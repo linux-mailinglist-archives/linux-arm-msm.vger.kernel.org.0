@@ -2,119 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B70648E41B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 07:15:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C0D7F48E42A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 07:19:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239300AbiANGPM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jan 2022 01:15:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50034 "EHLO
+        id S239206AbiANGSo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jan 2022 01:18:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239276AbiANGPL (ORCPT
+        with ESMTP id S236454AbiANGSn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jan 2022 01:15:11 -0500
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66837C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jan 2022 22:15:11 -0800 (PST)
-Received: by mail-ot1-x336.google.com with SMTP id a23-20020a9d4717000000b0056c15d6d0caso8961160otf.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jan 2022 22:15:11 -0800 (PST)
+        Fri, 14 Jan 2022 01:18:43 -0500
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 620B4C061574;
+        Thu, 13 Jan 2022 22:18:43 -0800 (PST)
+Received: by mail-pf1-x42a.google.com with SMTP id f144so1147491pfa.6;
+        Thu, 13 Jan 2022 22:18:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=+rs9ib3g33qLU8AiFD4BXM4f1mQTvOuGI7OOGqMW8N0=;
-        b=HQeHa183ss2xwvQGgBFFyDJIQp+7ijobwLR5NxByE8gCac3Jax7HEx9VX9BSyZISRT
-         2uG/NcCoeEx8mR91DRlBPOZWbXHIkLQjNxtWoXIvFFQN360+ZB22UHzNeeUORs2ogXdy
-         CWZTGLlpk9an7/T91xXpqnSQt3cf0Z0XX1hGc=
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id;
+        bh=P7I6VaE87nRYEstDp+uq11bjIAOgfEzIQh4DoOK5I2k=;
+        b=qe9as3lG4cg4d11XtFLXqvRFNvZMNnNnIdE+gPaK3SFr4zp6zwuxYyFC5i0tv5TtTz
+         zjAIcTezNFAI1yJWMHmkN1gY+NfhHuwweyxUCtK5fno4YDIU3Kuz1cHXFkym6XCxBAWI
+         iqlPFhlAEN4dSWh61WkITrZRSp0TDfjnNOTc6shj9xNYue1dTBZXx6HSFx4V++8sU+55
+         2xRcARCv7ky1ZRin/ot+OaQb6GEOsnk3Ym0u0GWKxLHsmFeCIKe+mfwEHpZtNfVQoLO0
+         rqTYQk/DGCw1e3mQENDa3EFAvRjo+ZzBNdtdTSHyz6x6GHWL7ArD4fXIVa7svdTCm2Re
+         yCLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=+rs9ib3g33qLU8AiFD4BXM4f1mQTvOuGI7OOGqMW8N0=;
-        b=rK2hyBpVjZjuTySiLqscHE7VasQ0qhZ3CqKqfr5lUHhl7bJNXBHOgx3POJw04BC5eE
-         MSdbBbBi5t40TCtBWrwZUAY/JZ7ZpQpQmu8KpoEewphcs0fI4eE150r7PZVd0LXdeWsX
-         yngoEzi64Yra6xDkbkp50BDyKDClOHo64b3XcbG4P1MT8uSHhPaniMZUhrYbYXDv1Zlc
-         2krk+MopUUDdkBTecfAw29bp8gqRa3hGU7yW/hy4IPUs9plqdcNbqIM8lQqa3tbp8F3D
-         2Ek21ZBdyldHu5PvkXU/1leiYL5WbmDdiQjVbiH8HFptbqKYYigJcJNtoIBYTu8VDn8l
-         f6ig==
-X-Gm-Message-State: AOAM5331wWH3KV9TqyiUjUE8OcO3vJeRyJl7Z0mjoRizk2dqDWkkrlRc
-        9YQVivdXH9Q2TJcfV0k2NI4QpWJm7M/3y+kGim/vrw==
-X-Google-Smtp-Source: ABdhPJzm2wgY+NMsHJ0/4tH0BadICR5mj3FOiJj6GgxeTjHljLVrIA8pvFs9jP14eFguOM+jj+Hkb+jkwnCm1mWwxaU=
-X-Received: by 2002:a05:6830:1614:: with SMTP id g20mr4785522otr.77.1642140910672;
- Thu, 13 Jan 2022 22:15:10 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 13 Jan 2022 22:15:10 -0800
-MIME-Version: 1.0
-In-Reply-To: <20220113164233.3.Iac012fa8d727be46448d47027a1813ea716423ce@changeid>
-References: <20220114004303.905808-1-dianders@chromium.org> <20220113164233.3.Iac012fa8d727be46448d47027a1813ea716423ce@changeid>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 13 Jan 2022 22:15:09 -0800
-Message-ID: <CAE-0n51e=rYtC3KyhpiO7KSJArxw2pmvh5v8TZ8Yrf-ToTv3Bw@mail.gmail.com>
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sc7280: Factor out Chrome common fragment
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>
-Cc:     quic_rjendra@quicinc.com, sibis@codeaurora.org,
-        kgodara1@codeaurora.org, mka@chromium.org, pmaliset@codeaurora.org,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=P7I6VaE87nRYEstDp+uq11bjIAOgfEzIQh4DoOK5I2k=;
+        b=IrwpumvxVvyrO6vcztlir85cyB2gnx8MPIPKb7VUFTFxCYr87ze/oNSXThfQzrqJiD
+         u6yo5BtTCF1ebHXQeRMVV1jVIARmntFsUMidg5cUG8Bn2ORnI8H4jGzC83PztjaCL8ST
+         SRJm7vE5p7UC6tsa7p0LYnATCyuNMSKJxjKL47RfApBnb+fxdQrGlSoBp6VCzsBmOJyU
+         kPkjeioKx6Md5u1ylHRM+E3FD3ZiTzIALxgtDzIsoc0u9utVYNUazTxC0BAOw/9316ZH
+         /I8ELuGvT9JH/MqfmZCz09jrUhIVdy2rky72DiAJORP7/2UrmVaiqSnCAjBckw3ak28M
+         bKyQ==
+X-Gm-Message-State: AOAM533nlWZKMMlDEIl8oVd9nCEaEmFEFeSb94/RSgZkw9Hr28YqIFpr
+        R4Gy1uNbLvPIaVVxVvwM74g=
+X-Google-Smtp-Source: ABdhPJxDVsI0xYs0EXSiOjEYrv7EF3fAnGjGjUzRXG0ePAETn2CzuaiK1U+JTS0VUpNjF5BAA5/L5Q==
+X-Received: by 2002:a63:6bc3:: with SMTP id g186mr6897880pgc.192.1642141122952;
+        Thu, 13 Jan 2022 22:18:42 -0800 (PST)
+Received: from localhost.localdomain ([159.226.95.43])
+        by smtp.googlemail.com with ESMTPSA id pi7sm1871131pjb.23.2022.01.13.22.18.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Jan 2022 22:18:42 -0800 (PST)
+From:   Miaoqian Lin <linmq006@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Sagar Dharia <sdharia@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org
+Cc:     linmq006@gmail.com
+Subject: [PATCH] slimbus: qcom:  Fix IRQ check in qcom_slim_probe
+Date:   Fri, 14 Jan 2022 06:18:29 +0000
+Message-Id: <20220114061830.13456-1-linmq006@gmail.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2022-01-13 16:43:02)
-> This factors out a device tree fragment from some sc7280 device
-> trees. It represents the device tree bits that should be included for
-> "Chrome" based sc7280 boards. On these boards the bootloader (Coreboot
-> + Depthcharge) configures things slightly different than the
-> bootloader that Qualcomm provides. The modem firmware on these boards
-> also works differently than on other Qulacomm products and thus the
-> reserved memory map needs to be adjusted.
->
-> NOTES:
-> - This is _not_ quite a no-op change. The "herobrine" and "idp"
->   fragments here were different and it looks like someone simply
->   forgot to update the herobrine version. This updates a few numbers
->   to match IDP. This will also cause the `pmk8350_pon` to be disabled
->   on idp/crd, which I belive is a correct change.
-> - At the moment this assumes LTE skus. Once it's clearer how WiFi SKUs
->   will work (how much of the memory map they can reclaim) we may add
->   an extra fragment that will rejigger one way or the other.
->
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
+platform_get_irq() returns negative error number instead 0 on failure.
+And the doc of platform_get_irq() provides a usage example:
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+    int irq = platform_get_irq(pdev, 0);
+    if (irq < 0)
+        return irq;
 
-One comment below.
+Fix the check of return value to catch errors correctly.
 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> new file mode 100644
-> index 000000000000..9d4f25f77152
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> @@ -0,0 +1,97 @@
-[...]
-> +
-> +/* Modem setup is different on Chrome setups than typical Qualcomm setup */
-> +&remoteproc_mpss {
-> +       status = "okay";
-> +       compatible = "qcom,sc7280-mss-pil";
-> +       iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
-> +       memory-region = <&mba_mem &mpss_mem>;
+Fixes: ad7fcbc308b0 ("slimbus: qcom: Add Qualcomm Slimbus controller driver")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+---
+ drivers/slimbus/qcom-ctrl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-I'd prefer this be
+diff --git a/drivers/slimbus/qcom-ctrl.c b/drivers/slimbus/qcom-ctrl.c
+index f04b961b96cd..ec58091fc948 100644
+--- a/drivers/slimbus/qcom-ctrl.c
++++ b/drivers/slimbus/qcom-ctrl.c
+@@ -510,9 +510,9 @@ static int qcom_slim_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	ctrl->irq = platform_get_irq(pdev, 0);
+-	if (!ctrl->irq) {
++	if (ctrl->irq < 0) {
+ 		dev_err(&pdev->dev, "no slimbus IRQ\n");
+-		return -ENODEV;
++		return ctrl->irq;
+ 	}
+ 
+ 	sctrl = &ctrl->ctrl;
+-- 
+2.17.1
 
-	memory-region = <&mba_mem>, <&mpss_mem>;
-
-so that we know mpss_mem isn't an "argument" or cell for mba_mem. I see
-that this is just moving around in this patch though so probably can be
-done in a followup.
-
-> +};
-> +
-> +/* Increase the size from 2.5MB to 8MB */
-> +&rmtfs_mem {
-> +       reg = <0x0 0x9c900000 0x0 0x800000>;
-> +};
