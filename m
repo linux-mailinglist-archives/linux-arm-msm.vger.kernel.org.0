@@ -2,47 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D593748E2E2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 04:14:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E897348E2E7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 04:17:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239024AbiANDOh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jan 2022 22:14:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38950 "EHLO
+        id S238905AbiANDRh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jan 2022 22:17:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238885AbiANDOc (ORCPT
+        with ESMTP id S238838AbiANDRh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jan 2022 22:14:32 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF15FC06161C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jan 2022 19:14:32 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id a1-20020a17090a688100b001b3fd52338eso11813624pjd.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jan 2022 19:14:32 -0800 (PST)
+        Thu, 13 Jan 2022 22:17:37 -0500
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36485C06161C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jan 2022 19:17:37 -0800 (PST)
+Received: by mail-pf1-x436.google.com with SMTP id i65so1618689pfc.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jan 2022 19:17:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=squareup.com; s=google;
         h=from:to:cc:subject:date:message-id;
-        bh=UihRxFe06/0BjCUwssSJVg8d5/WcnG6d9hupQZOxDOM=;
-        b=bvFNtVjXhWZB/QjtYGDuou+oOg1zbJqHE1lCE03Hzcg28YrENTk5LeMPjwFoPicoEe
-         dbwRbVpTpkrsdZ6/AFx3QdXgpAqiNTrs7UvI7Jty+mhxz0/S38uG1uQVYYNYGuuhvtjx
-         GEvqRCLqVIahMktERqUiahUAQSw5kybTBwSmg=
+        bh=22J5kbkqZMwi+zbdPplWGyEMzniZ46lPbAAksAaXwtc=;
+        b=dsktbiJ4cPJ7xF2ETl4LH75h7FyhR9XRGkBiaY9HDBCzIrCXLk2RdlUVHDSb1rE2C2
+         lAcLWzpfOlGRp8Hbpt/GwUQlrjAYVXTO+fz4thr4VPCGRQQVi5z0ovQaDQ+soUH3PdMT
+         PlQnN+cKPOt+XNDx5//1UEaDQsXml0dHu13D0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=UihRxFe06/0BjCUwssSJVg8d5/WcnG6d9hupQZOxDOM=;
-        b=xpRQgPMlf4imWJ0OFy6nfCRrHimuWXCe/0J2nWhrfzUFm0R8XPl+JjYqZFHE6l0WCb
-         Bot/HaZspTn48GHA137TYkmGAextUt1Vya6HPxC677mNctTe2BUTWrOBO31rFnjicRZU
-         hJKBfze3Yy6etU7r1rOsDBFseEZVY3N99tvScxqct21SLLHZF8OpWpP6FM3ZLTQUWN9e
-         nIGNoTPwI9jTjjSwvm7nK5WJU+rR7376+pHtkRAZboh4iig5C1o0MuZCe5qWxMwKHJIX
-         IE+RG0r1u4DmoWcmD/G6PWvmKdMi3FgcLIiiHBKiQxpvry8i6Qzy5SR/kuwEOjJ46Cvb
-         L3oA==
-X-Gm-Message-State: AOAM531m9M+NSyf3lG0o4VmKlMqoBSDZ+4++iHKX3XMCI4exBqvbcj53
-        CL3fKTZpGV4Hgkk9voMUZvIojg==
-X-Google-Smtp-Source: ABdhPJw5u7fOl1HCNeFx7xfSaQq53IeVfxaVK7JmWpf7VCgW+7WNldHq5Yw2s90BuxCArGbxNtnweg==
-X-Received: by 2002:a17:902:d505:b0:14a:77ac:1e8b with SMTP id b5-20020a170902d50500b0014a77ac1e8bmr7292312plg.1.1642130071939;
-        Thu, 13 Jan 2022 19:14:31 -0800 (PST)
+        bh=22J5kbkqZMwi+zbdPplWGyEMzniZ46lPbAAksAaXwtc=;
+        b=FRHWSYLHcOmvA1e6L9fiwidYLcf1YPOEfyMdmQQq9SiKMvt5iVvzqcwYfl8NltuPXc
+         1gy2MAGyy+Bhizqgo9+J7SQSloeEMdt85DJ7RPwKouM6jUGQntyIcI9aQSR75A+DDwnM
+         zWM6UmzKw0lLrDq2708V8xRd+qKaHJGd2eZeZOwmvY3Dulx5rLx/Ly7NRv/oiivXdwQq
+         g1ZBpZd7rhG6Vv6FaOS6Up+7dtgD6xyAi3MhAV6/Oagqzvqqp1uN7JblO0f1YzvAQHjt
+         QK7e7xXy87tN2eFgh8DwS6WzybW6T1+0sk/P/ZhWq33XyGvfRF7VeGWLspGMj1fCtNf7
+         hvYg==
+X-Gm-Message-State: AOAM5300hMFLWyDTT8wxzYUk3fp/CPMDgBqO+5N7wD0zWYEHzvYKK8fg
+        uOEMrl5wekYFdSEQuAZWMkLv6A==
+X-Google-Smtp-Source: ABdhPJwfE81HsvaNi1f/JpvJoBon3nPvWpf1kFbZbO+0UlkMFrPSkdRgPvXz1RJpo/tskm1nh28PaQ==
+X-Received: by 2002:a05:6a00:15c8:b0:4ba:fa69:3807 with SMTP id o8-20020a056a0015c800b004bafa693807mr7075964pfu.10.1642130256491;
+        Thu, 13 Jan 2022 19:17:36 -0800 (PST)
 Received: from localhost (99-47-69-49.lightspeed.sntcca.sbcglobal.net. [99.47.69.49])
-        by smtp.gmail.com with ESMTPSA id m3sm3813484pfa.183.2022.01.13.19.14.30
+        by smtp.gmail.com with ESMTPSA id lk10sm11101947pjb.20.2022.01.13.19.17.34
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Jan 2022 19:14:31 -0800 (PST)
+        Thu, 13 Jan 2022 19:17:35 -0800 (PST)
 From:   Benjamin Li <benl@squareup.com>
 To:     Amit Kucheria <amitk@kernel.org>,
         Thara Gopinath <thara.gopinath@linaro.org>
@@ -52,19 +52,21 @@ Cc:     Benjamin Li <benl@squareup.com>, Andy Gross <agross@kernel.org>,
         Daniel Lezcano <daniel.lezcano@linaro.org>,
         Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] drivers: thermal: tsens: respect thermal_device_mode in threshold irq reporting
-Date:   Thu, 13 Jan 2022 19:13:37 -0800
-Message-Id: <20220114031337.24741-1-benl@squareup.com>
+Subject: [PATCH v2] drivers: thermal: tsens: respect thermal_device_mode in threshold irq reporting
+Date:   Thu, 13 Jan 2022 19:17:30 -0800
+Message-Id: <20220114031730.25621-1-benl@squareup.com>
 X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 'echo disabled > .../thermal_zoneX/mode' will disable the thermal core's
-polling mechanism to check for threshold trips. However, tsens supports
-an interrupt mechanism to receive notification of trips, implemented in
-commit 634e11d5b450 ("drivers: thermal: tsens: Add interrupt support").
-This is used sometimes to run performance test cases.
+polling mechanism to check for threshold trips. This is used sometimes to
+run performance test cases.
+
+However, tsens supports an interrupt mechanism to receive notification of
+trips, implemented in commit 634e11d5b450 ("drivers: thermal: tsens: Add
+interrupt support").
 
 Currently the thermal zone mode that's set by userspace is not checked
 before propagating threshold trip events from IRQs. Let's fix this to
@@ -113,6 +115,9 @@ past temp=75000 without CPU throttling kicking in.
 Reported-by: Zac Crosby <zac@squareup.com>
 Signed-off-by: Benjamin Li <benl@squareup.com>
 ---
+Changes in v2:
+- Reordered sentences in first part of commit message to make sense.
+
  drivers/thermal/qcom/tsens.c | 15 +++++++++------
  1 file changed, 9 insertions(+), 6 deletions(-)
 
