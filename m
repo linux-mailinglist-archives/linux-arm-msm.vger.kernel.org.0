@@ -2,152 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E897348E2E7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 04:17:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A323048E40A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 07:08:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238905AbiANDRh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jan 2022 22:17:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39646 "EHLO
+        id S239254AbiANGIR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jan 2022 01:08:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238838AbiANDRh (ORCPT
+        with ESMTP id S236517AbiANGIR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jan 2022 22:17:37 -0500
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36485C06161C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jan 2022 19:17:37 -0800 (PST)
-Received: by mail-pf1-x436.google.com with SMTP id i65so1618689pfc.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jan 2022 19:17:37 -0800 (PST)
+        Fri, 14 Jan 2022 01:08:17 -0500
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 636D7C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jan 2022 22:08:17 -0800 (PST)
+Received: by mail-ot1-x32e.google.com with SMTP id c3-20020a9d6c83000000b00590b9c8819aso9004079otr.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jan 2022 22:08:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=squareup.com; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=22J5kbkqZMwi+zbdPplWGyEMzniZ46lPbAAksAaXwtc=;
-        b=dsktbiJ4cPJ7xF2ETl4LH75h7FyhR9XRGkBiaY9HDBCzIrCXLk2RdlUVHDSb1rE2C2
-         lAcLWzpfOlGRp8Hbpt/GwUQlrjAYVXTO+fz4thr4VPCGRQQVi5z0ovQaDQ+soUH3PdMT
-         PlQnN+cKPOt+XNDx5//1UEaDQsXml0dHu13D0=
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=K4p5fqUDkXH1ATZQd2cSahMZ7ElmoT3wb+zGFFFvjXY=;
+        b=fQQ7OHtYEd12KQp6LdWt6b2dKIV2H1dB4IRu648jqxy2ZRSoHPjrc24kOoPpp3TpbP
+         3vLuF2ngNJKgnwCNjlY2qLBob2s43Ots2e/KyD9RtlQuanD/hJqZzrMwtWRkZ8QQJzq1
+         +5s58jiMlPBZND4ELMykYJ4ZfoUPURYw729yM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=22J5kbkqZMwi+zbdPplWGyEMzniZ46lPbAAksAaXwtc=;
-        b=FRHWSYLHcOmvA1e6L9fiwidYLcf1YPOEfyMdmQQq9SiKMvt5iVvzqcwYfl8NltuPXc
-         1gy2MAGyy+Bhizqgo9+J7SQSloeEMdt85DJ7RPwKouM6jUGQntyIcI9aQSR75A+DDwnM
-         zWM6UmzKw0lLrDq2708V8xRd+qKaHJGd2eZeZOwmvY3Dulx5rLx/Ly7NRv/oiivXdwQq
-         g1ZBpZd7rhG6Vv6FaOS6Up+7dtgD6xyAi3MhAV6/Oagqzvqqp1uN7JblO0f1YzvAQHjt
-         QK7e7xXy87tN2eFgh8DwS6WzybW6T1+0sk/P/ZhWq33XyGvfRF7VeGWLspGMj1fCtNf7
-         hvYg==
-X-Gm-Message-State: AOAM5300hMFLWyDTT8wxzYUk3fp/CPMDgBqO+5N7wD0zWYEHzvYKK8fg
-        uOEMrl5wekYFdSEQuAZWMkLv6A==
-X-Google-Smtp-Source: ABdhPJwfE81HsvaNi1f/JpvJoBon3nPvWpf1kFbZbO+0UlkMFrPSkdRgPvXz1RJpo/tskm1nh28PaQ==
-X-Received: by 2002:a05:6a00:15c8:b0:4ba:fa69:3807 with SMTP id o8-20020a056a0015c800b004bafa693807mr7075964pfu.10.1642130256491;
-        Thu, 13 Jan 2022 19:17:36 -0800 (PST)
-Received: from localhost (99-47-69-49.lightspeed.sntcca.sbcglobal.net. [99.47.69.49])
-        by smtp.gmail.com with ESMTPSA id lk10sm11101947pjb.20.2022.01.13.19.17.34
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Jan 2022 19:17:35 -0800 (PST)
-From:   Benjamin Li <benl@squareup.com>
-To:     Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     Benjamin Li <benl@squareup.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=K4p5fqUDkXH1ATZQd2cSahMZ7ElmoT3wb+zGFFFvjXY=;
+        b=QtobTAZMQ5bIja539y3pSWLhw8t3F92p5pI95GABvTZ/gHKYDxY8PRRD1RE5F2cBL9
+         e7Tf7UJiJ4t6bjFVRyB129ChqFp5UypW8f9qt8qu2DqSxg+ct9mN4DdHQjz77gKMUQ2c
+         Q9+wOuYlyb+QRfIl/z3LjgM3tSVAj7S04WosHgyHwq5OoDJyiNE/FmOkAiP6sJ/arH4a
+         O5pq6jFbThOvSEEhWDFI6EeT+FA4/h7DaGJO0WeyHBEjE0SciFO5aKWJDnsBoG3bNThf
+         QHrF8QIXQasVTBHqWUl1airxxnjx9wWrXgpnm0HG3ziKnReckrF2qbp+kw5bP+H27IY1
+         7zwQ==
+X-Gm-Message-State: AOAM531FtVCANnm38BmroTyoMdNmuvErzY5w6y5yriQ8+pW1GzZWWegF
+        UseMFa0yd9JfItJRh1oCxJfMEn9B7Wv2u8l/6yIXxw==
+X-Google-Smtp-Source: ABdhPJzDfPw43c+GugW1jZY1RjzaNveoHNFQ/lVRUmmopat5KQaPTt8XtQ5a2FikuYK0q6YMDK7GEUS+iNWmsvy56y0=
+X-Received: by 2002:a9d:7451:: with SMTP id p17mr5551097otk.159.1642140496433;
+ Thu, 13 Jan 2022 22:08:16 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 13 Jan 2022 22:08:16 -0800
+MIME-Version: 1.0
+In-Reply-To: <20220113164233.1.I19f60014e9be4b9dda4d66b5d56ef3d9600b6e10@changeid>
+References: <20220114004303.905808-1-dianders@chromium.org> <20220113164233.1.I19f60014e9be4b9dda4d66b5d56ef3d9600b6e10@changeid>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Thu, 13 Jan 2022 22:08:16 -0800
+Message-ID: <CAE-0n50N=vFC3wpPh7O6eqWMNyT8n-Q0ssU+CkgJH2DY7T6SoQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: sc7280: Fix gmu unit address
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>
+Cc:     quic_rjendra@quicinc.com, sibis@codeaurora.org,
+        kgodara1@codeaurora.org, mka@chromium.org, pmaliset@codeaurora.org,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] drivers: thermal: tsens: respect thermal_device_mode in threshold irq reporting
-Date:   Thu, 13 Jan 2022 19:17:30 -0800
-Message-Id: <20220114031730.25621-1-benl@squareup.com>
-X-Mailer: git-send-email 2.17.1
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-'echo disabled > .../thermal_zoneX/mode' will disable the thermal core's
-polling mechanism to check for threshold trips. This is used sometimes to
-run performance test cases.
+Quoting Douglas Anderson (2022-01-13 16:43:00)
+> When processing sc7280 device trees, I can see:
+>
+>   Warning (simple_bus_reg): /soc@0/gmu@3d69000:
+>     simple-bus unit address format error, expected "3d6a000"
+>
+> There's a clear typo in the node name. Fix it.
+>
+> Fixes: 96c471970b7b ("arm64: dts: qcom: sc7280: Add gpu support")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 
-However, tsens supports an interrupt mechanism to receive notification of
-trips, implemented in commit 634e11d5b450 ("drivers: thermal: tsens: Add
-interrupt support").
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-Currently the thermal zone mode that's set by userspace is not checked
-before propagating threshold trip events from IRQs. Let's fix this to
-restore the abilty to disable thermal throttling at runtime.
-
-====================
-
-Tested on MSM8939 running 5.16.0. This platform has 8 cores; the first
-four thermal zones control cpu0-3 and the last zone is for the other four
-CPUs together.
-
-  for f in /sys/class/thermal/thermal_zone*; do
-    echo "disabled" > $f/mode
-    echo $f | paste - $f/type $f/mode
-  done
-
-/sys/class/thermal/thermal_zone0	cpu0-thermal	disabled
-/sys/class/thermal/thermal_zone1	cpu1-thermal	disabled
-/sys/class/thermal/thermal_zone2	cpu2-thermal	disabled
-/sys/class/thermal/thermal_zone3	cpu3-thermal	disabled
-/sys/class/thermal/thermal_zone4	cpu4567-thermal	disabled
-
-With mitigation thresholds at 75 degC and load running, we can now cruise
-past temp=75000 without CPU throttling kicking in.
-
-  watch -n 1 "grep '' /sys/class/thermal/*/temp
-      /sys/class/thermal/*/cur_state
-      /sys/bus/cpu/devices/cpu*/cpufreq/cpuinfo_cur_freq"
-
-/sys/class/thermal/thermal_zone0/temp:82000
-/sys/class/thermal/thermal_zone1/temp:84000
-/sys/class/thermal/thermal_zone2/temp:87000
-/sys/class/thermal/thermal_zone3/temp:84000
-/sys/class/thermal/thermal_zone4/temp:84000
-/sys/class/thermal/cooling_device0/cur_state:0
-/sys/class/thermal/cooling_device1/cur_state:0
-/sys/bus/cpu/devices/cpu0/cpufreq/cpuinfo_cur_freq:1113600
-/sys/bus/cpu/devices/cpu1/cpufreq/cpuinfo_cur_freq:1113600
-/sys/bus/cpu/devices/cpu2/cpufreq/cpuinfo_cur_freq:1113600
-/sys/bus/cpu/devices/cpu3/cpufreq/cpuinfo_cur_freq:1113600
-/sys/bus/cpu/devices/cpu4/cpufreq/cpuinfo_cur_freq:800000
-/sys/bus/cpu/devices/cpu5/cpufreq/cpuinfo_cur_freq:800000
-/sys/bus/cpu/devices/cpu6/cpufreq/cpuinfo_cur_freq:800000
-/sys/bus/cpu/devices/cpu7/cpufreq/cpuinfo_cur_freq:800000
-
-Reported-by: Zac Crosby <zac@squareup.com>
-Signed-off-by: Benjamin Li <benl@squareup.com>
----
-Changes in v2:
-- Reordered sentences in first part of commit message to make sense.
-
- drivers/thermal/qcom/tsens.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index 99a8d9f3e03c..0b6299512e7c 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -509,13 +509,16 @@ static irqreturn_t tsens_irq_thread(int irq, void *data)
- 		spin_unlock_irqrestore(&priv->ul_lock, flags);
- 
- 		if (trigger) {
--			dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
--				hw_id, __func__, temp);
--			thermal_zone_device_update(s->tzd,
--						   THERMAL_EVENT_UNSPECIFIED);
-+			if (s->tzd->mode == THERMAL_DEVICE_ENABLED) {
-+				dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
-+					hw_id, __func__, temp);
-+				thermal_zone_device_update(s->tzd, THERMAL_EVENT_UNSPECIFIED);
-+			} else {
-+				dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC) skipped as zone disabled\n",
-+					hw_id, __func__, temp);
-+			}
- 		} else {
--			dev_dbg(priv->dev, "[%u] %s: no violation:  %d\n",
--				hw_id, __func__, temp);
-+			dev_dbg(priv->dev, "[%u] %s: no violation:  %d\n", hw_id, __func__, temp);
- 		}
- 
- 		if (tsens_version(priv) < VER_0_1) {
--- 
-2.17.1
-
+BTW, gmu isn't a "standard" node name so might be worth replacing that
+with something else but I have no idea what. Maybe "firmware" or
+"power-controller"?
