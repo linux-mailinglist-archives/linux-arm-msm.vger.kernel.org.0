@@ -2,86 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B87C448E4DA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 08:28:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A3E9448E685
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 09:30:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235457AbiANH2O convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jan 2022 02:28:14 -0500
-Received: from relay1-d.mail.gandi.net ([217.70.183.193]:59993 "EHLO
-        relay1-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229719AbiANH2O (ORCPT
+        id S233087AbiANIac (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jan 2022 03:30:32 -0500
+Received: from mail-ua1-f42.google.com ([209.85.222.42]:36818 "EHLO
+        mail-ua1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240938AbiANIaA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jan 2022 02:28:14 -0500
-Received: (Authenticated sender: miquel.raynal@bootlin.com)
-        by relay1-d.mail.gandi.net (Postfix) with ESMTPSA id 8DE02240010;
-        Fri, 14 Jan 2022 07:27:18 +0000 (UTC)
-Date:   Fri, 14 Jan 2022 08:27:18 +0100
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mdalam@codeaurora.org,
-        sricharan@codeaurora.org
-Subject: Re: [PATCH] mtd: nand: raw: qcom_nandc: Don't clear_bam_transaction
- on READID
-Message-ID: <20220114082718.32a2fc83@xps13>
-In-Reply-To: <20220113184427.2259509-1-konrad.dybcio@somainline.org>
-References: <20220113184427.2259509-1-konrad.dybcio@somainline.org>
-Organization: Bootlin
-X-Mailer: Claws Mail 3.17.7 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        Fri, 14 Jan 2022 03:30:00 -0500
+Received: by mail-ua1-f42.google.com with SMTP id r15so15754877uao.3;
+        Fri, 14 Jan 2022 00:29:59 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=coIUzB6ooSMMXusXijGBXbc+2Rfc5lcc+ApCRo1wUfo=;
+        b=PlFvfuJJio9IfOytYyW3fte6684nzGdT+Kfw/tOWWIASW93wlAg7FoPve0wEVouIJo
+         tGOZFd6zsgQjTpAVhJzXyXh1NjccT8HAkF8HC/WD5ybmJl18J5j/n8F1Zk64B2WWGAba
+         V3Fby/0mVcQId52DPe8gi0uOklig2Ps4lo71d6h4w775zubZHbTl7B5LC0Tg5n9dMnMQ
+         L6d5ai+meScOXRFR5PlTZ5YztaM8RGwznVyEdhYqzi5j/mbfmeijsbKJF/RFuXfmmkSv
+         WD8N7pNGsb1SMnQp1yEbOGHY3/RLOXLHT9R7pRkE+Ug2E5cM72fbGyaMNxMMaseDgnx1
+         AihA==
+X-Gm-Message-State: AOAM532RKi0a2qmy/9yJgAZ+Wp8bo+dKjWZDh9/cZCm0oFXAhZjm0cJa
+        SG/dpjRiogKvI4x18m0+Yb0kci9RADpdDg==
+X-Google-Smtp-Source: ABdhPJzAiVYSKnU+OVha1nlMLCRQu8agC6BMaVTJWYlqJqfISfDsgoHF8yWWjs29+pvCsMZdBWgwqA==
+X-Received: by 2002:ab0:2752:: with SMTP id c18mr3791332uap.33.1642148998951;
+        Fri, 14 Jan 2022 00:29:58 -0800 (PST)
+Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com. [209.85.221.178])
+        by smtp.gmail.com with ESMTPSA id s25sm2278156vsk.20.2022.01.14.00.29.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Jan 2022 00:29:58 -0800 (PST)
+Received: by mail-vk1-f178.google.com with SMTP id v192so2391335vkv.4;
+        Fri, 14 Jan 2022 00:29:58 -0800 (PST)
+X-Received: by 2002:a05:6122:c89:: with SMTP id ba9mr3830615vkb.39.1642148997887;
+ Fri, 14 Jan 2022 00:29:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+References: <20211202191630.12450-1-jaschultz@microsoft.com>
+ <20211202191630.12450-3-jaschultz@microsoft.com> <CAMuHMdUPwo7pCSwY8_9xTaDruTHt6d=wHiNHvRmE71k8hWeLBw@mail.gmail.com>
+ <87czku4z2i.fsf@kernel.org>
+In-Reply-To: <87czku4z2i.fsf@kernel.org>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Fri, 14 Jan 2022 09:29:46 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdWEh07zXZZesuY0sksXaa6ptDvv3Fv4UC1RDkf7_KUv8w@mail.gmail.com>
+Message-ID: <CAMuHMdWEh07zXZZesuY0sksXaa6ptDvv3Fv4UC1RDkf7_KUv8w@mail.gmail.com>
+Subject: Re: [PATCH 2/5] platform: surface: Propagate ACPI Dependency
+To:     Felipe Balbi <balbi@kernel.org>
+Cc:     Jarrett Schultz <jaschultzms@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Mark Gross <markgross@kernel.org>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        platform-driver-x86@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Jarrett Schultz <jaschultz@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
+Hi Felipe,
 
-konrad.dybcio@somainline.org wrote on Thu, 13 Jan 2022 19:44:26 +0100:
+On Fri, Jan 14, 2022 at 7:21 AM Felipe Balbi <balbi@kernel.org> wrote:
+> Geert Uytterhoeven <geert@linux-m68k.org> writes:
+> > On Mon, Dec 6, 2021 at 4:03 PM Jarrett Schultz <jaschultzms@gmail.com> wrote:
+> >> Since the Surface XBL Driver does not depend on ACPI, the
+> >> platform/surface directory as a whole no longer depends on ACPI. With
+> >> respect to this, the ACPI dependency is moved into each config that depends
+> >> on ACPI individually.
+> >>
+> >> Signed-off-by: Jarrett Schultz <jaschultz@microsoft.com>
+> >
+> > Thanks for your patch, which is now commit 272479928172edf0 ("platform:
+> > surface: Propagate ACPI Dependency").
+> >
+> >> --- a/drivers/platform/surface/Kconfig
+> >> +++ b/drivers/platform/surface/Kconfig
+> >> @@ -5,7 +5,6 @@
+> >>
+> >>  menuconfig SURFACE_PLATFORMS
+> >>         bool "Microsoft Surface Platform-Specific Device Drivers"
+> >> -       depends on ACPI
+> >>         default y
+> >>         help
+> >>           Say Y here to get to see options for platform-specific device drivers
+> >
+> > Without any dependency, all users configuring a kernel are now asked
+> > about this. Is there any other platform dependency that can be used
+> > instead?
+>
+> there's probably no symbol that would be true for x86 and arm64 while
+> being false for everything else. Any ideas?
 
-> While I have absolutely 0 idea why and how, running clear_bam_transaction
-> when READID is issued makes the DMA totally clog up and refuse to function
-> at all on mdm9607. In fact, it is so bad that all the data gets garbled
-> and after a short while in the nand probe flow, the CPU decides that
-> sepuku is the only option.
-> 
-> Removing _READID from the if condition makes it work like a charm, I can
-> read data and mount partitions without a problem.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> ---
-> This is totally just an observation which took me an inhumane amount of
-> debug prints to find.. perhaps there's a better reason behind this, but
-> I can't seem to find any answers.. Therefore, this is a BIG RFC!
+depends on ARM64 || X86 || COMPILE_TEST?
 
-I'm adding two people from codeaurora who worked a lot on this driver.
-Hopefully they will have an idea :)
+> In any case, what's the problem of being asked about a new symbol? That
+> happens all the time whenever new drivers are merged, right?
 
-Thanks,Miquèl
+In se there is no problem with being asked about a new symbol.
+The problem is the sheer number of symbols, and irrelevant questions
+(e.g. this one, on !x86 and !arm64).
+Time spent on adding proper dependencies is IMHO well-spent, as it
+will save time for everyone who configures his own kernel.
 
-> 
-> 
->  drivers/mtd/nand/raw/qcom_nandc.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-> index 04e6f7b26706..506006ccdf1a 100644
-> --- a/drivers/mtd/nand/raw/qcom_nandc.c
-> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> @@ -1459,8 +1459,7 @@ static void pre_command(struct qcom_nand_host *host, int command)
->  
->  	clear_read_regs(nandc);
->  
-> -	if (command == NAND_CMD_RESET || command == NAND_CMD_READID ||
-> -	    command == NAND_CMD_PARAM || command == NAND_CMD_ERASE1)
-> +	if (command == NAND_CMD_RESET || command == NAND_CMD_PARAM || command == NAND_CMD_ERASE1)
->  		clear_bam_transaction(nandc);
->  }
->  
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
