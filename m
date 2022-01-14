@@ -2,80 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C01E248EF43
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 18:33:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC01948EF69
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 18:55:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243894AbiANRdv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jan 2022 12:33:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37670 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241472AbiANRdu (ORCPT
+        id S243946AbiANRzF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jan 2022 12:55:05 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:46153 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243937AbiANRzE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jan 2022 12:33:50 -0500
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F2D5C06173E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jan 2022 09:33:50 -0800 (PST)
-Received: by mail-pj1-x102e.google.com with SMTP id c14-20020a17090a674e00b001b31e16749cso22813404pjm.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jan 2022 09:33:50 -0800 (PST)
+        Fri, 14 Jan 2022 12:55:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=NpkWfGVGqnc91YTgK3WlM5S8pWGG5vJjqMuZVdyWTiY=;
-        b=GryrtVZT6GTQPVBnsyBN9dip7/snn5Inu5rK8omBqPJTRhiJy2LQrz5RS2a1PPTrKq
-         PPEW91dcI+2puozvKu0Srwl0P1oaZCjFjRdA7TLZ+Yb4CKKM4bvGA2WrBV1oxjqoo9ou
-         Dis7n2+PQvrDroMHSvmj+BSrJ9ivaqfU6O7jo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=NpkWfGVGqnc91YTgK3WlM5S8pWGG5vJjqMuZVdyWTiY=;
-        b=vIUs2D/iFMjjHc8AJT//5KxO7WedjXPKHw64MnkGyWyaDDMwdopwBhZR4Pd/vENxie
-         xaXTKTjAQSjjQWBGMxeTNh0W7CX2qNos3IzmRnDO2/HYCPIFKQj1XWpz6w9sUUzmcKnB
-         K+0Kzg/ClLwBngZ58viezv4kqFrEmIruTeS/LzwVs46+FQQOlN/v+sYHYqgXS5jfxX7J
-         0sRnvnnm0m1wj+R3zvrI5OX1GzWhvZJ3Cbd/Wjb7U1ZSUnLuzAe1hFMgYilPTf0PUJNE
-         igviLp9X+Cu0EC3VaLDygEfC/jcaU4TZBDzOQx6O+bB6MYiMHtSwn1w7+Xw9z4HFoUtE
-         WnCg==
-X-Gm-Message-State: AOAM531HwT2OKJy297nbXSRxbyuKF/hnEbC2RA0PRQipexdAm5k/0eoB
-        pwjQVWua/0Oj9IA0PTunC7ah7w==
-X-Google-Smtp-Source: ABdhPJyuRSsUFHNVVNJZzR5cpzVwwv7EuqU/qi1pgH1A4aLiTLjJ+3Ad7B3EtY6bTj6b70kG8wmdUw==
-X-Received: by 2002:a17:902:aa92:b0:149:6e0b:18d0 with SMTP id d18-20020a170902aa9200b001496e0b18d0mr10380502plr.34.1642181629982;
-        Fri, 14 Jan 2022 09:33:49 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:a0bd:cd39:e43:7570])
-        by smtp.gmail.com with UTF8SMTPSA id i194sm325306pfe.10.2022.01.14.09.33.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Jan 2022 09:33:49 -0800 (PST)
-Date:   Fri, 14 Jan 2022 09:33:48 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        quic_rjendra@quicinc.com, sibis@codeaurora.org,
-        kgodara1@codeaurora.org, swboyd@chromium.org,
-        pmaliset@codeaurora.org, Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: sc7280: Fix gmu unit address
-Message-ID: <YeGz/Nu9VNlzEHBR@google.com>
-References: <20220114004303.905808-1-dianders@chromium.org>
- <20220113164233.1.I19f60014e9be4b9dda4d66b5d56ef3d9600b6e10@changeid>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1642182905; x=1673718905;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=uqJ5CmOT3PvUyNa00Cv5sc/GONEvZmWWJpcg0wzd2HA=;
+  b=miMm3KUOooaB7mTOv1oMTR2mqFeHb1F+gt7tdc4UzNxoz5Xl88pPJkCB
+   xEzuX2MYz1HSajNeim7VdwgF3WMsMWofNUTwQEFZmSUMR3IR+egjvDjog
+   b/ETyEcBwTbaNqlJBxEGBvKdWnYZ4mhidqyjCOer3fh4/xE5AUbHpf9I2
+   g=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 14 Jan 2022 09:55:04 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2022 09:55:04 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Fri, 14 Jan 2022 09:54:43 -0800
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Fri, 14 Jan 2022 09:54:43 -0800
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <vkoul@kernel.org>,
+        <daniel@ffwll.ch>, <airlied@linux.ie>, <agross@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
+CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
+        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v14 0/4] group dp driver related patches into one series
+Date:   Fri, 14 Jan 2022 09:54:30 -0800
+Message-ID: <1642182874-27296-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220113164233.1.I19f60014e9be4b9dda4d66b5d56ef3d9600b6e10@changeid>
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 13, 2022 at 04:43:00PM -0800, Douglas Anderson wrote:
-> When processing sc7280 device trees, I can see:
-> 
->   Warning (simple_bus_reg): /soc@0/gmu@3d69000:
->     simple-bus unit address format error, expected "3d6a000"
-> 
-> There's a clear typo in the node name. Fix it.
-> 
-> Fixes: 96c471970b7b ("arm64: dts: qcom: sc7280: Add gpu support")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Group below 4 dp driver related patches into one series.
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Kuogee Hsieh (4):
+  drm/msm/dp: do not initialize phy until plugin interrupt received
+  drm/msm/dp:  populate connector of struct  dp_panel
+  drm/msm/dp: add support of tps4 (training pattern 4) for HBR3
+  drm/msm/dp: stop link training after link training 2 failed
+
+ drivers/gpu/drm/msm/dp/dp_catalog.c |  12 ++---
+ drivers/gpu/drm/msm/dp/dp_catalog.h |   2 +-
+ drivers/gpu/drm/msm/dp/dp_ctrl.c    | 100 ++++++++++++++++--------------------
+ drivers/gpu/drm/msm/dp/dp_ctrl.h    |   8 +--
+ drivers/gpu/drm/msm/dp/dp_display.c |  97 +++++++++++++++++++++-------------
+ 5 files changed, 118 insertions(+), 101 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
