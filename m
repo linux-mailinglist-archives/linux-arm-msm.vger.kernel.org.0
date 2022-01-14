@@ -2,119 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6A7648F19D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 21:41:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 04E8048F1D9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 22:12:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235529AbiANUlu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jan 2022 15:41:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51532 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239788AbiANUlt (ORCPT
+        id S229611AbiANVMB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jan 2022 16:12:01 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:23524 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229602AbiANVMB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jan 2022 15:41:49 -0500
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F426C06161C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jan 2022 12:41:49 -0800 (PST)
-Received: by mail-oi1-x233.google.com with SMTP id t9so13787557oie.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jan 2022 12:41:49 -0800 (PST)
+        Fri, 14 Jan 2022 16:12:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=w8eYRN8DvaWrfxZ2Wz3wjJHXZl1sXzUmVItZvQrcpIU=;
-        b=OKa3qW6WIsuRKuwVZNQaoh+x0FXafWzSaIVMiOJybsAilmpEY6W3EOaW9x2UgT2rw5
-         7Z6ixaS6ITqghZ1bGqvYEroKq3/zGqHGcf6lImK8zDJvW3Mf+P2/aLm6KsTE0F3P8quV
-         5MzfzisWUjGUiPZu535FQWvgGlcTrhsR26KJc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=w8eYRN8DvaWrfxZ2Wz3wjJHXZl1sXzUmVItZvQrcpIU=;
-        b=FgR9dmCQ4el1u4P1AquO0PgjwkxiSe3jgFJ9wnuGr+kRMzGG0sqPDeTUwZV8wZq1H4
-         S3vfVd3F7HAG3NiTVo7mtpdP917CJHBXZQrrgQ/x4U36vUu3tAXA/2cPM7aYcgJtF/lq
-         b5he3YUAeBzNRRIcwgTeZHzOD7i7Z2zthAhUy0huwz+tcxB9K1CyQInOWGuLgsaSUJfy
-         CA9a9qaHVQCyZZKepPZQFf6yzgrB/8nh5l0Himpq7z3Z3SthGciWWvq5wfd39s4Scqbx
-         tKUu9LlyvTtgjb1CmiVgC4t/izMaMMdnD50sLwQFbbymZKX3vZRyLajtE6H9PLsK6M3+
-         c3PA==
-X-Gm-Message-State: AOAM532P27lzasPx4TK+HVtsSB49kNfr1sR/FtVbETP5qTuW1a/aGe/M
-        TBOExFSHyuiphwiDQLDmoc1CaoMz30NgIdleB6kgzg==
-X-Google-Smtp-Source: ABdhPJyJdhcMkqImaSUxZ1WkeHPyT3tbME4n66V0rAr6S+Pk6ZlC3B9/0q6DsTjh/bqpzaqTLFTgaIaDVy4htwfjrno=
-X-Received: by 2002:aca:4382:: with SMTP id q124mr8893398oia.64.1642192908901;
- Fri, 14 Jan 2022 12:41:48 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 14 Jan 2022 14:41:48 -0600
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1642194721; x=1673730721;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=/4GBNMPdwBS9cM9z/abzaZUdcyEiqvofhTDmKCg2xWI=;
+  b=jmlWf9ryHI7dA5xgW21lsp+D/nMS5F4E5Uuvn2zK/zoUCXfUDrm8sEyp
+   P+g0SqRwCya4Q9vuBXkCk4s/cAnbZUxZbMfv7Q7fls+QmpytlAj8jumvr
+   snT5PuvDK5hp4BTKpKeUdHjHULPgHnH8xiil44OWJ66HMcS7bGT+5mVNz
+   8=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 14 Jan 2022 13:12:01 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2022 13:12:00 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Fri, 14 Jan 2022 13:12:00 -0800
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Fri, 14 Jan 2022 13:11:59 -0800
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <vkoul@kernel.org>,
+        <daniel@ffwll.ch>, <airlied@linux.ie>, <agross@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
+CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
+        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v15 0/4] group dp driver related patches into one series
+Date:   Fri, 14 Jan 2022 13:11:46 -0800
+Message-ID: <1642194710-2512-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-In-Reply-To: <1642182874-27296-2-git-send-email-quic_khsieh@quicinc.com>
-References: <1642182874-27296-1-git-send-email-quic_khsieh@quicinc.com> <1642182874-27296-2-git-send-email-quic_khsieh@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Fri, 14 Jan 2022 14:41:48 -0600
-Message-ID: <CAE-0n52UntroUk9hzPorUOvkVty1=V5B2oznYghi_DM6=zyzrw@mail.gmail.com>
-Subject: Re: [PATCH v14 1/4] drm/msm/dp: do not initialize phy until plugin
- interrupt received
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dmitry.baryshkov@linaro.org, dri-devel@lists.freedesktop.org,
-        robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, aravindh@codeaurora.org,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-01-14 09:54:31)
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 7cc4d21..2616f7b 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -372,21 +373,38 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
->         return rc;
->  }
->
-> -static void dp_display_host_init(struct dp_display_private *dp, int reset)
-> +static void dp_display_host_phy_init(struct dp_display_private *dp)
->  {
-> -       bool flip = false;
-> +       DRM_DEBUG_DP("core_init=%d phy_init=%d\n",
-> +                       dp->core_initialized, dp->phy_initialized);
->
-> +       if (!dp->phy_initialized) {
-> +               dp_ctrl_phy_init(dp->ctrl);
-> +               dp->phy_initialized = true;
-> +       }
-> +}
-> +
-> +static void dp_display_host_phy_exit(struct dp_display_private *dp)
-> +{
-> +       DRM_DEBUG_DP("core_init=%d phy_init=%d\n",
-> +                       dp->core_initialized, dp->phy_initialized);
-> +
-> +       if (dp->phy_initialized) {
-> +               dp_ctrl_phy_exit(dp->ctrl);
-> +               dp->phy_initialized = false;
-> +       }
-> +}
-> +
-> +static void dp_display_host_init(struct dp_display_private *dp)
-> +{
->         DRM_DEBUG_DP("core_initialized=%d\n", dp->core_initialized);
->         if (dp->core_initialized) {
+Group below 4 dp driver related patches into one series.
 
-Can you remove this if condition too? I don't see how it ever happens.
+Kuogee Hsieh (4):
+  drm/msm/dp: do not initialize phy until plugin interrupt received
+  drm/msm/dp:  populate connector of struct  dp_panel
+  drm/msm/dp: add support of tps4 (training pattern 4) for HBR3
+  drm/msm/dp: stop link training after link training 2 failed
 
->                 DRM_DEBUG_DP("DP core already initialized\n");
->                 return;
->         }
->
-> -       if (dp->usbpd->orientation == ORIENTATION_CC2)
-> -               flip = true;
-> -
-> -       dp_power_init(dp->power, flip);
-> -       dp_ctrl_host_init(dp->ctrl, flip, reset);
-> +       dp_power_init(dp->power, false);
-> +       dp_ctrl_reset_irq_ctrl(dp->ctrl, true);
->         dp_aux_init(dp->aux);
->         dp->core_initialized = true;
->  }
+ drivers/gpu/drm/msm/dp/dp_catalog.c |  12 ++---
+ drivers/gpu/drm/msm/dp/dp_catalog.h |   2 +-
+ drivers/gpu/drm/msm/dp/dp_ctrl.c    | 100 ++++++++++++++++------------------
+ drivers/gpu/drm/msm/dp/dp_ctrl.h    |   8 +--
+ drivers/gpu/drm/msm/dp/dp_display.c | 105 +++++++++++++++++++++---------------
+ 5 files changed, 118 insertions(+), 109 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
