@@ -2,113 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E2BF048E6AA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 09:38:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 53E0B48E6E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 09:51:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235067AbiANIiU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jan 2022 03:38:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54396 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234295AbiANIiS (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jan 2022 03:38:18 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDB66C061574;
-        Fri, 14 Jan 2022 00:38:18 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 56A7A61998;
-        Fri, 14 Jan 2022 08:38:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD51C36AE9;
-        Fri, 14 Jan 2022 08:38:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1642149497;
-        bh=YGkYm9ISTpruq1RiIS/D3UGxFTC4kUdeUfT0+pdRgoY=;
-        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
-        b=U/GR1rOKg2okE6AmaOGIv4kYQ7nViMlcfg6Xk3AYYhHr/vLyS0kxV1LzNtC6pelJU
-         R6rcrLFjUv4tgZWW/9rMpHbsBfwIoXnvQLxqOp3uh1n8jKOuGfs4ig/3Vt3q00vZ9y
-         WEcFF8MZ16nVaB66OvdGWwNudHY65/j3dtRf/1kQ1CBCtqVwv1ldA1fAPHpKP2HzLy
-         XMk+TjXhdAI/u/cOLq/KX5Wfu0Pzooh3dtLzDr5HNPfSLDsiLy3J6uqqngbr9zScwF
-         wh5+E4bgqgUqncYzC7JwQP+s38svWPRMFUuIb7fV5Q37ViJQD4amZr76I886FfmeGR
-         qx4SF/beAvfzQ==
-References: <20211202191630.12450-1-jaschultz@microsoft.com>
- <20211202191630.12450-3-jaschultz@microsoft.com>
- <CAMuHMdUPwo7pCSwY8_9xTaDruTHt6d=wHiNHvRmE71k8hWeLBw@mail.gmail.com>
- <87czku4z2i.fsf@kernel.org>
- <CAMuHMdWEh07zXZZesuY0sksXaa6ptDvv3Fv4UC1RDkf7_KUv8w@mail.gmail.com>
- <2d6ab8ab-79c8-681b-a898-a88b48fceb55@redhat.com>
-User-agent: mu4e 1.6.10; emacs 28.0.90
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Hans de Goede <hdegoede@redhat.com>
-Cc:     Geert Uytterhoeven <geert@linux-m68k.org>,
-        Jarrett Schultz <jaschultzms@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Gross <markgross@kernel.org>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        platform-driver-x86@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Jarrett Schultz <jaschultz@microsoft.com>
-Subject: Re: [PATCH 2/5] platform: surface: Propagate ACPI Dependency
-Date:   Fri, 14 Jan 2022 10:37:57 +0200
-In-reply-to: <2d6ab8ab-79c8-681b-a898-a88b48fceb55@redhat.com>
-Message-ID: <874k664sqz.fsf@kernel.org>
+        id S237363AbiANIvE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jan 2022 03:51:04 -0500
+Received: from smtp25.cstnet.cn ([159.226.251.25]:36464 "EHLO cstnet.cn"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S237046AbiANIvD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 14 Jan 2022 03:51:03 -0500
+Received: from localhost.localdomain (unknown [124.16.141.244])
+        by APP-05 (Coremail) with SMTP id zQCowACHjwNfOeFhURcyBg--.44770S2;
+        Fri, 14 Jan 2022 16:50:40 +0800 (CST)
+From:   Xu Wang <vulab@iscas.ac.cn>
+To:     agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] soc: qcom: apr: Remove redundant 'flush_workqueue()' calls
+Date:   Fri, 14 Jan 2022 08:50:19 +0000
+Message-Id: <20220114085019.42904-1-vulab@iscas.ac.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: zQCowACHjwNfOeFhURcyBg--.44770S2
+X-Coremail-Antispam: 1UD129KBjvdXoWrKF17GrW7uF4rCr4rWFW7urg_yoWxKFb_KF
+        ZFkrWxWF4UCrZ7C347JF1YvFyvva97Zw12qa1aqF9IyFyjyw1YvFWqvr1kXrWUXw4UCF17
+        uryDX34UXrn3GjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+        9fnUUIcSsGvfJTRUUUb2kYjsxI4VWkCwAYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I
+        6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
+        8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW5JVW7JwA2z4x0Y4vE2Ix0
+        cI8IcVCY1x0267AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I
+        8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
+        64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AKxVWUJVW8Jw
+        Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lc2xSY4AK67AK6r43MxAIw28I
+        cxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2
+        IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI
+        42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42
+        IY6xAIw20EY4v20xvaj40_Wr1j6rW3Jr1lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2
+        z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8JPE3UUUUU==
+X-Originating-IP: [124.16.141.244]
+X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiCggGA1z4kSyk7QAAsX
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+'destroy_workqueue()' already drains the queue before destroying it, so
+there is no need to flush it explicitly.
 
-Hi,
+Remove the redundant 'flush_workqueue()' calls.
 
-Hans de Goede <hdegoede@redhat.com> writes:
-> Hi,
->
-> On 1/14/22 09:29, Geert Uytterhoeven wrote:
->> Hi Felipe,
->> 
->> On Fri, Jan 14, 2022 at 7:21 AM Felipe Balbi <balbi@kernel.org> wrote:
->>> Geert Uytterhoeven <geert@linux-m68k.org> writes:
->>>> On Mon, Dec 6, 2021 at 4:03 PM Jarrett Schultz <jaschultzms@gmail.com> wrote:
->>>>> Since the Surface XBL Driver does not depend on ACPI, the
->>>>> platform/surface directory as a whole no longer depends on ACPI. With
->>>>> respect to this, the ACPI dependency is moved into each config that depends
->>>>> on ACPI individually.
->>>>>
->>>>> Signed-off-by: Jarrett Schultz <jaschultz@microsoft.com>
->>>>
->>>> Thanks for your patch, which is now commit 272479928172edf0 ("platform:
->>>> surface: Propagate ACPI Dependency").
->>>>
->>>>> --- a/drivers/platform/surface/Kconfig
->>>>> +++ b/drivers/platform/surface/Kconfig
->>>>> @@ -5,7 +5,6 @@
->>>>>
->>>>>  menuconfig SURFACE_PLATFORMS
->>>>>         bool "Microsoft Surface Platform-Specific Device Drivers"
->>>>> -       depends on ACPI
->>>>>         default y
->>>>>         help
->>>>>           Say Y here to get to see options for platform-specific device drivers
->>>>
->>>> Without any dependency, all users configuring a kernel are now asked
->>>> about this. Is there any other platform dependency that can be used
->>>> instead?
->>>
->>> there's probably no symbol that would be true for x86 and arm64 while
->>> being false for everything else. Any ideas?
->> 
->> depends on ARM64 || X86 || COMPILE_TEST?
->
-> That sounds reasonable to me, I would be happy to take a patch for that.
+Signed-off-by: Xu Wang <vulab@iscas.ac.cn>
+---
+ drivers/soc/qcom/apr.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-fair enough, let's see what Jarrett replies
-
+diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
+index 82ca12c9328a..3caabd873322 100644
+--- a/drivers/soc/qcom/apr.c
++++ b/drivers/soc/qcom/apr.c
+@@ -653,7 +653,6 @@ static void apr_remove(struct rpmsg_device *rpdev)
+ 
+ 	pdr_handle_release(apr->pdr);
+ 	device_for_each_child(&rpdev->dev, NULL, apr_remove_device);
+-	flush_workqueue(apr->rxwq);
+ 	destroy_workqueue(apr->rxwq);
+ }
+ 
 -- 
-balbi
+2.25.1
+
