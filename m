@@ -2,239 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A28FF48E294
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 03:42:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D593748E2E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 04:14:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238783AbiANCm6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Jan 2022 21:42:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60136 "EHLO
+        id S239024AbiANDOh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Jan 2022 22:14:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236040AbiANCm6 (ORCPT
+        with ESMTP id S238885AbiANDOc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Jan 2022 21:42:58 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8E94C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jan 2022 18:42:57 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id d3so25841688lfv.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jan 2022 18:42:57 -0800 (PST)
+        Thu, 13 Jan 2022 22:14:32 -0500
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF15FC06161C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jan 2022 19:14:32 -0800 (PST)
+Received: by mail-pj1-x1034.google.com with SMTP id a1-20020a17090a688100b001b3fd52338eso11813624pjd.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jan 2022 19:14:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=cjt46o0H8juJwTkg9g5qXZAEFKZ9jhldP8/d/bKEtbM=;
-        b=AItf8MjIcqDlBKVoN8mbcCw6jsfY0mqaz1EXRhYSnnNPSTl7YFt4JhwnG7D8pjbp0y
-         vbWB8MzPP0ldlt5ziFTnCx0tDWQkNu4PH6M96dl48CFRQjym0geyTThU4RzEB4wZKIPt
-         eXhyLFqzG2XwOgCyBlLGAjJd4SVtVwppTz4r0=
+        d=squareup.com; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=UihRxFe06/0BjCUwssSJVg8d5/WcnG6d9hupQZOxDOM=;
+        b=bvFNtVjXhWZB/QjtYGDuou+oOg1zbJqHE1lCE03Hzcg28YrENTk5LeMPjwFoPicoEe
+         dbwRbVpTpkrsdZ6/AFx3QdXgpAqiNTrs7UvI7Jty+mhxz0/S38uG1uQVYYNYGuuhvtjx
+         GEvqRCLqVIahMktERqUiahUAQSw5kybTBwSmg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=cjt46o0H8juJwTkg9g5qXZAEFKZ9jhldP8/d/bKEtbM=;
-        b=pf1NqU608uU9AHDLux6Lxe+VAHd3uuUfdtrSLAhgPigl2036DuWVTC1DGiNNgJ+YbZ
-         0LSWCbsEwx61/mdriXDI1kYaOTS0sGupeZ8jTKpgr7RriLzk0aHDq0WU46u8BjBTPybK
-         xM6dIRZo3xni7qYKFHl1743OANbbVKjhHh9GsxddqqrN1nz0gi2V2x0QwELHRvlj9ruL
-         nlvTTuoXDTLNu1+H78pxHfnhrKI9fMkJDBXM/Og6RZ46/QNfUgZa10d6K03ZG1Ex7cjP
-         +3auhhx0Ym5Pc0vRPJTyjLkeVJihcJkeVN5IHpy/aLa5tZrh6WBcYV4lPOzE48azM5nS
-         2Bng==
-X-Gm-Message-State: AOAM5303oaWuF4jbWHHmltfBi5w4RE5hvTkweFRsGEpHUHxErJAyxjcR
-        XrCD/1ZwKVDSTjRVyy/9SErLrn1M90bfR4HLFAdkfw==
-X-Google-Smtp-Source: ABdhPJwW2WTcDmQiD0n1+kqJjG6r7Sb7wz9pL0WUIMko1hXyZSHNYJlaQOXrDZKTuBGY9YLHSZk9DcRejNde+phVHXg=
-X-Received: by 2002:a19:2d0c:: with SMTP id k12mr5322641lfj.224.1642128175854;
- Thu, 13 Jan 2022 18:42:55 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 13 Jan 2022 18:42:54 -0800
-MIME-Version: 1.0
-In-Reply-To: <1642118019-18673-2-git-send-email-quic_khsieh@quicinc.com>
-References: <1642118019-18673-1-git-send-email-quic_khsieh@quicinc.com> <1642118019-18673-2-git-send-email-quic_khsieh@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Thu, 13 Jan 2022 18:42:54 -0800
-Message-ID: <CAE-0n52OETzrO-XxuOQLp=fM17X3SGdD6zARtF85znmTqdvVRg@mail.gmail.com>
-Subject: Re: [PATCH v13 1/4] drm/msm/dp: do not initialize phy until plugin
- interrupt received
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dmitry.baryshkov@linaro.org, dri-devel@lists.freedesktop.org,
-        robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, aravindh@codeaurora.org,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=UihRxFe06/0BjCUwssSJVg8d5/WcnG6d9hupQZOxDOM=;
+        b=xpRQgPMlf4imWJ0OFy6nfCRrHimuWXCe/0J2nWhrfzUFm0R8XPl+JjYqZFHE6l0WCb
+         Bot/HaZspTn48GHA137TYkmGAextUt1Vya6HPxC677mNctTe2BUTWrOBO31rFnjicRZU
+         hJKBfze3Yy6etU7r1rOsDBFseEZVY3N99tvScxqct21SLLHZF8OpWpP6FM3ZLTQUWN9e
+         nIGNoTPwI9jTjjSwvm7nK5WJU+rR7376+pHtkRAZboh4iig5C1o0MuZCe5qWxMwKHJIX
+         IE+RG0r1u4DmoWcmD/G6PWvmKdMi3FgcLIiiHBKiQxpvry8i6Qzy5SR/kuwEOjJ46Cvb
+         L3oA==
+X-Gm-Message-State: AOAM531m9M+NSyf3lG0o4VmKlMqoBSDZ+4++iHKX3XMCI4exBqvbcj53
+        CL3fKTZpGV4Hgkk9voMUZvIojg==
+X-Google-Smtp-Source: ABdhPJw5u7fOl1HCNeFx7xfSaQq53IeVfxaVK7JmWpf7VCgW+7WNldHq5Yw2s90BuxCArGbxNtnweg==
+X-Received: by 2002:a17:902:d505:b0:14a:77ac:1e8b with SMTP id b5-20020a170902d50500b0014a77ac1e8bmr7292312plg.1.1642130071939;
+        Thu, 13 Jan 2022 19:14:31 -0800 (PST)
+Received: from localhost (99-47-69-49.lightspeed.sntcca.sbcglobal.net. [99.47.69.49])
+        by smtp.gmail.com with ESMTPSA id m3sm3813484pfa.183.2022.01.13.19.14.30
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 13 Jan 2022 19:14:31 -0800 (PST)
+From:   Benjamin Li <benl@squareup.com>
+To:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     Benjamin Li <benl@squareup.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: [PATCH] drivers: thermal: tsens: respect thermal_device_mode in threshold irq reporting
+Date:   Thu, 13 Jan 2022 19:13:37 -0800
+Message-Id: <20220114031337.24741-1-benl@squareup.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-01-13 15:53:36)
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 7cc4d21..b3c5404 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -83,6 +83,7 @@ struct dp_display_private {
->
->         /* state variables */
->         bool core_initialized;
-> +       bool phy_initialized;
->         bool hpd_irq_on;
->         bool audio_supported;
->
-> @@ -372,21 +373,38 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
->         return rc;
->  }
->
-> -static void dp_display_host_init(struct dp_display_private *dp, int reset)
-> +static void dp_display_host_phy_init(struct dp_display_private *dp)
->  {
-> -       bool flip = false;
-> +       DRM_DEBUG_DP("core_init=%d phy_init=%d\n",
-> +                       dp->core_initialized, dp->phy_initialized);
->
-> +       if (!dp->phy_initialized) {
-> +               dp_ctrl_phy_init(dp->ctrl);
-> +               dp->phy_initialized = true;
-> +       }
-> +}
-> +
-> +static void dp_display_host_phy_exit(struct dp_display_private *dp)
-> +{
-> +       DRM_DEBUG_DP("core_init=%d phy_init=%d\n",
-> +                       dp->core_initialized, dp->phy_initialized);
-> +
-> +       if (dp->phy_initialized) {
-> +               dp_ctrl_phy_exit(dp->ctrl);
-> +               dp->phy_initialized = false;
-> +       }
-> +}
-> +
-> +static void dp_display_host_init(struct dp_display_private *dp)
-> +{
->         DRM_DEBUG_DP("core_initialized=%d\n", dp->core_initialized);
->         if (dp->core_initialized) {
+'echo disabled > .../thermal_zoneX/mode' will disable the thermal core's
+polling mechanism to check for threshold trips. However, tsens supports
+an interrupt mechanism to receive notification of trips, implemented in
+commit 634e11d5b450 ("drivers: thermal: tsens: Add interrupt support").
+This is used sometimes to run performance test cases.
 
-When is this true? From what I see dp_display_host_init() is only called
-from two places: resume where core_initialized has been set to false
-during suspend or from dp_display_config_hpd() kicked by the kthread
-where core_initialized is also false.
+Currently the thermal zone mode that's set by userspace is not checked
+before propagating threshold trip events from IRQs. Let's fix this to
+restore the abilty to disable thermal throttling at runtime.
 
-Also, I see that dp_display_host_deinit() is only called from suspend
-now, so 'core_initialized' is almost always true, except for on the
-resume path and before the kthread is started and in the case that the
-driver probes but can't start the kthread for some reason (is that
-real?).
+====================
 
->                 DRM_DEBUG_DP("DP core already initialized\n");
->                 return;
->         }
->
-> -       if (dp->usbpd->orientation == ORIENTATION_CC2)
-> -               flip = true;
-> -
-> -       dp_power_init(dp->power, flip);
-> -       dp_ctrl_host_init(dp->ctrl, flip, reset);
-> +       dp_power_init(dp->power, false);
-> +       dp_ctrl_reset_irq_ctrl(dp->ctrl, true);
->         dp_aux_init(dp->aux);
->         dp->core_initialized = true;
->  }
-> @@ -892,12 +901,19 @@ static int dp_display_disable(struct dp_display_private *dp, u32 data)
->
->         dp_display->audio_enabled = false;
->
-> -       /* triggered by irq_hpd with sink_count = 0 */
->         if (dp->link->sink_count == 0) {
-> +               /*
-> +                * irq_hpd with sink_count = 0
-> +                * hdmi unplugged out of dongle
-> +                */
->                 dp_ctrl_off_link_stream(dp->ctrl);
->         } else {
-> +               /*
-> +                * unplugged interrupt
-> +                * dongle unplugged out of DUT
-> +                */
->                 dp_ctrl_off(dp->ctrl);
-> -               dp->core_initialized = false;
-> +               dp_display_host_phy_exit(dp);
->         }
->
->         dp_display->power_on = false;
-> @@ -1027,7 +1043,7 @@ void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp)
->  static void dp_display_config_hpd(struct dp_display_private *dp)
->  {
->
-> -       dp_display_host_init(dp, true);
-> +       dp_display_host_init(dp);
->         dp_catalog_ctrl_hpd_config(dp->catalog);
->
->         /* Enable interrupt first time
-> @@ -1306,20 +1322,23 @@ static int dp_pm_resume(struct device *dev)
->         dp->hpd_state = ST_DISCONNECTED;
->
->         /* turn on dp ctrl/phy */
-> -       dp_display_host_init(dp, true);
-> +       dp_display_host_init(dp);
->
->         dp_catalog_ctrl_hpd_config(dp->catalog);
->
-> -       /*
-> -        * set sink to normal operation mode -- D0
-> -        * before dpcd read
-> -        */
-> -       dp_link_psm_config(dp->link, &dp->panel->link_info, false);
->
->         if (dp_catalog_link_is_connected(dp->catalog)) {
-> +               /*
-> +                * set sink to normal operation mode -- D0
-> +                * before dpcd read
-> +                */
-> +               dp_display_host_phy_init(dp);
-> +               dp_link_psm_config(dp->link, &dp->panel->link_info, false);
->                 sink_count = drm_dp_read_sink_count(dp->aux);
->                 if (sink_count < 0)
->                         sink_count = 0;
-> +
-> +               dp_display_host_phy_exit(dp);
->         }
->
->         dp->link->sink_count = sink_count;
-> @@ -1363,7 +1382,11 @@ static int dp_pm_suspend(struct device *dev)
->                 if (dp_power_clk_status(dp->power, DP_CTRL_PM))
->                         dp_ctrl_off_link_stream(dp->ctrl);
->
-> +               dp_display_host_phy_exit(dp);
-> +
+Tested on MSM8939 running 5.16.0. This platform has 8 cores; the first
+four thermal zones control cpu0-3 and the last zone is for the other four
+CPUs together.
 
-Why is there a newline here?
+  for f in /sys/class/thermal/thermal_zone*; do
+    echo "disabled" > $f/mode
+    echo $f | paste - $f/type $f/mode
+  done
 
->                 dp_display_host_deinit(dp);
-> +       } else {
-> +               dp_display_host_phy_exit(dp);
->         }
->
->         dp->hpd_state = ST_SUSPENDED;
+/sys/class/thermal/thermal_zone0	cpu0-thermal	disabled
+/sys/class/thermal/thermal_zone1	cpu1-thermal	disabled
+/sys/class/thermal/thermal_zone2	cpu2-thermal	disabled
+/sys/class/thermal/thermal_zone3	cpu3-thermal	disabled
+/sys/class/thermal/thermal_zone4	cpu4567-thermal	disabled
 
-There's a dp->core_initialized = false right here but it's not in the
-diff window. It's redundant now because the hunk above is basically
+With mitigation thresholds at 75 degC and load running, we can now cruise
+past temp=75000 without CPU throttling kicking in.
 
-	if (dp->core_initialized == true) {
-		...
-		dp_display_host_phy_exit(dp);
-		dp_display_host_deinit(dp);
-	} else {
-		dp_display_host_phy_exit(dp);
-	}
+  watch -n 1 "grep '' /sys/class/thermal/*/temp
+      /sys/class/thermal/*/cur_state
+      /sys/bus/cpu/devices/cpu*/cpufreq/cpuinfo_cur_freq"
 
-	dp->hpd_state = ST_SUSPENDED;
+/sys/class/thermal/thermal_zone0/temp:82000
+/sys/class/thermal/thermal_zone1/temp:84000
+/sys/class/thermal/thermal_zone2/temp:87000
+/sys/class/thermal/thermal_zone3/temp:84000
+/sys/class/thermal/thermal_zone4/temp:84000
+/sys/class/thermal/cooling_device0/cur_state:0
+/sys/class/thermal/cooling_device1/cur_state:0
+/sys/bus/cpu/devices/cpu0/cpufreq/cpuinfo_cur_freq:1113600
+/sys/bus/cpu/devices/cpu1/cpufreq/cpuinfo_cur_freq:1113600
+/sys/bus/cpu/devices/cpu2/cpufreq/cpuinfo_cur_freq:1113600
+/sys/bus/cpu/devices/cpu3/cpufreq/cpuinfo_cur_freq:1113600
+/sys/bus/cpu/devices/cpu4/cpufreq/cpuinfo_cur_freq:800000
+/sys/bus/cpu/devices/cpu5/cpufreq/cpuinfo_cur_freq:800000
+/sys/bus/cpu/devices/cpu6/cpufreq/cpuinfo_cur_freq:800000
+/sys/bus/cpu/devices/cpu7/cpufreq/cpuinfo_cur_freq:800000
 
-and dp_display_host_deinit() sets core_initialized to false, thus
-core_initialized will be false here already. Can you remove the
-duplicate assignment?
+Reported-by: Zac Crosby <zac@squareup.com>
+Signed-off-by: Benjamin Li <benl@squareup.com>
+---
+ drivers/thermal/qcom/tsens.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-> @@ -1535,7 +1558,7 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
->         state =  dp_display->hpd_state;
->
->         if (state == ST_DISPLAY_OFF)
-> -               dp_display_host_init(dp_display, true);
-> +               dp_display_host_phy_init(dp_display);
->
->         dp_display_enable(dp_display, 0);
->
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index 99a8d9f3e03c..0b6299512e7c 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -509,13 +509,16 @@ static irqreturn_t tsens_irq_thread(int irq, void *data)
+ 		spin_unlock_irqrestore(&priv->ul_lock, flags);
+ 
+ 		if (trigger) {
+-			dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
+-				hw_id, __func__, temp);
+-			thermal_zone_device_update(s->tzd,
+-						   THERMAL_EVENT_UNSPECIFIED);
++			if (s->tzd->mode == THERMAL_DEVICE_ENABLED) {
++				dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
++					hw_id, __func__, temp);
++				thermal_zone_device_update(s->tzd, THERMAL_EVENT_UNSPECIFIED);
++			} else {
++				dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC) skipped as zone disabled\n",
++					hw_id, __func__, temp);
++			}
+ 		} else {
+-			dev_dbg(priv->dev, "[%u] %s: no violation:  %d\n",
+-				hw_id, __func__, temp);
++			dev_dbg(priv->dev, "[%u] %s: no violation:  %d\n", hw_id, __func__, temp);
+ 		}
+ 
+ 		if (tsens_version(priv) < VER_0_1) {
+-- 
+2.17.1
+
