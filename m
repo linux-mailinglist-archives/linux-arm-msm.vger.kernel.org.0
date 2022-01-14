@@ -2,98 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DB7AD48F1EA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 22:12:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EC1E448F1F3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 22:16:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229722AbiANVMK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jan 2022 16:12:10 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:46612 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229681AbiANVMI (ORCPT
+        id S229636AbiANVQp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jan 2022 16:16:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59730 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229610AbiANVQp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jan 2022 16:12:08 -0500
+        Fri, 14 Jan 2022 16:16:45 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED687C061574;
+        Fri, 14 Jan 2022 13:16:44 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id 30so38613238edv.3;
+        Fri, 14 Jan 2022 13:16:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1642194728; x=1673730728;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=z+JIuWKxJODjguXs3yWrhfZnFZJClraM9Lc/R80g5pc=;
-  b=OFbVqVSoeu7FsOjBMBQwnUExeXuozOukMQz/7lA+F0T4CzWHiPJF4unt
-   HwtD+EV8taFh1G3OXpNL5HX5WuJgxocaFK2S+2rnciMB4VslnBNVR3NMY
-   4r3ERwUH/u/3j9SSgjMlkzdw/oWCCAQbIt2yx0b2aORQ6iRlyazPhcGeu
-   w=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 14 Jan 2022 13:12:08 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2022 13:12:07 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Fri, 14 Jan 2022 13:12:06 -0800
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Fri, 14 Jan 2022 13:12:06 -0800
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <vkoul@kernel.org>,
-        <daniel@ffwll.ch>, <airlied@linux.ie>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v15 4/4] drm/msm/dp: stop link training after link training 2 failed
-Date:   Fri, 14 Jan 2022 13:11:50 -0800
-Message-ID: <1642194710-2512-5-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1642194710-2512-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1642194710-2512-1-git-send-email-quic_khsieh@quicinc.com>
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=YrvRfhmO1hiyCxFoGjXY+IVWhPEEmP2piXZZ4kxoAXI=;
+        b=iB8+QE4FEx0hL/yYmufZsOJsHduPAtwSozYOmHSoAag7Zi0uO+sH0ZZDKid3Cq9p2A
+         qT17SRBjXy+fbEYWK2oOD9PD7aeXvYVHPCy2jCzBgg3IJRz9BFNrAKyJdGWNL6RH5m4F
+         5fq7ePCZ1sPz5lAH0J4k2zwdXHma66XfYvaGlbAV/GNm0kEIJPUJz1blYPXO/xmIUk+q
+         B0ZhuGmSMJ/3E3vWnexW1Uu8F7TMLU2MFugsN2yBR+bx3QlOnA0qIUgFTp21uS7G+Irs
+         3mebAXwcrItj4k33/yeJdRQ2jPEJvtU8ULRjMKoPHwhkF/R8Jrwye8PwlrJSyhSwxifm
+         I43Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
+         :references:mime-version:content-disposition:in-reply-to;
+        bh=YrvRfhmO1hiyCxFoGjXY+IVWhPEEmP2piXZZ4kxoAXI=;
+        b=G4qrNq3a1yXIhUr58VKYQe29JU607KJ0au2clfKfuO+Fx/WjnmtcSiTBkiTufNXgbi
+         WZqTznOQoychm67Sf0COw4EhTMf7utAC7aeC/KV8g0BqpbarHoNiwwFVBD+qTI2I7yN9
+         FlURojxWrRQTuXnmOUP4I/EXTWsO9WD14odbJ1qJkQEFLyKa2SG1UhGK6CydUWbl+fQX
+         N3RUxvTrMDJHVMHcWTyCyabtsswGDibIim/Kyg3e9UkzEOpoxsY5ZBEuDv4OvIXG5lup
+         0FiNxJ2q3+FESmYs340ddcwR4syuZ7vKLtantpxIyTGZCeBImCVQz5mxlGd9MiifB5Hq
+         c7MQ==
+X-Gm-Message-State: AOAM531N1klH94RnFpXPerzG5+288ex3HSycB9GiFTxkM3Iaqw3+7fY7
+        aFvPC8kT8PiAss/xJzUYXmnknlDHMGRcVA==
+X-Google-Smtp-Source: ABdhPJwjQ5OsNFr9YSM4lWT4rLEGMdp2CX29Vv5K/TfMbTBAd4ffpVxgosQz0ycJBbJLHeG15zxFEA==
+X-Received: by 2002:a05:6402:2696:: with SMTP id w22mr10405102edd.253.1642195003581;
+        Fri, 14 Jan 2022 13:16:43 -0800 (PST)
+Received: from pevik (gw1.ms-free.net. [185.243.124.10])
+        by smtp.gmail.com with ESMTPSA id t20sm2697737edv.81.2022.01.14.13.16.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Jan 2022 13:16:42 -0800 (PST)
+Date:   Fri, 14 Jan 2022 22:16:40 +0100
+From:   Petr Vorel <petr.vorel@gmail.com>
+To:     Konrad Dybcio <konradybcio@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, Jean Thomas <virgule@jeanthomas.me>,
+        Alexey Minnekhanov <alexeymin@postmarketos.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Taniya Das <tdas@codeaurora.org>, linux-mmc@vger.kernel.org
+Subject: Re: [PATCH 5/6] arm64: dts: qcom: msm8994-huawei-angler: Add
+ sdhc{1,2} definitions
+Message-ID: <YeHoOL7KH01LJ5nc@pevik>
+Reply-To: Petr Vorel <petr.vorel@gmail.com>
+References: <20220113233358.17972-1-petr.vorel@gmail.com>
+ <20220113233358.17972-6-petr.vorel@gmail.com>
+ <YeC4Y+rZrNpubxhR@pevik>
+ <b249531e-ef1a-da29-0d3e-eef251b22c87@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b249531e-ef1a-da29-0d3e-eef251b22c87@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Each DP link training contains link training 1 followed by link
-training 2.  There is maximum of 5 retries of DP link training
-before declared link training failed. It is required to stop link
-training at end of link training 2 if it is failed so that next
-link training 1 can start freshly. This patch fixes link compliance
-test  case 4.3.1.13 (Source Device Link Training EQ Fallback Test).
+Hi Konrad, all,
 
-Changes in v10:
---  group into one series
+> Hi, please check if [1] can solve your clock issues, as it did for me.
+Thanks for info.  I still need my patch "arm64: dts: qcom: msm8994: Provide
+missing "xo_board" and "sleep_clk" to GCC" [2] regardless I use "clk: qcom:
+gcc-msm8994: Remove NoC clocks" [1] or not.
 
-Changes in v11:
--- drop drm/msm/dp: dp_link_parse_sink_count() return immediately if aux read
+Kind regards,
+Petr
 
-Fixes: 2e0adc765d88 ("drm/msm/dp: do not end dp link training until video is ready")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/gpu/drm/msm/dp/dp_ctrl.c | 3 +++
- 1 file changed, 3 insertions(+)
+> Konrad
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index f98df93..245e1b9 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1755,6 +1755,9 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
- 				/* end with failure */
- 				break; /* lane == 1 already */
- 			}
-+
-+			/* stop link training before start re training  */
-+			dp_ctrl_clear_training_pattern(ctrl);
- 		}
- 	}
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
 
+> [1] https://patchwork.kernel.org/project/linux-arm-msm/patch/20211230023101.1122588-1-konrad.dybcio@somainline.org/
+[2] https://lore.kernel.org/linux-arm-msm/20220113233358.17972-4-petr.vorel@gmail.com/T/#u
