@@ -2,99 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A6CD48E8CB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 12:02:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E70048E967
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 12:46:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240647AbiANLCq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jan 2022 06:02:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59488 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240646AbiANLCo (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jan 2022 06:02:44 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3707DC06173F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jan 2022 03:02:44 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id z22so33570278edd.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jan 2022 03:02:44 -0800 (PST)
+        id S240860AbiANLq4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jan 2022 06:46:56 -0500
+Received: from smtp2.axis.com ([195.60.68.18]:4161 "EHLO smtp2.axis.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237600AbiANLq4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 14 Jan 2022 06:46:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=nfTpTGejjbs1/IGPoPayvAsK5HXiDgr01tfB1Ox12/o=;
-        b=F4kAU5sR4g6LVo0JnWblWrXfyVfC4H454DjEzaz7/ozw0szvs3R1q3Y91nZ1hCi9dh
-         zx/WWapKaJ3nGVMZzcVilNc5dPgRr4A8TEK3h9GBFI/m4/LWda1yVgFQg7CmHg8E6XAC
-         FdZbhGUyGHbK/UYiDHMZ/o5JHdXDmY1m4WI61dRVsRNfwGyHFDwvsHRuNb4qRiLop0mh
-         Y90+yFSHNiyAMKqkCxHKrojCHqVEaCTPG03p5PTnnfVG8w2z8fuh5h9dq3sEjyppfa4o
-         9YkZ+snIayxn0AD5clE9HBui221LF9ToMbKcnX0tyMaLkLQ9ht5hph4jwJrQ2dg1NrCJ
-         Zx1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=nfTpTGejjbs1/IGPoPayvAsK5HXiDgr01tfB1Ox12/o=;
-        b=ml8ShksaF/1YFtElHzc2eOMeF7fYdG5bkefp7D4OblKSW8BnccM+bGpByvI7jDNWlm
-         56UKqee8aMkbMLAiHpwPT5omo48cfsswq96Z00Y37Dq4Juw5nJC9IOZwxEsBMuFupM/A
-         3keJtjzOXmrQNSzJvBHL9KWPDaIa9DWthqL/c2+2A4mcmjjag6J2HRtQPVgMXH5jfOFC
-         F8SmmqVVgojPDEww8SXIO6iwfoIMrJlDu3WDk76gIrMOltASMVpSoIaMssAVS6JqLh7C
-         18dwtYuyYOnnFWf3gyT1bO2rJW2BaGO4Jj0l/Vpe/5UtkdcV0ay80n5n4KuskyG9sLxa
-         xp+w==
-X-Gm-Message-State: AOAM532FGfFxC1bclqenHhAZX+JAJnRbTLBDsDWu7vlRf5JWtRl9Q4+X
-        HU7bmDktzYb+U0ux/e+9bu6ewyZDDzLA5YyO
-X-Google-Smtp-Source: ABdhPJxrqLroV1LJ+YyoXVnpa0G8hJgPhVutmPuZ1ZhswksM4KJynfcwHTX4uevBrPH9BDYmLyIFdg==
-X-Received: by 2002:a17:906:9b8e:: with SMTP id dd14mr6629836ejc.307.1642158162583;
-        Fri, 14 Jan 2022 03:02:42 -0800 (PST)
-Received: from localhost.localdomain ([2a02:a210:20c5:8c80:7d0a:cd68:c339:f426])
-        by smtp.gmail.com with ESMTPSA id 21sm1725718ejz.24.2022.01.14.03.02.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Jan 2022 03:02:41 -0800 (PST)
-From:   Luca Weiss <luca.weiss@fairphone.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] media: venus: hfi: avoid null dereference in deinit
-Date:   Fri, 14 Jan 2022 12:02:26 +0100
-Message-Id: <20220114110226.130380-2-luca.weiss@fairphone.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220114110226.130380-1-luca.weiss@fairphone.com>
-References: <20220114110226.130380-1-luca.weiss@fairphone.com>
+  d=axis.com; q=dns/txt; s=axis-central1; t=1642160816;
+  x=1673696816;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=AMs+u9nkmpDZ5lxA/fLhYjA5QxFXQFce1TTDfia+q9o=;
+  b=prxnNYcOGGmim/hX7bJaOw0U9IHxVljTedagnTFSF7/qctkZakI54WWK
+   RlM6AWHnhDj/ULGTxKWnKayKUvqYjLEeaGdTzsQBiVNGOcLEu2hqSrWZI
+   vpdH/Bx/jenFQxulF3VtI4OSTXaEZc5Sb86g7IN3BTYVJugQW6GQKkWlx
+   nJPuODvDeCGImPG9JuqurCHBYIaA7KTMCBAIvSeY2lQQgKDwmlDc9T8Mj
+   q/crapUg10o4os+ZXmQCSk5WGHexbmrCwUCOTIE+QO5+tZBK68ntsIFIY
+   ENdJMW4zl0yMtJuu7Xit1OBwLMRKLiSMzlUatAw0HgoUPzvEpa89hPeR1
+   g==;
+Date:   Fri, 14 Jan 2022 12:46:54 +0100
+From:   Vincent Whitchurch <vincent.whitchurch@axis.com>
+To:     Jim Cromie <jim.cromie@gmail.com>
+CC:     "jbaron@akamai.com" <jbaron@akamai.com>,
+        "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+        "linux@rasmusvillemoes.dk" <linux@rasmusvillemoes.dk>,
+        "rostedt@goodmis.org" <rostedt@goodmis.org>,
+        "mathieu.desnoyers@efficios.com" <mathieu.desnoyers@efficios.com>,
+        "daniel.vetter@ffwll.ch" <daniel.vetter@ffwll.ch>,
+        "seanpaul@chromium.org" <seanpaul@chromium.org>,
+        "robdclark@gmail.com" <robdclark@gmail.com>,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
+        "intel-gvt-dev@lists.freedesktop.org" 
+        <intel-gvt-dev@lists.freedesktop.org>,
+        "intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "quic_saipraka@quicinc.com" <quic_saipraka@quicinc.com>,
+        "will@kernel.org" <will@kernel.org>,
+        "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
+        "quic_psodagud@quicinc.com" <quic_psodagud@quicinc.com>,
+        "maz@kernel.org" <maz@kernel.org>, "arnd@arndb.de" <arnd@arndb.de>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "mingo@redhat.com" <mingo@redhat.com>
+Subject: Re: [PATCH v11 03/19] dyndbg: add write-to-tracefs code
+Message-ID: <20220114114654.GA23983@axis.com>
+References: <20220107052942.1349447-1-jim.cromie@gmail.com>
+ <20220107052942.1349447-4-jim.cromie@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20220107052942.1349447-4-jim.cromie@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If venus_probe fails at pm_runtime_put_sync the error handling first
-calls hfi_destroy and afterwards hfi_core_deinit. As hfi_destroy sets
-core->ops to NULL, hfi_core_deinit cannot call the core_deinit function
-anymore.
+On Fri, Jan 07, 2022 at 06:29:26AM +0100, Jim Cromie wrote:
+> adds: dynamic_trace()
+>  uses trace_console() temporarily to issue printk:console event
+>  uses internal-ish __ftrace_trace_stack code:
+>       4-context buffer stack, barriers per Steve
+> 
+> call it from new funcs:
+>   dynamic_printk() - print to both syslog/tracefs
+>   dynamic_dev_printk() - dev-print to both syslog/tracefs
+> 
+> These handle both _DPRINTK_FLAGS_PRINTK and _DPRINTK_FLAGS_TRACE
+> cases, allowing to vsnprintf the message once and use it for both,
+> skipping past the KERN_DEBUG character for tracing.
+> 
+> Finally, adjust the callers: __dynamic_{pr_debug,{,net,ib}dev_dbg},
+> replacing printk and dev_printk with the new funcs above.
+> 
+> The _DPRINTK_FLAGS_TRACE flag character s 'T', so the following finds
+> all callsites enabled for tracing:
+> 
+>   grep -P =p?T /proc/dynamic_debug/control
+> 
+> Enabling debug-to-tracefs is 2 steps:
+> 
+>   # event enable
+>   echo 1 > /sys/kernel/tracing/events/dyndbg/enable
+>   # callsite enable
+>   echo module foo +T > /proc/dynamic_debug/control
+> 
+> This patch,~1,~2 are based upon:
+>   https://lore.kernel.org/lkml/20200825153338.17061-1-vincent.whitchurch@axis.com/
+> 
+> .. with simplification of temporarily reusing trace_console() rather
+> than adding a new printk:dyndbg event.  Soon, add 2 new events
+> capturing the pr_debug & dev_dbg() args.
 
-Avoid this null pointer derefence by skipping the call when necessary.
+The example above does not match the code in this patch since the
+dyndbg:* events are only added in a later patch.  Perhaps you could
+reorder this patch stack so that you don't use trace_console() in this
+patch just to replace it with the new events in the next patch?
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- drivers/media/platform/qcom/venus/hfi.c | 3 +++
- 1 file changed, 3 insertions(+)
+> 
+> CC: vincent.whitchurch@axis.com
+> Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
+> ---
+>  .../admin-guide/dynamic-debug-howto.rst       |   1 +
+>  lib/dynamic_debug.c                           | 155 +++++++++++++++---
+>  2 files changed, 130 insertions(+), 26 deletions(-)
+> 
+> diff --git a/Documentation/admin-guide/dynamic-debug-howto.rst b/Documentation/admin-guide/dynamic-debug-howto.rst
+[...]
+> @@ -723,29 +822,33 @@ void __dynamic_ibdev_dbg(struct _ddebug *descriptor,
+>  {
+>  	struct va_format vaf;
+>  	va_list args;
+> +	unsigned int flags;
+>  
+>  	va_start(args, fmt);
+>  
+>  	vaf.fmt = fmt;
+>  	vaf.va = &args;
+> +	flags = descriptor->flags;
+>  
+>  	if (ibdev && ibdev->dev.parent) {
+>  		char buf[PREFIX_SIZE] = "";
+>  
+> -		dev_printk_emit(LOGLEVEL_DEBUG, ibdev->dev.parent,
+> -				"%s%s %s %s: %pV",
+> -				dynamic_emit_prefix(descriptor, buf),
+> -				dev_driver_string(ibdev->dev.parent),
+> -				dev_name(ibdev->dev.parent),
+> -				dev_name(&ibdev->dev),
+> -				&vaf);
+> +		dynamic_dev_printk(flags, ibdev->dev.parent,
+> +				   "%s%s %s %s: %pV",
+> +				   dynamic_emit_prefix(descriptor, buf),
+> +				   dev_driver_string(ibdev->dev.parent),
+> +				   dev_name(ibdev->dev.parent),
+> +				   dev_name(&ibdev->dev),
+> +				   &vaf);
+>  	} else if (ibdev) {
+> -		printk(KERN_DEBUG "%s: %pV", dev_name(&ibdev->dev), &vaf);
+> +		dynamic_printk(flags, KERN_DEBUG "%s%s: %pV",
+> +			       dev_name(&ibdev->dev), &vaf);
+>  	} else {
+> -		printk(KERN_DEBUG "(NULL ib_device): %pV", &vaf);
+> +		dynamic_printk(flags, KERN_DEBUG "(NULL ip_device): %pV",
+> +			       &vaf);
+>  	}
+>  
+> -	va_end(args);
+> +va_end(args);
 
-diff --git a/drivers/media/platform/qcom/venus/hfi.c b/drivers/media/platform/qcom/venus/hfi.c
-index 4e2151fb47f0..1968f09ad177 100644
---- a/drivers/media/platform/qcom/venus/hfi.c
-+++ b/drivers/media/platform/qcom/venus/hfi.c
-@@ -104,6 +104,9 @@ int hfi_core_deinit(struct venus_core *core, bool blocking)
- 		mutex_lock(&core->lock);
- 	}
- 
-+	if (!core->ops)
-+		goto unlock;
-+
- 	ret = core->ops->core_deinit(core);
- 
- 	if (!ret)
--- 
-2.34.1
-
+This looks like an unintentional whitespace change?
