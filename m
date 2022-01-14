@@ -2,102 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F45248E431
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 07:21:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F164F48E439
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 07:25:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239294AbiANGVt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jan 2022 01:21:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51520 "EHLO
+        id S236489AbiANGZY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jan 2022 01:25:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236448AbiANGVt (ORCPT
+        with ESMTP id S236244AbiANGZX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jan 2022 01:21:49 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4871C061574;
-        Thu, 13 Jan 2022 22:21:48 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A5427B82358;
-        Fri, 14 Jan 2022 06:21:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1516C36AEA;
-        Fri, 14 Jan 2022 06:21:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1642141306;
-        bh=jMMCQqHtQybK+7j6b9dRuEYkttlsElUrZOATTRYk3nY=;
-        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
-        b=mydq9O2zMax5L27z6DbdkN0K82YjLUhFbSLtKQQt/heZwXE1An/F2Yzn7KVXt1wMt
-         0tXCzSPrTl5B0zVq5IkiZqyo9IynB6SKEtxfv9OBEVmSx5qHYqGxYP7B7C+/e9rNeb
-         w1APZwq+KfpwJTTDx+MUVwowlyakdjzOrpkPq8+SVfQm/A9nCFj3/5KvR+6gZrh9jC
-         g2BZIkviW35EC7kT0N+XfGr/Gfld7PLqKmIg5jBAkKIjzPSJT6nUBjRY57v6DVHweD
-         XDFEvPJ8hxAGMWgTJkQcyJd34O0Ni4x6Bqei7JWY94fOfqLFZYpxoqbxY33c7ydV0I
-         50q7eEmF/Lirw==
-References: <20211202191630.12450-1-jaschultz@microsoft.com>
- <20211202191630.12450-3-jaschultz@microsoft.com>
- <CAMuHMdUPwo7pCSwY8_9xTaDruTHt6d=wHiNHvRmE71k8hWeLBw@mail.gmail.com>
-User-agent: mu4e 1.6.10; emacs 28.0.90
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Geert Uytterhoeven <geert@linux-m68k.org>
-Cc:     Jarrett Schultz <jaschultzms@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Mark Gross <markgross@kernel.org>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        platform-driver-x86@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Jarrett Schultz <jaschultz@microsoft.com>
-Subject: Re: [PATCH 2/5] platform: surface: Propagate ACPI Dependency
-Date:   Fri, 14 Jan 2022 08:20:41 +0200
-In-reply-to: <CAMuHMdUPwo7pCSwY8_9xTaDruTHt6d=wHiNHvRmE71k8hWeLBw@mail.gmail.com>
-Message-ID: <87czku4z2i.fsf@kernel.org>
+        Fri, 14 Jan 2022 01:25:23 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0C46C06173E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jan 2022 22:25:22 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id w188so10954333oiw.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jan 2022 22:25:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=P31p+kFVwmOiI3/+SfJ1eDPjKnj+4NHA/QnHEDI8vD4=;
+        b=Tc2Ij+r2dRStuwdA2z8k/QMP6qz7UzufJqbZuBNmt1dVz9OGE+Gqvdt2IBChmrOzmZ
+         sgUJH1uFjqrEblArY8TN8c1ZRl/NJ1pcUnPnpMcYdfOXhYwOmZJTY1IXAIR/C6wfeRLb
+         hMDdAM4AnwBziapK/xqYecBGcFHQECgyZFwPY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=P31p+kFVwmOiI3/+SfJ1eDPjKnj+4NHA/QnHEDI8vD4=;
+        b=LIoYaGVfcpAJcRodUrxQ2X/ySZxaFnlMLktVKLC0AHPXkf4fUh/U9mNAdO3jW1xMX4
+         eK/bj9waW1F+WGeKyNYEPJVTiQxBKGJePcBbMWAh4BTJjhKePX+EzaSK0Mn6oWjQGFIn
+         B6IAyomOHnhbHD99bAUZQgtECPtSK9w0usVdAR4bFk6qGDK2Zn4AayUsGU8ymuVR3PSe
+         PyW+x62hu4e4UjQ9LMAIDeWaKdykKXekri5ZUuwpztF7WJ09uDy/8ZmCWe4m3Ffjb5AJ
+         j1DK3vJVbHPxR/NdQS435ebBUbGRCvPNBSFuHHAQco2cbPyTMPZDKv7/G08YHxOFk5Hy
+         tl5w==
+X-Gm-Message-State: AOAM530wumNLgrO8H/dSTj/7RB9+bYGARvU8oh271tdPhguBoZ3vnaTY
+        nizqGzmK/DW8eLBopWSAi3E/JdriipYIuwcVB5hdaw==
+X-Google-Smtp-Source: ABdhPJyNhHiiWL0ga7Yjo6ha5I+du9/9cd9L6+5J2+Yl7zVxUoL7i5Wlm7/epPqhp50BL5TwXwGR8sSzD3FdYLj0MT0=
+X-Received: by 2002:aca:a953:: with SMTP id s80mr11793776oie.164.1642141522376;
+ Thu, 13 Jan 2022 22:25:22 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 13 Jan 2022 22:25:21 -0800
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20220113164233.4.I5604b7af908e8bbe709ac037a6a8a6ba8a2bfa94@changeid>
+References: <20220114004303.905808-1-dianders@chromium.org> <20220113164233.4.I5604b7af908e8bbe709ac037a6a8a6ba8a2bfa94@changeid>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Thu, 13 Jan 2022 22:25:21 -0800
+Message-ID: <CAE-0n53Y=GzBxbkbG=Vj+5gcrDreZYL1qMwnu4X1FdKJ78Ky-Q@mail.gmail.com>
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sc7280: Add herobrine-r1
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>
+Cc:     quic_rjendra@quicinc.com, sibis@codeaurora.org,
+        kgodara1@codeaurora.org, mka@chromium.org, pmaliset@codeaurora.org,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-Hi,
-
-Geert Uytterhoeven <geert@linux-m68k.org> writes:
-> Hi Jarrett,
+Quoting Douglas Anderson (2022-01-13 16:43:03)
+> Add the new herobrine-r1. Note that this is pretty much a re-design
+> compared to herobrine-r0 so we don't attempt any dtsi to share stuff
+> between them.
 >
-> On Mon, Dec 6, 2021 at 4:03 PM Jarrett Schultz <jaschultzms@gmail.com> wrote:
->> Since the Surface XBL Driver does not depend on ACPI, the
->> platform/surface directory as a whole no longer depends on ACPI. With
->> respect to this, the ACPI dependency is moved into each config that depends
->> on ACPI individually.
->>
->> Signed-off-by: Jarrett Schultz <jaschultz@microsoft.com>
+> This patch attempts to define things at 3 levels:
 >
-> Thanks for your patch, which is now commit 272479928172edf0 ("platform:
-> surface: Propagate ACPI Dependency").
+> 1. The Qcard level. Herobrine includes a Qcard PCB and the Qcard PCB
+>    is supposed to be the same (modulo stuffing options) across
+>    multiple boards, so trying to define what's there hopefully makes
+>    sense. NOTE that newer "CRD" boards from Qualcomm also use
+>    Qcard. When support for CRD3 is added hopefully it can use the
+>    Qcard include (and perhaps we should even evaluate it using
+>    herobrine.dtsi?)
+> 2. The herobrine "baseboard" level. Right now most stuff is here with
+>    the exception of things that we _know_ will be different per
+>    board. We know that not all boards will have the same set of eMMC,
+>    nvme, and SD. We also know that the exact pin names are likely to
+>    be different.
+> 3. The actual "board" level, AKA herobrine-rev1.
 >
->> --- a/drivers/platform/surface/Kconfig
->> +++ b/drivers/platform/surface/Kconfig
->> @@ -5,7 +5,6 @@
->>
->>  menuconfig SURFACE_PLATFORMS
->>         bool "Microsoft Surface Platform-Specific Device Drivers"
->> -       depends on ACPI
->>         default y
->>         help
->>           Say Y here to get to see options for platform-specific device drivers
+> NOTES:
+> - This boots to command prompt, but no eDP yet since eDP hasn't
+>   been added to sc7280.dtsi yet.
+> - This assumes LTE for now. Once it's clear how WiFi-only SKUs will
+>   work we expect some small changes.
 >
-> Without any dependency, all users configuring a kernel are now asked
-> about this. Is there any other platform dependency that can be used
-> instead?
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 
-there's probably no symbol that would be true for x86 and arm64 while
-being false for everything else. Any ideas?
-
-In any case, what's the problem of being asked about a new symbol? That
-happens all the time whenever new drivers are merged, right?
-
--- 
-balbi
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
