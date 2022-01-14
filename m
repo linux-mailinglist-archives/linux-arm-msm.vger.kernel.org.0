@@ -2,162 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8986F48E9F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 13:36:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EB23748EABE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 14:33:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235131AbiANMg0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jan 2022 07:36:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52540 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234971AbiANMg0 (ORCPT
+        id S236866AbiANNdV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jan 2022 08:33:21 -0500
+Received: from bhuna.collabora.co.uk ([46.235.227.227]:57896 "EHLO
+        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231860AbiANNdV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jan 2022 07:36:26 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F3F1C061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jan 2022 04:36:25 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id x7so29789904lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jan 2022 04:36:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SSzezY2jwvG4+eW0wbMu/xOqdxgjDbfSgLN6Au8+Zrc=;
-        b=QBLyTADGzXb9Yk307zk3N0XT1xp21JkFjPvJmMKSYw5BjxHHvG6D6Uu7Fxd2vhDulo
-         lVBMxMXGS8WDHtbx2bFlu3bNP+Mx5248ulH7GBF6SOe8aMMcZSRyEsEJ/YR5+qga/4F6
-         X4t+ZWmfXRvQ0kcJ6lqaay0KeRRs7t/gKbq+rpxAvyEyz8m7FmvTxvVlQpN6RBFcViV3
-         o7YRcq/qEQaievfhHucpoD4ezmuA5n/cRtrc9qfwkDZLYRqwCYhLxxn9D5oQMkOTDtSl
-         mBrFnbpwx6QL6rHICP/MbH7ETcTfKVYyfCBiPCXX3d4etrBTHWiwBwvBYBJYDUWYmKkC
-         47FQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SSzezY2jwvG4+eW0wbMu/xOqdxgjDbfSgLN6Au8+Zrc=;
-        b=UeUaIi1vkLZCASD7UdX6XyjQAphTPyYN42rzJstXSeATcmOQXdC8wsdO3vpDO9o62w
-         pu3aGw1jTDBtyEtdynUMb2KVCg4IdEf26vFziQeGkSeO1/TtzNh7ytGZc/A2E7WWN/Wd
-         udkRLQOTwjGpoYnwVKgL7hKd3etrO66vZ+kHyfvPaJNhXLiPSCLCzhSM0egQ/ZOUFJUG
-         1rSZKeybYfWbomRjUZLFKsj9t15boSFcMhflZWjxuX8ZPC+EM5eRPdUe4egn+Jwoo528
-         ppPckYoRjeDM74oUor/ah6b7k1WkgMRyPbw63oxInFkYPHxQ6tdfJOv+b/1bR8L0KJA+
-         QVnA==
-X-Gm-Message-State: AOAM5339HwliRPXgtQNPa6iz7lQi42lJ4uTtbVOaTbURDOKUb6C8cjEX
-        aXh06nkyvZj2ltnyHVnJwIUDTvNz9UIi/1MkAFfmCw==
-X-Google-Smtp-Source: ABdhPJwe10Fbr0Jt+27ibm7UUvRFe3FsREn49iuUAe39IhMRm5FxvcIiHZTb94mylal21zbJVAgK2fF95oXXD56cib8=
-X-Received: by 2002:a05:651c:98f:: with SMTP id b15mr6550226ljq.367.1642163784010;
- Fri, 14 Jan 2022 04:36:24 -0800 (PST)
+        Fri, 14 Jan 2022 08:33:21 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: kholk11)
+        with ESMTPSA id 2ADCB1F46992
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1642167199;
+        bh=bIGZkqg8TQB584qijqAGY+JJJVnU59xCz/eRyLXwgkI=;
+        h=From:To:Cc:Subject:Date:From;
+        b=c5xKYpgSzYg0CLKJsgl7jrbku95RwK5bFFjlw7yyT9Nz+yuzagvspFdbKMAKOsMi1
+         Hq0GGOPfQXh9rWbmanKrVXZpogKs0WbrEb/31KMoFTi9sqgMCFTkZtb/UfsJ9r02Ij
+         dhc2no736Q3KKl9d2rtsdSvEpk5H+KRbo9CIAohmwvZw5y5DZNX2lmg9F4CImiJBGx
+         GeqUtjv0uWfaVIcL5ZZDO2wZYMvocWWBH69QsNJZXZEZ6w5z9WzwtgWK2ls6WZ/Us9
+         3ldfMfw8W6BvshG4g7GmX5SzBYRV9has5kA5aDuzvfXal6zDxXudEFOiX6fWg6rAI6
+         byF9mb1dXHWeA==
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+To:     agross@kernel.org
+Cc:     bjorn.andersson@linaro.org, mathieu.poirier@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel@collabora.com,
+        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Subject: [PATCH v2] rpmsg: qcom_smd: Fix redundant channel->registered assignment
+Date:   Fri, 14 Jan 2022 14:32:59 +0100
+Message-Id: <20220114133259.247726-1-angelogioacchino.delregno@collabora.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-References: <1641749107-31979-1-git-send-email-quic_mkshah@quicinc.com> <1641749107-31979-10-git-send-email-quic_mkshah@quicinc.com>
-In-Reply-To: <1641749107-31979-10-git-send-email-quic_mkshah@quicinc.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 14 Jan 2022 13:35:47 +0100
-Message-ID: <CAPDyKFrASmBKRLLvWS-TUBdrtgPieuu1p0jco+qAuWo6HV2E=A@mail.gmail.com>
-Subject: Re: [PATCH 09/10] soc: qcom: rpmh-rsc: Save base address of drv
-To:     Maulik Shah <quic_mkshah@quicinc.com>
-Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        rafael@kernel.org, daniel.lezcano@linaro.org,
-        quic_lsrao@quicinc.com, quic_rjendra@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 9 Jan 2022 at 18:26, Maulik Shah <quic_mkshah@quicinc.com> wrote:
->
-> Add changes to save drv's base address for rsc. This is
-> used to read drv's configuration such as solver mode is
-> supported or to write into CONTROL_TCS registers.
->
-> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+In qcom_channel_state_worker(), we are setting channel->registered
+to true when registering a channel, but this is getting repeated both
+before and after re-locking the channels_lock spinlock, which is
+obviously a typo.
+Remove the assignment done out of the spinlock to fix this redundancy.
 
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 53e2822e56c7 ("rpmsg: Introduce Qualcomm SMD backend")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+---
+v2: Fixed funny typo in commit title (channel->assigned => channel->registered)
 
-Kind regards
-Uffe
+ drivers/rpmsg/qcom_smd.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-> ---
->  drivers/soc/qcom/rpmh-internal.h |  2 ++
->  drivers/soc/qcom/rpmh-rsc.c      | 18 ++++++++----------
->  2 files changed, 10 insertions(+), 10 deletions(-)
->
-> diff --git a/drivers/soc/qcom/rpmh-internal.h b/drivers/soc/qcom/rpmh-internal.h
-> index 32ac117..6770bbb 100644
-> --- a/drivers/soc/qcom/rpmh-internal.h
-> +++ b/drivers/soc/qcom/rpmh-internal.h
-> @@ -91,6 +91,7 @@ struct rpmh_ctrlr {
->   * Resource State Coordinator controller (RSC)
->   *
->   * @name:               Controller identifier.
-> + * @base:               Start address of the DRV registers in this controller.
->   * @tcs_base:           Start address of the TCS registers in this controller.
->   * @id:                 Instance id in the controller (Direct Resource Voter).
->   * @num_tcs:            Number of TCSes in this DRV.
-> @@ -115,6 +116,7 @@ struct rpmh_ctrlr {
->   */
->  struct rsc_drv {
->         const char *name;
-> +       void __iomem *base;
->         void __iomem *tcs_base;
->         int id;
->         int num_tcs;
-> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-> index 5875ad5..c2a7c6c 100644
-> --- a/drivers/soc/qcom/rpmh-rsc.c
-> +++ b/drivers/soc/qcom/rpmh-rsc.c
-> @@ -882,8 +882,7 @@ static int rpmh_rsc_pd_attach(struct rsc_drv *drv, struct device *dev)
->         return dev_pm_genpd_add_notifier(dev, &drv->genpd_nb);
->  }
->
-> -static int rpmh_probe_tcs_config(struct platform_device *pdev,
-> -                                struct rsc_drv *drv, void __iomem *base)
-> +static int rpmh_probe_tcs_config(struct platform_device *pdev, struct rsc_drv *drv)
->  {
->         struct tcs_type_config {
->                 u32 type;
-> @@ -897,9 +896,9 @@ static int rpmh_probe_tcs_config(struct platform_device *pdev,
->         ret = of_property_read_u32(dn, "qcom,tcs-offset", &offset);
->         if (ret)
->                 return ret;
-> -       drv->tcs_base = base + offset;
-> +       drv->tcs_base = drv->base + offset;
->
-> -       config = readl_relaxed(base + DRV_PRNT_CHLD_CONFIG);
-> +       config = readl_relaxed(drv->base + DRV_PRNT_CHLD_CONFIG);
->
->         max_tcs = config;
->         max_tcs &= DRV_NUM_TCS_MASK << (DRV_NUM_TCS_SHIFT * drv->id);
-> @@ -961,7 +960,6 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
->         char drv_id[10] = {0};
->         int ret, irq;
->         u32 solver_config;
-> -       void __iomem *base;
->
->         /*
->          * Even though RPMh doesn't directly use cmd-db, all of its children
-> @@ -988,11 +986,11 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
->                 drv->name = dev_name(&pdev->dev);
->
->         snprintf(drv_id, ARRAY_SIZE(drv_id), "drv-%d", drv->id);
-> -       base = devm_platform_ioremap_resource_byname(pdev, drv_id);
-> -       if (IS_ERR(base))
-> -               return PTR_ERR(base);
-> +       drv->base = devm_platform_ioremap_resource_byname(pdev, drv_id);
-> +       if (IS_ERR(drv->base))
-> +               return PTR_ERR(drv->base);
->
-> -       ret = rpmh_probe_tcs_config(pdev, drv, base);
-> +       ret = rpmh_probe_tcs_config(pdev, drv);
->         if (ret)
->                 return ret;
->
-> @@ -1015,7 +1013,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
->          * 'HW solver' mode where they can be in autonomous mode executing low
->          * power mode to power down.
->          */
-> -       solver_config = readl_relaxed(base + DRV_SOLVER_CONFIG);
-> +       solver_config = readl_relaxed(drv->base + DRV_SOLVER_CONFIG);
->         solver_config &= DRV_HW_SOLVER_MASK << DRV_HW_SOLVER_SHIFT;
->         solver_config = solver_config >> DRV_HW_SOLVER_SHIFT;
->         if (!solver_config) {
-> --
-> 2.7.4
->
+diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
+index 540e027f08c4..0ee3f7ddabb0 100644
+--- a/drivers/rpmsg/qcom_smd.c
++++ b/drivers/rpmsg/qcom_smd.c
+@@ -1298,9 +1298,7 @@ static void qcom_channel_state_worker(struct work_struct *work)
+ 
+ 		spin_unlock_irqrestore(&edge->channels_lock, flags);
+ 		qcom_smd_create_device(channel);
+-		channel->registered = true;
+ 		spin_lock_irqsave(&edge->channels_lock, flags);
+-
+ 		channel->registered = true;
+ 	}
+ 
+-- 
+2.33.1
+
