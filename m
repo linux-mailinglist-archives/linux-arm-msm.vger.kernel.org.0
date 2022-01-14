@@ -2,248 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D17548EEF4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 18:05:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F48448EF15
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 18:12:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235891AbiANRFE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jan 2022 12:05:04 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:49675 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233561AbiANRFE (ORCPT
+        id S239447AbiANRLi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jan 2022 12:11:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60918 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236772AbiANRLh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jan 2022 12:05:04 -0500
+        Fri, 14 Jan 2022 12:11:37 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A84DC06161C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jan 2022 09:11:37 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id y16-20020a17090a6c9000b001b13ffaa625so22769722pjj.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jan 2022 09:11:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1642179905; x=1673715905;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=LAXbPGrQij7hKaDghaiCxJfHKx2yQSO9XzW1xW7uwLo=;
-  b=aBpuejDlNkkEv69TO9q6PjDmSUtlEDzIYrGdvG8BKPn/fQUKHP4hucVD
-   SsDQCGVi1cOhZ9dWE/la9tKUWAMqnzyXnuvJIxWd/HxMcxkCwHHeSxOxs
-   YK2xh0yXyKrLHXqUTYmmjQFPLEzLXEv9uc7jDkAt/AEdgHNqyXbZQdWDV
-   M=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 14 Jan 2022 09:05:04 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2022 09:04:48 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Fri, 14 Jan 2022 09:04:48 -0800
-Received: from [10.110.125.36] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Fri, 14 Jan
- 2022 09:04:47 -0800
-Message-ID: <a507d7f2-c1f8-f8bd-24fa-15c4a2fb5a8b@quicinc.com>
-Date:   Fri, 14 Jan 2022 09:04:46 -0800
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=CRZUvior4qSuMl2PMYXMAWiEwViGY4hYBcxCDilxVC8=;
+        b=nal068ypEOFzYl2TSNavDQWBYctnmTFE/lmauGthQ8xs0uEmhlPGDMIVblS9xI2VyR
+         BNKVai7x8r0wVEKZDi08Yai5aVWwBXUnoubwRBq4urzhHzmequjGwMq1IILEKIHnPBaX
+         MwvDq9m5+ftg3gLfY9/rS0Q3tsWio3Nt1YGbU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=CRZUvior4qSuMl2PMYXMAWiEwViGY4hYBcxCDilxVC8=;
+        b=IDKJDfud1m4xqSD9zQ4IVwenwIVSAD/HFd3SM3A5keIHa9T331YLTCWP9tvbKxMDuw
+         UqFnGXXMtDgxSwyXzu6LphUmx0nZzBVXiz2Xt3CvJGxNysixlVtQv29OpZMlagTbHpZs
+         Pj/wVZpdS/gdVzGtumtqzQ6VuhzL135b62Vh1500AYQWT+Kz8Qc1hM5ZfaxYkrFQ3J3M
+         k4IwXX3nBQ+ncLCw0ye/8EvRbDWtxf34PPCtsMlDI1mqSfH0q/V8Qt7Ksw2heUN2upa/
+         GHgvm3nDUFVrGRhR54UZqE2cs0G4yutAZPG37kkGcef62Pn0BJL80yHUqyc1f83+p4aZ
+         bDgA==
+X-Gm-Message-State: AOAM532jt2DP/AvJjO4M3oPg/aGDL4JwaHBF8UN0Hya5oH53UhXcpWL5
+        wKFbtUmaPgbbSoMDQ8uJrvcYvw==
+X-Google-Smtp-Source: ABdhPJxbSLJmdoDiI5pqCuWWl/53bI6sPZAQa6CRffZQrpW2sHun3FflGcKOwGyfVfR1N99qVTwzSA==
+X-Received: by 2002:a17:90a:c303:: with SMTP id g3mr21275081pjt.74.1642180297211;
+        Fri, 14 Jan 2022 09:11:37 -0800 (PST)
+Received: from localhost ([2620:15c:202:201:a0bd:cd39:e43:7570])
+        by smtp.gmail.com with UTF8SMTPSA id l21sm5066532pgk.41.2022.01.14.09.11.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Jan 2022 09:11:36 -0800 (PST)
+Date:   Fri, 14 Jan 2022 09:11:35 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        quic_rjendra@quicinc.com, sibis@codeaurora.org,
+        kgodara1@codeaurora.org, swboyd@chromium.org,
+        pmaliset@codeaurora.org, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sc7280: Add herobrine-r1
+Message-ID: <YeGuxzO3q/9S6VmO@google.com>
+References: <20220114004303.905808-1-dianders@chromium.org>
+ <20220113164233.4.I5604b7af908e8bbe709ac037a6a8a6ba8a2bfa94@changeid>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.0
-Subject: Re: [PATCH v13 1/4] drm/msm/dp: do not initialize phy until plugin
- interrupt received
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <airlied@linux.ie>, <bjorn.andersson@linaro.org>,
-        <daniel@ffwll.ch>, <dmitry.baryshkov@linaro.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <vkoul@kernel.org>
-CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1642118019-18673-1-git-send-email-quic_khsieh@quicinc.com>
- <1642118019-18673-2-git-send-email-quic_khsieh@quicinc.com>
- <CAE-0n52OETzrO-XxuOQLp=fM17X3SGdD6zARtF85znmTqdvVRg@mail.gmail.com>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <CAE-0n52OETzrO-XxuOQLp=fM17X3SGdD6zARtF85znmTqdvVRg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220113164233.4.I5604b7af908e8bbe709ac037a6a8a6ba8a2bfa94@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Jan 13, 2022 at 04:43:03PM -0800, Douglas Anderson wrote:
+> Add the new herobrine-r1. Note that this is pretty much a re-design
+> compared to herobrine-r0 so we don't attempt any dtsi to share stuff
+> between them.
+> 
+> This patch attempts to define things at 3 levels:
+> 
+> 1. The Qcard level. Herobrine includes a Qcard PCB and the Qcard PCB
+>    is supposed to be the same (modulo stuffing options) across
+>    multiple boards, so trying to define what's there hopefully makes
+>    sense. NOTE that newer "CRD" boards from Qualcomm also use
+>    Qcard. When support for CRD3 is added hopefully it can use the
+>    Qcard include (and perhaps we should even evaluate it using
+>    herobrine.dtsi?)
+> 2. The herobrine "baseboard" level. Right now most stuff is here with
+>    the exception of things that we _know_ will be different per
+>    board. We know that not all boards will have the same set of eMMC,
+>    nvme, and SD. We also know that the exact pin names are likely to
+>    be different.
+> 3. The actual "board" level, AKA herobrine-rev1.
+> 
+> NOTES:
+> - This boots to command prompt, but no eDP yet since eDP hasn't
+>   been added to sc7280.dtsi yet.
+> - This assumes LTE for now. Once it's clear how WiFi-only SKUs will
+>   work we expect some small changes.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 
-On 1/13/2022 6:42 PM, Stephen Boyd wrote:
-> Quoting Kuogee Hsieh (2022-01-13 15:53:36)
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
->> index 7cc4d21..b3c5404 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -83,6 +83,7 @@ struct dp_display_private {
->>
->>          /* state variables */
->>          bool core_initialized;
->> +       bool phy_initialized;
->>          bool hpd_irq_on;
->>          bool audio_supported;
->>
->> @@ -372,21 +373,38 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
->>          return rc;
->>   }
->>
->> -static void dp_display_host_init(struct dp_display_private *dp, int reset)
->> +static void dp_display_host_phy_init(struct dp_display_private *dp)
->>   {
->> -       bool flip = false;
->> +       DRM_DEBUG_DP("core_init=%d phy_init=%d\n",
->> +                       dp->core_initialized, dp->phy_initialized);
->>
->> +       if (!dp->phy_initialized) {
->> +               dp_ctrl_phy_init(dp->ctrl);
->> +               dp->phy_initialized = true;
->> +       }
->> +}
->> +
->> +static void dp_display_host_phy_exit(struct dp_display_private *dp)
->> +{
->> +       DRM_DEBUG_DP("core_init=%d phy_init=%d\n",
->> +                       dp->core_initialized, dp->phy_initialized);
->> +
->> +       if (dp->phy_initialized) {
->> +               dp_ctrl_phy_exit(dp->ctrl);
->> +               dp->phy_initialized = false;
->> +       }
->> +}
->> +
->> +static void dp_display_host_init(struct dp_display_private *dp)
->> +{
->>          DRM_DEBUG_DP("core_initialized=%d\n", dp->core_initialized);
->>          if (dp->core_initialized) {
-> When is this true? From what I see dp_display_host_init() is only called
-> from two places: resume where core_initialized has been set to false
-> during suspend or from dp_display_config_hpd() kicked by the kthread
-> where core_initialized is also false.
->
-> Also, I see that dp_display_host_deinit() is only called from suspend
-> now, so 'core_initialized' is almost always true, except for on the
-> resume path and before the kthread is started and in the case that the
-> driver probes but can't start the kthread for some reason (is that
-> real?).
-
-Yes, that true.
-
-The purpose  of dp_display_host_init() is to configure both dp 
-controller and hpd controller to be ready to receive
-
-HPD plugged-in interrupts and at plugged-in handler enable dp phy. 
-Therefore core_initialized is set to true at both booting up and resume 
-and false at suspend.
-
->>                  DRM_DEBUG_DP("DP core already initialized\n");
->>                  return;
->>          }
->>
->> -       if (dp->usbpd->orientation == ORIENTATION_CC2)
->> -               flip = true;
->> -
->> -       dp_power_init(dp->power, flip);
->> -       dp_ctrl_host_init(dp->ctrl, flip, reset);
->> +       dp_power_init(dp->power, false);
->> +       dp_ctrl_reset_irq_ctrl(dp->ctrl, true);
->>          dp_aux_init(dp->aux);
->>          dp->core_initialized = true;
->>   }
->> @@ -892,12 +901,19 @@ static int dp_display_disable(struct dp_display_private *dp, u32 data)
->>
->>          dp_display->audio_enabled = false;
->>
->> -       /* triggered by irq_hpd with sink_count = 0 */
->>          if (dp->link->sink_count == 0) {
->> +               /*
->> +                * irq_hpd with sink_count = 0
->> +                * hdmi unplugged out of dongle
->> +                */
->>                  dp_ctrl_off_link_stream(dp->ctrl);
->>          } else {
->> +               /*
->> +                * unplugged interrupt
->> +                * dongle unplugged out of DUT
->> +                */
->>                  dp_ctrl_off(dp->ctrl);
->> -               dp->core_initialized = false;
->> +               dp_display_host_phy_exit(dp);
->>          }
->>
->>          dp_display->power_on = false;
->> @@ -1027,7 +1043,7 @@ void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp)
->>   static void dp_display_config_hpd(struct dp_display_private *dp)
->>   {
->>
->> -       dp_display_host_init(dp, true);
->> +       dp_display_host_init(dp);
->>          dp_catalog_ctrl_hpd_config(dp->catalog);
->>
->>          /* Enable interrupt first time
->> @@ -1306,20 +1322,23 @@ static int dp_pm_resume(struct device *dev)
->>          dp->hpd_state = ST_DISCONNECTED;
->>
->>          /* turn on dp ctrl/phy */
->> -       dp_display_host_init(dp, true);
->> +       dp_display_host_init(dp);
->>
->>          dp_catalog_ctrl_hpd_config(dp->catalog);
->>
->> -       /*
->> -        * set sink to normal operation mode -- D0
->> -        * before dpcd read
->> -        */
->> -       dp_link_psm_config(dp->link, &dp->panel->link_info, false);
->>
->>          if (dp_catalog_link_is_connected(dp->catalog)) {
->> +               /*
->> +                * set sink to normal operation mode -- D0
->> +                * before dpcd read
->> +                */
->> +               dp_display_host_phy_init(dp);
->> +               dp_link_psm_config(dp->link, &dp->panel->link_info, false);
->>                  sink_count = drm_dp_read_sink_count(dp->aux);
->>                  if (sink_count < 0)
->>                          sink_count = 0;
->> +
->> +               dp_display_host_phy_exit(dp);
->>          }
->>
->>          dp->link->sink_count = sink_count;
->> @@ -1363,7 +1382,11 @@ static int dp_pm_suspend(struct device *dev)
->>                  if (dp_power_clk_status(dp->power, DP_CTRL_PM))
->>                          dp_ctrl_off_link_stream(dp->ctrl);
->>
->> +               dp_display_host_phy_exit(dp);
->> +
-> Why is there a newline here?
->
->>                  dp_display_host_deinit(dp);
->> +       } else {
->> +               dp_display_host_phy_exit(dp);
->>          }
->>
->>          dp->hpd_state = ST_SUSPENDED;
-> There's a dp->core_initialized = false right here but it's not in the
-> diff window. It's redundant now because the hunk above is basically
->
-> 	if (dp->core_initialized == true) {
-> 		...
-> 		dp_display_host_phy_exit(dp);
-> 		dp_display_host_deinit(dp);
-> 	} else {
-> 		dp_display_host_phy_exit(dp);
-> 	}
->
-> 	dp->hpd_state = ST_SUSPENDED;
->
-> and dp_display_host_deinit() sets core_initialized to false, thus
-> core_initialized will be false here already. Can you remove the
-> duplicate assignment?
-yes,
->> @@ -1535,7 +1558,7 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
->>          state =  dp_display->hpd_state;
->>
->>          if (state == ST_DISPLAY_OFF)
->> -               dp_display_host_init(dp_display, true);
->> +               dp_display_host_phy_init(dp_display);
->>
->>          dp_display_enable(dp_display, 0);
->>
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
