@@ -2,55 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EC1E448F1F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 22:16:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AE05848F1FB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jan 2022 22:19:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229636AbiANVQp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Jan 2022 16:16:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59730 "EHLO
+        id S229800AbiANVTl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Jan 2022 16:19:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229610AbiANVQp (ORCPT
+        with ESMTP id S229795AbiANVTl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Jan 2022 16:16:45 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED687C061574;
-        Fri, 14 Jan 2022 13:16:44 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id 30so38613238edv.3;
-        Fri, 14 Jan 2022 13:16:44 -0800 (PST)
+        Fri, 14 Jan 2022 16:19:41 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88D3DC061574;
+        Fri, 14 Jan 2022 13:19:40 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id x7so34281483lfu.8;
+        Fri, 14 Jan 2022 13:19:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=YrvRfhmO1hiyCxFoGjXY+IVWhPEEmP2piXZZ4kxoAXI=;
-        b=iB8+QE4FEx0hL/yYmufZsOJsHduPAtwSozYOmHSoAag7Zi0uO+sH0ZZDKid3Cq9p2A
-         qT17SRBjXy+fbEYWK2oOD9PD7aeXvYVHPCy2jCzBgg3IJRz9BFNrAKyJdGWNL6RH5m4F
-         5fq7ePCZ1sPz5lAH0J4k2zwdXHma66XfYvaGlbAV/GNm0kEIJPUJz1blYPXO/xmIUk+q
-         B0ZhuGmSMJ/3E3vWnexW1Uu8F7TMLU2MFugsN2yBR+bx3QlOnA0qIUgFTp21uS7G+Irs
-         3mebAXwcrItj4k33/yeJdRQ2jPEJvtU8ULRjMKoPHwhkF/R8Jrwye8PwlrJSyhSwxifm
-         I43Q==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=9KqaEd/orzPaRDHAcmr+KkzSNx57MD4aPF0oDzJ/wLA=;
+        b=HTCyYdif+hOSUfWUY+hAHr1YywYGjMUAZe6drFu7PT6zyOoc6RvnaOJqjt0U6PqeUW
+         tYIkALSedBBlygfgejYE8ptTVTzVpKOCo+fbji7pSXk0mf1Qx95SaPm0UT6P0o23XPT2
+         gS+xsvW6bxEnBCVvIghmHj61KttnW/MDNBDsDc2R6Fo6j7FtwEGqazi1E3AF9wOz8vmN
+         xg3jWiZBLnyVCXf0rv7agPQi2lEm6wAZCun19Dg+Qi+zadv7L45ivp5QugMiqg8FJtpq
+         dF40L4pk/LlcE7ZgC9dS5961pz+yxGWKcFTL5X0Twoa2Z2G68l2wMiuwSHKwcO3uivkP
+         f8Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=YrvRfhmO1hiyCxFoGjXY+IVWhPEEmP2piXZZ4kxoAXI=;
-        b=G4qrNq3a1yXIhUr58VKYQe29JU607KJ0au2clfKfuO+Fx/WjnmtcSiTBkiTufNXgbi
-         WZqTznOQoychm67Sf0COw4EhTMf7utAC7aeC/KV8g0BqpbarHoNiwwFVBD+qTI2I7yN9
-         FlURojxWrRQTuXnmOUP4I/EXTWsO9WD14odbJ1qJkQEFLyKa2SG1UhGK6CydUWbl+fQX
-         N3RUxvTrMDJHVMHcWTyCyabtsswGDibIim/Kyg3e9UkzEOpoxsY5ZBEuDv4OvIXG5lup
-         0FiNxJ2q3+FESmYs340ddcwR4syuZ7vKLtantpxIyTGZCeBImCVQz5mxlGd9MiifB5Hq
-         c7MQ==
-X-Gm-Message-State: AOAM531N1klH94RnFpXPerzG5+288ex3HSycB9GiFTxkM3Iaqw3+7fY7
-        aFvPC8kT8PiAss/xJzUYXmnknlDHMGRcVA==
-X-Google-Smtp-Source: ABdhPJwjQ5OsNFr9YSM4lWT4rLEGMdp2CX29Vv5K/TfMbTBAd4ffpVxgosQz0ycJBbJLHeG15zxFEA==
-X-Received: by 2002:a05:6402:2696:: with SMTP id w22mr10405102edd.253.1642195003581;
-        Fri, 14 Jan 2022 13:16:43 -0800 (PST)
-Received: from pevik (gw1.ms-free.net. [185.243.124.10])
-        by smtp.gmail.com with ESMTPSA id t20sm2697737edv.81.2022.01.14.13.16.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Jan 2022 13:16:42 -0800 (PST)
-Date:   Fri, 14 Jan 2022 22:16:40 +0100
-From:   Petr Vorel <petr.vorel@gmail.com>
-To:     Konrad Dybcio <konradybcio@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=9KqaEd/orzPaRDHAcmr+KkzSNx57MD4aPF0oDzJ/wLA=;
+        b=AsFD4JGuTm9yxmeSyE8fQW2SCLiqbwAHzY+UZbAZk01zwAj1xwdo3uh/hk56XoXz9+
+         ZII2BdVnBukmR52lda+sGjB6WW15lAnfLSt59+8Gv3yJiY6NTto3DurJFdpdTopdzKVd
+         r/nhpkavK0MN4DNAU3BZmhej19Cw6DiucKU19XWXaN1ApQhrYozGEvl6OglQVdxQ5YGo
+         AYDta0uthwrDIBo2jgJN1in3jetRYBukUz6oHU/GKh8ADAPJrj7kxGCwdrMYZqoO4bap
+         u55gvtC4J/nSWw0Zt7qp+7EXQT/Q+E4BPP1aiK5rFJDbrl/YHBSBLv8lHlJoBc9HzH/v
+         V7ww==
+X-Gm-Message-State: AOAM530+A29l2ck8bCswP69jKWxPHqm7Rtt/um3LOYu18CsImhjULSeW
+        UFDpPt7nQ0bmNMEbTOpknV0=
+X-Google-Smtp-Source: ABdhPJxpar866DKZqgIPew+HmhhXCaMC0R3qYQ1QWUtVP2HqeV9Y7ed7eigbXpZkNaPNOfKtsm3G3g==
+X-Received: by 2002:a05:6512:1085:: with SMTP id j5mr4619386lfg.588.1642195178843;
+        Fri, 14 Jan 2022 13:19:38 -0800 (PST)
+Received: from [192.168.1.101] (83.6.165.232.neoplus.adsl.tpnet.pl. [83.6.165.232])
+        by smtp.gmail.com with ESMTPSA id b18sm656486ljq.62.2022.01.14.13.19.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Jan 2022 13:19:38 -0800 (PST)
+Message-ID: <d269ddea-85c2-defa-abb9-733006f0d622@gmail.com>
+Date:   Fri, 14 Jan 2022 22:19:37 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: [PATCH 5/6] arm64: dts: qcom: msm8994-huawei-angler: Add
+ sdhc{1,2} definitions
+Content-Language: en-US
+To:     Petr Vorel <petr.vorel@gmail.com>
 Cc:     linux-arm-msm@vger.kernel.org, Jean Thomas <virgule@jeanthomas.me>,
         Alexey Minnekhanov <alexeymin@postmarketos.org>,
         Andy Gross <agross@kernel.org>,
@@ -58,34 +65,36 @@ Cc:     linux-arm-msm@vger.kernel.org, Jean Thomas <virgule@jeanthomas.me>,
         Ulf Hansson <ulf.hansson@linaro.org>,
         Douglas Anderson <dianders@chromium.org>,
         Taniya Das <tdas@codeaurora.org>, linux-mmc@vger.kernel.org
-Subject: Re: [PATCH 5/6] arm64: dts: qcom: msm8994-huawei-angler: Add
- sdhc{1,2} definitions
-Message-ID: <YeHoOL7KH01LJ5nc@pevik>
-Reply-To: Petr Vorel <petr.vorel@gmail.com>
 References: <20220113233358.17972-1-petr.vorel@gmail.com>
- <20220113233358.17972-6-petr.vorel@gmail.com>
- <YeC4Y+rZrNpubxhR@pevik>
- <b249531e-ef1a-da29-0d3e-eef251b22c87@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b249531e-ef1a-da29-0d3e-eef251b22c87@gmail.com>
+ <20220113233358.17972-6-petr.vorel@gmail.com> <YeC4Y+rZrNpubxhR@pevik>
+ <b249531e-ef1a-da29-0d3e-eef251b22c87@gmail.com> <YeHoOL7KH01LJ5nc@pevik>
+From:   Konrad Dybcio <konradybcio@gmail.com>
+In-Reply-To: <YeHoOL7KH01LJ5nc@pevik>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad, all,
 
-> Hi, please check if [1] can solve your clock issues, as it did for me.
-Thanks for info.  I still need my patch "arm64: dts: qcom: msm8994: Provide
-missing "xo_board" and "sleep_clk" to GCC" [2] regardless I use "clk: qcom:
-gcc-msm8994: Remove NoC clocks" [1] or not.
+> Hi Konrad, all,
+> 
+>> Hi, please check if [1] can solve your clock issues, as it did for me.
+> Thanks for info.  I still need my patch "arm64: dts: qcom: msm8994: Provide
+> missing "xo_board" and "sleep_clk" to GCC" [2] regardless I use "clk: qcom:
+> gcc-msm8994: Remove NoC clocks" [1] or not.
+Yeah, that slipped my watchlist as well. I was supposed to send this (or have
+sent in the past but then forgot to resubmit it? not sure tbf) before gcc changes
+landed, but I forgot to. Providing the clocks is required.
 
-Kind regards,
-Petr
+Konrad
 
-> Konrad
-
-
-> [1] https://patchwork.kernel.org/project/linux-arm-msm/patch/20211230023101.1122588-1-konrad.dybcio@somainline.org/
-[2] https://lore.kernel.org/linux-arm-msm/20220113233358.17972-4-petr.vorel@gmail.com/T/#u
+> 
+> Kind regards,
+> Petr
+> 
+>> Konrad
+> 
+>> [1] https://patchwork.kernel.org/project/linux-arm-msm/patch/20211230023101.1122588-1-konrad.dybcio@somainline.org/
+> [2] https://lore.kernel.org/linux-arm-msm/20220113233358.17972-4-petr.vorel@gmail.com/T/#u
+> 
