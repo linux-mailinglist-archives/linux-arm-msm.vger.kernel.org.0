@@ -2,103 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DA33F48F6F0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jan 2022 14:01:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 91A9048F709
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jan 2022 14:15:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231727AbiAONAx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Jan 2022 08:00:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39488 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229455AbiAONAw (ORCPT
+        id S231742AbiAONPn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Jan 2022 08:15:43 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:16151 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229946AbiAONPn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Jan 2022 08:00:52 -0500
-Received: from balrog.mythic-beasts.com (balrog.mythic-beasts.com [IPv6:2a00:1098:0:82:1000:0:2:1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92FCBC061574;
-        Sat, 15 Jan 2022 05:00:52 -0800 (PST)
-Received: from [81.101.6.87] (port=35384 helo=jic23-huawei)
-        by balrog.mythic-beasts.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92.3)
-        (envelope-from <jic23@jic23.retrosnub.co.uk>)
-        id 1n8ifi-000779-8I; Sat, 15 Jan 2022 13:00:46 +0000
-Date:   Sat, 15 Jan 2022 13:06:26 +0000
-From:   Jonathan Cameron <jic23@jic23.retrosnub.co.uk>
-To:     Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, sumit.semwal@linaro.org,
-        amit.pundir@linaro.org, john.stultz@linaro.org
-Subject: Re: [PATCH v3 1/7] mfd: qcom-spmi-pmic: expose the PMIC revid
- information to clients
-Message-ID: <20220115130626.2c018335@jic23-huawei>
-In-Reply-To: <53e76d68-3e47-f221-b5c4-5e29a958c5fc@linaro.org>
-References: <20220106173131.3279580-1-caleb.connolly@linaro.org>
-        <20220106173131.3279580-2-caleb.connolly@linaro.org>
-        <20220109165743.7e01e226@jic23-huawei>
-        <53e76d68-3e47-f221-b5c4-5e29a958c5fc@linaro.org>
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.31; x86_64-pc-linux-gnu)
+        Sat, 15 Jan 2022 08:15:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1642252543; x=1673788543;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=IPwwapaT/ikZ9NW5+1OVFkVwiTEp+44eAcz//PEEcvk=;
+  b=eniZ8niM/sRtHNCaIFnQa5kICKYBV3VO49TKBf3dxMITazLx4a82bC3W
+   UoVfNI0vQ0MHPD4HGezrBMknTxWT4lCt/riiavtQWEq7U634mVE2OEFyM
+   vra6ANLty2oRvlbW80m8eQ7GNncUwpzECtv4E6r/roMGst9w5Z+Q5yDLI
+   g=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 15 Jan 2022 05:15:43 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jan 2022 05:15:42 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Sat, 15 Jan 2022 05:15:21 -0800
+Received: from blr-ubuntu-253.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Sat, 15 Jan 2022 05:15:17 -0800
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+To:     Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Marc Zyngier <maz@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Steven Rostedt <rostedt@goodmis.org>
+CC:     gregkh <gregkh@linuxfoundation.org>, <quic_psodagud@quicinc.com>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>
+Subject: [PATCHv7 0/5] lib/rwmmio/arm64: Add support to trace register reads/writes
+Date:   Sat, 15 Jan 2022 18:44:50 +0530
+Message-ID: <cover.1642233364.git.quic_saipraka@quicinc.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-BlackCat-Spam-Score: 19
-X-Spam-Status: No, score=1.9
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 10 Jan 2022 11:46:39 +0000
-Caleb Connolly <caleb.connolly@linaro.org> wrote:
+Generic MMIO read/write i.e., __raw_{read,write}{b,l,w,q} accessors
+are typically used to read/write from/to memory mapped registers
+and can cause hangs or some undefined behaviour in following cases,
 
-> On 09/01/2022 16:57, Jonathan Cameron wrote:
-> > On Thu,  6 Jan 2022 17:31:25 +0000
-> > Caleb Connolly <caleb.connolly@linaro.org> wrote:
-> >   
-> >> Some PMIC functions such as the RRADC need to be aware of the PMIC
-> >> chip revision information to implement errata or otherwise adjust
-> >> behaviour, export the PMIC information to enable this.
-> >>
-> >> This is specifically required to enable the RRADC to adjust
-> >> coefficients based on which chip fab the PMIC was produced in,
-> >> this can vary per unique device and therefore has to be read at
-> >> runtime.
-> >>
-> >> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>  
-> > Hi Caleb,
-> > 
-> > Some comments inline.  
-> Hi Jonathan,
-> 
-> Thanks for the feedback, I had a question about one of your points below.
+* If the access to the register space is unclocked, for example: if
+  there is an access to multimedia(MM) block registers without MM
+  clocks.
 
-Miss read on my part.
+* If the register space is protected and not set to be accessible from
+  non-secure world, for example: only EL3 (EL: Exception level) access
+  is allowed and any EL2/EL1 access is forbidden.
+
+* If xPU(memory/register protection units) is controlling access to
+  certain memory/register space for specific clients.
+
+and more...
+
+Such cases usually results in instant reboot/SErrors/NOC or interconnect
+hangs and tracing these register accesses can be very helpful to debug
+such issues during initial development stages and also in later stages.
+
+So use ftrace trace events to log such MMIO register accesses which
+provides rich feature set such as early enablement of trace events,
+filtering capability, dumping ftrace logs on console and many more.
+
+Sample output:
+
+rwmmio_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
+rwmmio_post_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
+rwmmio_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 addr=0xfffffbfffdbff610
+rwmmio_post_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 val=0x0 addr=0xfffffbfffdbff610
+
+This series is a follow-up for the series [1] and a recent series [2] making use
+of both.
+
+[1] https://lore.kernel.org/lkml/cover.1536430404.git.saiprakash.ranjan@codeaurora.org/
+[2] https://lore.kernel.org/lkml/1604631386-178312-1-git-send-email-psodagud@codeaurora.org/
+
+Note in previous v4 version, Arnd suggested to benchmark and compare size with callback
+based implementation, please see [3] for more details on that with brief comparison below.
 
 
-> >>   
-> >>   static const struct regmap_config spmi_regmap_config = {
-> >> @@ -144,22 +122,38 @@ static const struct regmap_config spmi_regmap_config = {
-> >>   static int pmic_spmi_probe(struct spmi_device *sdev)
-> >>   {
-> >>   	struct regmap *regmap;
-> >> +	struct qcom_spmi_pmic *pmic;
-> >>   
-> >>   	regmap = devm_regmap_init_spmi_ext(sdev, &spmi_regmap_config);
-> >>   	if (IS_ERR(regmap))
-> >>   		return PTR_ERR(regmap);
-> >>   
-> >> +	pmic = devm_kzalloc(&sdev->dev, sizeof(*pmic), GFP_KERNEL);
-> >> +	if (!pmic)
-> >> +		return -ENOMEM;  
-> > 
-> > Within the code visible here, why can't this just be on the stack?  
-> I allocated on the heap beacuse the data has to be read by other drivers 
-> (it's handed over in spmi_device_set_drvdata() below). I don't have a 
-> whole lot of C experience so please forgive the potentially ignorant 
-> questions - is it ok to allocate on the stack if the object needs to 
-> have a lifetime longer than the function?
+**Inline version with CONFIG_FTRACE=y and CONFIG_TRACE_MMIO_ACCESS=y**
+$ size vmlinux
+   text           data             bss     dec             hex         filename
+ 23884219        14284468         532568 38701255        24e88c7        vmlinux
 
-You are of course correct. I just missed the set_drvdata call when reading this
-and thought it was just being used for the print!  Oops.
+**Callback version with CONFIG_FTRACE=y and CONFIG_TRACE_MMIO_ACCESS=y**
+$ size vmlinux
+    text          data             bss     dec             hex        filename
+ 24108179        14279596         532568 38920343        251e097       vmlinux
+
+$ ./scripts/bloat-o-meter inline-vmlinux callback-vmlinux
+add/remove: 8/3 grow/shrink: 4889/89 up/down: 242244/-11564 (230680)
+Total: Before=25812612, After=26043292, chg +0.89%
+
+[3] https://lore.kernel.org/lkml/466449a1-36da-aaa9-7e4f-477f36b52c9e@quicinc.com/
+
+Changes in v7:
+ * Use lib/ instead of kernel/trace/ based on review comment by Steven Rostedt.
+
+Changes in v6:
+ * Implemented suggestions by Arnd Bergmann:
+   - Use arch independent IO barriers in arm64/asm
+   - Add ARCH_HAVE_TRACE_MMIO_ACCESS
+   - Add post read and post write logging support
+   - Remove tracepoint_active check
+ * Fix build error reported by kernel test robot.
+
+Changes in v5:
+ * Move arm64 to use asm-generic provided high level MMIO accessors (Arnd).
+ * Add inline logging for MMIO relaxed and non-relaxed accessors.
+ * Move nVHE KVM comment to makefile (Marc).
+ * Fix overflow warning due to switch to inline accessors instead of macro.
+ * Modify trace event field to include caller and parent details for more detailed logs.
+
+Changes in v4:
+ * Drop dynamic debug based filter support since that will be developed later with
+   the help from Steven (Ftrace maintainer).
+ * Drop value passed to writel as it is causing hangs when tracing is enabled.
+ * Code cleanup for trace event as suggested by Steven for earlier version.
+ * Fixed some build errors reported by 0-day bot.
+
+Changes in v3:
+ * Create a generic mmio header for instrumented version (Earlier suggested in [1]
+   by Will Deacon and recently [2] by Greg to have a generic version first).
+ * Add dynamic debug support to filter out traces which can be very useful for targeted
+   debugging specific to subsystems or drivers.
+ * Few modifications to the rwmmio trace event fields to include the mmio width and print
+   addresses in hex.
+ * Rewrote commit msg to explain some more about usecases.
+
+Prasad Sodagudi (1):
+  lib: Add register read/write tracing support
+
+Sai Prakash Ranjan (4):
+  arm64: io: Use asm-generic high level MMIO accessors
+  irqchip/tegra: Fix overflow implicit truncation warnings
+  drm/meson: Fix overflow implicit truncation warnings
+  asm-generic/io: Add logging support for MMIO accessors
+
+ arch/Kconfig                      |   3 +
+ arch/arm64/Kconfig                |   1 +
+ arch/arm64/include/asm/io.h       |  41 +++--------
+ arch/arm64/kvm/hyp/nvhe/Makefile  |   7 +-
+ drivers/gpu/drm/meson/meson_viu.c |  22 +++---
+ drivers/irqchip/irq-tegra.c       |  10 +--
+ include/asm-generic/io.h          |  81 +++++++++++++++++++--
+ include/trace/events/rwmmio.h     | 112 ++++++++++++++++++++++++++++++
+ lib/Kconfig                       |   7 ++
+ lib/Makefile                      |   2 +
+ lib/trace_readwrite.c             |  47 +++++++++++++
+ 11 files changed, 279 insertions(+), 54 deletions(-)
+ create mode 100644 include/trace/events/rwmmio.h
+ create mode 100644 lib/trace_readwrite.c
+
+-- 
+2.33.1
 
