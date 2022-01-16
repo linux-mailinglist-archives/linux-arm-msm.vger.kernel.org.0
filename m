@@ -2,115 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 878A848FDE0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jan 2022 17:31:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C738E48FE68
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jan 2022 19:18:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233691AbiAPQbH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Jan 2022 11:31:07 -0500
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.50]:33759 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231292AbiAPQbG (ORCPT
+        id S235996AbiAPSSw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Jan 2022 13:18:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51982 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235965AbiAPSSv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Jan 2022 11:31:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1642350648;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=wd5B5q6uhmXCkTltl4oPLre+b0CAXOOsrH3DYJLPWOk=;
-    b=QAyRW1JmAAA/yFoj8X3QlSMfV7J/1fZy54Yx3ak5/iNi9bBnRjTZ0qdv2HRCVFrQeH
-    4I9sz6VMbpxUQOhW874t2uU7b+e+pkg9hOpqKlo8sy+eGHj5CMVFdSQrAUEgNkj4ko1a
-    +//H9KPf6J9h/viwiQOokXiVltBL/RziMlcqLcyRLAIDnTGiOFY5mqGVGmhdK+R0DkTz
-    UbLMgs+VUrIn5piPwwXZXhDJ7ggj2l/dUCJ/ZReyuW2PRPpX2rdRpICmDN9XGTLvUGxJ
-    4lyglW81xWiXjBh7BIzt/MjXtU7CupYK6pceuw04NaqNn/qWpawq+FnenPnkDAgKJT5Q
-    T5Vw==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLVrK8+86Y="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.37.6 AUTH)
-    with ESMTPSA id h68d06y0GGUk8zU
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Sun, 16 Jan 2022 17:30:46 +0100 (CET)
-Date:   Sun, 16 Jan 2022 17:30:39 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH 09/15] rpmsg: smd: Drop unnecessary condition for channel
- creation
-Message-ID: <YeRILypv8ajssNae@gerhold.net>
-References: <20220112194118.178026-1-luca@z3ntu.xyz>
- <20220112194118.178026-10-luca@z3ntu.xyz>
- <Yd9KebiZUjTuHtIM@gerhold.net>
- <12385151.O9o76ZdvQC@g550jk>
+        Sun, 16 Jan 2022 13:18:51 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CB29C061574;
+        Sun, 16 Jan 2022 10:18:51 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id p1-20020a1c7401000000b00345c2d068bdso19112691wmc.3;
+        Sun, 16 Jan 2022 10:18:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=OLj2L5VWyVdOGJLMSf56SLM7Vb7QMt0sfGUe7E+PMH4=;
+        b=jRakOnSgyncQcbqCpsBMCzFRPbyC5q5F1x1gV+Fz1VCWtNW6s7Dk28Ndtpv4j0pnH5
+         WFI+1JfDG3ZlWK88iMvyrPh0iB5NqtC8pKw3wQNv4eFCrr82rVltFwYPu7lMiTRbi6+a
+         MOQ9fB29u1KOMm6vjpEUURATLxjS0tJrmK4HcB/zxXa+h5HoQS0qG2aSuJRA28IpNLLq
+         FaNduFspAXsEYfpP47Xx/XOlwItZk6EkWyFxbKdTlb7nU88B+x0z5R7psZLTEDazouSN
+         zniT8VDufVCLzm6Rv0i+xUCFaN6j8lKCfh78NTwJ35fpfurbYgV9h/ReGO6yRkFCEXIR
+         C2cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=OLj2L5VWyVdOGJLMSf56SLM7Vb7QMt0sfGUe7E+PMH4=;
+        b=Aebd54sqBRk+xV0Grst6gk2X1mS3aRwwWkWtz1kj2iG2Nor+jkz4LwK62YC0ZFMij6
+         fuEbDv4L+nH+uMGrErjsY88POvUMV4P7R+udyNS+zftoOfeixZt6Pcu92sQOMh2JC3xL
+         MUARSgs1iqYzW1fBkj1LAVnekpuoVca4ynRHTR5LonyygPfxL63LrFv0BQlua7KNPWzZ
+         ZgjpfhJwEBZiSe2cjQ7AVd6Hm4uDA1VC5Ga5vhWmyZKCpbUgItCJCzYW6LaFk7UKc49R
+         eF7CebhS5fDkZV4BniScG7PUCFNJaq9uuBIEvPO3OlmlDr2OsNjGhT7Q65SYVq/54iP+
+         0Pbw==
+X-Gm-Message-State: AOAM53159pN1yrJQ/lsTt6mAGs0REEl2ThoKP/I2UAHRJluQJS769zOp
+        3YmREJnGS3q8vDdHry5wJEnvpEO0NX2L2Q==
+X-Google-Smtp-Source: ABdhPJzTfTrZbeYRdTwd3jGkTbjCInOqQZojBFH9tyRmM+gfinOFNR3IHyqEGi7J4eRXBbu1zN/+XA==
+X-Received: by 2002:a5d:47ad:: with SMTP id 13mr16163005wrb.664.1642357130069;
+        Sun, 16 Jan 2022 10:18:50 -0800 (PST)
+Received: from localhost.localdomain ([94.73.33.246])
+        by smtp.gmail.com with ESMTPSA id g12sm11603839wrm.109.2022.01.16.10.18.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 Jan 2022 10:18:49 -0800 (PST)
+From:   =?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>
+To:     hali@codeaurora.org
+Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, dmitry.baryshkov@linaro.org,
+        abhinavk@codeaurora.org, rajeevny@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        =?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>
+Subject: [PATCH] drm/msm/dsi: invalid parameter check in msm_dsi_phy_enable
+Date:   Sun, 16 Jan 2022 19:18:44 +0100
+Message-Id: <20220116181844.7400-1-jose.exposito89@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <12385151.O9o76ZdvQC@g550jk>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jan 16, 2022 at 05:08:29PM +0100, Luca Weiss wrote:
-> On Mittwoch, 12. J�nner 2022 22:39:53 CET Stephan Gerhold wrote:
-> > On Wed, Jan 12, 2022 at 08:40:58PM +0100, Luca Weiss wrote:
-> > > From: Vladimir Lypak <vladimir.lypak@gmail.com>
-> > > 
-> > > RPM Firmware on variety of newer SoCs such as MSM8917 (also likely
-> > > MSM8937, MSM8940, MSM8952), MSM8953 and on some MSM8916 devices) doesn't
-> > > initiate opening of the SMD channel if it was previously opened by
-> > > bootloader. This doesn't allow probing of smd-rpm driver on such devices
-> > > because there is a check that requires RPM this behaviour.
-> > > 
-> > > Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-> > > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > > Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> > 
-> > This is effectively a "Revert "Revert "rpmsg: smd: Create device for all
-> > channels""":
-> > 
-> > https://lore.kernel.org/linux-arm-msm/20171212235857.10432-3-bjorn.andersson
-> > @linaro.org/
-> > https://lore.kernel.org/linux-arm-msm/20180315181244.8859-1-bjorn.andersson
-> > @linaro.org/
-> > 
-> > Won't this cause the same regression reported by Srinivas again?
-> > 
-> 
-> Do you have any suggestion on another way to solve this? Without this commit 
-> the regulators just won't probe at all, I haven't looked very deep into it 
-> though given this patch solves it.
-> 
-> I guess worst case it'll become a devicetree property to enable this quirk?
-> 
+The function performs a check on the "phy" input parameter, however, it
+is used before the check.
 
-My spontaneous suggestion would be to skip the check only for the
-"rpm_requests" channel, e.g. something like
+Initialize the "dev" variable after the sanity check to avoid a possible
+NULL pointer dereference.
 
-	if (remote_state != SMD_CHANNEL_OPENING &&
-	    remote_state != SMD_CHANNEL_OPENED &&
-	    strcmp(channel->name, "rpm_requests")
-		continue;
+Fixes: 5c8290284402b ("drm/msm/dsi: Split PHY drivers to separate files")
+Addresses-Coverity-ID: 1493860 ("Null pointer dereference")
+Signed-off-by: José Expósito <jose.exposito89@gmail.com>
+---
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-This will avoid changing the behavior for anything but the RPM channel.
-I don't think anything else is affected by the same problem (since the
-bootloader or earlier firmware should not make use of any other channel).
-Also, we definitely *always* want to open the channel to the RPM because
-otherwise almost everything breaks.
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+index 9842e04b5858..baa6af0c3bcc 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+@@ -808,12 +808,14 @@ int msm_dsi_phy_enable(struct msm_dsi_phy *phy,
+ 			struct msm_dsi_phy_clk_request *clk_req,
+ 			struct msm_dsi_phy_shared_timings *shared_timings)
+ {
+-	struct device *dev = &phy->pdev->dev;
++	struct device *dev;
+ 	int ret;
+ 
+ 	if (!phy || !phy->cfg->ops.enable)
+ 		return -EINVAL;
+ 
++	dev = &phy->pdev->dev;
++
+ 	ret = dsi_phy_enable_resource(phy);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev, "%s: resource enable failed, %d\n",
+-- 
+2.25.1
 
-Many solutions are possible though so at the end it is mostly up to
-Bjorn to decide I think. :)
-
-Thanks,
-Stephan
