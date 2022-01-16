@@ -2,104 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C738E48FE68
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jan 2022 19:18:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 409A948FF1F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jan 2022 22:26:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235996AbiAPSSw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Jan 2022 13:18:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51982 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235965AbiAPSSv (ORCPT
+        id S236207AbiAPV0j convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Jan 2022 16:26:39 -0500
+Received: from ec2-13-115-114-132.ap-northeast-1.compute.amazonaws.com ([13.115.114.132]:33296
+        "EHLO mail.gunma-suigai-risk.jp" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S236205AbiAPV0i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Jan 2022 13:18:51 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CB29C061574;
-        Sun, 16 Jan 2022 10:18:51 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id p1-20020a1c7401000000b00345c2d068bdso19112691wmc.3;
-        Sun, 16 Jan 2022 10:18:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=OLj2L5VWyVdOGJLMSf56SLM7Vb7QMt0sfGUe7E+PMH4=;
-        b=jRakOnSgyncQcbqCpsBMCzFRPbyC5q5F1x1gV+Fz1VCWtNW6s7Dk28Ndtpv4j0pnH5
-         WFI+1JfDG3ZlWK88iMvyrPh0iB5NqtC8pKw3wQNv4eFCrr82rVltFwYPu7lMiTRbi6+a
-         MOQ9fB29u1KOMm6vjpEUURATLxjS0tJrmK4HcB/zxXa+h5HoQS0qG2aSuJRA28IpNLLq
-         FaNduFspAXsEYfpP47Xx/XOlwItZk6EkWyFxbKdTlb7nU88B+x0z5R7psZLTEDazouSN
-         zniT8VDufVCLzm6Rv0i+xUCFaN6j8lKCfh78NTwJ35fpfurbYgV9h/ReGO6yRkFCEXIR
-         C2cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=OLj2L5VWyVdOGJLMSf56SLM7Vb7QMt0sfGUe7E+PMH4=;
-        b=Aebd54sqBRk+xV0Grst6gk2X1mS3aRwwWkWtz1kj2iG2Nor+jkz4LwK62YC0ZFMij6
-         fuEbDv4L+nH+uMGrErjsY88POvUMV4P7R+udyNS+zftoOfeixZt6Pcu92sQOMh2JC3xL
-         MUARSgs1iqYzW1fBkj1LAVnekpuoVca4ynRHTR5LonyygPfxL63LrFv0BQlua7KNPWzZ
-         ZgjpfhJwEBZiSe2cjQ7AVd6Hm4uDA1VC5Ga5vhWmyZKCpbUgItCJCzYW6LaFk7UKc49R
-         eF7CebhS5fDkZV4BniScG7PUCFNJaq9uuBIEvPO3OlmlDr2OsNjGhT7Q65SYVq/54iP+
-         0Pbw==
-X-Gm-Message-State: AOAM53159pN1yrJQ/lsTt6mAGs0REEl2ThoKP/I2UAHRJluQJS769zOp
-        3YmREJnGS3q8vDdHry5wJEnvpEO0NX2L2Q==
-X-Google-Smtp-Source: ABdhPJzTfTrZbeYRdTwd3jGkTbjCInOqQZojBFH9tyRmM+gfinOFNR3IHyqEGi7J4eRXBbu1zN/+XA==
-X-Received: by 2002:a5d:47ad:: with SMTP id 13mr16163005wrb.664.1642357130069;
-        Sun, 16 Jan 2022 10:18:50 -0800 (PST)
-Received: from localhost.localdomain ([94.73.33.246])
-        by smtp.gmail.com with ESMTPSA id g12sm11603839wrm.109.2022.01.16.10.18.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Jan 2022 10:18:49 -0800 (PST)
-From:   =?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>
-To:     hali@codeaurora.org
-Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, dmitry.baryshkov@linaro.org,
-        abhinavk@codeaurora.org, rajeevny@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        =?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>
-Subject: [PATCH] drm/msm/dsi: invalid parameter check in msm_dsi_phy_enable
-Date:   Sun, 16 Jan 2022 19:18:44 +0100
-Message-Id: <20220116181844.7400-1-jose.exposito89@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        Sun, 16 Jan 2022 16:26:38 -0500
+Received: from Unknown (unknown [194.67.9.178])
+        by mail.gunma-suigai-risk.jp (Postfix) with ESMTPA id EAE552A9AD7E;
+        Sun, 16 Jan 2022 05:38:37 +0000 (UTC)
+Message-ID: <B5B006555E8AA467BBBEF74B4F878FAB@wbdfxcd>
+Reply-To: "Fredrik Elvebakk" <fcresswell9@gmail.com>
+From:   "Fredrik Elvebakk" <investment@dnb.no>
+Subject: Re:
+Date:   Sat, 15 Jan 2022 21:38:32 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        format=flowed;
+        charset="windows-1251";
+        reply-type=original
+Content-Transfer-Encoding: 8BIT
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Windows Live Mail 16.4.3528.331
+X-MimeOLE: Produced By Microsoft MimeOLE V16.4.3528.331
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The function performs a check on the "phy" input parameter, however, it
-is used before the check.
+Hello
 
-Initialize the "dev" variable after the sanity check to avoid a possible
-NULL pointer dereference.
+Kindly get back to me for an important 
+discussion
 
-Fixes: 5c8290284402b ("drm/msm/dsi: Split PHY drivers to separate files")
-Addresses-Coverity-ID: 1493860 ("Null pointer dereference")
-Signed-off-by: José Expósito <jose.exposito89@gmail.com>
----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index 9842e04b5858..baa6af0c3bcc 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -808,12 +808,14 @@ int msm_dsi_phy_enable(struct msm_dsi_phy *phy,
- 			struct msm_dsi_phy_clk_request *clk_req,
- 			struct msm_dsi_phy_shared_timings *shared_timings)
- {
--	struct device *dev = &phy->pdev->dev;
-+	struct device *dev;
- 	int ret;
- 
- 	if (!phy || !phy->cfg->ops.enable)
- 		return -EINVAL;
- 
-+	dev = &phy->pdev->dev;
-+
- 	ret = dsi_phy_enable_resource(phy);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev, "%s: resource enable failed, %d\n",
--- 
-2.25.1
-
+Best regards
+Fredrik Elvebakk
