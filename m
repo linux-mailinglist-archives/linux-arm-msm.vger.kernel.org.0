@@ -2,288 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AF6448F8D7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Jan 2022 19:46:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 565D948FA11
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jan 2022 01:58:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233172AbiAOSqG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Jan 2022 13:46:06 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:50410 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230304AbiAOSqG (ORCPT
+        id S234015AbiAPA64 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Jan 2022 19:58:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53460 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234010AbiAPA6z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Jan 2022 13:46:06 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 9B478B80A72;
-        Sat, 15 Jan 2022 18:46:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D87FC36AE5;
-        Sat, 15 Jan 2022 18:46:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1642272363;
-        bh=whQ8uNyDbpEy/G7Yas7JugsPMYKeBy4tvjBVcxsb8OA=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=cyLW0NJpUjExD1P4hjNorI3427pPrmzLCqGyMOSXtUPC/K9s3PGTvSeYrE8u0ae9w
-         L5ZRqVkTsV2SOlhpx368Orw586/mpHsnNLq2v1Fw/LHnX4KW3GnPyIj0VOt0n+Z3Ua
-         5HjfaIDIVKdBZRZCo9VZdbbzqMhiS+cLx3/kZrjeoxOwFV7OEoZn87L6D1dHdB0NU5
-         6m74kQScYYNZdm4KNenXevLFwOQ/Tfc4yKFSrfz+O89CIkCyVUac8M4fZj+bHqrHVy
-         AdxmOi2ZMO0/gyzFBefq4I1Sf+4k9p36+E3YCV8N3sD57P2dlMmbJfobOKQWmaReLo
-         jS95InmSp0Lcw==
-Date:   Sat, 15 Jan 2022 18:52:03 +0000
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Andreas Kemnade <andreas@kemnade.info>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Peter Rosin <peda@axentia.se>
-Subject: Re: [PATCH v2 5/5] iio: afe: iio-rescale: Re-use generic struct
- s32_fract
-Message-ID: <20220115185203.567780e8@jic23-huawei>
-In-Reply-To: <20220110193104.75225-5-andriy.shevchenko@linux.intel.com>
-References: <20220110193104.75225-1-andriy.shevchenko@linux.intel.com>
-        <20220110193104.75225-5-andriy.shevchenko@linux.intel.com>
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.31; x86_64-pc-linux-gnu)
+        Sat, 15 Jan 2022 19:58:55 -0500
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA103C061574
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jan 2022 16:58:55 -0800 (PST)
+Received: by mail-oi1-x22b.google.com with SMTP id w188so18018920oiw.13
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Jan 2022 16:58:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3Zbir2HQFQZdW9Tmc/FhUTrgl/itixs+HF0NKBgjfVc=;
+        b=Yh0vPDd1G6keQC/FJtF4agKsRM/U93onYrsMyZG2hqH4zxiYv8BwcyI2njKr6aFPMB
+         iCqLfls8da11QehL5xhjaZRimYnfreZ/848FN6buJv6vnAUW8BBHYWW0tHRCTb+DqBpp
+         AQad/LL9E2wlF6MLj9SmH9rh2W96loC1zXRyVTSoJ/a1Rer3usmihSpx+/G1DHnMUsCW
+         bdjgrGTE8033EaBQecjg1vG0sBJVERrEnV69ZipfazKz5cdIioboi42YAy4aKi9wTLjY
+         SH4HggOONaq8/vGf6WlM3wIqq/5XJLlWaRyz1SYJwEmlBJ/rJp/cZ8jV4Nm9AE5szaek
+         uWTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3Zbir2HQFQZdW9Tmc/FhUTrgl/itixs+HF0NKBgjfVc=;
+        b=iWYZn47oD8lzixjJGboB+f5wwcfhprUHsHS06Kc/tbxgcxLZC+9ccq7tcg5fOfGd1r
+         vQFvUaad8dnRoi1yQpvI00QMcO8repuc1Dexe7JT0zD/FvfkBc3BkoRx9lLENBpKusoM
+         iTnN8xioWSUiiADsbBQ8skNKAHTC92wGcMC3TjQr82ohOC6sCx5ho2LPWlbMqXoBR9rI
+         +TtAR43ATj5OAnK+qOrUjenjOi1NlYdXRJ55RBmcu2aKeRhFs+63ci6wUWMtT71uFZRg
+         AQIzZHQnFCfqUlTTtJtyS16SG2OuaUJUZ988O1Ry8wHk3l2tLxG9TowHs0YdrNWaSKmg
+         Or5Q==
+X-Gm-Message-State: AOAM533Q4EYN1CPAKongdOz8yS1p+Zhoo1gXwQLtGPTDxF9kfThNVyws
+        paxzsbwHt94BW6G/azTW0u1dFc6gNB2LGPKBPUo3Fg==
+X-Google-Smtp-Source: ABdhPJxWMRX3TsxnLYFJRGSaSneOnzs9jAel1b3dZQqFej3Jh5BIbaG7pKz3veRZwsjhuRLRjjczmU3tGMJEt2q+IJ4=
+X-Received: by 2002:a05:6808:2097:: with SMTP id s23mr8350127oiw.132.1642294735018;
+ Sat, 15 Jan 2022 16:58:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <20220111140519.1.Ie2662d6289af1e9758b14b37149703c846d5f509@changeid>
+In-Reply-To: <20220111140519.1.Ie2662d6289af1e9758b14b37149703c846d5f509@changeid>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Sun, 16 Jan 2022 01:58:43 +0100
+Message-ID: <CACRpkdZ=dNw19Qx4C5w59hxTuOx7O7x9Dw+5wxSTc99WxPRO8g@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: pinctrl: drive-strength doesn't default to 2
+ if unspecified
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 10 Jan 2022 21:31:04 +0200
-Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
+On Tue, Jan 11, 2022 at 11:05 PM Douglas Anderson <dianders@chromium.org> wrote:
 
-> Instead of custom data type re-use generic struct s32_fract.
-> No changes intended.
-> 
-> The new member is put to be the first one to avoid additional
-> pointer arithmetic. Besides that one may switch to use fract
-> member to perform container_of(), which will be no-op in this
-> case, to get struct rescale.
-> 
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> If the drive-strength isn't specified in the device tree then it
+> doesn't actually default to 2. Instead, it defaults to whatever the
+> heck the BIOS left it at. If the BIOS doesn't touch it then that means
+> it's whatever the heck the initial state of the pin was when the SoC
+> booted.
+>
+> Reported-by: Matthias Kaehlcke <mka@chromium.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 
-I'm not totally sold on this series showing there is a strong case for
-these macros so interested to hear what others think.
-Boiler plate removal is always nice of course...
+Patch applied.
 
-One trivial comment inline on this one.
-
-> ---
-> 
-> I found this better in order how code is structurally (re)organized.
-> I may rebase this on top of ongoing AFE series.
-> 
-> Also reveals possibility to switch to rational best approximation.
-> But this is another story...
-
-Now that may well justify introducing this shared infrastructure :)
-
-> 
-> v2: no changes
-> 
->  drivers/iio/afe/iio-rescale.c | 74 +++++++++++++++++------------------
->  1 file changed, 37 insertions(+), 37 deletions(-)
-> 
-> diff --git a/drivers/iio/afe/iio-rescale.c b/drivers/iio/afe/iio-rescale.c
-> index 774eb3044edd..0368bca8a485 100644
-> --- a/drivers/iio/afe/iio-rescale.c
-> +++ b/drivers/iio/afe/iio-rescale.c
-> @@ -11,6 +11,7 @@
->  #include <linux/gcd.h>
->  #include <linux/iio/consumer.h>
->  #include <linux/iio/iio.h>
-> +#include <linux/math.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
->  #include <linux/of_device.h>
-> @@ -21,17 +22,16 @@ struct rescale;
->  
->  struct rescale_cfg {
->  	enum iio_chan_type type;
-> -	int (*props)(struct device *dev, struct rescale *rescale);
-> +	int (*props)(struct device *dev, struct s32_fract *fract);
->  };
->  
->  struct rescale {
-> +	struct s32_fract fract;
->  	const struct rescale_cfg *cfg;
->  	struct iio_channel *source;
->  	struct iio_chan_spec chan;
->  	struct iio_chan_spec_ext_info *ext_info;
->  	bool chan_processed;
-> -	s32 numerator;
-> -	s32 denominator;
->  };
->  
->  static int rescale_read_raw(struct iio_dev *indio_dev,
-> @@ -39,6 +39,7 @@ static int rescale_read_raw(struct iio_dev *indio_dev,
->  			    int *val, int *val2, long mask)
->  {
->  	struct rescale *rescale = iio_priv(indio_dev);
-> +	struct s32_fract *fract = &rescale->fract;
->  	unsigned long long tmp;
->  	int ret;
->  
-> @@ -67,19 +68,19 @@ static int rescale_read_raw(struct iio_dev *indio_dev,
->  		}
->  		switch (ret) {
->  		case IIO_VAL_FRACTIONAL:
-> -			*val *= rescale->numerator;
-> -			*val2 *= rescale->denominator;
-> +			*val *= fract->numerator;
-> +			*val2 *= fract->denominator;
->  			return ret;
->  		case IIO_VAL_INT:
-> -			*val *= rescale->numerator;
-> -			if (rescale->denominator == 1)
-> +			*val *= fract->numerator;
-> +			if (fract->denominator == 1)
->  				return ret;
-> -			*val2 = rescale->denominator;
-> +			*val2 = fract->denominator;
->  			return IIO_VAL_FRACTIONAL;
->  		case IIO_VAL_FRACTIONAL_LOG2:
->  			tmp = *val * 1000000000LL;
-> -			do_div(tmp, rescale->denominator);
-> -			tmp *= rescale->numerator;
-> +			do_div(tmp, fract->denominator);
-> +			tmp *= fract->numerator;
->  			do_div(tmp, 1000000000LL);
->  			*val = tmp;
->  			return ret;
-> @@ -175,7 +176,7 @@ static int rescale_configure_channel(struct device *dev,
->  }
->  
->  static int rescale_current_sense_amplifier_props(struct device *dev,
-> -						 struct rescale *rescale)
-> +						 struct s32_fract *fract)
->  {
->  	u32 sense;
->  	u32 gain_mult = 1;
-> @@ -199,22 +200,22 @@ static int rescale_current_sense_amplifier_props(struct device *dev,
->  	 * numerator/denominator from overflowing.
->  	 */
->  	factor = gcd(sense, 1000000);
-> -	rescale->numerator = 1000000 / factor;
-> -	rescale->denominator = sense / factor;
-> +	fract->numerator = 1000000 / factor;
-> +	fract->denominator = sense / factor;
->  
-> -	factor = gcd(rescale->numerator, gain_mult);
-> -	rescale->numerator /= factor;
-> -	rescale->denominator *= gain_mult / factor;
-> +	factor = gcd(fract->numerator, gain_mult);
-> +	fract->numerator /= factor;
-> +	fract->denominator *= gain_mult / factor;
->  
-> -	factor = gcd(rescale->denominator, gain_div);
-> -	rescale->numerator *= gain_div / factor;
-> -	rescale->denominator /= factor;
-> +	factor = gcd(fract->denominator, gain_div);
-> +	fract->numerator *= gain_div / factor;
-> +	fract->denominator /= factor;
->  
->  	return 0;
->  }
->  
->  static int rescale_current_sense_shunt_props(struct device *dev,
-> -					     struct rescale *rescale)
-> +					     struct s32_fract *fract)
->  {
->  	u32 shunt;
->  	u32 factor;
-> @@ -228,35 +229,33 @@ static int rescale_current_sense_shunt_props(struct device *dev,
->  	}
->  
->  	factor = gcd(shunt, 1000000);
-> -	rescale->numerator = 1000000 / factor;
-> -	rescale->denominator = shunt / factor;
-> +	fract->numerator = 1000000 / factor;
-> +	fract->denominator = shunt / factor;
->  
->  	return 0;
->  }
->  
->  static int rescale_voltage_divider_props(struct device *dev,
-> -					 struct rescale *rescale)
-> +					 struct s32_fract *fract)
->  {
->  	int ret;
->  	u32 factor;
->  
-> -	ret = device_property_read_u32(dev, "output-ohms",
-> -				       &rescale->denominator);
-> +	ret = device_property_read_u32(dev, "output-ohms", &fract->denominator);
->  	if (ret) {
->  		dev_err(dev, "failed to read output-ohms: %d\n", ret);
->  		return ret;
->  	}
->  
-> -	ret = device_property_read_u32(dev, "full-ohms",
-> -				       &rescale->numerator);
-> +	ret = device_property_read_u32(dev, "full-ohms", &fract->numerator);
->  	if (ret) {
->  		dev_err(dev, "failed to read full-ohms: %d\n", ret);
->  		return ret;
->  	}
->  
-> -	factor = gcd(rescale->numerator, rescale->denominator);
-> -	rescale->numerator /= factor;
-> -	rescale->denominator /= factor;
-> +	factor = gcd(fract->numerator, fract->denominator);
-> +	fract->numerator /= factor;
-> +	fract->denominator /= factor;
->  
->  	return 0;
->  }
-> @@ -299,6 +298,7 @@ static int rescale_probe(struct platform_device *pdev)
->  	struct iio_dev *indio_dev;
->  	struct iio_channel *source;
->  	struct rescale *rescale;
-> +	struct s32_fract *fract;
->  	int sizeof_ext_info;
->  	int sizeof_priv;
->  	int i;
-> @@ -322,24 +322,24 @@ static int rescale_probe(struct platform_device *pdev)
->  		return -ENOMEM;
->  
->  	rescale = iio_priv(indio_dev);
-> -
-> +	rescale->source = source;
-
-There seems to be more reorganizing going on in here than is necessary
-for the function of this patch. At very least, description should
-call it out.  Why move setting source?
-
->  	rescale->cfg = of_device_get_match_data(dev);
-> -	rescale->numerator = 1;
-> -	rescale->denominator = 1;
->  
-> -	ret = rescale->cfg->props(dev, rescale);
-> +	fract = &rescale->fract;
-> +	fract->numerator = 1;
-> +	fract->denominator = 1;
-> +
-> +	ret = rescale->cfg->props(dev, fract);
->  	if (ret)
->  		return ret;
->  
-> -	if (!rescale->numerator || !rescale->denominator) {
-> +	if (!fract->numerator || !fract->denominator) {
->  		dev_err(dev, "invalid scaling factor.\n");
->  		return -EINVAL;
->  	}
->  
->  	platform_set_drvdata(pdev, indio_dev);
->  
-> -	rescale->source = source;
-> -
->  	indio_dev->name = dev_name(dev);
->  	indio_dev->info = &rescale_info;
->  	indio_dev->modes = INDIO_DIRECT_MODE;
-
+Yours,
+Linus Walleij
