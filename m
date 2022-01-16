@@ -2,97 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AECD848FA75
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jan 2022 04:22:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B998F48FC72
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jan 2022 13:02:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232540AbiAPDWb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Jan 2022 22:22:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55908 "EHLO
+        id S232939AbiAPMCv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Jan 2022 07:02:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234155AbiAPDW2 (ORCPT
+        with ESMTP id S231156AbiAPMCu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Jan 2022 22:22:28 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 461FAC061574;
-        Sat, 15 Jan 2022 19:22:28 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id c66so13487181wma.5;
-        Sat, 15 Jan 2022 19:22:28 -0800 (PST)
+        Sun, 16 Jan 2022 07:02:50 -0500
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B73DFC061574
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Jan 2022 04:02:50 -0800 (PST)
+Received: by mail-oi1-x234.google.com with SMTP id s22so19349200oie.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Jan 2022 04:02:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=PtVAa/r3Ho8RpTk/oGLVeaQ3Tn1StJzXSfcrQ//zcLE=;
-        b=CSJLvxWy+3bL9jUbNu+QHIjHM7dacGonCvZqtYmqAqyECJmADWK2uw6wzNa/JO+nar
-         umfxiBNbwZKF99mLpsb0sUIcEb2v96V5a7F7bkIE43a9n/7Hr3iaHWiw2y3989DEJR7u
-         fGF/bMlsw8RnzXKfvJpjCd6MUG23mhfLA445WI8lCMC6izjGUFPGeySWhP3wuOfXkqsw
-         JjEU29NI7+2ZCLNjgHgj8cKBeELLpBOaJOVHcsziAs4tSYDNQR0OCbhUrhAh+5p7qW+5
-         kXepoaV2gZz89MQwzn5NUbsVoS+QhwjSa9xtkg4U8L05rTtczg4p9q0ArFaa6AF2UlMM
-         Ru0w==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MQugVzR0HUW1l8YQ855U1R3u4rbB4xlEWOyDYT7TwoM=;
+        b=s0yHRZxkpbimGufWxMOVBXxk5R6yRG83z9/XZ9iOTsE+YGZA1cWYi0Zi8fRs2kNaN0
+         eIVgSWV8wxFPOSX1u5DZCLWjSJyhP4NPoY0s9tQfCMq+D3JErlR6sez3A8q8Idu/Zbob
+         pLbqeWLXwGP419yPkutzyTfQf6IauG1pPSExJPOoFOkAhlo6g8wB8BnWbiG9nu/o/H5Q
+         DICRotGEhLY18p8HIWkHifxmVMSOWm9CIMLIVQDzQpwMsV1UCzusUQVI8jiyzOZlWmpy
+         DoMxEqLo1X3LqktlT2cmTUjQEE3a2bB3/Ea1AGr3lCMuusNLXyaNExyDhBQ9mRl/b+CL
+         mD2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=PtVAa/r3Ho8RpTk/oGLVeaQ3Tn1StJzXSfcrQ//zcLE=;
-        b=ugO1B6huD+zmO8sO3Y+1HgMGImUlEEGLcRUin70YOdIoj+xANY2Yx+xuXqpS3sdmyV
-         7uSEIF17m0PDUoJovazYrkD5tC0+nKyg2JCzI+SFNkhvpLI+C/wj7U1m8RXtv05mNtWN
-         C0DB6TH+vKMb/SwFjQf5dOLHBTGeCztfgIsiACSs1mukcOU2c+ukf0uSZaMea6x9zGaq
-         +MIr7II+4wwgJJpvbCDeLIc5QzLIM5wbWzyU2sYt8SJFrtOvFlwNNwlPXjmc84UqPznC
-         qKpwWHr6hwbDF96hZk+9crAcFnPxoDRq9gvtB33ayap/77IxeNTMMNhVeBB2y3aqiJrd
-         LfJg==
-X-Gm-Message-State: AOAM530n9s2u6oz4XDjS4tPnHUS14XjtxXDEqalDHrgVmpb9Sdv5m3KL
-        Gsj+SN6qQXqvGx+c8EA+TWA=
-X-Google-Smtp-Source: ABdhPJx7gMj7wQTQ4DwpJYQDmjcURscLM20JCKTVhXQRYyW91D4imPL/8TFzxIDIXijBJz4N/HG/Mw==
-X-Received: by 2002:adf:f102:: with SMTP id r2mr12335057wro.480.1642303346152;
-        Sat, 15 Jan 2022 19:22:26 -0800 (PST)
-Received: from localhost.localdomain (93-42-71-246.ip85.fastwebnet.it. [93.42.71.246])
-        by smtp.googlemail.com with ESMTPSA id u16sm1446785wmq.23.2022.01.15.19.22.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Jan 2022 19:22:25 -0800 (PST)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>
-Subject: [PATCH 2/2] mtd: parsers: qcom: Fix missing free for pparts in cleanup
-Date:   Sun, 16 Jan 2022 04:22:11 +0100
-Message-Id: <20220116032211.9728-2-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20220116032211.9728-1-ansuelsmth@gmail.com>
-References: <20220116032211.9728-1-ansuelsmth@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MQugVzR0HUW1l8YQ855U1R3u4rbB4xlEWOyDYT7TwoM=;
+        b=R+BKp8Eba51DmkfGRykRcEMRdRSIkZ7qh3yQNV3KTKa8aZ91L61tJQOgIRh6QKae25
+         kkSowKVG9VUEzKgsBRo72dd89T7Qc7SNOKr5dX2q8oh4I3YoI96wpqZmXSjbq/xHrHnw
+         jkxZy+pAM1eefE67Jqpfqm+dQfogXW56KxzK31x8clc2ck99Q4xBErDvnhX8AtS+b0gx
+         1wmiaFXy9b+RLdEt+voM+BDlolpHhchi59RAjoSHChnfP0zVev7PeIzdWGh70gMh6ZQb
+         a7E71gl9Tk9lH+h3qZ5OvIF58G1cbJtRT9QKXnkAPEpeGEc1zwpLDnlsNtuQcMG7guOi
+         TElA==
+X-Gm-Message-State: AOAM532zH2jtH8VgZDTU+eWZI2bfj+88UeduZSF6whrZW5jL2xGvYWAF
+        zPfTmEnSsd3xbtOUc1IWKHtzB7c5IQoRVrTw1S7ck8v9EDE=
+X-Google-Smtp-Source: ABdhPJz5Vivaiqv+f1v9kMNzZy+LxZx0FYcqZ8u6a+PsYoKEcQKvQ5CcKRTey5EKw7ysWPJCtK7HWm3FeghHnLp48DM=
+X-Received: by 2002:a54:4613:: with SMTP id p19mr13356731oip.162.1642334569955;
+ Sun, 16 Jan 2022 04:02:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220113162617.131697-1-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20220113162617.131697-1-manivannan.sadhasivam@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Sun, 16 Jan 2022 13:02:38 +0100
+Message-ID: <CACRpkdYraGHxYPW5JL49RMg3Wo8wQgRP8d29VYGqHg4Oc=7Lbg@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: Return -EINVAL for setting affinity if no
+ IRQ parent
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     bjorn.andersson@linaro.org, dianders@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Mtdpart doesn't free pparts when a cleanup function is declared.
-Add missing free for pparts in cleanup function for smem to fix the
-leak.
+On Thu, Jan 13, 2022 at 5:26 PM Manivannan Sadhasivam
+<manivannan.sadhasivam@linaro.org> wrote:
 
-Fixes: 10f3b4d79958 ("mtd: parsers: qcom: Fix leaking of partition name")
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- drivers/mtd/parsers/qcomsmempart.c | 2 ++
- 1 file changed, 2 insertions(+)
+> The MSM GPIO IRQ controller relies on the parent IRQ controller to set the
+> CPU affinity for the IRQ. And this is only valid if there is any wakeup
+> parent available and defined in DT.
+>
+> For the case of no parent IRQ controller defined in DT,
+> msm_gpio_irq_set_affinity() and msm_gpio_irq_set_vcpu_affinity() should
+> return -EINVAL instead of 0 as the affinity can't be set.
+>
+> Otherwise, below warning will be printed by genirq:
+>
+> genirq: irq_chip msmgpio did not update eff. affinity mask of irq 70
+>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-diff --git a/drivers/mtd/parsers/qcomsmempart.c b/drivers/mtd/parsers/qcomsmempart.c
-index f4fc7635c1f3..32ddfea70142 100644
---- a/drivers/mtd/parsers/qcomsmempart.c
-+++ b/drivers/mtd/parsers/qcomsmempart.c
-@@ -173,6 +173,8 @@ static void parse_qcomsmem_cleanup(const struct mtd_partition *pparts,
- 
- 	for (i = 0; i < nr_parts; i++)
- 		kfree(pparts[i].name);
-+
-+	kfree(pparts);
- }
- 
- static const struct of_device_id qcomsmem_of_match_table[] = {
--- 
-2.33.1
+Patch applied for v5.18!
 
+Yours,
+Linus Walleij
