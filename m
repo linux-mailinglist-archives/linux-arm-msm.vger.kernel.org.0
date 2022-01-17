@@ -2,59 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E9DC5490096
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jan 2022 04:34:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 41F5749009A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jan 2022 04:36:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232540AbiAQDeU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Jan 2022 22:34:20 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:58915 "EHLO
+        id S232818AbiAQDg5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Jan 2022 22:36:57 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:10320 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237016AbiAQDeQ (ORCPT
+        with ESMTP id S231537AbiAQDg5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Jan 2022 22:34:16 -0500
+        Sun, 16 Jan 2022 22:36:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1642390456; x=1673926456;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=lvrbhMCfAp3bBClq/SQ1WlS+AsU8IXclSbLtgUr3LVU=;
-  b=LtIJ1IHs4IjvxbiFxtuE3D+xwBufeor72KWvpP1nbiV5tsKfBUIz+R7N
-   7WG6XREo0oiChCgtHGwzNUDQg+PCikgRtKidXBFq1hWZzb34IMoSH6cD3
-   05wQOjCf0KGIXF8yeOXyzinMUtF7dogv/E0OVgmp0I65oymdffbmIDFa0
-   w=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 16 Jan 2022 19:34:16 -0800
+  t=1642390617; x=1673926617;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=bj9WMkmjtrT6QiuclCEkl72aeTgEetnOQdSVXuGcalk=;
+  b=b9CM7HT76Xs3GO44Us/cZLqnd/8dGkZocQGHDp0WqRJ85c7xWP8WFSzk
+   azDtirI9NjqO1D5oANi06p45l8VP8qSFhtNvZBsS/u4cSL971YUDJ7NSw
+   1mquoRVrCg0zTGKgwZSyAxSMMj5erYK0MsA61l3U11bUxoMSFA4mHNO1/
+   c=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 16 Jan 2022 19:36:57 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jan 2022 19:34:15 -0800
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jan 2022 19:36:57 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Sun, 16 Jan 2022 19:34:15 -0800
-Received: from blr-ubuntu-253.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Sun, 16 Jan 2022 19:34:10 -0800
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-To:     Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Marc Zyngier <maz@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Steven Rostedt <rostedt@goodmis.org>
-CC:     gregkh <gregkh@linuxfoundation.org>, <quic_psodagud@quicinc.com>,
-        "Trilok Soni" <quic_tsoni@quicinc.com>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>
-Subject: [PATCHv8 5/5] asm-generic/io: Add logging support for MMIO accessors
-Date:   Mon, 17 Jan 2022 09:02:54 +0530
-Message-ID: <14ebf1ce34f3186a45bc6c93675295acd28b8f05.1642309054.git.quic_saipraka@quicinc.com>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <cover.1642309054.git.quic_saipraka@quicinc.com>
-References: <cover.1642309054.git.quic_saipraka@quicinc.com>
+ 15.2.922.19; Sun, 16 Jan 2022 19:36:56 -0800
+Received: from [10.50.45.28] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Sun, 16 Jan
+ 2022 19:36:52 -0800
+Message-ID: <c441e4f1-02e6-058e-3d53-549afc9d960b@quicinc.com>
+Date:   Mon, 17 Jan 2022 09:06:48 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.2
+Subject: Re: [PATCHv7 5/5] asm-generic/io: Add logging support for MMIO
+ accessors
+Content-Language: en-US
+To:     kernel test robot <lkp@intel.com>, Will Deacon <will@kernel.org>,
+        "Catalin Marinas" <catalin.marinas@arm.com>,
+        Marc Zyngier <maz@kernel.org>, "Arnd Bergmann" <arnd@arndb.de>,
+        Steven Rostedt <rostedt@goodmis.org>
+CC:     <kbuild-all@lists.01.org>, gregkh <gregkh@linuxfoundation.org>,
+        <quic_psodagud@quicinc.com>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <8085e36ca19787ae111e4cfbb5c555e65bd34be6.1642233364.git.quic_saipraka@quicinc.com>
+ <202201160019.hrsMYj6V-lkp@intel.com>
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+In-Reply-To: <202201160019.hrsMYj6V-lkp@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
@@ -62,276 +64,98 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add logging support for MMIO high level accessors such as read{b,w,l,q}
-and their relaxed versions to aid in debugging unexpected crashes/hangs
-caused by the corresponding MMIO operation. Also add a generic flag
-(__DISABLE_TRACE_MMIO__) which is used to disable MMIO tracing in nVHE KVM
-and if required can be used to disable MMIO tracing for specific drivers.
+On 1/15/2022 10:03 PM, kernel test robot wrote:
+> Hi Sai,
+>
+> Thank you for the patch! Yet something to improve:
+>
+> [auto build test ERROR on next-20220115]
+> [cannot apply to arm64/for-next/core arnd-asm-generic/master arm-perf/for-next/perf linus/master v5.16 v5.16-rc8 v5.16-rc7 v5.16]
+> [If your patch is applied to the wrong git tree, kindly drop us a note.
+> And when submitting patch, we suggest to use '--base' as documented in
+> https://git-scm.com/docs/git-format-patch]
+>
+> url:    https://github.com/0day-ci/linux/commits/Sai-Prakash-Ranjan/lib-rwmmio-arm64-Add-support-to-trace-register-reads-writes/20220115-211708
+> base:    bd8d9cef2a7932e688ca267ea1adf5ea6557c777
+> config: nios2-defconfig (https://download.01.org/0day-ci/archive/20220116/202201160019.hrsMYj6V-lkp@intel.com/config)
+> compiler: nios2-linux-gcc (GCC) 11.2.0
+> reproduce (this is a W=1 build):
+>          wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+>          chmod +x ~/bin/make.cross
+>          # https://github.com/0day-ci/linux/commit/0757812bba83a756f73ce1a84c86ded3e276cd0f
+>          git remote add linux-review https://github.com/0day-ci/linux
+>          git fetch --no-tags linux-review Sai-Prakash-Ranjan/lib-rwmmio-arm64-Add-support-to-trace-register-reads-writes/20220115-211708
+>          git checkout 0757812bba83a756f73ce1a84c86ded3e276cd0f
+>          # save the config file to linux build tree
+>          mkdir build_dir
+>          COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=nios2 SHELL=/bin/bash
+>
+> If you fix the issue, kindly add following tag as appropriate
+> Reported-by: kernel test robot <lkp@intel.com>
+>
+> All errors (new ones prefixed by >>):
+>
+>     In file included from arch/nios2/include/asm/io.h:41,
+>                      from include/linux/io.h:13,
+>                      from arch/nios2/include/asm/pgtable.h:18,
+>                      from include/linux/pgtable.h:6,
+>                      from arch/nios2/kernel/nios2_ksyms.c:11:
+>     include/asm-generic/io.h: In function 'readb':
+>>> include/asm-generic/io.h:181:32: error: '_THIS_IP_' undeclared (first use in this function)
+>       181 |         log_read_mmio(8, addr, _THIS_IP_);
+>           |                                ^~~~~~~~~
+>     include/asm-generic/io.h:181:32: note: each undeclared identifier is reported only once for each function it appears in
+>     include/asm-generic/io.h: In function 'readw':
+>     include/asm-generic/io.h:196:33: error: '_THIS_IP_' undeclared (first use in this function)
+>       196 |         log_read_mmio(16, addr, _THIS_IP_);
+>           |                                 ^~~~~~~~~
+>     include/asm-generic/io.h: In function 'readl':
+>     include/asm-generic/io.h:211:33: error: '_THIS_IP_' undeclared (first use in this function)
+>       211 |         log_read_mmio(32, addr, _THIS_IP_);
+>           |                                 ^~~~~~~~~
+>     include/asm-generic/io.h: In function 'writeb':
+>     include/asm-generic/io.h:241:40: error: '_THIS_IP_' undeclared (first use in this function)
+>       241 |         log_write_mmio(value, 8, addr, _THIS_IP_);
+>           |                                        ^~~~~~~~~
+>     include/asm-generic/io.h: In function 'writew':
+>     include/asm-generic/io.h:253:41: error: '_THIS_IP_' undeclared (first use in this function)
+>       253 |         log_write_mmio(value, 16, addr, _THIS_IP_);
+>           |                                         ^~~~~~~~~
+>     include/asm-generic/io.h: In function 'writel':
+>     include/asm-generic/io.h:265:41: error: '_THIS_IP_' undeclared (first use in this function)
+>       265 |         log_write_mmio(value, 32, addr, _THIS_IP_);
+>           |                                         ^~~~~~~~~
 
-Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
----
- arch/arm64/kvm/hyp/nvhe/Makefile |  7 ++-
- include/asm-generic/io.h         | 82 ++++++++++++++++++++++++++++++--
- 2 files changed, 84 insertions(+), 5 deletions(-)
+Hmm I need to include <linux/instruction_pointer.h> for this, although 
+arm64 build doesn't
+throw this warning. Now posted v8 with this fix - 
+https://lore.kernel.org/lkml/cover.1642309054.git.quic_saipraka@quicinc.com/
 
-diff --git a/arch/arm64/kvm/hyp/nvhe/Makefile b/arch/arm64/kvm/hyp/nvhe/Makefile
-index 24b2c2425b38..228d1f8921c3 100644
---- a/arch/arm64/kvm/hyp/nvhe/Makefile
-+++ b/arch/arm64/kvm/hyp/nvhe/Makefile
-@@ -4,7 +4,12 @@
- #
- 
- asflags-y := -D__KVM_NVHE_HYPERVISOR__ -D__DISABLE_EXPORTS
--ccflags-y := -D__KVM_NVHE_HYPERVISOR__ -D__DISABLE_EXPORTS
-+
-+# Tracepoint and MMIO logging symbols should not be visible at nVHE KVM as
-+# there is no way to execute them and any such MMIO access from nVHE KVM
-+# will explode instantly (Words of Marc Zyngier). So introduce a generic flag
-+# __DISABLE_TRACE_MMIO__ to disable MMIO tracing for nVHE KVM.
-+ccflags-y := -D__KVM_NVHE_HYPERVISOR__ -D__DISABLE_EXPORTS -D__DISABLE_TRACE_MMIO__
- 
- hostprogs := gen-hyprel
- HOST_EXTRACFLAGS += -I$(objtree)/include
-diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
-index 7ce93aaf69f8..c9b428657760 100644
---- a/include/asm-generic/io.h
-+++ b/include/asm-generic/io.h
-@@ -10,6 +10,7 @@
- #include <asm/page.h> /* I/O is all done through memory accesses */
- #include <linux/string.h> /* for memset() and memcpy() */
- #include <linux/types.h>
-+#include <linux/instruction_pointer.h>
- 
- #ifdef CONFIG_GENERIC_IOMAP
- #include <asm-generic/iomap.h>
-@@ -61,6 +62,35 @@
- #define __io_par(v)     __io_ar(v)
- #endif
- 
-+#if IS_ENABLED(CONFIG_TRACE_MMIO_ACCESS) && !(defined(__DISABLE_TRACE_MMIO__))
-+#include <linux/tracepoint-defs.h>
-+
-+DECLARE_TRACEPOINT(rwmmio_write);
-+DECLARE_TRACEPOINT(rwmmio_post_write);
-+DECLARE_TRACEPOINT(rwmmio_read);
-+DECLARE_TRACEPOINT(rwmmio_post_read);
-+
-+void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
-+		    unsigned long caller_addr);
-+void log_post_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
-+			 unsigned long caller_addr);
-+void log_read_mmio(u8 width, const volatile void __iomem *addr,
-+		   unsigned long caller_addr);
-+void log_post_read_mmio(u64 val, u8 width, const volatile void __iomem *addr,
-+			unsigned long caller_addr);
-+
-+#else
-+
-+static inline void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
-+				  unsigned long caller_addr) {}
-+static inline void log_post_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
-+				       unsigned long caller_addr) {}
-+static inline void log_read_mmio(u8 width, const volatile void __iomem *addr,
-+				 unsigned long caller_addr) {}
-+static inline void log_post_read_mmio(u64 val, u8 width, const volatile void __iomem *addr,
-+				      unsigned long caller_addr) {}
-+
-+#endif /* CONFIG_TRACE_MMIO_ACCESS */
- 
- /*
-  * __raw_{read,write}{b,w,l,q}() access memory in native endianness.
-@@ -149,9 +179,11 @@ static inline u8 readb(const volatile void __iomem *addr)
- {
- 	u8 val;
- 
-+	log_read_mmio(8, addr, _THIS_IP_);
- 	__io_br();
- 	val = __raw_readb(addr);
- 	__io_ar(val);
-+	log_post_read_mmio(val, 8, addr, _THIS_IP_);
- 	return val;
- }
- #endif
-@@ -162,9 +194,11 @@ static inline u16 readw(const volatile void __iomem *addr)
- {
- 	u16 val;
- 
-+	log_read_mmio(16, addr, _THIS_IP_);
- 	__io_br();
- 	val = __le16_to_cpu((__le16 __force)__raw_readw(addr));
- 	__io_ar(val);
-+	log_post_read_mmio(val, 16, addr, _THIS_IP_);
- 	return val;
- }
- #endif
-@@ -175,9 +209,11 @@ static inline u32 readl(const volatile void __iomem *addr)
- {
- 	u32 val;
- 
-+	log_read_mmio(32, addr, _THIS_IP_);
- 	__io_br();
- 	val = __le32_to_cpu((__le32 __force)__raw_readl(addr));
- 	__io_ar(val);
-+	log_post_read_mmio(val, 32, addr, _THIS_IP_);
- 	return val;
- }
- #endif
-@@ -189,9 +225,11 @@ static inline u64 readq(const volatile void __iomem *addr)
- {
- 	u64 val;
- 
-+	log_read_mmio(64, addr, _THIS_IP_);
- 	__io_br();
- 	val = __le64_to_cpu(__raw_readq(addr));
- 	__io_ar(val);
-+	log_post_read_mmio(val, 64, addr, _THIS_IP_);
- 	return val;
- }
- #endif
-@@ -201,9 +239,11 @@ static inline u64 readq(const volatile void __iomem *addr)
- #define writeb writeb
- static inline void writeb(u8 value, volatile void __iomem *addr)
- {
-+	log_write_mmio(value, 8, addr, _THIS_IP_);
- 	__io_bw();
- 	__raw_writeb(value, addr);
- 	__io_aw();
-+	log_post_write_mmio(value, 8, addr, _THIS_IP_);
- }
- #endif
- 
-@@ -211,9 +251,11 @@ static inline void writeb(u8 value, volatile void __iomem *addr)
- #define writew writew
- static inline void writew(u16 value, volatile void __iomem *addr)
- {
-+	log_write_mmio(value, 16, addr, _THIS_IP_);
- 	__io_bw();
- 	__raw_writew((u16 __force)cpu_to_le16(value), addr);
- 	__io_aw();
-+	log_post_write_mmio(value, 16, addr, _THIS_IP_);
- }
- #endif
- 
-@@ -221,9 +263,11 @@ static inline void writew(u16 value, volatile void __iomem *addr)
- #define writel writel
- static inline void writel(u32 value, volatile void __iomem *addr)
- {
-+	log_write_mmio(value, 32, addr, _THIS_IP_);
- 	__io_bw();
- 	__raw_writel((u32 __force)__cpu_to_le32(value), addr);
- 	__io_aw();
-+	log_post_write_mmio(value, 32, addr, _THIS_IP_);
- }
- #endif
- 
-@@ -232,9 +276,11 @@ static inline void writel(u32 value, volatile void __iomem *addr)
- #define writeq writeq
- static inline void writeq(u64 value, volatile void __iomem *addr)
- {
-+	log_write_mmio(value, 64, addr, _THIS_IP_);
- 	__io_bw();
- 	__raw_writeq(__cpu_to_le64(value), addr);
- 	__io_aw();
-+	log_post_write_mmio(value, 64, addr, _THIS_IP_);
- }
- #endif
- #endif /* CONFIG_64BIT */
-@@ -248,7 +294,12 @@ static inline void writeq(u64 value, volatile void __iomem *addr)
- #define readb_relaxed readb_relaxed
- static inline u8 readb_relaxed(const volatile void __iomem *addr)
- {
--	return __raw_readb(addr);
-+	u8 val;
-+
-+	log_read_mmio(8, addr, _THIS_IP_);
-+	val = __raw_readb(addr);
-+	log_post_read_mmio(val, 8, addr, _THIS_IP_);
-+	return val;
- }
- #endif
- 
-@@ -256,7 +307,12 @@ static inline u8 readb_relaxed(const volatile void __iomem *addr)
- #define readw_relaxed readw_relaxed
- static inline u16 readw_relaxed(const volatile void __iomem *addr)
- {
--	return __le16_to_cpu(__raw_readw(addr));
-+	u16 val;
-+
-+	log_read_mmio(16, addr, _THIS_IP_);
-+	val = __le16_to_cpu(__raw_readw(addr));
-+	log_post_read_mmio(val, 16, addr, _THIS_IP_);
-+	return val;
- }
- #endif
- 
-@@ -264,7 +320,12 @@ static inline u16 readw_relaxed(const volatile void __iomem *addr)
- #define readl_relaxed readl_relaxed
- static inline u32 readl_relaxed(const volatile void __iomem *addr)
- {
--	return __le32_to_cpu(__raw_readl(addr));
-+	u32 val;
-+
-+	log_read_mmio(32, addr, _THIS_IP_);
-+	val = __le32_to_cpu(__raw_readl(addr));
-+	log_post_read_mmio(val, 32, addr, _THIS_IP_);
-+	return val;
- }
- #endif
- 
-@@ -272,7 +333,12 @@ static inline u32 readl_relaxed(const volatile void __iomem *addr)
- #define readq_relaxed readq_relaxed
- static inline u64 readq_relaxed(const volatile void __iomem *addr)
- {
--	return __le64_to_cpu(__raw_readq(addr));
-+	u64 val;
-+
-+	log_read_mmio(64, addr, _THIS_IP_);
-+	val =__le64_to_cpu(__raw_readq(addr));
-+	log_post_read_mmio(val, 64, addr, _THIS_IP_);
-+	return val;
- }
- #endif
- 
-@@ -280,7 +346,9 @@ static inline u64 readq_relaxed(const volatile void __iomem *addr)
- #define writeb_relaxed writeb_relaxed
- static inline void writeb_relaxed(u8 value, volatile void __iomem *addr)
- {
-+	log_write_mmio(value, 8, addr, _THIS_IP_);
- 	__raw_writeb(value, addr);
-+	log_post_write_mmio(value, 8, addr, _THIS_IP_);
- }
- #endif
- 
-@@ -288,7 +356,9 @@ static inline void writeb_relaxed(u8 value, volatile void __iomem *addr)
- #define writew_relaxed writew_relaxed
- static inline void writew_relaxed(u16 value, volatile void __iomem *addr)
- {
-+	log_write_mmio(value, 16, addr, _THIS_IP_);
- 	__raw_writew(cpu_to_le16(value), addr);
-+	log_post_write_mmio(value, 16, addr, _THIS_IP_);
- }
- #endif
- 
-@@ -296,7 +366,9 @@ static inline void writew_relaxed(u16 value, volatile void __iomem *addr)
- #define writel_relaxed writel_relaxed
- static inline void writel_relaxed(u32 value, volatile void __iomem *addr)
- {
-+	log_write_mmio(value, 32, addr, _THIS_IP_);
- 	__raw_writel(__cpu_to_le32(value), addr);
-+	log_post_write_mmio(value, 32, addr, _THIS_IP_);
- }
- #endif
- 
-@@ -304,7 +376,9 @@ static inline void writel_relaxed(u32 value, volatile void __iomem *addr)
- #define writeq_relaxed writeq_relaxed
- static inline void writeq_relaxed(u64 value, volatile void __iomem *addr)
- {
-+	log_write_mmio(value, 64, addr, _THIS_IP_);
- 	__raw_writeq(__cpu_to_le64(value), addr);
-+	log_post_write_mmio(value, 64, addr, _THIS_IP_);
- }
- #endif
- 
--- 
-2.33.1
-
+>
+> vim +/_THIS_IP_ +181 include/asm-generic/io.h
+>
+>     169	
+>     170	/*
+>     171	 * {read,write}{b,w,l,q}() access little endian memory and return result in
+>     172	 * native endianness.
+>     173	 */
+>     174	
+>     175	#ifndef readb
+>     176	#define readb readb
+>     177	static inline u8 readb(const volatile void __iomem *addr)
+>     178	{
+>     179		u8 val;
+>     180	
+>   > 181		log_read_mmio(8, addr, _THIS_IP_);
+>     182		__io_br();
+>     183		val = __raw_readb(addr);
+>     184		__io_ar(val);
+>     185		log_post_read_mmio(val, 8, addr, _THIS_IP_);
+>     186		return val;
+>     187	}
+>     188	#endif
+>     189	
+>
+> ---
+> 0-DAY CI Kernel Test Service, Intel Corporation
+> https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
