@@ -2,87 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A642490437
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jan 2022 09:45:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D1BF6490576
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jan 2022 10:54:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232447AbiAQIok (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jan 2022 03:44:40 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217]:48352 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238403AbiAQIoj (ORCPT
+        id S238016AbiAQJy4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jan 2022 04:54:56 -0500
+Received: from m1397.mail.163.com ([220.181.13.97]:1859 "EHLO
+        m1397.mail.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235893AbiAQJy4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jan 2022 03:44:39 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CBF93610A6;
-        Mon, 17 Jan 2022 08:44:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12DBEC36AE3;
-        Mon, 17 Jan 2022 08:44:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1642409078;
-        bh=A02iP63Nmhf+3fXS2zK3Hw4hWrnpdgDC7O7PJe9+bSc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=eDYim3PbCga1SLXLbcyS52cgzi0eAxuU5juCBja1qJEycc1H/1toDFBccvko7W4oT
-         TsrUTOrIcqhcxp3wcjgEIcp+REw54EpyNVdGXpjNfjY5tlTT6auwAJqwUXO+5xgI/X
-         Q32u1jf9rImMH2AYbbimk37tqQjS7yJDSl95cLTrSAOPFabdPOQDFenDtqKgsIwcW7
-         zm9sPa+LbbmlX1BcAFuzJC6EYdWsYhKoAHaId0tTcHoDXyDK3FlKvyyXoNCrOLirmX
-         RhNuanhlXVLvwH8mGTCeN0WdyL+DCgQrBC8MX3BaqWOt5HbiQurHMjZ0zt+5pDU7Ek
-         DzVQKeTkiIDxg==
-Date:   Mon, 17 Jan 2022 14:14:32 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Slark Xiao <slark_xiao@163.com>
+        Mon, 17 Jan 2022 04:54:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=9dnuf
+        rMMtk3itgkWFpthNjv+i06kMuBtg0W7wPYLTxE=; b=aZEAQoaYt6Naomu1ING73
+        u96ooLZwi/o/Fx/YAWUDip1zLxg+uBUkzJngziUIaWit60L0jAg4AjomBsb/46Sg
+        KCA45ornegWjnovlhwI10ui3yuCiAyIIoxXe0oIEU3txItRo1LVgqDNr6kuU6Gfx
+        1afLPav9IyVXJdOOdGlcuU=
+Received: from slark_xiao$163.com ( [112.97.53.17] ) by ajax-webmail-wmsvr97
+ (Coremail) ; Mon, 17 Jan 2022 17:54:37 +0800 (CST)
+X-Originating-IP: [112.97.53.17]
+Date:   Mon, 17 Jan 2022 17:54:37 +0800 (CST)
+From:   "Slark Xiao" <slark_xiao@163.com>
+To:     "Manivannan Sadhasivam" <mani@kernel.org>
 Cc:     hemantk@codeaurora.org, mhi@lists.linux.dev,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net v2] For default mechanism, product would use default
- MRU 3500 if they didn't define it. But for Foxconn SDX55, there is a known
- issue which MRU 3500 would lead to data connection lost. So we align it with
- Qualcomm default MRU settings.
-Message-ID: <20220117084432.GB4209@thinkpad>
+Subject: Re:Re: [PATCH net v2] For default mechanism, product would use
+ default MRU 3500 if they didn't define it. But for Foxconn SDX55, there is
+ a known issue which MRU 3500 would lead to data connection lost. So we
+ align it with Qualcomm default MRU settings.
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210622(1d4788a8)
+ Copyright (c) 2002-2022 www.mailtech.cn 163com
+In-Reply-To: <20220117084432.GB4209@thinkpad>
 References: <20220117081644.21121-1-slark_xiao@163.com>
+ <20220117084432.GB4209@thinkpad>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220117081644.21121-1-slark_xiao@163.com>
+Message-ID: <50e92997.386b.17e6775c20b.Coremail.slark_xiao@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: YcGowADnCyvdPOVhWi0NAA--.52199W
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/xtbBDR+LZFaEG24L7QACs+
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 17, 2022 at 04:16:44PM +0800, Slark Xiao wrote:
-> Fixes: 5c2c85315948 ("bus: mhi: pci-generic: configurable network interface MRU")
-
-You have messed up the patch subject, please fix it. Also, the correct fixes tag
-should be the one added the Foxconn modem support, precisely "aac426562f56".
-
-One more thing, please make sure this MRU value works well for other Foxconn
-modems supported by this config.
-
-> Signed-off-by: Slark Xiao <slark_xiao@163.com>
-
-You should have added my Reviewed-by tag too...
-
-Thanks,
-Mani
-
-> 
-> ---
-> v2: Add Fixes tag
-> ---
->  drivers/bus/mhi/pci_generic.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-> index 3a258a677df8..74e8fc342cfd 100644
-> --- a/drivers/bus/mhi/pci_generic.c
-> +++ b/drivers/bus/mhi/pci_generic.c
-> @@ -366,6 +366,7 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
->  	.config = &modem_foxconn_sdx55_config,
->  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
->  	.dma_data_width = 32,
-> +	.mru_default = 32768,
->  	.sideband_wake = false,
->  };
->  
-> -- 
-> 2.25.1
-> 
+CgoKCgoKQXQgMjAyMi0wMS0xNyAxNjo0NDozMiwgIk1hbml2YW5uYW4gU2FkaGFzaXZhbSIgPG1h
+bmlAa2VybmVsLm9yZz4gd3JvdGU6Cj5PbiBNb24sIEphbiAxNywgMjAyMiBhdCAwNDoxNjo0NFBN
+ICswODAwLCBTbGFyayBYaWFvIHdyb3RlOgo+PiBGaXhlczogNWMyYzg1MzE1OTQ4ICgiYnVzOiBt
+aGk6IHBjaS1nZW5lcmljOiBjb25maWd1cmFibGUgbmV0d29yayBpbnRlcmZhY2UgTVJVIikKPgo+
+WW91IGhhdmUgbWVzc2VkIHVwIHRoZSBwYXRjaCBzdWJqZWN0LCBwbGVhc2UgZml4IGl0LiBBbHNv
+LCB0aGUgY29ycmVjdCBmaXhlcyB0YWcKPnNob3VsZCBiZSB0aGUgb25lIGFkZGVkIHRoZSBGb3hj
+b25uIG1vZGVtIHN1cHBvcnQsIHByZWNpc2VseSAiYWFjNDI2NTYyZjU2Ii4KPgpZZXMsIHNvcnJ5
+IGZvciB0aGlzIG1pc3Rha2UuIAo+T25lIG1vcmUgdGhpbmcsIHBsZWFzZSBtYWtlIHN1cmUgdGhp
+cyBNUlUgdmFsdWUgd29ya3Mgd2VsbCBmb3Igb3RoZXIgRm94Y29ubgo+bW9kZW1zIHN1cHBvcnRl
+ZCBieSB0aGlzIGNvbmZpZy4KPgpJIGFtIHN1cmUgdGhpcyB3b3VsZCB3b3JrIGZvciBhbGwgIG91
+ciBkZXZpY2UuIEJUVywgSSB3YW50IHRvIGFkZCB0aGlzIG1ydV9kZWZhdWx0IHRvIApjaW50ZXJp
+b24tbXYzMSBQUk9EVUNULiBTaGFsbCBJIHVzZSB2MyBvciBjcmVhdGUgYSBuZXcgdmVyc2lvbiBm
+b3IgdGhhdD8gSXQncyBjb25maXJtZWQgCnRoYXQgdGhpcyBjaGFuZ2UgY291bGQgaGVscCBmaXgg
+aXNzdWUgb24gdGhhdCBwcm9kdWN0Lgo+PiBTaWduZWQtb2ZmLWJ5OiBTbGFyayBYaWFvIDxzbGFy
+a194aWFvQDE2My5jb20+Cj4KPllvdSBzaG91bGQgaGF2ZSBhZGRlZCBteSBSZXZpZXdlZC1ieSB0
+YWcgdG9vLi4uClNoYWxsIEkgYWRkIHJldmlld2QtYnkgdGFnIGlmIEkgYWRkIGNoYW5nZXMgb24g
+TVYzMSBwcm9kdWN0Pwo+Cj5UaGFua3MsCj5NYW5pCj4KPj4gCj4+IC0tLQo+PiB2MjogQWRkIEZp
+eGVzIHRhZwo+PiAtLS0KPj4gIGRyaXZlcnMvYnVzL21oaS9wY2lfZ2VuZXJpYy5jIHwgMSArCj4+
+ICAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKykKPj4gCj4+IGRpZmYgLS1naXQgYS9kcml2
+ZXJzL2J1cy9taGkvcGNpX2dlbmVyaWMuYyBiL2RyaXZlcnMvYnVzL21oaS9wY2lfZ2VuZXJpYy5j
+Cj4+IGluZGV4IDNhMjU4YTY3N2RmOC4uNzRlOGZjMzQyY2ZkIDEwMDY0NAo+PiAtLS0gYS9kcml2
+ZXJzL2J1cy9taGkvcGNpX2dlbmVyaWMuYwo+PiArKysgYi9kcml2ZXJzL2J1cy9taGkvcGNpX2dl
+bmVyaWMuYwo+PiBAQCAtMzY2LDYgKzM2Niw3IEBAIHN0YXRpYyBjb25zdCBzdHJ1Y3QgbWhpX3Bj
+aV9kZXZfaW5mbyBtaGlfZm94Y29ubl9zZHg1NV9pbmZvID0gewo+PiAgCS5jb25maWcgPSAmbW9k
+ZW1fZm94Y29ubl9zZHg1NV9jb25maWcsCj4+ICAJLmJhcl9udW0gPSBNSElfUENJX0RFRkFVTFRf
+QkFSX05VTSwKPj4gIAkuZG1hX2RhdGFfd2lkdGggPSAzMiwKPj4gKwkubXJ1X2RlZmF1bHQgPSAz
+Mjc2OCwKPj4gIAkuc2lkZWJhbmRfd2FrZSA9IGZhbHNlLAo+PiAgfTsKPj4gIAo+PiAtLSAKPj4g
+Mi4yNS4xCj4+IAo=
