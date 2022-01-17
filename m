@@ -2,67 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F7F3490392
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jan 2022 09:17:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 493674903F5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jan 2022 09:36:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237985AbiAQIRX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jan 2022 03:17:23 -0500
-Received: from mail-m975.mail.163.com ([123.126.97.5]:24218 "EHLO
-        mail-m975.mail.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231253AbiAQIRW (ORCPT
+        id S238234AbiAQIgF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jan 2022 03:36:05 -0500
+Received: from m1397.mail.163.com ([220.181.13.97]:45498 "EHLO
+        m1397.mail.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233273AbiAQIgE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jan 2022 03:17:22 -0500
+        Mon, 17 Jan 2022 03:36:04 -0500
+X-Greylist: delayed 925 seconds by postgrey-1.27 at vger.kernel.org; Mon, 17 Jan 2022 03:35:56 EST
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=zGy/c
-        +rMZ+YP77HHohIlehh2vF9jVqV2GGfASZ90qrc=; b=Y0hhUnkIIbKqhF/cQjIIY
-        YN+dfq3qrYZexbFVW4K0xXFknnyeGhfjfERPLo/L38MmskdBcXsc+/UkNnaqrCnT
-        L02nBzU4eKD+1pcVbPajfixjQd2c4VKu2JIdzFgfMzCe8BC6a/xa7lAjKN39IORG
-        G3XXYqC3Es2nEMDrYSB9/k=
-Received: from localhost.localdomain (unknown [112.97.49.17])
-        by smtp5 (Coremail) with SMTP id HdxpCgAXT6DzJeVh5THMAQ--.604S2;
-        Mon, 17 Jan 2022 16:16:53 +0800 (CST)
-From:   Slark Xiao <slark_xiao@163.com>
-To:     mani@kernel.org, hemantk@codeaurora.org
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Slark Xiao <slark_xiao@163.com>
-Subject: [PATCH net v2] For default mechanism, product would use default MRU 3500 if they didn't define it. But for Foxconn SDX55, there is a known issue which MRU 3500 would lead to data connection lost. So we align it with Qualcomm default MRU settings.
-Date:   Mon, 17 Jan 2022 16:16:44 +0800
-Message-Id: <20220117081644.21121-1-slark_xiao@163.com>
-X-Mailer: git-send-email 2.25.1
+        s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=U6AJg
+        RT9yEKALKqy71zPTJhLAEDKSAmRLqeRA/LEZqI=; b=og+G4EDMAh4i2EurjCB65
+        teC8pAYUU5c4O0ADKf3qc8RxMr7UEwDepXJOswqKL5CyZcY+U93HKNLyFaB6+kLP
+        us5VJOosw9eK37s4Ry1Nd8ZwGezVY7NMjnOXCAt/l5W6V5vBg75r7+48C6BSMI5P
+        WDLiTOA9hIKs3f+JLqwlKY=
+Received: from slark_xiao$163.com ( [112.97.53.17] ) by ajax-webmail-wmsvr97
+ (Coremail) ; Mon, 17 Jan 2022 16:20:12 +0800 (CST)
+X-Originating-IP: [112.97.53.17]
+Date:   Mon, 17 Jan 2022 16:20:12 +0800 (CST)
+From:   "Slark Xiao" <slark_xiao@163.com>
+To:     "Manivannan Sadhasivam" <mani@kernel.org>
+Cc:     hemantk@codeaurora.org, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re:Re: [PATCH net] bus: mhi: Add mru_default for Foxconn SDX55
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210622(1d4788a8)
+ Copyright (c) 2002-2022 www.mailtech.cn 163com
+In-Reply-To: <20220117075323.GA4209@thinkpad>
+References: <20220115103912.3775-1-slark_xiao@163.com>
+ <20220117075323.GA4209@thinkpad>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: HdxpCgAXT6DzJeVh5THMAQ--.604S2
-X-Coremail-Antispam: 1Uf129KBjvdXoW7Gw18tr4xGF1kWw4fCFy5twb_yoWxtrg_Cr
-        ZxGF97Gws8WryDGw1vqan5JrWrKa4rWr1kAF1Iqrn8J342vwnxXwnYqr18JFnIgF45CF9r
-        J3s5Zr1rAw4YgjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-        9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IUbasj7UUUUU==
-X-Originating-IP: [112.97.49.17]
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiNQCLZFrPfDWNuwABsx
+Message-ID: <76f0a70a.2e7f.17e671f4eb0.Coremail.slark_xiao@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: YcGowABHbCu8JuVhoh8NAA--.52392W
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiJRaLZGAJmDy6WgABsw
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fixes: 5c2c85315948 ("bus: mhi: pci-generic: configurable network interface MRU")
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
-
----
-v2: Add Fixes tag
----
- drivers/bus/mhi/pci_generic.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-index 3a258a677df8..74e8fc342cfd 100644
---- a/drivers/bus/mhi/pci_generic.c
-+++ b/drivers/bus/mhi/pci_generic.c
-@@ -366,6 +366,7 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
- 	.config = &modem_foxconn_sdx55_config,
- 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
- 	.dma_data_width = 32,
-+	.mru_default = 32768,
- 	.sideband_wake = false,
- };
- 
--- 
-2.25.1
-
+CgpBdCAyMDIyLTAxLTE3IDE1OjUzOjIzLCAiTWFuaXZhbm5hbiBTYWRoYXNpdmFtIiA8bWFuaUBr
+ZXJuZWwub3JnPiB3cm90ZToKPk9uIFNhdCwgSmFuIDE1LCAyMDIyIGF0IDA2OjM5OjEyUE0gKzA4
+MDAsIFNsYXJrIFhpYW8gd3JvdGU6Cj4+IEZvciBkZWZhdWx0IG1lY2hhbmlzbSwgcHJvZHVjdCB3
+b3VsZCB1c2UgZGVmYXVsdCBNUlUgMzUwMCBpZgo+PiB0aGV5IGRpZG4ndCBkZWZpbmUgaXQuIEJ1
+dCBmb3IgRm94Y29ubiBTRFg1NSwgdGhlcmUgaXMgYSBrbm93bgo+PiBpc3N1ZSB3aGljaCBNUlUg
+MzUwMCB3b3VsZCBsZWFkIHRvIGRhdGEgY29ubmVjdGlvbiBsb3N0Lgo+PiBTbyB3ZSBhbGlnbiBp
+dCB3aXRoIFF1YWxjb21tIGRlZmF1bHQgTVJVIHNldHRpbmdzLgo+PiAKPj4gU2lnbmVkLW9mZi1i
+eTogU2xhcmsgWGlhbyA8c2xhcmtfeGlhb0AxNjMuY29tPgo+Cj5SZXZpZXdlZC1ieTogTWFuaXZh
+bm5hbiBTYWRoYXNpdmFtIDxtYW5pQGtlcm5lbC5vcmc+Cj4KPllvdSBuZWVkIHRvIGFkZCBGaXhl
+cyB0YWcgc28gdGhhdCBJIGNhbiBxdWV1ZSB0aGlzIHBhdGNoIGZvciB2NS4xNyBSQ3MuCj4KPlRo
+YW5rcywKPk1hbmkKPgpIaSBNYW5pLAogIE5ldyBwYXRjaCBpcyBjb21taXR0ZWQuIFBsZWFzZSBo
+ZWxwIGRvIGEgY2hlY2sgYWdhaW4uCgpUaGFua3MhCj4+IC0tLQo+PiAgZHJpdmVycy9idXMvbWhp
+L3BjaV9nZW5lcmljLmMgfCAxICsKPj4gIDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKQo+
+PiAKPj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvYnVzL21oaS9wY2lfZ2VuZXJpYy5jIGIvZHJpdmVy
+cy9idXMvbWhpL3BjaV9nZW5lcmljLmMKPj4gaW5kZXggM2EyNThhNjc3ZGY4Li43NGU4ZmMzNDJj
+ZmQgMTAwNjQ0Cj4+IC0tLSBhL2RyaXZlcnMvYnVzL21oaS9wY2lfZ2VuZXJpYy5jCj4+ICsrKyBi
+L2RyaXZlcnMvYnVzL21oaS9wY2lfZ2VuZXJpYy5jCj4+IEBAIC0zNjYsNiArMzY2LDcgQEAgc3Rh
+dGljIGNvbnN0IHN0cnVjdCBtaGlfcGNpX2Rldl9pbmZvIG1oaV9mb3hjb25uX3NkeDU1X2luZm8g
+PSB7Cj4+ICAJLmNvbmZpZyA9ICZtb2RlbV9mb3hjb25uX3NkeDU1X2NvbmZpZywKPj4gIAkuYmFy
+X251bSA9IE1ISV9QQ0lfREVGQVVMVF9CQVJfTlVNLAo+PiAgCS5kbWFfZGF0YV93aWR0aCA9IDMy
+LAo+PiArCS5tcnVfZGVmYXVsdCA9IDMyNzY4LAo+PiAgCS5zaWRlYmFuZF93YWtlID0gZmFsc2Us
+Cj4+ICB9Owo+PiAgCj4+IC0tIAo+PiAyLjI1LjEKPj4gCg==
