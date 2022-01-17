@@ -2,97 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD9D8490617
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jan 2022 11:41:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FB0F49061D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jan 2022 11:41:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236133AbiAQKjk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jan 2022 05:39:40 -0500
-Received: from guitar.tcltek.co.il ([84.110.109.230]:52576 "EHLO mx.tkos.co.il"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S229744AbiAQKjj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jan 2022 05:39:39 -0500
-Received: from tarshish (unknown [10.0.8.4])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mx.tkos.co.il (Postfix) with ESMTPS id 95CE3440242;
-        Mon, 17 Jan 2022 12:39:29 +0200 (IST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tkos.co.il;
-        s=default; t=1642415970;
-        bh=9Wg6psWGSMPUmDfhFxRofL+wpsigvBX363eYVFLuJnw=;
-        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
-        b=JO7OKIChuye2W6vXIBuASeSEzoc2VJTsqP4Nrt/8hySPQx4xjozgcWoQcMaBXHdQ/
-         /8otSTLG8P5JGQA3bS9+8rx2PqdtOUrRUgnHCmcwxFIjtu0hblB9+XWEdDdk72Dbg5
-         BWsJZ4B5MBphAIQtMn8fr4zHVjiJ5VduzDSBA3UDtB1+CBUj+NlBpg/Llb0L+NSGlg
-         vqWcBoGMW7fCiQ5zekYPrX2STR7GbJydLpApb4fjr7VIjWC9Sz4OmMeSFkRLH9Dpfs
-         mbQDbJfLcU+24n47Ev0tthaSWr4J6n5masxmyIBTumQn58+mtfgU1qOsuDEvFu6EgM
-         ffbR2+3ONnXNw==
-References: <20220114233904.907918-1-sean.anderson@seco.com>
-User-agent: mu4e 1.6.10; emacs 27.1
-From:   Baruch Siach <baruch@tkos.co.il>
-To:     Sean Anderson <sean.anderson@seco.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Robert Hancock <robert.hancock@calian.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 0/6] usb: dwc3: Calculate REFCLKPER et. al. from
- reference clock
-Date:   Mon, 17 Jan 2022 12:36:25 +0200
-In-reply-to: <20220114233904.907918-1-sean.anderson@seco.com>
-Message-ID: <87iluifxy1.fsf@tarshish>
+        id S233737AbiAQKkx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jan 2022 05:40:53 -0500
+Received: from mail-m974.mail.163.com ([123.126.97.4]:44280 "EHLO
+        mail-m974.mail.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233028AbiAQKkw (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 17 Jan 2022 05:40:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=yFV6Y
+        NSi4Vb9QBZh0XwgcOfZ3owMie3kscsPISoVnHo=; b=m5i0JBosUPiN6c7QA3WQi
+        a0iMo9B98P18WhvQCXanKYn+nkH3/nPFK58q1dOq0DKYMd8LgrarJ25Td5OkeT1I
+        Cw9bb4PAu85f1Ci1hlm91bCeUbFvp42Y/2dKhh1MdlJhJvrFLaaM/27nW1s3uU2j
+        ieVVXQqoqMtVkL3cbIBc1A=
+Received: from localhost.localdomain (unknown [112.97.53.17])
+        by smtp4 (Coremail) with SMTP id HNxpCgAnPPyYR+VhcIvZAQ--.302S2;
+        Mon, 17 Jan 2022 18:40:26 +0800 (CST)
+From:   Slark Xiao <slark_xiao@163.com>
+To:     mani@kernel.org, hemantk@codeaurora.org, jarvis.w.jiang@gmail.com,
+        loic.poulain@linaro.org, thomas.ulrich@thalesgroup.com,
+        gregkh@linuxfoundation.org
+Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Slark Xiao <slark_xiao@163.com>
+Subject: [PATCH net] bus: mhi: Add mru_default for Foxconn SDX55 and Cinterion MV31-W
+Date:   Mon, 17 Jan 2022 18:40:16 +0800
+Message-Id: <20220117104016.23046-1-slark_xiao@163.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: HNxpCgAnPPyYR+VhcIvZAQ--.302S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7AFWUJw47Wr1UJF4UCr13XFb_yoW8Gr48pF
+        40vrWIyr4vqrWYqF4vk34kWFn5WanxGFy7KFZrK342yrn8Aa4qvFyqgw1SgF12qrWxXFWa
+        yrn0gFZrXF1DXaDanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UUKs8UUUUU=
+X-Originating-IP: [112.97.53.17]
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/xtbBrRqLZF75dU7ZwQAAsc
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sean, Thinh,
+For default mechanism, product would use default MRU 3500 if
+they didn't define it. But for Foxconn SDX55, there is a known
+issue which MRU 3500 would lead to data connection lost.
+So we align it with Qualcomm default MRU settings.
+We also validate it with Cinterion product and find it also
+works.
 
-On Fri, Jan 14 2022, Sean Anderson wrote:
-> This is a rework of patches 3-5 of [1]. It attempts to correctly program
-> REFCLKPER and REFCLK_FLADJ based on the reference clock frequency. Since
-> we no longer need a special property duplicating this configuration,
-> snps,ref-clock-period-ns is deprecated.
->
-> Please test this! Patches 3/4 in this series have the effect of
-> programming REFCLKPER and REFCLK_FLADJ on boards which already configure
-> the "ref" clock. I have build tested, but not much else.
->
-> [1] https://lore.kernel.org/linux-usb/20220114044230.2677283-1-robert.hancock@calian.com/
+Fixes: aac426562f56 ("bus: mhi: pci_generic: Introduce Foxconn T99W175 support")
+Fixes: 87693e092bd0 ("bus: mhi: pci_generic: Add Cinterion MV31-W PCIe to MHI")
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
+---
+ drivers/bus/mhi/pci_generic.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Thinh, you suggested the dedicated DT property for the reference clock:
-
-  https://lore.kernel.org/all/d5acb192-80b9-36f7-43f5-81f21c4e6ba0@synopsys.com/
-
-Can you comment on this series?
-
-Thanks,
-baruch
-
-> Sean Anderson (6):
->   dt-bindings: usb: dwc3: Deprecate snps,ref-clock-period-ns
->   usb: dwc3: Get clocks individually
->   usb: dwc3: Calculate REFCLKPER based on reference clock
->   usb: dwc3: Handle fractional reference clocks
->   arm64: dts: zynqmp: Move USB clocks to dwc3 node
->   arm64: dts: ipq6018: Use reference clock to set dwc3 period
->
->  .../devicetree/bindings/usb/snps,dwc3.yaml    |  7 +-
->  arch/arm64/boot/dts/qcom/ipq6018.dtsi         |  3 +-
->  .../arm64/boot/dts/xilinx/zynqmp-clk-ccf.dtsi |  4 +-
->  arch/arm64/boot/dts/xilinx/zynqmp.dtsi        |  4 +-
->  drivers/usb/dwc3/core.c                       | 98 ++++++++++++++++---
->  drivers/usb/dwc3/core.h                       |  6 +-
->  6 files changed, 98 insertions(+), 24 deletions(-)
-
-
+diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+index 3a258a677df8..b79895810c52 100644
+--- a/drivers/bus/mhi/pci_generic.c
++++ b/drivers/bus/mhi/pci_generic.c
+@@ -366,6 +366,7 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
+ 	.config = &modem_foxconn_sdx55_config,
+ 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+ 	.dma_data_width = 32,
++	.mru_default = 32768,
+ 	.sideband_wake = false,
+ };
+ 
+@@ -401,6 +402,7 @@ static const struct mhi_pci_dev_info mhi_mv31_info = {
+ 	.config = &modem_mv31_config,
+ 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+ 	.dma_data_width = 32,
++	.mru_default = 32768,
+ };
+ 
+ static const struct mhi_channel_config mhi_sierra_em919x_channels[] = {
 -- 
-                                                     ~. .~   Tk Open Systems
-=}------------------------------------------------ooO--U--Ooo------------{=
-   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
+2.25.1
+
