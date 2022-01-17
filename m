@@ -2,142 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 06ACC491075
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jan 2022 19:52:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D9E704911C5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jan 2022 23:34:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242277AbiAQSwN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jan 2022 13:52:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43232 "EHLO
+        id S243632AbiAQWeA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jan 2022 17:34:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230519AbiAQSwN (ORCPT
+        with ESMTP id S243622AbiAQWeA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jan 2022 13:52:13 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8857AC061574;
-        Mon, 17 Jan 2022 10:52:12 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id p18so22534551wmg.4;
-        Mon, 17 Jan 2022 10:52:12 -0800 (PST)
+        Mon, 17 Jan 2022 17:34:00 -0500
+Received: from mail-ua1-x92e.google.com (mail-ua1-x92e.google.com [IPv6:2607:f8b0:4864:20::92e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0E1FC061574;
+        Mon, 17 Jan 2022 14:33:59 -0800 (PST)
+Received: by mail-ua1-x92e.google.com with SMTP id m90so33227259uam.2;
+        Mon, 17 Jan 2022 14:33:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Llyi63UWOQi3BXtk58lidq6ltne401ehGOiS/+yI99c=;
-        b=E0SkFJ1eNBMo/BXshOmkTPChBIgiyyVlVk0gPGk8QVDDy8UyhCmsqtCHoZoCQaVEQx
-         Yb58PaMtXHJVBJCjqhGQOYYVRLNm1yJkccLfJeS4ZcrGOGajs/K0w1TYlVLI/AmKZhRB
-         fe6dC6vlN7i6TZBjk4XACc/fnUn5h4x7xC/oHEpyn0/nMwqXNHZzCKXzH+y93UyMAnX5
-         eQviF1wxkhT72AKqxmeYxLzTL/pcImh7vlU/GhZfJSxitgRa/HCQtG2It+18vtBtWppx
-         /H8OM87IZVViaQZgl4IwD4XbF02ov9rDIT9Vpwr+N7lASCCowUWCpV9Cp0ToXyuz+fqH
-         R3mA==
+        bh=J6GKKmupfWWlnbgXJKPfzJduT4T53vFjxxafbxuWCWg=;
+        b=petsnc8lPMN850o8bB7rXXqsr7jTek96Ibwh+lLVqGy1nC6IOknt0HnjXjpcmfOEqm
+         N/8+yo35F8ZgjCaaeqzv1NMEfg7Pt8yXnHz6muenSeqEVoSTHjOUb8xy/SD9+ryVqwn6
+         Fj5lk09WqWsy0Kf+4puiN1ivWTVcYpLYEq9dkw1ntuRXpuYJsqjg/5AdiWeRYvAMh/iN
+         k7pZNkMA5uha61nx/Z/SLrNpCkLup0vmUItmGaIpaQHallceNw9mza3k38ierx/W2LY8
+         aPSdCBM1OrasuuvSjuu8RVtTHKm6rIkCTLJs18gthrAO1slm8npdnXZLDIRFkAoEm8T9
+         4tSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Llyi63UWOQi3BXtk58lidq6ltne401ehGOiS/+yI99c=;
-        b=J0vibS4sszwLle6Brrh6kTyBL0Tfkg+S+lkRrMT0JswJ2BxVaJFLh+AltjobaeV6c3
-         A6eVbA1xSfZcHT/l4NBAvOsJT1Rp9Kl0nTwntPwgBVtLqP6k5WdzU8kmUBaUZ0hmo+Ie
-         d80mUjgnP6IeVLJeuu2y1YJsT/ZJZBwjo6o4buUlQjMuXLyciRso+VscVnc+xB4hkNHr
-         H4gKqvQau95LS5rhgUd0YaXqfPimDr5eZHBGHpiwyuwUpL1AMH76Bl+0DoFeimXOAIKN
-         qLAw6vzidQknG3i4QYDr+2fR75yqyh99+OVTQMtW9tnJ/F7l5IB8DNX2LTwQaNrP6yxt
-         fFfA==
-X-Gm-Message-State: AOAM532Xr9XtLsR8FHRaEDeueUtf0VuVhQJm0wkP6Wz6VDpzBn0rmQhN
-        nHwvctGJtysmJN114DzwMkbtXfno88JjHLQD0DY=
-X-Google-Smtp-Source: ABdhPJxQ0pUqRD8MmoQwaA9vNqyssG6WNxyHraaqHL2nlDWnmgYgF9OQPX1Wec8GNSQSV0jOQD8w+lH1oChYwZaIrBY=
-X-Received: by 2002:a7b:ce08:: with SMTP id m8mr22116860wmc.127.1642445530931;
- Mon, 17 Jan 2022 10:52:10 -0800 (PST)
+        bh=J6GKKmupfWWlnbgXJKPfzJduT4T53vFjxxafbxuWCWg=;
+        b=Zk0L9Vy+w1wKF7NyZezZg6A0ZWJd4GAK12pysRr11xEoR8cBwR3qWAyFRermwB9chH
+         i4N6RN0noLa8haNJD6whkT8CNpTkvlfuNe8WR5iB2SJfxxezOT/V950B/FDYKOsEONXb
+         AjImBRD/1GShpHj8dYYnyJwkW5qV+22t4JrYosKcpdAsrqT3otEk3vfsTI02x2KToMjM
+         HtxCd/Wrm7lzYc025XNHLJxsIrhY2OfzteulXqHEpCjKoNCi21pMRDN4U5rToGh6UD6v
+         059cOFdJs20wzrvjv9D89j25DF4HSXdAziFijnRpAPAu9fBi/PP9msfyx0DfySzNwgbT
+         zMJA==
+X-Gm-Message-State: AOAM531LCUdEfe6HOx/pUsNy8Tx2MpgJ5rotVr4AIc/TC9AY7xOkhxRm
+        4tkDCxEPaVYdYPoowTBkLP0s+l7q6tNhhQRvuUw=
+X-Google-Smtp-Source: ABdhPJxWhkcwjL2R6hpGY61yBJ6r2FktnPVmLesfV1BZdfVRhtY/6a2CDJAHrMsl0L46bPttGQkAEE28ovqTC/SSiYI=
+X-Received: by 2002:a05:6102:3f56:: with SMTP id l22mr7888725vsv.20.1642458839004;
+ Mon, 17 Jan 2022 14:33:59 -0800 (PST)
 MIME-Version: 1.0
-References: <20220112030115.1.Ibac66e1e0e565313bc28f192e6c94cb508f205eb@changeid>
- <20220112030115.3.I86c32730e08cba9e5c83f02ec17885124d45fa56@changeid>
- <CAF6AEGuJxdrYM5XXt6sUGmjossqZTRzwQ6Y8qYsnfCYDvGQurw@mail.gmail.com>
- <CAA8EJpokgiUbqj9BOF52a9QjJK53PinNHfxy_6nbNq53JnO2Og@mail.gmail.com> <bd284863-3643-4a8e-beb6-f47cc60ea1b5@quicinc.com>
-In-Reply-To: <bd284863-3643-4a8e-beb6-f47cc60ea1b5@quicinc.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 17 Jan 2022 10:52:07 -0800
-Message-ID: <CAF6AEGsBNafYjfC-05XBG2QT+vxU-jB=wTmu9gOVe-wLTXFgzQ@mail.gmail.com>
-Subject: Re: [PATCH 3/4] drm/msm/adreno: Expose speedbin to userspace
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS 
-        <devicetree@vger.kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <20220107052942.1349447-1-jim.cromie@gmail.com>
+ <20220107052942.1349447-2-jim.cromie@gmail.com> <20220114115718.GB23983@axis.com>
+In-Reply-To: <20220114115718.GB23983@axis.com>
+From:   jim.cromie@gmail.com
+Date:   Mon, 17 Jan 2022 15:33:33 -0700
+Message-ID: <CAJfuBxw1scH7xS7-RfxZ369wVQ8umP+0MHqz1U_3cW-BLPsDkg@mail.gmail.com>
+Subject: Re: [PATCH v11 01/19] dyndbg: add _DPRINTK_FLAGS_ENABLED
+To:     Vincent Whitchurch <vincent.whitchurch@axis.com>
+Cc:     "jbaron@akamai.com" <jbaron@akamai.com>,
+        "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+        "linux@rasmusvillemoes.dk" <linux@rasmusvillemoes.dk>,
+        "rostedt@goodmis.org" <rostedt@goodmis.org>,
+        "mathieu.desnoyers@efficios.com" <mathieu.desnoyers@efficios.com>,
+        "daniel.vetter@ffwll.ch" <daniel.vetter@ffwll.ch>,
+        "seanpaul@chromium.org" <seanpaul@chromium.org>,
+        "robdclark@gmail.com" <robdclark@gmail.com>,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
+        "intel-gvt-dev@lists.freedesktop.org" 
+        <intel-gvt-dev@lists.freedesktop.org>,
+        "intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "quic_saipraka@quicinc.com" <quic_saipraka@quicinc.com>,
+        "will@kernel.org" <will@kernel.org>,
+        "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
+        "quic_psodagud@quicinc.com" <quic_psodagud@quicinc.com>,
+        "maz@kernel.org" <maz@kernel.org>, "arnd@arndb.de" <arnd@arndb.de>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "mingo@redhat.com" <mingo@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 17, 2022 at 6:38 AM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+On Fri, Jan 14, 2022 at 4:57 AM Vincent Whitchurch
+<vincent.whitchurch@axis.com> wrote:
 >
-> On 1/13/2022 12:43 PM, Dmitry Baryshkov wrote:
-> > On Thu, 13 Jan 2022 at 00:19, Rob Clark <robdclark@gmail.com> wrote:
-> >> On Tue, Jan 11, 2022 at 1:31 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
-> >>> Expose speedbin through MSM_PARAM_CHIP_ID parameter to help userspace
-> >>> identify the sku.
-> >>>
-> >>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> >>> ---
-> >>>
-> >>>   drivers/gpu/drm/msm/adreno/adreno_gpu.c | 9 +++++----
-> >>>   1 file changed, 5 insertions(+), 4 deletions(-)
-> >>>
-> >>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> >>> index f33cfa4..e970e6a 100644
-> >>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> >>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> >>> @@ -242,10 +242,11 @@ int adreno_get_param(struct msm_gpu *gpu, uint32_t param, uint64_t *value)
-> >>>                  *value = !adreno_is_a650_family(adreno_gpu) ? 0x100000 : 0;
-> >>>                  return 0;
-> >>>          case MSM_PARAM_CHIP_ID:
-> >>> -               *value = adreno_gpu->rev.patchid |
-> >>> -                               (adreno_gpu->rev.minor << 8) |
-> >>> -                               (adreno_gpu->rev.major << 16) |
-> >>> -                               (adreno_gpu->rev.core << 24);
-> >>> +               *value = (uint64_t) adreno_gpu->rev.patchid |
-> >>> +                               (uint64_t) (adreno_gpu->rev.minor << 8) |
-> >>> +                               (uint64_t) (adreno_gpu->rev.major << 16) |
-> >>> +                               (uint64_t) (adreno_gpu->rev.core << 24) |
-> >>> +                               (((uint64_t) adreno_gpu->rev.sku) << 32);
-> >> How about this instead, so we are only changing the behavior for
-> >> new/unreleased devices:
->
-> I thought this property was only used for new devices whereas the
-> existing devices rely on REVN.
->
-> -Akhil.
->
-> >>
-> >> *value = adreno_gpu->rev.patchid |
-> >> (adreno_gpu->rev.minor << 8) |
-> >> (adreno_gpu->rev.major << 16) |
-> >> (adreno_gpu->rev.core << 24);
-> >> if (!adreno_gpu->info->revn)
-> >> *value |= (((uint64_t) adreno_gpu->rev.sku) << 32);
-> >>
-> >> (sorry about the butchered indentation.. somehow gmail has become
-> >> antagonistic about pasting code)
-> > I assume that you would like to keep userspace compat for older chips.
-> > thus the if.
-> > Maybe we should introduce MSM_PARAM_CHIP_ID_SKU instead (and gradually
-> > make userspace switch to it)?
+> On Fri, Jan 07, 2022 at 06:29:24AM +0100, Jim Cromie wrote:
+> >  #ifdef CONFIG_JUMP_LABEL
+> > -                     if (dp->flags & _DPRINTK_FLAGS_PRINT) {
+> > -                             if (!(modifiers->flags & _DPRINTK_FLAGS_PRINT))
+> > +                     if (dp->flags & _DPRINTK_FLAGS_ENABLED) {
+> > +                             if (!(modifiers->flags & _DPRINTK_FLAGS_ENABLED))
+> >                                       static_branch_disable(&dp->key.dd_key_true);
+> > -                     } else if (modifiers->flags & _DPRINTK_FLAGS_PRINT)
+> > +                     } else if (modifiers->flags & _DPRINTK_FLAGS_ENABLED)
+> >                               static_branch_enable(&dp->key.dd_key_true);
+> >  #endif
+> >                       dp->flags = newflags;
+> > --
+> > 2.33.1
 > >
+>
+> I haven't tested it so I could be mistaken, but when
+> _DPRINTK_FLAGS_ENABLED gets two flags in the next patch, it looks like
+> this code still has the problem which I mentioned in
+> https://lore.kernel.org/lkml/20211209150910.GA23668@axis.com/?
+>
 
-Existing userspace tools do query CHIP_ID, but match based on GPU_ID
-(falling back to CHIP_ID only if GPU_ID==0).. still, out of an
-abundance of caution, we should probably not change the behavior for
-existing GPUs.  But so far the only thing with GPU_ID==0 does not
-exist in the wild yet, so I think we can get away without having to
-introduce a new param if we only set the upper bits of CHIP_ID when
-GPU_ID==0.
+Yes, thanks for noticing.  I missed that detail.
+Apriori, I dont know why bit-and of bit-or'd flags doesnt cover it,
+but I will take a careful look.
 
-BR,
--R
+> | I noticed a bug inside the CONFIG_JUMP_LABEL handling (also present
+> | in the last version I posted) which should be fixed as part of the
+> | diff below (I've added a comment).
+> | [...]
+> |  #ifdef CONFIG_JUMP_LABEL
+> | -                     if (dp->flags & _DPRINTK_FLAGS_PRINT) {
+> | -                             if (!(modifiers->flags & _DPRINTK_FLAGS_PRINT))
+> | +                     if (dp->flags & _DPRINTK_FLAGS_ENABLE) {
+> | +                             /*
+> | +                              * The newflags check is to ensure that the
+> | +                              * static branch doesn't get disabled in step
+> | +                              * 3:
+> | +                              *
+> | +                              * (1) +pf
+> | +                              * (2) +x
+> | +                              * (3) -pf
+> | +                              */
+> | +                             if (!(modifiers->flags & _DPRINTK_FLAGS_ENABLE) &&
+> | +                                 !(newflags & _DPRINTK_FLAGS_ENABLE)) {
+> |                                       static_branch_disable(&dp->key.dd_key_true);
+> | -                     } else if (modifiers->flags & _DPRINTK_FLAGS_PRINT)
+> | +                             }
+> | +                     } else if (modifiers->flags & _DPRINTK_FLAGS_ENABLE) {
+> |                               static_branch_enable(&dp->key.dd_key_true);
+> | +                     }
+> |  #endif
