@@ -2,81 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CF9D490388
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jan 2022 09:15:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F7F3490392
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jan 2022 09:17:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237971AbiAQIPg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jan 2022 03:15:36 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:38125 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230028AbiAQIPf (ORCPT
+        id S237985AbiAQIRX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jan 2022 03:17:23 -0500
+Received: from mail-m975.mail.163.com ([123.126.97.5]:24218 "EHLO
+        mail-m975.mail.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231253AbiAQIRW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jan 2022 03:15:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1642407335; x=1673943335;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=pE15V9cC2hu9MEnNgmYkLQQoTLc+mdGCHkVp2gX0xDE=;
-  b=CLVi9hju/2oTjkw4QtNG1CK7ZYrf+7ZDYJJyVbQcE/KlC/7RzesIf2Xb
-   bXSfLigWmZaumnZMC+qn9/e37YBUmTbAz7NLEG3wOhQCny9i3ReJKV+YF
-   JZgUvZ1uA5T6FXeWbji7t1q7kls56risDXooYSFEi8kqPbcGsQ1uhv2Nb
-   o=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 17 Jan 2022 00:15:35 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jan 2022 00:12:59 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 17 Jan 2022 00:12:58 -0800
-Received: from [10.216.37.171] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 17 Jan
- 2022 00:12:53 -0800
-Message-ID: <7745d562-17bd-0a51-7f7e-8f5468e6d373@quicinc.com>
-Date:   Mon, 17 Jan 2022 13:42:40 +0530
+        Mon, 17 Jan 2022 03:17:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=zGy/c
+        +rMZ+YP77HHohIlehh2vF9jVqV2GGfASZ90qrc=; b=Y0hhUnkIIbKqhF/cQjIIY
+        YN+dfq3qrYZexbFVW4K0xXFknnyeGhfjfERPLo/L38MmskdBcXsc+/UkNnaqrCnT
+        L02nBzU4eKD+1pcVbPajfixjQd2c4VKu2JIdzFgfMzCe8BC6a/xa7lAjKN39IORG
+        G3XXYqC3Es2nEMDrYSB9/k=
+Received: from localhost.localdomain (unknown [112.97.49.17])
+        by smtp5 (Coremail) with SMTP id HdxpCgAXT6DzJeVh5THMAQ--.604S2;
+        Mon, 17 Jan 2022 16:16:53 +0800 (CST)
+From:   Slark Xiao <slark_xiao@163.com>
+To:     mani@kernel.org, hemantk@codeaurora.org
+Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Slark Xiao <slark_xiao@163.com>
+Subject: [PATCH net v2] For default mechanism, product would use default MRU 3500 if they didn't define it. But for Foxconn SDX55, there is a known issue which MRU 3500 would lead to data connection lost. So we align it with Qualcomm default MRU settings.
+Date:   Mon, 17 Jan 2022 16:16:44 +0800
+Message-Id: <20220117081644.21121-1-slark_xiao@163.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.1
-Subject: Re: [PATCH 04/10] arm64: dts: qcom: sm8450: Update cpuidle states
- parameters
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-CC:     <bjorn.andersson@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <rafael@kernel.org>, <daniel.lezcano@linaro.org>,
-        <quic_lsrao@quicinc.com>, <quic_rjendra@quicinc.com>,
-        <devicetree@vger.kernel.org>
-References: <1641749107-31979-1-git-send-email-quic_mkshah@quicinc.com>
- <1641749107-31979-5-git-send-email-quic_mkshah@quicinc.com>
- <CAPDyKFrrajGPsH5=iqtB6PAuO6Y9C8_QfbF8yF2PKqrVuCmZ9g@mail.gmail.com>
-From:   Maulik Shah <quic_mkshah@quicinc.com>
-In-Reply-To: <CAPDyKFrrajGPsH5=iqtB6PAuO6Y9C8_QfbF8yF2PKqrVuCmZ9g@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: HdxpCgAXT6DzJeVh5THMAQ--.604S2
+X-Coremail-Antispam: 1Uf129KBjvdXoW7Gw18tr4xGF1kWw4fCFy5twb_yoWxtrg_Cr
+        ZxGF97Gws8WryDGw1vqan5JrWrKa4rWr1kAF1Iqrn8J342vwnxXwnYqr18JFnIgF45CF9r
+        J3s5Zr1rAw4YgjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+        9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IUbasj7UUUUU==
+X-Originating-IP: [112.97.49.17]
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiNQCLZFrPfDWNuwABsx
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Fixes: 5c2c85315948 ("bus: mhi: pci-generic: configurable network interface MRU")
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
 
-On 1/14/2022 6:00 PM, Ulf Hansson wrote:
->
->> @@ -315,7 +315,7 @@
->>
->>                  CLUSTER_PD: cpu-cluster0 {
->>                          #power-domain-cells = <0>;
->> -                       domain-idle-states = <&CLUSTER_SLEEP_0>;
->> +                       domain-idle-states = <&CLUSTER_SLEEP_0 &CLUSTER_SLEEP_1>;
-> Should this be like the below instead?
->
-> <&CLUSTER_SLEEP_0>,  <&CLUSTER_SLEEP_1>;
+---
+v2: Add Fixes tag
+---
+ drivers/bus/mhi/pci_generic.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks for catching this. Will correct in v2.
+diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+index 3a258a677df8..74e8fc342cfd 100644
+--- a/drivers/bus/mhi/pci_generic.c
++++ b/drivers/bus/mhi/pci_generic.c
+@@ -366,6 +366,7 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
+ 	.config = &modem_foxconn_sdx55_config,
+ 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+ 	.dma_data_width = 32,
++	.mru_default = 32768,
+ 	.sideband_wake = false,
+ };
+ 
+-- 
+2.25.1
 
-Thanks,
-Maulik
