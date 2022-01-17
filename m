@@ -2,149 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8668D490FD3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jan 2022 18:45:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DC2A491024
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jan 2022 19:16:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238925AbiAQRpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jan 2022 12:45:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56066 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238566AbiAQRpM (ORCPT
+        id S229726AbiAQSQ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jan 2022 13:16:28 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:27464 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229657AbiAQSQ1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jan 2022 12:45:12 -0500
-Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DF7DC061574;
-        Mon, 17 Jan 2022 09:45:12 -0800 (PST)
-Received: by mail-oo1-xc2d.google.com with SMTP id s13-20020a4aa38d000000b002e28c5100cbso1170383ool.12;
-        Mon, 17 Jan 2022 09:45:12 -0800 (PST)
+        Mon, 17 Jan 2022 13:16:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=d1XPYUu2DVsH+3Kz9XrYtlypSTvPCVH2n5Gq/9uSXNE=;
-        b=RxPXDrkQTmR8hnlL8FuoL6/ulwyoibbX7KzYLtzc4RUIrfY9Yppl/lZPW+IWU7c8X+
-         /89NEeXnEraRIV+zkVVF0IzzEHLc1WNRcsBSX6bxHYsFa83rBKJbn7X1orNrRxd+MuUs
-         VFKVkmx0ez+ZuJLLe83XgmQf+h+3I7ozcIkU06HXnPNkZ8rhKV9vkKjUInd81CZDLjRP
-         WNqsfERj87z7sAYhSLWDESzpT1PURJXUhrHNYylxxUBMhT3Pg88OEzyceRIK6jTGYgpD
-         5rfTgxsTgOvAIleZPFgRKv6fDiI8fUu89z8ZIH9r+2NLEovhjDQx0bYmswXj4GxmGR8Z
-         YYZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:subject:to:cc:references:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=d1XPYUu2DVsH+3Kz9XrYtlypSTvPCVH2n5Gq/9uSXNE=;
-        b=AAwyylSOwgUF/pA0DchW5aYLJofRwzAPxafYhe9xs9w1/OiVbovyqjSa4vvvUzMQJG
-         jxBIKCThz6l1jf3Ihot/db/8xpsOwXLk5LR/xZZNMuoieboAowiS2xQ6Shs4zrbK3e/C
-         3Oq/eBjTIE/anhqsdjTQirH6EyEMopSAczIHl05W1rCPOlbqb7hK7Xp+FXj8r41U07Yt
-         AaIGFsjPmzo8qeVRoE6+uRpnZ1obVN2Y8luKg+GgHTAQmQSa61WZsLocenaZiunFXYk+
-         XGkBa+IaDTcWEE0v5T+iZ/iiHFPlOJLKwHwTGLTYq5z6ysAaeHeU77hR8av8nTQoY0Ax
-         xyfQ==
-X-Gm-Message-State: AOAM532BSrP7RgIdxMrBKZyW9YqQ7BXRAn5bHaSpRd9Et/HFcvk8m6FT
-        WPTHjhD2FSdkr1JdvTe0f+mf0Az6pvE=
-X-Google-Smtp-Source: ABdhPJwy3aRzKPc7tYpWvWtlYnrzSu/EnOn5hytDPFDvXNKo0DrjMhAnSImO6Pl+LrZpHnP7tdd4sw==
-X-Received: by 2002:a4a:e87a:: with SMTP id m26mr15597252oom.41.1642441511427;
-        Mon, 17 Jan 2022 09:45:11 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id q5sm7247321oiv.2.2022.01.17.09.45.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Jan 2022 09:45:10 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Subject: Re: [PATCH v2] dt-bindings: watchdog: improve QCOM compatible parsing
- for modern chips
-To:     David Heidelberg <david@ixit.cz>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     ~okias/devicetree@lists.sr.ht, Rob Herring <robh@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220111212310.97566-1-david@ixit.cz>
-From:   Guenter Roeck <linux@roeck-us.net>
-Message-ID: <a24227a0-c0eb-be20-c545-906439edf3f1@roeck-us.net>
-Date:   Mon, 17 Jan 2022 09:45:08 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1642443387; x=1673979387;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=TpYuMc5hSqWA0JqIB9lyXBpDOxH/KsfeWVy/QmBxyLk=;
+  b=u26QxwcC3NN3ofaBsyQmeL7lsso718chgmlC4RZKGMlS9I28vBpuOo+p
+   Rbfn6NRDtAZ+MWYTbeoO1RlrqMnE1mFJL1je01jgaCZLtgQZNqX+z3DDp
+   fUalkHiuOZlnTC6Q8iaQ4Dy9HpDVCZI7AkLBfUaugyUVR9gV3hbR6R9Bu
+   o=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 17 Jan 2022 10:16:27 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jan 2022 10:16:26 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Mon, 17 Jan 2022 10:16:25 -0800
+Received: from [10.110.8.118] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 17 Jan
+ 2022 10:16:24 -0800
+Message-ID: <337655e4-db0c-e748-43bc-fd166c9f2577@quicinc.com>
+Date:   Mon, 17 Jan 2022 10:16:24 -0800
 MIME-Version: 1.0
-In-Reply-To: <20220111212310.97566-1-david@ixit.cz>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: [PATCH v17 1/4] drm/msm/dp: do not initialize phy until plugin
+ interrupt received
 Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
+        <airlied@linux.ie>, <bjorn.andersson@linaro.org>,
+        <daniel@ffwll.ch>, <dmitry.baryshkov@linaro.org>,
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <vkoul@kernel.org>
+CC:     <quic_abhinavk@quicinc.com>, <aravindh@codeaurora.org>,
+        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1642208315-9136-1-git-send-email-quic_khsieh@quicinc.com>
+ <1642208315-9136-2-git-send-email-quic_khsieh@quicinc.com>
+ <CAE-0n52KfpfnxsC5SKvR9zWWONmh2oyD3cS9L-8-J1RHHzKSdQ@mail.gmail.com>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <CAE-0n52KfpfnxsC5SKvR9zWWONmh2oyD3cS9L-8-J1RHHzKSdQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/11/22 1:23 PM, David Heidelberg wrote:
-> Parse compatible as expected for modern QCOMs.
-> 
-> Fixes warnings as:
-> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: watchdog@17980000: compatible: ['qcom,apss-wdt-sdm845', 'qcom,kpss-wdt'] is too long
->          From schema: Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-> arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml: watchdog@17980000: compatible: Additional items are not allowed ('qcom,kpss-wdt' was unexpected)
->          From schema: Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-> 
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: David Heidelberg <david@ixit.cz>
 
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+On 1/14/2022 5:13 PM, Stephen Boyd wrote:
+> Quoting Kuogee Hsieh (2022-01-14 16:58:32)
+>> @@ -1363,14 +1368,14 @@ static int dp_pm_suspend(struct device *dev)
+>>                  if (dp_power_clk_status(dp->power, DP_CTRL_PM))
+>>                          dp_ctrl_off_link_stream(dp->ctrl);
+>>
+>> +               dp_display_host_phy_exit(dp);
+>> +
+>> +               /* host_init will be called at pm_resume */
+>>                  dp_display_host_deinit(dp);
+>>          }
+> I thought we determined that core_initialized was always true here, so
+> the if condition is redundant. Furthermore, removing that check allows
+> us to entirely remove the core_initialized variable from the code.
 
-> ---
-> v2:
->   - updated compatible list as two compatibles has been added upstream
->   -> resolve merge conflict
-> ---
->   .../bindings/watchdog/qcom-wdt.yaml           | 37 +++++++++++--------
->   1 file changed, 21 insertions(+), 16 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-> index 16c6f82a13ca..4ff8c59c59ab 100644
-> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-> @@ -14,22 +14,27 @@ allOf:
->   
->   properties:
->     compatible:
-> -    enum:
-> -      - qcom,apss-wdt-qcs404
-> -      - qcom,apss-wdt-sc7180
-> -      - qcom,apss-wdt-sc7280
-> -      - qcom,apss-wdt-sdm845
-> -      - qcom,apss-wdt-sdx55
-> -      - qcom,apss-wdt-sm6350
-> -      - qcom,apss-wdt-sm8150
-> -      - qcom,apss-wdt-sm8250
-> -      - qcom,kpss-timer
-> -      - qcom,kpss-wdt
-> -      - qcom,kpss-wdt-apq8064
-> -      - qcom,kpss-wdt-ipq4019
-> -      - qcom,kpss-wdt-ipq8064
-> -      - qcom,kpss-wdt-msm8960
-> -      - qcom,scss-timer
-> +    oneOf:
-> +      - items:
-> +          - enum:
-> +              - qcom,apss-wdt-qcs404
-> +              - qcom,apss-wdt-sc7180
-> +              - qcom,apss-wdt-sc7280
-> +              - qcom,apss-wdt-sdm845
-> +              - qcom,apss-wdt-sdx55
-> +              - qcom,apss-wdt-sm6350
-> +              - qcom,apss-wdt-sm8150
-> +              - qcom,apss-wdt-sm8250
-> +          - const: qcom,kpss-wdt
-> +      - items:
-> +          - enum:
-> +              - qcom,kpss-wdt
-> +              - qcom,kpss-timer
-> +              - qcom,kpss-wdt-apq8064
-> +              - qcom,kpss-wdt-ipq4019
-> +              - qcom,kpss-wdt-ipq8064
-> +              - qcom,kpss-wdt-msm8960
-> +              - qcom,scss-timer
->   
->     reg:
->       maxItems: 1
-> 
+my mistake. Will remove the condition check.
+
+However, I would like to keep code_initialized for debugging purpose.
+
+Otherwise, we will shot in the dark if customer report bug.
 
