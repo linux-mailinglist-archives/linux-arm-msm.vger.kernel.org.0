@@ -2,61 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD2E649010C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jan 2022 06:12:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 775864901A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jan 2022 06:44:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229486AbiAQFMd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jan 2022 00:12:33 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:23919 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229455AbiAQFMc (ORCPT
+        id S232901AbiAQFoZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jan 2022 00:44:25 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:2481 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232449AbiAQFoY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jan 2022 00:12:32 -0500
+        Mon, 17 Jan 2022 00:44:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1642396352; x=1673932352;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=5+i3OFZvbJvxEhERitXVmUI0MC3HAKYJToPu9J4JaZw=;
-  b=a8iHXuiAmkMLZ2+N+Y+EZJ9uHjm2d6WO3kEx2i1x+mRQpCrJ7xKTRqDr
-   R8IGMZ8LP3jnoAY9qdnie6HFoWj8wtGxsFs8umwlZ8OnIv6Ies/ZdBiwE
-   tUJo7R/57cyTZEitFP3x+AJozgxtA0KKLpG5Tc6+CRTEqvAoX1YH0fRPJ
-   w=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 16 Jan 2022 21:12:32 -0800
+  t=1642398264; x=1673934264;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=ORexfekDTETJk/q4623XGnH+VR9R4h8fqEYOUoS0J50=;
+  b=b5ESTi783O3A+U5CkPAP9X4C3490ms8tGkSuV6FfmkSNn14+Ar52j/eN
+   e7aYTmoCPRzcA+Hob45cAxyIjczegQQIDzsYg+9EupMeslspl7ACvOA4X
+   eSYHx1t9dF0DcU82bvBPGu7lcddP/uTMTx+QiyZ4kSZGUhVbNJcCO3X4o
+   0=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 16 Jan 2022 21:44:24 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jan 2022 21:12:32 -0800
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jan 2022 21:44:24 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Sun, 16 Jan 2022 21:12:31 -0800
-Received: from [10.50.10.143] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Sun, 16 Jan
- 2022 21:12:25 -0800
-Message-ID: <ffda32f9-85ff-b6d2-0736-6c36d6c709ec@quicinc.com>
-Date:   Mon, 17 Jan 2022 10:42:20 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH V3 1/7] dt-bindings: Add the yaml bindings for EUD
-Content-Language: en-CA
-To:     Rob Herring <robh@kernel.org>
+ 15.2.922.19; Sun, 16 Jan 2022 21:44:24 -0800
+Received: from c-sanm-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Sun, 16 Jan 2022 21:44:19 -0800
+From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>
 CC:     <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <pure.logic@nexus-software.ie>,
-        <bjorn.andersson@linaro.org>, <greg@kroah.com>,
-        <linux-kernel@vger.kernel.org>, <tsoni@codeaurora.org>,
-        <psodagud@codeaurora.org>, <satyap@codeaurora.org>,
-        <pheragu@codeaurora.org>, <rnayak@codeaurora.org>,
-        <sibis@codeaurora.org>, <saiprakash.ranjan@codeaurora.org>
-References: <cover.1641288286.git.quic_schowdhu@quicinc.com>
- <5d9491693870b5dde757959f4491296503d22f70.1641288286.git.quic_schowdhu@quicinc.com>
- <Yd4qD7ziPNgAQNHG@robh.at.kernel.org>
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-In-Reply-To: <Yd4qD7ziPNgAQNHG@robh.at.kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+        <linux-kernel@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Subject: [PATCH v10 0/6] USB DWC3 host wake up support from system suspend
+Date:   Mon, 17 Jan 2022 11:14:02 +0530
+Message-ID: <1642398248-21753-1-git-send-email-quic_c_sanm@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+MIME-Version: 1.0
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
@@ -64,86 +58,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Avoiding phy powerdown in host mode when wakeup capable devices are 
+connected, so that it can be wake up by devices.
+Set GENPD_FLAG_ALWAYS_ON flag to keep usb30_prim gdsc active to retain
+controller status during suspend/resume.
 
-On 1/12/2022 6:38 AM, Rob Herring wrote:
-> On Tue, Jan 04, 2022 at 05:28:14PM +0530, Souradeep Chowdhury wrote:
->> Documentation for Embedded USB Debugger(EUD) device tree
->> bindings in yaml format.
-> I agree with Bjorn's comments.
-Ack
->
->> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
->> ---
->>   .../devicetree/bindings/soc/qcom/qcom,eud.yaml     | 50 ++++++++++++++++++++++
->>   1 file changed, 50 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
->> new file mode 100644
->> index 0000000..3523932
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
->> @@ -0,0 +1,50 @@
->> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,eud.yaml#"
->> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
->> +
->> +title: Qualcomm Embedded USB Debugger
->> +
->> +maintainers:
->> +  - Souradeep Chowdhury <quic_schowdhu@quicinc.com>
->> +
->> +description:
->> +  This binding is used to describe the Qualcomm Embedded USB Debugger, which is
->> +  mini USB-hub implemented on chip to support USB-based debug capabilities.
->> +
->> +properties:
->> +  compatible:
->> +    items:
->> +      - enum:
->> +          - qcom,sc7280-eud
->> +      - const: qcom,eud
->> +
->> +  reg:
->> +    items:
->> +      - description: EUD Base Register Region
->> +      - description: EUD Mode Manager Register
->> +
->> +  interrupts:
->> +    description:
->> +      EUD interrupt
-> Just 'maxItems: 1' is sufficient here.
-Ack
->
->> +
->> +  port:
-> Based on Bjorn's comment, you will need 2 port nodes.
-Ack
->
->> +    description:
->> +      This port is to be attached to the endpoint of the connector child of
->> +      DWC3 controller node. The controller has the "usb-role-switch" property.
->> +    $ref: /schemas/graph.yaml#/properties/port
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |
->> +    eud@88e0000 {
->> +           compatible = "qcom,sc7280-eud","qcom,eud";
->> +           reg = <0x88e0000 0x2000>,
->> +                 <0x88e2000 0x1000>;
-> Are the ports really optional?
-Ack. Will make them mandatory.
->
->> +    };
->> -- 
->> 2.7.4
->>
->>
+Changes in v10:
+PATCH 1/6: Change device_set_wakeup_capable to device_set_wakeup_enable
+PATCH 2/6: Remove redundant else part in dwc3_resume_common
+PATCH 4/6: Change the irg flags
+PATCH 5/6: Set flag GENPD_FLAG_ALWAYS_ON
+PATCH 6/6: Remove remove disable interrupts function and enable
+interrupts in probe.
+
+
+Changes in v9:
+Checking with device_may_makeup property instead of phy_power_off flag.
+Changed the IRQ flags and removed hs_phy_mode variable.
+
+Changes in v8:
+Moved the dwc3 suspend quirk code in dwc3/host.c to xhci-plat.c
+Checking phy_power_off flag instead of usb_wakeup_enabled_descendants 
+to keep gdsc active.
+
+Changes in v7:
+Change in commit text and message in PATCH 1/5 and PATCH 5/5
+as per Matthias suggestion.
+Added curly braces for if and else if sections in PATCH 4/5.
+
+Changes in v6:
+Addressed comments in host.c and core.c
+Separated the patches in dwc3-qcom.c to make it simple.
+Dropped wakeup-source change as it is not related to this series.
+
+Changes in v5:
+Added phy_power_off flag to check presence of wakeup capable devices.
+Dropped patch[v4,4/5] as it is present linux-next.
+Addressed comments in host.c and dwc3-qcom.c.
+
+Changes in v4:
+Addressed Matthias comments raised in v3.
+
+Changes in v3:
+Removed need_phy_for_wakeup flag and by default avoiding phy powerdown.
+Addressed Matthias comments and added entry for DEV_SUPERSPEED.
+Added suspend_quirk in dwc3 host and moved the dwc3_set_phy_speed_flags.
+Added wakeup-source dt entry and reading in dwc-qcom.c glue driver.
+
+Changes in v2:
+Dropped the patch in clock to set GENPD_FLAG_ACTIVE_WAKEUP flag and 
+setting in usb dwc3 driver.
+Separated the core patch and glue driver patch.
+Made need_phy_for_wakeup flag part of dwc structure and 
+hs_phy_flags as unsgined int.
+Adrressed the comment on device_init_wakeup call.
+Corrected offset for reading portsc register.
+Added pacth to support wakeup in xo shutdown case.
+
+Sandeep Maheswaram (6):
+  usb: host: xhci: plat: Add suspend quirk for dwc3 controller
+  usb: dwc3: core: Host wake up support from system suspend
+  usb: dwc3: qcom: Add helper functions to enable,disable wake irqs
+  usb: dwc3: qcom: Change the IRQ flag for DP/DM hs phy irq
+  usb: dwc3: qcom: Keep power domain on to retain controller status
+  usb: dwc3: qcom: Enable the interrupts during probe
+
+ drivers/usb/dwc3/core.c      |  4 +--
+ drivers/usb/dwc3/dwc3-qcom.c | 64 +++++++++++++++-----------------------------
+ drivers/usb/host/xhci-plat.c | 12 +++++++++
+ 3 files changed, 36 insertions(+), 44 deletions(-)
+
+-- 
+2.7.4
+
