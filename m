@@ -2,491 +2,283 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E23A4901BC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jan 2022 06:49:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D46B34901D0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jan 2022 07:03:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234378AbiAQFtz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jan 2022 00:49:55 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:29337 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233482AbiAQFtz (ORCPT
+        id S234565AbiAQGDR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jan 2022 01:03:17 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:26583 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231213AbiAQGDR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jan 2022 00:49:55 -0500
+        Mon, 17 Jan 2022 01:03:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1642398595; x=1673934595;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=R8MZ1+Qs1qIMcUr4jtwrbhH0GB48Ogod/qsGRwU42iA=;
-  b=Es0C8zvhucUaiJ3QX1UUFpvCEPGgME+OLXOjZc3JkkRZhABPH4B5nrFk
-   sG1cT7BTLPB8wQLFE8owxBhKfT6s/GdPuRfNqEVXeLKAKts73qQmNu1V2
-   IN0C7YETbS3MZ5XZPqUXcuAbLYS6F7uBTJkLJhVP965xu6qRDPiv2NZWp
+  t=1642399396; x=1673935396;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=WJIWiUWalhi2BbS+bckp3FA++wta/bhcud1UlOmtB3Y=;
+  b=Kr4DnpJ/E0So2MkcxpToqM/qw0JLaZ0No0ArfyaCHHs1AVy+8thaSFzW
+   Y7fpHzGOt3U2sECTB6JZ6ws8U3Nqg32sT9R3ELBVRJQ5KTg0ageYqW4HJ
+   bVHhgFlA+ZAUrWYNsfP41nC2AV5JgPIgZYFlX0z0sYUYK/0OtKQ6BBid2
    k=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 16 Jan 2022 21:49:55 -0800
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 16 Jan 2022 22:03:16 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jan 2022 21:49:54 -0800
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jan 2022 22:03:15 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Sun, 16 Jan 2022 21:49:53 -0800
-Received: from [10.50.10.143] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ 15.2.922.19; Sun, 16 Jan 2022 22:03:15 -0800
+Received: from [10.216.36.108] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Sun, 16 Jan
- 2022 21:49:48 -0800
-Message-ID: <c0f792f4-522e-f1fd-5b58-579389c2c48d@quicinc.com>
-Date:   Mon, 17 Jan 2022 11:19:43 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH V6 2/7] soc: qcom: dcc:Add driver support for Data Capture
- and Compare unit(DCC)
-Content-Language: en-CA
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     Souradeep Chowdhury <schowdhu@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
+ 2022 22:03:07 -0800
+Subject: Re: [PATCH v2 1/3] dt-bindings: usb: qcom,dwc3: Add multi-pd bindings
+ for dwc3 qcom
+To:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>
+CC:     Viresh Kumar <viresh.kumar@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        "Sai Prakash Ranjan" <saiprakash.ranjan@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>, <vkoul@kernel.org>
-References: <cover.1628617260.git.schowdhu@codeaurora.org>
- <fc69469f26983d373d5ad7dc2dc83df207967eda.1628617260.git.schowdhu@codeaurora.org>
- <YbzvD+FFHuDWzCtZ@yoga> <caccb6da-2024-db4e-700c-9b4c13946ca0@quicinc.com>
- <YdeC456prDBG7tBA@ripper> <77a2ef02-384d-ce67-ae84-02c385eccd60@quicinc.com>
- <Ydhi1/SH5ySDLNfI@ripper>
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-In-Reply-To: <Ydhi1/SH5ySDLNfI@ripper>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Andy Gross <agross@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>
+References: <1635152851-23660-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1635152851-23660-2-git-send-email-quic_c_sanm@quicinc.com>
+ <YXcBK7zqny0s4gd4@ripper>
+ <CAE-0n51k8TycXjEkH7rHYo0j7cYbKJOnOn1keVhx2yyTcBNnvg@mail.gmail.com>
+ <YXck+xCJQBRGqTCw@ripper>
+ <CAE-0n530M3eft-o0qB+yEzGjZgCLMgY==ZgdvwiVCwqqCAVxxA@mail.gmail.com>
+ <YXdsYlLWnjopyMn/@ripper>
+ <CAE-0n51C4dm6bhds=ZZyje-Pcejxjm4MMa3m-VHjFgq7GZGrLw@mail.gmail.com>
+ <YXjbs3Bv6Y3d87EC@yoga>
+ <CAPDyKFrWQdvZX4ukHZoGz73JPfQSgqVrG_4ShMp_GrxL0NKLvg@mail.gmail.com>
+ <da877712-dac9-e9d0-0bfc-25bef450eb65@codeaurora.org>
+From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Message-ID: <0153c297-f648-25d1-7f0f-2114f07ef12b@quicinc.com>
+Date:   Mon, 17 Jan 2022 11:33:04 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
+MIME-Version: 1.0
+In-Reply-To: <da877712-dac9-e9d0-0bfc-25bef450eb65@codeaurora.org>
+Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Rajendra,
 
-On 1/7/2022 9:27 PM, Bjorn Andersson wrote:
-> On Fri 07 Jan 07:27 PST 2022, Souradeep Chowdhury wrote:
+On 10/28/2021 9:26 AM, Rajendra Nayak wrote:
 >
->> On 1/7/2022 5:31 AM, Bjorn Andersson wrote:
->>> On Wed 05 Jan 23:57 PST 2022, Souradeep Chowdhury wrote:
+>
+> On 10/27/2021 7:54 PM, Ulf Hansson wrote:
+>> On Wed, 27 Oct 2021 at 06:55, Bjorn Andersson
+>> <bjorn.andersson@linaro.org> wrote:
 >>>
->>>> On 12/18/2021 1:41 AM, Bjorn Andersson wrote:
->>>>> On Tue 10 Aug 12:54 CDT 2021, Souradeep Chowdhury wrote:
->>>>>
->>>>>> The DCC is a DMA Engine designed to capture and store data
->>>>>> during system crash or software triggers.The DCC operates
->>>>> Please include a space after '.'
->>>> Ack
->>>>>> based on user inputs via the sysfs interface.The user gives
->>>>>> addresses as inputs and these addresses are stored in the
->>>>>> form of linkedlists.In case of a system crash or a manual
->>>>> I think the user configures the DCC hardware with "a sequence of
->>>>> operations to be performed as DCC is triggered".
->>>>>
->>>>> Afaict the sequence is stored just as a sequence of operations in SRAM,
->>>>> there's no linked list involved - except in your intermediate
->>>>> implementation.
->>>> The user just enters the addresses as input whereas the sequence of
->>>> operations takes
->>>>
->>>> place as per configuration code inside the driver. The end result is storage
->>>> of these
->>>>
->>>> addresses inside the DCC SRAM. The DCC hardware will capture the value at
->>>> these
->>>>
->>>> addresses on a crash or manual trigger by the user.
->>>>
->>>>>> software trigger by the user through the sysfs interface,
->>>>>> the dcc captures and stores the values at these addresses.
->>>>>> This patch contains the driver which has all the methods
->>>>>> pertaining to the sysfs interface, auxiliary functions to
->>>>>> support all the four fundamental operations of dcc namely
->>>>>> read, write, first read then write and loop.The probe method
->>>>> "first read then write" is called "read/modify/write"
->>>> Ack
->>>>>> here instantiates all the resources necessary for dcc to
->>>>>> operate mainly the dedicated dcc sram where it stores the
->>>>>> values.The DCC driver can be used for debugging purposes
->>>>>> without going for a reboot since it can perform manual
->>>>>> triggers.
->>>>>>
->>>>>> Also added the documentation for sysfs entries
->>>>>> and explained the functionalities of each sysfs file that
->>>>>> has been created for dcc.
->>>>>>
->>>>>> The following is the justification of using sysfs interface
->>>>>> over the other alternatives like ioctls
->>>>>>
->>>>>> i) As can be seen from the sysfs attribute descriptions,
->>>>>> most of it does basic hardware manipulations like dcc_enable,
->>>>>> dcc_disable, config reset etc. As a result sysfs is preferred
->>>>>> over ioctl as we just need to enter a 0 or 1.
->>>>>>
->>>>> As I mentioned in our chat, using sysfs allows us to operate the
->>>>> interface using the shell without additional tools.
->>>>>
->>>>> But I don't think that it's easy to implement enable/disable/reset using
->>>>> sysfs is a strong argument. The difficult part of this ABI is the
->>>>> operations to manipulate the sequence of operations, so that's what you
->>>>> need to have a solid plan for.
->>>> The sysfs interface is being used to get the addresses values entered by the
->>>> user
->>>>
->>>> and to also go for manual triggers. The sequence of operations are kept as a
->>>> part of
->>>>
->>>> fixed driver code which is called when the user enters the data.
->>>>
->>> But does the hardware really just operate on "addresses values entered
->>> by the user". Given the various types of operations: read, write,
->>> read-modify-write and loop I get the feeling that the hardware
->>> "executes" a series of actions.
+>>> On Tue 26 Oct 19:48 CDT 2021, Stephen Boyd wrote:
 >>>
->>> I'm don't think the proposed sysfs interface best exposes this to the
->>> user and I don't think that "it's easy to implement enable/disable
->>> attributes in sysfs" is reason enough to go with that approach.
->> So the sysfs interface here has been introduced keeping in mind how the
->> DCC_SRAM needs to be
->>
->> programmed for the dcc hardware to work. We are maintaining a list here
->> based on the address
->>
->> entry. The 4 cases for the type of addresses are as follows-:
->>
->> i) READ ADDRESSES
->>
->> user enters something like "echo <addr> <len> > config"
->>
->> DCC driver stores the <addr> along with the length information in the
->> DCC_SRAM.
->>
->> ii) WRITE ADDRESSES
->>
->> User enters something like "echo <addr> <write_val> 1  > config_write"
->>
->> DCC stores the <addr> first in sram followed by <write_val>.
->>
->> For the above 2 type of addresses there won't be much difference if we use
->> IOCTL.
->>
->> However, for the next 2 type of addresses
->>
->> iii) LOOP ADDRESSES
->>
->> user has to enter something like below
->>
->> echo 9 > loop
->> echo 0x01741010 1 > config
->> echo 0x01741014 1 > config
->> echo 1 > loop
->>
->> The DCC SRAM will be programmed precisely like the above entries where the
->> loop count will be stored first
->>
->> followed by loop addresses and then again a "echo 1 > loop " marks the end
->> of loop addresses.
->>
->> in DCC_SRAM.
->>
->> iv) READ_WRITE ADDRESSES
->>
->> User has to enter something like below
->>
->> echo <addr> > /sys/bus/platform/devices/../config
->>
->> echo <mask> <val> > /sys/bus/platform/devices/../rd_mod_wr
->>
->> Here first the  <addr> is stored in DCC_SRAM followed by <mask> and then the
->> <val>.
->>
->> The above representation to the user space is consistent with the dcc
->> hardware in terms of
->>
->> the way the sequence of values are programmed in the DCC SRAM . Moving to
->> IOCTL will
->>
->> only change the way the READ_WRITE address is represented although user will
->> have to enter
->>
->> multiple parameters at once, let me know if we still need to go for the
->> same.
->>
-> So if I understand correctly, my concern is that if I would like to
-> perform something like (in pseudo code):
->
-> readl(X)
-> write(1, Y)
-> readl(Z) 5 times
->
-> then I will do this as:
->
-> echo X > config
-> echo Y 1 > config_write
-> echo 5 > loop
-> echo Z > config
-> echo 1 > loop
->
-> And the DCC driver will then write this to SRAM as something like:
->
-> read X
-> write Y, 1
-> loop 5
-> read Z
-> loop
->
->
-> In other words, my mind and the DCC has the same representation of this
-> sequence of operations, but I have to shuffle the information into 4
-> different sysfs attributes to get there.
->
-> The design guideline for sysfs is that each attribute should hold one
-> value per attribute, but in your model the attributes are tangled and
-> writing things to them depends on what has been written in that or other
-> attributes previously.
->
-> I simply don't think that's a good ABI.
-
-Ack.
-
-Should I change this to have separate sysfs files dealing with separate 
-type of instructions?
-
-For example I can have separate files like config_read, 
-config_write(already exists), config_loop
-
-and config_read_write to handle 4 different type of instructions with 
-inputs like
-
-echo <loop_offset> <loop_address_numbers> <loop_address_1> 
-<loop_address_2>.. > config_loop
-
-echo <address> <mask> <val> > config_read_write
-
-and so on
-
->
-> [..]
->>>>>> +		The address argument should
->>>>>> +		be given of the form <mask> <value>.For debugging
->>>>>> +		purposes sometimes we need to first read from a register
->>>>>> +		and then set some values to the register.
->>>>>> +		Example:
->>>>>> +		echo 0x80000000 > /sys/bus/platform/devices/.../config
->>>>>> +		(Set the address in config file)
->>>>>> +		echo 0xF 0xA > /sys/bus/platform/devices/.../rd_mod_wr
->>>>>> +		(Provide the mask and the value to write)
->>>>>> +
->>>>>> +What:           /sys/bus/platform/devices/.../ready
->>>>>> +Date:           March 2021
->>>>>> +Contact:        Souradeep Chowdhury<schowdhu@codeaurora.org>
->>>>>> +Description:
->>>>>> +		This file is used to check the status of the dcc
->>>>>> +		hardware if it's ready to take the inputs.
->>>>> When will this read "false"?
->>>> This will give false if the DCC hardware is not in an operational state.
+>>>> +Rajendra
 >>>>
->>>> Will update accordingly.
->>>>
->>>>>> +		Example:
->>>>>> +		cat /sys/bus/platform/devices/.../ready
->>>>>> +
->>>>>> +What:		/sys/bus/platform/devices/.../curr_list
->>>>>> +Date:		February 2021
->>>>>> +Contact:	Souradeep Chowdhury<schowdhu@codeaurora.org>
->>>>>> +Description:
->>>>>> +		This attribute is used to enter the linklist to be
->>>>> I think it would be more appropriate to use the verb "select" here and
->>>>> afaict it's a "list" as the "linked" part only relates to your
->>>>> implementation).
+>>>> Quoting Bjorn Andersson (2021-10-25 19:48:02)
+>>>>> On Mon 25 Oct 15:41 PDT 2021, Stephen Boyd wrote:
 >>>>>
->>>>> But that said, I don't like this ABI. I think it would be cleaner if you
->>>>> had specific attributes for each of the lists. That way it would be
->>>>> clear that you have N lists and they can be configured and enabled
->>>>> independently, and there's no possible race conditions.
->>>> So we do have attributes for independent lists in this case. The user is
->>>> given the option
+>>>>>>
+>>>>>> When the binding was introduced I recall we punted on the parent 
+>>>>>> child
+>>>>>> conversion stuff. One problem at a time. There's also the 
+>>>>>> possibility
+>>>>>> for a power domain to be parented by multiple power domains so
+>>>>>> translation tables need to account for that.
+>>>>>>
+>>>>>
+>>>>> But for this case - and below display case - the subdomain (the 
+>>>>> device's
+>>>>> power-domain) is just a dumb gate. So there is no translation, the 
+>>>>> given
+>>>>> performance_state applies to the parent. Or perhaps such implicitness
+>>>>> will come back and bite us?
 >>>>
->>>> to configure multiple lists at one go. For example I can do
+>>>> In the gate case I don't see how the implicitness will ever be a
+>>>> problem.
 >>>>
->>>> echo 1 > curr_list
+>>>>>
+>>>>> I don't think we allow a power-domain to be a subdomain of two
+>>>>> power-domains - and again it's not applicable to USB or display 
+>>>>> afaict.
 >>>>
->>>> echo 0x18000010 1 > config
->>>> echo 0x18000024 1 > config
+>>>> Ah maybe. I always confuse power domains and genpd.
 >>>>
->>>> Then followed by
+>>>>>
+>>>>>>>
+>>>>>>>> Or we may need to make another part of the OPP binding to 
+>>>>>>>> indicate the
+>>>>>>>> relationship between the power domain and the OPP and the 
+>>>>>>>> parent of
+>>>>>>>> the power domain.
+>>>>>>>
+>>>>>>> I suspect this would be useful if a power-domain provider needs to
+>>>>>>> translate a performance_state into a different 
+>>>>>>> supply-performance_state.
+>>>>>>> Not sure if we have such case currently; these examples are all an
+>>>>>>> adjustable power-domain with "gating" subdomains.
+>>>>>>
+>>>>>> Even for this case, we should be able to have the GDSC map the on 
+>>>>>> state
+>>>>>> to some performance state in the parent domain. Maybe we need to add
+>>>>>> some code to the gdsc.c file to set a performance state on the 
+>>>>>> parent
+>>>>>> domain when it is turned on. I'm not sure where the value for 
+>>>>>> that perf
+>>>>>> state comes from. I guess we can hardcode it in the driver for 
+>>>>>> now and
+>>>>>> if it needs to be multiple values based on the clk frequency we 
+>>>>>> can push
+>>>>>> it out to an OPP table or something like that.
+>>>>>>
+>>>>>
+>>>>> For the GDSC I believe we only have 1:1 mapping, so implementing
+>>>>> set_performance_state to just pass that on to the parent might do the
+>>>>> trick (although I haven't thought this through).
+>>>>>
+>>>>> Conceptually I guess this would be like calling clk_set_rate() on a
+>>>>> clock gate, relying on it being propagated upwards. The problem 
+>>>>> here is
+>>>>> that the performance_state is just a "random" integer without a well
+>>>>> defined unit.
+>>>>>
 >>>>
->>>> echo 2 > curr_list
+>>>> Right. Ideally it would be in the core code somehow so that if there
+>>>> isn't a set_performance_state function we go to the parent or some
+>>>> special return value from the function says "call it on my parent". 
+>>>> The
+>>>> translation scheme could come later so we can translate the "random"
+>>>> integer between parent-child domains.
+>>>
+>>> As a proof of concept it should be sufficient to just add an
+>>> implementation of sc->pd.set_performance_state in gdsc.c. But I agree
+>>> that it would be nice to push this into some framework code, perhaps
+>>> made opt-in by some GENPD_FLAG_xyz.
+>>>
+>>>> At the end of the day the device
+>>>> driver wants to set a frequency or runtime pm get the device and 
+>>>> let the
+>>>> OPP table or power domain code figure out what the level is 
+>>>> supposed to
+>>>> be.
 >>>>
->>>> echo 0x18010038 6 > config
->>>> echo 0x18020010 1 > config
->>>>
->>>> We will get the output in terms of two separate list of registers values.
->>>>
->>> I understand that this will define two lists of operations and that we
->>> will get 2 and 7 registers dumped, respectively. Perhaps unlikely, but
->>> what happens if you try to do these two operations concurrently?
+>>>
+>>> Yes and this is already working for the non-nested case - where the
+>>> single power-domain jumps between performance states as the opp code
+>>> switches from one opp to another.
+>>>
+>>> So if we can list only the child power-domain (i.e. the GDSC) and have
+>>> the performance_stat requests propagate up to the parent rpmhpd 
+>>> resource
+>>> I think we're good.
 >>>
 >>>
->>> What I'm suggesting here is that if you have N contexts, you should have
->>> N interfaces to modify each one independently - simply because that's
->>> generally a very good thing.
->> Not sure if there will ever be a concurrency issue in this case.
->> This is just about programming the DCC SRAM from the user entries
->> sequentially.
-> So you've decided that two such sequences must not happen at the same
-> time. (I know it's unlikely, but there's nothing preventing me from
-> running the two snippets of echos concurrently and the outcome will be
-> unexpected)
-
-So as per the dcc hardware configuration document, parallel programming 
-of lists are not
-
-supported for dcc. We program the lists sequentially one after the other.
-
->
->> The curr_list number is nothing but some register writes
->> done in the dcc so that the dcc_hardware knows the beginning and end
->> of a particular list and can dump the captured data according. Even if
->> an user chooses multiple curr_list entries, it will be programmed
->> sequentially in DCC_SRAM.
->>
-> So there's no separation between the lists in the hardware?
->
-> Looking at the driver I get a sense that we have N lists that can be
-> configured independently and will be run "independently" upon a trigger.
->
-> If this isn't the case, what's the purpose of the multiple lists?
-
-Lists are programmed sequentially from the driver perspective.
-
-We have multiple lists in case of dcc because multiple software 
-components may be using
-
-dcc hardware at once in which case there are individual lists allotted 
-for each individual components.
-
-For example kernel might have a few lists to access whereas the rest 
-maybe used by SDI which is a
-
-separate component. Each list is of arbitrary length as entered by the 
-user and one list can be updated
-
-with it's base address after the previous list has been programmed in 
-DCC_SRAM like below :-
-
-                 ret = __dcc_ll_cfg(drvdata, list);
-                 if (ret) {
-                         dcc_writel(drvdata, 0, DCC_LL_LOCK(list));
-                         goto err;
-                 }
-
-                 /* 3. program DCC_RAM_CFG reg */
-                 dcc_writel(drvdata, ram_cfg_base +
-                         drvdata->ram_offset/4, DCC_LL_BASE(list));
-  
-
->
->>>>>> +		used while appending addresses.The range of values
->>>>>> +		for this can be from 0 to 3.This feature is given in
->>>>>> +		order to use certain linkedlist for certain debugging
->>>>>> +		purposes.
->>>>>> +		Example:
->>>>>> +		echo 0 > /sys/bus/platform/devices/10a2000.dcc/curr_list
->>>>>> +
->>> [..]
->>>>>> diff --git a/drivers/soc/qcom/dcc.c b/drivers/soc/qcom/dcc.c
->>> [..]
->>>>>> +static int dcc_valid_list(struct dcc_drvdata *drvdata, int curr_list)
->>>>>> +{
->>>>>> +	u32 lock_reg;
->>>>>> +
->>>>>> +	if (list_empty(&drvdata->cfg_head[curr_list]))
->>>>>> +		return -EINVAL;
->>>>>> +
->>>>>> +	if (drvdata->enable[curr_list]) {
->>>>>> +		dev_err(drvdata->dev, "List %d is already enabled\n",
->>>>>> +				curr_list);
->>>>>> +		return -EINVAL;
->>>>>> +	}
->>>>>> +
->>>>>> +	lock_reg = dcc_readl(drvdata, DCC_LL_LOCK(curr_list));
->>>>> Under what circumstances would this differ from
->>>>> drvdata->enable[curr_list}?
->>>> So locking the list is done on the register as soon as the user enters the
->>>> curr_list entry whereas
+>>> Let's give this a spin and confirm that this is the case...
+>>>
+>>>>>
+>>>>>
+>>>>> The one case where I believe we talked about having different mapping
+>>>>> between the performance_state levels was in the relationship 
+>>>>> between CX
+>>>>> and MX. But I don't think we ever did anything about that...
 >>>>
->>>> the list is marked as enabled only on successfully programming the SRAM
->>>> contents. So a list can
+>>>> Hmm alright. I think there's a constraint but otherwise nobody really
+>>>> wants to change both at the same time.
 >>>>
->>>> be locked and not marked enabled in certain cases. The first is used so that
->>>> the user doesn't
+>>>>>>
+>>>>>> Yes, a GDSC is really a gate on a parent power domain like CX or 
+>>>>>> MMCX,
+>>>>>> etc. Is the display subsystem an example of different clk 
+>>>>>> frequencies
+>>>>>> wanting to change the perf state of CX? If so it's a good place 
+>>>>>> to work
+>>>>>> out the translation scheme for devices that aren't listing the CX 
+>>>>>> power
+>>>>>> domain in DT.
+>>>>>
+>>>>> Yes, the various display components sits in MDSS_GDSC but the 
+>>>>> opp-tables
+>>>>> needs to change the performance_state of MDSS_GDSC->parent (i.e. 
+>>>>> CX or
+>>>>> MMCX, depending on platform).
+>>>>>
+>>>>> As I said, today we hack this by trusting that the base drm/msm 
+>>>>> driver
+>>>>> will keep MDSS_GDSC on and listing MMCX (or CX) as power-domain 
+>>>>> for each
+>>>>> of these components.
+>>>>>
+>>>>>
+>>>>> So if we solve this, then that seems to directly map to the static 
+>>>>> case
+>>>>> for USB as well.
+>>>>>
 >>>>
->>>> mistakenly enter the same curr_list twice whereas the later is used to mark
->>>> that the list has been
->>>>
->>>> successfully configured.
->>>>
->>> So this will mark the list as "actively in use, but disabled"? Why is
->>> this kept in the hardware? When is this not the same as the list of
->>> operations for that list being non-empty?
->> So this is in accordance with the dcc hardware configuration
->> requirement. We have to lock the list first and after that proceed
->> with the subsequent writes.
-> But what does this mean? What happens when I lock a list?
+>>>> Got it. So in this case we could have the various display components
+>>>> that are in the mdss gdsc domain set their frequency via OPP and then
+>>>> have that translate to a level in CX or MMCX. How do we parent the 
+>>>> power
+>>>> domains outside of DT? I'm thinking that we'll need to do that if MMCX
+>>>> is parented by CX or something like that and the drivers for those two
+>>>> power domains are different. Is it basic string matching?
+>>>
+>>> In one way or another we need to invoke pm_genpd_add_subdomain() to 
+>>> link
+>>> the two power-domains (actually genpds) together, like what was done in
+>>> 3652265514f5 ("clk: qcom: gdsc: enable optional power domain support").
+>>>
+>>> In the case of MMCX and CX, my impression of the documentation is that
+>>> they are independent - but if we need to express that CX is parent of
+>>> MMCX, they are both provided by rpmhpd which already supports this by
+>>> just specifying .parent on mmcx to point to cx.
+>>
+>> I was trying to follow the discussion, but it turned out to be a bit
+>> complicated to catch up and answer all things. In any case, let me
+>> just add a few overall comments, perhaps that can help to move things
+>> forward.
+>>
+>> First, one domain can have two parent domains. Both from DT and from
+>> genpd point of view, just to make this clear.
+>>
+>> Although, it certainly looks questionable to me, to hook up the USB
+>> device to two separate power domains, one to control power and one to
+>> control performance. Especially, if it's really the same piece of HW
+>> that is managing both things. 
+> []..
+>> Additionally, if it's correct to model
+>> the USB GDSC power domain as a child to the CX power domain from HW
+>> point of view, we should likely do that.
 >
-> Afacit we have a "lock" bit and an "enable" bit. So in what circumstance
-> does the hardware care about a list being locked? Wouldn't it be
-> sufficient to just have the enable bit?
-
-As explained above multiple software components might be using DCC 
-hardware for which lock bit is
-
-necessary. From only kernel perspective enable bit alone suffices for 
-the operation.
-
+> I think this would still require a few things in genpd, since
+> CX and USB GDSC are power domains from different providers.
+> Perhaps a pm_genpd_add_subdomain_by_name()?
 >
->> As per the driver code below
->>
->>                 /* 1. Take ownership of the list */
->>                  dcc_writel(drvdata, BIT(0), DCC_LL_LOCK(list));
->>
->>                  /* 2. Program linked-list in the SRAM */
->>                  ram_cfg_base = drvdata->ram_cfg;
->>                  ret = __dcc_ll_cfg(drvdata, list);
->>                  if (ret) {
->>                          dcc_writel(drvdata, 0, DCC_LL_LOCK(list));
->>                          goto err;
->>                  }
->>
->>                  /* 3. program DCC_RAM_CFG reg */
->>                  dcc_writel(drvdata, ram_cfg_base +
->>                          drvdata->ram_offset/4, DCC_LL_BASE(list));
->>                  dcc_writel(drvdata, drvdata->ram_start +
->>                          drvdata->ram_offset/4, DCC_FD_BASE(list));
->>                  dcc_writel(drvdata, 0xFFF, DCC_LL_TIMEOUT(list));
->>
->>                  /* 4. Clears interrupt status register */
->>                  dcc_writel(drvdata, 0, DCC_LL_INT_ENABLE(list));
->>                  dcc_writel(drvdata, (BIT(0) | BIT(1) | BIT(2)),
->>                                          DCC_LL_INT_STATUS(list));
->>
->> In case of any errors we again unlock the list before exiting.
->>
-> So it needs to be locked while SRAM contains a valid sequence of
-> operations?
->
-> Or does it need to be locked while we write to SRAM? If so, why is that?
+Tried with the changes provided by you  where USB GDSC power domains 
+added as a child to the CX power domain
 
-So it needs to be locked while SRAM contains a valid sequence of operations.
+But cx shutdown is not happening  during sytem suspend as we need to 
+keep USB GDSC active in host mode .
 
-The reason has been explained as above.
+Regards
 
-> Regards,
-> Bjorn
+Sandeep
+
+
+
