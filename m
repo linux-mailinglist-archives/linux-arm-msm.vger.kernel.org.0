@@ -2,114 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 515C9491341
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jan 2022 02:02:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 044F9491374
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jan 2022 02:38:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244263AbiARBCc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jan 2022 20:02:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39152 "EHLO
+        id S238958AbiARBiM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jan 2022 20:38:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244112AbiARBCI (ORCPT
+        with ESMTP id S231266AbiARBiL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jan 2022 20:02:08 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D54D1C06161C;
-        Mon, 17 Jan 2022 17:02:07 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id c71so72639749edf.6;
-        Mon, 17 Jan 2022 17:02:07 -0800 (PST)
+        Mon, 17 Jan 2022 20:38:11 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70B0CC061574;
+        Mon, 17 Jan 2022 17:38:11 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id t24so72828619edi.8;
+        Mon, 17 Jan 2022 17:38:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
+        h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=70y9nP+1TJuyoQVHWKHYrgk62/1kbAozVgHhQoGQnWU=;
-        b=Ua355Juvb+5cWQs7Gu/XWJattoD8KtPGSZKPITsu8/pwo6tOdqGkRg78iwsyMaR/3Q
-         5Nl6JWabCVo4Ysyl4qcpLQddwq2FtSSNTl0IEWSKUUvxyCCU1LzPPFdMwEScczc0cTSx
-         eLyThB2vMDUN+WPoE8SgUPs+Ni55KM+GYapZ7K3IptXwFqs6XYx0qxZCO1au/4ckOW0n
-         ziUnL2ARYZyRDq/g1voz3IMBh3mHi7G1+xeK3Is0K96VpYeDq9Z6EC2lAXiWc/gIyD3c
-         pWnd09mAyvDhmza6odhGBmhl9SJUovZXXAajqM0GQQSPNvFUgTjATRQvrVqIRjSBr5GT
-         8XnA==
+        bh=HTyWntryCBF4iZJRg4LVIdA30wsrAuLbxuCKj8lB+YA=;
+        b=ZNnuZdnp4aH0xUTo2hVJ3oXzTIxQohV/RtSLFHEYvmOTZJuBrEY2GpF2XLKqjvZp8o
+         wkWZDTPw0EPr4qq7Afc6HtUrQiUr4bzMhQvM9iNC1M++YUffmfYt3cHWzE658ruhkbNc
+         tVMltG4qTYFyUPf/K1WazsXYxz6UMPOP8m7K0XB5AeZtkRK5pBLV3E1Zc9LMxMZqhTAC
+         j67WQ6vhD6LCtZt4Or5gwruI7piplslFNFFZFu0HsBJ9Xp41ADCIm8U8JtZfiMTbruxy
+         GiwK6nXM7+uG9rjd53UySclF5f4yqJE9wHJl3r4dOMAt4diMtQ6udG2v1CySODWYhXlQ
+         SlMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=70y9nP+1TJuyoQVHWKHYrgk62/1kbAozVgHhQoGQnWU=;
-        b=fpXvvVYjvLmG3CoWFQ5Mb7DRBEmKPvMJl+TMpqlmsDRrzN8yX848qH+W8qlpp4Q3r8
-         MYB2TdPcwKOrxvGCapFEmQOjQSsnk5MAkY1f3tWzE+g9PFy9Y1t2+MVvuCsn8oW43bMh
-         bo5LafQlurhHiovmgDq7TIm21LZwMoK04EJZ2pSrBhSD5NUNud3u/QF00FgdS+kdxKM5
-         buwUCi8igHhq7Ota8nb6TnEQq7yqKVKSqhvglNH5wQt9IWC8awXgbiWMXsniwtbX/Gyb
-         Rew1ozZnwiC3Tvwoi0Sd5sfEs5ZVL9A4eOd74LcACLFqYc/VizkwJAd6ajYYpn886fab
-         mqYA==
-X-Gm-Message-State: AOAM531zAJGH8FJi/qr4UxEPV5zuKt23ckJIsmGeD/whOXLnwquZMjWr
-        1CC3eIHt5YVGv8WVDa88L8814WOCkyQ=
-X-Google-Smtp-Source: ABdhPJw587JtgnQlOOPt5ApE1N1/wBG4hMb2MOqEUk6zLxEKAgsPBKF5evubIxpeZlL3w/Qnn8/1CA==
-X-Received: by 2002:a05:6402:518d:: with SMTP id q13mr23364662edd.377.1642467726331;
-        Mon, 17 Jan 2022 17:02:06 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=HTyWntryCBF4iZJRg4LVIdA30wsrAuLbxuCKj8lB+YA=;
+        b=V/3HuCNoQicwi+GQquDAdn2c+OQ3EouDK3malLFCWCfclnczgDPOi+DE59ooZnXTLs
+         /E9tOxTzKnqHFNWXSMC44XXNxc57gwpZop2Wc1ArxdppKPyLRtpJBKPRf17PfntDjjtA
+         R1wGRgjV3s5SUG4Liw2sGTek5KZ7dCrup4zFS05dnk6F2EB4zN2B60q2FPUzCuhCi2Mz
+         tpkTf15r4KxiHDFsb9qntDJO2Gcak1Im3CH1jh5AAyHO/yBFB4nKOpx5JgTt1hWKNAWC
+         pVgIMd8YMQUzDgHkTrRwpacOZCqov09raoTV6i1JPXAkf77Cjzr4xJBwowSH/QflJF+a
+         CAQg==
+X-Gm-Message-State: AOAM532wtqwaRrS3Xk4BlZlNNzYX/yj5b4gPj11B0yXsaMw9gP/fJ9Vc
+        LOl2c2ETJe4IH6llVR+yvLA=
+X-Google-Smtp-Source: ABdhPJzPwaA9CAKXi1XWNkYgNeLcX4kyhh2e9tQqMhJgVNOMwWHa09CnWK7qYu/M/LgBhEseEhljaQ==
+X-Received: by 2002:a17:907:72d2:: with SMTP id du18mr18435031ejc.208.1642469889882;
+        Mon, 17 Jan 2022 17:38:09 -0800 (PST)
 Received: from localhost.localdomain (93-42-71-246.ip85.fastwebnet.it. [93.42.71.246])
-        by smtp.googlemail.com with ESMTPSA id 24sm4892127ejg.47.2022.01.17.17.02.05
+        by smtp.googlemail.com with ESMTPSA id kj18sm3990675ejc.139.2022.01.17.17.38.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Jan 2022 17:02:06 -0800 (PST)
+        Mon, 17 Jan 2022 17:38:09 -0800 (PST)
 From:   Ansuel Smith <ansuelsmth@gmail.com>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Ansuel Smith <ansuelsmth@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 14/14] ARM: dts: qcom: Add syscon and cxo/pxo clock to gcc node for ipq8064
-Date:   Tue, 18 Jan 2022 01:44:34 +0100
-Message-Id: <20220118004434.17095-15-ansuelsmth@gmail.com>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>
+Subject: [PATCH 00/17] Multiple addition to ipq8064 dtsi
+Date:   Tue, 18 Jan 2022 02:20:30 +0100
+Message-Id: <20220118012051.21691-1-ansuelsmth@gmail.com>
 X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20220118004434.17095-1-ansuelsmth@gmail.com>
-References: <20220118004434.17095-1-ansuelsmth@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add syscon compatible required for tsens driver to correctly probe driver
-and access the reg. Also add cxo and pxo tag and declare them as gcc clock
-now requires them for the ipq8064 gcc driver that has now been modernized.
+This try to complete the ipq8064 dtsi and introduce 2 new dtsi
+ipq8064-v2 and ipq8065. While some node are still missing (cpufreq node,
+l2 scale node, fab scale node) this would add most of the missing node
+to make ipq8064 actually usable.
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- arch/arm/boot/dts/qcom-ipq8064.dtsi | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+Some of the changes are the fix for the pci IO that cause any secondary
+wifi card with ath10k to fail init.
+Adds regulators definition for RPM.
+Adds many missing gsbi nodes used by all the devices.
+Enable the usb phy by default as they are actually enabled internally by
+xlate only if the dwc3 driver is used.
+Add opp table and declare idle state for ipq8064.
+Fix some dtc warning.
 
-diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-index 11481313bdb6..5524a68cf3d1 100644
---- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-@@ -298,13 +298,13 @@ smem: smem@41000000 {
- 	};
- 
- 	clocks {
--		cxo_board {
-+		cxo_board: cxo_board {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
- 			clock-frequency = <25000000>;
- 		};
- 
--		pxo_board {
-+		pxo_board: pxo_board {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
- 			clock-frequency = <25000000>;
-@@ -736,7 +736,9 @@ tsens_calib_backup: calib_backup@410 {
- 		};
- 
- 		gcc: clock-controller@900000 {
--			compatible = "qcom,gcc-ipq8064";
-+			compatible = "qcom,gcc-ipq8064", "syscon";
-+			clocks = <&pxo_board>, <&cxo_board>;
-+			clock-names = "pxo", "cxo";
- 			reg = <0x00900000 0x4000>;
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
+This also add the ipq8064-v2.0 dtsi and the ipq8065 dtsi used by more
+recent devices based on this SoC.
+
+Ansuel Smith (17):
+  ARM: dts: qcom: add multiple missing pin definition for ipq8064
+  ARM: dts: qcom: add gsbi6 missing definition for ipq8064
+  ARM: dts: qcom: add missing rpm regulators and cells for ipq8064
+  ARM: dts: qcom: add missing snps,dwmac compatible for gmac ipq8064
+  ARM: dts: qcom: enable usb phy by default for ipq8064
+  ARM: dts: qcom: reduce pci IO size to 64K for ipq8064
+  ARM: dts: qcom: fix dtc warning for missing #address-cells for ipq8064
+  ARM: dts: qcom: add smem node for ipq8064
+  ARM: dts: qcom: add saw for l2 cache and kraitcc for ipq8064
+  ARM: dts: qcom: add sic non secure node for ipq8064
+  ARM: dts: qcom: fix and add some missing gsbi node for ipq8064
+  ARM: dts: qcom: add opp table for cpu and l2 for ipq8064
+  ARM: dts: qcom: add speedbin efuse nvmem binding
+  ARM: dts: qcom: add multiple missing binding for cpu and l2 for
+    ipq8064
+  ARM: dts: qcom: remove redundant binding from ipq8064 rb3011 dts
+  ARM: dts: qcom: add ipq8064-v2.0 dtsi
+  ARM: dts: qcom: add ipq8065 dtsi
+
+ arch/arm/boot/dts/qcom-ipq8064-rb3011.dts |  17 --
+ arch/arm/boot/dts/qcom-ipq8064-v2.0.dtsi  |  70 +++++
+ arch/arm/boot/dts/qcom-ipq8064.dtsi       | 344 +++++++++++++++++++++-
+ arch/arm/boot/dts/qcom-ipq8065.dtsi       | 168 +++++++++++
+ 4 files changed, 568 insertions(+), 31 deletions(-)
+ create mode 100644 arch/arm/boot/dts/qcom-ipq8064-v2.0.dtsi
+ create mode 100644 arch/arm/boot/dts/qcom-ipq8065.dtsi
+
 -- 
 2.33.1
 
