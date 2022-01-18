@@ -2,99 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D145249136C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jan 2022 02:34:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 203BD4914B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jan 2022 03:24:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238856AbiARBcx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jan 2022 20:32:53 -0500
-Received: from mail-ot1-f51.google.com ([209.85.210.51]:33338 "EHLO
-        mail-ot1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238792AbiARBcw (ORCPT
+        id S244589AbiARCXr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jan 2022 21:23:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57230 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244809AbiARCWp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jan 2022 20:32:52 -0500
-Received: by mail-ot1-f51.google.com with SMTP id y11-20020a0568302a0b00b0059a54d66106so5010733otu.0;
-        Mon, 17 Jan 2022 17:32:52 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=UTya3NP8ShVi3TupYuluGp8FAaiOXk0bgJr9capIY1Y=;
-        b=aN17tOQXkxYyAq+7JgHXMpIMT4PdRRZlzJQ0Pb4YZgdpIeOK6o3zN8U3o57OvF/SUh
-         TnmrUbWjqz8KRdtm7H811nMDQSw4ro4OJUqvLWTMWPx3ZxoXHdxanBlMmvuZScUwYx50
-         UKezkw8r9N8QYlihCbmm0z7RuRz72peU9M7rPobIqTlXW3ZYCneHluZUfDaPjZ439QEJ
-         Aoog1nVzhtenFOLC5MW3sab8RHEmBV0d9YQFGhq+IHGtMF2lcbaAvhYVQacJF0xz8mmi
-         kD8mPlQrt99B3J0T8NwqrcIalxMKwtqJcvdaU1EhkOh10DhHO373rOS0ZAMdsi5mZFGv
-         8Scw==
-X-Gm-Message-State: AOAM530J//N+N1zl1s4lpqGt+WIXATc24OJOgdYT6M0OK/uB1odl/nkQ
-        ya88D4hB9HZLCrr1GOvLhHru8BEWuA==
-X-Google-Smtp-Source: ABdhPJxY2OtlCebxGCFuxE33YrmMjePyRG0OvLHCPVYYAFzbcANNCuNMrHqFQjab+l6ECjiYQmfEfw==
-X-Received: by 2002:a05:6830:150b:: with SMTP id k11mr15905244otp.231.1642469571569;
-        Mon, 17 Jan 2022 17:32:51 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id o11sm7905064oiv.10.2022.01.17.17.32.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Jan 2022 17:32:50 -0800 (PST)
-Received: (nullmailer pid 545751 invoked by uid 1000);
-        Tue, 18 Jan 2022 01:32:47 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        linux-clk@vger.kernel.org,
-        Michael Turquette <mturquette@baylibre.com>,
+        Mon, 17 Jan 2022 21:22:45 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15A63C06176F;
+        Mon, 17 Jan 2022 18:22:45 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8559A60010;
+        Tue, 18 Jan 2022 02:22:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2961C36AEB;
+        Tue, 18 Jan 2022 02:22:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1642472564;
+        bh=Uy3muUzRramXrgI3qDW47luLxlFoyW/MzQLWzbhDiyE=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=cK64x3MRbrOcZFbH11pycydLRnPg+hcbZPJAe/phqdYVJBZLu3JGr6EHM9wvOZvch
+         F2YPpdRhrNPWZ26P5Jtgwhlf1rQFk9SpETiyj/Wl2MDeHtMXmTeUK3UO66zUTzhg5o
+         KRHewCrvaSE/0tIgO6PaP0SWUx5ph6zojS/yNI8HuuOMslVujIheYv5ap805Urg5tE
+         eVA1c3uPAdKdkPWdOW29501ZcrF5ZdzXtyl+Fq0KO/bWGyaxfTvmcjT6UpR6+JmPij
+         q5/P6uEWuBtqnCfkl5j0oJCqxa0OcNAo8RTaQ2DL8zCI0Ru5ihuWUTuKE6bUhGItCo
+         s7YjMI3flbMqQ==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>
-In-Reply-To: <20220118004434.17095-2-ansuelsmth@gmail.com>
-References: <20220118004434.17095-1-ansuelsmth@gmail.com> <20220118004434.17095-2-ansuelsmth@gmail.com>
-Subject: Re: [PATCH 01/14] dt-bindings: clock: Document qcom,gcc-ipq8064 binding
-Date:   Mon, 17 Jan 2022 19:32:47 -0600
-Message-Id: <1642469567.797039.545749.nullmailer@robh.at.kernel.org>
+        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.16 055/217] arm64: dts: qcom: sm[68]350: Use interrupts-extended with pdc interrupts
+Date:   Mon, 17 Jan 2022 21:16:58 -0500
+Message-Id: <20220118021940.1942199-55-sashal@kernel.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220118021940.1942199-1-sashal@kernel.org>
+References: <20220118021940.1942199-1-sashal@kernel.org>
+MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 18 Jan 2022 01:44:21 +0100, Ansuel Smith wrote:
-> Document qcom,gcc-ipq8064 binding needed to declare pxo and cxo source
-> clocks. The gcc node is also used by the tsens driver, already Documented,
-> to get the calib nvmem cells and the base reg from gcc.
-> 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  .../bindings/clock/qcom,gcc-ipq8064.yaml      | 67 +++++++++++++++++++
->  1 file changed, 67 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-ipq8064.yaml
-> 
+From: Konrad Dybcio <konrad.dybcio@somainline.org>
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+[ Upstream commit 9e7f7b65c7f04c5cfda97d6bd0d452a49e60f24e ]
 
-yamllint warnings/errors:
+Using interrupts = <&pdc X Y> makes the interrupt framework interpret this as
+the &pdc-nth range of the main interrupt controller (GIC). Fix it.
 
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8064.example.dt.yaml: clock-controller@900000: compatible: ['qcom,gcc-ipq8064', 'syscon'] is too long
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8064.example.dt.yaml: clock-controller@900000: compatible: Additional items are not allowed ('syscon' was unexpected)
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8064.example.dt.yaml: clock-controller@900000: 'clock-names', 'clocks' do not match any of the regexes: 'pinctrl-[0-9]+'
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8064.example.dt.yaml: clock-controller@900000: compatible: ['qcom,gcc-ipq8064', 'syscon'] is too long
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8064.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8064.example.dt.yaml: clock-controller@900000: compatible: Additional items are not allowed ('syscon' was unexpected)
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,gcc-ipq8064.yaml
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://lore.kernel.org/r/20211114012755.112226-5-konrad.dybcio@somainline.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 4 ++--
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/1581028
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index 973e18fe3b674..cd55797facf69 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -631,7 +631,7 @@ tsens0: thermal-sensor@c263000 {
+ 			reg = <0 0x0c263000 0 0x1ff>, /* TM */
+ 			      <0 0x0c222000 0 0x8>; /* SROT */
+ 			#qcom,sensors = <16>;
+-			interrupts = <&pdc 26 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&pdc 26 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <&pdc 28 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "uplow", "critical";
+ 			#thermal-sensor-cells = <1>;
+@@ -642,7 +642,7 @@ tsens1: thermal-sensor@c265000 {
+ 			reg = <0 0x0c265000 0 0x1ff>, /* TM */
+ 			      <0 0x0c223000 0 0x8>; /* SROT */
+ 			#qcom,sensors = <16>;
+-			interrupts = <&pdc 27 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&pdc 27 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <&pdc 29 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "uplow", "critical";
+ 			#thermal-sensor-cells = <1>;
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index d134280e29390..a8c040c564096 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -910,7 +910,7 @@ tsens0: thermal-sensor@c263000 {
+ 			reg = <0 0x0c263000 0 0x1ff>, /* TM */
+ 			      <0 0x0c222000 0 0x8>; /* SROT */
+ 			#qcom,sensors = <15>;
+-			interrupts = <&pdc 26 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&pdc 26 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <&pdc 28 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "uplow", "critical";
+ 			#thermal-sensor-cells = <1>;
+@@ -921,7 +921,7 @@ tsens1: thermal-sensor@c265000 {
+ 			reg = <0 0x0c265000 0 0x1ff>, /* TM */
+ 			      <0 0x0c223000 0 0x8>; /* SROT */
+ 			#qcom,sensors = <14>;
+-			interrupts = <&pdc 27 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&pdc 27 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <&pdc 29 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "uplow", "critical";
+ 			#thermal-sensor-cells = <1>;
+-- 
+2.34.1
 
