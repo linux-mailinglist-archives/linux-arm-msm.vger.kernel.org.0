@@ -2,47 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 73EEF49166A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jan 2022 03:34:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 32A7149166C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jan 2022 03:34:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344007AbiARCeE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jan 2022 21:34:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58524 "EHLO
+        id S1343671AbiARCeF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jan 2022 21:34:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343626AbiARC2T (ORCPT
+        with ESMTP id S1345191AbiARCbU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jan 2022 21:28:19 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAFFDC0612F2;
-        Mon, 17 Jan 2022 18:25:51 -0800 (PST)
+        Mon, 17 Jan 2022 21:31:20 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43F48C07E5FE;
+        Mon, 17 Jan 2022 18:28:32 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 67306B8123D;
-        Tue, 18 Jan 2022 02:25:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11224C36AF4;
-        Tue, 18 Jan 2022 02:25:47 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id AB760610AB;
+        Tue, 18 Jan 2022 02:28:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252C7C36AEB;
+        Tue, 18 Jan 2022 02:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1642472749;
-        bh=qB7IvpF6hWL16AlFX0KXr2GLtAf9ZWPdNVPoZdxWx+Y=;
+        s=k20201202; t=1642472911;
+        bh=Zlb1GxZyQU5sZAlAtxJ1xvGbM1W1LxN/N01mLYXusvk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=mzcKMTCWwXCKAOFvKHoJBBzzjX5RAgVdz9DaIjqCLFxr70ceeJO5ltEXXPX4HJDer
-         GSraIexCf2bAu1n2vXdZL0CClsegI3SbiQ8yTFy/RWtTKSa8w5e6kn9eb2xoc5hNoD
-         1sF6/ZLp/wXc8ro3tIsCJ2VnIjoCIhZklT6yruDYZkGFs3W58SmoPck5OaWSdr2m44
-         Qs1VHlezVsxQ+nx0u6MonGWessp2YAVgnSNi89WJzGOxk/jEit39kesDLTq0Dvf3ta
-         wrcW7YR6D18dfugugWk5r9A1Xzc5ya7cPfdl83/Hrdc6l6ctDrV+1mNystZzixs8rl
-         OL2xsKf8Kdb5Q==
+        b=gWgweuE7DwAFp+/4BedNB2FmEcv11fK5noZZlBFRT6ckE3ixtQwWzTgoo4KSvgwRj
+         vpQ+d2OdGQQmQjT95VDUgSu0lKCwf487KVLKMcm5AIJbXr9gbIf5RCYv5fu6K11hsG
+         u5HWbd1Hx0qQTfGj0js8sKux/LKeGBQx+EL0ZHeNapd+5TBmCLuqsaiCH24TW3Fy7G
+         4+B8UUGa5XIScKZ2UiTj5oX5VNrPdLqUC9fUkW78pzkiShLQR8qekm42rbQORnWadZ
+         OZzK54CJ5u2aD+sOhM4aD3ZGe/3isGt/IIq0sA2fOzi6Lmc+oL8j+c1kOQ1Rd9cSHw
+         yRxJo/cpF9/Aw==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Alex Elder <elder@linaro.org>, David Heidelberg <david@ixit.cz>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "David S . Miller" <davem@davemloft.net>,
-        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.16 121/217] ARM: dts: qcom: sdx55: fix IPA interconnect definitions
-Date:   Mon, 17 Jan 2022 21:18:04 -0500
-Message-Id: <20220118021940.1942199-121-sashal@kernel.org>
+Cc:     Changcheng Deng <deng.changcheng@zte.com.cn>,
+        Zeal Robot <zealci@zte.com.cn>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sasha Levin <sashal@kernel.org>, nks@flawful.org,
+        agross@kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.16 162/217] PM: AVS: qcom-cpr: Use div64_ul instead of do_div
+Date:   Mon, 17 Jan 2022 21:18:45 -0500
+Message-Id: <20220118021940.1942199-162-sashal@kernel.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220118021940.1942199-1-sashal@kernel.org>
 References: <20220118021940.1942199-1-sashal@kernel.org>
@@ -54,45 +54,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Alex Elder <elder@linaro.org>
+From: Changcheng Deng <deng.changcheng@zte.com.cn>
 
-[ Upstream commit c0d6316c238b1bd743108bd4b08eda364f47c7c9 ]
+[ Upstream commit 92c550f9ffd2884bb5def52b5c0485a35e452784 ]
 
-The first two interconnects defined for IPA on the SDX55 SoC are
-really two parts of what should be represented as a single path
-between IPA and system memory.
+do_div() does a 64-by-32 division. Here the divisor is an unsigned long
+which on some platforms is 64 bit wide. So use div64_ul instead of do_div
+to avoid a possible truncation.
 
-Fix this by combining the "memory-a" and "memory-b" interconnects
-into a single "memory" interconnect.
-
-Reported-by: David Heidelberg <david@ixit.cz>
-Tested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Alex Elder <elder@linaro.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: Changcheng Deng <deng.changcheng@zte.com.cn>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://lore.kernel.org/r/20211125014311.45942-1-deng.changcheng@zte.com.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/qcom-sdx55.dtsi | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/soc/qcom/cpr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
-index 44526ad9d210b..eee2f63b9bbab 100644
---- a/arch/arm/boot/dts/qcom-sdx55.dtsi
-+++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
-@@ -333,12 +333,10 @@ ipa: ipa@1e40000 {
- 			clocks = <&rpmhcc RPMH_IPA_CLK>;
- 			clock-names = "core";
+diff --git a/drivers/soc/qcom/cpr.c b/drivers/soc/qcom/cpr.c
+index 1d818a8ba2089..e9b854ed1bdfd 100644
+--- a/drivers/soc/qcom/cpr.c
++++ b/drivers/soc/qcom/cpr.c
+@@ -1010,7 +1010,7 @@ static int cpr_interpolate(const struct corner *corner, int step_volt,
+ 		return corner->uV;
  
--			interconnects = <&system_noc MASTER_IPA &system_noc SLAVE_SNOC_MEM_NOC_GC>,
--					<&mem_noc MASTER_SNOC_GC_MEM_NOC &mc_virt SLAVE_EBI_CH0>,
-+			interconnects = <&system_noc MASTER_IPA &mc_virt SLAVE_EBI_CH0>,
- 					<&system_noc MASTER_IPA &system_noc SLAVE_OCIMEM>,
- 					<&mem_noc MASTER_AMPSS_M0 &system_noc SLAVE_IPA_CFG>;
--			interconnect-names = "memory-a",
--					     "memory-b",
-+			interconnect-names = "memory",
- 					     "imem",
- 					     "config";
+ 	temp = f_diff * (uV_high - uV_low);
+-	do_div(temp, f_high - f_low);
++	temp = div64_ul(temp, f_high - f_low);
  
+ 	/*
+ 	 * max_volt_scale has units of uV/MHz while freq values
 -- 
 2.34.1
 
