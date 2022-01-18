@@ -2,130 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C2FE4921B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jan 2022 09:58:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DD3AA4921F5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jan 2022 10:06:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233210AbiARI6D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jan 2022 03:58:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36356 "EHLO
+        id S1345159AbiARJGW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jan 2022 04:06:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240431AbiARI6D (ORCPT
+        with ESMTP id S240264AbiARJGV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jan 2022 03:58:03 -0500
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 950F1C061574;
-        Tue, 18 Jan 2022 00:58:02 -0800 (PST)
-Received: by mail-ot1-x331.google.com with SMTP id t4-20020a05683022e400b00591aaf48277so23271617otc.13;
-        Tue, 18 Jan 2022 00:58:02 -0800 (PST)
+        Tue, 18 Jan 2022 04:06:21 -0500
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1525EC06161C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jan 2022 01:06:21 -0800 (PST)
+Received: by mail-yb1-xb2c.google.com with SMTP id m6so53626626ybc.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jan 2022 01:06:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=FsktoWN11jLWpkTmdexyrutmDTweSqKSJJTsgTRyixU=;
-        b=GgvakMAFTEDdlAZ1aGXXD+GOfBvKxscCoMjAtF9pxaDGCe072j2wmSsu3PUgCRkeDq
-         RV/MbsqxpUNYZGoZUe/Fuf/bIkNGObOQChg88H0o8crFHmk0ajwnXhp/kACS579PaP5N
-         CJkLEdlu6bSN+xRX/CF59rN3qd4S4ra6CozIzM3zScc4WmBhq/e/4beaYb5ea/1uePRm
-         0532PAEXIlH6wYIzWnEcT/TbKVap0Oi+6jkHmBq1buKijzYt8GNqHClUigIW2L0+6MYk
-         QZrwA4wE4HECxxEU9xjJG7pdnpng4n65M1xDHdizuSw73nyL2J823Q+nvoX9uQKrQzpw
-         hCBQ==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=AIHedDQeQ2nfeFyhlIY6iBZ7Eo/kAlP72EhStgPHV1I=;
+        b=k1UGLl6o5Uq6om5hN0pjU2SqjycVyCGV42oQwMqtQTc6fkgbpj/oyn6fvH1hhLxegR
+         e/tPf/G+2yaXGI3do3wgHJ4MBEiuCqdEdBnyCL11eVSeCzta++Y5RURdzrzWTjelmsnR
+         tYb7NXugOOFQvK5UrYmiZe+/YKb+yCGeZYWGcjYdV5yN72laJXIlbtqVapKJ/5GdwrZc
+         jKv0Mf/FS0NNj/5kDQ9kAOsNyVCtbpKLftV2DJtg6CRRyJ8egrShP/swZ3woEYdRd/kv
+         rGI7pqoXVl1W7n46g1lZBHmTX0YsD0zUT5JnPzSKv/9tGz6f/BNBIuij6Gfw3F4qflfa
+         1a8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=FsktoWN11jLWpkTmdexyrutmDTweSqKSJJTsgTRyixU=;
-        b=U2pksDRai4VNwfqdC1gVIH55WPX+y4MnTL89M1GnP5OcUV7QiOoYt2JO6DaFI1bXKm
-         q4uzNOdopkiCv/8ZZsLuFPd8w6fjFJDIEopl+FjwhjDcCYAH1w2hQ11r2iuhan4RolL6
-         IRG7DgoztcIlTvMXOIcWiNbkb2BNr1VHtQh3rVWzY/qocQb/E1NItsAnd4fwiTm2+4ga
-         VK8UKx+54z8EtLdYmBc8T8RsK7Rnce91W7/db3a0C1Zcqs0eCM7J52kqivJwX4lgIoWY
-         WO4JtWwQOMTWyQKckOij3uqKzLgBAj7wS2yC3n+W5HhZYODdWS0JB5LyLWANQC0IbtD+
-         QE7Q==
-X-Gm-Message-State: AOAM530VHXeMzvB0Wrd2CtAwInipgZXwQ+3PZh0yMpsPYDRXjrz2Y84X
-        LCgmK13npOJIzuhIwzqHmDItYbiRe0cKC62+0FI=
-X-Google-Smtp-Source: ABdhPJwfhfP3ZzoOIvtdJwn9PzUBulGr/ZtsAdTqJjMDYStI8gE0hdRgSEp3KCRRvjy8ScAfUXak4HokaBQse1ecQY8=
-X-Received: by 2002:a9d:d08:: with SMTP id 8mr20315706oti.334.1642496282003;
- Tue, 18 Jan 2022 00:58:02 -0800 (PST)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=AIHedDQeQ2nfeFyhlIY6iBZ7Eo/kAlP72EhStgPHV1I=;
+        b=GhigRgDR51d+TXBqxMHvRgYRVuTlDUFTsIA24Eva08Z4DfyNxAdlwYHhQxnevH0XG5
+         IkWuvZsZLJx3rjixa4M3A6BfELJCaRH1BELQHV+IjSR6KWQSNESkP4U2kP/VfESrHjC4
+         +DnaATk3Vnafe8mkG4zHch2lQEDzWPp2F6OJHaS0EwiyM/efpqMJA2tds9Ue3pBdJJ0M
+         H5uHfDcwia4qCtkExoWXyhTSpWN5hV+jhUOblV+dxjWIb4ShxsmsOgFdliquiueBz9ru
+         ZpgDXpMYOLzUL1ftW4EHiDydYfkcyX7QsTSirAQLce8xbE6y965WwidhHRBt5+VW4XYE
+         UQLw==
+X-Gm-Message-State: AOAM533GBPI/APOSzsBxmTDq+VvY9bH9yH6BhI2HHs86VEd79erdzu6n
+        UeSxpXWIyEAa4uRa7NJ+yRZxk6uCEDyJds7ts48=
+X-Google-Smtp-Source: ABdhPJy5JVI3lW5DQjGRcco9V6NcXyngKxIlC4poqepFoSfKU9tR+yKwtpwsk8Y/0BpNOB+S0MHQJLI1GNmgFDkC468=
+X-Received: by 2002:a25:e549:: with SMTP id c70mr10850321ybh.339.1642496780233;
+ Tue, 18 Jan 2022 01:06:20 -0800 (PST)
 MIME-Version: 1.0
-References: <1642398248-21753-1-git-send-email-quic_c_sanm@quicinc.com> <1642398248-21753-3-git-send-email-quic_c_sanm@quicinc.com>
-In-Reply-To: <1642398248-21753-3-git-send-email-quic_c_sanm@quicinc.com>
-From:   Jun Li <lijun.kernel@gmail.com>
-Date:   Tue, 18 Jan 2022 16:57:50 +0800
-Message-ID: <CAKgpwJUpMZTUKRbuWye8Qxjw6odqTS=ZLFLnPfunc=iA79ckew@mail.gmail.com>
-Subject: Re: [PATCH v10 2/6] usb: dwc3: core: Host wake up support from system suspend
-To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
-        Li Jun <jun.li@nxp.com>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        linux-arm-msm@vger.kernel.org,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com
+Received: by 2002:a05:7108:3655:0:0:0:0 with HTTP; Tue, 18 Jan 2022 01:06:19
+ -0800 (PST)
+Reply-To: asil.ajwad@gmail.com
+From:   Asil Ajwad <graceyaogokamboule@gmail.com>
+Date:   Mon, 17 Jan 2022 21:06:19 -1200
+Message-ID: <CA+Yy_gC682JQi1_QLisGxR7uZiLm8cG+u0MPQzn6Z_L30nLM6Q@mail.gmail.com>
+Subject: Greetings,
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sandeep Maheswaram <quic_c_sanm@quicinc.com> =E4=BA=8E2022=E5=B9=B41=E6=9C=
-=8817=E6=97=A5=E5=91=A8=E4=B8=80 22:03=E5=86=99=E9=81=93=EF=BC=9A
->
-> Avoiding phy powerdown when wakeup capable devices are connected
-> by checking wakeup property of xhci plat device.
-> Phy should be on to wake up the device from suspend using wakeup capable
-> devices such as keyboard and mouse.
->
-> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> Tested-by: Brian Norris <briannorris@chromium.org>
-> ---
-> Remove redundant else part in dwc3_resume_common. This will not be
-> required if GDSC is always on during suspend/resume.
->
->
->  drivers/usb/dwc3/core.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-> index f4c0995..e7a5e3f 100644
-> --- a/drivers/usb/dwc3/core.c
-> +++ b/drivers/usb/dwc3/core.c
-> @@ -1789,7 +1789,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm=
-_message_t msg)
->                 dwc3_core_exit(dwc);
->                 break;
->         case DWC3_GCTL_PRTCAP_HOST:
-> -               if (!PMSG_IS_AUTO(msg)) {
-> +               if (!PMSG_IS_AUTO(msg) && !device_may_wakeup(&dwc->xhci->=
-dev)) {
->                         dwc3_core_exit(dwc);
->                         break;
->                 }
-> @@ -1850,7 +1850,7 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_=
-message_t msg)
->                 spin_unlock_irqrestore(&dwc->lock, flags);
->                 break;
->         case DWC3_GCTL_PRTCAP_HOST:
-> -               if (!PMSG_IS_AUTO(msg)) {
-> +               if (!PMSG_IS_AUTO(msg) && !device_may_wakeup(&dwc->xhci->=
-dev)) {
+-- 
+Greetings,
 
-If XHCI_SKIP_PHY_INIT is not set, I see the usb core will help to
-handle phy power on/off and init/exit via drivers/usb/core/phy.c, so
-if the wakeup is enabled for controller, then finally the phy will not
-be power off/exit. I am wondering if this change is actually required if
-that is the case.
+I am Mr.Asil Ajwad, I work with United Bank of Africa, can you use
+an ATM Visa Card to withdraw money at, ATM Cash Machine in your
+country, if yes I want to transfer abounded fund the sum of $10.5million
+US-Dollars, to you from my country, this is part of the money that was
+abounded by our late old client a politician who unfortunately lost
+his life and was forced out of power Du to his greedy act, the bank will
 
-Sorry for the late comment.
+change the account details to your name, and apply for a Visa Card
+with your details, the Visa Card will be send to you, and you can be
+withdrawing money with it always, whatever any amount you withdraw
+daily, you will send 60% to me and you will take 40%, the Visa Card
+and the bank account will be on your name, I will be waiting for your
+response for more details, thanks to you a lot for giving me your time.
 
-Li Jun
-
-
-
->                         ret =3D dwc3_core_init_for_resume(dwc);
->                         if (ret)
->                                 return ret;
-> --
-> 2.7.4
->
+regards,
+Mr.Asil Ajwad.
