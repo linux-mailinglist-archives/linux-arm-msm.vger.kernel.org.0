@@ -2,296 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 247944929B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jan 2022 16:35:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C4BE492AEB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jan 2022 17:15:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345818AbiARPfV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jan 2022 10:35:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43784 "EHLO
+        id S243862AbiARQPr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jan 2022 11:15:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238270AbiARPfU (ORCPT
+        with ESMTP id S1347843AbiARQOI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jan 2022 10:35:20 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0740CC06161C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jan 2022 07:35:20 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id bg19-20020a05600c3c9300b0034565e837b6so2507203wmb.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jan 2022 07:35:19 -0800 (PST)
+        Tue, 18 Jan 2022 11:14:08 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5295FC061401;
+        Tue, 18 Jan 2022 08:12:32 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id q9-20020a7bce89000000b00349e697f2fbso7130868wmj.0;
+        Tue, 18 Jan 2022 08:12:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=3yHVxlmHcPx/kimFj7FIZeDPGuzhaFHwPOIDMO1PgQM=;
-        b=vLIuyvlA3zAecwnB3fRb+67VCWslFLWAYjZ4WGmK9UfO0gZv3nKveZ5+EjPCaSUOEY
-         nHL9t/hgzZZKIfPhQj3C7hDYYjRaFvVuOprBXyBjsOFiiZkT28P4AuAAgpptg/s4kR/t
-         12//QWqFBiXv8aN1v+Qerknd3vlqxxRV0qjvGzVCx99XNAjM+R/AlH4+L5EhXOYB+Qog
-         wsOTBT8HVu2musPzX3xGEcKPojjjg0EMLlkZzg1oB+HdJ+THrEVZ2QFH+cfNEpxsAGgC
-         Ey8s5jjaluXXzfdeqBTNhIZp7VB/irpS4qFLim1gisZiRnh19hvuP4uWAw7lQacyGGCJ
-         ymbA==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Krm5uyz9TkCVOdM6IRP/tp33k9YUzt1fxsTNdw5NfEw=;
+        b=KA9qDwiChE5WC5y/z8sx1fIYwcOJidks7V9x+KmnagPHsG/nangXyPC3+rMOFMxiG2
+         ba1U24ByRXFbXcM2BPRH8q10tMqXd/SE3zLPY4vLmSr1dht5Hl5QAbq5uW7cBldbYOyd
+         KctbVzA3zk8oUtacvgfhQhSlGI8KrWCEL5/Ov1dM8hvydrW6ai3lhzQtK83R9ttUHqiL
+         +sXBFT6cUIOjHBZxKnetfudtQXdy/CW1udxChPQokhurcwURo5fx8oT/Zqqysw6BIDva
+         o9xoqpbbMxvpnLJSeVBIPbhcW6mbOucfiC6+juCQZfdXMZKsIxEs0ynuJGXNuzsT4mXh
+         BBUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=3yHVxlmHcPx/kimFj7FIZeDPGuzhaFHwPOIDMO1PgQM=;
-        b=1YUgaCMr+GkYmrVHNJJoylnI4afjgkGVQdgrShHMH+niZNdRWReZWAb0h8Il4TilTv
-         MiJTVratB0GeOVwBnobBRICA4ZPSdEaqk/A545u8Yit9sehKTQUYD3CHdnmlqE3aRKqi
-         4zjVD3ssrgSmnk2GcKWylSnlfl68PWDhWtpiB5jGBiil5137dz+NKIN3cL8VfE7BJXd4
-         B+z/svHEFji7G9bv66hBz4TbQ9SlkbMXTYVVZKMRCXtGRda+YAz6Zus/u15hucqaahXC
-         dtzhH0lOga0rTI+KBipJ8/hSdRiHE0X6G/LhELarett///gF7C4RstTV6iapCkL0VC6L
-         XBJw==
-X-Gm-Message-State: AOAM5300lIu7HsodzF2Y9wdzpZ1c6fvYcraKea9RJ2ohoQw+FlurmAP1
-        q5oXDCAwGiZRGUtMC5wn989wiQ==
-X-Google-Smtp-Source: ABdhPJxnU+By0HtVR7dFHKyv8rh8bWveU22B0NZ1Mi58eyxN5qc3wxwAYK6xKvJ+8VVSCmXCknMSDw==
-X-Received: by 2002:a05:600c:2b8f:: with SMTP id j15mr27529317wmc.160.1642520118496;
-        Tue, 18 Jan 2022 07:35:18 -0800 (PST)
-Received: from localhost.localdomain ([88.160.176.23])
-        by smtp.gmail.com with ESMTPSA id ay21sm3402146wmb.0.2022.01.18.07.35.17
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 18 Jan 2022 07:35:18 -0800 (PST)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     robdclark@gmail.com, sean@poorly.run, robh+dt@kernel.org
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, bjorn.andersson@linaro.org,
-        dmitry.baryshkov@linaro.org, Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH 2/2] dt-bindings: msm: disp: add yaml schemas for QCM2290 DPU bindings
-Date:   Tue, 18 Jan 2022 16:47:34 +0100
-Message-Id: <1642520854-32196-2-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1642520854-32196-1-git-send-email-loic.poulain@linaro.org>
-References: <1642520854-32196-1-git-send-email-loic.poulain@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Krm5uyz9TkCVOdM6IRP/tp33k9YUzt1fxsTNdw5NfEw=;
+        b=13GWTjrGu/OUDjwPeQCmV8nBZ8Fe3fCZmTYP7DaXjcC099U6cQaLgFVsQeTiSKbEfV
+         4yKbD6CJsmdXjON7OZjhlFqUuZh1aavB4HtSFpKVjMdfckdbIKuPjiuGp+M004E82pGN
+         sSmMiFNIIjJo4E5FPHv/AYRsjmVBoX0PiT3VwUbx3HsoGu2luIcXREDT05dyz4H0aQQa
+         qjs1YSTSVVmBbS95V8gQ2V6U19tdQu429Q8IPbgs5LletNzK8knokzLw/LFpDTUOMUVo
+         LJDaQw/Gms63Gcmoa7ITMFskLYGkGAfrppGTj7tUHAYyKYFk+6USvtjYC1GxQpwlkCOy
+         HR1A==
+X-Gm-Message-State: AOAM530G/1TSyx/2BAIHtWsZn9Eiojscg7ZPMwU+I2Ql7lgkevB7+zhE
+        Cs4zXDk08ENBLREyp0gBDtixYJcQEPgU2vZiKALlSp2n
+X-Google-Smtp-Source: ABdhPJxZIYhkFdiZT/A6fnYqp1GLnjJj7ZtJQYuN9lfydv7zQ4SqlsycyamGHxs7L0u+wVdYcHjoii0Dp7pIpJ75ZNY=
+X-Received: by 2002:a7b:cdf7:: with SMTP id p23mr25280266wmj.151.1642522350903;
+ Tue, 18 Jan 2022 08:12:30 -0800 (PST)
+MIME-Version: 1.0
+References: <20220117155559.234026-1-stanimir.varbanov@linaro.org> <20220117155559.234026-2-stanimir.varbanov@linaro.org>
+In-Reply-To: <20220117155559.234026-2-stanimir.varbanov@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Tue, 18 Jan 2022 08:12:27 -0800
+Message-ID: <CAF6AEGuB2drN-qt8TicP0pLYbKQLt2vEhLt+xSND7tVoOiNEQQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/6] v4l: Add Qualcomm custom compressed pixel formats
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     "open list:DMA BUFFER SHARING FRAMEWORK" 
+        <linux-media@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-api@vger.kernel.org, hverkuil-cisco@xs4all.nl,
+        Rob Clark <robdclark@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QCM2290 MSM Mobile Display Subsystem (MDSS) encapsulates sub-blocks
-like DPU display controller, DSI etc. Add YAML schema for DPU device
-tree bindings
+On Mon, Jan 17, 2022 at 6:36 PM Stanimir Varbanov
+<stanimir.varbanov@linaro.org> wrote:
+>
+> Add custom Qualcomm raw compressed pixel formats. They are
+> used in Qualcomm SoCs to optimize the interconnect bandwidth.
+>
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> ---
+>  .../media/v4l/pixfmt-reserved.rst             | 19 +++++++++++++++++++
+>  drivers/media/v4l2-core/v4l2-ioctl.c          |  2 ++
+>  include/uapi/linux/videodev2.h                |  2 ++
+>  3 files changed, 23 insertions(+)
+>
+> diff --git a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
+> index 2f2133b4cd9c..929bd0dc0ba3 100644
+> --- a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
+> +++ b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
+> @@ -245,6 +245,25 @@ please make a proposal on the linux-media mailing list.
+>        - Non-compressed, tiled two-planar format used by Mediatek MT8183.
+>         This is an opaque intermediate format and the MDP3 hardware can be
+>         used to convert it to other formats.
+> +    * .. _V4L2-PIX-FMT-QC08C:
+> +
+> +      - ``V4L2_PIX_FMT_QC08C``
+> +      - 'QC08C'
+> +      - Compressed Macro-tile 8-Bit YUV420 format used by Qualcomm platforms.
+> +        It is an opaque intermediate format. The used compression is lossless
+> +        and it is used by various multimedia hardware blocks like GPU, display
+> +        controllers, ISP and video accelerators.
+> +        It contains four planes for progressive video and eight planes for
+> +        interlaced video.
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
----
- .../bindings/display/msm/dpu-qcm2290.yaml          | 214 +++++++++++++++++++++
- 1 file changed, 214 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml
+I guess QC08C is the same thing as NV12+UBWC?  Note that on the GPU
+side, NV12+UBWC is treated as two planes, we program the hw with the
+address of the start of UBWC data and the hw calculates the offset to
+pixel data for the plane.  So the UBWC and pixel data are not actually
+independent planes.
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml b/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml
-new file mode 100644
-index 00000000..8766b13
---- /dev/null
-+++ b/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml
-@@ -0,0 +1,214 @@
-+# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/display/msm/dpu-qcm2290.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm Display DPU dt properties for QCM2290 target
-+
-+maintainers:
-+  - Loic Poulain <loic.poulain@linaro.org>
-+
-+description: |
-+  Device tree bindings for MSM Mobile Display Subsystem(MDSS) that encapsulates
-+  sub-blocks like DPU display controller and DSI. Device tree bindings of MDSS
-+  and DPU are mentioned for QCM2290 target.
-+
-+properties:
-+  compatible:
-+    items:
-+      - const: qcom,qcm2290-mdss
-+
-+  reg:
-+    maxItems: 1
-+
-+  reg-names:
-+    const: mdss
-+
-+  power-domains:
-+    maxItems: 1
-+
-+  clocks:
-+    items:
-+      - description: Display AHB clock from gcc
-+      - description: Display AXI clock
-+      - description: Display core clock
-+
-+  clock-names:
-+    items:
-+      - const: iface
-+      - const: bus
-+      - const: core
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  interrupt-controller: true
-+
-+  "#address-cells": true
-+
-+  "#size-cells": true
-+
-+  "#interrupt-cells":
-+    const: 1
-+
-+  iommus:
-+    items:
-+      - description: Phandle to apps_smmu node with SID mask for Hard-Fail port0
-+      - description: Phandle to apps_smmu node with SID mask for Hard-Fail port1
-+
-+  ranges: true
-+
-+  interconnects:
-+    items:
-+      - description: Interconnect path specifying the port ids for data bus
-+
-+  interconnect-names:
-+    const: mdp0-mem
-+
-+patternProperties:
-+  "^display-controller@[0-9a-f]+$":
-+    type: object
-+    description: Node containing the properties of DPU.
-+
-+    properties:
-+      compatible:
-+        items:
-+          - const: qcom,qcm2290-dpu
-+
-+      reg:
-+        items:
-+          - description: Address offset and size for mdp register set
-+          - description: Address offset and size for vbif register set
-+
-+      reg-names:
-+        items:
-+          - const: mdp
-+          - const: vbif
-+
-+      clocks:
-+        items:
-+          - description: Display AXI clock from gcc
-+          - description: Display AHB clock from dispcc
-+          - description: Display core clock from dispcc
-+          - description: Display lut clock from dispcc
-+          - description: Display vsync clock from dispcc
-+
-+      clock-names:
-+        items:
-+          - const: bus
-+          - const: iface
-+          - const: core
-+          - const: lut
-+          - const: vsync
-+
-+      interrupts:
-+        maxItems: 1
-+
-+      power-domains:
-+        maxItems: 1
-+
-+      operating-points-v2: true
-+
-+      ports:
-+        $ref: /schemas/graph.yaml#/properties/ports
-+        description: |
-+          Contains the list of output ports from DPU device. These ports
-+          connect to interfaces that are external to the DPU hardware,
-+          such as DSI. Each output port contains an endpoint that
-+          describes how it is connected to an external interface.
-+
-+        properties:
-+          port@0:
-+            $ref: /schemas/graph.yaml#/properties/port
-+            description: DPU_INTF1 (DSI1)
-+
-+        required:
-+          - port@0
-+
-+    required:
-+      - compatible
-+      - reg
-+      - reg-names
-+      - clocks
-+      - interrupts
-+      - power-domains
-+      - operating-points-v2
-+      - ports
-+
-+required:
-+  - compatible
-+  - reg
-+  - reg-names
-+  - power-domains
-+  - clocks
-+  - interrupts
-+  - interrupt-controller
-+  - iommus
-+  - ranges
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,dispcc-qcm2290.h>
-+    #include <dt-bindings/clock/qcom,gcc-qcm2290.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/interconnect/qcom,qcm2290.h>
-+    #include <dt-bindings/power/qcom-rpmpd.h>
-+
-+    mdss: mdss@5e00000 {
-+        #address-cells = <1>;
-+        #size-cells = <1>;
-+        compatible = "qcom,qcm2290-mdss", "qcom,mdss";
-+        reg = <0x05e00000 0x1000>;
-+        reg-names = "mdss";
-+        power-domains = <&dispcc MDSS_GDSC>;
-+        clocks = <&gcc GCC_DISP_AHB_CLK>,
-+                 <&gcc GCC_DISP_HF_AXI_CLK>,
-+                 <&dispcc DISP_CC_MDSS_MDP_CLK>;
-+        clock-names = "iface", "bus", "core";
-+
-+        interrupts = <GIC_SPI 186 IRQ_TYPE_LEVEL_HIGH>;
-+        interrupt-controller;
-+        #interrupt-cells = <1>;
-+
-+        interconnects = <&mmrt_virt MASTER_MDP0 &bimc SLAVE_EBI1>;
-+        interconnect-names = "mdp0-mem";
-+
-+        iommus = <&apps_smmu 0x420 0x2>,
-+                 <&apps_smmu 0x421 0x0>;
-+        ranges;
-+
-+        mdss_mdp: mdp@5e01000 {
-+                compatible = "qcom,qcm2290-dpu";
-+                reg = <0x05e01000 0x8f000>,
-+                      <0x05eb0000 0x2008>;
-+                reg-names = "mdp", "vbif";
-+
-+                clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
-+                         <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+                         <&dispcc DISP_CC_MDSS_MDP_CLK>,
-+                         <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
-+                         <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-+                clock-names = "bus", "iface", "core", "lut", "vsync";
-+
-+                operating-points-v2 = <&mdp_opp_table>;
-+                power-domains = <&rpmpd QCM2290_VDDCX>;
-+
-+                interrupt-parent = <&mdss>;
-+                interrupts = <0 IRQ_TYPE_NONE>;
-+
-+                ports {
-+                        #address-cells = <1>;
-+                        #size-cells = <0>;
-+
-+                        port@0 {
-+                                reg = <0>;
-+                                dpu_intf1_out: endpoint {
-+                                        remote-endpoint = <&dsi0_in>;
-+                                };
-+                        };
-+                 };
-+         };
-+...
--- 
-2.7.4
+BR,
+-R
 
+> +    * .. _V4L2-PIX-FMT-QC10C:
+> +
+> +      - ``V4L2_PIX_FMT_QC10C``
+> +      - 'QC10C'
+> +      - Compressed Macro-tile 10-Bit YUV420 format used by Qualcomm platforms.
+> +        It is an opaque intermediate format. The used compression is lossless
+> +        and it is used by various multimedia hardware blocks like GPU, display
+> +        controllers, ISP and video accelerators.
+> +        It contains four planes for progressive video.
+>
+>  .. raw:: latex
+>
+> diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
+> index 9ac557b8e146..1b6462f9ad7e 100644
+> --- a/drivers/media/v4l2-core/v4l2-ioctl.c
+> +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
+> @@ -1437,6 +1437,8 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)
+>                 case V4L2_PIX_FMT_SE401:        descr = "GSPCA SE401"; break;
+>                 case V4L2_PIX_FMT_S5C_UYVY_JPG: descr = "S5C73MX interleaved UYVY/JPEG"; break;
+>                 case V4L2_PIX_FMT_MT21C:        descr = "Mediatek Compressed Format"; break;
+> +               case V4L2_PIX_FMT_QC08C:        descr = "QCOM Compressed 8-bit Format"; break;
+> +               case V4L2_PIX_FMT_QC10C:        descr = "QCOM Compressed 10-bit Format"; break;
+>                 default:
+>                         if (fmt->description[0])
+>                                 return;
+> diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+> index df8b9c486ba1..e710903185bd 100644
+> --- a/include/uapi/linux/videodev2.h
+> +++ b/include/uapi/linux/videodev2.h
+> @@ -744,6 +744,8 @@ struct v4l2_pix_format {
+>  #define V4L2_PIX_FMT_INZI     v4l2_fourcc('I', 'N', 'Z', 'I') /* Intel Planar Greyscale 10-bit and Depth 16-bit */
+>  #define V4L2_PIX_FMT_CNF4     v4l2_fourcc('C', 'N', 'F', '4') /* Intel 4-bit packed depth confidence information */
+>  #define V4L2_PIX_FMT_HI240    v4l2_fourcc('H', 'I', '2', '4') /* BTTV 8-bit dithered RGB */
+> +#define V4L2_PIX_FMT_QC08C    v4l2_fourcc('Q', '0', '8', 'C') /* Qualcomm 8-bit compressed */
+> +#define V4L2_PIX_FMT_QC10C    v4l2_fourcc('Q', '1', '0', 'C') /* Qualcomm 10-bit compressed */
+>
+>  /* 10bit raw bayer packed, 32 bytes for every 25 pixels, last LSB 6 bits unused */
+>  #define V4L2_PIX_FMT_IPU3_SBGGR10      v4l2_fourcc('i', 'p', '3', 'b') /* IPU3 packed 10-bit BGGR bayer */
+> --
+> 2.25.1
+>
