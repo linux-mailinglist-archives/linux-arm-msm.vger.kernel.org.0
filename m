@@ -2,49 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B71E491B7B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jan 2022 04:07:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E71E491B7D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jan 2022 04:07:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354560AbiARDG4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Jan 2022 22:06:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34766 "EHLO
+        id S1354573AbiARDG6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Jan 2022 22:06:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345815AbiARCsy (ORCPT
+        with ESMTP id S1349269AbiARCtU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Jan 2022 21:48:54 -0500
+        Mon, 17 Jan 2022 21:49:20 -0500
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EE66C061747;
-        Mon, 17 Jan 2022 18:39:36 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2BBFC061778;
+        Mon, 17 Jan 2022 18:41:48 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 968616115F;
-        Tue, 18 Jan 2022 02:39:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1126AC36AEF;
-        Tue, 18 Jan 2022 02:39:33 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C2575611F1;
+        Tue, 18 Jan 2022 02:41:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A6CC36B06;
+        Tue, 18 Jan 2022 02:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1642473575;
-        bh=qyBu0B7dRXJctmKgZrrvfp0L9hSwBmhZ/BtctYh2YSQ=;
+        s=k20201202; t=1642473708;
+        bh=RZBlap/RMp7ZfHovS5gwsBz2IiHVM3iggWVvt6vezak=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=LLHEcMJldgYMNa0e1tA+9Zc5fsrXcKTm3xTW7n0vDWc+wgulZypTQDNFmUoSaQu/b
-         BMomthIRhxS0CEPP9bA3z4mwYqhZ98FbS+YgXg2OFS80QHyh5wuVJKRvSI8M1U2cm9
-         Dq9yf1bLvarMQIjrF0A5JkKawuxYAW4cK3XVuSBhrdRz/BWXVexa+YARcXa8M+oaKk
-         k6OG2iYfjM76m0E0pTqBANZqaFhedWIjLCZ57sU0QOxZE5gfgcJiREdmSVimKVgRYa
-         3TsKnVL0KzJeS9Gpif8TWOabkLQ1j5zfWqtjsZ9f6T8BcLr8DOMuoMGUm9cOwkhYfx
-         uyjFGIfa/0ECA==
+        b=g0DDmpMyanhBVsG5MEaOXthlDUU72tJ31DaiWeb1NwxbZ1uTe9N6yZRrAEqHA9F+t
+         gjE1VcVCzdm3IE2G/pNahl2JnpTX3/svSQ6Q0I1tVcYCyAaPJDPeC+Qx9PuW/MPqI3
+         DcPuHJGnFt1lfgy36uZ7gcr/ee6xBSJBZR/WnxjLVfACpr2iDswads7JBOiy2ZevlG
+         kofn2X0qJA5xIN+BlMgr680YM2/Nbdw5WCVZ+CdQhpjuf1Tl3xGzVmx7EtBZR8z3oz
+         lOUIo6JaxXirE7gaB/kQzpPg84GRqdwq94M4alwLCt2dMuR+UYLTXYm9WSRg5JCJqB
+         8hYb2+OwIoCOw==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Mark Brown <broonie@kernel.org>,
+Cc:     Mansur Alisha Shaik <mansur@codeaurora.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
         Sasha Levin <sashal@kernel.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 175/188] regulator: qcom_smd: Align probe function with rpmh-regulator
-Date:   Mon, 17 Jan 2022 21:31:39 -0500
-Message-Id: <20220118023152.1948105-175-sashal@kernel.org>
+        bjorn.andersson@linaro.org, mchehab@kernel.org,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.10 035/116] media: venus: avoid calling core_clk_setrate() concurrently during concurrent video sessions
+Date:   Mon, 17 Jan 2022 21:38:46 -0500
+Message-Id: <20220118024007.1950576-35-sashal@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220118023152.1948105-1-sashal@kernel.org>
-References: <20220118023152.1948105-1-sashal@kernel.org>
+In-Reply-To: <20220118024007.1950576-1-sashal@kernel.org>
+References: <20220118024007.1950576-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -53,169 +54,207 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Konrad Dybcio <konrad.dybcio@somainline.org>
+From: Mansur Alisha Shaik <mansur@codeaurora.org>
 
-[ Upstream commit 14e2976fbabdacb01335d7f91eeebbc89c67ddb1 ]
+[ Upstream commit 91f2b7d269e5c885c38c7ffa261f5276bd42f907 ]
 
-The RPMh regulator driver is much newer and gets more attention, which in
-consequence makes it do a few things better. Update qcom_smd-regulator's
-probe function to mimic what rpmh-regulator does to address a couple of
-issues:
+In existing implementation, core_clk_setrate() is getting called
+concurrently in concurrent video sessions. Before the previous call to
+core_clk_setrate returns, new call to core_clk_setrate is invoked from
+another video session running concurrently. This results in latest
+calculated frequency being set (higher/lower) instead of actual frequency
+required for that video session. It also results in stability crashes
+mention below. These resources are specific to video core, hence keeping
+under core lock would ensure that they are estimated for all running video
+sessions and called once for the video core.
 
-- Probe defer now works correctly, before it used to, well,
-  kinda just die.. This fixes reliable probing on (at least) PM8994,
-  because Linux apparently cannot deal with supply map dependencies yet..
+Crash logs:
 
-- Regulator data is now matched more sanely: regulator data is matched
-  against each individual regulator node name and throwing an -EINVAL if
-  data is missing, instead of just assuming everything is fine and
-  iterating over all subsequent array members.
+[    1.900089] WARNING: CPU: 4 PID: 1 at drivers/opp/debugfs.c:33 opp_debug_remove_one+0x2c/0x48
+[    1.908493] Modules linked in:
+[    1.911524] CPU: 4 PID: 1 Comm: swapper/0 Not tainted 5.10.67 #35 f8edb8c30cf2dd6838495dd9ef9be47af7f5f60c
+[    1.921036] Hardware name: Qualcomm Technologies, Inc. sc7280 IDP SKU2 platform (DT)
+[    1.928673] pstate: 60800009 (nZCv daif -PAN +UAO -TCO BTYPE=--)
+[    1.934608] pc : opp_debug_remove_one+0x2c/0x48
+[    1.939080] lr : opp_debug_remove_one+0x2c/0x48
+[    1.943560] sp : ffffffc011d7b7f0
+[    1.946836] pmr_save: 000000e0
+[    1.949854] x29: ffffffc011d7b7f0 x28: ffffffc010733bbc
+[    1.955104] x27: ffffffc010733ba8 x26: ffffff8083cedd00
+[    1.960355] x25: 0000000000000001 x24: 0000000000000000
+[    1.965603] x23: ffffff8083cc2878 x22: ffffff8083ceb900
+[    1.970852] x21: ffffff8083ceb910 x20: ffffff8083cc2800
+[    1.976101] x19: ffffff8083ceb900 x18: 00000000ffff0a10
+[    1.981352] x17: ffffff80837a5620 x16: 00000000000000ec
+[    1.986601] x15: ffffffc010519ad4 x14: 0000000000000003
+[    1.991849] x13: 0000000000000004 x12: 0000000000000001
+[    1.997100] x11: c0000000ffffdfff x10: 00000000ffffffff
+[    2.002348] x9 : d2627c580300dc00 x8 : d2627c580300dc00
+[    2.007596] x7 : 0720072007200720 x6 : ffffff80802ecf00
+[    2.012845] x5 : 0000000000190004 x4 : 0000000000000000
+[    2.018094] x3 : ffffffc011d7b478 x2 : ffffffc011d7b480
+[    2.023343] x1 : 00000000ffffdfff x0 : 0000000000000017
+[    2.028594] Call trace:
+[    2.031022]  opp_debug_remove_one+0x2c/0x48
+[    2.035160]  dev_pm_opp_put+0x94/0xb0
+[    2.038780]  _opp_remove_all+0x7c/0xc8
+[    2.042486]  _opp_remove_all_static+0x54/0x7c
+[    2.046796]  dev_pm_opp_remove_table+0x74/0x98
+[    2.051183]  devm_pm_opp_of_table_release+0x18/0x24
+[    2.056001]  devm_action_release+0x1c/0x28
+[    2.060053]  release_nodes+0x23c/0x2b8
+[    2.063760]  devres_release_group+0xcc/0xd0
+[    2.067900]  component_bind+0xac/0x168
+[    2.071608]  component_bind_all+0x98/0x124
+[    2.075664]  msm_drm_bind+0x1e8/0x678
+[    2.079287]  try_to_bring_up_master+0x60/0x134
+[    2.083674]  component_master_add_with_match+0xd8/0x120
+[    2.088834]  msm_pdev_probe+0x20c/0x2a0
+[    2.092629]  platform_drv_probe+0x9c/0xbc
+[    2.096598]  really_probe+0x11c/0x46c
+[    2.100217]  driver_probe_device+0x8c/0xf0
+[    2.104270]  device_driver_attach+0x54/0x78
+[    2.108407]  __driver_attach+0x48/0x148
+[    2.112201]  bus_for_each_dev+0x88/0xd4
+[    2.115998]  driver_attach+0x2c/0x38
+[    2.119534]  bus_add_driver+0x10c/0x200
+[    2.123330]  driver_register+0x6c/0x104
+[    2.127122]  __platform_driver_register+0x4c/0x58
+[    2.131767]  msm_drm_register+0x6c/0x70
+[    2.135560]  do_one_initcall+0x64/0x23c
+[    2.139357]  do_initcall_level+0xac/0x15c
+[    2.143321]  do_initcalls+0x5c/0x9c
+[    2.146778]  do_basic_setup+0x2c/0x38
+[    2.150401]  kernel_init_freeable+0xf8/0x15c
+[    2.154622]  kernel_init+0x1c/0x11c
+[    2.158079]  ret_from_fork+0x10/0x30
+[    2.161615] ---[ end trace a2cc45a0f784b212 ]---
 
-- status = "disabled" will now work for disabling individual regulators in
-  DT. Previously it didn't seem to do much if anything at all.
+[    2.166272] Removing OPP: 300000000
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Link: https://lore.kernel.org/r/20211230023442.1123424-1-konrad.dybcio@somainline.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/qcom_smd-regulator.c | 100 +++++++++++++++++--------
- 1 file changed, 70 insertions(+), 30 deletions(-)
+ .../media/platform/qcom/venus/pm_helpers.c    | 28 +++++++++----------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
-index 198fcc6551f6d..8e077792bddd9 100644
---- a/drivers/regulator/qcom_smd-regulator.c
-+++ b/drivers/regulator/qcom_smd-regulator.c
-@@ -9,6 +9,7 @@
- #include <linux/of_device.h>
- #include <linux/platform_device.h>
- #include <linux/regulator/driver.h>
-+#include <linux/regulator/of_regulator.h>
- #include <linux/soc/qcom/smd-rpm.h>
+diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+index 2946547a0df4a..789f39ddb5742 100644
+--- a/drivers/media/platform/qcom/venus/pm_helpers.c
++++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+@@ -147,14 +147,12 @@ static u32 load_per_type(struct venus_core *core, u32 session_type)
+ 	struct venus_inst *inst = NULL;
+ 	u32 mbs_per_sec = 0;
  
- struct qcom_rpm_reg {
-@@ -1190,52 +1191,91 @@ static const struct of_device_id rpm_of_match[] = {
- };
- MODULE_DEVICE_TABLE(of, rpm_of_match);
+-	mutex_lock(&core->lock);
+ 	list_for_each_entry(inst, &core->instances, list) {
+ 		if (inst->session_type != session_type)
+ 			continue;
  
--static int rpm_reg_probe(struct platform_device *pdev)
-+/**
-+ * rpm_regulator_init_vreg() - initialize all attributes of a qcom_smd-regulator
-+ * @vreg:		Pointer to the individual qcom_smd-regulator resource
-+ * @dev:		Pointer to the top level qcom_smd-regulator PMIC device
-+ * @node:		Pointer to the individual qcom_smd-regulator resource
-+ *			device node
-+ * @rpm:		Pointer to the rpm bus node
-+ * @pmic_rpm_data:	Pointer to a null-terminated array of qcom_smd-regulator
-+ *			resources defined for the top level PMIC device
-+ *
-+ * Return: 0 on success, errno on failure
-+ */
-+static int rpm_regulator_init_vreg(struct qcom_rpm_reg *vreg, struct device *dev,
-+				   struct device_node *node, struct qcom_smd_rpm *rpm,
-+				   const struct rpm_regulator_data *pmic_rpm_data)
- {
--	const struct rpm_regulator_data *reg;
--	const struct of_device_id *match;
--	struct regulator_config config = { };
-+	struct regulator_config config = {};
-+	const struct rpm_regulator_data *rpm_data;
- 	struct regulator_dev *rdev;
-+	int ret;
-+
-+	for (rpm_data = pmic_rpm_data; rpm_data->name; rpm_data++)
-+		if (of_node_name_eq(node, rpm_data->name))
-+			break;
-+
-+	if (!rpm_data->name) {
-+		dev_err(dev, "Unknown regulator %pOFn\n", node);
-+		return -EINVAL;
-+	}
-+
-+	vreg->dev	= dev;
-+	vreg->rpm	= rpm;
-+	vreg->type	= rpm_data->type;
-+	vreg->id	= rpm_data->id;
-+
-+	memcpy(&vreg->desc, rpm_data->desc, sizeof(vreg->desc));
-+	vreg->desc.name = rpm_data->name;
-+	vreg->desc.supply_name = rpm_data->supply;
-+	vreg->desc.owner = THIS_MODULE;
-+	vreg->desc.type = REGULATOR_VOLTAGE;
-+	vreg->desc.of_match = rpm_data->name;
-+
-+	config.dev		= dev;
-+	config.of_node		= node;
-+	config.driver_data	= vreg;
-+
-+	rdev = devm_regulator_register(dev, &vreg->desc, &config);
-+	if (IS_ERR(rdev)) {
-+		ret = PTR_ERR(rdev);
-+		dev_err(dev, "%pOFn: devm_regulator_register() failed, ret=%d\n", node, ret);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static int rpm_reg_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	const struct rpm_regulator_data *vreg_data;
-+	struct device_node *node;
- 	struct qcom_rpm_reg *vreg;
- 	struct qcom_smd_rpm *rpm;
-+	int ret;
+ 		mbs_per_sec += load_per_instance(inst);
+ 	}
+-	mutex_unlock(&core->lock);
  
- 	rpm = dev_get_drvdata(pdev->dev.parent);
- 	if (!rpm) {
--		dev_err(&pdev->dev, "unable to retrieve handle to rpm\n");
-+		dev_err(&pdev->dev, "Unable to retrieve handle to rpm\n");
- 		return -ENODEV;
+ 	return mbs_per_sec;
+ }
+@@ -203,14 +201,12 @@ static int load_scale_bw(struct venus_core *core)
+ 	struct venus_inst *inst = NULL;
+ 	u32 mbs_per_sec, avg, peak, total_avg = 0, total_peak = 0;
+ 
+-	mutex_lock(&core->lock);
+ 	list_for_each_entry(inst, &core->instances, list) {
+ 		mbs_per_sec = load_per_instance(inst);
+ 		mbs_to_bw(inst, mbs_per_sec, &avg, &peak);
+ 		total_avg += avg;
+ 		total_peak += peak;
+ 	}
+-	mutex_unlock(&core->lock);
+ 
+ 	/*
+ 	 * keep minimum bandwidth vote for "video-mem" path,
+@@ -237,8 +233,9 @@ static int load_scale_v1(struct venus_inst *inst)
+ 	struct device *dev = core->dev;
+ 	u32 mbs_per_sec;
+ 	unsigned int i;
+-	int ret;
++	int ret = 0;
+ 
++	mutex_lock(&core->lock);
+ 	mbs_per_sec = load_per_type(core, VIDC_SESSION_TYPE_ENC) +
+ 		      load_per_type(core, VIDC_SESSION_TYPE_DEC);
+ 
+@@ -263,17 +260,19 @@ static int load_scale_v1(struct venus_inst *inst)
+ 	if (ret) {
+ 		dev_err(dev, "failed to set clock rate %lu (%d)\n",
+ 			freq, ret);
+-		return ret;
++		goto exit;
  	}
  
--	match = of_match_device(rpm_of_match, &pdev->dev);
--	if (!match) {
--		dev_err(&pdev->dev, "failed to match device\n");
-+	vreg_data = of_device_get_match_data(dev);
-+	if (!vreg_data)
- 		return -ENODEV;
--	}
+ 	ret = load_scale_bw(core);
+ 	if (ret) {
+ 		dev_err(dev, "failed to set bandwidth (%d)\n",
+ 			ret);
+-		return ret;
++		goto exit;
+ 	}
  
--	for (reg = match->data; reg->name; reg++) {
-+	for_each_available_child_of_node(dev->of_node, node) {
- 		vreg = devm_kzalloc(&pdev->dev, sizeof(*vreg), GFP_KERNEL);
- 		if (!vreg)
- 			return -ENOMEM;
+-	return 0;
++exit:
++	mutex_unlock(&core->lock);
++	return ret;
+ }
  
--		vreg->dev = &pdev->dev;
--		vreg->type = reg->type;
--		vreg->id = reg->id;
--		vreg->rpm = rpm;
--
--		memcpy(&vreg->desc, reg->desc, sizeof(vreg->desc));
--
--		vreg->desc.id = -1;
--		vreg->desc.owner = THIS_MODULE;
--		vreg->desc.type = REGULATOR_VOLTAGE;
--		vreg->desc.name = reg->name;
--		vreg->desc.supply_name = reg->supply;
--		vreg->desc.of_match = reg->name;
--
--		config.dev = &pdev->dev;
--		config.driver_data = vreg;
--		rdev = devm_regulator_register(&pdev->dev, &vreg->desc, &config);
--		if (IS_ERR(rdev)) {
--			dev_err(&pdev->dev, "failed to register %s\n", reg->name);
--			return PTR_ERR(rdev);
-+		ret = rpm_regulator_init_vreg(vreg, dev, node, rpm, vreg_data);
-+
-+		if (ret < 0) {
-+			of_node_put(node);
-+			return ret;
+ static int core_get_v1(struct device *dev)
+@@ -962,13 +961,13 @@ static int load_scale_v4(struct venus_inst *inst)
+ 	struct device *dev = core->dev;
+ 	unsigned long freq = 0, freq_core1 = 0, freq_core2 = 0;
+ 	unsigned long filled_len = 0;
+-	int i, ret;
++	int i, ret = 0;
+ 
+ 	for (i = 0; i < inst->num_input_bufs; i++)
+ 		filled_len = max(filled_len, inst->payloads[i]);
+ 
+ 	if (inst->session_type == VIDC_SESSION_TYPE_DEC && !filled_len)
+-		return 0;
++		return ret;
+ 
+ 	freq = calculate_inst_freq(inst, filled_len);
+ 	inst->clk_data.freq = freq;
+@@ -984,7 +983,6 @@ static int load_scale_v4(struct venus_inst *inst)
+ 			freq_core2 += inst->clk_data.freq;
  		}
  	}
+-	mutex_unlock(&core->lock);
  
+ 	freq = max(freq_core1, freq_core2);
+ 
+@@ -1008,17 +1006,19 @@ static int load_scale_v4(struct venus_inst *inst)
+ 	if (ret) {
+ 		dev_err(dev, "failed to set clock rate %lu (%d)\n",
+ 			freq, ret);
+-		return ret;
++		goto exit;
+ 	}
+ 
+ 	ret = load_scale_bw(core);
+ 	if (ret) {
+ 		dev_err(dev, "failed to set bandwidth (%d)\n",
+ 			ret);
+-		return ret;
++		goto exit;
+ 	}
+ 
+-	return 0;
++exit:
++	mutex_unlock(&core->lock);
++	return ret;
+ }
+ 
+ static const struct venus_pm_ops pm_ops_v4 = {
 -- 
 2.34.1
 
