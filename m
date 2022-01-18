@@ -2,146 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C4BE492AEB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jan 2022 17:15:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 23C26492C24
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jan 2022 18:19:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243862AbiARQPr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jan 2022 11:15:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51776 "EHLO
+        id S243610AbiARRTN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jan 2022 12:19:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347843AbiARQOI (ORCPT
+        with ESMTP id S232859AbiARRTM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jan 2022 11:14:08 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5295FC061401;
-        Tue, 18 Jan 2022 08:12:32 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id q9-20020a7bce89000000b00349e697f2fbso7130868wmj.0;
-        Tue, 18 Jan 2022 08:12:32 -0800 (PST)
+        Tue, 18 Jan 2022 12:19:12 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 693C7C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jan 2022 09:19:12 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id q141-20020a1ca793000000b00347b48dfb53so9385306wme.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jan 2022 09:19:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Krm5uyz9TkCVOdM6IRP/tp33k9YUzt1fxsTNdw5NfEw=;
-        b=KA9qDwiChE5WC5y/z8sx1fIYwcOJidks7V9x+KmnagPHsG/nangXyPC3+rMOFMxiG2
-         ba1U24ByRXFbXcM2BPRH8q10tMqXd/SE3zLPY4vLmSr1dht5Hl5QAbq5uW7cBldbYOyd
-         KctbVzA3zk8oUtacvgfhQhSlGI8KrWCEL5/Ov1dM8hvydrW6ai3lhzQtK83R9ttUHqiL
-         +sXBFT6cUIOjHBZxKnetfudtQXdy/CW1udxChPQokhurcwURo5fx8oT/Zqqysw6BIDva
-         o9xoqpbbMxvpnLJSeVBIPbhcW6mbOucfiC6+juCQZfdXMZKsIxEs0ynuJGXNuzsT4mXh
-         BBUA==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=vGvnbxeNRIB3S31pWuMCSmiB84n9/DgEiMQTAdokJ2A=;
+        b=yI/yw5virPuhFslSzUfs/a2QGuoL29nxuPsNYii8327f2x32lmsA5vlSaVyCoNExke
+         61ZLyCwl+/wrM2nYMR4RJKA2LyRA8Cjt7CUq81c1gG+aF+V9bXEJWUJdfo8IzmtTFVys
+         uY5FpPwMxMAtpiX5iOYofYXYsmW7bd8SkbSuujqWc/RWc3SnlVfofTy5iKaHjjtrp4W7
+         CYfpiAWfjnIruC2GMYjgoVTaWVKytidX40gOE0Bii4AZXlJ+nzaA+rW+r+hSJkjW5hj9
+         phz4ePZqchHunwrvujbaJtALtrPQXnXdfpxMsJhMKkm10JtS2p7z35DsESVVR4EEMbng
+         QSyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Krm5uyz9TkCVOdM6IRP/tp33k9YUzt1fxsTNdw5NfEw=;
-        b=13GWTjrGu/OUDjwPeQCmV8nBZ8Fe3fCZmTYP7DaXjcC099U6cQaLgFVsQeTiSKbEfV
-         4yKbD6CJsmdXjON7OZjhlFqUuZh1aavB4HtSFpKVjMdfckdbIKuPjiuGp+M004E82pGN
-         sSmMiFNIIjJo4E5FPHv/AYRsjmVBoX0PiT3VwUbx3HsoGu2luIcXREDT05dyz4H0aQQa
-         qjs1YSTSVVmBbS95V8gQ2V6U19tdQu429Q8IPbgs5LletNzK8knokzLw/LFpDTUOMUVo
-         LJDaQw/Gms63Gcmoa7ITMFskLYGkGAfrppGTj7tUHAYyKYFk+6USvtjYC1GxQpwlkCOy
-         HR1A==
-X-Gm-Message-State: AOAM530G/1TSyx/2BAIHtWsZn9Eiojscg7ZPMwU+I2Ql7lgkevB7+zhE
-        Cs4zXDk08ENBLREyp0gBDtixYJcQEPgU2vZiKALlSp2n
-X-Google-Smtp-Source: ABdhPJxZIYhkFdiZT/A6fnYqp1GLnjJj7ZtJQYuN9lfydv7zQ4SqlsycyamGHxs7L0u+wVdYcHjoii0Dp7pIpJ75ZNY=
-X-Received: by 2002:a7b:cdf7:: with SMTP id p23mr25280266wmj.151.1642522350903;
- Tue, 18 Jan 2022 08:12:30 -0800 (PST)
-MIME-Version: 1.0
-References: <20220117155559.234026-1-stanimir.varbanov@linaro.org> <20220117155559.234026-2-stanimir.varbanov@linaro.org>
-In-Reply-To: <20220117155559.234026-2-stanimir.varbanov@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 18 Jan 2022 08:12:27 -0800
-Message-ID: <CAF6AEGuB2drN-qt8TicP0pLYbKQLt2vEhLt+xSND7tVoOiNEQQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/6] v4l: Add Qualcomm custom compressed pixel formats
-To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-api@vger.kernel.org, hverkuil-cisco@xs4all.nl,
-        Rob Clark <robdclark@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=vGvnbxeNRIB3S31pWuMCSmiB84n9/DgEiMQTAdokJ2A=;
+        b=P8dwFw202f4z7tEZfaEeg/GAgQw8hDVDCXquKBoNnx9OQWRFQ0/hFlGdTJl9Y/+pYJ
+         gW2Gafb9LlelW5ZPR5QI/F++D7LavggntQKBqZthawvP8FnymuvMvQl3+Czvk7rQLVmW
+         KWCPYKcGRmCoHEVi0iNWW9dhAz7Q7Zys1BE4B324Yzt4YSlTq6acrST8T7CW4op5Zad3
+         KbNl4ULHwg6SXJyJ7KKqlX9md7S2V228DvlyFayv63M0T2iAGGQo/2UfTTMLX8ZngctB
+         owsU4EU1I68MyNbgF2/z47cPcGZQBXjlWd97Zqy9+qMVhkKgEMhWz4Ts+wUm5+NOr2ud
+         Pbkw==
+X-Gm-Message-State: AOAM533h8MIjx3LqAbPJVnu+I9wyQPJdC1D8AfEZYKSCPGBk/TEM5YbX
+        +KTg+LBMjyx8T2Sk/DFhAfhtyA==
+X-Google-Smtp-Source: ABdhPJyDeP+FmCIq4KYZZeMOloMM6jTaZiE8LQnSZClu80cQJgrMhkBX9qbjMdKGYwPegnLC12xb3g==
+X-Received: by 2002:a05:600c:4991:: with SMTP id h17mr26018779wmp.14.1642526350895;
+        Tue, 18 Jan 2022 09:19:10 -0800 (PST)
+Received: from localhost.localdomain ([88.160.176.23])
+        by smtp.gmail.com with ESMTPSA id r7sm1081239wma.39.2022.01.18.09.19.10
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 18 Jan 2022 09:19:10 -0800 (PST)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     robdclark@gmail.com, sean@poorly.run
+Cc:     linux-arm-msm@vger.kernel.org, dmitry.baryshkov@linaro.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH 1/2] drm/msm/dsi: Add support for flexible DSI block mapping
+Date:   Tue, 18 Jan 2022 18:31:27 +0100
+Message-Id: <1642527088-13088-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 17, 2022 at 6:36 PM Stanimir Varbanov
-<stanimir.varbanov@linaro.org> wrote:
->
-> Add custom Qualcomm raw compressed pixel formats. They are
-> used in Qualcomm SoCs to optimize the interconnect bandwidth.
->
-> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-> ---
->  .../media/v4l/pixfmt-reserved.rst             | 19 +++++++++++++++++++
->  drivers/media/v4l2-core/v4l2-ioctl.c          |  2 ++
->  include/uapi/linux/videodev2.h                |  2 ++
->  3 files changed, 23 insertions(+)
->
-> diff --git a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
-> index 2f2133b4cd9c..929bd0dc0ba3 100644
-> --- a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
-> +++ b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
-> @@ -245,6 +245,25 @@ please make a proposal on the linux-media mailing list.
->        - Non-compressed, tiled two-planar format used by Mediatek MT8183.
->         This is an opaque intermediate format and the MDP3 hardware can be
->         used to convert it to other formats.
-> +    * .. _V4L2-PIX-FMT-QC08C:
-> +
-> +      - ``V4L2_PIX_FMT_QC08C``
-> +      - 'QC08C'
-> +      - Compressed Macro-tile 8-Bit YUV420 format used by Qualcomm platforms.
-> +        It is an opaque intermediate format. The used compression is lossless
-> +        and it is used by various multimedia hardware blocks like GPU, display
-> +        controllers, ISP and video accelerators.
-> +        It contains four planes for progressive video and eight planes for
-> +        interlaced video.
+The QCM2290 SoC integrates same DSI hardware as SC7180 but mapped
+at a different address, 0x5e94000 vs 0xae94000. To support such
+case, this change introduces an optional io_mask value that can
+be used to match multiple mapped addresses. It's probably not the
+more elegant solution, and could be revisited if necessary.
 
-I guess QC08C is the same thing as NV12+UBWC?  Note that on the GPU
-side, NV12+UBWC is treated as two planes, we program the hw with the
-address of the start of UBWC data and the hw calculates the offset to
-pixel data for the plane.  So the UBWC and pixel data are not actually
-independent planes.
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ drivers/gpu/drm/msm/dsi/dsi_cfg.h  | 2 +-
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 3 +++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-BR,
--R
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+index 41e99a9..195ab2f 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
++++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+@@ -36,6 +36,7 @@ struct msm_dsi_config {
+ 	const char * const *bus_clk_names;
+ 	const int num_bus_clks;
+ 	const resource_size_t io_start[DSI_MAX];
++	const u32 io_mask;
+ 	const int num_dsi;
+ };
+ 
+@@ -61,4 +62,3 @@ struct msm_dsi_cfg_handler {
+ const struct msm_dsi_cfg_handler *msm_dsi_cfg_get(u32 major, u32 minor);
+ 
+ #endif /* __MSM_DSI_CFG_H__ */
+-
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index f69a125f..428641e 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1779,6 +1779,9 @@ static int dsi_host_get_id(struct msm_dsi_host *msm_host)
+ 	for (i = 0; i < cfg->num_dsi; i++) {
+ 		if (cfg->io_start[i] == res->start)
+ 			return i;
++		else if (cfg->io_mask &&
++			 (cfg->io_start[i] & cfg->io_mask) == (res->start & cfg->io_mask))
++			return i;
+ 	}
+ 
+ 	return -EINVAL;
+-- 
+2.7.4
 
-> +    * .. _V4L2-PIX-FMT-QC10C:
-> +
-> +      - ``V4L2_PIX_FMT_QC10C``
-> +      - 'QC10C'
-> +      - Compressed Macro-tile 10-Bit YUV420 format used by Qualcomm platforms.
-> +        It is an opaque intermediate format. The used compression is lossless
-> +        and it is used by various multimedia hardware blocks like GPU, display
-> +        controllers, ISP and video accelerators.
-> +        It contains four planes for progressive video.
->
->  .. raw:: latex
->
-> diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
-> index 9ac557b8e146..1b6462f9ad7e 100644
-> --- a/drivers/media/v4l2-core/v4l2-ioctl.c
-> +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
-> @@ -1437,6 +1437,8 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)
->                 case V4L2_PIX_FMT_SE401:        descr = "GSPCA SE401"; break;
->                 case V4L2_PIX_FMT_S5C_UYVY_JPG: descr = "S5C73MX interleaved UYVY/JPEG"; break;
->                 case V4L2_PIX_FMT_MT21C:        descr = "Mediatek Compressed Format"; break;
-> +               case V4L2_PIX_FMT_QC08C:        descr = "QCOM Compressed 8-bit Format"; break;
-> +               case V4L2_PIX_FMT_QC10C:        descr = "QCOM Compressed 10-bit Format"; break;
->                 default:
->                         if (fmt->description[0])
->                                 return;
-> diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
-> index df8b9c486ba1..e710903185bd 100644
-> --- a/include/uapi/linux/videodev2.h
-> +++ b/include/uapi/linux/videodev2.h
-> @@ -744,6 +744,8 @@ struct v4l2_pix_format {
->  #define V4L2_PIX_FMT_INZI     v4l2_fourcc('I', 'N', 'Z', 'I') /* Intel Planar Greyscale 10-bit and Depth 16-bit */
->  #define V4L2_PIX_FMT_CNF4     v4l2_fourcc('C', 'N', 'F', '4') /* Intel 4-bit packed depth confidence information */
->  #define V4L2_PIX_FMT_HI240    v4l2_fourcc('H', 'I', '2', '4') /* BTTV 8-bit dithered RGB */
-> +#define V4L2_PIX_FMT_QC08C    v4l2_fourcc('Q', '0', '8', 'C') /* Qualcomm 8-bit compressed */
-> +#define V4L2_PIX_FMT_QC10C    v4l2_fourcc('Q', '1', '0', 'C') /* Qualcomm 10-bit compressed */
->
->  /* 10bit raw bayer packed, 32 bytes for every 25 pixels, last LSB 6 bits unused */
->  #define V4L2_PIX_FMT_IPU3_SBGGR10      v4l2_fourcc('i', 'p', '3', 'b') /* IPU3 packed 10-bit BGGR bayer */
-> --
-> 2.25.1
->
