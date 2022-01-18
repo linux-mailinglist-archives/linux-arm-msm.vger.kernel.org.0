@@ -2,77 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD3AA4921F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jan 2022 10:06:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EAF249233C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jan 2022 10:53:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345159AbiARJGW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jan 2022 04:06:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38326 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240264AbiARJGV (ORCPT
+        id S236327AbiARJxY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jan 2022 04:53:24 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:54024 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S236484AbiARJxE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jan 2022 04:06:21 -0500
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1525EC06161C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jan 2022 01:06:21 -0800 (PST)
-Received: by mail-yb1-xb2c.google.com with SMTP id m6so53626626ybc.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jan 2022 01:06:21 -0800 (PST)
+        Tue, 18 Jan 2022 04:53:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=AIHedDQeQ2nfeFyhlIY6iBZ7Eo/kAlP72EhStgPHV1I=;
-        b=k1UGLl6o5Uq6om5hN0pjU2SqjycVyCGV42oQwMqtQTc6fkgbpj/oyn6fvH1hhLxegR
-         e/tPf/G+2yaXGI3do3wgHJ4MBEiuCqdEdBnyCL11eVSeCzta++Y5RURdzrzWTjelmsnR
-         tYb7NXugOOFQvK5UrYmiZe+/YKb+yCGeZYWGcjYdV5yN72laJXIlbtqVapKJ/5GdwrZc
-         jKv0Mf/FS0NNj/5kDQ9kAOsNyVCtbpKLftV2DJtg6CRRyJ8egrShP/swZ3woEYdRd/kv
-         rGI7pqoXVl1W7n46g1lZBHmTX0YsD0zUT5JnPzSKv/9tGz6f/BNBIuij6Gfw3F4qflfa
-         1a8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=AIHedDQeQ2nfeFyhlIY6iBZ7Eo/kAlP72EhStgPHV1I=;
-        b=GhigRgDR51d+TXBqxMHvRgYRVuTlDUFTsIA24Eva08Z4DfyNxAdlwYHhQxnevH0XG5
-         IkWuvZsZLJx3rjixa4M3A6BfELJCaRH1BELQHV+IjSR6KWQSNESkP4U2kP/VfESrHjC4
-         +DnaATk3Vnafe8mkG4zHch2lQEDzWPp2F6OJHaS0EwiyM/efpqMJA2tds9Ue3pBdJJ0M
-         H5uHfDcwia4qCtkExoWXyhTSpWN5hV+jhUOblV+dxjWIb4ShxsmsOgFdliquiueBz9ru
-         ZpgDXpMYOLzUL1ftW4EHiDydYfkcyX7QsTSirAQLce8xbE6y965WwidhHRBt5+VW4XYE
-         UQLw==
-X-Gm-Message-State: AOAM533GBPI/APOSzsBxmTDq+VvY9bH9yH6BhI2HHs86VEd79erdzu6n
-        UeSxpXWIyEAa4uRa7NJ+yRZxk6uCEDyJds7ts48=
-X-Google-Smtp-Source: ABdhPJy5JVI3lW5DQjGRcco9V6NcXyngKxIlC4poqepFoSfKU9tR+yKwtpwsk8Y/0BpNOB+S0MHQJLI1GNmgFDkC468=
-X-Received: by 2002:a25:e549:: with SMTP id c70mr10850321ybh.339.1642496780233;
- Tue, 18 Jan 2022 01:06:20 -0800 (PST)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1642499584; x=1674035584;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=slegNbvC48O25IlaQUhAlEyR879gHkXEau/QklLdKM0=;
+  b=lahlwjuCK9LPlWpSYateOVXQ5tmQJE0Sfpu2k0fs5PeEcKt7zhbNR+WR
+   PNgWLxeoMn7j9fVvwKLPUaKGCLGY0VZ5Ag79I+UqjXxxc8p7KuGVcnNC+
+   GiEQcHBud6uvhKuHjaEuo3/bPGd3fKirH57M4y+0Xbp67x0vGxrYew/bj
+   I=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 18 Jan 2022 01:53:04 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jan 2022 01:53:04 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 18 Jan 2022 01:53:03 -0800
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 18 Jan 2022 01:52:59 -0800
+Date:   Tue, 18 Jan 2022 15:22:55 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Steev Klimaszewski <steev@kali.org>
+CC:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        "Matthias Kaehlcke" <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>
+Subject: Re: [PATCH v10 6/6] usb: dwc3: qcom: Enable the interrupts during
+ probe
+Message-ID: <20220118095255.GB11385@hu-pkondeti-hyd.qualcomm.com>
+References: <1642398248-21753-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1642398248-21753-7-git-send-email-quic_c_sanm@quicinc.com>
+ <93b68251-7e7e-ac92-fb47-346c410744b2@kali.org>
 MIME-Version: 1.0
-Received: by 2002:a05:7108:3655:0:0:0:0 with HTTP; Tue, 18 Jan 2022 01:06:19
- -0800 (PST)
-Reply-To: asil.ajwad@gmail.com
-From:   Asil Ajwad <graceyaogokamboule@gmail.com>
-Date:   Mon, 17 Jan 2022 21:06:19 -1200
-Message-ID: <CA+Yy_gC682JQi1_QLisGxR7uZiLm8cG+u0MPQzn6Z_L30nLM6Q@mail.gmail.com>
-Subject: Greetings,
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <93b68251-7e7e-ac92-fb47-346c410744b2@kali.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
--- 
-Greetings,
+On Tue, Jan 18, 2022 at 12:12:30AM -0600, Steev Klimaszewski wrote:
+> 
+> On 1/16/22 11:44 PM, Sandeep Maheswaram wrote:
+> >Enable the interrupts during probe and remove the disable interrupts
+> >function.
+> >
+> >Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> >---
+> >  drivers/usb/dwc3/dwc3-qcom.c | 28 ++++------------------------
+> >  1 file changed, 4 insertions(+), 24 deletions(-)
+> >
+> >diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> >index 54dc3d3..7c5e636 100644
+> >--- a/drivers/usb/dwc3/dwc3-qcom.c
+> >+++ b/drivers/usb/dwc3/dwc3-qcom.c
+> >@@ -306,25 +306,7 @@ static void dwc3_qcom_enable_wakeup_irq(int irq)
+> >  	enable_irq_wake(irq);
+> >  }
+> >-static void dwc3_qcom_disable_wakeup_irq(int irq)
+> >-{
+> >-	if (!irq)
+> >-		return;
+> >-
+> >-	disable_irq_wake(irq);
+> >-	disable_irq_nosync(irq);
+> >-}
+> >-static void dwc3_qcom_disable_interrupts(struct dwc3_qcom *qcom)
+> >-{
+> >-	dwc3_qcom_disable_wakeup_irq(qcom->hs_phy_irq);
+> >-
+> >-	dwc3_qcom_disable_wakeup_irq(qcom->dp_hs_phy_irq);
+> >-
+> >-	dwc3_qcom_disable_wakeup_irq(qcom->dm_hs_phy_irq);
+> >-
+> >-	dwc3_qcom_disable_wakeup_irq(qcom->ss_phy_irq);
+> >-}
+> >  static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
+> >  {
+> >@@ -356,9 +338,6 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
+> >  	if (ret)
+> >  		dev_warn(qcom->dev, "failed to disable interconnect: %d\n", ret);
+> >-	if (device_may_wakeup(qcom->dev))
+> >-		dwc3_qcom_enable_interrupts(qcom);
+> >-
+> >  	qcom->is_suspended = true;
+> >  	return 0;
+> >@@ -372,9 +351,6 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom)
+> >  	if (!qcom->is_suspended)
+> >  		return 0;
+> >-	if (device_may_wakeup(qcom->dev))
+> >-		dwc3_qcom_disable_interrupts(qcom);
+> >-
+> >  	for (i = 0; i < qcom->num_clocks; i++) {
+> >  		ret = clk_prepare_enable(qcom->clks[i]);
+> >  		if (ret < 0) {
+> >@@ -832,6 +808,10 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+> >  	genpd->flags |= GENPD_FLAG_ALWAYS_ON;
+> >  	device_init_wakeup(&pdev->dev, 1);
+> >+
+> >+	if (device_may_wakeup(qcom->dev))
+> >+		dwc3_qcom_enable_interrupts(qcom);
+> >+
+> >  	qcom->is_suspended = false;
+> >  	pm_runtime_set_active(dev);
+> >  	pm_runtime_enable(dev);
+> 
+> Hi Sandeep,
+> 
+> I was testing this series on my Lenovo Yoga C630, and with this patch in
+> particular applied, my system will no longer boot. Unfortunately I don't get
+> any sort of good output at all, I just get hung tasks when trying to probe
+> things it would seem.
+> 
+> 
+> With the other 5 patches in the series applied, the system still boots and
+> works correctly.
+> 
+> 
 
-I am Mr.Asil Ajwad, I work with United Bank of Africa, can you use
-an ATM Visa Card to withdraw money at, ATM Cash Machine in your
-country, if yes I want to transfer abounded fund the sum of $10.5million
-US-Dollars, to you from my country, this is part of the money that was
-abounded by our late old client a politician who unfortunately lost
-his life and was forced out of power Du to his greedy act, the bank will
+Sandeep,
 
-change the account details to your name, and apply for a Visa Card
-with your details, the Visa Card will be send to you, and you can be
-withdrawing money with it always, whatever any amount you withdraw
-daily, you will send 60% to me and you will take 40%, the Visa Card
-and the bank account will be on your name, I will be waiting for your
-response for more details, thanks to you a lot for giving me your time.
+Enable DP/DM interrupts all the time might be creating a storm of interrupts.
+calling enable_irq_wake() during probe is okay, but not the enable_irq().
 
-regards,
-Mr.Asil Ajwad.
+Did you verify your change with a Highspeed/Fullspeed device connected?
+
+Thanks,
+Pavan
