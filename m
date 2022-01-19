@@ -2,117 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 365284943C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jan 2022 00:16:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 256D24943ED
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jan 2022 00:55:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240260AbiASXQj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jan 2022 18:16:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52678 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240338AbiASXQi (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jan 2022 18:16:38 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C566C06161C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 15:16:38 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id m1so14518408lfq.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 15:16:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=4frs59YJlPKUn4ECIxS4w+UO9vELx/wX9L+HYGD0PPU=;
-        b=kaXFa7BU8V7n0wYiOXe2T9/reNlqGfjeXzP039cx3hxNLazSCKozFUK9BE5fyMQ0dl
-         OSja1kfX+A4kjBk1KKJhJkDqece5eBg9fzndnGgXTGdGJPIL8F/lu2H/pH4XC/lfSnIh
-         PWcxSW0D8IIWERHvwEbmTW3FoO4urZnQs1qrAYYcCdcSInl8yvO/gfAwZVYuC2BAlG7V
-         +JaARezbrGsrTjGa8g5WDQSMCcHlo6d72+tL2ehABfolCUR5VA4elB4lPo+uB+heu1YO
-         AaDLVjX2PkJqjiJpRDHOtO7eUzEB8FByqX1eO9vcE1LtU2K+mMZggpq3qzc0CQm5F1g3
-         RKsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=4frs59YJlPKUn4ECIxS4w+UO9vELx/wX9L+HYGD0PPU=;
-        b=Q9EVzWOd7O7lhly6imgEedDiYTfY2UevZLsso1rFnkAt95E+3dvs8Fvip2a559zM02
-         iVqbRRXB332Lc3n6whqjOPX5asSeOEK9BBQUFvfqfZ/tGo6ncrQLVEtPplmSzTkgZM/M
-         36EfBRzOfXDELRtiAcgLVLgStPYEKliTPq4zoaUsj48qyDqhVlBQ/6k71oAl105yp1iu
-         7Y2FnnsLHLtYMTRG+HLfFKYTmYrD1srjIQUuJUnI3cgW+tAJx8UtUEeuPyvFAUPSLH6b
-         wl2QPGwxfZZUArvwwEpECsXg0GPOzxIW+oYPzL4okAN974s+qkMa1gkM5G6kyJCSK+S1
-         gXyg==
-X-Gm-Message-State: AOAM533hcKa0pRZS+lUN6wO6L+RCg+p7GjbPJw0nyoHy1KK+0R/51mzP
-        oT0uGKl10dnMCjeViq77vSWKZQ==
-X-Google-Smtp-Source: ABdhPJzBN1gta2RG1WiG9bwGJXAws9yfXg5qJWQC6wtU3f13U+qPjvj0TL8vz4P8MaEzRyRe6yD7gQ==
-X-Received: by 2002:ac2:4e0b:: with SMTP id e11mr16126235lfr.296.1642634196566;
-        Wed, 19 Jan 2022 15:16:36 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u15sm106159lfo.194.2022.01.19.15.16.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Jan 2022 15:16:35 -0800 (PST)
-Message-ID: <8042df9c-5dba-a857-e62f-3ea66c2cd218@linaro.org>
-Date:   Thu, 20 Jan 2022 02:16:35 +0300
+        id S1344315AbiASXzn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jan 2022 18:55:43 -0500
+Received: from mga12.intel.com ([192.55.52.136]:24224 "EHLO mga12.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230318AbiASXzn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 19 Jan 2022 18:55:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1642636543; x=1674172543;
+  h=date:from:to:subject:message-id:references:mime-version:
+   in-reply-to;
+  bh=uCVZjXt17Nfv/G9qw2L3K1mqeAXwrnobzh2GWeu989k=;
+  b=Xq7ZTsMM63DynNcsOqCTWO9FYusqG5qQiUuqKR0FPqhtY4icnujnFHyU
+   uau5jvNDzfRG5GU0jcUokhVqOJPjGfCVFN8Ow/DgXp4QPoZKN/EZXVi1T
+   BPOkrsfGNACQGfrtbbeFZOZiFIEh5pgMSvTygfEkbXrHTHiwswnj8HEju
+   8t4Ps102BqAZ8uKBnuDJCrUwh0ENXwthh4immDu5DUlcvnuFMlIkvHU8T
+   XLgKC9jjM38JX6E9nzbzeXOz+10IeXOlZOem5tOYS0gDG9RTq0mdofhI3
+   mA4HNrE6UKdytsBONN/zKuq26tSj3gEpIna/IwwfebJSmLSog9aAHI6fl
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10231"; a="225208528"
+X-IronPort-AV: E=Sophos;i="5.88,300,1635231600"; 
+   d="scan'208";a="225208528"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jan 2022 15:55:42 -0800
+X-IronPort-AV: E=Sophos;i="5.88,300,1635231600"; 
+   d="scan'208";a="477585769"
+Received: from iweiny-desk2.sc.intel.com (HELO localhost) ([10.3.52.147])
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jan 2022 15:55:42 -0800
+Date:   Wed, 19 Jan 2022 15:55:42 -0800
+From:   Ira Weiny <ira.weiny@intel.com>
+To:     David Airlie <airlied@linux.ie>,
+        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org,
+        Christian =?utf-8?B?S++/vW5pZw==?= <christian.koenig@amd.com>
+Subject: Re: [PATCH 0/7] DRM kmap() fixes and kmap_local_page() conversions
+Message-ID: <20220119235542.GF209936@iweiny-DESK2.sc.intel.com>
+References: <20211210232404.4098157-1-ira.weiny@intel.com>
+ <20220119165356.GD209936@iweiny-DESK2.sc.intel.com>
+ <YehJRt+JngIsj+Gd@phenom.ffwll.local>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH] drm/msm/hdmi: Fix missing put_device() call in
- msm_hdmi_get_phy
-Content-Language: en-GB
-To:     Miaoqian Lin <linmq006@gmail.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jyri Sarha <jyri.sarha@iki.fi>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        Archit Taneja <architt@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20220107085026.23831-1-linmq006@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220107085026.23831-1-linmq006@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YehJRt+JngIsj+Gd@phenom.ffwll.local>
+User-Agent: Mutt/1.11.1 (2018-12-01)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/01/2022 11:50, Miaoqian Lin wrote:
-> The reference taken by 'of_find_device_by_node()' must be released when
-> not needed anymore.
-> Add the corresponding 'put_device()' in the error handling path.
+On Wed, Jan 19, 2022 at 06:24:22PM +0100, Daniel Vetter wrote:
+> On Wed, Jan 19, 2022 at 08:53:56AM -0800, Ira Weiny wrote:
+> > On Fri, Dec 10, 2021 at 03:23:57PM -0800, 'Ira Weiny' wrote:
+> > > From: Ira Weiny <ira.weiny@intel.com>
+> > > 
+> > > This series starts by converting the last easy kmap() uses to
+> > > kmap_local_page().
+> > > 
+> > > There is one more call to kmap() wrapped in ttm_bo_kmap_ttm().  Unfortunately,
+> > > ttm_bo_kmap_ttm() is called in a number of different ways including some which
+> > > are not thread local.  I have a patch to convert that call.  However, it is not
+> > > straight forward so it is not included in this series.
+> > > 
+> > > The final 2 patches fix bugs found while working on the ttm_bo_kmap_ttm()
+> > > conversion.
+> > 
+> > Gentile ping on this series?  Will it make this merge window?
 > 
-> Fixes: e00012b256d4 ("drm/msm/hdmi: Make HDMI core get its PHY")
-> Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+> I think this fell through the cracks and so no. Note that generally we
+> feature-freeze drm tree around -rc6 anyway for the upcoming merge window,
+> so you were cutting this all a bit close anyway.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Ok, No problem.  I just had not heard if this was picked up or not.
 
-> ---
->   drivers/gpu/drm/msm/hdmi/hdmi.c | 7 ++++++-
->   1 file changed, 6 insertions(+), 1 deletion(-)
+> Also looks like the ttm
+> kmap caching question didn't get resolved?
+
+I'm sorry I thought it was resolve for this series.  Christian said the patches
+in this series were "a good bug fix" even if not strictly necessary.[1]  Beyond
+this series I was discussing where to go from here, and is it possible to go
+further with more changes.[2]  At the moment I don't think I will.
+
+Christian did I misunderstand?  I can drop patch 6 and 7 if they are not proper
+bug fixes or at least clarifications to the code.
+
+Ira
+
+[1] https://lore.kernel.org/lkml/c3b173ea-6509-ebbe-b5f9-eeb29f1ce57e@amd.com/
+[2] https://lore.kernel.org/lkml/20211215210949.GW3538886@iweiny-DESK2.sc.intel.com/
+
 > 
-> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
-> index 75b64e6ae035..a439794a32e8 100644
-> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
-> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-> @@ -95,10 +95,15 @@ static int msm_hdmi_get_phy(struct hdmi *hdmi)
->   
->   	of_node_put(phy_node);
->   
-> -	if (!phy_pdev || !hdmi->phy) {
-> +	if (!phy_pdev) {
->   		DRM_DEV_ERROR(&pdev->dev, "phy driver is not ready\n");
->   		return -EPROBE_DEFER;
->   	}
-> +	if (!hdmi->phy) {
-> +		DRM_DEV_ERROR(&pdev->dev, "phy driver is not ready\n");
-> +		put_device(&phy_pdev->dev);
-> +		return -EPROBE_DEFER;
-> +	}
->   
->   	hdmi->phy_dev = get_device(&phy_pdev->dev);
->   
-
-
--- 
-With best wishes
-Dmitry
+> Anyway if patches are stuck resend with RESEND and if people still don't
+> pick them up poke me and I'll apply as fallback.
+> 
+> Cheers, Daniel
+> 
+> > 
+> > Thanks,
+> > Ira
+> > 
+> > > 
+> > > 
+> > > Ira Weiny (7):
+> > > drm/i915: Replace kmap() with kmap_local_page()
+> > > drm/amd: Replace kmap() with kmap_local_page()
+> > > drm/gma: Remove calls to kmap()
+> > > drm/radeon: Replace kmap() with kmap_local_page()
+> > > drm/msm: Alter comment to use kmap_local_page()
+> > > drm/amdgpu: Ensure kunmap is called on error
+> > > drm/radeon: Ensure kunmap is called on error
+> > > 
+> > > drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 8 ++++----
+> > > drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c | 1 +
+> > > drivers/gpu/drm/gma500/gma_display.c | 6 ++----
+> > > drivers/gpu/drm/gma500/mmu.c | 8 ++++----
+> > > drivers/gpu/drm/i915/gem/i915_gem_shmem.c | 4 ++--
+> > > drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c | 8 ++++----
+> > > drivers/gpu/drm/i915/gt/intel_ggtt_fencing.c | 4 ++--
+> > > drivers/gpu/drm/i915/gt/shmem_utils.c | 4 ++--
+> > > drivers/gpu/drm/i915/i915_gem.c | 8 ++++----
+> > > drivers/gpu/drm/i915/i915_gpu_error.c | 4 ++--
+> > > drivers/gpu/drm/msm/msm_gem_submit.c | 4 ++--
+> > > drivers/gpu/drm/radeon/radeon_ttm.c | 4 ++--
+> > > drivers/gpu/drm/radeon/radeon_uvd.c | 1 +
+> > > 13 files changed, 32 insertions(+), 32 deletions(-)
+> > > 
+> > > --
+> > > 2.31.1
+> > > 
+> 
+> -- 
+> Daniel Vetter
+> Software Engineer, Intel Corporation
+> http://blog.ffwll.ch
