@@ -2,111 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 18CBD493515
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jan 2022 07:40:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B32E4493659
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jan 2022 09:32:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351823AbiASGke (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jan 2022 01:40:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50400 "EHLO
+        id S1352500AbiASIcX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jan 2022 03:32:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351831AbiASGkc (ORCPT
+        with ESMTP id S1350982AbiASIcX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jan 2022 01:40:32 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6590DC06173F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jan 2022 22:40:32 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id d15-20020a17090a110f00b001b4e7d27474so1709616pja.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jan 2022 22:40:32 -0800 (PST)
+        Wed, 19 Jan 2022 03:32:23 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA4EBC061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 00:32:22 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id m8-20020a17090a4d8800b001b4f361964fso1949974pjh.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 00:32:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=zpqOr/tBRi75Pp8qLo4l0nBsgr344a1nSf9Rbnq+odM=;
-        b=qEYIK5rApXpv0wg81nkrlkx1T++XKJBs1RDU+7UymNOd/serK07jnV/QZUYpzO1cZx
-         wj6xTp+NFXcu/VVvkGp0KBC0MfieDkaiP5XvpIvvJKB6tbSd3+sSr5ueB8ITW9ftDO/u
-         yheozRHgkCfFm6CVnnrKd6XiKG2Su3UOFenBTkSPuvzul0kpK9ncGpQJNPSj4vw5afam
-         GYNFNl6Oov2WscSyYFmKYYuq+EJfNE0yfTueSoo4RuDtNhXRP6U1d5CxcfJ120j9HVLg
-         Mj5zu7jCDAtYo8SUwn+zSVSF0TeeL27Wz3XKko0KU5GOn3lm2i2OTWH1ygcjd24A8CHU
-         2jPQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dSmyI9DWw4yjUYr1nbkInCEVJfsKrWWmNEo3N5Pb/+8=;
+        b=ALKiXykSDyTEQAdxfUqak//n6c0I9iHi2l01AJef/DYgG2GQHArPmubo5KNHrbOreS
+         of5NeR6NqgQ74KZ2WEOxDtJ/W0rutGdyD6dQavhGy9ohiXGf0MxS15oFWHcLOgi8vPOg
+         Lm0s7HKLAEStRsolrJ6I3VbLcfKOhgABBPiDdIgmJwf1xRTzZSiNp8l1JRH/Ct11F01v
+         8LVzQgfrD0TiZsaDVN16goRrt6TIn1xN8b35eNsjs9bJfo6RhDZoXFNv+WkHxdbhgn8j
+         FZT42ZpmNEAd7KCW9ENDt2JZrQNqXMNDuS4e8L5dFzB6gYFYNBFObdgBbDUzgCQplcpI
+         BjGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=zpqOr/tBRi75Pp8qLo4l0nBsgr344a1nSf9Rbnq+odM=;
-        b=iW6mGh7s0SFVHbaObrnDzal1ouJ+WH0ouVi0WuJXgn53lYHECh8saBNS1Zq1iOJecf
-         OyEgfK5NnixhiitNLGVR6j/wXkfiOl6WGrrKPWC8yWZTsBhNFmxVG9rPoJK1nERSRcEN
-         5nx25EHklaIBTZiEkpHcH0JGPqaVQjdz3jofcb4LD4ggQAlbofcNz8wfkNfITFz5eDnB
-         SkZpvIKRJ8aEBrzqTzzoD5XIHUE4hHOMZEWYxk6N6zuDoOyC2ihzfQQ+4Imv/1dxPYll
-         muWbXj94vcKrGUTBNeDqMj2ZE7tccIsynBhILwnOscpHzj18bjGH9UmlRPcRjF59ZEdb
-         W4Rg==
-X-Gm-Message-State: AOAM530mo2jRBM9/RQYC2D2pOFsvMl565Z4R9Xa9EbM/33qlbCax9kdA
-        Wq5hfqcV8KymvzuFN6yQEx4Qlg==
-X-Google-Smtp-Source: ABdhPJx8ka9jtqv7zCBJO2qiQ9/AM6qAF/k8L4Cci5O8W/jOWZTORT9y08zINcOya2zj/P+qTeHWVQ==
-X-Received: by 2002:a17:90b:3144:: with SMTP id ip4mr2608936pjb.19.1642574431950;
-        Tue, 18 Jan 2022 22:40:31 -0800 (PST)
-Received: from localhost ([223.184.90.234])
-        by smtp.gmail.com with ESMTPSA id a9sm18672318pfo.169.2022.01.18.22.40.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Jan 2022 22:40:31 -0800 (PST)
-Date:   Wed, 19 Jan 2022 12:10:29 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Lukasz Luba <lukasz.luba@arm.com>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH 1/2] cpufreq: qcom-hw: Use initialized cpumask for
- thermal pressure update
-Message-ID: <20220119064029.b2yhqcazhpdbhasc@vireshk-i7>
-References: <20220118185612.2067031-1-bjorn.andersson@linaro.org>
- <20220119063547.hktwzbycf7trqjju@vireshk-i7>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dSmyI9DWw4yjUYr1nbkInCEVJfsKrWWmNEo3N5Pb/+8=;
+        b=wdOnTjRNofidgyNHuwZl8cBGRP9nzcgKGIlFzG/SRc6OKvTwSjOQpcM9+stbFwMeTv
+         zRx41qCVsC5qqif6lPDAJCl7gfupzw6Uh2B431ujDh2YwvaoiMs1wX2xw/R5OIpzQZv6
+         5aXTar2sWiTE2QU3idyknwbfGEM7hLOKjUX8YfK2y5R8Re9MnesMrxWvE4j9B1iAQV5r
+         mai7mEqs1S43Oj6U6JAwcDKBUThV8n9LEU9azVYtYpdxYfjVQrKf6Qv8bAWyDO/gsihD
+         76dbx2gbFkSUaBoe9XHyBjc42hZxcaa1WxF/bWZ0UgASkLQDZsxKdQXNOsQmzRbPiETP
+         QOPw==
+X-Gm-Message-State: AOAM5304lpwmwoshNwma+R59GoU72+bkxEkuMuDWRBx53LSOGhqGvMBH
+        scuhu1EqVOH4wzttG+fy1iJtJWAkpNq+Abs+ZQnAmg==
+X-Google-Smtp-Source: ABdhPJxDax72AjX8z4FnT10PwvTLx2e5zuOtT54rp12MpXvCqQWd+6XrpPRdBI429DXhFjcp17gIF9WQpBvZSgLgIFQ=
+X-Received: by 2002:a17:90a:53:: with SMTP id 19mr2927524pjb.159.1642581142444;
+ Wed, 19 Jan 2022 00:32:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220119063547.hktwzbycf7trqjju@vireshk-i7>
-User-Agent: NeoMutt/20180716-391-311a52
+References: <1642520854-32196-1-git-send-email-loic.poulain@linaro.org> <c37daeda-e58e-6a93-36aa-28e392bb06f2@linaro.org>
+In-Reply-To: <c37daeda-e58e-6a93-36aa-28e392bb06f2@linaro.org>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Wed, 19 Jan 2022 09:44:05 +0100
+Message-ID: <CAMZdPi8VLa4VEKk9BsO5i-cSA=itpUTBr6YoQN7Y7AE6Jugo_Q@mail.gmail.com>
+Subject: Re: [PATCH 1/2] drm/msm: add support for QCM2290 MDSS
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     robdclark@gmail.com, sean@poorly.run, robh+dt@kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, bjorn.andersson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19-01-22, 12:05, Viresh Kumar wrote:
-> policy->cpus keeps on changing with CPU hotplug and this can leave
-> your platform in an inconsistent state. For example, in case where you
-> offline a CPU from policy, other CPUs get their thermal pressure
-> updated, online the CPU back and all CPUs of a policy don't have the
-> same settings anymore.
-> 
-> There are few things we can do here now:
-> 
-> - Check for empty related_cpus and return early. Since related_cpus is
->   updated only once, this shall work just fine and must not be racy.
-> 
->   While at it, I think we can also do something like this in
->   topology_update_thermal_pressure() instead:
-> 
->   	cpu = cpumask_first(cpus);
->         if (unlikely(cpu >= NR_CPUS))
->                 return;
-> 
-> - And while writing this email, I dropped all other ideas in favor of
->   change to topology_update_thermal_pressure() :)
+Hi Dmitry,
 
-And then I saw your second patch, which looks good as otherwise we
-will not be able to catch the bug in our system where we are sending
-the empty cpumask :)
+On Tue, 18 Jan 2022 at 19:02, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On 18/01/2022 18:47, Loic Poulain wrote:
+> > Add compatibility for QCM2290 display subsystem, including
+> > required entries in DPU hw catalog.
+> >
+> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 175 ++++++++++++++++++++++++-
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |   1 +
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c        |   1 +
+> >   drivers/gpu/drm/msm/msm_drv.c                  |   1 +
+> >   4 files changed, 177 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> > index ce6f32a..7fa3fc7 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> > @@ -25,6 +25,8 @@
+> >   #define VIG_SM8250_MASK \
+[...]
+> > +static const struct dpu_vbif_cfg qcm2290_vbif[] = {
+> > +     {
+> > +     .name = "vbif_0", .id = VBIF_0,
+> > +     .base = 0, .len = 0x1040,
+> > +     .features = BIT(DPU_VBIF_QOS_REMAP),
+> > +     .xin_halt_timeout = 0x4000,
+> > +     .qos_rt_tbl = {
+> > +             .npriority_lvl = ARRAY_SIZE(sdm845_rt_pri_lvl),
+> > +             .priority_lvl = sdm845_rt_pri_lvl,
+> > +             },
+> > +     .memtype_count = 14,
+> > +     .memtype = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+> > +     },
+> > +};
+>
+> The only difference from sdm845_vbif is the lack of .qos_nrt_tbl. Is
+> this on purpose?
 
-So the other idea is:
+Yes, I've not found any info related to non-rt for QCM2290 dpu, but I
+assume it would be safe to just use sdm845_vbif here, as the others.
 
-- Revert, or bring back a new version of this and register the
-  interrupt from there. But that is also not a very clean solution.
-
-  commit 4bf8e582119e ("cpufreq: Remove ready() callback")
-
-- 
-
--- 
-viresh
+Regards,
+Loic
