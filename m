@@ -2,412 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E5514941B8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jan 2022 21:31:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F8914941BB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jan 2022 21:32:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357292AbiASUbL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jan 2022 15:31:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43790 "EHLO
+        id S1357319AbiASUcD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jan 2022 15:32:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244018AbiASUbJ (ORCPT
+        with ESMTP id S1357299AbiASUcB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jan 2022 15:31:09 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B7BDC061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 12:31:08 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id m3so13196460lfu.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 12:31:08 -0800 (PST)
+        Wed, 19 Jan 2022 15:32:01 -0500
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FFF0C06173F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 12:32:01 -0800 (PST)
+Received: by mail-pf1-x42c.google.com with SMTP id i129so3309719pfe.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 12:32:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=rSwblmd2HsvVAk7MLwaAx3yMHnmaeW6z0nD6uf+evKM=;
-        b=tiGGyQ+yp5EHWAI/6kpBEcqth18a21e2tsQgcxWIDu9KHCLGrDucNCviKKARaiRmHY
-         Fi6PDZcACEJJXtmBia6rQfKXfvGkuz+ZyJ4jWSP5jzPEyl2G7fz9/mis6IYmQLscDjYv
-         3x6jU2RTjxXmMRUYaNlyM9G5Ecp+LIhw/kHNjHKzICItGlhSm51WK2MkoAvpBQCxUbT1
-         CibhI2mQFoxPB9s9uhKCSxeMjwATb9GdYj+aPQ4TqihksqULrTfjdFvf0FXWxeG4Ljj/
-         z7EKzoWlbNNjpATlily4UUrapR22FP9nJZp5+uAR6+JXc1d/7SRcAp1o6Yeq6N8HDr4U
-         Rjpg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vOeM/NfwNyAWZgDAxYZ3pnAqphu80pQ3bmYhNquSXxA=;
+        b=U/OKBUGOMvQCALWUiV+6YQB+7maHueBtaXx3fEl8TvxN4K2IVKdiyTIC4D+qSJv97H
+         cLd6bABXU8cph6fil8Vb0DNDwU8dNBFVOd5GOvXu3d42KbuXqbK0j+vq6n0Ffilk06vY
+         K1YSlQEjWgwiTJhvPpJOCWeuJV5ZaPjwJKerS2q+SWqRJQEVMxWiPDAUDt2e/IwJCDhd
+         DjvI0amnjK/+K0AyTJPlYjWALQsR9zxhHvoi9jZ4rZ6hrs9gxljPASpCOHvn3O5HX0up
+         cE+qIXpVoNqrd1Kqz2A3XGKM3Y2deKseJHpgDCxNsZ7avW4PKAMHnUFVaxb1trebIxTq
+         ej5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=rSwblmd2HsvVAk7MLwaAx3yMHnmaeW6z0nD6uf+evKM=;
-        b=Ul4I7TFQqEBqusw7W1crlSvuPBBCliskQRTPpLkB+nD/mcsjj2vHs72fO8YcZTYbew
-         0tOwmofN7VLHHpuc4fXiamWZDvG629VsxhiJVwdyb3YONhAkeVoSuP9gx7nrbwTDZ6xp
-         AvzShbfIIfibXmNXpSVKaDS3K34RxNcJ3WXYnA2/RpNXqOCiO/KkSZKEUJGvTvQwliDU
-         vVTGHsM6m5ICKlfoyXW7eYa1ENN7Jw1RuBuoYw+Troe32abGubT27MXKHLyywdQud8Ji
-         jvnCvkLRUyglx+EaotKx2ZqPA78abKY9i58Umh8Qn04LmYnCKDPo99Tl4PsqQeIcsHa6
-         jezQ==
-X-Gm-Message-State: AOAM533rPH38c87zdU5T0fXWAYR4U2sFQiESBJ0nmooQesLsFRrgIeXb
-        1mdZAs5i75NvoJFJFRbJihPFzV5mC5G2/g==
-X-Google-Smtp-Source: ABdhPJyswQKdM+L0cIkGl8/aASch2AIlksvNS37SfX2NTAUwIKdhsxnZC4P0ufRa8isYOfSSejd9cQ==
-X-Received: by 2002:a05:651c:1a24:: with SMTP id by36mr12330580ljb.191.1642624266586;
-        Wed, 19 Jan 2022 12:31:06 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id h19sm63867lfu.198.2022.01.19.12.31.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Jan 2022 12:31:06 -0800 (PST)
-Message-ID: <bacb4a41-9f28-3c68-7076-7e55cea984a7@linaro.org>
-Date:   Wed, 19 Jan 2022 23:31:05 +0300
+        bh=vOeM/NfwNyAWZgDAxYZ3pnAqphu80pQ3bmYhNquSXxA=;
+        b=BNUQxbw+jpi4xtKZTum0G4U32FH6Kj6hVsj6lSPNEZKA/NmIpmtIQBKllLlT8JxLjS
+         M04T+KJesP+3hGDo3KbvQFdVbAqR6wzfP17MzLDTh8BpxEKHy4KiVwGraCSwmKtcSStj
+         BhBVS2hwlDQogWIOIsknsHXL7lgFgHiXXiIpzRrqM2eA8kvLaYYPBXmDWkD1v6BbDHl2
+         vvMWbjywYm6V423hD1pbHYzz4VZtsqsShnAiiCGRYe3sGMK3e+D7+64tuAigmjj5pH16
+         b//jGKtUBNfSOgszuVfcM779Ki3A4XoSRw0H3eAxAgHfeeiZZZWb/+HPWKr7Yq2DsyH4
+         8RCQ==
+X-Gm-Message-State: AOAM532/kXw+cjCEigvfa7U5je4vY0hNcWT35pl0edHnb1NPaOUEuD/3
+        fBAFbLDMHG+Ak2JPNvt6Wkj/pvxnvkbDZw==
+X-Google-Smtp-Source: ABdhPJxZzDg+q2pM4sd+uTHtumgKdp4sfYCfVUs+IxF5l1SUpXnMYgxA+dEZFA64UoGOULaTrl6U3A==
+X-Received: by 2002:a62:17c7:0:b0:4bd:9fb9:f025 with SMTP id 190-20020a6217c7000000b004bd9fb9f025mr32523713pfx.35.1642624320615;
+        Wed, 19 Jan 2022 12:32:00 -0800 (PST)
+Received: from localhost.localdomain ([2401:4900:1f3a:47e5:8bff:a3f8:a494:acd0])
+        by smtp.gmail.com with ESMTPSA id x13sm6807552pjq.43.2022.01.19.12.31.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Jan 2022 12:32:00 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        robh+dt@kernel.org, linux-gpio@vger.kernel.org,
+        linus.walleij@linaro.org, bjorn.andersson@linaro.org,
+        Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
+        Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 0/4] Add support for PDC interrupt controller for sm8150
+Date:   Thu, 20 Jan 2022 02:01:29 +0530
+Message-Id: <20220119203133.467264-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.1
-Subject: Re: [Freedreno] [PATCH v2 1/2] drm/msm/dpu: simplify clocks handling
-Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>
-References: <20211126023516.1108411-1-dmitry.baryshkov@linaro.org>
- <20211126023516.1108411-2-dmitry.baryshkov@linaro.org>
- <645728c0-05be-0784-0c7f-5535095ced00@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <645728c0-05be-0784-0c7f-5535095ced00@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/01/2022 05:32, Jessica Zhang wrote:
-> On 11/25/2021 6:35 PM, Dmitry Baryshkov wrote:
->> DPU driver contains code to parse clock items from device tree into
->> special data struct and then enable/disable/set rate for the clocks
->> using that data struct. However the DPU driver itself uses only parsing
->> and enabling/disabling part (the rate setting is used by DP driver).
->>
->> Move this implementation to the DP driver (which actually uses rate
->> setting) and replace hand-coded enable/disable/get loops in the DPU
->> with the respective clk_bulk operations. Put operation is removed
->> completely because, it is handled using devres instead.
->>
->> DP implementation is unchanged for now.
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/gpu/drm/msm/Makefile                  |  2 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 24 ++-----
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  6 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 46 +++----------
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |  4 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c      | 26 +++----
->>   .../dpu1/dpu_io_util.c => dp/dp_clk_util.c}   | 69 +------------------
->>   .../dpu1/dpu_io_util.h => dp/dp_clk_util.h}   |  2 -
->>   drivers/gpu/drm/msm/dp/dp_parser.h            |  2 +-
->>   drivers/gpu/drm/msm/msm_drv.c                 | 49 +++++++++++++
->>   drivers/gpu/drm/msm/msm_drv.h                 |  1 +
->>   11 files changed, 84 insertions(+), 147 deletions(-)
->>   rename drivers/gpu/drm/msm/{disp/dpu1/dpu_io_util.c => 
->> dp/dp_clk_util.c} (61%)
->>   rename drivers/gpu/drm/msm/{disp/dpu1/dpu_io_util.h => 
->> dp/dp_clk_util.h} (92%)
->>
+This patchset adds the support for PDC interrupt controller found
+on sm8150 SoCs from Qualcomm.
 
-[skipped]
+Here we add the device-tree bindings, pinctrl driver support
+and the dts support for the same.
 
->> @@ -174,14 +174,10 @@ static int dpu_mdss_enable(struct msm_mdss *mdss)
->>   static int dpu_mdss_disable(struct msm_mdss *mdss)
->>   {
->>       struct dpu_mdss *dpu_mdss = to_dpu_mdss(mdss);
->> -    struct dss_module_power *mp = &dpu_mdss->mp;
->> -    int ret;
->> -    ret = msm_dss_enable_clk(mp->clk_config, mp->num_clk, false);
->> -    if (ret)
->> -        DPU_ERROR("clock disable failed, ret:%d\n", ret);
->> +    clk_bulk_disable_unprepare(dpu_mdss->num_clocks, dpu_mdss->clocks);
->> -    return ret;
->> +    return 0;
->>   }
->>   static void dpu_mdss_destroy(struct drm_device *dev)
-> 
-> Hi Dmitry,
-> 
-> Looks like this is based on some outdated code:
-> 2027e5b3 (drm/msm: Initialize MDSS irq domain at probe time) changes 
-> `*dev` to `*mdss`
-> 
-> I want to test this patch on some boards (namely RB3 and RB5). Can you 
-> release a version with your changes rebased on top of the tip of msm-next?
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: Rob Herring <robh@kernel.org>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>
 
-Sure, I'll post v3.
+Bhupesh Sharma (4):
+  dt-bindings: qcom,pdc: Add compatible for SM8150
+  pinctrl: qcom: sm8150: Specify PDC map
+  arm64: dts: qcom: sm8150: Add pdc interrupt controller node
+  arm64: dts: qcom: sm8150: Add PDC as the interrupt parent for tlmm
 
-> 
->> @@ -189,7 +185,6 @@ static void dpu_mdss_destroy(struct drm_device *dev)
->>       struct platform_device *pdev = to_platform_device(dev->dev);
->>       struct msm_drm_private *priv = dev->dev_private;
->>       struct dpu_mdss *dpu_mdss = to_dpu_mdss(priv->mdss);
->> -    struct dss_module_power *mp = &dpu_mdss->mp;
->>       int irq;
->>       pm_runtime_suspend(dev->dev);
->> @@ -197,8 +192,6 @@ static void dpu_mdss_destroy(struct drm_device *dev)
->>       _dpu_mdss_irq_domain_fini(dpu_mdss);
->>       irq = platform_get_irq(pdev, 0);
->>       irq_set_chained_handler_and_data(irq, NULL, NULL);
->> -    msm_dss_put_clk(mp->clk_config, mp->num_clk);
->> -    devm_kfree(&pdev->dev, mp->clk_config);
->>       if (dpu_mdss->mmio)
->>           devm_iounmap(&pdev->dev, dpu_mdss->mmio);
->> @@ -217,7 +210,6 @@ int dpu_mdss_init(struct drm_device *dev)
->>       struct platform_device *pdev = to_platform_device(dev->dev);
->>       struct msm_drm_private *priv = dev->dev_private;
->>       struct dpu_mdss *dpu_mdss;
->> -    struct dss_module_power *mp;
->>       int ret;
->>       int irq;
->> @@ -231,12 +223,12 @@ int dpu_mdss_init(struct drm_device *dev)
->>       DRM_DEBUG("mapped mdss address space @%pK\n", dpu_mdss->mmio);
->> -    mp = &dpu_mdss->mp;
->> -    ret = msm_dss_parse_clock(pdev, mp);
->> -    if (ret) {
->> +    ret = msm_parse_clock(pdev, &dpu_mdss->clocks);
->> +    if (ret < 0) {
->>           DPU_ERROR("failed to parse clocks, ret=%d\n", ret);
->>           goto clk_parse_err;
->>       }
->> +    dpu_mdss->num_clocks = ret;
->>       dpu_mdss->base.dev = dev;
->>       dpu_mdss->base.funcs = &mdss_funcs;
->> @@ -263,9 +255,7 @@ int dpu_mdss_init(struct drm_device *dev)
->>   irq_error:
->>       _dpu_mdss_irq_domain_fini(dpu_mdss);
->>   irq_domain_error:
->> -    msm_dss_put_clk(mp->clk_config, mp->num_clk);
->>   clk_parse_err:
->> -    devm_kfree(&pdev->dev, mp->clk_config);
->>       if (dpu_mdss->mmio)
->>           devm_iounmap(&pdev->dev, dpu_mdss->mmio);
->>       dpu_mdss->mmio = NULL;
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c 
->> b/drivers/gpu/drm/msm/dp/dp_clk_util.c
->> similarity index 61%
->> rename from drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c
->> rename to drivers/gpu/drm/msm/dp/dp_clk_util.c
->> index 078afc5f5882..44a4fc59ff31 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_clk_util.c
->> @@ -11,7 +11,7 @@
->>   #include <drm/drm_print.h>
->> -#include "dpu_io_util.h"
->> +#include "dp_clk_util.h"
->>   void msm_dss_put_clk(struct dss_clk *clk_arry, int num_clk)
->>   {
->> @@ -118,70 +118,3 @@ int msm_dss_enable_clk(struct dss_clk *clk_arry, 
->> int num_clk, int enable)
->>       return rc;
->>   }
->> -
->> -int msm_dss_parse_clock(struct platform_device *pdev,
->> -            struct dss_module_power *mp)
->> -{
->> -    u32 i, rc = 0;
->> -    const char *clock_name;
->> -    int num_clk = 0;
->> -
->> -    if (!pdev || !mp)
->> -        return -EINVAL;
->> -
->> -    mp->num_clk = 0;
->> -    num_clk = of_property_count_strings(pdev->dev.of_node, 
->> "clock-names");
->> -    if (num_clk <= 0) {
->> -        pr_debug("clocks are not defined\n");
->> -        return 0;
->> -    }
->> -
->> -    mp->clk_config = devm_kcalloc(&pdev->dev,
->> -                      num_clk, sizeof(struct dss_clk),
->> -                      GFP_KERNEL);
->> -    if (!mp->clk_config)
->> -        return -ENOMEM;
->> -
->> -    for (i = 0; i < num_clk; i++) {
->> -        rc = of_property_read_string_index(pdev->dev.of_node,
->> -                           "clock-names", i,
->> -                           &clock_name);
->> -        if (rc) {
->> -            DRM_DEV_ERROR(&pdev->dev, "Failed to get clock name for 
->> %d\n",
->> -                i);
->> -            break;
->> -        }
->> -        strlcpy(mp->clk_config[i].clk_name, clock_name,
->> -            sizeof(mp->clk_config[i].clk_name));
->> -
->> -        mp->clk_config[i].type = DSS_CLK_AHB;
->> -    }
->> -
->> -    rc = msm_dss_get_clk(&pdev->dev, mp->clk_config, num_clk);
->> -    if (rc) {
->> -        DRM_DEV_ERROR(&pdev->dev, "Failed to get clock refs %d\n", rc);
->> -        goto err;
->> -    }
->> -
->> -    rc = of_clk_set_defaults(pdev->dev.of_node, false);
->> -    if (rc) {
->> -        DRM_DEV_ERROR(&pdev->dev, "Failed to set clock defaults 
->> %d\n", rc);
->> -        goto err;
->> -    }
->> -
->> -    for (i = 0; i < num_clk; i++) {
->> -        u32 rate = clk_get_rate(mp->clk_config[i].clk);
->> -        if (!rate)
->> -            continue;
->> -        mp->clk_config[i].rate = rate;
->> -        mp->clk_config[i].type = DSS_CLK_PCLK;
->> -        mp->clk_config[i].max_rate = rate;
->> -    }
->> -
->> -    mp->num_clk = num_clk;
->> -    return 0;
->> -
->> -err:
->> -    msm_dss_put_clk(mp->clk_config, num_clk);
->> -    return rc;
->> -}
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.h 
->> b/drivers/gpu/drm/msm/dp/dp_clk_util.h
->> similarity index 92%
->> rename from drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.h
->> rename to drivers/gpu/drm/msm/dp/dp_clk_util.h
->> index e6b5c772fa3b..6288a2833a58 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.h
->> +++ b/drivers/gpu/drm/msm/dp/dp_clk_util.h
->> @@ -35,6 +35,4 @@ int msm_dss_get_clk(struct device *dev, struct 
->> dss_clk *clk_arry, int num_clk);
->>   void msm_dss_put_clk(struct dss_clk *clk_arry, int num_clk);
->>   int msm_dss_clk_set_rate(struct dss_clk *clk_arry, int num_clk);
->>   int msm_dss_enable_clk(struct dss_clk *clk_arry, int num_clk, int 
->> enable);
->> -int msm_dss_parse_clock(struct platform_device *pdev,
->> -        struct dss_module_power *mp);
->>   #endif /* __DPU_IO_UTIL_H__ */
->> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h 
->> b/drivers/gpu/drm/msm/dp/dp_parser.h
->> index 3172da089421..094b39bfed8c 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_parser.h
->> +++ b/drivers/gpu/drm/msm/dp/dp_parser.h
->> @@ -10,7 +10,7 @@
->>   #include <linux/phy/phy.h>
->>   #include <linux/phy/phy-dp.h>
->> -#include "dpu_io_util.h"
->> +#include "dp_clk_util.h"
->>   #include "msm_drv.h"
->>   #define DP_LABEL "MDSS DP DISPLAY"
->> diff --git a/drivers/gpu/drm/msm/msm_drv.c 
->> b/drivers/gpu/drm/msm/msm_drv.c
->> index 892c04365239..3e90fca33581 100644
->> --- a/drivers/gpu/drm/msm/msm_drv.c
->> +++ b/drivers/gpu/drm/msm/msm_drv.c
->> @@ -5,6 +5,7 @@
->>    * Author: Rob Clark <robdclark@gmail.com>
->>    */
->> +#include <linux/clk/clk-conf.h>
->>   #include <linux/dma-mapping.h>
->>   #include <linux/kthread.h>
->>   #include <linux/sched/mm.h>
->> @@ -123,6 +124,54 @@ struct clk *msm_clk_get(struct platform_device 
->> *pdev, const char *name)
->>       return clk;
->>   }
->> +int msm_parse_clock(struct platform_device *pdev, struct 
->> clk_bulk_data **clocks)
-> 
-> Can you also move msm_parse_clock and other io helper methods (like 
-> _msm_ioremap) into a separate msm_io_utils file instead? That would help 
-> avoid file bloat.
-
-Nice idea!
-
-> Thanks,
-> 
-> Jessica Zhang
-> 
->> +{
->> +    u32 i, rc = 0;
->> +    const char *clock_name;
->> +    struct clk_bulk_data *bulk;
->> +    int num_clk = 0;
->> +
->> +    if (!pdev)
->> +        return -EINVAL;
->> +
->> +    num_clk = of_property_count_strings(pdev->dev.of_node, 
->> "clock-names");
->> +    if (num_clk <= 0) {
->> +        pr_debug("clocks are not defined\n");
->> +        return 0;
->> +    }
->> +
->> +    bulk = devm_kcalloc(&pdev->dev, num_clk, sizeof(struct 
->> clk_bulk_data), GFP_KERNEL);
->> +    if (!bulk)
->> +        return -ENOMEM;
->> +
->> +    for (i = 0; i < num_clk; i++) {
->> +        rc = of_property_read_string_index(pdev->dev.of_node,
->> +                           "clock-names", i,
->> +                           &clock_name);
->> +        if (rc) {
->> +            DRM_DEV_ERROR(&pdev->dev, "Failed to get clock name for 
->> %d\n", i);
->> +            return rc;
->> +        }
->> +        bulk[i].id = devm_kstrdup(&pdev->dev, clock_name, GFP_KERNEL);
->> +    }
->> +
->> +    rc = devm_clk_bulk_get(&pdev->dev, num_clk, bulk);
->> +    if (rc) {
->> +        DRM_DEV_ERROR(&pdev->dev, "Failed to get clock refs %d\n", rc);
->> +        return rc;
->> +    }
->> +
->> +    rc = of_clk_set_defaults(pdev->dev.of_node, false);
->> +    if (rc) {
->> +        DRM_DEV_ERROR(&pdev->dev, "Failed to set clock defaults 
->> %d\n", rc);
->> +        return rc;
->> +    }
->> +
->> +    *clocks = bulk;
->> +
->> +    return num_clk;
->> +}
->> +
->>   static void __iomem *_msm_ioremap(struct platform_device *pdev, 
->> const char *name,
->>                     const char *dbgname, bool quiet, phys_addr_t *psize)
->>   {
->> diff --git a/drivers/gpu/drm/msm/msm_drv.h 
->> b/drivers/gpu/drm/msm/msm_drv.h
->> index 69952b239384..cfede901056d 100644
->> --- a/drivers/gpu/drm/msm/msm_drv.h
->> +++ b/drivers/gpu/drm/msm/msm_drv.h
->> @@ -477,6 +477,7 @@ struct clk *msm_clk_get(struct platform_device 
->> *pdev, const char *name);
->>   struct clk *msm_clk_bulk_get_clock(struct clk_bulk_data *bulk, int 
->> count,
->>       const char *name);
->> +int msm_parse_clock(struct platform_device *pdev, struct 
->> clk_bulk_data **clocks);
->>   void __iomem *msm_ioremap(struct platform_device *pdev, const char 
->> *name,
->>           const char *dbgname);
->>   void __iomem *msm_ioremap_size(struct platform_device *pdev, const 
->> char *name,
->> -- 
->> 2.33.0
->>
-
+ .../interrupt-controller/qcom,pdc.txt         |  1 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          | 11 ++++++++++
+ drivers/pinctrl/qcom/pinctrl-sm8150.c         | 21 +++++++++++++++++++
+ 3 files changed, 33 insertions(+)
 
 -- 
-With best wishes
-Dmitry
+2.33.1
+
