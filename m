@@ -2,303 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D687D49420A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jan 2022 21:45:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 065BA4942E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jan 2022 23:16:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245198AbiASUon (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jan 2022 15:44:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46798 "EHLO
+        id S1357531AbiASWQU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jan 2022 17:16:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357404AbiASUoH (ORCPT
+        with ESMTP id S236635AbiASWQU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jan 2022 15:44:07 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 477DCC061747
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 12:44:07 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id g9-20020a17090a67c900b001b4f1d71e4fso3736800pjm.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 12:44:07 -0800 (PST)
+        Wed, 19 Jan 2022 17:16:20 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91EC8C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 14:16:19 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id y15so5670448lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 14:16:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=tJ5lLLdSCeNvt2ZI1+v6LXdLP5izzC+/ppZtPbMuaA4=;
-        b=KJsVAkJVn8mblr6TPMU3BOXA4T+7aZr39DS6lCyx8RF3S+HhylJtXcMcid2oGCfJ5K
-         xM9xaUr9ZWW2Hs8a6ypHfBYZuiWoHTa1SZbEKijYdafaWkgrc4N04+SGGvUR6bNNhbBO
-         ng0wD4dKX2tEm0t8QEcL7yUnETpDCGqiaQj/I=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wentIdGMex7cJsypmwDQmsmO24X3lRILvlbSaTQV1CE=;
+        b=codcPLfy/wN5lv0LpcSen1o7LnvOWLomPolURzU8l5GS0JIzHXuAX9sF+nJICfBwz+
+         FGZi88g5QZI4vnNCHAfjI88yrW2EexSYY4AA2eGlIg/VIRMS+Tk8ff6ITMezaNSdsXvz
+         S6Hxhd0udKBxmDl7caK+uFMyz4WomgnAgTgFUTPlDP5/d+HYvyOqVw5ZI25IPDwbTI0q
+         V/JtSbVSFwvbO4Tabrlv5IGYwsARj7a2xFPt54+DBxu/vyc9hlxf4+hb3x0VNYgJ1JlN
+         vFLMI4ITTO3bjEIREuFFqqRMkUqmqq6AqgjiYpc/2DpoUPHwn1kO09EriGceEv455AYl
+         BkSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=tJ5lLLdSCeNvt2ZI1+v6LXdLP5izzC+/ppZtPbMuaA4=;
-        b=Rbc8Ks3tqGtGlwFuHZRXFqXhjH7cpINGO/H6ZtXB6MekwazBcqT2W8l3Ibhe639ias
-         xBCqkSCsp4oE6c4YDdTEbCeD++30P+JIrLgucxWliJvTGcrH+rYIcvFM9nc+Rf5lXq/U
-         cqUOu+nvgqWRQ7ONoLQwUSWqUjrzW40sczY/3oLqJaps4DubQrPGaMrIzr5Tq8bv0qcV
-         s099/B1IHlY0xRZOGMQ2KZLJf0uhdaW7bcRzy+kLSzTIBgHQsqTAYBm3pG7MY97sPjMw
-         qMn8rLZZ6mchN66N3s0G7chSolJOWdI3PeaEngz/MqM+UjUzWR+InmrVLNzODBYQTbEB
-         0AxQ==
-X-Gm-Message-State: AOAM533iVYjk2BvFJXiH19q/i9cTzhzAOCWnwpCPqrF8M2xMOFIf1978
-        l9KASQer1nmGLG7P/xtAF1Ig/A==
-X-Google-Smtp-Source: ABdhPJwWK14isWM3EDWa4Tamw/urSWdvnGdT3e9EN1ZzbjaY8+j0Gom4jp2zN/ek+vUhhmoPCBs69A==
-X-Received: by 2002:a17:902:f54a:b0:14a:6827:8d01 with SMTP id h10-20020a170902f54a00b0014a68278d01mr34880338plf.127.1642625046836;
-        Wed, 19 Jan 2022 12:44:06 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:618e:efc:c014:d89c])
-        by smtp.gmail.com with UTF8SMTPSA id k17sm566753pff.25.2022.01.19.12.44.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Jan 2022 12:44:06 -0800 (PST)
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Felipe Balbi <balbi@kernel.org>
-Cc:     devicetree@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Peter Chen <peter.chen@kernel.org>,
-        linux-kernel@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Roger Quadros <rogerq@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        linux-usb@vger.kernel.org, Bastien Nocera <hadess@hadess.net>,
-        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v20 5/5] arm64: dts: qcom: sc7180-trogdor: Add nodes for onboard USB hub
-Date:   Wed, 19 Jan 2022 12:43:45 -0800
-Message-Id: <20220119124327.v20.5.Ie0d2c1214b767bb5551dd4cad38398bd40e4466f@changeid>
-X-Mailer: git-send-email 2.34.1.703.g22d0c6ccf7-goog
-In-Reply-To: <20220119204345.3769662-1-mka@chromium.org>
-References: <20220119204345.3769662-1-mka@chromium.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wentIdGMex7cJsypmwDQmsmO24X3lRILvlbSaTQV1CE=;
+        b=IhwXHx6cTHpHr9Fu6oLqrjnNHkXdkRE/mg+T6qFZVLvxCzAbh9ut7UR2d/MzxxI/Sf
+         NZMDtTYxWODFoqVEYAw8MKa55wV27Q4iGCG9ZUSzYjqG76duYVQd7TVMZdKXnZ8U231g
+         dV73P8eCAPC3egynZPEzfvUgMi1x6nocqGDbwN7lqe10y3IVv47PBls7BIl+fSUgzyRT
+         x2hUC+ebEyiSaCPX7A+UMu9kFHiJ4zVfbXh+CJgorQRYhTWVP3bGfYvKRURgeSASdr3H
+         eF3dPJXrkML/R35idDA6Qq0JGnVGRLAdatNxaB9iUptx5jxAzqUoYHVpnN8/PcJXuxa7
+         JkDw==
+X-Gm-Message-State: AOAM531qYRwLg5or4/D/SEVPgygxKQc5f6+LYrBGnHy4mymYrhrbJTFq
+        YefVk67AjzOVm8nBtjz5NzchQw==
+X-Google-Smtp-Source: ABdhPJytPZPvnBPnSyVQVLks9jbTqGrJIo13plYjVI4Z+OCSKv8FExvgtw1WJYiyvsBysqV2M1pcag==
+X-Received: by 2002:a2e:9646:: with SMTP id z6mr17891630ljh.51.1642630577935;
+        Wed, 19 Jan 2022 14:16:17 -0800 (PST)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id b11sm89053lfb.277.2022.01.19.14.16.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Jan 2022 14:16:17 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH v3 0/3] drm/msm: rework clock handling
+Date:   Thu, 20 Jan 2022 01:16:13 +0300
+Message-Id: <20220119221616.3089119-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add nodes for the onboard USB hub on trogdor devices. Remove the
-'always-on' property from the hub regulator, since the regulator
-is now managed by the onboard_usb_hub driver.
+msm_dss_clk_*() functions significantly duplicate clk_bulk_* family of
+functions. Drop custom code and use bulk clocks directly. This also
+removes dependency of DP driver on the DPU driver internals.
 
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
----
+Prerequisites: [1]
 
-Changes in v20:
-- renamed hub labels to 'usb_hub_2/3_x'
-- added comment for 'regulator-boot-on' of 'pp3300_hub'
-- added 'Reviewed-by' tags from Stephen and Doug
+Changes since v2:
+ - Retain conditional code/prints in DP code to ease debugging
+ - Rebase on top of msm-next and [1]
+ - Split helper functions to msm_io_utils.c as suggested by Jessica
 
-Changes in v19:
-- none
+Changes since v1:
+ - Rebase on top of current tree to fix conflicts
 
-Changes in v18:
-- also adjust config for pompom rev1
+Dmitry Baryshkov (3):
+  drm/msm: move utility functions from msm_drv.c
+  drm/msm/dpu: simplify clocks handling
+  drm/msm/dp: rewrite dss_module_power to use bulk clock functions
 
-Changes in v17:
-- none
+[1] https://patchwork.freedesktop.org/series/98521/
 
-Changes in v16:
-- none
+ drivers/gpu/drm/msm/Makefile                  |   2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c |  24 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |   6 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c   | 187 ------------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.h   |  40 ----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  46 ++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c      |  26 +--
+ drivers/gpu/drm/msm/dp/dp_ctrl.c              |  19 +-
+ drivers/gpu/drm/msm/dp/dp_parser.c            |  21 +-
+ drivers/gpu/drm/msm/dp/dp_parser.h            |  17 +-
+ drivers/gpu/drm/msm/dp/dp_power.c             |  82 +++++---
+ drivers/gpu/drm/msm/msm_drv.c                 | 119 +----------
+ drivers/gpu/drm/msm/msm_drv.h                 |   1 +
+ drivers/gpu/drm/msm/msm_io_utils.c            | 176 +++++++++++++++++
+ 15 files changed, 305 insertions(+), 465 deletions(-)
+ delete mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c
+ delete mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.h
+ create mode 100644 drivers/gpu/drm/msm/msm_io_utils.c
 
-Changes in v15:
-- none
 
-Changes in v14:
-- none
-
-Changes in v13:
-- none
-
-Changes in v12:
-- none
-
-Changes in v11:
-- rebased on qcom/arm64-for-5.14 (with the rest of the series)
-
-Changes in v10:
-- keep 'regulator-boot-on' property
-- updated commit message
-
-Changes in v9:
-- none
-
-Changes in v8:
-- none
-
-Changes in v7:
-- rebased on qcom/arm64-for-5.13 (with the rest of the series)
-
-Changes in v6:
-- added 'companion-hub' entry to both USB devices
-- added 'vdd-supply' also to hub@2
-
-Changes in v5:
-- patch added to the series
-
- .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts | 19 ++++++++----------
- .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts | 12 +++++------
- .../dts/qcom/sc7180-trogdor-pompom-r1.dts     | 11 ++++------
- .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts | 19 ++++++++----------
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 20 ++++++++++++++++++-
- 5 files changed, 44 insertions(+), 37 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-index 30e3e769d2b4..b69590a17cab 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-@@ -14,17 +14,6 @@ / {
- 	compatible = "google,lazor-rev0", "qcom,sc7180";
- };
- 
--&pp3300_hub {
--	/* pp3300_l7c is used to power the USB hub */
--	/delete-property/regulator-always-on;
--	/delete-property/regulator-boot-on;
--};
--
--&pp3300_l7c {
--	regulator-always-on;
--	regulator-boot-on;
--};
--
- &sn65dsi86_out {
- 	/*
- 	 * Lane 0 was incorrectly mapped on the cable, but we've now decided
-@@ -33,3 +22,11 @@ &sn65dsi86_out {
- 	 */
- 	lane-polarities = <1 0>;
- };
-+
-+&usb_hub_2_x {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-+
-+&usb_hub_3_x {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-index c2ef06367baf..25f178c3c6eb 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-@@ -14,13 +14,11 @@ / {
- 	compatible = "google,lazor-rev1", "google,lazor-rev2", "qcom,sc7180";
- };
- 
--&pp3300_hub {
--	/* pp3300_l7c is used to power the USB hub */
--	/delete-property/regulator-always-on;
--	/delete-property/regulator-boot-on;
-+
-+&usb_hub_2_x {
-+	 vdd-supply = <&pp3300_l7c>;
- };
- 
--&pp3300_l7c {
--	regulator-always-on;
--	regulator-boot-on;
-+&usb_hub_3_x {
-+	 vdd-supply = <&pp3300_l7c>;
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts
-index 76a130bad60a..8467ff41e6d5 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts
-@@ -34,13 +34,10 @@ &pm6150_adc_tm {
- 	/delete-node/ charger-thermistor@0;
- };
- 
--&pp3300_hub {
--	/* pp3300_l7c is used to power the USB hub */
--	/delete-property/regulator-always-on;
--	/delete-property/regulator-boot-on;
-+&usb_hub_2_x {
-+	 vdd-supply = <&pp3300_l7c>;
- };
- 
--&pp3300_l7c {
--	regulator-always-on;
--	regulator-boot-on;
-+&usb_hub_3_x {
-+	 vdd-supply = <&pp3300_l7c>;
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-index 457c25499863..0cbb7a68d58b 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-@@ -43,17 +43,6 @@ &panel {
- 	compatible = "auo,b116xa01";
- };
- 
--&pp3300_hub {
--	/* pp3300_l7c is used to power the USB hub */
--	/delete-property/regulator-always-on;
--	/delete-property/regulator-boot-on;
--};
--
--&pp3300_l7c {
--	regulator-always-on;
--	regulator-boot-on;
--};
--
- &sdhc_2 {
- 	status = "okay";
- };
-@@ -62,6 +51,14 @@ &trackpad {
- 	interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
- };
- 
-+&usb_hub_2_x {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-+
-+&usb_hub_3_x {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-+
- /* PINCTRL - modifications to sc7180-trogdor.dtsi */
- 
- &trackpad_int_1v8_odl {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index d4f4441179fc..be06938872ca 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -202,7 +202,7 @@ pp3300_hub: pp3300-hub {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&en_pp3300_hub>;
- 
--		regulator-always-on;
-+		/* The BIOS leaves this regulator on */
- 		regulator-boot-on;
- 
- 		vin-supply = <&pp3300_a>;
-@@ -839,6 +839,24 @@ &usb_1 {
- 
- &usb_1_dwc3 {
- 	dr_mode = "host";
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	/* 2.x hub on port 1 */
-+	usb_hub_2_x: hub@1 {
-+		compatible = "usbbda,5411";
-+		reg = <1>;
-+		vdd-supply = <&pp3300_hub>;
-+		companion-hub = <&usb_hub_3_x>;
-+	};
-+
-+	/* 3.x hub on port 2 */
-+	usb_hub_3_x: hub@2 {
-+		compatible = "usbbda,411";
-+		reg = <2>;
-+		vdd-supply = <&pp3300_hub>;
-+		companion-hub = <&usb_hub_2_x>;
-+	};
- };
- 
- &usb_1_hsphy {
+base-commit: 6ed95285382d6f90a3c3a11d5806a5eb7db715c3
+prerequisite-patch-id: b5572c353efa8ebefb32fc70e54bc537f78ff2bd
+prerequisite-patch-id: 40a854aee69b6ddf5b1c33cac3647efae3e3ebf1
+prerequisite-patch-id: 8b687a19047983e26262a1bb2feda8a9fd5bc97f
 -- 
-2.34.1.703.g22d0c6ccf7-goog
+2.34.1
 
