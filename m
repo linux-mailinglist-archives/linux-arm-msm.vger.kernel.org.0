@@ -2,42 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B55B4937F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jan 2022 11:11:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 882F3493866
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jan 2022 11:27:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353452AbiASKKZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jan 2022 05:10:25 -0500
-Received: from mail-m971.mail.163.com ([123.126.97.1]:29899 "EHLO
-        mail-m971.mail.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353441AbiASKKY (ORCPT
+        id S1349446AbiASK1w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jan 2022 05:27:52 -0500
+Received: from mail-m972.mail.163.com ([123.126.97.2]:29589 "EHLO
+        mail-m972.mail.163.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1353429AbiASK1w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jan 2022 05:10:24 -0500
+        Wed, 19 Jan 2022 05:27:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
         s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=Ggh+j
-        BUxPZigS6LulYn3qU9duz7ejB5F3vOjxnkFcnM=; b=Cw5la4WjPHCoeoVqVukcw
-        dg0LQupWl42pzdjkSx2VDmL4cwfjoCghYwkSva1zub4p2Tu0XquAWhdmvUhVK7/6
-        7zqIuqQOOLxo1dlmlt5YEr/dPAV9q+x4+XV5cBqEhAM8GJHwJaabxFPFqyUBJ6DF
-        IaZjGqHUNzUn6vQ5IlFOWg=
-Received: from localhost.localdomain (unknown [112.97.61.111])
-        by smtp1 (Coremail) with SMTP id GdxpCgA38JRy4+dh_EsTAw--.12569S2;
-        Wed, 19 Jan 2022 18:09:56 +0800 (CST)
+        BUxPZigS6LulYn3qU9duz7ejB5F3vOjxnkFcnM=; b=XG+fovDDxuMf+QBe22rXp
+        enUNaRD5RQH6ET9DfO1BINiHo86WoM1gJ/iLvgqMh4Tl3PeZbbMZNjHwclLdV8cB
+        PMnqWu+5KJrWBxXTCT7tZ+ZxHmWfeFjdAQdl83gskpvp51BtTdDiC059pLaBJ4iC
+        ikx6m7gKePYsd2cvX+u9pg=
+Received: from localhost.localdomain (unknown [112.97.57.111])
+        by smtp2 (Coremail) with SMTP id GtxpCgDXTrP_4+dh2FkEAw--.8202S2;
+        Wed, 19 Jan 2022 18:12:17 +0800 (CST)
 From:   Slark Xiao <slark_xiao@163.com>
-To:     mani@kernel.org, hemantk@codeaurora.org
+To:     mani@kernel.org, hemantk@codeaurora.org, jarvis.w.jiang@gmail.com,
+        loic.poulain@linaro.org
 Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, Slark Xiao <slark_xiao@163.com>
 Subject: [PATCH net v3] bus: mhi: Add mru_default for Foxconn SDX55
-Date:   Wed, 19 Jan 2022 18:09:22 +0800
-Message-Id: <20220119100922.4922-1-slark_xiao@163.com>
+Date:   Wed, 19 Jan 2022 18:12:13 +0800
+Message-Id: <20220119101213.5008-1-slark_xiao@163.com>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: GdxpCgA38JRy4+dh_EsTAw--.12569S2
+X-CM-TRANSID: GtxpCgDXTrP_4+dh2FkEAw--.8202S2
 X-Coremail-Antispam: 1Uf129KBjvdXoWrtw4xuw1rAFyxtF4xZFyfXrb_yoWDJFb_Cr
         ZIgF4xuws8WrZ5Gwn2qan5Z3yrK3W7ZF1kZF10qrn8J34aqw1qqwn5trZ5AFn0gFW5AF9r
-        J34rWr1rAw1a9jkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-        9fnUUvcSsGvfC2KfnxnUUI43ZEXa7sRgmid7UUUUU==
-X-Originating-IP: [112.97.61.111]
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/xtbBDRSNZFaEG41OMQAAsL
+        J34rWr1rAw1a9jkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+        9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IUjSoGtUUUUU==
+X-Originating-IP: [112.97.57.111]
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiRwKNZFc7Vmlq1gAAsD
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
