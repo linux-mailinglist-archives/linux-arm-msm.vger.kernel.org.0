@@ -2,581 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BE229493F02
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jan 2022 18:25:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EC02493F34
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jan 2022 18:42:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347341AbiASRZH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jan 2022 12:25:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57356 "EHLO
+        id S1356473AbiASRm4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jan 2022 12:42:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356382AbiASRZE (ORCPT
+        with ESMTP id S1354375AbiASRmz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jan 2022 12:25:04 -0500
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BA21C06161C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 09:25:04 -0800 (PST)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1nAEhS-00087m-4B; Wed, 19 Jan 2022 18:24:46 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1nAEhP-00BDZa-JQ; Wed, 19 Jan 2022 18:24:42 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1nAEhO-0000fT-32; Wed, 19 Jan 2022 18:24:42 +0100
-Date:   Wed, 19 Jan 2022 18:24:39 +0100
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Wed, 19 Jan 2022 12:42:55 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8E81C06161C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 09:42:54 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id w26so6738012wmi.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 09:42:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=OegbDPdXm3sV0Rvdu8S4fL7eXlxzhuHMWuEq/Y9oGpw=;
+        b=FRqsTopmLNQWeJMYKN9m9ZbfoVKW0+n1Xvnrt4g/w1013FQM0Z+3zU/g4yTBb2h3sx
+         ij0tkqkuwaoyc909S+9ckn43iYmmBfqxZ/JqsQI+SPp2wfoFjZ4a3VvXADhLQdoCKqEe
+         6lycmMJ0Es1pSl7cqYHy6+mS4fDVjaY7K+uEYfCxdVKLLq0tRKg+5N2gvjR8ZdAsnWXY
+         Poz1EGfSWWUs64K/dnD19QlAZRG14/6Z/IZpqa1y2RYEy5WLhPcARz3v2Ga/FPiwlkx4
+         vhE5O414ebBRT5jqt1vfA/AzbnLmaW++8twO3QNW2jtbFWxSmKPh3SfJxkX2ASZbigDg
+         s9ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=OegbDPdXm3sV0Rvdu8S4fL7eXlxzhuHMWuEq/Y9oGpw=;
+        b=i81XrBQfTCRMY4saQLf+eq4e/y/I+WkTOoSr9e1WXKNaBSj4QBPDyqsDeexmwy6nK1
+         iYQEIPK+xLeKubK09IdQwk966TQ+ajWVdTLGlF7P5OB/Q7HRmM1jmjEOV+6mueUmN6wM
+         cPiT63Nr5zYfe+djG5Yf3wQf/v4qsBP4njqgd40IC8EXeCUm/8XLie+l2KB0p79idQQI
+         xd7CGZAUAQIUQDtYb8zC47hz56S9DYfBEcsl6LPbxYvE6RrZYXSnEdtFlIrTJN6nzNdf
+         QIj0KguitvAXPn9cq9vN/IMnGXYigp+7CVEiSI+Ud1MnV/ifxjX3ariJ9hHaqkPfHSKd
+         v0SA==
+X-Gm-Message-State: AOAM530m/jNouMt3ZuCzD0zI66UQEOHn8sp3DXank4SUlDjgHtLoHM/u
+        MmlTf7LttGjvM1EmNwy4BHnD9Q==
+X-Google-Smtp-Source: ABdhPJxVYEBLDcVZw2238uOiXYZ+lN+sQ1uikswfKycmpoS9k3JMLNBS3/RjGpr/sGNXgww775ixxA==
+X-Received: by 2002:a05:6000:1709:: with SMTP id n9mr4480560wrc.10.1642614173119;
+        Wed, 19 Jan 2022 09:42:53 -0800 (PST)
+Received: from [192.168.0.30] (cpc78119-cwma10-2-0-cust590.7-3.cable.virginm.net. [81.96.50.79])
+        by smtp.gmail.com with ESMTPSA id l19sm235843wmq.7.2022.01.19.09.42.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Jan 2022 09:42:52 -0800 (PST)
+Message-ID: <d0d42804-f437-e964-1c0d-4eb65e76db6c@linaro.org>
+Date:   Wed, 19 Jan 2022 17:42:51 +0000
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: [PATCH v3 3/7] iio: adc: qcom-spmi-rradc: introduce round robin
+ adc
+Content-Language: en-US
+To:     Jonathan Cameron <jic23@jic23.retrosnub.co.uk>
+Cc:     Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Baruch Siach <baruch.siach@siklu.com>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v10 1/3] pwm: driver for qualcomm ipq6018 pwm block
-Message-ID: <20220119172439.be4xpaqgwzdy26oh@pengutronix.de>
-References: <ab2a4c345844f66aa22a847e522b2f4ee0786d8b.1639499239.git.baruch@tkos.co.il>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ahumoojkjiueqw52"
-Content-Disposition: inline
-In-Reply-To: <ab2a4c345844f66aa22a847e522b2f4ee0786d8b.1639499239.git.baruch@tkos.co.il>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+        Lee Jones <lee.jones@linaro.org>, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, sumit.semwal@linaro.org,
+        amit.pundir@linaro.org, john.stultz@linaro.org
+References: <20220106173131.3279580-1-caleb.connolly@linaro.org>
+ <20220106173131.3279580-4-caleb.connolly@linaro.org>
+ <20220109172948.76dbb1fa@jic23-huawei>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <20220109172948.76dbb1fa@jic23-huawei>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---ahumoojkjiueqw52
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Dec 14, 2021 at 06:27:17PM +0200, Baruch Siach wrote:
-> From: Baruch Siach <baruch.siach@siklu.com>
->=20
-> Driver for the PWM block in Qualcomm IPQ6018 line of SoCs. Based on
-> driver from downstream Codeaurora kernel tree. Removed support for older
-> (V1) variants because I have no access to that hardware.
->=20
-> Tested on IPQ6010 based hardware.
->=20
-> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
-> ---
-> v10:
->=20
->   Restore round up in pwm_div calculation; otherwise diff is always <=3D
->   0, so only bingo match works
->=20
->   Don't overwrite min_diff on every loop iteration
->=20
-> v9:
->=20
-> Address comment from Uwe Kleine-K=F6nig:
->=20
->   Use period_ns*rate in dividers calculation for better accuracy
->=20
->   Round down pre_div and pwm_div
->=20
->   Add a comment explaining why pwm_div can't underflow
->=20
->   Add a comment explaining why pre_div > pwm_div end the search loop
->=20
->   Drop 'CFG_' from register macros
->=20
->   Rename to_ipq_pwm_chip() to ipq_pwm_from_chip()
->=20
->   Change bare 'unsigned' to 'unsigned int'
->=20
->   Clarify the comment on separate REG1 write for enable/disable
->=20
->   Round up the period value in .get_state
->=20
->   Use direct readl/writel so no need to check for regmap errors
->=20
-> v7:
->=20
->   Change 'offset' to 'reg' for the tcsr offset (Rob)
->=20
->   Drop clock name; there is only one clock (Bjorn)
->=20
->   Simplify probe failure code path (Bjorn)
->=20
-> v6:
->=20
-> Address Uwe Kleine-K=F6nig review comments:
->=20
->   Drop IPQ_PWM_MAX_DEVICES
->=20
->   Rely on assigned-clock-rates; drop IPQ_PWM_CLK_SRC_FREQ
->=20
->   Simplify register offset calculation
->=20
->   Calculate duty cycle more precisely
->=20
->   Refuse to set inverted polarity
->=20
->   Drop redundant IPQ_PWM_REG1_ENABLE bit clear
->=20
->   Remove x1000 factor in pwm_div calculation, use rate directly, and roun=
-d up
->=20
->   Choose initial pre_div such that pwm_div < IPQ_PWM_MAX_DIV
->=20
->   Ensure pre_div <=3D pwm_div
->=20
->   Rename close_ to best_
->=20
->   Explain in comment why effective_div doesn't overflow
->=20
->   Limit pwm_div to IPQ_PWM_MAX_DIV - 1 to allow 100% duty cycle
->=20
->   Disable clock only after pwmchip_remove()
->=20
->   const pwm_ops
->=20
-> Other changes:
->=20
->   Add missing linux/bitfield.h header include (kernel test robot)
->=20
->   Adjust code for PWM device node under TCSR (Rob Herring)
->=20
-> v5:
->=20
-> Use &tcsr_q6 syscon to access registers (Bjorn Andersson)
->=20
-> Address Uwe Kleine-K=F6nig review comments:
->=20
->   Implement .get_state()
->=20
->   Add IPQ_PWM_ prefix to local macros
->=20
->   Use GENMASK/BIT/FIELD_PREP for register fields access
->=20
->   Make type of config_div_and_duty() parameters consistent
->=20
->   Derive IPQ_PWM_MIN_PERIOD_NS from IPQ_PWM_CLK_SRC_FREQ
->=20
->   Integrate enable/disable into config_div_and_duty() to save register re=
-ad,
->   and reduce frequency glitch on update
->=20
->   Use min() instead of min_t()
->=20
->   Fix comment format
->=20
->   Use dev_err_probe() to indicate probe step failure
->=20
->   Add missing clk_disable_unprepare() in .remove
->=20
->   Don't set .owner
->=20
-> v4:
->=20
->   Use div64_u64() to fix link for 32-bit targets ((kernel test robot
->   <lkp@intel.com>, Uwe Kleine-K=F6nig)
->=20
-> v3:
->=20
->   s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
->=20
->   Fix integer overflow on 32-bit targets (kernel test robot <lkp@intel.co=
-m>)
->=20
-> v2:
->=20
-> Address Uwe Kleine-K=F6nig review comments:
->=20
->   Fix period calculation when out of range
->=20
->   Don't set period larger than requested
->=20
->   Remove PWM disable on configuration change
->=20
->   Implement .apply instead of non-atomic .config/.enable/.disable
->=20
->   Don't modify PWM on .request/.free
->=20
->   Check pwm_div underflow
->=20
->   Fix various code and comment formatting issues
->=20
-> Other changes:
->=20
->   Use u64 divisor safe division
->=20
->   Remove now empty .request/.free
-> ---
->  drivers/pwm/Kconfig   |  12 ++
->  drivers/pwm/Makefile  |   1 +
->  drivers/pwm/pwm-ipq.c | 275 ++++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 288 insertions(+)
->  create mode 100644 drivers/pwm/pwm-ipq.c
->=20
-> diff --git a/drivers/pwm/Kconfig b/drivers/pwm/Kconfig
-> index 21e3b05a5153..e39718137ecd 100644
-> --- a/drivers/pwm/Kconfig
-> +++ b/drivers/pwm/Kconfig
-> @@ -260,6 +260,18 @@ config PWM_INTEL_LGM
->  	  To compile this driver as a module, choose M here: the module
->  	  will be called pwm-intel-lgm.
-> =20
-> +config PWM_IPQ
-> +	tristate "IPQ PWM support"
-> +	depends on ARCH_QCOM || COMPILE_TEST
-> +	depends on HAVE_CLK && HAS_IOMEM
-> +	help
-> +	  Generic PWM framework driver for IPQ PWM block which supports
-> +	  4 pwm channels. Each of the these channels can be configured
-> +	  independent of each other.
-> +
-> +	  To compile this driver as a module, choose M here: the module
-> +	  will be called pwm-ipq.
-> +
->  config PWM_IQS620A
->  	tristate "Azoteq IQS620A PWM support"
->  	depends on MFD_IQS62X || COMPILE_TEST
-> diff --git a/drivers/pwm/Makefile b/drivers/pwm/Makefile
-> index 708840b7fba8..7402feae4b36 100644
-> --- a/drivers/pwm/Makefile
-> +++ b/drivers/pwm/Makefile
-> @@ -22,6 +22,7 @@ obj-$(CONFIG_PWM_IMX1)		+=3D pwm-imx1.o
->  obj-$(CONFIG_PWM_IMX27)		+=3D pwm-imx27.o
->  obj-$(CONFIG_PWM_IMX_TPM)	+=3D pwm-imx-tpm.o
->  obj-$(CONFIG_PWM_INTEL_LGM)	+=3D pwm-intel-lgm.o
-> +obj-$(CONFIG_PWM_IPQ)		+=3D pwm-ipq.o
->  obj-$(CONFIG_PWM_IQS620A)	+=3D pwm-iqs620a.o
->  obj-$(CONFIG_PWM_JZ4740)	+=3D pwm-jz4740.o
->  obj-$(CONFIG_PWM_KEEMBAY)	+=3D pwm-keembay.o
-> diff --git a/drivers/pwm/pwm-ipq.c b/drivers/pwm/pwm-ipq.c
-> new file mode 100644
-> index 000000000000..3764010808f0
-> --- /dev/null
-> +++ b/drivers/pwm/pwm-ipq.c
-> @@ -0,0 +1,275 @@
-> +// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0
-> +/*
-> + * Copyright (c) 2016-2017, 2020 The Linux Foundation. All rights reserv=
-ed.
-> + */
-> +
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/pwm.h>
-> +#include <linux/clk.h>
-> +#include <linux/io.h>
-> +#include <linux/of.h>
-> +#include <linux/math64.h>
-> +#include <linux/of_device.h>
-> +#include <linux/bitfield.h>
-> +
-> +/* The frequency range supported is 1 Hz to clock rate */
-> +#define IPQ_PWM_MAX_PERIOD_NS	((u64)NSEC_PER_SEC)
-> +
-> +/*
-> + * The max value specified for each field is based on the number of bits
-> + * in the pwm control register for that field
-> + */
-> +#define IPQ_PWM_MAX_DIV		0xFFFF
-> +
-> +/*
-> + * Two 32-bit registers for each PWM: REG0, and REG1.
-> + * Base offset for PWM #i is at 8 * #i.
-> + */
-> +#define IPQ_PWM_REG0			0 /*PWM_DIV PWM_HI*/
-> +#define IPQ_PWM_REG0_PWM_DIV		GENMASK(15, 0)
-> +#define IPQ_PWM_REG0_HI_DURATION	GENMASK(31, 16)
+On 09/01/2022 17:29, Jonathan Cameron wrote:
+> On Thu,  6 Jan 2022 17:31:27 +0000
+> Caleb Connolly <caleb.connolly@linaro.org> wrote:
+> 
+>> The Round Robin ADC is responsible for reading data about the rate of
+>> charge from the USB or DC in jacks, it can also read the battery
+>> ID (resistence) and some temperatures. It is found on the PMI8998 and
+>> PM660 Qualcomm PMICs.
+>>
+>> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> Hi Calib,
+Hi Jonathan,
 
-PWM_HI in the comment of IPQ_PWM_REG0 vs. HI_DURATION? Should this
-match? I'd say the comment is redundant.
+I've spent some time on this and mostly reworked things, thanks a lot for
+your feedback, it's been quite interesting to learn about IIO. :)
 
-> +#define IPQ_PWM_REG1			4 /*ENABLE UPDATE PWM_PRE_DIV*/
-> +#define IPQ_PWM_REG1_PRE_DIV		GENMASK(15, 0)
-> +/*
-> + * Enable bit is set to enable output toggling in pwm device.
-> + * Update bit is set to reflect the changed divider and high duration
-> + * values in register.
-> + */
-> +#define IPQ_PWM_REG1_UPDATE		BIT(30)
-> +#define IPQ_PWM_REG1_ENABLE		BIT(31)
-> +
-> +
-> +struct ipq_pwm_chip {
-> +	struct pwm_chip chip;
-> +	struct clk *clk;
-> +	void __iomem *mem;
-> +};
-> +
-> +static struct ipq_pwm_chip *ipq_pwm_from_chip(struct pwm_chip *chip)
-> +{
-> +	return container_of(chip, struct ipq_pwm_chip, chip);
-> +}
-> +
-> +static unsigned int ipq_pwm_reg_read(struct pwm_device *pwm, unsigned in=
-t reg)
-> +{
-> +	struct ipq_pwm_chip *ipq_chip =3D ipq_pwm_from_chip(pwm->chip);
-> +	unsigned int off =3D 8 * pwm->hwpwm + reg;
-> +
-> +	return readl(ipq_chip->mem + off);
-> +}
-> +
-> +static void ipq_pwm_reg_write(struct pwm_device *pwm, unsigned int reg,
-> +			      unsigned int val)
-> +{
-> +	struct ipq_pwm_chip *ipq_chip =3D ipq_pwm_from_chip(pwm->chip);
-> +	unsigned int off =3D 8 * pwm->hwpwm + reg;
-> +
-> +	writel(val, ipq_chip->mem + off);
-> +}
-> +
-> +static void config_div_and_duty(struct pwm_device *pwm, unsigned int pre=
-_div,
-> +			unsigned int pwm_div, unsigned long rate, u64 duty_ns,
-> +			bool enable)
-> +{
-> +	unsigned long hi_dur;
-> +	unsigned long val =3D 0;
-> +
-> +	/*
-> +	 * high duration =3D pwm duty * (pwm div + 1)
-> +	 * pwm duty =3D duty_ns / period_ns
-> +	 */
-> +	hi_dur =3D div64_u64(duty_ns * rate, (pre_div + 1) * NSEC_PER_SEC);
-> +
-> +	val =3D FIELD_PREP(IPQ_PWM_REG0_HI_DURATION, hi_dur) |
-> +		FIELD_PREP(IPQ_PWM_REG0_PWM_DIV, pwm_div);
-> +	ipq_pwm_reg_write(pwm, IPQ_PWM_REG0, val);
-> +
-> +	val =3D FIELD_PREP(IPQ_PWM_REG1_PRE_DIV, pre_div);
-> +	ipq_pwm_reg_write(pwm, IPQ_PWM_REG1, val);
-> +
-> +	/* PWM enable toggle needs a separate write to REG1 */
-> +	val |=3D IPQ_PWM_REG1_UPDATE;
-> +	if (enable)
-> +		val |=3D IPQ_PWM_REG1_ENABLE;
-> +	ipq_pwm_reg_write(pwm, IPQ_PWM_REG1, val);
-> +}
-> +
-> +static int ipq_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
-> +			 const struct pwm_state *state)
-> +{
-> +	struct ipq_pwm_chip *ipq_chip =3D ipq_pwm_from_chip(chip);
-> +	unsigned int pre_div, pwm_div, best_pre_div, best_pwm_div;
-> +	unsigned long rate =3D clk_get_rate(ipq_chip->clk);
-> +	u64 period_ns, duty_ns, period_rate;
-> +	u64 min_diff;
-> +
-> +	if (state->polarity !=3D PWM_POLARITY_NORMAL)
-> +		return -EINVAL;
-> +
-> +	if (state->period < div64_u64(NSEC_PER_SEC, rate))
-> +		return -ERANGE;
+Quite a few of the channels fit well into the (adc_code + offset) * scale format,
+however the one you commented on "rradc_post_process_chg_temp()" doesn't seem to
+fit, it requires multiple steps of applying offsets and scale and I haven't been
+able to re-arrange it to work sensibly.
 
-NSEC_PER_SEC / rate is the smallest period you can achieve, right?
-Consider rate =3D 33333 (Hz), then the minimal period is
-30000.30000300003 ns. So you should refuse a request to configure
-state->period =3D 30000, but as div64_u64(1000000000, 33333) is 30000 you
-don't.
+I noticed the calibbias properties which seems like something I should expose
+for "rradc_get_fab_coeff()"?
 
-> +	period_ns =3D min(state->period, IPQ_PWM_MAX_PERIOD_NS);
-> +	duty_ns =3D min(state->duty_cycle, period_ns);
-> +
-> +	/*
-> +	 * period_ns is 1G or less. As long as rate is less than 16 GHz this
-> +	 * does not overflow.
+Could you point me in the right direction here? For reference my WIP tree can be
+found here: https://github.com/aospm/linux/commits/upstreaming/spmi-rradc
 
-Well, rate cannot be bigger than 4294967295 because an unsigned long
-cannot hold a bigger value.
+I also tried switching to labels, but I found that when I drop the extend_name
+property the driver fails to probe because multiple channels end up with the same
+name in sysfs (e.g. "in_temp_raw"). I've read through the docs and looked at a few
+other drivers but I wasn't able to find out what I'm missing for this to work.
 
-> +	 */
-> +	period_rate =3D period_ns * rate;
-> +	best_pre_div =3D IPQ_PWM_MAX_DIV;
-> +	best_pwm_div =3D IPQ_PWM_MAX_DIV;
-> +	/* Initial pre_div value such that pwm_div < IPQ_PWM_MAX_DIV */
-> +	pre_div =3D div64_u64(period_rate,
-> +			(u64)NSEC_PER_SEC * (IPQ_PWM_MAX_DIV + 1));
+I've snipped to the relevant bits below.
 
-Hmmm, we want=20
+Kind regards,
+Caleb
+> 
+> Various things inline but biggest is probably that in IIO we prefer
+> if possible to make application of offsets and scales a job for the caller,
+> either userspace or in kernel callers. This allows them to maintain precision
+> better if they need to further transform the data.
+> 
+> Jonathan
+> 
+>> ---
+>>   drivers/iio/adc/Kconfig           |   13 +
+>>   drivers/iio/adc/Makefile          |    1 +
+>>   drivers/iio/adc/qcom-spmi-rradc.c | 1070 +++++++++++++++++++++++++++++
+>>   3 files changed, 1084 insertions(+)
+>>   create mode 100644 drivers/iio/adc/qcom-spmi-rradc.c
+>>
 
-	(pre_div + 1) * (pwm_div + 1) * NSEC_PER_SEC
-	-------------------------------------------- <=3D period_ns
-	                  rate
+[snip]
 
-, right? Resolving that for pre_div this gives:
+>> +static int rradc_post_process_chg_temp(struct rradc_chip *chip, u16 adc_code,
+>> +				       int *result_millidegc)
+>> +{
+>> +	int64_t uv, offset, slope;
+>> +	int ret;
+>> +
+>> +	ret = rradc_get_fab_coeff(chip, &offset, &slope);
+>> +	if (ret < 0) {
+>> +		dev_err(chip->dev, "Unable to get fab id coefficients\n");
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	uv = ((int64_t)adc_code * RR_ADC_TEMP_FS_VOLTAGE_NUM);
+>> +	uv = div64_s64(uv,
+>> +		       (RR_ADC_TEMP_FS_VOLTAGE_DEN * RR_ADC_CHAN_MAX_VALUE));
+>> +	uv = offset - uv;
+>> +	uv = div64_s64((uv * MILLI), slope);
+>> +	uv += RR_ADC_CHG_TEMP_OFFSET_MILLI_DEGC;
+>> +	*result_millidegc = (int)uv;
+> 
+> Marginally harder than the one below, but this is still looking like it can
+> be well expressed as an offset + scale.  Thus making the tedious maths
+> userspaces or callers problem.  I'm working backwards hence won't comment on
+> similar before this point. Key is to transform whatever maths you have into
+> 
+> (adc_code + offset) * scale then expose offset and scale as well as the
+> raw value.  The right maths will get done for in kernel users and
+> userspace can do it nicely with floating point.
+> 
+>> +
+>> +	return 0;
+>> +}
 
-	                period_ns * rate
-	pre_div <=3D ----------------------------
-	           NSEC_PER_SEC * (pwm_div + 1)
+[snip]
 
-The term on the right hand side is maximal for pwm_div =3D=3D 0 so the
-possible values for pre_div are
+>> +static const struct iio_chan_spec rradc_iio_chans[RR_ADC_CHAN_MAX] = {
+>> +	{
+>> +		.extend_name = "batt_id",
+> 
+> We recently introduced channel labels to try and avoid the need for
+> extend_name.  The problem with extend_name is that generic software then
+> has trouble parsing the resulting sysfs files as they can have very
+> freeform naming.  Moving it to label makes that much easier.  Note that
+> there is code to give a default label of extend_name to work around
+> this problem for older drivers.
+> 
+>> +		.type = IIO_RESISTANCE,
+>> +		.info_mask_separate = BIT(IIO_CHAN_INFO_PROCESSED),
+>> +		.address = RR_ADC_BATT_ID,
+>> +	},
 
-	0 ... min(div64_u64(period_rate / NSEC_PER_SEC), IPQ_PWM_MAX_DIV)
+> 
+> Thanks,
+> 
+> Jonathan
 
-isn't it? If so, your algorithm is wrong as you're iterating over
-
-	div64_u64(period_rate, NSEC_PER_SEC * (IPQ_PWM_MAX_DIV + 1)) ... IPQ_PWM_M=
-AX_DIV
-
-> +	min_diff =3D period_rate;
-> +
-> +	for (; pre_div <=3D IPQ_PWM_MAX_DIV; pre_div++) {
-> +		long long diff;
-> +
-> +		pwm_div =3D DIV64_U64_ROUND_UP(period_rate,
-> +				(u64)NSEC_PER_SEC * (pre_div + 1));
-> +		/* pwm_div is unsigned; the check below catches underflow */
-> +		pwm_div--;
-
-What underflow? DIV64_U64_ROUND_UP returns > 0 assuming period_rate > 0.
-So pwm_div - 1 doesn't underflow?!
-
-The task here is to calculate the biggest pwm_div for a given pre_div
-such that
-
-
-	(pre_div + 1) * (pwm_div + 1) * NSEC_PER_SEC
-	-------------------------------------------- <=3D period_ns
-	                   rate
-
-right?
-
-This is equivalent to:
-
-	                  period_ns * rate
-	pre_div <=3D ---------------------------- - 1
-	           (pre_div + 1) * NSEC_PER_SEC
-
-As pre_div is integer, rounding down should be fine?!
-
-> +		/*
-> +		 * pre_div and pwm_div values swap produces the same
-> +		 * result. This loop goes over all pre_div <=3D pwm_div
-> +		 * combinations. The rest are equivalent.
-> +		 */
-
-I'd write:
-
-	/*
-	 * Swapping values for pre_div and pwm_div produces the same
-	 * period length. So we can skip all settings with pre_div <
-	 * pwm_div which results in bigger constraints for selecting the
-	 * duty_cycle than with the two values swapped.
-	 */
-
-> +		if (pre_div > pwm_div)
-> +			break;
-> +
-> +		/*
-> +		 * Make sure we can do 100% duty cycle where
-> +		 * hi_dur =3D=3D pwm_div + 1
-> +		 */
-> +		if (pwm_div > IPQ_PWM_MAX_DIV - 1)
-> +			continue;
-> +
-> +		diff =3D ((uint64_t)NSEC_PER_SEC * (pre_div + 1) * (pwm_div + 1))
-> +			- period_rate;
-> +
-> +		if (diff < 0) /* period larger than requested */
-> +			continue;
-
-This shouldn't happen if the above calculation is correct.
-
-> +		if (diff =3D=3D 0) { /* bingo */
-> +			best_pre_div =3D pre_div;
-> +			best_pwm_div =3D pwm_div;
-> +			break;
-> +		}
-> +		if (diff < min_diff) {
-> +			min_diff =3D diff;
-> +			best_pre_div =3D pre_div;
-> +			best_pwm_div =3D pwm_div;
-> +		}
-
-This can be simplified as:
-
-		if (diff < min_diff) {
-			best_pre_div =3D pre_div;
-			best_pwm_div =3D pwm_div;
-			min_diff =3D diff;
-
-			if (min_diff =3D=3D 0)
-				/* bingo! */
-				break;
-		}
-
-> +	}
-> +
-> +	/* config divider values for the closest possible frequency */
-> +	config_div_and_duty(pwm, best_pre_div, best_pwm_div,
-> +			    rate, duty_ns, state->enabled);
-> +
-> +	return 0;
-> +}
-> +
-> +static void ipq_pwm_get_state(struct pwm_chip *chip, struct pwm_device *=
-pwm,
-> +			      struct pwm_state *state)
-> +{
-> +	struct ipq_pwm_chip *ipq_chip =3D ipq_pwm_from_chip(chip);
-> +	unsigned long rate =3D clk_get_rate(ipq_chip->clk);
-> +	unsigned int pre_div, pwm_div, hi_dur;
-> +	u64 effective_div, hi_div;
-> +	u32 reg0, reg1;
-> +
-> +	reg0 =3D ipq_pwm_reg_read(pwm, IPQ_PWM_REG0);
-> +	reg1 =3D ipq_pwm_reg_read(pwm, IPQ_PWM_REG1);
-> +
-> +	state->polarity =3D PWM_POLARITY_NORMAL;
-> +	state->enabled =3D reg1 & IPQ_PWM_REG1_ENABLE;
-> +
-> +	pwm_div =3D FIELD_GET(IPQ_PWM_REG0_PWM_DIV, reg0);
-> +	hi_dur =3D FIELD_GET(IPQ_PWM_REG0_HI_DURATION, reg0);
-> +	pre_div =3D FIELD_GET(IPQ_PWM_REG1_PRE_DIV, reg1);
-> +
-> +	/* No overflow here, both pre_div and pwm_div <=3D 0xffff */
-> +	effective_div =3D (u64)(pre_div + 1) * (pwm_div + 1);
-> +	state->period =3D DIV64_U64_ROUND_UP(effective_div * NSEC_PER_SEC, rate=
-);
-> +
-> +	hi_div =3D hi_dur * (pre_div + 1);
-> +	state->duty_cycle =3D div64_u64(hi_div * NSEC_PER_SEC, rate);
-
-This must be round up for the same reasons as for period.
-
-> +}
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---ahumoojkjiueqw52
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmHoSVMACgkQwfwUeK3K
-7AmrjAf7BrG+1pY8ScC4gRrJUtt0uKUwwBdo9uFvQq7hS3RKay6VkCWW/6AeawYa
-tpFB1K/a8II1JI922qFx7Xn1fTv4JB6WaTB7iMrVf2Znvuasc7qxxdGjKLKUBXPn
-7s9VIOTs5AGwFB5rxjO4keOes8lCmGDoV5dwLecEZ9ettXFmjnQOaQRjhdda4cxG
-VGbkPEHcTamuToQ5AiZzbrbCDojIkWQq7JfRCy2HO/mP+ol03UGCxBQLrJnNQTBW
-LkrPw9X9pA+G3/8zFrG0B+6Lz/MU2AF/qV2EaWgxCfxDOY8/DqZtJnMilqVxMCVY
-P4PQDfrhC6HQQvp1A3xTJ+507x5ZCA==
-=MZU8
------END PGP SIGNATURE-----
-
---ahumoojkjiueqw52--
+-- 
+Kind Regards,
+Caleb (they/them)
