@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 19A5F493506
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jan 2022 07:35:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 18CBD493515
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jan 2022 07:40:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351798AbiASGfw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jan 2022 01:35:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49350 "EHLO
+        id S1351823AbiASGke (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jan 2022 01:40:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349796AbiASGfv (ORCPT
+        with ESMTP id S1351831AbiASGkc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jan 2022 01:35:51 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC0ECC06173E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jan 2022 22:35:50 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id d12-20020a17090a628c00b001b4f47e2f51so2216106pjj.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jan 2022 22:35:50 -0800 (PST)
+        Wed, 19 Jan 2022 01:40:32 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6590DC06173F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jan 2022 22:40:32 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id d15-20020a17090a110f00b001b4e7d27474so1709616pja.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jan 2022 22:40:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=0PXs+XnAFQgpQ9xLRKE0glSvUjxvj1L/ZIt0SEGUo1c=;
-        b=fQqbhjybCwC0L/PgihADaiXSShglwgmOZIzlIM1KL7gK9tFDs5tAowQyn+J5vAihiI
-         U4IhMUIkEYEmocU4AMF3O0a/h+styyIG6XBHf7aWYdZgxd1xOyeEHuFTwzEcQuowavDc
-         kB5xKzCVZ1M7zqVoDlC/7XnuGrUIPKAT2OH13CAhmDEzYfbTPaaDbQR9d4d5v/N+ji8I
-         bMM0x7JZD/XYLJGXr+9tlmMPP68pJhDb5Hl52W/Gk7C1NwoSDCElHYd/MKdcGgOL/n9O
-         uZXTceLAgaznKP8h9fxP6sFq5GQQiu8KIg58ar3arvdfXORb3MJpC16wGz2kx0v2IQDs
-         PYVQ==
+        bh=zpqOr/tBRi75Pp8qLo4l0nBsgr344a1nSf9Rbnq+odM=;
+        b=qEYIK5rApXpv0wg81nkrlkx1T++XKJBs1RDU+7UymNOd/serK07jnV/QZUYpzO1cZx
+         wj6xTp+NFXcu/VVvkGp0KBC0MfieDkaiP5XvpIvvJKB6tbSd3+sSr5ueB8ITW9ftDO/u
+         yheozRHgkCfFm6CVnnrKd6XiKG2Su3UOFenBTkSPuvzul0kpK9ncGpQJNPSj4vw5afam
+         GYNFNl6Oov2WscSyYFmKYYuq+EJfNE0yfTueSoo4RuDtNhXRP6U1d5CxcfJ120j9HVLg
+         Mj5zu7jCDAtYo8SUwn+zSVSF0TeeL27Wz3XKko0KU5GOn3lm2i2OTWH1ygcjd24A8CHU
+         2jPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0PXs+XnAFQgpQ9xLRKE0glSvUjxvj1L/ZIt0SEGUo1c=;
-        b=huyuFNJiSnA+s3KcNlJDF2rkK3dj3EVwWZUYIJ+oFceU7lDqJzNSkSpLtlKVdIghA6
-         x+HG6Wt66Xg1W0nWRwgezsIrl1C91x5Kpwyb/7EVkBw1knr2IrGvf2FLCPKZ0TnPpmBC
-         NSrzxjkrsj+Qvmnke1TFJo2yN1iqxikGWkbotjtHMiSucKUMY10f9rKL3gK2qB7KvQl+
-         QMjeOZWHm+3WgAvL02YWquvSQIA1curQtXC7BgyBE4Up34Asg09XPdzl8q2WXQxpMKUL
-         eGvlT92EYIBWa0M/7lAJvNM1TTkDPNmjZcyrsPMJCNgsMmR9Ijw2jgRRAKP/eGY/i6Md
-         71tw==
-X-Gm-Message-State: AOAM531F3nfBmWfZG66Rf1BXz3LgEad/vCNn6/+opHQsxL0eB1D5C0eu
-        syyP7zR+cTAeWnRvnTT4m/wGQQ==
-X-Google-Smtp-Source: ABdhPJwbDseRQ/w2ehW0f94PPtEHNvGrQCY5xA9P7mRGxNv2wA+R59MGE3gIl9erF8qcfvWhrTQSpA==
-X-Received: by 2002:a17:90b:17c1:: with SMTP id me1mr2560402pjb.135.1642574150392;
-        Tue, 18 Jan 2022 22:35:50 -0800 (PST)
+        bh=zpqOr/tBRi75Pp8qLo4l0nBsgr344a1nSf9Rbnq+odM=;
+        b=iW6mGh7s0SFVHbaObrnDzal1ouJ+WH0ouVi0WuJXgn53lYHECh8saBNS1Zq1iOJecf
+         OyEgfK5NnixhiitNLGVR6j/wXkfiOl6WGrrKPWC8yWZTsBhNFmxVG9rPoJK1nERSRcEN
+         5nx25EHklaIBTZiEkpHcH0JGPqaVQjdz3jofcb4LD4ggQAlbofcNz8wfkNfITFz5eDnB
+         SkZpvIKRJ8aEBrzqTzzoD5XIHUE4hHOMZEWYxk6N6zuDoOyC2ihzfQQ+4Imv/1dxPYll
+         muWbXj94vcKrGUTBNeDqMj2ZE7tccIsynBhILwnOscpHzj18bjGH9UmlRPcRjF59ZEdb
+         W4Rg==
+X-Gm-Message-State: AOAM530mo2jRBM9/RQYC2D2pOFsvMl565Z4R9Xa9EbM/33qlbCax9kdA
+        Wq5hfqcV8KymvzuFN6yQEx4Qlg==
+X-Google-Smtp-Source: ABdhPJx8ka9jtqv7zCBJO2qiQ9/AM6qAF/k8L4Cci5O8W/jOWZTORT9y08zINcOya2zj/P+qTeHWVQ==
+X-Received: by 2002:a17:90b:3144:: with SMTP id ip4mr2608936pjb.19.1642574431950;
+        Tue, 18 Jan 2022 22:40:31 -0800 (PST)
 Received: from localhost ([223.184.90.234])
-        by smtp.gmail.com with ESMTPSA id o186sm18968479pfb.187.2022.01.18.22.35.48
+        by smtp.gmail.com with ESMTPSA id a9sm18672318pfo.169.2022.01.18.22.40.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Jan 2022 22:35:49 -0800 (PST)
-Date:   Wed, 19 Jan 2022 12:05:47 +0530
+        Tue, 18 Jan 2022 22:40:31 -0800 (PST)
+Date:   Wed, 19 Jan 2022 12:10:29 +0530
 From:   Viresh Kumar <viresh.kumar@linaro.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Lukasz Luba <lukasz.luba@arm.com>,
@@ -61,69 +61,52 @@ Cc:     Lukasz Luba <lukasz.luba@arm.com>,
         linux-pm@vger.kernel.org
 Subject: Re: [PATCH 1/2] cpufreq: qcom-hw: Use initialized cpumask for
  thermal pressure update
-Message-ID: <20220119063547.hktwzbycf7trqjju@vireshk-i7>
+Message-ID: <20220119064029.b2yhqcazhpdbhasc@vireshk-i7>
 References: <20220118185612.2067031-1-bjorn.andersson@linaro.org>
+ <20220119063547.hktwzbycf7trqjju@vireshk-i7>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220118185612.2067031-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20220119063547.hktwzbycf7trqjju@vireshk-i7>
 User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18-01-22, 10:56, Bjorn Andersson wrote:
-> In the event that the SoC is under thermal pressure while booting it's
-> possible for the dcvs notification to happen inbetween the cpufreq
-> framework calling init and it actually updating the policy's
-> related_cpus cpumask.
+On 19-01-22, 12:05, Viresh Kumar wrote:
+> policy->cpus keeps on changing with CPU hotplug and this can leave
+> your platform in an inconsistent state. For example, in case where you
+> offline a CPU from policy, other CPUs get their thermal pressure
+> updated, online the CPU back and all CPUs of a policy don't have the
+> same settings anymore.
 > 
-> Prior to the introduction of the thermal pressure update helper an empty
-> cpumask would simply result in the thermal pressure of no cpus being
-> updated, but the new code will attempt to dereference an invalid per_cpu
-> variable.
+> There are few things we can do here now:
 > 
-> Avoid this problem by using the policy's cpus cpumask instead of the
-> related_cpus mask, as this is initialized before the interrupt is
-> registered.
+> - Check for empty related_cpus and return early. Since related_cpus is
+>   updated only once, this shall work just fine and must not be racy.
 > 
-> Fixes: 0258cb19c77d ("cpufreq: qcom-cpufreq-hw: Use new thermal pressure update function")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  drivers/cpufreq/qcom-cpufreq-hw.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>   While at it, I think we can also do something like this in
+>   topology_update_thermal_pressure() instead:
 > 
-> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> index 05f3d7876e44..866fba3ac6fc 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> @@ -297,7 +297,7 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
->  	throttled_freq = freq_hz / HZ_PER_KHZ;
->  
->  	/* Update thermal pressure (the boost frequencies are accepted) */
-> -	arch_update_thermal_pressure(policy->related_cpus, throttled_freq);
-> +	arch_update_thermal_pressure(policy->cpus, throttled_freq);
+>   	cpu = cpumask_first(cpus);
+>         if (unlikely(cpu >= NR_CPUS))
+>                 return;
+> 
+> - And while writing this email, I dropped all other ideas in favor of
+>   change to topology_update_thermal_pressure() :)
 
-policy->cpus keeps on changing with CPU hotplug and this can leave
-your platform in an inconsistent state. For example, in case where you
-offline a CPU from policy, other CPUs get their thermal pressure
-updated, online the CPU back and all CPUs of a policy don't have the
-same settings anymore.
+And then I saw your second patch, which looks good as otherwise we
+will not be able to catch the bug in our system where we are sending
+the empty cpumask :)
 
-There are few things we can do here now:
+So the other idea is:
 
-- Check for empty related_cpus and return early. Since related_cpus is
-  updated only once, this shall work just fine and must not be racy.
+- Revert, or bring back a new version of this and register the
+  interrupt from there. But that is also not a very clean solution.
 
-  While at it, I think we can also do something like this in
-  topology_update_thermal_pressure() instead:
+  commit 4bf8e582119e ("cpufreq: Remove ready() callback")
 
-  	cpu = cpumask_first(cpus);
-        if (unlikely(cpu >= NR_CPUS))
-                return;
+- 
 
-- And while writing this email, I dropped all other ideas in favor of
-  change to topology_update_thermal_pressure() :)
-
---
+-- 
 viresh
