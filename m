@@ -2,193 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EC02493F34
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jan 2022 18:42:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 11169493FBA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jan 2022 19:20:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356473AbiASRm4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jan 2022 12:42:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33186 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354375AbiASRmz (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jan 2022 12:42:55 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8E81C06161C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 09:42:54 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id w26so6738012wmi.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 09:42:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=OegbDPdXm3sV0Rvdu8S4fL7eXlxzhuHMWuEq/Y9oGpw=;
-        b=FRqsTopmLNQWeJMYKN9m9ZbfoVKW0+n1Xvnrt4g/w1013FQM0Z+3zU/g4yTBb2h3sx
-         ij0tkqkuwaoyc909S+9ckn43iYmmBfqxZ/JqsQI+SPp2wfoFjZ4a3VvXADhLQdoCKqEe
-         6lycmMJ0Es1pSl7cqYHy6+mS4fDVjaY7K+uEYfCxdVKLLq0tRKg+5N2gvjR8ZdAsnWXY
-         Poz1EGfSWWUs64K/dnD19QlAZRG14/6Z/IZpqa1y2RYEy5WLhPcARz3v2Ga/FPiwlkx4
-         vhE5O414ebBRT5jqt1vfA/AzbnLmaW++8twO3QNW2jtbFWxSmKPh3SfJxkX2ASZbigDg
-         s9ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=OegbDPdXm3sV0Rvdu8S4fL7eXlxzhuHMWuEq/Y9oGpw=;
-        b=i81XrBQfTCRMY4saQLf+eq4e/y/I+WkTOoSr9e1WXKNaBSj4QBPDyqsDeexmwy6nK1
-         iYQEIPK+xLeKubK09IdQwk966TQ+ajWVdTLGlF7P5OB/Q7HRmM1jmjEOV+6mueUmN6wM
-         cPiT63Nr5zYfe+djG5Yf3wQf/v4qsBP4njqgd40IC8EXeCUm/8XLie+l2KB0p79idQQI
-         xd7CGZAUAQIUQDtYb8zC47hz56S9DYfBEcsl6LPbxYvE6RrZYXSnEdtFlIrTJN6nzNdf
-         QIj0KguitvAXPn9cq9vN/IMnGXYigp+7CVEiSI+Ud1MnV/ifxjX3ariJ9hHaqkPfHSKd
-         v0SA==
-X-Gm-Message-State: AOAM530m/jNouMt3ZuCzD0zI66UQEOHn8sp3DXank4SUlDjgHtLoHM/u
-        MmlTf7LttGjvM1EmNwy4BHnD9Q==
-X-Google-Smtp-Source: ABdhPJxVYEBLDcVZw2238uOiXYZ+lN+sQ1uikswfKycmpoS9k3JMLNBS3/RjGpr/sGNXgww775ixxA==
-X-Received: by 2002:a05:6000:1709:: with SMTP id n9mr4480560wrc.10.1642614173119;
-        Wed, 19 Jan 2022 09:42:53 -0800 (PST)
-Received: from [192.168.0.30] (cpc78119-cwma10-2-0-cust590.7-3.cable.virginm.net. [81.96.50.79])
-        by smtp.gmail.com with ESMTPSA id l19sm235843wmq.7.2022.01.19.09.42.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Jan 2022 09:42:52 -0800 (PST)
-Message-ID: <d0d42804-f437-e964-1c0d-4eb65e76db6c@linaro.org>
-Date:   Wed, 19 Jan 2022 17:42:51 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.1
-Subject: Re: [PATCH v3 3/7] iio: adc: qcom-spmi-rradc: introduce round robin
- adc
-Content-Language: en-US
-To:     Jonathan Cameron <jic23@jic23.retrosnub.co.uk>
-Cc:     Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
+        id S1356654AbiASSUG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jan 2022 13:20:06 -0500
+Received: from guitar.tcltek.co.il ([84.110.109.230]:54931 "EHLO mx.tkos.co.il"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S235941AbiASSUF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 19 Jan 2022 13:20:05 -0500
+Received: from tarshish (unknown [10.0.8.4])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx.tkos.co.il (Postfix) with ESMTPS id 49918440636;
+        Wed, 19 Jan 2022 20:19:52 +0200 (IST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tkos.co.il;
+        s=default; t=1642616393;
+        bh=YiIEY8EdhFZDp3IMZEZpIN5BqRDWJATtLtyWjFrte0I=;
+        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
+        b=NfteVB8o9UgTp3risSYPPfx0t2Ljb7tRlOACyxYlYuOXbP1XT0Yt1HTJVFWIn8ko6
+         tpsesLrXuTlmSGyMNUvS8dFWWY66SxlPj8PoOT+hFq8QCpjRl2gkcEEVV+Fl/bVEHo
+         7gF/EsMuv8+SPcU06rJfjx0vxx8Lqm4jSXGlJXlsm3hB0HtERYCTKApvEmC7I3jhBh
+         8QA2dMzKOTz6Qoco4IF+fL7bKdxvoojNfV292IC7mt0LQUk13TEQ4sKwSTGWmyZm+T
+         V+kgBw1OLNzY1VfXhdnSqluAY5gqL7iyNAkFBQc1j3dgIi53nni8XhjfX2uvtH8bnJ
+         v/OSnLXf4ox2w==
+References: <20220119002438.106079-1-sean.anderson@seco.com>
+User-agent: mu4e 1.6.10; emacs 27.1
+From:   Baruch Siach <baruch@tkos.co.il>
+To:     Sean Anderson <sean.anderson@seco.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-usb@vger.kernel.org, Felipe Balbi <balbi@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        linux-kernel@vger.kernel.org,
+        Robert Hancock <robert.hancock@calian.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, sumit.semwal@linaro.org,
-        amit.pundir@linaro.org, john.stultz@linaro.org
-References: <20220106173131.3279580-1-caleb.connolly@linaro.org>
- <20220106173131.3279580-4-caleb.connolly@linaro.org>
- <20220109172948.76dbb1fa@jic23-huawei>
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20220109172948.76dbb1fa@jic23-huawei>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Michal Simek <michal.simek@xilinx.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 0/7] usb: dwc3: Calculate REFCLKPER et. al. from
+ reference clock
+Date:   Wed, 19 Jan 2022 20:14:06 +0200
+In-reply-to: <20220119002438.106079-1-sean.anderson@seco.com>
+Message-ID: <87ee53fv01.fsf@tarshish>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Sean,
 
+On Tue, Jan 18 2022, Sean Anderson wrote:
+> This is a rework of patches 3-5 of [1]. It attempts to correctly program
+> REFCLKPER and REFCLK_FLADJ based on the reference clock frequency. Since
+> we no longer need a special property duplicating this configuration,
+> snps,ref-clock-period-ns is deprecated.
+>
+> Please test this! Patches 3/4 in this series have the effect of
+> programming REFCLKPER and REFCLK_FLADJ on boards which already configure
+> the "ref" clock. I have build tested, but not much else.
 
-On 09/01/2022 17:29, Jonathan Cameron wrote:
-> On Thu,  6 Jan 2022 17:31:27 +0000
-> Caleb Connolly <caleb.connolly@linaro.org> wrote:
-> 
->> The Round Robin ADC is responsible for reading data about the rate of
->> charge from the USB or DC in jacks, it can also read the battery
->> ID (resistence) and some temperatures. It is found on the PMI8998 and
->> PM660 Qualcomm PMICs.
->>
->> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-> Hi Calib,
-Hi Jonathan,
+Tested here on IPQ6010 based system. USB still works. But the with "ref"
+clock at 24MHz, period is calculated as 0x29. Previous
+snps,ref-clock-period-ns value used to be 0x32.
 
-I've spent some time on this and mostly reworked things, thanks a lot for
-your feedback, it's been quite interesting to learn about IIO. :)
+Is that expected?
 
-Quite a few of the channels fit well into the (adc_code + offset) * scale format,
-however the one you commented on "rradc_post_process_chg_temp()" doesn't seem to
-fit, it requires multiple steps of applying offsets and scale and I haven't been
-able to re-arrange it to work sensibly.
+Thanks,
+baruch
 
-I noticed the calibbias properties which seems like something I should expose
-for "rradc_get_fab_coeff()"?
+>
+> [1] https://lore.kernel.org/linux-usb/20220114044230.2677283-1-robert.hancock@calian.com/
+>
+> Changes in v2:
+> - Document clock members
+> - Also program GFLADJ.240MHZDECR
+> - Don't program GFLADJ if the version is < 2.50a
+> - Add snps,ref-clock-frequency-hz property for ACPI
+>
+> Sean Anderson (7):
+>   dt-bindings: usb: dwc3: Deprecate snps,ref-clock-period-ns
+>   usb: dwc3: Get clocks individually
+>   usb: dwc3: Calculate REFCLKPER based on reference clock
+>   usb: dwc3: Program GFLADJ
+>   usb: dwc3: Add snps,ref-clock-frequency-hz property for ACPI
+>   arm64: dts: zynqmp: Move USB clocks to dwc3 node
+>   arm64: dts: ipq6018: Use reference clock to set dwc3 period
+>
+>  .../devicetree/bindings/usb/snps,dwc3.yaml    |   7 +-
+>  arch/arm64/boot/dts/qcom/ipq6018.dtsi         |   3 +-
+>  .../arm64/boot/dts/xilinx/zynqmp-clk-ccf.dtsi |   4 +-
+>  arch/arm64/boot/dts/xilinx/zynqmp.dtsi        |   4 +-
+>  drivers/usb/dwc3/core.c                       | 112 +++++++++++++++---
+>  drivers/usb/dwc3/core.h                       |  17 ++-
+>  6 files changed, 120 insertions(+), 27 deletions(-)
 
-Could you point me in the right direction here? For reference my WIP tree can be
-found here: https://github.com/aospm/linux/commits/upstreaming/spmi-rradc
-
-I also tried switching to labels, but I found that when I drop the extend_name
-property the driver fails to probe because multiple channels end up with the same
-name in sysfs (e.g. "in_temp_raw"). I've read through the docs and looked at a few
-other drivers but I wasn't able to find out what I'm missing for this to work.
-
-I've snipped to the relevant bits below.
-
-Kind regards,
-Caleb
-> 
-> Various things inline but biggest is probably that in IIO we prefer
-> if possible to make application of offsets and scales a job for the caller,
-> either userspace or in kernel callers. This allows them to maintain precision
-> better if they need to further transform the data.
-> 
-> Jonathan
-> 
->> ---
->>   drivers/iio/adc/Kconfig           |   13 +
->>   drivers/iio/adc/Makefile          |    1 +
->>   drivers/iio/adc/qcom-spmi-rradc.c | 1070 +++++++++++++++++++++++++++++
->>   3 files changed, 1084 insertions(+)
->>   create mode 100644 drivers/iio/adc/qcom-spmi-rradc.c
->>
-
-[snip]
-
->> +static int rradc_post_process_chg_temp(struct rradc_chip *chip, u16 adc_code,
->> +				       int *result_millidegc)
->> +{
->> +	int64_t uv, offset, slope;
->> +	int ret;
->> +
->> +	ret = rradc_get_fab_coeff(chip, &offset, &slope);
->> +	if (ret < 0) {
->> +		dev_err(chip->dev, "Unable to get fab id coefficients\n");
->> +		return -EINVAL;
->> +	}
->> +
->> +	uv = ((int64_t)adc_code * RR_ADC_TEMP_FS_VOLTAGE_NUM);
->> +	uv = div64_s64(uv,
->> +		       (RR_ADC_TEMP_FS_VOLTAGE_DEN * RR_ADC_CHAN_MAX_VALUE));
->> +	uv = offset - uv;
->> +	uv = div64_s64((uv * MILLI), slope);
->> +	uv += RR_ADC_CHG_TEMP_OFFSET_MILLI_DEGC;
->> +	*result_millidegc = (int)uv;
-> 
-> Marginally harder than the one below, but this is still looking like it can
-> be well expressed as an offset + scale.  Thus making the tedious maths
-> userspaces or callers problem.  I'm working backwards hence won't comment on
-> similar before this point. Key is to transform whatever maths you have into
-> 
-> (adc_code + offset) * scale then expose offset and scale as well as the
-> raw value.  The right maths will get done for in kernel users and
-> userspace can do it nicely with floating point.
-> 
->> +
->> +	return 0;
->> +}
-
-[snip]
-
->> +static const struct iio_chan_spec rradc_iio_chans[RR_ADC_CHAN_MAX] = {
->> +	{
->> +		.extend_name = "batt_id",
-> 
-> We recently introduced channel labels to try and avoid the need for
-> extend_name.  The problem with extend_name is that generic software then
-> has trouble parsing the resulting sysfs files as they can have very
-> freeform naming.  Moving it to label makes that much easier.  Note that
-> there is code to give a default label of extend_name to work around
-> this problem for older drivers.
-> 
->> +		.type = IIO_RESISTANCE,
->> +		.info_mask_separate = BIT(IIO_CHAN_INFO_PROCESSED),
->> +		.address = RR_ADC_BATT_ID,
->> +	},
-
-> 
-> Thanks,
-> 
-> Jonathan
 
 -- 
-Kind Regards,
-Caleb (they/them)
+                                                     ~. .~   Tk Open Systems
+=}------------------------------------------------ooO--U--Ooo------------{=
+   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
