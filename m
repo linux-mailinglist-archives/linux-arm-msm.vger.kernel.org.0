@@ -2,108 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B32E4493659
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jan 2022 09:32:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9248D49368A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jan 2022 09:49:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352500AbiASIcX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jan 2022 03:32:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47444 "EHLO
+        id S1352587AbiASItg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jan 2022 03:49:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350982AbiASIcX (ORCPT
+        with ESMTP id S1352571AbiASIte (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jan 2022 03:32:23 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA4EBC061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 00:32:22 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id m8-20020a17090a4d8800b001b4f361964fso1949974pjh.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 00:32:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dSmyI9DWw4yjUYr1nbkInCEVJfsKrWWmNEo3N5Pb/+8=;
-        b=ALKiXykSDyTEQAdxfUqak//n6c0I9iHi2l01AJef/DYgG2GQHArPmubo5KNHrbOreS
-         of5NeR6NqgQ74KZ2WEOxDtJ/W0rutGdyD6dQavhGy9ohiXGf0MxS15oFWHcLOgi8vPOg
-         Lm0s7HKLAEStRsolrJ6I3VbLcfKOhgABBPiDdIgmJwf1xRTzZSiNp8l1JRH/Ct11F01v
-         8LVzQgfrD0TiZsaDVN16goRrt6TIn1xN8b35eNsjs9bJfo6RhDZoXFNv+WkHxdbhgn8j
-         FZT42ZpmNEAd7KCW9ENDt2JZrQNqXMNDuS4e8L5dFzB6gYFYNBFObdgBbDUzgCQplcpI
-         BjGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dSmyI9DWw4yjUYr1nbkInCEVJfsKrWWmNEo3N5Pb/+8=;
-        b=wdOnTjRNofidgyNHuwZl8cBGRP9nzcgKGIlFzG/SRc6OKvTwSjOQpcM9+stbFwMeTv
-         zRx41qCVsC5qqif6lPDAJCl7gfupzw6Uh2B431ujDh2YwvaoiMs1wX2xw/R5OIpzQZv6
-         5aXTar2sWiTE2QU3idyknwbfGEM7hLOKjUX8YfK2y5R8Re9MnesMrxWvE4j9B1iAQV5r
-         mai7mEqs1S43Oj6U6JAwcDKBUThV8n9LEU9azVYtYpdxYfjVQrKf6Qv8bAWyDO/gsihD
-         76dbx2gbFkSUaBoe9XHyBjc42hZxcaa1WxF/bWZ0UgASkLQDZsxKdQXNOsQmzRbPiETP
-         QOPw==
-X-Gm-Message-State: AOAM5304lpwmwoshNwma+R59GoU72+bkxEkuMuDWRBx53LSOGhqGvMBH
-        scuhu1EqVOH4wzttG+fy1iJtJWAkpNq+Abs+ZQnAmg==
-X-Google-Smtp-Source: ABdhPJxDax72AjX8z4FnT10PwvTLx2e5zuOtT54rp12MpXvCqQWd+6XrpPRdBI429DXhFjcp17gIF9WQpBvZSgLgIFQ=
-X-Received: by 2002:a17:90a:53:: with SMTP id 19mr2927524pjb.159.1642581142444;
- Wed, 19 Jan 2022 00:32:22 -0800 (PST)
+        Wed, 19 Jan 2022 03:49:34 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 706FCC061574;
+        Wed, 19 Jan 2022 00:49:34 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 11208614B8;
+        Wed, 19 Jan 2022 08:49:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDB9C340E3;
+        Wed, 19 Jan 2022 08:49:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1642582173;
+        bh=f7Mv8iRpM88XNk2LC22R7OThKjTnidsB51bEaWygpKY=;
+        h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
+        b=YUS9c3e2F/VtS4CWpLVbSvlL766/2c/tYU2wPF0iUk59loi6zU8OF0m44ueNMJ1gZ
+         cWBi3Im6C6pH2OXSA9bvnOrmzwK2YABh01Xl4wFXEW+h1ngGRaAtwkGMxTbrQg8ADl
+         6+EKr8ED2bNFgFKHEwAsi+AK2s2K8/BP3lRwlxIX9Wyy1i7COffAHz3e9vY6QRwQmS
+         6fNVuxhWa0kn5jc25Cpd8iDu0h1fVjMG0KABL3vcQgChHw+y7xU6WgQ7qSFzgj3SEU
+         d7LZllKqMBfMc+dzYsdw4IwUEQtZQrDfYWqvZzIV7D6VqPDHxM159aXhrU+dM0CoQ1
+         yoGXQxZesHS0g==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <1642520854-32196-1-git-send-email-loic.poulain@linaro.org> <c37daeda-e58e-6a93-36aa-28e392bb06f2@linaro.org>
-In-Reply-To: <c37daeda-e58e-6a93-36aa-28e392bb06f2@linaro.org>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Wed, 19 Jan 2022 09:44:05 +0100
-Message-ID: <CAMZdPi8VLa4VEKk9BsO5i-cSA=itpUTBr6YoQN7Y7AE6Jugo_Q@mail.gmail.com>
-Subject: Re: [PATCH 1/2] drm/msm: add support for QCM2290 MDSS
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     robdclark@gmail.com, sean@poorly.run, robh+dt@kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, bjorn.andersson@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v3 1/4] wcn36xx: Implement get_snr()
+From:   Kalle Valo <kvalo@kernel.org>
+In-Reply-To: <20220115001646.3981501-2-bryan.odonoghue@linaro.org>
+References: <20220115001646.3981501-2-bryan.odonoghue@linaro.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     kvalo@codeaurora.org, linux-wireless@vger.kernel.org,
+        wcn36xx@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        loic.poulain@linaro.org, benl@squareup.com,
+        bryan.odonoghue@linaro.org
+User-Agent: pwcli/0.1.0-git (https://github.com/kvalo/pwcli/) Python/3.7.3
+Message-ID: <164258216749.21393.3097198740948062777.kvalo@kernel.org>
+Date:   Wed, 19 Jan 2022 08:49:31 +0000 (UTC)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+Bryan O'Donoghue <bryan.odonoghue@linaro.org> wrote:
 
-On Tue, 18 Jan 2022 at 19:02, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On 18/01/2022 18:47, Loic Poulain wrote:
-> > Add compatibility for QCM2290 display subsystem, including
-> > required entries in DPU hw catalog.
-> >
-> > Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 175 ++++++++++++++++++++++++-
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |   1 +
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c        |   1 +
-> >   drivers/gpu/drm/msm/msm_drv.c                  |   1 +
-> >   4 files changed, 177 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> > index ce6f32a..7fa3fc7 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> > @@ -25,6 +25,8 @@
-> >   #define VIG_SM8250_MASK \
-[...]
-> > +static const struct dpu_vbif_cfg qcm2290_vbif[] = {
-> > +     {
-> > +     .name = "vbif_0", .id = VBIF_0,
-> > +     .base = 0, .len = 0x1040,
-> > +     .features = BIT(DPU_VBIF_QOS_REMAP),
-> > +     .xin_halt_timeout = 0x4000,
-> > +     .qos_rt_tbl = {
-> > +             .npriority_lvl = ARRAY_SIZE(sdm845_rt_pri_lvl),
-> > +             .priority_lvl = sdm845_rt_pri_lvl,
-> > +             },
-> > +     .memtype_count = 14,
-> > +     .memtype = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-> > +     },
-> > +};
->
-> The only difference from sdm845_vbif is the lack of .qos_nrt_tbl. Is
-> this on purpose?
+> The wcn36xx BD phy descriptor returns both Received Signal Strength
+> Information (RSSI) and Signal To Noise Ratio (SNR) with each delivered BD.
+> 
+> The macro to extract this data is a simple-one liner, easily imported from
+> prima driver. This data will be useful to us when implementing
+> mac80211-ops->get_survey().
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
+> Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
 
-Yes, I've not found any info related to non-rt for QCM2290 dpu, but I
-assume it would be safe to just use sdm845_vbif here, as the others.
+4 patches applied to ath-next branch of ath.git, thanks.
 
-Regards,
-Loic
+039d5d4db4bc wcn36xx: Implement get_snr()
+d6f2746691cb wcn36xx: Track the band and channel we are tuned to
+29696e0aa413 wcn36xx: Track SNR and RSSI for each RX frame
+51395cf204f2 wcn36xx: Add SNR reporting via get_survey()
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/patch/20220115001646.3981501-2-bryan.odonoghue@linaro.org/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+
