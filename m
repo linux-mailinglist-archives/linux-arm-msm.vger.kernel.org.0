@@ -2,152 +2,660 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B56E4931DB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jan 2022 01:25:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C11C74932F3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jan 2022 03:32:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350556AbiASAZO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Jan 2022 19:25:14 -0500
-Received: from mail-eopbgr80059.outbound.protection.outlook.com ([40.107.8.59]:23461
-        "EHLO EUR04-VI1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1350483AbiASAZH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Jan 2022 19:25:07 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=nvLaxc7BvVf+xev5u41wCc2WBwaqo4iURwhQqGxT7K+e1Y5tDPx+ZfnynsfCvzAFBE+XUiWUmpQ9iG8Wng1EYbH1DP6Vo2mb4msMY4UNr75wOPIy97f/NIb3wJP4eWe60vFg6eCAzsMsvYhU85m2VtIBua4mJPU2RygpRRdW+RONoLfTJ/DXPpfG/TO9p+2mUZENxevxuEfTSg1yvP8mSVLZoyqmQY1bme59vhBhsCx8r60VePYGTRlRj9bqGoDwE0BPslkmQ+n0UuuVrYrfPbrOlItLjwqFPlhx4KpyvxoGOD5mIXy3BSgrw21dZ7x1aS7rC8q4L4IWmJUWKIETEA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3iTbNcgMHKQDn2UQ5Q4s8qZrx9GE3+86V4LoAq9OCT8=;
- b=QQsF3n236BkxMIvrdwA5uT/3JZlBE+UQQfGKpbGTs5w0QrwrTXqmfheJXbdDRqXPybb4Mj0ieq18RIIfDOqp4ND1wIpmEIk8iBuGltRE7+2S3kwTvvOMhz4n1a/ed90avceqTH94zZo6sDMsEGYYUUDSR58heeUDiBlzwhGth4Sb+rJSpJO011tLx/Hpf+9cx2MerdyfX35UG4DfTkwCBAA9ZfWnfV326xILt2KWcNXqUUkUfXa9yk42L1g3l1bYoPXLUnSy3qQtnAAUhMQL50/ELzQVZZymRbIrAyafrUAZqVnsmfdF7mpbkLcL0NRO7+vcrEQHNc9RleBOKHcljA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=seco.com; dmarc=pass action=none header.from=seco.com;
- dkim=pass header.d=seco.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seco.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3iTbNcgMHKQDn2UQ5Q4s8qZrx9GE3+86V4LoAq9OCT8=;
- b=jj+ue/MVo79U3u/bjRZUS9q/xNtBLBOvRiRgXFZjs5hZzuqrXsQLFm3CBLhdESxh+ZNW5IGtn0Gy0AOUtJgD/awxVNxJaxLx05zR+oLq2tli9cXiWp1y7EVlPgO92pI9d3+K9RP/096qSR16OWK4Mop+U2Jngz6b3BWbIdOClb2+GYpMpgo/ee9bAHpZpEbvFyv+1/JvaQ81jRJjq26e6LXSSSyOic+2U4eKCTbbIQyHB9QTDDzKBLzXGTHkgbsU28xotM04sI04+9et5yQmMkcY3tXDf2SkbNibsfxWWZ03m0EtyAoU3ImCYEPmKSA6j+K3vES1mLSuW1+2VeZH8w==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=seco.com;
-Received: from DB7PR03MB4523.eurprd03.prod.outlook.com (2603:10a6:10:19::27)
- by AM6PR03MB4373.eurprd03.prod.outlook.com (2603:10a6:20b:10::28) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4888.11; Wed, 19 Jan
- 2022 00:25:03 +0000
-Received: from DB7PR03MB4523.eurprd03.prod.outlook.com
- ([fe80::d47e:81b0:256:3005]) by DB7PR03MB4523.eurprd03.prod.outlook.com
- ([fe80::d47e:81b0:256:3005%4]) with mapi id 15.20.4888.014; Wed, 19 Jan 2022
- 00:25:03 +0000
-From:   Sean Anderson <sean.anderson@seco.com>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-usb@vger.kernel.org
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        linux-kernel@vger.kernel.org,
-        Robert Hancock <robert.hancock@calian.com>,
-        Baruch Siach <baruch@tkos.co.il>,
-        Sean Anderson <sean.anderson@seco.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 7/7] arm64: dts: ipq6018: Use reference clock to set dwc3 period
-Date:   Tue, 18 Jan 2022 19:24:37 -0500
-Message-Id: <20220119002438.106079-8-sean.anderson@seco.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220119002438.106079-1-sean.anderson@seco.com>
-References: <20220119002438.106079-1-sean.anderson@seco.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MN2PR01CA0025.prod.exchangelabs.com (2603:10b6:208:10c::38)
- To DB7PR03MB4523.eurprd03.prod.outlook.com (2603:10a6:10:19::27)
+        id S1350754AbiASCcw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Jan 2022 21:32:52 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:2918 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S238636AbiASCcw (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 18 Jan 2022 21:32:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1642559571; x=1674095571;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=Vl+b7drMZ5+KHqYRoUNQ+S6TqzW7BKVlOKBy6IG4qnA=;
+  b=VpSHvQjZ7zHowbfMb4M1ha7r/SasFM3pHvdCYIIQMD2XIqcgUey0dEcU
+   CJeSdbsr0DVnZAN0v8T7yA6Yb0kBHRKjEgBkGZIhpkkq0XaxpouRJcH5A
+   BKsdhlPUaIxS1mkBSvY7sknKP2ZOhJcvkDXCsYlaR0FwVQPjK9Sm6phLG
+   8=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 18 Jan 2022 18:32:51 -0800
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jan 2022 18:32:51 -0800
+Received: from [10.71.111.172] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Tue, 18 Jan
+ 2022 18:32:50 -0800
+Message-ID: <645728c0-05be-0784-0c7f-5535095ced00@quicinc.com>
+Date:   Tue, 18 Jan 2022 18:32:50 -0800
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 3d7dffc1-b60e-48c8-0838-08d9dae222c8
-X-MS-TrafficTypeDiagnostic: AM6PR03MB4373:EE_
-X-Microsoft-Antispam-PRVS: <AM6PR03MB43737C8203418E1F6786E8BC96599@AM6PR03MB4373.eurprd03.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:4303;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: xDEjDsNFGNR1HZbz9XUBE0r/M9lUHyKdPO5IbVXZDzVT5O4f6k+Ew6Bk2rK7hFf2WYDCTLObexqgovjExEeASkSRLl2qgHnu3eFQJiewl8jsBdBNrckHsm1SnhHAqSYjrdOmxmuaPQxYH+tg6cZffIasIwPgww8Ko3KTsqOGUlaTZwCPdC0JuI+IdBU0SEuNVtYZ6UUdduly9LgqzMXMKhwZQglg+I+m4aoKgrtLkJ/m3s7TJFdkEZbpfP5ld3eGgfyDQ1DP09T7tsstsfQ4qbXmAiI1+q6D0aXFf9J5LokPrXUb7kt6ymSjlSUyosiAxtY6pnh4hoVldaeEUjsM1M9be77nN7KPCjkyBdIo8CqFyfD8XEa/DoS276EHhXrUgJ0sGsl3G05uqotBN6JV/lBz+GgCVmxVCxjnrngW179Sf1+SBSJIcPY7KQ2IwSjX9fW3ZLXvvmBxMVIFHOgW/OSCuCHB/TEovzy7I4y9pufxgHDZvkt0TmMa97fJhBu3pheH6eD9cgwqjSfkrvVzVU7AYiAFzTZKKTaqI6YxOZKVDrntKbDyjDB/Pvv3YbaT6REYDtTe5OK9oMpopJsAsmm0J4RXqymjZODQw+cR/2OjZDUK9cuBpvNA9UrMGe3kaZodVZ9WUqG09HhjpiJTTdtdSPDyZjKaIyfbls1rr1SQtGNDmNLSIhOl8nS0P90JXa0kxfMKmGXS65wSJYCqgw==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB7PR03MB4523.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(316002)(6666004)(5660300002)(186003)(4326008)(6512007)(44832011)(6486002)(6506007)(38100700002)(2616005)(1076003)(7416002)(66556008)(38350700002)(52116002)(54906003)(66946007)(8936002)(508600001)(2906002)(83380400001)(36756003)(26005)(8676002)(66476007)(86362001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?T7nlWPx7Fbw7DQ5iBvqa7M71A+ZpE8cN33M3MnnjXBjzTS4On8/Uh6FHMLpt?=
- =?us-ascii?Q?VaslftwYzqwMBKjp7rtYz/nubaLZeRgHiFWRZ7MUK2gCyUQd1LRvxZW+G5b9?=
- =?us-ascii?Q?rYLFBFAbsZfT2Is4YyMy/w2MDwqgbkuyfzkYerVvsAn55so3y0KMGaOCKvXZ?=
- =?us-ascii?Q?7s8NqfgJDfJSXvp/WkOGWXP0qFatsKwomO/amKhLnBT4IBQIY0xhHsTI61PH?=
- =?us-ascii?Q?JJgREBvfg4vBtiGp5mCYs7qCAroHEXWaSD8aU0xqDZyEse/ZjflYX8hsvckX?=
- =?us-ascii?Q?90YeGKvazv5JSY2sc3GYpYZM5M6vKMeYKIaHXoTeyeNr8YpeDcnc1I67X8zu?=
- =?us-ascii?Q?8rGYe5h01qeJYzHw54zJKhpFE5yLV6uEa9ggyQGVYdhqQ3U/4KU9eVtmJI0k?=
- =?us-ascii?Q?HLTJ/4rGLRvCg/dzFuKW8JmurIiN+7l0ULOa/edskNns0XvHtw9Pu9zuEKEN?=
- =?us-ascii?Q?+TorUSUtqKhSRN8E1q/wDlqVrWlTE8XkAtga89MujRIhhY+cdv3Ba6qoD3Bh?=
- =?us-ascii?Q?5Yegx1baqLcxOByuR4F9bS8CS/WQDPzI1mOueTqXwm1cKT5QsCCLr4kUNfMB?=
- =?us-ascii?Q?Tombr9jiApsBtyD9duFfDeSzl2IrYGqycsm+4AhjBNG5rfDSAXNvC87elGid?=
- =?us-ascii?Q?HrUKU5ffuS4f4jCIAbKYAUcB5/u+AvTc6Ud58TEqh0p5VmM8lsLITjVuojI2?=
- =?us-ascii?Q?8xKujhqbnZ0+i7zkEXIpfxKpicPOVkWUufUfRs1zpOYBp1BYNzUZyFeQeNaC?=
- =?us-ascii?Q?RbuxRDdmSVr7SVifIGf6W9FS4aT7tt5OfZHX/fFjNR+r/wTCtiBC6r/SMxxO?=
- =?us-ascii?Q?ajChdfYHkaV/1xUU8Qt7w2DJwM/o4EE/AIK3mEiBGtqUui66lfdE8f+gYqtF?=
- =?us-ascii?Q?QMwoORpP2HKQvxdtFJaRwqObbyW0vxxizufvJ8chg8/TEo5o0AJ0R9awcxMM?=
- =?us-ascii?Q?MNclvIdB/TPzXYot8BAMDA72iNW4MjGm4aItF3eAbVUnmYPK9IypBbmW6roi?=
- =?us-ascii?Q?k8LB/Pm3cXgcrbjoT1lFznSiMtTcrw4wNQLa5QZ/4tvd9KwhDo76IfGezI+M?=
- =?us-ascii?Q?hU02uT65jxqYb4YtVWiyYiC+wW5H3j97brKldzJ4w0UZ6/GRyWnnB0mDVe+7?=
- =?us-ascii?Q?r+e3mk3132uV9XA8KIkWtTO5DHA6kUr3cbNixtaaq8lBVQ0j7QKNmJTM3qQC?=
- =?us-ascii?Q?j/mxLTrlAhCVwmjJp4s0W5fCuul0jn0ZyjmVUun52CfNf3VxCJupOlH3o4AD?=
- =?us-ascii?Q?iNdQtKFkWhCMEoI+RJFegFv4gbKz6FO6DLiVnx9IXFrhcPEspfDNJIh/ClpS?=
- =?us-ascii?Q?RysJ3pmjtqBOKw86SgckwA9A8wQFot48pZw+xn46wh7E7HTq5C6L3NFyL/Te?=
- =?us-ascii?Q?57Eh7yCqR0Po6HTlHr3wxtPzL4FxGNRKFdxXfvBDL878QrYMz0LO379Ly+nf?=
- =?us-ascii?Q?23VjdN/XkiGkYqwBWFWSEnqg8jn+W4+2rMEcyus/E4cr3B62OetVctMPN70i?=
- =?us-ascii?Q?hQXfmhz9jsDXt5PraeYMq54Ffli+td2xjRlEkzKiMXxzi4TQxUPWjuSewrVp?=
- =?us-ascii?Q?oSfKFVokLK5HGppoPSPt4P8XnRPknJ6COsGVwRvIh5n+07I71CZkpyNE905u?=
- =?us-ascii?Q?BspF3r1sCH9e6MFjV1nZOw4=3D?=
-X-OriginatorOrg: seco.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3d7dffc1-b60e-48c8-0838-08d9dae222c8
-X-MS-Exchange-CrossTenant-AuthSource: DB7PR03MB4523.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Jan 2022 00:25:03.3134
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bebe97c3-6438-442e-ade3-ff17aa50e733
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 37h3oD5KSX9LcoI0jw4j5/8S5D68Quho4R+zNFO821dzA4nHmhwL44pAdSZPaHSAx7+dyez48+YOZTsblR+rLA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR03MB4373
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [Freedreno] [PATCH v2 1/2] drm/msm/dpu: simplify clocks handling
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Stephen Boyd <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <freedreno@lists.freedesktop.org>, Sean Paul <sean@poorly.run>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>
+References: <20211126023516.1108411-1-dmitry.baryshkov@linaro.org>
+ <20211126023516.1108411-2-dmitry.baryshkov@linaro.org>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20211126023516.1108411-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Instead of manually setting snps,ref-clock-period-ns, we can let the
-driver calculate it automatically from the "ref" clock. I haven't
-reviewed this board's schematics, so please let me know if this is the
-wrong 24MHz clock to use.
+On 11/25/2021 6:35 PM, Dmitry Baryshkov wrote:
+> DPU driver contains code to parse clock items from device tree into
+> special data struct and then enable/disable/set rate for the clocks
+> using that data struct. However the DPU driver itself uses only parsing
+> and enabling/disabling part (the rate setting is used by DP driver).
+> 
+> Move this implementation to the DP driver (which actually uses rate
+> setting) and replace hand-coded enable/disable/get loops in the DPU
+> with the respective clk_bulk operations. Put operation is removed
+> completely because, it is handled using devres instead.
+> 
+> DP implementation is unchanged for now.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/Makefile                  |  2 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 24 ++-----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |  6 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 46 +++----------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |  4 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c      | 26 +++----
+>   .../dpu1/dpu_io_util.c => dp/dp_clk_util.c}   | 69 +------------------
+>   .../dpu1/dpu_io_util.h => dp/dp_clk_util.h}   |  2 -
+>   drivers/gpu/drm/msm/dp/dp_parser.h            |  2 +-
+>   drivers/gpu/drm/msm/msm_drv.c                 | 49 +++++++++++++
+>   drivers/gpu/drm/msm/msm_drv.h                 |  1 +
+>   11 files changed, 84 insertions(+), 147 deletions(-)
+>   rename drivers/gpu/drm/msm/{disp/dpu1/dpu_io_util.c => dp/dp_clk_util.c} (61%)
+>   rename drivers/gpu/drm/msm/{disp/dpu1/dpu_io_util.h => dp/dp_clk_util.h} (92%)
+> 
+> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+> index 40577f8856d8..b6637da219b0 100644
+> --- a/drivers/gpu/drm/msm/Makefile
+> +++ b/drivers/gpu/drm/msm/Makefile
+> @@ -69,7 +69,6 @@ msm-y := \
+>   	disp/dpu1/dpu_hw_top.o \
+>   	disp/dpu1/dpu_hw_util.o \
+>   	disp/dpu1/dpu_hw_vbif.o \
+> -	disp/dpu1/dpu_io_util.o \
+>   	disp/dpu1/dpu_kms.o \
+>   	disp/dpu1/dpu_mdss.o \
+>   	disp/dpu1/dpu_plane.o \
+> @@ -105,6 +104,7 @@ msm-$(CONFIG_DRM_MSM_GPU_STATE)	+= adreno/a6xx_gpu_state.o
+>   
+>   msm-$(CONFIG_DRM_MSM_DP)+= dp/dp_aux.o \
+>   	dp/dp_catalog.o \
+> +	dp/dp_clk_util.o \
+>   	dp/dp_ctrl.o \
+>   	dp/dp_display.o \
+>   	dp/dp_drm.o \
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> index 60fe06018581..4d184122d63e 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+> @@ -284,17 +284,6 @@ void dpu_core_perf_crtc_release_bw(struct drm_crtc *crtc)
+>   	}
+>   }
+>   
+> -static int _dpu_core_perf_set_core_clk_rate(struct dpu_kms *kms, u64 rate)
+> -{
+> -	struct dss_clk *core_clk = kms->perf.core_clk;
+> -
+> -	if (core_clk->max_rate && (rate > core_clk->max_rate))
+> -		rate = core_clk->max_rate;
+> -
+> -	core_clk->rate = rate;
+> -	return dev_pm_opp_set_rate(&kms->pdev->dev, core_clk->rate);
+> -}
+> -
+>   static u64 _dpu_core_perf_get_core_clk_rate(struct dpu_kms *kms)
+>   {
+>   	u64 clk_rate = kms->perf.perf_tune.min_core_clk;
+> @@ -306,7 +295,7 @@ static u64 _dpu_core_perf_get_core_clk_rate(struct dpu_kms *kms)
+>   			dpu_cstate = to_dpu_crtc_state(crtc->state);
+>   			clk_rate = max(dpu_cstate->new_perf.core_clk_rate,
+>   							clk_rate);
+> -			clk_rate = clk_round_rate(kms->perf.core_clk->clk,
+> +			clk_rate = clk_round_rate(kms->perf.core_clk,
+>   					clk_rate);
+>   		}
+>   	}
+> @@ -405,10 +394,11 @@ int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
+>   
+>   		trace_dpu_core_perf_update_clk(kms->dev, stop_req, clk_rate);
+>   
+> -		ret = _dpu_core_perf_set_core_clk_rate(kms, clk_rate);
+> +		if (clk_rate > kms->perf.max_core_clk_rate)
+> +			clk_rate = kms->perf.max_core_clk_rate;
+> +		ret = dev_pm_opp_set_rate(&kms->pdev->dev, clk_rate);
+>   		if (ret) {
+> -			DPU_ERROR("failed to set %s clock rate %llu\n",
+> -					kms->perf.core_clk->clk_name, clk_rate);
+> +			DPU_ERROR("failed to set core clock rate %llu\n", clk_rate);
+>   			return ret;
+>   		}
+>   
+> @@ -529,13 +519,13 @@ void dpu_core_perf_destroy(struct dpu_core_perf *perf)
+>   int dpu_core_perf_init(struct dpu_core_perf *perf,
+>   		struct drm_device *dev,
+>   		struct dpu_mdss_cfg *catalog,
+> -		struct dss_clk *core_clk)
+> +		struct clk *core_clk)
+>   {
+>   	perf->dev = dev;
+>   	perf->catalog = catalog;
+>   	perf->core_clk = core_clk;
+>   
+> -	perf->max_core_clk_rate = core_clk->max_rate;
+> +	perf->max_core_clk_rate = clk_get_rate(core_clk);
+>   	if (!perf->max_core_clk_rate) {
+>   		DPU_DEBUG("optional max core clk rate, use default\n");
+>   		perf->max_core_clk_rate = DPU_PERF_DEFAULT_MAX_CORE_CLK_RATE;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+> index cf4b9b5964c6..8dfcc6db7176 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h
+> @@ -56,7 +56,7 @@ struct dpu_core_perf_tune {
+>    * @dev: Pointer to drm device
+>    * @debugfs_root: top level debug folder
+>    * @catalog: Pointer to catalog configuration
+> - * @core_clk: Pointer to core clock structure
+> + * @core_clk: Pointer to the core clock
+>    * @core_clk_rate: current core clock rate
+>    * @max_core_clk_rate: maximum allowable core clock rate
+>    * @perf_tune: debug control for performance tuning
+> @@ -69,7 +69,7 @@ struct dpu_core_perf {
+>   	struct drm_device *dev;
+>   	struct dentry *debugfs_root;
+>   	struct dpu_mdss_cfg *catalog;
+> -	struct dss_clk *core_clk;
+> +	struct clk *core_clk;
+>   	u64 core_clk_rate;
+>   	u64 max_core_clk_rate;
+>   	struct dpu_core_perf_tune perf_tune;
+> @@ -120,7 +120,7 @@ void dpu_core_perf_destroy(struct dpu_core_perf *perf);
+>   int dpu_core_perf_init(struct dpu_core_perf *perf,
+>   		struct drm_device *dev,
+>   		struct dpu_mdss_cfg *catalog,
+> -		struct dss_clk *core_clk);
+> +		struct clk *core_clk);
+>   
+>   struct dpu_kms;
+>   
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index a15b26428280..655cbd912309 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -936,29 +936,15 @@ static int _dpu_kms_mmu_init(struct dpu_kms *dpu_kms)
+>   	return 0;
+>   }
+>   
+> -static struct dss_clk *_dpu_kms_get_clk(struct dpu_kms *dpu_kms,
+> -		char *clock_name)
+> -{
+> -	struct dss_module_power *mp = &dpu_kms->mp;
+> -	int i;
+> -
+> -	for (i = 0; i < mp->num_clk; i++) {
+> -		if (!strcmp(mp->clk_config[i].clk_name, clock_name))
+> -			return &mp->clk_config[i];
+> -	}
+> -
+> -	return NULL;
+> -}
+> -
+>   u64 dpu_kms_get_clk_rate(struct dpu_kms *dpu_kms, char *clock_name)
+>   {
+> -	struct dss_clk *clk;
+> +	struct clk *clk;
+>   
+> -	clk = _dpu_kms_get_clk(dpu_kms, clock_name);
+> +	clk = msm_clk_bulk_get_clock(dpu_kms->clocks, dpu_kms->num_clocks, clock_name);
+>   	if (!clk)
+>   		return -EINVAL;
+>   
+> -	return clk_get_rate(clk->clk);
+> +	return clk_get_rate(clk);
+>   }
+>   
+>   static int dpu_kms_hw_init(struct msm_kms *kms)
+> @@ -1070,7 +1056,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+>   	}
+>   
+>   	rc = dpu_core_perf_init(&dpu_kms->perf, dev, dpu_kms->catalog,
+> -			_dpu_kms_get_clk(dpu_kms, "core"));
+> +			msm_clk_bulk_get_clock(dpu_kms->clocks, dpu_kms->num_clocks, "core"));
+>   	if (rc) {
+>   		DPU_ERROR("failed to init perf %d\n", rc);
+>   		goto perf_err;
+> @@ -1157,7 +1143,6 @@ static int dpu_bind(struct device *dev, struct device *master, void *data)
+>   	struct platform_device *pdev = to_platform_device(dev);
+>   	struct msm_drm_private *priv = ddev->dev_private;
+>   	struct dpu_kms *dpu_kms;
+> -	struct dss_module_power *mp;
+>   	int ret = 0;
+>   
+>   	dpu_kms = devm_kzalloc(&pdev->dev, sizeof(*dpu_kms), GFP_KERNEL);
+> @@ -1174,12 +1159,12 @@ static int dpu_bind(struct device *dev, struct device *master, void *data)
+>   		return ret;
+>   	}
+>   
+> -	mp = &dpu_kms->mp;
+> -	ret = msm_dss_parse_clock(pdev, mp);
+> -	if (ret) {
+> +	ret = msm_parse_clock(pdev, &dpu_kms->clocks);
+> +	if (ret < 0) {
+>   		DPU_ERROR("failed to parse clocks, ret=%d\n", ret);
+>   		return ret;
+>   	}
+> +	dpu_kms->num_clocks = ret;
+>   
+>   	platform_set_drvdata(pdev, dpu_kms);
+>   
+> @@ -1203,11 +1188,6 @@ static void dpu_unbind(struct device *dev, struct device *master, void *data)
+>   {
+>   	struct platform_device *pdev = to_platform_device(dev);
+>   	struct dpu_kms *dpu_kms = platform_get_drvdata(pdev);
+> -	struct dss_module_power *mp = &dpu_kms->mp;
+> -
+> -	msm_dss_put_clk(mp->clk_config, mp->num_clk);
+> -	devm_kfree(&pdev->dev, mp->clk_config);
+> -	mp->num_clk = 0;
+>   
+>   	if (dpu_kms->rpm_enabled)
+>   		pm_runtime_disable(&pdev->dev);
+> @@ -1231,21 +1211,18 @@ static int dpu_dev_remove(struct platform_device *pdev)
+>   
+>   static int __maybe_unused dpu_runtime_suspend(struct device *dev)
+>   {
+> -	int i, rc = -1;
+> +	int i;
+>   	struct platform_device *pdev = to_platform_device(dev);
+>   	struct dpu_kms *dpu_kms = platform_get_drvdata(pdev);
+> -	struct dss_module_power *mp = &dpu_kms->mp;
+>   
+>   	/* Drop the performance state vote */
+>   	dev_pm_opp_set_rate(dev, 0);
+> -	rc = msm_dss_enable_clk(mp->clk_config, mp->num_clk, false);
+> -	if (rc)
+> -		DPU_ERROR("clock disable failed rc:%d\n", rc);
+> +	clk_bulk_disable_unprepare(dpu_kms->num_clocks, dpu_kms->clocks);
+>   
+>   	for (i = 0; i < dpu_kms->num_paths; i++)
+>   		icc_set_bw(dpu_kms->path[i], 0, 0);
+>   
+> -	return rc;
+> +	return 0;
+>   }
+>   
+>   static int __maybe_unused dpu_runtime_resume(struct device *dev)
+> @@ -1255,7 +1232,6 @@ static int __maybe_unused dpu_runtime_resume(struct device *dev)
+>   	struct dpu_kms *dpu_kms = platform_get_drvdata(pdev);
+>   	struct drm_encoder *encoder;
+>   	struct drm_device *ddev;
+> -	struct dss_module_power *mp = &dpu_kms->mp;
+>   	int i;
+>   
+>   	ddev = dpu_kms->dev;
+> @@ -1265,7 +1241,7 @@ static int __maybe_unused dpu_runtime_resume(struct device *dev)
+>   	for (i = 0; i < dpu_kms->num_paths; i++)
+>   		icc_set_bw(dpu_kms->path[i], 0, Bps_to_icc(MIN_IB_BW));
+>   
+> -	rc = msm_dss_enable_clk(mp->clk_config, mp->num_clk, true);
+> +	rc = clk_bulk_prepare_enable(dpu_kms->num_clocks, dpu_kms->clocks);
+>   	if (rc) {
+>   		DPU_ERROR("clock enable failed rc:%d\n", rc);
+>   		return rc;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> index 775bcbda860f..d366aa359d38 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> @@ -21,7 +21,6 @@
+>   #include "dpu_hw_lm.h"
+>   #include "dpu_hw_interrupts.h"
+>   #include "dpu_hw_top.h"
+> -#include "dpu_io_util.h"
+>   #include "dpu_rm.h"
+>   #include "dpu_core_perf.h"
+>   
+> @@ -113,7 +112,8 @@ struct dpu_kms {
+>   	struct platform_device *pdev;
+>   	bool rpm_enabled;
+>   
+> -	struct dss_module_power mp;
+> +	struct clk_bulk_data *clocks;
+> +	int num_clocks;
+>   
+>   	/* reference count bandwidth requests, so we know when we can
+>   	 * release bandwidth.  Each atomic update increments, and frame-
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
+> index b466784d9822..d7faf11a5456 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
+> @@ -29,7 +29,8 @@ struct dpu_irq_controller {
+>   struct dpu_mdss {
+>   	struct msm_mdss base;
+>   	void __iomem *mmio;
+> -	struct dss_module_power mp;
+> +	struct clk_bulk_data *clocks;
+> +	int num_clocks;
+>   	struct dpu_irq_controller irq_controller;
+>   };
+>   
+> @@ -136,10 +137,9 @@ static void _dpu_mdss_irq_domain_fini(struct dpu_mdss *dpu_mdss)
+>   static int dpu_mdss_enable(struct msm_mdss *mdss)
+>   {
+>   	struct dpu_mdss *dpu_mdss = to_dpu_mdss(mdss);
+> -	struct dss_module_power *mp = &dpu_mdss->mp;
+>   	int ret;
+>   
+> -	ret = msm_dss_enable_clk(mp->clk_config, mp->num_clk, true);
+> +	ret = clk_bulk_prepare_enable(dpu_mdss->num_clocks, dpu_mdss->clocks);
+>   	if (ret) {
+>   		DPU_ERROR("clock enable failed, ret:%d\n", ret);
+>   		return ret;
+> @@ -174,14 +174,10 @@ static int dpu_mdss_enable(struct msm_mdss *mdss)
+>   static int dpu_mdss_disable(struct msm_mdss *mdss)
+>   {
+>   	struct dpu_mdss *dpu_mdss = to_dpu_mdss(mdss);
+> -	struct dss_module_power *mp = &dpu_mdss->mp;
+> -	int ret;
+>   
+> -	ret = msm_dss_enable_clk(mp->clk_config, mp->num_clk, false);
+> -	if (ret)
+> -		DPU_ERROR("clock disable failed, ret:%d\n", ret);
+> +	clk_bulk_disable_unprepare(dpu_mdss->num_clocks, dpu_mdss->clocks);
+>   
+> -	return ret;
+> +	return 0;
+>   }
+>   
+>   static void dpu_mdss_destroy(struct drm_device *dev)
 
-Signed-off-by: Sean Anderson <sean.anderson@seco.com>
----
+Hi Dmitry,
 
-(no changes since v1)
+Looks like this is based on some outdated code:
+2027e5b3 (drm/msm: Initialize MDSS irq domain at probe time) changes 
+`*dev` to `*mdss`
 
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+I want to test this patch on some boards (namely RB3 and RB5). Can you 
+release a version with your changes rebased on top of the tip of msm-next?
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index 66ec5615651d..a614b9f73e2c 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -743,12 +743,13 @@ dwc_0: usb@8A00000 {
- 				interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
- 				phys = <&qusb_phy_0>, <&usb0_ssphy>;
- 				phy-names = "usb2-phy", "usb3-phy";
-+				clocks = <&xo>;
-+				clock-names = "ref";
- 				tx-fifo-resize;
- 				snps,is-utmi-l1-suspend;
- 				snps,hird-threshold = /bits/ 8 <0x0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_u3_susphy_quirk;
--				snps,ref-clock-period-ns = <0x32>;
- 				dr_mode = "host";
- 			};
- 		};
--- 
-2.25.1
+> @@ -189,7 +185,6 @@ static void dpu_mdss_destroy(struct drm_device *dev)
+>   	struct platform_device *pdev = to_platform_device(dev->dev);
+>   	struct msm_drm_private *priv = dev->dev_private;
+>   	struct dpu_mdss *dpu_mdss = to_dpu_mdss(priv->mdss);
+> -	struct dss_module_power *mp = &dpu_mdss->mp;
+>   	int irq;
+>   
+>   	pm_runtime_suspend(dev->dev);
+> @@ -197,8 +192,6 @@ static void dpu_mdss_destroy(struct drm_device *dev)
+>   	_dpu_mdss_irq_domain_fini(dpu_mdss);
+>   	irq = platform_get_irq(pdev, 0);
+>   	irq_set_chained_handler_and_data(irq, NULL, NULL);
+> -	msm_dss_put_clk(mp->clk_config, mp->num_clk);
+> -	devm_kfree(&pdev->dev, mp->clk_config);
+>   
+>   	if (dpu_mdss->mmio)
+>   		devm_iounmap(&pdev->dev, dpu_mdss->mmio);
+> @@ -217,7 +210,6 @@ int dpu_mdss_init(struct drm_device *dev)
+>   	struct platform_device *pdev = to_platform_device(dev->dev);
+>   	struct msm_drm_private *priv = dev->dev_private;
+>   	struct dpu_mdss *dpu_mdss;
+> -	struct dss_module_power *mp;
+>   	int ret;
+>   	int irq;
+>   
+> @@ -231,12 +223,12 @@ int dpu_mdss_init(struct drm_device *dev)
+>   
+>   	DRM_DEBUG("mapped mdss address space @%pK\n", dpu_mdss->mmio);
+>   
+> -	mp = &dpu_mdss->mp;
+> -	ret = msm_dss_parse_clock(pdev, mp);
+> -	if (ret) {
+> +	ret = msm_parse_clock(pdev, &dpu_mdss->clocks);
+> +	if (ret < 0) {
+>   		DPU_ERROR("failed to parse clocks, ret=%d\n", ret);
+>   		goto clk_parse_err;
+>   	}
+> +	dpu_mdss->num_clocks = ret;
+>   
+>   	dpu_mdss->base.dev = dev;
+>   	dpu_mdss->base.funcs = &mdss_funcs;
+> @@ -263,9 +255,7 @@ int dpu_mdss_init(struct drm_device *dev)
+>   irq_error:
+>   	_dpu_mdss_irq_domain_fini(dpu_mdss);
+>   irq_domain_error:
+> -	msm_dss_put_clk(mp->clk_config, mp->num_clk);
+>   clk_parse_err:
+> -	devm_kfree(&pdev->dev, mp->clk_config);
+>   	if (dpu_mdss->mmio)
+>   		devm_iounmap(&pdev->dev, dpu_mdss->mmio);
+>   	dpu_mdss->mmio = NULL;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c b/drivers/gpu/drm/msm/dp/dp_clk_util.c
+> similarity index 61%
+> rename from drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c
+> rename to drivers/gpu/drm/msm/dp/dp_clk_util.c
+> index 078afc5f5882..44a4fc59ff31 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_clk_util.c
+> @@ -11,7 +11,7 @@
+>   
+>   #include <drm/drm_print.h>
+>   
+> -#include "dpu_io_util.h"
+> +#include "dp_clk_util.h"
+>   
+>   void msm_dss_put_clk(struct dss_clk *clk_arry, int num_clk)
+>   {
+> @@ -118,70 +118,3 @@ int msm_dss_enable_clk(struct dss_clk *clk_arry, int num_clk, int enable)
+>   
+>   	return rc;
+>   }
+> -
+> -int msm_dss_parse_clock(struct platform_device *pdev,
+> -			struct dss_module_power *mp)
+> -{
+> -	u32 i, rc = 0;
+> -	const char *clock_name;
+> -	int num_clk = 0;
+> -
+> -	if (!pdev || !mp)
+> -		return -EINVAL;
+> -
+> -	mp->num_clk = 0;
+> -	num_clk = of_property_count_strings(pdev->dev.of_node, "clock-names");
+> -	if (num_clk <= 0) {
+> -		pr_debug("clocks are not defined\n");
+> -		return 0;
+> -	}
+> -
+> -	mp->clk_config = devm_kcalloc(&pdev->dev,
+> -				      num_clk, sizeof(struct dss_clk),
+> -				      GFP_KERNEL);
+> -	if (!mp->clk_config)
+> -		return -ENOMEM;
+> -
+> -	for (i = 0; i < num_clk; i++) {
+> -		rc = of_property_read_string_index(pdev->dev.of_node,
+> -						   "clock-names", i,
+> -						   &clock_name);
+> -		if (rc) {
+> -			DRM_DEV_ERROR(&pdev->dev, "Failed to get clock name for %d\n",
+> -				i);
+> -			break;
+> -		}
+> -		strlcpy(mp->clk_config[i].clk_name, clock_name,
+> -			sizeof(mp->clk_config[i].clk_name));
+> -
+> -		mp->clk_config[i].type = DSS_CLK_AHB;
+> -	}
+> -
+> -	rc = msm_dss_get_clk(&pdev->dev, mp->clk_config, num_clk);
+> -	if (rc) {
+> -		DRM_DEV_ERROR(&pdev->dev, "Failed to get clock refs %d\n", rc);
+> -		goto err;
+> -	}
+> -
+> -	rc = of_clk_set_defaults(pdev->dev.of_node, false);
+> -	if (rc) {
+> -		DRM_DEV_ERROR(&pdev->dev, "Failed to set clock defaults %d\n", rc);
+> -		goto err;
+> -	}
+> -
+> -	for (i = 0; i < num_clk; i++) {
+> -		u32 rate = clk_get_rate(mp->clk_config[i].clk);
+> -		if (!rate)
+> -			continue;
+> -		mp->clk_config[i].rate = rate;
+> -		mp->clk_config[i].type = DSS_CLK_PCLK;
+> -		mp->clk_config[i].max_rate = rate;
+> -	}
+> -
+> -	mp->num_clk = num_clk;
+> -	return 0;
+> -
+> -err:
+> -	msm_dss_put_clk(mp->clk_config, num_clk);
+> -	return rc;
+> -}
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.h b/drivers/gpu/drm/msm/dp/dp_clk_util.h
+> similarity index 92%
+> rename from drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.h
+> rename to drivers/gpu/drm/msm/dp/dp_clk_util.h
+> index e6b5c772fa3b..6288a2833a58 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_clk_util.h
+> @@ -35,6 +35,4 @@ int msm_dss_get_clk(struct device *dev, struct dss_clk *clk_arry, int num_clk);
+>   void msm_dss_put_clk(struct dss_clk *clk_arry, int num_clk);
+>   int msm_dss_clk_set_rate(struct dss_clk *clk_arry, int num_clk);
+>   int msm_dss_enable_clk(struct dss_clk *clk_arry, int num_clk, int enable);
+> -int msm_dss_parse_clock(struct platform_device *pdev,
+> -		struct dss_module_power *mp);
+>   #endif /* __DPU_IO_UTIL_H__ */
+> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
+> index 3172da089421..094b39bfed8c 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_parser.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_parser.h
+> @@ -10,7 +10,7 @@
+>   #include <linux/phy/phy.h>
+>   #include <linux/phy/phy-dp.h>
+>   
+> -#include "dpu_io_util.h"
+> +#include "dp_clk_util.h"
+>   #include "msm_drv.h"
+>   
+>   #define DP_LABEL "MDSS DP DISPLAY"
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index 892c04365239..3e90fca33581 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -5,6 +5,7 @@
+>    * Author: Rob Clark <robdclark@gmail.com>
+>    */
+>   
+> +#include <linux/clk/clk-conf.h>
+>   #include <linux/dma-mapping.h>
+>   #include <linux/kthread.h>
+>   #include <linux/sched/mm.h>
+> @@ -123,6 +124,54 @@ struct clk *msm_clk_get(struct platform_device *pdev, const char *name)
+>   	return clk;
+>   }
+>   
+> +int msm_parse_clock(struct platform_device *pdev, struct clk_bulk_data **clocks)
 
+Can you also move msm_parse_clock and other io helper methods (like 
+_msm_ioremap) into a separate msm_io_utils file instead? That would help 
+avoid file bloat.
+
+Thanks,
+
+Jessica Zhang
+
+> +{
+> +	u32 i, rc = 0;
+> +	const char *clock_name;
+> +	struct clk_bulk_data *bulk;
+> +	int num_clk = 0;
+> +
+> +	if (!pdev)
+> +		return -EINVAL;
+> +
+> +	num_clk = of_property_count_strings(pdev->dev.of_node, "clock-names");
+> +	if (num_clk <= 0) {
+> +		pr_debug("clocks are not defined\n");
+> +		return 0;
+> +	}
+> +
+> +	bulk = devm_kcalloc(&pdev->dev, num_clk, sizeof(struct clk_bulk_data), GFP_KERNEL);
+> +	if (!bulk)
+> +		return -ENOMEM;
+> +
+> +	for (i = 0; i < num_clk; i++) {
+> +		rc = of_property_read_string_index(pdev->dev.of_node,
+> +						   "clock-names", i,
+> +						   &clock_name);
+> +		if (rc) {
+> +			DRM_DEV_ERROR(&pdev->dev, "Failed to get clock name for %d\n", i);
+> +			return rc;
+> +		}
+> +		bulk[i].id = devm_kstrdup(&pdev->dev, clock_name, GFP_KERNEL);
+> +	}
+> +
+> +	rc = devm_clk_bulk_get(&pdev->dev, num_clk, bulk);
+> +	if (rc) {
+> +		DRM_DEV_ERROR(&pdev->dev, "Failed to get clock refs %d\n", rc);
+> +		return rc;
+> +	}
+> +
+> +	rc = of_clk_set_defaults(pdev->dev.of_node, false);
+> +	if (rc) {
+> +		DRM_DEV_ERROR(&pdev->dev, "Failed to set clock defaults %d\n", rc);
+> +		return rc;
+> +	}
+> +
+> +	*clocks = bulk;
+> +
+> +	return num_clk;
+> +}
+> +
+>   static void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name,
+>   				  const char *dbgname, bool quiet, phys_addr_t *psize)
+>   {
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index 69952b239384..cfede901056d 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -477,6 +477,7 @@ struct clk *msm_clk_get(struct platform_device *pdev, const char *name);
+>   
+>   struct clk *msm_clk_bulk_get_clock(struct clk_bulk_data *bulk, int count,
+>   	const char *name);
+> +int msm_parse_clock(struct platform_device *pdev, struct clk_bulk_data **clocks);
+>   void __iomem *msm_ioremap(struct platform_device *pdev, const char *name,
+>   		const char *dbgname);
+>   void __iomem *msm_ioremap_size(struct platform_device *pdev, const char *name,
+> -- 
+> 2.33.0
+> 
