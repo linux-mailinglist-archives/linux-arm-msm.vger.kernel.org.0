@@ -2,106 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 83197494C0F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jan 2022 11:50:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 69513494C3A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jan 2022 11:55:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229502AbiATKuj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jan 2022 05:50:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37080 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230467AbiATKqz (ORCPT
+        id S229782AbiATKyH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jan 2022 05:54:07 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:20783 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229526AbiATKyG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jan 2022 05:46:55 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AA20C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 02:46:55 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 00555B81D3C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 10:46:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C28DC340E7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 10:46:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1642675612;
-        bh=k+uQQQF7GQAwh9UXBPTIV58+RXFCR7Pd2Rz5cvZglN4=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=uPp0e8zapeU+w6K2MlVMA+YysP/dabxvXISTGCXtgxNTb/koXAF/FRfWvFOGAkKKG
-         jKjhqTLxU5wAL0g6IaaFqHgewabyt/8yxAhePV+hKSh3ba8ymnqjIYfRvzcvipVFBJ
-         plsi4FeXJNaGjaKYDFYDCm1qo7n2jBWL5Jlqq8cNLzwoWl9kIwajIpe9ZDuBDAxH2r
-         iuKeoYLX5i0Mo3YMqbNBeMP8feKun39YZPpPG11Yww7J65CW1GNmYsHa9zdlgWse9u
-         RVffbV/a2yRNEioBNtepigXjQHo61Eeq5FtaK6b5zSrLFuc36JRWNw96YBEJlfLUOZ
-         QCu0UbDXYKxOw==
-Received: by mail-lf1-f48.google.com with SMTP id b14so20043466lff.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 02:46:52 -0800 (PST)
-X-Gm-Message-State: AOAM530mCAgsAAxipHF7CI6XEC88U2huhaydu8+7TIPtadFkR+8IrlNC
-        ThZ7R6/pmhfvo6b2DCAmzqG4SO+rnK23+TeORNyruQ==
-X-Google-Smtp-Source: ABdhPJxHdz1sSl6DZamoq/5yN4GrTCEPRNTOuwn+s5//0QZBhQs+EYn7MaYBJxodo/VLzLE3tdxyE6IZ171L2SljYfY=
-X-Received: by 2002:a2e:904e:: with SMTP id n14mr29339084ljg.28.1642675610651;
- Thu, 20 Jan 2022 02:46:50 -0800 (PST)
+        Thu, 20 Jan 2022 05:54:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1642676046; x=1674212046;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=OQxEySdr4f1nr1SBYHxpL92c8SRLaP68TBUursFakxg=;
+  b=k0uhan7wA1J/TqCRb06WRcaYOEL38yKZA/Fnh1fEVfBubfqrDBgHwkLl
+   JR5rEREwWaY+v0sqrwyKDvOKVPhvqlPw60AetnN9AnkE4dXgnpR0G0SAW
+   4AZUq9cpAod+JhyeyUkE5gqwx/y3UuxgzZ4zfxWk/7gRGJvygiYar3G+f
+   8=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 20 Jan 2022 02:54:05 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2022 02:54:05 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 20 Jan 2022 02:54:05 -0800
+Received: from [10.216.6.136] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 20 Jan
+ 2022 02:53:59 -0800
+Message-ID: <816df5c9-aa89-e019-4036-6c9a79e534bd@quicinc.com>
+Date:   Thu, 20 Jan 2022 16:23:52 +0530
 MIME-Version: 1.0
-References: <20220114095529.1754065-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220114095529.1754065-1-dmitry.baryshkov@linaro.org>
-From:   Amit Kucheria <amitk@kernel.org>
-Date:   Thu, 20 Jan 2022 16:16:39 +0530
-X-Gmail-Original-Message-ID: <CAHLCerOJQ_rf+dz8BE9YqK_X7YfJMO9VoEVXedkrkRrn1Ef8+w@mail.gmail.com>
-Message-ID: <CAHLCerOJQ_rf+dz8BE9YqK_X7YfJMO9VoEVXedkrkRrn1Ef8+w@mail.gmail.com>
-Subject: Re: [PATCH] thermal/drivers/tsens: register thermal zones as hwmon sensors
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Linux PM list <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sm8150: Add pdc interrupt
+ controller node
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>
+CC:     <bhupesh.linux@gmail.com>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <robh+dt@kernel.org>,
+        <linux-gpio@vger.kernel.org>, <linus.walleij@linaro.org>,
+        <bjorn.andersson@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh@kernel.org>
+References: <20220119203133.467264-1-bhupesh.sharma@linaro.org>
+ <20220119203133.467264-4-bhupesh.sharma@linaro.org>
+From:   Maulik Shah <quic_mkshah@quicinc.com>
+In-Reply-To: <20220119203133.467264-4-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jan 14, 2022 at 3:25 PM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
+Hi,
+
+On 1/20/2022 2:01 AM, Bhupesh Sharma wrote:
+> Add pdc interrupt controller for sm8150.
 >
-> Register thermal zones as hwmon sensors to let userspace read
-> temperatures using standard hwmon interface.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Cc: Rob Herring <robh@kernel.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 > ---
->  drivers/thermal/qcom/tsens.c | 5 +++++
->  1 file changed, 5 insertions(+)
+>   arch/arm64/boot/dts/qcom/sm8150.dtsi | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
 >
-> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> index 99a8d9f3e03c..c13093e8a642 100644
-> --- a/drivers/thermal/qcom/tsens.c
-> +++ b/drivers/thermal/qcom/tsens.c
-> @@ -19,6 +19,7 @@
->  #include <linux/slab.h>
->  #include <linux/thermal.h>
->  #include "tsens.h"
-> +#include "../thermal_hwmon.h"
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> index 6012322a5984..cc4dc11b2585 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -1626,6 +1626,16 @@ system-cache-controller@9200000 {
+>   			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+>   		};
+>   
+> +		pdc: interrupt-controller@b220000 {
+> +			compatible = "qcom,sm8150-pdc", "qcom,pdc";
+> +			reg = <0 0x0b220000 0 0x400>, <0 0x17c000f0 0 0x60>;
 
-Just a nit, but can you move this above the tsen.h along with other
-system headers?
+<0x17c000f0 0x64>;
 
-With that, feel free to add
+Remove the second reg, its not used in the driver and also not 
+documented yet.
 
-Acked-by: Amit Kucheria <amitk@kernel.org>
-
->
->  /**
->   * struct tsens_irq_data - IRQ status and temperature violations
-> @@ -1060,6 +1061,10 @@ static int tsens_register(struct tsens_priv *priv)
->                 priv->sensor[i].tzd = tzd;
->                 if (priv->ops->enable)
->                         priv->ops->enable(priv, i);
+Thanks,
+Maulik
+> +			qcom,pdc-ranges = <0 480 94>, <94 609 31>,
+> +					  <125 63 1>;
+> +			#interrupt-cells = <2>;
+> +			interrupt-parent = <&intc>;
+> +			interrupt-controller;
+> +		};
 > +
-> +               if (devm_thermal_add_hwmon_sysfs(tzd))
-> +                       dev_warn(priv->dev,
-> +                                "Failed to add hwmon sysfs attributes\n");
->         }
->
->         /* VER_0 require to set MIN and MAX THRESH
-> --
-> 2.34.1
->
+>   		ufs_mem_hc: ufshc@1d84000 {
+>   			compatible = "qcom,sm8150-ufshc", "qcom,ufshc",
+>   				     "jedec,ufs-2.0";
