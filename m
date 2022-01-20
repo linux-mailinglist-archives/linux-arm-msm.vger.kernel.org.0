@@ -2,172 +2,357 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EE4CA4944B3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jan 2022 01:34:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D7744945BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jan 2022 03:17:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357813AbiATAev (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jan 2022 19:34:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41748 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357876AbiATAeo (ORCPT
+        id S231945AbiATCRd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jan 2022 21:17:33 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:49395 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229875AbiATCRd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jan 2022 19:34:44 -0500
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5681C061574
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 16:34:43 -0800 (PST)
-Received: by mail-oi1-x235.google.com with SMTP id e81so7037680oia.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 16:34:43 -0800 (PST)
+        Wed, 19 Jan 2022 21:17:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=PQWbtRSfMI7cW/DhHLCe9Ue9Xg2UF+u+efuIrUmVbXc=;
-        b=HY3JN2cYz9Vn+FroIekigaULfIoV0MBiYUnhUW5W/kBL8/hfrYf5Jy4nth38EXvVK8
-         0Wl1B4dLorFOSy2vffyfMSw5ACZeqefyfeEMjpTRGh1XuLmVoOHTq87i/wSUDHRhJhuh
-         iE5oSDnoNHiekVZp7mUdC1+tJ3U07RVgk5NVsXc5zOUAMhc2hE8y4oHwsbK+Ax1v/C/w
-         EaHtQChiDQyzp27QCjBPKmhUwwFUciWdrQKXhHla8PrCmjyqExQIA/G9Wfnzp/JqOw+N
-         LTmok3Ulqvj7JDHCgzIOGu9vvtlpM7hhl5PZ8u2m1L+r99GK6Pj0sVRFFAC6bFXhbRWm
-         mg4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=PQWbtRSfMI7cW/DhHLCe9Ue9Xg2UF+u+efuIrUmVbXc=;
-        b=w1LdH62PfJ8bSxrmzxZP3h1EUhhhZuqAlEUZhzMY1L+RiNq9xfD7/crI6Ucpe29ekm
-         iMwn4I0D7SFjrVnPpbBAf+6A2suO94OwT9weaQP2XpV4hn82F/n9vxm/DvxX88e1U3RF
-         k4MMn9sm2JCsz4xC9FJIfW/fq7e9LgTSFTFYFs8oM+KoxCvfmyuPcEJYcJ6gehFcj0vJ
-         NPnuEbK+r8IqKxELisqEvWmI5BrNXsBAoMYTQWNeJ5H3tEJq8OSAokNC7xAMp0aGw5xQ
-         pVGKJYFAImbL8rmgi7250V3TfPI2KutHhCHLxu9mXhqn3a3IMsY2P2v9O1iLLMEP45uu
-         OLkw==
-X-Gm-Message-State: AOAM530rD3hf6GqrX0iGjR06HOMkdnIxR4VIbaA3sL3NDx4IJmvk5HtT
-        1uO/TCeOnrs798iP10cyNBwp4x0bhqu5mg==
-X-Google-Smtp-Source: ABdhPJx52YvWMWkLgw7UPU1nTlyknc2cYQgXvX5a70ux3nqbMHpQ68EKdDORSWSHJkxbWRxIQV39MQ==
-X-Received: by 2002:a05:6808:999:: with SMTP id a25mr5520344oic.75.1642638883193;
-        Wed, 19 Jan 2022 16:34:43 -0800 (PST)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id v27sm569715ots.62.2022.01.19.16.34.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jan 2022 16:34:42 -0800 (PST)
-Date:   Wed, 19 Jan 2022 16:35:17 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Benjamin Li <benl@squareup.com>
-Cc:     Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] drivers: thermal: tsens: respect thermal_device_mode
- in threshold irq reporting
-Message-ID: <YeiuRXFR1yer9vxe@ripper>
-References: <20220114031730.25621-1-benl@squareup.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1642645053; x=1674181053;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=n9B3OZZYXrUobwS6/6oXjyZOzv1XIJzd2Yny6GbWnVk=;
+  b=TDwnqSqS/ffrENaXnEQCfs1DBhq5GIWbKY0JBJ72G9jARnuBTGRc1IH0
+   9OfvEuU+GXGQ0CPakNSIplH7QueWfVcLgAI1QswsXpeARguiWTuKSs7L0
+   pZGxh3j8OyNp4GAHi+OWGn2oNwzrAE8MOnkqzJRvzt9X/JvQdmQOiphvr
+   Y=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 19 Jan 2022 18:17:32 -0800
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jan 2022 18:17:32 -0800
+Received: from [10.71.111.172] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Wed, 19 Jan
+ 2022 18:17:32 -0800
+Message-ID: <cc54a962-253b-c764-8439-60ba08159e9a@quicinc.com>
+Date:   Wed, 19 Jan 2022 18:17:31 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220114031730.25621-1-benl@squareup.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [Freedreno] [PATCH v3 1/3] drm/msm: move utility functions from
+ msm_drv.c
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+CC:     David Airlie <airlied@linux.ie>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        "Daniel Vetter" <daniel@ffwll.ch>,
+        <freedreno@lists.freedesktop.org>
+References: <20220119221616.3089119-1-dmitry.baryshkov@linaro.org>
+ <20220119221616.3089119-2-dmitry.baryshkov@linaro.org>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20220119221616.3089119-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 13 Jan 19:17 PST 2022, Benjamin Li wrote:
 
-> 'echo disabled > .../thermal_zoneX/mode' will disable the thermal core's
-> polling mechanism to check for threshold trips. This is used sometimes to
-> run performance test cases.
+
+On 1/19/2022 2:16 PM, Dmitry Baryshkov wrote:
+> Move clock/IO/hrtimer utility functions from msm_drv.c to new
+> msm_io_utils.c file.
 > 
-> However, tsens supports an interrupt mechanism to receive notification of
-> trips, implemented in commit 634e11d5b450 ("drivers: thermal: tsens: Add
-> interrupt support").
-> 
-> Currently the thermal zone mode that's set by userspace is not checked
-> before propagating threshold trip events from IRQs. Let's fix this to
-> restore the abilty to disable thermal throttling at runtime.
-> 
-> ====================
-> 
-> Tested on MSM8939 running 5.16.0. This platform has 8 cores; the first
-> four thermal zones control cpu0-3 and the last zone is for the other four
-> CPUs together.
-> 
->   for f in /sys/class/thermal/thermal_zone*; do
->     echo "disabled" > $f/mode
->     echo $f | paste - $f/type $f/mode
->   done
-> 
-> /sys/class/thermal/thermal_zone0	cpu0-thermal	disabled
-> /sys/class/thermal/thermal_zone1	cpu1-thermal	disabled
-> /sys/class/thermal/thermal_zone2	cpu2-thermal	disabled
-> /sys/class/thermal/thermal_zone3	cpu3-thermal	disabled
-> /sys/class/thermal/thermal_zone4	cpu4567-thermal	disabled
-> 
-> With mitigation thresholds at 75 degC and load running, we can now cruise
-> past temp=75000 without CPU throttling kicking in.
-> 
->   watch -n 1 "grep '' /sys/class/thermal/*/temp
->       /sys/class/thermal/*/cur_state
->       /sys/bus/cpu/devices/cpu*/cpufreq/cpuinfo_cur_freq"
-> 
-> /sys/class/thermal/thermal_zone0/temp:82000
-> /sys/class/thermal/thermal_zone1/temp:84000
-> /sys/class/thermal/thermal_zone2/temp:87000
-> /sys/class/thermal/thermal_zone3/temp:84000
-> /sys/class/thermal/thermal_zone4/temp:84000
-> /sys/class/thermal/cooling_device0/cur_state:0
-> /sys/class/thermal/cooling_device1/cur_state:0
-> /sys/bus/cpu/devices/cpu0/cpufreq/cpuinfo_cur_freq:1113600
-> /sys/bus/cpu/devices/cpu1/cpufreq/cpuinfo_cur_freq:1113600
-> /sys/bus/cpu/devices/cpu2/cpufreq/cpuinfo_cur_freq:1113600
-> /sys/bus/cpu/devices/cpu3/cpufreq/cpuinfo_cur_freq:1113600
-> /sys/bus/cpu/devices/cpu4/cpufreq/cpuinfo_cur_freq:800000
-> /sys/bus/cpu/devices/cpu5/cpufreq/cpuinfo_cur_freq:800000
-> /sys/bus/cpu/devices/cpu6/cpufreq/cpuinfo_cur_freq:800000
-> /sys/bus/cpu/devices/cpu7/cpufreq/cpuinfo_cur_freq:800000
-> 
-> Reported-by: Zac Crosby <zac@squareup.com>
-> Signed-off-by: Benjamin Li <benl@squareup.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Tested on: Qualcomm RB3 (debian, sdm845), Qualcomm RB5 (debian, qrb5165)
+
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+
 > ---
-> Changes in v2:
-> - Reordered sentences in first part of commit message to make sense.
-
-Didn't spot the v2 before replying to v1, still looks good :)
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-
+>   drivers/gpu/drm/msm/Makefile       |   1 +
+>   drivers/gpu/drm/msm/msm_drv.c      | 118 ---------------------------
+>   drivers/gpu/drm/msm/msm_io_utils.c | 126 +++++++++++++++++++++++++++++
+>   3 files changed, 127 insertions(+), 118 deletions(-)
+>   create mode 100644 drivers/gpu/drm/msm/msm_io_utils.c
 > 
->  drivers/thermal/qcom/tsens.c | 15 +++++++++------
->  1 file changed, 9 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> index 99a8d9f3e03c..0b6299512e7c 100644
-> --- a/drivers/thermal/qcom/tsens.c
-> +++ b/drivers/thermal/qcom/tsens.c
-> @@ -509,13 +509,16 @@ static irqreturn_t tsens_irq_thread(int irq, void *data)
->  		spin_unlock_irqrestore(&priv->ul_lock, flags);
->  
->  		if (trigger) {
-> -			dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
-> -				hw_id, __func__, temp);
-> -			thermal_zone_device_update(s->tzd,
-> -						   THERMAL_EVENT_UNSPECIFIED);
-> +			if (s->tzd->mode == THERMAL_DEVICE_ENABLED) {
-> +				dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
-> +					hw_id, __func__, temp);
-> +				thermal_zone_device_update(s->tzd, THERMAL_EVENT_UNSPECIFIED);
-> +			} else {
-> +				dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC) skipped as zone disabled\n",
-> +					hw_id, __func__, temp);
-> +			}
->  		} else {
-> -			dev_dbg(priv->dev, "[%u] %s: no violation:  %d\n",
-> -				hw_id, __func__, temp);
-> +			dev_dbg(priv->dev, "[%u] %s: no violation:  %d\n", hw_id, __func__, temp);
->  		}
->  
->  		if (tsens_version(priv) < VER_0_1) {
+> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+> index 03ab55c37beb..5b6e37477079 100644
+> --- a/drivers/gpu/drm/msm/Makefile
+> +++ b/drivers/gpu/drm/msm/Makefile
+> @@ -87,6 +87,7 @@ msm-y := \
+>   	msm_gem_vma.o \
+>   	msm_gpu.o \
+>   	msm_gpu_devfreq.o \
+> +	msm_io_utils.o \
+>   	msm_iommu.o \
+>   	msm_perf.o \
+>   	msm_rd.o \
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index fd62a4da14a1..30c44c395a24 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -75,124 +75,6 @@ static bool modeset = true;
+>   MODULE_PARM_DESC(modeset, "Use kernel modesetting [KMS] (1=on (default), 0=disable)");
+>   module_param(modeset, bool, 0600);
+>   
+> -/*
+> - * Util/helpers:
+> - */
+> -
+> -struct clk *msm_clk_bulk_get_clock(struct clk_bulk_data *bulk, int count,
+> -		const char *name)
+> -{
+> -	int i;
+> -	char n[32];
+> -
+> -	snprintf(n, sizeof(n), "%s_clk", name);
+> -
+> -	for (i = 0; bulk && i < count; i++) {
+> -		if (!strcmp(bulk[i].id, name) || !strcmp(bulk[i].id, n))
+> -			return bulk[i].clk;
+> -	}
+> -
+> -
+> -	return NULL;
+> -}
+> -
+> -struct clk *msm_clk_get(struct platform_device *pdev, const char *name)
+> -{
+> -	struct clk *clk;
+> -	char name2[32];
+> -
+> -	clk = devm_clk_get(&pdev->dev, name);
+> -	if (!IS_ERR(clk) || PTR_ERR(clk) == -EPROBE_DEFER)
+> -		return clk;
+> -
+> -	snprintf(name2, sizeof(name2), "%s_clk", name);
+> -
+> -	clk = devm_clk_get(&pdev->dev, name2);
+> -	if (!IS_ERR(clk))
+> -		dev_warn(&pdev->dev, "Using legacy clk name binding.  Use "
+> -				"\"%s\" instead of \"%s\"\n", name, name2);
+> -
+> -	return clk;
+> -}
+> -
+> -static void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name,
+> -				  bool quiet, phys_addr_t *psize)
+> -{
+> -	struct resource *res;
+> -	unsigned long size;
+> -	void __iomem *ptr;
+> -
+> -	if (name)
+> -		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
+> -	else
+> -		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> -
+> -	if (!res) {
+> -		if (!quiet)
+> -			DRM_DEV_ERROR(&pdev->dev, "failed to get memory resource: %s\n", name);
+> -		return ERR_PTR(-EINVAL);
+> -	}
+> -
+> -	size = resource_size(res);
+> -
+> -	ptr = devm_ioremap(&pdev->dev, res->start, size);
+> -	if (!ptr) {
+> -		if (!quiet)
+> -			DRM_DEV_ERROR(&pdev->dev, "failed to ioremap: %s\n", name);
+> -		return ERR_PTR(-ENOMEM);
+> -	}
+> -
+> -	if (psize)
+> -		*psize = size;
+> -
+> -	return ptr;
+> -}
+> -
+> -void __iomem *msm_ioremap(struct platform_device *pdev, const char *name)
+> -{
+> -	return _msm_ioremap(pdev, name, false, NULL);
+> -}
+> -
+> -void __iomem *msm_ioremap_quiet(struct platform_device *pdev, const char *name)
+> -{
+> -	return _msm_ioremap(pdev, name, true, NULL);
+> -}
+> -
+> -void __iomem *msm_ioremap_size(struct platform_device *pdev, const char *name,
+> -			  phys_addr_t *psize)
+> -{
+> -	return _msm_ioremap(pdev, name, false, psize);
+> -}
+> -
+> -static enum hrtimer_restart msm_hrtimer_worktimer(struct hrtimer *t)
+> -{
+> -	struct msm_hrtimer_work *work = container_of(t,
+> -			struct msm_hrtimer_work, timer);
+> -
+> -	kthread_queue_work(work->worker, &work->work);
+> -
+> -	return HRTIMER_NORESTART;
+> -}
+> -
+> -void msm_hrtimer_queue_work(struct msm_hrtimer_work *work,
+> -			    ktime_t wakeup_time,
+> -			    enum hrtimer_mode mode)
+> -{
+> -	hrtimer_start(&work->timer, wakeup_time, mode);
+> -}
+> -
+> -void msm_hrtimer_work_init(struct msm_hrtimer_work *work,
+> -			   struct kthread_worker *worker,
+> -			   kthread_work_func_t fn,
+> -			   clockid_t clock_id,
+> -			   enum hrtimer_mode mode)
+> -{
+> -	hrtimer_init(&work->timer, clock_id, mode);
+> -	work->timer.function = msm_hrtimer_worktimer;
+> -	work->worker = worker;
+> -	kthread_init_work(&work->work, fn);
+> -}
+> -
+>   static irqreturn_t msm_irq(int irq, void *arg)
+>   {
+>   	struct drm_device *dev = arg;
+> diff --git a/drivers/gpu/drm/msm/msm_io_utils.c b/drivers/gpu/drm/msm/msm_io_utils.c
+> new file mode 100644
+> index 000000000000..7b504617833a
+> --- /dev/null
+> +++ b/drivers/gpu/drm/msm/msm_io_utils.c
+> @@ -0,0 +1,126 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2016-2018, 2020-2021 The Linux Foundation. All rights reserved.
+> + * Copyright (C) 2013 Red Hat
+> + * Author: Rob Clark <robdclark@gmail.com>
+> + */
+> +
+> +#include "msm_drv.h"
+> +
+> +/*
+> + * Util/helpers:
+> + */
+> +
+> +struct clk *msm_clk_bulk_get_clock(struct clk_bulk_data *bulk, int count,
+> +		const char *name)
+> +{
+> +	int i;
+> +	char n[32];
+> +
+> +	snprintf(n, sizeof(n), "%s_clk", name);
+> +
+> +	for (i = 0; bulk && i < count; i++) {
+> +		if (!strcmp(bulk[i].id, name) || !strcmp(bulk[i].id, n))
+> +			return bulk[i].clk;
+> +	}
+> +
+> +
+> +	return NULL;
+> +}
+> +
+> +struct clk *msm_clk_get(struct platform_device *pdev, const char *name)
+> +{
+> +	struct clk *clk;
+> +	char name2[32];
+> +
+> +	clk = devm_clk_get(&pdev->dev, name);
+> +	if (!IS_ERR(clk) || PTR_ERR(clk) == -EPROBE_DEFER)
+> +		return clk;
+> +
+> +	snprintf(name2, sizeof(name2), "%s_clk", name);
+> +
+> +	clk = devm_clk_get(&pdev->dev, name2);
+> +	if (!IS_ERR(clk))
+> +		dev_warn(&pdev->dev, "Using legacy clk name binding.  Use "
+> +				"\"%s\" instead of \"%s\"\n", name, name2);
+> +
+> +	return clk;
+> +}
+> +
+> +static void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name,
+> +				  bool quiet, phys_addr_t *psize)
+> +{
+> +	struct resource *res;
+> +	unsigned long size;
+> +	void __iomem *ptr;
+> +
+> +	if (name)
+> +		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
+> +	else
+> +		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +
+> +	if (!res) {
+> +		if (!quiet)
+> +			DRM_DEV_ERROR(&pdev->dev, "failed to get memory resource: %s\n", name);
+> +		return ERR_PTR(-EINVAL);
+> +	}
+> +
+> +	size = resource_size(res);
+> +
+> +	ptr = devm_ioremap(&pdev->dev, res->start, size);
+> +	if (!ptr) {
+> +		if (!quiet)
+> +			DRM_DEV_ERROR(&pdev->dev, "failed to ioremap: %s\n", name);
+> +		return ERR_PTR(-ENOMEM);
+> +	}
+> +
+> +	if (psize)
+> +		*psize = size;
+> +
+> +	return ptr;
+> +}
+> +
+> +void __iomem *msm_ioremap(struct platform_device *pdev, const char *name)
+> +{
+> +	return _msm_ioremap(pdev, name, false, NULL);
+> +}
+> +
+> +void __iomem *msm_ioremap_quiet(struct platform_device *pdev, const char *name)
+> +{
+> +	return _msm_ioremap(pdev, name, true, NULL);
+> +}
+> +
+> +void __iomem *msm_ioremap_size(struct platform_device *pdev, const char *name,
+> +			  phys_addr_t *psize)
+> +{
+> +	return _msm_ioremap(pdev, name, false, psize);
+> +}
+> +
+> +static enum hrtimer_restart msm_hrtimer_worktimer(struct hrtimer *t)
+> +{
+> +	struct msm_hrtimer_work *work = container_of(t,
+> +			struct msm_hrtimer_work, timer);
+> +
+> +	kthread_queue_work(work->worker, &work->work);
+> +
+> +	return HRTIMER_NORESTART;
+> +}
+> +
+> +void msm_hrtimer_queue_work(struct msm_hrtimer_work *work,
+> +			    ktime_t wakeup_time,
+> +			    enum hrtimer_mode mode)
+> +{
+> +	hrtimer_start(&work->timer, wakeup_time, mode);
+> +}
+> +
+> +void msm_hrtimer_work_init(struct msm_hrtimer_work *work,
+> +			   struct kthread_worker *worker,
+> +			   kthread_work_func_t fn,
+> +			   clockid_t clock_id,
+> +			   enum hrtimer_mode mode)
+> +{
+> +	hrtimer_init(&work->timer, clock_id, mode);
+> +	work->timer.function = msm_hrtimer_worktimer;
+> +	work->worker = worker;
+> +	kthread_init_work(&work->work, fn);
+> +}
 > -- 
-> 2.17.1
+> 2.34.1
 > 
