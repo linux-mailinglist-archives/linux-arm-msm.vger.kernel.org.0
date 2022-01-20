@@ -2,116 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B7E23494BC7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jan 2022 11:32:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 83197494C0F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jan 2022 11:50:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376314AbiATKcx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jan 2022 05:32:53 -0500
-Received: from guitar.tcltek.co.il ([84.110.109.230]:55517 "EHLO mx.tkos.co.il"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1359851AbiATKcx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jan 2022 05:32:53 -0500
-Received: from tarshish (unknown [10.0.8.4])
+        id S229502AbiATKuj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jan 2022 05:50:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37080 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230467AbiATKqz (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Jan 2022 05:46:55 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AA20C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 02:46:55 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mx.tkos.co.il (Postfix) with ESMTPS id A83A7440EC4;
-        Thu, 20 Jan 2022 12:32:41 +0200 (IST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tkos.co.il;
-        s=default; t=1642674762;
-        bh=vLMmNW2zYd4cs+GrkWWq8UgDVQ4AcyicuNf3Ub6yOBM=;
-        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
-        b=PJf4vnRUn6ZMWWDokawzeHfIXZb+pppxcGRJUNB62fmaSCRCX1CIDwvyWLchN9dcS
-         ksNv22a841TrpPPvuXRhs33vKx/wGpP2FcVXCh2H23lq2D7cm4ekodRlbHLM0s4yTq
-         w4dyVJO2mveUsYlfzvcdJmT+HFsA+IESJTzoTG/vijQQqu0cUkcFoKyX3t43p0vgnR
-         feBJMrb6PkY+rxk7evREegEIXqaDZtBn+zOFns93Xfi0sjklWOvMNaD9oa9/OkQmte
-         52PgdUQkfhMVQ+vPQuIsztHuTzwSPlG5U+bW9ExUdkO8aRuJh23kDqzx+31wzz0JfK
-         AdCw9SLMbl//g==
-References: <20220119002438.106079-1-sean.anderson@seco.com>
- <87ee53fv01.fsf@tarshish>
- <1965fc315525b8ab26cf9f71f939c24d@codeaurora.org>
-User-agent: mu4e 1.6.10; emacs 27.1
-From:   Baruch Siach <baruch@tkos.co.il>
-To:     Kathiravan T <kathirav@codeaurora.org>
-Cc:     Sean Anderson <sean.anderson@seco.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-usb@vger.kernel.org, Felipe Balbi <balbi@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        linux-kernel@vger.kernel.org,
-        Robert Hancock <robert.hancock@calian.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 0/7] usb: dwc3: Calculate REFCLKPER et. al. from
- reference clock
-Date:   Thu, 20 Jan 2022 12:29:32 +0200
-In-reply-to: <1965fc315525b8ab26cf9f71f939c24d@codeaurora.org>
-Message-ID: <871r12g0j2.fsf@tarshish>
+        by ams.source.kernel.org (Postfix) with ESMTPS id 00555B81D3C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 10:46:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C28DC340E7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 10:46:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1642675612;
+        bh=k+uQQQF7GQAwh9UXBPTIV58+RXFCR7Pd2Rz5cvZglN4=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=uPp0e8zapeU+w6K2MlVMA+YysP/dabxvXISTGCXtgxNTb/koXAF/FRfWvFOGAkKKG
+         jKjhqTLxU5wAL0g6IaaFqHgewabyt/8yxAhePV+hKSh3ba8ymnqjIYfRvzcvipVFBJ
+         plsi4FeXJNaGjaKYDFYDCm1qo7n2jBWL5Jlqq8cNLzwoWl9kIwajIpe9ZDuBDAxH2r
+         iuKeoYLX5i0Mo3YMqbNBeMP8feKun39YZPpPG11Yww7J65CW1GNmYsHa9zdlgWse9u
+         RVffbV/a2yRNEioBNtepigXjQHo61Eeq5FtaK6b5zSrLFuc36JRWNw96YBEJlfLUOZ
+         QCu0UbDXYKxOw==
+Received: by mail-lf1-f48.google.com with SMTP id b14so20043466lff.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 02:46:52 -0800 (PST)
+X-Gm-Message-State: AOAM530mCAgsAAxipHF7CI6XEC88U2huhaydu8+7TIPtadFkR+8IrlNC
+        ThZ7R6/pmhfvo6b2DCAmzqG4SO+rnK23+TeORNyruQ==
+X-Google-Smtp-Source: ABdhPJxHdz1sSl6DZamoq/5yN4GrTCEPRNTOuwn+s5//0QZBhQs+EYn7MaYBJxodo/VLzLE3tdxyE6IZ171L2SljYfY=
+X-Received: by 2002:a2e:904e:: with SMTP id n14mr29339084ljg.28.1642675610651;
+ Thu, 20 Jan 2022 02:46:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20220114095529.1754065-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220114095529.1754065-1-dmitry.baryshkov@linaro.org>
+From:   Amit Kucheria <amitk@kernel.org>
+Date:   Thu, 20 Jan 2022 16:16:39 +0530
+X-Gmail-Original-Message-ID: <CAHLCerOJQ_rf+dz8BE9YqK_X7YfJMO9VoEVXedkrkRrn1Ef8+w@mail.gmail.com>
+Message-ID: <CAHLCerOJQ_rf+dz8BE9YqK_X7YfJMO9VoEVXedkrkRrn1Ef8+w@mail.gmail.com>
+Subject: Re: [PATCH] thermal/drivers/tsens: register thermal zones as hwmon sensors
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Kathiravan,
-
-On Thu, Jan 20 2022, Kathiravan T wrote:
-> On 2022-01-19 23:44, Baruch Siach wrote:
->> Hi Sean,
->> On Tue, Jan 18 2022, Sean Anderson wrote:
->>> This is a rework of patches 3-5 of [1]. It attempts to correctly program
->>> REFCLKPER and REFCLK_FLADJ based on the reference clock frequency. Since
->>> we no longer need a special property duplicating this configuration,
->>> snps,ref-clock-period-ns is deprecated.
->>> Please test this! Patches 3/4 in this series have the effect of
->>> programming REFCLKPER and REFCLK_FLADJ on boards which already configure
->>> the "ref" clock. I have build tested, but not much else.
->> Tested here on IPQ6010 based system. USB still works. But the with 
->> "ref"
->> clock at 24MHz, period is calculated as 0x29. Previous
->> snps,ref-clock-period-ns value used to be 0x32.
->> Is that expected?
+On Fri, Jan 14, 2022 at 3:25 PM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
-> Yes, it is 0x29 for IPQ60xx based SoCs. In downstream it was wrongly mentioned
-> as 0x32, which was corrected recently.
+> Register thermal zones as hwmon sensors to let userspace read
+> temperatures using standard hwmon interface.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/thermal/qcom/tsens.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index 99a8d9f3e03c..c13093e8a642 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -19,6 +19,7 @@
+>  #include <linux/slab.h>
+>  #include <linux/thermal.h>
+>  #include "tsens.h"
+> +#include "../thermal_hwmon.h"
 
-Thanks for the update. This needs fixing in upstream kernel. I'll send a
-patch.
+Just a nit, but can you move this above the tsen.h along with other
+system headers?
 
-For some reason USB appears to work here with both values. Is it because
-I only use USB2 signals? If this is the case them I can not actually
-test this series on my system.
+With that, feel free to add
 
-Thanks,
-baruch
+Acked-by: Amit Kucheria <amitk@kernel.org>
 
->>> [1] 
->>> https://lore.kernel.org/linux-usb/20220114044230.2677283-1-robert.hancock@calian.com/
->>> Changes in v2:
->>> - Document clock members
->>> - Also program GFLADJ.240MHZDECR
->>> - Don't program GFLADJ if the version is < 2.50a
->>> - Add snps,ref-clock-frequency-hz property for ACPI
->>> Sean Anderson (7):
->>>   dt-bindings: usb: dwc3: Deprecate snps,ref-clock-period-ns
->>>   usb: dwc3: Get clocks individually
->>>   usb: dwc3: Calculate REFCLKPER based on reference clock
->>>   usb: dwc3: Program GFLADJ
->>>   usb: dwc3: Add snps,ref-clock-frequency-hz property for ACPI
->>>   arm64: dts: zynqmp: Move USB clocks to dwc3 node
->>>   arm64: dts: ipq6018: Use reference clock to set dwc3 period
->>>  .../devicetree/bindings/usb/snps,dwc3.yaml    |   7 +-
->>>  arch/arm64/boot/dts/qcom/ipq6018.dtsi         |   3 +-
->>>  .../arm64/boot/dts/xilinx/zynqmp-clk-ccf.dtsi |   4 +-
->>>  arch/arm64/boot/dts/xilinx/zynqmp.dtsi        |   4 +-
->>>  drivers/usb/dwc3/core.c                       | 112 +++++++++++++++---
->>>  drivers/usb/dwc3/core.h                       |  17 ++-
->>>  6 files changed, 120 insertions(+), 27 deletions(-)
-
-
--- 
-                                                     ~. .~   Tk Open Systems
-=}------------------------------------------------ooO--U--Ooo------------{=
-   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
+>
+>  /**
+>   * struct tsens_irq_data - IRQ status and temperature violations
+> @@ -1060,6 +1061,10 @@ static int tsens_register(struct tsens_priv *priv)
+>                 priv->sensor[i].tzd = tzd;
+>                 if (priv->ops->enable)
+>                         priv->ops->enable(priv, i);
+> +
+> +               if (devm_thermal_add_hwmon_sysfs(tzd))
+> +                       dev_warn(priv->dev,
+> +                                "Failed to add hwmon sysfs attributes\n");
+>         }
+>
+>         /* VER_0 require to set MIN and MAX THRESH
+> --
+> 2.34.1
+>
