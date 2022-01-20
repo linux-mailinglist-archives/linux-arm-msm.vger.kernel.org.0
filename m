@@ -2,109 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D8D34952BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jan 2022 17:57:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E066D495322
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jan 2022 18:28:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377067AbiATQ5W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jan 2022 11:57:22 -0500
-Received: from mga12.intel.com ([192.55.52.136]:10462 "EHLO mga12.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1377176AbiATQ5T (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jan 2022 11:57:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1642697839; x=1674233839;
-  h=date:from:to:subject:message-id:references:mime-version:
-   content-transfer-encoding:in-reply-to;
-  bh=pCcwTYYesBJwbUxzk/FlPOIcKf6xw2HINpD6RNQi8Ug=;
-  b=mio8YSRAqurha6z+YCGHa20GK7EYxbTZdcZIc0dtbdAcOMiuQ+UeYDGv
-   4m4zlra6u5dzYy5w6vwc3Id8sT2JaEzm9HlmriMtmNgq7dLMi/G0ODVj6
-   wDeVaDZNsYuK9O573TPBt9FecNiuUgIPNXTY761U9wviUSuVfIGWEPybe
-   JZKdcdUUxwmR/S88u2nWKizRmSIAy2XuSyxxxJkTqIho4BQEvazqQFE/0
-   dMvn8dDcTI3FFDYvkdp/TO2oTHsyDxcl3iru/8SratB5IX2J5ma8vDQvi
-   lzdieDMnVBxuy6L28+BlKIBDkF0ZN06M6Avkn/dIPeeRzclHC1AWjVT5h
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10233"; a="225377673"
-X-IronPort-AV: E=Sophos;i="5.88,302,1635231600"; 
-   d="scan'208";a="225377673"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2022 08:57:18 -0800
-X-IronPort-AV: E=Sophos;i="5.88,302,1635231600"; 
-   d="scan'208";a="532859202"
-Received: from iweiny-desk2.sc.intel.com (HELO localhost) ([10.3.52.147])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2022 08:57:18 -0800
-Date:   Thu, 20 Jan 2022 08:57:17 -0800
-From:   Ira Weiny <ira.weiny@intel.com>
-To:     Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-        David Airlie <airlied@linux.ie>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [Intel-gfx] [PATCH 0/7] DRM kmap() fixes and kmap_local_page()
- conversions
-Message-ID: <20220120165717.GG209936@iweiny-DESK2.sc.intel.com>
-References: <20211210232404.4098157-1-ira.weiny@intel.com>
- <20220119165356.GD209936@iweiny-DESK2.sc.intel.com>
- <YehJRt+JngIsj+Gd@phenom.ffwll.local>
- <20220119235542.GF209936@iweiny-DESK2.sc.intel.com>
- <fb71af05-a889-8f6e-031b-426b58a64f00@amd.com>
- <YemEYndwyP6BHwMx@phenom.ffwll.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YemEYndwyP6BHwMx@phenom.ffwll.local>
-User-Agent: Mutt/1.11.1 (2018-12-01)
+        id S231142AbiATR2N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jan 2022 12:28:13 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:38887 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232006AbiATR0x (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 20 Jan 2022 12:26:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1642699613; x=1674235613;
+  h=from:to:cc:subject:date:message-id;
+  bh=yoXWUpciytUxGVmD3OIc8Emx9Q31wdTLP4aBGRalkQQ=;
+  b=cyUzi8aE1TY06MjKLuJpBCgDnucVRwapDIXdfzOW+donpzG3TWb9Teaa
+   sZT3+Ekpn1wpcjojETtVfnB7vffXlOGmbKnS5waryY5/AVIf0nmfNsZYt
+   d/fV8iXlQuyLWnQC0g7p5e6/T0+q8VIinmweOYoQGJpXpS3rAJjJHS+0I
+   Y=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 20 Jan 2022 09:26:53 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 20 Jan 2022 09:26:51 -0800
+X-QCInternal: smtphost
+Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 20 Jan 2022 22:56:28 +0530
+Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
+        id 27115538E; Thu, 20 Jan 2022 22:56:27 +0530 (IST)
+From:   Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+To:     adrian.hunter@intel.com, quic_asutoshd@quicinc.com,
+        ulf.hansson@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-mmc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     stummala@codeaurora.org, vbadigan@codeaurora.org,
+        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
+        sartgarg@codeaurora.org, nitirawa@codeaurora.org,
+        sayalil@codeaurora.org,
+        Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+Subject: [PATCH V3 0/4] mmc: add error statistics for eMMC and SD card
+Date:   Thu, 20 Jan 2022 22:56:18 +0530
+Message-Id: <1642699582-14785-1-git-send-email-quic_c_sbhanu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 20, 2022 at 04:48:50PM +0100, Daniel Vetter wrote:
-> On Thu, Jan 20, 2022 at 09:16:35AM +0100, Christian König wrote:
-> > Am 20.01.22 um 00:55 schrieb Ira Weiny:
-> > > On Wed, Jan 19, 2022 at 06:24:22PM +0100, Daniel Vetter wrote:
-> > > > On Wed, Jan 19, 2022 at 08:53:56AM -0800, Ira Weiny wrote:
-> > > > > On Fri, Dec 10, 2021 at 03:23:57PM -0800, 'Ira Weiny' wrote:
-> > > > > > From: Ira Weiny <ira.weiny@intel.com>
-> > > > > > 
-> > > > > > This series starts by converting the last easy kmap() uses to
-> > > > > > kmap_local_page().
-> > > > > > 
-> > > > > > There is one more call to kmap() wrapped in ttm_bo_kmap_ttm().  Unfortunately,
-> > > > > > ttm_bo_kmap_ttm() is called in a number of different ways including some which
-> > > > > > are not thread local.  I have a patch to convert that call.  However, it is not
-> > > > > > straight forward so it is not included in this series.
-> > > > > > 
-> > > > > > The final 2 patches fix bugs found while working on the ttm_bo_kmap_ttm()
-> > > > > > conversion.
-> > > > > Gentile ping on this series?  Will it make this merge window?
-> > > > I think this fell through the cracks and so no. Note that generally we
-> > > > feature-freeze drm tree around -rc6 anyway for the upcoming merge window,
-> > > > so you were cutting this all a bit close anyway.
-> > > Ok, No problem.  I just had not heard if this was picked up or not.
-> > > 
-> > > > Also looks like the ttm
-> > > > kmap caching question didn't get resolved?
-> > > I'm sorry I thought it was resolve for this series.  Christian said the patches
-> > > in this series were "a good bug fix" even if not strictly necessary.[1]  Beyond
-> > > this series I was discussing where to go from here, and is it possible to go
-> > > further with more changes.[2]  At the moment I don't think I will.
-> > > 
-> > > Christian did I misunderstand?  I can drop patch 6 and 7 if they are not proper
-> > > bug fixes or at least clarifications to the code.
-> > 
-> > Yeah, it is indeed a correct cleanup. I would just *not* put a CC stable on
-> > it because it doesn't really fix anything.
-> 
-> Ok can you pls get the amd/radeon ones stuffed into alex' tree? Or do we
-> want to put all the ttm ones into drm-misc instead?
+Changes since V2:
+	-Removed userspace error stats clear debug fs entry as suggested by Adrain Hunter.
+	-Split patch into 4 patches
+		[PATCH V3 1/4] : sdhci driver
+		[PATCH V3 2/4] : debug fs entries
+		[PATCH V3 3/4] : core driver
+		[PATCH V3 4/4] : cqhci driver
+	-Used for loop to print error messages instead of using printf
+	 statements for all error messages as suggested by Adrain Hunter.
+	-Introduced one flag to enable error stats feature, if any other
+	 client wants to use this feature, they need to enable that flag.
+	-Moved reset command timeout error statement to card init flow
+	 as suggested by Adrain Hunter.
 
-I just updated to the latest master and there is a minor conflict.  Since this
-is not going in this window.  Let me rebase and resend.
+Changes since V1:
+	-Removed sysfs entry for eMMC and SD card error statistics and added
+	 debugfs entry as suggested by Adrian Hunter and Ulf Hansson.
 
-Ira
+Shaik Sajida Bhanu (4):
+  mmc: sdhci: Capture eMMC and SD card errors
+  mmc: debugfs: Add debug fs entry for mmc driver
+  mmc: core: Capture eMMC and SD card errors
+  mmc: cqhci: Capture eMMC and SD card errors
 
-> -Daniel
-> 
+ drivers/mmc/core/core.c       |  8 +++++
+ drivers/mmc/core/debugfs.c    | 81 +++++++++++++++++++++++++++++++++++++++++++
+ drivers/mmc/core/queue.c      |  3 ++
+ drivers/mmc/host/cqhci-core.c |  9 ++++-
+ drivers/mmc/host/sdhci-msm.c  |  3 ++
+ drivers/mmc/host/sdhci.c      | 72 +++++++++++++++++++++++++++++++-------
+ include/linux/mmc/host.h      | 31 +++++++++++++++++
+ 7 files changed, 194 insertions(+), 13 deletions(-)
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
