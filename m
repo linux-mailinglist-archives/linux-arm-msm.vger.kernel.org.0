@@ -2,123 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B8356494C3E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jan 2022 11:55:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 78775494C5A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jan 2022 11:59:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229909AbiATKyT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jan 2022 05:54:19 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:27014 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229755AbiATKyQ (ORCPT
+        id S229995AbiATK6z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jan 2022 05:58:55 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217]:37972 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230018AbiATK6y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jan 2022 05:54:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1642676057; x=1674212057;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=PWXf9U9ip1SlEBsO3DM5W2hgX/Z8F0qlAhGez6OXS/k=;
-  b=qy6SAarL7xNSYLLaJe8M/HI2WnltMqZpRn+c0b0Y2yKlbqR0GEq0xPh+
-   K3be9VrLSOm33k74vBs6w27Y3zTl3n5EWcicWweEqiTJayRa5IQ1OjrIJ
-   xuik23iAI8hGF4QuRrpVEW5cjIa5PRzNOq0Kyg/R2KCIAVfI2RaVRoWLY
-   w=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 20 Jan 2022 02:54:16 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2022 02:54:15 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 20 Jan 2022 02:54:15 -0800
-Received: from [10.216.6.136] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 20 Jan
- 2022 02:54:09 -0800
-Message-ID: <2f208798-2ec5-4c29-1362-0de102f29718@quicinc.com>
-Date:   Thu, 20 Jan 2022 16:24:05 +0530
+        Thu, 20 Jan 2022 05:58:54 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 861646157E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 10:58:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0CCC340EE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 10:58:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1642676333;
+        bh=+jkyxXMoEk5+hwtBJlffpwJ8aa4wwzoRMO9NurvgCWU=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=g8YoZlVkh/8k178K0nLX3wCKHTyTeisRKNVJwPT8ky5ra7t+9c50Mymp49zx4hvA8
+         KHG361Br503LtIHzpMLGQLbZMXsdBX693wh56U+kx0ISfnb6z9MQMTqNP0l1UhAd/l
+         bbbMRpdJVPc0t9bvSJchRS4xLi/FEhhXqVcJNG8RunmVPOt5fy6bbjIeopq0p6gT2l
+         djl1pvdmppC8+L1diVcoUFU4czH0IuGEr197CKK0n8anbhUm5I3BeZHaj9h8l6KmH6
+         FC2NJ3rqvC+y3cInKFDY2Kudu9DgHl0Sj6pn+GwwsB0aTg+aC5bjg7tKG4mA7SDR9S
+         NTcYYDYcTdevg==
+Received: by mail-lf1-f41.google.com with SMTP id o12so20002128lfu.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 02:58:53 -0800 (PST)
+X-Gm-Message-State: AOAM5333cJGPEIAxsj4nKoIfm7VVw0ltpKYILFT0QgIZj+ugwt4hoK/k
+        4NedLkRGk5997ohspNJ/Nf1rRoqG34YoxjEsBbS43Q==
+X-Google-Smtp-Source: ABdhPJzCBCnJZ3oIXFukCi1Pa6f/1m/OuPcJzRFUfboLxTs9Ofigs2PhdSiU3aU8RkHR44+n8gnJLTI4QW+JwXe3GT4=
+X-Received: by 2002:a05:6512:986:: with SMTP id w6mr31394398lft.201.1642676331951;
+ Thu, 20 Jan 2022 02:58:51 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.1
-Subject: Re: [PATCH 2/4] pinctrl: qcom: sm8150: Specify PDC map
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>
-CC:     <bhupesh.linux@gmail.com>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <robh+dt@kernel.org>,
-        <linux-gpio@vger.kernel.org>, <linus.walleij@linaro.org>,
-        <bjorn.andersson@linaro.org>
-References: <20220119203133.467264-1-bhupesh.sharma@linaro.org>
- <20220119203133.467264-3-bhupesh.sharma@linaro.org>
-From:   Maulik Shah <quic_mkshah@quicinc.com>
-In-Reply-To: <20220119203133.467264-3-bhupesh.sharma@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+References: <20220112194118.178026-1-luca@z3ntu.xyz> <20220112194118.178026-7-luca@z3ntu.xyz>
+In-Reply-To: <20220112194118.178026-7-luca@z3ntu.xyz>
+From:   Amit Kucheria <amitk@kernel.org>
+Date:   Thu, 20 Jan 2022 16:28:40 +0530
+X-Gmail-Original-Message-ID: <CAHLCerMEvDyrxkwpd+POUSjspkEfw=-FhPCS1=nX5WOVH4=bcw@mail.gmail.com>
+Message-ID: <CAHLCerMEvDyrxkwpd+POUSjspkEfw=-FhPCS1=nX5WOVH4=bcw@mail.gmail.com>
+Subject: Re: [PATCH 06/15] dt-bindings: thermal: tsens: Add msm8953 compatible
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 1/20/2022 2:01 AM, Bhupesh Sharma wrote:
-> Specify the PDC mapping for SM8150, so that gpio interrupts are
-> propertly mapped to the wakeup IRQs of the PDC.
-
-s/propertly/properly
-
+On Thu, Jan 13, 2022 at 1:12 AM Luca Weiss <luca@z3ntu.xyz> wrote:
 >
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Linus Walleij <linus.walleij@linaro.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> Document the compatible string for tsens found in msm8953.
+>
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> Acked-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+
+Acked-by: Amit Kucheria <amitk@kernel.org>
+
 > ---
->   drivers/pinctrl/qcom/pinctrl-sm8150.c | 21 +++++++++++++++++++++
->   1 file changed, 21 insertions(+)
+>  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sm8150.c b/drivers/pinctrl/qcom/pinctrl-sm8150.c
-> index 7359bae68c69..499dd05c3e3d 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sm8150.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sm8150.c
-> @@ -1500,6 +1500,25 @@ static const struct msm_pingroup sm8150_groups[] = {
->   	[178] = SDC_QDSD_PINGROUP(sdc2_data, 0xB2000, 9, 0),
->   };
->   
-> +static const struct msm_gpio_wakeirq_map sm8150_pdc_map[] = {
-> +	{ 3, 31 }, { 5, 32 }, { 8, 33 }, { 9, 34 }, { 10, 100 },
-> +	{ 12, 104 }, { 24, 37 }, { 26, 38 }, { 27, 41 }, { 28, 42 },
-> +	{ 30, 39 }, { 36, 43 }, { 37, 44 }, { 38, 30 }, { 39, 118 },
-> +	{ 39, 125 },
-GPIO 39 is duplicated. 39 is used with 118 PDC interrupt in downstream. 
-so { 39, 125 } can be removed.
-> { 41, 47 }, { 42, 48 }, { 46, 50 }, { 47, 49 },
-> +	{ 48, 51 }, { 49, 53 }, { 50, 52 }, { 51, 116 }, { 51, 123 },
-GPIO 51 is duplicated. 51 is used with 116 PDC interrupt in downstream 
-so { 51, 123 } can be removed
-> +	{ 53, 54 }, { 54, 55 }, { 55, 56 }, { 56, 57 }, { 58, 58 },
-> +	{ 60, 60 }, { 61, 61 }, { 68, 62 }, { 70, 63 }, { 76, 71 },
-> +	{ 77, 66 }, { 81, 64 }, { 83, 65 }, { 86, 67 }, { 87, 84 },
-> +	{ 88, 117 }, { 88, 124 }, { 90, 69 }, { 91, 70 }, { 93, 75 },
-> +	{ 95, 72 }, { 96, 73 }, { 97, 74 }, { 101, 40 }, { 103, 77 },
-> +	{ 104, 78 }, { 108, 79 }, { 112, 80 }, { 113, 81 }, { 114, 82 },
-> +	{ 117, 85 }, { 118, 101 }, { 119, 87 }, { 120, 88 }, { 121, 89 },
-> +	{ 122, 90 }, { 123, 91 }, { 124, 92 }, { 125, 93 }, { 129, 94 },
-> +	{ 132, 105 }, { 133, 83 }, { 134, 36 }, { 136, 97 }, { 142, 103 },
-> +	{ 144, 115 }, { 144, 122 }, { 147, 102 }, { 150, 107 },
-> +	{ 152, 108 }, { 153, 109 }
-> +};
-> +
->   static const struct msm_pinctrl_soc_data sm8150_pinctrl = {
->   	.pins = sm8150_pins,
->   	.npins = ARRAY_SIZE(sm8150_pins),
-> @@ -1510,6 +1529,8 @@ static const struct msm_pinctrl_soc_data sm8150_pinctrl = {
->   	.ngpios = 176,
->   	.tiles = sm8150_tiles,
->   	.ntiles = ARRAY_SIZE(sm8150_tiles),
-> +	.wakeirq_map = sm8150_pdc_map,
-> +	.nwakeirq_map = ARRAY_SIZE(sm8150_pdc_map),
-
-On SM8150 need to set .wakeirq_dual_edge_errata = true, similar to sc7180.
-
-Thanks,
-Maulik
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> index d3b9e9b600a2..b6406bcc683f 100644
+> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> @@ -43,6 +43,7 @@ properties:
+>        - description: v2 of TSENS
+>          items:
+>            - enum:
+> +              - qcom,msm8953-tsens
+>                - qcom,msm8996-tsens
+>                - qcom,msm8998-tsens
+>                - qcom,sc7180-tsens
+> --
+> 2.34.1
+>
