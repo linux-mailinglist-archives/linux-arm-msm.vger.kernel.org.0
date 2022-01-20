@@ -2,141 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 256D24943ED
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jan 2022 00:55:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CDFB64944B0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jan 2022 01:33:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344315AbiASXzn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Jan 2022 18:55:43 -0500
-Received: from mga12.intel.com ([192.55.52.136]:24224 "EHLO mga12.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230318AbiASXzn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Jan 2022 18:55:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1642636543; x=1674172543;
-  h=date:from:to:subject:message-id:references:mime-version:
-   in-reply-to;
-  bh=uCVZjXt17Nfv/G9qw2L3K1mqeAXwrnobzh2GWeu989k=;
-  b=Xq7ZTsMM63DynNcsOqCTWO9FYusqG5qQiUuqKR0FPqhtY4icnujnFHyU
-   uau5jvNDzfRG5GU0jcUokhVqOJPjGfCVFN8Ow/DgXp4QPoZKN/EZXVi1T
-   BPOkrsfGNACQGfrtbbeFZOZiFIEh5pgMSvTygfEkbXrHTHiwswnj8HEju
-   8t4Ps102BqAZ8uKBnuDJCrUwh0ENXwthh4immDu5DUlcvnuFMlIkvHU8T
-   XLgKC9jjM38JX6E9nzbzeXOz+10IeXOlZOem5tOYS0gDG9RTq0mdofhI3
-   mA4HNrE6UKdytsBONN/zKuq26tSj3gEpIna/IwwfebJSmLSog9aAHI6fl
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10231"; a="225208528"
-X-IronPort-AV: E=Sophos;i="5.88,300,1635231600"; 
-   d="scan'208";a="225208528"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jan 2022 15:55:42 -0800
-X-IronPort-AV: E=Sophos;i="5.88,300,1635231600"; 
-   d="scan'208";a="477585769"
-Received: from iweiny-desk2.sc.intel.com (HELO localhost) ([10.3.52.147])
-  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jan 2022 15:55:42 -0800
-Date:   Wed, 19 Jan 2022 15:55:42 -0800
-From:   Ira Weiny <ira.weiny@intel.com>
-To:     David Airlie <airlied@linux.ie>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org,
-        Christian =?utf-8?B?S++/vW5pZw==?= <christian.koenig@amd.com>
-Subject: Re: [PATCH 0/7] DRM kmap() fixes and kmap_local_page() conversions
-Message-ID: <20220119235542.GF209936@iweiny-DESK2.sc.intel.com>
-References: <20211210232404.4098157-1-ira.weiny@intel.com>
- <20220119165356.GD209936@iweiny-DESK2.sc.intel.com>
- <YehJRt+JngIsj+Gd@phenom.ffwll.local>
+        id S1344992AbiATAdY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Jan 2022 19:33:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41448 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240402AbiATAdY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 19 Jan 2022 19:33:24 -0500
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD9E7C06161C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 16:33:23 -0800 (PST)
+Received: by mail-ot1-x329.google.com with SMTP id m8-20020a9d4c88000000b00592bae7944bso5563417otf.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jan 2022 16:33:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=XI0YKgrX96jrRqJX0xTirhQDqynoAmpoLgDxtstEk0I=;
+        b=z8oZ5Kpgc5dBpj8kOuTY4Eudhob0nTtmDUBa3JtW4JrKkYpg0NA7DaBeAVjXDiP4+O
+         JIjxKWffcXfOCVeOhm/uvHDXqKiVxM1Cqzl0+XP9n7RZs4jP6Apuz7UCP0a6lOg0zq3q
+         6cgO7Kzu1F1c+OpVkpqzP6hYWhST5UHtINBJw20WsOYRZeigxzX5LTtHZjo0HFAGADI5
+         lyoxTSltXu79nlOgrAp9I0zSwVU1G+AFd3yVi74O7lDpzJgx/Oz/xcxabXqz4HulrIVS
+         w+AAyt41Vr8Yb04M+FQd3BHlBG1kVtdzIonPqpo+MH9/w3GY53qchM+lQM5qnqF+m4zS
+         rYcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=XI0YKgrX96jrRqJX0xTirhQDqynoAmpoLgDxtstEk0I=;
+        b=bfgV6ozhNBL3VfW0JmSYgq9XNFOc+wqevM2tiBR2GWcFEp7iugvwm6dl3Q0OTiJ4tk
+         KmZOis0Z+hFDSpzI/BUoQ/FFkD5FbkRmWeW8HkrU4lCWidiwp0NhEn+Ias0pUWUFnKVe
+         FO4k9WpF/0YiyKi4riF0+XHCZH6lO8Gbb91T8h+kQsFORTYK8W3H8lCUrnKhkquovUHy
+         ywhbdSG3+eH0x9cK4n8Li3V1tRKeiuQHP9W9qhI21Le2g0ZuhHSWhVFZUE1ORYEmSYPC
+         8U2bj/5Vy79ZNzJOBkaooSS/Aaa3gO4ILcqHRE1JM6S5Pn2T06pVuzsuxdqFY+WxYjVd
+         BiPQ==
+X-Gm-Message-State: AOAM531hFiiCbUBX+BqIPUFixXXsrziePPX9OdnCsLBEjFqiJkaYVv3W
+        KCi25uoEuJcHluiQ22s52AR1cA==
+X-Google-Smtp-Source: ABdhPJzeXboRJRatdu05KzVyDKwnnW2vtxjtTUwciHWbIWWVta4xpf8URS13rB7eFo3fSSkTj5X4Lg==
+X-Received: by 2002:a05:6830:3115:: with SMTP id b21mr26749635ots.27.1642638803019;
+        Wed, 19 Jan 2022 16:33:23 -0800 (PST)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id bj19sm886796oib.9.2022.01.19.16.33.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Jan 2022 16:33:22 -0800 (PST)
+Date:   Wed, 19 Jan 2022 16:33:57 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Benjamin Li <benl@squareup.com>
+Cc:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drivers: thermal: tsens: respect thermal_device_mode in
+ threshold irq reporting
+Message-ID: <Yeit9QQhVsnDX6TT@ripper>
+References: <20220114031337.24741-1-benl@squareup.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YehJRt+JngIsj+Gd@phenom.ffwll.local>
-User-Agent: Mutt/1.11.1 (2018-12-01)
+In-Reply-To: <20220114031337.24741-1-benl@squareup.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 19, 2022 at 06:24:22PM +0100, Daniel Vetter wrote:
-> On Wed, Jan 19, 2022 at 08:53:56AM -0800, Ira Weiny wrote:
-> > On Fri, Dec 10, 2021 at 03:23:57PM -0800, 'Ira Weiny' wrote:
-> > > From: Ira Weiny <ira.weiny@intel.com>
-> > > 
-> > > This series starts by converting the last easy kmap() uses to
-> > > kmap_local_page().
-> > > 
-> > > There is one more call to kmap() wrapped in ttm_bo_kmap_ttm().  Unfortunately,
-> > > ttm_bo_kmap_ttm() is called in a number of different ways including some which
-> > > are not thread local.  I have a patch to convert that call.  However, it is not
-> > > straight forward so it is not included in this series.
-> > > 
-> > > The final 2 patches fix bugs found while working on the ttm_bo_kmap_ttm()
-> > > conversion.
-> > 
-> > Gentile ping on this series?  Will it make this merge window?
+On Thu 13 Jan 19:13 PST 2022, Benjamin Li wrote:
+
+> 'echo disabled > .../thermal_zoneX/mode' will disable the thermal core's
+> polling mechanism to check for threshold trips. However, tsens supports
+> an interrupt mechanism to receive notification of trips, implemented in
+> commit 634e11d5b450 ("drivers: thermal: tsens: Add interrupt support").
+> This is used sometimes to run performance test cases.
 > 
-> I think this fell through the cracks and so no. Note that generally we
-> feature-freeze drm tree around -rc6 anyway for the upcoming merge window,
-> so you were cutting this all a bit close anyway.
-
-Ok, No problem.  I just had not heard if this was picked up or not.
-
-> Also looks like the ttm
-> kmap caching question didn't get resolved?
-
-I'm sorry I thought it was resolve for this series.  Christian said the patches
-in this series were "a good bug fix" even if not strictly necessary.[1]  Beyond
-this series I was discussing where to go from here, and is it possible to go
-further with more changes.[2]  At the moment I don't think I will.
-
-Christian did I misunderstand?  I can drop patch 6 and 7 if they are not proper
-bug fixes or at least clarifications to the code.
-
-Ira
-
-[1] https://lore.kernel.org/lkml/c3b173ea-6509-ebbe-b5f9-eeb29f1ce57e@amd.com/
-[2] https://lore.kernel.org/lkml/20211215210949.GW3538886@iweiny-DESK2.sc.intel.com/
-
+> Currently the thermal zone mode that's set by userspace is not checked
+> before propagating threshold trip events from IRQs. Let's fix this to
+> restore the abilty to disable thermal throttling at runtime.
 > 
-> Anyway if patches are stuck resend with RESEND and if people still don't
-> pick them up poke me and I'll apply as fallback.
+> ====================
 > 
-> Cheers, Daniel
+> Tested on MSM8939 running 5.16.0. This platform has 8 cores; the first
+> four thermal zones control cpu0-3 and the last zone is for the other four
+> CPUs together.
 > 
-> > 
-> > Thanks,
-> > Ira
-> > 
-> > > 
-> > > 
-> > > Ira Weiny (7):
-> > > drm/i915: Replace kmap() with kmap_local_page()
-> > > drm/amd: Replace kmap() with kmap_local_page()
-> > > drm/gma: Remove calls to kmap()
-> > > drm/radeon: Replace kmap() with kmap_local_page()
-> > > drm/msm: Alter comment to use kmap_local_page()
-> > > drm/amdgpu: Ensure kunmap is called on error
-> > > drm/radeon: Ensure kunmap is called on error
-> > > 
-> > > drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 8 ++++----
-> > > drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c | 1 +
-> > > drivers/gpu/drm/gma500/gma_display.c | 6 ++----
-> > > drivers/gpu/drm/gma500/mmu.c | 8 ++++----
-> > > drivers/gpu/drm/i915/gem/i915_gem_shmem.c | 4 ++--
-> > > drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c | 8 ++++----
-> > > drivers/gpu/drm/i915/gt/intel_ggtt_fencing.c | 4 ++--
-> > > drivers/gpu/drm/i915/gt/shmem_utils.c | 4 ++--
-> > > drivers/gpu/drm/i915/i915_gem.c | 8 ++++----
-> > > drivers/gpu/drm/i915/i915_gpu_error.c | 4 ++--
-> > > drivers/gpu/drm/msm/msm_gem_submit.c | 4 ++--
-> > > drivers/gpu/drm/radeon/radeon_ttm.c | 4 ++--
-> > > drivers/gpu/drm/radeon/radeon_uvd.c | 1 +
-> > > 13 files changed, 32 insertions(+), 32 deletions(-)
-> > > 
-> > > --
-> > > 2.31.1
-> > > 
+>   for f in /sys/class/thermal/thermal_zone*; do
+>     echo "disabled" > $f/mode
+>     echo $f | paste - $f/type $f/mode
+>   done
 > 
+> /sys/class/thermal/thermal_zone0	cpu0-thermal	disabled
+> /sys/class/thermal/thermal_zone1	cpu1-thermal	disabled
+> /sys/class/thermal/thermal_zone2	cpu2-thermal	disabled
+> /sys/class/thermal/thermal_zone3	cpu3-thermal	disabled
+> /sys/class/thermal/thermal_zone4	cpu4567-thermal	disabled
+> 
+> With mitigation thresholds at 75 degC and load running, we can now cruise
+> past temp=75000 without CPU throttling kicking in.
+> 
+>   watch -n 1 "grep '' /sys/class/thermal/*/temp
+>       /sys/class/thermal/*/cur_state
+>       /sys/bus/cpu/devices/cpu*/cpufreq/cpuinfo_cur_freq"
+> 
+> /sys/class/thermal/thermal_zone0/temp:82000
+> /sys/class/thermal/thermal_zone1/temp:84000
+> /sys/class/thermal/thermal_zone2/temp:87000
+> /sys/class/thermal/thermal_zone3/temp:84000
+> /sys/class/thermal/thermal_zone4/temp:84000
+> /sys/class/thermal/cooling_device0/cur_state:0
+> /sys/class/thermal/cooling_device1/cur_state:0
+> /sys/bus/cpu/devices/cpu0/cpufreq/cpuinfo_cur_freq:1113600
+> /sys/bus/cpu/devices/cpu1/cpufreq/cpuinfo_cur_freq:1113600
+> /sys/bus/cpu/devices/cpu2/cpufreq/cpuinfo_cur_freq:1113600
+> /sys/bus/cpu/devices/cpu3/cpufreq/cpuinfo_cur_freq:1113600
+> /sys/bus/cpu/devices/cpu4/cpufreq/cpuinfo_cur_freq:800000
+> /sys/bus/cpu/devices/cpu5/cpufreq/cpuinfo_cur_freq:800000
+> /sys/bus/cpu/devices/cpu6/cpufreq/cpuinfo_cur_freq:800000
+> /sys/bus/cpu/devices/cpu7/cpufreq/cpuinfo_cur_freq:800000
+> 
+> Reported-by: Zac Crosby <zac@squareup.com>
+> Signed-off-by: Benjamin Li <benl@squareup.com>
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
+
+> ---
+>  drivers/thermal/qcom/tsens.c | 15 +++++++++------
+>  1 file changed, 9 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index 99a8d9f3e03c..0b6299512e7c 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -509,13 +509,16 @@ static irqreturn_t tsens_irq_thread(int irq, void *data)
+>  		spin_unlock_irqrestore(&priv->ul_lock, flags);
+>  
+>  		if (trigger) {
+> -			dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
+> -				hw_id, __func__, temp);
+> -			thermal_zone_device_update(s->tzd,
+> -						   THERMAL_EVENT_UNSPECIFIED);
+> +			if (s->tzd->mode == THERMAL_DEVICE_ENABLED) {
+> +				dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
+> +					hw_id, __func__, temp);
+> +				thermal_zone_device_update(s->tzd, THERMAL_EVENT_UNSPECIFIED);
+> +			} else {
+> +				dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC) skipped as zone disabled\n",
+> +					hw_id, __func__, temp);
+> +			}
+>  		} else {
+> -			dev_dbg(priv->dev, "[%u] %s: no violation:  %d\n",
+> -				hw_id, __func__, temp);
+> +			dev_dbg(priv->dev, "[%u] %s: no violation:  %d\n", hw_id, __func__, temp);
+>  		}
+>  
+>  		if (tsens_version(priv) < VER_0_1) {
 > -- 
-> Daniel Vetter
-> Software Engineer, Intel Corporation
-> http://blog.ffwll.ch
+> 2.17.1
+> 
