@@ -2,119 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 98D5149568A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 00:00:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 858FB4956AA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 00:20:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347609AbiATXAu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jan 2022 18:00:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35312 "EHLO
+        id S1378154AbiATXUf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jan 2022 18:20:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347380AbiATXAu (ORCPT
+        with ESMTP id S1378150AbiATXUe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jan 2022 18:00:50 -0500
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3B70C061401
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 15:00:49 -0800 (PST)
-Received: by mail-ot1-x333.google.com with SMTP id a10-20020a9d260a000000b005991bd6ae3eso9510112otb.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 15:00:49 -0800 (PST)
+        Thu, 20 Jan 2022 18:20:34 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25A82C061574;
+        Thu, 20 Jan 2022 15:20:34 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id c2so14917452wml.1;
+        Thu, 20 Jan 2022 15:20:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=TrvQTuFf4wSv4Q5s7NHAHkNBxd8yoqRnHP4rc1hgP+w=;
-        b=tQlWGtQ2pCTLcA3DZ3UOI00jnMnHtWbfcGaIVFICq2M9RQLN99ZuKOxNJk0FiMvdyl
-         E1GsA6Jb2vbu48PlF560FjYpDt7W396p3B0lSZDwc+sURvhY/T8l4ExYk+ViSTkUmIMr
-         vGjFaCcPA5Gyi7UhmToH4BawjNPi/NmpJXCxOyJFV6WVinVfp59k8B0kUpGq8N7VpLTt
-         oK6PWkiskxVQ5CCFKvlLPB2kIHnzKoydzImK9T27BqsxQMaf0dD4NbL/UPe1MF0Py3Tl
-         Qw0N0a7SK3xCnpRabM6Cp7mSAxeKKZtAJBFHmD5pzX1spyh3c7k7iSR7aMp8b6tap3by
-         BrpA==
+        d=gmail.com; s=20210112;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UcYnZJXwLc4lqt61bDMxR0ZCzh1Cztx6cNOepvk0MLY=;
+        b=nTTF8cYS2m6KU1k6dDIAzQbGDUksZ5cKjfvNW29C0S2hzZ1W01qXV1KRIXsmmNYiXW
+         PdiY8uwWqR7otOigA/UA/SGWOS6cNZXorhI6NtQ9SwqxmYTECjjAHmc44+d5LAxOEKTm
+         BKUXfynB6E+GNcQuCOtPuLt3qRbq73N998WSH0NF8PBFZ9ftoRFLZ75V1WRe/iN5vJAG
+         utPb4je50FojpMVbii3D9cN3guQzwKV/E4FqiUxISeDuNtEpzQXBjVxkZP4FNrC8lgiJ
+         3pCeAlILnMG9oA0UXZET7V9zgl/+JqD/VNxb29G2y7cghOE9ioCKQYSM16m4p1t9KwYq
+         cvSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=TrvQTuFf4wSv4Q5s7NHAHkNBxd8yoqRnHP4rc1hgP+w=;
-        b=5HtTnwUCLrHcX+Ty4T+5GWE8LpYMzA4btC8uSEI3ic+ux8ADnnxmklNeMJICd+uSPb
-         U5DM13AOdCngm/JAggnr1rsuyZdb93ZXSN1+erAi3MwQnwldvbi6h05DCs0YabMwJftk
-         uJONB8v9LDKl714gGQWf9L+6YoqhOChJQdiiuIuaJNMVuTQd3Qy0ijoMFAO+8A22BPli
-         ZD/N/XRiLIaneBYXVxOievaretpAjG+U4wtP3t0X72rhYd1gkEKFvNnquRhIdnATHAxD
-         v7jnLgjJ7Y4ZgZ4HFzXgfZeGKRWfS91t4KFY0weHyPUamldOoYfZUmhoW7o5xwFiC1yn
-         8I+w==
-X-Gm-Message-State: AOAM533V++Ha0CG62KNDqLiIb8I7aMCUDuxtDgx8RjwRat31uL0feVv/
-        esGB9BIIHq8REN2aNU31BI7F2g==
-X-Google-Smtp-Source: ABdhPJwex3Uu/ZT2ptJZsPUbsB1kn9GWL63hAQQrv8t9SgrC2JIdy866cfkAs59zglhGuNIdMFfj/w==
-X-Received: by 2002:a9d:5919:: with SMTP id t25mr515127oth.318.1642719649017;
-        Thu, 20 Jan 2022 15:00:49 -0800 (PST)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id x15sm241753otr.38.2022.01.20.15.00.47
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UcYnZJXwLc4lqt61bDMxR0ZCzh1Cztx6cNOepvk0MLY=;
+        b=5AJ2aeofEuhVQFNyhdP295JCmw+fR/RoVq4YWnh7IAKiF7dvJxQuELG0ODzl+2JXnS
+         8fjPujgVrxhkgElet2Y6UBWlyaWR4DDvZkTy6SuMaV9BkrfkccitIxh4SjRDTpQ3CfxW
+         xb4LnhZcC/lH8G+QKMqMz7zOeS/qFjkTQVCjj5P6Ide88qOXcwzXaY/J3lSjpEycBLuz
+         YyC1niAfm9czmNcnDbEbvX4YgQ4Kdtgm1x0jhmZSlIfB4L8la7Wxo18iUu+mu6X3gYVj
+         BMjrjuCylVRgJojA4DwnSNL0aX91c2ZmHaCj/l6H8Z5SEpGXAx5wXIyPH/3oCe2bHleA
+         IgHQ==
+X-Gm-Message-State: AOAM533B6T+eH87Lg+j8HS6GRmAwfsYKuxWmKeYWT3z5/Th8avzUlTcD
+        yZUK6ybt3d3gEyhTXxg/i9+qbbLv4Qo=
+X-Google-Smtp-Source: ABdhPJzDbjksy4Dl+Wf8rgiRdVl1Eoz4qUD4mBjgoaOMNROY12cBUof5no8oj1J7KSBssDI+9j163Q==
+X-Received: by 2002:a1c:1982:: with SMTP id 124mr7154025wmz.50.1642720832322;
+        Thu, 20 Jan 2022 15:20:32 -0800 (PST)
+Received: from localhost.localdomain (93-42-71-246.ip85.fastwebnet.it. [93.42.71.246])
+        by smtp.googlemail.com with ESMTPSA id a9sm3939283wmm.32.2022.01.20.15.20.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jan 2022 15:00:48 -0800 (PST)
-Date:   Thu, 20 Jan 2022 15:01:22 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Anjelique Melendez <quic_amelende@quicinc.com>
-Cc:     dmitry.torokhov@gmail.com, linux-input@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        collinsd@codeaurora.org, swboyd@chromium.org, skakit@codeaurora.org
-Subject: Re: [PATCH 3/3] input: misc: pm8941-pwrkey: avoid potential null
- pointer dereference
-Message-ID: <YenpwnE3WrIEAOlm@ripper>
-References: <20220120204132.17875-1-quic_amelende@quicinc.com>
- <20220120204132.17875-4-quic_amelende@quicinc.com>
+        Thu, 20 Jan 2022 15:20:31 -0800 (PST)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Taniya Das <tdas@codeaurora.org>,
+        Ansuel Smith <ansuelsmth@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 00/15] Multiple addition and improvement to ipq8064 gcc
+Date:   Fri, 21 Jan 2022 00:20:13 +0100
+Message-Id: <20220120232028.6738-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220120204132.17875-4-quic_amelende@quicinc.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 20 Jan 12:41 PST 2022, Anjelique Melendez wrote:
+This is an attempt in making the ipq8064 SoC actually usable. Currently
+many feature are missing for this SoC and devs user off-the-tree patches
+to make it work (example patch for missing clock, patch for cpufreq
+driver, patch to add missing node in the dts)
 
-> From: David Collins <collinsd@codeaurora.org>
-> 
-> Add a null check for the pwrkey->data pointer after it is assigned
-> in pm8941_pwrkey_probe().  This avoids a potential null pointer
-> dereference when pwrkey->data->has_pon_pbs is accessed later in
-> the probe function.
-> 
-> Change-Id: I589c4851e544d79a1863fd110b32a0b45ac03caf
-> Signed-off-by: David Collins <collinsd@codeaurora.org>
-> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
-> ---
->  drivers/input/misc/pm8941-pwrkey.c | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/drivers/input/misc/pm8941-pwrkey.c b/drivers/input/misc/pm8941-pwrkey.c
-> index 0ce00736e695..ac08ed025802 100644
-> --- a/drivers/input/misc/pm8941-pwrkey.c
-> +++ b/drivers/input/misc/pm8941-pwrkey.c
-> @@ -263,6 +263,10 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
->  
->  	pwrkey->dev = &pdev->dev;
->  	pwrkey->data = of_device_get_match_data(&pdev->dev);
-> +	if (!pwrkey->data) {
+I notice there was some work in modernizing the gcc driver for other
+qcom target but this wasn't done for ipq806x. This does exactly this, we
+drop any parent_names stuff and we switch to the parent_data way. We
+also drop the pxo and cxo source clk from gcc driver and we refer to the
+dts for it.
 
-The only way this can happen is if you add a new compatible and forget
-to specify data and when that happens you will get a print in the log
-somewhere, which once you realize that you don't have your pwrkey you
-might be able to find among all the other prints.
+This also add all the missing feature for the nss cores and the
+cryptoengine in them. It does also introduce the required flags to make
+the RPM actually work and NOT reject any command. There was an attempt
+in declaring these clock as core clock in the dts but this ends up in no
+serial as the kernel makes these clock not accessible. We just want to
+make the kernel NOT disable them if unused nothing more.
 
-If you instead don't NULL check this pointer you will get a large splat
-in the log, with callstack and all, immediately hinting you that
-pwrkey->data is NULL.
+At the end we update the ipq8064 dtsi to add the pxo and cxo tag and
+declare them in gcc and also fix a problem with tsens probe.
 
+v2:
+- Fix error from Rob bot.
+- Add additional commits to make qcom,gcc.yaml a template
+- Squash parent_hws patch with the modernize patch
+- Create gcc_pxo instead of using long define.
 
-In other words, there's already a print, a much larger print and I don't
-think there's value in handling this mistake gracefully.
+Ansuel Smith (15):
+  dt-bindings: clock: permit additionalProprieties to qcom,gcc
+  dt-bindings: clock: simplify qcom,gcc-apq8064 Documentation
+  dt-bindings: clock: Document qcom,gcc-ipq8064 binding
+  drivers: clk: qcom: gcc-ipq806x: fix wrong naming for
+    gcc_pxo_pll8_pll0
+  drivers: clk: qcom: gcc-ipq806x: convert parent_names to parent_data
+  drivers: clk: qcom: gcc-ipq806x: use ARRAY_SIZE for num_parents
+  drivers: clk: qcom: gcc-ipq806x: drop hardcoded pxo and cxo source clk
+  drivers: clk: qcom: gcc-ipq806x: add additional freq nss cores
+  drivers: clk: qcom: gcc-ipq806x: add unusued flag for critical clock
+  drivers: clk: qcom: gcc-ipq806x: add additional freq for sdc table
+  dt-bindings: clock: add ipq8064 ce5 clk define
+  drivers: clk: qcom: gcc-ipq806x: add CryptoEngine clocks
+  dt-bindings: reset: add ipq8064 ce5 resets
+  drivers: clk: qcom: gcc-ipq806x: add CryptoEngine resets
+  ARM: dts: qcom: Add syscon and cxo/pxo clock to gcc node for ipq8064
 
-Regards,
-Bjorn
+ .../bindings/clock/qcom,gcc-apq8064.yaml      |  27 +-
+ .../bindings/clock/qcom,gcc-ipq8064.yaml      |  70 ++
+ .../devicetree/bindings/clock/qcom,gcc.yaml   |  41 +-
+ arch/arm/boot/dts/qcom-ipq8064.dtsi           |   8 +-
+ drivers/clk/qcom/gcc-ipq806x.c                | 638 +++++++++++++-----
+ include/dt-bindings/clock/qcom,gcc-ipq806x.h  |   5 +-
+ include/dt-bindings/reset/qcom,gcc-ipq806x.h  |   5 +
+ 7 files changed, 581 insertions(+), 213 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-ipq8064.yaml
 
-> +		dev_err(&pdev->dev, "match data not found\n");
-> +		return -ENODEV;
-> +	}
->  
->  	parent = pdev->dev.parent;
->  	regmap_node = pdev->dev.of_node;
-> -- 
-> 2.34.1
-> 
+-- 
+2.33.1
+
