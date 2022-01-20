@@ -2,99 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E38749491B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jan 2022 09:08:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E21849496B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jan 2022 09:28:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358755AbiATIGn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jan 2022 03:06:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56506 "EHLO
+        id S1359201AbiATI2T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jan 2022 03:28:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239073AbiATIGi (ORCPT
+        with ESMTP id S232274AbiATI2T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jan 2022 03:06:38 -0500
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E124BC061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 00:06:37 -0800 (PST)
-Received: by mail-pg1-x532.google.com with SMTP id g2so4928193pgo.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 00:06:37 -0800 (PST)
+        Thu, 20 Jan 2022 03:28:19 -0500
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96C0EC061401
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 00:28:18 -0800 (PST)
+Received: by mail-pl1-x62f.google.com with SMTP id n8so4600778plc.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 00:28:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6MotDTbNoN+oGigz2Dz9rqju7rJ74CQrGAnlMebYt5c=;
-        b=hLleXYpeLhpaDeDq/oDeNwtbvrt0c+0QWgy/dMDtxzTabc5WeILbNkkw5MKZ6hzPWN
-         qZQbFjaVDo1gf4cd4j8yiWZCmD95Xj6f/aZOJnCP6qAOiyUsLdHUOb9wcC4d9NYnANMO
-         kt4RAIiT0xDXHrbgkX0x2DoACnMubdKZUq1Tg9FveQG2TLokBu942+Jvw/90HSyxgwwm
-         gpEMATjqKQg1pFewOWyUEuKig9rGRADl8hG4Jylx+6aIe78Fo8/aS692ZxpTNyDaJo4t
-         ODck2xCNzCedAdzkRaLGAzVebQBm75lj8t3Axim3iDyPDXL7xlr0faJGBA5VM/jXB/Kz
-         4yHw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mzTttx13ei9Jo9Pm3/hsfv4HCjAkodc9jMnwdUcQbE8=;
+        b=jki9XfMQTNnNgiJnZD8GeYOLFcjgMnXibyXqByT3L3wiZn38BQh4b14dTMCze3NClX
+         1S9+ma3sdubh87Vay23XsiwT1uGsKVkmkRvHCDHCMg0LRPPkXE2dEQspTwa/uZkXik1T
+         YlBCySrS242zjWm/caK+HaMOX3gxyC0qmdAOJKlVhfIyHwqtblqQFLitJ0U00veMl4Iv
+         29N8rLlZjMMK3MNgsvt3R4eVvbZ1pra/W64KkgJJ4/r5BSQYjVkx32BPnQFQCz83UZVr
+         BHduUO+WjY2WbDIQ7gkmnbX0Fk0qScJJZDfQvlzLtzj2DqxXj2BszRGzDLHpgq9/7agQ
+         4uUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6MotDTbNoN+oGigz2Dz9rqju7rJ74CQrGAnlMebYt5c=;
-        b=lLu54DB4RgfhuyAt1eGwSlhLvjg1jCCcRMdL6dGSUdON/Rpg9bh29L7KbhEZp9U1EB
-         WmQ07zxGVWNGamR1PMi8glZVRzbga8JWzhDDkg9UlfxM46TjVY9C8HoE8oykrlZaAMrq
-         hEEdMnbyHA0irdCqPGVor6mmHeZeKgrDTfLHs+cc8hxRsGOCLLPw0pjy//t7wYq8SHwL
-         r9tJR1y4Tu8jc05nN7VEZfRZey4OTc8rOPXV5cQqRLQIhcTKy3NNmxU2LveyI8XcvmmA
-         pJGFSOv8dL/je15c6+sB0lvGDGHUy1H/cRCtezxrFg5KJG764Z8A7OoKH0t3nmfqGf8u
-         DF6A==
-X-Gm-Message-State: AOAM530l3C1R38pFpc1DSUM0eNjtiKVNo7doTkHUGFLyIgaTLiu8ZcXA
-        prV2YiNT1oXgvRqUAemqmA8Oa59si4R9Y1QVmOp5xw==
-X-Google-Smtp-Source: ABdhPJxgpiGuRUSH63K0vKEsBNswrtEsWqarymPitjrPi16y/PfJsIWUrmIXZZT3gS/dQgxnGCwBphY0K2qZa6Q/wM8=
-X-Received: by 2002:a63:2a57:: with SMTP id q84mr6221003pgq.167.1642665997308;
- Thu, 20 Jan 2022 00:06:37 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mzTttx13ei9Jo9Pm3/hsfv4HCjAkodc9jMnwdUcQbE8=;
+        b=2DspHqXCXBJxqByOUwBpraSLoGmDMJ3WylsbSOaAx37GR2VO4BNUFooGj0TfXKVIPi
+         sjJvqW2dj3jCqHPMNU0JB0CTFWXebxsbcrXXPMDPKhkld4AACt/UuZ2Uwhr5FH2VJ1yJ
+         5robwlOh/jdNFenAsQ2V2epaCoY3oKHwExUSzXkA+jgk2Vr791nUSuoOUq6oDV83bXQQ
+         oGeBNgDcSG1vevk8PZT8XDajowx+VAhl4VN2N44jnKsJ+VhdD3gViaLUV/3YO8e3vzgB
+         BVMtSMrDfoLcdOy68chw97jvkvEixP6+BPDQIzF5vocKhvB8rM3RGMjrZuwoziixslm+
+         nkXA==
+X-Gm-Message-State: AOAM532mrtEe0SkBssqQLP+Swr8AhC8+eS+kcOuL/3TnhhA+Atkqaqda
+        OX0c87ZFlOpvN+cqpky+pv5S1AFk9bMcQA==
+X-Google-Smtp-Source: ABdhPJx/AwYGnP1h2N1sy+WoR8VNSbBYfEY/nn3r4tTfvdJbDDWEwX03JhS+iqjJc1gnVT0BC6l/Zg==
+X-Received: by 2002:a17:90b:3510:: with SMTP id ls16mr9236840pjb.229.1642667297725;
+        Thu, 20 Jan 2022 00:28:17 -0800 (PST)
+Received: from localhost.localdomain ([2401:4900:1f3a:47e5:8bff:a3f8:a494:acd0])
+        by smtp.gmail.com with ESMTPSA id s17sm2263639pfk.174.2022.01.20.00.28.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Jan 2022 00:28:17 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        robh+dt@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH] arm64: dts: qcom: sm8150: Add ufs power-domain entries
+Date:   Thu, 20 Jan 2022 13:58:03 +0530
+Message-Id: <20220120082803.15535-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <1642586079-12472-1-git-send-email-loic.poulain@linaro.org> <CAA8EJpro3OQB4bcXu78xfP=MUfLbh8Spkb4Kh_NyQbnEo+d5vQ@mail.gmail.com>
-In-Reply-To: <CAA8EJpro3OQB4bcXu78xfP=MUfLbh8Spkb4Kh_NyQbnEo+d5vQ@mail.gmail.com>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Thu, 20 Jan 2022 09:18:19 +0100
-Message-ID: <CAMZdPi82PjPOQ5_jGteu0YjBRf9g4-aoV+HKJ8Rubx-vaabgTw@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dsi: Fix byte clock interface rate for 14nm PHY
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     robdclark@gmail.com, sean@poorly.run, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dm
+Add power-domain entries for UFS controller & phy nodes
+in sm8150 dts.
 
-On Wed, 19 Jan 2022 at 11:45, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Wed, 19 Jan 2022 at 12:42, Loic Poulain <loic.poulain@linaro.org> wrote:
-> >
-> > According to downstream driver, byte intf clk rate should be half the
-> > byte clk only with DSI PHY verion above 2.0 (14nm):
-> > https://source.codeaurora.org/quic/la/platform/vendor/opensource/display-drivers/tree/msm/dsi/dsi_display.c?h=LA.UM.8.12.3.1#n3991
->
-> This is a bit strange. We have other 14nm DSI PHYs, which are thought
-> to be working (msm8996, sdm660). Not tested by me, though.
-> And msm8916 has 28nm-lp, which according to CAF's patch should also use
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Rob Herring <robh@kernel.org>
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Yes, It's not clear to me if this clock configuration is just a
-recommendation or a requirement. All I can say is that it fixes DSI
-issue on QCM2290 14nm, so maybe I should be more conservative and
-restrict this behaviour to QCM2290 phy only?
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 6012322a5984..7aa879eb24d7 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -1637,6 +1637,8 @@ ufs_mem_hc: ufshc@1d84000 {
+ 			phy-names = "ufsphy";
+ 			lanes-per-direction = <2>;
+ 			#reset-cells = <1>;
++
++			power-domains = <&gcc UFS_PHY_GDSC>;
+ 			resets = <&gcc GCC_UFS_PHY_BCR>;
+ 			reset-names = "rst";
+ 
+@@ -1687,6 +1689,9 @@ ufs_mem_phy: phy@1d87000 {
+ 			clocks = <&gcc GCC_UFS_MEM_CLKREF_CLK>,
+ 				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
+ 
++			power-domains = <&gcc UFS_CARD_GDSC>,
++					<&gcc UFS_PHY_GDSC>;
++			power-domain-names = "ufs_card_gdsc", "ufs_phy_gdsc";
+ 			resets = <&ufs_mem_hc 0>;
+ 			reset-names = "ufsphy";
+ 			status = "disabled";
+-- 
+2.34.1
 
-[...]
-> > diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-> > index 7414966..f4849e6 100644
-> > --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-> > +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-> > @@ -897,6 +897,9 @@ static int dsi_pll_14nm_init(struct msm_dsi_phy *phy)
-> >
-> >         phy->vco_hw = &pll_14nm->clk_hw;
-> >
-> > +       /* For PHY version <= 2.0 (14nm), byte_intf_clk = byte_clk */
-> > +       phy->no_byte_intf_clk_div = true;
->
-> This setting can go into constant phy configuration instead. And also
-> note that there are other <= 2.0 PHYs (20nm, 28nm).
-> Do they share this property?
-
-According to downstream, yes, but I can not test on other PHYs.
-
-Regards,
-Loic
