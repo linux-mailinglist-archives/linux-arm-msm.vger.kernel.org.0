@@ -2,120 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 11CB34958E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 05:18:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B64474958EA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 05:30:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245521AbiAUESh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jan 2022 23:18:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48528 "EHLO
+        id S233924AbiAUEaY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jan 2022 23:30:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244938AbiAUESh (ORCPT
+        with ESMTP id S233630AbiAUEaY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jan 2022 23:18:37 -0500
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9BC0C06173F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 20:18:36 -0800 (PST)
-Received: by mail-ot1-x32f.google.com with SMTP id y11-20020a0568302a0b00b0059a54d66106so10399314otu.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 20:18:36 -0800 (PST)
+        Thu, 20 Jan 2022 23:30:24 -0500
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD485C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 20:30:23 -0800 (PST)
+Received: by mail-oi1-x234.google.com with SMTP id g205so12020860oif.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 20:30:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=X+027WAXIEf9otddXJOLwu3Q7db/hKp3YNkSsFObVoo=;
-        b=g2HmbwnVrjJJTz5/dipfRDJG8eT7xdVFBFo+FRwfGPuvLs4BaLMkSPfqdLnSTVAg+0
-         PZGlX22ic1QLJ2B/baSXOd17CvZwptwXX0Vuhq5LI9r/vdjakWz6sS67Fkex8AsBm2oy
-         0CBgfcdgKiX1f+zbEcAs1vUsZcXN1LGVyJzjU=
+        bh=LYTEoc7rHyCXH1oH9BtjH0WArodUqZMGF/Aa2JALJcg=;
+        b=jAuD4Q4d0AYZ/PEDXtbz04htFL1EN6grlsqGnAIkDVE2E4pO7M/1oqZYiMPi2SvG5v
+         iJPsX46rPq+RVPYyPhX9ofHmWWtOugLIVyRKnZeGldfGzx3X5m4HMzbXt/xHEpYRzKei
+         USuN1Cw0SThUY1CAkZK+oIWKE/6I7c9tJPnkE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=X+027WAXIEf9otddXJOLwu3Q7db/hKp3YNkSsFObVoo=;
-        b=ezxpHedjBRu3azwNHiDhJqy2iQogYupRHzzGceom3pEMuyv/STwl3y1t3Z9w/RC/4E
-         W3aiCoyfixGk0VSwyS7ksDgSENszUIZ5IgXnQxyBiNDdkKBejk5b7jd8DbR+o+z+wrOc
-         nBPBQHN+A2kO9hwrsNHPVjEG/rPkvyWPz6r4AW65vLXb0aK2CWP11VLCZDuG34YVBQum
-         KFVL27rvlepxnLOPHWEAay6KrHhtXEu8rP2Wftwd7bzEs7s0WofrbUB1j4Wkbc60vpYb
-         ISN8qtxQiC886tvrZlOmRrxSuKYsfZ0vA6kbjXMHUa5QTLkf+ECgnDlPvZmDJwa6YbIY
-         pcQQ==
-X-Gm-Message-State: AOAM5316jMG94RLvD1ZkgAm/jD62+yCCPz1yB4+WDNimiLuXTIyNFNxC
-        NqvS1NjzL7wXRqDJofbB1mp/wqB4cHz0OGQudDISYQ==
-X-Google-Smtp-Source: ABdhPJyc1dJG2DBLziGQ6/BQDrbk7P2KSwENbshVTH9OiBCmKoRRHH00Pt3dS/I27eysMcU6r1aFXTWKmrC2/wPSXNg=
-X-Received: by 2002:a05:6830:1614:: with SMTP id g20mr1542245otr.77.1642738716150;
- Thu, 20 Jan 2022 20:18:36 -0800 (PST)
+        bh=LYTEoc7rHyCXH1oH9BtjH0WArodUqZMGF/Aa2JALJcg=;
+        b=Lo24MNXzQSTBIf/DaQeTgUNn+lz4rX0VdbvF5S0wq7iT0WV2/RMjZeaeNdgakaRv7E
+         FEg+BOeRAI7fqFRA7umBFW99rE1SomIGfgtBLmGequDBpLZHVOmuNC6EQAn8/R9gykax
+         V7rvH5HK9XfoQTPAQ7NmvCr5dbEOfl7nIDP4S3vv9ElW4Yb79ilw3x9w/VLojNnaisPU
+         lV3tqKtei6Lz1I9SBxZMYItYO/I/3u4QRITxBNfF97nKXmhrIU23bDFmDCTODlxCwtzq
+         JWtJzenHMX7dInB2P40qs2pBAM0dD8LkPLKAcPNG+W8ptQ9Jddoycxi/z58szYWr84Ab
+         cXQA==
+X-Gm-Message-State: AOAM533FaI7/ZsPJy3Svolgd3hXOiXoBBO8uqj8eujSTN/efes0QwJSU
+        YFkdUqLegTtwn30ohQhtl/pa57+wR7ZUh/OXNVziBg==
+X-Google-Smtp-Source: ABdhPJy29RK3pnK83q6mbJuyMkA8rNx2S0loo1Mj2IuzvYlvMss7+Mu29C5GZPkKe7ElF4wm5ZCKgzQaRd232lKC8xU=
+X-Received: by 2002:a05:6808:cc:: with SMTP id t12mr10524563oic.32.1642739423002;
+ Thu, 20 Jan 2022 20:30:23 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 20 Jan 2022 20:18:35 -0800
+ HTTPREST; Thu, 20 Jan 2022 20:30:22 -0800
 MIME-Version: 1.0
-In-Reply-To: <e2015c19-b73b-39a7-ba73-708b2c4552c7@quicinc.com>
-References: <20220120204132.17875-1-quic_amelende@quicinc.com>
- <20220120204132.17875-4-quic_amelende@quicinc.com> <YenpwnE3WrIEAOlm@ripper> <e2015c19-b73b-39a7-ba73-708b2c4552c7@quicinc.com>
+In-Reply-To: <20220119221616.3089119-3-dmitry.baryshkov@linaro.org>
+References: <20220119221616.3089119-1-dmitry.baryshkov@linaro.org> <20220119221616.3089119-3-dmitry.baryshkov@linaro.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Thu, 20 Jan 2022 20:18:35 -0800
-Message-ID: <CAE-0n50+1OU2yt2gihHHCEn-cE-CZuqa_U9W=xWCuYeCQdzExw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] input: misc: pm8941-pwrkey: avoid potential null
- pointer dereference
-To:     Anjelique Melendez <quic_amelende@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     dmitry.torokhov@gmail.com, linux-input@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        collinsd@codeaurora.org, skakit@codeaurora.org
+Date:   Thu, 20 Jan 2022 20:30:22 -0800
+Message-ID: <CAE-0n53=vj53a_u-5rUmrhV79_-c=F5gtjbejoVs+=PR=hc1Nw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] drm/msm/dpu: simplify clocks handling
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Anjelique Melendez (2022-01-20 16:25:26)
+Quoting Dmitry Baryshkov (2022-01-19 14:16:15)
+> diff --git a/drivers/gpu/drm/msm/msm_io_utils.c b/drivers/gpu/drm/msm/msm_io_utils.c
+> index 7b504617833a..5533c87c7158 100644
+> --- a/drivers/gpu/drm/msm/msm_io_utils.c
+> +++ b/drivers/gpu/drm/msm/msm_io_utils.c
+> @@ -5,6 +5,8 @@
+>   * Author: Rob Clark <robdclark@gmail.com>
+>   */
 >
-> On 1/20/2022 3:01 PM, Bjorn Andersson wrote:
-> > On Thu 20 Jan 12:41 PST 2022, Anjelique Melendez wrote:
-> >
-> >> From: David Collins <collinsd@codeaurora.org>
-> >>
-> >> Add a null check for the pwrkey->data pointer after it is assigned
-> >> in pm8941_pwrkey_probe().  This avoids a potential null pointer
-> >> dereference when pwrkey->data->has_pon_pbs is accessed later in
-> >> the probe function.
-> >>
-> >> Change-Id: I589c4851e544d79a1863fd110b32a0b45ac03caf
-> >> Signed-off-by: David Collins <collinsd@codeaurora.org>
-> >> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
-> >> ---
-> >>  drivers/input/misc/pm8941-pwrkey.c | 4 ++++
-> >>  1 file changed, 4 insertions(+)
-> >>
-> >> diff --git a/drivers/input/misc/pm8941-pwrkey.c b/drivers/input/misc/pm8941-pwrkey.c
-> >> index 0ce00736e695..ac08ed025802 100644
-> >> --- a/drivers/input/misc/pm8941-pwrkey.c
-> >> +++ b/drivers/input/misc/pm8941-pwrkey.c
-> >> @@ -263,6 +263,10 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
-> >>
-> >>      pwrkey->dev = &pdev->dev;
-> >>      pwrkey->data = of_device_get_match_data(&pdev->dev);
-> >> +    if (!pwrkey->data) {
-> > The only way this can happen is if you add a new compatible and forget
-> > to specify data and when that happens you will get a print in the log
-> > somewhere, which once you realize that you don't have your pwrkey you
-> > might be able to find among all the other prints.
-> >
-> > If you instead don't NULL check this pointer you will get a large splat
-> > in the log, with callstack and all, immediately hinting you that
-> > pwrkey->data is NULL.
-> >
-> >
-> > In other words, there's already a print, a much larger print and I don't
-> > think there's value in handling this mistake gracefully.
-> >
-> > Regards,
-> > Bjorn
+> +#include <linux/clk/clk-conf.h>
+> +
+>  #include "msm_drv.h"
 >
+>  /*
+> @@ -47,6 +49,54 @@ struct clk *msm_clk_get(struct platform_device *pdev, const char *name)
+>         return clk;
+>  }
 >
-> We would like to the null pointer check in place to avoid static analysis
->
-> warnings that can be easily fixed.
->
+> +int msm_parse_clock(struct platform_device *pdev, struct clk_bulk_data **clocks)
+> +{
+> +       u32 i, rc = 0;
+> +       const char *clock_name;
+> +       struct clk_bulk_data *bulk;
+> +       int num_clk = 0;
 
-Many drivers check that their device_get_match_data() returns a valid
-pointer. I'd like to see that API used in addition to checking the
-return value for NULL so that we can keep the static analysis tools
-happy. Yes it's an impossible case assuming the driver writer didn't
-mess up but it shuts SA up and we don't really have a better solution
-to tell tools that device_get_match_data() can't return NULL.
+No need to assign and then reassign before testing. Same goes for 'rc'.
+
+> +
+> +       if (!pdev)
+> +               return -EINVAL;
+> +
+> +       num_clk = of_property_count_strings(pdev->dev.of_node, "clock-names");
+> +       if (num_clk <= 0) {
+> +               pr_debug("clocks are not defined\n");
+> +               return 0;
+> +       }
+> +
+> +       bulk = devm_kcalloc(&pdev->dev, num_clk, sizeof(struct clk_bulk_data), GFP_KERNEL);
+> +       if (!bulk)
+> +               return -ENOMEM;
+> +
+> +       for (i = 0; i < num_clk; i++) {
+> +               rc = of_property_read_string_index(pdev->dev.of_node,
+> +                                                  "clock-names", i,
+> +                                                  &clock_name);
+> +               if (rc) {
+> +                       DRM_DEV_ERROR(&pdev->dev, "Failed to get clock name for %d\n", i);
+> +                       return rc;
+> +               }
+> +               bulk[i].id = devm_kstrdup(&pdev->dev, clock_name, GFP_KERNEL);
+> +       }
+> +
+> +       rc = devm_clk_bulk_get(&pdev->dev, num_clk, bulk);
+
+Use devm_clk_bulk_get_all()?
+
+> +       if (rc) {
+> +               DRM_DEV_ERROR(&pdev->dev, "Failed to get clock refs %d\n", rc);
+> +               return rc;
+> +       }
+> +
+> +       rc = of_clk_set_defaults(pdev->dev.of_node, false);
+
+Why is this needed?
+
+> +       if (rc) {
+> +               DRM_DEV_ERROR(&pdev->dev, "Failed to set clock defaults %d\n", rc);
+> +               return rc;
+> +       }
+> +
+> +       *clocks = bulk;
+> +
+> +       return num_clk;
