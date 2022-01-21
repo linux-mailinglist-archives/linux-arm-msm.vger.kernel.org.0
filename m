@@ -2,137 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B64474958EA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 05:30:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 99C9D495912
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 06:03:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233924AbiAUEaY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jan 2022 23:30:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51064 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233630AbiAUEaY (ORCPT
+        id S229457AbiAUFDB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jan 2022 00:03:01 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:1667 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229480AbiAUFDB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jan 2022 23:30:24 -0500
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD485C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 20:30:23 -0800 (PST)
-Received: by mail-oi1-x234.google.com with SMTP id g205so12020860oif.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 20:30:23 -0800 (PST)
+        Fri, 21 Jan 2022 00:03:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=LYTEoc7rHyCXH1oH9BtjH0WArodUqZMGF/Aa2JALJcg=;
-        b=jAuD4Q4d0AYZ/PEDXtbz04htFL1EN6grlsqGnAIkDVE2E4pO7M/1oqZYiMPi2SvG5v
-         iJPsX46rPq+RVPYyPhX9ofHmWWtOugLIVyRKnZeGldfGzx3X5m4HMzbXt/xHEpYRzKei
-         USuN1Cw0SThUY1CAkZK+oIWKE/6I7c9tJPnkE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=LYTEoc7rHyCXH1oH9BtjH0WArodUqZMGF/Aa2JALJcg=;
-        b=Lo24MNXzQSTBIf/DaQeTgUNn+lz4rX0VdbvF5S0wq7iT0WV2/RMjZeaeNdgakaRv7E
-         FEg+BOeRAI7fqFRA7umBFW99rE1SomIGfgtBLmGequDBpLZHVOmuNC6EQAn8/R9gykax
-         V7rvH5HK9XfoQTPAQ7NmvCr5dbEOfl7nIDP4S3vv9ElW4Yb79ilw3x9w/VLojNnaisPU
-         lV3tqKtei6Lz1I9SBxZMYItYO/I/3u4QRITxBNfF97nKXmhrIU23bDFmDCTODlxCwtzq
-         JWtJzenHMX7dInB2P40qs2pBAM0dD8LkPLKAcPNG+W8ptQ9Jddoycxi/z58szYWr84Ab
-         cXQA==
-X-Gm-Message-State: AOAM533FaI7/ZsPJy3Svolgd3hXOiXoBBO8uqj8eujSTN/efes0QwJSU
-        YFkdUqLegTtwn30ohQhtl/pa57+wR7ZUh/OXNVziBg==
-X-Google-Smtp-Source: ABdhPJy29RK3pnK83q6mbJuyMkA8rNx2S0loo1Mj2IuzvYlvMss7+Mu29C5GZPkKe7ElF4wm5ZCKgzQaRd232lKC8xU=
-X-Received: by 2002:a05:6808:cc:: with SMTP id t12mr10524563oic.32.1642739423002;
- Thu, 20 Jan 2022 20:30:23 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 20 Jan 2022 20:30:22 -0800
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1642741381; x=1674277381;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=qsVvbTD+kFXnw/RCOk7A0nqK86MwmdSQ061zu0NFLOY=;
+  b=JWljXZNp5+hZiMEzDSxguJyOkOc5szadrLqiDwd7SeqiBDGeU+NP6krN
+   59VYhfRnesdDvQKO0QunLzJlJ94R4sG3OijgitPNbj/4s0VEBtSEf/1ZU
+   EgOrrycAsAIAarwGkpTc5UPwch2w7xPrfK8JKQzzYyOjnzI7YZv4TgWc1
+   Y=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 20 Jan 2022 21:03:01 -0800
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2022 21:03:01 -0800
+Received: from hu-ctheegal-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 20 Jan 2022 21:02:56 -0800
+From:   Chitti Babu Theegala <quic_ctheegal@quicinc.com>
+To:     <mingo@redhat.com>, <peterz@infradead.org>,
+        <juri.lelli@redhat.com>, <vincent.guittot@linaro.org>,
+        <dietmar.eggemann@arm.com>, <rostedt@goodmis.org>,
+        <joel@joelfernandes.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <quic_lingutla@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <quic_rjendra@quicinc.com>,
+        <vincent.donnefort@arm.com>,
+        Chitti Babu Theegala <quic_ctheegal@quicinc.com>
+Subject: [PATCH v2] sched/fair: Prefer small idle cores for forkees
+Date:   Fri, 21 Jan 2022 10:32:33 +0530
+Message-ID: <20220121050233.8708-1-quic_ctheegal@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-In-Reply-To: <20220119221616.3089119-3-dmitry.baryshkov@linaro.org>
-References: <20220119221616.3089119-1-dmitry.baryshkov@linaro.org> <20220119221616.3089119-3-dmitry.baryshkov@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 20 Jan 2022 20:30:22 -0800
-Message-ID: <CAE-0n53=vj53a_u-5rUmrhV79_-c=F5gtjbejoVs+=PR=hc1Nw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] drm/msm/dpu: simplify clocks handling
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-01-19 14:16:15)
-> diff --git a/drivers/gpu/drm/msm/msm_io_utils.c b/drivers/gpu/drm/msm/msm_io_utils.c
-> index 7b504617833a..5533c87c7158 100644
-> --- a/drivers/gpu/drm/msm/msm_io_utils.c
-> +++ b/drivers/gpu/drm/msm/msm_io_utils.c
-> @@ -5,6 +5,8 @@
->   * Author: Rob Clark <robdclark@gmail.com>
->   */
->
-> +#include <linux/clk/clk-conf.h>
-> +
->  #include "msm_drv.h"
->
->  /*
-> @@ -47,6 +49,54 @@ struct clk *msm_clk_get(struct platform_device *pdev, const char *name)
->         return clk;
->  }
->
-> +int msm_parse_clock(struct platform_device *pdev, struct clk_bulk_data **clocks)
-> +{
-> +       u32 i, rc = 0;
-> +       const char *clock_name;
-> +       struct clk_bulk_data *bulk;
-> +       int num_clk = 0;
+Newly forked threads don't have any useful utilization data yet and
+it's not possible to forecast their impact on energy consumption.
+These forkees (though very small, most times) end up waking big
+cores from deep sleep for that very small durations.
 
-No need to assign and then reassign before testing. Same goes for 'rc'.
+Bias all forkees to small cores to prevent waking big cores from deep
+sleep to save power.
 
-> +
-> +       if (!pdev)
-> +               return -EINVAL;
-> +
-> +       num_clk = of_property_count_strings(pdev->dev.of_node, "clock-names");
-> +       if (num_clk <= 0) {
-> +               pr_debug("clocks are not defined\n");
-> +               return 0;
-> +       }
-> +
-> +       bulk = devm_kcalloc(&pdev->dev, num_clk, sizeof(struct clk_bulk_data), GFP_KERNEL);
-> +       if (!bulk)
-> +               return -ENOMEM;
-> +
-> +       for (i = 0; i < num_clk; i++) {
-> +               rc = of_property_read_string_index(pdev->dev.of_node,
-> +                                                  "clock-names", i,
-> +                                                  &clock_name);
-> +               if (rc) {
-> +                       DRM_DEV_ERROR(&pdev->dev, "Failed to get clock name for %d\n", i);
-> +                       return rc;
-> +               }
-> +               bulk[i].id = devm_kstrdup(&pdev->dev, clock_name, GFP_KERNEL);
-> +       }
-> +
-> +       rc = devm_clk_bulk_get(&pdev->dev, num_clk, bulk);
+Signed-off-by: Chitti Babu Theegala <quic_ctheegal@quicinc.com>
+---
+Changes in v2:
+1. Enclosed the EAS check for this small core preferring logic
+---
+ kernel/sched/fair.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-Use devm_clk_bulk_get_all()?
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index c6046446c50b3..72f9ea7c98c05 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -5872,7 +5872,7 @@ static int wake_affine(struct sched_domain *sd, struct task_struct *p,
+ }
+ 
+ static struct sched_group *
+-find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu);
++find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu, int sd_flag);
+ 
+ /*
+  * find_idlest_group_cpu - find the idlest CPU among the CPUs in the group.
+@@ -5959,7 +5959,7 @@ static inline int find_idlest_cpu(struct sched_domain *sd, struct task_struct *p
+ 			continue;
+ 		}
+ 
+-		group = find_idlest_group(sd, p, cpu);
++		group = find_idlest_group(sd, p, cpu, sd_flag);
+ 		if (!group) {
+ 			sd = sd->child;
+ 			continue;
+@@ -8885,7 +8885,8 @@ static inline void update_sg_wakeup_stats(struct sched_domain *sd,
+ static bool update_pick_idlest(struct sched_group *idlest,
+ 			       struct sg_lb_stats *idlest_sgs,
+ 			       struct sched_group *group,
+-			       struct sg_lb_stats *sgs)
++			       struct sg_lb_stats *sgs,
++			       int sd_flag)
+ {
+ 	if (sgs->group_type < idlest_sgs->group_type)
+ 		return true;
+@@ -8922,6 +8923,13 @@ static bool update_pick_idlest(struct sched_group *idlest,
+ 		if (idlest_sgs->idle_cpus > sgs->idle_cpus)
+ 			return false;
+ 
++		if (sched_energy_enabled()) {
++		    /* Select smaller cpu group for newly woken up forkees */
++		    if ((sd_flag & SD_BALANCE_FORK) && (idlest_sgs->idle_cpus &&
++		        !capacity_greater(idlest->sgc->max_capacity, group->sgc->max_capacity)))
++			return false;
++		}
++
+ 		/* Select group with lowest group_util */
+ 		if (idlest_sgs->idle_cpus == sgs->idle_cpus &&
+ 			idlest_sgs->group_util <= sgs->group_util)
+@@ -8940,7 +8948,7 @@ static bool update_pick_idlest(struct sched_group *idlest,
+  * Assumes p is allowed on at least one CPU in sd.
+  */
+ static struct sched_group *
+-find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu)
++find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu, int sd_flag)
+ {
+ 	struct sched_group *idlest = NULL, *local = NULL, *group = sd->groups;
+ 	struct sg_lb_stats local_sgs, tmp_sgs;
+@@ -8978,7 +8986,7 @@ find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu)
+ 
+ 		update_sg_wakeup_stats(sd, group, sgs, p);
+ 
+-		if (!local_group && update_pick_idlest(idlest, &idlest_sgs, group, sgs)) {
++		if (!local_group && update_pick_idlest(idlest, &idlest_sgs, group, sgs, sd_flag)) {
+ 			idlest = group;
+ 			idlest_sgs = *sgs;
+ 		}
+-- 
+2.17.1
 
-> +       if (rc) {
-> +               DRM_DEV_ERROR(&pdev->dev, "Failed to get clock refs %d\n", rc);
-> +               return rc;
-> +       }
-> +
-> +       rc = of_clk_set_defaults(pdev->dev.of_node, false);
-
-Why is this needed?
-
-> +       if (rc) {
-> +               DRM_DEV_ERROR(&pdev->dev, "Failed to set clock defaults %d\n", rc);
-> +               return rc;
-> +       }
-> +
-> +       *clocks = bulk;
-> +
-> +       return num_clk;
