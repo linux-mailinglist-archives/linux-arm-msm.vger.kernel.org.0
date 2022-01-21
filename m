@@ -2,115 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 337734956D6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 00:21:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E84649573A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 01:15:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378146AbiATXVK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jan 2022 18:21:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39682 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378232AbiATXUu (ORCPT
+        id S233907AbiAUAPx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jan 2022 19:15:53 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:12590 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232090AbiAUAPw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jan 2022 18:20:50 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 127B9C061574;
-        Thu, 20 Jan 2022 15:20:50 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id f202-20020a1c1fd3000000b0034dd403f4fbso14390158wmf.1;
-        Thu, 20 Jan 2022 15:20:50 -0800 (PST)
+        Thu, 20 Jan 2022 19:15:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=70y9nP+1TJuyoQVHWKHYrgk62/1kbAozVgHhQoGQnWU=;
-        b=W9FIXQ88UaSTP59Qi7+oime1sFU7XPsBBr+GgtIZuDCxabPolRSg0UVB57+j7xn3TL
-         L4J7c3XN5cVXU9vUf/jC5K7uxhGch/2CdvfibqBaKT5alYLpdgoGJC0Sechz5wI13ueW
-         yz1HoXFN/s6m+/l2+I2rKH/GFcdU6pu9U14eRH0Vb4jaqUZSyKndqo0sqB3evNjZHBfe
-         9MgvwW7Su+DfBOpYp0wZpCnECInP2+66b0NQDJscSnZgYRNWUL8Bs3pua9a6K1rwKdtY
-         TTyirOIfrj5QFrdL/rS8eb23El1xVwL1JItJRWwdE30ei42exZSy7tk421zuJVgwzPRz
-         gavQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=70y9nP+1TJuyoQVHWKHYrgk62/1kbAozVgHhQoGQnWU=;
-        b=ryWacxUS5gcpzIpAapqVN/nXu+mTYaCl07RCEn222HIN73nJ8anwgGJtOQDJxRvRWK
-         yKR4eX97TNvuCSLfXOyCwwxbraHHAkGRnfNf3Y1itRpsUsrWPugps/RLGLL8gOJKWw9k
-         t1vNnn21+A3fqfxfRbv46TmYE1mMlsvng/aEyPna7HkSe6l20Yd1zQvNA+VLxZhgoYkj
-         6giLeHjOCuixBtCeQm02RV8bIPkIjwjoHl5xGZhx9dGBVIha8SDfVQDBcJBeTZIH1JSL
-         RsrNr5O8Tqk7RJk/zeK6Sq7jMslwXunUibh+1+Jixgmb64s8oHgfTuZI8nABF7Ml9WtN
-         ilCA==
-X-Gm-Message-State: AOAM533jLCkXh2hQCvUNuC97ObA1SPjKLzcf8Eo4JkOI1zUuhiZeKRir
-        lpzOJiW8gMB0zKiEWMciGak=
-X-Google-Smtp-Source: ABdhPJy2EAGYqEGxCHtEc43zDu9wvxI6e81Sk5trFgKtuU1q9UCCbNWoXPBJztPhW8RkxnbwpfmtgQ==
-X-Received: by 2002:a05:600c:5125:: with SMTP id o37mr1107030wms.161.1642720848419;
-        Thu, 20 Jan 2022 15:20:48 -0800 (PST)
-Received: from localhost.localdomain (93-42-71-246.ip85.fastwebnet.it. [93.42.71.246])
-        by smtp.googlemail.com with ESMTPSA id a9sm3939283wmm.32.2022.01.20.15.20.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jan 2022 15:20:48 -0800 (PST)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Taniya Das <tdas@codeaurora.org>,
-        Ansuel Smith <ansuelsmth@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 15/15] ARM: dts: qcom: Add syscon and cxo/pxo clock to gcc node for ipq8064
-Date:   Fri, 21 Jan 2022 00:20:28 +0100
-Message-Id: <20220120232028.6738-16-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20220120232028.6738-1-ansuelsmth@gmail.com>
-References: <20220120232028.6738-1-ansuelsmth@gmail.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1642724152; x=1674260152;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=dKsHQvAjT19aw8U+G6+KD+0SJ25835Y+mwf/wTZtNaE=;
+  b=JbD3rrCdB1IPXuqBxrgpvA65ObjI6bOyIp5SYsZgDxx53B6lZRfqEFce
+   b7RZxxJvAhBlzTOFDhbNI2eO8ixJOT7u8dMn1E2HMbBFq2w1wXHAPkfhQ
+   Vv5TwGl0jsreYJk4RBEQAYzv2AoGnYizoA9rtNTWXE8JsRUhq+DCkvrUh
+   c=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 20 Jan 2022 16:15:52 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2022 16:15:51 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 20 Jan 2022 16:15:51 -0800
+Received: from [10.110.112.109] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 20 Jan
+ 2022 16:15:50 -0800
+Message-ID: <1192afb0-43b8-527e-4a43-6635413e4cc4@quicinc.com>
+Date:   Thu, 20 Jan 2022 16:15:50 -0800
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH 3/3] input: misc: pm8941-pwrkey: avoid potential null
+ pointer dereference
+Content-Language: en-US
+To:     Trilok Soni <quic_tsoni@quicinc.com>, <dmitry.torokhov@gmail.com>
+CC:     <linux-input@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <collinsd@codeaurora.org>,
+        <bjorn.andersson@linaro.org>, <swboyd@chromium.org>,
+        <skakit@codeaurora.org>
+References: <20220120204132.17875-1-quic_amelende@quicinc.com>
+ <20220120204132.17875-4-quic_amelende@quicinc.com>
+ <88e7a6c5-c94e-0b65-173d-5f21109e216e@quicinc.com>
+From:   Anjelique Melendez <quic_amelende@quicinc.com>
+In-Reply-To: <88e7a6c5-c94e-0b65-173d-5f21109e216e@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add syscon compatible required for tsens driver to correctly probe driver
-and access the reg. Also add cxo and pxo tag and declare them as gcc clock
-now requires them for the ipq8064 gcc driver that has now been modernized.
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- arch/arm/boot/dts/qcom-ipq8064.dtsi | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-index 11481313bdb6..5524a68cf3d1 100644
---- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-@@ -298,13 +298,13 @@ smem: smem@41000000 {
- 	};
- 
- 	clocks {
--		cxo_board {
-+		cxo_board: cxo_board {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
- 			clock-frequency = <25000000>;
- 		};
- 
--		pxo_board {
-+		pxo_board: pxo_board {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
- 			clock-frequency = <25000000>;
-@@ -736,7 +736,9 @@ tsens_calib_backup: calib_backup@410 {
- 		};
- 
- 		gcc: clock-controller@900000 {
--			compatible = "qcom,gcc-ipq8064";
-+			compatible = "qcom,gcc-ipq8064", "syscon";
-+			clocks = <&pxo_board>, <&cxo_board>;
-+			clock-names = "pxo", "cxo";
- 			reg = <0x00900000 0x4000>;
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
--- 
-2.33.1
-
+On 1/20/2022 2:18 PM, Trilok Soni wrote:
+> On 1/20/2022 12:41 PM, Anjelique Melendez wrote:
+>> From: David Collins <collinsd@codeaurora.org>
+>>
+>> Add a null check for the pwrkey->data pointer after it is assigned
+>> in pm8941_pwrkey_probe().  This avoids a potential null pointer
+>> dereference when pwrkey->data->has_pon_pbs is accessed later in
+>> the probe function.
+>>
+>> Change-Id: I589c4851e544d79a1863fd110b32a0b45ac03caf
+>> Signed-off-by: David Collins <collinsd@codeaurora.org>
+>> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+>> ---
+>>   drivers/input/misc/pm8941-pwrkey.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/drivers/input/misc/pm8941-pwrkey.c b/drivers/input/misc/pm8941-pwrkey.c
+>> index 0ce00736e695..ac08ed025802 100644
+>> --- a/drivers/input/misc/pm8941-pwrkey.c
+>> +++ b/drivers/input/misc/pm8941-pwrkey.c
+>> @@ -263,6 +263,10 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
+>>         pwrkey->dev = &pdev->dev;
+>>       pwrkey->data = of_device_get_match_data(&pdev->dev);
+>> +    if (!pwrkey->data) {
+>> +        dev_err(&pdev->dev, "match data not found\n");
+>> +        return -ENODEV;
+>> +    }
+>>   
+>
+> I don't understand why this patch is 3rd in the series. Isn't it independent from the debounce time? If not, then why it is not fixed as part of the patch which adds this debounce time support?
+>
+> ---Trilok Soni
+You are correct that this patch is independent from debounce time. In the following version I will move this patch up to be the first patch!
