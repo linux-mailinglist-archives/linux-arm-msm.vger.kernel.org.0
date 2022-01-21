@@ -2,115 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 387154966E9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 22:04:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 807514966FE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 22:06:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233433AbiAUVER (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jan 2022 16:04:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49506 "EHLO
+        id S231271AbiAUVGX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jan 2022 16:06:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233437AbiAUVEK (ORCPT
+        with ESMTP id S229850AbiAUVGW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jan 2022 16:04:10 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E523CC06175A;
-        Fri, 21 Jan 2022 13:04:08 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id l5so27759882edv.3;
-        Fri, 21 Jan 2022 13:04:08 -0800 (PST)
+        Fri, 21 Jan 2022 16:06:22 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6659C06173D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jan 2022 13:06:21 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id x11so36378824lfa.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jan 2022 13:06:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=70y9nP+1TJuyoQVHWKHYrgk62/1kbAozVgHhQoGQnWU=;
-        b=ifaBPUIYWqx0Yuxwid+52Kneq6qIIEZpQyCGPZBb+SdwutjTuyrN/oWw8oiyCbLJ/4
-         JWNQWjVEd/tMRmtzrg1+Vp0Y9SEKG8h6m6ue3U3cXDOxv42tsqAet4qqt0HcFhztaDtG
-         j/6fGOWsEhoqiqLUrXk5rc1rKrfSi5gXBWqnaDtx7Ae73aH8qX9boL2yfxLD2gbGYFKw
-         HVgGDv5RL8q05bcDRzhiDltJvNTL8QXvqp5d0pwmqVKp0yTbSz7mLQ8He1qYyxSX/iGA
-         slqJ8p3O+RiqiRI7evjb7n3SbBCv1C4cPjyyLnQ+ZT5wZvr+5PwaC6CestOwpIYs2Zph
-         U2lA==
+        bh=0vJ8DhwvnCQdnTeYuE3CkWRZJOO1ip2uJNFoaTJPamw=;
+        b=rtY6myzx7rzb+2+xk/btRkYOxuVjnX/xNvgZHq4099bqiiGiiF3worWSzctzRLrHSh
+         xan4nUgoHFhnpKtmeqC/5lPJNPFdrDJVAL0gW182Ccy7xGvaA33xIg2xrRTzA7Gzxyy8
+         3x/eJODRgjvZpcP0AeqzmFw56uouUWtxeR93sxLLleYHds4pyWjgyT9ruygbdOPcIC25
+         iizrN3zHKw77Sr/Cb64at+NdiW2U0A6GgN+qFXSKgR1rBlUg4qRe/EVdzOCULABzX3Si
+         iYhHoJHrVjyGwdHQbOAT7oONNM29pY+Prncp9mIQDJGHYPZh8oIsfPf3hANiUZC3UUeS
+         0D0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=70y9nP+1TJuyoQVHWKHYrgk62/1kbAozVgHhQoGQnWU=;
-        b=vJ4oNSnSmEcrKpBxiENzCONaJ0O8+g2FEaiNXtA4/bf7oIF3Kwmj3oP5Vdw71/KVWI
-         QDcotawdN6YqOQP64SIyiy6ccCGbJOVf0NGDsD6BUR7BLgYtrVzxINjjs2j5Er5ocSyd
-         108VyzmVblq7j8CH0y74GuhlztwYbZp3s0VFTMKivC0NZ44xLt9NxqA+r46jHWzo8CY7
-         RXCV6gm+sGDlAQ2no1cP0luU6SortxyURW4Mn9AVkHHCkqYBMwq4UY6kqUC4kwtKzZum
-         MRoNmIVxlpvBIeaN9QtLBAcXokpITpzH58y7DNZQPX+TbWeD1xOl9Wt9G7EkscEOCMO4
-         EMPA==
-X-Gm-Message-State: AOAM533smrrKmyHpyiiemTo+70EsGAirSRrVMkv1X9HbBWxhRn8bskej
-        4Jkj853Tqs5LyI8T3/Q0xt0=
-X-Google-Smtp-Source: ABdhPJy1y4HO8/1WaxNmwSExaeBcf58GI14B5KbdtJCqWCaEiOtb20D7eSoT8DXN+D/CEEd8o4jPGQ==
-X-Received: by 2002:a05:6402:b4c:: with SMTP id bx12mr5776585edb.363.1642799047385;
-        Fri, 21 Jan 2022 13:04:07 -0800 (PST)
-Received: from localhost.localdomain (93-42-71-246.ip85.fastwebnet.it. [93.42.71.246])
-        by smtp.googlemail.com with ESMTPSA id p23sm2898595edx.86.2022.01.21.13.04.06
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0vJ8DhwvnCQdnTeYuE3CkWRZJOO1ip2uJNFoaTJPamw=;
+        b=PaFRtQEbGVjYm7CERD6KF1zpDIxSi7WtLJiPEdj2jzWRxnZK1PC/FkC9TUbcWPUAu7
+         1M1H02ITpy2Osy/InclsuglgWVgvXU9Z/2DfrLaz600GXZPXjKfLSaVOi2NqnIemJjcM
+         5rSyIk5C0I/EZg6GMbBNMb7+uyq8UekCYWP8AUiOacoe6WK8mQsVsFjK8aXAzuSzL/8z
+         cfNYUec1LxK8ziQwsok8AeFcXbs4VBY3lpU7RF7bqnn6kowQmcoR88p9961Y/YZHFe/z
+         pamdbsut0Z7OO2NTGipsacWZgY/pg4P4oaZiiXHFVJ+5Ke59t7SnoVfxnvAS/30fA4rh
+         skpQ==
+X-Gm-Message-State: AOAM5308f/R0jcWYdkZN+6TeVuOgDoPNXPRIWKeed5DRHNQWXm7B3Oqs
+        7xdGYj4+VtqGps464E04FKYNAw==
+X-Google-Smtp-Source: ABdhPJx49jz1SijSo8MyJjMx8hgsEJ6kEQlaDTIQslCRxiPxXAZdmi0yppHMtgeEBo8iwtFlG2h8zw==
+X-Received: by 2002:a05:6512:c2a:: with SMTP id z42mr4974720lfu.329.1642799180056;
+        Fri, 21 Jan 2022 13:06:20 -0800 (PST)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id v10sm279125ljk.44.2022.01.21.13.06.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Jan 2022 13:04:06 -0800 (PST)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Taniya Das <tdas@codeaurora.org>,
-        Ansuel Smith <ansuelsmth@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 15/15] ARM: dts: qcom: Add syscon and cxo/pxo clock to gcc node for ipq8064
-Date:   Fri, 21 Jan 2022 22:03:40 +0100
-Message-Id: <20220121210340.32362-16-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20220121210340.32362-1-ansuelsmth@gmail.com>
-References: <20220121210340.32362-1-ansuelsmth@gmail.com>
+        Fri, 21 Jan 2022 13:06:19 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH v5 0/6] drm/msm/dpu: simplify RM code
+Date:   Sat, 22 Jan 2022 00:06:12 +0300
+Message-Id: <20220121210618.3482550-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add syscon compatible required for tsens driver to correctly probe driver
-and access the reg. Also add cxo and pxo tag and declare them as gcc clock
-now requires them for the ipq8064 gcc driver that has now been modernized.
+INTF blocks are not really handled by resource manager, they are
+assigned at dpu_encoder_setup_display using dpu_encoder_get_intf().
+Then this allocation is passed to RM and then returned to then
+dpu_encoder. So allocate them outside of RM and use them directly.
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- arch/arm/boot/dts/qcom-ipq8064.dtsi | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+While we are at it, drop the lm_max_width from the RM and simplify VBIF
+handling (move creation/destruction to the RM too). Once this and SSPP
+handling patches are merged, the RM would handle lifetime of all
+dpu_hw_* objects.
 
-diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-index 11481313bdb6..5524a68cf3d1 100644
---- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-@@ -298,13 +298,13 @@ smem: smem@41000000 {
- 	};
- 
- 	clocks {
--		cxo_board {
-+		cxo_board: cxo_board {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
- 			clock-frequency = <25000000>;
- 		};
- 
--		pxo_board {
-+		pxo_board: pxo_board {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
- 			clock-frequency = <25000000>;
-@@ -736,7 +736,9 @@ tsens_calib_backup: calib_backup@410 {
- 		};
- 
- 		gcc: clock-controller@900000 {
--			compatible = "qcom,gcc-ipq8064";
-+			compatible = "qcom,gcc-ipq8064", "syscon";
-+			clocks = <&pxo_board>, <&cxo_board>;
-+			clock-names = "pxo", "cxo";
- 			reg = <0x00900000 0x4000>;
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
+Changes since v4:
+ - Changes IS_ERR_OR_NULL() to IS_ERR() in dpu_rm_init()
+ - Removed if(!null) conditions when calling dpu_hw_intf_destroy() and
+   dpu_hw_vbif_destroy()
+
+Changes since v3:
+ - Add missing DSPP blocks teardown
+ - Remove dpu_hw_blk from dpu_hw_intf
+ - move dpu_hw_vbif creation/destruction to the RM
+
+Changes since v2:
+ - Dropped DSPP, PP and MERGE_3D patches for now.
+
+Changes since v1:
+ - Split into separate patch series to ease review.
+
+Dmitry Baryshkov (6):
+  drm/msm/dpu: drop unused lm_max_width from RM
+  drm/msm/dpu: add DSPP blocks teardown
+  drm/msm/dpu: get INTF blocks directly rather than through RM
+  drm/msm/dpu: stop embedding dpu_hw_blk into dpu_hw_intf
+  drm/msm/dpu: fix error handling in dpu_rm_init
+  drm/msm/dpu: move VBIF blocks handling to dpu_rm
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |  36 +----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h   |  16 ---
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |   5 -
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  |   8 --
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |   8 --
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h   |  11 --
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h   |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  28 +---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |   2 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        | 126 +++++-------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h        |  31 ++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c      |  26 +---
+ 12 files changed, 73 insertions(+), 225 deletions(-)
+
 -- 
-2.33.1
+2.34.1
 
