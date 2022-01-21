@@ -2,121 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F92649574E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 01:25:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A96194957C9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 02:37:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233817AbiAUAZ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Jan 2022 19:25:29 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:59998 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230379AbiAUAZ2 (ORCPT
+        id S1347527AbiAUBhm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Jan 2022 20:37:42 -0500
+Received: from mail-oi1-f177.google.com ([209.85.167.177]:38624 "EHLO
+        mail-oi1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232540AbiAUBhl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Jan 2022 19:25:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1642724728; x=1674260728;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=t2YxuKttgVah2lM2twk9tkIYIwUdg0peTdAk1kq1K4o=;
-  b=gZotGw2bSPosillhuBEaEcoyjj0cUTwMwUoIw8aI1PwnGwMwwHqrzcB6
-   65ZF2Yg3El4qSUnEVq4wF8le1QSBpnFHjGY7yS5id+p56EMd9eMUlz3sj
-   b9yUb6iI2VmYwidowH3p/YNGQHL2FSBnUYqvwUPOD4tNcPpdDRWtdOd+O
-   o=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 20 Jan 2022 16:25:28 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2022 16:25:27 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 20 Jan 2022 16:25:27 -0800
-Received: from [10.110.112.109] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 20 Jan
- 2022 16:25:27 -0800
-Message-ID: <e2015c19-b73b-39a7-ba73-708b2c4552c7@quicinc.com>
-Date:   Thu, 20 Jan 2022 16:25:26 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH 3/3] input: misc: pm8941-pwrkey: avoid potential null
- pointer dereference
-Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     <dmitry.torokhov@gmail.com>, <linux-input@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <collinsd@codeaurora.org>, <swboyd@chromium.org>,
-        <skakit@codeaurora.org>
-References: <20220120204132.17875-1-quic_amelende@quicinc.com>
- <20220120204132.17875-4-quic_amelende@quicinc.com> <YenpwnE3WrIEAOlm@ripper>
-From:   Anjelique Melendez <quic_amelende@quicinc.com>
-In-Reply-To: <YenpwnE3WrIEAOlm@ripper>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+        Thu, 20 Jan 2022 20:37:41 -0500
+Received: by mail-oi1-f177.google.com with SMTP id g205so11559536oif.5;
+        Thu, 20 Jan 2022 17:37:41 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=lwx/3sI/jAgnGg6BbYNTq2g4K7zJzyk25fhYkr3exC0=;
+        b=t8VFvFhmokBMq5hdyD47XrcVaaRq9Blc6EZwVd2Mckp3jhx+LodO6HWZSIQnrQq3wL
+         3pewnyc7SdBo/iPhkNu3t33cF7eh34HUKLZF66ErQx7hLP0jC1ym2gvy7ao4dHa5ZrBC
+         2/l/Zk6VMu0V3YTKydLL3TcWZW1soN0aAQZQD2haK55S/Vj9r1wTRaV8dmhg4msbE/dH
+         V3O7/G/n3EQQjERTSCLG7BRJGXSeTTblICulS+cTuxw2jBzlCYdW/By32LirEiPk9+RM
+         gzG5WASeOFl4VUoin7QlvrTtQOywTB5iFPR6E2LROy/LtRZHMrcHvAcH++TOJTeaHTtm
+         Z2+g==
+X-Gm-Message-State: AOAM5319yGRvILIv0c+R+pQE2qzqUcX/M+qdyP51Xf73ZZdYMuBM988u
+        LqQoS+jGYeb/g8Y0lrzVsA==
+X-Google-Smtp-Source: ABdhPJxw18vz18oJhNnQmNv3Pg97sN04HSdTjldQBZY7zJAkoFUNRxgJGeo1b/7bNUVA/HdTHKyzKw==
+X-Received: by 2002:a05:6808:aa7:: with SMTP id r7mr1447327oij.47.1642729060372;
+        Thu, 20 Jan 2022 17:37:40 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id o21sm440941ote.4.2022.01.20.17.37.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Jan 2022 17:37:39 -0800 (PST)
+Received: (nullmailer pid 2314865 invoked by uid 1000);
+        Fri, 21 Jan 2022 01:37:38 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     devicetree@vger.kernel.org, Taniya Das <tdas@codeaurora.org>,
+        linux-kernel@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-clk@vger.kernel.org, Philipp Zabel <p.zabel@pengutronix.de>
+In-Reply-To: <20220120232028.6738-3-ansuelsmth@gmail.com>
+References: <20220120232028.6738-1-ansuelsmth@gmail.com> <20220120232028.6738-3-ansuelsmth@gmail.com>
+Subject: Re: [PATCH v2 02/15] dt-bindings: clock: simplify qcom,gcc-apq8064 Documentation
+Date:   Thu, 20 Jan 2022 19:37:38 -0600
+Message-Id: <1642729058.530862.2314864.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, 21 Jan 2022 00:20:15 +0100, Ansuel Smith wrote:
+> Simplify qcon,gcc-apq8064 Documentation by using qcom,gcc.yaml as a
+> template.
+> 
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> ---
+>  .../bindings/clock/qcom,gcc-apq8064.yaml      | 27 +++----------------
+>  1 file changed, 3 insertions(+), 24 deletions(-)
+> 
 
-On 1/20/2022 3:01 PM, Bjorn Andersson wrote:
-> On Thu 20 Jan 12:41 PST 2022, Anjelique Melendez wrote:
->
->> From: David Collins <collinsd@codeaurora.org>
->>
->> Add a null check for the pwrkey->data pointer after it is assigned
->> in pm8941_pwrkey_probe().  This avoids a potential null pointer
->> dereference when pwrkey->data->has_pon_pbs is accessed later in
->> the probe function.
->>
->> Change-Id: I589c4851e544d79a1863fd110b32a0b45ac03caf
->> Signed-off-by: David Collins <collinsd@codeaurora.org>
->> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
->> ---
->>  drivers/input/misc/pm8941-pwrkey.c | 4 ++++
->>  1 file changed, 4 insertions(+)
->>
->> diff --git a/drivers/input/misc/pm8941-pwrkey.c b/drivers/input/misc/pm8941-pwrkey.c
->> index 0ce00736e695..ac08ed025802 100644
->> --- a/drivers/input/misc/pm8941-pwrkey.c
->> +++ b/drivers/input/misc/pm8941-pwrkey.c
->> @@ -263,6 +263,10 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
->>  
->>  	pwrkey->dev = &pdev->dev;
->>  	pwrkey->data = of_device_get_match_data(&pdev->dev);
->> +	if (!pwrkey->data) {
-> The only way this can happen is if you add a new compatible and forget
-> to specify data and when that happens you will get a print in the log
-> somewhere, which once you realize that you don't have your pwrkey you
-> might be able to find among all the other prints.
->
-> If you instead don't NULL check this pointer you will get a large splat
-> in the log, with callstack and all, immediately hinting you that
-> pwrkey->data is NULL.
->
->
-> In other words, there's already a print, a much larger print and I don't
-> think there's value in handling this mistake gracefully.
->
-> Regards,
-> Bjorn
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
+yamllint warnings/errors:
 
-We would like to the null pointer check in place to avoid static analysis
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.example.dt.yaml:0:0: /example-0/clock-controller@900000: failed to match any schema with compatible: ['qcom,gcc-apq8064']
 
-warnings that can be easily fixed.
+doc reference errors (make refcheckdocs):
 
+See https://patchwork.ozlabs.org/patch/1582347
 
->
->> +		dev_err(&pdev->dev, "match data not found\n");
->> +		return -ENODEV;
->> +	}
->>  
->>  	parent = pdev->dev.parent;
->>  	regmap_node = pdev->dev.of_node;
->> -- 
->> 2.34.1
->>
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
