@@ -2,312 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1085149603D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 15:01:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 021204960B8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 15:27:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380836AbiAUOBy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jan 2022 09:01:54 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:44320 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350404AbiAUOBy (ORCPT
+        id S1381051AbiAUO15 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jan 2022 09:27:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43986 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1381038AbiAUO1z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jan 2022 09:01:54 -0500
+        Fri, 21 Jan 2022 09:27:55 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 291CAC06173B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jan 2022 06:27:55 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id o12so34141550lfu.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jan 2022 06:27:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1642773714; x=1674309714;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=5IqRLRAOCUN5N8x7XtvNl4hgMj0+RLgbF9Z13Lxi2w4=;
-  b=CLblmgaKeS6G8cIhMD0YZsLA3EPs+9JeSURWtSojeL/Brwm1mLI4amY5
-   sgnOuVR8n310Z5IEzrOh0AOoqhJW0lg3lBqgCdloWx+IXX60xR3fDECiE
-   /jA2/wEuRkg4JY7xyATk72n0UY+8VufA5li0tSbFxTGWiRfo9OxrQ468+
-   4=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 21 Jan 2022 06:01:54 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jan 2022 06:01:54 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Fri, 21 Jan 2022 06:01:53 -0800
-Received: from [10.253.75.234] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Fri, 21 Jan
- 2022 06:01:50 -0800
-Message-ID: <2703bf83-3a87-e69f-2392-7e0568e91712@quicinc.com>
-Date:   Fri, 21 Jan 2022 22:01:47 +0800
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=T5DdgzdEP/ycx7S7WAsdXGSwAN7y02UOf2kIHObUcYA=;
+        b=LPKgykbUdMmZqHV7RTgEm5kK2QzH3vl1DLmlkKDOJwrWWkAnO5+WQyxOeLlbfEwQ5/
+         DwKsIhLmPxZqM8ikqxKGMVm4YabKaFOB2p3n/XNVw2Lrr0TpvtloHzzEE5uou7uq9PoM
+         YUACtYIuc651Qy0xeO256dXFf8i+RM9XPDht19GtaDobIdjSwu+vlzK9NWjc95V7CB5b
+         N7N8DYi6/IS1takj9tcGGPO+0QVIAdx12gZ2Q7pYFbItodPujZDIZKuJyrexFFZuIVoM
+         tgh3/kwRS0LWGZ+HYLQmG3gCqYlB+Bo+AQVQoEz+hCFheA2hBoz2TNNFgzwujwsNFNVh
+         oAWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=T5DdgzdEP/ycx7S7WAsdXGSwAN7y02UOf2kIHObUcYA=;
+        b=LIRZOUm9xi/GYCuqNtu5ajbgkeVaPBkNuJKrARtH6i1dpQhxdRuGCU7wVUo7gcRUL5
+         Zn3Sf4JRbTeHEEYCeO5pDFKkVx9ugMl3++w5L7pNan/B0PzXz8Um6ASo0r+sdM0Rx+Lw
+         A58BDLA8w4SErZtxFR1Uez/goR2qq0Mm/Sj/RBWT66TUO5nDGjxa5bZKn0O6uETLs58b
+         dskO2iW9S1yNLjDvt4rKpRjr7Mf3K1SPpr1i4uKD7Cpqw90PbzFZcXjvxsq0RsHPi06Y
+         xs0J6XJ8L4z4XxXksrE747/jtoUHcUj4ozahGd4R+tEaoODKR0nKrgB97Fw4wm3giQZO
+         bkgw==
+X-Gm-Message-State: AOAM533n5d7fsy/RJTvUHAnBpICqZpZRtA192GC7/LVXlEqxcUzU/B8Z
+        hPKUsIsVBGfQQ1ouDZp6WsZfKU2ztZBeJ2cAEWgcvQ==
+X-Google-Smtp-Source: ABdhPJxVEP+ieUR0BpVvq/WdgN9zf6SxNJrIPp+zWW83gdFVxbH/lah8cFzuxk01LCPckNDTgaE8/7iVNj31hvDnZyU=
+X-Received: by 2002:a19:f811:: with SMTP id a17mr3865291lff.18.1642775273407;
+ Fri, 21 Jan 2022 06:27:53 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [PATCH v2 2/9] Coresight: Add coresight TPDM source driver
-Content-Language: en-US
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>
-CC:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20211209141543.21314-1-quic_jinlmao@quicinc.com>
- <20211209141543.21314-3-quic_jinlmao@quicinc.com>
- <20211214185714.GB1549991@p14s>
- <85ad17fb-c885-831d-d841-4c6f10920355@quicinc.com>
- <CAJ9a7Vh2d79Ro72ZDsbQSVS8VrH3c+X+xo8849yGS4Z73+yq_w@mail.gmail.com>
- <20211216190223.GA78825@p14s>
-From:   Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <20211216190223.GA78825@p14s>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+References: <20220121050233.8708-1-quic_ctheegal@quicinc.com>
+In-Reply-To: <20220121050233.8708-1-quic_ctheegal@quicinc.com>
+From:   Vincent Guittot <vincent.guittot@linaro.org>
+Date:   Fri, 21 Jan 2022 15:27:42 +0100
+Message-ID: <CAKfTPtDTm5O_P504=_6Gjk2Uv0DiLS8Mu=c6km3uVO0h8BB1Lw@mail.gmail.com>
+Subject: Re: [PATCH v2] sched/fair: Prefer small idle cores for forkees
+To:     Chitti Babu Theegala <quic_ctheegal@quicinc.com>
+Cc:     mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com,
+        dietmar.eggemann@arm.com, rostedt@goodmis.org,
+        joel@joelfernandes.org, linux-arm-msm@vger.kernel.org,
+        quic_lingutla@quicinc.com, linux-kernel@vger.kernel.org,
+        quic_rjendra@quicinc.com, Vincent.Donnefort@arm.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mathieu,
+On Fri, 21 Jan 2022 at 06:03, Chitti Babu Theegala
+<quic_ctheegal@quicinc.com> wrote:
+>
+> Newly forked threads don't have any useful utilization data yet and
+> it's not possible to forecast their impact on energy consumption.
 
-Good Day.
+It would be worth mentioning that you consider only EAS mode in the patch
 
-On 12/17/2021 3:02 AM, Mathieu Poirier wrote:
-> [...]
->
->>>>> +
->>>>> +static void tpdm_init_default_data(struct tpdm_drvdata *drvdata)
->>>>> +{
->>>>> +    static int traceid = TPDM_TRACE_ID_START;
->>>>> +
->>>>> +    drvdata->traceid = traceid++;
->>>>> +}
->>>> I have been specific on how to properly do this in the last revision.  Given the
->>>> above about the MAINTAINERS file, I am not sure that I will continue reviewing this set.
->>>>
->>>> There is also no need to rush another revision as I won't have the bandwidth to
->>>> process it before the holidays.
->>>>
->>>> Thanks,
->>>> Mathieu
->>> Hi Mathieu,
->>>
->>> Sorry, not addressed your previous comments here.
->>>
->>> For the trace id, each coresight component has 7 bits to store the trace
->>> id. So the trace id should be from 1 to 127 as 0 is invalid.
->> IDs 0x70 - 0x7F (`112 - 127 ) are reserved - see the ARM Coresight
->> Architecture specification v3.0
->>
-> Correct
->
->>> Apart from TPDMs/STM/ETMs, we also have other coresight components in
->>> our internal device. About 80 ids are already used.
->>>
->>> Some components have fixed trace id in HW. If we use functions below to
->>> count the trace id, there will be conflict to other components.
->>>
->>> Can we use 1-15 for etm trace ids  and 16 - 127 for other coresight
->>> components ? And handle trace ids in its' own driver ?
->>>
->> This will limit systems to 15 cores - some have more!
->>
-> Correct
->
->>> static inline int coresight_get_system_trace_id(int id)
->>> {
->>>           /* Start system IDs above the highest per CPU trace ID. */
->>>           return coresigth_get_trace_id(cpumask_last(cpu_possible_mask) + 1);
->>> }
-> Looking at my own suggestion again this won't work since it returns the same traceID
-> when called multiple times.
->
-> For this patchset and _without_ taking into account internal devices that have
-> their traceID set in HW:
->
-> 1. Define a bitmask that is 7 bit wide.
-Should it be a 128 bit wide bitmask  (0--127)?
-> 2. By default, set bits under 0x10 and between 0x70 - 0x7F.
-> 3. In coresight_get_system_trace_id(), drop the @id parameter and allocate the
-> first available bit after cpumask_last(cpu_possible_mask) + 1.
+> These forkees (though very small, most times) end up waking big
 
-Should it allocate the first available bit after (cpumask_last(cpu_possible_mask) *2 ) + 0x10 ?
-Return the first zero bit position as the trace id and set the bit.
+The assumption that " (though very small, most times)" is maybe true
+for the cases that you are interested in and you monitor, but it's not
+always true. It seems that Vincent D. raised some concerns about
+forkee which would not be small at the end.
 
-> 4. Define a new function called coresight_put_system_trace_id(int id) that
-> clears the bit in the mask corresponding to @id.
+> cores from deep sleep for that very small durations.
 >
-> For now that should work.
+> Bias all forkees to small cores to prevent waking big cores from deep
+
+you are testing idlest_sgs->idle_cpus so you don't bias to small cores
+but small & idle cores but if there is no small idle core then you
+will wake up a big core though the forkees are small most times
+
+> sleep to save power.
+
+Then why do you want to wake up a small core from deep state instead
+of packing in one of these already running cpus? If you care about
+power, selecting a small idle core may not always be the best choice.
+Would it be better to select a non idle cpu with largest spare
+capacity at the current opp ?
+
 >
->>> static inline int coresight_get_trace_id(int cpu)
->>> {
->>>       /*
->>>        * A trace ID of value 0 is invalid, so let's start at some
->>>        * random value that fits in 7 bits and go from there.  Since
->>>        * the common convention is to have data trace IDs be I(N) + 1,
->>>        * set instruction trace IDs as a function of the CPU number.
->>>        */
->>>       return (CORESIGHT_ETM_PMU_SEED + (cpu * 2));
->>> }
->>>
->> This fixed relationship between cpu and trace ID is used in the perf
->> tooling to populate the elements in the perf.data file to correctly
->> allow association between CPU and trace data, and thus allow correct
->> trace decode.
-> TraceIDs associated to CPUs are communicated to the perf tooling by way of the
-> perf header - theoretically we should be able to change the allocation scheme
-> without impacting the decoding process.
+> Signed-off-by: Chitti Babu Theegala <quic_ctheegal@quicinc.com>
+> ---
+> Changes in v2:
+> 1. Enclosed the EAS check for this small core preferring logic
+> ---
+>  kernel/sched/fair.c | 18 +++++++++++++-----
+>  1 file changed, 13 insertions(+), 5 deletions(-)
 >
->> It should be possible to create another more dynamic mapping scheme -
->> but this must include a way to support the perf requirements too.
->>
-> TraceIDs have been a lurking problem for as long as the subsystem has existed.
-> For now what I have suggested above should be sufficient to provide an
-> in-between solution that doesn't hold back this patchset.
+> diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+> index c6046446c50b3..72f9ea7c98c05 100644
+> --- a/kernel/sched/fair.c
+> +++ b/kernel/sched/fair.c
+> @@ -5872,7 +5872,7 @@ static int wake_affine(struct sched_domain *sd, struct task_struct *p,
+>  }
 >
-> That being said, we need to start thinking about the best way to do this.  I
-> will put a patchset together in the new year that aims in that direction.
+>  static struct sched_group *
+> -find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu);
+> +find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu, int sd_flag);
 >
->> Regards
->>
->> Mike
->>
->>> Thanks
->>>
->>> Jinlong Mao
->>>
->>>>> +
->>>>> +static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
->>>>> +{
->>>>> +    struct device *dev = &adev->dev;
->>>>> +    struct coresight_platform_data *pdata;
->>>>> +    struct tpdm_drvdata *drvdata;
->>>>> +    struct coresight_desc desc = { 0 };
->>>>> +
->>>>> +    desc.name = coresight_alloc_device_name(&tpdm_devs, dev);
->>>>> +    if (!desc.name)
->>>>> +            return -ENOMEM;
->>>>> +    pdata = coresight_get_platform_data(dev);
->>>>> +    if (IS_ERR(pdata))
->>>>> +            return PTR_ERR(pdata);
->>>>> +    adev->dev.platform_data = pdata;
->>>>> +
->>>>> +    drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
->>>>> +    if (!drvdata)
->>>>> +            return -ENOMEM;
->>>>> +    drvdata->dev = &adev->dev;
->>>>> +    dev_set_drvdata(dev, drvdata);
->>>>> +
->>>>> +    drvdata->base = devm_ioremap_resource(dev, &adev->res);
->>>>> +    if (!drvdata->base)
->>>>> +            return -ENOMEM;
->>>>> +
->>>>> +    mutex_init(&drvdata->lock);
->>>>> +
->>>>> +    desc.type = CORESIGHT_DEV_TYPE_SOURCE;
->>>>> +    desc.subtype.source_subtype = CORESIGHT_DEV_SUBTYPE_SOURCE_SYS;
->>>>> +    desc.ops = &tpdm_cs_ops;
->>>>> +    desc.pdata = adev->dev.platform_data;
->>>>> +    desc.dev = &adev->dev;
->>>>> +    drvdata->csdev = coresight_register(&desc);
->>>>> +    if (IS_ERR(drvdata->csdev))
->>>>> +            return PTR_ERR(drvdata->csdev);
->>>>> +
->>>>> +    tpdm_init_default_data(drvdata);
->>>>> +    pm_runtime_put(&adev->dev);
->>>>> +
->>>>> +    return 0;
->>>>> +}
->>>>> +
->>>>> +static void __exit tpdm_remove(struct amba_device *adev)
->>>>> +{
->>>>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(&adev->dev);
->>>>> +
->>>>> +    coresight_unregister(drvdata->csdev);
->>>>> +}
->>>>> +
->>>>> +static struct amba_id tpdm_ids[] = {
->>>>> +    {
->>>>> +            .id = 0x000f0e00,
->>>>> +            .mask = 0x000fff00,
->>>>> +    },
->>>>> +    { 0, 0},
->>>>> +};
->>>>> +
->>>>> +static struct amba_driver tpdm_driver = {
->>>>> +    .drv = {
->>>>> +            .name   = "coresight-tpdm",
->>>>> +            .owner  = THIS_MODULE,
->>>>> +            .suppress_bind_attrs = true,
->>>>> +    },
->>>>> +    .probe          = tpdm_probe,
->>>>> +    .id_table       = tpdm_ids,
->>>>> +};
->>>>> +
->>>>> +module_amba_driver(tpdm_driver);
->>>>> +
->>>>> +MODULE_LICENSE("GPL v2");
->>>>> +MODULE_DESCRIPTION("Trace, Profiling & Diagnostic Monitor driver");
->>>>> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
->>>>> new file mode 100644
->>>>> index 000000000000..980ae90ff1c8
->>>>> --- /dev/null
->>>>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
->>>>> @@ -0,0 +1,31 @@
->>>>> +/* SPDX-License-Identifier: GPL-2.0 */
->>>>> +/*
->>>>> + * Copyright (c) 2021 Qualcomm Innovation Center, Inc. All rights reserved.
->>>>> + */
->>>>> +
->>>>> +#ifndef _CORESIGHT_CORESIGHT_TPDM_H
->>>>> +#define _CORESIGHT_CORESIGHT_TPDM_H
->>>>> +
->>>>> +/* Default value of the traceid */
->>>>> +#define TPDM_TRACE_ID_START 128
->>>>> +
->>>>> +/**
->>>>> + * struct tpdm_drvdata - specifics associated to an TPDM component
->>>>> + * @base:       memory mapped base address for this component.
->>>>> + * @dev:        The device entity associated to this component.
->>>>> + * @csdev:      component vitals needed by the framework.
->>>>> + * @lock:       lock for the enable value.
->>>>> + * @enable:     enable status of the component.
->>>>> + * @traceid:    value of the current ID for this component.
->>>>> + */
->>>>> +
->>>>> +struct tpdm_drvdata {
->>>>> +    void __iomem            *base;
->>>>> +    struct device           *dev;
->>>>> +    struct coresight_device *csdev;
->>>>> +    struct mutex            lock;
->>>>> +    bool                    enable;
->>>>> +    int                     traceid;
->>>>> +};
->>>>> +
->>>>> +#endif  /* _CORESIGHT_CORESIGHT_TPDM_H */
->>>>> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
->>>>> index 93a2922b7653..e48d463be63b 100644
->>>>> --- a/include/linux/coresight.h
->>>>> +++ b/include/linux/coresight.h
->>>>> @@ -65,6 +65,7 @@ enum coresight_dev_subtype_source {
->>>>>       CORESIGHT_DEV_SUBTYPE_SOURCE_PROC,
->>>>>       CORESIGHT_DEV_SUBTYPE_SOURCE_BUS,
->>>>>       CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE,
->>>>> +    CORESIGHT_DEV_SUBTYPE_SOURCE_SYS,
->>>>>    };
->>>>>
->>>>>    enum coresight_dev_subtype_helper {
->>>>> --
->>>>> 2.17.1
->>>>>
->>
->>
->> -- 
->> Mike Leach
->> Principal Engineer, ARM Ltd.
->> Manchester Design Centre. UK
+>  /*
+>   * find_idlest_group_cpu - find the idlest CPU among the CPUs in the group.
+> @@ -5959,7 +5959,7 @@ static inline int find_idlest_cpu(struct sched_domain *sd, struct task_struct *p
+>                         continue;
+>                 }
+>
+> -               group = find_idlest_group(sd, p, cpu);
+> +               group = find_idlest_group(sd, p, cpu, sd_flag);
+>                 if (!group) {
+>                         sd = sd->child;
+>                         continue;
+> @@ -8885,7 +8885,8 @@ static inline void update_sg_wakeup_stats(struct sched_domain *sd,
+>  static bool update_pick_idlest(struct sched_group *idlest,
+>                                struct sg_lb_stats *idlest_sgs,
+>                                struct sched_group *group,
+> -                              struct sg_lb_stats *sgs)
+> +                              struct sg_lb_stats *sgs,
+> +                              int sd_flag)
+>  {
+>         if (sgs->group_type < idlest_sgs->group_type)
+>                 return true;
+> @@ -8922,6 +8923,13 @@ static bool update_pick_idlest(struct sched_group *idlest,
+>                 if (idlest_sgs->idle_cpus > sgs->idle_cpus)
+>                         return false;
+>
+> +               if (sched_energy_enabled()) {
+
+This is not enough, the find_energy_efficient_cpu() returns early to
+fallback to the default performance mode when the system is
+overutilized
+
+
+> +                   /* Select smaller cpu group for newly woken up forkees */
+> +                   if ((sd_flag & SD_BALANCE_FORK) && (idlest_sgs->idle_cpus &&
+> +                       !capacity_greater(idlest->sgc->max_capacity, group->sgc->max_capacity)))
+> +                       return false;
+> +               }
+> +
+>                 /* Select group with lowest group_util */
+>                 if (idlest_sgs->idle_cpus == sgs->idle_cpus &&
+>                         idlest_sgs->group_util <= sgs->group_util)
+> @@ -8940,7 +8948,7 @@ static bool update_pick_idlest(struct sched_group *idlest,
+>   * Assumes p is allowed on at least one CPU in sd.
+>   */
+>  static struct sched_group *
+> -find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu)
+> +find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu, int sd_flag)
+>  {
+>         struct sched_group *idlest = NULL, *local = NULL, *group = sd->groups;
+>         struct sg_lb_stats local_sgs, tmp_sgs;
+> @@ -8978,7 +8986,7 @@ find_idlest_group(struct sched_domain *sd, struct task_struct *p, int this_cpu)
+>
+>                 update_sg_wakeup_stats(sd, group, sgs, p);
+>
+> -               if (!local_group && update_pick_idlest(idlest, &idlest_sgs, group, sgs)) {
+> +               if (!local_group && update_pick_idlest(idlest, &idlest_sgs, group, sgs, sd_flag)) {
+>                         idlest = group;
+>                         idlest_sgs = *sgs;
+>                 }
+> --
+> 2.17.1
+>
