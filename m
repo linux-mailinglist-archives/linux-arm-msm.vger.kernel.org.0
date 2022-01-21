@@ -2,331 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EB37C4963A0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 18:16:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 67DC24964B6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 19:02:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379398AbiAURP7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jan 2022 12:15:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54520 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379114AbiAURP5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jan 2022 12:15:57 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1298AC06173B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jan 2022 09:15:57 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id n8so9107280plc.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jan 2022 09:15:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=K02TfDJswqE9tV0xWJk1EnsHkHdcprQzen8J5NZz700=;
-        b=TS0yzC8OZsTAoeA90oXwPTHGlGNDfqivpU1dwRTid9E/mJd1mMplol4mMoBux3t5Fz
-         sMsTlbmTD+IrPcaAxsOz1PaoMEKRSdbXyTwEhoHT8qu0F5f9thvh1Be9y06fZxaI6RhQ
-         ySIV26zWD6pGr01gGuCdW8wRwaHhJPesgCCb9yfA9Gw0NmTliqP19V3VIljFd+GcNgz1
-         gTXg/s43k2Vsohju6iTY6Soa3Gj3c8FoYCKi7SfSZUE1FGjDzDrgtgOzwMpgnqwTB8XN
-         EqUlxrJ/eS4paeJWOnPDoXdvsCmOLSs51B8PdwDEKWwkv4DypLNSHeg8tIV4aCm8BiMi
-         jDyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=K02TfDJswqE9tV0xWJk1EnsHkHdcprQzen8J5NZz700=;
-        b=ZSKz1N2z+CNeIY41Q9vq+ZCZtGM98Fz/KVjJLiXwYZ/60uYPcyrIdn0WSufZwWBBaB
-         4E58EXteEiZn6E0UsI5yC7zldzrjsAB1hSmW3HFXluXmAAfhutITNBC8NGebDWKiecdv
-         dpQp3WLJ4cbphTw2hymG65GiyobQMyznhGfNKYkDakM0G1wzs4m8XNbfkiQUkl68aUvP
-         Wd11kAXu9VGuP79XioDEa0939VrEcA9hkKgDzgrZr1snyH7Pev/WDgiJUdJKg36DJizL
-         ESlp9HZWRO4s1x3BQTf48dKG1IjBUkTSriyjbiDUOHmyIlGQmEHWXMZ5rkhvKwqSHO08
-         PY6g==
-X-Gm-Message-State: AOAM530nfdBgf5NrIUKZdBhCIpZVGcI31U3ywd9u4ajgyfyl0tVLU3pq
-        27VUX7H86skbHJ0SrT341fM2dw==
-X-Google-Smtp-Source: ABdhPJxAzKU4mxUSe3BXH4XKO4E9h2cUEcSgpzifRiK+mdLzPZdXTW0rxJwRnXWoqzOLk83PhhZ5fQ==
-X-Received: by 2002:a17:90b:4d11:: with SMTP id mw17mr1765554pjb.32.1642785356445;
-        Fri, 21 Jan 2022 09:15:56 -0800 (PST)
-Received: from p14s (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
-        by smtp.gmail.com with ESMTPSA id t1sm7916902pfj.115.2022.01.21.09.15.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Jan 2022 09:15:54 -0800 (PST)
-Date:   Fri, 21 Jan 2022 10:15:52 -0700
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Jinlong Mao <quic_jinlmao@quicinc.com>
-Cc:     Mike Leach <mike.leach@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 2/9] Coresight: Add coresight TPDM source driver
-Message-ID: <20220121171552.GA1811357@p14s>
-References: <20211209141543.21314-1-quic_jinlmao@quicinc.com>
- <20211209141543.21314-3-quic_jinlmao@quicinc.com>
- <20211214185714.GB1549991@p14s>
- <85ad17fb-c885-831d-d841-4c6f10920355@quicinc.com>
- <CAJ9a7Vh2d79Ro72ZDsbQSVS8VrH3c+X+xo8849yGS4Z73+yq_w@mail.gmail.com>
- <20211216190223.GA78825@p14s>
- <2703bf83-3a87-e69f-2392-7e0568e91712@quicinc.com>
+        id S236663AbiAUSCp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jan 2022 13:02:45 -0500
+Received: from mga02.intel.com ([134.134.136.20]:65286 "EHLO mga02.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1382074AbiAUSCp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 Jan 2022 13:02:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1642788165; x=1674324165;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=kVr133G4QQEACtNcARQL4cMXIgv0co62FF/BdQCLGCU=;
+  b=hYdGJWf66CEpI25k9NeCm1Cl17++HwqaIM+hX29ii5cpgOwweh+XiDRO
+   YEImHLRzmbnYlHLQuuGWeoDutASooNnwMtqsXLUvy5VjvsrAvKAKw85k1
+   8U3Z29+ok5VAjTg+X7tpQUL4I2CEFbkYKm8FBCG8zBfwf6FF7WW6SWVZJ
+   RfRSNDY8QAkQpKJbforJYyKwFpk8gIdx7l9VN+S823Jdc+CDm+T38vRI7
+   7xAl/N0ejwJdolwXoYt/NWvSzTp+xMu/V5BXRMGGyJiuahVEyWpDk1iAD
+   KPwkFPva2yRDUEyb/uZ3YlRhXdKA4j1ktK243pFA83cEZFtkSG8zGLkZp
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10234"; a="233069471"
+X-IronPort-AV: E=Sophos;i="5.88,306,1635231600"; 
+   d="scan'208";a="233069471"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jan 2022 10:00:03 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,306,1635231600"; 
+   d="scan'208";a="765775155"
+Received: from lkp-server01.sh.intel.com (HELO 276f1b88eecb) ([10.239.97.150])
+  by fmsmga006.fm.intel.com with ESMTP; 21 Jan 2022 10:00:00 -0800
+Received: from kbuild by 276f1b88eecb with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1nAyCd-000FXx-IG; Fri, 21 Jan 2022 17:59:59 +0000
+Date:   Sat, 22 Jan 2022 01:59:31 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Chevron Li <chevron.li@bayhubtech.com>, adrian.hunter@intel.com,
+        ulf.hansson@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-mmc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     kbuild-all@lists.01.org, shirley.her@bayhubtech.com,
+        fred.ai@bayhubtech.com, xiaoguang.yu@bayhubtech.com
+Subject: Re: [PATCH 2/2] mmc:sdhci-bayhub:provide a solution to improve sd
+ host card compatibility
+Message-ID: <202201220136.LTeGkEsu-lkp@intel.com>
+References: <20220121110909.104-2-chevron.li@bayhubtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2703bf83-3a87-e69f-2392-7e0568e91712@quicinc.com>
+In-Reply-To: <20220121110909.104-2-chevron.li@bayhubtech.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Jinlong,
+Hi Chevron,
 
-On Fri, Jan 21, 2022 at 10:01:47PM +0800, Jinlong Mao wrote:
-> Hi Mathieu,
-> 
-> Good Day.
-> 
-> On 12/17/2021 3:02 AM, Mathieu Poirier wrote:
-> > [...]
-> > 
-> > > > > > +
-> > > > > > +static void tpdm_init_default_data(struct tpdm_drvdata *drvdata)
-> > > > > > +{
-> > > > > > +    static int traceid = TPDM_TRACE_ID_START;
-> > > > > > +
-> > > > > > +    drvdata->traceid = traceid++;
-> > > > > > +}
-> > > > > I have been specific on how to properly do this in the last revision.  Given the
-> > > > > above about the MAINTAINERS file, I am not sure that I will continue reviewing this set.
-> > > > > 
-> > > > > There is also no need to rush another revision as I won't have the bandwidth to
-> > > > > process it before the holidays.
-> > > > > 
-> > > > > Thanks,
-> > > > > Mathieu
-> > > > Hi Mathieu,
-> > > > 
-> > > > Sorry, not addressed your previous comments here.
-> > > > 
-> > > > For the trace id, each coresight component has 7 bits to store the trace
-> > > > id. So the trace id should be from 1 to 127 as 0 is invalid.
-> > > IDs 0x70 - 0x7F (`112 - 127 ) are reserved - see the ARM Coresight
-> > > Architecture specification v3.0
-> > > 
-> > Correct
-> > 
-> > > > Apart from TPDMs/STM/ETMs, we also have other coresight components in
-> > > > our internal device. About 80 ids are already used.
-> > > > 
-> > > > Some components have fixed trace id in HW. If we use functions below to
-> > > > count the trace id, there will be conflict to other components.
-> > > > 
-> > > > Can we use 1-15 for etm trace ids  and 16 - 127 for other coresight
-> > > > components ? And handle trace ids in its' own driver ?
-> > > > 
-> > > This will limit systems to 15 cores - some have more!
-> > > 
-> > Correct
-> > 
-> > > > static inline int coresight_get_system_trace_id(int id)
-> > > > {
-> > > >           /* Start system IDs above the highest per CPU trace ID. */
-> > > >           return coresigth_get_trace_id(cpumask_last(cpu_possible_mask) + 1);
-> > > > }
-> > Looking at my own suggestion again this won't work since it returns the same traceID
-> > when called multiple times.
-> > 
-> > For this patchset and _without_ taking into account internal devices that have
-> > their traceID set in HW:
-> > 
-> > 1. Define a bitmask that is 7 bit wide.
-> Should it be a 128 bit wide bitmask  (0--127)?
+Thank you for the patch! Yet something to improve:
 
-Yes, you are correct.
+[auto build test ERROR on c9e6606c7fe92b50a02ce51dda82586ebdf99b48]
 
-> > 2. By default, set bits under 0x10 and between 0x70 - 0x7F.
-> > 3. In coresight_get_system_trace_id(), drop the @id parameter and allocate the
-> > first available bit after cpumask_last(cpu_possible_mask) + 1.
-> 
-> Should it allocate the first available bit after (cpumask_last(cpu_possible_mask) *2 ) + 0x10 ?
-> Return the first zero bit position as the trace id and set the bit.
+url:    https://github.com/0day-ci/linux/commits/Chevron-Li/mmc-sdhci-msm-fix-Qualcomm-sd-host-7180-SD-card-compatibility-issue/20220121-191113
+base:   c9e6606c7fe92b50a02ce51dda82586ebdf99b48
+config: mips-allyesconfig (https://download.01.org/0day-ci/archive/20220122/202201220136.LTeGkEsu-lkp@intel.com/config)
+compiler: mips-linux-gcc (GCC) 11.2.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/0day-ci/linux/commit/8916351ffe4bd538ba3bf2c5e16a151fb47674fe
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Chevron-Li/mmc-sdhci-msm-fix-Qualcomm-sd-host-7180-SD-card-compatibility-issue/20220121-191113
+        git checkout 8916351ffe4bd538ba3bf2c5e16a151fb47674fe
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=mips SHELL=/bin/bash
 
-I need to clarify something with Mike on this - I will get back to you on
-Monday.
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
 
-> 
-> > 4. Define a new function called coresight_put_system_trace_id(int id) that
-> > clears the bit in the mask corresponding to @id.
-> > 
-> > For now that should work.
-> > 
-> > > > static inline int coresight_get_trace_id(int cpu)
-> > > > {
-> > > >       /*
-> > > >        * A trace ID of value 0 is invalid, so let's start at some
-> > > >        * random value that fits in 7 bits and go from there.  Since
-> > > >        * the common convention is to have data trace IDs be I(N) + 1,
-> > > >        * set instruction trace IDs as a function of the CPU number.
-> > > >        */
-> > > >       return (CORESIGHT_ETM_PMU_SEED + (cpu * 2));
-> > > > }
-> > > > 
-> > > This fixed relationship between cpu and trace ID is used in the perf
-> > > tooling to populate the elements in the perf.data file to correctly
-> > > allow association between CPU and trace data, and thus allow correct
-> > > trace decode.
-> > TraceIDs associated to CPUs are communicated to the perf tooling by way of the
-> > perf header - theoretically we should be able to change the allocation scheme
-> > without impacting the decoding process.
-> > 
-> > > It should be possible to create another more dynamic mapping scheme -
-> > > but this must include a way to support the perf requirements too.
-> > > 
-> > TraceIDs have been a lurking problem for as long as the subsystem has existed.
-> > For now what I have suggested above should be sufficient to provide an
-> > in-between solution that doesn't hold back this patchset.
-> > 
-> > That being said, we need to start thinking about the best way to do this.  I
-> > will put a patchset together in the new year that aims in that direction.
-> > 
-> > > Regards
-> > > 
-> > > Mike
-> > > 
-> > > > Thanks
-> > > > 
-> > > > Jinlong Mao
-> > > > 
-> > > > > > +
-> > > > > > +static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
-> > > > > > +{
-> > > > > > +    struct device *dev = &adev->dev;
-> > > > > > +    struct coresight_platform_data *pdata;
-> > > > > > +    struct tpdm_drvdata *drvdata;
-> > > > > > +    struct coresight_desc desc = { 0 };
-> > > > > > +
-> > > > > > +    desc.name = coresight_alloc_device_name(&tpdm_devs, dev);
-> > > > > > +    if (!desc.name)
-> > > > > > +            return -ENOMEM;
-> > > > > > +    pdata = coresight_get_platform_data(dev);
-> > > > > > +    if (IS_ERR(pdata))
-> > > > > > +            return PTR_ERR(pdata);
-> > > > > > +    adev->dev.platform_data = pdata;
-> > > > > > +
-> > > > > > +    drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
-> > > > > > +    if (!drvdata)
-> > > > > > +            return -ENOMEM;
-> > > > > > +    drvdata->dev = &adev->dev;
-> > > > > > +    dev_set_drvdata(dev, drvdata);
-> > > > > > +
-> > > > > > +    drvdata->base = devm_ioremap_resource(dev, &adev->res);
-> > > > > > +    if (!drvdata->base)
-> > > > > > +            return -ENOMEM;
-> > > > > > +
-> > > > > > +    mutex_init(&drvdata->lock);
-> > > > > > +
-> > > > > > +    desc.type = CORESIGHT_DEV_TYPE_SOURCE;
-> > > > > > +    desc.subtype.source_subtype = CORESIGHT_DEV_SUBTYPE_SOURCE_SYS;
-> > > > > > +    desc.ops = &tpdm_cs_ops;
-> > > > > > +    desc.pdata = adev->dev.platform_data;
-> > > > > > +    desc.dev = &adev->dev;
-> > > > > > +    drvdata->csdev = coresight_register(&desc);
-> > > > > > +    if (IS_ERR(drvdata->csdev))
-> > > > > > +            return PTR_ERR(drvdata->csdev);
-> > > > > > +
-> > > > > > +    tpdm_init_default_data(drvdata);
-> > > > > > +    pm_runtime_put(&adev->dev);
-> > > > > > +
-> > > > > > +    return 0;
-> > > > > > +}
-> > > > > > +
-> > > > > > +static void __exit tpdm_remove(struct amba_device *adev)
-> > > > > > +{
-> > > > > > +    struct tpdm_drvdata *drvdata = dev_get_drvdata(&adev->dev);
-> > > > > > +
-> > > > > > +    coresight_unregister(drvdata->csdev);
-> > > > > > +}
-> > > > > > +
-> > > > > > +static struct amba_id tpdm_ids[] = {
-> > > > > > +    {
-> > > > > > +            .id = 0x000f0e00,
-> > > > > > +            .mask = 0x000fff00,
-> > > > > > +    },
-> > > > > > +    { 0, 0},
-> > > > > > +};
-> > > > > > +
-> > > > > > +static struct amba_driver tpdm_driver = {
-> > > > > > +    .drv = {
-> > > > > > +            .name   = "coresight-tpdm",
-> > > > > > +            .owner  = THIS_MODULE,
-> > > > > > +            .suppress_bind_attrs = true,
-> > > > > > +    },
-> > > > > > +    .probe          = tpdm_probe,
-> > > > > > +    .id_table       = tpdm_ids,
-> > > > > > +};
-> > > > > > +
-> > > > > > +module_amba_driver(tpdm_driver);
-> > > > > > +
-> > > > > > +MODULE_LICENSE("GPL v2");
-> > > > > > +MODULE_DESCRIPTION("Trace, Profiling & Diagnostic Monitor driver");
-> > > > > > diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
-> > > > > > new file mode 100644
-> > > > > > index 000000000000..980ae90ff1c8
-> > > > > > --- /dev/null
-> > > > > > +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
-> > > > > > @@ -0,0 +1,31 @@
-> > > > > > +/* SPDX-License-Identifier: GPL-2.0 */
-> > > > > > +/*
-> > > > > > + * Copyright (c) 2021 Qualcomm Innovation Center, Inc. All rights reserved.
-> > > > > > + */
-> > > > > > +
-> > > > > > +#ifndef _CORESIGHT_CORESIGHT_TPDM_H
-> > > > > > +#define _CORESIGHT_CORESIGHT_TPDM_H
-> > > > > > +
-> > > > > > +/* Default value of the traceid */
-> > > > > > +#define TPDM_TRACE_ID_START 128
-> > > > > > +
-> > > > > > +/**
-> > > > > > + * struct tpdm_drvdata - specifics associated to an TPDM component
-> > > > > > + * @base:       memory mapped base address for this component.
-> > > > > > + * @dev:        The device entity associated to this component.
-> > > > > > + * @csdev:      component vitals needed by the framework.
-> > > > > > + * @lock:       lock for the enable value.
-> > > > > > + * @enable:     enable status of the component.
-> > > > > > + * @traceid:    value of the current ID for this component.
-> > > > > > + */
-> > > > > > +
-> > > > > > +struct tpdm_drvdata {
-> > > > > > +    void __iomem            *base;
-> > > > > > +    struct device           *dev;
-> > > > > > +    struct coresight_device *csdev;
-> > > > > > +    struct mutex            lock;
-> > > > > > +    bool                    enable;
-> > > > > > +    int                     traceid;
-> > > > > > +};
-> > > > > > +
-> > > > > > +#endif  /* _CORESIGHT_CORESIGHT_TPDM_H */
-> > > > > > diff --git a/include/linux/coresight.h b/include/linux/coresight.h
-> > > > > > index 93a2922b7653..e48d463be63b 100644
-> > > > > > --- a/include/linux/coresight.h
-> > > > > > +++ b/include/linux/coresight.h
-> > > > > > @@ -65,6 +65,7 @@ enum coresight_dev_subtype_source {
-> > > > > >       CORESIGHT_DEV_SUBTYPE_SOURCE_PROC,
-> > > > > >       CORESIGHT_DEV_SUBTYPE_SOURCE_BUS,
-> > > > > >       CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE,
-> > > > > > +    CORESIGHT_DEV_SUBTYPE_SOURCE_SYS,
-> > > > > >    };
-> > > > > > 
-> > > > > >    enum coresight_dev_subtype_helper {
-> > > > > > --
-> > > > > > 2.17.1
-> > > > > > 
-> > > 
-> > > 
-> > > -- 
-> > > Mike Leach
-> > > Principal Engineer, ARM Ltd.
-> > > Manchester Design Centre. UK
+All errors (new ones prefixed by >>):
+
+   mips-linux-ld: drivers/mmc/host/sdhci-msm.o: in function `mmc_decode_cid':
+>> sdhci-msm.c:(.text.mmc_decode_cid+0x0): multiple definition of `mmc_decode_cid'; drivers/mmc/core/sd.o:sd.c:(.text.mmc_decode_cid+0x0): first defined here
+   mips-linux-ld: drivers/mmc/host/sdhci-msm.o: in function `mmc_sd_switch_hs':
+>> sdhci-msm.c:(.text.mmc_sd_switch_hs+0x0): multiple definition of `mmc_sd_switch_hs'; drivers/mmc/core/sd.o:sd.c:(.text.mmc_sd_switch_hs+0x0): first defined here
+   mips-linux-ld: drivers/mmc/host/sdhci-msm.o: in function `mmc_sd_get_cid':
+>> sdhci-msm.c:(.text.mmc_sd_get_cid+0x0): multiple definition of `mmc_sd_get_cid'; drivers/mmc/core/sd.o:sd.c:(.text.mmc_sd_get_cid+0x0): first defined here
+   mips-linux-ld: drivers/mmc/host/sdhci-msm.o: in function `mmc_sd_get_csd':
+>> sdhci-msm.c:(.text.mmc_sd_get_csd+0x0): multiple definition of `mmc_sd_get_csd'; drivers/mmc/core/sd.o:sd.c:(.text.mmc_sd_get_csd+0x0): first defined here
+   mips-linux-ld: drivers/mmc/host/sdhci-msm.o: in function `mmc_sd_setup_card':
+>> sdhci-msm.c:(.text.mmc_sd_setup_card+0x0): multiple definition of `mmc_sd_setup_card'; drivers/mmc/core/sd.o:sd.c:(.text.mmc_sd_setup_card+0x0): first defined here
+>> mips-linux-ld: drivers/mmc/host/sdhci-msm.o:(.data.sd_type+0x0): multiple definition of `sd_type'; drivers/mmc/core/sd.o:(.data.sd_type+0x0): first defined here
+   mips-linux-ld: drivers/mmc/host/sdhci-msm.o: in function `mmc_sd_get_max_clock':
+>> sdhci-msm.c:(.text.mmc_sd_get_max_clock+0x0): multiple definition of `mmc_sd_get_max_clock'; drivers/mmc/core/sd.o:sd.c:(.text.mmc_sd_get_max_clock+0x0): first defined here
+   mips-linux-ld: drivers/mmc/host/sdhci-msm.o: in function `mmc_attach_sd':
+>> sdhci-msm.c:(.text.mmc_attach_sd+0x0): multiple definition of `mmc_attach_sd'; drivers/mmc/core/sd.o:sd.c:(.text.mmc_attach_sd+0x0): first defined here
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
