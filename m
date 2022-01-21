@@ -2,136 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D0454966B3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 22:01:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 746F94966BE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 22:03:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230333AbiAUVBH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jan 2022 16:01:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48778 "EHLO
+        id S230256AbiAUVDx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jan 2022 16:03:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230151AbiAUVBF (ORCPT
+        with ESMTP id S230151AbiAUVDw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jan 2022 16:01:05 -0500
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83EF6C06173B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jan 2022 13:01:05 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id v22so1924246ljg.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jan 2022 13:01:05 -0800 (PST)
+        Fri, 21 Jan 2022 16:03:52 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E891C06173B;
+        Fri, 21 Jan 2022 13:03:52 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id p15so3327659ejc.7;
+        Fri, 21 Jan 2022 13:03:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=/cvB4LBHX1iUJJ6pMjFmq8Rc+tQVwfrFHdlbMQKEsso=;
-        b=BWC2Q+BfElXXHALjANaUBA//Ajbzl30dpQ/P9nJzurdRxwYJDtnXUcy/4Zqt0JKpZB
-         LSKZQxlHftfN3y5zO5ybxEocTATbsQIcvzfAppBkDv/6nawtw+ekNLST++AX8f5ZxeN8
-         lao9IqEHcGcDGVFNWaVB9pnSyBOgKgu2ed0zggce8tWwy7xEROaNjH01CcP7b9ZSybZT
-         UkYHp9llW0in9CziOj8jEOXl4cgTxRADvGEAQ+8eFAXed9iSZn2EC1UYO/T1OtZDqNV9
-         dKPMXZjcmUupPAp2igICm3uOEMSaazB38nhU6o6k/Z3Jrqfm+oNCo9f673TpO850J+gY
-         NXvw==
+        d=gmail.com; s=20210112;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=E5rstHin1kw6kgXvm7+bH6Fbg4Ln/NveudB174otKCU=;
+        b=oDnXoI5HZ2FD3zmgkb1g+wnyX1nDEvet/DJ6NoZLQa464G3N83smvJBMAzC44UptlR
+         7XUfIO5ot7Bb7X1eQLMqfYrHfhaqpMlhPo0snEVG+zSlPLwQeM235Lpur0vXwxg6JWHv
+         LsLAboNyHo/5Z75H6w/saM5TCVjEFfxXCce8eFAqhHO6ou/ER6JL4nefe91Be9OzJXfh
+         R+W3rc5P4VAx07CPLE28INBpaUoIlsq6Hs3dGyDL1KiCYwILKRWrA6KXEHUuDW3/Z5uz
+         5CHxStT7RTcLNlpvpd9RQaCcttGD+znQONNVBMrQ9rmAZv5RRy+m46ijGxOqZvXWiIWU
+         Dl6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=/cvB4LBHX1iUJJ6pMjFmq8Rc+tQVwfrFHdlbMQKEsso=;
-        b=V28mPbpf1lpTbkS9vBrWOZFZPRGAM8Y4JWzDZeYobeUJaG4RYVb1OXFQbIogqdjOuL
-         i7op+41PxoILsBrj1XkkGTEbazJEvlEVeNzJwbxkAr7DpdroRH6nadVlaVxh9ycq558B
-         28zDIhvYgATOvQa766tF9Ca5JFjdl3dhvtk7Jb4FlobBVnbqrVlGDxfLkD1+8Wdb8YzE
-         KUORPx/Ttkr0Hh6/yDlmlF6tJ1OlOjGz/iuzfCzJIyI8WmD5tRWAzTixdj5caxlG+k+e
-         QAqpF5NTmwzVMNvpGVIjqOw84SSClsKQhKYp4lo54O8kAKM1jxrjliJYjrk+kLRX9igo
-         Z9zw==
-X-Gm-Message-State: AOAM533yYd4ytSRQsjR/9cuFEOSAAbT+74GHeO0yxvwAMrxRB9x5BK/K
-        OYfPP7NJpmG01mt5mTJB590c5g==
-X-Google-Smtp-Source: ABdhPJzefh4KvJdPjvl6eIx/C+c9ZTyTfgIk/ah3mCBoW0ccOQof0uRnH+MWsi0s4hff7v8bVPiz2A==
-X-Received: by 2002:a2e:95cf:: with SMTP id y15mr4365824ljh.132.1642798863862;
-        Fri, 21 Jan 2022 13:01:03 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id m17sm364405lfc.130.2022.01.21.13.01.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Jan 2022 13:01:03 -0800 (PST)
-Message-ID: <a6e5fb27-8a0f-44bf-c4d3-0619d8fc834f@linaro.org>
-Date:   Sat, 22 Jan 2022 00:01:02 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v4 5/5] drm/msm/dpu: move VBIF blocks handling to dpu_rm
-Content-Language: en-GB
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
+        bh=E5rstHin1kw6kgXvm7+bH6Fbg4Ln/NveudB174otKCU=;
+        b=Js6XO6ch+OlPS/nv8y6EvZnV+XF41Vz7CTNqwy1hc3160iFq6FdA0zIo5BRvGk9/Mk
+         IREYGSfJo3FKq4D7R7w2LS4Wa8S+HizFSUYllzwj944bPeaZDZYLAnPSQ4rCfCUgYwz5
+         NboQ8DIwOqOnLdKHXWZYW+ON+5kBxz1j+ydwzlkjeybqBe7Nt+XnlS4osPKNjlntTrRw
+         fMwumvwOQvql9xV4yMBakNGMsMQNKEbrre33kkVLCMZhzSKLotp0I7vLw87ifzeOYGWJ
+         mZKhH+9IebX93IV5j7+5HlqmcL6Th+WOQucyIvgpoKLrGadmtJwqN6r7Du4pNMjSFdDP
+         b4ww==
+X-Gm-Message-State: AOAM531ZQ8+GjpuwvHORDt0IdAQFPirAaG8GiLNEcUDR6GIuF0WNg1Uj
+        etZY00cwHu+NI/bt9t3jbtI=
+X-Google-Smtp-Source: ABdhPJyzcBV/4K6CB90XZPXGQiWG0UMeA75+/J8qi9N26HAgafq+vJQgjkN/0evm9ycT0K4SRF1XLw==
+X-Received: by 2002:a17:906:e282:: with SMTP id gg2mr4857545ejb.607.1642799030387;
+        Fri, 21 Jan 2022 13:03:50 -0800 (PST)
+Received: from localhost.localdomain (93-42-71-246.ip85.fastwebnet.it. [93.42.71.246])
+        by smtp.googlemail.com with ESMTPSA id p23sm2898595edx.86.2022.01.21.13.03.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Jan 2022 13:03:49 -0800 (PST)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20220105231031.436020-1-dmitry.baryshkov@linaro.org>
- <20220105231031.436020-6-dmitry.baryshkov@linaro.org>
- <CAE-0n505KAiLvza2WTRfk8w9qcAH-Z2W6kLMtrOxTNRbUnSJig@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAE-0n505KAiLvza2WTRfk8w9qcAH-Z2W6kLMtrOxTNRbUnSJig@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Taniya Das <tdas@codeaurora.org>,
+        Ansuel Smith <ansuelsmth@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 00/15] Multiple addition and improvement to ipq8064 gcc
+Date:   Fri, 21 Jan 2022 22:03:25 +0100
+Message-Id: <20220121210340.32362-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.33.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/01/2022 04:27, Stephen Boyd wrote:
-> Quoting Dmitry Baryshkov (2022-01-05 15:10:31)
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
->> index bf4d72356a12..2301ac114920 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
->> @@ -78,6 +78,10 @@ int dpu_rm_destroy(struct dpu_rm *rm)
->>                  if (rm->hw_intf[i])
->>                          dpu_hw_intf_destroy(rm->hw_intf[i]);
->>          }
->> +       for (i = 0; i < ARRAY_SIZE(rm->hw_vbif); i++) {
->> +               if (rm->hw_vbif[i])
->> +                       dpu_hw_vbif_destroy(rm->hw_vbif[i]);
-> 
-> Maybe drop this check and pass NULL to dpu_hw_vbif_destroy() sometimes?
-> Then the check can be omitted and the braces dropped
+This is an attempt in making the ipq8064 SoC actually usable. Currently
+many feature are missing for this SoC and devs user off-the-tree patches
+to make it work (example patch for missing clock, patch for cpufreq
+driver, patch to add missing node in the dts)
 
-Nice idea. This also applies to dpu_hw_intf_destroy, so I'm going to 
-apply it to the previous patch.
+I notice there was some work in modernizing the gcc driver for other
+qcom target but this wasn't done for ipq806x. This does exactly this, we
+drop any parent_names stuff and we switch to the parent_data way. We
+also drop the pxo and cxo source clk from gcc driver and we refer to the
+dts for it.
 
-> 
->> +       }
->>
->>          return 0;
->>   }
->> @@ -212,6 +216,23 @@ int dpu_rm_init(struct dpu_rm *rm,
->>                  rm->dspp_blks[dspp->id - DSPP_0] = &hw->base;
->>          }
->>
->> +       for (i = 0; i < cat->vbif_count; i++) {
->> +               struct dpu_hw_vbif *hw;
->> +               const struct dpu_vbif_cfg *vbif = &cat->vbif[i];
->> +
->> +               if (vbif->id < VBIF_0 || vbif->id >= VBIF_MAX) {
->> +                       DPU_ERROR("skip vbif %d with invalid id\n", vbif->id);
->> +                       continue;
->> +               }
->> +               hw = dpu_hw_vbif_init(vbif->id, mmio, cat);
->> +               if (IS_ERR_OR_NULL(hw)) {
->> +                       rc = PTR_ERR(hw);
->> +                       DPU_ERROR("failed vbif object creation: err %d\n", rc);
->> +                       goto fail;
-> 
-> If it's NULL then rc will be 0 and fail will return 0. Is that
-> intentional?
+This also add all the missing feature for the nss cores and the
+cryptoengine in them. It does also introduce the required flags to make
+the RPM actually work and NOT reject any command. There was an attempt
+in declaring these clock as core clock in the dts but this ends up in no
+serial as the kernel makes these clock not accessible. We just want to
+make the kernel NOT disable them if unused nothing more.
 
-Actually no. And init functions can not return NULL. So let's fix it too.
+At the end we update the ipq8064 dtsi to add the pxo and cxo tag and
+declare them in gcc and also fix a problem with tsens probe.
 
-> 
->> +               }
->> +               rm->hw_vbif[vbif->id - VBIF_0] = hw;
->> +       }
->> +
->>          return 0;
->>
->>   fail:
+v3:
+- Rework Documentation with Rob suggestions
+v2:
+- Fix error from Rob bot.
+- Add additional commits to make qcom,gcc.yaml a template
+- Squash parent_hws patch with the modernize patch
+- Create gcc_pxo instead of using long define.
 
+Ansuel Smith (15):
+  dt-bindings: clock: split qcom,gcc.yaml to common and specific schema
+  dt-bindings: clock: simplify qcom,gcc-apq8064 Documentation
+  dt-bindings: clock: Document qcom,gcc-ipq8064 binding
+  drivers: clk: qcom: gcc-ipq806x: fix wrong naming for
+    gcc_pxo_pll8_pll0
+  drivers: clk: qcom: gcc-ipq806x: convert parent_names to parent_data
+  drivers: clk: qcom: gcc-ipq806x: use ARRAY_SIZE for num_parents
+  drivers: clk: qcom: gcc-ipq806x: drop hardcoded pxo and cxo source clk
+  drivers: clk: qcom: gcc-ipq806x: add additional freq nss cores
+  drivers: clk: qcom: gcc-ipq806x: add unusued flag for critical clock
+  drivers: clk: qcom: gcc-ipq806x: add additional freq for sdc table
+  dt-bindings: clock: add ipq8064 ce5 clk define
+  drivers: clk: qcom: gcc-ipq806x: add CryptoEngine clocks
+  dt-bindings: reset: add ipq8064 ce5 resets
+  drivers: clk: qcom: gcc-ipq806x: add CryptoEngine resets
+  ARM: dts: qcom: Add syscon and cxo/pxo clock to gcc node for ipq8064
+
+ .../bindings/clock/qcom,gcc-apq8064.yaml      |  29 +-
+ .../bindings/clock/qcom,gcc-common.yaml       |  42 ++
+ .../bindings/clock/qcom,gcc-ipq8064.yaml      |  76 +++
+ .../devicetree/bindings/clock/qcom,gcc.yaml   |  31 +-
+ arch/arm/boot/dts/qcom-ipq8064.dtsi           |   8 +-
+ drivers/clk/qcom/gcc-ipq806x.c                | 638 +++++++++++++-----
+ include/dt-bindings/clock/qcom,gcc-ipq806x.h  |   5 +-
+ include/dt-bindings/reset/qcom,gcc-ipq806x.h  |   5 +
+ 8 files changed, 615 insertions(+), 219 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-common.yaml
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-ipq8064.yaml
 
 -- 
-With best wishes
-Dmitry
+2.33.1
+
