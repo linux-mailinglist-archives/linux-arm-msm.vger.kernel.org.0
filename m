@@ -2,305 +2,390 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 551CB496708
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 22:06:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4983C496753
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 22:34:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229989AbiAUVG3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jan 2022 16:06:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50088 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233171AbiAUVG2 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jan 2022 16:06:28 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84E9CC06173B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jan 2022 13:06:27 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id u14so5336466lfo.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jan 2022 13:06:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=vmgkqgqoCtzPCMYYy+6eXohS4KrBEXGt/+AgN0mFU54=;
-        b=KkJJX6rvY92HGXZa1gEH0yJTDAr6y4LGcQw8W92bvi2Fxtc2MEjkOzkZFUiSuvUHtR
-         3MaHJbDErfMmP6VFLMvpD55zUGaeEw2vU2+9ACuPRB4+LGZaj9hAzb8ar0qMNblkMYG6
-         o2uGX3DJbNQn0xIM3vlRmLqswI092HXmYRuHmRwwoJAhfMPiEekRiLFaH6kAxsEUcDhG
-         IXQ2kxSs8do5T5DjwtsYMJV1g8cytL6XtIBOmLZMsB3b5jcK9qps850gLxS9m31NIJp4
-         kXqeIEWKVgmUrIXlvJDr2cpOg8PYVK5MgiHEaiiiP4VCk6ErbydhJAxW5XlH6NwFHoLI
-         b1Xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=vmgkqgqoCtzPCMYYy+6eXohS4KrBEXGt/+AgN0mFU54=;
-        b=B64mq1iqG1c0fjfM4LAp8QHGVyptrqykzM+Ms4cso8tPgolf6tfNQ6Vg07Zu4AgnSM
-         OBsdcf3oEd+QDr4CrdXWmlJmUG0O72O2Vc8yOmlFktU97nUD95f0ZRsJkA2ueBckMaY8
-         eDW8K24J0YZ05afB3LcIElNJGZ5YulJHZ/ueV9JrlKRBCXdPQQV1NUH58K+iEyltNd5m
-         BqLZLXjo5MnEthqyfpOL47/q1S/tbbIL6HGhEgOBUxtMcN1vGCoLGM93zkpYgG1rkwtN
-         2WZledlYsV+7lEcxOWoSr+cPOREkR4Z5+4gKc/8WEURuEC5AD7B3icDgafZoSaBCXku8
-         YHPQ==
-X-Gm-Message-State: AOAM531w7Rka+qmMyg2S7JyMhsacuZZiyr1Z2D6KzcLZPBAtO43rpmM0
-        8EUoRihEXWaDF479o2sPZsUrgg==
-X-Google-Smtp-Source: ABdhPJyNaSD7oF4wGEVnZprFLw7hRhmF+yzcqW88z8cjwacN7j2106+xdesnb1Z36+84Hu4eBzWp2Q==
-X-Received: by 2002:ac2:5f0f:: with SMTP id 15mr4995057lfq.462.1642799185849;
-        Fri, 21 Jan 2022 13:06:25 -0800 (PST)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v10sm279125ljk.44.2022.01.21.13.06.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Jan 2022 13:06:25 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH v5 6/6] drm/msm/dpu: move VBIF blocks handling to dpu_rm
-Date:   Sat, 22 Jan 2022 00:06:18 +0300
-Message-Id: <20220121210618.3482550-7-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220121210618.3482550-1-dmitry.baryshkov@linaro.org>
-References: <20220121210618.3482550-1-dmitry.baryshkov@linaro.org>
+        id S230078AbiAUVeI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jan 2022 16:34:08 -0500
+Received: from mga07.intel.com ([134.134.136.100]:53079 "EHLO mga07.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229798AbiAUVeI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 Jan 2022 16:34:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1642800848; x=1674336848;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=TUIu/hEwyZOJjP0RMpy0JKE2+Z4JbU+k3d74jBVIpP4=;
+  b=YCaMcCqxE2tNyPEUEHHJOdBCnyI/McBS/X4wMGXo8TxuMWgLIZFFT4tD
+   fsCeon3xVkVfrM6RZ4sRHchTcaG1ZduFRz0iXD/W7obQU5Ze7E+W08umd
+   SHWVaNT/34wiYIFu/HSWZ9WKJGNmYSrLO9PNRDDwzfde++Yln3NChwMf/
+   MugVQHS2ijiKcU9MsBtLS2YabmQgvH/5YaOmlrSPe1NlzwuIL+d3D09MJ
+   rYO4feRCO8mp8UaYfUvBisNk13soZpjYSaqgHQDEQZeJ0HE9pSjhXDG9T
+   GxJAiu4PVvTWghtp1trrd/pViPSc36YijCdY2aea3KKa7OrBZPfCxCFcG
+   w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10234"; a="309074222"
+X-IronPort-AV: E=Sophos;i="5.88,306,1635231600"; 
+   d="scan'208";a="309074222"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jan 2022 13:34:08 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,306,1635231600"; 
+   d="scan'208";a="694777472"
+Received: from lkp-server01.sh.intel.com (HELO 276f1b88eecb) ([10.239.97.150])
+  by orsmga005.jf.intel.com with ESMTP; 21 Jan 2022 13:34:04 -0800
+Received: from kbuild by 276f1b88eecb with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1nB1Xo-000Fge-4y; Fri, 21 Jan 2022 21:34:04 +0000
+Date:   Sat, 22 Jan 2022 05:33:28 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Chevron Li <chevron.li@bayhubtech.com>, adrian.hunter@intel.com,
+        ulf.hansson@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-mmc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     kbuild-all@lists.01.org, shirley.her@bayhubtech.com,
+        fred.ai@bayhubtech.com, xiaoguang.yu@bayhubtech.com
+Subject: Re: [PATCH 1/2] mmc:sdhci-msm:fix Qualcomm sd host 7180 SD card
+ compatibility issue
+Message-ID: <202201220531.njLkAypI-lkp@intel.com>
+References: <20220121110909.104-1-chevron.li@bayhubtech.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220121110909.104-1-chevron.li@bayhubtech.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move handling of VBIF blocks into dpu_rm. This serves the purpose of
-unification of handling of all hardware blocks inside the DPU driver.
-This removes hand-coded loops in dpu_vbif (which look for necessary VBIF
-instance by looping through the dpu_kms->hw_vbif and comparing
-vbif_idx).
+Hi Chevron,
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Thank you for the patch! Perhaps something to improve:
+
+[auto build test WARNING on c9e6606c7fe92b50a02ce51dda82586ebdf99b48]
+
+url:    https://github.com/0day-ci/linux/commits/Chevron-Li/mmc-sdhci-msm-fix-Qualcomm-sd-host-7180-SD-card-compatibility-issue/20220121-191113
+base:   c9e6606c7fe92b50a02ce51dda82586ebdf99b48
+config: arc-randconfig-r043-20220121 (https://download.01.org/0day-ci/archive/20220122/202201220531.njLkAypI-lkp@intel.com/config)
+compiler: arceb-elf-gcc (GCC) 11.2.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/0day-ci/linux/commit/bba780c9359fe89c2a3e769bfa6373f58b90ee76
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Chevron-Li/mmc-sdhci-msm-fix-Qualcomm-sd-host-7180-SD-card-compatibility-issue/20220121-191113
+        git checkout bba780c9359fe89c2a3e769bfa6373f58b90ee76
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=arc SHELL=/bin/bash
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+   drivers/mmc/host/sdhci-msm.c: In function 'sdhci_msm_probe':
+>> drivers/mmc/host/sdhci-msm.c:2535:40: warning: variable 'bht_host' set but not used [-Wunused-but-set-variable]
+    2535 |                 struct sdhci_bht_host *bht_host;
+         |                                        ^~~~~~~~
+
+
+vim +/bht_host +2535 drivers/mmc/host/sdhci-msm.c
+
+  2498	
+  2499	
+  2500	static int sdhci_msm_probe(struct platform_device *pdev)
+  2501	{
+  2502		struct sdhci_host *host;
+  2503		struct sdhci_pltfm_host *pltfm_host;
+  2504		struct sdhci_msm_host *msm_host;
+  2505		struct clk *clk;
+  2506		int ret;
+  2507		u16 host_version, core_minor;
+  2508		u32 core_version, config;
+  2509		u8 core_major;
+  2510		const struct sdhci_msm_offset *msm_offset;
+  2511		const struct sdhci_msm_variant_info *var_info;
+  2512		struct device_node *node = pdev->dev.of_node;
+  2513	
+  2514		/* Bayhub patch: memory allocate for sdhci_bht_host structure */
+  2515		if (of_find_property(node, "use-bayhub-bh201", NULL))
+  2516			host = sdhci_pltfm_init(pdev, &sdhci_msm_pdata,
+  2517				sizeof(*msm_host) + sizeof(struct sdhci_bht_host));
+  2518		else
+  2519			host = sdhci_pltfm_init(pdev, &sdhci_msm_pdata, sizeof(*msm_host));
+  2520		if (IS_ERR(host))
+  2521			return PTR_ERR(host);
+  2522	
+  2523		host->sdma_boundary = 0;
+  2524		pltfm_host = sdhci_priv(host);
+  2525		msm_host = sdhci_pltfm_priv(pltfm_host);
+  2526		msm_host->mmc = host->mmc;
+  2527		msm_host->pdev = pdev;
+  2528	
+  2529		ret = mmc_of_parse(host->mmc);
+  2530		if (ret)
+  2531			goto pltfm_free;
+  2532	
+  2533		/* Bayhub patch: resource assign and mmc_rescan routine overload */
+  2534		if (of_find_property(node, "use-bayhub-bh201", NULL)) {
+> 2535			struct sdhci_bht_host *bht_host;
+  2536	
+  2537			bht_host = sdhci_msm_priv(msm_host);
+  2538			sdhci_bht_parse(msm_host->mmc);
+  2539			INIT_DELAYED_WORK(&host->mmc->detect, mmc_rescan_bht);
+  2540		}
+  2541	
+  2542		/*
+  2543		 * Based on the compatible string, load the required msm host info from
+  2544		 * the data associated with the version info.
+  2545		 */
+  2546		var_info = of_device_get_match_data(&pdev->dev);
+  2547	
+  2548		msm_host->mci_removed = var_info->mci_removed;
+  2549		msm_host->restore_dll_config = var_info->restore_dll_config;
+  2550		msm_host->var_ops = var_info->var_ops;
+  2551		msm_host->offset = var_info->offset;
+  2552	
+  2553		msm_offset = msm_host->offset;
+  2554	
+  2555		sdhci_get_of_property(pdev);
+  2556		sdhci_msm_get_of_property(pdev, host);
+  2557	
+  2558		msm_host->saved_tuning_phase = INVALID_TUNING_PHASE;
+  2559	
+  2560		/* Setup SDCC bus voter clock. */
+  2561		msm_host->bus_clk = devm_clk_get(&pdev->dev, "bus");
+  2562		if (!IS_ERR(msm_host->bus_clk)) {
+  2563			/* Vote for max. clk rate for max. performance */
+  2564			ret = clk_set_rate(msm_host->bus_clk, INT_MAX);
+  2565			if (ret)
+  2566				goto pltfm_free;
+  2567			ret = clk_prepare_enable(msm_host->bus_clk);
+  2568			if (ret)
+  2569				goto pltfm_free;
+  2570		}
+  2571	
+  2572		/* Setup main peripheral bus clock */
+  2573		clk = devm_clk_get(&pdev->dev, "iface");
+  2574		if (IS_ERR(clk)) {
+  2575			ret = PTR_ERR(clk);
+  2576			dev_err(&pdev->dev, "Peripheral clk setup failed (%d)\n", ret);
+  2577			goto bus_clk_disable;
+  2578		}
+  2579		msm_host->bulk_clks[1].clk = clk;
+  2580	
+  2581		/* Setup SDC MMC clock */
+  2582		clk = devm_clk_get(&pdev->dev, "core");
+  2583		if (IS_ERR(clk)) {
+  2584			ret = PTR_ERR(clk);
+  2585			dev_err(&pdev->dev, "SDC MMC clk setup failed (%d)\n", ret);
+  2586			goto bus_clk_disable;
+  2587		}
+  2588		msm_host->bulk_clks[0].clk = clk;
+  2589	
+  2590		 /* Check for optional interconnect paths */
+  2591		ret = dev_pm_opp_of_find_icc_paths(&pdev->dev, NULL);
+  2592		if (ret)
+  2593			goto bus_clk_disable;
+  2594	
+  2595		ret = devm_pm_opp_set_clkname(&pdev->dev, "core");
+  2596		if (ret)
+  2597			goto bus_clk_disable;
+  2598	
+  2599		/* OPP table is optional */
+  2600		ret = devm_pm_opp_of_add_table(&pdev->dev);
+  2601		if (ret && ret != -ENODEV) {
+  2602			dev_err(&pdev->dev, "Invalid OPP table in Device tree\n");
+  2603			goto bus_clk_disable;
+  2604		}
+  2605	
+  2606		/* Vote for maximum clock rate for maximum performance */
+  2607		ret = dev_pm_opp_set_rate(&pdev->dev, INT_MAX);
+  2608		if (ret)
+  2609			dev_warn(&pdev->dev, "core clock boost failed\n");
+  2610	
+  2611		clk = devm_clk_get(&pdev->dev, "cal");
+  2612		if (IS_ERR(clk))
+  2613			clk = NULL;
+  2614		msm_host->bulk_clks[2].clk = clk;
+  2615	
+  2616		clk = devm_clk_get(&pdev->dev, "sleep");
+  2617		if (IS_ERR(clk))
+  2618			clk = NULL;
+  2619		msm_host->bulk_clks[3].clk = clk;
+  2620	
+  2621		clk = sdhci_msm_ice_get_clk(&pdev->dev);
+  2622		if (IS_ERR(clk))
+  2623			clk = NULL;
+  2624		msm_host->bulk_clks[4].clk = clk;
+  2625	
+  2626		ret = clk_bulk_prepare_enable(ARRAY_SIZE(msm_host->bulk_clks),
+  2627					      msm_host->bulk_clks);
+  2628		if (ret)
+  2629			goto bus_clk_disable;
+  2630	
+  2631		/*
+  2632		 * xo clock is needed for FLL feature of cm_dll.
+  2633		 * In case if xo clock is not mentioned in DT, warn and proceed.
+  2634		 */
+  2635		msm_host->xo_clk = devm_clk_get(&pdev->dev, "xo");
+  2636		if (IS_ERR(msm_host->xo_clk)) {
+  2637			ret = PTR_ERR(msm_host->xo_clk);
+  2638			dev_warn(&pdev->dev, "TCXO clk not present (%d)\n", ret);
+  2639		}
+  2640	
+  2641		if (!msm_host->mci_removed) {
+  2642			msm_host->core_mem = devm_platform_ioremap_resource(pdev, 1);
+  2643			if (IS_ERR(msm_host->core_mem)) {
+  2644				ret = PTR_ERR(msm_host->core_mem);
+  2645				goto clk_disable;
+  2646			}
+  2647		}
+  2648	
+  2649		/* Reset the vendor spec register to power on reset state */
+  2650		writel_relaxed(CORE_VENDOR_SPEC_POR_VAL,
+  2651				host->ioaddr + msm_offset->core_vendor_spec);
+  2652	
+  2653		if (!msm_host->mci_removed) {
+  2654			/* Set HC_MODE_EN bit in HC_MODE register */
+  2655			msm_host_writel(msm_host, HC_MODE_EN, host,
+  2656					msm_offset->core_hc_mode);
+  2657			config = msm_host_readl(msm_host, host,
+  2658					msm_offset->core_hc_mode);
+  2659			config |= FF_CLK_SW_RST_DIS;
+  2660			msm_host_writel(msm_host, config, host,
+  2661					msm_offset->core_hc_mode);
+  2662		}
+  2663	
+  2664		host_version = readw_relaxed((host->ioaddr + SDHCI_HOST_VERSION));
+  2665		dev_dbg(&pdev->dev, "Host Version: 0x%x Vendor Version 0x%x\n",
+  2666			host_version, ((host_version & SDHCI_VENDOR_VER_MASK) >>
+  2667				       SDHCI_VENDOR_VER_SHIFT));
+  2668	
+  2669		core_version = msm_host_readl(msm_host, host,
+  2670				msm_offset->core_mci_version);
+  2671		core_major = (core_version & CORE_VERSION_MAJOR_MASK) >>
+  2672			      CORE_VERSION_MAJOR_SHIFT;
+  2673		core_minor = core_version & CORE_VERSION_MINOR_MASK;
+  2674		dev_dbg(&pdev->dev, "MCI Version: 0x%08x, major: 0x%04x, minor: 0x%02x\n",
+  2675			core_version, core_major, core_minor);
+  2676	
+  2677		if (core_major == 1 && core_minor >= 0x42)
+  2678			msm_host->use_14lpp_dll_reset = true;
+  2679	
+  2680		/*
+  2681		 * SDCC 5 controller with major version 1, minor version 0x34 and later
+  2682		 * with HS 400 mode support will use CM DLL instead of CDC LP 533 DLL.
+  2683		 */
+  2684		if (core_major == 1 && core_minor < 0x34)
+  2685			msm_host->use_cdclp533 = true;
+  2686	
+  2687		/*
+  2688		 * Support for some capabilities is not advertised by newer
+  2689		 * controller versions and must be explicitly enabled.
+  2690		 */
+  2691		if (core_major >= 1 && core_minor != 0x11 && core_minor != 0x12) {
+  2692			config = readl_relaxed(host->ioaddr + SDHCI_CAPABILITIES);
+  2693			config |= SDHCI_CAN_VDD_300 | SDHCI_CAN_DO_8BIT;
+  2694			writel_relaxed(config, host->ioaddr +
+  2695					msm_offset->core_vendor_spec_capabilities0);
+  2696		}
+  2697	
+  2698		if (core_major == 1 && core_minor >= 0x49)
+  2699			msm_host->updated_ddr_cfg = true;
+  2700	
+  2701		if (core_major == 1 && core_minor >= 0x71)
+  2702			msm_host->uses_tassadar_dll = true;
+  2703	
+  2704		ret = sdhci_msm_register_vreg(msm_host);
+  2705		if (ret)
+  2706			goto clk_disable;
+  2707	
+  2708		/*
+  2709		 * Power on reset state may trigger power irq if previous status of
+  2710		 * PWRCTL was either BUS_ON or IO_HIGH_V. So before enabling pwr irq
+  2711		 * interrupt in GIC, any pending power irq interrupt should be
+  2712		 * acknowledged. Otherwise power irq interrupt handler would be
+  2713		 * fired prematurely.
+  2714		 */
+  2715		sdhci_msm_handle_pwr_irq(host, 0);
+  2716	
+  2717		/*
+  2718		 * Ensure that above writes are propogated before interrupt enablement
+  2719		 * in GIC.
+  2720		 */
+  2721		mb();
+  2722	
+  2723		/* Setup IRQ for handling power/voltage tasks with PMIC */
+  2724		msm_host->pwr_irq = platform_get_irq_byname(pdev, "pwr_irq");
+  2725		if (msm_host->pwr_irq < 0) {
+  2726			ret = msm_host->pwr_irq;
+  2727			goto clk_disable;
+  2728		}
+  2729	
+  2730		sdhci_msm_init_pwr_irq_wait(msm_host);
+  2731		/* Enable pwr irq interrupts */
+  2732		msm_host_writel(msm_host, INT_MASK, host,
+  2733			msm_offset->core_pwrctl_mask);
+  2734	
+  2735		ret = devm_request_threaded_irq(&pdev->dev, msm_host->pwr_irq, NULL,
+  2736						sdhci_msm_pwr_irq, IRQF_ONESHOT,
+  2737						dev_name(&pdev->dev), host);
+  2738		if (ret) {
+  2739			dev_err(&pdev->dev, "Request IRQ failed (%d)\n", ret);
+  2740			goto clk_disable;
+  2741		}
+  2742	
+  2743		msm_host->mmc->caps |= MMC_CAP_WAIT_WHILE_BUSY | MMC_CAP_NEED_RSP_BUSY;
+  2744	
+  2745		/* Set the timeout value to max possible */
+  2746		host->max_timeout_count = 0xF;
+  2747	
+  2748		pm_runtime_get_noresume(&pdev->dev);
+  2749		pm_runtime_set_active(&pdev->dev);
+  2750		pm_runtime_enable(&pdev->dev);
+  2751		pm_runtime_set_autosuspend_delay(&pdev->dev,
+  2752						 MSM_MMC_AUTOSUSPEND_DELAY_MS);
+  2753		pm_runtime_use_autosuspend(&pdev->dev);
+  2754	
+  2755		host->mmc_host_ops.start_signal_voltage_switch =
+  2756			sdhci_msm_start_signal_voltage_switch;
+  2757		host->mmc_host_ops.execute_tuning = sdhci_msm_execute_tuning;
+  2758		/* Bayhub patch: overload the mmc_host_ops.execute_tuning routine */
+  2759		if (of_find_property(node, "use-bayhub-bh201", NULL))
+  2760			host->mmc_host_ops.execute_tuning = sdhci_bht_execute_tuning;
+  2761		if (of_property_read_bool(node, "supports-cqe"))
+  2762			ret = sdhci_msm_cqe_add_host(host, pdev);
+  2763		else
+  2764			ret = sdhci_add_host(host);
+  2765		if (ret)
+  2766			goto pm_runtime_disable;
+  2767	
+  2768		pm_runtime_mark_last_busy(&pdev->dev);
+  2769		pm_runtime_put_autosuspend(&pdev->dev);
+  2770	
+  2771		return 0;
+  2772	
+  2773	pm_runtime_disable:
+  2774		pm_runtime_disable(&pdev->dev);
+  2775		pm_runtime_set_suspended(&pdev->dev);
+  2776		pm_runtime_put_noidle(&pdev->dev);
+  2777	clk_disable:
+  2778		clk_bulk_disable_unprepare(ARRAY_SIZE(msm_host->bulk_clks),
+  2779					   msm_host->bulk_clks);
+  2780	bus_clk_disable:
+  2781		if (!IS_ERR(msm_host->bus_clk))
+  2782			clk_disable_unprepare(msm_host->bus_clk);
+  2783	pltfm_free:
+  2784		/* Bayhub patch: release assigned resource */
+  2785		if (of_find_property(node, "use-bayhub-bh201", NULL))
+  2786			sdhci_bht_resource_free(msm_host);
+  2787		sdhci_pltfm_free(pdev);
+  2788		return ret;
+  2789	}
+  2790	
+
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h |  1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 28 +--------------------
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     |  1 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      | 19 ++++++++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h      | 12 +++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c    | 26 ++++++-------------
- 6 files changed, 40 insertions(+), 47 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h
-index 6417aa28d32c..895e86dabcb6 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h
-@@ -8,6 +8,7 @@
- #include "dpu_hw_catalog.h"
- #include "dpu_hw_mdss.h"
- #include "dpu_hw_util.h"
-+#include "dpu_hw_blk.h"
- 
- struct dpu_hw_vbif;
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 47fe11a84a77..4a1983d8561b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -782,8 +782,6 @@ static long dpu_kms_round_pixclk(struct msm_kms *kms, unsigned long rate,
- 
- static void _dpu_kms_hw_destroy(struct dpu_kms *dpu_kms)
- {
--	int i;
--
- 	if (dpu_kms->hw_intr)
- 		dpu_hw_intr_destroy(dpu_kms->hw_intr);
- 	dpu_kms->hw_intr = NULL;
-@@ -791,15 +789,6 @@ static void _dpu_kms_hw_destroy(struct dpu_kms *dpu_kms)
- 	/* safe to call these more than once during shutdown */
- 	_dpu_kms_mmu_destroy(dpu_kms);
- 
--	if (dpu_kms->catalog) {
--		for (i = 0; i < dpu_kms->catalog->vbif_count; i++) {
--			u32 vbif_idx = dpu_kms->catalog->vbif[i].id;
--
--			if ((vbif_idx < VBIF_MAX) && dpu_kms->hw_vbif[vbif_idx])
--				dpu_hw_vbif_destroy(dpu_kms->hw_vbif[vbif_idx]);
--		}
--	}
--
- 	if (dpu_kms->rm_init)
- 		dpu_rm_destroy(&dpu_kms->rm);
- 	dpu_kms->rm_init = false;
-@@ -1027,7 +1016,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- {
- 	struct dpu_kms *dpu_kms;
- 	struct drm_device *dev;
--	int i, rc = -EINVAL;
-+	int rc = -EINVAL;
- 
- 	if (!kms) {
- 		DPU_ERROR("invalid kms\n");
-@@ -1116,21 +1105,6 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 		goto power_error;
- 	}
- 
--	for (i = 0; i < dpu_kms->catalog->vbif_count; i++) {
--		u32 vbif_idx = dpu_kms->catalog->vbif[i].id;
--
--		dpu_kms->hw_vbif[i] = dpu_hw_vbif_init(vbif_idx,
--				dpu_kms->vbif[vbif_idx], dpu_kms->catalog);
--		if (IS_ERR_OR_NULL(dpu_kms->hw_vbif[vbif_idx])) {
--			rc = PTR_ERR(dpu_kms->hw_vbif[vbif_idx]);
--			if (!dpu_kms->hw_vbif[vbif_idx])
--				rc = -EINVAL;
--			DPU_ERROR("failed to init vbif %d: %d\n", vbif_idx, rc);
--			dpu_kms->hw_vbif[vbif_idx] = NULL;
--			goto power_error;
--		}
--	}
--
- 	rc = dpu_core_perf_init(&dpu_kms->perf, dev, dpu_kms->catalog,
- 			_dpu_kms_get_clk(dpu_kms, "core"));
- 	if (rc) {
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-index 3f518c809e33..b96c901483ae 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-@@ -105,7 +105,6 @@ struct dpu_kms {
- 	struct dpu_rm rm;
- 	bool rm_init;
- 
--	struct dpu_hw_vbif *hw_vbif[VBIF_MAX];
- 	struct dpu_hw_mdp *hw_mdp;
- 
- 	bool has_danger_ctrl;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-index 7497538adae1..6d49666c4e77 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-@@ -76,6 +76,8 @@ int dpu_rm_destroy(struct dpu_rm *rm)
- 	}
- 	for (i = 0; i < ARRAY_SIZE(rm->hw_intf); i++)
- 		dpu_hw_intf_destroy(rm->hw_intf[i]);
-+	for (i = 0; i < ARRAY_SIZE(rm->hw_vbif); i++)
-+		dpu_hw_vbif_destroy(rm->hw_vbif[i]);
- 
- 	return 0;
- }
-@@ -210,6 +212,23 @@ int dpu_rm_init(struct dpu_rm *rm,
- 		rm->dspp_blks[dspp->id - DSPP_0] = &hw->base;
- 	}
- 
-+	for (i = 0; i < cat->vbif_count; i++) {
-+		struct dpu_hw_vbif *hw;
-+		const struct dpu_vbif_cfg *vbif = &cat->vbif[i];
-+
-+		if (vbif->id < VBIF_0 || vbif->id >= VBIF_MAX) {
-+			DPU_ERROR("skip vbif %d with invalid id\n", vbif->id);
-+			continue;
-+		}
-+		hw = dpu_hw_vbif_init(vbif->id, mmio, cat);
-+		if (IS_ERR(hw)) {
-+			rc = PTR_ERR(hw);
-+			DPU_ERROR("failed vbif object creation: err %d\n", rc);
-+			goto fail;
-+		}
-+		rm->hw_vbif[vbif->id - VBIF_0] = hw;
-+	}
-+
- 	return 0;
- 
- fail:
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-index 9b13200a050a..a15977bdceeb 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-@@ -20,6 +20,7 @@ struct dpu_global_state;
-  * @ctl_blks: array of ctl hardware resources
-  * @hw_intf: array of intf hardware resources
-  * @dspp_blks: array of dspp hardware resources
-+ * @hw_vbif: array of vbif hardware resources
-  */
- struct dpu_rm {
- 	struct dpu_hw_blk *pingpong_blks[PINGPONG_MAX - PINGPONG_0];
-@@ -28,6 +29,7 @@ struct dpu_rm {
- 	struct dpu_hw_intf *hw_intf[INTF_MAX - INTF_0];
- 	struct dpu_hw_blk *dspp_blks[DSPP_MAX - DSPP_0];
- 	struct dpu_hw_blk *merge_3d_blks[MERGE_3D_MAX - MERGE_3D_0];
-+	struct dpu_hw_vbif *hw_vbif[VBIF_MAX - VBIF_0];
- };
- 
- /**
-@@ -95,5 +97,15 @@ static inline struct dpu_hw_intf *dpu_rm_get_intf(struct dpu_rm *rm, enum dpu_in
- 	return rm->hw_intf[intf_idx - INTF_0];
- }
- 
-+/**
-+ * dpu_rm_get_vbif - Return a struct dpu_hw_vbif instance given it's index.
-+ * @rm: DPU Resource Manager handle
-+ * @vbif_idx: VBIF's index
-+ */
-+static inline struct dpu_hw_vbif *dpu_rm_get_vbif(struct dpu_rm *rm, enum dpu_vbif vbif_idx)
-+{
-+	return rm->hw_vbif[vbif_idx - VBIF_0];
-+}
-+
- #endif /* __DPU_RM_H__ */
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
-index 21d20373eb8b..00ac2aa81651 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
-@@ -152,15 +152,10 @@ void dpu_vbif_set_ot_limit(struct dpu_kms *dpu_kms,
- 	struct dpu_hw_mdp *mdp;
- 	bool forced_on = false;
- 	u32 ot_lim;
--	int ret, i;
-+	int ret;
- 
- 	mdp = dpu_kms->hw_mdp;
--
--	for (i = 0; i < ARRAY_SIZE(dpu_kms->hw_vbif); i++) {
--		if (dpu_kms->hw_vbif[i] &&
--				dpu_kms->hw_vbif[i]->idx == params->vbif_idx)
--			vbif = dpu_kms->hw_vbif[i];
--	}
-+	vbif = dpu_rm_get_vbif(&dpu_kms->rm, params->vbif_idx);
- 
- 	if (!vbif || !mdp) {
- 		DRM_DEBUG_ATOMIC("invalid arguments vbif %d mdp %d\n",
-@@ -216,14 +211,7 @@ void dpu_vbif_set_qos_remap(struct dpu_kms *dpu_kms,
- 	}
- 	mdp = dpu_kms->hw_mdp;
- 
--	for (i = 0; i < ARRAY_SIZE(dpu_kms->hw_vbif); i++) {
--		if (dpu_kms->hw_vbif[i] &&
--				dpu_kms->hw_vbif[i]->idx == params->vbif_idx) {
--			vbif = dpu_kms->hw_vbif[i];
--			break;
--		}
--	}
--
-+	vbif = dpu_rm_get_vbif(&dpu_kms->rm, params->vbif_idx);
- 	if (!vbif || !vbif->cap) {
- 		DPU_ERROR("invalid vbif %d\n", params->vbif_idx);
- 		return;
-@@ -261,8 +249,8 @@ void dpu_vbif_clear_errors(struct dpu_kms *dpu_kms)
- 	struct dpu_hw_vbif *vbif;
- 	u32 i, pnd, src;
- 
--	for (i = 0; i < ARRAY_SIZE(dpu_kms->hw_vbif); i++) {
--		vbif = dpu_kms->hw_vbif[i];
-+	for (i = VBIF_0; i < VBIF_MAX; i++) {
-+		vbif = dpu_rm_get_vbif(&dpu_kms->rm, i);
- 		if (vbif && vbif->ops.clear_errors) {
- 			vbif->ops.clear_errors(vbif, &pnd, &src);
- 			if (pnd || src) {
-@@ -278,8 +266,8 @@ void dpu_vbif_init_memtypes(struct dpu_kms *dpu_kms)
- 	struct dpu_hw_vbif *vbif;
- 	int i, j;
- 
--	for (i = 0; i < ARRAY_SIZE(dpu_kms->hw_vbif); i++) {
--		vbif = dpu_kms->hw_vbif[i];
-+	for (i = VBIF_0; i < VBIF_MAX; i++) {
-+		vbif = dpu_rm_get_vbif(&dpu_kms->rm, i);
- 		if (vbif && vbif->cap && vbif->ops.set_mem_type) {
- 			for (j = 0; j < vbif->cap->memtype_count; j++)
- 				vbif->ops.set_mem_type(
--- 
-2.34.1
-
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
