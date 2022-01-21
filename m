@@ -2,158 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AAAA495AED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 08:38:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 943EC495B80
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 09:00:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245347AbiAUHh6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jan 2022 02:37:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35782 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231687AbiAUHh5 (ORCPT
+        id S1379351AbiAUIAo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jan 2022 03:00:44 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:26917 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1379360AbiAUIAh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jan 2022 02:37:57 -0500
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57E75C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 23:37:57 -0800 (PST)
-Received: by mail-qk1-x732.google.com with SMTP id z10so9040498qkf.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jan 2022 23:37:57 -0800 (PST)
+        Fri, 21 Jan 2022 03:00:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/NsTFmbJRFMqEPN6TQaECc+hiLY0/v9eV3DVPhW44GY=;
-        b=PuWCb9iH9vKdzPSOA+cnzoC5jXVWy1AxxiEArf+ovVTKyq6Rs8b9hRdqqysFgZO3RH
-         6HR5CHUYtgLvFzY41BzyTZnhtdVBI2dlVkadACZfkbJeiCHh8hOkTRlnPN/l9GmSI+Id
-         mQu8TpqBpn8pYss2p8mm2Ylw68LDjOSh/YPOoMT5GrYBX3FVUnHxnSWIv6AHbc9CKyFq
-         pRXqz33+o2U+kCAOOqq+fJMR9aPYxAqjwLWxTsOR8seSgKB1lER2TEf8VRXONBQKR7Ee
-         zKn4EwFBihlTG3TooPkxvtIHW9a0KRVMGmir3ujmoCXdA3mwiVVcMurDL3u1o7Oh92lF
-         /mBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/NsTFmbJRFMqEPN6TQaECc+hiLY0/v9eV3DVPhW44GY=;
-        b=nhtmkIh9wZvt51+aKoqVnODN+agVaTpPxq7EVeQZ9VMXEQmmQjMqzdu57L9jdZFSyJ
-         eAouT5MDVqp3SSqGLk8E6vOmz9lsfhvJ+NmwAmdfpq5OV6RnoHALaajdLrnw09Nea8at
-         0fxE7W7xGCDERsBNdrwb8J0K5dZBXquyhxqgo7/H79xoqf9+QhrTHPKifzy06JHSWf8V
-         rMO8UBJCbpWYX0Dn3vqRDnfX0qP+LjRzSkofsOToKclUdv/E4IS87N+59pGHh+gwMlVZ
-         2kT6TNjW+tEqViL1ZuguzqNeJdAIO9RETyTJO85xAbYBzjdAN2w605IbPRowX7YPkPk3
-         1SCA==
-X-Gm-Message-State: AOAM531UM5Gvdvk0aNQc445HVXP5FTbguIp7vR25m+ToYVkApI2ImLDj
-        6MLqxHW0YbhMqCpiTte1GAfewP4P1Fm9WnTrTiaoeQ==
-X-Google-Smtp-Source: ABdhPJw9OZfOWatupIhHHWLCFkKsSFA5JB0Def6mqorRivdXWOXbcfFf1iqBjl+UybZDdM37TVcPw1r6mgO0fI/hWGM=
-X-Received: by 2002:a37:a211:: with SMTP id l17mr1812465qke.593.1642750676511;
- Thu, 20 Jan 2022 23:37:56 -0800 (PST)
-MIME-Version: 1.0
-References: <20220119221616.3089119-1-dmitry.baryshkov@linaro.org>
- <20220119221616.3089119-3-dmitry.baryshkov@linaro.org> <CAE-0n53=vj53a_u-5rUmrhV79_-c=F5gtjbejoVs+=PR=hc1Nw@mail.gmail.com>
-In-Reply-To: <CAE-0n53=vj53a_u-5rUmrhV79_-c=F5gtjbejoVs+=PR=hc1Nw@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 21 Jan 2022 10:37:45 +0300
-Message-ID: <CAA8EJprSTDhox33q0d37NQVKrkdhh+Ubq5_8wXqgstFkr_EtaQ@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] drm/msm/dpu: simplify clocks handling
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1642752037; x=1674288037;
+  h=from:to:cc:subject:date:message-id;
+  bh=abbX6k9WSffHvKTCpCIkdMCrlIZ93cMC92Al2dGkxzY=;
+  b=FgkRuHTpfprCdITPVotr9x2qNS/67hIfLiYvLdKQdpxx0MK2in5MP5Ai
+   XtAWZJBifSVycKK3UQWrnE7ykDPdgP6nqy7Y4gxaoKTwz5wvFC22KmNGC
+   WPFi3RGasadtqtzMn+fSoiRKNxwxzR57zqymjs7IUihewOwdQ4u6XEKlD
+   w=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 21 Jan 2022 00:00:36 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 21 Jan 2022 00:00:34 -0800
+X-QCInternal: smtphost
+Received: from pillair-linux.qualcomm.com ([10.204.116.193])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 21 Jan 2022 13:30:17 +0530
+Received: by pillair-linux.qualcomm.com (Postfix, from userid 452944)
+        id C2FF65334; Fri, 21 Jan 2022 13:30:16 +0530 (IST)
+From:   Rakesh Pillai <quic_pillair@quicinc.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        swboyd@chromium.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_sibis@quicinc.com,
+        quic_mpubbise@quicinc.com, kuabhs@chromium.org,
+        Rakesh Pillai <quic_pillair@quicinc.com>
+Subject: [PATCH v8] arm64: dts: qcom: sc7280: Add WPSS remoteproc node
+Date:   Fri, 21 Jan 2022 13:30:07 +0530
+Message-Id: <1642752007-19923-1-git-send-email-quic_pillair@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 21 Jan 2022 at 07:30, Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Dmitry Baryshkov (2022-01-19 14:16:15)
-> > diff --git a/drivers/gpu/drm/msm/msm_io_utils.c b/drivers/gpu/drm/msm/msm_io_utils.c
-> > index 7b504617833a..5533c87c7158 100644
-> > --- a/drivers/gpu/drm/msm/msm_io_utils.c
-> > +++ b/drivers/gpu/drm/msm/msm_io_utils.c
-> > @@ -5,6 +5,8 @@
-> >   * Author: Rob Clark <robdclark@gmail.com>
-> >   */
-> >
-> > +#include <linux/clk/clk-conf.h>
-> > +
-> >  #include "msm_drv.h"
-> >
-> >  /*
-> > @@ -47,6 +49,54 @@ struct clk *msm_clk_get(struct platform_device *pdev, const char *name)
-> >         return clk;
-> >  }
-> >
-> > +int msm_parse_clock(struct platform_device *pdev, struct clk_bulk_data **clocks)
-> > +{
-> > +       u32 i, rc = 0;
-> > +       const char *clock_name;
-> > +       struct clk_bulk_data *bulk;
-> > +       int num_clk = 0;
->
-> No need to assign and then reassign before testing. Same goes for 'rc'.
+Add the WPSS remoteproc node in dts for
+PIL loading.
 
-Ack
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Rakesh Pillai <quic_pillair@quicinc.com>
+---
+Changes from v7:
+- Remove wpss_mem from reserved memory. Its part of board dtsi.
 
->
-> > +
-> > +       if (!pdev)
-> > +               return -EINVAL;
-> > +
-> > +       num_clk = of_property_count_strings(pdev->dev.of_node, "clock-names");
-> > +       if (num_clk <= 0) {
-> > +               pr_debug("clocks are not defined\n");
-> > +               return 0;
-> > +       }
-> > +
-> > +       bulk = devm_kcalloc(&pdev->dev, num_clk, sizeof(struct clk_bulk_data), GFP_KERNEL);
-> > +       if (!bulk)
-> > +               return -ENOMEM;
-> > +
-> > +       for (i = 0; i < num_clk; i++) {
-> > +               rc = of_property_read_string_index(pdev->dev.of_node,
-> > +                                                  "clock-names", i,
-> > +                                                  &clock_name);
-> > +               if (rc) {
-> > +                       DRM_DEV_ERROR(&pdev->dev, "Failed to get clock name for %d\n", i);
-> > +                       return rc;
-> > +               }
-> > +               bulk[i].id = devm_kstrdup(&pdev->dev, clock_name, GFP_KERNEL);
-> > +       }
-> > +
-> > +       rc = devm_clk_bulk_get(&pdev->dev, num_clk, bulk);
->
-> Use devm_clk_bulk_get_all()?
+Changes from v6:
+- Swap the oder of two properties in wpss_mem reserved memory
 
-Oh, wow. I missed this API. Then this function becomes unnecessary.
+Changes from v5:
+- Update the clock names
+---
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts |  4 +++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi    | 51 +++++++++++++++++++++++++++++++++
+ 2 files changed, 55 insertions(+)
 
->
-> > +       if (rc) {
-> > +               DRM_DEV_ERROR(&pdev->dev, "Failed to get clock refs %d\n", rc);
-> > +               return rc;
-> > +       }
-> > +
-> > +       rc = of_clk_set_defaults(pdev->dev.of_node, false);
->
-> Why is this needed?
-
-Both mdss and mdp devices use assigned-clocks properties, while not
-being a clock provider (or a child of it).
-So I assumed it should call the of_clk_set_defaults(node, false)
-Not to mention that this call exists in the msm_dss_parse_clock(),
-which is being refactored/replaced.
-
->
-> > +       if (rc) {
-> > +               DRM_DEV_ERROR(&pdev->dev, "Failed to set clock defaults %d\n", rc);
-> > +               return rc;
-> > +       }
-> > +
-> > +       *clocks = bulk;
-> > +
-> > +       return num_clk;
-
-
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+index 9b991ba..ddab150 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+@@ -80,3 +80,7 @@
+ 		qcom,pre-scaling = <1 1>;
+ 	};
+ };
++
++&remoteproc_wpss {
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 937c2e0..e7c0745 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -2603,6 +2603,57 @@
+ 			status = "disabled";
+ 		};
+ 
++		remoteproc_wpss: remoteproc@8a00000 {
++			compatible = "qcom,sc7280-wpss-pil";
++			reg = <0 0x08a00000 0 0x10000>;
++
++			interrupts-extended = <&intc GIC_SPI 587 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "wdog", "fatal", "ready", "handover",
++					  "stop-ack", "shutdown-ack";
++
++			clocks = <&gcc GCC_WPSS_AHB_BDG_MST_CLK>,
++				 <&gcc GCC_WPSS_AHB_CLK>,
++				 <&gcc GCC_WPSS_RSCP_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "ahb_bdg", "ahb",
++				      "rscp", "xo";
++
++			power-domains = <&rpmhpd SC7280_CX>,
++					<&rpmhpd SC7280_MX>;
++			power-domain-names = "cx", "mx";
++
++			memory-region = <&wpss_mem>;
++
++			qcom,qmp = <&aoss_qmp>;
++
++			qcom,smem-states = <&wpss_smp2p_out 0>;
++			qcom,smem-state-names = "stop";
++
++			resets = <&aoss_reset AOSS_CC_WCSS_RESTART>,
++				 <&pdc_reset PDC_WPSS_SYNC_RESET>;
++			reset-names = "restart", "pdc_sync";
++
++			qcom,halt-regs = <&tcsr_mutex 0x37000>;
++
++			status = "disabled";
++
++			glink-edge {
++				interrupts-extended = <&ipcc IPCC_CLIENT_WPSS
++							     IPCC_MPROC_SIGNAL_GLINK_QMP
++							     IRQ_TYPE_EDGE_RISING>;
++				mboxes = <&ipcc IPCC_CLIENT_WPSS
++						IPCC_MPROC_SIGNAL_GLINK_QMP>;
++
++				label = "wpss";
++				qcom,remote-pid = <13>;
++			};
++		};
++
+ 		dc_noc: interconnect@90e0000 {
+ 			reg = <0 0x090e0000 0 0x5080>;
+ 			compatible = "qcom,sc7280-dc-noc";
 -- 
-With best wishes
-Dmitry
+2.7.4
+
