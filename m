@@ -2,97 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2644E49667C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 21:43:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A978A49668A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jan 2022 21:45:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229783AbiAUUnH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Jan 2022 15:43:07 -0500
-Received: from mga14.intel.com ([192.55.52.115]:45447 "EHLO mga14.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229510AbiAUUnH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Jan 2022 15:43:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1642797786; x=1674333786;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=zi42iAFJZUfwAkLlr/dUNgF2Eg3r9qS0RQ6ZF0BDqXE=;
-  b=P2/HnH8bbubxJ+N5ZFhuyXyXEVbcfgXJiOQ1o3nk9z+9DuAqqpOoIXff
-   CAZdzQQIuP4Vr13jhIrzju+Tor27PzVxh7qsAySZ1d71PnLHM6i9SMelH
-   D/nK8ARIOxYXFuLgc6q8bWH0nPTCVB+vhxPR7aRBKYtQcmSdBYck1rTvt
-   vMrT+pdGRlcKT1V7/baWDb2MvZWGVjzWvEUfIAdxlNSyB+6ZQNja9hWRk
-   Pj1mVVGBUp/72Jc0XmP0TpaVHtk/fDP/+1Ui6aZ4MNprWuYXUiYGAeBG8
-   AmU/A2QmyCkUQUK092IJ+I1JHf1kHCSt+d72JHR24IPNK2WNBxAkIWf0i
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10234"; a="245960439"
-X-IronPort-AV: E=Sophos;i="5.88,306,1635231600"; 
-   d="scan'208";a="245960439"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jan 2022 12:43:06 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,306,1635231600"; 
-   d="scan'208";a="616627685"
-Received: from lkp-server01.sh.intel.com (HELO 276f1b88eecb) ([10.239.97.150])
-  by FMSMGA003.fm.intel.com with ESMTP; 21 Jan 2022 12:43:04 -0800
-Received: from kbuild by 276f1b88eecb with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1nB0kR-000FeT-EY; Fri, 21 Jan 2022 20:43:03 +0000
-Date:   Sat, 22 Jan 2022 04:42:35 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
-        bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        robh+dt@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sm8150: Add ufs power-domain entries
-Message-ID: <202201220442.bMRI74m1-lkp@intel.com>
-References: <20220120082803.15535-1-bhupesh.sharma@linaro.org>
+        id S230285AbiAUUo7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Jan 2022 15:44:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45204 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230196AbiAUUo7 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 21 Jan 2022 15:44:59 -0500
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EA65C06173D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jan 2022 12:44:56 -0800 (PST)
+Received: by mail-oi1-x232.google.com with SMTP id x193so15360853oix.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jan 2022 12:44:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=nNz54uRGsVGq1YmuK1HNWWa+LTEnTSopROjQ2zq4zm0=;
+        b=m1s4c2vAOxuTO6Lu0LPAgPXMbmvG4gd3tc9bw2TM7FE1U0bPUh6bhXhmEHwvv+fZCl
+         z8Z3w303cT/YXM52NPJsTMCWCLGbrmzpF9ha986eX6m7fhkNLbIyDgGxrs92a+Bx8fND
+         7aLwNyV2nnstJzfLFfJEZeC31paYHI71CeT5o=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=nNz54uRGsVGq1YmuK1HNWWa+LTEnTSopROjQ2zq4zm0=;
+        b=AIjMW1a88mF6SN7L6tvx1VrgXAhOgOgTVlYYFEFBN+NPw9ufuUfcQLwpLZo8kumU2H
+         3HxGgByJNFRPnmRJJlm0piowhiJ7ziFDGQfRr+SYlT7CxpTCMc32hYFO+dYDo4PfpM9Z
+         RIG/49339MOHJVQNrZOZbVkftKCIP3xWfJ99weUKoDDW7RUMWMcEg1AgrvkfodUWZ8+1
+         ybMdGtPO54LIpq8C/CmcCY65jJdi7DNrh+JqNMEFvpawC6VimK7neq0IW3vxGKUhPc9/
+         20mLx7IM99LnLnLnI+09mWb1MPzFGBrAaTFKTl2DLohw/RTykrr2kHSuOB5RI22fonAb
+         CuPw==
+X-Gm-Message-State: AOAM530YOY8/cQFSbEChlrk5XbsB1yDYenWKm8tKNpERuNx7Tr398RCJ
+        tp/rTwETBzXfORoWg2BX+SNjwHZdQAMvNKlSetF8Jw==
+X-Google-Smtp-Source: ABdhPJzDcldej/njJqo9IkYjzGOwjYvA2xC1t1LUcIdHN8PEmwRwA+T0bX98AEPzf48OgQoQSBKj/6v9PKUCO5XIZlI=
+X-Received: by 2002:a05:6808:cc:: with SMTP id t12mr2046276oic.32.1642797894159;
+ Fri, 21 Jan 2022 12:44:54 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 21 Jan 2022 12:44:53 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220120082803.15535-1-bhupesh.sharma@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <CAA8EJprSTDhox33q0d37NQVKrkdhh+Ubq5_8wXqgstFkr_EtaQ@mail.gmail.com>
+References: <20220119221616.3089119-1-dmitry.baryshkov@linaro.org>
+ <20220119221616.3089119-3-dmitry.baryshkov@linaro.org> <CAE-0n53=vj53a_u-5rUmrhV79_-c=F5gtjbejoVs+=PR=hc1Nw@mail.gmail.com>
+ <CAA8EJprSTDhox33q0d37NQVKrkdhh+Ubq5_8wXqgstFkr_EtaQ@mail.gmail.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Fri, 21 Jan 2022 12:44:53 -0800
+Message-ID: <CAE-0n53i6yCdFZpgZqyybP1eJEKmrry1LpPxt410fCQ_LGmJ-w@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] drm/msm/dpu: simplify clocks handling
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bhupesh,
+Quoting Dmitry Baryshkov (2022-01-20 23:37:45)
+> On Fri, 21 Jan 2022 at 07:30, Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > Quoting Dmitry Baryshkov (2022-01-19 14:16:15)
+> > > diff --git a/drivers/gpu/drm/msm/msm_io_utils.c b/drivers/gpu/drm/msm/msm_io_utils.c
+> > > index 7b504617833a..5533c87c7158 100644
+> > > --- a/drivers/gpu/drm/msm/msm_io_utils.c
+> > > +++ b/drivers/gpu/drm/msm/msm_io_utils.c
+>
+> >
+> > > +       if (rc) {
+> > > +               DRM_DEV_ERROR(&pdev->dev, "Failed to get clock refs %d\n", rc);
+> > > +               return rc;
+> > > +       }
+> > > +
+> > > +       rc = of_clk_set_defaults(pdev->dev.of_node, false);
+> >
+> > Why is this needed?
+>
+> Both mdss and mdp devices use assigned-clocks properties, while not
+> being a clock provider (or a child of it).
+> So I assumed it should call the of_clk_set_defaults(node, false)
 
-Thank you for the patch! Yet something to improve:
+A device node doesn't need to be a clk provider to call
+of_clk_set_defaults(). Does the call to of_clk_set_defaults() in
+drivers/base/platform.c cover this?
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on v5.16 next-20220121]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+> Not to mention that this call exists in the msm_dss_parse_clock(),
+> which is being refactored/replaced.
+>
 
-url:    https://github.com/0day-ci/linux/commits/Bhupesh-Sharma/arm64-dts-qcom-sm8150-Add-ufs-power-domain-entries/20220120-162925
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-config: arm64-randconfig-r011-20220120 (https://download.01.org/0day-ci/archive/20220122/202201220442.bMRI74m1-lkp@intel.com/config)
-compiler: clang version 14.0.0 (https://github.com/llvm/llvm-project 7b3d30728816403d1fd73cc5082e9fb761262bce)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install arm64 cross compiling tool for clang build
-        # apt-get install binutils-aarch64-linux-gnu
-        # https://github.com/0day-ci/linux/commit/e9cea3a4d3c4706f9cef18f55b07d3bc389a051a
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Bhupesh-Sharma/arm64-dts-qcom-sm8150-Add-ufs-power-domain-entries/20220120-162925
-        git checkout e9cea3a4d3c4706f9cef18f55b07d3bc389a051a
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash
+Indeed it's already in the code.
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
->> Error: arch/arm64/boot/dts/qcom/sm8150.dtsi:1641.26-27 syntax error
-   FATAL ERROR: Unable to parse input tree
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+> >
+> > > +       if (rc) {
+> > > +               DRM_DEV_ERROR(&pdev->dev, "Failed to set clock defaults %d\n", rc);
+> > > +               return rc;
+> > > +       }
+> > > +
+> > > +       *clocks = bulk;
+> > > +
