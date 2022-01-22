@@ -2,103 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C0015496CE8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jan 2022 17:32:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 30B0B496D39
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jan 2022 19:09:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234451AbiAVQcv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Jan 2022 11:32:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50100 "EHLO
+        id S234670AbiAVSJT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Jan 2022 13:09:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234480AbiAVQcr (ORCPT
+        with ESMTP id S231812AbiAVSJT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Jan 2022 11:32:47 -0500
-Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5B73C061744
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jan 2022 08:32:46 -0800 (PST)
-Received: by mail-qv1-xf2d.google.com with SMTP id 15so14427552qvp.12
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jan 2022 08:32:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek-ca.20210112.gappssmtp.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=xi6Epe+O63qC2bPYwLhP+7XAxexroUTZOcN3RjcdwYc=;
-        b=zZiWJkEJj7gkgpFfiL8+Qcq3iYCvUKc4tQa1qAYdIa4FzHEprH5jH3QbvhRB9OV0H3
-         NYvDLa3z02FmjRs/pdWWyPtMolo32YfSQztd1ETs7yydgO+HAKRdvPlUM58iRk1VQGjQ
-         9H0iiIoGR1EQm2nuOIhswXYyj8FFD90Slnvk5nRbXkOiRlm5gVlzD1phJXKRf0der5WK
-         w7TgmoYFlG2etXShrW3MnokTMiCOmIXWUHOmGZmUN1/9KQBzCM6vAJah7MMVTcnLtUDi
-         r6IHTISIhhAX8iYe44o8VklWfb3Y0/ILg4mLgu3xo4gSip4E96tPgGgoDuqMHHWITKxr
-         tdjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xi6Epe+O63qC2bPYwLhP+7XAxexroUTZOcN3RjcdwYc=;
-        b=YJKv1H8JdwN+y90RCywzNekTV2xK6u6X+ZbrcE+K/4L1CgYfE9w/nT1B3JZ/eJ6u9e
-         ba8R6WXr7TyHTNRRiRFteLkLnfHn19xUtiUllU8qpr2cVHrqcvmWHBdOV04O4fD2S0+l
-         fAOqaw2E7FXKsr6nEg0FAIkhmeuoAX4EPv6edE+OfZf8jpMvNb8WNihwYdIY4lNd7LAc
-         DXCG4xEHJ+iYLm9O62evOIdDZ5o7lNGCc0gd1F+4ZIoQ01eiYjr/HdYfgKz/XByMFZB3
-         AoqlOqBR37c+o5qQ7KqEXHL5of3S3mOZeyT5LC/fTaj3vaqcLY7i0JjkfCOY14s01+sh
-         PUDw==
-X-Gm-Message-State: AOAM531uuQEVcXCAdQ7k/6U7sex8X/pb9g3JkU9OJQ0B7YJZzd83dVts
-        GcKLvdmo7mhbgOKfZoXt0EqsPC1AAhGJULuS
-X-Google-Smtp-Source: ABdhPJwb/Jm99YoLQ3/xxKudwqDLeXqNgcKFveEo5sXqa3tcV0J1phIo5ww72GLZhP9AFEiuthcbKA==
-X-Received: by 2002:a05:6214:4008:: with SMTP id kd8mr8123868qvb.5.1642869165665;
-        Sat, 22 Jan 2022 08:32:45 -0800 (PST)
-Received: from localhost.localdomain (modemcable134.222-177-173.mc.videotron.ca. [173.177.222.134])
-        by smtp.gmail.com with ESMTPSA id b140sm4806440qkg.108.2022.01.22.08.32.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 Jan 2022 08:32:45 -0800 (PST)
-From:   Jonathan Marek <jonathan@marek.ca>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
+        Sat, 22 Jan 2022 13:09:19 -0500
+Received: from mxd2.seznam.cz (mxd2.seznam.cz [IPv6:2a02:598:2::210])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B457C06173B;
+        Sat, 22 Jan 2022 10:09:18 -0800 (PST)
+Received: from email.seznam.cz
+        by email-smtpc1b.ng.seznam.cz (email-smtpc1b.ng.seznam.cz [10.23.13.15])
+        id 7fbae1b324b4b5da7e132ded;
+        Sat, 22 Jan 2022 19:09:17 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seznam.cz; s=beta;
+        t=1642874957; bh=1EnTIdt2O2BU0FhIK6Yn08TeenHwWuw5X96kZ29foJ4=;
+        h=Received:From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
+         Content-Transfer-Encoding:X-szn-frgn:X-szn-frgc;
+        b=k+cGD6vvq9kpXANrY2THUJXhM/GT95qZbbji6rpfjF/pTClbc1Uh/NuhQ5eCCsV0q
+         qDa1stRakwLesNGSTs39WAqSpycY9gPqI4+/Bgy6SMMztm7nWFyaR2ASSV2l/tc7Bh
+         FxvuEt9gviRV9JCy6vF4mpY0wABYJraAtzWExAeE=
+Received: from localhost.localdomain (ip-244-214.dynamic.ccinternet.cz [185.148.214.244])
+        by email-relay24.ng.seznam.cz (Seznam SMTPD 1.3.136) with ESMTP;
+        Sat, 22 Jan 2022 19:06:48 +0100 (CET)  
+From:   michael.srba@seznam.cz
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8450: fix apps_smmu interrupts
-Date:   Sat, 22 Jan 2022 11:29:32 -0500
-Message-Id: <20220122162932.7686-2-jonathan@marek.ca>
-X-Mailer: git-send-email 2.26.1
-In-Reply-To: <20220122162932.7686-1-jonathan@marek.ca>
-References: <20220122162932.7686-1-jonathan@marek.ca>
+        Stephen Boyd <sboyd@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Saravana Kannan <saravanak@google.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Michael Srba <Michael.Srba@seznam.cz>
+Subject: [PATCH 1/4] dt-bindings: clock: gcc-msm8998: Add definitions of SSC-related clocks
+Date:   Sat, 22 Jan 2022 19:04:10 +0100
+Message-Id: <20220122180413.1480-1-michael.srba@seznam.cz>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-szn-frgn: <e6182ed4-c1ff-46a6-91dc-c5b444140202>
+X-szn-frgc: <0>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update interrupts in apps_smmu to match downstream. This is fixes apps_smmu
-failing to probe when running at EL2 (expects 96 context interrupts)
+From: Michael Srba <Michael.Srba@seznam.cz>
 
-Fixes: 892d5395396d ("arm64: dts: qcom: sm8450: add smmu nodes")
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+ This patch adds definitions of four clocks which need to be manipulated
+ in order to initialize the AHB bus which exposes the SCC block in the
+ global address space.
+
+Signed-off-by: Michael Srba <Michael.Srba@seznam.cz>
 ---
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/dt-bindings/clock/qcom,gcc-msm8998.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 5a98f2aad7099..aef8b6814cda0 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -1076,7 +1076,7 @@ apps_smmu: iommu@15000000 {
- 			compatible = "qcom,sm8450-smmu-500", "arm,mmu-500";
- 			reg = <0 0x15000000 0 0x100000>;
- 			#iommu-cells = <2>;
--			#global-interrupts = <2>;
-+			#global-interrupts = <1>;
- 			interrupts =    <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>,
- 					<GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>,
- 					<GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1163,6 +1163,7 @@ apps_smmu: iommu@15000000 {
- 					<GIC_SPI 412 IRQ_TYPE_LEVEL_HIGH>,
- 					<GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH>,
- 					<GIC_SPI 707 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH>,
- 					<GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH>,
- 					<GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH>,
- 					<GIC_SPI 690 IRQ_TYPE_LEVEL_HIGH>,
+diff --git a/include/dt-bindings/clock/qcom,gcc-msm8998.h b/include/dt-bindings/clock/qcom,gcc-msm8998.h
+index 72c99e486d86..1badb4f9c58f 100644
+--- a/include/dt-bindings/clock/qcom,gcc-msm8998.h
++++ b/include/dt-bindings/clock/qcom,gcc-msm8998.h
+@@ -186,6 +186,10 @@
+ #define UFS_UNIPRO_CORE_CLK_SRC					177
+ #define GCC_MMSS_GPLL0_CLK					178
+ #define HMSS_GPLL0_CLK_SRC					179
++#define GCC_IM_SLEEP						180
++#define AGGRE2_SNOC_NORTH_AXI					181
++#define SSC_XO							182
++#define SSC_CNOC_AHBS_CLK					183
+ 
+ #define PCIE_0_GDSC						0
+ #define UFS_GDSC						1
 -- 
-2.26.1
+2.34.1
 
