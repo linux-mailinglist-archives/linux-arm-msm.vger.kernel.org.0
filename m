@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BBA3498BB0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 20:15:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 26290498CF3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 20:32:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343851AbiAXTPr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jan 2022 14:15:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47472 "EHLO
+        id S236858AbiAXT0o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jan 2022 14:26:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345126AbiAXTNI (ORCPT
+        with ESMTP id S1348049AbiAXTXZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jan 2022 14:13:08 -0500
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6B6DC0604E6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 11:04:17 -0800 (PST)
-Received: by mail-io1-xd36.google.com with SMTP id a12so20772664iod.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 11:04:17 -0800 (PST)
+        Mon, 24 Jan 2022 14:23:25 -0500
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D250BC061259
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 11:11:01 -0800 (PST)
+Received: by mail-io1-xd30.google.com with SMTP id n17so4926085iod.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 11:11:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=RTiZ8sEgSQ0Acx4U7fIroiVQ52FJWGRyWnzr9lBr6vQ=;
-        b=CvVf5UuSzlaRr1Tb9GU6821HGAi6l+KgJh8pOw5NzySgkQvHkKUof1RPVkUPF4Ku6e
-         h4zo/zJbL/yHrCIdvs4HylasfPtsJKAo4HNZUI4zJsZpVBZ1Uw/B6A7JJNTgvtv4/jIz
-         XBMk3jk6NfkDYa0C38hFQ8obLn58ciZ6gJkZw=
+        bh=/Hb93v/cG3xs7a91RJePhFR111coG45/XiAqaJtoOXg=;
+        b=dekshM3r0iZqRnweN0cD1KEJ/ymwv3d8zD/lK38pye/d6XexTA41QPH7eF7J5ydIuP
+         T+vohEUegraekD/fwapCJeRUIjZm0tUtukdNQMo4cg6MypLPrzRTcMH+JFN8qkid4b7c
+         Fh307MemSL7Jm9rjOaMJSBJKqt2OAxti9p2cg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=RTiZ8sEgSQ0Acx4U7fIroiVQ52FJWGRyWnzr9lBr6vQ=;
-        b=P/xzp2qFm6/W6odRIxEuqaREpNcOZoIoLUHQC8bVX79C5jOiVzadv0T/vknnIQY8Nr
-         05fRRo3MJsTFChfWrXjJaSuX2O/BJJ5Qlqza+HBrl52vVTg5RwXJUkGUVaEvMV/0Ds3L
-         SqfdLfNoje33T1//mo6vBApZSsuegteHsWFwIiLJAtyLx7amjhR8i5mIM24UxzMxRnKL
-         ECwN0CXM5Wsr4bV7SP0BblVHcZoMF/9HSuKtBVGkTWiRVy0D1S5Q0F+DdaHmXyxC5Ufg
-         /4bD/5AsGIT74ULGmrqu25ECQrWduSOPKTutdK9sx3fKi/Xu/bZyOFfz5mw0RA0XbCmO
-         o5Ww==
-X-Gm-Message-State: AOAM533GnrngbsJh9bPOpZqKRhEEQ1A6G0/QWurKEmdq4CkKJXbHU6/W
-        f6QtaM4+r3Oj+tnQh/Cwa3k0uIdjd7UvSg==
-X-Google-Smtp-Source: ABdhPJyEtaUgbhfnegQHGQJ5/BblBk/T0imNg5tymIlbLlR5xyDRJMWq4yQV93swIxMO9dis1uR4FQ==
-X-Received: by 2002:a05:6602:15c6:: with SMTP id f6mr8984833iow.170.1643051056903;
-        Mon, 24 Jan 2022 11:04:16 -0800 (PST)
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com. [209.85.166.48])
-        by smtp.gmail.com with ESMTPSA id k1sm6548909iov.6.2022.01.24.11.04.15
+        bh=/Hb93v/cG3xs7a91RJePhFR111coG45/XiAqaJtoOXg=;
+        b=SAQ2PjUYaCwGfIFh4QRR7dC+LxLKlqzqdS/6zuTzCXCPlN9dltuqzh5T4y3R13P++8
+         n7ybS5Grdb6ke9gpPpWIq/JI/gVgfjz36ud6g4n3Sw6s94Thwm5lXDwPoO89bbGkypOE
+         ohfw+OoLQbuC8jfoIFII+jCCDso/I/Yk5CaBcEwXVpoIFo1JhXr5W0c9N0qvrGHwEB4o
+         CigwF0loWG2pT/g14MELtELwXi6qpAosedUIzsZOnLy8IuwJ7vjb+s1071uKB+ZRjvDp
+         vYOM5H2LJg0ZqnVuG7NPb0f6hZUqmFod7W34ZOJWeZMQrfb1CNKyOv0CKpm2r8wdBfUN
+         RkoA==
+X-Gm-Message-State: AOAM530Ih1GYx4A9TrTCSOiWRXkpH9HCJzy5KZ8N1JSysCcmgTDruu37
+        gN8/twitpIoihZi3uqX+NpgcfugF3+dHfw==
+X-Google-Smtp-Source: ABdhPJxtZxIUVvR/kVfvUPks/JMKz0+5K/XWEYfJ/FQHy945B5tSLj/Ryz7+iv/9/+NRhIXI/yCQug==
+X-Received: by 2002:a6b:b3c5:: with SMTP id c188mr1060168iof.76.1643051461077;
+        Mon, 24 Jan 2022 11:11:01 -0800 (PST)
+Received: from mail-io1-f44.google.com (mail-io1-f44.google.com. [209.85.166.44])
+        by smtp.gmail.com with ESMTPSA id u5sm8245693ill.82.2022.01.24.11.10.59
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Jan 2022 11:04:15 -0800 (PST)
-Received: by mail-io1-f48.google.com with SMTP id h7so2829835iof.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 11:04:15 -0800 (PST)
-X-Received: by 2002:a5e:9b07:: with SMTP id j7mr8634583iok.136.1643051055347;
- Mon, 24 Jan 2022 11:04:15 -0800 (PST)
+        Mon, 24 Jan 2022 11:10:59 -0800 (PST)
+Received: by mail-io1-f44.google.com with SMTP id w7so20813934ioj.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 11:10:59 -0800 (PST)
+X-Received: by 2002:a02:c726:: with SMTP id h6mr2352523jao.207.1643051459292;
+ Mon, 24 Jan 2022 11:10:59 -0800 (PST)
 MIME-Version: 1.0
-References: <1643048114-2996-1-git-send-email-quic_sbillaka@quicinc.com> <1643048114-2996-2-git-send-email-quic_sbillaka@quicinc.com>
-In-Reply-To: <1643048114-2996-2-git-send-email-quic_sbillaka@quicinc.com>
+References: <1643048114-2996-1-git-send-email-quic_sbillaka@quicinc.com> <1643048114-2996-3-git-send-email-quic_sbillaka@quicinc.com>
+In-Reply-To: <1643048114-2996-3-git-send-email-quic_sbillaka@quicinc.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 24 Jan 2022 11:04:03 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=WjnDCh6dLV8pxgYepMDtf5oMSTb9v+Z8dwyMARL7TYaQ@mail.gmail.com>
-Message-ID: <CAD=FV=WjnDCh6dLV8pxgYepMDtf5oMSTb9v+Z8dwyMARL7TYaQ@mail.gmail.com>
-Subject: Re: [PATCH v1 1/2] ARM64: dts: qcom: enable eDP panel support for sc7280
+Date:   Mon, 24 Jan 2022 11:10:48 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=XLzCc-M6CMYOMMZ6cj+RMdwi4Uwsde=2s5V2pMWj_QTA@mail.gmail.com>
+Message-ID: <CAD=FV=XLzCc-M6CMYOMMZ6cj+RMdwi4Uwsde=2s5V2pMWj_QTA@mail.gmail.com>
+Subject: Re: [PATCH v1 2/2] drm/panel-edp: Add sharp panel support for sc7280
 To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>
 Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
@@ -79,262 +79,65 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Mon, Jan 24, 2022 at 10:15 AM Sankeerth Billakanti
+On Mon, Jan 24, 2022 at 10:16 AM Sankeerth Billakanti
 <quic_sbillaka@quicinc.com> wrote:
 >
-> Enable the eDP display panel support with backlight on sc7280 platform.
+> Add eDP panel support for sc7280 CRD platform.
 >
 > Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sc7280-crd.dts | 127 ++++++++++++++++++++++++++++++++
->  1 file changed, 127 insertions(+)
+>  drivers/gpu/drm/panel/panel-edp.c | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
 >
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> index cd2755c..fde6f75 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> @@ -64,6 +64,47 @@ ap_ts_pen_1v8: &i2c13 {
->         };
+> diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+> index 176ef0c..bb2e346 100644
+> --- a/drivers/gpu/drm/panel/panel-edp.c
+> +++ b/drivers/gpu/drm/panel/panel-edp.c
+> @@ -1605,6 +1605,14 @@ static const struct panel_desc sharp_lq123p1jx31 = {
+>         },
 >  };
 >
-> +&mdss {
-> +       status = "okay";
-> +};
-> +
-> +&mdss_mdp {
-> +       status = "okay";
-> +};
+> +static const struct panel_desc sharp_lq140m1jw46 = {
+> +       .bpc = 8,
+> +       .size = {
+> +               .width = 309,
+> +               .height = 173,
+> +       },
 
-"mdss_mdp" sorts after "mdss_edp",
+Where are your delays? I very much doubt that they are all 0.
 
+I guess you're also not putting timings in here and you're relying on
+these coming from the EDID? My own preference would be:
 
-> +&mdss_edp {
-> +       status = "okay";
-> +
-> +       vdda-1p2-supply = <&vreg_l6b_1p2>;
-> +       vdda-0p9-supply = <&vreg_l10c_0p8>;
-> +
-> +       ports {
-> +               port@1 {
-> +                       reg = <1>;
-> +                       edp_out: endpoint {
-> +                               remote-endpoint = <&edp_panel_in>;
-> +                       };
-> +               };
-> +       };
+1. If you are relying on a reliable way to read the EDID of the panel
+then you shouldn't even need to add anything to this section of the
+file. You should use the "edp-panel" compatible string and then add an
+entry to the "edp_panels" structure.
 
-I think part of the above should be in sc7280.dtsi. Basically in
-sc7820.dtsi I think you should have:
-
-ports {
-  #address-cells = <1>;
-  #size-cells = <0>;
-  port@0 {
-    reg = <0>;
-    edp_in: endpoint {
-      remote-endpoint = <&dpu_intf5_out>;
-    };
-  };
-  port@1 {
-    reg = <1>;
-    edp_out: endpoint {
-    };
-  };
-};
-
-...and then the crd dts file just needs:
-
-&edp_out {
-  remote-endpoint = <&edp_panel_in>;
-};
-
-Right?
+2. If you want to support folks that don't have a reliable way to read
+the EDID then you can add things here, but you should add a mode.
 
 
 > +};
 > +
-> +&mdss_edp_phy {
-> +       status = "okay";
-> +
-> +       vdda-1p2-supply = <&vreg_l6b_1p2>;
-> +       vdda-0p9-supply = <&vreg_l10c_0p8>;
-> +};
-> +
-> +&mdss_dp {
-> +       status = "okay";
-> +
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&dp_hot_plug_det>;
-> +       data-lanes = <0 1>;
-> +       vdda-1p2-supply = <&vreg_l6b_1p2>;
-> +       vdda-0p9-supply = <&vreg_l1b_0p8>;
-> +};
-> +
->  &nvme_3v3_regulator {
->         gpio = <&tlmm 51 GPIO_ACTIVE_HIGH>;
->  };
-> @@ -72,7 +113,93 @@ ap_ts_pen_1v8: &i2c13 {
->         pins = "gpio51";
->  };
->
-> +&pm8350c_pwm{
+>  static const struct drm_display_mode starry_kr122ea0sra_mode = {
+>         .clock = 147000,
+>         .hdisplay = 1920,
+> @@ -1719,6 +1727,9 @@ static const struct of_device_id platform_of_match[] = {
+>                 .compatible = "sharp,lq123p1jx31",
+>                 .data = &sharp_lq123p1jx31,
+>         }, {
+> +               .compatible = "sharp_lq140m1jw46",
+> +               .data = &sharp_lq140m1jw46,
 
-nit: space after "pwm" and before "{"
+Two problems:
+
+1. You should use a ",", not a "_" to separate the vendor from the model.
+
+2. You need to post device tree bindings for this.
 
 
-> +       status = "okay";
-
-Don't you need:
-
-pinctrl-names = "default";
-pinctrl-0 = <&backlight_pwm_default>;
-
-
-> +};
-> +
-> +&pm8350c_gpios {
-> +       backlight_pwm_default: backlight_pwm_default {
-
-nit: node name should have dashes, not underscores. Also, don't
-include the word "default".
-
-
-> +               pinconf {
-> +                       pins = "gpio8";
-> +                       function = "func1";
-> +                       output-low;
-> +                       bias-disable;
-> +                       power-source = <0>;
-> +                       qcom,drive-strength = <3>;
-
-
-Instead of 3, should be PMIC_GPIO_STRENGTH_LOW
-
-> +               };
-
-Don't need the "pinconf" subnode.
-
-
-> +       };
-> +};
-> +
-> +&soc {
-
-Don't need to put the regulators under &soc. They can be top level, right?
-
-
-> +       backlight_power: backlight_power {
-
-nit: node names should have "-", not "_"
-
-
-> +               compatible = "regulator-fixed";
-> +               regulator-name = "backlight_power";
-> +               regulator-always-on;
-> +               regulator-boot-on;
-> +       };
-> +
-> +       edp_power: edp_power {
-
-nit: node names should have "-", not "_"
-
-
-> +               compatible = "regulator-fixed";
-> +               regulator-name = "edp_power";
-> +
-> +               regulator-min-microvolt = <3300000>;
-> +               regulator-max-microvolt = <3300000>;
-> +
-> +               gpio = <&tlmm 80 GPIO_ACTIVE_HIGH>;
-> +               enable-active-high;
-> +
-> +               pinctrl-names = "default";
-> +               pinctrl-0 = <&edp_panel_power_default>;
-> +       };
-> +
-> +       edp_backlight: edp_backlight {
-
-nit: node names should have a "-", not an "_".
-
-
-> +               compatible = "pwm-backlight";
-> +
-> +               pwms = <&pm8350c_pwm 3 65535>;
-> +               power-supply = <&backlight_power>;
-> +               enable-gpio = <&pm8350c_gpios 7 GPIO_ACTIVE_HIGH>;
-
-So wait. Why do you have a "bogus" backlight_power regulator and then
-a separate enable-gpio? Why
-
-> +
-> +               pinctrl-names = "default";
-> +               pinctrl-0 = <&backlight_pwm_default>;
-
-This pinctrl belongs as part of the PWM, not as part of the backlight.
-
-...but where's the pinctrl for pm8350c_gpios #7? That _should_ be here
-since that's the backlight enable.
-
-
-> +       };
-> +
-> +       edp_panel: edp_panel {
-> +               compatible = "sharp_lq140m1jw46";
-
-Device tree compatible strings separate the manufacturer from the
-model with ",", not "_".
-
-
-> +               pinctrl-names = "default";
-> +               pinctrl-0 = <&edp_hot_plug_det>;
-
-I think for eDP we probably want the pinctrl to be in the sc7280.dtsi
-file. It seems highly likely that people will hook up the eDP HPD pin
-to the standard place. If they don't then boards can override it.
-
-
-> +               power-supply = <&edp_power>;
-> +               backlight = <&edp_backlight>;
-> +
-> +               ports {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       port@0 {
-> +                               reg = <0>;
-> +                               edp_panel_in: endpoint {
-> +                                       remote-endpoint = <&edp_out>;
-> +                               };
-> +                       };
-
-Like for DP, much of this "ports" stuff should be in sc7280.dtsi.
-
-
-> +               };
-> +       };
-> +};
-> +
->  &tlmm {
-> +       edp_hot_plug_det: edp-hot-plug-det {
-> +               pins = "gpio60";
-> +               function = "edp_hot";
-
-The "pins" and "function" belong in sc7280.dtsi.
-
-
-> +               bias-pull-down;
-
-This part belongs in the CRD file.
-
-
-> +               input-enable;
-
-You don't need "input-enable".
-
-
-> +       };
-
-
-> +       edp_panel_power_default: edp_panel_power_default {
-
-Nit: node name shouldn't have underscores.
-...and remove the word "default".
+NOTE: if instead your eDP controller supports DP AUX bus then you
+don't need to add to this table at all and you don't need to add
+bindings. Instead, you'd add your EDID panel ID to the "edp_panels"
+structure.
