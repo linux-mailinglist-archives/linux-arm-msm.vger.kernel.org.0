@@ -2,138 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C715497E7B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 13:08:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB9C0497F41
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 13:21:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238161AbiAXMIa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jan 2022 07:08:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59640 "EHLO
+        id S239462AbiAXMVr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jan 2022 07:21:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238097AbiAXMIa (ORCPT
+        with ESMTP id S239500AbiAXMVn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jan 2022 07:08:30 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1859FC06173B;
-        Mon, 24 Jan 2022 04:08:30 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id 131so322672wmc.4;
-        Mon, 24 Jan 2022 04:08:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=XArnnH4OvrxRcoFfpFy+puuAOs1zK8Kgo1S3kPJSJSw=;
-        b=Jc276FuGvUAjhsukljJ+yBmJsnTKcW5NrocuudRyuV338c+REYomAqV50vs3b9w4gw
-         jQUdowlUT4PRsPPsTAx3vb+xhwoOyrYKpR9Yc+Tii6O6Pa7p/nbIXGl23Dc7cyglQCdj
-         /h5svWv15McmcBB+SVksjK92+h0n0fJw40OLE2eieebA957FhvtKGR0hjGKQV4L8E1jT
-         ULJQlldeeOX3wdAa0621QBFB1gY3WE2BqPzwM3CJ5bFnJLxjaQPzu5VlFPBnYQIxnLda
-         Vhqv8J9RWPMvMK4I0olcJ33FVxRcdbNGVrSgt20UGyTLJIwHtLqMfwvzw6f3J+0KLU90
-         m9Tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=XArnnH4OvrxRcoFfpFy+puuAOs1zK8Kgo1S3kPJSJSw=;
-        b=vFxQFofijTNIGACU3PYRhevl6jGMJEA9+8+Kgmw6Y9hrWZVia+MrO8mUGJD+mTZwAl
-         4Sbiwml2YpIg5Om9+lvCzJUy+y7HhUHeIhfsD8kHn+C5LAPPrwsNJ1F0i6atmGE0w/Ux
-         0B8//PlaVst06hGWXYPHpsZSmV1xFAI1vCpl5aps+rqCnRilzR1re1Jqyy0zfVzTkZCG
-         jifCIgxEQ786NS4a/hPhn3UhdZtkB2GGqrcVz2HgFgzcCNghZxyaXA5rfO7I/oaN+xis
-         iRQonN5vauePOCf7XEUkQViQOQKHUIWFWiSOGaM1efAuT+SJAsZbfumf9ADUz3Y+QnC0
-         +nqw==
-X-Gm-Message-State: AOAM530oQ0JLccCPXuwGOsTY5/WnrNoZaHZWK5pGMG/v/SytAhVNX69C
-        kQ6utowu2Ri9GPjAStUczrU=
-X-Google-Smtp-Source: ABdhPJxx9aW2LXSFk8wJPNYSMOgRQT/XrKepKIzP/Y7B/Y5B2yDT0IK8LOJk1hzSqfc71Sgws6OTQA==
-X-Received: by 2002:a7b:c5c4:: with SMTP id n4mr1572870wmk.134.1643026108567;
-        Mon, 24 Jan 2022 04:08:28 -0800 (PST)
-Received: from [192.168.178.21] (p57b0bff8.dip0.t-ipconnect.de. [87.176.191.248])
-        by smtp.gmail.com with ESMTPSA id c14sm17849799wri.32.2022.01.24.04.08.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Jan 2022 04:08:28 -0800 (PST)
-Subject: Re: [PATCH V2 0/7] DRM kmap() fixes and kmap_local_page() conversions
-To:     ira.weiny@intel.com, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org
-References: <20220124015409.807587-1-ira.weiny@intel.com>
-From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <ckoenig.leichtzumerken@gmail.com>
-Message-ID: <a56344b6-b1bd-6749-5ed2-5f38bf79dcee@gmail.com>
-Date:   Mon, 24 Jan 2022 13:08:26 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Mon, 24 Jan 2022 07:21:43 -0500
+Received: from mxd1.seznam.cz (mxd1.seznam.cz [IPv6:2a02:598:a::78:210])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A337C061749;
+        Mon, 24 Jan 2022 04:21:41 -0800 (PST)
+Received: from email.seznam.cz
+        by email-smtpc19a.ko.seznam.cz (email-smtpc19a.ko.seznam.cz [10.53.18.22])
+        id 45464a151e481e7c44ef864b;
+        Mon, 24 Jan 2022 13:21:21 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seznam.cz; s=beta;
+        t=1643026881; bh=zYQEmRawZQYZJJTHE4ElIs5NJPlKvgxPLzAY5nWjyLs=;
+        h=Received:From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
+         Content-Transfer-Encoding:X-szn-frgn:X-szn-frgc;
+        b=CADxL70CdGDfvKtGTumEu7i9/7OwIzlapDHnWVg6atYhGsQ5xoRTZ2qJXWO/it1+6
+         SKwIakcxfXW+YPek6dmsUztMFIFOfFIBAUlWG69tRr1v3rWfHIpdtWBMJX2Suc+uyV
+         sRpw8fa3bxOL/pMlTjOmMRGhh7LQmI8kzEv2FxyQ=
+Received: from localhost.localdomain (ip-244-214.dynamic.ccinternet.cz [185.148.214.244])
+        by email-relay21.ko.seznam.cz (Seznam SMTPD 1.3.136) with ESMTP;
+        Mon, 24 Jan 2022 13:21:16 +0100 (CET)  
+From:   michael.srba@seznam.cz
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Saravana Kannan <saravanak@google.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Michael Srba <Michael.Srba@seznam.cz>
+Subject: [PATCH v3 1/5] dt-bindings: clock: gcc-msm8998: Add definitions of SSC-related clocks
+Date:   Mon, 24 Jan 2022 13:18:49 +0100
+Message-Id: <20220124121853.23600-1-michael.srba@seznam.cz>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-In-Reply-To: <20220124015409.807587-1-ira.weiny@intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+X-szn-frgn: <1f2d1a29-a523-400c-b821-7879a9ee9178>
+X-szn-frgc: <0>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 24.01.22 um 02:54 schrieb ira.weiny@intel.com:
-> From: Ira Weiny <ira.weiny@intel.com>
->
-> Changes from V1:
-> 	Use memcpy_to_page() where appropriate
-> 	Rebased to latest
->
-> The kmap() call may cause issues with work being done with persistent memory.
-> For this and other reasons it is being deprecated.
+From: Michael Srba <Michael.Srba@seznam.cz>
 
-I'm really wondering how we should be able to implement the kernel 
-mapping without kmap in TTM.
+ This patch adds definitions of four clocks which need to be manipulated
+ in order to initialize the AHB bus which exposes the SCC block in the
+ global address space.
 
-> This series starts by converting the last easy kmap() uses in the drm tree to
-> kmap_local_page().
->
-> The final 2 patches fix bugs found while working on the ttm_bo_kmap_ttm()
-> conversion.  They are valid fixes but were found via code inspection not
-> because of any actual bug so don't require a stable tag.[1]
->
-> There is one more call to kmap() used in ttm_bo_kmap_ttm().  Unfortunately,
-> fixing this is not straight forward so it is left to future work.[2]
+Signed-off-by: Michael Srba <Michael.Srba@seznam.cz>
+---
+ CHANGES:
+ - v2: none
+ - v3: none
+---
+ include/dt-bindings/clock/qcom,gcc-msm8998.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Patches #2, #4, #6 and #7 are Reviewed-by: Christian König 
-<christian.koenig@amd.com>
-
-How to you now want to push those upstream? I can pick them up for the 
-AMD tree like Daniel suggested or you can push them through something else.
-
-Regards,
-Christian.
-
->
-> [1] https://lore.kernel.org/lkml/fb71af05-a889-8f6e-031b-426b58a64f00@amd.com/
-> [2] https://lore.kernel.org/lkml/20211215210949.GW3538886@iweiny-DESK2.sc.intel.com/
->
->
-> Ira Weiny (7):
-> drm/i915: Replace kmap() with kmap_local_page()
-> drm/amd: Replace kmap() with kmap_local_page()
-> drm/gma: Remove calls to kmap()
-> drm/radeon: Replace kmap() with kmap_local_page()
-> drm/msm: Alter comment to use kmap_local_page()
-> drm/amdgpu: Ensure kunmap is called on error
-> drm/radeon: Ensure kunmap is called on error
->
-> drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 8 ++++----
-> drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c | 1 +
-> drivers/gpu/drm/gma500/gma_display.c | 6 ++----
-> drivers/gpu/drm/gma500/mmu.c | 8 ++++----
-> drivers/gpu/drm/i915/gem/i915_gem_shmem.c | 6 ++----
-> drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c | 8 ++++----
-> drivers/gpu/drm/i915/gt/intel_ggtt_fencing.c | 4 ++--
-> drivers/gpu/drm/i915/gt/shmem_utils.c | 7 ++-----
-> drivers/gpu/drm/i915/i915_gem.c | 8 ++++----
-> drivers/gpu/drm/i915/i915_gpu_error.c | 4 ++--
-> drivers/gpu/drm/msm/msm_gem_submit.c | 4 ++--
-> drivers/gpu/drm/radeon/radeon_ttm.c | 4 ++--
-> drivers/gpu/drm/radeon/radeon_uvd.c | 1 +
-> 13 files changed, 32 insertions(+), 37 deletions(-)
->
-> --
-> 2.31.1
->
+diff --git a/include/dt-bindings/clock/qcom,gcc-msm8998.h b/include/dt-bindings/clock/qcom,gcc-msm8998.h
+index 72c99e486d86..1badb4f9c58f 100644
+--- a/include/dt-bindings/clock/qcom,gcc-msm8998.h
++++ b/include/dt-bindings/clock/qcom,gcc-msm8998.h
+@@ -186,6 +186,10 @@
+ #define UFS_UNIPRO_CORE_CLK_SRC					177
+ #define GCC_MMSS_GPLL0_CLK					178
+ #define HMSS_GPLL0_CLK_SRC					179
++#define GCC_IM_SLEEP						180
++#define AGGRE2_SNOC_NORTH_AXI					181
++#define SSC_XO							182
++#define SSC_CNOC_AHBS_CLK					183
+ 
+ #define PCIE_0_GDSC						0
+ #define UFS_GDSC						1
+-- 
+2.34.1
 
