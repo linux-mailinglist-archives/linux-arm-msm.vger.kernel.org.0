@@ -2,92 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 77DDF4986BB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 18:28:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D819498661
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 18:20:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241641AbiAXR2C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jan 2022 12:28:02 -0500
-Received: from fwd1.porkbun.com ([52.10.174.57]:36506 "EHLO fwd1.porkbun.com"
+        id S244390AbiAXRUb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jan 2022 12:20:31 -0500
+Received: from mga14.intel.com ([192.55.52.115]:58855 "EHLO mga14.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S244304AbiAXR0v (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jan 2022 12:26:51 -0500
-Received: by fwd1.porkbun.com (Postfix, from userid 497)
-        id E8E3341B7F; Mon, 24 Jan 2022 17:16:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ansari.sh;
-        s=default; t=1643044732;
-        bh=a9whC7JtDB4/7zPJIuUirqdml13MUQ9IgB9uwgfXCD4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=SyMBu2Xy7B6VPeLaeONMFPU5iX6G0WEDzhLMD/9qyZeHfew+TTHRp7+ZnbR/KmyB8
-         KqH713cA7/vyxWugR5YjZLi1/ynNFq+2SyaA3p3N45WYzp/cr2CknDWHiFg1gMdj2g
-         YJ4YpX4tXdCynczsT9ZLy3602Yd9x0csdIajBXWk=
-X-Spam-Checker-Version: SpamAssassin 3.4.3 (2019-12-06) on
-        ip-172-31-37-14.us-west-2.compute.internal
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.0 required=5.0 tests=ALL_TRUSTED,BAYES_00,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU autolearn=unavailable
-        autolearn_force=no version=3.4.3
-Received: from rayyan-pc.broadband (unknown [90.242.138.108])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        (Authenticated sender: rayyan@ansari.sh)
-        by fwd1.porkbun.com (Postfix) with ESMTPSA id C44A8409E8;
-        Mon, 24 Jan 2022 17:16:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ansari.sh;
-        s=default; t=1643044572;
-        bh=a9whC7JtDB4/7zPJIuUirqdml13MUQ9IgB9uwgfXCD4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=amH6gn+4/lbzBWtmupToE1eeYfkq0ggTOzp8qGjaW1//5w/TslNH8dfXTH1diCkfH
-         zfPONxD+KS0z6yyJG+J4YL108aw3la9lpfTHee3EeLCTmVZKM5aom1aVmPZnCAX72E
-         YMwYIQX/MkqgTQSQZdjVWXRN9GNeUVKJsfjEclnY=
-From:   Rayyan Ansari <rayyan@ansari.sh>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Rayyan Ansari <rayyan@ansari.sh>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        id S244321AbiAXRU2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 24 Jan 2022 12:20:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1643044828; x=1674580828;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=gDQSUskimsF+BvPq9Sv63P2zlzyWFSa/xN8KMVRN7Z4=;
+  b=fsqK1u14VR/IvEwTXzV+ZUYVeOIO9w5GqP9psy+4Gmlerk+3snU6GfUI
+   IcQmKO04COQCzuNknVvnQ1UYYI7IruBm3HFyb+Qk4UQn9J14UzGPMV+Ho
+   IZAzNWn+WN5/tOLGf0/qQlvW31Lx8CN1UqJkRhM3elnv1LCWJyEbvTZxH
+   rLXJotScuYBDNLTPxHikaOwpocr3o6yh4W7YM7K4aCSpDKLcBbii0mPcN
+   PIBDuQ9YvFfESF8E00XLns50IMtVeiLSbWlwy28XZR6gSc2cxN4osIby+
+   cabA2IA65x104JpkCcSEf1OhJyuY0i2cFzptLDwtmA2UOK0m76ASVvtAn
+   Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10236"; a="246316985"
+X-IronPort-AV: E=Sophos;i="5.88,311,1635231600"; 
+   d="scan'208";a="246316985"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2022 09:20:25 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,311,1635231600"; 
+   d="scan'208";a="617320047"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by FMSMGA003.fm.intel.com with ESMTP; 24 Jan 2022 09:20:22 -0800
+Received: by black.fi.intel.com (Postfix, from userid 1003)
+        id 97045178; Mon, 24 Jan 2022 19:20:35 +0200 (EET)
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Andreas Kemnade <andreas@kemnade.info>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] ARM: dts: qcom: pm8226: Add node for the MPP
-Date:   Mon, 24 Jan 2022 17:15:38 +0000
-Message-Id: <20220124171538.18088-3-rayyan@ansari.sh>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Peter Rosin <peda@axentia.se>
+Subject: [PATCH v3 1/6] math.h: Introduce data types for fractional numbers
+Date:   Mon, 24 Jan 2022 19:20:27 +0200
+Message-Id: <20220124172032.87893-1-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220124171538.18088-1-rayyan@ansari.sh>
-References: <20220124171538.18088-1-rayyan@ansari.sh>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The PM8226 provides 8 Multi-Purpose Pins (or MPPs for short).
-Add a node to support them.
+Introduce a macro to produce data types like
 
-Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
+	struct TYPE_fract {
+		__TYPE numerator;
+		__TYPE denominator;
+	};
+
+to be used in the code wherever it's needed.
+
+In the following changes convert some users to it.
+
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- arch/arm/boot/dts/qcom-pm8226.dtsi | 10 ++++++++++
- 1 file changed, 10 insertions(+)
 
-diff --git a/arch/arm/boot/dts/qcom-pm8226.dtsi b/arch/arm/boot/dts/qcom-pm8226.dtsi
-index dddb5150dfd7..9db3ea28b321 100644
---- a/arch/arm/boot/dts/qcom-pm8226.dtsi
-+++ b/arch/arm/boot/dts/qcom-pm8226.dtsi
-@@ -16,6 +16,16 @@ pwrkey@800 {
- 			debounce = <15625>;
- 			bias-pull-up;
- 		};
-+
-+		pm8226_mpps: mpps@a000 {
-+			compatible = "qcom,pm8226-mpp", "qcom,spmi-mpp";
-+			reg = <0xa000>;
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			gpio-ranges = <&pm8226_mpps 0 0 8>;
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+		};
- 	};
+May be pulled via IIO tree.
+
+v3: no changes
+v2: no changes
+
+ include/linux/math.h | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/include/linux/math.h b/include/linux/math.h
+index 53674a327e39..439b8f0b9ebd 100644
+--- a/include/linux/math.h
++++ b/include/linux/math.h
+@@ -2,6 +2,7 @@
+ #ifndef _LINUX_MATH_H
+ #define _LINUX_MATH_H
  
- 	pm8226_1: pm8226@1 {
++#include <linux/types.h>
+ #include <asm/div64.h>
+ #include <uapi/linux/kernel.h>
+ 
+@@ -106,6 +107,17 @@
+ }							\
+ )
+ 
++#define __STRUCT_FRACT(type)				\
++struct type##_fract {					\
++	__##type numerator;				\
++	__##type denominator;				\
++};
++__STRUCT_FRACT(s16)
++__STRUCT_FRACT(u16)
++__STRUCT_FRACT(s32)
++__STRUCT_FRACT(u32)
++#undef __STRUCT_FRACT
++
+ /*
+  * Multiplies an integer by a fraction, while avoiding unnecessary
+  * overflow or loss of precision.
 -- 
 2.34.1
 
