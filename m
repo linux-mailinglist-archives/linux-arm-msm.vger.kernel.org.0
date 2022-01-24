@@ -2,111 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F4F1498637
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 18:16:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9FF4F4986AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 18:26:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231756AbiAXRQB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jan 2022 12:16:01 -0500
-Received: from m43-7.mailgun.net ([69.72.43.7]:38867 "EHLO m43-7.mailgun.net"
+        id S244555AbiAXR0v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jan 2022 12:26:51 -0500
+Received: from fwd1.porkbun.com ([52.10.174.57]:36316 "EHLO fwd1.porkbun.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229897AbiAXRQB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jan 2022 12:16:01 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1643044561; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=piowxZvxdRmjQpd/2H1/kJab1tq+eQt2F5u4/0VD8C0=; b=MqTOZwm+dudj4vkyZnpS7orImSqsoZiYdu3jze0Vkq2vuAHgUIR8leFeClRnvMVYVju7pxCe
- XumdfqAmWp/4lsdor8a9ITCXBXV8au01dkJ1RgNkArS5HOGDcFJVXdRERLWkNrKGjlJP3D7y
- 16Gf8Kp1uB1SSVqLoZLk+tqYQxM=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 61eede7362864ab1016bbadf (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 24 Jan 2022 17:14:27
- GMT
-Sender: tdas=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 99D98C4360D; Mon, 24 Jan 2022 17:14:26 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
+        id S244541AbiAXR0u (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 24 Jan 2022 12:26:50 -0500
+Received: by fwd1.porkbun.com (Postfix, from userid 497)
+        id 898CB41690; Mon, 24 Jan 2022 17:16:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ansari.sh;
+        s=default; t=1643044689;
+        bh=gxvgpUI7CywQc3XL9HhVRlq8qejwxf/AG4pnQ/62QdA=;
+        h=From:To:Cc:Subject:Date;
+        b=Y0LKzux3Euveb6p+BeFD4kp4Qk/S09Le9YmB90sPioiIhTKx5cY0oUO3oTimdVuZd
+         gXEK1M+wDXy7OVJMukDI4Selk0yF+YAT8mMagXxGYmT54TvD4U2HnN2GJaDXH3dzXC
+         xUxfOhRCpcrYbcxqpk7nZ5M/LTEeVxvqJIjeVE/c=
+X-Spam-Checker-Version: SpamAssassin 3.4.3 (2019-12-06) on
+        ip-172-31-37-14.us-west-2.compute.internal
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from hu-tdas-hyd.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3ACDDC4360D;
-        Mon, 24 Jan 2022 17:14:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 3ACDDC4360D
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Taniya Das <tdas@codeaurora.org>
-To:     Stephen Boyd <sboyd@kernel.org>,
-        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH v1] clk: qcom: clk-rcg2: Update logic to calculate D value for RCG
-Date:   Mon, 24 Jan 2022 22:44:15 +0530
-Message-Id: <20220124171415.12293-1-tdas@codeaurora.org>
-X-Mailer: git-send-email 2.17.1
+X-Spam-Status: No, score=-3.0 required=5.0 tests=ALL_TRUSTED,BAYES_00,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU autolearn=unavailable
+        autolearn_force=no version=3.4.3
+Received: from rayyan-pc.broadband (unknown [90.242.138.108])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        (Authenticated sender: rayyan@ansari.sh)
+        by fwd1.porkbun.com (Postfix) with ESMTPSA id 90D0140A88;
+        Mon, 24 Jan 2022 17:15:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ansari.sh;
+        s=default; t=1643044562;
+        bh=gxvgpUI7CywQc3XL9HhVRlq8qejwxf/AG4pnQ/62QdA=;
+        h=From:To:Cc:Subject:Date;
+        b=BiSVUl/wwpkQgTnAVh4a0DMXUOb21tKHJOHXnL3S7PmogxWbXpP/3m3SpCajX2hnd
+         oSfRFmzbHzn47yahXhSoWs9deqpYPjA4DpjcItvVTno/nEFG7U/EKlwCPmEbpCg/OD
+         CLNoNMGKQC63WCgnaQG4tAc6QB+6waj5ligx0CPA=
+From:   Rayyan Ansari <rayyan@ansari.sh>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Rayyan Ansari <rayyan@ansari.sh>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/3] dt-bindings: pinctrl: qcom,pmic-mpp: Document PM8226 compatible
+Date:   Mon, 24 Jan 2022 17:15:36 +0000
+Message-Id: <20220124171538.18088-1-rayyan@ansari.sh>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The current implementation does not check for D value is within
-the accepted range for a given M & N value. Update the logic to
-calculate the final D value based on the range. While at it, add
-support for 2/3 divider in frac_table_pixel.
+Document the Device Tree binding for PM8226 MPPs.
 
-Signed-off-by: Taniya Das <tdas@codeaurora.org>
+Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
 ---
- drivers/clk/qcom/clk-rcg2.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index e1b1b426fae4..036c8071c07a 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -264,7 +264,7 @@ static int clk_rcg2_determine_floor_rate(struct clk_hw *hw,
-
- static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
- {
--	u32 cfg, mask;
-+	u32 cfg, mask, d_val, not2d_val;
- 	struct clk_hw *hw = &rcg->clkr.hw;
- 	int ret, index = qcom_find_src_index(hw, rcg->parent_map, f->src);
-
-@@ -283,8 +283,18 @@ static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
- 		if (ret)
- 			return ret;
-
-+		/* Calculate 2d value */
-+		d_val = f->n;
-+
-+		if (d_val > ((f->n - f->m) * 2))
-+			d_val = (f->n - f->m) * 2;
-+		else if (d_val < f->m)
-+			d_val = f->m;
-+
-+		not2d_val = ~d_val & mask;
-+
- 		ret = regmap_update_bits(rcg->clkr.regmap,
--				RCG_D_OFFSET(rcg), mask, ~f->n);
-+				RCG_D_OFFSET(rcg), mask, not2d_val);
- 		if (ret)
- 			return ret;
- 	}
-@@ -720,6 +730,7 @@ static const struct frac_entry frac_table_pixel[] = {
- 	{ 2, 9 },
- 	{ 4, 9 },
- 	{ 1, 1 },
-+	{ 2, 3 },
- 	{ }
- };
-
---
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-of the Code Aurora Forum, hosted by the  Linux Foundation.
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
+index 35c846f59979..df79274d0ec3 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
+@@ -21,6 +21,7 @@ properties:
+           - qcom,pm8019-mpp
+           - qcom,pm8038-mpp
+           - qcom,pm8058-mpp
++          - qcom,pm8226-mpp
+           - qcom,pm8821-mpp
+           - qcom,pm8841-mpp
+           - qcom,pm8916-mpp
+-- 
+2.34.1
 
