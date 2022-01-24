@@ -2,95 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A808498290
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 15:41:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A6AEB4982BD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 15:53:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239640AbiAXOlo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jan 2022 09:41:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39892 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239468AbiAXOln (ORCPT
+        id S238457AbiAXOxj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jan 2022 09:53:39 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217]:36006 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231403AbiAXOxi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jan 2022 09:41:43 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B2F8C061744
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 06:41:43 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id a28so19832086lfl.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 06:41:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rDkr/Rong6odf/l1FFKK3Zb5bf9I7lsmuK7pJ15wG/8=;
-        b=izNxEl4a4luZq6cAnVCYJYeJCBaH/+ylbFkis8xjyq2EVPulVDm/13IQnTAmpI/mus
-         UhiOghVn5UaSRpWdmmql/c+kfngWx/b/He3B+uvxQh74afMny8DmnF6yRvkZJgEf0bRX
-         c8SXS9Gavk67xeZ9D+czOQ6t6YuCXNrgAy/cLtsRwf2xeM4KXNqkgil1JoQooqS2nMzo
-         fZBRRu8/nrdPYR6A+k/J4400eLhoydqKx9SyYJJL6zuW/g28dQrgMexNgW3KhaaM8uAj
-         ClRMlU89W+PSqkYODhn1Kl74k3gyLEjXm+RzBQpAudOrqQIiDmYFGXfLgxo4vYz3ZePt
-         JUQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rDkr/Rong6odf/l1FFKK3Zb5bf9I7lsmuK7pJ15wG/8=;
-        b=z8nE0jDpeqeYfsSYI7ouwEa3o3Q2YdUF28KyLkrRujbmntuhf9n/NcBr9SJDwEgBOe
-         kSg9azeJBQNiaFWY/sEV/Cg4IWHYDjRyHFxJYwxp0GekfPDsunq36aJ1abo6K5saeVTD
-         U4ddoEM8nnUyY1WMB3QNiLu2QvvB5oeuDQcLSu9xFZ3ZJ8Ak8x+G8CNrYtpuCZLF33+s
-         DCBMvmmNWAfYjTksXUS+6sUhQGzmFBL/HjxW78Fy21Ay9moJZzcIwDGhFkdUtac9b8QZ
-         390pMbwJ821YqNMbTZJFMBMo1CF6g7mjLhJI2XxQ6Dx1E+8aKPjX2roATs1u+RpNFGbr
-         Dziw==
-X-Gm-Message-State: AOAM533flkhuyrgUY3pY+G5h0kqjf7MfG9SxFQNhDY8OT/TyUzylAFib
-        qkpSogp4wDtVQgt3FuQVCRaFIyFyS0OVxMdfn6Etqg==
-X-Google-Smtp-Source: ABdhPJzXA8eX9kSAZ+l1b4fqeGXQBWRlv4PCBNL3A0MBPY5wxd/KuKJMuGGcR+7kkjOsBL8YOX8Q+FuJkFMs3RAVtDk=
-X-Received: by 2002:a05:6512:32c9:: with SMTP id f9mr12756249lfg.184.1643035301614;
- Mon, 24 Jan 2022 06:41:41 -0800 (PST)
+        Mon, 24 Jan 2022 09:53:38 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4AF49613CA;
+        Mon, 24 Jan 2022 14:53:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2322C340F0;
+        Mon, 24 Jan 2022 14:53:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1643036017;
+        bh=DgfnJXVYNoni5MGvYeMU/Er55W48ZA0qOqqHqmXQ1rI=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=HalJMxMRLUpfiogYDK0mnFCaGYakFt0khGZZpCxXdTS2OtImbiKX1Tb/I1299LP9o
+         ZUZq9ajxoI4wVAoF8MEndgNHudY3DOJq0Oq/ArJFMb+ogKU2S3eIPqz7nN4KgtcOFr
+         v+ryr+uyTo6mhbIphRLFx8kFmhy5tKILwHJWhL0no54/4ySqaEz/FEtPxWf3P0gUV0
+         dILYIkphx69lWoNDwiuinVj+NcKC4U2Em5q1xhlmaV0k+UCutvBP80Kp5JLVaOsQtG
+         nwLaNB3IwLHql7acY9hrLaZ9JQuyfGUNrYaFah+onlYuYJOjzV0b2xsXY8c+S5CkIt
+         TjpxHqU74Te0A==
+Received: by mail-ed1-f50.google.com with SMTP id c24so54835059edy.4;
+        Mon, 24 Jan 2022 06:53:37 -0800 (PST)
+X-Gm-Message-State: AOAM533/MBDuY4ypXqxL4PmTYmvWk9nqNnhqfPB1rzqFv1G6Xa+/l9ET
+        cCMFp09aWvIQ79n34qtTt3f4bfIHMzfzfjZGHg==
+X-Google-Smtp-Source: ABdhPJwZziTImIRfNFR6rqYJ587/gofl1dEoiSlc8t2aFJTjjw5R0cyuRIY1LoDUnwgwbbrvVENrXBJP8tRVC64pIfw=
+X-Received: by 2002:aa7:dc44:: with SMTP id g4mr16285510edu.109.1643036016020;
+ Mon, 24 Jan 2022 06:53:36 -0800 (PST)
 MIME-Version: 1.0
-References: <20220112194118.178026-1-luca@z3ntu.xyz> <20220112194118.178026-6-luca@z3ntu.xyz>
-In-Reply-To: <20220112194118.178026-6-luca@z3ntu.xyz>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 24 Jan 2022 15:41:05 +0100
-Message-ID: <CAPDyKFr+BjF8_rEv0RG8aH3FmnKtngkrbfNmNSo=WPmz==uDfw@mail.gmail.com>
-Subject: Re: [PATCH 05/15] dt-bindings: mmc: sdhci-msm: Add msm8953 compatible
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-mmc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20211217211136.3536443-1-robh@kernel.org>
+In-Reply-To: <20211217211136.3536443-1-robh@kernel.org>
+From:   Rob Herring <robh@kernel.org>
+Date:   Mon, 24 Jan 2022 08:53:24 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqLBwHK+M_Tk4YxAHxaSgUm7sFvov7-UC3TdDhhPWtaqew@mail.gmail.com>
+Message-ID: <CAL_JsqLBwHK+M_Tk4YxAHxaSgUm7sFvov7-UC3TdDhhPWtaqew@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: Fix msm8998 cache nodes
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 12 Jan 2022 at 20:42, Luca Weiss <luca@z3ntu.xyz> wrote:
+On Fri, Dec 17, 2021 at 3:11 PM Rob Herring <robh@kernel.org> wrote:
 >
-> Add msm8953 SoC specific compatible strings for qcom-sdhci controller.
+> The msm8998 cache nodes have some issues. First, L1 caches are described
+> within cpu nodes, not as separate nodes. The 'next-level-cache' property
+> is of course in the correct location, otherwise the cache hierarchy
+> walking would not work. Remove all the L1 cache nodes.
 >
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> Acked-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-
-Applied for next, thanks!
-
-Kind regards
-Uffe
-
-
+> Second, 'arm,arch-cache' is not a documented compatible string. "cache"
+> is a sufficient compatible string for the Arm architected caches.
+>
+> Signed-off-by: Rob Herring <robh@kernel.org>
 > ---
->  Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 1 +
->  1 file changed, 1 insertion(+)
+>  arch/arm64/boot/dts/qcom/msm8998.dtsi | 52 ++-------------------------
+>  1 file changed, 2 insertions(+), 50 deletions(-)
+
+Ping
+
 >
-> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> index 50841e2843fc..a62eaade5d97 100644
-> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> @@ -14,6 +14,7 @@ Required properties:
->         full compatible strings with SoC and version:
->                 "qcom,apq8084-sdhci", "qcom,sdhci-msm-v4"
->                 "qcom,msm8226-sdhci", "qcom,sdhci-msm-v4"
-> +               "qcom,msm8953-sdhci", "qcom,sdhci-msm-v4"
->                 "qcom,msm8974-sdhci", "qcom,sdhci-msm-v4"
->                 "qcom,msm8916-sdhci", "qcom,sdhci-msm-v4"
->                 "qcom,msm8992-sdhci", "qcom,sdhci-msm-v4"
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> index 408f265e277b..00adee461b52 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> @@ -138,15 +138,9 @@ CPU0: cpu@0 {
+>                         cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+>                         next-level-cache = <&L2_0>;
+>                         L2_0: l2-cache {
+> -                               compatible = "arm,arch-cache";
+> +                               compatible = "cache";
+>                                 cache-level = <2>;
+>                         };
+> -                       L1_I_0: l1-icache {
+> -                               compatible = "arm,arch-cache";
+> -                       };
+> -                       L1_D_0: l1-dcache {
+> -                               compatible = "arm,arch-cache";
+> -                       };
+>                 };
+>
+>                 CPU1: cpu@1 {
+> @@ -157,12 +151,6 @@ CPU1: cpu@1 {
+>                         capacity-dmips-mhz = <1024>;
+>                         cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+>                         next-level-cache = <&L2_0>;
+> -                       L1_I_1: l1-icache {
+> -                               compatible = "arm,arch-cache";
+> -                       };
+> -                       L1_D_1: l1-dcache {
+> -                               compatible = "arm,arch-cache";
+> -                       };
+>                 };
+>
+>                 CPU2: cpu@2 {
+> @@ -173,12 +161,6 @@ CPU2: cpu@2 {
+>                         capacity-dmips-mhz = <1024>;
+>                         cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+>                         next-level-cache = <&L2_0>;
+> -                       L1_I_2: l1-icache {
+> -                               compatible = "arm,arch-cache";
+> -                       };
+> -                       L1_D_2: l1-dcache {
+> -                               compatible = "arm,arch-cache";
+> -                       };
+>                 };
+>
+>                 CPU3: cpu@3 {
+> @@ -189,12 +171,6 @@ CPU3: cpu@3 {
+>                         capacity-dmips-mhz = <1024>;
+>                         cpu-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+>                         next-level-cache = <&L2_0>;
+> -                       L1_I_3: l1-icache {
+> -                               compatible = "arm,arch-cache";
+> -                       };
+> -                       L1_D_3: l1-dcache {
+> -                               compatible = "arm,arch-cache";
+> -                       };
+>                 };
+>
+>                 CPU4: cpu@100 {
+> @@ -206,15 +182,9 @@ CPU4: cpu@100 {
+>                         cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
+>                         next-level-cache = <&L2_1>;
+>                         L2_1: l2-cache {
+> -                               compatible = "arm,arch-cache";
+> +                               compatible = "cache";
+>                                 cache-level = <2>;
+>                         };
+> -                       L1_I_100: l1-icache {
+> -                               compatible = "arm,arch-cache";
+> -                       };
+> -                       L1_D_100: l1-dcache {
+> -                               compatible = "arm,arch-cache";
+> -                       };
+>                 };
+>
+>                 CPU5: cpu@101 {
+> @@ -225,12 +195,6 @@ CPU5: cpu@101 {
+>                         capacity-dmips-mhz = <1536>;
+>                         cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
+>                         next-level-cache = <&L2_1>;
+> -                       L1_I_101: l1-icache {
+> -                               compatible = "arm,arch-cache";
+> -                       };
+> -                       L1_D_101: l1-dcache {
+> -                               compatible = "arm,arch-cache";
+> -                       };
+>                 };
+>
+>                 CPU6: cpu@102 {
+> @@ -241,12 +205,6 @@ CPU6: cpu@102 {
+>                         capacity-dmips-mhz = <1536>;
+>                         cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
+>                         next-level-cache = <&L2_1>;
+> -                       L1_I_102: l1-icache {
+> -                               compatible = "arm,arch-cache";
+> -                       };
+> -                       L1_D_102: l1-dcache {
+> -                               compatible = "arm,arch-cache";
+> -                       };
+>                 };
+>
+>                 CPU7: cpu@103 {
+> @@ -257,12 +215,6 @@ CPU7: cpu@103 {
+>                         capacity-dmips-mhz = <1536>;
+>                         cpu-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
+>                         next-level-cache = <&L2_1>;
+> -                       L1_I_103: l1-icache {
+> -                               compatible = "arm,arch-cache";
+> -                       };
+> -                       L1_D_103: l1-dcache {
+> -                               compatible = "arm,arch-cache";
+> -                       };
+>                 };
+>
+>                 cpu-map {
 > --
-> 2.34.1
+> 2.32.0
 >
