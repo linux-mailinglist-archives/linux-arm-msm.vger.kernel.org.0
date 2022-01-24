@@ -2,118 +2,496 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DEA11497DAD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 12:15:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AB04497E05
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 12:32:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237243AbiAXLPv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jan 2022 06:15:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47632 "EHLO
+        id S237581AbiAXLcF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jan 2022 06:32:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232330AbiAXLPu (ORCPT
+        with ESMTP id S237234AbiAXLcF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jan 2022 06:15:50 -0500
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C085AC06173B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 03:15:49 -0800 (PST)
-Received: by mail-qt1-x835.google.com with SMTP id y17so19195866qtx.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 03:15:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cUptRqDtEkkJPAHl0ynJV1wbRGCqMae2UeMqdj24E40=;
-        b=ozD9KbWWkge+fKJkJPYI849+fGP9YlVD9EGKkwKfFJs7KuCKLN9oh6rahrLp7L2k5J
-         KDSyAUzqF8GF2GW04tu1Hvym3Hcbje7xnixhm3IbxqsiOuHPeTY3EBrQgEjjvVmBG4HN
-         10rduo9r8r6zECj4k1CJ6nkaadOR3z0eBv3goQO2moqdTj6ZM+CokAge1jxTsHrHYxxF
-         NdiPGHlDNSjlb5sHkrvwHt/lUSkrpScorOogg0j6o/MTGoCLnlU5WzQVGmP8pNQtAxI1
-         52jbapRmZNnsvTAgw9j5/k9xyKkLUcVUsPZ+MpkbPdqBOlG6EzbW7yjPvFI8J3k9VFp3
-         R7uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cUptRqDtEkkJPAHl0ynJV1wbRGCqMae2UeMqdj24E40=;
-        b=PApmnh8FtZzfCsl5GycL6P2pUTxe+szGLu7my7X28HBt9eDjPLBByElUKCLGw6xoJ0
-         DUBTuoZ9jSl0MH6+UR7srOHvI+xwA/w0DHTkrsc75KS1yS6fJR9UdL+MJpKQZ36enIV0
-         b81BsvpwVEhWub9emdv3jCrrYeJvFncQUqedFYfhpJsOYynpZFRGUpc+OMf9wqTt0fMS
-         m6Ff3599/s6HFI/aO6uZW2uizpgIil4cp/ODHX/B8xYKPx7VVidr+q53DV7mRc+bHzBv
-         MJLtdrl/Z0eQnf43PnOf6ncaxGiVYSUZ6azzEAV1Czz3EGmZcmbNxpQtm8o9neEsQ7Gd
-         FoLg==
-X-Gm-Message-State: AOAM533SFGx2PA5HxNocJZJdnJ0fxqZbShAiow58Kuo5YbCUzcg9D0bS
-        bWqu53WTE+ed732hSXr7ghR6Pqn126RdjUk3toqOZw==
-X-Google-Smtp-Source: ABdhPJwhOzuV07VQgBe5fQl8ymvUNqjpFobsJtXh++gWZGbvgvZckIMii1JjIezWZTFU2tWjY2riJOYrtiVV0UjUFbM=
-X-Received: by 2002:a05:622a:241:: with SMTP id c1mr11853967qtx.295.1643022948878;
- Mon, 24 Jan 2022 03:15:48 -0800 (PST)
-MIME-Version: 1.0
-References: <20220119221616.3089119-1-dmitry.baryshkov@linaro.org>
- <20220119221616.3089119-3-dmitry.baryshkov@linaro.org> <CAE-0n53=vj53a_u-5rUmrhV79_-c=F5gtjbejoVs+=PR=hc1Nw@mail.gmail.com>
- <CAA8EJprSTDhox33q0d37NQVKrkdhh+Ubq5_8wXqgstFkr_EtaQ@mail.gmail.com> <CAE-0n53i6yCdFZpgZqyybP1eJEKmrry1LpPxt410fCQ_LGmJ-w@mail.gmail.com>
-In-Reply-To: <CAE-0n53i6yCdFZpgZqyybP1eJEKmrry1LpPxt410fCQ_LGmJ-w@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 24 Jan 2022 14:15:37 +0300
-Message-ID: <CAA8EJprLvMhzN3DZ=JnV3C0TUmrE=3XPkf6dpuV-NQm-J3CeRg@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] drm/msm/dpu: simplify clocks handling
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Mon, 24 Jan 2022 06:32:05 -0500
+X-Greylist: delayed 82 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 24 Jan 2022 03:32:04 PST
+Received: from mxd1.seznam.cz (mxd1.seznam.cz [IPv6:2a02:598:a::78:210])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FE36C06173B;
+        Mon, 24 Jan 2022 03:32:04 -0800 (PST)
+Received: from email.seznam.cz
+        by email-smtpc26a.ko.seznam.cz (email-smtpc26a.ko.seznam.cz [10.53.18.36])
+        id 31e5f4a26aeba0cb304c38fc;
+        Mon, 24 Jan 2022 12:32:03 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seznam.cz; s=beta;
+        t=1643023923; bh=qugtnTgBGaK0HOvuWoMPde2p+6WObdM2i/AuyPyVMjQ=;
+        h=Received:From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
+         Content-Transfer-Encoding:X-szn-frgn:X-szn-frgc;
+        b=PwBC6kLnY5p7hHaN5EYlNlns96GQpPrKnhaKD7/LAIN5/vob6SdEM75GCHx/nsYDs
+         /ZtMeIrXFO+u8X2KWEiPMvaFrWm5TprQuC+eJ73X2FeN94hQf7sNZ+doIzQzhaD1fd
+         JZvSQsJye3/+u9khg4Qhi7ve53n/yRISDlQ4vmpw=
+Received: from localhost.localdomain (ip-244-214.dynamic.ccinternet.cz [185.148.214.244])
+        by email-relay22.ko.seznam.cz (Seznam SMTPD 1.3.136) with ESMTP;
+        Mon, 24 Jan 2022 12:30:06 +0100 (CET)  
+From:   michael.srba@seznam.cz
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Saravana Kannan <saravanak@google.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Michael Srba <Michael.Srba@seznam.cz>
+Subject: [PATCH v2 4/5] drivers: bus: add driver for initializing the SSC bus on (some) qcom SoCs
+Date:   Mon, 24 Jan 2022 12:27:40 +0100
+Message-Id: <20220124112740.22790-1-michael.srba@seznam.cz>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-szn-frgn: <cd5e8a88-924e-4890-8d56-eb18cccdf9fe>
+X-szn-frgc: <0>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 21 Jan 2022 at 23:44, Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Dmitry Baryshkov (2022-01-20 23:37:45)
-> > On Fri, 21 Jan 2022 at 07:30, Stephen Boyd <swboyd@chromium.org> wrote:
-> > >
-> > > Quoting Dmitry Baryshkov (2022-01-19 14:16:15)
-> > > > diff --git a/drivers/gpu/drm/msm/msm_io_utils.c b/drivers/gpu/drm/msm/msm_io_utils.c
-> > > > index 7b504617833a..5533c87c7158 100644
-> > > > --- a/drivers/gpu/drm/msm/msm_io_utils.c
-> > > > +++ b/drivers/gpu/drm/msm/msm_io_utils.c
-> >
-> > >
-> > > > +       if (rc) {
-> > > > +               DRM_DEV_ERROR(&pdev->dev, "Failed to get clock refs %d\n", rc);
-> > > > +               return rc;
-> > > > +       }
-> > > > +
-> > > > +       rc = of_clk_set_defaults(pdev->dev.of_node, false);
-> > >
-> > > Why is this needed?
-> >
-> > Both mdss and mdp devices use assigned-clocks properties, while not
-> > being a clock provider (or a child of it).
-> > So I assumed it should call the of_clk_set_defaults(node, false)
->
-> A device node doesn't need to be a clk provider to call
-> of_clk_set_defaults(). Does the call to of_clk_set_defaults() in
-> drivers/base/platform.c cover this?
+From: Michael Srba <Michael.Srba@seznam.cz>
 
-I'll check if it does.
+ This patch adds bindings for the AHB bus which exposes the SCC block in
+ the global address space. This bus (and the SSC block itself) is present
+ on certain qcom SoCs.
 
->
-> > Not to mention that this call exists in the msm_dss_parse_clock(),
-> > which is being refactored/replaced.
-> >
->
-> Indeed it's already in the code.
->
-> > >
-> > > > +       if (rc) {
-> > > > +               DRM_DEV_ERROR(&pdev->dev, "Failed to set clock defaults %d\n", rc);
-> > > > +               return rc;
-> > > > +       }
-> > > > +
-> > > > +       *clocks = bulk;
-> > > > +
+ In typical configuration, this bus (as some of the clocks and registers
+ that we need to manipulate) is not accessible to Linux, and the resources
+ on this bus are indirectly accessed by communicating with a hexagon CPU
+ core residing in the SSC block. In this configuration, the hypervisor is
+ the one performing the bus initialization for the purposes of bringing
+ the haxagon CPU core out of reset.
 
+ However, it is possible to change the configuration, in which case this
+ driver will initialize the bus.
 
+ In combination with drivers for resources on the SSC bus, this driver can
+ aid in debugging, and for example with a TLMM driver can be used to
+ directly access SSC-dedicated GPIO pins, removing the need to commit
+ to a particular usecase during hw design.
 
+ Finally, until open firmware for the hexagon core is available, this
+ approach allows for using sensors hooked up to SSC-dedicated GPIO pins
+ on mainline Linux simply by utilizing the existing in-tree drivers for
+ these sensors.
+
+Signed-off-by: Michael Srba <Michael.Srba@seznam.cz>
+---
+ CHANGES:
+ - v2: fix clang warning
+---
+ drivers/bus/Kconfig              |   6 +
+ drivers/bus/Makefile             |   1 +
+ drivers/bus/qcom-ssc-block-bus.c | 365 +++++++++++++++++++++++++++++++
+ 3 files changed, 372 insertions(+)
+ create mode 100644 drivers/bus/qcom-ssc-block-bus.c
+
+diff --git a/drivers/bus/Kconfig b/drivers/bus/Kconfig
+index 3c68e174a113..f2b2e3098491 100644
+--- a/drivers/bus/Kconfig
++++ b/drivers/bus/Kconfig
+@@ -173,6 +173,12 @@ config SUNXI_RSB
+ 	  with various RSB based devices, such as AXP223, AXP8XX PMICs,
+ 	  and AC100/AC200 ICs.
+ 
++config QCOM_SSC_BLOCK_BUS
++	bool "Qualcomm SSC Block Bus Init Driver"
++	  help
++	  Say y here to enable support for initializing the bus that connects the SSC block's internal
++	  bus to the cNoC on (some) qcom SoCs
++
+ config TEGRA_ACONNECT
+ 	tristate "Tegra ACONNECT Bus Driver"
+ 	depends on ARCH_TEGRA_210_SOC
+diff --git a/drivers/bus/Makefile b/drivers/bus/Makefile
+index 52c2f35a26a9..e6756e83a9c4 100644
+--- a/drivers/bus/Makefile
++++ b/drivers/bus/Makefile
+@@ -25,6 +25,7 @@ obj-$(CONFIG_OMAP_INTERCONNECT)	+= omap_l3_smx.o omap_l3_noc.o
+ 
+ obj-$(CONFIG_OMAP_OCP2SCP)	+= omap-ocp2scp.o
+ obj-$(CONFIG_QCOM_EBI2)		+= qcom-ebi2.o
++obj-$(CONFIG_QCOM_SSC_BLOCK_BUS)	+= qcom-ssc-block-bus.o
+ obj-$(CONFIG_SUN50I_DE2_BUS)	+= sun50i-de2.o
+ obj-$(CONFIG_SUNXI_RSB)		+= sunxi-rsb.o
+ obj-$(CONFIG_OF)		+= simple-pm-bus.o
+diff --git a/drivers/bus/qcom-ssc-block-bus.c b/drivers/bus/qcom-ssc-block-bus.c
+new file mode 100644
+index 000000000000..a93c7350a231
+--- /dev/null
++++ b/drivers/bus/qcom-ssc-block-bus.c
+@@ -0,0 +1,365 @@
++// SPDX-License-Identifier: GPL-2.0-only
++// Copyright (c) 2021, Michael Srba
++
++#include <linux/clk.h>
++#include <linux/delay.h>
++#include <linux/io.h>
++#include <linux/mfd/syscon.h>
++#include <linux/module.h>
++#include <linux/of_platform.h>
++#include <linux/platform_device.h>
++#include <linux/pm_clock.h>
++#include <linux/pm_domain.h>
++#include <linux/pm_runtime.h>
++#include <linux/regmap.h>
++#include <linux/reset.h>
++
++/* AXI Halt Register Offsets */
++#define AXI_HALTREQ_REG			0x0
++#define AXI_HALTACK_REG			0x4
++#define AXI_IDLE_REG			0x8
++
++static const char *qcom_ssc_block_pd_names[] = {
++	"ssc_cx",
++	"ssc_mx"
++};
++
++struct qcom_ssc_block_bus_data {
++	int num_pds;
++	const char **pd_names;
++	struct device *pds[ARRAY_SIZE(qcom_ssc_block_pd_names)];
++	char __iomem *reg_mpm_sscaon_config0; // MPM - msm power manager; AON - always-on
++	char __iomem *reg_mpm_sscaon_config1; // that's as much as we know about these
++	struct regmap *halt_map;
++	u32 ssc_axi_halt;
++	struct clk *xo_clk;
++	struct clk *aggre2_clk;
++	struct clk *gcc_im_sleep_clk;
++	struct clk *aggre2_north_clk;
++	struct clk *ssc_xo_clk;
++	struct clk *ssc_ahbs_clk;
++	struct reset_control *ssc_bcr;
++	struct reset_control *ssc_reset;
++};
++
++static void reg32_set_bits(char __iomem *reg, u32 value)
++{
++	u32 tmp = ioread32(reg);
++
++	iowrite32(tmp | value, reg);
++}
++
++static void reg32_clear_bits(char __iomem *reg, u32 value)
++{
++	u32 tmp = ioread32(reg);
++
++	iowrite32(tmp & (~value), reg);
++}
++
++
++static int qcom_ssc_block_bus_init(struct device *dev)
++{
++	int ret;
++
++	struct qcom_ssc_block_bus_data *data = dev_get_drvdata(dev);
++
++	clk_prepare_enable(data->xo_clk);
++	clk_prepare_enable(data->aggre2_clk);
++
++	clk_prepare_enable(data->gcc_im_sleep_clk);
++
++	reg32_clear_bits(data->reg_mpm_sscaon_config0, BIT(4) | BIT(5));
++	reg32_clear_bits(data->reg_mpm_sscaon_config1, BIT(31));
++
++	clk_disable(data->aggre2_north_clk);
++
++	ret = reset_control_deassert(data->ssc_reset);
++	if (ret) {
++		dev_err(dev, "error deasserting ssc_reset: %d\n", ret);
++		return ret;
++	}
++
++	clk_prepare_enable(data->aggre2_north_clk);
++
++	ret = reset_control_deassert(data->ssc_bcr);
++	if (ret) {
++		dev_err(dev, "error deasserting ssc_bcr: %d\n", ret);
++		return ret;
++	}
++
++	regmap_write(data->halt_map, data->ssc_axi_halt + AXI_HALTREQ_REG, 0);
++
++	clk_prepare_enable(data->ssc_xo_clk);
++
++	clk_prepare_enable(data->ssc_ahbs_clk);
++
++	return 0;
++}
++
++static int qcom_ssc_block_bus_deinit(struct device *dev)
++{
++	int ret;
++
++	struct qcom_ssc_block_bus_data *data = dev_get_drvdata(dev);
++
++	clk_disable(data->ssc_xo_clk);
++	clk_disable(data->ssc_ahbs_clk);
++
++	ret = reset_control_assert(data->ssc_bcr);
++	if (ret) {
++		dev_err(dev, "error asserting ssc_bcr: %d\n", ret);
++		return ret;
++	}
++
++	regmap_write(data->halt_map, data->ssc_axi_halt + AXI_HALTREQ_REG, 1);
++
++	reg32_set_bits(data->reg_mpm_sscaon_config1, BIT(31));
++	reg32_set_bits(data->reg_mpm_sscaon_config0, BIT(4) | BIT(5));
++
++	ret = reset_control_assert(data->ssc_reset);
++	if (ret) {
++		dev_err(dev, "error asserting ssc_reset: %d\n", ret);
++		return ret;
++	}
++
++	clk_disable(data->gcc_im_sleep_clk);
++
++	clk_disable(data->aggre2_north_clk);
++
++	clk_disable(data->aggre2_clk);
++	clk_disable(data->xo_clk);
++
++	return 0;
++}
++
++
++static int qcom_ssc_block_bus_pds_attach(struct device *dev, struct device **pds,
++					 const char **pd_names, size_t num_pds)
++{
++	int ret;
++	int i;
++
++	for (i = 0; i < num_pds; i++) {
++		pds[i] = dev_pm_domain_attach_by_name(dev, pd_names[i]);
++		if (IS_ERR_OR_NULL(pds[i])) {
++			ret = PTR_ERR(pds[i]) ? : -ENODATA;
++			goto unroll_attach;
++		}
++	}
++
++	return num_pds;
++
++unroll_attach:
++	for (i--; i >= 0; i--)
++		dev_pm_domain_detach(pds[i], false);
++
++	return ret;
++};
++
++static void qcom_ssc_block_bus_pds_detach(struct device *dev, struct device **pds, size_t num_pds)
++{
++	int i;
++
++	for (i = 0; i < num_pds; i++)
++		dev_pm_domain_detach(pds[i], false);
++}
++
++static int qcom_ssc_block_bus_pds_enable(struct device **pds, size_t num_pds)
++{
++	int ret;
++	int i;
++
++	for (i = 0; i < num_pds; i++) {
++		dev_pm_genpd_set_performance_state(pds[i], INT_MAX);
++		ret = pm_runtime_get_sync(pds[i]);
++		if (ret < 0)
++			goto unroll_pd_votes;
++	}
++
++	return 0;
++
++unroll_pd_votes:
++	for (i--; i >= 0; i--) {
++		dev_pm_genpd_set_performance_state(pds[i], 0);
++		pm_runtime_put(pds[i]);
++	}
++
++	return ret;
++};
++
++static void qcom_ssc_block_bus_pds_disable(struct device **pds, size_t num_pds)
++{
++	int i;
++
++	for (i = 0; i < num_pds; i++) {
++		dev_pm_genpd_set_performance_state(pds[i], 0);
++		pm_runtime_put(pds[i]);
++	}
++}
++
++static int qcom_ssc_block_bus_probe(struct platform_device *pdev)
++{
++	struct qcom_ssc_block_bus_data *data;
++	struct device_node *np = pdev->dev.of_node;
++	struct of_phandle_args halt_args;
++	struct resource *res;
++	int ret;
++
++	if (np)
++		of_platform_populate(np, NULL, NULL, &pdev->dev);
++
++	data = devm_kzalloc(&pdev->dev, sizeof(*data), GFP_KERNEL);
++	if (!data)
++		return -ENOMEM;
++
++	platform_set_drvdata(pdev, data);
++
++	data->pd_names = qcom_ssc_block_pd_names;
++	data->num_pds = ARRAY_SIZE(qcom_ssc_block_pd_names);
++
++	ret = qcom_ssc_block_bus_pds_attach(&pdev->dev, data->pds, data->pd_names, data->num_pds);
++	if (ret < 0) {
++		dev_err(&pdev->dev, "error when attaching power domains: %d\n", ret);
++		return ret;
++	}
++
++	ret = qcom_ssc_block_bus_pds_enable(data->pds, data->num_pds);
++	if (ret < 0) {
++		dev_err(&pdev->dev, "error when enabling power domains: %d\n", ret);
++		return ret;
++	}
++
++	// the meaning of the bits in these two registers is sadly not documented,
++	// the set/clear operations are just copying what qcom does
++	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mpm_sscaon_config0");
++	data->reg_mpm_sscaon_config0 = devm_ioremap_resource(&pdev->dev, res);
++	if (IS_ERR(data->reg_mpm_sscaon_config0)) {
++		ret = PTR_ERR(data->reg_mpm_sscaon_config0);
++		dev_err(&pdev->dev, "failed to ioremap mpm_sscaon_config0 (err: %d)\n", ret);
++		return ret;
++	}
++	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mpm_sscaon_config0");
++	data->reg_mpm_sscaon_config1 = devm_ioremap_resource(&pdev->dev, res);
++	if (IS_ERR(data->reg_mpm_sscaon_config1)) {
++		ret = PTR_ERR(data->reg_mpm_sscaon_config1);
++		dev_err(&pdev->dev, "failed to ioremap mpm_sscaon_config1 (err: %d)\n", ret);
++		return ret;
++	}
++
++	data->ssc_bcr = devm_reset_control_get_exclusive(&pdev->dev, "ssc_bcr");
++	if (IS_ERR(data->ssc_bcr)) {
++		ret = PTR_ERR(data->ssc_bcr);
++		dev_err(&pdev->dev, "failed to acquire reset: scc_bcr (err: %d)\n", ret);
++		return ret;
++	}
++	data->ssc_reset = devm_reset_control_get_exclusive(&pdev->dev, "ssc_reset");
++	if (IS_ERR(data->ssc_reset)) {
++		ret = PTR_ERR(data->ssc_reset);
++		dev_err(&pdev->dev, "failed to acquire reset: ssc_reset: (err: %d)\n", ret);
++		return ret;
++	}
++
++	data->xo_clk = devm_clk_get(&pdev->dev, "xo");
++	if (IS_ERR(data->xo_clk)) {
++		ret = PTR_ERR(data->xo_clk);
++		if (ret != -EPROBE_DEFER)
++			dev_err(&pdev->dev, "Failed to get clock: xo (err: %d)\n", ret);
++		return ret;
++	}
++
++	data->aggre2_clk = devm_clk_get(&pdev->dev, "aggre2");
++	if (IS_ERR(data->aggre2_clk)) {
++		ret = PTR_ERR(data->aggre2_clk);
++		if (ret != -EPROBE_DEFER)
++			dev_err(&pdev->dev, "Failed to get clock: aggre2 (err: %d)\n", ret);
++		return ret;
++	}
++
++	data->gcc_im_sleep_clk = devm_clk_get(&pdev->dev, "gcc_im_sleep");
++	if (IS_ERR(data->gcc_im_sleep_clk)) {
++		ret = PTR_ERR(data->gcc_im_sleep_clk);
++		if (ret != -EPROBE_DEFER)
++			dev_err(&pdev->dev, "Failed to get clock: gcc_im_sleep (err: %d)\n", ret);
++		return ret;
++	}
++
++	data->aggre2_north_clk = devm_clk_get(&pdev->dev, "aggre2_north");
++	if (IS_ERR(data->aggre2_north_clk)) {
++		ret = PTR_ERR(data->aggre2_north_clk);
++		if (ret != -EPROBE_DEFER)
++			dev_err(&pdev->dev, "Failed to get clock: aggre2_north (err: %d)\n", ret);
++		return ret;
++	}
++
++	data->ssc_xo_clk = devm_clk_get(&pdev->dev, "ssc_xo");
++	if (IS_ERR(data->ssc_xo_clk)) {
++		ret = PTR_ERR(data->ssc_xo_clk);
++		if (ret != -EPROBE_DEFER)
++			dev_err(&pdev->dev, "Failed to get clock: ssc_xo (err: %d)\n", ret);
++		return ret;
++	}
++
++	data->ssc_ahbs_clk = devm_clk_get(&pdev->dev, "ssc_ahbs");
++	if (IS_ERR(data->ssc_ahbs_clk)) {
++		ret = PTR_ERR(data->ssc_ahbs_clk);
++		if (ret != -EPROBE_DEFER)
++			dev_err(&pdev->dev, "Failed to get clock: ssc_ahbs (err: %d)\n", ret);
++		return ret;
++	}
++
++	ret = of_parse_phandle_with_fixed_args(pdev->dev.of_node, "qcom,halt-regs", 1, 0,
++					       &halt_args);
++	if (ret < 0) {
++		dev_err(&pdev->dev, "failed to parse qcom,halt-regs\n");
++		return -EINVAL;
++	}
++
++	data->halt_map = syscon_node_to_regmap(halt_args.np);
++	of_node_put(halt_args.np);
++	if (IS_ERR(data->halt_map))
++		return PTR_ERR(data->halt_map);
++
++	data->ssc_axi_halt = halt_args.args[0];
++
++	qcom_ssc_block_bus_init(&pdev->dev);
++
++	return 0;
++}
++
++static int qcom_ssc_block_bus_remove(struct platform_device *pdev)
++{
++	struct qcom_ssc_block_bus_data *data = platform_get_drvdata(pdev);
++
++	qcom_ssc_block_bus_deinit(&pdev->dev);
++
++	iounmap(data->reg_mpm_sscaon_config0);
++	iounmap(data->reg_mpm_sscaon_config1);
++
++	qcom_ssc_block_bus_pds_disable(data->pds, data->num_pds);
++	qcom_ssc_block_bus_pds_detach(&pdev->dev, data->pds, data->num_pds);
++	pm_runtime_disable(&pdev->dev);
++	pm_clk_destroy(&pdev->dev);
++
++	return 0;
++}
++
++static const struct of_device_id qcom_ssc_block_bus_of_match[] = {
++	{ .compatible = "qcom,ssc-block-bus", },
++	{ /* sentinel */ }
++};
++MODULE_DEVICE_TABLE(of, qcom_ssc_block_bus_of_match);
++
++static struct platform_driver qcom_ssc_block_bus_driver = {
++	.probe = qcom_ssc_block_bus_probe,
++	.remove = qcom_ssc_block_bus_remove,
++	.driver = {
++		.name = "qcom-ssc-block-bus",
++		.of_match_table = qcom_ssc_block_bus_of_match,
++	},
++};
++
++module_platform_driver(qcom_ssc_block_bus_driver);
++
++MODULE_DESCRIPTION("A driver for handling the init sequence needed for accessing the SSC block on (some) qcom SoCs over AHB");
++MODULE_AUTHOR("Michael Srba <Michael.Srba@seznam.cz>");
++MODULE_LICENSE("GPL v2");
 -- 
-With best wishes
-Dmitry
+2.34.1
+
