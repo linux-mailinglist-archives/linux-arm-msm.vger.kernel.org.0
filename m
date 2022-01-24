@@ -2,120 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AC854981AD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 15:04:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A808498290
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 15:41:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238343AbiAXOET (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jan 2022 09:04:19 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:48014 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230156AbiAXOET (ORCPT
+        id S239640AbiAXOlo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jan 2022 09:41:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39892 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239468AbiAXOln (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jan 2022 09:04:19 -0500
+        Mon, 24 Jan 2022 09:41:43 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B2F8C061744
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 06:41:43 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id a28so19832086lfl.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 06:41:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1643033059; x=1674569059;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=hK6Gk5mnXF4IHRICMmepTdEfNCx/EzeL17Dix2QUIaU=;
-  b=OGSCboF8Fn9X54gI+CpLoN7tH+gJi/KtdhubT5uyh6/cQiIOGW0KfZBl
-   Wtlr8LM/DabWj2unrWbYcf1OBR/D8YO8GPHVR14ZDHZCkFGe/pTFJdp5k
-   m5dJzICVsQma+KvLsYIsJX6W/pG4fx8k5sckRk7Dqqoc9A0hOJxhrRvSN
-   w=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 24 Jan 2022 06:04:19 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2022 06:04:19 -0800
-Received: from [10.216.45.46] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.47.97.222) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 24 Jan
- 2022 06:04:15 -0800
-Message-ID: <49c9611e-f8cd-3a18-19b3-123da5d8d8eb@quicinc.com>
-Date:   Mon, 24 Jan 2022 19:34:09 +0530
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rDkr/Rong6odf/l1FFKK3Zb5bf9I7lsmuK7pJ15wG/8=;
+        b=izNxEl4a4luZq6cAnVCYJYeJCBaH/+ylbFkis8xjyq2EVPulVDm/13IQnTAmpI/mus
+         UhiOghVn5UaSRpWdmmql/c+kfngWx/b/He3B+uvxQh74afMny8DmnF6yRvkZJgEf0bRX
+         c8SXS9Gavk67xeZ9D+czOQ6t6YuCXNrgAy/cLtsRwf2xeM4KXNqkgil1JoQooqS2nMzo
+         fZBRRu8/nrdPYR6A+k/J4400eLhoydqKx9SyYJJL6zuW/g28dQrgMexNgW3KhaaM8uAj
+         ClRMlU89W+PSqkYODhn1Kl74k3gyLEjXm+RzBQpAudOrqQIiDmYFGXfLgxo4vYz3ZePt
+         JUQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rDkr/Rong6odf/l1FFKK3Zb5bf9I7lsmuK7pJ15wG/8=;
+        b=z8nE0jDpeqeYfsSYI7ouwEa3o3Q2YdUF28KyLkrRujbmntuhf9n/NcBr9SJDwEgBOe
+         kSg9azeJBQNiaFWY/sEV/Cg4IWHYDjRyHFxJYwxp0GekfPDsunq36aJ1abo6K5saeVTD
+         U4ddoEM8nnUyY1WMB3QNiLu2QvvB5oeuDQcLSu9xFZ3ZJ8Ak8x+G8CNrYtpuCZLF33+s
+         DCBMvmmNWAfYjTksXUS+6sUhQGzmFBL/HjxW78Fy21Ay9moJZzcIwDGhFkdUtac9b8QZ
+         390pMbwJ821YqNMbTZJFMBMo1CF6g7mjLhJI2XxQ6Dx1E+8aKPjX2roATs1u+RpNFGbr
+         Dziw==
+X-Gm-Message-State: AOAM533flkhuyrgUY3pY+G5h0kqjf7MfG9SxFQNhDY8OT/TyUzylAFib
+        qkpSogp4wDtVQgt3FuQVCRaFIyFyS0OVxMdfn6Etqg==
+X-Google-Smtp-Source: ABdhPJzXA8eX9kSAZ+l1b4fqeGXQBWRlv4PCBNL3A0MBPY5wxd/KuKJMuGGcR+7kkjOsBL8YOX8Q+FuJkFMs3RAVtDk=
+X-Received: by 2002:a05:6512:32c9:: with SMTP id f9mr12756249lfg.184.1643035301614;
+ Mon, 24 Jan 2022 06:41:41 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH] remoteproc: Use unbounded/high priority workqueue for
- recovery work
-Content-Language: en-US
-To:     <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     <bjorn.andersson@linaro.org>, <mathieu.poirier@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <1642620644-19297-1-git-send-email-quic_mojha@quicinc.com>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <1642620644-19297-1-git-send-email-quic_mojha@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.47.97.222)
+References: <20220112194118.178026-1-luca@z3ntu.xyz> <20220112194118.178026-6-luca@z3ntu.xyz>
+In-Reply-To: <20220112194118.178026-6-luca@z3ntu.xyz>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Mon, 24 Jan 2022 15:41:05 +0100
+Message-ID: <CAPDyKFr+BjF8_rEv0RG8aH3FmnKtngkrbfNmNSo=WPmz==uDfw@mail.gmail.com>
+Subject: Re: [PATCH 05/15] dt-bindings: mmc: sdhci-msm: Add msm8953 compatible
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-mmc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+linux-arm-msm
-
-Thanks,
--Mukesh
-
-On 1/20/2022 1:00 AM, Mukesh Ojha wrote:
-> There could be a scenario where there is too much load(n number
-> of tasks which is affined) on a core on which rproc recovery
-> is queued. Due to which, it takes number of seconds to complete
-> the recovery.
+On Wed, 12 Jan 2022 at 20:42, Luca Weiss <luca@z3ntu.xyz> wrote:
 >
-> If we make this queue unbounded and move it to high priority worker
-> pool then this work can be attempted to finished in less time.
+> Add msm8953 SoC specific compatible strings for qcom-sdhci controller.
 >
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> Acked-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+
+Applied for next, thanks!
+
+Kind regards
+Uffe
+
+
 > ---
->   drivers/remoteproc/remoteproc_core.c | 14 ++++++++++++--
->   1 file changed, 12 insertions(+), 2 deletions(-)
+>  Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-> index 69f51ac..efb6316 100644
-> --- a/drivers/remoteproc/remoteproc_core.c
-> +++ b/drivers/remoteproc/remoteproc_core.c
-> @@ -59,6 +59,7 @@ static int rproc_release_carveout(struct rproc *rproc,
->   
->   /* Unique indices for remoteproc devices */
->   static DEFINE_IDA(rproc_dev_index);
-> +static struct workqueue_struct *rproc_recovery_wq;
->   
->   static const char * const rproc_crash_names[] = {
->   	[RPROC_MMUFAULT]	= "mmufault",
-> @@ -2752,8 +2753,10 @@ void rproc_report_crash(struct rproc *rproc, enum rproc_crash_type type)
->   	dev_err(&rproc->dev, "crash detected in %s: type %s\n",
->   		rproc->name, rproc_crash_to_string(type));
->   
-> -	/* Have a worker handle the error; ensure system is not suspended */
-> -	queue_work(system_freezable_wq, &rproc->crash_handler);
-> +	if (rproc_recovery_wq)
-> +		queue_work(rproc_recovery_wq, &rproc->crash_handler);
-> +	else
-> +		queue_work(system_freezable_wq, &rproc->crash_handler);
->   }
->   EXPORT_SYMBOL(rproc_report_crash);
->   
-> @@ -2802,6 +2805,11 @@ static void __exit rproc_exit_panic(void)
->   
->   static int __init remoteproc_init(void)
->   {
-> +	rproc_recovery_wq = alloc_workqueue("rproc_recovery_wq", WQ_UNBOUND |
-> +				WQ_HIGHPRI | WQ_FREEZABLE, 0);
-> +	if (!rproc_recovery_wq)
-> +		pr_err("remoteproc: creation of rproc_recovery_wq failed\n");
-> +
->   	rproc_init_sysfs();
->   	rproc_init_debugfs();
->   	rproc_init_cdev();
-> @@ -2818,6 +2826,8 @@ static void __exit remoteproc_exit(void)
->   	rproc_exit_panic();
->   	rproc_exit_debugfs();
->   	rproc_exit_sysfs();
-> +	if (rproc_recovery_wq)
-> +		destroy_workqueue(rproc_recovery_wq);
->   }
->   module_exit(remoteproc_exit);
->   
+> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+> index 50841e2843fc..a62eaade5d97 100644
+> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+> @@ -14,6 +14,7 @@ Required properties:
+>         full compatible strings with SoC and version:
+>                 "qcom,apq8084-sdhci", "qcom,sdhci-msm-v4"
+>                 "qcom,msm8226-sdhci", "qcom,sdhci-msm-v4"
+> +               "qcom,msm8953-sdhci", "qcom,sdhci-msm-v4"
+>                 "qcom,msm8974-sdhci", "qcom,sdhci-msm-v4"
+>                 "qcom,msm8916-sdhci", "qcom,sdhci-msm-v4"
+>                 "qcom,msm8992-sdhci", "qcom,sdhci-msm-v4"
+> --
+> 2.34.1
+>
