@@ -2,217 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BA33497F4C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 13:22:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AC854981AD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 15:04:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239388AbiAXMW0 convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jan 2022 07:22:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35026 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233181AbiAXMWZ (ORCPT
+        id S238343AbiAXOET (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jan 2022 09:04:19 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:48014 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230156AbiAXOET (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jan 2022 07:22:25 -0500
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0F26C06173B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 04:22:25 -0800 (PST)
-Received: from lupine.hi.pengutronix.de ([2001:67c:670:100:3ad5:47ff:feaf:1a17] helo=lupine)
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <p.zabel@pengutronix.de>)
-        id 1nByMT-0003Fk-6c; Mon, 24 Jan 2022 13:22:17 +0100
-Received: from pza by lupine with local (Exim 4.94.2)
-        (envelope-from <p.zabel@pengutronix.de>)
-        id 1nByMR-001wKp-IO; Mon, 24 Jan 2022 13:22:15 +0100
-Message-ID: <56835bba2a746aab15463c38f7a761e4d30c51e4.camel@pengutronix.de>
-Subject: Re: [PATCH v2 4/5] drivers: bus: add driver for initializing the
- SSC bus on (some) qcom SoCs
-From:   Philipp Zabel <p.zabel@pengutronix.de>
-To:     michael.srba@seznam.cz, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Saravana Kannan <saravanak@google.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Date:   Mon, 24 Jan 2022 13:22:15 +0100
-In-Reply-To: <20220124112740.22790-1-michael.srba@seznam.cz>
-References: <20220124112740.22790-1-michael.srba@seznam.cz>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-User-Agent: Evolution 3.38.3-1 
+        Mon, 24 Jan 2022 09:04:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1643033059; x=1674569059;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=hK6Gk5mnXF4IHRICMmepTdEfNCx/EzeL17Dix2QUIaU=;
+  b=OGSCboF8Fn9X54gI+CpLoN7tH+gJi/KtdhubT5uyh6/cQiIOGW0KfZBl
+   Wtlr8LM/DabWj2unrWbYcf1OBR/D8YO8GPHVR14ZDHZCkFGe/pTFJdp5k
+   m5dJzICVsQma+KvLsYIsJX6W/pG4fx8k5sckRk7Dqqoc9A0hOJxhrRvSN
+   w=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 24 Jan 2022 06:04:19 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2022 06:04:19 -0800
+Received: from [10.216.45.46] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.47.97.222) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 24 Jan
+ 2022 06:04:15 -0800
+Message-ID: <49c9611e-f8cd-3a18-19b3-123da5d8d8eb@quicinc.com>
+Date:   Mon, 24 Jan 2022 19:34:09 +0530
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2001:67c:670:100:3ad5:47ff:feaf:1a17
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH] remoteproc: Use unbounded/high priority workqueue for
+ recovery work
+Content-Language: en-US
+To:     <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     <bjorn.andersson@linaro.org>, <mathieu.poirier@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <1642620644-19297-1-git-send-email-quic_mojha@quicinc.com>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <1642620644-19297-1-git-send-email-quic_mojha@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.47.97.222)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Michael,
++linux-arm-msm
 
-On Mon, 2022-01-24 at 12:27 +0100, michael.srba@seznam.cz wrote:
-[...]
-> +
-> +static int qcom_ssc_block_bus_init(struct device *dev)
-> +{
-> +	int ret;
-> +
-> +	struct qcom_ssc_block_bus_data *data = dev_get_drvdata(dev);
-> +
-> +	clk_prepare_enable(data->xo_clk);
-> +	clk_prepare_enable(data->aggre2_clk);
-> +
-> +	clk_prepare_enable(data->gcc_im_sleep_clk);
+Thanks,
+-Mukesh
 
-Those should be disabled on failure below, otherwise they could
-accumulate enable_counts with multiple failed block_bus_init calls.
-(Assuming that the reset_control_* can fail in practice.)
-
+On 1/20/2022 1:00 AM, Mukesh Ojha wrote:
+> There could be a scenario where there is too much load(n number
+> of tasks which is affined) on a core on which rproc recovery
+> is queued. Due to which, it takes number of seconds to complete
+> the recovery.
+>
+> If we make this queue unbounded and move it to high priority worker
+> pool then this work can be attempted to finished in less time.
+>
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> ---
+>   drivers/remoteproc/remoteproc_core.c | 14 ++++++++++++--
+>   1 file changed, 12 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+> index 69f51ac..efb6316 100644
+> --- a/drivers/remoteproc/remoteproc_core.c
+> +++ b/drivers/remoteproc/remoteproc_core.c
+> @@ -59,6 +59,7 @@ static int rproc_release_carveout(struct rproc *rproc,
+>   
+>   /* Unique indices for remoteproc devices */
+>   static DEFINE_IDA(rproc_dev_index);
+> +static struct workqueue_struct *rproc_recovery_wq;
+>   
+>   static const char * const rproc_crash_names[] = {
+>   	[RPROC_MMUFAULT]	= "mmufault",
+> @@ -2752,8 +2753,10 @@ void rproc_report_crash(struct rproc *rproc, enum rproc_crash_type type)
+>   	dev_err(&rproc->dev, "crash detected in %s: type %s\n",
+>   		rproc->name, rproc_crash_to_string(type));
+>   
+> -	/* Have a worker handle the error; ensure system is not suspended */
+> -	queue_work(system_freezable_wq, &rproc->crash_handler);
+> +	if (rproc_recovery_wq)
+> +		queue_work(rproc_recovery_wq, &rproc->crash_handler);
+> +	else
+> +		queue_work(system_freezable_wq, &rproc->crash_handler);
+>   }
+>   EXPORT_SYMBOL(rproc_report_crash);
+>   
+> @@ -2802,6 +2805,11 @@ static void __exit rproc_exit_panic(void)
+>   
+>   static int __init remoteproc_init(void)
+>   {
+> +	rproc_recovery_wq = alloc_workqueue("rproc_recovery_wq", WQ_UNBOUND |
+> +				WQ_HIGHPRI | WQ_FREEZABLE, 0);
+> +	if (!rproc_recovery_wq)
+> +		pr_err("remoteproc: creation of rproc_recovery_wq failed\n");
 > +
-> +	reg32_clear_bits(data->reg_mpm_sscaon_config0, BIT(4) | BIT(5));
-> +	reg32_clear_bits(data->reg_mpm_sscaon_config1, BIT(31));
-> +
-> +	clk_disable(data->aggre2_north_clk);
-
-Where was this clock enabled before?
-
-> +
-> +	ret = reset_control_deassert(data->ssc_reset);
-> +	if (ret) {
-> +		dev_err(dev, "error deasserting ssc_reset: %d\n", ret);
-> +		return ret;
-
-And leave the aggre2_north_clk disabled? See below.
-
-> +	}
-> +
-> +	clk_prepare_enable(data->aggre2_north_clk);
-> +
-> +	ret = reset_control_deassert(data->ssc_bcr);
-> +	if (ret) {
-> +		dev_err(dev, "error deasserting ssc_bcr: %d\n", ret);
-> +		return ret;
-
-And leave the aggre2_north_clk enabled? This needs to be consistent.
-
-> +	}
-> +
-> +	regmap_write(data->halt_map, data->ssc_axi_halt + AXI_HALTREQ_REG, 0);
-> +
-> +	clk_prepare_enable(data->ssc_xo_clk);
-> +
-> +	clk_prepare_enable(data->ssc_ahbs_clk);
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_ssc_block_bus_deinit(struct device *dev)
-
-Why does this return int when its result is never checked?
-
-> +{
-> +	int ret;
-> +
-> +	struct qcom_ssc_block_bus_data *data = dev_get_drvdata(dev);
-> +
-> +	clk_disable(data->ssc_xo_clk);
-> +	clk_disable(data->ssc_ahbs_clk);
-> +
-> +	ret = reset_control_assert(data->ssc_bcr);
-> +	if (ret) {
-> +		dev_err(dev, "error asserting ssc_bcr: %d\n", ret);
-> +		return ret;
-
-And leave clocks below enabled?
-
-> +	}
-> +
-> +	regmap_write(data->halt_map, data->ssc_axi_halt + AXI_HALTREQ_REG, 1);
-> +
-> +	reg32_set_bits(data->reg_mpm_sscaon_config1, BIT(31));
-> +	reg32_set_bits(data->reg_mpm_sscaon_config0, BIT(4) | BIT(5));
-> +
-> +	ret = reset_control_assert(data->ssc_reset);
-> +	if (ret) {
-> +		dev_err(dev, "error asserting ssc_reset: %d\n", ret);
-> +		return ret;
-
-Same as above.
-
-> +	}
-> +
-> +	clk_disable(data->gcc_im_sleep_clk);
-> +
-> +	clk_disable(data->aggre2_north_clk);
-> +
-> +	clk_disable(data->aggre2_clk);
-> +	clk_disable(data->xo_clk);
-> +
-> +	return 0;
-> +}
-[...]
-> +static int qcom_ssc_block_bus_probe(struct platform_device *pdev)
-> +{
-> +	struct qcom_ssc_block_bus_data *data;
-> +	struct device_node *np = pdev->dev.of_node;
-> +	struct of_phandle_args halt_args;
-> +	struct resource *res;
-> +	int ret;
-> +
-> +	if (np)
-> +		of_platform_populate(np, NULL, NULL, &pdev->dev);
-> +
-> +	data = devm_kzalloc(&pdev->dev, sizeof(*data), GFP_KERNEL);
-> +	if (!data)
-> +		return -ENOMEM;
-> +
-> +	platform_set_drvdata(pdev, data);
-> +
-> +	data->pd_names = qcom_ssc_block_pd_names;
-> +	data->num_pds = ARRAY_SIZE(qcom_ssc_block_pd_names);
-> +
-> +	ret = qcom_ssc_block_bus_pds_attach(&pdev->dev, data->pds, data->pd_names, data->num_pds);
-> +	if (ret < 0) {
-> +		dev_err(&pdev->dev, "error when attaching power domains: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	ret = qcom_ssc_block_bus_pds_enable(data->pds, data->num_pds);
-> +	if (ret < 0) {
-> +		dev_err(&pdev->dev, "error when enabling power domains: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	// the meaning of the bits in these two registers is sadly not documented,
-> +	// the set/clear operations are just copying what qcom does
-> +	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mpm_sscaon_config0");
-> +	data->reg_mpm_sscaon_config0 = devm_ioremap_resource(&pdev->dev, res);
-> +	if (IS_ERR(data->reg_mpm_sscaon_config0)) {
-> +		ret = PTR_ERR(data->reg_mpm_sscaon_config0);
-> +		dev_err(&pdev->dev, "failed to ioremap mpm_sscaon_config0 (err: %d)\n", ret);
-> +		return ret;
-> +	}
-> +	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mpm_sscaon_config0");
-> +	data->reg_mpm_sscaon_config1 = devm_ioremap_resource(&pdev->dev, res);
-> +	if (IS_ERR(data->reg_mpm_sscaon_config1)) {
-> +		ret = PTR_ERR(data->reg_mpm_sscaon_config1);
-> +		dev_err(&pdev->dev, "failed to ioremap mpm_sscaon_config1 (err: %d)\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	data->ssc_bcr = devm_reset_control_get_exclusive(&pdev->dev, "ssc_bcr");
-> +	if (IS_ERR(data->ssc_bcr)) {
-> +		ret = PTR_ERR(data->ssc_bcr);
-> +		dev_err(&pdev->dev, "failed to acquire reset: scc_bcr (err: %d)\n", ret);
-> +		return ret;
-
-Why check for -EPROBE_DEFER for the clocks but not here?
-You could use dev_err_probe() to simplify all these error returns.
-
-regards
-Philipp
+>   	rproc_init_sysfs();
+>   	rproc_init_debugfs();
+>   	rproc_init_cdev();
+> @@ -2818,6 +2826,8 @@ static void __exit remoteproc_exit(void)
+>   	rproc_exit_panic();
+>   	rproc_exit_debugfs();
+>   	rproc_exit_sysfs();
+> +	if (rproc_recovery_wq)
+> +		destroy_workqueue(rproc_recovery_wq);
+>   }
+>   module_exit(remoteproc_exit);
+>   
