@@ -2,123 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F27CD497484
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jan 2022 19:41:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FD584976F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 02:54:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239841AbiAWSk7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 23 Jan 2022 13:40:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53626 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239683AbiAWSkn (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 23 Jan 2022 13:40:43 -0500
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12BCBC061765;
-        Sun, 23 Jan 2022 10:40:39 -0800 (PST)
-Received: by mail-pg1-x536.google.com with SMTP id 187so12949541pga.10;
-        Sun, 23 Jan 2022 10:40:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=eBCqVqROfO1n2GtvmaN8kb1rlmDqWZOnUSJDskEB5Oo=;
-        b=mJpgWld2B5wbHhAvTMo/0gMGWx3ZGMwlFDlFyfSZigS6cUmCqMZhCmhhnpUtMwHQvy
-         U7vEWX2yv0mK4/592AvEUhGR8Bcq1qSOtPDaE68Fcx0iEHXFXSw+JfHNJwvdbsEQU8Nk
-         Tzi0/XyxcEtaa0BR1NACnnrVqmbASiYnUX6wAv39ETD9AwBjexOS8Dq6D28L55v1DIeA
-         z8LGQVXZcM/fQX5tf8gJB52u4N9LngjlLpLvLwTz9zLbczSKPpNuB1og0VOis8OQopte
-         HszK8h97b+7fUeV0fxI+/kNFpek6zXMX2TbaxxRH0Jpoxd5rkk3XDT7S9kduvAKZlNGN
-         xX/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=eBCqVqROfO1n2GtvmaN8kb1rlmDqWZOnUSJDskEB5Oo=;
-        b=IRZxEoCn+McUkhmywm3VzhKsR0s2yfCfPa7cI8dcmn5LgWwy/ZiGAdJj6LpHLrRONb
-         tjcaFMpBPVxk7hduAfYsYcUAARDqtwLzl5Kwvy5V8Yl7S4a7frEkZ3XEEKGHrdJ0kewQ
-         Ai3xCpHzyodY3A0IlNiWWoEWd3xGNpFJqsJozKpdrbkf3aXaxvCphy/pkXE/3mtY7mob
-         9ufx3FdXt9lzcv1CVIyEjtCr6cozWAeh6IcFSmxaGk45FwdisVzwso1AXIkHDg2AV8p0
-         4YtyyxDhWcTtf0cFZk8z8Yt49dP3oV5dUey/vm+/JNbxzNeBe0w3PyePkQ0pWWmZmoQ4
-         WwZw==
-X-Gm-Message-State: AOAM533OKRVq4kq+drMIlfKCwt1g+Gyh2FR6GI1RmWsWIMIAWp6mpKgB
-        KlRBZNFkqyIJKvQlMaVGX1QOK5DX42U=
-X-Google-Smtp-Source: ABdhPJwRbsW8Pwf2wNB+Tms82WHgGwFZKC0sf8JW2mhyRDN3TsdWwUbRPyPzecSyKFotLcUKv7t4fA==
-X-Received: by 2002:a62:4c3:0:b0:4c2:7817:7360 with SMTP id 186-20020a6204c3000000b004c278177360mr11429381pfe.24.1642963238546;
-        Sun, 23 Jan 2022 10:40:38 -0800 (PST)
-Received: from localhost (searspoint.nvidia.com. [216.228.112.21])
-        by smtp.gmail.com with ESMTPSA id h5sm13043609pfi.111.2022.01.23.10.40.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Jan 2022 10:40:38 -0800 (PST)
-From:   Yury Norov <yury.norov@gmail.com>
-To:     Yury Norov <yury.norov@gmail.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        =?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Peter Zijlstra <peterz@infradead.org>,
-        David Laight <David.Laight@aculab.com>,
-        Joe Perches <joe@perches.com>, Dennis Zhou <dennis@kernel.org>,
-        Emil Renner Berthing <kernel@esmil.dk>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
-        Alexey Klimov <aklimov@redhat.com>,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 16/54] cpufreq: replace cpumask_weight with cpumask_empty where appropriate
-Date:   Sun, 23 Jan 2022 10:38:47 -0800
-Message-Id: <20220123183925.1052919-17-yury.norov@gmail.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20220123183925.1052919-1-yury.norov@gmail.com>
-References: <20220123183925.1052919-1-yury.norov@gmail.com>
+        id S240714AbiAXByN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 23 Jan 2022 20:54:13 -0500
+Received: from mga11.intel.com ([192.55.52.93]:16811 "EHLO mga11.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238668AbiAXByN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 23 Jan 2022 20:54:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1642989253; x=1674525253;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=ngiBZ4miI2i9+e7eQ8QzZsVgrw+8WTFv/7YWGiVXsVM=;
+  b=dbSgAmfaBp99HEcKeaCjAP3tUZPP4LaKY6z1QaaM36A09fmWs70TXQHK
+   2bQvC0LK/898ZThWp9yMXUzqWRXUXRuzxEuQzGkSVTgo0JHzDzX8worIO
+   7r2o0iZVYjamOCdmC8h8aXU95r3qwUEvC9cJzmVlkFrO3h2ToS3trDi+0
+   kuzmBIERDwEasgP3K02jWisCO0KJMJxGUP9IFYrmVFKe7ZdqeZSmv8UBd
+   3SjtKCbf1oiDCqKkcataCEokjYX1mEkeecaTOID/69jRspBAlagus3OAj
+   MZ57NXSjWtLCchrLC5uHbj208iJlGyK1EvXYlIPyUOkAoex09WEAhcLNh
+   Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10236"; a="243536972"
+X-IronPort-AV: E=Sophos;i="5.88,311,1635231600"; 
+   d="scan'208";a="243536972"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2022 17:54:12 -0800
+X-IronPort-AV: E=Sophos;i="5.88,311,1635231600"; 
+   d="scan'208";a="476550367"
+Received: from iweiny-desk2.sc.intel.com (HELO localhost) ([10.3.52.147])
+  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2022 17:54:12 -0800
+From:   ira.weiny@intel.com
+To:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     Ira Weiny <ira.weiny@intel.com>, amd-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH V2 0/7] DRM kmap() fixes and kmap_local_page() conversions
+Date:   Sun, 23 Jan 2022 17:54:02 -0800
+Message-Id: <20220124015409.807587-1-ira.weiny@intel.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-drivers/cpufreq calls cpumask_weight() to check if any bit of a given
-cpumask is set. We can do it more efficiently with cpumask_empty() because
-cpumask_empty() stops traversing the cpumask as soon as it finds first set
-bit, while cpumask_weight() counts all bits unconditionally.
+From: Ira Weiny <ira.weiny@intel.com>
 
-Signed-off-by: Yury Norov <yury.norov@gmail.com>
----
- drivers/cpufreq/qcom-cpufreq-hw.c | 2 +-
- drivers/cpufreq/scmi-cpufreq.c    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Changes from V1:
+	Use memcpy_to_page() where appropriate
+	Rebased to latest
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index 05f3d7876e44..95a0c57ab5bb 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -482,7 +482,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
- 	}
- 
- 	qcom_get_related_cpus(index, policy->cpus);
--	if (!cpumask_weight(policy->cpus)) {
-+	if (cpumask_empty(policy->cpus)) {
- 		dev_err(dev, "Domain-%d failed to get related CPUs\n", index);
- 		ret = -ENOENT;
- 		goto error;
-diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
-index 1e0cd4d165f0..919fa6e3f462 100644
---- a/drivers/cpufreq/scmi-cpufreq.c
-+++ b/drivers/cpufreq/scmi-cpufreq.c
-@@ -154,7 +154,7 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
- 	 * table and opp-shared.
- 	 */
- 	ret = dev_pm_opp_of_get_sharing_cpus(cpu_dev, priv->opp_shared_cpus);
--	if (ret || !cpumask_weight(priv->opp_shared_cpus)) {
-+	if (ret || cpumask_empty(priv->opp_shared_cpus)) {
- 		/*
- 		 * Either opp-table is not set or no opp-shared was found.
- 		 * Use the CPU mask from SCMI to designate CPUs sharing an OPP
--- 
-2.30.2
+The kmap() call may cause issues with work being done with persistent memory.
+For this and other reasons it is being deprecated.
+
+This series starts by converting the last easy kmap() uses in the drm tree to
+kmap_local_page().
+
+The final 2 patches fix bugs found while working on the ttm_bo_kmap_ttm()
+conversion.  They are valid fixes but were found via code inspection not
+because of any actual bug so don't require a stable tag.[1]
+
+There is one more call to kmap() used in ttm_bo_kmap_ttm().  Unfortunately,
+fixing this is not straight forward so it is left to future work.[2]
+
+[1] https://lore.kernel.org/lkml/fb71af05-a889-8f6e-031b-426b58a64f00@amd.com/
+[2] https://lore.kernel.org/lkml/20211215210949.GW3538886@iweiny-DESK2.sc.intel.com/
+
+
+Ira Weiny (7):
+drm/i915: Replace kmap() with kmap_local_page()
+drm/amd: Replace kmap() with kmap_local_page()
+drm/gma: Remove calls to kmap()
+drm/radeon: Replace kmap() with kmap_local_page()
+drm/msm: Alter comment to use kmap_local_page()
+drm/amdgpu: Ensure kunmap is called on error
+drm/radeon: Ensure kunmap is called on error
+
+drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 8 ++++----
+drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c | 1 +
+drivers/gpu/drm/gma500/gma_display.c | 6 ++----
+drivers/gpu/drm/gma500/mmu.c | 8 ++++----
+drivers/gpu/drm/i915/gem/i915_gem_shmem.c | 6 ++----
+drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c | 8 ++++----
+drivers/gpu/drm/i915/gt/intel_ggtt_fencing.c | 4 ++--
+drivers/gpu/drm/i915/gt/shmem_utils.c | 7 ++-----
+drivers/gpu/drm/i915/i915_gem.c | 8 ++++----
+drivers/gpu/drm/i915/i915_gpu_error.c | 4 ++--
+drivers/gpu/drm/msm/msm_gem_submit.c | 4 ++--
+drivers/gpu/drm/radeon/radeon_ttm.c | 4 ++--
+drivers/gpu/drm/radeon/radeon_uvd.c | 1 +
+13 files changed, 32 insertions(+), 37 deletions(-)
+
+--
+2.31.1
 
