@@ -2,116 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD04B497CCD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 11:13:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 23029497D55
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 11:41:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236800AbiAXKMh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jan 2022 05:12:37 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:35778 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235866AbiAXKMg (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jan 2022 05:12:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=qti.qualcomm.com; i=@qti.qualcomm.com; q=dns/txt;
-  s=qcdkim; t=1643019156; x=1674555156;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references;
-  bh=SmeMy60LdpA36LqQOAGJvLI4Z67XOS7PNX+kDj8r1rY=;
-  b=FKrXGnsMrXNbS8Hb1T3HO7Uz3B9caabfdSWfjMq1yIDS4nZotZriTdvI
-   aUyd5jUsnMSRlPyYvM9Bok88iW45PwODd95v9Y21BVELKtvdjM3e9stV5
-   Za3hD3llRijVl8EwwfQNrx/nakt4tXkHcNNFmrcsRNRsL4ctdxGSRWfAD
-   Q=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 24 Jan 2022 02:12:36 -0800
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 24 Jan 2022 02:12:34 -0800
-X-QCInternal: smtphost
-Received: from hu-dikshita-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.110.13])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 24 Jan 2022 15:42:21 +0530
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 347544)
-        id DB41244ED; Mon, 24 Jan 2022 15:42:19 +0530 (+0530)
-From:   Dikshita Agarwal <dikshita@qti.qualcomm.com>
-To:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     hverkuil-cisco@xs4all.nl, ezequiel@collabora.com,
-        vgarodia@codeaurora.org, stanimir.varbanov@linaro.org,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>
-Subject: [PATCH v1 2/2] venus: venc: Add support for intra-refresh mode
-Date:   Mon, 24 Jan 2022 15:41:59 +0530
-Message-Id: <1643019119-8309-3-git-send-email-dikshita@qti.qualcomm.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1643019119-8309-1-git-send-email-dikshita@qti.qualcomm.com>
-References: <1643019119-8309-1-git-send-email-dikshita@qti.qualcomm.com>
+        id S235859AbiAXKlx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jan 2022 05:41:53 -0500
+Received: from foss.arm.com ([217.140.110.172]:57228 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231843AbiAXKlx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 24 Jan 2022 05:41:53 -0500
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CDE606D;
+        Mon, 24 Jan 2022 02:41:52 -0800 (PST)
+Received: from bogus (unknown [10.57.34.236])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2E97D3F73B;
+        Mon, 24 Jan 2022 02:41:48 -0800 (PST)
+Date:   Mon, 24 Jan 2022 10:41:13 +0000
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Yury Norov <yury.norov@gmail.com>
+Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        =?utf-8?B?TWljaGHFgiBNaXJvc8WCYXc=?= <mirq-linux@rere.qmqm.pl>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Peter Zijlstra <peterz@infradead.org>,
+        David Laight <David.Laight@aculab.com>,
+        Joe Perches <joe@perches.com>, Dennis Zhou <dennis@kernel.org>,
+        Emil Renner Berthing <kernel@esmil.dk>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        Alexey Klimov <aklimov@redhat.com>,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 16/54] cpufreq: replace cpumask_weight with cpumask_empty
+ where appropriate
+Message-ID: <20220124104113.ccbcyipd5gtweulz@bogus>
+References: <20220123183925.1052919-1-yury.norov@gmail.com>
+ <20220123183925.1052919-17-yury.norov@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220123183925.1052919-17-yury.norov@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+On Sun, Jan 23, 2022 at 10:38:47AM -0800, Yury Norov wrote:
+> drivers/cpufreq calls cpumask_weight() to check if any bit of a given
+> cpumask is set. We can do it more efficiently with cpumask_empty() because
+> cpumask_empty() stops traversing the cpumask as soon as it finds first set
+> bit, while cpumask_weight() counts all bits unconditionally.
+>
 
-Add support for intra-refresh type v4l2 control.
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com> (for SCMI cpufreq driver)
 
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
----
- drivers/media/platform/qcom/venus/core.h       | 1 +
- drivers/media/platform/qcom/venus/venc.c       | 3 ++-
- drivers/media/platform/qcom/venus/venc_ctrls.c | 8 ++++++++
- 3 files changed, 11 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 7c3bac0..814ec3c 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -260,6 +260,7 @@ struct venc_controls {
- 
- 	u32 header_mode;
- 	bool aud_enable;
-+	u32 intra_refresh_mode;
- 	u32 intra_refresh_period;
- 
- 	struct {
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 84bafc3..e8b8135 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -893,8 +893,9 @@ static int venc_set_properties(struct venus_inst *inst)
- 				mbs++;
- 			mbs /= ctr->intra_refresh_period;
- 
--			intra_refresh.mode = HFI_INTRA_REFRESH_RANDOM;
- 			intra_refresh.cir_mbs = mbs;
-+			if (ctr->intra_refresh_mode == V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_RANDOM)
-+				intra_refresh.mode = HFI_INTRA_REFRESH_RANDOM;
- 		}
- 
- 		ptype = HFI_PROPERTY_PARAM_VENC_INTRA_REFRESH;
-diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-index 1ada42d..c54b46f 100644
---- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-+++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-@@ -316,6 +316,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:
- 		ctr->mastering = *ctrl->p_new.p_hdr10_mastering;
- 		break;
-+	case V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_TYPE:
-+		ctr->intra_refresh_mode = ctrl->val;
-+		break;
- 	case V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD:
- 		ctr->intra_refresh_period = ctrl->val;
- 		break;
-@@ -582,6 +585,11 @@ int venc_ctrl_init(struct venus_inst *inst)
- 				   V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY,
- 				   v4l2_ctrl_ptr_create(NULL));
- 
-+	v4l2_ctrl_new_std_menu(&inst->ctrl_handler, &venc_ctrl_ops,
-+			       V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_TYPE,
-+			       V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_RANDOM,
-+			       0, V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_RANDOM);
-+
- 	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
- 			  V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD, 0,
- 			  ((4096 * 2304) >> 8), 1, 0);
 -- 
-2.7.4
-
+Regards,
+Sudeep
