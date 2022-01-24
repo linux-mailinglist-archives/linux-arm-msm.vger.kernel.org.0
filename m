@@ -2,137 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 868D349884D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 19:27:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C9D4D49888A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 19:44:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245248AbiAXS1m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jan 2022 13:27:42 -0500
-Received: from mga01.intel.com ([192.55.52.88]:22992 "EHLO mga01.intel.com"
+        id S245086AbiAXSou (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jan 2022 13:44:50 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:61084 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241827AbiAXS1m (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jan 2022 13:27:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1643048862; x=1674584862;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=QYEAybRwP0jTcU3cihM+fGC4MwyHH67iS4J4O/RWUsE=;
-  b=aTVpXun8YP4g4591uQvIc7RnSiJgpbHpwdTSyjoThbjhq59NUTEpA7/L
-   t8Z8KkVSrDfHHh0XC0e3Foxm8MFrEcBhP5Zm+eg5kBelFGOlDgRsd8AU2
-   j8YwDeEzz+OOgW+iM4cP++ffUPB2JJbrrQVWtfm91LJSNvxUs5NI25A25
-   CCqvrGYNKB5f/hMPvP/DX16u0UWqmghpIuD3QWyazyMeA+IlidFsJ/5Nr
-   tQSL/+eaUfdvXE73t7oN9Ot+UyqeJrDLdUHgUHl39iGN4SM7ok7ZyySJo
-   ICHoKiKq1hbbBlBKL3Z1wkaT+DIppe4clM7IEMnM1JAefX3RZ/wXHLzdd
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10237"; a="270553205"
-X-IronPort-AV: E=Sophos;i="5.88,311,1635231600"; 
-   d="scan'208";a="270553205"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2022 10:27:41 -0800
-X-IronPort-AV: E=Sophos;i="5.88,311,1635231600"; 
-   d="scan'208";a="479182936"
-Received: from iweiny-desk2.sc.intel.com (HELO localhost) ([10.3.52.147])
-  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2022 10:27:41 -0800
-Date:   Mon, 24 Jan 2022 10:27:41 -0800
-From:   Ira Weiny <ira.weiny@intel.com>
-To:     Christian =?iso-8859-1?Q?K=F6nig?= 
-        <ckoenig.leichtzumerken@gmail.com>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org
-Subject: Re: [PATCH V2 0/7] DRM kmap() fixes and kmap_local_page() conversions
-Message-ID: <20220124182741.GC785175@iweiny-DESK2.sc.intel.com>
-References: <20220124015409.807587-1-ira.weiny@intel.com>
- <a56344b6-b1bd-6749-5ed2-5f38bf79dcee@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a56344b6-b1bd-6749-5ed2-5f38bf79dcee@gmail.com>
-User-Agent: Mutt/1.11.1 (2018-12-01)
+        id S230499AbiAXSou (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 24 Jan 2022 13:44:50 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1643049890; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=ppxgPtI7FNs4AGoK17I/zfz6dJ1Z7KppGzQnrtUptqs=; b=G+odYynxae6BrKEjgezZ2j2SlafpJJTLKc99eGtAgYAmQBa0cQ4cnjlI4uXI2L+zfBB5bNgZ
+ g6Pu6yC6YqNfbC+j3IXh+vuvdKMFOYjoDP/QTkAr2q5Hi6I7e/yNpuyRHNhR0YcZ12qhXRzp
+ h0K5T7n3wuHs1cWWejlTnWgqHRA=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 61eef3a1d64b5e7b6e17993b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 24 Jan 2022 18:44:49
+ GMT
+Sender: tdas=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6A18CC4360D; Mon, 24 Jan 2022 18:44:49 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from hu-tdas-hyd.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id AD97CC4360D;
+        Mon, 24 Jan 2022 18:44:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org AD97CC4360D
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v1] arm64: dts: qcom: sc7280: Add camcc clock node
+Date:   Tue, 25 Jan 2022 00:14:37 +0530
+Message-Id: <20220124184437.9278-1-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 24, 2022 at 01:08:26PM +0100, Christian König wrote:
-> Am 24.01.22 um 02:54 schrieb ira.weiny@intel.com:
-> > From: Ira Weiny <ira.weiny@intel.com>
-> > 
-> > Changes from V1:
-> > 	Use memcpy_to_page() where appropriate
-> > 	Rebased to latest
-> > 
-> > The kmap() call may cause issues with work being done with persistent memory.
-> > For this and other reasons it is being deprecated.
-> 
-> I'm really wondering how we should be able to implement the kernel mapping
-> without kmap in TTM.
-> 
-> > This series starts by converting the last easy kmap() uses in the drm tree to
-> > kmap_local_page().
-> > 
-> > The final 2 patches fix bugs found while working on the ttm_bo_kmap_ttm()
-> > conversion.  They are valid fixes but were found via code inspection not
-> > because of any actual bug so don't require a stable tag.[1]
-> > 
-> > There is one more call to kmap() used in ttm_bo_kmap_ttm().  Unfortunately,
-> > fixing this is not straight forward so it is left to future work.[2]
-> 
-> Patches #2, #4, #6 and #7 are Reviewed-by: Christian König
-> <christian.koenig@amd.com>
+Add the camera clock controller node for SC7280 SoC.
 
-Christian,
+Signed-off-by: Taniya Das <tdas@codeaurora.org>
+---
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-Would you prefer I send those 4 to you as a separate series?
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 937c2e0e93eb..2b4596f2b4cb 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -4,7 +4,7 @@
+  *
+  * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
+  */
+-
++#include <dt-bindings/clock/qcom,camcc-sc7280.h>
+ #include <dt-bindings/clock/qcom,dispcc-sc7280.h>
+ #include <dt-bindings/clock/qcom,gcc-sc7280.h>
+ #include <dt-bindings/clock/qcom,gpucc-sc7280.h>
+@@ -2761,6 +2761,18 @@
+ 			#power-domain-cells = <1>;
+ 		};
 
-> 
-> How to you now want to push those upstream? I can pick them up for the AMD
-> tree like Daniel suggested or you can push them through something else.
++		camcc: clock-controller@ad00000 {
++			compatible = "qcom,sc7280-camcc";
++			reg = <0 0x0ad00000 0 0x10000>;
++			clocks = <&rpmhcc RPMH_CXO_CLK>,
++				<&rpmhcc RPMH_CXO_CLK_A>,
++				<&sleep_clk>;
++			clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
++			#clock-cells = <1>;
++			#reset-cells = <1>;
++			#power-domain-cells = <1>;
++		};
++
+ 		dispcc: clock-controller@af00000 {
+ 			compatible = "qcom,sc7280-dispcc";
+ 			reg = <0 0xaf00000 0 0x20000>;
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
 
-You picking them up from this series is ok as well.
-
-Daniel will you take #1, #3, and #5?
-
-Thanks,
-Ira
-
-> 
-> Regards,
-> Christian.
-> 
-> > 
-> > [1] https://lore.kernel.org/lkml/fb71af05-a889-8f6e-031b-426b58a64f00@amd.com/
-> > [2] https://lore.kernel.org/lkml/20211215210949.GW3538886@iweiny-DESK2.sc.intel.com/
-> > 
-> > 
-> > Ira Weiny (7):
-> > drm/i915: Replace kmap() with kmap_local_page()
-> > drm/amd: Replace kmap() with kmap_local_page()
-> > drm/gma: Remove calls to kmap()
-> > drm/radeon: Replace kmap() with kmap_local_page()
-> > drm/msm: Alter comment to use kmap_local_page()
-> > drm/amdgpu: Ensure kunmap is called on error
-> > drm/radeon: Ensure kunmap is called on error
-> > 
-> > drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 8 ++++----
-> > drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c | 1 +
-> > drivers/gpu/drm/gma500/gma_display.c | 6 ++----
-> > drivers/gpu/drm/gma500/mmu.c | 8 ++++----
-> > drivers/gpu/drm/i915/gem/i915_gem_shmem.c | 6 ++----
-> > drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c | 8 ++++----
-> > drivers/gpu/drm/i915/gt/intel_ggtt_fencing.c | 4 ++--
-> > drivers/gpu/drm/i915/gt/shmem_utils.c | 7 ++-----
-> > drivers/gpu/drm/i915/i915_gem.c | 8 ++++----
-> > drivers/gpu/drm/i915/i915_gpu_error.c | 4 ++--
-> > drivers/gpu/drm/msm/msm_gem_submit.c | 4 ++--
-> > drivers/gpu/drm/radeon/radeon_ttm.c | 4 ++--
-> > drivers/gpu/drm/radeon/radeon_uvd.c | 1 +
-> > 13 files changed, 32 insertions(+), 37 deletions(-)
-> > 
-> > --
-> > 2.31.1
-> > 
-> 
