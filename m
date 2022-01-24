@@ -2,160 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BB9649A195
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jan 2022 00:38:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4552849A818
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jan 2022 05:07:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1386450AbiAXXhx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jan 2022 18:37:53 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:65534 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1847822AbiAXXUn (ORCPT
+        id S244110AbiAYCzs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jan 2022 21:55:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35742 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1348778AbiAXUTX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jan 2022 18:20:43 -0500
+        Mon, 24 Jan 2022 15:19:23 -0500
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F3FEC014F19
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 11:38:57 -0800 (PST)
+Received: by mail-oi1-x230.google.com with SMTP id q186so27171995oih.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 11:38:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1643066443; x=1674602443;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=lHW3hLnV/NwAlPaJvWLZeYHn/Z13jsz9Dd88QrFizYA=;
-  b=m++m4t7oTvxKU3eDqNBL/kDP212fa18klJqMbqXSBtv7nLcZYjHJO3Kl
-   t26byNRVb3if/tSC3Pyj9zZE7iY/99hJVVGMDDJoiHb5JhCyNftE91C3+
-   6974KnoGekKF0PJUxxLkggbzMwzYBegroCdVENYQW3rUaEdMi0bU/Qurm
-   E=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 24 Jan 2022 15:20:42 -0800
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2022 15:20:42 -0800
-Received: from collinsd-linux.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 24 Jan 2022 15:20:41 -0800
-From:   David Collins <quic_collinsd@quicinc.com>
-To:     Mark Brown <broonie@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>
-CC:     David Collins <quic_collinsd@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
-Subject: [RESEND PATCH 2/2] regulator: scmi: add support for registering SCMI regulators by name
-Date:   Mon, 24 Jan 2022 15:20:02 -0800
-Message-ID: <916966958cc63e9509f94fb263ad8d3c3ec768da.1639099631.git.quic_collinsd@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <cover.1639099631.git.quic_collinsd@quicinc.com>
-References: <cover.1639099631.git.quic_collinsd@quicinc.com>
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=kwkbTwrBzC5jE9f2nafUwAahS6VU0ATjJ7MFCgX616c=;
+        b=mWzdzA6qhipKU0Y435He/wNbJHmgEgP9OP8ykZrxXsJZKtUyYKTa7HDaY/sn7/3hw/
+         t4JkQkLEWBIXqUzmazVAIkbKn2Pq2GhSbf5eHq211Qwc0uXY8RLYXjjyKX5W2LC+pqQZ
+         2QA1rTJe5w1qbfpd9/fp2/IL7+zE8+duxtWtA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=kwkbTwrBzC5jE9f2nafUwAahS6VU0ATjJ7MFCgX616c=;
+        b=HULwdsYZUes+yy/XrWwtoegQTQ+TL4JNK6eyXn7xyWyOoK+SN+SGW0ZFT1krzS3aws
+         uEpqkVjrwwk0MldeGNTDomss//eXH6rZTByCtXDAf53LFOHpVuaBiHXlyb4WGIQE6PVI
+         3raqbIj4Whp8QYWWr39vDHDFQnQZrmaXsEYs3h7XNnUw+acUegYKzskdaghQ9ijVfAAK
+         thhHNffgSE77K8SpAOyH82RUJ6FieaZg5JD2jMWh2E4iWAaoNNc55Dcob8Z2a8FHFR82
+         Y639BJkgpwaCYi0E73pCxis879ms4DaIAiu7ESSEoA8lz4J3eEyQwdBtn/URWbqwSFrg
+         IJlQ==
+X-Gm-Message-State: AOAM530KqfXNX88UNPUQabiTXktgbHTRoTW74JiI1rSl8lir7RCGY2Vc
+        UJK9pawe+4stX6qZb6O8OPinOvsZPElNR4yWTRGJmQ==
+X-Google-Smtp-Source: ABdhPJwiCnqu6yM4uv/PV0S4Qz6YlQlrhPVpkOJMdAypGHgIGkKVo6c8u59L5EKFTyd32VvCZwg4u2QBBm+6bRT9OCc=
+X-Received: by 2002:aca:f241:: with SMTP id q62mr2885361oih.64.1643053137039;
+ Mon, 24 Jan 2022 11:38:57 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 24 Jan 2022 11:38:56 -0800
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+In-Reply-To: <20220124165745.16277-1-tdas@codeaurora.org>
+References: <20220124165745.16277-1-tdas@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Mon, 24 Jan 2022 11:38:56 -0800
+Message-ID: <CAE-0n53pZG+LG8v35O6untzjn6H9dDOyrTX8Q4joHjcV3GAWSQ@mail.gmail.com>
+Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Add lpasscore & lpassaudio
+ clock controllers
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support to register SCMI regulator subnodes based on an SCMI
-Voltage Domain name specified via the 'regulator-name' device tree
-property.  In doing so, make the 'reg' property optional with the
-constraint that at least one of 'reg' or 'regulator-name' must be
-specified.  If both are specified, then both must match the
-Voltage Domain data exposed by the SCMI platform.
+Quoting Taniya Das (2022-01-24 08:57:45)
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 937c2e0e93eb..0aa834ce6b61 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -1744,6 +1746,47 @@
+>                         #clock-cells = <1>;
+>                 };
+>
+> +               lpass_audiocc: clock-controller@3300000 {
+> +                       compatible = "qcom,sc7280-lpassaudiocc";
+> +                       reg = <0  0x03300000 0 0x30000>;
+> +                       clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +                              <&lpass_aon LPASS_AON_CC_MAIN_RCG_CLK_SRC>;
+> +                       clock-names = "bi_tcxo", "lpass_aon_cc_main_rcg_clk_src";
+> +                       power-domains = <&lpass_aon LPASS_AON_CC_LPASS_AUDIO_HM_GDSC>;
+> +                       #clock-cells = <1>;
+> +                       #power-domain-cells = <1>;
+> +               };
+> +
+> +               lpass_aon: clock-controller@3380000 {
+> +                       compatible = "qcom,sc7280-lpassaoncc";
+> +                       reg = <0  0x03380000 0 0x30000>;
+> +                       clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +                              <&rpmhcc RPMH_CXO_CLK_A>,
+> +                              <&lpasscc LPASS_CORE_CC_CORE_CLK>;
+> +                       clock-names = "bi_tcxo", "bi_tcxo_ao", "iface";
+> +                       #clock-cells = <1>;
+> +                       #power-domain-cells = <1>;
+> +               };
+> +
+> +               lpasscore: clock-controller@3900000 {
+> +                       compatible = "qcom,sc7280-lpasscorecc";
+> +                       reg = <0  0x03900000 0 0x50000>;
 
-Name based SCMI regulator registration helps ensure that an SCMI
-agent doesn't need to be aware of the numbering scheme used for
-Voltage Domains by the SCMI platform.  It also ensures that the
-correct Voltage Domain is selected for a given physical regulator.
-This cannot be guaranteed with numeric Voltage Domain IDs alone.
+Nitpick: Why the extra space here? ^ Applies to all three above.
 
-Signed-off-by: David Collins <quic_collinsd@quicinc.com>
----
- drivers/regulator/scmi-regulator.c | 57 ++++++++++++++++++++++++++++--
- 1 file changed, 54 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/regulator/scmi-regulator.c b/drivers/regulator/scmi-regulator.c
-index 1f02f60ad136..c3287901975e 100644
---- a/drivers/regulator/scmi-regulator.c
-+++ b/drivers/regulator/scmi-regulator.c
-@@ -31,6 +31,7 @@
- #include <linux/regulator/of_regulator.h>
- #include <linux/scmi_protocol.h>
- #include <linux/slab.h>
-+#include <linux/string.h>
- #include <linux/types.h>
- 
- static const struct scmi_voltage_proto_ops *voltage_ops;
-@@ -252,16 +253,66 @@ static int scmi_regulator_common_init(struct scmi_regulator *sreg)
- 	return 0;
- }
- 
-+static int scmi_regulator_map_name(struct scmi_protocol_handle *ph,
-+				   struct scmi_regulator_info *rinfo,
-+				   const char *name)
-+{
-+	const struct scmi_voltage_info *vinfo;
-+	int i;
-+
-+	for (i = 0; i < rinfo->num_doms; i++) {
-+		vinfo = voltage_ops->info_get(ph, i);
-+		if (!vinfo)
-+			continue;
-+		if (!strncmp(vinfo->name, name, sizeof(vinfo->name)))
-+			return i;
-+	}
-+
-+	return -ENODEV;
-+}
-+
- static int process_scmi_regulator_of_node(struct scmi_device *sdev,
- 					  struct scmi_protocol_handle *ph,
- 					  struct device_node *np,
- 					  struct scmi_regulator_info *rinfo)
- {
- 	u32 dom, ret;
-+	int name_dom;
-+	const char *name;
- 
--	ret = of_property_read_u32(np, "reg", &dom);
--	if (ret)
--		return ret;
-+	dom = rinfo->num_doms;
-+	if (of_find_property(np, "reg", NULL)) {
-+		ret = of_property_read_u32(np, "reg", &dom);
-+		if (ret)
-+			return ret;
-+
-+		if (dom >= rinfo->num_doms)
-+			return -ENODEV;
-+	}
-+
-+	if (of_find_property(np, "regulator-name", NULL)) {
-+		ret = of_property_read_string(np, "regulator-name", &name);
-+		if (ret)
-+			return ret;
-+
-+		name_dom = scmi_regulator_map_name(ph, rinfo, name);
-+		if (name_dom < 0) {
-+			dev_err(&sdev->dev,
-+				"No SCMI Voltage Domain found named %s. Skipping: %s\n",
-+				name, np->full_name);
-+			return name_dom;
-+		}
-+
-+		if (dom >= rinfo->num_doms)
-+			dom = name_dom;
-+
-+		if (name_dom != dom) {
-+			dev_err(&sdev->dev,
-+				"SCMI Voltage Domain %s ID mismatch, %u (DT) != %d (firmware). Skipping: %s\n",
-+				name, dom, name_dom, np->full_name);
-+			return -EINVAL;
-+		}
-+	}
- 
- 	if (dom >= rinfo->num_doms)
- 		return -ENODEV;
--- 
-2.17.1
-
+> +                       clocks =  <&rpmhcc RPMH_CXO_CLK>;
+> +                       clock-names = "bi_tcxo";
+> +                       power-domains = <&lpass_hm LPASS_CORE_CC_LPASS_CORE_HM_GDSC>;
+> +                       #clock-cells = <1>;
+> +                       #power-domain-cells = <1>;
