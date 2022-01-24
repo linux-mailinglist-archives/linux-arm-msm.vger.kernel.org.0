@@ -2,127 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 362024978DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 07:22:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C4C94978EF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 07:33:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241587AbiAXGWL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jan 2022 01:22:11 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:58588 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241551AbiAXGWL (ORCPT
+        id S235570AbiAXGd5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jan 2022 01:33:57 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:50065 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231725AbiAXGd5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jan 2022 01:22:11 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id E5964B80DF2;
-        Mon, 24 Jan 2022 06:22:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FAA3C340E5;
-        Mon, 24 Jan 2022 06:22:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1643005328;
-        bh=KXoIODYLU0wZly3rYKNFyGFd5LqueIgvEtew+lJP7Ms=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hjHjKAzG5ZH6dEjzdaazqYtmfqbxl7DHg1rQqvBGg+H2Lff/oibVi1wmf1CBkHozu
-         E364hRxfI/M4HoP0767uabY48VP33W5sQ2VXxcN5MiH6dZIKDSL0h3VHso+izMOZ8Z
-         wScaEXhmeawoissNFGJcoQkue5xj4M1Vyq8aFXSo=
-Date:   Mon, 24 Jan 2022 07:21:57 +0100
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com
-Subject: Re: [PATCH v5] usb: host: xhci-plat: Set XHCI_SKIP_PHY_INIT quirk
- for DWC3 controller
-Message-ID: <Ye5FhWDUnCfn9LT4@kroah.com>
-References: <1640153383-21036-1-git-send-email-quic_c_sanm@quicinc.com>
- <Ydb79/twbxLDJB8/@kroah.com>
- <d17330f1-d85e-b8c2-9e87-10d109c25abb@quicinc.com>
- <c34ea13b-f7ac-22de-6c5d-5e930853415c@quicinc.com>
+        Mon, 24 Jan 2022 01:33:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1643006037; x=1674542037;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=/U7zGUz6MWdHQU1UPzMvdVxLuRqZKHF8gTTEnJR+Y8M=;
+  b=pFgvo/cCmFIaCK1BReTBlkdqSiN2Mf3TThoTV357Mx0zGqaMTmEbfM0c
+   IaQGrfgNrau6HGqt2P1GlqNqozmzPfWH5QicQr6r86OFZ7dFWkD//FYgL
+   KF+OTt3+pVvy8H0AH3cyVRNQIj+UEaZkMulNj3zzGIRvMUj7Yzyrb2BB2
+   Q=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 23 Jan 2022 22:33:57 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2022 22:33:57 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Sun, 23 Jan 2022 22:33:56 -0800
+Received: from blr-ubuntu-253.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Sun, 23 Jan 2022 22:33:51 -0800
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+To:     Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Arnd Bergmann <arnd@arndb.de>, Marc Zyngier <maz@kernel.org>,
+        Steven Rostedt <rostedt@goodmis.org>
+CC:     gregkh <gregkh@linuxfoundation.org>, <quic_psodagud@quicinc.com>,
+        "Trilok Soni" <quic_tsoni@quicinc.com>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>
+Subject: [PATCHv9 0/5] lib/rwmmio/arm64: Add support to trace register reads/writes
+Date:   Mon, 24 Jan 2022 12:03:29 +0530
+Message-ID: <cover.1642482334.git.quic_saipraka@quicinc.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <c34ea13b-f7ac-22de-6c5d-5e930853415c@quicinc.com>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 24, 2022 at 11:01:07AM +0530, Sandeep Maheswaram wrote:
-> Hi Greg,
-> 
-> On 1/7/2022 10:27 AM, Sandeep Maheswaram wrote:
-> > 
-> > On 1/6/2022 7:55 PM, Greg Kroah-Hartman wrote:
-> > > On Wed, Dec 22, 2021 at 11:39:43AM +0530, Sandeep Maheswaram wrote:
-> > > > Set XHCI_SKIP_PHY_INIT quirk to avoid phy initialization twice.
-> > > > Runtime suspend of phy drivers was failing from DWC3 driver as runtime
-> > > > usage value is 2 because the phy is initialized from DWC3 and HCD core.
-> > > > DWC3 manages phy in their core drivers. Set this quirk to avoid phy
-> > > > initialization in HCD core.
-> > > > 
-> > > > Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> > > > ---
-> > > > v5:
-> > > > Added comment to explain the change done.
-> > > > v4:
-> > > > Changed pdev->dev.parent->of_node to sysdev->of_node
-> > > > 
-> > > >   drivers/usb/host/xhci-plat.c | 8 ++++++++
-> > > >   1 file changed, 8 insertions(+)
-> > > > 
-> > > > diff --git a/drivers/usb/host/xhci-plat.c
-> > > > b/drivers/usb/host/xhci-plat.c
-> > > > index c1edcc9..e6014d4 100644
-> > > > --- a/drivers/usb/host/xhci-plat.c
-> > > > +++ b/drivers/usb/host/xhci-plat.c
-> > > > @@ -327,6 +327,14 @@ static int xhci_plat_probe(struct
-> > > > platform_device *pdev)
-> > > >                        &xhci->imod_interval);
-> > > >       }
-> > > >   +    /*
-> > > > +     * Set XHCI_SKIP_PHY_INIT quirk to avoid phy initialization twice.
-> > > > +     * DWC3 manages phy in their core drivers. Set this quirk
-> > > > to avoid phy
-> > > > +     * initialization in HCD core.
-> > > > +     */
-> > > > +    if (of_device_is_compatible(sysdev->of_node, "snps,dwc3"))
-> > > > +        xhci->quirks |= XHCI_SKIP_PHY_INIT;
-> > > > +
-> > > Why is this function caring about dwc3 stuff?  Shoudn't this be a
-> > > "generic" device property instead of this device-specific one?
-> > > 
-> > > thanks,
-> > > 
-> > > greg k-h
-> > 
-> > This quirk is set only if required for some controllers (eg: dwc3 &
-> > cdns3).
-> > 
-> > Please check below commit.
-> > 
-> > https://lore.kernel.org/all/20200918131752.16488-5-mathias.nyman@linux.intel.com/
-> > 
-> > 
-> > 
-> > Regards
-> > 
-> > Sandeep
-> > 
-> > 
-> Please let me know if anything more info needed for this patch.
+Generic MMIO read/write i.e., __raw_{read,write}{b,l,w,q} accessors
+are typically used to read/write from/to memory mapped registers
+and can cause hangs or some undefined behaviour in following cases,
 
-The merge window ended a few hours ago, give me a few days to catch up
-with my pending email queue that I have to review:
+* If the access to the register space is unclocked, for example: if
+  there is an access to multimedia(MM) block registers without MM
+  clocks.
 
-$ mdfrm -c ~/mail/todo/
-2254 messages in /home/gregkh/mail/todo/
+* If the register space is protected and not set to be accessible from
+  non-secure world, for example: only EL3 (EL: Exception level) access
+  is allowed and any EL2/EL1 access is forbidden.
 
-thanks,
+* If xPU(memory/register protection units) is controlling access to
+  certain memory/register space for specific clients.
 
-greg k-h
+and more...
+
+Such cases usually results in instant reboot/SErrors/NOC or interconnect
+hangs and tracing these register accesses can be very helpful to debug
+such issues during initial development stages and also in later stages.
+
+So use ftrace trace events to log such MMIO register accesses which
+provides rich feature set such as early enablement of trace events,
+filtering capability, dumping ftrace logs on console and many more.
+
+Sample output:
+
+rwmmio_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
+rwmmio_post_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
+rwmmio_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 addr=0xfffffbfffdbff610
+rwmmio_post_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 val=0x0 addr=0xfffffbfffdbff610
+
+This series is a follow-up for the series [1] and a recent series [2] making use
+of both.
+
+[1] https://lore.kernel.org/lkml/cover.1536430404.git.saiprakash.ranjan@codeaurora.org/
+[2] https://lore.kernel.org/lkml/1604631386-178312-1-git-send-email-psodagud@codeaurora.org/
+
+Note in previous v4 version, Arnd suggested to benchmark and compare size with callback
+based implementation, please see [3] for more details on that with brief comparison below.
+
+
+**Inline version with CONFIG_FTRACE=y and CONFIG_TRACE_MMIO_ACCESS=y**
+$ size vmlinux
+   text           data             bss     dec             hex         filename
+ 23884219        14284468         532568 38701255        24e88c7        vmlinux
+
+**Callback version with CONFIG_FTRACE=y and CONFIG_TRACE_MMIO_ACCESS=y**
+$ size vmlinux
+    text          data             bss     dec             hex        filename
+ 24108179        14279596         532568 38920343        251e097       vmlinux
+
+$ ./scripts/bloat-o-meter inline-vmlinux callback-vmlinux
+add/remove: 8/3 grow/shrink: 4889/89 up/down: 242244/-11564 (230680)
+Total: Before=25812612, After=26043292, chg +0.89%
+
+[3] https://lore.kernel.org/lkml/466449a1-36da-aaa9-7e4f-477f36b52c9e@quicinc.com/
+
+Changes in v9:
+ * Use TRACE_EVENT_CLASS for rwmmio_write and post_write (Steven Rostedt)
+
+Changes in v8:
+ * Fix build error reported by kernel test robot.
+
+Changes in v7:
+ * Use lib/ instead of kernel/trace/ based on review comment by Steven Rostedt.
+
+Changes in v6:
+ * Implemented suggestions by Arnd Bergmann:
+   - Use arch independent IO barriers in arm64/asm
+   - Add ARCH_HAVE_TRACE_MMIO_ACCESS
+   - Add post read and post write logging support
+   - Remove tracepoint_active check
+ * Fix build error reported by kernel test robot.
+
+Changes in v5:
+ * Move arm64 to use asm-generic provided high level MMIO accessors (Arnd).
+ * Add inline logging for MMIO relaxed and non-relaxed accessors.
+ * Move nVHE KVM comment to makefile (Marc).
+ * Fix overflow warning due to switch to inline accessors instead of macro.
+ * Modify trace event field to include caller and parent details for more detailed logs.
+
+Changes in v4:
+ * Drop dynamic debug based filter support since that will be developed later with
+   the help from Steven (Ftrace maintainer).
+ * Drop value passed to writel as it is causing hangs when tracing is enabled.
+ * Code cleanup for trace event as suggested by Steven for earlier version.
+ * Fixed some build errors reported by 0-day bot.
+
+Changes in v3:
+ * Create a generic mmio header for instrumented version (Earlier suggested in [1]
+   by Will Deacon and recently [2] by Greg to have a generic version first).
+ * Add dynamic debug support to filter out traces which can be very useful for targeted
+   debugging specific to subsystems or drivers.
+ * Few modifications to the rwmmio trace event fields to include the mmio width and print
+   addresses in hex.
+ * Rewrote commit msg to explain some more about usecases.
+
+Prasad Sodagudi (1):
+  lib: Add register read/write tracing support
+
+Sai Prakash Ranjan (4):
+  arm64: io: Use asm-generic high level MMIO accessors
+  irqchip/tegra: Fix overflow implicit truncation warnings
+  drm/meson: Fix overflow implicit truncation warnings
+  asm-generic/io: Add logging support for MMIO accessors
+
+ arch/Kconfig                      |  3 +
+ arch/arm64/Kconfig                |  1 +
+ arch/arm64/include/asm/io.h       | 41 +++----------
+ arch/arm64/kvm/hyp/nvhe/Makefile  |  7 ++-
+ drivers/gpu/drm/meson/meson_viu.c | 22 +++----
+ drivers/irqchip/irq-tegra.c       | 10 ++--
+ include/asm-generic/io.h          | 82 ++++++++++++++++++++++++--
+ include/trace/events/rwmmio.h     | 97 +++++++++++++++++++++++++++++++
+ lib/Kconfig                       |  7 +++
+ lib/Makefile                      |  2 +
+ lib/trace_readwrite.c             | 47 +++++++++++++++
+ 11 files changed, 265 insertions(+), 54 deletions(-)
+ create mode 100644 include/trace/events/rwmmio.h
+ create mode 100644 lib/trace_readwrite.c
+
+
+base-commit: bd8d9cef2a7932e688ca267ea1adf5ea6557c777
+-- 
+2.33.1
+
