@@ -2,32 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD244498586
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 17:58:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F4F1498637
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 18:16:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243894AbiAXQ6B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jan 2022 11:58:01 -0500
-Received: from so254-9.mailgun.net ([198.61.254.9]:57401 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235321AbiAXQ6B (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jan 2022 11:58:01 -0500
+        id S231756AbiAXRQB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jan 2022 12:16:01 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:38867 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229897AbiAXRQB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 24 Jan 2022 12:16:01 -0500
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1643043479; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=BmbwObkwttro0SkpL4p0P2XaUDTExkEYfbCchug/+GI=; b=vZFNpNT6t++UjJxzzIePhWchIejBneLoz90n1QPY/EWYS8mDZdoAP2e84prgmuMHPe4uOYN4
- Jk4a4tQ6BUIFsKV+9dPDMQlm7awNLgcyqHRyJL5/AzE3CwyaIpEB/Q4Zf3yEsz9HZGbCM6SD
- aUzK0Ny7PUKK99DlnFEdSpGMW6E=
-X-Mailgun-Sending-Ip: 198.61.254.9
+ s=smtp; t=1643044561; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=piowxZvxdRmjQpd/2H1/kJab1tq+eQt2F5u4/0VD8C0=; b=MqTOZwm+dudj4vkyZnpS7orImSqsoZiYdu3jze0Vkq2vuAHgUIR8leFeClRnvMVYVju7pxCe
+ XumdfqAmWp/4lsdor8a9ITCXBXV8au01dkJ1RgNkArS5HOGDcFJVXdRERLWkNrKGjlJP3D7y
+ 16Gf8Kp1uB1SSVqLoZLk+tqYQxM=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 61eeda94020b4d26a6184208 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 24 Jan 2022 16:57:56
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 61eede7362864ab1016bbadf (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 24 Jan 2022 17:14:27
  GMT
 Sender: tdas=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E4E3DC4360D; Mon, 24 Jan 2022 16:57:55 +0000 (UTC)
+        id 99D98C4360D; Mon, 24 Jan 2022 17:14:26 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,97 +36,76 @@ Received: from hu-tdas-hyd.qualcomm.com (unknown [202.46.22.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 57B9DC4338F;
-        Mon, 24 Jan 2022 16:57:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 57B9DC4338F
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3ACDDC4360D;
+        Mon, 24 Jan 2022 17:14:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 3ACDDC4360D
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
 From:   Taniya Das <tdas@codeaurora.org>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+To:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
         Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH v1] arm64: dts: qcom: sc7280: Add lpasscore & lpassaudio clock controllers
-Date:   Mon, 24 Jan 2022 22:27:45 +0530
-Message-Id: <20220124165745.16277-1-tdas@codeaurora.org>
+Subject: [PATCH v1] clk: qcom: clk-rcg2: Update logic to calculate D value for RCG
+Date:   Mon, 24 Jan 2022 22:44:15 +0530
+Message-Id: <20220124171415.12293-1-tdas@codeaurora.org>
 X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the low pass audio clock controller device nodes.
+The current implementation does not check for D value is within
+the accepted range for a given M & N value. Update the logic to
+calculate the final D value based on the range. While at it, add
+support for 2/3 divider in frac_table_pixel.
 
 Signed-off-by: Taniya Das <tdas@codeaurora.org>
 ---
-Dependent onLPASS clock controller change: https://lkml.org/lkml/2022/1/24/772
+ drivers/clk/qcom/clk-rcg2.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 43 ++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index e1b1b426fae4..036c8071c07a 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -264,7 +264,7 @@ static int clk_rcg2_determine_floor_rate(struct clk_hw *hw,
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 937c2e0e93eb..0aa834ce6b61 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -8,6 +8,8 @@
- #include <dt-bindings/clock/qcom,dispcc-sc7280.h>
- #include <dt-bindings/clock/qcom,gcc-sc7280.h>
- #include <dt-bindings/clock/qcom,gpucc-sc7280.h>
-+#include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
-+#include <dt-bindings/clock/qcom,lpasscorecc-sc7280.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/clock/qcom,videocc-sc7280.h>
- #include <dt-bindings/interconnect/qcom,sc7280.h>
-@@ -1744,6 +1746,47 @@
- 			#clock-cells = <1>;
- 		};
+ static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
+ {
+-	u32 cfg, mask;
++	u32 cfg, mask, d_val, not2d_val;
+ 	struct clk_hw *hw = &rcg->clkr.hw;
+ 	int ret, index = qcom_find_src_index(hw, rcg->parent_map, f->src);
 
-+		lpass_audiocc: clock-controller@3300000 {
-+			compatible = "qcom,sc7280-lpassaudiocc";
-+			reg = <0  0x03300000 0 0x30000>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+			       <&lpass_aon LPASS_AON_CC_MAIN_RCG_CLK_SRC>;
-+			clock-names = "bi_tcxo", "lpass_aon_cc_main_rcg_clk_src";
-+			power-domains = <&lpass_aon LPASS_AON_CC_LPASS_AUDIO_HM_GDSC>;
-+			#clock-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
+@@ -283,8 +283,18 @@ static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
+ 		if (ret)
+ 			return ret;
+
++		/* Calculate 2d value */
++		d_val = f->n;
 +
-+		lpass_aon: clock-controller@3380000 {
-+			compatible = "qcom,sc7280-lpassaoncc";
-+			reg = <0  0x03380000 0 0x30000>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+			       <&rpmhcc RPMH_CXO_CLK_A>,
-+			       <&lpasscc LPASS_CORE_CC_CORE_CLK>;
-+			clock-names = "bi_tcxo", "bi_tcxo_ao", "iface";
-+			#clock-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
++		if (d_val > ((f->n - f->m) * 2))
++			d_val = (f->n - f->m) * 2;
++		else if (d_val < f->m)
++			d_val = f->m;
 +
-+		lpasscore: clock-controller@3900000 {
-+			compatible = "qcom,sc7280-lpasscorecc";
-+			reg = <0  0x03900000 0 0x50000>;
-+			clocks =  <&rpmhcc RPMH_CXO_CLK>;
-+			clock-names = "bi_tcxo";
-+			power-domains = <&lpass_hm LPASS_CORE_CC_LPASS_CORE_HM_GDSC>;
-+			#clock-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
++		not2d_val = ~d_val & mask;
 +
-+		lpass_hm: clock-controller@3c00000 {
-+			compatible = "qcom,sc7280-lpasshm";
-+			reg = <0 0x3c00000 0 0x28>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>;
-+			clock-names = "bi_tcxo";
-+			#clock-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		lpass_ag_noc: interconnect@3c40000 {
- 			reg = <0 0x03c40000 0 0xf080>;
- 			compatible = "qcom,sc7280-lpass-ag-noc";
+ 		ret = regmap_update_bits(rcg->clkr.regmap,
+-				RCG_D_OFFSET(rcg), mask, ~f->n);
++				RCG_D_OFFSET(rcg), mask, not2d_val);
+ 		if (ret)
+ 			return ret;
+ 	}
+@@ -720,6 +730,7 @@ static const struct frac_entry frac_table_pixel[] = {
+ 	{ 2, 9 },
+ 	{ 4, 9 },
+ 	{ 1, 1 },
++	{ 2, 3 },
+ 	{ }
+ };
+
 --
 Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
 of the Code Aurora Forum, hosted by the  Linux Foundation.
