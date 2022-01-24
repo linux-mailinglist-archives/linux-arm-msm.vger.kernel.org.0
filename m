@@ -2,49 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1866C498304
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 16:06:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 72011498331
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 16:11:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231830AbiAXPGF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jan 2022 10:06:05 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:47619 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230516AbiAXPGF (ORCPT
+        id S240553AbiAXPLk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jan 2022 10:11:40 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:48123 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S235253AbiAXPLk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jan 2022 10:06:05 -0500
+        Mon, 24 Jan 2022 10:11:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1643036765; x=1674572765;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=E8vHImfluUU3uX3A/OmttWG5UOkcr1vapLjwdi9D8T4=;
-  b=H7MBA8iOKVHWGBDnMYwzuRHz1QJ8RBH4sHEpFjYWfOjbV/41gWUCefQp
-   +ra0IzmNhImGuQ2n6AWnJdm8lfhT3WNqBHlas1XfEO/hElou9XDgmadQp
-   O5AbQfLEBEGqQXIuJyehAws47T7gSnz0qZY0NED+AzORBD6tC4+LepHXI
-   k=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 24 Jan 2022 07:06:04 -0800
+  t=1643037099; x=1674573099;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=/YcoCW22K4Bj4d7gqCROWQEd7ONJm4N2eOylT8ZKqls=;
+  b=NCMz68fEKoIs+pYgGx+7LX5UtQX2wv/3qBtQ3KR3G8wutN2pPs8RSq5x
+   hP3AsCWw25fAx584oKFwi7U3nZ1NDEnAQnvGDWrDknjmWqrC8Zq8OalLI
+   0VtdG1A3gI+QQAI0+wcDs1bM09rnZkCjYoEy9sITLov0NYcGewgBTr7vr
+   E=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 24 Jan 2022 07:11:39 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2022 07:06:04 -0800
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2022 07:11:38 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 24 Jan 2022 07:06:03 -0800
-Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 24 Jan 2022 07:06:00 -0800
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     Kathiravan T <quic_kathirav@quicinc.com>
-Subject: [PATCH v3] arm64: dts: qcom: ipq8074: add the reserved-memory node
-Date:   Mon, 24 Jan 2022 20:35:51 +0530
-Message-ID: <1643036751-15957-1-git-send-email-quic_kathirav@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+ 15.2.922.19; Mon, 24 Jan 2022 07:11:38 -0800
+Received: from [10.50.44.136] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 24 Jan
+ 2022 07:11:31 -0800
+Subject: Re: [PATCH v2 0/7] usb: dwc3: Calculate REFCLKPER et. al. from
+ reference clock
+To:     Baruch Siach <baruch@tkos.co.il>,
+        Kathiravan T <kathirav@codeaurora.org>
+CC:     Sean Anderson <sean.anderson@seco.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <linux-usb@vger.kernel.org>, Felipe Balbi <balbi@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        "Balaji Prakash J" <bjagadee@codeaurora.org>,
+        <linux-kernel@vger.kernel.org>,
+        Robert Hancock <robert.hancock@calian.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        "Rob Herring" <robh+dt@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20220119002438.106079-1-sean.anderson@seco.com>
+ <87ee53fv01.fsf@tarshish> <1965fc315525b8ab26cf9f71f939c24d@codeaurora.org>
+ <871r12g0j2.fsf@tarshish>
+From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Message-ID: <e1309c23-530b-c698-b7ba-4f1a5226fe8c@quicinc.com>
+Date:   Mon, 24 Jan 2022 20:41:26 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <871r12g0j2.fsf@tarshish>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
@@ -52,42 +72,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-4MB of memory is needed for TZ. So mark that region as reserved
-appropriately.
+Hi Baruch,
 
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
----
-Changes since v2:
-	* Rebased on top of v5.17-rc1
-	* Reworded the commit message and title
-Changes since v1:
-        * Fixed the commit title
+On 1/20/2022 3:59 PM, Baruch Siach wrote:
+> Hi Kathiravan,
+>
+> On Thu, Jan 20 2022, Kathiravan T wrote:
+>> On 2022-01-19 23:44, Baruch Siach wrote:
+>>> Hi Sean,
+>>> On Tue, Jan 18 2022, Sean Anderson wrote:
+>>>> This is a rework of patches 3-5 of [1]. It attempts to correctly program
+>>>> REFCLKPER and REFCLK_FLADJ based on the reference clock frequency. Since
+>>>> we no longer need a special property duplicating this configuration,
+>>>> snps,ref-clock-period-ns is deprecated.
+>>>> Please test this! Patches 3/4 in this series have the effect of
+>>>> programming REFCLKPER and REFCLK_FLADJ on boards which already configure
+>>>> the "ref" clock. I have build tested, but not much else.
+>>> Tested here on IPQ6010 based system. USB still works. But the with
+>>> "ref"
+>>> clock at 24MHz, period is calculated as 0x29. Previous
+>>> snps,ref-clock-period-ns value used to be 0x32.
+>>> Is that expected?
+>> Yes, it is 0x29 for IPQ60xx based SoCs. In downstream it was wrongly mentioned
+>> as 0x32, which was corrected recently.
+> Thanks for the update. This needs fixing in upstream kernel. I'll send a
+> patch.
+>
+> For some reason USB appears to work here with both values. Is it because
+> I only use USB2 signals? If this is the case them I can not actually
+> test this series on my system.
 
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+I could recollect we did see some issue on USB2.0 port as well, but it 
+wasn't fatal one. Anyways it is better to test it.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index e6cc261201ef..26ba7ce9222c 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -82,6 +82,17 @@
- 		};
- 	};
- 
-+	reserved-memory {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		memory@4ac00000 {
-+			no-map;
-+			reg = <0x0 0x4ac00000 0x0 0x00400000>;
-+		};
-+	};
-+
- 	soc: soc {
- 		#address-cells = <0x1>;
- 		#size-cells = <0x1>;
--- 
-2.7.4
+Thanks,
 
+Kathiravan T.
+
+>
+> Thanks,
+> baruch
+>
+>>>> [1]
+>>>> https://lore.kernel.org/linux-usb/20220114044230.2677283-1-robert.hancock@calian.com/
+>>>> Changes in v2:
+>>>> - Document clock members
+>>>> - Also program GFLADJ.240MHZDECR
+>>>> - Don't program GFLADJ if the version is < 2.50a
+>>>> - Add snps,ref-clock-frequency-hz property for ACPI
+>>>> Sean Anderson (7):
+>>>>    dt-bindings: usb: dwc3: Deprecate snps,ref-clock-period-ns
+>>>>    usb: dwc3: Get clocks individually
+>>>>    usb: dwc3: Calculate REFCLKPER based on reference clock
+>>>>    usb: dwc3: Program GFLADJ
+>>>>    usb: dwc3: Add snps,ref-clock-frequency-hz property for ACPI
+>>>>    arm64: dts: zynqmp: Move USB clocks to dwc3 node
+>>>>    arm64: dts: ipq6018: Use reference clock to set dwc3 period
+>>>>   .../devicetree/bindings/usb/snps,dwc3.yaml    |   7 +-
+>>>>   arch/arm64/boot/dts/qcom/ipq6018.dtsi         |   3 +-
+>>>>   .../arm64/boot/dts/xilinx/zynqmp-clk-ccf.dtsi |   4 +-
+>>>>   arch/arm64/boot/dts/xilinx/zynqmp.dtsi        |   4 +-
+>>>>   drivers/usb/dwc3/core.c                       | 112 +++++++++++++++---
+>>>>   drivers/usb/dwc3/core.h                       |  17 ++-
+>>>>   6 files changed, 120 insertions(+), 27 deletions(-)
+>
