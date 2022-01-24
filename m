@@ -2,99 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E5F6498385
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 16:27:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4019949840E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 17:01:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240764AbiAXP1k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jan 2022 10:27:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50738 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238433AbiAXP1i (ORCPT
+        id S243287AbiAXQBS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jan 2022 11:01:18 -0500
+Received: from mail-ot1-f50.google.com ([209.85.210.50]:41726 "EHLO
+        mail-ot1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243296AbiAXQBR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jan 2022 10:27:38 -0500
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6E45C06173B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 07:27:37 -0800 (PST)
-Received: by mail-pl1-x62f.google.com with SMTP id y17so5430725plg.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 07:27:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3HDDkZ4JptQvUueROJyMLPvuWRpma8Lk9Kajk4VoZ7g=;
-        b=oCZW1Uf34XcMXjVM7frYNDOAJhTX8eifTi5L9BJqN4uZJ5E5GRaSY8GmkvNuysIg4J
-         SSJHF0q7lgcbjS2DUyJtgKeRbw3rM1DckwB99lwNYnoz26GvbKvveQoG9BHnbR3+Fshu
-         ktWvS6ywdxY2xQlyr7XUaRaMUSsLlZD0wqdm09DMnbZm6FYs43QzgfIjmVZNxFMKGP3Q
-         EvC5Gez0WbuDEMzcKfjFvwURn12duMeyr/bdHehL1SFrzV0dAbqQjy6hi0PBE3w2ywjt
-         PnBzGCwAPVaWomYjsmKM+qwYG7hWQBtlDC7spCVHsg8jqpBvccAgSU6xZzuRRr7cM62G
-         lkYg==
+        Mon, 24 Jan 2022 11:01:17 -0500
+Received: by mail-ot1-f50.google.com with SMTP id b12-20020a9d754c000000b0059eb935359eso6545074otl.8;
+        Mon, 24 Jan 2022 08:01:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3HDDkZ4JptQvUueROJyMLPvuWRpma8Lk9Kajk4VoZ7g=;
-        b=QJETO6Jzyszjgvz6DFCqHOJiusCvJIi2ADlrlAJY5Pz4gnJHdYEyb7MyJqVcBmNt4K
-         pXvPfhuFlQ65I7zCYJcxaYOb9bZamSu7FHG2AYrQQn0cgaHCk2XoY8QXmmVFArxthr0+
-         kXJM+x5jk/Jy0xl3n/IgqAOznG/ygi2GiYfO4tK46xJSmqDRYOhZAKi/cUswu3BluY7X
-         2a7/ibk6SQgZ8WvJq/tljNU5X7Gzr47W7YWoVeskg+t5COFpeUuaxqzSuOYNwOLrMG0C
-         Bkm5xzeOW4BCpq8qjoaRYLkKopDVYabfg8+ayjEDh4XIlb4pqaG2kL5jmYHY7TCUjdkq
-         uaig==
-X-Gm-Message-State: AOAM5339w33AmNjks4aqtKs5NVbqHcbOLSOz9OceG2qS/NwJXSDWX0HV
-        W/M0S+8NaxzB58QBN7VRvM9D8/wsMh2cwQv3O/cfQ180Ofg=
-X-Google-Smtp-Source: ABdhPJycPXj58poXbIS7wrV7p/bJJKo5dmP5xCUFrpidft8+LA9/WrCcL9NqzoSpBkz/mtGiO73S/qyVN+j8LB5Wtgk=
-X-Received: by 2002:a17:902:b10d:b0:14b:4e8c:4859 with SMTP id
- q13-20020a170902b10d00b0014b4e8c4859mr5060131plr.95.1643038046755; Mon, 24
- Jan 2022 07:27:26 -0800 (PST)
-MIME-Version: 1.0
-References: <1639763060-24524-1-git-send-email-loic.poulain@linaro.org> <1639763060-24524-2-git-send-email-loic.poulain@linaro.org>
-In-Reply-To: <1639763060-24524-2-git-send-email-loic.poulain@linaro.org>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Mon, 24 Jan 2022 16:39:03 +0100
-Message-ID: <CAMZdPi_q17UPdU-exVGPLffUwfL2LBxkdV69WOdugeo5nosF8g@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] clk: qcom: Add display clock controller driver for QCM2290
-To:     bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, shawn.guo@linaro.org,
-        robh+dt@kernel.org, agross@kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, sboyd@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=4oDy0h+Kn1sS1/A4tfxNkpnbvwT3eD0GbpthjgEWnmw=;
+        b=DHYopP3v0AUi6WBKGoEZMBQbOh3pJ0WSOP4TKU6Opzb/BdwH6PYe0C8QHOxj9bkxcj
+         IClELCC7gV84Rijyxl/dJRwwGAiJLitYVdnpeSQu6e00x0j8IKsHAHA+tik90cuIr9lm
+         uYpSZfRbRpnsRzBSJ/KIvnaKH/h1Ub4nGB/a/xyOgxFqdvEZZaHYx9GPT6TsOizcd0Z4
+         J8cnIiZjB0VFyhQUS2G6SpiCsu8PA23+tddhq9avMAQX7jf75s0ODvxorjJAsZZ4wcIP
+         +k49tIFVlj55FDMi/snySiT7UV9XgeS/xFPY8YVyVMqp/RoxKxIQslmkzkNgn+2Ra0CO
+         nO6Q==
+X-Gm-Message-State: AOAM5301YnqAZfZ5nHHdI9Y2i9jDKHL/J3Qv35c/bysQXAWkNVvVSGP2
+        +vD1qB9OGHMsJK2Gox2oxg==
+X-Google-Smtp-Source: ABdhPJwRM5ALOhU/Vs9GjW7lmhl/9UMYuTfoILSHm228ySaR1KNsxNhbTvaDMWCOm/oq3fu6Ovy/Qw==
+X-Received: by 2002:a9d:4b08:: with SMTP id q8mr6966159otf.181.1643040076418;
+        Mon, 24 Jan 2022 08:01:16 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id i13sm5353082otl.46.2022.01.24.08.01.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Jan 2022 08:01:15 -0800 (PST)
+Received: (nullmailer pid 3901529 invoked by uid 1000);
+        Mon, 24 Jan 2022 16:01:12 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Caleb Connolly <caleb@connolly.tech>
+Cc:     Henrik Rydberg <rydberg@bitmath.org>, linux-kernel@vger.kernel.org,
+        Colin Cross <ccross@android.com>, linux-input@vger.kernel.org,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Kees Cook <keescook@chromium.org>,
+        Alexander Martinz <amartinz@shiftphones.com>,
+        David Airlie <airlied@linux.ie>,
+        Harigovindan P <harigovi@codeaurora.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Anton Vorontsov <anton@enomsg.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Tony Luck <tony.luck@intel.com>,
+        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        Thierry Reding <thierry.reding@gmail.com>
+In-Reply-To: <20220123173650.290349-2-caleb@connolly.tech>
+References: <20220123173650.290349-1-caleb@connolly.tech> <20220123173650.290349-2-caleb@connolly.tech>
+Subject: Re: [PATCH 1/6] dt-bindings: input: touchscreen: add bindings for focaltech,fts
+Date:   Mon, 24 Jan 2022 10:01:12 -0600
+Message-Id: <1643040072.587317.3901528.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
-
-On Fri, 17 Dec 2021 at 18:32, Loic Poulain <loic.poulain@linaro.org> wrote:
->
-> Add support for the display clock controller found in QCM2290
-> based devices. This clock controller feeds the Multimedia Display
-> SubSystem (MDSS).
->
-> It's a porting of dispcc-scuba GPL-2.0 driver from CAF msm-4.19 kernel:
-> https://source.codeaurora.org/quic/la/kernel/msm-4.19/tree/drivers/clk/qcom/dispcc-scuba.c?h=LE.UM.4.4.1.r3
->
-> Global clock name references (parent_names) have been replaced by
-> parent_data and parent_hws.
->
-> Clocks marked enable_safe_config have their clk_rcg2_ops moved to
-> clk_rcg2_shared_ops.
->
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-
-Any other comments on this series?
-
-Regards,
-Loic
-
+On Sun, 23 Jan 2022 17:37:27 +0000, Caleb Connolly wrote:
+> Add devicetree bindings for the Focaltech FTS touchscreen drivers.
+> 
+> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
 > ---
->  v2: Added missing dispcc-qcm2290.h header file
->  v3: - Moved dt-bindings header into dt bindings commit
->      - clk_rcg2_ops to clk_rcg2_shared_ops for enable_safe_config
->        marked clocks.
->  v4: - Removed useless NOCACHE clk flags
->      - Added explicit comment for OPS_PARENT_ENABLE flag
->      - Removed useless headers (clk.h, reset.h)
->      - spark_vco tab as const
->      - removed global .name reference for sleep_clk
->      - removed dispcc_xo_clk as it is always on (enabled in probe)
->      - removed dev_info message on probe success
->      - Kconfig: Select QCM_GCC_2290 for builtin
+>  .../input/touchscreen/focaltech,fts.yaml      | 78 +++++++++++++++++++
+>  1 file changed, 78 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/input/touchscreen/focaltech,fts.yaml
+> 
+
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Error: Documentation/devicetree/bindings/input/touchscreen/focaltech,fts.example.dts:21.9-14 syntax error
+FATAL ERROR: Unable to parse input tree
+make[1]: *** [scripts/Makefile.lib:378: Documentation/devicetree/bindings/input/touchscreen/focaltech,fts.example.dt.yaml] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1398: dt_binding_check] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/1583161
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
