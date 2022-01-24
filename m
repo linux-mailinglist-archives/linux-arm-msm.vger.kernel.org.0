@@ -2,100 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FBFF49880D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 19:16:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 868D349884D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jan 2022 19:27:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245080AbiAXSP7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jan 2022 13:15:59 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:56203 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243961AbiAXSP6 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jan 2022 13:15:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1643048158; x=1674584158;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=SjrQNLm3+7esMzoKo8xxleZRgcv3vxJh/gbHLOQw4LQ=;
-  b=UPjPrDCw9RTHGi/9tPFUdo1wx4Q/XQC21EAsdgJZRuIA3y2W/rJWnuj3
-   b0p6DBlLQlCuGkTqG0XDkAX9vIgVf+BlGvEU4Q3kXu30Z8ApFtr27WixZ
-   GpPTd8CQrdYYTF1w1j8KlvcOQtJaHPew1gwdsdFkPBsQfU2VPJq4+e43R
-   0=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 24 Jan 2022 10:15:58 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2022 10:15:57 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 24 Jan 2022 10:15:57 -0800
-Received: from sbillaka-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 24 Jan 2022 10:15:52 -0800
-From:   Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <robh+dt@kernel.org>
-CC:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        <robdclark@gmail.com>, <seanpaul@chromium.org>,
-        <swboyd@chromium.org>, <quic_kalyant@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <dianders@chromium.org>,
-        <quic_khsieh@quicinc.com>, <quic_mkrishn@quicinc.com>
-Subject: [PATCH v1 2/2] drm/panel-edp: Add sharp panel support for sc7280
-Date:   Mon, 24 Jan 2022 23:45:14 +0530
-Message-ID: <1643048114-2996-3-git-send-email-quic_sbillaka@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1643048114-2996-1-git-send-email-quic_sbillaka@quicinc.com>
-References: <1643048114-2996-1-git-send-email-quic_sbillaka@quicinc.com>
+        id S245248AbiAXS1m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jan 2022 13:27:42 -0500
+Received: from mga01.intel.com ([192.55.52.88]:22992 "EHLO mga01.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S241827AbiAXS1m (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 24 Jan 2022 13:27:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1643048862; x=1674584862;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=QYEAybRwP0jTcU3cihM+fGC4MwyHH67iS4J4O/RWUsE=;
+  b=aTVpXun8YP4g4591uQvIc7RnSiJgpbHpwdTSyjoThbjhq59NUTEpA7/L
+   t8Z8KkVSrDfHHh0XC0e3Foxm8MFrEcBhP5Zm+eg5kBelFGOlDgRsd8AU2
+   j8YwDeEzz+OOgW+iM4cP++ffUPB2JJbrrQVWtfm91LJSNvxUs5NI25A25
+   CCqvrGYNKB5f/hMPvP/DX16u0UWqmghpIuD3QWyazyMeA+IlidFsJ/5Nr
+   tQSL/+eaUfdvXE73t7oN9Ot+UyqeJrDLdUHgUHl39iGN4SM7ok7ZyySJo
+   ICHoKiKq1hbbBlBKL3Z1wkaT+DIppe4clM7IEMnM1JAefX3RZ/wXHLzdd
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10237"; a="270553205"
+X-IronPort-AV: E=Sophos;i="5.88,311,1635231600"; 
+   d="scan'208";a="270553205"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2022 10:27:41 -0800
+X-IronPort-AV: E=Sophos;i="5.88,311,1635231600"; 
+   d="scan'208";a="479182936"
+Received: from iweiny-desk2.sc.intel.com (HELO localhost) ([10.3.52.147])
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jan 2022 10:27:41 -0800
+Date:   Mon, 24 Jan 2022 10:27:41 -0800
+From:   Ira Weiny <ira.weiny@intel.com>
+To:     Christian =?iso-8859-1?Q?K=F6nig?= 
+        <ckoenig.leichtzumerken@gmail.com>
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org
+Subject: Re: [PATCH V2 0/7] DRM kmap() fixes and kmap_local_page() conversions
+Message-ID: <20220124182741.GC785175@iweiny-DESK2.sc.intel.com>
+References: <20220124015409.807587-1-ira.weiny@intel.com>
+ <a56344b6-b1bd-6749-5ed2-5f38bf79dcee@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a56344b6-b1bd-6749-5ed2-5f38bf79dcee@gmail.com>
+User-Agent: Mutt/1.11.1 (2018-12-01)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add eDP panel support for sc7280 CRD platform.
+On Mon, Jan 24, 2022 at 01:08:26PM +0100, Christian König wrote:
+> Am 24.01.22 um 02:54 schrieb ira.weiny@intel.com:
+> > From: Ira Weiny <ira.weiny@intel.com>
+> > 
+> > Changes from V1:
+> > 	Use memcpy_to_page() where appropriate
+> > 	Rebased to latest
+> > 
+> > The kmap() call may cause issues with work being done with persistent memory.
+> > For this and other reasons it is being deprecated.
+> 
+> I'm really wondering how we should be able to implement the kernel mapping
+> without kmap in TTM.
+> 
+> > This series starts by converting the last easy kmap() uses in the drm tree to
+> > kmap_local_page().
+> > 
+> > The final 2 patches fix bugs found while working on the ttm_bo_kmap_ttm()
+> > conversion.  They are valid fixes but were found via code inspection not
+> > because of any actual bug so don't require a stable tag.[1]
+> > 
+> > There is one more call to kmap() used in ttm_bo_kmap_ttm().  Unfortunately,
+> > fixing this is not straight forward so it is left to future work.[2]
+> 
+> Patches #2, #4, #6 and #7 are Reviewed-by: Christian König
+> <christian.koenig@amd.com>
 
-Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
----
- drivers/gpu/drm/panel/panel-edp.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+Christian,
 
-diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
-index 176ef0c..bb2e346 100644
---- a/drivers/gpu/drm/panel/panel-edp.c
-+++ b/drivers/gpu/drm/panel/panel-edp.c
-@@ -1605,6 +1605,14 @@ static const struct panel_desc sharp_lq123p1jx31 = {
- 	},
- };
- 
-+static const struct panel_desc sharp_lq140m1jw46 = {
-+	.bpc = 8,
-+	.size = {
-+		.width = 309,
-+		.height = 173,
-+	},
-+};
-+
- static const struct drm_display_mode starry_kr122ea0sra_mode = {
- 	.clock = 147000,
- 	.hdisplay = 1920,
-@@ -1719,6 +1727,9 @@ static const struct of_device_id platform_of_match[] = {
- 		.compatible = "sharp,lq123p1jx31",
- 		.data = &sharp_lq123p1jx31,
- 	}, {
-+		.compatible = "sharp_lq140m1jw46",
-+		.data = &sharp_lq140m1jw46,
-+	}, {
- 		.compatible = "starry,kr122ea0sra",
- 		.data = &starry_kr122ea0sra,
- 	}, {
--- 
-2.7.4
+Would you prefer I send those 4 to you as a separate series?
 
+> 
+> How to you now want to push those upstream? I can pick them up for the AMD
+> tree like Daniel suggested or you can push them through something else.
+
+You picking them up from this series is ok as well.
+
+Daniel will you take #1, #3, and #5?
+
+Thanks,
+Ira
+
+> 
+> Regards,
+> Christian.
+> 
+> > 
+> > [1] https://lore.kernel.org/lkml/fb71af05-a889-8f6e-031b-426b58a64f00@amd.com/
+> > [2] https://lore.kernel.org/lkml/20211215210949.GW3538886@iweiny-DESK2.sc.intel.com/
+> > 
+> > 
+> > Ira Weiny (7):
+> > drm/i915: Replace kmap() with kmap_local_page()
+> > drm/amd: Replace kmap() with kmap_local_page()
+> > drm/gma: Remove calls to kmap()
+> > drm/radeon: Replace kmap() with kmap_local_page()
+> > drm/msm: Alter comment to use kmap_local_page()
+> > drm/amdgpu: Ensure kunmap is called on error
+> > drm/radeon: Ensure kunmap is called on error
+> > 
+> > drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 8 ++++----
+> > drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c | 1 +
+> > drivers/gpu/drm/gma500/gma_display.c | 6 ++----
+> > drivers/gpu/drm/gma500/mmu.c | 8 ++++----
+> > drivers/gpu/drm/i915/gem/i915_gem_shmem.c | 6 ++----
+> > drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c | 8 ++++----
+> > drivers/gpu/drm/i915/gt/intel_ggtt_fencing.c | 4 ++--
+> > drivers/gpu/drm/i915/gt/shmem_utils.c | 7 ++-----
+> > drivers/gpu/drm/i915/i915_gem.c | 8 ++++----
+> > drivers/gpu/drm/i915/i915_gpu_error.c | 4 ++--
+> > drivers/gpu/drm/msm/msm_gem_submit.c | 4 ++--
+> > drivers/gpu/drm/radeon/radeon_ttm.c | 4 ++--
+> > drivers/gpu/drm/radeon/radeon_uvd.c | 1 +
+> > 13 files changed, 32 insertions(+), 37 deletions(-)
+> > 
+> > --
+> > 2.31.1
+> > 
+> 
