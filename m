@@ -2,159 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F28649BC01
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jan 2022 20:24:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F07E49BCB6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jan 2022 21:11:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229879AbiAYTYm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jan 2022 14:24:42 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:13638 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229849AbiAYTYi (ORCPT
+        id S231708AbiAYULv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jan 2022 15:11:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60150 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231942AbiAYUK1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jan 2022 14:24:38 -0500
+        Tue, 25 Jan 2022 15:10:27 -0500
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9A33C061744
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jan 2022 12:10:23 -0800 (PST)
+Received: by mail-qv1-xf31.google.com with SMTP id g13so23719182qvw.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jan 2022 12:10:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1643138678; x=1674674678;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=uJ9S2I9JwIcsZP3Xg/NZAPRy9Xc3MsaKcTkgUlFWqcQ=;
-  b=KIbcWQm4tptz1WSlYFCodAjdzNjGdcU9qRj6gEaCm1TXrkQvgT0FuW0s
-   PkEX5qWHA5ylEQis7FT4RF6UrR6Bci3Kp+Td6G4vWBFZC4Qg4eV8LBBjr
-   bosYehPmHZ88x+2DP7djZBMT5QNx/Rs/dMDwtG82RnsZHs4vQNdANahY2
-   k=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 25 Jan 2022 11:24:37 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2022 11:24:36 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 25 Jan 2022 11:24:36 -0800
-Received: from [10.110.14.237] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Tue, 25 Jan
- 2022 11:24:35 -0800
-Message-ID: <15868e85-d48e-e2a8-a8da-c7b87c22564a@quicinc.com>
-Date:   Tue, 25 Jan 2022 11:24:35 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH 1/3] input: misc: pm8941-pwrkey: add software key press
- debouncing support
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>, <dmitry.torokhov@gmail.com>
-CC:     <linux-input@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <collinsd@codeaurora.org>,
-        <bjorn.andersson@linaro.org>, <skakit@codeaurora.org>
-References: <20220120204132.17875-1-quic_amelende@quicinc.com>
- <20220120204132.17875-2-quic_amelende@quicinc.com>
- <CAE-0n508nxF_c9pzsTaQfSi42ZGQXkqb3NyQebuMBec2DCV0KA@mail.gmail.com>
- <efa57fd8-d2ac-4c02-04ac-c62315b3b28c@quicinc.com>
- <CAE-0n51GUGskL17MGhk-=-dbdPU_3ChE37Hbzq6VBZc2Ge0vkA@mail.gmail.com>
-From:   Anjelique Melendez <quic_amelende@quicinc.com>
-In-Reply-To: <CAE-0n51GUGskL17MGhk-=-dbdPU_3ChE37Hbzq6VBZc2Ge0vkA@mail.gmail.com>
+        d=ndufresne-ca.20210112.gappssmtp.com; s=20210112;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=bO+44MIAGqJ54bWmyOECv7TDUed3BpEBH2ddFHfhBWI=;
+        b=SYgABCXQ32JIZk+yFrxkgFundT75n0SnHuJ+qGBRdSnEDYvF/wVOP+726vr/2rX2ih
+         zKOwdLdi6FgbRaBKtQjp4tdyOmMfdv5G59Kj6Jk+Qy2guOJa+dUhTCwAraHMXyUPDCKW
+         zMPn7MiEGFEg+CZa1t1xT8as3AIM0VMr6JV6Tl4BwoVtcAWHO49F1KYC5YY/mPgmj448
+         ktjbJcAMl45umtO6jil/W6GLP1+whE0VK29t2OU6//b/V2IU/g+1OA55lUuQT+6IXDH8
+         rkdjhQFng6xFRRt0ZPN9tcKhSiz20Kc1BQWcYkAKbuWIfIR01fzCOeZgTcdMnGGEW51n
+         +qaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:user-agent:mime-version:content-transfer-encoding;
+        bh=bO+44MIAGqJ54bWmyOECv7TDUed3BpEBH2ddFHfhBWI=;
+        b=PbULtep1JVGZfK2yngDqPUDReVtyASreIOa34wIiUf6xi/2MvUKHFmSV8sP76/PtwT
+         h0PELFd/4nDzY9iSIHPHj5KF1lVbJDdfuOUPl9oafYVijCKUmZnbKSggBgqTcdm+dugK
+         nQnGvc95c3nuWPZpFJ7jv3sad5yFTms6sx8wOwzBR/fOfgj2CoGH/zMeFPb7Twz2+3Q6
+         n4QL88+Guzr0Qbvoy8uDPQHAktmazweosiki+4LyzyttYZMdZ3yPJI4BQK5kc525FrIY
+         8z+fqoXuZzMFu4jxd+1OdffgflJNu1OQiETkYG9yMcWNYQRr+Kb1JtivsZI3gUeC+mVH
+         OLbg==
+X-Gm-Message-State: AOAM530BbaVumIIv6SxPCLDmRva/CQsZ0Uy2SPzbhrtMJjSlkr5YeKwD
+        /WgOwJMggliODt3p3sRQzjIOnw==
+X-Google-Smtp-Source: ABdhPJxwft1KnVqTuKlaUkyvFqwMc8XK6lahKqbHGt5PQAyp0qzx5iP1iLx5HvNLikrajxvNQQYx4A==
+X-Received: by 2002:a05:6214:c6b:: with SMTP id t11mr1275598qvj.123.1643141422888;
+        Tue, 25 Jan 2022 12:10:22 -0800 (PST)
+Received: from nicolas-tpx395.localdomain (173-246-12-168.qc.cable.ebox.net. [173.246.12.168])
+        by smtp.gmail.com with ESMTPSA id j14sm9911393qkp.70.2022.01.25.12.10.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Jan 2022 12:10:22 -0800 (PST)
+Message-ID: <cd96d39ed6ab782c04d5606218aa1345da0cfbe0.camel@ndufresne.ca>
+Subject: Re: [PATCH v1 1/2] media: v4l2-ctrls: Add intra-refresh type control
+From:   Nicolas Dufresne <nicolas@ndufresne.ca>
+To:     Dikshita Agarwal <dikshita@qti.qualcomm.com>,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     hverkuil-cisco@xs4all.nl, ezequiel@collabora.com,
+        vgarodia@codeaurora.org, stanimir.varbanov@linaro.org,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>
+Date:   Tue, 25 Jan 2022 15:10:20 -0500
+In-Reply-To: <1643019119-8309-2-git-send-email-dikshita@qti.qualcomm.com>
+References: <1643019119-8309-1-git-send-email-dikshita@qti.qualcomm.com>
+         <1643019119-8309-2-git-send-email-dikshita@qti.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+User-Agent: Evolution 3.42.3 (3.42.3-1.fc35) 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Le lundi 24 janvier 2022 à 15:41 +0530, Dikshita Agarwal a écrit :
+> From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> 
+> Add a control to set intra-refresh type.
+> 
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 
-On 1/24/2022 11:33 AM, Stephen Boyd wrote:
-> Quoting Anjelique Melendez (2022-01-21 16:04:13)
->>
->> On 1/20/2022 8:08 PM, Stephen Boyd wrote:
->>> Quoting Anjelique Melendez (2022-01-20 12:41:33)
->>>> @@ -200,15 +268,21 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
->>>>                         dev_err(&pdev->dev, "failed to locate regmap\n");
->>>>                         return -ENODEV;
->>>>                 }
->>>> +       }
->>>>
->>>> -               error = of_property_read_u32(parent->of_node,
->>>> -                                            "reg", &pwrkey->baseaddr);
->>>> -       } else {
->>>> -               error = of_property_read_u32(pdev->dev.of_node, "reg",
->>>> -                                            &pwrkey->baseaddr);
->>>> +       addr = of_get_address(regmap_node, 0, NULL, NULL);
->>>> +       if (!addr) {
->>>> +               dev_err(&pdev->dev, "reg property missing\n");
->>>> +               return -EINVAL;
->>>> +       }
->>>> +       pwrkey->baseaddr = be32_to_cpu(*addr);
->>> Can this hunk be split off? A new API is used and it doesn't look
->>> relevant to this patch.
->> In PMK8350 and following chips the reg property will have the pon hlos address first,
->> followed by a second pon pbs address. This change is needed so that both the older chipsets
->> and the newer can be used regardless of how many reg addresses are being used.
-> Got it, but do we ned to change to of_get_address() in this patch? I was
-> suggesting that the change to the new API be done first so that it's
-> clearer what's going on with the change in address location.
+> ---
+>  .../userspace-api/media/v4l/ext-ctrls-codec.rst    | 23 ++++++++++++++++++++++
+>  drivers/media/v4l2-core/v4l2-ctrls-defs.c          |  9 +++++++++
+>  include/uapi/linux/v4l2-controls.h                 |  5 +++++
+>  3 files changed, 37 insertions(+)
+> 
+> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> index e141f0e..54b42e1 100644
+> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
+> @@ -1180,6 +1180,29 @@ enum v4l2_mpeg_video_h264_entropy_mode -
+>      is set to non zero value.
+>      Applicable to H264, H263 and MPEG4 encoder.
+>  
+> +``V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_TYPE (enum)``
+> +
+> +enum v4l2_mpeg_video_intra_refresh_type -
+> +    Sets the type of intra refresh. The period to refresh
+> +    the whole frame is specified by V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD.
+> +    Note if the client sets this control to either ``V4L2_MPEG_VIDEO_INTRA_REFRESH_RANDOM``
+> +    or ``V4L2_MPEG_VIDEO_INTRA_REFRESH_CYCLIC`` the ``V4L2_CID_MPEG_VIDEO_CYCLIC_INTRA_REFRESH_MB``
+> +    control shall be ignored.
+> +    Applicable to H264, H263 and MPEG4 encoder. Possible values are:
+> +
+> +.. tabularcolumns:: |p{9.6cm}|p{7.9cm}|
+> +
+> +.. flat-table::
+> +    :header-rows:  0
+> +    :stub-columns: 0
+> +
+> +    * - ``V4L2_MPEG_VIDEO_INTRA_REFRESH_RANDOM``
+> +      - The whole frame is completely refreshed randomly
+> +      after the specified period.
+> +    * - ``V4L2_MPEG_VIDEO_INTRA_REFRESH_CYCLIC``
+> +      - The whole frame MBs are completely refreshed in cyclic order
+> +      after the specified period.
+> +
+>  ``V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD (integer)``
+>      Intra macroblock refresh period. This sets the period to refresh
+>      the whole frame. In other words, this defines the number of frames
+> diff --git a/drivers/media/v4l2-core/v4l2-ctrls-defs.c b/drivers/media/v4l2-core/v4l2-ctrls-defs.c
+> index 54ca4e6..f13f587 100644
+> --- a/drivers/media/v4l2-core/v4l2-ctrls-defs.c
+> +++ b/drivers/media/v4l2-core/v4l2-ctrls-defs.c
+> @@ -572,6 +572,11 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
+>  		"VBV/CPB Limit",
+>  		NULL,
+>  	};
+> +	static const char * const intra_refresh_type[] = {
+> +		"Random",
+> +		"Cyclic",
+> +		NULL,
+> +	};
+>  
+>  	switch (id) {
+>  	case V4L2_CID_MPEG_AUDIO_SAMPLING_FREQ:
+> @@ -705,6 +710,8 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
+>  		return hevc_start_code;
+>  	case V4L2_CID_CAMERA_ORIENTATION:
+>  		return camera_orientation;
+> +	case V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_TYPE:
+> +		return intra_refresh_type;
+>  	default:
+>  		return NULL;
+>  	}
+> @@ -834,6 +841,7 @@ const char *v4l2_ctrl_get_name(u32 id)
+>  	case V4L2_CID_MPEG_VIDEO_DECODER_SLICE_INTERFACE:	return "Decoder Slice Interface";
+>  	case V4L2_CID_MPEG_VIDEO_DECODER_MPEG4_DEBLOCK_FILTER:	return "MPEG4 Loop Filter Enable";
+>  	case V4L2_CID_MPEG_VIDEO_CYCLIC_INTRA_REFRESH_MB:	return "Number of Intra Refresh MBs";
+> +	case V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_TYPE:		return "Intra Refresh Type";
+>  	case V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD:		return "Intra Refresh Period";
+>  	case V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE:		return "Frame Level Rate Control Enable";
+>  	case V4L2_CID_MPEG_VIDEO_MB_RC_ENABLE:			return "H264 MB Level Rate Control";
+> @@ -1360,6 +1368,7 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+>  	case V4L2_CID_STATELESS_H264_DECODE_MODE:
+>  	case V4L2_CID_STATELESS_H264_START_CODE:
+>  	case V4L2_CID_CAMERA_ORIENTATION:
+> +	case V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_TYPE:
+>  		*type = V4L2_CTRL_TYPE_MENU;
+>  		break;
+>  	case V4L2_CID_LINK_FREQ:
+> diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
+> index c8e0f84..9650b71 100644
+> --- a/include/uapi/linux/v4l2-controls.h
+> +++ b/include/uapi/linux/v4l2-controls.h
+> @@ -443,6 +443,11 @@ enum v4l2_mpeg_video_multi_slice_mode {
+>  #define V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES		(V4L2_CID_CODEC_BASE+234)
+>  #define V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR		(V4L2_CID_CODEC_BASE+235)
+>  #define V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD	(V4L2_CID_CODEC_BASE+236)
+> +#define V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_TYPE		(V4L2_CID_CODEC_BASE+237)
+> +enum v4l2_mpeg_video_intra_refresh_type {
+> +	V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_RANDOM	= 0,
+> +	V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_CYCLIC	= 1,
+> +};
+>  
+>  /* CIDs for the MPEG-2 Part 2 (H.262) codec */
+>  #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_CODEC_BASE+270)
 
-Ok, makes sense. Will separate this into it's own patch for v2.
-
->>>> +
->>>> +       if (pwrkey->data->has_pon_pbs) {
->>>> +               /* PON_PBS base address is optional */
->>>> +               addr = of_get_address(regmap_node, 1, NULL, NULL);
->>>> +               if (addr)
->>>> +                       pwrkey->pon_pbs_baseaddr = be32_to_cpu(*addr);
->>>>         }
->>>> -       if (error)
->>>> -               return error;
->>>>
->>>>         pwrkey->irq = platform_get_irq(pdev, 0);
->>>>         if (pwrkey->irq < 0)
->>>> @@ -217,7 +291,14 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
->>>>         error = regmap_read(pwrkey->regmap, pwrkey->baseaddr + PON_REV2,
->>>>                             &pwrkey->revision);
->>>>         if (error) {
->>>> -               dev_err(&pdev->dev, "failed to set debounce: %d\n", error);
->>>> +               dev_err(&pdev->dev, "failed to read revision: %d\n", error);
->>> Nice error message fix!
-> This can be split off to a different patch as well.
-
-Will do.
-
->>>> +               return error;
->>>> +       }
->>>> +
->>>> +       error = regmap_read(pwrkey->regmap, pwrkey->baseaddr + PON_SUBTYPE,
->>>> +                           &pwrkey->subtype);
->>>> +       if (error) {
->>>> +               dev_err(&pdev->dev, "failed to read subtype: %d\n", error);
->>>>                 return error;
->>>>         }
->>>>
->>>> @@ -255,6 +336,12 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
->>>>                 }
->>>>         }
->>>>
->>>> +       if (pwrkey->data->needs_sw_debounce) {
->>>> +               error = pm8941_pwrkey_sw_debounce_init(pwrkey);
->>>> +               if (error)
->>>> +                       return error;
->>>> +       }
->>>> +
->>>>         if (pwrkey->data->pull_up_bit) {
->>>>                 error = regmap_update_bits(pwrkey->regmap,
->>>>                                            pwrkey->baseaddr + PON_PULL_CTL,
->>>> @@ -316,6 +403,8 @@ static const struct pm8941_data pwrkey_data = {
->>>>         .phys = "pm8941_pwrkey/input0",
->>>>         .supports_ps_hold_poff_config = true,
->>>>         .supports_debounce_config = true,
->>>> +       .needs_sw_debounce = true,
->>> needs_sw_debounce is always true? Why is it even an option then?
->> As of right now the "needs_sw_debounce" property is being used for a sw work around for a hw
->> problem. We anticipate that chips in the future will fix this hw problem and we would then have
->> devices where needs_sw_debounce would be set to false.
-> Hmm ok. Why can't future chips be supported in this series? What happens
-> if nobody ever adds support for the new chips? We're left with this
-> condition that looks like dead code.
-
-Sure, makes sense. Will remove "needs_sw_debounce" property for V2.
