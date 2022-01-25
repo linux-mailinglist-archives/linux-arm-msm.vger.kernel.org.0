@@ -2,62 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B87C849BEC2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jan 2022 23:44:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 18BA849BEC5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jan 2022 23:45:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234026AbiAYWoq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jan 2022 17:44:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39232 "EHLO
+        id S234042AbiAYWos (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jan 2022 17:44:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234025AbiAYWoq (ORCPT
+        with ESMTP id S234035AbiAYWor (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jan 2022 17:44:46 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDC3BC061744
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jan 2022 14:44:45 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id s61-20020a17090a69c300b001b4d0427ea2so3069733pjj.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jan 2022 14:44:45 -0800 (PST)
+        Tue, 25 Jan 2022 17:44:47 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B221C061748
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jan 2022 14:44:47 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id d12-20020a17090a628c00b001b4f47e2f51so3075657pjj.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jan 2022 14:44:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EZGm0MaNJxAMfb/7pwPJBUSOCgRjQhE6bgY2ZPyNesk=;
-        b=BaeEOzyeMjop7c632xbiR6uP2jqptMMaKdz4LnTmKH1oxk81XTPfLKur9xaAZ9BYSZ
-         FxpaczYhqoh9nke2yhFUAuZgnVD5XjqD2ekoxe3oL3pmoq3hFv8PLyTc+BRczF084JxA
-         q8sPtlXRhaOk+C3VrRMxSDHZz6q69oqY01SNc=
+        bh=JeNHRfVJhJwg7c4aib6D7QwGiFz7LtBrAhsdC3k1Vao=;
+        b=WXZHwtbBOzHwpYqp1KDddlJWPoC3eJajLidWMzC9FCf8C3IKmHVZUFNYzMBwbbgNPz
+         TL23fihIz/RktI0Lz7XwCV+IFigj7cc+M6PqVuoiffsbuo+pBpYXwsVfDdeedgjoz18D
+         iljTRpEFRX8KHA9oxICJvj3uUURX6JO7DeylM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EZGm0MaNJxAMfb/7pwPJBUSOCgRjQhE6bgY2ZPyNesk=;
-        b=gYmA+9sfd27NrXaVNG+t4PRJ6c/7jsDvhb+9+BOp397xPbo2SJyGoZlXaomzjy/TFI
-         HkP5gXFbJVz6nmtinFGnr4xWzp3/5bLs/TCSKiqyNx5GQrG+LIx2qNBs6NtmyUfFgbUS
-         4leCJ8Qj4kNk/wgoOlo99aQcugHS4SQLm+YhsiNduuGpn0PZs6lub51JkEVIx+i/YDIu
-         vpeFaOFTIhCzL7/CDddyQDPaDTHHc0eYaDreJDNOtorYwJAdVssZZc+aVhtSo6lsdsnk
-         5EHFgDvZ7LGWa876D8XO9PYUOE0Ofxm0xIlqaZ+lZWJ/t0rDGgU9A0G99wz5lk7VDayI
-         Ec1w==
-X-Gm-Message-State: AOAM530p7l/LCFVN3igGfdGUBhC1slSITxt9ploB4En8H0NoUupIQqJ4
-        5UqcJ0uIkbeBNRl3ZvjhrU0m0Q==
-X-Google-Smtp-Source: ABdhPJyAWiYE/ZAwc6fGCQCqkzagXMstzNJ0s6bMyw0uxX4tW24KUQtf4jfQ/jMaxSWaC3gi2v0o0w==
-X-Received: by 2002:a17:902:e805:b0:14b:18a:ace2 with SMTP id u5-20020a170902e80500b0014b018aace2mr20777208plg.93.1643150685498;
-        Tue, 25 Jan 2022 14:44:45 -0800 (PST)
+        bh=JeNHRfVJhJwg7c4aib6D7QwGiFz7LtBrAhsdC3k1Vao=;
+        b=t0LdkePeAgui+ATKiT1Tkz+2UyvAv1EVKQ45zFRdtsC0xW/wSUpH/oPbwP1myCZGuh
+         gHUPR4CWPw+bwsAH4zZBmSd4E5XmSv58wjb863EiDQCPP3OhkpZYzxJDSQkC5aWIGI5x
+         yoNlABL9Z297ykuP+bsLJo9SMJUac4aSGik5NnCTzaj+mepXBGxp/0MIBJx34HzQ2AvF
+         aG36KQqNfEtUwVIF5EHUkI5XrgLlV3dlZj/7PKtIG7pGgincuM8tLwb8g2hIHHmLSR7J
+         n4IuBz38O22R658K6O9BE5N0tbKoWVyY8zj3Z6A/oeF8X9WyMga03csKtAHhB9ZW1rY8
+         vERQ==
+X-Gm-Message-State: AOAM530Zgjo8ksTIsoo4tgOzjnVqVlWRUbA2nJAiQt7irtqVloLghrnX
+        PCvTgPZHnacxs7JqqjeqrmRX7w==
+X-Google-Smtp-Source: ABdhPJy6ec4tjI1AWJjK5aTs6WwY/im+MX2OpcaSR6P1r8xYXhvw74RBZqCGjKUX5PC4QJ4L/N2AGg==
+X-Received: by 2002:a17:902:da8a:b0:14b:370b:23fe with SMTP id j10-20020a170902da8a00b0014b370b23femr14704876plx.103.1643150686908;
+        Tue, 25 Jan 2022 14:44:46 -0800 (PST)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:f313:ff03:9fc5:6152])
-        by smtp.gmail.com with ESMTPSA id p12sm1322335pjj.55.2022.01.25.14.44.44
+        by smtp.gmail.com with ESMTPSA id p12sm1322335pjj.55.2022.01.25.14.44.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jan 2022 14:44:45 -0800 (PST)
+        Tue, 25 Jan 2022 14:44:46 -0800 (PST)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     konrad.dybcio@somainline.org, swboyd@chromium.org,
         kgodara@codeaurora.org, mka@chromium.org, sibis@codeaurora.org,
         pmaliset@codeaurora.org, quic_rjendra@quicinc.com,
         Douglas Anderson <dianders@chromium.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 1/5] arm64: dts: qcom: sc7280: Fix gmu unit address
-Date:   Tue, 25 Jan 2022 14:44:18 -0800
-Message-Id: <20220125144316.v2.1.I19f60014e9be4b9dda4d66b5d56ef3d9600b6e10@changeid>
+Subject: [PATCH v2 2/5] arm64: dts: qcom: sc7280: Move herobrine-r0 to its own dts
+Date:   Tue, 25 Jan 2022 14:44:19 -0800
+Message-Id: <20220125144316.v2.2.Id9716db8c133bcb14c9413144048f8d00ae2674f@changeid>
 X-Mailer: git-send-email 2.35.0.rc0.227.g00780c9af4-goog
 In-Reply-To: <20220125224422.544381-1-dianders@chromium.org>
 References: <20220125224422.544381-1-dianders@chromium.org>
@@ -67,14 +66,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When processing sc7280 device trees, I can see:
+The upcoming herobrine-r1 board is really not very similar to
+herobrine-r0. Let's get rid of the "herobrine.dtsi" file and stick all
+the content in the -r0 dts file directly. We'll also rename the dts so
+it's obvious that it's just for -r0.
 
-  Warning (simple_bus_reg): /soc@0/gmu@3d69000:
-    simple-bus unit address format error, expected "3d6a000"
+While renaming, let's actually name the file so it's obvious that
+"herobrine" is both the name of the board and the name of the
+"baseboard". In other words "herobrine" is an actual board but also
+often used as the name of a whole class of similar boards that forked
+from a design. While "herobrine-herobrine" is a bit of mouthful it
+makes it more obvious which things are part of an actual board rather
+than the baseboard.
 
-There's a clear typo in the node name. Fix it.
+NOTE: herobrine-rev0's days are likely doomed and this device tree is
+likely to be deleted in the future.
 
-Fixes: 96c471970b7b ("arm64: dts: qcom: sc7280: Add gpu support")
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
@@ -82,22 +89,66 @@ Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 
 (no changes since v1)
 
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/Makefile                  |  2 +-
+ ...rine.dtsi => sc7280-herobrine-herobrine-r0.dts} |  6 ++++++
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dts      | 14 --------------
+ 3 files changed, 7 insertions(+), 15 deletions(-)
+ rename arch/arm64/boot/dts/qcom/{sc7280-herobrine.dtsi => sc7280-herobrine-herobrine-r0.dts} (99%)
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine.dts
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 937c2e0e93eb..eab7a8505053 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -1790,7 +1790,7 @@ opp-550000000 {
- 			};
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index f7232052d286..9db743826391 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -82,7 +82,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pompom-r3.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-pompom-r3-lte.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-r1-lte.dtb
+-dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-herobrine-r0.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp2.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-crd.dtb
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dts
+similarity index 99%
+rename from arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+rename to arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dts
+index 4619fa9fcacd..8676c93590b5 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dts
+@@ -22,6 +22,12 @@
+ #include "pm8350c.dtsi"
+ #include "pmk8350.dtsi"
  
--		gmu: gmu@3d69000 {
-+		gmu: gmu@3d6a000 {
- 			compatible="qcom,adreno-gmu-635.0", "qcom,adreno-gmu";
- 			reg = <0 0x03d6a000 0 0x34000>,
- 				<0 0x3de0000 0 0x10000>,
++/ {
++	model = "Google Herobrine (rev0)";
++	compatible = "google,herobrine",
++		     "qcom,sc7280";
++};
++
+ /*
+  * Reserved memory changes
+  *
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dts
+deleted file mode 100644
+index 7a92679a688b..000000000000
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dts
++++ /dev/null
+@@ -1,14 +0,0 @@
+-// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+-/*
+- * Google Herobrine board device tree source
+- *
+- * Copyright 2021 Google LLC.
+- */
+-
+-#include "sc7280-herobrine.dtsi"
+-
+-/ {
+-	model = "Google Herobrine";
+-	compatible = "google,herobrine",
+-		     "qcom,sc7280";
+-};
 -- 
 2.35.0.rc0.227.g00780c9af4-goog
 
