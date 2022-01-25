@@ -2,86 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D3CDC49BE56
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jan 2022 23:19:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C57E49BEC0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jan 2022 23:44:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233659AbiAYWSs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jan 2022 17:18:48 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:46710 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233690AbiAYWS2 (ORCPT
+        id S233997AbiAYWop (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jan 2022 17:44:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39222 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233985AbiAYWoo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jan 2022 17:18:28 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 440BBB81B75;
-        Tue, 25 Jan 2022 22:18:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B78C340E0;
-        Tue, 25 Jan 2022 22:18:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1643149106;
-        bh=YVyYSfcEbGqrd42MxRnKj9Y7w9N7kkEnC3ipr7yb7eo=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=okzIC0QqkLEW5Xru2kBPMD5aFVpb/Pst5GIxGVa+IpAvuivVVn8SRxa21vdEIanyu
-         xkNNvrtqETC/DtFwExZBC2/gVYuwEoMxW6xgzl0KUWrymTPnCI+/Df8e1+FlHdvt/h
-         kH9ObHvff0TVtjg2COUibTfCMsh6VvhoK1+awzFgxb3aSyLC7dtOj2KX5BZX8SkzP4
-         0ONlKXvo00xAzSmfNJS9SvpgH0wnlrDY7id5kXOWzx9wEjoZipPUjP20puoe6yDYDj
-         tg68l1+d18MhwGxcgBV5EGyF1WiqiPmvXo8rcAfFHliHyTJgy5lTxMFTFl3TIaT6/e
-         ZleBZ26cTgU9g==
-Content-Type: text/plain; charset="utf-8"
+        Tue, 25 Jan 2022 17:44:44 -0500
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F981C061747
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jan 2022 14:44:44 -0800 (PST)
+Received: by mail-pl1-x633.google.com with SMTP id c9so20750809plg.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jan 2022 14:44:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/jIHPkrcrg/IX2G8MpgrNtMCWPOHXvyJQgcNyeiBzgg=;
+        b=hqGa/1H/YFFeZlS2duI7roo3l7kV0LUBbRbfIibdEh1t7ar2y0BXQJ1iYK5eN2pxC8
+         1OMyfZubXjRwN63SJDxg/GcvIfk7gExpCbhUy4IoAIoYXAeXkFGKCdh1SoKE9e4JXFc6
+         O7aeq+LWh7DsBF8EdSjoX8ZdPmsJQhXsTe3QM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/jIHPkrcrg/IX2G8MpgrNtMCWPOHXvyJQgcNyeiBzgg=;
+        b=JDd2DfTWxlWmwwg8W8JH0mfOHsrImIIQUPqVgj4+PA341Ou4g9++IOfS8PsCBm7fo0
+         H8X8bVMpQ2fOymcmE3md4MLMYozNe1vhrQlJDnj7RxUt1nM6+f+9Og5pMLaCFZ4pDVH9
+         +IbtTmCS/Dmczy0MY0JuASyg+BUPC0jdeBbmfAMFZfd3rPPNLlXp/kKNIZzYKeqpxZbQ
+         pxKM6AdPMcAtoTp2Af+tXCLSTyrFUc16yohaR2hMiZFZ0KIMTXgyAtI2y3G3n9yy4fue
+         tUtZF4dJi7JOBz9DvAxaics/YoxOmzbFn1fqL1YfwMIsZmye+IzyV3sJgKh0aUaqPZV0
+         xaxg==
+X-Gm-Message-State: AOAM532cXlVJZABzJn0YxxOFMr0+GiISwt2GevLYMS4/VuX1v67Me0tr
+        XVv0U4rR+S5kCBUGXXqYwHyIVQ==
+X-Google-Smtp-Source: ABdhPJyw98JlLo0u38m6MexsIV00zoTGfSot0lsI6pshuX/BDi9PRqIp9GUkpLhsZN4LY7zH2UDYMw==
+X-Received: by 2002:a17:902:db10:b0:14b:588d:e0ff with SMTP id m16-20020a170902db1000b0014b588de0ffmr9548850plx.92.1643150683949;
+        Tue, 25 Jan 2022 14:44:43 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:f313:ff03:9fc5:6152])
+        by smtp.gmail.com with ESMTPSA id p12sm1322335pjj.55.2022.01.25.14.44.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Jan 2022 14:44:43 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     konrad.dybcio@somainline.org, swboyd@chromium.org,
+        kgodara@codeaurora.org, mka@chromium.org, sibis@codeaurora.org,
+        pmaliset@codeaurora.org, quic_rjendra@quicinc.com,
+        Douglas Anderson <dianders@chromium.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/5] arm64: dts: qcom: sc7280: Introduce herobrine-rev1
+Date:   Tue, 25 Jan 2022 14:44:17 -0800
+Message-Id: <20220125224422.544381-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.35.0.rc0.227.g00780c9af4-goog
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <61f065b9.1c69fb81.ed14d.b9e2@mx.google.com>
-References: <20220121210340.32362-1-ansuelsmth@gmail.com> <20220121210340.32362-11-ansuelsmth@gmail.com> <20220125204555.91DB4C340E0@smtp.kernel.org> <61f065b9.1c69fb81.ed14d.b9e2@mx.google.com>
-Subject: Re: [PATCH v3 10/15] drivers: clk: qcom: gcc-ipq806x: add additional freq for sdc table
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Date:   Tue, 25 Jan 2022 14:18:24 -0800
-User-Agent: alot/0.10
-Message-Id: <20220125221825.D9B78C340E0@smtp.kernel.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Ansuel Smith (2022-01-25 13:03:52)
-> On Tue, Jan 25, 2022 at 12:45:53PM -0800, Stephen Boyd wrote:
-> > Quoting Ansuel Smith (2022-01-21 13:03:35)
-> > > Add additional freq supported for the sdc table.
-> > >=20
-> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > > ---
-> > >  drivers/clk/qcom/gcc-ipq806x.c | 1 +
-> > >  1 file changed, 1 insertion(+)
-> > >=20
-> > > diff --git a/drivers/clk/qcom/gcc-ipq806x.c b/drivers/clk/qcom/gcc-ip=
-q806x.c
-> > > index 77bc3d94f580..dbd61e4844b0 100644
-> > > --- a/drivers/clk/qcom/gcc-ipq806x.c
-> > > +++ b/drivers/clk/qcom/gcc-ipq806x.c
-> > > @@ -1292,6 +1292,7 @@ static const struct freq_tbl clk_tbl_sdc[] =3D {
-> > >         {  20210000, P_PLL8,  1, 1,  19 },
-> > >         {  24000000, P_PLL8,  4, 1,   4 },
-> > >         {  48000000, P_PLL8,  4, 1,   2 },
-> > > +       {  52000000, P_PLL8,  1, 2,  15 }, /* 51.2 Mhz */
-> >=20
-> > Why the comment and fake rate? Can it be 51200000 instead and drop the
-> > comment?
->=20
-> I will add the related reason in the commit.
->=20
-> We cannot achieve exact 52Mhz(jitter free) clock using PLL8.
-> As per the MND calculator the closest possible jitter free clock
-> using PLL8 is 51.2Mhz. This patch adds the values, which will provide
-> jitter free 51.2Mhz when the requested frequency is 52mhz.
+This series adds support for herobrine-rev1. Note that it's likely
+that with the introduction of -rev1 we can drop -rev0 support, but
+we'll keep it for now (though we won't try to "fit it in" and share
+code with it).
 
-Sounds like this clk should use the round down clk_ops instead of the
-round up ones. Then the actual frequency can be in the table.
+This series is confirmed to boot herobrine-rev1 atop mainline, commit
+0280e3c58f92 ("Merge tag 'nfs-for-5.17-1' of
+git://git.linux-nfs.org/projects/anna/linux-nfs"), though it requires
+a hack to work around a misconfigured DMA for i2c14
+(https://crrev.com/c/3378660)
+
+Changes in v2:
+- memory-region syntax change as per Stephen.
+- ("Factor gpio.h include to sc7280.dtsi") new for v2
+- Herobrine compatible on one line, not two
+- Wording change in comments for components enabled per-board
+- Always sort "bias" above "drive-strength" in pinctrl.
+- Properly sort "hub_en" pinctrl.
+- Two comments moved from multiline to single line.
+- Space after "/delete-property/"
+
+Douglas Anderson (5):
+  arm64: dts: qcom: sc7280: Fix gmu unit address
+  arm64: dts: qcom: sc7280: Move herobrine-r0 to its own dts
+  arm64: dts: qcom: sc7280: Factor out Chrome common fragment
+  arm64: dts: qcom: sc7280: Factor gpio.h include to sc7280.dtsi
+  arm64: dts: qcom: sc7280: Add herobrine-r1
+
+ arch/arm64/boot/dts/qcom/Makefile             |    3 +-
+ .../boot/dts/qcom/sc7280-chrome-common.dtsi   |   97 ++
+ .../qcom/sc7280-herobrine-herobrine-r0.dts    | 1350 +++++++++++++++++
+ .../qcom/sc7280-herobrine-herobrine-r1.dts    |  313 ++++
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dts |   14 -
+ .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 1056 +++----------
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      |   76 +-
+ arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi    |  553 +++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          |    3 +-
+ 9 files changed, 2530 insertions(+), 935 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
+ delete mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+
+-- 
+2.35.0.rc0.227.g00780c9af4-goog
+
