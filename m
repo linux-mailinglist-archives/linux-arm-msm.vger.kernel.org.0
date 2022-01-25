@@ -2,79 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E84E49B112
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jan 2022 11:03:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E467349B204
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jan 2022 11:45:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233761AbiAYKBE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jan 2022 05:01:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59994 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238254AbiAYJ6o (ORCPT
+        id S1345997AbiAYKeR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jan 2022 05:34:17 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:46696 "EHLO
+        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1344733AbiAYKU5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jan 2022 04:58:44 -0500
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A290C06175A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jan 2022 01:58:44 -0800 (PST)
-Received: by mail-pj1-x102e.google.com with SMTP id d5so17020842pjk.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jan 2022 01:58:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Vn0L6RsHRKBCiKCBWNgL0pspPE5cNVNqyAIXzD4B2ac=;
-        b=WCtmK8sexON+JqmlN+yhbvbUSA+hHCBa3kTTazQSI34b1IWbDnw8nUyEvS2ReTPIB0
-         lUeYI0D/neUse7fmGnV7JyyEx9fXrDQKOKiiLbfvPjSVZ+W0cM1brgwrgzgg5rZvScMx
-         GEj2aw4jFbxLZCkJ5ndXOoV/i45sGVG8uIrkAASLErvgitI41Yq56BdeJytdoDqW2K7g
-         I+MrqSNzlpb2QhRnFBsH3zL0ElvdRZrJOoGYMLarZQiai/1xSJ3Y1LQhLETAUq9eMPGm
-         aDwzFniyrzMn+CwOfSlifAkvrcGcaIQ/I2c9Ef4MPHmxO1JoNKdZGNFpFAd2BCk5K3y1
-         1mxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Vn0L6RsHRKBCiKCBWNgL0pspPE5cNVNqyAIXzD4B2ac=;
-        b=KoPJOXsdAuAtaU+fDIjKrcQE1/Kk9G4qiUoAha+ZqExwTAPJG1EELtnnvAo/km+xxA
-         mNo2CS7whKwGRcCwZjVEUjZm1o0LbJ6Gx2ndhch5czrg22ofq3yZ+ZtsXopvNTVbNv7F
-         tLqQY6r4yefisjR7swnyNWY7fVjQVP44jlXfhrCOSkjntB4vZlgfTq7WuZjTJo67VrX7
-         uHbFF64WKU6UbiwOcfphBXOGX3Q11gD+jHqw+6AjwGztZ46xuZ6/oq/pMqzzNCt6vPo8
-         RAAt6PIyk3160NCeDBM/MF58O+mrinRQAOcmvWh4kvIqMcIpiegyf4UOAhsuc4psAdCP
-         iZ1Q==
-X-Gm-Message-State: AOAM533mJzsNiGUns/PtOdk2xDNdrsbw9PwqvPi0lFDFb3mBMfI3HgT5
-        oqIFqPaaGArpusgvQQG84KzFDui8kCD4GnpzzR3njw==
-X-Google-Smtp-Source: ABdhPJy6iq38+iVsvEVuWBX5xlN0nG0obSDju74J6kON/LOkH6qEpvX7weUZ3u4f8T1088Lex+a6kCIupWO6SbhgX4c=
-X-Received: by 2002:a17:90a:53:: with SMTP id 19mr2702386pjb.159.1643104723636;
- Tue, 25 Jan 2022 01:58:43 -0800 (PST)
+        Tue, 25 Jan 2022 05:20:57 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B51DCB81626;
+        Tue, 25 Jan 2022 10:20:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3BCEC340E0;
+        Tue, 25 Jan 2022 10:20:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1643106055;
+        bh=YtEK2QrVTxCqt+3W3/QgzHCRCsuXuZsJpRPOEOnHStw=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=fiPNRpxhcMz0B+IFRWYT71b7YDCC6lSMubr7ALYbrQvQO66ScO64Xu6xAUp7JXCjQ
+         u6b2jJl/7EuTLTZ8G9lRFiC04ufO8Vg5yPEbTm5osm5pbvfphTWjA6DGZiGIzTr7/O
+         fuaScrl0W13ZljXXFGxIB1I9tFWuspfhyv8Kuks5UkSagbbj8h1l7NYLRiLX6iBhmi
+         Zw+4439Me2PmfC/GeedNkVyzyhiJQhZ7W4bJBCxn4N34Z9MnCuF6loLQEziWe72rsB
+         mS6VcYO1QbI5BrxJwkUNf1bookc9ceOeW7WKE7gfKfnGStKv7W4xPKNP6f0xs6U4rG
+         1yI+ZB8OglHmA==
+From:   Mark Brown <broonie@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Julia Lawall <julia.lawall@inria.fr>
+Cc:     linux-kernel@vger.kernel.org, kbuild-all@lists.01.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
+        Andy Gross <agross@kernel.org>
+In-Reply-To: <alpine.DEB.2.22.394.2201151210170.3051@hadrien>
+References: <alpine.DEB.2.22.394.2201151210170.3051@hadrien>
+Subject: Re: [PATCH] regulator: qcom_smd: fix for_each_child.cocci warnings
+Message-Id: <164310605364.75017.9038445361122316011.b4-ty@kernel.org>
+Date:   Tue, 25 Jan 2022 10:20:53 +0000
 MIME-Version: 1.0
-References: <20220125004046.4058284-1-bryan.odonoghue@linaro.org>
-In-Reply-To: <20220125004046.4058284-1-bryan.odonoghue@linaro.org>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Tue, 25 Jan 2022 11:10:19 +0100
-Message-ID: <CAMZdPi-1Ts-wuvkBozuPGv5DRxf4wMFTrfGcK32TUFdN8v2CKg@mail.gmail.com>
-Subject: Re: [PATCH] wcn36xx: Differentiate wcn3660 from wcn3620
-To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Cc:     kvalo@codeaurora.org, linux-wireless@vger.kernel.org,
-        wcn36xx@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        benl@squareup.com, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 25 Jan 2022 at 01:40, Bryan O'Donoghue
-<bryan.odonoghue@linaro.org> wrote:
->
-> The spread of capability between the three WiFi silicon parts wcn36xx
-> supports is:
->
-> wcn3620 - 802.11 a/b/g
-> wcn3660 - 802.11 a/b/g/n
-> wcn3680 - 802.11 a/b/g/n/ac
->
-> We currently treat wcn3660 as wcn3620 thus limiting it to 2GHz channels.
-> Fix this regression by ensuring we differentiate between all three parts.
->
-> Fixes: 8490987bdb9a ("wcn36xx: Hook and identify RF_IRIS_WCN3680")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+On Sat, 15 Jan 2022 12:11:38 +0100 (CET), Julia Lawall wrote:
+> From: kernel test robot <lkp@intel.com>
+> 
+> drivers/regulator/qcom_smd-regulator.c:1318:1-33: WARNING: Function "for_each_available_child_of_node" should have of_node_put() before return around line 1321.
+> 
+> 
+> Semantic patch information:
+>  False positives can be due to function calls within the for_each
+>  loop that may encapsulate an of_node_put.
+> 
+> [...]
 
-Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
+Applied to
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+
+Thanks!
+
+[1/1] regulator: qcom_smd: fix for_each_child.cocci warnings
+      commit: 6390d42c21efff0b4c10956a38e341f4e84ecd3d
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
