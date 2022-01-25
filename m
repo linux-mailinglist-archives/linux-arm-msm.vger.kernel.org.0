@@ -2,136 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 638E649A839
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jan 2022 05:08:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B237549A83C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jan 2022 05:08:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381173AbiAYDAb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Jan 2022 22:00:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56962 "EHLO
+        id S3414736AbiAYDAr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Jan 2022 22:00:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S3415623AbiAYBuH (ORCPT
+        with ESMTP id S3416558AbiAYCES (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Jan 2022 20:50:07 -0500
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E0CAC06179A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 17:50:07 -0800 (PST)
-Received: by mail-ot1-x331.google.com with SMTP id c3-20020a9d6c83000000b00590b9c8819aso24775724otr.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 17:50:07 -0800 (PST)
+        Mon, 24 Jan 2022 21:04:18 -0500
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0FE2C0680B1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 17:55:59 -0800 (PST)
+Received: by mail-oi1-x236.google.com with SMTP id q186so28500248oih.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jan 2022 17:55:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=wUEHk84PPSq5TMcst7Q46Xs07T+hDbMqqFuqhOeSN4c=;
-        b=HRToCcScCB2MmK94C4zwwPCL+sRf7G/Qg7BbMZj7V8W7nnP+AvEK28dFClVAdHckcq
-         XRvwkazFnxqQjxDnh75dW4WM7LVg34SZWkKfmnQBKScjJ6Knoo5L3b5YxHgyi5e1YLBg
-         4FiPnFZ5jL/oipIjK6GjFdOdpgPJrn8KgFlhI=
+        bh=T4rF0hLY7ipw4hc6cLAFZLFsJmiutz6BweB8Dz29VfE=;
+        b=mvEF6fOKLUpg42CVbbypm40M0/3KmMchADzb3NMDmLowUcZqsdQ9ybGgFg0NFGWzwh
+         b9WHGpDfddcXAyDpMpRpB5KzlYxFPoJ4xXSMLdA5smZ6UkM91INnKst7AlTuayeQvzbs
+         Uxx0n2Jukd4i1d5M70kWyTYutk/S9Qa+S1XOk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=wUEHk84PPSq5TMcst7Q46Xs07T+hDbMqqFuqhOeSN4c=;
-        b=Lvttz9wcyvX41QG/ejMO1nSQVWsrD8kmZu9NumCkCUutRRacYqNMlwVJaLqvna+rfN
-         KLUEUv3ZvlJWSweFS9JiuozrrSer2XfL4mMiJlKmelAwA0nhlsvleFpnlo3YoD5ptVk7
-         yY1pFNulYJiqSUYkaH0qN8vGsKJnQgExxgUE29qEbhWVJnilmTmktJZ27UU/reYeuKYj
-         v+2XW2qIS/E89NFv5OBw2rbM9D4jsFXby15XurWJCtxwIPMBF0tcya8BpyZI4dBkTNyJ
-         OnC3q531e0IKiWtSP9JfFWVMmFetyWLTbFpctRgzK3hAIXtI40L2Yls8BqPk9GcX5vp7
-         yHdQ==
-X-Gm-Message-State: AOAM532vkBLwGXczBeDWxQR9NlNozIML3I3A8MPfk62W6HM82HV5SRLc
-        x+a2By6caTB9yV85lK7MtW2tJnbj3szKwXGNSD4nmQ==
-X-Google-Smtp-Source: ABdhPJywHOsm6rxOv2ws+sHjp3srUtW0vaJGy7NiC9Hr/q913lcg5jyP3m/ecMVqRlFiPi0CJdg2jcKD4Q6Mx8vRJKU=
-X-Received: by 2002:a05:6830:30ba:: with SMTP id g26mr6860402ots.159.1643075406598;
- Mon, 24 Jan 2022 17:50:06 -0800 (PST)
+        bh=T4rF0hLY7ipw4hc6cLAFZLFsJmiutz6BweB8Dz29VfE=;
+        b=75q9nQFBpqI/8uEk81pK9LfagU1PgRnrZzdPBwBACng3GTvcMs4eZVkLudLgaLKYay
+         433k5e6B9XcawHbyMAASEePDPJ7dlNganhezQ8nbn5nDN0VKQ4Kt7ZfM/LVeHDFyKIww
+         rh+WiYSmohX6BE0EDbYWYzfM3rQzpjj7EWywZl9MVNMRUM10neABC8kK0NyhflICMWiI
+         ANfzDmNqww0rrM/tjNBgNxTjJZjhj0zyj8Y49yz15wX0UdEorFyhHwVTBVcINhBIx+AT
+         3TEzd8y2xfSugpU6j6S9ZKuX8uQG74WzGaRfrdDr5HHmCaewy1YgQ1/LeWT1d/teOy+D
+         DPcQ==
+X-Gm-Message-State: AOAM5330GVwpn/d+gx6nt/ruSjaLmQNjom2mG+Jj1OVL3gYa4+ukq7Ng
+        JdTs5mZTpkhDEtxTu/RBg837oCqG/U4zQz3uRgnIUQ==
+X-Google-Smtp-Source: ABdhPJzHi4N4zlikwEiCyjUIatqOZ90959JBrz7E38fa6Tao/XK98LwlytlQgYDcXpHvnll2OI4toRTtnC5NjDJLSCQ=
+X-Received: by 2002:a05:6808:252:: with SMTP id m18mr1234653oie.164.1643075759011;
+ Mon, 24 Jan 2022 17:55:59 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 24 Jan 2022 17:50:06 -0800
+ HTTPREST; Mon, 24 Jan 2022 17:55:58 -0800
 MIME-Version: 1.0
-In-Reply-To: <1643064292-6965-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1643064292-6965-1-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <Ye8nmnQ3F4QcTIJs@ripper>
+References: <20220120204132.17875-1-quic_amelende@quicinc.com>
+ <20220120204132.17875-4-quic_amelende@quicinc.com> <YenpwnE3WrIEAOlm@ripper>
+ <e2015c19-b73b-39a7-ba73-708b2c4552c7@quicinc.com> <CAE-0n50+1OU2yt2gihHHCEn-cE-CZuqa_U9W=xWCuYeCQdzExw@mail.gmail.com>
+ <Ye8nmnQ3F4QcTIJs@ripper>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Mon, 24 Jan 2022 17:50:06 -0800
-Message-ID: <CAE-0n505fYR1zpgZnC=J7WSxp_gpn6mnda9TuVjmJD8vMRn2Rg@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dp: add connector type to enhance debug messages
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dmitry.baryshkov@linaro.org, robdclark@gmail.com, sean@poorly.run,
-        vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, aravindh@codeaurora.org,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Mon, 24 Jan 2022 17:55:58 -0800
+Message-ID: <CAE-0n51bYEkvxu8z2gc_KUv0u+J2Esg0_3AiQRLyTaouNoa78g@mail.gmail.com>
+Subject: Re: [PATCH 3/3] input: misc: pm8941-pwrkey: avoid potential null
+ pointer dereference
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Anjelique Melendez <quic_amelende@quicinc.com>,
+        dmitry.torokhov@gmail.com, linux-input@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        collinsd@codeaurora.org, skakit@codeaurora.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-01-24 14:44:52)
-> DP driver is a generic driver which supports both eDP and DP.
-> For debugging purpose it is required to have capabilities to
-> differentiate message are generated from eDP or DP. This patch
-> add connector type into debug messages for this purpose.
+Quoting Bjorn Andersson (2022-01-24 14:26:34)
+> On Thu 20 Jan 20:18 PST 2022, Stephen Boyd wrote:
 >
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_ctrl.c    | 20 +++++------
->  drivers/gpu/drm/msm/dp/dp_display.c | 71 ++++++++++++++++++++++++++-----------
->  2 files changed, 60 insertions(+), 31 deletions(-)
+> > Quoting Anjelique Melendez (2022-01-20 16:25:26)
+> > >
+> > > On 1/20/2022 3:01 PM, Bjorn Andersson wrote:
+> > > > On Thu 20 Jan 12:41 PST 2022, Anjelique Melendez wrote:
+> > > >
+> > > >> From: David Collins <collinsd@codeaurora.org>
+> > > >>
+> > > >> Add a null check for the pwrkey->data pointer after it is assigned
+> > > >> in pm8941_pwrkey_probe().  This avoids a potential null pointer
+> > > >> dereference when pwrkey->data->has_pon_pbs is accessed later in
+> > > >> the probe function.
+> > > >>
+> > > >> Change-Id: I589c4851e544d79a1863fd110b32a0b45ac03caf
+> > > >> Signed-off-by: David Collins <collinsd@codeaurora.org>
+> > > >> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+> > > >> ---
+> > > >>  drivers/input/misc/pm8941-pwrkey.c | 4 ++++
+> > > >>  1 file changed, 4 insertions(+)
+> > > >>
+> > > >> diff --git a/drivers/input/misc/pm8941-pwrkey.c b/drivers/input/misc/pm8941-pwrkey.c
+> > > >> index 0ce00736e695..ac08ed025802 100644
+> > > >> --- a/drivers/input/misc/pm8941-pwrkey.c
+> > > >> +++ b/drivers/input/misc/pm8941-pwrkey.c
+> > > >> @@ -263,6 +263,10 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
+> > > >>
+> > > >>      pwrkey->dev = &pdev->dev;
+> > > >>      pwrkey->data = of_device_get_match_data(&pdev->dev);
+> > > >> +    if (!pwrkey->data) {
+> > > > The only way this can happen is if you add a new compatible and forget
+> > > > to specify data and when that happens you will get a print in the log
+> > > > somewhere, which once you realize that you don't have your pwrkey you
+> > > > might be able to find among all the other prints.
+> > > >
+> > > > If you instead don't NULL check this pointer you will get a large splat
+> > > > in the log, with callstack and all, immediately hinting you that
+> > > > pwrkey->data is NULL.
+> > > >
+> > > >
+> > > > In other words, there's already a print, a much larger print and I don't
+> > > > think there's value in handling this mistake gracefully.
+> > > >
+> > > > Regards,
+> > > > Bjorn
+> > >
+> > >
+> > > We would like to the null pointer check in place to avoid static analysis
+> > >
+> > > warnings that can be easily fixed.
+> > >
+> >
+> > Many drivers check that their device_get_match_data() returns a valid
+> > pointer. I'd like to see that API used in addition to checking the
+> > return value for NULL so that we can keep the static analysis tools
+> > happy. Yes it's an impossible case assuming the driver writer didn't
+> > mess up but it shuts SA up and we don't really have a better solution
+> > to tell tools that device_get_match_data() can't return NULL.
 >
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index 245e1b9..dcd0126 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1396,6 +1396,8 @@ void dp_ctrl_phy_init(struct dp_ctrl *dp_ctrl)
->
->         dp_catalog_ctrl_phy_reset(ctrl->catalog);
->         phy_init(phy);
-> +       DRM_DEBUG_DP("phy=%p init=%d power_on=%d\n",
-> +                       phy, phy->init_count, phy->power_count);
->  }
->
->  void dp_ctrl_phy_exit(struct dp_ctrl *dp_ctrl)
-> @@ -1410,6 +1412,8 @@ void dp_ctrl_phy_exit(struct dp_ctrl *dp_ctrl)
->
->         dp_catalog_ctrl_phy_reset(ctrl->catalog);
->         phy_exit(phy);
-> +       DRM_DEBUG_DP("phy=%p init=%d power_on=%d\n",
-> +                       phy, phy->init_count, phy->power_count);
->  }
->
->  static bool dp_ctrl_use_fixed_nvid(struct dp_ctrl_private *ctrl)
-> @@ -1484,6 +1488,8 @@ static int dp_ctrl_deinitialize_mainlink(struct dp_ctrl_private *ctrl)
->         phy_exit(phy);
->         phy_init(phy);
->
-> +       DRM_DEBUG_DP("phy=%p init=%d power_on=%d\n",
-> +                       phy, phy->init_count, phy->power_count);
->         return 0;
->  }
->
+> I'm not saying that device_get_match_data() can't return NULL,
 
-These are entirely new messages. Adding messages isn't mentioned in the
-commit text. Please either split this out or indicate in the commit text
-what's going on here.
+Indeed, I wasn't implying that you were saying that.
 
-> @@ -1895,14 +1901,12 @@ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
->
->         phy_power_off(phy);
->
-> -       DRM_DEBUG_DP("After, phy=%x init_count=%d power_on=%d\n",
-> -               (u32)(uintptr_t)phy, phy->init_count, phy->power_count);
-> -
->         /* aux channel down, reinit phy */
->         phy_exit(phy);
->         phy_init(phy);
->
-> -       DRM_DEBUG_DP("DP off link/stream done\n");
-> +       DRM_DEBUG_DP("phy=%p init=%d power_on=%d\n",
+> I'm
+> saying that in the very specific cases that it would return NULL it's
+> useful to have a kernel panic - as that's a much faster way to figure
+> out that something is wrong.
 
-The DRM_DEBUG_DP macro says it's deprecated now and we should use
-drm_dbg_dp() instead. Can you use that macro instead? Then it looks like
-drm->dev can actually be any old struct device, so I guess we're allowed
-to pass in the particular instance of dp device this is for. Allowing us
-to figure out which DP device is actually printing messages.
-
-> +                       phy, phy->init_count, phy->power_count);
->         return ret;
->  }
->
+I see it as more annoying, but maybe that's my workflow? When my kernel
+oopses I have to go back to a recovery kernel, which takes me a few more
+seconds to "repair" my device. If the driver only failed to probe then
+I'd probably be able to boot far enough to get networking and more
+easily replace my kernel with a working device. And I'd have userspace
+access so I could poke around and figure out why the driver failed to
+probe. Now obviously a big stacktrace would be helpful to know that it's
+the power key driver that's busted, but it's not like we're calling some
+internal API here. We're trying to probe a driver and if that oopses
+because the driver writer failed at their job then it's bad on them for
+writing a bad patch but also annoying for the integrator who has to deal
+with the mess they created. I'd rather have a half working system here
+vs. a totally broken one.
