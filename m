@@ -2,202 +2,572 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A3B649B709
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jan 2022 15:59:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80C0249B85C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jan 2022 17:15:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1449621AbiAYO43 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jan 2022 09:56:29 -0500
-Received: from mail-eopbgr00106.outbound.protection.outlook.com ([40.107.0.106]:15022
-        "EHLO EUR02-AM5-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1581013AbiAYOyV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jan 2022 09:54:21 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=I/vdwx3AKsOCFx6F78O6xs7YUWdZqCsMcCY6hoDoJErjIk26mdHiEdOZ5lJgEAaYnlRdESre75cuJ7CwMglGHDxDrZLlAZ8Sv+23dhvL918KKIgN3Yxw2oT4HDL01IQZGCGmpSj1ofaeNgc4EVbtSpkq4O6O9PZouYWaFEdD172s0HHKqkCcll1xSMWvGASMbfttosg6xOZwl9+FnG/tenMQ6M8jblU03aVkfRRwk/2N89yuHxcY4J9ZtWnkoHlgIgJDBkrEN7YE3KSNmzZguBvH/BUN8jdh/wLJ8fyHupqSTdC1bNOMxSEy+HrBrN5fgvjTH7Roc2fjkr79YtXVRQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tDtxkZW8zmkqpfEaWEY6IwYx4RFzxn8+djpZ1NYVD+g=;
- b=XnLgTnWHUtW29NW0wKnufn1R4fTOi1PhDtLJjN9ubBODJbj7/N3RPLKzEjTgsMLT4uhLQ+o0FNajecDxSPn/m69AyQGDbvDCI5e8a1XGCoCy0GFkqH2YvvtA483+qWXBO8YYONuG9fw9uh8m1jVOh3rX9Atn130HP/6jwjbtvaeouuR+pzkklkyJOizc2eq8AwMfx1kCQH8cETFWxiws6QgBAdx6mbTF9j0owfYjXA+vA97YeV+v+y2eheBK71HI0yKcV29EJyyZXvbovpi7No/UPsO7O6GiPDRs2VQPY1enOxvZXKjHvS6iE0ZIoFbUAXef0jj6RCf2LAtisS0Ohg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axentia.se;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tDtxkZW8zmkqpfEaWEY6IwYx4RFzxn8+djpZ1NYVD+g=;
- b=WHQa+r613fcT8gGJyDPkjk3hCyXpehO6vb9kGG6I4EKkO+A0D8ixYlzJvib8A6iiCyJA5rmUCJgiOpA/0ARe/BEQRrXnSjwnvPwMn9j2aBb0jJQ+H6Umn7+S6N3u4g19NZAgBWB6WOG7j1Pr3B2lYWV2UFsRrPh7iI5hgkWzMug=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=axentia.se;
-Received: from DB8PR02MB5482.eurprd02.prod.outlook.com (2603:10a6:10:eb::29)
- by AM6PR02MB5254.eurprd02.prod.outlook.com (2603:10a6:20b:80::26) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4909.19; Tue, 25 Jan
- 2022 14:54:11 +0000
-Received: from DB8PR02MB5482.eurprd02.prod.outlook.com
- ([fe80::99a:847f:ce2e:745]) by DB8PR02MB5482.eurprd02.prod.outlook.com
- ([fe80::99a:847f:ce2e:745%4]) with mapi id 15.20.4909.017; Tue, 25 Jan 2022
- 14:54:11 +0000
-Message-ID: <b25932d7-91bc-27b4-ada9-8d5da1ef2ddf@axentia.se>
-Date:   Tue, 25 Jan 2022 15:54:07 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v2 5/5] iio: afe: iio-rescale: Re-use generic struct
- s32_fract
-Content-Language: en-US
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Liam Beguin <liambeguin@gmail.com>
-Cc:     Jonathan Cameron <jic23@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Andreas Kemnade <andreas@kemnade.info>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        id S1354226AbiAYQOn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jan 2022 11:14:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33410 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1583388AbiAYQM0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 25 Jan 2022 11:12:26 -0500
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8859C061747
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jan 2022 08:12:24 -0800 (PST)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1nCOQU-0004mv-6D; Tue, 25 Jan 2022 17:12:10 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1nCOQT-00CNKR-9U; Tue, 25 Jan 2022 17:12:08 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1nCOQR-001L5i-US; Tue, 25 Jan 2022 17:12:07 +0100
+Date:   Tue, 25 Jan 2022 17:12:04 +0100
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lars-Peter Clausen <lars@metafoo.de>
-References: <20220110193104.75225-1-andriy.shevchenko@linux.intel.com>
- <20220110193104.75225-5-andriy.shevchenko@linux.intel.com>
- <20220115185203.567780e8@jic23-huawei> <Ye7DSAN4gdhXfEUs@smile.fi.intel.com>
- <Ye8Z6dS5cCji9LNQ@shaak> <Ye/4eJ/RhlWF7q70@smile.fi.intel.com>
-From:   Peter Rosin <peda@axentia.se>
-Organization: Axentia Technologies AB
-In-Reply-To: <Ye/4eJ/RhlWF7q70@smile.fi.intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: GV3P280CA0051.SWEP280.PROD.OUTLOOK.COM
- (2603:10a6:150:9::35) To DB8PR02MB5482.eurprd02.prod.outlook.com
- (2603:10a6:10:eb::29)
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v10 1/3] pwm: driver for qualcomm ipq6018 pwm block
+Message-ID: <20220125161204.hx5foivny6iupjke@pengutronix.de>
+References: <ab2a4c345844f66aa22a847e522b2f4ee0786d8b.1639499239.git.baruch@tkos.co.il>
+ <20220119172439.be4xpaqgwzdy26oh@pengutronix.de>
+ <87tuds7y09.fsf@tarshish>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: b5aa1368-e727-4676-72e9-08d9e0128c1d
-X-MS-TrafficTypeDiagnostic: AM6PR02MB5254:EE_
-X-Microsoft-Antispam-PRVS: <AM6PR02MB525402C678C9F7DB15B490BBBC5F9@AM6PR02MB5254.eurprd02.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:9508;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: fXDHJ/kvvn7nQUxBa/keZevmZjRc5Pyufb4dfAv5ccvEqglJExpvswsxYRGWlMaUwzBJ20Iy3PPBy7TpRO/aHQQbrYOGYVd446tA304U4Jw1jgZA9GqBkzwPSHFo4hFYJQ5ysaSjSWQx8ZipYDlBNXpW62C8EIlYhwjqP9Ini+WlKbUdE7HztInq/E1PYGA90LukV+Cz34ZRBbh8lqHPP0VSRu73GpyqqrgO5csZAgS5lW7/zkjwpu2AerMebamX65r5Oc3Ma3I0v/4ltmdxbdVwku++vjk4cqC3Dtgm6P+psNfecRWzYFpWMUOKbMoSTmtAQEKp18/HkmnU7Rs9LOQAYG469APPONnsGs66gCmO64pqohD66Bip/jDni2KQ8vcS72AQ72OnBXjlbmb5vwPB+LXEJyBgU4dnvdRdiPEXfG7mBGcJB/3a+6f5DPF8q7Oek55CTDmd1M8Hkkaxego8PiG1/7HtTzTzULEe/Owsg6QkwJr98X2j6oRuXkeqtTH1EnJeIpJyAGX08TIKScr+LTeBGAgAzkKa6OnvPI1mX5GosH8hT8tiDo3GkxVA0z32XG4u9PQjMeA0NqcWs+W4FDwE7NoXhL0wGWAUmdSUjlTz5wdbWALzh8lTylSAHh2sbCe+s+5iqUQptRPcuRMJdt3/s066hOSk94700dbTi+dh6TYFo5RiQXH8vsJtJXK5EpkeXaBgmjgSzQ47YTa8Ni7cJX8AJ5DpBp1TaAlh0S5gRiPJ74frtoyM4WWj
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB8PR02MB5482.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(396003)(376002)(346002)(366004)(136003)(39830400003)(2616005)(7416002)(83380400001)(316002)(186003)(38100700002)(31696002)(36756003)(110136005)(54906003)(53546011)(66476007)(2906002)(6666004)(4326008)(8936002)(8676002)(508600001)(31686004)(36916002)(66946007)(86362001)(6512007)(26005)(5660300002)(6486002)(6506007)(66556008)(41533002)(45980500001)(43740500002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bTBXUUtzaEJEb1JNTzB2VGhldzB0OGplcy9hUkZ2YjIvTmZnd04rSjU1UXNt?=
- =?utf-8?B?SVI0ZW1wZWhmNUt3TlZpeWwyRlJCcXR3V2NQSkxTd3VzYmJqK3cxK3pibWJ0?=
- =?utf-8?B?Q3hmRGJ3S2c3Vi9rSVo5K3dveEdIbytBVmZiMGNtMFhlSmV3cStKci94TDAx?=
- =?utf-8?B?bVNpR0pzVEQwck9PamJnNDBGL0ZEWnNMMCtBb3RFS1R5aXVKNjk0ZVVCNHVx?=
- =?utf-8?B?TEJySnNPb2dUc3d4NW95cS9qOGdkaEE2S3JxZ0NWcTBoR0ZkOVRTdHd6dlpZ?=
- =?utf-8?B?RXBxRk5RNDFhNE9DZHRING9tb2lpTmowN0hLaWZ4a1hTWlB1ejZ4Nk9xS1Q4?=
- =?utf-8?B?ZlQ1d3RUUTdkdUUzbHE3SG1ZckpLOFFaZWI5RFdoU205VVlNaHd1eXNScE1O?=
- =?utf-8?B?SWU0eTkxWitVcmh4eHpjcC90Mzl5S0NLSnkzeTZYYkRkVnQ1TVJ4L0w5VVlv?=
- =?utf-8?B?dkY0UmJLUmh4eUltaUVXMDZTbmZSWU8ydWN5elUzeUVQaGd5MUlXY203bE9L?=
- =?utf-8?B?aGJ2djR3WG5SOVQvOFV2dUJISm03QlVTS0N5cXNBNGMxcnNzSW5Gb3dVS29T?=
- =?utf-8?B?aExobGY5RkRoMWVNR0dDcjN2bnVoRkU2b01DVmZ5Q2VOdDY5L0RWdjhtNXZU?=
- =?utf-8?B?SlAxSndPb24xVksrMFVmTElHa2pJaXQ0RU92Q0pmdzZ3UzhYVGl5Zm9GdE5u?=
- =?utf-8?B?TjkreEJ2MytXUmk0S3kzY1NwTkJ2MFBUTU9SNjMrYVlYTXdMOVQvdWd2eWFU?=
- =?utf-8?B?a2k2Qy85K3lFQkFQcEFuWjZTRXhnejJUcUFteURPTGt5L0dOdWZ5QW9EV3Rj?=
- =?utf-8?B?TU1aMWozSzFhQTMrbFlrTVozbzZoN0RIR1BpS1pYTFlNWGxJc3prZnIyT0d0?=
- =?utf-8?B?Wkp5cnVaUWhNVkFIOEpkWWVLT0F2OGhyeWxLU1QvR2JSY3o4RG1SMFNyZUoy?=
- =?utf-8?B?b2U5U2IxS0EwbzlySStPRlVxMDN5Q0RTelBrWFZxSDdMVGNwY1dYUHhTUk1E?=
- =?utf-8?B?c1gzSDBTRFgzSURtRDVUNGlYUlVWVTRHVk0xYktEKzF5Uk5yaE1KOVRvbytu?=
- =?utf-8?B?enNpVmZrYlRuYm11VlArZnIvc3lTeGxicjRaVXUvTG44blB6WGlQN3I4L1Vx?=
- =?utf-8?B?bkk1YkNCc0Y4dGt3YkJMd3VmUHN0Ry9vOXE5N1hzMGJLSjI1eXNJUFU1UzdP?=
- =?utf-8?B?SmtkQ2U0TDV2VzJRallBTFZVUE5wcFNaeWZBb3VtdEJBRll4V1E2VUhUZXdB?=
- =?utf-8?B?RXVGem1MWHdOZ3lBSXJYZ3JheW9yZi80TjRGSVM0SHJlNFBxVnY1TFZjVlpB?=
- =?utf-8?B?dHRsWGdLeVRnb0hNVzNuTFB0ei8vbFFjNnBFbjAxdlV2ZFFuc2czTmhoY1h0?=
- =?utf-8?B?UXJuQUhQVWFMdW8xM2JtSExUZm5iMkZnTFBqbm53OHZTTyswSFhmMVJRVVNw?=
- =?utf-8?B?WXM4S3p6bnJHSmFqL3VseDZ0ck9WVjNLTWJPa214b1JmbjZ0NFBBR0tZcW5j?=
- =?utf-8?B?OGZITW85LzAybzdqa1BZZ0pBR2ppSFJvR1MwREQxZFhQNnhxL1prZ3F4d2Ew?=
- =?utf-8?B?allXTlhONjdndVdxWCtqUGFTNS9ZM212R1R5eHFTQ0Y3K21JMy8rb1ZmUElk?=
- =?utf-8?B?cmU0MWt2QXA4WW80OGNZM1Y5eGhqaDhJMUJyaG5aMWtPTi8wbXJuQjhOVG8x?=
- =?utf-8?B?NU05NG53c3ZTNkhwOHJkSGcrSmhhZWY2eElVWUlkWDkvcXBnRk9wN0t6MDQ4?=
- =?utf-8?B?VCtSVG83R1lyeWd2NVBhNm5nZmV6VVh2cWdna0hnaWdjZ3pDWmk2TWh3aUdp?=
- =?utf-8?B?VGE0WS9MNXcvb2Z4M3hEdlVibWYwNlJ3Q1l3N1ovV2VRV0FjM3FYKzNza3dt?=
- =?utf-8?B?SHd3N2RteXFRd1RxdmtlaFNVRklrSU1GeHVSZEpOTkNESUt1cDdheWRuVWs1?=
- =?utf-8?B?TDBGTzgxNjBTa01GMFlubE9zb3ZZcXQxdktBb1hFR1NLVEphcTVYY1FaRGI2?=
- =?utf-8?B?SWV3UFdUdk9kTjdQamx5bkd0am1TcXVtcnA2aC9mckpDTm1ZTFYvVmMweEtC?=
- =?utf-8?B?MXNhLzAvdFllYjUzbXk0cytULzhvcGV5VnRhVmxPM2wyR2RMazBJNWxFWXFV?=
- =?utf-8?Q?OnmQ=3D?=
-X-OriginatorOrg: axentia.se
-X-MS-Exchange-CrossTenant-Network-Message-Id: b5aa1368-e727-4676-72e9-08d9e0128c1d
-X-MS-Exchange-CrossTenant-AuthSource: DB8PR02MB5482.eurprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jan 2022 14:54:11.6127
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4ee68585-03e1-4785-942a-df9c1871a234
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: NEgn5Du7EZQkCAzyQdLIox/R4SS8nd6h1h3/YakrH5HT7GUEYIbMDEfsCPn+P3V8
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR02MB5254
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="agv2t6hsvvxjui2s"
+Content-Disposition: inline
+In-Reply-To: <87tuds7y09.fsf@tarshish>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 2022-01-25 14:17, Andy Shevchenko wrote:
-> On Mon, Jan 24, 2022 at 04:28:09PM -0500, Liam Beguin wrote:
->> On Mon, Jan 24, 2022 at 05:18:32PM +0200, Andy Shevchenko wrote:
->>> On Sat, Jan 15, 2022 at 06:52:03PM +0000, Jonathan Cameron wrote:
->>>> On Mon, 10 Jan 2022 21:31:04 +0200
->>>> Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
->>>>
->>>>> Instead of custom data type re-use generic struct s32_fract.
->>>>> No changes intended.
->>>>>
->>>>> The new member is put to be the first one to avoid additional
->>>>> pointer arithmetic. Besides that one may switch to use fract
->>>>> member to perform container_of(), which will be no-op in this
->>>>> case, to get struct rescale.
->>>>>
->>>>> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
->>>>
->>>> I'm not totally sold on this series showing there is a strong case for
->>>> these macros so interested to hear what others think.
->>>
->>> So far no news :-)
->>
->> Like I mentioned briefly in the other thread[1], I don't really see the
->> advantage for the AFE driver given that it's almost just like renaming
->> the parameters.
-> 
-> I tend to disagree, perhaps I wasn't so clear in my points.
-> 
-> The change reveals that the layering can be improved. In OOP
-> the object A which is inherited (or encapsulated as we see here)
-> allows to clearly get what kind of data the methods are operating
-> with / on. As you may see the two functions and the method
-> declaration appears to have interest only in the fraction data
-> for rescaling. The cleanup I consider helpful in the terms
-> of layering and OOP.
+--agv2t6hsvvxjui2s
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hi!
+Hello Baruch,
 
-[Sorry for the delay, I have been far too busy for far too long]
+On Tue, Jan 25, 2022 at 03:03:08PM +0200, Baruch Siach wrote:
+> On Wed, Jan 19 2022, Uwe Kleine-K=F6nig wrote:
+> > On Tue, Dec 14, 2021 at 06:27:17PM +0200, Baruch Siach wrote:
+> >> From: Baruch Siach <baruch.siach@siklu.com>
+> >>=20
+> >> Driver for the PWM block in Qualcomm IPQ6018 line of SoCs. Based on
+> >> driver from downstream Codeaurora kernel tree. Removed support for old=
+er
+> >> (V1) variants because I have no access to that hardware.
+> >>=20
+> >> Tested on IPQ6010 based hardware.
+> >>=20
+> >> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
+> >> ---
+> >> v10:
+> >>=20
+> >>   Restore round up in pwm_div calculation; otherwise diff is always <=
+=3D
+> >>   0, so only bingo match works
+> >>=20
+> >>   Don't overwrite min_diff on every loop iteration
+> >>=20
+> >> v9:
+> >>=20
+> >> Address comment from Uwe Kleine-K=F6nig:
+> >>=20
+> >>   Use period_ns*rate in dividers calculation for better accuracy
+> >>=20
+> >>   Round down pre_div and pwm_div
+> >>=20
+> >>   Add a comment explaining why pwm_div can't underflow
+> >>=20
+> >>   Add a comment explaining why pre_div > pwm_div end the search loop
+> >>=20
+> >>   Drop 'CFG_' from register macros
+> >>=20
+> >>   Rename to_ipq_pwm_chip() to ipq_pwm_from_chip()
+> >>=20
+> >>   Change bare 'unsigned' to 'unsigned int'
+> >>=20
+> >>   Clarify the comment on separate REG1 write for enable/disable
+> >>=20
+> >>   Round up the period value in .get_state
+> >>=20
+> >>   Use direct readl/writel so no need to check for regmap errors
+> >>=20
+> >> v7:
+> >>=20
+> >>   Change 'offset' to 'reg' for the tcsr offset (Rob)
+> >>=20
+> >>   Drop clock name; there is only one clock (Bjorn)
+> >>=20
+> >>   Simplify probe failure code path (Bjorn)
+> >>=20
+> >> v6:
+> >>=20
+> >> Address Uwe Kleine-K=F6nig review comments:
+> >>=20
+> >>   Drop IPQ_PWM_MAX_DEVICES
+> >>=20
+> >>   Rely on assigned-clock-rates; drop IPQ_PWM_CLK_SRC_FREQ
+> >>=20
+> >>   Simplify register offset calculation
+> >>=20
+> >>   Calculate duty cycle more precisely
+> >>=20
+> >>   Refuse to set inverted polarity
+> >>=20
+> >>   Drop redundant IPQ_PWM_REG1_ENABLE bit clear
+> >>=20
+> >>   Remove x1000 factor in pwm_div calculation, use rate directly, and r=
+ound up
+> >>=20
+> >>   Choose initial pre_div such that pwm_div < IPQ_PWM_MAX_DIV
+> >>=20
+> >>   Ensure pre_div <=3D pwm_div
+> >>=20
+> >>   Rename close_ to best_
+> >>=20
+> >>   Explain in comment why effective_div doesn't overflow
+> >>=20
+> >>   Limit pwm_div to IPQ_PWM_MAX_DIV - 1 to allow 100% duty cycle
+> >>=20
+> >>   Disable clock only after pwmchip_remove()
+> >>=20
+> >>   const pwm_ops
+> >>=20
+> >> Other changes:
+> >>=20
+> >>   Add missing linux/bitfield.h header include (kernel test robot)
+> >>=20
+> >>   Adjust code for PWM device node under TCSR (Rob Herring)
+> >>=20
+> >> v5:
+> >>=20
+> >> Use &tcsr_q6 syscon to access registers (Bjorn Andersson)
+> >>=20
+> >> Address Uwe Kleine-K=F6nig review comments:
+> >>=20
+> >>   Implement .get_state()
+> >>=20
+> >>   Add IPQ_PWM_ prefix to local macros
+> >>=20
+> >>   Use GENMASK/BIT/FIELD_PREP for register fields access
+> >>=20
+> >>   Make type of config_div_and_duty() parameters consistent
+> >>=20
+> >>   Derive IPQ_PWM_MIN_PERIOD_NS from IPQ_PWM_CLK_SRC_FREQ
+> >>=20
+> >>   Integrate enable/disable into config_div_and_duty() to save register=
+ read,
+> >>   and reduce frequency glitch on update
+> >>=20
+> >>   Use min() instead of min_t()
+> >>=20
+> >>   Fix comment format
+> >>=20
+> >>   Use dev_err_probe() to indicate probe step failure
+> >>=20
+> >>   Add missing clk_disable_unprepare() in .remove
+> >>=20
+> >>   Don't set .owner
+> >>=20
+> >> v4:
+> >>=20
+> >>   Use div64_u64() to fix link for 32-bit targets ((kernel test robot
+> >>   <lkp@intel.com>, Uwe Kleine-K=F6nig)
+> >>=20
+> >> v3:
+> >>=20
+> >>   s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
+> >>=20
+> >>   Fix integer overflow on 32-bit targets (kernel test robot <lkp@intel=
+=2Ecom>)
+> >>=20
+> >> v2:
+> >>=20
+> >> Address Uwe Kleine-K=F6nig review comments:
+> >>=20
+> >>   Fix period calculation when out of range
+> >>=20
+> >>   Don't set period larger than requested
+> >>=20
+> >>   Remove PWM disable on configuration change
+> >>=20
+> >>   Implement .apply instead of non-atomic .config/.enable/.disable
+> >>=20
+> >>   Don't modify PWM on .request/.free
+> >>=20
+> >>   Check pwm_div underflow
+> >>=20
+> >>   Fix various code and comment formatting issues
+> >>=20
+> >> Other changes:
+> >>=20
+> >>   Use u64 divisor safe division
+> >>=20
+> >>   Remove now empty .request/.free
+> >> ---
+> >>  drivers/pwm/Kconfig   |  12 ++
+> >>  drivers/pwm/Makefile  |   1 +
+> >>  drivers/pwm/pwm-ipq.c | 275 ++++++++++++++++++++++++++++++++++++++++++
+> >>  3 files changed, 288 insertions(+)
+> >>  create mode 100644 drivers/pwm/pwm-ipq.c
+> >>=20
+> >> diff --git a/drivers/pwm/Kconfig b/drivers/pwm/Kconfig
+> >> index 21e3b05a5153..e39718137ecd 100644
+> >> --- a/drivers/pwm/Kconfig
+> >> +++ b/drivers/pwm/Kconfig
+> >> @@ -260,6 +260,18 @@ config PWM_INTEL_LGM
+> >>  	  To compile this driver as a module, choose M here: the module
+> >>  	  will be called pwm-intel-lgm.
+> >> =20
+> >> +config PWM_IPQ
+> >> +	tristate "IPQ PWM support"
+> >> +	depends on ARCH_QCOM || COMPILE_TEST
+> >> +	depends on HAVE_CLK && HAS_IOMEM
+> >> +	help
+> >> +	  Generic PWM framework driver for IPQ PWM block which supports
+> >> +	  4 pwm channels. Each of the these channels can be configured
+> >> +	  independent of each other.
+> >> +
+> >> +	  To compile this driver as a module, choose M here: the module
+> >> +	  will be called pwm-ipq.
+> >> +
+> >>  config PWM_IQS620A
+> >>  	tristate "Azoteq IQS620A PWM support"
+> >>  	depends on MFD_IQS62X || COMPILE_TEST
+> >> diff --git a/drivers/pwm/Makefile b/drivers/pwm/Makefile
+> >> index 708840b7fba8..7402feae4b36 100644
+> >> --- a/drivers/pwm/Makefile
+> >> +++ b/drivers/pwm/Makefile
+> >> @@ -22,6 +22,7 @@ obj-$(CONFIG_PWM_IMX1)		+=3D pwm-imx1.o
+> >>  obj-$(CONFIG_PWM_IMX27)		+=3D pwm-imx27.o
+> >>  obj-$(CONFIG_PWM_IMX_TPM)	+=3D pwm-imx-tpm.o
+> >>  obj-$(CONFIG_PWM_INTEL_LGM)	+=3D pwm-intel-lgm.o
+> >> +obj-$(CONFIG_PWM_IPQ)		+=3D pwm-ipq.o
+> >>  obj-$(CONFIG_PWM_IQS620A)	+=3D pwm-iqs620a.o
+> >>  obj-$(CONFIG_PWM_JZ4740)	+=3D pwm-jz4740.o
+> >>  obj-$(CONFIG_PWM_KEEMBAY)	+=3D pwm-keembay.o
+> >> diff --git a/drivers/pwm/pwm-ipq.c b/drivers/pwm/pwm-ipq.c
+> >> new file mode 100644
+> >> index 000000000000..3764010808f0
+> >> --- /dev/null
+> >> +++ b/drivers/pwm/pwm-ipq.c
+> >> @@ -0,0 +1,275 @@
+> >> +// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0
+> >> +/*
+> >> + * Copyright (c) 2016-2017, 2020 The Linux Foundation. All rights res=
+erved.
+> >> + */
+> >> +
+> >> +#include <linux/module.h>
+> >> +#include <linux/platform_device.h>
+> >> +#include <linux/pwm.h>
+> >> +#include <linux/clk.h>
+> >> +#include <linux/io.h>
+> >> +#include <linux/of.h>
+> >> +#include <linux/math64.h>
+> >> +#include <linux/of_device.h>
+> >> +#include <linux/bitfield.h>
+> >> +
+> >> +/* The frequency range supported is 1 Hz to clock rate */
+> >> +#define IPQ_PWM_MAX_PERIOD_NS	((u64)NSEC_PER_SEC)
+> >> +
+> >> +/*
+> >> + * The max value specified for each field is based on the number of b=
+its
+> >> + * in the pwm control register for that field
+> >> + */
+> >> +#define IPQ_PWM_MAX_DIV		0xFFFF
+> >> +
+> >> +/*
+> >> + * Two 32-bit registers for each PWM: REG0, and REG1.
+> >> + * Base offset for PWM #i is at 8 * #i.
+> >> + */
+> >> +#define IPQ_PWM_REG0			0 /*PWM_DIV PWM_HI*/
+> >> +#define IPQ_PWM_REG0_PWM_DIV		GENMASK(15, 0)
+> >> +#define IPQ_PWM_REG0_HI_DURATION	GENMASK(31, 16)
+> >
+> > PWM_HI in the comment of IPQ_PWM_REG0 vs. HI_DURATION? Should this
+> > match? I'd say the comment is redundant.
+> >
+> >> +#define IPQ_PWM_REG1			4 /*ENABLE UPDATE PWM_PRE_DIV*/
+> >> +#define IPQ_PWM_REG1_PRE_DIV		GENMASK(15, 0)
+> >> +/*
+> >> + * Enable bit is set to enable output toggling in pwm device.
+> >> + * Update bit is set to reflect the changed divider and high duration
+> >> + * values in register.
+> >> + */
+> >> +#define IPQ_PWM_REG1_UPDATE		BIT(30)
+> >> +#define IPQ_PWM_REG1_ENABLE		BIT(31)
+> >> +
+> >> +
+> >> +struct ipq_pwm_chip {
+> >> +	struct pwm_chip chip;
+> >> +	struct clk *clk;
+> >> +	void __iomem *mem;
+> >> +};
+> >> +
+> >> +static struct ipq_pwm_chip *ipq_pwm_from_chip(struct pwm_chip *chip)
+> >> +{
+> >> +	return container_of(chip, struct ipq_pwm_chip, chip);
+> >> +}
+> >> +
+> >> +static unsigned int ipq_pwm_reg_read(struct pwm_device *pwm, unsigned=
+ int reg)
+> >> +{
+> >> +	struct ipq_pwm_chip *ipq_chip =3D ipq_pwm_from_chip(pwm->chip);
+> >> +	unsigned int off =3D 8 * pwm->hwpwm + reg;
+> >> +
+> >> +	return readl(ipq_chip->mem + off);
+> >> +}
+> >> +
+> >> +static void ipq_pwm_reg_write(struct pwm_device *pwm, unsigned int re=
+g,
+> >> +			      unsigned int val)
+> >> +{
+> >> +	struct ipq_pwm_chip *ipq_chip =3D ipq_pwm_from_chip(pwm->chip);
+> >> +	unsigned int off =3D 8 * pwm->hwpwm + reg;
+> >> +
+> >> +	writel(val, ipq_chip->mem + off);
+> >> +}
+> >> +
+> >> +static void config_div_and_duty(struct pwm_device *pwm, unsigned int =
+pre_div,
+> >> +			unsigned int pwm_div, unsigned long rate, u64 duty_ns,
+> >> +			bool enable)
+> >> +{
+> >> +	unsigned long hi_dur;
+> >> +	unsigned long val =3D 0;
+> >> +
+> >> +	/*
+> >> +	 * high duration =3D pwm duty * (pwm div + 1)
+> >> +	 * pwm duty =3D duty_ns / period_ns
+> >> +	 */
+> >> +	hi_dur =3D div64_u64(duty_ns * rate, (pre_div + 1) * NSEC_PER_SEC);
+> >> +
+> >> +	val =3D FIELD_PREP(IPQ_PWM_REG0_HI_DURATION, hi_dur) |
+> >> +		FIELD_PREP(IPQ_PWM_REG0_PWM_DIV, pwm_div);
+> >> +	ipq_pwm_reg_write(pwm, IPQ_PWM_REG0, val);
+> >> +
+> >> +	val =3D FIELD_PREP(IPQ_PWM_REG1_PRE_DIV, pre_div);
+> >> +	ipq_pwm_reg_write(pwm, IPQ_PWM_REG1, val);
+> >> +
+> >> +	/* PWM enable toggle needs a separate write to REG1 */
+> >> +	val |=3D IPQ_PWM_REG1_UPDATE;
+> >> +	if (enable)
+> >> +		val |=3D IPQ_PWM_REG1_ENABLE;
+> >> +	ipq_pwm_reg_write(pwm, IPQ_PWM_REG1, val);
+> >> +}
+> >> +
+> >> +static int ipq_pwm_apply(struct pwm_chip *chip, struct pwm_device *pw=
+m,
+> >> +			 const struct pwm_state *state)
+> >> +{
+> >> +	struct ipq_pwm_chip *ipq_chip =3D ipq_pwm_from_chip(chip);
+> >> +	unsigned int pre_div, pwm_div, best_pre_div, best_pwm_div;
+> >> +	unsigned long rate =3D clk_get_rate(ipq_chip->clk);
+> >> +	u64 period_ns, duty_ns, period_rate;
+> >> +	u64 min_diff;
+> >> +
+> >> +	if (state->polarity !=3D PWM_POLARITY_NORMAL)
+> >> +		return -EINVAL;
+> >> +
+> >> +	if (state->period < div64_u64(NSEC_PER_SEC, rate))
+> >> +		return -ERANGE;
+> >
+> > NSEC_PER_SEC / rate is the smallest period you can achieve, right?
+> > Consider rate =3D 33333 (Hz), then the minimal period is
+> > 30000.30000300003 ns. So you should refuse a request to configure
+> > state->period =3D 30000, but as div64_u64(1000000000, 33333) is 30000 y=
+ou
+> > don't.
+> >
+> >> +	period_ns =3D min(state->period, IPQ_PWM_MAX_PERIOD_NS);
+> >> +	duty_ns =3D min(state->duty_cycle, period_ns);
+> >> +
+> >> +	/*
+> >> +	 * period_ns is 1G or less. As long as rate is less than 16 GHz this
+> >> +	 * does not overflow.
+> >
+> > Well, rate cannot be bigger than 4294967295 because an unsigned long
+> > cannot hold a bigger value.
+>=20
+> On 64-bit systems __SIZEOF_LONG__ is 8, which can hold more than 2^32.
 
-While this is all true for the current set of front-ends, it is not
-all that far-fetched to imagine some kind of future front-end that
-requires some other parameter, such that the rescaling fraction is no
-longer the only thing of interest. So, I have the feeling that changing
-the type of the 2nd argument of the ->props functions to just the
-fraction instead of the bigger object is conceptually wrong and
-something that will later turn out to have been a bad idea.
+Ah right, then I suggest to check that in code to make it more explicit
+than in a comment.
 
-Regarding the new xyz_fract types, I have no strong opinion. But as
-long as there are no helper functions for the new types, I see little
-value in them. To me, they look mostly like something that newcomers
-(and others) will not know about or expect, and it will just be
-another thing that you have to look out for during review, to keep new
-numerators/denominators from appearing and causing extra rounds of
-review for something that is mostly a bikeshed issue.
+> >> +	 */
+> >> +	period_rate =3D period_ns * rate;
+> >> +	best_pre_div =3D IPQ_PWM_MAX_DIV;
+> >> +	best_pwm_div =3D IPQ_PWM_MAX_DIV;
+> >> +	/* Initial pre_div value such that pwm_div < IPQ_PWM_MAX_DIV */
+>=20
+> Note this comment.
 
-My guess is that many times where fractions are used, they are used
-since fp math is not available. And that means that there will be a
-lot of special handling and shortcuts done since various things about
-accuracy and precision can be assumed. I think it will be hard to do
-all that centrally and in a comprehensible way. But if it is done it
-will of course also be possible to eliminate bugs since people may
-have taken too many shortcuts. But simply changing to xyz_fract and
-then not take it further than that will not change much.
+<=3D ?
 
-Also, there is already a v4l2_fract which is exposed in UAPI (maybe
-there are others?). I don't see how we bring that one in line with this
-new struct xyz_fract scheme?
+>=20
+> >> +	pre_div =3D div64_u64(period_rate,
+> >> +			(u64)NSEC_PER_SEC * (IPQ_PWM_MAX_DIV + 1));
+> >
+> > Hmmm, we want=20
+> >
+> > 	(pre_div + 1) * (pwm_div + 1) * NSEC_PER_SEC
+> > 	-------------------------------------------- <=3D period_ns
+> > 	                  rate
+> >
+> > , right? Resolving that for pre_div this gives:
+> >
+> > 	                period_ns * rate
+> > 	pre_div <=3D ----------------------------
+> > 	           NSEC_PER_SEC * (pwm_div + 1)
+> >
+> > The term on the right hand side is maximal for pwm_div =3D=3D 0 so the
+> > possible values for pre_div are
+> >
+> > 	0 ... min(div64_u64(period_rate / NSEC_PER_SEC), IPQ_PWM_MAX_DIV)
+> >
+> > isn't it?
+>=20
+> I don't think so. pre_div =3D=3D 0 will produce pwm_div larger than
+> IPQ_PWM_MAX_DIV for a large period_rate value. The initial pre_div here i=
+s the
+> smallest value that produces pwm_div within it limit.
 
-Cheers,
-Peter
+Ah, got your reasoning. If a pre_div is picked that is smaller than the
+value you calculate, a bigger pre_div results in a better approximation.
+
+What strikes me is that if you pick a smaller pre_div, you can still use
+pwm_div =3D IPQ_PWM_MAX_DIV which yields an allowed setting. So while your
+argument is right, I'd need a better comment to actually understand it.
+Something like:
+
+	/*
+	 * We don't need to consider pre_div values smaller than
+	 *
+	 *                              period_rate
+	 *  pre_div_min :=3D ------------------------------------
+	 *                 NSEC_PER_SEC * (IPQ_PWM_MAX_DIV + 1)
+	 *
+	 * because pre_div =3D pre_div_min results in a better
+	 * approximation.
+	 */
+
+
+> > If so, your algorithm is wrong as you're iterating over
+> >
+> > 	div64_u64(period_rate, NSEC_PER_SEC * (IPQ_PWM_MAX_DIV + 1)) ... IPQ_P=
+WM_MAX_DIV
+>=20
+> The loop stops when pre_div > pwm_div. That should be before pre_div =3D=
+=3D
+> IPQ_PWM_MAX_DIV because pwm_div <=3D IPQ_PWM_MAX_DIV. Should I put the pr=
+e_div >
+> pwm_div condition directly in the for statement?
+
+OK, moving the check isn't necessary.
+
+> > The task here is to calculate the biggest pwm_div for a given pre_div
+> > such that
+> >
+> >
+> > 	(pre_div + 1) * (pwm_div + 1) * NSEC_PER_SEC
+> > 	-------------------------------------------- <=3D period_ns
+> > 	                   rate
+> >
+> > right?
+> >
+> > This is equivalent to:
+> >
+> > 	                  period_ns * rate
+> > 	pre_div <=3D ---------------------------- - 1
+> > 	           (pre_div + 1) * NSEC_PER_SEC
+> >
+> > As pre_div is integer, rounding down should be fine?!
+>=20
+> I can't follow. With round down (as in v8) the result is always:
+>=20
+>   NSEC_PER_SEC * (pre_div + 1) * (pwm_div + 1) <=3D period_rate
+
+Yes, that's the condition that a valid configuration should fulfill
+because then the configured period is never bigger than the requested
+period.
+=20
+> As a result, 'diff' calculation below will always produce diff <=3D 0. Wh=
+en
+> there is no diff =3D=3D 0 result (bingo) we get IPQ_PWM_MAX_DIV in both b=
+est_
+> values at the end of the loop.
+
+Looking again, your check is wrong. I think you need:
+
+	diff =3D period_rate - NSEC_PER_SEC * (pre_div + 1) * (pwm_div + 1)
+
+=2E Given the calculations for pre_div and pwm_div this should never be
+negative and you should pick values that minimize diff.
+
+> Do we actually need diff > 0 in the condition below?
+>=20
+> >> +		/*
+> >> +		 * pre_div and pwm_div values swap produces the same
+> >> +		 * result. This loop goes over all pre_div <=3D pwm_div
+> >> +		 * combinations. The rest are equivalent.
+> >> +		 */
+> >
+> > I'd write:
+> >
+> > 	/*
+> > 	 * Swapping values for pre_div and pwm_div produces the same
+> > 	 * period length. So we can skip all settings with pre_div <
+> > 	 * pwm_div which results in bigger constraints for selecting the
+> > 	 * duty_cycle than with the two values swapped.
+> > 	 */
+>=20
+> I'll take your wording with inverted inequality sign.
+
+Right.
+
+Looking forward to your next iteration.
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--agv2t6hsvvxjui2s
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmHwIVEACgkQwfwUeK3K
+7AkTrQf/UbpXG5EcxzzywmnrfNaftgtczOR8kdWyPS12KrxxNyLncOuuFzR+LIcw
+yjc+O2x+xYaWYVsMboTDAh1bOwjOJE0Vjjgm5zLm6QUA41WLMSffKwm0RVZF/0/9
+IUNoB+x1Z3qQFbxrDIVKPVIZCg23zr8ZWbWZPvrsKaYDdB4ufBJXQHWyQGFlfxIx
+o8FfqSCgeone6atOeNEhIY4yG/zjEPfS2fpDuB2IBcg3QV1HMDmu+BQRdBogzury
+Yc2z3DqiIR2vgWYQVGMYvSjIGBKZkBTxB6N1dMFKkAnT2Wq3PZLuwH4rx1q6stdk
+SH4B9EaTtFNxAb8ACTzIjxcFjfqtwg==
+=5UoV
+-----END PGP SIGNATURE-----
+
+--agv2t6hsvvxjui2s--
