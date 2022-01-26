@@ -2,198 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8428949C941
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jan 2022 13:06:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4642449C993
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jan 2022 13:25:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233883AbiAZMGJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jan 2022 07:06:09 -0500
-Received: from mga01.intel.com ([192.55.52.88]:23918 "EHLO mga01.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241060AbiAZMGI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jan 2022 07:06:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1643198768; x=1674734768;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=ppDxVaxFOB8xCtyaz1C0wlYJV3uWw9Rg2IHoloxfDDM=;
-  b=F24bQpFN50m0swkVrekz+dAh2gw6y5BauUARXdE7MDmvVbOW2nA+PtVL
-   LToqdFAXIT9BO3t3gNBdiPXk9w0VQ0n/da/3sO91pFe5w9dv/p1XcOveG
-   NUeutvs8JONL7dWpgVHAyniTVy9C2kztsbcNH1cx3wvlproxlVi5r5mlA
-   z2fS8iHvIsLg8AvRYthBKECabvj3LZ47fqxzUCUXBJSW2kiaBB5JhHVZm
-   QUAwq1gJjQF6RVUx9PSnvgE4TOKfk5IIXSoykCEv3FowpmXsSeOnLvXvn
-   1fnHPfJqhzZZ41gLEkIzNJ1KYUoGekbGf5o/kF42XYikgtwdet7gbXm+2
-   g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10238"; a="270986943"
-X-IronPort-AV: E=Sophos;i="5.88,318,1635231600"; 
-   d="scan'208";a="270986943"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jan 2022 04:06:03 -0800
-X-IronPort-AV: E=Sophos;i="5.88,318,1635231600"; 
-   d="scan'208";a="628286413"
-Received: from smile.fi.intel.com ([10.237.72.61])
-  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jan 2022 04:06:00 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.95)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1nCh2j-00Eaan-UQ;
-        Wed, 26 Jan 2022 14:04:53 +0200
-Date:   Wed, 26 Jan 2022 14:04:53 +0200
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Peter Rosin <peda@axentia.se>
-Cc:     Liam Beguin <liambeguin@gmail.com>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Andreas Kemnade <andreas@kemnade.info>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lars-Peter Clausen <lars@metafoo.de>
-Subject: Re: [PATCH v2 5/5] iio: afe: iio-rescale: Re-use generic struct
- s32_fract
-Message-ID: <YfE45cImAQpOeziT@smile.fi.intel.com>
-References: <20220110193104.75225-1-andriy.shevchenko@linux.intel.com>
- <20220110193104.75225-5-andriy.shevchenko@linux.intel.com>
- <20220115185203.567780e8@jic23-huawei>
- <Ye7DSAN4gdhXfEUs@smile.fi.intel.com>
- <Ye8Z6dS5cCji9LNQ@shaak>
- <Ye/4eJ/RhlWF7q70@smile.fi.intel.com>
- <b25932d7-91bc-27b4-ada9-8d5da1ef2ddf@axentia.se>
- <YfA+xFR0oh2ztDKv@smile.fi.intel.com>
- <34c121fa-2a3b-fb6b-f6d5-fc2be2a5c6b7@axentia.se>
+        id S241227AbiAZMZa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jan 2022 07:25:30 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:49754 "EHLO
+        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241220AbiAZMZ3 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 Jan 2022 07:25:29 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 1984DB81CBB;
+        Wed, 26 Jan 2022 12:25:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 240A7C340E3;
+        Wed, 26 Jan 2022 12:25:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1643199926;
+        bh=LEmuz0iDH1iogcBanvIn+OqS5lY1EbahPHRPxL6nifk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=vO4veg9JTHiSb2719N6wyiIBx+hK1D8lPbRNAOKHBFLF6Wpp/gKp1ToGQWCmlkxMA
+         lsoiMdEIfelcUzmtXBZ/oLns4zx2CF2Qk7w99xvLY9iqYql+VvqyDwWqUbMvOwKcdA
+         96k8/k+VnZ8t1Y61Cp9VFOP9V8aOdDR+2Mg3tbeo=
+Date:   Wed, 26 Jan 2022 13:25:23 +0100
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Cc:     Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com
+Subject: Re: [PATCH v5] usb: host: xhci-plat: Set XHCI_SKIP_PHY_INIT quirk
+ for DWC3 controller
+Message-ID: <YfE9s06CIv1P3bA/@kroah.com>
+References: <1640153383-21036-1-git-send-email-quic_c_sanm@quicinc.com>
+ <Ydb79/twbxLDJB8/@kroah.com>
+ <d17330f1-d85e-b8c2-9e87-10d109c25abb@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <34c121fa-2a3b-fb6b-f6d5-fc2be2a5c6b7@axentia.se>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+In-Reply-To: <d17330f1-d85e-b8c2-9e87-10d109c25abb@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 26, 2022 at 11:26:50AM +0100, Peter Rosin wrote:
-> On 2022-01-25 19:17, Andy Shevchenko wrote:
-> > On Tue, Jan 25, 2022 at 03:54:07PM +0100, Peter Rosin wrote:
-> >> On 2022-01-25 14:17, Andy Shevchenko wrote:
-> >>> On Mon, Jan 24, 2022 at 04:28:09PM -0500, Liam Beguin wrote:
-> >>>> On Mon, Jan 24, 2022 at 05:18:32PM +0200, Andy Shevchenko wrote:
-> >>>>> On Sat, Jan 15, 2022 at 06:52:03PM +0000, Jonathan Cameron wrote:
-> >>>>>> On Mon, 10 Jan 2022 21:31:04 +0200
-> >>>>>> Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
-
-...
-
-> >>>>>> I'm not totally sold on this series showing there is a strong case for
-> >>>>>> these macros so interested to hear what others think.
-> >>>>>
-> >>>>> So far no news :-)
-> >>>>
-> >>>> Like I mentioned briefly in the other thread[1], I don't really see the
-> >>>> advantage for the AFE driver given that it's almost just like renaming
-> >>>> the parameters.
-> >>>
-> >>> I tend to disagree, perhaps I wasn't so clear in my points.
-> >>>
-> >>> The change reveals that the layering can be improved. In OOP
-> >>> the object A which is inherited (or encapsulated as we see here)
-> >>> allows to clearly get what kind of data the methods are operating
-> >>> with / on. As you may see the two functions and the method
-> >>> declaration appears to have interest only in the fraction data
-> >>> for rescaling. The cleanup I consider helpful in the terms
-> >>> of layering and OOP.
-> > 
-> >> [Sorry for the delay, I have been far too busy for far too long]
-> > 
-> > Anyway, thanks for review! My answers below.
-> > 
-> >> While this is all true for the current set of front-ends, it is not
-> >> all that far-fetched to imagine some kind of future front-end that
-> >> requires some other parameter, such that the rescaling fraction is no
-> >> longer the only thing of interest. So, I have the feeling that changing
-> >> the type of the 2nd argument of the ->props functions to just the
-> >> fraction instead of the bigger object is conceptually wrong and
-> >> something that will later turn out to have been a bad idea.
-> > 
-> > How? Technically as I mentioned currently it's the case to use
-> > only the date from fraction. The bigger object would be needed
-> > in case of using data that is not fraction. Either way it would
-> > be easy to add a container_of() than supply unneeded data to
-> > the method.
+On Fri, Jan 07, 2022 at 10:27:59AM +0530, Sandeep Maheswaram wrote:
 > 
-> It's easy to both remove and to add back "the bigger object". I just
-> don't see the point of the churn. Technically you can probably rearrange
-> stuff in probe and remove the 2nd argument to ->props() altogether and
-> chase pointers from the dev object instead. I don't see the point of
-> that either. It doesn't really make things simpler, it doesn't really
-> make things easier to read. To me, it's just pointless churn.
-
-Since you still haven't got a point the conclusions are wrong.
-The point is (I dunno how more clear to make it) is to have proper
-layering from the (current) design perspective.
-
-If we go to the road full of "if it will come XYZ then this sucks".
-The future is uncertain and neither of us may prove the current
-change good or bad in terms of the future (unknown and uncertain)
-changes.
-
-Preventing this patch to land is to tell "Oh, my design is bad,
-but I will keep it, because in the future everything may change".
-So, why don't you make this future to be now?
-
-> > TL;DR: It makes possible not to mix bananas with wooden boxes.
-> 
-> Which is all good until you need to ship an apple in the box with the
-> bananas. (e.g. if you for some reason need the bananas to get ripe real
-> quick, apples produce ethylene)
-
-Really. arguments about the future changes are weak. If you have
-patches in mind, send them, We will see in practice what you meant.
-
-> >> Regarding the new xyz_fract types, I have no strong opinion. But as
-> >> long as there are no helper functions for the new types, I see little
-> >> value in them. To me, they look mostly like something that newcomers
-> >> (and others) will not know about or expect, and it will just be
-> >> another thing that you have to look out for during review, to keep new
-> >> numerators/denominators from appearing and causing extra rounds of
-> >> review for something that is mostly a bikeshed issue.
-> >>
-> >> My guess is that many times where fractions are used, they are used
-> >> since fp math is not available. And that means that there will be a
-> >> lot of special handling and shortcuts done since various things about
-> >> accuracy and precision can be assumed. I think it will be hard to do
-> >> all that centrally and in a comprehensible way. But if it is done it
-> >> will of course also be possible to eliminate bugs since people may
-> >> have taken too many shortcuts. But simply changing to xyz_fract and
-> >> then not take it further than that will not change much.
+> On 1/6/2022 7:55 PM, Greg Kroah-Hartman wrote:
+> > On Wed, Dec 22, 2021 at 11:39:43AM +0530, Sandeep Maheswaram wrote:
+> > > Set XHCI_SKIP_PHY_INIT quirk to avoid phy initialization twice.
+> > > Runtime suspend of phy drivers was failing from DWC3 driver as runtime
+> > > usage value is 2 because the phy is initialized from DWC3 and HCD core.
+> > > DWC3 manages phy in their core drivers. Set this quirk to avoid phy
+> > > initialization in HCD core.
+> > > 
+> > > Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> > > ---
+> > > v5:
+> > > Added comment to explain the change done.
+> > > v4:
+> > > Changed pdev->dev.parent->of_node to sysdev->of_node
+> > > 
+> > >   drivers/usb/host/xhci-plat.c | 8 ++++++++
+> > >   1 file changed, 8 insertions(+)
+> > > 
+> > > diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
+> > > index c1edcc9..e6014d4 100644
+> > > --- a/drivers/usb/host/xhci-plat.c
+> > > +++ b/drivers/usb/host/xhci-plat.c
+> > > @@ -327,6 +327,14 @@ static int xhci_plat_probe(struct platform_device *pdev)
+> > >   					 &xhci->imod_interval);
+> > >   	}
+> > > +	/*
+> > > +	 * Set XHCI_SKIP_PHY_INIT quirk to avoid phy initialization twice.
+> > > +	 * DWC3 manages phy in their core drivers. Set this quirk to avoid phy
+> > > +	 * initialization in HCD core.
+> > > +	 */
+> > > +	if (of_device_is_compatible(sysdev->of_node, "snps,dwc3"))
+> > > +		xhci->quirks |= XHCI_SKIP_PHY_INIT;
+> > > +
+> > Why is this function caring about dwc3 stuff?  Shoudn't this be a
+> > "generic" device property instead of this device-specific one?
 > > 
-> > I understand your point. I will provide a mult_fract() macro and
-> > apply it to AFE to show the usability of this. Would it work better?
+> > thanks,
+> > 
+> > greg k-h
 > 
-> In my experience, burying stuff in macros will make it harder to follow
-> what is really happening. Something that has proven hard as-is in this
-> driver. While reviewing the changes from Liam, I have repeatedly looked
-> up the various division variants to find out what they are actually
-> doing. Here, it's not the individual steps that are difficult. I feel
-> that if we start adding macros for fractions they will soon multiply and
-> I'm not really looking forward to also have a set of similar fraction
-> macros to juggle.
+> This quirk is set only if required for some controllers (eg: dwc3 & cdns3).
+> 
+> Please check below commit.
+> 
+> https://lore.kernel.org/all/20200918131752.16488-5-mathias.nyman@linux.intel.com/
 
-The problem here is that every driver would like to do this differently
-and since it's related to the calculation we will have all possible error
-prone implementations which do miscalculations (yes, one may not notice
-traditional off-by-one until it becomes a huge issue by using additional
-conversion formulas or so).
+That commit has nothing to do with a specific "dwc3" quirk anywhere.
+Why not set this flag in the specific platform xhci driver instead where
+it belongs?
 
-> But sure, feel free to suggest something. But please hold until the
-> current work from Liam is merged.
-> That series is clearly more
-> important, and I'm not really interested in neither adding more work for
-> him nor a cleanup of the current code without those pending changes.
+thanks,
 
-I'm very well fine with that. As I mentioned from the beginning, I may rebase
-this on top of the Liam's work.
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+greg k-h
