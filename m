@@ -2,161 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3409B49D416
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jan 2022 22:05:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 10DA649D514
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jan 2022 23:11:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231940AbiAZVFb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jan 2022 16:05:31 -0500
-Received: from mga14.intel.com ([192.55.52.115]:27638 "EHLO mga14.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231694AbiAZVFa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jan 2022 16:05:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1643231130; x=1674767130;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=10s7JCzkmDr5frcmvWxL9SK3VMQGPrm/FbqaqhQ5Y8E=;
-  b=FjivUBlNMk9lfXbOeCGLTLc8xCgY3QUQkMoPTi+HV0w+OZIiaeS1OS03
-   FPchhy/vGOpiBZohfW9DbC1u0ov+06Fj2BqmfdJ8LDSsK7oN5I4a3jNZy
-   zo+xZ9L5swhPYZJfMDI2LHIx3a6IJbumGixNMEZNTMn/Jbo8eaZ8zNhFg
-   ov7wBLkZwBbAkQ920NwldrzN+T6HDOnWWMECCoUT7hM/qc4lJIBNKBNa3
-   /oIx9FO75IqNv9vrxwwtJGUxX0gKRwWIRJM9IfvKWf+fKUxj90yD4Uq0F
-   IxUF2aaQIZCeHJtdIotA3JYEYNhYe9hQhtpjnTCirlauEcLoRthJC4JG2
-   w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10239"; a="246870366"
-X-IronPort-AV: E=Sophos;i="5.88,319,1635231600"; 
-   d="scan'208";a="246870366"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jan 2022 13:05:20 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,319,1635231600"; 
-   d="scan'208";a="696371048"
-Received: from lkp-server01.sh.intel.com (HELO 276f1b88eecb) ([10.239.97.150])
-  by orsmga005.jf.intel.com with ESMTP; 26 Jan 2022 13:05:17 -0800
-Received: from kbuild by 276f1b88eecb with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1nCpTg-000Lf3-Uc; Wed, 26 Jan 2022 21:05:16 +0000
-Date:   Thu, 27 Jan 2022 05:04:54 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        robh+dt@kernel.org, gregkh@linuxfoundation.org
-Cc:     kbuild-all@lists.01.org, devicetree@vger.kernel.org,
-        ekangupt@qti.qualcomm.com, bkumar@qti.qualcomm.com,
-        linux-kernel@vger.kernel.org, srini@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        Jeya R <jeyr@codeaurora.org>
-Subject: Re: [PATCH v3 03/12] misc: fastrpc: Add support to get DSP
- capabilities
-Message-ID: <202201270435.PxFnOyYn-lkp@intel.com>
-References: <20220126135304.16340-4-srinivas.kandagatla@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220126135304.16340-4-srinivas.kandagatla@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        id S233139AbiAZWLK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jan 2022 17:11:10 -0500
+Received: from mail-ot1-f41.google.com ([209.85.210.41]:43876 "EHLO
+        mail-ot1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232925AbiAZWLF (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 Jan 2022 17:11:05 -0500
+Received: by mail-ot1-f41.google.com with SMTP id j38-20020a9d1926000000b0059fa6de6c71so674398ota.10;
+        Wed, 26 Jan 2022 14:11:05 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=mWzFgIdFBfjTrsmYvpDvQiTB3AYUGt3QjdlF8YKt81o=;
+        b=RT1m7CGSZvih/vfj89e0qh1HIZgPE5hKmv8oAUsaCEmNUkZCHPsYmAVoczgt2R4Fqf
+         Ag3mmzn4vtwnZlw0LbLALcefIVUKDwq5VJYvmcqOoYo18QcmqTYqZuLyrRz/L8lvBUW/
+         QsqxUSiyf1VeOgd0jTsL1Hmk6NtpABNqEVNDcJOEDU6ZjQbsx1s5/f2PuwE6Md+c50lB
+         1uUNhTuTTtzmwynv1w9S9rFlDQWL47AUDzIA7VPo8zwmvqRqI6HkfpNvhtS5ahT4vr/H
+         vuIi+CHZVj8VXegoDM3a7slX+DmcPtuz9Ih3CXKWDL3+ltl6fWUxZ4QO5IvO2zBwEAL8
+         Da+g==
+X-Gm-Message-State: AOAM531saVec5O9k0dH1cKoU9owO5Wg6jDTd5Py1TZsL81qQ9EAgDOED
+        wixHUCb/bH0E/IYmHZpUyw==
+X-Google-Smtp-Source: ABdhPJw5ToBw3P3H9Ryzc7tRQt+hkw/HI9tQEKtEPH0l0u1PGZUDhWxMmp4AzUxfZ97PPLdUJuJGBw==
+X-Received: by 2002:a05:6830:1e11:: with SMTP id s17mr492020otr.347.1643235064885;
+        Wed, 26 Jan 2022 14:11:04 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id k17sm9189614otk.80.2022.01.26.14.11.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Jan 2022 14:11:04 -0800 (PST)
+Received: (nullmailer pid 1535100 invoked by uid 1000);
+        Wed, 26 Jan 2022 22:10:52 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     michael.srba@seznam.cz
+Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        Michael Srba <Michael.Srba@seznam.cz>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Saravana Kannan <saravanak@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        devicetree@vger.kernel.org, linux-clk@vger.kernel.org
+In-Reply-To: <20220126183250.11924-3-michael.srba@seznam.cz>
+References: <20220126183250.11924-1-michael.srba@seznam.cz> <20220126183250.11924-3-michael.srba@seznam.cz>
+Subject: Re: [PATCH v4 3/5] dt-bindings: bus: add device tree bindings for qcom,ssc-block-bus
+Date:   Wed, 26 Jan 2022 16:10:52 -0600
+Message-Id: <1643235052.876294.1535099.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Srinivas,
+On Wed, 26 Jan 2022 19:32:48 +0100, michael.srba@seznam.cz wrote:
+> From: Michael Srba <Michael.Srba@seznam.cz>
+> 
+> This patch adds bindings for the AHB bus which exposes the SCC block in
+> the global address space. This bus (and the SSC block itself) is present
+> on certain qcom SoCs.
+> 
+> In typical configuration, this bus (as some of the clocks and registers
+> that we need to manipulate) is not accessible to the OS, and the
+> resources on this bus are indirectly accessed by communicating with a
+> hexagon CPU core residing in the SSC block. In this configuration, the
+> hypervisor is the one performing the bus initialization for the purposes
+> of bringing the haxagon CPU core out of reset.
+> 
+> However, it is possible to change the configuration, in which case this
+> binding serves to allow the OS to initialize the bus.
+> 
+> Signed-off-by: Michael Srba <Michael.Srba@seznam.cz>
+> ---
+>  CHANGES:
+>  - v2: fix issues caught by by dt-schema
+>  - v3: none
+>  - v4: address the issues pointed out in the review
+> ---
+>  .../bindings/bus/qcom,ssc-block-bus.yaml      | 150 ++++++++++++++++++
+>  1 file changed, 150 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/bus/qcom,ssc-block-bus.yaml
+> 
 
-Thank you for the patch! Perhaps something to improve:
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-[auto build test WARNING on char-misc/char-misc-testing]
-[also build test WARNING on robh/for-next linux/master linus/master v5.17-rc1 next-20220125]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/bus/qcom,ssc-block-bus.yaml:86:9: [warning] wrong indentation: expected 10 but found 8 (indentation)
 
-url:    https://github.com/0day-ci/linux/commits/Srinivas-Kandagatla/misc-fastrpc-Add-missing-DSP-FastRPC-features/20220126-215705
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/char-misc.git 515a2f507491e7c3818e74ef4f4e088c1fecb190
-config: nds32-randconfig-r014-20220126 (https://download.01.org/0day-ci/archive/20220127/202201270435.PxFnOyYn-lkp@intel.com/config)
-compiler: nds32le-linux-gcc (GCC) 11.2.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/0day-ci/linux/commit/a22465bb4904facca8fe21d23f74410cf6cb1fd0
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Srinivas-Kandagatla/misc-fastrpc-Add-missing-DSP-FastRPC-features/20220126-215705
-        git checkout a22465bb4904facca8fe21d23f74410cf6cb1fd0
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=nds32 SHELL=/bin/bash
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/bus/qcom,ssc-block-bus.example.dt.yaml:0:0: /example-0/soc/bus@10ac008/pinctrl@5e10000: failed to match any schema with compatible: ['qcom,msm8998-ssc-tlmm-pinctrl']
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+doc reference errors (make refcheckdocs):
 
-All warnings (new ones prefixed by >>):
+See https://patchwork.ozlabs.org/patch/1584622
 
-   drivers/misc/fastrpc.c: In function 'fastrpc_req_mem_unmap_impl':
-   drivers/misc/fastrpc.c:1646:23: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-    1646 |         args[0].ptr = (u64) &req_msg;
-         |                       ^
-   drivers/misc/fastrpc.c: In function 'fastrpc_req_mem_map':
-   drivers/misc/fastrpc.c:1696:19: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-    1696 |         map->va = (void *) req.vaddrin;
-         |                   ^
-   drivers/misc/fastrpc.c:1701:23: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-    1701 |         args[0].ptr = (u64) &req_msg;
-         |                       ^
-   drivers/misc/fastrpc.c:1707:23: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-    1707 |         args[1].ptr = (u64) &pages;
-         |                       ^
-   drivers/misc/fastrpc.c:1710:23: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-    1710 |         args[2].ptr = (u64) &pages;
-         |                       ^
-   drivers/misc/fastrpc.c:1713:23: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-    1713 |         args[3].ptr = (u64) &rsp_msg;
-         |                       ^
-   drivers/misc/fastrpc.c: In function 'fastrpc_get_info_from_kernel.constprop':
->> drivers/misc/fastrpc.c:1437:1: warning: the frame size of 1080 bytes is larger than 1024 bytes [-Wframe-larger-than=]
-    1437 | }
-         | ^
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
 
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
-vim +1437 drivers/misc/fastrpc.c
+pip3 install dtschema --upgrade
 
-  1400	
-  1401	static int fastrpc_get_info_from_kernel(struct fastrpc_ioctl_capability *cap,
-  1402						struct fastrpc_user *fl)
-  1403	{
-  1404		struct fastrpc_channel_ctx *cctx = fl->cctx;
-  1405		uint32_t attribute_id = cap->attribute_id;
-  1406		uint32_t dsp_attributes[FASTRPC_MAX_DSP_ATTRIBUTES];
-  1407		unsigned long flags;
-  1408		uint32_t domain = cap->domain;
-  1409		int err;
-  1410	
-  1411		spin_lock_irqsave(&cctx->lock, flags);
-  1412		/* check if we already have queried dsp for attributes */
-  1413		if (cctx->valid_attributes) {
-  1414			spin_unlock_irqrestore(&cctx->lock, flags);
-  1415			goto done;
-  1416		}
-  1417		spin_unlock_irqrestore(&cctx->lock, flags);
-  1418	
-  1419		err = fastrpc_get_info_from_dsp(fl, &dsp_attributes[0], FASTRPC_MAX_DSP_ATTRIBUTES);
-  1420		if (err == DSP_UNSUPPORTED_API) {
-  1421			dev_info(&cctx->rpdev->dev,
-  1422				 "Warning: DSP capabilities not supported on domain: %d\n", domain);
-  1423			return -EOPNOTSUPP;
-  1424		} else if (err) {
-  1425			dev_err(&cctx->rpdev->dev, "Error: dsp information is incorrect err: %d\n", err);
-  1426			return err;
-  1427		}
-  1428	
-  1429		spin_lock_irqsave(&cctx->lock, flags);
-  1430		memcpy(cctx->dsp_attributes, dsp_attributes, sizeof(u32) * FASTRPC_MAX_DSP_ATTRIBUTES);
-  1431		cctx->valid_attributes = true;
-  1432		spin_unlock_irqrestore(&cctx->lock, flags);
-  1433	done:
-  1434		cap->capability = cctx->dsp_attributes[attribute_id];
-  1435	
-  1436		return 0;
-> 1437	}
-  1438	
+Please check and re-submit.
 
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
