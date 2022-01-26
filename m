@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 823D249C22E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jan 2022 04:36:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C257649C249
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jan 2022 04:48:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232151AbiAZDgo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Jan 2022 22:36:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49036 "EHLO
+        id S237306AbiAZDsT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Jan 2022 22:48:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229989AbiAZDgo (ORCPT
+        with ESMTP id S233406AbiAZDsR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Jan 2022 22:36:44 -0500
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E214C06161C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jan 2022 19:36:43 -0800 (PST)
-Received: by mail-oi1-x236.google.com with SMTP id p203so18760759oih.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jan 2022 19:36:43 -0800 (PST)
+        Tue, 25 Jan 2022 22:48:17 -0500
+Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C3ECC06161C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jan 2022 19:48:17 -0800 (PST)
+Received: by mail-oo1-xc2d.google.com with SMTP id w15-20020a4a9d0f000000b002c5cfa80e84so7316304ooj.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jan 2022 19:48:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=VG/REmNYFs8bhsKXCSAuBru7SObV38RHtdJqUNmAFro=;
-        b=NsBN3Gaw761RJyAafRSwP5L617daZObcfY/EQgQeoHX//pIpR4UYR9gi7tdO8ub9Bw
-         UiV7V40wzvDctD+g3GIhI7e0To5S5Yx3Re5iVMcX7puwxC2fQoKE4emJh/8S/KrsuW3t
-         nEN+haKx8sB2+YbJtmEa6sd1I2/opzs+MMwfxyNjrdf5cgM5Gfpw1kWzZRD7zq6dqTMU
-         KAVPtCSe/XEnlgIWKUYn4PsZqh3ZiZEFl2WqwcKKIm0Bby8uwj8ZsHPANg63SOeFP2E1
-         maE4tbbc9VwRbQhLzi1Kucm7/lNzEy6Mf1CeS7R9LfMjFcDiQdyMRR7yGhsWV8QOH1ro
-         DxNA==
+        bh=/CzI7fFqk9ezqzku/D4S1Z4SQBDlduEbt7GyUHCyi/0=;
+        b=qqjPBxz8nPA/nHcBgparnJk+wSi0qEJmYKPNpaJxb6S8lm/PBXCeWOzefRI2zb+hE3
+         pJ3Vm/xw7Z1zVAbYGLfMBv9T8gWbVOyzlVc70KvAek+ugpwpqjxV9Tecaw/+WP1/oSlV
+         PqZKADBuv+e8rbuN5JekrNWmOUL2QtWObW2QdYzTe0d4uDzCG3l9eusuuaoF3SJxACfF
+         WrbxcZfGTz4rssMjsLWQvpgqASqSpoT2VI9VmQHxCKGiMheGjah7neCLyc7lHA8Inj8s
+         +FkYkd5vBJ2tjTI6MhhkWqvStD2KDIBaqor+2Wl1cB2PXPzPVAeqFcKnYuzLs6BUPCJ6
+         +uIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=VG/REmNYFs8bhsKXCSAuBru7SObV38RHtdJqUNmAFro=;
-        b=OsP5c+TEeZ/7fKGQaSwKPnQ33cxZ0JGJdCk5b3HMThvxO06vgZUt0XyMERebDDqM5T
-         73kLxlW4FtE6OllbAF4OM71QRHPyS0cFN1MtEVRgZ9IfKr8g6QkpH+Mz7JAJ+jts6gb5
-         ybe3D8kBzRntIfAbEBKEUYFYLUOsFJcNuEarIhIiTYkpVdswTOD+XUy6KYC1owBqCZi6
-         c78mxrnNdawgr00NoHM7TgtXbYjlBKgh4JmpdradAS0LTTTzU1OM+HLVbDjvKdDL6tP2
-         0jcesyb9E3hZHp7YBs0YQpbf28Km6FIxab2yC0hQSopYV2M+MLZDeqkj20rw6ZPxfRXZ
-         E5rw==
-X-Gm-Message-State: AOAM531D0o5RMTt474jA9UGKGUQign1fy6eYei37ukr3K96RG09/eyuR
-        i1tGwKmEFY05mZnm7ZxFhoVQVQ==
-X-Google-Smtp-Source: ABdhPJyvcAS1QUxOmNKXtl9N9GHgH4+9eZ/3YKrSkHRUslMb2r2IzXejM4aw3Fp3vP0NrdW8xGQawQ==
-X-Received: by 2002:a05:6808:1485:: with SMTP id e5mr2896160oiw.214.1643168202502;
-        Tue, 25 Jan 2022 19:36:42 -0800 (PST)
+        bh=/CzI7fFqk9ezqzku/D4S1Z4SQBDlduEbt7GyUHCyi/0=;
+        b=1uFqgvfOorsx6kUFT6MRYCyhBofayeMnHi7nkJnf6/LVsEt+RpHAFTejZd0KLeVoDV
+         SHaZffha/q9e+41MnZ9Xoz/SJJrhMKICprARJcEgNfu+6Z6Vk+dmBCOeRcjAgJrhlZEY
+         rxuKydbh2sOMLB+aq9PjQj1H+DVX3TtGhrwIVFLHiJlgv3K+bxkOU2TcnG3PDeuh/h04
+         CG/GVZwa76wUsnGrVkfCQj4agnitpjTttQh1OKmkPdz6c4SvZYZXHJ8C7E587Kifpjhe
+         8l7m4ovIciGQMKF1YkuRqrate8Q7olocUiJvz9M0WdrK8zNIPt8tBLqptomTDx/fgcUY
+         zvhg==
+X-Gm-Message-State: AOAM5316yqG+mMghWdBLLEQKPPR8XmFo+u5/Anp99FzDiLCAw9nsVScA
+        872F8ORbrn1zN17L4qzXB1Zd9g==
+X-Google-Smtp-Source: ABdhPJwqV6TZsYVpfJrk5fcrgE7qU2PrOCNdoVRSES32V2SReNo2Lkn75JI5XKD/GtUs+Sggwj9CvA==
+X-Received: by 2002:a4a:ac0a:: with SMTP id p10mr14621672oon.96.1643168896843;
+        Tue, 25 Jan 2022 19:48:16 -0800 (PST)
 Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id i81sm6087180oih.22.2022.01.25.19.36.41
+        by smtp.gmail.com with ESMTPSA id d7sm1080152otf.66.2022.01.25.19.48.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jan 2022 19:36:41 -0800 (PST)
-Date:   Tue, 25 Jan 2022 21:36:40 -0600
+        Tue, 25 Jan 2022 19:48:16 -0800 (PST)
+Date:   Tue, 25 Jan 2022 21:48:14 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     michael.srba@seznam.cz
 Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
@@ -60,123 +60,66 @@ Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Saravana Kannan <saravanak@google.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 2/5] clk: qcom: gcc-msm8998: add SSC-related clocks
-Message-ID: <YfDByGjf90xDUuly@builder.lan>
+Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: msm8998: reserve potentially
+ inaccessible clocks With the gcc driver now being more complete and
+ describing clocks which might not always be write-accessible to the OS,
+ conservatively specify all such clocks as protected in the SoC dts. The
+ board dts - or even user-supplied dts - can override this property to
+ reflect the actual configuration.
+Message-ID: <YfDEfkAHSgB4xER3@builder.lan>
 References: <20220124121853.23600-1-michael.srba@seznam.cz>
- <20220124121853.23600-2-michael.srba@seznam.cz>
+ <20220124121853.23600-5-michael.srba@seznam.cz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220124121853.23600-2-michael.srba@seznam.cz>
+In-Reply-To: <20220124121853.23600-5-michael.srba@seznam.cz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Mon 24 Jan 06:18 CST 2022, michael.srba@seznam.cz wrote:
 
-> From: Michael Srba <Michael.Srba@seznam.cz>
+> From: Michael Srba <michael.srba@seznam.cz>
 > 
->  This patch adds four clocks which need to be manipulated in order to
 
-Please skip the space on the start of each line here.
+Something is off with your $subject, perhaps the entire commit message
+was treated as the subject?
 
->  initialize the AHB bus which exposes the SCC block in the global address
->  space.
-> 
->  Care should be taken not to write to these registers unless the device is
->  known to be configured such that writing to these registers from Linux
->  is permitted.
-
-Does this imply that applying this will break the existing devices and
-care _must_ be taken, presumably before we can apply the patch?
-
-Regards,
-Bjorn
-
-> 
 > Signed-off-by: Michael Srba <Michael.Srba@seznam.cz>
 > ---
 >  CHANGES:
->  - v2: none
->  - v3: none
+>  - v2: add this patch
+>  - v3: fix missing Signed-off-by
 > ---
->  drivers/clk/qcom/gcc-msm8998.c | 56 ++++++++++++++++++++++++++++++++++
->  1 file changed, 56 insertions(+)
+>  arch/arm64/boot/dts/qcom/msm8998.dtsi | 6 ++++++
+>  1 file changed, 6 insertions(+)
 > 
-> diff --git a/drivers/clk/qcom/gcc-msm8998.c b/drivers/clk/qcom/gcc-msm8998.c
-> index 407e2c5caea4..2d14c3d672fc 100644
-> --- a/drivers/clk/qcom/gcc-msm8998.c
-> +++ b/drivers/clk/qcom/gcc-msm8998.c
-> @@ -2833,6 +2833,58 @@ static struct clk_branch gcc_rx1_usb2_clkref_clk = {
->  	},
->  };
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> index f273bc1ff629..cff83af8c12e 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> @@ -863,6 +863,12 @@ gcc: clock-controller@100000 {
 >  
-> +static struct clk_branch gcc_im_sleep_clk = {
-> +	.halt_reg = 0x4300C,
-> +	.halt_check = BRANCH_HALT,
-> +	.clkr = {
-> +		.enable_reg = 0x4300C,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "gcc_im_sleep_clk",
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
+>  			clock-names = "xo", "sleep_clk";
+>  			clocks = <&xo>, <&sleep_clk>;
 > +
-> +static struct clk_branch aggre2_snoc_north_axi_clk = {
-> +	.halt_reg = 0x83010,
-> +	.halt_check = BRANCH_HALT,
-> +	.clkr = {
-> +		.enable_reg = 0x83010,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "aggre2_snoc_north_axi_clk",
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static struct clk_branch ssc_xo_clk = {
-> +	.halt_reg = 0x63018,
-> +	.halt_check = BRANCH_HALT,
-> +	.clkr = {
-> +		.enable_reg = 0x63018,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "ssc_xo_clk",
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static struct clk_branch ssc_cnoc_ahbs_clk = {
-> +	.halt_reg = 0x6300C,
-> +	.halt_check = BRANCH_HALT,
-> +	.clkr = {
-> +		.enable_reg = 0x6300C,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(struct clk_init_data){
-> +			.name = "ssc_cnoc_ahbs_clk",
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
->  static struct gdsc pcie_0_gdsc = {
->  	.gdscr = 0x6b004,
->  	.gds_hw_ctrl = 0x0,
-> @@ -3036,6 +3088,10 @@ static struct clk_regmap *gcc_msm8998_clocks[] = {
->  	[GCC_MSS_MNOC_BIMC_AXI_CLK] = &gcc_mss_mnoc_bimc_axi_clk.clkr,
->  	[GCC_MMSS_GPLL0_CLK] = &gcc_mmss_gpll0_clk.clkr,
->  	[HMSS_GPLL0_CLK_SRC] = &hmss_gpll0_clk_src.clkr,
-> +	[GCC_IM_SLEEP] = &gcc_im_sleep_clk.clkr,
-> +	[AGGRE2_SNOC_NORTH_AXI] = &aggre2_snoc_north_axi_clk.clkr,
-> +	[SSC_XO] = &ssc_xo_clk.clkr,
-> +	[SSC_CNOC_AHBS_CLK] = &ssc_cnoc_ahbs_clk.clkr,
->  };
+> +			// be conservative by default, the board dts
+> +			// can overwrite this list
+
+By next week we've forgotten why these clocks are listed here and then
+it's not really going to help to know that it's a conservative list.
+
+Please spell out why these clocks are listed here, and please use /* */
+
+Thanks,
+Bjorn
+
+> +			protected-clocks = <AGGRE2_SNOC_NORTH_AXI>,
+> +					   <SSC_XO>,
+> +					   <SSC_CNOC_AHBS_CLK>;
+>  		};
 >  
->  static struct gdsc *gcc_msm8998_gdscs[] = {
+>  		rpm_msg_ram: sram@778000 {
 > -- 
 > 2.34.1
 > 
