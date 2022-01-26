@@ -2,113 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10DA649D514
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jan 2022 23:11:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3206149D52B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jan 2022 23:18:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233139AbiAZWLK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jan 2022 17:11:10 -0500
-Received: from mail-ot1-f41.google.com ([209.85.210.41]:43876 "EHLO
-        mail-ot1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232925AbiAZWLF (ORCPT
+        id S233128AbiAZWSM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jan 2022 17:18:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55102 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233126AbiAZWSL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jan 2022 17:11:05 -0500
-Received: by mail-ot1-f41.google.com with SMTP id j38-20020a9d1926000000b0059fa6de6c71so674398ota.10;
-        Wed, 26 Jan 2022 14:11:05 -0800 (PST)
+        Wed, 26 Jan 2022 17:18:11 -0500
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B00FC06174E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jan 2022 14:18:11 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id w12-20020a17090a528c00b001b276aa3aabso5664407pjh.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jan 2022 14:18:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dIYkVQemKDQ2y3bmpym5ZYoIUxFabj5sPwnUV0EmyK0=;
+        b=twxr89mbaTAnP8dq8YFVOzjDl7dJbJgmeoThgAobqg2LYDWbxuYX1Linn83YeirfD3
+         SgXCZUUjDWEjMBoQwH45P7YFcRIvE4Ym8KF39ctqj+El6c8fRQoN+tYmovajyFRt9o/h
+         75dOn2d82d4KD8DPDy9Y9UxfywfXGbawIjI8Hp1H/J0IjOz2fipmcgHOT0p2ehYUpqUS
+         gU0Bx5G9E19T9uIKnIlQW6rEamiB9WvR31BzpPDkJ5iNSLQPTYyOcYZ2EexA6sLGXfD6
+         YWxx5Vn1ibXLhWxuEPooaJTm/YjlG9y4AeRdnjClO6U0ZC4NQYJ8tOD89/6Ti9YOZevk
+         foLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=mWzFgIdFBfjTrsmYvpDvQiTB3AYUGt3QjdlF8YKt81o=;
-        b=RT1m7CGSZvih/vfj89e0qh1HIZgPE5hKmv8oAUsaCEmNUkZCHPsYmAVoczgt2R4Fqf
-         Ag3mmzn4vtwnZlw0LbLALcefIVUKDwq5VJYvmcqOoYo18QcmqTYqZuLyrRz/L8lvBUW/
-         QsqxUSiyf1VeOgd0jTsL1Hmk6NtpABNqEVNDcJOEDU6ZjQbsx1s5/f2PuwE6Md+c50lB
-         1uUNhTuTTtzmwynv1w9S9rFlDQWL47AUDzIA7VPo8zwmvqRqI6HkfpNvhtS5ahT4vr/H
-         vuIi+CHZVj8VXegoDM3a7slX+DmcPtuz9Ih3CXKWDL3+ltl6fWUxZ4QO5IvO2zBwEAL8
-         Da+g==
-X-Gm-Message-State: AOAM531saVec5O9k0dH1cKoU9owO5Wg6jDTd5Py1TZsL81qQ9EAgDOED
-        wixHUCb/bH0E/IYmHZpUyw==
-X-Google-Smtp-Source: ABdhPJw5ToBw3P3H9Ryzc7tRQt+hkw/HI9tQEKtEPH0l0u1PGZUDhWxMmp4AzUxfZ97PPLdUJuJGBw==
-X-Received: by 2002:a05:6830:1e11:: with SMTP id s17mr492020otr.347.1643235064885;
-        Wed, 26 Jan 2022 14:11:04 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id k17sm9189614otk.80.2022.01.26.14.11.03
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dIYkVQemKDQ2y3bmpym5ZYoIUxFabj5sPwnUV0EmyK0=;
+        b=GAO9Pt4LgHvk04Jf6IYpoURumF7VoIrgOq95Wu0XAjBkQZx0L4OydkugCpkf9K+2LH
+         18STeKznei94jIUs8WXppE7sUah6hiPHI0MclXOez5+89rL3q+qz/rcdmQyznklupB9b
+         3h1qwfchtESWL9LvlukXCFUuyESts7i0acZ/H/JhEyS0PIjyaZp/QmKCfEyI722mqw0V
+         Jat5pDEWER4Lc69Msp9P4gJR0DketpXOVdK0JW3vcB+oWX5bBu6pB0QEb8FRQw5T02eV
+         DXVApnTnYEdPv2DDAYQNZJDre0T80xQRMaHr5a1BBKzQr6nisc9uX/a6EBDHGGnj8XEi
+         mDqg==
+X-Gm-Message-State: AOAM530ZLVOhW9iCWZwtkT7Xl7fK+n69FIMyl0tI1Dd6mV/tArJULK/t
+        2DiCA3nWBfjBWz3mcka6jUO+3HAafPRVQs+r
+X-Google-Smtp-Source: ABdhPJwj9zXQUjLBroliCIG3Eo6PSOIGzmIbNf/ymx9psMbfp47HmhIkDtHe9fZysk1LRnZyL3Z++w==
+X-Received: by 2002:a17:90b:4c8e:: with SMTP id my14mr10841049pjb.243.1643235490641;
+        Wed, 26 Jan 2022 14:18:10 -0800 (PST)
+Received: from localhost.localdomain ([2401:4900:1f3a:4e9b:8fa7:36dc:a805:c73f])
+        by smtp.gmail.com with ESMTPSA id t17sm4233742pgm.69.2022.01.26.14.18.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Jan 2022 14:11:04 -0800 (PST)
-Received: (nullmailer pid 1535100 invoked by uid 1000);
-        Wed, 26 Jan 2022 22:10:52 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     michael.srba@seznam.cz
-Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-        Michael Srba <Michael.Srba@seznam.cz>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Saravana Kannan <saravanak@google.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org
-In-Reply-To: <20220126183250.11924-3-michael.srba@seznam.cz>
-References: <20220126183250.11924-1-michael.srba@seznam.cz> <20220126183250.11924-3-michael.srba@seznam.cz>
-Subject: Re: [PATCH v4 3/5] dt-bindings: bus: add device tree bindings for qcom,ssc-block-bus
-Date:   Wed, 26 Jan 2022 16:10:52 -0600
-Message-Id: <1643235052.876294.1535099.nullmailer@robh.at.kernel.org>
+        Wed, 26 Jan 2022 14:18:10 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        robh+dt@kernel.org, agross@kernel.org, sboyd@kernel.org,
+        tdas@codeaurora.org, mturquette@baylibre.com,
+        linux-clk@vger.kernel.org, bjorn.andersson@linaro.org,
+        davem@davemloft.net, netdev@vger.kernel.org
+Subject: [PATCH 0/8] Add ethernet support for Qualcomm SA8155p-ADP board
+Date:   Thu, 27 Jan 2022 03:47:17 +0530
+Message-Id: <20220126221725.710167-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 26 Jan 2022 19:32:48 +0100, michael.srba@seznam.cz wrote:
-> From: Michael Srba <Michael.Srba@seznam.cz>
-> 
-> This patch adds bindings for the AHB bus which exposes the SCC block in
-> the global address space. This bus (and the SSC block itself) is present
-> on certain qcom SoCs.
-> 
-> In typical configuration, this bus (as some of the clocks and registers
-> that we need to manipulate) is not accessible to the OS, and the
-> resources on this bus are indirectly accessed by communicating with a
-> hexagon CPU core residing in the SSC block. In this configuration, the
-> hypervisor is the one performing the bus initialization for the purposes
-> of bringing the haxagon CPU core out of reset.
-> 
-> However, it is possible to change the configuration, in which case this
-> binding serves to allow the OS to initialize the bus.
-> 
-> Signed-off-by: Michael Srba <Michael.Srba@seznam.cz>
-> ---
->  CHANGES:
->  - v2: fix issues caught by by dt-schema
->  - v3: none
->  - v4: address the issues pointed out in the review
-> ---
->  .../bindings/bus/qcom,ssc-block-bus.yaml      | 150 ++++++++++++++++++
->  1 file changed, 150 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/bus/qcom,ssc-block-bus.yaml
-> 
+The SA8155p-ADP board supports on-board ethernet (Gibabit Interface),
+with support for both RGMII and RMII buses.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+This patchset adds the support for the same.
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/bus/qcom,ssc-block-bus.yaml:86:9: [warning] wrong indentation: expected 10 but found 8 (indentation)
+Note that this patchset is based on an earlier sent patchset
+for adding PDC controller support on SM8150 (see [1]).
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/bus/qcom,ssc-block-bus.example.dt.yaml:0:0: /example-0/soc/bus@10ac008/pinctrl@5e10000: failed to match any schema with compatible: ['qcom,msm8998-ssc-tlmm-pinctrl']
+[1]. https://lore.kernel.org/linux-arm-msm/20220119203133.467264-1-bhupesh.sharma@linaro.org/T
 
-doc reference errors (make refcheckdocs):
+Bhupesh Sharma (3):
+  clk: qcom: gcc: Add PCIe, EMAC and UFS GDSCs for SM8150
+  clk: qcom: gcc-sm8150: use runtime PM for the clock controller
+  clk: qcom: gcc-sm8150: Use PWRSTS_ON (only) as a workaround for emac
+    gdsc
 
-See https://patchwork.ozlabs.org/patch/1584622
+Bjorn Andersson (1):
+  net: stmmac: dwmac-qcom-ethqos: Adjust rgmii loopback_en per platform
 
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
+Vinod Koul (4):
+  dt-bindings: net: qcom,ethqos: Document SM8150 SoC compatible
+  net: stmmac: Add support for SM8150
+  arm64: dts: qcom: sm8150: add ethernet node
+  arm64: dts: qcom: sa8155p-adp: Enable ethernet node
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+ .../devicetree/bindings/net/qcom,ethqos.txt   |   4 +-
+ arch/arm64/boot/dts/qcom/sa8155p-adp.dts      | 144 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |  27 ++++
+ drivers/clk/qcom/gcc-sm8150.c                 | 105 +++++++++++--
+ .../stmicro/stmmac/dwmac-qcom-ethqos.c        |  37 ++++-
+ include/dt-bindings/clock/qcom,gcc-sm8150.h   |   9 +-
+ 6 files changed, 305 insertions(+), 21 deletions(-)
 
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
+-- 
+2.34.1
 
