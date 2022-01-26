@@ -2,84 +2,325 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 26CBB49C3AE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jan 2022 07:33:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C903149C402
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jan 2022 08:07:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236347AbiAZGdK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jan 2022 01:33:10 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:48572 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S236369AbiAZGdJ (ORCPT
+        id S237600AbiAZHHw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jan 2022 02:07:52 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:26945 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S237575AbiAZHHr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jan 2022 01:33:09 -0500
+        Wed, 26 Jan 2022 02:07:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1643178789; x=1674714789;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=Ht5tFAx/b0oY9oX+FB+kzZOocBM2sta/Sgzs8nZLw/o=;
-  b=eSQbXq9GVwiekz/tpTfv91eM0eU7IDevrrI/XMvl7qwZk4u9AkiXeVh5
-   7XUHo7N0blDPRQcpgRbC+FMB1jbfp11zwrpv8a8p4Zymzdc5dBFHFjZyo
-   GvT5y0VdybZ+tu/Sfo7czwsUNvn118+AynkB0lbyqWPVT8YnXE1JWhHuh
-   A=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 25 Jan 2022 22:33:07 -0800
+  t=1643180867; x=1674716867;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=MjaAHw6izXbNh5I4IvkhbU0EiB1SMMyzgVlk8+jq0Ao=;
+  b=IgfsF8Q/Q9uqxF9wL9c2tt0+ZOUAIAGijcAxvEa4qkhYkbEGjz3Ooemf
+   GgtaoeVgNv20lOxkFOVEiASQqVjlQenmhy5RE5ThW1cN4wVnG8Coo+AYU
+   Mvyw8sUvGediLEbEDXg3pmMZZh+1vNS6/tTYZjR4hhzNcRYQ0+pXvaqoG
+   8=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 25 Jan 2022 23:07:46 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2022 22:33:05 -0800
-Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2022 23:07:46 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 25 Jan 2022 22:33:04 -0800
-Received: from fenglinw-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 25 Jan 2022 22:33:02 -0800
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <sboyd@kernel.org>
-CC:     <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
-        <quic_fenglinw@quicinc.com>, <tglx@linutronix.de>, <maz@kernel.org>
-Subject: [PATCH v5 10/10] spmi: pmic-arb: increase SPMI transaction timeout delay
-Date:   Wed, 26 Jan 2022 14:31:52 +0800
-Message-ID: <1643178713-17178-11-git-send-email-quic_fenglinw@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1643178713-17178-1-git-send-email-quic_fenglinw@quicinc.com>
-References: <1643178713-17178-1-git-send-email-quic_fenglinw@quicinc.com>
+ 15.2.922.19; Tue, 25 Jan 2022 23:07:46 -0800
+Received: from [10.253.77.50] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Tue, 25 Jan
+ 2022 23:07:41 -0800
+Message-ID: <24c09945-bcda-81e4-f53c-af871f696094@quicinc.com>
+Date:   Wed, 26 Jan 2022 15:07:38 +0800
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Subject: Re: [PATCH v2 2/9] Coresight: Add coresight TPDM source driver
+Content-Language: en-US
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>
+CC:     Mike Leach <mike.leach@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20211209141543.21314-1-quic_jinlmao@quicinc.com>
+ <20211209141543.21314-3-quic_jinlmao@quicinc.com>
+ <20211214185714.GB1549991@p14s>
+ <85ad17fb-c885-831d-d841-4c6f10920355@quicinc.com>
+ <CAJ9a7Vh2d79Ro72ZDsbQSVS8VrH3c+X+xo8849yGS4Z73+yq_w@mail.gmail.com>
+ <20211216190223.GA78825@p14s>
+ <2703bf83-3a87-e69f-2392-7e0568e91712@quicinc.com>
+ <20220121171552.GA1811357@p14s>
+From:   Jinlong Mao <quic_jinlmao@quicinc.com>
+In-Reply-To: <20220121171552.GA1811357@p14s>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: David Collins <collinsd@codeaurora.org>
+Hi Mathieu,
 
-Increase the SPMI transaction timeout delay from 100 us to
-1000 us in order to account for the slower execution time
-found on some simulator targets.
+Good afternoon.
 
-Signed-off-by: David Collins <collinsd@codeaurora.org>
-Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
----
- drivers/spmi/spmi-pmic-arb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index 0496e5d..45f9344 100644
---- a/drivers/spmi/spmi-pmic-arb.c
-+++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -91,7 +91,7 @@ enum pmic_arb_channel {
- 
- /* Maximum number of support PMIC peripherals */
- #define PMIC_ARB_MAX_PERIPHS		512
--#define PMIC_ARB_TIMEOUT_US		100
-+#define PMIC_ARB_TIMEOUT_US		1000
- #define PMIC_ARB_MAX_TRANS_BYTES	(8)
- 
- #define PMIC_ARB_APID_MASK		0xFF
--- 
-2.7.4
-
+On 1/22/2022 1:15 AM, Mathieu Poirier wrote:
+> Hey Jinlong,
+>
+> On Fri, Jan 21, 2022 at 10:01:47PM +0800, Jinlong Mao wrote:
+>> Hi Mathieu,
+>>
+>> Good Day.
+>>
+>> On 12/17/2021 3:02 AM, Mathieu Poirier wrote:
+>>> [...]
+>>>
+>>>>>>> +
+>>>>>>> +static void tpdm_init_default_data(struct tpdm_drvdata *drvdata)
+>>>>>>> +{
+>>>>>>> +    static int traceid = TPDM_TRACE_ID_START;
+>>>>>>> +
+>>>>>>> +    drvdata->traceid = traceid++;
+>>>>>>> +}
+>>>>>> I have been specific on how to properly do this in the last revision.  Given the
+>>>>>> above about the MAINTAINERS file, I am not sure that I will continue reviewing this set.
+>>>>>>
+>>>>>> There is also no need to rush another revision as I won't have the bandwidth to
+>>>>>> process it before the holidays.
+>>>>>>
+>>>>>> Thanks,
+>>>>>> Mathieu
+>>>>> Hi Mathieu,
+>>>>>
+>>>>> Sorry, not addressed your previous comments here.
+>>>>>
+>>>>> For the trace id, each coresight component has 7 bits to store the trace
+>>>>> id. So the trace id should be from 1 to 127 as 0 is invalid.
+>>>> IDs 0x70 - 0x7F (`112 - 127 ) are reserved - see the ARM Coresight
+>>>> Architecture specification v3.0
+>>>>
+>>> Correct
+>>>
+>>>>> Apart from TPDMs/STM/ETMs, we also have other coresight components in
+>>>>> our internal device. About 80 ids are already used.
+>>>>>
+>>>>> Some components have fixed trace id in HW. If we use functions below to
+>>>>> count the trace id, there will be conflict to other components.
+>>>>>
+>>>>> Can we use 1-15 for etm trace ids  and 16 - 127 for other coresight
+>>>>> components ? And handle trace ids in its' own driver ?
+>>>>>
+>>>> This will limit systems to 15 cores - some have more!
+>>>>
+>>> Correct
+>>>
+>>>>> static inline int coresight_get_system_trace_id(int id)
+>>>>> {
+>>>>>            /* Start system IDs above the highest per CPU trace ID. */
+>>>>>            return coresigth_get_trace_id(cpumask_last(cpu_possible_mask) + 1);
+>>>>> }
+>>> Looking at my own suggestion again this won't work since it returns the same traceID
+>>> when called multiple times.
+>>>
+>>> For this patchset and _without_ taking into account internal devices that have
+>>> their traceID set in HW:
+>>>
+>>> 1. Define a bitmask that is 7 bit wide.
+>> Should it be a 128 bit wide bitmask  (0--127)?
+> Yes, you are correct.
+>
+>>> 2. By default, set bits under 0x10 and between 0x70 - 0x7F.
+>>> 3. In coresight_get_system_trace_id(), drop the @id parameter and allocate the
+>>> first available bit after cpumask_last(cpu_possible_mask) + 1.
+>> Should it allocate the first available bit after (cpumask_last(cpu_possible_mask) *2 ) + 0x10 ?
+>> Return the first zero bit position as the trace id and set the bit.
+> I need to clarify something with Mike on this - I will get back to you on
+> Monday.
+Do you have more comments on this ?
+>
+>>> 4. Define a new function called coresight_put_system_trace_id(int id) that
+>>> clears the bit in the mask corresponding to @id.
+>>>
+>>> For now that should work.
+>>>
+>>>>> static inline int coresight_get_trace_id(int cpu)
+>>>>> {
+>>>>>        /*
+>>>>>         * A trace ID of value 0 is invalid, so let's start at some
+>>>>>         * random value that fits in 7 bits and go from there.  Since
+>>>>>         * the common convention is to have data trace IDs be I(N) + 1,
+>>>>>         * set instruction trace IDs as a function of the CPU number.
+>>>>>         */
+>>>>>        return (CORESIGHT_ETM_PMU_SEED + (cpu * 2));
+>>>>> }
+>>>>>
+>>>> This fixed relationship between cpu and trace ID is used in the perf
+>>>> tooling to populate the elements in the perf.data file to correctly
+>>>> allow association between CPU and trace data, and thus allow correct
+>>>> trace decode.
+>>> TraceIDs associated to CPUs are communicated to the perf tooling by way of the
+>>> perf header - theoretically we should be able to change the allocation scheme
+>>> without impacting the decoding process.
+>>>
+>>>> It should be possible to create another more dynamic mapping scheme -
+>>>> but this must include a way to support the perf requirements too.
+>>>>
+>>> TraceIDs have been a lurking problem for as long as the subsystem has existed.
+>>> For now what I have suggested above should be sufficient to provide an
+>>> in-between solution that doesn't hold back this patchset.
+>>>
+>>> That being said, we need to start thinking about the best way to do this.  I
+>>> will put a patchset together in the new year that aims in that direction.
+>>>
+>>>> Regards
+>>>>
+>>>> Mike
+>>>>
+>>>>> Thanks
+>>>>>
+>>>>> Jinlong Mao
+>>>>>
+>>>>>>> +
+>>>>>>> +static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
+>>>>>>> +{
+>>>>>>> +    struct device *dev = &adev->dev;
+>>>>>>> +    struct coresight_platform_data *pdata;
+>>>>>>> +    struct tpdm_drvdata *drvdata;
+>>>>>>> +    struct coresight_desc desc = { 0 };
+>>>>>>> +
+>>>>>>> +    desc.name = coresight_alloc_device_name(&tpdm_devs, dev);
+>>>>>>> +    if (!desc.name)
+>>>>>>> +            return -ENOMEM;
+>>>>>>> +    pdata = coresight_get_platform_data(dev);
+>>>>>>> +    if (IS_ERR(pdata))
+>>>>>>> +            return PTR_ERR(pdata);
+>>>>>>> +    adev->dev.platform_data = pdata;
+>>>>>>> +
+>>>>>>> +    drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+>>>>>>> +    if (!drvdata)
+>>>>>>> +            return -ENOMEM;
+>>>>>>> +    drvdata->dev = &adev->dev;
+>>>>>>> +    dev_set_drvdata(dev, drvdata);
+>>>>>>> +
+>>>>>>> +    drvdata->base = devm_ioremap_resource(dev, &adev->res);
+>>>>>>> +    if (!drvdata->base)
+>>>>>>> +            return -ENOMEM;
+>>>>>>> +
+>>>>>>> +    mutex_init(&drvdata->lock);
+>>>>>>> +
+>>>>>>> +    desc.type = CORESIGHT_DEV_TYPE_SOURCE;
+>>>>>>> +    desc.subtype.source_subtype = CORESIGHT_DEV_SUBTYPE_SOURCE_SYS;
+>>>>>>> +    desc.ops = &tpdm_cs_ops;
+>>>>>>> +    desc.pdata = adev->dev.platform_data;
+>>>>>>> +    desc.dev = &adev->dev;
+>>>>>>> +    drvdata->csdev = coresight_register(&desc);
+>>>>>>> +    if (IS_ERR(drvdata->csdev))
+>>>>>>> +            return PTR_ERR(drvdata->csdev);
+>>>>>>> +
+>>>>>>> +    tpdm_init_default_data(drvdata);
+>>>>>>> +    pm_runtime_put(&adev->dev);
+>>>>>>> +
+>>>>>>> +    return 0;
+>>>>>>> +}
+>>>>>>> +
+>>>>>>> +static void __exit tpdm_remove(struct amba_device *adev)
+>>>>>>> +{
+>>>>>>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(&adev->dev);
+>>>>>>> +
+>>>>>>> +    coresight_unregister(drvdata->csdev);
+>>>>>>> +}
+>>>>>>> +
+>>>>>>> +static struct amba_id tpdm_ids[] = {
+>>>>>>> +    {
+>>>>>>> +            .id = 0x000f0e00,
+>>>>>>> +            .mask = 0x000fff00,
+>>>>>>> +    },
+>>>>>>> +    { 0, 0},
+>>>>>>> +};
+>>>>>>> +
+>>>>>>> +static struct amba_driver tpdm_driver = {
+>>>>>>> +    .drv = {
+>>>>>>> +            .name   = "coresight-tpdm",
+>>>>>>> +            .owner  = THIS_MODULE,
+>>>>>>> +            .suppress_bind_attrs = true,
+>>>>>>> +    },
+>>>>>>> +    .probe          = tpdm_probe,
+>>>>>>> +    .id_table       = tpdm_ids,
+>>>>>>> +};
+>>>>>>> +
+>>>>>>> +module_amba_driver(tpdm_driver);
+>>>>>>> +
+>>>>>>> +MODULE_LICENSE("GPL v2");
+>>>>>>> +MODULE_DESCRIPTION("Trace, Profiling & Diagnostic Monitor driver");
+>>>>>>> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
+>>>>>>> new file mode 100644
+>>>>>>> index 000000000000..980ae90ff1c8
+>>>>>>> --- /dev/null
+>>>>>>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
+>>>>>>> @@ -0,0 +1,31 @@
+>>>>>>> +/* SPDX-License-Identifier: GPL-2.0 */
+>>>>>>> +/*
+>>>>>>> + * Copyright (c) 2021 Qualcomm Innovation Center, Inc. All rights reserved.
+>>>>>>> + */
+>>>>>>> +
+>>>>>>> +#ifndef _CORESIGHT_CORESIGHT_TPDM_H
+>>>>>>> +#define _CORESIGHT_CORESIGHT_TPDM_H
+>>>>>>> +
+>>>>>>> +/* Default value of the traceid */
+>>>>>>> +#define TPDM_TRACE_ID_START 128
+>>>>>>> +
+>>>>>>> +/**
+>>>>>>> + * struct tpdm_drvdata - specifics associated to an TPDM component
+>>>>>>> + * @base:       memory mapped base address for this component.
+>>>>>>> + * @dev:        The device entity associated to this component.
+>>>>>>> + * @csdev:      component vitals needed by the framework.
+>>>>>>> + * @lock:       lock for the enable value.
+>>>>>>> + * @enable:     enable status of the component.
+>>>>>>> + * @traceid:    value of the current ID for this component.
+>>>>>>> + */
+>>>>>>> +
+>>>>>>> +struct tpdm_drvdata {
+>>>>>>> +    void __iomem            *base;
+>>>>>>> +    struct device           *dev;
+>>>>>>> +    struct coresight_device *csdev;
+>>>>>>> +    struct mutex            lock;
+>>>>>>> +    bool                    enable;
+>>>>>>> +    int                     traceid;
+>>>>>>> +};
+>>>>>>> +
+>>>>>>> +#endif  /* _CORESIGHT_CORESIGHT_TPDM_H */
+>>>>>>> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
+>>>>>>> index 93a2922b7653..e48d463be63b 100644
+>>>>>>> --- a/include/linux/coresight.h
+>>>>>>> +++ b/include/linux/coresight.h
+>>>>>>> @@ -65,6 +65,7 @@ enum coresight_dev_subtype_source {
+>>>>>>>        CORESIGHT_DEV_SUBTYPE_SOURCE_PROC,
+>>>>>>>        CORESIGHT_DEV_SUBTYPE_SOURCE_BUS,
+>>>>>>>        CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE,
+>>>>>>> +    CORESIGHT_DEV_SUBTYPE_SOURCE_SYS,
+>>>>>>>     };
+>>>>>>>
+>>>>>>>     enum coresight_dev_subtype_helper {
+>>>>>>> --
+>>>>>>> 2.17.1
+>>>>>>>
+>>>>
+>>>> -- 
+>>>> Mike Leach
+>>>> Principal Engineer, ARM Ltd.
+>>>> Manchester Design Centre. UK
