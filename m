@@ -2,206 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 714E849CB97
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jan 2022 14:55:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 586B449CB6F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jan 2022 14:53:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241767AbiAZNy5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Jan 2022 08:54:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50480 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241820AbiAZNyl (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Jan 2022 08:54:41 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3A23C06175E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jan 2022 05:54:40 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id c2so27780185wml.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jan 2022 05:54:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=BnDmn/bGiXHzA/HR2vbnCnaA9xu9dPUN92kb7gNI0E8=;
-        b=RiTu8S4Ln7+O0WBUqkkUsl7/Y8RGgsnBr2QEGirlJGd5zv/J2sKYcCOIKi43UG0OIv
-         huxteankWCJT7bWllcRYrm7tlbM+644kIo9Gl2UfI3aj4ihrfuygcZnp8WYhX41Y6OK1
-         q69MJ9QVDRNA1v1eaGcQfOJrX9hqUKCjqwJFyr5W6b6ZaBUlhRweBkfU8XTq4AnE0AYx
-         2+qbazic7fNyaLMuzM4COM9Y7imeMx1cMQTmjHHno7X0fvDgpgtnWsSLQY8sTjjP9vif
-         6JVJ+tA9loPtnaHRAZ+8UnJ/uLRT1rzYOsQMCyr7eXO0Llk0BTRW171515gVHCvaE+vk
-         xSBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=BnDmn/bGiXHzA/HR2vbnCnaA9xu9dPUN92kb7gNI0E8=;
-        b=MhFLju+rpqRQ90lU7vgnnxQZICC6EnG/NsCncnTiwWYzV8GL+XP4IgtsNJexONy3Bg
-         ZWN93qbhGBWgTdNP5ncwnKoACDLslcbUVzmpJ/ENt1yAgI3FKJTrP+degj9eSE7i8Gpc
-         7vII2yTLtlNgTE8PQ/qFNUr5vvaEXLebfvNxvCz1IvM90ZtAGcr+iCA86/XZRl13T8St
-         QTP0or1+tbqKqCGopmL0ZiRevms4RTDa3TrZTxgcJj0u2lPh1gB5lgRXHHlRFFyo2ddL
-         nqAzMlqyVe+hqpfdQNTHJt2fzgohAQ5+tBlGzdG/t4o/+dwv0FyEjVZdGKV7Tq2yXU7r
-         CjIA==
-X-Gm-Message-State: AOAM532Vq2BTuneg995Ydme4n/f3p47U7ky2o7dZZbJXLEb1ottUkRDO
-        C0y9hZBRp+qnqtXinhO0WHiEjw==
-X-Google-Smtp-Source: ABdhPJyel63/sPQgccttrP2TI12+cJQazZbJYZemZWsjq8GWdGcvGhyZNBoQMvKbAPIMSpCJumUbPw==
-X-Received: by 2002:a7b:c401:: with SMTP id k1mr7506568wmi.67.1643205279377;
-        Wed, 26 Jan 2022 05:54:39 -0800 (PST)
-Received: from srini-hackbox.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.gmail.com with ESMTPSA id n15sm3356593wmr.26.2022.01.26.05.54.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Jan 2022 05:54:38 -0800 (PST)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     robh+dt@kernel.org, gregkh@linuxfoundation.org
-Cc:     devicetree@vger.kernel.org, ekangupt@qti.qualcomm.com,
-        bkumar@qti.qualcomm.com, linux-kernel@vger.kernel.org,
-        srini@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, Jeya R <jeyr@codeaurora.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH v3 12/12] arm64: dts: qcom: add non-secure domain property to fastrpc nodes
-Date:   Wed, 26 Jan 2022 13:53:04 +0000
-Message-Id: <20220126135304.16340-13-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20220126135304.16340-1-srinivas.kandagatla@linaro.org>
-References: <20220126135304.16340-1-srinivas.kandagatla@linaro.org>
+        id S241680AbiAZNxp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Jan 2022 08:53:45 -0500
+Received: from mga11.intel.com ([192.55.52.93]:33269 "EHLO mga11.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S241675AbiAZNxp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 26 Jan 2022 08:53:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1643205225; x=1674741225;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=bMBLo3juLdl1DLRTER+VXh+0HaGKi5neF1b3QBBd5Uw=;
+  b=X3DKg1UckL+ci7aQkLecA2tfQXkQMy8Dk4N3oxghZA6+vtpQQ3mg87BB
+   cImUn4N8cuHnLvawFNOKUswxob+Lj7DAYItkIdLEZJ4F5PQyqlUZxgvue
+   LcSdJhD20GDLCcsXbJ+ujw9kKNpRc5X5Z95wBdRGeC/EyzPgCLqINdKHm
+   MmLR5nys/2hgG4EsBduwxlYljaZAEhZamGjCnrTx7kufcQhtvVOVf8r0K
+   2dkD1EuZa03NiBfTs/JmqFhGKxjQhPSV3z8SBeM7czVokfm8Wa5wPqvQd
+   eMeEFCigdDQDK//1yUHfmkNXc/IPvVWaKVVslzf+SRkVWKVPu8IgMerK1
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10238"; a="244150361"
+X-IronPort-AV: E=Sophos;i="5.88,318,1635231600"; 
+   d="scan'208";a="244150361"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jan 2022 05:53:45 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,318,1635231600"; 
+   d="scan'208";a="769377043"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by fmsmga005.fm.intel.com with ESMTP; 26 Jan 2022 05:53:41 -0800
+Received: by black.fi.intel.com (Postfix, from userid 1003)
+        id A6F82167; Wed, 26 Jan 2022 15:53:54 +0200 (EET)
+From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Andreas Kemnade <andreas@kemnade.info>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>
+Subject: [PATCH v4 1/4] math.h: Introduce data types for fractional numbers
+Date:   Wed, 26 Jan 2022 15:53:50 +0200
+Message-Id: <20220126135353.24007-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jeya R <jeyr@codeaurora.org>
+Introduce a macro to produce data types like
 
-FastRPC DSP domain would be set as secure if non-secure dsp property is not
-added to the fastrpc DT node. Add this property to DT files of msm8916,
-sdm845, sm8150, sm8250 and sm8350 so that nothing is broken after secure
-domain patchset.
+	struct TYPE_fract {
+		__TYPE numerator;
+		__TYPE denominator;
+	};
 
-This patch is purely for backward compatibility reasons.
+to be used in the code wherever it's needed.
 
-Signed-off-by: Jeya R <jeyr@codeaurora.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In the following changes convert some users to it.
+
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 1 +
- arch/arm64/boot/dts/qcom/sdm845.dtsi  | 2 ++
- arch/arm64/boot/dts/qcom/sm8150.dtsi  | 3 +++
- arch/arm64/boot/dts/qcom/sm8250.dtsi  | 3 +++
- arch/arm64/boot/dts/qcom/sm8350.dtsi  | 3 +++
- 5 files changed, 12 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 41897eb3736a..a1543012c4fa 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1370,6 +1370,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,smd-channels = "fastrpcsmd-apps-dsp";
- 					label = "adsp";
-+					qcom,non-secure-domain;
+May be pulled via IIO tree.
+
+v4: no changes
+v3: no changes
+v2: no changes
+
+ include/linux/math.h | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/include/linux/math.h b/include/linux/math.h
+index 53674a327e39..439b8f0b9ebd 100644
+--- a/include/linux/math.h
++++ b/include/linux/math.h
+@@ -2,6 +2,7 @@
+ #ifndef _LINUX_MATH_H
+ #define _LINUX_MATH_H
  
- 					#address-cells = <1>;
- 					#size-cells = <0>;
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index cfdeaa81f1bb..c9d613063966 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -838,6 +838,7 @@
- 				compatible = "qcom,fastrpc";
- 				qcom,glink-channels = "fastrpcglink-apps-dsp";
- 				label = "adsp";
-+				qcom,non-secure-domain;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
++#include <linux/types.h>
+ #include <asm/div64.h>
+ #include <uapi/linux/kernel.h>
  
-@@ -888,6 +889,7 @@
- 				compatible = "qcom,fastrpc";
- 				qcom,glink-channels = "fastrpcglink-apps-dsp";
- 				label = "cdsp";
-+				qcom,non-secure-domain;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
+@@ -106,6 +107,17 @@
+ }							\
+ )
  
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 9255982adb69..637c6a6d4054 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -1755,6 +1755,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "sdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -2997,6 +2998,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "cdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -3442,6 +3444,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "adsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index c97ea638f6aa..3be4e630c2fe 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2594,6 +2594,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "sdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -2659,6 +2660,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "cdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -4429,6 +4431,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "adsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 53b39e718fb6..a9a11c747a3a 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -1996,6 +1996,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "sdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -2065,6 +2066,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "cdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -2367,6 +2369,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "adsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
++#define __STRUCT_FRACT(type)				\
++struct type##_fract {					\
++	__##type numerator;				\
++	__##type denominator;				\
++};
++__STRUCT_FRACT(s16)
++__STRUCT_FRACT(u16)
++__STRUCT_FRACT(s32)
++__STRUCT_FRACT(u32)
++#undef __STRUCT_FRACT
++
+ /*
+  * Multiplies an integer by a fraction, while avoiding unnecessary
+  * overflow or loss of precision.
 -- 
-2.21.0
+2.34.1
 
