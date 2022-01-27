@@ -2,150 +2,309 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E3EE449DBD2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 08:45:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C66CF49DD45
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 10:05:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237450AbiA0Hph (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jan 2022 02:45:37 -0500
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:35900
-        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S237420AbiA0Hpg (ORCPT
+        id S238176AbiA0JFi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jan 2022 04:05:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57150 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231985AbiA0JFh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jan 2022 02:45:36 -0500
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com [209.85.221.71])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id AC1BE3F1DD
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 07:45:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1643269535;
-        bh=A2nKj4Pl+64Ysr4+QSknv7VT4EFI0AF9z9C7GHdP12w=;
-        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-         In-Reply-To:Content-Type;
-        b=uOtW3NGdj0gIRpAVE0/UHen6y/HD6qyn2I+E3mmFZcC3pkoC5vkxlszO4wcCEV9un
-         xC+M7hAp9O9i2pNuET/m5hfTG2/ujZ9wqfC7hMqTc1J0eWA1YlmnivT7/4kYWghsQ6
-         mrK4Piiq68FXhbZloP6RyalTRX/SOABMC82urInh+qxT6rmqRWFDU4OFbasz1iQVnG
-         +lQQQcgTw64hZ7cis+m5Md24bxEFJh0Mqs3Fkk0VUM5wG8zIPDd7Pljp4JcFURjSVg
-         XQI/idF9ggOimGlEa0Yr3iaQ2Ce6ZTyHlY7BUJcAoKX/ilb5qGLpWdFInUFjtvStae
-         JMsw0ai0ehiAA==
-Received: by mail-wr1-f71.google.com with SMTP id e15-20020adf9bcf000000b001de055937d4so669919wrc.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jan 2022 23:45:35 -0800 (PST)
+        Thu, 27 Jan 2022 04:05:37 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47EC2C061747
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 01:05:37 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id v13so3397876wrv.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 01:05:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20210112.gappssmtp.com; s=20210112;
+        h=references:user-agent:from:to:cc:subject:date:in-reply-to
+         :message-id:mime-version;
+        bh=rjtR56dfdnTjyM6bjm66t58wWtukpooj/ecEV7qKFFU=;
+        b=RINGYWmdOJjRmzG/N3Nc3K8o+ujsn7QBQ5I5V9tMGZRL5nET7TcPqyT9oOIOrZGDgA
+         yjEdEZtN0UlnVj9CLMpEXhXrKEI2nbsOW6QV/zKK0aLY8mCp3fYA72DSBBdLxKzSrw6M
+         qsw0avSCZ5aQY66yJBw3HZZ6E3iTNkLLFNwlroAXGsNcKwrO8uYutF9EscY1Dw8WB8lj
+         7rHCojLlMQ05VcA5jovZImiweY2YVDzKumB2r8gZB/PSSkNIp7zbiPnIywND0RKO4YvU
+         YlRcyxCQEvjKxIQheHHNM4q5JRrRXDmqF+y04W756RgsaelM0vNFX2Yqny+wvSTdRC7g
+         qJog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=A2nKj4Pl+64Ysr4+QSknv7VT4EFI0AF9z9C7GHdP12w=;
-        b=C9reHQs8qKiBHON8JA7DZaPd4D+V2EA3QHM21MvzYwAcCkUZFGjFwcOBLhE3lY1L8i
-         cVmmQiSwhyi5SQOFmbUhn3Ca76SihN5GaUpUzNoe6UxNHtLHbyJGWsuNZw5vxAnECQMn
-         Fni50WC2oODyg29oTPDb7P4bV2DhLTYVuTqhTWCq/gqs0Puy0GCdE/pi1G6pteoZrhMH
-         9UiGbtxZZ8PWflTUuz2SIbxPjuhpsgc0pau8KduvjxdFhwqsUtwRnFnAUIEj4E/q71Ho
-         z8RX+QCwbMnWq95MojQ5zDgt7tXd2cu2iRzRR9syoO7NIeKF7TRSXc38qQuWOqoznAVp
-         xUKw==
-X-Gm-Message-State: AOAM5313F8SFjkv4GO8rLY6gAtPpsLO1FU5rEgYckpsTUsFIwrPt7fNj
-        4lVqKSWfha4vCNB4sIYHVvtS6Zivm1B7vvHCN0ndtqh6zdZZ6sBfhwItyCKSbDdTcADf3VXQimQ
-        7r84dN21DCU88xhM8VNx+DlOXd1CJ1t1HvcBZXo1L8tI=
-X-Received: by 2002:adf:ffd0:: with SMTP id x16mr1770492wrs.489.1643269535295;
-        Wed, 26 Jan 2022 23:45:35 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJz7jAoPbLTEGbFOH5NdL0XmAfgEGITHjiDTMGRmPjC05oBjkMk8eXbStMM/Z+R7G7OO6XMvnw==
-X-Received: by 2002:adf:ffd0:: with SMTP id x16mr1770480wrs.489.1643269535072;
-        Wed, 26 Jan 2022 23:45:35 -0800 (PST)
-Received: from [192.168.0.62] (xdsl-188-155-168-84.adslplus.ch. [188.155.168.84])
-        by smtp.gmail.com with ESMTPSA id m6sm1647098wrw.54.2022.01.26.23.45.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jan 2022 23:45:34 -0800 (PST)
-Message-ID: <c69d1daf-45c8-3ac5-a0b0-bb853593c54e@canonical.com>
-Date:   Thu, 27 Jan 2022 08:45:33 +0100
+        h=x-gm-message-state:references:user-agent:from:to:cc:subject:date
+         :in-reply-to:message-id:mime-version;
+        bh=rjtR56dfdnTjyM6bjm66t58wWtukpooj/ecEV7qKFFU=;
+        b=X1Lle9bA4/tlO0uJv/3HUhDeUzswzx5Cf3VZ7H9JJ7UAdmXMTOlkvMuXH2U/FpyfGW
+         lk4YjJG1gVIllEX/iFoZ17Ki40h1Bx3P5/8n19jVhZVjc0oMSeIcVfFt04pO4PiDP347
+         cgGz2EuKMHJuirvXdo6JSYGTmEfPapfQFNBbEdDwoY9jUSHncEWjp1aGzMwMSi6OEAoi
+         VBMGPZJXDuGdzQe4c3IJqF2TN2LPBzxt9z9JDXIZQmCeFCqt3yeDRaQctDAeuMNUg2iP
+         KDKSeZO0UoL+WTHaSsiGOscxCKCLy2e+ZFPLE8bMJbs8JAS7coYj0fedembuzZfsWSVw
+         d1ig==
+X-Gm-Message-State: AOAM5329/L5snHbO9ZWgK/jLjCwsAdw07Ofd6M92RIqZLvhbEuFIsFGT
+        s7VwXmXsZSLZZfHqjeho5H59SA==
+X-Google-Smtp-Source: ABdhPJwPXj2TGvVrDtoZmyvAc/oT6t1ERUujcirvOS6XEJszUThggTk+2eO5mXwRJ/mazVI3JS/s+A==
+X-Received: by 2002:a5d:660b:: with SMTP id n11mr2162313wru.78.1643274335733;
+        Thu, 27 Jan 2022 01:05:35 -0800 (PST)
+Received: from localhost (82-65-169-74.subs.proxad.net. [82.65.169.74])
+        by smtp.gmail.com with ESMTPSA id g5sm2022495wri.108.2022.01.27.01.05.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Jan 2022 01:05:35 -0800 (PST)
+References: <20220126231427.1638089-1-robh@kernel.org>
+User-agent: mu4e 1.6.10; emacs 27.1
+From:   Jerome Brunet <jbrunet@baylibre.com>
+To:     Rob Herring <robh@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Cheng-Yi Chiang <cychiang@chromium.org>,
+        Shengjiu Wang <shengjiu.wang@nxp.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Jonathan Bakker <xc-racer2@live.ca>
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] ASoC: dt-bindings: Centralize the 'sound-dai' definition
+Date:   Thu, 27 Jan 2022 10:00:53 +0100
+In-reply-to: <20220126231427.1638089-1-robh@kernel.org>
+Message-ID: <1jtudp1rc1.fsf@starbuckisacylon.baylibre.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH 6/8] dt-bindings: vendor-prefixes: add LG Electronics
-Content-Language: en-US
-To:     Petr Vorel <petr.vorel@gmail.com>, Luca Weiss <luca@z3ntu.xyz>,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
-Cc:     Shawn Guo <shawnguo@kernel.org>,
-        Oleksij Rempel <linux@rempel-privat.de>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Daniel Palmer <daniel@0x0f.com>,
-        Max Merchel <Max.Merchel@tq-group.com>,
-        Hao Fang <fanghao11@huawei.com>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Jean THOMAS <virgule@jeanthomas.me>
-References: <YfHlV13Zi4KV+bNT@pevik>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <YfHlV13Zi4KV+bNT@pevik>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/01/2022 01:20, Petr Vorel wrote:
-> Hi all,
-> 
->>> Hi Krzysztof,
-> 
->>> On Montag, 13. September 2021 10:49:43 CEST Krzysztof Kozlowski wrote:
->>>> On 12/09/2021 01:27, Luca Weiss wrote:
->>>>> LG Electronics is a part of the LG Corporation and produces, amongst
->>>>> other things, consumer electronics such as phones and smartwatches.
-> 
->>>> Hi,
-> 
->>>> Thanks for the patches.
-> 
->>>> I think "lge" it's the same prefix as "lg". There is no sense in having
->>>> multiple vendor prefixes just because company splits inside business
->>>> units or subsidiaries. The same as with other conglomerates, e.g.
->>>> Samsung - if we wanted to be specific, there will be 4-5 Samsung
->>>> vendors... Not mentioning that company organisation is not always
->>>> disclosed and can change.
-> 
-> 
->>> I was mostly following qcom-msm8974-lge-nexus5-hammerhead as it's the other LG
->>> device tree I am aware of so I've picked lge instead of lg. Also worth noting
->>> that Google uses "LGE" in the Android device tree[1] or in the model name in
->>> the LG G Watch R kernel sources ("LGE APQ 8026v2 LENOK rev-1.0")
-> 
->> [1] Does not point to kernel tree. Downstream user could be a good
->> argument to switch to lge, but then I would expect correcting other "lg"
->> devices which are in fact made by LGE.
-> 
-> 
->>> I don't have a strong opinion either way so I'm fine with either.
-> 
->>> If we decide to go with "lg" do we want to change the Nexus 5 devicetree
->>> (hammerhead) also, that one has the lge name in at least compatible and
->>> filename (I don't know how much of a breaking change that would be considered
->>> as).
-> 
->> We would have to add a new one and mark the old compatible as deprecated.
-> 
-> Have we sorted this lg- vs. lge- ?
-> 
-> There are both:
-> arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-> vs
-> arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-> 
 
-Probably renaming/unifying/correcting prefix in existing compatibles is
-not worth the effort. This would make a mess and affect other DTS users.
+On Wed 26 Jan 2022 at 17:14, Rob Herring <robh@kernel.org> wrote:
 
-Most of existing usages of "lg" prefix are panels which are coming from
-another subsidiary of LG - LG Display. We all use there "lg" prefix, not
-"lgd".
-Plus mention before Bullhead mobile phone which is coming from LG
-Electronics.
+> 'sound-dai' is a common property, but has duplicate type definitions.
+> Create a new common definition to define the type and then update all
+> the other occurrences to just define how many entries there are just
+> like other phandle+arg properties.
+>
+> The constraints on the number of entries is based on the examples and
+> could be wrong.
+>
+> Cc: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+> Please ack, this depends on commit abf0fee97313 ("dt-bindings: Improve
+> phandle-array schemas") in my tree.
+> ---
+>  .../bindings/sound/amlogic,gx-sound-card.yaml |  4 ++--
+>  .../bindings/sound/google,sc7180-trogdor.yaml |  6 ++++--
+>  .../bindings/sound/imx-audio-card.yaml        |  7 +++++--
+>  .../bindings/sound/qcom,sm8250.yaml           | 10 +++++++---
+>  .../bindings/sound/samsung,aries-wm8994.yaml  |  5 +----
+>  .../bindings/sound/samsung,midas-audio.yaml   |  2 --
+>  .../bindings/sound/samsung,odroid.yaml        |  9 +++------
+>  .../devicetree/bindings/sound/sound-dai.yaml  | 20 +++++++++++++++++++
+>  8 files changed, 42 insertions(+), 21 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/sound/sound-dai.yaml
+>
+> diff --git a/Documentation/devicetree/bindings/sound/amlogic,gx-sound-card.yaml b/Documentation/devicetree/bindings/sound/amlogic,gx-sound-card.yaml
+> index 2e35aeaa8781..8b5be4b92f35 100644
+> --- a/Documentation/devicetree/bindings/sound/amlogic,gx-sound-card.yaml
+> +++ b/Documentation/devicetree/bindings/sound/amlogic,gx-sound-card.yaml
+> @@ -57,7 +57,7 @@ patternProperties:
+>            rate
+>  
+>        sound-dai:
+> -        $ref: /schemas/types.yaml#/definitions/phandle-array
+> +        maxItems: 1
+>          description: phandle of the CPU DAI
+>  
+>      patternProperties:
+> @@ -71,7 +71,7 @@ patternProperties:
+>  
+>          properties:
+>            sound-dai:
+> -            $ref: /schemas/types.yaml#/definitions/phandle-array
+> +            maxItems: 1
 
-If we use generalized "lg" prefix for one subsidiary (LG Display), then
-let's do the same for another subsidiary - LG Electronics. Plus entire
-branding of LG Electronics products is LG: the website, the logo,
-advertisements. Everywhere except legal footer.
+No min or max here. Links may have more than one codec.
 
-I vote for using "lg" for both subsidiaries: LG Display and LG Electronics.
+Ex:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/amlogic/meson-gxl-s905x-libretech-cc.dts#n158
 
+>              description: phandle of the codec DAI
+>  
+>          required:
+> diff --git a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
+> index 837e3faa63a9..233caa0ade87 100644
+> --- a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
+> +++ b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
+> @@ -62,13 +62,15 @@ patternProperties:
+>          description: Holds subnode which indicates cpu dai.
+>          type: object
+>          properties:
+> -          sound-dai: true
+> +          sound-dai:
+> +            maxItems: 1
+>  
+>        codec:
+>          description: Holds subnode which indicates codec dai.
+>          type: object
+>          properties:
+> -          sound-dai: true
+> +          sound-dai:
+> +            maxItems: 1
+>  
+>      required:
+>        - link-name
+> diff --git a/Documentation/devicetree/bindings/sound/imx-audio-card.yaml b/Documentation/devicetree/bindings/sound/imx-audio-card.yaml
+> index d1816dd061cf..bb3a435722c7 100644
+> --- a/Documentation/devicetree/bindings/sound/imx-audio-card.yaml
+> +++ b/Documentation/devicetree/bindings/sound/imx-audio-card.yaml
+> @@ -59,13 +59,16 @@ patternProperties:
+>          description: Holds subnode which indicates cpu dai.
+>          type: object
+>          properties:
+> -          sound-dai: true
+> +          sound-dai:
+> +            maxItems: 1
+>  
+>        codec:
+>          description: Holds subnode which indicates codec dai.
+>          type: object
+>          properties:
+> -          sound-dai: true
+> +          sound-dai:
+> +            minItems: 1
+> +            maxItems: 2
+>  
+>        fsl,mclk-equal-bclk:
+>          description: Indicates mclk can be equal to bclk, especially for sai interface
+> diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+> index 4bfda04b4608..4ecd4080bb96 100644
+> --- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+> +++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+> @@ -69,19 +69,23 @@ patternProperties:
+>          description: Holds subnode which indicates cpu dai.
+>          type: object
+>          properties:
+> -          sound-dai: true
+> +          sound-dai:
+> +            maxItems: 1
+>  
+>        platform:
+>          description: Holds subnode which indicates platform dai.
+>          type: object
+>          properties:
+> -          sound-dai: true
+> +          sound-dai:
+> +            maxItems: 1
+>  
+>        codec:
+>          description: Holds subnode which indicates codec dai.
+>          type: object
+>          properties:
+> -          sound-dai: true
+> +          sound-dai:
+> +            minItems: 1
+> +            maxItems: 4
+>  
+>      required:
+>        - link-name
+> diff --git a/Documentation/devicetree/bindings/sound/samsung,aries-wm8994.yaml b/Documentation/devicetree/bindings/sound/samsung,aries-wm8994.yaml
+> index eb487ed3ca3b..4ffa275b3c49 100644
+> --- a/Documentation/devicetree/bindings/sound/samsung,aries-wm8994.yaml
+> +++ b/Documentation/devicetree/bindings/sound/samsung,aries-wm8994.yaml
+> @@ -27,9 +27,6 @@ properties:
+>        sound-dai:
+>          minItems: 2
+>          maxItems: 2
+> -        items:
+> -          maxItems: 1
+> -        $ref: /schemas/types.yaml#/definitions/phandle-array
+>          description: |
+>            phandles to the I2S controller and bluetooth codec,
+>            in that order
+> @@ -38,7 +35,7 @@ properties:
+>      type: object
+>      properties:
+>        sound-dai:
+> -        $ref: /schemas/types.yaml#/definitions/phandle-array
+> +        maxItems: 1
+>          description: phandle to the WM8994 CODEC
+>  
+>    samsung,audio-routing:
+> diff --git a/Documentation/devicetree/bindings/sound/samsung,midas-audio.yaml b/Documentation/devicetree/bindings/sound/samsung,midas-audio.yaml
+> index 095775c598fa..ec50bcb4af5f 100644
+> --- a/Documentation/devicetree/bindings/sound/samsung,midas-audio.yaml
+> +++ b/Documentation/devicetree/bindings/sound/samsung,midas-audio.yaml
+> @@ -21,7 +21,6 @@ properties:
+>      type: object
+>      properties:
+>        sound-dai:
+> -        $ref: /schemas/types.yaml#/definitions/phandle-array
+>          maxItems: 1
+>          description: phandle to the I2S controller
+>      required:
+> @@ -31,7 +30,6 @@ properties:
+>      type: object
+>      properties:
+>        sound-dai:
+> -        $ref: /schemas/types.yaml#/definitions/phandle-array
+>          maxItems: 1
+>          description: phandle to the WM1811 CODEC
+>      required:
+> diff --git a/Documentation/devicetree/bindings/sound/samsung,odroid.yaml b/Documentation/devicetree/bindings/sound/samsung,odroid.yaml
+> index e8122bc87362..db2513f3e168 100644
+> --- a/Documentation/devicetree/bindings/sound/samsung,odroid.yaml
+> +++ b/Documentation/devicetree/bindings/sound/samsung,odroid.yaml
+> @@ -37,18 +37,15 @@ properties:
+>      type: object
+>      properties:
+>        sound-dai:
+> -        $ref: /schemas/types.yaml#/definitions/phandle-array
+>          description: phandles to the I2S controllers
+>  
+>    codec:
+>      type: object
+>      properties:
+>        sound-dai:
+> -        $ref: /schemas/types.yaml#/definitions/phandle-array
+> -        description: |
+> -          List of phandles to the CODEC nodes,
+> -          first entry must be corresponding to the MAX98090 CODEC and
+> -          the second entry must be the phandle of the HDMI IP block node.
+> +        items:
+> +          - description: phandle of the MAX98090 CODEC
+> +          - description: phandle of the HDMI IP block node
+>  
+>    samsung,audio-routing:
+>      $ref: /schemas/types.yaml#/definitions/non-unique-string-array
+> diff --git a/Documentation/devicetree/bindings/sound/sound-dai.yaml b/Documentation/devicetree/bindings/sound/sound-dai.yaml
+> new file mode 100644
+> index 000000000000..61c6f7abc4e7
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/sound/sound-dai.yaml
+> @@ -0,0 +1,20 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/sound/sound-dai.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Digital Audio Interface consumer Device Tree Bindings
+> +
+> +maintainers:
+> +  - Rob Herring <robh@kernel.org>
+> +
+> +select: true
+> +
+> +properties:
+> +  sound-dai:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    description: A phandle plus args to digital audio interface provider(s)
+> +
+> +additionalProperties: true
+> +...
 
-Best regards,
-Krzysztof
