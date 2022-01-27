@@ -2,183 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DC7049E219
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 13:11:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 287C449E284
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 13:41:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235899AbiA0MLW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jan 2022 07:11:22 -0500
-Received: from mail-vi1eur05on2101.outbound.protection.outlook.com ([40.107.21.101]:16896
-        "EHLO EUR05-VI1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S233669AbiA0MLV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jan 2022 07:11:21 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=M/eq+bZ9xMllD8HgPExENEoj6jJJfux1Q6j7Fg7qwDm/euq9VGaIswuS+i4dXwY06zUMI2/8cPkdWr1qb+MkcYlGNB7tH/vR7uhGcf9BLgvklvo6Us1e3DpfIqMvZXJfu2kJUZwL76D2aLnVaZhdsWJkl94VJq1FLpj0RSapVaurDucYFefyTRaH60wJHWf7uopPzIAOv6DxgWYSNMNfVyeewojp/xY4toC7CXWJymwsGdszAUq3FlemjYnGQ1a8I0p4QbkRtgcRYrwwRhoASvxamqkqK2G+jLbB/T5mEHyIaFT+tsOR4M/9m7W6o/MkLi62vGH9YEQ3I/6EP5ZAeQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=o8udWVrbw6jpUgPJaYJaACxuLP6SCOIhMol29XkPbCg=;
- b=oc+CYE3TvJJs0lnmQug7mb7KrjQdS+paRWYCVolNsC+YJdqoTesSiMb8h7l9JcIyg1p3qgaApQpOx0nzUCbzZ9rsRt5aKfD3M7Fem57hi7wk0MYGHbMR7R89r32neol3uuhy6uGvmXlI6xGVDiVWNkVt7sCbjSYAUArrs4OaDG6FAQjk2AJ75y271m4UczabAQsBh7B7j96W1zWX4jSCPBOGJzbii45bprMH4LAOM/s9ckVIKSC1J32KmBNQq8BMG6BRbPahxtnUx+jWaxCtJfOPtTXgKUciQMynqMSQj+ghYSIdLaL2+NKnJBDM2fJGavR809/gkosClHMipdNmNg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axentia.se;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=o8udWVrbw6jpUgPJaYJaACxuLP6SCOIhMol29XkPbCg=;
- b=OZPOt5tVHmvvjZ0oLBm+pNP9OOpIExxNVLCVCQWEVR4fYQbl9fn8dabTTS9iZKaXQzjjvOp8t3DMBiQ7rufZ262of1TEI715dB6vfNFcaJhTPK9Ok2Ue5IHjaP6+J/h7arMHakhBd23FTOtUQJF3NlVNxwmUeJBTq+i/9G4xtCY=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=axentia.se;
-Received: from DB8PR02MB5482.eurprd02.prod.outlook.com (2603:10a6:10:eb::29)
- by AM0PR02MB5011.eurprd02.prod.outlook.com (2603:10a6:208:fe::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4930.17; Thu, 27 Jan
- 2022 12:11:18 +0000
-Received: from DB8PR02MB5482.eurprd02.prod.outlook.com
- ([fe80::99a:847f:ce2e:745]) by DB8PR02MB5482.eurprd02.prod.outlook.com
- ([fe80::99a:847f:ce2e:745%4]) with mapi id 15.20.4930.017; Thu, 27 Jan 2022
- 12:11:18 +0000
-Message-ID: <c3fac656-5c9b-4b39-f5e9-e3637f4d5746@axentia.se>
-Date:   Thu, 27 Jan 2022 13:11:14 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v2 5/5] iio: afe: iio-rescale: Re-use generic struct
- s32_fract
-Content-Language: en-US
-From:   Peter Rosin <peda@axentia.se>
-To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc:     Liam Beguin <liambeguin@gmail.com>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Andreas Kemnade <andreas@kemnade.info>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lars-Peter Clausen <lars@metafoo.de>
-References: <20220110193104.75225-5-andriy.shevchenko@linux.intel.com>
- <20220115185203.567780e8@jic23-huawei> <Ye7DSAN4gdhXfEUs@smile.fi.intel.com>
- <Ye8Z6dS5cCji9LNQ@shaak> <Ye/4eJ/RhlWF7q70@smile.fi.intel.com>
- <b25932d7-91bc-27b4-ada9-8d5da1ef2ddf@axentia.se>
- <YfA+xFR0oh2ztDKv@smile.fi.intel.com>
- <34c121fa-2a3b-fb6b-f6d5-fc2be2a5c6b7@axentia.se>
- <YfE45cImAQpOeziT@smile.fi.intel.com>
- <7ed2cdb9-0719-3535-9e0a-fd9d393f1cd8@axentia.se>
- <YfFGLjeAEWfAAUWc@smile.fi.intel.com>
- <7bae39d5-7a38-ebdd-074a-6c140dc3a519@axentia.se>
-Organization: Axentia Technologies AB
-In-Reply-To: <7bae39d5-7a38-ebdd-074a-6c140dc3a519@axentia.se>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: HE1P190CA0052.EURP190.PROD.OUTLOOK.COM (2603:10a6:7:52::41)
- To DB8PR02MB5482.eurprd02.prod.outlook.com (2603:10a6:10:eb::29)
+        id S241250AbiA0MlM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jan 2022 07:41:12 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:29866 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S241211AbiA0MlI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 27 Jan 2022 07:41:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1643287268; x=1674823268;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=ZqKlu4CuQ8DC1yfQEo5A/CfHIV3YO7XgLioVJtilO2A=;
+  b=kiAQZ4e+0YXA20Tcs5zdPjp+6KlxfltTZlQwTs9RQ2p7gFhKsGrgPI/t
+   3dFxY4AiWQhuxwJRuetPTdwDzQDvmpCJzg64GRTTF30bQUCCBqwv04RyY
+   SSQQuuI/ApoMWqiIsjoouvVEfD5D56Hz6pmWv9nitZSBSyyR8qiRmpyTL
+   U=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 27 Jan 2022 04:41:08 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2022 04:41:08 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 27 Jan 2022 04:41:07 -0800
+Received: from mpubbise-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 27 Jan 2022 04:41:03 -0800
+From:   Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <robh+dt@kernel.org>, <swboyd@chromium.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_sibis@quicinc.com>,
+        <kuabhs@chromium.org>, <quic_pillair@quicinc.com>,
+        Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
+Subject: [PATCH v9] arm64: dts: qcom: sc7280: Add WPSS remoteproc node
+Date:   Thu, 27 Jan 2022 18:10:48 +0530
+Message-ID: <1643287248-1092-1-git-send-email-quic_mpubbise@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 4f10b99a-4a23-44c7-7854-08d9e18e1f7e
-X-MS-TrafficTypeDiagnostic: AM0PR02MB5011:EE_
-X-Microsoft-Antispam-PRVS: <AM0PR02MB5011649F73549AF2636D6FAFBC219@AM0PR02MB5011.eurprd02.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:3044;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: grCnwrTwvI5T8ZwQfUiBSLlzBFt+v9JrT0hJ5oVRfUus21jCcSkywYXe47wXSLVBTPrsjg4+NL0T7QSrLn35tCSlNStnczhTrrteft/SvMcBymhfqwApZ00NxgmeI2RmiMOSfFNKMXc+Qjy8IKWooXr3Kps9OLQ/yaWSnViX6OVfxwjA+txMOfxovFirClNgSgnHlcqALKr5KkiKj1LPk3K7ixET+YbCx7y+IoZH43jFcAJ6b+9ECfh1hHfx6K/y9kPEbVHGISAE0xBkd0y/fkjNVl8XludV6LM3Bd40pFRDtlIGqh9fIFPRWVyoC0hF7dOEB1757fjGwjnqKrUf+qKAjw1FHLJoIWbV+xSK9nCSAcNzwgA2g+QYEjAOco3Z5Q4lVo1v1dYr+SJ4D5z//ERFxr+noM3KuDdUfbmyZ+ebeCxx2kjYsIahSFJ3nu66IBoXvBSFVvqUeO3af94qpnLNvhYsNnlF5Ku51WkpQJBvXCY2+IrZ/J2Z8cOt5di7L7IyIaZ3igVYFoBLOOCEXd36+jXXDT8Q1HJTY+aq9y/Wh2aUk5zASByjo9mSws9mMaSQ14CQ/JgAsxmMRGEvqD9Sw6tqkqvKh5qUtdoR0fl9jSQQMMugUSX85FpiMKRV77kE6M0Lb0n3xhmSWVluJ+wa+vtZ/N4rjB2ArXy5tZXgr0Wuqoh8ppz/Ss/4XqraIkR06OiVdoE9gxEDwgWN+CsWE3YB47vg4AZcAjJiL0wNCGB98zqY52G4L2VJjnV0J8gORGZgpCnXZ8Z7fudV2nboOuJ4jBeSjAqpsemDUXTJtCz9ihyKL/9ai0MSWUPATsF4l49kb9N6+SE5ZeVdKQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB8PR02MB5482.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(396003)(376002)(346002)(366004)(136003)(39830400003)(31686004)(6666004)(6512007)(36916002)(966005)(2616005)(6506007)(31696002)(26005)(86362001)(83380400001)(186003)(53546011)(508600001)(6486002)(66476007)(8676002)(36756003)(8936002)(66946007)(66556008)(7416002)(316002)(6916009)(5660300002)(38100700002)(54906003)(4326008)(2906002)(41533002)(45980500001)(43740500002)(20210929001);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?amJUaUdiSjVkNXRTZnA1R2VFMjNwVlVHZHdHcWZyMHdZUHBFZG40VDBIVWxK?=
- =?utf-8?B?V2hTV3crN3d2WWNwZ25yYlhSSERqQ2tiUDgrWUFLS2VDNHZhOS8vcG1JbWg2?=
- =?utf-8?B?SG11T1k5eC9kVGtlSGFMVUd4Zm1ObjBGakhxYnRxczFqenBJdm1zS0NkOVJ3?=
- =?utf-8?B?M0k4TEUrY291NXRXYTRVUEhqYU5CTmZIdmxBSG5PcnNLVlpWSGx3TWUvSGpY?=
- =?utf-8?B?NzViQVBRaS9RTGh0ZjZnOERoVkoyVnJnc2JBUXoxY3VkYVo3aE1QUHVTeDAz?=
- =?utf-8?B?NHlvYis1NUNCVFdmVVBSU0FwMFc4cm81ZU1LUWxPK2FvU01xYjZSRU05MUFm?=
- =?utf-8?B?RGt0b21aWCtXR2ZZUlV6NDhhbmxjbnh4by9iNmdsWFVWK0ZHTUV4TUs0d1U1?=
- =?utf-8?B?cTkxL2Qxbmt1RjM3RkdJZVpvMGF4Vm5ZUFFPZkNHV0xLQnFlNVllMTNqNFF0?=
- =?utf-8?B?bWE5UjkrbVBmTno4UjFyQVFNZW1Fc1Z0U3o4cDNCYzRmRW51WFJtNWpUWWc0?=
- =?utf-8?B?dUhXLzFBcHVlbXhUTy9Ga0NTdW5rZzlDQ1pXVnNvUVpQYjRRNnQ1SXNIanl5?=
- =?utf-8?B?b0xHa2lUQUJ5cnM1aEFndjhiQmhrVWJpa2ZOTmwzMGw2YnV5REo5K1JGbVhW?=
- =?utf-8?B?eDVXVHdEcDJLMnNyMjVxeHd4c2hYYWRnYnNBZDA2bFpIaFpFRGNuWkRVZ09z?=
- =?utf-8?B?K2VsN2VYazlESUs0emJySVIycWJvaGZtNUoySVBlcEN1WDBKaUpLSmFNbTU4?=
- =?utf-8?B?RUExOTVxYnN5bjRjYWNnR05mUXhTWlVhckpVbHlJMXQ0SVR2aW9jK3E3Z0Zq?=
- =?utf-8?B?VUJTY3hRNEc4R1cwVlorZUN6SFYvTytiTWlZbFozZUVjYzFhV203Yk5nNWw2?=
- =?utf-8?B?QzNDVmZKRW9HdjhqamR6dmg0c2kyMk1sVlFUV2lacXhNMEljZXlWUDVxL3Fw?=
- =?utf-8?B?YndHWmdvZnh5YkNtT0JCYTg1WXcyYXZMTTJpMGovaE92MlJPTm5zdnZ5bkJw?=
- =?utf-8?B?NnpncG8xclNNYUx1dUFNSG9NL1NjU0d4bFZTZUlkanVqMmE2VC9UVjFidFM5?=
- =?utf-8?B?SmJtRVlwZ1BlWmQwN01MeGlVY2pDTkg4OUpTR3JWemVnUWRUNmNIRmlXVnU1?=
- =?utf-8?B?OHRqQ0VRTjdrRWRZZVpUaGtrNVREc2hyS0NjK2pSUFJEZXpCMmhyOU5TTnBo?=
- =?utf-8?B?YjA0SUlSMzVjdGFaazMrb1R1TzBsQkRvZmg3QVNwN2Y3QS8rck5nTnA5aFJr?=
- =?utf-8?B?dncxNWtvYXR0YmtoRzRxejBteXpFQVV4NVVUMFE1czRXYUJ3VHJ1NjY2TVlK?=
- =?utf-8?B?RGNPWWFUejUzTzdGeCtoVGt5Y3VwT2ZtMktBcHQ5QnBBajVwYlZkMUxNRUxU?=
- =?utf-8?B?TTAwWURMSkF3ZmNqc3RIdUxuNTlEUTFVdmlZMWRhOGs0UWxVUW42ZkhDaC9q?=
- =?utf-8?B?c05zSmJFRVlXendjZ0NnUkZBdUdocVhLZURFa05mNmdpN1FoY2d2dG8vaGtL?=
- =?utf-8?B?aGIwcjlMZ0plMWQ2NlNpM0I1cDAzV3MvczNuNkUzbEI0bTFyZndHR25CZ1FY?=
- =?utf-8?B?KytZV291a09id3ZFUE9sU04vWXQ5SjU0ai9VV29aangyQjhFMklIUzhjWHRw?=
- =?utf-8?B?c2E0UmQydGYrMlFncG1iOW42YjdZOXR1UUdiNVpNRXRad0RjVHVSMnJPZ2J0?=
- =?utf-8?B?aHdWZmNYLzVETHdaekhYSkVjNXk0bERJTDgzS0ZZYXZmUWQ1WVdIZUlRSjcw?=
- =?utf-8?B?TmEveXJKSjVlTHhkZTU2V3JxOGlnN040dFA4aDExNGsyWGw2TnpIbUhNQ1Rv?=
- =?utf-8?B?Y0NZZnR2Nlo5Tm9QTk1tcEpXeWtZTlpwTHlaait4WFgrb3c0MW1ESTdpZW1L?=
- =?utf-8?B?N2wrRUVxMnJxZktyNFRoV1hWWHFFc2wzNjlQMFJnUkJuRFZ3b3NBOHZyckVM?=
- =?utf-8?B?YnA2WjUyK3U3SE1kU0c1dzN3OFZraGhMZTdaR1ZaaFZ0bHB5a0o5TGZ0OUhh?=
- =?utf-8?B?RU1sWVZwVjJBODNkTVl1Z1pVN1V3WU95ZDF2VWRhNnRzczB4ZkpUSTlvVTdT?=
- =?utf-8?B?NldWdlArNzhkYjI3bis2dWlkbmJTZWtET0hBNUhXQ2pzdmU3UjBlR2pmZEFk?=
- =?utf-8?Q?4hyo=3D?=
-X-OriginatorOrg: axentia.se
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4f10b99a-4a23-44c7-7854-08d9e18e1f7e
-X-MS-Exchange-CrossTenant-AuthSource: DB8PR02MB5482.eurprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jan 2022 12:11:18.1029
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4ee68585-03e1-4785-942a-df9c1871a234
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4D3ZHrsab5a3eWElnz5KVy70OyXwwdhBq/H3psv1n5c2o6B34v/jev09IMQhtDZR
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR02MB5011
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-01-26 13:04, Andy Shevchenko wrote:
-> On Wed, Jan 26, 2022 at 11:26:50AM +0100, Peter Rosin wrote:
->> It's easy to both remove and to add back "the bigger object". I just
->> don't see the point of the churn. Technically you can probably rearrange
->> stuff in probe and remove the 2nd argument to ->props() altogether and
->> chase pointers from the dev object instead. I don't see the point of
->> that either. It doesn't really make things simpler, it doesn't really
->> make things easier to read. To me, it's just pointless churn.
-> 
-> Since you still haven't got a point the conclusions are wrong.
-> The point is (I dunno how more clear to make it) is to have proper
-> layering from the (current) design perspective.
-> 
-> If we go to the road full of "if it will come XYZ then this sucks".
-> The future is uncertain and neither of us may prove the current
-> change good or bad in terms of the future (unknown and uncertain)
-> changes.
-> 
-> Preventing this patch to land is to tell "Oh, my design is bad,
-> but I will keep it, because in the future everything may change".
-> So, why don't you make this future to be now?
-> 
->>> TL;DR: It makes possible not to mix bananas with wooden boxes.
->>
->> Which is all good until you need to ship an apple in the box with the
->> bananas. (e.g. if you for some reason need the bananas to get ripe real
->> quick, apples produce ethylene)
-> 
-> Really. arguments about the future changes are weak. If you have
-> patches in mind, send them, We will see in practice what you meant.
+From: Rakesh Pillai <quic_pillair@quicinc.com>
 
-I can do one better - here are links to patches from 7-8 months ago.
+Add the WPSS remoteproc node in dts for
+PIL loading.
 
-https://lore.kernel.org/lkml/20210530005917.20953-1-liambeguin@gmail.com/
-https://lore.kernel.org/lkml/20210530005917.20953-6-liambeguin@gmail.com/
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Rakesh Pillai <quic_pillair@quicinc.com>
+Signed-off-by: Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
+---
+Changes from v8:
+- Enable remoteproc_wpss from sc7280-idp.dtsi as the change is common for IDP and IDP2
 
-Or, if you prefer, the latest revisions.
+Changes from v7:
+- Remove wpss_mem from reserved memory. Its part of board dtsi.
 
-https://lore.kernel.org/lkml/20220108205319.2046348-9-liambeguin@gmail.com/
-https://lore.kernel.org/lkml/20220108205319.2046348-14-liambeguin@gmail.com/
+Changes from v6:
+- Swap the oder of two properties in wpss_mem reserved memory
 
-You have made review comments on that series.
+Changes from v5:
+- Update the clock names
 
-My previous arguments were based on gut feel, and I'm sorry for not
-thinking of the offset in the referred series before.
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi |  4 +++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi     | 51 ++++++++++++++++++++++++++++++++
+ 2 files changed, 55 insertions(+)
 
-Cheers,
-Peter
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+index a146d0d..7287e51 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+@@ -634,3 +634,7 @@
+ 		bias-pull-up;
+ 	};
+ };
++
++&remoteproc_wpss {
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 937c2e0..e7c0745 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -2603,6 +2603,57 @@
+ 			status = "disabled";
+ 		};
+ 
++		remoteproc_wpss: remoteproc@8a00000 {
++			compatible = "qcom,sc7280-wpss-pil";
++			reg = <0 0x08a00000 0 0x10000>;
++
++			interrupts-extended = <&intc GIC_SPI 587 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "wdog", "fatal", "ready", "handover",
++					  "stop-ack", "shutdown-ack";
++
++			clocks = <&gcc GCC_WPSS_AHB_BDG_MST_CLK>,
++				 <&gcc GCC_WPSS_AHB_CLK>,
++				 <&gcc GCC_WPSS_RSCP_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "ahb_bdg", "ahb",
++				      "rscp", "xo";
++
++			power-domains = <&rpmhpd SC7280_CX>,
++					<&rpmhpd SC7280_MX>;
++			power-domain-names = "cx", "mx";
++
++			memory-region = <&wpss_mem>;
++
++			qcom,qmp = <&aoss_qmp>;
++
++			qcom,smem-states = <&wpss_smp2p_out 0>;
++			qcom,smem-state-names = "stop";
++
++			resets = <&aoss_reset AOSS_CC_WCSS_RESTART>,
++				 <&pdc_reset PDC_WPSS_SYNC_RESET>;
++			reset-names = "restart", "pdc_sync";
++
++			qcom,halt-regs = <&tcsr_mutex 0x37000>;
++
++			status = "disabled";
++
++			glink-edge {
++				interrupts-extended = <&ipcc IPCC_CLIENT_WPSS
++							     IPCC_MPROC_SIGNAL_GLINK_QMP
++							     IRQ_TYPE_EDGE_RISING>;
++				mboxes = <&ipcc IPCC_CLIENT_WPSS
++						IPCC_MPROC_SIGNAL_GLINK_QMP>;
++
++				label = "wpss";
++				qcom,remote-pid = <13>;
++			};
++		};
++
+ 		dc_noc: interconnect@90e0000 {
+ 			reg = <0 0x090e0000 0 0x5080>;
+ 			compatible = "qcom,sc7280-dc-noc";
+-- 
+2.7.4
+
