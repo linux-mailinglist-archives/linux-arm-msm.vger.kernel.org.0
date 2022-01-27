@@ -2,63 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B95D49E853
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 18:04:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EBD7549E876
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 18:10:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244280AbiA0REW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jan 2022 12:04:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57924 "EHLO
+        id S244328AbiA0RKl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jan 2022 12:10:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238718AbiA0REV (ORCPT
+        with ESMTP id S244326AbiA0RKl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jan 2022 12:04:21 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67392C061714
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 09:04:21 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id r186so488173wma.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 09:04:21 -0800 (PST)
+        Thu, 27 Jan 2022 12:10:41 -0500
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53D9EC061714;
+        Thu, 27 Jan 2022 09:10:41 -0800 (PST)
+Received: by mail-pf1-x436.google.com with SMTP id e28so3210379pfj.5;
+        Thu, 27 Jan 2022 09:10:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=Xq5JSeGAWZi1OsdDMQABwbOnDerwbPa8wE4vgOTW8/Y=;
-        b=zcjytRgZhKk0UVB7sTJ2tWYadwRdtz8tU5dbL4itdSgdGa+Vfi1ivXb0DOX0wFJnF+
-         jCTR+jwLKPiSOZAKRpM2zaK0baqKzuM5lWOZLUdDtKR3vP11Hlv8hQflCJkcyq/suMp/
-         AxQ45gYnkkKnBGDvIN/sZ+HoA8TZhod5ouV9IHOJBGuU2m5JJMgoATDywhudRYjGpBJ9
-         zdnW/Z8ZeWGS8QML+ZprPfhrzpxL8QTqPzqoszoFH1RaF/15uSsx0BRE/LhZ6UtlmPD9
-         rz9A0ZscZRDDQsqNh1Ni9CxtrlmHzWAgfpbaBPX4WaTRRbLvOQ7TVyvEifxwMsr4j/oA
-         Ey4A==
+        bh=6CDYV/P4O/r3dgztPFLJV9lZu9zFEjn3L3fRfL7MbBg=;
+        b=Hk2vLuMBhTwAlb4KfBdcApLjWnZDozauE3TjJ4sb/iJXaqrO1FrsL4c3Ws4Qg/zHQa
+         mhdSVaD+Ic9IGShFa+PSVgTzSHCFmYgn+1hEO/JunIX/mqEWJ9Ao2zlTJIiia4kgw8AP
+         +2Os0rxdyQcQay1394o5TuMIfMnf+CFkhpyudSbLhk6Wn72mz+cGXyE9fkzSqUMi9j3Z
+         p9GTZQFq3QSoI0tJEUjB7AMybt2cxsEbFExufpG2VwoLRJoSuJR4bOzZ7eBquYvhfqTn
+         LSF2GpnxOyxXe2vqrrwi4uBA6bHJwmFWhFYQs9ak2ljg/SblZiV2ssf7F62H9TiYTwLt
+         zD5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=Xq5JSeGAWZi1OsdDMQABwbOnDerwbPa8wE4vgOTW8/Y=;
-        b=dlVyWBz6t/hmSkTW8fFqhOf4S8LRcmrgFrX7Va5bqbbfSdLDb74xvXGwoDeO7553L4
-         qapTRnVg49pGSijdjdc4+jwZAnPoc7XpYMICBJZgPt0hD3sxTr11rV8ddb94TK9aJHL0
-         RC5PEIFBS8oKhTS/vR9BsPFvAvWef+JBO+gTlsiHQc2jQLb1Y0OvgPtJcc9IqrkGQo6r
-         XONmaLPOIFcsrlKnXKNO6G6HB7mFLgRP5b0rz2QOKK6Pt+z6CJNb0/uU0kGmIMFxwX6r
-         rGicIO7EdRLQyZ+OpJs7ljIkPUjJq0Mn0CyLqRWdKN6WvsJ8tr2DZgvOFtQ6BVVclIPM
-         292g==
-X-Gm-Message-State: AOAM5301tAL2BvZH5xSXLWB4D6ThRyQqmEGrk+8t2mtZtR27jpYs3wG/
-        LipBwahCNkoE4rUN8G45+pK7vg==
-X-Google-Smtp-Source: ABdhPJyBI5EHJ0MpglMjqGADM1SO/QEfD2Zy/mqKdhdp8dhVZB6esmP/S8cjIf8hsX6ZeIdl6n6hjg==
-X-Received: by 2002:a05:600c:3ac5:: with SMTP id d5mr3902521wms.107.1643303059880;
-        Thu, 27 Jan 2022 09:04:19 -0800 (PST)
-Received: from maple.lan (cpc141216-aztw34-2-0-cust174.18-1.cable.virginm.net. [80.7.220.175])
-        by smtp.gmail.com with ESMTPSA id t18sm2677495wri.34.2022.01.27.09.04.18
+        bh=6CDYV/P4O/r3dgztPFLJV9lZu9zFEjn3L3fRfL7MbBg=;
+        b=cF8+L/C5tVVnpamTKW0dSJsxw+YqfgQ4TIN/HjUzn3B2KyRf2LKd02lUhSCXgRaIfj
+         8CwQ6qYDmBvfnrw/iM8ZCoyKlSmM9M6GFHKkYp1IeShWFPFOq05XHLoLKkFPRMLJpit/
+         WQn3MCe1LJCCJdlXUbDaKpQDFG0eCpwKdLp5lSDc3kOXEyeCPZmxhoSTyZQiugPYcqic
+         W9tqJ5Do8BNq2qVAEyFJuUQFI23xBLxXnGQ5Yi/YO0a0QkNdzY0ER9KSI6zVVZh+1bZl
+         GPpPcI8aqdWu9GvgzvK6PatRB6JLOTZj/hMur53bhkXdrwiBujFYm9u8nbAFtfCkD+3p
+         vZww==
+X-Gm-Message-State: AOAM533LJWVunH+qBypZXZF6RuTYfYS9vp6BzKuIV3BdHi7yK6WQ34Nc
+        N9oH3jdhHK4YpCIys2AuOfc=
+X-Google-Smtp-Source: ABdhPJzn1vEhu3bWNINfrUH4IlHRDhOyZTM5Rr6/CueuFg55HYzFq/5BYJocgMN50qBBIF+3eEgakw==
+X-Received: by 2002:a05:6a00:15d0:: with SMTP id o16mr3722269pfu.19.1643303440786;
+        Thu, 27 Jan 2022 09:10:40 -0800 (PST)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id 84sm5779217pgd.66.2022.01.27.09.10.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jan 2022 09:04:19 -0800 (PST)
-From:   Daniel Thompson <daniel.thompson@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Daniel Thompson <daniel.thompson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm: Remove spurious IRQF_ONESHOT flags from dsi & hdmi
-Date:   Thu, 27 Jan 2022 17:04:05 +0000
-Message-Id: <20220127170405.155710-1-daniel.thompson@linaro.org>
+        Thu, 27 Jan 2022 09:10:39 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        linux-kernel@vger.kernel.org (open list),
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Yangtao Li <tiny.windzz@gmail.com>
+Subject: [PATCH 0/2] drm/msm: Add tracking for faults associated with an address space
+Date:   Thu, 27 Jan 2022 09:10:37 -0800
+Message-Id: <20220127171045.541341-1-robdclark@gmail.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -66,60 +75,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting the header comments, IRQF_ONESHOT is "Used by threaded interrupts
-which need to keep the irq line disabled until the threaded handler has
-been run.". When applied to an interrupt that doesn't request a threaded
-irq then IRQF_ONESHOT has a lesser known (undocumented?) side effect,
-which it to disable the forced threading of irqs (and for "normal" kernels
-it is a nop). In this case I can find no evidence that suppressing forced
-threading is intentional. Had it been intentional then a driver must adopt
-the raw_spinlock API in order to avoid deadlocks on PREEMPT_RT kernels
-(and avoid calling any kernel API that uses regular spinlocks).
+From: Rob Clark <robdclark@chromium.org>
 
-Fix this by removing the spurious additional flag.
+Currently, for GL_EXT_robustness userspace uses the global and per-
+submitqueue fault counters to determine GUILTY_CONTEXT_RESET_EXT vs
+INNOCENT_CONTEXT_RESET_EXT.  But that is a bit overly paranoid, in
+that a fault in a different process's context (when it has it's own
+isolated address space) should not hurt anything.
 
-This change is required for my Snapdragon 7cx Gen2 tablet to boot-to-GUI
-with PREEMPT_RT enabled.
+This is particularly annoying with CrOS and chrome's exit_on_context_lost quirk,
+while running deqp in the android container, as the deqp-egl suite has
+tests that intentionally trigger gpu hangs (for the purpose of testing
+the robustness extension), which triggers chrome to restart, which
+restarts the android container!
 
-Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
----
+This new param gives userspace a way to ignore faults triggered by other
+processes.
 
-Notes:
-    Just in case anybody asks, yes! I did use coccinelle to do a quick scan
-    for similar issues. I didn't find any other instances in drivers/drm/ .
+Applies on top of https://patchwork.freedesktop.org/series/98907/
 
- drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
- drivers/gpu/drm/msm/hdmi/hdmi.c    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Rob Clark (2):
+  drm/msm/gpu: Add ctx to get_param()
+  drm/msm/gpu: Add param to get address space faults
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 6b3ced4aaaf5d..3a3f53f0c8ae1 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1877,7 +1877,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 6 +++++-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h | 3 ++-
+ drivers/gpu/drm/msm/msm_drv.c           | 4 +++-
+ drivers/gpu/drm/msm/msm_gem.h           | 3 +++
+ drivers/gpu/drm/msm/msm_gpu.c           | 1 +
+ drivers/gpu/drm/msm/msm_gpu.h           | 3 ++-
+ drivers/gpu/drm/msm/msm_rd.c            | 6 ++++--
+ include/uapi/drm/msm_drm.h              | 3 ++-
+ 8 files changed, 22 insertions(+), 7 deletions(-)
 
- 	/* do not autoenable, will be enabled later */
- 	ret = devm_request_irq(&pdev->dev, msm_host->irq, dsi_host_irq,
--			IRQF_TRIGGER_HIGH | IRQF_ONESHOT | IRQF_NO_AUTOEN,
-+			IRQF_TRIGGER_HIGH | IRQF_NO_AUTOEN,
- 			"dsi_isr", msm_host);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "failed to request IRQ%u: %d\n",
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
-index 3acdeae25caf0..a1bfbc4c74bf7 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
-@@ -301,7 +301,7 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
- 	}
-
- 	ret = devm_request_irq(&pdev->dev, hdmi->irq,
--			msm_hdmi_irq, IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-+			msm_hdmi_irq, IRQF_TRIGGER_HIGH,
- 			"hdmi_isr", hdmi);
- 	if (ret < 0) {
- 		DRM_DEV_ERROR(dev->dev, "failed to request IRQ%u: %d\n",
-
-base-commit: e783362eb54cd99b2cac8b3a9aeac942e6f6ac07
---
+-- 
 2.34.1
 
