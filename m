@@ -2,61 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 01F5E49DA35
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 06:31:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB5C249DAEB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 07:40:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233484AbiA0Fa6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jan 2022 00:30:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40302 "EHLO
+        id S236772AbiA0Gka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jan 2022 01:40:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233121AbiA0Fa6 (ORCPT
+        with ESMTP id S232072AbiA0Gk3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jan 2022 00:30:58 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75492C06161C;
-        Wed, 26 Jan 2022 21:30:58 -0800 (PST)
+        Thu, 27 Jan 2022 01:40:29 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20D37C061714;
+        Wed, 26 Jan 2022 22:40:29 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1393B6187C;
-        Thu, 27 Jan 2022 05:30:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D87C340E4;
-        Thu, 27 Jan 2022 05:30:56 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 6C1FAB8208E;
+        Thu, 27 Jan 2022 06:40:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CCB3C340E4;
+        Thu, 27 Jan 2022 06:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1643261457;
-        bh=ZO8QqAPZhk4/Am2PeI6dAhQraFlAnTUockNeGMJ5AnE=;
+        s=k20201202; t=1643265626;
+        bh=YCEQJOqamp76h+hodLfyNzMOia7mX3TnaRSEk+7aQeQ=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=oynhwJHZxAzSkIlGqTnRzpmotg+LpoytKcCepNeuBy6Zud8c+PrpnsBjlxItGSSvI
-         DWYwtvjes8OxUSxrIL5eJZh2PQX666F9HOISUx4fkAeSmsUFzBph+aMCuJd8hObQOi
-         8hY85kh47b7klzZgjFZhDhsoNjDmw4V1XfDYezIu/4iFEsC046zgA7scAh7LSm546P
-         Fjj8boFNXUUOmC5crgEX6SOuvnNZ/XmwmPn79SXAf074FrDv/55h7K/jMuc0yDVxO8
-         5oSm2C8mymUF+UIqdJjbj5kgyoRvSo3fisgnvagJHirkeEQSOakbqedhXqeA4Uumj4
-         /gOWZO0Fz9AEg==
-Date:   Thu, 27 Jan 2022 11:00:54 +0530
+        b=YQV46Z+5EOLaDHiEdtXw3XUsks4cNbnXz3bfkbXzJEhN6tFHRcyr9EEoz4X/8/dBW
+         nILAuwHxfjeQwZtula5DjDnqfF5ZEGTtcFscpAHaop4wx05cxBhmoQUJPuuhII++tg
+         538KGKoIA8APnOTVDu68xeNOFGlE60F3wBTZjTzVz7MdQ8JR4DXFEqb2nRaBaiKIFK
+         ZtTlPZabyh7MQSi1LUdkoYLlUM1GrjlSTu6F9aUrci1gteAsBebWPVT9JUGRlHxww6
+         XS0f4Awcu2Vgzcymd+joAG0aS1nj/TUNrGDQZC/2w1hiqYrrqfu/1jX1l5gw22kDr7
+         0fxNblMX/m+oQ==
+Date:   Thu, 27 Jan 2022 12:10:22 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
+To:     David Heidelberg <david@ixit.cz>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Kishon Vijay Abraham I <kishon@ti.com>,
-        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 02/15] phy: qcom-qusb2: Add compatible for MSM8953
-Message-ID: <YfIuDkVs2WqAwikk@matsya>
-References: <20220112194118.178026-1-luca@z3ntu.xyz>
- <20220112194118.178026-3-luca@z3ntu.xyz>
+        Rob Herring <robh+dt@kernel.org>,
+        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] dt-bindings: phy: convert Qualcomm USB HS phy to yaml
+Message-ID: <YfI+VvBv4mP/5BlS@matsya>
+References: <20211230000740.103869-1-david@ixit.cz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220112194118.178026-3-luca@z3ntu.xyz>
+In-Reply-To: <20211230000740.103869-1-david@ixit.cz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12-01-22, 20:40, Luca Weiss wrote:
-> Add compatible for MSM8953 QUSB2 device which reuses MSM8996
-> configuration.
+On 30-12-21, 01:07, David Heidelberg wrote:
+> Conversion of Qualcomm USB HS phy documentation to yaml.
 
 Applied, thanks
 
