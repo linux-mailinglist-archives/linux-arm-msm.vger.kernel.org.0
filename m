@@ -2,65 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2950B49EC12
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 21:03:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D42C249EC11
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 21:03:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343837AbiA0UDm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1343735AbiA0UDm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 27 Jan 2022 15:03:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43452 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343900AbiA0UCm (ORCPT
+        with ESMTP id S1343910AbiA0UCm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 27 Jan 2022 15:02:42 -0500
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC789C0613E4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 12:02:39 -0800 (PST)
-Received: by mail-pf1-x430.google.com with SMTP id d187so3776193pfa.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 12:02:39 -0800 (PST)
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01E2AC0613E9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 12:02:41 -0800 (PST)
+Received: by mail-pf1-x42b.google.com with SMTP id i30so3782673pfk.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 12:02:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=pg7u1QgES9vvilydf87u7mbX9H+V1JXmTaOjVr3A4N4=;
-        b=SNb6+UtCldRo3C3aKKuH53pJUKPR1QoOvhja2fFrdIZAqK2pC8avjHvs2QWwdAqY2L
-         iDTt5Ev8TK1FUPlXG0GLJg90OtWzYd58L9jGhUvwTScxXTgeVD59clQ/6ruqJGZsIDtb
-         VzKFMzhSCdtxWvtOoLilyZS6Je3BqrKogxJuI=
+        bh=NWPDgDUwRl+84SzwunIQASVSIexCRProBcGwEVA3ZyQ=;
+        b=oCNz3/TyoOC1Z4L+TGEGzc242VDcV1zOa2+4KpqoSchL9yglQa3dROPnlnWmSgibm6
+         6FdcJLI6inymZ9YaC5K+b7GNCEgYSqJfiA0drHN9+5GRKTc6wlUr9xF8D4rI3iPKD07E
+         +51WbfkKJVTDAand07akDTPtzYj2zVO+3ThYk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=pg7u1QgES9vvilydf87u7mbX9H+V1JXmTaOjVr3A4N4=;
-        b=P+eH/xiUWd7NxYfJtKxM+6sIegpyfFkibIfP9/vyPrnzdbH7tiXj2Wvt+Rc811OGSF
-         Ayf3HA1a67TeMnSLtBtfGgQWdBr50rj5x4DvVOAEYL6zjvpqe+1IGa82HoFHSAggc3Vr
-         cU9xgu8+G5QJPa/KOAyCwAQovCafILdJl6tYBRz5IKHh3OhtXkW9Hw+dnp/QfzS2W1Aa
-         0tBJbzNUXanvYdeohhJs8JRFPkg0bNtFr4Pp1QBlSBuJAyKOTQRLLSr2CWCe4H86VVOu
-         ogXmS+Eo1D1XwnEaBFi+S718BrbzYfE4HHTcLbo414aEFsUj79aSv7dpNM1wuEhgZ02q
-         GZUw==
-X-Gm-Message-State: AOAM532iSmPHKoRZsJiKQbWwubdAcWbmApV9nIK8EzIOsAH2PG+hK6jc
-        4IDcc0WxIjo6npSlF44eV1qPTg==
-X-Google-Smtp-Source: ABdhPJyWS6wiSowTLsVHpFT26f9C2DJENr9ONfoQ93NBCznOznrI8TRNbMCesKj30yy09FTDuZLACA==
-X-Received: by 2002:a63:dd0f:: with SMTP id t15mr3912064pgg.12.1643313759139;
-        Thu, 27 Jan 2022 12:02:39 -0800 (PST)
+        bh=NWPDgDUwRl+84SzwunIQASVSIexCRProBcGwEVA3ZyQ=;
+        b=bstP26qzvTKARNuhSpUyVu4Vo8vOqzVZ7uSnFG22mRtnzWgA+ZChOkVq6JGrX248Qu
+         iNdQS/K71jTP1GPXSAooWLrVOOUbMX3dX6ebleUiYZVK8s/VX5u72nva/AaEalIfby60
+         q/bbnvvHCLb1PFjwRAvcFEQixoENn/3Z5wCtl84P4bTiWi4x4FedCdLahztaUEa7IWFE
+         v2OZfTbW8qMcTmkKENbS4HzBLb9r2n6hmrRioam8HqUR3FbLJtyRzkaDRqEm82MTrAX9
+         uG6nQ8RPREvszsRQn5rU5t02qVyHS680gOIdmAnTh68Uf5CZzr+4WH6TiPlcBRW8LkW/
+         Zx3A==
+X-Gm-Message-State: AOAM533REd5P5Z3V3xpmSsxuipX72H22ecciOWeLpvKdBxaXSvY2a935
+        yFzH6p5ZeWoyJP4wTj7QlAgAGw==
+X-Google-Smtp-Source: ABdhPJyZ+yxlFIH/w2575esD0A9Z3uwPXwkVYGsPiBy9KXIh12HY0oxwuUFjhhYoIin6PRGU1PyxnQ==
+X-Received: by 2002:a62:e704:: with SMTP id s4mr4171414pfh.25.1643313760477;
+        Thu, 27 Jan 2022 12:02:40 -0800 (PST)
 Received: from smtp.gmail.com ([2620:15c:202:201:9246:1838:3243:3071])
-        by smtp.gmail.com with ESMTPSA id k21sm6561190pff.33.2022.01.27.12.02.37
+        by smtp.gmail.com with ESMTPSA id k21sm6561190pff.33.2022.01.27.12.02.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jan 2022 12:02:38 -0800 (PST)
+        Thu, 27 Jan 2022 12:02:40 -0800 (PST)
 From:   Stephen Boyd <swboyd@chromium.org>
 To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Douglas Anderson <dianders@chromium.org>
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Stefan Binding <sbinding@opensource.cirrus.com>,
-        Lucas Tanure <tanureal@opensource.cirrus.com>,
-        Takashi Iwai <tiwai@suse.de>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
         Daniel Vetter <daniel.vetter@ffwll.ch>,
         "Rafael J. Wysocki" <rafael@kernel.org>,
         Rob Clark <robdclark@gmail.com>,
         Russell King <rmk+kernel@arm.linux.org.uk>,
         Saravana Kannan <saravanak@google.com>
-Subject: [PATCH v6 33/35] ALSA: hda/realtek: Migrate to aggregate driver
-Date:   Thu, 27 Jan 2022 12:01:39 -0800
-Message-Id: <20220127200141.1295328-34-swboyd@chromium.org>
+Subject: [PATCH v6 34/35] component: Get rid of drm_of_component_probe()
+Date:   Thu, 27 Jan 2022 12:01:40 -0800
+Message-Id: <20220127200141.1295328-35-swboyd@chromium.org>
 X-Mailer: git-send-email 2.35.0.rc0.227.g00780c9af4-goog
 In-Reply-To: <20220127200141.1295328-1-swboyd@chromium.org>
 References: <20220127200141.1295328-1-swboyd@chromium.org>
@@ -70,82 +68,189 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use an aggregate driver instead of component ops so that we can get
-proper driver probe ordering of the aggregate device with respect to all
-the component devices that make up the aggregate device.
+There aren't any users anymore so drop it.
 
-Cc: Stefan Binding <sbinding@opensource.cirrus.com>
-Cc: Lucas Tanure <tanureal@opensource.cirrus.com>
-Cc: Takashi Iwai <tiwai@suse.de>
+Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: "Rafael J. Wysocki" <rafael@kernel.org>
 Cc: Rob Clark <robdclark@gmail.com>
 Cc: Russell King <rmk+kernel@arm.linux.org.uk>
 Cc: Saravana Kannan <saravanak@google.com>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- sound/pci/hda/patch_realtek.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/drm_of.c | 85 +++++++++-------------------------------
+ include/drm/drm_of.h     | 12 ------
+ 2 files changed, 19 insertions(+), 78 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 668274e52674..80a2164c99b6 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -6547,25 +6547,31 @@ static int find_comp_by_dev_name(struct alc_spec *spec, const char *name)
- 	return -ENODEV;
+diff --git a/drivers/gpu/drm/drm_of.c b/drivers/gpu/drm/drm_of.c
+index 0fe822319aae..84e285432d13 100644
+--- a/drivers/gpu/drm/drm_of.c
++++ b/drivers/gpu/drm/drm_of.c
+@@ -99,18 +99,30 @@ void drm_of_component_match_add(struct device *master,
  }
+ EXPORT_SYMBOL_GPL(drm_of_component_match_add);
  
--static int comp_bind(struct device *dev)
-+static int realtek_aggregate_probe(struct aggregate_device *adev)
+-static int _drm_of_component_probe(struct device *dev,
++/**
++ * drm_of_aggregate_probe - Generic probe function for a component based aggregate host
++ * @dev: device containing the OF node
++ * @compare_of: compare function used for matching components
++ * @adrv: aggregate driver to be used
++ *
++ * Parse the platform device OF node and bind all the components associated
++ * with the aggregate device. Interface ports are added before the encoders in
++ * order to satisfy their .bind_component requirements
++ * See Documentation/devicetree/bindings/graph.txt for the bindings.
++ *
++ * Returns zero if successful, or one of the standard error codes if it fails.
++ */
++int drm_of_aggregate_probe(struct device *dev,
+ 			   int (*compare_of)(struct device *, void *),
+-			   struct component_match **matchptr)
++			   struct aggregate_driver *adrv)
  {
-+	struct device *dev = aggregate_device_parent(adev);
- 	struct hda_codec *cdc = dev_to_hda_codec(dev);
- 	struct alc_spec *spec = cdc->spec;
+ 	struct device_node *ep, *port, *remote;
++	struct component_match *match = NULL;
+ 	int i;
  
- 	return component_bind_all(dev, spec->comps);
- }
+ 	if (!dev->of_node)
+ 		return -EINVAL;
  
--static void comp_unbind(struct device *dev)
-+static void realtek_aggregate_remove(struct aggregate_device *adev)
- {
-+	struct device *dev = aggregate_device_parent(adev);
- 	struct hda_codec *cdc = dev_to_hda_codec(dev);
- 	struct alc_spec *spec = cdc->spec;
+-	*matchptr = NULL;
+-
+ 	/*
+ 	 * Bind the crtc's ports first, so that drm_of_find_possible_crtcs()
+ 	 * called from encoder's .bind callbacks works as expected
+@@ -121,7 +133,7 @@ static int _drm_of_component_probe(struct device *dev,
+ 			break;
  
- 	component_unbind_all(dev, spec->comps);
- }
+ 		if (of_device_is_available(port->parent))
+-			drm_of_component_match_add(dev, matchptr, compare_of,
++			drm_of_component_match_add(dev, &match, compare_of,
+ 						   port);
  
--static const struct component_master_ops comp_master_ops = {
--	.bind = comp_bind,
--	.unbind = comp_unbind,
-+static struct aggregate_driver realtek_aggregate_driver = {
-+	.probe = realtek_aggregate_probe,
-+	.remove = realtek_aggregate_remove,
-+	.driver = {
-+		.name = "realtek_aggregate",
-+		.owner = THIS_MODULE,
-+	},
- };
+ 		of_node_put(port);
+@@ -132,7 +144,7 @@ static int _drm_of_component_probe(struct device *dev,
+ 		return -ENODEV;
+ 	}
  
- static void comp_generic_playback_hook(struct hda_pcm_stream *hinfo, struct hda_codec *cdc,
-@@ -6597,7 +6603,7 @@ static void cs35l41_generic_fixup(struct hda_codec *cdc, int action, const char
- 				return;
- 			component_match_add(dev, &spec->match, comp_match_dev_name, name);
+-	if (!*matchptr) {
++	if (!match) {
+ 		dev_err(dev, "no available port\n");
+ 		return -ENODEV;
+ 	}
+@@ -162,72 +174,13 @@ static int _drm_of_component_probe(struct device *dev,
+ 				continue;
+ 			}
+ 
+-			drm_of_component_match_add(dev, matchptr, compare_of,
++			drm_of_component_match_add(dev, &match, compare_of,
+ 						   remote);
+ 			of_node_put(remote);
  		}
--		ret = component_master_add_with_match(dev, &comp_master_ops, spec->match);
-+		ret = component_aggregate_register(dev, &realtek_aggregate_driver, spec->match);
- 		if (ret)
- 			codec_err(cdc, "Fail to register component aggregator %d\n", ret);
- 		else
-@@ -6648,7 +6654,7 @@ static void alc287_fixup_legion_16achg6_speakers(struct hda_codec *cdc, const st
- 				    "i2c-CLSA0100:00-cs35l41-hda.0");
- 		component_match_add(dev, &spec->match, comp_match_dev_name,
- 				    "i2c-CLSA0100:00-cs35l41-hda.1");
--		ret = component_master_add_with_match(dev, &comp_master_ops, spec->match);
-+		ret = component_aggregate_register(dev, &realtek_aggregate_driver, spec->match);
- 		if (ret)
- 			codec_err(cdc, "Fail to register component aggregator %d\n", ret);
- 		else
+ 		of_node_put(port);
+ 	}
+ 
+-	return 0;
+-}
+-
+-/**
+- * drm_of_component_probe - Generic probe function for a component based master
+- * @dev: master device containing the OF node
+- * @compare_of: compare function used for matching components
+- * @m_ops: component master ops to be used
+- *
+- * Parse the platform device OF node and bind all the components associated
+- * with the master. Interface ports are added before the encoders in order to
+- * satisfy their .bind requirements
+- * See Documentation/devicetree/bindings/graph.txt for the bindings.
+- *
+- * Deprecated: Use drm_of_aggregate_probe() instead.
+- *
+- * Returns zero if successful, or one of the standard error codes if it fails.
+- */
+-int drm_of_component_probe(struct device *dev,
+-			   int (*compare_of)(struct device *, void *),
+-			   const struct component_master_ops *m_ops)
+-{
+-
+-	struct component_match *match;
+-	int ret;
+-
+-	ret = _drm_of_component_probe(dev, compare_of, &match);
+-	if (ret)
+-		return ret;
+-
+-	return component_master_add_with_match(dev, m_ops, match);
+-}
+-EXPORT_SYMBOL(drm_of_component_probe);
+-
+-
+-/**
+- * drm_of_aggregate_probe - Generic probe function for a component based aggregate host
+- * @dev: device containing the OF node
+- * @compare_of: compare function used for matching components
+- * @adrv: aggregate driver to be used
+- *
+- * Parse the platform device OF node and bind all the components associated
+- * with the aggregate device. Interface ports are added before the encoders in
+- * order to satisfy their .bind_component requirements
+- * See Documentation/devicetree/bindings/graph.txt for the bindings.
+- *
+- * Returns zero if successful, or one of the standard error codes if it fails.
+- */
+-int drm_of_aggregate_probe(struct device *dev,
+-			   int (*compare_of)(struct device *, void *),
+-			   struct aggregate_driver *adrv)
+-{
+-	struct component_match *match;
+-	int ret;
+-
+-	ret = _drm_of_component_probe(dev, compare_of, &match);
+-	if (ret)
+-		return ret;
+-
+ 	return component_aggregate_register(dev, adrv, match);
+ }
+ EXPORT_SYMBOL(drm_of_aggregate_probe);
+diff --git a/include/drm/drm_of.h b/include/drm/drm_of.h
+index 7c7b0d8377a7..4709ff2f04eb 100644
+--- a/include/drm/drm_of.h
++++ b/include/drm/drm_of.h
+@@ -8,7 +8,6 @@
+ #endif
+ 
+ struct aggregate_driver;
+-struct component_master_ops;
+ struct component_match;
+ struct device;
+ struct drm_device;
+@@ -38,9 +37,6 @@ void drm_of_component_match_add(struct device *master,
+ 				struct component_match **matchptr,
+ 				int (*compare)(struct device *, void *),
+ 				struct device_node *node);
+-int drm_of_component_probe(struct device *dev,
+-			   int (*compare_of)(struct device *, void *),
+-			   const struct component_master_ops *m_ops);
+ int drm_of_aggregate_probe(struct device *dev,
+ 			   int (*compare_of)(struct device *, void *),
+ 			   struct aggregate_driver *adrv);
+@@ -75,14 +71,6 @@ drm_of_component_match_add(struct device *master,
+ {
+ }
+ 
+-static inline int
+-drm_of_component_probe(struct device *dev,
+-		       int (*compare_of)(struct device *, void *),
+-		       const struct component_master_ops *m_ops)
+-{
+-	return -EINVAL;
+-}
+-
+ static inline int
+ drm_of_aggregate_probe(struct device *dev,
+ 		       int (*compare_of)(struct device *, void *),
 -- 
 https://chromeos.dev
 
