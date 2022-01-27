@@ -2,188 +2,462 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B07E49E12B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 12:34:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 813FC49E1D0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 13:01:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229968AbiA0Le2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jan 2022 06:34:28 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32]:55076 "EHLO
-        mx0a-00069f02.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S235836AbiA0LeZ (ORCPT
+        id S235784AbiA0MB1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jan 2022 07:01:27 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:32720 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234911AbiA0MBZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jan 2022 06:34:25 -0500
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
-        by mx0b-00069f02.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 20RBRhRr022494;
-        Thu, 27 Jan 2022 11:34:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : content-type : in-reply-to : mime-version;
- s=corp-2021-07-09; bh=mWewiBsFRLD8y8lGFBsxtzY9mrklvxWYNhU+hFum1QU=;
- b=dyLasUPdCwIk8HRDCGywEDu2Poa5nJjyhppswq+YjdxaI2SsK2vpBqcIOUibBsiutIiw
- uIKZLw2k3fWv+jWhReqDK215IYAgQPwBseOlxC1LYkBYOmR1tT2LOIBaZ9+Te2pZDByv
- N7KvLJfzjbP1rsLRe8429kqVsA71X1Mj4yG9b1vemRFcHpLvPRrt15In7pJnG125xSzy
- 7XTfLl7q4isErLfpW5/TJZcHM/2BDyFBANW6ux4KZ7H17JFCBAGZopdFxQSEpbUda5gK
- Q//zsb07CYTaye1mQNx8jPxvwcuMtRG5HnJBgL03iwBk7vnpnbjgF0hh7vt9mgtPJQFv 3Q== 
-Received: from aserp3030.oracle.com (aserp3030.oracle.com [141.146.126.71])
-        by mx0b-00069f02.pphosted.com with ESMTP id 3dsxvfrpep-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Thu, 27 Jan 2022 11:34:18 +0000
-Received: from pps.filterd (aserp3030.oracle.com [127.0.0.1])
-        by aserp3030.oracle.com (8.16.1.2/8.16.1.2) with SMTP id 20RBVNal142444;
-        Thu, 27 Jan 2022 11:34:17 GMT
-Received: from nam04-bn8-obe.outbound.protection.outlook.com (mail-bn8nam08lp2044.outbound.protection.outlook.com [104.47.74.44])
-        by aserp3030.oracle.com with ESMTP id 3dr7ykjvq6-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Thu, 27 Jan 2022 11:34:17 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=m5/zhjIVXDrCkIl78H4F/07Udwhm88AjYa9+raqSRS4YtdS+dJXj+o4VR8KNCAmW2kWClUu/6PrDr6nRrya4gl+aQ1axFbDRgZ+27qL0GJNy3wskUWx9hX6kQ2/wU7Q7TXvHk4dizpvPAyPAqN3Szp607s/EWPa+mPDw5JTiWFKebzMNfmDkfB/xIadW2aHwVJyxZo3FjWERUkvqs3sxrYOetOMfkSPSfoLPRAu1vBlTH9vRER8r49+47IfmvasvDs9i6xJLCaCrgxA0fQpbxMpv6q63yfSe63oWL1J8DXsBXHTrE55R+E6DN+Nc6xiQQ1MDvrGjEY4IiEShBhenpg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mWewiBsFRLD8y8lGFBsxtzY9mrklvxWYNhU+hFum1QU=;
- b=YhhfIybdOUjiF6qM8G6hIH8dBkeJ4pvxKm3y7yO5LRYjq8zvqe2a+1Js4w0qKN0frzKHT3COzY3XZRiUzWKeJYFz+ywMKl0DiyA8qarbk01o8ZAt6HkORV0wrVhpNHnCG0ua8G7Bo4PpUXGUgf8fBepRM7Tye9JVGGimbeP1gqshYYwQle/zlljPD6eUBMNSuNc/Oy9UbJ5vZoqy71YA2B1fLV5j4QQUbsPC/DoU4aNMjCiuM3MDDB2hI/2I757/58Xje4hDXXGn8a9+E9fL35GeYcrE+80bE9+pFHeByn8n7h6rchzIcScdEIhVvZ+SLz9Nn43YliZjm7l2e4O4ZQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
+        Thu, 27 Jan 2022 07:01:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mWewiBsFRLD8y8lGFBsxtzY9mrklvxWYNhU+hFum1QU=;
- b=Hs86rd9YBc6qCpNTlDwmA3QJrCSyScsEgo/o9jbeq+RlJVxkltqQcuQ1T7g3YJsstBKlFj9q8XmKc9HmpuJNKP9LhgK0/OwcNlvCQhsmNZmdZjnLb9TV5vGLYwv8C6mlx51IAUZUsmF2lSdXv3Zy8MF94oSclKS0miP5c7sSWNg=
-Received: from MWHPR1001MB2365.namprd10.prod.outlook.com
- (2603:10b6:301:2d::28) by DM6PR10MB4281.namprd10.prod.outlook.com
- (2603:10b6:5:216::20) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4930.17; Thu, 27 Jan
- 2022 11:34:15 +0000
-Received: from MWHPR1001MB2365.namprd10.prod.outlook.com
- ([fe80::c13b:5812:a403:6d96]) by MWHPR1001MB2365.namprd10.prod.outlook.com
- ([fe80::c13b:5812:a403:6d96%6]) with mapi id 15.20.4909.019; Thu, 27 Jan 2022
- 11:34:15 +0000
-Date:   Thu, 27 Jan 2022 14:33:50 +0300
-From:   Dan Carpenter <dan.carpenter@oracle.com>
-To:     kbuild@lists.01.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        robh+dt@kernel.org, gregkh@linuxfoundation.org
-Cc:     lkp@intel.com, kbuild-all@lists.01.org, devicetree@vger.kernel.org,
-        ekangupt@qti.qualcomm.com, bkumar@qti.qualcomm.com,
-        linux-kernel@vger.kernel.org, srini@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH v3 01/12] misc: fastrpc: separate fastrpc device from
- channel context
-Message-ID: <202201271857.MGiOkhFo-lkp@intel.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220126135304.16340-2-srinivas.kandagatla@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-ClientProxiedBy: JNAP275CA0021.ZAFP275.PROD.OUTLOOK.COM (2603:1086:0:4d::12)
- To MWHPR1001MB2365.namprd10.prod.outlook.com (2603:10b6:301:2d::28)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1643284886; x=1674820886;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=ODmQe+nTvytUYpHI+64ndLGgyDSJ1duv/n9RT9ECuSs=;
+  b=H4qNW81quy9+4y+CdbHd5Hh8NDWW6ZgFtD2LnMm9KTVcLyQrZ/lOJQam
+   tz25aT/nS6YQbmN+8XTuAUtKJoUmH9SR8lLZxGvkJXIqvNyhIuibgcOgV
+   KCRrGuXvuWkqHFCwH27YLHv8PUIXLq3ERPikCHbnQSJB6Gi/ZBG3GezHU
+   k=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 27 Jan 2022 04:01:25 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2022 04:01:24 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 27 Jan 2022 04:01:24 -0800
+Received: from [10.50.37.177] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 27 Jan
+ 2022 04:01:16 -0800
+Message-ID: <c072d162-e371-e44b-8160-d06a8a6c051c@quicinc.com>
+Date:   Thu, 27 Jan 2022 17:31:11 +0530
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 658d0cdc-18aa-45fb-863f-08d9e188f29a
-X-MS-TrafficTypeDiagnostic: DM6PR10MB4281:EE_
-X-Microsoft-Antispam-PRVS: <DM6PR10MB428103B84AE462EE8D5218608E219@DM6PR10MB4281.namprd10.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:3631;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: mhKVCQ2me9jQ/5ndl6khANVPgFO1FamyYQam5nNo5DZAhWuwauw65BDscPHAqJFdj8YZ5vXxz4L2Wjc6dt8LtIiFDDsfQI98m3aOvF9onu3+zUbaQJime11cm4E+SsIYYVrKPJhHlCXDa6JzHC2AMI0qf8MkZnpjCuO1fewJLGIhWzClBirGQY10GDfeeDksRjKtTCa+WxfOTc5F7VzbE6tOSKAlt/dumKhu2fs1dyI1nfjkTAJCni7mBQsGqCotP8ySIYEjUlCAQeJwpc0YbM5nLsgnyBQjPHkF01IaZZuRwRIlo8fXmCWaAHh3Q8VrFGzd3h5VBGINM255MisERGvn8aVHdZCXE9qZZRxKT3i4oYH6klhkHkpZuIDuHkPpdyk0h89TTd5cpeXZMkbjJXLh41rfe8htBLgKAB7kPp5ZAMyRzqnadZGq131eKSNRv6UmUtqIJRLY3sfHDxIHhLKYIqQ/PoEOGDm9xduv3VKXeP8MhaVgFSVLeaKakNhjV0NXjTDhxRLyRei4A6FFqWPL9owCL9C76pqh5y+JLSUof3+Wo4x96jRFqS/2jTS0jyHjUloEwEN9BhI+AlljorFsS7UGg05sBlmtqEPcsYMmbSaTHxAig5Ve6bnsg7uGLi7kU9tKkHSVdrEzAu1tWuWOnnv5Qi9f7JZZhjoahA3l4V0vlUmV1SZpWEtA8ANInEUuIGi76qoAorbb0L7+UDRL2RUBTnhVO5Qpht32BzHYvTxSAZm3AXoHFwwLL1SycDdBUS+Pu6as6yrJBCzTYMrgphsrQ+CI4WCxCCQ5QlIWlnFIGDrggaRFzXF0bq/eg6vCnXE2H52mX9sicyOB5g==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MWHPR1001MB2365.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(366004)(6486002)(966005)(508600001)(7416002)(66556008)(5660300002)(38100700002)(38350700002)(86362001)(66946007)(44832011)(66476007)(316002)(2906002)(8676002)(8936002)(4326008)(83380400001)(26005)(186003)(1076003)(6666004)(36756003)(52116002)(6512007)(9686003)(6506007)(20210929001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Sf+4P1ad/4PfKMPPK0B2B3gLTrIGOr1RuZWgAEYMzQ+zKRx1Ru0wd1bcY4Lz?=
- =?us-ascii?Q?k1jHv8A9Ub5KNFDp+hqrLHvKR5l6iwVJ6hTzgh1NEmFqBozvbFLCEHgo46+W?=
- =?us-ascii?Q?WYnNYHJ7FEL3Izi+gFrxy/ENPYjJO78wfa4mxpnUmGeMp/zpbI+E1xFfM3EJ?=
- =?us-ascii?Q?sYhpLbGliSMSXrg0ewC2JdlbxD95fzy5mOiRGXinGegn+Eezxa683BU7ycrk?=
- =?us-ascii?Q?N5R86BHMmy13c8CWJ/2HFu83oOjy41fYDJspu84agZUXNG6h0MUdgYH9qer6?=
- =?us-ascii?Q?Ckdg/q10eTzWwMdebO4xccCRo+UsLRv9KpIcEdFKucss5XRvts9Dic4xGd0x?=
- =?us-ascii?Q?nrUXtmV5JUfJwSwFVHYYy5ZgD2vwiySP1z8N/EtsnQSQ56hWiwOuAGm6OFY/?=
- =?us-ascii?Q?yEVTHenIMrfM+bI93fr5iwUX6t/N/X2WwBMx0rPIoqwm9fjHgiGI/2DMZ8VU?=
- =?us-ascii?Q?3QWWW9CAYCgYypoY6MDKLCaZGl27R2NPsojxdpCu4bMFynW8jRGu/b+7JMrS?=
- =?us-ascii?Q?8KECVNsCey1yDJuvw4rez39T3V9BzeVSSI6AYQi1RkGJuN/vekrPWGa6mle2?=
- =?us-ascii?Q?pXv0rYT3malasrzzeRiPZvviVaGfa0iikVyTnX8R9wx01k2zL2dAza/MrhS3?=
- =?us-ascii?Q?OgAzNj20cg40ojxcIo8ip8RSIzJ3T+XtQVvb+woHW1LbsCfEqo9YraHgHZC5?=
- =?us-ascii?Q?kcYHG2gQfe9D62YD1fPPrT8Huv3aqkLM0JLfFfLcHoJuJ25nGizCLqBErHSc?=
- =?us-ascii?Q?w2861LJ4AGTca1IMCQJY6VbfukKPpzhNaOCz8P8+vp2tYaeZ45EoPfYo9vXo?=
- =?us-ascii?Q?PUIDpXjSOEnTZB3NtKibGJe374ZPq6QBcdhcKAZ1C0k0yB9QlL5GSWn6OITf?=
- =?us-ascii?Q?D0a8yoc6f7VczHJl9LNc0U3y4vEmmaYlh6GLMH4bqeUCmnLSe7Mj6ycpLu+i?=
- =?us-ascii?Q?DuyaRIkSXQ0oe8Bhh+5FQcSRy/Pm+C6kXetEPxTsXOfko35rmFtakFvPaUgc?=
- =?us-ascii?Q?s1e99JH69B/CNNNPEZ/DDJMvmMJrrnuyOym+JjqNg2fgj4wtjZRsNoIdM/58?=
- =?us-ascii?Q?eABex9BMqiYwBOJBdAnKJQTDJnlrhMsy1M/HFLoZ7aqRHRghOu0rpGF8riGK?=
- =?us-ascii?Q?yTEpgrrW8LsVXMCkAfJcsi9MCenTE3+uv+jrkBDd+uX3cni4Qpdq6yiAYjc0?=
- =?us-ascii?Q?yzRDNYQBdkFNGaymndLDs/ootYzFgAtRfcxBBszdBZw03tNLUT8laiA8zElO?=
- =?us-ascii?Q?wmBAD8+Q9qMT1uFDlcxcnx7CvzqXCz5E23sDGz1ZN+g86Dqn4AB8vPNOQaoY?=
- =?us-ascii?Q?SWdSG/z6NgHRu6q9bQXdStysavi3Gb8ExMSvevfgwQKewKDHztPOZ37ZiyvA?=
- =?us-ascii?Q?vr9+EZHN3UnNwShOavdqI/7exfNKu2Yljja/EWCm7NezoCavnEi6OsOPHV91?=
- =?us-ascii?Q?JC1q4oXzIM74w05lBDoPF6lER9VjiHpMSkv2QPem8l3O5XUK3kpfTQ37yBOA?=
- =?us-ascii?Q?Humdgu6i9ldfdeAmhgr1YLVOlKb8Wq00OQ2AR5xEpi8yia0J1BLwGk9LoQbp?=
- =?us-ascii?Q?1twHAXGJpaZ0zHTYXiJYXxYC5nNyVEAxcwXSr3YWDVGDlWf3j+qIvKddjFPe?=
- =?us-ascii?Q?ZwgGD1Yq0Fm4xdtJhD4oU/ZjkxHImWGIdA+vMFcRHP2wpgeuV265YYudtkU6?=
- =?us-ascii?Q?3CTdJw7b/zj1L6M5iRbhn10LVRo=3D?=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 658d0cdc-18aa-45fb-863f-08d9e188f29a
-X-MS-Exchange-CrossTenant-AuthSource: MWHPR1001MB2365.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jan 2022 11:34:15.4150
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: E9Nar5Wievufr/xoeMENZd36hKs9Lf8gBFK8+G2KrimLez7yN2npkmy+5NY2/UxPAS2fe28lGZgMt7FKyuI1GyfNNQGGMPoM3i9xfmMogvk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR10MB4281
-X-Proofpoint-Virus-Version: vendor=nai engine=6300 definitions=10239 signatures=668683
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 phishscore=0 bulkscore=0
- suspectscore=0 malwarescore=0 adultscore=0 mlxlogscore=999 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2201110000
- definitions=main-2201270070
-X-Proofpoint-GUID: 792luorSvMCfHdA5FXNAdWze0d36scVl
-X-Proofpoint-ORIG-GUID: 792luorSvMCfHdA5FXNAdWze0d36scVl
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH V4 3/6] soc: qcom: eud: Add driver support for Embedded
+ USB Debugger(EUD)
+Content-Language: en-CA
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <pure.logic@nexus-software.ie>,
+        <greg@kroah.com>, <robh@kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_tsoni@quicinc.com>,
+        <quic_psodagud@quicinc.com>, <quic_satyap@quicinc.com>,
+        <quic_pheragu@quicinc.com>, <quic_rjendra@quicinc.com>,
+        <quic_sibis@quicinc.com>, <quic_saipraka@quicinc.com>
+References: <cover.1642768837.git.quic_schowdhu@quicinc.com>
+ <7ccee5ae484e6917f5838c8abde368680ec63d05.1642768837.git.quic_schowdhu@quicinc.com>
+ <YfDSZTZOryQuWIlJ@builder.lan>
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+In-Reply-To: <YfDSZTZOryQuWIlJ@builder.lan>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Srinivas,
 
-url:    https://github.com/0day-ci/linux/commits/Srinivas-Kandagatla/misc-fastrpc-Add-missing-DSP-FastRPC-features/20220126-215705
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/char-misc.git 515a2f507491e7c3818e74ef4f4e088c1fecb190
-config: openrisc-randconfig-m031-20220124 (https://download.01.org/0day-ci/archive/20220127/202201271857.MGiOkhFo-lkp@intel.com/config)
-compiler: or1k-linux-gcc (GCC) 11.2.0
+On 1/26/2022 10:17 AM, Bjorn Andersson wrote:
+> On Fri 21 Jan 07:53 CST 2022, Souradeep Chowdhury wrote:
+>
+>> Add support for control peripheral of EUD (Embedded USB Debugger) to
+>> listen to events such as USB attach/detach, pet EUD to indicate software
+>> is functional.Reusing the platform device kobj, sysfs entry 'enable' is
+>> created to enable or disable EUD.
+>>
+>> To enable the eud the following needs to be done
+>> echo 1 > /sys/bus/platform/.../enable
+>>
+>> To disable eud, following is the command
+>> echo 0 > /sys/bus/platform/.../enable
+>>
+>> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>> ---
+>>   Documentation/ABI/testing/sysfs-driver-eud |   9 ++
+>>   drivers/soc/qcom/Kconfig                   |  10 ++
+>>   drivers/soc/qcom/Makefile                  |   1 +
+>>   drivers/soc/qcom/qcom_eud.c                | 250 +++++++++++++++++++++++++++++
+>>   4 files changed, 270 insertions(+)
+>>   create mode 100644 Documentation/ABI/testing/sysfs-driver-eud
+>>   create mode 100644 drivers/soc/qcom/qcom_eud.c
+>>
+>> diff --git a/Documentation/ABI/testing/sysfs-driver-eud b/Documentation/ABI/testing/sysfs-driver-eud
+>> new file mode 100644
+>> index 0000000..2381552
+>> --- /dev/null
+>> +++ b/Documentation/ABI/testing/sysfs-driver-eud
+>> @@ -0,0 +1,9 @@
+>> +What:		/sys/bus/platform/drivers/eud/.../enable
+>> +Date:           January 2022
+>> +Contact:        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>> +Description:
+>> +		The Enable/Disable sysfs interface for Embedded
+>> +		USB Debugger(EUD). This enables and disables the
+>> +		EUD based on a 1 or a 0 value. By enabling EUD,
+>> +		the user is able to activate the mini-usb hub of
+>> +		EUD for debug and trace capabilities.
+>> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+>> index e718b87..abc6be0 100644
+>> --- a/drivers/soc/qcom/Kconfig
+>> +++ b/drivers/soc/qcom/Kconfig
+>> @@ -42,6 +42,16 @@ config QCOM_CPR
+>>   	  To compile this driver as a module, choose M here: the module will
+>>   	  be called qcom-cpr
+>>
+>> +config QCOM_EUD
+>> +        tristate "QCOM Embedded USB Debugger(EUD) Driver"
+> The indentation looks off here.
+Ack
+>
+>> +	select USB_ROLE_SWITCH
+>> +	help
+>> +	  This module enables support for Qualcomm Technologies, Inc.
+>> +	  Embedded USB Debugger (EUD). The EUD is a control peripheral
+>> +	  which reports VBUS attach/detach events and has USB-based
+>> +	  debug and trace capabilities. On selecting m, the module name
+>> +	  that is built is qcom_eud.ko
+>> +
+>>   config QCOM_GENI_SE
+>>   	tristate "QCOM GENI Serial Engine Driver"
+>>   	depends on ARCH_QCOM || COMPILE_TEST
+>> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+>> index 70d5de6..e0c7d2d 100644
+>> --- a/drivers/soc/qcom/Makefile
+>> +++ b/drivers/soc/qcom/Makefile
+>> @@ -4,6 +4,7 @@ obj-$(CONFIG_QCOM_AOSS_QMP) +=	qcom_aoss.o
+>>   obj-$(CONFIG_QCOM_GENI_SE) +=	qcom-geni-se.o
+>>   obj-$(CONFIG_QCOM_COMMAND_DB) += cmd-db.o
+>>   obj-$(CONFIG_QCOM_CPR)		+= cpr.o
+>> +obj-$(CONFIG_QCOM_EUD)          += qcom_eud.o
+>>   obj-$(CONFIG_QCOM_GSBI)	+=	qcom_gsbi.o
+>>   obj-$(CONFIG_QCOM_MDT_LOADER)	+= mdt_loader.o
+>>   obj-$(CONFIG_QCOM_OCMEM)	+= ocmem.o
+>> diff --git a/drivers/soc/qcom/qcom_eud.c b/drivers/soc/qcom/qcom_eud.c
+>> new file mode 100644
+>> index 0000000..a538645
+>> --- /dev/null
+>> +++ b/drivers/soc/qcom/qcom_eud.c
+>> @@ -0,0 +1,250 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
+>> + */
+>> +
+>> +#include <linux/bitops.h>
+>> +#include <linux/err.h>
+>> +#include <linux/interrupt.h>
+>> +#include <linux/io.h>
+>> +#include <linux/iopoll.h>
+>> +#include <linux/kernel.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/slab.h>
+>> +#include <linux/sysfs.h>
+>> +#include <linux/usb/role.h>
+>> +
+>> +#define EUD_REG_INT1_EN_MASK	0x0024
+>> +#define EUD_REG_INT_STATUS_1	0x0044
+>> +#define EUD_REG_CTL_OUT_1	0x0074
+>> +#define EUD_REG_VBUS_INT_CLR	0x0080
+>> +#define EUD_REG_CSR_EUD_EN	0x1014
+>> +#define EUD_REG_SW_ATTACH_DET	0x1018
+>> +#define EUD_REG_EUD_EN2         0x0000
+>> +
+>> +#define EUD_ENABLE		BIT(0)
+>> +#define EUD_INT_PET_EUD		BIT(0)
+>> +#define EUD_INT_VBUS		BIT(2)
+>> +#define EUD_INT_SAFE_MODE	BIT(4)
+>> +#define EUD_INT_ALL		(EUD_INT_VBUS|EUD_INT_SAFE_MODE)
+>> +
+>> +struct eud_chip {
+>> +	struct device			*dev;
+>> +	struct usb_role_switch		*role_sw;
+>> +	void __iomem			*base;
+>> +	void __iomem			*mode_mgr;
+>> +	unsigned int			int_status;
+>> +	int				irq;
+>> +	bool				enabled;
+>> +	bool				usb_attached;
+>> +};
+>> +
+>> +static int enable_eud(struct eud_chip *priv)
+>> +{
+>> +	writel(EUD_ENABLE, priv->base + EUD_REG_CSR_EUD_EN);
+>> +	writel(EUD_INT_VBUS | EUD_INT_SAFE_MODE,
+>> +			priv->base + EUD_REG_INT1_EN_MASK);
+>> +	writel(1, priv->mode_mgr + EUD_REG_EUD_EN2);
+>> +
+>> +	return usb_role_switch_set_role(priv->role_sw, USB_ROLE_DEVICE);
+> So we won't get EUD_INT_VBUS when we enable the EUD and can rely on the
+> irq handler to set the role?
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Yes, in this case it is being explicitly set based on the user input 
+rather than through irq handler.
 
-New smatch warnings:
-drivers/misc/fastrpc.c:1636 fastrpc_device_register() warn: passing devm_ allocated variable to kfree. 'fdev'
+In this way we are able to detect if the role is set properly and take 
+the next steps from the
 
-vim +/fdev +1636 drivers/misc/fastrpc.c
+enable_store method.
 
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1620  static int fastrpc_device_register(struct device *dev, struct fastrpc_channel_ctx *cctx,
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1621  				   const char *domain)
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1622  {
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1623  	struct fastrpc_device *fdev;
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1624  	int err;
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1625  
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1626  	fdev = devm_kzalloc(dev, sizeof(*fdev), GFP_KERNEL);
-                                                        ^^^^^^^^^^^^^^^^^^^
+>
+>> +}
+>> +
+>> +static void disable_eud(struct eud_chip *priv)
+>> +{
+>> +	writel(0, priv->base + EUD_REG_CSR_EUD_EN);
+>> +	writel(0, priv->mode_mgr + EUD_REG_EUD_EN2);
+>> +}
+>> +
+>> +static ssize_t enable_show(struct device *dev,
+>> +		struct device_attribute *attr, char *buf)
+>> +{
+>> +	struct eud_chip *chip = dev_get_drvdata(dev);
+>> +
+>> +	return sysfs_emit(buf, "%d\n", chip->enabled);
+>> +}
+>> +
+>> +static ssize_t enable_store(struct device *dev,
+>> +		struct device_attribute *attr,
+>> +		const char *buf, size_t count)
+>> +{
+>> +	struct eud_chip *chip = dev_get_drvdata(dev);
+>> +	bool enable;
+>> +	int ret;
+>> +
+>> +	if (kstrtobool(buf, &enable))
+>> +		return -EINVAL;
+>> +
+>> +	if (enable) {
+>> +		ret = enable_eud(chip);
+>> +		if (!ret)
+>> +			chip->enabled = enable;
+>> +		else
+>> +			disable_eud(chip);
+>> +	} else {
+>> +		disable_eud(chip);
+>> +	}
+>> +
+>> +	return count;
+>> +}
+>> +
+>> +static DEVICE_ATTR_RW(enable);
+>> +
+>> +static struct attribute *eud_attrs[] = {
+>> +	&dev_attr_enable.attr,
+>> +	NULL,
+>> +};
+>> +ATTRIBUTE_GROUPS(eud);
+>> +
+>> +static void usb_attach_detach(struct eud_chip *chip)
+>> +{
+>> +	u32 reg;
+>> +
+>> +	/* read ctl_out_1[4] to find USB attach or detach event */
+>> +	reg = readl(chip->base + EUD_REG_CTL_OUT_1);
+>> +	chip->usb_attached = reg & EUD_INT_SAFE_MODE;
+>> +}
+>> +
+>> +static void pet_eud(struct eud_chip *chip)
+>> +{
+>> +	u32 reg;
+>> +	int ret;
+>> +
+>> +	/* When the EUD_INT_PET_EUD in SW_ATTACH_DET is set, the cable has been
+>> +	 * disconnected and we need to detach the pet to check if EUD is in safe
+>> +	 * mode before attaching again.
+>> +	 */
+>> +	reg = readl(chip->base + EUD_REG_SW_ATTACH_DET);
+>> +	if (reg & EUD_INT_PET_EUD) {
+>> +		/* Detach & Attach pet for EUD */
+>> +		writel(0, chip->base + EUD_REG_SW_ATTACH_DET);
+>> +		/* Delay to make sure detach pet is done before attach pet */
+>> +		ret = readl_poll_timeout(chip->base + EUD_REG_SW_ATTACH_DET,
+>> +					reg, (reg == 0), 1, 100);
+>> +		if (ret) {
+>> +			dev_err(chip->dev, "Detach pet failed\n");
+>> +			return;
+>> +		}
+>> +	}
+>> +	/* Attach pet for EUD */
+>> +	writel(EUD_INT_PET_EUD, chip->base +EUD_REG_SW_ATTACH_DET);
+>> +}
+>> +
+>> +static irqreturn_t handle_eud_irq(int irq, void *data)
+>> +{
+>> +	struct eud_chip *chip = data;
+>> +	u32 reg;
+>> +
+>> +	reg = readl(chip->base + EUD_REG_INT_STATUS_1);
+>> +	switch (reg & EUD_INT_ALL) {
+>> +	case EUD_INT_VBUS:
+>> +		chip->int_status = EUD_INT_VBUS;
+> The first time that reg & EUD_INT_VBUS is set, you assign int_status
+> EUD_INT_VBUS, you never clear it again.
+>
+> This is also the only path where you wake up the thread, so int_status
+> will always be EUD_INT_VBUS when you reach handle_eud_irq_thread().
+>
+> Which means that int_status serves no purpose and if you're happy with
+> how this implementation currently works you can just drop "int_status"
+> and the conditional below.
+Ack. Will remove the int_status flag as it is not needed.
+>
+>> +		usb_attach_detach(chip);
+>> +		return IRQ_WAKE_THREAD;
+>> +	case EUD_INT_SAFE_MODE:
+>> +		pet_eud(chip);
+>> +		return IRQ_HANDLED;
+>> +	default:
+>> +		return IRQ_NONE;
+>> +	}
+>> +}
+>> +
+>> +static irqreturn_t handle_eud_irq_thread(int irq, void *data)
+>> +{
+>> +	struct eud_chip *chip = data;
+>> +	int ret;
+>> +
+>> +	if (chip->int_status == EUD_INT_VBUS) {
+>> +		if (chip->usb_attached)
+>> +			ret = usb_role_switch_set_role(chip->role_sw, USB_ROLE_DEVICE);
+>> +		else
+>> +			ret = usb_role_switch_set_role(chip->role_sw, USB_ROLE_HOST);
+>> +		if (ret)
+>> +			dev_err(chip->dev, "failed to set role switch\n");
+>> +	}
+>> +
+>> +	/* set and clear vbus_int_clr[0] to clear interrupt */
+>> +	writel(BIT(0), chip->base + EUD_REG_VBUS_INT_CLR);
+>> +	writel(0, chip->base + EUD_REG_VBUS_INT_CLR);
+>> +
+>> +	return IRQ_HANDLED;
+>> +}
+>> +
+>> +static int eud_probe(struct platform_device *pdev)
+>> +{
+>> +	struct eud_chip *chip;
+>> +	struct fwnode_handle *fwnode = pdev->dev.fwnode, *dwc3;
+>> +	int ret;
+>> +
+>> +	chip = devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
+>> +	if (!chip)
+>> +		return -ENOMEM;
+>> +
+>> +	chip->dev = &pdev->dev;
+>> +
+>> +	dwc3 = fwnode_graph_get_next_endpoint(fwnode, NULL);
+> This will pick the first endpoint, but if you instead use
+>
+>      chip->role_sw = usb_role_switch_get(&pdev->dev);
+>
+> you should get whichever port that points to a usb-role-switch node,
+> without having to do the fwnode dance (and refcounting, which you forgot
+> to release).
+Ack
+>
+>> +	if (!dwc3)
+>> +		return -ENODEV;
+>> +
+>> +	chip->role_sw = fwnode_usb_role_switch_get(dwc3);
+>> +	if (IS_ERR(chip->role_sw)) {
+>> +		ret = PTR_ERR(chip->role_sw);
+>> +		usb_role_switch_put(chip->role_sw);
+> You don't need to return the role_sw if it's IS_ERR().
+Ack
+>
+>> +		return dev_err_probe(chip->dev, ret,
+>> +					"failed to get role switch\n");
+>> +	}
+>> +
+>> +	chip->base = devm_platform_ioremap_resource(pdev, 0);
+>> +	if (IS_ERR(chip->base))
+> You're not usb_role_switch_put() your role_sw here, or below return
+> cases. I would recommend devm_add_action_or_reset() to avoid the hassle
+> of adding the necessary cleanup logic.
+Ack
+>
+>> +		return PTR_ERR(chip->base);
+>> +
+>> +	chip->mode_mgr = devm_platform_ioremap_resource(pdev, 1);
+>> +	if (IS_ERR(chip->mode_mgr))
+>> +		return PTR_ERR(chip->mode_mgr);
+>> +
+>> +	chip->irq = platform_get_irq(pdev, 0);
+>> +	ret = devm_request_threaded_irq(&pdev->dev, chip->irq, handle_eud_irq,
+>> +			handle_eud_irq_thread, IRQF_ONESHOT, NULL, chip);
+>> +	if (ret)
+>> +		return dev_err_probe(chip->dev, ret, "failed to allocate irq\n");
+>> +
+>> +	enable_irq_wake(chip->irq);
+>> +
+>> +	platform_set_drvdata(pdev, chip);
+>> +
+>> +	return 0;
+> Per the updated binding, the EUD would now be a usb-role-switch as well
+> and when not enabled should simply propagate the incoming requests. So I
+> was expecting this to register as a usb_role_switch as well...
 
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1627  	if (!fdev)
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1628  		return -ENOMEM;
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1629  
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1630  	fdev->cctx = cctx;
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1631  	fdev->miscdev.minor = MISC_DYNAMIC_MINOR;
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1632  	fdev->miscdev.fops = &fastrpc_fops;
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1633  	fdev->miscdev.name = devm_kasprintf(dev, GFP_KERNEL, "fastrpc-%s", domain);
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1634  	err = misc_register(&fdev->miscdev);
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1635  	if (err)
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26 @1636  		kfree(fdev);
-                                                                ^^^^^^^^^^^
-Double free
+Can you please elaborate on this?
 
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1637  	else
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1638  		cctx->fdevice = fdev;
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1639  
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1640  	return err;
-99d9d7a1c5f2dae Srinivas Kandagatla 2022-01-26  1641  }
+Do I need to define a separate 'usb_role_switch_desc' here and register 
+using 'usb_role_switch_register'?
 
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+Also what should be the set method in this case for usb_role_switch_desc?
 
+>
+>> +}
+>> +
+>> +static int eud_remove(struct platform_device *pdev)
+>> +{
+>> +	struct eud_chip *chip = platform_get_drvdata(pdev);
+>> +
+>> +	if (chip->enabled)
+>> +		disable_eud(chip);
+>> +
+>> +	device_init_wakeup(&pdev->dev, false);
+>> +	disable_irq_wake(chip->irq);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static const struct of_device_id eud_dt_match[] = {
+>> +	{ .compatible = "qcom,sc7280-eud" },
+> Do you see any reason for not just adding qcom,eud here? Are there any
+> differences from other platforms that has this block that means that we
+> need per-platform driver support (the dts should have both
+> compatibles still)?
+That is correct, this might need driver support for multiple platforms.
+>
+> Regards,
+> Bjorn
+>
+>> +	{ }
+>> +};
+>> +MODULE_DEVICE_TABLE(of, eud_dt_match);
+>> +
+>> +static struct platform_driver eud_driver = {
+>> +	.probe	= eud_probe,
+>> +	.remove	= eud_remove,
+>> +	.driver	= {
+>> +		.name = "qcom_eud",
+>> +		.dev_groups = eud_groups,
+>> +		.of_match_table = eud_dt_match,
+>> +	},
+>> +};
+>> +module_platform_driver(eud_driver);
+>> +
+>> +MODULE_DESCRIPTION("QTI EUD driver");
+>> +MODULE_LICENSE("GPL v2");
+>> --
+>> 2.7.4
+>>
