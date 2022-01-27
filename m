@@ -2,65 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF71149EBF4
+	by mail.lfdr.de (Postfix) with ESMTP id 66C4449EBF2
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 21:03:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343828AbiA0UDD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1343821AbiA0UDD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 27 Jan 2022 15:03:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43332 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343760AbiA0UCe (ORCPT
+        with ESMTP id S1343666AbiA0UCg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jan 2022 15:02:34 -0500
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D774DC061749
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 12:02:33 -0800 (PST)
-Received: by mail-pg1-x535.google.com with SMTP id j10so3234744pgc.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 12:02:33 -0800 (PST)
+        Thu, 27 Jan 2022 15:02:36 -0500
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28E30C061758
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 12:02:35 -0800 (PST)
+Received: by mail-pg1-x536.google.com with SMTP id j10so3234805pgc.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 12:02:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ka5n0VIFlCANZbv+1O6BEaBIrpT2TSivDZEr/FN1kY8=;
-        b=MXoXAgK1oy6andcq7Ev9jdik2AL8qv5c3I8xi0/e6YDPc830v2J7hy32iT3ICQBJ8J
-         xy09VzT9Yn29S+RdgW2+6hsABDgU6UyFNOGBLRCszHxFQFq6dKmKLilaT6sUw4r9sdt7
-         c29EGPbcTtzKRF4KZrDHS+Z347DLhk07qht9s=
+        bh=uoYkWU8ZYG31h//2O3CYJPowjGxvjjH2b6ZF0p9sQps=;
+        b=Npdvqs3dgVEFL7SvLzWbajP/ltLnMywE5OL4sdVwIATKFbTuobWdTSdnjQGKqw+P3Q
+         z4BL7Whjg+87X0sbFCE+X5hflua22Oq7YC76P11dk4ptrikhRbSZ2i7ugYtYodwBP3vb
+         cjJ0P0mq6X5+92CpBNqeR6xJuk6b6giXEsfqQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ka5n0VIFlCANZbv+1O6BEaBIrpT2TSivDZEr/FN1kY8=;
-        b=sb86Z2voM1RnsXHxtGvcRwc7IYAa5pDMs9IoAQVmduVMSPICD9GPmXkDKQeM2WzrFx
-         DUpYVyrkn0dhCnzs55zrTSCtyeeWAo9q7FQbyif6+Q39w9SdF3eO48TKiehDNFvDfzUH
-         3D0CZVucKXWDAVdr6HM9h107egEQyQmCIBldIA95pWfp0FGIUFU/vJELtYNo+2vG6jNy
-         UqHxhizUwengC1U99KJwYjfU+CyJm89ibXqAr58o4JGD6uqauAwP5uQIEG79R8FMWKoK
-         Nr3eIsUo/AUmFnvpKExdpOTKwi4RQxUika9QScx0UH6YRtGkPEquHsxv428PUeSugNiM
-         iIkA==
-X-Gm-Message-State: AOAM5335nXnbydD9ys40/tvE+2bnrxr5Q7PWXPx5q1lGfIOosLbBTRl0
-        RnBVokDiWG6BTL3kUq9fBcVHgSrme1vH3A==
-X-Google-Smtp-Source: ABdhPJzXSmoe1y40KU/53VBe7HVzxX6p0Ykdxtz/+cL6TFf9tO0wg6o7nu36+L3nnJbpQJ7nrONYcg==
-X-Received: by 2002:a63:2d86:: with SMTP id t128mr3994596pgt.200.1643313753420;
-        Thu, 27 Jan 2022 12:02:33 -0800 (PST)
+        bh=uoYkWU8ZYG31h//2O3CYJPowjGxvjjH2b6ZF0p9sQps=;
+        b=bFdYmABsSkTyAz7Qz2fudx1BMcnly6pgqE1cEk5yy+o5+8/aLP64Qt6QhvTsB7ZHgi
+         M9NTMPWm1CuSjFO++EisEhmwkc66KqAqKclBycIywsZXCHogbJUX1CySJoFCw2XwD/+H
+         WVSjdWKAzlHbWb0V9mKu6a7X6Tcw6Y1ADQg53seQp0f6obD51Dtvt5CBpAXTqnL8EBkU
+         BGyORr+kOjeO2zGAjiRl88fOFarZt84QEhzB/3K6rRY1jvXz47NBz258ZDdy/T7nZZUH
+         aLXE7B+W8IP1CzR/zZHw2/2+UZC9Z2xTNURB+Hu3pyFG3B+1XsnLcqjFmcgjz22Zen4S
+         It0g==
+X-Gm-Message-State: AOAM533iBxNU+nBc1uuLL+s4bHJSKuMmkAsQzAHSRAnkzYlF8LPXnL1c
+        uixXkj84cqArEUGyCR57IeHzSQ==
+X-Google-Smtp-Source: ABdhPJx6qf0FRtjUDt7e569xeRU9IhaGc6sCbZg7DZ1PWIGIEEYIMaZDXyPgkgC77gUh4nAd8RysXw==
+X-Received: by 2002:a63:4b0b:: with SMTP id y11mr3862310pga.342.1643313754673;
+        Thu, 27 Jan 2022 12:02:34 -0800 (PST)
 Received: from smtp.gmail.com ([2620:15c:202:201:9246:1838:3243:3071])
-        by smtp.gmail.com with ESMTPSA id k21sm6561190pff.33.2022.01.27.12.02.32
+        by smtp.gmail.com with ESMTPSA id k21sm6561190pff.33.2022.01.27.12.02.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jan 2022 12:02:33 -0800 (PST)
+        Thu, 27 Jan 2022 12:02:34 -0800 (PST)
 From:   Stephen Boyd <swboyd@chromium.org>
 To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Douglas Anderson <dianders@chromium.org>
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Mark Brown <broonie@kernel.org>,
         Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Kai Vehmanen <kai.vehmanen@linux.intel.com>,
         Daniel Vetter <daniel.vetter@ffwll.ch>,
         "Rafael J. Wysocki" <rafael@kernel.org>,
         Rob Clark <robdclark@gmail.com>,
         Russell King <rmk+kernel@arm.linux.org.uk>,
         Saravana Kannan <saravanak@google.com>
-Subject: [PATCH v6 29/35] sound: hdac: Migrate to aggregate driver
-Date:   Thu, 27 Jan 2022 12:01:35 -0800
-Message-Id: <20220127200141.1295328-30-swboyd@chromium.org>
+Subject: [PATCH v6 30/35] ASoC: codecs: wcd938x: Migrate to aggregate driver
+Date:   Thu, 27 Jan 2022 12:01:36 -0800
+Message-Id: <20220127200141.1295328-31-swboyd@chromium.org>
 X-Mailer: git-send-email 2.35.0.rc0.227.g00780c9af4-goog
 In-Reply-To: <20220127200141.1295328-1-swboyd@chromium.org>
 References: <20220127200141.1295328-1-swboyd@chromium.org>
@@ -74,9 +73,8 @@ Use an aggregate driver instead of component ops so that we can get
 proper driver probe ordering of the aggregate device with respect to all
 the component devices that make up the aggregate device.
 
+Acked-by: Mark Brown <broonie@kernel.org>
 Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
 Cc: "Rafael J. Wysocki" <rafael@kernel.org>
 Cc: Rob Clark <robdclark@gmail.com>
@@ -84,71 +82,70 @@ Cc: Russell King <rmk+kernel@arm.linux.org.uk>
 Cc: Saravana Kannan <saravanak@google.com>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- sound/hda/hdac_component.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ sound/soc/codecs/wcd938x.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/sound/hda/hdac_component.c b/sound/hda/hdac_component.c
-index bb37e7e0bd79..4ec5d9bf8533 100644
---- a/sound/hda/hdac_component.c
-+++ b/sound/hda/hdac_component.c
-@@ -181,8 +181,9 @@ int snd_hdac_acomp_get_eld(struct hdac_device *codec, hda_nid_t nid, int dev_id,
- }
- EXPORT_SYMBOL_GPL(snd_hdac_acomp_get_eld);
+diff --git a/sound/soc/codecs/wcd938x.c b/sound/soc/codecs/wcd938x.c
+index eff200a07d9f..6e1c9f93c819 100644
+--- a/sound/soc/codecs/wcd938x.c
++++ b/sound/soc/codecs/wcd938x.c
+@@ -4317,8 +4317,9 @@ static struct snd_soc_dai_driver wcd938x_dais[] = {
+ 	},
+ };
  
--static int hdac_component_master_bind(struct device *dev)
-+static int hdac_component_master_bind(struct aggregate_device *adev)
+-static int wcd938x_bind(struct device *dev)
++static int wcd938x_bind(struct aggregate_device *adev)
  {
 +	struct device *dev = aggregate_device_parent(adev);
- 	struct drm_audio_component *acomp = hdac_get_acomp(dev);
+ 	struct wcd938x_priv *wcd938x = dev_get_drvdata(dev);
  	int ret;
  
-@@ -222,8 +223,9 @@ static int hdac_component_master_bind(struct device *dev)
- 	return ret;
+@@ -4401,8 +4402,9 @@ static int wcd938x_bind(struct device *dev)
+ 
  }
  
--static void hdac_component_master_unbind(struct device *dev)
-+static void hdac_component_master_unbind(struct aggregate_device *adev)
+-static void wcd938x_unbind(struct device *dev)
++static void wcd938x_unbind(struct aggregate_device *adev)
  {
 +	struct device *dev = aggregate_device_parent(adev);
- 	struct drm_audio_component *acomp = hdac_get_acomp(dev);
+ 	struct wcd938x_priv *wcd938x = dev_get_drvdata(dev);
  
- 	if (acomp->audio_ops && acomp->audio_ops->master_unbind)
-@@ -233,9 +235,13 @@ static void hdac_component_master_unbind(struct device *dev)
- 	WARN_ON(acomp->ops || acomp->dev);
+ 	device_link_remove(dev, wcd938x->txdev);
+@@ -4412,9 +4414,13 @@ static void wcd938x_unbind(struct device *dev)
+ 	component_unbind_all(dev, wcd938x);
  }
  
--static const struct component_master_ops hdac_component_master_ops = {
--	.bind = hdac_component_master_bind,
--	.unbind = hdac_component_master_unbind,
-+static struct aggregate_driver hdac_aggregate_driver = {
-+	.probe = hdac_component_master_bind,
-+	.remove = hdac_component_master_unbind,
-+	.driver = {
-+		.name = "hdac_agg",
+-static const struct component_master_ops wcd938x_comp_ops = {
+-	.bind   = wcd938x_bind,
+-	.unbind = wcd938x_unbind,
++static struct aggregate_driver wcd938x_aggregate_driver = {
++	.probe	= wcd938x_bind,
++	.remove	= wcd938x_unbind,
++	.driver	= {
++		.name = "wcd938x_snd",
 +		.owner = THIS_MODULE,
 +	},
  };
  
- /**
-@@ -303,8 +309,7 @@ int snd_hdac_acomp_init(struct hdac_bus *bus,
- 	devres_add(dev, acomp);
+ static int wcd938x_compare_of(struct device *dev, void *data)
+@@ -4483,7 +4489,7 @@ static int wcd938x_probe(struct platform_device *pdev)
  
- 	component_match_add_typed(dev, &match, match_master, bus);
--	ret = component_master_add_with_match(dev, &hdac_component_master_ops,
--					      match);
-+	ret = component_aggregate_register(dev, &hdac_aggregate_driver, match);
- 	if (ret < 0)
- 		goto out_err;
+ 	wcd938x_reset(wcd938x);
  
-@@ -344,7 +349,7 @@ int snd_hdac_acomp_exit(struct hdac_bus *bus)
- 	bus->display_power_active = 0;
- 	bus->display_power_status = 0;
+-	ret = component_master_add_with_match(dev, &wcd938x_comp_ops, match);
++	ret = component_aggregate_register(dev, &wcd938x_aggregate_driver, match);
+ 	if (ret)
+ 		return ret;
  
--	component_master_del(dev, &hdac_component_master_ops);
-+	component_aggregate_unregister(dev, &hdac_aggregate_driver);
+@@ -4499,7 +4505,7 @@ static int wcd938x_probe(struct platform_device *pdev)
  
- 	bus->audio_component = NULL;
- 	devres_destroy(dev, hdac_acomp_release, NULL, NULL);
+ static int wcd938x_remove(struct platform_device *pdev)
+ {
+-	component_master_del(&pdev->dev, &wcd938x_comp_ops);
++	component_aggregate_unregister(&pdev->dev, &wcd938x_aggregate_driver);
+ 
+ 	return 0;
+ }
 -- 
 https://chromeos.dev
 
