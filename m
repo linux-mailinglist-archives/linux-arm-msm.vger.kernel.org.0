@@ -2,151 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2996749E2EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 13:59:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EEAE049E303
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 14:02:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241390AbiA0M7a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jan 2022 07:59:30 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:45696 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S241325AbiA0M73 (ORCPT
+        id S241403AbiA0NCu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jan 2022 08:02:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57364 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238381AbiA0NCu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jan 2022 07:59:29 -0500
+        Thu, 27 Jan 2022 08:02:50 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 198ECC061714
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 05:02:50 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id c24so3560531edy.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 05:02:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1643288369; x=1674824369;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=dDaS4TfDS0GhX6trEBHoJM36XGKacCUQH5lHeL2N7Xc=;
-  b=xogTEZld2m6RFvrSSIm+ZYM0zH4cpuXrNYQEwgPtRQlI5lXhKqDbikaO
-   VCc4LChkxSLlzwK8wePYRGxyn/7wxMq8GqEyYFELA0zk1biHj0WVgbYOn
-   V9Xuo8wyTTJ62VuQDdPIADiLAeylMGL8/iAcb+/zTvWcMOmcubzXs4y3m
-   w=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 27 Jan 2022 04:59:28 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2022 04:59:28 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 27 Jan 2022 04:59:28 -0800
-Received: from mpubbise-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 27 Jan 2022 04:59:25 -0800
-From:   Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <robh+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        "Manikanta Pubbisetty" <quic_mpubbise@quicinc.com>
-Subject: [PATCH v2] arm64: dts: qcom: sc7280: Add WCN6750 WiFi node
-Date:   Thu, 27 Jan 2022 18:29:12 +0530
-Message-ID: <1643288352-13652-1-git-send-email-quic_mpubbise@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=grsecurity.net; s=grsec;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EeVrfXRiA/Z//HiAisq12dm/ACVeh9IJbIggThIJWrg=;
+        b=T6MoQ6Mz7R494soC6mRyuhUTo5MO6w6umoo13tC58PNOlHn8ixbKHDx/ht0cvaPNXu
+         W403+kp10BwKn2Dl9azMMCYJ2O7S5NEvVJ8EDDTIAfdJ2qb+dwPt9w8xlM7PUGrBpq8J
+         ETxI/YK2FgUpnDZsmDd8bZ0rTmpdO5J4QjiXRvZ3mYD6maKkIIxZ0vU5PeGKkeDKHOL3
+         3sVedy/1Al3mre6Zj2ct/0TTcDKlkoeRUnXirMJfgRWbA82T9EDIDuIh2K2JT4sT7Cs7
+         XDhgSlss0VPx9T8eXQ/Nq+hjmboDpQsUR8/oj9vSOdGTswlqtnhO7/l+HKYUIdEZl9qF
+         zy/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EeVrfXRiA/Z//HiAisq12dm/ACVeh9IJbIggThIJWrg=;
+        b=PAlY/1XBdY3CC2njYCX0hhGtji6AtOUXfTxLJvyJDnRfeoG61dsYR7C0jue1iwHTw0
+         XA8wPIyQ4S/i14536/Bqhvt/U15Sua3iJCNPH/Bjj4jJx0S9E3IIEuFTEvQUbe2DOEw4
+         aaL5zzhDhUkJiA++1yekpNNe+xBTNBuQF1+wxip9HeTTHy2f+LfjhkOpg0SBi6CNvFya
+         bJgOZlmPVyqGQg+bSeF7EZ2Ai7s+t6pk0ch9PDnU7+HNIj2cA29j3ZTThf554SmvtY6G
+         sBwnNlMWUDgq7z9UIl6CcQDg7wBq4PKQrwR9+4VMyw293T4Os02znZowDHhnnbLtbmpR
+         wvSQ==
+X-Gm-Message-State: AOAM533idTPfdIQYMQ2b7/VDNlyAi3jEj+/phGbV6P6cMnF67wAA3E8Y
+        iawDUeurpZGnrBtzK82DblDgtw==
+X-Google-Smtp-Source: ABdhPJzHlRzs7ubUO9oh0RObD1YEaP3tN41AVUNYzI+hINmrw9SW0CMbu0PjEORzEdTnZxvXq3jHMQ==
+X-Received: by 2002:aa7:cb17:: with SMTP id s23mr3519845edt.282.1643288568672;
+        Thu, 27 Jan 2022 05:02:48 -0800 (PST)
+Received: from bell.fritz.box (p200300f6af0b1300a70c0d30e044053b.dip0.t-ipconnect.de. [2003:f6:af0b:1300:a70c:d30:e044:53b])
+        by smtp.gmail.com with ESMTPSA id n11sm11380621edv.52.2022.01.27.05.02.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Jan 2022 05:02:48 -0800 (PST)
+From:   Mathias Krause <minipli@grsecurity.net>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     Mathias Krause <minipli@grsecurity.net>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: [PATCH] misc: fastrpc: avoid double fput() on failed usercopy
+Date:   Thu, 27 Jan 2022 14:02:18 +0100
+Message-Id: <20220127130218.809261-1-minipli@grsecurity.net>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DTS node for WCN6750 WiFi chipset.
+If the copy back to userland fails for the FASTRPC_IOCTL_ALLOC_DMA_BUFF
+ioctl(), we shouldn't assume that 'buf->dmabuf' is still valid. In fact,
+dma_buf_fd() called fd_install() before, i.e. "consumed" one reference,
+leaving us with none.
 
-Signed-off-by: Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
+Calling dma_buf_put() will therefore put a reference we no longer own,
+leading to a valid file descritor table entry for an already released
+'file' object which is a straight use-after-free.
+
+Simply avoid calling dma_buf_put() and rely on the process exit code to
+do the necessary cleanup, if needed, i.e. if the file descriptor is
+still valid.
+
+Fixes: 6cffd79504ce ("misc: fastrpc: Add support for dmabuf exporter")
+Signed-off-by: Mathias Krause <minipli@grsecurity.net>
 ---
-Depends on:
-- https://patchwork.kernel.org/project/linux-arm-msm/patch/1643287248-1092-1-git-send-email-quic_mpubbise@quicinc.com/
-- https://patchwork.kernel.org/project/linux-wireless/list/?series=605793
+ drivers/misc/fastrpc.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-Changes from V1:
-- Corrected the case for hex values
-
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi |  7 +++++
- arch/arm64/boot/dts/qcom/sc7280.dtsi     | 47 ++++++++++++++++++++++++++++++++
- 2 files changed, 54 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index 7287e51..e6b86bd 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -638,3 +638,10 @@
- &remoteproc_wpss {
- 	status = "okay";
- };
-+
-+&wifi {
-+	status = "okay";
-+	wifi-firmware {
-+		iommus = <&apps_smmu 0x1c02 0x1>;
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index e7c0745..bb57274 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -83,6 +83,11 @@
- 		#size-cells = <2>;
- 		ranges;
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index 4ccbf43e6bfa..aa1682b94a23 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1288,7 +1288,14 @@ static int fastrpc_dmabuf_alloc(struct fastrpc_user *fl, char __user *argp)
+ 	}
  
-+		wlan_ce_mem: memory@4cd000 {
-+			no-map;
-+			reg = <0x0 0x4cd000 0x0 0x1000>;
-+		};
-+
- 		hyp_mem: memory@80000000 {
- 			reg = <0x0 0x80000000 0x0 0x600000>;
- 			no-map;
-@@ -1574,6 +1579,48 @@
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
+ 	if (copy_to_user(argp, &bp, sizeof(bp))) {
+-		dma_buf_put(buf->dmabuf);
++		/*
++		 * The usercopy failed, but we can't do much about it, as
++		 * dma_buf_fd() already called fd_install() and made the
++		 * file descriptor accessible for the current process. It
++		 * might already be closed and dmabuf no longer valid when
++		 * we reach this point. Therefore "leak" the fd and rely on
++		 * the process exit path to do any required cleanup.
++		 */
+ 		return -EFAULT;
+ 	}
  
-+		wifi: wifi@17a10040 {
-+			compatible = "qcom,wcn6750-wifi";
-+			reg = <0 0x17a10040 0 0x0>;
-+			reg-names = "msi_addr";
-+			iommus = <&apps_smmu 0x1c00 0x1>;
-+			interrupts = <GIC_SPI 768 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 769 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 770 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 771 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 772 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 773 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 774 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 775 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 776 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 777 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 778 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 779 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 780 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 781 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 782 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 783 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 784 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 785 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 786 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 787 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 788 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 789 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 790 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 791 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 792 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 793 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 794 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 795 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 796 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 797 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 798 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 799 IRQ_TYPE_EDGE_RISING>;
-+			qcom,rproc = <&remoteproc_wpss>;
-+			memory-region = <&wlan_fw_mem &wlan_ce_mem>;
-+			status = "disabled";
-+		};
-+
- 		pcie1: pci@1c08000 {
- 			compatible = "qcom,pcie-sc7280";
- 			reg = <0 0x01c08000 0 0x3000>,
 -- 
-2.7.4
+2.30.2
 
