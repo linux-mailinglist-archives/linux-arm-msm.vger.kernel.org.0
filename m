@@ -2,309 +2,370 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C66CF49DD45
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 10:05:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B66D249DE18
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 10:33:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238176AbiA0JFi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jan 2022 04:05:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57150 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231985AbiA0JFh (ORCPT
+        id S234551AbiA0Jdh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jan 2022 04:33:37 -0500
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:19192 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S238644AbiA0Jdg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jan 2022 04:05:37 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47EC2C061747
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 01:05:37 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id v13so3397876wrv.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 01:05:37 -0800 (PST)
+        Thu, 27 Jan 2022 04:33:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20210112.gappssmtp.com; s=20210112;
-        h=references:user-agent:from:to:cc:subject:date:in-reply-to
-         :message-id:mime-version;
-        bh=rjtR56dfdnTjyM6bjm66t58wWtukpooj/ecEV7qKFFU=;
-        b=RINGYWmdOJjRmzG/N3Nc3K8o+ujsn7QBQ5I5V9tMGZRL5nET7TcPqyT9oOIOrZGDgA
-         yjEdEZtN0UlnVj9CLMpEXhXrKEI2nbsOW6QV/zKK0aLY8mCp3fYA72DSBBdLxKzSrw6M
-         qsw0avSCZ5aQY66yJBw3HZZ6E3iTNkLLFNwlroAXGsNcKwrO8uYutF9EscY1Dw8WB8lj
-         7rHCojLlMQ05VcA5jovZImiweY2YVDzKumB2r8gZB/PSSkNIp7zbiPnIywND0RKO4YvU
-         YlRcyxCQEvjKxIQheHHNM4q5JRrRXDmqF+y04W756RgsaelM0vNFX2Yqny+wvSTdRC7g
-         qJog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:references:user-agent:from:to:cc:subject:date
-         :in-reply-to:message-id:mime-version;
-        bh=rjtR56dfdnTjyM6bjm66t58wWtukpooj/ecEV7qKFFU=;
-        b=X1Lle9bA4/tlO0uJv/3HUhDeUzswzx5Cf3VZ7H9JJ7UAdmXMTOlkvMuXH2U/FpyfGW
-         lk4YjJG1gVIllEX/iFoZ17Ki40h1Bx3P5/8n19jVhZVjc0oMSeIcVfFt04pO4PiDP347
-         cgGz2EuKMHJuirvXdo6JSYGTmEfPapfQFNBbEdDwoY9jUSHncEWjp1aGzMwMSi6OEAoi
-         VBMGPZJXDuGdzQe4c3IJqF2TN2LPBzxt9z9JDXIZQmCeFCqt3yeDRaQctDAeuMNUg2iP
-         KDKSeZO0UoL+WTHaSsiGOscxCKCLy2e+ZFPLE8bMJbs8JAS7coYj0fedembuzZfsWSVw
-         d1ig==
-X-Gm-Message-State: AOAM5329/L5snHbO9ZWgK/jLjCwsAdw07Ofd6M92RIqZLvhbEuFIsFGT
-        s7VwXmXsZSLZZfHqjeho5H59SA==
-X-Google-Smtp-Source: ABdhPJwPXj2TGvVrDtoZmyvAc/oT6t1ERUujcirvOS6XEJszUThggTk+2eO5mXwRJ/mazVI3JS/s+A==
-X-Received: by 2002:a5d:660b:: with SMTP id n11mr2162313wru.78.1643274335733;
-        Thu, 27 Jan 2022 01:05:35 -0800 (PST)
-Received: from localhost (82-65-169-74.subs.proxad.net. [82.65.169.74])
-        by smtp.gmail.com with ESMTPSA id g5sm2022495wri.108.2022.01.27.01.05.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jan 2022 01:05:35 -0800 (PST)
-References: <20220126231427.1638089-1-robh@kernel.org>
-User-agent: mu4e 1.6.10; emacs 27.1
-From:   Jerome Brunet <jbrunet@baylibre.com>
-To:     Rob Herring <robh@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Cheng-Yi Chiang <cychiang@chromium.org>,
-        Shengjiu Wang <shengjiu.wang@nxp.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Jonathan Bakker <xc-racer2@live.ca>
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] ASoC: dt-bindings: Centralize the 'sound-dai' definition
-Date:   Thu, 27 Jan 2022 10:00:53 +0100
-In-reply-to: <20220126231427.1638089-1-robh@kernel.org>
-Message-ID: <1jtudp1rc1.fsf@starbuckisacylon.baylibre.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1643276015; x=1674812015;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=ozq+LTwpMXjth0rTIKHrkM8marZVKxy8MHKPzE4YwIs=;
+  b=Zwod3tojI8jd8fL/tO8sCswfAnx8Wl5ilYegyohCuwLCCpRmEN/cDw/S
+   PA9IzaHwoBZJni+cWGWPM4fAL+LgoZ2kSANzuj8e+5+3DuTZK8xtZiO3m
+   1c+iXpRZnTgUVa8nqij90/3JLt02+cAuGMUY89RZhRFMbg95WKulYrjIo
+   E=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 27 Jan 2022 01:33:35 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2022 01:33:34 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 27 Jan 2022 01:33:34 -0800
+Received: from [10.253.77.50] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 27 Jan
+ 2022 01:33:29 -0800
+Message-ID: <25d9a681-b899-5936-868d-34f645ee40ef@quicinc.com>
+Date:   Thu, 27 Jan 2022 17:33:26 +0800
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
+Subject: Re: [PATCH v2 2/9] Coresight: Add coresight TPDM source driver
+Content-Language: en-US
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>
+CC:     Mike Leach <mike.leach@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20211209141543.21314-1-quic_jinlmao@quicinc.com>
+ <20211209141543.21314-3-quic_jinlmao@quicinc.com>
+ <20211214185714.GB1549991@p14s>
+ <85ad17fb-c885-831d-d841-4c6f10920355@quicinc.com>
+ <CAJ9a7Vh2d79Ro72ZDsbQSVS8VrH3c+X+xo8849yGS4Z73+yq_w@mail.gmail.com>
+ <20211216190223.GA78825@p14s>
+ <2703bf83-3a87-e69f-2392-7e0568e91712@quicinc.com>
+ <20220121171552.GA1811357@p14s>
+ <24c09945-bcda-81e4-f53c-af871f696094@quicinc.com>
+ <20220126153437.GA2144852@p14s>
+From:   Jinlong Mao <quic_jinlmao@quicinc.com>
+In-Reply-To: <20220126153437.GA2144852@p14s>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Wed 26 Jan 2022 at 17:14, Rob Herring <robh@kernel.org> wrote:
-
-> 'sound-dai' is a common property, but has duplicate type definitions.
-> Create a new common definition to define the type and then update all
-> the other occurrences to just define how many entries there are just
-> like other phandle+arg properties.
+On 1/26/2022 11:34 PM, Mathieu Poirier wrote:
+> On Wed, Jan 26, 2022 at 03:07:38PM +0800, Jinlong Mao wrote:
+>> Hi Mathieu,
+>>
+>> Good afternoon.
+>>
+>> On 1/22/2022 1:15 AM, Mathieu Poirier wrote:
+>>> Hey Jinlong,
+>>>
+>>> On Fri, Jan 21, 2022 at 10:01:47PM +0800, Jinlong Mao wrote:
+>>>> Hi Mathieu,
+>>>>
+>>>> Good Day.
+>>>>
+>>>> On 12/17/2021 3:02 AM, Mathieu Poirier wrote:
+>>>>> [...]
+>>>>>
+>>>>>>>>> +
+>>>>>>>>> +static void tpdm_init_default_data(struct tpdm_drvdata *drvdata)
+>>>>>>>>> +{
+>>>>>>>>> +    static int traceid = TPDM_TRACE_ID_START;
+>>>>>>>>> +
+>>>>>>>>> +    drvdata->traceid = traceid++;
+>>>>>>>>> +}
+>>>>>>>> I have been specific on how to properly do this in the last revision.  Given the
+>>>>>>>> above about the MAINTAINERS file, I am not sure that I will continue reviewing this set.
+>>>>>>>>
+>>>>>>>> There is also no need to rush another revision as I won't have the bandwidth to
+>>>>>>>> process it before the holidays.
+>>>>>>>>
+>>>>>>>> Thanks,
+>>>>>>>> Mathieu
+>>>>>>> Hi Mathieu,
+>>>>>>>
+>>>>>>> Sorry, not addressed your previous comments here.
+>>>>>>>
+>>>>>>> For the trace id, each coresight component has 7 bits to store the trace
+>>>>>>> id. So the trace id should be from 1 to 127 as 0 is invalid.
+>>>>>> IDs 0x70 - 0x7F (`112 - 127 ) are reserved - see the ARM Coresight
+>>>>>> Architecture specification v3.0
+>>>>>>
+>>>>> Correct
+>>>>>
+>>>>>>> Apart from TPDMs/STM/ETMs, we also have other coresight components in
+>>>>>>> our internal device. About 80 ids are already used.
+>>>>>>>
+>>>>>>> Some components have fixed trace id in HW. If we use functions below to
+>>>>>>> count the trace id, there will be conflict to other components.
+>>>>>>>
+>>>>>>> Can we use 1-15 for etm trace ids  and 16 - 127 for other coresight
+>>>>>>> components ? And handle trace ids in its' own driver ?
+>>>>>>>
+>>>>>> This will limit systems to 15 cores - some have more!
+>>>>>>
+>>>>> Correct
+>>>>>
+>>>>>>> static inline int coresight_get_system_trace_id(int id)
+>>>>>>> {
+>>>>>>>             /* Start system IDs above the highest per CPU trace ID. */
+>>>>>>>             return coresigth_get_trace_id(cpumask_last(cpu_possible_mask) + 1);
+>>>>>>> }
+>>>>> Looking at my own suggestion again this won't work since it returns the same traceID
+>>>>> when called multiple times.
+>>>>>
+>>>>> For this patchset and _without_ taking into account internal devices that have
+>>>>> their traceID set in HW:
+>>>>>
+>>>>> 1. Define a bitmask that is 7 bit wide.
+>>>> Should it be a 128 bit wide bitmask  (0--127)?
+>>> Yes, you are correct.
+>>>
+>>>>> 2. By default, set bits under 0x10 and between 0x70 - 0x7F.
+>>>>> 3. In coresight_get_system_trace_id(), drop the @id parameter and allocate the
+>>>>> first available bit after cpumask_last(cpu_possible_mask) + 1.
+>>>> Should it allocate the first available bit after (cpumask_last(cpu_possible_mask) *2 ) + 0x10 ?
+>>>> Return the first zero bit position as the trace id and set the bit.
+>>> I need to clarify something with Mike on this - I will get back to you on
+>>> Monday.
+>> Do you have more comments on this ?
+> I just received clarifications on this - there is no need to continue enacting
+> the current scheme and as such reserving bits following the above formula will
+> not be needed either.  Simply assigning free traceIDs based on request will
+> work just fine.
 >
-> The constraints on the number of entries is based on the examples and
-> could be wrong.
+> That of course is taking into account that 0x0, 0x1 and 0x70 - 0x7f are
+> reserved.  0x1 is currently used for STM and should eventually be fixed to
+> simply request a traceID the same way any other component do.  You can fix it as
+> part of this set but it is not mandatory.
 >
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
-> Please ack, this depends on commit abf0fee97313 ("dt-bindings: Improve
-> phandle-array schemas") in my tree.
-> ---
->  .../bindings/sound/amlogic,gx-sound-card.yaml |  4 ++--
->  .../bindings/sound/google,sc7180-trogdor.yaml |  6 ++++--
->  .../bindings/sound/imx-audio-card.yaml        |  7 +++++--
->  .../bindings/sound/qcom,sm8250.yaml           | 10 +++++++---
->  .../bindings/sound/samsung,aries-wm8994.yaml  |  5 +----
->  .../bindings/sound/samsung,midas-audio.yaml   |  2 --
->  .../bindings/sound/samsung,odroid.yaml        |  9 +++------
->  .../devicetree/bindings/sound/sound-dai.yaml  | 20 +++++++++++++++++++
->  8 files changed, 42 insertions(+), 21 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/sound/sound-dai.yaml
+> Let me know if there are things I haven't been clear on.
 >
-> diff --git a/Documentation/devicetree/bindings/sound/amlogic,gx-sound-card.yaml b/Documentation/devicetree/bindings/sound/amlogic,gx-sound-card.yaml
-> index 2e35aeaa8781..8b5be4b92f35 100644
-> --- a/Documentation/devicetree/bindings/sound/amlogic,gx-sound-card.yaml
-> +++ b/Documentation/devicetree/bindings/sound/amlogic,gx-sound-card.yaml
-> @@ -57,7 +57,7 @@ patternProperties:
->            rate
->  
->        sound-dai:
-> -        $ref: /schemas/types.yaml#/definitions/phandle-array
-> +        maxItems: 1
->          description: phandle of the CPU DAI
->  
->      patternProperties:
-> @@ -71,7 +71,7 @@ patternProperties:
->  
->          properties:
->            sound-dai:
-> -            $ref: /schemas/types.yaml#/definitions/phandle-array
-> +            maxItems: 1
+> Thanks,
+> Mathieu
 
-No min or max here. Links may have more than one codec.
+Hi Mathieu,
 
-Ex:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/amlogic/meson-gxl-s905x-libretech-cc.dts#n158
 
->              description: phandle of the codec DAI
->  
->          required:
-> diff --git a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
-> index 837e3faa63a9..233caa0ade87 100644
-> --- a/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
-> +++ b/Documentation/devicetree/bindings/sound/google,sc7180-trogdor.yaml
-> @@ -62,13 +62,15 @@ patternProperties:
->          description: Holds subnode which indicates cpu dai.
->          type: object
->          properties:
-> -          sound-dai: true
-> +          sound-dai:
-> +            maxItems: 1
->  
->        codec:
->          description: Holds subnode which indicates codec dai.
->          type: object
->          properties:
-> -          sound-dai: true
-> +          sound-dai:
-> +            maxItems: 1
->  
->      required:
->        - link-name
-> diff --git a/Documentation/devicetree/bindings/sound/imx-audio-card.yaml b/Documentation/devicetree/bindings/sound/imx-audio-card.yaml
-> index d1816dd061cf..bb3a435722c7 100644
-> --- a/Documentation/devicetree/bindings/sound/imx-audio-card.yaml
-> +++ b/Documentation/devicetree/bindings/sound/imx-audio-card.yaml
-> @@ -59,13 +59,16 @@ patternProperties:
->          description: Holds subnode which indicates cpu dai.
->          type: object
->          properties:
-> -          sound-dai: true
-> +          sound-dai:
-> +            maxItems: 1
->  
->        codec:
->          description: Holds subnode which indicates codec dai.
->          type: object
->          properties:
-> -          sound-dai: true
-> +          sound-dai:
-> +            minItems: 1
-> +            maxItems: 2
->  
->        fsl,mclk-equal-bclk:
->          description: Indicates mclk can be equal to bclk, especially for sai interface
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-> index 4bfda04b4608..4ecd4080bb96 100644
-> --- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-> +++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-> @@ -69,19 +69,23 @@ patternProperties:
->          description: Holds subnode which indicates cpu dai.
->          type: object
->          properties:
-> -          sound-dai: true
-> +          sound-dai:
-> +            maxItems: 1
->  
->        platform:
->          description: Holds subnode which indicates platform dai.
->          type: object
->          properties:
-> -          sound-dai: true
-> +          sound-dai:
-> +            maxItems: 1
->  
->        codec:
->          description: Holds subnode which indicates codec dai.
->          type: object
->          properties:
-> -          sound-dai: true
-> +          sound-dai:
-> +            minItems: 1
-> +            maxItems: 4
->  
->      required:
->        - link-name
-> diff --git a/Documentation/devicetree/bindings/sound/samsung,aries-wm8994.yaml b/Documentation/devicetree/bindings/sound/samsung,aries-wm8994.yaml
-> index eb487ed3ca3b..4ffa275b3c49 100644
-> --- a/Documentation/devicetree/bindings/sound/samsung,aries-wm8994.yaml
-> +++ b/Documentation/devicetree/bindings/sound/samsung,aries-wm8994.yaml
-> @@ -27,9 +27,6 @@ properties:
->        sound-dai:
->          minItems: 2
->          maxItems: 2
-> -        items:
-> -          maxItems: 1
-> -        $ref: /schemas/types.yaml#/definitions/phandle-array
->          description: |
->            phandles to the I2S controller and bluetooth codec,
->            in that order
-> @@ -38,7 +35,7 @@ properties:
->      type: object
->      properties:
->        sound-dai:
-> -        $ref: /schemas/types.yaml#/definitions/phandle-array
-> +        maxItems: 1
->          description: phandle to the WM8994 CODEC
->  
->    samsung,audio-routing:
-> diff --git a/Documentation/devicetree/bindings/sound/samsung,midas-audio.yaml b/Documentation/devicetree/bindings/sound/samsung,midas-audio.yaml
-> index 095775c598fa..ec50bcb4af5f 100644
-> --- a/Documentation/devicetree/bindings/sound/samsung,midas-audio.yaml
-> +++ b/Documentation/devicetree/bindings/sound/samsung,midas-audio.yaml
-> @@ -21,7 +21,6 @@ properties:
->      type: object
->      properties:
->        sound-dai:
-> -        $ref: /schemas/types.yaml#/definitions/phandle-array
->          maxItems: 1
->          description: phandle to the I2S controller
->      required:
-> @@ -31,7 +30,6 @@ properties:
->      type: object
->      properties:
->        sound-dai:
-> -        $ref: /schemas/types.yaml#/definitions/phandle-array
->          maxItems: 1
->          description: phandle to the WM1811 CODEC
->      required:
-> diff --git a/Documentation/devicetree/bindings/sound/samsung,odroid.yaml b/Documentation/devicetree/bindings/sound/samsung,odroid.yaml
-> index e8122bc87362..db2513f3e168 100644
-> --- a/Documentation/devicetree/bindings/sound/samsung,odroid.yaml
-> +++ b/Documentation/devicetree/bindings/sound/samsung,odroid.yaml
-> @@ -37,18 +37,15 @@ properties:
->      type: object
->      properties:
->        sound-dai:
-> -        $ref: /schemas/types.yaml#/definitions/phandle-array
->          description: phandles to the I2S controllers
->  
->    codec:
->      type: object
->      properties:
->        sound-dai:
-> -        $ref: /schemas/types.yaml#/definitions/phandle-array
-> -        description: |
-> -          List of phandles to the CODEC nodes,
-> -          first entry must be corresponding to the MAX98090 CODEC and
-> -          the second entry must be the phandle of the HDMI IP block node.
-> +        items:
-> +          - description: phandle of the MAX98090 CODEC
-> +          - description: phandle of the HDMI IP block node
->  
->    samsung,audio-routing:
->      $ref: /schemas/types.yaml#/definitions/non-unique-string-array
-> diff --git a/Documentation/devicetree/bindings/sound/sound-dai.yaml b/Documentation/devicetree/bindings/sound/sound-dai.yaml
-> new file mode 100644
-> index 000000000000..61c6f7abc4e7
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/sound/sound-dai.yaml
-> @@ -0,0 +1,20 @@
-> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/sound/sound-dai.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Digital Audio Interface consumer Device Tree Bindings
-> +
-> +maintainers:
-> +  - Rob Herring <robh@kernel.org>
-> +
-> +select: true
-> +
-> +properties:
-> +  sound-dai:
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> +    description: A phandle plus args to digital audio interface provider(s)
-> +
-> +additionalProperties: true
-> +...
+Do you mean ETM sources and other sources can share the same 
+"coresight_get_trace_id" function ?
 
+
+int trace_id = 1;
+
+int coresight_get_trace_id ()
+{
+     trace_id += 1;
+     if (trace_id > 1 && trace_id < 0x70)
+         return trace_id;
+     else
+         return -EINVAL;
+}
+
+or do we still need a different function for other sources like use 
+"coresight_get_system_trace_id" ?
+Return the id from 1 and skip the ids which equeals to 
+CORESIGHT_ETM_PMU_SEED + (cpu * 2).
+
+Thanks
+
+Jinlong Mao
+
+>>>>> 4. Define a new function called coresight_put_system_trace_id(int id) that
+>>>>> clears the bit in the mask corresponding to @id.
+>>>>>
+>>>>> For now that should work.
+>>>>>
+>>>>>>> static inline int coresight_get_trace_id(int cpu)
+>>>>>>> {
+>>>>>>>         /*
+>>>>>>>          * A trace ID of value 0 is invalid, so let's start at some
+>>>>>>>          * random value that fits in 7 bits and go from there.  Since
+>>>>>>>          * the common convention is to have data trace IDs be I(N) + 1,
+>>>>>>>          * set instruction trace IDs as a function of the CPU number.
+>>>>>>>          */
+>>>>>>>         return (CORESIGHT_ETM_PMU_SEED + (cpu * 2));
+>>>>>>> }
+>>>>>>>
+>>>>>> This fixed relationship between cpu and trace ID is used in the perf
+>>>>>> tooling to populate the elements in the perf.data file to correctly
+>>>>>> allow association between CPU and trace data, and thus allow correct
+>>>>>> trace decode.
+>>>>> TraceIDs associated to CPUs are communicated to the perf tooling by way of the
+>>>>> perf header - theoretically we should be able to change the allocation scheme
+>>>>> without impacting the decoding process.
+>>>>>
+>>>>>> It should be possible to create another more dynamic mapping scheme -
+>>>>>> but this must include a way to support the perf requirements too.
+>>>>>>
+>>>>> TraceIDs have been a lurking problem for as long as the subsystem has existed.
+>>>>> For now what I have suggested above should be sufficient to provide an
+>>>>> in-between solution that doesn't hold back this patchset.
+>>>>>
+>>>>> That being said, we need to start thinking about the best way to do this.  I
+>>>>> will put a patchset together in the new year that aims in that direction.
+>>>>>
+>>>>>> Regards
+>>>>>>
+>>>>>> Mike
+>>>>>>
+>>>>>>> Thanks
+>>>>>>>
+>>>>>>> Jinlong Mao
+>>>>>>>
+>>>>>>>>> +
+>>>>>>>>> +static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
+>>>>>>>>> +{
+>>>>>>>>> +    struct device *dev = &adev->dev;
+>>>>>>>>> +    struct coresight_platform_data *pdata;
+>>>>>>>>> +    struct tpdm_drvdata *drvdata;
+>>>>>>>>> +    struct coresight_desc desc = { 0 };
+>>>>>>>>> +
+>>>>>>>>> +    desc.name = coresight_alloc_device_name(&tpdm_devs, dev);
+>>>>>>>>> +    if (!desc.name)
+>>>>>>>>> +            return -ENOMEM;
+>>>>>>>>> +    pdata = coresight_get_platform_data(dev);
+>>>>>>>>> +    if (IS_ERR(pdata))
+>>>>>>>>> +            return PTR_ERR(pdata);
+>>>>>>>>> +    adev->dev.platform_data = pdata;
+>>>>>>>>> +
+>>>>>>>>> +    drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+>>>>>>>>> +    if (!drvdata)
+>>>>>>>>> +            return -ENOMEM;
+>>>>>>>>> +    drvdata->dev = &adev->dev;
+>>>>>>>>> +    dev_set_drvdata(dev, drvdata);
+>>>>>>>>> +
+>>>>>>>>> +    drvdata->base = devm_ioremap_resource(dev, &adev->res);
+>>>>>>>>> +    if (!drvdata->base)
+>>>>>>>>> +            return -ENOMEM;
+>>>>>>>>> +
+>>>>>>>>> +    mutex_init(&drvdata->lock);
+>>>>>>>>> +
+>>>>>>>>> +    desc.type = CORESIGHT_DEV_TYPE_SOURCE;
+>>>>>>>>> +    desc.subtype.source_subtype = CORESIGHT_DEV_SUBTYPE_SOURCE_SYS;
+>>>>>>>>> +    desc.ops = &tpdm_cs_ops;
+>>>>>>>>> +    desc.pdata = adev->dev.platform_data;
+>>>>>>>>> +    desc.dev = &adev->dev;
+>>>>>>>>> +    drvdata->csdev = coresight_register(&desc);
+>>>>>>>>> +    if (IS_ERR(drvdata->csdev))
+>>>>>>>>> +            return PTR_ERR(drvdata->csdev);
+>>>>>>>>> +
+>>>>>>>>> +    tpdm_init_default_data(drvdata);
+>>>>>>>>> +    pm_runtime_put(&adev->dev);
+>>>>>>>>> +
+>>>>>>>>> +    return 0;
+>>>>>>>>> +}
+>>>>>>>>> +
+>>>>>>>>> +static void __exit tpdm_remove(struct amba_device *adev)
+>>>>>>>>> +{
+>>>>>>>>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(&adev->dev);
+>>>>>>>>> +
+>>>>>>>>> +    coresight_unregister(drvdata->csdev);
+>>>>>>>>> +}
+>>>>>>>>> +
+>>>>>>>>> +static struct amba_id tpdm_ids[] = {
+>>>>>>>>> +    {
+>>>>>>>>> +            .id = 0x000f0e00,
+>>>>>>>>> +            .mask = 0x000fff00,
+>>>>>>>>> +    },
+>>>>>>>>> +    { 0, 0},
+>>>>>>>>> +};
+>>>>>>>>> +
+>>>>>>>>> +static struct amba_driver tpdm_driver = {
+>>>>>>>>> +    .drv = {
+>>>>>>>>> +            .name   = "coresight-tpdm",
+>>>>>>>>> +            .owner  = THIS_MODULE,
+>>>>>>>>> +            .suppress_bind_attrs = true,
+>>>>>>>>> +    },
+>>>>>>>>> +    .probe          = tpdm_probe,
+>>>>>>>>> +    .id_table       = tpdm_ids,
+>>>>>>>>> +};
+>>>>>>>>> +
+>>>>>>>>> +module_amba_driver(tpdm_driver);
+>>>>>>>>> +
+>>>>>>>>> +MODULE_LICENSE("GPL v2");
+>>>>>>>>> +MODULE_DESCRIPTION("Trace, Profiling & Diagnostic Monitor driver");
+>>>>>>>>> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
+>>>>>>>>> new file mode 100644
+>>>>>>>>> index 000000000000..980ae90ff1c8
+>>>>>>>>> --- /dev/null
+>>>>>>>>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
+>>>>>>>>> @@ -0,0 +1,31 @@
+>>>>>>>>> +/* SPDX-License-Identifier: GPL-2.0 */
+>>>>>>>>> +/*
+>>>>>>>>> + * Copyright (c) 2021 Qualcomm Innovation Center, Inc. All rights reserved.
+>>>>>>>>> + */
+>>>>>>>>> +
+>>>>>>>>> +#ifndef _CORESIGHT_CORESIGHT_TPDM_H
+>>>>>>>>> +#define _CORESIGHT_CORESIGHT_TPDM_H
+>>>>>>>>> +
+>>>>>>>>> +/* Default value of the traceid */
+>>>>>>>>> +#define TPDM_TRACE_ID_START 128
+>>>>>>>>> +
+>>>>>>>>> +/**
+>>>>>>>>> + * struct tpdm_drvdata - specifics associated to an TPDM component
+>>>>>>>>> + * @base:       memory mapped base address for this component.
+>>>>>>>>> + * @dev:        The device entity associated to this component.
+>>>>>>>>> + * @csdev:      component vitals needed by the framework.
+>>>>>>>>> + * @lock:       lock for the enable value.
+>>>>>>>>> + * @enable:     enable status of the component.
+>>>>>>>>> + * @traceid:    value of the current ID for this component.
+>>>>>>>>> + */
+>>>>>>>>> +
+>>>>>>>>> +struct tpdm_drvdata {
+>>>>>>>>> +    void __iomem            *base;
+>>>>>>>>> +    struct device           *dev;
+>>>>>>>>> +    struct coresight_device *csdev;
+>>>>>>>>> +    struct mutex            lock;
+>>>>>>>>> +    bool                    enable;
+>>>>>>>>> +    int                     traceid;
+>>>>>>>>> +};
+>>>>>>>>> +
+>>>>>>>>> +#endif  /* _CORESIGHT_CORESIGHT_TPDM_H */
+>>>>>>>>> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
+>>>>>>>>> index 93a2922b7653..e48d463be63b 100644
+>>>>>>>>> --- a/include/linux/coresight.h
+>>>>>>>>> +++ b/include/linux/coresight.h
+>>>>>>>>> @@ -65,6 +65,7 @@ enum coresight_dev_subtype_source {
+>>>>>>>>>         CORESIGHT_DEV_SUBTYPE_SOURCE_PROC,
+>>>>>>>>>         CORESIGHT_DEV_SUBTYPE_SOURCE_BUS,
+>>>>>>>>>         CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE,
+>>>>>>>>> +    CORESIGHT_DEV_SUBTYPE_SOURCE_SYS,
+>>>>>>>>>      };
+>>>>>>>>>
+>>>>>>>>>      enum coresight_dev_subtype_helper {
+>>>>>>>>> --
+>>>>>>>>> 2.17.1
+>>>>>>>>>
+>>>>>> -- 
+>>>>>> Mike Leach
+>>>>>> Principal Engineer, ARM Ltd.
+>>>>>> Manchester Design Centre. UK
