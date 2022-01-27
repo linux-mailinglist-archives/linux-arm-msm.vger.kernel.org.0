@@ -2,126 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E655449E57C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 16:10:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ADFFC49E593
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 16:16:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234065AbiA0PKX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jan 2022 10:10:23 -0500
-Received: from mga03.intel.com ([134.134.136.65]:60688 "EHLO mga03.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229609AbiA0PKW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jan 2022 10:10:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1643296222; x=1674832222;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=0hMfEXPWVpbvX1S6c0gfWDQMTstAwIM+/e46Tz9PlgE=;
-  b=H8YHMjRz+mYrdYyDoajQxOxu3mc2S9DPG7vASBMe31aDLeDQ76oKp1Bv
-   ftNpeQgeWobTKw3BT0RCMdc2kaEUCpxGewQ3bGcybNttdm5ecjTUwyeMq
-   KN6e23emzwYEfwMFzvoph/GSe/G4fR8FoqVUec7WPioMpi2NWVElQUi2E
-   tg8LQZwoFHERTtrhr1Qf28ozui0oQvnzaQ2wUedSDw3vohkowpWJAJEsz
-   vZUwoKCRJuRHkgRNfnQvuNnWqta/zgqZSXvUjHMZKJ7yiGNDT46AOvyMY
-   4LUMTxYNJ3KvLs7Dr0YOI234t1OSdLbkzA8OQZJT1C7R1zsfoR2Iw+HvY
-   w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10239"; a="246824865"
-X-IronPort-AV: E=Sophos;i="5.88,321,1635231600"; 
-   d="scan'208";a="246824865"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2022 07:10:22 -0800
-X-IronPort-AV: E=Sophos;i="5.88,321,1635231600"; 
-   d="scan'208";a="563817526"
-Received: from smile.fi.intel.com ([10.237.72.61])
-  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2022 07:10:19 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.95)
-        (envelope-from <andriy.shevchenko@linux.intel.com>)
-        id 1nD6Of-00F1Cx-FN;
-        Thu, 27 Jan 2022 17:09:13 +0200
-Date:   Thu, 27 Jan 2022 17:09:13 +0200
-From:   Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To:     Peter Rosin <peda@axentia.se>
-Cc:     Liam Beguin <liambeguin@gmail.com>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Andreas Kemnade <andreas@kemnade.info>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        id S242818AbiA0PQe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jan 2022 10:16:34 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217]:37272 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231149AbiA0PQd (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 27 Jan 2022 10:16:33 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0F15960C44;
+        Thu, 27 Jan 2022 15:16:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4C8C340E4;
+        Thu, 27 Jan 2022 15:16:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1643296592;
+        bh=6zdI64JO16o4OH7ihIB0tyhcoVY66C9Jpg96cHbKPds=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=hACrKDFLEvnRX2070s40MHT2rdBP6mAneFCTf5+sefDmyVuNOGFCIC+g+qN1028um
+         /Ibeid44iPpekMbYboRKsakO/x6MVfzNQPdB8yJ8JzSZHsykf5XfI+XmzMPOip4Ju0
+         INLL1ozY5XoDNN765dpagbrWTf0+RrXW5U/q+eEfv1zHAyHfbAD2zItMPuvBXue1T9
+         q7ELjwNJJMEOe7G0mZ3FhoPBZbjGulwhA+2755cC+5ztRRFM22NZkifhGHTmP84frZ
+         IDdxkI2cDy2xYx4dpEivf0rNZ975DUGdHd/fbKBcjeU8R//VHo6dQjRLWNeGX0XY9N
+         9Slo4T7bqdY5g==
+Date:   Thu, 27 Jan 2022 09:16:30 -0600
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lars-Peter Clausen <lars@metafoo.de>
-Subject: Re: [PATCH v2 5/5] iio: afe: iio-rescale: Re-use generic struct
- s32_fract
-Message-ID: <YfK1mZQ0BTyDgNUB@smile.fi.intel.com>
-References: <Ye8Z6dS5cCji9LNQ@shaak>
- <Ye/4eJ/RhlWF7q70@smile.fi.intel.com>
- <b25932d7-91bc-27b4-ada9-8d5da1ef2ddf@axentia.se>
- <YfA+xFR0oh2ztDKv@smile.fi.intel.com>
- <34c121fa-2a3b-fb6b-f6d5-fc2be2a5c6b7@axentia.se>
- <YfE45cImAQpOeziT@smile.fi.intel.com>
- <7ed2cdb9-0719-3535-9e0a-fd9d393f1cd8@axentia.se>
- <YfFGLjeAEWfAAUWc@smile.fi.intel.com>
- <7bae39d5-7a38-ebdd-074a-6c140dc3a519@axentia.se>
- <c3fac656-5c9b-4b39-f5e9-e3637f4d5746@axentia.se>
+        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Robert Marko <robert.marko@sartura.hr>,
+        Bryan O'Donoghue <pure.logic@nexus-software.ie>,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v5 3/3] PCI: qcom: add support for IPQ60xx PCIe controller
+Message-ID: <20220127151630.GA100574@bhelgaas>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c3fac656-5c9b-4b39-f5e9-e3637f4d5746@axentia.se>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+In-Reply-To: <8735lc9r9d.fsf@tarshish>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jan 27, 2022 at 01:11:14PM +0100, Peter Rosin wrote:
-> On 2022-01-26 13:04, Andy Shevchenko wrote:
-> > On Wed, Jan 26, 2022 at 11:26:50AM +0100, Peter Rosin wrote:
-> >> It's easy to both remove and to add back "the bigger object". I just
-> >> don't see the point of the churn. Technically you can probably rearrange
-> >> stuff in probe and remove the 2nd argument to ->props() altogether and
-> >> chase pointers from the dev object instead. I don't see the point of
-> >> that either. It doesn't really make things simpler, it doesn't really
-> >> make things easier to read. To me, it's just pointless churn.
-> > 
-> > Since you still haven't got a point the conclusions are wrong.
-> > The point is (I dunno how more clear to make it) is to have proper
-> > layering from the (current) design perspective.
-> > 
-> > If we go to the road full of "if it will come XYZ then this sucks".
-> > The future is uncertain and neither of us may prove the current
-> > change good or bad in terms of the future (unknown and uncertain)
-> > changes.
-> > 
-> > Preventing this patch to land is to tell "Oh, my design is bad,
-> > but I will keep it, because in the future everything may change".
-> > So, why don't you make this future to be now?
-> > 
-> >>> TL;DR: It makes possible not to mix bananas with wooden boxes.
-> >>
-> >> Which is all good until you need to ship an apple in the box with the
-> >> bananas. (e.g. if you for some reason need the bananas to get ripe real
-> >> quick, apples produce ethylene)
-> > 
-> > Really. arguments about the future changes are weak. If you have
-> > patches in mind, send them, We will see in practice what you meant.
-> 
-> I can do one better - here are links to patches from 7-8 months ago.
-> 
-> https://lore.kernel.org/lkml/20210530005917.20953-1-liambeguin@gmail.com/
-> https://lore.kernel.org/lkml/20210530005917.20953-6-liambeguin@gmail.com/
-> 
-> Or, if you prefer, the latest revisions.
-> 
-> https://lore.kernel.org/lkml/20220108205319.2046348-9-liambeguin@gmail.com/
-> https://lore.kernel.org/lkml/20220108205319.2046348-14-liambeguin@gmail.com/
-> 
-> You have made review comments on that series.
-> 
-> My previous arguments were based on gut feel, and I'm sorry for not
-> thinking of the offset in the referred series before.
+On Tue, Jan 25, 2022 at 09:41:45AM +0200, Baruch Siach wrote:
+> On Mon, Jan 24 2022, Bjorn Helgaas wrote:
+> > On Mon, Jan 24, 2022 at 06:27:31PM +0200, Baruch Siach wrote:
 
-No problem and thanks for your comments!
+> >> +static int qcom_pcie_init_2_9_0(struct qcom_pcie *pcie)
+> >> +{
+> >> +	struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
+> >> +	struct device *dev = pcie->pci->dev;
+> >> +	int ret;
+> >> +
+> >> +	ret = reset_control_assert(res->rst);
+> >> +	if (ret) {
+> >> +		dev_err(dev, "reset assert failed (%d)\n", ret);
+> >> +		return ret;
+> >> +	}
+> >> +
+> >> +	usleep_range(2000, 2500);
+> >
+> > Where do these sleep durations come from?  If they're specified
+> > somewhere by PCIe, can you include a citation, e.g., a section number
+> > in the spec.
+> 
+> As I mentioned before, I have no access to hardware documentation. I'm
+> only porting working code from downstream kernel.
+> 
+> In a comment on v4 Bjorn Andersson mentioned "datasheet stating the
+> minimum timing of the operations to be performed to get the PCIe
+> controller into a known (clean) state".
 
--- 
-With Best Regards,
-Andy Shevchenko
+Sorry if I'm repeating questions.  We can help avoid that by adding a
+brief comment here like "black magic copied from working code at X" or
+whatever you *do* know.  Repeated questions are wasted effort for both
+the author and reviewers.
 
+Sleeps with unsourced durations are always suspect because nobody
+wants to wait longer than necessary, and if all we have is a bare
+number and nobody knows how it was derived, we can't be confident
+about changing it.
 
+>   https://lore.kernel.org/all/Ydd5Wh0KeADBQ%2Fh1@ripper/
+> 
+> I have no further details.
