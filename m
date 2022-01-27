@@ -2,99 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ADFFC49E593
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 16:16:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2317549E765
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 17:23:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242818AbiA0PQe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jan 2022 10:16:34 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217]:37272 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231149AbiA0PQd (ORCPT
+        id S237525AbiA0QXY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jan 2022 11:23:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48104 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243629AbiA0QXX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jan 2022 10:16:33 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0F15960C44;
-        Thu, 27 Jan 2022 15:16:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4C8C340E4;
-        Thu, 27 Jan 2022 15:16:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1643296592;
-        bh=6zdI64JO16o4OH7ihIB0tyhcoVY66C9Jpg96cHbKPds=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=hACrKDFLEvnRX2070s40MHT2rdBP6mAneFCTf5+sefDmyVuNOGFCIC+g+qN1028um
-         /Ibeid44iPpekMbYboRKsakO/x6MVfzNQPdB8yJ8JzSZHsykf5XfI+XmzMPOip4Ju0
-         INLL1ozY5XoDNN765dpagbrWTf0+RrXW5U/q+eEfv1zHAyHfbAD2zItMPuvBXue1T9
-         q7ELjwNJJMEOe7G0mZ3FhoPBZbjGulwhA+2755cC+5ztRRFM22NZkifhGHTmP84frZ
-         IDdxkI2cDy2xYx4dpEivf0rNZ975DUGdHd/fbKBcjeU8R//VHo6dQjRLWNeGX0XY9N
-         9Slo4T7bqdY5g==
-Date:   Thu, 27 Jan 2022 09:16:30 -0600
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     Andy Gross <agross@kernel.org>,
+        Thu, 27 Jan 2022 11:23:23 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D359C061747
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 08:23:23 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id f202-20020a1c1fd3000000b0034dd403f4fbso2231454wmf.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 08:23:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20210112.gappssmtp.com; s=20210112;
+        h=references:user-agent:from:to:cc:subject:date:in-reply-to
+         :message-id:mime-version;
+        bh=dszbD2iJpZiPeHo8KU4CPZgugNBsta//XmHDun3F64c=;
+        b=fZcrsbxTVL6oEX16YFICUECpoqbUxOVzhN91OZM/+KQu155OI7WSTG0MiQZJgjExmx
+         jp0sIHft9IaJptYG6xxadWut2UoUpBdZjQx5gv7u1MkTlRl1hZUMLS10XNBqLS12Kqc0
+         fUGz36q/7SAVtW2er4/vNtRl/IAv5P9dXGTRghcXk838xHFTh0rpWC3QJ1hL6MFMFpmZ
+         IOudqk9T82+pKnR3a4nT1d5H50M3AZIqsuTo+VhmilYtZbr/+DsaUTUQrPVXWALYkJoQ
+         ua9KX5MavqeNx/aTRA4/yfAgHvPRa2gKr2mV89ocCP23NjXS4WJhAaF53CwKPll5S9QB
+         nuww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:references:user-agent:from:to:cc:subject:date
+         :in-reply-to:message-id:mime-version;
+        bh=dszbD2iJpZiPeHo8KU4CPZgugNBsta//XmHDun3F64c=;
+        b=t603a//QNRE6silgLs60YV9ZeZlCVC22imWLqdapKhuVrMxSxSN5YLXp/dK/gpYjat
+         OrX1zZLX6gGLtFrZVNzo55Kdw4i90u8saIXYIy8azDVI84NR99wtPlUeyEak9/vdGo01
+         N8vCdjdWy09dKsnODY7lBOWyapeLsuyShnZF9B62GAHr1Bbhq5hbksWp3x1FSg4dbFi4
+         N2CFscVL9H8Xg1A6eroKm8c0KRJfmbtehCrjnv9jcOEUsUnB8VMDdy1Q28GMSMyodPeC
+         byhc1uIPlcj63GWfFnoaFAUySn0Bf6nCJS7RpV7knNQXVKRsNs787xBpsue9hG9DTP+x
+         48+g==
+X-Gm-Message-State: AOAM5325wc3jfKnpWFyiAW1OvLEN2Z7cb1kLi+YdCUjKo7glIMS+u6A3
+        0FHcTNBN53rT9NVyn6D2vkaEXA==
+X-Google-Smtp-Source: ABdhPJx68OlAQYPxDB8R5MGosp8NvBZZ+3uApWKaznWHP31o8jTnJGFiSqqrgwHrSvAVTiOnIthV0w==
+X-Received: by 2002:a1c:e914:: with SMTP id q20mr12306751wmc.89.1643300601853;
+        Thu, 27 Jan 2022 08:23:21 -0800 (PST)
+Received: from localhost (82-65-169-74.subs.proxad.net. [82.65.169.74])
+        by smtp.gmail.com with ESMTPSA id v124sm6289832wme.30.2022.01.27.08.23.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Jan 2022 08:23:21 -0800 (PST)
+References: <20220126231427.1638089-1-robh@kernel.org>
+ <1jtudp1rc1.fsf@starbuckisacylon.baylibre.com>
+ <CAL_JsqL77E+5ftqgHPdWQzfp98Oh3d=QZRQ8Z6v91OfSeprxig@mail.gmail.com>
+User-agent: mu4e 1.6.10; emacs 27.1
+From:   Jerome Brunet <jbrunet@baylibre.com>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Bryan O'Donoghue <pure.logic@nexus-software.ie>,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH v5 3/3] PCI: qcom: add support for IPQ60xx PCIe controller
-Message-ID: <20220127151630.GA100574@bhelgaas>
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Cheng-Yi Chiang <cychiang@chromium.org>,
+        Shengjiu Wang <shengjiu.wang@nxp.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Jonathan Bakker <xc-racer2@live.ca>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Linux-ALSA <alsa-devel@alsa-project.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH] ASoC: dt-bindings: Centralize the 'sound-dai' definition
+Date:   Thu, 27 Jan 2022 17:20:49 +0100
+In-reply-to: <CAL_JsqL77E+5ftqgHPdWQzfp98Oh3d=QZRQ8Z6v91OfSeprxig@mail.gmail.com>
+Message-ID: <1jlez1172f.fsf@starbuckisacylon.baylibre.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8735lc9r9d.fsf@tarshish>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 25, 2022 at 09:41:45AM +0200, Baruch Siach wrote:
-> On Mon, Jan 24 2022, Bjorn Helgaas wrote:
-> > On Mon, Jan 24, 2022 at 06:27:31PM +0200, Baruch Siach wrote:
 
-> >> +static int qcom_pcie_init_2_9_0(struct qcom_pcie *pcie)
-> >> +{
-> >> +	struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
-> >> +	struct device *dev = pcie->pci->dev;
-> >> +	int ret;
-> >> +
-> >> +	ret = reset_control_assert(res->rst);
-> >> +	if (ret) {
-> >> +		dev_err(dev, "reset assert failed (%d)\n", ret);
-> >> +		return ret;
-> >> +	}
-> >> +
-> >> +	usleep_range(2000, 2500);
-> >
-> > Where do these sleep durations come from?  If they're specified
-> > somewhere by PCIe, can you include a citation, e.g., a section number
-> > in the spec.
-> 
-> As I mentioned before, I have no access to hardware documentation. I'm
-> only porting working code from downstream kernel.
-> 
-> In a comment on v4 Bjorn Andersson mentioned "datasheet stating the
-> minimum timing of the operations to be performed to get the PCIe
-> controller into a known (clean) state".
+On Thu 27 Jan 2022 at 08:35, Rob Herring <robh@kernel.org> wrote:
 
-Sorry if I'm repeating questions.  We can help avoid that by adding a
-brief comment here like "black magic copied from working code at X" or
-whatever you *do* know.  Repeated questions are wasted effort for both
-the author and reviewers.
+> On Thu, Jan 27, 2022 at 3:05 AM Jerome Brunet <jbrunet@baylibre.com> wrote:
+>>
+>>
+>> On Wed 26 Jan 2022 at 17:14, Rob Herring <robh@kernel.org> wrote:
+>>
+>> > 'sound-dai' is a common property, but has duplicate type definitions.
+>> > Create a new common definition to define the type and then update all
+>> > the other occurrences to just define how many entries there are just
+>> > like other phandle+arg properties.
+>> >
+>> > The constraints on the number of entries is based on the examples and
+>> > could be wrong.
+>> >
+>> > Cc: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+>> > Signed-off-by: Rob Herring <robh@kernel.org>
+>> > ---
+>> > Please ack, this depends on commit abf0fee97313 ("dt-bindings: Improve
+>> > phandle-array schemas") in my tree.
+>> > ---
+>> >  .../bindings/sound/amlogic,gx-sound-card.yaml |  4 ++--
+>> >  .../bindings/sound/google,sc7180-trogdor.yaml |  6 ++++--
+>> >  .../bindings/sound/imx-audio-card.yaml        |  7 +++++--
+>> >  .../bindings/sound/qcom,sm8250.yaml           | 10 +++++++---
+>> >  .../bindings/sound/samsung,aries-wm8994.yaml  |  5 +----
+>> >  .../bindings/sound/samsung,midas-audio.yaml   |  2 --
+>> >  .../bindings/sound/samsung,odroid.yaml        |  9 +++------
+>> >  .../devicetree/bindings/sound/sound-dai.yaml  | 20 +++++++++++++++++++
+>> >  8 files changed, 42 insertions(+), 21 deletions(-)
+>> >  create mode 100644 Documentation/devicetree/bindings/sound/sound-dai.yaml
+>> >
+>> > diff --git a/Documentation/devicetree/bindings/sound/amlogic,gx-sound-card.yaml b/Documentation/devicetree/bindings/sound/amlogic,gx-sound-card.yaml
+>> > index 2e35aeaa8781..8b5be4b92f35 100644
+>> > --- a/Documentation/devicetree/bindings/sound/amlogic,gx-sound-card.yaml
+>> > +++ b/Documentation/devicetree/bindings/sound/amlogic,gx-sound-card.yaml
+>> > @@ -57,7 +57,7 @@ patternProperties:
+>> >            rate
+>> >
+>> >        sound-dai:
+>> > -        $ref: /schemas/types.yaml#/definitions/phandle-array
+>> > +        maxItems: 1
+>> >          description: phandle of the CPU DAI
+>> >
+>> >      patternProperties:
+>> > @@ -71,7 +71,7 @@ patternProperties:
+>> >
+>> >          properties:
+>> >            sound-dai:
+>> > -            $ref: /schemas/types.yaml#/definitions/phandle-array
+>> > +            maxItems: 1
+>>
+>> No min or max here. Links may have more than one codec.
+>>
+>> Ex:
+>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/amlogic/meson-gxl-s905x-libretech-cc.dts#n158
+>
+> What do you mean? Every 'sound-dai' there only has 1 phande+args. Each
+> codec is a child node.
 
-Sleeps with unsourced durations are always suspect because nobody
-wants to wait longer than necessary, and if all we have is a bare
-number and nobody knows how it was derived, we can't be confident
-about changing it.
+Yes it is a child - sorry I misunderstood.
+I thought the MaxItems: 1 would limit the number of codecs
 
->   https://lore.kernel.org/all/Ydd5Wh0KeADBQ%2Fh1@ripper/
-> 
-> I have no further details.
+For the amlogic part:
+Acked-by: Jerome Brunet <jbrunet@baylibre.com>
+
+>
+> Rob
+
