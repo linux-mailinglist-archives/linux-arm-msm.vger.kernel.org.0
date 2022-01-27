@@ -2,64 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 66C4449EBF2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 21:03:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C409E49EC0E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 21:03:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343821AbiA0UDD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jan 2022 15:03:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43360 "EHLO
+        id S1343807AbiA0UDl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jan 2022 15:03:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343666AbiA0UCg (ORCPT
+        with ESMTP id S1343886AbiA0UCm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jan 2022 15:02:36 -0500
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28E30C061758
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 12:02:35 -0800 (PST)
-Received: by mail-pg1-x536.google.com with SMTP id j10so3234805pgc.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 12:02:35 -0800 (PST)
+        Thu, 27 Jan 2022 15:02:42 -0500
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12B84C061760
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 12:02:37 -0800 (PST)
+Received: by mail-pg1-x531.google.com with SMTP id f8so3223897pgf.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 12:02:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=uoYkWU8ZYG31h//2O3CYJPowjGxvjjH2b6ZF0p9sQps=;
-        b=Npdvqs3dgVEFL7SvLzWbajP/ltLnMywE5OL4sdVwIATKFbTuobWdTSdnjQGKqw+P3Q
-         z4BL7Whjg+87X0sbFCE+X5hflua22Oq7YC76P11dk4ptrikhRbSZ2i7ugYtYodwBP3vb
-         cjJ0P0mq6X5+92CpBNqeR6xJuk6b6giXEsfqQ=
+        bh=ZPdM2UZRVqO2e0C8ICFRT9vqGkS5bJAyu59fLH+Uvcs=;
+        b=Gl4OTjqsqgynBhjQVr0J0vK/Y4lnurULqWtCsHyQOkEHqf7pCYHQI81VfLe0ELPBsG
+         0SYrju/lR6J6HE43y4rKJGyo6/G5xD8lVQyH6+Ijf/swy2beLa8NcG5FgN9KTJwKHXGo
+         bQsVmN6a58G5hTr/ZwYaIyIU2zcLLGHUCcPIM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=uoYkWU8ZYG31h//2O3CYJPowjGxvjjH2b6ZF0p9sQps=;
-        b=bFdYmABsSkTyAz7Qz2fudx1BMcnly6pgqE1cEk5yy+o5+8/aLP64Qt6QhvTsB7ZHgi
-         M9NTMPWm1CuSjFO++EisEhmwkc66KqAqKclBycIywsZXCHogbJUX1CySJoFCw2XwD/+H
-         WVSjdWKAzlHbWb0V9mKu6a7X6Tcw6Y1ADQg53seQp0f6obD51Dtvt5CBpAXTqnL8EBkU
-         BGyORr+kOjeO2zGAjiRl88fOFarZt84QEhzB/3K6rRY1jvXz47NBz258ZDdy/T7nZZUH
-         aLXE7B+W8IP1CzR/zZHw2/2+UZC9Z2xTNURB+Hu3pyFG3B+1XsnLcqjFmcgjz22Zen4S
-         It0g==
-X-Gm-Message-State: AOAM533iBxNU+nBc1uuLL+s4bHJSKuMmkAsQzAHSRAnkzYlF8LPXnL1c
-        uixXkj84cqArEUGyCR57IeHzSQ==
-X-Google-Smtp-Source: ABdhPJx6qf0FRtjUDt7e569xeRU9IhaGc6sCbZg7DZ1PWIGIEEYIMaZDXyPgkgC77gUh4nAd8RysXw==
-X-Received: by 2002:a63:4b0b:: with SMTP id y11mr3862310pga.342.1643313754673;
-        Thu, 27 Jan 2022 12:02:34 -0800 (PST)
+        bh=ZPdM2UZRVqO2e0C8ICFRT9vqGkS5bJAyu59fLH+Uvcs=;
+        b=YYIObeUQrjisOOCeFn2h2rVx4NtDhLI/nGxeTBFJ3+WYc6xzinmJ/rs7Sj9CnbcNyb
+         nhz12Dg27911WghB1ZVKMps3QfCyXMz+wD0P8UA0Avw7vIHNJzgXwYFMw5X442UFSQi+
+         KHlYNd6Hzj/0XvB2AYl5z2YKVZndi23r82wLcqwSKBkaVt3ul4KVVXRbmxiW0ffNRhj/
+         CGIKjbBsFqBjG2pr4HVBCfEhsJhApSvNmKzNMSYcxVEgCGC8JjwJY4xPqxEtHnZmWr4l
+         9YIikCMF/ci8bK2TGA/2BNTYEw5dVgaUSKpNtlfZNyyoDARbO1MMSgzoeV1AyzL6qwM1
+         TBmw==
+X-Gm-Message-State: AOAM5313KLL2QzBYJdbONhqX+ya6mTTyZ2ouM8tMn6Dp9gGIMMsw12Gx
+        S5sqkTa/MhnQ+04dwhL5unnEwQ==
+X-Google-Smtp-Source: ABdhPJwB8j2u/cujHRi6C9hFkNiVFW4PLGhDjL/+Uzw5oKliGwBjASBtEEumzc2+wCCT+0M/ofqccg==
+X-Received: by 2002:a05:6a00:14d1:: with SMTP id w17mr4787164pfu.46.1643313756502;
+        Thu, 27 Jan 2022 12:02:36 -0800 (PST)
 Received: from smtp.gmail.com ([2620:15c:202:201:9246:1838:3243:3071])
-        by smtp.gmail.com with ESMTPSA id k21sm6561190pff.33.2022.01.27.12.02.33
+        by smtp.gmail.com with ESMTPSA id k21sm6561190pff.33.2022.01.27.12.02.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jan 2022 12:02:34 -0800 (PST)
+        Thu, 27 Jan 2022 12:02:36 -0800 (PST)
 From:   Stephen Boyd <swboyd@chromium.org>
 To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Douglas Anderson <dianders@chromium.org>
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang7@gmail.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Kevin Tang <kevin3.tang@gmail.com>,
         Daniel Vetter <daniel.vetter@ffwll.ch>,
         "Rafael J. Wysocki" <rafael@kernel.org>,
         Rob Clark <robdclark@gmail.com>,
         Russell King <rmk+kernel@arm.linux.org.uk>,
         Saravana Kannan <saravanak@google.com>
-Subject: [PATCH v6 30/35] ASoC: codecs: wcd938x: Migrate to aggregate driver
-Date:   Thu, 27 Jan 2022 12:01:36 -0800
-Message-Id: <20220127200141.1295328-31-swboyd@chromium.org>
+Subject: [PATCH v6 31/35] drm/sprd: Migrate to aggregate driver
+Date:   Thu, 27 Jan 2022 12:01:37 -0800
+Message-Id: <20220127200141.1295328-32-swboyd@chromium.org>
 X-Mailer: git-send-email 2.35.0.rc0.227.g00780c9af4-goog
 In-Reply-To: <20220127200141.1295328-1-swboyd@chromium.org>
 References: <20220127200141.1295328-1-swboyd@chromium.org>
@@ -73,8 +76,11 @@ Use an aggregate driver instead of component ops so that we can get
 proper driver probe ordering of the aggregate device with respect to all
 the component devices that make up the aggregate device.
 
-Acked-by: Mark Brown <broonie@kernel.org>
-Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Orson Zhai <orsonzhai@gmail.com>
+Cc: Baolin Wang <baolin.wang7@gmail.com>
+Cc: Chunyan Zhang <zhang.lyra@gmail.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Kevin Tang <kevin3.tang@gmail.com>
 Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
 Cc: "Rafael J. Wysocki" <rafael@kernel.org>
 Cc: Rob Clark <robdclark@gmail.com>
@@ -82,70 +88,105 @@ Cc: Russell King <rmk+kernel@arm.linux.org.uk>
 Cc: Saravana Kannan <saravanak@google.com>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- sound/soc/codecs/wcd938x.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/sprd/sprd_drm.c | 48 +++++++++++++++++++--------------
+ 1 file changed, 28 insertions(+), 20 deletions(-)
 
-diff --git a/sound/soc/codecs/wcd938x.c b/sound/soc/codecs/wcd938x.c
-index eff200a07d9f..6e1c9f93c819 100644
---- a/sound/soc/codecs/wcd938x.c
-+++ b/sound/soc/codecs/wcd938x.c
-@@ -4317,8 +4317,9 @@ static struct snd_soc_dai_driver wcd938x_dais[] = {
- 	},
+diff --git a/drivers/gpu/drm/sprd/sprd_drm.c b/drivers/gpu/drm/sprd/sprd_drm.c
+index a077e2d4d721..ff39b32b20c0 100644
+--- a/drivers/gpu/drm/sprd/sprd_drm.c
++++ b/drivers/gpu/drm/sprd/sprd_drm.c
+@@ -65,8 +65,9 @@ static struct drm_driver sprd_drm_drv = {
+ 	.minor			= DRIVER_MINOR,
  };
  
--static int wcd938x_bind(struct device *dev)
-+static int wcd938x_bind(struct aggregate_device *adev)
+-static int sprd_drm_bind(struct device *dev)
++static int sprd_drm_aggregate_probe(struct aggregate_device *adev)
  {
 +	struct device *dev = aggregate_device_parent(adev);
- 	struct wcd938x_priv *wcd938x = dev_get_drvdata(dev);
- 	int ret;
- 
-@@ -4401,8 +4402,9 @@ static int wcd938x_bind(struct device *dev)
- 
+ 	struct platform_device *pdev = to_platform_device(dev);
+ 	struct drm_device *drm;
+ 	struct sprd_drm *sprd;
+@@ -118,8 +119,9 @@ static int sprd_drm_bind(struct device *dev)
+ 	return ret;
  }
  
--static void wcd938x_unbind(struct device *dev)
-+static void wcd938x_unbind(struct aggregate_device *adev)
+-static void sprd_drm_unbind(struct device *dev)
++static void sprd_drm_aggregate_remove(struct aggregate_device *adev)
  {
 +	struct device *dev = aggregate_device_parent(adev);
- 	struct wcd938x_priv *wcd938x = dev_get_drvdata(dev);
+ 	struct drm_device *drm = dev_get_drvdata(dev);
  
- 	device_link_remove(dev, wcd938x->txdev);
-@@ -4412,9 +4414,13 @@ static void wcd938x_unbind(struct device *dev)
- 	component_unbind_all(dev, wcd938x);
+ 	drm_dev_unregister(drm);
+@@ -129,9 +131,28 @@ static void sprd_drm_unbind(struct device *dev)
+ 	component_unbind_all(drm->dev, drm);
  }
  
--static const struct component_master_ops wcd938x_comp_ops = {
--	.bind   = wcd938x_bind,
--	.unbind = wcd938x_unbind,
-+static struct aggregate_driver wcd938x_aggregate_driver = {
-+	.probe	= wcd938x_bind,
-+	.remove	= wcd938x_unbind,
-+	.driver	= {
-+		.name = "wcd938x_snd",
+-static const struct component_master_ops drm_component_ops = {
+-	.bind = sprd_drm_bind,
+-	.unbind = sprd_drm_unbind,
++static void sprd_drm_aggregate_shutdown(struct aggregate_device *adev)
++{
++	struct device *dev = aggregate_device_parent(adev);
++	struct platform_device *pdev = to_platform_device(dev);
++	struct drm_device *drm = platform_get_drvdata(pdev);
++
++	if (!drm) {
++		drm_warn(drm, "drm device is not available, no shutdown\n");
++		return;
++	}
++
++	drm_atomic_helper_shutdown(drm);
++}
++
++static struct aggregate_driver sprd_drm_aggregate_driver = {
++	.probe = sprd_drm_aggregate_probe,
++	.remove = sprd_drm_aggregate_remove,
++	.shutdown = sprd_drm_aggregate_shutdown,
++	.driver = {
++		.name = "sprd_drm",
 +		.owner = THIS_MODULE,
 +	},
  };
  
- static int wcd938x_compare_of(struct device *dev, void *data)
-@@ -4483,7 +4489,7 @@ static int wcd938x_probe(struct platform_device *pdev)
+ static int compare_of(struct device *dev, void *data)
+@@ -141,27 +162,15 @@ static int compare_of(struct device *dev, void *data)
  
- 	wcd938x_reset(wcd938x);
- 
--	ret = component_master_add_with_match(dev, &wcd938x_comp_ops, match);
-+	ret = component_aggregate_register(dev, &wcd938x_aggregate_driver, match);
- 	if (ret)
- 		return ret;
- 
-@@ -4499,7 +4505,7 @@ static int wcd938x_probe(struct platform_device *pdev)
- 
- static int wcd938x_remove(struct platform_device *pdev)
+ static int sprd_drm_probe(struct platform_device *pdev)
  {
--	component_master_del(&pdev->dev, &wcd938x_comp_ops);
-+	component_aggregate_unregister(&pdev->dev, &wcd938x_aggregate_driver);
+-	return drm_of_component_probe(&pdev->dev, compare_of, &drm_component_ops);
++	return drm_of_aggregate_probe(&pdev->dev, compare_of, &sprd_drm_aggregate_driver);
+ }
  
+ static int sprd_drm_remove(struct platform_device *pdev)
+ {
+-	component_master_del(&pdev->dev, &drm_component_ops);
++	component_aggregate_unregister(&pdev->dev, &sprd_drm_aggregate_driver);
  	return 0;
  }
+ 
+-static void sprd_drm_shutdown(struct platform_device *pdev)
+-{
+-	struct drm_device *drm = platform_get_drvdata(pdev);
+-
+-	if (!drm) {
+-		drm_warn(drm, "drm device is not available, no shutdown\n");
+-		return;
+-	}
+-
+-	drm_atomic_helper_shutdown(drm);
+-}
+-
+ static const struct of_device_id drm_match_table[] = {
+ 	{ .compatible = "sprd,display-subsystem", },
+ 	{ /* sentinel */ },
+@@ -171,7 +180,6 @@ MODULE_DEVICE_TABLE(of, drm_match_table);
+ static struct platform_driver sprd_drm_driver = {
+ 	.probe = sprd_drm_probe,
+ 	.remove = sprd_drm_remove,
+-	.shutdown = sprd_drm_shutdown,
+ 	.driver = {
+ 		.name = "sprd-drm-drv",
+ 		.of_match_table = drm_match_table,
 -- 
 https://chromeos.dev
 
