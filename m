@@ -2,162 +2,313 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6441B49EB5C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 20:51:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D477C49EB7F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jan 2022 21:01:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245305AbiA0Tvt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jan 2022 14:51:49 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:15824 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234826AbiA0Tvt (ORCPT
+        id S239771AbiA0UBq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jan 2022 15:01:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43070 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229667AbiA0UBq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jan 2022 14:51:49 -0500
+        Thu, 27 Jan 2022 15:01:46 -0500
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DFA1C06173B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 12:01:46 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id i186so1319726pfe.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 12:01:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1643313109; x=1674849109;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=M4KyLIl9S5rtOUuVugAvQTnfhRh0E8GptPgBaQ0zctA=;
-  b=NVe5CGcjoSjikDzmTWiTHJINAf2UOPoQGvtVbLwcUI4SazVGOzTlP21/
-   AdWtgreaVZ5w7k1F2rHUUi14P3ewlYtGt4dSW/MDN0LL1UxAsVja4sy3q
-   K73nZb+++inW6KkevTROP2aJosHyCSBXVU0lnqCZKy8QQXZdnU6NxGRER
-   0=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 27 Jan 2022 11:51:49 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2022 11:51:48 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 27 Jan 2022 11:51:48 -0800
-Received: from [10.110.26.31] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 27 Jan
- 2022 11:51:46 -0800
-Message-ID: <c280e1d3-15c5-29fa-c218-78bcd2427e09@quicinc.com>
-Date:   Thu, 27 Jan 2022 11:51:45 -0800
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dU8ab7ulGqymjJ/fLv1o7Map/AivRDGDSe5tyGb8CYs=;
+        b=dMt2MuVVZzz0MVHLj7Y8Ti36l/TTs9CqSuVCH9G6LHKs/GVCplLR7HLOlzkzBR2BJ9
+         h9hQiFWB4QfTAOHua+56ytSxWBQjxYed3S1k6sG1Z+6MdNygxbqIczylQvQMEpqdoNog
+         VNfQJQ1AEtQ2ytliUK3+/sb8RPwkeYE3NhL/w=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dU8ab7ulGqymjJ/fLv1o7Map/AivRDGDSe5tyGb8CYs=;
+        b=zTdfCRKhagfUXOcqZzug8WFnH/Oj5G7j7MchXn2H1ULDX+LwL565tvrIYph69vVNRj
+         rrSqq1b2QsKuGS+NzHlxrF3dOnCTalrJf0VSvDZEZwCImVTnYNLHmdEvdqvYDseWcFCf
+         CBZxzMnxOZ+mrUmXN54pZ5z+HlSt6GRguaG16TZ3KcgxgZDgMuUxO4SYK/4TtaInwKB5
+         hczGLALWr8zT8Z2tZV2hQTE1Zxs6JJ5uSVvs2OFHI8OGiSgN1PFsk2sK7Cgm9WPzNQXU
+         j5kPnE2Fs+AaqmXvfqKagFUMKEewXqVOmH2UjkJxZ8Vqw5nNGDKaSFiFyrLJt0r3yHgK
+         ud8g==
+X-Gm-Message-State: AOAM533gjG8naMt7AIcxZVKn51HVxAZt2+zHIYRla/FP+Fe4YXcMLGz8
+        zPAuOj9W58MOdgfxsOlK2NE02Q==
+X-Google-Smtp-Source: ABdhPJxosLIV/FhwZ+Cv5kqs3lcLG2k3nd5MBXD1irDAfPHg4ect1HNpLG+hDpqmwHJ50umpGmdFGA==
+X-Received: by 2002:a63:5f13:: with SMTP id t19mr3977476pgb.440.1643313705559;
+        Thu, 27 Jan 2022 12:01:45 -0800 (PST)
+Received: from smtp.gmail.com ([2620:15c:202:201:9246:1838:3243:3071])
+        by smtp.gmail.com with ESMTPSA id k21sm6561190pff.33.2022.01.27.12.01.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Jan 2022 12:01:45 -0800 (PST)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Douglas Anderson <dianders@chromium.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Arnd Bergmann <arnd@arndb.de>,
+        Baolin Wang <baolin.wang7@gmail.com>,
+        Chen Feng <puck.chen@hisilicon.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Emma Anholt <emma@anholt.net>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        =?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
+        Inki Dae <inki.dae@samsung.com>,
+        James Qian Wang <james.qian.wang@arm.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Joerg Roedel <joro@8bytes.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Jyri Sarha <jyri.sarha@iki.fi>,
+        Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+        Kevin Tang <kevin3.tang@gmail.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        linux-fbdev@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-pm@vger.kernel.org, Linus Walleij <linus.walleij@linaro.org>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Lucas Tanure <tanureal@opensource.cirrus.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Mark Brown <broonie@kernel.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Russell King <linux+etnaviv@armlinux.org.uk>,
+        Russell King <rmk+kernel@arm.linux.org.uk>,
+        Sandy Huang <hjc@rock-chips.com>,
+        Saravana Kannan <saravanak@google.com>,
+        Sebastian Reichel <sre@kernel.org>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Stefan Binding <sbinding@opensource.cirrus.com>,
+        Takashi Iwai <tiwai@suse.com>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Tomas Winkler <tomas.winkler@intel.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Will Deacon <will@kernel.org>,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Vitaly Lubart <vitaly.lubart@intel.com>,
+        Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH v6 00/35] component: Make into an aggregate bus
+Date:   Thu, 27 Jan 2022 12:01:06 -0800
+Message-Id: <20220127200141.1295328-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.35.0.rc0.227.g00780c9af4-goog
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH 3/3] input: misc: pm8941-pwrkey: avoid potential null
- pointer dereference
-Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>
-CC:     <dmitry.torokhov@gmail.com>, <linux-input@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <collinsd@codeaurora.org>, <skakit@codeaurora.org>
-References: <20220120204132.17875-1-quic_amelende@quicinc.com>
- <20220120204132.17875-4-quic_amelende@quicinc.com> <YenpwnE3WrIEAOlm@ripper>
- <e2015c19-b73b-39a7-ba73-708b2c4552c7@quicinc.com>
- <CAE-0n50+1OU2yt2gihHHCEn-cE-CZuqa_U9W=xWCuYeCQdzExw@mail.gmail.com>
- <Ye8nmnQ3F4QcTIJs@ripper>
- <CAE-0n51bYEkvxu8z2gc_KUv0u+J2Esg0_3AiQRLyTaouNoa78g@mail.gmail.com>
- <YfBDVQeEsLv6Yj9g@ripper>
-From:   Anjelique Melendez <quic_amelende@quicinc.com>
-In-Reply-To: <YfBDVQeEsLv6Yj9g@ripper>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series is from discussion we had on reordering the device lists for
+drm shutdown paths[1]. I've introduced an 'aggregate' bus that we put
+the aggregate device onto and then we probe the aggregate device once
+all the components are probed and call component_add(). The probe/remove
+hooks are where the bind/unbind calls go, and then a shutdown hook is
+added that can be used to shutdown the drm display pipeline at the right
+time.
 
+This works for me on my sc7180 board. I no longer get a warning from i2c
+at shutdown that we're trying to make an i2c transaction after the i2c
+bus has been shutdown. There's more work to do on the msm drm driver to
+extract component device resources like clks, regulators, etc. out of
+the component bind function into the driver probe but I wanted to move
+everything over now in other component drivers before tackling that
+problem.
 
-On 1/25/2022 10:37 AM, Bjorn Andersson wrote:
-> On Mon 24 Jan 17:55 PST 2022, Stephen Boyd wrote:
->
->> Quoting Bjorn Andersson (2022-01-24 14:26:34)
->>> On Thu 20 Jan 20:18 PST 2022, Stephen Boyd wrote:
->>>
->>>> Quoting Anjelique Melendez (2022-01-20 16:25:26)
->>>>> On 1/20/2022 3:01 PM, Bjorn Andersson wrote:
->>>>>> On Thu 20 Jan 12:41 PST 2022, Anjelique Melendez wrote:
->>>>>>
->>>>>>> From: David Collins <collinsd@codeaurora.org>
->>>>>>>
->>>>>>> Add a null check for the pwrkey->data pointer after it is assigned
->>>>>>> in pm8941_pwrkey_probe().  This avoids a potential null pointer
->>>>>>> dereference when pwrkey->data->has_pon_pbs is accessed later in
->>>>>>> the probe function.
->>>>>>>
->>>>>>> Change-Id: I589c4851e544d79a1863fd110b32a0b45ac03caf
->>>>>>> Signed-off-by: David Collins <collinsd@codeaurora.org>
->>>>>>> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
->>>>>>> ---
->>>>>>>  drivers/input/misc/pm8941-pwrkey.c | 4 ++++
->>>>>>>  1 file changed, 4 insertions(+)
->>>>>>>
->>>>>>> diff --git a/drivers/input/misc/pm8941-pwrkey.c b/drivers/input/misc/pm8941-pwrkey.c
->>>>>>> index 0ce00736e695..ac08ed025802 100644
->>>>>>> --- a/drivers/input/misc/pm8941-pwrkey.c
->>>>>>> +++ b/drivers/input/misc/pm8941-pwrkey.c
->>>>>>> @@ -263,6 +263,10 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
->>>>>>>
->>>>>>>      pwrkey->dev = &pdev->dev;
->>>>>>>      pwrkey->data = of_device_get_match_data(&pdev->dev);
->>>>>>> +    if (!pwrkey->data) {
->>>>>> The only way this can happen is if you add a new compatible and forget
->>>>>> to specify data and when that happens you will get a print in the log
->>>>>> somewhere, which once you realize that you don't have your pwrkey you
->>>>>> might be able to find among all the other prints.
->>>>>>
->>>>>> If you instead don't NULL check this pointer you will get a large splat
->>>>>> in the log, with callstack and all, immediately hinting you that
->>>>>> pwrkey->data is NULL.
->>>>>>
->>>>>>
->>>>>> In other words, there's already a print, a much larger print and I don't
->>>>>> think there's value in handling this mistake gracefully.
->>>>>>
->>>>>> Regards,
->>>>>> Bjorn
->>>>>
->>>>> We would like to the null pointer check in place to avoid static analysis
->>>>>
->>>>> warnings that can be easily fixed.
->>>>>
->>>> Many drivers check that their device_get_match_data() returns a valid
->>>> pointer. I'd like to see that API used in addition to checking the
->>>> return value for NULL so that we can keep the static analysis tools
->>>> happy. Yes it's an impossible case assuming the driver writer didn't
->>>> mess up but it shuts SA up and we don't really have a better solution
->>>> to tell tools that device_get_match_data() can't return NULL.
->>> I'm not saying that device_get_match_data() can't return NULL,
->> Indeed, I wasn't implying that you were saying that.
->>
->>> I'm
->>> saying that in the very specific cases that it would return NULL it's
->>> useful to have a kernel panic - as that's a much faster way to figure
->>> out that something is wrong.
->> I see it as more annoying, but maybe that's my workflow? When my kernel
->> oopses I have to go back to a recovery kernel, which takes me a few more
->> seconds to "repair" my device. If the driver only failed to probe then
->> I'd probably be able to boot far enough to get networking and more
->> easily replace my kernel with a working device. And I'd have userspace
->> access so I could poke around and figure out why the driver failed to
->> probe. Now obviously a big stacktrace would be helpful to know that it's
->> the power key driver that's busted, but it's not like we're calling some
->> internal API here. We're trying to probe a driver and if that oopses
->> because the driver writer failed at their job then it's bad on them for
->> writing a bad patch but also annoying for the integrator who has to deal
->> with the mess they created. I'd rather have a half working system here
->> vs. a totally broken one.
-> Forgot about your recovery cycle, on most of my boards I just load a new
-> kernel every boot, so there's no cost of recovering from a panic, it
-> might even save me some time if it crashes completely before userspace
-> starts consuming cycles.
->
-> My only concern is that this "sets" a quite fuzzy precedence. I don't
-> want us to just fix SA warnings all over the place, but I don't want it
-> to be inconvenient to work on the kernel...
->
-> Regards,
-> Bjorn
+Tested-by tags would be appreciated, and Acked-by/Reviewed-by tags too.
 
-I will drop this patch for now so that further discussion can be had. Can send as a separate patch
-later.
+Per Daniel, I've resent this to collect Acks or Review tags from gregkh
+and once Greg is happy with the driver core bits it can be merged
+through drm-misc tree via dianders (both are on the To line).
+
+Changes since v5 (https://lore.kernel.org/r/20220106214556.2461363-1-swboyd@chromium.org):
+ - Refcount the driver registration to support multiple device usage
+ - Fix runtime PM in MediaTek iommu patch
+ - Rebased to v5.17-rc1 and converted new component uses
+ - No longer expose struct aggregate_device in component.h header
+
+Changes since v4 (https://lore.kernel.org/r/20211202222732.2453851-1-swboyd@chromium.org):
+ - Picked up tags
+ - Moved rename patch to first in the series
+ - Squashed device and bus type patch together
+
+Changes since v3 (https://lore.kernel.org/r/20211026000044.885195-1-swboyd@chromium.org):
+ - Picked up tags
+ - Rebased to v5.16-rc2
+ - Updated component.c for a few new patches there
+ - Dropped a conversion patch
+ - Added a conversion patch
+
+Changes since v2 (https://lore.kernel.org/r/20211006193819.2654854-1-swboyd@chromium.org):
+ - Picked up acks
+ - Fixed build warnings/errors
+ - Reworked patch series to rename 'master' in a different patch
+
+Changes since v1 (https://lore.kernel.org/r/20210520002519.3538432-1-swboyd@chromium.org):
+ - Use devlink to connect components to the aggregate device
+ - Don't set the registering device as a parent of the aggregate device
+ - New patch for bind_component/unbind_component ops that takes the
+   aggregate device
+ - Convert all drivers in the tree to use the aggregate driver approach
+ - Allow one aggregate driver to be used for multiple aggregate devices
+
+[1] https://lore.kernel.org/r/20210508074118.1621729-1-swboyd@chromium.org
+
+Stephen Boyd (35):
+  component: Replace most references to 'master' with 'aggregate device'
+  component: Introduce the aggregate bus_type
+  component: Add aggregate_device_parent() for driver use
+  component: Add {bind,unbind}_component() ops that take aggregate
+    device
+  drm/of: Add a drm_of_aggregate_probe() API
+  drm/msm: Migrate to aggregate driver
+  drm/komeda: Migrate to aggregate driver
+  drm/arm/hdlcd: Migrate to aggregate driver
+  drm/malidp: Migrate to aggregate driver
+  drm/armada: Migrate to aggregate driver
+  drm/etnaviv: Migrate to aggregate driver
+  drm/kirin: Migrate to aggregate driver
+  drm/exynos: Migrate to aggregate driver
+  drm/imx: Migrate to aggregate driver
+  drm/ingenic: Migrate to aggregate driver
+  drm/mcde: Migrate to aggregate driver
+  drm/mediatek: Migrate to aggregate driver
+  drm/meson: Migrate to aggregate driver
+  drm/omap: Migrate to aggregate driver
+  drm/rockchip: Migrate to aggregate driver
+  drm/sti: Migrate to aggregate driver
+  drm/sun4i: Migrate to aggregate driver
+  drm/tilcdc: Migrate to aggregate driver
+  drm/vc4: Migrate to aggregate driver
+  iommu/mediatek: Migrate to aggregate driver
+  mei: Migrate to aggregate driver
+  power: supply: ab8500: Migrate to aggregate driver
+  fbdev: omap2: Migrate to aggregate driver
+  sound: hdac: Migrate to aggregate driver
+  ASoC: codecs: wcd938x: Migrate to aggregate driver
+  drm/sprd: Migrate to aggregate driver
+  usb: typec: port-mapper: Migrate to aggregate driver
+  ALSA: hda/realtek: Migrate to aggregate driver
+  component: Get rid of drm_of_component_probe()
+  component: Remove component_master_ops and friends
+
+ drivers/base/component.c                      | 571 +++++++++++-------
+ .../gpu/drm/arm/display/komeda/komeda_drv.c   |  20 +-
+ drivers/gpu/drm/arm/hdlcd_drv.c               |  21 +-
+ drivers/gpu/drm/arm/malidp_drv.c              |  21 +-
+ drivers/gpu/drm/armada/armada_drv.c           |  23 +-
+ drivers/gpu/drm/drm_drv.c                     |   2 +-
+ drivers/gpu/drm/drm_of.c                      |  18 +-
+ drivers/gpu/drm/etnaviv/etnaviv_drv.c         |  20 +-
+ drivers/gpu/drm/exynos/exynos_drm_drv.c       |  21 +-
+ .../gpu/drm/hisilicon/kirin/kirin_drm_drv.c   |  20 +-
+ drivers/gpu/drm/imx/imx-drm-core.c            |  20 +-
+ drivers/gpu/drm/ingenic/ingenic-drm-drv.c     |  25 +-
+ drivers/gpu/drm/mcde/mcde_drv.c               |  23 +-
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c        |  20 +-
+ drivers/gpu/drm/meson/meson_drv.c             |  21 +-
+ drivers/gpu/drm/msm/msm_drv.c                 |  48 +-
+ drivers/gpu/drm/omapdrm/dss/dss.c             |  20 +-
+ drivers/gpu/drm/rockchip/rockchip_drm_drv.c   |  20 +-
+ drivers/gpu/drm/sprd/sprd_drm.c               |  48 +-
+ drivers/gpu/drm/sti/sti_drv.c                 |  20 +-
+ drivers/gpu/drm/sun4i/sun4i_drv.c             |  26 +-
+ drivers/gpu/drm/tilcdc/tilcdc_drv.c           |  28 +-
+ drivers/gpu/drm/vc4/vc4_drv.c                 |  20 +-
+ drivers/iommu/mtk_iommu.c                     |  14 +-
+ drivers/iommu/mtk_iommu.h                     |   6 +-
+ drivers/iommu/mtk_iommu_v1.c                  |  14 +-
+ drivers/memory/mtk-smi.c                      |  10 +-
+ drivers/misc/mei/hdcp/mei_hdcp.c              |  22 +-
+ drivers/misc/mei/pxp/mei_pxp.c                |  22 +-
+ drivers/power/supply/ab8500_charger.c         |  22 +-
+ drivers/usb/typec/port-mapper.c               |  22 +-
+ drivers/video/fbdev/omap2/omapfb/dss/dss.c    |  20 +-
+ include/drm/drm_of.h                          |  10 +-
+ include/linux/component.h                     |  96 ++-
+ sound/hda/hdac_component.c                    |  21 +-
+ sound/pci/hda/patch_realtek.c                 |  20 +-
+ sound/soc/codecs/wcd938x.c                    |  20 +-
+ 37 files changed, 863 insertions(+), 532 deletions(-)
+
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Baolin Wang <baolin.wang7@gmail.com>
+Cc: Chen Feng <puck.chen@hisilicon.com>
+Cc: Chen-Yu Tsai <wens@csie.org>
+Cc: Christian Gmeiner <christian.gmeiner@gmail.com>
+Cc: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Cc: Chunyan Zhang <zhang.lyra@gmail.com>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Emma Anholt <emma@anholt.net>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc: "Heiko Stübner" <heiko@sntech.de>
+Cc: Inki Dae <inki.dae@samsung.com>
+Cc: James Qian Wang (Arm Technology China) <james.qian.wang@arm.com>
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Joerg Roedel <joro@8bytes.org>
+Cc: John Stultz <john.stultz@linaro.org>
+Cc: Joonyoung Shim <jy0922.shim@samsung.com>
+Cc: Jyri Sarha <jyri.sarha@iki.fi>
+Cc: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Cc: Kevin Tang <kevin3.tang@gmail.com>
+Cc: Kyungmin Park <kyungmin.park@samsung.com>
+Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc: <linux-fbdev@vger.kernel.org>
+Cc: <linux-omap@vger.kernel.org>
+Cc: <linux-pm@vger.kernel.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Cc: Liviu Dudau <liviu.dudau@arm.com>
+Cc: Lucas Stach <l.stach@pengutronix.de>
+Cc: Lucas Tanure <tanureal@opensource.cirrus.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Neil Armstrong <narmstrong@baylibre.com>
+Cc: Orson Zhai <orsonzhai@gmail.com>
+Cc: Paul Cercueil <paul@crapouillou.net>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: Russell King <linux+etnaviv@armlinux.org.uk>
+Cc: Russell King <rmk+kernel@arm.linux.org.uk>
+Cc: Sandy Huang <hjc@rock-chips.com>
+Cc: Saravana Kannan <saravanak@google.com>
+Cc: Sebastian Reichel <sre@kernel.org>
+Cc: Seung-Woo Kim <sw0312.kim@samsung.com>
+Cc: Stefan Binding <sbinding@opensource.cirrus.com>
+Cc: Takashi Iwai <tiwai@suse.com>
+Cc: Tian Tao <tiantao6@hisilicon.com>
+Cc: Tomas Winkler <tomas.winkler@intel.com>
+Cc: Tomi Valkeinen <tomba@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: Xinliang Liu <xinliang.liu@linaro.org>
+Cc: Xinwei Kong <kong.kongxinwei@hisilicon.com>
+Cc: Yong Wu <yong.wu@mediatek.com>
+Cc: Vitaly Lubart <vitaly.lubart@intel.com>
+Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+
+base-commit: e783362eb54cd99b2cac8b3a9aeac942e6f6ac07
+-- 
+https://chromeos.dev
+
