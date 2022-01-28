@@ -2,186 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7959649FCDB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jan 2022 16:31:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 30F8C49FDAA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jan 2022 17:10:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231638AbiA1Pbw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jan 2022 10:31:52 -0500
-Received: from mx0b-001ae601.pphosted.com ([67.231.152.168]:40192 "EHLO
-        mx0b-001ae601.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S239667AbiA1Pbv (ORCPT
+        id S233878AbiA1QKI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jan 2022 11:10:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38364 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232523AbiA1QKI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jan 2022 10:31:51 -0500
-Received: from pps.filterd (m0077474.ppops.net [127.0.0.1])
-        by mx0b-001ae601.pphosted.com (8.16.1.2/8.16.1.2) with ESMTP id 20SAlQGQ004181;
-        Fri, 28 Jan 2022 09:31:26 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=from : to : cc :
- references : in-reply-to : subject : date : message-id : mime-version :
- content-type : content-transfer-encoding; s=PODMain02222019;
- bh=wL0zJBiKIWod4uzVo58UrUjP2I3Psupby3Ex3AeWzPQ=;
- b=Mcq8z9yB9JWAcj/MHgRaOFISzsoLZgyA1Bs4Dxm6yBQlWxHLwvPLFgXWINFPhFp06Jiv
- efD+NVFGDKjekxesvNZ4DQdRZ0lJSabTYzPm9R4UkoUisHBD6rjtUbtNMbFf1y2FsBPO
- psMe2WdnL+5Qn25G5kwaph14y0YNNQFF/52aWoJfMxlIBsN6Bw0b3Bw1s0HSrl0ePFof
- BJSfG6mmdDBn0GiBa8QRH9b5EYtx3LyxSw5DFEWJTpGh2AShjVQpgwNeCKTtPR4cRBIz
- bX0h8lNsAcFeQXHlIUY7bgWxBrVyrEvI7YZqIrwoE0SHlKqwlW8ncgIdHd1eB7iu0KWM MQ== 
-Received: from ediex02.ad.cirrus.com ([84.19.233.68])
-        by mx0b-001ae601.pphosted.com (PPS) with ESMTPS id 3dv90rrhu4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-        Fri, 28 Jan 2022 09:31:26 -0600
-Received: from EDIEX01.ad.cirrus.com (198.61.84.80) by EDIEX02.ad.cirrus.com
- (198.61.84.81) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.18; Fri, 28 Jan
- 2022 15:31:24 +0000
-Received: from ediswmail.ad.cirrus.com (198.61.86.93) by EDIEX01.ad.cirrus.com
- (198.61.84.80) with Microsoft SMTP Server id 15.1.2375.18 via Frontend
- Transport; Fri, 28 Jan 2022 15:31:24 +0000
-Received: from LONN2DGDQ73 (unknown [198.90.238.118])
-        by ediswmail.ad.cirrus.com (Postfix) with ESMTP id 5A1E52A9;
-        Fri, 28 Jan 2022 15:31:24 +0000 (UTC)
-From:   Stefan Binding <sbinding@opensource.cirrus.com>
-To:     'Stephen Boyd' <swboyd@chromium.org>,
-        'Greg Kroah-Hartman' <gregkh@linuxfoundation.org>,
-        'Douglas Anderson' <dianders@chromium.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>,
-        'Lucas Tanure' <tanureal@opensource.cirrus.com>,
-        'Takashi Iwai' <tiwai@suse.de>,
-        'Daniel Vetter' <daniel.vetter@ffwll.ch>,
-        "'Rafael J. Wysocki'" <rafael@kernel.org>,
-        'Rob Clark' <robdclark@gmail.com>,
-        'Russell King' <rmk+kernel@arm.linux.org.uk>,
-        'Saravana Kannan' <saravanak@google.com>
-References: <20220127200141.1295328-1-swboyd@chromium.org> <20220127200141.1295328-34-swboyd@chromium.org>
-In-Reply-To: <20220127200141.1295328-34-swboyd@chromium.org>
-Subject: RE: [PATCH v6 33/35] ALSA: hda/realtek: Migrate to aggregate driver
-Date:   Fri, 28 Jan 2022 15:31:24 +0000
-Message-ID: <003d01d8145c$1bfc83b0$53f58b10$@opensource.cirrus.com>
+        Fri, 28 Jan 2022 11:10:08 -0500
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C600C061714
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jan 2022 08:10:08 -0800 (PST)
+Received: by mail-qk1-x734.google.com with SMTP id 200so5962151qki.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jan 2022 08:10:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Rk7VcZa4IMMqb6sCLkENxEoQJPsc6pzh8cQe7rPuPKA=;
+        b=gSyEMahkctL4Nfo8ra6kHWRvCef4H64kuggemaRFhQsXyo8teBosxEwxJISdzs8qa4
+         L2aAxCKneZhd06kzXqf2RHG4MCNBuyiE9Q7XgCZzkVfFrfhE05eBUqgwGJfWYf4lrajM
+         HVDJw1W8SE6cz7W0ynzgmYOoVwNRInrWGxkBM+/jp0Ro8IECH9SU2GeZpc06UNRn869X
+         hEw9RW8C+d1J5k0nyjr/C6h+bJGtVWsijoUFPbxHzHVgpxP4YoDg4cMqjGg0IMAEnx5P
+         DXL+g44hfQ7CV38p5xpKm1M4wKgVeEz4VCxcprzSCN5xj4X3VCypSXKjxqaXed+FghvS
+         +DLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Rk7VcZa4IMMqb6sCLkENxEoQJPsc6pzh8cQe7rPuPKA=;
+        b=lN6U3sby0ek/UMf2RRnooZZAAAMBPV16rtVVV5G2DvMaZezkgIQpdcnHL/WmtEgDTZ
+         kuSXd2xv0wfpbECi6cgVLK/dcIW7eersx712xAvz2v46C1IuLdUOnJth2KDERFssoxQP
+         FWi4TDu7BxT+xzshMjTIkWO8ow+W/A9X/fcfPllt9cyrUta8NxKOtJFbaYnHokDjazXY
+         foA+JS3E9LH2+wUfhDKKY8TPcy1ljPhwp3SwUdFrpF5dUm+kXgflWnFLOHDyHKJRYON0
+         6v7C8pTUccJKIl69m0aOb6654/pCNFmSpddoGCihMWWD856wTGg6twbIe1yqzHQNkrlK
+         mkVQ==
+X-Gm-Message-State: AOAM5332LYr7qqpG+Ol/sTuafl1/aS4uqUgicSa6DrrWoBTIvZJ78teV
+        4g2R/r//M4N3G58OU+3an2rTQg==
+X-Google-Smtp-Source: ABdhPJykv/bKO1SBw3zdNIc0hwGw4in1YcboBEUNol8/GRKieE0u+cr03abnT35IqqYTMlwPIEn7bw==
+X-Received: by 2002:a37:5345:: with SMTP id h66mr6062373qkb.40.1643386207200;
+        Fri, 28 Jan 2022 08:10:07 -0800 (PST)
+Received: from sagittarius-a.sqcorp.co (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id o21sm3339006qtv.68.2022.01.28.08.10.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Jan 2022 08:10:06 -0800 (PST)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     djakov@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+Cc:     jun.nie@linaro.org, shawn.guo@linaro.org, benl@squareup.com,
+        dmitry.baryshkov@linaro.org, bryan.odonoghue@linaro.org
+Subject: [PATCH 0/3] interconnect: qcom: msm8939: Coalesce snoc and snoc_mm
+Date:   Fri, 28 Jan 2022 16:09:59 +0000
+Message-Id: <20220128161002.2308563-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQKTHzAglPObqNN3HmQB0+j3AO7d5wDuIK/MqvsC3oA=
-Content-Language: en-gb
-X-Proofpoint-ORIG-GUID: K_LOQM8TjPJrzG6NLbyR90eIF2EODU3A
-X-Proofpoint-GUID: K_LOQM8TjPJrzG6NLbyR90eIF2EODU3A
-X-Proofpoint-Spam-Reason: safe
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Booting msm8939 on tip-of-tree I encountered the following error.
 
+[    1.212340] qnoc-msm8939 580000.interconnect_mm: can't request region for resource [mem 0x00580000-0x0059407f]
+[    1.212391] qnoc-msm8939 580000.interconnect_mm: Cannot ioremap interconnect bus resource
+[    1.221524] qnoc-msm8939: probe of 580000.interconnect_mm failed with error -16
 
-> -----Original Message-----
-> From: Stephen Boyd <swboyd@chromium.org>
-> Sent: 27 January 2022 20:02
-> To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>; Douglas Anderson
-> <dianders@chromium.org>
-> Cc: linux-kernel@vger.kernel.org; linux-arm-msm@vger.kernel.org; dri-
-> devel@lists.freedesktop.org; freedreno@lists.freedesktop.org; Stefan
-> Binding <sbinding@opensource.cirrus.com>; Lucas Tanure
-> <tanureal@opensource.cirrus.com>; Takashi Iwai <tiwai@suse.de>; Daniel
-> Vetter <daniel.vetter@ffwll.ch>; Rafael J. Wysocki <rafael@kernel.org>;
-Rob
-> Clark <robdclark@gmail.com>; Russell King <rmk+kernel@arm.linux.org.uk>;
-> Saravana Kannan <saravanak@google.com>
-> Subject: [PATCH v6 33/35] ALSA: hda/realtek: Migrate to aggregate driver
-> 
-> Use an aggregate driver instead of component ops so that we can get
-> proper driver probe ordering of the aggregate device with respect to all
-> the component devices that make up the aggregate device.
-> 
-> Cc: Stefan Binding <sbinding@opensource.cirrus.com>
-> Cc: Lucas Tanure <tanureal@opensource.cirrus.com>
-> Cc: Takashi Iwai <tiwai@suse.de>
-> Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-> Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Russell King <rmk+kernel@arm.linux.org.uk>
-> Cc: Saravana Kannan <saravanak@google.com>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  sound/pci/hda/patch_realtek.c | 20 +++++++++++++-------
->  1 file changed, 13 insertions(+), 7 deletions(-)
-> 
-> diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-> index 668274e52674..80a2164c99b6 100644
-> --- a/sound/pci/hda/patch_realtek.c
-> +++ b/sound/pci/hda/patch_realtek.c
-> @@ -6547,25 +6547,31 @@ static int find_comp_by_dev_name(struct
-> alc_spec *spec, const char *name)
->  	return -ENODEV;
->  }
-> 
-> -static int comp_bind(struct device *dev)
-> +static int realtek_aggregate_probe(struct aggregate_device *adev)
->  {
-> +	struct device *dev = aggregate_device_parent(adev);
->  	struct hda_codec *cdc = dev_to_hda_codec(dev);
->  	struct alc_spec *spec = cdc->spec;
-> 
->  	return component_bind_all(dev, spec->comps);
->  }
-> 
-> -static void comp_unbind(struct device *dev)
-> +static void realtek_aggregate_remove(struct aggregate_device *adev)
->  {
-> +	struct device *dev = aggregate_device_parent(adev);
->  	struct hda_codec *cdc = dev_to_hda_codec(dev);
->  	struct alc_spec *spec = cdc->spec;
-> 
->  	component_unbind_all(dev, spec->comps);
->  }
-> 
-> -static const struct component_master_ops comp_master_ops = {
-> -	.bind = comp_bind,
-> -	.unbind = comp_unbind,
-> +static struct aggregate_driver realtek_aggregate_driver = {
-> +	.probe = realtek_aggregate_probe,
-> +	.remove = realtek_aggregate_remove,
-> +	.driver = {
-> +		.name = "realtek_aggregate",
-> +		.owner = THIS_MODULE,
-> +	},
->  };
-> 
->  static void comp_generic_playback_hook(struct hda_pcm_stream *hinfo,
-> struct hda_codec *cdc,
-> @@ -6597,7 +6603,7 @@ static void cs35l41_generic_fixup(struct hda_codec
-> *cdc, int action, const char
->  				return;
->  			component_match_add(dev, &spec->match,
-> comp_match_dev_name, name);
->  		}
-> -		ret = component_master_add_with_match(dev,
-> &comp_master_ops, spec->match);
-> +		ret = component_aggregate_register(dev,
-> &realtek_aggregate_driver, spec->match);
->  		if (ret)
->  			codec_err(cdc, "Fail to register component
-> aggregator %d\n", ret);
->  		else
-> @@ -6648,7 +6654,7 @@ static void
-> alc287_fixup_legion_16achg6_speakers(struct hda_codec *cdc, const st
->  				    "i2c-CLSA0100:00-cs35l41-hda.0");
->  		component_match_add(dev, &spec->match,
-> comp_match_dev_name,
->  				    "i2c-CLSA0100:00-cs35l41-hda.1");
-> -		ret = component_master_add_with_match(dev,
-> &comp_master_ops, spec->match);
-> +		ret = component_aggregate_register(dev,
-> &realtek_aggregate_driver, spec->match);
->  		if (ret)
->  			codec_err(cdc, "Fail to register component
-> aggregator %d\n", ret);
->  		else
-> --
-> https://chromeos.dev
+Initially I thought this was a bug with the interconnect driver but,
+examining it a bit more I realized the DTS I was working with based on
+downstream, declares snoc and snoc_mm as existing at the same address
+range.
 
-Tested locally, and no issues found.
-Tested-by: Stefan Binding <sbinding@opensource.cirrus.com>
+When we were developing the DTS for 8939 we weren't using the common rpm
+interconnect driver so we never saw the ioremap collision.
 
-Thanks,
-Stefan
+Taking a hard look at the qcom documentation as well as the downstream code
+we see that yes downstream declares snoc and snoc_mm separately but, also
+at the same overlapping address.
 
+The qcom documentation for performance points for msm8936/msm8939 snoc,
+deliniates snoc_mm as simply two new performance-points i.e. a faster GPLL0
+vote associated with new multi-media devices attached to the snoc.
+
+In other words the snoc had two new RPM vote indices added to it, to
+represent the higher performance clocks, should one of the multi-media IP
+blocks call for it.
+
+We can fix the ioremap collision and still represent the two higher
+performance point clock votes by coalsecing snoc and snoc_mm into snoc. The
+DTS clock references will take care of the appropriate votes.
+
+Bryan O'Donoghue (3):
+  dt-bindings: interconnect: Create modified msm8939-snoc description
+  interconnect: qcom: msm8939: Merge snoc and snoc_mm into one
+  interconnect: qcom: msm8939: Deliniate bus, bus_a, bus_mm and bus_a_mm
+    clocks
+
+ .../bindings/interconnect/qcom,rpm.yaml       | 25 +++++++++++-
+ drivers/interconnect/qcom/msm8939.c           | 39 +++++++------------
+ 2 files changed, 37 insertions(+), 27 deletions(-)
+
+-- 
+2.33.0
 
