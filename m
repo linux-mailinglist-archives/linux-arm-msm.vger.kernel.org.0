@@ -2,95 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 23F9549FA51
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jan 2022 14:06:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B13C949FB54
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jan 2022 15:07:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241079AbiA1NGa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jan 2022 08:06:30 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217]:34298 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236370AbiA1NG1 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jan 2022 08:06:27 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S243076AbiA1OHt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jan 2022 09:07:49 -0500
+Received: from vps5.brixit.nl ([192.81.221.234]:47618 "EHLO vps5.brixit.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240958AbiA1OHt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 28 Jan 2022 09:07:49 -0500
+Received: from [192.168.20.2] (unknown [77.239.252.99])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2C89C61C50;
-        Fri, 28 Jan 2022 13:06:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38F72C340E0;
-        Fri, 28 Jan 2022 13:06:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1643375186;
-        bh=Is4olLhsk3j3j8qTWxE/Zeo3FckilHNlsQ9Vsr92LR4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=kxHVqdphzE5X65rhBYzku+ROQZ7aH2C2kVbgzXgCFeRoMOCeiHDTKzyYC5JXPCx8O
-         qLJIElrOFLMEc6J7VO8RKxlV06WAYysknXqJ/90758o/XCcmaZwOUEkZYhg+xnHe8P
-         8KIa4AQMDgUwzwjeJvYg8IfmtPPcDN2Xopvt1l3bUCe599gs10SVIB3J1bO5OYifU0
-         rtkA+fCVMLIjBMkb0pYl7JvLOeqDVmVun9zBrVvQF1MQRXPF7xeLmYDXkMZPx4uN6H
-         KVZy/JdC6uSH2CyrpJCCu9yJh/ASWXV+aQj4LcD8oIsWXHJ+ig92ZcxWx+sdeutxQk
-         ClKOKWSVWEsnw==
-Date:   Fri, 28 Jan 2022 13:06:19 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Jerome Brunet <jbrunet@baylibre.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Cheng-Yi Chiang <cychiang@chromium.org>,
-        Shengjiu Wang <shengjiu.wang@nxp.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Jonathan Bakker <xc-racer2@live.ca>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] ASoC: dt-bindings: Centralize the 'sound-dai' definition
-Message-ID: <YfPqS8v7ZtT6HDyS@sirena.org.uk>
-References: <20220126231427.1638089-1-robh@kernel.org>
+        by vps5.brixit.nl (Postfix) with ESMTPSA id 0861061BA7;
+        Fri, 28 Jan 2022 14:07:46 +0000 (UTC)
+Message-ID: <22c14d50-7585-ced5-24e2-8c0b417fa0db@postmarketos.org>
+Date:   Fri, 28 Jan 2022 17:07:45 +0300
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="YNdayVbVmdPYqrJn"
-Content-Disposition: inline
-In-Reply-To: <20220126231427.1638089-1-robh@kernel.org>
-X-Cookie: The Moral Majority is neither.
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH] arm64: dts: qcom: sm8150: Add ufs power-domain entries
+Content-Language: en-US
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Cc:     bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh+dt@kernel.org,
+        bjorn.andersson@linaro.org, agross@kernel.org,
+        Rob Herring <robh@kernel.org>
+References: <20220120082803.15535-1-bhupesh.sharma@linaro.org>
+From:   Alexey Minnekhanov <alexeymin@postmarketos.org>
+In-Reply-To: <20220120082803.15535-1-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+At 20.01.2022 11:28, Bhupesh Sharma wrote:
+> Add power-domain entries for UFS controller & phy nodes
+> in sm8150 dts.
+> 
+> ...
+> +			power-domains = <&gcc UFS_PHY_GDSC>;
+>   			resets = <&gcc GCC_UFS_PHY_BCR>;
+>   			reset-names = "rst";
+> ...
+> +			power-domains = <&gcc UFS_CARD_GDSC>,
+> +					<&gcc UFS_PHY_GDSC>;
+> +			power-domain-names = "ufs_card_gdsc", "ufs_phy_gdsc";
 
---YNdayVbVmdPYqrJn
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Strange, but I don't see neither UFS_PHY_GDSC nor UFS_CARD_GDSC in 
+gcc-sm8150.c [1] (and accordingly not in 
+include/dt-bindings/clock/qcom,gcc-sm8150.h), but they are present in 
+corresponding files for sm8250 [2].
 
-On Wed, Jan 26, 2022 at 05:14:27PM -0600, Rob Herring wrote:
-> 'sound-dai' is a common property, but has duplicate type definitions.
-> Create a new common definition to define the type and then update all
-> the other occurrences to just define how many entries there are just
-> like other phandle+arg properties.
+By quick look at downstream sm8150-gdsc.dtsi addresses seem to be 
+similar to one used on sm8250, so I'm guessing gcc-sm8150 has to be 
+fixed first for this patch to work?
 
-Acked-by: Mark Brown <broonie@kernel.org>
+[1] 
+https://elixir.bootlin.com/linux/v5.17-rc1/source/drivers/clk/qcom/gcc-sm8150.c#L3716
+[2] 
+https://elixir.bootlin.com/linux/v5.17-rc1/source/drivers/clk/qcom/gcc-sm8250.c#L3522
 
---YNdayVbVmdPYqrJn
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmHz6koACgkQJNaLcl1U
-h9B49Qf+Jhz1zqYprzEs4mjpHmY22CKnG6zMmgy5bCBIfVwqA0nwKfsC9ul8fXXL
-NcltbAqGcCxr7u0lJoXY3h/Oob0gwpuqzMMyS+bUHzXQPnK994clJApOdV/J7UXC
-YJpbL78jiNhLsi9SZP9cTucY/LJTMEpN595HZ2+LPO6xeY6tq9RP4EWQj/0zvSn/
-dO3Z1egfcbsjKVGilRNKIjeK9WfKUdpRAwv3AS+0wSglY+fsSrpNe7Fij2CUN5zs
-nNlnVrsIvRZ45CK8pgK3YOkcvaWp/9GgS4+4+DJXwtVH8V8shpAsK/dxY+ddPhdK
-5xeCdZoQNFc+Ixkd9EQwLZLSUgKTOw==
-=AKJ7
------END PGP SIGNATURE-----
-
---YNdayVbVmdPYqrJn--
+-- 
+Regards
+Alexey Minnekhanov
+postmarketOS developer
+https://www.postmarketos.org
