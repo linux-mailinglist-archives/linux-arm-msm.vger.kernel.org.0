@@ -2,109 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F1E6749F183
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jan 2022 03:55:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 515EA49F1C9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jan 2022 04:25:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345764AbiA1CzH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jan 2022 21:55:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52694 "EHLO
+        id S1345721AbiA1DZa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jan 2022 22:25:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345652AbiA1CzA (ORCPT
+        with ESMTP id S242389AbiA1DZa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jan 2022 21:55:00 -0500
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FFE0C06174E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 18:55:00 -0800 (PST)
-Received: by mail-oi1-x232.google.com with SMTP id v67so9775169oie.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 18:55:00 -0800 (PST)
+        Thu, 27 Jan 2022 22:25:30 -0500
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF73CC061714
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 19:25:29 -0800 (PST)
+Received: by mail-oi1-x22f.google.com with SMTP id w133so9907950oie.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 19:25:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ZFOGW+nVn/EM1Z2BztmM+/jCRAogoevTBkpE6moeqjw=;
-        b=HdaemvutluNp99sWBlcuaC1SxIFeOm3iywNN8TxBxGmC62cU911Ph2uHk4jsJU7vqY
-         S6Lqs1ibqhqQ0VOetBb7NOuUAkTRN6ewV2zYblA6uxhpSr4ZNiZzsvJShmsf8PQGwXRJ
-         B8SvZAD5yKdQ7G1QwWL8v/kCPmuWxLNHmBM3/tu0MkC2ZES2V7u6e1b5g9NI/Pz4fkNw
-         iuMzWiq8diKFZtwomPbEWZvTz5e17SMdd9JmmCYTyMdnqrMxXUUMH690uJs/DyFcVhe3
-         opbiv2mJVOxuBH5ORq9/uj3wEJmsIaZleoW5sQeVkjV2SsMUtkZO7fNVcR0wgKKSJcTF
-         syUA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ty87z8mPFCHS0MY8zzrtuvTZ6oO3QjVwryu3eYeSmWE=;
+        b=aA4k4kzFiuRhBh0BXgbfcuq9ufCLBzxhy1n0nwDOnZXENDHrVV3z+4G5d/GWGxhcNM
+         pMKBbjQ5jFw18zS67w5KowD3E5kf/fEq8XhfTJx89V3aiCZxVVotsCtsqnNxMLte11Zf
+         +Kxy/ppfbleRr3MmklXr1SaofYtbx+INtlz5zAPzbHrOiM2so7lpUmN6Y5nh0HfwpIli
+         n9VqUgU9ftpDJg5XbaLIuJs8cuvmPTFA9fRLAwicE2mCLRaMinnky3xL+4Q5P6NZ/wuf
+         Bcd3aoXHFsfkdpOrjukeRMi8AD/yBy0SmGQPBj25ODZQLQoyM+8SqEzlFhlOQ+sxDQmw
+         Ikng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ZFOGW+nVn/EM1Z2BztmM+/jCRAogoevTBkpE6moeqjw=;
-        b=MHc/RItn8Clj/M4VhaNz76RsFUDaljBuI8diWISjS6HBvPWQPL9Zjag8uSZEliw1I7
-         OvkTr1/A5pdaNIivNU3I+NmeHTs5mXBrgMu9+xfXd6e+LiMDM5kLcfmXxUGDNfOac60W
-         4zUX5/ho1EuaME8+P84la39RNZMR46KAOHy7BoZm1d9595FVxj+fqu1+74XkLv3/RpBS
-         uGD3vxTsncDverBtaIfKzBgz3TLDVlpaMVe5xs7d7p57iZaHz7pid+c8IVG6H2IHVW1o
-         NMIyfPP8wyWR48CXBX2h6B9hp3JbhRvjSBWOoOkyEiVWk3OuesZPO5/I6td4CmFKLGm7
-         ma5w==
-X-Gm-Message-State: AOAM533iQ47aYnXDQLl0/Z0jXqDA1u9zjm0va7b0XZYeyvMggcFqm+cQ
-        X9G6JBlDsteEsRJoSrI6Slndiw==
-X-Google-Smtp-Source: ABdhPJzK2qMTXj7NERh/AtWEIFGTW3DUbZtlsOUyoBZqt+PngY65GEw549w2aJ2kvxJIo8FmPw5UqA==
-X-Received: by 2002:aca:ad0c:: with SMTP id w12mr4128987oie.287.1643338499659;
-        Thu, 27 Jan 2022 18:54:59 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ty87z8mPFCHS0MY8zzrtuvTZ6oO3QjVwryu3eYeSmWE=;
+        b=OsVGD8/WFvLrc5TLHUlhV2nlH/rFdAMvu1Y4LyZQVm91kBbROgGl8Se7Zp/8On5N1y
+         MJiUXHxfdwDym3tvV4m9P9Bv9OydQE4gJPoR3VOKbS/eikAdBBmG2seW3AMyCMtD7TjI
+         H7OsmhNKgkcL/Ct/GNCiGtBNuihrcEWS2UUhHtRKwMV7FER5LqcQbM8y/Ei3HzoQqx3W
+         qGcGGWU6Ied/9WN1hzMZrg01UuNL8NLTplqhurghOlBptw9pJ0Q2j7Q+QCQXtDXvKxO3
+         bbzoMbwUy3Z1f4vF2i97BgnQj3VPjj4OMwJtWN1r0EoDtKbvTF6G4QkimArpvIvVYuXk
+         dBTw==
+X-Gm-Message-State: AOAM530ulsSEdsCMKjZ/ykkeVJi4+wPNlC0fyR0Hx6rFruu/KEFARqZD
+        vhBhokyG9rKb+LfY4r0WZZCspQ==
+X-Google-Smtp-Source: ABdhPJw9dlFq8qPZGHIulSa2/+LOOD2gAlQuQmCu96B//4BKOIXSHLybARCtI4aZqIubJ3AWVEq1OQ==
+X-Received: by 2002:aca:a88f:: with SMTP id r137mr4169824oie.51.1643340329274;
+        Thu, 27 Jan 2022 19:25:29 -0800 (PST)
 Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id k6sm5677352oop.28.2022.01.27.18.54.58
+        by smtp.gmail.com with ESMTPSA id l63sm5447242oia.2.2022.01.27.19.25.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jan 2022 18:54:59 -0800 (PST)
+        Thu, 27 Jan 2022 19:25:28 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 13/13] arm64: dts: qcom: sm8450-qrd: Enable remoteproc instances
-Date:   Thu, 27 Jan 2022 18:55:13 -0800
-Message-Id: <20220128025513.97188-14-bjorn.andersson@linaro.org>
+To:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Jonathan Corbet <corbet@lwn.net>,
+        Lukasz Luba <lukasz.luba@arm.com>, linux-pm@vger.kernel.org,
+        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2 1/2] cpufreq: Reintroduce ready() callback
+Date:   Thu, 27 Jan 2022 19:25:53 -0800
+Message-Id: <20220128032554.155132-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20220128025513.97188-1-bjorn.andersson@linaro.org>
-References: <20220128025513.97188-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the audio, compute, sensor and modem remoteproc and specify
-firmware path for these on the Qualcomm SM8450 QRD.
+This effectively revert '4bf8e582119e ("cpufreq: Remove ready()
+callback")' (except the Chinese translation), in order to reintroduce
+the ready callback.
+
+This is needed in order to be able to leave the thermal pressure
+interrupts in the Qualcomm CPUfreq driver disabled during
+initialization, so that it doesn't fire while related_cpus are still 0.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450-qrd.dts | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450-qrd.dts b/arch/arm64/boot/dts/qcom/sm8450-qrd.dts
-index b68ab247e6ae..9526632d4029 100644
---- a/arch/arm64/boot/dts/qcom/sm8450-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8450-qrd.dts
-@@ -346,6 +346,26 @@ &qupv3_id_0 {
- 	status = "okay";
- };
+Changes since v1:
+- New patch
+
+ Documentation/cpu-freq/cpu-drivers.rst | 3 +++
+ drivers/cpufreq/cpufreq.c              | 4 ++++
+ include/linux/cpufreq.h                | 3 +++
+ 3 files changed, 10 insertions(+)
+
+diff --git a/Documentation/cpu-freq/cpu-drivers.rst b/Documentation/cpu-freq/cpu-drivers.rst
+index 3b32336a7803..d84ededb66f9 100644
+--- a/Documentation/cpu-freq/cpu-drivers.rst
++++ b/Documentation/cpu-freq/cpu-drivers.rst
+@@ -75,6 +75,9 @@ And optionally
+  .resume - A pointer to a per-policy resume function which is called
+  with interrupts disabled and _before_ the governor is started again.
  
-+&remoteproc_adsp {
-+	status = "okay";
-+	firmware-name = "qcom/sm8450/adsp.mbn";
-+};
++ .ready - A pointer to a per-policy ready function which is called after
++ the policy is fully initialized.
 +
-+&remoteproc_cdsp {
-+	status = "okay";
-+	firmware-name = "qcom/sm8450/cdsp.mbn";
-+};
+  .attr - A pointer to a NULL-terminated list of "struct freq_attr" which
+  allow to export values to sysfs.
+ 
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index b8d95536ee22..80f535cc8a75 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -1518,6 +1518,10 @@ static int cpufreq_online(unsigned int cpu)
+ 
+ 	kobject_uevent(&policy->kobj, KOBJ_ADD);
+ 
++	/* Callback for handling stuff after policy is ready */
++	if (cpufreq_driver->ready)
++		cpufreq_driver->ready(policy);
 +
-+&remoteproc_mpss {
-+	status = "okay";
-+	firmware-name = "qcom/sm8450/modem.mbn";
-+};
+ 	if (cpufreq_thermal_control_enabled(cpufreq_driver))
+ 		policy->cdev = of_cpufreq_cooling_register(policy);
+ 
+diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
+index 1ab29e61b078..3522a272b74d 100644
+--- a/include/linux/cpufreq.h
++++ b/include/linux/cpufreq.h
+@@ -382,6 +382,9 @@ struct cpufreq_driver {
+ 	int		(*suspend)(struct cpufreq_policy *policy);
+ 	int		(*resume)(struct cpufreq_policy *policy);
+ 
++	/* Will be called after the driver is fully initialized */
++	void		(*ready)(struct cpufreq_policy *policy);
 +
-+&remoteproc_slpi {
-+	status = "okay";
-+	firmware-name = "qcom/sm8450/slpi.mbn";
-+};
-+
- &tlmm {
- 	gpio-reserved-ranges = <28 4>, <36 4>;
- };
+ 	struct freq_attr **attr;
+ 
+ 	/* platform specific boost support code */
 -- 
 2.33.1
 
