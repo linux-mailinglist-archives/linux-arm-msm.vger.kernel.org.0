@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E7F3449F15B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jan 2022 03:54:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3170249F15C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jan 2022 03:54:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345558AbiA1Cyu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Jan 2022 21:54:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52574 "EHLO
+        id S1345581AbiA1Cyv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Jan 2022 21:54:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345568AbiA1Cyt (ORCPT
+        with ESMTP id S1345577AbiA1Cyu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Jan 2022 21:54:49 -0500
-Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8810EC061747
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 18:54:49 -0800 (PST)
-Received: by mail-oo1-xc2c.google.com with SMTP id r15-20020a4ae5cf000000b002edba1d3349so1101640oov.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 18:54:49 -0800 (PST)
+        Thu, 27 Jan 2022 21:54:50 -0500
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E954C06173B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 18:54:50 -0800 (PST)
+Received: by mail-oi1-x236.google.com with SMTP id q186so9790067oih.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jan 2022 18:54:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mMvqDo4o/ZptH9wsrReKbkSFrVe904arvpn9YDSHQs8=;
-        b=LTAcL3dphdPohty6dcW1pBBA6UgY+g81dyLs2HLenLgXJayqlKy7WO1COIUBzWXOtQ
-         98oWM4bOqAysEorM08qNVUgIzGOI0Vlu94tmLKAoCZH3W4ZnQbwO4K3Jn+9yCbp1ivln
-         tw0e9jCzJ0QhNtzndEvs1SD0avNEVG1I3jCqyFWHtvAW/xkLDONabluja3R3UuUTwisJ
-         Dh73kigIxm3Vyg/7oIz2nwec1QWjLtvnMUh0I4p120Vmg4QFd7SKcBGqjFsE/lCYOgZy
-         QeoO8WhvFxjag+MSJkwxreeNQ3gWife8g3nwTbb5lkPdqcioczloFXJehb7tjIPM1Klx
-         pnAA==
+        bh=LcpZYrTZZbyun9fAq1Z6HAHR568TtSyO3q30sHVzyrg=;
+        b=aYSSUv4UrsBBLlwEVb1eeQr+5jS54ssOzcW8avbJ5FO94VoNFTqfnrYEvomA4zBPrq
+         100BfiCNYfaFRZ5cQl3LjONgOLbPzRBSJt1P4/FU5IbiEEw0/7KkfqKxatcUymT7Sl2k
+         InsKwRHGmIJazeR5DDO854gM9otPSqWbD6kxWw4YZi8NCoKdtIeLQpi811LKRUpnPFZw
+         5iceGaHP47f7IfSDz4zjd3zQAUVY7BtuIO/mdIIAZFWbKe8zsEncemfLdC/CUQm5X9Z2
+         r5AWYdLc866bNtEMwh0q6dl4eqKEpDQG+fmsGtZJ5UXXfP0/s9MeC3vdUwCGIfZ6G1h7
+         UvEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mMvqDo4o/ZptH9wsrReKbkSFrVe904arvpn9YDSHQs8=;
-        b=KyxqddGgx1Kj2whDKyFyV6tNU6LPxPRkfYTjTKQVqwsbIsi6BZw5qHDqfT7kVkOAMS
-         s5Pa5xZzwCj3mIQozFzfTs00jCH1IcbfhD6Kjhay9M0N6yk4WAO9PMGJzYbIR6xxRr1Z
-         7A8X5fX90VrHr5kxBHTXIbHzi0XolIIDmR5yPypShtDbpo/dJwph94er8FSKohBm+lMw
-         9H6KyfRYyk6vNFCWzxeU5GyPXH0A2rXjeDeS9Fj5IAdoRLB9cX6uAjlvcE+1nOSpzcBD
-         fNdbm+2wpCnondlb1Km0K+7/Z2Ypl9gW7PIu89FAEELZcTX7FW/GuDdlLi78rlb1Awa2
-         MJpQ==
-X-Gm-Message-State: AOAM530Sm4KES1UPsok5EoJkcQ+GjwsaFiu2JwKSoArUipYVclZSEFF2
-        6+H7QoTEYll4plStAf9b+4Yrt9tOAAXUxg==
-X-Google-Smtp-Source: ABdhPJwflWrHDGkphNOlxMYMDPSlfL6ZbyV+qs8klHHcrp/Gvzy2bO2LC5KDEaY+nyrZkhEUyf/60g==
-X-Received: by 2002:a05:6820:610:: with SMTP id e16mr3342746oow.69.1643338488823;
-        Thu, 27 Jan 2022 18:54:48 -0800 (PST)
+        bh=LcpZYrTZZbyun9fAq1Z6HAHR568TtSyO3q30sHVzyrg=;
+        b=DXmRjrsdRKXkX5PeTp7elUFdGFTVojMegpRFSRrZfxaqc820wxbSVlvCaFvDYNjlZG
+         /bNNj7Xv4sn0r+LU3mT9HmcAmOZ9s8oVN2hV/uFCZtzPf+BSlkhkohcaN5X3BtXSPLjf
+         cEF2+QbvWhHwiFSsSxycuJrYWSIJ4gJwz7vIpuqtwh+P1pwV8KKGvF9+qRG627DNH6YI
+         ztxTv8D/Xb9YXsKHiNYW/huHdAa/VAFW84GtSi4OS3IDkpy+CwDbFPN9sUJilmeHbolc
+         RCJhFX/GXKpdfNPzjOgbE8EQlFdI1awQp3EqGTeCIHCMBW7eTM083y+PZRskBP1R6p2p
+         cx/w==
+X-Gm-Message-State: AOAM532T/lhRy5ppvQNL5JWDeRGVSTC15RN8VYyvEvr20lKKwjHxBHiB
+        MVGrpXaX4Y+oXNLBxpDV6a210A==
+X-Google-Smtp-Source: ABdhPJxXwAaYsLOeIwMHxNTMOEbWkKRk+eRrG+gSkgetkIek43FJ1geKBCagLXAC030j4XbR5JzpZg==
+X-Received: by 2002:a05:6808:14c9:: with SMTP id f9mr2977531oiw.251.1643338489702;
+        Thu, 27 Jan 2022 18:54:49 -0800 (PST)
 Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id k6sm5677352oop.28.2022.01.27.18.54.47
+        by smtp.gmail.com with ESMTPSA id k6sm5677352oop.28.2022.01.27.18.54.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jan 2022 18:54:48 -0800 (PST)
+        Thu, 27 Jan 2022 18:54:49 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Mathieu Poirier <mathieu.poirier@linaro.org>
 Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 01/13] firmware: qcom: scm: Introduce pas_metadata context
-Date:   Thu, 27 Jan 2022 18:55:01 -0800
-Message-Id: <20220128025513.97188-2-bjorn.andersson@linaro.org>
+Subject: [PATCH 02/13] soc: qcom: mdt_loader: Split out split-file-loader
+Date:   Thu, 27 Jan 2022 18:55:02 -0800
+Message-Id: <20220128025513.97188-3-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20220128025513.97188-1-bjorn.andersson@linaro.org>
 References: <20220128025513.97188-1-bjorn.andersson@linaro.org>
@@ -66,130 +66,142 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Starting with Qualcomm SM8450, some new security enhancements has been
-done in the secure world, which results in the requirement to keep the
-metadata segment accessible by the secure world from init_image() until
-auth_and_reset().
+Spotted in a SM8450 device, the hash metadata segment is split out in a
+separate .bNN file which means that the logic for loading split out
+segmenents needs to be duplicated in qcom_mdt_read_metadata().
 
-Introduce a "PAS metadata context" object that can be passed to
-init_image() for tracking the mapped memory and a related release
-function for client drivers to release the mapping once either
-auth_and_reset() has been invoked or in error handling paths on the way
-there.
+Split out the existing logic to a helper function that can be used in
+both code paths.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- drivers/firmware/qcom_scm.c   | 39 ++++++++++++++++++++++++++++++-----
- drivers/soc/qcom/mdt_loader.c |  2 +-
- include/linux/qcom_scm.h      | 10 ++++++++-
- 3 files changed, 44 insertions(+), 7 deletions(-)
+ drivers/soc/qcom/mdt_loader.c | 72 ++++++++++++++++++++---------------
+ 1 file changed, 41 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index 7db8066b19fd..3218d13cbf83 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -435,10 +435,16 @@ static void qcom_scm_set_download_mode(bool enable)
-  *		and optional blob of data used for authenticating the metadata
-  *		and the rest of the firmware
-  * @size:	size of the metadata
-+ * @ctx:	optional metadata context
-  *
-- * Returns 0 on success.
-+ * Return: 0 on success.
-+ *
-+ * Upon successful return, the PAS metadata context (@ctx) will be used to
-+ * track the metadata allocation, this needs to be released by invoking
-+ * qcom_scm_pas_metadata_release() by the caller.
-  */
--int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size)
-+int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size,
-+			    struct qcom_scm_pas_metadata *ctx)
- {
- 	dma_addr_t mdata_phys;
- 	void *mdata_buf;
-@@ -467,7 +473,7 @@ int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size)
- 
- 	ret = qcom_scm_clk_enable();
- 	if (ret)
--		goto free_metadata;
-+		goto out;
- 
- 	desc.args[1] = mdata_phys;
- 
-@@ -475,13 +481,36 @@ int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size)
- 
- 	qcom_scm_clk_disable();
- 
--free_metadata:
--	dma_free_coherent(__scm->dev, size, mdata_buf, mdata_phys);
-+out:
-+	if (ret < 0 || !ctx) {
-+		dma_free_coherent(__scm->dev, size, mdata_buf, mdata_phys);
-+	} else if (ctx) {
-+		ctx->ptr = mdata_buf;
-+		ctx->phys = mdata_phys;
-+		ctx->size = size;
-+	}
- 
- 	return ret ? : res.result[0];
- }
- EXPORT_SYMBOL(qcom_scm_pas_init_image);
- 
-+/**
-+ * qcom_scm_pas_metadata_release() - release metadata context
-+ * @ctx:	metadata context
-+ */
-+void qcom_scm_pas_metadata_release(struct qcom_scm_pas_metadata *ctx)
-+{
-+	if (!ctx->ptr)
-+		return;
-+
-+	dma_free_coherent(__scm->dev, ctx->size, ctx->ptr, ctx->phys);
-+
-+	ctx->ptr = NULL;
-+	ctx->phys = 0;
-+	ctx->size = 0;
-+}
-+EXPORT_SYMBOL(qcom_scm_pas_metadata_release);
-+
- /**
-  * qcom_scm_pas_mem_setup() - Prepare the memory related to a given peripheral
-  *			      for firmware loading
 diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-index 72fc2b539213..b00586db5391 100644
+index b00586db5391..c9e5bdfac371 100644
 --- a/drivers/soc/qcom/mdt_loader.c
 +++ b/drivers/soc/qcom/mdt_loader.c
-@@ -171,7 +171,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
- 			goto out;
+@@ -31,6 +31,44 @@ static bool mdt_phdr_valid(const struct elf32_phdr *phdr)
+ 	return true;
+ }
+ 
++static ssize_t mdt_load_split_segment(void *ptr, const struct elf32_phdr *phdrs,
++				      unsigned int segment, const char *fw_name,
++				      struct device *dev)
++{
++	const struct elf32_phdr *phdr = &phdrs[segment];
++	const struct firmware *seg_fw;
++	char *seg_name;
++	ssize_t ret;
++
++	if (strlen(fw_name) < 4)
++		return -EINVAL;
++
++	seg_name = kstrdup(fw_name, GFP_KERNEL);
++	if (!seg_name)
++		return -ENOMEM;
++
++	sprintf(seg_name + strlen(fw_name) - 3, "b%02d", segment);
++	ret = request_firmware_into_buf(&seg_fw, seg_name, dev,
++					ptr, phdr->p_filesz);
++	if (ret) {
++		dev_err(dev, "error %zd loading %s\n", ret, seg_name);
++		kfree(seg_name);
++		return ret;
++	}
++
++	if (seg_fw->size != phdr->p_filesz) {
++		dev_err(dev,
++			"failed to load segment %d from truncated file %s\n",
++			segment, seg_name);
++		ret = -EINVAL;
++	}
++
++	release_firmware(seg_fw);
++	kfree(seg_name);
++
++	return ret;
++}
++
+ /**
+  * qcom_mdt_get_size() - acquire size of the memory region needed to load mdt
+  * @fw:		firmware object for the mdt file
+@@ -127,22 +165,19 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len)
+ EXPORT_SYMBOL_GPL(qcom_mdt_read_metadata);
+ 
+ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+-			   const char *firmware, int pas_id, void *mem_region,
++			   const char *fw_name, int pas_id, void *mem_region,
+ 			   phys_addr_t mem_phys, size_t mem_size,
+ 			   phys_addr_t *reloc_base, bool pas_init)
+ {
+ 	const struct elf32_phdr *phdrs;
+ 	const struct elf32_phdr *phdr;
+ 	const struct elf32_hdr *ehdr;
+-	const struct firmware *seg_fw;
+ 	phys_addr_t mem_reloc;
+ 	phys_addr_t min_addr = PHYS_ADDR_MAX;
+ 	phys_addr_t max_addr = 0;
+ 	size_t metadata_len;
+-	size_t fw_name_len;
+ 	ssize_t offset;
+ 	void *metadata;
+-	char *fw_name;
+ 	bool relocate = false;
+ 	void *ptr;
+ 	int ret = 0;
+@@ -154,14 +189,6 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+ 	ehdr = (struct elf32_hdr *)fw->data;
+ 	phdrs = (struct elf32_phdr *)(ehdr + 1);
+ 
+-	fw_name_len = strlen(firmware);
+-	if (fw_name_len <= 4)
+-		return -EINVAL;
+-
+-	fw_name = kstrdup(firmware, GFP_KERNEL);
+-	if (!fw_name)
+-		return -ENOMEM;
+-
+ 	if (pas_init) {
+ 		metadata = qcom_mdt_read_metadata(fw, &metadata_len);
+ 		if (IS_ERR(metadata)) {
+@@ -258,25 +285,9 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+ 			memcpy(ptr, fw->data + phdr->p_offset, phdr->p_filesz);
+ 		} else if (phdr->p_filesz) {
+ 			/* Firmware not large enough, load split-out segments */
+-			sprintf(fw_name + fw_name_len - 3, "b%02d", i);
+-			ret = request_firmware_into_buf(&seg_fw, fw_name, dev,
+-							ptr, phdr->p_filesz);
+-			if (ret) {
+-				dev_err(dev, "error %d loading %s\n",
+-					ret, fw_name);
++			ret = mdt_load_split_segment(ptr, phdrs, i, fw_name, dev);
++			if (ret)
+ 				break;
+-			}
+-
+-			if (seg_fw->size != phdr->p_filesz) {
+-				dev_err(dev,
+-					"failed to load segment %d from truncated file %s\n",
+-					i, fw_name);
+-				release_firmware(seg_fw);
+-				ret = -EINVAL;
+-				break;
+-			}
+-
+-			release_firmware(seg_fw);
  		}
  
--		ret = qcom_scm_pas_init_image(pas_id, metadata, metadata_len);
-+		ret = qcom_scm_pas_init_image(pas_id, metadata, metadata_len, NULL);
+ 		if (phdr->p_memsz > phdr->p_filesz)
+@@ -287,7 +298,6 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+ 		*reloc_base = mem_reloc;
  
- 		kfree(metadata);
- 		if (ret) {
-diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
-index 81cad9e1e412..4d8371410b05 100644
---- a/include/linux/qcom_scm.h
-+++ b/include/linux/qcom_scm.h
-@@ -68,8 +68,16 @@ extern int qcom_scm_set_warm_boot_addr(void *entry, const cpumask_t *cpus);
- extern void qcom_scm_cpu_power_down(u32 flags);
- extern int qcom_scm_set_remote_state(u32 state, u32 id);
+ out:
+-	kfree(fw_name);
  
-+struct qcom_scm_pas_metadata {
-+	void *ptr;
-+	dma_addr_t phys;
-+	ssize_t size;
-+};
-+
- extern int qcom_scm_pas_init_image(u32 peripheral, const void *metadata,
--				   size_t size);
-+				   size_t size,
-+				   struct qcom_scm_pas_metadata *ctx);
-+void qcom_scm_pas_metadata_release(struct qcom_scm_pas_metadata *ctx);
- extern int qcom_scm_pas_mem_setup(u32 peripheral, phys_addr_t addr,
- 				  phys_addr_t size);
- extern int qcom_scm_pas_auth_and_reset(u32 peripheral);
+ 	return ret;
+ }
 -- 
 2.33.1
 
