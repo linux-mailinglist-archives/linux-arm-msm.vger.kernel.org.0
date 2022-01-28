@@ -2,97 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A37D24A00E6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jan 2022 20:32:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 18F8F4A0392
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jan 2022 23:24:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232590AbiA1TcL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jan 2022 14:32:11 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:41356 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350963AbiA1TcL (ORCPT
+        id S241332AbiA1WYS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jan 2022 17:24:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39066 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1346947AbiA1WYP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jan 2022 14:32:11 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C5CE3B81CA6;
-        Fri, 28 Jan 2022 19:32:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A55C340E7;
-        Fri, 28 Jan 2022 19:32:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1643398328;
-        bh=ocTfvDJr4Az4Cqx+uznqAIEN6JNDdsu/e4U8+fXMP2Q=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fLyox+J5RBcTXAqWg40ECApbugLOt8XLIw+Lge3vN6ygd+erfvHm1mSRpypHS98zj
-         77IHDcD6lkQoKS68XVtseIeW+yPXKrpLUQxDCEbxDrkMgblEJRQTnOrqJLf6LPcUgG
-         A9zqTOze1Ph8nZMINIk7zzv7fq+O9Y83876t10p7nu1ibKVpusgol7jpjW3Z6HAdXg
-         TlfXqdyglouGZGnLmm3F85ZDSU35+hPPQtc0dFm4Z6mGL2xqdh19U5XplYqxMeGpIx
-         uXRMc79ZZZTHB71J5z3/KLT8RWAVxYyVJoZ/pqkXCq7f4r66kCUc+PlZ3Iuv740l/s
-         KbqXWw1r9K6Jw==
-Date:   Fri, 28 Jan 2022 19:32:03 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     David Collins <quic_collinsd@quicinc.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        devicetree@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
-Subject: Re: [RESEND PATCH 1/2] dt-bindings: firmware: arm,scmi: define
- support for name based regulators
-Message-ID: <YfREsxeSSX2pbALf@sirena.org.uk>
-References: <cover.1643069954.git.quic_collinsd@quicinc.com>
- <fcd130891cc1d52cb09b8bfc866ab7ef1ce3b2a1.1643069954.git.quic_collinsd@quicinc.com>
+        Fri, 28 Jan 2022 17:24:15 -0500
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5CBAC061753
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jan 2022 14:24:14 -0800 (PST)
+Received: by mail-qt1-x831.google.com with SMTP id y8so6446289qtn.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jan 2022 14:24:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=vf877r/66ZQ/GNJScldomlsixS79+DCD1DtadcpCLxU=;
+        b=dKpq4srguyxEDrXqfxlAdpj/afmWItoVpfbCxNtNH0MJuCDw7Z624vlS+CvJSftmUN
+         vMlaH7Qv1EnOqTYD9kfFlTSUGM/konNCLMDqxfXPqkpYyfdpa9ubZVveCu/t5LhsAlpj
+         WX19wIeuN90wn+q4k4Cjf849Tnvke6PWKAozN4gMHr7Zdt1GVl2aXfHCQ0LmRmCeVhOf
+         hkcUTlh4DbVXPm/cPXMoRf+yOePJf2c59IgUKVT/HsaaMIkvFKicpkO3Dkh3Z8QlZyp/
+         iP8p2qRlr2ojqipTIgUUw4uWZ2l8e7+DtVLUnXR4MAXC312UcHWCgd38SuuLoM/E5Gya
+         risg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vf877r/66ZQ/GNJScldomlsixS79+DCD1DtadcpCLxU=;
+        b=6Qe0vH6fTfxydninjuYwVKWzKpFKeUIRnzOSEwSbZrB9GtMw2UqQVUAUq6PK6gtA8p
+         ajuGfWMxdtNUl+W26TT5hGUujc/HXfy4Hg9Q+XQVvcx3VFYM2KmRBVk78N75joYkTKYE
+         778A9MPDOcqqZ0pG4X+7OT7XEoy5XVlyeI+NgYXfbhW3D6ZR2kEDZn/peS1yJ1b8zUe+
+         OxQy8VEG/ZgSkguANPgz5RRsBtGzmkpBvJe8cccy8SBazDd3LdhRsh5DSUaKJWDOy3w0
+         ZOfDkFoOQmMThl7EYR6iwaYX8k37r/2wkUEiuGUnpRXWHvCAEsHY4FTzlespLVtGHJE5
+         381w==
+X-Gm-Message-State: AOAM531fjYk0U/bJYloZh91BFBHgv/WTfTGw1QjxOyqZAf1Th2asJ9q0
+        QV3lj7lhXSKcvLt/pPti92m349bta5g0asGfuXo7pg==
+X-Google-Smtp-Source: ABdhPJysrYwC7ZB4aKNk/f/30Jh+oKG90RogI9mBmSHTs4BO5R0iUJP91CXBvpfgvqC19obbEOXOj3PTQuLJl4jVzkM=
+X-Received: by 2002:a05:622a:164a:: with SMTP id y10mr7777176qtj.629.1643408653707;
+ Fri, 28 Jan 2022 14:24:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="saTo/Nt6xCfZVkU9"
-Content-Disposition: inline
-In-Reply-To: <fcd130891cc1d52cb09b8bfc866ab7ef1ce3b2a1.1643069954.git.quic_collinsd@quicinc.com>
-X-Cookie: Torque is cheap.
+References: <20220128161002.2308563-1-bryan.odonoghue@linaro.org> <20220128161002.2308563-3-bryan.odonoghue@linaro.org>
+In-Reply-To: <20220128161002.2308563-3-bryan.odonoghue@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 29 Jan 2022 01:24:02 +0300
+Message-ID: <CAA8EJpqvDqTH3+ATsdC2pwtfT-OWpLNSUgOPmeU_Tpu8Uqa1+g@mail.gmail.com>
+Subject: Re: [PATCH 2/3] interconnect: qcom: msm8939: Merge snoc and snoc_mm
+ into one
+To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc:     djakov@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        jun.nie@linaro.org, shawn.guo@linaro.org, benl@squareup.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, 28 Jan 2022 at 19:10, Bryan O'Donoghue
+<bryan.odonoghue@linaro.org> wrote:
+>
+> The current msm8939 snoc and snoc_mm definitions are represented as
+> separate entities based on downstream definition which declares two
+> identical and therefore overlapping mmio regions.
+>
+> Downstream:
+> reg = <0x580000 0x14080>,
+>       <0x580000 0x14080>;
+> reg-names = "snoc-base", "snoc-mm-base";
+>
+> Upstream:
+> snoc: interconnect@580000 {
+>         compatible = "qcom,msm8939-snoc";
+>         #interconnect-cells = <1>;
+>         reg = <0x580000 0x14080>;
+>         clock-names = "bus", "bus_a";
+>         clocks = <&rpmcc RPM_SMD_SNOC_CLK>,
+>                  <&rpmcc RPM_SMD_SNOC_A_CLK>;
+>         status = "okay";
+> };
+>
+> snoc: interconnect@580000 {
+>         compatible = "qcom,msm8939-snoc_mm";
+>         #interconnect-cells = <1>;
+>         reg = <0x580000 0x14080>;
+>         clock-names = "bus", "bus_a",
+>         clocks = <&rpmcc RPM_SMD_SYSMMNOC_CLK>,
+>                  <&rpmcc RPM_SMD_SYSMMNOC_A_CLK>;
+>         status = "okay";
+> };
+>
+> This overlapping declaration leads to the following failure on boot.
+>
+> [    1.212340] qnoc-msm8939 580000.interconnect_mm: can't request region for resource [mem 0x00580000-0x0059407f]
+> [    1.212391] qnoc-msm8939 580000.interconnect_mm: Cannot ioremap interconnect bus resource
+> [    1.221524] qnoc-msm8939: probe of 580000.interconnect_mm failed with error -16
+>
+> snoc_mm is a complete misnomer though, as there is no distinct register
+> space, simply an additional clock to drive higher frequences on snoc for
+> new multi-media 'mm' devices tacked on to the old msm8916 snoc.
+>
+> The difference can be captured with
+>
+> - A new clock
+> - Performance points/clock settings in the relevant multi-media devices.
+>
+> Fix the above bug by representing snoc_mm as two new clocks to the existing
+> snoc, not a separate interconnect bus.
 
---saTo/Nt6xCfZVkU9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+This would lead to higher frequencies being set on both 'normal' and
+mm snoc clocks, thus (possibly) increasing power consumption.
 
-On Mon, Jan 24, 2022 at 04:27:35PM -0800, David Collins wrote:
+The proper fix should be implemented following patches 4 and 5 from
+https://lore.kernel.org/all/20211215002324.1727-1-shawn.guo@linaro.org/
 
-> Name based SCMI regulator specification helps ensure that an SCMI
-> agent doesn't need to be aware of the numbering scheme used for
+>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  drivers/interconnect/qcom/msm8939.c | 30 +++++------------------------
+>  1 file changed, 5 insertions(+), 25 deletions(-)
+>
+> diff --git a/drivers/interconnect/qcom/msm8939.c b/drivers/interconnect/qcom/msm8939.c
+> index d188f3636e4c3..7030911e25adc 100644
+> --- a/drivers/interconnect/qcom/msm8939.c
+> +++ b/drivers/interconnect/qcom/msm8939.c
+> @@ -1271,25 +1271,6 @@ static struct qcom_icc_node *msm8939_snoc_nodes[] = {
+>         [SNOC_INT_BIMC] = &snoc_int_bimc,
+>         [SNOC_PCNOC_MAS] = &snoc_pcnoc_mas,
+>         [SNOC_QDSS_INT] = &qdss_int,
+> -};
+> -
+> -static const struct regmap_config msm8939_snoc_regmap_config = {
+> -       .reg_bits       = 32,
+> -       .reg_stride     = 4,
+> -       .val_bits       = 32,
+> -       .max_register   = 0x14080,
+> -       .fast_io        = true,
+> -};
+> -
+> -static struct qcom_icc_desc msm8939_snoc = {
+> -       .type = QCOM_ICC_NOC,
+> -       .nodes = msm8939_snoc_nodes,
+> -       .num_nodes = ARRAY_SIZE(msm8939_snoc_nodes),
+> -       .regmap_cfg = &msm8939_snoc_regmap_config,
+> -       .qos_offset = 0x7000,
+> -};
+> -
+> -static struct qcom_icc_node *msm8939_snoc_mm_nodes[] = {
+>         [MASTER_VIDEO_P0] = &mas_video,
+>         [MASTER_JPEG] = &mas_jpeg,
+>         [MASTER_VFE] = &mas_vfe,
+> @@ -1301,7 +1282,7 @@ static struct qcom_icc_node *msm8939_snoc_mm_nodes[] = {
+>         [SNOC_MM_INT_2] = &mm_int_2,
+>  };
+>
+> -static const struct regmap_config msm8939_snoc_mm_regmap_config = {
+> +static const struct regmap_config msm8939_snoc_regmap_config = {
+>         .reg_bits       = 32,
+>         .reg_stride     = 4,
+>         .val_bits       = 32,
+> @@ -1309,11 +1290,11 @@ static const struct regmap_config msm8939_snoc_mm_regmap_config = {
+>         .fast_io        = true,
+>  };
+>
+> -static struct qcom_icc_desc msm8939_snoc_mm = {
+> +static struct qcom_icc_desc msm8939_snoc = {
+>         .type = QCOM_ICC_NOC,
+> -       .nodes = msm8939_snoc_mm_nodes,
+> -       .num_nodes = ARRAY_SIZE(msm8939_snoc_mm_nodes),
+> -       .regmap_cfg = &msm8939_snoc_mm_regmap_config,
+> +       .nodes = msm8939_snoc_nodes,
+> +       .num_nodes = ARRAY_SIZE(msm8939_snoc_nodes),
+> +       .regmap_cfg = &msm8939_snoc_regmap_config,
+>         .qos_offset = 0x7000,
+>  };
+>
+> @@ -1420,7 +1401,6 @@ static const struct of_device_id msm8939_noc_of_match[] = {
+>         { .compatible = "qcom,msm8939-bimc", .data = &msm8939_bimc },
+>         { .compatible = "qcom,msm8939-pcnoc", .data = &msm8939_pcnoc },
+>         { .compatible = "qcom,msm8939-snoc", .data = &msm8939_snoc },
+> -       { .compatible = "qcom,msm8939-snoc-mm", .data = &msm8939_snoc_mm },
+>         { }
+>  };
+>  MODULE_DEVICE_TABLE(of, msm8939_noc_of_match);
+> --
+> 2.33.0
+>
 
-What is a "SCMI agent" in this context?  This is changing how the DT
-bindings are specified, at some point things are going to need to be
-hard coded.
 
-> +              regulator-name: true
-> +
-> +            anyOf:
-> +              - required:
-> +                  - reg
-> +              - required:
-> +                  - regulator-name
-
-This is abusing the existing regulator-name property which is there to
-allow a human readable descriptive string to be attached to a regulator.
-It should have no effect other than being included in diagnostic output.
-
---saTo/Nt6xCfZVkU9
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmH0RLIACgkQJNaLcl1U
-h9C29Af+M8xJw3Zj3s5s/7+hQVGfdxlKUfEUacHNcXCVYIufDwCB14Yxr+x2nOCP
-5SGj/GWXK8LaPBktM5PQBdiIKWGMjFTdQF0I2QcSUJ6rKmthttUs36u2/x80b6Hp
-g+g1Gd4qZKgC9f73doy5tIA/NUmSX5RHpAQ2CG8a0BAYfxqK7lsGxfcE9bjyBHVI
-YPBxVn47on7lD63G94aSa46nBWx20oLFBZYPJdtMdnFOFmEAo1KXzAEsYOMA4CU/
-1ru2Rmc0FGlnDQbkaEORDiOwOz6Ae1EuoU5ABhlgnWy2v+VPLAwYEbtKEDkd7bzc
-kXyAmCkb5GT3LmVU7pnqG9RVgnNf3w==
-=Z21V
------END PGP SIGNATURE-----
-
---saTo/Nt6xCfZVkU9--
+-- 
+With best wishes
+Dmitry
