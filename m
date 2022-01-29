@@ -2,109 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 87A8A4A2B6A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jan 2022 04:27:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E4F14A2B8D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jan 2022 05:10:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351283AbiA2D1n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jan 2022 22:27:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49588 "EHLO
+        id S232969AbiA2EKo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jan 2022 23:10:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352277AbiA2D1m (ORCPT
+        with ESMTP id S230242AbiA2EKm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jan 2022 22:27:42 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 179E0C061714
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jan 2022 19:27:42 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id c192so5877050wma.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jan 2022 19:27:42 -0800 (PST)
+        Fri, 28 Jan 2022 23:10:42 -0500
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6BB0C061714
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jan 2022 20:10:41 -0800 (PST)
+Received: by mail-qv1-xf29.google.com with SMTP id h16so7718384qvk.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jan 2022 20:10:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3joy+PQtl9Lgy2hme/XhYmJ/nQbCvBKozvSBN92ggvo=;
-        b=CZ+OPZJfDaPv/tY928Sqt+xqFbihqyFCn/7R4s623V2uZ7nRKs4LRQ5WWSTw43xf66
-         FVkgY8D/mmxFfC90h227ZjCZQArfgDcaPHQDluFxCI+CGlc5QOmiiios+WQfc5ha1ImE
-         3UdCczHnIqXC16+BmlJOKrZP3hvI8HADWQzeOEXG0aoniWzLVQMgMfjWB9Cg/TUvXp3z
-         PnhBgMGdq1hDKyXP1SaCFFSFDkiZbUN3odDdblZs0kTpJXDLt5nl6fRmxpZzbPyVU43P
-         kGGJnQjJQaLvW9jD75gr9sfZlgl1ntCxWBb55zWibiv7SykLqZdLEchw0NCFwE2uN13R
-         naPg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=C4Lf1TnT0Pcqk5oV6l/C2rZINNCB+v1VbsrorTZOtDg=;
+        b=vcjmUBT7vZvEQ7XtlY/4gJrb0jglLdfakbX7LrVnurEzO0sqHYKFJvXNYrNXyDPEIA
+         G4EGCvlJcNWco5/C2kplbki1UUQTxytOednDDSBUqNuWzDtkVurlHBQOT8diuVWRTZ/V
+         zt0D+EZY3OkELZJZbvsanu4yvJ/3ANkvMZcSifg0z2RVHRdjMp7h1UWnfyUt5MRmm7yk
+         mTrhrU/gti/5EA/1ZSH0gd7aVZ15dOXah9SCmRx8diErLXLRBO+gticChqxiIhaV06V5
+         NpMoc3wRuLMaoZaNRIDTBOvqnvrKL2ep/DgJ6GDSRboqIP4blNybARndH7YF2psnSJXK
+         8Gvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3joy+PQtl9Lgy2hme/XhYmJ/nQbCvBKozvSBN92ggvo=;
-        b=wt7x3phnhy7yX4TADXe6p2T/8V+nVy0aGc6cHRyfC76M4nc7ZD9CQDrmQv5n/+xKka
-         uMzsUowfHaQIxseyXGxRbHik7FZ5ArNlyOumyAgOti6pVwMhXRfIHzJFhEDH5yuDVCBG
-         3/wxSWJlCJHL436vlcnp6W+5vj8lKvnuULDvwYyFmxI9H/sZPggguAxoDTCPwXaDDZEQ
-         6t4+01OrruVPkPKM/SBx56mgXLZcC9h1InzbrREytXcJJpBYIYsSw6Jowu2JSOGjO32j
-         KsKx6oHVdY0Oxrt4QQKS+FoYjJ8MeLZ4lw5EK7/PMVLeMohhBLJSGAHXu3u5Qbgp290t
-         aVXw==
-X-Gm-Message-State: AOAM533FEe+fN6vt3RZg0Z90G59q0CYIN2BHI9sni8ff9NwmD6S7ir8W
-        MtSHllZPouI9CbFo87wYXNj2wg==
-X-Google-Smtp-Source: ABdhPJxNVcN2AtpjQomiqNyzIysYg3jFb/lWrXviuAtv4rBqxjp+Lwap0f2JccDU9ACVZ5U88uUcYQ==
-X-Received: by 2002:a7b:cf2e:: with SMTP id m14mr9587402wmg.26.1643426860739;
-        Fri, 28 Jan 2022 19:27:40 -0800 (PST)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id o12sm7365477wry.115.2022.01.28.19.27.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Jan 2022 19:27:40 -0800 (PST)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     djakov@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
-Cc:     jun.nie@linaro.org, shawn.guo@linaro.org, benl@squareup.com,
-        dmitry.baryshkov@linaro.org, bryan.odonoghue@linaro.org
-Subject: [PATCH v2 2/2] interconnect: qcom: msm8939: Remove snoc_mm specific regmap
-Date:   Sat, 29 Jan 2022 03:27:35 +0000
-Message-Id: <20220129032735.2410936-3-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20220129032735.2410936-1-bryan.odonoghue@linaro.org>
-References: <20220129032735.2410936-1-bryan.odonoghue@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=C4Lf1TnT0Pcqk5oV6l/C2rZINNCB+v1VbsrorTZOtDg=;
+        b=mkrcErS4L5KQW1A09+Jb5TqA7iPeI/9cC4woIReDSjEd43ZEubwtL4jwkTgLQoHJ7s
+         0NYN5obkjyvkYozkg/LAinlW8/370pIB/9rOna4B8ySNNQHFw3A5eQrwuYbmxl1dR5le
+         mZqzUD19FCZTQvOI7+bUSE3Ed2I/wicWz7r8dn3sDFSUzsrc4hYmp3sTe5uRPOQvzPGL
+         nO6vigkS3VWGiHy1nhZkKs23qeFXPzclhU6wquV7I+f8dSTjOvwTmm6Q4Xcz22IMR3fF
+         Oppiy+YzPZUoqSblNCljX/UWK+n5q2OCCKKF+7YtqRBYMm1ytS0BqWYY7dDGiWCOE9hl
+         Ln0A==
+X-Gm-Message-State: AOAM5306WsDLtGqROey1FB/R56x4gZOY+gYzBbvczm7vRjA1pmJgXU4i
+        3zbAFQcmq3UbrJVqdH2n5McJNKgXnw057imGqfi6KQ==
+X-Google-Smtp-Source: ABdhPJxitrKVz1BvX4K8YA0JPZ7P1zLYokkrXpyfe5xR/tkBJHMB25GhyiBNaKQ7hs+jrRuRypQ0wpbQjhH0W001FwQ=
+X-Received: by 2002:a05:6214:29cd:: with SMTP id gh13mr9811402qvb.122.1643429440974;
+ Fri, 28 Jan 2022 20:10:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220128161002.2308563-1-bryan.odonoghue@linaro.org>
+ <20220128161002.2308563-3-bryan.odonoghue@linaro.org> <CAA8EJpqvDqTH3+ATsdC2pwtfT-OWpLNSUgOPmeU_Tpu8Uqa1+g@mail.gmail.com>
+ <251a8515-7f8d-2535-e222-17443266f275@linaro.org>
+In-Reply-To: <251a8515-7f8d-2535-e222-17443266f275@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 29 Jan 2022 07:10:29 +0300
+Message-ID: <CAA8EJpoSjaMsYn42X9arPQan-8Ex6LFJf4ZKQMmyts3J7VTcyw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] interconnect: qcom: msm8939: Merge snoc and snoc_mm
+ into one
+To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc:     djakov@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        jun.nie@linaro.org, shawn.guo@linaro.org, benl@squareup.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Booting tip-of-tree on msm8939 we find the following error caused by our
-modelling of snoc and snoc_mm as peer devices with the same address space.
+On Sat, 29 Jan 2022 at 02:23, Bryan O'Donoghue
+<bryan.odonoghue@linaro.org> wrote:
+>
+> On 28/01/2022 22:24, Dmitry Baryshkov wrote:
+> > This would lead to higher frequencies being set on both 'normal' and
+> > mm snoc clocks, thus (possibly) increasing power consumption.
+> >
+> How so ?
 
-[    1.212340] qnoc-msm8939 580000.interconnect_mm: can't request region for resource [mem 0x00580000-0x0059407f]
-[    1.212391] qnoc-msm8939 580000.interconnect_mm: Cannot ioremap interconnect bus resource
-[    1.221524] qnoc-msm8939: probe of 580000.interconnect_mm failed with error -16
+If I remember correctly, bus clocks are set to max(sum(avg_bw),
+max(peak_bw)) calculated over all bandwidth paths (nodes).
+If you merge snoc and snoc_mm, the resulting sum(avg_bw) would be a
+sum of (older) snoc's and snoc_mm's sums.
+Thus the bus clocks (both bus and bus_mm) would be set to higher frequencies.
 
-Declaring snoc_mm as a child device of snoc mitigates the fault and is
-consistent with a similar extant implementation in qcm2290.
+>
+> There are four clocks
+>
+> bus
+> bus_a
+> bus_mm
+> bus_a_mm
+>
+> The last two clocks
+>
+> SNOC performance points are
+> 0 | 19.2  | XO
+> 1 | 50    | GPLL0
+> 2 | 100   | GPLL0
+> 3 | 133.3 | GPLL0
+> 4 | 160   | GPLL0
+> 5 | 200   | GPLL0
+> 6 | 266.6 | GPLL0
+>
+> SNOC_MM performance points are
+> 0 | 19.2  | XO
+> 1 | 50    | GPLL0
+> 2 | 100   | GPLL0
+> 3 | 133.3 | GPLL0
+> 4 | 160   | GPLL0
+> 5 | 200   | GPLL0
+> 6 | 266.6 | GPLL0
+> 7 | 320   | GPLL0
+> 8 | 400   | GPLL0
+>
+> Its GPLL0 being set, the snoc_mm clocks really just map back to GPLL0
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/interconnect/qcom/msm8939.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/msm8939.c b/drivers/interconnect/qcom/msm8939.c
-index d188f3636e4c3..f9c2d7d3100dd 100644
---- a/drivers/interconnect/qcom/msm8939.c
-+++ b/drivers/interconnect/qcom/msm8939.c
-@@ -1301,19 +1301,11 @@ static struct qcom_icc_node *msm8939_snoc_mm_nodes[] = {
- 	[SNOC_MM_INT_2] = &mm_int_2,
- };
- 
--static const struct regmap_config msm8939_snoc_mm_regmap_config = {
--	.reg_bits	= 32,
--	.reg_stride	= 4,
--	.val_bits	= 32,
--	.max_register	= 0x14080,
--	.fast_io	= true,
--};
--
- static struct qcom_icc_desc msm8939_snoc_mm = {
- 	.type = QCOM_ICC_NOC,
- 	.nodes = msm8939_snoc_mm_nodes,
- 	.num_nodes = ARRAY_SIZE(msm8939_snoc_mm_nodes),
--	.regmap_cfg = &msm8939_snoc_mm_regmap_config,
-+	.regmap_cfg = &msm8939_snoc_regmap_config,
- 	.qos_offset = 0x7000,
- };
- 
+
 -- 
-2.33.0
-
+With best wishes
+Dmitry
