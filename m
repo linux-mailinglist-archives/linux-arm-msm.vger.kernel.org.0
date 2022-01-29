@@ -2,162 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D80D4A2AC0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jan 2022 01:53:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B079A4A2B1E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jan 2022 02:53:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344948AbiA2Ax2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jan 2022 19:53:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44144 "EHLO
+        id S1352110AbiA2Bxn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jan 2022 20:53:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240552AbiA2Ax2 (ORCPT
+        with ESMTP id S1344897AbiA2Bxm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jan 2022 19:53:28 -0500
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA367C061748
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jan 2022 16:53:27 -0800 (PST)
-Received: by mail-ot1-x32e.google.com with SMTP id s6-20020a0568301e0600b0059ea5472c98so7327907otr.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jan 2022 16:53:27 -0800 (PST)
+        Fri, 28 Jan 2022 20:53:42 -0500
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76D5FC061714
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jan 2022 17:53:42 -0800 (PST)
+Received: by mail-yb1-xb29.google.com with SMTP id v186so23801550ybg.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jan 2022 17:53:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=kdgdtq3eOJHV51siqvXo/GLiap2Pd2Ct5h8leY/7+qQ=;
-        b=fiWptCh5t5yJTLtKKqW+Ag6RQ6RGNL8eRJ50PmEcFl2VOoxRJXMkyb1I3y6HYKfDow
-         1jLKcBqJxEG/r5+SaKi/+w4kkXXNEfluF3OJofOpTQCluSPdSZxnILu1AIkk7hCWLliS
-         CSN8Ixj5fTR5DhfUbaTZNrNip+mfxNpMtUgZrRb9XW2mow9xD43I+CBMK+7CKCWAqMgk
-         yMdIPEh36bjEuPHtgiY34m0AVB5zr4hq8irnnwDuxpukW2PZr6ticWOZSeKPwRumK5HN
-         ipxXKJFQXiO5o00GlbUHMYrXXspNv7RnkbMTN0fbHz9FIb5y0ucrEHFzJOUBPuEbRhYf
-         0wJg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HZeBPf4FWmMWEAA75U+2zfHoRz8ztsSomUo5httipXs=;
+        b=nqKX4wkSst9GeerM4nOCf/vzcWrSonrEHusl2jkdf6JPbXSJq+BxWymEiL4T3uY8Ik
+         4x8dW5ayjyNSQpzHGdBXBwgUR3/i7QbntH1DGpiG1VSo/qONG1dEHjk7eQ7vUZWuTZcB
+         sjeGkl7Rxz21f045e0BYhUjLOx+j4CUZqFwX2B6eJp8vesd3WG6mx2xDKwUT/ZySaf4/
+         S1/TI9gInNa8Zfx1tUHqgbcs4m8APeF5EQfIi/DnbDv9oVHQSi9bqB1DPhkGLsG0Glc8
+         IzQ6dbpda1kxUaMwyRXK27ASejJ7TZq97LYZRHTosEUxPim+HBln40aZzLwhZ55NRmD4
+         D9LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=kdgdtq3eOJHV51siqvXo/GLiap2Pd2Ct5h8leY/7+qQ=;
-        b=BH7c05qHjFDC4rOVpnSyL7cneEvQukM0sVe7a28yKXroE4fH/dgu4FzjMg1Ep4BTMM
-         vlLlP5Goo2lfVk3KUSlw7a37z69x1sennnuXtyUUj0QIjEmuzxeHMk8MJRkS+5uDqPS8
-         1rjOrlo84+yq/sFSyedg7eGIVOhxxu9wxLsDdNfis0H9qY5D8yafl2ZyqDAAUgMxadAD
-         sL5EFfposf/qVr9wzgwjoduQsRZtZM+LUV0tOgE7NbAUovUnQBkDHQ2mPJVuj5HhksCw
-         euCDEtjIyNxVLGzehROwXUEpKZjxrB3nHY9LdV/Kcn/abr7cEdR+lfs/0HWXrOgUx8B8
-         jS4w==
-X-Gm-Message-State: AOAM530ZxDuYzOZQOwC+t2/MIt+AwgpvFTaX5OojWWNJhD5bGt+jyA+Q
-        He9yXemq6w4RbPN1L9BrLcb/FA==
-X-Google-Smtp-Source: ABdhPJwM/USBBDqcz3Mo0FpT+5QasQtoHcs2ePLRiKzk0nszAsYbzNIGGqS8hJcbJaiGnR5zlF5l2g==
-X-Received: by 2002:a05:6830:839:: with SMTP id t25mr6395244ots.372.1643417607223;
-        Fri, 28 Jan 2022 16:53:27 -0800 (PST)
-Received: from yoga ([2600:1700:a0:3dc8:5c39:baff:fe03:898d])
-        by smtp.gmail.com with ESMTPSA id 124sm12194246oif.7.2022.01.28.16.53.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Jan 2022 16:53:26 -0800 (PST)
-Date:   Fri, 28 Jan 2022 18:53:24 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
-        Lee Jones <lee.jones@linaro.org>, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-Subject: Re: [PATCH v10 2/2] leds: Add driver for Qualcomm LPG
-Message-ID: <YfSQBOHkwCKMGrbu@yoga>
-References: <20211010043912.136640-1-bjorn.andersson@linaro.org>
- <20211010043912.136640-2-bjorn.andersson@linaro.org>
- <YXL0DyyPkS4/wfB7@ripper>
- <20211027211928.tjybwy2lokj6eoun@SoMainline.org>
- <20211027212709.4ma5uzy5titmgzqv@SoMainline.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HZeBPf4FWmMWEAA75U+2zfHoRz8ztsSomUo5httipXs=;
+        b=DsSRh8RHQlv5izC1VyvmeTIDZO2EcENJrtyMSq1cTKv+0SyjAbangJQK5KQRQrBKQi
+         CdzR851jhCcb/HRTEBMYhgUcqyvlokvWq9zgCgVjsPE90QM0dz75AcakxLHdxa5d0Pxh
+         3gn4KSZlOTqIC4X2YBnR0IZ2Dgy2f3oxq/UaB9UzjFCfyhvX/aS5XAO4RqXfsWvVaCFa
+         UxJliqmoCWZAe1LKU9qIWBBlZdAjovgHzdYV7YaHIJsro9bEr1xlRK8zgLps+2wmOas9
+         VEviwRKImuqkcP7LvuTNVMKDvOJIZfXkkdjAkYYcifJ3eYXXYZXABQIvcDdxOqIEQuR0
+         RuwA==
+X-Gm-Message-State: AOAM532aJIxdbW7X36g2FT7w2xC49cE/CJYQJ7RVkKlGeH9aySt1MOTr
+        Z0Cmx5PElTkGdflMYK/shsqwy8vnMyz8esL86os6lw==
+X-Google-Smtp-Source: ABdhPJz1SUkhXX0nFJpMY927BG9OfI05xq6GzmRY0qwKjjcY4yGG/+NV86N6iZNmb0K0+pJBgyraSskIt/tK1DfJS44=
+X-Received: by 2002:a25:8011:: with SMTP id m17mr16390132ybk.284.1643421221603;
+ Fri, 28 Jan 2022 17:53:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211027212709.4ma5uzy5titmgzqv@SoMainline.org>
+References: <cover.1643075547.git.benwolsieffer@gmail.com> <9f19df2a0017b71547445ac34df221e827c45bd0.1643075547.git.benwolsieffer@gmail.com>
+ <YfDKTGQDh3tDMECz@builder.lan>
+In-Reply-To: <YfDKTGQDh3tDMECz@builder.lan>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Sat, 29 Jan 2022 02:53:30 +0100
+Message-ID: <CACRpkday7mRWPfirjY+VcS-tB8CwqWQCyunkTUh0om9DXF4F3g@mail.gmail.com>
+Subject: Re: [PATCH 3/3] ARM: dts: qcom: basic HP TouchPad support
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Ben Wolsieffer <benwolsieffer@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+        soc@kernel.org, Stephen Boyd <sboyd@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 27 Oct 16:27 CDT 2021, Marijn Suijten wrote:
+On Wed, Jan 26, 2022 at 5:13 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
 
-> On 2021-10-27 23:19:30, Marijn Suijten wrote:
-> > Hi Bjorn,
-> > 
-> > On 2021-10-22 10:25:35, Bjorn Andersson wrote:
-> > > On Sat 09 Oct 21:39 PDT 2021, Bjorn Andersson wrote:
-> > > 
-> > > > The Light Pulse Generator (LPG) is a PWM-block found in a wide range of
-> > > > PMICs from Qualcomm. These PMICs typically comes with 1-8 LPG instances,
-> > > > with their output being routed to various other components, such as
-> > > > current sinks or GPIOs.
-> > > > 
-> > > > Each LPG instance can operate on fixed parameters or based on a shared
-> > > > lookup-table, altering the duty cycle over time. This provides the means
-> > > > for hardware assisted transitions of LED brightness.
-> > > > 
-> > > > A typical use case for the fixed parameter mode is to drive a PWM
-> > > > backlight control signal, the driver therefor allows each LPG instance
-> > > > to be exposed to the kernel either through the LED framework or the PWM
-> > > > framework.
-> > > > 
-> > > > A typical use case for the LED configuration is to drive RGB LEDs in
-> > > > smartphones etc, for which the driver support multiple channels to be
-> > > > ganged up to a MULTICOLOR LED. In this configuration the pattern
-> > > > generators will be synchronized, to allow for multi-color patterns.
-> > > > 
-> > > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > > ---
-> > > 
-> > > Any feedback on this?
-> > 
-> > I asked in #linux-msm whether anything is wrong with the patterns,
-> > since my Sony Discovery (sdm630 with a pm660l) blinks way quicker on a
-> > pattern that's supposed to stay on for 1s and off for 1s:
-> > 
-> >     echo "0 1000 255 1000" > /sys/class/leds/rgb\:status/hw_pattern
-> > 
-> > It however seems to be broken in the same way on an older version now
-> > (this might be v9 or v8) which I don't remember to be the case.  Can you
-> > double-check if this is all working fine on your side?  If so, I'll have
-> > to find some time to debug it on my end.
-> > 
-> > Thanks!
-> > - Marijn
-> 
-> Another thing I just ran into: on both patch revisions the colors are
-> flipped.  multi_index reports "red green glue", but the values written
-> to multi_intensity correspond to "blue green red" instead.  Is it the
-> same on your side?
-> 
+> @Linus, please take a look at the regulator question below.
 
-I booted one of my 8974 devices with RGB LED and the colors matches my
-expectations. Can you confirm that your mapping in the DT node is
-correct?
+OK!
 
-E.g. with pm8941 the mapping should be "backwards":
+> >  arch/arm/boot/dts/qcom-apq8060-tenderloin.dts | 549 ++----------------
 
-lpg {
-    ...;
-    rgb-led {
-        color = <LED_COLOR_ID_RGB>;
-        function = LED_FUNCTION_STATUS;
+Nice to see some use of all the work put into the APQ8060 support!
 
-        #address-cells = <1>;
-        #size-cells = <0>;
+FYI: if you want graphics, this work may need to get finished:
+https://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-integrator.git/log/?h=apq8060-dragonboard-graphics
+(mainly the MMCC)
 
-        led@1 {
-            reg = <7>;
-            color = <LED_COLOR_ID_RED>;
-        };
+> >               pinctrl@800000 {
+> > -                     /* eMMMC pins, all 8 data lines connected */
+>
+> It would be nice if you could throw a separate patch on the list that
+> fixes this spelling mistake in the original as well.
 
-        led@2 {
-            reg = <6>;
-            color = <LED_COLOR_ID_GREEN>;
-        };
+Yes pls.
 
-        led@3 {
-            reg = <5>;
-            color = <LED_COLOR_ID_BLUE>;
-        };
-};
+> >                               l21 {
+> > -                                     // 1.1 V according to schematic
+> >                                       regulator-min-microvolt = <1200000>;
+> >                                       regulator-max-microvolt = <1200000>;
+> >                                       bias-pull-down;
+> > -                                     regulator-always-on;
+> > +                                     /*
+> > +                                      * RPM driver can't handle always-on regulators that are
+> > +                                      * supplied by regulators initialized after them.
+> > +                                      */
+>
+> That looks like an oversight that should be corrected, perhaps it needs
+> similar attention that was given to the smd-rpm driver recently?
 
-Regards,
-Bjorn
+Indeed
+
+> But this makes me wonder, how can this work on the other board? Linus?
+
+I suppose these don't supply anything vital?
+
+I know I have seen some regulators switch off and on but I
+may have been confused.
+
+
+> >                               s0 {
+> > -                                     // regulator-min-microvolt = <500000>;
+> > +                                     // regulator-min-microvolt = <800000>;
+> >                                       // regulator-max-microvolt = <1325000>;
+>
+> This looks like the full range the regulator could do, do you see a
+> reason for documenting that here? Unless there's a good reason I think
+> you should leave the commented min/max out.
+
+Yours,
+Linus Walleij
