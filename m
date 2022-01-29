@@ -2,88 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 140514A047A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jan 2022 00:47:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 19DC34A2AAC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jan 2022 01:50:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351798AbiA1XrO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Jan 2022 18:47:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57586 "EHLO
+        id S240679AbiA2Aus (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Jan 2022 19:50:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347866AbiA1XrN (ORCPT
+        with ESMTP id S241510AbiA2Aur (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Jan 2022 18:47:13 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 552D9C06174A;
-        Fri, 28 Jan 2022 15:47:11 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EA17961F31;
-        Fri, 28 Jan 2022 23:47:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02819C340E7;
-        Fri, 28 Jan 2022 23:47:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1643413630;
-        bh=iNytjglSwIU8s0+h6erELVVSV91M1C1VRXtxDVxTAac=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=s4r58rKCpAZku+KAwDpt6mdrvCK13XEAitBqpT9R3cb3LDZy7wri6BuXyPHq3s81o
-         x2kOReJ4kjwUQ4PuJe6GxOVGwvzs9tSUdwROMoXFAFdz4nPX4LRtt9pPZPcKoZEJUy
-         jI+AamI5iB8S2eY+6YnYWM9yKQ2qrwA20iHpIeYyeRZC6f3CVBbmqPaL6GvqLXpzop
-         q7jQ18fhWalMot6OvOHphHHTdfL7DizgqBvB/0ALIXc/MaZJgSkixrD8S1kZ/1s8L0
-         KGKeJBTiPgNHfo33AXlecs0Keng1mMlUzjWlCoarbMeScwpT3/AEFW2LcN+quFJMVg
-         0j581gynUOX8A==
-From:   Mark Brown <broonie@kernel.org>
-To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel-janitors@vger.kernel.org, linux-spi@vger.kernel.org
-In-Reply-To: <1b14e4ce91a33c16b2c655389c728071a9c9aa2e.1641643601.git.christophe.jaillet@wanadoo.fr>
-References: <1b14e4ce91a33c16b2c655389c728071a9c9aa2e.1641643601.git.christophe.jaillet@wanadoo.fr>
-Subject: Re: [PATCH] spi: qcom: geni: Simplify DMA setting
-Message-Id: <164341362873.694916.2694684212503292812.b4-ty@kernel.org>
-Date:   Fri, 28 Jan 2022 23:47:08 +0000
+        Fri, 28 Jan 2022 19:50:47 -0500
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CC36C061747
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jan 2022 16:50:47 -0800 (PST)
+Received: by mail-oi1-x230.google.com with SMTP id v67so15537294oie.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jan 2022 16:50:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=wP9GUemZjobVvElhar7UqvhZ43XmUSMFie0l7uhdp34=;
+        b=mMl9H0qw9/VE5m1aO1VI4YZPm4cSdMe0mM3Q2l4V1XUz9/eB0ZKNP/bYFFaNoTXCCq
+         Gb2+GZx14nkjburIhdiga039yksG29/Xqy+EMFyFBXbTb9brMIhyntvWRT2RFU8KMwak
+         axohOsIVOumItT87Cf3fDnf7as+Xc/uKUaVRIXY6Jd/4Qajcb2OZzn9bVS05p9zHNv7w
+         O2gTlJblQuIQbtM0FSf9QnHWBfKzr1rHLNB5nbr7kGfX6jPyNR+0ZWoKB6hXAM3axWnx
+         1BB+IGZcE38YeWzvHZtY3adbMruKepDbVCuRUscZ2zLiqpxHsy3U2wBsA7vm0861LeO6
+         RNbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=wP9GUemZjobVvElhar7UqvhZ43XmUSMFie0l7uhdp34=;
+        b=Jk6lMgAOOTmQxKxBtj92BGWrJ28GrpOWLZWiqEZTdscAeZbsXIytr3HR5TBi/VfPa7
+         YdxLpzAkx+v1UOxbxi9D2eCyzOb4o0MfrXj1eHoA5BT2N3AR+TrT+D1w0VNMpZpp3pjt
+         QXUah3Kqhp/JdZp2z5rd7fJX+c6BfYoGNtpLA2r537WGGY4f+qTufXpu80L/wpKHN6Eq
+         ZrSYOlSPK2CvxxFiQ2QCSQMDPeCADi81cZuDg06+XcWRX8TgmErVddc/TY5/ufGk0j2B
+         20UecSKInDE1YB8ghQXOKI8hdd1Z7zKsmbMjioUx2RARHzwdo88uKxExf7nY0gTLqS3P
+         qP5g==
+X-Gm-Message-State: AOAM53081rYEpDmMaGdRW8/pGsmRYxQlbP2jyR+nCpOn2TdlEciJ3iYE
+        W4W0bqCHqaG1yUJHbvpRTQFcpA==
+X-Google-Smtp-Source: ABdhPJwERBnVifrHrrzYgx92kUQsmMqDK5Gg8Dx7QIQWHze+WTQMcJMbFY9jNW6BAwUh2FHD5fgivA==
+X-Received: by 2002:aca:100c:: with SMTP id 12mr7528496oiq.147.1643417446535;
+        Fri, 28 Jan 2022 16:50:46 -0800 (PST)
+Received: from yoga ([2600:1700:a0:3dc8:5c39:baff:fe03:898d])
+        by smtp.gmail.com with ESMTPSA id c26sm3619496otn.34.2022.01.28.16.50.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Jan 2022 16:50:45 -0800 (PST)
+Date:   Fri, 28 Jan 2022 18:50:42 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
+        Lee Jones <lee.jones@linaro.org>, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Subject: Re: [PATCH v10 2/2] leds: Add driver for Qualcomm LPG
+Message-ID: <YfSPYkbTXMOUGKkG@yoga>
+References: <20211010043912.136640-1-bjorn.andersson@linaro.org>
+ <20211010043912.136640-2-bjorn.andersson@linaro.org>
+ <YXL0DyyPkS4/wfB7@ripper>
+ <20211027211928.tjybwy2lokj6eoun@SoMainline.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211027211928.tjybwy2lokj6eoun@SoMainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 8 Jan 2022 13:07:54 +0100, Christophe JAILLET wrote:
-> As stated in [1], dma_set_mask() with a 64-bit mask will never fail if
-> dev->dma_mask is non-NULL.
-> So, if it fails, the 32 bits case will also fail for the same reason.
+On Wed 27 Oct 16:19 CDT 2021, Marijn Suijten wrote:
+
+> Hi Bjorn,
 > 
-> Simplify code and remove some dead code accordingly.
+> On 2021-10-22 10:25:35, Bjorn Andersson wrote:
+> > On Sat 09 Oct 21:39 PDT 2021, Bjorn Andersson wrote:
+> > 
+> > > The Light Pulse Generator (LPG) is a PWM-block found in a wide range of
+> > > PMICs from Qualcomm. These PMICs typically comes with 1-8 LPG instances,
+> > > with their output being routed to various other components, such as
+> > > current sinks or GPIOs.
+> > > 
+> > > Each LPG instance can operate on fixed parameters or based on a shared
+> > > lookup-table, altering the duty cycle over time. This provides the means
+> > > for hardware assisted transitions of LED brightness.
+> > > 
+> > > A typical use case for the fixed parameter mode is to drive a PWM
+> > > backlight control signal, the driver therefor allows each LPG instance
+> > > to be exposed to the kernel either through the LED framework or the PWM
+> > > framework.
+> > > 
+> > > A typical use case for the LED configuration is to drive RGB LEDs in
+> > > smartphones etc, for which the driver support multiple channels to be
+> > > ganged up to a MULTICOLOR LED. In this configuration the pattern
+> > > generators will be synchronized, to allow for multi-color patterns.
+> > > 
+> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > ---
+> > 
+> > Any feedback on this?
 > 
-> [1]: https://lkml.org/lkml/2021/6/7/398
+> I asked in #linux-msm whether anything is wrong with the patterns,
+> since my Sony Discovery (sdm630 with a pm660l) blinks way quicker on a
+> pattern that's supposed to stay on for 1s and off for 1s:
 > 
-> [...]
+>     echo "0 1000 255 1000" > /sys/class/leds/rgb\:status/hw_pattern
+> 
+> It however seems to be broken in the same way on an older version now
+> (this might be v9 or v8) which I don't remember to be the case.  Can you
+> double-check if this is all working fine on your side?  If so, I'll have
+> to find some time to debug it on my end.
+> 
 
-Applied to
+I had missed the fact that LPG_RAMP_DURATION_REG is two registers for
+msg and lsb, for a total of 9 bits of duration. So what you saw was
+probably ticking at 232ms.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+Note though that the pattern uses the last time as "high pause", so I
+expect that you should have seen 232 ms of off, followed by 464ms of
+light.
 
-Thanks!
+I've fixed this for v11, both rejecting invalid input and writing out
+all 9 bits.
 
-[1/1] spi: qcom: geni: Simplify DMA setting
-      commit: bef8c5fdf50b573351571e94525800c41d9830f2
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+Thanks for spotting this!
+Bjorn
