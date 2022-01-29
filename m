@@ -2,143 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B221E4A2D74
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jan 2022 10:45:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D9E84A2D81
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jan 2022 10:52:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234553AbiA2Jp0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Jan 2022 04:45:26 -0500
-Received: from mail.z3ntu.xyz ([128.199.32.197]:43336 "EHLO mail.z3ntu.xyz"
+        id S238383AbiA2JwX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Jan 2022 04:52:23 -0500
+Received: from mout.gmx.net ([212.227.17.21]:36547 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234124AbiA2JpZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Jan 2022 04:45:25 -0500
-Received: from g550jk.localnet (ip-213-127-106-2.ip.prioritytelecom.net [213.127.106.2])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 90B00CACAF;
-        Sat, 29 Jan 2022 09:45:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1643449523; bh=zQkC1QYsOvP0xeltftJt85NawEUy23u3cA/wx9Ewofw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=IpJMuvhOdripEPz6XDpw6ktN29te+2YyoYuCmvISHCt8R9pbBCPUZcFXrMdIeISF6
-         WrEBHFhW4D73kscbB4WezUNy30zlZeJkRaUt0TbuuyI2BF9HURmmMU+vFtwy/MakZ4
-         xe/UGOsBg97pr0k6GelkyPsA9m/xqJHURBcM1Usc=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     Petr Vorel <petr.vorel@gmail.com>, linux-arm-msm@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     Shawn Guo <shawnguo@kernel.org>,
-        Oleksij Rempel <linux@rempel-privat.de>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Daniel Palmer <daniel@0x0f.com>,
-        Max Merchel <Max.Merchel@tq-group.com>,
-        Hao Fang <fanghao11@huawei.com>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Jean THOMAS <virgule@jeanthomas.me>
-Subject: Re: [PATCH 6/8] dt-bindings: vendor-prefixes: add LG Electronics
-Date:   Sat, 29 Jan 2022 10:45:23 +0100
-Message-ID: <3398674.ElGaqSPkdT@g550jk>
-In-Reply-To: <64ee2334-aa99-7226-8946-84c95676041a@canonical.com>
-References: <YfHlV13Zi4KV+bNT@pevik> <5883435.31r3eYUQgx@g550jk> <64ee2334-aa99-7226-8946-84c95676041a@canonical.com>
+        id S238457AbiA2JwT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 29 Jan 2022 04:52:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1643449934;
+        bh=SjobegYeCpUDAve7xiuQBv0BWl07pgDK9eKK4i8RRPs=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=Ets050nABkDUfTnVuV2reJhTxXdwnk6WYChZVH3zKncpwK25er0mNIMyEHlMtNkR5
+         n2RsvMqSTmbhqSO7XwYv3bG+0Ufrm77KtPrsXTORDM2kcpZQILdffpF6M8Fi5XPEhI
+         CDyEO/hvZowgVmFypMbTMrbATNUoob/zYndtptXs=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M7b6b-1nAB6G3Ln3-0080Jw; Sat, 29
+ Jan 2022 10:52:13 +0100
+From:   =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To:     linux-clk@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org,
+        =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: [PATCH 4/5] clk: qcom: Declare mux table as const u32[]
+Date:   Sat, 29 Jan 2022 10:51:57 +0100
+Message-Id: <20220129095159.2202366-5-j.neuschaefer@gmx.net>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220129095159.2202366-1-j.neuschaefer@gmx.net>
+References: <20220129095159.2202366-1-j.neuschaefer@gmx.net>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
+X-Provags-ID: V03:K1:uwp4dzzhhwbJM5makTwlwtp2N5eApP48DwAPSe0hk9JLwycThiY
+ 2MUj4FKwb6auuycF27LwU/l/EWpnEH0YXAvmndGMerAOhR42WEJl7QqEvcvPIhXXFT3PPLA
+ 8CosYEPrUcmAZvT28jrijfFhyBbJ2PiJomY9YHIe/vkj00ggn5WwGYiUYcM8jAIA1yLWWYz
+ rXV8n2zEHBY9ACGqMiDPA==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:iYe1hMHmwFg=:CcsxAEilFaU7hb3BMmW6IU
+ mqxqawEDxV/hnLznDrDtzJE1hI8b8EacwHkIkCXEn93Pw2IqPmuML4LKQg69UVoUlUvvYbyto
+ IYd7pzYDqct/5Ht/QycqKtT1JCSL7OCmNSa/sGTX/6WIMmkoy2klu76FTvId2U2VCNBO7WOux
+ xZswuTV95pirvtFO6iI7vYB36GapOqWiy4FEXLp9u7XXxEvSlTLvfisHoVERrZuATWxsQn9Sz
+ PtLgpkwKyV2V91/+uoUkmfgYLy7qNFrg98IxoncbkFAAon4r7ONVnFrWaozlMq+h7wmkIoKh/
+ ESaFTmrdOmlz1ee4K0do5iQPt1wULnkTH6Ei041TonFhIwepwuQDHKTSQjZK8eKh8fC+/QseN
+ n8vU7rb0+P3aG3NBWzIqqhjqMrkWCHicdAqisWfMGq3+8VbUKIBNtyJDCpy4yI5YeVFAfRxNf
+ i4KDbBiei1JgCtpEDjL2bkcvMtWgS7G1Vwj0rTbk/C2SEapwRIo/buL/gPtYs/4+HW6wh8WQQ
+ r5jRyhOvM0Py+zYiG5v7+IBsZaLY4B+RSLUywdZAVv7M2yQSMAm0FYgBytF07Nq01szUv3/ga
+ tzJz6vfxCepIc0Qq+jpmnW3YEif1wEz1tMo9hCxww6gRpKk0UclqLI5vmV75gT++LWOXXbduC
+ 0WM/Y1WS8+on2NdqX4EX2DzIdCEjSNJk+nTRLiZXxw5xSOFnL3EN/J4C/2h6IXfMpnYI46CaW
+ 1i60lpilaRXQWsR2n8HOEJPZX2lKrXKVWk9fyZ2PG2NzNci98OZniEZ8dqLzWBD62BeCQKv0z
+ 7iNJQJ93fnfEujTb5EEgJATyE3DepBvCMG5f3Zz7G6g4EI4e8snaRxqz8WIlxbDaoKwKIdJCt
+ B95f7odsXi+0EeTGxnTwM8vmAeU2pnQ1q5o3esXY1sQ0URux6xcI7k8DjTl8re1nzaiWiED/W
+ o877P/6I8nbev0IvaU9kNX0aAfkzQ8Zl304u3BoKhPimCDsOy4gs8/NAKMRMh15JFX2u9AI0A
+ Nd+gkVG/hNl9XEqFjjM5QNi/6VIZfAAniDT2c6MZIyoTn9WrSrQs7WJCenSXMYBJ6c8hI9oqe
+ Q0qCk7RmQfr1/g=
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
+Now that clk_register_mux_table takes a const u32 *, we can declare the
+mux tables as const u32[].
 
-On Freitag, 28. J=E4nner 2022 10:57:15 CET Krzysztof Kozlowski wrote:
-> On 27/01/2022 21:51, Luca Weiss wrote:
-> > Hi all,
-> >=20
-> > On Donnerstag, 27. J=E4nner 2022 08:45:33 CET Krzysztof Kozlowski wrote:
-> >> On 27/01/2022 01:20, Petr Vorel wrote:
-> >>> Hi all,
-> >>>=20
-> >>>>> Hi Krzysztof,
-> >>>>>=20
-> >>>>> On Montag, 13. September 2021 10:49:43 CEST Krzysztof Kozlowski wro=
-te:
-> >>>>>> On 12/09/2021 01:27, Luca Weiss wrote:
-> >>>>>>> LG Electronics is a part of the LG Corporation and produces, amon=
-gst
-> >>>>>>> other things, consumer electronics such as phones and smartwatche=
-s.
-> >>>>>>=20
-> >>>>>> Hi,
-> >>>>>>=20
-> >>>>>> Thanks for the patches.
-> >>>>>>=20
-> >>>>>> I think "lge" it's the same prefix as "lg". There is no sense in
-> >>>>>> having
-> >>>>>> multiple vendor prefixes just because company splits inside busine=
-ss
-> >>>>>> units or subsidiaries. The same as with other conglomerates, e.g.
-> >>>>>> Samsung - if we wanted to be specific, there will be 4-5 Samsung
-> >>>>>> vendors... Not mentioning that company organisation is not always
-> >>>>>> disclosed and can change.
-> >>>>>=20
-> >>>>> I was mostly following qcom-msm8974-lge-nexus5-hammerhead as it's t=
-he
-> >>>>> other LG device tree I am aware of so I've picked lge instead of lg.
-> >>>>> Also worth noting that Google uses "LGE" in the Android device tree=
-[1]
-> >>>>> or in the model name in the LG G Watch R kernel sources ("LGE APQ
-> >>>>> 8026v2 LENOK rev-1.0")
-> >>>>=20
-> >>>> [1] Does not point to kernel tree. Downstream user could be a good
-> >>>> argument to switch to lge, but then I would expect correcting other
-> >>>> "lg"
-> >>>> devices which are in fact made by LGE.
-> >>>>=20
-> >>>>> I don't have a strong opinion either way so I'm fine with either.
-> >>>>>=20
-> >>>>> If we decide to go with "lg" do we want to change the Nexus 5
-> >>>>> devicetree
-> >>>>> (hammerhead) also, that one has the lge name in at least compatible
-> >>>>> and
-> >>>>> filename (I don't know how much of a breaking change that would be
-> >>>>> considered as).
-> >>>>=20
-> >>>> We would have to add a new one and mark the old compatible as
-> >>>> deprecated.
-> >>>=20
-> >>> Have we sorted this lg- vs. lge- ?
-> >>>=20
-> >>> There are both:
-> >>> arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-> >>> vs
-> >>> arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-> >>=20
-> >> Probably renaming/unifying/correcting prefix in existing compatibles is
-> >> not worth the effort. This would make a mess and affect other DTS user=
-s.
-> >=20
-> > If wanted I can send a patch renaming the Nexus 5 to just LG, this would
-> > adjust both compatible in the file (which shouldn't really affect
-> > anything) and the filename (which probably will affect various scripts
-> > and whatnot used by existing users of the dtb).
-> > Is this something that can be done in mainline or should we rather just
-> > let it be? I'm not sure what the policies there are.
->=20
-> The "lge" compatible is already in the bindings, so it should not be
-> changed without valid reason. Imagine there is an user-space code
-> parsing compatibles to adjust some power-management settings to
-> different models. It would be broken now.
->=20
-> What could be done is to mark it as deprecated and a add new one:
-> compatible =3D "lg,hammerhead", "lge,hammerhead", "qcom,msm8974";
-> This should be safe for user-space and allow transition to common "lg".
+Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+=2D--
+ drivers/clk/qcom/kpss-xcc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-What can or should be done about the filename then?
-=46or compatible in the file it's now clear from my side.
+diff --git a/drivers/clk/qcom/kpss-xcc.c b/drivers/clk/qcom/kpss-xcc.c
+index 4fec1f9142b82..88d4b33ac0cc3 100644
+=2D-- a/drivers/clk/qcom/kpss-xcc.c
++++ b/drivers/clk/qcom/kpss-xcc.c
+@@ -17,7 +17,7 @@ static const char *aux_parents[] =3D {
+ 	"pxo",
+ };
 
-Regards
-Luca
-
->=20
-> Best regards,
-> Krzysztof
-
-
-
+-static unsigned int aux_parent_map[] =3D {
++static const u32 aux_parent_map[] =3D {
+ 	3,
+ 	0,
+ };
+=2D-
+2.34.1
 
