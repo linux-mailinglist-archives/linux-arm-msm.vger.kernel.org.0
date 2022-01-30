@@ -2,69 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4681C4A3609
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jan 2022 12:45:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C3284A362F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jan 2022 13:24:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354699AbiA3Lpw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 30 Jan 2022 06:45:52 -0500
-Received: from mail.z3ntu.xyz ([128.199.32.197]:43338 "EHLO mail.z3ntu.xyz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1354689AbiA3Lpw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 30 Jan 2022 06:45:52 -0500
-Received: from localhost.localdomain (ip-213-127-106-2.ip.prioritytelecom.net [213.127.106.2])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 23EFDCE852;
-        Sun, 30 Jan 2022 11:45:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1643543147; bh=+J7dsbVz0Gr8InKACrreO1d9W/9Jj6OF5yJF+RWIf/E=;
-        h=From:To:Cc:Subject:Date;
-        b=c10RlLUlhqufnyLDvfgaFSw4/SeapNyg8sHtOOCs2asKq8bYgmIo5jMHiQrO4sVtn
-         bPDvbPVUDDhHSLnswp3shlNPnW51H3wvzOwcEZppmr/yi164niHla/lSA2M3yCz15a
-         VDxkxHqguH1CGgef7Q+WRr1vWpE+fLPIyZLxJeJ4=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
+        id S1354755AbiA3MY0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 30 Jan 2022 07:24:26 -0500
+Received: from ams.source.kernel.org ([145.40.68.75]:56526 "EHLO
+        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1354425AbiA3MY0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 30 Jan 2022 07:24:26 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id CAD15B80DEF;
+        Sun, 30 Jan 2022 12:24:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 414C7C340E4;
+        Sun, 30 Jan 2022 12:24:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1643545463;
+        bh=pwp+GnroCdFEJWcK92qTVzMBdnxk6NQt6J0zB3LNVFw=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=MKwSQ4Kc2eZERUl547NyXjpkmgDhFlbBAXPMGgkB/2IF1avODl8A5zheoOiuhdvBK
+         PUkZ/XHPlQ3tw6XTJy5ib8Qq3tkemLckKabLfO0+iXpwBeP2JOP/1udQ4zHYCNKIVc
+         QCcU8V6K04kNc0Y7+uwicf0LZ4otCFrL99yTkqMW+N6dwzb7ldYFRMQLewoi2Gs0Pd
+         UepBAywLrbMA7nsrzatHNRnuRAtCJ1pB8WTLMja4xXECRmb6kXbhORfWunr6qJkpom
+         QkJbEmSGkCR+w57Xt9LWGGHhXbWNnzrJxwDoV5rTjdRO17ox4L0xhiUDmXInSTU/EP
+         ItvlnGt61ip0Q==
+Date:   Sun, 30 Jan 2022 12:30:47 +0000
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc:     Andreas Kemnade <andreas@kemnade.info>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Ansuel Smith <ansuelsmth@gmail.com>,
-        Sricharan R <sricharan@codeaurora.org>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] cpufreq: qcom-cpufreq-nvmem: fix reading of PVS Valid fuse
-Date:   Sun, 30 Jan 2022 12:45:35 +0100
-Message-Id: <20220130114535.1570634-1-luca@z3ntu.xyz>
-X-Mailer: git-send-email 2.34.1
+        Lars-Peter Clausen <lars@metafoo.de>
+Subject: Re: [PATCH v4 1/4] math.h: Introduce data types for fractional
+ numbers
+Message-ID: <20220130123034.708543ad@jic23-huawei>
+In-Reply-To: <20220126135353.24007-1-andriy.shevchenko@linux.intel.com>
+References: <20220126135353.24007-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The fuse consists of 64 bits, with this statement we're supposed to get
-the upper 32 bits but it actually read out of bounds and got 0 instead
-of the desired value which lead to the "PVS bin not set." codepath being
-run resetting our pvs value.
+On Wed, 26 Jan 2022 15:53:50 +0200
+Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
 
-Fixes: a8811ec764f9 ("cpufreq: qcom: Add support for krait based socs")
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
- drivers/cpufreq/qcom-cpufreq-nvmem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> Introduce a macro to produce data types like
+> 
+> 	struct TYPE_fract {
+> 		__TYPE numerator;
+> 		__TYPE denominator;
+> 	};
+> 
+> to be used in the code wherever it's needed.
+> 
+> In the following changes convert some users to it.
+> 
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-index d1744b5d9619..6dfa86971a75 100644
---- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-+++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-@@ -130,7 +130,7 @@ static void get_krait_bin_format_b(struct device *cpu_dev,
- 	}
- 
- 	/* Check PVS_BLOW_STATUS */
--	pte_efuse = *(((u32 *)buf) + 4);
-+	pte_efuse = *(((u32 *)buf) + 1);
- 	pte_efuse &= BIT(21);
- 	if (pte_efuse) {
- 		dev_dbg(cpu_dev, "PVS bin: %d\n", *pvs);
--- 
-2.34.1
+I'm not 100% sold on this, but I'm going to give them the benefit
+of the doubt as to long term usefulness and apply them.
+
+Basically I'm taking the view Andy is often right :)
+
+Applied to the togreg branch of iio.git and pushed out as testing
+for 0-day to see if we missed anything.
+
+Thanks,
+
+Jonathan
+
+> ---
+> 
+> May be pulled via IIO tree.
+> 
+> v4: no changes
+> v3: no changes
+> v2: no changes
+> 
+>  include/linux/math.h | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+> 
+> diff --git a/include/linux/math.h b/include/linux/math.h
+> index 53674a327e39..439b8f0b9ebd 100644
+> --- a/include/linux/math.h
+> +++ b/include/linux/math.h
+> @@ -2,6 +2,7 @@
+>  #ifndef _LINUX_MATH_H
+>  #define _LINUX_MATH_H
+>  
+> +#include <linux/types.h>
+>  #include <asm/div64.h>
+>  #include <uapi/linux/kernel.h>
+>  
+> @@ -106,6 +107,17 @@
+>  }							\
+>  )
+>  
+> +#define __STRUCT_FRACT(type)				\
+> +struct type##_fract {					\
+> +	__##type numerator;				\
+> +	__##type denominator;				\
+> +};
+> +__STRUCT_FRACT(s16)
+> +__STRUCT_FRACT(u16)
+> +__STRUCT_FRACT(s32)
+> +__STRUCT_FRACT(u32)
+> +#undef __STRUCT_FRACT
+> +
+>  /*
+>   * Multiplies an integer by a fraction, while avoiding unnecessary
+>   * overflow or loss of precision.
 
