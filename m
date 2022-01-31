@@ -2,173 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B6254A4919
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 15:13:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F9194A4A39
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 16:16:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358595AbiAaONQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jan 2022 09:13:16 -0500
-Received: from m43-7.mailgun.net ([69.72.43.7]:17755 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1379295AbiAaONO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jan 2022 09:13:14 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1643638394; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=HHc7r3nTW7LvI6JuHzsTAZhfU68I0uEaz59BkQU4fJI=; b=g/h8W017CJSvorH9CHGTdfzySvscxOyA85EB+3no1klLGKYAiCSN8zgfBa26PLsekMsdWAIw
- WIBMqM6BLqEXMQKzn6d89Xeep9PYU8KcqHbjk6t9xDAuY0xEiS8B7EdbTGe4Wtzjn6TtaBDd
- u9cUnyWFHpcWrEQeCmoghaUGSjk=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 61f7ee79d9d8618172487c1b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 31 Jan 2022 14:13:13
- GMT
-Sender: sricharan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 72A55C43617; Mon, 31 Jan 2022 14:13:11 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.0.104] (unknown [183.82.28.99])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sricharan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3760AC4338F;
-        Mon, 31 Jan 2022 14:13:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 3760AC4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH] mtd: nand: raw: qcom_nandc: Don't clear_bam_transaction
- on READID
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        pragalla@codeaurora.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mdalam@codeaurora.org
-References: <20220113184427.2259509-1-konrad.dybcio@somainline.org>
- <20220114082718.32a2fc83@xps13> <20220126111613.3ab0021e@xps13>
- <20220126103316.GA212068@thinkpad> <20220126114200.4cc3c21b@xps13>
- <fc80a6e7-bd44-3b3e-fca2-1316a76d65f5@codeaurora.org>
- <a6fcc533-e7cd-7b55-4db0-cec80c07b46a@codeaurora.org>
- <0a8d6550-aa19-0af1-abae-66bf34c91ea8@somainline.org>
-From:   Sricharan Ramabadhran <sricharan@codeaurora.org>
-Message-ID: <be779ed9-bd80-8f01-fe7f-d3c07d3d85aa@codeaurora.org>
-Date:   Mon, 31 Jan 2022 19:43:03 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S1346224AbiAaPP4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jan 2022 10:15:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47280 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1379424AbiAaPPu (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 31 Jan 2022 10:15:50 -0500
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 782C5C061776
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 07:15:21 -0800 (PST)
+Received: by mail-ot1-x334.google.com with SMTP id j38-20020a9d1926000000b0059fa6de6c71so13261796ota.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 07:15:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4ZgU+vGjwoubJ875RGR9zEt1v4kg3PV5cuvMBbMqjDc=;
+        b=esqX2L3zl905Y4V/EzdVPP2sl+6fanA8uZ9ay50GWGhwYUlJoITrs+ppFlantEW6nQ
+         TxuuQOowDZ9PnlFKUR4rVmQGHsl+e+8CHke645UitiKHGeSY1tYZDgUvktOzj+QZLJBv
+         9UzdTBOt3eE3dDx3B9kDvC5z1rjSzIUUF1lzA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4ZgU+vGjwoubJ875RGR9zEt1v4kg3PV5cuvMBbMqjDc=;
+        b=RnF+rtP/w7UpvD0ATl4UDCPjfOcTA0JaZppRco5la27OJIVedscd1UzW/lKAIXezGp
+         ae92AHLP59GLwahOebCIKSX3/1AXwyEfSe2M6KRYJzd9NDyg4nMSPFX3Pb5Eg77i3uYc
+         YCNVfnMB8kD1gw02bbvYFyxkXxvzY1UOvbM7c6Pemrwv32tjCHBcRKw6cZ7MkqkFpb7S
+         vV0f5haAk/iyKapJGA6Mx7N0aJ45Q7kVaSu8ihU+zwRq/9+uS689Mjv7vRpJaL1+Y5tO
+         ZHBnypRyHJEhSlfuK3QjNdbsl1km9osTJZN4zkWDV7RR18aJN51fm7rVUflzw3DKguVK
+         4T/Q==
+X-Gm-Message-State: AOAM532BT4TOMAUO6DOfvyOsaphHe/U1t3K3fERRiEWOyHc5VZXfdbCM
+        qEIXaVofE5CZEic1ZBnnrNciZWtXMcEsYLSs5PQnFA==
+X-Google-Smtp-Source: ABdhPJyTs7vnJHqxyqBQfChzS9rKUYFzQoYfVDVbHfBXsz/Jv0Pkicsb6xNwHUpx979UIH6aBlsgh3d/tVOt+pEg2C8=
+X-Received: by 2002:a05:6830:1153:: with SMTP id x19mr11310437otq.321.1643642120656;
+ Mon, 31 Jan 2022 07:15:20 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <0a8d6550-aa19-0af1-abae-66bf34c91ea8@somainline.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+References: <20220127200141.1295328-1-swboyd@chromium.org> <20220127200141.1295328-3-swboyd@chromium.org>
+ <YffoqgmeUdxZ56zB@kroah.com>
+In-Reply-To: <YffoqgmeUdxZ56zB@kroah.com>
+From:   Daniel Vetter <daniel.vetter@ffwll.ch>
+Date:   Mon, 31 Jan 2022 16:15:09 +0100
+Message-ID: <CAKMK7uFYyQ9siB5ENHku+yVPWWM1H=TEn-NZofEKqpJnuEvMmw@mail.gmail.com>
+Subject: Re: [PATCH v6 02/35] component: Introduce the aggregate bus_type
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Russell King <rmk+kernel@arm.linux.org.uk>,
+        Saravana Kannan <saravanak@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
+On Mon, Jan 31, 2022 at 2:48 PM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> On Thu, Jan 27, 2022 at 12:01:08PM -0800, Stephen Boyd wrote:
+> > The component framework only provides 'bind' and 'unbind' callbacks to
+> > tell the host driver that it is time to assemble the aggregate driver
+> > now that all the components have probed. The component framework doesn't
+> > attempt to resolve runtime PM or suspend/resume ordering, and explicitly
+> > mentions this in the code. This lack of support leads to some pretty
+> > gnarly usages of the 'prepare' and 'complete' power management hooks in
+> > drivers that host the aggregate device, and it fully breaks down when
+> > faced with ordering shutdown between the various components, the
+> > aggregate driver, and the host driver that registers the whole thing.
+> >
+> > In a concrete example, the MSM display driver at drivers/gpu/drm/msm is
+> > using 'prepare' and 'complete' to call the drm helpers
+> > drm_mode_config_helper_suspend() and drm_mode_config_helper_resume()
+> > respectively, so that it can move the aggregate driver suspend/resume
+> > callbacks to be before and after the components that make up the drm
+> > device call any suspend/resume hooks they have. This only works as long
+> > as the component devices don't do anything in their own 'prepare' and
+> > 'complete' callbacks. If they did, then the ordering would be incorrect
+> > and we would be doing something in the component drivers before the
+> > aggregate driver could do anything. Yuck!
+> >
+> > Similarly, when trying to add shutdown support to the MSM driver we run
+> > across a problem where we're trying to shutdown the drm device via
+> > drm_atomic_helper_shutdown(), but some of the devices in the encoder
+> > chain have already been shutdown. This time, the component devices
+> > aren't the problem (although they could be if they did anything in their
+> > shutdown callbacks), but there's a DSI to eDP bridge in the encoder
+> > chain that has already been shutdown before the driver hosting the
+> > aggregate device runs shutdown. The ordering of driver probe is like
+> > this:
+> >
+> >  1. msm_pdev_probe() (host driver)
+> >  2. DSI bridge
+> >  3. aggregate bind
+> >
+> > When it comes to shutdown we have this order:
+> >
+> >  1. DSI bridge
+> >  2. msm_pdev_shutdown() (host driver)
+> >
+> > and so the bridge is already off, but we want to communicate to it to
+> > turn things off on the display during msm_pdev_shutdown(). Double yuck!
+> > Unfortunately, this time we can't split shutdown into multiple phases
+> > and swap msm_pdev_shutdown() with the DSI bridge.
+> >
+> > Let's make the component_master_ops into an actual device driver that has
+> > probe/remove/shutdown functions. The driver will only be bound to the
+> > aggregate device once all component drivers have called component_add()
+> > to indicate they're ready to assemble the aggregate driver. This allows
+> > us to attach shutdown logic (and in the future runtime PM logic) to the
+> > aggregate driver so that it runs the hooks in the correct order.
+>
+> I know I asked before, but I can not remember the answer.
+>
+> This really looks like it is turning into the aux bus code.  Why can't
+> you just use that instead here for this type of thing?  You are creating
+> another bus and drivers for that bus that are "fake" which is great, but
+> that's what the aux bus code was supposed to help out with, so we
+> wouldn't have to write more of these.
+>
+> So, if this really is different, can you document it here so I remember
+> next time you resend this patch series?
 
-On 1/31/2022 3:39 PM, Konrad Dybcio wrote:
->
-> On 28/01/2022 18:50, Sricharan Ramabadhran wrote:
->> Hi Konrad,
->>
->> On 1/28/2022 9:55 AM, Sricharan Ramabadhran wrote:
->>> Hi Miquel,
->>>
->>> On 1/26/2022 4:12 PM, Miquel Raynal wrote:
->>>> Hi Mani,
->>>>
->>>> mani@kernel.org wrote on Wed, 26 Jan 2022 16:03:16 +0530:
->>>>
->>>>> On Wed, Jan 26, 2022 at 11:16:13AM +0100, Miquel Raynal wrote:
->>>>>> Hello,
->>>>>>
->>>>>> miquel.raynal@bootlin.com wrote on Fri, 14 Jan 2022 08:27:18 +0100:
->>>>>>> Hi Konrad,
->>>>>>>
->>>>>>> konrad.dybcio@somainline.org wrote on Thu, 13 Jan 2022 19:44:26 
->>>>>>> +0100:
->>>>>>>> While I have absolutely 0 idea why and how, running 
->>>>>>>> clear_bam_transaction
->>>>>>>> when READID is issued makes the DMA totally clog up and refuse 
->>>>>>>> to function
->>>>>>>> at all on mdm9607. In fact, it is so bad that all the data gets 
->>>>>>>> garbled
->>>>>>>> and after a short while in the nand probe flow, the CPU decides 
->>>>>>>> that
->>>>>>>> sepuku is the only option.
->>>>>>>>
->>>>>>>> Removing _READID from the if condition makes it work like a 
->>>>>>>> charm, I can
->>>>>>>> read data and mount partitions without a problem.
->>>>>>>>
->>>>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
->>>>>>>> ---
->>>>>>>> This is totally just an observation which took me an inhumane 
->>>>>>>> amount of
->>>>>>>> debug prints to find.. perhaps there's a better reason behind 
->>>>>>>> this, but
->>>>>>>> I can't seem to find any answers.. Therefore, this is a BIG RFC!
->>>>>>> I'm adding two people from codeaurora who worked a lot on this 
->>>>>>> driver.
->>>>>>> Hopefully they will have an idea :)
->>>>>> Sadre, I've spent a significant amount of time reviewing your 
->>>>>> patches,
->>>>>> now it's your turn to not take a month to answer to your peers
->>>>>> proposals.
->>>>>>
->>>>>> Please help reviewing this patch.
->>>>> Sorry. I was hoping that Qcom folks would chime in as I don't have 
->>>>> any idea
->>>>> about the mdm9607 platform. It could be that the mail server 
->>>>> migration from
->>>>> codeaurora to quicinc put a barrier here.
->>>>>
->>>>> Let me ping them internally.
->>>> Oh, ok, I didn't know. Thanks!
->>>
->>>    Sorry Miquel, somehow we did not get this email in our inbox.
->>>    Thanks to Mani for pinging us, we will test this up today and get 
->>> back.
->>>
->>       While we could not reproduce this issue on our ipq boards (do 
->> not have a mdm9607 right now) and
->>        issue does not look any obvious.
->>       can you please give the debug logs that you did for the above 
->> stage by stage ?
->
-> I won't have access to the board for about two weeks, sorry.
->
-> When I get to it, I'll surely try to send you the logs, though there
->
-> wasn't much more than just something jumping to who-knows-where
->
-> after clear_bam_transaction was called, resulting in values associated 
-> with
->
-> the NAND being all zeroed out in pr_err/_debug/etc.
->
->
-     Ok sure. So was the READID command itself failing (or) the 
-subsequent one ?
-    We can check which parameter reset by the clear_bam_transaction is 
-causing the
-    failure.  Meanwhile, looping in Pradeep who has access to the board, 
-so in a better
-    position to debug.
+aux takes a device and splits it into a lot of sub-devices, each with
+their own driver.
 
-Regards,
-    Sricharan
+This takes a pile of devices, and turns it into a single logical
+device with a single driver.
 
+So aux is 1:N, component is N:1.
 
+And yes you asked this already, I typed this up already :-)
+
+Cheers, Daniel
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
