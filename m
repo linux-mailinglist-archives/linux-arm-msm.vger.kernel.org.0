@@ -2,261 +2,321 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A657B4A38E7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jan 2022 21:15:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B03E4A3D25
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 06:04:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231913AbiA3UPu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 30 Jan 2022 15:15:50 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:42867 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356097AbiA3UPu (ORCPT
+        id S234752AbiAaFE2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jan 2022 00:04:28 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:9634 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233527AbiAaFE1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 30 Jan 2022 15:15:50 -0500
+        Mon, 31 Jan 2022 00:04:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1643573750; x=1675109750;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references;
-  bh=p5aXxLCPRw2pj9jH3aEARcXm7IAACxpMBexHYu/TxcA=;
-  b=VIh2Q4UmpaMQCdCKSNYy/WQfTOIOJi2UljxcS5OsIOa5yWZjPjyLzVVZ
-   M0e/Uz4C2Jr61vc2W0l9EuO+mqK2mVXxJO9X3E1N6eMlFKtCwlMq3W6+A
-   4A+umgXfIhZmvzAy554Sel6sedhqdmpgxKXRHlGaNh0zYNCNSLJN6U2w9
+  t=1643605467; x=1675141467;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=DRVzS+ZJxQe/0b9mt46yJXaWTFVnqVFcY+WutzAm4W0=;
+  b=aPLrpy4loMx+b57mnAerhVjZnYrMs9vs3zOT+ZONVoMQ1YHFM+4ww7cq
+   3/m8n1vBFyStDq4Npvxn+6JXyTiNaNgQg0QxvEQI/xc4cFCBTYUfgdcCL
+   0h/WeY1JYTRym3Z5sMVaeKylfgaG9HRTGwXqSC9l8V4/Cnm2v8ySq3+OK
    w=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 30 Jan 2022 12:15:50 -0800
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 30 Jan 2022 21:04:27 -0800
 X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 30 Jan 2022 12:15:48 -0800
-X-QCInternal: smtphost
-Received: from rajeevny-linux.qualcomm.com ([10.204.66.121])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 31 Jan 2022 01:45:24 +0530
-Received: by rajeevny-linux.qualcomm.com (Postfix, from userid 2363605)
-        id 5A82221ACE; Mon, 31 Jan 2022 01:45:24 +0530 (IST)
-From:   Rajeev Nandan <quic_rajeevny@quicinc.com>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Rajeev Nandan <quic_rajeevny@quicinc.com>,
-        linux-kernel@vger.kernel.org, sean@poorly.run, robdclark@gmail.com,
-        robh+dt@kernel.org, robh@kernel.org, quic_abhinavk@quicinc.com,
-        quic_kalyant@quicinc.com, quic_mkrishn@quicinc.com,
-        jonathan@marek.ca, dmitry.baryshkov@linaro.org, airlied@linux.ie,
-        daniel@ffwll.ch, swboyd@chromium.org
-Subject: [v5 3/3] drm/msm/dsi: Add 10nm dsi phy tuning configuration support
-Date:   Mon, 31 Jan 2022 01:45:19 +0530
-Message-Id: <1643573719-32095-4-git-send-email-quic_rajeevny@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1643573719-32095-1-git-send-email-quic_rajeevny@quicinc.com>
-References: <1643573719-32095-1-git-send-email-quic_rajeevny@quicinc.com>
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jan 2022 21:04:25 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Sun, 30 Jan 2022 21:04:25 -0800
+Received: from [10.216.60.245] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Sun, 30 Jan
+ 2022 21:04:18 -0800
+Message-ID: <36dce74e-f2c8-bd5b-f75e-be4d80537535@quicinc.com>
+Date:   Mon, 31 Jan 2022 10:34:15 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v2 1/3] dt-bindings: usb: qcom,dwc3: Add multi-pd bindings
+ for dwc3 qcom
+Content-Language: en-US
+To:     Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>
+CC:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>
+References: <1635152851-23660-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1635152851-23660-2-git-send-email-quic_c_sanm@quicinc.com>
+ <YXcBK7zqny0s4gd4@ripper>
+ <CAE-0n51k8TycXjEkH7rHYo0j7cYbKJOnOn1keVhx2yyTcBNnvg@mail.gmail.com>
+ <YXck+xCJQBRGqTCw@ripper>
+ <CAE-0n530M3eft-o0qB+yEzGjZgCLMgY==ZgdvwiVCwqqCAVxxA@mail.gmail.com>
+ <YXdsYlLWnjopyMn/@ripper>
+ <CAE-0n51C4dm6bhds=ZZyje-Pcejxjm4MMa3m-VHjFgq7GZGrLw@mail.gmail.com>
+ <YXjbs3Bv6Y3d87EC@yoga>
+ <CAPDyKFrWQdvZX4ukHZoGz73JPfQSgqVrG_4ShMp_GrxL0NKLvg@mail.gmail.com>
+ <da877712-dac9-e9d0-0bfc-25bef450eb65@codeaurora.org>
+ <0153c297-f648-25d1-7f0f-2114f07ef12b@quicinc.com>
+ <7514ff7f-9979-e308-486e-def51ca8e943@quicinc.com>
+From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+In-Reply-To: <7514ff7f-9979-e308-486e-def51ca8e943@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The clock and data lanes of the DSI PHY have a calibration circuitry
-feature. As per the MSM DSI PHY tuning guidelines, the drive strength
-tuning can be done by adjusting rescode offset for hstop/hsbot, and
-the drive level tuning can be done by adjusting the LDO output level
-for the HSTX drive.
 
-Signed-off-by: Rajeev Nandan <quic_rajeevny@quicinc.com>
----
+On 1/19/2022 4:31 PM, Rajendra Nayak wrote:
+>
+>
+> On 1/17/2022 11:33 AM, Sandeep Maheswaram wrote:
+>> Hi Rajendra,
+>>
+>> On 10/28/2021 9:26 AM, Rajendra Nayak wrote:
+>>>
+>>>
+>>> On 10/27/2021 7:54 PM, Ulf Hansson wrote:
+>>>> On Wed, 27 Oct 2021 at 06:55, Bjorn Andersson
+>>>> <bjorn.andersson@linaro.org> wrote:
+>>>>>
+>>>>> On Tue 26 Oct 19:48 CDT 2021, Stephen Boyd wrote:
+>>>>>
+>>>>>> +Rajendra
+>>>>>>
+>>>>>> Quoting Bjorn Andersson (2021-10-25 19:48:02)
+>>>>>>> On Mon 25 Oct 15:41 PDT 2021, Stephen Boyd wrote:
+>>>>>>>
+>>>>>>>>
+>>>>>>>> When the binding was introduced I recall we punted on the 
+>>>>>>>> parent child
+>>>>>>>> conversion stuff. One problem at a time. There's also the 
+>>>>>>>> possibility
+>>>>>>>> for a power domain to be parented by multiple power domains so
+>>>>>>>> translation tables need to account for that.
+>>>>>>>>
+>>>>>>>
+>>>>>>> But for this case - and below display case - the subdomain (the 
+>>>>>>> device's
+>>>>>>> power-domain) is just a dumb gate. So there is no translation, 
+>>>>>>> the given
+>>>>>>> performance_state applies to the parent. Or perhaps such 
+>>>>>>> implicitness
+>>>>>>> will come back and bite us?
+>>>>>>
+>>>>>> In the gate case I don't see how the implicitness will ever be a
+>>>>>> problem.
+>>>>>>
+>>>>>>>
+>>>>>>> I don't think we allow a power-domain to be a subdomain of two
+>>>>>>> power-domains - and again it's not applicable to USB or display 
+>>>>>>> afaict.
+>>>>>>
+>>>>>> Ah maybe. I always confuse power domains and genpd.
+>>>>>>
+>>>>>>>
+>>>>>>>>>
+>>>>>>>>>> Or we may need to make another part of the OPP binding to 
+>>>>>>>>>> indicate the
+>>>>>>>>>> relationship between the power domain and the OPP and the 
+>>>>>>>>>> parent of
+>>>>>>>>>> the power domain.
+>>>>>>>>>
+>>>>>>>>> I suspect this would be useful if a power-domain provider 
+>>>>>>>>> needs to
+>>>>>>>>> translate a performance_state into a different 
+>>>>>>>>> supply-performance_state.
+>>>>>>>>> Not sure if we have such case currently; these examples are 
+>>>>>>>>> all an
+>>>>>>>>> adjustable power-domain with "gating" subdomains.
+>>>>>>>>
+>>>>>>>> Even for this case, we should be able to have the GDSC map the 
+>>>>>>>> on state
+>>>>>>>> to some performance state in the parent domain. Maybe we need 
+>>>>>>>> to add
+>>>>>>>> some code to the gdsc.c file to set a performance state on the 
+>>>>>>>> parent
+>>>>>>>> domain when it is turned on. I'm not sure where the value for 
+>>>>>>>> that perf
+>>>>>>>> state comes from. I guess we can hardcode it in the driver for 
+>>>>>>>> now and
+>>>>>>>> if it needs to be multiple values based on the clk frequency we 
+>>>>>>>> can push
+>>>>>>>> it out to an OPP table or something like that.
+>>>>>>>>
+>>>>>>>
+>>>>>>> For the GDSC I believe we only have 1:1 mapping, so implementing
+>>>>>>> set_performance_state to just pass that on to the parent might 
+>>>>>>> do the
+>>>>>>> trick (although I haven't thought this through).
+>>>>>>>
+>>>>>>> Conceptually I guess this would be like calling clk_set_rate() on a
+>>>>>>> clock gate, relying on it being propagated upwards. The problem 
+>>>>>>> here is
+>>>>>>> that the performance_state is just a "random" integer without a 
+>>>>>>> well
+>>>>>>> defined unit.
+>>>>>>>
+>>>>>>
+>>>>>> Right. Ideally it would be in the core code somehow so that if there
+>>>>>> isn't a set_performance_state function we go to the parent or some
+>>>>>> special return value from the function says "call it on my 
+>>>>>> parent". The
+>>>>>> translation scheme could come later so we can translate the "random"
+>>>>>> integer between parent-child domains.
+>>>>>
+>>>>> As a proof of concept it should be sufficient to just add an
+>>>>> implementation of sc->pd.set_performance_state in gdsc.c. But I agree
+>>>>> that it would be nice to push this into some framework code, perhaps
+>>>>> made opt-in by some GENPD_FLAG_xyz.
+>>>>>
+>>>>>> At the end of the day the device
+>>>>>> driver wants to set a frequency or runtime pm get the device and 
+>>>>>> let the
+>>>>>> OPP table or power domain code figure out what the level is 
+>>>>>> supposed to
+>>>>>> be.
+>>>>>>
+>>>>>
+>>>>> Yes and this is already working for the non-nested case - where the
+>>>>> single power-domain jumps between performance states as the opp code
+>>>>> switches from one opp to another.
+>>>>>
+>>>>> So if we can list only the child power-domain (i.e. the GDSC) and 
+>>>>> have
+>>>>> the performance_stat requests propagate up to the parent rpmhpd 
+>>>>> resource
+>>>>> I think we're good.
+>>>>>
+>>>>>
+>>>>> Let's give this a spin and confirm that this is the case...
+>>>>>
+>>>>>>>
+>>>>>>>
+>>>>>>> The one case where I believe we talked about having different 
+>>>>>>> mapping
+>>>>>>> between the performance_state levels was in the relationship 
+>>>>>>> between CX
+>>>>>>> and MX. But I don't think we ever did anything about that...
+>>>>>>
+>>>>>> Hmm alright. I think there's a constraint but otherwise nobody 
+>>>>>> really
+>>>>>> wants to change both at the same time.
+>>>>>>
+>>>>>>>>
+>>>>>>>> Yes, a GDSC is really a gate on a parent power domain like CX 
+>>>>>>>> or MMCX,
+>>>>>>>> etc. Is the display subsystem an example of different clk 
+>>>>>>>> frequencies
+>>>>>>>> wanting to change the perf state of CX? If so it's a good place 
+>>>>>>>> to work
+>>>>>>>> out the translation scheme for devices that aren't listing the 
+>>>>>>>> CX power
+>>>>>>>> domain in DT.
+>>>>>>>
+>>>>>>> Yes, the various display components sits in MDSS_GDSC but the 
+>>>>>>> opp-tables
+>>>>>>> needs to change the performance_state of MDSS_GDSC->parent (i.e. 
+>>>>>>> CX or
+>>>>>>> MMCX, depending on platform).
+>>>>>>>
+>>>>>>> As I said, today we hack this by trusting that the base drm/msm 
+>>>>>>> driver
+>>>>>>> will keep MDSS_GDSC on and listing MMCX (or CX) as power-domain 
+>>>>>>> for each
+>>>>>>> of these components.
+>>>>>>>
+>>>>>>>
+>>>>>>> So if we solve this, then that seems to directly map to the 
+>>>>>>> static case
+>>>>>>> for USB as well.
+>>>>>>>
+>>>>>>
+>>>>>> Got it. So in this case we could have the various display components
+>>>>>> that are in the mdss gdsc domain set their frequency via OPP and 
+>>>>>> then
+>>>>>> have that translate to a level in CX or MMCX. How do we parent 
+>>>>>> the power
+>>>>>> domains outside of DT? I'm thinking that we'll need to do that if 
+>>>>>> MMCX
+>>>>>> is parented by CX or something like that and the drivers for 
+>>>>>> those two
+>>>>>> power domains are different. Is it basic string matching?
+>>>>>
+>>>>> In one way or another we need to invoke pm_genpd_add_subdomain() 
+>>>>> to link
+>>>>> the two power-domains (actually genpds) together, like what was 
+>>>>> done in
+>>>>> 3652265514f5 ("clk: qcom: gdsc: enable optional power domain 
+>>>>> support").
+>>>>>
+>>>>> In the case of MMCX and CX, my impression of the documentation is 
+>>>>> that
+>>>>> they are independent - but if we need to express that CX is parent of
+>>>>> MMCX, they are both provided by rpmhpd which already supports this by
+>>>>> just specifying .parent on mmcx to point to cx.
+>>>>
+>>>> I was trying to follow the discussion, but it turned out to be a bit
+>>>> complicated to catch up and answer all things. In any case, let me
+>>>> just add a few overall comments, perhaps that can help to move things
+>>>> forward.
+>>>>
+>>>> First, one domain can have two parent domains. Both from DT and from
+>>>> genpd point of view, just to make this clear.
+>>>>
+>>>> Although, it certainly looks questionable to me, to hook up the USB
+>>>> device to two separate power domains, one to control power and one to
+>>>> control performance. Especially, if it's really the same piece of HW
+>>>> that is managing both things. 
+>>> []..
+>>>> Additionally, if it's correct to model
+>>>> the USB GDSC power domain as a child to the CX power domain from HW
+>>>> point of view, we should likely do that.
+>>>
+>>> I think this would still require a few things in genpd, since
+>>> CX and USB GDSC are power domains from different providers.
+>>> Perhaps a pm_genpd_add_subdomain_by_name()?
+>>>
+>> Tried with the changes provided by you  where USB GDSC power domains 
+>> added as a child to the CX power domain
+>>
+>> But cx shutdown is not happening  during sytem suspend as we need to 
+>> keep USB GDSC active in host mode .
+>
+> In the USB driver suspend when you check for this condition, in order 
+> to keep the GDSC active, you would
+> perhaps have to drop the performance state vote and re-vote in resume.
+> I don;t think the genpd core can handle this in any way.
+>
+CX shutdown is not happening even after dropping the performance state 
+in USB driver suspend.
 
-Changes in v2:
- - Split into generic code and 10nm-specific part (Dmitry Baryshkov)
- - Fix the backward compatibility (Dmitry Baryshkov)
+Tried even without USB nodes in device tree cx shutdown is not happening
 
-Changes in v3:
- - Address comments for phy tuning data structure (Dmitry Baryshkov)
- - Make changes as per updated dt-bindings
+Adding CX as a power-domain for GCC  along with below patch
 
-Changes in v4:
- - Return error in case of out of range values (Dmitry Baryshkov)
- - Return error if dt property is present but parsing is failing
-
-Changes in v5:
- - Added missing printk arg ldo_level
+https://lore.kernel.org/all/20210829154757.784699-6-dmitry.baryshkov@linaro.org/ 
+preventing CX shutdown.
 
 
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c | 118 +++++++++++++++++++++++++++--
- 1 file changed, 112 insertions(+), 6 deletions(-)
+Regards
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-index d8128f5..86a6954 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
-@@ -83,6 +83,18 @@ struct dsi_pll_10nm {
- 
- #define to_pll_10nm(x)	container_of(x, struct dsi_pll_10nm, clk_hw)
- 
-+/**
-+ * struct dsi_phy_10nm_tuning_cfg - Holds 10nm PHY tuning config parameters.
-+ * @rescode_offset_top: Offset for pull-up legs rescode.
-+ * @rescode_offset_bot: Offset for pull-down legs rescode.
-+ * @vreg_ctrl: vreg ctrl to drive LDO level
-+ */
-+struct dsi_phy_10nm_tuning_cfg {
-+	u8 rescode_offset_top[DSI_LANE_MAX];
-+	u8 rescode_offset_bot[DSI_LANE_MAX];
-+	u8 vreg_ctrl;
-+};
-+
- /*
-  * Global list of private DSI PLL struct pointers. We need this for bonded DSI
-  * mode, where the master PLL's clk_ops needs access the slave's private data
-@@ -747,6 +759,7 @@ static void dsi_phy_hw_v3_0_lane_settings(struct msm_dsi_phy *phy)
- 	int i;
- 	u8 tx_dctrl[] = { 0x00, 0x00, 0x00, 0x04, 0x01 };
- 	void __iomem *lane_base = phy->lane_base;
-+	struct dsi_phy_10nm_tuning_cfg *tuning_cfg = phy->tuning_cfg;
- 
- 	if (phy->cfg->quirks & DSI_PHY_10NM_QUIRK_OLD_TIMINGS)
- 		tx_dctrl[3] = 0x02;
-@@ -775,10 +788,13 @@ static void dsi_phy_hw_v3_0_lane_settings(struct msm_dsi_phy *phy)
- 		dsi_phy_write(lane_base + REG_DSI_10nm_PHY_LN_CFG2(i), 0x0);
- 		dsi_phy_write(lane_base + REG_DSI_10nm_PHY_LN_CFG3(i),
- 			      i == 4 ? 0x80 : 0x0);
--		dsi_phy_write(lane_base +
--			      REG_DSI_10nm_PHY_LN_OFFSET_TOP_CTRL(i), 0x0);
--		dsi_phy_write(lane_base +
--			      REG_DSI_10nm_PHY_LN_OFFSET_BOT_CTRL(i), 0x0);
-+
-+		/* platform specific dsi phy drive strength adjustment */
-+		dsi_phy_write(lane_base + REG_DSI_10nm_PHY_LN_OFFSET_TOP_CTRL(i),
-+				tuning_cfg->rescode_offset_top[i]);
-+		dsi_phy_write(lane_base + REG_DSI_10nm_PHY_LN_OFFSET_BOT_CTRL(i),
-+				tuning_cfg->rescode_offset_bot[i]);
-+
- 		dsi_phy_write(lane_base + REG_DSI_10nm_PHY_LN_TX_DCTRL(i),
- 			      tx_dctrl[i]);
- 	}
-@@ -799,6 +815,7 @@ static int dsi_10nm_phy_enable(struct msm_dsi_phy *phy,
- 	u32 const timeout_us = 1000;
- 	struct msm_dsi_dphy_timing *timing = &phy->timing;
- 	void __iomem *base = phy->base;
-+	struct dsi_phy_10nm_tuning_cfg *tuning_cfg = phy->tuning_cfg;
- 	u32 data;
- 
- 	DBG("");
-@@ -834,8 +851,9 @@ static int dsi_10nm_phy_enable(struct msm_dsi_phy *phy,
- 	/* Select MS1 byte-clk */
- 	dsi_phy_write(base + REG_DSI_10nm_PHY_CMN_GLBL_CTRL, 0x10);
- 
--	/* Enable LDO */
--	dsi_phy_write(base + REG_DSI_10nm_PHY_CMN_VREG_CTRL, 0x59);
-+	/* Enable LDO with platform specific drive level/amplitude adjustment */
-+	dsi_phy_write(base + REG_DSI_10nm_PHY_CMN_VREG_CTRL,
-+		      tuning_cfg->vreg_ctrl);
- 
- 	/* Configure PHY lane swap (TODO: we need to calculate this) */
- 	dsi_phy_write(base + REG_DSI_10nm_PHY_CMN_LANE_CFG0, 0x21);
-@@ -922,6 +940,92 @@ static void dsi_10nm_phy_disable(struct msm_dsi_phy *phy)
- 	DBG("DSI%d PHY disabled", phy->id);
- }
- 
-+static int dsi_10nm_phy_parse_dt(struct msm_dsi_phy *phy)
-+{
-+	struct device *dev = &phy->pdev->dev;
-+	struct dsi_phy_10nm_tuning_cfg *tuning_cfg;
-+	s8 offset_top[DSI_LANE_MAX] = { 0 }; /* No offset */
-+	s8 offset_bot[DSI_LANE_MAX] = { 0 }; /* No offset */
-+	u32 ldo_level = 400; /* 400mV */
-+	u8 level;
-+	int ret, i;
-+
-+	tuning_cfg = devm_kzalloc(dev, sizeof(*tuning_cfg), GFP_KERNEL);
-+	if (!tuning_cfg)
-+		return -ENOMEM;
-+
-+	/* Drive strength adjustment parameters */
-+	ret = of_property_read_u8_array(dev->of_node, "qcom,phy-rescode-offset-top",
-+					offset_top, DSI_LANE_MAX);
-+	if (ret && ret != -EINVAL) {
-+		DRM_DEV_ERROR(dev, "failed to parse qcom,phy-rescode-offset-top, %d\n", ret);
-+		return ret;
-+	}
-+
-+	for (i = 0; i < DSI_LANE_MAX; i++) {
-+		if (offset_top[i] < -32 || offset_top[i] > 31) {
-+			DRM_DEV_ERROR(dev,
-+				"qcom,phy-rescode-offset-top value %d is not in range [-32..31]\n",
-+				offset_top[i]);
-+			return -EINVAL;
-+		}
-+		tuning_cfg->rescode_offset_top[i] = 0x3f & offset_top[i];
-+	}
-+
-+	ret = of_property_read_u8_array(dev->of_node, "qcom,phy-rescode-offset-bot",
-+					offset_bot, DSI_LANE_MAX);
-+	if (ret && ret != -EINVAL) {
-+		DRM_DEV_ERROR(dev, "failed to parse qcom,phy-rescode-offset-bot, %d\n", ret);
-+		return ret;
-+	}
-+
-+	for (i = 0; i < DSI_LANE_MAX; i++) {
-+		if (offset_bot[i] < -32 || offset_bot[i] > 31) {
-+			DRM_DEV_ERROR(dev,
-+				"qcom,phy-rescode-offset-bot value %d is not in range [-32..31]\n",
-+				offset_bot[i]);
-+			return -EINVAL;
-+		}
-+		tuning_cfg->rescode_offset_bot[i] = 0x3f & offset_bot[i];
-+	}
-+
-+	/* Drive level/amplitude adjustment parameters */
-+	ret = of_property_read_u32(dev->of_node, "qcom,phy-drive-ldo-level", &ldo_level);
-+	if (ret && ret != -EINVAL) {
-+		DRM_DEV_ERROR(dev, "failed to parse qcom,phy-drive-ldo-level, %d\n", ret);
-+		return ret;
-+	}
-+
-+	switch (ldo_level) {
-+	case 375:
-+		level = 0;
-+		break;
-+	case 400:
-+		level = 1;
-+		break;
-+	case 425:
-+		level = 2;
-+		break;
-+	case 450:
-+		level = 3;
-+		break;
-+	case 475:
-+		level = 4;
-+		break;
-+	case 500:
-+		level = 5;
-+		break;
-+	default:
-+		DRM_DEV_ERROR(dev, "qcom,phy-drive-ldo-level %d is not supported\n", ldo_level);
-+		return -EINVAL;
-+	}
-+	tuning_cfg->vreg_ctrl = 0x58 | (0x7 & level);
-+
-+	phy->tuning_cfg = tuning_cfg;
-+
-+	return 0;
-+}
-+
- const struct msm_dsi_phy_cfg dsi_phy_10nm_cfgs = {
- 	.has_phy_lane = true,
- 	.reg_cfg = {
-@@ -936,6 +1040,7 @@ const struct msm_dsi_phy_cfg dsi_phy_10nm_cfgs = {
- 		.pll_init = dsi_pll_10nm_init,
- 		.save_pll_state = dsi_10nm_pll_save_state,
- 		.restore_pll_state = dsi_10nm_pll_restore_state,
-+		.parse_dt_properties = dsi_10nm_phy_parse_dt,
- 	},
- 	.min_pll_rate = 1000000000UL,
- 	.max_pll_rate = 3500000000UL,
-@@ -957,6 +1062,7 @@ const struct msm_dsi_phy_cfg dsi_phy_10nm_8998_cfgs = {
- 		.pll_init = dsi_pll_10nm_init,
- 		.save_pll_state = dsi_10nm_pll_save_state,
- 		.restore_pll_state = dsi_10nm_pll_restore_state,
-+		.parse_dt_properties = dsi_10nm_phy_parse_dt,
- 	},
- 	.min_pll_rate = 1000000000UL,
- 	.max_pll_rate = 3500000000UL,
--- 
-2.7.4
+Sandeep
+
 
