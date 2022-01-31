@@ -2,145 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 784564A5291
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 23:47:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E3D04A529A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 23:49:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234734AbiAaWq7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jan 2022 17:46:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39074 "EHLO
+        id S234933AbiAaWtL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jan 2022 17:49:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234138AbiAaWq6 (ORCPT
+        with ESMTP id S229890AbiAaWtK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jan 2022 17:46:58 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 782B1C061714;
-        Mon, 31 Jan 2022 14:46:58 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id a8so47578068ejc.8;
-        Mon, 31 Jan 2022 14:46:58 -0800 (PST)
+        Mon, 31 Jan 2022 17:49:10 -0500
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80634C06173B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 14:49:10 -0800 (PST)
+Received: by mail-oi1-x22e.google.com with SMTP id y23so29660853oia.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 14:49:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=MIJF9PMHei+gU84wXljWgPX+FCJkqv51JTonhsdd7mU=;
-        b=HL8PJ/RQQ1SfpMA0hvEAt3kC/ALs15+JUOnMq4CRnxjD/LdncB4+eGzcNzM3qDsri5
-         Dk3jby0FeIYX9OT27kVfxJI0DXYNF2sXqh9++K3NK4PE6fR8Yz8292mL2FFg7fKHee6y
-         3EwPKuLfiZaLYGm3m51qaUXAYzOuwYavHcCN3aEJEnzKRTDT1S3TeQkgpg/ycbAS2ipd
-         szSTNHotdj/FiHa4Yv9NQin2rA6oqcTZMcPJzrC6yuRz6cI9VPagqMSfL44HSVeRyLbg
-         GX3dj8MDGJCZHLFtX0pE4l7YRcAOYorNHXF0EwwhiGZ8r56xUbivRUPVZ8VtVvmaCzyg
-         ZDlw==
+        bh=zH4G8FhpzwG8vGycg/3LNRhJPRrFcCye+DMKHFi6Thc=;
+        b=Z+C/vr5aIT6/wwUd35zbTynl7Zjos1sT4ON9OT/iWsN0kEYqucV9ox33Y40BneFydQ
+         dM3FT60gJJHfBT/EmqlnlRdOfUprmHRPwV0rdHvcY9d/2uYuZoMKqwTbikDk0Jb9GpfJ
+         eLuE93gYe4As+VR1uZftkEUzNXk/afrj6wQFUf9YrxGMgSdHN703HBMeeh/ko1fuSJKL
+         96GMoCu9HaiG1QIBH86JAf4T/yJzcJNHcQeBk2wvKkB7jTR8btCtWkvRQPdJ7aaeKL90
+         7GbePG6Es9zFE5oTZPBeh6xOoLZWX+RRLrMS8uXEfl4XXrSxB1XuCFfkcifkBl3HpzEH
+         T+/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=MIJF9PMHei+gU84wXljWgPX+FCJkqv51JTonhsdd7mU=;
-        b=Nso3IVV3ZFW/yKB2DDNxWY3IIf3p8NMkgP1FfMD2NQIhVH5t9D8WNrmCaps4ECNxTG
-         5EQpZpHG5pNYgemuVTP4u1O22bQQ1b98ehFnj0Q6CXpyZ4fg5UR628elCoSB09QXq8Z9
-         ljrbRtARm2R3L8LJWJdxG32nZrexT54fDTMya1rmIUiTG1Ed+mZK0nw4repBbyAhoo9s
-         mdyAKFDvdlUqh2a4Nzqkq7R5UYde6+ys+K12I9lnRQ6r+JkwEauqnCSxOOeoiyqVkPA+
-         iHF4l3Nwsx+O2f5CV8Sxo/91R/Ope09h+tubk0aJlAzVe0oStUN5k0dlRvPN7HWP6v16
-         BpTA==
-X-Gm-Message-State: AOAM531PtCi/a0qD58tUhk5HnaxZCU/HwKRixArWxuXmXwGcVKILfK/B
-        s5EROp2coivOhZ1w0f6PdcY=
-X-Google-Smtp-Source: ABdhPJyETVBxZ9jlV5H5rIieiwcpEXnUqiAwLq1cKF2Sc8is9RFgQ193GqJPsskLcNWl2xvNhDoFTg==
-X-Received: by 2002:a17:907:16a2:: with SMTP id hc34mr19443000ejc.330.1643669216978;
-        Mon, 31 Jan 2022 14:46:56 -0800 (PST)
-Received: from pevik (gw1.ms-free.net. [185.243.124.10])
-        by smtp.gmail.com with ESMTPSA id f11sm18204895edv.29.2022.01.31.14.46.55
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=zH4G8FhpzwG8vGycg/3LNRhJPRrFcCye+DMKHFi6Thc=;
+        b=vZh8tphZGb9cRB4xq36MvvqoGZ4Bbh7E0z9Zssyz2MdkH7lwUQeI//fsHQTXzdbqOu
+         ufI5R9WIdkWFzDtyQn1hibtWBIC/06aTcvXrxuZXCqz/Jbc+L7LYTn48UGIZ5HJgbfoc
+         oJfGhsSkq/n/y8a3MKheexJsaWz+or2ZwT4hj82qGitENp0lgLFJx3tjZA4NRM4W8pyn
+         gNDJy9kSrDyM1Hi6ejR2nxEezJEE2pamSpOLfQxRd8WTh6k0Ito1tDHxKTLhRaSm12J2
+         Hg7i/5zV44qrTy8fTM0mo2n/4aJaIA7O7chuURdGHRwVYzCZTXqB0XU2rv0ygtQOt9li
+         hhdA==
+X-Gm-Message-State: AOAM5335OCsL9iR7ASO7NBNx3xW6G57BOCqEpysAsjuYQn7qg5jCcs+L
+        YC4asz4hprQpD16Wq+/yLQTsjA==
+X-Google-Smtp-Source: ABdhPJxuZlYoI8KM9zf3D0JjhRwI1p4aqNYZezGEaZ+/GCbAPwG/LQABbp3SdE61/B5emMDHIBguug==
+X-Received: by 2002:a05:6808:f8d:: with SMTP id o13mr14653449oiw.250.1643669349914;
+        Mon, 31 Jan 2022 14:49:09 -0800 (PST)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id a15sm17882083oil.13.2022.01.31.14.49.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Jan 2022 14:46:56 -0800 (PST)
-Date:   Mon, 31 Jan 2022 23:46:54 +0100
-From:   Petr Vorel <petr.vorel@gmail.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Jean Thomas <virgule@jeanthomas.me>,
-        Alexey Minnekhanov <alexeymin@postmarketos.org>,
-        Andy Gross <agross@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Taniya Das <tdas@codeaurora.org>, linux-mmc@vger.kernel.org
-Subject: Re: [PATCH 5/6] arm64: dts: qcom: msm8994-huawei-angler: Add
- sdhc{1,2} definitions
-Message-ID: <Yfhm3opZCtAxMwrY@pevik>
-Reply-To: Petr Vorel <petr.vorel@gmail.com>
-References: <20220113233358.17972-1-petr.vorel@gmail.com>
- <20220113233358.17972-6-petr.vorel@gmail.com>
- <YfhmF6FKV9/6YfAL@builder.lan>
+        Mon, 31 Jan 2022 14:49:09 -0800 (PST)
+Date:   Mon, 31 Jan 2022 16:49:07 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 12/17] ARM: dts: qcom: add opp table for cpu and l2 for
+ ipq8064
+Message-ID: <YfhnY1K7gXtYT5fb@builder.lan>
+References: <20220118012051.21691-1-ansuelsmth@gmail.com>
+ <20220118012051.21691-13-ansuelsmth@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YfhmF6FKV9/6YfAL@builder.lan>
+In-Reply-To: <20220118012051.21691-13-ansuelsmth@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+On Mon 17 Jan 19:20 CST 2022, Ansuel Smith wrote:
 
-> On Thu 13 Jan 17:33 CST 2022, Petr Vorel wrote:
+> Add opp table for cpu and l2 cache. The l2 cache won't work as it would
+> require a dedicated cpufreq driver to scale cache with core.
+> 
 
-> > Although downstream supports HS400, there are overclocking warnings when
-> > using mmc-hs400-1_8v:
+Are you saying that the L2 cache frequency scaling doesn't work so you
+put it there for completeness sake, or that it doesn't work without this
+patch?
 
-> > mmc0: Card appears overclocked; req 200000000 Hz, actual 384000000 Hz
-> > mmc0: Card appears overclocked; req 200000000 Hz, actual 384000000 Hz
-> > mmc0: Card appears overclocked; req 200000000 Hz, actual 384000000 Hz
-> > mmc0: Card appears overclocked; req 400000000 Hz, actual 768000000 Hz
-> > mmc0: Card appears overclocked; req 400000000 Hz, actual 768000000 Hz
-> > mmc0: new HS400 MMC card at address 0001
+Could you please rewrite this to make it clear in the git history?
 
-> > Using HS200 (i.e. mmc-hs200-1_8v or mmc-ddr-1_8v) would reduce them:
+Thanks,
+Bjorn
 
-> > mmc0: Card appears overclocked; req 200000000 Hz, actual 384000000 Hz
-> > mmc0: Card appears overclocked; req 200000000 Hz, actual 384000000 Hz
-> > mmc0: new HS200 MMC card at address 0001
-
-> > But as the problem is probably elsewhere (bullhead behaves the same),
-> > keep mmc-hs400-1_8v.
-
-> > Angler does not have SD card, thus explicitly disable sdhc2.
-
-> > Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
-> > ---
-> >  .../dts/qcom/msm8994-huawei-angler-rev-101.dts   | 16 ++++++++++++++++
-> >  1 file changed, 16 insertions(+)
-
-> > diff --git a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-> > index 0e3dd48f0dbf..5ce3dc169bb4 100644
-> > --- a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-> > +++ b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-> > @@ -7,6 +7,7 @@
-> >  /dts-v1/;
-
-> >  #include "msm8994.dtsi"
-> > +#include <dt-bindings/gpio/gpio.h>
-
-> >  /* Angler's firmware does not report where the memory is allocated */
-> >  /delete-node/ &cont_splash_mem;
-> > @@ -41,3 +42,18 @@ serial@f991e000 {
-> >  &tlmm {
-> >  	gpio-reserved-ranges = <85 4>;
-> >  };
-> > +
-> > +/*
-> > + * Although downstream supports also HS400 there are fewer overclocking
-> > + * warnings when used DDR, also LK bootloader reports DDR mode.
-> > + */
-> > +&sdhc1 {
-> > +	status = "okay";
-> > +
-> > +	mmc-hs400-1_8v;
-> > +};
-> > +
-> > +/* Angler does not have SD card */
-> > +&sdhc2 {
-
-> But isn't &sdhc2 already disabled from msm8992.dtsi and msm8994.dtsi?
-
-Yes it's disabled, thus this is not needed.
-I'll send v2 of this, where I remove this.
-
-Kind regards,
-Petr
-
-> Regards,
-> Bjorn
+> Opp-level is set based on the logic of
+> 0: idle level
+> 1: normal level
+> 2: turbo level
+> 
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> ---
+>  arch/arm/boot/dts/qcom-ipq8064.dtsi | 99 +++++++++++++++++++++++++++++
+>  1 file changed, 99 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> index 6f9075489e58..1e6297d6f302 100644
+> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> @@ -48,6 +48,105 @@ L2: l2-cache {
+>  		};
+>  	};
+>  
+> +	opp_table_l2: opp_table_l2 {
+> +		compatible = "operating-points-v2";
+> +
+> +		opp-384000000 {
+> +			opp-hz = /bits/ 64 <384000000>;
+> +			opp-microvolt = <1100000>;
+> +			clock-latency-ns = <100000>;
+> +			opp-level = <0>;
+> +		};
+> +
+> +		opp-1000000000 {
+> +			opp-hz = /bits/ 64 <1000000000>;
+> +			opp-microvolt = <1100000>;
+> +			clock-latency-ns = <100000>;
+> +			opp-level = <1>;
+> +		};
+> +
+> +		opp-1200000000 {
+> +			opp-hz = /bits/ 64 <1200000000>;
+> +			opp-microvolt = <1150000>;
+> +			clock-latency-ns = <100000>;
+> +			opp-level = <2>;
+> +		};
+> +	};
+> +
+> +	opp_table0: opp_table0 {
+> +		compatible = "operating-points-v2-kryo-cpu";
+> +		nvmem-cells = <&speedbin_efuse>;
+> +
+> +		/*
+> +		 * Voltage thresholds are <target min max>
+> +		 */
+> +		opp-384000000 {
+> +			opp-hz = /bits/ 64 <384000000>;
+> +			opp-microvolt-speed0-pvs0-v0 = <1000000 950000 1050000>;
+> +			opp-microvolt-speed0-pvs1-v0 = <925000 878750 971250>;
+> +			opp-microvolt-speed0-pvs2-v0 = <875000 831250 918750>;
+> +			opp-microvolt-speed0-pvs3-v0 = <800000 760000 840000>;
+> +			opp-supported-hw = <0x1>;
+> +			clock-latency-ns = <100000>;
+> +			opp-level = <0>;
+> +		};
+> +
+> +		opp-600000000 {
+> +			opp-hz = /bits/ 64 <600000000>;
+> +			opp-microvolt-speed0-pvs0-v0 = <1050000 997500 1102500>;
+> +			opp-microvolt-speed0-pvs1-v0 = <975000 926250 1023750>;
+> +			opp-microvolt-speed0-pvs2-v0 = <925000 878750 971250>;
+> +			opp-microvolt-speed0-pvs3-v0 = <850000 807500 892500>;
+> +			opp-supported-hw = <0x1>;
+> +			clock-latency-ns = <100000>;
+> +			opp-level = <1>;
+> +		};
+> +
+> +		opp-800000000 {
+> +			opp-hz = /bits/ 64 <800000000>;
+> +			opp-microvolt-speed0-pvs0-v0 = <1100000 1045000 1155000>;
+> +			opp-microvolt-speed0-pvs1-v0 = <1025000 973750 1076250>;
+> +			opp-microvolt-speed0-pvs2-v0 = <995000 945250 1044750>;
+> +			opp-microvolt-speed0-pvs3-v0 = <900000 855000 945000>;
+> +			opp-supported-hw = <0x1>;
+> +			clock-latency-ns = <100000>;
+> +			opp-level = <1>;
+> +		};
+> +
+> +		opp-1000000000 {
+> +			opp-hz = /bits/ 64 <1000000000>;
+> +			opp-microvolt-speed0-pvs0-v0 = <1150000 1092500 1207500>;
+> +			opp-microvolt-speed0-pvs1-v0 = <1075000 1021250 1128750>;
+> +			opp-microvolt-speed0-pvs2-v0 = <1025000 973750 1076250>;
+> +			opp-microvolt-speed0-pvs3-v0 = <950000 902500 997500>;
+> +			opp-supported-hw = <0x1>;
+> +			clock-latency-ns = <100000>;
+> +			opp-level = <1>;
+> +		};
+> +
+> +		opp-1200000000 {
+> +			opp-hz = /bits/ 64 <1200000000>;
+> +			opp-microvolt-speed0-pvs0-v0 = <1200000 1140000 1260000>;
+> +			opp-microvolt-speed0-pvs1-v0 = <1125000 1068750 1181250>;
+> +			opp-microvolt-speed0-pvs2-v0 = <1075000 1021250 1128750>;
+> +			opp-microvolt-speed0-pvs3-v0 = <1000000 950000 1050000>;
+> +			opp-supported-hw = <0x1>;
+> +			clock-latency-ns = <100000>;
+> +			opp-level = <2>;
+> +		};
+> +
+> +		opp-1400000000 {
+> +			opp-hz = /bits/ 64 <1400000000>;
+> +			opp-microvolt-speed0-pvs0-v0 = <1250000 1187500 1312500>;
+> +			opp-microvolt-speed0-pvs1-v0 = <1175000 1116250 1233750>;
+> +			opp-microvolt-speed0-pvs2-v0 = <1125000 1068750 1181250>;
+> +			opp-microvolt-speed0-pvs3-v0 = <1050000 997500 1102500>;
+> +			opp-supported-hw = <0x1>;
+> +			clock-latency-ns = <100000>;
+> +			opp-level = <2>;
+> +		};
+> +	};
+> +
+>  	thermal-zones {
+>  		sensor0-thermal {
+>  			polling-delay-passive = <0>;
+> -- 
+> 2.33.1
+> 
