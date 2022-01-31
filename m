@@ -2,321 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B03E4A3D25
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 06:04:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 01CBF4A3D7F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 06:50:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234752AbiAaFE2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jan 2022 00:04:28 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:9634 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233527AbiAaFE1 (ORCPT
+        id S232704AbiAaFue (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jan 2022 00:50:34 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:14930 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229711AbiAaFuc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jan 2022 00:04:27 -0500
+        Mon, 31 Jan 2022 00:50:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1643605467; x=1675141467;
+  t=1643608233; x=1675144233;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=DRVzS+ZJxQe/0b9mt46yJXaWTFVnqVFcY+WutzAm4W0=;
-  b=aPLrpy4loMx+b57mnAerhVjZnYrMs9vs3zOT+ZONVoMQ1YHFM+4ww7cq
-   3/m8n1vBFyStDq4Npvxn+6JXyTiNaNgQg0QxvEQI/xc4cFCBTYUfgdcCL
-   0h/WeY1JYTRym3Z5sMVaeKylfgaG9HRTGwXqSC9l8V4/Cnm2v8ySq3+OK
-   w=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 30 Jan 2022 21:04:27 -0800
+  bh=NSbTVg5sCTdAmXBhRH2OYQg5Av98vgep7b61yDctVLE=;
+  b=VYrVve/PxUV8im4tg2aD4vx0NjtdVp9iMnfY3ywqPLxTYtFD6YOtffZG
+   vTYC7ExoKukI0tqx6ITISPJ3I5M/L+wAJzyBYQIi1/p4tBAR6Ywi9UR3T
+   vZhxKuY+dvPUghIYanRjL/VjPmduk/RlwZBAJf+UNkBywUWEWoLci/6ru
+   E=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 30 Jan 2022 21:50:32 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jan 2022 21:04:25 -0800
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jan 2022 21:50:16 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Sun, 30 Jan 2022 21:04:25 -0800
-Received: from [10.216.60.245] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ 15.2.922.19; Sun, 30 Jan 2022 21:50:16 -0800
+Received: from [10.50.8.93] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Sun, 30 Jan
- 2022 21:04:18 -0800
-Message-ID: <36dce74e-f2c8-bd5b-f75e-be4d80537535@quicinc.com>
-Date:   Mon, 31 Jan 2022 10:34:15 +0530
+ 2022 21:50:09 -0800
+Message-ID: <bf41cb03-a836-11ed-c203-d78d420eca99@quicinc.com>
+Date:   Mon, 31 Jan 2022 11:19:31 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v2 1/3] dt-bindings: usb: qcom,dwc3: Add multi-pd bindings
- for dwc3 qcom
-Content-Language: en-US
-To:     Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>
-CC:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>
-References: <1635152851-23660-1-git-send-email-quic_c_sanm@quicinc.com>
- <1635152851-23660-2-git-send-email-quic_c_sanm@quicinc.com>
- <YXcBK7zqny0s4gd4@ripper>
- <CAE-0n51k8TycXjEkH7rHYo0j7cYbKJOnOn1keVhx2yyTcBNnvg@mail.gmail.com>
- <YXck+xCJQBRGqTCw@ripper>
- <CAE-0n530M3eft-o0qB+yEzGjZgCLMgY==ZgdvwiVCwqqCAVxxA@mail.gmail.com>
- <YXdsYlLWnjopyMn/@ripper>
- <CAE-0n51C4dm6bhds=ZZyje-Pcejxjm4MMa3m-VHjFgq7GZGrLw@mail.gmail.com>
- <YXjbs3Bv6Y3d87EC@yoga>
- <CAPDyKFrWQdvZX4ukHZoGz73JPfQSgqVrG_4ShMp_GrxL0NKLvg@mail.gmail.com>
- <da877712-dac9-e9d0-0bfc-25bef450eb65@codeaurora.org>
- <0153c297-f648-25d1-7f0f-2114f07ef12b@quicinc.com>
- <7514ff7f-9979-e308-486e-def51ca8e943@quicinc.com>
-From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-In-Reply-To: <7514ff7f-9979-e308-486e-def51ca8e943@quicinc.com>
+ Thunderbird/91.3.2
+Subject: Re: [PATCH V4 3/6] soc: qcom: eud: Add driver support for Embedded
+ USB Debugger(EUD)
+Content-Language: en-CA
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <pure.logic@nexus-software.ie>,
+        <greg@kroah.com>, <robh@kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_tsoni@quicinc.com>,
+        <quic_psodagud@quicinc.com>, <quic_satyap@quicinc.com>,
+        <quic_pheragu@quicinc.com>, <quic_rjendra@quicinc.com>,
+        <quic_sibis@quicinc.com>, <quic_saipraka@quicinc.com>
+References: <cover.1642768837.git.quic_schowdhu@quicinc.com>
+ <7ccee5ae484e6917f5838c8abde368680ec63d05.1642768837.git.quic_schowdhu@quicinc.com>
+ <YfDSZTZOryQuWIlJ@builder.lan>
+ <c072d162-e371-e44b-8160-d06a8a6c051c@quicinc.com> <YfQVpzZ42MdJkkZW@ripper>
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+In-Reply-To: <YfQVpzZ42MdJkkZW@ripper>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 1/19/2022 4:31 PM, Rajendra Nayak wrote:
+On 1/28/2022 9:41 PM, Bjorn Andersson wrote:
+> On Thu 27 Jan 04:01 PST 2022, Souradeep Chowdhury wrote:
 >
->
-> On 1/17/2022 11:33 AM, Sandeep Maheswaram wrote:
->> Hi Rajendra,
+>> On 1/26/2022 10:17 AM, Bjorn Andersson wrote:
+>>> On Fri 21 Jan 07:53 CST 2022, Souradeep Chowdhury wrote:
+> [..]
+>>>> +		return PTR_ERR(chip->base);
+>>>> +
+>>>> +	chip->mode_mgr = devm_platform_ioremap_resource(pdev, 1);
+>>>> +	if (IS_ERR(chip->mode_mgr))
+>>>> +		return PTR_ERR(chip->mode_mgr);
+>>>> +
+>>>> +	chip->irq = platform_get_irq(pdev, 0);
+>>>> +	ret = devm_request_threaded_irq(&pdev->dev, chip->irq, handle_eud_irq,
+>>>> +			handle_eud_irq_thread, IRQF_ONESHOT, NULL, chip);
+>>>> +	if (ret)
+>>>> +		return dev_err_probe(chip->dev, ret, "failed to allocate irq\n");
+>>>> +
+>>>> +	enable_irq_wake(chip->irq);
+>>>> +
+>>>> +	platform_set_drvdata(pdev, chip);
+>>>> +
+>>>> +	return 0;
+>>> Per the updated binding, the EUD would now be a usb-role-switch as well
+>>> and when not enabled should simply propagate the incoming requests. So I
+>>> was expecting this to register as a usb_role_switch as well...
+>> Can you please elaborate on this?
 >>
->> On 10/28/2021 9:26 AM, Rajendra Nayak wrote:
->>>
->>>
->>> On 10/27/2021 7:54 PM, Ulf Hansson wrote:
->>>> On Wed, 27 Oct 2021 at 06:55, Bjorn Andersson
->>>> <bjorn.andersson@linaro.org> wrote:
->>>>>
->>>>> On Tue 26 Oct 19:48 CDT 2021, Stephen Boyd wrote:
->>>>>
->>>>>> +Rajendra
->>>>>>
->>>>>> Quoting Bjorn Andersson (2021-10-25 19:48:02)
->>>>>>> On Mon 25 Oct 15:41 PDT 2021, Stephen Boyd wrote:
->>>>>>>
->>>>>>>>
->>>>>>>> When the binding was introduced I recall we punted on the 
->>>>>>>> parent child
->>>>>>>> conversion stuff. One problem at a time. There's also the 
->>>>>>>> possibility
->>>>>>>> for a power domain to be parented by multiple power domains so
->>>>>>>> translation tables need to account for that.
->>>>>>>>
->>>>>>>
->>>>>>> But for this case - and below display case - the subdomain (the 
->>>>>>> device's
->>>>>>> power-domain) is just a dumb gate. So there is no translation, 
->>>>>>> the given
->>>>>>> performance_state applies to the parent. Or perhaps such 
->>>>>>> implicitness
->>>>>>> will come back and bite us?
->>>>>>
->>>>>> In the gate case I don't see how the implicitness will ever be a
->>>>>> problem.
->>>>>>
->>>>>>>
->>>>>>> I don't think we allow a power-domain to be a subdomain of two
->>>>>>> power-domains - and again it's not applicable to USB or display 
->>>>>>> afaict.
->>>>>>
->>>>>> Ah maybe. I always confuse power domains and genpd.
->>>>>>
->>>>>>>
->>>>>>>>>
->>>>>>>>>> Or we may need to make another part of the OPP binding to 
->>>>>>>>>> indicate the
->>>>>>>>>> relationship between the power domain and the OPP and the 
->>>>>>>>>> parent of
->>>>>>>>>> the power domain.
->>>>>>>>>
->>>>>>>>> I suspect this would be useful if a power-domain provider 
->>>>>>>>> needs to
->>>>>>>>> translate a performance_state into a different 
->>>>>>>>> supply-performance_state.
->>>>>>>>> Not sure if we have such case currently; these examples are 
->>>>>>>>> all an
->>>>>>>>> adjustable power-domain with "gating" subdomains.
->>>>>>>>
->>>>>>>> Even for this case, we should be able to have the GDSC map the 
->>>>>>>> on state
->>>>>>>> to some performance state in the parent domain. Maybe we need 
->>>>>>>> to add
->>>>>>>> some code to the gdsc.c file to set a performance state on the 
->>>>>>>> parent
->>>>>>>> domain when it is turned on. I'm not sure where the value for 
->>>>>>>> that perf
->>>>>>>> state comes from. I guess we can hardcode it in the driver for 
->>>>>>>> now and
->>>>>>>> if it needs to be multiple values based on the clk frequency we 
->>>>>>>> can push
->>>>>>>> it out to an OPP table or something like that.
->>>>>>>>
->>>>>>>
->>>>>>> For the GDSC I believe we only have 1:1 mapping, so implementing
->>>>>>> set_performance_state to just pass that on to the parent might 
->>>>>>> do the
->>>>>>> trick (although I haven't thought this through).
->>>>>>>
->>>>>>> Conceptually I guess this would be like calling clk_set_rate() on a
->>>>>>> clock gate, relying on it being propagated upwards. The problem 
->>>>>>> here is
->>>>>>> that the performance_state is just a "random" integer without a 
->>>>>>> well
->>>>>>> defined unit.
->>>>>>>
->>>>>>
->>>>>> Right. Ideally it would be in the core code somehow so that if there
->>>>>> isn't a set_performance_state function we go to the parent or some
->>>>>> special return value from the function says "call it on my 
->>>>>> parent". The
->>>>>> translation scheme could come later so we can translate the "random"
->>>>>> integer between parent-child domains.
->>>>>
->>>>> As a proof of concept it should be sufficient to just add an
->>>>> implementation of sc->pd.set_performance_state in gdsc.c. But I agree
->>>>> that it would be nice to push this into some framework code, perhaps
->>>>> made opt-in by some GENPD_FLAG_xyz.
->>>>>
->>>>>> At the end of the day the device
->>>>>> driver wants to set a frequency or runtime pm get the device and 
->>>>>> let the
->>>>>> OPP table or power domain code figure out what the level is 
->>>>>> supposed to
->>>>>> be.
->>>>>>
->>>>>
->>>>> Yes and this is already working for the non-nested case - where the
->>>>> single power-domain jumps between performance states as the opp code
->>>>> switches from one opp to another.
->>>>>
->>>>> So if we can list only the child power-domain (i.e. the GDSC) and 
->>>>> have
->>>>> the performance_stat requests propagate up to the parent rpmhpd 
->>>>> resource
->>>>> I think we're good.
->>>>>
->>>>>
->>>>> Let's give this a spin and confirm that this is the case...
->>>>>
->>>>>>>
->>>>>>>
->>>>>>> The one case where I believe we talked about having different 
->>>>>>> mapping
->>>>>>> between the performance_state levels was in the relationship 
->>>>>>> between CX
->>>>>>> and MX. But I don't think we ever did anything about that...
->>>>>>
->>>>>> Hmm alright. I think there's a constraint but otherwise nobody 
->>>>>> really
->>>>>> wants to change both at the same time.
->>>>>>
->>>>>>>>
->>>>>>>> Yes, a GDSC is really a gate on a parent power domain like CX 
->>>>>>>> or MMCX,
->>>>>>>> etc. Is the display subsystem an example of different clk 
->>>>>>>> frequencies
->>>>>>>> wanting to change the perf state of CX? If so it's a good place 
->>>>>>>> to work
->>>>>>>> out the translation scheme for devices that aren't listing the 
->>>>>>>> CX power
->>>>>>>> domain in DT.
->>>>>>>
->>>>>>> Yes, the various display components sits in MDSS_GDSC but the 
->>>>>>> opp-tables
->>>>>>> needs to change the performance_state of MDSS_GDSC->parent (i.e. 
->>>>>>> CX or
->>>>>>> MMCX, depending on platform).
->>>>>>>
->>>>>>> As I said, today we hack this by trusting that the base drm/msm 
->>>>>>> driver
->>>>>>> will keep MDSS_GDSC on and listing MMCX (or CX) as power-domain 
->>>>>>> for each
->>>>>>> of these components.
->>>>>>>
->>>>>>>
->>>>>>> So if we solve this, then that seems to directly map to the 
->>>>>>> static case
->>>>>>> for USB as well.
->>>>>>>
->>>>>>
->>>>>> Got it. So in this case we could have the various display components
->>>>>> that are in the mdss gdsc domain set their frequency via OPP and 
->>>>>> then
->>>>>> have that translate to a level in CX or MMCX. How do we parent 
->>>>>> the power
->>>>>> domains outside of DT? I'm thinking that we'll need to do that if 
->>>>>> MMCX
->>>>>> is parented by CX or something like that and the drivers for 
->>>>>> those two
->>>>>> power domains are different. Is it basic string matching?
->>>>>
->>>>> In one way or another we need to invoke pm_genpd_add_subdomain() 
->>>>> to link
->>>>> the two power-domains (actually genpds) together, like what was 
->>>>> done in
->>>>> 3652265514f5 ("clk: qcom: gdsc: enable optional power domain 
->>>>> support").
->>>>>
->>>>> In the case of MMCX and CX, my impression of the documentation is 
->>>>> that
->>>>> they are independent - but if we need to express that CX is parent of
->>>>> MMCX, they are both provided by rpmhpd which already supports this by
->>>>> just specifying .parent on mmcx to point to cx.
->>>>
->>>> I was trying to follow the discussion, but it turned out to be a bit
->>>> complicated to catch up and answer all things. In any case, let me
->>>> just add a few overall comments, perhaps that can help to move things
->>>> forward.
->>>>
->>>> First, one domain can have two parent domains. Both from DT and from
->>>> genpd point of view, just to make this clear.
->>>>
->>>> Although, it certainly looks questionable to me, to hook up the USB
->>>> device to two separate power domains, one to control power and one to
->>>> control performance. Especially, if it's really the same piece of HW
->>>> that is managing both things. 
->>> []..
->>>> Additionally, if it's correct to model
->>>> the USB GDSC power domain as a child to the CX power domain from HW
->>>> point of view, we should likely do that.
->>>
->>> I think this would still require a few things in genpd, since
->>> CX and USB GDSC are power domains from different providers.
->>> Perhaps a pm_genpd_add_subdomain_by_name()?
->>>
->> Tried with the changes provided by you  where USB GDSC power domains 
->> added as a child to the CX power domain
+>> Do I need to define a separate 'usb_role_switch_desc' here and register
+>> using 'usb_role_switch_register'?
 >>
->> But cx shutdown is not happening  during sytem suspend as we need to 
->> keep USB GDSC active in host mode .
+>> Also what should be the set method in this case for usb_role_switch_desc?
+>>
+> My expectation is that in normal operation pmic_glink will provide role
+> switching requests and then as you enable the EUD it will force the role
+> to gadget.
 >
-> In the USB driver suspend when you check for this condition, in order 
-> to keep the GDSC active, you would
-> perhaps have to drop the performance state vote and re-vote in resume.
-> I don;t think the genpd core can handle this in any way.
+> So my suggestion was that you make eud a role-switch and as long as EUD
+> is disabled you just pass through the role-switch vote from pmic_glink
+> onto the dwc3.
 >
-CX shutdown is not happening even after dropping the performance state 
-in USB driver suspend.
+> Perhaps I'm misunderstanding how this is really working.
 
-Tried even without USB nodes in device tree cx shutdown is not happening
+As per the code, the role-switching on dwc3 is enabled from 
+drivers/usb/dwc3/drd.c on setting the usb mode to "otg " ,
 
-Adding CX as a power-domain for GCC  along with below patch
+that is being done on the 5th patch of this series. There is no other 
+entity that is switching role for dwc3 other than EUD.
 
-https://lore.kernel.org/all/20210829154757.784699-6-dmitry.baryshkov@linaro.org/ 
-preventing CX shutdown.
+Also the role-switch registration happens from drivers/usb/dwc3/drd.c as 
+follows
 
+static int dwc3_setup_role_switch(struct dwc3 *dwc)
+{
+         struct usb_role_switch_desc dwc3_role_switch = {NULL};
+         u32 mode;
 
-Regards
+         dwc->role_switch_default_mode = 
+usb_get_role_switch_default_mode(dwc->dev);
+         if (dwc->role_switch_default_mode == USB_DR_MODE_HOST) {
+                 mode = DWC3_GCTL_PRTCAP_HOST;
+         } else {
+                 dwc->role_switch_default_mode = USB_DR_MODE_PERIPHERAL;
+                 mode = DWC3_GCTL_PRTCAP_DEVICE;
+         }
 
-Sandeep
+         dwc3_role_switch.fwnode = dev_fwnode(dwc->dev);
+         dwc3_role_switch.set = dwc3_usb_role_switch_set;
+         dwc3_role_switch.get = dwc3_usb_role_switch_get;
+         dwc3_role_switch.driver_data = dwc;
+         dwc->role_sw = usb_role_switch_register(dwc->dev, 
+&dwc3_role_switch);
+         if (IS_ERR(dwc->role_sw))
+                 return PTR_ERR(dwc->role_sw);
 
+         dwc3_set_mode(dwc, mode);
+         return 0;
+}
 
+Can you please point out the pmic_glink driver upstream and how it is 
+related in this case?
+
+>
+> Regards,
+> Bjorn
