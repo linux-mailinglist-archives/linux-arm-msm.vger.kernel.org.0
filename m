@@ -2,197 +2,234 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 99F034A4F00
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 19:56:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A6474A4FBD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 20:54:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234543AbiAaS42 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jan 2022 13:56:28 -0500
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:20151 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232915AbiAaS41 (ORCPT
+        id S1377532AbiAaTyS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jan 2022 14:54:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55736 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232738AbiAaTyR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jan 2022 13:56:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1643655388; x=1675191388;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=kaj4j/1RJd1d+1eIhFnvpmOvCmlsLKxbfI0yMzUfdds=;
-  b=E/rFZc6HzUxRK1VsSZVipmBuoAVPbJ6ahoAQD5ZyyaSWQw9f17sH1aU3
-   I+GrP1h8J6dnmhpQWcU4AnOkZXaMKY7mmy6p391q6jOJm+Lmn51M9z3BT
-   udeYb9MHPnOv6Wojna62yKNNEC1E7p2+pAyE8IhcU2p0ccUUDv2vJ0frZ
-   w=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 31 Jan 2022 10:56:27 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Jan 2022 10:56:27 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Mon, 31 Jan 2022 10:56:26 -0800
-Received: from [10.50.31.158] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 31 Jan
- 2022 10:56:22 -0800
-Message-ID: <ae3db4cc-67ab-e968-44da-0d88f1b5092b@quicinc.com>
-Date:   Tue, 1 Feb 2022 00:26:18 +0530
+        Mon, 31 Jan 2022 14:54:17 -0500
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F0B0C061714;
+        Mon, 31 Jan 2022 11:54:16 -0800 (PST)
+Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl [194.29.137.1])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 523D93F748;
+        Mon, 31 Jan 2022 20:54:13 +0100 (CET)
+Message-ID: <12cad24a-fa2f-9a82-cf43-241a0a6fe4f6@somainline.org>
+Date:   Mon, 31 Jan 2022 20:54:12 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.2
-Subject: Re: [PATCHv9 0/5] lib/rwmmio/arm64: Add support to trace register
- reads/writes
-Content-Language: en-US
-To:     Will Deacon <will@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Arnd Bergmann <arnd@arndb.de>, Marc Zyngier <maz@kernel.org>,
-        Steven Rostedt <rostedt@goodmis.org>
-CC:     gregkh <gregkh@linuxfoundation.org>, <quic_psodagud@quicinc.com>,
-        "Trilok Soni" <quic_tsoni@quicinc.com>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <cover.1642482334.git.quic_saipraka@quicinc.com>
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-In-Reply-To: <cover.1642482334.git.quic_saipraka@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.5.1
+Subject: Re: [PATCH] mtd: nand: raw: qcom_nandc: Don't clear_bam_transaction
+ on READID
+To:     Sricharan Ramabadhran <sricharan@codeaurora.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        pragalla@codeaurora.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mdalam@codeaurora.org
+References: <20220113184427.2259509-1-konrad.dybcio@somainline.org>
+ <20220114082718.32a2fc83@xps13> <20220126111613.3ab0021e@xps13>
+ <20220126103316.GA212068@thinkpad> <20220126114200.4cc3c21b@xps13>
+ <fc80a6e7-bd44-3b3e-fca2-1316a76d65f5@codeaurora.org>
+ <a6fcc533-e7cd-7b55-4db0-cec80c07b46a@codeaurora.org>
+ <0a8d6550-aa19-0af1-abae-66bf34c91ea8@somainline.org>
+ <be779ed9-bd80-8f01-fe7f-d3c07d3d85aa@codeaurora.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <be779ed9-bd80-8f01-fe7f-d3c07d3d85aa@codeaurora.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Arnd, Steve
 
-On 1/24/2022 12:03 PM, Sai Prakash Ranjan wrote:
-> Generic MMIO read/write i.e., __raw_{read,write}{b,l,w,q} accessors
-> are typically used to read/write from/to memory mapped registers
-> and can cause hangs or some undefined behaviour in following cases,
+On 31/01/2022 15:13, Sricharan Ramabadhran wrote:
+> Hi Konrad,
 >
-> * If the access to the register space is unclocked, for example: if
->    there is an access to multimedia(MM) block registers without MM
->    clocks.
->
-> * If the register space is protected and not set to be accessible from
->    non-secure world, for example: only EL3 (EL: Exception level) access
->    is allowed and any EL2/EL1 access is forbidden.
->
-> * If xPU(memory/register protection units) is controlling access to
->    certain memory/register space for specific clients.
->
-> and more...
->
-> Such cases usually results in instant reboot/SErrors/NOC or interconnect
-> hangs and tracing these register accesses can be very helpful to debug
-> such issues during initial development stages and also in later stages.
->
-> So use ftrace trace events to log such MMIO register accesses which
-> provides rich feature set such as early enablement of trace events,
-> filtering capability, dumping ftrace logs on console and many more.
->
-> Sample output:
->
-> rwmmio_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
-> rwmmio_post_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
-> rwmmio_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 addr=0xfffffbfffdbff610
-> rwmmio_post_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 val=0x0 addr=0xfffffbfffdbff610
->
-> This series is a follow-up for the series [1] and a recent series [2] making use
-> of both.
->
-> [1] https://lore.kernel.org/lkml/cover.1536430404.git.saiprakash.ranjan@codeaurora.org/
-> [2] https://lore.kernel.org/lkml/1604631386-178312-1-git-send-email-psodagud@codeaurora.org/
->
-> Note in previous v4 version, Arnd suggested to benchmark and compare size with callback
-> based implementation, please see [3] for more details on that with brief comparison below.
->
->
-> **Inline version with CONFIG_FTRACE=y and CONFIG_TRACE_MMIO_ACCESS=y**
-> $ size vmlinux
->     text           data             bss     dec             hex         filename
->   23884219        14284468         532568 38701255        24e88c7        vmlinux
->
-> **Callback version with CONFIG_FTRACE=y and CONFIG_TRACE_MMIO_ACCESS=y**
-> $ size vmlinux
->      text          data             bss     dec             hex        filename
->   24108179        14279596         532568 38920343        251e097       vmlinux
->
-> $ ./scripts/bloat-o-meter inline-vmlinux callback-vmlinux
-> add/remove: 8/3 grow/shrink: 4889/89 up/down: 242244/-11564 (230680)
-> Total: Before=25812612, After=26043292, chg +0.89%
->
-> [3] https://lore.kernel.org/lkml/466449a1-36da-aaa9-7e4f-477f36b52c9e@quicinc.com/
->
-> Changes in v9:
->   * Use TRACE_EVENT_CLASS for rwmmio_write and post_write (Steven Rostedt)
->
-> Changes in v8:
->   * Fix build error reported by kernel test robot.
->
-> Changes in v7:
->   * Use lib/ instead of kernel/trace/ based on review comment by Steven Rostedt.
->
-> Changes in v6:
->   * Implemented suggestions by Arnd Bergmann:
->     - Use arch independent IO barriers in arm64/asm
->     - Add ARCH_HAVE_TRACE_MMIO_ACCESS
->     - Add post read and post write logging support
->     - Remove tracepoint_active check
->   * Fix build error reported by kernel test robot.
->
-> Changes in v5:
->   * Move arm64 to use asm-generic provided high level MMIO accessors (Arnd).
->   * Add inline logging for MMIO relaxed and non-relaxed accessors.
->   * Move nVHE KVM comment to makefile (Marc).
->   * Fix overflow warning due to switch to inline accessors instead of macro.
->   * Modify trace event field to include caller and parent details for more detailed logs.
->
-> Changes in v4:
->   * Drop dynamic debug based filter support since that will be developed later with
->     the help from Steven (Ftrace maintainer).
->   * Drop value passed to writel as it is causing hangs when tracing is enabled.
->   * Code cleanup for trace event as suggested by Steven for earlier version.
->   * Fixed some build errors reported by 0-day bot.
->
-> Changes in v3:
->   * Create a generic mmio header for instrumented version (Earlier suggested in [1]
->     by Will Deacon and recently [2] by Greg to have a generic version first).
->   * Add dynamic debug support to filter out traces which can be very useful for targeted
->     debugging specific to subsystems or drivers.
->   * Few modifications to the rwmmio trace event fields to include the mmio width and print
->     addresses in hex.
->   * Rewrote commit msg to explain some more about usecases.
->
-> Prasad Sodagudi (1):
->    lib: Add register read/write tracing support
->
-> Sai Prakash Ranjan (4):
->    arm64: io: Use asm-generic high level MMIO accessors
->    irqchip/tegra: Fix overflow implicit truncation warnings
->    drm/meson: Fix overflow implicit truncation warnings
->    asm-generic/io: Add logging support for MMIO accessors
->
->   arch/Kconfig                      |  3 +
->   arch/arm64/Kconfig                |  1 +
->   arch/arm64/include/asm/io.h       | 41 +++----------
->   arch/arm64/kvm/hyp/nvhe/Makefile  |  7 ++-
->   drivers/gpu/drm/meson/meson_viu.c | 22 +++----
->   drivers/irqchip/irq-tegra.c       | 10 ++--
->   include/asm-generic/io.h          | 82 ++++++++++++++++++++++++--
->   include/trace/events/rwmmio.h     | 97 +++++++++++++++++++++++++++++++
->   lib/Kconfig                       |  7 +++
->   lib/Makefile                      |  2 +
->   lib/trace_readwrite.c             | 47 +++++++++++++++
->   11 files changed, 265 insertions(+), 54 deletions(-)
->   create mode 100644 include/trace/events/rwmmio.h
->   create mode 100644 lib/trace_readwrite.c
->
->
-> base-commit: bd8d9cef2a7932e688ca267ea1adf5ea6557c777
+> On 1/31/2022 3:39 PM, Konrad Dybcio wrote:
+>>
+>> On 28/01/2022 18:50, Sricharan Ramabadhran wrote:
+>>> Hi Konrad,
+>>>
+>>> On 1/28/2022 9:55 AM, Sricharan Ramabadhran wrote:
+>>>> Hi Miquel,
+>>>>
+>>>> On 1/26/2022 4:12 PM, Miquel Raynal wrote:
+>>>>> Hi Mani,
+>>>>>
+>>>>> mani@kernel.org wrote on Wed, 26 Jan 2022 16:03:16 +0530:
+>>>>>
+>>>>>> On Wed, Jan 26, 2022 at 11:16:13AM +0100, Miquel Raynal wrote:
+>>>>>>> Hello,
+>>>>>>>
+>>>>>>> miquel.raynal@bootlin.com wrote on Fri, 14 Jan 2022 08:27:18 +0100:
+>>>>>>>> Hi Konrad,
+>>>>>>>>
+>>>>>>>> konrad.dybcio@somainline.org wrote on Thu, 13 Jan 2022 19:44:26 
+>>>>>>>> +0100:
+>>>>>>>>> While I have absolutely 0 idea why and how, running 
+>>>>>>>>> clear_bam_transaction
+>>>>>>>>> when READID is issued makes the DMA totally clog up and refuse 
+>>>>>>>>> to function
+>>>>>>>>> at all on mdm9607. In fact, it is so bad that all the data 
+>>>>>>>>> gets garbled
+>>>>>>>>> and after a short while in the nand probe flow, the CPU 
+>>>>>>>>> decides that
+>>>>>>>>> sepuku is the only option.
+>>>>>>>>>
+>>>>>>>>> Removing _READID from the if condition makes it work like a 
+>>>>>>>>> charm, I can
+>>>>>>>>> read data and mount partitions without a problem.
+>>>>>>>>>
+>>>>>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+>>>>>>>>> ---
+>>>>>>>>> This is totally just an observation which took me an inhumane 
+>>>>>>>>> amount of
+>>>>>>>>> debug prints to find.. perhaps there's a better reason behind 
+>>>>>>>>> this, but
+>>>>>>>>> I can't seem to find any answers.. Therefore, this is a BIG RFC!
+>>>>>>>> I'm adding two people from codeaurora who worked a lot on this 
+>>>>>>>> driver.
+>>>>>>>> Hopefully they will have an idea :)
+>>>>>>> Sadre, I've spent a significant amount of time reviewing your 
+>>>>>>> patches,
+>>>>>>> now it's your turn to not take a month to answer to your peers
+>>>>>>> proposals.
+>>>>>>>
+>>>>>>> Please help reviewing this patch.
+>>>>>> Sorry. I was hoping that Qcom folks would chime in as I don't 
+>>>>>> have any idea
+>>>>>> about the mdm9607 platform. It could be that the mail server 
+>>>>>> migration from
+>>>>>> codeaurora to quicinc put a barrier here.
+>>>>>>
+>>>>>> Let me ping them internally.
+>>>>> Oh, ok, I didn't know. Thanks!
+>>>>
+>>>>    Sorry Miquel, somehow we did not get this email in our inbox.
+>>>>    Thanks to Mani for pinging us, we will test this up today and 
+>>>> get back.
+>>>>
+>>>       While we could not reproduce this issue on our ipq boards (do 
+>>> not have a mdm9607 right now) and
+>>>        issue does not look any obvious.
+>>>       can you please give the debug logs that you did for the above 
+>>> stage by stage ?
+>>
+>> I won't have access to the board for about two weeks, sorry.
+>>
+>> When I get to it, I'll surely try to send you the logs, though there
+>>
+>> wasn't much more than just something jumping to who-knows-where
+>>
+>> after clear_bam_transaction was called, resulting in values 
+>> associated with
+>>
+>> the NAND being all zeroed out in pr_err/_debug/etc.
+>>
+>>
+>     Ok sure. So was the READID command itself failing (or) the 
+> subsequent one ?
+>    We can check which parameter reset by the clear_bam_transaction is 
+> causing the
+>    failure.  Meanwhile, looping in Pradeep who has access to the 
+> board, so in a better
+>    position to debug.
 
-Any comments on this version?
+I'm sorry I have so few details on hand, and no kernel tree (no access 
+to that machine either, for now).
 
-Thanks,
-Sai
+
+I will try to describe to the best of my abilities what I recall.
+
+
+My methodology of making sure things don't go haywire was to print the 
+oob size
+
+of our NAND basically every two lines of code (yes, i was very desperate 
+at one point),
+
+as that was zeroed out when *the bug* happened, leading to a kernel 
+bug/panic/stall
+
+(can't recall what exactly it was, but it said something along the lines 
+of "no support for
+
+oob size 0" and then it didn't fail graceully, leading to some bad jumps 
+and ultimately
+
+a dead platform..)
+
+
+after hours of digging, I found out that everything goes fine until 
+clear_bam_transaction is called,
+
+after that gets executed every nand op starts reading all zeroes (for 
+example in JEDEC ID check)
+
+so I added the changes from this patch, and things magically started 
+working... My suspicion is
+
+that the underlying FIFO isn't fully drained (is it a FIFO on 9607? bah, 
+i work on too many socs at once)
+
+and this function only makes Linux think it is, without actually 
+draining it, and the leftover
+
+commands get executed with some parts of them getting overwritten, 
+resulting in the
+
+famous garbage in - garbage out situation, but that's only a guesstimate..
+
+
+Do note this somehow worked fine on 5.11 and then broke on 5.12/13. I 
+went as far as replacing most
+
+of the kernel with the updated/downgraded parts via git checkout (i 
+tried many combinations),
+
+to no avail.. I even tried different compilers and optimization levels, 
+thinking it could have been
+
+a codegen issue, but no luck either.
+
+
+I.. do understand this email is a total mess to read, as much as it was 
+to write, but
+
+without access to my code and the machine itself I can't give you solid 
+details, and
+
+the fact this situation is far from ordinary doesn't help either..
+
+
+The latest (ancient, not quite pretty, but probably working if my memory 
+is correct) version of my patches
+
+for the mdm9607 is available at [1], I will push the new revision after 
+I get access to the workstation.
+
+
+Konrad
+
+
+[1] https://github.com/SoMainline/linux/commits/konrad/pinemodem
+
+
+>
+> Regards,
+>    Sricharan
+>
+>
