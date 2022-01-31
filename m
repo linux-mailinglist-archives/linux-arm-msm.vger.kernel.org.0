@@ -2,122 +2,285 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E9A64A5121
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 22:10:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B59854A516C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 22:26:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344188AbiAaVKH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jan 2022 16:10:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44040 "EHLO
+        id S1357555AbiAaV0c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jan 2022 16:26:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351155AbiAaVJg (ORCPT
+        with ESMTP id S1358172AbiAaV0Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jan 2022 16:09:36 -0500
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D024BC061714
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 13:09:36 -0800 (PST)
-Received: by mail-ot1-x329.google.com with SMTP id b17-20020a9d4791000000b005a17fc2dfc1so14302122otf.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 13:09:36 -0800 (PST)
+        Mon, 31 Jan 2022 16:26:25 -0500
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 892E6C061714
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 13:26:25 -0800 (PST)
+Received: by mail-oi1-x230.google.com with SMTP id 4so4887495oil.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 13:26:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=R2J1Ic99L4kJYedsJXrEgCrliQJoVvf0Uyk+RpIbJhY=;
-        b=x3JUyezWAlIg+y5F+JzfMKEzkgG3ebuawRWuQqyDJKI8eF2tGaaqd8ju+tuF/rPdpZ
-         c9k0eO42P3gj3+kUhBqopEeXOHZGc8qKBL4iL7645Wx3W7bxVfwDA549n+r/y0sDHAsy
-         9xzNLpaRgDMEN81zZ3PgBpq1HeJssyD6sHp+54a8ubAtWcP6jcS5bz6hvO1kNDyXHgwi
-         C1k+7z8Qp3ZFYNIWL87uu7J5rnGcl5r8rb01gmr6Jj8MHZDNf+AMZqzGgSazo98GJClT
-         8lXZ7okU/H48WqrIYQS5br+Zdf/OeZKVHPJRweb31j+ZpVdyGw1N0LnweTAbsgXcTsHj
-         NL6Q==
+        bh=rjcQnxZph82Xd5iXuMJliZu5pKs4JinKFWoJ3CAGamw=;
+        b=MBodaNvwAzrufxpfW7g7ruVRDbHknoBi50bPAsc8NVyJCQIwJGh7+j9HlJjATrvBv0
+         pghuyqHZoxaczI2HebSbily7ypYGnFFLQFIbkdgG3aXCu6fFu8sKVsC6XlPt2xwFgkGr
+         uA0xkjpoY1jZ6LX2LIF9Kbi0Ds06n6lbTXFlwgVforbve94CCJspPNOpPsxco70SBqQg
+         cBZwEQWmEFW8ZfPvJ5qmvZN2Um5iBdij7OvJEpAEoehXs38tnsoGBESAU1EJLZWeqakM
+         ryhAZbkZyq2g4W1Jar8Zhqus2lqr/DgvJm7EgFZlgwYd62WMpVqyi5kud8iYtArRIWbR
+         nXNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=R2J1Ic99L4kJYedsJXrEgCrliQJoVvf0Uyk+RpIbJhY=;
-        b=Ig/R7+TCrq0Gs+Lc9Rmn2nr51KKF58o/5bCglql7HjP37SZzwZrGbGnm5yMbBCIxAk
-         RxEHP/APUat1z4I4V8hD5WUVguPdxMq2nT918m7/Gxbmk3gdJCl7W15Kg3ww6MZ9964F
-         5MnqsAfBfaTKVtxdsd/4cfDjnJ35M9cKvW3/QU8jQTrMCnP/vxShLLHDFuXIdO8CwrL8
-         PDn9oZmwr7Gy2/c0n1r4fDk5zWDKxq/L2bSfd/+O4uiKhSyygfqgNwr38H9j9yoysbym
-         vL6c7EsBXJ/28NAqJTOhx2l41XRowU2RnulVhZ3dmctkUynJ+WmykxpB6lMdJdqVC/E5
-         uxoQ==
-X-Gm-Message-State: AOAM530R0YsWuitGVyZbtNNjP5MCZin4YlDwVdFUBBABNdb8/D2IpR3S
-        chjEKrIYF5M+qdNXK3KZ4OSz/w==
-X-Google-Smtp-Source: ABdhPJyVFD8oHW/uorkeLcojJx2NTLLfghdS2U03XJEiCrDFgMRXuzVtD7N2LRvDzdV4fP/NIBAhBA==
-X-Received: by 2002:a9d:4d08:: with SMTP id n8mr12338398otf.16.1643663375866;
-        Mon, 31 Jan 2022 13:09:35 -0800 (PST)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id d7sm8815529otf.66.2022.01.31.13.09.34
+        bh=rjcQnxZph82Xd5iXuMJliZu5pKs4JinKFWoJ3CAGamw=;
+        b=BpGva2pY+winKghGdXWFVsH7E6thDQwj9O3qSWFWQa53Ecj6To8pv3CCZ5p5K+Dvbk
+         GEDL7sSmmHjqftq61aXc0DcnlKQZK1gExVMps93OR6q8P8K/4A5AcsYUzRJ2o3JfvMUh
+         Lb3EyrVKaFNChbgjSr/bj+otfINdhM57sEnTmfbufAcQneQzUcsvxBM93oZ6DTEUp1QF
+         e+SsCO4v/okL7c5MQO4xkfd6duHhnBT3/9WFawGk9VYdRuW8h/I7xoBz7ZB3zXP9UrZU
+         GMQmlWg3RatgxQf5QW0h2uK2KlAaW6VSjwn8qmo7WTb6jJd68Ybyu2epHCN9jxdY2AKU
+         U9cg==
+X-Gm-Message-State: AOAM531NlqYenmfzfOYvEupQrRjtXen7J5BPCgDv16c8Fn0oUlMIKNVY
+        atutyRSuGLdaLPkM2JIpQQ1xnQ==
+X-Google-Smtp-Source: ABdhPJzOt8SX9PLroEDwwrhXnj2Kvv/nQgztBJQs7uOiIqk+wA/7eKKAp8g9KFDNMk4uUMc0N15w9g==
+X-Received: by 2002:aca:dac2:: with SMTP id r185mr18558922oig.152.1643664384877;
+        Mon, 31 Jan 2022 13:26:24 -0800 (PST)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id q9sm10040747oif.9.2022.01.31.13.26.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Jan 2022 13:09:35 -0800 (PST)
-Date:   Mon, 31 Jan 2022 13:09:55 -0800
+        Mon, 31 Jan 2022 13:26:24 -0800 (PST)
+Date:   Mon, 31 Jan 2022 15:26:22 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Miao-chen Chou <mcchou@chromium.org>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Marcel Holtmann <marcel@holtmann.org>, rjliao@codeaurora.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-        saluvala@codeaurora.org, LKML <linux-kernel@vger.kernel.org>,
-        hbandi@codeaurora.org, BlueZ <linux-bluetooth@vger.kernel.org>,
-        hemantg@codeaurora.org, Matthias Kaehlcke <mka@chromium.org>
-Subject: Re: [PATCH v4] arm64: dts: qcom: sc7280: Add bluetooth node on
- SC7280 IDP boards
-Message-ID: <YfhQIyzBhvl6C0H+@ripper>
-References: <1639587963-22503-1-git-send-email-bgodavar@codeaurora.org>
- <164036941060.3935440.13095761506560620701.b4-ty@linaro.org>
- <CAD=FV=Vdjw-6GytO=Rpt==OYbnrNon3pYQnrZtUT4vX11S6ykw@mail.gmail.com>
- <CABmPvSGOLRKX20WO21P_qvtvDo812QGDr4nYOWE04pjoSGDGcw@mail.gmail.com>
+To:     David Heidelberg <david@ixit.cz>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        ~okias/devicetree@lists.sr.ht, Andy Gross <andy.gross@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: firmware: convert Qualcomm SCM binding to
+ the yaml
+Message-ID: <YfhT/ltPDhQZV0Bo@builder.lan>
+References: <20211218194038.26913-1-david@ixit.cz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CABmPvSGOLRKX20WO21P_qvtvDo812QGDr4nYOWE04pjoSGDGcw@mail.gmail.com>
+In-Reply-To: <20211218194038.26913-1-david@ixit.cz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 24 Jan 20:49 PST 2022, Miao-chen Chou wrote:
+On Sat 18 Dec 13:40 CST 2021, David Heidelberg wrote:
 
-> Hi,
+> Convert Qualcomm SCM firmware binding to the yaml format.
 > 
-> Following up on this patch, this patch didn't seem to land anywhere,
-> what is the plan to land this?
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+> This patch comes with followup question -> since not all definitions
+> follow `"qcom,scm-*chipset*", "qcom,scm"`, should I change them or adjust this
+> binding to cover all cases?
 > 
 
-I picked it up after sending my 5.17 pull request, so it had to wait for
-the merge window to close. So it's part of the 5.18 branch and hence
-linux-next now. But please double check.
+I don't remember why some platforms has the generic "fallback" and
+others doesn't. I don't have any objections to defining the binding as
+you've done.
 
+>  .../devicetree/bindings/firmware/qcom,scm.txt |  54 ---------
+>  .../bindings/firmware/qcom,scm.yaml           | 112 ++++++++++++++++++
+>  2 files changed, 112 insertions(+), 54 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.txt
+>  create mode 100644 Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.txt b/Documentation/devicetree/bindings/firmware/qcom,scm.txt
+> deleted file mode 100644
+> index d7e3cda8924e..000000000000
+> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.txt
+> +++ /dev/null
+> @@ -1,54 +0,0 @@
+> -QCOM Secure Channel Manager (SCM)
+> -
+> -Qualcomm processors include an interface to communicate to the secure firmware.
+> -This interface allows for clients to request different types of actions.  These
+> -can include CPU power up/down, HDCP requests, loading of firmware, and other
+> -assorted actions.
+> -
+> -Required properties:
+> -- compatible: must contain one of the following:
+> - * "qcom,scm-apq8064"
+> - * "qcom,scm-apq8084"
+> - * "qcom,scm-ipq4019"
+> - * "qcom,scm-ipq806x"
+> - * "qcom,scm-ipq8074"
+> - * "qcom,scm-mdm9607"
+> - * "qcom,scm-msm8226"
+> - * "qcom,scm-msm8660"
+> - * "qcom,scm-msm8916"
+> - * "qcom,scm-msm8953"
+> - * "qcom,scm-msm8960"
+> - * "qcom,scm-msm8974"
+> - * "qcom,scm-msm8994"
+> - * "qcom,scm-msm8996"
+> - * "qcom,scm-msm8998"
+> - * "qcom,scm-sc7180"
+> - * "qcom,scm-sc7280"
+> - * "qcom,scm-sdm845"
+> - * "qcom,scm-sdx55"
+> - * "qcom,scm-sm8150"
+> - * "qcom,scm-sm8250"
+> - * "qcom,scm-sm8350"
+> - and:
+> - * "qcom,scm"
+> -- clocks: Specifies clocks needed by the SCM interface, if any:
+> - * core clock required for "qcom,scm-apq8064", "qcom,scm-msm8660" and
+> -   "qcom,scm-msm8960"
+> - * core, iface and bus clocks required for "qcom,scm-apq8084",
+> -   "qcom,scm-msm8916", "qcom,scm-msm8953" and "qcom,scm-msm8974"
+> -- clock-names: Must contain "core" for the core clock, "iface" for the interface
+> -  clock and "bus" for the bus clock per the requirements of the compatible.
+> -- qcom,dload-mode: phandle to the TCSR hardware block and offset of the
+> -		   download mode control register (optional)
+> -
+> -Example for MSM8916:
+> -
+> -	firmware {
+> -		scm {
+> -			compatible = "qcom,msm8916", "qcom,scm";
+> -			clocks = <&gcc GCC_CRYPTO_CLK> ,
+> -				 <&gcc GCC_CRYPTO_AXI_CLK>,
+> -				 <&gcc GCC_CRYPTO_AHB_CLK>;
+> -			clock-names = "core", "bus", "iface";
+> -		};
+> -	};
+> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> new file mode 100644
+> index 000000000000..3a7261734fad
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> @@ -0,0 +1,112 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/firmware/qcom,scm.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: QCOM Secure Channel Manager (SCM)
+> +
+> +description: |
 
-Note that the thank-you email included the commit hash before I rebased
-the 5.18 tree onto v5.17-rc1, so the correct hash seems to be:
+I don't think there's value in the formatting, so perhaps omitting the
+pipe?
 
-1ff6797c326b ("arm64: dts: qcom: sc7280: Add bluetooth node on SC7280 IDP boards")
+> +  Qualcomm processors include an interface to communicate to the secure firmware.
+> +  This interface allows for clients to request different types of actions.  These
+> +  can include CPU power up/down, HDCP requests, loading of firmware, and other
+> +  assorted actions.
+> +
+> +maintainers:
+> +  - Andy Gross <andy.gross@linaro.org>
+
+It's been a while since Andy left that address behind. Please put mine
+instead.
+
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,scm-apq8064
+> +          - qcom,scm-apq8084
+> +          - qcom,scm-ipq4019
+> +          - qcom,scm-ipq806x
+> +          - qcom,scm-ipq8074
+> +          - qcom,scm-mdm9607
+> +          - qcom,scm-msm8226
+> +          - qcom,scm-msm8660
+> +          - qcom,scm-msm8916
+> +          - qcom,scm-msm8953
+> +          - qcom,scm-msm8960
+> +          - qcom,scm-msm8974
+> +          - qcom,scm-msm8994
+> +          - qcom,scm-msm8996
+> +          - qcom,scm-msm8998
+> +          - qcom,scm-sc7180
+> +          - qcom,scm-sc7280
+> +          - qcom,scm-sdm845
+> +          - qcom,scm-sdx55
+> +          - qcom,scm-sm8150
+> +          - qcom,scm-sm8250
+> +          - qcom,scm-sm8350
+> +      - const: qcom,scm
+> +
+> +  clocks:
+> +    minItems: 1
+> +    maxItems: 3
+> +
+> +  clock-names: true
+> +
+> +  qcom,dload-mode:
+> +    $ref: /schemas/types.yaml#/definitions/phandle
+> +    description: >
+> +      TCSR hardware block and offset of the download mode control register
+> +
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,scm-apq8064
+> +              - qcom,scm-msm8660
+> +              - qcom,scm-msm8960
+> +    then:
+> +      properties:
+> +        clock-names:
+> +          items:
+> +            - const: core
+> +
+> +      required:
+> +        - clocks
+> +        - clock-names
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,scm-apq8084
+> +              - qcom,scm-msm8916
+> +              - qcom,scm-msm8953
+> +              - qcom,scm-msm8974
+> +    then:
+> +      properties:
+> +        clock-names:
+> +          items:
+> +            - const: core
+> +            - const: iface
+> +            - const: bus
+> +
+> +      required:
+> +        - clocks
+> +        - clock-names
+> +
+> +required:
+> +  - compatible
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    firmware {
+> +        scm {
+> +            compatible = "qcom,msm8916", "qcom,scm";
+> +            clocks = <&gcc 104>,
+> +                     <&gcc 77>,
+> +                     <&gcc 86>;
+
+Can we include dt-bindings/clock/qcom,gcc-msm8916.h and continue to use
+the constants in the example?
 
 Regards,
 Bjorn
 
-> Thanks,
-> Miao
+> +            clock-names = "core", "bus", "iface";
+> +        };
+> +    };
+> -- 
+> 2.34.1
 > 
-> On Thu, Jan 13, 2022 at 3:59 PM Doug Anderson <dianders@chromium.org> wrote:
-> >
-> > Hi,
-> >
-> > On Fri, Dec 24, 2021 at 10:10 AM Bjorn Andersson
-> > <bjorn.andersson@linaro.org> wrote:
-> > >
-> > > On Wed, 15 Dec 2021 22:36:03 +0530, Balakrishna Godavarthi wrote:
-> > > > Add bluetooth SoC WCN6750 node for SC7280 IDP boards.
-> > > >
-> > > >
-> > >
-> > > Applied, thanks!
-> > >
-> > > [1/1] arm64: dts: qcom: sc7280: Add bluetooth node on SC7280 IDP boards
-> > >       commit: 3a89ff3087c03c2295250c07234efa75873c7b51
-> >
-> > Just to confirm, this later got dropped, right? I don't see it in the
-> > Qualcomm git tree, so presumably it'll land once the merge window
-> > closes.
-> >
-> > -Doug
