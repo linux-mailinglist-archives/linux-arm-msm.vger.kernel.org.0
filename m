@@ -2,206 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E3D04A529A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 23:49:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EEABF4A52A0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 23:51:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234933AbiAaWtL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jan 2022 17:49:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39560 "EHLO
+        id S230463AbiAaWvO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jan 2022 17:51:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229890AbiAaWtK (ORCPT
+        with ESMTP id S229790AbiAaWvO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jan 2022 17:49:10 -0500
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80634C06173B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 14:49:10 -0800 (PST)
-Received: by mail-oi1-x22e.google.com with SMTP id y23so29660853oia.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 14:49:10 -0800 (PST)
+        Mon, 31 Jan 2022 17:51:14 -0500
+Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58356C061714
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 14:51:14 -0800 (PST)
+Received: by mail-oo1-xc2f.google.com with SMTP id f11-20020a4abb0b000000b002e9abf6bcbcso3594696oop.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 14:51:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=zH4G8FhpzwG8vGycg/3LNRhJPRrFcCye+DMKHFi6Thc=;
-        b=Z+C/vr5aIT6/wwUd35zbTynl7Zjos1sT4ON9OT/iWsN0kEYqucV9ox33Y40BneFydQ
-         dM3FT60gJJHfBT/EmqlnlRdOfUprmHRPwV0rdHvcY9d/2uYuZoMKqwTbikDk0Jb9GpfJ
-         eLuE93gYe4As+VR1uZftkEUzNXk/afrj6wQFUf9YrxGMgSdHN703HBMeeh/ko1fuSJKL
-         96GMoCu9HaiG1QIBH86JAf4T/yJzcJNHcQeBk2wvKkB7jTR8btCtWkvRQPdJ7aaeKL90
-         7GbePG6Es9zFE5oTZPBeh6xOoLZWX+RRLrMS8uXEfl4XXrSxB1XuCFfkcifkBl3HpzEH
-         T+/g==
+        bh=nBrfpJzupkSShf4CWXDPtK4iaecwvZzucD4RhJBFXwk=;
+        b=zBtEMTjVVb+YGqAcOSPVvMPv1Ocy7/1H8T1FVt43BwsxAUK32tnMeaZKTf4vZlTc4K
+         +ZRlDJ9uMsDqhJ1Diu8SXbmt8AKixgtfKvZtDe5d/KyxMMPZJKnn2DuJmhHGAx/yL3kF
+         NpPTuUJH6UnN7tRI833pF/YeC+TTleD8ugqCXqHtiS4vPEW0bq6qnrzUf2JmgIlB3ApO
+         SH+GsWwMy4B8HzZSyGzktoAZR5OgYqxi1aTGhydpqX96FLkWYAMKBnLiL5SmHZYKuXxD
+         evMNdzvZVmWgqY1EQaGFtPt01WoJ7+A5mQsmybBawyx+iT7qE9o9qEgU22e9Z1ghXdAZ
+         rxqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=zH4G8FhpzwG8vGycg/3LNRhJPRrFcCye+DMKHFi6Thc=;
-        b=vZh8tphZGb9cRB4xq36MvvqoGZ4Bbh7E0z9Zssyz2MdkH7lwUQeI//fsHQTXzdbqOu
-         ufI5R9WIdkWFzDtyQn1hibtWBIC/06aTcvXrxuZXCqz/Jbc+L7LYTn48UGIZ5HJgbfoc
-         oJfGhsSkq/n/y8a3MKheexJsaWz+or2ZwT4hj82qGitENp0lgLFJx3tjZA4NRM4W8pyn
-         gNDJy9kSrDyM1Hi6ejR2nxEezJEE2pamSpOLfQxRd8WTh6k0Ito1tDHxKTLhRaSm12J2
-         Hg7i/5zV44qrTy8fTM0mo2n/4aJaIA7O7chuURdGHRwVYzCZTXqB0XU2rv0ygtQOt9li
-         hhdA==
-X-Gm-Message-State: AOAM5335OCsL9iR7ASO7NBNx3xW6G57BOCqEpysAsjuYQn7qg5jCcs+L
-        YC4asz4hprQpD16Wq+/yLQTsjA==
-X-Google-Smtp-Source: ABdhPJxuZlYoI8KM9zf3D0JjhRwI1p4aqNYZezGEaZ+/GCbAPwG/LQABbp3SdE61/B5emMDHIBguug==
-X-Received: by 2002:a05:6808:f8d:: with SMTP id o13mr14653449oiw.250.1643669349914;
-        Mon, 31 Jan 2022 14:49:09 -0800 (PST)
+        bh=nBrfpJzupkSShf4CWXDPtK4iaecwvZzucD4RhJBFXwk=;
+        b=kP5MX4AcwmPddfCciUfI2XdRaC4UpsaIyOkRsNRDV3huCtOLyQlcKmsmRa443fApzo
+         Y/jBz+LWH4d79czwds2xWxg9aicQmc4rgrlsC5j7DZMEphAY8MRc1gM7lZUP9yyoF7Mz
+         wco/SH7ltbu/uxdwyfg7NkjvC2MmRqevJOI2n/fRIg9180x1nYjMAE+Foo/uy32gPf5W
+         fpv/UaDFx1WCOtQWKojWtvrkFeNA5ghc0XNKlzztcajhXgVLZAGhVx0zVRbWvTZIByVD
+         NkTjbaS9IWoffWQDe1a2Va0C9D31mcLtB1R69MCZDm9juSR0Ndb20frLD9/hckz4q7My
+         gAjA==
+X-Gm-Message-State: AOAM530ouzMIHj+o+JVB8BXwDUlXTNsd/UFOEmWkDceFjLS1gJI+sFC3
+        HkKcis8TAkjE6HjFFSiHTY3pdg==
+X-Google-Smtp-Source: ABdhPJxR9eHfsl198Tn9tTHqvNyyVXfT+TxvfXIUwvWRj0ljbCIlWA9U6ZaHID1pRgfHEbrnr8WrdQ==
+X-Received: by 2002:a9d:40a:: with SMTP id 10mr8675863otc.319.1643669473716;
+        Mon, 31 Jan 2022 14:51:13 -0800 (PST)
 Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id a15sm17882083oil.13.2022.01.31.14.49.09
+        by smtp.gmail.com with ESMTPSA id l1sm12096073otd.18.2022.01.31.14.51.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Jan 2022 14:49:09 -0800 (PST)
-Date:   Mon, 31 Jan 2022 16:49:07 -0600
+        Mon, 31 Jan 2022 14:51:13 -0800 (PST)
+Date:   Mon, 31 Jan 2022 16:51:11 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Ansuel Smith <ansuelsmth@gmail.com>
 Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 12/17] ARM: dts: qcom: add opp table for cpu and l2 for
- ipq8064
-Message-ID: <YfhnY1K7gXtYT5fb@builder.lan>
+Subject: Re: [PATCH 00/17] Multiple addition to ipq8064 dtsi
+Message-ID: <Yfhn3x6SYzlzZORx@builder.lan>
 References: <20220118012051.21691-1-ansuelsmth@gmail.com>
- <20220118012051.21691-13-ansuelsmth@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220118012051.21691-13-ansuelsmth@gmail.com>
+In-Reply-To: <20220118012051.21691-1-ansuelsmth@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Mon 17 Jan 19:20 CST 2022, Ansuel Smith wrote:
 
-> Add opp table for cpu and l2 cache. The l2 cache won't work as it would
-> require a dedicated cpufreq driver to scale cache with core.
+> This try to complete the ipq8064 dtsi and introduce 2 new dtsi
+> ipq8064-v2 and ipq8065. While some node are still missing (cpufreq node,
+> l2 scale node, fab scale node) this would add most of the missing node
+> to make ipq8064 actually usable.
+> 
+> Some of the changes are the fix for the pci IO that cause any secondary
+> wifi card with ath10k to fail init.
+> Adds regulators definition for RPM.
+> Adds many missing gsbi nodes used by all the devices.
+> Enable the usb phy by default as they are actually enabled internally by
+> xlate only if the dwc3 driver is used.
+> Add opp table and declare idle state for ipq8064.
+> Fix some dtc warning.
+> 
+> This also add the ipq8064-v2.0 dtsi and the ipq8065 dtsi used by more
+> recent devices based on this SoC.
 > 
 
-Are you saying that the L2 cache frequency scaling doesn't work so you
-put it there for completeness sake, or that it doesn't work without this
-patch?
+From the look of the series I suspect that you format-patch'ed a series
+with 16 patches, then fixed something and re-ran it now with 17 patches.
 
-Could you please rewrite this to make it clear in the git history?
+Can you please resubmit the series to make it clear what you would like
+me to apply. (Preferably with that one commit message clarified)
 
-Thanks,
+Regards,
 Bjorn
 
-> Opp-level is set based on the logic of
-> 0: idle level
-> 1: normal level
-> 2: turbo level
+> Ansuel Smith (17):
+>   ARM: dts: qcom: add multiple missing pin definition for ipq8064
+>   ARM: dts: qcom: add gsbi6 missing definition for ipq8064
+>   ARM: dts: qcom: add missing rpm regulators and cells for ipq8064
+>   ARM: dts: qcom: add missing snps,dwmac compatible for gmac ipq8064
+>   ARM: dts: qcom: enable usb phy by default for ipq8064
+>   ARM: dts: qcom: reduce pci IO size to 64K for ipq8064
+>   ARM: dts: qcom: fix dtc warning for missing #address-cells for ipq8064
+>   ARM: dts: qcom: add smem node for ipq8064
+>   ARM: dts: qcom: add saw for l2 cache and kraitcc for ipq8064
+>   ARM: dts: qcom: add sic non secure node for ipq8064
+>   ARM: dts: qcom: fix and add some missing gsbi node for ipq8064
+>   ARM: dts: qcom: add opp table for cpu and l2 for ipq8064
+>   ARM: dts: qcom: add speedbin efuse nvmem binding
+>   ARM: dts: qcom: add multiple missing binding for cpu and l2 for
+>     ipq8064
+>   ARM: dts: qcom: remove redundant binding from ipq8064 rb3011 dts
+>   ARM: dts: qcom: add ipq8064-v2.0 dtsi
+>   ARM: dts: qcom: add ipq8065 dtsi
 > 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  arch/arm/boot/dts/qcom-ipq8064.dtsi | 99 +++++++++++++++++++++++++++++
->  1 file changed, 99 insertions(+)
+>  arch/arm/boot/dts/qcom-ipq8064-rb3011.dts |  17 --
+>  arch/arm/boot/dts/qcom-ipq8064-v2.0.dtsi  |  70 +++++
+>  arch/arm/boot/dts/qcom-ipq8064.dtsi       | 344 +++++++++++++++++++++-
+>  arch/arm/boot/dts/qcom-ipq8065.dtsi       | 168 +++++++++++
+>  4 files changed, 568 insertions(+), 31 deletions(-)
+>  create mode 100644 arch/arm/boot/dts/qcom-ipq8064-v2.0.dtsi
+>  create mode 100644 arch/arm/boot/dts/qcom-ipq8065.dtsi
 > 
-> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> index 6f9075489e58..1e6297d6f302 100644
-> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> @@ -48,6 +48,105 @@ L2: l2-cache {
->  		};
->  	};
->  
-> +	opp_table_l2: opp_table_l2 {
-> +		compatible = "operating-points-v2";
-> +
-> +		opp-384000000 {
-> +			opp-hz = /bits/ 64 <384000000>;
-> +			opp-microvolt = <1100000>;
-> +			clock-latency-ns = <100000>;
-> +			opp-level = <0>;
-> +		};
-> +
-> +		opp-1000000000 {
-> +			opp-hz = /bits/ 64 <1000000000>;
-> +			opp-microvolt = <1100000>;
-> +			clock-latency-ns = <100000>;
-> +			opp-level = <1>;
-> +		};
-> +
-> +		opp-1200000000 {
-> +			opp-hz = /bits/ 64 <1200000000>;
-> +			opp-microvolt = <1150000>;
-> +			clock-latency-ns = <100000>;
-> +			opp-level = <2>;
-> +		};
-> +	};
-> +
-> +	opp_table0: opp_table0 {
-> +		compatible = "operating-points-v2-kryo-cpu";
-> +		nvmem-cells = <&speedbin_efuse>;
-> +
-> +		/*
-> +		 * Voltage thresholds are <target min max>
-> +		 */
-> +		opp-384000000 {
-> +			opp-hz = /bits/ 64 <384000000>;
-> +			opp-microvolt-speed0-pvs0-v0 = <1000000 950000 1050000>;
-> +			opp-microvolt-speed0-pvs1-v0 = <925000 878750 971250>;
-> +			opp-microvolt-speed0-pvs2-v0 = <875000 831250 918750>;
-> +			opp-microvolt-speed0-pvs3-v0 = <800000 760000 840000>;
-> +			opp-supported-hw = <0x1>;
-> +			clock-latency-ns = <100000>;
-> +			opp-level = <0>;
-> +		};
-> +
-> +		opp-600000000 {
-> +			opp-hz = /bits/ 64 <600000000>;
-> +			opp-microvolt-speed0-pvs0-v0 = <1050000 997500 1102500>;
-> +			opp-microvolt-speed0-pvs1-v0 = <975000 926250 1023750>;
-> +			opp-microvolt-speed0-pvs2-v0 = <925000 878750 971250>;
-> +			opp-microvolt-speed0-pvs3-v0 = <850000 807500 892500>;
-> +			opp-supported-hw = <0x1>;
-> +			clock-latency-ns = <100000>;
-> +			opp-level = <1>;
-> +		};
-> +
-> +		opp-800000000 {
-> +			opp-hz = /bits/ 64 <800000000>;
-> +			opp-microvolt-speed0-pvs0-v0 = <1100000 1045000 1155000>;
-> +			opp-microvolt-speed0-pvs1-v0 = <1025000 973750 1076250>;
-> +			opp-microvolt-speed0-pvs2-v0 = <995000 945250 1044750>;
-> +			opp-microvolt-speed0-pvs3-v0 = <900000 855000 945000>;
-> +			opp-supported-hw = <0x1>;
-> +			clock-latency-ns = <100000>;
-> +			opp-level = <1>;
-> +		};
-> +
-> +		opp-1000000000 {
-> +			opp-hz = /bits/ 64 <1000000000>;
-> +			opp-microvolt-speed0-pvs0-v0 = <1150000 1092500 1207500>;
-> +			opp-microvolt-speed0-pvs1-v0 = <1075000 1021250 1128750>;
-> +			opp-microvolt-speed0-pvs2-v0 = <1025000 973750 1076250>;
-> +			opp-microvolt-speed0-pvs3-v0 = <950000 902500 997500>;
-> +			opp-supported-hw = <0x1>;
-> +			clock-latency-ns = <100000>;
-> +			opp-level = <1>;
-> +		};
-> +
-> +		opp-1200000000 {
-> +			opp-hz = /bits/ 64 <1200000000>;
-> +			opp-microvolt-speed0-pvs0-v0 = <1200000 1140000 1260000>;
-> +			opp-microvolt-speed0-pvs1-v0 = <1125000 1068750 1181250>;
-> +			opp-microvolt-speed0-pvs2-v0 = <1075000 1021250 1128750>;
-> +			opp-microvolt-speed0-pvs3-v0 = <1000000 950000 1050000>;
-> +			opp-supported-hw = <0x1>;
-> +			clock-latency-ns = <100000>;
-> +			opp-level = <2>;
-> +		};
-> +
-> +		opp-1400000000 {
-> +			opp-hz = /bits/ 64 <1400000000>;
-> +			opp-microvolt-speed0-pvs0-v0 = <1250000 1187500 1312500>;
-> +			opp-microvolt-speed0-pvs1-v0 = <1175000 1116250 1233750>;
-> +			opp-microvolt-speed0-pvs2-v0 = <1125000 1068750 1181250>;
-> +			opp-microvolt-speed0-pvs3-v0 = <1050000 997500 1102500>;
-> +			opp-supported-hw = <0x1>;
-> +			clock-latency-ns = <100000>;
-> +			opp-level = <2>;
-> +		};
-> +	};
-> +
->  	thermal-zones {
->  		sensor0-thermal {
->  			polling-delay-passive = <0>;
 > -- 
 > 2.33.1
 > 
