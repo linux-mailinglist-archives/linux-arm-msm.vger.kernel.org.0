@@ -2,160 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 32EB74A51D5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 22:47:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A03B4A520A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 23:06:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381154AbiAaVrd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jan 2022 16:47:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53660 "EHLO
+        id S231289AbiAaWGr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jan 2022 17:06:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351247AbiAaVr3 (ORCPT
+        with ESMTP id S231251AbiAaWGr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jan 2022 16:47:29 -0500
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31150C06173D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 13:47:29 -0800 (PST)
-Received: by mail-oi1-x22d.google.com with SMTP id r27so7273103oiw.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 13:47:29 -0800 (PST)
+        Mon, 31 Jan 2022 17:06:47 -0500
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 004D5C06173E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 14:06:46 -0800 (PST)
+Received: by mail-oi1-x236.google.com with SMTP id s185so29565686oie.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 14:06:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=i4ZNON8jjEqhdUhXt2lm8yAa37L58m4tSj1GfdxY8fY=;
-        b=hYQh9jnUfIqiLu881VQDp+oCeamuUvhXtTawHjvucMbffYwqzgdl9YuT5XOQW30ztY
-         oQemAMYrcEB6QlQemd2uNZWPymLOuISHd5Lj3aV+VTxyEaDNU6pJEUZW/2sgx4xxuEQz
-         Z8cruvZT0/q9rqGmqFStKqU27q0xtM1VSVs28k7xbB2ZekSekWGney+HB2oDdLcB5sXJ
-         isR2t5jZDAdOak3nzs06IIoeKkRHhEQrqOfQwy2hslIV/ugLAxLY2j6zWD6tzyK/hX2G
-         iEoB0Kh58qWypHKItSpBtL/a5GcUlwLmoHZjToXJL+G1Vxke1DSo6E7+zOkGsANE3Qy1
-         y0aA==
+        bh=W9hEBXurjCl7qSO381JI7fgMTyHfEqjYiRw7QVwUoiQ=;
+        b=f83Oy42QBUfyAnO9mve85cB7lvEpbgY0o691h1XkMCXtnW+ODYVqKGNpp53UiVmbrl
+         1LapiEW86Y8LpNLC57YIN4MJXtXRsAUASy/va5wXAVR9UsZJydU9Z6ScvgYH3Rto1ZtR
+         ATpM+JnVu6yUXaT++xmS910rY+UtTeVAJJ+1i1Ca8VUFPdxpkRYLLl3WFGoeM3QW+v+a
+         UJyNh4UCzHKLT4f4eL1OfYTWVH6YZJGYIXwmVk90Y+qy7if69L8IjUhOCEy3QGIDQSfF
+         nDnJhFBgh5+AWipXSUTTZ9+V7sctCUUqRpGELV9SZihVlU5DiMdDgTt1IZyt7DWrK1Pz
+         3m7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=i4ZNON8jjEqhdUhXt2lm8yAa37L58m4tSj1GfdxY8fY=;
-        b=addu4plHL/m7V+vv1hggjN1FSo1I/xYPgFwFRtXzm9X3+hwCstk+8/n57BsFtLB2AI
-         I9TVjWrH3+ZF5t7nrDQw0B2k06k6I8P1aFrk/lb+/GgDGm9R+A++nlRfnbk+SsjeifI/
-         fgPugI+0cirdo+qL/eUP67yem6YB8RYCLC4We2c0FIC6e02faQrFYx4kBA7luTZySzEl
-         TaNMxvK48xzU3ASRXpAKdh9sWjtyqfdeRq3UNLv3u0If6dQm6GNKJ/tlEQCWJV1+lOrw
-         XRVe/l4ShzulpPI6/FmdWdn+CNHRDYXfERun1LTmxj6NZCvhd9EHMVs520Z/hOx92T2c
-         66xQ==
-X-Gm-Message-State: AOAM533jjE4p4+Br6EzkRKEqHQxqzlSGAPcGlZD3jn+bPvwHuid7Ut9u
-        n0RbZHnOsi+UNaDUBdDb5qFIhw==
-X-Google-Smtp-Source: ABdhPJxv2BQ99VhEEybtEde4R7t1XK2VPNj5P94cmRD1qpbZ70xYPRLnqD31ijFF4oVSs3O/Arlt6A==
-X-Received: by 2002:a05:6808:f0a:: with SMTP id m10mr10743268oiw.127.1643665648575;
-        Mon, 31 Jan 2022 13:47:28 -0800 (PST)
+        bh=W9hEBXurjCl7qSO381JI7fgMTyHfEqjYiRw7QVwUoiQ=;
+        b=GfhqYzGMcG4KDh/HqvYNemMIRrDSLQXEaiPBJFL1G3LpExaFcWbp1pMw8/BybHT/xm
+         2gBQiYZvZ2dvZ4adaBtcrCXk789JCDM3FH7z0NsU9HXA36/Fko5Ks4umYRmAAZyu7FVT
+         2vKktKT7qNsZX4yUA8+qJiOZXtxC3gGtLphydI+JOpsJd0ux5owbtHtXJjD27ts0Ld5O
+         TefFBIzZBTUgdcsJk9rK4yQWxLqbVzSYUPK0xdvTCgqvSW2JKen3eOujL/yTiNiQZBYe
+         SCPT21/PqcfxCfKDx3iT3BHM1YykXKtqE1l1kxQM4f2QHupzEqVWV0cBbuZ9P5q/5Vg7
+         LmCQ==
+X-Gm-Message-State: AOAM531GkzClM5UY4YZ6zANsjNvZ0rganKEAe4JCPrHQXMUz4fVO3w5M
+        015Fuij+NtlcDjFA6gSV7AAi3Q==
+X-Google-Smtp-Source: ABdhPJwHPXbk+76P0Fx/D780/C1NJjDyzqlecixXCiyHyxzMZac7l6IJP/2pS0jKeDB9FmtMamolhg==
+X-Received: by 2002:a05:6808:1822:: with SMTP id bh34mr14801119oib.209.1643666806299;
+        Mon, 31 Jan 2022 14:06:46 -0800 (PST)
 Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id w42sm12923738ooi.40.2022.01.31.13.47.27
+        by smtp.gmail.com with ESMTPSA id q11sm7085491oti.3.2022.01.31.14.06.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Jan 2022 13:47:27 -0800 (PST)
-Date:   Mon, 31 Jan 2022 15:47:26 -0600
+        Mon, 31 Jan 2022 14:06:45 -0800 (PST)
+Date:   Mon, 31 Jan 2022 16:06:44 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     David Heidelberg <david@ixit.cz>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] ARM: dts: qcom: fix timer node clock-frequency
-Message-ID: <YfhY7vwTfRhJ2UWx@builder.lan>
-References: <20211224234631.109315-1-david@ixit.cz>
+To:     Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     Rob Herring <robh+dt@kernel.org>, Ilia Lin <ilia.lin@kernel.org>,
+        Niklas Cassel <nks@flawful.org>,
+        Andy Gross <agross@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/7] dt-bindings: Convert multiple Qualcomm OPP and
+ CPUFreq bindings to DT schema
+Message-ID: <YfhddMNAL1mQGtKU@builder.lan>
+References: <20220104132618.391799-1-y.oudjana@protonmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211224234631.109315-1-david@ixit.cz>
+In-Reply-To: <20220104132618.391799-1-y.oudjana@protonmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 24 Dec 17:46 CST 2021, David Heidelberg wrote:
+On Tue 04 Jan 07:27 CST 2022, Yassine Oudjana wrote:
 
-> Clock frequency is read by driver a single uint32,
-> so the second value was never processed.
+> This series is a compilation of DT schema conversions of multiple Qualcomm
+> OPP and CPUFreq bindings:
+> - qcom-cpufreq-nvmem (operating-points-v2-kryo-cpu)
+> - qcom-opp (operating-points-v2-qcom-level)
+> - qcom,cpr
+> 
+> Converting each one to DT schema introduces new dt_binding_check and
+> dtbs_check errors to the others, so it was better to combine them into
+> a series. Some errors were also caused by a couple of device trees having
+> OPP tables with names that do not follow opp-v2-base, so these got fixed
+> in this series as well. Finally, the lack of MSM8996 compatibles in
+> arm/qcom.yaml caused an error in the opp-v2-kryo-cpu example, so they were
+> added to the schema as well as to the msm8996-mtp device tree, which only
+> had qcom,msm8996-mtp as its compatible.
+> 
+> PATCH 4/7 is a new version of a patch[1] that was sent as part of
+> a different series before, and PATCH 7/7 is a new version of a patch[2]
+> that was first sent alone.
+> 
+> Changes since v1 (PATCH v2 4/7):
+>  - Split the schema into an OPP schema and a CPUFreq schema. 
+> 
+> Changes since v1 (PATCH v2 7/7):
+>  - Remove allOf from compatible.
 > 
 
-I'm not familiar with the reasoning behind this, but the binding says
-that we should have > 1 clock-frequency specified.
+The mixed versioning in this series confuses b4 - and thereby me as
+well.  Can you please resubmit this with all patches of the same version
+(e.g. v3).
 
-Regards,
+Thanks,
 Bjorn
 
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
->  arch/arm/boot/dts/qcom-apq8064.dtsi | 3 +--
->  arch/arm/boot/dts/qcom-ipq8064.dtsi | 3 +--
->  arch/arm/boot/dts/qcom-mdm9615.dtsi | 3 +--
->  arch/arm/boot/dts/qcom-msm8660.dtsi | 3 +--
->  arch/arm/boot/dts/qcom-msm8960.dtsi | 3 +--
->  5 files changed, 5 insertions(+), 10 deletions(-)
+> Yassine Oudjana (7):
+>   dt-bindings: arm: qcom: Add msm8996 and apq8096 compatibles
+>   arm64: dts: qcom: msm8996-mtp: Add msm8996 compatible
+>   dt-bindings: opp: qcom-opp: Convert to DT schema
+>   dt-bindings: opp: Convert qcom-nvmem-cpufreq to DT schema
+>   arm64: dts: qcom: msm8996: Rename cluster OPP tables
+>   arm64: dts: qcom: qcs404: Rename CPU and CPR OPP tables
+>   dt-bindings: power: avs: qcom,cpr: Convert to DT schema
 > 
-> diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
-> index 2d539d77bad4..3d5d9ffb66af 100644
-> --- a/arch/arm/boot/dts/qcom-apq8064.dtsi
-> +++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
-> @@ -380,8 +380,7 @@ timer@200a000 {
->  				     <1 2 0x301>,
->  				     <1 3 0x301>;
->  			reg = <0x0200a000 0x100>;
-> -			clock-frequency = <27000000>,
-> -					  <32768>;
-> +			clock-frequency = <27000000>;
->  			cpu-offset = <0x80000>;
->  		};
->  
-> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> index 996f4458d9fc..d663521bdd02 100644
-> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> @@ -458,8 +458,7 @@ IRQ_TYPE_EDGE_RISING)>,
->  				     <GIC_PPI 5 (GIC_CPU_MASK_SIMPLE(2) |
->  						 IRQ_TYPE_EDGE_RISING)>;
->  			reg = <0x0200a000 0x100>;
-> -			clock-frequency = <25000000>,
-> -					  <32768>;
-> +			clock-frequency = <25000000>;
->  			clocks = <&sleep_clk>;
->  			clock-names = "sleep";
->  			cpu-offset = <0x80000>;
-> diff --git a/arch/arm/boot/dts/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom-mdm9615.dtsi
-> index c32415f0e66d..8b58f80093e8 100644
-> --- a/arch/arm/boot/dts/qcom-mdm9615.dtsi
-> +++ b/arch/arm/boot/dts/qcom-mdm9615.dtsi
-> @@ -120,8 +120,7 @@ timer@200a000 {
->  				     <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_EDGE_RISING)>,
->  				     <GIC_PPI 3 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_EDGE_RISING)>;
->  			reg = <0x0200a000 0x100>;
-> -			clock-frequency = <27000000>,
-> -					  <32768>;
-> +			clock-frequency = <27000000>;
->  			cpu-offset = <0x80000>;
->  		};
->  
-> diff --git a/arch/arm/boot/dts/qcom-msm8660.dtsi b/arch/arm/boot/dts/qcom-msm8660.dtsi
-> index 1e8aab357f9c..b16060b65593 100644
-> --- a/arch/arm/boot/dts/qcom-msm8660.dtsi
-> +++ b/arch/arm/boot/dts/qcom-msm8660.dtsi
-> @@ -105,8 +105,7 @@ timer@2000000 {
->  				     <1 1 0x301>,
->  				     <1 2 0x301>;
->  			reg = <0x02000000 0x100>;
-> -			clock-frequency = <27000000>,
-> -					  <32768>;
-> +			clock-frequency = <27000000>;
->  			cpu-offset = <0x40000>;
->  		};
->  
-> diff --git a/arch/arm/boot/dts/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom-msm8960.dtsi
-> index 2a0ec97a264f..ca093b89c9ea 100644
-> --- a/arch/arm/boot/dts/qcom-msm8960.dtsi
-> +++ b/arch/arm/boot/dts/qcom-msm8960.dtsi
-> @@ -99,8 +99,7 @@ timer@200a000 {
->  				     <1 2 0x301>,
->  				     <1 3 0x301>;
->  			reg = <0x0200a000 0x100>;
-> -			clock-frequency = <27000000>,
-> -					  <32768>;
-> +			clock-frequency = <27000000>;
->  			cpu-offset = <0x80000>;
->  		};
->  
+>  .../devicetree/bindings/arm/qcom.yaml         |  16 +-
+>  .../bindings/cpufreq/qcom-cpufreq-nvmem.yaml  | 166 ++++
+>  .../bindings/opp/opp-v2-kryo-cpu.yaml         | 257 ++++++
+>  .../bindings/opp/opp-v2-qcom-level.yaml       |  60 ++
+>  .../bindings/opp/qcom-nvmem-cpufreq.txt       | 796 ------------------
+>  .../devicetree/bindings/opp/qcom-opp.txt      |  19 -
+>  .../bindings/power/avs/qcom,cpr.txt           | 130 ---
+>  .../bindings/power/avs/qcom,cpr.yaml          | 160 ++++
+>  MAINTAINERS                                   |   5 +-
+>  arch/arm64/boot/dts/qcom/msm8996-mtp.dts      |   2 +-
+>  arch/arm64/boot/dts/qcom/msm8996.dtsi         |   4 +-
+>  arch/arm64/boot/dts/qcom/qcs404.dtsi          |   4 +-
+>  12 files changed, 666 insertions(+), 953 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
+>  create mode 100644 Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
+>  create mode 100644 Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/opp/qcom-nvmem-cpufreq.txt
+>  delete mode 100644 Documentation/devicetree/bindings/opp/qcom-opp.txt
+>  delete mode 100644 Documentation/devicetree/bindings/power/avs/qcom,cpr.txt
+>  create mode 100644 Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
+> 
+> [1] https://lore.kernel.org/linux-arm-msm/20211014083016.137441-6-y.oudjana@protonmail.com/
+> [2]	https://lore.kernel.org/linux-arm-msm/20211221133937.173618-1-y.oudjana@protonmail.com/
 > -- 
 > 2.34.1
+> 
 > 
