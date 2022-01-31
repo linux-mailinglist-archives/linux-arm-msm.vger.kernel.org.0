@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 750E24A4C77
+	by mail.lfdr.de (Postfix) with ESMTP id BF6C84A4C78
 	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 17:51:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349846AbiAaQvA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1379619AbiAaQvA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 31 Jan 2022 11:51:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41582 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380618AbiAaQu7 (ORCPT
+        with ESMTP id S1349408AbiAaQvA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jan 2022 11:50:59 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D133C061714
+        Mon, 31 Jan 2022 11:51:00 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF087C06173B
         for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 08:50:59 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id x23so28239456lfc.0
+Received: by mail-lf1-x133.google.com with SMTP id a28so28084561lfl.7
         for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 08:50:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GioSKIaU13MEvW/d+kgEmzBl7St+VTT+z4XpTJBpYUY=;
-        b=SBoPxDB6moY9deewUj5it+ctmz5+3GQAHytVwtXh769U8fnQfYIwfHro339m133DQD
-         ugBeiN9xMjxV+diGLmEWHQgfZyh2ly9ru8uCfUtMTwbJmWf6aZbN++FmTRhtBPEnVWXL
-         IsMi9VenqKPUD++oadn88CTvz6GaESlUMqSgJ5k8adS4hXCiCTGmbH3S72pTErcKZmJs
-         1Up/NBzRfeDuPxYrtqSbn4bZigisIqA6tcUx3vCV0IOjk1AtPuycbaYK/jHWuYQnlVqa
-         jjm/IQ+N01GRkTiIqVf3A7AdUruaSYwvZvQtTU54BxDl90/o5pQWZjG5Lq1QtPLADbY5
-         qQcA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=HbazlGd5ZzfYdkAuyQfFJkYXtb1nbweTFWXytUoVMew=;
+        b=uzxSDxFm1hZXQlqmaAR4US5PBiUePbXHvP5VUBtYjSgTOLHBL+UQ5LtyCYB/CUriQu
+         BrbSsog1qfDUd1EuG7M2+UkkNV9979xaBjJJiljTgnKRAHNPi1za67bxTf9120juJFde
+         9GXz7Bbum4UMPCus/qKunb1/Eu22z13/jeQvtjEhjhLZsgaEwWSJGUk6pxIDLCP49YHd
+         9VgPPViBTaEpmJk5+tZ4aGxZ+lwK4nyL6Rt57m23Q4PnuGzSgBKJrxnCoR1TFsLCRZl1
+         vC8FpEpGDWz6tx1DPR7xEzcBBJthBC9fq8xxmzP5r2clmc0jPJ5XXuClg+uI53m9WdR4
+         ZjOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GioSKIaU13MEvW/d+kgEmzBl7St+VTT+z4XpTJBpYUY=;
-        b=A9CLXstqYY6M+xB/mVtz69qMnjBWAN0UCng2S4UPhungtihVpOfkCWL8V7gXHc7aYh
-         FWp8g61HYhsNae8cuF22sOCt2MMwylhutOWh7/SNNp73VGhNynOET4TcodSTU8vWDgUZ
-         +XTbyK9bb/zKrBwcFNr/x2TxgIhUQbgmBIlsiWOsjGKngY/AE3TlNAfHbGeBTvtk9tke
-         f0RThTz84Vd7aKeE1tsf159TpC7EpJIOKFP2QUkiFahQSb3y0qquSPVVJCEyVTloJhrK
-         qhoyvduDpFs88k85aAs5MkLtMQ4q6HdeNatAyxYx7LEFnUuB50ZMNHfuueqqNo1yzXMc
-         zyFw==
-X-Gm-Message-State: AOAM532SisPdXAtRsoYzwzen5ugEn/4dvAdEzomcIsxPI+LIpLlAuIkq
-        8i0I5g3SCH4ADXt3rfWwsEnG7w==
-X-Google-Smtp-Source: ABdhPJwVwIWSYC+eSXNXGue1cqc+/4LydpFv+yebWeUXw2DP8kiqQ0P8B9vHFpUbVYeUZMeNT0HhLw==
-X-Received: by 2002:a05:6512:1686:: with SMTP id bu6mr16325223lfb.125.1643647857618;
-        Mon, 31 Jan 2022 08:50:57 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=HbazlGd5ZzfYdkAuyQfFJkYXtb1nbweTFWXytUoVMew=;
+        b=XIZ0ZQ0GTB3KgecJWI2FE9JRJdE1BL9ZqOgEXMLZUum+3qA/g5oT/ZYw3YRKcAFWef
+         406FAftYH+Chh9M61dgksIr3rHAU8Spf39S1Mx1Q6qFDqo13mZyi6Ev3EsbsuY+zfIuL
+         m1Vci/5MrMOeNvrCMsMC8nsUbdDUdK9u2lCaO3XlegTF7r6JfGU89vIzp4o0veMd4Vds
+         KKpjhrohTNHyGZp1X1+zDJ9qsz3bbZ4AI/6EHsmbYJ/mITVHVjq8bAQhYQNt8jKmKPOI
+         xV58j+yN6rXXEZ2gJZ0EVDbn6gA/c4B0urijZVnQ8BInIYaDwynYu49Gq8grgXbIJQpN
+         E6yQ==
+X-Gm-Message-State: AOAM533s30Qv0I0BJ+rrhLi342yFoZggzuDf8O8Y+96g/9+TErwUYC7M
+        nAhQsNYT64WnJCcEtdJ8/LqhLw==
+X-Google-Smtp-Source: ABdhPJzLWlp++BpwoG7Q/hCcP6zTLKzd0xOJ9CW62UtrwPRwxQg9coovYKrMc0cRG5DHYsYzpXyHpg==
+X-Received: by 2002:a05:6512:151e:: with SMTP id bq30mr16030065lfb.139.1643647858330;
+        Mon, 31 Jan 2022 08:50:58 -0800 (PST)
 Received: from eriador.lan ([37.153.55.125])
         by smtp.gmail.com with ESMTPSA id i19sm2749853ljm.51.2022.01.31.08.50.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
@@ -54,18 +54,19 @@ To:     Andy Gross <agross@kernel.org>,
         Catalin Marinas <catalin.marinas@arm.com>,
         Will Deacon <will@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 1/5] arm64: defconfig: Enable some Qualcomm drivers
-Date:   Mon, 31 Jan 2022 19:50:52 +0300
-Message-Id: <20220131165056.2117434-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 2/5] arm64: defconfig: enable ath11k driver
+Date:   Mon, 31 Jan 2022 19:50:53 +0300
+Message-Id: <20220131165056.2117434-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220131165056.2117434-1-dmitry.baryshkov@linaro.org>
+References: <20220131165056.2117434-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable coincell, fastrpc, mailbox and adc-tm5 drivers to be built as
-modules. These driver are used on many of Qualcomm platforms.
+Enable Atheros Ath11k driver to be built on arm64 platforms.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
@@ -73,34 +74,27 @@ Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
  1 file changed, 4 insertions(+)
 
 diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 30516dc0b70e..ab1920df6c27 100644
+index ab1920df6c27..c72ae4a421d7 100644
 --- a/arch/arm64/configs/defconfig
 +++ b/arch/arm64/configs/defconfig
-@@ -270,6 +270,8 @@ CONFIG_BLK_DEV_LOOP=y
- CONFIG_BLK_DEV_NBD=m
- CONFIG_VIRTIO_BLK=y
- CONFIG_BLK_DEV_NVME=m
-+CONFIG_QCOM_COINCELL=m
-+CONFIG_QCOM_FASTRPC=m
- CONFIG_SRAM=y
- CONFIG_PCI_ENDPOINT_TEST=m
- CONFIG_EEPROM_AT24=m
-@@ -586,6 +588,7 @@ CONFIG_TEGRA_SOCTHERM=m
- CONFIG_QCOM_TSENS=y
- CONFIG_QCOM_SPMI_TEMP_ALARM=m
- CONFIG_QCOM_LMH=m
-+CONFIG_QCOM_SPMI_ADC_TM5=m
- CONFIG_UNIPHIER_THERMAL=y
- CONFIG_WATCHDOG=y
- CONFIG_SL28CPLD_WATCHDOG=m
-@@ -1050,6 +1053,7 @@ CONFIG_FSL_DPAA=y
- CONFIG_FSL_MC_DPIO=y
- CONFIG_FSL_RCPM=y
- CONFIG_MTK_PMIC_WRAP=y
-+CONFIG_MAILBOX=y
- CONFIG_QCOM_AOSS_QMP=y
- CONFIG_QCOM_COMMAND_DB=y
- CONFIG_QCOM_GENI_SE=y
+@@ -382,6 +382,9 @@ CONFIG_ATH10K=m
+ CONFIG_ATH10K_PCI=m
+ CONFIG_ATH10K_SNOC=m
+ CONFIG_WCN36XX=m
++CONFIG_ATH11K=m
++CONFIG_ATH11K_AHB=m
++CONFIG_ATH11K_PCI=m
+ CONFIG_BRCMFMAC=m
+ CONFIG_MWIFIEX=m
+ CONFIG_MWIFIEX_PCIE=m
+@@ -1228,6 +1231,7 @@ CONFIG_NLS_CODEPAGE_437=y
+ CONFIG_NLS_ISO8859_1=y
+ CONFIG_SECURITY=y
+ CONFIG_CRYPTO_ECHAINIV=y
++CONFIG_CRYPTO_MICHAEL_MIC=m
+ CONFIG_CRYPTO_ANSI_CPRNG=y
+ CONFIG_CRYPTO_USER_API_RNG=m
+ CONFIG_CRYPTO_DEV_SUN8I_CE=m
 -- 
 2.34.1
 
