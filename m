@@ -2,159 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 62A5B4A527D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 23:39:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D258A4A5287
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 23:43:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234225AbiAaWjK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jan 2022 17:39:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37328 "EHLO
+        id S234441AbiAaWni (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jan 2022 17:43:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234172AbiAaWjK (ORCPT
+        with ESMTP id S234425AbiAaWni (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jan 2022 17:39:10 -0500
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB3EFC06173D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 14:39:09 -0800 (PST)
-Received: by mail-ot1-x330.google.com with SMTP id n6-20020a9d6f06000000b005a0750019a7so14494089otq.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 14:39:09 -0800 (PST)
+        Mon, 31 Jan 2022 17:43:38 -0500
+Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E383C061714
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 14:43:38 -0800 (PST)
+Received: by mail-oo1-xc2a.google.com with SMTP id v17-20020a4ac911000000b002eac41bb3f4so3576515ooq.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 14:43:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=I2YeCNPA7JUrutaCl69AyRbHGGFWusCcn2hr3SGCW1s=;
-        b=foDZPqDmjYJKTvX6XkRIv+WJyzkPaJu2DQxeqscZqPbLvLmMYwSSLZIZxpUiDkoKGg
-         anOqt8nWUzxsywZ1RzvNUZj6UFVrIrsyLyZcAgyq8DcLWkdmuUJMUS/IQBXm51d0qFi7
-         ggpkddcxJ4N5F80UlNz8oAXkqLuVxdAFgnLVUDNSuGUsaiS/CXuPvIEFdlr1tZ2kBB9K
-         fbtTNlFg2tWvV6zY7UwsFqazV83XlfBPl5QXW/g20crr+jqGqgdJr2hr12/UeQy6Aqo1
-         hnq22qK94l1Ui+Z/qUvmwY8Idt2hHe+0uA2dw488uUsD6FC5hy5raxDbwu87Dv11Vpn+
-         o8qw==
+        bh=yX/YWQ2F2e81Xwl7jttAWwJX0hjqq2GEo6RpoBFupaE=;
+        b=vfFnO0qBgoNjcKKMsAi/QdbQDYRqVl+e0ovhz1YJEmfDXIJTHFLajFCfy4a/29VKiK
+         dCquWo1ULDCUPxTlldxNc+tt8SXRztecqlSswaH+6ta/g8TxE6LAX7cOpYyDMx3Ux8wF
+         PDdy0mfS4w2MZfWV94dvZWPDCavyZ8a92IzrMJ2BxgXKKmEcYLtELACElRAkkVagd0AE
+         3oWAuqlMHxwy/xFshv34BToc/9x2Aw7b14u2szcGtcqrrxYDbtBHgMTxV7BRFy9iVC70
+         +u4Claci5p6RTS3K8Ow4IpkFMs/Ah+9lnAMG30eqGldxYGVp3V6NZiUD+cBE+akEEurO
+         c39w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=I2YeCNPA7JUrutaCl69AyRbHGGFWusCcn2hr3SGCW1s=;
-        b=ZhNBY34kpaQmrjBaohhik11zOlZVN1x45dVLuRgNLFU3WMLENM8EwHb5BqUjyWaJDM
-         FUE27nJYTiZyllLsxm52nHlQ1JUcULCIATGYC/FHV0iUzXQLb5ltSk+ChWcG6FQXiZIy
-         6Gv6gmsj5KZVupN2nX1ebMFCaa6Mo2Fhhg50+NXdlY8Wz5ZTH+Y4SdwxnKN1y+S8eSxo
-         e6pobVNZRI4UpjnN5aaRTCrlOSIqGGJpyzY/4p6THPASoWXnSPBoZqd8IxqyHMrkJ9R9
-         7CoBXXEFCRh80oM2ObYgZBioyoQwLaFSyC8gKUw06rgK1/0ozji1C1mX0fcYF+AZdAru
-         Uo/A==
-X-Gm-Message-State: AOAM530r+sauAhPpBKmPHbceBRFtg2BW0ZIiSupV4elKmD0Dv8/da1Ce
-        N4vx4qmijTjMmaOWCBYscC92cQ==
-X-Google-Smtp-Source: ABdhPJz3DrrbNejbTueCAz6MmMNxgUOQKSR3d4PLal0CVNEOYgaNKJjs/dRMEoEqJtXTi6yuHVSS/A==
-X-Received: by 2002:a9d:12d7:: with SMTP id g81mr12610035otg.82.1643668749113;
-        Mon, 31 Jan 2022 14:39:09 -0800 (PST)
+        bh=yX/YWQ2F2e81Xwl7jttAWwJX0hjqq2GEo6RpoBFupaE=;
+        b=WIzDEeU9AGBGkrNyNmJZyynsY2VWG+XJaN9YebUJ4TORcQWWkp0G3dsREyjABUtbAv
+         5/SsAeSgWljXQKyKyyE2QhOOW6JhzQNurWjijTtWyznwBODH2MfraRm1aO4DR6mVCwip
+         PtpIlhlFut4G/NQh9QQbKG5bAP7YfhbsjuP0Tov7ccEI3HwR2P29QNuR4SthOoNjGsIZ
+         gpN17Q9WaggkcEpehnabEQEwWIjquwwV5eBGlE0i0DFpTq7e0S8BgU2wgh54DBCSyhRn
+         VNmiGUs4mjiyq8VrjtK6fUxOjVw22lWSXE8Mpbg+3hT8KjzpujljV2uKRNxDEyjAmDMz
+         Y/AA==
+X-Gm-Message-State: AOAM533pxuTkYoF/7u3nxENBE4Ozc2rIfJcBXDRFSs+LaeJ7RJX7qA4l
+        HwHQN96kYuRT9hABInV6qZftPw==
+X-Google-Smtp-Source: ABdhPJw0/vA1k6EMzBnpDb3zSUhXhlmDS2Ml8ZV6QIGWT9ZbfXaCadYTGpIHmQ2Vbq0owZnAxdAkEA==
+X-Received: by 2002:a4a:e0d8:: with SMTP id e24mr11256827oot.56.1643669017662;
+        Mon, 31 Jan 2022 14:43:37 -0800 (PST)
 Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id t4sm13313906oie.14.2022.01.31.14.39.08
+        by smtp.gmail.com with ESMTPSA id c26sm7516092otn.34.2022.01.31.14.43.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Jan 2022 14:39:08 -0800 (PST)
-Date:   Mon, 31 Jan 2022 16:39:06 -0600
+        Mon, 31 Jan 2022 14:43:37 -0800 (PST)
+Date:   Mon, 31 Jan 2022 16:43:35 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Luca Weiss <luca@z3ntu.xyz>
+To:     Petr Vorel <petr.vorel@gmail.com>
 Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Jean Thomas <virgule@jeanthomas.me>,
+        Alexey Minnekhanov <alexeymin@postmarketos.org>,
         Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 13/15] arm64: dts: qcom: Add MSM8953+PM8953 device tree
-Message-ID: <YfhlCkb3XUvU8ae1@builder.lan>
-References: <20220112194118.178026-1-luca@z3ntu.xyz>
- <20220112194118.178026-14-luca@z3ntu.xyz>
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Taniya Das <tdas@codeaurora.org>, linux-mmc@vger.kernel.org
+Subject: Re: [PATCH 5/6] arm64: dts: qcom: msm8994-huawei-angler: Add
+ sdhc{1,2} definitions
+Message-ID: <YfhmF6FKV9/6YfAL@builder.lan>
+References: <20220113233358.17972-1-petr.vorel@gmail.com>
+ <20220113233358.17972-6-petr.vorel@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220112194118.178026-14-luca@z3ntu.xyz>
+In-Reply-To: <20220113233358.17972-6-petr.vorel@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 12 Jan 13:41 CST 2022, Luca Weiss wrote:
+On Thu 13 Jan 17:33 CST 2022, Petr Vorel wrote:
 
-> From: Vladimir Lypak <vladimir.lypak@gmail.com>
+> Although downstream supports HS400, there are overclocking warnings when
+> using mmc-hs400-1_8v:
 > 
-> The combination MSM8953 + PM8953 is commonly used, so add a
-> device tree where common power supplies etc. can be configured.
+> mmc0: Card appears overclocked; req 200000000 Hz, actual 384000000 Hz
+> mmc0: Card appears overclocked; req 200000000 Hz, actual 384000000 Hz
+> mmc0: Card appears overclocked; req 200000000 Hz, actual 384000000 Hz
+> mmc0: Card appears overclocked; req 400000000 Hz, actual 768000000 Hz
+> mmc0: Card appears overclocked; req 400000000 Hz, actual 768000000 Hz
+> mmc0: new HS400 MMC card at address 0001
 > 
-> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Using HS200 (i.e. mmc-hs200-1_8v or mmc-ddr-1_8v) would reduce them:
+> 
+> mmc0: Card appears overclocked; req 200000000 Hz, actual 384000000 Hz
+> mmc0: Card appears overclocked; req 200000000 Hz, actual 384000000 Hz
+> mmc0: new HS200 MMC card at address 0001
+> 
+> But as the problem is probably elsewhere (bullhead behaves the same),
+> keep mmc-hs400-1_8v.
+> 
+> Angler does not have SD card, thus explicitly disable sdhc2.
+> 
+> Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
+> ---
+>  .../dts/qcom/msm8994-huawei-angler-rev-101.dts   | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
+> index 0e3dd48f0dbf..5ce3dc169bb4 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
+> +++ b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
+> @@ -7,6 +7,7 @@
+>  /dts-v1/;
+>  
+>  #include "msm8994.dtsi"
+> +#include <dt-bindings/gpio/gpio.h>
+>  
+>  /* Angler's firmware does not report where the memory is allocated */
+>  /delete-node/ &cont_splash_mem;
+> @@ -41,3 +42,18 @@ serial@f991e000 {
+>  &tlmm {
+>  	gpio-reserved-ranges = <85 4>;
+>  };
+> +
+> +/*
+> + * Although downstream supports also HS400 there are fewer overclocking
+> + * warnings when used DDR, also LK bootloader reports DDR mode.
+> + */
+> +&sdhc1 {
+> +	status = "okay";
+> +
+> +	mmc-hs400-1_8v;
+> +};
+> +
+> +/* Angler does not have SD card */
+> +&sdhc2 {
 
-I would prefer if we stick with the current scheme and just push this
-into the device dts (or possibly some vendor-common dtsi if that's
-applicable).
+But isn't &sdhc2 already disabled from msm8992.dtsi and msm8994.dtsi?
 
-Simply just to follow what we do on other platforms.
-
-
-PS. I see some patches has been applied, but as you resubmit this
-series please split it per maintainer to make it obvious to each
-maintainer that they should pick their part(s).
-
-Thanks,
+Regards,
 Bjorn
 
-> ---
->  arch/arm64/boot/dts/qcom/msm8953-pm8953.dtsi | 50 ++++++++++++++++++++
->  1 file changed, 50 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8953-pm8953.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8953-pm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953-pm8953.dtsi
-> new file mode 100644
-> index 000000000000..b5f20fc9488e
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8953-pm8953.dtsi
-> @@ -0,0 +1,50 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/* Copyright (c) 2022, The Linux Foundation. All rights reserved. */
-> +
-> +#include "msm8953.dtsi"
-> +#include "pm8953.dtsi"
-> +
-> +&hsusb_phy {
-> +	vdd-supply = <&pm8953_l3>;
-> +	vdda-pll-supply = <&pm8953_l7>;
-> +	vdda-phy-dpdm-supply = <&pm8953_l13>;
-> +};
-> +
-> +&sdhc_1 {
-> +	vmmc-supply = <&pm8953_l8>;
-> +	vqmmc-supply = <&pm8953_l5>;
-> +};
-> +
-> +&sdhc_2 {
-> +	vmmc-supply = <&pm8953_l11>;
-> +	vqmmc-supply = <&pm8953_l12>;
-> +};
-> +
-> +&rpm_requests {
-> +	smd_rpm_regulators: pm8953-regulators {
-> +		compatible = "qcom,rpm-pm8953-regulators";
-> +
-> +		pm8953_s1: s1 {};
-> +		pm8953_s3: s3 {};
-> +		pm8953_s4: s4 {};
-> +
-> +		pm8953_l1: l1 {};
-> +		pm8953_l2: l2 {};
-> +		pm8953_l3: l3 {};
-> +		pm8953_l5: l5 {};
-> +		pm8953_l6: l6 {};
-> +		pm8953_l7: l7 {};
-> +		pm8953_l8: l8 {};
-> +		pm8953_l9: l9 {};
-> +		pm8953_l10: l10 {};
-> +		pm8953_l11: l11 {};
-> +		pm8953_l12: l12 {};
-> +		pm8953_l13: l13 {};
-> +		pm8953_l15: l15 {};
-> +		pm8953_l16: l16 {};
-> +		pm8953_l17: l17 {};
-> +		pm8953_l19: l19 {};
-> +		pm8953_l22: l22 {};
-> +		pm8953_l23: l23 {};
-> +	};
+> +	status = "disabled";
 > +};
 > -- 
 > 2.34.1
