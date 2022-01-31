@@ -2,85 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C5394A52DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 00:04:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B8FB54A52F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 00:11:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231376AbiAaXEX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jan 2022 18:04:23 -0500
-Received: from so254-9.mailgun.net ([198.61.254.9]:34889 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229819AbiAaXEX (ORCPT
+        id S237336AbiAaXLs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jan 2022 18:11:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44822 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237144AbiAaXLs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jan 2022 18:04:23 -0500
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1643670262; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=zw1Yj5FBLCHqW7QysextbS43RRIoASpz2CYOQrDzFu4=; b=eebB2j66Nf4c1iyqT5T+wndi3QBD6PFSA2DSJmmhlzltdVpLZAlzx7SmN++viiWmkVWkse6i
- lq+hpskhjhLTONZJpgZlD8qOpbm+7J6jhyIvRb0hevcvVG0TF1Zvu+sKt71PqT1CdeOy2tsw
- 1g4muToJWi5uVTiBiifV80dJMrU=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 61f86af6e42a102d96a5e9d3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 31 Jan 2022 23:04:22
- GMT
-Sender: subbaram=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 351B1C43618; Mon, 31 Jan 2022 23:04:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [10.47.233.232] (Global_NAT1.qualcomm.com [129.46.96.20])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: subbaram)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E4443C4338F;
-        Mon, 31 Jan 2022 23:04:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org E4443C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH 3/3] spmi: pmic-arb: Add support for PMIC v7
-To:     Vinod Koul <vkoul@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        Mon, 31 Jan 2022 18:11:48 -0500
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0345CC06173D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 15:11:48 -0800 (PST)
+Received: by mail-oi1-x22d.google.com with SMTP id v67so29814536oie.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 15:11:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=BEp1YW6cXZjOzQZ2AT1X2T5G6w7sQ/rQe7vI6oRyACg=;
+        b=aufXy6V/hF3UwWmb051IYrOsjd77oVt4OlkZKiwzaXUqeQaM+/5wnV5hmFJV1oicEA
+         ZiXzYgKFARloxCYbXsPdhddJ6cXwdTwWQq4THKHH/5xmq8eQ8BNJU7FQGTmLNRJ1BaDw
+         3yX+xsDGTTJf4P4+HAstY5Sr7d8O5XIp/wc1DwGg3RhkuqrAzEoz11V8I2IIe68oCp/0
+         fLq9q6CRADErInCsOORTG3CQIh6UEYJBkdspR9iiRwp5fr7hiP9r1DLfQrmm6nNhf5Lp
+         e05hCWWHxwRwsZdrOi+M16KHWq2JMbzbMkfBuS4uUG1pHlo9kHMUOIuZkpMEBj+cDzap
+         ubsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=BEp1YW6cXZjOzQZ2AT1X2T5G6w7sQ/rQe7vI6oRyACg=;
+        b=46vT94BKNgMjaCNOiZy75JPXjrbdYl8ksyneiMHcOXXCSGgt7jIlbpr8mayQZgrPve
+         UeTyQ6A3zCsr4EK7RSFNG7RB63wO1g2GgoZZQZ88JkHT8hprd0yY8x7aSbs7JECEqTKQ
+         XxK/szNpSCGHfWqtQ2kAC/HgrDTo2k7XDKOPn9FTA6QELr/osDVijdQwQzT+Un+cugm/
+         qkY4KOblgdaLQJGImaj9veBDcntPpzDtdz5KEmcg+GKGsq4C0Xisjhh1aROouiDRi1i4
+         pDmfD6fdNOUzHA9LP4hI7UuyYh7HT7si7VTYKFPTJvU/zYL02Y0GsaslJ+YMiEuVLCjC
+         bWNw==
+X-Gm-Message-State: AOAM533KcCLPfvFzwpRXaf09+SZkLArjxBPiSyqvQURyoH4w23hFID+a
+        dxHmdGDB/Da+GyA/pmiOSxOGXQ==
+X-Google-Smtp-Source: ABdhPJzLH6uiNREJQvFo0wBCG2+uRxrUSQoGGMYpP0QdizGoFNpt2f+xqN2YsgC+siyrZMusvqf9JQ==
+X-Received: by 2002:a05:6808:5d2:: with SMTP id d18mr14389237oij.93.1643670707385;
+        Mon, 31 Jan 2022 15:11:47 -0800 (PST)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id o12sm15181247ooi.18.2022.01.31.15.11.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Jan 2022 15:11:46 -0800 (PST)
+Date:   Mon, 31 Jan 2022 17:11:44 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        David Collins <quic_collinsd@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Dai <daidavid1@codeaurora.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220131172450.2528065-1-vkoul@kernel.org>
- <20220131172450.2528065-4-vkoul@kernel.org>
-From:   Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-Message-ID: <b28ad431-a760-ed02-5bcc-3fc421061759@codeaurora.org>
-Date:   Mon, 31 Jan 2022 15:04:20 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+Subject: Re: [PATCH v3 01/15] dt-bindings: clock: split qcom,gcc.yaml to
+ common and specific schema
+Message-ID: <YfhssKqI5U8X+Akn@builder.lan>
+References: <20220121210340.32362-1-ansuelsmth@gmail.com>
+ <20220121210340.32362-2-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20220131172450.2528065-4-vkoul@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220121210340.32362-2-ansuelsmth@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 1/31/22 9:24 AM, Vinod Koul wrote:
-> From: David Dai <daidavid1@codeaurora.org>
->
-> PMIC v7 has different offset values and seqeunces, so add support for
-> this new version of PMIC
->
-> Signed-off-by: David Dai <daidavid1@codeaurora.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+On Fri 21 Jan 15:03 CST 2022, Ansuel Smith wrote:
+
+> Split qcom,gcc.yaml to common and specific schema to use it as a
+> template for schema that needs to use the gcc bindings and require
+> to add additional bindings.
+> 
+
+Nice!
+
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 > ---
+>  .../bindings/clock/qcom,gcc-common.yaml       | 42 +++++++++++++++++++
+>  .../devicetree/bindings/clock/qcom,gcc.yaml   | 25 ++---------
+>  2 files changed, 46 insertions(+), 21 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-common.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-common.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-common.yaml
+> new file mode 100644
+> index 000000000000..ea1dd94d8bf1
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-common.yaml
 
-Can you please fix the author based on my comments [1]?
+It seems reasonable to expect that qcom,gcc.yaml should be split out in
+a number of trivial qcom,gcc-platform.yaml files to define input clock
+etc. So how about using qcom,gcc.yaml for the common properties and for
+now rename the existing file to something like qcom,gcc-others.yaml
+?
 
-[1] https://lore.kernel.org/linux-arm-msm/8f6645ff-0753-bcd3-f692-6be205cf71b8@quicinc.com/
+> @@ -0,0 +1,42 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,gcc-common.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Global Clock & Reset Controller Binding Common Bindings
+> +
+> +maintainers:
+> +  - Stephen Boyd <sboyd@kernel.org>
+> +  - Taniya Das <tdas@codeaurora.org>
+> +
+> +description: |
 
--Subbaraman
+No need to preserve the formatting here, so the pipe can go.
+
+Regards,
+Bjorn
+
+> +  Common bindings for Qualcomm global clock control module which supports
+> +  the clocks, resets and power domains.
+> +
+> +properties:
+> +  '#clock-cells':
+> +    const: 1
+> +
+> +  '#reset-cells':
+> +    const: 1
+> +
+> +  '#power-domain-cells':
+> +    const: 1
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  protected-clocks:
+> +    description:
+> +      Protected clock specifier list as per common clock binding.
+> +
+> +required:
+> +  - reg
+> +  - '#clock-cells'
+> +  - '#reset-cells'
+> +  - '#power-domain-cells'
+> +
+> +additionalProperties: true
+> +
+> +...
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+> index f66d703bd913..73e3ff4979c6 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+> @@ -34,6 +34,9 @@ description: |
+>    - dt-bindings/reset/qcom,gcc-mdm9615.h
+>    - dt-bindings/clock/qcom,gcc-sdm660.h  (qcom,gcc-sdm630 and qcom,gcc-sdm660)
+>  
+> +allOf:
+> +  - $ref: "qcom,gcc-common.yaml#"
+> +
+>  properties:
+>    compatible:
+>      enum:
+> @@ -55,30 +58,10 @@ properties:
+>        - qcom,gcc-sdm630
+>        - qcom,gcc-sdm660
+>  
+> -  '#clock-cells':
+> -    const: 1
+> -
+> -  '#reset-cells':
+> -    const: 1
+> -
+> -  '#power-domain-cells':
+> -    const: 1
+> -
+> -  reg:
+> -    maxItems: 1
+> -
+> -  protected-clocks:
+> -    description:
+> -      Protected clock specifier list as per common clock binding.
+> -
+>  required:
+>    - compatible
+> -  - reg
+> -  - '#clock-cells'
+> -  - '#reset-cells'
+> -  - '#power-domain-cells'
+>  
+> -additionalProperties: false
+> +unevaluatedProperties: false
+>  
+>  examples:
+>    # Example for GCC for MSM8960:
+> -- 
+> 2.33.1
+> 
