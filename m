@@ -2,91 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 626A64A5182
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 22:37:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 32EB74A51D5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 22:47:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380954AbiAaVg5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jan 2022 16:36:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51210 "EHLO
+        id S1381154AbiAaVrd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jan 2022 16:47:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359172AbiAaVg4 (ORCPT
+        with ESMTP id S1351247AbiAaVr3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jan 2022 16:36:56 -0500
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD83DC061714
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 13:36:56 -0800 (PST)
-Received: by mail-oi1-x242.google.com with SMTP id v67so29364302oie.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 13:36:56 -0800 (PST)
+        Mon, 31 Jan 2022 16:47:29 -0500
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31150C06173D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 13:47:29 -0800 (PST)
+Received: by mail-oi1-x22d.google.com with SMTP id r27so7273103oiw.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 13:47:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=RcCyF58LaRxi/j1nHAT0ApLeXmQ9s66f3iMVqhPacvY=;
-        b=h0/ZbeSbhpQI9P1vadFWIIwaFx6Wg7DqXMk6y/6+HmqNlUgv3SlNpJw4qpKTo06mte
-         9c8XYB94UqfO8qOJWjzFkjv5zc9WvJZZl3Js9F72ABObxzvVfflP7X59ytjFJOxjOG2l
-         LO3Y+aza5Rf6VWZX6T/nuKCfE48EtABITU6cGLgH5Lgy6DZ7btNOQ2K6FCDw4SVAmVb+
-         bozVeCVEuRNzl4R/3iiKyQWEN4FwtOoBFNE1mvxGgM+MeOAXwYWRhKwNuVBkTmZ3ljfc
-         /CIpJAIw2H+Xim8Oyn6ivr2wbXYsB8V9T2ZN0w8wKdgaTu/QkrQmZRS8vp1zfQE1kyl/
-         bECA==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=i4ZNON8jjEqhdUhXt2lm8yAa37L58m4tSj1GfdxY8fY=;
+        b=hYQh9jnUfIqiLu881VQDp+oCeamuUvhXtTawHjvucMbffYwqzgdl9YuT5XOQW30ztY
+         oQemAMYrcEB6QlQemd2uNZWPymLOuISHd5Lj3aV+VTxyEaDNU6pJEUZW/2sgx4xxuEQz
+         Z8cruvZT0/q9rqGmqFStKqU27q0xtM1VSVs28k7xbB2ZekSekWGney+HB2oDdLcB5sXJ
+         isR2t5jZDAdOak3nzs06IIoeKkRHhEQrqOfQwy2hslIV/ugLAxLY2j6zWD6tzyK/hX2G
+         iEoB0Kh58qWypHKItSpBtL/a5GcUlwLmoHZjToXJL+G1Vxke1DSo6E7+zOkGsANE3Qy1
+         y0aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=RcCyF58LaRxi/j1nHAT0ApLeXmQ9s66f3iMVqhPacvY=;
-        b=8OTA02UhFl15tAK1Vuuw/00A1oQfsTfrI90Ktj8HU2WBEa2rBQHZbgdoEcaWve18iO
-         Q+KTf1cvol3b2o5xFSZhXyp1jvU/RFVhMHL4WfliYcauMUJkNA4c8Uknht4SsQNUfe1V
-         n3jWak0cp++DdZHMrRNccanfBaVG+vz5Ee9ncZQayosP/oQaXiZ4070dJ5V/rcdZke5W
-         AKufbYStCQJOkyVk67R14c7z/d7dCx1Zf0MEs9TYgxE2axLOLTQiAbYaYVdp68EoDdfd
-         UQZ1UbvvhA8eX685pnAg/OQ5AUgHGmw6Qwan+J/j/XHmvC6GmOMbJNslhIAcEszhNURf
-         nFcA==
-X-Gm-Message-State: AOAM533wFkDRq0PCFxOxCnfVJMctiUiiYpx147TNBTDDbjXz5m/cFzlK
-        fs8TCuPWcv98b0cU9CTuCpgkjO8qovYHsSTykFo=
-X-Google-Smtp-Source: ABdhPJwOKKiu9r5CLPBfR9xT27fzBbARJMbuDEn6UccpYrL5eWNExCgl2kvk+baqoa5SwK6UrZG3WcDm232+Riit43k=
-X-Received: by 2002:a54:4490:: with SMTP id v16mr14816050oiv.157.1643665016077;
- Mon, 31 Jan 2022 13:36:56 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=i4ZNON8jjEqhdUhXt2lm8yAa37L58m4tSj1GfdxY8fY=;
+        b=addu4plHL/m7V+vv1hggjN1FSo1I/xYPgFwFRtXzm9X3+hwCstk+8/n57BsFtLB2AI
+         I9TVjWrH3+ZF5t7nrDQw0B2k06k6I8P1aFrk/lb+/GgDGm9R+A++nlRfnbk+SsjeifI/
+         fgPugI+0cirdo+qL/eUP67yem6YB8RYCLC4We2c0FIC6e02faQrFYx4kBA7luTZySzEl
+         TaNMxvK48xzU3ASRXpAKdh9sWjtyqfdeRq3UNLv3u0If6dQm6GNKJ/tlEQCWJV1+lOrw
+         XRVe/l4ShzulpPI6/FmdWdn+CNHRDYXfERun1LTmxj6NZCvhd9EHMVs520Z/hOx92T2c
+         66xQ==
+X-Gm-Message-State: AOAM533jjE4p4+Br6EzkRKEqHQxqzlSGAPcGlZD3jn+bPvwHuid7Ut9u
+        n0RbZHnOsi+UNaDUBdDb5qFIhw==
+X-Google-Smtp-Source: ABdhPJxv2BQ99VhEEybtEde4R7t1XK2VPNj5P94cmRD1qpbZ70xYPRLnqD31ijFF4oVSs3O/Arlt6A==
+X-Received: by 2002:a05:6808:f0a:: with SMTP id m10mr10743268oiw.127.1643665648575;
+        Mon, 31 Jan 2022 13:47:28 -0800 (PST)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id w42sm12923738ooi.40.2022.01.31.13.47.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Jan 2022 13:47:27 -0800 (PST)
+Date:   Mon, 31 Jan 2022 15:47:26 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     David Heidelberg <david@ixit.cz>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        ~okias/devicetree@lists.sr.ht, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] ARM: dts: qcom: fix timer node clock-frequency
+Message-ID: <YfhY7vwTfRhJ2UWx@builder.lan>
+References: <20211224234631.109315-1-david@ixit.cz>
 MIME-Version: 1.0
-Received: by 2002:a4a:c30d:0:0:0:0:0 with HTTP; Mon, 31 Jan 2022 13:36:55
- -0800 (PST)
-Reply-To: westerunion909@gmail.com
-From:   "Antonia Lloyd." <anthonylloydatmxxx04@gmail.com>
-Date:   Mon, 31 Jan 2022 13:36:55 -0800
-Message-ID: <CAExPwBBtJH3GcqF-weqUuAur7b38Y2T1d6e9FzvuN_q1Nhi-zw@mail.gmail.com>
-Subject: Dear Email ID Owner.(USD$4000 IMF COMPENSATION FUND TO PICK UP TODAY).
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211224234631.109315-1-david@ixit.cz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dear Email ID Owner.
+On Fri 24 Dec 17:46 CST 2021, David Heidelberg wrote:
 
-The IMF is compensating all the email address that was funds as one of
-the ward win Victims and your email address and your name is among the
-listed one of approved to pay the sum of $3.6 million U.S Dollars. We
-have concluded to effect your own payment through Western Union Money
-Transfer for easy pick-up of those funds in good condition,$4000 twice
-daily,till the $3.6 million is completely transferred to you.We now
-need your information where we will be sending the funds,such
-as;Receiver name(Your full Name)address and phone number.Contact
-Western Union agent with this Email: ( westerunion995@gmail.com  ) for
-your payment fund.
+> Clock frequency is read by driver a single uint32,
+> so the second value was never processed.
+> 
 
-Ms.Maria Zatto
-E-mail:westerunion995@gmail.com
-Telephone: +229 682 97 169
+I'm not familiar with the reasoning behind this, but the binding says
+that we should have > 1 clock-frequency specified.
 
-Contact Ms.Maria,immediately you get this mail through western union
-email address above to enable her speed-up.your payment and release
-the $4000 dollars MTCN today for you to pick up the payment OK.
+Regards,
+Bjorn
 
-You are expected to provide us with the details as prescribed below to
-enable safe and easy release of your funds today.
-
-(1)Your Full name:
-(2)Your Phone number:
-(3)Your Country:
-(4)Your Age:
-
-Thank you,
-Dr.Antonia Lloyd.
-Contact Dir.Western Union Money Transfer,
-Cotonou-Benin Republic.
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>  arch/arm/boot/dts/qcom-apq8064.dtsi | 3 +--
+>  arch/arm/boot/dts/qcom-ipq8064.dtsi | 3 +--
+>  arch/arm/boot/dts/qcom-mdm9615.dtsi | 3 +--
+>  arch/arm/boot/dts/qcom-msm8660.dtsi | 3 +--
+>  arch/arm/boot/dts/qcom-msm8960.dtsi | 3 +--
+>  5 files changed, 5 insertions(+), 10 deletions(-)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
+> index 2d539d77bad4..3d5d9ffb66af 100644
+> --- a/arch/arm/boot/dts/qcom-apq8064.dtsi
+> +++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
+> @@ -380,8 +380,7 @@ timer@200a000 {
+>  				     <1 2 0x301>,
+>  				     <1 3 0x301>;
+>  			reg = <0x0200a000 0x100>;
+> -			clock-frequency = <27000000>,
+> -					  <32768>;
+> +			clock-frequency = <27000000>;
+>  			cpu-offset = <0x80000>;
+>  		};
+>  
+> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> index 996f4458d9fc..d663521bdd02 100644
+> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> @@ -458,8 +458,7 @@ IRQ_TYPE_EDGE_RISING)>,
+>  				     <GIC_PPI 5 (GIC_CPU_MASK_SIMPLE(2) |
+>  						 IRQ_TYPE_EDGE_RISING)>;
+>  			reg = <0x0200a000 0x100>;
+> -			clock-frequency = <25000000>,
+> -					  <32768>;
+> +			clock-frequency = <25000000>;
+>  			clocks = <&sleep_clk>;
+>  			clock-names = "sleep";
+>  			cpu-offset = <0x80000>;
+> diff --git a/arch/arm/boot/dts/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom-mdm9615.dtsi
+> index c32415f0e66d..8b58f80093e8 100644
+> --- a/arch/arm/boot/dts/qcom-mdm9615.dtsi
+> +++ b/arch/arm/boot/dts/qcom-mdm9615.dtsi
+> @@ -120,8 +120,7 @@ timer@200a000 {
+>  				     <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_EDGE_RISING)>,
+>  				     <GIC_PPI 3 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_EDGE_RISING)>;
+>  			reg = <0x0200a000 0x100>;
+> -			clock-frequency = <27000000>,
+> -					  <32768>;
+> +			clock-frequency = <27000000>;
+>  			cpu-offset = <0x80000>;
+>  		};
+>  
+> diff --git a/arch/arm/boot/dts/qcom-msm8660.dtsi b/arch/arm/boot/dts/qcom-msm8660.dtsi
+> index 1e8aab357f9c..b16060b65593 100644
+> --- a/arch/arm/boot/dts/qcom-msm8660.dtsi
+> +++ b/arch/arm/boot/dts/qcom-msm8660.dtsi
+> @@ -105,8 +105,7 @@ timer@2000000 {
+>  				     <1 1 0x301>,
+>  				     <1 2 0x301>;
+>  			reg = <0x02000000 0x100>;
+> -			clock-frequency = <27000000>,
+> -					  <32768>;
+> +			clock-frequency = <27000000>;
+>  			cpu-offset = <0x40000>;
+>  		};
+>  
+> diff --git a/arch/arm/boot/dts/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom-msm8960.dtsi
+> index 2a0ec97a264f..ca093b89c9ea 100644
+> --- a/arch/arm/boot/dts/qcom-msm8960.dtsi
+> +++ b/arch/arm/boot/dts/qcom-msm8960.dtsi
+> @@ -99,8 +99,7 @@ timer@200a000 {
+>  				     <1 2 0x301>,
+>  				     <1 3 0x301>;
+>  			reg = <0x0200a000 0x100>;
+> -			clock-frequency = <27000000>,
+> -					  <32768>;
+> +			clock-frequency = <27000000>;
+>  			cpu-offset = <0x80000>;
+>  		};
+>  
+> -- 
+> 2.34.1
+> 
