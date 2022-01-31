@@ -2,139 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5492C4A4C39
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 17:34:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 08FDE4A4C56
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 31 Jan 2022 17:42:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350206AbiAaQeb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jan 2022 11:34:31 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:37580 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234087AbiAaQeb (ORCPT
+        id S1379067AbiAaQlw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jan 2022 11:41:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39434 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1380561AbiAaQlu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jan 2022 11:34:31 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 4F6D4B82BA1;
-        Mon, 31 Jan 2022 16:34:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D037C340EE;
-        Mon, 31 Jan 2022 16:34:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1643646869;
-        bh=iUPEf5V4PpA5R8OvwYP58mWshnJmeklBvgOMRATEx9o=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=wva8EIbvnpW8cJPrNOPi+vyyASSZjyTjskajx/dF10/n8F3bIGaVKIiaGLS/dIiVF
-         +NaVLElqlW7pXYo3Ml8/CRm6lErj2lAS3OtI+fZvRHOPpRpT3Wrsf5ZADohL28FVfC
-         avygLh9k4T1iLF5gEuyiIxxPiYLP4KEFI8RADcoo=
-Date:   Mon, 31 Jan 2022 17:34:26 +0100
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Russell King <rmk+kernel@arm.linux.org.uk>,
-        Saravana Kannan <saravanak@google.com>
-Subject: Re: [PATCH v6 02/35] component: Introduce the aggregate bus_type
-Message-ID: <YfgPkliOLorgXwVE@kroah.com>
-References: <20220127200141.1295328-1-swboyd@chromium.org>
- <20220127200141.1295328-3-swboyd@chromium.org>
- <YffoqgmeUdxZ56zB@kroah.com>
- <CAKMK7uFYyQ9siB5ENHku+yVPWWM1H=TEn-NZofEKqpJnuEvMmw@mail.gmail.com>
+        Mon, 31 Jan 2022 11:41:50 -0500
+Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81083C061714
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 08:41:50 -0800 (PST)
+Received: by mail-oo1-xc33.google.com with SMTP id v17-20020a4ac911000000b002eac41bb3f4so3340097ooq.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 08:41:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Lccbg+paMSrfNOlYw3jpPC9OWvbn/WwrDOZkcaZPvcE=;
+        b=vijErlFOE7h9CFvOpGy5DofZSxon73a/2uogpCN2gsvHTCGhtwRERz8/825La3DaiX
+         5ipwWnhjPWnbhZzKKegWu7eX3EbQinJ6B/KX1zZASrd+0GO6Ew3P1BEDxz+RPnYEWFuk
+         J2O7AvzQ+xnSrIyZZfLfwDfzNhixKOVivSZldDFMSK4UqLIGLlO9QcQb5vXlXHPgVVpn
+         ehjYw9jUhbkfBs24LjgEgEh4mHfVE4n4M4cZGQVt+If2HdEn6tjGcw8Q1kAKLCMdryY0
+         pfrmCRnKIoZk+NjASoWjPPW7T8dasrC+7+OvpoObpj460j6TpxdwEJr7uLjzJ7hNQS90
+         DdPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Lccbg+paMSrfNOlYw3jpPC9OWvbn/WwrDOZkcaZPvcE=;
+        b=ot7t+bo/kX8gsbNhapPLZib45GfKIApZDjvk/4g5X2tCSn5agRw4QnlRnNVZGwwwI/
+         xcA5mF9RnHpcsTVoaIXLwczo1KIjbY1+ugPFNk9+mfPZBuupaQYLdynTi3MIQY9qRyQh
+         ZYd4gIQSaoHDINml3KwwRgOGs24FPDphuBRhUuRtcoUTE+9YgsS2s6AiQpxr+Rf4bLAm
+         BvtmLhe0fJ6msyQftYpkoKrMfOLLTiMCJx92aFTuE60L1WK3w4yhcwUhZDyJfh8UpQOM
+         nNOP4XH9DvKAcBPDqTVvQbQ4upy458TQkNeQPuxDTi8ulBLDaTfDIKuerOxqO1T6WTqW
+         Me6w==
+X-Gm-Message-State: AOAM530zAQB4BHiQ9P/2RTH1aaMKMs58i0rGvOvWJ7kwNk5eIPoGZPWr
+        ARXrXmCTihHGvxb1o9rFVFh9fA==
+X-Google-Smtp-Source: ABdhPJzjCFjNfjHPLsn3ZSMjJW96ABmq1kMkNtPhY1mK4eAvoRmBUiK54b1fVpZejSzB186165LJvw==
+X-Received: by 2002:a4a:a5c5:: with SMTP id k5mr10562610oom.66.1643647309810;
+        Mon, 31 Jan 2022 08:41:49 -0800 (PST)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id 71sm9562848otn.43.2022.01.31.08.41.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Jan 2022 08:41:49 -0800 (PST)
+Date:   Mon, 31 Jan 2022 10:41:47 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        kgodara@codeaurora.org, Matthias Kaehlcke <mka@chromium.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Prasad Malisetty <pmaliset@codeaurora.org>,
+        quic_rjendra@quicinc.com, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: sc7280: Add herobrine-r1
+Message-ID: <YfgRS/UtRn6Ewwhj@builder.lan>
+References: <20220125224422.544381-1-dianders@chromium.org>
+ <20220125144316.v2.5.I5604b7af908e8bbe709ac037a6a8a6ba8a2bfa94@changeid>
+ <CAE-0n528Bxdj+DKhi2Lan4qR_=4KHD7A1Zkr15tmu+MchryJ1A@mail.gmail.com>
+ <CAD=FV=UcpKaLQ31CGKUnaNnZcYnM4N_t8VC43FPGktoYDiMfsw@mail.gmail.com>
+ <YfC5i2jR5N+pmHoZ@ripper>
+ <CAE-0n50sX9-0MxcpF+3Rwqm75jSw5=aNwdsitLwE2sEA69jLJw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAKMK7uFYyQ9siB5ENHku+yVPWWM1H=TEn-NZofEKqpJnuEvMmw@mail.gmail.com>
+In-Reply-To: <CAE-0n50sX9-0MxcpF+3Rwqm75jSw5=aNwdsitLwE2sEA69jLJw@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 31, 2022 at 04:15:09PM +0100, Daniel Vetter wrote:
-> On Mon, Jan 31, 2022 at 2:48 PM Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > On Thu, Jan 27, 2022 at 12:01:08PM -0800, Stephen Boyd wrote:
-> > > The component framework only provides 'bind' and 'unbind' callbacks to
-> > > tell the host driver that it is time to assemble the aggregate driver
-> > > now that all the components have probed. The component framework doesn't
-> > > attempt to resolve runtime PM or suspend/resume ordering, and explicitly
-> > > mentions this in the code. This lack of support leads to some pretty
-> > > gnarly usages of the 'prepare' and 'complete' power management hooks in
-> > > drivers that host the aggregate device, and it fully breaks down when
-> > > faced with ordering shutdown between the various components, the
-> > > aggregate driver, and the host driver that registers the whole thing.
-> > >
-> > > In a concrete example, the MSM display driver at drivers/gpu/drm/msm is
-> > > using 'prepare' and 'complete' to call the drm helpers
-> > > drm_mode_config_helper_suspend() and drm_mode_config_helper_resume()
-> > > respectively, so that it can move the aggregate driver suspend/resume
-> > > callbacks to be before and after the components that make up the drm
-> > > device call any suspend/resume hooks they have. This only works as long
-> > > as the component devices don't do anything in their own 'prepare' and
-> > > 'complete' callbacks. If they did, then the ordering would be incorrect
-> > > and we would be doing something in the component drivers before the
-> > > aggregate driver could do anything. Yuck!
-> > >
-> > > Similarly, when trying to add shutdown support to the MSM driver we run
-> > > across a problem where we're trying to shutdown the drm device via
-> > > drm_atomic_helper_shutdown(), but some of the devices in the encoder
-> > > chain have already been shutdown. This time, the component devices
-> > > aren't the problem (although they could be if they did anything in their
-> > > shutdown callbacks), but there's a DSI to eDP bridge in the encoder
-> > > chain that has already been shutdown before the driver hosting the
-> > > aggregate device runs shutdown. The ordering of driver probe is like
-> > > this:
-> > >
-> > >  1. msm_pdev_probe() (host driver)
-> > >  2. DSI bridge
-> > >  3. aggregate bind
-> > >
-> > > When it comes to shutdown we have this order:
-> > >
-> > >  1. DSI bridge
-> > >  2. msm_pdev_shutdown() (host driver)
-> > >
-> > > and so the bridge is already off, but we want to communicate to it to
-> > > turn things off on the display during msm_pdev_shutdown(). Double yuck!
-> > > Unfortunately, this time we can't split shutdown into multiple phases
-> > > and swap msm_pdev_shutdown() with the DSI bridge.
-> > >
-> > > Let's make the component_master_ops into an actual device driver that has
-> > > probe/remove/shutdown functions. The driver will only be bound to the
-> > > aggregate device once all component drivers have called component_add()
-> > > to indicate they're ready to assemble the aggregate driver. This allows
-> > > us to attach shutdown logic (and in the future runtime PM logic) to the
-> > > aggregate driver so that it runs the hooks in the correct order.
-> >
-> > I know I asked before, but I can not remember the answer.
-> >
-> > This really looks like it is turning into the aux bus code.  Why can't
-> > you just use that instead here for this type of thing?  You are creating
-> > another bus and drivers for that bus that are "fake" which is great, but
-> > that's what the aux bus code was supposed to help out with, so we
-> > wouldn't have to write more of these.
-> >
-> > So, if this really is different, can you document it here so I remember
-> > next time you resend this patch series?
-> 
-> aux takes a device and splits it into a lot of sub-devices, each with
-> their own driver.
-> 
-> This takes a pile of devices, and turns it into a single logical
-> device with a single driver.
-> 
-> So aux is 1:N, component is N:1.
-> 
-> And yes you asked this already, I typed this up already :-)
+On Thu 27 Jan 15:16 CST 2022, Stephen Boyd wrote:
 
-Ok, thanks.  But then why is a bus needed if there's a single driver?
-I guess a bus for that driver?  So one bus, one driver, and one device?
+> Quoting Bjorn Andersson (2022-01-25 19:01:31)
+> > On Tue 25 Jan 15:46 PST 2022, Doug Anderson wrote:
+> >
+> > > Hi,
+> > >
+> > > On Tue, Jan 25, 2022 at 2:58 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> > > >
+> > > > Quoting Douglas Anderson (2022-01-25 14:44:22)
+> > > > > diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
+> > > > > new file mode 100644
+> > > > > index 000000000000..f95273052da0
+> > > > > --- /dev/null
+> > > > > +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
+> > > > > @@ -0,0 +1,313 @@
+> > > > > +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> > > > > +/*
+> > > > > + * Google Herobrine board device tree source
+> > > > > + *
+> > > > > + * Copyright 2022 Google LLC.
+> > > > > + */
+> > > > > +
+> > > > > +/dts-v1/;
+> > > > > +
+> > > > > +#include "sc7280-herobrine.dtsi"
+> > > > > +
+> > > > > +/ {
+> > > > > +       model = "Google Herobrine (rev1+)";
+> > > > > +       compatible = "google,herobrine", "qcom,sc7280";
+> > > >
+> > > > Can we stop adding "qcom,sc7280" to the board compatible string? It
+> > > > looks out of place. It's the compatible for the SoC and should really be
+> > > > the compatible for the /soc node.
+> > >
+> > > I don't have any objections, but I feel like this is the type of thing
+> > > I'd like Bjorn to have the final say on. What say you, Bjorn?
+> > >
+> >
+> > One practical case I can think of right away, where this matters is in
+> > cpufreq-dt-plat.c where we blocklist qcom,sc7280.
+> >
+> > I don't know if we rely on this in any other places, but I'm not keen on
+> > seeing a bunch of board-specific compatibles sprinkled throughout the
+> > implementation - it's annoying enough having to add each platform to
+> > these drivers.
+> 
+> Looking at sc7180, grep only shows cpufreq-dt-plat.c
+> 
 
-I think we need better documentation here...
+Good, then we handle all other platform specifics in drivers using
+platform-specific compatibles.
 
-thanks,
+>  $ git grep qcom,sc7180\" -- drivers
+>  drivers/cpufreq/cpufreq-dt-platdev.c:   { .compatible = "qcom,sc7180", },
+> 
+> Simplest solution would be to look at / and /soc for a compatible
+> string.
+> 
 
-greg k-h
+You mean that / would contain the device's compatible and /soc the soc's
+compatible? I'm afraid I don't see how this would help you - you still
+need the compatible in the dts, just now in two places.
+
+
+Either we leave it as is - which follows my interpretation of what the DT
+spec says - or we (and the DT maitainers) agree that it shouldn't be
+there (because this dtb won't run on any random qcom,sc7180 anyways) at
+all.
+
+Regards,
+Bjorn
+
+>  $ git grep -W 'soc[^:]*{' -- arch/arm*/boot/dts/ | grep compatible |
+> grep -v "simple-bus"
+> 
+> doesn't show many hits. The first hit is "ti,omap-infra" which is
+> actually inside an soc node, but even then I don't see anything that
+> matches the cpufreq-dt-plat.c lists.
+> 
+> ----8<-----
+> diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c
+> b/drivers/cpufreq/cpufreq-dt-platdev.c
+> index ca1d103ec449..32bfe453f8b4 100644
+> --- a/drivers/cpufreq/cpufreq-dt-platdev.c
+> +++ b/drivers/cpufreq/cpufreq-dt-platdev.c
+> @@ -179,25 +179,29 @@ static bool __init cpu0_node_has_opp_v2_prop(void)
+>  static int __init cpufreq_dt_platdev_init(void)
+>  {
+>  	struct device_node *np = of_find_node_by_path("/");
+> +	struct device_node *soc_np = of_find_node_by_path("/soc");
+>  	const struct of_device_id *match;
+>  	const void *data = NULL;
+> 
+> -	if (!np)
+> +	if (!np && !soc_np)
+>  		return -ENODEV;
+> 
+>  	match = of_match_node(allowlist, np);
+> -	if (match) {
+> +	if (match || (match = of_match_node(allowlist, soc_np))) {
+>  		data = match->data;
+>  		goto create_pdev;
+>  	}
+> 
+> -	if (cpu0_node_has_opp_v2_prop() && !of_match_node(blocklist, np))
+> +	if (cpu0_node_has_opp_v2_prop() && !of_match_node(blocklist, np) &&
+> +	    !of_match_node(blocklist, soc_np))
+>  		goto create_pdev;
+> 
+> +	of_node_put(soc_np);
+>  	of_node_put(np);
+>  	return -ENODEV;
+> 
+>  create_pdev:
+> +	of_node_put(soc_np);
+>  	of_node_put(np);
+>  	return PTR_ERR_OR_ZERO(platform_device_register_data(NULL, "cpufreq-dt",
+>  			       -1, data,
