@@ -2,75 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F3B04A631E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 19:02:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C1DF54A633C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 19:08:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241672AbiBASCl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Feb 2022 13:02:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46520 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241653AbiBASCl (ORCPT
+        id S238805AbiBASIT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Feb 2022 13:08:19 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:30991 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232304AbiBASIS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Feb 2022 13:02:41 -0500
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD524C06173B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Feb 2022 10:02:40 -0800 (PST)
-Received: by mail-pj1-x102b.google.com with SMTP id h12so17815455pjq.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Feb 2022 10:02:40 -0800 (PST)
+        Tue, 1 Feb 2022 13:08:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=7tCuLpr8/2LBd/9CIpx4oGmqp37+2g63+QcCiU/FCcw=;
-        b=WRl/nbwxyaq3khTLqkQsbbrLAhitrAJ2FYxxMArSCY2yDpkbMexbTkPQ/RuZnaYkNi
-         ZnBhgIuT6IIHsyKJmz6cPqPsJRwux/Azf8/l4yOhwuFiLcToLfsWkWjcrbZqfuDNhxTK
-         vCh0Iq5VxbmUxjgw3QAtq94h2KC0Fdq8wF0RA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7tCuLpr8/2LBd/9CIpx4oGmqp37+2g63+QcCiU/FCcw=;
-        b=U91u9IVQfQuvj9p5tLtqXr64kueBXbn9fsqTnE7RO0T8T2o9BtRkK5zWWC7PJ3J3Kj
-         gqS67krtJNGZGkUMpAV+FD7c42AGBujo+SlG9wxiyQAUr7Jh0AXdirhEE7h3kr+KXfd2
-         +eaGJeTHSvjrQ9nrT+eIA86RaQOuKBkVdQaHfjZNb7g1/7nkrnRsaPeDDtc3UFVT24rL
-         TzF3nMgXJdQea4rEiE5hs3VEZo/Sbpb6lil6UuWVAVkbY0a+51k8yHOHj05uOo+Gftz/
-         JVx1XJ7vtLx2ST/FiBSCd3tnSymo7WB99zCLkjRjlB3fhVdLbpEgZzsw1TrWDVihudXB
-         q+SA==
-X-Gm-Message-State: AOAM530xpJdy2+qfBsJQgV8DZvyhYPkF70xRfPpDuixOT909P7JXFZiO
-        ZXIDCtVeEPrIUhTAbFm5OLULJw==
-X-Google-Smtp-Source: ABdhPJzkP0PD5MmdFUYKdgkq732oNkEdLisECygqJK28T1AYcbgd81rLTJ3aIVEd+HlxmG9dQz1XkA==
-X-Received: by 2002:a17:902:e803:: with SMTP id u3mr27005923plg.151.1643738560350;
-        Tue, 01 Feb 2022 10:02:40 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:aca9:b3a5:6f80:8fb5])
-        by smtp.gmail.com with UTF8SMTPSA id h5sm23127901pfi.111.2022.02.01.10.02.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Feb 2022 10:02:40 -0800 (PST)
-Date:   Tue, 1 Feb 2022 10:02:38 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Shaik Sajida Bhanu <sbhanu@codeaurora.org>,
-        swboyd@chromium.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1643738899; x=1675274899;
+  h=from:to:cc:subject:date:message-id;
+  bh=XibvicD4b/B19Mt1CSI3bLsU+ULqNBdRlOGv5+YBSrA=;
+  b=BzrXriCsfKfT3QNy2O8Rt8pTp9CjCuNKInXEKya4L3IVMSgWHLHaoP9J
+   YKfHbWuiysxC7UKuL6tr+95jcgd541i2zF6LSpQ968vif3yLtfYKUh/3L
+   sSuFA15ihI5mD2lURJNk+j1StB8MAFKlvFZ7hkj1+DylLDT7r/Wwx5ory
+   0=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 01 Feb 2022 10:08:19 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 01 Feb 2022 10:08:17 -0800
+X-QCInternal: smtphost
+Received: from pmaliset-linux.qualcomm.com ([10.206.64.233])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 01 Feb 2022 23:37:59 +0530
+Received: by pmaliset-linux.qualcomm.com (Postfix, from userid 3848298)
+        id 7DAC32121A; Tue,  1 Feb 2022 23:37:58 +0530 (IST)
+From:   Prasad Malisetty <quic_pmaliset@quicinc.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        lorenzo.pieralisi@arm.com, robh@kernel.org, kw@linux.com,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/5] arm64: dts: qcom: sc7280: Properly sort sdc pinctrl
- lines
-Message-ID: <Yfl1vnHvmoLt6ATK@google.com>
-References: <20220201001042.3724523-1-dianders@chromium.org>
- <20220131161034.3.I6ae594129a8ad3d18af9f5ebffd895b4f6353a0a@changeid>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220131161034.3.I6ae594129a8ad3d18af9f5ebffd895b4f6353a0a@changeid>
+Cc:     quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+        manivannan.sadhasivam@linaro.org, swboyd@chromium.org,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>
+Subject: [PATCH v2] PCI: qcom: Add system PM support
+Date:   Tue,  1 Feb 2022 23:37:56 +0530
+Message-Id: <1643738876-18572-1-git-send-email-quic_pmaliset@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 31, 2022 at 04:10:40PM -0800, Douglas Anderson wrote:
-> The sdc1 / sdc2 pinctrl lines were randomly stuffed in the middle of
-> the qup pinctrl lines. Sort them properly. This is a no-op
-> change. Just code movement.
-> 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Add suspend_noirq and resume_noirq callbacks to handle
+System suspend and resume in dwc pcie controller driver.
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+When system suspends, send PME turnoff message to enter
+link into L2 state. Along with powerdown the PHY, disable
+pipe clock, switch gcc_pcie_1_pipe_clk_src to XO if mux is
+supported and disable the pcie clocks, regulators.
+
+When system resumes, PCIe link will be re-established and
+setup rc settings.
+
+Signed-off-by: Prasad Malisetty <quic_pmaliset@quicinc.com>
+Reported-by: kernel test robot <lkp@intel.com>
+
+---
+Changes since v1:
+	- Removed unnecessary logs and modified log level suggested by Manivannan.
+	- Removed platform specific callbacks as PM support is generic.
+---
+ drivers/pci/controller/dwc/pcie-qcom.c | 97 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 97 insertions(+)
+
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index c19cd506..d1dd6c7 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -73,6 +73,8 @@
+ 
+ #define PCIE20_PARF_Q2A_FLUSH			0x1AC
+ 
++#define PCIE20_PARF_PM_STTS                     0x24
++
+ #define PCIE20_MISC_CONTROL_1_REG		0x8BC
+ #define DBI_RO_WR_EN				1
+ 
+@@ -1616,6 +1618,100 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
++static int qcom_pcie_send_pme_turnoff_msg(struct qcom_pcie *pcie)
++{
++	int ret = 0;
++	u32 val = 0, poll_val = 0;
++	u64 l23_rdy_poll_timeout = 100000;
++	struct dw_pcie *pci = pcie->pci;
++	struct device *dev = pci->dev;
++
++	val = readl(pcie->elbi + PCIE20_ELBI_SYS_CTRL);
++	val |= BIT(4);
++	writel(val, pcie->elbi + PCIE20_ELBI_SYS_CTRL);
++
++	ret = readl_poll_timeout((pcie->parf + PCIE20_PARF_PM_STTS), poll_val,
++			(poll_val & BIT(5)), 10000, l23_rdy_poll_timeout);
++	if (!ret)
++		dev_info(dev, "PM_Enter_L23 is received\n");
++	else
++		dev_err(dev, "PM_Enter_L23 is NOT received.PARF_PM_STTS 0x%x\n",
++			readl_relaxed(pcie->parf + PCIE20_PARF_PM_STTS));
++
++	return ret;
++}
++
++static void qcom_pcie_host_disable(struct qcom_pcie *pcie)
++{
++	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
++
++	/* Assert the reset of endpoint */
++	qcom_ep_reset_assert(pcie);
++
++	/* Put PHY into POWER DOWN state */
++	phy_power_off(pcie->phy);
++
++	writel(1, pcie->parf + PCIE20_PARF_PHY_CTRL);
++
++	pcie->ops->post_deinit(pcie);
++
++	/* Disable PCIe clocks and regulators */
++	pcie->ops->deinit(pcie);
++}
++
++static int __maybe_unused qcom_pcie_pm_suspend_noirq(struct device *dev)
++{
++	int ret = 0;
++	struct qcom_pcie *pcie = dev_get_drvdata(dev);
++	struct dw_pcie *pci = pcie->pci;
++
++	if (!dw_pcie_link_up(pci)) {
++		dev_dbg(dev, "Power has been turned off already\n");
++		return ret;
++	}
++
++	/* Send PME turnoff msg */
++	ret = qcom_pcie_send_pme_turnoff_msg(pcie);
++	if (ret)
++		return ret;
++
++	/* Power down the PHY, disable clock and regulators */
++	qcom_pcie_host_disable(pcie);
++
++	return ret;
++}
++
++/* Resume the PCIe link */
++static int __maybe_unused qcom_pcie_pm_resume_noirq(struct device *dev)
++{
++	int ret = 0;
++	struct qcom_pcie *pcie = dev_get_drvdata(dev);
++	struct dw_pcie *pci = pcie->pci;
++	struct pcie_port *pp = &pci->pp;
++
++	/* Initialize PCIe host */
++	ret = qcom_pcie_host_init(pp);
++	if (ret) {
++		dev_err(dev, "cannot initialize host\n");
++		return ret;
++	}
++
++	dw_pcie_setup_rc(pp);
++
++	/* Start the PCIe link */
++	qcom_pcie_start_link(pci);
++
++	ret = dw_pcie_wait_for_link(pci);
++	if (ret)
++		dev_err(dev, "Link never came up, Resume failed\n");
++
++	return ret;
++}
++
++static const struct dev_pm_ops qcom_pcie_pm_ops = {
++	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_pm_suspend_noirq, qcom_pcie_pm_resume_noirq)
++};
++
+ static const struct of_device_id qcom_pcie_match[] = {
+ 	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
+ 	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
+@@ -1648,6 +1744,7 @@ static struct platform_driver qcom_pcie_driver = {
+ 	.probe = qcom_pcie_probe,
+ 	.driver = {
+ 		.name = "qcom-pcie",
++		.pm = &qcom_pcie_pm_ops,
+ 		.suppress_bind_attrs = true,
+ 		.of_match_table = qcom_pcie_match,
+ 	},
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
