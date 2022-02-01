@@ -2,251 +2,277 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 920BE4A641C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 19:39:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 362014A6758
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 22:49:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240214AbiBASjS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Feb 2022 13:39:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55608 "EHLO
+        id S235959AbiBAVt5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Feb 2022 16:49:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231139AbiBASjS (ORCPT
+        with ESMTP id S235481AbiBAVt5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Feb 2022 13:39:18 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 790BCC061714;
-        Tue,  1 Feb 2022 10:39:17 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 83991B82F43;
-        Tue,  1 Feb 2022 18:39:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C70EC340EB;
-        Tue,  1 Feb 2022 18:39:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1643740754;
-        bh=8z51N/DJx2T9IZBKLAJUpdHtDXlaBB892mPnUtwsAQg=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=k5lepYiVq+QONvRWemSETVG+HaTcv8zcqOu7zP5adFD7H6vA2aVadGowfyQeEhfx0
-         SRjRJbHNYNe+8o489Y06zASvNxRFqPhIgIdQWoYchx5mWSR91M95IczqCFnJAoaEYI
-         G8xsTItS9KoI/7Y2n6aqkyg5QUJpBStOuScBWWkv7xkw4XxUFG+BIVroweBA4yKd+A
-         A7ISV1AX8h3W+ngjwuhGB6F1bhRz1CxiYxb6Pm607tmxyNN6CYfhavPRtbnw6QkY94
-         4/VVaiLIQPN97CSiWmnj9CAVnJ2oP6tDjnehkmaDJXWUGPY5bMKd1uArLiFz7poCU6
-         x12BqMM36mbyg==
-Date:   Tue, 1 Feb 2022 12:39:12 -0600
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Prasad Malisetty <quic_pmaliset@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        lorenzo.pieralisi@arm.com, robh@kernel.org, kw@linux.com,
-        bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
-        manivannan.sadhasivam@linaro.org, swboyd@chromium.org
-Subject: Re: [PATCH v2] PCI: qcom: Add system PM support
-Message-ID: <20220201183912.GA583363@bhelgaas>
+        Tue, 1 Feb 2022 16:49:57 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5408C061714;
+        Tue,  1 Feb 2022 13:49:56 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id e2so34668309wra.2;
+        Tue, 01 Feb 2022 13:49:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=o4Hyu/VUYheXrOABb43glnjnbZby65idXFVWG0Y4WTY=;
+        b=O9TKvh/hTGTM4UMGMvIPoRUSjN+6tqaijsZkEixbdskujJqUkgj0VEByuscOzEF4je
+         +buhBPGDLh3n/vGSghZrAcUVxGjoOin64pL+biZDjqGje3mJbOg9BidtqXVGE7Uqbzb/
+         PGgUS+/Pz8xUykRAjU13HY076/u+S+nypid4DDaoKCLwI3T7MHTCepg+gpQHh+56WBkR
+         bARbnBUh75onjg2uQoqu6ou7CgSzVsfKGWtLjDT+H7O73QmU2f5p18QDOK4E4TUWRKI+
+         2PmCz2GM4cw53pN2of7KicIjahIvBiCAZ1NRjKJVNN00Qi1ZhFjGUdtrJw8ux9/7I2Sb
+         wf6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=o4Hyu/VUYheXrOABb43glnjnbZby65idXFVWG0Y4WTY=;
+        b=raDysHcU4ldcn/MJn/e2ZnwwdXhsk6TySkknNkFDl8P9BJR2cyUcOCg64/EUJm65Lv
+         wp5DLEj7xx1GHfj58oXnvfBQDwvJNhEu424mOVR/5qS7sDuVXMa2cb0EF0BBTigUNoWU
+         vfiMeL6KqBwE3cdKCSdw+DergU7YFE25HtsX6zccWwX2nOXbYX/EN7gJ37VwWKVORbOd
+         nKTFFkz3iD9QkAdQEXMhabM6skx3T5IJOYxVXipTHO/TOMNYxWi/TadS0g1LNwzpiiXQ
+         QYkO2OZlfFNH4wt290O93RJPSpRJiH/nq4CqNo3+iyVt3Q9HILaEciExhDkYFzublSiD
+         3sKQ==
+X-Gm-Message-State: AOAM531cugQr8ZI8LTC1lMzz0LC1AWaBqHC1ZfsBlAXnfIp+BPjo4Bp4
+        nIxz9SSNwiNbvRkhV2efC4o=
+X-Google-Smtp-Source: ABdhPJzNECjAmt68HyqKg9OizaVVm6XVr0LfrRCL1sgj7sW5Py7PSaXx7j0eZgnGRhQbkHSd7lblTQ==
+X-Received: by 2002:a5d:47cf:: with SMTP id o15mr22871041wrc.577.1643752195020;
+        Tue, 01 Feb 2022 13:49:55 -0800 (PST)
+Received: from Ansuel-xps.localdomain (93-42-71-246.ip85.fastwebnet.it. [93.42.71.246])
+        by smtp.gmail.com with ESMTPSA id r12sm15634699wrw.73.2022.02.01.13.49.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Feb 2022 13:49:54 -0800 (PST)
+Date:   Tue, 1 Feb 2022 22:49:16 +0100
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: soc: qcom: add qcom,tcsr bindings
+Message-ID: <Yfmq3IpjHZXdtEQR@Ansuel-xps.localdomain>
+References: <20220122001609.15904-1-ansuelsmth@gmail.com>
+ <20220122001609.15904-2-ansuelsmth@gmail.com>
+ <Yfhzqvrj6bIPmV2S@builder.lan>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1643738876-18572-1-git-send-email-quic_pmaliset@quicinc.com>
+In-Reply-To: <Yfhzqvrj6bIPmV2S@builder.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 01, 2022 at 11:37:56PM +0530, Prasad Malisetty wrote:
-> Add suspend_noirq and resume_noirq callbacks to handle
-> System suspend and resume in dwc pcie controller driver.
-
-s/System/system/
-s/pcie/PCIe/ as you did below.
-
-> When system suspends, send PME turnoff message to enter
-> link into L2 state. Along with powerdown the PHY, disable
-> pipe clock, switch gcc_pcie_1_pipe_clk_src to XO if mux is
-> supported and disable the pcie clocks, regulators.
+On Mon, Jan 31, 2022 at 05:41:30PM -0600, Bjorn Andersson wrote:
+> On Fri 21 Jan 18:16 CST 2022, Ansuel Smith wrote:
 > 
-> When system resumes, PCIe link will be re-established and
-> setup rc settings.
+> > Add qcom,tcsr-ipq8064 and qcom,tcsr-ipq4019 Documentation for the
+> > tcsr present in ipq8064 and ipa4019 required to configure and
+> > set various peripherals present in the SoC.
+> > 
+> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > ---
+> >  .../bindings/soc/qcom/qcom,tcsr-ipq4019.yaml  | 93 +++++++++++++++++++
+> >  .../bindings/soc/qcom/qcom,tcsr-ipq8064.yaml  | 47 ++++++++++
+> >  2 files changed, 140 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,tcsr-ipq4019.yaml
+> >  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,tcsr-ipq8064.yaml
+> > 
+> > diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,tcsr-ipq4019.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,tcsr-ipq4019.yaml
+> > new file mode 100644
+> > index 000000000000..3a82ccbb6588
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,tcsr-ipq4019.yaml
+> > @@ -0,0 +1,93 @@
+> > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: "http://devicetree.org/schemas/soc/qcom/qcom,tcsr-ipq4019.yaml#"
+> > +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> > +
+> > +title: Qualcomm Top Control and Status Registers binding for IPQ4019
+> > +
+> > +maintainers:
+> > +  - Ansuel Smith <ansuelsmth@gmail.com>
+> > +
+> > +description: |
+> > +  This binding describes the Qualcomm Top Control and Status Registers, used
+> > +  for accessing configuration and mux settings for a variety of peripherals
+> > +  for ipq4019.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    items:
+> > +      - const: qcom,tcsr-ipq4019
+> > +      - const: syscon
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +
+> > +  qcom,usb-hsphy-mode-select:
+> > +    description: Select usb hsphy mode for ipq4019
 > 
-> Signed-off-by: Prasad Malisetty <quic_pmaliset@quicinc.com>
-> Reported-by: kernel test robot <lkp@intel.com>
-
-The kernel test robot reported the lack of system power management?
-I'm impressed ;)  I doubt this "Reported-by" is useful.  If it *is*,
-please include a link to the report.
-
-> ---
-> Changes since v1:
-> 	- Removed unnecessary logs and modified log level suggested by Manivannan.
-> 	- Removed platform specific callbacks as PM support is generic.
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 97 ++++++++++++++++++++++++++++++++++
->  1 file changed, 97 insertions(+)
+> Why isn't this driven by the USB node, where I presume you otherwise
+> need to duplicate this decision?
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index c19cd506..d1dd6c7 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -73,6 +73,8 @@
->  
->  #define PCIE20_PARF_Q2A_FLUSH			0x1AC
->  
-> +#define PCIE20_PARF_PM_STTS                     0x24
 
-Indent with tabs (not spaces) as the surrounding code does.
+From what I understand this is global, setting this will apply on any
+usb present.
 
->  #define PCIE20_MISC_CONTROL_1_REG		0x8BC
->  #define DBI_RO_WR_EN				1
->  
-> @@ -1616,6 +1618,100 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  	return ret;
->  }
->  
-> +static int qcom_pcie_send_pme_turnoff_msg(struct qcom_pcie *pcie)
-> +{
-> +	int ret = 0;
-
-Drop unnecessary init.
-
-> +	u32 val = 0, poll_val = 0;
-
-Drop unnecessary "val" init.
-
-> +	u64 l23_rdy_poll_timeout = 100000;
-
-Add "microseconds" comment.
-
-> +	struct dw_pcie *pci = pcie->pci;
-> +	struct device *dev = pci->dev;
-> +
-> +	val = readl(pcie->elbi + PCIE20_ELBI_SYS_CTRL);
-> +	val |= BIT(4);
-> +	writel(val, pcie->elbi + PCIE20_ELBI_SYS_CTRL);
-> +
-> +	ret = readl_poll_timeout((pcie->parf + PCIE20_PARF_PM_STTS), poll_val,
-> +			(poll_val & BIT(5)), 10000, l23_rdy_poll_timeout);
-> +	if (!ret)
-> +		dev_info(dev, "PM_Enter_L23 is received\n");
-> +	else
-> +		dev_err(dev, "PM_Enter_L23 is NOT received.PARF_PM_STTS 0x%x\n",
-> +			readl_relaxed(pcie->parf + PCIE20_PARF_PM_STTS));
-> +
-> +	return ret;
-> +}
-> +
-> +static void qcom_pcie_host_disable(struct qcom_pcie *pcie)
-> +{
-> +	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-
-qcom_pcie_host_disable() is called from qcom_pcie_pm_suspend_noirq(),
-which is used for all qcom devices.  But it looks like not all qcom
-devices have 2_7_0 resources.  Is this supposed to be used only on
-certain revisions?
-
-> +
-> +	/* Assert the reset of endpoint */
-
-Superfluous comment, since the function name says the same thing.
-
-> +	qcom_ep_reset_assert(pcie);
-> +
-> +	/* Put PHY into POWER DOWN state */
-> +	phy_power_off(pcie->phy);
-> +
-> +	writel(1, pcie->parf + PCIE20_PARF_PHY_CTRL);
-> +
-> +	pcie->ops->post_deinit(pcie);
-> +
-> +	/* Disable PCIe clocks and regulators */
-> +	pcie->ops->deinit(pcie);
-> +}
-> +
-> +static int __maybe_unused qcom_pcie_pm_suspend_noirq(struct device *dev)
-> +{
-> +	int ret = 0;
-> +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> +	struct dw_pcie *pci = pcie->pci;
-> +
-> +	if (!dw_pcie_link_up(pci)) {
-> +		dev_dbg(dev, "Power has been turned off already\n");
-> +		return ret;
-
-"return 0" here and drop the init above.
-
-> +	}
-> +
-> +	/* Send PME turnoff msg */
-
-Superfluous comment.
-
-> +	ret = qcom_pcie_send_pme_turnoff_msg(pcie);
-> +	if (ret)
-> +		return ret;
-> +
-> +	/* Power down the PHY, disable clock and regulators */
-> +	qcom_pcie_host_disable(pcie);
-> +
-> +	return ret;
-
-"return 0" here.
-
-> +}
-> +
-> +/* Resume the PCIe link */
-> +static int __maybe_unused qcom_pcie_pm_resume_noirq(struct device *dev)
-> +{
-> +	int ret = 0;
-
-Drop unnecessary init.
-
-> +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> +	struct dw_pcie *pci = pcie->pci;
-> +	struct pcie_port *pp = &pci->pp;
-> +
-> +	/* Initialize PCIe host */
-
-Superfluous comment.
-
-> +	ret = qcom_pcie_host_init(pp);
-> +	if (ret) {
-> +		dev_err(dev, "cannot initialize host\n");
-> +		return ret;
-> +	}
-> +
-> +	dw_pcie_setup_rc(pp);
-> +
-> +	/* Start the PCIe link */
-
-Superfluous comment.
-
-> +	qcom_pcie_start_link(pci);
-> +
-> +	ret = dw_pcie_wait_for_link(pci);
-> +	if (ret)
-> +		dev_err(dev, "Link never came up, Resume failed\n");
-> +
-> +	return ret;
-> +}
-> +
-> +static const struct dev_pm_ops qcom_pcie_pm_ops = {
-> +	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_pm_suspend_noirq, qcom_pcie_pm_resume_noirq)
-
-qcom_pcie_pm_suspend_noirq() and qcom_pcie_pm_resume_noirq() look
-nothing like their counterparts in dra7xx, exynos, imx6, intel-gw.
-Any chance you could make them more similar?
-
-> +};
-> +
->  static const struct of_device_id qcom_pcie_match[] = {
->  	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
->  	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
-> @@ -1648,6 +1744,7 @@ static struct platform_driver qcom_pcie_driver = {
->  	.probe = qcom_pcie_probe,
->  	.driver = {
->  		.name = "qcom-pcie",
-> +		.pm = &qcom_pcie_pm_ops,
->  		.suppress_bind_attrs = true,
->  		.of_match_table = qcom_pcie_match,
->  	},
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-> of Code Aurora Forum, hosted by The Linux Foundation
+> Is this platform not capable of OTG?
 > 
+
+I assume it's capable by selecting the correct mode using tcsr.
+
+> > +    enum:
+> > +      - 'host'
+> > +      - 'device'
+> > +
+> > +  qcom,ess-interface-select:
+> > +    description: Select ess interface mode for ipq4019
+> > +    enum:
+> > +      - 'psgmii'
+> > +      - 'rgmii5'
+> > +      - 'rmii0'
+> > +      - 'rmii1'
+> > +      - 'rmii0_rmii1'
+> > +      - 'rgmii4'
+> > +
+> > +  qcom,wifi-glb-cfg-enable-axid:
+> > +    description: Enable AXI master bus Axid translating
+> > +                  to confirm all txn submitted by order for ipq4019
+> > +    type: boolean
+> > +
+> > +  qcom,wifi-glb-cfg-socslv-mode:
+> > +    description: Select wifi socslv mode for ipq4019
+> > +                  snoc use SNOC socslv_wxi_bvalid.
+> > +                  local use locally generate socslv_wxi_bvalid for performance.
+> > +    enum:
+> > +      - 'snoc'
+> > +      - 'local'
+> > +
+> > +  qcom,wifi_noc_memtype_m0_m2:
+> > +    description: Configure special wifi memory type needed for
+> > +                  some IPQ40xx devicesfor ipq4019
+> > +    type: boolean
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +
+> > +additionalProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    tcsr@194b000 {
+> > +      compatible = "qcom,tcsr-ipq4019", "syscon";
+> 
+> There's a single "tcsr" register block at 0x1937000 of size 0x21000.
+> The binding should describe that entire block, not convenient pieces of
+> it.
+> 
+
+The current driver implementation works with the offset provided by the
+reg. I assume I can just hardcode the offset in the driver and declare a
+single tcsr node. Will do this change.
+
+> > +      reg = <0x194b000 0x100>;
+> > +      qcom,usb-hsphy-mode-select = "host";
+> > +    };
+> > +
+> > +    tcsr@1949000 {
+> > +      compatible = "qcom,tcsr-ipq4019", "syscon";
+> > +      reg = <0x1949000 0x100>;
+> > +      qcom,wifi-glb-cfg-enable-axid;
+> > +      qcom,wifi-glb-cfg-socslv-mode = "local";
+> > +    };
+> > +
+> > +    ess_tcsr@1953000 {
+> > +      compatible = "qcom,tcsr-ipq4019", "syscon";
+> > +      reg = <0x1953000 0x1000>;
+> > +      qcom,ess-interface-select = "psgmii";
+> > +    };
+> > +
+> > +    tcsr@1957000 {
+> > +      compatible = "qcom,tcsr-ipq4019", "syscon";
+> > +      reg = <0x1957000 0x100>;
+> > +      qcom,wifi_noc_memtype_m0_m2;
+> > +    };
+> > +
+> > +...
+> > diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,tcsr-ipq8064.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,tcsr-ipq8064.yaml
+> > new file mode 100644
+> > index 000000000000..4ccc0bfccec5
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,tcsr-ipq8064.yaml
+> > @@ -0,0 +1,47 @@
+> > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: "http://devicetree.org/schemas/soc/qcom/qcom,tcsr-ipq8064.yaml#"
+> > +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> > +
+> > +title: Qualcomm Top Control and Status Registers binding for IPQ8064
+> > +
+> > +maintainers:
+> > +  - Ansuel Smith <ansuelsmth@gmail.com>
+> > +
+> > +description: |
+> > +  This binding describes the Qualcomm Top Control and Status Registers, used
+> > +  for accessing configuration and mux settings for a variety of peripherals
+> > +  for ipq8064.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    items:
+> > +      - const: qcom,tcsr-ipq8064
+> > +      - const: syscon
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +
+> > +  qcom,usb-ctrl-select:
+> > +    description: Select usb3 ctrl type for ipq8064
+> > +    enum:
+> > +      - 'p0'
+> > +      - 'p1'
+> > +      - 'dual'
+> 
+> Again, it seems reasonable to get this form the dwc3 node, rather than
+> duplicating the configuration.
+> 
+
+As I said up, it seems to be global, that's the reason I didn't put this
+handling in the dwc-qcom driver. (I mean it seems wrong that dwc3 would
+set the same value twice). If this is necessary I will add support for
+this in dwc-qcom.
+
+> Regards,
+> Bjorn
+> 
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +
+> > +additionalProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    tcsr: syscon@1a400000 {
+> > +      compatible = "qcom,tcsr-ipq8064", "syscon";
+> > +      reg = <0x1a400000 0x100>;
+> > +      qcom,usb-ctrl-select = "dual";
+> > +    };
+> > +
+> > +...
+> > -- 
+> > 2.33.1
+> > 
+
+-- 
+	Ansuel
