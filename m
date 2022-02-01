@@ -2,67 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 559044A5690
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 06:23:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 185914A5698
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 06:23:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233802AbiBAFXD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Feb 2022 00:23:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42366 "EHLO
+        id S233950AbiBAFXK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Feb 2022 00:23:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234052AbiBAFU7 (ORCPT
+        with ESMTP id S234324AbiBAFU7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 1 Feb 2022 00:20:59 -0500
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E1F8C0613DC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 21:20:51 -0800 (PST)
-Received: by mail-ot1-x32d.google.com with SMTP id s6-20020a0568301e0600b0059ea5472c98so15127994otr.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 21:20:51 -0800 (PST)
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32544C0617AB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 21:20:52 -0800 (PST)
+Received: by mail-ot1-x333.google.com with SMTP id d18-20020a9d51d2000000b005a09728a8c2so15154490oth.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 21:20:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=dAgRdlbtzfDJA3fxDZWwcXLHlGsqMKwkA2c7On9l7mY=;
-        b=EegnhEj9MYuo4VjqxEZMT4nrpVI8IQpnJd2TdoGSACTswGSco3YdYly9NgkXffOvaC
-         QOx0z4TmADBEDlzMD4ytBLRKU+RzILggcxQ+Kd6rjarmCy6QnJdkMgaS6f8nh/qB0I/a
-         gF4VS6QFDY3+wq7asipqFZ0ekGWCap3xd4TpMTEspnqM45rjFX8uGIxAI5iN9r7AtSNA
-         FhTwyjPER9+1w1ijtv5Sh/09S3TZzSFlLPhzx30qBoIKQL0bJYf2QKTtqO4JK6C8vpRK
-         4ETGeiLOhdV2+ITaRwPh3vH4ZBb73HzU4BcDxzWlppdRNJolwKvtIbHe1RGR2sYkBoH8
-         B5aw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=QCCppAscP/KIGwl1JCLJN5liCcMT30u1TqUecRLuuZk=;
+        b=ICVa3ObG2poOxz2N8URYem+JfD02Eg4WelUkOiUAbodduvFbvIxPp3WAemXDKMNwJu
+         aO0ea+0TBaq4itnPydmKaNU/YmzwjGXZaQq7XowAlX4jvJ2hSLB9QAl/Fk2r2oADjPnU
+         5yAQ0uKlaSvxM0JgsYOZIymJn32lrz/5ug2Qtox/NrADlOXLZ94Hb6KDKRgl6q9SJFxR
+         EjzLOeWYpSUBdz/voXZUAlMq+l2nTO6gEJ4Spm6Wy3Em/1cDL62Fov0gmhXZcUb4f2gQ
+         7HIY7XcOK9RUCVOkIEYNACckDEBuCJNP5NNyWeKat0DoN5D3IwC3DMgjr1KqYM+vkCEa
+         dTZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=dAgRdlbtzfDJA3fxDZWwcXLHlGsqMKwkA2c7On9l7mY=;
-        b=3seBjp13W/B+ExQ7y1YK6XlpPYFU03EtEWqCwjHd7fGdGRxvsnr2xkuS8HdCP/yBOe
-         3385zDPA3/ynWReIUFk9+W6is309iIrbLQ3gQNASRCVM2fKkeb2e0GVcBmbJMLCTUOGD
-         Tqm7PvA30KRs75p5hzoLK/fu8lxs1eamKmZvZt0F7pdfUfRsTNW/GPEX0qwobcqx7scT
-         hdarmEYfQMx2Mh2M3xG0ZJAoFxJXTm22fdNoLVDGY//NFztujaRdV7X8DGELdLmwt9ge
-         0gj+Cs/OOpRIxCJbNxcdcHIrpd7T17o2kvr1TGQPuLgnC0vXV9A3HcXzSDch1qxYNEtI
-         iR8w==
-X-Gm-Message-State: AOAM530iQlxbuegF+oRDO6yygi8iYfiFRs7SO4F9kGoBKNDiEVAy8iAM
-        LgEDK6P/PfLyxBPVuALkuPfU0g==
-X-Google-Smtp-Source: ABdhPJw6kXuZp3tSgSWyM4P90f/w4AkE856R/zJMf+1nAa0zqoHaYjyHf2ujG9/TtZA/XxPgKq7tsw==
-X-Received: by 2002:a9d:7097:: with SMTP id l23mr13773313otj.190.1643692850692;
-        Mon, 31 Jan 2022 21:20:50 -0800 (PST)
+        bh=QCCppAscP/KIGwl1JCLJN5liCcMT30u1TqUecRLuuZk=;
+        b=N8OVFVlIqTqflPRDeMM6WpiAGQK7rNfuCQrhp3HI3XarDQqEGIBSa9U9mST5XNqvWl
+         8GacA0frDHglV/US93f4b9hFPdczoxtzfZknZY8vL0KAPX+7wmkn9+yr3IPGoq0fhz7D
+         Y2bEsGz/1d3s7l0gkPepyGSDeK2+TToBGE+gwZ6Mi+bqI1sEAtAhGG6GVb+QKrCxA0XR
+         Y7mhZ12IX19kfeRaukwalfljBcK0g4XEJm+m2e8BhcZW/9k/wdtbY0DvERJfH6Si1/6E
+         pm2yErgKbq9ikDT9DzQOiNTSq+pF83/85R23aFUgUgh1ydTIfglGYxrul9HE11wmbSxw
+         XaGA==
+X-Gm-Message-State: AOAM532Tw5OF8oxDkAnb/CFkdUvC+FVXAPaQ6KeAWGP69gvf+hKtxa4C
+        n7j9IS6rYGAsr4ixEcHPtUXce5tmAWn8dg==
+X-Google-Smtp-Source: ABdhPJx+TBtU7wXSTDxavLIS3+39W1LCovnJUUwk64VK0Zthdm4jh6mS5bTZwW6JIiQDUCvfhDDX7Q==
+X-Received: by 2002:a9d:6f11:: with SMTP id n17mr5920242otq.228.1643692851587;
+        Mon, 31 Jan 2022 21:20:51 -0800 (PST)
 Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id u3sm8193107ooh.19.2022.01.31.21.20.49
+        by smtp.gmail.com with ESMTPSA id u3sm8193107ooh.19.2022.01.31.21.20.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Jan 2022 21:20:50 -0800 (PST)
+        Mon, 31 Jan 2022 21:20:51 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Mauro Carvalho <mchehab@kernel.org>,
-        devicetree@vger.kernel.org, Robert Foss <robert.foss@linaro.org>,
-        agross@kernel.org, Andrey Konovalov <andrey.konovalov@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: Re: [PATCH v4 0/2] Remove clock-lanes DT property from device trees
-Date:   Mon, 31 Jan 2022 23:20:00 -0600
-Message-Id: <164369277342.3095904.5682243255804634032.b4-ty@linaro.org>
+To:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH] arm64: dts: qcom: Fix msm8998 cache nodes
+Date:   Mon, 31 Jan 2022 23:20:01 -0600
+Message-Id: <164369277343.3095904.13862409515453016955.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20211206154003.39892-1-robert.foss@linaro.org>
-References: <20211206154003.39892-1-robert.foss@linaro.org>
+In-Reply-To: <20211217211136.3536443-1-robh@kernel.org>
+References: <20211217211136.3536443-1-robh@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -70,22 +65,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 6 Dec 2021 16:40:01 +0100, Robert Foss wrote:
-> This series depends on the below series being merged.
-> https://lore.kernel.org/all/20211206151811.39271-1-robert.foss@linaro.org/
+On Fri, 17 Dec 2021 15:11:36 -0600, Rob Herring wrote:
+> The msm8998 cache nodes have some issues. First, L1 caches are described
+> within cpu nodes, not as separate nodes. The 'next-level-cache' property
+> is of course in the correct location, otherwise the cache hierarchy
+> walking would not work. Remove all the L1 cache nodes.
 > 
-> Changes since v3:
->  - Bjorn: Added RBs for both patches
->  - Split series into two series for the ARM64 & Media trees
+> Second, 'arm,arch-cache' is not a documented compatible string. "cache"
+> is a sufficient compatible string for the Arm architected caches.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/2] arm64: dts: qcom: apq8016-sbc: Remove clock-lanes property from &camss node
-      commit: 015bbdd314110ad20d440bec4d8483f73f4a8b58
-[2/2] arm64: dts: qcom: sdm845-db845c: Remove clock-lanes property from &camss node
-      commit: 6bf3c1895f5848977ab3912eb76fd996bc4d2768
+[1/1] arm64: dts: qcom: Fix msm8998 cache nodes
+      commit: fad35efa75a22050bb4b7cace8c1c9dd4fc70d16
 
 Best regards,
 -- 
