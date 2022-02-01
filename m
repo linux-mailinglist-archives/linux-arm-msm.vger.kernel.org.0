@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DE2AF4A5FB6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 16:11:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4126E4A5FBB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 16:11:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240120AbiBAPLF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Feb 2022 10:11:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34960 "EHLO
+        id S240144AbiBAPLJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Feb 2022 10:11:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240134AbiBAPLE (ORCPT
+        with ESMTP id S240136AbiBAPLG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Feb 2022 10:11:04 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 941B2C06173B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Feb 2022 07:11:04 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id c7so24042924ljr.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Feb 2022 07:11:04 -0800 (PST)
+        Tue, 1 Feb 2022 10:11:06 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDDC5C061714
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Feb 2022 07:11:05 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id a28so34478915lfl.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Feb 2022 07:11:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wfWvIpKTNeO96YZzDdwtaOq2SkGxBOA3zsD7bx5oMo0=;
-        b=i12FkTCd4+M2p5hBYK9v0kYB4lfrLh72pNySqlGM7z8KsE67/8sDwHM9EEwKFs2J8s
-         AOnwYYiKMaKg79DCEpMh8P0FS/MSS6E7AX6gfFuOFO430S9l2Yv20kEhQANOq5v9ME0s
-         8srds0EnnvEhi2rPAKuoACv3sB+uuy69Jj8LbxzGhjEXVcsivCwx5hTLrhHA5ZZGuAyK
-         WpPvoQojx2tVlgAL0r4Q0yndJvJ+yt5Ourt+Vh8UiH6y+F+lPgtKRXUHQ4AeIQ2fEw/A
-         rckJ4RHNPQdCq9T5J6iOEfLBQM97ttKgSaG+BhX7vBddFu1WbfihL3U9WAtXluCiXbSe
-         vwsA==
+        bh=owS7N+fD6z7MNcyrcKKxeTKGNnGRvcE9bY721ZkO7As=;
+        b=FF6JYFIrhmvFzOdLgBTvfPEg+7/ObUl0boOEVI076UCPBtxRVJwBTWqw/QH9n63wAk
+         FnImUFbM1XQfw5BuBFMsPDmudtkQiTll/OtVopU6cy6a/tfsTOucRnH1FnJuwIGbgS6E
+         /XDfptxvGXUBtCCOCK5AEornpaOElB0YzB/3LKw+LqQVAxz/VgAwtQjI8ajqkZcbinWR
+         5rAVyL4Vg/GYImwLkhdJHbVf6daUk/MBXm+FVAELz60uNAKNaxZAKbOIJqCRO2wR5zAp
+         Vz1ipRAU1cUafdWKAqDbBmff70meZ8u8RJTYOIRXPI7DKULWyupsMOft4FElh2BbgpgV
+         KTKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wfWvIpKTNeO96YZzDdwtaOq2SkGxBOA3zsD7bx5oMo0=;
-        b=sdS56UYMgrIuImTBhW3Lx/P6daPWd6BKVSJB26N2YU4wqscWVWc4NMf1PNmnITYyoq
-         cdqLswAj/Uf13dUyU86eRe3Ppxl9m3Wlhdnx7xP2JEhJ09ztbQZ8KgrKH7nFLVnV6sqB
-         LBAivzLd9ro9PLTE+XcZ4+ZVcaBb9NfVen90fXK6wYZDzRF1LKtD5VHeiSoxzhHNjMNa
-         a4A/CBstPDVEBMy9Qj50HOVz0fCO3rJIWE7UwNtK6+IRNA2KT2z39URqb5BIZio/3rDs
-         lr5mxD+3Q/N3XBe9bihABvBGRS6Xt/QaGHao9aIz8N9loctQyYGOXUAZ2NBlGaNtLTcm
-         zIIw==
-X-Gm-Message-State: AOAM530lJxdRzchgqt/7OLkIGxH9ex1vJDWnBbiVurjnp4EwRK3yMFeO
-        2/9C+utISm9rFOBLjqjAtwKrJg==
-X-Google-Smtp-Source: ABdhPJzC5BzFjB/uak2tsmmc+C8qDlL5aeCRDqNr7JVU4e+4l4EIh/l4F6I14L58KNrII+sCXlIhRg==
-X-Received: by 2002:a2e:b703:: with SMTP id j3mr16649288ljo.228.1643728262837;
-        Tue, 01 Feb 2022 07:11:02 -0800 (PST)
+        bh=owS7N+fD6z7MNcyrcKKxeTKGNnGRvcE9bY721ZkO7As=;
+        b=109cmef25XzsgHgD/tjzlCoo4/ndprY75x/zSIBHwFweBQ/O5nGvmyI1NgS7prOEJF
+         YtYgU1xRCJBGKMCr2qhI3Zj8NQyoLHyEJSyF6ki3bLvgCeaLVdt95mRetS6OLqzkgQHA
+         oAyFom+YzAtMah41adXfXBzGtFORT1PajqJZDUScf9f/MgC7Jc54S+Pad0carsiRp1cM
+         lotrXmO1Sh1VVFE6smMcT8h4FMgq6yprBy6j4aUq5gnTl2P4KiHqU3ZYB186pBkep7v3
+         b+vR8H64aO5S08AJ2+uO7lfurjS72w1qUDeFoRl4wOrko5smF6rgY+GUNHrA17FrUuL5
+         5yHg==
+X-Gm-Message-State: AOAM530o8N7Nkl3JQqk0bY6QBxMsnY+H/fcY/nt1a1Y4F4UouykBzN9l
+        WEkTCmNxGT5tpmnNcVJzGItGwQ==
+X-Google-Smtp-Source: ABdhPJx3Qxi8wzgM27XFRGahYaKEm9Mn6AujiFlObY+6AMzcFzVlod3Eex8r6AOSmbTTi1n08eBBAw==
+X-Received: by 2002:a05:6512:228b:: with SMTP id f11mr19788913lfu.188.1643728263920;
+        Tue, 01 Feb 2022 07:11:03 -0800 (PST)
 Received: from eriador.lan ([37.153.55.125])
         by smtp.gmail.com with ESMTPSA id y6sm1337723lfk.157.2022.02.01.07.11.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Feb 2022 07:11:02 -0800 (PST)
+        Tue, 01 Feb 2022 07:11:03 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -56,9 +56,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 5/6] drm/msm/dpu: remove struct dpu_encoder_irq
-Date:   Tue,  1 Feb 2022 18:10:55 +0300
-Message-Id: <20220201151056.2480055-6-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 6/6] drm/msm/dpu: pass irq to dpu_encoder_helper_wait_for_irq()
+Date:   Tue,  1 Feb 2022 18:10:56 +0300
+Message-Id: <20220201151056.2480055-7-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220201151056.2480055-1-dmitry.baryshkov@linaro.org>
 References: <20220201151056.2480055-1-dmitry.baryshkov@linaro.org>
@@ -68,438 +68,203 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove additional indirection: specify IRQ callbacks and IRQ indices
-directly rather than through the pointer in the irq structure. For each
-IRQ we have a constant IRQ callback. This change simplifies code review
-as the reader no longer needs to remember which function is called.
+Pass IRQ number directly rather than passing an index in the dpu_encoder's irq table.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 28 +++----
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  | 21 +-----
- .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 73 +++++++------------
- .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  | 42 ++++-------
- 4 files changed, 58 insertions(+), 106 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 29 +++++++++----------
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  4 +--
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  |  9 ++++--
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |  3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h     | 12 ++++----
+ 5 files changed, 29 insertions(+), 28 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index dbcbf96cf8eb..83b6715820fa 100644
+index 83b6715820fa..4c9e7c4fa14b 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -261,9 +261,10 @@ static int dpu_encoder_helper_wait_event_timeout(int32_t drm_id,
+@@ -260,38 +260,35 @@ static int dpu_encoder_helper_wait_event_timeout(int32_t drm_id,
+ 		u32 irq_idx, struct dpu_encoder_wait_info *info);
  
  int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
- 		enum dpu_intr_idx intr_idx,
-+		void (*func)(void *arg, int irq_idx),
+-		enum dpu_intr_idx intr_idx,
++		int irq,
+ 		void (*func)(void *arg, int irq_idx),
  		struct dpu_encoder_wait_info *wait_info)
  {
--	struct dpu_encoder_irq *irq;
-+	int irq;
+-	int irq;
  	u32 irq_status;
  	int ret;
  
-@@ -271,7 +272,7 @@ int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
+-	if (!wait_info || intr_idx >= INTR_IDX_MAX) {
++	if (!wait_info) {
  		DPU_ERROR("invalid params\n");
  		return -EINVAL;
  	}
--	irq = &phys_enc->irq[intr_idx];
-+	irq = phys_enc->irq[intr_idx];
- 
+-	irq = phys_enc->irq[intr_idx];
+-
  	/* note: do master / slave checking outside */
  
-@@ -279,53 +280,52 @@ int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
+ 	/* return EWOULDBLOCK since we know the wait isn't necessary */
  	if (phys_enc->enable_state == DPU_ENC_DISABLED) {
- 		DRM_ERROR("encoder is disabled id=%u, intr=%d, irq=%d\n",
- 			  DRMID(phys_enc->parent), intr_idx,
--			  irq->irq_idx);
-+			  irq);
+-		DRM_ERROR("encoder is disabled id=%u, intr=%d, irq=%d\n",
+-			  DRMID(phys_enc->parent), intr_idx,
++		DRM_ERROR("encoder is disabled id=%u, callback=%ps, irq=%d\n",
++			  DRMID(phys_enc->parent), func,
+ 			  irq);
  		return -EWOULDBLOCK;
  	}
  
--	if (irq->irq_idx < 0) {
--		DRM_DEBUG_KMS("skip irq wait id=%u, intr=%d, irq=%s\n",
--			      DRMID(phys_enc->parent), intr_idx,
--			      irq->name);
-+	if (irq < 0) {
-+		DRM_DEBUG_KMS("skip irq wait id=%u, intr=%d\n",
-+			      DRMID(phys_enc->parent), intr_idx);
+ 	if (irq < 0) {
+-		DRM_DEBUG_KMS("skip irq wait id=%u, intr=%d\n",
+-			      DRMID(phys_enc->parent), intr_idx);
++		DRM_DEBUG_KMS("skip irq wait id=%u, callback=%ps\n",
++			      DRMID(phys_enc->parent), func);
  		return 0;
  	}
  
- 	DRM_DEBUG_KMS("id=%u, intr=%d, irq=%d, pp=%d, pending_cnt=%d\n",
- 		      DRMID(phys_enc->parent), intr_idx,
--		      irq->irq_idx, phys_enc->hw_pp->idx - PINGPONG_0,
-+		      irq, phys_enc->hw_pp->idx - PINGPONG_0,
+-	DRM_DEBUG_KMS("id=%u, intr=%d, irq=%d, pp=%d, pending_cnt=%d\n",
+-		      DRMID(phys_enc->parent), intr_idx,
++	DRM_DEBUG_KMS("id=%u, callback=%ps, irq=%d, pp=%d, pending_cnt=%d\n",
++		      DRMID(phys_enc->parent), func,
+ 		      irq, phys_enc->hw_pp->idx - PINGPONG_0,
  		      atomic_read(wait_info->atomic_cnt));
  
- 	ret = dpu_encoder_helper_wait_event_timeout(
- 			DRMID(phys_enc->parent),
--			irq->irq_idx,
-+			irq,
- 			wait_info);
- 
- 	if (ret <= 0) {
--		irq_status = dpu_core_irq_read(phys_enc->dpu_kms, irq->irq_idx);
-+		irq_status = dpu_core_irq_read(phys_enc->dpu_kms, irq);
+@@ -305,8 +302,8 @@ int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
  		if (irq_status) {
  			unsigned long flags;
  
- 			DRM_DEBUG_KMS("irq not triggered id=%u, intr=%d, irq=%d, pp=%d, atomic_cnt=%d\n",
- 				      DRMID(phys_enc->parent), intr_idx,
--				      irq->irq_idx,
-+				      irq,
+-			DRM_DEBUG_KMS("irq not triggered id=%u, intr=%d, irq=%d, pp=%d, atomic_cnt=%d\n",
+-				      DRMID(phys_enc->parent), intr_idx,
++			DRM_DEBUG_KMS("irq not triggered id=%u, callback=%ps, irq=%d, pp=%d, atomic_cnt=%d\n",
++				      DRMID(phys_enc->parent), func,
+ 				      irq,
  				      phys_enc->hw_pp->idx - PINGPONG_0,
  				      atomic_read(wait_info->atomic_cnt));
- 			local_irq_save(flags);
--			irq->func(phys_enc, irq->irq_idx);
-+			func(phys_enc, irq);
- 			local_irq_restore(flags);
+@@ -316,8 +313,8 @@ int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
  			ret = 0;
  		} else {
  			ret = -ETIMEDOUT;
- 			DRM_DEBUG_KMS("irq timeout id=%u, intr=%d, irq=%d, pp=%d, atomic_cnt=%d\n",
- 				      DRMID(phys_enc->parent), intr_idx,
--				      irq->irq_idx,
-+				      irq,
+-			DRM_DEBUG_KMS("irq timeout id=%u, intr=%d, irq=%d, pp=%d, atomic_cnt=%d\n",
+-				      DRMID(phys_enc->parent), intr_idx,
++			DRM_DEBUG_KMS("irq timeout id=%u, callback=%ps, irq=%d, pp=%d, atomic_cnt=%d\n",
++				      DRMID(phys_enc->parent), func,
+ 				      irq,
  				      phys_enc->hw_pp->idx - PINGPONG_0,
  				      atomic_read(wait_info->atomic_cnt));
- 		}
+@@ -325,7 +322,7 @@ int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
  	} else {
  		ret = 0;
  		trace_dpu_enc_irq_wait_success(DRMID(phys_enc->parent),
--			intr_idx, irq->irq_idx,
-+			intr_idx, irq,
+-			intr_idx, irq,
++			func, irq,
  			phys_enc->hw_pp->idx - PINGPONG_0,
  			atomic_read(wait_info->atomic_cnt));
  	}
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-index ff2218155b44..803fd6f25da1 100644
+index 803fd6f25da1..9843acdc33bd 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-@@ -162,21 +162,6 @@ enum dpu_intr_idx {
- 	INTR_IDX_MAX,
- };
- 
--/**
-- * dpu_encoder_irq - tracking structure for interrupts
-- * @name:		string name of interrupt
-- * @intr_idx:		Encoder interrupt enumeration
-- * @irq_idx:		IRQ interface lookup index from DPU IRQ framework
-- *			will be -EINVAL if IRQ is not registered
-- * @irq_cb:		interrupt callback
-- */
--struct dpu_encoder_irq {
--	const char *name;
--	enum dpu_intr_idx intr_idx;
--	int irq_idx;
--	void (*func)(void *arg, int irq_idx);
--};
--
- /**
-  * struct dpu_encoder_phys - physical encoder that drives a single INTF block
-  *	tied to a specific panel / sub-panel. Abstract type, sub-classed by
-@@ -207,7 +192,7 @@ struct dpu_encoder_irq {
-  * @pending_ctlstart_cnt:	Atomic counter tracking the number of ctl start
-  *                              pending.
-  * @pending_kickoff_wq:		Wait queue for blocking until kickoff completes
-- * @irq:			IRQ tracking structures
-+ * @irq:			IRQ indices
-  */
- struct dpu_encoder_phys {
- 	struct drm_encoder *parent;
-@@ -231,7 +216,7 @@ struct dpu_encoder_phys {
- 	atomic_t pending_ctlstart_cnt;
- 	atomic_t pending_kickoff_cnt;
- 	wait_queue_head_t pending_kickoff_wq;
--	struct dpu_encoder_irq irq[INTR_IDX_MAX];
-+	int irq[INTR_IDX_MAX];
- };
- 
- static inline int dpu_encoder_phys_inc_pending(struct dpu_encoder_phys *phys)
-@@ -357,11 +342,13 @@ void dpu_encoder_helper_report_irq_timeout(struct dpu_encoder_phys *phys_enc,
+@@ -341,13 +341,13 @@ void dpu_encoder_helper_report_irq_timeout(struct dpu_encoder_phys *phys_enc,
+  * dpu_encoder_helper_wait_for_irq - utility to wait on an irq.
   *	note: will call dpu_encoder_helper_wait_for_irq on timeout
   * @phys_enc: Pointer to physical encoder structure
-  * @intr_idx: encoder interrupt index
-+ * @func: IRQ callback to be called in case of timeout
+- * @intr_idx: encoder interrupt index
++ * @irq: IRQ index
+  * @func: IRQ callback to be called in case of timeout
   * @wait_info: wait info struct
   * @Return: 0 or -ERROR
   */
  int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
- 		enum dpu_intr_idx intr_idx,
-+		void (*func)(void *arg, int irq_idx),
+-		enum dpu_intr_idx intr_idx,
++		int irq,
+ 		void (*func)(void *arg, int irq_idx),
  		struct dpu_encoder_wait_info *wait_info);
  
- #endif /* __dpu_encoder_phys_H__ */
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-index ca7d557312ff..9987a129a32c 100644
+index 9987a129a32c..3eb0caccefbb 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-@@ -151,7 +151,6 @@ static void dpu_encoder_phys_cmd_mode_set(
- {
- 	struct dpu_encoder_phys_cmd *cmd_enc =
- 		to_dpu_encoder_phys_cmd(phys_enc);
--	struct dpu_encoder_irq *irq;
- 
- 	if (!mode || !adj_mode) {
- 		DPU_ERROR("invalid args\n");
-@@ -161,17 +160,13 @@ static void dpu_encoder_phys_cmd_mode_set(
- 	DPU_DEBUG_CMDENC(cmd_enc, "caching mode:\n");
- 	drm_mode_debug_printmodeline(adj_mode);
- 
--	irq = &phys_enc->irq[INTR_IDX_CTL_START];
--	irq->irq_idx = phys_enc->hw_ctl->caps->intr_start;
-+	phys_enc->irq[INTR_IDX_CTL_START] = phys_enc->hw_ctl->caps->intr_start;
- 
--	irq = &phys_enc->irq[INTR_IDX_PINGPONG];
--	irq->irq_idx = phys_enc->hw_pp->caps->intr_done;
-+	phys_enc->irq[INTR_IDX_PINGPONG] = phys_enc->hw_pp->caps->intr_done;
- 
--	irq = &phys_enc->irq[INTR_IDX_RDPTR];
--	irq->irq_idx = phys_enc->hw_pp->caps->intr_rdptr;
-+	phys_enc->irq[INTR_IDX_RDPTR] = phys_enc->hw_pp->caps->intr_rdptr;
- 
--	irq = &phys_enc->irq[INTR_IDX_UNDERRUN];
--	irq->irq_idx = phys_enc->hw_intf->cap->intr_underrun;
-+	phys_enc->irq[INTR_IDX_UNDERRUN] = phys_enc->hw_intf->cap->intr_underrun;
- }
- 
- static int _dpu_encoder_phys_cmd_handle_ppdone_timeout(
-@@ -212,7 +207,7 @@ static int _dpu_encoder_phys_cmd_handle_ppdone_timeout(
- 			  atomic_read(&phys_enc->pending_kickoff_cnt));
- 		msm_disp_snapshot_state(drm_enc->dev);
- 		dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_RDPTR].irq_idx);
-+				phys_enc->irq[INTR_IDX_RDPTR]);
- 	}
- 
- 	atomic_add_unless(&phys_enc->pending_kickoff_cnt, -1, 0);
-@@ -240,6 +235,7 @@ static int _dpu_encoder_phys_cmd_wait_for_idle(
+@@ -234,7 +234,8 @@ static int _dpu_encoder_phys_cmd_wait_for_idle(
+ 	wait_info.atomic_cnt = &phys_enc->pending_kickoff_cnt;
  	wait_info.timeout_ms = KICKOFF_TIMEOUT_MS;
  
- 	ret = dpu_encoder_helper_wait_for_irq(phys_enc, INTR_IDX_PINGPONG,
-+			dpu_encoder_phys_cmd_pp_tx_done_irq,
+-	ret = dpu_encoder_helper_wait_for_irq(phys_enc, INTR_IDX_PINGPONG,
++	ret = dpu_encoder_helper_wait_for_irq(phys_enc,
++			phys_enc->irq[INTR_IDX_PINGPONG],
+ 			dpu_encoder_phys_cmd_pp_tx_done_irq,
  			&wait_info);
  	if (ret == -ETIMEDOUT)
- 		_dpu_encoder_phys_cmd_handle_ppdone_timeout(phys_enc);
-@@ -279,11 +275,12 @@ static int dpu_encoder_phys_cmd_control_vblank_irq(
- 
- 	if (enable && atomic_inc_return(&phys_enc->vblank_refcount) == 1)
- 		ret = dpu_core_irq_register_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_RDPTR].irq_idx,
--				phys_enc->irq[INTR_IDX_RDPTR].func, phys_enc);
-+				phys_enc->irq[INTR_IDX_RDPTR],
-+				dpu_encoder_phys_cmd_pp_rd_ptr_irq,
-+				phys_enc);
- 	else if (!enable && atomic_dec_return(&phys_enc->vblank_refcount) == 0)
- 		ret = dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_RDPTR].irq_idx);
-+				phys_enc->irq[INTR_IDX_RDPTR]);
- 
- end:
- 	if (ret) {
-@@ -305,27 +302,30 @@ static void dpu_encoder_phys_cmd_irq_control(struct dpu_encoder_phys *phys_enc,
- 
- 	if (enable) {
- 		dpu_core_irq_register_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_PINGPONG].irq_idx,
--				phys_enc->irq[INTR_IDX_PINGPONG].func, phys_enc);
-+				phys_enc->irq[INTR_IDX_PINGPONG],
-+				dpu_encoder_phys_cmd_pp_tx_done_irq,
-+				phys_enc);
- 		dpu_core_irq_register_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_UNDERRUN].irq_idx,
--				phys_enc->irq[INTR_IDX_UNDERRUN].func, phys_enc);
-+				phys_enc->irq[INTR_IDX_UNDERRUN],
-+				dpu_encoder_phys_cmd_underrun_irq,
-+				phys_enc);
- 		dpu_encoder_phys_cmd_control_vblank_irq(phys_enc, true);
- 
- 		if (dpu_encoder_phys_cmd_is_master(phys_enc))
- 			dpu_core_irq_register_callback(phys_enc->dpu_kms,
--					phys_enc->irq[INTR_IDX_CTL_START].irq_idx,
--					phys_enc->irq[INTR_IDX_CTL_START].func, phys_enc);
-+					phys_enc->irq[INTR_IDX_CTL_START],
-+					dpu_encoder_phys_cmd_ctl_start_irq,
-+					phys_enc);
- 	} else {
- 		if (dpu_encoder_phys_cmd_is_master(phys_enc))
- 			dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
--					phys_enc->irq[INTR_IDX_CTL_START].irq_idx);
-+					phys_enc->irq[INTR_IDX_CTL_START]);
- 
- 		dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_UNDERRUN].irq_idx);
-+				phys_enc->irq[INTR_IDX_UNDERRUN]);
- 		dpu_encoder_phys_cmd_control_vblank_irq(phys_enc, false);
- 		dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_PINGPONG].irq_idx);
-+				phys_enc->irq[INTR_IDX_PINGPONG]);
- 	}
- }
- 
-@@ -660,6 +660,7 @@ static int _dpu_encoder_phys_cmd_wait_for_ctl_start(
+@@ -659,7 +660,8 @@ static int _dpu_encoder_phys_cmd_wait_for_ctl_start(
+ 	wait_info.atomic_cnt = &phys_enc->pending_ctlstart_cnt;
  	wait_info.timeout_ms = KICKOFF_TIMEOUT_MS;
  
- 	ret = dpu_encoder_helper_wait_for_irq(phys_enc, INTR_IDX_CTL_START,
-+			dpu_encoder_phys_cmd_ctl_start_irq,
+-	ret = dpu_encoder_helper_wait_for_irq(phys_enc, INTR_IDX_CTL_START,
++	ret = dpu_encoder_helper_wait_for_irq(phys_enc,
++			phys_enc->irq[INTR_IDX_CTL_START],
+ 			dpu_encoder_phys_cmd_ctl_start_irq,
  			&wait_info);
  	if (ret == -ETIMEDOUT) {
- 		DPU_ERROR_CMDENC(cmd_enc, "ctl start interrupt wait failed\n");
-@@ -715,6 +716,7 @@ static int dpu_encoder_phys_cmd_wait_for_vblank(
+@@ -715,7 +717,8 @@ static int dpu_encoder_phys_cmd_wait_for_vblank(
+ 
  	atomic_inc(&cmd_enc->pending_vblank_cnt);
  
- 	rc = dpu_encoder_helper_wait_for_irq(phys_enc, INTR_IDX_RDPTR,
-+			dpu_encoder_phys_cmd_pp_rd_ptr_irq,
+-	rc = dpu_encoder_helper_wait_for_irq(phys_enc, INTR_IDX_RDPTR,
++	rc = dpu_encoder_helper_wait_for_irq(phys_enc,
++			phys_enc->irq[INTR_IDX_RDPTR],
+ 			dpu_encoder_phys_cmd_pp_rd_ptr_irq,
  			&wait_info);
  
- 	return rc;
-@@ -766,7 +768,6 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
- {
- 	struct dpu_encoder_phys *phys_enc = NULL;
- 	struct dpu_encoder_phys_cmd *cmd_enc = NULL;
--	struct dpu_encoder_irq *irq;
- 	int i, ret = 0;
- 
- 	DPU_DEBUG("intf %d\n", p->intf_idx - INTF_0);
-@@ -790,30 +791,8 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
- 	phys_enc->enc_spinlock = p->enc_spinlock;
- 	cmd_enc->stream_sel = 0;
- 	phys_enc->enable_state = DPU_ENC_DISABLED;
--	for (i = 0; i < INTR_IDX_MAX; i++) {
--		irq = &phys_enc->irq[i];
--		irq->irq_idx = -EINVAL;
--	}
--
--	irq = &phys_enc->irq[INTR_IDX_CTL_START];
--	irq->name = "ctl_start";
--	irq->intr_idx = INTR_IDX_CTL_START;
--	irq->func = dpu_encoder_phys_cmd_ctl_start_irq;
--
--	irq = &phys_enc->irq[INTR_IDX_PINGPONG];
--	irq->name = "pp_done";
--	irq->intr_idx = INTR_IDX_PINGPONG;
--	irq->func = dpu_encoder_phys_cmd_pp_tx_done_irq;
--
--	irq = &phys_enc->irq[INTR_IDX_RDPTR];
--	irq->name = "pp_rd_ptr";
--	irq->intr_idx = INTR_IDX_RDPTR;
--	irq->func = dpu_encoder_phys_cmd_pp_rd_ptr_irq;
--
--	irq = &phys_enc->irq[INTR_IDX_UNDERRUN];
--	irq->name = "underrun";
--	irq->intr_idx = INTR_IDX_UNDERRUN;
--	irq->func = dpu_encoder_phys_cmd_underrun_irq;
-+	for (i = 0; i < INTR_IDX_MAX; i++)
-+		phys_enc->irq[i] = -EINVAL;
- 
- 	atomic_set(&phys_enc->vblank_refcount, 0);
- 	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index 50c063de1509..d80b2f80fec9 100644
+index d80b2f80fec9..45968cd60c90 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -366,19 +366,15 @@ static void dpu_encoder_phys_vid_mode_set(
- 		struct drm_display_mode *mode,
- 		struct drm_display_mode *adj_mode)
- {
--	struct dpu_encoder_irq *irq;
--
- 	if (adj_mode) {
- 		phys_enc->cached_mode = *adj_mode;
- 		drm_mode_debug_printmodeline(adj_mode);
- 		DPU_DEBUG_VIDENC(phys_enc, "caching mode:\n");
+@@ -486,7 +486,8 @@ static int dpu_encoder_phys_vid_wait_for_vblank(
  	}
- 
--	irq = &phys_enc->irq[INTR_IDX_VSYNC];
--	irq->irq_idx = phys_enc->hw_intf->cap->intr_vsync;
-+	phys_enc->irq[INTR_IDX_VSYNC] = phys_enc->hw_intf->cap->intr_vsync;
- 
--	irq = &phys_enc->irq[INTR_IDX_UNDERRUN];
--	irq->irq_idx = phys_enc->hw_intf->cap->intr_underrun;
-+	phys_enc->irq[INTR_IDX_UNDERRUN] = phys_enc->hw_intf->cap->intr_underrun;
- }
- 
- static int dpu_encoder_phys_vid_control_vblank_irq(
-@@ -405,11 +401,12 @@ static int dpu_encoder_phys_vid_control_vblank_irq(
- 
- 	if (enable && atomic_inc_return(&phys_enc->vblank_refcount) == 1)
- 		ret = dpu_core_irq_register_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_VSYNC].irq_idx,
--				phys_enc->irq[INTR_IDX_VSYNC].func, phys_enc);
-+				phys_enc->irq[INTR_IDX_VSYNC],
-+				dpu_encoder_phys_vid_vblank_irq,
-+				phys_enc);
- 	else if (!enable && atomic_dec_return(&phys_enc->vblank_refcount) == 0)
- 		ret = dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_VSYNC].irq_idx);
-+				phys_enc->irq[INTR_IDX_VSYNC]);
- 
- end:
- 	if (ret) {
-@@ -490,6 +487,7 @@ static int dpu_encoder_phys_vid_wait_for_vblank(
  
  	/* Wait for kickoff to complete */
- 	ret = dpu_encoder_helper_wait_for_irq(phys_enc, INTR_IDX_VSYNC,
-+			dpu_encoder_phys_vid_vblank_irq,
+-	ret = dpu_encoder_helper_wait_for_irq(phys_enc, INTR_IDX_VSYNC,
++	ret = dpu_encoder_helper_wait_for_irq(phys_enc,
++			phys_enc->irq[INTR_IDX_VSYNC],
+ 			dpu_encoder_phys_vid_vblank_irq,
  			&wait_info);
  
- 	if (ret == -ETIMEDOUT) {
-@@ -542,7 +540,7 @@ static void dpu_encoder_phys_vid_prepare_for_kickoff(
- 				ctl->idx, rc);
- 		msm_disp_snapshot_state(drm_enc->dev);
- 		dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_VSYNC].irq_idx);
-+				phys_enc->irq[INTR_IDX_VSYNC]);
- 	}
- }
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
+index 95b449a6e349..eab6c2e06fe6 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h
+@@ -188,25 +188,25 @@ DEFINE_EVENT(dpu_irq_template, dpu_irq_unregister_success,
+ );
  
-@@ -632,12 +630,13 @@ static void dpu_encoder_phys_vid_irq_control(struct dpu_encoder_phys *phys_enc,
- 			return;
+ TRACE_EVENT(dpu_enc_irq_wait_success,
+-	TP_PROTO(uint32_t drm_id, enum dpu_intr_idx intr_idx,
++	TP_PROTO(uint32_t drm_id, void *func,
+ 		 int irq_idx, enum dpu_pingpong pp_idx, int atomic_cnt),
+-	TP_ARGS(drm_id, intr_idx, irq_idx, pp_idx, atomic_cnt),
++	TP_ARGS(drm_id, func, irq_idx, pp_idx, atomic_cnt),
+ 	TP_STRUCT__entry(
+ 		__field(	uint32_t,		drm_id		)
+-		__field(	enum dpu_intr_idx,	intr_idx	)
++		__field(	void *,			func		)
+ 		__field(	int,			irq_idx		)
+ 		__field(	enum dpu_pingpong,	pp_idx		)
+ 		__field(	int,			atomic_cnt	)
+ 	),
+ 	TP_fast_assign(
+ 		__entry->drm_id = drm_id;
+-		__entry->intr_idx = intr_idx;
++		__entry->func = func;
+ 		__entry->irq_idx = irq_idx;
+ 		__entry->pp_idx = pp_idx;
+ 		__entry->atomic_cnt = atomic_cnt;
+ 	),
+-	TP_printk("id=%u, intr=%d, irq=%d, pp=%d, atomic_cnt=%d",
+-		  __entry->drm_id, __entry->intr_idx,
++	TP_printk("id=%u, callback=%ps, irq=%d, pp=%d, atomic_cnt=%d",
++		  __entry->drm_id, __entry->func,
+ 		  __entry->irq_idx, __entry->pp_idx, __entry->atomic_cnt)
+ );
  
- 		dpu_core_irq_register_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_UNDERRUN].irq_idx,
--				phys_enc->irq[INTR_IDX_UNDERRUN].func, phys_enc);
-+				phys_enc->irq[INTR_IDX_UNDERRUN],
-+				dpu_encoder_phys_vid_underrun_irq,
-+				phys_enc);
- 	} else {
- 		dpu_encoder_phys_vid_control_vblank_irq(phys_enc, false);
- 		dpu_core_irq_unregister_callback(phys_enc->dpu_kms,
--				phys_enc->irq[INTR_IDX_UNDERRUN].irq_idx);
-+				phys_enc->irq[INTR_IDX_UNDERRUN]);
- 	}
- }
- 
-@@ -703,7 +702,6 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
- 		struct dpu_enc_phys_init_params *p)
- {
- 	struct dpu_encoder_phys *phys_enc = NULL;
--	struct dpu_encoder_irq *irq;
- 	int i;
- 
- 	if (!p) {
-@@ -729,20 +727,8 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
- 	phys_enc->split_role = p->split_role;
- 	phys_enc->intf_mode = INTF_MODE_VIDEO;
- 	phys_enc->enc_spinlock = p->enc_spinlock;
--	for (i = 0; i < INTR_IDX_MAX; i++) {
--		irq = &phys_enc->irq[i];
--		irq->irq_idx = -EINVAL;
--	}
--
--	irq = &phys_enc->irq[INTR_IDX_VSYNC];
--	irq->name = "vsync_irq";
--	irq->intr_idx = INTR_IDX_VSYNC;
--	irq->func = dpu_encoder_phys_vid_vblank_irq;
--
--	irq = &phys_enc->irq[INTR_IDX_UNDERRUN];
--	irq->name = "underrun";
--	irq->intr_idx = INTR_IDX_UNDERRUN;
--	irq->func = dpu_encoder_phys_vid_underrun_irq;
-+	for (i = 0; i < INTR_IDX_MAX; i++)
-+		phys_enc->irq[i] = -EINVAL;
- 
- 	atomic_set(&phys_enc->vblank_refcount, 0);
- 	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
 -- 
 2.34.1
 
