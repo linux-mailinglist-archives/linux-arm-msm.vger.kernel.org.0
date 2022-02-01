@@ -2,210 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DA96A4A5DD2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 14:59:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 162DA4A5DE0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 15:04:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238964AbiBAN7x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Feb 2022 08:59:53 -0500
-Received: from mga17.intel.com ([192.55.52.151]:14988 "EHLO mga17.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238944AbiBAN7x (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Feb 2022 08:59:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1643723993; x=1675259993;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=lOH1XfKZ3/HZZy0a2x4qqcf+ZDoW+Ouz7bP0BLy5q9s=;
-  b=l4jziWWyxaE0IyQqN4w+7mTOl5KaYpRqG0LQQ3nKX20nGgSbFhPJYKbL
-   khVOA2MAKeFQm5fPVdRfde/IISbzNJhhc+FLNrywZ5paMa3OhS7VSGy+W
-   jstDqBpFv/xo3pK+O6+WWA3VRnM+fNuJuXu5nVj8DMn3DJO+DdpdNtlR9
-   YYxYUUexoBnSUCV8F3HmIuwb+y+mcRl6+m2EUtBz156r+PngSLt1/2eul
-   J2tEMDRIsx3P63inBoaahgEU+VKUUap1giH7G2JGaNAQSCAus1WVmCmLd
-   I1SVZCb420z+Ajt7medgLrAJJi9Pt1myTp+Yidm7gDWQy6ty9wjky3yiw
-   Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10244"; a="228352499"
-X-IronPort-AV: E=Sophos;i="5.88,334,1635231600"; 
-   d="scan'208";a="228352499"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2022 05:59:53 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,334,1635231600"; 
-   d="scan'208";a="523057009"
-Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.92]) ([10.237.72.92])
-  by orsmga007.jf.intel.com with ESMTP; 01 Feb 2022 05:59:48 -0800
-Subject: Re: [PATCH V3 2/4] mmc: debugfs: Add debug fs entry for mmc driver
-To:     "Sajida Bhanu (Temp) (QUIC)" <quic_c_sbhanu@quicinc.com>,
-        "Asutosh Das (QUIC)" <quic_asutoshd@quicinc.com>,
-        "ulf.hansson@linaro.org" <ulf.hansson@linaro.org>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Cc:     "stummala@codeaurora.org" <stummala@codeaurora.org>,
-        "vbadigan@codeaurora.org" <vbadigan@codeaurora.org>,
-        "Ram Prakash Gupta (QUIC)" <quic_rampraka@quicinc.com>,
-        "Pradeep Pragallapati (QUIC)" <quic_pragalla@quicinc.com>,
-        "sartgarg@codeaurora.org" <sartgarg@codeaurora.org>,
-        "nitirawa@codeaurora.org" <nitirawa@codeaurora.org>,
-        "sayalil@codeaurora.org" <sayalil@codeaurora.org>,
-        Liangliang Lu <luliang@codeaurora.org>,
-        "Bao D . Nguyen" <nguyenb@codeaurora.org>
-References: <1642699582-14785-1-git-send-email-quic_c_sbhanu@quicinc.com>
- <1642699582-14785-3-git-send-email-quic_c_sbhanu@quicinc.com>
- <0886f705-562f-6c8d-f396-60c2244b6375@intel.com>
- <SJ0PR02MB84494706E4515CFBEDB55898CD5F9@SJ0PR02MB8449.namprd02.prod.outlook.com>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-Message-ID: <dfac146e-bce6-574f-4760-c0d35b046a9f@intel.com>
-Date:   Tue, 1 Feb 2022 15:59:47 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Firefox/78.0 Thunderbird/78.14.0
+        id S239025AbiBAOES (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Feb 2022 09:04:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47548 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239020AbiBAOER (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Feb 2022 09:04:17 -0500
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9FBDC06173B
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Feb 2022 06:04:16 -0800 (PST)
+Received: by mail-io1-xd34.google.com with SMTP id 9so21362718iou.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Feb 2022 06:04:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AzLZKV9Ds06mRDyzKwbvSXYdln8SESWlfflardvbdLo=;
+        b=r0Ib1qzf8MAoYX939A2mETg17xgzERVvSWeacR4lftRZTuaoZTgO2Y5hBM4suOab5L
+         HREt+sclADHW4WP9AJmWT6To1BkAPgLmuGEqa37lujM65346jFh46umEiVBEzX//CvG3
+         5OTFYMT4f+mJdYwlfYsXcD1Z5mGAQyZO5ldWKHB7BpxsFHuAWj/K4MTmQB3qZcFNN+tQ
+         vpAeMF8Zf7A6y2KHVHcLxXkMJlqI83RXqb3fOHh0+suwjDCZkUznrA1jpHp9VPc8GKW3
+         fR0y1jenRTAI8jfu+A3vqDKzUAhGmYW24DhXeJ4lU4iIn+ViM/4gbG7XcO4ZsmIyW/Ev
+         oXGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AzLZKV9Ds06mRDyzKwbvSXYdln8SESWlfflardvbdLo=;
+        b=QD6THRIiioOIipW3nS/pZoZMmXnZIyJ5K0nH117Ze/Q/Pa2GwfDlYpgrKAhb1EJz0g
+         TLMEG+OeYGiARNfEgkAnUYXMWjESQ3LxRpcM20+j8xFDZoU27RZ9r7+SRRF7GSopwDYD
+         yvVN6JdRimlHA3V4EpqR2oXBBSl7qdxhUMnCc2A3SJjC0euLUCargaKzj3/DYN4ZKG1b
+         lX5+rfq8KimnJt4jSCFMqC/w1lN6tieFZUo0MTvpj3MNKC6ojPjy5iPxLst52Ljz/muk
+         F/W+blI8plp2Ld4FDZRdw1XxhIdk6qeQngT495hotckZ1hm5cFONQvZrhcEzHI6kqLQ8
+         4oAg==
+X-Gm-Message-State: AOAM533QapAbN0g7xSw2L5QR3h5+ZqfraHIIjKtQSMSrSsHcB0E/RDbj
+        NJU1RLFdNk+qUKk5QqQ5S1p43Q==
+X-Google-Smtp-Source: ABdhPJxJME5UGFSD89Qi+f+0oVbNYJBXd3IMSnnfV5LimCSknIFC89IGx0ia6974LGMc4mWws0lQ3w==
+X-Received: by 2002:a5d:9d9f:: with SMTP id ay31mr13828580iob.140.1643724256231;
+        Tue, 01 Feb 2022 06:04:16 -0800 (PST)
+Received: from localhost.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.gmail.com with ESMTPSA id o7sm189267ilo.17.2022.02.01.06.04.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Feb 2022 06:04:15 -0800 (PST)
+From:   Alex Elder <elder@linaro.org>
+To:     robh+dt@kernel.org, davem@davemloft.net, kuba@kernel.org
+Cc:     bjorn.andersson@linaro.org, mka@chromium.org, evgreen@chromium.org,
+        cpratapa@codeaurora.org, avuyyuru@codeaurora.org,
+        jponduru@codeaurora.org, subashab@codeaurora.org, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH net 0/2] net: ipa: enable register retention
+Date:   Tue,  1 Feb 2022 08:04:10 -0600
+Message-Id: <20220201140412.467233-1-elder@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-In-Reply-To: <SJ0PR02MB84494706E4515CFBEDB55898CD5F9@SJ0PR02MB8449.namprd02.prod.outlook.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/01/2022 20:19, Sajida Bhanu (Temp) (QUIC) wrote:
-> Hi,
-> 
-> Thanks for the review.
-> 
-> Please find the inline comments.
-> 
-> Thanks,
-> Sajida
-> 
-> -----Original Message-----
-> From: Adrian Hunter <adrian.hunter@intel.com> 
-> Sent: Friday, January 21, 2022 12:40 PM
-> To: Sajida Bhanu (Temp) (QUIC) <quic_c_sbhanu@quicinc.com>; Asutosh Das (QUIC) <quic_asutoshd@quicinc.com>; ulf.hansson@linaro.org; agross@kernel.org; bjorn.andersson@linaro.org; linux-mmc@vger.kernel.org; linux-arm-msm@vger.kernel.org; linux-kernel@vger.kernel.org
-> Cc: stummala@codeaurora.org; vbadigan@codeaurora.org; Ram Prakash Gupta (QUIC) <quic_rampraka@quicinc.com>; Pradeep Pragallapati (QUIC) <quic_pragalla@quicinc.com>; sartgarg@codeaurora.org; nitirawa@codeaurora.org; sayalil@codeaurora.org; Liangliang Lu <luliang@codeaurora.org>; Bao D . Nguyen <nguyenb@codeaurora.org>
-> Subject: Re: [PATCH V3 2/4] mmc: debugfs: Add debug fs entry for mmc driver
-> 
-> On 20/01/2022 19:26, Shaik Sajida Bhanu wrote:
->> Add debug fs entry to query eMMC and SD card errors statistics
->>
->> Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
->> Signed-off-by: Liangliang Lu <luliang@codeaurora.org>
->> Signed-off-by: Sayali Lokhande <sayalil@codeaurora.org>
->> Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
->> ---
->>  drivers/mmc/core/debugfs.c | 81 
->> ++++++++++++++++++++++++++++++++++++++++++++++
->>  1 file changed, 81 insertions(+)
->>
->> diff --git a/drivers/mmc/core/debugfs.c b/drivers/mmc/core/debugfs.c 
->> index 3fdbc80..f4cb594 100644
->> --- a/drivers/mmc/core/debugfs.c
->> +++ b/drivers/mmc/core/debugfs.c
->> @@ -223,6 +223,82 @@ static int mmc_clock_opt_set(void *data, u64 val)  
->> DEFINE_DEBUGFS_ATTRIBUTE(mmc_clock_fops, mmc_clock_opt_get, mmc_clock_opt_set,
->>  	"%llu\n");
->>  
->> +static int mmc_err_state_get(void *data, u64 *val) {
->> +	struct mmc_host *host = data;
->> +
->> +	if (!host)
->> +		return -EINVAL;
->> +
->> +	*val = host->err_state ? 1 : 0;
->> +
->> +	return 0;
->> +}
->> +
->> +DEFINE_SIMPLE_ATTRIBUTE(mmc_err_state, mmc_err_state_get, NULL, 
->> +"%llu\n");
->> +
->> +static int mmc_err_stats_show(struct seq_file *file, void *data) {
->> +	struct mmc_host *host = (struct mmc_host *)file->private;
->> +	const char *desc[MMC_ERR_MAX] = {
->> +		[MMC_ERR_CMD_TIMEOUT] = "Command Timeout Occurred",
->> +		[MMC_ERR_CMD_CRC] = "Command CRC Errors Occurred",
->> +		[MMC_ERR_DAT_TIMEOUT] = "Data Timeout Occurred",
->> +		[MMC_ERR_DAT_CRC] = "Data CRC Errors Occurred",
->> +		[MMC_ERR_AUTO_CMD] = "Auto-Cmd Error Occurred",
->> +		[MMC_ERR_ADMA] = "ADMA Error Occurred",
->> +		[MMC_ERR_TUNING] = "Tuning Error Occurred",
->> +		[MMC_ERR_CMDQ_RED] = "CMDQ RED Errors",
->> +		[MMC_ERR_CMDQ_GCE] = "CMDQ GCE Errors",
->> +		[MMC_ERR_CMDQ_ICCE] = "CMDQ ICCE Errors",
->> +		[MMC_ERR_REQ_TIMEOUT] = "Request Timedout",
->> +		[MMC_ERR_CMDQ_REQ_TIMEOUT] = "CMDQ Request Timedout",
->> +		[MMC_ERR_ICE_CFG] = "ICE Config Errors",
->> +	};
->> +	int i;
->> +
->> +	if (!host)
->> +		return -EINVAL;
->> +
->> +	if (!host->err_stats_enabled) {
->> +		seq_printf(file, "Not supported by driver\n");
->> +		return 0;
->> +	}
->> +
->> +	for (i = 0; i < MMC_ERR_MAX; i++) {
->> +		if (desc[i])
->> +			seq_printf(file, "# %s:\t %d\n",
->> +					desc[i], host->err_stats[i]);
->> +	}
->> +
->> +	return 0;
->> +}
->> +
->> +static int mmc_err_stats_open(struct inode *inode, struct file *file) 
->> +{
->> +	return single_open(file, mmc_err_stats_show, inode->i_private); }
->> +
->> +static ssize_t mmc_err_stats_write(struct file *filp, const char __user *ubuf,
->> +				   size_t cnt, loff_t *ppos)
->> +{
->> +	struct mmc_host *host = filp->f_mapping->host->i_private;
->> +
->> +	if (!host)
->> +		return -EINVAL;
->> +
->> +	pr_debug("%s: Resetting MMC error statistics\n", __func__);
->> +	memset(host->err_stats, 0, sizeof(host->err_stats));
->> +
->> +	return cnt;
->> +}
->> +
->> +static const struct file_operations mmc_err_stats_fops = {
->> +	.open	= mmc_err_stats_open,
->> +	.read	= seq_read,
->> +	.write	= mmc_err_stats_write,
->> +};
->> +
->>  void mmc_add_host_debugfs(struct mmc_host *host)  {
->>  	struct dentry *root;
->> @@ -236,6 +312,11 @@ void mmc_add_host_debugfs(struct mmc_host *host)
->>  	debugfs_create_file_unsafe("clock", S_IRUSR | S_IWUSR, root, host,
->>  				   &mmc_clock_fops);
->>  
->> +	debugfs_create_file("err_state", 0600, root, host,
->> +		&mmc_err_state);
-> 
-> Please, let's drop err_state for now
-> 
->>>>>> first we can check this right,  if it is set then we can go and check err_stats[] to know more on type of error (data /cmd timeout or CRC errors etc.).
-> Please let me know your opinion on this.( Same as patch set (V3 1/4).
+With runtime power management in place, we sometimes need to issue
+a command to enable retention of IPA register values before power
+collapse.  This requires a new Device Tree property, whose presence
+will also be used to signal that the command is required.
 
-Please see my comments for patch 1
+					-Alex
 
-> 
->> +	debugfs_create_file("err_stats", 0600, root, host,
->> +		&mmc_err_stats_fops);
->> +
->>  #ifdef CONFIG_FAIL_MMC_REQUEST
->>  	if (fail_request)
->>  		setup_fault_attr(&fail_default_attr, fail_request);
->>
-> 
+Alex Elder (2):
+  dt-bindings: net: qcom,ipa: add optional qcom,qmp property
+  net: ipa: request IPA register values be retained
+
+ .../devicetree/bindings/net/qcom,ipa.yaml     |  6 +++
+ drivers/net/ipa/ipa_power.c                   | 52 +++++++++++++++++++
+ drivers/net/ipa/ipa_power.h                   |  7 +++
+ drivers/net/ipa/ipa_uc.c                      |  5 ++
+ 4 files changed, 70 insertions(+)
+
+-- 
+2.32.0
 
