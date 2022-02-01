@@ -2,69 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D82C84A541B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 01:34:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 083664A545B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 02:01:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230433AbiBAAez (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jan 2022 19:34:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35418 "EHLO
+        id S231397AbiBABBQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jan 2022 20:01:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230474AbiBAAey (ORCPT
+        with ESMTP id S229739AbiBABBP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jan 2022 19:34:54 -0500
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B014CC06173B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 16:34:54 -0800 (PST)
-Received: by mail-io1-xd32.google.com with SMTP id i62so19222381ioa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 16:34:54 -0800 (PST)
+        Mon, 31 Jan 2022 20:01:15 -0500
+Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCFC7C061714
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 17:01:15 -0800 (PST)
+Received: by mail-il1-x131.google.com with SMTP id q11so4802944ild.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 17:01:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=0RxjgSGztYUFbx7bjM7KqKNH0qHJ5gdw8CggC6+9rrQ=;
-        b=IL6Y0sZzrChCOgfOM3tMFFLMgnoZbgv3BLZ8uvwghxync3/m7dJ2meo7QZNfdIFpFV
-         AE6NUtEQQtCT/QODYblVO8UVgEdDxaUF7EiM+GP41QIxOGg4PcmoTVoyZIZAnzXt++DN
-         0Xjv56VGx1Gb/LxPntRGY81CcPP1YlzbOQ33A=
+        bh=SlA+CRxN1+l3Q6yf6tu5cYnYlmBs1/fByPS12U2oI0k=;
+        b=fo/VVwycn1Uqn6OK+5mbn/4uxSczpI91VNZPf/j2vArqlSDljsgEI1EHHuyfyjSt/s
+         S6vfcVpHHnEWCAeJf91hsMXp3U2kbHwBdlt8f65Kyb+ggvAbeNoCRxDxhxzEB7JLJH4L
+         qeoRVkH3OOnE/wXc4ErYDPQnrrubvAd1YRU8M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=0RxjgSGztYUFbx7bjM7KqKNH0qHJ5gdw8CggC6+9rrQ=;
-        b=72TyzZqMCUZm03QhKylbkv0ctSR5E3DSlSYi0tUJyTXnN3MjMcGTpV4PFbgMWcX+R0
-         Xs9ZEYYuASfp77jNItO5/JJSQS9v5OTIM2si2xMZHMsIJBvEZYtlVSOlz1DKWxe5h9hg
-         Opsek4Xn3QiBrKxkr15aw70lMM5EioOF/WkwNR4JPG882jrYLo69eQ0a91x6Q5eXbFFu
-         DSASD37R6jI9H1qQ3uEzF5D+nJV0LRKBRclWFPp0OMr9TkEPMi9i9fAuH2hsrQ0SbrhD
-         /KyiYBczyWeW9J0O3b2VJc6JWpkSuMyYhn4BE7hyFVkbPkB4UfazD0uScfj8wqFV7gkn
-         yeJA==
-X-Gm-Message-State: AOAM533aIVZwaeEBc1Z6OjkxdE/tce02SiFy5uTtRjmSEwIgdwUaR4Xb
-        KjX4zF5Tsh98ZyIgtHVXq9zBmrqwE0b+9A==
-X-Google-Smtp-Source: ABdhPJwMhDuATWwF7nQSCVL8OoTnttJG62uqLnbqy1VvXYBIUxjcDi0WZCXArQHFQqUqFmEcWzwG7Q==
-X-Received: by 2002:a05:6638:1396:: with SMTP id w22mr4340539jad.11.1643675693962;
-        Mon, 31 Jan 2022 16:34:53 -0800 (PST)
-Received: from mail-io1-f41.google.com (mail-io1-f41.google.com. [209.85.166.41])
-        by smtp.gmail.com with ESMTPSA id j3sm7413634ilq.13.2022.01.31.16.34.53
+        bh=SlA+CRxN1+l3Q6yf6tu5cYnYlmBs1/fByPS12U2oI0k=;
+        b=AS2rX+5Ld2VCKdbn6isGjjzXOWUK8/0kJXOc94QQWFsEpxYGYnYc7QB0Gt9O2qZY+s
+         2uGrdw08PdB1c/gXzJ3a9kIWlSgEgQ4kprGqdCy9CI8U9OJsSHrsLagYMaupOgZp+Mas
+         MCuo44DyeQqLhJDL6JGLytEYPrNw6QcZ4MuJX5lH+RC2/gAm6xVUfoTzdK7YbaJWXLar
+         8Mi9PJ+czzFaNa/qKMDTcWr54w3OhN/2+kVasycPvrRIxgL3dMnT5moxEmVft97L504y
+         JsPl7ozfUuBaTB5QuINRVOF32kB409Ww+CF4b8XBlFHHFa9JXJC1A/R3HkjAn983h7Pw
+         eXpg==
+X-Gm-Message-State: AOAM531AvYPXANeD6TTumkxpaEw0HQtoz1S6nYO3AhldZ8LMKt1h2MWB
+        5kD6P9hM3W3ChIs4iktFTe4rKBy7PPwbQw==
+X-Google-Smtp-Source: ABdhPJwV+9Cpyres0NARehqkMtVmEcun7rG3y3PRk9fWqB4FEWqQS3FEM7QAXh/sQ9nN9W6EIWBvfQ==
+X-Received: by 2002:a92:c569:: with SMTP id b9mr13258419ilj.140.1643677275171;
+        Mon, 31 Jan 2022 17:01:15 -0800 (PST)
+Received: from mail-io1-f47.google.com (mail-io1-f47.google.com. [209.85.166.47])
+        by smtp.gmail.com with ESMTPSA id k13sm18769771ili.22.2022.01.31.17.01.14
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Jan 2022 16:34:53 -0800 (PST)
-Received: by mail-io1-f41.google.com with SMTP id e79so19142553iof.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 16:34:53 -0800 (PST)
-X-Received: by 2002:a05:6638:168d:: with SMTP id f13mr8859539jat.44.1643675692795;
- Mon, 31 Jan 2022 16:34:52 -0800 (PST)
+        Mon, 31 Jan 2022 17:01:14 -0800 (PST)
+Received: by mail-io1-f47.google.com with SMTP id 9so19314759iou.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 17:01:14 -0800 (PST)
+X-Received: by 2002:a05:6602:140c:: with SMTP id t12mr12178540iov.177.1643677273820;
+ Mon, 31 Jan 2022 17:01:13 -0800 (PST)
 MIME-Version: 1.0
-References: <20220201001042.3724523-1-dianders@chromium.org>
- <20220131161034.4.I79baad7f52351aafb470f8b21a9fa79d7031ad6a@changeid>
- <CAD=FV=U4oma5qeoboczmKf6Qx7hpuwFbU-wi51p=owaKgZCQtg@mail.gmail.com> <Yfh/zXKrzC5zaxl/@builder.lan>
-In-Reply-To: <Yfh/zXKrzC5zaxl/@builder.lan>
+References: <20220125224422.544381-1-dianders@chromium.org>
+ <20220125144316.v2.5.I5604b7af908e8bbe709ac037a6a8a6ba8a2bfa94@changeid>
+ <CAE-0n528Bxdj+DKhi2Lan4qR_=4KHD7A1Zkr15tmu+MchryJ1A@mail.gmail.com>
+ <CAD=FV=UcpKaLQ31CGKUnaNnZcYnM4N_t8VC43FPGktoYDiMfsw@mail.gmail.com>
+ <YfC5i2jR5N+pmHoZ@ripper> <CAE-0n50sX9-0MxcpF+3Rwqm75jSw5=aNwdsitLwE2sEA69jLJw@mail.gmail.com>
+ <YfgRS/UtRn6Ewwhj@builder.lan> <CAD=FV=V=pbmP-wKhAOVRBC0M=YjYm3Ym-022g8uBEZOxKW-8BQ@mail.gmail.com>
+In-Reply-To: <CAD=FV=V=pbmP-wKhAOVRBC0M=YjYm3Ym-022g8uBEZOxKW-8BQ@mail.gmail.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 31 Jan 2022 16:34:41 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=XhVC2g+Me_7Hj=cKEz_GxUJao7OSbfV-nT6GS535SpOA@mail.gmail.com>
-Message-ID: <CAD=FV=XhVC2g+Me_7Hj=cKEz_GxUJao7OSbfV-nT6GS535SpOA@mail.gmail.com>
-Subject: Re: [PATCH 4/5] arm64: dts: qcom: sc7280: Clean up sdc1 / sdc2 pinctrl
+Date:   Mon, 31 Jan 2022 17:01:02 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=WQ0gR18x9rhioLtYGO3oWtny1c52YaiZHUG=PG03d+OQ@mail.gmail.com>
+Message-ID: <CAD=FV=WQ0gR18x9rhioLtYGO3oWtny1c52YaiZHUG=PG03d+OQ@mail.gmail.com>
+Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: sc7280: Add herobrine-r1
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Shaik Sajida Bhanu <sbhanu@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>,
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        kgodara@codeaurora.org, Matthias Kaehlcke <mka@chromium.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Prasad Malisetty <pmaliset@codeaurora.org>,
+        quic_rjendra@quicinc.com, Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
         <devicetree@vger.kernel.org>,
@@ -77,66 +83,46 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Mon, Jan 31, 2022 at 4:33 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
+On Mon, Jan 31, 2022 at 8:50 AM Doug Anderson <dianders@chromium.org> wrote:
 >
-> On Mon 31 Jan 18:25 CST 2022, Doug Anderson wrote:
+> > Either we leave it as is - which follows my interpretation of what the DT
+> > spec says - or we (and the DT maitainers) agree that it shouldn't be
+> > there (because this dtb won't run on any random qcom,sc7180 anyways) at
+> > all.
 >
-> > Hi,
-> >
-> > On Mon, Jan 31, 2022 at 4:11 PM Douglas Anderson <dianders@chromium.org> wrote:
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > index 40cb414bc377..dc98a87e2871 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > @@ -616,6 +616,9 @@ qfprom: efuse@784000 {
-> > >
-> > >                 sdhc_1: sdhci@7c4000 {
-> > >                         compatible = "qcom,sc7280-sdhci", "qcom,sdhci-msm-v5";
-> > > +                       pinctrl-names = "default", "sleep";
-> > > +                       pinctrl-0 = <&sdc1_clk>, <&sdc1_cmd>, <&sdc1_data>, <&sdc1_rclk>;
-> > > +                       pinctrl-1 = <&sdc1_clk_sleep>, <&sdc1_cmd_sleep>, <&sdc1_data_sleep>, <&sdc1_rclk_sleep>;
-> > >                         status = "disabled";
-> > >
-> > >                         reg = <0 0x007c4000 0 0x1000>,
-> > > @@ -2425,6 +2428,9 @@ apss_merge_funnel_in: endpoint {
-> > >
-> > >                 sdhc_2: sdhci@8804000 {
-> > >                         compatible = "qcom,sc7280-sdhci", "qcom,sdhci-msm-v5";
-> > > +                       pinctrl-names = "default", "sleep";
-> > > +                       pinctrl-0 = <&sdc2_clk>, <&sdc2_cmd>, <&sdc2_data>;
-> > > +                       pinctrl-1 = <&sdc2_clk_sleep>, <&sdc2_cmd_sleep>, <&sdc2_data_sleep>;
-> > >                         status = "disabled";
-> > >
-> > >                         reg = <0 0x08804000 0 0x1000>;
-> > > @@ -3943,81 +3949,76 @@ qup_uart15_rx: qup-uart15-rx {
-> > >                                 function = "qup17";
-> > >                         };
-> > >
-> > > -                       sdc1_on: sdc1-on {
-> > > -                               clk {
-> > > -                                       pins = "sdc1_clk";
-> > > -                               };
-> > >
-> > > -                               cmd {
-> > > -                                       pins = "sdc1_cmd";
-> > > -                               };
-> > >
-> > > -                               data {
-> > > -                                       pins = "sdc1_data";
-> > > -                               };
-> > > +                       sdc1_clk: sdc1-clk {
-> >
-> > Ugh. I just noticed that there are way too many blank lines here in
-> > the output. Happy to have this fixed when applying or I can post a v2.
-> >
+> I'm curious what part of the DT spec says that we should have the SoC
+> in there? I know I've always done it, but it's always just been
+> following the examples of what was done before. When talking about the
+> root node, I see this in the `devicetree-specification-v0.4-rc1` spec:
 >
-> I can fix that up as I apply it. Will let it sit for a few days to
-> attract reviews first though.
+> ---
+>
+> Specifies a list of platform architectures with which this platform is
+> compatible. This property can be used by operating systems in
+> selecting platform specific code. The recommended form of the property
+> value is: "manufacturer,model"
+>
+> For example:
+> compatible = "fsl,mpc8572ds"
+>
+> ---
+>
+> That doesn't say anything about putting the SoC there.
+>
+>
+> I would also note that I'd be at least moderately inclined to land
+> things as-is and deal with this in a follow-up patch, though I'm happy
+> to spin if that's what people agree upon too. This is not a new
+> problem and so it doesn't seem like it makes sense to glom dealing
+> with it into this patch series...
 
-Sounds good. Thanks! I might end up sending a v2 anyway since I found
-a few more fixups, but I'll at least wait a day or two so I don't spam
-people too hard.
+I noticed that you applied the first 4 patches in the series (thanks!)
+but not this one. Are we waiting to get agreement on this before
+landing? As per above, I think it'd be OK to land as-is and then I'm
+happy to do a follow-up patch to clean this up since this isn't a new
+issue. Having this patch outstanding makes it a little confusing with
+the other cleanup patches that I'm posting... ;-)
+
+Thanks!
 
 -Doug
