@@ -2,127 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 083664A545B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 02:01:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E80C94A546C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 02:04:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231397AbiBABBQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jan 2022 20:01:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41326 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229739AbiBABBP (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jan 2022 20:01:15 -0500
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCFC7C061714
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 17:01:15 -0800 (PST)
-Received: by mail-il1-x131.google.com with SMTP id q11so4802944ild.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 17:01:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SlA+CRxN1+l3Q6yf6tu5cYnYlmBs1/fByPS12U2oI0k=;
-        b=fo/VVwycn1Uqn6OK+5mbn/4uxSczpI91VNZPf/j2vArqlSDljsgEI1EHHuyfyjSt/s
-         S6vfcVpHHnEWCAeJf91hsMXp3U2kbHwBdlt8f65Kyb+ggvAbeNoCRxDxhxzEB7JLJH4L
-         qeoRVkH3OOnE/wXc4ErYDPQnrrubvAd1YRU8M=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SlA+CRxN1+l3Q6yf6tu5cYnYlmBs1/fByPS12U2oI0k=;
-        b=AS2rX+5Ld2VCKdbn6isGjjzXOWUK8/0kJXOc94QQWFsEpxYGYnYc7QB0Gt9O2qZY+s
-         2uGrdw08PdB1c/gXzJ3a9kIWlSgEgQ4kprGqdCy9CI8U9OJsSHrsLagYMaupOgZp+Mas
-         MCuo44DyeQqLhJDL6JGLytEYPrNw6QcZ4MuJX5lH+RC2/gAm6xVUfoTzdK7YbaJWXLar
-         8Mi9PJ+czzFaNa/qKMDTcWr54w3OhN/2+kVasycPvrRIxgL3dMnT5moxEmVft97L504y
-         JsPl7ozfUuBaTB5QuINRVOF32kB409Ww+CF4b8XBlFHHFa9JXJC1A/R3HkjAn983h7Pw
-         eXpg==
-X-Gm-Message-State: AOAM531AvYPXANeD6TTumkxpaEw0HQtoz1S6nYO3AhldZ8LMKt1h2MWB
-        5kD6P9hM3W3ChIs4iktFTe4rKBy7PPwbQw==
-X-Google-Smtp-Source: ABdhPJwV+9Cpyres0NARehqkMtVmEcun7rG3y3PRk9fWqB4FEWqQS3FEM7QAXh/sQ9nN9W6EIWBvfQ==
-X-Received: by 2002:a92:c569:: with SMTP id b9mr13258419ilj.140.1643677275171;
-        Mon, 31 Jan 2022 17:01:15 -0800 (PST)
-Received: from mail-io1-f47.google.com (mail-io1-f47.google.com. [209.85.166.47])
-        by smtp.gmail.com with ESMTPSA id k13sm18769771ili.22.2022.01.31.17.01.14
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 31 Jan 2022 17:01:14 -0800 (PST)
-Received: by mail-io1-f47.google.com with SMTP id 9so19314759iou.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 17:01:14 -0800 (PST)
-X-Received: by 2002:a05:6602:140c:: with SMTP id t12mr12178540iov.177.1643677273820;
- Mon, 31 Jan 2022 17:01:13 -0800 (PST)
+        id S231474AbiBABEI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 31 Jan 2022 20:04:08 -0500
+Received: from mga02.intel.com ([134.134.136.20]:12886 "EHLO mga02.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231382AbiBABEH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 31 Jan 2022 20:04:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1643677447; x=1675213447;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=DXtKer8mna4UgD1qVP9Kb07cnZkz86WOAt0lED8SSyE=;
+  b=fzZJcQ/aLatjeiZMd8y2thLrmBPnr/snQLp4GFk/ggw7uywn9B92NCq7
+   mNJNn+/vp5FQqyFtmuCGwaX2FWMFdAKz1YSYKuYcZIFnEE+f43ULL5LeJ
+   cUWPUlPXXVB+cDh2FrmKw+kuKqi2I4CrzKwbwVTitlLLW3Bzw9YhaV2R7
+   oUmeN8/6M3BQGam6kVyqrHCpS4qB5JDFQ2KMjjTNxRJBawfqDbVXrrgVz
+   gSBCsMQwjy/6lePgQhFdZ6KEblTe1m62g4u4sO+zQhCvwPJLL1HMgpHhH
+   Oe4H2yMxW51k9LGo2WWBHgnyvYb2XxIUoiWh4wlT/JsM91JEaY0qdKi4+
+   Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10244"; a="234989533"
+X-IronPort-AV: E=Sophos;i="5.88,332,1635231600"; 
+   d="scan'208";a="234989533"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Jan 2022 17:04:07 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,332,1635231600"; 
+   d="scan'208";a="599044194"
+Received: from lkp-server01.sh.intel.com (HELO 276f1b88eecb) ([10.239.97.150])
+  by fmsmga004.fm.intel.com with ESMTP; 31 Jan 2022 17:04:04 -0800
+Received: from kbuild by 276f1b88eecb with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1nEhaW-000SXb-88; Tue, 01 Feb 2022 01:04:04 +0000
+Date:   Tue, 1 Feb 2022 09:03:14 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Taniya Das <tdas@codeaurora.org>, Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     kbuild-all@lists.01.org, Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Add lpasscore & lpassaudio
+ clock controllers
+Message-ID: <202202010945.Gqhv3bfz-lkp@intel.com>
+References: <20220131182629.9235-1-tdas@codeaurora.org>
 MIME-Version: 1.0
-References: <20220125224422.544381-1-dianders@chromium.org>
- <20220125144316.v2.5.I5604b7af908e8bbe709ac037a6a8a6ba8a2bfa94@changeid>
- <CAE-0n528Bxdj+DKhi2Lan4qR_=4KHD7A1Zkr15tmu+MchryJ1A@mail.gmail.com>
- <CAD=FV=UcpKaLQ31CGKUnaNnZcYnM4N_t8VC43FPGktoYDiMfsw@mail.gmail.com>
- <YfC5i2jR5N+pmHoZ@ripper> <CAE-0n50sX9-0MxcpF+3Rwqm75jSw5=aNwdsitLwE2sEA69jLJw@mail.gmail.com>
- <YfgRS/UtRn6Ewwhj@builder.lan> <CAD=FV=V=pbmP-wKhAOVRBC0M=YjYm3Ym-022g8uBEZOxKW-8BQ@mail.gmail.com>
-In-Reply-To: <CAD=FV=V=pbmP-wKhAOVRBC0M=YjYm3Ym-022g8uBEZOxKW-8BQ@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 31 Jan 2022 17:01:02 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=WQ0gR18x9rhioLtYGO3oWtny1c52YaiZHUG=PG03d+OQ@mail.gmail.com>
-Message-ID: <CAD=FV=WQ0gR18x9rhioLtYGO3oWtny1c52YaiZHUG=PG03d+OQ@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: sc7280: Add herobrine-r1
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        kgodara@codeaurora.org, Matthias Kaehlcke <mka@chromium.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Prasad Malisetty <pmaliset@codeaurora.org>,
-        quic_rjendra@quicinc.com, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220131182629.9235-1-tdas@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Taniya,
 
-On Mon, Jan 31, 2022 at 8:50 AM Doug Anderson <dianders@chromium.org> wrote:
->
-> > Either we leave it as is - which follows my interpretation of what the DT
-> > spec says - or we (and the DT maitainers) agree that it shouldn't be
-> > there (because this dtb won't run on any random qcom,sc7180 anyways) at
-> > all.
->
-> I'm curious what part of the DT spec says that we should have the SoC
-> in there? I know I've always done it, but it's always just been
-> following the examples of what was done before. When talking about the
-> root node, I see this in the `devicetree-specification-v0.4-rc1` spec:
->
-> ---
->
-> Specifies a list of platform architectures with which this platform is
-> compatible. This property can be used by operating systems in
-> selecting platform specific code. The recommended form of the property
-> value is: "manufacturer,model"
->
-> For example:
-> compatible = "fsl,mpc8572ds"
->
-> ---
->
-> That doesn't say anything about putting the SoC there.
->
->
-> I would also note that I'd be at least moderately inclined to land
-> things as-is and deal with this in a follow-up patch, though I'm happy
-> to spin if that's what people agree upon too. This is not a new
-> problem and so it doesn't seem like it makes sense to glom dealing
-> with it into this patch series...
+Thank you for the patch! Yet something to improve:
 
-I noticed that you applied the first 4 patches in the series (thanks!)
-but not this one. Are we waiting to get agreement on this before
-landing? As per above, I think it'd be OK to land as-is and then I'm
-happy to do a follow-up patch to clean this up since this isn't a new
-issue. Having this patch outstanding makes it a little confusing with
-the other cleanup patches that I'm posting... ;-)
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on v5.17-rc2 next-20220131]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-Thanks!
+url:    https://github.com/0day-ci/linux/commits/Taniya-Das/arm64-dts-qcom-sc7280-Add-lpasscore-lpassaudio-clock-controllers/20220201-022909
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+config: arm64-randconfig-m031-20220131 (https://download.01.org/0day-ci/archive/20220201/202202010945.Gqhv3bfz-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 11.2.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/0day-ci/linux/commit/267104167c342dc01741424eaa26a44754a5c4e9
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Taniya-Das/arm64-dts-qcom-sc7280-Add-lpasscore-lpassaudio-clock-controllers/20220201-022909
+        git checkout 267104167c342dc01741424eaa26a44754a5c4e9
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=arm64 SHELL=/bin/bash
 
--Doug
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All errors (new ones prefixed by >>):
+
+   In file included from arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi:18,
+                    from arch/arm64/boot/dts/qcom/sc7280-herobrine.dts:8:
+>> arch/arm64/boot/dts/qcom/sc7280.dtsi:11:10: fatal error: dt-bindings/clock/qcom,lpassaudiocc-sc7280.h: No such file or directory
+      11 | #include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
+         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   compilation terminated.
+
+
+vim +11 arch/arm64/boot/dts/qcom/sc7280.dtsi
+
+  > 11	#include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
+    12	#include <dt-bindings/clock/qcom,lpasscorecc-sc7280.h>
+    13	#include <dt-bindings/clock/qcom,rpmh.h>
+    14	#include <dt-bindings/clock/qcom,videocc-sc7280.h>
+    15	#include <dt-bindings/interconnect/qcom,sc7280.h>
+    16	#include <dt-bindings/interrupt-controller/arm-gic.h>
+    17	#include <dt-bindings/mailbox/qcom-ipcc.h>
+    18	#include <dt-bindings/power/qcom-rpmpd.h>
+    19	#include <dt-bindings/reset/qcom,sdm845-aoss.h>
+    20	#include <dt-bindings/reset/qcom,sdm845-pdc.h>
+    21	#include <dt-bindings/soc/qcom,rpmh-rsc.h>
+    22	#include <dt-bindings/thermal/thermal.h>
+    23	
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
