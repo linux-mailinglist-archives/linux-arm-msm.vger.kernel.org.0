@@ -2,276 +2,397 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1700E4A5DB1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 14:52:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 73F9F4A5DCF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 14:58:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238909AbiBANwM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Feb 2022 08:52:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44828 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230073AbiBANwM (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Feb 2022 08:52:12 -0500
-Received: from relay11.mail.gandi.net (relay11.mail.gandi.net [IPv6:2001:4b98:dc4:8::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3368AC061714;
-        Tue,  1 Feb 2022 05:52:11 -0800 (PST)
-Received: (Authenticated sender: miquel.raynal@bootlin.com)
-        by mail.gandi.net (Postfix) with ESMTPSA id 64B9B100002;
-        Tue,  1 Feb 2022 13:52:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1643723529;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=9wWj1va3LmxR7uptoK225JjVfSAKX5gP2e5O2jvKmFs=;
-        b=FolHXnBTaVk5XuRbTsW0DHX9gYw9CMcJbrjgFF4wiTfKl2KYiL7HuQbhq7Mi+UDXj6jrPl
-        m4SZGAaMeRPJyg51mND/9QvniCge/K1OBcfJPLVBHrbtWqwxXYrBVltNvhbhPyUQumb6Sj
-        fUkh89Orf94sEUL+u8UBtI5MFRzHhtcQc7fS5/GNJqbeGa5+ZrvKzbJgnhx22Hk8agp20O
-        FeTPGPilihUAJRzFPeZbCyu9Kz9BLq7AshbdfvQdgakW6JGpJ00dnlMzdSi2dCsTxn/TrD
-        g4iipY2XrNCbpMEc4VBMcBcT1IGszN4Vn6x0Q9XaC8+FGNrKp/XZC6KPr/vJUg==
-Date:   Tue, 1 Feb 2022 14:52:04 +0100
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Sricharan Ramabadhran <sricharan@codeaurora.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        pragalla@codeaurora.org, ~postmarketos/upstreaming@lists.sr.ht,
-        martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mdalam@codeaurora.org
-Subject: Re: [PATCH] mtd: nand: raw: qcom_nandc: Don't clear_bam_transaction
- on READID
-Message-ID: <20220201145204.54646475@xps13>
-In-Reply-To: <12cad24a-fa2f-9a82-cf43-241a0a6fe4f6@somainline.org>
-References: <20220113184427.2259509-1-konrad.dybcio@somainline.org>
-        <20220114082718.32a2fc83@xps13>
-        <20220126111613.3ab0021e@xps13>
-        <20220126103316.GA212068@thinkpad>
-        <20220126114200.4cc3c21b@xps13>
-        <fc80a6e7-bd44-3b3e-fca2-1316a76d65f5@codeaurora.org>
-        <a6fcc533-e7cd-7b55-4db0-cec80c07b46a@codeaurora.org>
-        <0a8d6550-aa19-0af1-abae-66bf34c91ea8@somainline.org>
-        <be779ed9-bd80-8f01-fe7f-d3c07d3d85aa@codeaurora.org>
-        <12cad24a-fa2f-9a82-cf43-241a0a6fe4f6@somainline.org>
-Organization: Bootlin
-X-Mailer: Claws Mail 3.17.7 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+        id S236698AbiBAN6M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Feb 2022 08:58:12 -0500
+Received: from mga18.intel.com ([134.134.136.126]:29463 "EHLO mga18.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238944AbiBAN6L (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 1 Feb 2022 08:58:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1643723891; x=1675259891;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=N1Wj4JqGEB+t2Hm7DHcv9uJSdSws/ihk/GCT0t1ds5E=;
+  b=hnE9+8aStI36g7PDx/bMJf2dtJwmNZXcSpLxro17iAkigPOQaOJ227oP
+   xx8wEXBdvXzVRg4BKCEmqKMrIG3BPJIyODYQylO4xvUcHFFVtxjGVVdeo
+   Ri+cY1Nae5H7B+fCtQ/AG2tEw1VXPDAClQs2Eo6UJUWz92TT53vMs7lRv
+   TYRARYGagOWWg2LsQKauzml8cZe34JZOmS0pcY3xOUH/NOhuH5FJTD/re
+   a0nu2XRxFaeY4hPhpeXNPCkhad8nr8Cd7WsW65YtwMArB3JesPYaI3FOv
+   TQHEs9T7DUGbpZqujQpnGUCDe1cFPyGKqWmSC9v0PCFfSvzyjahM7/V2v
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10244"; a="231263906"
+X-IronPort-AV: E=Sophos;i="5.88,334,1635231600"; 
+   d="scan'208";a="231263906"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2022 05:58:11 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,334,1635231600"; 
+   d="scan'208";a="523056720"
+Received: from ahunter-desktop.fi.intel.com (HELO [10.237.72.92]) ([10.237.72.92])
+  by orsmga007.jf.intel.com with ESMTP; 01 Feb 2022 05:58:06 -0800
+Subject: Re: [PATCH V3 1/4] mmc: sdhci: Capture eMMC and SD card errors
+To:     "Sajida Bhanu (Temp)" <c_sbhanu@qti.qualcomm.com>,
+        "Sajida Bhanu (Temp) (QUIC)" <quic_c_sbhanu@quicinc.com>,
+        "Asutosh Das (QUIC)" <quic_asutoshd@quicinc.com>,
+        "ulf.hansson@linaro.org" <ulf.hansson@linaro.org>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Cc:     "stummala@codeaurora.org" <stummala@codeaurora.org>,
+        "vbadigan@codeaurora.org" <vbadigan@codeaurora.org>,
+        "Ram Prakash Gupta (QUIC)" <quic_rampraka@quicinc.com>,
+        "Pradeep Pragallapati (QUIC)" <quic_pragalla@quicinc.com>,
+        "sartgarg@codeaurora.org" <sartgarg@codeaurora.org>,
+        "nitirawa@codeaurora.org" <nitirawa@codeaurora.org>,
+        "sayalil@codeaurora.org" <sayalil@codeaurora.org>,
+        Liangliang Lu <luliang@codeaurora.org>,
+        "Bao D . Nguyen" <nguyenb@codeaurora.org>
+References: <1642699582-14785-1-git-send-email-quic_c_sbhanu@quicinc.com>
+ <1642699582-14785-2-git-send-email-quic_c_sbhanu@quicinc.com>
+ <b28d2d19-b8fb-c58b-f661-6b5f0760b1a4@intel.com>
+ <SJ0PR02MB844953E6B8E29BCDCC6222ACCD5F9@SJ0PR02MB8449.namprd02.prod.outlook.com>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+Message-ID: <a999067d-3723-1c9b-ed7e-91cd4856b7ee@intel.com>
+Date:   Tue, 1 Feb 2022 15:58:05 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Firefox/78.0 Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <SJ0PR02MB844953E6B8E29BCDCC6222ACCD5F9@SJ0PR02MB8449.namprd02.prod.outlook.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
+On 25/01/2022 20:17, Sajida Bhanu (Temp) wrote:
+> Hi,
+> 
+> Thanks for  the Review.
+> 
+> Please find the inline comments.
+> 
+> Thanks,
+> Sajida
+> 
+> -----Original Message-----
+> From: Adrian Hunter <adrian.hunter@intel.com> 
+> Sent: Friday, January 21, 2022 12:38 PM
+> To: Sajida Bhanu (Temp) (QUIC) <quic_c_sbhanu@quicinc.com>; Asutosh Das (QUIC) <quic_asutoshd@quicinc.com>; ulf.hansson@linaro.org; agross@kernel.org; bjorn.andersson@linaro.org; linux-mmc@vger.kernel.org; linux-arm-msm@vger.kernel.org; linux-kernel@vger.kernel.org
+> Cc: stummala@codeaurora.org; vbadigan@codeaurora.org; Ram Prakash Gupta (QUIC) <quic_rampraka@quicinc.com>; Pradeep Pragallapati (QUIC) <quic_pragalla@quicinc.com>; sartgarg@codeaurora.org; nitirawa@codeaurora.org; sayalil@codeaurora.org; Liangliang Lu <luliang@codeaurora.org>; Bao D . Nguyen <nguyenb@codeaurora.org>
+> Subject: Re: [PATCH V3 1/4] mmc: sdhci: Capture eMMC and SD card errors
+> 
+> On 20/01/2022 19:26, Shaik Sajida Bhanu wrote:
+>> Add changes to capture eMMC and SD card errors.
+>> This is useful for debug and testing.
+>>
+>> Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+>> Signed-off-by: Liangliang Lu <luliang@codeaurora.org>
+>> Signed-off-by: Sayali Lokhande <sayalil@codeaurora.org>
+>> Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
+>> ---
+>>  drivers/mmc/host/sdhci-msm.c |  3 ++
+>>  drivers/mmc/host/sdhci.c     | 72 ++++++++++++++++++++++++++++++++++++--------
+>>  include/linux/mmc/host.h     | 31 +++++++++++++++++++
+>>  3 files changed, 94 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/drivers/mmc/host/sdhci-msm.c 
+>> b/drivers/mmc/host/sdhci-msm.c index 50c71e0..309eb7b 100644
+>> --- a/drivers/mmc/host/sdhci-msm.c
+>> +++ b/drivers/mmc/host/sdhci-msm.c
+>> @@ -128,6 +128,8 @@
+>>  
+>>  #define MSM_MMC_AUTOSUSPEND_DELAY_MS	50
+>>  
+>> +#define MSM_MMC_ERR_STATS_ENABLE 1
+>> +
+>>  /* Timeout value to avoid infinite waiting for pwr_irq */  #define 
+>> MSM_PWR_IRQ_TIMEOUT_MS 5000
+>>  
+>> @@ -2734,6 +2736,7 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>>  	if (ret)
+>>  		goto pm_runtime_disable;
+>>  
+>> +	host->mmc->err_stats_enabled = MSM_MMC_ERR_STATS_ENABLE;
+> 
+> Please remove this. SDHCI will enable error stats.
+> 
+>>>>>>> Sure.
+> 
+>>  	pm_runtime_mark_last_busy(&pdev->dev);
+>>  	pm_runtime_put_autosuspend(&pdev->dev);
+>>  
+>> diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c index 
+>> 07c6da1..74b356e 100644
+>> --- a/drivers/mmc/host/sdhci.c
+>> +++ b/drivers/mmc/host/sdhci.c
+>> @@ -113,6 +113,8 @@ void sdhci_dumpregs(struct sdhci_host *host)
+>>  	if (host->ops->dump_vendor_regs)
+>>  		host->ops->dump_vendor_regs(host);
+>>  
+>> +	if (host->mmc->err_stats_enabled)
+>> +		mmc_debugfs_err_stats_enable(host->mmc);
+> 
+> Please move this to sdhci_setup_host() and call it unconditionally i.e. just
+> 
+> 	mmc_debugfs_err_stats_enable(host->mmc);
+> 
+> 
+>>>>>>>> mmc_debugfs_err_stats_enable() will set err_state , that means some errors occurred in driver level.
+> If we move this call to sdhci_setup_host(), then it will set if no errors also right?
 
-konrad.dybcio@somainline.org wrote on Mon, 31 Jan 2022 20:54:12 +0100:
+Then it seems like you want to set err_state = true in mmc_debugfs_err_stats_inc()
 
-> On 31/01/2022 15:13, Sricharan Ramabadhran wrote:
-> > Hi Konrad,
-> >
-> > On 1/31/2022 3:39 PM, Konrad Dybcio wrote: =20
-> >>
-> >> On 28/01/2022 18:50, Sricharan Ramabadhran wrote: =20
-> >>> Hi Konrad,
-> >>>
-> >>> On 1/28/2022 9:55 AM, Sricharan Ramabadhran wrote: =20
-> >>>> Hi Miquel,
-> >>>>
-> >>>> On 1/26/2022 4:12 PM, Miquel Raynal wrote: =20
-> >>>>> Hi Mani,
-> >>>>>
-> >>>>> mani@kernel.org wrote on Wed, 26 Jan 2022 16:03:16 +0530:
-> >>>>> =20
-> >>>>>> On Wed, Jan 26, 2022 at 11:16:13AM +0100, Miquel Raynal wrote: =20
-> >>>>>>> Hello,
-> >>>>>>>
-> >>>>>>> miquel.raynal@bootlin.com wrote on Fri, 14 Jan 2022 08:27:18 +010=
-0: =20
-> >>>>>>>> Hi Konrad,
-> >>>>>>>>
-> >>>>>>>> konrad.dybcio@somainline.org wrote on Thu, 13 Jan 2022 19:44:26 =
->>>>>>>> +0100: =20
-> >>>>>>>>> While I have absolutely 0 idea why and how, running >>>>>>>>> c=
-lear_bam_transaction
-> >>>>>>>>> when READID is issued makes the DMA totally clog up and refuse =
->>>>>>>>> to function
-> >>>>>>>>> at all on mdm9607. In fact, it is so bad that all the data >>>>=
->>>>> gets garbled
-> >>>>>>>>> and after a short while in the nand probe flow, the CPU >>>>>>>=
->> decides that
-> >>>>>>>>> sepuku is the only option.
-> >>>>>>>>>
-> >>>>>>>>> Removing _READID from the if condition makes it work like a >>>=
->>>>>> charm, I can
-> >>>>>>>>> read data and mount partitions without a problem.
-> >>>>>>>>>
-> >>>>>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> >>>>>>>>> ---
-> >>>>>>>>> This is totally just an observation which took me an inhumane >=
->>>>>>>> amount of
-> >>>>>>>>> debug prints to find.. perhaps there's a better reason behind >=
->>>>>>>> this, but
-> >>>>>>>>> I can't seem to find any answers.. Therefore, this is a BIG RFC=
-! =20
-> >>>>>>>> I'm adding two people from codeaurora who worked a lot on this >=
->>>>>>> driver.
-> >>>>>>>> Hopefully they will have an idea :) =20
-> >>>>>>> Sadre, I've spent a significant amount of time reviewing your >>>=
->>>> patches,
-> >>>>>>> now it's your turn to not take a month to answer to your peers
-> >>>>>>> proposals.
-> >>>>>>>
-> >>>>>>> Please help reviewing this patch. =20
-> >>>>>> Sorry. I was hoping that Qcom folks would chime in as I don't >>>>=
->> have any idea
-> >>>>>> about the mdm9607 platform. It could be that the mail server >>>>>=
-> migration from
-> >>>>>> codeaurora to quicinc put a barrier here.
-> >>>>>>
-> >>>>>> Let me ping them internally. =20
-> >>>>> Oh, ok, I didn't know. Thanks! =20
-> >>>>
-> >>>> =C2=A0=C2=A0 Sorry Miquel, somehow we did not get this email in our =
-inbox.
-> >>>> =C2=A0=C2=A0 Thanks to Mani for pinging us, we will test this up tod=
-ay and >>>> get back.
-> >>>> =20
-> >>> =C2=A0 =C2=A0 =C2=A0 While we could not reproduce this issue on our i=
-pq boards (do >>> not have a mdm9607 right now) and
-> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 issue does not look any obvious.
-> >>> =C2=A0 =C2=A0 =C2=A0 can you please give the debug logs that you did =
-for the above >>> stage by stage ? =20
-> >>
-> >> I won't have access to the board for about two weeks, sorry.
-> >>
-> >> When I get to it, I'll surely try to send you the logs, though there
-> >>
-> >> wasn't much more than just something jumping to who-knows-where
-> >>
-> >> after clear_bam_transaction was called, resulting in values >> associa=
-ted with
-> >>
-> >> the NAND being all zeroed out in pr_err/_debug/etc.
-> >>
-> >> =20
-> > =C2=A0=C2=A0=C2=A0 Ok sure. So was the READID command itself failing (o=
-r) the > subsequent one ?
-> > =C2=A0=C2=A0 We can check which parameter reset by the clear_bam_transa=
-ction is > causing the
-> > =C2=A0=C2=A0 failure.=C2=A0 Meanwhile, looping in Pradeep who has acces=
-s to the > board, so in a better
-> > =C2=A0=C2=A0 position to debug. =20
->=20
-> I'm sorry I have so few details on hand, and no kernel tree (no access to=
- that machine either, for now).
->=20
->=20
-> I will try to describe to the best of my abilities what I recall.
->=20
->=20
-> My methodology of making sure things don't go haywire was to print the oo=
-b size
->=20
-> of our NAND basically every two lines of code (yes, i was very desperate =
-at one point),
->=20
-> as that was zeroed out when *the bug* happened,
+> 
+> 
+>>  	SDHCI_DUMP("============================================\n");
+>>  }
+>>  EXPORT_SYMBOL_GPL(sdhci_dumpregs);
+>> @@ -3159,6 +3161,8 @@ static void sdhci_timeout_timer(struct timer_list *t)
+>>  	spin_lock_irqsave(&host->lock, flags);
+>>  
+>>  	if (host->cmd && !sdhci_data_line_cmd(host->cmd)) {
+>> +		if (host->mmc && host->mmc->err_stats_enabled)
+>> +			mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_REQ_TIMEOUT);
+> 
+> Please remove the 'if ()', i.e. just make it, unconditionally:
+> 
+> 		mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_REQ_TIMEOUT);
+> 
+> Same for other calls to mmc_debugfs_err_stats_inc()
+> 
+>>>>>>>>> Sure.
+> 
+>>  		pr_err("%s: Timeout waiting for hardware cmd interrupt.\n",
+>>  		       mmc_hostname(host->mmc));
+>>  		sdhci_dumpregs(host);
+>> @@ -3181,6 +3185,8 @@ static void sdhci_timeout_data_timer(struct 
+>> timer_list *t)
+>>  
+>>  	if (host->data || host->data_cmd ||
+>>  	    (host->cmd && sdhci_data_line_cmd(host->cmd))) {
+>> +		if (host->mmc && host->mmc->err_stats_enabled)
+>> +			mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_REQ_TIMEOUT);
+>>  		pr_err("%s: Timeout waiting for hardware interrupt.\n",
+>>  		       mmc_hostname(host->mmc));
+>>  		sdhci_dumpregs(host);
+>> @@ -3240,11 +3246,18 @@ static void sdhci_cmd_irq(struct sdhci_host 
+>> *host, u32 intmask, u32 *intmask_p)
+>>  
+>>  	if (intmask & (SDHCI_INT_TIMEOUT | SDHCI_INT_CRC |
+>>  		       SDHCI_INT_END_BIT | SDHCI_INT_INDEX)) {
+>> -		if (intmask & SDHCI_INT_TIMEOUT)
+>> +		if (intmask & SDHCI_INT_TIMEOUT) {
+>>  			host->cmd->error = -ETIMEDOUT;
+>> -		else
+>> +			if (host->mmc && host->mmc->err_stats_enabled)
+>> +				mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_CMD_TIMEOUT);
+>> +		} else {
+>>  			host->cmd->error = -EILSEQ;
+>> -
+>> +			if (host->cmd->opcode != MMC_SEND_TUNING_BLOCK ||
+>> +					host->cmd->opcode != MMC_SEND_TUNING_BLOCK_HS200) {
+>> +				if (host->mmc && host->mmc->err_stats_enabled)
+>> +					mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_CMD_CRC);
+>> +			}
+>> +		}
+>>  		/* Treat data command CRC error the same as data CRC error */
+>>  		if (host->cmd->data &&
+>>  		    (intmask & (SDHCI_INT_CRC | SDHCI_INT_TIMEOUT)) == @@ -3265,6 
+>> +3278,8 @@ static void sdhci_cmd_irq(struct sdhci_host *host, u32 intmask, u32 *intmask_p)
+>>  		int err = (auto_cmd_status & SDHCI_AUTO_CMD_TIMEOUT) ?
+>>  			  -ETIMEDOUT :
+>>  			  -EILSEQ;
+>> +		if (host->mmc && host->mmc->err_stats_enabled)
+>> +			mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_AUTO_CMD);
+>>  
+>>  		if (sdhci_auto_cmd23(host, mrq)) {
+>>  			mrq->sbc->error = err;
+>> @@ -3342,6 +3357,8 @@ static void sdhci_data_irq(struct sdhci_host *host, u32 intmask)
+>>  			if (intmask & SDHCI_INT_DATA_TIMEOUT) {
+>>  				host->data_cmd = NULL;
+>>  				data_cmd->error = -ETIMEDOUT;
+>> +				if (host->mmc && host->mmc->err_stats_enabled)
+>> +					mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_CMD_TIMEOUT);
+>>  				__sdhci_finish_mrq(host, data_cmd->mrq);
+>>  				return;
+>>  			}
+>> @@ -3375,18 +3392,29 @@ static void sdhci_data_irq(struct sdhci_host *host, u32 intmask)
+>>  		return;
+>>  	}
+>>  
+>> -	if (intmask & SDHCI_INT_DATA_TIMEOUT)
+>> +	if (intmask & SDHCI_INT_DATA_TIMEOUT) {
+>>  		host->data->error = -ETIMEDOUT;
+>> +		if (host->mmc && host->mmc->err_stats_enabled)
+>> +			mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_DAT_TIMEOUT);
+>> +	}
+>>  	else if (intmask & SDHCI_INT_DATA_END_BIT)
+>>  		host->data->error = -EILSEQ;
+>>  	else if ((intmask & SDHCI_INT_DATA_CRC) &&
+>>  		SDHCI_GET_CMD(sdhci_readw(host, SDHCI_COMMAND))
+>> -			!= MMC_BUS_TEST_R)
+>> +			!= MMC_BUS_TEST_R) {
+>>  		host->data->error = -EILSEQ;
+>> +		if (host->cmd->opcode != MMC_SEND_TUNING_BLOCK ||
+>> +				host->cmd->opcode != MMC_SEND_TUNING_BLOCK_HS200) {
+>> +			if (host->mmc && host->mmc->err_stats_enabled)
+>> +				mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_DAT_CRC);
+>> +		}
+>> +	}
+>>  	else if (intmask & SDHCI_INT_ADMA_ERROR) {
+>>  		pr_err("%s: ADMA error: 0x%08x\n", mmc_hostname(host->mmc),
+>>  		       intmask);
+>>  		sdhci_adma_show_error(host);
+>> +		if (host->mmc && host->mmc->err_stats_enabled)
+>> +			mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_ADMA);
+>>  		host->data->error = -EIO;
+>>  		if (host->ops->adma_workaround)
+>>  			host->ops->adma_workaround(host, intmask); @@ -3905,20 +3933,40 @@ 
+>> bool sdhci_cqe_irq(struct sdhci_host *host, u32 intmask, int *cmd_error,
+>>  	if (!host->cqe_on)
+>>  		return false;
+>>  
+>> -	if (intmask & (SDHCI_INT_INDEX | SDHCI_INT_END_BIT | SDHCI_INT_CRC))
+>> +	if (intmask & (SDHCI_INT_INDEX | SDHCI_INT_END_BIT | SDHCI_INT_CRC)) 
+>> +{
+>>  		*cmd_error = -EILSEQ;
+>> -	else if (intmask & SDHCI_INT_TIMEOUT)
+>> +		if (intmask & SDHCI_INT_CRC) {
+>> +			if (host->cmd->opcode != MMC_SEND_TUNING_BLOCK ||
+>> +					host->cmd->opcode != MMC_SEND_TUNING_BLOCK_HS200) {
+>> +				if (host->mmc && host->mmc->err_stats_enabled)
+>> +					mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_CMD_CRC);
+>> +			}
+>> +		}
+>> +	} else if (intmask & SDHCI_INT_TIMEOUT) {
+>>  		*cmd_error = -ETIMEDOUT;
+>> -	else
+>> +		if (host->mmc && host->mmc->err_stats_enabled)
+>> +			mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_CMD_TIMEOUT);
+>> +	} else
+>>  		*cmd_error = 0;
+>>  
+>> -	if (intmask & (SDHCI_INT_DATA_END_BIT | SDHCI_INT_DATA_CRC))
+>> +	if (intmask & (SDHCI_INT_DATA_END_BIT | SDHCI_INT_DATA_CRC)) {
+>>  		*data_error = -EILSEQ;
+>> -	else if (intmask & SDHCI_INT_DATA_TIMEOUT)
+>> +		if (intmask & SDHCI_INT_DATA_CRC) {
+>> +			if (host->cmd->opcode != MMC_SEND_TUNING_BLOCK ||
+>> +					host->cmd->opcode != MMC_SEND_TUNING_BLOCK_HS200) {
+>> +				if (host->mmc && host->mmc->err_stats_enabled)
+>> +					mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_DAT_CRC);
+>> +			}
+>> +		}
+>> +	} else if (intmask & SDHCI_INT_DATA_TIMEOUT) {
+>>  		*data_error = -ETIMEDOUT;
+>> -	else if (intmask & SDHCI_INT_ADMA_ERROR)
+>> +		if (host->mmc && host->mmc->err_stats_enabled)
+>> +			mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_DAT_TIMEOUT);
+>> +	} else if (intmask & SDHCI_INT_ADMA_ERROR) {
+>>  		*data_error = -EIO;
+>> -	else
+>> +		if (host->mmc && host->mmc->err_stats_enabled)
+>> +			mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_ADMA);
+>> +	} else
+>>  		*data_error = 0;
+>>  
+>>  	/* Clear selected interrupts. */
+>> diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
+> 
+> Changes to host.h are core changes and belong in patch 3, which should be the first patch.
+> 
+>>>>>> Sure.
+> 
+>> index 7afb57c..883b50b 100644
+>> --- a/include/linux/mmc/host.h
+>> +++ b/include/linux/mmc/host.h
+>> @@ -93,6 +93,23 @@ struct mmc_clk_phase_map {
+>>  
+>>  struct mmc_host;
+>>  
+>> +enum mmc_err_stat {
+>> +	MMC_ERR_CMD_TIMEOUT,
+>> +	MMC_ERR_CMD_CRC,
+>> +	MMC_ERR_DAT_TIMEOUT,
+>> +	MMC_ERR_DAT_CRC,
+>> +	MMC_ERR_AUTO_CMD,
+>> +	MMC_ERR_ADMA,
+>> +	MMC_ERR_TUNING,
+>> +	MMC_ERR_CMDQ_RED,
+>> +	MMC_ERR_CMDQ_GCE,
+>> +	MMC_ERR_CMDQ_ICCE,
+>> +	MMC_ERR_REQ_TIMEOUT,
+>> +	MMC_ERR_CMDQ_REQ_TIMEOUT,
+>> +	MMC_ERR_ICE_CFG,
+>> +	MMC_ERR_MAX,
+>> +};
+>> +
+>>  struct mmc_host_ops {
+>>  	/*
+>>  	 * It is optional for the host to implement pre_req and post_req in 
+>> @@ -500,6 +517,9 @@ struct mmc_host {
+>>  
+>>  	/* Host Software Queue support */
+>>  	bool			hsq_enabled;
+>> +	u32                     err_stats[MMC_ERR_MAX];
+>> +	bool 			err_stats_enabled;
+>> +	bool			err_state;
+> 
+> Please drop err_state for now
+> 
+>>>>>>>> first we can check this variable right,  if it is set then we can go and check err_stats[] to know more on type of error (data /cmd timeout or CRC errors etc.).
+> Please let me know your opinion on this.
 
-This does look like a pointer error at some point and some kernel data
-has been corrupted very badly by the driver.
+As I wrote above, you could set err_state in mmc_debugfs_err_stats_inc().
+But maybe make the err_state addition a separate patch so it is easy to see how it works.
 
-> leading to a kernel bug/panic/stall
->=20
-> (can't recall what exactly it was, but it said something along the lines =
-of "no support for
->=20
-> oob size 0" and then it didn't fail graceully, leading to some bad jumps =
-and ultimately
->=20
-> a dead platform..)
->=20
->=20
-> after hours of digging, I found out that everything goes fine until clear=
-_bam_transaction is called,
+> 
+>>  
+>>  	unsigned long		private[] ____cacheline_aligned;
+>>  };
+>> @@ -635,6 +655,17 @@ static inline enum dma_data_direction mmc_get_dma_dir(struct mmc_data *data)
+>>  	return data->flags & MMC_DATA_WRITE ? DMA_TO_DEVICE : 
+>> DMA_FROM_DEVICE;  }
+>>  
+>> +static inline void mmc_debugfs_err_stats_enable(struct mmc_host *mmc)
+> 
+> Please use 'host' as the mmc_host parameter in this file.
+> 
+>> +{
+>> +	mmc->err_state = true;
+> 
+> Let's make this:
+> 
+> 	host->err_stats_enabled = true;
+> 
+>>>>>>> Sure.
+> 
+>> +}
+>> +
+>> +static inline void mmc_debugfs_err_stats_inc(struct mmc_host *mmc,
+>> +		enum mmc_err_stat stat) {
+>> +
+> 
+> Please remove blank line here
+> 
+>>>>>>> sure.
+> 
+>> +	mmc->err_stats[stat] += 1;
+>> +}
+>> +
+>>  int mmc_send_tuning(struct mmc_host *host, u32 opcode, int 
+>> *cmd_error);  int mmc_send_abort_tuning(struct mmc_host *host, u32 
+>> opcode);  int mmc_get_ext_csd(struct mmc_card *card, u8 
+>> **new_ext_csd);
+>>
+> 
 
-Do you remember if this function was called for the first time when
-this happened?
-
-> after that gets executed every nand op starts reading all zeroes (for exa=
-mple in JEDEC ID check)
->=20
-> so I added the changes from this patch, and things magically started work=
-ing... My suspicion is
->=20
-> that the underlying FIFO isn't fully drained (is it a FIFO on 9607? bah, =
-i work on too many socs at once)
-
-I don't see it in the list of supported devices, what's the exact
-compatible used?
-
->=20
-> and this function only makes Linux think it is, without actually draining=
- it, and the leftover
->=20
-> commands get executed with some parts of them getting overwritten, result=
-ing in the
->=20
-> famous garbage in - garbage out situation, but that's only a guesstimate..
-
-I would bet for a non allocated bam-ish pointer that is reset to zero
-in the clear_bam_transaction() helper.
-
-Can you get your hands on the board again?
-It would be nice to check if the allocation always occurs before use,
-and if yes on how much bytes.
-
-If the pointer is not dangling, then perhaps something else smashes
-that pointer.
-
-> Do note this somehow worked fine on 5.11 and then broke on 5.12/13. I wen=
-t as far as replacing most
->=20
-> of the kernel with the updated/downgraded parts via git checkout (i tried=
- many combinations),
->=20
-> to no avail.. I even tried different compilers and optimization levels, t=
-hinking it could have been
->=20
-> a codegen issue, but no luck either.
->=20
->=20
-> I.. do understand this email is a total mess to read, as much as it was t=
-o write, but
->=20
-> without access to my code and the machine itself I can't give you solid d=
-etails, and
->=20
-> the fact this situation is far from ordinary doesn't help either..
->=20
->=20
-> The latest (ancient, not quite pretty, but probably working if my memory =
-is correct) version of my patches
->=20
-> for the mdm9607 is available at [1], I will push the new revision after I=
- get access to the workstation.
->=20
->=20
-> Konrad
->=20
->=20
-> [1] https://github.com/SoMainline/linux/commits/konrad/pinemodem
->=20
->=20
-> >
-> > Regards,
-> > =C2=A0=C2=A0 Sricharan
-> >
-> > =20
-
-
-Thanks,
-Miqu=C3=A8l
