@@ -2,149 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 132AA4A55F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 05:44:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0422F4A561D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 06:20:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233478AbiBAEof (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 31 Jan 2022 23:44:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34422 "EHLO
+        id S233593AbiBAFUJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Feb 2022 00:20:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233374AbiBAEof (ORCPT
+        with ESMTP id S233587AbiBAFUI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 31 Jan 2022 23:44:35 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A7D7C061714;
-        Mon, 31 Jan 2022 20:44:34 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id E59E8B80A7C;
-        Tue,  1 Feb 2022 04:44:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23D7C340EB;
-        Tue,  1 Feb 2022 04:44:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1643690670;
-        bh=nrMXWuujMeQBDV3WKZ86xto16v8xlNe9fQ6nEAIm2VM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=gnna0Mb8c4E+SEqqZL8RoUSDY8zegDOLlcK7bDKuN3vDBAmMBShJbnLdN9ffXIMVm
-         KKUuuXY6isCxvip+r3+rRkmErgBGOcbu5VfpPNe2anjVFUmKDmCExrcECPEUOmwVu3
-         piBW26I2/J1DgkLzaVp03tFyCZmf7vW4QTZS6RxDqecwzGmLDaJ4Y42wNdz7AUwZBF
-         7RaKeLDcjYMqnSQos72vTjGcisLn+rl3ayf46lHEVuOgK2UQ/fd6vcLLpUrMbST3Ba
-         g2Z/WtkKBnhAkLN7syjAv5U0MuA65joX/y1z4cQ9JMyvE/9YvSXKSmx2CseJqbXuqp
-         wv2ns7ZkygTxQ==
-Date:   Tue, 1 Feb 2022 10:14:26 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [RFD]: Solving qcom unique unit address warnings
-Message-ID: <Yfi6qiPBvURTeKEW@matsya>
-References: <YerolYU7Ih3GW/zP@matsya>
+        Tue, 1 Feb 2022 00:20:08 -0500
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B9DAC06173D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 21:20:08 -0800 (PST)
+Received: by mail-oi1-x234.google.com with SMTP id m10so6177206oie.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 21:20:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=6CQJAF3aH8lfYp0bzeYY2RdYRUlGfNg+KYmMYRTkV0k=;
+        b=rFVwUYojxyqvXvc5rNwUP/lfl9p/kHDEVH/cvgJgyFk1aC4SRuyeV4EdeJtuvd6ZP+
+         yUAHSe4TzfylK9fWLCOVoy/AdREuTD/CdmZQAeNCldFw+WCYqgLrORlLAqSXhx8KW7X6
+         kvuFXnBVsFIAoHaK2kf98Ibmen+fKWOrhPCb/6+iceJZuIo5rPsMhnzoEekobpheW+f7
+         vYw3C5tu/JJy0tysMj/YrEbG+kpWTU2yP/kOuKUd7omUAyRJUhMf3c5hLa7yov2xbT1L
+         unRPH9+0IvnO+SXfMPayFHlBijib5HLF84gJ9Y2yHAjGsAvGoTenM7cGEe0aE7cizSH3
+         92jQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=6CQJAF3aH8lfYp0bzeYY2RdYRUlGfNg+KYmMYRTkV0k=;
+        b=OUaZ5g9wgjv08aXPUcof077KXEgu2ntkH2ZhvyaK9uZlPWEZDE69IsA8D4JhlY52t0
+         S8AI+65/BzpaVSisDghE5LECPEXVYTaNGcqGSCsffXI5alneOw1cxsplQRkqqrDl42F6
+         CmGmtVqIzsv0zT0zmzBjrhOo1ASTQfWzGnsV/L9Ga8/CCYWxfn4mGiLZycNyY/OWiKfj
+         szc8RgERhAJ262runUO1YSV16FB27x+o5AvbE7oQzJfqPjng2Eb7FuUGBaPB3VClyAPK
+         n32mxKVF/xl3RuDQKRRV0aLyQMaITQM7XF0AdZfPtUUDcNNeFXcp/pzDPYGSsNMsO0aI
+         RF0w==
+X-Gm-Message-State: AOAM532v82I3uOGkXiZUY1NZfX4rYhdBqJ2FM0K2xFS7yQU808d1aVqb
+        B+sQos18EDpALW77/fd2+xEXfQ==
+X-Google-Smtp-Source: ABdhPJyC9U0WiH8CSSZ1X2nXwzcRTvjRdIQZkk+hMsplJkvyZfcMtIktmhvB/7/YqzLSH3QBcKkuog==
+X-Received: by 2002:aca:398a:: with SMTP id g132mr203059oia.207.1643692807848;
+        Mon, 31 Jan 2022 21:20:07 -0800 (PST)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id u3sm8193107ooh.19.2022.01.31.21.20.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Jan 2022 21:20:07 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Felipe Balbi <balbi@kernel.org>, Andy Gross <agross@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Felipe Balbi <felipe.balbi@microsoft.com>
+Subject: Re: (subset) [PATCH] arm64: boot: dts: qcom: sm8150: add i2c and spi dma channels
+Date:   Mon, 31 Jan 2022 23:19:17 -0600
+Message-Id: <164369277343.3095904.415765092006433725.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20211216124348.370059-1-balbi@kernel.org>
+References: <20211216124348.370059-1-balbi@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YerolYU7Ih3GW/zP@matsya>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21-01-22, 22:38, Vinod Koul wrote:
-> Hi Rob,
+On Thu, 16 Dec 2021 14:43:48 +0200, Felipe Balbi wrote:
+> From: Felipe Balbi <felipe.balbi@microsoft.com>
+> 
+> By listing relevant DMA channels for the various QUPv3 instances, we
+> can work on adding support for DMA to the respective drivers.
+> 
+> 
 
-Any guidance on how to resolve this...?
+Applied, thanks!
 
-> 
-> On all Qualcomm SoCs there exists QUP serial engine. These engines are
-> loaded with a firmware by bootloader and can support a specific protocol
-> like I2C/SPI/uart etc.
-> 
-> Since the serial engine can support different protocols we end up
-> describing all the supported ones for this, as illustrated below from
-> sdm845 dts upstream:
-> 
-> 		qupv3_id_0: geniqup@8c0000 {
-> 			compatible = "qcom,geni-se-qup";
-> 			reg = <0 0x008c0000 0 0x6000>;
-> 			clock-names = "m-ahb", "s-ahb";
-> 			clocks = <&gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
-> 				 <&gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
-> 			iommus = <&apps_smmu 0x3 0x0>;
-> 			#address-cells = <2>;
-> 			#size-cells = <2>;
-> 			ranges;
-> 			interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>;
-> 			interconnect-names = "qup-core";
-> 			status = "disabled";
-> 
-> 			i2c0: i2c@880000 {
-> 				compatible = "qcom,geni-i2c";
-> 				reg = <0 0x00880000 0 0x4000>;
-> 				clock-names = "se";
-> 				clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
-> 				pinctrl-names = "default";
-> 				pinctrl-0 = <&qup_i2c0_default>;
-> 				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
-> 				#address-cells = <1>;
-> 				#size-cells = <0>;
-> 				power-domains = <&rpmhpd SDM845_CX>;
-> 				operating-points-v2 = <&qup_opp_table>;
-> 				interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>,
-> 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>,
-> 						<&aggre1_noc MASTER_QUP_1 0 &mem_noc SLAVE_EBI1 0>;
-> 				interconnect-names = "qup-core", "qup-config", "qup-memory";
-> 				status = "disabled";
-> 			};
-> 
-> 			spi0: spi@880000 {
-> 				compatible = "qcom,geni-spi";
-> 				reg = <0 0x00880000 0 0x4000>;
-> 				clock-names = "se";
-> 				clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
-> 				pinctrl-names = "default";
-> 				pinctrl-0 = <&qup_spi0_default>;
-> 				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
-> 				#address-cells = <1>;
-> 				#size-cells = <0>;
-> 				interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>,
-> 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>;
-> 				interconnect-names = "qup-core", "qup-config";
-> 				status = "disabled";
-> 			};
-> 
-> 			uart0: serial@880000 {
-> 				compatible = "qcom,geni-uart";
-> 				reg = <0 0x00880000 0 0x4000>;
-> 				clock-names = "se";
-> 				clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
-> 				pinctrl-names = "default";
-> 				pinctrl-0 = <&qup_uart0_default>;
-> 				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
-> 				power-domains = <&rpmhpd SDM845_CX>;
-> 				operating-points-v2 = <&qup_opp_table>;
-> 				interconnects = <&aggre1_noc MASTER_QUP_1 0 &config_noc SLAVE_BLSP_1 0>,
-> 						<&gladiator_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_BLSP_1 0>;
-> 				interconnect-names = "qup-core", "qup-config";
-> 				status = "disabled";
-> 			};
-> 
-> 
-> The problem comes with all these nodes having same unit addresses. This
-> is adding to ~2K warning for unique_unit_address upstream.
-> 
-> So to solve this we thought of creating a qup se node and then query the
-> protocol supported from the firmware on boot and create a child
-> auxillary_device. The problem with that approach is another warning
-> "node name for SPI buses should be 'spi'"! So that would not help
-> 
-> Now, I cant think of any better idea here, except maybe move these to
-> respective board dts and perhaps keep them commented here for
-> documentation.
-> 
-> Do we have any better idea to solve this problem?
-> 
-> Thanks
-> -- 
-> ~Vinod
+[1/1] arm64: boot: dts: qcom: sm8150: add i2c and spi dma channels
+      commit: abdd4b7a7a70b861c77151afab23880b5f80e9bc
 
+Best regards,
 -- 
-~Vinod
+Bjorn Andersson <bjorn.andersson@linaro.org>
