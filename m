@@ -2,66 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6921F4A5667
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 06:21:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A1274A5669
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 06:21:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233000AbiBAFVA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S234094AbiBAFVA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 1 Feb 2022 00:21:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42296 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233690AbiBAFUj (ORCPT
+        with ESMTP id S234089AbiBAFUj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 1 Feb 2022 00:20:39 -0500
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 771C2C06175D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 21:20:36 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id s185so31225385oie.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 21:20:36 -0800 (PST)
+Received: from mail-oo1-xc2b.google.com (mail-oo1-xc2b.google.com [IPv6:2607:f8b0:4864:20::c2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EEF5C061749
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 21:20:37 -0800 (PST)
+Received: by mail-oo1-xc2b.google.com with SMTP id k23-20020a4abd97000000b002ebc94445a0so3881380oop.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 21:20:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=76Y77aX/PkT+BnRws6qQD9VkAMlblS38JRObQoogxBY=;
-        b=S9BboYrytgPezrKIrGcej437N+5sau99LKxbxMMAIdxqhD1cRfe92sV8O5JDWYKUPr
-         3FQV8easA3ey9Rag2Daj+UsDceZBjuy6jSqXcfhnoar2EGDFLMBgyFpAp/P1WBVrg5dm
-         5OaBGGUQYan2xZI4dhf1NTbxHYtaUTra/rfkRmcuprR2NZj7CLclkW+zFfML8gnftUXg
-         MLfmK5wkJG7VrMoTI4mNHRYvni416aMtr6rSm4UFWpdop0jDk9IZLLTfsSPVPImNnMRA
-         QGgGns5cY6y7oHO1RREy71u5yLiJ1X7+uYvlIYaCMoGcHBiQuuZgyHFPO8MRAdQr9jVK
-         TTpw==
+        bh=LAH/xpO7dmqJi5llds2HI9MJ54m6F+2jB1nqKKZdM5Y=;
+        b=BpvDhL1UW/95FzozB5gGcxlCpzNIRGs6r0oQK8xWbCoP9g0aNjIC7FjLxh7cdnyJS1
+         5mVSQ6HzlZOxQao4CbnInfYXeefvahwiFeRZZdl2c/uj2Ma6OT2B896dpryZJOo0jWUG
+         3dkEZqdl/E1RE0rHeWW47NU3yroh/rGgMBediRPheFZ6dJMIAENxFmLDQ+JXUzxH7LOH
+         PrKsipfEctcWxNs5Rjg1xMQFd7yd/Ned7i5bjakp7foGK/LtnpBrt5mi5Di3kZhPEga7
+         7y5z14nCizw2LBNOM05gkD9+7GWCMOKknb7lBlOprpIXqNQhLEewHIGaV/UHZtAXsgfd
+         9jow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=76Y77aX/PkT+BnRws6qQD9VkAMlblS38JRObQoogxBY=;
-        b=MgrRIURkpsbKb5Qn1kTV9V4xPccOws57x0EO89bk8t1fp+odvThjDT73AxW7pYjYIG
-         OXAXr4VGkKDy5Xoyai4KwORz8NXP04jxgmadUM8JRwK1VEr/QLO9O/gSjY96NyexCU33
-         M5bf6MyDmGYqBsLV8jjbpKiWbui3YBu+zBUg8IxaydLilEPHv8BFjg3dxewaZfCl3Ecy
-         0RQBvvi711Zs84ejn7h+vFgFWiWHF/FeGLO3CLhp7ucW98OD9f1/t9QJdlaKorxOT+pO
-         BdtTU1tHvZQ/7nlSuUbu+6FX99Y7yHUXldV+RvsTW0a8L6voRSBj602ShYpL0j5kUYIa
-         hJNA==
-X-Gm-Message-State: AOAM531FWKH5fdhgTJmR7G7MjiEjzPfUQwy62n/SmdE0ay5SV1BE/PYM
-        Ytm3ViVLkM6SL/bCcCtLiWE0xw==
-X-Google-Smtp-Source: ABdhPJxStzc/zPxwFDLE0mUmfBRwAvwHw/nqlbgQ5pav34oJxEupc4tvbpBuFwo6pLME2Er9VA6QUg==
-X-Received: by 2002:a05:6808:211e:: with SMTP id r30mr243037oiw.6.1643692835857;
-        Mon, 31 Jan 2022 21:20:35 -0800 (PST)
+        bh=LAH/xpO7dmqJi5llds2HI9MJ54m6F+2jB1nqKKZdM5Y=;
+        b=cFwVzOHPkLz901ajeKv1+/zGDILMzSw1o5JalaLy0AvcJMLkZIcjwMmFE0iRpodi8l
+         PcKTyMk8hSaX9uqXdnlyCYOr5PTYoFp33VVG5GmKkPDsAG2myePP2bV1wGHCk5mmyFJO
+         9KmAwL2d2SGegKpAxmjpE8jx8DolEg29ag0Q+UcB7U0ZKuvbUyjFgrgXrjfWss3Aszin
+         xXWlV4bd5NTq+ZXfOdba81ZKHwekaGeLcmurW3quzTiA4kltAoevJKQL77PXK6/wFs4L
+         V4k1MSwSLqtCEjUL7swGwN+FYMmlYdJKowjx8ajiv391eaulWMIoQAYZfF/ZK42cXSPr
+         NddQ==
+X-Gm-Message-State: AOAM531seyfAqzRtwSWg5j7a+LWbv+1YKzkr8+pE5fNjFJ+9YCfVpLXP
+        lN8AcwXodcrZu/Xwe6LKH+900cclHPqLaQ==
+X-Google-Smtp-Source: ABdhPJwkWgB/pkfV4ZHTa4Kgbu4KoU8Gtt9Ihu6VdrFVAVrPPs9MLFEQw529dR+k4nv/oTaXajin2g==
+X-Received: by 2002:a4a:d54e:: with SMTP id q14mr11808566oos.39.1643692836786;
+        Mon, 31 Jan 2022 21:20:36 -0800 (PST)
 Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
         by smtp.gmail.com with ESMTPSA id u3sm8193107ooh.19.2022.01.31.21.20.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Jan 2022 21:20:35 -0800 (PST)
+        Mon, 31 Jan 2022 21:20:36 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     quic_rjendra@quicinc.com, swboyd@chromium.org, mka@chromium.org,
-        Rob Herring <robh+dt@kernel.org>, sibis@codeaurora.org,
-        devicetree@vger.kernel.org, konrad.dybcio@somainline.org,
-        kgodara@codeaurora.org, pmaliset@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH v2 3/5] arm64: dts: qcom: sc7280: Factor out Chrome common fragment
-Date:   Mon, 31 Jan 2022 23:19:44 -0600
-Message-Id: <164369277342.3095904.4024774294496056588.b4-ty@linaro.org>
+To:     Catalin Marinas <catalin.marinas@arm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>, Will Deacon <will@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: (subset) [PATCH 1/5] arm64: defconfig: Enable some Qualcomm drivers
+Date:   Mon, 31 Jan 2022 23:19:45 -0600
+Message-Id: <164369277342.3095904.4200248396936294863.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220125144316.v2.3.Iac012fa8d727be46448d47027a1813ea716423ce@changeid>
-References: <20220125224422.544381-1-dianders@chromium.org> <20220125144316.v2.3.Iac012fa8d727be46448d47027a1813ea716423ce@changeid>
+In-Reply-To: <20220131165056.2117434-1-dmitry.baryshkov@linaro.org>
+References: <20220131165056.2117434-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -69,21 +66,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 25 Jan 2022 14:44:20 -0800, Douglas Anderson wrote:
-> This factors out a device tree fragment from some sc7280 device
-> trees. It represents the device tree bits that should be included for
-> "Chrome" based sc7280 boards. On these boards the bootloader (Coreboot
-> + Depthcharge) configures things slightly different than the
-> bootloader that Qualcomm provides. The modem firmware on these boards
-> also works differently than on other Qulacomm products and thus the
-> reserved memory map needs to be adjusted.
+On Mon, 31 Jan 2022 19:50:52 +0300, Dmitry Baryshkov wrote:
+> Enable coincell, fastrpc, mailbox and adc-tm5 drivers to be built as
+> modules. These driver are used on many of Qualcomm platforms.
 > 
-> [...]
+> 
 
 Applied, thanks!
 
-[3/5] arm64: dts: qcom: sc7280: Factor out Chrome common fragment
-      commit: 90c856602e0346ce9ff234062e86a198d71fa723
+[1/5] arm64: defconfig: Enable some Qualcomm drivers
+      commit: 1677e64d480d190959c971a69c17e8da27bd3e17
+[2/5] arm64: defconfig: enable ath11k driver
+      commit: af2d38db2674139182e0cea4552cc83cbb8db0d0
+[3/5] arm64: defconfig: enable mcp251xfd driver
+      commit: 17ef0b4b441f755ad81800167a672ecbeeafb6c5
 
 Best regards,
 -- 
