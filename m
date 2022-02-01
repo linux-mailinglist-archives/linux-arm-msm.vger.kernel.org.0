@@ -2,126 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 290504A5EAD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 15:55:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C0824A5E6F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 15:39:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238121AbiBAOzV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Feb 2022 09:55:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59410 "EHLO
+        id S239419AbiBAOjX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Feb 2022 09:39:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236688AbiBAOzV (ORCPT
+        with ESMTP id S239395AbiBAOjW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Feb 2022 09:55:21 -0500
+        Tue, 1 Feb 2022 09:39:22 -0500
+X-Greylist: delayed 79 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 01 Feb 2022 06:39:22 PST
 Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 530F5C061714;
-        Tue,  1 Feb 2022 06:55:21 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8FEBC061714;
+        Tue,  1 Feb 2022 06:39:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
         s=the; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:
         Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
         Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
         :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
         List-Post:List-Owner:List-Archive;
-        bh=YMgFDARZ8YQji3moecO8LwsGl27AxxFF8y0lNToU7bA=; b=ZVmM79jZzl/eRmbRGhzTPuLdTr
-        f27jNFx1qLsm9yLNX4guFrhe0YoBYQYrUb79/ScF0ldTm8gvJs3NduLXd6mBKhrGDSjU5mfA+OIng
-        DLaxaY50TD4cCJNElW6e7umg0fb1ZqHVZtZWelB0paL/bbCv2brZAYqRUVyNmZx/KxKHbzMAM17aU
-        o+azkaGC+k8o5oBjglQeg8BEFFvOzL71vsmUAvJ1XYStki/7uh5Y3LmpkeCokNN49KPpElxKUiXfo
-        sqvMOEg6t4KAxv8T7U8KlNkhHvmuKhFcDz4r0sCUBs2AfEn8s3cGVaDzlGj7J26V7Druzw18KVOjk
-        vsm0+ZRQ==;
+        bh=WfiEQcqWlqA2wHWIL9U4U6jinXG6ycg3gZ8RU4/D1pU=; b=Gq0+VGG+c4NNDBhX4wkPfnHZgQ
+        p+5W4IRJn2OzjtPj/3/0RNZZF+/WbOChgrWbwH9/FH3swn0txTohUqTJCQkAPxx/+gaqJP6sPdNjB
+        L+0m6EoXmdOrQUfbDR0ZK8F5uhnE+tw4Wfeh/2lIgtzAtKI6iDxKKE/Wg6zIM1kGZ8WmQJ2FfQZG9
+        8jkFSlPrC6U3EMQCEDwXxP/rYQbj8afcFyA7VquXxOK6McfhFZ+Dtv7BGsCcWJFSS4Bzbo27k/8Yi
+        11/58rgZ8PApcifYMi/KIIEVvON7dCV4tC1gi5/NFWSEfGqa6Mp7uMFPeua7h9bRPpe3mUt72PG4V
+        ZzpokFSA==;
 Received: from noodles by the.earth.li with local (Exim 4.94.2)
         (envelope-from <noodles@earth.li>)
-        id 1nEuIB-00C7KX-3q; Tue, 01 Feb 2022 14:37:59 +0000
-Date:   Tue, 1 Feb 2022 14:37:59 +0000
+        id 1nEuJU-00C7OI-0z; Tue, 01 Feb 2022 14:39:20 +0000
+Date:   Tue, 1 Feb 2022 14:39:20 +0000
 From:   Jonathan McDowell <noodles@earth.li>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 02/17] ARM: dts: qcom: add gsbi6 missing definition for
- ipq8064
-Message-ID: <YflFx91iRey7N4uv@earth.li>
+Subject: Re: [PATCH 03/17] ARM: dts: qcom: add missing rpm regulators and
+ cells for ipq8064
+Message-ID: <YflGGM45F3TqERNj@earth.li>
 References: <20220118012051.21691-1-ansuelsmth@gmail.com>
- <20220118012051.21691-3-ansuelsmth@gmail.com>
+ <20220118012051.21691-4-ansuelsmth@gmail.com>
+ <Yfhmum8BnB1JIALP@builder.lan>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220118012051.21691-3-ansuelsmth@gmail.com>
+In-Reply-To: <Yfhmum8BnB1JIALP@builder.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jan 18, 2022 at 02:20:32AM +0100, Ansuel Smith wrote:
-> Add gsbi6 missing definition for ipq8064.
+On Mon, Jan 31, 2022 at 04:46:18PM -0600, Bjorn Andersson wrote:
+> On Mon 17 Jan 19:20 CST 2022, Ansuel Smith wrote:
 > 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  arch/arm/boot/dts/qcom-ipq8064.dtsi | 27 +++++++++++++++++++++++++++
->  1 file changed, 27 insertions(+)
+> > Add cells definition for rpm node and add missing regulators for the 4
+> > regulator present on ipq8064. There regulators are controlled by rpm and
+> > to correctly works gsbi4_i2c require to be NEVER disabled or rpm will
+> > reject any regulator change request.
+> > 
 > 
-> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> index cc6ca9013ab1..094125605bea 100644
-> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> @@ -665,6 +665,33 @@ spi@1a280000 {
->  			};
->  		};
->  
-> +		gsbi6: gsbi@16500000 {
-> +			status = "disabled";
-> +			compatible = "qcom,gsbi-v1.0.0";
-> +			cell-index = <6>;
-> +			reg = <0x16500000 0x100>;
-> +			clocks = <&gcc GSBI6_H_CLK>;
-> +			clock-names = "iface";
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +			ranges;
-> +
-> +			syscon-tcsr = <&tcsr>;
-> +
-> +			gsbi6_i2c: i2c@16580000 {
-> +				compatible = "qcom,i2c-qup-v1.1.1";
-> +				reg = <0x16580000 0x1000>;
-> +				interrupts = <GIC_SPI 157 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +				clocks = <&gcc GSBI6_QUP_CLK>, <&gcc GSBI6_H_CLK>;
-> +				clock-names = "core", "iface";
-> +				status = "disabled";
-> +
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
+> Is the SMB208 mandatory on all ipq8064 designs, or should this be pushed
+> out to the device dts?
 
-Can you include the SPI definition too? The RB3011 has its SPI LCD
-living here.
+It's not; the RB3011 uses a different regulator (a TPS563900).
 
-		gsbi6_spi: spi@16580000 {
-			compatible = "qcom,spi-qup-v1.1.1";
-			reg = <0x16580000 0x1000>;
-			interrupts = <GIC_SPI 157 IRQ_TYPE_LEVEL_HIGH>;
-
-			clocks = <&gcc GSBI6_QUP_CLK>, <&gcc GSBI6_H_CLK>;
-			clock-names = "core", "iface";
-			status = "disabled";
-
-			#address-cells = <1>;
-			#size-cells = <0>;
-		};
-
-> +		};
-> +
->  		gsbi7: gsbi@16600000 {
->  			status = "disabled";
->  			compatible = "qcom,gsbi-v1.0.0";
-> -- 
-> 2.33.1
-> 
+> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > ---
+> >  arch/arm/boot/dts/qcom-ipq8064.dtsi | 35 +++++++++++++++++++++++++++++
+> >  1 file changed, 35 insertions(+)
+> > 
+> > diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> > index 094125605bea..824cf13dd037 100644
+> > --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> > +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> > @@ -829,10 +829,45 @@ rpm: rpm@108000 {
+> >  			clocks = <&gcc RPM_MSG_RAM_H_CLK>;
+> >  			clock-names = "ram";
+> >  
+> > +			#address-cells = <1>;
+> > +			#size-cells = <0>;
+> > +
+> >  			rpmcc: clock-controller {
+> >  				compatible = "qcom,rpmcc-ipq806x", "qcom,rpmcc";
+> >  				#clock-cells = <1>;
+> >  			};
+> > +
+> > +			regulators {
+> > +				compatible = "qcom,rpm-smb208-regulators";
+> > +
+> > +				smb208_s1a: s1a {
+> > +					regulator-min-microvolt = <1050000>;
+> > +					regulator-max-microvolt = <1150000>;
+> > +
+> > +					qcom,switch-mode-frequency = <1200000>;
+> > +				};
+> > +
+> > +				smb208_s1b: s1b {
+> > +					regulator-min-microvolt = <1050000>;
+> > +					regulator-max-microvolt = <1150000>;
+> > +
+> > +					qcom,switch-mode-frequency = <1200000>;
+> > +				};
+> > +
+> > +				smb208_s2a: s2a {
+> > +					regulator-min-microvolt = < 800000>;
+> > +					regulator-max-microvolt = <1250000>;
+> > +
+> > +					qcom,switch-mode-frequency = <1200000>;
+> > +				};
+> > +
+> > +				smb208_s2b: s2b {
+> > +					regulator-min-microvolt = < 800000>;
+> > +					regulator-max-microvolt = <1250000>;
+> > +
+> > +					qcom,switch-mode-frequency = <1200000>;
+> > +				};
+> > +			};
+> >  		};
+> >  
+> >  		tcsr: syscon@1a400000 {
+> > -- 
+> > 2.33.1
+> > 
 
 J.
 
 -- 
-] https://www.earth.li/~noodles/ []  "send me the rhubarb" -- Martin   [
-]  PGP/GPG Key @ the.earth.li    [] Brooks on the risks of dog poo in  [
-] via keyserver, web or email.   []              compost               [
-] RSA: 4096/0x94FA372B2DA8B985   []                                    [
+... "There's no money, there's no weed. It's all been replaced by a fucking
+    big pile of corpses."  -- Lock, Stock and Two Smoking Barrels
