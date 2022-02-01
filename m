@@ -2,528 +2,276 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 916FC4A5D93
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 14:41:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1700E4A5DB1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 14:52:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238843AbiBANl3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Feb 2022 08:41:29 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:46990 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238841AbiBANl2 (ORCPT
+        id S238909AbiBANwM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Feb 2022 08:52:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44828 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230073AbiBANwM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Feb 2022 08:41:28 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id BF2C0B82DE9;
-        Tue,  1 Feb 2022 13:41:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34BC7C340EB;
-        Tue,  1 Feb 2022 13:41:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1643722885;
-        bh=UWwybFz7VVtcHpuSz2RmmXyxTewO/BTWqJ4lB7nm/jQ=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=l8N3OW0x7i6qZOIrSAk/pCEWQie7ljhr2JKiyu05xq/nntIlATimQXnHr4lkcvXa0
-         vmpuKn9DbdiOPWWG+UJBkQO/NtpX2ZRo8zaJd2W3oLzpVifeEbbsuE1BGPq1Fi9ifE
-         wQ/T+iH9Ln/jyZCjZA+MhNN3u5vRTksCcx/2cvc7p+AfIuAT0hZlGxVtayenJDawZ6
-         Bg+LOF/soK4k+GU6ME7GqT3ZE+UFL3qfs2Rp4xno1m7qPFvE5wNDG3G+eXGOHy2dHP
-         iC7f1o4BG8/HcxgyumKu8DQyOq5qUyMmpEXnYBYgdiU6WzUr1xsyyA1uHVJP1cdVo2
-         E9T101/vc39qA==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        David Collins <quic_collinsd@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Collins <collinsd@codeaurora.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        David Dai <daidavid1@codeaurora.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH v3 2/2] spmi: pmic-arb: Add support for PMIC v7
-Date:   Tue,  1 Feb 2022 19:11:08 +0530
-Message-Id: <20220201134108.2677578-3-vkoul@kernel.org>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20220201134108.2677578-1-vkoul@kernel.org>
-References: <20220201134108.2677578-1-vkoul@kernel.org>
+        Tue, 1 Feb 2022 08:52:12 -0500
+Received: from relay11.mail.gandi.net (relay11.mail.gandi.net [IPv6:2001:4b98:dc4:8::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3368AC061714;
+        Tue,  1 Feb 2022 05:52:11 -0800 (PST)
+Received: (Authenticated sender: miquel.raynal@bootlin.com)
+        by mail.gandi.net (Postfix) with ESMTPSA id 64B9B100002;
+        Tue,  1 Feb 2022 13:52:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+        t=1643723529;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=9wWj1va3LmxR7uptoK225JjVfSAKX5gP2e5O2jvKmFs=;
+        b=FolHXnBTaVk5XuRbTsW0DHX9gYw9CMcJbrjgFF4wiTfKl2KYiL7HuQbhq7Mi+UDXj6jrPl
+        m4SZGAaMeRPJyg51mND/9QvniCge/K1OBcfJPLVBHrbtWqwxXYrBVltNvhbhPyUQumb6Sj
+        fUkh89Orf94sEUL+u8UBtI5MFRzHhtcQc7fS5/GNJqbeGa5+ZrvKzbJgnhx22Hk8agp20O
+        FeTPGPilihUAJRzFPeZbCyu9Kz9BLq7AshbdfvQdgakW6JGpJ00dnlMzdSi2dCsTxn/TrD
+        g4iipY2XrNCbpMEc4VBMcBcT1IGszN4Vn6x0Q9XaC8+FGNrKp/XZC6KPr/vJUg==
+Date:   Tue, 1 Feb 2022 14:52:04 +0100
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     Sricharan Ramabadhran <sricharan@codeaurora.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        pragalla@codeaurora.org, ~postmarketos/upstreaming@lists.sr.ht,
+        martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mdalam@codeaurora.org
+Subject: Re: [PATCH] mtd: nand: raw: qcom_nandc: Don't clear_bam_transaction
+ on READID
+Message-ID: <20220201145204.54646475@xps13>
+In-Reply-To: <12cad24a-fa2f-9a82-cf43-241a0a6fe4f6@somainline.org>
+References: <20220113184427.2259509-1-konrad.dybcio@somainline.org>
+        <20220114082718.32a2fc83@xps13>
+        <20220126111613.3ab0021e@xps13>
+        <20220126103316.GA212068@thinkpad>
+        <20220126114200.4cc3c21b@xps13>
+        <fc80a6e7-bd44-3b3e-fca2-1316a76d65f5@codeaurora.org>
+        <a6fcc533-e7cd-7b55-4db0-cec80c07b46a@codeaurora.org>
+        <0a8d6550-aa19-0af1-abae-66bf34c91ea8@somainline.org>
+        <be779ed9-bd80-8f01-fe7f-d3c07d3d85aa@codeaurora.org>
+        <12cad24a-fa2f-9a82-cf43-241a0a6fe4f6@somainline.org>
+Organization: Bootlin
+X-Mailer: Claws Mail 3.17.7 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: David Collins <collinsd@codeaurora.org>
+Hi Konrad,
 
-PMIC v7 has different offset values and seqeunces, so add support for
-this new version of PMIC
+konrad.dybcio@somainline.org wrote on Mon, 31 Jan 2022 20:54:12 +0100:
 
-Signed-off-by: David Collins <collinsd@codeaurora.org>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- drivers/spmi/spmi-pmic-arb.c | 233 ++++++++++++++++++++++++++++++++---
- 1 file changed, 214 insertions(+), 19 deletions(-)
+> On 31/01/2022 15:13, Sricharan Ramabadhran wrote:
+> > Hi Konrad,
+> >
+> > On 1/31/2022 3:39 PM, Konrad Dybcio wrote: =20
+> >>
+> >> On 28/01/2022 18:50, Sricharan Ramabadhran wrote: =20
+> >>> Hi Konrad,
+> >>>
+> >>> On 1/28/2022 9:55 AM, Sricharan Ramabadhran wrote: =20
+> >>>> Hi Miquel,
+> >>>>
+> >>>> On 1/26/2022 4:12 PM, Miquel Raynal wrote: =20
+> >>>>> Hi Mani,
+> >>>>>
+> >>>>> mani@kernel.org wrote on Wed, 26 Jan 2022 16:03:16 +0530:
+> >>>>> =20
+> >>>>>> On Wed, Jan 26, 2022 at 11:16:13AM +0100, Miquel Raynal wrote: =20
+> >>>>>>> Hello,
+> >>>>>>>
+> >>>>>>> miquel.raynal@bootlin.com wrote on Fri, 14 Jan 2022 08:27:18 +010=
+0: =20
+> >>>>>>>> Hi Konrad,
+> >>>>>>>>
+> >>>>>>>> konrad.dybcio@somainline.org wrote on Thu, 13 Jan 2022 19:44:26 =
+>>>>>>>> +0100: =20
+> >>>>>>>>> While I have absolutely 0 idea why and how, running >>>>>>>>> c=
+lear_bam_transaction
+> >>>>>>>>> when READID is issued makes the DMA totally clog up and refuse =
+>>>>>>>>> to function
+> >>>>>>>>> at all on mdm9607. In fact, it is so bad that all the data >>>>=
+>>>>> gets garbled
+> >>>>>>>>> and after a short while in the nand probe flow, the CPU >>>>>>>=
+>> decides that
+> >>>>>>>>> sepuku is the only option.
+> >>>>>>>>>
+> >>>>>>>>> Removing _READID from the if condition makes it work like a >>>=
+>>>>>> charm, I can
+> >>>>>>>>> read data and mount partitions without a problem.
+> >>>>>>>>>
+> >>>>>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> >>>>>>>>> ---
+> >>>>>>>>> This is totally just an observation which took me an inhumane >=
+>>>>>>>> amount of
+> >>>>>>>>> debug prints to find.. perhaps there's a better reason behind >=
+>>>>>>>> this, but
+> >>>>>>>>> I can't seem to find any answers.. Therefore, this is a BIG RFC=
+! =20
+> >>>>>>>> I'm adding two people from codeaurora who worked a lot on this >=
+>>>>>>> driver.
+> >>>>>>>> Hopefully they will have an idea :) =20
+> >>>>>>> Sadre, I've spent a significant amount of time reviewing your >>>=
+>>>> patches,
+> >>>>>>> now it's your turn to not take a month to answer to your peers
+> >>>>>>> proposals.
+> >>>>>>>
+> >>>>>>> Please help reviewing this patch. =20
+> >>>>>> Sorry. I was hoping that Qcom folks would chime in as I don't >>>>=
+>> have any idea
+> >>>>>> about the mdm9607 platform. It could be that the mail server >>>>>=
+> migration from
+> >>>>>> codeaurora to quicinc put a barrier here.
+> >>>>>>
+> >>>>>> Let me ping them internally. =20
+> >>>>> Oh, ok, I didn't know. Thanks! =20
+> >>>>
+> >>>> =C2=A0=C2=A0 Sorry Miquel, somehow we did not get this email in our =
+inbox.
+> >>>> =C2=A0=C2=A0 Thanks to Mani for pinging us, we will test this up tod=
+ay and >>>> get back.
+> >>>> =20
+> >>> =C2=A0 =C2=A0 =C2=A0 While we could not reproduce this issue on our i=
+pq boards (do >>> not have a mdm9607 right now) and
+> >>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 issue does not look any obvious.
+> >>> =C2=A0 =C2=A0 =C2=A0 can you please give the debug logs that you did =
+for the above >>> stage by stage ? =20
+> >>
+> >> I won't have access to the board for about two weeks, sorry.
+> >>
+> >> When I get to it, I'll surely try to send you the logs, though there
+> >>
+> >> wasn't much more than just something jumping to who-knows-where
+> >>
+> >> after clear_bam_transaction was called, resulting in values >> associa=
+ted with
+> >>
+> >> the NAND being all zeroed out in pr_err/_debug/etc.
+> >>
+> >> =20
+> > =C2=A0=C2=A0=C2=A0 Ok sure. So was the READID command itself failing (o=
+r) the > subsequent one ?
+> > =C2=A0=C2=A0 We can check which parameter reset by the clear_bam_transa=
+ction is > causing the
+> > =C2=A0=C2=A0 failure.=C2=A0 Meanwhile, looping in Pradeep who has acces=
+s to the > board, so in a better
+> > =C2=A0=C2=A0 position to debug. =20
+>=20
+> I'm sorry I have so few details on hand, and no kernel tree (no access to=
+ that machine either, for now).
+>=20
+>=20
+> I will try to describe to the best of my abilities what I recall.
+>=20
+>=20
+> My methodology of making sure things don't go haywire was to print the oo=
+b size
+>=20
+> of our NAND basically every two lines of code (yes, i was very desperate =
+at one point),
+>=20
+> as that was zeroed out when *the bug* happened,
 
-diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index 2113be40b5a9..f4d54e7785a8 100644
---- a/drivers/spmi/spmi-pmic-arb.c
-+++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -22,8 +22,14 @@
- #define PMIC_ARB_VERSION_V2_MIN		0x20010000
- #define PMIC_ARB_VERSION_V3_MIN		0x30000000
- #define PMIC_ARB_VERSION_V5_MIN		0x50000000
-+#define PMIC_ARB_VERSION_V7_MIN		0x70000000
- #define PMIC_ARB_INT_EN			0x0004
- 
-+#define PMIC_ARB_FEATURES		0x0004
-+#define PMIC_ARB_FEATURES_PERIPH_MASK	GENMASK(10, 0)
-+
-+#define PMIC_ARB_FEATURES1		0x0008
-+
- /* PMIC Arbiter channel registers offsets */
- #define PMIC_ARB_CMD			0x00
- #define PMIC_ARB_CONFIG			0x04
-@@ -48,7 +54,6 @@
- #define INVALID_EE				0xFF
- 
- /* Ownership Table */
--#define SPMI_OWNERSHIP_TABLE_REG(N)	(0x0700 + (4 * (N)))
- #define SPMI_OWNERSHIP_PERIPH2OWNER(X)	((X) & 0x7)
- 
- /* Channel Status fields */
-@@ -91,6 +96,7 @@ enum pmic_arb_channel {
- 
- /* Maximum number of support PMIC peripherals */
- #define PMIC_ARB_MAX_PERIPHS		512
-+#define PMIC_ARB_MAX_PERIPHS_V7		1024
- #define PMIC_ARB_TIMEOUT_US		100
- #define PMIC_ARB_MAX_TRANS_BYTES	(8)
- 
-@@ -104,12 +110,12 @@ enum pmic_arb_channel {
- 	((((slave_id) & 0xF)   << 28) | \
- 	(((periph_id) & 0xFF)  << 20) | \
- 	(((irq_id)    & 0x7)   << 16) | \
--	(((apid)      & 0x1FF) << 0))
-+	(((apid)      & 0x3FF) << 0))
- 
- #define hwirq_to_sid(hwirq)  (((hwirq) >> 28) & 0xF)
- #define hwirq_to_per(hwirq)  (((hwirq) >> 20) & 0xFF)
- #define hwirq_to_irq(hwirq)  (((hwirq) >> 16) & 0x7)
--#define hwirq_to_apid(hwirq) (((hwirq) >> 0)  & 0x1FF)
-+#define hwirq_to_apid(hwirq) (((hwirq) >> 0)  & 0x3FF)
- 
- struct pmic_arb_ver_ops;
- 
-@@ -137,6 +143,8 @@ struct apid_data {
-  * @spmic:		SPMI controller object
-  * @ver_ops:		version dependent operations.
-  * @ppid_to_apid	in-memory copy of PPID -> APID mapping table.
-+ * @apid_data:		Table of data for all APIDs
-+ * @max_periphs:	Number of elements in apid_data[]
-  */
- struct spmi_pmic_arb {
- 	void __iomem		*rd_base;
-@@ -149,8 +157,11 @@ struct spmi_pmic_arb {
- 	u8			channel;
- 	int			irq;
- 	u8			ee;
-+	u32			bus_instance;
- 	u16			min_apid;
- 	u16			max_apid;
-+	u16			base_apid;
-+	int			apid_count;
- 	u32			*mapping_table;
- 	DECLARE_BITMAP(mapping_table_valid, PMIC_ARB_MAX_PERIPHS);
- 	struct irq_domain	*domain;
-@@ -158,7 +169,8 @@ struct spmi_pmic_arb {
- 	const struct pmic_arb_ver_ops *ver_ops;
- 	u16			*ppid_to_apid;
- 	u16			last_apid;
--	struct apid_data	apid_data[PMIC_ARB_MAX_PERIPHS];
-+	struct apid_data	*apid_data;
-+	int			max_periphs;
- };
- 
- /**
-@@ -180,6 +192,7 @@ struct spmi_pmic_arb {
-  * @irq_clear:		on v1 address of PMIC_ARB_SPMI_PIC_IRQ_CLEARn
-  *			on v2 address of SPMI_PIC_IRQ_CLEARn.
-  * @apid_map_offset:	offset of PMIC_ARB_REG_CHNLn
-+ * @apid_owner:		on v2 and later address of SPMI_PERIPHn_2OWNER_TABLE_REG
-  */
- struct pmic_arb_ver_ops {
- 	const char *ver_str;
-@@ -196,6 +209,7 @@ struct pmic_arb_ver_ops {
- 	void __iomem *(*irq_status)(struct spmi_pmic_arb *pmic_arb, u16 n);
- 	void __iomem *(*irq_clear)(struct spmi_pmic_arb *pmic_arb, u16 n);
- 	u32 (*apid_map_offset)(u16 n);
-+	void __iomem *(*apid_owner)(struct spmi_pmic_arb *pmic_arb, u16 n);
- };
- 
- static inline void pmic_arb_base_write(struct spmi_pmic_arb *pmic_arb,
-@@ -631,6 +645,11 @@ static void pmic_arb_chained_irq(struct irq_desc *desc)
- 	struct irq_chip *chip = irq_desc_get_chip(desc);
- 	int first = pmic_arb->min_apid >> 5;
- 	int last = pmic_arb->max_apid >> 5;
-+	/*
-+	 * acc_offset will be non-zero for the secondary SPMI bus instance on
-+	 * v7 controllers.
-+	 */
-+	int acc_offset = pmic_arb->base_apid >> 5;
- 	u8 ee = pmic_arb->ee;
- 	u32 status, enable;
- 	int i, id, apid;
-@@ -638,8 +657,7 @@ static void pmic_arb_chained_irq(struct irq_desc *desc)
- 	chained_irq_enter(chip, desc);
- 
- 	for (i = first; i <= last; ++i) {
--		status = readl_relaxed(
--				ver_ops->owner_acc_status(pmic_arb, ee, i));
-+		status = readl_relaxed(ver_ops->owner_acc_status(pmic_arb, ee, i - acc_offset));
- 		while (status) {
- 			id = ffs(status) - 1;
- 			status &= ~BIT(id);
-@@ -944,8 +962,8 @@ static u16 pmic_arb_find_apid(struct spmi_pmic_arb *pmic_arb, u16 ppid)
- 		if (offset >= pmic_arb->core_size)
- 			break;
- 
--		regval = readl_relaxed(pmic_arb->cnfg +
--				      SPMI_OWNERSHIP_TABLE_REG(apid));
-+		regval = readl_relaxed(pmic_arb->ver_ops->apid_owner(pmic_arb,
-+								     apid));
- 		apidd->irq_ee = SPMI_OWNERSHIP_PERIPH2OWNER(regval);
- 		apidd->write_ee = apidd->irq_ee;
- 
-@@ -981,20 +999,29 @@ static int pmic_arb_ppid_to_apid_v2(struct spmi_pmic_arb *pmic_arb, u16 ppid)
- 
- static int pmic_arb_read_apid_map_v5(struct spmi_pmic_arb *pmic_arb)
- {
--	struct apid_data *apidd = pmic_arb->apid_data;
-+	struct apid_data *apidd;
- 	struct apid_data *prev_apidd;
--	u16 i, apid, ppid;
-+	u16 i, apid, ppid, apid_max;
- 	bool valid, is_irq_ee;
- 	u32 regval, offset;
- 
- 	/*
- 	 * In order to allow multiple EEs to write to a single PPID in arbiter
--	 * version 5, there is more than one APID mapped to each PPID.
-+	 * version 5 and 7, there is more than one APID mapped to each PPID.
- 	 * The owner field for each of these mappings specifies the EE which is
- 	 * allowed to write to the APID.  The owner of the last (highest) APID
- 	 * for a given PPID will receive interrupts from the PPID.
-+	 *
-+	 * In arbiter version 7, the APID numbering space is divided between
-+	 * the primary bus (0) and secondary bus (1) such that:
-+	 * APID = 0 to N-1 are assigned to the primary bus
-+	 * APID = N to N+M-1 are assigned to the secondary bus
-+	 * where N = number of APIDs supported by the primary bus and
-+	 *       M = number of APIDs supported by the secondary bus
- 	 */
--	for (i = 0; ; i++, apidd++) {
-+	apidd = &pmic_arb->apid_data[pmic_arb->base_apid];
-+	apid_max = pmic_arb->base_apid + pmic_arb->apid_count;
-+	for (i = pmic_arb->base_apid; i < apid_max; i++, apidd++) {
- 		offset = pmic_arb->ver_ops->apid_map_offset(i);
- 		if (offset >= pmic_arb->core_size)
- 			break;
-@@ -1005,8 +1032,8 @@ static int pmic_arb_read_apid_map_v5(struct spmi_pmic_arb *pmic_arb)
- 		ppid = (regval >> 8) & PMIC_ARB_PPID_MASK;
- 		is_irq_ee = PMIC_ARB_CHAN_IS_IRQ_OWNER(regval);
- 
--		regval = readl_relaxed(pmic_arb->cnfg +
--				      SPMI_OWNERSHIP_TABLE_REG(i));
-+		regval = readl_relaxed(pmic_arb->ver_ops->apid_owner(pmic_arb,
-+								     i));
- 		apidd->write_ee = SPMI_OWNERSHIP_PERIPH2OWNER(regval);
- 
- 		apidd->irq_ee = is_irq_ee ? apidd->write_ee : INVALID_EE;
-@@ -1100,6 +1127,40 @@ static int pmic_arb_offset_v5(struct spmi_pmic_arb *pmic_arb, u8 sid, u16 addr,
- 	return offset;
- }
- 
-+/*
-+ * v7 offset per ee and per apid for observer channels and per apid for
-+ * read/write channels.
-+ */
-+static int pmic_arb_offset_v7(struct spmi_pmic_arb *pmic_arb, u8 sid, u16 addr,
-+			   enum pmic_arb_channel ch_type)
-+{
-+	u16 apid;
-+	int rc;
-+	u32 offset = 0;
-+	u16 ppid = (sid << 8) | (addr >> 8);
-+
-+	rc = pmic_arb->ver_ops->ppid_to_apid(pmic_arb, ppid);
-+	if (rc < 0)
-+		return rc;
-+
-+	apid = rc;
-+	switch (ch_type) {
-+	case PMIC_ARB_CHANNEL_OBS:
-+		offset = 0x8000 * pmic_arb->ee + 0x20 * apid;
-+		break;
-+	case PMIC_ARB_CHANNEL_RW:
-+		if (pmic_arb->apid_data[apid].write_ee != pmic_arb->ee) {
-+			dev_err(&pmic_arb->spmic->dev, "disallowed SPMI write to sid=%u, addr=0x%04X\n",
-+				sid, addr);
-+			return -EPERM;
-+		}
-+		offset = 0x1000 * apid;
-+		break;
-+	}
-+
-+	return offset;
-+}
-+
- static u32 pmic_arb_fmt_cmd_v1(u8 opc, u8 sid, u16 addr, u8 bc)
- {
- 	return (opc << 27) | ((sid & 0xf) << 20) | (addr << 4) | (bc & 0x7);
-@@ -1134,6 +1195,12 @@ pmic_arb_owner_acc_status_v5(struct spmi_pmic_arb *pmic_arb, u8 m, u16 n)
- 	return pmic_arb->intr + 0x10000 * m + 0x4 * n;
- }
- 
-+static void __iomem *
-+pmic_arb_owner_acc_status_v7(struct spmi_pmic_arb *pmic_arb, u8 m, u16 n)
-+{
-+	return pmic_arb->intr + 0x1000 * m + 0x4 * n;
-+}
-+
- static void __iomem *
- pmic_arb_acc_enable_v1(struct spmi_pmic_arb *pmic_arb, u16 n)
- {
-@@ -1152,6 +1219,12 @@ pmic_arb_acc_enable_v5(struct spmi_pmic_arb *pmic_arb, u16 n)
- 	return pmic_arb->wr_base + 0x100 + 0x10000 * n;
- }
- 
-+static void __iomem *
-+pmic_arb_acc_enable_v7(struct spmi_pmic_arb *pmic_arb, u16 n)
-+{
-+	return pmic_arb->wr_base + 0x100 + 0x1000 * n;
-+}
-+
- static void __iomem *
- pmic_arb_irq_status_v1(struct spmi_pmic_arb *pmic_arb, u16 n)
- {
-@@ -1170,6 +1243,12 @@ pmic_arb_irq_status_v5(struct spmi_pmic_arb *pmic_arb, u16 n)
- 	return pmic_arb->wr_base + 0x104 + 0x10000 * n;
- }
- 
-+static void __iomem *
-+pmic_arb_irq_status_v7(struct spmi_pmic_arb *pmic_arb, u16 n)
-+{
-+	return pmic_arb->wr_base + 0x104 + 0x1000 * n;
-+}
-+
- static void __iomem *
- pmic_arb_irq_clear_v1(struct spmi_pmic_arb *pmic_arb, u16 n)
- {
-@@ -1188,6 +1267,12 @@ pmic_arb_irq_clear_v5(struct spmi_pmic_arb *pmic_arb, u16 n)
- 	return pmic_arb->wr_base + 0x108 + 0x10000 * n;
- }
- 
-+static void __iomem *
-+pmic_arb_irq_clear_v7(struct spmi_pmic_arb *pmic_arb, u16 n)
-+{
-+	return pmic_arb->wr_base + 0x108 + 0x1000 * n;
-+}
-+
- static u32 pmic_arb_apid_map_offset_v2(u16 n)
- {
- 	return 0x800 + 0x4 * n;
-@@ -1198,6 +1283,28 @@ static u32 pmic_arb_apid_map_offset_v5(u16 n)
- 	return 0x900 + 0x4 * n;
- }
- 
-+static u32 pmic_arb_apid_map_offset_v7(u16 n)
-+{
-+	return 0x2000 + 0x4 * n;
-+}
-+
-+static void __iomem *
-+pmic_arb_apid_owner_v2(struct spmi_pmic_arb *pmic_arb, u16 n)
-+{
-+	return pmic_arb->cnfg + 0x700 + 0x4 * n;
-+}
-+
-+/*
-+ * For arbiter version 7, APID ownership table registers have independent
-+ * numbering space for each SPMI bus instance, so each is indexed starting from
-+ * 0.
-+ */
-+static void __iomem *
-+pmic_arb_apid_owner_v7(struct spmi_pmic_arb *pmic_arb, u16 n)
-+{
-+	return pmic_arb->cnfg + 0x4 * (n - pmic_arb->base_apid);
-+}
-+
- static const struct pmic_arb_ver_ops pmic_arb_v1 = {
- 	.ver_str		= "v1",
- 	.ppid_to_apid		= pmic_arb_ppid_to_apid_v1,
-@@ -1209,6 +1316,7 @@ static const struct pmic_arb_ver_ops pmic_arb_v1 = {
- 	.irq_status		= pmic_arb_irq_status_v1,
- 	.irq_clear		= pmic_arb_irq_clear_v1,
- 	.apid_map_offset	= pmic_arb_apid_map_offset_v2,
-+	.apid_owner		= pmic_arb_apid_owner_v2,
- };
- 
- static const struct pmic_arb_ver_ops pmic_arb_v2 = {
-@@ -1222,6 +1330,7 @@ static const struct pmic_arb_ver_ops pmic_arb_v2 = {
- 	.irq_status		= pmic_arb_irq_status_v2,
- 	.irq_clear		= pmic_arb_irq_clear_v2,
- 	.apid_map_offset	= pmic_arb_apid_map_offset_v2,
-+	.apid_owner		= pmic_arb_apid_owner_v2,
- };
- 
- static const struct pmic_arb_ver_ops pmic_arb_v3 = {
-@@ -1235,6 +1344,7 @@ static const struct pmic_arb_ver_ops pmic_arb_v3 = {
- 	.irq_status		= pmic_arb_irq_status_v2,
- 	.irq_clear		= pmic_arb_irq_clear_v2,
- 	.apid_map_offset	= pmic_arb_apid_map_offset_v2,
-+	.apid_owner		= pmic_arb_apid_owner_v2,
- };
- 
- static const struct pmic_arb_ver_ops pmic_arb_v5 = {
-@@ -1248,6 +1358,21 @@ static const struct pmic_arb_ver_ops pmic_arb_v5 = {
- 	.irq_status		= pmic_arb_irq_status_v5,
- 	.irq_clear		= pmic_arb_irq_clear_v5,
- 	.apid_map_offset	= pmic_arb_apid_map_offset_v5,
-+	.apid_owner		= pmic_arb_apid_owner_v2,
-+};
-+
-+static const struct pmic_arb_ver_ops pmic_arb_v7 = {
-+	.ver_str		= "v7",
-+	.ppid_to_apid		= pmic_arb_ppid_to_apid_v5,
-+	.non_data_cmd		= pmic_arb_non_data_cmd_v2,
-+	.offset			= pmic_arb_offset_v7,
-+	.fmt_cmd		= pmic_arb_fmt_cmd_v2,
-+	.owner_acc_status	= pmic_arb_owner_acc_status_v7,
-+	.acc_enable		= pmic_arb_acc_enable_v7,
-+	.irq_status		= pmic_arb_irq_status_v7,
-+	.irq_clear		= pmic_arb_irq_clear_v7,
-+	.apid_map_offset	= pmic_arb_apid_map_offset_v7,
-+	.apid_owner		= pmic_arb_apid_owner_v7,
- };
- 
- static const struct irq_domain_ops pmic_arb_irq_domain_ops = {
-@@ -1274,8 +1399,18 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 	pmic_arb = spmi_controller_get_drvdata(ctrl);
- 	pmic_arb->spmic = ctrl;
- 
-+	/*
-+	 * Please don't replace this with devm_platform_ioremap_resource() or
-+	 * devm_ioremap_resource().  These both result in a call to
-+	 * devm_request_mem_region() which prevents multiple mappings of this
-+	 * register address range.  SoCs with PMIC arbiter v7 may define two
-+	 * arbiter devices, for the two physical SPMI interfaces, which  share
-+	 * some register address ranges (i.e. "core", "obsrvr", and "chnls").
-+	 * Ensure that both devices probe successfully by calling devm_ioremap()
-+	 * which does not result in a devm_request_mem_region() call.
-+	 */
- 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "core");
--	core = devm_ioremap_resource(&ctrl->dev, res);
-+	core = devm_ioremap(&ctrl->dev, res->start, resource_size(res));
- 	if (IS_ERR(core)) {
- 		err = PTR_ERR(core);
- 		goto err_put_ctrl;
-@@ -1304,12 +1439,15 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 			pmic_arb->ver_ops = &pmic_arb_v2;
- 		else if (hw_ver < PMIC_ARB_VERSION_V5_MIN)
- 			pmic_arb->ver_ops = &pmic_arb_v3;
--		else
-+		else if (hw_ver < PMIC_ARB_VERSION_V7_MIN)
- 			pmic_arb->ver_ops = &pmic_arb_v5;
-+		else
-+			pmic_arb->ver_ops = &pmic_arb_v7;
- 
- 		res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
- 						   "obsrvr");
--		pmic_arb->rd_base = devm_ioremap_resource(&ctrl->dev, res);
-+		pmic_arb->rd_base = devm_ioremap(&ctrl->dev, res->start,
-+						 resource_size(res));
- 		if (IS_ERR(pmic_arb->rd_base)) {
- 			err = PTR_ERR(pmic_arb->rd_base);
- 			goto err_put_ctrl;
-@@ -1317,13 +1455,70 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 
- 		res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
- 						   "chnls");
--		pmic_arb->wr_base = devm_ioremap_resource(&ctrl->dev, res);
-+		pmic_arb->wr_base = devm_ioremap(&ctrl->dev, res->start,
-+						 resource_size(res));
- 		if (IS_ERR(pmic_arb->wr_base)) {
- 			err = PTR_ERR(pmic_arb->wr_base);
- 			goto err_put_ctrl;
- 		}
- 	}
- 
-+	pmic_arb->max_periphs = PMIC_ARB_MAX_PERIPHS;
-+
-+	if (hw_ver >= PMIC_ARB_VERSION_V7_MIN) {
-+		pmic_arb->max_periphs = PMIC_ARB_MAX_PERIPHS_V7;
-+		/* Optional property for v7: */
-+		of_property_read_u32(pdev->dev.of_node, "qcom,bus-id",
-+					&pmic_arb->bus_instance);
-+		if (pmic_arb->bus_instance > 1) {
-+			err = -EINVAL;
-+			dev_err(&pdev->dev, "invalid bus instance (%u) specified\n",
-+				pmic_arb->bus_instance);
-+			goto err_put_ctrl;
-+		}
-+
-+		if (pmic_arb->bus_instance == 0) {
-+			pmic_arb->base_apid = 0;
-+			pmic_arb->apid_count =
-+				readl_relaxed(core + PMIC_ARB_FEATURES) &
-+				PMIC_ARB_FEATURES_PERIPH_MASK;
-+		} else {
-+			pmic_arb->base_apid =
-+				readl_relaxed(core + PMIC_ARB_FEATURES) &
-+				PMIC_ARB_FEATURES_PERIPH_MASK;
-+			pmic_arb->apid_count =
-+				readl_relaxed(core + PMIC_ARB_FEATURES1) &
-+				PMIC_ARB_FEATURES_PERIPH_MASK;
-+		}
-+
-+		if (pmic_arb->base_apid + pmic_arb->apid_count >
-+		    pmic_arb->max_periphs) {
-+			err = -EINVAL;
-+			dev_err(&pdev->dev, "Unsupported APID count %d detected\n",
-+				pmic_arb->base_apid + pmic_arb->apid_count);
-+			goto err_put_ctrl;
-+		}
-+	} else if (hw_ver >= PMIC_ARB_VERSION_V5_MIN) {
-+		pmic_arb->base_apid = 0;
-+		pmic_arb->apid_count = readl_relaxed(core + PMIC_ARB_FEATURES) &
-+					PMIC_ARB_FEATURES_PERIPH_MASK;
-+
-+		if (pmic_arb->apid_count > pmic_arb->max_periphs) {
-+			err = -EINVAL;
-+			dev_err(&pdev->dev, "Unsupported APID count %d detected\n",
-+				pmic_arb->apid_count);
-+			goto err_put_ctrl;
-+		}
-+	}
-+
-+	pmic_arb->apid_data = devm_kcalloc(&ctrl->dev, pmic_arb->max_periphs,
-+					   sizeof(*pmic_arb->apid_data),
-+					   GFP_KERNEL);
-+	if (!pmic_arb->apid_data) {
-+		err = -ENOMEM;
-+		goto err_put_ctrl;
-+	}
-+
- 	dev_info(&ctrl->dev, "PMIC arbiter version %s (0x%x)\n",
- 		 pmic_arb->ver_ops->ver_str, hw_ver);
- 
-@@ -1386,7 +1581,7 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 	/* Initialize max_apid/min_apid to the opposite bounds, during
- 	 * the irq domain translation, we are sure to update these */
- 	pmic_arb->max_apid = 0;
--	pmic_arb->min_apid = PMIC_ARB_MAX_PERIPHS - 1;
-+	pmic_arb->min_apid = pmic_arb->max_periphs - 1;
- 
- 	platform_set_drvdata(pdev, ctrl);
- 	raw_spin_lock_init(&pmic_arb->lock);
--- 
-2.31.1
+This does look like a pointer error at some point and some kernel data
+has been corrupted very badly by the driver.
 
+> leading to a kernel bug/panic/stall
+>=20
+> (can't recall what exactly it was, but it said something along the lines =
+of "no support for
+>=20
+> oob size 0" and then it didn't fail graceully, leading to some bad jumps =
+and ultimately
+>=20
+> a dead platform..)
+>=20
+>=20
+> after hours of digging, I found out that everything goes fine until clear=
+_bam_transaction is called,
+
+Do you remember if this function was called for the first time when
+this happened?
+
+> after that gets executed every nand op starts reading all zeroes (for exa=
+mple in JEDEC ID check)
+>=20
+> so I added the changes from this patch, and things magically started work=
+ing... My suspicion is
+>=20
+> that the underlying FIFO isn't fully drained (is it a FIFO on 9607? bah, =
+i work on too many socs at once)
+
+I don't see it in the list of supported devices, what's the exact
+compatible used?
+
+>=20
+> and this function only makes Linux think it is, without actually draining=
+ it, and the leftover
+>=20
+> commands get executed with some parts of them getting overwritten, result=
+ing in the
+>=20
+> famous garbage in - garbage out situation, but that's only a guesstimate..
+
+I would bet for a non allocated bam-ish pointer that is reset to zero
+in the clear_bam_transaction() helper.
+
+Can you get your hands on the board again?
+It would be nice to check if the allocation always occurs before use,
+and if yes on how much bytes.
+
+If the pointer is not dangling, then perhaps something else smashes
+that pointer.
+
+> Do note this somehow worked fine on 5.11 and then broke on 5.12/13. I wen=
+t as far as replacing most
+>=20
+> of the kernel with the updated/downgraded parts via git checkout (i tried=
+ many combinations),
+>=20
+> to no avail.. I even tried different compilers and optimization levels, t=
+hinking it could have been
+>=20
+> a codegen issue, but no luck either.
+>=20
+>=20
+> I.. do understand this email is a total mess to read, as much as it was t=
+o write, but
+>=20
+> without access to my code and the machine itself I can't give you solid d=
+etails, and
+>=20
+> the fact this situation is far from ordinary doesn't help either..
+>=20
+>=20
+> The latest (ancient, not quite pretty, but probably working if my memory =
+is correct) version of my patches
+>=20
+> for the mdm9607 is available at [1], I will push the new revision after I=
+ get access to the workstation.
+>=20
+>=20
+> Konrad
+>=20
+>=20
+> [1] https://github.com/SoMainline/linux/commits/konrad/pinemodem
+>=20
+>=20
+> >
+> > Regards,
+> > =C2=A0=C2=A0 Sricharan
+> >
+> > =20
+
+
+Thanks,
+Miqu=C3=A8l
