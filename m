@@ -2,123 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0479F4A5DF1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 15:07:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 290504A5EAD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 15:55:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239091AbiBAOH2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Feb 2022 09:07:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48316 "EHLO
+        id S238121AbiBAOzV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Feb 2022 09:55:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239079AbiBAOH2 (ORCPT
+        with ESMTP id S236688AbiBAOzV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Feb 2022 09:07:28 -0500
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EAC8C06173B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Feb 2022 06:07:28 -0800 (PST)
-Received: by mail-io1-xd2f.google.com with SMTP id h7so21316923iof.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Feb 2022 06:07:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jE7i/45ZN4yQfoK8ALMqe4UBbhhVgSudWp2g9UDwE9c=;
-        b=spDwLyL2L5jJZInLzDJOx9fN23OKbt/8qSnko2v/3YXEzKCUJs4f8VNwfAqXa5GIKt
-         upn7j7A8OpyFRvyGiKSfwDj28Z6es5tIdaQQu/W8JohsWpgPtONLj9ObnClXIMRhJCBf
-         55ZKzrZ107eU0+PukEOzjwPVg9l0wb0X9sHIOs5PCgR9lBOKH5RUdKVvwXC73SomUFa0
-         oFrwXyFkQNofhj3X0OqAwmi15SPHQrWIi+T08/Nh7dtQJvPLJ/j6AJz8GKagVC5aDplD
-         M4iMhyGVUkYRul1K1QZdqBZuwXNMgiX7chPmKaJAOAm4w6Qaf3iRKviX7RkrAwIwIHbq
-         LrVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jE7i/45ZN4yQfoK8ALMqe4UBbhhVgSudWp2g9UDwE9c=;
-        b=pezKU4/U6pBi7/OYlNyM+CILesEx0WpYfGqpwPqj8MJxAR7EB8wfUb5a5KrWTpWsS0
-         y2POGVBImCIIfvAs3x8ILfNbkyrR2K0Fi3kejc1flV3vzS+PAlVRBndHWBWuxSkZ264o
-         j9Rh+drhuinIItq7Wnq7+J5bLlS7Y6YVbW6gcnpYOhzzj76GS+FvY+6ncUrsUb0QDmWW
-         /JIyrs4jVt9AqA8FlkYfVDiQ3BLvWm4e9ULJOAy+UkHtXDjhJPQQfK47wpr9xeDpev2U
-         Y8HjpzOmP4MaBa1I9AfdAJZ6LFUv0upw8gq1e8sRANVEsBD1mYmEVhhfBNDFevcR6q1a
-         YDkA==
-X-Gm-Message-State: AOAM5317vwSXONXgf0sX4k6Faz5vrfU8hBKI93W55eR9CuO1fOLJ0ECg
-        ZRAP37NYwRhnATXpbMmNgYw34g==
-X-Google-Smtp-Source: ABdhPJy5ZVgUEgsNb+EEn6bsYx+QID1EFyGStYPvKLXl7Kwy3rMkx1FnTIjPI3ojR4qk6eC+AUQFfQ==
-X-Received: by 2002:a05:6602:1652:: with SMTP id y18mr13414248iow.101.1643724447619;
-        Tue, 01 Feb 2022 06:07:27 -0800 (PST)
-Received: from localhost.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.gmail.com with ESMTPSA id m4sm19228887iln.48.2022.02.01.06.07.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Feb 2022 06:07:26 -0800 (PST)
-From:   Alex Elder <elder@linaro.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org, robh+dt@kernel.org
-Cc:     davem@davemloft.net, kuba@kernel.org, mka@chromium.org,
-        evgreen@chromium.org, cpratapa@codeaurora.org,
-        avuyyuru@codeaurora.org, jponduru@codeaurora.org,
-        subashab@codeaurora.org, elder@kernel.org,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        Tue, 1 Feb 2022 09:55:21 -0500
+Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 530F5C061714;
+        Tue,  1 Feb 2022 06:55:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
+        s=the; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:
+        Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=YMgFDARZ8YQji3moecO8LwsGl27AxxFF8y0lNToU7bA=; b=ZVmM79jZzl/eRmbRGhzTPuLdTr
+        f27jNFx1qLsm9yLNX4guFrhe0YoBYQYrUb79/ScF0ldTm8gvJs3NduLXd6mBKhrGDSjU5mfA+OIng
+        DLaxaY50TD4cCJNElW6e7umg0fb1ZqHVZtZWelB0paL/bbCv2brZAYqRUVyNmZx/KxKHbzMAM17aU
+        o+azkaGC+k8o5oBjglQeg8BEFFvOzL71vsmUAvJ1XYStki/7uh5Y3LmpkeCokNN49KPpElxKUiXfo
+        sqvMOEg6t4KAxv8T7U8KlNkhHvmuKhFcDz4r0sCUBs2AfEn8s3cGVaDzlGj7J26V7Druzw18KVOjk
+        vsm0+ZRQ==;
+Received: from noodles by the.earth.li with local (Exim 4.94.2)
+        (envelope-from <noodles@earth.li>)
+        id 1nEuIB-00C7KX-3q; Tue, 01 Feb 2022 14:37:59 +0000
+Date:   Tue, 1 Feb 2022 14:37:59 +0000
+From:   Jonathan McDowell <noodles@earth.li>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: add IPA qcom,qmp property
-Date:   Tue,  1 Feb 2022 08:07:23 -0600
-Message-Id: <20220201140723.467431-1-elder@linaro.org>
-X-Mailer: git-send-email 2.32.0
+Subject: Re: [PATCH 02/17] ARM: dts: qcom: add gsbi6 missing definition for
+ ipq8064
+Message-ID: <YflFx91iRey7N4uv@earth.li>
+References: <20220118012051.21691-1-ansuelsmth@gmail.com>
+ <20220118012051.21691-3-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220118012051.21691-3-ansuelsmth@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-At least three platforms require the "qcom,qmp" property to be
-specified, so the IPA driver can request register retention across
-power collapse.  Update DTS files accordingly.
+On Tue, Jan 18, 2022 at 02:20:32AM +0100, Ansuel Smith wrote:
+> Add gsbi6 missing definition for ipq8064.
+> 
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> ---
+>  arch/arm/boot/dts/qcom-ipq8064.dtsi | 27 +++++++++++++++++++++++++++
+>  1 file changed, 27 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> index cc6ca9013ab1..094125605bea 100644
+> --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
+> @@ -665,6 +665,33 @@ spi@1a280000 {
+>  			};
+>  		};
+>  
+> +		gsbi6: gsbi@16500000 {
+> +			status = "disabled";
+> +			compatible = "qcom,gsbi-v1.0.0";
+> +			cell-index = <6>;
+> +			reg = <0x16500000 0x100>;
+> +			clocks = <&gcc GSBI6_H_CLK>;
+> +			clock-names = "iface";
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +			ranges;
+> +
+> +			syscon-tcsr = <&tcsr>;
+> +
+> +			gsbi6_i2c: i2c@16580000 {
+> +				compatible = "qcom,i2c-qup-v1.1.1";
+> +				reg = <0x16580000 0x1000>;
+> +				interrupts = <GIC_SPI 157 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +				clocks = <&gcc GSBI6_QUP_CLK>, <&gcc GSBI6_H_CLK>;
+> +				clock-names = "core", "iface";
+> +				status = "disabled";
+> +
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +			};
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
+Can you include the SPI definition too? The RB3011 has its SPI LCD
+living here.
 
-Dave, Jakub, please let Bjorn take this through the Qualcomm tree.
+		gsbi6_spi: spi@16580000 {
+			compatible = "qcom,spi-qup-v1.1.1";
+			reg = <0x16580000 0x1000>;
+			interrupts = <GIC_SPI 157 IRQ_TYPE_LEVEL_HIGH>;
 
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 ++
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 ++
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 2 ++
- 3 files changed, 6 insertions(+)
+			clocks = <&gcc GSBI6_QUP_CLK>, <&gcc GSBI6_H_CLK>;
+			clock-names = "core", "iface";
+			status = "disabled";
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 2151cd8c8c7ab..e1c46b80f14a0 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -1459,6 +1459,8 @@ ipa: ipa@1e40000 {
- 					     "imem",
- 					     "config";
- 
-+			qcom,qmp = <&aoss_qmp>;
-+
- 			qcom,smem-states = <&ipa_smp2p_out 0>,
- 					   <&ipa_smp2p_out 1>;
- 			qcom,smem-state-names = "ipa-clock-enabled-valid",
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 937c2e0e93eb9..fe5792e7e8d7a 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -1714,6 +1714,8 @@ ipa: ipa@1e40000 {
- 			interconnect-names = "memory",
- 					     "config";
- 
-+			qcom,qmp = <&aoss_qmp>;
-+
- 			qcom,smem-states = <&ipa_smp2p_out 0>,
- 					   <&ipa_smp2p_out 1>;
- 			qcom,smem-state-names = "ipa-clock-enabled-valid",
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 53b39e718fb66..5c2866355e352 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -1425,6 +1425,8 @@ ipa: ipa@1e40000 {
- 			interconnect-names = "memory",
- 					     "config";
- 
-+			qcom,qmp = <&aoss_qmp>;
-+
- 			qcom,smem-states = <&ipa_smp2p_out 0>,
- 					   <&ipa_smp2p_out 1>;
- 			qcom,smem-state-names = "ipa-clock-enabled-valid",
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+
+> +		};
+> +
+>  		gsbi7: gsbi@16600000 {
+>  			status = "disabled";
+>  			compatible = "qcom,gsbi-v1.0.0";
+> -- 
+> 2.33.1
+> 
+
+J.
+
 -- 
-2.32.0
-
+] https://www.earth.li/~noodles/ []  "send me the rhubarb" -- Martin   [
+]  PGP/GPG Key @ the.earth.li    [] Brooks on the risks of dog poo in  [
+] via keyserver, web or email.   []              compost               [
+] RSA: 4096/0x94FA372B2DA8B985   []                                    [
