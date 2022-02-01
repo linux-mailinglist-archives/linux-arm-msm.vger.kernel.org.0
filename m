@@ -2,63 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 52A944A565E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 06:20:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A0C34A5661
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Feb 2022 06:20:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234029AbiBAFUt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Feb 2022 00:20:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42344 "EHLO
+        id S234251AbiBAFUv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Feb 2022 00:20:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233888AbiBAFUg (ORCPT
+        with ESMTP id S233816AbiBAFUi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Feb 2022 00:20:36 -0500
+        Tue, 1 Feb 2022 00:20:38 -0500
 Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8195C061778
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 21:20:32 -0800 (PST)
-Received: by mail-oi1-x233.google.com with SMTP id m9so31142778oia.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 21:20:32 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5AC9C06177D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 21:20:33 -0800 (PST)
+Received: by mail-oi1-x233.google.com with SMTP id s185so31225197oie.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 31 Jan 2022 21:20:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WlKH/pEjSh4EjyywKuXe02jLh+J0AViFsgBwKNgD2cU=;
-        b=zNRDKdHFSk19gJDopMbkyaruoTsLh2oT95lDAlVnm8KZTwIjDBeuyqdu1lgGrpydhb
-         UBgHpV/Mejcve/xa806AE8MW3m5jY8MrL++sQGEM2f4Ua5cqrMQ5NqTMfi8aDv5lV+07
-         seHFHK2UtRdLVnJGie7o+2ozI4N5UQhiGWOHXejZFfWI9+3kymR52QQ0w7a5rsMbe6GY
-         q6lYJyaR87n/ipD7scTVpxXFjg3/Rsu/t85PcQBRdrix/BMj5yKGjMQAmex0xqCpTp8Q
-         xc3fxCOntMwLzIuW6Q3XLsI5L6m9uWswOwdhYFvE6FR4MEn5B9l9xPcxjKiuZPtejdMz
-         nz3w==
+        bh=hVGYmXArXG8GIfrXzf15WvJ5KpD7Ng0lKVLODJ1EcMg=;
+        b=VNuFtQzu2pwPOug3u4uIiEihzfC8Ll6+3SX0rNG8rXpG9yPWPqnCfFd1uhVZOHu11C
+         39HTeFJkAyMXND2wx0RzSGaDgNvNb8ohh/f3fbB7rQWyQUPzsKdAm9Lpd/Y3nML9qVLZ
+         eWqfEIz373nLaAnpI0bXhf+sPaDYUWVfvKLuHepo47w2rwbmOzAeaqpRtPeamQmA2zVC
+         FOAjMAnou/QCqFZI/2Wq7mI/6BV7/EZ9too6gPOk6FNjp7Yp9aiByoLXJS4NKbmoYTGg
+         bJ5/rL1B9kHGKmluH5Z6mvrHFqKhpGLF45qqVS04nVMz6UTZo5m66YhPpDbQXb4FKJEw
+         krew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WlKH/pEjSh4EjyywKuXe02jLh+J0AViFsgBwKNgD2cU=;
-        b=p31YYKOpYYUtsJSWS4gCqtnobFch73e+ynokQcXgOuHVQ6/KhH5/4oToxO5QZjf2ek
-         amj2MKDByeBJYO0yqHtR+Ou8vOTRSszugeK9J2rMnZ0jHvE2nQtRpqLu3Rk7EEZ+Ojky
-         GXF3ttRI7UVwzY/gjH391R/bV4y2Iz6I885XU28MafqJiAXVdvBbyUU5CKuhM/5xO3jW
-         0+EJjOlGjioHuZRKYIF1Q+hT+tTkLm+GkfjHoLEzEEpbjgnLw4L7tpuLo6JvTy3hKM0q
-         jOXKlUrms2LXnbLSmrLRZqZ2PdUqmV3snPTvouEdcbCkM2+/Z3Blz2J4TtqNDFT5n/Gk
-         m5GA==
-X-Gm-Message-State: AOAM533I4GmoDXmJjEEGUaRU4JPRtYwMEA9P+fnTBHaOK5+6n//y9rWR
-        tVH2Cj89D6aR0OmIcsZFWrnvXmpf5Pt4QA==
-X-Google-Smtp-Source: ABdhPJwUpvfxwC9mIcyYHcGDDHcWfh0U0mOxvUT++6SaS1Gj2N3WbvEKZ6cAhDfhWfvLdU9PYabHZg==
-X-Received: by 2002:a05:6808:211a:: with SMTP id r26mr230462oiw.241.1643692832286;
-        Mon, 31 Jan 2022 21:20:32 -0800 (PST)
+        bh=hVGYmXArXG8GIfrXzf15WvJ5KpD7Ng0lKVLODJ1EcMg=;
+        b=UTyVdCvg3AUo2lWaTKN9rm97LPL7astu381bo7KNqx0qBHjjq+SPHHqZ1v2XQoe8Ax
+         OrqAMI0NGJMfbN1h9h1h4ZvgWZ1nAIQUCmz0hd61nN7r/ArMH910Zuo/aBmnGg19r0H9
+         nFYLr856Cm1xbsQEQaYHCOINqjYxsENsb6s+zABKTftvhC7yblj2/GdQTHe3N1c2snFb
+         3f7+Z+js8lkyOh88XtRESAdPz4L++QZxPS5hmxWCU4taKvOrEGHZiJnvsq9PnOAdazGl
+         5e0kep5tyGMkC5GegjRn8DHdwGRyL6/GEFony++dIJX9G/y3uZeX7Amp4T5DL06OfN8X
+         UmdQ==
+X-Gm-Message-State: AOAM530v/H/KvkMaouK4oWezNfY3YyUpAB8FPChdckWHIdveVYpe0FMY
+        LEygVDXBSKOJkgB+WvVbqsjP9Q==
+X-Google-Smtp-Source: ABdhPJw0rxP0aaD7SBSgIboiruNmEfyN88p/y60iO7CYjNuN2WP4yup7/68qbil1igVnoBMb+89TyQ==
+X-Received: by 2002:a05:6808:1248:: with SMTP id o8mr224207oiv.205.1643692833142;
+        Mon, 31 Jan 2022 21:20:33 -0800 (PST)
 Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id u3sm8193107ooh.19.2022.01.31.21.20.31
+        by smtp.gmail.com with ESMTPSA id u3sm8193107ooh.19.2022.01.31.21.20.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Jan 2022 21:20:31 -0800 (PST)
+        Mon, 31 Jan 2022 21:20:32 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
         David Heidelberg <david@ixit.cz>
 Cc:     devicetree@vger.kernel.org, ~okias/devicetree@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH] ARM: dts: qcom: fill missing power-domain-cells for gcc controllers
-Date:   Mon, 31 Jan 2022 23:19:40 -0600
-Message-Id: <164369277345.3095904.3228893403890968834.b4-ty@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        LogicalErzor <logicalerzor@gmail.com>
+Subject: Re: (subset) [PATCH] ARM: dts: qcom: fix gic_irq_domain_translate warnings for msm8960
+Date:   Mon, 31 Jan 2022 23:19:41 -0600
+Message-Id: <164369277344.3095904.15509491723672452794.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220108202719.82424-1-david@ixit.cz>
-References: <20220108202719.82424-1-david@ixit.cz>
+In-Reply-To: <20220108174229.60384-1-david@ixit.cz>
+References: <20220108174229.60384-1-david@ixit.cz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -66,15 +67,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 8 Jan 2022 21:27:18 +0100, David Heidelberg wrote:
-> Add missing #power-domain-cells to the clock controllers.
+On Sat, 8 Jan 2022 18:42:28 +0100, David Heidelberg wrote:
+> IRQ types blindly copied from very similar APQ8064.
+> 
+> Fixes warnings as:
+> WARNING: CPU: 0 PID: 1 at drivers/irqchip/irq-gic.c:1080 gic_irq_domain_translate+0x118/0x120
+> ...
 > 
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] ARM: dts: qcom: fill missing power-domain-cells for gcc controllers
-      commit: a23b9143286bf4ddd8cfe4126e8580ad85e98ca0
+[1/1] ARM: dts: qcom: fix gic_irq_domain_translate warnings for msm8960
+      commit: 6f7e221e7a5cfc3299616543fce42b36e631497b
 
 Best regards,
 -- 
