@@ -2,31 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BD1A4A7023
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Feb 2022 12:40:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 70EF04A7029
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Feb 2022 12:40:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343957AbiBBLkZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1343962AbiBBLkZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Wed, 2 Feb 2022 06:40:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59622 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343947AbiBBLkY (ORCPT
+        with ESMTP id S1343949AbiBBLkY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 2 Feb 2022 06:40:24 -0500
 Received: from mxd2.seznam.cz (mxd2.seznam.cz [IPv6:2a02:598:2::210])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71B8EC06173D;
-        Wed,  2 Feb 2022 03:40:22 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71C23C06173E;
+        Wed,  2 Feb 2022 03:40:23 -0800 (PST)
 Received: from email.seznam.cz
-        by email-smtpc4b.ng.seznam.cz (email-smtpc4b.ng.seznam.cz [10.23.13.105])
-        id 665689da3d58ddb367ff4584;
-        Wed, 02 Feb 2022 12:39:54 +0100 (CET)
+        by email-smtpc30b.ng.seznam.cz (email-smtpc30b.ng.seznam.cz [10.23.18.45])
+        id 350437586e0a633134adfb06;
+        Wed, 02 Feb 2022 12:39:55 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seznam.cz; s=beta;
-        t=1643801994; bh=5El4e8BmxQvTUX4huRlylfCVHnzIHTqfa1XUAqqV1ig=;
+        t=1643801995; bh=jE8BDDVqSXBeAAshBumYM28PZZjFepfDPpg0nlQv5ck=;
         h=Received:From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:
          References:MIME-Version:Content-Transfer-Encoding:X-szn-frgn:
          X-szn-frgc;
-        b=QqGTFCkVPIZMUSV25Svm7D0ijuedCTrUwsL80YAWwED9MidxmgqmdtenLu+G3YfJQ
-         vmd3WzKhXU9BLw/OQCXedQcG2HcO9uhMrDsUhO3j1AsI292vPqEQYzS2DcFpNb1a/6
-         hcWBEFQFGkIAVTMeH42ZVgvtm/EIVpPGGPPTdMTU=
+        b=XLuNWFP5yd9S4O+SiucnJW5lZ79Y/Bl4qfHHq22lmT2L3ulG1gf5Dp6EdW5fQLT0P
+         SAi4uTqKnk6LnxIi4Ijfo5rkABVZHUXGMPpw0QD70BHO8uRq8D/zrMw9BHMRHSU1vW
+         yB6CvflLRUxd7pzhiTblOSzQTTE5yetJfIkhN2HY=
 Received: from localhost.localdomain (ip-111-27.static.ccinternet.cz [147.161.27.111])
         by email-relay25.ng.seznam.cz (Seznam SMTPD 1.3.136) with ESMTP;
         Wed, 02 Feb 2022 12:39:51 +0100 (CET)  
@@ -43,15 +43,15 @@ Cc:     Linus Walleij <linus.walleij@linaro.org>,
         Saravana Kannan <saravanak@google.com>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, Michael Srba <Michael.Srba@seznam.cz>
-Subject: [PATCH v5 3/5] dt-bindings: bus: add device tree bindings for qcom,ssc-block-bus
-Date:   Wed,  2 Feb 2022 12:37:20 +0100
-Message-Id: <20220202113722.7550-3-michael.srba@seznam.cz>
+Subject: [PATCH v5 4/5] drivers: bus: add driver for initializing the SSC bus on (some) qcom SoCs
+Date:   Wed,  2 Feb 2022 12:37:21 +0100
+Message-Id: <20220202113722.7550-4-michael.srba@seznam.cz>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220202113722.7550-1-michael.srba@seznam.cz>
 References: <20220202113722.7550-1-michael.srba@seznam.cz>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-szn-frgn: <0aaf937c-8a2c-45d6-b5a3-a45587c2e1c2>
+X-szn-frgn: <c7518016-c9cf-4e1b-83a6-58feb9c88f90>
 X-szn-frgc: <0>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -64,176 +64,457 @@ the global address space. This bus (and the SSC block itself) is present
 on certain qcom SoCs.
 
 In typical configuration, this bus (as some of the clocks and registers
-that we need to manipulate) is not accessible to the OS, and the
-resources on this bus are indirectly accessed by communicating with a
-hexagon CPU core residing in the SSC block. In this configuration, the
-hypervisor is the one performing the bus initialization for the purposes
-of bringing the haxagon CPU core out of reset.
+that we need to manipulate) is not accessible to Linux, and the resources
+on this bus are indirectly accessed by communicating with a hexagon CPU
+core residing in the SSC block. In this configuration, the hypervisor is
+the one performing the bus initialization for the purposes of bringing
+the haxagon CPU core out of reset.
 
 However, it is possible to change the configuration, in which case this
-binding serves to allow the OS to initialize the bus.
+driver will initialize the bus.
+
+In combination with drivers for resources on the SSC bus, this driver can
+aid in debugging, and for example with a TLMM driver can be used to
+directly access SSC-dedicated GPIO pins, removing the need to commit
+to a particular usecase during hw design.
+
+Finally, until open firmware for the hexagon core is available, this
+approach allows for using sensors hooked up to SSC-dedicated GPIO pins
+on mainline Linux simply by utilizing the existing in-tree drivers for
+these sensors.
 
 Signed-off-by: Michael Srba <Michael.Srba@seznam.cz>
 ---
  CHANGES:
- - v2: fix issues caught by by dt-schema
- - v3: none
+ - v2: none
+ - v3: fix clang warning
  - v4: address the issues pointed out in the review
- - v5: clarify type of additional properties; remove ssc_tlmm node for now
+ - v5: none
 ---
- .../bindings/bus/qcom,ssc-block-bus.yaml      | 143 ++++++++++++++++++
- 1 file changed, 143 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/bus/qcom,ssc-block-bus.yaml
+ drivers/bus/Kconfig              |   6 +
+ drivers/bus/Makefile             |   1 +
+ drivers/bus/qcom-ssc-block-bus.c | 383 +++++++++++++++++++++++++++++++
+ 3 files changed, 390 insertions(+)
+ create mode 100644 drivers/bus/qcom-ssc-block-bus.c
 
-diff --git a/Documentation/devicetree/bindings/bus/qcom,ssc-block-bus.yaml b/Documentation/devicetree/bindings/bus/qcom,ssc-block-bus.yaml
+diff --git a/drivers/bus/Kconfig b/drivers/bus/Kconfig
+index 3c68e174a113..f2b2e3098491 100644
+--- a/drivers/bus/Kconfig
++++ b/drivers/bus/Kconfig
+@@ -173,6 +173,12 @@ config SUNXI_RSB
+ 	  with various RSB based devices, such as AXP223, AXP8XX PMICs,
+ 	  and AC100/AC200 ICs.
+ 
++config QCOM_SSC_BLOCK_BUS
++	bool "Qualcomm SSC Block Bus Init Driver"
++	  help
++	  Say y here to enable support for initializing the bus that connects the SSC block's internal
++	  bus to the cNoC on (some) qcom SoCs
++
+ config TEGRA_ACONNECT
+ 	tristate "Tegra ACONNECT Bus Driver"
+ 	depends on ARCH_TEGRA_210_SOC
+diff --git a/drivers/bus/Makefile b/drivers/bus/Makefile
+index 52c2f35a26a9..e6756e83a9c4 100644
+--- a/drivers/bus/Makefile
++++ b/drivers/bus/Makefile
+@@ -25,6 +25,7 @@ obj-$(CONFIG_OMAP_INTERCONNECT)	+= omap_l3_smx.o omap_l3_noc.o
+ 
+ obj-$(CONFIG_OMAP_OCP2SCP)	+= omap-ocp2scp.o
+ obj-$(CONFIG_QCOM_EBI2)		+= qcom-ebi2.o
++obj-$(CONFIG_QCOM_SSC_BLOCK_BUS)	+= qcom-ssc-block-bus.o
+ obj-$(CONFIG_SUN50I_DE2_BUS)	+= sun50i-de2.o
+ obj-$(CONFIG_SUNXI_RSB)		+= sunxi-rsb.o
+ obj-$(CONFIG_OF)		+= simple-pm-bus.o
+diff --git a/drivers/bus/qcom-ssc-block-bus.c b/drivers/bus/qcom-ssc-block-bus.c
 new file mode 100644
-index 000000000000..4044af0afda8
+index 000000000000..e489f5614e90
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/bus/qcom,ssc-block-bus.yaml
-@@ -0,0 +1,143 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/bus/qcom,ssc-block-bus.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
++++ b/drivers/bus/qcom-ssc-block-bus.c
+@@ -0,0 +1,383 @@
++// SPDX-License-Identifier: GPL-2.0-only
++// Copyright (c) 2021, Michael Srba
 +
-+title: The AHB Bus Providing a Global View of the SSC Block on (some) qcom SoCs
++#include <linux/clk.h>
++#include <linux/delay.h>
++#include <linux/io.h>
++#include <linux/mfd/syscon.h>
++#include <linux/module.h>
++#include <linux/of_platform.h>
++#include <linux/platform_device.h>
++#include <linux/pm_clock.h>
++#include <linux/pm_domain.h>
++#include <linux/pm_runtime.h>
++#include <linux/regmap.h>
++#include <linux/reset.h>
 +
-+maintainers:
-+  - Michael Srba <Michael.Srba@seznam.cz>
++/* AXI Halt Register Offsets */
++#define AXI_HALTREQ_REG			0x0
++#define AXI_HALTACK_REG			0x4
++#define AXI_IDLE_REG			0x8
 +
-+description: |
-+  This binding describes the dependencies (clocks, resets, power domains) which
-+  need to be turned on in a sequence before communication over the AHB bus
-+  becomes possible.
++static const char *const qcom_ssc_block_pd_names[] = {
++	"ssc_cx",
++	"ssc_mx"
++};
 +
-+  Additionally, the reg property is used to pass to the driver the location of
-+  two sadly undocumented registers which need to be poked as part of the sequence.
++struct qcom_ssc_block_bus_data {
++	int num_pds;
++	const char *const *pd_names;
++	struct device *pds[ARRAY_SIZE(qcom_ssc_block_pd_names)];
++	char __iomem *reg_mpm_sscaon_config0; // MPM - msm power manager; AON - always-on
++	char __iomem *reg_mpm_sscaon_config1; // that's as much as we know about these
++	struct regmap *halt_map;
++	u32 ssc_axi_halt;
++	struct clk *xo_clk;
++	struct clk *aggre2_clk;
++	struct clk *gcc_im_sleep_clk;
++	struct clk *aggre2_north_clk;
++	struct clk *ssc_xo_clk;
++	struct clk *ssc_ahbs_clk;
++	struct reset_control *ssc_bcr;
++	struct reset_control *ssc_reset;
++};
 +
-+properties:
-+  compatible:
-+    items:
-+      - const: qcom,msm8998-ssc-block-bus
-+      - const: qcom,ssc-block-bus
++static void reg32_set_bits(char __iomem *reg, u32 value)
++{
++	u32 tmp = ioread32(reg);
 +
-+  reg:
-+    description: |
-+      Shall contain the addresses of the SSCAON_CONFIG0 and SSCAON_CONFIG1
-+      registers
-+    minItems: 2
-+    maxItems: 2
++	iowrite32(tmp | value, reg);
++}
 +
-+  reg-names:
-+    items:
-+      - const: mpm_sscaon_config0
-+      - const: mpm_sscaon_config1
++static void reg32_clear_bits(char __iomem *reg, u32 value)
++{
++	u32 tmp = ioread32(reg);
 +
-+  '#address-cells':
-+    enum: [ 1, 2 ]
++	iowrite32(tmp & (~value), reg);
++}
 +
-+  '#size-cells':
-+    enum: [ 1, 2 ]
 +
-+  ranges: true
++static int qcom_ssc_block_bus_init(struct device *dev)
++{
++	int ret;
 +
-+  clocks:
-+    minItems: 6
-+    maxItems: 6
++	struct qcom_ssc_block_bus_data *data = dev_get_drvdata(dev);
 +
-+  clock-names:
-+    items:
-+      - const: xo
-+      - const: aggre2
-+      - const: gcc_im_sleep
-+      - const: aggre2_north
-+      - const: ssc_xo
-+      - const: ssc_ahbs
++	ret = clk_prepare_enable(data->xo_clk);
++	if (ret) {
++		dev_err(dev, "error enabling xo_clk: %d\n", ret);
++		goto err_xo_clk;
++	}
 +
-+  power-domains:
-+    description: Power domain phandles for the ssc_cx and ssc_mx power domains
-+    minItems: 2
-+    maxItems: 2
++	ret = clk_prepare_enable(data->aggre2_clk);
++	if (ret) {
++		dev_err(dev, "error enabling aggre2_clk: %d\n", ret);
++		goto err_aggre2_clk;
++	}
 +
-+  power-domain-names:
-+    items:
-+      - const: ssc_cx
-+      - const: ssc_mx
++	ret = clk_prepare_enable(data->gcc_im_sleep_clk);
++	if (ret) {
++		dev_err(dev, "error enabling gcc_im_sleep_clk: %d\n", ret);
++		goto err_gcc_im_sleep_clk;
++	}
 +
-+  resets:
-+    description: |
-+      Reset phandles for the ssc_reset and ssc_bcr resets (note: ssc_bcr is the
-+      branch control register associated with the ssc_xo and ssc_ahbs clocks)
-+    minItems: 2
-+    maxItems: 2
++	reg32_clear_bits(data->reg_mpm_sscaon_config0, BIT(4) | BIT(5));
++	reg32_clear_bits(data->reg_mpm_sscaon_config1, BIT(31));
 +
-+  reset-names:
-+    items:
-+      - const: ssc_reset
-+      - const: ssc_bcr
++	ret = clk_prepare_enable(data->aggre2_north_clk);
++	if (ret) {
++		dev_err(dev, "error enabling aggre2_north_clk: %d\n", ret);
++		goto err_aggre2_north_clk;
++	}
 +
-+  qcom,halt-regs:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    description: describes how to locate the ssc AXI halt register
-+    items:
-+      - items:
-+        - description: Phandle reference to a syscon representing TCSR
-+        - description: offset for the ssc AXI halt register
++	ret = reset_control_deassert(data->ssc_reset);
++	if (ret) {
++		dev_err(dev, "error deasserting ssc_reset: %d\n", ret);
++		goto err_ssc_reset;
++	}
 +
-+required:
-+  - compatible
-+  - reg
-+  - reg-names
-+  - '#address-cells'
-+  - '#size-cells'
-+  - ranges
-+  - clocks
-+  - clock-names
-+  - power-domains
-+  - power-domain-names
-+  - resets
-+  - reset-names
-+  - qcom,halt-regs
++	ret = reset_control_deassert(data->ssc_bcr);
++	if (ret) {
++		dev_err(dev, "error deasserting ssc_bcr: %d\n", ret);
++		goto err_ssc_bcr;
++	}
 +
-+additionalProperties:
-+  type: object
++	regmap_write(data->halt_map, data->ssc_axi_halt + AXI_HALTREQ_REG, 0);
 +
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-msm8998.h>
-+    #include <dt-bindings/clock/qcom,rpmcc.h>
-+    #include <dt-bindings/power/qcom-rpmpd.h>
++	ret = clk_prepare_enable(data->ssc_xo_clk);
++	if (ret) {
++		dev_err(dev, "error deasserting ssc_xo_clk: %d\n", ret);
++		goto err_ssc_xo_clk;
++	}
 +
-+    soc {
-+        #address-cells = <1>;
-+        #size-cells = <1>;
++	ret = clk_prepare_enable(data->ssc_ahbs_clk);
++	if (ret) {
++		dev_err(dev, "error deasserting ssc_ahbs_clk: %d\n", ret);
++		goto err_ssc_ahbs_clk;
++	}
 +
-+        // devices under this node are physically located in the SSC block, connected to an ssc-internal bus;
-+        ssc_ahb_slave: bus@10ac008 {
-+            #address-cells = <1>;
-+            #size-cells = <1>;
-+            ranges;
++	return 0;
 +
-+            compatible = "qcom,msm8998-ssc-block-bus", "qcom,ssc-block-bus";
-+            reg = <0x10ac008 0x4>, <0x10ac010 0x4>;
-+            reg-names = "mpm_sscaon_config0", "mpm_sscaon_config1";
++err_ssc_ahbs_clk:
++	clk_disable(data->ssc_xo_clk);
 +
-+            clocks = <&xo>,
-+                     <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
-+                     <&gcc GCC_IM_SLEEP>,
-+                     <&gcc AGGRE2_SNOC_NORTH_AXI>,
-+                     <&gcc SSC_XO>,
-+                     <&gcc SSC_CNOC_AHBS_CLK>;
-+            clock-names = "xo", "aggre2", "gcc_im_sleep", "aggre2_north", "ssc_xo", "ssc_ahbs";
++err_ssc_xo_clk:
++	regmap_write(data->halt_map, data->ssc_axi_halt + AXI_HALTREQ_REG, 1);
 +
-+            resets = <&gcc GCC_SSC_RESET>, <&gcc GCC_SSC_BCR>;
-+            reset-names = "ssc_reset", "ssc_bcr";
++	reset_control_assert(data->ssc_bcr);
 +
-+            power-domains = <&rpmpd MSM8998_SSCCX>, <&rpmpd MSM8998_SSCMX>;
-+            power-domain-names = "ssc_cx", "ssc_mx";
++err_ssc_bcr:
++	reset_control_assert(data->ssc_reset);
 +
-+            qcom,halt-regs = <&tcsr_mutex_regs 0x26000>;
-+        };
-+    };
++err_ssc_reset:
++	clk_disable(data->aggre2_north_clk);
++
++err_aggre2_north_clk:
++	reg32_set_bits(data->reg_mpm_sscaon_config0, BIT(4) | BIT(5));
++	reg32_set_bits(data->reg_mpm_sscaon_config1, BIT(31));
++
++	clk_disable(data->gcc_im_sleep_clk);
++
++err_gcc_im_sleep_clk:
++	clk_disable(data->aggre2_clk);
++
++err_aggre2_clk:
++	clk_disable(data->xo_clk);
++
++err_xo_clk:
++	return ret;
++}
++
++static void qcom_ssc_block_bus_deinit(struct device *dev)
++{
++	int ret;
++
++	struct qcom_ssc_block_bus_data *data = dev_get_drvdata(dev);
++
++	clk_disable(data->ssc_xo_clk);
++	clk_disable(data->ssc_ahbs_clk);
++
++	ret = reset_control_assert(data->ssc_bcr);
++	if (ret)
++		dev_err(dev, "error asserting ssc_bcr: %d\n", ret);
++
++	regmap_write(data->halt_map, data->ssc_axi_halt + AXI_HALTREQ_REG, 1);
++
++	reg32_set_bits(data->reg_mpm_sscaon_config1, BIT(31));
++	reg32_set_bits(data->reg_mpm_sscaon_config0, BIT(4) | BIT(5));
++
++	ret = reset_control_assert(data->ssc_reset);
++	if (ret)
++		dev_err(dev, "error asserting ssc_reset: %d\n", ret);
++
++	clk_disable(data->gcc_im_sleep_clk);
++
++	clk_disable(data->aggre2_north_clk);
++
++	clk_disable(data->aggre2_clk);
++	clk_disable(data->xo_clk);
++}
++
++
++static int qcom_ssc_block_bus_pds_attach(struct device *dev, struct device **pds,
++					 const char *const *pd_names, size_t num_pds)
++{
++	int ret;
++	int i;
++
++	for (i = 0; i < num_pds; i++) {
++		pds[i] = dev_pm_domain_attach_by_name(dev, pd_names[i]);
++		if (IS_ERR_OR_NULL(pds[i])) {
++			ret = PTR_ERR(pds[i]) ? : -ENODATA;
++			goto unroll_attach;
++		}
++	}
++
++	return num_pds;
++
++unroll_attach:
++	for (i--; i >= 0; i--)
++		dev_pm_domain_detach(pds[i], false);
++
++	return ret;
++};
++
++static void qcom_ssc_block_bus_pds_detach(struct device *dev, struct device **pds, size_t num_pds)
++{
++	int i;
++
++	for (i = 0; i < num_pds; i++)
++		dev_pm_domain_detach(pds[i], false);
++}
++
++static int qcom_ssc_block_bus_pds_enable(struct device **pds, size_t num_pds)
++{
++	int ret;
++	int i;
++
++	for (i = 0; i < num_pds; i++) {
++		dev_pm_genpd_set_performance_state(pds[i], INT_MAX);
++		ret = pm_runtime_get_sync(pds[i]);
++		if (ret < 0)
++			goto unroll_pd_votes;
++	}
++
++	return 0;
++
++unroll_pd_votes:
++	for (i--; i >= 0; i--) {
++		dev_pm_genpd_set_performance_state(pds[i], 0);
++		pm_runtime_put(pds[i]);
++	}
++
++	return ret;
++};
++
++static void qcom_ssc_block_bus_pds_disable(struct device **pds, size_t num_pds)
++{
++	int i;
++
++	for (i = 0; i < num_pds; i++) {
++		dev_pm_genpd_set_performance_state(pds[i], 0);
++		pm_runtime_put(pds[i]);
++	}
++}
++
++static int qcom_ssc_block_bus_probe(struct platform_device *pdev)
++{
++	struct qcom_ssc_block_bus_data *data;
++	struct device_node *np = pdev->dev.of_node;
++	struct of_phandle_args halt_args;
++	struct resource *res;
++	int ret;
++
++	data = devm_kzalloc(&pdev->dev, sizeof(*data), GFP_KERNEL);
++	if (!data)
++		return -ENOMEM;
++
++	platform_set_drvdata(pdev, data);
++
++	data->pd_names = qcom_ssc_block_pd_names;
++	data->num_pds = ARRAY_SIZE(qcom_ssc_block_pd_names);
++
++	// power domains
++	ret = qcom_ssc_block_bus_pds_attach(&pdev->dev, data->pds, data->pd_names, data->num_pds);
++	if (ret < 0)
++		return dev_err_probe(&pdev->dev, ret, "error when attaching power domains\n");
++
++	ret = qcom_ssc_block_bus_pds_enable(data->pds, data->num_pds);
++	if (ret < 0)
++		return dev_err_probe(&pdev->dev, ret, "error when enabling power domains\n");
++
++	// the meaning of the bits in these two registers is sadly not documented,
++	// the set/clear operations are just copying what qcom does
++	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mpm_sscaon_config0");
++	data->reg_mpm_sscaon_config0 = devm_ioremap_resource(&pdev->dev, res);
++	if (IS_ERR(data->reg_mpm_sscaon_config0))
++		return dev_err_probe(&pdev->dev, PTR_ERR(data->reg_mpm_sscaon_config0),
++				     "Failed to ioremap mpm_sscaon_config0\n");
++
++	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mpm_sscaon_config1");
++	data->reg_mpm_sscaon_config1 = devm_ioremap_resource(&pdev->dev, res);
++	if (IS_ERR(data->reg_mpm_sscaon_config1))
++		return dev_err_probe(&pdev->dev, PTR_ERR(data->reg_mpm_sscaon_config1),
++				     "Failed to ioremap mpm_sscaon_config1\n");
++
++	// resets
++	data->ssc_bcr = devm_reset_control_get_exclusive(&pdev->dev, "ssc_bcr");
++	if (IS_ERR(data->ssc_bcr))
++		return dev_err_probe(&pdev->dev, PTR_ERR(data->ssc_bcr),
++				     "Failed to acquire reset: scc_bcr\n");
++
++	data->ssc_reset = devm_reset_control_get_exclusive(&pdev->dev, "ssc_reset");
++	if (IS_ERR(data->ssc_reset))
++		return dev_err_probe(&pdev->dev, PTR_ERR(data->ssc_reset),
++				     "Failed to acquire reset: ssc_reset:\n");
++
++	// clocks
++	data->xo_clk = devm_clk_get(&pdev->dev, "xo");
++	if (IS_ERR(data->xo_clk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(data->xo_clk),
++				     "Failed to get clock: xo\n");
++
++	data->aggre2_clk = devm_clk_get(&pdev->dev, "aggre2");
++	if (IS_ERR(data->aggre2_clk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(data->aggre2_clk),
++				     "Failed to get clock: aggre2\n");
++
++	data->gcc_im_sleep_clk = devm_clk_get(&pdev->dev, "gcc_im_sleep");
++	if (IS_ERR(data->gcc_im_sleep_clk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(data->gcc_im_sleep_clk),
++				     "Failed to get clock: gcc_im_sleep\n");
++
++	data->aggre2_north_clk = devm_clk_get(&pdev->dev, "aggre2_north");
++	if (IS_ERR(data->aggre2_north_clk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(data->aggre2_north_clk),
++				     "Failed to get clock: aggre2_north\n");
++
++	data->ssc_xo_clk = devm_clk_get(&pdev->dev, "ssc_xo");
++	if (IS_ERR(data->ssc_xo_clk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(data->ssc_xo_clk),
++				     "Failed to get clock: ssc_xo\n");
++
++	data->ssc_ahbs_clk = devm_clk_get(&pdev->dev, "ssc_ahbs");
++	if (IS_ERR(data->ssc_ahbs_clk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(data->ssc_ahbs_clk),
++				     "Failed to get clock: ssc_ahbs\n");
++
++	ret = of_parse_phandle_with_fixed_args(pdev->dev.of_node, "qcom,halt-regs", 1, 0,
++					       &halt_args);
++	if (ret < 0)
++		return dev_err_probe(&pdev->dev, ret, "Failed to parse qcom,halt-regs\n");
++
++	data->halt_map = syscon_node_to_regmap(halt_args.np);
++	of_node_put(halt_args.np);
++	if (IS_ERR(data->halt_map))
++		return PTR_ERR(data->halt_map);
++
++	data->ssc_axi_halt = halt_args.args[0];
++
++	qcom_ssc_block_bus_init(&pdev->dev);
++
++	of_platform_populate(np, NULL, NULL, &pdev->dev);
++
++	return 0;
++}
++
++static int qcom_ssc_block_bus_remove(struct platform_device *pdev)
++{
++	struct qcom_ssc_block_bus_data *data = platform_get_drvdata(pdev);
++
++	qcom_ssc_block_bus_deinit(&pdev->dev);
++
++	iounmap(data->reg_mpm_sscaon_config0);
++	iounmap(data->reg_mpm_sscaon_config1);
++
++	qcom_ssc_block_bus_pds_disable(data->pds, data->num_pds);
++	qcom_ssc_block_bus_pds_detach(&pdev->dev, data->pds, data->num_pds);
++	pm_runtime_disable(&pdev->dev);
++	pm_clk_destroy(&pdev->dev);
++
++	return 0;
++}
++
++static const struct of_device_id qcom_ssc_block_bus_of_match[] = {
++	{ .compatible = "qcom,ssc-block-bus", },
++	{ /* sentinel */ }
++};
++MODULE_DEVICE_TABLE(of, qcom_ssc_block_bus_of_match);
++
++static struct platform_driver qcom_ssc_block_bus_driver = {
++	.probe = qcom_ssc_block_bus_probe,
++	.remove = qcom_ssc_block_bus_remove,
++	.driver = {
++		.name = "qcom-ssc-block-bus",
++		.of_match_table = qcom_ssc_block_bus_of_match,
++	},
++};
++
++module_platform_driver(qcom_ssc_block_bus_driver);
++
++MODULE_DESCRIPTION("A driver for handling the init sequence needed for accessing the SSC block on (some) qcom SoCs over AHB");
++MODULE_AUTHOR("Michael Srba <Michael.Srba@seznam.cz>");
++MODULE_LICENSE("GPL v2");
 -- 
 2.34.1
 
