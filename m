@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B66E84A7A3B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Feb 2022 22:24:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EF174A7A3D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Feb 2022 22:24:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244666AbiBBVYS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Feb 2022 16:24:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53022 "EHLO
+        id S1347494AbiBBVYT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Feb 2022 16:24:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347444AbiBBVYQ (ORCPT
+        with ESMTP id S1347487AbiBBVYQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 2 Feb 2022 16:24:16 -0500
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE250C06174E
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Feb 2022 13:24:14 -0800 (PST)
-Received: by mail-pf1-x436.google.com with SMTP id i30so404808pfk.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Feb 2022 13:24:14 -0800 (PST)
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9384CC061758
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Feb 2022 13:24:16 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id q63so542601pja.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Feb 2022 13:24:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bVsy7mC6OV+ZTsuxBz1mInaazBNug7TJhIqUVGCCLhk=;
-        b=kjWq5FRKAbdMqgqWGIjewgpnPLPgdl86CapN4dR3ymRmPRue1Ctp3PMge7SUPhP6Mo
-         TkZtMJZKiLs/UaQRfdh2N8SLHAFoUTqXVtNieUprqXxJfRLR8G5P6WGdcWkaVa89+7KC
-         FoedlrfFlbgpw+h4pyM8tsZQQH6uMlNPaH4CY=
+        bh=RR+ThUFVWTf4G7m8j1PiXLKZYfrCRssRc6rFuRuA7Cg=;
+        b=Lazeas4oXeIhjdgnNWgPcPxpLUvqGW/Cu9Pf1LZ82E/5h+MMrzFo3+mYJSVvSf5obf
+         2Rl9mjJ6pVLeTzfH9xLXc1X/NWNT8kB5HLaRV7kCpyOVRto2iLbGl6X67nPeJnQDTDGL
+         sqRr634lr1WNhCj/jf4Z8f1hxe2YykPt0vLy0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bVsy7mC6OV+ZTsuxBz1mInaazBNug7TJhIqUVGCCLhk=;
-        b=7J8VElHV8UJ0/e8WD8CnN2w+rPHSGGg+pYNEKAxCL3mcAYsEYi3usyLekyzwkVkh9m
-         5Ow2P//g5XBCjwmklJQd5Tb2L4rvUZx68d6pKrCpSxx5ZY1WuQLKAkTyYm2UY0OJZFW4
-         0wf+p85UGx6YRGi37B+Ljn4yQtpY6Mp0Dpv5fT97ZEJ7BTSb+njNg/jU/5fkWSaNbH5F
-         k6o38sf7cJq6j6JQraCjtxgn27aZf7fhMJrNaTXT6lR0vd1Kk26ohdS3ilop3Y2TDqXs
-         zlih4N0vAdFazB0Jg/aocmblPz2Z7iv2O4krmFwMB+X00D1a3wkccSr7nVOk04mZ70Ik
-         CjrQ==
-X-Gm-Message-State: AOAM530L481SAoHgEIXrpAELm/MnYBcoKU1rzyuxrvSfM3xSA5liNWi2
-        JfUK5926HjbSPquMpBxUY6lqmg==
-X-Google-Smtp-Source: ABdhPJzXn9MxY83qUZRRch/YRy6F25vBzkegCXgRiqWSKcNcpiOfvYbbRC1pqmzeFm+im8dqVcHNHw==
-X-Received: by 2002:a05:6a00:1345:: with SMTP id k5mr31488525pfu.37.1643837054360;
-        Wed, 02 Feb 2022 13:24:14 -0800 (PST)
+        bh=RR+ThUFVWTf4G7m8j1PiXLKZYfrCRssRc6rFuRuA7Cg=;
+        b=QrErUTtuiuuF7HFUe7oIS0fIgkZJi/OawMtPd5Bov3J9k3Silwd6o1e0Eh61IE/keV
+         XPKsoKZYVzUWBoNh0fNVbsq6/pzK2wM6JfcgKmWaefHsqaVoVYYy3LgruRIe7LHMtsmg
+         vAdN6ddXTnyCDMHrTdRZnVKfieSx8Y+Evpuq1niVxJRL1Ap227a4U+M22FoF77mMTTT7
+         yaXR0SKjLvf/Iq1d2vZjWRiW7/OQyBMBYO19Y5o94lUzrqtDwhEh+kW1vb+y88A+Fcg5
+         PSzhDSwLajGKzIBbeP7JvQQ496od1pLnR7S2LIC8OLLAksCsXyoY8OVhoAwrpS0WKPWt
+         RCyg==
+X-Gm-Message-State: AOAM530cIpO4oA9jJ7oAAp4YumZBLt+d02lBhJkJtsNypirmXl0mo17c
+        bhDr1wzQVToiJFL8HHIyKPv5GQ==
+X-Google-Smtp-Source: ABdhPJzpyOZ0frHuXehgPmWm1noxfZg4/0G0SpYwD6kaD5rTrw9wQvLbC4KGmzkG1e9mPkgH9QzcBA==
+X-Received: by 2002:a17:90b:390a:: with SMTP id ob10mr10382545pjb.110.1643837055792;
+        Wed, 02 Feb 2022 13:24:15 -0800 (PST)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:f1c4:10b6:b4ef:16e5])
-        by smtp.gmail.com with ESMTPSA id on9sm7627983pjb.16.2022.02.02.13.24.13
+        by smtp.gmail.com with ESMTPSA id on9sm7627983pjb.16.2022.02.02.13.24.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Feb 2022 13:24:13 -0800 (PST)
+        Wed, 02 Feb 2022 13:24:15 -0800 (PST)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     pmaliset@codeaurora.org, mka@chromium.org,
@@ -57,9 +57,9 @@ Cc:     pmaliset@codeaurora.org, mka@chromium.org,
         Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 03/14] arm64: dts: qcom: sc7280: Properly sort sdc pinctrl lines
-Date:   Wed,  2 Feb 2022 13:23:37 -0800
-Message-Id: <20220202132301.v3.3.I6ae594129a8ad3d18af9f5ebffd895b4f6353a0a@changeid>
+Subject: [PATCH v3 04/14] arm64: dts: qcom: sc7280: Clean up sdc1 / sdc2 pinctrl
+Date:   Wed,  2 Feb 2022 13:23:38 -0800
+Message-Id: <20220202132301.v3.4.I79baad7f52351aafb470f8b21a9fa79d7031ad6a@changeid>
 X-Mailer: git-send-email 2.35.0.rc2.247.g8bbb082509-goog
 In-Reply-To: <20220202212348.1391534-1-dianders@chromium.org>
 References: <20220202212348.1391534-1-dianders@chromium.org>
@@ -69,191 +69,441 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The sdc1 / sdc2 pinctrl lines were randomly stuffed in the middle of
-the qup pinctrl lines. Sort them properly. This is a no-op
-change. Just code movement.
+This patch makes a few improvements to the way that sdc1 / sdc2
+pinctrl is specified on sc7280:
+
+1. There's no reason to "group" the sdc pins into one overarching node
+and there's a downside: we have to replicate the hierarchy in the
+board device tree files. Let's clean this up.
+
+2. There's really not a lot of reason not to list the "pinctrl" for
+sdc1 (eMMC) in the SoC dtsi file. These aren't GPIO pins and
+everyone's going to specify the same pins.
+
+3. Even though it's likely that boards will need to override pinctrl
+for sdc2 (SD card) to add the card detect GPIO, we can be symmetric
+and add it to the SoC dsti file.
+
+4. Let's get rid of the word "on" from the normal config and add a
+"sleep" suffix to the sleep config. This looks cleaner to me.
+
+This is intended to be a no-op change but it could plausibly change
+behavior depending on how the pinctrl code parses things. One thing to
+note is that "SD card detect" is explicitly listed now as keeping its
+pull enabled in sleep since we still want to detect card insertions
+even if the controller is suspended (because no card is inserted). The
+pinctrl framework likely did this anyway, but it's nice to see it
+explicit.
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 ---
 
-(no changes since v1)
+Changes in v3:
+- Removed extra blank lines
 
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 154 +++++++++++++--------------
- 1 file changed, 77 insertions(+), 77 deletions(-)
+ .../qcom/sc7280-herobrine-herobrine-r0.dts    |  73 +++++------
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      |  91 +++++++-------
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          | 117 +++++++++---------
+ 3 files changed, 133 insertions(+), 148 deletions(-)
 
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dts
+index f159b5a6d7ef..918352c097bc 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dts
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dts
+@@ -676,9 +676,6 @@ &qupv3_id_1 {
+ &sdhc_1 {
+ 	status = "okay";
+ 
+-	pinctrl-names = "default", "sleep";
+-	pinctrl-0 = <&sdc1_on>;
+-	pinctrl-1 = <&sdc1_off>;
+ 	vmmc-supply = <&pp2950_l7b>;
+ 	vqmmc-supply = <&pp1800_l19b>;
+ };
+@@ -686,9 +683,8 @@ &sdhc_1 {
+ &sdhc_2 {
+ 	status = "okay";
+ 
+-	pinctrl-names = "default", "sleep";
+-	pinctrl-0 = <&sdc2_on>;
+-	pinctrl-1 = <&sdc2_off>;
++	pinctrl-0 = <&sdc2_clk>, <&sdc2_cmd>, <&sdc2_data>, <&sd_cd>;
++	pinctrl-1 = <&sdc2_clk_sleep>, <&sdc2_cmd_sleep>, <&sdc2_data_sleep>, <&sd_cd>;
+ 	vmmc-supply = <&pp2950_l9c>;
+ 	vqmmc-supply = <&ppvar_l6c>;
+ 
+@@ -883,47 +879,38 @@ &qup_uart7_rx {
+ 	bias-pull-up;
+ };
+ 
+-&sdc1_on {
+-	clk {
+-		bias-disable;
+-		drive-strength = <16>;
+-	};
+-
+-	cmd {
+-		bias-pull-up;
+-		drive-strength = <10>;
+-	};
++&sdc1_clk {
++	bias-disable;
++	drive-strength = <16>;
++};
+ 
+-	data {
+-		bias-pull-up;
+-		drive-strength = <10>;
+-	};
++&sdc1_cmd {
++	bias-pull-up;
++	drive-strength = <10>;
++};
+ 
+-	rclk {
+-		bias-pull-down;
+-	};
++&sdc1_data {
++	bias-pull-up;
++	drive-strength = <10>;
+ };
+ 
+-&sdc2_on {
+-	clk {
+-		bias-disable;
+-		drive-strength = <16>;
+-	};
++&sdc1_rclk {
++	bias-pull-down;
++};
+ 
+-	cmd {
+-		bias-pull-up;
+-		drive-strength = <10>;
+-	};
++&sdc2_clk {
++	bias-disable;
++	drive-strength = <16>;
++};
+ 
+-	data {
+-		bias-pull-up;
+-		drive-strength = <10>;
+-	};
++&sdc2_cmd {
++	bias-pull-up;
++	drive-strength = <10>;
++};
+ 
+-	sd-cd {
+-		pins = "gpio91";
+-		bias-pull-up;
+-	};
++&sdc2_data {
++	bias-pull-up;
++	drive-strength = <10>;
+ };
+ 
+ /* PINCTRL - board-specific pinctrl */
+@@ -1311,6 +1298,12 @@ qup_uart7_sleep_tx: qup-uart7-sleep-tx {
+ 		bias-pull-up;
+ 	};
+ 
++	sd_cd: sd-cd {
++		pins = "gpio91";
++		function = "gpio";
++		bias-pull-up;
++	};
++
+ 	tp_int_odl: tp-int-odl {
+ 		pins = "gpio102";
+ 		function = "gpio";
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+index 78da9ac983db..7a987bc9b758 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+@@ -278,10 +278,6 @@ &qupv3_id_1 {
+ &sdhc_1 {
+ 	status = "okay";
+ 
+-	pinctrl-names = "default", "sleep";
+-	pinctrl-0 = <&sdc1_on>;
+-	pinctrl-1 = <&sdc1_off>;
+-
+ 	non-removable;
+ 	no-sd;
+ 	no-sdio;
+@@ -293,9 +289,8 @@ &sdhc_1 {
+ &sdhc_2 {
+ 	status = "okay";
+ 
+-	pinctrl-names = "default", "sleep";
+-	pinctrl-0 = <&sdc2_on>;
+-	pinctrl-1 = <&sdc2_off>;
++	pinctrl-0 = <&sdc2_clk>, <&sdc2_cmd>, <&sdc2_data>, <&sd_cd>;
++	pinctrl-1 = <&sdc2_clk_sleep>, <&sdc2_cmd_sleep>, <&sdc2_data_sleep>, <&sd_cd>;
+ 
+ 	vmmc-supply = <&vreg_l9c_2p9>;
+ 	vqmmc-supply = <&vreg_l6c_2p9>;
+@@ -424,6 +419,40 @@ &qup_uart7_rx {
+ 	bias-pull-up;
+ };
+ 
++&sdc1_clk {
++	bias-disable;
++	drive-strength = <16>;
++};
++
++&sdc1_cmd {
++	bias-pull-up;
++	drive-strength = <10>;
++};
++
++&sdc1_data {
++	bias-pull-up;
++	drive-strength = <10>;
++};
++
++&sdc1_rclk {
++	bias-pull-down;
++};
++
++&sdc2_clk {
++	bias-disable;
++	drive-strength = <16>;
++};
++
++&sdc2_cmd {
++	bias-pull-up;
++	drive-strength = <10>;
++};
++
++&sdc2_data {
++	bias-pull-up;
++	drive-strength = <10>;
++};
++
+ &tlmm {
+ 	bt_en: bt-en {
+ 		pins = "gpio85";
+@@ -496,53 +525,17 @@ qup_uart7_sleep_rx: qup-uart7-sleep-rx {
+ 		bias-pull-up;
+ 	};
+ 
+-	sw_ctrl: sw-ctrl {
+-		pins = "gpio86";
++	sd_cd: sd-cd {
++		pins = "gpio91";
+ 		function = "gpio";
+-		input-enable;
+-		bias-pull-down;
+-	};
+-};
+-
+-&sdc1_on {
+-	clk {
+-		bias-disable;
+-		drive-strength = <16>;
+-	};
+-
+-	cmd {
+ 		bias-pull-up;
+-		drive-strength = <10>;
+ 	};
+ 
+-	data {
+-		bias-pull-up;
+-		drive-strength = <10>;
+-	};
+-
+-	rclk {
++	sw_ctrl: sw-ctrl {
++		pins = "gpio86";
++		function = "gpio";
++		input-enable;
+ 		bias-pull-down;
+ 	};
+ };
+ 
+-&sdc2_on {
+-	clk {
+-		bias-disable;
+-		drive-strength = <16>;
+-	};
+-
+-	cmd {
+-		bias-pull-up;
+-		drive-strength = <10>;
+-	};
+-
+-	data {
+-		bias-pull-up;
+-		drive-strength = <10>;
+-	};
+-
+-	sd-cd {
+-		pins = "gpio91";
+-		bias-pull-up;
+-	};
+-};
 diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index d4009cc0bb78..40cb414bc377 100644
+index 40cb414bc377..5b1e23991a6a 100644
 --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -3783,83 +3783,6 @@ qup_uart7_rx: qup-uart7-rx {
- 				function = "qup07";
+@@ -616,6 +616,9 @@ qfprom: efuse@784000 {
+ 
+ 		sdhc_1: sdhci@7c4000 {
+ 			compatible = "qcom,sc7280-sdhci", "qcom,sdhci-msm-v5";
++			pinctrl-names = "default", "sleep";
++			pinctrl-0 = <&sdc1_clk>, <&sdc1_cmd>, <&sdc1_data>, <&sdc1_rclk>;
++			pinctrl-1 = <&sdc1_clk_sleep>, <&sdc1_cmd_sleep>, <&sdc1_data_sleep>, <&sdc1_rclk_sleep>;
+ 			status = "disabled";
+ 
+ 			reg = <0 0x007c4000 0 0x1000>,
+@@ -2425,6 +2428,9 @@ apss_merge_funnel_in: endpoint {
+ 
+ 		sdhc_2: sdhci@8804000 {
+ 			compatible = "qcom,sc7280-sdhci", "qcom,sdhci-msm-v5";
++			pinctrl-names = "default", "sleep";
++			pinctrl-0 = <&sdc2_clk>, <&sdc2_cmd>, <&sdc2_data>;
++			pinctrl-1 = <&sdc2_clk_sleep>, <&sdc2_cmd_sleep>, <&sdc2_data_sleep>;
+ 			status = "disabled";
+ 
+ 			reg = <0 0x08804000 0 0x1000>;
+@@ -3943,81 +3949,74 @@ qup_uart15_rx: qup-uart15-rx {
+ 				function = "qup17";
  			};
  
 -			sdc1_on: sdc1-on {
 -				clk {
 -					pins = "sdc1_clk";
 -				};
--
++			sdc1_clk: sdc1-clk {
++				pins = "sdc1_clk";
++			};
+ 
 -				cmd {
 -					pins = "sdc1_cmd";
 -				};
--
++			sdc1_cmd: sdc1-cmd {
++				pins = "sdc1_cmd";
++			};
+ 
 -				data {
 -					pins = "sdc1_data";
 -				};
--
++			sdc1_data: sdc1-data {
++				pins = "sdc1_data";
++			};
+ 
 -				rclk {
 -					pins = "sdc1_rclk";
 -				};
--			};
--
++			sdc1_rclk: sdc1-rclk {
++				pins = "sdc1_rclk";
+ 			};
+ 
 -			sdc1_off: sdc1-off {
 -				clk {
 -					pins = "sdc1_clk";
 -					drive-strength = <2>;
 -					bias-bus-hold;
 -				};
--
++			sdc1_clk_sleep: sdc1-clk-sleep {
++				pins = "sdc1_clk";
++				drive-strength = <2>;
++				bias-bus-hold;
++			};
+ 
 -				cmd {
 -					pins = "sdc1_cmd";
 -					drive-strength = <2>;
 -					bias-bus-hold;
 -				};
--
++			sdc1_cmd_sleep: sdc1-cmd-sleep {
++				pins = "sdc1_cmd";
++				drive-strength = <2>;
++				bias-bus-hold;
++			};
+ 
 -				data {
 -					pins = "sdc1_data";
 -					drive-strength = <2>;
 -					bias-bus-hold;
 -				};
--
++			sdc1_data_sleep: sdc1-data-sleep {
++				pins = "sdc1_data";
++				drive-strength = <2>;
++				bias-bus-hold;
++			};
+ 
 -				rclk {
 -					pins = "sdc1_rclk";
 -					bias-bus-hold;
 -				};
--			};
--
++			sdc1_rclk_sleep: sdc1-rclk-sleep {
++				pins = "sdc1_rclk";
++				drive-strength = <2>;
++				bias-bus-hold;
+ 			};
+ 
 -			sdc2_on: sdc2-on {
 -				clk {
 -					pins = "sdc2_clk";
 -				};
--
++			sdc2_clk: sdc2-clk {
++				pins = "sdc2_clk";
++			};
+ 
 -				cmd {
 -					pins = "sdc2_cmd";
 -				};
--
++			sdc2_cmd: sdc2-cmd {
++				pins = "sdc2_cmd";
++			};
+ 
 -				data {
 -					pins = "sdc2_data";
 -				};
--			};
--
++			sdc2_data: sdc2-data {
++				pins = "sdc2_data";
+ 			};
+ 
 -			sdc2_off: sdc2-off {
 -				clk {
 -					pins = "sdc2_clk";
 -					drive-strength = <2>;
 -					bias-bus-hold;
 -				};
--
++			sdc2_clk_sleep: sdc2-clk-sleep {
++				pins = "sdc2_clk";
++				drive-strength = <2>;
++				bias-bus-hold;
++			};
+ 
 -				cmd {
 -					pins ="sdc2_cmd";
 -					drive-strength = <2>;
 -					bias-bus-hold;
 -				};
--
++			sdc2_cmd_sleep: sdc2-cmd-sleep {
++				pins = "sdc2_cmd";
++				drive-strength = <2>;
++				bias-bus-hold;
++			};
+ 
 -				data {
 -					pins ="sdc2_data";
 -					drive-strength = <2>;
 -					bias-bus-hold;
 -				};
--			};
--
- 			qup_uart8_cts: qup-uart8-cts {
- 				pins = "gpio32";
- 				function = "qup10";
-@@ -4019,6 +3942,83 @@ qup_uart15_rx: qup-uart15-rx {
- 				pins = "gpio63";
- 				function = "qup17";
++			sdc2_data_sleep: sdc2-data-sleep {
++				pins = "sdc2_data";
++				drive-strength = <2>;
++				bias-bus-hold;
  			};
-+
-+			sdc1_on: sdc1-on {
-+				clk {
-+					pins = "sdc1_clk";
-+				};
-+
-+				cmd {
-+					pins = "sdc1_cmd";
-+				};
-+
-+				data {
-+					pins = "sdc1_data";
-+				};
-+
-+				rclk {
-+					pins = "sdc1_rclk";
-+				};
-+			};
-+
-+			sdc1_off: sdc1-off {
-+				clk {
-+					pins = "sdc1_clk";
-+					drive-strength = <2>;
-+					bias-bus-hold;
-+				};
-+
-+				cmd {
-+					pins = "sdc1_cmd";
-+					drive-strength = <2>;
-+					bias-bus-hold;
-+				};
-+
-+				data {
-+					pins = "sdc1_data";
-+					drive-strength = <2>;
-+					bias-bus-hold;
-+				};
-+
-+				rclk {
-+					pins = "sdc1_rclk";
-+					bias-bus-hold;
-+				};
-+			};
-+
-+			sdc2_on: sdc2-on {
-+				clk {
-+					pins = "sdc2_clk";
-+				};
-+
-+				cmd {
-+					pins = "sdc2_cmd";
-+				};
-+
-+				data {
-+					pins = "sdc2_data";
-+				};
-+			};
-+
-+			sdc2_off: sdc2-off {
-+				clk {
-+					pins = "sdc2_clk";
-+					drive-strength = <2>;
-+					bias-bus-hold;
-+				};
-+
-+				cmd {
-+					pins ="sdc2_cmd";
-+					drive-strength = <2>;
-+					bias-bus-hold;
-+				};
-+
-+				data {
-+					pins ="sdc2_data";
-+					drive-strength = <2>;
-+					bias-bus-hold;
-+				};
-+			};
  		};
  
- 		imem@146a5000 {
 -- 
 2.35.0.rc2.247.g8bbb082509-goog
 
