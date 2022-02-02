@@ -2,708 +2,491 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DAC34A7B18
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Feb 2022 23:30:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DD064A7B25
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Feb 2022 23:34:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347858AbiBBWaw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Feb 2022 17:30:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40196 "EHLO
+        id S1347920AbiBBWe0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Feb 2022 17:34:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347638AbiBBWaw (ORCPT
+        with ESMTP id S1347893AbiBBWeX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Feb 2022 17:30:52 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9FAEC06173B
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Feb 2022 14:30:51 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id u14so1933522lfo.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Feb 2022 14:30:51 -0800 (PST)
+        Wed, 2 Feb 2022 17:34:23 -0500
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 373A2C06173E
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Feb 2022 14:34:23 -0800 (PST)
+Received: by mail-qk1-x733.google.com with SMTP id c189so988557qkg.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Feb 2022 14:34:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=oeuN5nd5sq6g5h5kT6DxOO52vYM7snUvZf34D33iGTI=;
-        b=vXUn8kpoZw8UmD1RhsSSCQ/pfnzF2VChF8L2U0ZX5kkhC4f2utHAerdQTgrX0ict39
-         qGHJVIvP2coBKhn+Wnmi+pdPXoHTqB3FsXPaXMErEEvcDjoafPWLpLhUxhKQvWWxGNUE
-         nOnd+n4qGER2c1tO02zhrn+Noo1uwkfhiQiD+hek7QeyiY1IcFLfuTQPU7rQ1VQlE1FD
-         qmii+7hK4KYSmkFBOKC+V9v76f821qSFCOwD/w5m2AE4rvNcEYVpgvDYj03mvKr9TBjI
-         Z0NKnueTgj39ULxl0mnSHcvxCYmS8OjIccbNux3mRJwllVQlxTH7JDLEpcLDBz59Hjre
-         TOfw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=X1V8DE0Ku28hciWaqKV70UHjnsuP1wsl0fwvfIUT1QM=;
+        b=fwcHlRJYWNeBJc83Xv3kWElEbZdkPvUddtgwgErkxt4JWXWUVg+JWaDt8uNOjrE1U0
+         NkPnBgLHLAvnk/qMrRwrbsBR5wbspfpbFKF/op+yDh4QyVGFtGHLha7AinKkXUb+sdNp
+         6uOqbsr+sotlfTjQtebNYncBbBTj7heG+3ymFkBTAm6uT2FU7JWZzykA4fMO4lqPeJqb
+         O/ehSsCeQRiCOtc4oxNIyhVd72HFRD8XHnv4VtUgB69XtmrN+m5TrzHT9fJU3wZonv7D
+         PtUtkweAplL5QfDie+VRDFJLMxHhoidrGIIRNdJC5F1pdq7hW3QTvI/CVHD8M/GOjUSP
+         Sa4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=oeuN5nd5sq6g5h5kT6DxOO52vYM7snUvZf34D33iGTI=;
-        b=pHUGglJ5ZhNO6SsFmbTa6a39Jwlw/bNDrWXsyULJ9UP9gCcvgPsqnwPY6KWQxPgZoM
-         iVLV8SnOP1vBkxo2rmNDbJSP4tlaWi+oO0cNAdXkKcZ/M0emGtFNcUqWMQcyIylxZVkI
-         eXJHcaFEFvnu9seXe9ZNeV6vYLP1Hqt1P5VFXQCuNKAtyZ1zcGDY198JM0EX9Ww3CIs/
-         5PkfyFrkTuR7VEY9yNmj0lTYxp6puuUH1poPZpL2kEEh4xVukSyVsiX+D93562+Z4NlN
-         JFDCXYw1DfNsm2dcrgy60aQbiYUDiJJoEk4MaWFXQ+dOsE8cUG1vnIMpvEJBkJdDQjHl
-         3SKA==
-X-Gm-Message-State: AOAM532P6uvEVldGeaUws/vGrQqEK8j9NmRxYcujRRyWKVEJ+h2okiem
-        KfQOBKyIlj6yRbmWYXXo9NL94A==
-X-Google-Smtp-Source: ABdhPJw8Z91O0MKM9mzo0U2vtlZs5kDlQnZox4xpRJw9zxL1muB7Vc2kW6T0vX4Fvh/USCf+HyoViA==
-X-Received: by 2002:a05:6512:39c2:: with SMTP id k2mr23589534lfu.586.1643841049367;
-        Wed, 02 Feb 2022 14:30:49 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id cf32sm3292397lfb.133.2022.02.02.14.30.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Feb 2022 14:30:48 -0800 (PST)
-Message-ID: <e510b1a3-b1a2-179b-7aac-5d59b329b494@linaro.org>
-Date:   Thu, 3 Feb 2022 01:30:47 +0300
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=X1V8DE0Ku28hciWaqKV70UHjnsuP1wsl0fwvfIUT1QM=;
+        b=DtnaC8ZooJZfZcl5jjOVfs/pyZ0ryuywgWn0BK3tMz9EFzOpzR6UpVn0WcWOt7h6Ll
+         g53y89u31WUnyCV2lvR0+a+Bip4/Mr9phn6RnS8lEbuxJYfRvx7ebtZ//SIsvokQPGvT
+         2GXxoiT3vO+OpMt4Wy4ceqAFfDp9FhqgSj5XhVsDNCQlTkEW7BeZx27DTsbQvE0dfVkO
+         urJv5vGm07S/oxUKEmz7GMolQZLkX17N5SWVb32ct3TEnchsQ69OmdPzAjuxpNtedDeg
+         tN6BYgOvsZCh5sm3GU4EHJGvd0bU467b8XCogmkvAPerji1lTvwLY+isGWPsrN5kcdRk
+         b6LQ==
+X-Gm-Message-State: AOAM530oAi9MfwR8C1GbfowUsPIZvewCbdAqAXlQ9dcYR65kxF7ayxU2
+        B1gbkHkWymQBgVEQ8JiH0lujdNoDFTvgt7OVDLFqqg==
+X-Google-Smtp-Source: ABdhPJzKMjY0yLA3UG5bGmLXKRo45byzLIQ6tQd7LGVUC1fL/bLOmE/ODBoowQv2lg+Bz8lxmtM8QvL2nXf/wD6BhmE=
+X-Received: by 2002:a05:620a:280b:: with SMTP id f11mr21398426qkp.59.1643841262124;
+ Wed, 02 Feb 2022 14:34:22 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v2] drm/msm/dp: add wide bus support
-Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, vkoul@kernel.org,
-        daniel@ffwll.ch, airlied@linux.ie, agross@kernel.org,
-        bjorn.andersson@linaro.org
-Cc:     quic_abhinavk@quicinc.com, aravindh@codeaurora.org,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1643761824-25858-1-git-send-email-quic_khsieh@quicinc.com>
- <04ac6556-310b-206b-5341-ccf846959f16@linaro.org>
- <b675ae63-e89d-ebb6-a6d4-3cfe054697fb@quicinc.com>
+References: <20220202182053.22925-1-tdas@codeaurora.org> <20220202182053.22925-2-tdas@codeaurora.org>
+In-Reply-To: <20220202182053.22925-2-tdas@codeaurora.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <b675ae63-e89d-ebb6-a6d4-3cfe054697fb@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Date:   Thu, 3 Feb 2022 01:34:11 +0300
+Message-ID: <CAA8EJpqWUm5C5nc3fZzjF4XfAEZo8m=PY0Rj6WeDgSJEey=D_A@mail.gmail.com>
+Subject: Re: [PATCH v1 2/2] clk: qcom: sc7280: Update clk_init_data to const
+ for clock controllers
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/02/2022 20:49, Kuogee Hsieh wrote:
-> 
-> On 2/2/2022 1:56 AM, Dmitry Baryshkov wrote:
->> On 02/02/2022 03:30, Kuogee Hsieh wrote:
->>> Normally, mdp will push one pixel of data per pixel clock to
->>> interface to display. Wide bus feature will increase bus
->>> width from 32 bits to 64 bits so that it can push two
->>> pixel of data per pixel clock to interface to display.
->>> This feature is pre requirement to support 4k resolution
->>> since it will reduce pixel clock rate to half of original
->>> rate. Hence pixel clock rate used to drive 4k panel will
->>> not exceed limitation.
->>
->> Bjorn question is still valid. Why is this required for the 4k panels? 
->> For which clock frequencies/chipsets?
-> 
-> less clock rate will use less power.
-> 
-> Please let me know exactly which info you are looking for.
+On Wed, 2 Feb 2022 at 21:23, Taniya Das <tdas@codeaurora.org> wrote:
+>
+> Update clk_init_data to const and also use index instead of fw_name for
+> graphics, lpasscc and video clock controller.
 
-I'm trying to make sense from the commit message ('pre requirement to 
-support 4k resolutions') and Bjorn using 4k monitor w/o this patch.
+What is the benefit from using indices here? In my opinion the code
+becomes more fragile with such a change.
 
-Also I'm trying to understand, when should it be used and which imact 
-will it have.
-
-> 
-> 
->>
->>>
->>> changes in v2:
->>> -- remove compression related code from timing
->>> -- remove op_info from  struct msm_drm_private
->>> -- remove unnecessary wide_bus_en variables
->>> -- pass wide_bus_en into timing configuration by struct msm_dp
->>>
->>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->>> ---
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  8 ++
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |  2 +
->>>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   | 14 +++
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        | 99 
->>> ++++++++++++++--------
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |  2 +
->>>   drivers/gpu/drm/msm/dp/dp_catalog.c                | 15 +++-
->>>   drivers/gpu/drm/msm/dp/dp_catalog.h                |  2 +-
->>>   drivers/gpu/drm/msm/dp/dp_ctrl.c                   | 13 ++-
->>>   drivers/gpu/drm/msm/dp/dp_ctrl.h                   |  1 +
->>>   drivers/gpu/drm/msm/dp/dp_display.c                | 11 +++
->>>   drivers/gpu/drm/msm/dp/dp_display.h                | 21 -----
->>>   drivers/gpu/drm/msm/dp/dp_panel.c                  |  4 +-
->>>   drivers/gpu/drm/msm/dp/dp_panel.h                  |  2 +-
->>>   drivers/gpu/drm/msm/msm_drv.h                      | 25 ++++++
->>>   14 files changed, 154 insertions(+), 65 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> index 1e648db..7bbdfb9 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> @@ -217,6 +217,14 @@ static u32 dither_matrix[DITHER_MATRIX_SZ] = {
->>>       15, 7, 13, 5, 3, 11, 1, 9, 12, 4, 14, 6, 0, 8, 2, 10
->>>   };
->>>   +
->>> +bool dpu_encoder_is_widebus_enabled(struct drm_encoder *drm_enc)
->>> +{
->>> +    struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
->>> +
->>> +    return dpu_enc->dp->wide_bus_en;
->>> +}
->>> +
->>>   static void _dpu_encoder_setup_dither(struct dpu_hw_pingpong 
->>> *hw_pp, unsigned bpc)
->>>   {
->>>       struct dpu_hw_dither_cfg dither_cfg = { 0 };
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->>> index e241914..0d73550 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->>> @@ -168,4 +168,6 @@ int dpu_encoder_get_linecount(struct drm_encoder 
->>> *drm_enc);
->>>    */
->>>   int dpu_encoder_get_vsync_count(struct drm_encoder *drm_enc);
->>>   +bool dpu_encoder_is_widebus_enabled(struct drm_encoder *drm_enc);
->>> +
->>>   #endif /* __DPU_ENCODER_H__ */
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->>> index ddd9d89..b72c33b 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->>> @@ -110,6 +110,20 @@ static void drm_mode_to_intf_timing_params(
->>>           timing->v_back_porch += timing->v_front_porch;
->>>           timing->v_front_porch = 0;
->>>       }
->>> +
->>> +    timing->wide_bus_en = 
->>> dpu_encoder_is_widebus_enabled(phys_enc->parent);
->>> +
->>> +    /*
->>> +     * for DP, divide the horizonal parameters by 2 when
->>> +     * widebus is enabled
->>> +     */
->>> +    if (timing->wide_bus_en) {
->>> +        timing->width = timing->width >> 1;
->>> +        timing->xres = timing->xres >> 1;
->>> +        timing->h_back_porch = timing->h_back_porch >> 1;
->>> +        timing->h_front_porch = timing->h_front_porch >> 1;
->>> +        timing->hsync_pulse_width = timing->hsync_pulse_width >> 1;
->>> +    }
->>>   }
->>>     static u32 get_horizontal_total(const struct intf_timing_params 
->>> *timing)
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>> index 116e2b5..35d4aaa 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>> @@ -33,6 +33,7 @@
->>>   #define INTF_TP_COLOR1                  0x05C
->>>   #define INTF_CONFIG2                    0x060
->>>   #define INTF_DISPLAY_DATA_HCTL          0x064
->>> +#define INTF_ACTIVE_DATA_HCTL           0x068
->>>   #define INTF_FRAME_LINE_COUNT_EN        0x0A8
->>>   #define INTF_FRAME_COUNT                0x0AC
->>>   #define   INTF_LINE_COUNT               0x0B0
->>> @@ -90,68 +91,95 @@ static void 
->>> dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
->>>       u32 hsync_period, vsync_period;
->>>       u32 display_v_start, display_v_end;
->>>       u32 hsync_start_x, hsync_end_x;
->>> +    u32 hsync_data_start_x, hsync_data_end_x;
->>>       u32 active_h_start, active_h_end;
->>>       u32 active_v_start, active_v_end;
->>>       u32 active_hctl, display_hctl, hsync_ctl;
->>>       u32 polarity_ctl, den_polarity, hsync_polarity, vsync_polarity;
->>>       u32 panel_format;
->>> -    u32 intf_cfg, intf_cfg2 = 0, display_data_hctl = 0;
->>> +    u32 intf_cfg, intf_cfg2 = 0;
->>> +    u32 display_data_hctl = 0, active_data_hctl = 0;
->>> +    u32 data_width;
->>> +    bool dp_intf = false;
->>>         /* read interface_cfg */
->>>       intf_cfg = DPU_REG_READ(c, INTF_CONFIG);
->>> +
->>> +    if (ctx->cap->type == INTF_EDP || ctx->cap->type == INTF_DP)
->>> +        dp_intf = true;
->>> +
->>>       hsync_period = p->hsync_pulse_width + p->h_back_porch + p->width +
->>>       p->h_front_porch;
->>>       vsync_period = p->vsync_pulse_width + p->v_back_porch + 
->>> p->height +
->>>       p->v_front_porch;
->>>         display_v_start = ((p->vsync_pulse_width + p->v_back_porch) *
->>> -    hsync_period) + p->hsync_skew;
->>> +            hsync_period) + p->hsync_skew;
->>
->> Whitespace changes should be in a separate patch
->>
->>>       display_v_end = ((vsync_period - p->v_front_porch) * 
->>> hsync_period) +
->>> -    p->hsync_skew - 1;
->>> +            p->hsync_skew - 1;
->>> +
->>> +    hsync_ctl = (hsync_period << 16) | p->hsync_pulse_width;
->>>         hsync_start_x = p->h_back_porch + p->hsync_pulse_width;
->>>       hsync_end_x = hsync_period - p->h_front_porch - 1;
->>>   -    if (p->width != p->xres) {
->>> -        active_h_start = hsync_start_x;
->>> -        active_h_end = active_h_start + p->xres - 1;
->>> -    } else {
->>> -        active_h_start = 0;
->>> -        active_h_end = 0;
->>> -    }
->>> +    /*
->>> +     * DATA_HCTL_EN controls data timing which can be different from
->>> +     * video timing. It is recommended to enable it for all cases, 
->>> except
->>> +     * if compression is enabled in 1 pixel per clock mode
->>> +     */
->>> +    if (p->wide_bus_en)
->>> +        intf_cfg2 |= BIT(4);
->>>   -    if (p->height != p->yres) {
->>> -        active_v_start = display_v_start;
->>> -        active_v_end = active_v_start + (p->yres * hsync_period) - 1;
->>> -    } else {
->>> -        active_v_start = 0;
->>> -        active_v_end = 0;
->>> -    }
->>> +    if (p->wide_bus_en)
->>> +        intf_cfg2 |= BIT(0);
->>>   -    if (active_h_end) {
->>> -        active_hctl = (active_h_end << 16) | active_h_start;
->>> -        intf_cfg |= BIT(29);    /* ACTIVE_H_ENABLE */
->>> -    } else {
->>> -        active_hctl = 0;
->>> -    }
->>> +    /*
->>> +     * If widebus is disabled:
->>> +     * For uncompressed stream, the data is valid for the entire active
->>> +     * window period.
->>> +     * For compressed stream, data is valid for a shorter time period
->>> +     * inside the active window depending on the compression ratio.
->>> +     *
->>> +     * If widebus is enabled:
->>> +     * For uncompressed stream, data is valid for only half the active
->>> +     * window, since the data rate is doubled in this mode.
->>> +     * p->width holds the adjusted width for DP but unadjusted width 
->>> for DSI
->>> +     * For compressed stream, data validity window needs to be 
->>> adjusted for
->>> +     * compression ratio and then further halved.
->>> +     */
->>> +    data_width = p->width;
->>> +
->>> +    if (!dp_intf && p->wide_bus_en)
->>> +        data_width = p->width >> 1;
->>> +    else
->>> +        data_width = p->width;
->>>   -    if (active_v_end)
->>> -        intf_cfg |= BIT(30); /* ACTIVE_V_ENABLE */
->>> +    hsync_data_start_x = hsync_start_x;
->>> +    hsync_data_end_x =  hsync_start_x + data_width - 1;
->>>   -    hsync_ctl = (hsync_period << 16) | p->hsync_pulse_width;
->>>       display_hctl = (hsync_end_x << 16) | hsync_start_x;
->>> +    display_data_hctl = (hsync_data_end_x << 16) | hsync_data_start_x;
->>>   -    if (ctx->cap->type == INTF_EDP || ctx->cap->type == INTF_DP) {
->>> -        active_h_start = hsync_start_x;
->>> -        active_h_end = active_h_start + p->xres - 1;
->>> -        active_v_start = display_v_start;
->>> -        active_v_end = active_v_start + (p->yres * hsync_period) - 1;
->>> -
->>> +    if (dp_intf) {
->>> +        // DP timing adjustment
->>>           display_v_start += p->hsync_pulse_width + p->h_back_porch;
->>> +        display_v_end   -= p->h_front_porch;
->>> +    }
->>> +
->>> +    active_h_start = hsync_start_x;
->>> +    active_h_end = active_h_start + p->xres - 1;
->>> +
->>> +    active_v_start = display_v_start;
->>> +    active_v_end = active_v_start + (p->yres * hsync_period) - 1;
->>>   -        active_hctl = (active_h_end << 16) | active_h_start;
->>> +    intf_cfg |= BIT(29);    /* ACTIVE_H_ENABLE */
->>> +    intf_cfg |= BIT(30);    /* ACTIVE_V_ENABLE */
->>
->> This makes ACTIVE_H_ENABLE/ACTIVE_V_ENABLE to be always enabled, while 
->> currently they are enabled conditionally. Could you please comment on 
->> this? Ideally, as you seem to be changing the way we calculate timings,
->> I'd ask to split this part into several patches:
->>  - Change current approach w/o adding wide_bus_en
->>  - Introduce wide_bus_en on top of that.
->>
-> no, it did not change calculate timing. instead it just add extra 
-> variables to accommodate newly registers
-
-Well, that's why I asked you to split widebus_en into a separate patch here.
-I clearly see changes in the way e.g. active_v_end is calculated. You 
-have removed all non-DP cases.
-
->> Also, while you are reworking this piece of code, could you please add 
->> defines for existing and new intf_cfg/etc BIT(n) values used here?
-> 
-> This is generic function code used by android (down stream) and chrome 
-> (up stream).
-> 
-> We like to have both use same timing function.
-
-Then the changes should be described clearly.
-
-> 
->> They are specified in comments, but I think a common consensus is to 
->> use defines instead.
-> 
->>
->>> +
->>> +    active_hctl = (active_h_end << 16) | active_h_start;
->>> +
->>> +    if (dp_intf)
->>>           display_hctl = active_hctl;
->>> -    }
->>>         den_polarity = 0;
->>>       if (ctx->cap->type == INTF_HDMI) {
->>> @@ -204,6 +232,9 @@ static void 
->>> dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
->>>       DPU_REG_WRITE(c, INTF_FRAME_LINE_COUNT_EN, 0x3);
->>>       DPU_REG_WRITE(c, INTF_CONFIG, intf_cfg);
->>>       DPU_REG_WRITE(c, INTF_PANEL_FORMAT, panel_format);
->>> +    DPU_REG_WRITE(c, INTF_CONFIG2, intf_cfg2);
->>> +    DPU_REG_WRITE(c, INTF_DISPLAY_DATA_HCTL, display_data_hctl);
->>> +    DPU_REG_WRITE(c, INTF_ACTIVE_DATA_HCTL, active_data_hctl);
->>>   }
->>>     static void dpu_hw_intf_enable_timing_engine(
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
->>> index 3568be8..e4a518a 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
->>> @@ -30,6 +30,8 @@ struct intf_timing_params {
->>>       u32 border_clr;
->>>       u32 underflow_clr;
->>>       u32 hsync_skew;
->>> +
->>> +    bool wide_bus_en;
->>>   };
->>>     struct intf_prog_fetch {
->>> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c 
->>> b/drivers/gpu/drm/msm/dp/dp_catalog.c
->>> index 64f0b26..462596f 100644
->>> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
->>> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
->>> @@ -739,10 +739,11 @@ u32 dp_catalog_ctrl_read_phy_pattern(struct 
->>> dp_catalog *dp_catalog)
->>>   }
->>>     /* panel related catalog functions */
->>> -int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog)
->>> +int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog, bool 
->>> wide_bus_en)
->>>   {
->>>       struct dp_catalog_private *catalog = container_of(dp_catalog,
->>>                   struct dp_catalog_private, dp_catalog);
->>> +    u32 reg;
->>>         dp_write_link(catalog, REG_DP_TOTAL_HOR_VER,
->>>                   dp_catalog->total);
->>> @@ -751,7 +752,17 @@ int dp_catalog_panel_timing_cfg(struct 
->>> dp_catalog *dp_catalog)
->>>       dp_write_link(catalog, REG_DP_HSYNC_VSYNC_WIDTH_POLARITY,
->>>                   dp_catalog->width_blanking);
->>>       dp_write_link(catalog, REG_DP_ACTIVE_HOR_VER, 
->>> dp_catalog->dp_active);
->>> -    dp_write_p0(catalog, MMSS_DP_INTF_CONFIG, 0);
->>> +
->>> +    reg = dp_read_p0(catalog, MMSS_DP_INTF_CONFIG);
->>> +
->>> +    if (wide_bus_en)
->>> +        reg |= BIT(4);
->>> +    else
->>> +        reg &= ~BIT(4);
->>
->> Could you please add a symbolic name for this bit?
-> I though linux does not have this requirement as window?
-
-It does not. However there is a strong suggestion to do so.
-
->>
->>> +
->>> +    DRM_DEBUG_DP("wide_bus_en=%d reg=%x\n", wide_bus_en, reg);
->>> +
->>> +    dp_write_p0(catalog, MMSS_DP_INTF_CONFIG, reg);
->>>       return 0;
->>>   }
->>>   diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h 
->>> b/drivers/gpu/drm/msm/dp/dp_catalog.h
->>> index 7dea101..78e22ad 100644
->>> --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
->>> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
->>> @@ -115,7 +115,7 @@ void dp_catalog_ctrl_send_phy_pattern(struct 
->>> dp_catalog *dp_catalog,
->>>   u32 dp_catalog_ctrl_read_phy_pattern(struct dp_catalog *dp_catalog);
->>>     /* DP Panel APIs */
->>> -int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog);
->>> +int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog, bool 
->>> wide_bus_en);
->>>   void dp_catalog_dump_regs(struct dp_catalog *dp_catalog);
->>>   void dp_catalog_panel_tpg_enable(struct dp_catalog *dp_catalog,
->>>                   struct drm_display_mode *drm_mode);
->>> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c 
->>> b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->>> index 245e1b9..1c4cf9d 100644
->>> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
->>> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->>> @@ -154,7 +154,7 @@ static void dp_ctrl_config_ctrl(struct 
->>> dp_ctrl_private *ctrl)
->>>       dp_catalog_ctrl_config_ctrl(ctrl->catalog, config);
->>>   }
->>>   -static void dp_ctrl_configure_source_params(struct dp_ctrl_private 
->>> *ctrl)
->>> +static void dp_ctrl_configure_source_params(struct dp_ctrl_private 
->>> *ctrl, bool wide_bus_en)
->>>   {
->>>       u32 cc, tb;
->>>   @@ -167,7 +167,7 @@ static void 
->>> dp_ctrl_configure_source_params(struct dp_ctrl_private *ctrl)
->>>           ctrl->panel->dp_mode.bpp);
->>>       cc = dp_link_get_colorimetry_config(ctrl->link);
->>>       dp_catalog_ctrl_config_misc(ctrl->catalog, cc, tb);
->>> -    dp_panel_timing_cfg(ctrl->panel);
->>> +    dp_panel_timing_cfg(ctrl->panel, wide_bus_en);
->>>   }
->>>     /*
->>> @@ -1796,6 +1796,7 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
->>>       int ret = 0;
->>>       bool mainlink_ready = false;
->>>       struct dp_ctrl_private *ctrl;
->>> +    u32 pixel_rate_orig;
->>>         if (!dp_ctrl)
->>>           return -EINVAL;
->>> @@ -1804,6 +1805,10 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
->>>         ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
->>>   +    pixel_rate_orig = ctrl->dp_ctrl.pixel_rate;
->>> +    if (dp_ctrl->wide_bus_en)
->>> +        ctrl->dp_ctrl.pixel_rate >>= 1;
->>> +
->>>       DRM_DEBUG_DP("rate=%d, num_lanes=%d, pixel_rate=%d\n",
->>>           ctrl->link->link_params.rate,
->>>           ctrl->link->link_params.num_lanes, ctrl->dp_ctrl.pixel_rate);
->>> @@ -1839,11 +1844,11 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
->>>        */
->>>       reinit_completion(&ctrl->video_comp);
->>>   -    dp_ctrl_configure_source_params(ctrl);
->>> +    dp_ctrl_configure_source_params(ctrl, dp_ctrl->wide_bus_en);
->>>         dp_catalog_ctrl_config_msa(ctrl->catalog,
->>>           ctrl->link->link_params.rate,
->>> -        ctrl->dp_ctrl.pixel_rate, dp_ctrl_use_fixed_nvid(ctrl));
->>> +        pixel_rate_orig, dp_ctrl_use_fixed_nvid(ctrl));
->>>         dp_ctrl_setup_tr_unit(ctrl);
->>>   diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h 
->>> b/drivers/gpu/drm/msm/dp/dp_ctrl.h
->>> index 2433edb..4dff44d 100644
->>> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
->>> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
->>> @@ -17,6 +17,7 @@ struct dp_ctrl {
->>>       bool orientation;
->>>       atomic_t aborted;
->>>       u32 pixel_rate;
->>> +    bool wide_bus_en;
->>>   };
->>>     int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
->>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
->>> b/drivers/gpu/drm/msm/dp/dp_display.c
->>> index 1d7f82e..5a0f5a3 100644
->>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->>> @@ -843,6 +843,8 @@ static int dp_display_enable(struct 
->>> dp_display_private *dp, u32 data)
->>>           return 0;
->>>       }
->>>   +    dp->ctrl->wide_bus_en = dp_display->wide_bus_en;
->>> +
->>>       rc = dp_ctrl_on_stream(dp->ctrl);
->>>       if (!rc)
->>>           dp_display->power_on = true;
->>> @@ -974,6 +976,8 @@ int dp_display_get_modes(struct msm_dp *dp,
->>>           dp->connector, dp_mode);
->>>       if (dp_mode->drm_mode.clock)
->>>           dp->max_pclk_khz = dp_mode->drm_mode.clock;
->>> +
->>> +    DRM_DEBUG_DP("id=%d wide_bus_en=%d\n", dp_display->id, 
->>> dp->wide_bus_en);
->>>       return ret;
->>>   }
->>>   @@ -1506,6 +1510,13 @@ int msm_dp_modeset_init(struct msm_dp 
->>> *dp_display, struct drm_device *dev,
->>>         priv->bridges[priv->num_bridges++] = dp_display->bridge;
->>>   +    if (dp_display->connector_type  == 
->>> DRM_MODE_CONNECTOR_DisplayPort) {
->>> +        dp_display->wide_bus_en = true;
->>
->> This makes wide_bus always enabled. However earlier you stated that it 
->> is not supported for some of earlier generations.
->>
-> are we expect this code to support msm8996 and other  older chipsets too?
-
-msm8998 is on the way. Hopefully it can be merged in this cycle. I don't 
-think DP has been tested with this platform, however we should not make 
-it overcomplicated. Compare this with the DPU driver, which has 
-capabilities for optional features even if the hardware baseline 
-supports all of them.
-
-> 
-> Currently we  want to enable wide bus feature for all DPs.
-
-Is wide bus supported on e.g. sdm845? From your previous answer I had 
-another impression:
-
- >> Are these registers present on all supported hardware (like sdm845)?
- >> Does msm8998 support them? msm8996?
- >
- > no, i  think they are start from sm8250 (Kona).
-
-
-> 
-> Or should we derive wide_bus_en from dtsi as first patch?
-
-If it is a platform feature that you'd like to enable by default for all 
-supporting platforms, it can be listed in struct msm_dp_config.
-
-> 
-> 
->>
->>> +        dp_display->compression_en = false;
->>
->> compression_en is not defined anywhere.
->>
->>> +    }
->>
->>> +
->>> +    DRM_DEBUG_DP("id=%d wide_bus_en=%d\n", dp_priv->id, 
->>> dp_display->wide_bus_en);
->>> +
->>>       return 0;
->>>   }
->>>   diff --git a/drivers/gpu/drm/msm/dp/dp_display.h 
->>> b/drivers/gpu/drm/msm/dp/dp_display.h
->>> index e3adcd5..2eb11d0 100644
->>> --- a/drivers/gpu/drm/msm/dp/dp_display.h
->>> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
->>> @@ -7,29 +7,8 @@
->>>   #define _DP_DISPLAY_H_
->>>     #include "dp_panel.h"
->>> -#include <sound/hdmi-codec.h>
->>>   #include "disp/msm_disp_snapshot.h"
->>>   -struct msm_dp {
->>> -    struct drm_device *drm_dev;
->>> -    struct device *codec_dev;
->>> -    struct drm_bridge *bridge;
->>> -    struct drm_connector *connector;
->>> -    struct drm_encoder *encoder;
->>> -    struct drm_bridge *panel_bridge;
->>> -    bool is_connected;
->>> -    bool audio_enabled;
->>> -    bool power_on;
->>> -    unsigned int connector_type;
->>> -
->>> -    hdmi_codec_plugged_cb plugged_cb;
->>> -
->>> -    u32 max_pclk_khz;
->>> -
->>> -    u32 max_dp_lanes;
->>> -    struct dp_audio *dp_audio;
->>> -};
->>> -
->>
->> NO. Let struct msm_dp be private.
-> 
-> them wide_bus_en can not be derived from msm_dp  at dpu_encoder.c
-> 
-> in that case, we have to define msm_op_info as first patch and pass it 
-> into dpu_encoder.c through msm_dp.
-> 
-> any better suggestion?
-
-if (dpu_enc->disp_info.intf_type == INTF_DP || 
-dpu_enc->disp_info.intf_type == INTF_EDP)
-     dpu_enc->wide_bus_enabled = msm_dp_get_widebus_enabled(priv->dp[i]);
-
-> 
-> 
->>
->>>   int dp_display_set_plugged_cb(struct msm_dp *dp_display,
->>>           hdmi_codec_plugged_cb fn, struct device *codec_dev);
->>>   int dp_display_validate_mode(struct msm_dp *dp_display, u32 
->>> mode_pclk_khz);
->>> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c 
->>> b/drivers/gpu/drm/msm/dp/dp_panel.c
->>> index 71db10c..71deb1e 100644
->>> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
->>> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
->>> @@ -353,7 +353,7 @@ void dp_panel_dump_regs(struct dp_panel *dp_panel)
->>>       dp_catalog_dump_regs(catalog);
->>>   }
->>>   -int dp_panel_timing_cfg(struct dp_panel *dp_panel)
->>> +int dp_panel_timing_cfg(struct dp_panel *dp_panel, bool wide_bus_en)
->>>   {
->>>       u32 data, total_ver, total_hor;
->>>       struct dp_catalog *catalog;
->>> @@ -404,7 +404,7 @@ int dp_panel_timing_cfg(struct dp_panel *dp_panel)
->>>         catalog->dp_active = data;
->>>   -    dp_catalog_panel_timing_cfg(catalog);
->>> +    dp_catalog_panel_timing_cfg(catalog, wide_bus_en);
->>>       panel->panel_on = true;
->>>         return 0;
->>> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h 
->>> b/drivers/gpu/drm/msm/dp/dp_panel.h
->>> index 9023e5b..5ec341a 100644
->>> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
->>> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
->>> @@ -57,7 +57,7 @@ struct dp_panel {
->>>     int dp_panel_init_panel_info(struct dp_panel *dp_panel);
->>>   int dp_panel_deinit(struct dp_panel *dp_panel);
->>> -int dp_panel_timing_cfg(struct dp_panel *dp_panel);
->>> +int dp_panel_timing_cfg(struct dp_panel *dp_panel, bool wide_bus_en);
->>>   void dp_panel_dump_regs(struct dp_panel *dp_panel);
->>>   int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
->>>           struct drm_connector *connector);
->>> diff --git a/drivers/gpu/drm/msm/msm_drv.h 
->>> b/drivers/gpu/drm/msm/msm_drv.h
->>> index d7574e6..84fb89e 100644
->>> --- a/drivers/gpu/drm/msm/msm_drv.h
->>> +++ b/drivers/gpu/drm/msm/msm_drv.h
->>> @@ -25,6 +25,8 @@
->>>   #include <linux/sizes.h>
->>>   #include <linux/kthread.h>
->>>   +#include <sound/hdmi-codec.h>
->>> +
->>>   #include <drm/drm_atomic.h>
->>>   #include <drm/drm_atomic_helper.h>
->>>   #include <drm/drm_plane_helper.h>
->>> @@ -134,6 +136,29 @@ struct msm_drm_thread {
->>>       struct kthread_worker *worker;
->>>   };
->>>   +struct msm_dp {
->>> +    struct drm_device *drm_dev;
->>> +    struct device *codec_dev;
->>> +    struct drm_bridge *bridge;
->>> +    struct drm_connector *connector;
->>> +    struct drm_encoder *encoder;
->>> +    struct drm_bridge *panel_bridge;
->>> +    bool is_connected;
->>> +    bool audio_enabled;
->>> +    bool power_on;
->>> +    unsigned int connector_type;
->>> +
->>> +    hdmi_codec_plugged_cb plugged_cb;
->>> +
->>> +    bool wide_bus_en;
->>> +    bool compression_en;
->>> +
->>> +    u32 max_pclk_khz;
->>> +
->>> +    u32 max_dp_lanes;
->>> +    struct dp_audio *dp_audio;
->>> +};
->>> +
->>>   struct msm_drm_private {
->>>         struct drm_device *dev;
->>
->>
+>
+> Fixes: 3e0f01d6c7e74 ("clk: qcom: Add graphics clock controller driver for SC7280")
+> Fixes: 4ab43d171181d ("clk: qcom: Add lpass clock controller driver for SC7280")
+> Fixes: fae7617bb1428 ("clk: qcom: Add video clock controller driver for SC7280")
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> ---
+>  drivers/clk/qcom/gpucc-sc7280.c   | 56 +++++++++++++++----------------
+>  drivers/clk/qcom/lpasscc-sc7280.c | 14 ++++----
+>  drivers/clk/qcom/videocc-sc7280.c | 26 +++++++-------
+>  3 files changed, 48 insertions(+), 48 deletions(-)
+>
+> diff --git a/drivers/clk/qcom/gpucc-sc7280.c b/drivers/clk/qcom/gpucc-sc7280.c
+> index 9a832f2bcf49..e8f6abc5261f 100644
+> --- a/drivers/clk/qcom/gpucc-sc7280.c
+> +++ b/drivers/clk/qcom/gpucc-sc7280.c
+> @@ -1,6 +1,6 @@
+>  // SPDX-License-Identifier: GPL-2.0-only
+>  /*
+> - * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2021-2022, The Linux Foundation. All rights reserved.
+>   */
+>
+>  #include <linux/clk-provider.h>
+> @@ -36,10 +36,10 @@ static struct clk_alpha_pll gpu_cc_pll0 = {
+>         .num_vco = ARRAY_SIZE(lucid_vco),
+>         .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID],
+>         .clkr = {
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "gpu_cc_pll0",
+>                         .parent_data = &(const struct clk_parent_data){
+> -                               .fw_name = "bi_tcxo",
+> +                               .index = 0,
+>                         },
+>                         .num_parents = 1,
+>                         .ops = &clk_alpha_pll_lucid_ops,
+> @@ -65,10 +65,10 @@ static struct clk_alpha_pll gpu_cc_pll1 = {
+>         .num_vco = ARRAY_SIZE(lucid_vco),
+>         .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID],
+>         .clkr = {
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "gpu_cc_pll1",
+>                         .parent_data = &(const struct clk_parent_data){
+> -                               .fw_name = "bi_tcxo",
+> +                               .index = 0,
+>                         },
+>                         .num_parents = 1,
+>                         .ops = &clk_alpha_pll_lucid_ops,
+> @@ -85,11 +85,11 @@ static const struct parent_map gpu_cc_parent_map_0[] = {
+>  };
+>
+>  static const struct clk_parent_data gpu_cc_parent_data_0[] = {
+> -       { .fw_name = "bi_tcxo" },
+> +       { .index = 0 },
+>         { .hw = &gpu_cc_pll0.clkr.hw },
+>         { .hw = &gpu_cc_pll1.clkr.hw },
+> -       { .fw_name = "gcc_gpu_gpll0_clk_src" },
+> -       { .fw_name = "gcc_gpu_gpll0_div_clk_src" },
+> +       { .index = 1 }, /* gcc_gpu_gpll0_clk_src */
+> +       { .index = 2 }, /* gcc_gpu_gpll0_div_clk_src */
+>  };
+>
+>  static const struct parent_map gpu_cc_parent_map_1[] = {
+> @@ -100,10 +100,10 @@ static const struct parent_map gpu_cc_parent_map_1[] = {
+>  };
+>
+>  static const struct clk_parent_data gpu_cc_parent_data_1[] = {
+> -       { .fw_name = "bi_tcxo", },
+> +       { .index = 0, },
+>         { .hw = &gpu_cc_pll1.clkr.hw },
+> -       { .fw_name = "gcc_gpu_gpll0_clk_src", },
+> -       { .fw_name = "gcc_gpu_gpll0_div_clk_src", },
+> +       { .index = 1 }, /* gcc_gpu_gpll0_clk_src */
+> +       { .index = 2 }, /* gcc_gpu_gpll0_div_clk_src */
+>  };
+>
+>  static const struct freq_tbl ftbl_gpu_cc_gmu_clk_src[] = {
+> @@ -119,7 +119,7 @@ static struct clk_rcg2 gpu_cc_gmu_clk_src = {
+>         .hid_width = 5,
+>         .parent_map = gpu_cc_parent_map_0,
+>         .freq_tbl = ftbl_gpu_cc_gmu_clk_src,
+> -       .clkr.hw.init = &(struct clk_init_data){
+> +       .clkr.hw.init = &(const struct clk_init_data){
+>                 .name = "gpu_cc_gmu_clk_src",
+>                 .parent_data = gpu_cc_parent_data_0,
+>                 .num_parents = ARRAY_SIZE(gpu_cc_parent_data_0),
+> @@ -140,7 +140,7 @@ static struct clk_rcg2 gpu_cc_hub_clk_src = {
+>         .hid_width = 5,
+>         .parent_map = gpu_cc_parent_map_1,
+>         .freq_tbl = ftbl_gpu_cc_hub_clk_src,
+> -       .clkr.hw.init = &(struct clk_init_data){
+> +       .clkr.hw.init = &(const struct clk_init_data){
+>                 .name = "gpu_cc_hub_clk_src",
+>                 .parent_data = gpu_cc_parent_data_1,
+>                 .num_parents = ARRAY_SIZE(gpu_cc_parent_data_1),
+> @@ -152,7 +152,7 @@ static struct clk_regmap_div gpu_cc_hub_ahb_div_clk_src = {
+>         .reg = 0x11c0,
+>         .shift = 0,
+>         .width = 4,
+> -       .clkr.hw.init = &(struct clk_init_data) {
+> +       .clkr.hw.init = &(const struct clk_init_data) {
+>                 .name = "gpu_cc_hub_ahb_div_clk_src",
+>                 .parent_hws = (const struct clk_hw*[]){
+>                         &gpu_cc_hub_clk_src.clkr.hw,
+> @@ -167,7 +167,7 @@ static struct clk_regmap_div gpu_cc_hub_cx_int_div_clk_src = {
+>         .reg = 0x11bc,
+>         .shift = 0,
+>         .width = 4,
+> -       .clkr.hw.init = &(struct clk_init_data) {
+> +       .clkr.hw.init = &(const struct clk_init_data) {
+>                 .name = "gpu_cc_hub_cx_int_div_clk_src",
+>                 .parent_hws = (const struct clk_hw*[]){
+>                         &gpu_cc_hub_clk_src.clkr.hw,
+> @@ -184,7 +184,7 @@ static struct clk_branch gpu_cc_ahb_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x1078,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "gpu_cc_ahb_clk",
+>                         .parent_hws = (const struct clk_hw*[]){
+>                                 &gpu_cc_hub_ahb_div_clk_src.clkr.hw,
+> @@ -202,7 +202,7 @@ static struct clk_branch gpu_cc_crc_ahb_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x107c,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "gpu_cc_crc_ahb_clk",
+>                         .parent_hws = (const struct clk_hw*[]){
+>                                 &gpu_cc_hub_ahb_div_clk_src.clkr.hw,
+> @@ -220,7 +220,7 @@ static struct clk_branch gpu_cc_cx_gmu_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x1098,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "gpu_cc_cx_gmu_clk",
+>                         .parent_hws = (const struct clk_hw*[]){
+>                                 &gpu_cc_gmu_clk_src.clkr.hw,
+> @@ -238,7 +238,7 @@ static struct clk_branch gpu_cc_cx_snoc_dvm_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x108c,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "gpu_cc_cx_snoc_dvm_clk",
+>                         .ops = &clk_branch2_ops,
+>                 },
+> @@ -251,7 +251,7 @@ static struct clk_branch gpu_cc_cxo_aon_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x1004,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "gpu_cc_cxo_aon_clk",
+>                         .ops = &clk_branch2_ops,
+>                 },
+> @@ -264,7 +264,7 @@ static struct clk_branch gpu_cc_cxo_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x109c,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "gpu_cc_cxo_clk",
+>                         .ops = &clk_branch2_aon_ops,
+>                 },
+> @@ -277,7 +277,7 @@ static struct clk_branch gpu_cc_gx_gmu_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x1064,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "gpu_cc_gx_gmu_clk",
+>                         .parent_hws = (const struct clk_hw*[]){
+>                                 &gpu_cc_gmu_clk_src.clkr.hw,
+> @@ -295,7 +295,7 @@ static struct clk_branch gpu_cc_hlos1_vote_gpu_smmu_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x5000,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "gpu_cc_hlos1_vote_gpu_smmu_clk",
+>                         .ops = &clk_branch2_ops,
+>                 },
+> @@ -308,7 +308,7 @@ static struct clk_branch gpu_cc_hub_aon_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x1178,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "gpu_cc_hub_aon_clk",
+>                         .parent_hws = (const struct clk_hw*[]){
+>                                 &gpu_cc_hub_clk_src.clkr.hw,
+> @@ -326,7 +326,7 @@ static struct clk_branch gpu_cc_hub_cx_int_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x1204,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "gpu_cc_hub_cx_int_clk",
+>                         .parent_hws = (const struct clk_hw*[]){
+>                                 &gpu_cc_hub_cx_int_div_clk_src.clkr.hw,
+> @@ -344,7 +344,7 @@ static struct clk_branch gpu_cc_mnd1x_0_gfx3d_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x802c,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "gpu_cc_mnd1x_0_gfx3d_clk",
+>                         .ops = &clk_branch2_ops,
+>                 },
+> @@ -357,7 +357,7 @@ static struct clk_branch gpu_cc_mnd1x_1_gfx3d_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x8030,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "gpu_cc_mnd1x_1_gfx3d_clk",
+>                         .ops = &clk_branch2_ops,
+>                 },
+> @@ -370,7 +370,7 @@ static struct clk_branch gpu_cc_sleep_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x1090,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "gpu_cc_sleep_clk",
+>                         .ops = &clk_branch2_ops,
+>                 },
+> diff --git a/drivers/clk/qcom/lpasscc-sc7280.c b/drivers/clk/qcom/lpasscc-sc7280.c
+> index b39ee1c9647b..ef055706b442 100644
+> --- a/drivers/clk/qcom/lpasscc-sc7280.c
+> +++ b/drivers/clk/qcom/lpasscc-sc7280.c
+> @@ -1,6 +1,6 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  /*
+> - * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2021-2022, The Linux Foundation. All rights reserved.
+>   */
+>
+>  #include <linux/clk-provider.h>
+> @@ -23,7 +23,7 @@ static struct clk_branch lpass_q6ss_ahbm_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x1c,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "lpass_q6ss_ahbm_clk",
+>                         .ops = &clk_branch2_ops,
+>                 },
+> @@ -36,7 +36,7 @@ static struct clk_branch lpass_q6ss_ahbs_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x20,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "lpass_q6ss_ahbs_clk",
+>                         .ops = &clk_branch2_ops,
+>                 },
+> @@ -49,7 +49,7 @@ static struct clk_branch lpass_top_cc_lpi_q6_axim_hs_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x0,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "lpass_top_cc_lpi_q6_axim_hs_clk",
+>                         .ops = &clk_branch2_ops,
+>                 },
+> @@ -63,7 +63,7 @@ static struct clk_branch lpass_qdsp6ss_core_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x20,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "lpass_qdsp6ss_core_clk",
+>                         .ops = &clk_branch2_ops,
+>                 },
+> @@ -77,7 +77,7 @@ static struct clk_branch lpass_qdsp6ss_xo_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x38,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "lpass_qdsp6ss_xo_clk",
+>                         .ops = &clk_branch2_ops,
+>                 },
+> @@ -91,7 +91,7 @@ static struct clk_branch lpass_qdsp6ss_sleep_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x3c,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "lpass_qdsp6ss_sleep_clk",
+>                         .ops = &clk_branch2_ops,
+>                 },
+> diff --git a/drivers/clk/qcom/videocc-sc7280.c b/drivers/clk/qcom/videocc-sc7280.c
+> index 615695d82319..ba192ce6163e 100644
+> --- a/drivers/clk/qcom/videocc-sc7280.c
+> +++ b/drivers/clk/qcom/videocc-sc7280.c
+> @@ -1,6 +1,6 @@
+>  // SPDX-License-Identifier: GPL-2.0-only
+>  /*
+> - * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2021-2022, The Linux Foundation. All rights reserved.
+>   */
+>
+>  #include <linux/clk-provider.h>
+> @@ -45,10 +45,10 @@ static struct clk_alpha_pll video_pll0 = {
+>         .num_vco = ARRAY_SIZE(lucid_vco),
+>         .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID],
+>         .clkr = {
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "video_pll0",
+>                         .parent_data = &(const struct clk_parent_data){
+> -                               .fw_name = "bi_tcxo",
+> +                               .index = 0,
+>                         },
+>                         .num_parents = 1,
+>                         .ops = &clk_alpha_pll_lucid_ops,
+> @@ -62,7 +62,7 @@ static const struct parent_map video_cc_parent_map_0[] = {
+>  };
+>
+>  static const struct clk_parent_data video_cc_parent_data_0[] = {
+> -       { .fw_name = "bi_tcxo" },
+> +       { .index = 0 },
+>         { .hw = &video_pll0.clkr.hw },
+>  };
+>
+> @@ -89,7 +89,7 @@ static struct clk_rcg2 video_cc_iris_clk_src = {
+>         .hid_width = 5,
+>         .parent_map = video_cc_parent_map_0,
+>         .freq_tbl = ftbl_video_cc_iris_clk_src,
+> -       .clkr.hw.init = &(struct clk_init_data){
+> +       .clkr.hw.init = &(const struct clk_init_data){
+>                 .name = "video_cc_iris_clk_src",
+>                 .parent_data = video_cc_parent_data_0,
+>                 .num_parents = ARRAY_SIZE(video_cc_parent_data_0),
+> @@ -109,7 +109,7 @@ static struct clk_rcg2 video_cc_sleep_clk_src = {
+>         .hid_width = 5,
+>         .parent_map = video_cc_parent_map_1,
+>         .freq_tbl = ftbl_video_cc_sleep_clk_src,
+> -       .clkr.hw.init = &(struct clk_init_data){
+> +       .clkr.hw.init = &(const struct clk_init_data){
+>                 .name = "video_cc_sleep_clk_src",
+>                 .parent_data = video_cc_parent_data_1,
+>                 .num_parents = ARRAY_SIZE(video_cc_parent_data_1),
+> @@ -123,7 +123,7 @@ static struct clk_branch video_cc_iris_ahb_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x5004,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "video_cc_iris_ahb_clk",
+>                         .parent_hws = (const struct clk_hw*[]){
+>                                 &video_cc_iris_clk_src.clkr.hw,
+> @@ -141,7 +141,7 @@ static struct clk_branch video_cc_mvs0_axi_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x800c,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "video_cc_mvs0_axi_clk",
+>                         .ops = &clk_branch2_ops,
+>                 },
+> @@ -156,7 +156,7 @@ static struct clk_branch video_cc_mvs0_core_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x3010,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "video_cc_mvs0_core_clk",
+>                         .parent_hws = (const struct clk_hw*[]){
+>                                 &video_cc_iris_clk_src.clkr.hw,
+> @@ -174,7 +174,7 @@ static struct clk_branch video_cc_mvsc_core_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x2014,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "video_cc_mvsc_core_clk",
+>                         .parent_hws = (const struct clk_hw*[]){
+>                                 &video_cc_iris_clk_src.clkr.hw,
+> @@ -192,7 +192,7 @@ static struct clk_branch video_cc_mvsc_ctl_axi_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x8004,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "video_cc_mvsc_ctl_axi_clk",
+>                         .ops = &clk_branch2_ops,
+>                 },
+> @@ -205,7 +205,7 @@ static struct clk_branch video_cc_sleep_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x7034,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "video_cc_sleep_clk",
+>                         .parent_hws = (const struct clk_hw*[]){
+>                                 &video_cc_sleep_clk_src.clkr.hw,
+> @@ -223,7 +223,7 @@ static struct clk_branch video_cc_venus_ahb_clk = {
+>         .clkr = {
+>                 .enable_reg = 0x801c,
+>                 .enable_mask = BIT(0),
+> -               .hw.init = &(struct clk_init_data){
+> +               .hw.init = &(const struct clk_init_data){
+>                         .name = "video_cc_venus_ahb_clk",
+>                         .ops = &clk_branch2_ops,
+>                 },
+> --
+> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+> of the Code Aurora Forum, hosted by the  Linux Foundation.
+>
 
 
 -- 
