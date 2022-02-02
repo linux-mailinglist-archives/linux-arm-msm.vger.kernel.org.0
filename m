@@ -2,104 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E60264A78B2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Feb 2022 20:27:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ECB514A7A32
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Feb 2022 22:24:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244932AbiBBT1Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Feb 2022 14:27:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54640 "EHLO
+        id S240299AbiBBVYL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Feb 2022 16:24:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235908AbiBBT1P (ORCPT
+        with ESMTP id S239328AbiBBVYK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Feb 2022 14:27:15 -0500
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87332C061714
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Feb 2022 11:27:15 -0800 (PST)
-Received: by mail-yb1-xb2d.google.com with SMTP id j2so1958753ybu.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Feb 2022 11:27:15 -0800 (PST)
+        Wed, 2 Feb 2022 16:24:10 -0500
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B472C06173D
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Feb 2022 13:24:10 -0800 (PST)
+Received: by mail-pf1-x430.google.com with SMTP id e6so409402pfc.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Feb 2022 13:24:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=anholt-net.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MVFg7PnzCZUjUxdz0W83GsH6V6lHk0PTdYLQqbtG0AI=;
-        b=VUwYV4hfYIJDeVqAbdSVlM+Ob6/tQmaK18WXFHl50OmP56SqFl78RfzWXIZAhDIEyA
-         FBxi54PA6BaxdknZcdX6mGVwGAs5r4L/o1yfQC6tIb41idAtlSuLxodwGODXpdQYAoou
-         gBYie3P3VedP1Q6B4Vq2tVEMo6OFvTZeK3j/8lCY2iRXtpCT1496pzBfM88SpAwUnR0v
-         UejxgXYvo3gN1ViXSbsqRVrvbwtcYBPz5h9Qvvh/PT5PICdBHwABLDDpHlb87s9G/l6Q
-         ExTcmFgmDUt5xNa5ZXPbgdrJftgwB8u6PIPXqmWn+Veh7T2F047aQbSZ1SEBqoDhU1wI
-         bB7A==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BzO4x0egfL+lkgiS2KouKfqLrj3n7wywW/JicE40S5U=;
+        b=EgxhRhjfIGWrGUq350wVEc1i/OZ+YrTYVF7kqrszFu4GlGi1H0Eq7z87hk8Suro3mu
+         jh9dljYpRoW9TznUkvre7B9lBRJ+wkk5olfhDNUyZ1A0H3Kd91MOb3sSvaFYcvZyTwph
+         LH5hGty/A0L1l37YOEVmn3KwioIEVHZmMAUWc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MVFg7PnzCZUjUxdz0W83GsH6V6lHk0PTdYLQqbtG0AI=;
-        b=CddpEF/Enbhw9gFl32OZZwCoHEMJUnlUXVb1M76VarnfuJZiSQO8/MhKgX5kZ+1pUz
-         Fju8+W+fXYT62R0DHdxtmsdr+sPXXreECsd1CQN5zpwVbkFi8UYNZW9XoYzsEP8hMxuJ
-         YgVu8k0FxaAJVzv4JqDaAwzOmPNwE11TAeO0vTzROkcjZb+f88pczB4ffYsiijZwXKVq
-         NdL5UN7MRq0PWRNd9j+aEzWMhTWHLVStqqNFp2hcHa518TedTw5b1SPja8YnD3UnhOaP
-         yivcJ4INJiAPVpykx/2yqh43aLQNBVnpOle82wjFkeWUiBXVeLCr41DiqkU0MpLtZOZY
-         ayTg==
-X-Gm-Message-State: AOAM533RrkSqvzwu59jaG1FgPEUHLG+97cDQa5MRvqa7nuqYnA0hIH1M
-        o82EJzScAzX54VNG9wVZzt1EulGa8RtLlOpLuJZ2IQ==
-X-Google-Smtp-Source: ABdhPJxjEkuDFLTtBXShgD0F0o0g/RNgC7ua+FWLePsV5R9uG8DZdnnVQ8u6OGlpCZe3rRIYPAUwctTIuW7JqlAHdlI=
-X-Received: by 2002:a81:23d4:: with SMTP id j203mr2147372ywj.95.1643830034776;
- Wed, 02 Feb 2022 11:27:14 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BzO4x0egfL+lkgiS2KouKfqLrj3n7wywW/JicE40S5U=;
+        b=3Id3omebeb7l5mdd6O127LXeLCzy7GdA6nDMRfj2d1kQPmN4ivQDmvC/2PmM3Gb6F3
+         YW9C410iwlpzL5NCrxqqkJ/nArvcXEr7aJ2eTqEP1vlgVdeG1eWm0JHuafUodF4rAI8j
+         PJVYSjcYSVx75SahWU1lFKsgkVYNGJ4V25oEADD+wkzEA86zm+Yt6klVdVYBgJeEquNB
+         +Bz17hvkuzbyEeJxMNMkBMWFYdVUAbC4zL17MTZHH5m3aEZ74B7YBD/Eroxnv8HjxiuS
+         z1MOkBXtq3Z/jn98spLzJoDZBxIU6HvSueyLUcwJMfyQOHPdB4PFBlirk8S4KJGrObQY
+         Zh9Q==
+X-Gm-Message-State: AOAM531ne4LHIoKQHdPInHcvVcqtwyZYTacIbhYiyWTxpvz+is8OrU09
+        x5o2o376luDxhT0BLe50ZxMtoA==
+X-Google-Smtp-Source: ABdhPJw2mY35yY30htTIyURARV2lwbwXWo9JdHo/Rhjfq2KKmY/oRs7iA2c6EKIvCKRbK8C2pAQDjg==
+X-Received: by 2002:a05:6a00:230e:: with SMTP id h14mr31840769pfh.10.1643837049816;
+        Wed, 02 Feb 2022 13:24:09 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:f1c4:10b6:b4ef:16e5])
+        by smtp.gmail.com with ESMTPSA id on9sm7627983pjb.16.2022.02.02.13.24.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Feb 2022 13:24:09 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     pmaliset@codeaurora.org, mka@chromium.org,
+        quic_rjendra@quicinc.com,
+        Shaik Sajida Bhanu <sbhanu@codeaurora.org>,
+        kgodara@codeaurora.org, konrad.dybcio@somainline.org,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        sibis@codeaurora.org, swboyd@chromium.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 00/14] arm64: dts: qcom: sc7x80: A smattering of misc dts cleanups + herobrine-rev1
+Date:   Wed,  2 Feb 2022 13:23:34 -0800
+Message-Id: <20220202212348.1391534-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.35.0.rc2.247.g8bbb082509-goog
 MIME-Version: 1.0
-References: <20220201161618.778455-1-robdclark@gmail.com> <20220201161618.778455-2-robdclark@gmail.com>
-In-Reply-To: <20220201161618.778455-2-robdclark@gmail.com>
-From:   Emma Anholt <emma@anholt.net>
-Date:   Wed, 2 Feb 2022 11:27:03 -0800
-Message-ID: <CADaigPUcA5+o2Cd+1YYTGbpnsj3Di=m2Q25OUeumz0HAQVFc9w@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] drm/msm/gpu: Add ctx to get_param()
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
-        freedreno@lists.freedesktop.org,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        Yiwei Zhang <zzyiwei@chromium.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        Yangtao Li <tiny.windzz@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 1, 2022 at 8:16 AM Rob Clark <robdclark@gmail.com> wrote:
->
-> From: Rob Clark <robdclark@chromium.org>
->
-> Prep work for next patch.
->
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
+This series is "v2" of my "smattering of misc dts cleanups" series
+plus v3 of the tail end of the series adding herobrine-rev1. I've set
+the version number to the larger of the two to (I hope) help
+allevitate confusion.
 
-> diff --git a/drivers/gpu/drm/msm/msm_rd.c b/drivers/gpu/drm/msm/msm_rd.c
-> index 7e4d6460719e..dd3605b46264 100644
-> --- a/drivers/gpu/drm/msm/msm_rd.c
-> +++ b/drivers/gpu/drm/msm/msm_rd.c
-> @@ -197,13 +197,15 @@ static int rd_open(struct inode *inode, struct file *file)
->
->         /* the parsing tools need to know gpu-id to know which
->          * register database to load.
-> +        *
-> +        * Note: These particular param does not require a context
->          */
+For the cleanups, there's not a lot holding this series together
+except that it fixes a smattering of random dts stuff that I noticed
+recently. There are not a lot of dependencies and some of the patches
+could be reordered if desired.
 
-Minor typo fix, "param does not" -> "params do not"
+Hopefully these look OK and can be applied quickly to avoid conflicts
+with other work going on.
 
-Other than that, series
-`Reviewed-by: Emma Anholt <emma@anholt.net>`
+For herobrine-rev1, it can be noted that it's likely
+that with the introduction of -rev1 we can drop -rev0 support, but
+we'll keep it for now (though we won't try to "fit it in" and share
+code with it). This series is confirmed to boot atop the top of
+the linux qualcomm tree, commit a5ee6b7720cb ("Merge branches
+'arm64-defconfig-for-5.18', 'arm64-for-5.18', 'dts-for-5.18',
+'arm64-fixes-for-5.17' and 'dts-fixes-for-5.17' into for-next")
 
-and I love that we're catching non-address-space associated faults now, too!
+Changes in v3:
+- Removed extra blank lines
+- ("Fix sort order of dp_hot_plug_det") new for v3.
+- ("Add edp_out port and HPD lines") new for v3.
+- ("Move pcie1_clkreq pull / drive str to boards") new for v3.
+- ("sc7280-idp: Disable pull from pcie1_clkreq") new for v3.
+- ("Remove dp_hot_plug_det pull from SoC dtsi file") new for v3.
+- ("Add a blank line in the dp node") new for v3.
+- Rebased atop dts cleanup patches.
+- Add regulator suffix as per dts cleanup patches.
+- Set PCIe bias / pull as per dts cleanup patches.
+- Add dp_hot_plug_det pull as per dts cleanup patches.
+- Setup SD card same as dts cleanup patches.
+- ("sc7280: Add the CPU compatible to the soc@0 node") new for v3.
+- ("Remove "qcom,sc7280" from top-level") patch new for v3.
+
+Changes in v2:
+- Herobrine compatible on one line, not two
+- Wording change in comments for components enabled per-board
+- Always sort "bias" above "drive-strength" in pinctrl.
+- Properly sort "hub_en" pinctrl.
+- Two comments moved from multiline to single line.
+- Space after "/delete-property/"
+
+Douglas Anderson (14):
+  arm64: dts: qcom: sc7180-trogdor: Add "-regulator" suffix to
+    pp3300_hub
+  arm64: dts: qcom: sc7280-herobrine: Consistently add "-regulator"
+    suffix
+  arm64: dts: qcom: sc7280: Properly sort sdc pinctrl lines
+  arm64: dts: qcom: sc7280: Clean up sdc1 / sdc2 pinctrl
+  arm64: dts: qcom: sc7280-idp: No need for "input-enable" on sw_ctrl
+  arm64: dts: qcom: sc7280: Fix sort order of dp_hot_plug_det /
+    pcie1_clkreq_n
+  arm64: dts: qcom: sc7280: Add edp_out port and HPD lines
+  arm64: dts: qcom: sc7280: Move pcie1_clkreq pull / drive str to boards
+  arm64: dts: qcom: sc7280: Disable pull from pcie1_clkreq
+  arm64: dts: qcom: sc7280: Move dp_hot_plug_det pull from SoC dtsi file
+  arm64: dts: qcom: sc7280: Add a blank line in the dp node
+  arm64: dts: qcom: sc7280: Add herobrine-r1
+  arm64: dts: qcom: sc7280: Add the CPU compatible to the soc@0 node
+  arm64: dts: qcom: sc7280: Remove "qcom,sc7280" from top-level of
+    boards
+
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |   2 +-
+ arch/arm64/boot/dts/qcom/sc7280-crd.dts       |   2 +-
+ .../qcom/sc7280-herobrine-herobrine-r0.dts    |  97 +--
+ .../qcom/sc7280-herobrine-herobrine-r1.dts    | 313 +++++++
+ .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 785 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts       |   2 +-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      |  99 +--
+ arch/arm64/boot/dts/qcom/sc7280-idp2.dts      |   2 +-
+ arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi    | 547 ++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          | 182 ++--
+ 11 files changed, 1845 insertions(+), 187 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+
+-- 
+2.35.0.rc2.247.g8bbb082509-goog
+
