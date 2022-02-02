@@ -2,153 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 592714A6C95
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Feb 2022 09:03:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E8834A6CD3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Feb 2022 09:22:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237007AbiBBIDT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Feb 2022 03:03:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38690 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241559AbiBBIDO (ORCPT
+        id S241476AbiBBIWD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Feb 2022 03:22:03 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:2033 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240949AbiBBIWD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Feb 2022 03:03:14 -0500
-Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7A06C06173D;
-        Wed,  2 Feb 2022 00:03:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
-        s=the; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:
-        Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=seEgaVlgz/Vp+D6vXdUCwzahcTfzufMMD8/HyxzkVJk=; b=YipIM99ngR8F00+RNu2Nn/sD4t
-        6IdBK9yQHpPyr69n1jrcw+F3WlA2dibRL3Qv2e9PKjHc93gyHAF4F5619u32MhCf6+ulIzHncaVyF
-        ZIjFORI1C9hwiAINgBx0PFlUDkBPMqKeNjJJyVQoLel9wsebdMpVvQU3/yZ5cEwxqD/EqLUgVee1H
-        bk0E8uXIwWkNqSW2FU8YnhCE95NBRDpyt4VdsAKZPbTo5pgvvlLIAqA0R7SvYJgjQ0USLDrL/u9/V
-        WcGS0bEF9OO81qCe1TVI0SVvA9uhlVLU/YO/9AqNCbV14w36eXO12446cFY7b26tE0soL+0m0CG73
-        CwnuTENA==;
-Received: from noodles by the.earth.li with local (Exim 4.94.2)
-        (envelope-from <noodles@earth.li>)
-        id 1nFAbe-00ClBn-TT; Wed, 02 Feb 2022 08:03:10 +0000
-Date:   Wed, 2 Feb 2022 08:03:10 +0000
-From:   Jonathan McDowell <noodles@earth.li>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 03/17] ARM: dts: qcom: add missing rpm regulators and
- cells for ipq8064
-Message-ID: <Yfo6vgdTR4ZLGZZ4@earth.li>
-References: <20220118012051.21691-1-ansuelsmth@gmail.com>
- <20220118012051.21691-4-ansuelsmth@gmail.com>
- <Yfhmum8BnB1JIALP@builder.lan>
- <YflGGM45F3TqERNj@earth.li>
- <YfmtHFfW00Qr2cLc@Ansuel-xps.localdomain>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YfmtHFfW00Qr2cLc@Ansuel-xps.localdomain>
+        Wed, 2 Feb 2022 03:22:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1643790124; x=1675326124;
+  h=from:to:cc:subject:date:message-id;
+  bh=xj1PMTdKP6FJfcRFDIwPOspQGBNZZNI40X619K+1Jks=;
+  b=ccLXNwiH+oqD7VvJ+Z5HBwX2s7zvoJdb8ESVyz/zSU906t4inZcUdPzP
+   tSFYX3kxyEzKQgNfFpgaX+sPgnaFDIX4wpc7lh0OcbdO9tXK5tc2vbyUY
+   pK62eKdjC1/hO9U1rCU3L0W8Iy9FLfjyCFE2sAW4FZnBpKtjqlCUbYqsy
+   c=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 02 Feb 2022 00:22:03 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 02 Feb 2022 00:21:46 -0800
+X-QCInternal: smtphost
+Received: from pmaliset-linux.qualcomm.com ([10.206.64.233])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 02 Feb 2022 13:51:28 +0530
+Received: by pmaliset-linux.qualcomm.com (Postfix, from userid 3848298)
+        id 0C6C721195; Wed,  2 Feb 2022 13:51:26 +0530 (IST)
+From:   Prasad Malisetty <quic_pmaliset@quicinc.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        lorenzo.pieralisi@arm.com, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robh@kernel.org, kw@linux.com,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+        manivannan.sadhasivam@linaro.org, swboyd@chromium.org,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>
+Subject: [PATCH v1] arm64: dts: qcom: sc7280: Fix pcie gpio entries
+Date:   Wed,  2 Feb 2022 13:51:22 +0530
+Message-Id: <1643790082-18417-1-git-send-email-quic_pmaliset@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 01, 2022 at 10:58:52PM +0100, Ansuel Smith wrote:
-> On Tue, Feb 01, 2022 at 02:39:20PM +0000, Jonathan McDowell wrote:
-> > On Mon, Jan 31, 2022 at 04:46:18PM -0600, Bjorn Andersson wrote:
-> > > On Mon 17 Jan 19:20 CST 2022, Ansuel Smith wrote:
-> > > 
-> > > > Add cells definition for rpm node and add missing regulators for the 4
-> > > > regulator present on ipq8064. There regulators are controlled by rpm and
-> > > > to correctly works gsbi4_i2c require to be NEVER disabled or rpm will
-> > > > reject any regulator change request.
-> > > > 
-> > > 
-> > > Is the SMB208 mandatory on all ipq8064 designs, or should this be pushed
-> > > out to the device dts?
-> > 
-> > It's not; the RB3011 uses a different regulator (a TPS563900).
-> >
-> 
-> Fact is that that's a special case. We have 20 devices based on ipq806x
-> and they all have smb208 regulators.
+Current gpio's in IDP file are not mapping properly,
+seeing device timedout failures.
 
-Indeed, it's another Mikrotik special unfortunately (I haven't managed
-to get the SMEM driver to work on the platform either).
+Corrected pcie gpio entries in dtsi files.
 
-> Is the TPS563900 also controlled by rpm?
+Fixes: 4e24d227aa77 ("arm64: dts: qcom: sc7280: Add PCIe nodes for IDP board")
 
-AFAICT it's CPU controlled via I2C. It looks like one output is shared
-for the CPU cores etc and the other is for the NSS cores, rather than
-the full control the smb208 offers.
+Signed-off-by: Prasad Malisetty <quic_pmaliset@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 35 ++++++++++++++------------------
+ arch/arm64/boot/dts/qcom/sc7280.dtsi     | 10 ++++++++-
+ 2 files changed, 24 insertions(+), 21 deletions(-)
 
-> Anyway should we use a dedicated dtsi to declare the correct regulators?
-
-I've got no problem with smb208 being the default, but please add any
-appropriate disabling of it to the RB3011 DTS.
-
-> > > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > > > ---
-> > > >  arch/arm/boot/dts/qcom-ipq8064.dtsi | 35 +++++++++++++++++++++++++++++
-> > > >  1 file changed, 35 insertions(+)
-> > > > 
-> > > > diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> > > > index 094125605bea..824cf13dd037 100644
-> > > > --- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> > > > +++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-> > > > @@ -829,10 +829,45 @@ rpm: rpm@108000 {
-> > > >  			clocks = <&gcc RPM_MSG_RAM_H_CLK>;
-> > > >  			clock-names = "ram";
-> > > >  
-> > > > +			#address-cells = <1>;
-> > > > +			#size-cells = <0>;
-> > > > +
-> > > >  			rpmcc: clock-controller {
-> > > >  				compatible = "qcom,rpmcc-ipq806x", "qcom,rpmcc";
-> > > >  				#clock-cells = <1>;
-> > > >  			};
-> > > > +
-> > > > +			regulators {
-> > > > +				compatible = "qcom,rpm-smb208-regulators";
-> > > > +
-> > > > +				smb208_s1a: s1a {
-> > > > +					regulator-min-microvolt = <1050000>;
-> > > > +					regulator-max-microvolt = <1150000>;
-> > > > +
-> > > > +					qcom,switch-mode-frequency = <1200000>;
-> > > > +				};
-> > > > +
-> > > > +				smb208_s1b: s1b {
-> > > > +					regulator-min-microvolt = <1050000>;
-> > > > +					regulator-max-microvolt = <1150000>;
-> > > > +
-> > > > +					qcom,switch-mode-frequency = <1200000>;
-> > > > +				};
-> > > > +
-> > > > +				smb208_s2a: s2a {
-> > > > +					regulator-min-microvolt = < 800000>;
-> > > > +					regulator-max-microvolt = <1250000>;
-> > > > +
-> > > > +					qcom,switch-mode-frequency = <1200000>;
-> > > > +				};
-> > > > +
-> > > > +				smb208_s2b: s2b {
-> > > > +					regulator-min-microvolt = < 800000>;
-> > > > +					regulator-max-microvolt = <1250000>;
-> > > > +
-> > > > +					qcom,switch-mode-frequency = <1200000>;
-> > > > +				};
-> > > > +			};
-> > > >  		};
-> > > >  
-> > > >  		tcsr: syscon@1a400000 {
-> > > > -- 
-> > > > 2.33.1
-
-J.
-
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+index 78da9ac..84bf9d2 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+@@ -243,9 +243,6 @@
+ 	perst-gpio = <&tlmm 2 GPIO_ACTIVE_LOW>;
+ 
+ 	vddpe-3v3-supply = <&nvme_3v3_regulator>;
+-
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pcie1_reset_n>, <&pcie1_wake_n>;
+ };
+ 
+ &pcie1_phy {
+@@ -360,6 +357,21 @@
+ 
+ /* PINCTRL - additions to nodes defined in sc7280.dtsi */
+ 
++&pcie1_reset_n {
++	pins = "gpio2";
++
++	drive-strength = <16>;
++	output-low;
++	bias-disable;
++};
++
++&pcie1_wake_n {
++	pins = "gpio3";
++
++	drive-strength = <2>;
++	bias-pull-up;
++};
++
+ &pm7325_gpios {
+ 	key_vol_up_default: key-vol-up-default {
+ 		pins = "gpio6";
+@@ -436,23 +448,6 @@
+ 		function = "gpio";
+ 	};
+ 
+-	pcie1_reset_n: pcie1-reset-n {
+-		pins = "gpio2";
+-		function = "gpio";
+-
+-		drive-strength = <16>;
+-		output-low;
+-		bias-disable;
+-	};
+-
+-	pcie1_wake_n: pcie1-wake-n {
+-		pins = "gpio3";
+-		function = "gpio";
+-
+-		drive-strength = <2>;
+-		bias-pull-up;
+-	};
+-
+ 	qup_uart7_sleep_cts: qup-uart7-sleep-cts {
+ 		pins = "gpio28";
+ 		function = "gpio";
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index d4009cc..2e14c37 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -1640,7 +1640,7 @@
+ 			phy-names = "pciephy";
+ 
+ 			pinctrl-names = "default";
+-			pinctrl-0 = <&pcie1_clkreq_n>;
++			pinctrl-0 = <&pcie1_clkreq_n>, <&pcie1_reset_n>, <&pcie1_wake_n>;
+ 
+ 			iommus = <&apps_smmu 0x1c80 0x1>;
+ 
+@@ -3272,6 +3272,14 @@
+ 				bias-pull-up;
+ 			};
+ 
++			pcie1_reset_n: pcie1-reset-n {
++				function = "gpio";
++			};
++
++			pcie1_wake_n: pcie1-wake-n {
++				function = "gpio";
++			};
++
+ 			dp_hot_plug_det: dp-hot-plug-det {
+ 				pins = "gpio47";
+ 				function = "dp_hot";
 -- 
-/-\                             | 101 things you can't have too much
-|@/  Debian GNU/Linux Developer |         of : 13 - Holidays.
-\-                              |
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
