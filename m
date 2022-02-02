@@ -2,83 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D03E4A6AF1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Feb 2022 05:37:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C66E4A6B83
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Feb 2022 06:32:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244414AbiBBEhl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Feb 2022 23:37:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49738 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242010AbiBBEhl (ORCPT
+        id S244486AbiBBFca (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Feb 2022 00:32:30 -0500
+Received: from so254-9.mailgun.net ([198.61.254.9]:20750 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244718AbiBBFc3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Feb 2022 23:37:41 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02BAAC061714;
-        Tue,  1 Feb 2022 20:37:41 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Wed, 2 Feb 2022 00:32:29 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1643779949; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=+8A3HqRShnpoP+gZhCSNyFS6qiL0RZHDQAAX0f9uISA=; b=tBsDzz414Ijm56qIiq575ZWLzO4i0Ik4VVkL75ajCHJaP9uPT71X+g4UEpnAi4lcbuQX/Uc/
+ DW03A/b2UFdycW1cvT47ySQCs7LXfjGZoxXVHaM7KzsMengFUucSHsV2GudhIxztZHZX+GRl
+ sH5QjPU8zn37iRnCpjpPTkSy5AA=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 61fa1766e46e09ccb695233d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Feb 2022 05:32:22
+ GMT
+Sender: tdas=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8B173C4338F; Wed,  2 Feb 2022 05:32:21 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.0
+Received: from hu-tdas-hyd.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id BD1A8B83004;
-        Wed,  2 Feb 2022 04:37:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A754DC004E1;
-        Wed,  2 Feb 2022 04:37:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1643776658;
-        bh=2MsTA7b4xqOfL4vaY92UZcG7bH+PIh+2toz97qRww+o=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=QXfQtHVhH0qlcARW6XI+27JP9dVUBMuKr4zYnYNuJlrmzDfoXPEWQlNkxDZd1cdy5
-         gfkqbISgrd4P6DQrARKdwA9IZ4RT3ohdu4LMn9GeNR9f4orZaQ0xCy5UJXJDNAlYLm
-         QKoiwFCjtoKBCQhjbkkQ7MhLbx/HtfY9IfTjAHg1/EjvUgwy7dMcG4IvIkUxAS2dmg
-         +WlWLXaAEHIabtH0e0/3Ok1JS7aLXhEMKycZn333AwM9ccRfGdExLLWx0Fo1CoDJee
-         hCTVqFINqWtawKLcoXSps8vyZDsbwKRqss/h2KX/o6anBnLGimHrBMy5UX/8zrXl0g
-         wACdGNrk/KJMg==
-Date:   Wed, 2 Feb 2022 10:07:34 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        Prasad Malisetty <pmaliset@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCH 0/3] PCI: qcom: pipe_clk_src fixes for pcie-qcom driver
-Message-ID: <YfoKjvWXNxHvoFpg@matsya>
-References: <20211218140223.500390-1-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211218140223.500390-1-dmitry.baryshkov@linaro.org>
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E19E4C4338F;
+        Wed,  2 Feb 2022 05:32:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org E19E4C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v3] arm64: dts: qcom: sc7280: Add lpasscore & lpassaudio clock controllers
+Date:   Wed,  2 Feb 2022 11:02:07 +0530
+Message-Id: <20220202053207.14256-1-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18-12-21, 17:02, Dmitry Baryshkov wrote:
-> After comparing upstream and downstream Qualcomm PCIe drivers, change
-> the way the driver works with the pipe_clk_src multiplexing.
-> 
-> The clock should be switched to using ref_clk (TCXO) as a parent before
-> turning the PCIE_x_GDSC power domain off and can be switched to using
-> PHY's pipe_clk after this power domain is turned on.
-> 
-> Downstream driver uses regulators for the GDSC, so current approach also
-> (incorrectly) uses them. However upstream driver uses power-domain and
-> so GDSC is maintained using pm_runtime_foo() calls. Change order of
-> operations to implement these requirements.
+Add the low pass audio clock controller device nodes.
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Taniya Das <tdas@codeaurora.org>
+---
+ * Fix unwanted extra spaces in reg property.
+ * Fix lpass_aon node clock phandle <&lpasscc> to <&lpasscore>
 
-> 
-> ----------------------------------------------------------------
-> Dmitry Baryshkov (3):
->       PCI: qcom: Balance pm_runtime_foo() calls
->       PCI: qcom: Fix pipe_clk_src reparenting
->       PCI: qcom: Remove unnecessary pipe_clk handling
-> 
->  drivers/pci/controller/dwc/pcie-qcom.c | 122 +++++++--------------------------
->  1 file changed, 25 insertions(+), 97 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 43 ++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
--- 
-~Vinod
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 937c2e0e93eb..0d8a0d9d0f89 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -8,6 +8,8 @@
+ #include <dt-bindings/clock/qcom,dispcc-sc7280.h>
+ #include <dt-bindings/clock/qcom,gcc-sc7280.h>
+ #include <dt-bindings/clock/qcom,gpucc-sc7280.h>
++#include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
++#include <dt-bindings/clock/qcom,lpasscorecc-sc7280.h>
+ #include <dt-bindings/clock/qcom,rpmh.h>
+ #include <dt-bindings/clock/qcom,videocc-sc7280.h>
+ #include <dt-bindings/interconnect/qcom,sc7280.h>
+@@ -1744,6 +1746,47 @@
+ 			#clock-cells = <1>;
+ 		};
+
++		lpass_audiocc: clock-controller@3300000 {
++			compatible = "qcom,sc7280-lpassaudiocc";
++			reg = <0 0x03300000 0 0x30000>;
++			clocks = <&rpmhcc RPMH_CXO_CLK>,
++			       <&lpass_aon LPASS_AON_CC_MAIN_RCG_CLK_SRC>;
++			clock-names = "bi_tcxo", "lpass_aon_cc_main_rcg_clk_src";
++			power-domains = <&lpass_aon LPASS_AON_CC_LPASS_AUDIO_HM_GDSC>;
++			#clock-cells = <1>;
++			#power-domain-cells = <1>;
++		};
++
++		lpass_aon: clock-controller@3380000 {
++			compatible = "qcom,sc7280-lpassaoncc";
++			reg = <0 0x03380000 0 0x30000>;
++			clocks = <&rpmhcc RPMH_CXO_CLK>,
++			       <&rpmhcc RPMH_CXO_CLK_A>,
++			       <&lpasscore LPASS_CORE_CC_CORE_CLK>;
++			clock-names = "bi_tcxo", "bi_tcxo_ao", "iface";
++			#clock-cells = <1>;
++			#power-domain-cells = <1>;
++		};
++
++		lpasscore: clock-controller@3900000 {
++			compatible = "qcom,sc7280-lpasscorecc";
++			reg = <0 0x03900000 0 0x50000>;
++			clocks =  <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "bi_tcxo";
++			power-domains = <&lpass_hm LPASS_CORE_CC_LPASS_CORE_HM_GDSC>;
++			#clock-cells = <1>;
++			#power-domain-cells = <1>;
++		};
++
++		lpass_hm: clock-controller@3c00000 {
++			compatible = "qcom,sc7280-lpasshm";
++			reg = <0 0x3c00000 0 0x28>;
++			clocks = <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "bi_tcxo";
++			#clock-cells = <1>;
++			#power-domain-cells = <1>;
++		};
++
+ 		lpass_ag_noc: interconnect@3c40000 {
+ 			reg = <0 0x03c40000 0 0xf080>;
+ 			compatible = "qcom,sc7280-lpass-ag-noc";
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
+
