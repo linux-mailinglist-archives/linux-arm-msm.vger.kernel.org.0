@@ -2,80 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D50AC4A75FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Feb 2022 17:35:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0338A4A76C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Feb 2022 18:25:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345853AbiBBQff (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Feb 2022 11:35:35 -0500
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:36817 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345897AbiBBQff (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Feb 2022 11:35:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1643819735; x=1675355735;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=F8cd0YD8rXLXdTg11NvSlE/wiVGFREMAolQeUbPPezQ=;
-  b=H8sOl5cdDP7QgCAO1qHwGSDNxj1HQproAxTqJDplbMvQP6EMMeX8dt71
-   ltOwjOqJT2gDauajBXHyl9bE2spPNOF4yBzz4q374sdGVAXXwWd/ubSnw
-   SbcnanzqGJwTrPlLnvR03EfXQz9zm871PzonB9J+R0FACNBKz6GQqv/Gq
-   A=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 02 Feb 2022 08:35:35 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Feb 2022 08:35:34 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 2 Feb 2022 08:35:34 -0800
-Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 2 Feb 2022 08:35:31 -0800
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     Kathiravan T <quic_kathirav@quicinc.com>
-Subject: [PATCH 2/2] arm64: dts: qcom: ipq6018: drop the clock-frequency property
-Date:   Wed, 2 Feb 2022 22:05:09 +0530
-Message-ID: <1643819709-5410-3-git-send-email-quic_kathirav@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1643819709-5410-1-git-send-email-quic_kathirav@quicinc.com>
-References: <1643819709-5410-1-git-send-email-quic_kathirav@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+        id S241039AbiBBRZz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Feb 2022 12:25:55 -0500
+Received: from m43-7.mailgun.net ([69.72.43.7]:52132 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232532AbiBBRZz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 2 Feb 2022 12:25:55 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1643822755; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=CNruI/g+gBVAdYPEy22ABVFeKz4l119XLs0dajq3y/Y=; b=KL5DKJFrg8qfN+8DD40JBMyIQAsab9YAiZaY8vDRboXIt8xyZmc7JWOqWTVjoj788U8+5cw8
+ O68swTh9ihh6AJxBzvD91NkaggaYvbG05Jzh8EdY2GsYJevh7Cu3r+BFTliuKSZwCFt1Yuh6
+ IVqLO6xy5fB66pQ9Y4rMGpMWxGM=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 61fabea242b0db82d29c8660 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Feb 2022 17:25:54
+ GMT
+Sender: tdas=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 97D72C4360C; Wed,  2 Feb 2022 17:25:53 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.0
+Received: from hu-tdas-hyd.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 636AEC4338F;
+        Wed,  2 Feb 2022 17:25:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 636AEC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [PATCH v2 1/2] clk: qcom: clk-rcg2: Update logic to calculate D value for RCG
+Date:   Wed,  2 Feb 2022 22:55:39 +0530
+Message-Id: <20220202172540.2458-1-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-clock-frequency for IPQ6018 SoCs should be 24MHz, not 19.2MHz. Rather
-than correcting it, drop the property itself since its already
-configured by the bootloader.
+The current implementation does not check for D value is within
+the accepted range for a given M & N value. Update the logic to
+calculate the final D value based on the range.
 
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+Fixes: 99cbd064b059f ("clk: qcom: Support display RCG clocks")
+Signed-off-by: Taniya Das <tdas@codeaurora.org>
 ---
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+* Split the patch and update the Fixes tag.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index 66ec5615651d..2803b060126b 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -520,7 +520,6 @@
- 			ranges;
- 			compatible = "arm,armv7-timer-mem";
- 			reg = <0x0 0x0b120000 0x0 0x1000>;
--			clock-frequency = <19200000>;
- 
- 			frame@b120000 {
- 				frame-number = <0>;
--- 
-2.7.4
+ drivers/clk/qcom/clk-rcg2.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index e1b1b426fae4..34251ec98def 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -264,7 +264,7 @@ static int clk_rcg2_determine_floor_rate(struct clk_hw *hw,
+
+ static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
+ {
+-	u32 cfg, mask;
++	u32 cfg, mask, d_val, not2d_val;
+ 	struct clk_hw *hw = &rcg->clkr.hw;
+ 	int ret, index = qcom_find_src_index(hw, rcg->parent_map, f->src);
+
+@@ -283,8 +283,18 @@ static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
+ 		if (ret)
+ 			return ret;
+
++		/* Calculate 2d value */
++		d_val = f->n;
++
++		if (d_val > ((f->n - f->m) * 2))
++			d_val = (f->n - f->m) * 2;
++		else if (d_val < f->m)
++			d_val = f->m;
++
++		not2d_val = ~d_val & mask;
++
+ 		ret = regmap_update_bits(rcg->clkr.regmap,
+-				RCG_D_OFFSET(rcg), mask, ~f->n);
++				RCG_D_OFFSET(rcg), mask, not2d_val);
+ 		if (ret)
+ 			return ret;
+ 	}
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
 
