@@ -2,121 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E36994A905A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 22:59:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5914F4A9109
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Feb 2022 00:13:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355600AbiBCV7G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Feb 2022 16:59:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50620 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355558AbiBCV7F (ORCPT
+        id S1355942AbiBCXN6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Feb 2022 18:13:58 -0500
+Received: from relay08.th.seeweb.it ([5.144.164.169]:48387 "EHLO
+        relay08.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231451AbiBCXN6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Feb 2022 16:59:05 -0500
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6570EC061714
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 13:59:05 -0800 (PST)
-Received: by mail-ot1-x332.google.com with SMTP id x52-20020a05683040b400b0059ea92202daso3734759ott.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 13:59:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=jApEEKPPEesUGF7pUKn75jeWUbjNZyZyCRrMteIrvwg=;
-        b=Buy290N/yQvLU8Quc992ySg6dNM0zHWEK7NjrpKMoURh7Zi2P4pDQBLMy5ZF06YVJI
-         WXOPsT11G8Sl9HFXZ17cKvsCz/oAtyhfCf3Qh35aU/V3yzY4t8XBiKujF/2ZGrnGWNpj
-         V+gFahIHlPBBtj8BTksC7stbGOpSDLFtQaBds=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=jApEEKPPEesUGF7pUKn75jeWUbjNZyZyCRrMteIrvwg=;
-        b=itQnh26AGymYcWx4KSre9QYnkGMx82mhCz4zvu8FAG6nNNc6i47V1V6AhxaUpqFJgH
-         b7DITPagZnAcDPul7xwl1Fsz7A3M5LsRbyZrjs1Wz+lBlC8iqqb2VMaVjyGIRA55+RHs
-         goaqaeaNX7WeoXMeMJQeD9xA6cTcxA4csqOBPEavBfcfQXF/GsrEwhP+Lhjv7lGE7c4C
-         nzF9/2fBywWLnmpK+JoMT7LOdmtEhggQeKQfrVgqZsqk33Ip998Yf3HUIep9d8Druihi
-         9Nau9Jmqqzi7bVx0UzOCxjfWo0uV+BZtNKDuwXsvf7J1sSApoWrQXHkZxljL8k4bdoZw
-         0f7Q==
-X-Gm-Message-State: AOAM533oDanjXIavLTF+99Ur2ud2cy6RN6CKe984P2SSjg6X+DjJY0E0
-        3F/mNw7RwibFCm9DdQr4GeiozB4e6kjvjZHD5Qoa8A==
-X-Google-Smtp-Source: ABdhPJw0gK+pVS0/00IuIsk2vMvTkFbxMoaFsmgKDmLqthmZ5xXaB4S5bfTjw8W60l+XU1f3BuTSYn6xf0cE0lrnaio=
-X-Received: by 2002:a9d:6f06:: with SMTP id n6mr63202otq.159.1643925544771;
- Thu, 03 Feb 2022 13:59:04 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 3 Feb 2022 21:59:04 +0000
-MIME-Version: 1.0
-In-Reply-To: <CAD=FV=UKKZaHHz3-idahLg-ey3xmSZWKeTVVipzpZNQAkUVKmQ@mail.gmail.com>
-References: <20220202212348.1391534-1-dianders@chromium.org>
- <20220202132301.v3.9.I5f367dcce8107f2186b2aad4aef0dfcfafa034b9@changeid>
- <CAE-0n51N4wB7aTRbZR3zh3hjz56vdkFNwOSuKjU7n9gd_JDcvA@mail.gmail.com> <CAD=FV=UKKZaHHz3-idahLg-ey3xmSZWKeTVVipzpZNQAkUVKmQ@mail.gmail.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 3 Feb 2022 21:59:04 +0000
-Message-ID: <CAE-0n50Xb2qwDDOCaLwZPr5-YES3gYyA+7218=EXa4ZSJuFGjw@mail.gmail.com>
-Subject: Re: [PATCH v3 09/14] arm64: dts: qcom: sc7280: Disable pull from pcie1_clkreq
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Prasad Malisetty <pmaliset@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>, quic_rjendra@quicinc.com,
-        Shaik Sajida Bhanu <sbhanu@codeaurora.org>,
-        kgodara@codeaurora.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        Sibi Sankar <sibis@codeaurora.org>,
+        Thu, 3 Feb 2022 18:13:58 -0500
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 9CE603F7A0;
+        Fri,  4 Feb 2022 00:13:56 +0100 (CET)
+Date:   Fri, 4 Feb 2022 00:13:55 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Thierry Reding <thierry.reding@gmail.com>,
+        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
+        Lee Jones <lee.jones@linaro.org>, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Subject: Re: [PATCH v10 2/2] leds: Add driver for Qualcomm LPG
+Message-ID: <20220203231355.i2hasweo7db74rfm@SoMainline.org>
+References: <20211010043912.136640-1-bjorn.andersson@linaro.org>
+ <20211010043912.136640-2-bjorn.andersson@linaro.org>
+ <YXL0DyyPkS4/wfB7@ripper>
+ <20211027211928.tjybwy2lokj6eoun@SoMainline.org>
+ <YfSPYkbTXMOUGKkG@yoga>
+ <20220202110305.gbow3e3stolb67v5@SoMainline.org>
+ <Yfr9+jvGIyB2ynMS@ripper>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yfr9+jvGIyB2ynMS@ripper>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Doug Anderson (2022-02-03 13:53:09)
-> Hi,
->
-> On Thu, Feb 3, 2022 at 1:42 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > Quoting Douglas Anderson (2022-02-02 13:23:43)
-> > > I believe that the PCIe clkreq pin is an output. That means we
-> > > shouldn't have a pull enabled for it. Turn it off.
-> >
-> > It sounds like it's a request from the PCI device to the PCI phy that
-> > the clk should be on. I googled pcie clkreq open drain and this pdf[1]
-> > says
-> >
-> > "The CLKREQ# signal is an open drain, active low signal that is driven
-> > low by the PCI Express M.2 add-I Card function to request that the PCI
-> > Express reference clock be available (active clock state) in order to
-> > allow the PCI Express interface to send/receive data"
-> >
-> > so presumably if there isn't an external pull on the signal the open
-> > drain feature will not work and the PCIe device won't be able to drive
-> > it low.
-> >
-> > [1] https://advdownload.advantech.com/productfile/PIS/96FD80-P512-LIS/Product%20-%20Datasheet/96FD80-P512-LIS_datasheet20180110154919.pdf
->
-> Yeah, I had some trouble figuring this out too, so if someone knows
-> better than me then I'm more than happy to take advice here. I thought
-> I had found something claiming that "clkreq" was an output and on the
-> schematic I have from Qualcomm it shows an arrow going out from the
-> SoC for this signal indicating that it's an output from the SoC. Of
-> course, those arrows are notoriously wrong but at least it's one piece
-> of evidence that someone thought this was an output from the SoC.
->
-> Hrm, but I just checked the sc7280 "datasheet" which claims that this
-> is an input. Sigh.
->
-> I guess the options are:
-> * If we're sure this is an input to the SoC then I think we should
-> remove the drive-strength, right?
-> * If we don't know then I guess we can leave both?
+On 2022-02-02 13:56:10, Bjorn Andersson wrote:
+> On Wed 02 Feb 03:03 PST 2022, Marijn Suijten wrote:
+> 
+> > On 2022-01-28 18:50:42, Bjorn Andersson wrote:
+> > > On Wed 27 Oct 16:19 CDT 2021, Marijn Suijten wrote:
+> > > 
+> > > > Hi Bjorn,
+> > > > 
+> > > > On 2021-10-22 10:25:35, Bjorn Andersson wrote:
+> > > > > On Sat 09 Oct 21:39 PDT 2021, Bjorn Andersson wrote:
+> > > > > 
+> > > > > > The Light Pulse Generator (LPG) is a PWM-block found in a wide range of
+> > > > > > PMICs from Qualcomm. These PMICs typically comes with 1-8 LPG instances,
+> > > > > > with their output being routed to various other components, such as
+> > > > > > current sinks or GPIOs.
+> > > > > > 
+> > > > > > Each LPG instance can operate on fixed parameters or based on a shared
+> > > > > > lookup-table, altering the duty cycle over time. This provides the means
+> > > > > > for hardware assisted transitions of LED brightness.
+> > > > > > 
+> > > > > > A typical use case for the fixed parameter mode is to drive a PWM
+> > > > > > backlight control signal, the driver therefor allows each LPG instance
+> > > > > > to be exposed to the kernel either through the LED framework or the PWM
+> > > > > > framework.
+> > > > > > 
+> > > > > > A typical use case for the LED configuration is to drive RGB LEDs in
+> > > > > > smartphones etc, for which the driver support multiple channels to be
+> > > > > > ganged up to a MULTICOLOR LED. In this configuration the pattern
+> > > > > > generators will be synchronized, to allow for multi-color patterns.
+> > > > > > 
+> > > > > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > > > > ---
+> > > > > 
+> > > > > Any feedback on this?
+> > > > 
+> > > > I asked in #linux-msm whether anything is wrong with the patterns,
+> > > > since my Sony Discovery (sdm630 with a pm660l) blinks way quicker on a
+> > > > pattern that's supposed to stay on for 1s and off for 1s:
+> > > > 
+> > > >     echo "0 1000 255 1000" > /sys/class/leds/rgb\:status/hw_pattern
+> > > > 
+> > > > It however seems to be broken in the same way on an older version now
+> > > > (this might be v9 or v8) which I don't remember to be the case.  Can you
+> > > > double-check if this is all working fine on your side?  If so, I'll have
+> > > > to find some time to debug it on my end.
+> > > > 
+> > > 
+> > > I had missed the fact that LPG_RAMP_DURATION_REG is two registers for
+> > > msg and lsb, for a total of 9 bits of duration. So what you saw was
+> > > probably ticking at 232ms.
+> > > 
+> > > Note though that the pattern uses the last time as "high pause", so I
+> > > expect that you should have seen 232 ms of off, followed by 464ms of
+> > > light.
+> > 
+> > Visual inspection seems to confirm those numbers indeed!
+> > 
+> > > I've fixed this for v11, both rejecting invalid input and writing out
+> > > all 9 bits.
+> > 
+> > Doesn't that 512ms limit, together with using only the last value for
+> > hi_pause (and not the first value for lo_pause) force users to write
+> > patterns in a certain way which is not easily conveyed to the caller
+> > except by reading the comment in the driver?  I'd guess lo_pause can be
+> > used even if not in ping-pong mode, it should just hold at the first
+> > value for the given duration?
+> > 
+> > (That said hw_pattern is anyway already riddled with device-specific
+> > information, such as only having one `delta_t` which functions as the
+> > step size for every entry, and with the change above would need to be
+> > sourced from another step that's not the first.)
+> > 
+> 
+> Perhaps we should clarify the single delta_t by requiring all those
+> delta_t to be the same, rather than ignoring their value.
+> 
+> I.e. we make the ping-pong pattern:
+> 
+> <value> <lopause+t> ... <value[N/2-1]> <t> <value[N/2]> <hipause+t> <value[N/2-1]> <t> ... <value> <t>
+> 
+> And for non-ping-pong:
+> 
+> <value> <lopause+t> <value> <t> ... <value> <t> <value> <hipause + t>
+> 
+> 
+> What do you think?
 
-I'll wait for qcom folks to confirm. Maybe it's bidirectional because it
-is an open drain signal. I'm showing my cards that I'm no PCIe expert :)
+Seems like a good idea, though we'll have to be careful to communicate
+this lopause+t value for the first entry and hipause+t for the
+middle/last (through a dev_err I suppose) in case we reject values that
+don't strictly adhere to this math.
 
->
->
-> In any case, for now we can just drop this patch?
->
+> > Bit of a stretch, but perhaps worth noting anyway: should this be
+> > written in documentation somewhere, together with pattern examples and
+> > their desired outcome to function as testcases too?
+> > 
+> 
+> There's a comment in lpg_pattern_set() where I tried to capture this.
+> 
+> I don't think it's worth documenting the behavior/structure away from
+> the driver. But let's make sure it's captured properly there.
 
-Sounds good to me. It needs to be resolved through for herobrine-r1?
+I've seen two other dirvers document the hw_pattern sysfs property under
+Documentation/leds/.  Should be easier to find than a comment inside the
+respective function deep in the kernel source tree I presume?
+
+Quoting Documentation/ABI/testing/sysfs-class-led-trigger-pattern for
+this sysfs property:
+
+    Since different LED hardware can have different semantics of
+    hardware patterns, each driver is expected to provide its own
+    description for the hardware patterns in their documentation
+    file at Documentation/leds/.
+
+Doesn't need to be anything long, copying your inline comment would be a
+great start.  Thanks!
+
+- Marijn
