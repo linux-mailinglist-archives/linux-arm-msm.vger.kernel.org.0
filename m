@@ -2,91 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 883104A8A92
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 18:47:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CEBD74A8B2B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 19:05:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352924AbiBCRrI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Feb 2022 12:47:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47870 "EHLO
+        id S1353126AbiBCSFt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Feb 2022 13:05:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240648AbiBCRrG (ORCPT
+        with ESMTP id S1353197AbiBCSFt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Feb 2022 12:47:06 -0500
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50B14C06173B
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 09:47:06 -0800 (PST)
-Received: by mail-yb1-xb30.google.com with SMTP id g14so11208388ybs.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 09:47:06 -0800 (PST)
+        Thu, 3 Feb 2022 13:05:49 -0500
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39300C061714
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 10:05:49 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id z14-20020a17090ab10e00b001b6175d4040so10825575pjq.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 10:05:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=v5dZWO2zmkTU1RVWjuesiHDlAcvosB8eIhfb8TkkDW4=;
-        b=fWjIkmzvsJ8zoAcq7Jc5ZmyO+/LLei8lOf89EOTKrjbv8VmqxicG8D8XTEienF/D01
-         cb7RXvb02KtgLw5HlmlHMdjoaucdPUTQWs8R86dySiqbqJC8afVqzvDWgJTae+ZuWYJk
-         JJaHG6o0T1+HJBVvn1Btr6m6ME2WoVRAwnkoX0Pb/bCUt4PXxvaRPy+pGjm7BbmhtE36
-         YiIMxPEw+H0Jl1rUG8FPzOiiZU1KblPn8V7pJ3UBVk1B6qBIInRzLj9yuwQrgY56zWr+
-         Gpw4+5/v0QmrR99MCddwYsyOHxuZcoQ3MObje78mPaZoEHBzyaPGL+Yemgy8whpB80nJ
-         ZziA==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=HlhPGWE5bdGNLYD2rLHTqQvYoa01TULW+puGjVO5vSQ=;
+        b=VtLsiCCk158cnWh1hhk4hcAu7akeN1un0UoiIYtmE5BUwwcvATGuybGt4H+8Rx5GTd
+         1z3bqgJ50552OdIa0vByKWASS/00Y3E5FSjIQC/+0ni8LCjdGYD1Viv+5Wlp+OGXaqcz
+         tDShm8qyl098X8w2HGMlTAzsi2yYmIPJOOhYw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=v5dZWO2zmkTU1RVWjuesiHDlAcvosB8eIhfb8TkkDW4=;
-        b=X13w/SiiE2vMjHUhb90EHNBfoGqBrb28pmno1FR1+lC6qOgUbTFA2KedHNjjIih6tn
-         EU/6HqrGNx5Cc4/45MLfZGC9VvR0vzgrHcWtUhsrXTASlE11sjGr6Q7QdPk+HcsW474y
-         rcKSoyP7cs7OC4aWBc8Jitx6hHGlXth74a/SxI4w2o0WGBvltWwIPl+hrHJlGqbfDI+4
-         zpH9txB4ZagdyqSqjUhHgHQTzON74xB+vSX/1HxQ9cJp1E/nFiBFONeYGWghla6iParP
-         ElqM2o0kyltbRTyq01C9lCi/sCDzq8Ij9M43Y2JoC4iEDqbuaCON8BSnOFfNki62hskT
-         qA0Q==
-X-Gm-Message-State: AOAM532MnqCZiGfNvhhOve8gPSzlegCisX19ajap3V2B2llyXVbZ9S4c
-        Vc931IExHbUn25n4/RlgrZgkbDCGK/RxTRG4pcs2BA==
-X-Google-Smtp-Source: ABdhPJz0+rQtUI8LuvWp2eey3xD0y133oWhVArETGjYikU7HVNZG/2q32vKkVmbl7w29e5uYkgM8sM1xerFpoQ3AU8c=
-X-Received: by 2002:a25:df56:: with SMTP id w83mr46318988ybg.110.1643910425506;
- Thu, 03 Feb 2022 09:47:05 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=HlhPGWE5bdGNLYD2rLHTqQvYoa01TULW+puGjVO5vSQ=;
+        b=qsM9j61lkqPab8DbJK4aUOQXIGWxQBuO1CfPCpB5xufGPsb3CAziAgQ5EbP7wY7N1o
+         VaWmtk93OT20GMkovQOKwCox0Hh/Doa3xEHDOyKnt3UGvHJxWbTR3SmYOOhmW8me5eLF
+         xOKubOxa6h0q8Ha3CckbPtj77S8k4QCsnbRvUtcIivQkPHfVIcJEK8Ra00nUPV3khE46
+         0RtDxoWW1cQK0+aEZLt954V64RN1SKLSo1bzH6xK7PAZXnwwdgqk4rzAsHHbCewM9Ohi
+         Wr4MOqPMJygB6V1fQwDTM/+sa/L5ECT4x1Yr78zWVnZ5YIgAP6oRv7t4Ts9KzWzWi7+z
+         5cSg==
+X-Gm-Message-State: AOAM532IMxDWBy99Nfju0evJYVbsjsIDPx4PNvwQ715/FNZjnLkh2zCc
+        1T22ttv2COy6tXkcHj6u1Ho8Cg==
+X-Google-Smtp-Source: ABdhPJz1UINvG9Evq//eD92215fo53RODE2NVBvGZPKEMKJbnw7X1TLafReBfjtN0hTRcqLS5mbWtw==
+X-Received: by 2002:a17:902:ed82:: with SMTP id e2mr36674770plj.55.1643911548721;
+        Thu, 03 Feb 2022 10:05:48 -0800 (PST)
+Received: from localhost ([2620:15c:202:201:c0cb:3065:aa0:d6c9])
+        by smtp.gmail.com with UTF8SMTPSA id 19sm10327466pjb.42.2022.02.03.10.05.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Feb 2022 10:05:48 -0800 (PST)
+Date:   Thu, 3 Feb 2022 10:05:46 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        pmaliset@codeaurora.org, quic_rjendra@quicinc.com,
+        Shaik Sajida Bhanu <sbhanu@codeaurora.org>,
+        kgodara@codeaurora.org, konrad.dybcio@somainline.org,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        sibis@codeaurora.org, swboyd@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 12/14] arm64: dts: qcom: sc7280: Add herobrine-r1
+Message-ID: <YfwZeq7VQpFO8yPH@google.com>
+References: <20220202212348.1391534-1-dianders@chromium.org>
+ <20220202132301.v3.12.I5604b7af908e8bbe709ac037a6a8a6ba8a2bfa94@changeid>
 MIME-Version: 1.0
-References: <20220202113722.7550-1-michael.srba@seznam.cz> <20220202113722.7550-4-michael.srba@seznam.cz>
-In-Reply-To: <20220202113722.7550-4-michael.srba@seznam.cz>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 3 Feb 2022 18:46:54 +0100
-Message-ID: <CACRpkdbxMU=Sf7HofDpNr4pGdPWNs7Ga4ACikZYF5bFJwivnLw@mail.gmail.com>
-Subject: Re: [PATCH v5 4/5] drivers: bus: add driver for initializing the SSC
- bus on (some) qcom SoCs
-To:     Michael.Srba@seznam.cz
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Saravana Kannan <saravanak@google.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220202132301.v3.12.I5604b7af908e8bbe709ac037a6a8a6ba8a2bfa94@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 2, 2022 at 12:40 PM <michael.srba@seznam.cz> wrote:
+On Wed, Feb 02, 2022 at 01:23:46PM -0800, Douglas Anderson wrote:
+> Add the new herobrine-r1. Note that this is pretty much a re-design
+> compared to herobrine-r0 so we don't attempt any dtsi to share stuff
+> between them.
+> 
+> This patch attempts to define things at 3 levels:
+> 
+> 1. The Qcard level. Herobrine includes a Qcard PCB and the Qcard PCB
+>    is supposed to be the same (modulo stuffing options) across
+>    multiple boards, so trying to define what's there hopefully makes
+>    sense. NOTE that newer "CRD" boards from Qualcomm also use
+>    Qcard. When support for CRD3 is added hopefully it can use the
+>    Qcard include (and perhaps we should even evaluate it using
+>    herobrine.dtsi?)
+> 2. The herobrine "baseboard" level. Right now most stuff is here with
+>    the exception of things that we _know_ will be different per
+>    board. We know that not all boards will have the same set of eMMC,
+>    nvme, and SD. We also know that the exact pin names are likely to
+>    be different.
+> 3. The actual "board" level, AKA herobrine-rev1.
+> 
+> NOTES:
+> - This boots to command prompt. We're still waiting on the PWM driver.
+> - This assumes LTE for now. Once it's clear how WiFi-only SKUs will
+>   work we expect some small changes.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 
-> In combination with drivers for resources on the SSC bus, this driver can
-> aid in debugging, and for example with a TLMM driver can be used to
-> directly access SSC-dedicated GPIO pins, removing the need to commit
-> to a particular usecase during hw design.
->
-> Finally, until open firmware for the hexagon core is available, this
-> approach allows for using sensors hooked up to SSC-dedicated GPIO pins
-> on mainline Linux simply by utilizing the existing in-tree drivers for
-> these sensors.
-
-So the idea is to access the SSC-dedicated GPIO pins with a special
-instance of the TLMM driver and then enable the sensors normally
-managed by the sensor hub?
-
-This is a GREAT feat, as we don't know if we will ever be able to
-get any proper Hexagon firmware for the sensor hubs.
-
-Yours,
-Linus Walleij
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
