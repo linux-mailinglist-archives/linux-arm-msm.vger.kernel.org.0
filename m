@@ -2,99 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3457F4A8842
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 17:03:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF5E44A88FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 17:47:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343903AbiBCQDQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Feb 2022 11:03:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51144 "EHLO
+        id S239404AbiBCQqi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Feb 2022 11:46:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230457AbiBCQDO (ORCPT
+        with ESMTP id S242631AbiBCQqh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Feb 2022 11:03:14 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7482CC061714;
-        Thu,  3 Feb 2022 08:03:14 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 33E30B834DE;
-        Thu,  3 Feb 2022 16:03:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A3AC340E8;
-        Thu,  3 Feb 2022 16:03:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1643904192;
-        bh=LC6Uw/4iRQgEicjbz3l1kpey9eelEu6Mf2oUdApElRY=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=p7TJFRlKrrWTfGlxLXYrCX+per1Zny4gr933z+b62n42fOQH8hkxlsn4tLMxDY4wZ
-         NzGBmB+ak/Rh4v/UzQ1odA7wnzlIwDNlZ4p8aBbzecTrzCm/fzFHGvug7LOrrg8wS3
-         r3wMRQCPg/UgNA7thgc4qN7HV3IeK+4pNY7EsjEbzUGBqWkJL/rArfpABpU9p6jyVw
-         hPINXK/OhTS4kw5wUTbwlJ9q6xWO7mP1k0aHxNokxImyuKkxvxoTwHBtXhXp9epg1Y
-         h2baXAhv3qb1v4JwUPebc45XB6EUVu4IsMqHeHpI3NtfEJZgrY/CkyEWjj1PREVWcm
-         d+dkL6x8QSTUA==
-Date:   Thu, 3 Feb 2022 08:03:09 -0800
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     davem@davemloft.net, robh+dt@kernel.org,
-        bjorn.andersson@linaro.org, agross@kernel.org, mka@chromium.org,
-        evgreen@chromium.org, cpratapa@codeaurora.org,
-        avuyyuru@codeaurora.org, jponduru@codeaurora.org,
-        subashab@codeaurora.org, elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net 2/2] net: ipa: request IPA register values be
- retained
-Message-ID: <20220203080309.3b085a97@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <6d303dbb-bdbc-bac1-526d-be593f329d23@linaro.org>
-References: <20220201140412.467233-1-elder@linaro.org>
-        <20220201140412.467233-3-elder@linaro.org>
-        <20220202210248.6e3f92ef@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-        <6d303dbb-bdbc-bac1-526d-be593f329d23@linaro.org>
+        Thu, 3 Feb 2022 11:46:37 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 933A2C06173D
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 08:46:37 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id k13so7191484lfg.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 08:46:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ie1OHE8dynoeStzKHWtxsQXqjLNlKsrhQFt6sTADfMA=;
+        b=M7p2IigGIIkJiS1rj/2sNK1ODqHrIF5SlWms7dSmhOACxEDQV2jqqiF77MyXoWjfLe
+         G2FVtRW/SSwZvA/NPvbxjmkJI7CzIneHelEpx84rgdj4dQRkeBr7m+nKxRQFAENiz5Tu
+         v/bObx6aY6C2x4ke4oesFrbpi6W5OH1EtrIdk/C9F5q6MnXn0xxyO/IMYI3rjARQUCeR
+         GsPXS4wts77pJbeLNx4xkxsR91sJ74YOCkTC0TPSlammkONInMBIqgU68PLS7Q7kpfrT
+         yq/E9+IkXS0mf8w3qeepus7LeK/tnbEYRlO4JYY7VyeSwCGjcNKAR+M0C8LLVJWBK46q
+         NWEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ie1OHE8dynoeStzKHWtxsQXqjLNlKsrhQFt6sTADfMA=;
+        b=o9TqlcsxIzCJqjPVnuTSGQzTD8S7GvRNN7jX3Ou8GqVafM9+nEkRoXSmIhLhKxRPoU
+         LNC0AMuka11GNEIlA5rOpjceshdNjKunVp9qDWfBtp63/cSHRNzwrKq1SQL4Jc59qfpj
+         QZX838z6d804ZKM3UenmXiCttOAV1moJfDh3vZTvxAUAG78za7ELAklBxlEdbA5Si5lU
+         iOTlKWQGe9BH/Z6tbRpHQIT9YnqbNso4iobuMDS0bSoQmPbmxku3P2W62DUOyV7NXxmW
+         dddQMZqOB8O/EgwLvMtlIHaX2uwjvwkVC05mOm/o72g3Ld6qUks01qHO6Z/GjEMDQZ0r
+         BccA==
+X-Gm-Message-State: AOAM532AY3SAPNeqLnNEB2nhKDn2W4UJkRvcCwAvzWHk+8nIrAW6aosX
+        EGMR7O/tEnJESros4x63iCmXeg==
+X-Google-Smtp-Source: ABdhPJz4iO8ubgZ56ej9rjRRI92NoRvioTzKBRhVXGP3nBxWdRughDp5LXUfUf8Gd0HmY3Wubghf4w==
+X-Received: by 2002:a19:5219:: with SMTP id m25mr28305305lfb.502.1643906795816;
+        Thu, 03 Feb 2022 08:46:35 -0800 (PST)
+Received: from localhost.localdomain (88-113-46-102.elisa-laajakaista.fi. [88.113.46.102])
+        by smtp.gmail.com with ESMTPSA id h6sm269999lfm.237.2022.02.03.08.46.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Feb 2022 08:46:35 -0800 (PST)
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Wolfram Sang <wsa@kernel.org>, linux-i2c@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH 0/9] i2c: qcom-cci: fixes and updates
+Date:   Thu,  3 Feb 2022 18:46:27 +0200
+Message-Id: <20220203164629.1711958-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 3 Feb 2022 05:22:23 -0600 Alex Elder wrote:
-> On 2/2/22 11:02 PM, Jakub Kicinski wrote:
-> > On Tue,  1 Feb 2022 08:04:12 -0600 Alex Elder wrote:  
-> >> Fixes: 2775cbc5afeb6 ("net: ipa: rename "ipa_clock.c"")  
-> > 
-> > The Fixes tag should point at the place the code was introduced,
-> > even if it moved or otherwise the patch won't apply as far back.  
-> 
-> The problem was not "activated" until this commit:
->    1aac309d32075 net: ipa: use autosuspend
-> 
-> 
-> And that commit was merged together in a series that
-> included the one I mentioned above:
->    2775cbc5afeb6 net: ipa: rename "ipa_clock.c"
-> 
-> The rename commit is two commits after "use autosuspend".
-> 
-> The merge commit was:
->    863434886497d Merge branch 'ipa-autosuspend'
-> 
-> 
-> Until autosuspend is enabled, this new code is
-> completely unnecessary, so back-porting it beyond
-> that is pointless.  I supplied the commit in the
-> "Fixes" tag because I thought it would be close
-> to equivalent and would avoid some trouble back-porting.
-> 
-> Perhaps the "use autosuspend" commit is the one that
-> should be in the "Fixes" tag, but I don't believe it
-> should be back-ported any further than that.
-> 
-> Re-spinning the series to fix the tag is trivial, but
-> before I do that, can you tell me which commit you
-> recommend I use in the "Fixes" tag?
-> 
-> The original commit that introduced the microcontroller
-> code (and also included the clock/power code) is:
->    a646d6ec90983 soc: qcom: ipa: modem and microcontroller
+The main intention of the patch series is to add support of vbus
+regulators, which are commonly connected to CCI I2C busses.
 
-Thanks for the explanation 1aac309d32075 sounds like the right choice.
-Let me just swap it for you and apply the v2.
+The new bus adapter specific bus_regulator from commit 5a7b95fb993e
+("i2c: core: support bus regulator controlling in adapter") is reused,
+however its control is connected to runtime pm of the I2C master
+controller rather than runtime pm of slaves.
+
+In addition the series adds new compatible value for CCI found on QCOM
+SM8450 SoC.
+
+Vladimir Zapolskiy (9):
+  dt-bindings: i2c: qcom-cci: add QCOM SM8450 compatible
+  dt-bindings: i2c: qcom-cci: add description of a vbus-supply property
+  i2c: qcom-cci: don't delete an unregistered adapter
+  i2c: qcom-cci: don't put a device tree node before i2c_add_adapter()
+  i2c: qcom-cci: initialize CCI controller after registration of adapters
+  i2c: qcom-cci: simplify probe by removing one loop over busses
+  i2c: qcom-cci: simplify access to bus data structure
+  i2c: qcom-cci: add support of optional vbus-supply regulators
+  i2c: qcom-cci: add sm8450 compatible
+
+ .../devicetree/bindings/i2c/i2c-qcom-cci.txt  |   9 +-
+ drivers/i2c/busses/i2c-qcom-cci.c             | 159 ++++++++++++------
+ 2 files changed, 114 insertions(+), 54 deletions(-)
+
+-- 
+2.33.0
+
