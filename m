@@ -2,148 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A0134A8B6F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 19:20:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D64444A8BD8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 19:45:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353346AbiBCSUG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Feb 2022 13:20:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55812 "EHLO
+        id S1353556AbiBCSpy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Feb 2022 13:45:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353342AbiBCSUF (ORCPT
+        with ESMTP id S230376AbiBCSpy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Feb 2022 13:20:05 -0500
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E74C1C06173E
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 10:20:04 -0800 (PST)
-Received: by mail-ot1-x32f.google.com with SMTP id g15-20020a9d6b0f000000b005a062b0dc12so3280359otp.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 10:20:04 -0800 (PST)
+        Thu, 3 Feb 2022 13:45:54 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3416C061714
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 10:45:53 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id bu18so7903785lfb.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 10:45:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=FCGv/qYKeyIfFckxFA2H8QoH1f78f7u1cBQ9C1Sjl3M=;
-        b=eF5N1ay0x01zbCkcH51YulCjlbhEz3kuA1OuFLPpYD06veDb//xhGfkMg66RE1E7cM
-         RXivflDbMlN/+L96DUHKvaL/WzBE+5OQwylRvm5Nr8Nz6bfZHtBrn51QRqndqNBUOqmY
-         XNLOYbDTOC6rIydYZgoJWdk7zx8nzbetY1GzohlLLRh+VqdnKO6TqsPQT8nqZ9YJ4FWq
-         ibNHoEZ3MyBsTJVKaIfyZlHW/zHh5dOnWTgg9YcNZdDdHUc+v/thpYW5HfkanOU7QYxZ
-         5vWVO5umEUNLp4nbmCXz1wcRoutZfkOM/wN48fx/yQ97mmaWp7h9qb0GIJ9VVhig+9WE
-         KL/g==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=wwYYEzEJz/i613XhR2H6uN9ZfSJvUkN3a5GGPAJavSU=;
+        b=UCEz0wqqlW8Yc99GZFrWrpWae1dY2uMQhgV5A1zNZ81+zFyXDtn6gwdJEG3i9CA7n9
+         ZI7uJ4IMTXPWNRBgmt6D+mKDTjXypdZe9uDQlJUhwnvoVfJPoRcX9XRJaMHaf6+b07/P
+         S5ECdCWEQ+MKRu5lF91635Ga7Muk1RcjCViHF4FR016EZn0DQB4cEy7hjIlJ2ivsDv+p
+         3TgPppvAaDNaRtjm9AstaxRyLiuSTEgL+UKQQunLjvk6xY4HGu63u9TCWpkks5k6Tq+t
+         eNMsq1/4dSjsByKHPHBWg8hu0OhWfm0lb/8c8bIliBHkqHVyfWqV3kVRAYj8W5s+hHmZ
+         ylFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=FCGv/qYKeyIfFckxFA2H8QoH1f78f7u1cBQ9C1Sjl3M=;
-        b=yINztnPQtyhMQDW8WMEtWagFx0M0cpha76w7Vr8G7RL3sdmIzOjUjC58vVIWHjnfMJ
-         D66Ok3ZNLDxciBYDCaJvRFnqwkVa4witrI5PoXwGvgpOdiZL+qBUa7Z9EluTuKqGyTKj
-         pQ3thFspWUnMS5QAlNTsWVdH2ERGmXgwshoXjA/Ml1Y6FWWHumQX/otvQ9aMb9D71Y9q
-         GE/oU1uWpb6rDd6VlHDg3Yxqh+scJDkvdrkzn0Xgo8pR2j3ivdEYPFfb/E5+nLblxyRT
-         vDp83UeeeIHjg/YIV0s41MhKB3lW3e6/xPZAuTb0fsQbi8HeXnnV9vIYwEtDMbYFYcuS
-         JZnw==
-X-Gm-Message-State: AOAM532ki4dF9P1U+CprL6xD/ESoXFKgNDYiwqcdczOCSQLlNQzemvWZ
-        dQQdm//+xfaFigeZaxlpn9eJohkaY+KcnA==
-X-Google-Smtp-Source: ABdhPJwIMo1ObNoIxykn8Wni8kH14hmmZ6CyaP0CsL8r060Q8Mrt4EjdgnqBRcqUNAj85m5E+K8NOQ==
-X-Received: by 2002:a05:6830:42:: with SMTP id d2mr19692222otp.27.1643912404228;
-        Thu, 03 Feb 2022 10:20:04 -0800 (PST)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id r186sm13107645oie.23.2022.02.03.10.20.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Feb 2022 10:20:03 -0800 (PST)
-Date:   Thu, 3 Feb 2022 10:20:20 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 00/13] soc: qcom: mdt_loader: Support Qualcomm SM8450
-Message-ID: <Yfwc5NG2sB5LNWut@ripper>
-References: <20220128025513.97188-1-bjorn.andersson@linaro.org>
- <8ee1cea3-00f3-7a9c-dbd9-aaf8160db006@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=wwYYEzEJz/i613XhR2H6uN9ZfSJvUkN3a5GGPAJavSU=;
+        b=195IdIdNkW7f3GP2rJuKq75d3amEKSUqT0aYvQhNs4tExstauA21veI/JDYpnqAmqR
+         eV0zztjxz9xXB4jsUmsMx0gJmd2KaBrOPIiLp1LwGLAq4Ic9g7N6MynH6KTufNpnN1ue
+         3wzf/IRfe0A35BKJAa4SIhzNUdyWg8eU7BkTW9ittFNEKVBttnT0jnEQ39wDd1IooAEv
+         fFHjqBIHeiUx5HG73BDuW6aZvZm1CyHPAIOupEnpk0+KAdXwEJg+flb6zijTa2bU8vDb
+         m3B+48eyR3DYeAYHZP0uVjXIvHfIRcOf9LQdmMSEUzwQ79R4CqfIKgAbSxrlJD4ghVSw
+         xpAw==
+X-Gm-Message-State: AOAM533gATCJ6ROnUa9gMRxhHMijhmGtLkF5pI4aUotGcHDbCNqL59cD
+        QeKTo2/G7bUxFZxVJtVVzQPhOUKBNjsclbIU
+X-Google-Smtp-Source: ABdhPJypHc+BzZOA5mXlLdu/HDx65VNakZJJNfdvhFtCFWCP3DXb1FVC1YBFf4Q7sv72Bq0LzxuICA==
+X-Received: by 2002:a05:6512:689:: with SMTP id t9mr27943252lfe.334.1643913952122;
+        Thu, 03 Feb 2022 10:45:52 -0800 (PST)
+Received: from [192.168.1.102] (88-113-46-102.elisa-laajakaista.fi. [88.113.46.102])
+        by smtp.gmail.com with ESMTPSA id b18sm4374543lff.109.2022.02.03.10.45.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Feb 2022 10:45:51 -0800 (PST)
+Subject: Re: [PATCH 5/9] i2c: qcom-cci: initialize CCI controller after
+ registration of adapters
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Robert Foss <robert.foss@linaro.org>,
+        Wolfram Sang <wsa@kernel.org>, linux-i2c@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20220203164629.1711958-1-vladimir.zapolskiy@linaro.org>
+ <20220203164705.1712027-1-vladimir.zapolskiy@linaro.org>
+ <CAMZdPi_mNzg4ET7FvMeNLiQxVJj7XU1DSxjSQ2CHLBvKu2XZzA@mail.gmail.com>
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Message-ID: <a0b1a993-7358-4016-e8d5-538f87d3d252@linaro.org>
+Date:   Thu, 3 Feb 2022 20:45:35 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8ee1cea3-00f3-7a9c-dbd9-aaf8160db006@linaro.org>
+In-Reply-To: <CAMZdPi_mNzg4ET7FvMeNLiQxVJj7XU1DSxjSQ2CHLBvKu2XZzA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 03 Feb 07:11 PST 2022, Dmitry Baryshkov wrote:
+Hi Loic,
 
-> On 28/01/2022 05:55, Bjorn Andersson wrote:
-> > The Qualcomm SM8450 platform comes with both some smaller changes in the
-> > firmware packaging and a new requirement to hold onto the metadata buffer until
-> > PAS auth_and_reset has been completed.
-> > 
-> > Extend the PAS api and rework the mdt_loader to meet these new requirements,
-> > then wire this up with the PAS remoteproc driver and finally add the SM8450
-> > remoteproc instances.
-> > 
-> > Bjorn Andersson (13):
-> >    firmware: qcom: scm: Introduce pas_metadata context
-> >    soc: qcom: mdt_loader: Split out split-file-loader
-> >    soc: qcom: mdt_loader: Allow hash segment to be split out
-> >    soc: qcom: mdt_loader: Allow hash to reside in any segment
-> >    soc: qcom: mdt_loader: Extend check for split firmware
-> >    soc: qcom: mdt_loader: Reorder parts of __qcom_mdt_load()
-> >    soc: qcom: mdt_loader: Always invoke PAS mem_setup
-> >    soc: qcom: mdt_loader: Extract PAS operations
-> >    remoteproc: qcom: pas: Carry PAS metadata context
-> >    dt-bindings: remoteproc: qcom: pas: Add SM8450 PAS compatibles
-> >    remoteproc: qcom: pas: Add SM8450 remoteproc support
-> >    arm64: dts: qcom: sm8450: Add remoteproc enablers and instances
-> >    arm64: dts: qcom: sm8450-qrd: Enable remoteproc instances
+On 2/3/22 7:29 PM, Loic Poulain wrote:
+> Hi Vladimir,
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> On Thu, 3 Feb 2022 at 17:47, Vladimir Zapolskiy
+> <vladimir.zapolskiy@linaro.org> wrote:
+>>
+>> The change is wanted to postpone initialization of busses on CCI controller
+>> by cci_init() and cci_reset() till adapters are registered, the later is
+>> needed for adding I2C bus devices and get correspondent vbus regulators.
 > 
+> This is odd, I don't think it's a good idea to register an adapter
+> which is not yet initialized. Could you elaborate on why you need to
+> do this, if you can't access the controller without this regulator
+> enabled, maybe it is more than vbus supply, and, in that case, it
+> should be enabled from your probe function.
 
-Thanks.
+thank you for review, the controller can be accessed without a vbus regulator,
+but I2C devices connected to the master controller can not.
 
-> Minor nitpicks:
->  - I'd reorder the series by moving patch 1 (pas_metadata) closer to patch
-> 8&9 (pas metadata usage)
+The registration of a master controller device done by i2c_add_adapter()
+should be safe to defer IMO, because there shall be no communication on
+the bus at this point, there are no slaves before probe completion, thus
+cci_init()/cci_reset() can be safely called afterwards.
 
-For a while the design where such that I would merge the first patch
-into a immutable branch and then merge the soc/qcom and remoteproc
-changes separately.
+The rationale of the change is to merge two loops over busses, see change 6/9,
+keeping two loops extremely complicates the proper resource management.
 
-But as you can see, in the end the remoteproc patch ended up depending
-on the mdt_loader changes.
+--
+Best wishes,
+Vladimir
 
-I like your suggestion, so I can move the scm change down to keep things
-together.
-
->  - I would have added pas_metadata as an argument to qcom_mdt_load().
-> However I see, why you didn't want to add another argument to the list.
-> 
-
-I looked at that, but I was already unhappy with the argument explosion
-in that function prototype.
-
-By splitting out the difference between qcom_mdt_load() and
-qcom_mdt_load_no_init() into a separate function will allow some cleanup
-and better reuse in the client drivers.
-
-As we bring up the various clients on SM8450 we will need to perform the
-same modifications that was done to the remoteproc driver, by doing it
-like this we don't need to change the prototype twice.
-
-Regards,
-Bjorn
-
-> > 
-> >   .../bindings/remoteproc/qcom,adsp.yaml        |  16 +
-> >   arch/arm64/boot/dts/qcom/sm8450-qrd.dts       |  20 ++
-> >   arch/arm64/boot/dts/qcom/sm8450.dtsi          | 297 ++++++++++++++++++
-> >   drivers/firmware/qcom_scm.c                   |  39 ++-
-> >   drivers/remoteproc/qcom_q6v5_mss.c            |   7 +-
-> >   drivers/remoteproc/qcom_q6v5_pas.c            |  36 ++-
-> >   drivers/soc/qcom/mdt_loader.c                 | 232 +++++++++-----
-> >   include/linux/qcom_scm.h                      |  10 +-
-> >   include/linux/soc/qcom/mdt_loader.h           |  17 +-
-> >   9 files changed, 579 insertions(+), 95 deletions(-)
-> > 
-> 
-> 
-> -- 
-> With best wishes
-> Dmitry
+>>
+>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>> ---
+>>   drivers/i2c/busses/i2c-qcom-cci.c | 17 ++++++++---------
+>>   1 file changed, 8 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+>> index cf54f1cb4c57..eebf9603d3d1 100644
+>> --- a/drivers/i2c/busses/i2c-qcom-cci.c
+>> +++ b/drivers/i2c/busses/i2c-qcom-cci.c
+>> @@ -630,14 +630,6 @@ static int cci_probe(struct platform_device *pdev)
+>>          val = readl(cci->base + CCI_HW_VERSION);
+>>          dev_dbg(dev, "CCI HW version = 0x%08x", val);
+>>
+>> -       ret = cci_reset(cci);
+>> -       if (ret < 0)
+>> -               goto error;
+>> -
+>> -       ret = cci_init(cci);
+>> -       if (ret < 0)
+>> -               goto error;
+>> -
+>>          for (i = 0; i < cci->data->num_masters; i++) {
+>>                  if (!cci->master[i].cci)
+>>                          continue;
+>> @@ -649,6 +641,14 @@ static int cci_probe(struct platform_device *pdev)
+>>                  }
+>>          }
+>>
+>> +       ret = cci_reset(cci);
+>> +       if (ret < 0)
+>> +               goto error_i2c;
+>> +
+>> +       ret = cci_init(cci);
+>> +       if (ret < 0)
+>> +               goto error_i2c;
+>> +
+>>          pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
+>>          pm_runtime_use_autosuspend(dev);
+>>          pm_runtime_set_active(dev);
+>> @@ -663,7 +663,6 @@ static int cci_probe(struct platform_device *pdev)
+>>                          of_node_put(cci->master[i].adap.dev.of_node);
+>>                  }
+>>          }
+>> -error:
+>>          disable_irq(cci->irq);
+>>   disable_clocks:
+>>          cci_disable_clocks(cci);
+>> --
+>> 2.33.0
+>>
