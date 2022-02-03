@@ -2,160 +2,211 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA1BA4A875F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 16:13:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 29EED4A87E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 16:47:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351708AbiBCPNk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Feb 2022 10:13:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39592 "EHLO
+        id S243438AbiBCPrF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Feb 2022 10:47:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234323AbiBCPNk (ORCPT
+        with ESMTP id S240972AbiBCPrE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Feb 2022 10:13:40 -0500
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 123FEC06173B
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 07:13:40 -0800 (PST)
-Received: by mail-pl1-x630.google.com with SMTP id j16so2399821plx.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 07:13:40 -0800 (PST)
+        Thu, 3 Feb 2022 10:47:04 -0500
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C311CC06173B
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 07:47:04 -0800 (PST)
+Received: by mail-ot1-x32d.google.com with SMTP id l12-20020a0568302b0c00b005a4856ff4ceso2875463otv.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 07:47:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ODbvf1Ryrte+WtyXtkFy4143hA54VvL0jc79zCOMbQM=;
-        b=Xpqy2kEoGwLDC0mCgToEY8c8KliIw3idiUMi1ofIlZm5VtTFRQykgcvaq58u/9/z7/
-         1z2D6Pp5D4I3IjQXPC/4BU85LhwCCtr5h6P2EJTBhuojlrnkbPrcIOCnrwvMVnEK8QWZ
-         G8WJlEEbag51npuNt4EwyeGaK9XiT6KIRL8qAMe8b4huksbwm0YZrdZwzGsjJ+RQtADu
-         xZZX2L5v7wcTW4lGB5OKkFiYuaXhl7UVzbm3bTcd9CjoGe8m7TWvcT9dsyvigIYwLcts
-         TdGJgdL4BRdIL7pi0KsjfRBLAj/t2wCNaB11EVMQCYyr5/7Q94lCs2Zq1+wnesiQ8XUZ
-         rOkA==
+        bh=8FrWpPu5qbqNeRR4utPcGWY/d5SeN3jaIZbvirN1ZeY=;
+        b=hzflAUWbERV6Oz8blFR1GSVZRre0yUiQW8Iq1bcV0B3aGScfjNZzKTwT4u/6Clvce7
+         AICroH8fFXBDplFdZ7sEwkKJD7xiWlWfZqAQQIbrJQkeburOWxiLVtzI8m4M57/VatPr
+         MBq1UVghTsHttESmvfhMgO6q9NU00XTR87UmaBMF7P2NbLLIsqe4VfM6GXRWKinibVuX
+         GkVNo7ov7PRes7SiH+E8bONY0I7gq0xeGxVH4qvZxPjnvk6mex8t+m6W/NdTnvUPx/db
+         L6OHh7nFbHI/hliX+4MEk+86nRwsAvY22IDFXRyAQkfE8YChKioeqihCvG8rguIqi+PB
+         Yuug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ODbvf1Ryrte+WtyXtkFy4143hA54VvL0jc79zCOMbQM=;
-        b=rHqh7xu/oCRZckC9uAPE9SlXWW8kSb8lZzuUYok3rRWP3KWwGOOpAo8It5ZtYhQjyS
-         /ft/WVS03Y4wxKFVfDVvVy55T2hDoiu+561nVQYfxK89VEphU04kosoL5NGjEyGkTeac
-         LwVN9WGPlxeodHiI4LAjneTUTily5mbKS378T0wf0TRAtBPuUHreb/m8wy93lKJUXe2D
-         g2DpvDN0xq8FyHKZAZXukwwi7xZHbZ0ZL2lcgSKD32FoNmjd1RD3tjgI7AZLPns1SrnS
-         2zVW+xkU2QfwHdrAjDscaPcNpivHmnX+oKjOCaUE+JqBTpgXZGrZl8PKqXVR6LHn/siz
-         Y7Vw==
-X-Gm-Message-State: AOAM530ALYND5NYFqz/nCEebJjr7fq9rb/fqQO0HKoHnvSGdouzZjhqv
-        FDU8BA3SAx6ObkL3CJ9fJg0/
-X-Google-Smtp-Source: ABdhPJxXaBOJ7l5/8YGUfcYE3/XIkm967Wz6CW1H6z+lH490LRb4Td71zcb83YXBKH2gRBpFTXy6lg==
-X-Received: by 2002:a17:902:ced2:: with SMTP id d18mr36412629plg.21.1643901219339;
-        Thu, 03 Feb 2022 07:13:39 -0800 (PST)
-Received: from thinkpad ([117.217.179.179])
-        by smtp.gmail.com with ESMTPSA id n42sm28977548pfv.29.2022.02.03.07.13.34
+        bh=8FrWpPu5qbqNeRR4utPcGWY/d5SeN3jaIZbvirN1ZeY=;
+        b=gunAIB0Z9AyJeUHQR9ENn8K8tS2ABzvLQXmcsUNKF3L9fx1C+83ry/V8e8qAzbym9p
+         w0Q3kSSMqJEyTS0/2zd/sADewdwWC8Q9jJeSrLqywIkkxhGBCuBLUx2YJ8TXkLLhyt3k
+         vyddJRNrjStYHE/AX+vQeYL9G40hmWq4YMDV4EzlgfDS5lC8UyHVsGgF3aieRwYXqtKL
+         ki/ylWAcvQc6OPAgwdw8ErHCEpIKgeeqmRGlNrHEy57Aaz2rB74Z70s4n14Vs9jGhkEx
+         XWPn2iSiLWChMjjpC9BlBcJgLZINz64Y1zcAnKoGGzGYiIvR1rYZtxt/dAtMMcJ6iqMd
+         Kpug==
+X-Gm-Message-State: AOAM530yQRNMrOgEaWA/DIkI/OkmnuL1UOEPjKIDwvt3D+Yit0st0ts6
+        L60qgQ4lqwa0fxUvJgF+X9ha/g==
+X-Google-Smtp-Source: ABdhPJyJi4QTZpyyU9/EKW4RaU+cJgbNbGo7KG2cOTmBJPYbC2MlQ4zyB4yEmiX7xC3Regx/MlnP0A==
+X-Received: by 2002:a9d:2f25:: with SMTP id h34mr18912063otb.346.1643903223960;
+        Thu, 03 Feb 2022 07:47:03 -0800 (PST)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id ay32sm13499901oob.16.2022.02.03.07.47.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Feb 2022 07:13:38 -0800 (PST)
-Date:   Thu, 3 Feb 2022 20:43:31 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Alex Elder <elder@ieee.org>
-Cc:     mhi@lists.linux.dev, hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        quic_jhugo@quicinc.com, vinod.koul@linaro.org,
-        bjorn.andersson@linaro.org, dmitry.baryshkov@linaro.org,
-        skananth@codeaurora.org, vpernami@codeaurora.org,
-        vbadigan@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 07/20] bus: mhi: ep: Add support for creating and
- destroying MHI EP devices
-Message-ID: <20220203151331.GF6298@thinkpad>
-References: <20211202113553.238011-1-manivannan.sadhasivam@linaro.org>
- <20211202113553.238011-8-manivannan.sadhasivam@linaro.org>
- <08a3b725-d211-b363-a3b4-2a325367b976@ieee.org>
+        Thu, 03 Feb 2022 07:47:03 -0800 (PST)
+Date:   Thu, 3 Feb 2022 07:47:20 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof Wilczy??ski <kw@linux.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH v5 2/5] PCI: qcom: Remove redundancy between qcom_pcie
+ and qcom_pcie_cfg
+Message-ID: <Yfv5CEex29bIX3D9@ripper>
+References: <20211218141024.500952-1-dmitry.baryshkov@linaro.org>
+ <20211218141024.500952-3-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <08a3b725-d211-b363-a3b4-2a325367b976@ieee.org>
+In-Reply-To: <20211218141024.500952-3-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 05, 2022 at 06:28:08PM -0600, Alex Elder wrote:
-> On 12/2/21 5:35 AM, Manivannan Sadhasivam wrote:
-> > This commit adds support for creating and destroying MHI endpoint devices.
-> > The MHI endpoint devices binds to the MHI endpoint channels and are used
-> > to transfer data between MHI host and endpoint device.
-> > 
-> > There is a single MHI EP device for each channel pair. The devices will be
-> > created when the corresponding channels has been started by the host and
-> > will be destroyed during MHI EP power down and reset.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >   drivers/bus/mhi/ep/main.c | 85 +++++++++++++++++++++++++++++++++++++++
-> >   1 file changed, 85 insertions(+)
-> > 
-> > diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> > index ce0f99f22058..f0b5f49db95a 100644
-> > --- a/drivers/bus/mhi/ep/main.c
-> > +++ b/drivers/bus/mhi/ep/main.c
-> > @@ -63,6 +63,91 @@ static struct mhi_ep_device *mhi_ep_alloc_device(struct mhi_ep_cntrl *mhi_cntrl)
-> >   	return mhi_dev;
-> >   }
-> > +static int mhi_ep_create_device(struct mhi_ep_cntrl *mhi_cntrl, u32 ch_id)
-> > +{
-> > +	struct mhi_ep_device *mhi_dev;
-> > +	struct mhi_ep_chan *mhi_chan = &mhi_cntrl->mhi_chan[ch_id];
-> > +	int ret;
-> > +
-> > +	mhi_dev = mhi_ep_alloc_device(mhi_cntrl);
-> > +	if (IS_ERR(mhi_dev))
-> > +		return PTR_ERR(mhi_dev);
-> > +
-> > +	mhi_dev->dev_type = MHI_DEVICE_XFER;
-> 
-> Elsewhere (at least in mhi_ep_process_tre_ring()) in your code
-> you assume that the even-numbered channel is UL.
-> 
-> I would say, either use that assumption throughout, or do
-> not use that assumption at all.  (I prefer the latter.)
-> 
-> I don't really like how this assumes that the channels
-> are defined in adjacent pairs.  It assumes one is
-> upload and the next one is download, but doesn't
-> specify the order in which they're defined.  If
-> you're going to assume they are defined in pairs, you
-> should be able to assume which one is defined first,
-> and then simplify this code (and even verify that
-> they are defined UL before DL, perhaps).
+On Sat 18 Dec 06:10 PST 2021, Dmitry Baryshkov wrote:
+
+> In preparation to adding more flags to configuration data, use pointer
+> to struct qcom_pcie_cfg directly inside struct qcom_pcie, rather than
+> duplicating all its fields. This would save us from the boilerplate code
+> that just copies flag values from one struct to another one.
 > 
 
-Yes, the UL channel is always even numbered and DL is odd.
-I've removed the checks.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-> > +	/* Configure primary channel */
-> > +	if (mhi_chan->dir == DMA_TO_DEVICE) {
-> > +		mhi_dev->ul_chan = mhi_chan;
-> > +		mhi_dev->ul_chan_id = mhi_chan->chan;
-> > +	} else {
-> > +		mhi_dev->dl_chan = mhi_chan;
-> > +		mhi_dev->dl_chan_id = mhi_chan->chan;
-> > +	}
-> > +
-> > +	get_device(&mhi_dev->dev);
-> > +	mhi_chan->mhi_dev = mhi_dev;
-> > +
-> > +	/* Configure secondary channel as well */
-> > +	mhi_chan++;
-> > +	if (mhi_chan->dir == DMA_TO_DEVICE) {
-> > +		mhi_dev->ul_chan = mhi_chan;
-> > +		mhi_dev->ul_chan_id = mhi_chan->chan;
-> > +	} else {
-> > +		mhi_dev->dl_chan = mhi_chan;
-> > +		mhi_dev->dl_chan_id = mhi_chan->chan;
-> > +	}
-> > +
-> > +	get_device(&mhi_dev->dev);
-> > +	mhi_chan->mhi_dev = mhi_dev;
-> > +
-> > +	/* Channel name is same for both UL and DL */
+Regards,
+Bjorn
+
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 31 +++++++++++---------------
+>  1 file changed, 13 insertions(+), 18 deletions(-)
 > 
-> You could verify the two channels indeed have the
-> same name.
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 4e668da96ef4..1204011c96ee 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -200,8 +200,7 @@ struct qcom_pcie {
+>  	union qcom_pcie_resources res;
+>  	struct phy *phy;
+>  	struct gpio_desc *reset;
+> -	const struct qcom_pcie_ops *ops;
+> -	unsigned int pipe_clk_need_muxing:1;
+> +	const struct qcom_pcie_cfg *cfg;
+>  };
+>  
+>  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
+> @@ -225,8 +224,8 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
+>  	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+>  
+>  	/* Enable Link Training state machine */
+> -	if (pcie->ops->ltssm_enable)
+> -		pcie->ops->ltssm_enable(pcie);
+> +	if (pcie->cfg->ops->ltssm_enable)
+> +		pcie->cfg->ops->ltssm_enable(pcie);
+>  
+>  	return 0;
+>  }
+> @@ -1145,7 +1144,7 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+>  	if (ret < 0)
+>  		return ret;
+>  
+> -	if (pcie->pipe_clk_need_muxing) {
+> +	if (pcie->cfg->pipe_clk_need_muxing) {
+>  		res->pipe_clk_src = devm_clk_get(dev, "pipe_mux");
+>  		if (IS_ERR(res->pipe_clk_src))
+>  			return PTR_ERR(res->pipe_clk_src);
+> @@ -1180,7 +1179,7 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+>  	}
+>  
+>  	/* Set pipe clock as clock source for pcie_pipe_clk_src */
+> -	if (pcie->pipe_clk_need_muxing)
+> +	if (pcie->cfg->pipe_clk_need_muxing)
+>  		clk_set_parent(res->pipe_clk_src, res->phy_pipe_clk);
+>  
+>  	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
+> @@ -1243,7 +1242,7 @@ static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
+>  	clk_bulk_disable_unprepare(res->num_clks, res->clks);
+>  
+>  	/* Set TCXO as clock source for pcie_pipe_clk_src */
+> -	if (pcie->pipe_clk_need_muxing)
+> +	if (pcie->cfg->pipe_clk_need_muxing)
+>  		clk_set_parent(res->pipe_clk_src, res->ref_clk_src);
+>  
+>  	regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
+> @@ -1336,7 +1335,7 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
+>  
+>  	qcom_ep_reset_assert(pcie);
+>  
+> -	ret = pcie->ops->init(pcie);
+> +	ret = pcie->cfg->ops->init(pcie);
+>  	if (ret)
+>  		return ret;
+>  
+> @@ -1346,8 +1345,8 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
+>  
+>  	qcom_ep_reset_deassert(pcie);
+>  
+> -	if (pcie->ops->config_sid) {
+> -		ret = pcie->ops->config_sid(pcie);
+> +	if (pcie->cfg->ops->config_sid) {
+> +		ret = pcie->cfg->ops->config_sid(pcie);
+>  		if (ret)
+>  			goto err;
+>  	}
+> @@ -1358,7 +1357,7 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
+>  	qcom_ep_reset_assert(pcie);
+>  	phy_power_off(pcie->phy);
+>  err_deinit:
+> -	pcie->ops->deinit(pcie);
+> +	pcie->cfg->ops->deinit(pcie);
+>  
+>  	return ret;
+>  }
+> @@ -1468,7 +1467,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  	struct pcie_port *pp;
+>  	struct dw_pcie *pci;
+>  	struct qcom_pcie *pcie;
+> -	const struct qcom_pcie_cfg *pcie_cfg;
+>  	int ret;
+>  
+>  	pcie = devm_kzalloc(dev, sizeof(*pcie), GFP_KERNEL);
+> @@ -1485,15 +1483,12 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  
+>  	pcie->pci = pci;
+>  
+> -	pcie_cfg = of_device_get_match_data(dev);
+> -	if (!pcie_cfg || !pcie_cfg->ops) {
+> +	pcie->cfg = of_device_get_match_data(dev);
+> +	if (!pcie->cfg || !pcie->cfg->ops) {
+>  		dev_err(dev, "Invalid platform data\n");
+>  		return -EINVAL;
+>  	}
+>  
+> -	pcie->ops = pcie_cfg->ops;
+> -	pcie->pipe_clk_need_muxing = pcie_cfg->pipe_clk_need_muxing;
+> -
+>  	pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
+>  	if (IS_ERR(pcie->reset))
+>  		return PTR_ERR(pcie->reset);
+> @@ -1510,7 +1505,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  	if (IS_ERR(pcie->phy))
+>  		return PTR_ERR(pcie->phy);
+>  
+> -	ret = pcie->ops->get_resources(pcie);
+> +	ret = pcie->cfg->ops->get_resources(pcie);
+>  	if (ret)
+>  		return ret;
+>  
+> -- 
+> 2.34.1
 > 
-
-done.
-
-Thanks,
-Mani
