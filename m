@@ -2,88 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7FF594A7B4C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Feb 2022 23:52:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 31B5D4A7C68
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 01:09:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347844AbiBBWv7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Feb 2022 17:51:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44918 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231298AbiBBWv7 (ORCPT
+        id S1348314AbiBCAJs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Feb 2022 19:09:48 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:22850 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S241194AbiBCAJr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Feb 2022 17:51:59 -0500
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9DECC061714
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Feb 2022 14:51:58 -0800 (PST)
-Received: by mail-pg1-x535.google.com with SMTP id q132so711390pgq.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Feb 2022 14:51:58 -0800 (PST)
+        Wed, 2 Feb 2022 19:09:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=lPEgbuxslnTLTy0cKW6Sngl50vamSxtuVPfB7iySKa8=;
-        b=dTX3bLDcEE54y6c/+Kkj6MTxo87Yu+ZsaHiJo7j2dp5a0WukhoMaez16sY2J9ItoI2
-         8sZRPFs7ZP+OtpiyrsdMbRVYmv/Mcf9lFF0yM7CBdQUQuNgGYJmXtyiBxGJi6CPmYj5u
-         yBanI0mVHsA1zAux5JwbqCUhZ3uctbdbQOTnI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=lPEgbuxslnTLTy0cKW6Sngl50vamSxtuVPfB7iySKa8=;
-        b=g2dKmPfUtK04VF69L7VTc96UAw4LpP9Aw2i2F1zOO9Q0DsCNgXHbdeVWHJTkLZUAUP
-         +CuwV26IDPBZ1aAcRzstn0QyvrrKb1MVvfDpX+KZTtsJZJUj+c9jXjj9vM1WnMU5PIv7
-         V0xQZ/reo/8ssiwKnwuDmjg6hTBGfXgjfhVVPlG3GhWMNM9pwG4ERvJ1bnZryHz1bhdX
-         whEHFcI9OWLPrIhFApMolwR6ys3rw/BGAxybmjyQGItszpNo5jm0S2rd3lbIhjURjGda
-         HnN1zZzvUQewPOwulLOUr513J6+cpmZ9jblDaVqC/a9lV5j29NeKAdNEKGYsaJtbfb1C
-         uMRQ==
-X-Gm-Message-State: AOAM530B8vWZ8HOk4vC7CLa9RLnYATEA91bs7I8QVPKNdVYjoPgot/bJ
-        D2k+NmTLYZpHVPupmZsVSI0Chw==
-X-Google-Smtp-Source: ABdhPJxejDh6p3N4BhaMrEV1Rd6fCUIEukCr6nZ/aaOTaDYGJBLHkze6Ky6n9rUQeMOBu97PiDSTzA==
-X-Received: by 2002:a63:285:: with SMTP id 127mr25890891pgc.67.1643842318226;
-        Wed, 02 Feb 2022 14:51:58 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:c0cb:3065:aa0:d6c9])
-        by smtp.gmail.com with UTF8SMTPSA id l14sm38679188pgn.50.2022.02.02.14.51.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Feb 2022 14:51:57 -0800 (PST)
-Date:   Wed, 2 Feb 2022 14:51:56 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        pmaliset@codeaurora.org, quic_rjendra@quicinc.com,
-        Shaik Sajida Bhanu <sbhanu@codeaurora.org>,
-        kgodara@codeaurora.org, konrad.dybcio@somainline.org,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        sibis@codeaurora.org, swboyd@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 07/14] arm64: dts: qcom: sc7280: Add edp_out port and
- HPD lines
-Message-ID: <YfsLDLmQrR1X5A9X@google.com>
-References: <20220202212348.1391534-1-dianders@chromium.org>
- <20220202132301.v3.7.Ic84bb69c45be2fccf50e3bd17b845fe20eec624c@changeid>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1643846987; x=1675382987;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=uTzf33I/3Zp/7jFnhbki7u7w8ZOQrs+HCUnkN+xtD3Y=;
+  b=RdLaMr2olLiipx53YnsG2IPaU+aAzqRaUOe1CCy0mL7a8fFQazaNniOA
+   uQ80GiPy6+V2mKLrtI3IWCnTC+S5OSb3MYs1jRTPmMBoST/2AD5Qk3gBX
+   ESWY/wm2UTq/bowD4FTuEHj6qr0lfl+Wxmt63JMl/l5OM/qly9/vMew0W
+   0=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 02 Feb 2022 16:09:47 -0800
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Feb 2022 16:09:46 -0800
+Received: from [10.46.160.247] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Wed, 2 Feb 2022
+ 16:09:46 -0800
+Subject: Re: [RESEND PATCH 1/2] dt-bindings: firmware: arm,scmi: define
+ support for name based regulators
+To:     Mark Brown <broonie@kernel.org>
+CC:     Rob Herring <robh+dt@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        <devicetree@vger.kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+        "Cristian Marussi" <cristian.marussi@arm.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        "Subbaraman Narayanamurthy" <quic_subbaram@quicinc.com>
+References: <cover.1643069954.git.quic_collinsd@quicinc.com>
+ <fcd130891cc1d52cb09b8bfc866ab7ef1ce3b2a1.1643069954.git.quic_collinsd@quicinc.com>
+ <YfREsxeSSX2pbALf@sirena.org.uk>
+ <8355035c-6d90-adfd-c4e1-7bb37a2d8055@quicinc.com>
+ <YfrBharI91QYkPR1@sirena.org.uk>
+From:   David Collins <quic_collinsd@quicinc.com>
+Message-ID: <532aa931-2471-8fb3-0db4-7ab8a60333e8@quicinc.com>
+Date:   Wed, 2 Feb 2022 16:09:43 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220202132301.v3.7.Ic84bb69c45be2fccf50e3bd17b845fe20eec624c@changeid>
+In-Reply-To: <YfrBharI91QYkPR1@sirena.org.uk>
+Content-Type: text/plain; charset="windows-1252"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 02, 2022 at 01:23:41PM -0800, Douglas Anderson wrote:
-> Like dp_out, we should have defined edp_out in sc7280.dtsi so we don't
-> need to do this in the board files.
+On 2/2/22 9:38 AM, Mark Brown wrote:
+>> The system layout that this patch is targeted for consists of an SCMI
+>> platform implemented in software in the primary Linux OS on the
+>> application processor and an SCMI agent in a guest VM (also running
+>> Linux).  This provides paravirtualized regulator control to the guest VM
+>> where full virtualization is not supported.
 > 
-> Like dp_hot_plug_det, we should define edp_hot_plug_det in
-> sc7280.dtsi.
+>> During the course of development of these software images, it may be
+>> necessary to add or reorder the set of SCMI voltage domains (regulators)
+>> implemented on the platform side.  If the voltage domains are only
+>> identified and matched based on the ID number, then it is easy for the
+>> platform and agent to get out of sync.
 > 
-> We should set the default pinctrl for edp_hot_plug_det in
-> sc7280.dtsi. NOTE: this is _unlike_ the dp_hot_plug_det. It is
-> reasonable that in some boards the dedicated DP Hot Plug Detect will
-> not be hooked up in favor of Type C mechanisms. This is unlike eDP
-> where the Hot Plug Detect line (which functions as "panel ready" in
-> eDP) is highly likely to be used by boards.
+>> Using the voltage domain name instead of ID number for identification
+>> and matching provides robust assurance of correct regulator usage in the
+>> face of domains being added, removed, or reordered on the platform side.
 > 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> This seems like a scenario where the DT should be being generated at
+> runtime along with the virtualisation of the platform?  TBH a setup
+> where this is an issue feels like it's asking for trouble.
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+I'm not familiar with runtime device tree generation.  Could you please
+point to an example of it or documentation for it?  How would this
+handle kernel devices on the VM side which need a phandle to an
+scmi-regulator DT subnode in order to get a pointer to the corresponding
+regulator device at runtime via devm_regulator_get()?
+
+>>>> +              regulator-name: true
+> 
+>>> This is abusing the existing regulator-name property which is there to
+>>> allow a human readable descriptive string to be attached to a regulator.
+>>> It should have no effect other than being included in diagnostic output.
+> 
+>> Would you be ok with a new DT property being added in place of
+>> "regulator-name" in this patch which serves the same matching purpose
+>> (perhaps "arm,scmi-domain-name")?
+> 
+> Yes, it needs to be a new property.
+
+Ok, I'll modify the series in V2 to use a different property.
+
+Thanks,
+David
