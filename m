@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E57B34A8955
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 18:09:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C0E44A8958
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 18:09:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244516AbiBCRJe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Feb 2022 12:09:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38324 "EHLO
+        id S1352529AbiBCRJh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Feb 2022 12:09:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236960AbiBCRJd (ORCPT
+        with ESMTP id S1352519AbiBCRJf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Feb 2022 12:09:33 -0500
-Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 650BDC06173B
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 09:09:33 -0800 (PST)
-Received: by mail-il1-x12c.google.com with SMTP id z18so2660723ilp.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 09:09:33 -0800 (PST)
+        Thu, 3 Feb 2022 12:09:35 -0500
+Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D563AC06173E
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 09:09:34 -0800 (PST)
+Received: by mail-il1-x12d.google.com with SMTP id y17so2674358ilm.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 09:09:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0sm9twsYFfUl1R441+dZUp0hhjan8fnG22qNYzem82s=;
-        b=K+67PkiyounXfx3XxuFDqeMRI9AsURutUzG0sKB4ty9jFEZfY7ApL2ijfwu1EmiTp7
-         /bmeqBzbV9FzNgFAquA4o5Uut8m3JIiZdX6rCgiVvG09mjRyicRDAwjdp7JgX81X+8zE
-         KcqCjlfQBjl7rpy203itqWJqjnnf7vT0G2k8E5EOLDEelqOHTtCQZMghThvHl35fX9c/
-         hUPADzN/Wftr+GJbmG1esy6dIJAhd1ftiCKQynFhZm3UkQ9XirdThOj1tgp7S1OI6ke4
-         rhnchifGkdstU5jlVX3MqRbJy5D7zyMzWtTuv3Crh1SewOMYjeJ0iw9mPZUuoK4KFiGB
-         ll6A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=HDx7zrECt0lRbn6ErTR+Jkn99RQBQ9k/kBc416RdGfc=;
+        b=TjhIqGFUReCXhgyjJ7DYcxUGbwXOKufhBPP/MOfmOvCSCBciZLnMwUeQ96hHaYkQPb
+         lmcXyk96hPRDuWXI0U4tfltE2PTFy94slEmLlUkMikgjc2mX4NaIZdMbsYi3vVgXUtLf
+         3YqeDO5DObZCYFaZNU/k77u71LZnlgWBREW3JkuyIMXxbEBYiraQH9uwOApbxT+f0HHq
+         IPZRTRGXrykjXtyqoMdbZjTS3TX+C0VomNYjfidqyKVA5tM7R4+/TtMd269gBnGqYPJk
+         0tDgyYuigex5iJggC8A1l+9B81XV3rbvr+YEspMGTts3br3ZINHht2U2/qVM9ejsz5bG
+         WndQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0sm9twsYFfUl1R441+dZUp0hhjan8fnG22qNYzem82s=;
-        b=NEsWfj2HvEv/T2gC467SSxoJOBo2HChfcqURwc15dYlI7xYT/kp8bQy+Q+dl0uW3oW
-         Zm2DGUKRNc7IHMtLAS0edCeQB7Qoa5jkmFkragCmO98HJHXW3yC3YQPezXqGqTE4yPX+
-         bXSiEleWWHnaI5Dz9RB/cnLw/T0HmqQ8uBEDK0bdpIdYv7przVnOUbRP9maCuUq9dp8T
-         kaDG8uqOmCwP3pk2mbVyWWw2N8fwk6hyX3OAWmy7HiabIeCbszGZcEyWN61xn2H+fuPZ
-         zrFjyP+4nCfIKykVPGNbppFc835YhvB9kA0OAST5IqRwgtsStkaKtjyTs6R62bpjvKMD
-         ZpLw==
-X-Gm-Message-State: AOAM5306SloI8tJvnp2y1jO1kTBrYF+VhfBNm2woe77Fsk0k2+PdZqFL
-        bz/BXYbcC2oNQrb36iKFsP5O7A==
-X-Google-Smtp-Source: ABdhPJwaQ52DTaKWHABJgB2ZMw/+Zx27WmRxJoY1MVrVdTPkQZCnfV42JqEEyHdQfZXOsuRhEBP5BA==
-X-Received: by 2002:a05:6e02:188c:: with SMTP id o12mr11555055ilu.44.1643908172619;
-        Thu, 03 Feb 2022 09:09:32 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=HDx7zrECt0lRbn6ErTR+Jkn99RQBQ9k/kBc416RdGfc=;
+        b=euXxaJQS+GvT9poYcC43deJJ5v2VUNEARAQK8ZfhOXz3Awq2BNU+rRa0uVipShle/m
+         uaJqxZXi9GK3fxO0Rhe9ywS/8tkSNSt4m5vnJz77h3s/eUOdOHzYU32H2SnifPre17pN
+         GGtqBOF4fpD8bq0IhpXksIw71unb6DhNcCP2DD5Hi95fnc9agC4HgPqLXYyxEi0ao67E
+         DD3xd1qR+gUGWHpZwiuBpKN9vuX2Fyl5gZlEGtjHXP+mSaRzQ/TksvFi8Lx17orwtHTn
+         UiRBNw8zutGiTnSvjYHl4h9S/o/g5aDiThTtWKLdlc01iag3fNiFAyeyie1VLcbCQdW/
+         QX9w==
+X-Gm-Message-State: AOAM532yZt3VLal7LnHTI8AdLWw6RrJgWmil5vEYF5O6si09Izrq1szd
+        5ahNLgcRwNsrUDRb3l6skJeblQ==
+X-Google-Smtp-Source: ABdhPJz5StQMD32VXFnbCoQKHcybhlADU8uiE5tXhUIqC5kLooVjU+SY5inGUl/6NJ8w5o3T44lFmw==
+X-Received: by 2002:a92:d4ce:: with SMTP id o14mr20659791ilm.218.1643908174073;
+        Thu, 03 Feb 2022 09:09:34 -0800 (PST)
 Received: from localhost.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.gmail.com with ESMTPSA id m12sm21869671iow.54.2022.02.03.09.09.31
+        by smtp.gmail.com with ESMTPSA id m12sm21869671iow.54.2022.02.03.09.09.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Feb 2022 09:09:31 -0800 (PST)
+        Thu, 03 Feb 2022 09:09:33 -0800 (PST)
 From:   Alex Elder <elder@linaro.org>
 To:     davem@davemloft.net, kuba@kernel.org
 Cc:     bjorn.andersson@linaro.org, mka@chromium.org, evgreen@chromium.org,
@@ -55,50 +55,113 @@ Cc:     bjorn.andersson@linaro.org, mka@chromium.org, evgreen@chromium.org,
         jponduru@codeaurora.org, subashab@codeaurora.org, elder@kernel.org,
         netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 00/10] net: ipa: improve RX buffer replenishing
-Date:   Thu,  3 Feb 2022 11:09:17 -0600
-Message-Id: <20220203170927.770572-1-elder@linaro.org>
+Subject: [PATCH net-next 01/10] net: ipa: kill replenish_saved
+Date:   Thu,  3 Feb 2022 11:09:18 -0600
+Message-Id: <20220203170927.770572-2-elder@linaro.org>
 X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20220203170927.770572-1-elder@linaro.org>
+References: <20220203170927.770572-1-elder@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series revises the algorithm used for replenishing receive
-buffers on RX endpoints.  Currently there are two atomic variables
-that track how many receive buffers can be sent to the hardware.
-The new algorithm obviates the need for those, by just assuming we
-always want to provide the hardware with buffers until it can hold
-no more.
+The replenish_saved field keeps track of the number of times a new
+buffer is added to the backlog when replenishing is disabled.  We
+don't really use it though, so there's no need for us to track it
+separately.  Whether replenishing is enabled or not, we can simply
+increment the backlog.
 
-The first patch eliminates an atomic variable that's not required.
-The next moves some code into the main replenish function's caller,
-making one of the called function's arguments unnecessary.   The
-next six refactor things a bit more, adding a new helper function
-that allows us to eliminate an additional atomic variable.  And the
-final two implement two more minor improvements.
+Get rid of replenish_saved, and initialize and increment the backlog
+where it would have otherwise been used.
 
-					-Alex
+Signed-off-by: Alex Elder <elder@linaro.org>
+---
+ drivers/net/ipa/ipa_endpoint.c | 17 ++++-------------
+ drivers/net/ipa/ipa_endpoint.h |  2 --
+ 2 files changed, 4 insertions(+), 15 deletions(-)
 
-Alex Elder (10):
-  net: ipa: kill replenish_saved
-  net: ipa: allocate transaction before pages when replenishing
-  net: ipa: increment backlog in replenish caller
-  net: ipa: decide on doorbell in replenish loop
-  net: ipa: allocate transaction in replenish loop
-  net: ipa: don't use replenish_backlog
-  net: ipa: introduce gsi_channel_trans_idle()
-  net: ipa: kill replenish_backlog
-  net: ipa: replenish after delivering payload
-  net: ipa: determine replenish doorbell differently
-
- drivers/net/ipa/gsi_trans.c    |  11 ++++
- drivers/net/ipa/gsi_trans.h    |  10 +++
- drivers/net/ipa/ipa_endpoint.c | 112 +++++++++++----------------------
- drivers/net/ipa/ipa_endpoint.h |   8 +--
- 4 files changed, 60 insertions(+), 81 deletions(-)
-
+diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint.c
+index fffd0a784ef2c..a9f6d4083f869 100644
+--- a/drivers/net/ipa/ipa_endpoint.c
++++ b/drivers/net/ipa/ipa_endpoint.c
+@@ -1090,9 +1090,8 @@ static int ipa_endpoint_replenish_one(struct ipa_endpoint *endpoint)
+  * endpoint, based on the number of entries in the underlying channel ring
+  * buffer.  If an endpoint's "backlog" is non-zero, it indicates how many
+  * more receive buffers can be supplied to the hardware.  Replenishing for
+- * an endpoint can be disabled, in which case requests to replenish a
+- * buffer are "saved", and transferred to the backlog once it is re-enabled
+- * again.
++ * an endpoint can be disabled, in which case buffers are not queued to
++ * the hardware.
+  */
+ static void ipa_endpoint_replenish(struct ipa_endpoint *endpoint, bool add_one)
+ {
+@@ -1102,7 +1101,7 @@ static void ipa_endpoint_replenish(struct ipa_endpoint *endpoint, bool add_one)
+ 
+ 	if (!test_bit(IPA_REPLENISH_ENABLED, endpoint->replenish_flags)) {
+ 		if (add_one)
+-			atomic_inc(&endpoint->replenish_saved);
++			atomic_inc(&endpoint->replenish_backlog);
+ 		return;
+ 	}
+ 
+@@ -1147,11 +1146,8 @@ static void ipa_endpoint_replenish_enable(struct ipa_endpoint *endpoint)
+ {
+ 	struct gsi *gsi = &endpoint->ipa->gsi;
+ 	u32 max_backlog;
+-	u32 saved;
+ 
+ 	set_bit(IPA_REPLENISH_ENABLED, endpoint->replenish_flags);
+-	while ((saved = atomic_xchg(&endpoint->replenish_saved, 0)))
+-		atomic_add(saved, &endpoint->replenish_backlog);
+ 
+ 	/* Start replenishing if hardware currently has no buffers */
+ 	max_backlog = gsi_channel_tre_max(gsi, endpoint->channel_id);
+@@ -1161,11 +1157,7 @@ static void ipa_endpoint_replenish_enable(struct ipa_endpoint *endpoint)
+ 
+ static void ipa_endpoint_replenish_disable(struct ipa_endpoint *endpoint)
+ {
+-	u32 backlog;
+-
+ 	clear_bit(IPA_REPLENISH_ENABLED, endpoint->replenish_flags);
+-	while ((backlog = atomic_xchg(&endpoint->replenish_backlog, 0)))
+-		atomic_add(backlog, &endpoint->replenish_saved);
+ }
+ 
+ static void ipa_endpoint_replenish_work(struct work_struct *work)
+@@ -1727,9 +1719,8 @@ static void ipa_endpoint_setup_one(struct ipa_endpoint *endpoint)
+ 		 */
+ 		clear_bit(IPA_REPLENISH_ENABLED, endpoint->replenish_flags);
+ 		clear_bit(IPA_REPLENISH_ACTIVE, endpoint->replenish_flags);
+-		atomic_set(&endpoint->replenish_saved,
++		atomic_set(&endpoint->replenish_backlog,
+ 			   gsi_channel_tre_max(gsi, endpoint->channel_id));
+-		atomic_set(&endpoint->replenish_backlog, 0);
+ 		INIT_DELAYED_WORK(&endpoint->replenish_work,
+ 				  ipa_endpoint_replenish_work);
+ 	}
+diff --git a/drivers/net/ipa/ipa_endpoint.h b/drivers/net/ipa/ipa_endpoint.h
+index 0313cdc607de3..c95816d882a74 100644
+--- a/drivers/net/ipa/ipa_endpoint.h
++++ b/drivers/net/ipa/ipa_endpoint.h
+@@ -66,7 +66,6 @@ enum ipa_replenish_flag {
+  * @netdev:		Network device pointer, if endpoint uses one
+  * @replenish_flags:	Replenishing state flags
+  * @replenish_ready:	Number of replenish transactions without doorbell
+- * @replenish_saved:	Replenish requests held while disabled
+  * @replenish_backlog:	Number of buffers needed to fill hardware queue
+  * @replenish_work:	Work item used for repeated replenish failures
+  */
+@@ -87,7 +86,6 @@ struct ipa_endpoint {
+ 	/* Receive buffer replenishing for RX endpoints */
+ 	DECLARE_BITMAP(replenish_flags, IPA_REPLENISH_COUNT);
+ 	u32 replenish_ready;
+-	atomic_t replenish_saved;
+ 	atomic_t replenish_backlog;
+ 	struct delayed_work replenish_work;		/* global wq */
+ };
 -- 
 2.32.0
 
