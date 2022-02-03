@@ -2,117 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A055D4A8A33
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 18:36:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 883104A8A92
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 18:47:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240543AbiBCRfR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Feb 2022 12:35:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44842 "EHLO
+        id S1352924AbiBCRrI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Feb 2022 12:47:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240552AbiBCRfP (ORCPT
+        with ESMTP id S240648AbiBCRrG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Feb 2022 12:35:15 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B404DC06173D
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 09:35:15 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id oa14-20020a17090b1bce00b001b61aed4a03so3680602pjb.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 09:35:15 -0800 (PST)
+        Thu, 3 Feb 2022 12:47:06 -0500
+Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50B14C06173B
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 09:47:06 -0800 (PST)
+Received: by mail-yb1-xb30.google.com with SMTP id g14so11208388ybs.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 09:47:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=9e0oxCku0Awg8Sfq6RwVv/SH5AvdTEcLXDJ8KHAWSBI=;
-        b=taFBh+thCKl5Jv/LEOX1LgoAt1cWwIlDf2gcDD57Hl8dOAegKbyMp4wwejfdITEY6n
-         aRhE9cCKXTHjAjDxE2ms/2VVej2/Z3Nal7SC6V0aVlyjoQRfTYQkTWolE3o94pJppD33
-         4DIBpeM8/8m4dD9OyiuPIyS6tXloCSJrPvkvcbaffucKQ+ullmkKYeCdT8k5yzOM4Cef
-         OU2QLpM8gynxD27x9GvTAXlQOaqufYtIfqGAKfaeZiBmPYYJuWLWjapuJ9f8ozDMgYE+
-         5LjhCpz2B84WMwZ/W4+EcqCMDKr6kqpVgf3UUpvNfbrOKc9ncVSuX7Pds/rggeqYYwdW
-         PQ3g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=v5dZWO2zmkTU1RVWjuesiHDlAcvosB8eIhfb8TkkDW4=;
+        b=fWjIkmzvsJ8zoAcq7Jc5ZmyO+/LLei8lOf89EOTKrjbv8VmqxicG8D8XTEienF/D01
+         cb7RXvb02KtgLw5HlmlHMdjoaucdPUTQWs8R86dySiqbqJC8afVqzvDWgJTae+ZuWYJk
+         JJaHG6o0T1+HJBVvn1Btr6m6ME2WoVRAwnkoX0Pb/bCUt4PXxvaRPy+pGjm7BbmhtE36
+         YiIMxPEw+H0Jl1rUG8FPzOiiZU1KblPn8V7pJ3UBVk1B6qBIInRzLj9yuwQrgY56zWr+
+         Gpw4+5/v0QmrR99MCddwYsyOHxuZcoQ3MObje78mPaZoEHBzyaPGL+Yemgy8whpB80nJ
+         ZziA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=9e0oxCku0Awg8Sfq6RwVv/SH5AvdTEcLXDJ8KHAWSBI=;
-        b=7N+xr+ZSS9AOa0nREPE1euUxRbkZexU+lbPc8YnD657yf4NX8Gsalz82a46t4rjUct
-         OJmvt04nfmKrTtp0lioOxppr2rQbyZHLfwcRslacXTsqmADb5zzdclAsH7Ii6mtPsOzu
-         ygk6thyNdg9HrExD+5q8c4/jtlyV9ROjwlpgtD8hkRdaEPi6vFgqzPpJWSDvo0E4GpNc
-         yDHwIX3XJAslKLGxI8cQaJz9dBUQxDad06Os2YckP5eEr6pgJCZonDPQ9R2eTNsEhzJb
-         dK5zLYkPxiiY9lbWLj0fcti1yYuR4uqrKEhyNZfM9Chjhm9pnPazRrwTmFYEejjEK0Vc
-         zKmA==
-X-Gm-Message-State: AOAM5318MyFQUou0SH/jHuCLp4LBaOHIGD1glXHMVFfL+CpefWC96TlV
-        0VlDGEVe+zZJX8Esm0Z5YPBtgQ==
-X-Google-Smtp-Source: ABdhPJzVjXtIyaIqU4Iftz/N5PHRDNQvMN/XP/gzP+j0ZLSMhFFIngn16sdHfs8mtnP17sR4rnss+w==
-X-Received: by 2002:a17:903:22d1:: with SMTP id y17mr36826313plg.107.1643909715150;
-        Thu, 03 Feb 2022 09:35:15 -0800 (PST)
-Received: from p14s (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
-        by smtp.gmail.com with ESMTPSA id me4sm11085727pjb.26.2022.02.03.09.35.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Feb 2022 09:35:13 -0800 (PST)
-Date:   Thu, 3 Feb 2022 10:35:10 -0700
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Deepak Kumar Singh <quic_deesin@quicinc.com>
-Cc:     bjorn.andersson@linaro.org, swboyd@chromium.org,
-        quic_clew@quicinc.com, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Ohad Ben-Cohen <ohad@wizery.com>
-Subject: Re: [PATCH V1 1/3] rpmsg: glink: Free device context only when cdev
- not in use
-Message-ID: <20220203173510.GA2982815@p14s>
-References: <1643223886-28170-1-git-send-email-quic_deesin@quicinc.com>
- <1643223886-28170-2-git-send-email-quic_deesin@quicinc.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=v5dZWO2zmkTU1RVWjuesiHDlAcvosB8eIhfb8TkkDW4=;
+        b=X13w/SiiE2vMjHUhb90EHNBfoGqBrb28pmno1FR1+lC6qOgUbTFA2KedHNjjIih6tn
+         EU/6HqrGNx5Cc4/45MLfZGC9VvR0vzgrHcWtUhsrXTASlE11sjGr6Q7QdPk+HcsW474y
+         rcKSoyP7cs7OC4aWBc8Jitx6hHGlXth74a/SxI4w2o0WGBvltWwIPl+hrHJlGqbfDI+4
+         zpH9txB4ZagdyqSqjUhHgHQTzON74xB+vSX/1HxQ9cJp1E/nFiBFONeYGWghla6iParP
+         ElqM2o0kyltbRTyq01C9lCi/sCDzq8Ij9M43Y2JoC4iEDqbuaCON8BSnOFfNki62hskT
+         qA0Q==
+X-Gm-Message-State: AOAM532MnqCZiGfNvhhOve8gPSzlegCisX19ajap3V2B2llyXVbZ9S4c
+        Vc931IExHbUn25n4/RlgrZgkbDCGK/RxTRG4pcs2BA==
+X-Google-Smtp-Source: ABdhPJz0+rQtUI8LuvWp2eey3xD0y133oWhVArETGjYikU7HVNZG/2q32vKkVmbl7w29e5uYkgM8sM1xerFpoQ3AU8c=
+X-Received: by 2002:a25:df56:: with SMTP id w83mr46318988ybg.110.1643910425506;
+ Thu, 03 Feb 2022 09:47:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1643223886-28170-2-git-send-email-quic_deesin@quicinc.com>
+References: <20220202113722.7550-1-michael.srba@seznam.cz> <20220202113722.7550-4-michael.srba@seznam.cz>
+In-Reply-To: <20220202113722.7550-4-michael.srba@seznam.cz>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Thu, 3 Feb 2022 18:46:54 +0100
+Message-ID: <CACRpkdbxMU=Sf7HofDpNr4pGdPWNs7Ga4ACikZYF5bFJwivnLw@mail.gmail.com>
+Subject: Re: [PATCH v5 4/5] drivers: bus: add driver for initializing the SSC
+ bus on (some) qcom SoCs
+To:     Michael.Srba@seznam.cz
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Saravana Kannan <saravanak@google.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Deepak,
+On Wed, Feb 2, 2022 at 12:40 PM <michael.srba@seznam.cz> wrote:
 
-On Thu, Jan 27, 2022 at 12:34:44AM +0530, Deepak Kumar Singh wrote:
-> Struct device holding cdev should not be freed unless cdev
-> is not in use. It is possible that user space has opened
-> char device while kernel has freed the associated struct
-> device context.
-> 
-> Mark dev kobj as parent of cdev, so that chardev_add gets
-> an extra reference to dev. This ensures device context is not
-> freed until cdev is is not in uses.
-> ---
->  drivers/rpmsg/rpmsg_char.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
-> index c03a118..72ee101 100644
-> --- a/drivers/rpmsg/rpmsg_char.c
-> +++ b/drivers/rpmsg/rpmsg_char.c
-> @@ -417,6 +417,7 @@ static int rpmsg_eptdev_create(struct rpmsg_ctrldev *ctrldev,
->  	dev->id = ret;
->  	dev_set_name(dev, "rpmsg%d", ret);
->  
-> +	cdev_set_parent(&eptdev->cdev, &dev->kobj);
->  	ret = cdev_add(&eptdev->cdev, dev->devt, 1);
+> In combination with drivers for resources on the SSC bus, this driver can
+> aid in debugging, and for example with a TLMM driver can be used to
+> directly access SSC-dedicated GPIO pins, removing the need to commit
+> to a particular usecase during hw design.
+>
+> Finally, until open firmware for the hexagon core is available, this
+> approach allows for using sensors hooked up to SSC-dedicated GPIO pins
+> on mainline Linux simply by utilizing the existing in-tree drivers for
+> these sensors.
 
-This issue should have been fixed when cdev_add() was replaced by
-cdev_device_add(), something you will find on v5.17-rc2.
+So the idea is to access the SSC-dedicated GPIO pins with a special
+instance of the TLMM driver and then enable the sensors normally
+managed by the sensor hub?
 
-Also, this set is generating checkpatch warnings and as such I will not review
-the other patches in it. 
+This is a GREAT feat, as we don't know if we will ever be able to
+get any proper Hexagon firmware for the sensor hubs.
 
-Thanks,
-Mathieu
-
->  	if (ret)
->  		goto free_ept_ida;
-> @@ -533,6 +534,7 @@ static int rpmsg_chrdev_probe(struct rpmsg_device *rpdev)
->  	dev->id = ret;
->  	dev_set_name(&ctrldev->dev, "rpmsg_ctrl%d", ret);
->  
-> +	cdev_set_parent(&ctrldev->cdev, &dev->kobj);
->  	ret = cdev_add(&ctrldev->cdev, dev->devt, 1);
->  	if (ret)
->  		goto free_ctrl_ida;
-> -- 
-> 2.7.4
-> 
+Yours,
+Linus Walleij
