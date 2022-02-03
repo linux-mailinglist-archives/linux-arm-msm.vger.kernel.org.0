@@ -2,482 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 755E14A80D4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 10:01:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C9854A824E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 11:29:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237385AbiBCJAp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Feb 2022 04:00:45 -0500
-Received: from ams.source.kernel.org ([145.40.68.75]:57726 "EHLO
-        ams.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349671AbiBCJAo (ORCPT
+        id S243517AbiBCK30 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Feb 2022 05:29:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59476 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231462AbiBCK30 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Feb 2022 04:00:44 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 2E8AEB8337B;
-        Thu,  3 Feb 2022 09:00:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1E3FC340F1;
-        Thu,  3 Feb 2022 09:00:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1643878842;
-        bh=sUk7Dqog7/eeGTftX68VztKtaI8uoxcNiRoR/Kyqw5Q=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Dmopyku5AYNEGAEADjvBJUhJK1KF3ETovDBp45FrjsUywOB3uK+xjwe400Xa7ZH45
-         2+dE+2kboHgjJPRZFWTTrpsjY9VQYkLKeEMMutF5NOL31FMKZhhlZWnkg+rQoXur5G
-         oGDALGIOcp7ZWxhyrBESspeIpx+vTGwxxq3CEsbBs0rr7ExXZNEVyF3SlOSj7Bkejm
-         7g7XE7f74TBTh+WZygoULgjSWC5W069g7U/IlnhLgNPMIhAtKK4uub8CwRWhUUd/sG
-         DafH69Ol/oyef5D9UadR6EKOnwNctUy9umSJSwCjUI25fJXlx3CL1oMZK9v/efRoXj
-         m3tEIjGaonVag==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        Thu, 3 Feb 2022 05:29:26 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B77C061714
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 02:29:25 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id my12-20020a17090b4c8c00b001b528ba1cd7so2530766pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 02:29:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=pDySLD49Od9ppT5fF1VG9msX8bYroKjD1B55FHPH58o=;
+        b=Ry0lEsVBCpgcS1blKtvJPs+19daf+8Hwxusy8ZKY7MmPiUk2SgCkkAez2CnxJPShgP
+         i3CSAUEN4gh48bw/c5TYBsPzmHPPkQFMqx17rweN5l01thiDWgFhEAwElqYqN8Xluzm4
+         LP0lY366cYHR8x81YoetishaETS9BYdEZGGI14uYvSaryTZQXwaAh32a4rp4letWaUb1
+         o9CA3ntDuR2WxidEpq5m7o0nccgFceT0si0eUJvCGI26SdMdkYyCNypS2o7rk0hf3h8H
+         8RE2+GEs2Na+7hhGmmv6CgXkoG1x+1GgM6LPB7+cPxp/fbb7GsgUjrMVf6MGnEJhoO8v
+         G2rA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=pDySLD49Od9ppT5fF1VG9msX8bYroKjD1B55FHPH58o=;
+        b=Y/DAfLGt5Ie1p7v0KvcALoAR3eNA9Nz2p6t6w4VgFcwE23flXprwseODuyxQTJqlzf
+         g4DgZ95T8JsmSVeaLfh7hBtK4GtMZ+V+ev8BNBi6eN2TtqGGbLOb0HDDOJdY2Y9zcuDH
+         OumrvlNGSm5OE8x7NF5pWA5rAIEI/DjtikwjyFEALr41805xCyttYfRLaeRk3/JhvS+h
+         2RJfgDCoj5XcpcK4KnDmf3f/+vw/qhwv6a0crwa6g295NKSMvWzP5CzHJQ9Y1KVtioS2
+         BXmRWKfrroHn4/e6ciYCju98EMq2CglOyh0lfmajSZQBFk0YlZ2T60I2EK0Q0q/bcAwg
+         zb2Q==
+X-Gm-Message-State: AOAM5317XYvB9eS0qCMPpQMMLLhj1Sh5nuVDyk1iyyJQRRFNtcYT1MgX
+        ode9t2LdtRjg6aQn5Xe5L0WQ33xuP+xD7X0=
+X-Google-Smtp-Source: ABdhPJzsej4081ZvrJvwGCEc+Zbs5ayxAOBDZ5759R8sreFuk9QW7NHmAy3LdpoqVgTnT+RgxDKtIQ==
+X-Received: by 2002:a17:90b:3ece:: with SMTP id rm14mr8882107pjb.220.1643884164685;
+        Thu, 03 Feb 2022 02:29:24 -0800 (PST)
+Received: from thinkpad ([117.217.179.179])
+        by smtp.gmail.com with ESMTPSA id l13sm36476955pgs.16.2022.02.03.02.29.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Feb 2022 02:29:23 -0800 (PST)
+Date:   Thu, 3 Feb 2022 15:59:17 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Alex Elder <elder@ieee.org>
+Cc:     mhi@lists.linux.dev, hemantk@codeaurora.org, bbhatt@codeaurora.org,
+        quic_jhugo@quicinc.com, vinod.koul@linaro.org,
+        bjorn.andersson@linaro.org, dmitry.baryshkov@linaro.org,
+        skananth@codeaurora.org, vpernami@codeaurora.org,
+        vbadigan@codeaurora.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: Add SM8450 HDK DTS
-Date:   Thu,  3 Feb 2022 14:30:31 +0530
-Message-Id: <20220203090031.3128702-2-vkoul@kernel.org>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20220203090031.3128702-1-vkoul@kernel.org>
-References: <20220203090031.3128702-1-vkoul@kernel.org>
+Subject: Re: [PATCH 02/20] bus: mhi: Move common MHI definitions out of host
+ directory
+Message-ID: <20220203102917.GA6298@thinkpad>
+References: <20211202113553.238011-1-manivannan.sadhasivam@linaro.org>
+ <20211202113553.238011-3-manivannan.sadhasivam@linaro.org>
+ <cf56733b-7c5d-e5f9-70c4-6f262fa2853b@ieee.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cf56733b-7c5d-e5f9-70c4-6f262fa2853b@ieee.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This adds the base HDK DTS along with the usb, ufs and regulators found
-in this board
+Hi Alex,
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- arch/arm64/boot/dts/qcom/Makefile       |   1 +
- arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 405 ++++++++++++++++++++++++
- 2 files changed, 406 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sm8450-hdk.dts
+Thanks a lot for the inputs. I've incorporated a portion of your suggestions
+and kept remaining ones post upstream.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index f7232052d286..146580f11c5f 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -121,4 +121,5 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-microsoft-surface-duo2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-sony-xperia-sagami-pdx214.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-sony-xperia-sagami-pdx215.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-qrd.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-new file mode 100644
-index 000000000000..284977b66f36
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-@@ -0,0 +1,405 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2022, Linaro Limited
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include "sm8450.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. SM8450 HDK";
-+	compatible = "qcom,sm8450-hdk", "qcom,sm8450";
-+
-+	aliases {
-+		serial0 = &uart7;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+};
-+
-+&apps_rsc {
-+	pm8350-rpmh-regulators {
-+		compatible = "qcom,pm8350-rpmh-regulators";
-+		qcom,pmic-id = "b";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+		vdd-s7-supply = <&vph_pwr>;
-+		vdd-s8-supply = <&vph_pwr>;
-+		vdd-s9-supply = <&vph_pwr>;
-+		vdd-s10-supply = <&vph_pwr>;
-+		vdd-s11-supply = <&vph_pwr>;
-+		vdd-s12-supply = <&vph_pwr>;
-+
-+		vdd-l1-l4-supply = <&vreg_s11b_0p95>;
-+		vdd-l2-l7-supply = <&vreg_bob>;
-+		vdd-l3-l5-supply = <&vreg_bob>;
-+		vdd-l6-l9-l10-supply = <&vreg_s12b_1p25>;
-+		vdd-l8-supply = <&vreg_s2h_0p95>;
-+
-+		vreg_s10b_1p8: smps10 {
-+			regulator-name = "vreg_s10b_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		vreg_s11b_0p95: smps11 {
-+			regulator-name = "vreg_s11b_0p95";
-+			regulator-min-microvolt = <966000>;
-+			regulator-max-microvolt = <1104000>;
-+		};
-+
-+		vreg_s12b_1p25: smps12 {
-+			regulator-name = "vreg_s12b_1p25";
-+			regulator-min-microvolt = <1350000>;
-+			regulator-max-microvolt = <1400000>;
-+		};
-+
-+		vreg_l1b_0p91: ldo1 {
-+			regulator-name = "vreg_l1b_0p91";
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2b_3p07: ldo2 {
-+			regulator-name = "vreg_l2b_3p07";
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3072000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3b_0p9: ldo3 {
-+			regulator-name = "vreg_l3b_0p9";
-+			regulator-min-microvolt = <904000>;
-+			regulator-max-microvolt = <904000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l5b_0p88: ldo5 {
-+			regulator-name = "vreg_l5b_0p88";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <888000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6b_1p2: ldo6 {
-+			regulator-name = "vreg_l6b_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7b_2p5: ldo7 {
-+			regulator-name = "vreg_l7b_2p5";
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <2504000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l9b_1p2: ldo9 {
-+			regulator-name = "vreg_l9b_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	pm8350c-rpmh-regulators {
-+		compatible = "qcom,pm8350c-rpmh-regulators";
-+		qcom,pmic-id = "c";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+		vdd-s7-supply = <&vph_pwr>;
-+		vdd-s8-supply = <&vph_pwr>;
-+		vdd-s9-supply = <&vph_pwr>;
-+		vdd-s10-supply = <&vph_pwr>;
-+
-+		vdd-l1-l12-supply = <&vreg_bob>;
-+		vdd-l2-l8-supply = <&vreg_bob>;
-+		vdd-l3-l4-l5-l7-l13-supply = <&vreg_bob>;
-+		vdd-l6-l9-l11-supply = <&vreg_bob>;
-+		vdd-l10-supply = <&vreg_s12b_1p25>;
-+
-+		vdd-bob-supply = <&vph_pwr>;
-+
-+		vreg_s1c_1p86: smps1 {
-+			regulator-name = "vreg_s1c_1p86";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2024000>;
-+		};
-+
-+		vreg_s10c_1p05: smps10 {
-+			regulator-name = "vreg_s10c_1p05";
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1100000>;
-+		};
-+
-+		vreg_bob: bob {
-+			regulator-name = "vreg_bob";
-+			regulator-min-microvolt = <3008000>;
-+			regulator-max-microvolt = <3960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
-+		};
-+
-+		vreg_l1c_1p8: ldo1 {
-+			regulator-name = "vreg_l1c_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3c_3p0: ldo3 {
-+			regulator-name = "vreg_l3c_3p0";
-+			regulator-min-microvolt = <3296000>;
-+			regulator-max-microvolt = <3304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l4c_1p8: ldo4 {
-+			regulator-name = "vreg_l4c_1p8";
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <3000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l5c_1p8: ldo5 {
-+			regulator-name = "vreg_l5c_1p8";
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <3000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6c_1p8: ldo6 {
-+			regulator-name = "vreg_l6c_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3008000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7c_3p0: ldo7 {
-+			regulator-name = "vreg_l7c_3p0";
-+			regulator-min-microvolt = <3008000>;
-+			regulator-max-microvolt = <3008000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l8c_1p8: ldo8 {
-+			regulator-name = "vreg_l8c_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l9c_2p96: ldo9 {
-+			regulator-name = "vreg_l9c_2p96";
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <3008000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l12c_1p8: ldo12 {
-+			regulator-name = "vreg_l12c_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1968000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l13c_3p0: ldo13 {
-+			regulator-name = "vreg_l13c_3p0";
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	pm8450-rpmh-regulators {
-+		compatible = "qcom,pm8450-rpmh-regulators";
-+		qcom,pmic-id = "h";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+
-+		vdd-l2-supply = <&vreg_bob>;
-+		vdd-l3-supply = <&vreg_bob>;
-+		vdd-l4-supply = <&vreg_bob>;
-+
-+		vreg_s2h_0p95: smps2 {
-+			regulator-name = "vreg_s2h_0p95";
-+			regulator-min-microvolt = <848000>;
-+			regulator-max-microvolt = <1104000>;
-+		};
-+
-+		vreg_s3h_0p5: smps3 {
-+			regulator-name = "vreg_s3h_0p5";
-+			regulator-min-microvolt = <500000>;
-+			regulator-max-microvolt = <500000>;
-+		};
-+
-+		vreg_l2h_0p91: ldo2 {
-+			regulator-name = "vreg_l2h_0p91";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <912000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3h_0p91: ldo3 {
-+			regulator-name = "vreg_l3h_0p91";
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <912000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+	};
-+
-+	pmr735a-rpmh-regulators {
-+		compatible = "qcom,pmr735a-rpmh-regulators";
-+		qcom,pmic-id = "e";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+
-+		vdd-l1-l2-supply = <&vreg_s2e_0p85>;
-+		vdd-l3-supply = <&vreg_s1e_1p25>;
-+		vdd-l4-supply = <&vreg_s1c_1p86>;
-+		vdd-l5-l6-supply = <&vreg_s1c_1p86>;
-+		vdd-l7-bob-supply = <&vreg_bob>;
-+
-+		vreg_s1e_1p25: smps1 {
-+			regulator-name = "vreg_s1e_1p25";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1296000>;
-+		};
-+
-+		vreg_s2e_0p85: smps2 {
-+			regulator-name = "vreg_s2e_0p85";
-+			regulator-min-microvolt = <500000>;
-+			regulator-max-microvolt = <1040000>;
-+		};
-+
-+		vreg_l1e_0p8: ldo1 {
-+			regulator-name = "vreg_l1e_0p8";
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+		};
-+
-+		vreg_l2e_0p8: ldo2 {
-+			regulator-name = "vreg_l2e_0p8";
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+		};
-+
-+		vreg_l3e_1p2: ldo3 {
-+			regulator-name = "vreg_l3e_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		vreg_l4e_1p7: ldo4 {
-+			regulator-name = "vreg_l4e_1p7";
-+			regulator-min-microvolt = <1776000>;
-+			regulator-max-microvolt = <1776000>;
-+		};
-+
-+		vreg_l5e_0p88: ldo5 {
-+			regulator-name = "vreg_l5e_0p88";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+		};
-+
-+		vreg_l6e_1p2: ldo6 {
-+			regulator-name = "vreg_l6e_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		vreg_l7e_2p8: ldo7 {
-+			regulator-name = "vreg_l7e_2p8";
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+		};
-+	};
-+};
-+
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <28 4>, <36 4>;
-+};
-+
-+&uart7 {
-+	status = "okay";
-+};
-+
-+&ufs_mem_hc {
-+	status = "okay";
-+
-+	reset-gpios = <&tlmm 210 GPIO_ACTIVE_LOW>;
-+
-+	vcc-supply = <&vreg_l7b_2p5>;
-+	vcc-max-microamp = <1100000>;
-+	vccq-supply = <&vreg_l9b_1p2>;
-+	vccq-max-microamp = <1200000>;
-+};
-+
-+&ufs_mem_phy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l5b_0p88>;
-+	vdda-pll-supply = <&vreg_l6b_1p2>;
-+	vdda-max-microamp = <173000>;
-+	vdda-pll-max-microamp = <24900>;
-+};
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "peripheral";
-+};
-+
-+&usb_1_hsphy {
-+	status = "okay";
-+
-+	vdda-pll-supply = <&vreg_l5b_0p88>;
-+	vdda18-supply = <&vreg_l1c_1p8>;
-+	vdda33-supply = <&vreg_l2b_3p07>;
-+};
-+
-+&usb_1_qmpphy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l6b_1p2>;
-+	vdda-pll-supply = <&vreg_l1b_0p91>;
-+};
--- 
-2.31.1
+On Wed, Jan 05, 2022 at 06:22:25PM -0600, Alex Elder wrote:
+> On 12/2/21 5:35 AM, Manivannan Sadhasivam wrote:
+> > Move the common MHI definitions in host "internal.h" to "common.h" so
+> > that the endpoint code can make use of them. This also avoids
+> > duplicating the definitions in the endpoint stack.
+> > 
+> > Still, the MHI register definitions are not moved since the offsets
+> > vary between host and endpoint.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >   drivers/bus/mhi/common.h        | 182 ++++++++++++++++++++++++++++++++
+> >   drivers/bus/mhi/host/internal.h | 154 +--------------------------
+> >   2 files changed, 183 insertions(+), 153 deletions(-)
+> >   create mode 100644 drivers/bus/mhi/common.h
+> > 
 
+[...]
+
+> > +
+> > +#define EV_CTX_RESERVED_MASK GENMASK(7, 0)
+> > +#define EV_CTX_INTMODC_MASK GENMASK(15, 8)
+> > +#define EV_CTX_INTMODC_SHIFT 8
+> > +#define EV_CTX_INTMODT_MASK GENMASK(31, 16)
+> > +#define EV_CTX_INTMODT_SHIFT 16
+> > +struct mhi_event_ctxt {
+> 
+> These fields should all be explicitly marked as little endian.
+> It so happens Intel and ARM use that, but defining them as
+> simple unsigned values is not correct for an external interface.
+> 
+> This comment applies to the command and channel context structures
+> also.
+> 
+
+Ack
+
+> > +	__u32 intmod;
+> > +	__u32 ertype;
+> > +	__u32 msivec;
+> > +
+> 
+> I think you can just define the entire struct as __packed
+> and __aligned(4) rather than defining all of these fields
+> with those attributes.
+> 
+
+This was suggested by Arnd during the MHI host review. He preferred adding the
+aligned parameter only for members that require them.
+
+> > +	__u64 rbase __packed __aligned(4);
+> > +	__u64 rlen __packed __aligned(4);
+> > +	__u64 rp __packed __aligned(4);
+> > +	__u64 wp __packed __aligned(4);
+> > +};
+> > +
+> > +#define CHAN_CTX_CHSTATE_MASK GENMASK(7, 0)
+> > +#define CHAN_CTX_CHSTATE_SHIFT 0
+> 
+> Please eliminate all the _SHIFT definitions like this,
+> where you are already defining the corresponding _MASK.
+> The _SHIFT is redundant (and could lead to error, and
+> takes up extra space).
+> 
+> You are using bitfield operations (like FIELD_GET()) in
+> at least some places already.  Use them consistently
+> throughout the driver.  Those macros simplify the code
+> and obviate the need for any shift definitions.
+> 
+
+Ack.
+
+Thanks,
+Mani
