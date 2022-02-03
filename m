@@ -2,76 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BA424A9042
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 22:53:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 19AB74A904A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 22:55:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355541AbiBCVx0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Feb 2022 16:53:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49356 "EHLO
+        id S1355570AbiBCVzh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Feb 2022 16:55:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231376AbiBCVxY (ORCPT
+        with ESMTP id S242921AbiBCVzf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Feb 2022 16:53:24 -0500
-Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E949C061714
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 13:53:23 -0800 (PST)
-Received: by mail-il1-x12f.google.com with SMTP id x6so3253176ilg.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 13:53:23 -0800 (PST)
+        Thu, 3 Feb 2022 16:55:35 -0500
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72FAFC061714
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 13:55:35 -0800 (PST)
+Received: by mail-oi1-x229.google.com with SMTP id t199so6190811oie.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 13:55:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Yw/OE+yoqHrGWOsbX30hBDztNYfmuxeKhNyJ4ntdaxg=;
-        b=Izi40afZ8OYZSbUSIHRmbNMv2qVTLhFfyqW43yk7xNplNKSKPf5mt2HhkphhkdWcLg
-         0ISLToWpdFUEATXPX/rGkJFhnCroXZUPHfEQL0mjnlv0jTPO+QOGix+uF/hpreTdH7ht
-         tFQFqJBjk0gHE2hEZ4b1INseWuqrj3T8HxMXM=
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=EKi8zmFFIs9yTKizbnsGRhz+ao0w4WrMRZ97vyp1W+Y=;
+        b=IdeSykH50iytRrZJsr567YWJhlQaOMbwAS+475H/ax5nj9hbp8d2dBM5geJMdQfDIh
+         eH/tsiq7YR0xjucM/lknhQk1DagoJcgAbLm1tqBNEc0/JcZ3G2r5SOuvB/DQbA+8Oir6
+         mIGDg1l31FJneI+1B67klYZ5BOqEny+JXTZxk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Yw/OE+yoqHrGWOsbX30hBDztNYfmuxeKhNyJ4ntdaxg=;
-        b=ujoRe6TkK+Iy9RkoKY6Z+3EW3L7B79POYnQqnHhsDRMjvdEzuA8h8AVUZdckUOzokN
-         uwGCsqf2cOlCaxwZ+2CqxA8PGExo2NaubU6GLhf5N4y9QAe2FrxcwPJ5yNBt9i2NpHkV
-         djoZ7GGf9M1QpInbE2cj7WIthBF3zKJF+CVeYKIVf0IsGNRWu7ofAnkttivD2qJC9tNR
-         BtSE00SfOSJ+EN3r2XtsmiVy40IDx/3DkjW4oiITB3RUiS2HGyRuRanbY2WKbPGx9yv9
-         1uh8kt41YXEXBXrqFPZxknb0VEhcEvtXF1I1W//z314G+nI9sSp18KBX0VTH5pcFPZhT
-         edtg==
-X-Gm-Message-State: AOAM531u/ercKywIAhY4CTj8HyDKQK8x4d2FCp5jRHaAdazsRSSgbro8
-        n/oCdVZdcOFki6jqQHzM2lfH41pm95m7Cg==
-X-Google-Smtp-Source: ABdhPJys++Hb0TRalsgqnNipQDjScJn5GB3QOIH1vsJDgqO+dHV0isv+t+ogVMdUUgCVtp48/K/RXw==
-X-Received: by 2002:a05:6e02:1b04:: with SMTP id i4mr41519ilv.270.1643925203051;
-        Thu, 03 Feb 2022 13:53:23 -0800 (PST)
-Received: from mail-il1-f170.google.com (mail-il1-f170.google.com. [209.85.166.170])
-        by smtp.gmail.com with ESMTPSA id k1sm24103107iov.6.2022.02.03.13.53.22
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Feb 2022 13:53:22 -0800 (PST)
-Received: by mail-il1-f170.google.com with SMTP id x6so3253150ilg.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 13:53:22 -0800 (PST)
-X-Received: by 2002:a05:6e02:1bed:: with SMTP id y13mr38117ilv.27.1643925201892;
- Thu, 03 Feb 2022 13:53:21 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=EKi8zmFFIs9yTKizbnsGRhz+ao0w4WrMRZ97vyp1W+Y=;
+        b=vJUzeSCN7SH+DvuvImNi+dxecJg1+7VxqnbtVuuRmMq294ogaojnc9WaWyTdTy+ij6
+         ivoHGweUswPWM6UXz4ciJyqw9Z51yqU4e10p4szSIpTf+32CUKSU0IUM5OucyQQqrCVM
+         IkrMFMsFAIATIN4GmW5+dVCKnNdgl/kFEBKla6cBgTc3rFEnsFS5D/YHmSn1aaAEjQmQ
+         AdZkAxogJbvjWYH7cdtlul7S1mTQXG+3wh8scCqpvpVx4K9ZBhp+I0VRhjNapx2XBEqf
+         YeUaHadA0hxJSiiDe/SiFy/J5YgRkeuKSdZduBR5vv7/zyNSDVaJx2nqe2PWZCb01Vby
+         5ieA==
+X-Gm-Message-State: AOAM531rhc8qyB6nyaB9V+a0OAJs9N+siY4jXU060YyDDoMoMWk4k9ED
+        pbvgtimbj4nrPm7r2kyTkPTCMmPJYdN/CoiFcLVrJA==
+X-Google-Smtp-Source: ABdhPJwyKQMmXpDSqD4fAmi7HwLGWf6ShcFVyhK9CYPOoN2omLdzc9C1Blaz6joxLP5zb1UWMKSTUIM0pfRssLG1TdM=
+X-Received: by 2002:aca:df82:: with SMTP id w124mr9157oig.112.1643925334493;
+ Thu, 03 Feb 2022 13:55:34 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 3 Feb 2022 21:55:34 +0000
 MIME-Version: 1.0
-References: <20220202212348.1391534-1-dianders@chromium.org>
- <20220202132301.v3.9.I5f367dcce8107f2186b2aad4aef0dfcfafa034b9@changeid> <CAE-0n51N4wB7aTRbZR3zh3hjz56vdkFNwOSuKjU7n9gd_JDcvA@mail.gmail.com>
-In-Reply-To: <CAE-0n51N4wB7aTRbZR3zh3hjz56vdkFNwOSuKjU7n9gd_JDcvA@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 3 Feb 2022 13:53:09 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=UKKZaHHz3-idahLg-ey3xmSZWKeTVVipzpZNQAkUVKmQ@mail.gmail.com>
-Message-ID: <CAD=FV=UKKZaHHz3-idahLg-ey3xmSZWKeTVVipzpZNQAkUVKmQ@mail.gmail.com>
-Subject: Re: [PATCH v3 09/14] arm64: dts: qcom: sc7280: Disable pull from pcie1_clkreq
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Prasad Malisetty <pmaliset@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>, quic_rjendra@quicinc.com,
-        Shaik Sajida Bhanu <sbhanu@codeaurora.org>,
-        kgodara@codeaurora.org,
+In-Reply-To: <YfgRS/UtRn6Ewwhj@builder.lan>
+References: <20220125224422.544381-1-dianders@chromium.org>
+ <20220125144316.v2.5.I5604b7af908e8bbe709ac037a6a8a6ba8a2bfa94@changeid>
+ <CAE-0n528Bxdj+DKhi2Lan4qR_=4KHD7A1Zkr15tmu+MchryJ1A@mail.gmail.com>
+ <CAD=FV=UcpKaLQ31CGKUnaNnZcYnM4N_t8VC43FPGktoYDiMfsw@mail.gmail.com>
+ <YfC5i2jR5N+pmHoZ@ripper> <CAE-0n50sX9-0MxcpF+3Rwqm75jSw5=aNwdsitLwE2sEA69jLJw@mail.gmail.com>
+ <YfgRS/UtRn6Ewwhj@builder.lan>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Thu, 3 Feb 2022 21:55:34 +0000
+Message-ID: <CAE-0n52aRjBPz7txfQV_UAzOz+1qnG8BOwR3V32mnRVu8wEFpw@mail.gmail.com>
+Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: sc7280: Add herobrine-r1
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        kgodara@codeaurora.org, Matthias Kaehlcke <mka@chromium.org>,
         Sibi Sankar <sibis@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
+        Prasad Malisetty <pmaliset@codeaurora.org>,
+        quic_rjendra@quicinc.com, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -79,46 +72,85 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Thu, Feb 3, 2022 at 1:42 PM Stephen Boyd <swboyd@chromium.org> wrote:
+Quoting Bjorn Andersson (2022-01-31 08:41:47)
+> On Thu 27 Jan 15:16 CST 2022, Stephen Boyd wrote:
 >
-> Quoting Douglas Anderson (2022-02-02 13:23:43)
-> > I believe that the PCIe clkreq pin is an output. That means we
-> > shouldn't have a pull enabled for it. Turn it off.
+> > Quoting Bjorn Andersson (2022-01-25 19:01:31)
+> > > On Tue 25 Jan 15:46 PST 2022, Doug Anderson wrote:
+> > >
+> > > > Hi,
+> > > >
+> > > > On Tue, Jan 25, 2022 at 2:58 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> > > > >
+> > > > > Quoting Douglas Anderson (2022-01-25 14:44:22)
+> > > > > > diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
+> > > > > > new file mode 100644
+> > > > > > index 000000000000..f95273052da0
+> > > > > > --- /dev/null
+> > > > > > +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r1.dts
+> > > > > > @@ -0,0 +1,313 @@
+> > > > > > +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> > > > > > +/*
+> > > > > > + * Google Herobrine board device tree source
+> > > > > > + *
+> > > > > > + * Copyright 2022 Google LLC.
+> > > > > > + */
+> > > > > > +
+> > > > > > +/dts-v1/;
+> > > > > > +
+> > > > > > +#include "sc7280-herobrine.dtsi"
+> > > > > > +
+> > > > > > +/ {
+> > > > > > +       model = "Google Herobrine (rev1+)";
+> > > > > > +       compatible = "google,herobrine", "qcom,sc7280";
+> > > > >
+> > > > > Can we stop adding "qcom,sc7280" to the board compatible string? It
+> > > > > looks out of place. It's the compatible for the SoC and should really be
+> > > > > the compatible for the /soc node.
+> > > >
+> > > > I don't have any objections, but I feel like this is the type of thing
+> > > > I'd like Bjorn to have the final say on. What say you, Bjorn?
+> > > >
+> > >
+> > > One practical case I can think of right away, where this matters is in
+> > > cpufreq-dt-plat.c where we blocklist qcom,sc7280.
+> > >
+> > > I don't know if we rely on this in any other places, but I'm not keen on
+> > > seeing a bunch of board-specific compatibles sprinkled throughout the
+> > > implementation - it's annoying enough having to add each platform to
+> > > these drivers.
+> >
+> > Looking at sc7180, grep only shows cpufreq-dt-plat.c
+> >
 >
-> It sounds like it's a request from the PCI device to the PCI phy that
-> the clk should be on. I googled pcie clkreq open drain and this pdf[1]
-> says
+> Good, then we handle all other platform specifics in drivers using
+> platform-specific compatibles.
 >
-> "The CLKREQ# signal is an open drain, active low signal that is driven
-> low by the PCI Express M.2 add-I Card function to request that the PCI
-> Express reference clock be available (active clock state) in order to
-> allow the PCI Express interface to send/receive data"
+> >  $ git grep qcom,sc7180\" -- drivers
+> >  drivers/cpufreq/cpufreq-dt-platdev.c:   { .compatible = "qcom,sc7180", },
+> >
+> > Simplest solution would be to look at / and /soc for a compatible
+> > string.
+> >
 >
-> so presumably if there isn't an external pull on the signal the open
-> drain feature will not work and the PCIe device won't be able to drive
-> it low.
+> You mean that / would contain the device's compatible and /soc the soc's
+> compatible? I'm afraid I don't see how this would help you - you still
+> need the compatible in the dts, just now in two places.
+
+I'd like / to contain the board compatible string and /soc to contain
+the SoC's compatible string. The two strings are different. In this case
+the board compatible at the root would be "google,trogdor-lazor" and the
+soc node compatible would be "qcom,sc7180".
+
 >
-> [1] https://advdownload.advantech.com/productfile/PIS/96FD80-P512-LIS/Product%20-%20Datasheet/96FD80-P512-LIS_datasheet20180110154919.pdf
+>
+> Either we leave it as is - which follows my interpretation of what the DT
+> spec says - or we (and the DT maitainers) agree that it shouldn't be
+> there (because this dtb won't run on any random qcom,sc7180 anyways) at
+> all.
 
-Yeah, I had some trouble figuring this out too, so if someone knows
-better than me then I'm more than happy to take advice here. I thought
-I had found something claiming that "clkreq" was an output and on the
-schematic I have from Qualcomm it shows an arrow going out from the
-SoC for this signal indicating that it's an output from the SoC. Of
-course, those arrows are notoriously wrong but at least it's one piece
-of evidence that someone thought this was an output from the SoC.
+Sure. Hopefully DT maintainers can chime in here.
 
-Hrm, but I just checked the sc7280 "datasheet" which claims that this
-is an input. Sigh.
-
-I guess the options are:
-* If we're sure this is an input to the SoC then I think we should
-remove the drive-strength, right?
-* If we don't know then I guess we can leave both?
-
-
-In any case, for now we can just drop this patch?
-
--Doug
+As you say, this dtb won't run on any random board that has a
+qcom,sc7180 SoC placed on the PCB so having it in the root node
+compatible is redundant at the least.
