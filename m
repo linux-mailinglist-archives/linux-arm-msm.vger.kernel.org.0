@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 56E444A82E5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 12:07:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9500A4A82F1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 12:10:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233512AbiBCLHT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Feb 2022 06:07:19 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:43148 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231448AbiBCLHS (ORCPT
+        id S1348207AbiBCLKn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Feb 2022 06:10:43 -0500
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:59479 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231448AbiBCLKn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Feb 2022 06:07:18 -0500
+        Thu, 3 Feb 2022 06:10:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1643886438; x=1675422438;
+  t=1643886643; x=1675422643;
   h=subject:to:cc:references:from:message-id:date:
    mime-version:in-reply-to:content-transfer-encoding;
-  bh=2C+3IsYfm09Uf6TZuQK9DHohoF0hBiKau/8SF3sQH0I=;
-  b=t36cXuzJqksOE/9dWfaka3/EtRfp9ZCEf1Cj/vA8LDtdJ15XnHLZFnSq
-   pYbyNsyHhgyKMMrRh27bMZA4loFZR49jocX35T1YMYf0pM3ZYVRebElhD
-   viUE8YNxs9Aq4SjOawfaVzk8UGpuhLCba4ux9vpFlHeLlJpxZLdphr1rd
-   M=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 03 Feb 2022 03:07:17 -0800
+  bh=tUkvSCXv5sVqRR0CMxg/pwmt2Q5ctAdeRzvoDev75VM=;
+  b=qTYLue21/KWuYxXdnX/RmNpO2SS0IWtZSMvORTfz1l9lPaB5Kg266rAv
+   61yKumJotLtxu07oyA1x5WQnmBcxJrruz0JlhiGpH69wp6QW4eWDi133M
+   oVorla0NpXY8XUDRRQ2ZE7p9I+XFdQdfU9va/uyoXOFLY6qnE6CUrQYFZ
+   E=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 03 Feb 2022 03:10:43 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Feb 2022 03:07:17 -0800
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Feb 2022 03:10:43 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 3 Feb 2022 03:07:16 -0800
+ 15.2.922.19; Thu, 3 Feb 2022 03:10:42 -0800
 Received: from [10.216.62.64] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 3 Feb 2022
- 03:07:12 -0800
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sc7280: Add lpass cpu node
+ 03:10:37 -0800
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sc7280: add sound card support
 To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
         <bjorn.andersson@linaro.org>, <devicetree@vger.kernel.org>,
         <dianders@chromium.org>, <judyhsiao@chromium.org>,
@@ -44,114 +44,163 @@ To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
         <srinivas.kandagatla@linaro.org>
 CC:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
 References: <1641208380-15510-1-git-send-email-quic_srivasam@quicinc.com>
- <1641208380-15510-3-git-send-email-quic_srivasam@quicinc.com>
- <CAE-0n51QAJFBALV7eEKLDunQaCNqPyTmdHRRUt7Khvkt8st=_g@mail.gmail.com>
+ <1641208380-15510-4-git-send-email-quic_srivasam@quicinc.com>
+ <CAE-0n5069ehb97ybJV7Z0FXnODvRBuy-w6r1KJSfZnHece7k1A@mail.gmail.com>
 From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 Organization: Qualcomm
-Message-ID: <fdd74ba3-935d-b5fa-e642-6fedaf33116c@quicinc.com>
-Date:   Thu, 3 Feb 2022 16:37:09 +0530
+Message-ID: <4ea4cac4-4372-9235-269f-d987cf816cf2@quicinc.com>
+Date:   Thu, 3 Feb 2022 16:40:34 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n51QAJFBALV7eEKLDunQaCNqPyTmdHRRUt7Khvkt8st=_g@mail.gmail.com>
+In-Reply-To: <CAE-0n5069ehb97ybJV7Z0FXnODvRBuy-w6r1KJSfZnHece7k1A@mail.gmail.com>
 Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 1/6/2022 2:37 AM, Stephen Boyd wrote:
+On 1/6/2022 2:40 AM, Stephen Boyd wrote:
 Thanks for Your time Stephen!!!
-> Quoting Srinivasa Rao Mandadapu (2022-01-03 03:12:59)
+> Quoting Srinivasa Rao Mandadapu (2022-01-03 03:13:00)
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> index 3449d56..63b1184 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> @@ -637,6 +637,99 @@
+>>          };
+>>   };
+>>
+>> +&sound {
+>> +       compatible = "google,sc7280-herobrine";
+>> +       model = "sc7280-wcd938x-max98360a-1mic";
+>> +       status = "okay";
+>> +       audio-routing =
+>> +               "IN1_HPHL", "HPHL_OUT",
+>> +               "IN2_HPHR", "HPHR_OUT",
+>> +               "AMIC1", "MIC BIAS1",
+>> +               "AMIC2", "MIC BIAS2",
+>> +               "VA DMIC0", "MIC BIAS3",
+>> +               "VA DMIC1", "MIC BIAS3",
+>> +               "VA DMIC2", "MIC BIAS1",
+>> +               "VA DMIC3", "MIC BIAS1",
+>> +               "TX SWR_ADC0", "ADC1_OUTPUT",
+>> +               "TX SWR_ADC1", "ADC2_OUTPUT",
+>> +               "TX SWR_ADC2", "ADC3_OUTPUT",
+>> +               "TX SWR_DMIC0", "DMIC1_OUTPUT",
+>> +               "TX SWR_DMIC1", "DMIC2_OUTPUT",
+>> +               "TX SWR_DMIC2", "DMIC3_OUTPUT",
+>> +               "TX SWR_DMIC3", "DMIC4_OUTPUT",
+>> +               "TX SWR_DMIC4", "DMIC5_OUTPUT",
+>> +               "TX SWR_DMIC5", "DMIC6_OUTPUT",
+>> +               "TX SWR_DMIC6", "DMIC7_OUTPUT",
+>> +               "TX SWR_DMIC7", "DMIC8_OUTPUT";
+>> +
+>> +               qcom,msm-mbhc-hphl-swh = <1>;
+>> +               qcom,msm-mbhc-gnd-swh = <1>;
+> Why are these last extra tabbed?
+Okay. Will remove it.
+>
+>> +
+>> +       #address-cells = <1>;
+>> +       #size-cells = <0>;
+>> +       #sound-dai-cells = <0>;
+>> +
+>> +       dai-link@6 {
+>> +               link-name = "WCD Playback";
+>> +               reg = <LPASS_CDC_DMA_RX0>;
+>> +               cpu {
+>> +                       sound-dai = <&lpass_cpu LPASS_CDC_DMA_RX0>;
+>> +               };
+>> +
+>> +               codec {
+>> +                       sound-dai = <&wcd938x 0>, <&swr0 0>, <&rxmacro 0>;
+>> +               };
+>> +       };
+>> +
+>> +       dai-link@19 {
+>> +               link-name = "WCD Capture";
+>> +               reg = <LPASS_CDC_DMA_TX3>;
+>> +               cpu {
+>> +                       sound-dai = <&lpass_cpu LPASS_CDC_DMA_TX3>;
+>> +               };
+>> +
+>> +               codec {
+>> +                       sound-dai = <&wcd938x 1>, <&swr1 0>, <&txmacro 0>;
+>> +               };
+>> +       };
+>> +
+>> +       dai-link@1 {
+>> +               link-name = "Secondary MI2S Playback";
+>> +               reg = <MI2S_SECONDARY>;
+>> +               cpu {
+>> +                       sound-dai = <&lpass_cpu MI2S_SECONDARY>;
+>> +               };
+>> +
+>> +               codec {
+>> +                       sound-dai = <&max98360a>;
+>> +               };
+>> +       };
+>> +
+>> +       dai-link@5 {
+>> +               link-name = "DP Playback";
+>> +               reg = <LPASS_DP_RX>;
+>> +               cpu {
+>> +                       sound-dai = <&lpass_cpu LPASS_DP_RX>;
+>> +               };
+>> +
+>> +               codec {
+>> +                               sound-dai = <&msm_dp>;
+> Why double tabbed?
+Okay. will remove it.
+>
+>> +               };
+>> +       };
+>> +
+>> +       dai-link@25 {
+>> +               link-name = "DMIC Capture";
+>> +               reg = <LPASS_CDC_DMA_VA_TX0>;
+>> +               cpu {
+>> +                       sound-dai = <&lpass_cpu LPASS_CDC_DMA_VA_TX0>;
+>> +               };
+>> +
+>> +               codec {
+>> +                       sound-dai = <&vamacro 0>;
+>> +               };
+>> +       };
+> The order of the nodes seems arbitrary. Is there any sort order that can
+> be used to avoid conflicts in the future? Maybe the reg property because
+> that's how we sort the SoC node.
+Okay. Will change accordingly.
+>
+>> +};
+>> +
+>>   &swr0 {
+>>          wcd_rx: wcd938x-rx{
+>>                  compatible = "sdw20217010d00";
 >> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index c0d9de3..68c7755 100644
+>> index 68c7755..57bc5ef 100644
 >> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
 >> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -17,6 +17,7 @@
->>   #include <dt-bindings/reset/qcom,sdm845-aoss.h>
->>   #include <dt-bindings/reset/qcom,sdm845-pdc.h>
->>   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->> +#include <dt-bindings/sound/qcom,lpass.h>
->>   #include <dt-bindings/thermal/thermal.h>
+>> @@ -2786,6 +2786,9 @@
 >>
->>   / {
->> @@ -1840,6 +1841,62 @@
->>                          #size-cells = <0>;
 >>                  };
 >>
->> +               lpass_cpu: qcom,lpass@3260000 {
-> audio-subsystem@3260000?
-Okay. will change accordingly.
->
->> +                       compatible = "qcom,sc7280-lpass-cpu";
->> +                       reg = <0 0x3260000 0 0xC000>,
->> +                               <0 0x3280000 0 0x29000>,
->> +                               <0 0x3340000 0 0x29000>,
->> +                               <0 0x336C000 0 0x3000>,
->> +                               <0 0x3987000 0 0x68000>,
->> +                               <0 0x3B00000 0 0x29000>;
->> +                       reg-names = "lpass-rxtx-cdc-dma-lpm",
->> +                                       "lpass-rxtx-lpaif",
->> +                                       "lpass-va-lpaif",
->> +                                       "lpass-va-cdc-dma-lpm",
->> +                                       "lpass-hdmiif",
->> +                                       "lpass-lpaif";
->> +
->> +                       iommus = <&apps_smmu 0x1820 0>,
->> +                               <&apps_smmu 0x1821 0>,
->> +                               <&apps_smmu 0x1832 0>;
->> +                       status = "disabled";
->> +
->> +                       power-domains = <&rpmhpd SC7280_LCX>;
->> +                       power-domain-names = "lcx";
->> +                       required-opps = <&rpmhpd_opp_nom>;
->> +
->> +                       clocks = <&lpass_aon LPASS_AON_CC_AUDIO_HM_H_CLK>,
->> +                                       <&lpasscc LPASS_CORE_CC_SYSNOC_MPORT_CORE_CLK>,
->> +                                       <&lpass_audiocc LPASS_AUDIO_CC_CODEC_MEM0_CLK>,
->> +                                       <&lpass_audiocc LPASS_AUDIO_CC_CODEC_MEM1_CLK>,
->> +                                       <&lpass_audiocc LPASS_AUDIO_CC_CODEC_MEM2_CLK>,
->> +                                       <&lpasscc LPASS_CORE_CC_EXT_IF0_IBIT_CLK>,
->> +                                       <&lpasscc LPASS_CORE_CC_EXT_IF1_IBIT_CLK>,
->> +                                       <&lpass_aon LPASS_AON_CC_VA_MEM0_CLK>;
->> +                       clock-names = "aon_cc_audio_hm_h",
->> +                                       "core_cc_sysnoc_mport_core",
->> +                                       "audio_cc_codec_mem0",
->> +                                       "audio_cc_codec_mem1",
->> +                                       "audio_cc_codec_mem2",
->> +                                       "core_cc_ext_if0_ibit",
->> +                                       "core_cc_ext_if1_ibit",
->> +                                       "aon_cc_va_mem0";
-> Please align these things on " and <.
-Okay.
->
->> +
->> +                       #sound-dai-cells = <1>;
->> +                       #address-cells = <1>;
->> +                       #size-cells = <0>;
->> +
->> +                       interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>,
->> +                                               <GIC_SPI 176 IRQ_TYPE_LEVEL_HIGH>,
->> +                                               <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>,
->> +                                               <GIC_SPI 268 IRQ_TYPE_LEVEL_HIGH>;
->> +
->> +                       interrupt-names = "lpass-irq-lpaif",
->> +                                       "lpass-irq-vaif",
->> +                                       "lpass-irq-rxtxif",
->> +                                       "lpass-irq-hdmi";
-> Same.
-Okay.
+>> +               sound: sound {
+> Is this really necessary? Certainly it shouldn't be in the SoC node as
+> it doesn't have a reg property.
+Okay. will remove it here and add in board specific files.
 >
 >> +               };
 >> +
->>                  vamacro: codec@3370000 {
->>                          compatible = "qcom,sc7280-lpass-va-macro";
->>                          pinctrl-0 = <&dmic01_active>;
+>>                  usb_1_hsphy: phy@88e3000 {
+>>                          compatible = "qcom,sc7280-usb-hs-phy",
+>>                                       "qcom,usb-snps-hs-7nm-phy";
 >> --
 >> 2.7.4
 >>
