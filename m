@@ -2,151 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C9854A824E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 11:29:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 835874A8263
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 11:35:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243517AbiBCK30 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Feb 2022 05:29:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59476 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231462AbiBCK30 (ORCPT
+        id S1350004AbiBCKfn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Feb 2022 05:35:43 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:31276 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1349894AbiBCKfl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Feb 2022 05:29:26 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B77C061714
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 02:29:25 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id my12-20020a17090b4c8c00b001b528ba1cd7so2530766pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 02:29:25 -0800 (PST)
+        Thu, 3 Feb 2022 05:35:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=pDySLD49Od9ppT5fF1VG9msX8bYroKjD1B55FHPH58o=;
-        b=Ry0lEsVBCpgcS1blKtvJPs+19daf+8Hwxusy8ZKY7MmPiUk2SgCkkAez2CnxJPShgP
-         i3CSAUEN4gh48bw/c5TYBsPzmHPPkQFMqx17rweN5l01thiDWgFhEAwElqYqN8Xluzm4
-         LP0lY366cYHR8x81YoetishaETS9BYdEZGGI14uYvSaryTZQXwaAh32a4rp4letWaUb1
-         o9CA3ntDuR2WxidEpq5m7o0nccgFceT0si0eUJvCGI26SdMdkYyCNypS2o7rk0hf3h8H
-         8RE2+GEs2Na+7hhGmmv6CgXkoG1x+1GgM6LPB7+cPxp/fbb7GsgUjrMVf6MGnEJhoO8v
-         G2rA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=pDySLD49Od9ppT5fF1VG9msX8bYroKjD1B55FHPH58o=;
-        b=Y/DAfLGt5Ie1p7v0KvcALoAR3eNA9Nz2p6t6w4VgFcwE23flXprwseODuyxQTJqlzf
-         g4DgZ95T8JsmSVeaLfh7hBtK4GtMZ+V+ev8BNBi6eN2TtqGGbLOb0HDDOJdY2Y9zcuDH
-         OumrvlNGSm5OE8x7NF5pWA5rAIEI/DjtikwjyFEALr41805xCyttYfRLaeRk3/JhvS+h
-         2RJfgDCoj5XcpcK4KnDmf3f/+vw/qhwv6a0crwa6g295NKSMvWzP5CzHJQ9Y1KVtioS2
-         BXmRWKfrroHn4/e6ciYCju98EMq2CglOyh0lfmajSZQBFk0YlZ2T60I2EK0Q0q/bcAwg
-         zb2Q==
-X-Gm-Message-State: AOAM5317XYvB9eS0qCMPpQMMLLhj1Sh5nuVDyk1iyyJQRRFNtcYT1MgX
-        ode9t2LdtRjg6aQn5Xe5L0WQ33xuP+xD7X0=
-X-Google-Smtp-Source: ABdhPJzsej4081ZvrJvwGCEc+Zbs5ayxAOBDZ5759R8sreFuk9QW7NHmAy3LdpoqVgTnT+RgxDKtIQ==
-X-Received: by 2002:a17:90b:3ece:: with SMTP id rm14mr8882107pjb.220.1643884164685;
-        Thu, 03 Feb 2022 02:29:24 -0800 (PST)
-Received: from thinkpad ([117.217.179.179])
-        by smtp.gmail.com with ESMTPSA id l13sm36476955pgs.16.2022.02.03.02.29.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Feb 2022 02:29:23 -0800 (PST)
-Date:   Thu, 3 Feb 2022 15:59:17 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Alex Elder <elder@ieee.org>
-Cc:     mhi@lists.linux.dev, hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        quic_jhugo@quicinc.com, vinod.koul@linaro.org,
-        bjorn.andersson@linaro.org, dmitry.baryshkov@linaro.org,
-        skananth@codeaurora.org, vpernami@codeaurora.org,
-        vbadigan@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 02/20] bus: mhi: Move common MHI definitions out of host
- directory
-Message-ID: <20220203102917.GA6298@thinkpad>
-References: <20211202113553.238011-1-manivannan.sadhasivam@linaro.org>
- <20211202113553.238011-3-manivannan.sadhasivam@linaro.org>
- <cf56733b-7c5d-e5f9-70c4-6f262fa2853b@ieee.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1643884541; x=1675420541;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=DPW1zRNgWsuV6eLK6ZnJNgLShUOjqEOCEDL/fcyJFdE=;
+  b=KzGxEr0TrFqANEJuK3/Cd61hLZ9nF0cTMQFDe8RwJ3XZKXc5R6uY7j6e
+   NA1Q80W0TAfjFTK88QPt3yYh5KESpOOuL6K86bsGXePDzMISzoMwfaKPi
+   k6cU+cNQf2++frc5WTydr7Eho+ktDQRUAAY+Uciap2TwdNTFBGQh2REyJ
+   Y=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 03 Feb 2022 02:35:40 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Feb 2022 02:35:40 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 3 Feb 2022 02:35:39 -0800
+Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 3 Feb 2022 02:35:34 -0800
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+To:     <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <pure.logic@nexus-software.ie>,
+        <bjorn.andersson@linaro.org>, <greg@kroah.com>, <robh@kernel.org>
+CC:     <linux-kernel@vger.kernel.org>, <quic_tsoni@quicinc.com>,
+        <quic_psodagud@quicinc.com>, <quic_satyap@quicinc.com>,
+        <quic_pheragu@quicinc.com>, <quic_rjendra@quicinc.com>,
+        <quic_sibis@quicinc.com>, <quic_saipraka@quicinc.com>,
+        <quic_schowdhu@quicinc.com>
+Subject: [PATCH V5 0/6] Add Embedded USB Debugger (EUD) driver
+Date:   Thu, 3 Feb 2022 16:04:29 +0530
+Message-ID: <cover.1643880577.git.quic_schowdhu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cf56733b-7c5d-e5f9-70c4-6f262fa2853b@ieee.org>
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Alex,
+This is a series of patches that implements a driver for the control
+peripheral, EUD (Embedded USB Debugger). The EUD is a mini-USB hub
+implemented on chip to support the USB-based debug and trace capabilities.
+Apart from debug capabilities, EUD has a control peripheral. Control
+Peripheral is on when EUD is on and gets signals like USB attach, pet
+EUD etc. EUD driver listens to events like USB attach or detach and then
+informs the USB about these events via ROLE-SWITCH. At regular intervals,
+the EUD driver receives an interrupt to pet the driver indicating that
+the software is functional.
 
-Thanks a lot for the inputs. I've incorporated a portion of your suggestions
-and kept remaining ones post upstream.
+Changes in V5
 
-On Wed, Jan 05, 2022 at 06:22:25PM -0600, Alex Elder wrote:
-> On 12/2/21 5:35 AM, Manivannan Sadhasivam wrote:
-> > Move the common MHI definitions in host "internal.h" to "common.h" so
-> > that the endpoint code can make use of them. This also avoids
-> > duplicating the definitions in the endpoint stack.
-> > 
-> > Still, the MHI register definitions are not moved since the offsets
-> > vary between host and endpoint.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >   drivers/bus/mhi/common.h        | 182 ++++++++++++++++++++++++++++++++
-> >   drivers/bus/mhi/host/internal.h | 154 +--------------------------
-> >   2 files changed, 183 insertions(+), 153 deletions(-)
-> >   create mode 100644 drivers/bus/mhi/common.h
-> > 
+* Added the review tags and implemented comments on V4 of the patch.
 
-[...]
+Changes in V4
 
-> > +
-> > +#define EV_CTX_RESERVED_MASK GENMASK(7, 0)
-> > +#define EV_CTX_INTMODC_MASK GENMASK(15, 8)
-> > +#define EV_CTX_INTMODC_SHIFT 8
-> > +#define EV_CTX_INTMODT_MASK GENMASK(31, 16)
-> > +#define EV_CTX_INTMODT_SHIFT 16
-> > +struct mhi_event_ctxt {
-> 
-> These fields should all be explicitly marked as little endian.
-> It so happens Intel and ARM use that, but defining them as
-> simple unsigned values is not correct for an external interface.
-> 
-> This comment applies to the command and channel context structures
-> also.
-> 
+* Aligned the device tree node structure of EUD as per discussion.
 
-Ack
+* Changes to usb-connector.yaml is no longer required and is not 
+  included in the patch series.
+  
+* Implemented the rest of the comments on Version 3 of the patch.  
 
-> > +	__u32 intmod;
-> > +	__u32 ertype;
-> > +	__u32 msivec;
-> > +
-> 
-> I think you can just define the entire struct as __packed
-> and __aligned(4) rather than defining all of these fields
-> with those attributes.
-> 
+Changes in V3
 
-This was suggested by Arnd during the MHI host review. He preferred adding the
-aligned parameter only for members that require them.
+* Removed the patch for registration of EUD connector as it is no longer
+  required.
+  
+* Added the description to include EUD in usb-connector.yaml  
 
-> > +	__u64 rbase __packed __aligned(4);
-> > +	__u64 rlen __packed __aligned(4);
-> > +	__u64 rp __packed __aligned(4);
-> > +	__u64 wp __packed __aligned(4);
-> > +};
-> > +
-> > +#define CHAN_CTX_CHSTATE_MASK GENMASK(7, 0)
-> > +#define CHAN_CTX_CHSTATE_SHIFT 0
-> 
-> Please eliminate all the _SHIFT definitions like this,
-> where you are already defining the corresponding _MASK.
-> The _SHIFT is redundant (and could lead to error, and
-> takes up extra space).
-> 
-> You are using bitfield operations (like FIELD_GET()) in
-> at least some places already.  Use them consistently
-> throughout the driver.  Those macros simplify the code
-> and obviate the need for any shift definitions.
-> 
+* Implemented comments on V2 of the patch.
 
-Ack.
+Changes in V2
 
-Thanks,
-Mani
+* Fixed the yaml issue and also implemented comments on yaml in V1.
+
+Changes in V1
+
+* EUD has now been mapped as a separate DT node as it is an independent QCOM IP.
+
+* EUD is attached to the connector child of dwc3 via port end point since EUD
+  driver needs the connector for role-switching.
+
+* EUD driver has been moved now to drivers/soc/qcom/qcom_eud.c.
+
+* All the comments from version 0 of the patch has been implemented.
+
+Souradeep Chowdhury (6):
+  dt-bindings: Add the yaml bindings for EUD
+  bindings: usb: dwc3: Update dwc3 properties for EUD connector
+  usb: common: eud: Add driver support for Embedded USB Debugger(EUD)
+  arm64: dts: qcom: sc7280: Add EUD dt node and dwc3 connector
+  arm64: dts: qcom: sc7280: Set the default dr_mode for usb2
+  MAINTAINERS: Add maintainer entry for EUD
+
+ Documentation/ABI/testing/sysfs-driver-eud         |   9 +
+ .../devicetree/bindings/soc/qcom/qcom,eud.yaml     |  77 +++++++
+ .../devicetree/bindings/usb/snps,dwc3.yaml         |   6 +
+ MAINTAINERS                                        |   8 +
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts            |   4 +
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |  36 +++
+ drivers/usb/common/Kconfig                         |  10 +
+ drivers/usb/common/Makefile                        |   1 +
+ drivers/usb/common/qcom_eud.c                      | 251 +++++++++++++++++++++
+ 9 files changed, 402 insertions(+)
+ create mode 100644 Documentation/ABI/testing/sysfs-driver-eud
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+ create mode 100644 drivers/usb/common/qcom_eud.c
+
+-- 
+2.7.4
+
