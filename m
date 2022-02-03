@@ -2,138 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21BBC4A8983
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 18:11:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9964F4A89C9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 18:20:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352701AbiBCRLP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Feb 2022 12:11:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38788 "EHLO
+        id S1352763AbiBCRUS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Feb 2022 12:20:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352812AbiBCRLF (ORCPT
+        with ESMTP id S240135AbiBCRUQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Feb 2022 12:11:05 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23686C0613E5
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 09:10:52 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id u13so5053705oie.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 09:10:52 -0800 (PST)
+        Thu, 3 Feb 2022 12:20:16 -0500
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DE74C06173D
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 09:20:16 -0800 (PST)
+Received: by mail-pl1-x635.google.com with SMTP id j16so2708259plx.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 09:20:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=iyTnLRq74SMNTbBGSC7BPrM96WbFmvv/b/YCqRhJKOE=;
-        b=thfJm2vpV7VaNu1lzrEG23OTmJsIHNzwHkX5JsY7aQhT0djoFZQjP4WbvWmzgMX1cE
-         RgB7VYmGPR90SJr5tBbfTbSqWyV3Zq1VGeheW+VcHDGI1pBPHdYoo0xncHYi5bxIm0z/
-         FJttwfCXgr+iSUbkSSpGH54np+ONYksPsh3OcSz3nhPuEZvH7QMawaWaVhPcczB/qcoh
-         byuE8Cu4teph0I2bnsxg88DB6rHFQavLj1aUAoJQiqbdR2R7NKAguLy1140kcERS6BLk
-         apaz7j+GBcmfVF31LgOSeYGL1zbvLVee1nLE+vyhb9e7RQFwEhg8m65karUqF9STUz+E
-         9uDA==
+        bh=PBScQedjQsJUD7zIshQCOQWAkiVB3CKCT3jKw7sdwEI=;
+        b=LQ+1tVGqnoiCz4In7FgL8RYfgvEEBWaRO+VkrlDk2K5K3MzrcAy2PC/epsgRJIVsFr
+         YvWruhMeSn8CP6Pz2Q77tAkVpsN+Rz5GuO7oUj6w3qCJhT2EJ9Le0q3fKJuGicOns3+H
+         OlWGUOz9FxyKOYlh4UCQIMjJ+xuOGSuDdUEGg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=iyTnLRq74SMNTbBGSC7BPrM96WbFmvv/b/YCqRhJKOE=;
-        b=L7WldbfBPtRDrjI9Taz6nzXsZGBZ4x2W5vP0RmQqb+YDEmvEA1MAEcYK2yXeebD/Dn
-         mlIu0xJjej9gbpdGYkchZRe79sIW85oyflMFP2UrMSyOvv4oG1aZXg0DpOdtOTBzbkcc
-         ASC+RBt+lMkfHS48VGw6YCEY8Hlf8fQMK0TtNppBV+9MtIwICkJWqmS6JXB1Balpn9mZ
-         BdjXSdymK3QH+czFRgLdeOFxRzNsvDbkj3n+Hq0Ou7kBcJrC8lMu8onHUp2J91hdzUtU
-         sUvtNAAXh3I0ORhXo1SGisQHYFb4xIGoZvAFZOA0AEUFoUIvCG3nC3RDcjKAyYcgorDQ
-         ndoQ==
-X-Gm-Message-State: AOAM531oL2qbveBu5ll63qHg+ojXTPvOurjfK5Y/aExKEnUcmqc6ZXBV
-        FKfbmiWBlaPuVkAxF4CDsJOfyg==
-X-Google-Smtp-Source: ABdhPJwK5V2IWgDRWmJUgoelR05uxNUjVGwc6M3avl68/CttOm1hmc7QnHQECMSMDwdigQmIe1SNdA==
-X-Received: by 2002:a05:6808:1590:: with SMTP id t16mr8091182oiw.215.1643908250910;
-        Thu, 03 Feb 2022 09:10:50 -0800 (PST)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id g4sm19145118otl.1.2022.02.03.09.10.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Feb 2022 09:10:50 -0800 (PST)
-Date:   Thu, 3 Feb 2022 09:11:07 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Wilczy??ski <kw@linux.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: Re: [PATCH v5 1/5] dt-bindings: pci: qcom: Document PCIe bindings
- for SM8450
-Message-ID: <YfwMq/kjmjr4d4t4@ripper>
-References: <20211218141024.500952-1-dmitry.baryshkov@linaro.org>
- <20211218141024.500952-2-dmitry.baryshkov@linaro.org>
+        bh=PBScQedjQsJUD7zIshQCOQWAkiVB3CKCT3jKw7sdwEI=;
+        b=2L6drjgyPH0TMQ2XLkUlQUGSxbIGERnWgFs0WX/cduyIrwyxyTl2dhyGYi/33hVgva
+         gRQReVeqPEHpcJQClF3rS5LMTjz7aedW+LGv2dpjZRpT0eT3DkVF3DMaQ+4OgywFni1I
+         x2tGfFm+Lk2QgSCbzjhhMVZh94j2QHutdHT2RBcjDNfUw3PT43QNx/Fsj6VIX0rJwzl8
+         LydMXP+RsEXXuvy65ZkCdjNzoDE1CIovOyJ2nP7w5VtmEjcjHBWvfkLL8ck/76WSRiLu
+         YIrMsg+MO7RPOF27hDtUPxyC/TEWKN9EWarYMxq0eT4BJelKkU0tDsSPX2y3SLBnn4u8
+         3paA==
+X-Gm-Message-State: AOAM531SfxY3rEjAgHghJY1Gql+9aIOOJ8xgEyI8PBFi3C3tRgZ8dfYW
+        h3hhBG7kTN+OlEagobxvlonISg==
+X-Google-Smtp-Source: ABdhPJy500NuFjqwp00AVO85/fDzxFW/sTqua/T06bMcxxtDqRkqUwOzz8ZW+UnMjaxoumi+ZxwlOg==
+X-Received: by 2002:a17:902:cec8:: with SMTP id d8mr36025317plg.98.1643908816120;
+        Thu, 03 Feb 2022 09:20:16 -0800 (PST)
+Received: from localhost ([2620:15c:202:201:c0cb:3065:aa0:d6c9])
+        by smtp.gmail.com with UTF8SMTPSA id a14sm31533363pfv.212.2022.02.03.09.20.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Feb 2022 09:20:15 -0800 (PST)
+Date:   Thu, 3 Feb 2022 09:20:13 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        pmaliset@codeaurora.org, quic_rjendra@quicinc.com,
+        Shaik Sajida Bhanu <sbhanu@codeaurora.org>,
+        kgodara@codeaurora.org, konrad.dybcio@somainline.org,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        sibis@codeaurora.org, swboyd@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 09/14] arm64: dts: qcom: sc7280: Disable pull from
+ pcie1_clkreq
+Message-ID: <YfwOzZNVlymi/w2c@google.com>
+References: <20220202212348.1391534-1-dianders@chromium.org>
+ <20220202132301.v3.9.I5f367dcce8107f2186b2aad4aef0dfcfafa034b9@changeid>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20211218141024.500952-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220202132301.v3.9.I5f367dcce8107f2186b2aad4aef0dfcfafa034b9@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 18 Dec 06:10 PST 2021, Dmitry Baryshkov wrote:
-
-> Document the PCIe DT bindings for SM8450 SoC. The PCIe IP is similar
-> to the one used on SM8250, however unlike SM8250, PCIe0 and PCIe1 use
-> different set of clocks, so two compatible entries are required.
+On Wed, Feb 02, 2022 at 01:23:43PM -0800, Douglas Anderson wrote:
+> I believe that the PCIe clkreq pin is an output. That means we
+> shouldn't have a pull enabled for it. Turn it off.
 > 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../devicetree/bindings/pci/qcom,pcie.txt     | 22 ++++++++++++++++++-
->  1 file changed, 21 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> index a0ae024c2d0c..0adb56d5645e 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-> @@ -15,6 +15,8 @@
->  			- "qcom,pcie-sc8180x" for sc8180x
->  			- "qcom,pcie-sdm845" for sdm845
->  			- "qcom,pcie-sm8250" for sm8250
-> +			- "qcom,pcie-sm8450-pcie0" for PCIe0 on sm8450
-> +			- "qcom,pcie-sm8450-pcie1" for PCIe1 on sm8450
->  			- "qcom,pcie-ipq6018" for ipq6018
->  
->  - reg:
-> @@ -169,6 +171,24 @@
->  			- "ddrss_sf_tbu" PCIe SF TBU clock
->  			- "pipe"	PIPE clock
->  
-> +- clock-names:
-> +	Usage: required for sm8450-pcie0 and sm8450-pcie1
-> +	Value type: <stringlist>
-> +	Definition: Should contain the following entries
-> +			- "aux"         Auxiliary clock
-> +			- "cfg"         Configuration clock
-> +			- "bus_master"  Master AXI clock
-> +			- "bus_slave"   Slave AXI clock
-> +			- "slave_q2a"   Slave Q2A clock
-> +			- "tbu"         PCIe TBU clock
-> +			- "ddrss_sf_tbu" PCIe SF TBU clock
-> +			- "pipe"        PIPE clock
-> +			- "pipe_mux"    PIPE MUX
-> +			- "phy_pipe"    PIPE output clock
-> +			- "ref"         REFERENCE clock
-> +			- "aggre0"	Aggre NoC PCIe0 AXI clock, only for sm8450-pcie0
-> +			- "aggre1"	Aggre NoC PCIe1 AXI clock
-> +
->  - resets:
->  	Usage: required
->  	Value type: <prop-encoded-array>
-> @@ -246,7 +266,7 @@
->  			- "ahb"			AHB reset
->  
->  - reset-names:
-> -	Usage: required for sc8180x, sdm845 and sm8250
-> +	Usage: required for sc8180x, sdm845, sm8250 and sm8450
->  	Value type: <stringlist>
->  	Definition: Should contain the following entries
->  			- "pci"			PCIe core reset
-> -- 
-> 2.34.1
-> 
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
