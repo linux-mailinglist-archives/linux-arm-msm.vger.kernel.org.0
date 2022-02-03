@@ -2,97 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A4FD4A8908
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 17:47:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9461F4A894B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Feb 2022 18:07:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352427AbiBCQrR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Feb 2022 11:47:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33316 "EHLO
+        id S1352493AbiBCRH2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Feb 2022 12:07:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239584AbiBCQrQ (ORCPT
+        with ESMTP id S242930AbiBCRH2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Feb 2022 11:47:16 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DC6CC06173B
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 08:47:16 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id b9so7229983lfq.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 08:47:16 -0800 (PST)
+        Thu, 3 Feb 2022 12:07:28 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C5C8C06173D
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Feb 2022 09:07:27 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id s61-20020a17090a69c300b001b4d0427ea2so10601493pjj.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Feb 2022 09:07:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Rr7HzGbHwYsK7mCJe032Gz1nhZI4xO0z3CxPo8njYGo=;
-        b=mPWt8OS5kkir1lqkTGi6VRk0bTG/zhJJYRuPsBsqk7Z1d0LXaZ/0w67JM3h/UgnRDR
-         2t2K/4pKlfrv+mE/Bmf/4lEd/lhdur8i6ErjnoaVlbJSI02gAlFsz3oBdNjondLIJVmO
-         Qedqiej2VkRXKrMHpt9va4D0vfyTom0iknQpC60ZkqG2gHt6vCVF1SF2vElx6LE4Y45P
-         RIzrkft7ANY5/IxLFCk3excD3XfzYEnMr9CzhcVopD2VQIbt4s+um7ZqCDcvLqctsP56
-         6oPDsBjUH0D1aS2jZOCOszo1APjyxxNfAbyPgS+Aoq9TR8R5C0GWgT91B4EcJcPBE4rH
-         YxYQ==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=LJp09xp8M+uPz3Zlp081AW6/VRw1By1H8gO/Cef3cHM=;
+        b=Adjh+T+uMn674K4lzSPEJAOpNaiO0jvKaXqteiO+51Q25gNHZ0YDnj8MXXM2f6ibRN
+         XWE1E3TNYEGYF4gqqPa6wBgMUEggrkOkie5/EOw77olyQeOmi8/yiRbc5pwWanV02BRY
+         L+6njpOsMrmUmGjN6zB6Rn8Z+b18QkFYGZWVw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Rr7HzGbHwYsK7mCJe032Gz1nhZI4xO0z3CxPo8njYGo=;
-        b=zZQ2fQW3/mkh4kSv5TA+YsShxdC2s3Qy/7En+gVb82G2Rn627jMMhNSxOBHSZJTUQR
-         M6w1QlgTYtUcdTbBJRfZZZdRmNi2i54wPtLBWwK7MMzUYRYvavgGC902HyAoVHN2y0Ue
-         6aWeE7wRYJntvgyjHxcAsOFB4MScf5TuHZ+dqjJMjbMEB6m2A1rQ1NaqMtHvduM0BB4o
-         kVgbFKqxIpHGPOgRyMmMiuHBFBEzlCZdZp7f5b81+relGgx4UHu4x7KSdSYTnv+s10RV
-         tkmhvJx0g883fknV5Jc9mnH04uYzrhpBJPrLwISRpxjQFO6xADSOM7BxNZIXdlriMfb/
-         Qkcw==
-X-Gm-Message-State: AOAM533tHQQfeNWuymSp6py91fKvTwglIUMc/biEvaqpx/WlG6+C8OsI
-        6Z9r7pKGsTPtKEvPNwUYDjkU+Bz2eA6Y/xHU
-X-Google-Smtp-Source: ABdhPJzLv3v+160PG42pegKfiCZr0PqsC6hWIE/uZgxt8u/3PELJ6uBFSD6FQKwUtZyVSqDjZIQ0zg==
-X-Received: by 2002:a05:6512:10ce:: with SMTP id k14mr26190370lfg.210.1643906834991;
-        Thu, 03 Feb 2022 08:47:14 -0800 (PST)
-Received: from localhost.localdomain (88-113-46-102.elisa-laajakaista.fi. [88.113.46.102])
-        by smtp.gmail.com with ESMTPSA id f10sm4756433lfk.209.2022.02.03.08.47.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Feb 2022 08:47:14 -0800 (PST)
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To:     Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>
-Cc:     Wolfram Sang <wsa@kernel.org>, linux-i2c@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH 9/9] i2c: qcom-cci: add sm8450 compatible
-Date:   Thu,  3 Feb 2022 18:47:13 +0200
-Message-Id: <20220203164713.1712111-1-vladimir.zapolskiy@linaro.org>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20220203164629.1711958-1-vladimir.zapolskiy@linaro.org>
-References: <20220203164629.1711958-1-vladimir.zapolskiy@linaro.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=LJp09xp8M+uPz3Zlp081AW6/VRw1By1H8gO/Cef3cHM=;
+        b=fxhaJOmRglw7FwFEF/2ZG+ElNrnXi4vZpHz5zdTfT0JzL84mwMVQCiMacDvKiOr2DG
+         33xKSXY+nqr3EUxUBupfTiYypu8tJyrunE6uYvPZbkzqdaZR3cPI6hMXn5aPBRoY13wS
+         vbbp8IjEZlcEfdBFy1y1N2ucVkicOYSvDCkp/RBpoJbL88/iO/MrP1UcwIxCxAMCEsjK
+         bfX7XhsgcUMm/9nD4iVIIUZSODB/jTuakT7VZ2PKhPCbwoC13Le6JfnenfbpVPIeVWQx
+         /9ghDhlf5sq0I22MBsHNOFwNpyHPyjGB0vVghEOinedVojoeefI8hz5VmQ2+OvME3/AO
+         WQSA==
+X-Gm-Message-State: AOAM530X5e/5+qhUTE2YQBsDRm7PrrotnQmq+wgtzmewQshYsMp1EiSz
+        6miZnqPay68rb7oW+ImI6MgY2g==
+X-Google-Smtp-Source: ABdhPJwlQtEnkwSVb6H/ujF0qK6GiHZBbZkSdS5LPsi/mn5p/6hLJIxQDWBkk3LMCBzm6bPY7W1VsA==
+X-Received: by 2002:a17:90b:33d2:: with SMTP id lk18mr14724761pjb.224.1643908046695;
+        Thu, 03 Feb 2022 09:07:26 -0800 (PST)
+Received: from localhost ([2620:15c:202:201:c0cb:3065:aa0:d6c9])
+        by smtp.gmail.com with UTF8SMTPSA id mi11sm10907797pjb.37.2022.02.03.09.07.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Feb 2022 09:07:26 -0800 (PST)
+Date:   Thu, 3 Feb 2022 09:07:24 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        pmaliset@codeaurora.org, quic_rjendra@quicinc.com,
+        Shaik Sajida Bhanu <sbhanu@codeaurora.org>,
+        kgodara@codeaurora.org, konrad.dybcio@somainline.org,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        sibis@codeaurora.org, swboyd@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 08/14] arm64: dts: qcom: sc7280: Move pcie1_clkreq
+ pull / drive str to boards
+Message-ID: <YfwLzJP/QuBJasAq@google.com>
+References: <20220202212348.1391534-1-dianders@chromium.org>
+ <20220202132301.v3.8.Iffff0c12440a047212a164601e637b03b9d2fc78@changeid>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220202132301.v3.8.Iffff0c12440a047212a164601e637b03b9d2fc78@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add QCOM SM8450 specific compatible for CCI controller, which is
-equal to CCI controllers found on QCOM SDM845 and QCOM SM8250 SoCs.
+On Wed, Feb 02, 2022 at 01:23:42PM -0800, Douglas Anderson wrote:
+> Pullups and drive strength don't belong in the SoC dtsi file. Move to
+> the board file.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
----
- drivers/i2c/busses/i2c-qcom-cci.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
-index 2fc7f1f2616f..e625857fde41 100644
---- a/drivers/i2c/busses/i2c-qcom-cci.c
-+++ b/drivers/i2c/busses/i2c-qcom-cci.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- // Copyright (c) 2012-2016, The Linux Foundation. All rights reserved.
--// Copyright (c) 2017-20 Linaro Limited.
-+// Copyright (c) 2017-2022 Linaro Limited.
- 
- #include <linux/clk.h>
- #include <linux/completion.h>
-@@ -822,6 +822,7 @@ static const struct of_device_id cci_dt_match[] = {
- 	{ .compatible = "qcom,msm8996-cci", .data = &cci_v2_data},
- 	{ .compatible = "qcom,sdm845-cci", .data = &cci_v2_data},
- 	{ .compatible = "qcom,sm8250-cci", .data = &cci_v2_data},
-+	{ .compatible = "qcom,sm8450-cci", .data = &cci_v2_data},
- 	{}
- };
- MODULE_DEVICE_TABLE(of, cci_dt_match);
--- 
-2.33.0
-
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
