@@ -2,78 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 488254AA2CB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Feb 2022 23:06:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FCF74AA2CD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Feb 2022 23:06:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241519AbiBDWGA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Feb 2022 17:06:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47822 "EHLO
+        id S1344602AbiBDWGE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Feb 2022 17:06:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233058AbiBDWF7 (ORCPT
+        with ESMTP id S1343746AbiBDWGD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Feb 2022 17:05:59 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4050C061714
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Feb 2022 14:05:46 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id z4so15243819lft.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Feb 2022 14:05:46 -0800 (PST)
+        Fri, 4 Feb 2022 17:06:03 -0500
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DD5EC061401
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Feb 2022 14:06:00 -0800 (PST)
+Received: by mail-ot1-x32d.google.com with SMTP id x52-20020a05683040b400b0059ea92202daso6111697ott.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Feb 2022 14:06:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=XuPklbFP/fc/0dPlSsCQ5ZGoroApyYX5xaCS3twuJo0=;
-        b=b9JDWnjrm3iOe3iGYZGMYwM63RP+E7UGWF5wVV2nyQomx1wYUcCWZC/eee8DXLwLlA
-         hrRLcHgJU/GSY+1nagrW/W7O9HdFWOevHCms5AGg5DMKk7HHuF0k3vk194/AbmcN17O8
-         lEgiGS8jSQKg3TlH4p/5ppfXplFGFEAKX/dDHK1M3B6vC1jJUb3sGZK+5INgmG+T0drE
-         tOT09bhB70/ikFKCyxqwnttYaJKSnX/pk6zHw7N6sR1J3KdrREi7YmFm6BLx1l3nHdj5
-         YUyhKqRfDqV4nOv8vQIoP1nmNtYXgmSL8OFUpvMT2LOXsknJeKaES2bRil0UVgPQ1DMt
-         LCtA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=GgMTuyFhfMGaPgXyT5djEh66US2TKTv1WM+9qJD9okI=;
+        b=OcPENJ2t+b1YpK3TYoG1ZSd8XbIyVovoWvPyKNoMXWOhG3lsFVkVYjWt0EBCJ4sC6n
+         AKGIP8rraXMkhZZocjOHDHNyjJvA+uTbtEmcsBBzNNTlRA9jKPUm4OwSoRn9Bcd7oC2a
+         C/qhC2R3YqDGKBMfz9KlFpcgP+BtQudL/rQmlnQgf4JHUe1WaVwOA+3d73EqDFipz6C0
+         kHW81p3ZKBAAA8c8NwDT/4AJ2sY3EIFGqBKdOGjNM26MMn3q1hcBCfOMRQQCmPmIt5MO
+         9LFU7l65k6j1ATQY/XdxgOtRp0hLCdrsT7KqXlYyya8Puj3CDbqSPFtI6goo2DksIrRv
+         J6FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=XuPklbFP/fc/0dPlSsCQ5ZGoroApyYX5xaCS3twuJo0=;
-        b=rlVZ2STIPRtKYwX+DI4bNYenEMc9ldSwaO6Rll1DMwSRTInuJxemIrwilqs+FzKVAM
-         lE5nmyoF8RLbJK6c4dDlMK/Izp3n+X4KaJ4/dKktvcBE3nr2shJUc9zGDySif4GLzg3a
-         hyMwsGyk4Kv04HhjzguQKsDQgady905rUd/noYZ+xk3DH2tdJCJiSF3w8s45XBaAUlOe
-         e+urUOIDMUUWiqUZPEbVy5Ii1wEqT6wJN/pBSbCrDOSkwpBBNnyt3X5Ft5hnR7RqcCyr
-         lmCRwWIGPAV96CDm1zc44lb8wwbkapMxHhwHLkEU73Big6lSAN0s1u0oFn67QCMGk/nI
-         /YAQ==
-X-Gm-Message-State: AOAM533i3m9cZj5lqBhghnYQerIzZbP339UKIraUxjTbMd9Mc4GrD6p5
-        //AX1pznyj3tDb4/EOLwvV8MVA==
-X-Google-Smtp-Source: ABdhPJw6EdE4r0SDZ5IGgQCyqb0x0l4A6H72ribqX+T6MBYeIexd/rE66QOn7AWl7hpzI7VL02xo3g==
-X-Received: by 2002:a05:6512:96a:: with SMTP id v10mr657014lft.497.1644012344995;
-        Fri, 04 Feb 2022 14:05:44 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id c27sm472570lfp.103.2022.02.04.14.05.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Feb 2022 14:05:44 -0800 (PST)
-Message-ID: <215d1870-bfa6-fe08-c885-c32161a74ff7@linaro.org>
-Date:   Sat, 5 Feb 2022 01:05:43 +0300
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=GgMTuyFhfMGaPgXyT5djEh66US2TKTv1WM+9qJD9okI=;
+        b=EO1jlfPmw9fpy0sDRezLcCIOkHmwZp95bo2a/+PkG06kKhVKNM+Nmamex+rcnaCQ3a
+         ixbWaMPQYO6s1Oc9thTVP3CxmRGA/7s+lJrn6AgeCvFczrcPTWbcGCCBCULw3xtr8nb3
+         zB7Jc/5HFYV/JP3DdipQd8hN/cv7EWxIqYU21PVCo41kWdkW4wRJPxOak4fB9VSXthtr
+         3jWyBfmRSovbrWMlq9Rdx2lsvNuQANC7ZOoJzM4HPt1hRRExB4dzSnxphsrygItT3sPr
+         dGieVHQu/gNQxhRfZ7/R8iPt2lNQOyORLKj8roaze8imyuUbe0NpPoOottLiojzB5xD0
+         whTg==
+X-Gm-Message-State: AOAM533eHe8zqtfgwUeupAyYGYUwpvbZSF9KZu7Fzk2Y4iXlw8a7zv19
+        2EAkqzIN4K7LpLPI+g+WeLfVrw==
+X-Google-Smtp-Source: ABdhPJxW4MWaRb1wlF8fzuNsLsYeXFnj6m66SEWmLW4wwzzgN+hd2bSOY2XNtxOTmhqtid4nBCXg+Q==
+X-Received: by 2002:a9d:6d01:: with SMTP id o1mr411112otp.204.1644012359264;
+        Fri, 04 Feb 2022 14:05:59 -0800 (PST)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id l1sm1222303otd.18.2022.02.04.14.05.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Feb 2022 14:05:58 -0800 (PST)
+Date:   Fri, 4 Feb 2022 16:05:56 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Wilczy??ski <kw@linux.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Prasad Malisetty <pmaliset@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 03/11] clk: qcom: gdsc: add support for clocks tied to
+ the GDSC
+Message-ID: <Yf2jRAf5UKYSMYxe@builder.lan>
+References: <20220204144645.3016603-1-dmitry.baryshkov@linaro.org>
+ <20220204144645.3016603-4-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v3 1/3] drm/msm/dp: revise timing engine programming to
- support widebus feature
-Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, vkoul@kernel.org,
-        daniel@ffwll.ch, airlied@linux.ie, agross@kernel.org,
-        bjorn.andersson@linaro.org
-Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1643999801-20359-1-git-send-email-quic_khsieh@quicinc.com>
- <1643999801-20359-2-git-send-email-quic_khsieh@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1643999801-20359-2-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220204144645.3016603-4-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_40,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,296 +82,128 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/02/2022 21:36, Kuogee Hsieh wrote:
-> Widebus feature will transmit two pixel data per pixel clock to interface.
-> Timing engine provides driving force for this purpose. This patch base
-> on HPG (Hardware Programming Guide) to revise timing engine register
-> setting to accommodate both widebus and non widebus application. Also
-> horizontal width parameters need to be reduced by half since two pixel
-> data are clocked out per pixel clock when widebus feature enabled.
-> In addition, revised timing engine function is an generic function and
-> intend to be shared by all platforms to reduce maintenance efforts.
+On Fri 04 Feb 08:46 CST 2022, Dmitry Baryshkov wrote:
+
+> On newer Qualcomm platforms GCC_PCIE_n_PIPE_CLK_SRC should be controlled
+> together with the PCIE_n_GDSC. The clock should be fed from the TCXO
+> before switching the GDSC off and can be fed from PCIE_n_PIPE_CLK once
+> the GDSC is on.
 > 
-> Changes in v2:
-> -- remove compression related code from timing
-> -- remove op_info from  struct msm_drm_private
-> -- remove unnecessary wide_bus_en variables
-> -- pass wide_bus_en into timing configuration by struct msm_dp
+> Since commit aa9c0df98c29 ("PCI: qcom: Switch pcie_1_pipe_clk_src after
+> PHY init in SC7280") PCIe controller driver tries to manage this on it's
+> own, resulting in the non-optimal code. Furthermore, if the any of the
+> drivers will have the same requirements, the code would have to be
+> dupliacted there.
 > 
-> Changes in v3:
-> -- split patch into 3 patches
+> Move handling of such clocks to the GDSC code, providing special GDSC
+> type.
 > 
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+
+As discussed on IRC, I'm inclined not to take this, because looks to me
+to be the same situation that we have with all GDSCs in SM8350 and
+onwards - that some clocks must be parked on a safe parent before the
+associated GDSC can be toggled.
+
+Prasad, please advice on what the actual requirements are wrt the
+gcc_pipe_clk_src. When does it need to provide a valid signal and when
+does it need to be parked?
+
+Regards,
+Bjorn
+
+> Cc: Prasad Malisetty <pmaliset@codeaurora.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 10 +++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |  2 +
->   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   | 14 +++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        | 99 ++++++++++++++--------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |  2 +
->   5 files changed, 93 insertions(+), 34 deletions(-)
+>  drivers/clk/qcom/gdsc.c | 41 +++++++++++++++++++++++++++++++++++++++++
+>  drivers/clk/qcom/gdsc.h | 14 ++++++++++++++
+>  2 files changed, 55 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 0d315b4..0c22839 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -208,6 +208,8 @@ struct dpu_encoder_virt {
->   
->   	u32 idle_timeout;
->   
-> +	bool wide_bus_en;
+> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+> index 7e1dd8ccfa38..9913d1b70947 100644
+> --- a/drivers/clk/qcom/gdsc.c
+> +++ b/drivers/clk/qcom/gdsc.c
+> @@ -45,6 +45,7 @@
+>  #define TIMEOUT_US		500
+>  
+>  #define domain_to_gdsc(domain) container_of(domain, struct gdsc, pd)
+> +#define domain_to_pipe_clk_gdsc(domain) container_of(domain, struct pipe_clk_gdsc, base.pd)
+>  
+>  enum gdsc_status {
+>  	GDSC_OFF,
+> @@ -549,3 +550,43 @@ int gdsc_gx_do_nothing_enable(struct generic_pm_domain *domain)
+>  	return 0;
+>  }
+>  EXPORT_SYMBOL_GPL(gdsc_gx_do_nothing_enable);
 > +
->   	struct msm_dp *dp;
->   };
->   
-> @@ -217,6 +219,14 @@ static u32 dither_matrix[DITHER_MATRIX_SZ] = {
->   	15, 7, 13, 5, 3, 11, 1, 9, 12, 4, 14, 6, 0, 8, 2, 10
->   };
->   
-> +
-> +bool dpu_encoder_is_widebus_enabled(struct drm_encoder *drm_enc)
+> +/*
+> + * Special operations for GDSCs with attached pipe clocks.
+> + * The clock should be parked to safe source (tcxo) before turning off the GDSC
+> + * and can be switched on as soon as the GDSC is on.
+> + *
+> + * We remove respective clock sources from clocks map and handle them manually.
+> + */
+> +int gdsc_pipe_enable(struct generic_pm_domain *domain)
 > +{
-> +	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
+> +	struct pipe_clk_gdsc *sc = domain_to_pipe_clk_gdsc(domain);
+> +	int i, ret;
 > +
-> +	return dpu_enc->wide_bus_en;
+> +	ret = gdsc_enable(domain);
+> +	if (ret)
+> +		return ret;
+> +
+> +	for (i = 0; i< sc->num_clocks; i++)
+> +		regmap_update_bits(sc->base.regmap, sc->clocks[i].reg,
+> +				BIT(sc->clocks[i].shift + sc->clocks[i].width) - BIT(sc->clocks[i].shift),
+> +				sc->clocks[i].on_value << sc->clocks[i].shift);
+> +
+> +	return 0;
 > +}
+> +EXPORT_SYMBOL_GPL(gdsc_pipe_enable);
 > +
->   static void _dpu_encoder_setup_dither(struct dpu_hw_pingpong *hw_pp, unsigned bpc)
->   {
->   	struct dpu_hw_dither_cfg dither_cfg = { 0 };
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> index 99a5d73..893d74d 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> @@ -168,4 +168,6 @@ int dpu_encoder_get_linecount(struct drm_encoder *drm_enc);
->    */
->   int dpu_encoder_get_frame_count(struct drm_encoder *drm_enc);
->   
-> +bool dpu_encoder_is_widebus_enabled(struct drm_encoder *drm_enc);
+> +int gdsc_pipe_disable(struct generic_pm_domain *domain)
+> +{
+> +	struct pipe_clk_gdsc *sc = domain_to_pipe_clk_gdsc(domain);
+> +	int i;
 > +
->   #endif /* __DPU_ENCODER_H__ */
-
-This chunk does not apply against the msm-next. The conflict is trivial, 
-but it would be nice to know that the code was tested against the 
-current tip.
-
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> index 185379b..3d6c914 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> @@ -110,6 +110,20 @@ static void drm_mode_to_intf_timing_params(
->   		timing->v_back_porch += timing->v_front_porch;
->   		timing->v_front_porch = 0;
->   	}
+> +	for (i = sc->num_clocks - 1; i >= 0; i--)
+> +		regmap_update_bits(sc->base.regmap, sc->clocks[i].reg,
+> +				BIT(sc->clocks[i].shift + sc->clocks[i].width) - BIT(sc->clocks[i].shift),
+> +				sc->clocks[i].off_value << sc->clocks[i].shift);
 > +
-> +	timing->wide_bus_en = dpu_encoder_is_widebus_enabled(phys_enc->parent);
+> +	/* In case of an error do not try turning the clocks again. We can not be sure about the GDSC state. */
+> +	return gdsc_disable(domain);
+> +}
+> +EXPORT_SYMBOL_GPL(gdsc_pipe_disable);
+> diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
+> index d7cc4c21a9d4..b1a2f0abe41c 100644
+> --- a/drivers/clk/qcom/gdsc.h
+> +++ b/drivers/clk/qcom/gdsc.h
+> @@ -68,11 +68,25 @@ struct gdsc_desc {
+>  	size_t num;
+>  };
+>  
+> +struct pipe_clk_gdsc {
+> +	struct gdsc base;
+> +	int num_clocks;
+> +	struct {
+> +		u32 reg;
+> +		u32 shift;
+> +		u32 width;
+> +		u32 off_value;
+> +		u32 on_value;
+> +	} clocks[];
+> +};
 > +
-> +	/*
-> +	 * for DP, divide the horizonal parameters by 2 when
-> +	 * widebus is enabled
-> +	 */
-> +	if (timing->wide_bus_en) {
-> +		timing->width = timing->width >> 1;
-> +		timing->xres = timing->xres >> 1;
-> +		timing->h_back_porch = timing->h_back_porch >> 1;
-> +		timing->h_front_porch = timing->h_front_porch >> 1;
-> +		timing->hsync_pulse_width = timing->hsync_pulse_width >> 1;
-> +	}
->   }
->   
->   static u32 get_horizontal_total(const struct intf_timing_params *timing)
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> index 116e2b5..35d4aaa 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> @@ -33,6 +33,7 @@
->   #define INTF_TP_COLOR1                  0x05C
->   #define INTF_CONFIG2                    0x060
->   #define INTF_DISPLAY_DATA_HCTL          0x064
-> +#define INTF_ACTIVE_DATA_HCTL           0x068
->   #define INTF_FRAME_LINE_COUNT_EN        0x0A8
->   #define INTF_FRAME_COUNT                0x0AC
->   #define   INTF_LINE_COUNT               0x0B0
-> @@ -90,68 +91,95 @@ static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
->   	u32 hsync_period, vsync_period;
->   	u32 display_v_start, display_v_end;
->   	u32 hsync_start_x, hsync_end_x;
-> +	u32 hsync_data_start_x, hsync_data_end_x;
->   	u32 active_h_start, active_h_end;
->   	u32 active_v_start, active_v_end;
->   	u32 active_hctl, display_hctl, hsync_ctl;
->   	u32 polarity_ctl, den_polarity, hsync_polarity, vsync_polarity;
->   	u32 panel_format;
-> -	u32 intf_cfg, intf_cfg2 = 0, display_data_hctl = 0;
-> +	u32 intf_cfg, intf_cfg2 = 0;
-> +	u32 display_data_hctl = 0, active_data_hctl = 0;
-> +	u32 data_width;
-> +	bool dp_intf = false;
->   
->   	/* read interface_cfg */
->   	intf_cfg = DPU_REG_READ(c, INTF_CONFIG);
-> +
-> +	if (ctx->cap->type == INTF_EDP || ctx->cap->type == INTF_DP)
-> +		dp_intf = true;
-> +
->   	hsync_period = p->hsync_pulse_width + p->h_back_porch + p->width +
->   	p->h_front_porch;
->   	vsync_period = p->vsync_pulse_width + p->v_back_porch + p->height +
->   	p->v_front_porch;
->   
->   	display_v_start = ((p->vsync_pulse_width + p->v_back_porch) *
-> -	hsync_period) + p->hsync_skew;
-> +			hsync_period) + p->hsync_skew;
->   	display_v_end = ((vsync_period - p->v_front_porch) * hsync_period) +
-> -	p->hsync_skew - 1;
-> +			p->hsync_skew - 1;
-> +
-> +	hsync_ctl = (hsync_period << 16) | p->hsync_pulse_width;
->   
->   	hsync_start_x = p->h_back_porch + p->hsync_pulse_width;
->   	hsync_end_x = hsync_period - p->h_front_porch - 1;
->   
-> -	if (p->width != p->xres) {
-> -		active_h_start = hsync_start_x;
-> -		active_h_end = active_h_start + p->xres - 1;
-> -	} else {
-> -		active_h_start = 0;
-> -		active_h_end = 0;
-> -	}
-> +	/*
-> +	 * DATA_HCTL_EN controls data timing which can be different from
-> +	 * video timing. It is recommended to enable it for all cases, except
-> +	 * if compression is enabled in 1 pixel per clock mode
-> +	 */
-> +	if (p->wide_bus_en)
-> +		intf_cfg2 |= BIT(4);
->   
-> -	if (p->height != p->yres) {
-> -		active_v_start = display_v_start;
-> -		active_v_end = active_v_start + (p->yres * hsync_period) - 1;
-> -	} else {
-> -		active_v_start = 0;
-> -		active_v_end = 0;
-> -	}
-> +	if (p->wide_bus_en)
-> +		intf_cfg2 |= BIT(0);
->   
-> -	if (active_h_end) {
-> -		active_hctl = (active_h_end << 16) | active_h_start;
-> -		intf_cfg |= BIT(29);	/* ACTIVE_H_ENABLE */
-> -	} else {
-> -		active_hctl = 0;
-> -	}
-> +	/*
-> +	 * If widebus is disabled:
-> +	 * For uncompressed stream, the data is valid for the entire active
-> +	 * window period.
-> +	 * For compressed stream, data is valid for a shorter time period
-> +	 * inside the active window depending on the compression ratio.
-> +	 *
-> +	 * If widebus is enabled:
-> +	 * For uncompressed stream, data is valid for only half the active
-> +	 * window, since the data rate is doubled in this mode.
-> +	 * p->width holds the adjusted width for DP but unadjusted width for DSI
-> +	 * For compressed stream, data validity window needs to be adjusted for
-> +	 * compression ratio and then further halved.
-> +	 */
-> +	data_width = p->width;
-
-This assignment is rewritten in the next few lines! Please drop it, it's 
-unused.
-
-> +
-> +	if (!dp_intf && p->wide_bus_en)
-
-This condition does not make sense. wide_bus_en can only be enabled for 
-dp_intf, can it not? So the condition is always false.
-
-> +		data_width = p->width >> 1;
-> +	else
-> +		data_width = p->width;
->   
-> -	if (active_v_end)
-> -		intf_cfg |= BIT(30); /* ACTIVE_V_ENABLE */
-> +	hsync_data_start_x = hsync_start_x;
-> +	hsync_data_end_x =  hsync_start_x + data_width - 1;
->   
-> -	hsync_ctl = (hsync_period << 16) | p->hsync_pulse_width;
->   	display_hctl = (hsync_end_x << 16) | hsync_start_x;
-> +	display_data_hctl = (hsync_data_end_x << 16) | hsync_data_start_x;
->   
-> -	if (ctx->cap->type == INTF_EDP || ctx->cap->type == INTF_DP) {
-> -		active_h_start = hsync_start_x;
-> -		active_h_end = active_h_start + p->xres - 1;
-> -		active_v_start = display_v_start;
-> -		active_v_end = active_v_start + (p->yres * hsync_period) - 1;
-> -
-> +	if (dp_intf) {
-> +		// DP timing adjustment
-
-This is the only place with the C99 comment. Please use the surrounding 
-syntax.
-
->   		display_v_start += p->hsync_pulse_width + p->h_back_porch;
-> +		display_v_end   -= p->h_front_porch;
-> +	}
-> +
-> +	active_h_start = hsync_start_x;
-> +	active_h_end = active_h_start + p->xres - 1;
-> +
-> +	active_v_start = display_v_start;
-> +	active_v_end = active_v_start + (p->yres * hsync_period) - 1;
-
-These assignments were only applied for the DP/eDP case. Could you 
-please elaborate the change? Why are you enabling them for the DSI and 
-HDMI outputs?
-
->   
-> -		active_hctl = (active_h_end << 16) | active_h_start;
-> +	intf_cfg |= BIT(29);	/* ACTIVE_H_ENABLE */
-> +	intf_cfg |= BIT(30);	/* ACTIVE_V_ENABLE */
-
-These were enabled only when active_h_end / active_v_end were non-zero. 
-Any comments?
-
-> +
-> +	active_hctl = (active_h_end << 16) | active_h_start;
-> +
-> +	if (dp_intf)
->   		display_hctl = active_hctl;
-> -	}
->   
->   	den_polarity = 0;
->   	if (ctx->cap->type == INTF_HDMI) {
-> @@ -204,6 +232,9 @@ static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
->   	DPU_REG_WRITE(c, INTF_FRAME_LINE_COUNT_EN, 0x3);
->   	DPU_REG_WRITE(c, INTF_CONFIG, intf_cfg);
->   	DPU_REG_WRITE(c, INTF_PANEL_FORMAT, panel_format);
-> +	DPU_REG_WRITE(c, INTF_CONFIG2, intf_cfg2);
-> +	DPU_REG_WRITE(c, INTF_DISPLAY_DATA_HCTL, display_data_hctl);
-> +	DPU_REG_WRITE(c, INTF_ACTIVE_DATA_HCTL, active_data_hctl);
-
-I see. These writes are currently under the if (ctx->cap->features & 
-BIT(DPU_DATA_HCTL_EN)) condition. Please leave them there unless the 
-condition is wrong.
-
->   }
->   
->   static void dpu_hw_intf_enable_timing_engine(
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> index 3568be8..e4a518a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> @@ -30,6 +30,8 @@ struct intf_timing_params {
->   	u32 border_clr;
->   	u32 underflow_clr;
->   	u32 hsync_skew;
-> +
-> +	bool wide_bus_en;
->   };
->   
->   struct intf_prog_fetch {
-
-
--- 
-With best wishes
-Dmitry
+>  #ifdef CONFIG_QCOM_GDSC
+>  int gdsc_register(struct gdsc_desc *desc, struct reset_controller_dev *,
+>  		  struct regmap *);
+>  void gdsc_unregister(struct gdsc_desc *desc);
+>  int gdsc_gx_do_nothing_enable(struct generic_pm_domain *domain);
+> +int gdsc_pipe_enable(struct generic_pm_domain *domain);
+> +int gdsc_pipe_disable(struct generic_pm_domain *domain);
+>  #else
+>  static inline int gdsc_register(struct gdsc_desc *desc,
+>  				struct reset_controller_dev *rcdev,
+> -- 
+> 2.34.1
+> 
