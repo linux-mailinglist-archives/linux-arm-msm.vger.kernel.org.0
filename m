@@ -2,72 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 66BBD4AA389
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Feb 2022 23:50:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 184544AA3A6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Feb 2022 23:56:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353577AbiBDWu0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Feb 2022 17:50:26 -0500
-Received: from mail-oo1-f50.google.com ([209.85.161.50]:43942 "EHLO
-        mail-oo1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236013AbiBDWu0 (ORCPT
+        id S242322AbiBDW4b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Feb 2022 17:56:31 -0500
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:22906 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1355625AbiBDW4a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Feb 2022 17:50:26 -0500
-Received: by mail-oo1-f50.google.com with SMTP id v17-20020a4ac911000000b002eac41bb3f4so6268953ooq.10;
-        Fri, 04 Feb 2022 14:50:26 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=AvbucQDEFjinAdRwwOgjGSsbKX2qsrrC6adh1LZlXSg=;
-        b=0V6tfWwbjQe7zwQh/cJ8FzH8QgRQwwdYk3te5yEZW7tSfyETNJdt4MjzGLPZPx+IMD
-         FyeY7qs0oAtrcP2MkcMN12H4rvE9Psc/qPW0ms8zD901/urnpcKHsf2iG74NRsNCvfXE
-         TZ9j0exYiGn7cHLYYpgTksLYkT0xdH86xytj7V5i9R1+djNPrNgFcBiWLER0ERkOWqpE
-         kYY7JDH/s52aFKznV89s94Mrq0DWbZGDnDPvjW6+2+IWNcoSpJNhi5e+M3rSFJL9fD3/
-         6uQd8A9HxgFRE2bNtIVp8Vq5B6gbL78q1F5xkPe2tJEevzTEKSIw/BukPLWcNEdlqAm2
-         AjrQ==
-X-Gm-Message-State: AOAM533CrbzGgPB5rEGbdww5FLRSB82ZOE1lPEmyWGqAvDtEsoUj5SC2
-        0cD2C2EoG6jg7Te1Om85yA==
-X-Google-Smtp-Source: ABdhPJyKbQ5XhmSZdxwGFvkH2pRYUfJIyNahUJA0wuOOlVKLPIKsmJ5Qa5+DNkk4uS8oPdj/0H/jPg==
-X-Received: by 2002:a05:6870:36c1:: with SMTP id u1mr338765oak.159.1644015025791;
-        Fri, 04 Feb 2022 14:50:25 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id v78sm1354836oie.18.2022.02.04.14.50.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Feb 2022 14:50:25 -0800 (PST)
-Received: (nullmailer pid 3329417 invoked by uid 1000);
-        Fri, 04 Feb 2022 22:50:24 -0000
-Date:   Fri, 4 Feb 2022 16:50:24 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc:     quic_pheragu@quicinc.com, quic_sibis@quicinc.com,
-        quic_saipraka@quicinc.com, quic_tsoni@quicinc.com,
-        quic_satyap@quicinc.com, linux-usb@vger.kernel.org,
-        bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, greg@kroah.com,
-        quic_psodagud@quicinc.com, quic_rjendra@quicinc.com,
-        devicetree@vger.kernel.org, pure.logic@nexus-software.ie
-Subject: Re: [PATCH V5 2/6] bindings: usb: dwc3: Update dwc3 properties for
- EUD connector
-Message-ID: <Yf2tsL2X3DVlfs2G@robh.at.kernel.org>
-References: <cover.1643880577.git.quic_schowdhu@quicinc.com>
- <48672133dbd76b2b274533b030233e7ba2db8fa6.1643880577.git.quic_schowdhu@quicinc.com>
+        Fri, 4 Feb 2022 17:56:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1644015391; x=1675551391;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=sAJLGY3CYWoZ9I7K46EUZ5x5/6daf2o0KT10Pq8KtRw=;
+  b=e87qHC1fLKQd30RaloAdY5gINDgl7EaM/gJj9DFf7uf3kJfrjoHT+4t0
+   IE5F9MCtpssjKQ8wUVnBNfRsCqC5URK3yXhzHLrf2v/z7HFwazN572FeB
+   EiSQKMEwgEw3mWzs8epzIgiuErXIPalbzrIfY2TYCuOAByVNsHyqvLOyU
+   c=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 04 Feb 2022 14:56:30 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Feb 2022 14:56:30 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Fri, 4 Feb 2022 14:56:29 -0800
+Received: from hu-amelende-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Fri, 4 Feb 2022 14:56:29 -0800
+From:   Anjelique Melendez <quic_amelende@quicinc.com>
+To:     <dmitry.torokhov@gmail.com>
+CC:     <linux-input@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <collinsd@codeaurora.org>,
+        <bjorn.andersson@linaro.org>, <swboyd@chromium.org>,
+        <skakit@codeaurora.org>,
+        Anjelique Melendez <quic_amelende@quicinc.com>
+Subject: [PATCH v4 0/4] Extend pm8941-pwrkey driver
+Date:   Fri, 4 Feb 2022 14:55:57 -0800
+Message-ID: <20220204225600.1663-1-quic_amelende@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <48672133dbd76b2b274533b030233e7ba2db8fa6.1643880577.git.quic_schowdhu@quicinc.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 03 Feb 2022 16:04:31 +0530, Souradeep Chowdhury wrote:
-> Add the ports property for dwc3 node. This port can be used
-> by the Embedded USB Debugger for role switching the controller
-> from device to host mode and vice versa.
-> 
-> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/usb/snps,dwc3.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
+Changes from v3:
+  - Fixed dereference issue in 2/4
+  - Added Stephen's reviewed by tag for 2/4
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Changes from v2:
+  - Addressed Stephen's comments
+    - Add Stephen's reviewed by tag for 1/4
+    - Fixed style for 2/4
+    - Corrected function call to use correct function for 3/4
+
+Changes from v1:
+  - Removed Change-Id from all patches
+  - Updated subject line of cover letter
+  - Addressed Stephen's comments for v1 1/3
+    - Separated error message fix to own patch (v2 1/4)
+    - Separated PON GEN3 base address changes to own patch (v2 2/4)
+    - Added new variables and functions to make code more readable
+  - Removed v1 3/3 as per Bjorn's comments
+
+Anjelique Melendez (2):
+  input: misc: pm8941-pwrkey: fix error message
+  input: misc: pm8941-pwrkey: add support for PON GEN3 base addresses
+
+David Collins (2):
+  input: misc: pm8941-pwrkey: add software key press debouncing support
+  input: misc: pm8941-pwrkey: simulate missed key press events
+
+ drivers/input/misc/pm8941-pwrkey.c | 124 +++++++++++++++++++++++++----
+ 1 file changed, 110 insertions(+), 14 deletions(-)
+
+-- 
+2.34.1
+
