@@ -2,99 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A27154A9EDA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Feb 2022 19:21:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 12B9F4A9EDE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Feb 2022 19:21:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244495AbiBDSU7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Feb 2022 13:20:59 -0500
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:12986 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S234002AbiBDSU7 (ORCPT
+        id S1377503AbiBDSVP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Feb 2022 13:21:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44516 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1359482AbiBDSVP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Feb 2022 13:20:59 -0500
+        Fri, 4 Feb 2022 13:21:15 -0500
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70CC4C06173D
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Feb 2022 10:21:15 -0800 (PST)
+Received: by mail-oi1-x234.google.com with SMTP id q8so9459464oiw.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Feb 2022 10:21:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1643998859; x=1675534859;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=QNQNR8pSD+bvmM7QVunNiubutry5FOQGRyE/RWkBNGQ=;
-  b=RTcirssTTj+yIsmm6lDPWOtmS7Qyx7Q/dq4qMCCKmdpPumLLwiSS4Dqr
-   3S4f4iRJ6uLfwM2dbWYd2sJiSRLfGmyOMEghw4IRGGUZjEUaYRNZUfIZ8
-   jXOmLYkrMHeVnN4o463mB91hhKdXDL4xeK8OxeaTXVINfnRbTKcXb9NgB
-   c=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 04 Feb 2022 10:20:59 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Feb 2022 10:20:58 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Fri, 4 Feb 2022 10:20:58 -0800
-Received: from [10.110.74.239] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Fri, 4 Feb 2022
- 10:20:58 -0800
-Message-ID: <8ccb18ce-5d86-47dd-dec1-8fc1c27dcba1@quicinc.com>
-Date:   Fri, 4 Feb 2022 10:20:57 -0800
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Sjg3/h2nK5uyxhoSAH+qELASNv/xBxoCTa1jePZCaCY=;
+        b=IO/TkgdLu64llDCWqOzo75erYz/vjtMgwCU0O3m7Tg5IysMgr5DG9VmVeV0A2K49zW
+         HfVoPaAodqvSSxTkTcGyAY7E54/FnpX2AsjMxrTPtwgsa8fGTXLiFH+itiI7VAQj3NH+
+         b2KC9XeuqbGnf8SAtI7XIecDO1/DQho8BQ2YsThnXGwq9TgexYlS/om3PA8RoNfuHMDQ
+         23pja2nJv1U/LdniMxN7kiInFQmaYYJ+LNbv/5qevh6f1JWjMDsi2lXoMPyDBJ9ZZzPS
+         ShenpnzPAESO91Vkned0gn9bU3zTozcKMxktFhXPhcyD7aWmt2eDWUArjePpEpqcpdLD
+         /QwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Sjg3/h2nK5uyxhoSAH+qELASNv/xBxoCTa1jePZCaCY=;
+        b=MixebR2dZEmvvOz9UAqbHpO2kibvx76L4JTc7T3ruZuzOEwB9Czxq9ET6R13M8QWAz
+         Fn0bDKkcK6/X9KDbjYF/5WNmZ+CLfoQWyOnvbe7ax7Wsshrkmy2roqjrLp/tzCop/1MT
+         QEKh3Hp7TDvz7J+V9D7BGRFr0Rh0KIZeWiCBOwL6jg2x64u3888E1PREutriwo1JNuGC
+         3+kRBfuHPtWJlcWNigyV+gHGHYFcWRGHqBMC74WGsANUp4UKDyL2fuTs4QuX6OoxWCt+
+         0x8ZUqal/C70MMAPdWOTxpRw3DMZxbT687c+AreojMzRDZwiSj+BfwXxJE2g26SI2f0/
+         H59g==
+X-Gm-Message-State: AOAM533tRA5azqzxwvlOz4mRe255aFiLNMbCGVPAQ5bbJuDRB61G2L4X
+        hHitaYiYxwaD+3uamqOC0NHyyJYMi4zI/A==
+X-Google-Smtp-Source: ABdhPJzrfnqdaF/1te/cwRLLNKqTKp6nM2zSXppa+/JdLfdcLjOYW1zqVxEFUz8Phe/p4sbNF7rKRg==
+X-Received: by 2002:a05:6808:1444:: with SMTP id x4mr135738oiv.6.1643998874454;
+        Fri, 04 Feb 2022 10:21:14 -0800 (PST)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id v78sm1072126oie.18.2022.02.04.10.21.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Feb 2022 10:21:14 -0800 (PST)
+Date:   Fri, 4 Feb 2022 10:21:30 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Wolfram Sang <wsa@kernel.org>, linux-i2c@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 8/9] i2c: qcom-cci: add support of optional vbus-supply
+ regulators
+Message-ID: <Yf1uqi/lzF5N1txV@ripper>
+References: <20220203164629.1711958-1-vladimir.zapolskiy@linaro.org>
+ <20220203164711.1712090-1-vladimir.zapolskiy@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v3 2/4] input: misc: pm8941-pwrkey: add support for PON
- GEN3 base addresses
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>, <dmitry.torokhov@gmail.com>
-CC:     <linux-input@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <collinsd@codeaurora.org>,
-        <bjorn.andersson@linaro.org>, <skakit@codeaurora.org>
-References: <20220203010804.20883-2-quic_amelende@quicinc.com>
- <20220203010804.20883-3-quic_amelende@quicinc.com>
- <CAE-0n51vAD-_0e0sBKECfx51B2a6-BK59LnRp6uGHejU_f3rGQ@mail.gmail.com>
-From:   Anjelique Melendez <quic_amelende@quicinc.com>
-In-Reply-To: <CAE-0n51vAD-_0e0sBKECfx51B2a6-BK59LnRp6uGHejU_f3rGQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220203164711.1712090-1-vladimir.zapolskiy@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu 03 Feb 08:47 PST 2022, Vladimir Zapolskiy wrote:
 
-
-On 2/3/2022 1:16 PM, Stephen Boyd wrote:
-> Quoting Anjelique Melendez (2022-02-02 17:08:05)
->> diff --git a/drivers/input/misc/pm8941-pwrkey.c b/drivers/input/misc/pm8941-pwrkey.c
->> index e0240db12d4f..2a42a676b021 100644
->> --- a/drivers/input/misc/pm8941-pwrkey.c
->> +++ b/drivers/input/misc/pm8941-pwrkey.c
->> @@ -200,15 +207,21 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
->>                         dev_err(&pdev->dev, "failed to locate regmap\n");
->>                         return -ENODEV;
->>                 }
->> +       }
->>
->> -               error = of_property_read_u32(parent->of_node,
->> -                                            "reg", &pwrkey->baseaddr);
->> -       } else {
->> -               error = of_property_read_u32(pdev->dev.of_node, "reg",
->> -                                            &pwrkey->baseaddr);
->> +       addr = of_get_address(regmap_node, 0, NULL, NULL);
->> +       if (!addr) {
->> +               dev_err(&pdev->dev, "reg property missing\n");
->> +               return -EINVAL;
->> +       }
->> +       pwrkey->baseaddr = be32_to_cpup(*addr);
->> +
->> +       if (pwrkey->data->has_pon_pbs) {
->> +               /* PON_PBS base address is optional */
->> +               addr = of_get_address(regmap_node, 1, NULL, NULL);
->> +               if (addr)
->> +                       pwrkey->pon_pbs_baseaddr = be32_to_cpup(*addr);
+> The change adds handling of optional vbus regulators in the driver.
 > 
-> With the deref dropped.
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+>  drivers/i2c/busses/i2c-qcom-cci.c | 49 +++++++++++++++++++++++++++++++
+>  1 file changed, 49 insertions(+)
 > 
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+> index 775945f7b4cd..2fc7f1f2616f 100644
+> --- a/drivers/i2c/busses/i2c-qcom-cci.c
+> +++ b/drivers/i2c/busses/i2c-qcom-cci.c
+> @@ -11,6 +11,7 @@
+>  #include <linux/of.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/pm_runtime.h>
+> +#include <linux/regulator/consumer.h>
+>  
+>  #define CCI_HW_VERSION				0x0
+>  #define CCI_RESET_CMD				0x004
+> @@ -480,6 +481,20 @@ static void cci_disable_clocks(struct cci *cci)
+>  static int __maybe_unused cci_suspend_runtime(struct device *dev)
+>  {
+>  	struct cci *cci = dev_get_drvdata(dev);
+> +	struct regulator *bus_regulator;
+> +	unsigned int i;
+> +
+> +	for (i = 0; i < cci->data->num_masters; i++) {
+> +		if (!cci->master[i].cci)
+> +			continue;
+> +
+> +		bus_regulator = cci->master[i].adap.bus_regulator;
+> +		if (!bus_regulator)
+> +			continue;
+> +
+> +		if (regulator_is_enabled(bus_regulator) > 0)
+> +			regulator_disable(bus_regulator);
+> +	}
+>  
+>  	cci_disable_clocks(cci);
+>  	return 0;
+> @@ -488,12 +503,30 @@ static int __maybe_unused cci_suspend_runtime(struct device *dev)
+>  static int __maybe_unused cci_resume_runtime(struct device *dev)
+>  {
+>  	struct cci *cci = dev_get_drvdata(dev);
+> +	struct regulator *bus_regulator;
+> +	unsigned int i;
+>  	int ret;
+>  
+>  	ret = cci_enable_clocks(cci);
+>  	if (ret)
+>  		return ret;
+>  
+> +	for (i = 0; i < cci->data->num_masters; i++) {
+> +		if (!cci->master[i].cci)
+> +			continue;
+> +
+> +		bus_regulator = cci->master[i].adap.bus_regulator;
+> +		if (!bus_regulator)
+> +			continue;
+> +
+> +		if (!regulator_is_enabled(bus_regulator)) {
 
-ACK
+regulator_is_enabled() tests if the regulator is enabled, not if you
+have enabled it. So if this is a shared regulator you might learn that
+it's already on, skip your regulator_enable() and then the other
+consumer turns it off behind your back.
+
+If you want the regulator to be on, you should regulator_enable().
+
+> +			ret = regulator_enable(bus_regulator);
+> +			if (ret)
+> +				dev_err(dev, "failed to enable regulator: %d\n",
+> +					ret);
+> +		}
+> +	}
+> +
+>  	cci_init(cci);
+>  	return 0;
+>  }
+> @@ -593,6 +626,7 @@ static int cci_probe(struct platform_device *pdev)
+>  	dev_dbg(dev, "CCI HW version = 0x%08x", val);
+>  
+>  	for_each_available_child_of_node(dev->of_node, child) {
+> +		struct regulator *bus_regulator;
+>  		struct cci_master *master;
+>  		u32 idx;
+>  
+> @@ -637,6 +671,21 @@ static int cci_probe(struct platform_device *pdev)
+>  			master->cci = NULL;
+>  			goto error_i2c;
+>  		}
+> +
+> +		/*
+> +		 * It might be possible to find an optional vbus supply, but
+> +		 * it requires to pass the registration of an I2C adapter
+> +		 * device and its association with a bus device tree node.
+> +		 */
+
+I'm afraid that I don't understand this comment. The regulator is
+optional because most of the time we don't control it explicitly.
+
+So a comment like "Control of IO supply is optional" seems more
+relevant.
+
+Regards,
+Bjorn
+
+> +		bus_regulator = devm_regulator_get_optional(&master->adap.dev,
+> +							    "vbus");
+> +		if (IS_ERR(bus_regulator)) {
+> +			ret = PTR_ERR(bus_regulator);
+> +			if (ret == -EPROBE_DEFER)
+> +				goto error_i2c;
+> +			bus_regulator = NULL;
+> +		}
+> +		master->adap.bus_regulator = bus_regulator;
+>  	}
+>  
+>  	ret = cci_reset(cci);
+> -- 
+> 2.33.0
+> 
