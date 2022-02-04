@@ -2,119 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C2834A9EA3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Feb 2022 19:06:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EC024A9EA6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Feb 2022 19:08:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242472AbiBDSGa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Feb 2022 13:06:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40778 "EHLO
+        id S1377376AbiBDSIQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Feb 2022 13:08:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377360AbiBDSFd (ORCPT
+        with ESMTP id S1377374AbiBDSIQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Feb 2022 13:05:33 -0500
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2498C061401
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Feb 2022 10:05:32 -0800 (PST)
-Received: by mail-oi1-x230.google.com with SMTP id r27so9433884oiw.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Feb 2022 10:05:32 -0800 (PST)
+        Fri, 4 Feb 2022 13:08:16 -0500
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D286DC06173E
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Feb 2022 10:08:15 -0800 (PST)
+Received: by mail-ot1-x32f.google.com with SMTP id w27-20020a9d5a9b000000b005a17d68ae89so5699895oth.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Feb 2022 10:08:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=FjF+sGZpg2iaH76PumvDp14W7fNNxKuPMZR+Us0rVMQ=;
-        b=WDWuvGT/OxA9GID0EgK9YDidQPh+HAa1en+YRr+jT4ZUb4X+eK3H8R6beO+FEvnyDG
-         BZSlJT5PvdgA1sBVwVVVMTQFtMesxbeA9ZwEY//5gfvsSRzU4LZNMFcRnunjU7KSfjcZ
-         okhZlE/GB/zmFuVhvn13M8n5tp8aIG4cwM6rTtTKLGfz+0zyQ3GmM814MUXEv9FgBUhD
-         dWY+Fk4FpY3WU2Qi+JuDc2d2fC71MzEM5cXKgW7RapBc+IXMRjbtd+3uYN9ThXNgYvln
-         HEeM7H/wbzGuKzDXOiKGAgXcNQ2U8NDGW/x6HhrTlnLNiQRLZj/hP+shOOrCFwDFj3L/
-         j5rg==
+        bh=g+GyvokC4JIDBfu1nlEt4yOnjvYWiAwVNgoY8pGa298=;
+        b=htSvG/nD0gdatQ8XpszfTbcPx6WRvFhlRFuQ3/cGEtQTN9dVfk9EUexMtuaeZ3BigV
+         89aPjTjyKyLzTqxjrjC4wQJGPhX3lFLKyX2JOfFlXnEXo2/MYjzT2wzUHbqxICU9pbgh
+         YUl1j1rpY76n2d+KXGBrv5MCNHjiJx3pq1jlZI0CWCjXc6a9gpBLVR+ivGGawM9ahxkn
+         Cla1/TZg/kBK09R8xShgA0Nh4+VbFZcsXlxYNeKOVQvX8vUVwp3U6T5HhuWnbZ4lHgoc
+         MawFRhVIgOGJdhD94x2afKwZ/rGjQEoqBof8OLwI9Z2NBk2P3MgjJxAVOKgyhpoNi4P4
+         kajw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=FjF+sGZpg2iaH76PumvDp14W7fNNxKuPMZR+Us0rVMQ=;
-        b=64cmFCMIw0ilWoqNBnMIS5QRbqhL+wV3zv4Fblr+6Q9rg67qiBbGn5KO6sJM8ghoIx
-         xuwAzjaPLNOd5IXbyXHBpHrsgr93GhinUWiHZvQi4imGrLHV73irSL2LNYKRpFuD5Y/m
-         nlNOBtdqWDcEUtU2UZpA2JpDFKuXKDPJ45805xJw03P0PprFVeYxBv/9FSs4+DAmtmQu
-         XoR56F/Yxs5Ab+15e1hcfXncu7upRtUG0qLqfdDVUgDCrBg2Oogm+9Bm2rzqKqOHYA4B
-         bYr32Pe4SajoS+vKWDQJkYgZYLZO3nb7x5v+dVcEuSBxP4VrLOHf6W2Tq/0W07wPaUdN
-         60MQ==
-X-Gm-Message-State: AOAM5312fDC25nEobJNMZ5QdrC+7ubMvn2/xzZKvistK1YeNvPQ/tOw+
-        XXIrj3bng7u4jTXenc5UYkxjUQ==
-X-Google-Smtp-Source: ABdhPJylpcEz5omTCtvVVTdyfF1+oj/R9wH56W4rthEOGLG4g7VSkPI6Ojv1x35a8V+C7gXtZf9Ksw==
-X-Received: by 2002:a05:6808:ecf:: with SMTP id q15mr1881768oiv.130.1643997932289;
-        Fri, 04 Feb 2022 10:05:32 -0800 (PST)
+        bh=g+GyvokC4JIDBfu1nlEt4yOnjvYWiAwVNgoY8pGa298=;
+        b=tz0x6i4l9KY+pZgb1rBehnyxFGwdYR+i3+zbEKSshK/8wphK3X/KiEHjC6m05RzcS4
+         LDX4WkzxpuQLSt5YWXVr+A7WGpGOhhz37JImzgajBzk4RQ6TW8mRFCO64fG5U1MkG6W3
+         GB+RWMcbTUypef6uhknhpYoRzXgPSrzNTatR1wAe/FDd/DYB5GFvxPeaxCQBo9nAs/J+
+         v3N3C6CFbMOHe9hQIDuuNt/muyLE/++xfgAfivHbAEqlI4eJaA3z+S/HrZFX64tndgok
+         2k84hRoo9HBX+zX7YjkDjSqFgRgVmdllrsBTcaqKdoSWGPiTOTpLxc4wTGimbc3BmpZ4
+         6Mwg==
+X-Gm-Message-State: AOAM530Mhvs8060AtTONxJTraPsZCDwgFCNFfi9rWXxDjGWaSbhvzKBc
+        AhQDwX1YAXl/VGa9JtTdCXKrqA==
+X-Google-Smtp-Source: ABdhPJwvwYm8p8ZLyMR7biGMJIl82SdfRuu3SbgGgQ4E+SI3CdLJ/0uYNZcyG2Fh4p6nkQzW4Onu2Q==
+X-Received: by 2002:a9d:4f0b:: with SMTP id d11mr74438otl.239.1643998095150;
+        Fri, 04 Feb 2022 10:08:15 -0800 (PST)
 Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id a15sm1114445oil.13.2022.02.04.10.05.31
+        by smtp.gmail.com with ESMTPSA id z4sm769333oad.30.2022.02.04.10.08.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Feb 2022 10:05:31 -0800 (PST)
-Date:   Fri, 4 Feb 2022 10:05:47 -0800
+        Fri, 04 Feb 2022 10:08:14 -0800 (PST)
+Date:   Fri, 4 Feb 2022 10:08:30 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        linus.walleij@linaro.org, broonie@kernel.org
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 Cc:     Loic Poulain <loic.poulain@linaro.org>,
         Robert Foss <robert.foss@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Wolfram Sang <wsa@kernel.org>, linux-i2c@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 2/9] dt-bindings: i2c: qcom-cci: add description of a
- vbus-supply property
-Message-ID: <Yf1q+wlXo2LAeZX+@ripper>
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 3/9] i2c: qcom-cci: don't delete an unregistered adapter
+Message-ID: <Yf1rnkvfMGOHEeP+@ripper>
 References: <20220203164629.1711958-1-vladimir.zapolskiy@linaro.org>
- <20220203164629.1711958-3-vladimir.zapolskiy@linaro.org>
+ <20220203164700.1711985-1-vladimir.zapolskiy@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220203164629.1711958-3-vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20220203164700.1711985-1-vladimir.zapolskiy@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 03 Feb 08:46 PST 2022, Vladimir Zapolskiy wrote:
+On Thu 03 Feb 08:47 PST 2022, Vladimir Zapolskiy wrote:
 
-> Quite regularly I2C bus lines on QCOM CCI controller require an external
-> pull-up to a regulator powered line, to be able to define all such
-> cases an additional vbus-supply property of a bus subnode is wanted.
+> If i2c_add_adapter() fails to add an I2C adapter found on QCOM CCI
+> controller, on error path i2c_del_adapter() is still called.
 > 
+> Fortunately there is a sanity check in the I2C core, so the only
+> visible implication is a printed debug level message:
+> 
+>     i2c-core: attempting to delete unregistered adapter [Qualcomm-CCI]
+> 
+> Nevertheless it would be reasonable to correct the probe error path.
+> 
+> Fixes: e517526195de ("i2c: Add Qualcomm CCI I2C driver")
 > Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> ---
->  Documentation/devicetree/bindings/i2c/i2c-qcom-cci.txt | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/i2c/i2c-qcom-cci.txt b/Documentation/devicetree/bindings/i2c/i2c-qcom-cci.txt
-> index 924ad8c03464..9f5b321748f1 100644
-> --- a/Documentation/devicetree/bindings/i2c/i2c-qcom-cci.txt
-> +++ b/Documentation/devicetree/bindings/i2c/i2c-qcom-cci.txt
-> @@ -60,6 +60,11 @@ PROPERTIES:
->  	Definition: Desired I2C bus clock frequency in Hz, defaults to 100
->  		    kHz if omitted.
->  
-> +- vbus-supply:
 
-I don't think "vbus" is an appropriate name for his. Perhaps "vddio" or
-something like that would be better.
+Fixes like this should either come first in the series, or be sent on
+their own, as it could be merged without considering the remainder of
+the series
 
-But there's a bigger question here, this is not a supply for the
-i2c master, it's simply a supply for pulling up the bus. So it's not
-entirely correct to specify it as a supply for the CCI node (which is
-also the reason why the name isn't obvious).
 
-Typically we don't don't mention the bus-supply because it happens to be
-pulled up either by io-supply for the block, or by some always-on
-regulator in the system.
-
-Looping in Linus and Mark in hope they have seen this need elsewhere.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 Regards,
 Bjorn
 
-> +	Usage: optional
-> +	Value type: phandle
-> +	Definition: Regulator that provides power to SCL/SDA lines
-> +
->  Example:
+> ---
+>  drivers/i2c/busses/i2c-qcom-cci.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+> index c1de8eb66169..fd4260d18577 100644
+> --- a/drivers/i2c/busses/i2c-qcom-cci.c
+> +++ b/drivers/i2c/busses/i2c-qcom-cci.c
+> @@ -655,7 +655,7 @@ static int cci_probe(struct platform_device *pdev)
+>  	return 0;
 >  
->  	cci@a0c000 {
+>  error_i2c:
+> -	for (; i >= 0; i--) {
+> +	for (--i ; i >= 0; i--) {
+>  		if (cci->master[i].cci)
+>  			i2c_del_adapter(&cci->master[i].adap);
+>  	}
 > -- 
 > 2.33.0
 > 
