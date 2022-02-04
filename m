@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 096144AA303
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Feb 2022 23:19:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 298454AA32C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Feb 2022 23:34:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348258AbiBDWTh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Feb 2022 17:19:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51596 "EHLO
+        id S1350276AbiBDWeZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Feb 2022 17:34:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238837AbiBDWTh (ORCPT
+        with ESMTP id S241600AbiBDWeZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Feb 2022 17:19:37 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53FA5C97CB22
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Feb 2022 14:19:35 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id u14so15179333lfo.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Feb 2022 14:19:35 -0800 (PST)
+        Fri, 4 Feb 2022 17:34:25 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1B62D210536
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Feb 2022 14:34:23 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id o12so15243938lfg.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Feb 2022 14:34:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=P1dWc4knF1Zee83c3DYigR0UvoSdDJPSPywVOG74Thc=;
-        b=drxWczvETNcQbdSLKMXST0GWAKwE56kpoYI7/xTNe+R0quEYDeVYD5zLwZ9Yt1r8fo
-         6b13wXbFBEHslLj17ufXnK/7LUex/mrdgybhf7ZcVTC57nky1lh+uIyx/uc+PAM+jyV1
-         euwj1FkKxm5iYV/5wklTChriL3tQQYoF9GVxN8nxTg2kVfz/ESZgNt75S2v56gJR+lLY
-         oEdrjYpCLpm392Mj7pOPOf5RxGMA0jgnkjrHFkmDvTNagKE0AcB0ejWk+GxijAkiTpu9
-         bZJYBLnFo8G7ihHRUd4Q2tFgzKWK0JSRHoAT6FrEJWlPT/DuhgnH8oFkSoZ+w91sOI6Z
-         QqZQ==
+        bh=SWpW1dxI4za05B4DNh3cpl0cH/l2JNHP2x1u8I9i430=;
+        b=Idal4AAHMZKDbV/D13eQtcBP4XvrE0VxfEkgts8Ab/PH7PvY6clEAnNRKqMp8/X3Dy
+         pAWtWt6WHXSu3VmuYm+do/bPjGdL+8SUzZVtv9BBiJ95EUKabkBJTP6it3SDKA3kmCDY
+         rqvs9frnFl8UaGKoQlTje52Z/fegitKqrpZTLfPe/XbOOsowy+qC/B0J24JA3LI+DafY
+         wxx8yBKD1OhnQ5IzQukOPOxN2n9WYERZsgxMW984G0Db2tJlA201Xdba6WtIq1XvQL/u
+         PJmghthSKyXiGOhkeNcg0QT+x5ejfmZuI9eYxvUmb1GVYq03dP+z+P6NDpI47MVyvhNC
+         r6Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=P1dWc4knF1Zee83c3DYigR0UvoSdDJPSPywVOG74Thc=;
-        b=SKG6uam5JHBK5UtXPJ8bDbuNuaOWR8MMl9t85C5YTl3Mwxqx5lg4ygUp0/zBDV8++N
-         E9bb5wut747MPQpElUeKWKCWJLqe2U6QxFKs7j3Qg426sm6/uUPg4NtlZ0dizd+5uHWa
-         rb2DQvdMV54Apzv0fSs+FHPyOg0zat4FVELR7rva36HTaVV6msEWLXmIbTXppp5Z2hsL
-         VX022wB/RzUxW+lUlj/Xh35Yrr1Uq0E6QAR9eCCQFSIZlO2GMNh43LtPeObKGCxCrOIF
-         5WsF3GLzA7wAJYDNaX5O5xnA8QQEajx7ppAGoeBlkDep9DXnw+UNXQdgJRR51n45Xdf5
-         d7Yg==
-X-Gm-Message-State: AOAM530tHdEu6z9TFXg4sL88dmndjrYz4Oe0ixYzqDVxMBpGDB5/RaK+
-        XmkUbQojB8zHP6zCtLZQMx+Xwg==
-X-Google-Smtp-Source: ABdhPJzT/TvxhBYFy1WlPvtURmJxes7SbmTcLu0off8Z+cvUTA+K+DPT4+iryP79fKqAbM8B5lBXcA==
-X-Received: by 2002:a05:6512:3341:: with SMTP id y1mr743133lfd.58.1644013173525;
-        Fri, 04 Feb 2022 14:19:33 -0800 (PST)
+        bh=SWpW1dxI4za05B4DNh3cpl0cH/l2JNHP2x1u8I9i430=;
+        b=D0hrjKN4PZfasUBy/T+z9vxXnT1FpLZ2Zj31IVw1AGrkO/nf6dM77o3qMTu9xmKOuB
+         0hftY0XQheXDh12Red/2C6yHLT3qSeWm4Z/MFYuDEHXAvU/rGA9p7H2HGDEDNjkMwzP1
+         jdDbPszRX48SAglIDY6o+uDHiYr/0SjfV7VVz8juk0/svAR/aagul+Z8DcCRdlQ/LADO
+         coK2icpYAknuVQ3CW5WQFWbf68J+Hpydg6a0BnccE4iW5Ni9YQZUZQtzdx8t3FGfI4Hg
+         1XrWY9/ww5dErORYISq503lSTnydSCcTGDQ22Cvqk6+r6rO/H6wwx9ZA6enh9s3aPQ9Q
+         3dxw==
+X-Gm-Message-State: AOAM530zf1defbXX/tDoIH4QKEJ+x5lxjJujiB4CZ6XwU3bA2hePPqAW
+        JKXVgpFIwJ6XJpfd2sXihY2a1Q==
+X-Google-Smtp-Source: ABdhPJyf/cLItOlN0t67gC1L2/P0F4eg2L4xQR+5SLoD4SG2pmuQrykrp2xCbukFmfndae8a2hmkXw==
+X-Received: by 2002:a05:6512:3b8c:: with SMTP id g12mr797208lfv.151.1644014062013;
+        Fri, 04 Feb 2022 14:34:22 -0800 (PST)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id h17sm414852ljh.119.2022.02.04.14.19.32
+        by smtp.gmail.com with ESMTPSA id z5sm419301ljz.38.2022.02.04.14.34.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Feb 2022 14:19:32 -0800 (PST)
-Message-ID: <7743d896-7727-3e27-d436-9212a247961f@linaro.org>
-Date:   Sat, 5 Feb 2022 01:19:32 +0300
+        Fri, 04 Feb 2022 14:34:21 -0800 (PST)
+Message-ID: <22b47967-a393-221c-17ce-8f5cfa14cc56@linaro.org>
+Date:   Sat, 5 Feb 2022 01:34:20 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.0
-Subject: Re: [PATCH 04/12] drm/msm/dpu: add changes to support writeback in
- hw_ctl
+Subject: Re: [PATCH 10/12] drm/msm/dpu: initialize dpu encoder and connector
+ for writeback
 Content-Language: en-GB
 To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
         dri-devel@lists.freedesktop.org
@@ -64,9 +64,9 @@ Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
         nganji@codeaurora.org, aravindh@codeaurora.org, daniel@ffwll.ch,
         markyacoub@chromium.org, quic_jesszhan@quicinc.com
 References: <1644009445-17320-1-git-send-email-quic_abhinavk@quicinc.com>
- <1644009445-17320-5-git-send-email-quic_abhinavk@quicinc.com>
+ <1644009445-17320-11-git-send-email-quic_abhinavk@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1644009445-17320-5-git-send-email-quic_abhinavk@quicinc.com>
+In-Reply-To: <1644009445-17320-11-git-send-email-quic_abhinavk@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -80,304 +80,211 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 05/02/2022 00:17, Abhinav Kumar wrote:
-> Add changes to support writeback module in the dpu_hw_ctl
-> interface. In addition inroduce a reset_intf_cfg op to reset
-> the interface bits for the currently active interfaces in
-> the ctl path.
+> Initialize dpu encoder and connector for writeback if the
+> target supports it in the catalog.
 > 
 > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
->   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |  3 +-
->   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |  6 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         | 65 ++++++++++++++++++++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         | 27 ++++++++-
->   4 files changed, 91 insertions(+), 10 deletions(-)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 37 ++++++++++++-----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 62 +++++++++++++++++++++++++++++
+>   2 files changed, 88 insertions(+), 11 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> index 34a6940..4cb72fa 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index b51a677..3746432 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -2066,7 +2066,7 @@ static void dpu_encoder_early_unregister(struct drm_encoder *encoder)
+>   }
+>   
+>   static int dpu_encoder_virt_add_phys_encs(
+> -		u32 display_caps,
+> +		struct msm_display_info *disp_info,
+>   		struct dpu_encoder_virt *dpu_enc,
+>   		struct dpu_enc_phys_init_params *params)
+>   {
+> @@ -2085,7 +2085,7 @@ static int dpu_encoder_virt_add_phys_encs(
+>   		return -EINVAL;
+>   	}
+>   
+> -	if (display_caps & MSM_DISPLAY_CAP_VID_MODE) {
+> +	if (disp_info->capabilities & MSM_DISPLAY_CAP_VID_MODE) {
+>   		enc = dpu_encoder_phys_vid_init(params);
+>   
+>   		if (IS_ERR_OR_NULL(enc)) {
+> @@ -2098,7 +2098,7 @@ static int dpu_encoder_virt_add_phys_encs(
+>   		++dpu_enc->num_phys_encs;
+>   	}
+>   
+> -	if (display_caps & MSM_DISPLAY_CAP_CMD_MODE) {
+> +	if (disp_info->capabilities & MSM_DISPLAY_CAP_CMD_MODE) {
+>   		enc = dpu_encoder_phys_cmd_init(params);
+>   
+>   		if (IS_ERR_OR_NULL(enc)) {
+> @@ -2111,6 +2111,19 @@ static int dpu_encoder_virt_add_phys_encs(
+>   		++dpu_enc->num_phys_encs;
+>   	}
+>   
+> +	if (disp_info->intf_type == DRM_MODE_ENCODER_VIRTUAL) {
+> +		enc = dpu_encoder_phys_wb_init(params);
+> +
+> +		if (IS_ERR_OR_NULL(enc)) {
+> +			DPU_ERROR_ENC(dpu_enc, "failed to init wb enc: %ld\n",
+> +					PTR_ERR(enc));
+> +			return enc == NULL ? -EINVAL : PTR_ERR(enc);
+> +		}
+> +
+> +		dpu_enc->phys_encs[dpu_enc->num_phys_encs] = enc;
+> +		++dpu_enc->num_phys_encs;
+> +	}
+> +
+>   	if (params->split_role == ENC_ROLE_SLAVE)
+>   		dpu_enc->cur_slave = enc;
+>   	else
+> @@ -2199,9 +2212,8 @@ static int dpu_encoder_setup_display(struct dpu_encoder_virt *dpu_enc,
+>   		}
+>   
+>   		if (!ret) {
+> -			ret = dpu_encoder_virt_add_phys_encs(disp_info->capabilities,
+> -												 dpu_enc,
+> -												 &phys_params);
+> +			ret = dpu_encoder_virt_add_phys_encs(disp_info,
+> +					dpu_enc, &phys_params);
+>   			if (ret)
+>   				DPU_ERROR_ENC(dpu_enc, "failed to add phys encs\n");
+>   		}
+> @@ -2317,11 +2329,14 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
+>   	if (!dpu_enc)
+>   		return ERR_PTR(-ENOMEM);
+>   
+> -	rc = drm_encoder_init(dev, &dpu_enc->base, &dpu_encoder_funcs,
+> -			drm_enc_mode, NULL);
+> -	if (rc) {
+> -		devm_kfree(dev->dev, dpu_enc);
+> -		return ERR_PTR(rc);
+> +	/* this is handled by drm_writeback_connector_init for virtual encoder */
+> +	if (drm_enc_mode != DRM_MODE_ENCODER_VIRTUAL) {
+> +		rc = drm_encoder_init(dev, &dpu_enc->base, &dpu_encoder_funcs,
+> +							  drm_enc_mode, NULL);
+> +		if (rc) {
+> +			devm_kfree(dev->dev, dpu_enc);
+> +			return ERR_PTR(rc);
+> +		}
+>   	}
+>   
+>   	drm_encoder_helper_add(&dpu_enc->base, &dpu_encoder_helper_funcs);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 47fe11a..6327ba9 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
 > @@ -1,5 +1,6 @@
 >   // SPDX-License-Identifier: GPL-2.0-only
 >   /*
 > + * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
->    * Copyright (c) 2015-2018, 2020-2021 The Linux Foundation. All rights reserved.
->    */
+>    * Copyright (c) 2014-2018, The Linux Foundation. All rights reserved.
+>    * Copyright (C) 2013 Red Hat
+>    * Author: Rob Clark <robdclark@gmail.com>
+> @@ -15,6 +16,7 @@
+>   #include <drm/drm_crtc.h>
+>   #include <drm/drm_file.h>
+>   #include <drm/drm_vblank.h>
+> +#include <drm/drm_writeback.h>
 >   
-> @@ -70,7 +71,7 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
->   	intf_cfg.intf_mode_sel = DPU_CTL_MODE_SEL_CMD;
->   	intf_cfg.stream_sel = cmd_enc->stream_sel;
->   	intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
-> -	ctl->ops.setup_intf_cfg(ctl, &intf_cfg);
-> +	ctl->ops.setup_intf_cfg(ctl, &intf_cfg, false);
+>   #include "msm_drv.h"
+>   #include "msm_mmu.h"
+> @@ -29,6 +31,7 @@
+>   #include "dpu_kms.h"
+>   #include "dpu_plane.h"
+>   #include "dpu_vbif.h"
+> +#include "dpu_writeback.h"
+>   
+>   #define CREATE_TRACE_POINTS
+>   #include "dpu_trace.h"
+> @@ -642,6 +645,56 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
+>   	return 0;
 >   }
 >   
->   static void dpu_encoder_phys_cmd_pp_tx_done_irq(void *arg, int irq_idx)
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> index ddd9d89..950fcd6 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> @@ -1,5 +1,7 @@
->   // SPDX-License-Identifier: GPL-2.0-only
-> -/* Copyright (c) 2015-2018, 2020-2021 The Linux Foundation. All rights reserved.
-> +/*
-> + *  Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> + *  Copyright (c) 2015-2018, 2020-2021 The Linux Foundation. All rights reserved.
->    */
->   
->   #define pr_fmt(fmt)	"[drm:%s:%d] " fmt, __func__, __LINE__
-> @@ -290,7 +292,7 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
->   	spin_lock_irqsave(phys_enc->enc_spinlock, lock_flags);
->   	phys_enc->hw_intf->ops.setup_timing_gen(phys_enc->hw_intf,
->   			&timing_params, fmt);
-> -	phys_enc->hw_ctl->ops.setup_intf_cfg(phys_enc->hw_ctl, &intf_cfg);
-> +	phys_enc->hw_ctl->ops.setup_intf_cfg(phys_enc->hw_ctl, &intf_cfg, false);
->   
->   	/* setup which pp blk will connect to this intf */
->   	if (phys_enc->hw_intf->ops.bind_pingpong_blk)
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index 02da9ec..a2069af 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -1,5 +1,6 @@
->   // SPDX-License-Identifier: GPL-2.0-only
-> -/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
-> +/* Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> + * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->    */
->   
->   #include <linux/delay.h>
-> @@ -23,8 +24,10 @@
->   #define   CTL_SW_RESET                  0x030
->   #define   CTL_LAYER_EXTN_OFFSET         0x40
->   #define   CTL_MERGE_3D_ACTIVE           0x0E4
-> +#define   CTL_WB_ACTIVE                 0x0EC
->   #define   CTL_INTF_ACTIVE               0x0F4
->   #define   CTL_MERGE_3D_FLUSH            0x100
-> +#define   CTL_WB_FLUSH                  0x108
->   #define   CTL_INTF_FLUSH                0x110
->   #define   CTL_INTF_MASTER               0x134
->   #define   CTL_FETCH_PIPE_ACTIVE         0x0FC
-> @@ -35,6 +38,7 @@
->   #define DPU_REG_RESET_TIMEOUT_US        2000
->   #define  MERGE_3D_IDX   23
->   #define  INTF_IDX       31
-> +#define WB_IDX          16
->   #define CTL_INVALID_BIT                 0xffff
->   #define CTL_DEFAULT_GROUP_ID		0xf
->   
-> @@ -128,6 +132,9 @@ static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
->   	if (ctx->pending_flush_mask & BIT(INTF_IDX))
->   		DPU_REG_WRITE(&ctx->hw, CTL_INTF_FLUSH,
->   				ctx->pending_intf_flush_mask);
-> +	if (ctx->pending_flush_mask & BIT(WB_IDX))
-> +		DPU_REG_WRITE(&ctx->hw, CTL_WB_FLUSH,
-> +				ctx->pending_wb_flush_mask);
->   
->   	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
->   }
-> @@ -248,6 +255,13 @@ static void dpu_hw_ctl_update_pending_flush_intf(struct dpu_hw_ctl *ctx,
->   	}
->   }
->   
-> +static void dpu_hw_ctl_update_pending_flush_wb_v1(struct dpu_hw_ctl *ctx,
-> +		enum dpu_wb wb)
+> +static int _dpu_kms_initialize_writeback(struct drm_device *dev,
+> +		struct msm_drm_private *priv, struct dpu_kms *dpu_kms)
 > +{
-> +	ctx->pending_wb_flush_mask |= BIT(wb - WB_0);
-> +	ctx->pending_flush_mask |= BIT(WB_IDX);
+> +	struct drm_encoder *encoder = NULL;
+> +	struct msm_display_info info;
+> +	int rc, i;
+> +	const u32 *wb_formats;
+> +	int n_formats;
+> +
+> +	encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_VIRTUAL);
+> +	if (IS_ERR(encoder)) {
+> +		DPU_ERROR("encoder init failed for dsi display\n");
+> +		return PTR_ERR(encoder);
+> +	}
+> +
+> +	memset(&info, 0, sizeof(info));
+> +
+> +	for (i = 0; i < dpu_kms->catalog->wb_count; i++) {
+> +		if (dpu_kms->catalog->wb[i].id == WB_2) {
+> +			wb_formats = dpu_kms->catalog->wb[i].format_list;
+> +			n_formats = dpu_kms->catalog->wb[i].num_formats;
+> +		}
+> +	}
+
+If there is no WB_2 in the catalog, then both wb_formats and n_formats 
+would be unused. Also even if there is no WB_2 you'd still try creating 
+the writeback below.
+
+I'd suggest to move dpu_encoder_init() + dpu_writeback_init() + 
+dpu_encoder_setup() to the separate function. Then you can loop over the 
+catslog->wb[] and once WB_2 is found, call this new function.
+
+> +
+> +	rc = dpu_writeback_init(dev, encoder, encoder->helper_private, wb_formats,
+> +			n_formats);
+> +	if (rc) {
+> +		DPU_ERROR("dpu_writeback_init, rc = %d\n", rc);
+> +		drm_encoder_cleanup(encoder);
+> +		return rc;
+> +	}
+> +
+> +	priv->encoders[priv->num_encoders++] = encoder;
+> +
+> +	info.num_of_h_tiles = 1;
+> +	/* use only WB idx 2 instance for DPU */
+> +	info.h_tile_instance[0] = WB_2;
+> +	info.capabilities = MSM_DISPLAY_CAP_HOT_PLUG | MSM_DISPLAY_CAP_EDID;
+
+these two capabilities are unused in the code. I'd suggest to drop them 
+from msm_drv.h at all.
+
+> +	info.intf_type = encoder->encoder_type;
+> +
+> +	rc = dpu_encoder_setup(dev, encoder, &info);
+> +	if (rc) {
+> +		DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
+> +				  encoder->base.id, rc);
+> +		return rc;
+> +	}
+> +
+> +	return 0;
 > +}
 > +
->   static void dpu_hw_ctl_update_pending_flush_intf_v1(struct dpu_hw_ctl *ctx,
->   		enum dpu_intf intf)
->   {
-> @@ -493,10 +507,11 @@ static void dpu_hw_ctl_setup_blendstage(struct dpu_hw_ctl *ctx,
->   
->   
->   static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
-> -		struct dpu_hw_intf_cfg *cfg)
-> +		struct dpu_hw_intf_cfg *cfg, bool is_wb)
->   {
->   	struct dpu_hw_blk_reg_map *c = &ctx->hw;
->   	u32 intf_active = 0;
-> +	u32 wb_active = 0;
->   	u32 mode_sel = 0;
->   
->   	/* CTL_TOP[31:28] carries group_id to collate CTL paths
-> @@ -509,18 +524,25 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
->   	if (cfg->intf_mode_sel == DPU_CTL_MODE_SEL_CMD)
->   		mode_sel |= BIT(17);
->   
-> -	intf_active = DPU_REG_READ(c, CTL_INTF_ACTIVE);
-> -	intf_active |= BIT(cfg->intf - INTF_0);
-> +	if (!is_wb) {
-
-I think we can judge if it is an INTF of WB by checking the cfg->intf 
-and cfg->wb, thus the is_wb argument is not needed.
-
-> +		intf_active = DPU_REG_READ(c, CTL_INTF_ACTIVE);
-> +		intf_active |= BIT(cfg->intf - INTF_0) > +	} else {
-> +		wb_active = DPU_REG_READ(c, CTL_WB_ACTIVE);
-> +		wb_active = BIT(cfg->wb - WB_0);
-
-wb_active |= BIT(...) ?
-
-> +	}
->   
->   	DPU_REG_WRITE(c, CTL_TOP, mode_sel);
->   	DPU_REG_WRITE(c, CTL_INTF_ACTIVE, intf_active);
-> +	DPU_REG_WRITE(c, CTL_WB_ACTIVE, wb_active);
-> +
->   	if (cfg->merge_3d)
->   		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
->   			      BIT(cfg->merge_3d - MERGE_3D_0));
->   }
->   
->   static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
-> -		struct dpu_hw_intf_cfg *cfg)
-> +		struct dpu_hw_intf_cfg *cfg, bool is_wb)
->   {
->   	struct dpu_hw_blk_reg_map *c = &ctx->hw;
->   	u32 intf_cfg = 0;
-> @@ -532,6 +554,9 @@ static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
->   		intf_cfg |= (cfg->mode_3d - 0x1) << 20;
+>   /**
+>    * _dpu_kms_setup_displays - create encoders, bridges and connectors
+>    *                           for underlying displays
+> @@ -668,6 +721,15 @@ static int _dpu_kms_setup_displays(struct drm_device *dev,
+>   		return rc;
 >   	}
 >   
-> +	if (is_wb)
-> +		intf_cfg |= (cfg->wb & 0x3) + 2;
+> +	/* Since WB isn't a driver check the catalog before initializing */
+> +	if (dpu_kms->catalog->wb_count) {
+> +		rc = _dpu_kms_initialize_writeback(dev, priv, dpu_kms);
+> +		if (rc) {
+> +			DPU_ERROR("initialize_WB failed, rc = %d\n", rc);
+> +			return rc;
+> +		}
+> +	}
 > +
->   	switch (cfg->intf_mode_sel) {
->   	case DPU_CTL_MODE_SEL_VID:
->   		intf_cfg &= ~BIT(17);
-> @@ -549,6 +574,34 @@ static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
->   	DPU_REG_WRITE(c, CTL_TOP, intf_cfg);
+>   	return rc;
 >   }
 >   
-> +static void dpu_hw_ctl_reset_intf_cfg_v1(struct dpu_hw_ctl *ctx,
-> +	struct dpu_hw_intf_cfg *cfg, bool is_wb)
-
-Could you please be more specific here (or in the documentation comment 
-bellow), what exactly is reset? For example the merge3d config is left 
-intact.
-
-> +{
-> +	struct dpu_hw_blk_reg_map *c = &ctx->hw;
-> +	u32 intf_active = 0;
-> +	u32 wb_active = 0;
-> +	u32 merge3d_active = 0;
-> +
-> +	if (cfg->merge_3d) {
-> +		merge3d_active = DPU_REG_READ(c, CTL_MERGE_3D_ACTIVE);
-> +		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
-> +			      BIT(cfg->merge_3d - MERGE_3D_0));
-> +	}
-> +
-> +	dpu_hw_ctl_clear_all_blendstages(ctx);
-> +
-> +	if (!is_wb) {
-> +		intf_active = DPU_REG_READ(c, CTL_INTF_ACTIVE);
-> +		intf_active &= ~BIT(cfg->intf - INTF_0);
-> +		DPU_REG_WRITE(c, CTL_INTF_ACTIVE, intf_active);
-> +	} else {
-> +		wb_active = DPU_REG_READ(c, CTL_WB_ACTIVE);
-> +		wb_active &= ~BIT(cfg->wb - WB_0);
-> +		DPU_REG_WRITE(c, CTL_WB_ACTIVE, wb_active);
-> +	}
-
-The same comment as for the setup_intf_cfg(). Also can we just write 
-both CTL_INTF_ACTIVE and CTL_WB_ACTIVE to 0?
-
-> +}
-> +
-> +
->   static void dpu_hw_ctl_set_fetch_pipe_active(struct dpu_hw_ctl *ctx,
->   	unsigned long *fetch_active)
->   {
-> @@ -572,10 +625,12 @@ static void _setup_ctl_ops(struct dpu_hw_ctl_ops *ops,
->   	if (cap & BIT(DPU_CTL_ACTIVE_CFG)) {
->   		ops->trigger_flush = dpu_hw_ctl_trigger_flush_v1;
->   		ops->setup_intf_cfg = dpu_hw_ctl_intf_cfg_v1;
-> +		ops->reset_intf_cfg = dpu_hw_ctl_reset_intf_cfg_v1;
->   		ops->update_pending_flush_intf =
->   			dpu_hw_ctl_update_pending_flush_intf_v1;
->   		ops->update_pending_flush_merge_3d =
->   			dpu_hw_ctl_update_pending_flush_merge_3d_v1;
-> +		ops->update_pending_flush_wb = dpu_hw_ctl_update_pending_flush_wb_v1;
->   	} else {
->   		ops->trigger_flush = dpu_hw_ctl_trigger_flush;
->   		ops->setup_intf_cfg = dpu_hw_ctl_intf_cfg;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> index 806c171..fb4baca 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> @@ -1,5 +1,6 @@
->   /* SPDX-License-Identifier: GPL-2.0-only */
-> -/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
-> +/* Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> + * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->    */
->   
->   #ifndef _DPU_HW_CTL_H
-> @@ -43,6 +44,7 @@ struct dpu_hw_stage_cfg {
->    */
->   struct dpu_hw_intf_cfg {
->   	enum dpu_intf intf;
-> +	enum dpu_wb wb;
->   	enum dpu_3d_blend_mode mode_3d;
->   	enum dpu_merge_3d merge_3d;
->   	enum dpu_ctl_mode_sel intf_mode_sel;
-> @@ -93,6 +95,15 @@ struct dpu_hw_ctl_ops {
->   		u32 flushbits);
->   
->   	/**
-> +	 * OR in the given flushbits to the cached pending_(wb_)flush_mask
-> +	 * No effect on hardware
-> +	 * @ctx       : ctl path ctx pointer
-> +	 * @blk       : writeback block index
-> +	 */
-> +	void (*update_pending_flush_wb)(struct dpu_hw_ctl *ctx,
-> +		enum dpu_wb blk);
-> +
-> +	/**
->   	 * OR in the given flushbits to the cached pending_(intf_)flush_mask
->   	 * No effect on hardware
->   	 * @ctx       : ctl path ctx pointer
-> @@ -127,9 +138,19 @@ struct dpu_hw_ctl_ops {
->   	 * Setup ctl_path interface config
->   	 * @ctx
->   	 * @cfg    : interface config structure pointer
-> +	 * @is_wb  : to indicate wb mode for programming the ctl path
->   	 */
->   	void (*setup_intf_cfg)(struct dpu_hw_ctl *ctx,
-> -		struct dpu_hw_intf_cfg *cfg);
-> +		struct dpu_hw_intf_cfg *cfg, bool is_wb);
-> +
-> +	/**
-> +	 * reset ctl_path interface config
-> +	 * @ctx
-> +	 * @cfg    : interface config structure pointer
-> +	 * @is_wb  : to indicate wb mode for programming the ctl path
-> +	 */
-> +	void (*reset_intf_cfg)(struct dpu_hw_ctl *ctx,
-> +		struct dpu_hw_intf_cfg *cfg, bool is_wb);
->   
->   	int (*reset)(struct dpu_hw_ctl *c);
->   
-> @@ -182,6 +203,7 @@ struct dpu_hw_ctl_ops {
->    * @mixer_hw_caps: mixer hardware capabilities
->    * @pending_flush_mask: storage for pending ctl_flush managed via ops
->    * @pending_intf_flush_mask: pending INTF flush
-> + * @pending_wb_flush_mask: pending WB flush
->    * @ops: operation list
->    */
->   struct dpu_hw_ctl {
-> @@ -195,6 +217,7 @@ struct dpu_hw_ctl {
->   	const struct dpu_lm_cfg *mixer_hw_caps;
->   	u32 pending_flush_mask;
->   	u32 pending_intf_flush_mask;
-> +	u32 pending_wb_flush_mask;
->   	u32 pending_merge_3d_flush_mask;
->   
->   	/* ops */
 
 
 -- 
