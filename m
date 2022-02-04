@@ -2,77 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D5A84AA32E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Feb 2022 23:36:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0676E4AA333
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Feb 2022 23:36:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241600AbiBDWgI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Feb 2022 17:36:08 -0500
-Received: from mail-oi1-f172.google.com ([209.85.167.172]:37716 "EHLO
-        mail-oi1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237867AbiBDWgI (ORCPT
+        id S1346580AbiBDWgh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Feb 2022 17:36:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55714 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1350731AbiBDWgg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Feb 2022 17:36:08 -0500
-Received: by mail-oi1-f172.google.com with SMTP id r27so10214895oiw.4;
-        Fri, 04 Feb 2022 14:36:08 -0800 (PST)
+        Fri, 4 Feb 2022 17:36:36 -0500
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 996D6D210536
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Feb 2022 14:36:35 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id a25so10421076lji.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Feb 2022 14:36:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=c7x/cvlOShTxU2gJe80KgOcsq6QIAA84CFY6qHZapHE=;
+        b=yAtSvEMHAuKcx9GO/1aZqwwNTknxA1L7vce6ArzLQbnqULt7LUrkE0CDGvrJTwT+2q
+         Opk0ugJBzAOgXCBlfKM4aLgLlYt25b07+9bcEn7oXJSHdomwWpzRDUrzXvYyYCoyVMil
+         xM73zdZAHrTM+mJYpqk6Cr52kp7/eCdRTrjgAMvfr5sS99VYYNtdUH6xV7ZEJP/pZKXE
+         iGZmh39HN0ZXMISDAoC7mWV/ULMDi7VzSnVDvuTOe9rfOvPHVg3QdEGKLQBL7Jn7riTe
+         FxL4/XwYJJ/QR25B4iw9inaz0gs+I3UydgMxwLjOsV75gthBM0y6B3vO+npCt4syc5dl
+         odjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=MqC4XXsfy4OSQxTMHWMiNrSGa1Al6Yednc9CWOuRGdY=;
-        b=b7XaWjDxKYwB50HR91Q8GG3Bpfd7iHh2YnP+gAksQvODVzGv2OGlMxm2eGjpUml/2b
-         uol5+WP2iJow3CymgFznLdV3/XWnpnoBejFiWSojizlUVbJOfqJIT3iFL7wNPGXSLEox
-         eyQYnVvyXWTVv8Vb2+uG13ZU0YoW2POGeOnoagS+oAbkjxBqDeNHtVySRv3nIKZUJRi2
-         h+zvmvOWZzm7JfYY6wUCBDzAAx2jxLboMmrEAavcgESalUr6FBKXUK3rtOFVaQzqup50
-         NNgpp+Ik3L/RGF30ScVz6orNozhYsfEygBDHyvvlATiAJPOKiI1+1HtiO+1rRASZITRq
-         wHPw==
-X-Gm-Message-State: AOAM532cynNQQ8Vf4qtejEzjx+TGXnoHzK0vvG0rrhdJQUkzXT0CQxhN
-        q2q1gF4LaekJ1BKUPod2ZQ==
-X-Google-Smtp-Source: ABdhPJzZc4Y0D4MVbBqCvKn1BX7lOTSIIrCE3xuG5Qvtfu5aTUoCVarqFItKADANNla6kGX1qln9HA==
-X-Received: by 2002:a05:6808:1a86:: with SMTP id bm6mr574161oib.182.1644014167720;
-        Fri, 04 Feb 2022 14:36:07 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id e92sm1233655ote.72.2022.02.04.14.36.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Feb 2022 14:36:07 -0800 (PST)
-Received: (nullmailer pid 3308882 invoked by uid 1000);
-        Fri, 04 Feb 2022 22:36:06 -0000
-Date:   Fri, 4 Feb 2022 16:36:06 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Fenglin Wu <quic_fenglinw@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sboyd@kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org, collinsd@codeaurora.org,
-        subbaram@codeaurora.org, tglx@linutronix.de, maz@kernel.org
-Subject: Re: [PATCH v5 08/10] bindings: spmi: spmi-pmic-arb: mark interrupt
- properties as optional
-Message-ID: <Yf2qVi8Xj/iYYRNm@robh.at.kernel.org>
-References: <1643178713-17178-1-git-send-email-quic_fenglinw@quicinc.com>
- <1643178713-17178-9-git-send-email-quic_fenglinw@quicinc.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=c7x/cvlOShTxU2gJe80KgOcsq6QIAA84CFY6qHZapHE=;
+        b=6vthKoB8SewxUiw/Lt5zjWIi7UPVld2trF8xYUqBvC9hjwADhQuSsYypcLN2eYJ8PT
+         m09ugjtTcDXzIoPQ0IbRk6+iXetXsFnaa3QbBZD2JvD8nJa2F9ScHyHefC4fQgF5dlUT
+         fHpwmf01gzZKvrrkDMyijY03JpiL/QUPouAOOtUhzzeV3mpn3U1bWPJaTvkqlIVPk1Rg
+         0eI+7Yuvo4ACiGVYThFd8ygVSUf3gs66Vd3RPtTwXK/zOpI+K+3nW2NAkL1qYBajX/pg
+         VYGpff3k5/sESX7PKLzVQgZi5H/nFlRzoxwbRm2HfTAcdkgwGLxku0t/f2LfknEyz6ob
+         AE1A==
+X-Gm-Message-State: AOAM531rCYV0xvegt3EE10CoB1Udu1s0D0Dr2TutApHJuz7Bzqy79fV6
+        /JqFScQpP9DnguBLoNxuwRtJng==
+X-Google-Smtp-Source: ABdhPJza7guCeIafEsHqEj+4mjDnBcgDEeyjXetzyWRS8/qRpdN2KL/BqPWnHD4+5zgY4hI2FXDI4g==
+X-Received: by 2002:a2e:9bd4:: with SMTP id w20mr697734ljj.324.1644014193996;
+        Fri, 04 Feb 2022 14:36:33 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id j2sm478643lfc.174.2022.02.04.14.36.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Feb 2022 14:36:33 -0800 (PST)
+Message-ID: <06082678-f677-b4e4-67af-d45d11f81c26@linaro.org>
+Date:   Sat, 5 Feb 2022 01:36:33 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1643178713-17178-9-git-send-email-quic_fenglinw@quicinc.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH 12/12] drm/msm/dpu: add writeback blocks to the display
+ snapshot
+Content-Language: en-GB
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        dri-devel@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        nganji@codeaurora.org, aravindh@codeaurora.org, daniel@ffwll.ch,
+        markyacoub@chromium.org, quic_jesszhan@quicinc.com
+References: <1644009445-17320-1-git-send-email-quic_abhinavk@quicinc.com>
+ <1644009445-17320-13-git-send-email-quic_abhinavk@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1644009445-17320-13-git-send-email-quic_abhinavk@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
+X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
+        lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 26, 2022 at 02:31:50PM +0800, Fenglin Wu wrote:
-> From: David Collins <collinsd@codeaurora.org>
+On 05/02/2022 00:17, Abhinav Kumar wrote:
+> Add writeback block information while capturing the display
+> snapshot.
 > 
-> Mark all interrupt related properties as optional instead of
-> required.  Some boards do not required PMIC IRQ support and it
-> isn't needed to handle SPMI bus transactions, so specify it as
-> optional.
-> 
-> Signed-off-by: David Collins <collinsd@codeaurora.org>
-> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 > ---
->  Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt | 2 ++
->  1 file changed, 2 insertions(+)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 6327ba9..e227b35 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -987,6 +987,11 @@ static void dpu_kms_mdp_snapshot(struct msm_disp_state *disp_state, struct msm_k
+>   		msm_disp_snapshot_add_block(disp_state, cat->mixer[i].len,
+>   				dpu_kms->mmio + cat->mixer[i].base, "lm_%d", i);
+>   
+> +	/* dump WB sub-blocks HW regs info */
+> +	for (i = 0; i < cat->wb_count; i++)
+> +		msm_disp_snapshot_add_block(disp_state, cat->wb[i].len,
+> +				dpu_kms->mmio + cat->wb[i].base, "wb_%d", i);
+> +
+>   	msm_disp_snapshot_add_block(disp_state, top->hw.length,
+>   			dpu_kms->mmio + top->hw.blk_off, "top");
+>   
 
-This will collide with converting it to DT schema[1].
 
-Rob
-
-[1] https://lore.kernel.org/all/20220131172450.2528065-2-vkoul@kernel.org/
+-- 
+With best wishes
+Dmitry
