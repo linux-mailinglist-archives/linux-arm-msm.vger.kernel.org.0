@@ -2,68 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 93AF64AA25E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Feb 2022 22:34:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 30B704AA262
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Feb 2022 22:36:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238467AbiBDVeT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Feb 2022 16:34:19 -0500
-Received: from gloria.sntech.de ([185.11.138.130]:37822 "EHLO gloria.sntech.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234460AbiBDVeS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Feb 2022 16:34:18 -0500
-Received: from p508fdcd8.dip0.t-ipconnect.de ([80.143.220.216] helo=phil.localnet)
-        by gloria.sntech.de with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <heiko@sntech.de>)
-        id 1nG6Db-0003Tl-Cw; Fri, 04 Feb 2022 22:34:11 +0100
-From:   Heiko Stuebner <heiko@sntech.de>
-To:     joro@8bytes.org, will@kernel.org,
-        Robin Murphy <robin.murphy@arm.com>
-Cc:     iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org
-Subject: Re: [PATCH] iommu/rockchip: : Use standard driver registration
-Date:   Fri, 04 Feb 2022 22:34:05 +0100
-Message-ID: <4984895.Adqdaih0Sd@phil>
-In-Reply-To: <c08d58bff340da6a829e76d66d2fa090a9718384.1644005728.git.robin.murphy@arm.com>
-References: <05ca5e1b29bdd350f4e20b9ceb031a2c281e23d2.1644005728.git.robin.murphy@arm.com> <c08d58bff340da6a829e76d66d2fa090a9718384.1644005728.git.robin.murphy@arm.com>
+        id S242886AbiBDVfy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Feb 2022 16:35:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39292 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233101AbiBDVfy (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 4 Feb 2022 16:35:54 -0500
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25F82C061714
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Feb 2022 13:35:51 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id a25so10250099lji.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Feb 2022 13:35:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=oWjZYPRQ/m7Ib0jZmdVRcCli6CugjAVAZIgA6S+3JN4=;
+        b=Vjr1Gle+MW/tK9aKK8kIvtOGlBDQr05bDaNmUJKodcz1GpaXMKlqKSLrC9i9Ej0V/O
+         pVwNVAPuhdCJmSLYQ6UB6Eg0zD4n1QA0KR4YR7JdtCKVXO7c4SaTib0q1kAK3dHiYZhU
+         nhwfEg9xLEbr89Ggp8mX6LB3ajjUUrNUNeQHosnZ06zzg94CwIEEBl4V7wSUheNntFYn
+         D/WmTkuxqFbWmmlWuydVvX075Wqk7CiO1TbHhGv4fY5InK3Q4Yz+Txkhwv9mweIxVw5Y
+         Hd/WtDn4O69F7aYswrB35WB9O/r2AuuSPEr494OUU4szJhAxhkqtTpJBAIoqi0ECsFFJ
+         2NRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=oWjZYPRQ/m7Ib0jZmdVRcCli6CugjAVAZIgA6S+3JN4=;
+        b=vW4rs22eU/+hPrEhLUnAcKt2UmJoWzm0lR8PZHu0NDigHfpWLNohDW3cGvM/41podv
+         cX5blLJAha89e4l2Pk6uWsoQZrVwF6b9tEyEWMbgbzGQR2GIIa9WoaPTYNuQlQB9hM0P
+         dt62y6wG5Fl1gPPGw1nnNPFn/jIhHmCbPLBTqkjoxqFNSOBVmdOOcoq6qD7JTLVhnZFe
+         O3rszL8sxPtn0lAWo8L4EHbLH8YbDN4jEV+SjjHxTtZg5U8oaqHndQb2IUEnMNEhzlPt
+         hK5PqNTIOyFVloeTdG6jCoOZCagddRczPwUxwyJ1S4O1LKFvEqCrOxhGFUSe6lAVs10q
+         qkDQ==
+X-Gm-Message-State: AOAM531tleRQa10DKG6E8U+8J4Q7hStDvTiyJBLumbAf+r9AKN0ISRB2
+        Gul7JaR8UPJvvDSzwOJMfRA28w==
+X-Google-Smtp-Source: ABdhPJxfjoITKG12Gxj2xM21hl5OuYpXZIA2e880TguoMzaCtryBEsUWAZbhIkTIltrUQHry9QEbEQ==
+X-Received: by 2002:a2e:b17a:: with SMTP id a26mr549657ljm.172.1644010549503;
+        Fri, 04 Feb 2022 13:35:49 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id o17sm462255lfu.180.2022.02.04.13.35.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Feb 2022 13:35:48 -0800 (PST)
+Message-ID: <859ff316-de11-e1a3-a714-addd7a490eb0@linaro.org>
+Date:   Sat, 5 Feb 2022 00:35:48 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v3 2/3] drm/msm/dp: revise timing engine programming to
+ support compression (DSC)
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, vkoul@kernel.org,
+        daniel@ffwll.ch, airlied@linux.ie, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1643999801-20359-1-git-send-email-quic_khsieh@quicinc.com>
+ <1643999801-20359-3-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1643999801-20359-3-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
+X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
+        lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am Freitag, 4. Februar 2022, 21:16:41 CET schrieb Robin Murphy:
-> It's been a long time since there was any reason to register IOMMU
-> drivers early. Convert to the standard platform driver helper.
+On 04/02/2022 21:36, Kuogee Hsieh wrote:
+> Divides horizontal width by 3 at timing engine of interface. There are
+> major part of  compression (DSC) programming have to be done at DSC
+> controller which is not covered by this patch.
 > 
-> CC: Heiko Stuebner <heiko@sntech.de>
-> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > ---
->  drivers/iommu/rockchip-iommu.c | 7 +------
->  1 file changed, 1 insertion(+), 6 deletions(-)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 22 ++++++++++++++++++----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h |  3 +++
+>   2 files changed, 21 insertions(+), 4 deletions(-)
 > 
-> diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
-> index 7f23ad61c094..204a93a72572 100644
-> --- a/drivers/iommu/rockchip-iommu.c
-> +++ b/drivers/iommu/rockchip-iommu.c
-> @@ -1407,9 +1407,4 @@ static struct platform_driver rk_iommu_driver = {
->  		   .suppress_bind_attrs = true,
->  	},
->  };
-> -
-> -static int __init rk_iommu_init(void)
-> -{
-> -	return platform_driver_register(&rk_iommu_driver);
-> -}
-> -subsys_initcall(rk_iommu_init);
-> +builtin_platform_driver(rk_iommu_driver);
-> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> index 35d4aaa..ee7ca34 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> @@ -128,7 +128,7 @@ static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
+>   	 * video timing. It is recommended to enable it for all cases, except
+>   	 * if compression is enabled in 1 pixel per clock mode
+>   	 */
+> -	if (p->wide_bus_en)
+> +	if (!p->compression_en || p->wide_bus_en)
+>   		intf_cfg2 |= BIT(4);
+
+So, what exactly is BIT(4)? Is it WIDE_BUS_ENABLE of some kind? Then why 
+do you disable it for compression_en?
+
+Please, add defines for all the respective BIT(n) values.
+
+>   
+>   	if (p->wide_bus_en)
+> @@ -150,10 +150,16 @@ static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
+>   	 */
+>   	data_width = p->width;
+>   
+> -	if (!dp_intf && p->wide_bus_en)
+> +	if (p->compression_en) {
+> +		data_width = DIV_ROUND_UP(p->dce_bytes_per_line, 3);
+> +
+> +		if (p->wide_bus_en)
+> +			data_width >>= 1;
+> +	} else if (!dp_intf && p->wide_bus_en) {
+>   		data_width = p->width >> 1;
+> -	else
+> +	} else {
+>   		data_width = p->width;
+> +	}
+>   
+>   	hsync_data_start_x = hsync_start_x;
+>   	hsync_data_end_x =  hsync_start_x + data_width - 1;
+> @@ -178,8 +184,16 @@ static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
+>   
+>   	active_hctl = (active_h_end << 16) | active_h_start;
+>   
+> -	if (dp_intf)
+> +	if (dp_intf) {
+>   		display_hctl = active_hctl;
+> +		if (p->compression_en) {
+> +			active_data_hctl = (hsync_start_x +
+> +					p->extra_dto_cycles) << 16;
+> +			active_data_hctl += hsync_start_x;
+> +
+> +			display_data_hctl = active_data_hctl;
+> +		}
+> +	}
+>   
+>   	den_polarity = 0;
+>   	if (ctx->cap->type == INTF_HDMI) {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+> index e4a518a..8fc71ce 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+> @@ -32,6 +32,9 @@ struct intf_timing_params {
+>   	u32 hsync_skew;
+>   
+>   	bool wide_bus_en;
+> +	bool compression_en;
+> +	u32 extra_dto_cycles;   /* for DP only */
+> +	u32 dce_bytes_per_line;
+>   };
+>   
+>   struct intf_prog_fetch {
 
 
-
-
+-- 
+With best wishes
+Dmitry
