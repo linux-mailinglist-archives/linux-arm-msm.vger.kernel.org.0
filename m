@@ -2,98 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E34C84A9F50
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Feb 2022 19:40:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E287E4A9F5E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Feb 2022 19:42:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236726AbiBDSkP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Feb 2022 13:40:15 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217]:55568 "EHLO
-        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229906AbiBDSkN (ORCPT
+        id S1377668AbiBDSmX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Feb 2022 13:42:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49404 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1377640AbiBDSmX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Feb 2022 13:40:13 -0500
+        Fri, 4 Feb 2022 13:42:23 -0500
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED393C06173D;
+        Fri,  4 Feb 2022 10:42:22 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 91CEC61C0A
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Feb 2022 18:40:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id F0102C004E1;
-        Fri,  4 Feb 2022 18:40:12 +0000 (UTC)
+        by sin.source.kernel.org (Postfix) with ESMTPS id 6A9ACCE23D2;
+        Fri,  4 Feb 2022 18:42:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 800C6C004E1;
+        Fri,  4 Feb 2022 18:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1644000013;
-        bh=RrIK0bBBtUtCiJNmlhOlPz1B8+SNF5bplO6x045mJPs=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=lx97YULa7GL3JqoQ28DVpQoW5BFC0Vx5xWsj7o1N7AqvfP51/Xvq36FKS6n3DAK/1
-         zyblG//QFRLo46R84e8wX/s5nwXVB3lsPV9/45Fp2U/E4EbQIK7UNu6/8Tt0Y9+blZ
-         h1UhLj+3EvaODogB1pg7+85U+7FRakER9sW6vzFIur6pXgYea8SfaNM6Z9T464qnQf
-         b+hArqhD7bRq4KokhhSkDIBwGPLqQNpa+pvvjHSKPyvQl4JLE9fKE5uije1DipNyQj
-         rdOHTZd41vrzRRrHlq/GjkcM5Wgmd8eh8Tj2zGNlU2RnzLNP1BZHFZBx9zHpHW9ACy
-         4JgLYSPcRW2yg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id D8383E6BBD2;
-        Fri,  4 Feb 2022 18:40:12 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 00/13] soc: qcom: mdt_loader: Support Qualcomm SM8450
-From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <164400001287.8570.2826947792878545555.git-patchwork-notify@kernel.org>
-Date:   Fri, 04 Feb 2022 18:40:12 +0000
-References: <20220128025513.97188-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20220128025513.97188-1-bjorn.andersson@linaro.org>
+        s=k20201202; t=1644000139;
+        bh=gbXlMQkTm6wk7+jYJvwk8s0/hMYzA2jyIoBYYozqmyA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=dGWkBTcMQktwcODnovOxids+lkqYf6w6wqbtDvlu51ixa3+5XGKWPXquW/srC25Q0
+         bMaReUQYWC/zycxF12aq1/o85PINE5Eb1pfaa66382MgvoF+pE06XpZzmtXdIOnDtX
+         1K74SR0l6L0tgkt+GhSgMKi/ujNp+7eMnUmAFCugyQm27OpFci1jHWraMNlC18x9vY
+         HcTyqlbcaMDdSmEs1dDV/mKtBhboEzMy+bQU5OUIGgZUD1zKX6Nim+Kjucq2CkkHo9
+         hThdYWCXtzVcn20bIlOMQLRl0Lpm0nbQOMgkz3sb4ILVH5fOv+YtJLDeHXrVaYq+Mj
+         9UFuzTrFSMO3w==
+Date:   Fri, 4 Feb 2022 18:42:14 +0000
+From:   Mark Brown <broonie@kernel.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org
+Cc:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        linus.walleij@linaro.org, Loic Poulain <loic.poulain@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Wolfram Sang <wsa@kernel.org>, linux-i2c@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/9] dt-bindings: i2c: qcom-cci: add description of a
+ vbus-supply property
+Message-ID: <Yf1zhojUSxlMNZgV@sirena.org.uk>
+References: <20220203164629.1711958-1-vladimir.zapolskiy@linaro.org>
+ <20220203164629.1711958-3-vladimir.zapolskiy@linaro.org>
+ <Yf1q+wlXo2LAeZX+@ripper>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="d/jMTsDZb3DWepCt"
+Content-Disposition: inline
+In-Reply-To: <Yf1q+wlXo2LAeZX+@ripper>
+X-Cookie: Torque is cheap.
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
 
-This series was applied to qcom/linux.git (for-next)
-by Bjorn Andersson <bjorn.andersson@linaro.org>:
+--d/jMTsDZb3DWepCt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Thu, 27 Jan 2022 18:55:00 -0800 you wrote:
-> The Qualcomm SM8450 platform comes with both some smaller changes in the
-> firmware packaging and a new requirement to hold onto the metadata buffer until
-> PAS auth_and_reset has been completed.
-> 
-> Extend the PAS api and rework the mdt_loader to meet these new requirements,
-> then wire this up with the PAS remoteproc driver and finally add the SM8450
-> remoteproc instances.
-> 
-> [...]
+On Fri, Feb 04, 2022 at 10:05:47AM -0800, Bjorn Andersson wrote:
+> On Thu 03 Feb 08:46 PST 2022, Vladimir Zapolskiy wrote:
 
-Here is the summary with links:
-  - [01/13] firmware: qcom: scm: Introduce pas_metadata context
-    https://git.kernel.org/qcom/c/3a99f121fe0b
-  - [02/13] soc: qcom: mdt_loader: Split out split-file-loader
-    https://git.kernel.org/qcom/c/26c1f17013a8
-  - [03/13] soc: qcom: mdt_loader: Allow hash segment to be split out
-    https://git.kernel.org/qcom/c/8bd42e2341a7
-  - [04/13] soc: qcom: mdt_loader: Allow hash to reside in any segment
-    https://git.kernel.org/qcom/c/64fb5eb87d58
-  - [05/13] soc: qcom: mdt_loader: Extend check for split firmware
-    https://git.kernel.org/qcom/c/ea90330fa329
-  - [06/13] soc: qcom: mdt_loader: Reorder parts of __qcom_mdt_load()
-    https://git.kernel.org/qcom/c/75d7213ce191
-  - [07/13] soc: qcom: mdt_loader: Always invoke PAS mem_setup
-    https://git.kernel.org/qcom/c/ebeb20a9cd3f
-  - [08/13] soc: qcom: mdt_loader: Extract PAS operations
-    https://git.kernel.org/qcom/c/f4e526ff7e38
-  - [09/13] remoteproc: qcom: pas: Carry PAS metadata context
-    (no matching commit)
-  - [10/13] dt-bindings: remoteproc: qcom: pas: Add SM8450 PAS compatibles
-    (no matching commit)
-  - [11/13] remoteproc: qcom: pas: Add SM8450 remoteproc support
-    (no matching commit)
-  - [12/13] arm64: dts: qcom: sm8450: Add remoteproc enablers and instances
-    https://git.kernel.org/qcom/c/e57f31b02784
-  - [13/13] arm64: dts: qcom: sm8450-qrd: Enable remoteproc instances
-    https://git.kernel.org/qcom/c/b48007d6d098
+> > +- vbus-supply:
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+> I don't think "vbus" is an appropriate name for his. Perhaps "vddio" or
+> something like that would be better.
 
+> But there's a bigger question here, this is not a supply for the
+> i2c master, it's simply a supply for pulling up the bus. So it's not
+> entirely correct to specify it as a supply for the CCI node (which is
+> also the reason why the name isn't obvious).
 
+Does the device (controller?) not have a supply that the I2C bus is
+referenced to?  If so that supply should be named.
+
+> Typically we don't don't mention the bus-supply because it happens to be
+> pulled up either by io-supply for the block, or by some always-on
+> regulator in the system.
+
+If the bus is being pulled up to some supply other than the supply that
+the bus is referenced to that doesn't sound like the greatest electrical
+engineering ever...  without any context it's hard to comment about this
+particular system.
+
+--d/jMTsDZb3DWepCt
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmH9c4UACgkQJNaLcl1U
+h9CM6Qf/WkwweKjs1czu0qwHwz5DI1EMVc0CWDqBRE/GBJQ7YC6Rle27N/g6Kff/
+IftkieaWxTG5zJsP9y5vs3BJd2I1ArDug4kfZFjg00PeUuizJ/5VcTmo/bLlYz4o
+UWCH0CSX3SJ6kPXxzx+9NBzYy/rytf82p4yWEJDg3D4bHwqVCbNTSAUN/IL82kXx
+D+ao+thL+lEN51KyPlhCtsCUXlua4TPYMuDBoFXOFV7NyWRcamyz0YFPVvEPmBGL
+JsDe7uH2rkj697orgYRYkyZFOlkvee5pFS/uIFamTXNg2kUGby+0bbjXAmGTQu0i
+8esmqS0psl9WN6h+VKqW+NA5v6VuZw==
+=ueXi
+-----END PGP SIGNATURE-----
+
+--d/jMTsDZb3DWepCt--
