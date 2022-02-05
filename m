@@ -2,73 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D36804AA614
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Feb 2022 03:58:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DE214AA616
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Feb 2022 03:59:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350023AbiBEC6q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Feb 2022 21:58:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49480 "EHLO
+        id S1378366AbiBEC7i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Feb 2022 21:59:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233604AbiBEC6o (ORCPT
+        with ESMTP id S231124AbiBEC7i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Feb 2022 21:58:44 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC8F3C061347
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Feb 2022 18:58:40 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id bg21-20020a05600c3c9500b0035283e7a012so4876963wmb.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Feb 2022 18:58:40 -0800 (PST)
+        Fri, 4 Feb 2022 21:59:38 -0500
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B41EDC061346
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Feb 2022 18:59:37 -0800 (PST)
+Received: by mail-oi1-x234.google.com with SMTP id 4so10671340oil.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Feb 2022 18:59:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=iGtpqcp1nHTS80waP6AzkzibIOxQhqD+Ab5mRyforrU=;
-        b=Mx7SrGWFZb350t8S4ZKdmBAAl81kfjQpbppGEMYVxgrpeouyUEM8ucUj/RzMMgBv9e
-         OjFsqyGk3jZ72RrkEcWpJg6REmTtKG+5dZllyYe8SbkMwSPM6iztNdtvGY1yRN/axugV
-         FZppoJQ3Ul0OwSiWinynLh7CxqvapjnTnmDGrvx0JD+c6Wlc3kQIIogYxbw8m/sskspH
-         j8RzEm4exFw8BKwHfWsge6CfBg5hY2EyVnsU6SIaOPnPsOJNF3kHQWGH0FQQC27jYjqx
-         9EviOEkieME90XE/wN8gb1BBiktYCjPMEk4Qbkpf6h4YIQnl1zaRJMyAnrR4wWeE8OUZ
-         VNFw==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=3E97oia/JHaNqBCi+pHPXm+51pzS7ZsSOY26FuQtaE8=;
+        b=Izo/qosg1QFKozQ4T+Mq4wtokc/McTYHZUY7byCX/tba8ExWdVQBoHym+aDzBmMckO
+         E85lZe7Z60wZEoX7rBWCrkJ7MZ1iI0RSUiFEjzuRBrYNusE4GlsFhJQXz1E+PUt8FFD4
+         6nVr9WG0S7GASSG7UtSon+Sgkl3Os+OVK4F+E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=iGtpqcp1nHTS80waP6AzkzibIOxQhqD+Ab5mRyforrU=;
-        b=6u3U9argT8MqRkNSUVdGp9jOm20RQ3bIpIZ79oU1Ys7D9zmQ+fowNftfdD48M/MeV0
-         vfX/we6ccXk1bQb+X8dbC31iGdIORh6CexAwotHUi2ohCj48XMCdU2u4aHcezmNC5GYo
-         dcU7FZXVvBHyhkW4QijX48y6YlYeqhB+Qt+E4EI3yu9vtHPQHTxBvi6Xak6tQWuviUUj
-         Wgj4R00xVG5Rd6RON3pXF9a5EnxXbo3PTIylt1rrRDuGO/qUCn43ywcQW3FU83CBPMn5
-         jP/gWqFf2SUn3k96RJa8Cqn2SAH3Rdu0zdjIvzmnBODIiqywqCZeObDBqejvs8H+4Uef
-         8pgA==
-X-Gm-Message-State: AOAM530JkEfMdM6cEbzoBVwpHJUMa1yUxcnbuJsEOhm8bR2lP0Vc5HA5
-        vo/DGekmlGHrMs9BqNlQ17xs6KnDufdglefa
-X-Google-Smtp-Source: ABdhPJy2PjTZnYDHNFOhpwZFISfWQNB/U6N6fWmzQBFkOmx3Px5mK+uEBU37uS1cq25i4vPYVJ162w==
-X-Received: by 2002:a7b:cf3a:: with SMTP id m26mr1292714wmg.4.1644029919074;
-        Fri, 04 Feb 2022 18:58:39 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id h18sm3965302wro.9.2022.02.04.18.58.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Feb 2022 18:58:38 -0800 (PST)
-Message-ID: <a71ea5e6-30f5-827b-413b-f2b39e285a6c@linaro.org>
-Date:   Sat, 5 Feb 2022 02:58:37 +0000
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=3E97oia/JHaNqBCi+pHPXm+51pzS7ZsSOY26FuQtaE8=;
+        b=VugGD8aD7O/eyyKHOsb4+021dfByVim0ba20tKidDesuLAIofHpRjQhQ/cDiI2fwPn
+         bDV0b4n9ajQFTHslscoSzDFbWP2hGmKZeFUzG0ivIrIDNtlfxTa4Z+bVKy2lKh0du6uu
+         ljKSrD3NEXfL27dm02fNCUU8Fut/O8h6LH77jcJ/sfHFSUSNwkYFnIMIYG0gabT+/WVa
+         QWQqfKgLDwGQjtsJAgwQp9U7O90QYRabPi9SKItPpuSOv5UoRoFDig76GK2T1XPqv01x
+         bveuTdOFUDLSo/63+ARYqs2IQAHtN1XmLaBY5UFG3bMzizPjldgFYb6mXgpREIi9r1qd
+         8p9Q==
+X-Gm-Message-State: AOAM532J22M92HLmPg+NLl40I2MM+mybVHG/QFBR65jksxVDrIobyZVF
+        D7cQdUSX3dKBCFXmBmuRB4l/vNASt5AWNnfUzk2RDg==
+X-Google-Smtp-Source: ABdhPJzBMdhfN5XAUxJYi7hcdSltX/9lXCx+IEr6KOg6sxh37lN6ibOwZV2quJu2FGLM+RKLntEyCSEkpMwxh64+z/E=
+X-Received: by 2002:a05:6808:190f:: with SMTP id bf15mr2846900oib.40.1644029977069;
+ Fri, 04 Feb 2022 18:59:37 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Sat, 5 Feb 2022 02:59:36 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [PATCH v3 0/8] camss: Fixup multiple VDDA regulator support
-Content-Language: en-US
-To:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        mchehab@kernel.org, hverkuil@xs4all.nl, robert.foss@linaro.org
-Cc:     jonathan@marek.ca, andrey.konovalov@linaro.org,
-        todor.too@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org,
-        jgrahsl@snap.com, hfink@snap.com, vladimir.zapolskiy@linaro.org,
-        dmitry.baryshkov@linaro.org
-References: <20220111125212.2343184-1-bryan.odonoghue@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20220111125212.2343184-1-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <Yf2f8Az5v1TtlAjd@builder.lan>
+References: <20220202212348.1391534-1-dianders@chromium.org>
+ <20220202132301.v3.13.I7924ce4592e3e75b2293804d8a3f8a4dae44646e@changeid> <Yf2f8Az5v1TtlAjd@builder.lan>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Sat, 5 Feb 2022 02:59:36 +0000
+Message-ID: <CAE-0n50mJD_P6KBS9xesoVb4to=cBqBhU4cLtjUdK2Gb-cXgiw@mail.gmail.com>
+Subject: Re: [PATCH v3 13/14] arm64: dts: qcom: sc7280: Add the CPU compatible
+ to the soc@0 node
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>
+Cc:     pmaliset@codeaurora.org, mka@chromium.org,
+        quic_rjendra@quicinc.com,
+        Shaik Sajida Bhanu <sbhanu@codeaurora.org>,
+        kgodara@codeaurora.org, konrad.dybcio@somainline.org,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        sibis@codeaurora.org, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,20 +74,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/01/2022 12:52, Bryan O'Donoghue wrote:
-> V3:
-> - Adds Robert's R-B for 7/8 patches
-> - 5/8 should be a NOP, for the sake of procedure left out Robert's RB
+Quoting Bjorn Andersson (2022-02-04 13:51:44)
+> On Wed 02 Feb 15:23 CST 2022, Douglas Anderson wrote:
+>
+> > We'd like to start including the CPU name as the compatible under the
+> > "soc" node so that we can get rid of it from the top-level compatible
+> > string.
+> >
+> > Suggested-by: Stephen Boyd <swboyd@chromium.org>
+> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > ---
+> > Probably needs a .yaml file somewhere?
+> >
+> > Changes in v3:
+> > - ("sc7280: Add the CPU compatible to the soc@0 node") new for v3.
+> >
+> >  arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > index 618ae0407cd6..2bfc919d4018 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > @@ -573,7 +573,7 @@ soc: soc@0 {
+> >               #size-cells = <2>;
+> >               ranges = <0 0 0 0 0x10 0>;
+> >               dma-ranges = <0 0 0 0 0x10 0>;
+> > -             compatible = "simple-bus";
+> > +             compatible = "qcom,sc7280", "simple-bus";
+>
+> To me this implies that /soc represents the sc7280, but as noted earlier
+> I don't think that's accurate. E.g. if this node represents the sc7280,
+> why are the cpus described outside this node?
 
-Hi Hans, Michael
+They're outside the soc node because cpus have historically been
+described at the root of the DT. The concept of an 'soc' node came after
+the cpu nodes.
 
-This still applies and works on 5.18h any chance of getting a PR ?
+>
+> Further more, if we look at the reg nodes on this bus it's clear that
+> this is some mmio bus, which per the ranges has 36 bit address width.
+> But not all buses in the sc7280 has 36 bit address width, so it's not
+> inconceivable that one would actually have to split /soc into more than
+> one entity with different dma-ranges. Perhaps not today, but I don't
+> like the precedence it sets.
+>
 
-ssh://git@git.linaro.org/people/bryan.odonoghue/kernel.git / 
-br-v5.18h+camss-fixes
-
-RB from Rob Herring and Robert Foss - included
-Vladimir gave his tested-by too
-
----
-bod
+That should be fine. We can separate the nodes inside the soc node if we
+need to by having different bus nodes underneath the soc node and then
+change the dma-ranges within those bus nodes accordingly. We wouldn't
+introduce another soc node to solve this problem.
