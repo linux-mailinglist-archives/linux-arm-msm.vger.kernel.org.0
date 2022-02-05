@@ -2,77 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6914E4AA5FC
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Feb 2022 03:43:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD4C64AA605
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Feb 2022 03:48:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234950AbiBECnt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Feb 2022 21:43:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46052 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230227AbiBECns (ORCPT
+        id S235383AbiBECs3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Feb 2022 21:48:29 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217]:48094 "EHLO
+        dfw.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233222AbiBECs3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Feb 2022 21:43:48 -0500
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75D80C061347
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Feb 2022 18:43:46 -0800 (PST)
-Received: by mail-ot1-x329.google.com with SMTP id d18-20020a9d51d2000000b005a09728a8c2so6503488oth.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Feb 2022 18:43:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=ptR9arcgsxsyCBHT5svh2CJp+R1460e5VL52+gvh4sY=;
-        b=iBWC0rDndMbAJeR7VoG1YfMyeH5uEtF6kNG1xDmR9IPm0ImGhINjF5GuREsuf36yTo
-         k85S0GlwMXhBb6TtmfsU4wSvjqG/h7UCMO7NItqQrHCLmAXYu/KrvEISsdHBhOMsmW8P
-         LPP3IWiYk3mGrlnkg+8Wgc6yhp/1bja5qc9Ow=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=ptR9arcgsxsyCBHT5svh2CJp+R1460e5VL52+gvh4sY=;
-        b=F7ue//f6/Y5Nd4OKKF0ftdjZtdiu4sVWOcAZ1sF1cpF7y5RO5HKws1HHFBPYTX/57S
-         qeSMIMwjAlOAB30Vrkm2ZaMv0+KTsLU7oxSqm+Q1zzNeNQgLGaBQbuZ/yBqo8Pg8enH7
-         ae4YmpBeW3YA3AOIIeY4yDWyHGpktUYkMs86ohs5JcEM4NLmjcdfUkG9efmctAfunNYW
-         rhb0eWeduuggmLuFPpUjg+UYBYdbPf0TNUe2bOySEmMvtsCGwRC1ZqifPjh2NhihcWFD
-         FQpy6js4ZWCLMn7tqPFw4/1ejNYk/UAJLHTNqGhV+5IeaTVpKuQWsveXfL5y/86pn9eI
-         qwzw==
-X-Gm-Message-State: AOAM532UleYHdxEf11ZWuHCw4XlIM5LahM58qOHo4HOMeNdhZ8c48R4y
-        pwPFdoURQva/8Az360ni7Fxirl4yWKVE7kK0lpFGOQ==
-X-Google-Smtp-Source: ABdhPJyJl7J0DMcwsErnsAZ2e6quUEfYM4CAsNNLCnhFVIsc+VDuH7t47yMKxkQ316BIMkPyEJu0huVO3XOQxkaUfoA=
-X-Received: by 2002:a9d:6f06:: with SMTP id n6mr637882otq.159.1644029025712;
- Fri, 04 Feb 2022 18:43:45 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 5 Feb 2022 02:43:45 +0000
+        Fri, 4 Feb 2022 21:48:29 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3218060C11;
+        Sat,  5 Feb 2022 02:48:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76942C004E1;
+        Sat,  5 Feb 2022 02:48:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1644029308;
+        bh=xd4Zyu6GLGga48XMPzzZETsVpPvBHmt/7qiLH5XsLjs=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=Vwz3RrYhbnaLJIzz9xaR2kdRLtigmA2VwWtCINvPYtJyYMHHcEEqqbfSAyQLtnEOk
+         +Lfqjz3fckDzbFmiw7qsHUH/VHXSM/GqMvqrYetigdumOXs3sKX80pVRmcIGRAF/iM
+         qILVVglOpExul4jVjCq3TNBGISaNAHC6xqXZ4oEWTAe07l6b7KYk0I1IuN0RxRGAW/
+         a9WBURihskHFUs6krsI2dYr6nOdX+YajJASKGuUEhXzzo2KVr28KNgAW3LXbBUOfo5
+         cuq6nLZ3btSSq2ioHCqPs7Q5Ctkplbv6VScBe/hHyh6LX+I8wk9PMheiFrq5ZZzNEG
+         J3Gcx1p9r0WRw==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <20220202053207.14256-1-tdas@codeaurora.org>
-References: <20220202053207.14256-1-tdas@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Sat, 5 Feb 2022 02:43:45 +0000
-Message-ID: <CAE-0n52zypP5Uhikbk01ZrMRoXyLKBv9wgjX6uRYD0iCOeqJag@mail.gmail.com>
-Subject: Re: [PATCH v3] arm64: dts: qcom: sc7280: Add lpasscore & lpassaudio
- clock controllers
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAA8EJpqWUm5C5nc3fZzjF4XfAEZo8m=PY0Rj6WeDgSJEey=D_A@mail.gmail.com>
+References: <20220202182053.22925-1-tdas@codeaurora.org> <20220202182053.22925-2-tdas@codeaurora.org> <CAA8EJpqWUm5C5nc3fZzjF4XfAEZo8m=PY0Rj6WeDgSJEey=D_A@mail.gmail.com>
+Subject: Re: [PATCH v1 2/2] clk: qcom: sc7280: Update clk_init_data to const for clock controllers
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Taniya Das <tdas@codeaurora.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
-X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
-        lindbergh.monkeyblade.net
+Date:   Fri, 04 Feb 2022 18:48:26 -0800
+User-Agent: alot/0.10
+Message-Id: <20220205024828.76942C004E1@smtp.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2022-02-01 21:32:07)
-> Add the low pass audio clock controller device nodes.
->
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> ---
+Quoting Dmitry Baryshkov (2022-02-02 14:34:11)
+> On Wed, 2 Feb 2022 at 21:23, Taniya Das <tdas@codeaurora.org> wrote:
+> >
+> > Update clk_init_data to const and also use index instead of fw_name for
+> > graphics, lpasscc and video clock controller.
+>=20
+> What is the benefit from using indices here? In my opinion the code
+> becomes more fragile with such a change.
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+The benefit is smaller code size. Please run scripts/bloat-o-meter
