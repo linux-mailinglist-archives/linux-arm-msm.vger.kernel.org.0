@@ -2,152 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0690F4AB040
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Feb 2022 16:34:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 741A84AB202
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Feb 2022 21:23:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240758AbiBFPeM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Feb 2022 10:34:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53850 "EHLO
+        id S244479AbiBFUXS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Feb 2022 15:23:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235777AbiBFPeL (ORCPT
+        with ESMTP id S231982AbiBFUXR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Feb 2022 10:34:11 -0500
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11A41C043186;
-        Sun,  6 Feb 2022 07:34:11 -0800 (PST)
-Received: by mail-pf1-x433.google.com with SMTP id u130so9559674pfc.2;
-        Sun, 06 Feb 2022 07:34:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:to:cc:references
-         :from:in-reply-to:content-transfer-encoding;
-        bh=14MC9C8IQIKOd8fz9Jlu9bO+FiVmkryy7aHyccyp2Q8=;
-        b=faxEA/89KE1KYI/K/OGLxzVmVPbiJPb9wiXjL6ULjkX7OsCZzgz+gQxsz0RLDWZLXB
-         lcI8LY+x7wd2wTXX5K95TBnh/y85wyOGaLlhJ+hJhFBrlFytdlWNDKtC1H5DwoSuYFAc
-         jb3bHjKzwISbl+Mgs1DVrasl8rSeF8rXvp41qTiuIVIYGgV7YxoOmbRE37ge8Bu9i2ao
-         aS/PBYeJQ5sm5MrR1jtnzo3HF/7/yb2dYhkWq2iz1TCcqF8a+aGKcU77UbFH1Ni48P+h
-         Qxmua+JkId3vKA4GKTOVW3vLRthKwgCTht81I+N2oVOH7ZQCTa4RH315ibN4Y8C5viqC
-         VbQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :to:cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=14MC9C8IQIKOd8fz9Jlu9bO+FiVmkryy7aHyccyp2Q8=;
-        b=dkeVzMYUxQZHgWfijrVLQuT8ItuhSokZtyI7hmHhQqxK4L3Zp11mdG11HSMtrPMPF0
-         /5+Z9BP7ZZ8oWxuRaSILfqxLBKDToTiiJSiKsG+h8/8hMUYzugBG9fnVEZvMLTomACv6
-         2yGBlxqTWPtiV7laMX5c7bAVJzjPSLKPwH5hrQf05Ju604ICLq8ePSWxui7bIJhYt659
-         FY1vwpx3oqk+ZMVi9SzcJHH5MeqWmPqovr4dkYMgFGoY5DPTcq1ueSm5hT/DSrlDmuPc
-         dZLqOftsd33jvIXyAWZrkCosjbyCvu8nhoUTKbeRp2I0Z4IgYTOkhA6mcjgQF4aAali2
-         9d1w==
-X-Gm-Message-State: AOAM533XrmsPhLhNd59phYrDYzmEblstun2UrBLYpKxde10amcss8Y1A
-        MOG6rM5EJVgqCU7iL2+V3Ps=
-X-Google-Smtp-Source: ABdhPJytxa4f/6n6AlxJZBZYfZdIyBQa1ZxD3cJM7PiKuShuVQL7/0cCEbfy1KK6sP57AbqFAsO91A==
-X-Received: by 2002:a63:26c1:: with SMTP id m184mr6358920pgm.296.1644161650564;
-        Sun, 06 Feb 2022 07:34:10 -0800 (PST)
-Received: from [192.168.1.12] ([120.244.202.146])
-        by smtp.gmail.com with ESMTPSA id 12sm6195117pgb.71.2022.02.06.07.34.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 06 Feb 2022 07:34:09 -0800 (PST)
-Message-ID: <a2c91d4c-c1f3-4723-e1a4-02ac1742f96c@gmail.com>
-Date:   Sun, 6 Feb 2022 23:34:02 +0800
+        Sun, 6 Feb 2022 15:23:17 -0500
+X-Greylist: delayed 345 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 06 Feb 2022 12:23:16 PST
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71035C06173B;
+        Sun,  6 Feb 2022 12:23:16 -0800 (PST)
+Received: from g550jk.localnet (mobiledyn-62-240-134-151.mrsn.at [62.240.134.151])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id D8C72CDF2E;
+        Sun,  6 Feb 2022 20:17:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1644178648; bh=690FBrexPdoV7NM0ztCyeAbjMDRItqMT8QQiwsTCIIM=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=MLezyn++G1Se1/xSc1aKBxr9QvWyZ9bMtflmNDUCNs8UkRiG20J3OHnzsP/qos2rd
+         L97w9d2Edpc6sj5AaAXRUss+wTHtDaWvla70a4R/JdPQe2rzH7I2IdeUSgg1Vy4sjU
+         suN8/7rQ310/I3W2t75CcYiy8SezI/tXWllHszhA=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: Re: [PATCH 09/15] rpmsg: smd: Drop unnecessary condition for channel creation
+Date:   Sun, 06 Feb 2022 21:17:22 +0100
+Message-ID: <2615776.mvXUDI8C0e@g550jk>
+In-Reply-To: <Yfhjil3pfZLa5g3j@builder.lan>
+References: <20220112194118.178026-1-luca@z3ntu.xyz> <YeRILypv8ajssNae@gerhold.net> <Yfhjil3pfZLa5g3j@builder.lan>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [BUG] bus: mhi: possible deadlock in mhi_pm_disable_transition()
- and mhi_async_power_up()
-To:     Daniel Thompson <daniel.thompson@linaro.org>
-Cc:     mani@kernel.org, hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        loic.poulain@linaro.org, jhugo@codeaurora.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-kernel <linux-kernel@vger.kernel.org>
-References: <d3a94b53-0d77-dafe-ce45-f9ab23278616@gmail.com>
- <20220201171540.2udq3x6r2swctzau@maple.lan>
-From:   Jia-Ju Bai <baijiaju1990@gmail.com>
-In-Reply-To: <20220201171540.2udq3x6r2swctzau@maple.lan>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+X-Spam-Status: No, score=0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Bjorn,
+
+On Montag, 31. J=E4nner 2022 23:32:42 CET Bjorn Andersson wrote:
+> On Sun 16 Jan 10:30 CST 2022, Stephan Gerhold wrote:
+> > On Sun, Jan 16, 2022 at 05:08:29PM +0100, Luca Weiss wrote:
+> > > On Mittwoch, 12. J=E4nner 2022 22:39:53 CET Stephan Gerhold wrote:
+> > > > On Wed, Jan 12, 2022 at 08:40:58PM +0100, Luca Weiss wrote:
+> > > > > From: Vladimir Lypak <vladimir.lypak@gmail.com>
+> > > > >=20
+> > > > > RPM Firmware on variety of newer SoCs such as MSM8917 (also likely
+> > > > > MSM8937, MSM8940, MSM8952), MSM8953 and on some MSM8916 devices)
+> > > > > doesn't
+> > > > > initiate opening of the SMD channel if it was previously opened by
+> > > > > bootloader. This doesn't allow probing of smd-rpm driver on such
+> > > > > devices
+> > > > > because there is a check that requires RPM this behaviour.
+> > > > >=20
+> > > > > Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+> > > > > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> > > > > Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> > > >=20
+> > > > This is effectively a "Revert "Revert "rpmsg: smd: Create device for
+> > > > all
+> > > > channels""":
+> > > >=20
+> > > > https://lore.kernel.org/linux-arm-msm/20171212235857.10432-3-bjorn.=
+and
+> > > > ersson @linaro.org/
+> > > > https://lore.kernel.org/linux-arm-msm/20180315181244.8859-1-bjorn.a=
+nde
+> > > > rsson
+> > > > @linaro.org/
+> > > >=20
+> > > > Won't this cause the same regression reported by Srinivas again?
+> > >=20
+> > > Do you have any suggestion on another way to solve this? Without this
+> > > commit the regulators just won't probe at all, I haven't looked very
+> > > deep into it though given this patch solves it.
+> > >=20
+> > > I guess worst case it'll become a devicetree property to enable this
+> > > quirk?
+> >=20
+> > My spontaneous suggestion would be to skip the check only for the
+> > "rpm_requests" channel, e.g. something like
+> >=20
+> > 	if (remote_state !=3D SMD_CHANNEL_OPENING &&
+> > =09
+> > 	    remote_state !=3D SMD_CHANNEL_OPENED &&
+> > 	    strcmp(channel->name, "rpm_requests")
+> > 	=09
+> > 		continue;
+> >=20
+> > This will avoid changing the behavior for anything but the RPM channel.
+> > I don't think anything else is affected by the same problem (since the
+> > bootloader or earlier firmware should not make use of any other channel=
+).
+> > Also, we definitely *always* want to open the channel to the RPM because
+> > otherwise almost everything breaks.
+>=20
+> Last time this came up I asked if someone could test if the RPM is stuck
+> in the state machine trying to close the channel and as such we could
+> kick it by making sure that we "ack" the closing of the channel and
+> hence it would come back up again.
+>=20
+> But I don't remember seeing any outcome of this.
+
+Do you have a link to this or should I go digging in the archives?
+
+Regards
+Luca
+
+>=20
+> > Many solutions are possible though so at the end it is mostly up to
+> > Bjorn to decide I think. :)
+>=20
+> I would prefer to get an answer to above question, but if that doesn't
+> work (or look like crap) I'm willing to take your suggestion of skipping
+> the continue for the rpm_requests channel. Obviously with a comment
+> above describing why we're carrying that special case.
+>=20
+> Regards,
+> Bjorn
 
 
-On 2022/2/2 1:15, Daniel Thompson wrote:
-> On Sat, Jan 29, 2022 at 10:56:30AM +0800, Jia-Ju Bai wrote:
->> Hello,
->>
->> My static analysis tool reports a possible deadlock in the mhi driver in
->> Linux 5.10:
->>
->> mhi_async_power_up()
->>    mutex_lock(&mhi_cntrl->pm_mutex); --> Line 933 (Lock A)
->>    wait_event_timeout(mhi_cntrl->state_event, ...) --> Line 985 (Wait X)
->>    mutex_unlock(&mhi_cntrl->pm_mutex); --> Line 1040 (Unlock A)
->>
->> mhi_pm_disable_transition()
->>    mutex_lock(&mhi_cntrl->pm_mutex); --> Line 463 (Lock A)
->>    wake_up_all(&mhi_cntrl->state_event); --> Line 474 (Wake X)
->>    mutex_unlock(&mhi_cntrl->pm_mutex); --> Line 524 (Unlock A)
->>    wake_up_all(&mhi_cntrl->state_event); --> Line 526 (Wake X)
->>
->> When mhi_async_power_up() is executed, "Wait X" is performed by holding
->> "Lock A". If mhi_pm_disable_transition() is concurrently executed at this
->> time, "Wake X" cannot be performed to wake up "Wait X" in
->> mhi_async_power_up(), because "Lock A" is already hold by
->> mhi_async_power_up(), causing a possible deadlock.
->> I find that "Wait X" is performed with a timeout, to relieve the possible
->> deadlock; but I think this timeout can cause inefficient execution.
->>
->> I am not quite sure whether this possible problem is real and how to fix it
->> if it is real.
->> Any feedback would be appreciated, thanks :)
-> Interesting find but I think it would be better to run your tool
-> against more recent kernels to confirm any problem reports. In this
-> case the code you mention looks like it was removed in v5.17-rc1
-> (and should eventually make its way to the stable kernels too).
 
-Hi Daniel,
-
-Thanks for your reply :)
-I check Linux v5.17-rc1 code, and find that this possible deadlock does 
-not exist, due to the changes in commit d651ce8e917f.
-
-However, my tool also reports several other possible deadlocks, which 
-are caused by waiting with holding mhi_cntrl->pm_mutex.
-There are two examples in Linux v5.17-rc1:
-
-#BUG 1
-mhi_pm_sys_error_transition()
-   mutex_lock(&mhi_cntrl->pm_mutex); --> Line 572 (Lock A)
-   wait_event_timeout(mhi_cntrl->state_event, ...); --> Line 600 (Wait X)
-   mutex_unlock(&mhi_cntrl->pm_mutex); --> Line 630 (Unlock A)
-
-mhi_pm_disable_transition()
-   mutex_lock(&mhi_cntrl->pm_mutex); --> Line 464 (Lock A)
-   mutex_unlock(&mhi_cntrl->pm_mutex); --> Line 496 (Unlock A)
-   wake_up_all(&mhi_cntrl->state_event); --> Line 498 (Wake X)
-
-#BUG 2
-mhi_pm_sys_error_transition()
-   mutex_lock(&mhi_cntrl->pm_mutex); --> Line 572 (Lock A)
-   wait_event_timeout(mhi_cntrl->state_event, ...); --> Line 600 (Wait X)
-   mutex_unlock(&mhi_cntrl->pm_mutex); --> Line 630 (Unlock A)
-
-mhi_power_down()
-   mutex_lock(&mhi_cntrl->pm_mutex); --> Line 1139 (Lock A)
-   wake_up_all(&mhi_cntrl->state_event); --> Line 1165 (Wait X)
-   mutex_unlock(&mhi_cntrl->pm_mutex); --> Line 1168 (Unlock A)
-
-I am not quite sure whether these possible problems are real.
-Any feedback would be appreciated, thanks :)
-
-
-Best wishes,
-Jia-Ju Bai
 
