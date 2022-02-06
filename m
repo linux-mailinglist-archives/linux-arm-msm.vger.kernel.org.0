@@ -2,142 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 741A84AB202
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Feb 2022 21:23:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BACC4AB21F
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Feb 2022 21:37:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244479AbiBFUXS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Feb 2022 15:23:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56774 "EHLO
+        id S234368AbiBFUhG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Feb 2022 15:37:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231982AbiBFUXR (ORCPT
+        with ESMTP id S232618AbiBFUhE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Feb 2022 15:23:17 -0500
-X-Greylist: delayed 345 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 06 Feb 2022 12:23:16 PST
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71035C06173B;
-        Sun,  6 Feb 2022 12:23:16 -0800 (PST)
-Received: from g550jk.localnet (mobiledyn-62-240-134-151.mrsn.at [62.240.134.151])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id D8C72CDF2E;
-        Sun,  6 Feb 2022 20:17:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1644178648; bh=690FBrexPdoV7NM0ztCyeAbjMDRItqMT8QQiwsTCIIM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=MLezyn++G1Se1/xSc1aKBxr9QvWyZ9bMtflmNDUCNs8UkRiG20J3OHnzsP/qos2rd
-         L97w9d2Edpc6sj5AaAXRUss+wTHtDaWvla70a4R/JdPQe2rzH7I2IdeUSgg1Vy4sjU
-         suN8/7rQ310/I3W2t75CcYiy8SezI/tXWllHszhA=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH 09/15] rpmsg: smd: Drop unnecessary condition for channel creation
-Date:   Sun, 06 Feb 2022 21:17:22 +0100
-Message-ID: <2615776.mvXUDI8C0e@g550jk>
-In-Reply-To: <Yfhjil3pfZLa5g3j@builder.lan>
-References: <20220112194118.178026-1-luca@z3ntu.xyz> <YeRILypv8ajssNae@gerhold.net> <Yfhjil3pfZLa5g3j@builder.lan>
+        Sun, 6 Feb 2022 15:37:04 -0500
+X-Greylist: delayed 435 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 06 Feb 2022 12:37:03 PST
+Received: from ixit.cz (ip-94-112-206-30.net.upcbroadband.cz [94.112.206.30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF88FC06173B
+        for <linux-arm-msm@vger.kernel.org>; Sun,  6 Feb 2022 12:37:03 -0800 (PST)
+Received: from newone.lan (_gateway [10.0.0.1])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id A560320056;
+        Sun,  6 Feb 2022 21:29:46 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1644179386;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=mJbQE9aLpDKahWvRXxUd+4aTtXVGsiL8uHGSLEVhR0w=;
+        b=DiVIEK2kVh9/PD98+QqNQmpY4Ou7lkgRwa2gzTB9TugbXr4CV3NtvDuah7cvYqP+o2o5M+
+        GqGz8M9++antjbHwnZgxrdvou8pCCu3n3lhHzixFjSY/xA62awUPiSDEwT4xZJOlGqRPyl
+        0Vo7ufwISCVvpe1S7/Wue88q/DfGLII=
+From:   David Heidelberg <david@ixit.cz>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>
+Cc:     ~okias/devicetree@lists.sr.ht, David Heidelberg <david@ixit.cz>,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] iommu/msm: simplify with dev_err_probe()
+Date:   Sun,  6 Feb 2022 21:29:45 +0100
+Message-Id: <20220206202945.465195-1-david@ixit.cz>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-X-Spam-Status: No, score=0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,PDS_RDNS_DYNAMIC_FP,
+        RDNS_DYNAMIC,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+Use the dev_err_probe() helper to simplify error handling during probe.
+This also handle scenario, when EDEFER is returned and useless error is
+printed.
 
-On Montag, 31. J=E4nner 2022 23:32:42 CET Bjorn Andersson wrote:
-> On Sun 16 Jan 10:30 CST 2022, Stephan Gerhold wrote:
-> > On Sun, Jan 16, 2022 at 05:08:29PM +0100, Luca Weiss wrote:
-> > > On Mittwoch, 12. J=E4nner 2022 22:39:53 CET Stephan Gerhold wrote:
-> > > > On Wed, Jan 12, 2022 at 08:40:58PM +0100, Luca Weiss wrote:
-> > > > > From: Vladimir Lypak <vladimir.lypak@gmail.com>
-> > > > >=20
-> > > > > RPM Firmware on variety of newer SoCs such as MSM8917 (also likely
-> > > > > MSM8937, MSM8940, MSM8952), MSM8953 and on some MSM8916 devices)
-> > > > > doesn't
-> > > > > initiate opening of the SMD channel if it was previously opened by
-> > > > > bootloader. This doesn't allow probing of smd-rpm driver on such
-> > > > > devices
-> > > > > because there is a check that requires RPM this behaviour.
-> > > > >=20
-> > > > > Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-> > > > > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > > > > Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> > > >=20
-> > > > This is effectively a "Revert "Revert "rpmsg: smd: Create device for
-> > > > all
-> > > > channels""":
-> > > >=20
-> > > > https://lore.kernel.org/linux-arm-msm/20171212235857.10432-3-bjorn.=
-and
-> > > > ersson @linaro.org/
-> > > > https://lore.kernel.org/linux-arm-msm/20180315181244.8859-1-bjorn.a=
-nde
-> > > > rsson
-> > > > @linaro.org/
-> > > >=20
-> > > > Won't this cause the same regression reported by Srinivas again?
-> > >=20
-> > > Do you have any suggestion on another way to solve this? Without this
-> > > commit the regulators just won't probe at all, I haven't looked very
-> > > deep into it though given this patch solves it.
-> > >=20
-> > > I guess worst case it'll become a devicetree property to enable this
-> > > quirk?
-> >=20
-> > My spontaneous suggestion would be to skip the check only for the
-> > "rpm_requests" channel, e.g. something like
-> >=20
-> > 	if (remote_state !=3D SMD_CHANNEL_OPENING &&
-> > =09
-> > 	    remote_state !=3D SMD_CHANNEL_OPENED &&
-> > 	    strcmp(channel->name, "rpm_requests")
-> > 	=09
-> > 		continue;
-> >=20
-> > This will avoid changing the behavior for anything but the RPM channel.
-> > I don't think anything else is affected by the same problem (since the
-> > bootloader or earlier firmware should not make use of any other channel=
-).
-> > Also, we definitely *always* want to open the channel to the RPM because
-> > otherwise almost everything breaks.
->=20
-> Last time this came up I asked if someone could test if the RPM is stuck
-> in the state machine trying to close the channel and as such we could
-> kick it by making sure that we "ack" the closing of the channel and
-> hence it would come back up again.
->=20
-> But I don't remember seeing any outcome of this.
+Fixes warnings as:
+msm_iommu 7500000.iommu: could not get smmu_pclk
 
-Do you have a link to this or should I go digging in the archives?
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+ drivers/iommu/msm_iommu.c | 24 ++++++++++--------------
+ 1 file changed, 10 insertions(+), 14 deletions(-)
 
-Regards
-Luca
-
->=20
-> > Many solutions are possible though so at the end it is mostly up to
-> > Bjorn to decide I think. :)
->=20
-> I would prefer to get an answer to above question, but if that doesn't
-> work (or look like crap) I'm willing to take your suggestion of skipping
-> the continue for the rpm_requests channel. Obviously with a comment
-> above describing why we're carrying that special case.
->=20
-> Regards,
-> Bjorn
-
-
-
+diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
+index 3a38352b603f..6e6cff5fc469 100644
+--- a/drivers/iommu/msm_iommu.c
++++ b/drivers/iommu/msm_iommu.c
+@@ -710,36 +710,32 @@ static int msm_iommu_probe(struct platform_device *pdev)
+ 	INIT_LIST_HEAD(&iommu->ctx_list);
+ 
+ 	iommu->pclk = devm_clk_get(iommu->dev, "smmu_pclk");
+-	if (IS_ERR(iommu->pclk)) {
+-		dev_err(iommu->dev, "could not get smmu_pclk\n");
+-		return PTR_ERR(iommu->pclk);
+-	}
++	if (IS_ERR(iommu->pclk))
++		return dev_err_probe(iommu->dev, PTR_ERR(iommu->pclk),
++				     "could not get smmu_pclk\n");
+ 
+ 	ret = clk_prepare(iommu->pclk);
+-	if (ret) {
+-		dev_err(iommu->dev, "could not prepare smmu_pclk\n");
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(iommu->dev, ret,
++				     "could not prepare smmu_pclk\n");
+ 
+ 	iommu->clk = devm_clk_get(iommu->dev, "iommu_clk");
+ 	if (IS_ERR(iommu->clk)) {
+-		dev_err(iommu->dev, "could not get iommu_clk\n");
+ 		clk_unprepare(iommu->pclk);
+-		return PTR_ERR(iommu->clk);
++		return dev_err_probe(iommu->dev, PTR_ERR(iommu->clk),
++				     "could not get iommu_clk\n");
+ 	}
+ 
+ 	ret = clk_prepare(iommu->clk);
+ 	if (ret) {
+-		dev_err(iommu->dev, "could not prepare iommu_clk\n");
+ 		clk_unprepare(iommu->pclk);
+-		return ret;
++		return dev_err_probe(iommu->dev, ret, "could not prepare iommu_clk\n");
+ 	}
+ 
+ 	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	iommu->base = devm_ioremap_resource(iommu->dev, r);
+ 	if (IS_ERR(iommu->base)) {
+-		dev_err(iommu->dev, "could not get iommu base\n");
+-		ret = PTR_ERR(iommu->base);
++		ret = dev_err_probe(iommu->dev, PTR_ERR(iommu->base), "could not get iommu base\n");
+ 		goto fail;
+ 	}
+ 	ioaddr = r->start;
+-- 
+2.34.1
 
