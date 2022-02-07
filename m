@@ -2,79 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CF4184AC8A7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Feb 2022 19:36:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A849E4AC915
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Feb 2022 20:03:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231640AbiBGSev (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Feb 2022 13:34:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53026 "EHLO
+        id S235940AbiBGTCm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Feb 2022 14:02:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237546AbiBGSbg (ORCPT
+        with ESMTP id S237935AbiBGS6a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Feb 2022 13:31:36 -0500
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3437C0401DA
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Feb 2022 10:31:33 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id o17so20982188ljp.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Feb 2022 10:31:33 -0800 (PST)
+        Mon, 7 Feb 2022 13:58:30 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 798EEC0401DA
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Feb 2022 10:58:29 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id o12so28690902lfg.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Feb 2022 10:58:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=NddTA8JTEM8uEkIveiNRta0hpicmCOBMWm+eYHHc8p8=;
-        b=IWuDFDU4wr0TiaPoaW3kU1CsX3fnzJMnTSop6BprigMbs90GF/cdHHKM7rF4pEE4WI
-         mlnsP6VI6SmNyZwlryimRJDrModfe4+U0uePAo3vb+Fs1P4LVlM01a1vuwmcJzJ+BhX9
-         wtQPBaN2qUPAsTj2NK+NDnBb3I/LUZ88RqBsmpSKjeyqnjz51RecaN3iv/qBt3t4KPvF
-         2iU5WBPtOTJK+k/hpKekECzjJeqwgBrjVf+BChiVNpM7iNRl8hGf+CfiNeFxpn+CiP56
-         i5jvxeRyGK/0RA3BvUIhXR+1zUdYau+UqwYjmWEtlOe/JxNutp5y7uzP6KbCSod2Wj6R
-         s87w==
+        d=snejp.pl; s=gmail;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3LaHo6rvtgMcP8htqnUDS9n4P7x108y6xlwp9X2USgE=;
+        b=D8LO7Cp2X8nXGl9l4bEBN8T8rjc4viTIRYcSoGaXpPafonUU736OG7ppuUjLJNqjhP
+         EC2VlIyOuD7Zk0uBYOac7v/iHRr6QKfQFuSNeHBdQiuhmNpUJwnbIKYZDsy19JCfl0gr
+         mrco6P1ON+hhUS6ksqzRB7E0odpVgvjzSx5UuzMIgyIAwhACHVTuBCQiUd6Hkqpo2juJ
+         iMfZ9h4CK74NiGKF6qficn8pBiKdcS8twcb5smYZ5hvjH+q1MOh0Bh+96hMq1y7bUhtB
+         SuSx3DcOgJHKX0A4wLb0Fr9V/xyAw5tOZGLIKYo7RgABRLV1gdSDpqoUbWRUQyNlOvn8
+         U8qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=NddTA8JTEM8uEkIveiNRta0hpicmCOBMWm+eYHHc8p8=;
-        b=ISNVyEg500yE0PBfxxoP2nR1TWQpF4BaYRi2pGn1uXvwYkVNBVGkN82zubnd4G1/0Q
-         LkoTSG5FGkLL0iZgMgSmn+uROvbWWixnvBN5JineI/AnDrwkp8P8HbEKpptH4qTVxINI
-         Ya4Am0qdx8RrMvBD+mqXzpXAl9TCdydakmfL+KIzfEJXKWVFpPDcEIXoSLyBAboax2Uo
-         6YQst3pnS/FB+UbfsARmeT2KH2NmfYZJqR4Zu1CiCQZSg0K2hVkmtCyc+4dEgXtV83dw
-         VlH7WVB4Yq+SQovHMmCj6+GcFH5mTM7E+t12uYqmLWym7gAYWA3cBPhqufwXo1aLohy/
-         MQ0A==
-X-Gm-Message-State: AOAM533cNEeGlnriouKzAAMMu56kVbl2xwSEqGRbBfqk4aFMsk2EckQq
-        CfL51+r8G7yF/QQvz1U2WitXmg==
-X-Google-Smtp-Source: ABdhPJzS7ltlwsGJn6FZ15E+lK+3hhf4ZXz0pU4Wl811KANBgWF+2pB0plDEmASKTBGFh0MNaO8llA==
-X-Received: by 2002:a2e:9847:: with SMTP id e7mr499578ljj.238.1644258692051;
-        Mon, 07 Feb 2022 10:31:32 -0800 (PST)
-Received: from [192.168.0.102] ([217.71.236.28])
-        by smtp.gmail.com with ESMTPSA id y17sm81028lfk.57.2022.02.07.10.31.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Feb 2022 10:31:31 -0800 (PST)
-Subject: Re: [PATCH 2/9] dt-bindings: i2c: qcom-cci: add description of a
- vbus-supply property
-To:     Mark Brown <broonie@kernel.org>, Wolfram Sang <wsa@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linus.walleij@linaro.org, Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220203164629.1711958-1-vladimir.zapolskiy@linaro.org>
- <20220203164629.1711958-3-vladimir.zapolskiy@linaro.org>
- <Yf1q+wlXo2LAeZX+@ripper> <Yf1zhojUSxlMNZgV@sirena.org.uk>
- <Yf14LADJ26G9ByZu@ripper> <Yf1/X1rXm4QbyoFN@sirena.org.uk>
- <846cdc17-891d-2ee4-fc89-7cf6fbdebc1d@linaro.org>
- <YgEvN0lXXu4lDCN5@sirena.org.uk>
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Message-ID: <682b7ffe-e162-bcf7-3c07-36b3a39c25ab@linaro.org>
-Date:   Mon, 7 Feb 2022 20:31:30 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+        bh=3LaHo6rvtgMcP8htqnUDS9n4P7x108y6xlwp9X2USgE=;
+        b=nIgNZjjD48jHYXnf8DXHOyMk69T8S1y5pRw26YKjxjMzqlG2t71xtI+g7jT6C6saWH
+         pEdD59TDlJpMTLF53Qq4YNIz3qt/jMmTqVVpvroQntg6gbK39soUW1h/08jiIhDHhx9c
+         cWq23erUa3qk0SelyXxhs1tC7QilRzsMBQUJ4SD99/SMkvxSgHI9oP5P/1bJInOrVDRt
+         /vC5pqcpwc2xqKrweJ323FGznGggkhNXxx1zgPgnix50rx5dryHaDuP423HDXpgvi2Fl
+         r7lbsXw6eIBCBBb/Qp6sDHO3SU7TQ8swEBx9wq+/pEWc7S8YYNKWsFGwZgCuZeK6oJ+T
+         c6SA==
+X-Gm-Message-State: AOAM531OdPmcnUX5cGQSMLhaMkDlxIU5EpMBUglU2VQoeesXO4AebyOU
+        cFS+NfNT6a3A2xH94MaFTw/NdQ==
+X-Google-Smtp-Source: ABdhPJy7hF9qyrjjwqDLWp1ssuOOYsjTj6/kbGKEPEQ5kxUhYNM2m+buO4lTDiqRDRg/eDazjC+PNg==
+X-Received: by 2002:ac2:52a8:: with SMTP id r8mr616293lfm.220.1644260307759;
+        Mon, 07 Feb 2022 10:58:27 -0800 (PST)
+Received: from Lenovo330 ([82.160.139.10])
+        by smtp.gmail.com with ESMTPSA id k10sm1599061lfo.187.2022.02.07.10.58.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Feb 2022 10:58:27 -0800 (PST)
+Received: from localhost (Lenovo330 [local])
+        by Lenovo330 (OpenSMTPD) with ESMTPA id 72d7be41;
+        Mon, 7 Feb 2022 18:58:26 +0000 (UTC)
+From:   Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+To:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, Luca Weiss <luca@z3ntu.xyz>
+Cc:     Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+Subject: [PATCH v2 0/2] MSM8226 Multimedia Clock Controller
+Date:   Mon,  7 Feb 2022 19:54:09 +0100
+Message-Id: <20220207185411.19118-1-bartosz.dudziak@snejp.pl>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <YgEvN0lXXu4lDCN5@sirena.org.uk>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,41 +78,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/7/22 4:39 PM, Mark Brown wrote:
-> On Mon, Feb 07, 2022 at 04:08:01PM +0200, Vladimir Zapolskiy wrote:
->> On 2/4/22 9:32 PM, Mark Brown wrote:
-> 
->>> Oh, good.  I forsee no problems here.  Probably this is something that
->>> should be in the I2C core if it's going to be dynamically managed,
->>> though just setting the supply as always on is probably more expedient.
-> 
->> vbus-supply property has been added recently to another I2C master controller,
->> see commit c021087c43c8 ("dt-binding: i2c: mt65xx: add vbus-supply property").
-> 
-> Note that some devices do have supplies that I/O is referenced against
-> and it's not clear that this isn't what's goin on here.
->
->> It serves right the same purpose, and its handling is going to be done in i2c
->> core, however since the latter is not yet completed, I would propose to add
->> the property to i2c-bus subnodes of QCOM CCI and its support in the driver,
->> later on both the property and its generic support would be better to see in
->> i2c core.
-> 
-> The bindings are ABI, it doesn't seem like a good idea to add new ABI as
-> a temporary bodge.
+Implement the MSM8226 MMCC on the top of existing MSM8974 driver.
 
-The bindings are supposed to describe hardware, thus it's natural to extend
-them, I believe there is a trilemma in this particular case:
-1) add optional vbus-supply property to all I2C master controllers or I2C
-    busses in case of multiple I2C busses managed by a single controller,
-2) add optional vbus-supply property to all I2C slave devices,
-3) ignore peculiarities of particular (multiple in fact) PCB designs and
-    a necessity of adding a regulator finely described as a pull-up for I2C
-    bus lines.
+version 2 changes:
+-replace `of_match_device()` with `of_device_get_match_data()`
 
-My assumption is that a decision should be generic for all similar cases,
-Wolfram, could you share your point of view on the subject?
+Bartosz Dudziak (2):
+  dt-bindings: clock: Add support for the MSM8226 mmcc
+  clk: qcom: Add MSM8226 Multimedia Clock Controller support
 
---
-Best wishes,
-Vladimir
+ .../devicetree/bindings/clock/qcom,mmcc.yaml  |   1 +
+ drivers/clk/qcom/mmcc-msm8974.c               | 206 +++++++++++++++++-
+ 2 files changed, 202 insertions(+), 5 deletions(-)
+
+-- 
+2.25.1
+
