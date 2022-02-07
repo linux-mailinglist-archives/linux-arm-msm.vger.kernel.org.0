@@ -2,84 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B0DB4AB49F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Feb 2022 07:18:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6EFBE4AB573
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Feb 2022 08:02:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229620AbiBGGRs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Feb 2022 01:17:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45748 "EHLO
+        id S230121AbiBGHAX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Feb 2022 02:00:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230505AbiBGE1Y (ORCPT
+        with ESMTP id S244239AbiBGGjS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Feb 2022 23:27:24 -0500
-X-Greylist: delayed 123 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 06 Feb 2022 20:27:23 PST
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CF6BC043183;
-        Sun,  6 Feb 2022 20:27:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644208043; x=1675744043;
-  h=from:to:cc:subject:date:message-id;
-  bh=pXQ7LkOBiXdg1mQC9sP2hejVjWSd8jyBBgp1P3TOblY=;
-  b=uzPgaGlKudtQ+4oC5hDoOswWVo+jEaGlY+17B00qFZFaER2bvpMPB/jg
-   9ByLR5A3MSPS1aYSZRzEHYRPwMhbXDp3XyCNCmFe/0Z5o7BFwf0y2Jb00
-   Gkc44MRV3nabnHImb7smRtIJja3NLiC3KRG2JVIju2N7/QYN3LwEQl7cX
-   0=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 06 Feb 2022 20:25:20 -0800
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 06 Feb 2022 20:25:18 -0800
-X-QCInternal: smtphost
-Received: from hyd-lablnx377.qualcomm.com ([10.204.178.226])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 07 Feb 2022 09:55:01 +0530
-Received: by hyd-lablnx377.qualcomm.com (Postfix, from userid 4035820)
-        id 87A482152F; Mon,  7 Feb 2022 09:55:00 +0530 (IST)
-From:   Sai Teja Aluvala <quic_saluvala@quicinc.com>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, quic_hemantg@quicinc.com,
-        linux-arm-msm@vger.kernel.org, quic_bgodavar@quicinc.com,
-        quic_rjliao@quicinc.com, quic_hbandi@quicinc.com,
-        abhishekpandit@chromium.org, mcchou@chromium.org,
-        Sai Teja Aluvala <quic_saluvala@quicinc.com>
-Subject: [PATCH v1] arm64: dts: qcom: sc7280: Add bluetooth node on SC7280 crd board
-Date:   Mon,  7 Feb 2022 09:54:38 +0530
-Message-Id: <1644207878-19839-1-git-send-email-quic_saluvala@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Mon, 7 Feb 2022 01:39:18 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 859F4C043184;
+        Sun,  6 Feb 2022 22:39:17 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6330A608CC;
+        Mon,  7 Feb 2022 06:39:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02037C004E1;
+        Mon,  7 Feb 2022 06:39:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1644215955;
+        bh=x0+qU7jW+I6pS9yDRMI6eYb/c2RxQC1bhyeo7aFHyY0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hQ0Q1uPSjrKlkH+8zu3b1QjeLuuhFlRFXuI+pbSDJ3NfbIaJR9kKLKcWsg/kjF+lX
+         M5dNenFMXdjFaGtmzYbHHOL0BMwfAl8xdRZoGXDa4AMPzasTH6er+lFw1vwP24VbRM
+         8ingmHtZySUbzYn9UNfqamBqSO70IEZg7tVW2r4iEq6GCt0LrZRpe+2DU332ZsZE4c
+         DEt7pG6yPpEVk1o9P5MDYPOLmjxuYpgRw4m/vxAzKQ0nA/IvxPN+2f33beEeZD/rcP
+         O96G7vOJuzFQwxcayzcP/1YEFLmHx84iRX52XLJKH5vIhRWsYR1gWXoO4S11kKig5x
+         Vx+28MxMz4zzA==
+Date:   Mon, 7 Feb 2022 12:09:08 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
+        loic.poulain@linaro.org, jhugo@codeaurora.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-kernel <linux-kernel@vger.kernel.org>
+Subject: Re: [BUG] bus: mhi: possible deadlock in mhi_pm_disable_transition()
+ and mhi_async_power_up()
+Message-ID: <20220207063908.GB1905@thinkpad>
+References: <d3a94b53-0d77-dafe-ce45-f9ab23278616@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d3a94b53-0d77-dafe-ce45-f9ab23278616@gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add Bluetooth SoC WCN6750 node for SC7280 crd board
+Hi,
 
-Signed-off-by: Sai Teja Aluvala <quic_saluvala@quicinc.com>
+Thanks for the report!
 
----
- arch/arm64/boot/dts/qcom/sc7280-crd.dts | 4 ++++
- 1 file changed, 4 insertions(+)
+On Sat, Jan 29, 2022 at 10:56:30AM +0800, Jia-Ju Bai wrote:
+> Hello,
+> 
+> My static analysis tool reports a possible deadlock in the mhi driver in
+> Linux 5.10:
+> 
+> mhi_async_power_up()
+>   mutex_lock(&mhi_cntrl->pm_mutex); --> Line 933 (Lock A)
+>   wait_event_timeout(mhi_cntrl->state_event, ...) --> Line 985 (Wait X)
+>   mutex_unlock(&mhi_cntrl->pm_mutex); --> Line 1040 (Unlock A)
+> 
+> mhi_pm_disable_transition()
+>   mutex_lock(&mhi_cntrl->pm_mutex); --> Line 463 (Lock A)
+>   wake_up_all(&mhi_cntrl->state_event); --> Line 474 (Wake X)
+>   mutex_unlock(&mhi_cntrl->pm_mutex); --> Line 524 (Unlock A)
+>   wake_up_all(&mhi_cntrl->state_event); --> Line 526 (Wake X)
+> 
+> When mhi_async_power_up() is executed, "Wait X" is performed by holding
+> "Lock A". If mhi_pm_disable_transition() is concurrently executed at this
+> time, "Wake X" cannot be performed to wake up "Wait X" in
+> mhi_async_power_up(), because "Lock A" is already hold by
+> mhi_async_power_up(), causing a possible deadlock.
+> I find that "Wait X" is performed with a timeout, to relieve the possible
+> deadlock; but I think this timeout can cause inefficient execution.
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-index cd2755c..53ea3b4 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-@@ -23,6 +23,10 @@
- 	};
- };
- 
-+&bluetooth {
-+	vddio-supply = <&vreg_l18b_1p8>;
-+};
-+
- ap_tp_i2c: &i2c0 {
- 	status = "okay";
- 	clock-frequency = <400000>;
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc.
+As per the MHI design, we can be sure that mhi_pm_disable_transition() won't be
+called until wait_event_timeout() completes in mhi_async_power_up(). So this
+deadlock is not possible in practical.
 
+Thanks,
+Mani
+
+> I am not quite sure whether this possible problem is real and how to fix it
+> if it is real.
+> Any feedback would be appreciated, thanks :)
+> 
+> 
+> Best wishes,
+> Jia-Ju Bai
+> 
+> 
+> 
