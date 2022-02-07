@@ -2,121 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BACC4AB21F
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Feb 2022 21:37:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B0DB4AB49F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Feb 2022 07:18:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234368AbiBFUhG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Feb 2022 15:37:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32980 "EHLO
+        id S229620AbiBGGRs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Feb 2022 01:17:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232618AbiBFUhE (ORCPT
+        with ESMTP id S230505AbiBGE1Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 6 Feb 2022 15:37:04 -0500
-X-Greylist: delayed 435 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 06 Feb 2022 12:37:03 PST
-Received: from ixit.cz (ip-94-112-206-30.net.upcbroadband.cz [94.112.206.30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF88FC06173B
-        for <linux-arm-msm@vger.kernel.org>; Sun,  6 Feb 2022 12:37:03 -0800 (PST)
-Received: from newone.lan (_gateway [10.0.0.1])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id A560320056;
-        Sun,  6 Feb 2022 21:29:46 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1644179386;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=mJbQE9aLpDKahWvRXxUd+4aTtXVGsiL8uHGSLEVhR0w=;
-        b=DiVIEK2kVh9/PD98+QqNQmpY4Ou7lkgRwa2gzTB9TugbXr4CV3NtvDuah7cvYqP+o2o5M+
-        GqGz8M9++antjbHwnZgxrdvou8pCCu3n3lhHzixFjSY/xA62awUPiSDEwT4xZJOlGqRPyl
-        0Vo7ufwISCVvpe1S7/Wue88q/DfGLII=
-From:   David Heidelberg <david@ixit.cz>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>
-Cc:     ~okias/devicetree@lists.sr.ht, David Heidelberg <david@ixit.cz>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] iommu/msm: simplify with dev_err_probe()
-Date:   Sun,  6 Feb 2022 21:29:45 +0100
-Message-Id: <20220206202945.465195-1-david@ixit.cz>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,PDS_RDNS_DYNAMIC_FP,
-        RDNS_DYNAMIC,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+        Sun, 6 Feb 2022 23:27:24 -0500
+X-Greylist: delayed 123 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 06 Feb 2022 20:27:23 PST
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CF6BC043183;
+        Sun,  6 Feb 2022 20:27:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1644208043; x=1675744043;
+  h=from:to:cc:subject:date:message-id;
+  bh=pXQ7LkOBiXdg1mQC9sP2hejVjWSd8jyBBgp1P3TOblY=;
+  b=uzPgaGlKudtQ+4oC5hDoOswWVo+jEaGlY+17B00qFZFaER2bvpMPB/jg
+   9ByLR5A3MSPS1aYSZRzEHYRPwMhbXDp3XyCNCmFe/0Z5o7BFwf0y2Jb00
+   Gkc44MRV3nabnHImb7smRtIJja3NLiC3KRG2JVIju2N7/QYN3LwEQl7cX
+   0=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 06 Feb 2022 20:25:20 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 06 Feb 2022 20:25:18 -0800
+X-QCInternal: smtphost
+Received: from hyd-lablnx377.qualcomm.com ([10.204.178.226])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 07 Feb 2022 09:55:01 +0530
+Received: by hyd-lablnx377.qualcomm.com (Postfix, from userid 4035820)
+        id 87A482152F; Mon,  7 Feb 2022 09:55:00 +0530 (IST)
+From:   Sai Teja Aluvala <quic_saluvala@quicinc.com>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, quic_hemantg@quicinc.com,
+        linux-arm-msm@vger.kernel.org, quic_bgodavar@quicinc.com,
+        quic_rjliao@quicinc.com, quic_hbandi@quicinc.com,
+        abhishekpandit@chromium.org, mcchou@chromium.org,
+        Sai Teja Aluvala <quic_saluvala@quicinc.com>
+Subject: [PATCH v1] arm64: dts: qcom: sc7280: Add bluetooth node on SC7280 crd board
+Date:   Mon,  7 Feb 2022 09:54:38 +0530
+Message-Id: <1644207878-19839-1-git-send-email-quic_saluvala@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use the dev_err_probe() helper to simplify error handling during probe.
-This also handle scenario, when EDEFER is returned and useless error is
-printed.
+Add Bluetooth SoC WCN6750 node for SC7280 crd board
 
-Fixes warnings as:
-msm_iommu 7500000.iommu: could not get smmu_pclk
+Signed-off-by: Sai Teja Aluvala <quic_saluvala@quicinc.com>
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
- drivers/iommu/msm_iommu.c | 24 ++++++++++--------------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7280-crd.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
-index 3a38352b603f..6e6cff5fc469 100644
---- a/drivers/iommu/msm_iommu.c
-+++ b/drivers/iommu/msm_iommu.c
-@@ -710,36 +710,32 @@ static int msm_iommu_probe(struct platform_device *pdev)
- 	INIT_LIST_HEAD(&iommu->ctx_list);
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+index cd2755c..53ea3b4 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
++++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+@@ -23,6 +23,10 @@
+ 	};
+ };
  
- 	iommu->pclk = devm_clk_get(iommu->dev, "smmu_pclk");
--	if (IS_ERR(iommu->pclk)) {
--		dev_err(iommu->dev, "could not get smmu_pclk\n");
--		return PTR_ERR(iommu->pclk);
--	}
-+	if (IS_ERR(iommu->pclk))
-+		return dev_err_probe(iommu->dev, PTR_ERR(iommu->pclk),
-+				     "could not get smmu_pclk\n");
- 
- 	ret = clk_prepare(iommu->pclk);
--	if (ret) {
--		dev_err(iommu->dev, "could not prepare smmu_pclk\n");
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(iommu->dev, ret,
-+				     "could not prepare smmu_pclk\n");
- 
- 	iommu->clk = devm_clk_get(iommu->dev, "iommu_clk");
- 	if (IS_ERR(iommu->clk)) {
--		dev_err(iommu->dev, "could not get iommu_clk\n");
- 		clk_unprepare(iommu->pclk);
--		return PTR_ERR(iommu->clk);
-+		return dev_err_probe(iommu->dev, PTR_ERR(iommu->clk),
-+				     "could not get iommu_clk\n");
- 	}
- 
- 	ret = clk_prepare(iommu->clk);
- 	if (ret) {
--		dev_err(iommu->dev, "could not prepare iommu_clk\n");
- 		clk_unprepare(iommu->pclk);
--		return ret;
-+		return dev_err_probe(iommu->dev, ret, "could not prepare iommu_clk\n");
- 	}
- 
- 	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	iommu->base = devm_ioremap_resource(iommu->dev, r);
- 	if (IS_ERR(iommu->base)) {
--		dev_err(iommu->dev, "could not get iommu base\n");
--		ret = PTR_ERR(iommu->base);
-+		ret = dev_err_probe(iommu->dev, PTR_ERR(iommu->base), "could not get iommu base\n");
- 		goto fail;
- 	}
- 	ioaddr = r->start;
++&bluetooth {
++	vddio-supply = <&vreg_l18b_1p8>;
++};
++
+ ap_tp_i2c: &i2c0 {
+ 	status = "okay";
+ 	clock-frequency = <400000>;
 -- 
-2.34.1
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc.
 
