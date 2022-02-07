@@ -2,131 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 966BB4AB839
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Feb 2022 11:01:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5038D4ABDE6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Feb 2022 13:05:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238892AbiBGJzB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Feb 2022 04:55:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34878 "EHLO
+        id S235431AbiBGLzn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Feb 2022 06:55:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352862AbiBGJim (ORCPT
+        with ESMTP id S1356746AbiBGLN0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Feb 2022 04:38:42 -0500
-Received: from mx.tkos.co.il (guitar.tcltek.co.il [84.110.109.230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13E4DC0401C0;
-        Mon,  7 Feb 2022 01:38:40 -0800 (PST)
-Received: from tarshish.tkos.co.il (unknown [10.0.8.2])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mx.tkos.co.il (Postfix) with ESMTPS id 4065A4409ED;
-        Mon,  7 Feb 2022 11:30:38 +0200 (IST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tkos.co.il;
-        s=default; t=1644226238;
-        bh=Kd4KB7a0IuAHNoAFfdMAc3/6q6mBt1QnffvQOUL1hCQ=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=SLYQTmZwAI35PLILedReLiOLWqqwYeZ6PrJVwvNyh+0cqdyI1dspGQL7N5l9fpHgn
-         NqFTwIASdoV6ghUVc9qN0yy4rAuyHCy890rchFaRczeZ4s1Ul3JLaHOMxDFXKCKNem
-         BVuWd0jN70fuGsTGr255julMy5/yqE2ogy+kmgOwIA79f0MxMKvnUiY5oANiqDNSNr
-         0oVNTNroptYTK3DV9+eEyLvWUJPAKs1vdx+WWRTp70uhe3V6fAwQdPSjjRLhxRnllP
-         iwlbae/vnwN2tiiRl3HJulay8YOX4o7JYrBGoHYR6q7JLEcUGysscN1PUCGzNVk8uH
-         Gf4Rzo0ut9VXg==
-From:   Baruch Siach <baruch@tkos.co.il>
-To:     Thierry Reding <thierry.reding@gmail.com>,
-        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Baruch Siach <baruch.siach@siklu.com>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 3/3] arm64: dts: ipq6018: add pwm node
-Date:   Mon,  7 Feb 2022 11:30:45 +0200
-Message-Id: <989c681a730f38b1a5f09dbb31552d9b974e400e.1644226245.git.baruch@tkos.co.il>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <17dd231f496d09ed8502bdd505eaa77bb6637e4b.1644226245.git.baruch@tkos.co.il>
-References: <17dd231f496d09ed8502bdd505eaa77bb6637e4b.1644226245.git.baruch@tkos.co.il>
+        Mon, 7 Feb 2022 06:13:26 -0500
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE5ADC043189;
+        Mon,  7 Feb 2022 03:13:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1644232402; x=1675768402;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=4xNbC5qCZstZuFmtgmc8pSYf6lHMJUKirKVnXS8RvWU=;
+  b=JwkmjvGoKervAdYbQ4rVD9ClJV/m6qxY+NoPiwdykovrybGfA+bR+72q
+   g6dz4yzXnUKaYrplkZRO10032XVz2jzaA4MvgsNvCryt96wzo+tcHGszq
+   RVZu3FaUvMGp8BrXBBeI8GVNl6ll5nFDLOM1VfckZGdqEmMMuhT0nF85y
+   +WYL9ciTrKMRYPAFlS3XkPBCGo0q44pxs2Mf3m70WjrSaojUMtKFzh6bm
+   dRKSDiaArWUdhlA9/0MG7zy5i7xVHDBD/7vaOn8BqhJCh3VKGqPXz4WUl
+   SRvQz/iNNX0XvyWaLq4UE59zXk154p8iLZeEsAgGtUhXHp1G6M/dfax8E
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10250"; a="273212853"
+X-IronPort-AV: E=Sophos;i="5.88,349,1635231600"; 
+   d="scan'208";a="273212853"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Feb 2022 03:13:22 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,349,1635231600"; 
+   d="scan'208";a="621513506"
+Received: from lkp-server01.sh.intel.com (HELO 9dd77a123018) ([10.239.97.150])
+  by FMSMGA003.fm.intel.com with ESMTP; 07 Feb 2022 03:13:19 -0800
+Received: from kbuild by 9dd77a123018 with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1nH1xP-0000S0-9K; Mon, 07 Feb 2022 11:13:19 +0000
+Date:   Mon, 7 Feb 2022 19:12:33 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Sai Teja Aluvala <quic_saluvala@quicinc.com>, marcel@holtmann.org,
+        johan.hedberg@gmail.com
+Cc:     kbuild-all@lists.01.org, mka@chromium.org,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        quic_hemantg@quicinc.com, linux-arm-msm@vger.kernel.org,
+        quic_bgodavar@quicinc.com, quic_rjliao@quicinc.com,
+        quic_hbandi@quicinc.com
+Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Add bluetooth node on
+ SC7280 crd board
+Message-ID: <202202071900.HBQ0tQbr-lkp@intel.com>
+References: <1644207878-19839-1-git-send-email-quic_saluvala@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        T_SPF_HELO_TEMPERROR autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1644207878-19839-1-git-send-email-quic_saluvala@quicinc.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Baruch Siach <baruch.siach@siklu.com>
+Hi Sai,
 
-Describe the PWM block on IPQ6018.
+Thank you for the patch! Yet something to improve:
 
-The PWM is in the TCSR area. Make &tcsr "simple-mfd" compatible, and add
-&pwm as child of &tcsr.
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on v5.17-rc3]
+[cannot apply to next-20220207]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-Add also ipq6018 specific compatible string.
+url:    https://github.com/0day-ci/linux/commits/Sai-Teja-Aluvala/arm64-dts-qcom-sc7280-Add-bluetooth-node-on-SC7280-crd-board/20220207-141304
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+config: arm64-randconfig-s031-20220207 (https://download.01.org/0day-ci/archive/20220207/202202071900.HBQ0tQbr-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 11.2.0
+reproduce:
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # apt-get install sparse
+        # sparse version: v0.6.4-dirty
+        # https://github.com/0day-ci/linux/commit/36d7dc511b4181b7243171a2949e2f097d799d40
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Sai-Teja-Aluvala/arm64-dts-qcom-sc7280-Add-bluetooth-node-on-SC7280-crd-board/20220207-141304
+        git checkout 36d7dc511b4181b7243171a2949e2f097d799d40
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__' O=build_dir ARCH=arm64 SHELL=/bin/bash
 
-Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All errors (new ones prefixed by >>):
+
+>> Error: arch/arm64/boot/dts/qcom/sc7280-crd.dts:26.1-11 Label or path bluetooth not found
+   FATAL ERROR: Syntax error parsing input tree
+
 ---
-v9:
-
-  Add 'ranges' property (Rob)
-
-v8:
-
-  Add size cell to 'reg' (Rob)
-
-v7:
-
-  Use 'reg' instead of 'offset' (Rob)
-
-  Add qcom,tcsr-ipq6018 (Rob)
-
-  Drop clock-names (Bjorn)
-
-v6:
-
-  Make the PWM node child of TCSR (Rob Herring)
-
-  Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
-
-v5: Use qcom,pwm-regs for TCSR phandle instead of direct regs
-
-v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
----
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index 66ec5615651d..a717fc17523d 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -258,8 +258,21 @@ tcsr_mutex_regs: syscon@1905000 {
- 		};
- 
- 		tcsr: syscon@1937000 {
--			compatible = "syscon";
-+			compatible = "qcom,tcsr-ipq6018", "syscon", "simple-mfd";
- 			reg = <0x0 0x01937000 0x0 0x21000>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges = <0x0 0x0 0x01937000 0x21000>;
-+
-+			pwm: pwm@a010 {
-+				compatible = "qcom,ipq6018-pwm";
-+				reg = <0xa010 0x20>;
-+				clocks = <&gcc GCC_ADSS_PWM_CLK>;
-+				assigned-clocks = <&gcc GCC_ADSS_PWM_CLK>;
-+				assigned-clock-rates = <100000000>;
-+				#pwm-cells = <2>;
-+				status = "disabled";
-+			};
- 		};
- 
- 		blsp_dma: dma-controller@7884000 {
--- 
-2.34.1
-
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
