@@ -2,83 +2,185 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1ED784ACAB2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Feb 2022 21:48:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 87AAC4ACADE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Feb 2022 22:09:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230087AbiBGUsD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Feb 2022 15:48:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56240 "EHLO
+        id S234981AbiBGVIk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Feb 2022 16:08:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229526AbiBGUpO (ORCPT
+        with ESMTP id S231445AbiBGVIf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Feb 2022 15:45:14 -0500
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 701E9C0401E2;
-        Mon,  7 Feb 2022 12:45:14 -0800 (PST)
-Received: by mail-oi1-f173.google.com with SMTP id r27so18396722oiw.4;
-        Mon, 07 Feb 2022 12:45:14 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=4CBvpKDtyyuhqMBdinQ0npnVmuvp9xQ/uV+Zs1POU3U=;
-        b=J5jgkxYXSAWdCJVYGVKoZLFjbw/3gBSlCCIKID+5LbwrrKJbvnCmeeUizg88ZyJEPV
-         Si0yHozg/m2e9n8qnYcrQPJltWPhLNvKNJtz0OHcnS6K0mdxDQezbq5S0Xie+YRahCjX
-         JcfIq9Q4dBYuH1s7bjzytMj9ySD8a59w+mflZc/dFMCSu8/irU+n2dy8snQ9uQa95KOX
-         JHZyskD9JggSFx3n1jTm17RHIV/osOUSnTBqoa9HSuZRK567mnCiUW/LW9UTob4jktzS
-         afwWICe3huOYMP0PJknPEyeflIcACE3tuOh2fvcoz5OPYu9vmjDfKV1+okI95oraBfKZ
-         w+0w==
-X-Gm-Message-State: AOAM532ERKoAkgbnEWnZHNrTUA7SVJvRF8QAn4+oF1g7s0eB7EcEog9k
-        6XqLrEssRd3iWKKyqa+MVw==
-X-Google-Smtp-Source: ABdhPJzhRWneseWtM0NrmN8rIoAn1dnsDFmiVKztKKTCE9meH6v+AjXkpehgBpZvAR9+EeGDabR7Ug==
-X-Received: by 2002:aca:59d4:: with SMTP id n203mr351770oib.293.1644266713798;
-        Mon, 07 Feb 2022 12:45:13 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id k10sm4434156oou.26.2022.02.07.12.45.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Feb 2022 12:45:12 -0800 (PST)
-Received: (nullmailer pid 887046 invoked by uid 1000);
-        Mon, 07 Feb 2022 20:45:11 -0000
-Date:   Mon, 7 Feb 2022 14:45:11 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     devicetree@vger.kernel.org,
-        Vamsi Krishna Gattupalli <quic_vgattupa@quicinc.com>,
-        robh+dt@kernel.org, srini@kernel.org, gregkh@linuxfoundation.org,
-        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        ekangupt@qti.qualcomm.com, linux-kernel@vger.kernel.org,
-        bkumar@qti.qualcomm.com
-Subject: Re: [PATCH v3 07/12] dt-bindings: misc: add fastrpc domain vmid
- property
-Message-ID: <YgGE1y+IbtvXD60w@robh.at.kernel.org>
-References: <20220126135304.16340-1-srinivas.kandagatla@linaro.org>
- <20220126135304.16340-8-srinivas.kandagatla@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220126135304.16340-8-srinivas.kandagatla@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+        Mon, 7 Feb 2022 16:08:35 -0500
+Received: from fwd1.porkbun.com (fwd1.porkbun.com [52.10.174.57])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B91F9C0401DC;
+        Mon,  7 Feb 2022 13:08:32 -0800 (PST)
+Received: by fwd1.porkbun.com (Postfix, from userid 497)
+        id 2B02241D0D; Mon,  7 Feb 2022 21:08:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ansari.sh;
+        s=default; t=1644268112;
+        bh=AEtROBqGP+jR5/7k+vesyxPbPrG5TrVHsHV0dRCttac=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References;
+        b=rByPbPnPa+x8igDKssb1ZXs3Nq8PdEeFMpTk2fePlNXhOqBzm8j2dILWc5UryruxT
+         4HtekvThgUKzYRxUQctWKopmhknG8Ngrovei5fGBdWXzBXgKhIe1Q0H5BvnoDShn1/
+         A4OJgFFZcntes+z+JpPQCz1xtcXqUMd+79KbVywo=
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
+Received: from webmail.porkbun.com (unknown [35.86.129.66])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        (Authenticated sender: rayyan@ansari.sh)
+        by fwd1.porkbun.com (Postfix) with ESMTPSA id 40DFA41BD1;
+        Mon,  7 Feb 2022 21:08:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ansari.sh;
+        s=default; t=1644268099;
+        bh=AEtROBqGP+jR5/7k+vesyxPbPrG5TrVHsHV0dRCttac=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References;
+        b=ZowXWhFxvTLt67TGpC0v5YQ1O65hMBhkNW0QviykJ92mkzCyS+M0GKxfAOTbGruLT
+         Ac0fhz2G2d3xa521urTiC229ZUDPenFchxg3aaHH3tlQqWZy6sHUAJs+tAmonWHGLP
+         dwzFA1tkxh76+DUKFpDSCspRn4W0gfJSvoEnbFLQ=
+MIME-Version: 1.0
+Date:   Mon, 07 Feb 2022 21:08:19 +0000
+From:   rayyan@ansari.sh
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 11/15] arm64: dts: qcom: Add PM8953 PMIC
+In-Reply-To: <20220112194118.178026-12-luca@z3ntu.xyz>
+References: <20220112194118.178026-1-luca@z3ntu.xyz>
+ <20220112194118.178026-12-luca@z3ntu.xyz>
+User-Agent: Roundcube Webmail/1.4.11
+Message-ID: <5e2c2d486c1d1f4794328f7b6c9035d1@ansari.sh>
+X-Sender: rayyan@ansari.sh
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 26 Jan 2022 13:52:59 +0000, Srinivas Kandagatla wrote:
-> From: Vamsi Krishna Gattupalli <quic_vgattupa@quicinc.com>
+On 2022-01-12 19:41, Luca Weiss wrote:
+> From: Vladimir Lypak <vladimir.lypak@gmail.com>
 > 
-> Add fastrpc domain virtual machine IDs property. This property is used to
-> setup memory protection for remote processor.
+> Add a base DT for PM8953 PMIC, commonly used with MSM8953.
 > 
-> Signed-off-by: Vamsi Krishna Gattupalli <quic_vgattupa@quicinc.com>
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 > ---
->  Documentation/devicetree/bindings/misc/qcom,fastrpc.txt | 5 +++++
->  1 file changed, 5 insertions(+)
+>  arch/arm64/boot/dts/qcom/pm8953.dtsi | 90 ++++++++++++++++++++++++++++
+>  1 file changed, 90 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/pm8953.dtsi
 > 
+> diff --git a/arch/arm64/boot/dts/qcom/pm8953.dtsi
+> b/arch/arm64/boot/dts/qcom/pm8953.dtsi
+> new file mode 100644
+> index 000000000000..102555b3f313
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/pm8953.dtsi
+> @@ -0,0 +1,90 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/* Copyright (c) 2022, The Linux Foundation. All rights reserved. */
+> +
+> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
+> +#include <dt-bindings/interrupt-controller/irq.h>
+> +#include <dt-bindings/input/linux-event-codes.h>
+> +#include <dt-bindings/spmi/spmi.h>
+> +
+> +&spmi_bus {
+> +	pmic@0 {
+> +		compatible = "qcom,pm8953", "qcom,spmi-pmic";
+> +		reg = <0 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		rtc@6000 {
+> +			compatible = "qcom,pm8941-rtc";
+> +			reg = <0x6000>, <0x6100>;
+> +			reg-names = "rtc", "alarm";
+> +			interrupts = <0x0 0x61 0x1 IRQ_TYPE_EDGE_RISING>;
+> +		};
+> +
+> +		pm8953_pon: pon@800 {
+> +			compatible = "qcom,pm8916-pon";
+> +			reg = <0x800>;
+> +			mode-bootloader = <0x2>;
+> +			mode-recovery = <0x1>;
+> +
+> +			pwrkey {
+> +				compatible = "qcom,pm8941-pwrkey";
+> +				interrupts = <0x00 0x08 0 IRQ_TYPE_EDGE_BOTH>;
+> +				debounce = <15625>;
+> +				bias-pull-up;
+> +				linux,code = <KEY_POWER>;
+> +			};
+> +
+> +			pm8953_resin: resin {
+> +				compatible = "qcom,pm8941-resin";
+> +				interrupts = <0x00 0x08 1 IRQ_TYPE_EDGE_BOTH>;
+> +				debounce = <15625>;
+> +				bias-pull-up;
+> +				status = "disabled";
+> +			};
+> +		};
+> +
+> +		temp-alarm@2400 {
+> +			compatible = "qcom,spmi-temp-alarm";
+> +			reg = <0x2400>;
+> +			interrupts = <0x0 0x24 0x0 IRQ_TYPE_EDGE_RISING>;
+> +			io-channels = <&pm8953_vadc 0x08>;
+> +			io-channel-names = "thermal";
+> +			#thermal-sensor-cells = <0x00>;
+> +		};
+> +
+> +		pm8953_vadc: vadc@3100 {
+> +			compatible = "qcom,spmi-vadc";
+> +			reg = <0x3100>;
+> +			interrupts = <0x00 0x31 0x00 0x01>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			#io-channel-cells = <1>;
+> +
+> +			die_temp@8 {
+> +				reg = <VADC_DIE_TEMP>;
+> +			};
+> +			ref_625mv@9 {
+> +				reg = <VADC_REF_625MV>;
+> +			};
+> +			ref_1250v@a {
+> +				reg = <VADC_REF_1250MV>;
+> +			};
+> +			ref_buf_625mv@c {
+> +				reg = <VADC_SPARE1>;
+> +			};
+> +			ref_gnd@e {
+> +				reg = <VADC_GND_REF>;
+> +			};
+> +			ref_vdd@f {
+> +				reg = <VADC_VDD_VADC>;
+> +			};
 
-Acked-by: Rob Herring <robh@kernel.org>
+Could you use the generic names for each VADC channel as recommended in 
+qcom,spmi-vadc.yaml?
+
+> +		};
+> +	};
+> +
+> +	pmic@1 {
+> +		compatible = "qcom,pm8953", "qcom,spmi-pmic";
+> +		reg = <1 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +	};
+> +};
