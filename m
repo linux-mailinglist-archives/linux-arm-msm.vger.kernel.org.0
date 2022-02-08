@@ -2,57 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5D494ADCC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 16:34:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D374B4ADCD9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 16:38:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380478AbiBHPeo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Feb 2022 10:34:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46576 "EHLO
+        id S1380930AbiBHPhj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Feb 2022 10:37:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380405AbiBHPeo (ORCPT
+        with ESMTP id S1380772AbiBHPhj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Feb 2022 10:34:44 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7076C061576;
-        Tue,  8 Feb 2022 07:34:43 -0800 (PST)
+        Tue, 8 Feb 2022 10:37:39 -0500
+X-Greylist: delayed 121 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 08 Feb 2022 07:37:38 PST
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95E24C061576;
+        Tue,  8 Feb 2022 07:37:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644334483; x=1675870483;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=tQYg4ns3pN6Cjly41q2OmwXQjFd76rsowbPhFUcjCls=;
-  b=a4j309wnGsxZBpzgAu73ktRgXbDL0gPPhnnBuUsD6bSI6Th/9WGmMmn9
-   CsOtEj0pQ4bYH81n9+tr/ZB7i+FF/ohfBSsJ+3BjExhBwXzci73G1I5AG
-   DoxXF5tf8SIrUrRoud8jGJsoRppksJypp3v0c319Cg8U0PcMLlIbt2wwc
-   I=;
+  t=1644334658; x=1675870658;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=QGaNOxEKruu8yndF8qxFjc24TlkwWSd/jVSLGfhcayg=;
+  b=GyuAEZVReP3J5TvFPwsKvnUL8ZnGfmBT3BU7BeGIKbI/DY0I4dDx+8/i
+   58Wyr7DoJdADalxEf5JEpizgK0RgV8TGkWBnGWTopcDTa5FwyOlpNZLJP
+   vmUxiAHrw4w/thB1Ep9G+ZWwSHKUekVu7n9a38EetnYKaGdiXvREUgQ/H
+   g=;
 Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 08 Feb 2022 07:34:43 -0800
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 08 Feb 2022 07:35:37 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Feb 2022 07:34:44 -0800
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Feb 2022 07:35:37 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 8 Feb 2022 07:34:42 -0800
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ 15.2.922.19; Tue, 8 Feb 2022 07:35:36 -0800
+Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 8 Feb 2022 07:34:38 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+ 15.2.922.19; Tue, 8 Feb 2022 07:35:33 -0800
+From:   Kathiravan T <quic_kathirav@quicinc.com>
 To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
         <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <rohitkr@codeaurora.org>, <srinivas.kandagatla@linaro.org>,
-        <dianders@chromium.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [PATCH v2 3/3] arm64: dts: qcom: sc7280: Add wcd9380 pinmux
-Date:   Tue, 8 Feb 2022 21:04:14 +0530
-Message-ID: <1644334454-16719-4-git-send-email-quic_srivasam@quicinc.com>
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     Kathiravan T <quic_kathirav@quicinc.com>
+Subject: [PATCH 0/2] Enable the GICv2m extension support for IPQ8074/IPQ6018
+Date:   Tue, 8 Feb 2022 21:05:23 +0530
+Message-ID: <1644334525-11577-1-git-send-email-quic_kathirav@quicinc.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1644334454-16719-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1644334454-16719-1-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
@@ -68,41 +62,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add pinmux to reset wcd codec, conneceted on SC7280 based platforms.
+GIC used in the IPQ8074 and IPQ6018 family of SoCs has one instance of
+GICv2m extension, which supports upto 32 MSI interrupts. This series
+enables the support for the same.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+Kathiravan T (2):
+  arm64: dts: qcom: ipq8074: enable the GICv2m support
+  arm64: dts: qcom: ipq6018: enable the GICv2m support
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index 4704a93..6b38fa1 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -594,6 +594,21 @@
- 		 */
- 		bias-pull-up;
- 	};
-+
-+	wcd938x_reset_active: wcd938x_reset_active {
-+			pins = "gpio83";
-+			function = "gpio";
-+			drive-strength = <16>;
-+			output-high;
-+	};
-+
-+	wcd938x_reset_sleep: wcd938x_reset_sleep {
-+			pins = "gpio83";
-+			function = "gpio";
-+			drive-strength = <16>;
-+			bias-disable;
-+			output-low;
-+	};
- };
- 
- &sdc1_on {
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi | 9 +++++++++
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 9 +++++++++
+ 2 files changed, 18 insertions(+)
+
 -- 
 2.7.4
 
