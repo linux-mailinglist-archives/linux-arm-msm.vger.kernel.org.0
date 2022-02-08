@@ -2,89 +2,280 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DBDAD4AE378
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 23:23:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E1FF64AE45F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 23:30:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230280AbiBHWWv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Feb 2022 17:22:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46566 "EHLO
+        id S245165AbiBHW3i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Feb 2022 17:29:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1387107AbiBHVym (ORCPT
+        with ESMTP id S1386581AbiBHW1Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Feb 2022 16:54:42 -0500
-Received: from sipsolutions.net (s3.sipsolutions.net [IPv6:2a01:4f8:191:4433::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FFD4C0612B8;
-        Tue,  8 Feb 2022 13:54:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sipsolutions.net; s=mail; h=Content-Transfer-Encoding:MIME-Version:
-        Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
-        Resent-Cc:Resent-Message-ID; bh=A+S/j9icHeYwdxH49eBPZ83QO48LwLkJGGxnQOH8gC8=;
-        t=1644357281; x=1645566881; b=Apd2a+F/6QJqcIihlzohIK5QcDkmZkPZ+wv3zJX4Yxl4Jds
-        3CDHrfcd4/ohluFaNVk+32QaaPGoaLmzjnZRLrqak0Iw1X/n9720Yxkc+Bk7McW6s7IMXxQZUV095
-        xYP8AcUpPyne4JtThVvUN7pR7D0iGTjKlNiW1ZKpcVZlf4KGeCiY4HkbSpVKdMxT/4+SBqmcoajnn
-        tGtjlOiP8bAdNJlnR7O/5js6MeQHO818fFnPBNTviNgyOkfXAfbOfaB1MTmKcR6w7Nz7jMhgmtCC8
-        hdWs01UiYNCVviiyDIUzinyjH3y7ENLg5D3VJKxsLzUn3W48UfTfXfyHLrelWfjg==;
-Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-        (Exim 4.95)
-        (envelope-from <johannes@sipsolutions.net>)
-        id 1nHYRX-00GDjC-9O;
-        Tue, 08 Feb 2022 22:54:35 +0100
-Message-ID: <c2a6e29063793eecc5c65d32af9d826544404ecc.camel@sipsolutions.net>
-Subject: Re: [PATCH] devcoredump: increase the device delete timeout to 10
- mins
-From:   Johannes Berg <johannes@sipsolutions.net>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        linux-kernel@vger.kernel.org
-Cc:     rafael@kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, swboyd@chromium.org,
-        khsieh@codeaurora.org, nganji@codeaurora.org,
-        seanpaul@chromium.org, gregkh@linuxfoundation.org,
-        dmitry.baryshkov@linaro.org, aravindh@codeaurora.org,
-        freedreno@lists.freedesktop.org
-Date:   Tue, 08 Feb 2022 22:54:34 +0100
-In-Reply-To: <a280fec2-754a-88ec-acc7-337e069e9148@quicinc.com>
-References: <1644349472-31077-1-git-send-email-quic_abhinavk@quicinc.com>
-         <8d67484c7e4b9fb4560d2eca1f71c75fde8bae0d.camel@sipsolutions.net>
-         <ebd340e4-2a02-d484-2ed0-9ee738d5b5c5@quicinc.com>
-         <c59bc1af9974484075091333a3c98a2088251321.camel@sipsolutions.net>
-         <a280fec2-754a-88ec-acc7-337e069e9148@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.42.3 (3.42.3-1.fc35) 
+        Tue, 8 Feb 2022 17:27:24 -0500
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D311C03BFC0
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Feb 2022 14:23:46 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id my12-20020a17090b4c8c00b001b528ba1cd7so404561pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Feb 2022 14:23:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=vMaF5jT9/UaEWAfDk+2t6KL6ikIYvAUy+840Rteop/E=;
+        b=j7gQSdsIWiZdmU//a2QwO46EbQ5SIOH5fWGlAvhnBWPyFq4bLW/fWbmZlxZwzUEr4f
+         8jomGnNxVxG+1yeClJtxG+wNefH84zBQj8X1Q+/CXgcqGY0ThDT1+d0SNl+SrNbcDLGZ
+         9bNGdlRDRHEbDB/cx8WWmOR4hrIdnDY9Pb6jo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=vMaF5jT9/UaEWAfDk+2t6KL6ikIYvAUy+840Rteop/E=;
+        b=aQqU5O4DM77gGFOmHfZw296qFmfwkWKqza6qv+bt639Gq0EPePxFdbrQXPOW+Dx4MV
+         yQW3AuJKBfQT6ddiqbHgJOt+0AD0pRNZYKXzo+Oukal3v65htVBDo59f09NEi7b8zxW7
+         2AgdqsoZFahIogjJTzdPQgWwA4hv7qHsW0E5+7dm/6RrJ7lQsYOldll9J3rkeigZzJeR
+         B91wh6oAyY8dxiAA12y0A4M4l82NYxCih1HhkY+S0MPEf8OuLj2m8o5CbXNE5eOEdEDk
+         p5DnWW7k6zm7cLxboI+Lvc90K5VFjfnkWrhZzgQ17ZJuqXcGlLubc8M1WwwFGtTiFCFf
+         w65g==
+X-Gm-Message-State: AOAM531vVzQOuAXdAHF+Eajx1EpN4ljLkfREc/MP9M9VdtIncKecRpMt
+        2RTi6QYGNeE4aYM6UPH1XyylMg==
+X-Google-Smtp-Source: ABdhPJxcJ61KROyKtZBAr6c9l+ods/Vf3fMBBg9aC+tckxuWCgMKjcQOdpiGoKC76Uo39dfbYIvJFQ==
+X-Received: by 2002:a17:90a:4811:: with SMTP id a17mr99117pjh.159.1644359025755;
+        Tue, 08 Feb 2022 14:23:45 -0800 (PST)
+Received: from localhost ([2620:15c:202:201:23dc:d215:b887:777d])
+        by smtp.gmail.com with UTF8SMTPSA id q2sm3684055pjj.32.2022.02.08.14.23.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Feb 2022 14:23:45 -0800 (PST)
+Date:   Tue, 8 Feb 2022 14:23:43 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        dianders@chromium.org, krzysztof.kozlowski@canonical.com,
+        thierry.reding@gmail.com, sam@ravnborg.org, airlied@linux.ie,
+        daniel@ffwll.ch, quic_kalyant@quicinc.com,
+        quic_abhinavk@quicinc.com, quic_khsieh@quicinc.com,
+        quic_mkrishn@quicinc.com
+Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: sc7280: Add support for eDP
+ panel on CRD
+Message-ID: <YgLtb8NCGKDi2uh4@google.com>
+References: <1644333525-30920-1-git-send-email-quic_sbillaka@quicinc.com>
+ <1644333525-30920-3-git-send-email-quic_sbillaka@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-malware-bazaar: not-scanned
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1644333525-30920-3-git-send-email-quic_sbillaka@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 2022-02-08 at 13:40 -0800, Abhinav Kumar wrote:
-> > 
-> I am checking what usermode sees and will get back ( I didnt see an 
-> error do most likely it was EOF ). I didnt follow the second part.
-
-I think probably it got -ENODEV, looking at kernfs_file_read_iter().
-
-> If the file descriptor read returns EOF, even if we consider them 
-> separate how will it resolve this issue?
+On Tue, Feb 08, 2022 at 08:48:43PM +0530, Sankeerth Billakanti wrote:
+> Enable the eDP display panel support without HPD on sc7280 platform.
 > 
-> My earlier questions were related to fixing it in devcoredump to detect
-> and fix it there. Are you suggesting to fix in usermode instead? How?
+> Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+> ---
 > 
+> Changes in v2:
+>   - sort node references alphabetically
+>   - improve readability
+>   - move the pwm pinctrl to pwm node
+>   - move the regulators to root
+>   - define backlight power
+>   - remove dummy regulator node
+>   - cleanup pinctrl definitions
+> 
+>  arch/arm64/boot/dts/qcom/sc7280-crd.dts | 122 ++++++++++++++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi    |   2 -
+>  2 files changed, 122 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> index e2efbdd..bff2707 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> @@ -21,6 +21,34 @@
+>  	chosen {
+>  		stdout-path = "serial0:115200n8";
+>  	};
+> +
+> +	backlight_power: backlight-power {
 
-Yeah, no, you cannot fix it in userspace.
+nit: the other fixed regulator in sc7280-idp.dtsi is called
+'nvme_3v3_regulator', if you wanted to be consistent you
+could call this backlight_3v3_regulator.
 
-But I just followed the rabbit hole down kernfs and all, and it looks
-like indeed the read would be cut short with -ENODEV, sorry.
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "backlight_power";
+> +
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <1800000>;
+> +
+> +		gpio = <&pm8350c_gpios 7 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&edp_bl_power>;
+> +	};
+> +
+> +	edp_power: edp-power {
 
-It doesn't look like there's good API for this, but it seems at least
-from the underlying kernfs POV it should be possible to get_device() in
-open and put_device() in release, so that the device sticks around while
-somebody has the file open? It's entirely virtual, so this should be OK?
+nit: see above
 
-johannes
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "edp_power";
+> +
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&tlmm 80 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&edp_panel_power>;
+> +	};
+>  };
+>  
+>  &apps_rsc {
+> @@ -76,6 +104,42 @@ ap_ts_pen_1v8: &i2c13 {
+>  	};
+>  };
+>  
+> +&edp_out {
+> +	remote-endpoint = <&edp_panel_in>;
+> +};
+> +
+> +&mdss {
+> +	status = "okay";
+> +};
+> +
+> +&mdss_edp {
+> +	status = "okay";
+> +
+> +	vdda-1p2-supply = <&vreg_l6b_1p2>;
+> +	vdda-0p9-supply = <&vreg_l10c_0p8>;
+> +};
+> +
+> +&mdss_edp_phy {
+> +	status = "okay";
+> +
+> +	vdda-1p2-supply = <&vreg_l6b_1p2>;
+> +	vdda-0p9-supply = <&vreg_l10c_0p8>;
+> +};
+> +
+> +&mdss_dp {
+
+should be before 'mdss_edp'.
+
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&dp_hot_plug_det>;
+> +	data-lanes = <0 1>;
+> +	vdda-1p2-supply = <&vreg_l6b_1p2>;
+> +	vdda-0p9-supply = <&vreg_l1b_0p8>;
+> +};
+> +
+> +&mdss_mdp {
+> +	status = "okay";
+> +};
+> +
+>  &nvme_3v3_regulator {
+>  	gpio = <&tlmm 51 GPIO_ACTIVE_HIGH>;
+>  };
+> @@ -84,7 +148,65 @@ ap_ts_pen_1v8: &i2c13 {
+>  	pins = "gpio51";
+>  };
+>  
+> +&pm8350c_pwm {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&edp_bl_pwm>;
+> +};
+> +
+> +&pm8350c_gpios {
+
+should be before 'pm8350c_pwm'
+
+> +	edp_bl_power: edp-bl-power {
+> +		pins = "gpio7";
+> +		function = "normal";
+> +		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
+> +		bias-disable;
+> +		output-low;
+> +	};
+> +
+> +	edp_bl_pwm: edp-bl-pwm {
+> +		pins = "gpio8";
+> +		function = "func1";
+> +		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
+> +		bias-disable;
+> +		output-low;
+> +	};
+> +};
+> +
+> +&soc {
+> +	edp_backlight: edp-backlight {
+> +		compatible = "pwm-backlight";
+> +
+> +		power-supply = <&backlight_power>;
+> +		pwms = <&pm8350c_pwm 3 65535>;
+> +	};
+> +
+> +	edp_panel: edp_panel {
+
+in difference to labels node names should use dashes as separator, not
+underscores (i.e. 'edp-panel')
+
+> +		compatible = "sharp,lq140m1jw46";
+> +
+> +		power-supply = <&edp_power>;
+> +		backlight = <&edp_backlight>;
+> +
+> +		ports {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			port@0 {
+> +				reg = <0>;
+> +				edp_panel_in: endpoint {
+> +					remote-endpoint = <&edp_out>;
+> +				};
+> +			};
+> +		};
+> +	};
+> +};
+> +
+>  &tlmm {
+> +	edp_panel_power: edp-panel-power {
+> +		pins = "gpio80";
+> +		function = "gpio";
+> +		bias-pull-down;
+> +	};
+> +
+>  	tp_int_odl: tp-int-odl {
+>  		pins = "gpio7";
+>  		function = "gpio";
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 3572399..f8fa716 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -3012,8 +3012,6 @@
+>  
+>  			mdss_edp: edp@aea0000 {
+>  				compatible = "qcom,sc7280-edp";
+> -				pinctrl-names = "default";
+> -				pinctrl-0 = <&edp_hot_plug_det>;
+
+This was just added a few days ago by commit 118cd3b8ec0d ("arm64: dts: qcom:
+sc7280: Add edp_out port and HPD lines"). The patch assumes that the 'Hot
+Plug Detect line (which functions as "panel ready" in eDP) is highly likely
+to be used by boards.'. If that is indeed the case and the CRD is the
+exception then it seems that deleting the two properties from the CRD DT
+would be a better solution.
