@@ -2,84 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0A4C4AD6E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 12:31:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B3E4F4AD8F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 14:16:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356470AbiBHLah (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Feb 2022 06:30:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38524 "EHLO
+        id S238410AbiBHNQJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Feb 2022 08:16:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245358AbiBHLOT (ORCPT
+        with ESMTP id S1357622AbiBHMfM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Feb 2022 06:14:19 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ADC9C03FEC0;
-        Tue,  8 Feb 2022 03:14:19 -0800 (PST)
+        Tue, 8 Feb 2022 07:35:12 -0500
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76784C03FECE
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Feb 2022 04:35:11 -0800 (PST)
+Received: by mail-oi1-x232.google.com with SMTP id s24so12671494oic.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Feb 2022 04:35:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644318859; x=1675854859;
-  h=from:to:cc:subject:date:message-id;
-  bh=7qcPX5mAFxlC0DRDNEQQXzFzZYYFYUFrOViWKGjD428=;
-  b=Wkht6RhTw69j/TbeQpbtIMcDmb/yKfvNtOU34AbHuhxG0fmr87S40vZ0
-   EP6TVMes/GPSZA7ot4bpvE2D7RI1kYA+dMWcQP/rTVl7okX0ZcnqbtHpi
-   nJuGswLzXTRP5d1vUf2kfiRe99RkqusweUjH7qihgjRYxe51SkOjOiAC1
-   U=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 08 Feb 2022 03:14:19 -0800
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 08 Feb 2022 03:14:17 -0800
-X-QCInternal: smtphost
-Received: from hyd-lablnx377.qualcomm.com ([10.204.178.226])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 08 Feb 2022 16:43:59 +0530
-Received: by hyd-lablnx377.qualcomm.com (Postfix, from userid 4035820)
-        id E224A213DB; Tue,  8 Feb 2022 16:43:58 +0530 (IST)
-From:   Sai Teja Aluvala <quic_saluvala@quicinc.com>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com,
-        bjorn.andersson@linaro.org
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, quic_hemantg@quicinc.com,
-        linux-arm-msm@vger.kernel.org, quic_bgodavar@quicinc.com,
-        quic_rjliao@quicinc.com, quic_hbandi@quicinc.com,
-        abhishekpandit@chromium.org, mcchou@chromium.org,
-        Sai Teja Aluvala <quic_saluvala@quicinc.com>
-Subject: [PATCH v2] arm64: dts: qcom: sc7280: setting the vddio supply for Bluetooth node on CRD
-Date:   Tue,  8 Feb 2022 16:43:23 +0530
-Message-Id: <1644318803-14950-1-git-send-email-quic_saluvala@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        d=kali.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=DCySzda80keBjyEDz1S/bpNT7VXpJeMj45VaQ6BvJBU=;
+        b=GYXq0lDGikvfNxjZHaTsvUsWpAWeKdn/6UGfEb3FFoeFYlD6bUY/0nlap/7s/pq9z0
+         3APdNRdEg8kXTQRccdTBPHnxP3GBaS0NEchX/eBUqUR4B92jiN87Z4wHKHI93W+h1GYZ
+         O01ad+euhCHLjSgemVx7XVtX2vVMua5t5NA/HKNu/iBinrg6OW/pUCc0JBP8TDRLmCMr
+         ZKk6vQVBcB2EhjBtCbdEacoZR+NRfxwQhTZxe37GS23drZkY2ti8E6eQYLVWDrMG1Vzo
+         V5ubSMJ8oprLEnkCN0Jeu1iX3/Hc0ivMOH7TFz1fxkcyb/1RylYGfs6YEKfxH6vmadAF
+         kx6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=DCySzda80keBjyEDz1S/bpNT7VXpJeMj45VaQ6BvJBU=;
+        b=0mEULYDnqz+N3sr9iJGaHz+ZtlEzSSFrrpHKhHLZF2aDxp+q8fw6LZBqZf5uo/DtNN
+         2s05/S1WerajBZlzg0vKcdEKz1ROz5MEmEFlt1hfQkVEdoWQAL7uTTWcd9+HUf5tU91p
+         BZUac6452OuHM2UOIbURDs+DESfeVzhbWVYZ8NryLGe5p23w7WjgEKYzHbFMTLBKrkUb
+         iGs5UV1Cw5Afj85HWmxlLq2wWp/BJ7igWXHzMhIlvAx5WlCJUYkXzmqizlNYkiP3EKRp
+         p1KKr1M2RNpXEaz1EQ19SYnq6sGzJ2UbuuDCWxC0crHsNTayvTkwW78BlGTyttICfbJC
+         VIjA==
+X-Gm-Message-State: AOAM533LmpFnqleq8RZi09u/9x+zjHIfm7XgpRksp76ZTSJejcXfeLPE
+        4ykrI4GeqAkBw7byVhJSSKYM0g==
+X-Google-Smtp-Source: ABdhPJxMAYh+r5RkZzZHsVmSNGS1wg9WOJ//Irolb0godaB76n0KtYv/ryyD2/ywrLKHBEIpmQyf+w==
+X-Received: by 2002:a05:6808:211e:: with SMTP id r30mr411574oiw.6.1644323710858;
+        Tue, 08 Feb 2022 04:35:10 -0800 (PST)
+Received: from [192.168.11.51] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
+        by smtp.gmail.com with ESMTPSA id bc36sm5211916oob.45.2022.02.08.04.35.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Feb 2022 04:35:10 -0800 (PST)
+Message-ID: <300f9ec9-da52-235f-ea3c-b49bdc8bfb75@kali.org>
+Date:   Tue, 8 Feb 2022 06:35:08 -0600
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.5.1
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: c630: Add backlight controller
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220208041606.144039-1-bjorn.andersson@linaro.org>
+From:   Steev Klimaszewski <steev@kali.org>
+In-Reply-To: <20220208041606.144039-1-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-setting the vddio supply for Bluetooth SoC WCN6750 node
-on SC7280 crd board
 
-Signed-off-by: Sai Teja Aluvala <quic_saluvala@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280-crd.dts | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-index cd2755c..53ea3b4 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-@@ -23,6 +23,10 @@
- 	};
- };
- 
-+&bluetooth {
-+	vddio-supply = <&vreg_l18b_1p8>;
-+};
-+
- ap_tp_i2c: &i2c0 {
- 	status = "okay";
- 	clock-frequency = <400000>;
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc.
-
+On 2/7/22 10:16 PM, Bjorn Andersson wrote:
+> The Lenovo Yoga C630 uses the PWM controller in the TI SN65DSI86 bridge
+> chip to provide a signal for the backlight control and has TLMM GPIO 11
+> attached to some regulator that drives the backlight.
+>
+> Unfortunately the regulator attached to this gpio is also powering the
+> camera, so turning off backlight result in the detachment of the camera
+> as well.
+>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 8 ++++++++
+>   1 file changed, 8 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> index 58845a14805f..55fb7302245b 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> @@ -59,6 +59,7 @@ mode {
+>   	panel {
+>   		compatible = "boe,nv133fhm-n61";
+>   		no-hpd;
+> +		backlight = <&backlight>;
+>   
+>   		ports {
+>   			port {
+> @@ -98,6 +99,12 @@ sn65dsi86_refclk: sn65dsi86-refclk {
+>   
+>   		clock-frequency = <19200000>;
+>   	};
+> +
+> +	backlight: backlight {
+> +		compatible = "pwm-backlight";
+> +		pwms = <&sn65dsi86 1000000>;
+> +		enable-gpios = <&tlmm 11 GPIO_ACTIVE_HIGH>;
+> +	};
+>   };
+>   
+>   &adsp_pas {
+> @@ -419,6 +426,7 @@ sn65dsi86: bridge@2c {
+>   		clock-names = "refclk";
+>   
+>   		no-hpd;
+> +		#pwm-cells = <1>;
+>   
+>   		ports {
+>   			#address-cells = <1>;
+Tested-by: Steev Klimaszewski <steev@kali.org>
