@@ -2,81 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 803624ACB84
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Feb 2022 22:45:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F1014ACD86
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 02:08:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241468AbiBGVpI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Feb 2022 16:45:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59220 "EHLO
+        id S1343922AbiBHBGg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Feb 2022 20:06:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235505AbiBGVpI (ORCPT
+        with ESMTP id S1343966AbiBHAR1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Feb 2022 16:45:08 -0500
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 102E4C061355;
-        Mon,  7 Feb 2022 13:45:08 -0800 (PST)
-Received: by mail-ot1-f49.google.com with SMTP id n6-20020a9d6f06000000b005a0750019a7so11870286otq.5;
-        Mon, 07 Feb 2022 13:45:08 -0800 (PST)
+        Mon, 7 Feb 2022 19:17:27 -0500
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD91CC061A73
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Feb 2022 16:17:26 -0800 (PST)
+Received: by mail-pf1-x42d.google.com with SMTP id i186so15938215pfe.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Feb 2022 16:17:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qa8nRRq7La+ePNvAYQN25AB/Dkqw4RLGBac/uizNapc=;
+        b=BYCyTLpFbAjJTU6RHckyUagUkCaBidw8jqLtHxiBGZ/TMfCh+6O/0Snj0cMZ1puh0S
+         uYDNk0hTL+QekX34gKoIEa0F1tt4xC3CHNWKNfr9b0ETucRKUrr3yeblGqHNAUur7Bis
+         bflpEEt3adM3BKkVN71bUHSUbIJXEC1hpB194=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=EucQ1HDPzTdjlFQmTZFP5fOCWRcSfTcvpkCUM8lpbHM=;
-        b=KRnuWdDo+sx61UYckKuaLEaVf4Lh8+ZNAcI9Rd3C+ln5dTA4co0asDE4oOUdoy8yFR
-         UuX/BhY2ZcY0o4Nruw9OqcxSUa3hLL627WB9CxIEkFY592AvgmMSv9dvfQ6906Zq2DVi
-         WOdndZEqUxBkD4nj+y+bj/x3eJOCm7+MIT3UK/0J6WSOdub352cYX32WLN/GrrGUJYOf
-         Yuof4pR96lGTey5R9PYUAIf7G9qYRvxuqRXa3KMZrEHXnzVlB6HdzVoiLlkGXWu8WnK0
-         Dnf4UBc8p8VbUMRbPza6NAfXe6YXy4Dx1Qe5+/NoXG5PyaItc+PulbEWpbeKYSRSpnYd
-         4dpQ==
-X-Gm-Message-State: AOAM53298e8KVTKS9iCB+2bNyFYSaoNtqcrmW40mnCMubspeI2jqsBes
-        mvDn8cxpb2OxKyjyWVYVFQ==
-X-Google-Smtp-Source: ABdhPJzvL7RVEbrfjUFInk8fOjM3ePzlL4+uLEqKjZgJD/j8eVPpQosYwuo5PcbJuBopaboqZec3cg==
-X-Received: by 2002:a05:6830:1284:: with SMTP id z4mr721865otp.338.1644270307330;
-        Mon, 07 Feb 2022 13:45:07 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id q18sm4393063otf.54.2022.02.07.13.45.05
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qa8nRRq7La+ePNvAYQN25AB/Dkqw4RLGBac/uizNapc=;
+        b=pCeXks3D8eTTUO4fL9Gf4cvhF50Vm74gCMX1eALJbD9pkkekhOlDMuHvLHc03Q9t/f
+         sWQk/VOBK3xJL5nJtMU5p88MNfifdnJt6IiNpmzof6hFisuNWgvcCuGwoEwjvuPRxH6t
+         o0xBCbLy5E3nuYloWpI4Re2qtolwV2X0auTzUJ3Bvlf3rTLWFWU3RfdfUvQppJaHiSfg
+         CKpNHT2eehMVwdHBomHJ35YLHXmtPZxa8GPDT1MqKRbDSu7ASKkL8yTnAufqN0TMfjtX
+         u+A4smUHqpSIcJjdlRozd84nY6HC05CWK4rJc3z7yfWK1HGzRj+kXYPoA9n6YEBXjWiM
+         NweQ==
+X-Gm-Message-State: AOAM531FrBLST/uj+NUL5iluiH0kMCMABfyLK3N/JVqh5niGOlhPt5PG
+        mTwP23dzdUxyrySeS+lh2zqyqg==
+X-Google-Smtp-Source: ABdhPJygKdc6xNR6j7YG2/jk9p/HVmxGlPDfdBoX3re4AlFyciQoFr9C4uvoSniH6pqktdxztYyKlw==
+X-Received: by 2002:a63:b207:: with SMTP id x7mr1470669pge.392.1644279446187;
+        Mon, 07 Feb 2022 16:17:26 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:6c4d:c442:5b4:f597])
+        by smtp.gmail.com with ESMTPSA id mz4sm456185pjb.53.2022.02.07.16.17.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Feb 2022 13:45:06 -0800 (PST)
-Received: (nullmailer pid 977329 invoked by uid 1000);
-        Mon, 07 Feb 2022 21:45:05 -0000
-Date:   Mon, 7 Feb 2022 15:45:05 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     David Collins <quic_collinsd@quicinc.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        David Dai <daidavid1@codeaurora.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH v3 1/2] dt-bindings: spmi: Add qcom,bus-id
-Message-ID: <YgGS4b+8c4xmy0H5@robh.at.kernel.org>
-References: <20220201134108.2677578-1-vkoul@kernel.org>
- <20220201134108.2677578-2-vkoul@kernel.org>
+        Mon, 07 Feb 2022 16:17:25 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     quic_mkrishn@quicinc.com, linux-arm-msm@vger.kernel.org,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        robdclark@gmail.com, quic_khsieh@quicinc.com,
+        quic_abhinavk@quicinc.com, linux-phy@lists.infradead.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [REPOST PATCH v1 0/3] Add support for eDP PHY on SC7280 platform
+Date:   Mon,  7 Feb 2022 16:17:01 -0800
+Message-Id: <20220208001704.367069-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.35.0.263.gb82422642f-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220201134108.2677578-2-vkoul@kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 01 Feb 2022 19:11:07 +0530, Vinod Koul wrote:
-> PMIC arbiter version 7 and beyond we need to define if we are using
-> primary or secondary bus, so add a new property of qcom,bus-id
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  .../devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml  | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
+This is a repost of the patch series that Sankeerth Billakanti posted
+back in November. As Stephen pointed out [1] a few days ago, it wasn't
+posted to the right place.
 
-Acked-by: Rob Herring <robh@kernel.org>
+I've tested this and it seems to bring the eDP up on my sc7280 board,
+so I'm re-posting it in the hopes that it can land soon-ish unless
+there's something terribly wrong with it. ;-)
+
+If it makes folks happier, I have no objections to Sankeerth's
+original patches landing. These are the exact same thing but simply
+with the addition of my Signed-off-by.
+
+[1] https://lore.kernel.org/r/CAE-0n50sONq+URcWwvDH=UPshgy6+XZEB3sK_4n+5jNktHsEhg@mail.gmail.com
+
+
+Sankeerth Billakanti (3):
+  dt-bindings: phy: Add eDP PHY compatible for sc7280
+  phy: qcom: Add support for eDP PHY on sc7280
+  phy: qcom: Program SSC only if supported by sink
+
+ Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml | 4 +++-
+ drivers/phy/qualcomm/phy-qcom-edp.c                     | 9 ++++++---
+ 2 files changed, 9 insertions(+), 4 deletions(-)
+
+-- 
+2.35.0.263.gb82422642f-goog
+
