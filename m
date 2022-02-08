@@ -2,63 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 580224AD25F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 08:40:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE5E74AD4B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 10:23:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348523AbiBHHkp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Feb 2022 02:40:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35646 "EHLO
+        id S1354087AbiBHJXm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Feb 2022 04:23:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348497AbiBHHkl (ORCPT
+        with ESMTP id S1347016AbiBHJXk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Feb 2022 02:40:41 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 559A0C0401EF;
-        Mon,  7 Feb 2022 23:40:40 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EF70761616;
-        Tue,  8 Feb 2022 07:40:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38174C004E1;
-        Tue,  8 Feb 2022 07:40:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1644306039;
-        bh=hCaoJ9viHY+9jSGZzSXxNK60/DZEM/xN7vZj/9sKfXA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=QjPNGi2j2Y6pYYNZq4wFMBTpYumZsgXxoGwPppPNbtjBXUorM+gdM6Djm98W4TjHr
-         uLW9XzYBtWFjHrwFaLIybU8f7Fx+fnzbIjUsSRSvgZN9yuyWKyidGhLdZcaG/FXlIb
-         u9lvxCXvzTTR6lJIoE07Hjd3xDeKhOIi6qa+ROO0=
-Date:   Tue, 8 Feb 2022 08:40:35 +0100
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-usb@vger.kernel.org
-Subject: Re: [PATCH 2/2] drm/msm/dp: Implement oob_hotplug_event()
-Message-ID: <YgIecy+W/lGzL6ac@kroah.com>
-References: <20220208044328.588860-1-bjorn.andersson@linaro.org>
- <20220208044328.588860-2-bjorn.andersson@linaro.org>
+        Tue, 8 Feb 2022 04:23:40 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06B0CC03FEC3
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Feb 2022 01:23:40 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id h6so10794680wrb.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Feb 2022 01:23:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=nv9eGMngUI4irs2c+oCw9hCjsOWg2bDP2XUBGqADoak=;
+        b=pjGIicdCBYz734ZtdMDLF0Vk0sQ4CQdXf13cqIefkoiIZvpwGSwsRPI7XLM+fzR/JU
+         66QDwlp33BgK6zTu5GMchSO6Ya9LIEeg4vIq/hsPX9qoPO/DBT617X9KBShEQ9HjKS3U
+         gVwWvGKzfRSOZn7GFMBRHHBpbfJhj1VVzWYRmEtM2bYZZmCn/l/ewK9rphxpSqANRpvG
+         E1nBnNFufGsa7tYM50+ZOtRY6zuv0Y53TRZq2ffG0QggCSdsLFY2h57mKKXYqGlDp4VO
+         pdzzVHt/rJ+K6LFu45fvQxTcKaMVXBNOCUfbuZEfXzpsVIs/gOslOA0VAS15MRIPWYTV
+         OKFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=nv9eGMngUI4irs2c+oCw9hCjsOWg2bDP2XUBGqADoak=;
+        b=znpL2WI9tFt3QpjY0Rd57OtzUi2ummpaSHZ0YsWS84MoXRDdE77G9yHc3CmqRlwLQ6
+         VZ556Eh7U3ZqBB3rBgxxoyC+H1v8osHf6XvLh4JYcFs/xMt5SPc6oH37FxpayIrFN4BM
+         gZRBl8NmEAaaUe8/nBQHQy9PnhxrlZU0imwDepoKGGrqsF0vrEnvYvRTzcY0J1LWXirH
+         Gl1IGYU9K5F8AK71/WEF0UJvjZRz51PwlVTSmJ0wBeoxqcKErRdgG6j1lSeHOWgtTF9Z
+         NTH51i6f8TWOVBp3Ty0ZVkoqjl/JN1NVJYui3pSQ6cQLFDiSmEJZPc+8VC5fW3DbrrNm
+         Qt1Q==
+X-Gm-Message-State: AOAM531GJxJg6f4Ui9NfV/FaqzBGen01Ynzr4D1e90xE6RSpLgpKJ+vh
+        VMWLM4TtFoXj7lrHr3vA9edMdg==
+X-Google-Smtp-Source: ABdhPJxjRg1M0ImAnVJO2McmBHHY7WjBVt9i/brwoGpY52oPDZ+DU4XInyUB2s7IiA+cTZulDHS/rg==
+X-Received: by 2002:adf:b610:: with SMTP id f16mr2693143wre.266.1644312218574;
+        Tue, 08 Feb 2022 01:23:38 -0800 (PST)
+Received: from google.com (cpc155339-bagu17-2-0-cust87.1-3.cable.virginm.net. [86.27.177.88])
+        by smtp.gmail.com with ESMTPSA id y1sm1771596wmi.36.2022.02.08.01.23.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Feb 2022 01:23:37 -0800 (PST)
+Date:   Tue, 8 Feb 2022 09:23:34 +0000
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>, Pavel Machek <pavel@ucw.cz>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/4] dt-bindings: backlight: qcom-wled: Add PM6150L
+ compatible
+Message-ID: <YgI2ltTYI/1mAxR+@google.com>
+References: <20211229170358.2457006-1-luca.weiss@fairphone.com>
+ <20211229170358.2457006-2-luca.weiss@fairphone.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220208044328.588860-2-bjorn.andersson@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20211229170358.2457006-2-luca.weiss@fairphone.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -67,78 +81,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 07, 2022 at 08:43:28PM -0800, Bjorn Andersson wrote:
-> The Qualcomm DisplayPort driver contains traces of the necessary
-> plumbing to hook up USB HPD, in the form of the dp_hpd module and the
-> dp_usbpd_cb struct. Use this as basis for implementing the
-> oob_hotplug_event() callback, by amending the dp_hpd module with the
-> missing logic.
+On Wed, 29 Dec 2021, Luca Weiss wrote:
+
+> Document the compatible for the wled block found in PM6150L.
 > 
-> Overall the solution is similar to what's done downstream, but upstream
-> all the code to disect the HPD notification lives on the calling side of
-> drm_connector_oob_hotplug_event().
-> 
-> drm_connector_oob_hotplug_event() performs the lookup of the
-> drm_connector based on fwnode, hence the need to assign the fwnode in
-> dp_drm_connector_init().
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->  drivers/gpu/drm/msm/dp/dp_display.c |  8 ++++++++
->  drivers/gpu/drm/msm/dp/dp_display.h |  2 ++
->  drivers/gpu/drm/msm/dp/dp_drm.c     | 10 ++++++++++
->  drivers/gpu/drm/msm/dp/dp_hpd.c     | 19 +++++++++++++++++++
->  drivers/gpu/drm/msm/dp/dp_hpd.h     |  4 ++++
->  5 files changed, 43 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 7cc4d21f2091..124a2f794382 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -414,6 +414,13 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
->  	return dp_display_process_hpd_high(dp);
->  }
->  
-> +void dp_display_oob_hotplug_event(struct msm_dp *dp_display, bool hpd_state)
-> +{
-> +	struct dp_display_private *dp = container_of(dp_display, struct dp_display_private, dp_display);
-> +
-> +	dp->usbpd->oob_event(dp->usbpd, hpd_state);
-> +}
-> +
->  static int dp_display_usbpd_disconnect_cb(struct device *dev)
->  {
->  	struct dp_display_private *dp = dev_get_dp_display_private(dev);
-> @@ -1251,6 +1258,7 @@ static int dp_display_probe(struct platform_device *pdev)
->  	dp->pdev = pdev;
->  	dp->name = "drm_dp";
->  	dp->dp_display.connector_type = desc->connector_type;
-> +	dp->dp_display.dev = &pdev->dev;
+>  Documentation/devicetree/bindings/leds/backlight/qcom-wled.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
-You did not properly reference count this pointer you just saved.  What
-is to keep that pointer from going away without you knowing about it?
+Applied, thanks.
 
-And you already have a pointer to pdev, why save another one here?
-
->  
->  	rc = dp_init_sub_modules(dp);
->  	if (rc) {
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-> index e3adcd578a90..1f856b3bca79 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
-> @@ -11,6 +11,7 @@
->  #include "disp/msm_disp_snapshot.h"
->  
->  struct msm_dp {
-> +	struct device *dev;
->  	struct drm_device *drm_dev;
->  	struct device *codec_dev;
-
-So you now have pointers to 3 different devices here?  What does 'dev'
-point to that the other ones do not?  This needs to be documented really
-well here.
-
-thanks,
-
-greg k-h
+-- 
+Lee Jones [李琼斯]
+Principal Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
