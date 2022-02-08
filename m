@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 80D7E4ADD7C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 16:50:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 01AF54ADDA3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 16:52:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239453AbiBHPuN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Feb 2022 10:50:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59682 "EHLO
+        id S238558AbiBHPwP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Feb 2022 10:52:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345827AbiBHPuM (ORCPT
+        with ESMTP id S244265AbiBHPwO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Feb 2022 10:50:12 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7979DC061578
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Feb 2022 07:50:11 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id e3so17593989wra.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Feb 2022 07:50:11 -0800 (PST)
+        Tue, 8 Feb 2022 10:52:14 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2C1DC06157B
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Feb 2022 07:52:11 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id k18so31548692wrg.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Feb 2022 07:52:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=ZdCv/e4Lout+hSyC3wopJXpraLZXoqzrPsSBbu5nCgE=;
-        b=k8MjIvKrepUHPzOaub+Mhfb8DEajKGDJ/KanDQokW8TtzeUlgriV1KUiSrICmn/NdT
-         A54lEz78IAphFK/sNe0G5T0XEYo6Un0B4fN7g5TLvFS9k78KlUVjl28ode3e07uoswJj
-         Nb3RgaFDl+b3kV7vWai0upxvqtm37GczB3xpFW+magR1HcPfGUgvEKR5uS2hMXfnBYJV
-         c2VO7Mxq3vDpSHSjBszHvrPFPZf+w4WAGeUczlNS4ZULmt/jEhzHRm6EO2T6FrzEoxWl
-         5GI1ZLDWyeWL5yGkBSoNY1Vi1tRtgXIkcIk7nh6xNcpsv36vYgmUoltzQOCq+hsgBXBw
-         +Fwg==
+        bh=6oXg4Jj3B9xQjIaqAFM3fLctpAtmS47DYSQULyyYcAA=;
+        b=ZmCN0TwD5zfpR1hL+i7yhZ7sHOiHkyV+2LHh1DCCmPa1hlUWNeTTplb2NISm3IpBXs
+         TL/n5fgI893+GUe4KN5COGUy+2YhjUC2DtySCrOyuoygRlD9zBJQaOTi6jROC91fGaxQ
+         mZvlNuQQQZz2JmyO1irBv6LzOAziHKg3E3+f/m/KikHQf53NUVaM3YigX/uEu0u1AhDj
+         U6k9C7QwLt27E26fF8ikOTfuphXDXutuFogpfL0OZkgV3ObMYyeWxyiq5J+J8m3YqpUq
+         e7e0JzCd+gXy/O8i4MPrD0tf9LWVqe3N3qwJPxD8f/XtKtr+uBk+ZE7jwoWVFeu8M5yu
+         BZYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=ZdCv/e4Lout+hSyC3wopJXpraLZXoqzrPsSBbu5nCgE=;
-        b=6nio5/+uMGdRAGPUT2bp+sNJH1tNDT33uItnO1WppQULb7rddiMXpSxvA5NwqK7aNC
-         Qy3hDddGBcPzmojmE0tT2U2c2fNejGM+xZTSH2eTFh921NLuo/r/qzLSMPv+MtAssb7w
-         eaevQZ1pQ8nSWFdhmcD4r6k6phjNddgndYbJK1RZOdP/+sA2NvkIyJCC9uFvDVaLsYTV
-         q36cAH/LitXjPZ0VxjA/oLBpYCdfSEr3rpNP2s8D3GtxjJtl4seDrFIc5hsaZCt1Oj51
-         9PZWZ720+c/Onq4cjYkntacniNERjXVIAeAk5Oez29AIMAwA5jiZjZmDg7QvI6NPB1U+
-         4HoA==
-X-Gm-Message-State: AOAM5304ttyBlCIEEDC7APWJ/riXkKCznDi0ddPyLZNTggkz7isHytC5
-        5KcHm6PoM10zrFGu5gjpnNwuoMxlhlIlTw==
-X-Google-Smtp-Source: ABdhPJz4/1yJUf+OiyO/9YQQMmLN9cBM5av45NCmbvWIJYkMWk5x9XlBbBqtdzRYBiqDC37XrxwcIQ==
-X-Received: by 2002:a5d:6c67:: with SMTP id r7mr4253787wrz.500.1644335409911;
-        Tue, 08 Feb 2022 07:50:09 -0800 (PST)
+        bh=6oXg4Jj3B9xQjIaqAFM3fLctpAtmS47DYSQULyyYcAA=;
+        b=H2Ruo9ih1zherrJw/IKzxqrsf+F694ZCgcXHQdI9OcholR9UfXhuoKFTkHFv/Wg8fb
+         9ZxXhMS5zw2YvKzm/k7aW4kFqruaQVKgB/uZfvnDUpVmfKo1YT1CZ9T2WMFvPgyBbVTv
+         90BhHpgzl+e/62+esLaxPem0exBFPBbB9qsG77MydmKNtwcrNqJWQU2r4hJYhTrW22w2
+         mUzJf4kO+umUlwHsJZ/rtjYgW93mF6OCpjKidGNJ8leneDQi0LgqgosNBXMHTc8RBlaR
+         fXPA2ifxIHJjDgzQc7uizS7w4Ch1de27zum8BQRZy+2rhfUMtpjLu6+3BaO3h0Nr+7rk
+         v7vg==
+X-Gm-Message-State: AOAM530Qt/VPRW6v1GE3NilueyCMzCowYXuqMqEq0qwklW4iZFwsf6r5
+        IFly04HaO4PQJl8pCIxwPdk54RPKwPBIsg==
+X-Google-Smtp-Source: ABdhPJy7L/4LKj0W2KQsp+BjC1Ka9Iz9ZZMvlooOUqwrdj6d19WKhR4wooW515NHj/8MT5dlEyJ0ow==
+X-Received: by 2002:a05:6000:11c8:: with SMTP id i8mr4005541wrx.590.1644335530343;
+        Tue, 08 Feb 2022 07:52:10 -0800 (PST)
 Received: from localhost.localdomain (hst-221-62.medicom.bg. [84.238.221.62])
-        by smtp.gmail.com with ESMTPSA id n13sm2700503wms.8.2022.02.08.07.50.08
+        by smtp.gmail.com with ESMTPSA id m6sm15076068wrw.54.2022.02.08.07.52.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Feb 2022 07:50:09 -0800 (PST)
+        Tue, 08 Feb 2022 07:52:09 -0800 (PST)
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
 To:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
 Cc:     Vikash Garodia <vgarodia@codeaurora.org>, dikshita@codeaurora.org,
         Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH] venus: hfi_cmds: List HDR10 property as unsupported for v1 and v3
-Date:   Tue,  8 Feb 2022 17:49:57 +0200
-Message-Id: <20220208154957.630720-1-stanimir.varbanov@linaro.org>
+Subject: [PATCH] venus: venc: Fix h264 8x8 transform control
+Date:   Tue,  8 Feb 2022 17:52:04 +0200
+Message-Id: <20220208155204.630966-1-stanimir.varbanov@linaro.org>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -68,28 +68,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI HFI property is not supported
-on Venus v1 and v3.
+During encoder driver open controls are initialized via a call
+to v4l2_ctrl_handler_setup which returns EINVAL error for
+V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM v4l2 control. The control
+default value is disabled and because of firmware limitations
+8x8 transform cannot be disabled for the supported HIGH and
+CONSTRAINED_HIGH profiles.
 
-Fixes: 9172652d72f8 ("media: venus: venc: Add support for CLL and Mastering display controls")
+To fix the issue change the control default value to enabled
+(this is fine because the firmware enables 8x8 transform for
+high and constrained_high profiles by default). Also, correct
+the checking of profile ids in s_ctrl from hfi to v4l2 ids.
+
+Fixes: bfee75f73c37 ("media: venus: venc: add support for V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM control")
 Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 ---
- drivers/media/platform/qcom/venus/hfi_cmds.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/qcom/venus/venc.c       | 4 ++--
+ drivers/media/platform/qcom/venus/venc_ctrls.c | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-index 5aea07307e02..4ecd444050bb 100644
---- a/drivers/media/platform/qcom/venus/hfi_cmds.c
-+++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-@@ -1054,6 +1054,8 @@ static int pkt_session_set_property_1x(struct hfi_session_set_property_pkt *pkt,
- 		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*info);
- 		break;
- 	}
-+	case HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI:
-+		return -ENOTSUPP;
+diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+index 84bafc3118cc..adea4c3b8c20 100644
+--- a/drivers/media/platform/qcom/venus/venc.c
++++ b/drivers/media/platform/qcom/venus/venc.c
+@@ -662,8 +662,8 @@ static int venc_set_properties(struct venus_inst *inst)
  
- 	/* FOLLOWING PROPERTIES ARE NOT IMPLEMENTED IN CORE YET */
- 	case HFI_PROPERTY_CONFIG_BUFFER_REQUIREMENTS:
+ 		ptype = HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8;
+ 		h264_transform.enable_type = 0;
+-		if (ctr->profile.h264 == HFI_H264_PROFILE_HIGH ||
+-		    ctr->profile.h264 == HFI_H264_PROFILE_CONSTRAINED_HIGH)
++		if (ctr->profile.h264 == V4L2_MPEG_VIDEO_H264_PROFILE_HIGH ||
++		    ctr->profile.h264 == V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH)
+ 			h264_transform.enable_type = ctr->h264_8x8_transform;
+ 
+ 		ret = hfi_session_set_property(inst, ptype, &h264_transform);
+diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
+index 1ada42df314d..ea5805e71c14 100644
+--- a/drivers/media/platform/qcom/venus/venc_ctrls.c
++++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+@@ -320,8 +320,8 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
+ 		ctr->intra_refresh_period = ctrl->val;
+ 		break;
+ 	case V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM:
+-		if (ctr->profile.h264 != HFI_H264_PROFILE_HIGH &&
+-		    ctr->profile.h264 != HFI_H264_PROFILE_CONSTRAINED_HIGH)
++		if (ctr->profile.h264 != V4L2_MPEG_VIDEO_H264_PROFILE_HIGH &&
++		    ctr->profile.h264 != V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH)
+ 			return -EINVAL;
+ 
+ 		/*
+@@ -457,7 +457,7 @@ int venc_ctrl_init(struct venus_inst *inst)
+ 			  V4L2_CID_MPEG_VIDEO_H264_I_FRAME_MIN_QP, 1, 51, 1, 1);
+ 
+ 	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+-			  V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM, 0, 1, 1, 0);
++			  V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM, 0, 1, 1, 1);
+ 
+ 	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+ 			  V4L2_CID_MPEG_VIDEO_H264_P_FRAME_MIN_QP, 1, 51, 1, 1);
 -- 
 2.25.1
 
