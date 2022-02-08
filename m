@@ -2,88 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E38E54AD946
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 14:17:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D19654AD8F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 14:16:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349908AbiBHNQI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Feb 2022 08:16:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34078 "EHLO
+        id S1348968AbiBHNQK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Feb 2022 08:16:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238410AbiBHMyF (ORCPT
+        with ESMTP id S232193AbiBHM4J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Feb 2022 07:54:05 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B37AC03FEC0
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Feb 2022 04:54:04 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id m4so52091464ejb.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Feb 2022 04:54:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=EdOABUNENMY5hYtYPGRPZmVz5tXWbGx6V9rHvVTwsTo=;
-        b=KgFzVhnS+WwfF4ySk8R2/5G/qaN9zSc7f1Btrik8l3ywATzIA1H3npms8IV/EEj2KI
-         IEWyrGEr/Q+oBaB+rZIL/nu2xrfklQucAehi0E2n5WYRj0scoAYhI4cerIdykx1YxOFA
-         bOMwE/D9+192GSVfQxod36C2LT3HZ1niWajoU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=EdOABUNENMY5hYtYPGRPZmVz5tXWbGx6V9rHvVTwsTo=;
-        b=5/MDYXRGLAgXFJNjQB71tJlJQmNxJJRotMT/zXnwh0hoUhXUONSprJtlERPj4ocFR+
-         osp1ZYUC6eb11nwf2Y0kxBrjrbSY8VA+Md8RPKPuIXF2p39uqxnFJ1OPWx1dVBfNz2/g
-         eXxnZZmk01J3FLgSNZ1U79cQOGueECY0V1BSP4GvEaFyVSS0X8jocLQAwEcSXbc5+Tyx
-         XGMhLk0BpBwPx8VLIoOMTa8tjUxEWG2aKfdjcnxPRL6uYD1Xx20fzCHZL6yC8aQxLovw
-         sqRfXw67NdCe16hlt0Xl2USZAZIWQ+xLwAepAC6YQcPWmRhgGxy8dTSIbfxkW6Raz6i/
-         v0ww==
-X-Gm-Message-State: AOAM533+NkGkuqWUztrhOBjkVEon9Xyd4PAcPP61pAJHG8djNtTj4JB9
-        DZVg+TR+kVjw8dke4HyY5jdK5w==
-X-Google-Smtp-Source: ABdhPJyjoXx7TZnQW6xw4xjBqA0XWuDhxN1WRj0W2ugU65gZDBqDw0EPp6tl28mczrKVDEoZQx+16g==
-X-Received: by 2002:a17:906:94e:: with SMTP id j14mr3514523ejd.369.1644324842613;
-        Tue, 08 Feb 2022 04:54:02 -0800 (PST)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id d18sm4740261ejd.95.2022.02.08.04.54.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Feb 2022 04:54:01 -0800 (PST)
-Date:   Tue, 8 Feb 2022 13:53:59 +0100
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Russell King <rmk+kernel@arm.linux.org.uk>,
-        Saravana Kannan <saravanak@google.com>
-Subject: Re: [PATCH v6 02/35] component: Introduce the aggregate bus_type
-Message-ID: <YgJn57s8u2OsBGnW@phenom.ffwll.local>
-Mail-Followup-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Russell King <rmk+kernel@arm.linux.org.uk>,
-        Saravana Kannan <saravanak@google.com>
-References: <20220127200141.1295328-1-swboyd@chromium.org>
- <20220127200141.1295328-3-swboyd@chromium.org>
- <YffoqgmeUdxZ56zB@kroah.com>
- <CAKMK7uFYyQ9siB5ENHku+yVPWWM1H=TEn-NZofEKqpJnuEvMmw@mail.gmail.com>
- <YfgPkliOLorgXwVE@kroah.com>
+        Tue, 8 Feb 2022 07:56:09 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38750C03FEC0;
+        Tue,  8 Feb 2022 04:56:07 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id E4BA0B8199A;
+        Tue,  8 Feb 2022 12:56:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F3C8C340EF;
+        Tue,  8 Feb 2022 12:56:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1644324964;
+        bh=Iz6QDWYe8a6FBB91FHO8w5d3p4KkbAejk3eFgH4kqWc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=XCZhmtIv9rvQgmEv7vh4q2IVsFpx8eJK2yo5486AXmuBRltLvBFKpaQ26fZJfNsSP
+         NdweG327MQjDKhunx44GQHKn0aAeu+9keqMgrwDxm9cTpBbhOZYsYA8Ref6/o0r720
+         V+k7xA1XvwAM8gFUS3FFMnOq3dWuhCyQGolYqji9uNNSBf+H5oNj5x8NP8eyA5QTn4
+         jjHMzv2SbKSpb/GrVRIxstjVkpVR2BXLdWYae0N9euemoVqbDKihc4Iw3GIE/nzXbE
+         kl1kXcvu59nrgla8WItdKnxAcG5Z551aB6RwiOSj6EB2mTSdPfJv83RB9G56BgXp5h
+         PtX8tYhORLl7w==
+Date:   Tue, 8 Feb 2022 12:55:59 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Wolfram Sang <wsa@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linus.walleij@linaro.org, Loic Poulain <loic.poulain@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/9] dt-bindings: i2c: qcom-cci: add description of a
+ vbus-supply property
+Message-ID: <YgJoX+Ajgt4dweQJ@sirena.org.uk>
+References: <20220203164629.1711958-1-vladimir.zapolskiy@linaro.org>
+ <20220203164629.1711958-3-vladimir.zapolskiy@linaro.org>
+ <Yf1q+wlXo2LAeZX+@ripper>
+ <Yf1zhojUSxlMNZgV@sirena.org.uk>
+ <Yf14LADJ26G9ByZu@ripper>
+ <Yf1/X1rXm4QbyoFN@sirena.org.uk>
+ <846cdc17-891d-2ee4-fc89-7cf6fbdebc1d@linaro.org>
+ <YgEvN0lXXu4lDCN5@sirena.org.uk>
+ <682b7ffe-e162-bcf7-3c07-36b3a39c25ab@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="MNHkY84JL65Tm1Wd"
 Content-Disposition: inline
-In-Reply-To: <YfgPkliOLorgXwVE@kroah.com>
-X-Operating-System: Linux phenom 5.10.0-8-amd64 
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <682b7ffe-e162-bcf7-3c07-36b3a39c25ab@linaro.org>
+X-Cookie: This is your fortune.
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,109 +69,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 31, 2022 at 05:34:26PM +0100, Greg Kroah-Hartman wrote:
-> On Mon, Jan 31, 2022 at 04:15:09PM +0100, Daniel Vetter wrote:
-> > On Mon, Jan 31, 2022 at 2:48 PM Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
-> > >
-> > > On Thu, Jan 27, 2022 at 12:01:08PM -0800, Stephen Boyd wrote:
-> > > > The component framework only provides 'bind' and 'unbind' callbacks to
-> > > > tell the host driver that it is time to assemble the aggregate driver
-> > > > now that all the components have probed. The component framework doesn't
-> > > > attempt to resolve runtime PM or suspend/resume ordering, and explicitly
-> > > > mentions this in the code. This lack of support leads to some pretty
-> > > > gnarly usages of the 'prepare' and 'complete' power management hooks in
-> > > > drivers that host the aggregate device, and it fully breaks down when
-> > > > faced with ordering shutdown between the various components, the
-> > > > aggregate driver, and the host driver that registers the whole thing.
-> > > >
-> > > > In a concrete example, the MSM display driver at drivers/gpu/drm/msm is
-> > > > using 'prepare' and 'complete' to call the drm helpers
-> > > > drm_mode_config_helper_suspend() and drm_mode_config_helper_resume()
-> > > > respectively, so that it can move the aggregate driver suspend/resume
-> > > > callbacks to be before and after the components that make up the drm
-> > > > device call any suspend/resume hooks they have. This only works as long
-> > > > as the component devices don't do anything in their own 'prepare' and
-> > > > 'complete' callbacks. If they did, then the ordering would be incorrect
-> > > > and we would be doing something in the component drivers before the
-> > > > aggregate driver could do anything. Yuck!
-> > > >
-> > > > Similarly, when trying to add shutdown support to the MSM driver we run
-> > > > across a problem where we're trying to shutdown the drm device via
-> > > > drm_atomic_helper_shutdown(), but some of the devices in the encoder
-> > > > chain have already been shutdown. This time, the component devices
-> > > > aren't the problem (although they could be if they did anything in their
-> > > > shutdown callbacks), but there's a DSI to eDP bridge in the encoder
-> > > > chain that has already been shutdown before the driver hosting the
-> > > > aggregate device runs shutdown. The ordering of driver probe is like
-> > > > this:
-> > > >
-> > > >  1. msm_pdev_probe() (host driver)
-> > > >  2. DSI bridge
-> > > >  3. aggregate bind
-> > > >
-> > > > When it comes to shutdown we have this order:
-> > > >
-> > > >  1. DSI bridge
-> > > >  2. msm_pdev_shutdown() (host driver)
-> > > >
-> > > > and so the bridge is already off, but we want to communicate to it to
-> > > > turn things off on the display during msm_pdev_shutdown(). Double yuck!
-> > > > Unfortunately, this time we can't split shutdown into multiple phases
-> > > > and swap msm_pdev_shutdown() with the DSI bridge.
-> > > >
-> > > > Let's make the component_master_ops into an actual device driver that has
-> > > > probe/remove/shutdown functions. The driver will only be bound to the
-> > > > aggregate device once all component drivers have called component_add()
-> > > > to indicate they're ready to assemble the aggregate driver. This allows
-> > > > us to attach shutdown logic (and in the future runtime PM logic) to the
-> > > > aggregate driver so that it runs the hooks in the correct order.
-> > >
-> > > I know I asked before, but I can not remember the answer.
-> > >
-> > > This really looks like it is turning into the aux bus code.  Why can't
-> > > you just use that instead here for this type of thing?  You are creating
-> > > another bus and drivers for that bus that are "fake" which is great, but
-> > > that's what the aux bus code was supposed to help out with, so we
-> > > wouldn't have to write more of these.
-> > >
-> > > So, if this really is different, can you document it here so I remember
-> > > next time you resend this patch series?
-> > 
-> > aux takes a device and splits it into a lot of sub-devices, each with
-> > their own driver.
-> > 
-> > This takes a pile of devices, and turns it into a single logical
-> > device with a single driver.
-> > 
-> > So aux is 1:N, component is N:1.
-> > 
-> > And yes you asked this already, I typed this up already :-)
-> 
-> Ok, thanks.  But then why is a bus needed if there's a single driver?
-> I guess a bus for that driver?  So one bus, one driver, and one device?
 
-Maybe? I have honestly no idea how this should be best modelled in the
-linux device model.
+--MNHkY84JL65Tm1Wd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> I think we need better documentation here...
+On Mon, Feb 07, 2022 at 08:31:30PM +0200, Vladimir Zapolskiy wrote:
+> On 2/7/22 4:39 PM, Mark Brown wrote:
 
-https://dri.freedesktop.org/docs/drm/driver-api/component.html?highlight=component_del#component-helper-for-aggregate-drivers
+> > The bindings are ABI, it doesn't seem like a good idea to add new ABI as
+> > a temporary bodge.
 
-There's a kerneldoc overview for component, but it's for driver authors
-that want to use component to glue different hw pieces into a logical
-driver, so it skips over these internals.
+> The bindings are supposed to describe hardware, thus it's natural to extend
+> them, I believe there is a trilemma in this particular case:
+> 1) add optional vbus-supply property to all I2C master controllers or I2C
+>    busses in case of multiple I2C busses managed by a single controller,
+> 2) add optional vbus-supply property to all I2C slave devices,
 
-And I'm honestly not sure how we want to leak implementation internals
-like the bus/driver/device structure ot users of component.c.
--Daniel
+If you add a named supply to all I2C controllers or devices then if any
+of them have an actual vbus supply there will be a namespace collision.
 
-> 
-> thanks,
-> 
-> greg k-h
+> 3) ignore peculiarities of particular (multiple in fact) PCB designs and
+>    a necessity of adding a regulator finely described as a pull-up for I2C
+>    bus lines.
 
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+There's also the option of representing this as a separate thing on or
+part of the bus.
+
+--MNHkY84JL65Tm1Wd
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmICaF4ACgkQJNaLcl1U
+h9AnBgf9HIMMDL6iR3/JslfiIXW5kstK7gnFRptY/bM55vmUXKuO/LfTrUSS7S6e
+zwfAXhBnHMl53aosIq9E/Bra3H0906AOR0S/nmiEb9q/bLDZqkngRY3qQoS0uwbr
+gyv9Hpm8qPn2tqAwjQvcUOUDsj2wKqLvrYzxA0HqksvVtN3t5ApTdOp6Ujoy7rmD
+7s6DPclKi3JdD6vn1Q7jDhYOXmLr9xSnX6VUorZe2tNniABlcRNB+LYKo9iqWUGP
+jSsmyDlwT2WDXKXTLM25cvIUVSaZBI8q5GIkb/1dfwZwIes/DyN5hxldTjYOpf0N
+wPfnM0qxGK5Zm8jy5GJo4hWWq3y4pg==
+=3YVL
+-----END PGP SIGNATURE-----
+
+--MNHkY84JL65Tm1Wd--
