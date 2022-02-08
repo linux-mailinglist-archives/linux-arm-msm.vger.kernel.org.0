@@ -2,113 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D19654AD8F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 14:16:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EAB1D4ADBC1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 15:56:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348968AbiBHNQK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Feb 2022 08:16:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34540 "EHLO
+        id S1378775AbiBHO4v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Feb 2022 09:56:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232193AbiBHM4J (ORCPT
+        with ESMTP id S1378807AbiBHO4u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Feb 2022 07:56:09 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38750C03FEC0;
-        Tue,  8 Feb 2022 04:56:07 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id E4BA0B8199A;
-        Tue,  8 Feb 2022 12:56:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F3C8C340EF;
-        Tue,  8 Feb 2022 12:56:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1644324964;
-        bh=Iz6QDWYe8a6FBB91FHO8w5d3p4KkbAejk3eFgH4kqWc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=XCZhmtIv9rvQgmEv7vh4q2IVsFpx8eJK2yo5486AXmuBRltLvBFKpaQ26fZJfNsSP
-         NdweG327MQjDKhunx44GQHKn0aAeu+9keqMgrwDxm9cTpBbhOZYsYA8Ref6/o0r720
-         V+k7xA1XvwAM8gFUS3FFMnOq3dWuhCyQGolYqji9uNNSBf+H5oNj5x8NP8eyA5QTn4
-         jjHMzv2SbKSpb/GrVRIxstjVkpVR2BXLdWYae0N9euemoVqbDKihc4Iw3GIE/nzXbE
-         kl1kXcvu59nrgla8WItdKnxAcG5Z551aB6RwiOSj6EB2mTSdPfJv83RB9G56BgXp5h
-         PtX8tYhORLl7w==
-Date:   Tue, 8 Feb 2022 12:55:59 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     Wolfram Sang <wsa@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linus.walleij@linaro.org, Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 2/9] dt-bindings: i2c: qcom-cci: add description of a
- vbus-supply property
-Message-ID: <YgJoX+Ajgt4dweQJ@sirena.org.uk>
-References: <20220203164629.1711958-1-vladimir.zapolskiy@linaro.org>
- <20220203164629.1711958-3-vladimir.zapolskiy@linaro.org>
- <Yf1q+wlXo2LAeZX+@ripper>
- <Yf1zhojUSxlMNZgV@sirena.org.uk>
- <Yf14LADJ26G9ByZu@ripper>
- <Yf1/X1rXm4QbyoFN@sirena.org.uk>
- <846cdc17-891d-2ee4-fc89-7cf6fbdebc1d@linaro.org>
- <YgEvN0lXXu4lDCN5@sirena.org.uk>
- <682b7ffe-e162-bcf7-3c07-36b3a39c25ab@linaro.org>
+        Tue, 8 Feb 2022 09:56:50 -0500
+X-Greylist: delayed 123 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 08 Feb 2022 06:56:48 PST
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B922C06157A;
+        Tue,  8 Feb 2022 06:56:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1644332208; x=1675868208;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=YQGb+3b6pl3pqDKbO+wrZjMeCmySRkEdSxC5xyXLuEc=;
+  b=KlI9zmOFC/S7hr78bVnncpHCMT7CLCGxzZq3x3p77oWRwCv0HMbR2Wkk
+   OwDrilLZ5EbHocb7FKpyGpctMZs0NNhFsH2n7Xe3kvDOA5YuLRyifholp
+   xU2JuDiEVPGnkFRqY+s58WXwN3TuD378cqtYf0DibloZlGIHDwdAs911o
+   E=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 08 Feb 2022 06:54:45 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Feb 2022 06:54:44 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 8 Feb 2022 06:54:43 -0800
+Received: from c-skakit-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 8 Feb 2022 06:54:38 -0800
+From:   Satya Priya <quic_c_skakit@quicinc.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+CC:     Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Das Srinagesh <gurus@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
+        <quic_jprakash@quicinc.com>,
+        Satya Priya <quic_c_skakit@quicinc.com>
+Subject: [PATCH V5 0/6] Add Qualcomm Technologies, Inc. PM8008 regulator driver
+Date:   Tue, 8 Feb 2022 20:22:14 +0530
+Message-ID: <1644331940-18986-1-git-send-email-quic_c_skakit@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="MNHkY84JL65Tm1Wd"
-Content-Disposition: inline
-In-Reply-To: <682b7ffe-e162-bcf7-3c07-36b3a39c25ab@linaro.org>
-X-Cookie: This is your fortune.
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Satya Priya (6):
+  dt-bindings: regulator: Add pm8008 regulator bindings
+  dt-bindings: mfd: pm8008: Add regulators node
+  mfd: pm8008: Add mfd cell struct to register LDOs
+  regulator: Add a regulator driver for the PM8008 PMIC
+  arm64: dts: qcom: pm8008: Add base dts file
+  arm64: dts: qcom: sc7280: Add pm8008 support for sc7280-idp
 
---MNHkY84JL65Tm1Wd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+ .../devicetree/bindings/mfd/qcom,pm8008.yaml       |  49 ++++-
+ .../bindings/regulator/qcom,pm8008-regulator.yaml  |  31 +++
+ arch/arm64/boot/dts/qcom/pm8008.dtsi               |  46 ++++
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi           |  66 ++++++
+ drivers/mfd/qcom-pm8008.c                          |  59 +++++-
+ drivers/regulator/Kconfig                          |   9 +
+ drivers/regulator/Makefile                         |   1 +
+ drivers/regulator/qcom-pm8008-regulator.c          | 234 +++++++++++++++++++++
+ 8 files changed, 485 insertions(+), 10 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/regulator/qcom,pm8008-regulator.yaml
+ create mode 100644 arch/arm64/boot/dts/qcom/pm8008.dtsi
+ create mode 100644 drivers/regulator/qcom-pm8008-regulator.c
 
-On Mon, Feb 07, 2022 at 08:31:30PM +0200, Vladimir Zapolskiy wrote:
-> On 2/7/22 4:39 PM, Mark Brown wrote:
+-- 
+2.7.4
 
-> > The bindings are ABI, it doesn't seem like a good idea to add new ABI as
-> > a temporary bodge.
-
-> The bindings are supposed to describe hardware, thus it's natural to extend
-> them, I believe there is a trilemma in this particular case:
-> 1) add optional vbus-supply property to all I2C master controllers or I2C
->    busses in case of multiple I2C busses managed by a single controller,
-> 2) add optional vbus-supply property to all I2C slave devices,
-
-If you add a named supply to all I2C controllers or devices then if any
-of them have an actual vbus supply there will be a namespace collision.
-
-> 3) ignore peculiarities of particular (multiple in fact) PCB designs and
->    a necessity of adding a regulator finely described as a pull-up for I2C
->    bus lines.
-
-There's also the option of representing this as a separate thing on or
-part of the bus.
-
---MNHkY84JL65Tm1Wd
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmICaF4ACgkQJNaLcl1U
-h9AnBgf9HIMMDL6iR3/JslfiIXW5kstK7gnFRptY/bM55vmUXKuO/LfTrUSS7S6e
-zwfAXhBnHMl53aosIq9E/Bra3H0906AOR0S/nmiEb9q/bLDZqkngRY3qQoS0uwbr
-gyv9Hpm8qPn2tqAwjQvcUOUDsj2wKqLvrYzxA0HqksvVtN3t5ApTdOp6Ujoy7rmD
-7s6DPclKi3JdD6vn1Q7jDhYOXmLr9xSnX6VUorZe2tNniABlcRNB+LYKo9iqWUGP
-jSsmyDlwT2WDXKXTLM25cvIUVSaZBI8q5GIkb/1dfwZwIes/DyN5hxldTjYOpf0N
-wPfnM0qxGK5Zm8jy5GJo4hWWq3y4pg==
-=3YVL
------END PGP SIGNATURE-----
-
---MNHkY84JL65Tm1Wd--
