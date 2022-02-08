@@ -2,102 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B80D14AE225
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 20:21:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C2D74AE35D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 23:22:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1385981AbiBHTV1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Feb 2022 14:21:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33766 "EHLO
+        id S232900AbiBHWWc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Feb 2022 17:22:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353732AbiBHTV1 (ORCPT
+        with ESMTP id S1386225AbiBHTop (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Feb 2022 14:21:27 -0500
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B10B1C0612C1
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Feb 2022 11:21:26 -0800 (PST)
-Received: by mail-pf1-x42d.google.com with SMTP id i17so105145pfq.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Feb 2022 11:21:26 -0800 (PST)
+        Tue, 8 Feb 2022 14:44:45 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE714C0613CB;
+        Tue,  8 Feb 2022 11:44:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=UhavSf6/PjLtcvbyACqW8jGku1F0ZcAYhxKvnz50uyk=;
-        b=U2noTsnkm3tOZvzPpceZca56VFNluoTSh6g/S3biOqsXmLxbbYc9tERNbd4yLw/ZXJ
-         84E7qCLw5V7LlIEPsju4nbV89b7LndhjrJjInhy9ANb/7DtpXIQGNYTvdG8SmfO7ZUJV
-         A98/Jx482W5M14B5nyu3Yc17XqRY6Le8ivpHI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=UhavSf6/PjLtcvbyACqW8jGku1F0ZcAYhxKvnz50uyk=;
-        b=OudtY4Biq5fKnkRYUL18NVkbvmRo5qffYM4SCxZRUpQMiVLkiRzElVJyUUtEQg5krk
-         201cPUAtps3ngNcwLgDPpJU8GOOW7VkQMQIm0nYVlvNDOuve/NDUez0s/9U6H9TGyj7H
-         nwX+3/gG6qIpq2zEoluuIrGc6I1Xo9YAVUE/0lwYbbWfTXmMrPF8o2FnrtNJEqTugcOK
-         6b4QMukW9PcuUYTDyyScMYYqVl1Yzq8Z07LKbLcc1rB0PpTGaL9hmG6rbeTToYo+Rdnn
-         XPUJR2JIWi6wlWgnPUZkaZmmomT42/8IKzmDw89Z6noHx2qaBm23L3R//GbJgrLfw0aH
-         4CVQ==
-X-Gm-Message-State: AOAM5316tjPY1+bpdd77E3aazrGz3r6PeJ0MPJxJMbnw+JYXXkrvK5ST
-        T7mRZVXS3afzzNYzaxB7JwKe1A==
-X-Google-Smtp-Source: ABdhPJz3wptJKt4/VswS/EBMC3E5DN8IXupK2rQoiNjmyWcS3/9KlyODv1tDCIcGMnVDlIcM7TKg+A==
-X-Received: by 2002:a63:4142:: with SMTP id o63mr3898654pga.425.1644348086316;
-        Tue, 08 Feb 2022 11:21:26 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:23dc:d215:b887:777d])
-        by smtp.gmail.com with UTF8SMTPSA id 38sm11947687pgm.37.2022.02.08.11.21.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Feb 2022 11:21:25 -0800 (PST)
-Date:   Tue, 8 Feb 2022 11:21:23 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Alan Stern <stern@rowland.harvard.edu>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Felipe Balbi <balbi@kernel.org>, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Peter Chen <peter.chen@kernel.org>,
-        linux-kernel@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Roger Quadros <rogerq@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        linux-usb@vger.kernel.org, Bastien Nocera <hadess@hadess.net>,
-        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v20 5/5] arm64: dts: qcom: sc7180-trogdor: Add nodes for
- onboard USB hub
-Message-ID: <YgLCswtX/0THkzXT@google.com>
-References: <20220119204345.3769662-1-mka@chromium.org>
- <20220119124327.v20.5.Ie0d2c1214b767bb5551dd4cad38398bd40e4466f@changeid>
- <YgJMkFAxjazkUDZd@kroah.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1644349484; x=1675885484;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=B0beRUcpy6mm/IC1BcwaxatHK/JKj1WU47oyT+N03mg=;
+  b=PmOrBH44twkgttlFTrbNznHsN82tq/QyRPYBRGwKespy+V1TQ7XMOuuQ
+   d39cTRA8h5t8m34AxiK2mz7FTOLeM7Ais3fD73M80b6wnWbjL43yAliuQ
+   JJhLBoU46nnjAhA5TmZmfMyqCiaMVtvzKgY1XnbTtsL9u8kxe6k/hiQjd
+   w=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 08 Feb 2022 11:44:44 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Feb 2022 11:44:43 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 8 Feb 2022 11:44:43 -0800
+Received: from abhinavk-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Tue, 8 Feb 2022 11:44:42 -0800
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+To:     <johannes@sipsolutions.net>, <linux-kernel@vger.kernel.org>
+CC:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        <gregkh@linuxfoundation.org>, <rafael@kernel.org>,
+        <robdclark@gmail.com>, <dri-devel@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+        <seanpaul@chromium.org>, <swboyd@chromium.org>,
+        <nganji@codeaurora.org>, <aravindh@codeaurora.org>,
+        <khsieh@codeaurora.org>, <daniel@ffwll.ch>,
+        <dmitry.baryshkov@linaro.org>
+Subject: [PATCH] devcoredump: increase the device delete timeout to 10 mins
+Date:   Tue, 8 Feb 2022 11:44:32 -0800
+Message-ID: <1644349472-31077-1-git-send-email-quic_abhinavk@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YgJMkFAxjazkUDZd@kroah.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 08, 2022 at 11:57:20AM +0100, Greg Kroah-Hartman wrote:
-> On Wed, Jan 19, 2022 at 12:43:45PM -0800, Matthias Kaehlcke wrote:
-> > Add nodes for the onboard USB hub on trogdor devices. Remove the
-> > 'always-on' property from the hub regulator, since the regulator
-> > is now managed by the onboard_usb_hub driver.
-> > 
-> > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> > Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> > ---
-> 
-> No DT maintainer approval yet?  :(
+There are cases where depending on the size of the devcoredump and the speed
+at which the usermode reads the dump, it can take longer than the current 5 mins
+timeout.
 
-Bjorn usually just picks DT changes into the QCOM tree when they are
-ready, so I wouldn't interpret anything into the lack of an explicit
-Ack.
+This can lead to incomplete dumps as the device is deleted once the timeout expires.
+
+One example is below where it took 6 mins for the devcoredump to be completely read.
+
+04:22:24.668 23916 23994 I HWDeviceDRM::DumpDebugData: Opening /sys/class/devcoredump/devcd6/data
+04:28:35.377 23916 23994 W HWDeviceDRM::DumpDebugData: Freeing devcoredump node
+
+Increase the timeout to 10 mins to accommodate system delays and large coredump
+sizes.
+
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+---
+ drivers/base/devcoredump.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/base/devcoredump.c b/drivers/base/devcoredump.c
+index f4d794d..6b83ae5 100644
+--- a/drivers/base/devcoredump.c
++++ b/drivers/base/devcoredump.c
+@@ -18,8 +18,8 @@ static struct class devcd_class;
+ /* global disable flag, for security purposes */
+ static bool devcd_disabled;
+ 
+-/* if data isn't read by userspace after 5 minutes then delete it */
+-#define DEVCD_TIMEOUT	(HZ * 60 * 5)
++/* if data isn't read by userspace after 10 minutes then delete it */
++#define DEVCD_TIMEOUT	(HZ * 60 * 10)
+ 
+ struct devcd_entry {
+ 	struct device devcd_dev;
+-- 
+2.7.4
+
