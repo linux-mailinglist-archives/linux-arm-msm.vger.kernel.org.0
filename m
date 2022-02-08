@@ -2,61 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 271F84ADBB1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 15:56:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 76C154ADC47
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 16:19:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378831AbiBHOzS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Feb 2022 09:55:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48200 "EHLO
+        id S1352926AbiBHPTF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Feb 2022 10:19:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378846AbiBHOzQ (ORCPT
+        with ESMTP id S1379708AbiBHPTD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Feb 2022 09:55:16 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 225C1C03FEF8;
-        Tue,  8 Feb 2022 06:55:14 -0800 (PST)
+        Tue, 8 Feb 2022 10:19:03 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37622C061578;
+        Tue,  8 Feb 2022 07:19:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644332114; x=1675868114;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=Yk6+mIAqQXnUtLkl5ADbRsIGvIy+eYl6I/IwK+2zswc=;
-  b=V1xUOyS2mb9FYEMDvymlQNOsVoEEKbHroiwNoCabeYV7rd1HqkErDrVG
-   A+7Rb8EaKdq6Bxk2Nm1YAmikjJM+yWwoMFmRUwh5ABtGs9whnu8ze5pcA
-   x62gx5bIN8YYmCbjOLM4ZCy+7/wrZpMXavyvU370BcWWaHt6ZCsfOBaPz
-   o=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 08 Feb 2022 06:55:14 -0800
+  t=1644333543; x=1675869543;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=e+YAbU7tnC/KqDRS6bxzop0kr89RyJukXnDpmgP6asg=;
+  b=qRStOiLclJljQsupKjUTpco2ZR89eyR2tmstRA27sVYKHTBFf0CY9WIl
+   sAlo7eAjgXQJ2ed0pnkD+FjwrpXXhV3DJLG5CXw9/SJ0riMvPAlZ2HyzV
+   xCulmldkO0/VGr5eWc90+B7/cOVkzyTOz646dDnVKInQ4U9tkCAIIXCj7
+   g=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 08 Feb 2022 07:19:02 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Feb 2022 06:55:13 -0800
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Feb 2022 07:19:03 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 8 Feb 2022 06:55:13 -0800
-Received: from c-skakit-linux.qualcomm.com (10.80.80.8) by
+ 15.2.922.19; Tue, 8 Feb 2022 07:19:01 -0800
+Received: from sbillaka-linux.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 8 Feb 2022 06:55:08 -0800
-From:   Satya Priya <quic_c_skakit@quicinc.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-CC:     Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Das Srinagesh <gurus@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
-        <quic_jprakash@quicinc.com>,
-        Satya Priya <quic_c_skakit@quicinc.com>
-Subject: [PATCH V5 6/6] arm64: dts: qcom: sc7280: Add pm8008 support for sc7280-idp
-Date:   Tue, 8 Feb 2022 20:22:20 +0530
-Message-ID: <1644331940-18986-7-git-send-email-quic_c_skakit@quicinc.com>
+ 15.2.922.19; Tue, 8 Feb 2022 07:18:55 -0800
+From:   Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <agross@kernel.org>,
+        <bjorn.andersson@linaro.org>, <robh+dt@kernel.org>,
+        <robdclark@gmail.com>, <seanpaul@chromium.org>,
+        <swboyd@chromium.org>, <dianders@chromium.org>,
+        <krzysztof.kozlowski@canonical.com>, <thierry.reding@gmail.com>,
+        <sam@ravnborg.org>, <airlied@linux.ie>, <daniel@ffwll.ch>
+CC:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        <quic_kalyant@quicinc.com>, <quic_abhinavk@quicinc.com>,
+        <quic_khsieh@quicinc.com>, <quic_mkrishn@quicinc.com>
+Subject: [PATCH v2 0/4] Add support for the eDP panel on sc7280 CRD
+Date:   Tue, 8 Feb 2022 20:48:41 +0530
+Message-ID: <1644333525-30920-1-git-send-email-quic_sbillaka@quicinc.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1644331940-18986-1-git-send-email-quic_c_skakit@quicinc.com>
-References: <1644331940-18986-1-git-send-email-quic_c_skakit@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
@@ -72,113 +68,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add pm8008_infra and pm8008_regulators support for sc7280 idp.
+Add support for the eDP panel on sc7280 CRD platform. The eDP panel does
+not need HPD line for connect disconnect. So, this series will report eDP
+as always connected. The driver needs to register for IRQ_HPD only for eDP.
+This support will be added later.
 
-Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
----
-Changes in V2:
- - As per Stephen's comments, replaced '_' with '-' for node names.
+These changes are dependent on the following series:
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=586263&archive=both&state=*
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=560587&state=%2A&archive=both
 
-Changes in V3:
- - Changed the regulator node names as l1, l2 etc
- - Changed "pm8008-regulators" to "regulators"
- - Changed "qcom,min-dropout-voltage" to "regulator-min-dropout-voltage-microvolt"
+Sankeerth Billakanti (4):
+  dt-bindings: display: simple: Add sharp LQ140M1JW46 panel
+  arm64: dts: qcom: sc7280: Add support for eDP panel on CRD
+  drm/panel-edp: Add eDP sharp panel support
+  drm/msm/dp: Add driver support to utilize drm panel
 
-Changes in V4:
- - Moved all common stuff to pm8008.dtsi and added board specific configurations here.
+ .../bindings/display/panel/panel-simple.yaml       |   2 +
+ arch/arm64/boot/dts/qcom/sc7280-crd.dts            | 122 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |   2 -
+ drivers/gpu/drm/msm/dp/dp_display.c                |   8 ++
+ drivers/gpu/drm/msm/dp/dp_drm.c                    |  54 ++++++++-
+ drivers/gpu/drm/msm/dp/dp_parser.h                 |   3 +
+ drivers/gpu/drm/panel/panel-edp.c                  |  31 ++++++
+ 7 files changed, 215 insertions(+), 7 deletions(-)
 
-Changes in V5:
- - Changed the node names as per pm8008.dtsi
- - Moved supply nodes to chip level (mfd node).
- - Removed the regulator-mindropout property.
-
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 66 ++++++++++++++++++++++++++++++++
- 1 file changed, 66 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index ecbf2b8..371ad19 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -263,6 +263,62 @@
- 	};
- };
- 
-+&i2c1 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	status = "okay";
-+
-+	#include "pm8008.dtsi"
-+};
-+
-+&pm8008_infra {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pm8008_active>;
-+};
-+
-+&pm8008_regulators {
-+	vdd_l1_l2-supply = <&vreg_s8b_1p2>;
-+	vdd_l3_l4-supply = <&vreg_s1b_1p8>;
-+	vdd_l5-supply = <&vreg_bob>;
-+	vdd_l6-supply = <&vreg_bob>;
-+	vdd_l7-supply = <&vreg_bob>;
-+};
-+
-+&pm8008_l1 {
-+	regulator-min-microvolt = <950000>;
-+	regulator-max-microvolt = <1300000>;
-+};
-+
-+&pm8008_l2 {
-+	regulator-min-microvolt = <950000>;
-+	regulator-max-microvolt = <1250000>;
-+};
-+
-+&pm8008_l3 {
-+	regulator-min-microvolt = <1650000>;
-+	regulator-max-microvolt = <3000000>;
-+};
-+
-+&pm8008_l4 {
-+	regulator-min-microvolt = <1504000>;
-+	regulator-max-microvolt = <1600000>;
-+};
-+
-+&pm8008_l5 {
-+	regulator-min-microvolt = <2600000>;
-+	regulator-max-microvolt = <3000000>;
-+};
-+
-+&pm8008_l6 {
-+	regulator-min-microvolt = <2600000>;
-+	regulator-max-microvolt = <3000000>;
-+};
-+
-+&pm8008_l7 {
-+	regulator-min-microvolt = <3000000>;
-+	regulator-max-microvolt = <3544000>;
-+};
-+
- &qfprom {
- 	vcc-supply = <&vreg_l1c_1p8>;
- };
-@@ -375,6 +431,16 @@
- 	drive-strength = <2>;
- };
- 
-+&pm8350c_gpios {
-+	pm8008_active: pm8008_active {
-+		pins = "gpio4";
-+		function = "normal";
-+		bias-disable;
-+		output-high;
-+		power-source = <0>;
-+	};
-+};
-+
- &qspi_cs0 {
- 	bias-disable;
- };
 -- 
 2.7.4
 
