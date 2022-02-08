@@ -2,68 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA77F4AD03F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 05:16:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E17484AD0B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 06:32:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346829AbiBHEQN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Feb 2022 23:16:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45484 "EHLO
+        id S240085AbiBHFb4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Feb 2022 00:31:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346775AbiBHEQL (ORCPT
+        with ESMTP id S1346970AbiBHElL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Feb 2022 23:16:11 -0500
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52801C0401EE
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Feb 2022 20:16:09 -0800 (PST)
-Received: by mail-oi1-x235.google.com with SMTP id x193so19436896oix.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Feb 2022 20:16:09 -0800 (PST)
+        Mon, 7 Feb 2022 23:41:11 -0500
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D98D5C0401DC
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Feb 2022 20:41:09 -0800 (PST)
+Received: by mail-ot1-x332.google.com with SMTP id d18-20020a9d51d2000000b005a09728a8c2so12469564oth.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Feb 2022 20:41:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=xlF31uWDKkUWKU7M7nwupRIZm+leoMsZ2bZGat9Ac10=;
-        b=M1ZZSewWQ0e4/EOHTZbm052rfxsrwvR/6tryH2qvZpDOWxa/Rc8VgNxHS/04ryq+kU
-         dEtRvwCxoy9V7ic9NaYPzjEQtKaSVmUFea7CL4VSSY/QOeuyTQFo4Uu820ZsJlY16KfH
-         IAE16VJ9fOQ6guIjoGxrlea8S1sy9yngTLljD1THq2Q/ffnJ8NIhw7a/ZlgjF9/fjxau
-         7eXTK0oLNkwgJA28XgXU0S9mwrmfA+reUZrVsRt+FIkeL85/F81AnEeFVFZQdUm77+Cc
-         faS9UEUx0Fr5FeR4lJZPMNiztH9Pk4e4ucv0u5KZuZOZ2VN/qEcycDB6BvLX/27t+hZk
-         creg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=esjcw5J1950tYULEo1Mi5rlx0creI3trE/Z1yqFmq9U=;
+        b=ip03ry5nqNDMKLD/txk0cpnpGu1BvjmtduHQhiYMDZpn5vJRKhomQqMBgVAUV9p5PV
+         3xrn4cnCiRNPB/VaCfnqZhPnd6KJm6T6p/Qwoo2K8DYmR59WBKOjBe05u/COnPxqKiJu
+         EqlHzDIxVCoDeopGi4kwr0th6q3BXHzubpSmeCksw9GLws5mb3eY4eRv5Z4+QKWjOS0Y
+         KPeWUeFJFh6xDAyoWwt5pNIypf7EQ2wDAripNLU9/qsxjaW8t6yQrxYqf/j41O4nfDV+
+         Y+mDQYBT/pqa9wJDrE85riLOVO73QXylarUrOvwHg7M7L1Kpu8vh4YtdNTS7uY5knGR9
+         pv/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xlF31uWDKkUWKU7M7nwupRIZm+leoMsZ2bZGat9Ac10=;
-        b=3RK7LEBk4Yr5Aurz+BVjEWgXZeiFsm8/TuelBujNn2ozvu5EC4OJd6Jv1VxFXg2Ear
-         1wEUyDNSa+AUk/iANaWPpsHcAqLkfL1aBfc8jh8Y4DMXQIFFCGX7uRoq9SJIk5F/cZQb
-         A3J1SVIaVZr34h8Gm2/wlLA+AZ+MgYGTqUL9GrK51/x1Q4oSDjHZw+dWAU53kqqn/uAE
-         TTfPIee+whY7orhSu0uoKF4zrtfr54GtvqqNLNTdKA/ddViICrJ6iUAm7jhbBZfOxd34
-         kMaa+Xqq+V+aWZW472zn2IUapB3zGJdcwS4exKXnWT2kEq0tVUekq0bax4tKEgEcvpF2
-         NawQ==
-X-Gm-Message-State: AOAM532VF57vfGcV60u3Igu+moTJRA3j3pY6Vf+biMNgRsc1sC/R1Hpk
-        5HUL5FXYTc38+iaCFtG/PChMvw==
-X-Google-Smtp-Source: ABdhPJwF9qF7O277ASabbS4tlDo+NLc9zi4x9bJxDc19uGMygj7LCUsT6CW/rBgN9sWWC4uuOds5rg==
-X-Received: by 2002:aca:f03:: with SMTP id 3mr951952oip.102.1644293768685;
-        Mon, 07 Feb 2022 20:16:08 -0800 (PST)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id u3sm5009970oie.30.2022.02.07.20.16.07
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=esjcw5J1950tYULEo1Mi5rlx0creI3trE/Z1yqFmq9U=;
+        b=sfjpYGBx5MS/MfDLc4XU0wrNP4EI6ccTCb/Wf5piRCiUnjO1CGZWjr0NdpVn8qYmXx
+         w22kBFD01pU8YcRqwKgU92NjCVDMiIXNWCzO8Tak8H+fzH5Q8ZQTkaCj1JSCmxrtNLHX
+         KaIAgv1t0VhvNTYPZoqB7AnYu12PLlweTDAvKw/35OhoV6FvLPan2ka7H3hQIpz4cmEm
+         8jAtfNoR9oF4Ek+IEvfHfgXSFSoGfHRqQERJ9tPIV/+2d41/JDoCnu10k/lJzsEkWDrC
+         rfOAeb8yzPqH7nTGj7dv4IZiQKGtdGNrajf1rDDZ1o4XUoziHt8L/r//46yP1hGiZi4Y
+         4m+A==
+X-Gm-Message-State: AOAM5315P41oyhZPriltbt5+y9+RCuKd6kLAzcqQ6TkRsQhwZX92fIeo
+        m0YPkIdA1yuSWDl7kXoVZiD3pw==
+X-Google-Smtp-Source: ABdhPJweY3q0vp0/f4DbyZgWE7ZXp0PpJrKT96m0Flrtcs1E/0Ff8vVW1yzoCSR4VtmcCjJaJS6RUQ==
+X-Received: by 2002:a9d:2c28:: with SMTP id f37mr1162716otb.65.1644295269183;
+        Mon, 07 Feb 2022 20:41:09 -0800 (PST)
+Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id l14sm4709367ooq.12.2022.02.07.20.41.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Feb 2022 20:16:08 -0800 (PST)
+        Mon, 07 Feb 2022 20:41:08 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: c630: Move panel to aux-bus
-Date:   Mon,  7 Feb 2022 22:16:06 -0600
-Message-Id: <20220208041606.144039-2-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220208041606.144039-1-bjorn.andersson@linaro.org>
-References: <20220208041606.144039-1-bjorn.andersson@linaro.org>
+To:     Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-usb@vger.kernel.org
+Subject: [PATCH 1/2] drm: Add HPD state to drm_connector_oob_hotplug_event()
+Date:   Mon,  7 Feb 2022 20:43:27 -0800
+Message-Id: <20220208044328.588860-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,60 +83,161 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-With the newly introduced aux-bus under the TI SN65DSI86 the panel
-node should be described as a child instead of a standalone node, move
-it there.
+In some implementations, such as the Qualcomm platforms, the display
+driver has no way to query the current HPD state and as such it's
+impossible to distinguish between disconnect and attention events.
+
+Add a parameter to drm_connector_oob_hotplug_event() to pass the HPD
+state.
+
+Also push the test for unchanged state in the displayport altmode driver
+into the i915 driver, to allow other drivers to act upon each update.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
- .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 27 +++++++++----------
- 1 file changed, 13 insertions(+), 14 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-index 55fb7302245b..fd1261901ab5 100644
---- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-@@ -56,20 +56,6 @@ mode {
- 		};
- 	};
+Note that the Intel driver has only been compile tested with this patch.
+
+ drivers/gpu/drm/drm_connector.c          |  6 ++++--
+ drivers/gpu/drm/i915/display/intel_dp.c  | 14 +++++++++++---
+ drivers/gpu/drm/i915/i915_drv.h          |  3 +++
+ drivers/usb/typec/altmodes/displayport.c |  9 ++-------
+ include/drm/drm_connector.h              |  5 +++--
+ 5 files changed, 23 insertions(+), 14 deletions(-)
+
+diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
+index a50c82bc2b2f..ad7295597c0f 100644
+--- a/drivers/gpu/drm/drm_connector.c
++++ b/drivers/gpu/drm/drm_connector.c
+@@ -2825,6 +2825,7 @@ struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode)
+ /**
+  * drm_connector_oob_hotplug_event - Report out-of-band hotplug event to connector
+  * @connector_fwnode: fwnode_handle to report the event on
++ * @hpd_state: number of data lanes available
+  *
+  * On some hardware a hotplug event notification may come from outside the display
+  * driver / device. An example of this is some USB Type-C setups where the hardware
+@@ -2834,7 +2835,8 @@ struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode)
+  * This function can be used to report these out-of-band events after obtaining
+  * a drm_connector reference through calling drm_connector_find_by_fwnode().
+  */
+-void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode)
++void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode,
++				     bool hpd_state)
+ {
+ 	struct drm_connector *connector;
  
--	panel {
--		compatible = "boe,nv133fhm-n61";
--		no-hpd;
--		backlight = <&backlight>;
--
--		ports {
--			port {
--				panel_in_edp: endpoint {
--					remote-endpoint = <&sn65dsi86_out>;
--				};
--			};
--		};
--	};
--
- 	/* Reserved memory changes for IPA */
- 	reserved-memory {
- 		wlan_msa_mem: memory@8c400000 {
-@@ -446,6 +432,19 @@ sn65dsi86_out: endpoint {
- 				};
- 			};
- 		};
+@@ -2843,7 +2845,7 @@ void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode)
+ 		return;
+ 
+ 	if (connector->funcs->oob_hotplug_event)
+-		connector->funcs->oob_hotplug_event(connector);
++		connector->funcs->oob_hotplug_event(connector, hpd_state);
+ 
+ 	drm_connector_put(connector);
+ }
+diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
+index 146b83916005..00520867d37b 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -4816,15 +4816,23 @@ static int intel_dp_connector_atomic_check(struct drm_connector *conn,
+ 	return intel_modeset_synced_crtcs(state, conn);
+ }
+ 
+-static void intel_dp_oob_hotplug_event(struct drm_connector *connector)
++static void intel_dp_oob_hotplug_event(struct drm_connector *connector, bool hpd_state)
+ {
+ 	struct intel_encoder *encoder = intel_attached_encoder(to_intel_connector(connector));
+ 	struct drm_i915_private *i915 = to_i915(connector->dev);
++	bool need_work = false;
+ 
+ 	spin_lock_irq(&i915->irq_lock);
+-	i915->hotplug.event_bits |= BIT(encoder->hpd_pin);
++	if (hpd_state != i915->hotplug.oob_hotplug_state) {
++		i915->hotplug.event_bits |= BIT(encoder->hpd_pin);
 +
-+		aux-bus {
-+			panel: panel {
-+				compatible = "boe,nv133fhm-n61";
-+				backlight = <&backlight>;
++		i915->hotplug.oob_hotplug_state = hpd_state;
++		need_work = true;
++	}
+ 	spin_unlock_irq(&i915->irq_lock);
+-	queue_delayed_work(system_wq, &i915->hotplug.hotplug_work, 0);
 +
-+				port {
-+					panel_in_edp: endpoint {
-+						remote-endpoint = <&sn65dsi86_out>;
-+					};
-+				};
-+			};
-+		};
- 	};
++	if (need_work)
++		queue_delayed_work(system_wq, &i915->hotplug.hotplug_work, 0);
+ }
+ 
+ static const struct drm_connector_funcs intel_dp_connector_funcs = {
+diff --git a/drivers/gpu/drm/i915/i915_drv.h b/drivers/gpu/drm/i915/i915_drv.h
+index 8c1706fd81f9..543ebf1cfcf4 100644
+--- a/drivers/gpu/drm/i915/i915_drv.h
++++ b/drivers/gpu/drm/i915/i915_drv.h
+@@ -149,6 +149,9 @@ struct i915_hotplug {
+ 	/* Whether or not to count short HPD IRQs in HPD storms */
+ 	u8 hpd_short_storm_enabled;
+ 
++	/* Last state reported by oob_hotplug_event */
++	bool oob_hotplug_state;
++
+ 	/*
+ 	 * if we get a HPD irq from DP and a HPD irq from non-DP
+ 	 * the non-DP HPD could block the workqueue on a mode config
+diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
+index c1d8c23baa39..a4596be4d34a 100644
+--- a/drivers/usb/typec/altmodes/displayport.c
++++ b/drivers/usb/typec/altmodes/displayport.c
+@@ -59,7 +59,6 @@ struct dp_altmode {
+ 	struct typec_displayport_data data;
+ 
+ 	enum dp_state state;
+-	bool hpd;
+ 
+ 	struct mutex lock; /* device lock */
+ 	struct work_struct work;
+@@ -143,10 +142,7 @@ static int dp_altmode_status_update(struct dp_altmode *dp)
+ 		if (!ret)
+ 			dp->state = DP_STATE_CONFIGURE;
+ 	} else {
+-		if (dp->hpd != hpd) {
+-			drm_connector_oob_hotplug_event(dp->connector_fwnode);
+-			dp->hpd = hpd;
+-		}
++		drm_connector_oob_hotplug_event(dp->connector_fwnode, hpd);
+ 	}
+ 
+ 	return ret;
+@@ -573,8 +569,7 @@ void dp_altmode_remove(struct typec_altmode *alt)
+ 	cancel_work_sync(&dp->work);
+ 
+ 	if (dp->connector_fwnode) {
+-		if (dp->hpd)
+-			drm_connector_oob_hotplug_event(dp->connector_fwnode);
++		drm_connector_oob_hotplug_event(dp->connector_fwnode, false);
+ 
+ 		fwnode_handle_put(dp->connector_fwnode);
+ 	}
+diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
+index 64cf5f88c05b..7c90b8eb2ace 100644
+--- a/include/drm/drm_connector.h
++++ b/include/drm/drm_connector.h
+@@ -1141,7 +1141,7 @@ struct drm_connector_funcs {
+ 	 * This will get called when a hotplug-event for a drm-connector
+ 	 * has been received from a source outside the display driver / device.
+ 	 */
+-	void (*oob_hotplug_event)(struct drm_connector *connector);
++	void (*oob_hotplug_event)(struct drm_connector *connector, bool hpd_state);
  };
  
+ /**
+@@ -1742,7 +1742,8 @@ drm_connector_is_unregistered(struct drm_connector *connector)
+ 		DRM_CONNECTOR_UNREGISTERED;
+ }
+ 
+-void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode);
++void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode,
++				     bool hpd_state);
+ const char *drm_get_connector_type_name(unsigned int connector_type);
+ const char *drm_get_connector_status_name(enum drm_connector_status status);
+ const char *drm_get_subpixel_order_name(enum subpixel_order order);
 -- 
-2.32.0
+2.33.1
 
