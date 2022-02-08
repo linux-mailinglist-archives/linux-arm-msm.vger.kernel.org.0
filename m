@@ -2,69 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D47444ACDF0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 02:24:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A0A3F4ACE75
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Feb 2022 02:55:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235938AbiBHBXh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Feb 2022 20:23:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55986 "EHLO
+        id S236677AbiBHBx6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Feb 2022 20:53:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343873AbiBHBXa (ORCPT
+        with ESMTP id S1345304AbiBHBxw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Feb 2022 20:23:30 -0500
-Received: from out30-54.freemail.mail.aliyun.com (out30-54.freemail.mail.aliyun.com [115.124.30.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14E59C053987;
-        Mon,  7 Feb 2022 17:23:25 -0800 (PST)
-X-Alimail-AntiSpam: AC=PASS;BC=-1|-1;BR=01201311R211e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=e01e04400;MF=yang.lee@linux.alibaba.com;NM=1;PH=DS;RN=11;SR=0;TI=SMTPD_---0V3tTUEL_1644283402;
-Received: from localhost(mailfrom:yang.lee@linux.alibaba.com fp:SMTPD_---0V3tTUEL_1644283402)
-          by smtp.aliyun-inc.com(127.0.0.1);
-          Tue, 08 Feb 2022 09:23:23 +0800
-From:   Yang Li <yang.lee@linux.alibaba.com>
-To:     daniel@ffwll.ch
-Cc:     airlied@linux.ie, sean@poorly.run, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, Yang Li <yang.lee@linux.alibaba.com>,
-        Abaci Robot <abaci@linux.alibaba.com>
-Subject: [PATCH -next] drm/msm/dpu: clean up some inconsistent indenting
-Date:   Tue,  8 Feb 2022 09:23:21 +0800
-Message-Id: <20220208012321.43587-1-yang.lee@linux.alibaba.com>
-X-Mailer: git-send-email 2.20.1.7.g153144c
+        Mon, 7 Feb 2022 20:53:52 -0500
+X-Greylist: delayed 122 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 07 Feb 2022 17:53:44 PST
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE067C03FEFB
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Feb 2022 17:53:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1644285224; x=1675821224;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=XYGnDAcg+DtyGKZQPv6wzPHMGMw0imYE5zSgdyrOqag=;
+  b=HwV3SJ15DIwSxLj/Ux9PKBMhaOAz5VOv4IdEorJcF678ilsL95QA+18V
+   aOzEMXnr3K8aPa+wmkQ71uXVZVwnTSwL/CT2uIKtbCe9F9ymX6JJO6yB6
+   3P3OYe3DVHnpMZ98qkrwORrtgLDCKkONV8vo6BXpps0bM7NDJSYNdMQ4A
+   4=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 07 Feb 2022 17:51:42 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Feb 2022 17:51:42 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Mon, 7 Feb 2022 17:51:41 -0800
+Received: from [10.38.243.172] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 7 Feb 2022
+ 17:51:39 -0800
+Message-ID: <8a2ce43f-f5b9-62bf-f169-ccbe3f4b8c49@quicinc.com>
+Date:   Mon, 7 Feb 2022 17:51:36 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-9.9 required=5.0 tests=BAYES_00,
-        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,UNPARSEABLE_RELAY,USER_IN_DEF_SPF_WL
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH -next] drm/msm/dpu: clean up some inconsistent indenting
+Content-Language: en-US
+To:     Yang Li <yang.lee@linux.alibaba.com>, <daniel@ffwll.ch>
+CC:     <airlied@linux.ie>, <sean@poorly.run>, <robdclark@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        "Abaci Robot" <abaci@linux.alibaba.com>
+References: <20220208012321.43587-1-yang.lee@linux.alibaba.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220208012321.43587-1-yang.lee@linux.alibaba.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Eliminate the follow smatch warning:
-drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c:411
-_dpu_crtc_blend_setup_mixer() warn: inconsistent indenting
 
-Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index e7c9fe1a250f..662b7bc9c219 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -408,7 +408,7 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
- 	if (ctl->ops.set_active_pipes)
- 		ctl->ops.set_active_pipes(ctl, fetch_active);
- 
--	 _dpu_crtc_program_lm_output_roi(crtc);
-+	_dpu_crtc_program_lm_output_roi(crtc);
- }
- 
- /**
--- 
-2.20.1.7.g153144c
-
+On 2/7/2022 5:23 PM, Yang Li wrote:
+> Eliminate the follow smatch warning:
+> drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c:411
+> _dpu_crtc_blend_setup_mixer() warn: inconsistent indenting
+> 
+> Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+> Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index e7c9fe1a250f..662b7bc9c219 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -408,7 +408,7 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>   	if (ctl->ops.set_active_pipes)
+>   		ctl->ops.set_active_pipes(ctl, fetch_active);
+>   
+> -	 _dpu_crtc_program_lm_output_roi(crtc);
+> +	_dpu_crtc_program_lm_output_roi(crtc);
+>   }
+>   
+>   /**
