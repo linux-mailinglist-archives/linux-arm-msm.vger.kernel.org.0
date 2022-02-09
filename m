@@ -1,71 +1,60 @@
 Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BB224AE709
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 03:42:20 +0100 (CET)
+Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
+	by mail.lfdr.de (Postfix) with ESMTP id 8ED9A4AE754
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 04:03:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344654AbiBIClZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Feb 2022 21:41:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38780 "EHLO
+        id S236865AbiBIDB5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Feb 2022 22:01:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245034AbiBICXH (ORCPT
+        with ESMTP id S1359864AbiBIC5A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Feb 2022 21:23:07 -0500
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56997C06157B;
-        Tue,  8 Feb 2022 18:23:06 -0800 (PST)
-Received: by mail-ot1-f50.google.com with SMTP id x52-20020a05683040b400b0059ea92202daso566905ott.7;
-        Tue, 08 Feb 2022 18:23:06 -0800 (PST)
+        Tue, 8 Feb 2022 21:57:00 -0500
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C135C0613CC;
+        Tue,  8 Feb 2022 18:56:59 -0800 (PST)
+Received: by mail-ot1-f45.google.com with SMTP id l43-20020a9d1cab000000b005aa50ff5869so654869ota.0;
+        Tue, 08 Feb 2022 18:56:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Tis6lVw2PLJGVs82tjcRt6cxHYbiIdScfbv50bSZkAA=;
-        b=bvXRVkC1q9/eRqAOBVoQxhlZb8qVEDjIUt62TmCSeAfcMkHNYaYJtHCygodO/9JkjE
-         dO/dUROd7rDXSpiaCuUmY5eAtFVQ0x68yO4HrdvxfY4d4jXu7QaogB91GmtC8anZ3fXx
-         eWswLzwZaxIcT8gvZjHSdOI5FtmRBF3NHfIB0gNsnfnab38W4DNK3HjFTUjMqUJx4Alc
-         MVQOBBe/SqG8i4lcXzAh4wRDJxi9APELHoIT1c2Ious1IlfTRD2gh3i/7xe86VV59ykw
-         Yy+2YCp3RvDsZsIrfWxBxD62tQfy4a4MSVEE7fZwMIaTC5Ai/eeyfZ4ks2wgzkFdC0+U
-         r/3Q==
-X-Gm-Message-State: AOAM531K8k/Fgzl8zHbKrZyQHt58seVJ35BLKG8Jary1SbyByJEQ5GPt
-        egCm6rIj1TZM1dDADBu+nDQdqNvCYg==
-X-Google-Smtp-Source: ABdhPJx30puFBSvWskIek8ojwuP/YiGbti3XK4ncDay0tM5RF63NNRqcb2uE8oFCEln61PxVJogJ8g==
-X-Received: by 2002:a05:6830:108f:: with SMTP id y15mr102448oto.185.1644373385594;
-        Tue, 08 Feb 2022 18:23:05 -0800 (PST)
+        bh=k4jpU9UQFFFu7MujThREpoXMQUlWam3Hqib4UzltPs4=;
+        b=Rxa9oj8MolDHGLu2boLdHGRN8KUidAeKvJ9Jcnpe99oJhuqET3Ol3pZdyhTNp6DGUP
+         3YLD6VokIxKmo54VVXxGoec9udT4N57TwOlcpCrfo6yxNBi+ifBhGbbpN55YgmIj2uTv
+         HVMiqrRViihnce+GtZkzMbwkjv0VmPS9iLzy+VwQqPGq9fUctQr0zO2kD5y6B1z6hPsq
+         eLdU5PBQvGcYGagFwQv4dvX4FlFnztmD93vXV4utyV6WK0Estah9N7HSEiIdpyXlRryu
+         oOQJa0KJjIc8eqt1hvaxK14iKnqthOs9n4WG4VUf6dILa+x1oqfdaql/ZAFgorzpDC6a
+         wpXA==
+X-Gm-Message-State: AOAM533I0grf0DVZbKW7kz0Vees9aZ9gnlTu3cHIcipimBBo0E7PYCTm
+        ABU0R8LptJ/dwTRL8dcYnA==
+X-Google-Smtp-Source: ABdhPJyuEEHwaXQoQ4bZu/47mrhqhpTHJ9wxw/Lmz/yywPX8o8dqvkV8izjaX5Zlg+bO4bJkzKXEWQ==
+X-Received: by 2002:a05:6830:1b62:: with SMTP id d2mr148286ote.66.1644375418738;
+        Tue, 08 Feb 2022 18:56:58 -0800 (PST)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id l22sm6084220otj.44.2022.02.08.18.23.03
+        by smtp.gmail.com with ESMTPSA id x17sm6008663oop.1.2022.02.08.18.56.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Feb 2022 18:23:04 -0800 (PST)
-Received: (nullmailer pid 3480838 invoked by uid 1000);
-        Wed, 09 Feb 2022 02:23:03 -0000
-Date:   Tue, 8 Feb 2022 20:23:03 -0600
+        Tue, 08 Feb 2022 18:56:58 -0800 (PST)
+Received: (nullmailer pid 3530997 invoked by uid 1000);
+        Wed, 09 Feb 2022 02:56:57 -0000
+Date:   Tue, 8 Feb 2022 20:56:57 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Jami Kettunen <jami.kettunen@somainline.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Rob Herring <robh+dt@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        dri-devel@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Martin Botka <martin.botka@somainline.org>
-Subject: Re: [PATCH 3/3] dt-bindings: display: msm: Add binding for msm8998
- dpu
-Message-ID: <YgMlh69HUntgxAew@robh.at.kernel.org>
-References: <20220113145111.29984-1-jami.kettunen@somainline.org>
- <20220113145111.29984-4-jami.kettunen@somainline.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        bjorn.andersson@linaro.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Marc Zyngier <maz@kernel.org>, bhupesh.linux@gmail.com,
+        robh+dt@kernel.org, linus.walleij@linaro.org
+Subject: Re: [PATCH 1/4] dt-bindings: qcom,pdc: Add compatible for SM8150
+Message-ID: <YgMteWXliX4BInLw@robh.at.kernel.org>
+References: <20220119203133.467264-1-bhupesh.sharma@linaro.org>
+ <20220119203133.467264-2-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220113145111.29984-4-jami.kettunen@somainline.org>
+In-Reply-To: <20220119203133.467264-2-bhupesh.sharma@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
@@ -77,17 +66,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 13 Jan 2022 16:51:11 +0200, Jami Kettunen wrote:
-> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+On Thu, 20 Jan 2022 02:01:30 +0530, Bhupesh Sharma wrote:
+> Add the compatible string for SM8150 SoC from Qualcomm.
 > 
-> Add yaml binding for msm8998 dpu1 support.
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> Signed-off-by: Jami Kettunen <jami.kettunen@somainline.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Cc: Rob Herring <robh@kernel.org>
+> Cc: Marc Zyngier <maz@kernel.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 > ---
->  .../bindings/display/msm/dpu-msm8998.yaml     | 219 ++++++++++++++++++
->  1 file changed, 219 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml
+>  .../devicetree/bindings/interrupt-controller/qcom,pdc.txt        | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Acked-by: Rob Herring <robh@kernel.org>
