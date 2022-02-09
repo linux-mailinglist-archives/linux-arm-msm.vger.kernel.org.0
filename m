@@ -2,87 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF8ED4AEA2B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 07:18:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 525FA4AEA6B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 07:34:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230301AbiBIGRx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Feb 2022 01:17:53 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:54458 "EHLO
+        id S229599AbiBIGed (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Feb 2022 01:34:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237925AbiBIGPZ (ORCPT
+        with ESMTP id S229888AbiBIGed (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Feb 2022 01:15:25 -0500
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C8E4DF28A20
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Feb 2022 22:15:29 -0800 (PST)
-Received: by mail-pf1-x432.google.com with SMTP id i186so2653686pfe.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Feb 2022 22:15:29 -0800 (PST)
+        Wed, 9 Feb 2022 01:34:33 -0500
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AE70E066E1A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Feb 2022 22:34:29 -0800 (PST)
+Received: by mail-pf1-x42f.google.com with SMTP id d187so2570704pfa.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Feb 2022 22:34:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=4l/aFNwd63uVLKNzeMm/2/pR6vs/tYGDEs6LgxVDxlI=;
-        b=r1fiqywmY+ZXjFns4iy4OyiewaVgMm0NsTnoz629RyyIhdlq8v/wSp0eNSiEThtCR+
-         tbze/g+/ol7lhlw5SoWxsXGKGJm/BGjeK2OgefivPq8rC/kd69by2eh/XAqS08Sz/yOp
-         oRdKYg4ECKxNmOp8ch3Adi0KmBe6qZnsrDnjvAtP0A0IKsdlBEfJKAgoSI9agqb90W/b
-         NysePOlOF4FtXKvvLKwcGXHSMGRgspJpDIYkrZ247uRQLIvuqe9vSvTGqQNBvKuSTBvb
-         FEn9RBMF7W0H69VY3UD26kT52kWkGmcpqOVYYvyY8A448QS24UGkCk/tQsaqo6X3Pt14
-         4MzA==
+        bh=OwHnp+CBrpknipruebBheU1nuu6L2xS3iNwKkt5hzSc=;
+        b=fHiYoWvoB+Gab19/vejvHtO0ZlTBEXUK3diJ0NhY8IXdVk/N0v+UGR+BlOtuSa9LMH
+         fV8Q4OxIzP0WK57293UqNQiTScEFW4NU7YCmlHlVonAFBpC1IMUIq8FKpG+r/5uIKwP8
+         iH+KcXAO1PZ9fOAgd6HRYvN+KAbfzC7vMFtfY/HGQtiNGDo/QlDrdsbnRufYiS4EA+r1
+         D8t2lXa0zwhm5wi0J82hk0F5cWF2gsouXwoXDSo+HJTSTLfm9fM2t1BQYhtkvM1Oibs1
+         Y+8F3ZcX3v/exjMqf5iK0xa7M4tY+kvbGNUiAAMP5pOzFFfo5CxVKcjZ72+T1k7lOuze
+         jDEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4l/aFNwd63uVLKNzeMm/2/pR6vs/tYGDEs6LgxVDxlI=;
-        b=qIh3eEcqQS92DGnGSz9Ep2zsqoJ9OspAYfN1eGuBbhR8H4gzh5W8Q5e2nXPK9DAgrn
-         qaqg8oqgFnk5wJoBOIehFngocfgbu/OpdduiGXLtVPHqTh0R4jDFtIM/44BWWlkwN/r6
-         eBk9sBH1FEPDnjIBntuDbwOoOiW7mKQsMtPAPIrTjKEn4TUecGiz2QHeMDdrdn/KBAcM
-         Rjrnm/i2fJGxU5869PiroP5WyAcsyTa1ERiUyN7NPmkUwrsL8YsShaztgMHAU+cge5O+
-         8M4qFCmA4wFNwJeqQqwSqOaETpPvT+h3EdAv/ngw2BDz1NlAR7Q+UiHBZBsNsC4x+bbq
-         t8GA==
-X-Gm-Message-State: AOAM533uqyXR6AHAtLPne4vpdjAt1AdzguZfUKgoWwGalYOduzRkK7KH
-        GnxVLwtokNQjvebc/xTtdL43ww==
-X-Google-Smtp-Source: ABdhPJw6hRR+tHVYkKn3k15p+UCUOzqAo6H+niApeRvxhdpTbpiTd9O3cmPCS3R7fY6sD2XFQhj5iQ==
-X-Received: by 2002:a63:f50f:: with SMTP id w15mr716344pgh.113.1644387321236;
-        Tue, 08 Feb 2022 22:15:21 -0800 (PST)
+        bh=OwHnp+CBrpknipruebBheU1nuu6L2xS3iNwKkt5hzSc=;
+        b=F6hWVcyKmii2udLWQPqWSGaxYAvQnjhUUlJK+HooRho9KDOuTm7n9BgJD+wigJNX/s
+         tRJkUe9amjCB74ts1/Wl+bphQgQk+8pMjHx8Wl3XU/y8NIqjsv0xpjAMRNBfU9UG8m5O
+         0V7N96cjzMkB3gK6WhUR4Pi4IspiBY/P3rhe1uWAaVKSe1WX3s4BjSyAIuKJlu6uc9Cd
+         oExHFnH7xXOsT5FcRiAJX4IMrwKhRh3eZusvF8tr36foEIo/5ac5BMmNenT2zMzDSUzC
+         T6eckVl7McDQR7TaRv1AstO1ezTVn5XucxAQVPYp+/0bAspTbXSoA/Q7FIp5RZPNRnW8
+         FWcg==
+X-Gm-Message-State: AOAM530dJfNWlxjVnR/O2CSRbBIUiMxj5fWeTO0BTqDNice1blKLo4Mx
+        Z5YBKPJfyrIpdlxEQUVqlhrutw==
+X-Google-Smtp-Source: ABdhPJx52+9Dw5Vu5Ayd4PAzN+hfjEFuihoosOnlAsFNrrdNMnMsovfyUzU9vYmhNYbMXE+jGAZnmQ==
+X-Received: by 2002:a63:3d4f:: with SMTP id k76mr749057pga.389.1644388468680;
+        Tue, 08 Feb 2022 22:34:28 -0800 (PST)
 Received: from localhost ([136.185.132.167])
-        by smtp.gmail.com with ESMTPSA id o2sm6879778pga.57.2022.02.08.22.15.20
+        by smtp.gmail.com with ESMTPSA id il18sm4889019pjb.27.2022.02.08.22.34.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Feb 2022 22:15:20 -0800 (PST)
-Date:   Wed, 9 Feb 2022 11:45:18 +0530
+        Tue, 08 Feb 2022 22:34:28 -0800 (PST)
+Date:   Wed, 9 Feb 2022 12:04:26 +0530
 From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Yury Norov <yury.norov@gmail.com>
-Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        =?utf-8?B?TWljaGHFgiBNaXJvc8WCYXc=?= <mirq-linux@rere.qmqm.pl>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Peter Zijlstra <peterz@infradead.org>,
-        David Laight <David.Laight@aculab.com>,
-        Joe Perches <joe@perches.com>, Dennis Zhou <dennis@kernel.org>,
-        Emil Renner Berthing <kernel@esmil.dk>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
-        Alexey Klimov <aklimov@redhat.com>,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
         "Rafael J. Wysocki" <rafael@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 16/54] cpufreq: replace cpumask_weight with cpumask_empty
- where appropriate
-Message-ID: <20220209061518.4xxc3hsswrfgg5u4@vireshk-i7>
-References: <20220123183925.1052919-1-yury.norov@gmail.com>
- <20220123183925.1052919-17-yury.norov@gmail.com>
+        Ansuel Smith <ansuelsmth@gmail.com>,
+        Sricharan R <sricharan@codeaurora.org>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] cpufreq: qcom-cpufreq-nvmem: fix reading of PVS Valid
+ fuse
+Message-ID: <20220209063426.ckefdtpfroj5zsad@vireshk-i7>
+References: <20220130114535.1570634-1-luca@z3ntu.xyz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220123183925.1052919-17-yury.norov@gmail.com>
+In-Reply-To: <20220130114535.1570634-1-luca@z3ntu.xyz>
 User-Agent: NeoMutt/20180716-391-311a52
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,17 +79,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-01-22, 10:38, Yury Norov wrote:
-> drivers/cpufreq calls cpumask_weight() to check if any bit of a given
-> cpumask is set. We can do it more efficiently with cpumask_empty() because
-> cpumask_empty() stops traversing the cpumask as soon as it finds first set
-> bit, while cpumask_weight() counts all bits unconditionally.
+On 30-01-22, 12:45, Luca Weiss wrote:
+> The fuse consists of 64 bits, with this statement we're supposed to get
+> the upper 32 bits but it actually read out of bounds and got 0 instead
+> of the desired value which lead to the "PVS bin not set." codepath being
+> run resetting our pvs value.
 > 
-> Signed-off-by: Yury Norov <yury.norov@gmail.com>
+> Fixes: a8811ec764f9 ("cpufreq: qcom: Add support for krait based socs")
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 > ---
->  drivers/cpufreq/qcom-cpufreq-hw.c | 2 +-
->  drivers/cpufreq/scmi-cpufreq.c    | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
+>  drivers/cpufreq/qcom-cpufreq-nvmem.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> index d1744b5d9619..6dfa86971a75 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> @@ -130,7 +130,7 @@ static void get_krait_bin_format_b(struct device *cpu_dev,
+>  	}
+>  
+>  	/* Check PVS_BLOW_STATUS */
+> -	pte_efuse = *(((u32 *)buf) + 4);
+> +	pte_efuse = *(((u32 *)buf) + 1);
+>  	pte_efuse &= BIT(21);
+>  	if (pte_efuse) {
+>  		dev_dbg(cpu_dev, "PVS bin: %d\n", *pvs);
 
 Applied. Thanks.
 
