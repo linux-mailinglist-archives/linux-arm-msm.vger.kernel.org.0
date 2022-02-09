@@ -2,88 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B9C7B4AF23C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 14:01:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D7614AF2B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 14:28:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232070AbiBINBS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Feb 2022 08:01:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39000 "EHLO
+        id S233666AbiBIN1l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Feb 2022 08:27:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230519AbiBINBR (ORCPT
+        with ESMTP id S233794AbiBIN1j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Feb 2022 08:01:17 -0500
+        Wed, 9 Feb 2022 08:27:39 -0500
 Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D506FC0613CA;
-        Wed,  9 Feb 2022 05:01:19 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 157EFC050CCA;
+        Wed,  9 Feb 2022 05:27:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644411681; x=1675947681;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=KD6Lp4BkKlFVB0RGHgLuv8EhmfR4x5XxZN5wW9sPRTg=;
-  b=tQGYiPY/ggziLCvmO9LMADUZqOXI3GWtUvD1M3R5ZOUyZaGXfCrX9vx6
-   rDJwefnvyUWl8JayQsFGWZ/hUMO9X7/IL9rbbXU+B5fOCDnG46hXflKaO
-   nDEPhv8z20sMJTm0ncSPhDcs/GkjOD8C6TiYwl1G68PI09hz1eAB4CJxA
-   g=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 09 Feb 2022 05:01:19 -0800
+  t=1644413258; x=1675949258;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=g81XqEg610YOWPcEx1mg1A5BtET0yAQT4NmAhA1VPPs=;
+  b=Gbw9J3jpcBwtIsqT2DFdFad5jpQgoG4Zc2uAwLzNuSDqtZPksi+lvfrp
+   xERNI+NLuuOyzw4ST+EHYmnqtTiiEohwZ3GIENBLkyJlAgnvNN6NtJ9in
+   HpbkkxtqTiyFUJx4f5QMRxBJgupwKw5JNux7x4Wzb8607mb8xk9Cc8TzY
+   A=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 09 Feb 2022 05:27:37 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2022 05:01:19 -0800
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2022 05:27:21 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 9 Feb 2022 05:01:18 -0800
-Received: from [10.50.24.58] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Wed, 9 Feb 2022
- 05:01:15 -0800
-Message-ID: <c898d9e6-c63a-d79c-f0c6-f33112e70b33@quicinc.com>
-Date:   Wed, 9 Feb 2022 18:31:11 +0530
+ 15.2.922.19; Wed, 9 Feb 2022 05:26:41 -0800
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Wed, 9 Feb 2022 05:26:35 -0800
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <plai@codeaurora.org>, <bgoswami@codeaurora.org>, <perex@perex.cz>,
+        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
+        <rohitkr@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <judyhsiao@chromium.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [RESEND v8 0/3] Machine driver to support LPASS SC7280 sound card registration
+Date:   Wed, 9 Feb 2022 18:56:18 +0530
+Message-ID: <1644413181-26358-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.2
-Subject: Re: [PATCHv2 0/9] soc: qcom: llcc: Add LLCC support for SM8450 SoC
-Content-Language: en-US
-To:     Vinod Koul <vkoul@kernel.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Prasad <quic_psodagud@quicinc.com>
-References: <cover.1643355594.git.quic_saipraka@quicinc.com>
- <Yf/XgGSHE9PwYrz0@matsya>
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-In-Reply-To: <Yf/XgGSHE9PwYrz0@matsya>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/6/2022 7:43 PM, Vinod Koul wrote:
-> On 28-01-22, 13:17, Sai Prakash Ranjan wrote:
->> This patch series adds support for LLCC on SM8450 SoC. It mainly
->> consists of LLCC driver changes to incorporate newer LLCC HW found
->> on SM8450 SoC and the corresponding DT bits to enable LLCC.
->> Based on qcom/for-next branch.
-> I have tested this on SM8450 QRD and MTP
->
-> Tested-by: Vinod Koul <vkoul@kernel.org>
->
+This patch set is to add support for SC7280 sound card registration and
+to add dt-bindings documentation file.
 
-Thanks Vinod.
+Srinivasa Rao Mandadapu (3):
+  ASoC: google: dt-bindings: Add sc7280-herobrine machine bindings
+  ASoC: qcom: Add macro for lpass DAI id's max limit
+  ASoC: qcom: SC7280: Add machine driver
 
--Sai
+Changes Since V7:
+    -- Create separate patch for dai id's macro.
+    -- Remove unused dapm widget structure.
+    -- Move to quicinc domain email id's.
+Changes Since V6:
+    -- Remove redundant headers.
+    -- Move max ports macro to lpass.h header.
+    -- Arrange structure alignment.
+    -- Fix indentation errors.
+    -- Update module license.
+Changes Since V5:
+    -- Add required properties to dt-bindings
+Changes Since V4:
+    -- Add COMPILE_TEST flag in sc7280 configuration.
+    -- Remove redundant startup and shutdown callbacks of snd_soc_ops.
+    -- Fix typo errors.
+Changes Since V3:
+    -- Change audio jack playpause key value.
+Changes Since V2:
+    -- updated required field in bindings
+    -- updated Return type check with proper enum in sc7280.c
+    -- Updated Header name and Typos in sc7280.c
+Changes Since V1:
+    -- Indentation changes and typo.
+
+ .../bindings/sound/google,sc7280-herobrine.yaml    | 171 +++++++++++++
+ sound/soc/qcom/Kconfig                             |  14 +
+ sound/soc/qcom/Makefile                            |   2 +
+ sound/soc/qcom/lpass.h                             |   1 +
+ sound/soc/qcom/sc7280.c                            | 284 +++++++++++++++++++++
+ 5 files changed, 472 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
+ create mode 100644 sound/soc/qcom/sc7280.c
+
+-- 
+2.7.4
+
