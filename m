@@ -2,70 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EA39D4AF37C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 15:01:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B787C4AF3E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 15:18:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234640AbiBIOB0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Feb 2022 09:01:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59194 "EHLO
+        id S234888AbiBIOS3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Feb 2022 09:18:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233068AbiBIOB0 (ORCPT
+        with ESMTP id S234418AbiBIOS2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Feb 2022 09:01:26 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B681AC061355;
-        Wed,  9 Feb 2022 06:01:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644415289; x=1675951289;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=jaO6ajKfkBLIjW5BN3gE7J2bahUdoXXXJBshGnZI/MY=;
-  b=g+hoDqbESqAUiWMHpwiFkaKK8kU0ILt0GbdzFaDkQpa9ROweGbou7Fv7
-   01GPxJtt/2x951Vx4oCzM/87Ay/fXqD++POJQ3krnPeVSFbEZJbvxURu9
-   uxHoBXSE2et6mHucIzv3HSekLK4nm+MuNMudzJit1EdgqouRO84fNKFKh
-   4=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Feb 2022 06:01:29 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2022 06:01:29 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 9 Feb 2022 06:01:28 -0800
-Received: from [10.216.41.35] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Wed, 9 Feb 2022
- 06:01:24 -0800
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sc7280: add lpass lpi pin
- controller node
-To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <devicetree@vger.kernel.org>,
-        <dianders@chromium.org>, <judyhsiao@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <robh+dt@kernel.org>, <rohitkr@codeaurora.org>,
-        <srinivas.kandagatla@linaro.org>
-CC:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
-References: <1644334454-16719-1-git-send-email-quic_srivasam@quicinc.com>
- <1644334454-16719-3-git-send-email-quic_srivasam@quicinc.com>
- <CAE-0n52LGY2amCKo+40D4BoSsANs7JeQ0t_4QfeXNC5q64Ccwg@mail.gmail.com>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-Message-ID: <c17e95f7-9c42-657a-8525-3937d4b27fb8@quicinc.com>
-Date:   Wed, 9 Feb 2022 19:31:21 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Wed, 9 Feb 2022 09:18:28 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE41DC06157B;
+        Wed,  9 Feb 2022 06:18:31 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3F689B821B2;
+        Wed,  9 Feb 2022 14:18:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B8AC340ED;
+        Wed,  9 Feb 2022 14:18:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1644416308;
+        bh=1MtO7MBePNHbA180B0d3mHWV4qoaflVr2s+vaUlLuqk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LriNNC73jaD88ED44JGHSTX8EOyHJPWda8DfKQNiSc0t42p29DxoZgkY9dLHrUURN
+         H2I6fZ+1iDE2XnR/vglWu+eYh6LW7rybBnJWKuWEZq39cy0z8jMMt7ss42PWj1sWNi
+         twDAfJCStcclo88RxyM0lKOs1zGS7viof0ecEXlQQCidRmV5asTeE5HJjkqnhavMq9
+         eWMS8sA2CGKLSREVpE7D44iCFOkhpA4CN3oBGPEGA2x/rLlwZDxw3dfFAeyDctnKtn
+         YwA6adixpgNvuLNtMZuNdQuYVquOE853N0oXEbiokZ6zH44BhRo9JKZcUTc6LkrcD7
+         zAIKK4X2vaGpg==
+Date:   Wed, 9 Feb 2022 14:18:22 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Satya Priya <quic_c_skakit@quicinc.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Das Srinagesh <gurus@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        quic_collinsd@quicinc.com, quic_subbaram@quicinc.com,
+        quic_jprakash@quicinc.com
+Subject: Re: [PATCH V5 4/6] regulator: Add a regulator driver for the PM8008
+ PMIC
+Message-ID: <YgPNLq6tdj5/UpZE@sirena.org.uk>
+References: <1644331940-18986-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1644331940-18986-5-git-send-email-quic_c_skakit@quicinc.com>
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n52LGY2amCKo+40D4BoSsANs7JeQ0t_4QfeXNC5q64Ccwg@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="xXbvD+5GjL5lwDdj"
+Content-Disposition: inline
+In-Reply-To: <1644331940-18986-5-git-send-email-quic_c_skakit@quicinc.com>
+X-Cookie: Disc space -- the final frontier!
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,198 +67,130 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 2/9/2022 2:41 AM, Stephen Boyd wrote:
-Thanks for your time Stephen!!!
-> Quoting Srinivasa Rao Mandadapu (2022-02-08 07:34:13)
->> Add LPASS LPI pinctrl node required for Audio functionality on sc7280
->> based platforms.
->>
->> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
->> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 150 +++++++++++++++++++++++++++++++
->>   1 file changed, 150 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> index c7d6c46..4704a93 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> @@ -638,3 +638,153 @@
->>                  bias-pull-up;
->>          };
->>   };
-> Newline here.
-Okay.
->
->> +&soc {
->> +       lpass_tlmm: pinctrl@33c0000 {
->> +               compatible = "qcom,sc7280-lpass-lpi-pinctrl";
->> +               reg = <0 0x33c0000 0x0 0x20000>,
->> +                       <0 0x3550000 0x0 0x10000>;
->> +               gpio-controller;
->> +               #gpio-cells = <2>;
->> +               gpio-ranges = <&lpass_tlmm 0 0 15>;
->> +
->> +               #clock-cells = <1>;
-> Presumably this doesn't change so it should be moved to the sc7280.dtsi
-> file as part of the soc node. It can be marked status = "disabled" if
-> it's not commonly used, but I suspect it is commonly used on sc7280?
-Okay. will move to common dtsi file.
->
->> +
->> +               dmic01_active: dmic01-active-pins {
-> The '-pins' suffix is redundant. Please remove it.
-Okay. will remove it.
->
->> +                       clk {
->> +                               pins = "gpio6";
->> +                               function = "dmic1_clk";
->> +                               drive-strength = <8>;
->> +                               output-high;
->> +                       };
-> Please be consistent and have a newline between nodes.
-Okay.
->
->> +                       data {
->> +                               pins = "gpio7";
->> +                               function = "dmic1_data";
->> +                               drive-strength = <8>;
->> +                               input-enable;
->> +                       };
->> +               };
->> +
->> +               dmic01_sleep: dmic01-sleep-pins {
->> +                       clk {
->> +                               pins = "gpio6";
->> +                               function = "dmic1_clk";
->> +                               drive-strength = <2>;
->> +                               bias-disable;
->> +                               output-low;
->> +                       };
->> +
->> +                       data {
->> +                               pins = "gpio7";
->> +                               function = "dmic1_data";
->> +                               drive-strength = <2>;
->> +                               pull-down;
->> +                               input-enable;
-> Why does input-enable matter? It's not a gpio.
-Actually the same is fallowed in sm8250.dtsi. Verified without it and 
-working fine. Need take call on it.
->
->> +                       };
->> +               };
->> +
->> +               dmic23_active: dmic02-active-pins {
->> +                       clk {
->> +                               pins = "gpio8";
->> +                               function = "dmic2_clk";
->> +                               drive-strength = <8>;
->> +                               output-high;
->> +                       };
->> +                       data {
->> +                               pins = "gpio9";
->> +                               function = "dmic2_data";
->> +                               drive-strength = <8>;
->> +                               input-enable;
->> +                       };
->> +               };
->> +
->> +               dmic23_sleep: dmic02-sleep-pins {
->> +                       clk {
->> +                               pins = "gpio8";
->> +                               function = "dmic2_clk";
->> +                               drive-strength = <2>;
->> +                               bias-disable;
->> +                               output-low;
->> +                       };
->> +
->> +                       data {
->> +                               pins = "gpio9";
->> +                               function = "dmic2_data";
->> +                               drive-strength = <2>;
->> +                               pull-down;
->> +                               input-enable;
->> +                       };
->> +               };
->> +
->> +               rx_swr_active: rx_swr-active-pins {
->> +                       clk {
->> +                               pins = "gpio3";
->> +                               function = "swr_rx_clk";
->> +                               drive-strength = <2>;
->> +                               slew-rate = <1>;
->> +                               bias-disable;
->> +                       };
->> +
->> +                       data {
->> +                               pins = "gpio4", "gpio5";
->> +                               function = "swr_rx_data";
->> +                               drive-strength = <2>;
->> +                               slew-rate = <1>;
->> +                               bias-bus-hold;
->> +                       };
->> +               };
->> +
->> +               rx_swr_sleep: rx_swr-sleep-pins {
->> +                       clk {
->> +                               pins = "gpio3";
->> +                               function = "swr_rx_clk";
->> +                               drive-strength = <2>;
->> +                               input-enable;
->> +                               bias-pull-down;
->> +                       };
->> +
->> +                       data {
->> +                               pins = "gpio4", "gpio5";
->> +                               function = "swr_rx_data";
->> +                               drive-strength = <2>;
->> +                               input-enable;
->> +                               bias-pull-down;
->> +                       };
->> +               };
->> +
->> +               tx_swr_active: tx_swr-active-pins {
->> +                       clk {
->> +                               pins = "gpio0";
->> +                               function = "swr_tx_clk";
->> +                               drive-strength = <2>;
->> +                               slew-rate = <1>;
->> +                               bias-disable;
->> +                       };
->> +
->> +                       data {
->> +                               pins = "gpio1", "gpio2", "gpio14";
->> +                               function = "swr_tx_data";
->> +                               drive-strength = <2>;
->> +                               slew-rate = <1>;
->> +                               bias-bus-hold;
->> +                       };
->> +               };
->> +
->> +               tx_swr_sleep: tx_swr-sleep-pins {
-> No underscore in node names.
-Okay.
->
->> +                       clk {
->> +                               pins = "gpio0";
->> +                               function = "swr_tx_clk";
->> +                               drive-strength = <2>;
->> +                               input-enable;
->> +                               bias-pull-down;
->> +                       };
->> +
->> +                       data {
->> +                               pins = "gpio1", "gpio2", "gpio14";
->> +                               function = "swr_tx_data";
->> +                               drive-strength = <2>;
->> +                               input-enable;
->> +                               bias-bus-hold;
->> +                       };
->> +               };
->> +       };
->> +};
->> --
->> 2.7.4
->>
+--xXbvD+5GjL5lwDdj
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Feb 08, 2022 at 08:22:18PM +0530, Satya Priya wrote:
+
+> +static int pm8008_regulator_of_parse(struct device_node *node,
+> +			const struct regulator_desc *desc,
+> +			struct regulator_config *config)
+> +{
+> +	struct pm8008_regulator *pm8008_reg =3D config->driver_data;
+> +	int rc;
+> +	unsigned int reg;
+> +
+> +	/* get slew rate */
+> +	rc =3D regmap_bulk_read(pm8008_reg->regmap,
+> +			LDO_STEPPER_CTL_REG(pm8008_reg->base), &reg, 1);
+> +	if (rc < 0) {
+> +		dev_err(pm8008_reg->dev,
+> +			"%s: failed to read step rate configuration rc=3D%d\n",
+> +			pm8008_reg->rdesc.name, rc);
+> +		return rc;
+> +	}
+> +	reg &=3D STEP_RATE_MASK;
+> +	pm8008_reg->step_rate =3D DEFAULT_VOLTAGE_STEPPER_RATE >> reg;
+> +
+> +	return 0;
+
+This is not doing any parsing of any DT properties at all, it is just
+reading a default value back from the hardware.  This shouldn't be in
+the of_parse() callback, it should be done on probe() or something so
+that if someone adds ACPI support or whatever there's no surprise
+breakage, and so that we've got this configured even if there's no DT
+bindings for the specific regulator.
+
+> +}
+> +
+> +static int pm8008_regulator_probe(struct platform_device *pdev)
+> +{
+> +	struct device *dev =3D &pdev->dev;
+> +	int id =3D pdev->id % PM8008_NUM_LDOS;
+> +	struct regulator_dev    *rdev;
+> +	struct pm8008_regulator *pm8008_reg;
+> +	struct regmap *regmap;
+> +	struct regulator_config reg_config =3D {};
+> +	int rc;
+> +
+> +	dev_dbg(dev, "DEBUG: Probing LDO%d\n", id + 1);
+> +
+> +	regmap =3D dev_get_regmap(dev->parent, NULL);
+> +	if (!regmap) {
+> +		dev_err(dev, "parent regmap is missing\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	pm8008_reg =3D devm_kzalloc(dev, sizeof(*pm8008_reg), GFP_KERNEL);
+> +	if (!pm8008_reg)
+> +		return -ENOMEM;
+> +
+> +	pm8008_reg->regmap =3D regmap;
+> +	pm8008_reg->dev =3D dev;
+> +	pm8008_reg->base =3D reg_data[id].base;
+> +
+> +	pm8008_reg->rdesc.type =3D REGULATOR_VOLTAGE;
+> +	pm8008_reg->rdesc.regulators_node =3D of_match_ptr("regulators");
+> +	pm8008_reg->rdesc.ops =3D &pm8008_regulator_ops;
+> +	pm8008_reg->rdesc.name =3D reg_data[id].name;
+> +	pm8008_reg->rdesc.supply_name =3D reg_data[id].supply_name;
+> +	pm8008_reg->rdesc.of_match =3D reg_data[id].name;
+> +	pm8008_reg->rdesc.of_parse_cb =3D pm8008_regulator_of_parse;
+> +	pm8008_reg->rdesc.uV_step =3D VSET_STEP_UV;
+> +	pm8008_reg->rdesc.min_uV =3D reg_data[id].min_uv;
+> +	pm8008_reg->rdesc.n_voltages
+> +		=3D ((reg_data[id].max_uv - reg_data[id].min_uv)
+> +			/ pm8008_reg->rdesc.uV_step) + 1;
+> +	pm8008_reg->rdesc.linear_ranges =3D reg_data[id].voltage_range;
+> +	pm8008_reg->rdesc.n_linear_ranges =3D 1;
+> +	pm8008_reg->rdesc.enable_reg =3D LDO_ENABLE_REG(pm8008_reg->base);
+> +	pm8008_reg->rdesc.enable_mask =3D ENABLE_BIT;
+> +	pm8008_reg->rdesc.min_dropout_uV =3D reg_data[id].min_dropout_uv;
+> +
+> +	reg_config.dev =3D dev->parent;
+> +	reg_config.driver_data =3D pm8008_reg;
+> +
+> +	rdev =3D devm_regulator_register(dev, &pm8008_reg->rdesc, &reg_config);
+> +	if (IS_ERR(rdev)) {
+> +		rc =3D PTR_ERR(rdev);
+> +		dev_err(dev, "%s: failed to register regulator rc=3D%d\n",
+> +				reg_data[id].name, rc);
+> +		return rc;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static struct platform_driver pm8008_regulator_driver =3D {
+> +	.driver	=3D {
+> +		.name		=3D "qcom,pm8008-regulators",
+> +	},
+> +	.probe	=3D pm8008_regulator_probe,
+> +};
+> +
+> +module_platform_driver(pm8008_regulator_driver);
+> +
+> +MODULE_DESCRIPTION("Qualcomm PM8008 PMIC Regulator Driver");
+> +MODULE_LICENSE("GPL");
+> --=20
+> 2.7.4
+>=20
+
+--xXbvD+5GjL5lwDdj
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmIDzS0ACgkQJNaLcl1U
+h9DRcAf9HPN3Mc4xD6E/TulcobefCCiQgxa/AHUX1JjIH0G6D0zCj79m5CZDoY3C
+0GjR8ECghIi9en0dXhsHyacAuudBBWQOO54LVpSh0pWtfi3r9rJS11wgjCIhk7FO
++pSO7jaKR38mbNp6I1j7xha5NiDkdvzTkbyYuxAxKMT1B7n75GlV6hfcez4L+Hz6
+Q8IRPfmYqa1IStIMfk77tA7CxnAA4+ynE41z276XuRhYLmm+JYpLZY3jDheEYazA
+OGIYxev1JXfdIRpuwWJNdWUGhl+3ulLhI7lg6G3TjfPxaHFKDOyJ4HPtCTX/QhZr
+Ucq/G4rJ4mK8UL18pjuxoacFwb7iiw==
+=sAyx
+-----END PGP SIGNATURE-----
+
+--xXbvD+5GjL5lwDdj--
