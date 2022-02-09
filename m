@@ -2,126 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EE7DF4AF6F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 17:40:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AC6F4AF75C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 17:58:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237326AbiBIQjy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Feb 2022 11:39:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47782 "EHLO
+        id S237576AbiBIQ55 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Feb 2022 11:57:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234543AbiBIQjx (ORCPT
+        with ESMTP id S237572AbiBIQ5y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Feb 2022 11:39:53 -0500
-Received: from fwd1.porkbun.com (fwd1.porkbun.com [52.10.174.57])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8457C0612BE;
-        Wed,  9 Feb 2022 08:39:56 -0800 (PST)
-Received: by fwd1.porkbun.com (Postfix, from userid 497)
-        id 78B7C429CD; Wed,  9 Feb 2022 16:39:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ansari.sh;
-        s=default; t=1644424796;
-        bh=ooNj/8suxQGCS+iG0qUYChLq9ehXfq6KW/VZ9iEQVtM=;
-        h=From:To:Cc:Subject:Date;
-        b=m2Mzvb3yBRtES/mr4zsa1QF5lj5mhZS1V0C6oe92XDpcv5MPqBz/vU8gOtlrbORKR
-         Tt0RqZoBdYPdmZsDUpBxIPYrE5UnfhCnMpsu6k89T+MgqUrwY6FVkrIoJVnMoPveiy
-         8vYKvLi8nSFutE0FplWcPfZ3ZRuUbp7VUV9dmiNM=
-X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
-        lindbergh.monkeyblade.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLACK autolearn=no
-        autolearn_force=no version=3.4.6
-Received: from rayyan-pc.. (unknown [90.242.138.108])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        (Authenticated sender: rayyan@ansari.sh)
-        by fwd1.porkbun.com (Postfix) with ESMTPSA id B8E4D41C54;
-        Wed,  9 Feb 2022 16:39:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ansari.sh;
-        s=default; t=1644424781;
-        bh=ooNj/8suxQGCS+iG0qUYChLq9ehXfq6KW/VZ9iEQVtM=;
-        h=From:To:Cc:Subject:Date;
-        b=ZM0LJZsYefdS00PyYlDAREOJZ+oo2lgbvjHxMsfx6vGyauOZP0s8MW22WeUp9KIBg
-         WPohoiTLEsz9SvHvTuB24ydfECHae4XNrRHeJsHRTEYFIdZRWdQ1M+5X0num9UF2ap
-         7u+fgkXSA0MqW4/hGjzKg4plnyZ1S8+ZMuGshFsg=
-From:   Rayyan Ansari <rayyan@ansari.sh>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Rayyan Ansari <rayyan@ansari.sh>,
-        Andy Gross <agross@kernel.org>,
+        Wed, 9 Feb 2022 11:57:54 -0500
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E6F6C05CB86;
+        Wed,  9 Feb 2022 08:57:57 -0800 (PST)
+Received: by mail-qt1-x843.google.com with SMTP id s1so2317798qtw.9;
+        Wed, 09 Feb 2022 08:57:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=c8ITlZ0TIJQYeuae8LzwclVS/gPvsuuD8tI1DH//ZB0=;
+        b=Alj2+fWNY3w/xeBfw85sJE1/xxD0ShOPbSBvLdKBwssQQsn0birtT5YpUpPp62/q+l
+         PTUpJ0ZQ1uHP87p3d9T/d9M5Q5vwW7sarhGKiaREvbGURzo4mZaWUx7BNsSDumcLfqKv
+         WzzSzvl7PymNUz6YlyRWx1uOQ2Oz6mecincQhr/0uocFitMryIEtHsrSwCUBNx3dFBk9
+         vh5Rn1ZV0Sy1LNax+QkgzRY2v5vHE+TXczdfIfiwxNJkSi2OTgEvuBn6KnnTCbjn7Anf
+         MhCCHghukYiJxUMI/0aIMbGGN0nA89YZiXQuS1fEEKoW+9/qj9d7mwh2/ThmJaR6rUMb
+         tPng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=c8ITlZ0TIJQYeuae8LzwclVS/gPvsuuD8tI1DH//ZB0=;
+        b=NFwU0xHifaPENHCIQdjQr87rH4pstEEoRV6LBLLFOh1mU3+KYSivb3rwAuzU6oC6Pr
+         e8wSqCLYPJzhaYUCJBDMPZIoO+SgKs4MBb5zitxUhUGZmPZf5XPBeC4OUBQdPTfhQPHI
+         x22JEZXO1mlZFSALCmgSQsLKSMRAtmE/T0LsxFRBtev3rlUbS51PvoNRvmxNWJLJa6qI
+         OnRAg/ovwcFDpbK6YYXwU/x0MOA3JhMtNFR1ylDTEBHEnJzJOaFE+lFcn6P3xdbXNVOP
+         EXh2d7QD2Aw3h6i5TqZRmIaz3ipGaJHG43wbSy8A3p3ZvjoJ6EBpktu3nT52gEV+zBfZ
+         ENzw==
+X-Gm-Message-State: AOAM530wIi3I3LhVV3nDo7ELqD69fNv2KaeiilraT87+z5Zh0nMhThNe
+        SGxTryg0UKo9n0I6Frkuz9o=
+X-Google-Smtp-Source: ABdhPJwB5PRL11twhgVtT0TwmaAdjTIgn1YAjllT+KDbjpY+nLqyxDe2O1PYeY4gdan0ISECuelYdw==
+X-Received: by 2002:ac8:7cab:: with SMTP id z11mr2004416qtv.384.1644425876371;
+        Wed, 09 Feb 2022 08:57:56 -0800 (PST)
+Received: from lumia-dev.localdomain. (pool-96-225-98-253.nwrknj.fios.verizon.net. [96.225.98.253])
+        by smtp.googlemail.com with ESMTPSA id z19sm9629019qtj.77.2022.02.09.08.57.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Feb 2022 08:57:55 -0800 (PST)
+From:   Jack Matthews <jm5112356@gmail.com>
+Cc:     jm5112356@gmail.com, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] ARM: dts: qcom: pm8226: Add VADC node
-Date:   Wed,  9 Feb 2022 16:38:40 +0000
-Message-Id: <20220209163841.7360-1-rayyan@ansari.sh>
-X-Mailer: git-send-email 2.34.1
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2] ARM: dts: qcom: pm8226: add node for RTC
+Date:   Wed,  9 Feb 2022 16:57:41 +0000
+Message-Id: <20220209165742.652890-1-jm5112356@gmail.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20220209052929.651881-1-jm5112356@gmail.com>
+References: <20220209052929.651881-1-jm5112356@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
+        lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a node for the voltage ADC (VADC) found in PM8226.
+Add a node for PM8226's real time clock.
 
-Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
+Signed-off-by: Jack Matthews <jm5112356@gmail.com>
 ---
- arch/arm/boot/dts/qcom-pm8226.dtsi | 34 ++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ arch/arm/boot/dts/qcom-pm8226.dtsi | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/arch/arm/boot/dts/qcom-pm8226.dtsi b/arch/arm/boot/dts/qcom-pm8226.dtsi
-index b3d0f7b5874d..5e07f34e4ec4 100644
+index 872724490a5d..8ee628ce88a9 100644
 --- a/arch/arm/boot/dts/qcom-pm8226.dtsi
 +++ b/arch/arm/boot/dts/qcom-pm8226.dtsi
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: BSD-3-Clause
- #include <dt-bindings/interrupt-controller/irq.h>
- #include <dt-bindings/spmi/spmi.h>
-+#include <dt-bindings/iio/qcom,spmi-vadc.h>
- 
- &spmi_bus {
- 	pm8226_0: pm8226@0 {
-@@ -40,6 +41,39 @@ smbb: charger@1000 {
- 			chg_otg: otg-vbus { };
+@@ -73,6 +73,13 @@ adc-chan@f {
+ 			};
  		};
  
-+		pm8226_vadc: adc@3100 {
-+			compatible = "qcom,spmi-vadc";
-+			reg = <0x3100>;
-+			interrupts = <0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			#io-channel-cells = <1>;
-+
-+			adc-chan@7 {
-+				reg = <VADC_VSYS>;
-+				qcom,pre-scaling = <1 3>;
-+				label = "vph_pwr";
-+			};
-+			adc-chan@8 {
-+				reg = <VADC_DIE_TEMP>;
-+				label = "die_temp";
-+			};
-+			adc-chan@9 {
-+				reg = <VADC_REF_625MV>;
-+				label = "ref_625mv";
-+			};
-+			adc-chan@a {
-+				reg = <VADC_REF_1250MV>;
-+				label = "ref_1250mv";
-+			};
-+			adc-chan@e {
-+				reg = <VADC_GND_REF>;
-+			};
-+			adc-chan@f {
-+				reg = <VADC_VDD_VADC>;
-+			};
++		rtc@6000 {
++			compatible = "qcom,pm8941-rtc";
++			reg = <0x6000>, <0x6100>;
++			reg-names = "rtc", "alarm";
++			interrupts = <0x0 0x61 0x1 IRQ_TYPE_EDGE_RISING>;
 +		};
 +
  		pm8226_mpps: mpps@a000 {
  			compatible = "qcom,pm8226-mpp", "qcom,spmi-mpp";
  			reg = <0xa000>;
 -- 
-2.34.1
+2.25.1
 
