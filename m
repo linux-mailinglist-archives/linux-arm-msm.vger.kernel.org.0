@@ -2,529 +2,393 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7862C4AF82E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 18:26:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 20EFE4AF8AB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 18:46:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238196AbiBIRZ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Feb 2022 12:25:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53412 "EHLO
+        id S238284AbiBIRqJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Feb 2022 12:46:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238236AbiBIRZr (ORCPT
+        with ESMTP id S235315AbiBIRqI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Feb 2022 12:25:47 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B908DC0613C9
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Feb 2022 09:25:49 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id z20so4433245ljo.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Feb 2022 09:25:49 -0800 (PST)
+        Wed, 9 Feb 2022 12:46:08 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51CEFC0613C9;
+        Wed,  9 Feb 2022 09:46:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Lw58U4vD/8+NxNvEp4u6pOgeLB3B0AxQcZjFEY7cvM4=;
-        b=DkcRRfXm/+75AQ7cgqwcL8JuJdKRXlkcUZIS1KVoIE5NPwnJP94TUau/tVKYciHV4c
-         HbL3jVVCb3xHbNtKAsGq8oaOs5GaAre5r1QoxDKn2yWVIw6cxvtVa/QAYJC1mjkT1GgK
-         Ll66hA9HZlPh/5S7uls206I46l/7G4kUSktJREhzwXzDa5jarcDJCnLwpKE+1J73h6QU
-         28J0arq6mrtYPhvRE+yKszlGTnxaQVn7ETCRBQAYgXwsoNHa39QfouG/VZ+H6pTg8UmJ
-         aa9yf9OaMgqxaaYZ7hargcyDhXgytWvDb171vMuEiG4vhxyyMZgsK7WLWjoiRKmKVXTL
-         uKVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Lw58U4vD/8+NxNvEp4u6pOgeLB3B0AxQcZjFEY7cvM4=;
-        b=lrrmoUrhvO4L8acetXF/XVRLeQTOTc27L4/zgGd4llJ4cno5lKov8EsN31Mw44J0x4
-         3Gn74H3BZEeFT4IRWJmdV+3gfSqHoJSEFbR32tC/YA/fmvMZWMIaBx5hOltoilrbjxZ4
-         Q0IqZqFGt8o6nUwyl7EiRv9Knfr3dWt5316YCSBXXEGJKx07cTz5uiHuJaphwAG1OFRH
-         RdsGBuWyoUfiCxAuZVU4rRrJGaw+9uJoGwMhzYW6UxeHhVrfazvt6jykZNpG7+9YQJVo
-         Cz/U0koy97uuc7JBxWPcU5rYQjK7XBRDB2hS0akLsrYsQlFdCkKs5PgEXLQqo8D1eImy
-         5KQg==
-X-Gm-Message-State: AOAM5315aFB2RuklH2HT7wnogF9radwXSTkf6auJEA2eoOSgJgp7FVNl
-        FMz1y2EJmoMqS+QBRtajF/5vBw==
-X-Google-Smtp-Source: ABdhPJwQwfDUXQbNbO4U5lSOEeStIVnAKdxU8HlQXuu57lAxolsx3/05xJ6yCHL/i7a2vKKBFcxCKg==
-X-Received: by 2002:a2e:9e01:: with SMTP id e1mr2106917ljk.31.1644427547975;
-        Wed, 09 Feb 2022 09:25:47 -0800 (PST)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u14sm2560055lji.40.2022.02.09.09.25.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Feb 2022 09:25:47 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 25/25] drm/msm/dpu: add support for wide planes
-Date:   Wed,  9 Feb 2022 20:25:20 +0300
-Message-Id: <20220209172520.3719906-26-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220209172520.3719906-1-dmitry.baryshkov@linaro.org>
-References: <20220209172520.3719906-1-dmitry.baryshkov@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1644428771; x=1675964771;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=RB573mLF4TwBecPUuBH+gJ5hpoDLGZ3AL75rF6UQ/ok=;
+  b=uvgBTses4fAR5Kar7ArZZ+0EPrKXW1Mmm2TilvUj0vzEENiG15IVFLu0
+   9njiU1CMgCyR9xYGKrrA1lHvm0itLuxbH218PwdHJ0GxZ5xie7J5WHZRg
+   Ujof7btHGMTQTspf1031pbDsWSc9SMYiwGSDxOy6EHqO26vw0Whsuogk/
+   k=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 09 Feb 2022 09:46:11 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2022 09:46:10 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Wed, 9 Feb 2022 09:46:10 -0800
+Received: from blr-ubuntu-87.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Wed, 9 Feb 2022 09:46:06 -0800
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+To:     <bjorn.andersson@linaro.org>, <dianders@chromium.org>,
+        <mka@chromium.org>
+CC:     <viresh.kumar@linaro.org>, <sboyd@kernel.org>, <agross@kernel.org>,
+        <robh+dt@kernel.org>, <rjw@rjwysocki.net>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH v4] arm64: dts: qcom: sc7280: Add cpu OPP tables
+Date:   Wed, 9 Feb 2022 23:15:57 +0530
+Message-ID: <1644428757-25575-1-git-send-email-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Typically SSPP can support rectangle with width up to 2560. However it's
-possible to use multirect feature and split source to use the SSPP to
-output two consecutive rectangles. This commit brings in this capability
-to support wider screen resolutions.
+Add OPP tables required to scale DDR/L3 per freq-domain on SC7280 SoCs.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  35 +++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 194 ++++++++++++++++++----
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |   2 +
- 3 files changed, 192 insertions(+), 39 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index fa279f0358d6..20ebac3028ec 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -418,7 +418,6 @@ static void _dpu_crtc_blend_setup_ctl(struct drm_crtc *crtc)
- 	struct dpu_plane_state *pstate = NULL;
+V4:
+ * Round up frequency labels [Matthias]
+ * Add DDR/L3 bandwidth votes for the pro variant of SC7280 SoC
+
+V3:
+ * Rename cpu opp table nodes [Matthias]
+ * Rename opp phandles [Doug]
+
+Depends on the following patch:
+L3 Provider Node: https://patchwork.kernel.org/project/linux-arm-msm/patch/1634812857-10676-4-git-send-email-okukatla@codeaurora.org/
+
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 230 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 230 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index c6d26ea805d8..f0b64be63c21 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -11,6 +11,7 @@
+ #include <dt-bindings/clock/qcom,rpmh.h>
+ #include <dt-bindings/clock/qcom,videocc-sc7280.h>
+ #include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/interconnect/qcom,osm-l3.h>
+ #include <dt-bindings/interconnect/qcom,sc7280.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/mailbox/qcom-ipcc.h>
+@@ -163,6 +164,9 @@
+ 					   &LITTLE_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_0>;
++			operating-points-v2 = <&cpu0_opp_table>;
++			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
++					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			#cooling-cells = <2>;
+ 			L2_0: l2-cache {
+@@ -183,6 +187,9 @@
+ 					   &LITTLE_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_100>;
++			operating-points-v2 = <&cpu0_opp_table>;
++			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
++					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			#cooling-cells = <2>;
+ 			L2_100: l2-cache {
+@@ -200,6 +207,9 @@
+ 					   &LITTLE_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_200>;
++			operating-points-v2 = <&cpu0_opp_table>;
++			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
++					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			#cooling-cells = <2>;
+ 			L2_200: l2-cache {
+@@ -217,6 +227,9 @@
+ 					   &LITTLE_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_300>;
++			operating-points-v2 = <&cpu0_opp_table>;
++			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
++					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			#cooling-cells = <2>;
+ 			L2_300: l2-cache {
+@@ -234,6 +247,9 @@
+ 					   &BIG_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_400>;
++			operating-points-v2 = <&cpu4_opp_table>;
++			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
++					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			#cooling-cells = <2>;
+ 			L2_400: l2-cache {
+@@ -251,6 +267,9 @@
+ 					   &BIG_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_500>;
++			operating-points-v2 = <&cpu4_opp_table>;
++			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
++					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			#cooling-cells = <2>;
+ 			L2_500: l2-cache {
+@@ -268,6 +287,9 @@
+ 					   &BIG_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_600>;
++			operating-points-v2 = <&cpu4_opp_table>;
++			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
++					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			#cooling-cells = <2>;
+ 			L2_600: l2-cache {
+@@ -285,6 +307,9 @@
+ 					   &BIG_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_700>;
++			operating-points-v2 = <&cpu7_opp_table>;
++			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
++					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+ 			qcom,freq-domain = <&cpufreq_hw 2>;
+ 			#cooling-cells = <2>;
+ 			L2_700: l2-cache {
+@@ -384,6 +409,211 @@
+ 		};
+ 	};
  
- 	uint32_t stage_idx, lm_idx;
--	int zpos_cnt[DPU_STAGE_MAX + 1] = { 0 };
- 	DECLARE_BITMAP(fetch_active, SSPP_MAX);
- 
- 	DRM_DEBUG_ATOMIC("%s\n", dpu_crtc->name);
-@@ -434,6 +433,7 @@ static void _dpu_crtc_blend_setup_ctl(struct drm_crtc *crtc)
- 	memset(fetch_active, 0, sizeof(fetch_active));
- 	drm_atomic_crtc_for_each_plane(plane, crtc) {
- 		enum dpu_sspp sspp_idx;
-+		struct dpu_sw_pipe *pipe;
- 
- 		state = plane->state;
- 		if (!state)
-@@ -441,18 +441,37 @@ static void _dpu_crtc_blend_setup_ctl(struct drm_crtc *crtc)
- 
- 		pstate = to_dpu_plane_state(state);
- 
--		sspp_idx = pstate->pipe.sspp->idx;
-+		pipe = &pstate->pipe;
-+		stage_idx = 0;
++	cpu0_opp_table: cpu0-opp-table {
++		compatible = "operating-points-v2";
++		opp-shared;
 +
-+		sspp_idx = pipe->sspp->idx;
- 		set_bit(sspp_idx, fetch_active);
- 
--		stage_idx = zpos_cnt[pstate->stage]++;
- 		stage_cfg.stage[pstate->stage][stage_idx] =
- 					sspp_idx;
- 		stage_cfg.multirect_index[pstate->stage][stage_idx] =
--					pstate->pipe.multirect_index;
-+					pipe->multirect_index;
- 
- 		/* blend config update */
- 		for (lm_idx = 0; lm_idx < cstate->num_mixers; lm_idx++)
- 			mixer[lm_idx].lm_ctl->ops.update_pending_flush_sspp(mixer[lm_idx].lm_ctl, sspp_idx);
++		cpu0_opp_300mhz: opp-300000000 {
++			opp-hz = /bits/ 64 <300000000>;
++			opp-peak-kBps = <800000 9600000>;
++		};
 +
-+		if (pstate->r_pipe.sspp) {
-+			pipe = &pstate->r_pipe;
-+			stage_idx = 1;
++		cpu0_opp_691mhz: opp-691200000 {
++			opp-hz = /bits/ 64 <691200000>;
++			opp-peak-kBps = <800000 17817600>;
++		};
 +
-+			sspp_idx = pipe->sspp->idx;
-+			set_bit(sspp_idx, fetch_active);
++		cpu0_opp_806mhz: opp-806400000 {
++			opp-hz = /bits/ 64 <806400000>;
++			opp-peak-kBps = <800000 20889600>;
++		};
 +
-+			stage_cfg.stage[pstate->stage][stage_idx] =
-+						sspp_idx;
-+			stage_cfg.multirect_index[pstate->stage][stage_idx] =
-+						pipe->multirect_index;
++		cpu0_opp_941mhz: opp-940800000 {
++			opp-hz = /bits/ 64 <940800000>;
++			opp-peak-kBps = <1804000 24576000>;
++		};
 +
-+			/* blend config update */
-+			for (lm_idx = 0; lm_idx < cstate->num_mixers; lm_idx++)
-+				mixer[lm_idx].lm_ctl->ops.update_pending_flush_sspp(mixer[lm_idx].lm_ctl, sspp_idx);
-+		}
- 	}
- 
- 	ctl = mixer->lm_ctl;
-@@ -1202,8 +1221,16 @@ static int _dpu_debugfs_status_show(struct seq_file *s, void *data)
- 		seq_printf(s, "\tdst x:%4d dst_y:%4d dst_w:%4d dst_h:%4d\n",
- 			state->crtc_x, state->crtc_y, state->crtc_w,
- 			state->crtc_h);
-+		seq_printf(s, "\tsspp: %d\n",
-+			pstate->pipe.sspp->idx);
- 		seq_printf(s, "\tmultirect: mode: %d index: %d\n",
- 			pstate->pipe.multirect_mode, pstate->pipe.multirect_index);
-+		if (pstate->r_pipe.sspp) {
-+			seq_printf(s, "\tsspp: %d\n",
-+				pstate->r_pipe.sspp->idx);
-+			seq_printf(s, "\tmultirect: mode: %d index: %d\n",
-+				pstate->r_pipe.multirect_mode, pstate->r_pipe.multirect_index);
-+		}
- 
- 		seq_puts(s, "\n");
- 	}
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 623f67247c2d..2f88405ead80 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -575,9 +575,8 @@ static const struct dpu_csc_cfg dpu_csc10_YUV2RGB_601L = {
- 	{ 0x00, 0x3ff, 0x00, 0x3ff, 0x00, 0x3ff,},
- };
- 
--static const struct dpu_csc_cfg *_dpu_plane_get_csc(struct dpu_plane *pdpu, const struct dpu_format *fmt)
-+static const struct dpu_csc_cfg *_dpu_plane_get_csc(struct dpu_plane *pdpu, struct dpu_sw_pipe *pipe, const struct dpu_format *fmt)
- {
--	struct dpu_plane_state *pstate = to_dpu_plane_state(pdpu->base.state);
- 	const struct dpu_csc_cfg *csc_ptr;
- 
- 	if (!pdpu) {
-@@ -588,7 +587,7 @@ static const struct dpu_csc_cfg *_dpu_plane_get_csc(struct dpu_plane *pdpu, cons
- 	if (!DPU_FORMAT_IS_YUV(fmt))
- 		return NULL;
- 
--	if (BIT(DPU_SSPP_CSC_10BIT) & pstate->pipe.sspp->cap->features)
-+	if (BIT(DPU_SSPP_CSC_10BIT) & pipe->sspp->cap->features)
- 		csc_ptr = &dpu_csc10_YUV2RGB_601L;
- 	else
- 		csc_ptr = &dpu_csc_YUV2RGB_601L;
-@@ -639,6 +638,27 @@ static void _dpu_plane_setup_scaler(struct dpu_sw_pipe *pipe,
- 				fmt);
- }
- 
-+static void _dpu_plane_color_fill_pipe(struct dpu_sw_pipe *pipe,
-+		struct dpu_hw_pipe_cfg *pipe_cfg,
-+		const struct dpu_format *fmt,
-+		u32 color)
-+{
-+	if (!pipe->sspp->ops.setup_solidfill)
-+		return;
++		cpu0_opp_1152mhz: opp-1152000000 {
++			opp-hz = /bits/ 64 <1152000000>;
++			opp-peak-kBps = <2188000 27033600>;
++		};
 +
-+	pipe->sspp->ops.setup_solidfill(pipe, color);
++		cpu0_opp_1325mhz: opp-1324800000 {
++			opp-hz = /bits/ 64 <1324800000>;
++			opp-peak-kBps = <2188000 33792000>;
++		};
 +
-+	if (pipe->sspp->ops.setup_format)
-+		pipe->sspp->ops.setup_format(pipe,
-+				fmt, DPU_SSPP_SOLID_FILL);
++		cpu0_opp_1517mhz: opp-1516800000 {
++			opp-hz = /bits/ 64 <1516800000>;
++			opp-peak-kBps = <3072000 38092800>;
++		};
 +
-+	if (pipe->sspp->ops.setup_rects)
-+		pipe->sspp->ops.setup_rects(pipe,
-+				pipe_cfg);
++		cpu0_opp_1651mhz: opp-1651200000 {
++			opp-hz = /bits/ 64 <1651200000>;
++			opp-peak-kBps = <3072000 41779200>;
++		};
 +
-+	_dpu_plane_setup_scaler(pipe, fmt, true, pipe_cfg);
-+}
++		cpu0_opp_1805mhz: opp-1804800000 {
++			opp-hz = /bits/ 64 <1804800000>;
++			opp-peak-kBps = <4068000 48537600>;
++		};
 +
- /**
-  * _dpu_plane_color_fill - enables color fill on plane
-  * @pdpu:   Pointer to DPU plane object
-@@ -661,31 +681,39 @@ static int _dpu_plane_color_fill(struct dpu_plane *pdpu,
- 	 * h/w only supports RGB variants
- 	 */
- 	fmt = dpu_get_dpu_format(DRM_FORMAT_ABGR8888);
-+	if (!fmt)
-+		return 0;
- 
--	/* update sspp */
--	if (fmt && pstate->pipe.sspp->ops.setup_solidfill) {
--		pstate->pipe.sspp->ops.setup_solidfill(&pstate->pipe,
--				(color & 0xFFFFFF) | ((alpha & 0xFF) << 24));
-+	pipe_cfg.dst_rect = pstate->base.dst;
- 
--		/* override scaler/decimation if solid fill */
--		pipe_cfg.dst_rect = pstate->base.dst;
-+	pipe_cfg.src_rect.x1 = 0;
-+	pipe_cfg.src_rect.y1 = 0;
-+	pipe_cfg.src_rect.x2 =
-+		drm_rect_width(&pipe_cfg.dst_rect);
-+	pipe_cfg.src_rect.y2 =
-+		drm_rect_height(&pipe_cfg.dst_rect);
- 
--		pipe_cfg.src_rect.x1 = 0;
--		pipe_cfg.src_rect.y1 = 0;
-+	/* update sspp */
-+	if (pstate->r_pipe.sspp) {
-+		/* split source */
-+		pipe_cfg.dst_rect.x2 = (pipe_cfg.dst_rect.x1 + pipe_cfg.dst_rect.x2) >> 1;
- 		pipe_cfg.src_rect.x2 =
- 			drm_rect_width(&pipe_cfg.dst_rect);
--		pipe_cfg.src_rect.y2 =
--			drm_rect_height(&pipe_cfg.dst_rect);
- 
--		if (pstate->pipe.sspp->ops.setup_format)
--			pstate->pipe.sspp->ops.setup_format(&pstate->pipe,
--					fmt, DPU_SSPP_SOLID_FILL);
-+		_dpu_plane_color_fill_pipe(&pstate->pipe, &pipe_cfg, fmt,
-+				(color & 0xFFFFFF) | ((alpha & 0xFF) << 24));
- 
--		if (pstate->pipe.sspp->ops.setup_rects)
--			pstate->pipe.sspp->ops.setup_rects(&pstate->pipe,
--					&pipe_cfg);
-+		pipe_cfg.dst_rect.x1 = pipe_cfg.dst_rect.x2;
-+		pipe_cfg.dst_rect.x2 = pstate->base.dst.x2;
++		cpu0_opp_1958mhz: opp-1958400000 {
++			opp-hz = /bits/ 64 <1958400000>;
++			opp-peak-kBps = <4068000 48537600>;
++		};
 +
-+		pipe_cfg.src_rect.x2 =
-+			drm_rect_width(&pipe_cfg.dst_rect);
- 
--		_dpu_plane_setup_scaler(&pstate->pipe, fmt, true, &pipe_cfg);
-+		_dpu_plane_color_fill_pipe(&pstate->r_pipe, &pipe_cfg, fmt,
-+				(color & 0xFFFFFF) | ((alpha & 0xFF) << 24));
-+	} else {
-+		_dpu_plane_color_fill_pipe(&pstate->pipe, &pipe_cfg, fmt,
-+				(color & 0xFFFFFF) | ((alpha & 0xFF) << 24));
- 	}
- 
- 	return 0;
-@@ -866,7 +894,6 @@ static void dpu_plane_cleanup_fb(struct drm_plane *plane,
- static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
- 		struct dpu_sw_pipe *pipe,
- 		struct dpu_hw_pipe_cfg *pipe_cfg,
--		uint32_t max_linewidth,
- 		const struct dpu_format *fmt)
- {
- 	uint32_t min_src_size;
-@@ -901,12 +928,6 @@ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
- 		DPU_DEBUG_PLANE(pdpu, "invalid dest rect " DRM_RECT_FMT "\n",
- 				DRM_RECT_ARG(&pipe_cfg->dst_rect));
- 		return -EINVAL;
--
--	/* check decimated source width */
--	} else if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
--		DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
--				DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
--		return -E2BIG;
- 	}
- 
- 	return 0;
-@@ -921,9 +942,11 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
- 	struct dpu_plane *pdpu = to_dpu_plane(plane);
- 	struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
- 	struct dpu_sw_pipe *pipe = &pstate->pipe;
-+	struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
- 	const struct drm_crtc_state *crtc_state = NULL;
- 	const struct dpu_format *fmt;
- 	struct dpu_hw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
-+	struct dpu_hw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
- 	struct drm_rect fb_rect = { 0 };
- 	uint32_t max_linewidth;
- 
-@@ -945,6 +968,9 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
- 
- 	pipe->multirect_index = DPU_SSPP_RECT_SOLO;
- 	pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-+	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-+	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-+	r_pipe->sspp = NULL;
- 
- 	pstate->stage = DPU_STAGE_0 + pstate->base.normalized_zpos;
- 	if (pstate->stage >= pdpu->catalog->caps->max_mixer_blendstages) {
-@@ -978,15 +1004,71 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
- 
- 	fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
- 
--	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, max_linewidth, fmt);
-+	if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
-+		/* struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc_state); */
++		cpu0_opp_2016mhz: opp-2016000000 {
++			opp-hz = /bits/ 64 <2016000000>;
++			opp-peak-kBps = <6220000 48537600>;
++		};
++	};
 +
-+		if (drm_rect_width(&pipe_cfg->src_rect) > 2 * max_linewidth) {
-+			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
-+					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
-+			return -E2BIG;
-+			/*
-+			 * FIXME: it's not possible to check if sourcesplit is supported,
-+			 * LMs is not assigned yet. It happens in dpu_encoder_virt_mode_set
-+			 */
-+		} else if (drm_rect_width(&pipe_cfg->src_rect) != drm_rect_width(&pipe_cfg->dst_rect) ||
-+			   drm_rect_height(&pipe_cfg->src_rect) != drm_rect_height(&pipe_cfg->dst_rect) ||
-+			   (!test_bit(DPU_SSPP_SMART_DMA_V1, &pipe->sspp->cap->features) &&
-+			    !test_bit(DPU_SSPP_SMART_DMA_V2, &pipe->sspp->cap->features)) ||
-+			   /* cstate->num_mixers < 2 ||
-+			   !test_bit(DPU_MIXER_SOURCESPLIT, &cstate->mixers[0].hw_lm->cap->features) || */
-+			   DPU_FORMAT_IS_YUV(fmt)) {
-+			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u, can't use split source\n",
-+					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
-+			return -E2BIG;
-+		}
++	cpu4_opp_table: cpu4-opp-table {
++		compatible = "operating-points-v2";
++		opp-shared;
 +
-+		/* Use multirect for wide plane. We do not support dynamic assignment of SSPPs, so we know the configuration. */
-+		pipe->multirect_index = DPU_SSPP_RECT_0;
-+		pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
++		cpu4_opp_691mhz: opp-691200000 {
++			opp-hz = /bits/ 64 <691200000>;
++			opp-peak-kBps = <1804000 9600000>;
++		};
 +
-+		r_pipe->sspp = pipe->sspp;
-+		r_pipe->multirect_index = DPU_SSPP_RECT_1;
-+		r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
++		cpu4_opp_941mhz: opp-940800000 {
++			opp-hz = /bits/ 64 <940800000>;
++			opp-peak-kBps = <2188000 17817600>;
++		};
 +
-+		*r_pipe_cfg = *pipe_cfg;
-+		pipe_cfg->src_rect.x2 = (pipe_cfg->src_rect.x1 + pipe_cfg->src_rect.x2) >> 1;
-+		pipe_cfg->dst_rect.x2 = (pipe_cfg->dst_rect.x1 + pipe_cfg->dst_rect.x2) >> 1;
-+		r_pipe_cfg->src_rect.x1 = pipe_cfg->src_rect.x2;
-+		r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
-+	}
++		cpu4_opp_1229mhz: opp-1228800000 {
++			opp-hz = /bits/ 64 <1228800000>;
++			opp-peak-kBps = <4068000 24576000>;
++		};
 +
-+	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt);
- 	if (ret)
- 		return ret;
- 
-+	if (r_pipe->sspp) {
-+		ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt);
-+		if (ret)
-+			return ret;
-+	}
++		cpu4_opp_1344mhz: opp-1344000000 {
++			opp-hz = /bits/ 64 <1344000000>;
++			opp-peak-kBps = <4068000 24576000>;
++		};
 +
- 	pstate->needs_qos_remap = drm_atomic_crtc_needs_modeset(crtc_state);
- 
- 	return 0;
- }
- 
-+static void dpu_plane_setup_csc(struct dpu_plane *pdpu,
-+		struct dpu_sw_pipe *pipe,
-+		const struct dpu_format *fmt)
-+{
-+	if (pipe->sspp && pipe->sspp->ops.setup_csc) {
-+		const struct dpu_csc_cfg *csc_ptr = _dpu_plane_get_csc(pdpu, pipe, fmt);
++		cpu4_opp_1517mhz: opp-1516800000 {
++			opp-hz = /bits/ 64 <1516800000>;
++			opp-peak-kBps = <4068000 24576000>;
++		};
 +
-+		if (csc_ptr)
-+			pipe->sspp->ops.setup_csc(pipe->sspp, csc_ptr);
-+	}
-+}
++		cpu4_opp_1651mhz: opp-1651200000 {
++			opp-hz = /bits/ 64 <1651200000>;
++			opp-peak-kBps = <6220000 38092800>;
++		};
 +
- void dpu_plane_flush(struct drm_plane *plane)
- {
- 	struct dpu_plane *pdpu;
-@@ -1010,12 +1092,11 @@ void dpu_plane_flush(struct drm_plane *plane)
- 	else if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG)
- 		/* force 100% alpha */
- 		_dpu_plane_color_fill(pdpu, pdpu->color_fill, 0xFF);
--	else if (pstate->pipe.sspp && pstate->pipe.sspp->ops.setup_csc) {
-+	else {
- 		const struct dpu_format *fmt = to_dpu_format(msm_framebuffer_format(plane->state->fb));
--		const struct dpu_csc_cfg *csc_ptr = _dpu_plane_get_csc(pdpu, fmt);
- 
--		if (csc_ptr)
--			pstate->pipe.sspp->ops.setup_csc(pstate->pipe.sspp, csc_ptr);
-+		dpu_plane_setup_csc(pdpu, &pstate->pipe, fmt);
-+		dpu_plane_setup_csc(pdpu, &pstate->r_pipe, fmt);
- 	}
- 
- 	/* flag h/w flush complete */
-@@ -1142,12 +1223,14 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
- 	struct drm_plane_state *state = plane->state;
- 	struct dpu_plane_state *pstate = to_dpu_plane_state(state);
- 	struct dpu_sw_pipe *pipe = &pstate->pipe;
-+	struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
- 	struct drm_crtc *crtc = state->crtc;
- 	struct drm_framebuffer *fb = state->fb;
- 	bool is_rt_pipe;
- 	const struct dpu_format *fmt =
- 		to_dpu_format(msm_framebuffer_format(fb));
- 	struct dpu_hw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
-+	struct dpu_hw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
- 	struct dpu_hw_fmt_layout layout;
- 	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
- 	struct msm_gem_address_space *aspace = kms->base.aspace;
-@@ -1164,6 +1247,8 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
- 
- 	is_rt_pipe = (dpu_crtc_get_client_type(crtc) != NRT_CLIENT);
- 	_dpu_plane_set_qos_ctrl(plane, pipe, false, DPU_PLANE_QOS_PANIC_CTRL);
-+	if (r_pipe->sspp)
-+		_dpu_plane_set_qos_ctrl(plane, r_pipe, false, DPU_PLANE_QOS_PANIC_CTRL);
- 
- 	DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u " DRM_RECT_FMT
- 			", %4.4s ubwc %d\n", fb->base.id, DRM_RECT_FP_ARG(&state->src),
-@@ -1188,6 +1273,21 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
- 	pstate->plane_fetch_bw = _dpu_plane_calc_bw(pdpu->catalog, fmt, &crtc->mode, pipe_cfg);
- 
- 	pstate->plane_clk = _dpu_plane_calc_clk(&crtc->mode, pipe_cfg);
++		cpu4_opp_1901mhz: opp-1900800000 {
++			opp-hz = /bits/ 64 <1900800000>;
++			opp-peak-kBps = <6220000 44851200>;
++		};
 +
-+	if (r_pipe->sspp) {
-+		dpu_plane_atomic_update_pipe(r_pipe, r_pipe_cfg,
-+				state->rotation,
-+				update_src_addr ? &layout : NULL,
-+				fmt, pdpu->catalog);
++		cpu4_opp_2054mhz: opp-2054400000 {
++			opp-hz = /bits/ 64 <2054400000>;
++			opp-peak-kBps = <6220000 44851200>;
++		};
 +
-+		dpu_plane_atomic_update_qos(plane, pstate,
-+				r_pipe, r_pipe_cfg,
-+				fmt, &crtc->mode, is_rt_pipe);
++		cpu4_opp_2112mhz: opp-2112000000 {
++			opp-hz = /bits/ 64 <2112000000>;
++			opp-peak-kBps = <6220000 44851200>;
++		};
 +
-+		pstate->plane_fetch_bw += _dpu_plane_calc_bw(pdpu->catalog, fmt, &crtc->mode, r_pipe_cfg);
++		cpu4_opp_2131mhz: opp-2131200000 {
++			opp-hz = /bits/ 64 <2131200000>;
++			opp-peak-kBps = <6220000 44851200>;
++		};
 +
-+		pstate->plane_clk = max(pstate->plane_clk, _dpu_plane_calc_clk(&crtc->mode, r_pipe_cfg));
-+	}
- }
- 
- static void _dpu_plane_atomic_disable(struct drm_plane *plane)
-@@ -1230,6 +1330,9 @@ static void dpu_plane_destroy(struct drm_plane *plane)
- 		pstate = to_dpu_plane_state(plane->state);
- 		_dpu_plane_set_qos_ctrl(plane, &pstate->pipe, false, DPU_PLANE_QOS_PANIC_CTRL);
- 
-+		if (pstate->r_pipe.sspp)
-+			_dpu_plane_set_qos_ctrl(plane, &pstate->r_pipe, false, DPU_PLANE_QOS_PANIC_CTRL);
++		cpu4_opp_2208mhz: opp-2208000000 {
++			opp-hz = /bits/ 64 <2208000000>;
++			opp-peak-kBps = <6220000 44851200>;
++		};
 +
- 		mutex_destroy(&pdpu->lock);
- 
- 		/* this will destroy the states as well */
-@@ -1310,11 +1413,26 @@ static void dpu_plane_atomic_print_state(struct drm_printer *p,
- 		const struct drm_plane_state *state)
- {
- 	const struct dpu_plane_state *pstate = to_dpu_plane_state(state);
-+	const struct dpu_sw_pipe *pipe = &pstate->pipe;
-+	const struct dpu_hw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
- 
- 	drm_printf(p, "\tstage=%d\n", pstate->stage);
--	drm_printf(p, "\tsspp=%s\n", pstate->pipe.sspp->cap->name);
--	drm_printf(p, "\tmultirect_mode=%s\n", dpu_get_multirect_mode(pstate->pipe.multirect_mode));
--	drm_printf(p, "\tmultirect_index=%s\n", dpu_get_multirect_index(pstate->pipe.multirect_index));
++		cpu4_opp_2400mhz: opp-2400000000 {
++			opp-hz = /bits/ 64 <2400000000>;
++			opp-peak-kBps = <8532000 48537600>;
++		};
 +
-+	drm_printf(p, "\tsspp[0]=%s\n", pipe->sspp->cap->name);
-+	drm_printf(p, "\tmultirect_mode[0]=%s\n", dpu_get_multirect_mode(pipe->multirect_mode));
-+	drm_printf(p, "\tmultirect_index[0]=%s\n", dpu_get_multirect_index(pipe->multirect_index));
-+	drm_printf(p, "\tsrc[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->src_rect));
-+	drm_printf(p, "\tdst[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->dst_rect));
++		cpu4_opp_2611mhz: opp-2611200000 {
++			opp-hz = /bits/ 64 <2611200000>;
++			opp-peak-kBps = <8532000 48537600>;
++		};
++	};
 +
-+	pipe = &pstate->r_pipe;
-+	pipe_cfg = &pstate->r_pipe_cfg;
-+	if (pipe->sspp) {
-+		drm_printf(p, "\tsspp[1]=%s\n", pipe->sspp->cap->name);
-+		drm_printf(p, "\tmultirect_mode[1]=%s\n", dpu_get_multirect_mode(pipe->multirect_mode));
-+		drm_printf(p, "\tmultirect_index[1]=%s\n", dpu_get_multirect_index(pipe->multirect_index));
-+		drm_printf(p, "\tsrc[1]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->src_rect));
-+		drm_printf(p, "\tdst[1]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->dst_rect));
-+	}
- }
- 
- static void dpu_plane_reset(struct drm_plane *plane)
-@@ -1344,6 +1462,10 @@ static void dpu_plane_reset(struct drm_plane *plane)
- 	}
- 
- 	pstate->pipe.sspp = to_dpu_hw_pipe(kms->rm.sspp_blks[pdpu->pipe - SSPP_NONE]);
-+	pstate->pipe.multirect_index = DPU_SSPP_RECT_SOLO;
-+	pstate->pipe.multirect_mode = DPU_SSPP_MULTIRECT_NONE;
++	cpu7_opp_table: cpu7-opp-table {
++		compatible = "operating-points-v2";
++		opp-shared;
 +
-+	pstate->r_pipe.sspp = NULL;
- 
- 	__drm_atomic_helper_plane_reset(plane, &pstate->base);
- }
-@@ -1360,6 +1482,8 @@ void dpu_plane_danger_signal_ctrl(struct drm_plane *plane, bool enable)
- 
- 	pm_runtime_get_sync(&dpu_kms->pdev->dev);
- 	_dpu_plane_set_qos_ctrl(plane, &pstate->pipe, enable, DPU_PLANE_QOS_PANIC_CTRL);
-+	if (pstate->r_pipe.sspp)
-+		_dpu_plane_set_qos_ctrl(plane, &pstate->r_pipe, enable, DPU_PLANE_QOS_PANIC_CTRL);
- 	pm_runtime_put_sync(&dpu_kms->pdev->dev);
- }
- #endif
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-index 69920c32cb9a..2dd1986f69bc 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-@@ -34,7 +34,9 @@ struct dpu_plane_state {
- 	bool pending;
- 
- 	struct dpu_sw_pipe pipe;
-+	struct dpu_sw_pipe r_pipe;
- 	struct dpu_hw_pipe_cfg pipe_cfg;
-+	struct dpu_hw_pipe_cfg r_pipe_cfg;
- 
- 	u64 plane_fetch_bw;
- 	u64 plane_clk;
++		cpu7_opp_806mhz: opp-806400000 {
++			opp-hz = /bits/ 64 <806400000>;
++			opp-peak-kBps = <1804000 9600000>;
++		};
++
++		cpu7_opp_1056mhz: opp-1056000000 {
++			opp-hz = /bits/ 64 <1056000000>;
++			opp-peak-kBps = <2188000 17817600>;
++		};
++
++		cpu7_opp_1325mhz: opp-1324800000 {
++			opp-hz = /bits/ 64 <1324800000>;
++			opp-peak-kBps = <4068000 24576000>;
++		};
++
++		cpu7_opp_1517mhz: opp-1516800000 {
++			opp-hz = /bits/ 64 <1516800000>;
++			opp-peak-kBps = <4068000 24576000>;
++		};
++
++		cpu7_opp_1766mhz: opp-1766400000 {
++			opp-hz = /bits/ 64 <1766400000>;
++			opp-peak-kBps = <6220000 38092800>;
++		};
++
++		cpu7_opp_1862mhz: opp-1862400000 {
++			opp-hz = /bits/ 64 <1862400000>;
++			opp-peak-kBps = <6220000 38092800>;
++		};
++
++		cpu7_opp_2035mhz: opp-2035200000 {
++			opp-hz = /bits/ 64 <2035200000>;
++			opp-peak-kBps = <6220000 38092800>;
++		};
++
++		cpu7_opp_2112mhz: opp-2112000000 {
++			opp-hz = /bits/ 64 <2112000000>;
++			opp-peak-kBps = <6220000 44851200>;
++		};
++
++		cpu7_opp_2208mhz: opp-2208000000 {
++			opp-hz = /bits/ 64 <2208000000>;
++			opp-peak-kBps = <6220000 44851200>;
++		};
++
++		cpu7_opp_2381mhz: opp-2380800000 {
++			opp-hz = /bits/ 64 <2380800000>;
++			opp-peak-kBps = <6832000 44851200>;
++		};
++
++		cpu7_opp_2400mhz: opp-2400000000 {
++			opp-hz = /bits/ 64 <2400000000>;
++			opp-peak-kBps = <8532000 48537600>;
++		};
++
++		cpu7_opp_2515mhz: opp-2515200000 {
++			opp-hz = /bits/ 64 <2515200000>;
++			opp-peak-kBps = <8532000 48537600>;
++		};
++
++		cpu7_opp_2707mhz: opp-2707200000 {
++			opp-hz = /bits/ 64 <2707200000>;
++			opp-peak-kBps = <8532000 48537600>;
++		};
++
++		cpu7_opp_3014mhz: opp-3014400000 {
++			opp-hz = /bits/ 64 <3014400000>;
++			opp-peak-kBps = <8532000 48537600>;
++		};
++	};
++
+ 	memory@80000000 {
+ 		device_type = "memory";
+ 		/* We expect the bootloader to fill in the size */
 -- 
-2.34.1
+2.7.4
 
