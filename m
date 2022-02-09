@@ -2,76 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C5E74AEA04
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 07:06:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF8ED4AEA2B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 07:18:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233147AbiBIGGA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Feb 2022 01:06:00 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:51866 "EHLO
+        id S230301AbiBIGRx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Feb 2022 01:17:53 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:54458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234279AbiBIGBM (ORCPT
+        with ESMTP id S237925AbiBIGPZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Feb 2022 01:01:12 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D22F6C050CC2;
-        Tue,  8 Feb 2022 22:01:14 -0800 (PST)
+        Wed, 9 Feb 2022 01:15:25 -0500
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C8E4DF28A20
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Feb 2022 22:15:29 -0800 (PST)
+Received: by mail-pf1-x432.google.com with SMTP id i186so2653686pfe.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Feb 2022 22:15:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644386474; x=1675922474;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=4peUR/FlwKBQOuJfd2ZZpHK3WkZEECAcE1WpoWtMvdg=;
-  b=FOjcW4zE2r5tgp4QWaTHBUPV5Q+BLMpaJMdoH+RAzvZCjVzA/8ATbbp9
-   3N2VMZ7m+R/NjI48FcBEU5kHB+Q7/za/1fN31j+VlnRQOepcd1y27R+GY
-   69VLUE7FL7QBJk6UQy/ffLhtcKI1Rp5AdgRORXFOlau7Uf9+A+34dx3nI
-   o=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 08 Feb 2022 22:01:14 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Feb 2022 22:01:14 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 8 Feb 2022 22:01:13 -0800
-Received: from [10.216.51.153] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Tue, 8 Feb 2022
- 22:01:10 -0800
-Message-ID: <d0048456-eb0a-cf91-fc28-f1dda69c1432@quicinc.com>
-Date:   Wed, 9 Feb 2022 11:31:06 +0530
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=4l/aFNwd63uVLKNzeMm/2/pR6vs/tYGDEs6LgxVDxlI=;
+        b=r1fiqywmY+ZXjFns4iy4OyiewaVgMm0NsTnoz629RyyIhdlq8v/wSp0eNSiEThtCR+
+         tbze/g+/ol7lhlw5SoWxsXGKGJm/BGjeK2OgefivPq8rC/kd69by2eh/XAqS08Sz/yOp
+         oRdKYg4ECKxNmOp8ch3Adi0KmBe6qZnsrDnjvAtP0A0IKsdlBEfJKAgoSI9agqb90W/b
+         NysePOlOF4FtXKvvLKwcGXHSMGRgspJpDIYkrZ247uRQLIvuqe9vSvTGqQNBvKuSTBvb
+         FEn9RBMF7W0H69VY3UD26kT52kWkGmcpqOVYYvyY8A448QS24UGkCk/tQsaqo6X3Pt14
+         4MzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=4l/aFNwd63uVLKNzeMm/2/pR6vs/tYGDEs6LgxVDxlI=;
+        b=qIh3eEcqQS92DGnGSz9Ep2zsqoJ9OspAYfN1eGuBbhR8H4gzh5W8Q5e2nXPK9DAgrn
+         qaqg8oqgFnk5wJoBOIehFngocfgbu/OpdduiGXLtVPHqTh0R4jDFtIM/44BWWlkwN/r6
+         eBk9sBH1FEPDnjIBntuDbwOoOiW7mKQsMtPAPIrTjKEn4TUecGiz2QHeMDdrdn/KBAcM
+         Rjrnm/i2fJGxU5869PiroP5WyAcsyTa1ERiUyN7NPmkUwrsL8YsShaztgMHAU+cge5O+
+         8M4qFCmA4wFNwJeqQqwSqOaETpPvT+h3EdAv/ngw2BDz1NlAR7Q+UiHBZBsNsC4x+bbq
+         t8GA==
+X-Gm-Message-State: AOAM533uqyXR6AHAtLPne4vpdjAt1AdzguZfUKgoWwGalYOduzRkK7KH
+        GnxVLwtokNQjvebc/xTtdL43ww==
+X-Google-Smtp-Source: ABdhPJw6hRR+tHVYkKn3k15p+UCUOzqAo6H+niApeRvxhdpTbpiTd9O3cmPCS3R7fY6sD2XFQhj5iQ==
+X-Received: by 2002:a63:f50f:: with SMTP id w15mr716344pgh.113.1644387321236;
+        Tue, 08 Feb 2022 22:15:21 -0800 (PST)
+Received: from localhost ([136.185.132.167])
+        by smtp.gmail.com with ESMTPSA id o2sm6879778pga.57.2022.02.08.22.15.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Feb 2022 22:15:20 -0800 (PST)
+Date:   Wed, 9 Feb 2022 11:45:18 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Yury Norov <yury.norov@gmail.com>
+Cc:     Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        =?utf-8?B?TWljaGHFgiBNaXJvc8WCYXc=?= <mirq-linux@rere.qmqm.pl>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Peter Zijlstra <peterz@infradead.org>,
+        David Laight <David.Laight@aculab.com>,
+        Joe Perches <joe@perches.com>, Dennis Zhou <dennis@kernel.org>,
+        Emil Renner Berthing <kernel@esmil.dk>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
+        Alexey Klimov <aklimov@redhat.com>,
+        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 16/54] cpufreq: replace cpumask_weight with cpumask_empty
+ where appropriate
+Message-ID: <20220209061518.4xxc3hsswrfgg5u4@vireshk-i7>
+References: <20220123183925.1052919-1-yury.norov@gmail.com>
+ <20220123183925.1052919-17-yury.norov@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v5] usb: host: xhci-plat: Set XHCI_SKIP_PHY_INIT quirk for
- DWC3 controller
-Content-Language: en-US
-To:     Pavan Kondeti <quic_pkondeti@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "Doug Anderson" <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_ppratap@quicinc.com>
-References: <1640153383-21036-1-git-send-email-quic_c_sanm@quicinc.com>
- <Ydb79/twbxLDJB8/@kroah.com>
- <d17330f1-d85e-b8c2-9e87-10d109c25abb@quicinc.com>
- <YfE9s06CIv1P3bA/@kroah.com>
- <f45f5952-e31c-5e9d-2560-064199beb29f@quicinc.com>
- <ca306d7c-d816-3cbd-8c65-2c3619739d47@quicinc.com>
- <YgJB6bGm/y7C0oo/@kroah.com>
- <20220209055352.GA22550@hu-pkondeti-hyd.qualcomm.com>
-From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-In-Reply-To: <20220209055352.GA22550@hu-pkondeti-hyd.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220123183925.1052919-17-yury.norov@gmail.com>
+User-Agent: NeoMutt/20180716-391-311a52
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,109 +90,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 23-01-22, 10:38, Yury Norov wrote:
+> drivers/cpufreq calls cpumask_weight() to check if any bit of a given
+> cpumask is set. We can do it more efficiently with cpumask_empty() because
+> cpumask_empty() stops traversing the cpumask as soon as it finds first set
+> bit, while cpumask_weight() counts all bits unconditionally.
+> 
+> Signed-off-by: Yury Norov <yury.norov@gmail.com>
+> ---
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 2 +-
+>  drivers/cpufreq/scmi-cpufreq.c    | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 
-On 2/9/2022 11:23 AM, Pavan Kondeti wrote:
-> On Tue, Feb 08, 2022 at 11:11:53AM +0100, Greg Kroah-Hartman wrote:
->> On Tue, Feb 08, 2022 at 03:34:22PM +0530, Sandeep Maheswaram wrote:
->>> Hi Greg,
->>>
->>> On 1/27/2022 10:28 AM, Sandeep Maheswaram wrote:
->>>> On 1/26/2022 5:55 PM, Greg Kroah-Hartman wrote:
->>>>> On Fri, Jan 07, 2022 at 10:27:59AM +0530, Sandeep Maheswaram wrote:
->>>>>> On 1/6/2022 7:55 PM, Greg Kroah-Hartman wrote:
->>>>>>> On Wed, Dec 22, 2021 at 11:39:43AM +0530, Sandeep Maheswaram wrote:
->>>>>>>> Set XHCI_SKIP_PHY_INIT quirk to avoid phy initialization twice.
->>>>>>>> Runtime suspend of phy drivers was failing from DWC3
->>>>>>>> driver as runtime
->>>>>>>> usage value is 2 because the phy is initialized from
->>>>>>>> DWC3 and HCD core.
->>>>>>>> DWC3 manages phy in their core drivers. Set this quirk to avoid phy
->>>>>>>> initialization in HCD core.
->>>>>>>>
->>>>>>>> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
->>>>>>>> ---
->>>>>>>> v5:
->>>>>>>> Added comment to explain the change done.
->>>>>>>> v4:
->>>>>>>> Changed pdev->dev.parent->of_node to sysdev->of_node
->>>>>>>>
->>>>>>>>     drivers/usb/host/xhci-plat.c | 8 ++++++++
->>>>>>>>     1 file changed, 8 insertions(+)
->>>>>>>>
->>>>>>>> diff --git a/drivers/usb/host/xhci-plat.c
->>>>>>>> b/drivers/usb/host/xhci-plat.c
->>>>>>>> index c1edcc9..e6014d4 100644
->>>>>>>> --- a/drivers/usb/host/xhci-plat.c
->>>>>>>> +++ b/drivers/usb/host/xhci-plat.c
->>>>>>>> @@ -327,6 +327,14 @@ static int xhci_plat_probe(struct
->>>>>>>> platform_device *pdev)
->>>>>>>>                          &xhci->imod_interval);
->>>>>>>>         }
->>>>>>>> +    /*
->>>>>>>> +     * Set XHCI_SKIP_PHY_INIT quirk to avoid phy
->>>>>>>> initialization twice.
->>>>>>>> +     * DWC3 manages phy in their core drivers. Set this
->>>>>>>> quirk to avoid phy
->>>>>>>> +     * initialization in HCD core.
->>>>>>>> +     */
->>>>>>>> +    if (of_device_is_compatible(sysdev->of_node, "snps,dwc3"))
->>>>>>>> +        xhci->quirks |= XHCI_SKIP_PHY_INIT;
->>>>>>>> +
->>>>>>> Why is this function caring about dwc3 stuff?  Shoudn't this be a
->>>>>>> "generic" device property instead of this device-specific one?
->>>>>>>
->>>>>>> thanks,
->>>>>>>
->>>>>>> greg k-h
->>>>>> This quirk is set only if required for some controllers (eg:
->>>>>> dwc3 & cdns3).
->>>>>>
->>>>>> Please check below commit.
->>>>>>
->>>>>> https://lore.kernel.org/all/20200918131752.16488-5-mathias.nyman@linux.intel.com/
->>>>>>
->>>>> That commit has nothing to do with a specific "dwc3" quirk anywhere.
->>>>> Why not set this flag in the specific platform xhci driver instead where
->>>>> it belongs?
->>>>>
->>>>> thanks,
->>>>>
->>>>> greg k-h
->>>> There is no specific xhci platform driver for dwc3 controllers.
->>>>
->>>> dwc3 controllers use xhci-plat driver .
->>>>
->>>> We can add this quirk in usb/dwc3/host.c as cdns3 does but that requires
->>>> tying dwc3 and xhci driver .
->>>>
->>>> https://patchwork.kernel.org/project/linux-arm-msm/patch/1633946518-13906-1-git-send-email-sanm@codeaurora.org/
->>>>
->>>>
->>>> Regards
->>>>
->>>> Sandeep
->>>>
->>>>
->>> Can you suggest any other method to set this quirk for dwc3 controllers.
->> No idea, sorry.
-> Sandeep,
->
-> I agree with Greg's comments here. The compatible based check to detect dwc3
-> controller is not elegant. Your proposal of adding a device tree param is
-> overkill, I believe.
->
-> Greg already gave us a pointer here [1] which I feel is the best approach going
-> forward. We know that xhci-plat is being used by drivers like dwc3, cdns3 and
-> these drivers need to expose their xhci quirks. As Greg suggested, why can't
-> we move xhci quirks definition to include/linux/usb/xhci-quriks.h and directly
-> access from the glue drivers? The attached is the patch (completely untested)
-> for your reference. It will prepare the setup for you to add the private data
-> and quirks in the dwc3 host glue driver.
->
-> Thanks,
-> Pavan
->
-> [1]
-> https://patchwork.kernel.org/project/linux-arm-msm/patch/1633946518-13906-1-git-send-email-sanm@codeaurora.org/
->
-Thanks Pavan..will test the patch.
+Applied. Thanks.
+
+-- 
+viresh
