@@ -2,206 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EFDB84AF31D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 14:42:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 529794AF328
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 14:43:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234348AbiBINmr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Feb 2022 08:42:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34832 "EHLO
+        id S233245AbiBINng (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Feb 2022 08:43:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233642AbiBINmp (ORCPT
+        with ESMTP id S234255AbiBINnf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Feb 2022 08:42:45 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E3CEC0613C9;
-        Wed,  9 Feb 2022 05:42:48 -0800 (PST)
+        Wed, 9 Feb 2022 08:43:35 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4EADC0612BE;
+        Wed,  9 Feb 2022 05:43:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644414168; x=1675950168;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=ah1QRhwUGWPd0/YL2BGoTuq+YFwA+ZsHMG7MjzrAM0c=;
-  b=KqPIv1KJr4npF2QuHeHaVeli+cXeTISJLZAZQYb5XpvjhB8Ew6foS0nQ
-   ppOPnV90sekjh/HaJv5PCmKx7h6Gdahz67R/rFdpsQMARfmQGJm2Aa/dW
-   LBKwnK/fdlR2lPsGIu+5fa2cQ8C0a6DQQB758R4MLhz0zl/h8Y2wNNe9t
-   8=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 09 Feb 2022 05:42:48 -0800
+  t=1644414218; x=1675950218;
+  h=from:to:subject:date:message-id:mime-version;
+  bh=iuWdGWL4r+alsxzIRmcnsUfqNu62+JTUmJFdnBcCVm0=;
+  b=Djp/XgwRLEH7xEMaGDjpNS4HllKNB8SAvxsfme0YnQexWa+pGAk7STG4
+   ZOoTXIU/sImK+lHUz5bb4m+1rd+iLIPSF4JpkQggpT2vpD4/TEU+YJBfp
+   R9SHqoJo7j/kfHp9DumgRzdbBOgVzS+KRm0bYqyC+L+kJN+Fu8eCWQb12
+   Q=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 09 Feb 2022 05:43:38 -0800
 X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2022 05:42:47 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2022 05:43:38 -0800
+Received: from hu-ctheegal-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 9 Feb 2022 05:42:47 -0800
-Received: from [10.216.41.35] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Wed, 9 Feb 2022
- 05:42:43 -0800
-Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: sc7280: Add pinmux for I2S
- speaker and Headset
-To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <devicetree@vger.kernel.org>,
-        <dianders@chromium.org>, <judyhsiao@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <robh+dt@kernel.org>, <rohitkr@codeaurora.org>,
-        <srinivas.kandagatla@linaro.org>
-CC:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
-References: <1644334454-16719-1-git-send-email-quic_srivasam@quicinc.com>
- <1644334454-16719-2-git-send-email-quic_srivasam@quicinc.com>
- <CAE-0n50PAtGfvHXjNrvQYe6edNEfJvEc1uYZFUeW2KHxn6fsBA@mail.gmail.com>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-Message-ID: <30805a84-b523-842c-d223-bc0d2043fa00@quicinc.com>
-Date:   Wed, 9 Feb 2022 19:12:40 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+ 15.2.922.19; Wed, 9 Feb 2022 05:43:34 -0800
+From:   Chitti Babu Theegala <quic_ctheegal@quicinc.com>
+To:     <mingo@redhat.com>, <peterz@infradead.org>,
+        <juri.lelli@redhat.com>, <vincent.guittot@linaro.org>,
+        <dietmar.eggemann@arm.com>, <rostedt@goodmis.org>,
+        <joel@joelfernandes.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_lingutla@quicinc.com>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH] sched/uclamp: New sysctl to tweak boost for uclamp tasks
+Date:   Wed, 9 Feb 2022 19:13:19 +0530
+Message-ID: <20220209134319.1183-1-quic_ctheegal@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n50PAtGfvHXjNrvQYe6edNEfJvEc1uYZFUeW2KHxn6fsBA@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+UCLAMP_MIN knob clamps the util_value within uclamp_min & max.
+Currently, these uclamped tasks are also boosted to big cores
+which can hit power.
 
-On 2/9/2022 2:38 AM, Stephen Boyd wrote:
-Thanks for your time Stephen!!!
-> Quoting Srinivasa Rao Mandadapu (2022-02-08 07:34:12)
->> Add AMP enable node and pinmux for primary and secondary I2S
->> for SC7280 based platforms.
->>
->> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
->> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 40 ++++++++++++++++++++++++++++++++
->>   arch/arm64/boot/dts/qcom/sc7280.dtsi     | 40 ++++++++++++++++++++++++++++++++
->>   2 files changed, 80 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> index d623d71..c7d6c46 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> @@ -436,6 +436,39 @@
->>                  qcom,drive-strength = <3>;
->>          };
->>   };
-> Newline here
-Okay. will remove it.
->
->> +&pri_mi2s_data0 {
->> +       drive-strength = <6>;
->> +};
->> +
->> +&pri_mi2s_data1 {
->> +       drive-strength = <6>;
->> +};
->> +
->> +&pri_mi2s_mclk {
->> +       drive-strength = <6>;
->> +};
->> +
->> +&pri_mi2s_sclk {
->> +       drive-strength = <6>;
->> +};
->> +
->> +&pri_mi2s_ws {
->> +       drive-strength = <6>;
->> +};
->> +
->> +&sec_mi2s_data0 {
->> +       drive-strength = <6>;
->> +       bias-disable;
->> +};
->> +
->> +&sec_mi2s_sclk {
->> +       drive-strength = <6>;
->> +       bias-disable;
->> +};
->> +
->> +&sec_mi2s_ws {
->> +       drive-strength = <6>;
->> +};
-> Please sort these nodes alphabetically on node name.
-Okay.
->
->>   &qspi_cs0 {
->>          bias-disable;
->> @@ -491,6 +524,13 @@
->>   };
->>
->>   &tlmm {
->> +       amp_en: amp-en {
->> +               pins = "gpio63";
->> +               function = "gpio";
->> +               bias-disable;
-> Is there an external pull?
-I think no external pull. In trogdor mentioned bias-pull-down but you 
-suggested to remove it.
->
->> +               drive-strength = <2>;
->> +       };
->> +
->>          nvme_pwren: nvme-pwren {
->>                  function = "gpio";
->>          };
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index 937c2e0..76e73e9 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -3461,6 +3461,46 @@
->>                                  };
->>                          };
->>
->> +                       pri_mi2s_data0: pri-mi2s-data0 {
->> +                               pins = "gpio98";
->> +                               function = "mi2s0_data0";
->> +                       };
->> +
->> +                       pri_mi2s_data1: pri-mi2s-data1 {
->> +                               pins = "gpio99";
->> +                               function = "mi2s0_data1";
->> +                       };
->> +
->> +                       pri_mi2s_mclk: pri-mi2s-mclk {
->> +                               pins = "gpio96";
->> +                               function = "pri_mi2s";
->> +                       };
->> +
->> +                       pri_mi2s_sclk: pri-mi2s-sclk {
->> +                               pins = "gpio97";
->> +                               function = "mi2s0_sck";
->> +                       };
->> +
->> +                       pri_mi2s_ws: pri-mi2s-ws {
->> +                               pins = "gpio100";
->> +                               function = "mi2s0_ws";
->> +                       };
->> +
->> +                       sec_mi2s_data0: sec-mi2s-data0 {
->> +                               pins = "gpio107";
->> +                               function = "mi2s1_data0";
->> +                       };
->> +
->> +                       sec_mi2s_sclk: sec-mi2s-sclk {
->> +                               pins = "gpio106";
->> +                               function = "mi2s1_sck";
->> +                       };
->> +
->> +                       sec_mi2s_ws: sec-mi2s-ws {
->> +                               pins = "gpio108";
->> +                               function = "mi2s1_ws";
->> +                       };
-> Please sort these nodes alphabetically on node name.
-Okay.
+Implementing a new knob which can provide an option to turn-off
+'boosting to big cores' and just restrict to 'clamping util value'
+job. Also, note that big cores affinity can be separately achieved
+with cpuset cgroups as well, if required for any critical tasks.
+
+Signed-off-by: Chitti Babu Theegala <quic_ctheegal@quicinc.com>
+---
+ include/linux/sched/sysctl.h | 1 +
+ kernel/sched/core.c          | 8 ++++++++
+ kernel/sched/fair.c          | 2 +-
+ kernel/sysctl.c              | 9 +++++++++
+ 4 files changed, 19 insertions(+), 1 deletion(-)
+
+diff --git a/include/linux/sched/sysctl.h b/include/linux/sched/sysctl.h
+index be27e725b9285..fa7abecf6cd68 100644
+--- a/include/linux/sched/sysctl.h
++++ b/include/linux/sched/sysctl.h
+@@ -54,6 +54,7 @@ extern unsigned int sysctl_sched_dl_period_min;
+ extern unsigned int sysctl_sched_uclamp_util_min;
+ extern unsigned int sysctl_sched_uclamp_util_max;
+ extern unsigned int sysctl_sched_uclamp_util_min_rt_default;
++extern unsigned int sysctl_sched_uclamp_util_min_to_boost;
+ #endif
+ 
+ #ifdef CONFIG_CFS_BANDWIDTH
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 634d571e39d77..55019eb9c83c5 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -1269,6 +1269,14 @@ unsigned int sysctl_sched_uclamp_util_max = SCHED_CAPACITY_SCALE;
+  */
+ unsigned int sysctl_sched_uclamp_util_min_rt_default = SCHED_CAPACITY_SCALE;
+ 
++/* UCLAMP_MIN knob clamps the util_value within uclamp_min & max. By default,
++ * these uclamped tasks are also boosted to bigger cores which can impact power.
++ *
++ * This knob provides an option to turn-off 'boosting to gold cores' and
++ * just restrict to 'clamping util value' job.
++ */
++unsigned int sysctl_sched_uclamp_util_min_to_boost = 1;
++
+ /* All clamps are required to be less or equal than these values */
+ static struct uclamp_se uclamp_default[UCLAMP_CNT];
+ 
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 7cd316793f4e3..44adcbfa9eb32 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -6829,7 +6829,7 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu, int sy
+ 		goto unlock;
+ 
+ 	latency_sensitive = uclamp_latency_sensitive(p);
+-	boosted = uclamp_boosted(p);
++	boosted = sysctl_sched_uclamp_util_min_to_boost && uclamp_boosted(p);
+ 	target_cap = boosted ? 0 : ULONG_MAX;
+ 
+ 	for (; pd; pd = pd->next) {
+diff --git a/kernel/sysctl.c b/kernel/sysctl.c
+index 8f196ed2ec065..6463d60fed84e 100644
+--- a/kernel/sysctl.c
++++ b/kernel/sysctl.c
+@@ -1882,6 +1882,15 @@ static struct ctl_table kern_table[] = {
+ 		.mode		= 0644,
+ 		.proc_handler	= sysctl_sched_uclamp_handler,
+ 	},
++	{
++		.procname	= "sched_util_clamp_min_to_boost",
++		.data		= &sysctl_sched_uclamp_util_min_to_boost,
++		.maxlen		= sizeof(unsigned int),
++		.mode		= 0644,
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1		= SYSCTL_ZERO,
++		.extra2		= SYSCTL_ONE,
++	},
+ #endif
+ #ifdef CONFIG_SCHED_AUTOGROUP
+ 	{
+-- 
+2.17.1
+
