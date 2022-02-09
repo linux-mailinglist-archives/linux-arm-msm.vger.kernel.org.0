@@ -2,98 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E7374AEB9D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 08:59:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BCCBD4AEBA9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 09:00:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232875AbiBIH7N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Feb 2022 02:59:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49362 "EHLO
+        id S236092AbiBIIAd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Feb 2022 03:00:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229528AbiBIH7M (ORCPT
+        with ESMTP id S235466AbiBIIAc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Feb 2022 02:59:12 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83290C0613CA;
-        Tue,  8 Feb 2022 23:59:16 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 4B02EB81F46;
-        Wed,  9 Feb 2022 07:59:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40946C340E7;
-        Wed,  9 Feb 2022 07:59:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1644393554;
-        bh=o3d1r5nyYz91T6wRpb3Xtl5wpWAZV1OgB32q5ncAlFg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=I6K8ICjNzVwQMg3o/1xmH8e9ryafuMmG/zBsENYkvwq1JaMNJqT82m0RCfmIAcQe4
-         VN5pL7WQGMnRtYtzz45d//+LYGaPCF/meyjILIAslS3JOGyuyZ3ZXj0qiwmFX0z20+
-         35AG0nLwpfvAH9c3NN0pId8FaPa5IQre1LEolBTNkssvJ6KZjb4g/hIhDRTSC09vwT
-         aSrcWXN/p0WsI1rbdwAzuhwyTkLA5Yfj47Lsth2L65pBvPqcsi6n0sbcATz/w3iPdI
-         E0FMKUqqk3ZRwNlsIGOZpe4edmBV39Cm+y0WYTsUfVP34lDGRXu4MoV4d+bYKmfD4h
-         uPOZG2uck6Wrw==
-Date:   Wed, 9 Feb 2022 13:29:08 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Paul Davey <paul.davey@alliedtelesis.co.nz>
-Cc:     Hemant Kumar <hemantk@codeaurora.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 0/2] bus: mhi: Fix MHI on big endian architectures
-Message-ID: <20220209075908.GA10700@workstation>
-References: <20210812031700.23397-1-paul.davey@alliedtelesis.co.nz>
+        Wed, 9 Feb 2022 03:00:32 -0500
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92B88C05CB80;
+        Wed,  9 Feb 2022 00:00:35 -0800 (PST)
+Received: from g550jk.localnet (84-115-212-237.cable.dynamic.surfer.at [84.115.212.237])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 44725CDFCA;
+        Wed,  9 Feb 2022 08:00:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1644393634; bh=4FXw/m0qzG12tweb/SpzqvxhvTalonOAWhiKiVfi+U0=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=vDuyTleEJgBCbkmvWKcbLvpyCp7hBGTI4BZVTpm7IdRqrvDBL3nRGisMJOhn+8xx8
+         jEDoW8C60Y6xIXcsExCaeXbtKPgfptE4EhsPU3EyZwqcbiBFFDcxUzg/VQNQQTWd58
+         zC1MtpWI0VpmkObfSvsUWRKjxD5e1W1zxbq+R54Q=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     Jack Matthews <jm5112356@gmail.com>
+Cc:     jm5112356@gmail.com, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] ARM: dts: qcom: pm8226: add node for RTC
+Date:   Wed, 09 Feb 2022 09:00:33 +0100
+Message-ID: <3306547.mvXUDI8C0e@g550jk>
+In-Reply-To: <20220209052929.651881-1-jm5112356@gmail.com>
+References: <20220209052929.651881-1-jm5112356@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210812031700.23397-1-paul.davey@alliedtelesis.co.nz>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Spam-Status: No, score=0.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 12, 2021 at 03:16:58PM +1200, Paul Davey wrote:
-> I encountered some problems getting the MHI driver to work on an Octeon
-> 3 platform these seem to all be related to endianness issues.  The modem
-> interface appears to require the DMA structures to be in little endian,
-> however the MHI core driver was assembling them in native endianness.
-> 
-> Using little endian explicitly allows the interface to function as
-> expected.
-> 
-> Changes in v4:
->   - add Fixes and Reviewed-By tags as requested/offered.
-> Changes in v3:
->   - removed change of doorbell helper functions db_val type from
->     dma_addr_t to __le64 favouring doing conversion only when writing to
->     context wp fields.  
-> Changes in v2:
->   - use __fls instead of find_last_bit in pm_state conversion patch as
->     requested by Hemant Kumar <hemantk@codeaurora.org>
-> 
-> Paul Davey (2):
->   bus: mhi: Fix pm_state conversion to string
->   bus: mhi: Fix MHI DMA structure endianness
+Hi Jack,
 
-I've included these two patches two my MHI endpoint patch series. But I
-hope to merge these along with MHI host cleanup patches separately for
-v5.18.
+On Mittwoch, 9. Februar 2022 06:29:28 CET Jack Matthews wrote:
+> Add a node for PM8226's real time clock.
+> 
+> Signed-off-by: Jack Matthews <jm5112356@gmail.com>
+> ---
+>  arch/arm/boot/dts/qcom-pm8226.dtsi | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-pm8226.dtsi
+> b/arch/arm/boot/dts/qcom-pm8226.dtsi index 04d070d98f97..ecc38ab1dc4b
+> 100644
+> --- a/arch/arm/boot/dts/qcom-pm8226.dtsi
+> +++ b/arch/arm/boot/dts/qcom-pm8226.dtsi
+> @@ -17,6 +17,13 @@ pwrkey@800 {
+>  			bias-pull-up;
+>  		};
+> 
+> +		rtc@6000 {
 
-Thanks,
-Mani
+Please keep the nodes sorted by address, so don't put @6000 between @800 and 
+@1000 please ;)
 
-> 
->  drivers/bus/mhi/core/debugfs.c  |  26 +++----
->  drivers/bus/mhi/core/init.c     |  43 ++++++------
->  drivers/bus/mhi/core/internal.h | 119 ++++++++++++++++----------------
->  drivers/bus/mhi/core/main.c     |  22 +++---
->  drivers/bus/mhi/core/pm.c       |   4 +-
->  5 files changed, 109 insertions(+), 105 deletions(-)
-> 
-> -- 
-> 2.32.0
-> 
+Regards
+Luca
+
+> +			compatible = "qcom,pm8941-rtc";
+> +			reg = <0x6000>, <0x6100>;
+> +			reg-names = "rtc", "alarm";
+> +			interrupts = <0x0 0x61 0x1 
+IRQ_TYPE_EDGE_RISING>;
+> +		};
+> +
+>  		smbb: charger@1000 {
+>  			compatible = "qcom,pm8226-charger";
+>  			reg = <0x1000>;
+
+
+
+
