@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 91A954AEFD0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 12:12:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 09AE64AEFC5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 12:11:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229558AbiBILMM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Feb 2022 06:12:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38298 "EHLO
+        id S230245AbiBILLM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Feb 2022 06:11:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229967AbiBILMM (ORCPT
+        with ESMTP id S229587AbiBILLJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Feb 2022 06:12:12 -0500
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71E6FE083C68
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Feb 2022 02:06:54 -0800 (PST)
-Received: by mail-pf1-x42e.google.com with SMTP id i21so1904063pfd.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Feb 2022 02:06:54 -0800 (PST)
+        Wed, 9 Feb 2022 06:11:09 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58693E0D9D19
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Feb 2022 02:07:00 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id m7so1738220pjk.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Feb 2022 02:07:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=uvVIJL7G+MoVaAaTQbJAgUmCSIup6bzWE2y/T2o5dIc=;
-        b=rsbsPZfQMI3NPYmG/P6BTvfC3qiGBICF8ZXe5GTx794yLnoYnv4qeKnGJuiurXxAnY
-         sJwwpzp7jWwm5VgjzOR2De8ZoMlDekmId51nnX0qFXn+DsskhHWNZLXvr4lwyIzqqsSH
-         k6WhOHr6CjGZntMuRZmpgm13RIUD7Pe/zadXTsS82nayrX9bf+fqEy2hjHH7gaqMHm2p
-         LgRo5ebNkjUf3FJkTbsa8bGOcw+/LDMdu4kBAr9lIxw5aGWnDGWnA2Ey6oH+4amvVOdD
-         6WjgcXAOf/4Vg1jv5HQMA4RJPgWjnP/lXw+O6SqH7Bu+tDFSxsaM9QKRIJDR6XYMihDz
-         orVg==
+        bh=NMpGHqPnhqxkjvc6r5GMD0fMkW8tMw6KlHDYVxHdn2U=;
+        b=B4Yn7jKIUDm2OAwEXij+OFbTThaic5w1aOf0f7h0UwkEZc9zYg6z2XJWSV7NhP0Zs+
+         lmn/RcR4P03HLduFsCmTlMpwHAIAgEtkAH3ygfBt9g5GLidAsdmqG/obdcG3yYwiUWkK
+         sVG7waeG+4JwqS00mdceah2qVPKKGnRVQxTjT28TA9MHHsaVDPmPIrGgtbydPpy0zMRU
+         9AKWPrj3UZmq9zntMKKlf7cETGnRqIpMJ+v8VtIoi6mNeOop44fwqTmCUdbBqzRNgJvt
+         fZPcABIo+GWZHAmQKn4ETeAx9+9xqsdAW1K4U2PMMqiVpl9CTtxkR18MH91ttx4LjkYY
+         uwPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=uvVIJL7G+MoVaAaTQbJAgUmCSIup6bzWE2y/T2o5dIc=;
-        b=APWEOTWR/ixSwAmDP/V++0xxYibZJIMBW05ZVqcUFuIGpox/Kd2fKl/b96WBq/LRlb
-         27FJ2+s9r3RKoqnNPTg8wSInihhpU76BpFWTDxLIx/mHqdCDnSRkm9Pbeq9jUxNZfWe3
-         XeTbEqET5wEapFB+bYXkIds5sufbCTyMo37mU6DmkRp3lLr0TWbxqdB3iEfr+93QyvnZ
-         zA9xB/Rw5xz5KMNFHbFk59v1Kn2FXTzxYPC5rjzLD8hxr+1wca44THZn6YcfxW1fCfKi
-         QIwcjao3vOnBm9G0e/SxHXH4QZq7P57JJo/JG2B2SX0rgPYIeyOPMnQi/gbr3ZKGdslj
-         7KFQ==
-X-Gm-Message-State: AOAM532xiW5s+lm9zl3+qqaSElCmXgGeXBoCsOEPagm5P3ro7zNmSU/p
-        BYffnGbLla+nrxnuovWZg/e9
-X-Google-Smtp-Source: ABdhPJw4dLxlOBb+w72LT1Jc2+IJXgpYPyOqGNlInW8RMtJjIkcawRYa45tkS3JhtXdQ4Ee8nFkB2g==
-X-Received: by 2002:a63:8842:: with SMTP id l63mr1259518pgd.421.1644401184543;
-        Wed, 09 Feb 2022 02:06:24 -0800 (PST)
+        bh=NMpGHqPnhqxkjvc6r5GMD0fMkW8tMw6KlHDYVxHdn2U=;
+        b=zF+A3Oc91KM4SnqiK9vtpQZ63FLT5C/D8kBqa/j07itSAxqcn/5lWS+13VIDMGCkzq
+         Fn/GIq3viNgMcd1OsS8xXqusRWF7EDyjkl5DIDbnKxA1e+31/8gEZE8rRVWS0lqMO2qo
+         RQaawHUMLdPmJnWQ6W11qCUb48ZfZ7xkAMxPTpeQaDg59vUVIly5Qw9jVUZeBbh0lzp7
+         Q0HoV955qQp/w+VVA0TuumUKC05ENLTLA5WFrmzm0RVXvA4nJ+H0ipWik5qNN562X0WU
+         anZ1eCa09jKuFwJU5qlYQAv2g3/Mqqyqrh13h5scCvxMoKw8zxhcGVqA42+DgWmtlDun
+         F2qQ==
+X-Gm-Message-State: AOAM532CJOWaSdwTGbnwYVGDSmuWJ2v9CrdR1urKF7G/hmp+BrUWS7gl
+        Yn26ZDFLwsHW6C6QUh/ZNRVi
+X-Google-Smtp-Source: ABdhPJyiRn/KWXntusKXNKDqIw1RfKpPyWx6lPq76lVZE/DyKLMem7wdNT6oQPG2LPIqJVDv9hdieA==
+X-Received: by 2002:a17:902:a708:: with SMTP id w8mr1366936plq.101.1644401190344;
+        Wed, 09 Feb 2022 02:06:30 -0800 (PST)
 Received: from localhost.localdomain ([117.217.179.178])
-        by smtp.gmail.com with ESMTPSA id p2sm6722024pfo.125.2022.02.09.02.06.19
+        by smtp.gmail.com with ESMTPSA id p2sm6722024pfo.125.2022.02.09.02.06.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Feb 2022 02:06:24 -0800 (PST)
+        Wed, 09 Feb 2022 02:06:29 -0800 (PST)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     mhi@lists.linux.dev
 Cc:     quic_hemantk@quicinc.com, quic_bbhatt@quicinc.com,
@@ -57,9 +57,9 @@ Cc:     quic_hemantk@quicinc.com, quic_bbhatt@quicinc.com,
         quic_skananth@quicinc.com, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, elder@linaro.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2 13/23] bus: mhi: ep: Add support for sending events to the host
-Date:   Wed,  9 Feb 2022 15:26:14 +0530
-Message-Id: <20220209095624.26389-14-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 14/23] bus: mhi: ep: Add support for managing MHI state machine
+Date:   Wed,  9 Feb 2022 15:26:15 +0530
+Message-Id: <20220209095624.26389-15-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20220209095624.26389-1-manivannan.sadhasivam@linaro.org>
 References: <20220209095624.26389-1-manivannan.sadhasivam@linaro.org>
@@ -67,7 +67,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,260 +75,368 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for sending the events to the host over MHI bus from the
-endpoint. Following events are supported:
+Add support for managing the MHI state machine by controlling the state
+transitions. Only the following MHI state transitions are supported:
 
-1. Transfer completion event
-2. Command completion event
-3. State change event
-4. Execution Environment (EE) change event
-
-An event is sent whenever an operation has been completed in the MHI EP
-device. Event is sent using the MHI event ring and additionally the host
-is notified using an IRQ if required.
+1. Ready state
+2. M0 state
+3. M3 state
+4. SYS_ERR state
 
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/bus/mhi/common.h      |  15 ++++
- drivers/bus/mhi/ep/internal.h |   8 ++-
- drivers/bus/mhi/ep/main.c     | 126 ++++++++++++++++++++++++++++++++++
- include/linux/mhi_ep.h        |   8 +++
- 4 files changed, 155 insertions(+), 2 deletions(-)
+ drivers/bus/mhi/ep/Makefile   |   2 +-
+ drivers/bus/mhi/ep/internal.h |  11 +++
+ drivers/bus/mhi/ep/main.c     |  51 ++++++++++-
+ drivers/bus/mhi/ep/sm.c       | 168 ++++++++++++++++++++++++++++++++++
+ include/linux/mhi_ep.h        |   6 ++
+ 5 files changed, 236 insertions(+), 2 deletions(-)
+ create mode 100644 drivers/bus/mhi/ep/sm.c
 
-diff --git a/drivers/bus/mhi/common.h b/drivers/bus/mhi/common.h
-index 89b2ba8c8305..c180ba981c9e 100644
---- a/drivers/bus/mhi/common.h
-+++ b/drivers/bus/mhi/common.h
-@@ -176,6 +176,21 @@
- #define MHI_TRE_GET_EV_LINKSPEED(tre)			((MHI_TRE_GET_DWORD(tre, 1) >> 24) & 0xFF)
- #define MHI_TRE_GET_EV_LINKWIDTH(tre)			(MHI_TRE_GET_DWORD(tre, 0) & 0xFF)
- 
-+/* State change event */
-+#define MHI_SC_EV_PTR					0
-+#define MHI_SC_EV_DWORD0(state)				cpu_to_le32(state << 24)
-+#define MHI_SC_EV_DWORD1(type)				cpu_to_le32(type << 16)
-+
-+/* EE event */
-+#define MHI_EE_EV_PTR					0
-+#define MHI_EE_EV_DWORD0(ee)				cpu_to_le32(ee << 24)
-+#define MHI_EE_EV_DWORD1(type)				cpu_to_le32(type << 16)
-+
-+/* Command Completion event */
-+#define MHI_CC_EV_PTR(ptr)				cpu_to_le64(ptr)
-+#define MHI_CC_EV_DWORD0(code)				cpu_to_le32(code << 24)
-+#define MHI_CC_EV_DWORD1(type)				cpu_to_le32(type << 16)
-+
- /* Transfer descriptor macros */
- #define MHI_TRE_DATA_PTR(ptr)				cpu_to_le64(ptr)
- #define MHI_TRE_DATA_DWORD0(len)			cpu_to_le32(len & MHI_MAX_MTU)
+diff --git a/drivers/bus/mhi/ep/Makefile b/drivers/bus/mhi/ep/Makefile
+index 7ba0e04801eb..aad85f180b70 100644
+--- a/drivers/bus/mhi/ep/Makefile
++++ b/drivers/bus/mhi/ep/Makefile
+@@ -1,2 +1,2 @@
+ obj-$(CONFIG_MHI_BUS_EP) += mhi_ep.o
+-mhi_ep-y := main.o mmio.o ring.o
++mhi_ep-y := main.o mmio.o ring.o sm.o
 diff --git a/drivers/bus/mhi/ep/internal.h b/drivers/bus/mhi/ep/internal.h
-index 48d6e9667d55..fd63f79c6aec 100644
+index fd63f79c6aec..e4e8f06c2898 100644
 --- a/drivers/bus/mhi/ep/internal.h
 +++ b/drivers/bus/mhi/ep/internal.h
-@@ -131,8 +131,8 @@ enum mhi_ep_ring_type {
+@@ -173,6 +173,11 @@ struct mhi_ep_event {
+ 	struct mhi_ep_ring ring;
  };
  
- struct mhi_ep_ring_element {
--	u64 ptr;
--	u32 dword[2];
-+	__le64 ptr;
-+	__le32 dword[2];
- };
- 
- /* Ring element */
-@@ -227,4 +227,8 @@ void mhi_ep_mmio_get_mhi_state(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state *s
- void mhi_ep_mmio_init(struct mhi_ep_cntrl *mhi_cntrl);
- void mhi_ep_mmio_update_ner(struct mhi_ep_cntrl *mhi_cntrl);
- 
-+/* MHI EP core functions */
-+int mhi_ep_send_state_change_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state state);
-+int mhi_ep_send_ee_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ep_execenv exec_env);
++struct mhi_ep_state_transition {
++	struct list_head node;
++	enum mhi_state state;
++};
 +
+ struct mhi_ep_chan {
+ 	char *name;
+ 	struct mhi_ep_device *mhi_dev;
+@@ -230,5 +235,11 @@ void mhi_ep_mmio_update_ner(struct mhi_ep_cntrl *mhi_cntrl);
+ /* MHI EP core functions */
+ int mhi_ep_send_state_change_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state state);
+ int mhi_ep_send_ee_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ep_execenv exec_env);
++bool mhi_ep_check_mhi_state(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state cur_mhi_state,
++			    enum mhi_state mhi_state);
++int mhi_ep_set_mhi_state(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state mhi_state);
++int mhi_ep_set_m0_state(struct mhi_ep_cntrl *mhi_cntrl);
++int mhi_ep_set_m3_state(struct mhi_ep_cntrl *mhi_cntrl);
++int mhi_ep_set_ready_state(struct mhi_ep_cntrl *mhi_cntrl);
+ 
  #endif
 diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index f907f76aa1f2..1bf46d33f3c3 100644
+index 1bf46d33f3c3..ed2427f954d7 100644
 --- a/drivers/bus/mhi/ep/main.c
 +++ b/drivers/bus/mhi/ep/main.c
-@@ -18,6 +18,131 @@
+@@ -184,6 +184,43 @@ static void mhi_ep_ring_worker(struct work_struct *work)
+ 	}
+ }
  
- static DEFINE_IDA(mhi_ep_cntrl_ida);
- 
-+static int mhi_ep_send_event(struct mhi_ep_cntrl *mhi_cntrl, u32 ring_idx,
-+			     struct mhi_ep_ring_element *el)
++static void mhi_ep_state_worker(struct work_struct *work)
 +{
++	struct mhi_ep_cntrl *mhi_cntrl = container_of(work, struct mhi_ep_cntrl, state_work);
 +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-+	union mhi_ep_ring_ctx *ctx;
-+	struct mhi_ep_ring *ring;
++	struct mhi_ep_state_transition *itr, *tmp;
++	unsigned long flags;
++	LIST_HEAD(head);
 +	int ret;
 +
-+	mutex_lock(&mhi_cntrl->event_lock);
-+	ring = &mhi_cntrl->mhi_event[ring_idx].ring;
-+	ctx = (union mhi_ep_ring_ctx *)&mhi_cntrl->ev_ctx_cache[ring_idx];
-+	if (!ring->started) {
-+		ret = mhi_ep_ring_start(mhi_cntrl, ring, ctx);
-+		if (ret) {
-+			dev_err(dev, "Error starting event ring (%d)\n", ring_idx);
-+			goto err_unlock;
++	spin_lock_irqsave(&mhi_cntrl->list_lock, flags);
++	list_splice_tail_init(&mhi_cntrl->st_transition_list, &head);
++	spin_unlock_irqrestore(&mhi_cntrl->list_lock, flags);
++
++	list_for_each_entry_safe(itr, tmp, &head, node) {
++		list_del(&itr->node);
++		dev_dbg(dev, "Handling MHI state transition to %s\n",
++			 mhi_state_str(itr->state));
++
++		switch (itr->state) {
++		case MHI_STATE_M0:
++			ret = mhi_ep_set_m0_state(mhi_cntrl);
++			if (ret)
++				dev_err(dev, "Failed to transition to M0 state\n");
++			break;
++		case MHI_STATE_M3:
++			ret = mhi_ep_set_m3_state(mhi_cntrl);
++			if (ret)
++				dev_err(dev, "Failed to transition to M3 state\n");
++			break;
++		default:
++			dev_err(dev, "Invalid MHI state transition: %d", itr->state);
++			break;
 +		}
++		kfree(itr);
++	}
++}
++
+ static void mhi_ep_release_device(struct device *dev)
+ {
+ 	struct mhi_ep_device *mhi_dev = to_mhi_ep_device(dev);
+@@ -385,6 +422,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+ 	}
+ 
+ 	INIT_WORK(&mhi_cntrl->ring_work, mhi_ep_ring_worker);
++	INIT_WORK(&mhi_cntrl->state_work, mhi_ep_state_worker);
+ 
+ 	mhi_cntrl->ring_wq = alloc_workqueue("mhi_ep_ring_wq", 0, 0);
+ 	if (!mhi_cntrl->ring_wq) {
+@@ -392,8 +430,16 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+ 		goto err_free_cmd;
+ 	}
+ 
++	mhi_cntrl->state_wq = alloc_workqueue("mhi_ep_state_wq", 0, 0);
++	if (!mhi_cntrl->state_wq) {
++		ret = -ENOMEM;
++		goto err_destroy_ring_wq;
 +	}
 +
-+	/* Add element to the event ring */
-+	ret = mhi_ep_ring_add_element(ring, el);
-+	if (ret) {
-+		dev_err(dev, "Error adding element to event ring (%d)\n", ring_idx);
-+		goto err_unlock;
+ 	INIT_LIST_HEAD(&mhi_cntrl->ch_db_list);
++	INIT_LIST_HEAD(&mhi_cntrl->st_transition_list);
+ 	spin_lock_init(&mhi_cntrl->list_lock);
++	spin_lock_init(&mhi_cntrl->state_lock);
+ 	mutex_init(&mhi_cntrl->event_lock);
+ 
+ 	/* Set MHI version and AMSS EE before enumeration */
+@@ -404,7 +450,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+ 	mhi_cntrl->index = ida_alloc(&mhi_ep_cntrl_ida, GFP_KERNEL);
+ 	if (mhi_cntrl->index < 0) {
+ 		ret = mhi_cntrl->index;
+-		goto err_destroy_ring_wq;
++		goto err_destroy_state_wq;
+ 	}
+ 
+ 	/* Allocate the controller device */
+@@ -432,6 +478,8 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+ 	put_device(&mhi_dev->dev);
+ err_ida_free:
+ 	ida_free(&mhi_ep_cntrl_ida, mhi_cntrl->index);
++err_destroy_state_wq:
++	destroy_workqueue(mhi_cntrl->state_wq);
+ err_destroy_ring_wq:
+ 	destroy_workqueue(mhi_cntrl->ring_wq);
+ err_free_cmd:
+@@ -447,6 +495,7 @@ void mhi_ep_unregister_controller(struct mhi_ep_cntrl *mhi_cntrl)
+ {
+ 	struct mhi_ep_device *mhi_dev = mhi_cntrl->mhi_dev;
+ 
++	destroy_workqueue(mhi_cntrl->state_wq);
+ 	destroy_workqueue(mhi_cntrl->ring_wq);
+ 
+ 	kfree(mhi_cntrl->mhi_cmd);
+diff --git a/drivers/bus/mhi/ep/sm.c b/drivers/bus/mhi/ep/sm.c
+new file mode 100644
+index 000000000000..68e7f99b9137
+--- /dev/null
++++ b/drivers/bus/mhi/ep/sm.c
+@@ -0,0 +1,168 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Copyright (C) 2021 Linaro Ltd.
++ * Author: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
++ */
++
++#include <linux/delay.h>
++#include <linux/errno.h>
++#include <linux/mhi_ep.h>
++#include "internal.h"
++
++bool __must_check mhi_ep_check_mhi_state(struct mhi_ep_cntrl *mhi_cntrl,
++					 enum mhi_state cur_mhi_state,
++					 enum mhi_state mhi_state)
++{
++	bool valid = false;
++
++	switch (mhi_state) {
++	case MHI_STATE_READY:
++		valid = (cur_mhi_state == MHI_STATE_RESET);
++		break;
++	case MHI_STATE_M0:
++		valid = (cur_mhi_state == MHI_STATE_READY ||
++			  cur_mhi_state == MHI_STATE_M3);
++		break;
++	case MHI_STATE_M3:
++		valid = (cur_mhi_state == MHI_STATE_M0);
++		break;
++	case MHI_STATE_SYS_ERR:
++		/* Transition to SYS_ERR state is allowed all the time */
++		valid = true;
++		break;
++	default:
++		break;
 +	}
 +
-+	/* Ensure that the ring pointer gets updated in host memory before triggering IRQ */
-+	smp_wmb();
-+
-+	mutex_unlock(&mhi_cntrl->event_lock);
-+
-+	/*
-+	 * Raise IRQ to host only if the BEI flag is not set in TRE. Host might
-+	 * set this flag for interrupt moderation as per MHI protocol.
-+	 */
-+	if (!MHI_EP_TRE_GET_BEI(el))
-+		mhi_cntrl->raise_irq(mhi_cntrl, ring->irq_vector);
-+
-+	return 0;
-+
-+err_unlock:
-+	mutex_unlock(&mhi_cntrl->event_lock);
-+
-+	return ret;
++	return valid;
 +}
 +
-+static int mhi_ep_send_completion_event(struct mhi_ep_cntrl *mhi_cntrl,
-+					struct mhi_ep_ring *ring, u32 len,
-+					enum mhi_ev_ccs code)
-+{
-+	struct mhi_ep_ring_element event = {};
-+	__le32 tmp;
-+
-+	event.ptr = le64_to_cpu(ring->ring_ctx->generic.rbase) +
-+			ring->rd_offset * sizeof(struct mhi_ep_ring_element);
-+
-+	tmp = event.dword[0];
-+	tmp |= MHI_TRE_EV_DWORD0(code, len);
-+	event.dword[0] = tmp;
-+
-+	tmp = event.dword[1];
-+	tmp |= MHI_TRE_EV_DWORD1(ring->ch_id, MHI_PKT_TYPE_TX_EVENT);
-+	event.dword[1] = tmp;
-+
-+	return mhi_ep_send_event(mhi_cntrl, ring->er_index, &event);
-+}
-+
-+int mhi_ep_send_state_change_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state state)
-+{
-+	struct mhi_ep_ring_element event = {};
-+	__le32 tmp;
-+
-+	tmp = event.dword[0];
-+	tmp |= MHI_SC_EV_DWORD0(state);
-+	event.dword[0] = tmp;
-+
-+	tmp = event.dword[1];
-+	tmp |= MHI_SC_EV_DWORD1(MHI_PKT_TYPE_STATE_CHANGE_EVENT);
-+	event.dword[1] = tmp;
-+
-+	return mhi_ep_send_event(mhi_cntrl, 0, &event);
-+}
-+
-+int mhi_ep_send_ee_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ep_execenv exec_env)
-+{
-+	struct mhi_ep_ring_element event = {};
-+	__le32 tmp;
-+
-+	tmp = event.dword[0];
-+	tmp |= MHI_EE_EV_DWORD0(exec_env);
-+	event.dword[0] = tmp;
-+
-+	tmp = event.dword[1];
-+	tmp |= MHI_SC_EV_DWORD1(MHI_PKT_TYPE_EE_EVENT);
-+	event.dword[1] = tmp;
-+
-+	return mhi_ep_send_event(mhi_cntrl, 0, &event);
-+}
-+
-+static int mhi_ep_send_cmd_comp_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ev_ccs code)
++int mhi_ep_set_mhi_state(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state mhi_state)
 +{
 +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-+	struct mhi_ep_ring_element event = {};
-+	__le32 tmp;
 +
-+	if (code > MHI_EV_CC_BAD_TRE) {
-+		dev_err(dev, "Invalid command completion code (%d)\n", code);
++	if (!mhi_ep_check_mhi_state(mhi_cntrl, mhi_cntrl->mhi_state, mhi_state)) {
++		dev_err(dev, "MHI state change to %s from %s is not allowed!\n",
++			mhi_state_str(mhi_state),
++			mhi_state_str(mhi_cntrl->mhi_state));
++		return -EACCES;
++	}
++
++	switch (mhi_state) {
++	case MHI_STATE_READY:
++		mhi_ep_mmio_masked_write(mhi_cntrl, MHISTATUS,
++				MHISTATUS_READY_MASK, 1);
++
++		mhi_ep_mmio_masked_write(mhi_cntrl, MHISTATUS,
++				MHISTATUS_MHISTATE_MASK, mhi_state);
++		break;
++	case MHI_STATE_SYS_ERR:
++		mhi_ep_mmio_masked_write(mhi_cntrl, MHISTATUS,
++				MHISTATUS_SYSERR_MASK, 1);
++
++		mhi_ep_mmio_masked_write(mhi_cntrl, MHISTATUS,
++				MHISTATUS_MHISTATE_MASK, mhi_state);
++		break;
++	case MHI_STATE_M1:
++	case MHI_STATE_M2:
++		dev_err(dev, "MHI state (%s) not supported\n", mhi_state_str(mhi_state));
++		return -EOPNOTSUPP;
++	case MHI_STATE_M0:
++	case MHI_STATE_M3:
++		mhi_ep_mmio_masked_write(mhi_cntrl, MHISTATUS,
++					  MHISTATUS_MHISTATE_MASK, mhi_state);
++		break;
++	default:
++		dev_err(dev, "Invalid MHI state (%d)\n", mhi_state);
 +		return -EINVAL;
 +	}
 +
-+	event.ptr = le64_to_cpu(mhi_cntrl->cmd_ctx_cache->rbase)
-+			+ (mhi_cntrl->mhi_cmd->ring.rd_offset *
-+			(sizeof(struct mhi_ep_ring_element)));
++	mhi_cntrl->mhi_state = mhi_state;
 +
-+	tmp = event.dword[0];
-+	tmp |= MHI_CC_EV_DWORD0(code);
-+	event.dword[0] = tmp;
-+
-+	tmp = event.dword[1];
-+	tmp |= MHI_CC_EV_DWORD1(MHI_PKT_TYPE_CMD_COMPLETION_EVENT);
-+	event.dword[1] = tmp;
-+
-+	return mhi_ep_send_event(mhi_cntrl, 0, &event);
++	return 0;
 +}
 +
- static void mhi_ep_ring_worker(struct work_struct *work)
- {
- 	struct mhi_ep_cntrl *mhi_cntrl = container_of(work,
-@@ -269,6 +394,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
- 
- 	INIT_LIST_HEAD(&mhi_cntrl->ch_db_list);
- 	spin_lock_init(&mhi_cntrl->list_lock);
-+	mutex_init(&mhi_cntrl->event_lock);
- 
- 	/* Set MHI version and AMSS EE before enumeration */
- 	mhi_ep_mmio_write(mhi_cntrl, MHIVER, config->mhi_version);
++int mhi_ep_set_m0_state(struct mhi_ep_cntrl *mhi_cntrl)
++{
++	struct device *dev = &mhi_cntrl->mhi_dev->dev;
++	enum mhi_state old_state;
++	int ret;
++
++	spin_lock_bh(&mhi_cntrl->state_lock);
++	old_state = mhi_cntrl->mhi_state;
++
++	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_M0);
++	if (ret) {
++		spin_unlock_bh(&mhi_cntrl->state_lock);
++		return ret;
++	}
++
++	spin_unlock_bh(&mhi_cntrl->state_lock);
++	/* Signal host that the device moved to M0 */
++	ret = mhi_ep_send_state_change_event(mhi_cntrl, MHI_STATE_M0);
++	if (ret) {
++		dev_err(dev, "Failed sending M0 state change event\n");
++		return ret;
++	}
++
++	if (old_state == MHI_STATE_READY) {
++		/* Allow the host to process state change event */
++		mdelay(1);
++
++		/* Send AMSS EE event to host */
++		ret = mhi_ep_send_ee_event(mhi_cntrl, MHI_EP_AMSS_EE);
++		if (ret) {
++			dev_err(dev, "Failed sending AMSS EE event\n");
++			return ret;
++		}
++	}
++
++	return 0;
++}
++
++int mhi_ep_set_m3_state(struct mhi_ep_cntrl *mhi_cntrl)
++{
++	struct device *dev = &mhi_cntrl->mhi_dev->dev;
++	int ret;
++
++	spin_lock_bh(&mhi_cntrl->state_lock);
++	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_M3);
++	if (ret) {
++		spin_unlock_bh(&mhi_cntrl->state_lock);
++		return ret;
++	}
++
++	spin_unlock_bh(&mhi_cntrl->state_lock);
++
++	/* Signal host that the device moved to M3 */
++	ret = mhi_ep_send_state_change_event(mhi_cntrl, MHI_STATE_M3);
++	if (ret) {
++		dev_err(dev, "Failed sending M3 state change event\n");
++		return ret;
++	}
++
++	return 0;
++}
++
++int mhi_ep_set_ready_state(struct mhi_ep_cntrl *mhi_cntrl)
++{
++	struct device *dev = &mhi_cntrl->mhi_dev->dev;
++	enum mhi_state mhi_state;
++	int ret, is_ready;
++
++	spin_lock_bh(&mhi_cntrl->state_lock);
++	/* Ensure that the MHISTATUS is set to RESET by host */
++	mhi_state = mhi_ep_mmio_masked_read(mhi_cntrl, MHISTATUS, MHISTATUS_MHISTATE_MASK);
++	is_ready = mhi_ep_mmio_masked_read(mhi_cntrl, MHISTATUS, MHISTATUS_READY_MASK);
++
++	if (mhi_state != MHI_STATE_RESET || is_ready) {
++		dev_err(dev, "READY state transition failed. MHI host not in RESET state\n");
++		spin_unlock_bh(&mhi_cntrl->state_lock);
++		return -EFAULT;
++	}
++
++	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_READY);
++	spin_unlock_bh(&mhi_cntrl->state_lock);
++
++	return ret;
++}
 diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
-index 33828a6c4e63..062133a68118 100644
+index 062133a68118..72ce30cbe87e 100644
 --- a/include/linux/mhi_ep.h
 +++ b/include/linux/mhi_ep.h
-@@ -59,6 +59,9 @@ struct mhi_ep_db_info {
-  * @mhi_event: Points to the event ring configurations table
-  * @mhi_cmd: Points to the command ring configurations table
-  * @sm: MHI Endpoint state machine
-+ * @ch_ctx_cache: Cache of host channel context data structure
-+ * @ev_ctx_cache: Cache of host event context data structure
-+ * @cmd_ctx_cache: Cache of host command context data structure
+@@ -65,11 +65,14 @@ struct mhi_ep_db_info {
   * @ch_ctx_host_pa: Physical address of host channel context data structure
   * @ev_ctx_host_pa: Physical address of host event context data structure
   * @cmd_ctx_host_pa: Physical address of host command context data structure
-@@ -67,6 +70,7 @@ struct mhi_ep_db_info {
++ * @state_wq: Dedicated workqueue for handling MHI state transitions
+  * @ring_wq: Dedicated workqueue for processing MHI rings
++ * @state_work: State transition worker
+  * @ring_work: Ring worker
   * @ch_db_list: List of queued channel doorbells
   * @st_transition_list: List of state transitions
   * @list_lock: Lock for protecting state transition and channel doorbell lists
-+ * @event_lock: Lock for protecting event rings
++ * @state_lock: Lock for protecting state transitions
+  * @event_lock: Lock for protecting event rings
   * @chdb: Array of channel doorbell interrupt info
   * @raise_irq: CB function for raising IRQ to the host
-  * @alloc_addr: CB function for allocating memory in endpoint for storing host context
-@@ -94,6 +98,9 @@ struct mhi_ep_cntrl {
- 	struct mhi_ep_cmd *mhi_cmd;
- 	struct mhi_ep_sm *sm;
- 
-+	struct mhi_chan_ctxt *ch_ctx_cache;
-+	struct mhi_event_ctxt *ev_ctx_cache;
-+	struct mhi_cmd_ctxt *cmd_ctx_cache;
- 	u64 ch_ctx_host_pa;
+@@ -105,12 +108,15 @@ struct mhi_ep_cntrl {
  	u64 ev_ctx_host_pa;
  	u64 cmd_ctx_host_pa;
-@@ -104,6 +111,7 @@ struct mhi_ep_cntrl {
+ 
++	struct workqueue_struct *state_wq;
+ 	struct workqueue_struct	*ring_wq;
++	struct work_struct state_work;
+ 	struct work_struct ring_work;
+ 
  	struct list_head ch_db_list;
  	struct list_head st_transition_list;
  	spinlock_t list_lock;
-+	struct mutex event_lock;
++	spinlock_t state_lock;
+ 	struct mutex event_lock;
  	struct mhi_ep_db_info chdb[4];
  
- 	void (*raise_irq)(struct mhi_ep_cntrl *mhi_cntrl, u32 vector);
 -- 
 2.25.1
 
