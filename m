@@ -2,75 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D464D4B001D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 23:25:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C64BC4B0065
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 23:35:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235349AbiBIWZv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Feb 2022 17:25:51 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:53384 "EHLO
+        id S236026AbiBIWfM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Feb 2022 17:35:12 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:49840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235383AbiBIWZj (ORCPT
+        with ESMTP id S236029AbiBIWfK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Feb 2022 17:25:39 -0500
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0883E00F7E0
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Feb 2022 14:25:09 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id z20so5443142ljo.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Feb 2022 14:25:09 -0800 (PST)
+        Wed, 9 Feb 2022 17:35:10 -0500
+Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD0FCE019262
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Feb 2022 14:35:11 -0800 (PST)
+Received: by mail-oo1-xc2e.google.com with SMTP id f11-20020a4abb0b000000b002e9abf6bcbcso4262837oop.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Feb 2022 14:35:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=hIcx7fgKf79oX3DQejLBFipd+nYlJybj4bCOUvRVfTk=;
-        b=AlKhd6Y+1pFKRAL1Gs0aGJemkU9izAFnRZhqMlBaMSz8KC/XHIV+ftQIqR0T+2Pv0g
-         iHaSekL2qjqYoQg48jXn6Li+zsiiNBgZOavlJPwPpmx7FS3as0roA3vYdVTGL+5Hl8p6
-         0/yHjvl7FFo92P3shC64MLzA5PjgKri39OfSj5KVgWTvfUybQVEUd5eAk3A39OGl2/Up
-         aTcL1aLw+i22DqH2LVq2zkGsp5X9y53Vebd/FxsxVz7DN29WnCQvXejtpuUrq9EAkqCy
-         RhD5ZgxUos3uDuChqgQkq2qbYHRNGLF2F+h1QkMbhrFCdk5aYjTLTP1RWGhOf4+v54Zn
-         oPcw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=7sNMbEN2ZWSKBSAKG7biB3FxMf95az/sXODaHaCSWMs=;
+        b=xdcjIPjBdfsq47myDzGlv/zDnSvqcldTrssyKMmoNbBcmUw17fDaGp0J/7YeM0yqmg
+         s8qWJDlGouztaI3L3dssm+Cpw12Gr8ov9SLFvidB+1pfLT8ol8I+JprQAoRBrzqqrboZ
+         nbXLMNrQFM1FxTGR9rCmePKWeLdWhoR/y5dfoPvdJz9aFLZ+TN2pxPw6d9x/VIJuj36Z
+         eNTwsOF1QO3RaM49fcz4iuxlbP58AFsMFNuprEf3paG49jotMgGznnttTKdpyvTJtONz
+         AxIlSS+bv2EvMq+7ollItzv1rZG4cyXWmZORmzxdjX9tjb1Dc0LvVir9lQHsGl0NbMxu
+         dDAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=hIcx7fgKf79oX3DQejLBFipd+nYlJybj4bCOUvRVfTk=;
-        b=vq099VUahdUkx0DJUNWfnDz01EsRLnZzOdkKCFE5Oobd87W0bVQG7RNQ2BNbbvmGgZ
-         ZlijiXSF5aVgdInt3AnyvSfcJbk/dxifCHUdEzcjkmcodqrdwCxE2vVcF/Tq1ofU/Czm
-         9tyeS6nSBYoPtpaAG9KG549TfYcS+1nXpmoASP3ihknlbYyQuDWiPDcpNindHno9WJfK
-         xJP/iq97Oi+qXoSEC/7VcBZeFkVLc7rPidAn8Gt2QaysGFgFDKouM6VbVebYyG4eF/Mg
-         ZeuMjza4tHIpfYHRS6iZ9ZP9hQQhX0rrAbOoB6uCA25lLqC+SHcJoGY9XyLjl4P/b6/U
-         I0CQ==
-X-Gm-Message-State: AOAM532E4y6VU0UjGQhLdd0gzxXKef/GJJmTcRxGPURVUjq4rIl6E4Ai
-        bSMH16Xw8LePRw+3MLGL7xeaaQ==
-X-Google-Smtp-Source: ABdhPJwBNTpjejPUqQ20I3Mf4h67E5BFHnM2+lhr2w2BSwR1xW8oumn+pmF/vKAuybdKMNJNXLT2LA==
-X-Received: by 2002:a05:651c:54d:: with SMTP id q13mr2950529ljp.352.1644445508012;
-        Wed, 09 Feb 2022 14:25:08 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id bi16sm1131966lfb.309.2022.02.09.14.25.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Feb 2022 14:25:07 -0800 (PST)
-Message-ID: <fa5f1cd9-d274-a5ed-18a2-eb16ffe82196@linaro.org>
-Date:   Thu, 10 Feb 2022 01:25:06 +0300
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=7sNMbEN2ZWSKBSAKG7biB3FxMf95az/sXODaHaCSWMs=;
+        b=qcZtiIiqzn3EYWSCNSoV0aeQZBpG+Ya9QyGKs2ZHhHvVxl5TuVeU/EPSfu0DZsgoDM
+         IalrUwult8vwYQ4Ks2EuesWMj9vCg+wC+AJHmcfDOoSdbVGRWg1P195Gvfb/+A+dJTeU
+         xKnQbKWEXr5vzLt3u7PHytf/xfzKMzJeLwnDZ+x7X7AdGIDIiFs8fEW/lvNa6qm5ioVG
+         HIZ2XbYWJJ8KP/65ivsOYSiEV/mjQA9OeJJPJeB+f1W/ufseqoD7z2RLBP1J1KzernVR
+         yJEKTe+gD1zlMwGIF9Or+CU1Bpq+WVUSk+I7nNtN5tC5GLaImX2dADHi3PCLqM1eQcIg
+         HPLA==
+X-Gm-Message-State: AOAM531pkXbtS014vYWOnJgF6xT65yg9KfMyoRFNfpvfChhlNLeuCvUw
+        J6LuAfY5572n0qyv1mwYMym4Sg==
+X-Google-Smtp-Source: ABdhPJw6ZCPvGXCBpXm4rynDmp58kloRm/T18gaJuFBSN0X6h1u23KWWxaJ+mFJOT3PwydMvdL4l/A==
+X-Received: by 2002:a4a:e1cb:: with SMTP id n11mr1840337oot.46.1644446111200;
+        Wed, 09 Feb 2022 14:35:11 -0800 (PST)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id s64sm7233725oos.0.2022.02.09.14.35.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Feb 2022 14:35:10 -0800 (PST)
+Date:   Wed, 9 Feb 2022 16:35:08 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette ? <mturquette@baylibre.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [v1 1/2] clk: qcom: gdsc: Use the default transition delay for
+ GDSCs
+Message-ID: <YgRBnExwlzI+lPlR@builder.lan>
+References: <20220209172513.17873-1-tdas@codeaurora.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [PATCH] drm/msm/rd: Add chip-id
-Content-Language: en-GB
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20220114185742.283539-1-robdclark@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220114185742.283539-1-robdclark@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220209172513.17873-1-tdas@codeaurora.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,45 +74,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/01/2022 21:57, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> For newer devices which deprecate gpu-id and do matching based on
-> chip-id, we need this information in cmdstream dumps so that the
-> decoding tools know how to decode them.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+On Wed 09 Feb 11:25 CST 2022, Taniya Das wrote:
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+> Do not update the transition delay and use the default reset values.
+> 
+> Fixes: 45dd0e55317cc ("clk: qcom: Add support for GDSCs)
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
 > ---
->   drivers/gpu/drm/msm/msm_rd.c | 4 ++++
->   1 file changed, 4 insertions(+)
+>  drivers/clk/qcom/gdsc.c | 6 +++++-
+>  drivers/clk/qcom/gdsc.h | 1 +
+>  2 files changed, 6 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/msm_rd.c b/drivers/gpu/drm/msm/msm_rd.c
-> index 81432ec07012..7e4d6460719e 100644
-> --- a/drivers/gpu/drm/msm/msm_rd.c
-> +++ b/drivers/gpu/drm/msm/msm_rd.c
-> @@ -62,6 +62,7 @@ enum rd_sect_type {
->   	RD_FRAG_SHADER,
->   	RD_BUFFER_CONTENTS,
->   	RD_GPU_ID,
-> +	RD_CHIP_ID,
->   };
->   
->   #define BUF_SZ 512  /* should be power of 2 */
-> @@ -202,6 +203,9 @@ static int rd_open(struct inode *inode, struct file *file)
->   
->   	rd_write_section(rd, RD_GPU_ID, &gpu_id, sizeof(gpu_id));
->   
-> +	gpu->funcs->get_param(gpu, MSM_PARAM_CHIP_ID, &val);
-> +	rd_write_section(rd, RD_CHIP_ID, &val, sizeof(val));
+> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+> index 7e1dd8ccfa38..e7b213450640 100644
+> --- a/drivers/clk/qcom/gdsc.c
+> +++ b/drivers/clk/qcom/gdsc.c
+> @@ -380,7 +380,11 @@ static int gdsc_init(struct gdsc *sc)
+>  	 */
+>  	mask = HW_CONTROL_MASK | SW_OVERRIDE_MASK |
+>  	       EN_REST_WAIT_MASK | EN_FEW_WAIT_MASK | CLK_DIS_WAIT_MASK;
+> -	val = EN_REST_WAIT_VAL | EN_FEW_WAIT_VAL | CLK_DIS_WAIT_VAL;
 > +
->   out:
->   	mutex_unlock(&gpu->lock);
->   	return ret;
+> +	regmap_read(sc->regmap, sc->gdscr, &val);
+> +
+> +	if (!(sc->flags & DEFAULT_TRANSITION_DELAY))
 
+I dug a little bit more into this and noticed that on various platforms
+CLK_DIS_WAIT_VAL for the GPU_CX GDSC is supposed to be 8 (whereas both
+hw default and CLK_DIS_WAIT_VAL is 2).
 
--- 
-With best wishes
-Dmitry
+I'm not able to find anything helpful in the git log describing what the
+value does, but it seems that a "just use hw default" flag won't cut it
+for this scenario.
+
+Regards,
+Bjorn
+
+> +		val |= EN_REST_WAIT_VAL | EN_FEW_WAIT_VAL | CLK_DIS_WAIT_VAL;
+>  	ret = regmap_update_bits(sc->regmap, sc->gdscr, mask, val);
+>  	if (ret)
+>  		return ret;
+> diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
+> index d7cc4c21a9d4..1bd3ecdd0b0a 100644
+> --- a/drivers/clk/qcom/gdsc.h
+> +++ b/drivers/clk/qcom/gdsc.h
+> @@ -53,6 +53,7 @@ struct gdsc {
+>  #define ALWAYS_ON	BIT(6)
+>  #define RETAIN_FF_ENABLE	BIT(7)
+>  #define NO_RET_PERIPH	BIT(8)
+> +#define DEFAULT_TRANSITION_DELAY	BIT(9)
+>  	struct reset_controller_dev	*rcdev;
+>  	unsigned int			*resets;
+>  	unsigned int			reset_count;
+> --
+> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+> of the Code Aurora Forum, hosted by the  Linux Foundation.
+> 
