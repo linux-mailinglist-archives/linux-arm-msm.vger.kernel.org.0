@@ -2,84 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CB604AE842
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 05:08:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 26C554AE967
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 06:38:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346074AbiBIEIB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Feb 2022 23:08:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47624 "EHLO
+        id S230074AbiBIFif (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Feb 2022 00:38:35 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:37398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347361AbiBIDny (ORCPT
+        with ESMTP id S236417AbiBIFaG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Feb 2022 22:43:54 -0500
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 632E0C0401C0;
-        Tue,  8 Feb 2022 19:34:03 -0800 (PST)
-Received: by mail-oi1-f182.google.com with SMTP id t199so1198072oie.10;
-        Tue, 08 Feb 2022 19:34:03 -0800 (PST)
+        Wed, 9 Feb 2022 00:30:06 -0500
+Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12413C03C180;
+        Tue,  8 Feb 2022 21:30:10 -0800 (PST)
+Received: by mail-qv1-xf42.google.com with SMTP id o5so1009675qvm.3;
+        Tue, 08 Feb 2022 21:30:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BaM2nun77Ox90ylhwBob4weqZHSsb78qbeuJ150+3wM=;
+        b=oW0NyvBN2TbhYrgNRdS2CWDkzWBELZWKx9Mw9NFWZGaqSHOA5FoFfs2knAaMqk+Lsx
+         rWxIjv9Iyqwq9jlvTY5/NQDha/Z1Su0Ia0QI5Osmsc5KCy/off+8Bx1faPgqljKPmZTD
+         Qw5doEehfyG9dYn1coZm9+VkgxjR8UFz1wUNTobVI6rz67FL/WZ02T4OjfLt8Fv3x3+M
+         h1XOEsxpo8V/i3WXYL3jWcMkicgJvrUWtbLB5PeNEdgKFPIvcOEO8LNR6O43/0psDnU7
+         xBn01RXAkkE1fRIeigAaFaoOgFf+r13IkC2zN/w1y0oF9K8hfQCkGl/Jgd2pGYEU8PMD
+         Qj6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=WAlxN8bgtyXgcYHA0KP+K5lEbx7cfGwSBqWcp3rk/io=;
-        b=GI0UaHL2oOmHj+HzC2uvBS50HiVKqTfCvrgiIOMaUKFXKzNCnC5U8QknzgV659OKwg
-         PYUGuTTDYODGNooElvN5GtxDm9nYUUuah9f9svS6L7j661KaXimOOaTpvgK72LuVA1Ep
-         ACQoCnhuLwNNaas6f6r2pIHtdpvs5S8lE1gNnOSASpltdn3hX+UHmtrKyRmajtSpaPBw
-         UN6iJ5/SruLTCjSVSlZD48nIfOhScYLKLrAQI2L0k0MluBhzwhPZm4uO/fWFgTc+xnW2
-         3UKUyrZMq2vFZu1f4RtP2KVTtAzxJ8CzgPRjbGwKccsEgUW1/YPAnJFE2yCoUoCMJb4i
-         1sIg==
-X-Gm-Message-State: AOAM531Z1Kh2ZsFYa4K43SnX1UamqjXbtAznHKtx7UQnTgE9Pa6z51J7
-        /ZTgG1jU68uELS0EE4GyWg==
-X-Google-Smtp-Source: ABdhPJxEz3ptZ7VgzPkwMka157fr3gyleGSPsZ0XvNL3UkGAdZZgyX9IYK+UR8roZHlem1JQSR50OA==
-X-Received: by 2002:a05:6808:30a3:: with SMTP id bl35mr492059oib.226.1644377642643;
-        Tue, 08 Feb 2022 19:34:02 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id a15sm6348800oil.13.2022.02.08.19.34.01
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BaM2nun77Ox90ylhwBob4weqZHSsb78qbeuJ150+3wM=;
+        b=w0cArU7MPtrqg6GiJYt8Z5a4aF69CmvMWq/K8olYHMvF2zxC1gXDAvQ4WiAzRRo2pX
+         fRMgYDOdQMEEPPqyavuIhN2OZ435lLTPPg4vJOyXD28dOE1cBVJl2PsqB4aGSlFRvtwh
+         KbHR4VnjKlM/s+07pIotxiDjSQA0j5wb3yDfxaoe6pii+qGjX5v/DLELhr10dg6a3cXS
+         dwCGJfe/dC8Kmf3Hp51nTVoJBoJ1PLSwao0x+EfY21v/5V8VmuCsIIrGX+QSQIVgQOUH
+         JIm2Gn1IfhmK8dtzJD3jhhCTbrTYn6/fKPjY3Ln8dEChmFUaTtEwb1n5a0TBZ74p4wdw
+         23kg==
+X-Gm-Message-State: AOAM532/Xr0PS12m4lB+BA1NylfZUbvwFOEBsS98pcWLQxtXHwCEwUmW
+        eWmxBE+7hz0qV3ZhCjXFpdU=
+X-Google-Smtp-Source: ABdhPJxaXkYuErG/Usk8Th8d1w/eNR+TDPdBcWPz5mJUFFBM0jBbIzFtfCiDT7o7l4Yyvb0ydJVyDw==
+X-Received: by 2002:a05:6214:27ed:: with SMTP id jt13mr365729qvb.24.1644384606914;
+        Tue, 08 Feb 2022 21:30:06 -0800 (PST)
+Received: from lumia-dev.localdomain. (pool-96-225-98-253.nwrknj.fios.verizon.net. [96.225.98.253])
+        by smtp.googlemail.com with ESMTPSA id s1sm8712024qkp.40.2022.02.08.21.30.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Feb 2022 19:34:01 -0800 (PST)
-Received: (nullmailer pid 3588896 invoked by uid 1000);
-        Wed, 09 Feb 2022 03:34:00 -0000
-Date:   Tue, 8 Feb 2022 21:34:00 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     sboyd@kernel.org, davem@davemloft.net,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        bjorn.andersson@linaro.org, Vinod Koul <vkoul@kernel.org>,
-        netdev@vger.kernel.org, mturquette@baylibre.com,
-        bhupesh.linux@gmail.com, tdas@codeaurora.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org, agross@kernel.org
-Subject: Re: [PATCH 1/8] dt-bindings: net: qcom,ethqos: Document SM8150 SoC
- compatible
-Message-ID: <YgM2KDD/oxxC+UKH@robh.at.kernel.org>
-References: <20220126221725.710167-1-bhupesh.sharma@linaro.org>
- <20220126221725.710167-2-bhupesh.sharma@linaro.org>
+        Tue, 08 Feb 2022 21:30:06 -0800 (PST)
+From:   Jack Matthews <jm5112356@gmail.com>
+Cc:     jm5112356@gmail.com, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] ARM: dts: qcom: pm8226: add node for RTC
+Date:   Wed,  9 Feb 2022 05:29:28 +0000
+Message-Id: <20220209052929.651881-1-jm5112356@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220126221725.710167-2-bhupesh.sharma@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 27 Jan 2022 03:47:18 +0530, Bhupesh Sharma wrote:
-> From: Vinod Koul <vkoul@kernel.org>
-> 
-> SM8150 has a ethernet controller and needs a different configuration so
-> add a new compatible for this
-> 
-> Cc: Rob Herring <robh@kernel.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  Documentation/devicetree/bindings/net/qcom,ethqos.txt | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
+Add a node for PM8226's real time clock.
 
-Acked-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Jack Matthews <jm5112356@gmail.com>
+---
+ arch/arm/boot/dts/qcom-pm8226.dtsi | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom-pm8226.dtsi b/arch/arm/boot/dts/qcom-pm8226.dtsi
+index 04d070d98f97..ecc38ab1dc4b 100644
+--- a/arch/arm/boot/dts/qcom-pm8226.dtsi
++++ b/arch/arm/boot/dts/qcom-pm8226.dtsi
+@@ -17,6 +17,13 @@ pwrkey@800 {
+ 			bias-pull-up;
+ 		};
+ 
++		rtc@6000 {
++			compatible = "qcom,pm8941-rtc";
++			reg = <0x6000>, <0x6100>;
++			reg-names = "rtc", "alarm";
++			interrupts = <0x0 0x61 0x1 IRQ_TYPE_EDGE_RISING>;
++		};
++
+ 		smbb: charger@1000 {
+ 			compatible = "qcom,pm8226-charger";
+ 			reg = <0x1000>;
+-- 
+2.25.1
+
