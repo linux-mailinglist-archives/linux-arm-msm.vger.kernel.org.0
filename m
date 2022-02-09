@@ -2,88 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5289B4AE798
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 04:11:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 02B634AE7BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 04:13:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235988AbiBIDId (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Feb 2022 22:08:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34574 "EHLO
+        id S233398AbiBIDLe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Feb 2022 22:11:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352784AbiBIDHT (ORCPT
+        with ESMTP id S1347357AbiBIDLR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Feb 2022 22:07:19 -0500
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 181EEC061355;
-        Tue,  8 Feb 2022 19:07:19 -0800 (PST)
-Received: by mail-oi1-f176.google.com with SMTP id s185so1195804oie.3;
-        Tue, 08 Feb 2022 19:07:19 -0800 (PST)
+        Tue, 8 Feb 2022 22:11:17 -0500
+Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37F01C043187;
+        Tue,  8 Feb 2022 19:11:01 -0800 (PST)
+Received: by mail-oo1-f41.google.com with SMTP id 189-20020a4a03c6000000b003179d7b30d8so1025716ooi.2;
+        Tue, 08 Feb 2022 19:11:01 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=4zK4mNlft0YSBrS1EUUtnZ1eiCxH6p/RVKxlEycE1ok=;
-        b=zV+UL1/rq+QB5T/bBSZz/acLjAkQWz86ys0sPEk5LPlA6KCUA7lGxzcVJZqfCoLh2i
-         r6b1RDOe5UOn2wTodFJeOp2TkGACi5bHKuw0BPHldY846Xq/TWLGjaepGLTXI/Jf7CXh
-         9CAb/olwD9XUTCPFhSJeuDxy19BJSA67E7R73CR6Axr6nPqtizPAqtSncVk89UgKxHka
-         DJCWayy3uHuSVF/HqSj2YZ2afmwHODXJ5UJqtTv3uhqWRVn3qUVDWHeEhPt9E0QY3+fD
-         eoeEuGHCBdVscU+g1ijTbB9AFtjd4I72hKvujPVRnYeMkmRlL1ZBonRU0J26M3W+gM6n
-         Zz7A==
-X-Gm-Message-State: AOAM530stBboYCnt5M6TJv/p9e8sDzSbuH3hbJckNvLf8JvvIO8F7OIO
-        lNDdkBRpJKBmevGPhW8+KA==
-X-Google-Smtp-Source: ABdhPJxVQa/OMB3jeFEviv/+OHHc5hTS47P1H6zGuk+DV0L87x8EQ3rVWsVnMJo7VRW3gI2yQeavOg==
-X-Received: by 2002:a05:6808:158b:: with SMTP id t11mr435650oiw.250.1644376038421;
-        Tue, 08 Feb 2022 19:07:18 -0800 (PST)
+        bh=4QLpY+NZl5728WnLEOfRJfXQ78UDzx/bgVTEF/QD8Cg=;
+        b=38n+esg7eG9z/UoI4ZCirTYHlpBR4jQg+BKRlEI8LPXMk782OsI7dHWhHvkojIY556
+         vl6r01heNWn4pzpFxMI27dDD95md2BdZ6PC0P/f1IMGPDuZUDforlO4QLbYvDcF8cDqW
+         +pjIFoc81zrGJya+fG/Xw4uwtigXGf4MxKJDbgTRletIeRQ4VQRLA7M2/rRWmD4FJbVT
+         5vlF9znvIGSHTncYoQkuTL7KkWm6aX0YOAoudqELN61DRCXYYQzIT2sg+yQtG2V0L78y
+         AyBftndbirJ707pdqFp7ep1XxAGPrI3RlYpCy/A78VoOqhtoiBHcSvHxDfdNBy1legoM
+         EUyQ==
+X-Gm-Message-State: AOAM5315A5TOjQv3pxDuPHdF5MKvr70JLacy+7oI5DmtWHanjdJ1bRbz
+        dz5lwcTdPFZK+WjeNVDQ9h9HVoRIdA==
+X-Google-Smtp-Source: ABdhPJw0JUU+jlnR9uiII9DzsJeXzBAVPMro9RR5JRMu/AqaBuPNJDbHCsFROHSxYk+l663r1YDeeQ==
+X-Received: by 2002:a05:6870:72c6:: with SMTP id o6mr115698oak.184.1644376260463;
+        Tue, 08 Feb 2022 19:11:00 -0800 (PST)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id g34sm6140107ooi.48.2022.02.08.19.07.17
+        by smtp.gmail.com with ESMTPSA id b7sm6138986ooq.30.2022.02.08.19.10.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Feb 2022 19:07:17 -0800 (PST)
-Received: (nullmailer pid 3547540 invoked by uid 1000);
-        Wed, 09 Feb 2022 03:07:16 -0000
-Date:   Tue, 8 Feb 2022 21:07:16 -0600
+        Tue, 08 Feb 2022 19:10:59 -0800 (PST)
+Received: (nullmailer pid 3553184 invoked by uid 1000);
+        Wed, 09 Feb 2022 03:10:58 -0000
+Date:   Tue, 8 Feb 2022 21:10:58 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Caleb Connolly <caleb@connolly.tech>
-Cc:     Tony Luck <tony.luck@intel.com>, Rob Herring <robh+dt@kernel.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Henrik Rydberg <rydberg@bitmath.org>,
+To:     Rayyan Ansari <rayyan@ansari.sh>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-kernel@vger.kernel.org, David Airlie <airlied@linux.ie>,
-        Anton Vorontsov <anton@enomsg.org>,
-        linux-arm-msm@vger.kernel.org, Colin Cross <ccross@android.com>,
-        linux-input@vger.kernel.org, Kees Cook <keescook@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Alexander Martinz <amartinz@shiftphones.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Harigovindan P <harigovi@codeaurora.org>,
-        dri-devel@lists.freedesktop.org, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-gpio@vger.kernel.org, phone-devel@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: Re: [PATCH 5/6] dt-bindings: vendor-prefixes: add vendor prefix for
- SHIFT
-Message-ID: <YgMv5A7gwz9a8VNK@robh.at.kernel.org>
-References: <20220123173650.290349-6-caleb@connolly.tech>
+Subject: Re: [PATCH 1/3] dt-bindings: pinctrl: qcom,pmic-mpp: Document PM8226
+ compatible
+Message-ID: <YgMwwi3M+C0OYwwi@robh.at.kernel.org>
+References: <20220124171538.18088-1-rayyan@ansari.sh>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220123173650.290349-6-caleb@connolly.tech>
+In-Reply-To: <20220124171538.18088-1-rayyan@ansari.sh>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 23 Jan 2022 17:38:08 +0000, Caleb Connolly wrote:
-> Add SHIFT vendor prefix, SHIFT make various devices such as the SHIF6mq
-> phone.
+On Mon, 24 Jan 2022 17:15:36 +0000, Rayyan Ansari wrote:
+> Document the Device Tree binding for PM8226 MPPs.
 > 
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+> Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
 > ---
->  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+>  Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 
 Acked-by: Rob Herring <robh@kernel.org>
