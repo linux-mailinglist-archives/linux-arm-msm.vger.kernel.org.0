@@ -2,80 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F38BF4AE7C7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 04:14:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CB604AE842
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 05:08:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344372AbiBIDNo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Feb 2022 22:13:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38630 "EHLO
+        id S1346074AbiBIEIB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Feb 2022 23:08:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344338AbiBIDNe (ORCPT
+        with ESMTP id S1347361AbiBIDny (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Feb 2022 22:13:34 -0500
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A5A9C0613CC;
-        Tue,  8 Feb 2022 19:13:33 -0800 (PST)
-Received: by mail-ot1-f53.google.com with SMTP id g19-20020a9d6213000000b005ab7489371aso638029otj.6;
-        Tue, 08 Feb 2022 19:13:33 -0800 (PST)
+        Tue, 8 Feb 2022 22:43:54 -0500
+Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 632E0C0401C0;
+        Tue,  8 Feb 2022 19:34:03 -0800 (PST)
+Received: by mail-oi1-f182.google.com with SMTP id t199so1198072oie.10;
+        Tue, 08 Feb 2022 19:34:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=bhPYavz29pyl+ykJUTk2kuFVvwHnpLudfeWM07RV3CY=;
-        b=6ETwU8WaGGDmbajZCFbvcuk4XDOoPx3TR/1UVmAUS/wkElWpGLqZg2s2Vh5GA0FryA
-         oQP8rymykNU+FAOabwk6vzfnYpZeTch/lAWzlWeI+ER7F99Mi684XTUKSb0xkEe6T7UO
-         cByvqv/1LQ5rn2LJAhzARmxqy1uG10sKx0albB8VpbqQUOXAblgnHfDL/pCjN5wwUW7u
-         UsBMnxSj6Nfwus8b8MLZEXqtaeFARAnfBwMI5YxHWJ7C03hv9XS+EBukTzJq/Wd+tFEV
-         Q4+kGdRKRNSPlELdx7fj1M3vXCTU1ce7OsxE1CeoHPYS4x3LHCZTd8+v92HtcQE58AER
-         s6Uw==
-X-Gm-Message-State: AOAM532FgtgIxin5hzLEwX/q728b7cRX8Z91vyZkY+OkPr9LHxQDpkkK
-        OeE0OmONvDw8KvK4a5RBtA==
-X-Google-Smtp-Source: ABdhPJzRQj0n07HNIyiYaj9jZlxThIk4+DLTmzsAvKXF03QmDAL4Omrrf0mgpRfVvroOQUoPAt4qag==
-X-Received: by 2002:a9d:6b15:: with SMTP id g21mr148782otp.337.1644376412801;
-        Tue, 08 Feb 2022 19:13:32 -0800 (PST)
+        bh=WAlxN8bgtyXgcYHA0KP+K5lEbx7cfGwSBqWcp3rk/io=;
+        b=GI0UaHL2oOmHj+HzC2uvBS50HiVKqTfCvrgiIOMaUKFXKzNCnC5U8QknzgV659OKwg
+         PYUGuTTDYODGNooElvN5GtxDm9nYUUuah9f9svS6L7j661KaXimOOaTpvgK72LuVA1Ep
+         ACQoCnhuLwNNaas6f6r2pIHtdpvs5S8lE1gNnOSASpltdn3hX+UHmtrKyRmajtSpaPBw
+         UN6iJ5/SruLTCjSVSlZD48nIfOhScYLKLrAQI2L0k0MluBhzwhPZm4uO/fWFgTc+xnW2
+         3UKUyrZMq2vFZu1f4RtP2KVTtAzxJ8CzgPRjbGwKccsEgUW1/YPAnJFE2yCoUoCMJb4i
+         1sIg==
+X-Gm-Message-State: AOAM531Z1Kh2ZsFYa4K43SnX1UamqjXbtAznHKtx7UQnTgE9Pa6z51J7
+        /ZTgG1jU68uELS0EE4GyWg==
+X-Google-Smtp-Source: ABdhPJxEz3ptZ7VgzPkwMka157fr3gyleGSPsZ0XvNL3UkGAdZZgyX9IYK+UR8roZHlem1JQSR50OA==
+X-Received: by 2002:a05:6808:30a3:: with SMTP id bl35mr492059oib.226.1644377642643;
+        Tue, 08 Feb 2022 19:34:02 -0800 (PST)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id n13sm6738710ooj.34.2022.02.08.19.13.31
+        by smtp.gmail.com with ESMTPSA id a15sm6348800oil.13.2022.02.08.19.34.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Feb 2022 19:13:32 -0800 (PST)
-Received: (nullmailer pid 3557642 invoked by uid 1000);
-        Wed, 09 Feb 2022 03:13:31 -0000
-Date:   Tue, 8 Feb 2022 21:13:31 -0600
+        Tue, 08 Feb 2022 19:34:01 -0800 (PST)
+Received: (nullmailer pid 3588896 invoked by uid 1000);
+        Wed, 09 Feb 2022 03:34:00 -0000
+Date:   Tue, 8 Feb 2022 21:34:00 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Ben Wolsieffer <benwolsieffer@gmail.com>
-Cc:     Arnd Bergmann <arnd@arndb.de>, Rob Herring <robh+dt@kernel.org>,
-        Olof Johansson <olof@lixom.net>,
-        linux-arm-kernel@lists.infradead.org, soc@kernel.org,
-        Stephen Boyd <sboyd@codeaurora.org>,
-        linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/3] dt-bindings: arm: qcom: document HP TouchPad
-Message-ID: <YgMxW46u6m5dhn0+@robh.at.kernel.org>
-References: <cover.1643075547.git.benwolsieffer@gmail.com>
- <aa59002aeae45a95097300213fc34490aa8db250.1643075547.git.benwolsieffer@gmail.com>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     sboyd@kernel.org, davem@davemloft.net,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        bjorn.andersson@linaro.org, Vinod Koul <vkoul@kernel.org>,
+        netdev@vger.kernel.org, mturquette@baylibre.com,
+        bhupesh.linux@gmail.com, tdas@codeaurora.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org, agross@kernel.org
+Subject: Re: [PATCH 1/8] dt-bindings: net: qcom,ethqos: Document SM8150 SoC
+ compatible
+Message-ID: <YgM2KDD/oxxC+UKH@robh.at.kernel.org>
+References: <20220126221725.710167-1-bhupesh.sharma@linaro.org>
+ <20220126221725.710167-2-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aa59002aeae45a95097300213fc34490aa8db250.1643075547.git.benwolsieffer@gmail.com>
+In-Reply-To: <20220126221725.710167-2-bhupesh.sharma@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 24 Jan 2022 21:07:04 -0500, Ben Wolsieffer wrote:
-> Add binding documentation for the HP TouchPad.
+On Thu, 27 Jan 2022 03:47:18 +0530, Bhupesh Sharma wrote:
+> From: Vinod Koul <vkoul@kernel.org>
 > 
-> Signed-off-by: Ben Wolsieffer <benwolsieffer@gmail.com>
+> SM8150 has a ethernet controller and needs a different configuration so
+> add a new compatible for this
+> 
+> Cc: Rob Herring <robh@kernel.org>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>  Documentation/devicetree/bindings/net/qcom,ethqos.txt | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 > 
 
 Acked-by: Rob Herring <robh@kernel.org>
