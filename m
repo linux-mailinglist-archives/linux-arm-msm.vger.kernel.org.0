@@ -2,121 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 635784B000D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 23:21:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B74D34B0012
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 23:23:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235316AbiBIWVf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Feb 2022 17:21:35 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:49620 "EHLO
+        id S235373AbiBIWWo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Feb 2022 17:22:44 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:50694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235315AbiBIWVe (ORCPT
+        with ESMTP id S235349AbiBIWWo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Feb 2022 17:21:34 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 918FDC0F869C
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Feb 2022 14:21:36 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id o2so6956014lfd.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Feb 2022 14:21:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=LayMCSz5Gx7VceGFXhPhnBsyoYh4zMiCbc/qJQSg/Jg=;
-        b=Ue2ZrcbJXB2MNgRzyNVYEWDCsluYxh4tIthDcubvTxc/NbTOozFDUNwCv8WrmXN0H7
-         2I4TmxU5x58/ut/Ey3o0DIyFqXnjKrmdy4e8zmJdBMN1iMzRFpJov5VWwLVgRM/lD80V
-         RTiwQ9sAPJlb0gf6e4VoUUMBgZu8vuy4KugCr2o0ly+DfIsgzt7KICt7YVq+X3PhLcXE
-         R2w12W3BTgnpe1DP7cHDbHJZhCYb+fJ+JUT75fzvzOPWWN+trvk8ui3077dXz4kxYkuz
-         Lr8eUFxo5W33BTC7vpyAH0jFwTu7GBTvjd7hp0OH5ue1Kz5TDuHLhFhyTkh55YxRb2tO
-         mXhg==
+        Wed, 9 Feb 2022 17:22:44 -0500
+Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2415C1DC5D1;
+        Wed,  9 Feb 2022 14:22:46 -0800 (PST)
+Received: by mail-oo1-f46.google.com with SMTP id t75-20020a4a3e4e000000b002e9c0821d78so4195826oot.4;
+        Wed, 09 Feb 2022 14:22:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=LayMCSz5Gx7VceGFXhPhnBsyoYh4zMiCbc/qJQSg/Jg=;
-        b=ksoZgM9kSReMiyU9Nga7kc17bZw/qhZFfr3HoPoNrmf6MZpmZ+J1uNOyXg1GsR1D7Y
-         hRPryx9YY3H9pc3v/RHxH+29oupiXmojjgSy4ylgkK2Eulqg765XTpBLyn3faFeHsygn
-         8TYN0Li+NM//igBIYRjVy+l/+U3w6AIP2JUG2V/5HSAcVUjSTkC1+IZ7nOm3rH1zcPg+
-         b6qbf+Q7cHMLV3nwntgyIQ9uHXIvk/eyg2w+5urJiSdCpC8YJoHB467pNQuxMx1i9koN
-         92cvjvzf3N93Al2WSDELVrlQtAgj8ornUhdV0NfBRldNhBfnU8jlvWDzizMq1PsiUUVo
-         2WYA==
-X-Gm-Message-State: AOAM5320Ux9AWIRNTWVdSLwc1dm0jzSmZKddGrzC2C9WYBRSRFsPaFQk
-        lR6POzTrP6Wt3zkUfS9qcdIxjA==
-X-Google-Smtp-Source: ABdhPJxM3HjEYcFzlVLmHZsaTG5gkw9OHHv/cXGfTe/KlLrIjF/PfMPJkFWHe4epOwb7VREgqFyGIA==
-X-Received: by 2002:a05:6512:3d02:: with SMTP id d2mr3248630lfv.138.1644445294959;
-        Wed, 09 Feb 2022 14:21:34 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id r4sm2540443lfi.115.2022.02.09.14.21.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Feb 2022 14:21:34 -0800 (PST)
-Message-ID: <cb8dd875-5690-7f8a-c55b-04a5c250feb0@linaro.org>
-Date:   Thu, 10 Feb 2022 01:21:33 +0300
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=p7H8vRR/hHMqd6cJjy66lpzbwuEKRZjfv8J4zVqENbI=;
+        b=24ksO36RN9ugHFx7oK42JUDono7a9JLVfQJehbUzvVVn+Q2+dp+v6NV8NHKiqayvmU
+         61f5QfO2PtRqh3FBiX0q6JzFObypthsO8kqeElqJfM5BJqgbCyhcX5/uamjWvC4x9V1z
+         qgHqDfZDTaFz9YDKYJLjKIu3HNH6jWXD1vdMhCN3sxSJARef0Z5EJf2Pe2aMXpCmTdwV
+         +OilEJkBNbjNCvsMk77+Af0IH+YF9i2BYccLFU7wqz7TNTC077HtlgyTw9E+fDDgXYW2
+         lcr3GP7+dFdRbTT30lGQnjdO/N+EZxp2wZgeR8SLYiz+HYWLHReijJJb650CF/xP6u0L
+         IZiw==
+X-Gm-Message-State: AOAM532yfbQmpbCmxyboFnN6HNzXnfuF2yLauhONmdvrcfMsRPMnzfPJ
+        6rPNWyBxWJ9ZOhgo63wqIw==
+X-Google-Smtp-Source: ABdhPJyVgNUrktRsjw7FToQtRXFtneJ6EyZ6SKQuJ3JNOr7cn5rmTG9pPiReipelbwLiLp8L4pj5gQ==
+X-Received: by 2002:a05:6871:396:: with SMTP id z22mr1695258oaf.126.1644445366082;
+        Wed, 09 Feb 2022 14:22:46 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id ek4sm7771458oab.23.2022.02.09.14.22.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Feb 2022 14:22:45 -0800 (PST)
+Received: (nullmailer pid 1043668 invoked by uid 1000);
+        Wed, 09 Feb 2022 22:22:44 -0000
+Date:   Wed, 9 Feb 2022 16:22:44 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Prasad Malisetty <pmaliset@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 01/11] dt-bindings: pci: qcom,pcie: drop unused "pipe"
+ clocks
+Message-ID: <YgQ+tGhLqwUCsTUo@robh.at.kernel.org>
+References: <20220204144645.3016603-1-dmitry.baryshkov@linaro.org>
+ <20220204144645.3016603-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [PATCH] drm/msm: replace DEFINE_SIMPLE_ATTRIBUTE with
- DEFINE_DEBUGFS_ATTRIBUTE
-Content-Language: en-GB
-To:     cgel.zte@gmail.com, robdclark@gmail.com
-Cc:     sean@poorly.run, quic_abhinavk@quicinc.com, airlied@linux.ie,
-        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org,
-        Changcheng Deng <deng.changcheng@zte.com.cn>,
-        Zeal Robot <zealci@zte.com.cn>
-References: <20211221144234.480618-1-deng.changcheng@zte.com.cn>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20211221144234.480618-1-deng.changcheng@zte.com.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220204144645.3016603-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/12/2021 17:42, cgel.zte@gmail.com wrote:
-> From: Changcheng Deng <deng.changcheng@zte.com.cn>
-> 
-> Fix the following coccicheck warning:
-> ./drivers/gpu/drm/msm/msm_debugfs.c: 132: 0-23: WARNING: shrink_fops
-> should be defined with DEFINE_DEBUGFS_ATTRIBUTE
-> 
-> Use DEFINE_DEBUGFS_ATTRIBUTE rather than DEFINE_SIMPLE_ATTRIBUTE for
-> debugfs files.
-> 
-> Reported-by: Zeal Robot <zealci@zte.com.cn>
-> Signed-off-by: Changcheng Deng <deng.changcheng@zte.com.cn>
+On Fri, Feb 04, 2022 at 05:46:35PM +0300, Dmitry Baryshkov wrote:
+> The "pipe" clock is now unused by the PCIe driver. Drop it from the
+> bindings.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Old kernels expect it, so nak.
 
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   drivers/gpu/drm/msm/msm_debugfs.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+>  Documentation/devicetree/bindings/pci/qcom,pcie.txt | 2 --
+>  1 file changed, 2 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/msm_debugfs.c b/drivers/gpu/drm/msm/msm_debugfs.c
-> index 956b1efc3721..91fb0c83b600 100644
-> --- a/drivers/gpu/drm/msm/msm_debugfs.c
-> +++ b/drivers/gpu/drm/msm/msm_debugfs.c
-> @@ -129,9 +129,9 @@ shrink_set(void *data, u64 val)
->   	return 0;
->   }
->   
-> -DEFINE_SIMPLE_ATTRIBUTE(shrink_fops,
-> -			shrink_get, shrink_set,
-> -			"0x%08llx\n");
-> +DEFINE_DEBUGFS_ATTRIBUTE(shrink_fops,
-> +			 shrink_get, shrink_set,
-> +			 "0x%08llx\n");
->   
->   
->   static int msm_gem_show(struct seq_file *m, void *arg)
-
-
--- 
-With best wishes
-Dmitry
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> index a0ae024c2d0c..da08f0f9de96 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+> @@ -154,7 +154,6 @@
+>  			- "bus_slave"	Slave AXI clock
+>  			- "slave_q2a"	Slave Q2A clock
+>  			- "tbu"		PCIe TBU clock
+> -			- "pipe"	PIPE clock
+>  
+>  - clock-names:
+>  	Usage: required for sc8180x and sm8250
+> @@ -167,7 +166,6 @@
+>  			- "slave_q2a"	Slave Q2A clock
+>  			- "tbu"		PCIe TBU clock
+>  			- "ddrss_sf_tbu" PCIe SF TBU clock
+> -			- "pipe"	PIPE clock
+>  
+>  - resets:
+>  	Usage: required
+> -- 
+> 2.34.1
+> 
+> 
