@@ -2,101 +2,201 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D3C4F4AF623
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 17:10:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 62EFB4AF6B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 17:30:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236601AbiBIQKE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Feb 2022 11:10:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43962 "EHLO
+        id S236967AbiBIQaP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Feb 2022 11:30:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236608AbiBIQKB (ORCPT
+        with ESMTP id S234737AbiBIQaO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Feb 2022 11:10:01 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87963C05CB82;
-        Wed,  9 Feb 2022 08:10:03 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2313D61727;
-        Wed,  9 Feb 2022 16:10:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17ECBC340F0;
-        Wed,  9 Feb 2022 16:09:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1644423002;
-        bh=5nzAqPwBH84omUc0AIW6FL5cJDjIdsWfCrgfze7zbUE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=mi9s8rv/4/h4NILE2YwLOY9uaVZjrV7XIrlRDngQlVJ7PP8zztsrvKeksKgwMdIxi
-         XE+NAHH2dQI7oZtjIo3EmI3uHpUBE0JyDtAXp3V8io98yD+wo6EQMiChd36x3Di5L5
-         rKGoluQXbh4syjYu4l1IWz1tqrivRrVf+D37Hqu6Y0b5gmkfr6CEUixYGxt+uPxtyu
-         9SWi5tlcaioi7/pXU9JTvOw2zrO3mY+lm4t/54+BdfDMsYcTaqu2oNgsciAuijQMA7
-         JSFOsywDOtZ0pu/k8f2M26fHtWDD67QXzpzenGnBDQ+Ia0oyCDyU1xO2PM6UCNjQkB
-         vYIqy7cO7o+MA==
-Date:   Wed, 9 Feb 2022 16:09:55 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org
-Subject: Re: [RESEND v8 3/3] ASoC: qcom: SC7280: Add machine driver
-Message-ID: <YgPnU5FyBCoRbeJn@sirena.org.uk>
-References: <1644413181-26358-1-git-send-email-quic_srivasam@quicinc.com>
- <1644413181-26358-4-git-send-email-quic_srivasam@quicinc.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="g65DA8fS0KcKTr33"
-Content-Disposition: inline
-In-Reply-To: <1644413181-26358-4-git-send-email-quic_srivasam@quicinc.com>
-X-Cookie: Disc space -- the final frontier!
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Wed, 9 Feb 2022 11:30:14 -0500
+X-Greylist: delayed 528 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 09 Feb 2022 08:30:16 PST
+Received: from fwd1.porkbun.com (fwd1.porkbun.com [52.10.174.57])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E40E4C0613C9;
+        Wed,  9 Feb 2022 08:30:16 -0800 (PST)
+Received: by fwd1.porkbun.com (Postfix, from userid 497)
+        id B1FED40F95; Wed,  9 Feb 2022 16:19:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ansari.sh;
+        s=default; t=1644423687;
+        bh=na7xW0UcmevfG+Vzc+SF/qFmYtwaEfbasz0l3EQ9fgY=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References;
+        b=C1pHPIxNQi/h1f2RvhJfT1tI6ceLC6NYOASTQ5CzxTiLyy0NWyP1tdvY5E3Fha/OH
+         tQ7WOm2UTgdUL10RKgn/9HclH4GOBrXMh9HBZsueij3FBoUe8HnT9izKqpj4LuRAIB
+         48kbkUwzgTkKfaDCDWikCSxwl1E2WfPK9TXbixOY=
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
+Received: from webmail.porkbun.com (unknown [35.86.129.66])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        (Authenticated sender: rayyan@ansari.sh)
+        by fwd1.porkbun.com (Postfix) with ESMTPSA id A00D943588;
+        Wed,  9 Feb 2022 16:19:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ansari.sh;
+        s=default; t=1644423560;
+        bh=na7xW0UcmevfG+Vzc+SF/qFmYtwaEfbasz0l3EQ9fgY=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References;
+        b=iqbAOYJD8e6WhMLQHy4VtjP6PH+6cUPl8kFvrViFRxgnV6HkTgbvFa+4aFsNfWNnG
+         qmK+HrLFApA4Vlsc/FJS/BfFwVtxis3LZkfzf8KRM6rc7PpkWLJf9lTnUtOsK3SycB
+         9n3TVfbzJRg+OcSdxr2/yvDDLqr1C9zCqGBnSWWs=
+MIME-Version: 1.0
+Date:   Wed, 09 Feb 2022 16:19:19 +0000
+From:   Rayyan Ansari <rayyan@ansari.sh>
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 11/15] arm64: dts: qcom: Add PM8953 PMIC
+In-Reply-To: <20220112194118.178026-12-luca@z3ntu.xyz>
+References: <20220112194118.178026-1-luca@z3ntu.xyz>
+ <20220112194118.178026-12-luca@z3ntu.xyz>
+User-Agent: Roundcube Webmail/1.4.11
+Message-ID: <cf675eac374a196dac3bd5017d2d8cae@ansari.sh>
+X-Sender: rayyan@ansari.sh
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2022-01-12 19:41, Luca Weiss wrote:
+> From: Vladimir Lypak <vladimir.lypak@gmail.com>
+> 
+> Add a base DT for PM8953 PMIC, commonly used with MSM8953.
+> 
+> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> ---
+>  arch/arm64/boot/dts/qcom/pm8953.dtsi | 90 ++++++++++++++++++++++++++++
+>  1 file changed, 90 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/pm8953.dtsi
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/pm8953.dtsi
+> b/arch/arm64/boot/dts/qcom/pm8953.dtsi
+> new file mode 100644
+> index 000000000000..102555b3f313
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/pm8953.dtsi
+> @@ -0,0 +1,90 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/* Copyright (c) 2022, The Linux Foundation. All rights reserved. */
+> +
+> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
+> +#include <dt-bindings/interrupt-controller/irq.h>
+> +#include <dt-bindings/input/linux-event-codes.h>
+> +#include <dt-bindings/spmi/spmi.h>
+> +
+> +&spmi_bus {
+> +	pmic@0 {
+> +		compatible = "qcom,pm8953", "qcom,spmi-pmic";
+> +		reg = <0 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		rtc@6000 {
+> +			compatible = "qcom,pm8941-rtc";
+> +			reg = <0x6000>, <0x6100>;
+> +			reg-names = "rtc", "alarm";
+> +			interrupts = <0x0 0x61 0x1 IRQ_TYPE_EDGE_RISING>;
+> +		};
 
---g65DA8fS0KcKTr33
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Could you sort the nodes by order? The rtc@6000 node should be after 
+vadc@3100.
 
-On Wed, Feb 09, 2022 at 06:56:21PM +0530, Srinivasa Rao Mandadapu wrote:
-> Add new machine driver to register sound card on sc7280 based targets and
-> do the required configuration for lpass cpu dai and external codecs
-> connected over MI2S and soundwire interfaces.
-> Add support for audio jack detection, soundwire init and MBHC.
+> +
+> +		pm8953_pon: pon@800 {
+> +			compatible = "qcom,pm8916-pon";
+> +			reg = <0x800>;
+> +			mode-bootloader = <0x2>;
+> +			mode-recovery = <0x1>;
+> +
+> +			pwrkey {
+> +				compatible = "qcom,pm8941-pwrkey";
+> +				interrupts = <0x00 0x08 0 IRQ_TYPE_EDGE_BOTH>;
+> +				debounce = <15625>;
+> +				bias-pull-up;
+> +				linux,code = <KEY_POWER>;
+> +			};
+> +
+> +			pm8953_resin: resin {
+> +				compatible = "qcom,pm8941-resin";
+> +				interrupts = <0x00 0x08 1 IRQ_TYPE_EDGE_BOTH>;
+> +				debounce = <15625>;
+> +				bias-pull-up;
+> +				status = "disabled";
+> +			};
+> +		};
+> +
+> +		temp-alarm@2400 {
+> +			compatible = "qcom,spmi-temp-alarm";
+> +			reg = <0x2400>;
+> +			interrupts = <0x0 0x24 0x0 IRQ_TYPE_EDGE_RISING>;
+> +			io-channels = <&pm8953_vadc 0x08>;
 
-This breaks an x86 allmodconfig build:
+Could you use VADC_DIE_TEMP here instead of 0x08 like in 
+qcom-spmi-temp-alarm.txt?
 
-/mnt/kernel/sound/soc/qcom/sc7280.c: In function 'sc7280_snd_hw_params':
-/mnt/kernel/sound/soc/qcom/sc7280.c:151:15: error: implicit declaration of function 'snd_soc_dai_get_sdw_stream'; did you mean 'snd_soc_dai_get_pcm_stream'? [-Werror=implicit-function-declaration]
-  151 |    sruntime = snd_soc_dai_get_sdw_stream(codec_dai, substream->stream);
-      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~
-      |               snd_soc_dai_get_pcm_stream
-/mnt/kernel/sound/soc/qcom/sc7280.c:151:13: error: assignment to 'struct sdw_stream_runtime *' from 'int' makes pointer from integer without a cast [-Werror=int-conversion]
-  151 |    sruntime = snd_soc_dai_get_sdw_stream(codec_dai, substream->stream);
-      |             ^
+> +			io-channel-names = "thermal";
+> +			#thermal-sensor-cells = <0x00>;
 
---g65DA8fS0KcKTr33
-Content-Type: application/pgp-signature; name="signature.asc"
+This should be "#thermal-sensor-cells = <0>;" as recommended by docs.
 
------BEGIN PGP SIGNATURE-----
+> +		};
+> +
+> +		pm8953_vadc: vadc@3100 {
+> +			compatible = "qcom,spmi-vadc";
+> +			reg = <0x3100>;
+> +			interrupts = <0x00 0x31 0x00 0x01>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			#io-channel-cells = <1>;
+> +
+> +			die_temp@8 {
+> +				reg = <VADC_DIE_TEMP>;
+> +			};
+> +			ref_625mv@9 {
+> +				reg = <VADC_REF_625MV>;
+> +			};
+> +			ref_1250v@a {
+> +				reg = <VADC_REF_1250MV>;
+> +			};
+> +			ref_buf_625mv@c {
+> +				reg = <VADC_SPARE1>;
+> +			};
+> +			ref_gnd@e {
+> +				reg = <VADC_GND_REF>;
+> +			};
+> +			ref_vdd@f {
+> +				reg = <VADC_VDD_VADC>;
+> +			};
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmID51MACgkQJNaLcl1U
-h9DS4gf+L0cOXgst1DdnBnb2JFSFrCKPgpHBMo8eofDL6SXXGaIUcPLNvzLc8uBy
-X7Z6cYbejzsLGdX+HfOoInYVNP+WBxT/3pAzDpcE6L1m1mAsDYGjDuR4//WPdyLB
-e3nBRZhE7rWi0p+3mvck4FKdNcMyweg2gh+fhuUU66JVjw2/fffnKK6/GJ1xRDEL
-ETO4wFphMMd5qO+S12Z0V5NM/OsUEsANCbVCBPAmhnse9KBOm8BLHVXzd/du9fbM
-mA15l7zrGMpJ9u+KkNSsUJAtfFuC8dmz2YPqWlsylvN+Aw2ut53O3MKay7o3bRT9
-JOBRMZAbW4EfADIyZEo64LutfFiAOg==
-=PdJe
------END PGP SIGNATURE-----
+Could you use the generic names for each VADC channel as recommended in 
+qcom,spmi-vadc.yaml?
 
---g65DA8fS0KcKTr33--
+> +		};
+> +	};
+> +
+> +	pmic@1 {
+> +		compatible = "qcom,pm8953", "qcom,spmi-pmic";
+> +		reg = <1 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +	};
+> +};
+
+With this sorted, add my Reviewed-by.
+
+Reviewed-by: Rayyan Ansari <rayyan@ansari.sh>
