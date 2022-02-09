@@ -2,80 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BBC94AE70B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 03:42:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BB224AE709
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 03:42:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238188AbiBICl2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Feb 2022 21:41:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36804 "EHLO
+        id S1344654AbiBIClZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Feb 2022 21:41:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244683AbiBICO0 (ORCPT
+        with ESMTP id S245034AbiBICXH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Feb 2022 21:14:26 -0500
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6380FC06157B;
-        Tue,  8 Feb 2022 18:14:26 -0800 (PST)
-Received: by mail-oi1-f181.google.com with SMTP id s185so1097237oie.3;
-        Tue, 08 Feb 2022 18:14:26 -0800 (PST)
+        Tue, 8 Feb 2022 21:23:07 -0500
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56997C06157B;
+        Tue,  8 Feb 2022 18:23:06 -0800 (PST)
+Received: by mail-ot1-f50.google.com with SMTP id x52-20020a05683040b400b0059ea92202daso566905ott.7;
+        Tue, 08 Feb 2022 18:23:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=q9K+kQmTViwQgMbuDZS5abBLQ8Er416I8TDPy6qw6Ao=;
-        b=4uj09Sm9CCapcsh0TKiEthOFekOthxSQJrTTD9eroafKod6Hhn4cGWABUhl3R7Qd8r
-         HjvWuMoKgDG2+SqLQ1R3IZCVrB0jKXMfLshsSn8QCgPrzwUwmEbo96wixqZtfiiq5LkB
-         N6gAXQr1zpiSSW4rRhJPF6LTbKafG20MY0/vtemOpcNAfmVW+2n/dNMhOqeXqZBdiL9d
-         8Mh6vDDdWYgQLS+eX3eYGNdGyl3TelIojtT767VtCPqlSRGZfXk5wxqBftwSfm49mv3Z
-         Yz9fwP6NSEeH4EaVcokDscAxqvCqmucApjN0TdmfkworA+oNw2BbALTyGA/B0pCZvPHk
-         TjWw==
-X-Gm-Message-State: AOAM533Rf6zgEDB5BaZmP7Jp/4StTy9btRWozlbR6aeyLceYv9SQAsUB
-        ik3iZNqQ8NsDUSa9C7S8Ya5AoAvD3Q==
-X-Google-Smtp-Source: ABdhPJxe1OyJ60lzKK2sQjMngRVns7MBxnq/b3uDsQqkBrnsw58M77JEG/LKeuDEY76EenPBNv3CFg==
-X-Received: by 2002:a05:6808:208d:: with SMTP id s13mr380725oiw.282.1644372865690;
-        Tue, 08 Feb 2022 18:14:25 -0800 (PST)
+        bh=Tis6lVw2PLJGVs82tjcRt6cxHYbiIdScfbv50bSZkAA=;
+        b=bvXRVkC1q9/eRqAOBVoQxhlZb8qVEDjIUt62TmCSeAfcMkHNYaYJtHCygodO/9JkjE
+         dO/dUROd7rDXSpiaCuUmY5eAtFVQ0x68yO4HrdvxfY4d4jXu7QaogB91GmtC8anZ3fXx
+         eWswLzwZaxIcT8gvZjHSdOI5FtmRBF3NHfIB0gNsnfnab38W4DNK3HjFTUjMqUJx4Alc
+         MVQOBBe/SqG8i4lcXzAh4wRDJxi9APELHoIT1c2Ious1IlfTRD2gh3i/7xe86VV59ykw
+         Yy+2YCp3RvDsZsIrfWxBxD62tQfy4a4MSVEE7fZwMIaTC5Ai/eeyfZ4ks2wgzkFdC0+U
+         r/3Q==
+X-Gm-Message-State: AOAM531K8k/Fgzl8zHbKrZyQHt58seVJ35BLKG8Jary1SbyByJEQ5GPt
+        egCm6rIj1TZM1dDADBu+nDQdqNvCYg==
+X-Google-Smtp-Source: ABdhPJx30puFBSvWskIek8ojwuP/YiGbti3XK4ncDay0tM5RF63NNRqcb2uE8oFCEln61PxVJogJ8g==
+X-Received: by 2002:a05:6830:108f:: with SMTP id y15mr102448oto.185.1644373385594;
+        Tue, 08 Feb 2022 18:23:05 -0800 (PST)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id r186sm6228746oie.23.2022.02.08.18.14.24
+        by smtp.gmail.com with ESMTPSA id l22sm6084220otj.44.2022.02.08.18.23.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Feb 2022 18:14:25 -0800 (PST)
-Received: (nullmailer pid 3468203 invoked by uid 1000);
-        Wed, 09 Feb 2022 02:14:24 -0000
-Date:   Tue, 8 Feb 2022 20:14:24 -0600
+        Tue, 08 Feb 2022 18:23:04 -0800 (PST)
+Received: (nullmailer pid 3480838 invoked by uid 1000);
+        Wed, 09 Feb 2022 02:23:03 -0000
+Date:   Tue, 8 Feb 2022 20:23:03 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH 14/15] dt-bindings: arm: qcom: Document sdm632 and
- fairphone,fp3 board
-Message-ID: <YgMjgJmVSEA3htyO@robh.at.kernel.org>
-References: <20220112194118.178026-1-luca@z3ntu.xyz>
- <20220112194118.178026-15-luca@z3ntu.xyz>
+To:     Jami Kettunen <jami.kettunen@somainline.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Rob Herring <robh+dt@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        devicetree@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        dri-devel@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Martin Botka <martin.botka@somainline.org>
+Subject: Re: [PATCH 3/3] dt-bindings: display: msm: Add binding for msm8998
+ dpu
+Message-ID: <YgMlh69HUntgxAew@robh.at.kernel.org>
+References: <20220113145111.29984-1-jami.kettunen@somainline.org>
+ <20220113145111.29984-4-jami.kettunen@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220112194118.178026-15-luca@z3ntu.xyz>
+In-Reply-To: <20220113145111.29984-4-jami.kettunen@somainline.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 12 Jan 2022 20:41:03 +0100, Luca Weiss wrote:
-> Add binding documentation for Fairphone 3 smartphone which is based on
-> Snapdragon 632 (sm632).
+On Thu, 13 Jan 2022 16:51:11 +0200, Jami Kettunen wrote:
+> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 > 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> Add yaml binding for msm8998 dpu1 support.
+> 
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> Signed-off-by: Jami Kettunen <jami.kettunen@somainline.org>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
+>  .../bindings/display/msm/dpu-msm8998.yaml     | 219 ++++++++++++++++++
+>  1 file changed, 219 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml
 > 
 
-Acked-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
