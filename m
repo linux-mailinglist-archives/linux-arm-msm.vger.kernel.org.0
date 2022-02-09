@@ -2,110 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 525FA4AEA6B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 07:34:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 21CD44AEAA3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Feb 2022 07:54:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229599AbiBIGed (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Feb 2022 01:34:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47934 "EHLO
+        id S229824AbiBIGxa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Feb 2022 01:53:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229888AbiBIGed (ORCPT
+        with ESMTP id S229931AbiBIGx2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Feb 2022 01:34:33 -0500
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AE70E066E1A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Feb 2022 22:34:29 -0800 (PST)
-Received: by mail-pf1-x42f.google.com with SMTP id d187so2570704pfa.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Feb 2022 22:34:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=OwHnp+CBrpknipruebBheU1nuu6L2xS3iNwKkt5hzSc=;
-        b=fHiYoWvoB+Gab19/vejvHtO0ZlTBEXUK3diJ0NhY8IXdVk/N0v+UGR+BlOtuSa9LMH
-         fV8Q4OxIzP0WK57293UqNQiTScEFW4NU7YCmlHlVonAFBpC1IMUIq8FKpG+r/5uIKwP8
-         iH+KcXAO1PZ9fOAgd6HRYvN+KAbfzC7vMFtfY/HGQtiNGDo/QlDrdsbnRufYiS4EA+r1
-         D8t2lXa0zwhm5wi0J82hk0F5cWF2gsouXwoXDSo+HJTSTLfm9fM2t1BQYhtkvM1Oibs1
-         Y+8F3ZcX3v/exjMqf5iK0xa7M4tY+kvbGNUiAAMP5pOzFFfo5CxVKcjZ72+T1k7lOuze
-         jDEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=OwHnp+CBrpknipruebBheU1nuu6L2xS3iNwKkt5hzSc=;
-        b=F6hWVcyKmii2udLWQPqWSGaxYAvQnjhUUlJK+HooRho9KDOuTm7n9BgJD+wigJNX/s
-         tRJkUe9amjCB74ts1/Wl+bphQgQk+8pMjHx8Wl3XU/y8NIqjsv0xpjAMRNBfU9UG8m5O
-         0V7N96cjzMkB3gK6WhUR4Pi4IspiBY/P3rhe1uWAaVKSe1WX3s4BjSyAIuKJlu6uc9Cd
-         oExHFnH7xXOsT5FcRiAJX4IMrwKhRh3eZusvF8tr36foEIo/5ac5BMmNenT2zMzDSUzC
-         T6eckVl7McDQR7TaRv1AstO1ezTVn5XucxAQVPYp+/0bAspTbXSoA/Q7FIp5RZPNRnW8
-         FWcg==
-X-Gm-Message-State: AOAM530dJfNWlxjVnR/O2CSRbBIUiMxj5fWeTO0BTqDNice1blKLo4Mx
-        Z5YBKPJfyrIpdlxEQUVqlhrutw==
-X-Google-Smtp-Source: ABdhPJx52+9Dw5Vu5Ayd4PAzN+hfjEFuihoosOnlAsFNrrdNMnMsovfyUzU9vYmhNYbMXE+jGAZnmQ==
-X-Received: by 2002:a63:3d4f:: with SMTP id k76mr749057pga.389.1644388468680;
-        Tue, 08 Feb 2022 22:34:28 -0800 (PST)
-Received: from localhost ([136.185.132.167])
-        by smtp.gmail.com with ESMTPSA id il18sm4889019pjb.27.2022.02.08.22.34.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Feb 2022 22:34:28 -0800 (PST)
-Date:   Wed, 9 Feb 2022 12:04:26 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Ansuel Smith <ansuelsmth@gmail.com>,
-        Sricharan R <sricharan@codeaurora.org>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] cpufreq: qcom-cpufreq-nvmem: fix reading of PVS Valid
- fuse
-Message-ID: <20220209063426.ckefdtpfroj5zsad@vireshk-i7>
-References: <20220130114535.1570634-1-luca@z3ntu.xyz>
+        Wed, 9 Feb 2022 01:53:28 -0500
+X-Greylist: delayed 669 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 08 Feb 2022 22:53:29 PST
+Received: from m2.doom4.beget.com (m2.doom4.beget.com [87.236.19.51])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F40FC05CB8C
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Feb 2022 22:53:29 -0800 (PST)
+Received: from vitami (Authenticated sender vitami@doom4.beget.ru)
+        by doom4.beget.ru with local (Exim 4.92.3-beget)
+        (envelope-from <vitami__opelpglavpsnabpru__a1@doom4.beget.ru>)
+        id 1nHggE-0004ss-Jb
+        for linux-arm-msm@vger.kernel.org; Wed, 09 Feb 2022 09:42:18 +0300
+To:     linux-arm-msm@vger.kernel.org
+Subject: Consultio
+Date:   Wed, 9 Feb 2022 06:42:18 +0000
+Message-ID: <6elULAmH4spQIUPUIBW5XRemYRzXeOTkiQnYf0vHk@opel-glav-snab.ru>
+X-Mailer: PHPMailer 6.5.0 (https://github.com/PHPMailer/PHPMailer)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220130114535.1570634-1-luca@z3ntu.xyz>
-User-Agent: NeoMutt/20180716-391-311a52
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+From:   noreply@unverified.beget.ru
+Reply-To: Consultio <casethemes.net@gmail.com>
+X-Beget-Rewrite: original from 'Consultio <casethemes.net@gmail.com> '
+X-Beget-Rewrite: original reply-to 'casethemes.net@gmail.com '
+X-Spam-Status: Yes, score=6.6 required=5.0 tests=BAYES_50,
+        FREEMAIL_FORGED_REPLYTO,RCVD_IN_DNSWL_NONE,SHORT_SHORTNER,
+        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLACK autolearn=no
         autolearn_force=no version=3.4.6
+X-Spam-Report: *  1.7 URIBL_BLACK Contains an URL listed in the URIBL blacklist
+        *      [URIs: inx.lv]
+        * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [87.236.19.51 listed in list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        * -0.0 SPF_HELO_PASS SPF: HELO matches SPF record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  2.0 SHORT_SHORTNER Short body with little more than a link to a
+        *      shortener
+        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
+X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30-01-22, 12:45, Luca Weiss wrote:
-> The fuse consists of 64 bits, with this statement we're supposed to get
-> the upper 32 bits but it actually read out of bounds and got 0 instead
-> of the desired value which lead to the "PVS bin not set." codepath being
-> run resetting our pvs value.
-> 
-> Fixes: a8811ec764f9 ("cpufreq: qcom: Add support for krait based socs")
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
->  drivers/cpufreq/qcom-cpufreq-nvmem.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> index d1744b5d9619..6dfa86971a75 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> @@ -130,7 +130,7 @@ static void get_krait_bin_format_b(struct device *cpu_dev,
->  	}
->  
->  	/* Check PVS_BLOW_STATUS */
-> -	pte_efuse = *(((u32 *)buf) + 4);
-> +	pte_efuse = *(((u32 *)buf) + 1);
->  	pte_efuse &= BIT(21);
->  	if (pte_efuse) {
->  		dev_dbg(cpu_dev, "PVS bin: %d\n", *pvs);
+From: ❤️ Jean want to meet you! Click Here: http://inx.lv/6LHN?5h704 ❤️ m8lz0adg <linux-arm-msm@vger.kernel.org>
+Name: ❤️ Jean want to meet you! Click Here: http://inx.lv/6LHN?5h704 ❤️ m8lz0adg
+Phone: 207072967851
+Service: Business Growth
+Web Address: 822649b
+Message Body:
+b8feox
 
-Applied. Thanks.
 
 -- 
-viresh
+This e-mail was sent from a contact form on Consultio (https://demo.casethemes.net/consultio-business2)
+
