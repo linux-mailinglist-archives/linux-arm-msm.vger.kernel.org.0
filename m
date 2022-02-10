@@ -2,61 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 808354B012C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 00:26:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C9504B0288
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 02:57:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229899AbiBIXZs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Feb 2022 18:25:48 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:34952 "EHLO
+        id S229867AbiBJBz7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Feb 2022 20:55:59 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:60174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229742AbiBIXZo (ORCPT
+        with ESMTP id S233169AbiBJBzn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Feb 2022 18:25:44 -0500
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B841E0939E5
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Feb 2022 15:25:38 -0800 (PST)
-Received: by mail-pj1-x1035.google.com with SMTP id v5-20020a17090a4ec500b001b8b702df57so6753814pjl.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Feb 2022 15:25:38 -0800 (PST)
+        Wed, 9 Feb 2022 20:55:43 -0500
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15D222BB18
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Feb 2022 17:50:54 -0800 (PST)
+Received: by mail-oi1-x236.google.com with SMTP id s24so4481648oic.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Feb 2022 17:50:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=cuDyqJtQkOZWq7GCqSKtM5Nekpy0WS9Wr09B0b+ZHEk=;
-        b=mJUGs196QE4e+93P3XrLjGhPpdg6y+RWphSnf3Fr4PTAuc+HnrZgbhtvd06SXDn+gS
-         GCqMgHjSLUhtpWCMI8WWXfqRS5edno6KEmX84YaoGfeDhvuzbjw7RdE7vhZFdoNXuEmA
-         NEk2vKgifQiIGBMIiEdCXmVq6VOHYD3mph42Q=
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=8+Nru2NcToVw10SMtgwpUUD5V5gNRuUchLBb5mwzcTo=;
+        b=TXHV4iS/LnExFOG16+ujTQmMvV1cNm5vPFzItoWZDg8A8T/YPbRQnR5VB+jSEMaxFU
+         Pt/WKTUgnSrBXxgCyeIzvTEs7ZzqHTpju3FkNOxVi1T4xx3SI1l6pK+TLwjynJqb/OSP
+         R19+UJ4qOCkEjvQcpQOFlPTR99isRfg19NWdQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=cuDyqJtQkOZWq7GCqSKtM5Nekpy0WS9Wr09B0b+ZHEk=;
-        b=AQClB6JAuJ1nWkxRHfObwfr7RX7N0w8uIVuqY4vPuLe7E4T/pfB75OJFDu4BFd3Ik6
-         xaqnh4mgdzlO59/XjS/JE6ngxn3W51hAA72Xs5Fv8nuDxnRI+NfJPxzuBuKun6/hw0Bv
-         j//5quBckVEJJsBReiMs1H1ynxNXgtAV/Vbea1qWRAtCK5E8sljA8N8l/Zd66y9NkHeO
-         ErPwT4qWdzB66pmGV5k1kF/BxNWCazCLxgp/20653JXz3MhqNY5B0S0Dxtb9Ufg2lS04
-         84cnwRKEuVbLAYoo8xbYHymdE5H1LZA/W4J39iSFAjKzSRAPxlaB9qg0Dp8NcOYRXH+g
-         5BJA==
-X-Gm-Message-State: AOAM5300tMjargkahdJLFFiremSG3k1xJZlDdg+Ub6169m5yIGgbAYC/
-        nYHi3PczhhBaLqZiAaRJj1iVCg==
-X-Google-Smtp-Source: ABdhPJyFlluWkTGxIDD8DAe+Rrtl/A4H7tmBZt3vNUZHOenuccFvdMBHj1zHh72rB0o4uWqYwAMcTw==
-X-Received: by 2002:a17:90a:7083:: with SMTP id g3mr5220486pjk.209.1644449122551;
-        Wed, 09 Feb 2022 15:25:22 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:202:201:5193:6865:e38e:3a5b])
-        by smtp.gmail.com with ESMTPSA id u12sm22067162pfk.220.2022.02.09.15.25.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Feb 2022 15:25:22 -0800 (PST)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Mark Brown <broonie@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Subject: [PATCH] ASoC: qcom: Actually clear DMA interrupt register for HDMI
-Date:   Wed,  9 Feb 2022 15:25:20 -0800
-Message-Id: <20220209232520.4017634-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.35.1.265.g69c8d7142f-goog
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=8+Nru2NcToVw10SMtgwpUUD5V5gNRuUchLBb5mwzcTo=;
+        b=uIV0NlA76rsCN26vJZEDQ90fBr2vFUaiGP+ffcGoOe1LiLq8WQlIU7qipMXgRT5W6O
+         PZrhAf98bUWWdFk6Jwc4kGvs6qbBe9pw9XYZBoZKae88zBx+tP36ICWTZPoreDo/Aj6k
+         yTDbabq7COwpN7pc4jkydIzA+VfkE8qZI1OAn6dCzFCxe2ac1ng41/yTNg/4rk2wXOdk
+         L2ReuiTnMq6/HzVHUbNUlTMX0m8R5yqjGGAfqDJPlSWSi2cRvS6g8Msx0h7MsAqSfemN
+         b0jxEs5hJqpz0OBiZ+Lht8SHO+1poDJmkuHK9MHNod1BXASOIL9xZ3sjSYEWQ3zemfk1
+         Fdqw==
+X-Gm-Message-State: AOAM530bQfKQFrArbmVKoAAjliG1EtiAxHHnvkru1fQE1BmO6EltaA0P
+        Qko+W8YcrVto5NWpHoy8U5xqToze3edwxGUUPT3FZUIzO8s=
+X-Google-Smtp-Source: ABdhPJziJIFTknz84SWo9mVGHh0qE57URGU8n7DntwMHca8it42Jy2AZliHDBlgXQCx9Gscxm97mfnNa5Z0YJT9CftY=
+X-Received: by 2002:a05:6870:d413:: with SMTP id i19mr1648649oag.54.1644451410730;
+ Wed, 09 Feb 2022 16:03:30 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 9 Feb 2022 16:03:30 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <a1c2a7e6-8d76-6ee6-4bc4-e7ea8013af02@quicinc.com>
+References: <1644334454-16719-1-git-send-email-quic_srivasam@quicinc.com>
+ <1644334454-16719-4-git-send-email-quic_srivasam@quicinc.com>
+ <CAE-0n50jBeOnkpogPFm+zqTf8bqQs-Bo0Gma658uFE6aA=Edxg@mail.gmail.com> <a1c2a7e6-8d76-6ee6-4bc4-e7ea8013af02@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Wed, 9 Feb 2022 16:03:30 -0800
+Message-ID: <CAE-0n52LqrdLXk4=WMQY3WXVYLjpwXH+FP2z71gKMAkjiPR4Xg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sc7280: Add wcd9380 pinmux
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        devicetree@vger.kernel.org, dianders@chromium.org,
+        judyhsiao@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
+        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org
+Cc:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -67,79 +71,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In commit da0363f7bfd3 ("ASoC: qcom: Fix for DMA interrupt clear reg
-overwriting") we changed regmap_write() to regmap_update_bits() so that
-we can avoid overwriting bits that we didn't intend to modify.
-Unfortunately this change breaks the case where a register is writable
-but not readable, which is exactly how the HDMI irq clear register is
-designed (grep around LPASS_HDMITX_APP_IRQCLEAR_REG to see how it's
-write only). That's because regmap_update_bits() tries to read the
-register from the hardware and if it isn't readable it looks in the
-regmap cache to see what was written there last time to compare against
-what we want to write there. Eventually, we're unable to modify this
-register at all because the bits that we're trying to set are already
-set in the cache.
+Quoting Srinivasa Rao Mandadapu (2022-02-09 06:26:58)
+>
+> On 2/9/2022 2:42 AM, Stephen Boyd wrote:
+> > Quoting Srinivasa Rao Mandadapu (2022-02-08 07:34:14)
+> >
+> >> +                       pins = "gpio83";
+> >> +                       function = "gpio";
+> >> +                       drive-strength = <16>;
+> >> +                       output-high;
+> >> +       };
+> >> +
+> >> +       wcd938x_reset_sleep: wcd938x_reset_sleep {
+> >> +                       pins = "gpio83";
+> >> +                       function = "gpio";
+> >> +                       drive-strength = <16>;
+> >> +                       bias-disable;
+> >> +                       output-low;
+> > Why doesn't the device drive the reset gpio by requesting the gpio and
+> > asserting and deasserting it? We shouldn't need to use pinctrl settings
+> > to toggle reset gpios.
+> Okay. Verified without these nodes and didn't see any impact. But
+> similar way it's mentioned in sm8250-mtp.dts. Could You please suggest
+> on it how to go ahead on this?.
 
-This is doubly bad for the irq clear register because you have to write
-the bit to clear an interrupt. Given the irq is level triggered, we see
-an interrupt storm upon plugging in an HDMI cable and starting audio
-playback. The irq storm is so great that performance degrades
-significantly, leading to CPU soft lockups.
+I'd expect the wcd938x codec device node to have a 'reset-gpios'
+property like
 
-Fix it by using regmap_write_bits() so that we really do write the bits
-in the clear register that we want to. This brings the number of irqs
-handled by lpass_dma_interrupt_handler() down from ~150k/sec to ~10/sec.
+	reset-gpios = <&tlmm 83 GPIO_ACTIVE_LOW>
 
-Fixes: da0363f7bfd3 ("ASoC: qcom: Fix for DMA interrupt clear reg overwriting")
-Cc: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- sound/soc/qcom/lpass-platform.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+and then the driver to request that gpio via
 
-diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
-index a59e9d20cb46..4b1773c1fb95 100644
---- a/sound/soc/qcom/lpass-platform.c
-+++ b/sound/soc/qcom/lpass-platform.c
-@@ -524,7 +524,7 @@ static int lpass_platform_pcmops_trigger(struct snd_soc_component *component,
- 			return -EINVAL;
- 		}
- 
--		ret = regmap_update_bits(map, reg_irqclr, val_irqclr, val_irqclr);
-+		ret = regmap_write_bits(map, reg_irqclr, val_irqclr, val_irqclr);
- 		if (ret) {
- 			dev_err(soc_runtime->dev, "error writing to irqclear reg: %d\n", ret);
- 			return ret;
-@@ -665,7 +665,7 @@ static irqreturn_t lpass_dma_interrupt_handler(
- 	return -EINVAL;
- 	}
- 	if (interrupts & LPAIF_IRQ_PER(chan)) {
--		rv = regmap_update_bits(map, reg, mask, (LPAIF_IRQ_PER(chan) | val));
-+		rv = regmap_write_bits(map, reg, mask, (LPAIF_IRQ_PER(chan) | val));
- 		if (rv) {
- 			dev_err(soc_runtime->dev,
- 				"error writing to irqclear reg: %d\n", rv);
-@@ -676,7 +676,7 @@ static irqreturn_t lpass_dma_interrupt_handler(
- 	}
- 
- 	if (interrupts & LPAIF_IRQ_XRUN(chan)) {
--		rv = regmap_update_bits(map, reg, mask, (LPAIF_IRQ_XRUN(chan) | val));
-+		rv = regmap_write_bits(map, reg, mask, (LPAIF_IRQ_XRUN(chan) | val));
- 		if (rv) {
- 			dev_err(soc_runtime->dev,
- 				"error writing to irqclear reg: %d\n", rv);
-@@ -688,7 +688,7 @@ static irqreturn_t lpass_dma_interrupt_handler(
- 	}
- 
- 	if (interrupts & LPAIF_IRQ_ERR(chan)) {
--		rv = regmap_update_bits(map, reg, mask, (LPAIF_IRQ_ERR(chan) | val));
-+		rv = regmap_write_bits(map, reg, mask, (LPAIF_IRQ_ERR(chan) | val));
- 		if (rv) {
- 			dev_err(soc_runtime->dev,
- 				"error writing to irqclear reg: %d\n", rv);
+	reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
 
-base-commit: dfd42facf1e4ada021b939b4e19c935dcdd55566
--- 
-https://chromeos.dev
-
+so it gets the gpio during driver probe. Then the gpio can be deasserted
+during suspend and reasserted on resume, if that's even important?
