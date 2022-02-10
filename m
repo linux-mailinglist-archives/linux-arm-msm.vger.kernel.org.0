@@ -2,70 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BE9E4B02A9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 03:01:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F08584B046A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 05:20:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233062AbiBJB6W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Feb 2022 20:58:22 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:33884 "EHLO
+        id S231271AbiBJEUF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Feb 2022 23:20:05 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233757AbiBJB4N (ORCPT
+        with ESMTP id S230422AbiBJEUF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Feb 2022 20:56:13 -0500
-Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 545E02AAB4
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Feb 2022 17:41:26 -0800 (PST)
-Received: by mail-oo1-xc34.google.com with SMTP id p190-20020a4a2fc7000000b0031820de484aso4615579oop.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Feb 2022 17:41:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=7BvHswSXg9zN9k7P3bu3kJhfUU/WgKwQ6HEFpY+l4jA=;
-        b=Ewraufgtj1xMfakazeSpwx5MnBYDQHaeFVN1wLgspkWrMugkjtb49bIjLe5uO4rZnG
-         1/SsRTmx/SdfhAdZc4IcIwJP+dA8AJX591gYcpvbwF3giFkKi4T1Ft5Om1/eRIcZOEY/
-         B0i/ShAZtw1hvFkJ6P6wjp4UGB/ApLobqDUNY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=7BvHswSXg9zN9k7P3bu3kJhfUU/WgKwQ6HEFpY+l4jA=;
-        b=1fAjYdXHpdrvXb0dJii4bHYfsvAwtlaG//R72hfUW0kdKiri0GIvJ/D9xtP7w3gcK2
-         JC+mEg8BQ9GnQjd7cyKhIAyF8s1RCLSat5pxcN8C8gC6LNzH9Rqf0duV8MG2CQoNoxVK
-         PP26RR39tzAhJKMuYoqaOw4LPMM9hOTlpCljmB9S6BvBOf5hL3iPedLR/9jGoDwFwP/R
-         36JEOpvUt8q95iL+2vb1P28/N2RprZj8DAc6O/YK9L4Y897+pPOgoVEulHQai37FS09a
-         5LqZ8l90fYiTJH2W/Q5df8DqdIy8s2SsdwmqwSy1G4CEFoRyKlS4gtapYgUm7277wCUf
-         Ae8Q==
-X-Gm-Message-State: AOAM530dUM17auqgj9fy2F7tnham7aKz9zx78GJmLkMGv3hXJ8FX/5Zd
-        fAyPA1c8UfEYjP8OWBvKpG9m6hml+WR4CLcZwytQig==
-X-Google-Smtp-Source: ABdhPJz5nnuCshCtEM3gga4og7wjd6Bj6dW8FLpEygBvjacEExJ8np7WaRj3GTND+KVxtMxzzyhuWn0ScaNhy+C9qjM=
-X-Received: by 2002:a05:6870:1209:: with SMTP id 9mr72218oan.8.1644457285749;
- Wed, 09 Feb 2022 17:41:25 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 9 Feb 2022 17:41:25 -0800
+        Wed, 9 Feb 2022 23:20:05 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABAD5245B1;
+        Wed,  9 Feb 2022 20:20:05 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9C0E7B821B8;
+        Thu, 10 Feb 2022 04:20:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C1B1C004E1;
+        Thu, 10 Feb 2022 04:19:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1644466802;
+        bh=iCjxYGA0ByQSX+YK1mDlq2Ao5AztFRWI3R1tZW1U2lE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=b0Sp8rgyXSb4m6CrFH7EQjb1od3uhZHWaMY9RJvKWfsUkkKrW1i9nuraFoxINzoxv
+         SAxPLF0FVCf7O2mPBUBTI+THUjV02SYr2Zmc+CZ0mF3SLadZHgFSmSW6xpP9RKNLdP
+         CDP8Yg10rT+donvsL39cwWNZBVbXgH4ukx+W0F/vhWzv/oodPram8P+fjW0zWyCikL
+         E5C0sNRp3BFPajbqI5pXR8Bql5YeqZJWoIknI7dX3uwC6Umjibzbrml1+HfriRt/RF
+         hHn76b1SCZZHvrvRR4eADSMgMWjzIvqlFNcehAjfUI9lgw+JJQUKXNeftoTMXuVlbG
+         pcM1v6U79atRA==
+Date:   Thu, 10 Feb 2022 09:49:54 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Yonglin Tan <yonglin.tan@outlook.com>
+Cc:     mani@kernel.org, hemantk@codeaurora.org, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: pci_generic: Add mru_default for Quectel EM1xx
+ series
+Message-ID: <20220210041954.GA5294@thinkpad>
+References: <MEYP282MB2374EE345DADDB591AFDA6AFFD2E9@MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM>
 MIME-Version: 1.0
-In-Reply-To: <1644331940-18986-6-git-send-email-quic_c_skakit@quicinc.com>
-References: <1644331940-18986-1-git-send-email-quic_c_skakit@quicinc.com> <1644331940-18986-6-git-send-email-quic_c_skakit@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Wed, 9 Feb 2022 17:41:25 -0800
-Message-ID: <CAE-0n52vX-50GEZ5X3PhnZaLyriALRtoqGiWSydi4WSAvGmf9A@mail.gmail.com>
-Subject: Re: [PATCH V5 5/6] arm64: dts: qcom: pm8008: Add base dts file
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>
-Cc:     Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Das Srinagesh <gurus@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_collinsd@quicinc.com,
-        quic_subbaram@quicinc.com, quic_jprakash@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <MEYP282MB2374EE345DADDB591AFDA6AFFD2E9@MEYP282MB2374.AUSP282.PROD.OUTLOOK.COM>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,55 +56,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Satya Priya (2022-02-08 06:52:19)
-> Add base DTS file for pm8008 with infra and regulator nodes.
->
-> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+On Wed, Feb 09, 2022 at 09:57:52PM +0800, Yonglin Tan wrote:
+> For default mechanism, the driver uses default MRU 3500 if mru_default
+> is not initialized. The Qualcomm configured the MRU size to 32768 in the
+> WWAN device FW. So, we align the driver setting with Qualcomm FW setting.
+> 
+> Fixes: ac4bf60bbaa0 ("bus: mhi: pci_generic: Introduce quectel EM1XXGR-L support")
+> Cc: stable@vger.kernel.org
+> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> Signed-off-by: Yonglin Tan <yonglin.tan@outlook.com>
+
+Applied to mhi-fixes!
+
+Thanks,
+Mani
+
 > ---
-> Changes in V4:
->  - This is newly added in V4, to add all the pm8008 common stuff.
->
-> Changes in V5:
->  - Changed the mfd node names from pm8008_chip to pm8008_infra and
->    pm8008_ldo to pm8008_regulators as they re more appropriate.
->  - Changed the compatible for pm8008@9 mfd node to differentiate from
->    pm8008@8 node in driver.
->  - Removed compatible for regulators node.
->  - Removed reg property for LDOs and added in driver.
->
->  arch/arm64/boot/dts/qcom/pm8008.dtsi | 46 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 46 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/pm8008.dtsi
->
-> diff --git a/arch/arm64/boot/dts/qcom/pm8008.dtsi b/arch/arm64/boot/dts/qcom/pm8008.dtsi
-> new file mode 100644
-> index 0000000..8e04983
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/pm8008.dtsi
-> @@ -0,0 +1,46 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +// Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> +
-> +pm8008_infra: pm8008@8 {
-> +       compatible = "qcom,pm8008";
-> +       reg = <0x8>;
-> +       #address-cells = <1>;
-> +       #size-cells = <0>;
-> +};
-> +
-> +pm8008_regulators: pm8008@9 {
-> +       compatible = "qcom,pm8008-regulators";
-> +       reg = <0x9>;
-> +       #address-cells = <1>;
-> +       #size-cells = <0>;
-> +
-> +       regulators {
-
-What is the point of the 'regulators' node? Why can't we just put LDO1
-directly underneath the node that has the "qcom,pm8008-regulators"
-compatible?
-
-> +               pm8008_l1: LDO1 {
-> +                       regulator-name = "pm8008_l1";
-> +               };
-> +
+>  drivers/bus/mhi/pci_generic.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+> index b79895810c52..9527b7d63840 100644
+> --- a/drivers/bus/mhi/pci_generic.c
+> +++ b/drivers/bus/mhi/pci_generic.c
+> @@ -327,6 +327,7 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
+>  	.config = &modem_quectel_em1xx_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+> +	.mru_default = 32768,
+>  	.sideband_wake = true,
+>  };
+>  
+> -- 
+> 2.7.4
+> 
+> 
