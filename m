@@ -2,66 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FE224B0327
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 03:14:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A163D4B032F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 03:17:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230140AbiBJCOi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Feb 2022 21:14:38 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:35988 "EHLO
+        id S231232AbiBJCQX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Feb 2022 21:16:23 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:36810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229696AbiBJCOh (ORCPT
+        with ESMTP id S231414AbiBJCQW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Feb 2022 21:14:37 -0500
+        Wed, 9 Feb 2022 21:16:22 -0500
 Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4538D261A
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Feb 2022 18:14:40 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37CBF261A
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Feb 2022 18:16:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644459280; x=1675995280;
+  t=1644459384; x=1675995384;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=Yicd7RRwODN6w/+A1+AuGrBmdvedplETzWs7cnxWy+w=;
-  b=vmce+AOADb99TEVHL1Ago8oeniveH41K4H1K1EykNcZi7XBo6C/23+iE
-   KaQ7/RHbbJRb/1N8UOARzOM4MlujFp4bjYVFv+IdcN6cmnawYu0s0axql
-   MkCNFwdecufE/+w571TuhNnby2zfNV8Jv4tszanXW6NtfOyEnKDbM7uRC
-   Q=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Feb 2022 16:08:22 -0800
+  bh=VGzwbqESoImOKFJCw+yC3eLW5wYhCR9FjWGT3KObvx4=;
+  b=YgMKooO2Jlh6NPB6syFenJS3LCbf7O5NYYacbak8TsdBO8NfVy7Rs1+C
+   +MhLSAkX5MyTggEk4He3vgOt3SsbEgPnWQ/Po0groFahRCHX9ePG/LnQP
+   ZDkibZcRUhuxUmqSyCmL/iu/tiLgMGmFahU1bfGey32aMeLJQJYodXRMl
+   k=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 09 Feb 2022 16:10:06 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2022 16:08:22 -0800
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2022 16:10:05 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 9 Feb 2022 16:08:21 -0800
+ 15.2.922.19; Wed, 9 Feb 2022 16:10:03 -0800
 Received: from [10.111.162.111] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Wed, 9 Feb 2022
- 16:08:19 -0800
-Message-ID: <d7a32361-6845-c1a0-15c4-16c4fecf00ed@quicinc.com>
-Date:   Wed, 9 Feb 2022 16:08:17 -0800
+ 16:10:01 -0800
+Message-ID: <73970f98-f95b-b4fd-c800-2b9dc762ca44@quicinc.com>
+Date:   Wed, 9 Feb 2022 16:09:59 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.1
-Subject: Re: [Freedreno] [PATCH v5 1/6] drm/msm/dpu: drop unused lm_max_width
- from RM
+Subject: Re: [PATCH v5 2/6] drm/msm/dpu: add DSPP blocks teardown
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     David Airlie <airlied@linux.ie>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "Daniel Vetter" <daniel@ffwll.ch>,
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
         <freedreno@lists.freedesktop.org>
 References: <20220121210618.3482550-1-dmitry.baryshkov@linaro.org>
- <20220121210618.3482550-2-dmitry.baryshkov@linaro.org>
+ <20220121210618.3482550-3-dmitry.baryshkov@linaro.org>
 From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220121210618.3482550-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220121210618.3482550-3-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
@@ -76,60 +75,33 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 1/21/2022 1:06 PM, Dmitry Baryshkov wrote:
-> No code uses lm_max_width from resource manager, so drop it. Instead of
-> calculating the lm_max_width, code can use max_mixer_width field from
-> the hw catalog.
+> Add missing calls to dpu_hw_dspp_destroy() to free resources allocated
+> for DSPP hardware blocks.
 > 
+> Fixes: e47616df008b ("drm/msm/dpu: add support for color processing blocks in dpu driver")
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 12 ------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h |  4 ----
->   2 files changed, 16 deletions(-)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 8 ++++++++
+>   1 file changed, 8 insertions(+)
 > 
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> index f9c83d6e427a..b5b1ea1e4de6 100644
+> index b5b1ea1e4de6..63ed0d7df848 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> @@ -114,18 +114,6 @@ int dpu_rm_init(struct dpu_rm *rm,
->   			goto fail;
->   		}
->   		rm->mixer_blks[lm->id - LM_0] = &hw->base;
-> -
-> -		if (!rm->lm_max_width) {
-> -			rm->lm_max_width = lm->sblk->maxwidth;
-> -		} else if (rm->lm_max_width != lm->sblk->maxwidth) {
-> -			/*
-> -			 * Don't expect to have hw where lm max widths differ.
-> -			 * If found, take the min.
-> -			 */
-> -			DPU_ERROR("unsupported: lm maxwidth differs\n");
-> -			if (rm->lm_max_width > lm->sblk->maxwidth)
-> -				rm->lm_max_width = lm->sblk->maxwidth;
-> -		}
->   	}
+> @@ -35,6 +35,14 @@ int dpu_rm_destroy(struct dpu_rm *rm)
+>   {
+>   	int i;
 >   
->   	for (i = 0; i < cat->merge_3d_count; i++) {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> index 1f12c8d5b8aa..0f27759211b5 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-> @@ -20,8 +20,6 @@ struct dpu_global_state;
->    * @ctl_blks: array of ctl hardware resources
->    * @intf_blks: array of intf hardware resources
->    * @dspp_blks: array of dspp hardware resources
-> - * @lm_max_width: cached layer mixer maximum width
-> - * @rm_lock: resource manager mutex
->    */
->   struct dpu_rm {
->   	struct dpu_hw_blk *pingpong_blks[PINGPONG_MAX - PINGPONG_0];
-> @@ -30,8 +28,6 @@ struct dpu_rm {
->   	struct dpu_hw_blk *intf_blks[INTF_MAX - INTF_0];
->   	struct dpu_hw_blk *dspp_blks[DSPP_MAX - DSPP_0];
->   	struct dpu_hw_blk *merge_3d_blks[MERGE_3D_MAX - MERGE_3D_0];
-> -
-> -	uint32_t lm_max_width;
->   };
+> +	for (i = 0; i < ARRAY_SIZE(rm->dspp_blks); i++) {
+> +		struct dpu_hw_dspp *hw;
+> +
+> +		if (rm->dspp_blks[i]) {
+> +			hw = to_dpu_hw_dspp(rm->dspp_blks[i]);
+> +			dpu_hw_dspp_destroy(hw);
+> +		}
+> +	}
+>   	for (i = 0; i < ARRAY_SIZE(rm->pingpong_blks); i++) {
+>   		struct dpu_hw_pingpong *hw;
 >   
->   /**
