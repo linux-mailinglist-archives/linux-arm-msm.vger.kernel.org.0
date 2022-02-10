@@ -2,54 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E5CA4B06EF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 08:28:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 517534B0753
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 08:36:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235930AbiBJH2m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 02:28:42 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:41800 "EHLO
+        id S234218AbiBJHgs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 02:36:48 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:48402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235923AbiBJH2m (ORCPT
+        with ESMTP id S233771AbiBJHgs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 02:28:42 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 458C6262;
-        Wed,  9 Feb 2022 23:28:43 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E0F8761D09;
-        Thu, 10 Feb 2022 07:28:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E796C004E1;
-        Thu, 10 Feb 2022 07:28:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1644478122;
-        bh=ivUZB2W0DolffJ9dSW0NWla+NxBAr6g2ORvL3qtg/Uc=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=ZQQi3Cy+znWu/QxZ3iDItHJX+lK8ilYoBBmwWfX7+DHw2sYzbBxknSWaJsMD2c0E+
-         xrJCa7E5fz6/QixIwB7CJ/0MmaD7lmqrSc8mGaDGgCR3OZDs6n96+mG+gTHLqOMSWn
-         DqkUzpodMpL/wy6kxOP7vYa9H14Q5m1bTKVTXSIgNy3R9ER+x+La44p2PHt86hb28f
-         1pUO5p5ffIIDZfeVNEqiibXZm4RFKge6btH836qneXKc1y13PeMJAY3YQI0mxl4Qvw
-         AwuH5PCxHM/fYQzJ657yEhYZtNFOQRIBW3S1QYc1l9zTNzVbKCC00Vl0sJ9cSBzI0T
-         De925PYktf8AA==
-Content-Type: text/plain; charset="utf-8"
+        Thu, 10 Feb 2022 02:36:48 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 653C1270;
+        Wed,  9 Feb 2022 23:36:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1644478609; x=1676014609;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=UYTGULdMGV9sc8yVw9KMVk2PqW+apnNq019VLoB/ZZk=;
+  b=q7kMGTpjd+72o9eQnepw0Tz+QBgzOvlQSxmpIu4Z6gfuRAl3CDEyl6ne
+   EufX15Pmjxq3mMSKzFIQM33tMDYad5OVIcLKNeuV+ss9CUiZbYC62X4d3
+   OL662ug3w9wujKtPxTrxuc+IrLMEj+XYqqO4AbpYZE2LL2a4AsbYktK1q
+   U=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 09 Feb 2022 23:36:49 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2022 23:36:48 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Wed, 9 Feb 2022 23:36:48 -0800
+Received: from [10.50.12.153] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Wed, 9 Feb 2022
+ 23:36:44 -0800
+Message-ID: <a64cefd2-7dfa-c86c-f1aa-461699253b62@quicinc.com>
+Date:   Thu, 10 Feb 2022 13:06:41 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <YgRBnExwlzI+lPlR@builder.lan>
-References: <20220209172513.17873-1-tdas@codeaurora.org> <YgRBnExwlzI+lPlR@builder.lan>
-Subject: Re: [v1 1/2] clk: qcom: gdsc: Use the default transition delay for GDSCs
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Taniya Das <tdas@codeaurora.org>
-Date:   Wed, 09 Feb 2022 23:28:40 -0800
-User-Agent: alot/0.10
-Message-Id: <20220210072842.3E796C004E1@smtp.kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.2
+Subject: Re: [PATCHv9 1/5] arm64: io: Use asm-generic high level MMIO
+ accessors
+Content-Language: en-US
+To:     Catalin Marinas <catalin.marinas@arm.com>
+CC:     Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        gregkh <gregkh@linuxfoundation.org>, <quic_psodagud@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <cover.1642482334.git.quic_saipraka@quicinc.com>
+ <87926437f2f9e72dd94f0b30c8784c2da5508644.1642482334.git.quic_saipraka@quicinc.com>
+ <YgQNiXsh4hC+5+O5@arm.com>
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+In-Reply-To: <YgQNiXsh4hC+5+O5@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -58,42 +75,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2022-02-09 14:35:08)
-> On Wed 09 Feb 11:25 CST 2022, Taniya Das wrote:
->=20
-> > Do not update the transition delay and use the default reset values.
-> >=20
-> > Fixes: 45dd0e55317cc ("clk: qcom: Add support for GDSCs)
-> > Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> > ---
-> >  drivers/clk/qcom/gdsc.c | 6 +++++-
-> >  drivers/clk/qcom/gdsc.h | 1 +
-> >  2 files changed, 6 insertions(+), 1 deletion(-)
-> >=20
-> > diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> > index 7e1dd8ccfa38..e7b213450640 100644
-> > --- a/drivers/clk/qcom/gdsc.c
-> > +++ b/drivers/clk/qcom/gdsc.c
-> > @@ -380,7 +380,11 @@ static int gdsc_init(struct gdsc *sc)
-> >        */
-> >       mask =3D HW_CONTROL_MASK | SW_OVERRIDE_MASK |
-> >              EN_REST_WAIT_MASK | EN_FEW_WAIT_MASK | CLK_DIS_WAIT_MASK;
-> > -     val =3D EN_REST_WAIT_VAL | EN_FEW_WAIT_VAL | CLK_DIS_WAIT_VAL;
-> > +
-> > +     regmap_read(sc->regmap, sc->gdscr, &val);
-> > +
-> > +     if (!(sc->flags & DEFAULT_TRANSITION_DELAY))
->=20
-> I dug a little bit more into this and noticed that on various platforms
-> CLK_DIS_WAIT_VAL for the GPU_CX GDSC is supposed to be 8 (whereas both
-> hw default and CLK_DIS_WAIT_VAL is 2).
->=20
-> I'm not able to find anything helpful in the git log describing what the
-> value does, but it seems that a "just use hw default" flag won't cut it
-> for this scenario.
->=20
+On 2/10/2022 12:22 AM, Catalin Marinas wrote:
+> On Mon, Jan 24, 2022 at 12:03:30PM +0530, Sai Prakash Ranjan wrote:
+>> Remove custom arm64 MMIO accessors read{b,w,l,q} and their relaxed
+>> versions in support to use asm-generic defined accessors. Also define
+>> one set of IO barriers (ar/bw version) used by asm-generic code to
+>> override the arm64 specific variants.
+>>
+>> Suggested-by: Arnd Bergmann <arnd@arndb.de>
+>> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+> I'm fine with this patch:
+>
+> Acked-by: Catalin Marinas <catalin.marinas@arm.com>
 
-I'd prefer we invert the logic so that we don't need to litter this flag
-all over the place. I recall that the wait values were incorrect a long
-time ago on early gdsc using designs but hopefully they've been fixed
-now and we can simply use the default power on reset (POR) values.
+Thanks!
+
+>> diff --git a/arch/arm64/include/asm/io.h b/arch/arm64/include/asm/io.h
+>> index 7fd836bea7eb..1b436810d779 100644
+>> --- a/arch/arm64/include/asm/io.h
+>> +++ b/arch/arm64/include/asm/io.h
+> [...]
+>> +/* arm64-specific, don't use in portable drivers */
+>> +#define __iormb(v)		__io_ar(v)
+>> +#define __iowmb()		__io_bw()
+>> +#define __iomb()		dma_mb()
+> However, I'd like to see a few subsequent patches that get rid of the
+> __io*mb() uses in drivers/ (there don't seem to be that many).
+>
+
+Sure, I will do these in next version of this series. Hoping to get 
+reviews on other patches
+as well so I can include all the changes in the next version.
+
+Thanks,
+Sai
