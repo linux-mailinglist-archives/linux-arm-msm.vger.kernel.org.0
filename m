@@ -2,57 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 47FE94B0AD7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 11:36:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A08054B0B09
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 11:39:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239865AbiBJKfh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 05:35:37 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47710 "EHLO
+        id S238091AbiBJKjs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 05:39:48 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:51696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239947AbiBJKfe (ORCPT
+        with ESMTP id S239902AbiBJKjr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 05:35:34 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C1461021;
-        Thu, 10 Feb 2022 02:35:28 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DCB3361BAA;
-        Thu, 10 Feb 2022 10:35:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E33C340ED;
-        Thu, 10 Feb 2022 10:35:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1644489327;
-        bh=V51Yokz4/nkM1sMfLkFe6kYA28/O+8VdwI6w+UCjRAE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=YuvRJ/S5/gM9RYyhZlZDo4wB6utxyms2LUhvWKrcUCQBpYwZWk/9JAVZQ6Zn9gwop
-         Ix/p3cdy2s0fxMMAognN4PJTrYov+rd+GXN6Q6Ok54widzxyDNVSRCFcAnBhcFSe1x
-         HlzSq57BHclhTc4ED0XPOp1u+HPA4B7Qwh2/SZoVVmM+MEhCdSlSu1CIQwuKPgwtTQ
-         Wq8EhUMK5G4rKYL8mmAmY5qenvJmLVtLhUsCM6I3Ps1eWb9oCgmvNMqBGHIDYZm3FL
-         JXHjsvkyivJIFsRMTdkHjm+8bPBH6roYbc2eFtNqMlDN8zqu8VgZh9vaPeeMz1PL8V
-         S7FD6Nq4Q22Tw==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Rob Clark <robdclark@gmail.com>
+        Thu, 10 Feb 2022 05:39:47 -0500
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D49FFEB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 02:39:48 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id k18so7270412lji.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 02:39:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=uV6ErWvRHqjgOJVJNqpy2N27QhZ/SkH6lhneV2eezQE=;
+        b=nKbcz2Gdq39piyfbPiMit7TrOu1sDICMWcR+0EmABFsSkx77n2YjUmhr9Oadftelnl
+         nzyFf1sLKC1AWxptKuKsXPV9p1RmG+D6jQyD31hPB1kGkeMvwGndSrj/dfuJGfmhzuDY
+         x7S9su9VVRlprEq876OXVw4utyS2H0wqlon8AG1vz+iAvf48UQJTXuAFcdGIJBA5on0Z
+         DIGzgHX/3Kl+0fAUOe+dqph4GRG5mxn4T/P0Wca67iJEh4fWjf/jZ7MKOc/6LKZqW2UX
+         NSqzOhzbWmjRiq5SG4CHSX1xrfFFVHM8mAgo+Tqxdx4SNMrAzC6Yv6jiXtWS1NgpyGsp
+         OlAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=uV6ErWvRHqjgOJVJNqpy2N27QhZ/SkH6lhneV2eezQE=;
+        b=5G0Lx8ITYTGCgJyLRuvX2jDfzfT3OzD4lZRuKR/C3kxX1hxv7JmDKg+0IJHumg3gD9
+         aKyePfzQwhpTyuMe6utzUENae2+4/JmCBxro3NtMq3fLPNnxFIr8uH/Lj9EEiRdJAIIM
+         XKbGuChBQDpGfT+L+KcBK4/ZbwYVn/UeqNJ9IBxDE/rInR6LLEGss/6OE9WQL/g/7NTM
+         NxE3yFNKoESbDeFptx/8lOF9pORQ0Dj16CXrzheVg43xByNapOpPUvb2tLfUkAshNybH
+         XDK59vYfGIXLl1FkqC7sTk68XY9Ih7DrE1uUPNczChyHgGS3O0CSbxzFQXDL52nCYbtq
+         rktw==
+X-Gm-Message-State: AOAM533z8VxAM3oz9ni4ict+DwZfoHpd+EwvmBJH7H8aiueyaQjxyACi
+        RfPrzBedS9EmA/WrMugb00oAWQ==
+X-Google-Smtp-Source: ABdhPJzWQaQGUC9tOFhfWQgRhHoC89SI5cdC7nImJz2CXY8dRllDB4UDR090ZDdk+eOaZKSH3cgx9g==
+X-Received: by 2002:a05:651c:54a:: with SMTP id q10mr4541444ljp.441.1644489586976;
+        Thu, 10 Feb 2022 02:39:46 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id z22sm2754597lji.63.2022.02.10.02.39.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Feb 2022 02:39:46 -0800 (PST)
+Message-ID: <88925781-ccca-b180-4d68-dbc689bd5184@linaro.org>
+Date:   Thu, 10 Feb 2022 13:39:46 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [REPOST PATCH v4 09/13] drm/msm: Add missing structure
+ documentation
+Content-Language: en-GB
+To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
 Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, David Airlie <airlied@linux.ie>,
+        David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
         Jonathan Marek <jonathan@marek.ca>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Abhinav Kumar <abhinavk@codeaurora.org>,
         linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [REPOST PATCH v4 13/13] drm/msm/dsi: Add support for DSC configuration
-Date:   Thu, 10 Feb 2022 16:04:23 +0530
-Message-Id: <20220210103423.271016-14-vkoul@kernel.org>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20220210103423.271016-1-vkoul@kernel.org>
 References: <20220210103423.271016-1-vkoul@kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+ <20220210103423.271016-10-vkoul@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220210103423.271016-10-vkoul@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -61,174 +82,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When DSC is enabled, we need to configure DSI registers accordingly and
-configure the respective stream compression registers.
+On 10/02/2022 13:34, Vinod Koul wrote:
+> Somehow documentation for dspp was missed, so add that
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-Add support to calculate the register setting based on DSC params and
-timing information and configure these registers.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- drivers/gpu/drm/msm/dsi/dsi.xml.h  |  10 +++
- drivers/gpu/drm/msm/dsi/dsi_host.c | 109 ++++++++++++++++++++++++++++-
- 2 files changed, 118 insertions(+), 1 deletion(-)
+> ---
+>   drivers/gpu/drm/msm/msm_drv.h | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index e7a312edfe67..6425a42e997c 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -102,6 +102,7 @@ enum msm_event_wait {
+>    * @num_lm:       number of layer mixers used
+>    * @num_enc:      number of compression encoder blocks used
+>    * @num_intf:     number of interfaces the panel is mounted on
+> + * @num_dspp:     number of dspp blocks used
+>    */
+>   struct msm_display_topology {
+>   	u32 num_lm;
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.xml.h b/drivers/gpu/drm/msm/dsi/dsi.xml.h
-index 49b551ad1bff..c1c85df58c4b 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.xml.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi.xml.h
-@@ -706,4 +706,14 @@ static inline uint32_t DSI_VERSION_MAJOR(uint32_t val)
- #define REG_DSI_CPHY_MODE_CTRL					0x000002d4
- 
- 
-+#define REG_DSI_VIDEO_COMPRESSION_MODE_CTRL			0x0000029c
-+
-+#define REG_DSI_VIDEO_COMPRESSION_MODE_CTRL2			0x000002a0
-+
-+#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL			0x000002a4
-+
-+#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2			0x000002a8
-+
-+#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL3			0x000002ac
-+
- #endif /* DSI_XML */
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 438c80750682..3d8d5a1daaa3 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -908,6 +908,20 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
- 		dsi_write(msm_host, REG_DSI_CPHY_MODE_CTRL, BIT(0));
- }
- 
-+static int dsi_dsc_update_pic_dim(struct msm_display_dsc_config *dsc,
-+				  int pic_width, int pic_height)
-+{
-+	if (!dsc || !pic_width || !pic_height) {
-+		pr_err("DSI: invalid input: pic_width: %d pic_height: %d\n", pic_width, pic_height);
-+		return -EINVAL;
-+	}
-+
-+	dsc->drm->pic_width = pic_width;
-+	dsc->drm->pic_height = pic_height;
-+
-+	return 0;
-+}
-+
- static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- {
- 	struct drm_display_mode *mode = msm_host->mode;
-@@ -940,7 +954,68 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 		hdisplay /= 2;
- 	}
- 
-+	if (msm_host->dsc) {
-+		struct msm_display_dsc_config *dsc = msm_host->dsc;
-+
-+		/* update dsc params with timing params */
-+		dsi_dsc_update_pic_dim(dsc, mode->hdisplay, mode->vdisplay);
-+		DBG("Mode Width- %d x Height %d\n", dsc->drm->pic_width, dsc->drm->pic_height);
-+
-+		/* we do the calculations for dsc parameters here so that
-+		 * panel can use these parameters
-+		 */
-+		dsi_populate_dsc_params(dsc);
-+
-+		/* Divide the display by 3 but keep back/font porch and
-+		 * pulse width same
-+		 */
-+		h_total -= hdisplay;
-+		hdisplay /= 3;
-+		h_total += hdisplay;
-+		ha_end = ha_start + hdisplay;
-+	}
-+
- 	if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
-+		if (msm_host->dsc) {
-+			struct msm_display_dsc_config *dsc = msm_host->dsc;
-+			u32 reg, intf_width, slice_per_intf;
-+			u32 total_bytes_per_intf;
-+
-+			/* first calculate dsc parameters and then program
-+			 * compress mode registers
-+			 */
-+			intf_width = hdisplay;
-+			slice_per_intf = DIV_ROUND_UP(intf_width, dsc->drm->slice_width);
-+
-+			dsc->drm->slice_count = 1;
-+			dsc->bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width * 8, 8);
-+			total_bytes_per_intf = dsc->bytes_in_slice * slice_per_intf;
-+
-+			dsc->eol_byte_num = total_bytes_per_intf % 3;
-+			dsc->pclk_per_line =  DIV_ROUND_UP(total_bytes_per_intf, 3);
-+			dsc->bytes_per_pkt = dsc->bytes_in_slice * dsc->drm->slice_count;
-+			dsc->pkt_per_line = slice_per_intf / dsc->drm->slice_count;
-+
-+			reg = dsc->bytes_per_pkt << 16;
-+			reg |= (0x0b << 8);    /* dtype of compressed image */
-+
-+			/* pkt_per_line:
-+			 * 0 == 1 pkt
-+			 * 1 == 2 pkt
-+			 * 2 == 4 pkt
-+			 * 3 pkt is not supported
-+			 * above translates to ffs() - 1
-+			 */
-+			reg |= (ffs(dsc->pkt_per_line) - 1) << 6;
-+
-+			dsc->eol_byte_num = total_bytes_per_intf % 3;
-+			reg |= dsc->eol_byte_num << 4;
-+			reg |= 1;
-+
-+			dsi_write(msm_host,
-+				  REG_DSI_VIDEO_COMPRESSION_MODE_CTRL, reg);
-+		}
-+
- 		dsi_write(msm_host, REG_DSI_ACTIVE_H,
- 			DSI_ACTIVE_H_START(ha_start) |
- 			DSI_ACTIVE_H_END(ha_end));
-@@ -959,8 +1034,40 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 			DSI_ACTIVE_VSYNC_VPOS_START(vs_start) |
- 			DSI_ACTIVE_VSYNC_VPOS_END(vs_end));
- 	} else {		/* command mode */
-+		if (msm_host->dsc) {
-+			struct msm_display_dsc_config *dsc = msm_host->dsc;
-+			u32 reg, reg_ctrl, reg_ctrl2;
-+			u32 slice_per_intf, bytes_in_slice, total_bytes_per_intf;
-+
-+			reg_ctrl = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL);
-+			reg_ctrl2 = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2);
-+
-+			slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->drm->slice_width);
-+			bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width *
-+						      dsc->drm->bits_per_pixel, 8);
-+			dsc->drm->slice_chunk_size = bytes_in_slice;
-+			total_bytes_per_intf = dsc->bytes_in_slice * slice_per_intf;
-+			dsc->pkt_per_line = slice_per_intf / dsc->drm->slice_count;
-+
-+			reg = 0x39 << 8;
-+			reg |= ffs(dsc->pkt_per_line) << 6;
-+
-+			dsc->eol_byte_num = total_bytes_per_intf % 3;
-+			reg |= dsc->eol_byte_num << 4;
-+			reg |= 1;
-+
-+			reg_ctrl |= reg;
-+			reg_ctrl2 |= bytes_in_slice;
-+
-+			dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL, reg);
-+			dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2, reg_ctrl2);
-+		}
-+
- 		/* image data and 1 byte write_memory_start cmd */
--		wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
-+		if (!msm_host->dsc)
-+			wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
-+		else
-+			wc = mode->hdisplay / 2 + 1;
- 
- 		dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL,
- 			DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
+
 -- 
-2.31.1
-
+With best wishes
+Dmitry
