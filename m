@@ -2,79 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 965564B0B7E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 11:55:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C6CE4B0BB1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 12:03:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240306AbiBJKzj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 05:55:39 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:33690 "EHLO
+        id S240449AbiBJLDk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 06:03:40 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:39126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240294AbiBJKzb (ORCPT
+        with ESMTP id S232915AbiBJLDj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 05:55:31 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 414BEC24
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 02:55:32 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id z19so9570790lfq.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 02:55:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=gAbvkkOMr7PxpULPtXuB0NxD4mTH8ipHNDayBfqdakY=;
-        b=KurLFWxVHDrlTwpwvUuZQ1Mh5fqIYbgqlEzuomiNqwTvgqpguB4OTtOqbR8bs86gRg
-         vD2Q0Ir7QyYtRQjV4HymrwX1TKUb3zrQpocNjaNbb3lAxjli8wee0ZozTwg4aKvvjPFL
-         Y/G/SPrvNs88DXKiKIDeBYJhsaDlTeQz5Tg9yF9Mukp8TvNbbB7EtOv6KoUNl9y335pb
-         AWTvG931NnBR/PrLaEkFKCwPPbrYZ+/6WC590Jfm8xgHBqVUr1OrpjMGqmQpql7eOP6s
-         tNRg9yNPzp9ow7/NAy8kYN76F6hsXQPodez1XUSQZYH1lI8UC2Wjn/Ioo/YNZcn8iI5e
-         gKHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=gAbvkkOMr7PxpULPtXuB0NxD4mTH8ipHNDayBfqdakY=;
-        b=eoeBTeTXVevw59GpfXxJ1Mlo68XQczKCWyhCBz3I9SROjC7dMqZakOrveZrCjHnigM
-         QDlbIPe7lwEWpkyM0gcvhSIP4ST+x5qTslidmKu/oDIoco6qxYod36Ze7yPxyiZW8UjQ
-         TjH9KWux3Jg13hVHgAmEcae8iuV/NeRjouGBPXfyVQUUio8GP3yMrnaSOOnOABbc0629
-         d1Oq2Lx1GgDtFwo8YhLzo494DhwnQ9WfgxEz4oemogaSZlOsuk2hKV/cIoixWnfoGkQ5
-         /Th7M7A0+6eYGdKW9SMyPTcv9UgGz32eEfkoDNKGM5tv8VPiHcW+4l+5Plqu+qCS2tt6
-         nptQ==
-X-Gm-Message-State: AOAM531W265awPtEn2C6DeXPyMqlApBunL4riWeVoU/ttuIL+s7xNMsE
-        d9VkfIBcVUmZ4s0Gw3u3OLedyw==
-X-Google-Smtp-Source: ABdhPJwwSMqQiT+3qMl2wffuwYEg7FwRpyq6E9ToujIF0jMlsoGmBMJxIdnAVQKe0fK/8rkVJd5dRw==
-X-Received: by 2002:ac2:598e:: with SMTP id w14mr4783080lfn.218.1644490530615;
-        Thu, 10 Feb 2022 02:55:30 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id d38sm2218378lfv.8.2022.02.10.02.55.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Feb 2022 02:55:30 -0800 (PST)
-Message-ID: <3035968b-8323-5380-afe3-4ddcc1ca65c4@linaro.org>
-Date:   Thu, 10 Feb 2022 13:55:27 +0300
+        Thu, 10 Feb 2022 06:03:39 -0500
+Received: from mailgw02.mediatek.com (unknown [210.61.82.184])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCF84FE2;
+        Thu, 10 Feb 2022 03:03:40 -0800 (PST)
+X-UUID: f16f89fe7ede40bcb9dc9a77101ecd2b-20220210
+X-UUID: f16f89fe7ede40bcb9dc9a77101ecd2b-20220210
+Received: from mtkmbs10n2.mediatek.inc [(172.21.101.183)] by mailgw02.mediatek.com
+        (envelope-from <yong.wu@mediatek.com>)
+        (Generic MTA with TLSv1.2 ECDHE-RSA-AES256-GCM-SHA384 256/256)
+        with ESMTP id 1689102185; Thu, 10 Feb 2022 19:03:37 +0800
+Received: from mtkcas10.mediatek.inc (172.21.101.39) by
+ mtkmbs07n2.mediatek.inc (172.21.101.141) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.2; Thu, 10 Feb 2022 19:03:36 +0800
+Received: from mhfsdcap04 (10.17.3.154) by mtkcas10.mediatek.inc
+ (172.21.101.73) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Thu, 10 Feb 2022 19:03:35 +0800
+Message-ID: <7c517b787d1dd768372d0141f5078e3089e883cb.camel@mediatek.com>
+Subject: Re: [PATCH v6 25/35] iommu/mediatek: Migrate to aggregate driver
+From:   Yong Wu <yong.wu@mediatek.com>
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>,
+        "Joerg Roedel" <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        "Rob Clark" <robdclark@gmail.com>,
+        Russell King <rmk+kernel@arm.linux.org.uk>,
+        Saravana Kannan <saravanak@google.com>
+Date:   Thu, 10 Feb 2022 19:03:35 +0800
+In-Reply-To: <20220127200141.1295328-26-swboyd@chromium.org>
+References: <20220127200141.1295328-1-swboyd@chromium.org>
+         <20220127200141.1295328-26-swboyd@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.2 
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [REPOST PATCH v4 08/13] drm/msm/disp/dpu1: Don't use DSC with
- mode_3d
-Content-Language: en-GB
-To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20220210103423.271016-1-vkoul@kernel.org>
- <20220210103423.271016-9-vkoul@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220210103423.271016-9-vkoul@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-MTK:  N
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNPARSEABLE_RELAY autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,78 +61,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/02/2022 13:34, Vinod Koul wrote:
-> We cannot enable mode_3d when we are using the DSC. So pass
-> configuration to detect DSC is enabled and not enable mode_3d
-> when we are using DSC
+On Thu, 2022-01-27 at 12:01 -0800, Stephen Boyd wrote:
+> Use an aggregate driver instead of component ops so that we can get
+> proper driver probe ordering of the aggregate device with respect to
+> all
+> the component devices that make up the aggregate device.
 > 
-> We add a helper dpu_encoder_helper_get_dsc() to detect dsc
-> enabled and pass this to .setup_intf_cfg()
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Cc: Yong Wu <yong.wu@mediatek.com>
+> Cc: Joerg Roedel <joro@8bytes.org>
+> Cc: Will Deacon <will@kernel.org>
+> Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+> Cc: "Rafael J. Wysocki" <rafael@kernel.org>
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Russell King <rmk+kernel@arm.linux.org.uk>
+> Cc: Saravana Kannan <saravanak@google.com>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-You seem to insist on this.
-Ok, lets agree that you did not test any other topologies and let 
-anybody adding support for SDE_RM_TOPOLOGY_DUALPIPE_3DMERGE_DSC handle this.
++ Krzysztof
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+The memory/mtk-smi.c is expected to get Ack from Krzysztof.
+
+Tested-by: Yong Wu <yong.wu@mediatek.com>
 
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 4 ++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 4 ++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c           | 7 ++++++-
->   3 files changed, 14 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> index 34a6940d12c5..ed37a4c21596 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> @@ -70,6 +70,10 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
->   	intf_cfg.intf_mode_sel = DPU_CTL_MODE_SEL_CMD;
->   	intf_cfg.stream_sel = cmd_enc->stream_sel;
->   	intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
-> +	intf_cfg.dsc = dpu_encoder_helper_get_dsc(phys_enc);
-> +	if (intf_cfg.dsc)
-> +		intf_cfg.mode_3d = 0;
-> +
->   	ctl->ops.setup_intf_cfg(ctl, &intf_cfg);
->   }
->   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> index ddd9d89cd456..218009855fca 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> @@ -284,6 +284,10 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
->   	intf_cfg.intf_mode_sel = DPU_CTL_MODE_SEL_VID;
->   	intf_cfg.stream_sel = 0; /* Don't care value for video mode */
->   	intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
-> +	intf_cfg.dsc = dpu_encoder_helper_get_dsc(phys_enc);
-> +	if (intf_cfg.dsc)
-> +		intf_cfg.mode_3d = 0;
-> +
->   	if (phys_enc->hw_pp->merge_3d)
->   		intf_cfg.merge_3d = phys_enc->hw_pp->merge_3d->idx;
->   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index 49659165cea8..6d5268b7da90 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -536,7 +536,12 @@ static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
->   
->   	intf_cfg |= (cfg->intf & 0xF) << 4;
->   
-> -	if (cfg->mode_3d) {
-> +	/* In DSC we can't set merge, so check for dsc and complain */
-> +	if (cfg->mode_3d && cfg->dsc)
-> +		pr_err("DPU1: DSC and Merge 3D both are set!! it may not work\n");
-> +
-> +	/* set merge only when dsc is not set */
-> +	if (cfg->mode_3d && !cfg->dsc) {
->   		intf_cfg |= BIT(19);
->   		intf_cfg |= (cfg->mode_3d - 0x1) << 20;
->   	}
+>  drivers/iommu/mtk_iommu.c    | 14 +++++++++-----
+>  drivers/iommu/mtk_iommu.h    |  6 ++++--
+>  drivers/iommu/mtk_iommu_v1.c | 14 +++++++++-----
+>  drivers/memory/mtk-smi.c     | 10 ++++------
+>  4 files changed, 26 insertions(+), 18 deletions(-)
 
+[...]
 
--- 
-With best wishes
-Dmitry
+> diff --git a/drivers/memory/mtk-smi.c b/drivers/memory/mtk-smi.c
+> index e201e5976f34..0910fe109f53 100644
+> --- a/drivers/memory/mtk-smi.c
+> +++ b/drivers/memory/mtk-smi.c
+> @@ -175,6 +175,8 @@ mtk_smi_larb_bind(struct device *dev, struct
+> device *master, void *data)
+>  			larb->larbid = i;
+>  			larb->mmu = &larb_mmu[i].mmu;
+>  			larb->bank = larb_mmu[i].bank;
+> +
+> +			pm_runtime_enable(dev);
+>  			return 0;
+>  		}
+>  	}
+> @@ -450,15 +452,11 @@ static int mtk_smi_larb_probe(struct
+> platform_device *pdev)
+>  	if (ret < 0)
+>  		return ret;
+>  
+> -	pm_runtime_enable(dev);
+>  	platform_set_drvdata(pdev, larb);
+>  	ret = component_add(dev, &mtk_smi_larb_component_ops);
+> -	if (ret)
+> -		goto err_pm_disable;
+> -	return 0;
+> +	if (!ret)
+> +		return 0;
+>  
+> -err_pm_disable:
+> -	pm_runtime_disable(dev);
+>  	device_link_remove(dev, larb->smi_common_dev);
+
+Here is right. But at a glance code here, I was confused why it always
+call device_link_remove here. If we have v7, Could you help keep the
+original format? something like below. This may be helpful when we add
+new error flow in future.
+
+        if (ret)
+              goto dev_link_remove;
+        return ret;
+
+dev_link_remove:
+        device_link_remove(dev, larb->smi_common_dev);
+
+Thanks.     
+
+>  	return ret;
+>  }
+
