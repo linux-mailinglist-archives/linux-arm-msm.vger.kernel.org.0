@@ -2,62 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B09B64B1091
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 15:39:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F9CA4B10CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 15:48:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243009AbiBJOjY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 09:39:24 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49290 "EHLO
+        id S243163AbiBJOsD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 09:48:03 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:58730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231510AbiBJOjY (ORCPT
+        with ESMTP id S243196AbiBJOsC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 09:39:24 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50B2BBCD;
-        Thu, 10 Feb 2022 06:39:25 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 09422B8255A;
-        Thu, 10 Feb 2022 14:39:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D76C340E5;
-        Thu, 10 Feb 2022 14:39:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1644503962;
-        bh=cMf1z3wP7NeBeseMjIqYtP1TfS0kXcL2He69HWdeLuI=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=IxSgGTvf/EvSoYruT2PiaQkFRiE6Ew1VBuuFX3nR4iKqcid6+UJRXa+5+N35Qn/GH
-         Ow+X+6MaVKCb0P1IWcCl7wd0oG0MlfMISybY5iL8zap3LB+2zST8L6O0pFMgIM6UUS
-         +vW3nATJWc8M/XEc05QCkYCPFQF0xoyx55CjrDtL0dOFwpTntTs4WDE7jHCYAxy5++
-         HVLuHIXqub1fRup9VgdcGaUChh3VwElu4jMKYcFr0HtGUNTgd3UhPAFMrd3nuaFb9S
-         YuyNt/XW/OgAosV0UY0Rm6LAcCbraX9bdjh2IJ+XjaGUqJ5LVgB0wfs0HlGrdpw+P+
-         6hmqjIisufubA==
-Received: by mail-ej1-f49.google.com with SMTP id k25so15864336ejp.5;
-        Thu, 10 Feb 2022 06:39:22 -0800 (PST)
-X-Gm-Message-State: AOAM5310aRVKC+uznPjenEkvavutRF2BWMYwZ6f9oZuJi/lCbJTpmd3o
-        js9rDKW0s/UtsLZNr7G7bt3CVs95JWby53UN+A==
-X-Google-Smtp-Source: ABdhPJx+AuAxADrHvdwM8twasfxAV19kvrVXLNmJ/T4wMBi49Xr3AAtUec55ECwrlMkUXnh3hsKVjsr5l1JcUPEVrck=
-X-Received: by 2002:a17:907:628c:: with SMTP id nd12mr6596093ejc.82.1644503961103;
- Thu, 10 Feb 2022 06:39:21 -0800 (PST)
+        Thu, 10 Feb 2022 09:48:02 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCE63D69
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 06:48:03 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id v5-20020a17090a4ec500b001b8b702df57so8764107pjl.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 06:48:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UTlhzilwZJ+GV0G2sShDk8AU6wcwqOk4GnRwj06CIc0=;
+        b=Yl5VNVAN/O18uDWiOHZoyJaHv8Yj2hrpvi9Ai+sn/m8cHmMi3G/uOE7DuKDKtX/Eik
+         jV7mgLokb+hr+I90QsDfmFWsrOvAsm1JZFxwN0ai68h6ekLNQ8L0NG/P3eBQBhLbaCD+
+         mivFLnVauQDBJSFZIY4MGoRFJQFp6MM0ob9CMOneu/uA0OfUG4odyKXaLhcm4AjdUFXC
+         woeCqSWUNhX098pO/ko1m2rnp1n9iSzZaO+gXYbJ12/21rblVvhJdWDI3aDleljLpYmB
+         0OlGek5ROehPCw/ZUGRXIUs0QtTlN7AiUIEyQbDNlOxv5l3jWmYpyixt4ivSBPRBjm0g
+         rMGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UTlhzilwZJ+GV0G2sShDk8AU6wcwqOk4GnRwj06CIc0=;
+        b=RdI0l4hqvBUdtmzstXXQiNdVXeEKKb2RxmAOWZngysu2/gPdMIPtqawEAWsm1fc8K+
+         5GLeU5P5dEImbL7bvyH1b4sJ1XNtGtdoCZMCutINnUF9eRqBBryu2AXTrI2CpkcsEdVZ
+         xPLo8Cb268f2IVyR4rvos+84OgLyNTV9Adwriho3Fc4bGL03D3mgEXoszqDSwgp/7w6E
+         +rDrbr2GdDY2VXq4AJxACLZ5VUzJw+nQX0P532/DW776bb6W1NtsAKY+oxqQP+bWOltl
+         Qo/sHZoV/tk/u8M7VuwklbIqobAVV0eQN9QtifGkhkhtbF11gnO5UlON2+Avyv+MLzVO
+         RNgw==
+X-Gm-Message-State: AOAM533OtjOpQw4sj0thswju1/mXjP7HA5f0F6Fz7pkLI1T8ISg7ssvV
+        FSLslaYz4vERfyxh2D/ySrZ62zx7aAWVvDs=
+X-Google-Smtp-Source: ABdhPJzNPs7oJuxf+RGN9n4bAwd3UkaD8iV0GSwuukEFfop8/LTWoR3TpFFs+XL+xfJqsfA3hcVDWw==
+X-Received: by 2002:a17:902:b684:: with SMTP id c4mr8126073pls.122.1644504483364;
+        Thu, 10 Feb 2022 06:48:03 -0800 (PST)
+Received: from localhost.localdomain ([27.111.75.88])
+        by smtp.gmail.com with ESMTPSA id p11sm15960117pff.45.2022.02.10.06.48.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Feb 2022 06:48:03 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     lorenzo.pieralisi@arm.com, bhelgaas@google.com
+Cc:     svarbanov@mm-sol.com, bjorn.andersson@linaro.org, robh@kernel.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2] PCI: qcom: Add support for handling MSIs from 8 endpoints
+Date:   Thu, 10 Feb 2022 20:17:45 +0530
+Message-Id: <20220210144745.135721-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20220210065132.234341-1-vkoul@kernel.org>
-In-Reply-To: <20220210065132.234341-1-vkoul@kernel.org>
-From:   Rob Herring <robh@kernel.org>
-Date:   Thu, 10 Feb 2022 08:39:09 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqKPO0TGDjD1+_Tbg39YRpxRCcH_LTy83SHcMBzFA_tw2g@mail.gmail.com>
-Message-ID: <CAL_JsqKPO0TGDjD1+_Tbg39YRpxRCcH_LTy83SHcMBzFA_tw2g@mail.gmail.com>
-Subject: Re: [PATCH] kbuild: Don't report disabled nodes with duplicate addresses
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Masahiro Yamada <masahiroy@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michal Marek <michal.lkml@markovi.net>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -66,67 +70,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 10, 2022 at 12:51 AM Vinod Koul <vkoul@kernel.org> wrote:
->
-> Duplicated unit address is okay if we have only one such node enabled.
-> So, remove '-Wno-unique_unit_address' from DTC_FLAGS.
->
-> This helps in reducing warnings in qcom dts from
->
->    6483 unique_unit_address
->    1108 simple_bus_reg
->     764 avoid_unnecessary_addr_size
->     712 unit_address_vs_reg
->     120 graph_child_address
->      32 unique_unit_address_if_enabled
->
-> after this patch:
->     277 simple_bus_reg
->     191 avoid_unnecessary_addr_size
->     178 unit_address_vs_reg
->      32 unique_unit_address_if_enabled
->      30 graph_child_address
+The DWC controller used in the Qcom Platforms are capable of addressing the
+MSIs generated from 8 different endpoints each with 32 vectors (256 in
+total). Currently the driver is using the default value of addressing the
+MSIs from 1 endpoint only. Extend it by passing the MAX_MSI_IRQS to the
+num_vectors field of pcie_port structure.
 
-I'm confused how unique_unit_address changes the count for others?
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
 
->
-> which would help people focus on the actual warnings and fix them.
+Changes in v2:
 
-Hopefully you do a 'sort -u' on the warnings to dedup them...
+* Rebased on top of v5.17-rc1
 
->
-> Suggested-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
->  scripts/Makefile.lib | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
->
-> diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
-> index 79be57fdd32a..7e4f6671d950 100644
-> --- a/scripts/Makefile.lib
-> +++ b/scripts/Makefile.lib
-> @@ -299,7 +299,8 @@ quiet_cmd_gzip = GZIP    $@
->  # DTC
->  # ---------------------------------------------------------------------------
->  DTC ?= $(objtree)/scripts/dtc/dtc
-> -DTC_FLAGS += -Wno-interrupt_provider
-> +DTC_FLAGS += -Wno-interrupt_provider \
-> +       -Wno-unique_unit_address
->
->  # Disable noisy checks by default
->  ifeq ($(findstring 1,$(KBUILD_EXTRA_WARN)),)
-> @@ -307,8 +308,9 @@ DTC_FLAGS += -Wno-unit_address_vs_reg \
->         -Wno-avoid_unnecessary_addr_size \
->         -Wno-alias_paths \
->         -Wno-graph_child_address \
-> -       -Wno-simple_bus_reg \
-> -       -Wno-unique_unit_address
-> +       -Wno-simple_bus_reg
-> +else
-> +DTC_FLAGS += -Wunique_unit_address_if_enabled
->  endif
->
->  ifneq ($(findstring 2,$(KBUILD_EXTRA_WARN)),)
-> --
-> 2.31.1
->
+ drivers/pci/controller/dwc/pcie-qcom.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index c19cd506ed3f..03e766f6937e 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1556,6 +1556,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+ 	pci->dev = dev;
+ 	pci->ops = &dw_pcie_ops;
+ 	pp = &pci->pp;
++	pp->num_vectors = MAX_MSI_IRQS;
+ 
+ 	pcie->pci = pci;
+ 
+-- 
+2.25.1
+
