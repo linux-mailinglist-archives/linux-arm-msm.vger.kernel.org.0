@@ -2,69 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A35B4B11BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 16:33:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A56B24B11D0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 16:38:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243640AbiBJPdW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 10:33:22 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:32996 "EHLO
+        id S243682AbiBJPiA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 10:38:00 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:35422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243638AbiBJPdV (ORCPT
+        with ESMTP id S238346AbiBJPh7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 10:33:21 -0500
+        Thu, 10 Feb 2022 10:37:59 -0500
 Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0401A1D6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 07:33:22 -0800 (PST)
-Received: by mail-qk1-x731.google.com with SMTP id o25so5166677qkj.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 07:33:21 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B54D9C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 07:38:00 -0800 (PST)
+Received: by mail-qk1-x731.google.com with SMTP id bs32so5212291qkb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 07:38:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=FL/C4Z8yVwITrvLePD7PW2Jh2OQUiy4zpTquT5szMek=;
-        b=qeouTAFQBSLpoh8wkQn7kXpOttRk9Gv3ezXt7zdNPmb9P5eqkcvquLwiOSj+NY0O39
-         jExbqpUz6GTIgvr7F/SNKwhxlIaddLakzvNgGipS9nQPQD/FUFbmaG/KyqZNIEVuyRCS
-         KsQBGYv/RmF8VclP+Wwo0RYy+LWTRyLfMSWDzdaqeDV5s3JubMvBq0+/A4UuFhXBpfKx
-         oSWFDteSho1x3i7f7d3rRIQ1JlTRrNXp6O1NcEcyfY7M9xARz78qi33mBj74rVBKPMP6
-         5k4d/oO7hUo4a9LJSy4h7muGwin3Woq6P6oBN8NWcfzTFgp6MWNfT7dp/VEqViTIsF1m
-         kt9A==
+        bh=dOIcJ6wQhY02nLa4jykUVh5HXVg6014x9J8/El/aByw=;
+        b=UnZkf5JbRLhoxh2+rUNY0Y7PyxIkqLcEdAF/0BqSbgfUP68ieI6zShxTLjzggvblj0
+         Aj2Mdb5FslsJeKFU+0QqDjfP1EkTs1tyV5j8+ei1fKWcm9+IxH4lo89gFqjchrXSt5tt
+         ERnE61tF150G7lLUgTQIJQI26MyyKwU7w89Ed0YD7z6WctcOH3BlvyaI7VWVgE9o0a/l
+         du51in55C+DMxgsCWe40l/YP0VW9oyOHbOmcGmlUPxSOWGJHu/Nc/M5rGO59GLPxjC4M
+         6ciuirA0sWydcYZqHJ8y5dI3Lwy2JPKmkk5TfkHlc8cwzzbBfhNFo3WbpL7f7RJSnGH+
+         h6TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=FL/C4Z8yVwITrvLePD7PW2Jh2OQUiy4zpTquT5szMek=;
-        b=ptlbvAJlVi1JUqQzCKkh7wGXlK1DTmGOZ6hHwXE0ciXgviGouZ2xIwK2ytR9i2AJ7s
-         AkIZiAriqiqyMqO6qpT5ndCLrPW4jYdc9xqyfUlBa0IHod/3T1ebqWp3FJn+ubJF4P9J
-         pY8IisChIjRJG58yUrbUZrLK3tulzV4+/Z+6+h/lPKuavBw65Brx5OBzeXIUTH2qAr5v
-         cUCSPq92I0AyG3qCIjZIR6gxrykZqQ5mTu/gjPGaIOrV+L61YAL7vWAKzteT2GQ8nIT4
-         m82voWxweMQl7MlBofBERx/dzJfNQWJgCHh8aIG71KhUO41perm/5LI7fAVxfghXKvwd
-         TUfA==
-X-Gm-Message-State: AOAM531Qk0XpR8zesf209htypmpxoMdEKWsB23Styq7RnnjOxb4ToFg2
-        0qNQYCwGqdGVXOpxxq2pjeTZKLIkfCSPq0AM/WLtMy2dNzo=
-X-Google-Smtp-Source: ABdhPJyHyx35eqG+mDoZXo+4b0lEDjXxuVtsuUbpESl7ZzUT3JUOOliWvKZ4XFvW9Lywzp2UQZCzw2j854aPgD09pf0=
-X-Received: by 2002:a05:620a:1664:: with SMTP id d4mr4053644qko.363.1644507201150;
- Thu, 10 Feb 2022 07:33:21 -0800 (PST)
+        bh=dOIcJ6wQhY02nLa4jykUVh5HXVg6014x9J8/El/aByw=;
+        b=qce4hgeJh2cxxz7YXzsgcYdz9XVTTt/mCXudJCywtTZIc2fxsDBEBZ8TkpxYS1sBfD
+         mV6xle7l6kmR1FqejLwJ7CZsiOpd7lhXGipKityWgOD9uHlGW9XdOq71ye42/RDci+J9
+         Do6w+CjsOahS4DQFog3cYPMhNZwEmwDqrK2ZTm8ZVzUyyLzpgg0x7mWq7R038jB4atXK
+         d/Fp0jkXztavGiMxygNbefVZmHWRi+bOg/IhxjM27gW9MwTFRlgGAC89b4aRf8kUZxiL
+         BsQq9BxeKBJ7Rqw050IR2Er6P6yT/OY76p+bIzAOxtq9DMBReFhvwLTq/ZDQfx9GUIay
+         3mFQ==
+X-Gm-Message-State: AOAM531PlP4S+n4xeFGU2r85QXXwuAcnm/kRtmYHjQkNy9VGdyLuEPyQ
+        x4Yw7/S1B6I16/96flEpxezYUCZNLSeyqgA2OOMqNQ==
+X-Google-Smtp-Source: ABdhPJxgzM9OcdSJ67Pr7qWlAMGObbohX1R5smPQ9jC8pkCvNMgwYm8hy0eWMluvW3d8pXc4PaefPMVtp4VmedLAlW4=
+X-Received: by 2002:ae9:eb87:: with SMTP id b129mr4223200qkg.203.1644507479554;
+ Thu, 10 Feb 2022 07:37:59 -0800 (PST)
 MIME-Version: 1.0
 References: <20220203164629.1711958-1-vladimir.zapolskiy@linaro.org>
- <20220203164629.1711958-3-vladimir.zapolskiy@linaro.org> <Yf1q+wlXo2LAeZX+@ripper>
- <Yf1zhojUSxlMNZgV@sirena.org.uk> <Yf14LADJ26G9ByZu@ripper>
- <Yf1/X1rXm4QbyoFN@sirena.org.uk> <846cdc17-891d-2ee4-fc89-7cf6fbdebc1d@linaro.org>
- <YgEvN0lXXu4lDCN5@sirena.org.uk> <682b7ffe-e162-bcf7-3c07-36b3a39c25ab@linaro.org>
- <YgJoX+Ajgt4dweQJ@sirena.org.uk>
-In-Reply-To: <YgJoX+Ajgt4dweQJ@sirena.org.uk>
+ <20220203164711.1712090-1-vladimir.zapolskiy@linaro.org> <CAG3jFyuzJmRk47kfd_zVw3g+_eKUQVG6y5hU0z1KfXPEM4quNg@mail.gmail.com>
+ <CAMZdPi9cbH2Xiwr+QOF46pqZEtaZCBbq8Zq-3gUaYDp7MekJSA@mail.gmail.com>
+In-Reply-To: <CAMZdPi9cbH2Xiwr+QOF46pqZEtaZCBbq8Zq-3gUaYDp7MekJSA@mail.gmail.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 10 Feb 2022 18:33:09 +0300
-Message-ID: <CAA8EJppEjFqPUBXtdkTsx2U2CjsrjNsXEmrx_DkAS9a9jmB9cg@mail.gmail.com>
-Subject: Re: [PATCH 2/9] dt-bindings: i2c: qcom-cci: add description of a
- vbus-supply property
-To:     Mark Brown <broonie@kernel.org>
+Date:   Thu, 10 Feb 2022 18:37:48 +0300
+Message-ID: <CAA8EJpri7d+RPSaUKG+g3HUbiNawCVnnNtW-xA8ON+Obm5x5yw@mail.gmail.com>
+Subject: Re: [PATCH 8/9] i2c: qcom-cci: add support of optional vbus-supply regulators
+To:     Loic Poulain <loic.poulain@linaro.org>
 Cc:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Wolfram Sang <wsa@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linus.walleij@linaro.org, Loic Poulain <loic.poulain@linaro.org>,
         Robert Foss <robert.foss@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+        Wolfram Sang <wsa@kernel.org>, linux-i2c@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -76,41 +69,144 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 8 Feb 2022 at 16:16, Mark Brown <broonie@kernel.org> wrote:
+On Fri, 4 Feb 2022 at 14:42, Loic Poulain <loic.poulain@linaro.org> wrote:
 >
-> On Mon, Feb 07, 2022 at 08:31:30PM +0200, Vladimir Zapolskiy wrote:
-> > On 2/7/22 4:39 PM, Mark Brown wrote:
+> On Fri, 4 Feb 2022 at 12:03, Robert Foss <robert.foss@linaro.org> wrote:
+> >
+> > On Thu, 3 Feb 2022 at 17:47, Vladimir Zapolskiy
+> > <vladimir.zapolskiy@linaro.org> wrote:
+> > >
+> > > The change adds handling of optional vbus regulators in the driver.
+> > >
+> > > Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> > > ---
+> > >  drivers/i2c/busses/i2c-qcom-cci.c | 49 +++++++++++++++++++++++++++++++
+> > >  1 file changed, 49 insertions(+)
+> > >
+> > > diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+> > > index 775945f7b4cd..2fc7f1f2616f 100644
+> > > --- a/drivers/i2c/busses/i2c-qcom-cci.c
+> > > +++ b/drivers/i2c/busses/i2c-qcom-cci.c
+> > > @@ -11,6 +11,7 @@
+> > >  #include <linux/of.h>
+> > >  #include <linux/platform_device.h>
+> > >  #include <linux/pm_runtime.h>
+> > > +#include <linux/regulator/consumer.h>
+> > >
+> > >  #define CCI_HW_VERSION                         0x0
+> > >  #define CCI_RESET_CMD                          0x004
+> > > @@ -480,6 +481,20 @@ static void cci_disable_clocks(struct cci *cci)
+> > >  static int __maybe_unused cci_suspend_runtime(struct device *dev)
+> > >  {
+> > >         struct cci *cci = dev_get_drvdata(dev);
+> > > +       struct regulator *bus_regulator;
+> > > +       unsigned int i;
+> > > +
+> > > +       for (i = 0; i < cci->data->num_masters; i++) {
+> > > +               if (!cci->master[i].cci)
+> > > +                       continue;
+> > > +
+> > > +               bus_regulator = cci->master[i].adap.bus_regulator;
+> > > +               if (!bus_regulator)
+> > > +                       continue;
+> > > +
+> > > +               if (regulator_is_enabled(bus_regulator) > 0)
+> >
+> > Is this check needed? No matter the current status of the regulator,
+> > we'd like to disable it, and from my reading regulator_disable can be
+> > called for already disabled regulators.
 >
-> > > The bindings are ABI, it doesn't seem like a good idea to add new ABI as
-> > > a temporary bodge.
+> +1, but why do we even assign this regulator to each adapter, a
+> simpler solution would be to have the regulator part of the cci
+> struct, and simply disable/enable it on runtime suspend/resume,
+> without extra loop/check. I2C core does nothing with
+> adap.bus_regulator anyway (5a7b95fb993e has been partially reverted).
 
-It's not a temporary bodge. The i2c-core piece was reverted, but not
-the mediatek driver code/bindings.
-Vladimir has provided a replacement for the i2c-core code handling the
-vbus-regulator. When thee code will be back, the code from i2c-cci can
-be removed. The bindings will be the same.
+I like the idea of having the regulator per bus (rather than per
+controller). However instead of pushing handling these changes to the
+CCI controller, I'd suggest to move this code to the i2c-core itself.
+The original patch tried to do the regulator control per client.
+Instead it should be done per adapter. I think this should also solve
+the reported issue for AMD controllers (since that i2c adapters won't
+have vbus-supply).
 
 >
-> > The bindings are supposed to describe hardware, thus it's natural to extend
-> > them, I believe there is a trilemma in this particular case:
-> > 1) add optional vbus-supply property to all I2C master controllers or I2C
-> >    busses in case of multiple I2C busses managed by a single controller,
-> > 2) add optional vbus-supply property to all I2C slave devices,
->
-> If you add a named supply to all I2C controllers or devices then if any
-> of them have an actual vbus supply there will be a namespace collision.
->
-> > 3) ignore peculiarities of particular (multiple in fact) PCB designs and
-> >    a necessity of adding a regulator finely described as a pull-up for I2C
-> >    bus lines.
->
-> There's also the option of representing this as a separate thing on or
-> part of the bus.
+> >
+> > > +                       regulator_disable(bus_regulator);
+> > > +       }
+> > >
+> > >         cci_disable_clocks(cci);
+> > >         return 0;
+> > > @@ -488,12 +503,30 @@ static int __maybe_unused cci_suspend_runtime(struct device *dev)
+> > >  static int __maybe_unused cci_resume_runtime(struct device *dev)
+> > >  {
+> > >         struct cci *cci = dev_get_drvdata(dev);
+> > > +       struct regulator *bus_regulator;
+> > > +       unsigned int i;
+> > >         int ret;
+> > >
+> > >         ret = cci_enable_clocks(cci);
+> > >         if (ret)
+> > >                 return ret;
+> > >
+> > > +       for (i = 0; i < cci->data->num_masters; i++) {
+> > > +               if (!cci->master[i].cci)
+> > > +                       continue;
+> > > +
+> > > +               bus_regulator = cci->master[i].adap.bus_regulator;
+> > > +               if (!bus_regulator)
+> > > +                       continue;
+> > > +
+> > > +               if (!regulator_is_enabled(bus_regulator)) {
+> > > +                       ret = regulator_enable(bus_regulator);
+> > > +                       if (ret)
+> > > +                               dev_err(dev, "failed to enable regulator: %d\n",
+> > > +                                       ret);
+> > > +               }
+> > > +       }
+> > > +
+> > >         cci_init(cci);
+> > >         return 0;
+> > >  }
+> > > @@ -593,6 +626,7 @@ static int cci_probe(struct platform_device *pdev)
+> > >         dev_dbg(dev, "CCI HW version = 0x%08x", val);
+> > >
+> > >         for_each_available_child_of_node(dev->of_node, child) {
+> > > +               struct regulator *bus_regulator;
+> > >                 struct cci_master *master;
+> > >                 u32 idx;
+> > >
+> > > @@ -637,6 +671,21 @@ static int cci_probe(struct platform_device *pdev)
+> > >                         master->cci = NULL;
+> > >                         goto error_i2c;
+> > >                 }
+> > > +
+> > > +               /*
+> > > +                * It might be possible to find an optional vbus supply, but
+> > > +                * it requires to pass the registration of an I2C adapter
+> > > +                * device and its association with a bus device tree node.
+> > > +                */
+> > > +               bus_regulator = devm_regulator_get_optional(&master->adap.dev,
+> > > +                                                           "vbus");
+> > > +               if (IS_ERR(bus_regulator)) {
+> > > +                       ret = PTR_ERR(bus_regulator);
+> > > +                       if (ret == -EPROBE_DEFER)
+> > > +                               goto error_i2c;
+> > > +                       bus_regulator = NULL;
+> > > +               }
+> > > +               master->adap.bus_regulator = bus_regulator;
+> > >         }
+> > >
+> > >         ret = cci_reset(cci);
+> > > --
+> > > 2.33.0
+> > >
+> >
+> > With the above nit sorted, feel free to add my r-b.
+> >
+> > Reviewed-by: Robert Foss <robert.foss@linaro.org>
 
-4) (which you have implemented in your patch). Add support for  the
-vbus-supplies property for the I2C CCI controllers.
 
-This is the option I'd vote for.
 
 -- 
 With best wishes
