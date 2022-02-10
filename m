@@ -2,64 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC7CC4B04BF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 06:08:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 39B724B0657
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 07:38:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229802AbiBJFIZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 00:08:25 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42122 "EHLO
+        id S235240AbiBJGhz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 01:37:55 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:40466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232695AbiBJFIY (ORCPT
+        with ESMTP id S232448AbiBJGhz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 00:08:24 -0500
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 799C6291
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Feb 2022 21:08:26 -0800 (PST)
-Received: by mail-oi1-x22d.google.com with SMTP id 4so4768674oil.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Feb 2022 21:08:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=17HQ1lZ4Nfz73vYr3iF8T8txXNV0ECOTIWhcMcq56Ns=;
-        b=MY0483PAAismrHYbFZFzShmOwL5Bjug/y7G2BDSpPqDsC3dbhYUAsmCP85NC5oTMAw
-         RabL0o9i9iYRc6BV1JhmtUop9PRVeFYzXUdD0l7OIj7227F+vaZnf1r5a4Rs0FYzUdDz
-         1AuW6LLRyVDuk/LsmboGoT4Q4SjwuJKuyB4SKpwAAGRAV8BOgxOyyNhiXkfK+fUWz32z
-         unXibIaPtrwqkwC4UyGy2Srwq1w4VLAty5EIQRLlsxhUTnoWXtoTABGJ97jhLZDSXB55
-         gPuW3DBHMD8J2i7DnKW5ISkkHXsPuKLc9gtMOaE8OrizMCLVBoFJ2pdCdHfV/OS0gAy8
-         sssQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=17HQ1lZ4Nfz73vYr3iF8T8txXNV0ECOTIWhcMcq56Ns=;
-        b=uadgKoxkYfFfRLkNIbIV+oZhtaIxKh390lKGNwf5vRBxhHKy+dvjblwJdhPPX+ag6n
-         RNvS8ZYy4atS7WsJLijFhiLiEuKJdJRo6sZ7sMGfo+l5rMj88D0tsDFzgJ8s3MyKlZTO
-         8h057u9BckxgZx8gfNWsrAMDzk5oiByVGsT1uhDBWbAx21BuC0aobscjdQSr+trRCk5q
-         Ajs8dEyuyBjsLyeLeJbKUIWcd1d5bYMO+pcOPhoq0wKRnd4DeBddvjV+34Gkh0SjN2Pn
-         KZ+ZsdinSeMVkSnSaf2yvlQixYEU2wR3A/p6e6Nar9WYqtYykjalqlqWr4cPol6nX0zS
-         8MPQ==
-X-Gm-Message-State: AOAM530Mz/aux7/R7QAXsfNms9jiQvM1uFqsEmy5KWIQzFcpePgPK81l
-        B2sUWh51lwwCE7M7gzXMO/dzNA==
-X-Google-Smtp-Source: ABdhPJwCiMJEvUF1a9t7kam4kZ/xoR3EK6VXaI8vakYWaJc8fUukLGyPwT9ZZx9m4Dvk6OnjNH8j/w==
-X-Received: by 2002:a05:6808:168e:: with SMTP id bb14mr363067oib.106.1644469705872;
-        Wed, 09 Feb 2022 21:08:25 -0800 (PST)
-Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id p22sm8915912oae.33.2022.02.09.21.08.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Feb 2022 21:08:25 -0800 (PST)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] soc: qcom: socinfo: Add some more PMICs and SoCs
-Date:   Wed,  9 Feb 2022 21:10:43 -0800
-Message-Id: <20220210051043.748275-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.33.1
+        Thu, 10 Feb 2022 01:37:55 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4E8ED99;
+        Wed,  9 Feb 2022 22:37:55 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 7C7C0B823D6;
+        Thu, 10 Feb 2022 06:37:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B75EC004E1;
+        Thu, 10 Feb 2022 06:37:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1644475072;
+        bh=z4lRkqvA9DQ7TsxP/HD2yM3VcwHkhADf25A8nAfUPPY=;
+        h=From:To:Cc:Subject:Date:From;
+        b=XMYFDZWuCnNwCbO0JqGuBFjjwKtV3eRY1pJQnk/2dx16lEIgOwyk5ZJ3HQpNjdmHe
+         OXmbvyVVmqMHzFOhb3VEGZ43l37PMyP3mmNGaG/pe0cjEGxl6utyAB2K9LUPG49RQL
+         6LThtW423nPIcigjXZAchigPlguJrBSUbeGdaZTFzU4RN5QbzuDgYJPbG2DAXi10Y7
+         rR0Sle+NbSQEsS9MfCB7q0mDn5s+wAVBliDpuEtJ0hawUmGxMQWJnpmtsfQaSotF0Y
+         97016YbutPPsDEFr/ylBMx+fgCL746KId+BfLpM8UVo3QvDdBLtoP1jshDY1WjN1oP
+         Wce2WcEtZyVWw==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v4 00/13] drm/msm: Add Display Stream Compression Support
+Date:   Thu, 10 Feb 2022 12:07:26 +0530
+Message-Id: <20220210063739.233634-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -67,48 +59,100 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add SM8350, SC8280XP, SA8540P and one more SM8450 and various PMICs
-found on boards on these platforms to the socinfo driver.
-
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/soc/qcom/socinfo.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index 6dc0f39c0ec3..8b38d134720a 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -104,6 +104,14 @@ static const char *const pmic_models[] = {
- 	[36] = "PM8009",
- 	[38] = "PM8150C",
- 	[41] = "SMB2351",
-+	[47] = "PMK8350",
-+	[48] = "PM8350",
-+	[49] = "PM8350C",
-+	[50] = "PM8350B",
-+	[51] = "PMR735A",
-+	[52] = "PMR735B",
-+	[58] = "PM8450",
-+	[65] = "PM8010",
- };
- #endif /* CONFIG_DEBUG_FS */
+Display Stream Compression (DSC) compresses the display stream in host which
+is later decoded by panel. This series enables this for Qualcomm msm driver.
+This was tested on Google Pixel3 phone which use LGE SW43408 panel.
  
-@@ -314,10 +322,14 @@ static const struct soc_id soc_id[] = {
- 	{ 422, "IPQ6010" },
- 	{ 425, "SC7180" },
- 	{ 434, "SM6350" },
-+	{ 439, "SM8350" },
-+	{ 449, "SC8280XP" },
- 	{ 453, "IPQ6005" },
- 	{ 455, "QRB5165" },
- 	{ 457, "SM8450" },
- 	{ 459, "SM7225" },
-+	{ 460, "SA8540P" },
-+	{ 480, "SM8450" },
- };
+The changes include DSC data and hardware block enabling for DPU1 then
+support in encoder. We also add support in DSI and introduce required
+topology changes.
  
- static const char *socinfo_machine(struct device *dev, unsigned int id)
+In order for panel to set the DSC parameters we add dsc in drm_panel and set
+it from the msm driver.
+
+We still have dsc as a globabl entity. I think while doing DP + DSC we
+should be able to update it, right now comprehending the requirements are
+bit difficult.
+ 
+Complete changes which enable this for Pixel3 along with panel driver (not
+part of this series) and DT changes can be found at:
+git.linaro.org/people/vinod.koul/kernel.git pixel/dsc_v4
+ 
+Comments welcome!
+
+Changes since v3:
+ - Merge changes from Dmitry to have dsc per encoder instance
+ - add warning for dsc and mode3d enabled together
+ - set dsc in dpu_encoder_phys_vid as well
+ - remove dsc hardcoded mask
+ - use devm_kzalloc for memory allocation for dsc
+
+Changes since v2:
+ - Fix comments by Dimitry except the dsc being global.
+ - Move RM patch later for dependency on topology now
+ - Add patch for mode valid callback for dsi_mgr
+ - Add missing structure documentation patch
+ - Fix errors in mode_3d changes
+ - Rebase on v5.16-rc1 and test
+
+Changes since v1:
+ - Fix various issues spotted by kbuildbot
+ - Rebase to v5.15-rc3
+ - Remove unused fields and duplicate defines
+ - Enable DSC blocks only when DSC is enabled
+ - remove sdm845 feature mask, use 0
+ - Check for DSC in hw_ctl
+
+Changes since RFC:
+ - Drop the DT binding patch as we derive the configuration from panel
+ - Drop the drm api patch as we no longer need it (use pps drm api)
+ - Fix comments raised by Dimitry
+ - Add dsc parameters calculation from downstream
+
+Vinod Koul (13):
+  drm/msm/dsi: add support for dsc data
+  drm/msm/dsi: Pass DSC params to drm_panel
+  drm/msm/disp/dpu1: Add support for DSC
+  drm/msm/disp/dpu1: Add support for DSC in pingpong block
+  drm/msm/disp/dpu1: Add DSC for SDM845 to hw_catalog
+  drm/msm/disp/dpu1: Add DSC support in hw_ctl
+  drm/msm/disp/dpu1: Add support for DSC in encoder
+  drm/msm/disp/dpu1: Don't use DSC with mode_3d
+  drm/msm: Add missing structure documentation
+  drm/msm/disp/dpu1: Add support for DSC in topology
+  drm/msm/disp/dpu1: Add DSC support in RM
+  drm/msm/dsi: add mode valid callback for dsi_mgr
+  drm/msm/dsi: Add support for DSC configuration
+
+ drivers/gpu/drm/msm/Makefile                  |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 177 ++++++++++-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |   8 +
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  |   4 +
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |   4 +
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  20 ++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  13 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c    |  18 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h    |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c    | 210 +++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h    |  77 +++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |  13 +
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   |  32 ++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   |  14 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        |  56 ++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h        |   1 +
+ drivers/gpu/drm/msm/dsi/dsi.c                 |   5 +
+ drivers/gpu/drm/msm/dsi/dsi.h                 |   3 +
+ drivers/gpu/drm/msm/dsi/dsi.xml.h             |  10 +
+ drivers/gpu/drm/msm/dsi/dsi_host.c            | 289 +++++++++++++++++-
+ drivers/gpu/drm/msm/dsi/dsi_manager.c         |  12 +
+ drivers/gpu/drm/msm/msm_drv.h                 |  26 ++
+ include/drm/drm_panel.h                       |   7 +
+ 25 files changed, 1001 insertions(+), 4 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
+
 -- 
-2.33.1
+2.31.1
 
