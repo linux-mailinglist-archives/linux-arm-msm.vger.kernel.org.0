@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF34B4B02A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 03:01:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BE9E4B02A9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 03:01:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232964AbiBJB6O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Feb 2022 20:58:14 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:60376 "EHLO
+        id S233062AbiBJB6W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Feb 2022 20:58:22 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:33884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233481AbiBJB5Z (ORCPT
+        with ESMTP id S233757AbiBJB4N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Feb 2022 20:57:25 -0500
-Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 618F02AAAD
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Feb 2022 17:40:18 -0800 (PST)
-Received: by mail-oo1-xc36.google.com with SMTP id t75-20020a4a3e4e000000b002e9c0821d78so4669872oot.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Feb 2022 17:40:18 -0800 (PST)
+        Wed, 9 Feb 2022 20:56:13 -0500
+Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 545E02AAB4
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Feb 2022 17:41:26 -0800 (PST)
+Received: by mail-oo1-xc34.google.com with SMTP id p190-20020a4a2fc7000000b0031820de484aso4615579oop.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Feb 2022 17:41:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=xiMygS5GCAC4R42Lq/IZA4PNsqGvlfOWFaspwPB3zd4=;
-        b=GDyRGUOiPVTELBOLuWceTs67AV5WGP9ASQIzh/UJirlP8awCGqcWU51IAygUD5QxrU
-         U0qcljs5KaoeP8J113/DiGI2Tdd9uU/ymVfRd+FXMyKG1DGR+9FmkS/tahmtzHqTyFg+
-         8HGC8XHsISG11qfPA/mdGtyvfmkZ9mW/FakUg=
+        bh=7BvHswSXg9zN9k7P3bu3kJhfUU/WgKwQ6HEFpY+l4jA=;
+        b=Ewraufgtj1xMfakazeSpwx5MnBYDQHaeFVN1wLgspkWrMugkjtb49bIjLe5uO4rZnG
+         1/SsRTmx/SdfhAdZc4IcIwJP+dA8AJX591gYcpvbwF3giFkKi4T1Ft5Om1/eRIcZOEY/
+         B0i/ShAZtw1hvFkJ6P6wjp4UGB/ApLobqDUNY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=xiMygS5GCAC4R42Lq/IZA4PNsqGvlfOWFaspwPB3zd4=;
-        b=k89ZEvy22TJMlSuj0bzloetaxcm4s5hGCiOX69U2Ztp38omNBNrOQ/ixOqONDy32H4
-         MlALCVNjd6E5b794uo0iEyN2Z+weTouRp4KZ0yufBgauQPavIrepdI3XLlfT3wGVSJPR
-         95cuGkPFpYpsL91L27E8Ec/QT4BiqtHSoB6rJylp/XrlZI0RXMYn435qitjrXdwPtPhi
-         4G+uU6W6j5tX4kQUdu4VA3ft+tYJS4xlDSU6ARqlvikh9V96K8KyMTMcfxa+vmex1BSW
-         LTQXZLimkh1i2DdNtfXDoOnvEbUQ4zV7movUqL2Vy0tW6E3rBK1KHP/g7vW8aW2yL+kl
-         nEow==
-X-Gm-Message-State: AOAM530oaIltsW7gEDjRBM8ilJucADU++W1mcN1e5IhzyMhUae6Jh4/i
-        u/hSrd6/o20LrdInIErcXB6D+y5LJWyJgtUSdjPQlw==
-X-Google-Smtp-Source: ABdhPJy/vSbbs6NItTc17HLseFMtls6jhLxHfN9IoMajlkunPEPYPnJ3PT/NC7DSxTm6/4WL66QOH6XkRo6PMp+BL1U=
-X-Received: by 2002:a05:6870:305:: with SMTP id m5mr66766oaf.200.1644457216837;
- Wed, 09 Feb 2022 17:40:16 -0800 (PST)
+        bh=7BvHswSXg9zN9k7P3bu3kJhfUU/WgKwQ6HEFpY+l4jA=;
+        b=1fAjYdXHpdrvXb0dJii4bHYfsvAwtlaG//R72hfUW0kdKiri0GIvJ/D9xtP7w3gcK2
+         JC+mEg8BQ9GnQjd7cyKhIAyF8s1RCLSat5pxcN8C8gC6LNzH9Rqf0duV8MG2CQoNoxVK
+         PP26RR39tzAhJKMuYoqaOw4LPMM9hOTlpCljmB9S6BvBOf5hL3iPedLR/9jGoDwFwP/R
+         36JEOpvUt8q95iL+2vb1P28/N2RprZj8DAc6O/YK9L4Y897+pPOgoVEulHQai37FS09a
+         5LqZ8l90fYiTJH2W/Q5df8DqdIy8s2SsdwmqwSy1G4CEFoRyKlS4gtapYgUm7277wCUf
+         Ae8Q==
+X-Gm-Message-State: AOAM530dUM17auqgj9fy2F7tnham7aKz9zx78GJmLkMGv3hXJ8FX/5Zd
+        fAyPA1c8UfEYjP8OWBvKpG9m6hml+WR4CLcZwytQig==
+X-Google-Smtp-Source: ABdhPJz5nnuCshCtEM3gga4og7wjd6Bj6dW8FLpEygBvjacEExJ8np7WaRj3GTND+KVxtMxzzyhuWn0ScaNhy+C9qjM=
+X-Received: by 2002:a05:6870:1209:: with SMTP id 9mr72218oan.8.1644457285749;
+ Wed, 09 Feb 2022 17:41:25 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 9 Feb 2022 17:40:16 -0800
+ HTTPREST; Wed, 9 Feb 2022 17:41:25 -0800
 MIME-Version: 1.0
-In-Reply-To: <1644331940-18986-5-git-send-email-quic_c_skakit@quicinc.com>
-References: <1644331940-18986-1-git-send-email-quic_c_skakit@quicinc.com> <1644331940-18986-5-git-send-email-quic_c_skakit@quicinc.com>
+In-Reply-To: <1644331940-18986-6-git-send-email-quic_c_skakit@quicinc.com>
+References: <1644331940-18986-1-git-send-email-quic_c_skakit@quicinc.com> <1644331940-18986-6-git-send-email-quic_c_skakit@quicinc.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Wed, 9 Feb 2022 17:40:16 -0800
-Message-ID: <CAE-0n53kLn1t6HU9LHBMv6fRnjUj9NTtmRS8uKrwkWL0gzpAsQ@mail.gmail.com>
-Subject: Re: [PATCH V5 4/6] regulator: Add a regulator driver for the PM8008 PMIC
+Date:   Wed, 9 Feb 2022 17:41:25 -0800
+Message-ID: <CAE-0n52vX-50GEZ5X3PhnZaLyriALRtoqGiWSydi4WSAvGmf9A@mail.gmail.com>
+Subject: Re: [PATCH V5 5/6] arm64: dts: qcom: pm8008: Add base dts file
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
         Rob Herring <robh+dt@kernel.org>,
@@ -73,209 +73,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Satya Priya (2022-02-08 06:52:18)
-> diff --git a/drivers/regulator/qcom-pm8008-regulator.c b/drivers/regulator/qcom-pm8008-regulator.c
+Quoting Satya Priya (2022-02-08 06:52:19)
+> Add base DTS file for pm8008 with infra and regulator nodes.
+>
+> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+> ---
+> Changes in V4:
+>  - This is newly added in V4, to add all the pm8008 common stuff.
+>
+> Changes in V5:
+>  - Changed the mfd node names from pm8008_chip to pm8008_infra and
+>    pm8008_ldo to pm8008_regulators as they re more appropriate.
+>  - Changed the compatible for pm8008@9 mfd node to differentiate from
+>    pm8008@8 node in driver.
+>  - Removed compatible for regulators node.
+>  - Removed reg property for LDOs and added in driver.
+>
+>  arch/arm64/boot/dts/qcom/pm8008.dtsi | 46 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 46 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/pm8008.dtsi
+>
+> diff --git a/arch/arm64/boot/dts/qcom/pm8008.dtsi b/arch/arm64/boot/dts/qcom/pm8008.dtsi
 > new file mode 100644
-> index 0000000..86043b4
+> index 0000000..8e04983
 > --- /dev/null
-> +++ b/drivers/regulator/qcom-pm8008-regulator.c
-> @@ -0,0 +1,234 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/* Copyright (c) 2021, The Linux Foundation. All rights reserved. */
+> +++ b/arch/arm64/boot/dts/qcom/pm8008.dtsi
+> @@ -0,0 +1,46 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +// Copyright (c) 2021, The Linux Foundation. All rights reserved.
 > +
-> +#include <linux/device.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/of_device.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/regmap.h>
-> +#include <linux/regulator/driver.h>
-> +#include <linux/regulator/machine.h>
-> +
-> +#define STARTUP_DELAY_USEC             20
-> +#define VSET_STEP_MV                   8
-> +#define VSET_STEP_UV                   (VSET_STEP_MV * 1000)
-> +
-> +#define LDO_ENABLE_REG(base)           ((base) + 0x46)
-> +#define ENABLE_BIT                     BIT(7)
-> +
-> +#define LDO_STATUS1_REG(base)          ((base) + 0x08)
-> +#define VREG_READY_BIT                 BIT(7)
-> +
-> +#define LDO_VSET_LB_REG(base)          ((base) + 0x40)
-> +
-> +#define LDO_STEPPER_CTL_REG(base)      ((base) + 0x3b)
-> +#define DEFAULT_VOLTAGE_STEPPER_RATE   38400
-> +#define STEP_RATE_MASK                 GENMASK(1, 0)
-> +
-> +#define PM8008_NUM_LDOS                        7
-> +
-> +struct regulator_data {
-> +       const char                      *name;
-> +       const char                      *supply_name;
-> +       u16                             base;
-> +       int                             min_uv;
-> +       int                             max_uv;
-> +       int                             min_dropout_uv;
-> +       const struct linear_range       *voltage_range;
+> +pm8008_infra: pm8008@8 {
+> +       compatible = "qcom,pm8008";
+> +       reg = <0x8>;
+> +       #address-cells = <1>;
+> +       #size-cells = <0>;
 > +};
 > +
-> +struct pm8008_regulator {
-> +       struct device           *dev;
-> +       struct regmap           *regmap;
-> +       struct regulator_desc   rdesc;
-> +       u16                     base;
-> +       int                     step_rate;
-> +};
+> +pm8008_regulators: pm8008@9 {
+> +       compatible = "qcom,pm8008-regulators";
+> +       reg = <0x9>;
+> +       #address-cells = <1>;
+> +       #size-cells = <0>;
 > +
-> +static const struct linear_range nldo_ranges[] = {
-> +       REGULATOR_LINEAR_RANGE(528000, 0, 122, 8000),
-> +};
-> +
-> +static const struct linear_range pldo_ranges[] = {
-> +       REGULATOR_LINEAR_RANGE(1504000, 0, 237, 8000),
-> +};
-> +
-> +static const struct regulator_data reg_data[] = {
-> +       /* name  parent       base   min_uv  max_uv  headroom_uv voltage_range */
-> +       { "LDO1", "vdd_l1_l2", 0x4000,  528000, 1504000, 225000, nldo_ranges, },
-> +       { "LDO2", "vdd_l1_l2", 0x4100,  528000, 1504000, 225000, nldo_ranges, },
-> +       { "LDO3", "vdd_l3_l4", 0x4200, 1504000, 3400000, 300000, pldo_ranges, },
-> +       { "LDO4", "vdd_l3_l4", 0x4300, 1504000, 3400000, 300000, pldo_ranges, },
-> +       { "LDO5", "vdd_l5",    0x4400, 1504000, 3400000, 200000, pldo_ranges, },
-> +       { "LDO6", "vdd_l6",    0x4500, 1504000, 3400000, 200000, pldo_ranges, },
-> +       { "LDO7", "vdd_l7",    0x4600, 1504000, 3400000, 200000, pldo_ranges, },
-> +};
-> +
-> +static int pm8008_regulator_get_voltage(struct regulator_dev *rdev)
-> +{
-> +       struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
-> +       __le16 mV;
-> +       int rc;
-> +
-> +       rc = regmap_bulk_read(pm8008_reg->regmap,
-> +                       LDO_VSET_LB_REG(pm8008_reg->base), (void *)&mV, 2);
-> +       if (rc < 0) {
-> +               dev_err(&rdev->dev, "failed to read regulator voltage rc=%d\n", rc);
-> +               return rc;
-> +       }
-> +
-> +       return le16_to_cpu(mV) * 1000;
-> +}
-> +
-> +static inline int pm8008_write_voltage(struct pm8008_regulator *pm8008_reg,
-> +                                                       int mV)
-> +{
-> +       int rc;
-> +       u16 vset_raw;
-> +
-> +       vset_raw = cpu_to_le16(mV);
+> +       regulators {
 
-sparse should complain here that an le16 is degrading to a u16. Please
-make vset_raw an __le16 as well.
+What is the point of the 'regulators' node? Why can't we just put LDO1
+directly underneath the node that has the "qcom,pm8008-regulators"
+compatible?
 
+> +               pm8008_l1: LDO1 {
+> +                       regulator-name = "pm8008_l1";
+> +               };
 > +
-> +       rc = regmap_bulk_write(pm8008_reg->regmap,
-> +                       LDO_VSET_LB_REG(pm8008_reg->base),
-> +                       (const void *)&vset_raw, sizeof(vset_raw));
-> +       if (rc < 0) {
-> +               dev_err(pm8008_reg->dev, "failed to write voltage rc=%d\n", rc);
-
-Do we really need this? It could spam the logs in theory. We have
-tracepoints on regmap that could be used to figure out that some
-read/write failed. I'd like to see a plain
-
-	return regmap_bulk_write(...)
-
-> +               return rc;
-> +       }
-> +
-> +       return 0;
-> +}
-> +
-> +static int pm8008_regulator_set_voltage_time(struct regulator_dev *rdev,
-> +                               int old_uV, int new_uv)
-> +{
-> +       struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
-> +
-> +       return DIV_ROUND_UP(abs(new_uv - old_uV), pm8008_reg->step_rate);
-> +}
-> +
-> +static int pm8008_regulator_set_voltage(struct regulator_dev *rdev,
-> +                                       unsigned int selector)
-> +{
-> +       struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
-> +       int rc, mV;
-> +
-> +       /* voltage control register is set with voltage in millivolts */
-> +       mV = DIV_ROUND_UP(regulator_list_voltage_linear_range(rdev, selector),
-> +                                               1000);
-
-Aren't there linear range APIs that can avoid any div roundups here?
-
-> +       if (mV < 0)
-> +               return mV;
-> +
-> +       rc = pm8008_write_voltage(pm8008_reg, mV);
-> +       if (rc < 0)
-> +               return rc;
-> +
-> +       dev_dbg(&rdev->dev, "voltage set to %d\n", mV * 1000);
-> +       return 0;
-> +}
-> +
-> +static const struct regulator_ops pm8008_regulator_ops = {
-> +       .enable                 = regulator_enable_regmap,
-> +       .disable                = regulator_disable_regmap,
-> +       .is_enabled             = regulator_is_enabled_regmap,
-> +       .set_voltage_sel        = pm8008_regulator_set_voltage,
-> +       .get_voltage            = pm8008_regulator_get_voltage,
-> +       .list_voltage           = regulator_list_voltage_linear,
-> +       .set_voltage_time       = pm8008_regulator_set_voltage_time,
-> +};
-> +
-> +static int pm8008_regulator_of_parse(struct device_node *node,
-> +                       const struct regulator_desc *desc,
-> +                       struct regulator_config *config)
-> +{
-> +       struct pm8008_regulator *pm8008_reg = config->driver_data;
-> +       int rc;
-> +       unsigned int reg;
-> +
-> +       /* get slew rate */
-> +       rc = regmap_bulk_read(pm8008_reg->regmap,
-> +                       LDO_STEPPER_CTL_REG(pm8008_reg->base), &reg, 1);
-> +       if (rc < 0) {
-> +               dev_err(pm8008_reg->dev,
-> +                       "%s: failed to read step rate configuration rc=%d\n",
-> +                       pm8008_reg->rdesc.name, rc);
-> +               return rc;
-> +       }
-> +       reg &= STEP_RATE_MASK;
-> +       pm8008_reg->step_rate = DEFAULT_VOLTAGE_STEPPER_RATE >> reg;
-> +
-> +       return 0;
-> +}
-> +
-> +static int pm8008_regulator_probe(struct platform_device *pdev)
-> +{
-> +       struct device *dev = &pdev->dev;
-> +       int id = pdev->id % PM8008_NUM_LDOS;
-> +       struct regulator_dev    *rdev;
-> +       struct pm8008_regulator *pm8008_reg;
-> +       struct regmap *regmap;
-> +       struct regulator_config reg_config = {};
-> +       int rc;
-> +
-> +       dev_dbg(dev, "DEBUG: Probing LDO%d\n", id + 1);
-
-Why can't we probe one regulators (plural) platform device instead of 8
-regulator platform devices? A 'struct device' isn't exactly small and
-it would be simpler to probe all the regulators in a single loop.
-
-> +
-> +       regmap = dev_get_regmap(dev->parent, NULL);
-> +       if (!regmap) {
-> +               dev_err(dev, "parent regmap is missing\n");
