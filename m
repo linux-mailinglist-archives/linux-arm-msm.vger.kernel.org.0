@@ -2,71 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 856A84B106B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 15:29:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B09B64B1091
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 15:39:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242915AbiBJO3w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 09:29:52 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44858 "EHLO
+        id S243009AbiBJOjY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 09:39:24 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242934AbiBJO3v (ORCPT
+        with ESMTP id S231510AbiBJOjY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 09:29:51 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0708B398;
-        Thu, 10 Feb 2022 06:29:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644503393; x=1676039393;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=+FTgaWtC/fbl/lpxIMMrwrFu+pXJ8EqWfUdrXRGQUgY=;
-  b=WuwaJBS/8djrJIBZ/oD04w/hmfo2yGpn2ulCvSUl0DUu+5LXrEh9dJWw
-   4FYZ8z4g3gsYr5a9AcVmYqPJx5zYUUxMT2xJX1CkpuQ2wifYQI+2t011+
-   Lfgvbj3BHqZeFC5DGUpFqXDOoeZ9ifkXGCCvLqa8VsMDlLomO3i2cMKWK
-   Q=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 10 Feb 2022 06:29:51 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2022 06:29:51 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 10 Feb 2022 06:29:50 -0800
-Received: from [10.216.9.195] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 10 Feb
- 2022 06:29:47 -0800
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sc7280: Add wcd9380 pinmux
-To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <devicetree@vger.kernel.org>,
-        <dianders@chromium.org>, <judyhsiao@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <robh+dt@kernel.org>, <rohitkr@codeaurora.org>,
-        <srinivas.kandagatla@linaro.org>
-CC:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
-References: <1644334454-16719-1-git-send-email-quic_srivasam@quicinc.com>
- <1644334454-16719-4-git-send-email-quic_srivasam@quicinc.com>
- <CAE-0n50jBeOnkpogPFm+zqTf8bqQs-Bo0Gma658uFE6aA=Edxg@mail.gmail.com>
- <a1c2a7e6-8d76-6ee6-4bc4-e7ea8013af02@quicinc.com>
- <CAE-0n52LqrdLXk4=WMQY3WXVYLjpwXH+FP2z71gKMAkjiPR4Xg@mail.gmail.com>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-Message-ID: <7a5e55b9-058f-e143-0d78-7a6d57498a50@quicinc.com>
-Date:   Thu, 10 Feb 2022 19:59:43 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Thu, 10 Feb 2022 09:39:24 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50B2BBCD;
+        Thu, 10 Feb 2022 06:39:25 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 09422B8255A;
+        Thu, 10 Feb 2022 14:39:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D76C340E5;
+        Thu, 10 Feb 2022 14:39:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1644503962;
+        bh=cMf1z3wP7NeBeseMjIqYtP1TfS0kXcL2He69HWdeLuI=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=IxSgGTvf/EvSoYruT2PiaQkFRiE6Ew1VBuuFX3nR4iKqcid6+UJRXa+5+N35Qn/GH
+         Ow+X+6MaVKCb0P1IWcCl7wd0oG0MlfMISybY5iL8zap3LB+2zST8L6O0pFMgIM6UUS
+         +vW3nATJWc8M/XEc05QCkYCPFQF0xoyx55CjrDtL0dOFwpTntTs4WDE7jHCYAxy5++
+         HVLuHIXqub1fRup9VgdcGaUChh3VwElu4jMKYcFr0HtGUNTgd3UhPAFMrd3nuaFb9S
+         YuyNt/XW/OgAosV0UY0Rm6LAcCbraX9bdjh2IJ+XjaGUqJ5LVgB0wfs0HlGrdpw+P+
+         6hmqjIisufubA==
+Received: by mail-ej1-f49.google.com with SMTP id k25so15864336ejp.5;
+        Thu, 10 Feb 2022 06:39:22 -0800 (PST)
+X-Gm-Message-State: AOAM5310aRVKC+uznPjenEkvavutRF2BWMYwZ6f9oZuJi/lCbJTpmd3o
+        js9rDKW0s/UtsLZNr7G7bt3CVs95JWby53UN+A==
+X-Google-Smtp-Source: ABdhPJx+AuAxADrHvdwM8twasfxAV19kvrVXLNmJ/T4wMBi49Xr3AAtUec55ECwrlMkUXnh3hsKVjsr5l1JcUPEVrck=
+X-Received: by 2002:a17:907:628c:: with SMTP id nd12mr6596093ejc.82.1644503961103;
+ Thu, 10 Feb 2022 06:39:21 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n52LqrdLXk4=WMQY3WXVYLjpwXH+FP2z71gKMAkjiPR4Xg@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+References: <20220210065132.234341-1-vkoul@kernel.org>
+In-Reply-To: <20220210065132.234341-1-vkoul@kernel.org>
+From:   Rob Herring <robh@kernel.org>
+Date:   Thu, 10 Feb 2022 08:39:09 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKPO0TGDjD1+_Tbg39YRpxRCcH_LTy83SHcMBzFA_tw2g@mail.gmail.com>
+Message-ID: <CAL_JsqKPO0TGDjD1+_Tbg39YRpxRCcH_LTy83SHcMBzFA_tw2g@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: Don't report disabled nodes with duplicate addresses
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Masahiro Yamada <masahiroy@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michal Marek <michal.lkml@markovi.net>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,41 +66,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Feb 10, 2022 at 12:51 AM Vinod Koul <vkoul@kernel.org> wrote:
+>
+> Duplicated unit address is okay if we have only one such node enabled.
+> So, remove '-Wno-unique_unit_address' from DTC_FLAGS.
+>
+> This helps in reducing warnings in qcom dts from
+>
+>    6483 unique_unit_address
+>    1108 simple_bus_reg
+>     764 avoid_unnecessary_addr_size
+>     712 unit_address_vs_reg
+>     120 graph_child_address
+>      32 unique_unit_address_if_enabled
+>
+> after this patch:
+>     277 simple_bus_reg
+>     191 avoid_unnecessary_addr_size
+>     178 unit_address_vs_reg
+>      32 unique_unit_address_if_enabled
+>      30 graph_child_address
 
-On 2/10/2022 5:33 AM, Stephen Boyd wrote:
-Thanks for your time Stephen!!!
-> Quoting Srinivasa Rao Mandadapu (2022-02-09 06:26:58)
->> On 2/9/2022 2:42 AM, Stephen Boyd wrote:
->>> Quoting Srinivasa Rao Mandadapu (2022-02-08 07:34:14)
->>>
->>>> +                       pins = "gpio83";
->>>> +                       function = "gpio";
->>>> +                       drive-strength = <16>;
->>>> +                       output-high;
->>>> +       };
->>>> +
->>>> +       wcd938x_reset_sleep: wcd938x_reset_sleep {
->>>> +                       pins = "gpio83";
->>>> +                       function = "gpio";
->>>> +                       drive-strength = <16>;
->>>> +                       bias-disable;
->>>> +                       output-low;
->>> Why doesn't the device drive the reset gpio by requesting the gpio and
->>> asserting and deasserting it? We shouldn't need to use pinctrl settings
->>> to toggle reset gpios.
->> Okay. Verified without these nodes and didn't see any impact. But
->> similar way it's mentioned in sm8250-mtp.dts. Could You please suggest
->> on it how to go ahead on this?.
-> I'd expect the wcd938x codec device node to have a 'reset-gpios'
-> property like
+I'm confused how unique_unit_address changes the count for others?
+
 >
-> 	reset-gpios = <&tlmm 83 GPIO_ACTIVE_LOW>
+> which would help people focus on the actual warnings and fix them.
+
+Hopefully you do a 'sort -u' on the warnings to dedup them...
+
 >
-> and then the driver to request that gpio via
+> Suggested-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  scripts/Makefile.lib | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
 >
-> 	reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
+> diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
+> index 79be57fdd32a..7e4f6671d950 100644
+> --- a/scripts/Makefile.lib
+> +++ b/scripts/Makefile.lib
+> @@ -299,7 +299,8 @@ quiet_cmd_gzip = GZIP    $@
+>  # DTC
+>  # ---------------------------------------------------------------------------
+>  DTC ?= $(objtree)/scripts/dtc/dtc
+> -DTC_FLAGS += -Wno-interrupt_provider
+> +DTC_FLAGS += -Wno-interrupt_provider \
+> +       -Wno-unique_unit_address
 >
-> so it gets the gpio during driver probe. Then the gpio can be deasserted
-> during suspend and reasserted on resume, if that's even important?
-Okay will remove it. Already wcd938x node has reset gpio. It seems these 
-are redundant.
+>  # Disable noisy checks by default
+>  ifeq ($(findstring 1,$(KBUILD_EXTRA_WARN)),)
+> @@ -307,8 +308,9 @@ DTC_FLAGS += -Wno-unit_address_vs_reg \
+>         -Wno-avoid_unnecessary_addr_size \
+>         -Wno-alias_paths \
+>         -Wno-graph_child_address \
+> -       -Wno-simple_bus_reg \
+> -       -Wno-unique_unit_address
+> +       -Wno-simple_bus_reg
+> +else
+> +DTC_FLAGS += -Wunique_unit_address_if_enabled
+>  endif
+>
+>  ifneq ($(findstring 2,$(KBUILD_EXTRA_WARN)),)
+> --
+> 2.31.1
+>
