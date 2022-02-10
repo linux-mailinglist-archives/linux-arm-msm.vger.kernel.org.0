@@ -2,130 +2,291 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0EAC4B1979
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 00:30:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C46D4B1961
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 00:22:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345665AbiBJX32 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 18:29:28 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:41758 "EHLO
+        id S1345617AbiBJXWi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 18:22:38 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231627AbiBJX31 (ORCPT
+        with ESMTP id S1345584AbiBJXWh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 18:29:27 -0500
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E31A7116D;
-        Thu, 10 Feb 2022 15:29:27 -0800 (PST)
-Received: by mail-il1-x12e.google.com with SMTP id h11so5640655ilq.9;
-        Thu, 10 Feb 2022 15:29:27 -0800 (PST)
+        Thu, 10 Feb 2022 18:22:37 -0500
+Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71B375F5D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 15:22:37 -0800 (PST)
+Received: by mail-oo1-xc2f.google.com with SMTP id o192-20020a4a2cc9000000b00300af40d795so8277760ooo.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 15:22:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=3bNm5/uTnBAzIRKqMnmZ8YYfpkxkteIvyaUY7P/5B+o=;
-        b=fLgRM4uji0XMP07LvJA5cjBtqm7zXPbJEBYtQDz8uGRsGjNkvOmu1mZZGhE7PFB0h8
-         7PGHiZ+HnW21lWBjG1Hp5A/io3C7i6JtUrMDThpe5y92omUL2lBUuwmbVl7bS3bU0t7o
-         bZq4lw7FX7tlNYB2G04YnPLZMYUK5kOrXpdscRdaz4TtPLlDq3oaDeUrODGU15pKMaSD
-         ocKLNnWjsh+fu2AZ1ivgdj8WAlWXHXIdIRLnA9L7DsQS1etO2PvLwSwJhPDSSGAXJiZV
-         jG0tuxn4fxzCTULGAwmomyB/ly9laDnDKG1pIYbAduDcAzKjTa3UKRbikmrRgcduFqam
-         Yaeg==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=VWcjiP0aJllSyLu5U7SuD3WWUkksQFBkkd2fOLl4Q3g=;
+        b=DQkeyAZAViLmDFiSaddRDOcrKfXdLrLVdNU6dUqr4gmx3UcugdllIp0uoMgmIJNl7C
+         R9Q5w4bmcYoN1zMGB3Z3oDaGVqS9OFoPJ5GoUNpNLi/detKsVXtwGKgc+zGrz7xICbhB
+         GaVbpw4SGsyFeaf71CGt74oSc0hXwm+c62TRcU2MTAXpDogpMY+6Dg2x2JbNUq3fJYPg
+         csv7YWwUBSNCQ+mEBwFBK//hqNw1g6lGazliwGgV6Ufdwg/+R5bQrP8r2SjXEy0c/BYn
+         muoGUegKH/dEB3MCiZ2PYFjXb3h3LvchHVy4MF06pKHqKPLyadW9IEcbjbbQaQu6o1R6
+         Y+1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3bNm5/uTnBAzIRKqMnmZ8YYfpkxkteIvyaUY7P/5B+o=;
-        b=0Bm/AANPXhtOTo4MvPfcduVvG7vNSHkhabvMkghPwmHeuiDTPX5YNFnPb/g9EHGqh2
-         fjBVFl9N10jUrCgB5t38PHPm3jlztY+pehrrx1MMCAcJ2Yue6teBJn1lFTAwGdgfiipI
-         PDaKcrRSlf4USIghBewlGAdUFX+c/bYcg4MfEB2XZ4vd64vxoALvA30DN/Bm/ky8F7PK
-         216++5dECfxYb5FHmaa6ahJp40y5NKaUWK2UO8Sd0NYhOusX6TWdp58TcJ4m3CjRmzPK
-         xhITWlYkeAg6YlFNH/1z2pgJtp6icyRW4r92IidNqwkFXgBraDUT8TXAVOEA+vfz1D0x
-         FZHg==
-X-Gm-Message-State: AOAM531VaDJnNz8oCOhMo8TUYCPkobIuWSAu+FAt/9Y+DhrxN1ADEHfs
-        cN9sFvWFTluSzEGt95CRZiQ=
-X-Google-Smtp-Source: ABdhPJxG4wLZX5EPMqNJ2GZN9s/YWLmAmUwDDdSVvbnGhVn58IPPvR5sZVSRf3Lr6OSWj7N5cae0BA==
-X-Received: by 2002:a92:d64e:: with SMTP id x14mr5598201ilp.97.1644535767261;
-        Thu, 10 Feb 2022 15:29:27 -0800 (PST)
-Received: from localhost ([12.28.44.171])
-        by smtp.gmail.com with ESMTPSA id b5sm6717209ilr.0.2022.02.10.15.29.26
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=VWcjiP0aJllSyLu5U7SuD3WWUkksQFBkkd2fOLl4Q3g=;
+        b=bQAObKoCK3c4PngXc2berCBdCd5hUCFUfppviC0L4mzYurE+ECvthGvWjCjRdN+IH0
+         Z8K3q+KBmqJcjhKiU8X8+FZaOWPP4IFKJ3MI8Ds9P2gNUUPl16aAbzjK4dmZdzIHW+yt
+         8+EA5FiZm8vF/XE8uKrxchG1SgDYapI052o0XC1xOiwIUFUJaC7+G9PvqUI106e+BDNi
+         4dQERWG2NYKdfczKv6KsiojxRg31CjN1LlXvY/wlT33QTJuBPrDj8HHHKLR25NGXJTo+
+         7FSHaC+qVw6uKEVqRfnolGUiC25ja+p9ZK+vaEoL2Q4hZeGS7cBcErdcu8QykG4WwlCm
+         GwdQ==
+X-Gm-Message-State: AOAM530OvGmyStxpK/QKlfbgLbDCrrIg0xwU2asuRrK6x3k6vJex3rD6
+        IAcCV9PnTnJJErava5Imo58DsA==
+X-Google-Smtp-Source: ABdhPJzGHTz/lbwaYjTzQQN0oGwFuY/HWnLxlow29evo1zJed7Y64duTC98MM2AHDncWWIysYjlhOw==
+X-Received: by 2002:a05:6870:a3c2:: with SMTP id h2mr1522821oak.152.1644535356674;
+        Thu, 10 Feb 2022 15:22:36 -0800 (PST)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id b32sm3163784oaq.43.2022.02.10.15.22.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Feb 2022 15:29:26 -0800 (PST)
-From:   Yury Norov <yury.norov@gmail.com>
-To:     Yury Norov <yury.norov@gmail.com>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        =?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Peter Zijlstra <peterz@infradead.org>,
-        David Laight <David.Laight@aculab.com>,
-        Joe Perches <joe@perches.com>, Dennis Zhou <dennis@kernel.org>,
-        Emil Renner Berthing <kernel@esmil.dk>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
-        Alexey Klimov <aklimov@redhat.com>,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 17/49] cpufreq: replace cpumask_weight with cpumask_empty where appropriate
-Date:   Thu, 10 Feb 2022 14:49:01 -0800
-Message-Id: <20220210224933.379149-18-yury.norov@gmail.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220210224933.379149-1-yury.norov@gmail.com>
-References: <20220210224933.379149-1-yury.norov@gmail.com>
+        Thu, 10 Feb 2022 15:22:36 -0800 (PST)
+Date:   Thu, 10 Feb 2022 15:24:51 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-usb@vger.kernel.org
+Subject: Re: [PATCH 1/2] drm: Add HPD state to
+ drm_connector_oob_hotplug_event()
+Message-ID: <YgWewzgtHM7B6KUI@ripper>
+References: <20220208044328.588860-1-bjorn.andersson@linaro.org>
+ <YgJISIIacBnFyTLq@kroah.com>
+ <YgV8GyK9G0gbWAaq@ripper>
+ <CAA8EJppkZTRApQbuEUACw=r2kBH+321_f1ZqRf_-veEuwB56zg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJppkZTRApQbuEUACw=r2kBH+321_f1ZqRf_-veEuwB56zg@mail.gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-drivers/cpufreq calls cpumask_weight() to check if any bit of a given
-cpumask is set. We can do it more efficiently with cpumask_empty() because
-cpumask_empty() stops traversing the cpumask as soon as it finds first set
-bit, while cpumask_weight() counts all bits unconditionally.
+On Thu 10 Feb 13:12 PST 2022, Dmitry Baryshkov wrote:
 
-Signed-off-by: Yury Norov <yury.norov@gmail.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com> (for SCMI cpufreq driver)
----
- drivers/cpufreq/qcom-cpufreq-hw.c | 2 +-
- drivers/cpufreq/scmi-cpufreq.c    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+> On Thu, 10 Feb 2022 at 23:54, Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > On Tue 08 Feb 02:39 PST 2022, Greg Kroah-Hartman wrote:
+> >
+> > > On Mon, Feb 07, 2022 at 08:43:27PM -0800, Bjorn Andersson wrote:
+> > > > In some implementations, such as the Qualcomm platforms, the display
+> > > > driver has no way to query the current HPD state and as such it's
+> > > > impossible to distinguish between disconnect and attention events.
+> > > >
+> > > > Add a parameter to drm_connector_oob_hotplug_event() to pass the HPD
+> > > > state.
+> > > >
+> > > > Also push the test for unchanged state in the displayport altmode driver
+> > > > into the i915 driver, to allow other drivers to act upon each update.
+> > > >
+> > > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > > ---
+> > > >
+> > > > Note that the Intel driver has only been compile tested with this patch.
+> > > >
+> > > >  drivers/gpu/drm/drm_connector.c          |  6 ++++--
+> > > >  drivers/gpu/drm/i915/display/intel_dp.c  | 14 +++++++++++---
+> > > >  drivers/gpu/drm/i915/i915_drv.h          |  3 +++
+> > > >  drivers/usb/typec/altmodes/displayport.c |  9 ++-------
+> > > >  include/drm/drm_connector.h              |  5 +++--
+> > > >  5 files changed, 23 insertions(+), 14 deletions(-)
+> > > >
+> > > > diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
+> > > > index a50c82bc2b2f..ad7295597c0f 100644
+> > > > --- a/drivers/gpu/drm/drm_connector.c
+> > > > +++ b/drivers/gpu/drm/drm_connector.c
+> > > > @@ -2825,6 +2825,7 @@ struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode)
+> > > >  /**
+> > > >   * drm_connector_oob_hotplug_event - Report out-of-band hotplug event to connector
+> > > >   * @connector_fwnode: fwnode_handle to report the event on
+> > > > + * @hpd_state: number of data lanes available
+> > >
+> > > "number"?
+> > >
+> > > >   *
+> > > >   * On some hardware a hotplug event notification may come from outside the display
+> > > >   * driver / device. An example of this is some USB Type-C setups where the hardware
+> > > > @@ -2834,7 +2835,8 @@ struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode)
+> > > >   * This function can be used to report these out-of-band events after obtaining
+> > > >   * a drm_connector reference through calling drm_connector_find_by_fwnode().
+> > > >   */
+> > > > -void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode)
+> > > > +void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode,
+> > > > +                                bool hpd_state)
+> > >
+> > > This is a boolean, how can it be a number?
+> > >
+> >
+> > The kerneldoc wasn't appropriately updated as this went from being
+> > "number of data lanes" to "the hot plug detect (hpd) state".
+> >
+> > > And having a "flag" like this is a pain, how do you know what the
+> > > parameter really means?
+> > >
+> >
+> > You're right, "state" isn't a boolean property, let's rename it
+> > "hpd_high" to clarify it.
+> 
+> "connected" ?
+> 
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index 05f3d7876e44..95a0c57ab5bb 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -482,7 +482,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
- 	}
- 
- 	qcom_get_related_cpus(index, policy->cpus);
--	if (!cpumask_weight(policy->cpus)) {
-+	if (cpumask_empty(policy->cpus)) {
- 		dev_err(dev, "Domain-%d failed to get related CPUs\n", index);
- 		ret = -ENOENT;
- 		goto error;
-diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
-index 1e0cd4d165f0..919fa6e3f462 100644
---- a/drivers/cpufreq/scmi-cpufreq.c
-+++ b/drivers/cpufreq/scmi-cpufreq.c
-@@ -154,7 +154,7 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
- 	 * table and opp-shared.
- 	 */
- 	ret = dev_pm_opp_of_get_sharing_cpus(cpu_dev, priv->opp_shared_cpus);
--	if (ret || !cpumask_weight(priv->opp_shared_cpus)) {
-+	if (ret || cpumask_empty(priv->opp_shared_cpus)) {
- 		/*
- 		 * Either opp-table is not set or no opp-shared was found.
- 		 * Use the CPU mask from SCMI to designate CPUs sharing an OPP
--- 
-2.32.0
+I've been trying to find some references to point to, but my
+understanding is that in a DisplayPort or HDMI connector/cable you have
+a dedicated HPD pin, which when high denotes the sink is alive _and_
+EDID can be read.
 
+So in a situation where you have a multifunction USB & DP/HDMI hub where
+you connect a display, you might have the USB hub connected to the host
+and you might even have your sink connected, but HPD could still be low
+until the display is ready to talk to you. So physically everything is
+connected, but this property will still be "not connected".
+
+As such I don't think it's appropriate to name it "connected".
+
+Regards,
+Bjorn
+
+> >
+> > > >  {
+> > > >     struct drm_connector *connector;
+> > > >
+> > > > @@ -2843,7 +2845,7 @@ void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode)
+> > > >             return;
+> > > >
+> > > >     if (connector->funcs->oob_hotplug_event)
+> > > > -           connector->funcs->oob_hotplug_event(connector);
+> > > > +           connector->funcs->oob_hotplug_event(connector, hpd_state);
+> > > >
+> > > >     drm_connector_put(connector);
+> > > >  }
+> > > > diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
+> > > > index 146b83916005..00520867d37b 100644
+> > > > --- a/drivers/gpu/drm/i915/display/intel_dp.c
+> > > > +++ b/drivers/gpu/drm/i915/display/intel_dp.c
+> > > > @@ -4816,15 +4816,23 @@ static int intel_dp_connector_atomic_check(struct drm_connector *conn,
+> > > >     return intel_modeset_synced_crtcs(state, conn);
+> > > >  }
+> > > >
+> > > > -static void intel_dp_oob_hotplug_event(struct drm_connector *connector)
+> > > > +static void intel_dp_oob_hotplug_event(struct drm_connector *connector, bool hpd_state)
+> > > >  {
+> > > >     struct intel_encoder *encoder = intel_attached_encoder(to_intel_connector(connector));
+> > > >     struct drm_i915_private *i915 = to_i915(connector->dev);
+> > > > +   bool need_work = false;
+> > > >
+> > > >     spin_lock_irq(&i915->irq_lock);
+> > > > -   i915->hotplug.event_bits |= BIT(encoder->hpd_pin);
+> > > > +   if (hpd_state != i915->hotplug.oob_hotplug_state) {
+> > > > +           i915->hotplug.event_bits |= BIT(encoder->hpd_pin);
+> > > > +
+> > > > +           i915->hotplug.oob_hotplug_state = hpd_state;
+> > > > +           need_work = true;
+> > > > +   }
+> > > >     spin_unlock_irq(&i915->irq_lock);
+> > > > -   queue_delayed_work(system_wq, &i915->hotplug.hotplug_work, 0);
+> > > > +
+> > > > +   if (need_work)
+> > > > +           queue_delayed_work(system_wq, &i915->hotplug.hotplug_work, 0);
+> > > >  }
+> > > >
+> > > >  static const struct drm_connector_funcs intel_dp_connector_funcs = {
+> > > > diff --git a/drivers/gpu/drm/i915/i915_drv.h b/drivers/gpu/drm/i915/i915_drv.h
+> > > > index 8c1706fd81f9..543ebf1cfcf4 100644
+> > > > --- a/drivers/gpu/drm/i915/i915_drv.h
+> > > > +++ b/drivers/gpu/drm/i915/i915_drv.h
+> > > > @@ -149,6 +149,9 @@ struct i915_hotplug {
+> > > >     /* Whether or not to count short HPD IRQs in HPD storms */
+> > > >     u8 hpd_short_storm_enabled;
+> > > >
+> > > > +   /* Last state reported by oob_hotplug_event */
+> > > > +   bool oob_hotplug_state;
+> > > > +
+> > > >     /*
+> > > >      * if we get a HPD irq from DP and a HPD irq from non-DP
+> > > >      * the non-DP HPD could block the workqueue on a mode config
+> > > > diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
+> > > > index c1d8c23baa39..a4596be4d34a 100644
+> > > > --- a/drivers/usb/typec/altmodes/displayport.c
+> > > > +++ b/drivers/usb/typec/altmodes/displayport.c
+> > > > @@ -59,7 +59,6 @@ struct dp_altmode {
+> > > >     struct typec_displayport_data data;
+> > > >
+> > > >     enum dp_state state;
+> > > > -   bool hpd;
+> > > >
+> > > >     struct mutex lock; /* device lock */
+> > > >     struct work_struct work;
+> > > > @@ -143,10 +142,7 @@ static int dp_altmode_status_update(struct dp_altmode *dp)
+> > > >             if (!ret)
+> > > >                     dp->state = DP_STATE_CONFIGURE;
+> > > >     } else {
+> > > > -           if (dp->hpd != hpd) {
+> > > > -                   drm_connector_oob_hotplug_event(dp->connector_fwnode);
+> > > > -                   dp->hpd = hpd;
+> > > > -           }
+> > > > +           drm_connector_oob_hotplug_event(dp->connector_fwnode, hpd);
+> > > >     }
+> > > >
+> > > >     return ret;
+> > > > @@ -573,8 +569,7 @@ void dp_altmode_remove(struct typec_altmode *alt)
+> > > >     cancel_work_sync(&dp->work);
+> > > >
+> > > >     if (dp->connector_fwnode) {
+> > > > -           if (dp->hpd)
+> > > > -                   drm_connector_oob_hotplug_event(dp->connector_fwnode);
+> > > > +           drm_connector_oob_hotplug_event(dp->connector_fwnode, false);
+> > >
+> > > See, what does "false" here mean?
+> > >
+> > > Name the function for what it does, do not have random flags as
+> > > parameters, that makes it impossible to understand what the code is
+> > > doing when you are reading it, without having to jump around and figure
+> > > out what the flags are saying.
+> > >
+> > > And here they just don't even seem to be right :(
+> > >
+> >
+> > Both the old and new code will signal to the DRM driver that the cable
+> > was removed, the change is that we're carrying the level in the call
+> > rather than just indicating that the state has changed.
+> >
+> > We could introduce some HPD_HIGH/HPD_LOW defines to make it easier to
+> > read. But the various places I'm looking at just represented the hpd
+> > state as a bool.
+> >
+> > Regards,
+> > Bjorn
+> 
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
