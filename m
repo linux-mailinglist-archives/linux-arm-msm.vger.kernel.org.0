@@ -2,44 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3C9C4B105E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 15:29:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 856A84B106B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 15:29:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242876AbiBJO2C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 09:28:02 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43790 "EHLO
+        id S242915AbiBJO3w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 09:29:52 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242909AbiBJO14 (ORCPT
+        with ESMTP id S242934AbiBJO3v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 09:27:56 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC2CD21C;
-        Thu, 10 Feb 2022 06:27:57 -0800 (PST)
+        Thu, 10 Feb 2022 09:29:51 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0708B398;
+        Thu, 10 Feb 2022 06:29:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644503277; x=1676039277;
+  t=1644503393; x=1676039393;
   h=subject:to:cc:references:from:message-id:date:
    mime-version:in-reply-to:content-transfer-encoding;
-  bh=bqs2yU4FRtIKgztQwYdP5aUA/kaXzF+Ng5jdx6HVnAE=;
-  b=v7OxZ1h02y/sqYxcebX9u6kKI0tNSSe/xQnCJMgPvL19whCdWvK8Bqbd
-   wHGOa0+3lJNgOhvJZlT9rUK3qwc/VaMQCSi0oSCcAJu5gU7r50njoRLC7
-   auY8ftOeAJQGMktVlEGi/pffmFiX7uahivlST3LDJ0LBK6ueEftRDQrAv
-   Y=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 10 Feb 2022 06:27:57 -0800
+  bh=+FTgaWtC/fbl/lpxIMMrwrFu+pXJ8EqWfUdrXRGQUgY=;
+  b=WuwaJBS/8djrJIBZ/oD04w/hmfo2yGpn2ulCvSUl0DUu+5LXrEh9dJWw
+   4FYZ8z4g3gsYr5a9AcVmYqPJx5zYUUxMT2xJX1CkpuQ2wifYQI+2t011+
+   Lfgvbj3BHqZeFC5DGUpFqXDOoeZ9ifkXGCCvLqa8VsMDlLomO3i2cMKWK
+   Q=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 10 Feb 2022 06:29:51 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2022 06:27:57 -0800
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2022 06:29:51 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 10 Feb 2022 06:27:56 -0800
+ 15.2.922.19; Thu, 10 Feb 2022 06:29:50 -0800
 Received: from [10.216.9.195] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 10 Feb
- 2022 06:27:52 -0800
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sc7280: add lpass lpi pin
- controller node
+ 2022 06:29:47 -0800
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sc7280: Add wcd9380 pinmux
 To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
         <bjorn.andersson@linaro.org>, <devicetree@vger.kernel.org>,
         <dianders@chromium.org>, <judyhsiao@chromium.org>,
@@ -48,18 +47,18 @@ To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
         <srinivas.kandagatla@linaro.org>
 CC:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
 References: <1644334454-16719-1-git-send-email-quic_srivasam@quicinc.com>
- <1644334454-16719-3-git-send-email-quic_srivasam@quicinc.com>
- <CAE-0n52LGY2amCKo+40D4BoSsANs7JeQ0t_4QfeXNC5q64Ccwg@mail.gmail.com>
- <c17e95f7-9c42-657a-8525-3937d4b27fb8@quicinc.com>
- <CAE-0n51o3ohrVO-HCeVOTz=JwePA63yMrNpFsY4sFOiv6rQwEA@mail.gmail.com>
+ <1644334454-16719-4-git-send-email-quic_srivasam@quicinc.com>
+ <CAE-0n50jBeOnkpogPFm+zqTf8bqQs-Bo0Gma658uFE6aA=Edxg@mail.gmail.com>
+ <a1c2a7e6-8d76-6ee6-4bc4-e7ea8013af02@quicinc.com>
+ <CAE-0n52LqrdLXk4=WMQY3WXVYLjpwXH+FP2z71gKMAkjiPR4Xg@mail.gmail.com>
 From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 Organization: Qualcomm
-Message-ID: <42e27aa2-afb6-656d-9b56-c822a8c510ad@quicinc.com>
-Date:   Thu, 10 Feb 2022 19:57:49 +0530
+Message-ID: <7a5e55b9-058f-e143-0d78-7a6d57498a50@quicinc.com>
+Date:   Thu, 10 Feb 2022 19:59:43 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n51o3ohrVO-HCeVOTz=JwePA63yMrNpFsY4sFOiv6rQwEA@mail.gmail.com>
+In-Reply-To: <CAE-0n52LqrdLXk4=WMQY3WXVYLjpwXH+FP2z71gKMAkjiPR4Xg@mail.gmail.com>
 Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -77,46 +76,40 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 2/10/2022 5:35 AM, Stephen Boyd wrote:
-Thanks for Your time Stephen!!!
-> Quoting Srinivasa Rao Mandadapu (2022-02-09 06:01:21)
->> On 2/9/2022 2:41 AM, Stephen Boyd wrote:
->>> Quoting Srinivasa Rao Mandadapu (2022-02-08 07:34:13)
->>>> +                       data {
->>>> +                               pins = "gpio7";
->>>> +                               function = "dmic1_data";
->>>> +                               drive-strength = <8>;
->>>> +                               input-enable;
->>>> +                       };
->>>> +               };
+On 2/10/2022 5:33 AM, Stephen Boyd wrote:
+Thanks for your time Stephen!!!
+> Quoting Srinivasa Rao Mandadapu (2022-02-09 06:26:58)
+>> On 2/9/2022 2:42 AM, Stephen Boyd wrote:
+>>> Quoting Srinivasa Rao Mandadapu (2022-02-08 07:34:14)
+>>>
+>>>> +                       pins = "gpio83";
+>>>> +                       function = "gpio";
+>>>> +                       drive-strength = <16>;
+>>>> +                       output-high;
+>>>> +       };
 >>>> +
->>>> +               dmic01_sleep: dmic01-sleep-pins {
->>>> +                       clk {
->>>> +                               pins = "gpio6";
->>>> +                               function = "dmic1_clk";
->>>> +                               drive-strength = <2>;
->>>> +                               bias-disable;
->>>> +                               output-low;
->>>> +                       };
->>>> +
->>>> +                       data {
->>>> +                               pins = "gpio7";
->>>> +                               function = "dmic1_data";
->>>> +                               drive-strength = <2>;
->>>> +                               pull-down;
->>>> +                               input-enable;
->>> Why does input-enable matter? It's not a gpio.
->> Actually the same is fallowed in sm8250.dtsi. Verified without it and
->> working fine. Need take call on it.
-> Is that because the pin is already an input by default? What does gpio
-> debugfs say for this pin? Does it also work if you make it
-> output-low/output-high here? I thought that the gpio itself isn't muxed
-> out to the pad unless the function is "gpio" so I hope the input/output
-> settings have no effect here.
-
-Pin is in by default. debugfs says
-
-gpio7 : in 1 8mA no pull
-
-verified in downstream code also. Same is followed there also.
-
+>>>> +       wcd938x_reset_sleep: wcd938x_reset_sleep {
+>>>> +                       pins = "gpio83";
+>>>> +                       function = "gpio";
+>>>> +                       drive-strength = <16>;
+>>>> +                       bias-disable;
+>>>> +                       output-low;
+>>> Why doesn't the device drive the reset gpio by requesting the gpio and
+>>> asserting and deasserting it? We shouldn't need to use pinctrl settings
+>>> to toggle reset gpios.
+>> Okay. Verified without these nodes and didn't see any impact. But
+>> similar way it's mentioned in sm8250-mtp.dts. Could You please suggest
+>> on it how to go ahead on this?.
+> I'd expect the wcd938x codec device node to have a 'reset-gpios'
+> property like
+>
+> 	reset-gpios = <&tlmm 83 GPIO_ACTIVE_LOW>
+>
+> and then the driver to request that gpio via
+>
+> 	reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
+>
+> so it gets the gpio during driver probe. Then the gpio can be deasserted
+> during suspend and reasserted on resume, if that's even important?
+Okay will remove it. Already wcd938x node has reset gpio. It seems these 
+are redundant.
