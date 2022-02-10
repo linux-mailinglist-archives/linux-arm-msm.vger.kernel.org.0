@@ -2,113 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 241A74B10C9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 15:48:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F3BF4B10D9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 15:50:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243177AbiBJOsX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 09:48:23 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60658 "EHLO
+        id S243198AbiBJOuI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 09:50:08 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243170AbiBJOsW (ORCPT
+        with ESMTP id S243180AbiBJOuI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 09:48:22 -0500
-Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D8E1D84
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 06:48:23 -0800 (PST)
-Received: by mail-oo1-xc34.google.com with SMTP id u25-20020a4ad0d9000000b002e8d4370689so6595710oor.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 06:48:23 -0800 (PST)
+        Thu, 10 Feb 2022 09:50:08 -0500
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50333EB0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 06:50:09 -0800 (PST)
+Received: by mail-pj1-x1034.google.com with SMTP id a11-20020a17090a740b00b001b8b506c42fso8855921pjg.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 06:50:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=y8L6D09oyDfYgwjLd8NNF83N1gzGF1wUPPtkfx3XZVI=;
-        b=Yz2H8KJy53ICSCEZXr1I3rj+EZgdmww45658jW9z7hOVEYZlLREbsl3IWRp6XroyLl
-         bjKED9NyeDE7z/MsCNXL4xHx3IlDAuN8xEFqO9e1Wta49qmoVj7HY1gXtS+1oNah5bDA
-         IU4pnCkTKHU9EoUQYCnuow5mBJp269e+mCdD3rcHR2lzzGqoRMGRiX7ayJuwbEUDy72S
-         cIk8FsIbsAzF80Uz5Tn6iYB3HoaYe3XvXZq+Z/PFCdeKBIUwxY6N4yYra5r0r9gO9BKh
-         2jETZHqbDAi17Ea0qm9lCKoEDf+/fkFtS1946pTvmSVMRfqRf0896ht/K/2DDmFTjzm8
-         dh8Q==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mldDtPK/YShlaxniuH+3uQLRX7HHInnMOPZ6vrRICic=;
+        b=IPAZVFUrFJKLW/2M19S1gOpWRk5N811dE8ZSeDPl474N9O6CUPX3MurHqyYaCOcKPk
+         jAUBSDiCIDkCIpL1sP0nOO0xX9KXtH2DPohRcE/VIaCQ+uWQVd1vrqzdN0Er2eTyVe5x
+         8M0zyBg+0hX6o3e26SweX9vDuvT55BhT+XVpoCr0ztzeXWflP2aFYGrfYdZnDbhkCE0v
+         5bueIft6l2Bh9tw8onbJMOyAPZSfLgukj8StGxzkcHnp/gKjoiwVN7b2WeHn+/RZxTxc
+         LQPN6t7RxgqS11KUjG/ZuQIG/JRwyb2ULe7cea0kDlaQ03NK9Zg6OKlSpkXEHaWXVCPz
+         97rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=y8L6D09oyDfYgwjLd8NNF83N1gzGF1wUPPtkfx3XZVI=;
-        b=YcCMzSQeF1WMn97uK2U6DAVLzM6t4x0LleHfjG+sizvDoRDnxnsJ3k0ezMmPa7JTPq
-         NzHUj1qWvF00CXtEWzj6nSBIKCXa9VuE/o8/ntlRfdChf218BJBdC+p08GIaWieSNZ47
-         rjeAGcKTV40zQbdSIgv5Up5QGhTvWD3PtEOlkr8sz2aGQG2Rof/Zz/LgjWsOVbElwOnO
-         1DpyM6/FqrgvvCovNdYVxQJ+KCJXf/yf+NDfV1TLea4aUa9Ne4pdsS4DtJiXw41yat1u
-         /QZcPzGmM1b9FyX51/hH4lIFtd7zXuAbe+NQ9yRMlp0nuPShQw9cbdjbhtnlFPdPp8IG
-         iGVQ==
-X-Gm-Message-State: AOAM5333lfjNFY7ZNZRYbRdTONGKsgpwZXN+EecQfvX4oUQ0x+K170iT
-        ZLyWZS5ty+fVsWJYFBsuaYE01A4wMJ6iUcPoS+w=
-X-Google-Smtp-Source: ABdhPJyWfn2w/9INbj+KirLZzE3lITYuIDHKR/pl+vpDZ9MC8lZBoGlc8zc26FOJvbzuyKpyw6JB3kvwulmJPLIz79w=
-X-Received: by 2002:a05:6870:4512:: with SMTP id e18mr896807oao.122.1644504502777;
- Thu, 10 Feb 2022 06:48:22 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mldDtPK/YShlaxniuH+3uQLRX7HHInnMOPZ6vrRICic=;
+        b=8ArmJ1MNvSfb1eImYtiFxGo4WAjo/IzyEaxAEjlSIy/NeIdh8CRfkpHv1tRAWcMvKM
+         /hcVTlb+jGexbehyXNr5hbZogvtSpngmXGKCcPC0a3Y0F3oOjyCzBa9flzO6ssQAnG0C
+         7S8CWxj94RDAcFtQHZtdhUZ7yZIi99vBSYCC9pu0p3Yy1ZHfKldxgzCiqG6vZrTxvej+
+         ojuJy715gA5NRkUdu8lyogMmEsm0d8HMlR/8RFRGAQqScEdRUohmTtntdfOiW8lkak4b
+         5yidrq663jZnNTd5M3xe9DCxQUTnLbQq9Hb3JzfVV9T5I8MYCjOgmtAdxHldiCwn9/WE
+         nGmQ==
+X-Gm-Message-State: AOAM530xVPrUSkfgGzIUJnrnf7WLOhCQRpuyUIjpsQc1iRIX39rrtTns
+        Gb4otvediP9jBo8MAzLL4B+z
+X-Google-Smtp-Source: ABdhPJyZq00sxNb5hAHpRbhT6EmJjtzQ75byHD7XHTLWQnIKn8R1+p4oCNwbrxsl5vTZQr6effGtuQ==
+X-Received: by 2002:a17:90a:8804:: with SMTP id s4mr3169533pjn.129.1644504608770;
+        Thu, 10 Feb 2022 06:50:08 -0800 (PST)
+Received: from localhost.localdomain ([27.111.75.88])
+        by smtp.gmail.com with ESMTPSA id f8sm24219206pfe.204.2022.02.10.06.50.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Feb 2022 06:50:08 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     bhelgaas@google.com
+Cc:     bjorn.andersson@linaro.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH] PCI: pciehp: Add Qualcomm bridge (0x0110) to the command completed quirk
+Date:   Thu, 10 Feb 2022 20:20:03 +0530
+Message-Id: <20220210145003.135907-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Sender: lila.lucas112@gmail.com
-Received: by 2002:a05:6830:4387:0:0:0:0 with HTTP; Thu, 10 Feb 2022 06:48:22
- -0800 (PST)
-From:   Sophia Erick <sdltdkggl3455@gmail.com>
-Date:   Thu, 10 Feb 2022 15:48:22 +0100
-X-Google-Sender-Auth: AlIaJAwqBJTbMx26yhFiwkI37w0
-Message-ID: <CAAGLdM4B8rTRbCn7BgkH_bBMNzm+kuPjgjMG6WJzLunRNZs2kQ@mail.gmail.com>
-Subject: HELLO
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.3 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FROM_LOCAL_NOVOWEL,HK_RANDOM_FROM,LOTS_OF_MONEY,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_MONEY_PERCENT,
-        T_SCC_BODY_TEXT_LINE,UNDISC_MONEY autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Report: *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.5 FROM_LOCAL_NOVOWEL From: localpart has series of non-vowel
-        *      letters
-        *  0.6 HK_RANDOM_FROM From username looks random
-        * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:c34 listed in]
-        [list.dnswl.org]
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [lila.lucas112[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [lila.lucas112[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  0.0 LOTS_OF_MONEY Huge... sums of money
-        *  0.0 T_MONEY_PERCENT X% of a lot of money for you
-        *  3.3 UNDISC_MONEY Undisclosed recipients + money/fraud signs
-X-Spam-Level: *****
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello My Dear,
+The Qualcomm PCI bridge device (0x0110) found in chipsets such as SM8450
+does not set the command completed bit unless writes to the Slot Command
+register change "Control" bits.
 
-It is my pleasure to communicate with you, I know that this message
-will be a surprise to you my name is Mrs. Sophia Erick, I am diagnosed
-with ovarian cancer which my doctor have confirmed that I have only
-some weeks to live so I have decided you handover the sum of($
-11,000,000.00, Eleven Million Dollars) through I decided handover the
-money in my account to you for help of the orphanage homes and the
-needy once
+This results in timeouts like below:
 
-Please   kindly reply me here as soon as possible to enable me give
-you more information but before handing over my details to you please
-assure me that you will only take 30%  of the money and share the rest
-to the poor orphanage home and the needy once, thank you am waiting to
-hear from you
+pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2020 msec ago)
 
-Mrs Sophia Erick.
+Hence, add the device to the command completed quirk to mark commands
+"completed" immediately unless they change the "Control" bits.
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ drivers/pci/hotplug/pciehp_hpc.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/pci/hotplug/pciehp_hpc.c b/drivers/pci/hotplug/pciehp_hpc.c
+index 1c1ebf3dad43..4e4ccf3afbe3 100644
+--- a/drivers/pci/hotplug/pciehp_hpc.c
++++ b/drivers/pci/hotplug/pciehp_hpc.c
+@@ -1084,6 +1084,8 @@ static void quirk_cmd_compl(struct pci_dev *pdev)
+ }
+ DECLARE_PCI_FIXUP_CLASS_EARLY(PCI_VENDOR_ID_INTEL, PCI_ANY_ID,
+ 			      PCI_CLASS_BRIDGE_PCI, 8, quirk_cmd_compl);
++DECLARE_PCI_FIXUP_CLASS_EARLY(PCI_VENDOR_ID_QCOM, 0x0110,
++			      PCI_CLASS_BRIDGE_PCI, 8, quirk_cmd_compl);
+ DECLARE_PCI_FIXUP_CLASS_EARLY(PCI_VENDOR_ID_QCOM, 0x0400,
+ 			      PCI_CLASS_BRIDGE_PCI, 8, quirk_cmd_compl);
+ DECLARE_PCI_FIXUP_CLASS_EARLY(PCI_VENDOR_ID_QCOM, 0x0401,
+-- 
+2.25.1
+
