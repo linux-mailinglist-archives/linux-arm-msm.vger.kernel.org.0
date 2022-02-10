@@ -2,67 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 93F984B0DD7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 13:52:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B3A44B0E2E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 14:15:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241768AbiBJMvL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 07:51:11 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:34644 "EHLO
+        id S238484AbiBJNOO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 08:14:14 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241774AbiBJMvI (ORCPT
+        with ESMTP id S242040AbiBJNON (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 07:51:08 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03E762643;
-        Thu, 10 Feb 2022 04:51:07 -0800 (PST)
+        Thu, 10 Feb 2022 08:14:13 -0500
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A85DD114F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 05:14:10 -0800 (PST)
+Received: by mail-qt1-x82f.google.com with SMTP id e16so5109027qtq.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 05:14:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644497468; x=1676033468;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=CtfKZgjswOE5qA2x4o23nBJL1zD+uEdwDe3VnUg3YVQ=;
-  b=UAYOdI6wAmisQARkRwF2jtEW196UfTybfR67ef01z/0geGKOYn+UjlM6
-   lKWMo7+WQ4UINomRh/WPsFSC9+QUwS9mayMlOyEUdHVbA0uTC86ROFBPb
-   nm00nowtWG+RglVu2yy6XbnhsrlUU16yQfu9hwER6Txg5il2+wAZM89yO
-   A=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 10 Feb 2022 04:51:07 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2022 04:51:06 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 10 Feb 2022 04:50:52 -0800
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 10 Feb 2022 04:50:46 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <plai@codeaurora.org>, <bgoswami@codeaurora.org>, <perex@perex.cz>,
-        <tiwai@suse.com>, <srinivas.kandagatla@linaro.org>,
-        <rohitkr@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [PATCH v9 3/3] ASoC: qcom: SC7280: Add machine driver
-Date:   Thu, 10 Feb 2022 18:20:15 +0530
-Message-ID: <1644497415-25291-4-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1644497415-25291-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1644497415-25291-1-git-send-email-quic_srivasam@quicinc.com>
+        d=marek-ca.20210112.gappssmtp.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Y72MSrQ/DK9eOIq9d6AGRca4dPZsVxDBVqlBoGFZ7PY=;
+        b=NyLxq3vq0kHFKDhUJ3pSUKTCyqSSKWmMmkoEQQ/RaZv5k87LD+S5ayCPA9rkX12Ubb
+         iO6DXi5mylYQO8chgdnOlWthGsYc/Z9G9s+TvtQdLhjHM47cEW84IPMXXpMnFFGSI9lK
+         SJhsq4aJHNHEODdg/DMTQ55yYiHUG8iXGh9jS+kBzhuyFLHl0CC7y6vMD1Af1UvERi8n
+         0+frDrUi1GXSTKf7/b+p/2YgygJHjIHi8srH36Oy5r4DcuOGH3CjJWiUasfGbtNHaAaF
+         Bj0JDWxjJPThsPEDRVGai0fUGjwr+Hr3HT5Yvq8AsR9qCMJGMqnfxe2hbtWUmtYAC8Lr
+         +QOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Y72MSrQ/DK9eOIq9d6AGRca4dPZsVxDBVqlBoGFZ7PY=;
+        b=HzRAewZJW41RYaz+nXBZVgqnyo54k9UynKEVF1GZ30LGmTaX6KEl6rn6bPX1cPCqAG
+         5sryn2nbDByrms8mX4aFZje6tb/3olsuhUkz6VWM1GDMeKKySqkBZKKtACY1lcYa/jiA
+         3urbWidg8q4NeFRlsJ7Qf3OAeMi1hX1uramzxvTvYcyVBoMXEdny0LV8+sgE1BA50oZw
+         0/Sf+E6nq1PJ3kxo6gHdNqxFImhYKGDu4nsRyhfQZ8+CciQAvQhkb/BnbNXgHi8HjFGL
+         13NYL+zMeYcMwpo1P8ZlnnIDbP4wb4n3819e4pAfAWoIiF7i++MpfAccnDsLGKIg4LgY
+         3nuQ==
+X-Gm-Message-State: AOAM530KxtY9c7lnc6TApksLoktSPAux2RDNQ9PzGF2YaySNKLAOTlCt
+        YnoiVGHhy0KLTrjLDAG+kCZaur2OAsXuMNWk0jA=
+X-Google-Smtp-Source: ABdhPJwdx3+lYvsYAW0QRWrwsSv9Oo8NwlenWMTzFZT4ukvzzUu6UZVIHv7s8/G+EUO8UBHbDWjEtA==
+X-Received: by 2002:a05:622a:3d3:: with SMTP id k19mr4645920qtx.71.1644498849534;
+        Thu, 10 Feb 2022 05:14:09 -0800 (PST)
+Received: from localhost.localdomain (modemcable134.222-177-173.mc.videotron.ca. [173.177.222.134])
+        by smtp.gmail.com with ESMTPSA id p15sm10969824qtk.56.2022.02.10.05.14.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Feb 2022 05:14:09 -0800 (PST)
+From:   Jonathan Marek <jonathan@marek.ca>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     dmitry.baryshkov@linaro.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-gpio@vger.kernel.org (open list:PIN CONTROL SUBSYSTEM),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 1/2] pinctrl: qcom: sm8450: Add egpio support
+Date:   Thu, 10 Feb 2022 08:12:08 -0500
+Message-Id: <20220210131210.24605-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,354 +71,166 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add new machine driver to register sound card on sc7280 based targets and
-do the required configuration for lpass cpu dai and external codecs
-connected over MI2S and soundwire interfaces.
-Add support for audio jack detection, soundwire init and MBHC.
+This mirrors egpio support added for sc7280. This change is necessary for
+gpios 165 to 209 to be driven by APSS.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 ---
- sound/soc/qcom/Kconfig  |  14 +++
- sound/soc/qcom/Makefile |   2 +
- sound/soc/qcom/sc7280.c | 284 ++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 300 insertions(+)
- create mode 100644 sound/soc/qcom/sc7280.c
+ drivers/pinctrl/qcom/pinctrl-sm8450.c | 106 +++++++++++++++-----------
+ 1 file changed, 61 insertions(+), 45 deletions(-)
 
-diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
-index cf3e151..dd5949e 100644
---- a/sound/soc/qcom/Kconfig
-+++ b/sound/soc/qcom/Kconfig
-@@ -176,4 +176,18 @@ config SND_SOC_SC7180
- 	  SC7180 SoC-based systems.
- 	  Say Y if you want to use audio device on this SoCs.
+diff --git a/drivers/pinctrl/qcom/pinctrl-sm8450.c b/drivers/pinctrl/qcom/pinctrl-sm8450.c
+index c6fa3dbc14a1e..3110d7bf5698a 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sm8450.c
++++ b/drivers/pinctrl/qcom/pinctrl-sm8450.c
+@@ -46,6 +46,8 @@
+ 		.mux_bit = 2,			\
+ 		.pull_bit = 0,			\
+ 		.drv_bit = 6,			\
++		.egpio_enable = 12,		\
++		.egpio_present = 11,		\
+ 		.oe_bit = 9,			\
+ 		.in_bit = 0,			\
+ 		.out_bit = 1,			\
+@@ -567,6 +569,7 @@ enum sm8450_functions {
+ 	msm_mux_ddr_pxi2,
+ 	msm_mux_ddr_pxi3,
+ 	msm_mux_dp_hot,
++	msm_mux_egpio,
+ 	msm_mux_gcc_gp1,
+ 	msm_mux_gcc_gp2,
+ 	msm_mux_gcc_gp3,
+@@ -719,6 +722,17 @@ static const char * const gpio_groups[] = {
+ 	"gpio207", "gpio208", "gpio209",
+ };
  
-+config SND_SOC_SC7280
-+	tristate "SoC Machine driver for SC7280 boards"
-+	depends on I2C && SOUNDWIRE || COMPILE_TEST
-+	select SND_SOC_QCOM_COMMON
-+	select SND_SOC_LPASS_SC7280
-+	select SND_SOC_MAX98357A
-+	select SND_SOC_WCD938X
-+	select SND_SOC_LPASS_RX_MACRO
-+	select SND_SOC_LPASS_TX_MACRO
-+	help
-+	  Add support for audio on Qualcomm Technologies Inc.
-+	  SC7280 SoC-based systems.
-+	  Say Y or M if you want to use audio device on this SoCs.
-+
- endif #SND_SOC_QCOM
-diff --git a/sound/soc/qcom/Makefile b/sound/soc/qcom/Makefile
-index 1600ae5..625aec6 100644
---- a/sound/soc/qcom/Makefile
-+++ b/sound/soc/qcom/Makefile
-@@ -19,6 +19,7 @@ snd-soc-storm-objs := storm.o
- snd-soc-apq8016-sbc-objs := apq8016_sbc.o
- snd-soc-apq8096-objs := apq8096.o
- snd-soc-sc7180-objs := sc7180.o
-+snd-soc-sc7280-objs := sc7280.o
- snd-soc-sdm845-objs := sdm845.o
- snd-soc-sm8250-objs := sm8250.o
- snd-soc-qcom-common-objs := common.o
-@@ -27,6 +28,7 @@ obj-$(CONFIG_SND_SOC_STORM) += snd-soc-storm.o
- obj-$(CONFIG_SND_SOC_APQ8016_SBC) += snd-soc-apq8016-sbc.o
- obj-$(CONFIG_SND_SOC_MSM8996) += snd-soc-apq8096.o
- obj-$(CONFIG_SND_SOC_SC7180) += snd-soc-sc7180.o
-+obj-$(CONFIG_SND_SOC_SC7280) += snd-soc-sc7280.o
- obj-$(CONFIG_SND_SOC_SDM845) += snd-soc-sdm845.o
- obj-$(CONFIG_SND_SOC_SM8250) += snd-soc-sm8250.o
- obj-$(CONFIG_SND_SOC_QCOM_COMMON) += snd-soc-qcom-common.o
-diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
-new file mode 100644
-index 0000000..bd0bf9c
---- /dev/null
-+++ b/sound/soc/qcom/sc7280.c
-@@ -0,0 +1,284 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+//
-+// Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-+//
-+// ALSA SoC Machine driver for sc7280
-+
-+#include <linux/input.h>
-+#include <linux/module.h>
-+#include <linux/of_device.h>
-+#include <linux/platform_device.h>
-+#include <sound/core.h>
-+#include <sound/jack.h>
-+#include <sound/pcm.h>
-+#include <sound/soc.h>
-+#include <linux/soundwire/sdw.h>
-+
-+#include "common.h"
-+#include "lpass.h"
-+
-+struct sc7280_snd_data {
-+	struct snd_soc_card card;
-+	struct sdw_stream_runtime *sruntime[LPASS_MAX_PORTS];
-+	struct snd_soc_jack hs_jack;
-+	struct snd_soc_jack hdmi_jack;
-+	bool jack_setup;
-+	bool stream_prepared[LPASS_MAX_PORTS];
++static const char * const egpio_groups[] = {
++	"gpio165", "gpio166", "gpio167", "gpio168", "gpio169", "gpio170",
++	"gpio171", "gpio172", "gpio173", "gpio174", "gpio175", "gpio176",
++	"gpio177", "gpio178", "gpio179", "gpio180", "gpio181", "gpio182",
++	"gpio183", "gpio184", "gpio185", "gpio186", "gpio187", "gpio188",
++	"gpio189", "gpio190", "gpio191", "gpio192", "gpio193", "gpio194",
++	"gpio195", "gpio196", "gpio197", "gpio198", "gpio199", "gpio200",
++	"gpio201", "gpio202", "gpio203", "gpio204", "gpio205", "gpio206",
++	"gpio207", "gpio208", "gpio209",
 +};
 +
-+static void sc7280_jack_free(struct snd_jack *jack)
-+{
-+	struct snd_soc_component *component = jack->private_data;
-+
-+	snd_soc_component_set_jack(component, NULL, NULL);
-+}
-+
-+static int sc7280_headset_init(struct snd_soc_pcm_runtime *rtd)
-+{
-+	struct snd_soc_card *card = rtd->card;
-+	struct sc7280_snd_data *pdata = snd_soc_card_get_drvdata(card);
-+	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct snd_soc_component *component = codec_dai->component;
-+	struct snd_jack *jack;
-+	int rval, i;
-+
-+	if (!pdata->jack_setup) {
-+		rval = snd_soc_card_jack_new(card, "Headset Jack",
-+					     SND_JACK_HEADSET | SND_JACK_LINEOUT |
-+					     SND_JACK_MECHANICAL |
-+					     SND_JACK_BTN_0 | SND_JACK_BTN_1 |
-+					     SND_JACK_BTN_2 | SND_JACK_BTN_3 |
-+					     SND_JACK_BTN_4 | SND_JACK_BTN_5,
-+					     &pdata->hs_jack, NULL, 0);
-+
-+		if (rval < 0) {
-+			dev_err(card->dev, "Unable to add Headset Jack\n");
-+			return rval;
-+		}
-+
-+		jack = pdata->hs_jack.jack;
-+
-+		snd_jack_set_key(jack, SND_JACK_BTN_0, KEY_PLAYPAUSE);
-+		snd_jack_set_key(jack, SND_JACK_BTN_1, KEY_VOICECOMMAND);
-+		snd_jack_set_key(jack, SND_JACK_BTN_2, KEY_VOLUMEUP);
-+		snd_jack_set_key(jack, SND_JACK_BTN_3, KEY_VOLUMEDOWN);
-+
-+		jack->private_data = component;
-+		jack->private_free = sc7280_jack_free;
-+		pdata->jack_setup = true;
-+	}
-+	switch (cpu_dai->id) {
-+	case LPASS_CDC_DMA_RX0:
-+	case LPASS_CDC_DMA_TX3:
-+		for_each_rtd_codec_dais(rtd, i, codec_dai) {
-+			rval = snd_soc_component_set_jack(component, &pdata->hs_jack, NULL);
-+			if (rval != 0 && rval != -ENOTSUPP) {
-+				dev_err(card->dev, "Failed to set jack: %d\n", rval);
-+				return rval;
-+			}
-+		}
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
-+static int sc7280_hdmi_init(struct snd_soc_pcm_runtime *rtd)
-+{
-+	struct snd_soc_card *card = rtd->card;
-+	struct sc7280_snd_data *pdata = snd_soc_card_get_drvdata(card);
-+	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
-+	struct snd_soc_component *component = codec_dai->component;
-+	struct snd_jack *jack;
-+	int rval;
-+
-+	rval = snd_soc_card_jack_new(card, "HDMI Jack",	SND_JACK_LINEOUT,
-+				     &pdata->hdmi_jack, NULL, 0);
-+
-+	if (rval < 0) {
-+		dev_err(card->dev, "Unable to add HDMI Jack\n");
-+		return rval;
-+	}
-+
-+	jack = pdata->hdmi_jack.jack;
-+	jack->private_data = component;
-+	jack->private_free = sc7280_jack_free;
-+
-+	return snd_soc_component_set_jack(component, &pdata->hdmi_jack, NULL);
-+}
-+
-+static int sc7280_init(struct snd_soc_pcm_runtime *rtd)
-+{
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+
-+	switch (cpu_dai->id) {
-+	case LPASS_CDC_DMA_TX3:
-+		return sc7280_headset_init(rtd);
-+	case LPASS_CDC_DMA_RX0:
-+	case LPASS_CDC_DMA_VA_TX0:
-+	case MI2S_SECONDARY:
-+		return 0;
-+	case LPASS_DP_RX:
-+		return sc7280_hdmi_init(rtd);
-+	default:
-+		dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__, cpu_dai->id);
-+	}
-+
-+	return -EINVAL;
-+}
-+
-+static int sc7280_snd_hw_params(struct snd_pcm_substream *substream,
-+				struct snd_pcm_hw_params *params)
-+{
-+	struct snd_pcm_runtime *runtime = substream->runtime;
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct snd_soc_dai *codec_dai;
-+	const struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct sc7280_snd_data *pdata = snd_soc_card_get_drvdata(rtd->card);
-+	struct sdw_stream_runtime *sruntime;
-+	int i;
-+
-+	snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_CHANNELS, 2, 2);
-+	snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_RATE, 48000, 48000);
-+
-+	switch (cpu_dai->id) {
-+	case LPASS_CDC_DMA_TX3:
-+	case LPASS_CDC_DMA_RX0:
-+		for_each_rtd_codec_dais(rtd, i, codec_dai) {
-+			sruntime = snd_soc_dai_get_stream(codec_dai, substream->stream);
-+			if (sruntime != ERR_PTR(-ENOTSUPP))
-+				pdata->sruntime[cpu_dai->id] = sruntime;
-+		}
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
-+static int sc7280_snd_swr_prepare(struct snd_pcm_substream *substream)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	const struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct sc7280_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-+	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
-+	int ret;
-+
-+	if (!sruntime)
-+		return 0;
-+
-+	if (data->stream_prepared[cpu_dai->id]) {
-+		sdw_disable_stream(sruntime);
-+		sdw_deprepare_stream(sruntime);
-+		data->stream_prepared[cpu_dai->id] = false;
-+	}
-+
-+	ret = sdw_prepare_stream(sruntime);
-+	if (ret)
-+		return ret;
-+
-+	ret = sdw_enable_stream(sruntime);
-+	if (ret) {
-+		sdw_deprepare_stream(sruntime);
-+		return ret;
-+	}
-+	data->stream_prepared[cpu_dai->id] = true;
-+
-+	return ret;
-+}
-+
-+static int sc7280_snd_prepare(struct snd_pcm_substream *substream)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	const struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+
-+	switch (cpu_dai->id) {
-+	case LPASS_CDC_DMA_RX0:
-+	case LPASS_CDC_DMA_TX3:
-+		return sc7280_snd_swr_prepare(substream);
-+	default:
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
-+static int sc7280_snd_hw_free(struct snd_pcm_substream *substream)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct sc7280_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-+	const struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
-+
-+	switch (cpu_dai->id) {
-+	case LPASS_CDC_DMA_RX0:
-+	case LPASS_CDC_DMA_TX3:
-+		if (sruntime && data->stream_prepared[cpu_dai->id]) {
-+			sdw_disable_stream(sruntime);
-+			sdw_deprepare_stream(sruntime);
-+			data->stream_prepared[cpu_dai->id] = false;
-+		}
-+		break;
-+	default:
-+		break;
-+	}
-+	return 0;
-+}
-+
-+static const struct snd_soc_ops sc7280_ops = {
-+	.hw_params = sc7280_snd_hw_params,
-+	.hw_free = sc7280_snd_hw_free,
-+	.prepare = sc7280_snd_prepare,
-+};
-+
-+static int sc7280_snd_platform_probe(struct platform_device *pdev)
-+{
-+	struct snd_soc_card *card;
-+	struct sc7280_snd_data *data;
-+	struct device *dev = &pdev->dev;
-+	struct snd_soc_dai_link *link;
-+	int ret, i;
-+
-+	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
-+	if (!data)
-+		return -ENOMEM;
-+
-+	card = &data->card;
-+	snd_soc_card_set_drvdata(card, data);
-+
-+	card->owner = THIS_MODULE;
-+	card->driver_name = "SC7280";
-+	card->dev = dev;
-+
-+	ret = qcom_snd_parse_of(card);
-+	if (ret)
-+		return ret;
-+
-+	for_each_card_prelinks(card, i, link) {
-+		link->init = sc7280_init;
-+		link->ops = &sc7280_ops;
-+	}
-+
-+	return devm_snd_soc_register_card(dev, card);
-+}
-+
-+static const struct of_device_id sc7280_snd_device_id[]  = {
-+	{ .compatible = "google,sc7280-herobrine" },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(of, sc7280_snd_device_id);
-+
-+static struct platform_driver sc7280_snd_driver = {
-+	.probe = sc7280_snd_platform_probe,
-+	.driver = {
-+		.name = "msm-snd-sc7280",
-+		.of_match_table = sc7280_snd_device_id,
-+		.pm = &snd_soc_pm_ops,
-+	},
-+};
-+module_platform_driver(sc7280_snd_driver);
-+
-+MODULE_DESCRIPTION("sc7280 ASoC Machine Driver");
-+MODULE_LICENSE("GPL");
+ static const char * const aon_cam_groups[] = {
+ 	"gpio108",
+ };
+@@ -1285,6 +1299,7 @@ static const struct msm_function sm8450_functions[] = {
+ 	FUNCTION(ddr_pxi2),
+ 	FUNCTION(ddr_pxi3),
+ 	FUNCTION(dp_hot),
++	FUNCTION(egpio),
+ 	FUNCTION(gcc_gp1),
+ 	FUNCTION(gcc_gp2),
+ 	FUNCTION(gcc_gp3),
+@@ -1571,51 +1586,51 @@ static const struct msm_pingroup sm8450_groups[] = {
+ 	[162] = PINGROUP(162, qlink2_request, _, _, _, _, _, _, _, _),
+ 	[163] = PINGROUP(163, qlink2_enable, _, _, _, _, _, _, _, _),
+ 	[164] = PINGROUP(164, qlink2_wmss, _, _, _, _, _, _, _, _),
+-	[165] = PINGROUP(165, _, _, _, _, _, _, _, _, _),
+-	[166] = PINGROUP(166, _, _, _, _, _, _, _, _, _),
+-	[167] = PINGROUP(167, _, _, _, _, _, _, _, _, _),
+-	[168] = PINGROUP(168, _, _, _, _, _, _, _, _, _),
+-	[169] = PINGROUP(169, _, _, _, _, _, _, _, _, _),
+-	[170] = PINGROUP(170, _, _, _, _, _, _, _, _, _),
+-	[171] = PINGROUP(171, _, _, _, _, _, _, _, _, _),
+-	[172] = PINGROUP(172, _, _, _, _, _, _, _, _, _),
+-	[173] = PINGROUP(173, _, _, _, _, _, _, _, _, _),
+-	[174] = PINGROUP(174, _, _, _, _, _, _, _, _, _),
+-	[175] = PINGROUP(175, _, _, _, _, _, _, _, _, _),
+-	[176] = PINGROUP(176, _, _, _, _, _, _, _, _, _),
+-	[177] = PINGROUP(177, _, _, _, _, _, _, _, _, _),
+-	[178] = PINGROUP(178, _, _, _, _, _, _, _, _, _),
+-	[179] = PINGROUP(179, _, _, _, _, _, _, _, _, _),
+-	[180] = PINGROUP(180, _, _, _, _, _, _, _, _, _),
+-	[181] = PINGROUP(181, _, _, _, _, _, _, _, _, _),
+-	[182] = PINGROUP(182, _, _, _, _, _, _, _, _, _),
+-	[183] = PINGROUP(183, _, _, _, _, _, _, _, _, _),
+-	[184] = PINGROUP(184, _, _, _, _, _, _, _, _, _),
+-	[185] = PINGROUP(185, _, _, _, _, _, _, _, _, _),
+-	[186] = PINGROUP(186, _, _, _, _, _, _, _, _, _),
+-	[187] = PINGROUP(187, _, _, _, _, _, _, _, _, _),
+-	[188] = PINGROUP(188, _, qdss_gpio, _, _, _, _, _, _, _),
+-	[189] = PINGROUP(189, _, qdss_gpio, _, _, _, _, _, _, _),
+-	[190] = PINGROUP(190, qdss_gpio, _, _, _, _, _, _, _, _),
+-	[191] = PINGROUP(191, qdss_gpio, _, _, _, _, _, _, _, _),
+-	[192] = PINGROUP(192, _, qdss_gpio, _, _, _, _, _, _, _),
+-	[193] = PINGROUP(193, _, qdss_gpio, _, _, _, _, _, _, _),
+-	[194] = PINGROUP(194, _, qdss_gpio, _, _, _, _, _, _, _),
+-	[195] = PINGROUP(195, _, qdss_gpio, _, _, _, _, _, _, _),
+-	[196] = PINGROUP(196, _, qdss_gpio, _, _, _, _, _, _, _),
+-	[197] = PINGROUP(197, _, qdss_gpio, _, _, _, _, _, _, _),
+-	[198] = PINGROUP(198, _, qdss_gpio, _, _, _, _, _, _, _),
+-	[199] = PINGROUP(199, _, qdss_gpio, _, _, _, _, _, _, _),
+-	[200] = PINGROUP(200, _, qdss_gpio, _, _, _, _, _, _, _),
+-	[201] = PINGROUP(201, _, qdss_gpio, _, _, _, _, _, _, _),
+-	[202] = PINGROUP(202, qdss_gpio, _, _, _, _, _, _, _, _),
+-	[203] = PINGROUP(203, qdss_gpio, _, _, _, _, _, _, _, _),
+-	[204] = PINGROUP(204, qdss_gpio, _, _, _, _, _, _, _, _),
+-	[205] = PINGROUP(205, qdss_gpio, _, _, _, _, _, _, _, _),
+-	[206] = PINGROUP(206, qup5, _, _, _, _, _, _, _, _),
+-	[207] = PINGROUP(207, qup5, _, _, _, _, _, _, _, _),
+-	[208] = PINGROUP(208, cci_i2c, _, _, _, _, _, _, _, _),
+-	[209] = PINGROUP(209, cci_i2c, _, _, _, _, _, _, _, _),
++	[165] = PINGROUP(165, _, _, _, _, _, _, _, _, egpio),
++	[166] = PINGROUP(166, _, _, _, _, _, _, _, _, egpio),
++	[167] = PINGROUP(167, _, _, _, _, _, _, _, _, egpio),
++	[168] = PINGROUP(168, _, _, _, _, _, _, _, _, egpio),
++	[169] = PINGROUP(169, _, _, _, _, _, _, _, _, egpio),
++	[170] = PINGROUP(170, _, _, _, _, _, _, _, _, egpio),
++	[171] = PINGROUP(171, _, _, _, _, _, _, _, _, egpio),
++	[172] = PINGROUP(172, _, _, _, _, _, _, _, _, egpio),
++	[173] = PINGROUP(173, _, _, _, _, _, _, _, _, egpio),
++	[174] = PINGROUP(174, _, _, _, _, _, _, _, _, egpio),
++	[175] = PINGROUP(175, _, _, _, _, _, _, _, _, egpio),
++	[176] = PINGROUP(176, _, _, _, _, _, _, _, _, egpio),
++	[177] = PINGROUP(177, _, _, _, _, _, _, _, _, egpio),
++	[178] = PINGROUP(178, _, _, _, _, _, _, _, _, egpio),
++	[179] = PINGROUP(179, _, _, _, _, _, _, _, _, egpio),
++	[180] = PINGROUP(180, _, _, _, _, _, _, _, _, egpio),
++	[181] = PINGROUP(181, _, _, _, _, _, _, _, _, egpio),
++	[182] = PINGROUP(182, _, _, _, _, _, _, _, _, egpio),
++	[183] = PINGROUP(183, _, _, _, _, _, _, _, _, egpio),
++	[184] = PINGROUP(184, _, _, _, _, _, _, _, _, egpio),
++	[185] = PINGROUP(185, _, _, _, _, _, _, _, _, egpio),
++	[186] = PINGROUP(186, _, _, _, _, _, _, _, _, egpio),
++	[187] = PINGROUP(187, _, _, _, _, _, _, _, _, egpio),
++	[188] = PINGROUP(188, _, qdss_gpio, _, _, _, _, _, _, egpio),
++	[189] = PINGROUP(189, _, qdss_gpio, _, _, _, _, _, _, egpio),
++	[190] = PINGROUP(190, qdss_gpio, _, _, _, _, _, _, _, egpio),
++	[191] = PINGROUP(191, qdss_gpio, _, _, _, _, _, _, _, egpio),
++	[192] = PINGROUP(192, _, qdss_gpio, _, _, _, _, _, _, egpio),
++	[193] = PINGROUP(193, _, qdss_gpio, _, _, _, _, _, _, egpio),
++	[194] = PINGROUP(194, _, qdss_gpio, _, _, _, _, _, _, egpio),
++	[195] = PINGROUP(195, _, qdss_gpio, _, _, _, _, _, _, egpio),
++	[196] = PINGROUP(196, _, qdss_gpio, _, _, _, _, _, _, egpio),
++	[197] = PINGROUP(197, _, qdss_gpio, _, _, _, _, _, _, egpio),
++	[198] = PINGROUP(198, _, qdss_gpio, _, _, _, _, _, _, egpio),
++	[199] = PINGROUP(199, _, qdss_gpio, _, _, _, _, _, _, egpio),
++	[200] = PINGROUP(200, _, qdss_gpio, _, _, _, _, _, _, egpio),
++	[201] = PINGROUP(201, _, qdss_gpio, _, _, _, _, _, _, egpio),
++	[202] = PINGROUP(202, qdss_gpio, _, _, _, _, _, _, _, egpio),
++	[203] = PINGROUP(203, qdss_gpio, _, _, _, _, _, _, _, egpio),
++	[204] = PINGROUP(204, qdss_gpio, _, _, _, _, _, _, _, egpio),
++	[205] = PINGROUP(205, qdss_gpio, _, _, _, _, _, _, _, egpio),
++	[206] = PINGROUP(206, qup5, _, _, _, _, _, _, _, egpio),
++	[207] = PINGROUP(207, qup5, _, _, _, _, _, _, _, egpio),
++	[208] = PINGROUP(208, cci_i2c, _, _, _, _, _, _, _, egpio),
++	[209] = PINGROUP(209, cci_i2c, _, _, _, _, _, _, _, egpio),
+ 	[210] = UFS_RESET(ufs_reset, 0xde000),
+ 	[211] = SDC_QDSD_PINGROUP(sdc2_clk, 0xd6000, 14, 6),
+ 	[212] = SDC_QDSD_PINGROUP(sdc2_cmd, 0xd6000, 11, 3),
+@@ -1651,6 +1666,7 @@ static const struct msm_pinctrl_soc_data sm8450_tlmm = {
+ 	.ngpios = 211,
+ 	.wakeirq_map = sm8450_pdc_map,
+ 	.nwakeirq_map = ARRAY_SIZE(sm8450_pdc_map),
++	.egpio_func = 9,
+ };
+ 
+ static int sm8450_tlmm_probe(struct platform_device *pdev)
 -- 
-2.7.4
+2.26.1
 
