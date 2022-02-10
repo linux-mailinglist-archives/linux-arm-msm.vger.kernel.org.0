@@ -2,51 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E55414B06AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 07:51:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 044A94B06EA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 08:26:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235699AbiBJGvv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 01:51:51 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55562 "EHLO
+        id S235897AbiBJH0D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 02:26:03 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:40792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235797AbiBJGvs (ORCPT
+        with ESMTP id S230002AbiBJH0D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 01:51:48 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C51E115B;
-        Wed,  9 Feb 2022 22:51:45 -0800 (PST)
+        Thu, 10 Feb 2022 02:26:03 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F381F254;
+        Wed,  9 Feb 2022 23:26:04 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9D0D661CC6;
-        Thu, 10 Feb 2022 06:51:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54377C004E1;
-        Thu, 10 Feb 2022 06:51:41 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id B7A25B80AF9;
+        Thu, 10 Feb 2022 07:26:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E08DC004E1;
+        Thu, 10 Feb 2022 07:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1644475904;
-        bh=dYbpKbKmMH09KEhVGiK8fe9cVi1GcDr6cnrXLyfYOXY=;
-        h=From:To:Cc:Subject:Date:From;
-        b=lSDNVk8oqvt7M2Z4olp9DwmAFM1M5mCGF9pN56kVBW2u+6Wf+nJS7osN/ENcxQodE
-         5E9RwfYZe6Nh8zZdGlR5H55lHt16ZAqwcT9IGEY3Gb7Px+9tJ8c0ptddxMmCbm+rVk
-         dgG2TrRmx7jlGGMvCNPtBAJjD6sNbM75Hi+teE05ZvuZGxnAQcG8nq4GitTrkG03Kq
-         8TuqDkntpHTOGpFQ+c2PAJPSUGKh/0p7KPjWzoZ0+lcW18JBeSgHGXTXVxIZ0g7JOn
-         ipIaAf54uFuGRPftTO/SLdzyXm77FeUbqGzdxkaUrUC/2a15muSiPbooKnzDSgvZfa
-         gYqMeeQaE/yNQ==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Rob Herring <robh@kernel.org>,
-        Masahiro Yamada <masahiroy@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Michal Marek <michal.lkml@markovi.net>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] kbuild: Don't report disabled nodes with duplicate addresses
-Date:   Thu, 10 Feb 2022 12:21:32 +0530
-Message-Id: <20220210065132.234341-1-vkoul@kernel.org>
-X-Mailer: git-send-email 2.31.1
+        s=k20201202; t=1644477962;
+        bh=XAK3gR3Jt5PIItnDx9L7GXAYJrQ2zpIn/6UBryAXvQY=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=Cyxta8klKp0UWC/zY0xy77TNqZ715uKvTCE8n5pr+MmAmCwkjFMPRHn2HakQ+BBqU
+         1vSIhkAARALOxGqYMBGl1hfWHGU98a5C9afw48O8rovcWhPv9s0mCNAKu3LSBQx2et
+         vKJbDXhgiGK3eNiQjug59BALdN1ZHmnliN6k+Pl/jlAuAASy9nxzDwc98g7UsNonnk
+         yRkYKyHjMWE1vKn7lw4jJfCj7kLxqIGkozL1yQZQBEc1Os7D3A5ud2cPfx8SGnQ9Xn
+         D4G7r7cMp5+IyHxLbRVr/kfYYAHTnkZLqx9ObdTfR7PpKIaH7MUPjYIaU2U6gotiU5
+         2RVJoHueNcMHw==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20220209172513.17873-1-tdas@codeaurora.org>
+References: <20220209172513.17873-1-tdas@codeaurora.org>
+Subject: Re: [v1 1/2] clk: qcom: gdsc: Use the default transition delay for GDSCs
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+To:     Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>
+Date:   Wed, 09 Feb 2022 23:26:00 -0800
+User-Agent: alot/0.10
+Message-Id: <20220210072602.6E08DC004E1@smtp.kernel.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -57,59 +58,13 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Duplicated unit address is okay if we have only one such node enabled.
-So, remove '-Wno-unique_unit_address' from DTC_FLAGS.
+Quoting Taniya Das (2022-02-09 09:25:12)
+> Do not update the transition delay and use the default reset values.
 
-This helps in reducing warnings in qcom dts from
-
-   6483 unique_unit_address
-   1108 simple_bus_reg
-    764 avoid_unnecessary_addr_size
-    712 unit_address_vs_reg
-    120 graph_child_address
-     32 unique_unit_address_if_enabled
-
-after this patch:
-    277 simple_bus_reg
-    191 avoid_unnecessary_addr_size
-    178 unit_address_vs_reg
-     32 unique_unit_address_if_enabled
-     30 graph_child_address
-
-which would help people focus on the actual warnings and fix them.
-
-Suggested-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- scripts/Makefile.lib | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
-index 79be57fdd32a..7e4f6671d950 100644
---- a/scripts/Makefile.lib
-+++ b/scripts/Makefile.lib
-@@ -299,7 +299,8 @@ quiet_cmd_gzip = GZIP    $@
- # DTC
- # ---------------------------------------------------------------------------
- DTC ?= $(objtree)/scripts/dtc/dtc
--DTC_FLAGS += -Wno-interrupt_provider
-+DTC_FLAGS += -Wno-interrupt_provider \
-+       -Wno-unique_unit_address
- 
- # Disable noisy checks by default
- ifeq ($(findstring 1,$(KBUILD_EXTRA_WARN)),)
-@@ -307,8 +308,9 @@ DTC_FLAGS += -Wno-unit_address_vs_reg \
- 	-Wno-avoid_unnecessary_addr_size \
- 	-Wno-alias_paths \
- 	-Wno-graph_child_address \
--	-Wno-simple_bus_reg \
--	-Wno-unique_unit_address
-+	-Wno-simple_bus_reg
-+else
-+DTC_FLAGS += -Wunique_unit_address_if_enabled
- endif
- 
- ifneq ($(findstring 2,$(KBUILD_EXTRA_WARN)),)
--- 
-2.31.1
-
+Why? I know why because I'm CCed on the internal bug but nobody else
+knows what's going on here. Please clearly describe what you're fixing,
+i.e. that you're seeing black screens on sc7180 because the gdsc is
+being enabled/disabled so rapidly that the hardware is getting borked.
+Lots more detail please. Otherwise we're going to ignore this patch
+series as nonsense because we don't have enough information to realize
+that it is important.
