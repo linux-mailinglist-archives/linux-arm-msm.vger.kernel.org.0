@@ -2,75 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AD664B0A6A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 11:18:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F39344B0A7E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 11:25:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239550AbiBJKQz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 05:16:55 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:37330 "EHLO
+        id S239386AbiBJKZk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 05:25:40 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:41378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239553AbiBJKQx (ORCPT
+        with ESMTP id S238573AbiBJKZj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 05:16:53 -0500
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80829FFA
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 02:16:50 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id t14so7240690ljh.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 02:16:50 -0800 (PST)
+        Thu, 10 Feb 2022 05:25:39 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22159B92
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 02:25:40 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id i34so9547032lfv.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 02:25:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=3ne9afkcEMUgeoGNnWkV++QClTAUsFhKUiDokSSK4gs=;
-        b=cpwqd0ostl/K+0LDjp2O6emA6OJVYcuj390GkHObcgJdcYkRtqUketq5yz81ZW1ECl
-         XNHUYvbLv6X9XrwkTOPMd0aj8dFeJivC7rqhA/EwEwFsHu/2/2VYqiP4gmU1vK1v5bgH
-         0r1SH59cy3GO/YFDMyrJ90Z9jcifx/DZvIZ+Smo8syz3lY5yQByFDE+P5EK0qRWKKzVc
-         6D17AWW2PEHr/FfcoztmL0216RO4PipqiK8X08Zedwbl90LI3Dkv5sTl0B5SJr2o9ONs
-         JgS3JxvDgP0iqwaryvvqtf8raA7fGcBKOV9bXpANRbVytEfgzOPqqB4852ysoRhjbuN+
-         NDkA==
+        h=message-id:date:mime-version:user-agent:subject:content-language
+         :from:to:cc:references:in-reply-to:content-transfer-encoding;
+        bh=HcOwHwa374KzHuMTQX4hlu4wGlaW5fvWT58vEFdgi34=;
+        b=otdIvizCfcaIN3vkxknSDMzKSGde4u/FrqlqozCuFXCQVXMOfmHR2abjgTL/npJPBm
+         w+2GR8eYwe2Z9J8BsB1b+h3psN7Bks75xHG4Dwtr587mxWv92FiVWLWdEcdb9ZZd2IQg
+         KgpnTSATs0JuSnfQI+F3k59Vxe5KonjGlO5X3FCdqSwrHGEs2xOMNv22pYez7CzBn8a5
+         LQAmunCMrdt/maV8lPCFv+xngBrA2HRIG4HpZSaB0WB63teiJJ8tskHwwcFHVwswqlWX
+         gu+5OILScnEr50ugowA4rwzP4kUGupJaQFmbi3crJ41Ud5SsvZ1k/vajMaP4k4aW6mIS
+         U9XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
+         :content-language:from:to:cc:references:in-reply-to
          :content-transfer-encoding;
-        bh=3ne9afkcEMUgeoGNnWkV++QClTAUsFhKUiDokSSK4gs=;
-        b=Mr6DzceO4/yLNyOdo0oKxYuHhqoVRgr1mCWr8FwQy8oJJOOVjPLacZ1TGL/m6bvw0d
-         BXyqiELttrs/w00PEnqv+qdgHw7X6nsxYcrG/TVBefZZ/o5zFZnni3w4WF95fM4R2fuu
-         TWzFCS9r0P4w1mC8FeVDTb2dLVGLKZxPYV3W0m8LekEc+miIQYeVyVaI9Gdsv2ifwLLq
-         tFtEtsEDisyC6cr82XriWME7LitwcWSE9eHCzfzxt0xslnLRlH6eIN27Fe+F30gpz60Q
-         XtSvBBQyokVjnMIKdF2vTmoq38JRkwhWl+RjLoUGIbGwPUwTyA+gzq6UHjDJTWRm5k42
-         3PqQ==
-X-Gm-Message-State: AOAM532ZknF2rZrP3psNmP2fe8YwubLEMbUn5ajOv4Fyv8XGAKcelsW8
-        xWIn4QDiS+y23FajiwOHj1jSBw==
-X-Google-Smtp-Source: ABdhPJxjobzeo5yzVqpZ1edrDcbPHOwnY2/Az6fBOhCPktWcPtktCsDi7eYsUWXornR+W6Dt96frYg==
-X-Received: by 2002:a05:651c:1413:: with SMTP id u19mr4516534lje.240.1644488208827;
-        Thu, 10 Feb 2022 02:16:48 -0800 (PST)
+        bh=HcOwHwa374KzHuMTQX4hlu4wGlaW5fvWT58vEFdgi34=;
+        b=Or7j5xA6l78ilsupd5JqtUnS+zByVyTGY57269vjlsFkDroB53EKr/kSUGQDnOHiZ5
+         9o8Eht/rwR60NDfPjTEW/28u+igix7FgvZ6WOgH4aJ1wxfuIjbyWpyIz2QGjXt9IskgZ
+         FnNtA3JKBLLSqy1uGCWKH/haj2ZHQewM3IPaPhWU/0KKWjUrvfQdfEOQKXGbpav9PaRH
+         klgrf1vxVDsMkQxGWLLgnlL7b9JwG+w2ovhkagu73Pkkmc4wHXI24of0IreE1Vq5Uuv3
+         zTvFuEN7JNrn5LNd2nmAt6ve2zPZcRIHT/jMqpSg7A0nBNift2XsEzlOK3yjZUAJUmD9
+         U0ew==
+X-Gm-Message-State: AOAM531Nn8mmZLCPiS8NwVQiSfsKi2Wm8snNlkPHXGP3iJ0G8560hL5y
+        8qaXFUrpWpo5AKLlX6eg2pUhPw==
+X-Google-Smtp-Source: ABdhPJw3fAnl7fN5UigE34CpFSfcKM0ptxvPkATy5UUf9y6Wjlvz3vZbtg0BPMlYZ3WDsyJ4naqQ3A==
+X-Received: by 2002:a05:6512:2393:: with SMTP id c19mr4043803lfv.423.1644488738323;
+        Thu, 10 Feb 2022 02:25:38 -0800 (PST)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id a6sm2841646ljb.93.2022.02.10.02.16.48
+        by smtp.gmail.com with ESMTPSA id h13sm2746486lfv.100.2022.02.10.02.25.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Feb 2022 02:16:48 -0800 (PST)
-Message-ID: <19b96972-cee7-937f-21ce-c78982ed2048@linaro.org>
-Date:   Thu, 10 Feb 2022 13:16:46 +0300
+        Thu, 10 Feb 2022 02:25:37 -0800 (PST)
+Message-ID: <6a0fbf4b-abaf-21a5-e219-74d7144b183e@linaro.org>
+Date:   Thu, 10 Feb 2022 13:25:36 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.1
-Subject: Re: [PATCH] media: qcom: use div64_u64() instead of do_div()
+Subject: Re: [PATCH 2/2] drm/msm/dsi: switch to DRM_PANEL_BRIDGE
 Content-Language: en-GB
-To:     Qing Wang <wangqing@vivo.com>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1644395913-4091-1-git-send-email-wangqing@vivo.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1644395913-4091-1-git-send-email-wangqing@vivo.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+References: <20211207222901.988484-1-dmitry.baryshkov@linaro.org>
+ <20211207222901.988484-3-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20211207222901.988484-3-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,42 +78,585 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/02/2022 11:38, Qing Wang wrote:
-> From: Wang Qing <wangqing@vivo.com>
+On 08/12/2021 01:29, Dmitry Baryshkov wrote:
+> Currently the DSI driver has two separate paths: one if the next device
+> in a chain is a bridge and another one if the panel is connected
+> directly to the DSI host. Simplify the code path by using panel-bridge
+> driver (already selected in Kconfig) and dropping support for
+> handling the panel directly.
 > 
-> do_div() does a 64-by-32 division.
-> When the divisor is u64, do_div() truncates it to 32 bits, this means it
-> can test non-zero and be truncated to zero for division.
-> 
-> fix do_div.cocci warning:
-> do_div() does a 64-by-32 division, please consider using div64_u64 instead.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
+In favour of merging DSC first, I'm deferring this patch till we can 
+pass DSC data w/o using the drm panel.
 
-NAK
-
-The div64_u64 is not equivalent to do_div. It returns the quotient
-rather than modifying the first arg. Moreover it is unoptimal on 32-bit
-arches.
-
-> 
-> Signed-off-by: Wang Qing <wangqing@vivo.com>
 > ---
->   drivers/media/platform/qcom/venus/vdec.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   drivers/gpu/drm/msm/dsi/dsi.c         |  32 +---
+>   drivers/gpu/drm/msm/dsi/dsi.h         |  10 +-
+>   drivers/gpu/drm/msm/dsi/dsi_host.c    |  20 +-
+>   drivers/gpu/drm/msm/dsi/dsi_manager.c | 257 +++-----------------------
+>   4 files changed, 32 insertions(+), 287 deletions(-)
 > 
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 91da3f5..941a904
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -435,7 +435,7 @@ static int vdec_s_parm(struct file *file, void *fh, struct v4l2_streamparm *a)
->   		return -EINVAL;
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
+> index 9670e548b3e9..b61f451a282e 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi.c
+> @@ -208,7 +208,7 @@ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
+>   			 struct drm_encoder *encoder)
+>   {
+>   	struct msm_drm_private *priv;
+> -	struct drm_bridge *ext_bridge;
+> +	struct drm_connector *connector;
+>   	int ret;
 >   
->   	fps = (u64)USEC_PER_SEC;
-> -	do_div(fps, us_per_frame);
-> +	div64_u64(fps, us_per_frame);
+>   	if (WARN_ON(!encoder) || WARN_ON(!msm_dsi) || WARN_ON(!dev))
+> @@ -238,31 +238,17 @@ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
+>   		goto fail;
+>   	}
 >   
->   	inst->fps = fps;
->   	inst->timeperframe = *timeperframe;
+> -	/*
+> -	 * check if the dsi encoder output is connected to a panel or an
+> -	 * external bridge. We create a connector only if we're connected to a
+> -	 * drm_panel device. When we're connected to an external bridge, we
+> -	 * assume that the drm_bridge driver will create the connector itself.
+> -	 */
+> -	ext_bridge = msm_dsi_host_get_bridge(msm_dsi->host);
+> -
+> -	if (ext_bridge)
+> -		msm_dsi->connector =
+> -			msm_dsi_manager_ext_bridge_init(msm_dsi->id);
+> -	else
+> -		msm_dsi->connector =
+> -			msm_dsi_manager_connector_init(msm_dsi->id);
+> -
+> -	if (IS_ERR(msm_dsi->connector)) {
+> -		ret = PTR_ERR(msm_dsi->connector);
+> +	connector = msm_dsi_manager_ext_bridge_init(msm_dsi->id);
+> +
+> +	if (IS_ERR(connector)) {
+> +		ret = PTR_ERR(connector);
+>   		DRM_DEV_ERROR(dev->dev,
+>   			"failed to create dsi connector: %d\n", ret);
+> -		msm_dsi->connector = NULL;
+>   		goto fail;
+>   	}
+>   
+>   	priv->bridges[priv->num_bridges++]       = msm_dsi->bridge;
+> -	priv->connectors[priv->num_connectors++] = msm_dsi->connector;
+> +	priv->connectors[priv->num_connectors++] = connector;
+>   
+>   	return 0;
+>   fail:
+> @@ -272,12 +258,6 @@ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
+>   		msm_dsi->bridge = NULL;
+>   	}
+>   
+> -	/* don't destroy connector if we didn't make it */
+> -	if (msm_dsi->connector && !msm_dsi->external_bridge)
+> -		msm_dsi->connector->funcs->destroy(msm_dsi->connector);
+> -
+> -	msm_dsi->connector = NULL;
+> -
+>   	return ret;
+>   }
+>   
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
+> index f46df52c6985..7eb778070a8c 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi.h
+> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
+> @@ -49,8 +49,6 @@ struct msm_dsi {
+>   	struct drm_device *dev;
+>   	struct platform_device *pdev;
+>   
+> -	/* connector managed by us when we're connected to a drm_panel */
+> -	struct drm_connector *connector;
+>   	/* internal dsi bridge attached to MDP interface */
+>   	struct drm_bridge *bridge;
+>   
+> @@ -58,10 +56,8 @@ struct msm_dsi {
+>   	struct msm_dsi_phy *phy;
+>   
+>   	/*
+> -	 * panel/external_bridge connected to dsi bridge output, only one of the
+> -	 * two can be valid at a time
+> +	 * external_bridge connected to dsi bridge output
+>   	 */
+> -	struct drm_panel *panel;
+>   	struct drm_bridge *external_bridge;
+>   
+>   	struct device *phy_dev;
+> @@ -76,7 +72,6 @@ struct msm_dsi {
+>   /* dsi manager */
+>   struct drm_bridge *msm_dsi_manager_bridge_init(u8 id);
+>   void msm_dsi_manager_bridge_destroy(struct drm_bridge *bridge);
+> -struct drm_connector *msm_dsi_manager_connector_init(u8 id);
+>   struct drm_connector *msm_dsi_manager_ext_bridge_init(u8 id);
+>   int msm_dsi_manager_cmd_xfer(int id, const struct mipi_dsi_msg *msg);
+>   bool msm_dsi_manager_cmd_xfer_trigger(int id, u32 dma_base, u32 len);
+> @@ -88,7 +83,7 @@ void msm_dsi_manager_tpg_enable(void);
+>   /* msm dsi */
+>   static inline bool msm_dsi_device_connected(struct msm_dsi *msm_dsi)
+>   {
+> -	return msm_dsi->panel || msm_dsi->external_bridge;
+> +	return msm_dsi->external_bridge;
+>   }
+>   
+>   struct drm_encoder *msm_dsi_get_encoder(struct msm_dsi *msm_dsi);
+> @@ -115,7 +110,6 @@ int msm_dsi_host_power_on(struct mipi_dsi_host *host,
+>   int msm_dsi_host_power_off(struct mipi_dsi_host *host);
+>   int msm_dsi_host_set_display_mode(struct mipi_dsi_host *host,
+>   				  const struct drm_display_mode *mode);
+> -struct drm_panel *msm_dsi_host_get_panel(struct mipi_dsi_host *host);
+>   unsigned long msm_dsi_host_get_mode_flags(struct mipi_dsi_host *host);
+>   struct drm_bridge *msm_dsi_host_get_bridge(struct mipi_dsi_host *host);
+>   int msm_dsi_host_register(struct mipi_dsi_host *host);
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 5b4bb722f750..58bd48d4ec03 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -159,7 +159,6 @@ struct msm_dsi_host {
+>   	struct drm_display_mode *mode;
+>   
+>   	/* connected device info */
+> -	struct device_node *device_node;
+>   	unsigned int channel;
+>   	unsigned int lanes;
+>   	enum mipi_dsi_pixel_format format;
+> @@ -1604,8 +1603,6 @@ static int dsi_host_detach(struct mipi_dsi_host *host,
+>   
+>   	dsi_dev_detach(msm_host->pdev);
+>   
+> -	msm_host->device_node = NULL;
+> -
+>   	DBG("id=%d", msm_host->id);
+>   	if (msm_host->dev)
+>   		queue_work(msm_host->workqueue, &msm_host->hpd_work);
+> @@ -1745,16 +1742,6 @@ static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
+>   		goto err;
+>   	}
+>   
+> -	/* Get panel node from the output port's endpoint data */
+> -	device_node = of_graph_get_remote_node(np, 1, 0);
+> -	if (!device_node) {
+> -		DRM_DEV_DEBUG(dev, "%s: no valid device\n", __func__);
+> -		ret = -ENODEV;
+> -		goto err;
+> -	}
+> -
+> -	msm_host->device_node = device_node;
+> -
+>   	if (of_property_read_bool(np, "syscon-sfpb")) {
+>   		msm_host->sfpb = syscon_regmap_lookup_by_phandle(np,
+>   					"syscon-sfpb");
+> @@ -2405,11 +2392,6 @@ int msm_dsi_host_set_display_mode(struct mipi_dsi_host *host,
+>   	return 0;
+>   }
+>   
+> -struct drm_panel *msm_dsi_host_get_panel(struct mipi_dsi_host *host)
+> -{
+> -	return of_drm_find_panel(to_msm_dsi_host(host)->device_node);
+> -}
+> -
+>   unsigned long msm_dsi_host_get_mode_flags(struct mipi_dsi_host *host)
+>   {
+>   	return to_msm_dsi_host(host)->mode_flags;
+> @@ -2419,7 +2401,7 @@ struct drm_bridge *msm_dsi_host_get_bridge(struct mipi_dsi_host *host)
+>   {
+>   	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
+>   
+> -	return of_drm_find_bridge(msm_host->device_node);
+> +	return devm_drm_of_get_bridge(&msm_host->pdev->dev, msm_host->pdev->dev.of_node, 1, 0);
+>   }
+>   
+>   void msm_dsi_host_snapshot(struct msm_disp_state *disp_state, struct mipi_dsi_host *host)
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> index 497719efb9e9..43b8a1268c4b 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> @@ -188,39 +188,26 @@ static void dsi_mgr_phy_disable(int id)
+>   	}
+>   }
+>   
+> -struct dsi_connector {
+> -	struct drm_connector base;
+> -	int id;
+> -};
+> -
+>   struct dsi_bridge {
+>   	struct drm_bridge base;
+>   	int id;
+>   };
+>   
+> -#define to_dsi_connector(x) container_of(x, struct dsi_connector, base)
+>   #define to_dsi_bridge(x) container_of(x, struct dsi_bridge, base)
+>   
+> -static inline int dsi_mgr_connector_get_id(struct drm_connector *connector)
+> -{
+> -	struct dsi_connector *dsi_connector = to_dsi_connector(connector);
+> -	return dsi_connector->id;
+> -}
+> -
+>   static int dsi_mgr_bridge_get_id(struct drm_bridge *bridge)
+>   {
+>   	struct dsi_bridge *dsi_bridge = to_dsi_bridge(bridge);
+>   	return dsi_bridge->id;
+>   }
+>   
+> -static int msm_dsi_manager_panel_init(struct drm_connector *conn, u8 id)
+> +static void msm_dsi_manager_set_split_display(u8 id)
+>   {
+> -	struct msm_drm_private *priv = conn->dev->dev_private;
+> -	struct msm_kms *kms = priv->kms;
+>   	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+>   	struct msm_dsi *other_dsi = dsi_mgr_get_other_dsi(id);
+> +	struct msm_drm_private *priv = msm_dsi->dev->dev_private;
+> +	struct msm_kms *kms = priv->kms;
+>   	struct msm_dsi *master_dsi, *slave_dsi;
+> -	struct drm_panel *panel;
+>   
+>   	if (IS_BONDED_DSI() && !IS_MASTER_DSI_LINK(id)) {
+>   		master_dsi = other_dsi;
+> @@ -230,88 +217,29 @@ static int msm_dsi_manager_panel_init(struct drm_connector *conn, u8 id)
+>   		slave_dsi = other_dsi;
+>   	}
+>   
+> -	/*
+> -	 * There is only 1 panel in the global panel list for bonded DSI mode.
+> -	 * Therefore slave dsi should get the drm_panel instance from master
+> -	 * dsi.
+> -	 */
+> -	panel = msm_dsi_host_get_panel(master_dsi->host);
+> -	if (IS_ERR(panel)) {
+> -		DRM_ERROR("Could not find panel for %u (%ld)\n", msm_dsi->id,
+> -			  PTR_ERR(panel));
+> -		return PTR_ERR(panel);
+> -	}
+> -
+> -	if (!panel || !IS_BONDED_DSI())
+> -		goto out;
+> -
+> -	drm_object_attach_property(&conn->base,
+> -				   conn->dev->mode_config.tile_property, 0);
+> +	if (!msm_dsi->external_bridge || !IS_BONDED_DSI())
+> +		return;
+>   
+>   	/*
+>   	 * Set split display info to kms once bonded DSI panel is connected to
+>   	 * both hosts.
+>   	 */
+> -	if (other_dsi && other_dsi->panel && kms->funcs->set_split_display) {
+> +	if (other_dsi && other_dsi->external_bridge && kms->funcs->set_split_display) {
+>   		kms->funcs->set_split_display(kms, master_dsi->encoder,
+>   					      slave_dsi->encoder,
+>   					      msm_dsi_is_cmd_mode(msm_dsi));
+>   	}
+> -
+> -out:
+> -	msm_dsi->panel = panel;
+> -	return 0;
+> -}
+> -
+> -static enum drm_connector_status dsi_mgr_connector_detect(
+> -		struct drm_connector *connector, bool force)
+> -{
+> -	int id = dsi_mgr_connector_get_id(connector);
+> -	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+> -
+> -	return msm_dsi->panel ? connector_status_connected :
+> -		connector_status_disconnected;
+> -}
+> -
+> -static void dsi_mgr_connector_destroy(struct drm_connector *connector)
+> -{
+> -	struct dsi_connector *dsi_connector = to_dsi_connector(connector);
+> -
+> -	DBG("");
+> -
+> -	drm_connector_cleanup(connector);
+> -
+> -	kfree(dsi_connector);
+> -}
+> -
+> -static int dsi_mgr_connector_get_modes(struct drm_connector *connector)
+> -{
+> -	int id = dsi_mgr_connector_get_id(connector);
+> -	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+> -	struct drm_panel *panel = msm_dsi->panel;
+> -	int num;
+> -
+> -	if (!panel)
+> -		return 0;
+> -
+> -	/*
+> -	 * In bonded DSI mode, we have one connector that can be
+> -	 * attached to the drm_panel.
+> -	 */
+> -	num = drm_panel_get_modes(panel, connector);
+> -	if (!num)
+> -		return 0;
+> -
+> -	return num;
+>   }
+>   
+> -static enum drm_mode_status dsi_mgr_connector_mode_valid(struct drm_connector *connector,
+> -				struct drm_display_mode *mode)
+> +static enum drm_mode_status dsi_mgr_bridge_mode_valid(struct drm_bridge *bridge,
+> +				const struct drm_display_info *info,
+> +				const struct drm_display_mode *mode)
+>   {
+> -	int id = dsi_mgr_connector_get_id(connector);
+> +	int id = dsi_mgr_bridge_get_id(bridge);
+>   	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+>   	struct drm_encoder *encoder = msm_dsi_get_encoder(msm_dsi);
+> -	struct msm_drm_private *priv = connector->dev->dev_private;
+> +	struct drm_device *dev = msm_dsi->dev;
+> +	struct msm_drm_private *priv = dev->dev_private;
+>   	struct msm_kms *kms = priv->kms;
+>   	long actual, requested;
+>   
+> @@ -326,16 +254,6 @@ static enum drm_mode_status dsi_mgr_connector_mode_valid(struct drm_connector *c
+>   	return MODE_OK;
+>   }
+>   
+> -static struct drm_encoder *
+> -dsi_mgr_connector_best_encoder(struct drm_connector *connector)
+> -{
+> -	int id = dsi_mgr_connector_get_id(connector);
+> -	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+> -
+> -	DBG("");
+> -	return msm_dsi_get_encoder(msm_dsi);
+> -}
+> -
+>   static void dsi_mgr_bridge_power_on(struct drm_bridge *bridge)
+>   {
+>   	int id = dsi_mgr_bridge_get_id(bridge);
+> @@ -398,7 +316,6 @@ static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
+>   	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+>   	struct msm_dsi *msm_dsi1 = dsi_mgr_get_dsi(DSI_1);
+>   	struct mipi_dsi_host *host = msm_dsi->host;
+> -	struct drm_panel *panel = msm_dsi->panel;
+>   	bool is_bonded_dsi = IS_BONDED_DSI();
+>   	int ret;
+>   
+> @@ -410,18 +327,6 @@ static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
+>   	if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id))
+>   		return;
+>   
+> -	/* Always call panel functions once, because even for dual panels,
+> -	 * there is only one drm_panel instance.
+> -	 */
+> -	if (panel) {
+> -		ret = drm_panel_prepare(panel);
+> -		if (ret) {
+> -			pr_err("%s: prepare panel %d failed, %d\n", __func__,
+> -								id, ret);
+> -			goto panel_prep_fail;
+> -		}
+> -	}
+> -
+>   	ret = msm_dsi_host_enable(host);
+>   	if (ret) {
+>   		pr_err("%s: enable host %d failed, %d\n", __func__, id, ret);
+> @@ -441,9 +346,6 @@ static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
+>   host1_en_fail:
+>   	msm_dsi_host_disable(host);
+>   host_en_fail:
+> -	if (panel)
+> -		drm_panel_unprepare(panel);
+> -panel_prep_fail:
+>   
+>   	return;
+>   }
+> @@ -461,62 +363,12 @@ void msm_dsi_manager_tpg_enable(void)
+>   	}
+>   }
+>   
+> -static void dsi_mgr_bridge_enable(struct drm_bridge *bridge)
+> -{
+> -	int id = dsi_mgr_bridge_get_id(bridge);
+> -	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+> -	struct drm_panel *panel = msm_dsi->panel;
+> -	bool is_bonded_dsi = IS_BONDED_DSI();
+> -	int ret;
+> -
+> -	DBG("id=%d", id);
+> -	if (!msm_dsi_device_connected(msm_dsi))
+> -		return;
+> -
+> -	/* Do nothing with the host if it is slave-DSI in case of bonded DSI */
+> -	if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id))
+> -		return;
+> -
+> -	if (panel) {
+> -		ret = drm_panel_enable(panel);
+> -		if (ret) {
+> -			pr_err("%s: enable panel %d failed, %d\n", __func__, id,
+> -									ret);
+> -		}
+> -	}
+> -}
+> -
+> -static void dsi_mgr_bridge_disable(struct drm_bridge *bridge)
+> -{
+> -	int id = dsi_mgr_bridge_get_id(bridge);
+> -	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+> -	struct drm_panel *panel = msm_dsi->panel;
+> -	bool is_bonded_dsi = IS_BONDED_DSI();
+> -	int ret;
+> -
+> -	DBG("id=%d", id);
+> -	if (!msm_dsi_device_connected(msm_dsi))
+> -		return;
+> -
+> -	/* Do nothing with the host if it is slave-DSI in case of bonded DSI */
+> -	if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id))
+> -		return;
+> -
+> -	if (panel) {
+> -		ret = drm_panel_disable(panel);
+> -		if (ret)
+> -			pr_err("%s: Panel %d OFF failed, %d\n", __func__, id,
+> -									ret);
+> -	}
+> -}
+> -
+>   static void dsi_mgr_bridge_post_disable(struct drm_bridge *bridge)
+>   {
+>   	int id = dsi_mgr_bridge_get_id(bridge);
+>   	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+>   	struct msm_dsi *msm_dsi1 = dsi_mgr_get_dsi(DSI_1);
+>   	struct mipi_dsi_host *host = msm_dsi->host;
+> -	struct drm_panel *panel = msm_dsi->panel;
+>   	bool is_bonded_dsi = IS_BONDED_DSI();
+>   	int ret;
+>   
+> @@ -543,13 +395,6 @@ static void dsi_mgr_bridge_post_disable(struct drm_bridge *bridge)
+>   			pr_err("%s: host1 disable failed, %d\n", __func__, ret);
+>   	}
+>   
+> -	if (panel) {
+> -		ret = drm_panel_unprepare(panel);
+> -		if (ret)
+> -			pr_err("%s: Panel %d unprepare failed,%d\n", __func__,
+> -								id, ret);
+> -	}
+> -
+>   	msm_dsi_host_disable_irq(host);
+>   	if (is_bonded_dsi && msm_dsi1)
+>   		msm_dsi_host_disable_irq(msm_dsi1->host);
+> @@ -594,76 +439,13 @@ static void dsi_mgr_bridge_mode_set(struct drm_bridge *bridge,
+>   	dsi_mgr_bridge_power_on(bridge);
+>   }
+>   
+> -static const struct drm_connector_funcs dsi_mgr_connector_funcs = {
+> -	.detect = dsi_mgr_connector_detect,
+> -	.fill_modes = drm_helper_probe_single_connector_modes,
+> -	.destroy = dsi_mgr_connector_destroy,
+> -	.reset = drm_atomic_helper_connector_reset,
+> -	.atomic_duplicate_state = drm_atomic_helper_connector_duplicate_state,
+> -	.atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
+> -};
+> -
+> -static const struct drm_connector_helper_funcs dsi_mgr_conn_helper_funcs = {
+> -	.get_modes = dsi_mgr_connector_get_modes,
+> -	.mode_valid = dsi_mgr_connector_mode_valid,
+> -	.best_encoder = dsi_mgr_connector_best_encoder,
+> -};
+> -
+>   static const struct drm_bridge_funcs dsi_mgr_bridge_funcs = {
+>   	.pre_enable = dsi_mgr_bridge_pre_enable,
+> -	.enable = dsi_mgr_bridge_enable,
+> -	.disable = dsi_mgr_bridge_disable,
+>   	.post_disable = dsi_mgr_bridge_post_disable,
+>   	.mode_set = dsi_mgr_bridge_mode_set,
+> +	.mode_valid = dsi_mgr_bridge_mode_valid,
+>   };
+>   
+> -/* initialize connector when we're connected to a drm_panel */
+> -struct drm_connector *msm_dsi_manager_connector_init(u8 id)
+> -{
+> -	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+> -	struct drm_connector *connector = NULL;
+> -	struct dsi_connector *dsi_connector;
+> -	int ret;
+> -
+> -	dsi_connector = kzalloc(sizeof(*dsi_connector), GFP_KERNEL);
+> -	if (!dsi_connector)
+> -		return ERR_PTR(-ENOMEM);
+> -
+> -	dsi_connector->id = id;
+> -
+> -	connector = &dsi_connector->base;
+> -
+> -	ret = drm_connector_init(msm_dsi->dev, connector,
+> -			&dsi_mgr_connector_funcs, DRM_MODE_CONNECTOR_DSI);
+> -	if (ret)
+> -		return ERR_PTR(ret);
+> -
+> -	drm_connector_helper_add(connector, &dsi_mgr_conn_helper_funcs);
+> -
+> -	/* Enable HPD to let hpd event is handled
+> -	 * when panel is attached to the host.
+> -	 */
+> -	connector->polled = DRM_CONNECTOR_POLL_HPD;
+> -
+> -	/* Display driver doesn't support interlace now. */
+> -	connector->interlace_allowed = 0;
+> -	connector->doublescan_allowed = 0;
+> -
+> -	drm_connector_attach_encoder(connector, msm_dsi->encoder);
+> -
+> -	ret = msm_dsi_manager_panel_init(connector, id);
+> -	if (ret) {
+> -		DRM_DEV_ERROR(msm_dsi->dev->dev, "init panel failed %d\n", ret);
+> -		goto fail;
+> -	}
+> -
+> -	return connector;
+> -
+> -fail:
+> -	connector->funcs->destroy(msm_dsi->connector);
+> -	return ERR_PTR(ret);
+> -}
+> -
+>   bool msm_dsi_manager_validate_current_config(u8 id)
+>   {
+>   	bool is_bonded_dsi = IS_BONDED_DSI();
+> @@ -727,8 +509,11 @@ struct drm_connector *msm_dsi_manager_ext_bridge_init(u8 id)
+>   	int ret;
+>   
+>   	int_bridge = msm_dsi->bridge;
+> -	ext_bridge = msm_dsi->external_bridge =
+> -			msm_dsi_host_get_bridge(msm_dsi->host);
+> +	ext_bridge = msm_dsi_host_get_bridge(msm_dsi->host);
+> +	if (IS_ERR(ext_bridge))
+> +		return ERR_PTR(PTR_ERR(ext_bridge));
+> +
+> +	msm_dsi->external_bridge = ext_bridge;
+>   
+>   	encoder = msm_dsi->encoder;
+>   
+> @@ -755,7 +540,7 @@ struct drm_connector *msm_dsi_manager_ext_bridge_init(u8 id)
+>   
+>   		list_for_each_entry(connector, connector_list, head) {
+>   			if (drm_connector_has_possible_encoder(connector, encoder))
+> -				return connector;
+> +				goto out;
+>   		}
+>   
+>   		return ERR_PTR(-ENODEV);
+> @@ -769,6 +554,10 @@ struct drm_connector *msm_dsi_manager_ext_bridge_init(u8 id)
+>   
+>   	drm_connector_attach_encoder(connector, encoder);
+>   
+> +out:
+> +	/* The pipeline is ready, ping encoders if necessary */
+> +	msm_dsi_manager_set_split_display(id);
+> +
+>   	return connector;
+>   }
+>   
 
 
 -- 
