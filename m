@@ -2,74 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F39344B0A7E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 11:25:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B41314B0A98
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 11:31:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239386AbiBJKZk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 05:25:40 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:41378 "EHLO
+        id S239635AbiBJKag (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 05:30:36 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238573AbiBJKZj (ORCPT
+        with ESMTP id S239633AbiBJKag (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 05:25:39 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22159B92
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 02:25:40 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id i34so9547032lfv.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 02:25:40 -0800 (PST)
+        Thu, 10 Feb 2022 05:30:36 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18D06398
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 02:30:37 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id d27so8686197wrc.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 02:30:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=HcOwHwa374KzHuMTQX4hlu4wGlaW5fvWT58vEFdgi34=;
-        b=otdIvizCfcaIN3vkxknSDMzKSGde4u/FrqlqozCuFXCQVXMOfmHR2abjgTL/npJPBm
-         w+2GR8eYwe2Z9J8BsB1b+h3psN7Bks75xHG4Dwtr587mxWv92FiVWLWdEcdb9ZZd2IQg
-         KgpnTSATs0JuSnfQI+F3k59Vxe5KonjGlO5X3FCdqSwrHGEs2xOMNv22pYez7CzBn8a5
-         LQAmunCMrdt/maV8lPCFv+xngBrA2HRIG4HpZSaB0WB63teiJJ8tskHwwcFHVwswqlWX
-         gu+5OILScnEr50ugowA4rwzP4kUGupJaQFmbi3crJ41Ud5SsvZ1k/vajMaP4k4aW6mIS
-         U9XQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Hg0ykC/xhPsgiw+XPFRSb93UCPPBSVUUOU7Rmic0fE4=;
+        b=wWLK6GqWuhu0ioKmV+tcw7GHuor880s1xgFFVK7lPyRdcUdDfQRbYyclB5/rSEdzhU
+         ESG89iDplhau7sARiBhl4TjvQPchmERJqq1R58jvq4AApxhkVhKdb8Vxt0u+tNa2Xlm8
+         EpNhX49RvD3fv2Rvphw26g/IIqrhgQl9y9JGjDlvUyxyF+JEgN5b6Trs2ZQXKg07XdWn
+         O1DNTxm6UOFKPFM0XuXbFhwUkfKodMuVeVyPYeZpUITq8n9tRg4G9tejr6rfctLq+WXu
+         kZPMiyxIcuOlNOKpo02vQmRkV8TsNe+ejCLNOCYHgrb+8En2qKkuCKBmMgkyHR8x+ZMc
+         1dXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=HcOwHwa374KzHuMTQX4hlu4wGlaW5fvWT58vEFdgi34=;
-        b=Or7j5xA6l78ilsupd5JqtUnS+zByVyTGY57269vjlsFkDroB53EKr/kSUGQDnOHiZ5
-         9o8Eht/rwR60NDfPjTEW/28u+igix7FgvZ6WOgH4aJ1wxfuIjbyWpyIz2QGjXt9IskgZ
-         FnNtA3JKBLLSqy1uGCWKH/haj2ZHQewM3IPaPhWU/0KKWjUrvfQdfEOQKXGbpav9PaRH
-         klgrf1vxVDsMkQxGWLLgnlL7b9JwG+w2ovhkagu73Pkkmc4wHXI24of0IreE1Vq5Uuv3
-         zTvFuEN7JNrn5LNd2nmAt6ve2zPZcRIHT/jMqpSg7A0nBNift2XsEzlOK3yjZUAJUmD9
-         U0ew==
-X-Gm-Message-State: AOAM531Nn8mmZLCPiS8NwVQiSfsKi2Wm8snNlkPHXGP3iJ0G8560hL5y
-        8qaXFUrpWpo5AKLlX6eg2pUhPw==
-X-Google-Smtp-Source: ABdhPJw3fAnl7fN5UigE34CpFSfcKM0ptxvPkATy5UUf9y6Wjlvz3vZbtg0BPMlYZ3WDsyJ4naqQ3A==
-X-Received: by 2002:a05:6512:2393:: with SMTP id c19mr4043803lfv.423.1644488738323;
-        Thu, 10 Feb 2022 02:25:38 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id h13sm2746486lfv.100.2022.02.10.02.25.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Feb 2022 02:25:37 -0800 (PST)
-Message-ID: <6a0fbf4b-abaf-21a5-e219-74d7144b183e@linaro.org>
-Date:   Thu, 10 Feb 2022 13:25:36 +0300
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Hg0ykC/xhPsgiw+XPFRSb93UCPPBSVUUOU7Rmic0fE4=;
+        b=ck9qDqvgIrvTOg8UN69Hit0PvGN4ShVYw+UtsWxbKkLHFYraQ1nvQZVbZ7LiEnQcKY
+         vNMzwqeYSY3nKN87VKoXn9fulN+wVUDzTHjvGQKbYp0e8wvPKSHXqDF5nvp6Zem3j7Hi
+         3w9+PkE/tIsgGznPjTsmswIy/eEO0+PS1PQFqvITHSPW2PAQm7y09pDi4TiYcf4i1o3R
+         vXvt6juQtRRo4Rp7fwkrtTsCOn9C7swpc9saAbKPqX7VdJUn9cH6EPqx5LXMCiQLRdDI
+         Tp2KUhmGqvNrAAqoInU+lT3EUxCO0aotKBAlZqWoFc5k54eqzhX1p06ZrfN5s8QvYsyK
+         7JkA==
+X-Gm-Message-State: AOAM530wZE6fWLCpuj4uNX620oX0nkews9pvB5uD1dZwj0Yo+38wsQ9d
+        /529ikixMmGrsSQHl5tVeBXtJiHFX5WwbwO/kz675g==
+X-Google-Smtp-Source: ABdhPJwmg0KhQ8UiefJfT2UWLNxUjOicv7T38bCIeIVIl6YHjrtOD81dGFp0nBU3TO2ZkJj9+8CZgmF/+f0mqgovw6g=
+X-Received: by 2002:adf:f4d1:: with SMTP id h17mr2495434wrp.111.1644489035607;
+ Thu, 10 Feb 2022 02:30:35 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [PATCH 2/2] drm/msm/dsi: switch to DRM_PANEL_BRIDGE
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-References: <20211207222901.988484-1-dmitry.baryshkov@linaro.org>
- <20211207222901.988484-3-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20211207222901.988484-3-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20220209105706.18852-1-quic_jinlmao@quicinc.com>
+In-Reply-To: <20220209105706.18852-1-quic_jinlmao@quicinc.com>
+From:   Mike Leach <mike.leach@linaro.org>
+Date:   Thu, 10 Feb 2022 10:30:24 +0000
+Message-ID: <CAJ9a7VhZtNrj9S4T=dNDOWT9fEcnm1qqtp+4h3EqytidDwEd5Q@mail.gmail.com>
+Subject: Re: [PATCH v3 00/10] Coresight: Add support for TPDM and TPDA
+To:     Mao Jinlong <quic_jinlmao@quicinc.com>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,587 +76,181 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/12/2021 01:29, Dmitry Baryshkov wrote:
-> Currently the DSI driver has two separate paths: one if the next device
-> in a chain is a bridge and another one if the panel is connected
-> directly to the DSI host. Simplify the code path by using panel-bridge
-> driver (already selected in Kconfig) and dropping support for
-> handling the panel directly.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Hello  Mao,
 
-In favour of merging DSC first, I'm deferring this patch till we can 
-pass DSC data w/o using the drm panel.
+I have looked through this set and have a few general questions.
 
-> ---
->   drivers/gpu/drm/msm/dsi/dsi.c         |  32 +---
->   drivers/gpu/drm/msm/dsi/dsi.h         |  10 +-
->   drivers/gpu/drm/msm/dsi/dsi_host.c    |  20 +-
->   drivers/gpu/drm/msm/dsi/dsi_manager.c | 257 +++-----------------------
->   4 files changed, 32 insertions(+), 287 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
-> index 9670e548b3e9..b61f451a282e 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.c
-> @@ -208,7 +208,7 @@ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
->   			 struct drm_encoder *encoder)
->   {
->   	struct msm_drm_private *priv;
-> -	struct drm_bridge *ext_bridge;
-> +	struct drm_connector *connector;
->   	int ret;
->   
->   	if (WARN_ON(!encoder) || WARN_ON(!msm_dsi) || WARN_ON(!dev))
-> @@ -238,31 +238,17 @@ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
->   		goto fail;
->   	}
->   
-> -	/*
-> -	 * check if the dsi encoder output is connected to a panel or an
-> -	 * external bridge. We create a connector only if we're connected to a
-> -	 * drm_panel device. When we're connected to an external bridge, we
-> -	 * assume that the drm_bridge driver will create the connector itself.
-> -	 */
-> -	ext_bridge = msm_dsi_host_get_bridge(msm_dsi->host);
-> -
-> -	if (ext_bridge)
-> -		msm_dsi->connector =
-> -			msm_dsi_manager_ext_bridge_init(msm_dsi->id);
-> -	else
-> -		msm_dsi->connector =
-> -			msm_dsi_manager_connector_init(msm_dsi->id);
-> -
-> -	if (IS_ERR(msm_dsi->connector)) {
-> -		ret = PTR_ERR(msm_dsi->connector);
-> +	connector = msm_dsi_manager_ext_bridge_init(msm_dsi->id);
-> +
-> +	if (IS_ERR(connector)) {
-> +		ret = PTR_ERR(connector);
->   		DRM_DEV_ERROR(dev->dev,
->   			"failed to create dsi connector: %d\n", ret);
-> -		msm_dsi->connector = NULL;
->   		goto fail;
->   	}
->   
->   	priv->bridges[priv->num_bridges++]       = msm_dsi->bridge;
-> -	priv->connectors[priv->num_connectors++] = msm_dsi->connector;
-> +	priv->connectors[priv->num_connectors++] = connector;
->   
->   	return 0;
->   fail:
-> @@ -272,12 +258,6 @@ int msm_dsi_modeset_init(struct msm_dsi *msm_dsi, struct drm_device *dev,
->   		msm_dsi->bridge = NULL;
->   	}
->   
-> -	/* don't destroy connector if we didn't make it */
-> -	if (msm_dsi->connector && !msm_dsi->external_bridge)
-> -		msm_dsi->connector->funcs->destroy(msm_dsi->connector);
-> -
-> -	msm_dsi->connector = NULL;
-> -
->   	return ret;
->   }
->   
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-> index f46df52c6985..7eb778070a8c 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.h
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
-> @@ -49,8 +49,6 @@ struct msm_dsi {
->   	struct drm_device *dev;
->   	struct platform_device *pdev;
->   
-> -	/* connector managed by us when we're connected to a drm_panel */
-> -	struct drm_connector *connector;
->   	/* internal dsi bridge attached to MDP interface */
->   	struct drm_bridge *bridge;
->   
-> @@ -58,10 +56,8 @@ struct msm_dsi {
->   	struct msm_dsi_phy *phy;
->   
->   	/*
-> -	 * panel/external_bridge connected to dsi bridge output, only one of the
-> -	 * two can be valid at a time
-> +	 * external_bridge connected to dsi bridge output
->   	 */
-> -	struct drm_panel *panel;
->   	struct drm_bridge *external_bridge;
->   
->   	struct device *phy_dev;
-> @@ -76,7 +72,6 @@ struct msm_dsi {
->   /* dsi manager */
->   struct drm_bridge *msm_dsi_manager_bridge_init(u8 id);
->   void msm_dsi_manager_bridge_destroy(struct drm_bridge *bridge);
-> -struct drm_connector *msm_dsi_manager_connector_init(u8 id);
->   struct drm_connector *msm_dsi_manager_ext_bridge_init(u8 id);
->   int msm_dsi_manager_cmd_xfer(int id, const struct mipi_dsi_msg *msg);
->   bool msm_dsi_manager_cmd_xfer_trigger(int id, u32 dma_base, u32 len);
-> @@ -88,7 +83,7 @@ void msm_dsi_manager_tpg_enable(void);
->   /* msm dsi */
->   static inline bool msm_dsi_device_connected(struct msm_dsi *msm_dsi)
->   {
-> -	return msm_dsi->panel || msm_dsi->external_bridge;
-> +	return msm_dsi->external_bridge;
->   }
->   
->   struct drm_encoder *msm_dsi_get_encoder(struct msm_dsi *msm_dsi);
-> @@ -115,7 +110,6 @@ int msm_dsi_host_power_on(struct mipi_dsi_host *host,
->   int msm_dsi_host_power_off(struct mipi_dsi_host *host);
->   int msm_dsi_host_set_display_mode(struct mipi_dsi_host *host,
->   				  const struct drm_display_mode *mode);
-> -struct drm_panel *msm_dsi_host_get_panel(struct mipi_dsi_host *host);
->   unsigned long msm_dsi_host_get_mode_flags(struct mipi_dsi_host *host);
->   struct drm_bridge *msm_dsi_host_get_bridge(struct mipi_dsi_host *host);
->   int msm_dsi_host_register(struct mipi_dsi_host *host);
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 5b4bb722f750..58bd48d4ec03 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -159,7 +159,6 @@ struct msm_dsi_host {
->   	struct drm_display_mode *mode;
->   
->   	/* connected device info */
-> -	struct device_node *device_node;
->   	unsigned int channel;
->   	unsigned int lanes;
->   	enum mipi_dsi_pixel_format format;
-> @@ -1604,8 +1603,6 @@ static int dsi_host_detach(struct mipi_dsi_host *host,
->   
->   	dsi_dev_detach(msm_host->pdev);
->   
-> -	msm_host->device_node = NULL;
-> -
->   	DBG("id=%d", msm_host->id);
->   	if (msm_host->dev)
->   		queue_work(msm_host->workqueue, &msm_host->hpd_work);
-> @@ -1745,16 +1742,6 @@ static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
->   		goto err;
->   	}
->   
-> -	/* Get panel node from the output port's endpoint data */
-> -	device_node = of_graph_get_remote_node(np, 1, 0);
-> -	if (!device_node) {
-> -		DRM_DEV_DEBUG(dev, "%s: no valid device\n", __func__);
-> -		ret = -ENODEV;
-> -		goto err;
-> -	}
-> -
-> -	msm_host->device_node = device_node;
-> -
->   	if (of_property_read_bool(np, "syscon-sfpb")) {
->   		msm_host->sfpb = syscon_regmap_lookup_by_phandle(np,
->   					"syscon-sfpb");
-> @@ -2405,11 +2392,6 @@ int msm_dsi_host_set_display_mode(struct mipi_dsi_host *host,
->   	return 0;
->   }
->   
-> -struct drm_panel *msm_dsi_host_get_panel(struct mipi_dsi_host *host)
-> -{
-> -	return of_drm_find_panel(to_msm_dsi_host(host)->device_node);
-> -}
-> -
->   unsigned long msm_dsi_host_get_mode_flags(struct mipi_dsi_host *host)
->   {
->   	return to_msm_dsi_host(host)->mode_flags;
-> @@ -2419,7 +2401,7 @@ struct drm_bridge *msm_dsi_host_get_bridge(struct mipi_dsi_host *host)
->   {
->   	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
->   
-> -	return of_drm_find_bridge(msm_host->device_node);
-> +	return devm_drm_of_get_bridge(&msm_host->pdev->dev, msm_host->pdev->dev.of_node, 1, 0);
->   }
->   
->   void msm_dsi_host_snapshot(struct msm_disp_state *disp_state, struct mipi_dsi_host *host)
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> index 497719efb9e9..43b8a1268c4b 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> @@ -188,39 +188,26 @@ static void dsi_mgr_phy_disable(int id)
->   	}
->   }
->   
-> -struct dsi_connector {
-> -	struct drm_connector base;
-> -	int id;
-> -};
-> -
->   struct dsi_bridge {
->   	struct drm_bridge base;
->   	int id;
->   };
->   
-> -#define to_dsi_connector(x) container_of(x, struct dsi_connector, base)
->   #define to_dsi_bridge(x) container_of(x, struct dsi_bridge, base)
->   
-> -static inline int dsi_mgr_connector_get_id(struct drm_connector *connector)
-> -{
-> -	struct dsi_connector *dsi_connector = to_dsi_connector(connector);
-> -	return dsi_connector->id;
-> -}
-> -
->   static int dsi_mgr_bridge_get_id(struct drm_bridge *bridge)
->   {
->   	struct dsi_bridge *dsi_bridge = to_dsi_bridge(bridge);
->   	return dsi_bridge->id;
->   }
->   
-> -static int msm_dsi_manager_panel_init(struct drm_connector *conn, u8 id)
-> +static void msm_dsi_manager_set_split_display(u8 id)
->   {
-> -	struct msm_drm_private *priv = conn->dev->dev_private;
-> -	struct msm_kms *kms = priv->kms;
->   	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
->   	struct msm_dsi *other_dsi = dsi_mgr_get_other_dsi(id);
-> +	struct msm_drm_private *priv = msm_dsi->dev->dev_private;
-> +	struct msm_kms *kms = priv->kms;
->   	struct msm_dsi *master_dsi, *slave_dsi;
-> -	struct drm_panel *panel;
->   
->   	if (IS_BONDED_DSI() && !IS_MASTER_DSI_LINK(id)) {
->   		master_dsi = other_dsi;
-> @@ -230,88 +217,29 @@ static int msm_dsi_manager_panel_init(struct drm_connector *conn, u8 id)
->   		slave_dsi = other_dsi;
->   	}
->   
-> -	/*
-> -	 * There is only 1 panel in the global panel list for bonded DSI mode.
-> -	 * Therefore slave dsi should get the drm_panel instance from master
-> -	 * dsi.
-> -	 */
-> -	panel = msm_dsi_host_get_panel(master_dsi->host);
-> -	if (IS_ERR(panel)) {
-> -		DRM_ERROR("Could not find panel for %u (%ld)\n", msm_dsi->id,
-> -			  PTR_ERR(panel));
-> -		return PTR_ERR(panel);
-> -	}
-> -
-> -	if (!panel || !IS_BONDED_DSI())
-> -		goto out;
-> -
-> -	drm_object_attach_property(&conn->base,
-> -				   conn->dev->mode_config.tile_property, 0);
-> +	if (!msm_dsi->external_bridge || !IS_BONDED_DSI())
-> +		return;
->   
->   	/*
->   	 * Set split display info to kms once bonded DSI panel is connected to
->   	 * both hosts.
->   	 */
-> -	if (other_dsi && other_dsi->panel && kms->funcs->set_split_display) {
-> +	if (other_dsi && other_dsi->external_bridge && kms->funcs->set_split_display) {
->   		kms->funcs->set_split_display(kms, master_dsi->encoder,
->   					      slave_dsi->encoder,
->   					      msm_dsi_is_cmd_mode(msm_dsi));
->   	}
-> -
-> -out:
-> -	msm_dsi->panel = panel;
-> -	return 0;
-> -}
-> -
-> -static enum drm_connector_status dsi_mgr_connector_detect(
-> -		struct drm_connector *connector, bool force)
-> -{
-> -	int id = dsi_mgr_connector_get_id(connector);
-> -	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
-> -
-> -	return msm_dsi->panel ? connector_status_connected :
-> -		connector_status_disconnected;
-> -}
-> -
-> -static void dsi_mgr_connector_destroy(struct drm_connector *connector)
-> -{
-> -	struct dsi_connector *dsi_connector = to_dsi_connector(connector);
-> -
-> -	DBG("");
-> -
-> -	drm_connector_cleanup(connector);
-> -
-> -	kfree(dsi_connector);
-> -}
-> -
-> -static int dsi_mgr_connector_get_modes(struct drm_connector *connector)
-> -{
-> -	int id = dsi_mgr_connector_get_id(connector);
-> -	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
-> -	struct drm_panel *panel = msm_dsi->panel;
-> -	int num;
-> -
-> -	if (!panel)
-> -		return 0;
-> -
-> -	/*
-> -	 * In bonded DSI mode, we have one connector that can be
-> -	 * attached to the drm_panel.
-> -	 */
-> -	num = drm_panel_get_modes(panel, connector);
-> -	if (!num)
-> -		return 0;
-> -
-> -	return num;
->   }
->   
-> -static enum drm_mode_status dsi_mgr_connector_mode_valid(struct drm_connector *connector,
-> -				struct drm_display_mode *mode)
-> +static enum drm_mode_status dsi_mgr_bridge_mode_valid(struct drm_bridge *bridge,
-> +				const struct drm_display_info *info,
-> +				const struct drm_display_mode *mode)
->   {
-> -	int id = dsi_mgr_connector_get_id(connector);
-> +	int id = dsi_mgr_bridge_get_id(bridge);
->   	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
->   	struct drm_encoder *encoder = msm_dsi_get_encoder(msm_dsi);
-> -	struct msm_drm_private *priv = connector->dev->dev_private;
-> +	struct drm_device *dev = msm_dsi->dev;
-> +	struct msm_drm_private *priv = dev->dev_private;
->   	struct msm_kms *kms = priv->kms;
->   	long actual, requested;
->   
-> @@ -326,16 +254,6 @@ static enum drm_mode_status dsi_mgr_connector_mode_valid(struct drm_connector *c
->   	return MODE_OK;
->   }
->   
-> -static struct drm_encoder *
-> -dsi_mgr_connector_best_encoder(struct drm_connector *connector)
-> -{
-> -	int id = dsi_mgr_connector_get_id(connector);
-> -	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
-> -
-> -	DBG("");
-> -	return msm_dsi_get_encoder(msm_dsi);
-> -}
-> -
->   static void dsi_mgr_bridge_power_on(struct drm_bridge *bridge)
->   {
->   	int id = dsi_mgr_bridge_get_id(bridge);
-> @@ -398,7 +316,6 @@ static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
->   	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
->   	struct msm_dsi *msm_dsi1 = dsi_mgr_get_dsi(DSI_1);
->   	struct mipi_dsi_host *host = msm_dsi->host;
-> -	struct drm_panel *panel = msm_dsi->panel;
->   	bool is_bonded_dsi = IS_BONDED_DSI();
->   	int ret;
->   
-> @@ -410,18 +327,6 @@ static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
->   	if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id))
->   		return;
->   
-> -	/* Always call panel functions once, because even for dual panels,
-> -	 * there is only one drm_panel instance.
-> -	 */
-> -	if (panel) {
-> -		ret = drm_panel_prepare(panel);
-> -		if (ret) {
-> -			pr_err("%s: prepare panel %d failed, %d\n", __func__,
-> -								id, ret);
-> -			goto panel_prep_fail;
-> -		}
-> -	}
-> -
->   	ret = msm_dsi_host_enable(host);
->   	if (ret) {
->   		pr_err("%s: enable host %d failed, %d\n", __func__, id, ret);
-> @@ -441,9 +346,6 @@ static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
->   host1_en_fail:
->   	msm_dsi_host_disable(host);
->   host_en_fail:
-> -	if (panel)
-> -		drm_panel_unprepare(panel);
-> -panel_prep_fail:
->   
->   	return;
->   }
-> @@ -461,62 +363,12 @@ void msm_dsi_manager_tpg_enable(void)
->   	}
->   }
->   
-> -static void dsi_mgr_bridge_enable(struct drm_bridge *bridge)
-> -{
-> -	int id = dsi_mgr_bridge_get_id(bridge);
-> -	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
-> -	struct drm_panel *panel = msm_dsi->panel;
-> -	bool is_bonded_dsi = IS_BONDED_DSI();
-> -	int ret;
-> -
-> -	DBG("id=%d", id);
-> -	if (!msm_dsi_device_connected(msm_dsi))
-> -		return;
-> -
-> -	/* Do nothing with the host if it is slave-DSI in case of bonded DSI */
-> -	if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id))
-> -		return;
-> -
-> -	if (panel) {
-> -		ret = drm_panel_enable(panel);
-> -		if (ret) {
-> -			pr_err("%s: enable panel %d failed, %d\n", __func__, id,
-> -									ret);
-> -		}
-> -	}
-> -}
-> -
-> -static void dsi_mgr_bridge_disable(struct drm_bridge *bridge)
-> -{
-> -	int id = dsi_mgr_bridge_get_id(bridge);
-> -	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
-> -	struct drm_panel *panel = msm_dsi->panel;
-> -	bool is_bonded_dsi = IS_BONDED_DSI();
-> -	int ret;
-> -
-> -	DBG("id=%d", id);
-> -	if (!msm_dsi_device_connected(msm_dsi))
-> -		return;
-> -
-> -	/* Do nothing with the host if it is slave-DSI in case of bonded DSI */
-> -	if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id))
-> -		return;
-> -
-> -	if (panel) {
-> -		ret = drm_panel_disable(panel);
-> -		if (ret)
-> -			pr_err("%s: Panel %d OFF failed, %d\n", __func__, id,
-> -									ret);
-> -	}
-> -}
-> -
->   static void dsi_mgr_bridge_post_disable(struct drm_bridge *bridge)
->   {
->   	int id = dsi_mgr_bridge_get_id(bridge);
->   	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
->   	struct msm_dsi *msm_dsi1 = dsi_mgr_get_dsi(DSI_1);
->   	struct mipi_dsi_host *host = msm_dsi->host;
-> -	struct drm_panel *panel = msm_dsi->panel;
->   	bool is_bonded_dsi = IS_BONDED_DSI();
->   	int ret;
->   
-> @@ -543,13 +395,6 @@ static void dsi_mgr_bridge_post_disable(struct drm_bridge *bridge)
->   			pr_err("%s: host1 disable failed, %d\n", __func__, ret);
->   	}
->   
-> -	if (panel) {
-> -		ret = drm_panel_unprepare(panel);
-> -		if (ret)
-> -			pr_err("%s: Panel %d unprepare failed,%d\n", __func__,
-> -								id, ret);
-> -	}
-> -
->   	msm_dsi_host_disable_irq(host);
->   	if (is_bonded_dsi && msm_dsi1)
->   		msm_dsi_host_disable_irq(msm_dsi1->host);
-> @@ -594,76 +439,13 @@ static void dsi_mgr_bridge_mode_set(struct drm_bridge *bridge,
->   	dsi_mgr_bridge_power_on(bridge);
->   }
->   
-> -static const struct drm_connector_funcs dsi_mgr_connector_funcs = {
-> -	.detect = dsi_mgr_connector_detect,
-> -	.fill_modes = drm_helper_probe_single_connector_modes,
-> -	.destroy = dsi_mgr_connector_destroy,
-> -	.reset = drm_atomic_helper_connector_reset,
-> -	.atomic_duplicate_state = drm_atomic_helper_connector_duplicate_state,
-> -	.atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
-> -};
-> -
-> -static const struct drm_connector_helper_funcs dsi_mgr_conn_helper_funcs = {
-> -	.get_modes = dsi_mgr_connector_get_modes,
-> -	.mode_valid = dsi_mgr_connector_mode_valid,
-> -	.best_encoder = dsi_mgr_connector_best_encoder,
-> -};
-> -
->   static const struct drm_bridge_funcs dsi_mgr_bridge_funcs = {
->   	.pre_enable = dsi_mgr_bridge_pre_enable,
-> -	.enable = dsi_mgr_bridge_enable,
-> -	.disable = dsi_mgr_bridge_disable,
->   	.post_disable = dsi_mgr_bridge_post_disable,
->   	.mode_set = dsi_mgr_bridge_mode_set,
-> +	.mode_valid = dsi_mgr_bridge_mode_valid,
->   };
->   
-> -/* initialize connector when we're connected to a drm_panel */
-> -struct drm_connector *msm_dsi_manager_connector_init(u8 id)
-> -{
-> -	struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
-> -	struct drm_connector *connector = NULL;
-> -	struct dsi_connector *dsi_connector;
-> -	int ret;
-> -
-> -	dsi_connector = kzalloc(sizeof(*dsi_connector), GFP_KERNEL);
-> -	if (!dsi_connector)
-> -		return ERR_PTR(-ENOMEM);
-> -
-> -	dsi_connector->id = id;
-> -
-> -	connector = &dsi_connector->base;
-> -
-> -	ret = drm_connector_init(msm_dsi->dev, connector,
-> -			&dsi_mgr_connector_funcs, DRM_MODE_CONNECTOR_DSI);
-> -	if (ret)
-> -		return ERR_PTR(ret);
-> -
-> -	drm_connector_helper_add(connector, &dsi_mgr_conn_helper_funcs);
-> -
-> -	/* Enable HPD to let hpd event is handled
-> -	 * when panel is attached to the host.
-> -	 */
-> -	connector->polled = DRM_CONNECTOR_POLL_HPD;
-> -
-> -	/* Display driver doesn't support interlace now. */
-> -	connector->interlace_allowed = 0;
-> -	connector->doublescan_allowed = 0;
-> -
-> -	drm_connector_attach_encoder(connector, msm_dsi->encoder);
-> -
-> -	ret = msm_dsi_manager_panel_init(connector, id);
-> -	if (ret) {
-> -		DRM_DEV_ERROR(msm_dsi->dev->dev, "init panel failed %d\n", ret);
-> -		goto fail;
-> -	}
-> -
-> -	return connector;
-> -
-> -fail:
-> -	connector->funcs->destroy(msm_dsi->connector);
-> -	return ERR_PTR(ret);
-> -}
-> -
->   bool msm_dsi_manager_validate_current_config(u8 id)
->   {
->   	bool is_bonded_dsi = IS_BONDED_DSI();
-> @@ -727,8 +509,11 @@ struct drm_connector *msm_dsi_manager_ext_bridge_init(u8 id)
->   	int ret;
->   
->   	int_bridge = msm_dsi->bridge;
-> -	ext_bridge = msm_dsi->external_bridge =
-> -			msm_dsi_host_get_bridge(msm_dsi->host);
-> +	ext_bridge = msm_dsi_host_get_bridge(msm_dsi->host);
-> +	if (IS_ERR(ext_bridge))
-> +		return ERR_PTR(PTR_ERR(ext_bridge));
-> +
-> +	msm_dsi->external_bridge = ext_bridge;
->   
->   	encoder = msm_dsi->encoder;
->   
-> @@ -755,7 +540,7 @@ struct drm_connector *msm_dsi_manager_ext_bridge_init(u8 id)
->   
->   		list_for_each_entry(connector, connector_list, head) {
->   			if (drm_connector_has_possible_encoder(connector, encoder))
-> -				return connector;
-> +				goto out;
->   		}
->   
->   		return ERR_PTR(-ENODEV);
-> @@ -769,6 +554,10 @@ struct drm_connector *msm_dsi_manager_ext_bridge_init(u8 id)
->   
->   	drm_connector_attach_encoder(connector, encoder);
->   
-> +out:
-> +	/* The pipeline is ready, ping encoders if necessary */
-> +	msm_dsi_manager_set_split_display(id);
-> +
->   	return connector;
->   }
->   
+My understanding based on the information in the code is that the TPDM
+devices will always send data to the TPDA device, the TPDM is not
+capable of directly driving the ATB itself?
+The TPDA device  will then packetize the inputs and output these to
+the ATB over the normal CoreSight architecture to a standard ETR / ETF
+for collection.
+
+Looking at the TPDM driver - it is assigned a trace ID but never
+actually uses it in the hardware. My assumption here is that this is
+used purely to satisfy the requirement that the CoreSight core has
+that all sources have a unique trace id?
+
+For the TPDA driver you assign an ATID as an attribute in device tree,
+and then program this into the devices control register.
+
+The trace IDs in ETM / ETE / STM, are programmed into the hardware and
+these values drive the ATID value on the trace bus. So assigning an
+ATID value to the TPDA driver through device tree will lead to clashes
+with the assignment of trace IDs in the other driver software.
+
+The topology here appears to me that you have multiple  "data source"
+devices TPDM, supplying a TPDA - which is the real CoreSight "trace
+source" from the viewpoint of the trace bus and CoreSight
+infrastructure.
+To get this to work in the current CoreSight driver stack, you have
+assigned the TPDM as a source type, and the TPDA as a link to ensure
+that when a TPDM is started, all the components on the path to the
+sink are activated.
+This is fine.
+
+If my assumptions above are all accurate I suggest the following improvements
+
+For TPDA drop the device tree assignment of ATID and instead use the
+coresight_get_system_trace_id() function you introduce in the 2nd
+patch in this set.
+
+For TPDM you have assigned a unique source sub-type
+CORESIGHT_DEV_SUBTYPE_SOURCE_SYS.- this could become
+CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY. If the trace ID assigned to
+this device is only to satisfy the unique ID requirement and is not
+used elsewhere, then the sub type could become
+CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY. We can agree that this sub
+type does not need a unique ID and acts as none ATB a source for
+another component, The core code can be altered to drop the
+requirement for this sub-type and trace ID can be dropped for this
+component.
+
+You should be aware that we are in the process of re-designed how
+trace IDs are allocated. The current mechanism does not scale for
+large multi-core systems (currently broken for any system > 46 cores),
+and as you have discovered there is a need for additional allocation
+of IDs. Also the ETE / TRBE combination does not need a trace ID.  A
+dynamic allocation system is being proposed.
+
+Regards
+
+Mike
 
 
--- 
-With best wishes
-Dmitry
+On Wed, 9 Feb 2022 at 10:57, Mao Jinlong <quic_jinlmao@quicinc.com> wrote:
+>
+> This series adds support for the trace performance monitoring and
+> diagnostics hardware (TPDM and TPDA). It is composed of two major
+> elements.
+> a) Changes for original coresight framework to support for TPDM and TPDA.
+> b) Add driver code for TPDM and TPDA.
+>
+> Introduction of changes for original coresight framework
+> Support TPDM as new coresight source.
+> Since only STM and ETM are supported as coresight source originally.
+> TPDM is a newly added coresight source. We need to change
+> the original way of saving coresight path to support more types source
+> for coresight driver.
+> The following patch is to add support more coresight sources.
+>     Use IDR to maintain all the enabled sources' paths.
+>     coresight: Use bitmap to assign trace id to the sources
+>
+> Introduction of TPDM and TPDA
+> TPDM - The trace performance monitoring and diagnostics monitor or TPDM in
+> short serves as data collection component for various dataset types
+> specified in the QPMDA(Qualcomm performance monitoring and diagnostics
+> architecture) spec. The primary use case of the TPDM is to collect data
+> from different data sources and send it to a TPDA for packetization,
+> timestamping and funneling.
+>     Coresight: Add coresight TPDM source driver
+>     dt-bindings: arm: Adds CoreSight TPDM hardware definitions
+>     coresight-tpdm: Add DSB dataset support
+>     coresight-tpdm: Add integration test support
+>     docs: sysfs: coresight: Add sysfs ABI documentation for TPDM
+>
+> TPDA - The trace performance monitoring and diagnostics aggregator or
+> TPDA in short serves as an arbitration and packetization engine for the
+> performance monitoring and diagnostics network as specified in the QPMDA
+> (Qualcomm performance monitoring and diagnostics architecture)
+> specification. The primary use case of the TPDA is to provide
+> packetization, funneling and timestamping of Monitor data as specified
+> in the QPMDA specification.
+> The following patch is to add driver for TPDA.
+>     Coresight: Add TPDA link driver
+>     dt-bindings: arm: Adds CoreSight TPDA hardware definitions
+>
+> The last patch of this series is a device tree modification, which add
+> the TPDM and TPDA configuration to device tree for validating.
+>     ARM: dts: msm: Add coresight components for SM8250
+>
+> Once this series patches are applied properly, the tpdm and tpda nodes
+> should be observed at the coresight path /sys/bus/coresight/devices
+> e.g.
+> /sys/bus/coresight/devices # ls -l | grep tpd
+> tpda0 -> ../../../devices/platform/soc@0/6004000.tpda/tpda0
+> tpdm0 -> ../../../devices/platform/soc@0/6c08000.mm.tpdm/tpdm0
+>
+> We can use the commands are similar to the below to validate TPDMs.
+> Enable coresight sink first.
+>
+> echo 1 > /sys/bus/coresight/devices/tmc_etf0/enable_sink
+> echo 1 > /sys/bus/coresight/devices/tpdm0/enable_source
+> echo 1 > /sys/bus/coresight/devices/tpdm0/integration_test
+> echo 2 > /sys/bus/coresight/devices/tpdm0/integration_test
+> The test data will be collected in the coresight sink which is enabled.
+> If rwp register of the sink is keeping updating when do
+> integration_test (by cat tmc_etf0/mgmt/rwp), it means there is data
+> generated from TPDM to sink.
+>
+> Changes from V2:
+> 1. Use bitmap to assign the trace id. (Mathieu Poirier)
+>
+> Mao Jinlong (10):
+>   Use IDR to maintain all the enabled sources' paths.
+>   coresight: Use bitmap to assign trace id to the sources
+>   Coresight: Add coresight TPDM source driver
+>   dt-bindings: arm: Adds CoreSight TPDM hardware definitions
+>   coresight-tpdm: Add DSB dataset support
+>   coresight-tpdm: Add integration test support
+>   docs: sysfs: coresight: Add sysfs ABI documentation for TPDM
+>   Coresight: Add TPDA link driver
+>   dt-bindings: arm: Adds CoreSight TPDA hardware definitions
+>   ARM: dts: msm: Add coresight components for SM8250
+>
+>  .../testing/sysfs-bus-coresight-devices-tpdm  |   6 +
+>  .../bindings/arm/coresight-tpda.yaml          | 129 ++++
+>  .../bindings/arm/coresight-tpdm.yaml          |  81 ++
+>  .../devicetree/bindings/arm/coresight.txt     |   7 +
+>  MAINTAINERS                                   |   1 +
+>  .../arm64/boot/dts/qcom/sm8250-coresight.dtsi | 690 ++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi          |   2 +
+>  drivers/hwtracing/coresight/Kconfig           |  33 +
+>  drivers/hwtracing/coresight/Makefile          |   2 +
+>  drivers/hwtracing/coresight/coresight-core.c  | 127 ++--
+>  drivers/hwtracing/coresight/coresight-tpda.c  | 193 +++++
+>  drivers/hwtracing/coresight/coresight-tpda.h  |  32 +
+>  drivers/hwtracing/coresight/coresight-tpdm.c  | 270 +++++++
+>  drivers/hwtracing/coresight/coresight-tpdm.h  |  57 ++
+>  include/linux/coresight-pmu.h                 |  11 +
+>  include/linux/coresight.h                     |   1 +
+>  16 files changed, 1592 insertions(+), 50 deletions(-)
+>  create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>  create mode 100644 Documentation/devicetree/bindings/arm/coresight-tpda.yaml
+>  create mode 100644 Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
+>  create mode 100644 arch/arm64/boot/dts/qcom/sm8250-coresight.dtsi
+>  create mode 100644 drivers/hwtracing/coresight/coresight-tpda.c
+>  create mode 100644 drivers/hwtracing/coresight/coresight-tpda.h
+>  create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.c
+>  create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.h
+>
+> --
+> 2.17.1
+>
+
+
+--
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
