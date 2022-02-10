@@ -2,107 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C5124B0A06
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 10:53:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D5AB14B09F7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 10:51:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238959AbiBJJvr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 04:51:47 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:39384 "EHLO
+        id S239005AbiBJJus (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 04:50:48 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232140AbiBJJvq (ORCPT
+        with ESMTP id S239083AbiBJJur (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 04:51:46 -0500
-X-Greylist: delayed 63 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 10 Feb 2022 01:51:46 PST
-Received: from qq.com (smtpbg409.qq.com [113.96.223.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87A451DD;
-        Thu, 10 Feb 2022 01:51:46 -0800 (PST)
-X-QQ-mid: bizesmtp35t1644486579t7s5pzpj
-Received: from localhost.localdomain (unknown [123.114.60.34])
-        by bizesmtp.qq.com (ESMTP) with 
-        id ; Thu, 10 Feb 2022 17:49:37 +0800 (CST)
-X-QQ-SSF: 01400000002000B0L000B00A0000000
-X-QQ-FEAT: 1vYwxPNStGkN+kaiA9TtVU7idvHzuLjWRT8ogLx30DRJ+gwRyaLbXx7V2EPtH
-        n4qR9GIXYajsebc+ONF04MhxGgVMvpBXESO4EpLChV3ndIPRMsFpTxwwFtttUCtjyNzUAat
-        dVWrRXDKV4stfMFW02g8gRERqbuwSdy4mbFzL/7P1YlZVjcLd+47x5y8GiL0INKaCfJs9qm
-        oXxo1SRQgURBpl2/zqMXNtE7xOL+m9GFUpLfYamwBxNo4+IZ5n/GGt+BZAOyLbvWjs6R/bA
-        YuhIga17DK8zUXIfxgXDuWWKrGReSNCwMpj+TP48TUazq+De/9zCUaC40g/xvag1zwvBF15
-        HoFwQSUdyIQzuN1feCaaVvOexbEDzGMBnSCOBg6
-X-QQ-GoodBg: 2
-From:   zhaoxiao <zhaoxiao@uniontech.com>
-To:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, mchehab@kernel.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, zhaoxiao <zhaoxiao@uniontech.com>
-Subject: [PATCH] media: camss-csiphy: Use platform_get_irq_byname() to get the interrupt
-Date:   Thu, 10 Feb 2022 17:49:36 +0800
-Message-Id: <20220210094936.23462-1-zhaoxiao@uniontech.com>
-X-Mailer: git-send-email 2.20.1
+        Thu, 10 Feb 2022 04:50:47 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A30A31E8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 01:50:48 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id h8so6118144lfj.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 01:50:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language
+         :from:to:references:in-reply-to:content-transfer-encoding;
+        bh=CngJ+UjWUmvAVy4/bM0ovf96zSL5J/lSGtKSp/n9h34=;
+        b=p4yIHqvWk/xa+/iIlrU8AOZ70keGFx7j5JwojMxu3Wa36AvnkXN67CXtupYmtsWXs4
+         K7nl7/vys7rpej7STElkxdKfXpQ3mD7/jOPfmPVitL+vl1duvIxMz+pRA05wqf0VMfra
+         UoQgKi8uG2yoHqr2Vk5EyzvG2vPZZhZxr+rS33sgrYJ6uuqoIO7t1arYN92VesztTqs6
+         Us8UMgG2UiWu/+ZtOOiIgQknnHA88cKQ2FDC2A+paIH2kqN9mdnjWjpg6Cq/pm1aZ7xu
+         w1DtrSzPatZy83kNavuf0z3q0viqxClqqEShjWgb6NRF3xwKmRcnAmmXWRZndyYSe8pU
+         3ITw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:from:to:references:in-reply-to
+         :content-transfer-encoding;
+        bh=CngJ+UjWUmvAVy4/bM0ovf96zSL5J/lSGtKSp/n9h34=;
+        b=MSfFJVqo3r32tB0vFgrfzptQHA7qX/UxmQclvqDKmctuX9GnNl8UeW8LjXnYtXHQum
+         PAC2E6065+t+hsFsNa/SitltYls41KscWX9SiN4eOckZjJIyK1In24gt8ZH8AbdXnrbC
+         2vE5biMXNUl8yoqXjAtFIK7BW3rcxOHUiN4vrrjLE7e8I/EzXBkQwayLhLedOjgHNdBA
+         KpCVCj0eLRPT2su0Tf/JeXiw8aRreZ6OmBQr5nljKGpDx5eS2wTJyqUIvrmVzOV6O4Kz
+         P3zCRSwxrU7ABZPpQsZFd03qJn58rku2yHhbmUPX25CEX1UZr8vhcm9+yQhfH3g3xXEe
+         UGnQ==
+X-Gm-Message-State: AOAM531bV7n4aeu7drNrhKOZ9P9BvY1WWugY6FfPmDWTFUaKToNmhgI4
+        8O26gHLlpmVnEiDgjgwjFOFi1w==
+X-Google-Smtp-Source: ABdhPJx+tAi+K4eZQFhjdsO2Hex06V7hu3VnQLUWmC3cKKFbwTFj5NodmbpX5qhlENw6cedikrnPjw==
+X-Received: by 2002:a05:6512:c22:: with SMTP id z34mr4864472lfu.259.1644486646997;
+        Thu, 10 Feb 2022 01:50:46 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id b31sm2729441lfv.163.2022.02.10.01.50.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Feb 2022 01:50:46 -0800 (PST)
+Message-ID: <e9941f8d-5796-b524-793b-148f12fea51e@linaro.org>
+Date:   Thu, 10 Feb 2022 12:50:45 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: gpu: drm: msm: use div64_u64() instead of do_div()
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Qing Wang <wangqing@vivo.com>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+References: <1644395837-3845-1-git-send-email-wangqing@vivo.com>
+ <6ea0e85e-1ade-f102-86c2-4b71dbc24285@linaro.org>
+In-Reply-To: <6ea0e85e-1ade-f102-86c2-4b71dbc24285@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: bizesmtp:uniontech.com:qybgforeign:qybgforeign5
-X-QQ-Bgrelay: 1
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-platform_get_resource_byname(pdev, IORESOURCE_IRQ, ..) relies on static
-allocation of IRQ resources in DT core code, this causes an issue
-when using hierarchical interrupt domains using "interrupts" property
-in the node as this bypassed the hierarchical setup and messed up the
-irq chaining.
+On 10/02/2022 01:17, Dmitry Baryshkov wrote:
+> On 09/02/2022 11:37, Qing Wang wrote:
+>> From: Wang Qing <wangqing@vivo.com>
+>>
+>> do_div() does a 64-by-32 division.
+>> When the divisor is u64, do_div() truncates it to 32 bits, this means it
+>> can test non-zero and be truncated to zero for division.
+>>
+>> fix do_div.cocci warning:
+>> do_div() does a 64-by-32 division, please consider using div64_u64 
+>> instead.
+>>
+>> Signed-off-by: Wang Qing <wangqing@vivo.com>
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-In preparation for removal of static setup of IRQ resource from DT core
-code use platform_get_irq_byname().
+After rechecking, I'd like to withdraw my R-B tag (Minecrell, thanks for 
+pointing this out!)
 
-Signed-off-by: zhaoxiao <zhaoxiao@uniontech.com>
----
- drivers/media/platform/qcom/camss/camss-csiphy.c | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+The div64_u64 is not equivalent to do_div. It returns the quotient 
+rather than modifying the first arg. Moreover it is unoptimal on 32-bit 
+arches.
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
-index 24eec16197e7..92bdd1cd260f 100644
---- a/drivers/media/platform/qcom/camss/camss-csiphy.c
-+++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
-@@ -568,7 +568,6 @@ int msm_csiphy_subdev_init(struct camss *camss,
- {
- 	struct device *dev = camss->dev;
- 	struct platform_device *pdev = to_platform_device(dev);
--	struct resource *r;
- 	int i, j;
- 	int ret;
- 
-@@ -610,19 +609,14 @@ int msm_csiphy_subdev_init(struct camss *camss,
- 	}
- 
- 	/* Interrupt */
-+	ret = platform_get_irq_byname(pdev, res->interrupt[0]);
-+	if (ret < 0)
-+		return ret;
- 
--	r = platform_get_resource_byname(pdev, IORESOURCE_IRQ,
--					 res->interrupt[0]);
--	if (!r) {
--		dev_err(dev, "missing IRQ\n");
--		return -EINVAL;
--	}
--
--	csiphy->irq = r->start;
- 	snprintf(csiphy->irq_name, sizeof(csiphy->irq_name), "%s_%s%d",
- 		 dev_name(dev), MSM_CSIPHY_NAME, csiphy->id);
- 
--	ret = devm_request_irq(dev, csiphy->irq, csiphy->ops->isr,
-+	ret = devm_request_irq(dev, ret, csiphy->ops->isr,
- 			       IRQF_TRIGGER_RISING | IRQF_NO_AUTOEN,
- 			       csiphy->irq_name, csiphy);
- 	if (ret < 0) {
+I'd suggest changing the math to remove multiplications by 1000 and 
+10000 before division. Or just ignoring this at all, judging from the 
+fact that these values are used only for tracing rather than actual 
+calculations.
+
+> 
+>> ---
+>>   drivers/gpu/drm/msm/msm_gpu.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/msm_gpu.c 
+>> b/drivers/gpu/drm/msm/msm_gpu.c
+>> index 2c1049c..aa4617b
+>> --- a/drivers/gpu/drm/msm/msm_gpu.c
+>> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+>> @@ -648,7 +648,7 @@ static void retire_submit(struct msm_gpu *gpu, 
+>> struct msm_ringbuffer *ring,
+>>       /* Calculate the clock frequency from the number of CP cycles */
+>>       if (elapsed) {
+>>           clock = (stats->cpcycles_end - stats->cpcycles_start) * 1000;
+>> -        do_div(clock, elapsed);
+>> +        div64_u64(clock, elapsed);
+>>       }
+>>       trace_msm_gpu_submit_retired(submit, elapsed, clock,
+> 
+> 
+
+
 -- 
-2.20.1
-
-
-
+With best wishes
+Dmitry
