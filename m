@@ -2,240 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1DEA4B10F7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 15:52:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A35B4B11BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Feb 2022 16:33:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243255AbiBJOwS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 09:52:18 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:39654 "EHLO
+        id S243640AbiBJPdW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 10:33:22 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:32996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243251AbiBJOwQ (ORCPT
+        with ESMTP id S243638AbiBJPdV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 09:52:16 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81EA1EBE;
-        Thu, 10 Feb 2022 06:52:17 -0800 (PST)
+        Thu, 10 Feb 2022 10:33:21 -0500
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0401A1D6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 07:33:22 -0800 (PST)
+Received: by mail-qk1-x731.google.com with SMTP id o25so5166677qkj.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 07:33:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644504737; x=1676040737;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=PqI7BX+q/FiTPutrhWnZnXJPfIzp6aM2ZwkwoyDQ5pA=;
-  b=S83nlki1VBObMYabkUZaqmYiTgdQoB/C/aQ1L0/s741I/W5emtJx8ND7
-   PZcLMPe4utyZVUpny+qb+bq2lN4lke25Lx7GXKvBATVGsQRwGc30D4n1r
-   y3ZI1Tbvho3r9DPreEBybkAM5ABCvHQBFPznBrGgFHS33eUG8uW85pmKw
-   Y=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 10 Feb 2022 06:52:17 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2022 06:52:16 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 10 Feb 2022 06:52:16 -0800
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 10 Feb 2022 06:52:12 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <rohitkr@codeaurora.org>, <srinivas.kandagatla@linaro.org>,
-        <dianders@chromium.org>, <swboyd@chromium.org>,
-        <judyhsiao@chromium.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [PATCH v3 2/2] arm64: dts: qcom: sc7280: add lpass lpi pin controller node
-Date:   Thu, 10 Feb 2022 20:21:50 +0530
-Message-ID: <1644504710-944-3-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1644504710-944-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1644504710-944-1-git-send-email-quic_srivasam@quicinc.com>
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FL/C4Z8yVwITrvLePD7PW2Jh2OQUiy4zpTquT5szMek=;
+        b=qeouTAFQBSLpoh8wkQn7kXpOttRk9Gv3ezXt7zdNPmb9P5eqkcvquLwiOSj+NY0O39
+         jExbqpUz6GTIgvr7F/SNKwhxlIaddLakzvNgGipS9nQPQD/FUFbmaG/KyqZNIEVuyRCS
+         KsQBGYv/RmF8VclP+Wwo0RYy+LWTRyLfMSWDzdaqeDV5s3JubMvBq0+/A4UuFhXBpfKx
+         oSWFDteSho1x3i7f7d3rRIQ1JlTRrNXp6O1NcEcyfY7M9xARz78qi33mBj74rVBKPMP6
+         5k4d/oO7hUo4a9LJSy4h7muGwin3Woq6P6oBN8NWcfzTFgp6MWNfT7dp/VEqViTIsF1m
+         kt9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FL/C4Z8yVwITrvLePD7PW2Jh2OQUiy4zpTquT5szMek=;
+        b=ptlbvAJlVi1JUqQzCKkh7wGXlK1DTmGOZ6hHwXE0ciXgviGouZ2xIwK2ytR9i2AJ7s
+         AkIZiAriqiqyMqO6qpT5ndCLrPW4jYdc9xqyfUlBa0IHod/3T1ebqWp3FJn+ubJF4P9J
+         pY8IisChIjRJG58yUrbUZrLK3tulzV4+/Z+6+h/lPKuavBw65Brx5OBzeXIUTH2qAr5v
+         cUCSPq92I0AyG3qCIjZIR6gxrykZqQ5mTu/gjPGaIOrV+L61YAL7vWAKzteT2GQ8nIT4
+         m82voWxweMQl7MlBofBERx/dzJfNQWJgCHh8aIG71KhUO41perm/5LI7fAVxfghXKvwd
+         TUfA==
+X-Gm-Message-State: AOAM531Qk0XpR8zesf209htypmpxoMdEKWsB23Styq7RnnjOxb4ToFg2
+        0qNQYCwGqdGVXOpxxq2pjeTZKLIkfCSPq0AM/WLtMy2dNzo=
+X-Google-Smtp-Source: ABdhPJyHyx35eqG+mDoZXo+4b0lEDjXxuVtsuUbpESl7ZzUT3JUOOliWvKZ4XFvW9Lywzp2UQZCzw2j854aPgD09pf0=
+X-Received: by 2002:a05:620a:1664:: with SMTP id d4mr4053644qko.363.1644507201150;
+ Thu, 10 Feb 2022 07:33:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20220203164629.1711958-1-vladimir.zapolskiy@linaro.org>
+ <20220203164629.1711958-3-vladimir.zapolskiy@linaro.org> <Yf1q+wlXo2LAeZX+@ripper>
+ <Yf1zhojUSxlMNZgV@sirena.org.uk> <Yf14LADJ26G9ByZu@ripper>
+ <Yf1/X1rXm4QbyoFN@sirena.org.uk> <846cdc17-891d-2ee4-fc89-7cf6fbdebc1d@linaro.org>
+ <YgEvN0lXXu4lDCN5@sirena.org.uk> <682b7ffe-e162-bcf7-3c07-36b3a39c25ab@linaro.org>
+ <YgJoX+Ajgt4dweQJ@sirena.org.uk>
+In-Reply-To: <YgJoX+Ajgt4dweQJ@sirena.org.uk>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 10 Feb 2022 18:33:09 +0300
+Message-ID: <CAA8EJppEjFqPUBXtdkTsx2U2CjsrjNsXEmrx_DkAS9a9jmB9cg@mail.gmail.com>
+Subject: Re: [PATCH 2/9] dt-bindings: i2c: qcom-cci: add description of a
+ vbus-supply property
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Wolfram Sang <wsa@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linus.walleij@linaro.org, Loic Poulain <loic.poulain@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add LPASS LPI pinctrl node required for Audio functionality on sc7280
-based platforms.
+On Tue, 8 Feb 2022 at 16:16, Mark Brown <broonie@kernel.org> wrote:
+>
+> On Mon, Feb 07, 2022 at 08:31:30PM +0200, Vladimir Zapolskiy wrote:
+> > On 2/7/22 4:39 PM, Mark Brown wrote:
+>
+> > > The bindings are ABI, it doesn't seem like a good idea to add new ABI as
+> > > a temporary bodge.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 147 +++++++++++++++++++++++++++++++++++
- 1 file changed, 147 insertions(+)
+It's not a temporary bodge. The i2c-core piece was reverted, but not
+the mediatek driver code/bindings.
+Vladimir has provided a replacement for the i2c-core code handling the
+vbus-regulator. When thee code will be back, the code from i2c-cci can
+be removed. The bindings will be the same.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 503d461..dac2b47 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -1751,6 +1751,153 @@
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
-+		lpass_tlmm: pinctrl@33c0000 {
-+			compatible = "qcom,sc7280-lpass-lpi-pinctrl";
-+			reg = <0 0x33c0000 0x0 0x20000>,
-+				<0 0x3550000 0x0 0x10000>;
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			gpio-ranges = <&lpass_tlmm 0 0 15>;
-+
-+			#clock-cells = <1>;
-+
-+			dmic01_active: dmic01-active {
-+				clk {
-+					pins = "gpio6";
-+					function = "dmic1_clk";
-+					drive-strength = <8>;
-+					output-high;
-+				};
-+
-+				data {
-+					pins = "gpio7";
-+					function = "dmic1_data";
-+					drive-strength = <8>;
-+				};
-+			};
-+
-+			dmic01_sleep: dmic01-sleep {
-+				clk {
-+					pins = "gpio6";
-+					function = "dmic1_clk";
-+					drive-strength = <2>;
-+					bias-disable;
-+					output-low;
-+				};
-+
-+				data {
-+					pins = "gpio7";
-+					function = "dmic1_data";
-+					drive-strength = <2>;
-+					pull-down;
-+				};
-+			};
-+
-+			dmic23_active: dmic02-active {
-+				clk {
-+					pins = "gpio8";
-+					function = "dmic2_clk";
-+					drive-strength = <8>;
-+					output-high;
-+				};
-+
-+				data {
-+					pins = "gpio9";
-+					function = "dmic2_data";
-+					drive-strength = <8>;
-+				};
-+			};
-+
-+			dmic23_sleep: dmic02-sleep {
-+				clk {
-+					pins = "gpio8";
-+					function = "dmic2_clk";
-+					drive-strength = <2>;
-+					bias-disable;
-+					output-low;
-+				};
-+
-+				data {
-+					pins = "gpio9";
-+					function = "dmic2_data";
-+					drive-strength = <2>;
-+					pull-down;
-+				};
-+			};
-+
-+			rx_swr_active: rx-swr-active {
-+				clk {
-+					pins = "gpio3";
-+					function = "swr_rx_clk";
-+					drive-strength = <2>;
-+					slew-rate = <1>;
-+					bias-disable;
-+				};
-+
-+				data {
-+					pins = "gpio4", "gpio5";
-+					function = "swr_rx_data";
-+					drive-strength = <2>;
-+					slew-rate = <1>;
-+					bias-bus-hold;
-+				};
-+			};
-+
-+			rx_swr_sleep: rx-swr-sleep {
-+				clk {
-+					pins = "gpio3";
-+					function = "swr_rx_clk";
-+					drive-strength = <2>;
-+					input-enable;
-+					bias-pull-down;
-+				};
-+
-+				data {
-+					pins = "gpio4", "gpio5";
-+					function = "swr_rx_data";
-+					drive-strength = <2>;
-+					input-enable;
-+					bias-pull-down;
-+				};
-+			};
-+
-+			tx_swr_active: tx-swr-active {
-+				clk {
-+					pins = "gpio0";
-+					function = "swr_tx_clk";
-+					drive-strength = <2>;
-+					slew-rate = <1>;
-+					bias-disable;
-+				};
-+
-+				data {
-+					pins = "gpio1", "gpio2", "gpio14";
-+					function = "swr_tx_data";
-+					drive-strength = <2>;
-+					slew-rate = <1>;
-+					bias-bus-hold;
-+				};
-+			};
-+
-+			tx_swr_sleep: tx-swr-sleep {
-+				clk {
-+					pins = "gpio0";
-+					function = "swr_tx_clk";
-+					drive-strength = <2>;
-+					input-enable;
-+					bias-pull-down;
-+				};
-+
-+				data {
-+					pins = "gpio1", "gpio2", "gpio14";
-+					function = "swr_tx_data";
-+					drive-strength = <2>;
-+					input-enable;
-+					bias-bus-hold;
-+				};
-+			};
-+		};
-+
- 		gpu: gpu@3d00000 {
- 			compatible = "qcom,adreno-635.0", "qcom,adreno";
- 			reg = <0 0x03d00000 0 0x40000>,
+>
+> > The bindings are supposed to describe hardware, thus it's natural to extend
+> > them, I believe there is a trilemma in this particular case:
+> > 1) add optional vbus-supply property to all I2C master controllers or I2C
+> >    busses in case of multiple I2C busses managed by a single controller,
+> > 2) add optional vbus-supply property to all I2C slave devices,
+>
+> If you add a named supply to all I2C controllers or devices then if any
+> of them have an actual vbus supply there will be a namespace collision.
+>
+> > 3) ignore peculiarities of particular (multiple in fact) PCB designs and
+> >    a necessity of adding a regulator finely described as a pull-up for I2C
+> >    bus lines.
+>
+> There's also the option of representing this as a separate thing on or
+> part of the bus.
+
+4) (which you have implemented in your patch). Add support for  the
+vbus-supplies property for the I2C CCI controllers.
+
+This is the option I'd vote for.
+
 -- 
-2.7.4
-
+With best wishes
+Dmitry
