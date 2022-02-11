@@ -2,70 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 29B474B213F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 10:14:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 73A924B22A6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 11:01:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235169AbiBKJOQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Feb 2022 04:14:16 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:56600 "EHLO
+        id S231731AbiBKKBA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Feb 2022 05:01:00 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:40642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235817AbiBKJOQ (ORCPT
+        with ESMTP id S231577AbiBKKA7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Feb 2022 04:14:16 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A28101026
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Feb 2022 01:14:15 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id v5-20020a17090a4ec500b001b8b702df57so11317914pjl.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Feb 2022 01:14:15 -0800 (PST)
+        Fri, 11 Feb 2022 05:00:59 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE448133;
+        Fri, 11 Feb 2022 02:00:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=AnYtNhdLAufx/Wabg2w3ZU5XlCq9QWc6T4pL9mdKHRk=;
-        b=PNPe2khfRgmo+HiRLlAoG8nVNb0scB964DKEKSYoD7jVClmPhbuGxl65L227FrqsEV
-         4iVXQk8yjkMgI4Zhwnus0nHOI5kzk+FjeqIZLwu8gcgvdb5Ux6L6guI4TmJf1iJ2CCYb
-         NJPvElMNC+IdNHNEp8OCZhHSaZaJzH245SUwRA0tIVkUbZmm9jrIIdqcnhSioTl6xg74
-         kXPojEOuzOH6ySvsn4F29C2yeDxpHL02dfhn80v0ic8b7gnNaSLrqooTu0WH3UqgNRNs
-         /jpQ651JLr3m4/kZa5eZRasvXTwPv6nOg7gd2feWYA67K7391vlqj86x/yjM0XjqTeoe
-         8fjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=AnYtNhdLAufx/Wabg2w3ZU5XlCq9QWc6T4pL9mdKHRk=;
-        b=AMSY7f+ujueC/33DcOIiJR7NIEV0r1TnUO2cg6WOKEuORJqyYLWNtPlqC7dCe3hkUY
-         9KKNLteR0+Hh6H6Ok/i3DbH7ApSpNXjwyfaqiVe0UuFRtZlxkjsBWSpaus/Y8yCDy4Zg
-         kbjr/jCnMWXk50iiy78tz3tr0dExkroZ55+64QhTLk/8tbiOCloM3moLa9DYs5YVuPb7
-         Lr5A0IJWws/Qts+AGran32lNiOkE+ojYbckDTCwpDqYjFJlO6/R3gC4g1MjGXLZ4aPAS
-         SVPwK+21URPgxPlZ9lNhbT/Z3J0D/e5IXn0sSoAhrs21co2hMGX/EtMGppDKpBZOdvF6
-         /ffA==
-X-Gm-Message-State: AOAM531EG2i1sz3WBnOw6cxGpbZjx3CL0f1H7t+v9Oi72eyQUpCvkF6h
-        k7IXQyfTSPL9glqzBs/ysMgZKfQB2ialLyc=
-X-Google-Smtp-Source: ABdhPJwHRpEeOjwi5F77yVboQHbjWdwulWc/2KiRTMLMCZ9HfBIOxiShsb9dQk3Gt66vTmxNGYNhAA==
-X-Received: by 2002:a17:90b:3b8f:: with SMTP id pc15mr1606035pjb.165.1644570855042;
-        Fri, 11 Feb 2022 01:14:15 -0800 (PST)
-Received: from thinkpad ([27.111.75.38])
-        by smtp.gmail.com with ESMTPSA id h4sm26078995pfv.166.2022.02.11.01.14.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Feb 2022 01:14:14 -0800 (PST)
-Date:   Fri, 11 Feb 2022 14:44:09 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Prasad Malisetty <quic_pmaliset@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        lorenzo.pieralisi@arm.com, robh@kernel.org, kw@linux.com,
-        bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
-        swboyd@chromium.org
-Subject: Re: [PATCH v2] PCI: qcom: Add system PM support
-Message-ID: <20220211091409.GB3223@thinkpad>
-References: <1643738876-18572-1-git-send-email-quic_pmaliset@quicinc.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1644573658; x=1676109658;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=z9a5VslmIX25OnGQp6my8AEprVdaAFHvejS6kfNUFjo=;
+  b=Ss79HcUBdL+9o+tuKUA9ABPtSmWmOZ7Z1ID5LrjtJPvIqyTNP6YjqV4f
+   TuUvv3FyQfamLa2IXoNDG7ifAvFpjI5prfZb77UaAPa5p0p1lvstAtQUm
+   szusMtWjY7Vzp2M2DpwCahDldm9tGUnLvefkG8oGGmMu4Qbvm6g7vZBur
+   g=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 11 Feb 2022 02:00:58 -0800
+X-QCInternal: smtphost
+Received: from nalasex01a.na.qualcomm.com ([10.47.209.196])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Feb 2022 02:00:57 -0800
+Received: from [10.216.7.73] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Fri, 11 Feb
+ 2022 02:00:52 -0800
+Subject: Re: [PATCH V5 4/6] regulator: Add a regulator driver for the PM8008
+ PMIC
+To:     Mark Brown <broonie@kernel.org>
+CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        "Liam Girdwood" <lgirdwood@gmail.com>,
+        Das Srinagesh <gurus@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
+        <quic_jprakash@quicinc.com>
+References: <1644331940-18986-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1644331940-18986-5-git-send-email-quic_c_skakit@quicinc.com>
+ <YgPNLq6tdj5/UpZE@sirena.org.uk>
+From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
+Message-ID: <66830ee2-5846-8298-3371-359c7d1999db@quicinc.com>
+Date:   Fri, 11 Feb 2022 15:30:48 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1643738876-18572-1-git-send-email-quic_pmaliset@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <YgPNLq6tdj5/UpZE@sirena.org.uk>
+Content-Type: text/plain; charset="windows-1252"; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,103 +73,114 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On top of Bjorn's review:
 
-On Tue, Feb 01, 2022 at 11:37:56PM +0530, Prasad Malisetty wrote:
-> Add suspend_noirq and resume_noirq callbacks to handle
-> System suspend and resume in dwc pcie controller driver.
-> 
-> When system suspends, send PME turnoff message to enter
-> link into L2 state. Along with powerdown the PHY, disable
-> pipe clock, switch gcc_pcie_1_pipe_clk_src to XO if mux is
-> supported and disable the pcie clocks, regulators.
-> 
-> When system resumes, PCIe link will be re-established and
-> setup rc settings.
-> 
-> Signed-off-by: Prasad Malisetty <quic_pmaliset@quicinc.com>
-> Reported-by: kernel test robot <lkp@intel.com>
-> 
-> ---
-> Changes since v1:
-> 	- Removed unnecessary logs and modified log level suggested by Manivannan.
-> 	- Removed platform specific callbacks as PM support is generic.
+On 2/9/2022 7:48 PM, Mark Brown wrote:
+> On Tue, Feb 08, 2022 at 08:22:18PM +0530, Satya Priya wrote:
+>
+>> +static int pm8008_regulator_of_parse(struct device_node *node,
+>> +			const struct regulator_desc *desc,
+>> +			struct regulator_config *config)
+>> +{
+>> +	struct pm8008_regulator *pm8008_reg = config->driver_data;
+>> +	int rc;
+>> +	unsigned int reg;
+>> +
+>> +	/* get slew rate */
+>> +	rc = regmap_bulk_read(pm8008_reg->regmap,
+>> +			LDO_STEPPER_CTL_REG(pm8008_reg->base), &reg, 1);
+>> +	if (rc < 0) {
+>> +		dev_err(pm8008_reg->dev,
+>> +			"%s: failed to read step rate configuration rc=%d\n",
+>> +			pm8008_reg->rdesc.name, rc);
+>> +		return rc;
+>> +	}
+>> +	reg &= STEP_RATE_MASK;
+>> +	pm8008_reg->step_rate = DEFAULT_VOLTAGE_STEPPER_RATE >> reg;
+>> +
+>> +	return 0;
+> This is not doing any parsing of any DT properties at all, it is just
+> reading a default value back from the hardware.  This shouldn't be in
+> the of_parse() callback, it should be done on probe() or something so
+> that if someone adds ACPI support or whatever there's no surprise
+> breakage, and so that we've got this configured even if there's no DT
+> bindings for the specific regulator.
 
-This is not still generic... Please see below.
 
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 97 ++++++++++++++++++++++++++++++++++
->  1 file changed, 97 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index c19cd506..d1dd6c7 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -73,6 +73,8 @@
->  
->  #define PCIE20_PARF_Q2A_FLUSH			0x1AC
->  
-> +#define PCIE20_PARF_PM_STTS                     0x24
-> +
->  #define PCIE20_MISC_CONTROL_1_REG		0x8BC
->  #define DBI_RO_WR_EN				1
->  
-> @@ -1616,6 +1618,100 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  	return ret;
->  }
->  
-> +static int qcom_pcie_send_pme_turnoff_msg(struct qcom_pcie *pcie)
-> +{
-> +	int ret = 0;
-> +	u32 val = 0, poll_val = 0;
-> +	u64 l23_rdy_poll_timeout = 100000;
-> +	struct dw_pcie *pci = pcie->pci;
-> +	struct device *dev = pci->dev;
-> +
-> +	val = readl(pcie->elbi + PCIE20_ELBI_SYS_CTRL);
-> +	val |= BIT(4);
+Okay, I'll move it to probe.
 
-Define BIT(4)
 
-> +	writel(val, pcie->elbi + PCIE20_ELBI_SYS_CTRL);
-> +
-> +	ret = readl_poll_timeout((pcie->parf + PCIE20_PARF_PM_STTS), poll_val,
-> +			(poll_val & BIT(5)), 10000, l23_rdy_poll_timeout);
-
-Define BIT(5)
-
-> +	if (!ret)
-> +		dev_info(dev, "PM_Enter_L23 is received\n");
-
-Maybe print, "Device entered L23_Ready state"? Also this should be dev_dbg().
-
-> +	else
-> +		dev_err(dev, "PM_Enter_L23 is NOT received.PARF_PM_STTS 0x%x\n",
-
-Maybe print, "Device failed to enter L23_Ready state"?
-
-> +			readl_relaxed(pcie->parf + PCIE20_PARF_PM_STTS));
-> +
-> +	return ret;
-> +}
-> +
-> +static void qcom_pcie_host_disable(struct qcom_pcie *pcie)
-> +{
-> +	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-> +
-
-As Bjorn said this would only work for platforms supporting v2.7.0 ops. Please
-make it generic.
-
-> +	/* Assert the reset of endpoint */
-> +	qcom_ep_reset_assert(pcie);
-> +
-> +	/* Put PHY into POWER DOWN state */
-> +	phy_power_off(pcie->phy);
-> +
-> +	writel(1, pcie->parf + PCIE20_PARF_PHY_CTRL);
-
-Define "1".
-
-Thanks,
-Mani
+>
+>> +}
+>> +
+>> +static int pm8008_regulator_probe(struct platform_device *pdev)
+>> +{
+>> +	struct device *dev = &pdev->dev;
+>> +	int id = pdev->id % PM8008_NUM_LDOS;
+>> +	struct regulator_dev    *rdev;
+>> +	struct pm8008_regulator *pm8008_reg;
+>> +	struct regmap *regmap;
+>> +	struct regulator_config reg_config = {};
+>> +	int rc;
+>> +
+>> +	dev_dbg(dev, "DEBUG: Probing LDO%d\n", id + 1);
+>> +
+>> +	regmap = dev_get_regmap(dev->parent, NULL);
+>> +	if (!regmap) {
+>> +		dev_err(dev, "parent regmap is missing\n");
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	pm8008_reg = devm_kzalloc(dev, sizeof(*pm8008_reg), GFP_KERNEL);
+>> +	if (!pm8008_reg)
+>> +		return -ENOMEM;
+>> +
+>> +	pm8008_reg->regmap = regmap;
+>> +	pm8008_reg->dev = dev;
+>> +	pm8008_reg->base = reg_data[id].base;
+>> +
+>> +	pm8008_reg->rdesc.type = REGULATOR_VOLTAGE;
+>> +	pm8008_reg->rdesc.regulators_node = of_match_ptr("regulators");
+>> +	pm8008_reg->rdesc.ops = &pm8008_regulator_ops;
+>> +	pm8008_reg->rdesc.name = reg_data[id].name;
+>> +	pm8008_reg->rdesc.supply_name = reg_data[id].supply_name;
+>> +	pm8008_reg->rdesc.of_match = reg_data[id].name;
+>> +	pm8008_reg->rdesc.of_parse_cb = pm8008_regulator_of_parse;
+>> +	pm8008_reg->rdesc.uV_step = VSET_STEP_UV;
+>> +	pm8008_reg->rdesc.min_uV = reg_data[id].min_uv;
+>> +	pm8008_reg->rdesc.n_voltages
+>> +		= ((reg_data[id].max_uv - reg_data[id].min_uv)
+>> +			/ pm8008_reg->rdesc.uV_step) + 1;
+>> +	pm8008_reg->rdesc.linear_ranges = reg_data[id].voltage_range;
+>> +	pm8008_reg->rdesc.n_linear_ranges = 1;
+>> +	pm8008_reg->rdesc.enable_reg = LDO_ENABLE_REG(pm8008_reg->base);
+>> +	pm8008_reg->rdesc.enable_mask = ENABLE_BIT;
+>> +	pm8008_reg->rdesc.min_dropout_uV = reg_data[id].min_dropout_uv;
+>> +
+>> +	reg_config.dev = dev->parent;
+>> +	reg_config.driver_data = pm8008_reg;
+>> +
+>> +	rdev = devm_regulator_register(dev, &pm8008_reg->rdesc, &reg_config);
+>> +	if (IS_ERR(rdev)) {
+>> +		rc = PTR_ERR(rdev);
+>> +		dev_err(dev, "%s: failed to register regulator rc=%d\n",
+>> +				reg_data[id].name, rc);
+>> +		return rc;
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static struct platform_driver pm8008_regulator_driver = {
+>> +	.driver	= {
+>> +		.name		= "qcom,pm8008-regulators",
+>> +	},
+>> +	.probe	= pm8008_regulator_probe,
+>> +};
+>> +
+>> +module_platform_driver(pm8008_regulator_driver);
+>> +
+>> +MODULE_DESCRIPTION("Qualcomm PM8008 PMIC Regulator Driver");
+>> +MODULE_LICENSE("GPL");
+>> -- 
+>> 2.7.4
+>>
