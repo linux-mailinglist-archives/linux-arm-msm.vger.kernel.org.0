@@ -2,49 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA3DF4B2B60
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 18:10:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FABA4B2B68
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 18:10:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232591AbiBKRKW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Feb 2022 12:10:22 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:34526 "EHLO
+        id S1350931AbiBKRK0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Feb 2022 12:10:26 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:34590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234388AbiBKRKV (ORCPT
+        with ESMTP id S1345343AbiBKRKY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Feb 2022 12:10:21 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE7F021F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Feb 2022 09:10:19 -0800 (PST)
+        Fri, 11 Feb 2022 12:10:24 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AC3521F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Feb 2022 09:10:23 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5C5F661ABA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Feb 2022 17:10:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id BF648C340F1;
+        by ams.source.kernel.org (Postfix) with ESMTPS id A86F2B82B21
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Feb 2022 17:10:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id CDD37C340F3;
         Fri, 11 Feb 2022 17:10:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1644599418;
-        bh=oKJAyO2YAGvFfujx9mCMG8nPxP/1NsHJ1Rvid2RWWgk=;
+        bh=vs7558Z/gK3LCmPxfAbE0YbIbQDGw/EtrAt5YXWAQNc=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Er+vo3B2MSrrP+NqF0ZspWLr8rydH9WhD5Bw8eBXg3ebG3+L+FdFZpSi8lbm7PQCe
-         Hp9KmZ8BYZhimZ4Yoa6g8yDuHYc8LjBPcQePD7YK8EV9b8ozKUYzn4J17vrBXkwRs1
-         9mG97tFd4kYH+rbmnicQP40KHtauyk+we4vAU7mXtTf+BWHBjOzCRmaISem1XM7h98
-         rP+DMEqfTnjJC0fJlqJ2l68Hv8gAq3cAaXr1CqARLh6M1FQEkiuKz+NJqsW5IuRcRm
-         WQ6P9/JSaHDJ9tKsTuXmWAwrTJWgJ/LA+oEZhxVXKds5A60HXyIeKAc9uGqMK+BMU5
-         bPvYSm0iVFraA==
+        b=pdPCoXvsJUBCN8Mvylpqqsh59yM/QmkitUwhQfGR1U/57XlwmibsT0OrXYyPL8dDY
+         pi7YGJY7wKufvZVBQaovuafQDMY57QTZ0tGR3ElYxBLMSGCDDv2fmqMWJWhIiDmk6J
+         ojhbMnsh3uTOi9/UDAzxEuCHJUtzWjnELLsV0FsIqB4X06C7WFNNJKRSu+EfQJmat6
+         WRPa1cgJJF4/2VyYiP/lGI0G6nMbGdqLFwqnxZM57+nz0sSBXw8whGTwNye9yQKVdb
+         zM+YEa4eRiIYGCTzYGFJDgWE+U2D34hQL8XD91M0dRJTMu6TMAi7M1fPEzKSTIiIrv
+         O7q+sxVBqRT8Q==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id A7A08E6D45A;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id BBD91E6D447;
         Fri, 11 Feb 2022 17:10:18 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCHv2 0/9] soc: qcom: llcc: Add LLCC support for SM8450 SoC
+Subject: Re: [PATCH 0/2] Drop the clock-frequency property from the MMIO timer
+ node
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <164459941868.13057.17422878968199883193.git-patchwork-notify@kernel.org>
+Message-Id: <164459941875.13057.7345188944922728405.git-patchwork-notify@kernel.org>
 Date:   Fri, 11 Feb 2022 17:10:18 +0000
-References: <cover.1643355594.git.quic_saipraka@quicinc.com>
-In-Reply-To: <cover.1643355594.git.quic_saipraka@quicinc.com>
-To:     Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+References: <1643819709-5410-1-git-send-email-quic_kathirav@quicinc.com>
+In-Reply-To: <1643819709-5410-1-git-send-email-quic_kathirav@quicinc.com>
+To:     Kathiravan T <quic_kathirav@quicinc.com>
 Cc:     linux-arm-msm@vger.kernel.org
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
@@ -61,36 +62,21 @@ Hello:
 This series was applied to qcom/linux.git (for-next)
 by Bjorn Andersson <bjorn.andersson@linaro.org>:
 
-On Fri, 28 Jan 2022 13:17:07 +0530 you wrote:
-> This patch series adds support for LLCC on SM8450 SoC. It mainly
-> consists of LLCC driver changes to incorporate newer LLCC HW found
-> on SM8450 SoC and the corresponding DT bits to enable LLCC.
-> Based on qcom/for-next branch.
+On Wed, 2 Feb 2022 22:05:07 +0530 you wrote:
+> Drop the clock-frequency property from the MMIO timer node in both IPQ8074
+> and IPQ6018 DTSI. There are couple of reasons for this change
 > 
-> Changes in v2:
->  * Fix version assignment to drv_data.
+> 1) As per the DT binding, this property should be present only if the
+> firmware is not configuring the clock frequency properly. In both IPQ8074
+> and IPQ6018, bootloader is configuring it properly.
 > 
 > [...]
 
 Here is the summary with links:
-  - [PATCHv2,1/9] soc: qcom: llcc: Add support for 16 ways of allocation
-    https://git.kernel.org/qcom/c/06b24ab36440
-  - [PATCHv2,2/9] soc: qcom: llcc: Update the logic for version info extraction
-    https://git.kernel.org/qcom/c/8008e7902f28
-  - [PATCHv2,3/9] soc: qcom: llcc: Add write-cache cacheable support
-    https://git.kernel.org/qcom/c/2b8175a1f108
-  - [PATCHv2,4/9] soc: qcom: llcc: Add missing llcc configuration data
-    https://git.kernel.org/qcom/c/bc88a42075cd
-  - [PATCHv2,5/9] soc: qcom: llcc: Update register offsets for newer LLCC HW
-    https://git.kernel.org/qcom/c/424ad93c23e2
-  - [PATCHv2,6/9] soc: qcom: llcc: Add configuration data for SM8450 SoC
-    https://git.kernel.org/qcom/c/a6e9d7ef252c
-  - [PATCHv2,7/9] dt-bindings: arm: msm: Add LLCC compatible for SM8350
-    https://git.kernel.org/qcom/c/c4bfcb73b609
-  - [PATCHv2,8/9] dt-bindings: arm: msm: Add LLCC compatible for SM8450
-    https://git.kernel.org/qcom/c/c9413e3e1e59
-  - [PATCHv2,9/9] arm64: dts: qcom: sm8450: Add LLCC/system-cache-controller node
-    https://git.kernel.org/qcom/c/1dc3e50eb680
+  - [1/2] arm64: dts: qcom: ipq8074: drop the clock-frequency property
+    https://git.kernel.org/qcom/c/555ab09c7896
+  - [2/2] arm64: dts: qcom: ipq6018: drop the clock-frequency property
+    https://git.kernel.org/qcom/c/01b8c4aff332
 
 You are awesome, thank you!
 -- 
