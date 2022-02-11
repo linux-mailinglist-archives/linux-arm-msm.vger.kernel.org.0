@@ -2,46 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 581CD4B2C33
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 18:57:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B15A4B2D35
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 19:59:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234778AbiBKR5j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Feb 2022 12:57:39 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46334 "EHLO
+        id S235508AbiBKS7s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Feb 2022 13:59:48 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:34672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230475AbiBKR5i (ORCPT
+        with ESMTP id S231374AbiBKS7r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Feb 2022 12:57:38 -0500
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 869601AF;
-        Fri, 11 Feb 2022 09:57:37 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4EA771042;
-        Fri, 11 Feb 2022 09:57:37 -0800 (PST)
-Received: from lpieralisi (e121166-lin.cambridge.arm.com [10.1.196.255])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0FA113F70D;
-        Fri, 11 Feb 2022 09:57:35 -0800 (PST)
-Date:   Fri, 11 Feb 2022 17:57:33 +0000
-From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        Prasad Malisetty <pmaliset@codeaurora.org>
-Subject: Re: [PATCH 0/3] PCI: qcom: pipe_clk_src fixes for pcie-qcom driver
-Message-ID: <20220211175733.GB2300@lpieralisi>
-References: <20211218140223.500390-1-dmitry.baryshkov@linaro.org>
- <CAE-0n52qs0fe2Cz2QChc0RmnddcWtuw-u1Q34=_Q7FVJSw=q2g@mail.gmail.com>
+        Fri, 11 Feb 2022 13:59:47 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E251CD8;
+        Fri, 11 Feb 2022 10:59:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1644605986; x=1676141986;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=10MNTyWKrFElxhMmkbbRa8eHQjuoljFrhQU1QJPnd58=;
+  b=JKr3XVndKeATPGzOtQLIpr+M7xnWoUVRJXFyjvCiFeghuHJAaLzR/ZVd
+   0PUxViCZ5PelSnkwPr49PhNn8Q3OYrosumZkCpGTb3zZ4HkDcDStFLkHW
+   k89f6lHBbfIMx9Z3X4+KnJR3s/uThcLYj28M8Vu+FH/lMYO35XEylM08o
+   g=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 11 Feb 2022 10:59:46 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Feb 2022 10:59:44 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Fri, 11 Feb 2022 10:59:44 -0800
+Received: from [10.38.246.233] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Fri, 11 Feb
+ 2022 10:59:41 -0800
+Message-ID: <654d620b-9e14-c47f-b48c-762dc0bd32a1@quicinc.com>
+Date:   Fri, 11 Feb 2022 10:59:39 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE-0n52qs0fe2Cz2QChc0RmnddcWtuw-u1Q34=_Q7FVJSw=q2g@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [PATCH] devcoredump: increase the device delete timeout to 10
+ mins
+Content-Language: en-US
+To:     Greg KH <gregkh@linuxfoundation.org>
+CC:     <johannes@sipsolutions.net>, <linux-kernel@vger.kernel.org>,
+        <rafael@kernel.org>, <robdclark@gmail.com>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>, <seanpaul@chromium.org>,
+        <swboyd@chromium.org>, <nganji@codeaurora.org>,
+        <aravindh@codeaurora.org>, <khsieh@codeaurora.org>,
+        <daniel@ffwll.ch>, <dmitry.baryshkov@linaro.org>
+References: <1644349472-31077-1-git-send-email-quic_abhinavk@quicinc.com>
+ <YgZD8vPqB7ISpRpZ@kroah.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <YgZD8vPqB7ISpRpZ@kroah.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -50,22 +73,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 03, 2022 at 09:11:44PM +0000, Stephen Boyd wrote:
-> Quoting Dmitry Baryshkov (2021-12-18 06:02:20)
-> > After comparing upstream and downstream Qualcomm PCIe drivers, change
-> > the way the driver works with the pipe_clk_src multiplexing.
-> >
-> > The clock should be switched to using ref_clk (TCXO) as a parent before
-> > turning the PCIE_x_GDSC power domain off and can be switched to using
-> > PHY's pipe_clk after this power domain is turned on.
-> >
-> > Downstream driver uses regulators for the GDSC, so current approach also
-> > (incorrectly) uses them. However upstream driver uses power-domain and
-> > so GDSC is maintained using pm_runtime_foo() calls. Change order of
-> > operations to implement these requirements.
+Hi Greg
+
+Thanks for the response.
+
+On 2/11/2022 3:09 AM, Greg KH wrote:
+> On Tue, Feb 08, 2022 at 11:44:32AM -0800, Abhinav Kumar wrote:
+>> There are cases where depending on the size of the devcoredump and the speed
+>> at which the usermode reads the dump, it can take longer than the current 5 mins
+>> timeout.
+>>
+>> This can lead to incomplete dumps as the device is deleted once the timeout expires.
+>>
+>> One example is below where it took 6 mins for the devcoredump to be completely read.
+>>
+>> 04:22:24.668 23916 23994 I HWDeviceDRM::DumpDebugData: Opening /sys/class/devcoredump/devcd6/data
+>> 04:28:35.377 23916 23994 W HWDeviceDRM::DumpDebugData: Freeing devcoredump node
 > 
-> Prasad, can you test/review this series?
+> What makes this so slow?  Reading from the kernel shouldn't be the
+> limit, is it where the data is being sent to?
 
-Waiting for testing/review and Bjorn/Andy ACKs.
+We are still checking this. We are seeing better read times when we bump 
+up the thread priority of the thread which was reading this.
+We are also trying to check if bumping up CPU speed is helping.
+But, results have not been consistently good enough. So we thought we 
+should also increase the timeout to be safe.
 
-Lorenzo
+
+> 
+>> Increase the timeout to 10 mins to accommodate system delays and large coredump
+>> sizes.
+> 
+> Nit, please wrap your changelog texts at 72 columns.
+> 
+Yes, i will fix this when I re-post.
+
+> And what is "large"?
+
+We are seeing devcoredumps in the range of 2.5MB-3MB. I can also mention 
+this in the commit text in the next post.
+
+Thanks
+
+Abhinav
+
+> 
+> thanks,
+> 
+> greg k-h
