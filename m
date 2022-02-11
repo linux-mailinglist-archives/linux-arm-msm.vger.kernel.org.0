@@ -2,64 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B169E4B279D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 15:12:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 625274B2836
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 15:48:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343844AbiBKOMa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Feb 2022 09:12:30 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:53538 "EHLO
+        id S1350991AbiBKOsX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Feb 2022 09:48:23 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235702AbiBKOM2 (ORCPT
+        with ESMTP id S235874AbiBKOsX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Feb 2022 09:12:28 -0500
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5063DDE9;
-        Fri, 11 Feb 2022 06:12:27 -0800 (PST)
-Received: by mail-oi1-f173.google.com with SMTP id u3so9601753oiv.12;
-        Fri, 11 Feb 2022 06:12:27 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=lAkUnjcZkQaj/Jq2IySe0qTtnqDiy/JqCybGCbj3Xr4=;
-        b=5mNmr8yHdbwp5y5Z7i4FgoIsKJMsKAO9MIu0CIG0lr7DykEvXtPE0Z96oUtRTXbwyf
-         lyLNIHgtetc5wnUJcc2RmNHI3+cMM2OXoKjpsVmj0cVjzSjSnq8z+2nmhEguPmZVFnO1
-         MkVPlI3TM2kyJC5ithzkG0xu9rXiP9He8NHSuQt2EaBRlcUEN8IQ9rNQjIHulZtoGmhc
-         o+O+h20evJds50LnCXJsofiBs2aWv7Z+SzIkHqdcWupI4C2aAuQq3/AaeGbEGNjyMV5O
-         P1Omuupa8MgKsqoRSDRoJz+MdKVsytvswqSJx/BYBzfjI10CMncBF/Cr/9H2jccJVLH/
-         IPLQ==
-X-Gm-Message-State: AOAM530cOwetM4Q3AmxLtkeJTW+5TncQDG2Vza3N9AkfPpHild1BVuS4
-        gBc4g1WuRWBrMiWcTQsU8Y2W/va13w==
-X-Google-Smtp-Source: ABdhPJwmSbOHF34SzzapTIDb7eEv5EgBL3YRReQ1KuJvfhTPrEgsWRjiCFNskT7QkRP715c6n1sF+A==
-X-Received: by 2002:a05:6808:ec2:: with SMTP id q2mr249429oiv.124.1644588746611;
-        Fri, 11 Feb 2022 06:12:26 -0800 (PST)
-Received: from robh.at.kernel.org ([2607:fb90:20d7:a802:e6b0:6d9c:32f7:4bd9])
-        by smtp.gmail.com with ESMTPSA id c61sm9016445otb.52.2022.02.11.06.12.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Feb 2022 06:12:25 -0800 (PST)
-Received: (nullmailer pid 291081 invoked by uid 1000);
-        Fri, 11 Feb 2022 14:12:23 -0000
-Date:   Fri, 11 Feb 2022 08:12:23 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-i2c@vger.kernel.org, Loic Poulain <loic.poulain@linaro.org>,
-        Wolfram Sang <wsa@kernel.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH 1/9] dt-bindings: i2c: qcom-cci: add QCOM SM8450
- compatible
-Message-ID: <YgZux6VgMQqpA0dj@robh.at.kernel.org>
-References: <20220203164629.1711958-1-vladimir.zapolskiy@linaro.org>
- <20220203164629.1711958-2-vladimir.zapolskiy@linaro.org>
+        Fri, 11 Feb 2022 09:48:23 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E034FE;
+        Fri, 11 Feb 2022 06:48:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1644590901; x=1676126901;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=LeB8V2BK2eGUygILietSQ0lBWhPLWz2Zfy8r2Lh8pkU=;
+  b=uU2a3HNMXyuGQXzPvcumwvZVWB/tRa+KyQvn+U5ekhA8V4BmZK+VpduS
+   UEWpWqPCL2gVSd006KaNoCXlqW6wgTl3xC6exQgC4Y4/bY24js3Se+qTQ
+   O3UEYXXU+sYWjX+wXJbdS8RoBXnJbyT+wco3JjQ6+eKmVTGRkvOHHfLRQ
+   g=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 11 Feb 2022 06:48:21 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Feb 2022 06:48:20 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Fri, 11 Feb 2022 06:48:20 -0800
+Received: from [10.216.7.73] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Fri, 11 Feb
+ 2022 06:48:14 -0800
+Subject: Re: [PATCH V5 4/6] regulator: Add a regulator driver for the PM8008
+ PMIC
+To:     Matti Vaittinen <mazziesaccount@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski@canonical.com>
+CC:     Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Das Srinagesh <gurus@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
+        <quic_jprakash@quicinc.com>
+References: <1644331940-18986-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1644331940-18986-5-git-send-email-quic_c_skakit@quicinc.com>
+ <828ffa4e-d098-071f-1b5f-3bf414c0ed80@gmail.com>
+From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
+Message-ID: <654f9808-9787-cbbb-8f27-219aeea4024d@quicinc.com>
+Date:   Fri, 11 Feb 2022 20:18:09 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220203164629.1711958-2-vladimir.zapolskiy@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+In-Reply-To: <828ffa4e-d098-071f-1b5f-3bf414c0ed80@gmail.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -67,15 +78,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 03 Feb 2022 18:46:28 +0200, Vladimir Zapolskiy wrote:
-> The change adds QCOM SM8450 compatible value to the list of QCOM CCI
-> controller compatibles, the controller found on the SoC is equal to
-> the ones found on previous SoC generations.
-> 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> ---
->  Documentation/devicetree/bindings/i2c/i2c-qcom-cci.txt | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
+Hi Matti,
 
-Acked-by: Rob Herring <robh@kernel.org>
+
+Thanks for reviewing the patches!
+
+
+On 2/11/2022 4:31 PM, Matti Vaittinen wrote:
+> Hi Satya,
+>
+> It's always nice to see new PMIC drivers :) I just one question after 
+> reading your patch - please ignore it if it has already been discussed 
+> before - for some reason this version was caught by my filters where 
+> the previous versions didn't. It means I do not know the full history.
+> On 2/8/22 16:52, Satya Priya wrote:
+>> Qualcomm Technologies, Inc. PM8008 is an I2C controlled PMIC
+>> containing 7 LDO regulators.  Add a PM8008 regulator driver to
+>> support PMIC regulator management via the regulator framework.
+>>
+>> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+>> ---
+>
+> snip
+>
+>> +
+>> +static int pm8008_regulator_of_parse(struct device_node *node,
+>> +            const struct regulator_desc *desc,
+>> +            struct regulator_config *config)
+>> +{
+>> +    struct pm8008_regulator *pm8008_reg = config->driver_data;
+>> +    int rc;
+>> +    unsigned int reg;
+>> +
+>> +    /* get slew rate */
+>> +    rc = regmap_bulk_read(pm8008_reg->regmap,
+>> +            LDO_STEPPER_CTL_REG(pm8008_reg->base), &reg, 1);
+>> +    if (rc < 0) {
+>> +        dev_err(pm8008_reg->dev,
+>> +            "%s: failed to read step rate configuration rc=%d\n",
+>> +            pm8008_reg->rdesc.name, rc);
+>> +        return rc;
+>> +    }
+>> +    reg &= STEP_RATE_MASK;
+>> +    pm8008_reg->step_rate = DEFAULT_VOLTAGE_STEPPER_RATE >> reg;
+>> +
+>> +    return 0;
+>> +}
+>
+> I wonder why this is done in the of_parse_cb? Could this perhaps be 
+> done directly in probe - I don't think this is actually parsing the 
+> device_node properties, right?
+>
+
+Right, I will move this part to probe. In the previous version there was 
+some code here which did the DT parsing, now that I removed all that, I 
+should move this to probe.
+
+
+Thanks,
+
+Satya Priya
+
+
+> Overall this looks pretty nice to me.
+>
+> Best Regards
+>     -- Matti
+>
