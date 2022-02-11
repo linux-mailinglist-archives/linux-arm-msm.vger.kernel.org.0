@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D051B4B230C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 11:25:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A0614B2338
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 11:36:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233172AbiBKKYA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Feb 2022 05:24:00 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:51192 "EHLO
+        id S1349016AbiBKKf3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Feb 2022 05:35:29 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:32806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242036AbiBKKYA (ORCPT
+        with ESMTP id S1349053AbiBKKfW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Feb 2022 05:24:00 -0500
+        Fri, 11 Feb 2022 05:35:22 -0500
 Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70C41220;
-        Fri, 11 Feb 2022 02:23:59 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 714A6F1D;
+        Fri, 11 Feb 2022 02:35:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644575039; x=1676111039;
+  t=1644575716; x=1676111716;
   h=subject:to:cc:references:from:message-id:date:
    mime-version:in-reply-to:content-transfer-encoding;
-  bh=UkTuOxm219Uf9vWVBlVQGbmmZ+csO/awHC70HwYJGsA=;
-  b=msNiC289Tb1TnnMiLChcYNYDV7a4ueneFyRZu5+erH1MdHQ4+3Huj8jf
-   aJvTYXWpPA2yt1OB6Wa3hwycROQ6NUglVTUktBgosnROhbD9E5uSyezrz
-   gJH5dpbOp70rHEDwd/uKc3agv5y6cGHOINBhmLWFpkNBdFFdwZk/Dq5ah
-   A=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 11 Feb 2022 02:23:59 -0800
+  bh=VSQeArOnGdl7FcIKdua2NdAwZTNifoQ+KWawkwDJKbI=;
+  b=Ic9/BJZX6iXH/PYtts4WOYLxPs5OyF4rnJMJ8Jk+EJXOWNMaAyn8C2xF
+   uzWV6SiRVJ6+wR+YNX6LSiHCJdFLQ5BAfNDjv3BO4FqMfAeJ4i/rzFbo/
+   kjH+cZb2trPf6ZlRiXhV5toyFU0LqpvxJ4Zzk40o4A+BQKA604t1uOF+S
+   U=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 11 Feb 2022 02:35:16 -0800
 X-QCInternal: smtphost
 Received: from nalasex01a.na.qualcomm.com ([10.47.209.196])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Feb 2022 02:23:57 -0800
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Feb 2022 02:35:15 -0800
 Received: from [10.216.7.73] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Fri, 11 Feb
- 2022 02:23:52 -0800
-Subject: Re: [PATCH V5 1/6] dt-bindings: regulator: Add pm8008 regulator
- bindings
+ 2022 02:35:10 -0800
+Subject: Re: [PATCH V5 4/6] regulator: Add a regulator driver for the PM8008
+ PMIC
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 CC:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
@@ -48,15 +48,15 @@ CC:     Rob Herring <robh+dt@kernel.org>,
         <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
         <quic_jprakash@quicinc.com>
 References: <1644331940-18986-1-git-send-email-quic_c_skakit@quicinc.com>
- <1644331940-18986-2-git-send-email-quic_c_skakit@quicinc.com>
- <YgWxRDeo7vuTBeAo@builder.lan>
+ <1644331940-18986-5-git-send-email-quic_c_skakit@quicinc.com>
+ <YgW0ltMKjGZH4NrZ@builder.lan>
 From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
-Message-ID: <cb7858fe-4891-ead5-f1cf-fb64e8368927@quicinc.com>
-Date:   Fri, 11 Feb 2022 15:53:49 +0530
+Message-ID: <653bc533-8dca-cd9c-3ca0-d5628da37f4a@quicinc.com>
+Date:   Fri, 11 Feb 2022 16:05:07 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <YgWxRDeo7vuTBeAo@builder.lan>
+In-Reply-To: <YgW0ltMKjGZH4NrZ@builder.lan>
 Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -74,88 +74,38 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 2/11/2022 6:13 AM, Bjorn Andersson wrote:
+On 2/11/2022 6:27 AM, Bjorn Andersson wrote:
 > On Tue 08 Feb 08:52 CST 2022, Satya Priya wrote:
->
->> Add bindings for pm8008 pmic regulators.
->>
->> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
->> ---
->> Changes in V2:
->>   - Moved this patch before "mfd: pm8008: Add pm8008 regulator node" to
->>     resolve dtschema errors. Removed regulator-min-microvolt and
->>     regulator-max-microvolt properties.
->>
->> Changes in V3:
->>   - As per Rob's comments added standard unit suffix for mindropout property,
->>     added blank lines where required and added description for reg property.
->>
->> Changes in V4:
->>   - Changed compatible string to "com,pm8008-regulators"
->>   - Moved "regulator-min-dropout-voltage-microvolt" to regulator.yaml as
->>     separate patch.
->>
->> Changes in V5:
->>   - Removed the separate compatible for pm8008 regulator driver.
->>   - Moved the supply nodes to chip level.
->>   - Removed min-dropout property.
->>
->>   .../bindings/regulator/qcom,pm8008-regulator.yaml  | 31 ++++++++++++++++++++++
->>   1 file changed, 31 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/regulator/qcom,pm8008-regulator.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/regulator/qcom,pm8008-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,pm8008-regulator.yaml
->> new file mode 100644
->> index 0000000..0098845
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/regulator/qcom,pm8008-regulator.yaml
->> @@ -0,0 +1,31 @@
->> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/regulator/qcom,pm8008-regulator.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm Technologies, Inc. PM8008 Regulator bindings
->> +
->> +maintainers:
->> +  - Satya Priya <skakit@codeaurora.org>
->> +
->> +description:
->> +  Qualcomm Technologies, Inc. PM8008 is an I2C controlled PMIC
->> +  containing 7 LDO regulators.
->> +
->> +patternProperties:
->> +  "^LDO[1-7]$":
-> Please make this lower case, to match all other regulator bindings.
+>> diff --git a/drivers/regulator/qcom-pm8008-regulator.c b/drivers/regulator/qcom-pm8008-regulator.c
+> [..]
+>> +static int pm8008_regulator_probe(struct platform_device *pdev)
+>> +{
+>> +	struct device *dev = &pdev->dev;
+>> +	int id = pdev->id % PM8008_NUM_LDOS;
+> Why does this driver look completely different from all the other
+> Qualcomm regulator drivers that we already have, and why do you register
+> one platform_device per regulator?
 
 
-Okay.
+Based on Mark's suggestions and the discussion happened here [1], I've 
+changed the design like this.
+
+[1] 
+https://patchwork.kernel.org/project/linux-arm-msm/patch/1637314953-4215-3-git-send-email-quic_c_skakit@quicinc.com/
 
 
->> +    type: object
->> +    $ref: "regulator.yaml#"
->> +    description: PM8008 regulator peripherals of PM8008 regulator device
->> +
->> +    properties:
->> +      regulator-name: true
->> +
->> +    required:
->> +      - regulator-name
-> Why is regulator-name a (and the only) required property?
+> The fundamental difference in design makes it hard to maintain and
 
 
-It is not a required property, I'll correct this.
+> you're wasting quite a bit of memory with the unnecessary
+> platfrom_device objects.
+
+
+I'm going to change this. I will add only one cell with .name to match 
+with the regulator driver and probe all the regulators using a single 
+loop. That way we don't waste lot of memory by registering multiple 
+regulator platform devices.
 
 
 > Regards,
 > Bjorn
->
->> +
->> +    unevaluatedProperties: false
->> +
->> +additionalProperties: false
->> +...
->> -- 
->> 2.7.4
->>
