@@ -2,88 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D9834B2A5B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 17:31:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D57FF4B2A35
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 17:28:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243359AbiBKQbS convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Feb 2022 11:31:18 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:35168 "EHLO
+        id S1351484AbiBKQZ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Feb 2022 11:25:59 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:54220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243100AbiBKQbR (ORCPT
+        with ESMTP id S1351485AbiBKQZ6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Feb 2022 11:31:17 -0500
-X-Greylist: delayed 508 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 11 Feb 2022 08:31:15 PST
-Received: from mail.holtmann.org (coyote.holtmann.net [212.227.132.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 123FECCB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Feb 2022 08:31:14 -0800 (PST)
-Received: from smtpclient.apple (p4fefcd07.dip0.t-ipconnect.de [79.239.205.7])
-        by mail.holtmann.org (Postfix) with ESMTPSA id D3451CECEA;
-        Fri, 11 Feb 2022 17:22:46 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.60.0.1.1\))
-Subject: Re: [PATCH v2] Bluetooth: btusb: Improve stability for QCA devices
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1644566620-16748-1-git-send-email-zijuhu@codeaurora.org>
-Date:   Fri, 11 Feb 2022 17:22:46 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, c-hbandi@codeaurora.org,
-        hemantg@codeaurora.org, rjliao@codeaurora.org,
-        tjiang@codeaurora.org, Zijun Hu <quic_zijuhu@quicinc.com>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <59F65F10-0988-4E50-8956-69C601F05434@holtmann.org>
-References: <1644566620-16748-1-git-send-email-zijuhu@codeaurora.org>
-To:     Zijun Hu <zijuhu@codeaurora.org>
-X-Mailer: Apple Mail (2.3693.60.0.1.1)
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Fri, 11 Feb 2022 11:25:58 -0500
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAFB93AD;
+        Fri, 11 Feb 2022 08:25:55 -0800 (PST)
+Received: by mail-oi1-f173.google.com with SMTP id v67so10066191oie.9;
+        Fri, 11 Feb 2022 08:25:55 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=SNHEpqIX2AMyOXJaqG7yEXFoVSICVPmb7B0ilFWlNec=;
+        b=NITPRY5H7arMQsFaW9G4zKnHf8g3lskbRi216nO6LihTHSNIAj2/NLJof6xdAYorR8
+         QxXSuVrZ3QDuO8fG5v9CFV+bSxwVgK9WCR1tv9jmiPsV0mdXYK+p/xhIVGC8p2kvQiyx
+         x77k9fBYsn71f1Gw9WqIuXzU4XlEscgtnqE2tjrCVl+T/crmVxTiSqaZLSgUoUIimgdY
+         iHFXSt8FG6f695ZUHA+qvmzBMPEWyUphx0yMbGGPT0fktUeTNs8QxtD68mvDeMpmSKNh
+         IT0C1ThrqlgAwjLxkeemaPuxnH0icoCZgjLX+NxLcvsNY/iPiQsFXjSoutrPkNy+JgVK
+         1/+g==
+X-Gm-Message-State: AOAM533ULXE12O45eB0+C6lBWFmvyWe8aj142YVMdFrlFviw+3GPfgI7
+        lNKgA39WlTtROwcjhx/fSQ==
+X-Google-Smtp-Source: ABdhPJw8oaVkgx5Pu3uFJ78qknmKsHlv+NqPM1RqyBvjDOel/OiKPX344OCHUA71kPGl79Oq05bBpw==
+X-Received: by 2002:aca:c056:: with SMTP id q83mr582840oif.294.1644596755317;
+        Fri, 11 Feb 2022 08:25:55 -0800 (PST)
+Received: from robh.at.kernel.org ([2607:fb90:5fee:dfce:b6df:c3e1:b1e5:d6d8])
+        by smtp.gmail.com with ESMTPSA id x16sm9731092ooa.6.2022.02.11.08.25.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Feb 2022 08:25:54 -0800 (PST)
+Received: (nullmailer pid 467504 invoked by uid 1000);
+        Fri, 11 Feb 2022 16:25:52 -0000
+Date:   Fri, 11 Feb 2022 10:25:52 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Jeffrey Hugo <jhugo@codeaurora.org>, linux-clk@vger.kernel.org,
+        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Subject: Re: [PATCH v2 1/2] dt-bindings: clock: Add support for the MSM8226
+ mmcc
+Message-ID: <YgaOEHwe7DKI6i1N@robh.at.kernel.org>
+References: <20220207185411.19118-1-bartosz.dudziak@snejp.pl>
+ <20220207185411.19118-2-bartosz.dudziak@snejp.pl>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220207185411.19118-2-bartosz.dudziak@snejp.pl>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Zijun,
-
-> Controller will reset after NVM is downloaded for QCA
-> device, so wait a moment for reset Done then go ahead
-> to improve stability.
+On Mon, 07 Feb 2022 19:54:10 +0100, Bartosz Dudziak wrote:
+> Document the multimedia clock controller found on MSM8226.
 > 
-> Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+> Signed-off-by: Bartosz Dudziak <bartosz.dudziak@snejp.pl>
 > ---
-> drivers/bluetooth/btusb.c | 5 +++++
-> 1 file changed, 5 insertions(+)
+>  Documentation/devicetree/bindings/clock/qcom,mmcc.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index e03dfbd92fcc..20e36f53d2e7 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -2994,6 +2994,7 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
-> #define QCA_PATCH_UPDATED	0x80
-> #define QCA_DFU_TIMEOUT		3000
-> #define QCA_FLAG_MULTI_NVM      0x80
-> +#define QCA_BT_RESET_WAIT_MS    100
-> 
-> #define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
-> #define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
-> @@ -3320,6 +3321,10 @@ static int btusb_setup_qca(struct hci_dev *hdev)
-> 		err = btusb_setup_qca_load_nvm(hdev, &ver, info);
-> 		if (err < 0)
-> 			return err;
-> +		/* Controller will reset after NVM is downloaded, so wait a moment
-> +		 * for reset Done, it will improve stability.
-> +		 */
-> +		msleep(QCA_BT_RESET_WAIT_MS);
 
-how hard is to just grab the data sheet and figure out the appropriate time to wait? I will be all documented and then reference the documentation.
-
-I really dislike this "add a sleep here and sleep there". It might just work for now. The next hardware generation comes around or if placed on a different board just behaves a little bit different. And at some point we are at 10 seconds sleep and you start complaining why the controller initialization takes so long. Stop guessing and reference the data sheet.
-
-Regards
-
-Marcel
-
+Acked-by: Rob Herring <robh@kernel.org>
