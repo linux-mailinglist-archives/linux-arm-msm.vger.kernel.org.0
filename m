@@ -2,73 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C77EB4B2E46
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 21:13:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 368DC4B2EAC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 21:44:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353209AbiBKUNc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Feb 2022 15:13:32 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:54302 "EHLO
+        id S1348029AbiBKUny (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Feb 2022 15:43:54 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:41044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350987AbiBKUNb (ORCPT
+        with ESMTP id S239197AbiBKUnx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Feb 2022 15:13:31 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BC4CCF5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Feb 2022 12:13:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644610410; x=1676146410;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=X6Kr/4OZO4ERbvN7+C8TVcR8Fvw6LASOBv5GjLwTfg4=;
-  b=TKtU7AdSYsUAO1YoOEXDTSvwo3HFFM2l74ptbAUIjJpB/1/ntkoRqS+Q
-   uLeZ9Xm0dJLMRrIMqvE/5aklJi3NH7dzIhHCOayIwEaMaP04xGIOBin1f
-   amKTEbk4ZhscjrEynsYHZWasWBsV8MBy8I75BfoNpI7oguqE58roudRXb
-   w=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 11 Feb 2022 12:13:29 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Feb 2022 12:13:29 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Fri, 11 Feb 2022 12:13:29 -0800
-Received: from [10.38.246.233] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Fri, 11 Feb
- 2022 12:13:26 -0800
-Message-ID: <d4f50a93-2d6d-f940-6871-236226a30893@quicinc.com>
-Date:   Fri, 11 Feb 2022 12:13:24 -0800
+        Fri, 11 Feb 2022 15:43:53 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C0201A2;
+        Fri, 11 Feb 2022 12:43:52 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id DC527B82C8C;
+        Fri, 11 Feb 2022 20:43:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C99C340E9;
+        Fri, 11 Feb 2022 20:43:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1644612229;
+        bh=mXMa9ZUQphYRbJnD+grWFSam29E/b+kEAveY07tHbZM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=SvdcM79ulLZdSc2lufdGwMsPQRYYoVmadl8EDemmMMzbDqQpEy0EbrdZvyb1Hz8w+
+         zEIFRIqvbJxQLdDo+IYolCYwH54fc2pyI9RSyFF9NIxFfQCUboUFCVGkbpdMgHu3nn
+         clLJS9bOzYTy0+awDhQ8Lkkoe1nkno/+t2kti8LIKTKBX7JBBknwnwU6CuPwwLyx8y
+         5un7CBKQJYnEku1A0rmKUR2JQUBx+uJfL6823uQBnptMt75VY/CDAByu8rzyLe6Git
+         X9V+IuOGfvjV7CBBgkcRThC2PMie08cN049XXsqtxhRuKKWYjxDQo9t6nflnE3kuzZ
+         fpsJ8gaOPmxLg==
+Date:   Fri, 11 Feb 2022 21:43:45 +0100
+From:   Wolfram Sang <wsa@kernel.org>
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 0/9] i2c: qcom-cci: fixes and updates
+Message-ID: <YgbKgaEDvnSMhaoO@kunai>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Foss <robert.foss@linaro.org>, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220203164629.1711958-1-vladimir.zapolskiy@linaro.org>
+ <Ygahuyi+/m8T/5cZ@kunai>
+ <db11d120-0f9c-177d-66a0-18cab7297445@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [Freedreno] [PATCH 1/2] drm/msm/dsi: move DSI host powerup to
- modeset time
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <freedreno@lists.freedesktop.org>, Stephen Boyd <sboyd@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Rob Clark <robdclark@gmail.com>,
-        <dri-devel@lists.freedesktop.org>, Daniel Vetter <daniel@ffwll.ch>,
-        Sean Paul <sean@poorly.run>
-References: <20211207222901.988484-1-dmitry.baryshkov@linaro.org>
- <20211207222901.988484-2-dmitry.baryshkov@linaro.org>
- <9fc8d452-7541-cbc5-57ca-96d1e480150c@quicinc.com>
- <CAA8EJpp_re=UYYpuY90FiFJjARcFr+sZoR_WtJ9ETU40Dc_wig@mail.gmail.com>
- <b3338d40-5f54-2577-60a9-afa3a34173f1@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <b3338d40-5f54-2577-60a9-afa3a34173f1@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="eK/eJvcjL3QiJR2o"
+Content-Disposition: inline
+In-Reply-To: <db11d120-0f9c-177d-66a0-18cab7297445@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,163 +67,50 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--eK/eJvcjL3QiJR2o
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 2/11/2022 11:37 AM, Dmitry Baryshkov wrote:
-> On 18/01/2022 23:03, Dmitry Baryshkov wrote:
->> On Tue, 18 Jan 2022 at 22:29, Abhinav Kumar 
->> <quic_abhinavk@quicinc.com> wrote:
->>>
->>>
->>>
->>> On 12/7/2021 2:29 PM, Dmitry Baryshkov wrote:
->>>> The DSI subsystem does not fully fall into the pre-enable/enable system
->>>> of callbacks, since typically DSI device bridge drivers expect to be
->>>> able to communicate with DSI devices at the pre-enable() callback. The
->>>> reason is that for some DSI hosts enabling the video stream would
->>>> prevent other drivers from sending DSI commands. For example see the
->>>> panel-bridge driver, which does drm_panel_prepare() from the
->>>> pre_enable() callback (which would be called before our pre_enable()
->>>> callback, resulting in panel preparation failures as the link is not 
->>>> yet
->>>> ready).
->>>>
->>>> Therewere several attempts to solve this issue, but currently the best
->>>> approach is to power up the DSI link from the mode_set() callback,
->>>> allowing next bridge/panel to use DSI transfers in the pre_enable()
->>>> time. Follow this approach.
->>>>
->>> Change looks okay. As per the programming guideline, we should set the
->>> VIDEO_MODE_EN register in the DSI controller followed by enabling the
->>> timing engine which will still happen even now because we will do it in
->>> modeset instead of the pre_enable().
->>> But, this can potentially increase the delay between VIDEO_MODE_EN
->>> and TIMING_ENGINE_EN. I dont see anything in the programming guide
->>> against this but since this is a change from the original flow, I would
->>> like to do one test before acking this. Can you please try adding a huge
->>> delay like 200-300ms between VIDEO_MODE_EN and timing engine enable to
->>> make sure there are no issues? You can do that here:
->>
->>
->> Fine, I'll do the test as the time permits.
-> 
-> I did the tests, the display pipeline works as expected.
-> 
-> Let's get this in, it allows using other DSI-controlled bridges.
 
-Alright, sounds good,
+> > Reusing is nice, of course, but I hope you noticed that I needed to
+> > revert this feature:
+> >=20
+> > a19f75de73c2 ("Revert "i2c: core: support bus regulator controlling in =
+adapter"")
+>=20
+> yes, I've seen it, and as far as I understand it's expected to get it
+> back after the regression fixes.
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> 
->>
->>>
->>> int msm_dsi_host_enable(struct mipi_dsi_host *host)
->>> {
->>>       struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
->>>
->>>       dsi_op_mode_config(msm_host,
->>>           !!(msm_host->mode_flags & MIPI_DSI_MODE_VIDEO), true);
->>>
->>>       msleep(300);
->>> }
->>>
->>>
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> ---
->>>>    drivers/gpu/drm/msm/dsi/dsi_manager.c | 43 
->>>> +++++++++++++++++++--------
->>>>    1 file changed, 31 insertions(+), 12 deletions(-)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c 
->>>> b/drivers/gpu/drm/msm/dsi/dsi_manager.c
->>>> index 681ca74fe410..497719efb9e9 100644
->>>> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
->>>> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
->>>> @@ -336,13 +336,12 @@ dsi_mgr_connector_best_encoder(struct 
->>>> drm_connector *connector)
->>>>        return msm_dsi_get_encoder(msm_dsi);
->>>>    }
->>>>
->>>> -static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
->>>> +static void dsi_mgr_bridge_power_on(struct drm_bridge *bridge)
->>>>    {
->>>>        int id = dsi_mgr_bridge_get_id(bridge);
->>>>        struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
->>>>        struct msm_dsi *msm_dsi1 = dsi_mgr_get_dsi(DSI_1);
->>>>        struct mipi_dsi_host *host = msm_dsi->host;
->>>> -     struct drm_panel *panel = msm_dsi->panel;
->>>>        struct msm_dsi_phy_shared_timings phy_shared_timings[DSI_MAX];
->>>>        bool is_bonded_dsi = IS_BONDED_DSI();
->>>>        int ret;
->>>> @@ -383,6 +382,34 @@ static void dsi_mgr_bridge_pre_enable(struct 
->>>> drm_bridge *bridge)
->>>>        if (is_bonded_dsi && msm_dsi1)
->>>>                msm_dsi_host_enable_irq(msm_dsi1->host);
->>>>
->>>> +     return;
->>>> +
->>>> +host1_on_fail:
->>>> +     msm_dsi_host_power_off(host);
->>>> +host_on_fail:
->>>> +     dsi_mgr_phy_disable(id);
->>>> +phy_en_fail:
->>>> +     return;
->>>> +}
->>>> +
->>>> +static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
->>>> +{
->>>> +     int id = dsi_mgr_bridge_get_id(bridge);
->>>> +     struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
->>>> +     struct msm_dsi *msm_dsi1 = dsi_mgr_get_dsi(DSI_1);
->>>> +     struct mipi_dsi_host *host = msm_dsi->host;
->>>> +     struct drm_panel *panel = msm_dsi->panel;
->>>> +     bool is_bonded_dsi = IS_BONDED_DSI();
->>>> +     int ret;
->>>> +
->>>> +     DBG("id=%d", id);
->>>> +     if (!msm_dsi_device_connected(msm_dsi))
->>>> +             return;
->>>> +
->>>> +     /* Do nothing with the host if it is slave-DSI in case of 
->>>> bonded DSI */
->>>> +     if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id))
->>>> +             return;
->>>> +
->>>>        /* Always call panel functions once, because even for dual 
->>>> panels,
->>>>         * there is only one drm_panel instance.
->>>>         */
->>>> @@ -417,17 +444,7 @@ static void dsi_mgr_bridge_pre_enable(struct 
->>>> drm_bridge *bridge)
->>>>        if (panel)
->>>>                drm_panel_unprepare(panel);
->>>>    panel_prep_fail:
->>>> -     msm_dsi_host_disable_irq(host);
->>>> -     if (is_bonded_dsi && msm_dsi1)
->>>> -             msm_dsi_host_disable_irq(msm_dsi1->host);
->>>>
->>>> -     if (is_bonded_dsi && msm_dsi1)
->>>> -             msm_dsi_host_power_off(msm_dsi1->host);
->>>> -host1_on_fail:
->>>> -     msm_dsi_host_power_off(host);
->>>> -host_on_fail:
->>>> -     dsi_mgr_phy_disable(id);
->>>> -phy_en_fail:
->>>>        return;
->>>>    }
->>>>
->>>> @@ -573,6 +590,8 @@ static void dsi_mgr_bridge_mode_set(struct 
->>>> drm_bridge *bridge,
->>>>        msm_dsi_host_set_display_mode(host, adjusted_mode);
->>>>        if (is_bonded_dsi && other_dsi)
->>>>                msm_dsi_host_set_display_mode(other_dsi->host, 
->>>> adjusted_mode);
->>>> +
->>>> +     dsi_mgr_bridge_power_on(bridge);
->>>>    }
->>>>
->>>>    static const struct drm_connector_funcs dsi_mgr_connector_funcs = {
->>
->>
->>
-> 
-> 
+True, but work on this has stalled, sadly. I am gathering interested
+parties for the topic here :)
+
+> Wolfram, can you please share your opinion on device tree binding name and
+> placement for an SDA/SDC pull-up controlled by a regulator?
+
+For efficiency reasons, not before bus regulator has been applied again
+because the above question depends on it IIUC. Until then, I'll work on
+other items of my too long todo list.
+
+
+--eK/eJvcjL3QiJR2o
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmIGyn0ACgkQFA3kzBSg
+Kba1TRAAgNR1H6cx5HWBZliqaJMdkq1St/G7R6opa30EbhjRLzZTVO7nMPJn4cbx
+dAs9TOCWH5hUDirCI1/Ao9YEhsWv7ySsxaOuRv+okh3s9Mm7K0dbjCoY5yuDZaQt
+HiIEHSxAvDWbJy9+ZWX5EN5LzZCp/fbcLDUPzwUycOdWismEpZtCCVMud0aYFEEn
+TgCBi62MdfEiLy4TrxKZVm31ubjS3/FaRolbe70ZMFc9NPGJAuzyt01TFXN7g++i
+LCdEe182xVZimDplhNqrXpkquuCP4OqLUrindJGJ317g8I55GFJlozxwmmYSfrBy
+tYOZiNcNDVga8bw0VgxJNNvhDsq2laapNtVHobIBMEXtVLGv20tI6HtHz7p4A2iR
+4C3cqtG6vK4Gg8jCe1HRmP+DK1Jscb5SVDLejFGwod4iGPZ8tNqzFssuBVJUr6pG
+oFi+/qIe0lPX/KZexi8JEMEr6+wQi6pDaoxHpJl2hba1IJZPazkh/xEshg72pDwg
+tHG8lyE3kD4TyXGiQDPiqYF6Cwcy8vGwhmUH7M8yPn9sQQVxMpGxKaHwhjvM8r4b
+Kb4nDWON3Oy0uVHiacj4beQQTTzYNq7TOA6bZxHgCnVHg6/BLdfz6h++n1SHMVra
+ZNVqsazJNA9EOgDuyc3HJLqNR4kg3TGfuzptQnvIjDTP6Egf/5A=
+=ixCM
+-----END PGP SIGNATURE-----
+
+--eK/eJvcjL3QiJR2o--
