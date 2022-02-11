@@ -2,67 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A7754B2D77
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 20:23:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E33A4B2DD2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 20:38:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352826AbiBKTXF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Feb 2022 14:23:05 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:45404 "EHLO
+        id S244277AbiBKTiB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Feb 2022 14:38:01 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:52796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241986AbiBKTXE (ORCPT
+        with ESMTP id S1347031AbiBKTiA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Feb 2022 14:23:04 -0500
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B1DFCEE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Feb 2022 11:22:58 -0800 (PST)
-Received: by mail-lj1-x230.google.com with SMTP id e17so13842800ljk.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Feb 2022 11:22:58 -0800 (PST)
+        Fri, 11 Feb 2022 14:38:00 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38B63CFA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Feb 2022 11:37:57 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id j7so1189889lfu.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Feb 2022 11:37:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=CohT/Nu9Rizc5F/pjKyNrpX+O97YlL41tU/VPx3SFO0=;
-        b=rpg0KwqMjolXdSmmSeBXXlh+UASZRKHMbsSB4hg9aJe1ajdRQD3x5RV1jKfTGcuCCg
-         dXxTgwMBecrKRpS15nDpL2ZD5N/muGhbWQQckPG91I4DW+wykC1PKbNjUZ8Dl0EmuzOl
-         RpRWqlMf9IyZhM3m6ZhXKsF5GTE/fYLaY4Pt1tY/9FnBTDKMMdnLAt1r6wP2G10BoR5m
-         JQHMfMs2iHovtlqrzDOBQfhT0Dzev6FN43fzZwN1s6Tmv1hXIoPTSliwNUVIxqDJ8ZCL
-         sceVdEHVW6jeYx9O+rQJFMuNeq/ibszK1cVEQEFNolAGESeroNb36EouTW/f0rlRIxY7
-         ptrQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language
+         :from:to:cc:references:in-reply-to:content-transfer-encoding;
+        bh=sSx8Paqu3ASvbjQPUlnYKKI4cx7QprSE/iXv4ANFEu4=;
+        b=swvsTENNZju97vEixJSQtcO5KNE1iXnnSC/vj7XjHeIGPkW7BS7rKBUg/XaUiC/z7h
+         lVUUw9VsFgIORqxaHtjDNwNdahuXfjgXpoNDyels9L1rHPaQi4bzRKzq0Sp58Yd7pnid
+         deQv832Rtc9ZH5uqGGs6/sHobyeWb6Ae6jzHMs77LXuBUurfb06OZ85Jd8mVgyoA+CjE
+         4niHkWEV0Vk2/Z08SP0PYis54EP5lB/eO8E3WIEXWcy0GmMt/elIXWbQMfzqQS5yBjAl
+         HYNOtOxc76pWIUwU83qhmxbfvT3TligFl+9D1Rr5K83WcnvBG86o1EpENeLNO4+e67pS
+         holw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+         :content-language:from:to:cc:references:in-reply-to
          :content-transfer-encoding;
-        bh=CohT/Nu9Rizc5F/pjKyNrpX+O97YlL41tU/VPx3SFO0=;
-        b=D9UeeUESY/ZZrTtoeMRPiZ9J5fI6sQN4coPFSks5jpbTP/U0F9I+3Uv0wr/+eNOKD4
-         q6djpNZ+yO3B0tkk865qyrgfrBFPUVDLK5oqi4Dvbx8q7H+MTcKR9nQ6HddFq03eA1n0
-         NadY2h8WXXq/pj4QZCX9CgmBKcGNZu1UYMrmujBfqhmVvmjbc7CaeNsjzbutFDQfkl0g
-         WIUBGktIhFFVMmHdMG1EV9FJEFrdbxLFr5UaJm7+z9YAWGM8QWmHFM4LiF5gKuHpjGOA
-         OqNR/DpWC9LY/db9CM98BaxXRo0DOVffXHf8Q68k2R7WotBix22yJgaEo8ay3E/BnQsb
-         SnTQ==
-X-Gm-Message-State: AOAM5330sAq/GJttKND8PlD45xImvXFUbh2gJ/uqrVvarVfbDHHuhhuF
-        91xZ2qMirIFRTQtsSvyTdIB7ZQ==
-X-Google-Smtp-Source: ABdhPJzmLYnLllI1YQfCTwAJX2CGjGJlSrur0gIvykT45qQrn0tJ9/9fHm3sGtjhqKtRYrhibQ4PwQ==
-X-Received: by 2002:a05:651c:178e:: with SMTP id bn14mr1899218ljb.12.1644607376629;
-        Fri, 11 Feb 2022 11:22:56 -0800 (PST)
+        bh=sSx8Paqu3ASvbjQPUlnYKKI4cx7QprSE/iXv4ANFEu4=;
+        b=O1JmI79JX9TkhlzjZn4w3PLSiyoPGv2LSeHdPxEz94ZY5mGx5jSUVQibGWSGunSZF3
+         ezB75VWEYmuPian7Uri3tBIjOnOD94FVXdb28IHnHCIBiq8VfG6x94KLaQvIuQuNBOmv
+         F8MEUmXKHvMKCFyGOkXWuF+J5W+Y22CBQQIStA0sZO0Y2WXDr8CPTcNJhRy8A6fjAqqe
+         m2SeE6A4kuMdH28QDu5EiBTV7pQnouS3efSF42ZuvoCY9jIOn+xf2UkdPM/b8tDl2Goh
+         4AleY02SASiZ+dfHk0YjrCgAkCWMjzRVKipkj58AE3BHXHegxv0IPHw8BwQklsXrc+OQ
+         ELCw==
+X-Gm-Message-State: AOAM531kebRkcAq9JcojlFuqk+E/PAzFqtDqr85sbUFK/pzi7qql15O0
+        +XjPRQGVDqi86JufQ6voiTFfcA==
+X-Google-Smtp-Source: ABdhPJxN/S/6+pDOdwmvMpW/KnsSgE/aQtO96RAZErkrt+Ug0YDjxVElnFHKfH3n4d/fC1CAk32q9A==
+X-Received: by 2002:ac2:5dcb:: with SMTP id x11mr2225351lfq.160.1644608275561;
+        Fri, 11 Feb 2022 11:37:55 -0800 (PST)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id c9sm817938lfr.230.2022.02.11.11.22.55
+        by smtp.gmail.com with ESMTPSA id q7sm1151702lfm.113.2022.02.11.11.37.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Feb 2022 11:22:56 -0800 (PST)
-Message-ID: <432e015c-1486-2bc4-7acc-e83cbc40ab15@linaro.org>
-Date:   Fri, 11 Feb 2022 22:22:55 +0300
+        Fri, 11 Feb 2022 11:37:54 -0800 (PST)
+Message-ID: <b3338d40-5f54-2577-60a9-afa3a34173f1@linaro.org>
+Date:   Fri, 11 Feb 2022 22:37:53 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.1
-Subject: Re: [PATCH v2 1/2] drm/msm: add support for QCM2290 MDSS
+Subject: Re: [PATCH 1/2] drm/msm/dsi: move DSI host powerup to modeset time
 Content-Language: en-GB
-To:     Loic Poulain <loic.poulain@linaro.org>, robdclark@gmail.com,
-        sean@poorly.run, robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        bjorn.andersson@linaro.org
-References: <1644338552-14426-1-git-send-email-loic.poulain@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1644338552-14426-1-git-send-email-loic.poulain@linaro.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+References: <20211207222901.988484-1-dmitry.baryshkov@linaro.org>
+ <20211207222901.988484-2-dmitry.baryshkov@linaro.org>
+ <9fc8d452-7541-cbc5-57ca-96d1e480150c@quicinc.com>
+ <CAA8EJpp_re=UYYpuY90FiFJjARcFr+sZoR_WtJ9ETU40Dc_wig@mail.gmail.com>
+In-Reply-To: <CAA8EJpp_re=UYYpuY90FiFJjARcFr+sZoR_WtJ9ETU40Dc_wig@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -75,308 +82,147 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/02/2022 19:42, Loic Poulain wrote:
-> Add compatibility for QCM2290 display subsystem, including
-> required entries in DPU hw catalog.
+On 18/01/2022 23:03, Dmitry Baryshkov wrote:
+> On Tue, 18 Jan 2022 at 22:29, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 12/7/2021 2:29 PM, Dmitry Baryshkov wrote:
+>>> The DSI subsystem does not fully fall into the pre-enable/enable system
+>>> of callbacks, since typically DSI device bridge drivers expect to be
+>>> able to communicate with DSI devices at the pre-enable() callback. The
+>>> reason is that for some DSI hosts enabling the video stream would
+>>> prevent other drivers from sending DSI commands. For example see the
+>>> panel-bridge driver, which does drm_panel_prepare() from the
+>>> pre_enable() callback (which would be called before our pre_enable()
+>>> callback, resulting in panel preparation failures as the link is not yet
+>>> ready).
+>>>
+>>> Therewere several attempts to solve this issue, but currently the best
+>>> approach is to power up the DSI link from the mode_set() callback,
+>>> allowing next bridge/panel to use DSI transfers in the pre_enable()
+>>> time. Follow this approach.
+>>>
+>> Change looks okay. As per the programming guideline, we should set the
+>> VIDEO_MODE_EN register in the DSI controller followed by enabling the
+>> timing engine which will still happen even now because we will do it in
+>> modeset instead of the pre_enable().
+>> But, this can potentially increase the delay between VIDEO_MODE_EN
+>> and TIMING_ENGINE_EN. I dont see anything in the programming guide
+>> against this but since this is a change from the original flow, I would
+>> like to do one test before acking this. Can you please try adding a huge
+>> delay like 200-300ms between VIDEO_MODE_EN and timing engine enable to
+>> make sure there are no issues? You can do that here:
 > 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+> 
+> Fine, I'll do the test as the time permits.
 
-Note, that these patches were not sent to the freedreno@ mailing list. 
-Please resend including freedreno ML into the CC or To list.
+I did the tests, the display pipeline works as expected.
 
-> ---
->   v2: - Add BIT(DPU_SSPP_QOS_8LVL) to qcm2290 vig mask
->       - drop qseed_type from dpu caps as there is no scaler
->       - rename _QCM2290_VIG_SBLK to _VIG_SBLK_NOSCALE
->       - Use sm8150_dspp_sblk instead of cloning it
->       - Use sdm845_pp_sblk instead of cloning it
->       - Use sdm845_vbif
+Let's get this in, it allows using other DSI-controlled bridges.
+
 > 
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 148 +++++++++++++++++++++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |   1 +
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c        |   1 +
->   drivers/gpu/drm/msm/msm_drv.c                  |   1 +
->   4 files changed, 151 insertions(+)
+>>
+>> int msm_dsi_host_enable(struct mipi_dsi_host *host)
+>> {
+>>       struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
+>>
+>>       dsi_op_mode_config(msm_host,
+>>           !!(msm_host->mode_flags & MIPI_DSI_MODE_VIDEO), true);
+>>
+>>       msleep(300);
+>> }
+>>
+>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/dsi/dsi_manager.c | 43 +++++++++++++++++++--------
+>>>    1 file changed, 31 insertions(+), 12 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+>>> index 681ca74fe410..497719efb9e9 100644
+>>> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+>>> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+>>> @@ -336,13 +336,12 @@ dsi_mgr_connector_best_encoder(struct drm_connector *connector)
+>>>        return msm_dsi_get_encoder(msm_dsi);
+>>>    }
+>>>
+>>> -static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
+>>> +static void dsi_mgr_bridge_power_on(struct drm_bridge *bridge)
+>>>    {
+>>>        int id = dsi_mgr_bridge_get_id(bridge);
+>>>        struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+>>>        struct msm_dsi *msm_dsi1 = dsi_mgr_get_dsi(DSI_1);
+>>>        struct mipi_dsi_host *host = msm_dsi->host;
+>>> -     struct drm_panel *panel = msm_dsi->panel;
+>>>        struct msm_dsi_phy_shared_timings phy_shared_timings[DSI_MAX];
+>>>        bool is_bonded_dsi = IS_BONDED_DSI();
+>>>        int ret;
+>>> @@ -383,6 +382,34 @@ static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
+>>>        if (is_bonded_dsi && msm_dsi1)
+>>>                msm_dsi_host_enable_irq(msm_dsi1->host);
+>>>
+>>> +     return;
+>>> +
+>>> +host1_on_fail:
+>>> +     msm_dsi_host_power_off(host);
+>>> +host_on_fail:
+>>> +     dsi_mgr_phy_disable(id);
+>>> +phy_en_fail:
+>>> +     return;
+>>> +}
+>>> +
+>>> +static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
+>>> +{
+>>> +     int id = dsi_mgr_bridge_get_id(bridge);
+>>> +     struct msm_dsi *msm_dsi = dsi_mgr_get_dsi(id);
+>>> +     struct msm_dsi *msm_dsi1 = dsi_mgr_get_dsi(DSI_1);
+>>> +     struct mipi_dsi_host *host = msm_dsi->host;
+>>> +     struct drm_panel *panel = msm_dsi->panel;
+>>> +     bool is_bonded_dsi = IS_BONDED_DSI();
+>>> +     int ret;
+>>> +
+>>> +     DBG("id=%d", id);
+>>> +     if (!msm_dsi_device_connected(msm_dsi))
+>>> +             return;
+>>> +
+>>> +     /* Do nothing with the host if it is slave-DSI in case of bonded DSI */
+>>> +     if (is_bonded_dsi && !IS_MASTER_DSI_LINK(id))
+>>> +             return;
+>>> +
+>>>        /* Always call panel functions once, because even for dual panels,
+>>>         * there is only one drm_panel instance.
+>>>         */
+>>> @@ -417,17 +444,7 @@ static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
+>>>        if (panel)
+>>>                drm_panel_unprepare(panel);
+>>>    panel_prep_fail:
+>>> -     msm_dsi_host_disable_irq(host);
+>>> -     if (is_bonded_dsi && msm_dsi1)
+>>> -             msm_dsi_host_disable_irq(msm_dsi1->host);
+>>>
+>>> -     if (is_bonded_dsi && msm_dsi1)
+>>> -             msm_dsi_host_power_off(msm_dsi1->host);
+>>> -host1_on_fail:
+>>> -     msm_dsi_host_power_off(host);
+>>> -host_on_fail:
+>>> -     dsi_mgr_phy_disable(id);
+>>> -phy_en_fail:
+>>>        return;
+>>>    }
+>>>
+>>> @@ -573,6 +590,8 @@ static void dsi_mgr_bridge_mode_set(struct drm_bridge *bridge,
+>>>        msm_dsi_host_set_display_mode(host, adjusted_mode);
+>>>        if (is_bonded_dsi && other_dsi)
+>>>                msm_dsi_host_set_display_mode(other_dsi->host, adjusted_mode);
+>>> +
+>>> +     dsi_mgr_bridge_power_on(bridge);
+>>>    }
+>>>
+>>>    static const struct drm_connector_funcs dsi_mgr_connector_funcs = {
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index aa75991..12392d0 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -25,6 +25,8 @@
->   #define VIG_SM8250_MASK \
->   	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3LITE))
->   
-> +#define VIG_QCM2290_MASK (VIG_MASK | BIT(DPU_SSPP_QOS_8LVL))
-> +
->   #define DMA_SDM845_MASK \
->   	(BIT(DPU_SSPP_SRC) | BIT(DPU_SSPP_QOS) | BIT(DPU_SSPP_QOS_8LVL) |\
->   	BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_TS_PREFILL_REC1) |\
-> @@ -251,6 +253,17 @@ static const struct dpu_caps sc7280_dpu_caps = {
->   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
->   };
->   
-> +static const struct dpu_caps qcm2290_dpu_caps = {
-> +	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
-> +	.max_mixer_blendstages = 0x4,
-> +	.smart_dma_rev = DPU_SSPP_SMART_DMA_V2,
-> +	.ubwc_version = DPU_HW_UBWC_VER_20,
-> +	.has_dim_layer = true,
-> +	.has_idle_pc = true,
-> +	.max_linewidth = 2160,
-> +	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
-> +};
-> +
->   static const struct dpu_mdp_cfg sdm845_mdp[] = {
->   	{
->   	.name = "top_0", .id = MDP_TOP,
-> @@ -336,6 +349,19 @@ static const struct dpu_mdp_cfg sc7280_mdp[] = {
->   	},
->   };
->   
-> +static const struct dpu_mdp_cfg qcm2290_mdp[] = {
-> +	{
-> +	.name = "top_0", .id = MDP_TOP,
-> +	.base = 0x0, .len = 0x494,
-> +	.features = 0,
-> +	.highest_bank_bit = 0x2,
-> +	.clk_ctrls[DPU_CLK_CTRL_VIG0] = {
-> +		.reg_off = 0x2AC, .bit_off = 0},
-> +	.clk_ctrls[DPU_CLK_CTRL_DMA0] = {
-> +		.reg_off = 0x2AC, .bit_off = 8},
-> +	},
-> +};
-> +
->   /*************************************************************
->    * CTL sub blocks config
->    *************************************************************/
-> @@ -459,6 +485,15 @@ static const struct dpu_ctl_cfg sc7280_ctl[] = {
->   	},
->   };
->   
-> +static const struct dpu_ctl_cfg qcm2290_ctl[] = {
-> +	{
-> +	.name = "ctl_0", .id = CTL_0,
-> +	.base = 0x1000, .len = 0x1dc,
-> +	.features = BIT(DPU_CTL_ACTIVE_CFG),
-> +	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 9),
-> +	},
-> +};
-> +
->   /*************************************************************
->    * SSPP sub blocks config
->    *************************************************************/
-> @@ -595,6 +630,30 @@ static const struct dpu_sspp_cfg sc7280_sspp[] = {
->   		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1),
->   };
->   
-> +
-> +#define _VIG_SBLK_NOSCALE(num, sdma_pri) \
-> +	{ \
-> +	.maxdwnscale = SSPP_UNITY_SCALE, \
-> +	.maxupscale = SSPP_UNITY_SCALE, \
-> +	.smart_dma_priority = sdma_pri, \
-> +	.src_blk = {.name = STRCAT("sspp_src_", num), \
-> +		.id = DPU_SSPP_SRC, .base = 0x00, .len = 0x150,}, \
-> +	.format_list = plane_formats_yuv, \
-> +	.num_formats = ARRAY_SIZE(plane_formats_yuv), \
-> +	.virt_format_list = plane_formats, \
-> +	.virt_num_formats = ARRAY_SIZE(plane_formats), \
-> +	}
-> +
-> +static const struct dpu_sspp_sub_blks qcm2290_vig_sblk_0 = _VIG_SBLK_NOSCALE("0", 2);
-> +static const struct dpu_sspp_sub_blks qcm2290_dma_sblk_0 = _DMA_SBLK("8", 1);
-> +
-> +static const struct dpu_sspp_cfg qcm2290_sspp[] = {
-> +	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_QCM2290_MASK,
-> +		 qcm2290_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
-> +	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
-> +		 qcm2290_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
-> +};
-> +
->   /*************************************************************
->    * MIXER sub blocks config
->    *************************************************************/
-> @@ -679,6 +738,21 @@ static const struct dpu_lm_cfg sc7280_lm[] = {
->   		&sc7180_lm_sblk, PINGPONG_3, LM_2, 0),
->   };
->   
-> +/* QCM2290 */
-> +
-> +static const struct dpu_lm_sub_blks qcm2290_lm_sblk = {
-> +	.maxwidth = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
-> +	.maxblendstages = 4, /* excluding base layer */
-> +	.blendstage_base = { /* offsets relative to mixer base */
-> +		0x20, 0x38, 0x50, 0x68
-> +	},
-> +};
-> +
-> +static const struct dpu_lm_cfg qcm2290_lm[] = {
-> +	LM_BLK("lm_0", LM_0, 0x44000, MIXER_SC7180_MASK,
-> +		&qcm2290_lm_sblk, PINGPONG_0, 0, DSPP_0),
-> +};
-> +
->   /*************************************************************
->    * DSPP sub blocks config
->    *************************************************************/
-> @@ -716,6 +790,11 @@ static const struct dpu_dspp_cfg sm8150_dspp[] = {
->   		 &sm8150_dspp_sblk),
->   };
->   
-> +static const struct dpu_dspp_cfg qcm2290_dspp[] = {
-> +	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
-> +		 &sm8150_dspp_sblk),
-> +};
-> +
->   /*************************************************************
->    * PINGPONG sub blocks config
->    *************************************************************/
-> @@ -798,6 +877,12 @@ static const struct dpu_pingpong_cfg sm8150_pp[] = {
->   			-1),
->   };
->   
-> +static struct dpu_pingpong_cfg qcm2290_pp[] = {
-> +	PP_BLK("pingpong_0", PINGPONG_0, 0x70000, 0, sdm845_pp_sblk,
-> +		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
-> +		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
-> +};
-> +
->   /*************************************************************
->    * MERGE_3D sub blocks config
->    *************************************************************/
-> @@ -861,6 +946,11 @@ static const struct dpu_intf_cfg sc7280_intf[] = {
->   	INTF_BLK("intf_5", INTF_5, 0x39000, INTF_DP, MSM_DP_CONTROLLER_1, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
->   };
->   
-> +static const struct dpu_intf_cfg qcm2290_intf[] = {
-> +	INTF_BLK("intf_0", INTF_0, 0x00000, INTF_NONE, 0, 0, 0, 0, 0, 0),
-> +	INTF_BLK("intf_1", INTF_1, 0x6A800, INTF_DSI, 0, 24, INTF_SC7180_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
-> +};
-> +
->   /*************************************************************
->    * VBIF sub blocks config
->    *************************************************************/
-> @@ -931,6 +1021,10 @@ static const struct dpu_qos_lut_entry sm8150_qos_linear[] = {
->   	{.fl = 0, .lut = 0x0011222222223357 },
->   };
->   
-> +static const struct dpu_qos_lut_entry qcm2290_qos_linear[] = {
-> +	{.fl = 0, .lut = 0x0011222222335777},
-> +};
-> +
->   static const struct dpu_qos_lut_entry sdm845_qos_macrotile[] = {
->   	{.fl = 10, .lut = 0x344556677},
->   	{.fl = 11, .lut = 0x3344556677},
-> @@ -1102,6 +1196,27 @@ static const struct dpu_perf_cfg sc7280_perf_data = {
->   	.bw_inefficiency_factor = 120,
->   };
->   
-> +static const struct dpu_perf_cfg qcm2290_perf_data = {
-> +	.max_bw_low = 2700000,
-> +	.max_bw_high = 2700000,
-> +	.min_core_ib = 1300000,
-> +	.min_llcc_ib = 0,
-> +	.min_dram_ib = 1600000,
-> +	.min_prefill_lines = 24,
-> +	.danger_lut_tbl = {0xff, 0x0, 0x0},
-> +	.safe_lut_tbl = {0xfff0, 0x0, 0x0},
-> +	.qos_lut_tbl = {
-> +		{.nentry = ARRAY_SIZE(qcm2290_qos_linear),
-> +		.entries = qcm2290_qos_linear
-> +		},
-> +	},
-> +	.cdp_cfg = {
-> +		{.rd_enable = 1, .wr_enable = 1},
-> +		{.rd_enable = 1, .wr_enable = 0}
-> +	},
-> +	.clk_inefficiency_factor = 105,
-> +	.bw_inefficiency_factor = 120,
-> +};
->   /*************************************************************
->    * Hardware catalog init
->    *************************************************************/
-> @@ -1255,6 +1370,38 @@ static void sc7280_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
->   	};
->   }
->   
-> +
-> +/*
-> + * qcm2290_cfg_init(): populate qcm2290 dpu sub-blocks reg offsets
-> + * and instance counts.
-> + */
-> +static void qcm2290_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
-> +{
-> +	*dpu_cfg = (struct dpu_mdss_cfg){
-> +		.caps = &qcm2290_dpu_caps,
-> +		.mdp_count = ARRAY_SIZE(qcm2290_mdp),
-> +		.mdp = qcm2290_mdp,
-> +		.ctl_count = ARRAY_SIZE(qcm2290_ctl),
-> +		.ctl = qcm2290_ctl,
-> +		.sspp_count = ARRAY_SIZE(qcm2290_sspp),
-> +		.sspp = qcm2290_sspp,
-> +		.mixer_count = ARRAY_SIZE(qcm2290_lm),
-> +		.mixer = qcm2290_lm,
-> +		.dspp_count = ARRAY_SIZE(qcm2290_dspp),
-> +		.dspp = qcm2290_dspp,
-> +		.pingpong_count = ARRAY_SIZE(qcm2290_pp),
-> +		.pingpong = qcm2290_pp,
-> +		.intf_count = ARRAY_SIZE(qcm2290_intf),
-> +		.intf = qcm2290_intf,
-> +		.vbif_count = ARRAY_SIZE(sdm845_vbif),
-> +		.vbif = sdm845_vbif,
-> +		.reg_dma_count = 1,
-> +		.dma_cfg = sdm845_regdma,
-> +		.perf = qcm2290_perf_data,
-> +		.mdss_irqs = IRQ_SC7180_MASK,
-> +	};
-> +}
-> +
->   static const struct dpu_mdss_hw_cfg_handler cfg_handler[] = {
->   	{ .hw_rev = DPU_HW_VER_400, .cfg_init = sdm845_cfg_init},
->   	{ .hw_rev = DPU_HW_VER_401, .cfg_init = sdm845_cfg_init},
-> @@ -1262,6 +1409,7 @@ static const struct dpu_mdss_hw_cfg_handler cfg_handler[] = {
->   	{ .hw_rev = DPU_HW_VER_501, .cfg_init = sm8150_cfg_init},
->   	{ .hw_rev = DPU_HW_VER_600, .cfg_init = sm8250_cfg_init},
->   	{ .hw_rev = DPU_HW_VER_620, .cfg_init = sc7180_cfg_init},
-> +	{ .hw_rev = DPU_HW_VER_650, .cfg_init = qcm2290_cfg_init},
->   	{ .hw_rev = DPU_HW_VER_720, .cfg_init = sc7280_cfg_init},
->   };
->   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index 31af04a..5b31392 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -41,6 +41,7 @@
->   #define DPU_HW_VER_501	DPU_HW_VER(5, 0, 1) /* sm8150 v2.0 */
->   #define DPU_HW_VER_600	DPU_HW_VER(6, 0, 0) /* sm8250 */
->   #define DPU_HW_VER_620	DPU_HW_VER(6, 2, 0) /* sc7180 v1.0 */
-> +#define DPU_HW_VER_650	DPU_HW_VER(6, 5, 0) /* qcm2290|sm4125 */
->   #define DPU_HW_VER_720	DPU_HW_VER(7, 2, 0) /* sc7280 */
->   
->   #define IS_MSM8996_TARGET(rev) IS_DPU_MAJOR_MINOR_SAME((rev), DPU_HW_VER_170)
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 47fe11a..b816a50 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -1348,6 +1348,7 @@ static const struct dev_pm_ops dpu_pm_ops = {
->   };
->   
->   const struct of_device_id dpu_dt_match[] = {
-> +	{ .compatible = "qcom,qcm2290-dpu", },
->   	{ .compatible = "qcom,sdm845-dpu", },
->   	{ .compatible = "qcom,sc7180-dpu", },
->   	{ .compatible = "qcom,sc7280-dpu", },
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index ad35a5d..c8ab6eb 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -1438,6 +1438,7 @@ static void msm_pdev_shutdown(struct platform_device *pdev)
->   static const struct of_device_id dt_match[] = {
->   	{ .compatible = "qcom,mdp4", .data = (void *)KMS_MDP4 },
->   	{ .compatible = "qcom,mdss", .data = (void *)KMS_MDP5 },
-> +	{ .compatible = "qcom,qcm2290-mdss", .data = (void *)KMS_DPU },
->   	{ .compatible = "qcom,sdm845-mdss", .data = (void *)KMS_DPU },
->   	{ .compatible = "qcom,sc7180-mdss", .data = (void *)KMS_DPU },
->   	{ .compatible = "qcom,sc7280-mdss", .data = (void *)KMS_DPU },
+> 
+> 
 
 
 -- 
