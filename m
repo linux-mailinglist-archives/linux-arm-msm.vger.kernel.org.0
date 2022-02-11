@@ -2,72 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B2A74B1987
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 00:32:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F70A4B1A07
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 01:04:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241972AbiBJXb6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 18:31:58 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43280 "EHLO
+        id S1346015AbiBKAEX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 19:04:23 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:34984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231627AbiBJXb5 (ORCPT
+        with ESMTP id S1346021AbiBKAEW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 18:31:57 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05E8D55AD
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 15:31:56 -0800 (PST)
+        Thu, 10 Feb 2022 19:04:22 -0500
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA67C26CD
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 16:04:22 -0800 (PST)
+Received: by mail-oi1-x229.google.com with SMTP id 4so7788837oil.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 16:04:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644535917; x=1676071917;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=tr1F4cwuNBlcUArv+T5kqnSySD1F7EBrDtvWOTaOGBw=;
-  b=H/cXwLOeyqr7Z5L4cExBzQ8vbGQfu6SkdzzVT7lynt16Ij8WlbOVpVkE
-   VxE5ZUJVAqavHK4KGpHsCFi+rkau92j+xOKssiPDfGEGeW1VIySPPDwbn
-   Fue2ZHQcDhl/rGye3CaHMw6uTELWTiKUA8pjbwyKgjt8DGsEHJorNdu3i
-   A=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 10 Feb 2022 15:31:56 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2022 15:31:56 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 10 Feb 2022 15:31:55 -0800
-Received: from [10.111.162.111] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 10 Feb
- 2022 15:31:53 -0800
-Message-ID: <f88d7138-9ba2-c8ec-0767-5d0b071d8de6@quicinc.com>
-Date:   Thu, 10 Feb 2022 15:31:51 -0800
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=TwE69elyD4RG12W7mdlzgoVEhbd5xJqzNauxvjHyiNE=;
+        b=cg275d3E6S8mO6+ZdkUje5MUQaTGjjyQaBaMou+1IT3/4XYCTOR5IFO+ZxjiLpLRl9
+         6W4lfmL9WayudmVV4/CtAn5Kl9wfoycTigVNSb4Rcpi/IRLUw9osTB93hyAfQmQI65Aa
+         z6IfvGsBd0OviXwNOr6e6gajfGJZvhxS0OBVCQ6zKct1zfeXhiztjtStMoRH1gLssmQO
+         CnJqUEBX6EHPdjn1MMi8eJ+GHKBzry8QyljnOV44VUuyo2RdMQntFT2BsvaN9S+0TXRY
+         n9raDTixEJ6mDCvxXexc9gz0F+VDIIW78Zi5WysbQFyBAi0uqhl03TCINBitvov3w1Ho
+         sS7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=TwE69elyD4RG12W7mdlzgoVEhbd5xJqzNauxvjHyiNE=;
+        b=aPWbcMkWUIB1LDVJwFUPY3QmKaxSCnXcip9LTPQE1v4ysx8s/JdSvBy/xPe82a38I+
+         UQt8TMdsaxe4TSpVesZpTkQ9HXsOthStu9o+4/lqoHN1NuAuBELKn+KBtGVP2+ZpDOR7
+         sihd0GBlsY9Y7Y1XuSbjn0vrYFf6zwBcWckEL5PorhYR4mbyuoUSDy/1bPA8lm/XO6Vb
+         3NebqqMtcaa/eH1hR3GI1xxijOePXwqotbtvEku8rGlAxPtB7rH36DOxe2HLiWAEL//a
+         tnSOt2T6OD+SFWSBGbmMednNGd3gg5Zk1oRjYur5Zz5sHtTv8i3Q4EtQvZr9YEHZhI0A
+         AhAA==
+X-Gm-Message-State: AOAM533WV48BFwhrwpqS3MgYG0hv1lhVIeRX/rmEb+2atFrScNEHc89h
+        a+riA4O9zbk070CExIXNutHUnQ==
+X-Google-Smtp-Source: ABdhPJyK+1GIBtIPdHFYFYU2Kft/qVPJKO/aZBLeGW9q8XWjsUecOAvHnc1eaK93qKlp8hxSaflzEQ==
+X-Received: by 2002:a05:6808:1309:: with SMTP id y9mr2246137oiv.261.1644537862165;
+        Thu, 10 Feb 2022 16:04:22 -0800 (PST)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id s3sm9183005ois.19.2022.02.10.16.04.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Feb 2022 16:04:21 -0800 (PST)
+Date:   Thu, 10 Feb 2022 18:04:19 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, agross@kernel.org, robh+dt@kernel.org,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        dianders@chromium.org, krzysztof.kozlowski@canonical.com,
+        thierry.reding@gmail.com, sam@ravnborg.org, airlied@linux.ie,
+        daniel@ffwll.ch, quic_kalyant@quicinc.com,
+        quic_abhinavk@quicinc.com, quic_khsieh@quicinc.com,
+        quic_mkrishn@quicinc.com, quic_vproddut@quicinc.com
+Subject: Re: [PATCH v4 2/5] arm64: dts: qcom: sc7280: Add support for eDP
+ panel on CRD
+Message-ID: <YgWoAwdH/AqJUshh@builder.lan>
+References: <1644494255-6632-1-git-send-email-quic_sbillaka@quicinc.com>
+ <1644494255-6632-3-git-send-email-quic_sbillaka@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [Freedreno] [PATCH v5 3/6] drm/msm/dpu: get INTF blocks directly
- rather than through RM
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     David Airlie <airlied@linux.ie>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "Daniel Vetter" <daniel@ffwll.ch>,
-        <freedreno@lists.freedesktop.org>
-References: <20220121210618.3482550-1-dmitry.baryshkov@linaro.org>
- <20220121210618.3482550-4-dmitry.baryshkov@linaro.org>
- <0bc25257-b866-7c95-efa8-ac7eac96b316@quicinc.com>
- <9d87a3ff-e3d5-2fa9-92b9-e7d724812559@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <9d87a3ff-e3d5-2fa9-92b9-e7d724812559@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1644494255-6632-3-git-send-email-quic_sbillaka@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,434 +79,206 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu 10 Feb 05:57 CST 2022, Sankeerth Billakanti wrote:
 
-
-On 2/10/2022 1:32 AM, Dmitry Baryshkov wrote:
-> On 10/02/2022 03:25, Abhinav Kumar wrote:
->>
->>
->> On 1/21/2022 1:06 PM, Dmitry Baryshkov wrote:
->>> INTF blocks are not really handled by resource manager, they are
->>> assigned at dpu_encoder_setup_display using dpu_encoder_get_intf().
->>> Then this allocation is passed to RM and then returned to then
->>> dpu_encoder.
->>> So allocate them outside of RM and use them directly.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
->>
->> I have some questions about this approach.
->>
->> Agreed, that when there is one encoder tied to one interface, we dont 
->> need to go through RM because RM just gives what the encoder asks. 
->> Instead we can directly get the interface from encoder.
->>
->> But what happens when multiple displays are requesting the same 
->> interface?
->>
->> There are use-cases which we have handled especially in mid-tier chips 
->> which do not have external display where between mode-switches
->> OR between some user triggered events DSI0 was shared between two 
->> displays.
->>
->> So  lets say display 1 (with encoder X) requests DSI0
->> and display 2 (with encoder Y) also requests DSI0,
+> Enable the eDP display panel support without HPD on sc7280 platform.
 > 
-> All the encoders are allocated in the loop over possible DSI/DP 
-> interfaces. Thus it's not possible to have two encoders being driven by 
-> the same DSI entity. Moreover, the MSM DSI manager would not be able to 
-> cope with such cases.
+> Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+> ---
 > 
-> In my opinion, the proper way to handle such cases would be a bridge 
-> which would generate hotplug events and toggle display pipeline inbetween.
-
-Like I wrote in the previous comment, today there is always one encoder 
-requesting for one interface (or two for split DSI ) and there is no 
-chance of a conflict ( the loop that you are referring to ).
-
-And yes I am aware that DSI does not support this today.
-
-Myself and a few others internally are looking ahead and thinking of 
-what can come in the future and something which we already support 
-downstream, which is to support sharing the interface across encoders.
-
-So what happens downstream is the controller ID comes from the device tree:
-
-6266 	info->num_of_h_tiles = display->ctrl_count;
-6267 	for (i = 0; i < info->num_of_h_tiles; i++)
-6268 		info->h_tile_instance[i] = display->ctrl[i].ctrl->cell_index;
-6269
-
-There is a concept of a dsi_display quite similar to the dsi_manager we 
-have upstream. There are also implementations already in place of a 
-shared display, where like I was describing in IRC, the DSI0 can be 
-shared across two encoders between a mode_set().
-
-Hotplug is not necessarily the only trigger which happens, it can just
-be a simple mode_set() in between.
-
-In that case, this encoder to intf mapping in the RM will protect 
-against concurrent hardware use.
-
-Ofcourse, all this is not present today but will someday :)
-
-That time this will have to be brought back.
-
-So I thought I must mention the use-cases which will get potentially 
-affected with this change of removing INTF from RM.
-
-If for the sake of code simplicity, if we want to ignore the possibility
-of this coming back later, please let me know what you think and we can
-take this further by acking it.
-
-
+> Changes in v4:
+>   - Create new patch for name changes
+>   - Remove output-low
 > 
->> with this change, the code will allow that as there is no interface to
->> encoder mapping.
->>
->>> ---
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 36 +---------
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h   | 16 -----
->>>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  5 --
->>>   .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  |  8 ---
->>>   .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |  8 ---
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |  1 -
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        | 68 ++-----------------
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h        |  8 +++
->>>   8 files changed, 16 insertions(+), 134 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> index 1e648db439f9..11f7126728db 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> @@ -420,26 +420,6 @@ int dpu_encoder_get_linecount(struct drm_encoder 
->>> *drm_enc)
->>>       return linecount;
->>>   }
->>> -void dpu_encoder_get_hw_resources(struct drm_encoder *drm_enc,
->>> -                  struct dpu_encoder_hw_resources *hw_res)
->>> -{
->>> -    struct dpu_encoder_virt *dpu_enc = NULL;
->>> -    int i = 0;
->>> -
->>> -    dpu_enc = to_dpu_encoder_virt(drm_enc);
->>> -    DPU_DEBUG_ENC(dpu_enc, "\n");
->>> -
->>> -    /* Query resources used by phys encs, expected to be without 
->>> overlap */
->>> -    memset(hw_res, 0, sizeof(*hw_res));
->>> -
->>> -    for (i = 0; i < dpu_enc->num_phys_encs; i++) {
->>> -        struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
->>> -
->>> -        if (phys->ops.get_hw_resources)
->>> -            phys->ops.get_hw_resources(phys, hw_res);
->>> -    }
->>> -}
->>> -
->>>   static void dpu_encoder_destroy(struct drm_encoder *drm_enc)
->>>   {
->>>       struct dpu_encoder_virt *dpu_enc = NULL;
->>> @@ -973,7 +953,7 @@ static void dpu_encoder_virt_mode_set(struct 
->>> drm_encoder *drm_enc,
->>>       struct dpu_hw_blk *hw_lm[MAX_CHANNELS_PER_ENC];
->>>       struct dpu_hw_blk *hw_dspp[MAX_CHANNELS_PER_ENC] = { NULL };
->>>       int num_lm, num_ctl, num_pp;
->>> -    int i, j;
->>> +    int i;
->>>       if (!drm_enc) {
->>>           DPU_ERROR("invalid encoder\n");
->>> @@ -1040,8 +1020,6 @@ static void dpu_encoder_virt_mode_set(struct 
->>> drm_encoder *drm_enc,
->>>       cstate->num_mixers = num_lm;
->>>       for (i = 0; i < dpu_enc->num_phys_encs; i++) {
->>> -        int num_blk;
->>> -        struct dpu_hw_blk *hw_blk[MAX_CHANNELS_PER_ENC];
->>>           struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
->>>           if (!dpu_enc->hw_pp[i]) {
->>> @@ -1059,16 +1037,8 @@ static void dpu_encoder_virt_mode_set(struct 
->>> drm_encoder *drm_enc,
->>>           phys->hw_pp = dpu_enc->hw_pp[i];
->>>           phys->hw_ctl = to_dpu_hw_ctl(hw_ctl[i]);
->>> -        num_blk = dpu_rm_get_assigned_resources(&dpu_kms->rm,
->>> -            global_state, drm_enc->base.id, DPU_HW_BLK_INTF,
->>> -            hw_blk, ARRAY_SIZE(hw_blk));
->>> -        for (j = 0; j < num_blk; j++) {
->>> -            struct dpu_hw_intf *hw_intf;
->>> -
->>> -            hw_intf = to_dpu_hw_intf(hw_blk[i]);
->>> -            if (hw_intf->idx == phys->intf_idx)
->>> -                phys->hw_intf = hw_intf;
->>> -        }
->>> +        if (phys->intf_idx >= INTF_0 && phys->intf_idx < INTF_MAX)
->>> +            phys->hw_intf = dpu_rm_get_intf(&dpu_kms->rm, 
->>> phys->intf_idx);
->>>           if (!phys->hw_intf) {
->>>               DPU_ERROR_ENC(dpu_enc,
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->>> index e241914a9677..722dd7db6bdf 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->>> @@ -18,22 +18,6 @@
->>>   #define IDLE_TIMEOUT    (66 - 16/2)
->>> -/**
->>> - * Encoder functions and data types
->>> - * @intfs:    Interfaces this encoder is using, INTF_MODE_NONE if 
->>> unused
->>> - */
->>> -struct dpu_encoder_hw_resources {
->>> -    enum dpu_intf_mode intfs[INTF_MAX];
->>> -};
->>> -
->>> -/**
->>> - * dpu_encoder_get_hw_resources - Populate table of required 
->>> hardware resources
->>> - * @encoder:    encoder pointer
->>> - * @hw_res:    resource table to populate with encoder required 
->>> resources
->>> - */
->>> -void dpu_encoder_get_hw_resources(struct drm_encoder *encoder,
->>> -                  struct dpu_encoder_hw_resources *hw_res);
->>> -
->>>   /**
->>>    * dpu_encoder_assign_crtc - Link the encoder to the crtc it's 
->>> assigned to
->>>    * @encoder:    encoder pointer
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
->>> index e7270eb6b84b..42febfce79c7 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
->>> @@ -91,9 +91,6 @@ struct dpu_encoder_virt_ops {
->>>    * @disable:            DRM Call. Disable mode.
->>>    * @atomic_check:        DRM Call. Atomic check new DRM state.
->>>    * @destroy:            DRM Call. Destroy and release resources.
->>> - * @get_hw_resources:        Populate the structure with the hardware
->>> - *                resources that this phys_enc is using.
->>> - *                Expect no overlap between phys_encs.
->>>    * @control_vblank_irq        Register/Deregister for VBLANK IRQ
->>>    * @wait_for_commit_done:    Wait for hardware to have flushed the
->>>    *                current pending frames to hardware
->>> @@ -129,8 +126,6 @@ struct dpu_encoder_phys_ops {
->>>                   struct drm_crtc_state *crtc_state,
->>>                   struct drm_connector_state *conn_state);
->>>       void (*destroy)(struct dpu_encoder_phys *encoder);
->>> -    void (*get_hw_resources)(struct dpu_encoder_phys *encoder,
->>> -                 struct dpu_encoder_hw_resources *hw_res);
->>>       int (*control_vblank_irq)(struct dpu_encoder_phys *enc, bool 
->>> enable);
->>>       int (*wait_for_commit_done)(struct dpu_encoder_phys *phys_enc);
->>>       int (*wait_for_tx_complete)(struct dpu_encoder_phys *phys_enc);
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
->>> index 34a6940d12c5..7d2beea9cc4e 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
->>> @@ -534,13 +534,6 @@ static void dpu_encoder_phys_cmd_destroy(struct 
->>> dpu_encoder_phys *phys_enc)
->>>       kfree(cmd_enc);
->>>   }
->>> -static void dpu_encoder_phys_cmd_get_hw_resources(
->>> -        struct dpu_encoder_phys *phys_enc,
->>> -        struct dpu_encoder_hw_resources *hw_res)
->>> -{
->>> -    hw_res->intfs[phys_enc->intf_idx - INTF_0] = INTF_MODE_CMD;
->>> -}
->>> -
->>>   static void dpu_encoder_phys_cmd_prepare_for_kickoff(
->>>           struct dpu_encoder_phys *phys_enc)
->>>   {
->>> @@ -736,7 +729,6 @@ static void dpu_encoder_phys_cmd_init_ops(
->>>       ops->enable = dpu_encoder_phys_cmd_enable;
->>>       ops->disable = dpu_encoder_phys_cmd_disable;
->>>       ops->destroy = dpu_encoder_phys_cmd_destroy;
->>> -    ops->get_hw_resources = dpu_encoder_phys_cmd_get_hw_resources;
->>>       ops->control_vblank_irq = dpu_encoder_phys_cmd_control_vblank_irq;
->>>       ops->wait_for_commit_done = 
->>> dpu_encoder_phys_cmd_wait_for_commit_done;
->>>       ops->prepare_for_kickoff = 
->>> dpu_encoder_phys_cmd_prepare_for_kickoff;
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->>> index ddd9d89cd456..db6a9b896e42 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
->>> @@ -465,13 +465,6 @@ static void dpu_encoder_phys_vid_destroy(struct 
->>> dpu_encoder_phys *phys_enc)
->>>       kfree(phys_enc);
->>>   }
->>> -static void dpu_encoder_phys_vid_get_hw_resources(
->>> -        struct dpu_encoder_phys *phys_enc,
->>> -        struct dpu_encoder_hw_resources *hw_res)
->>> -{
->>> -    hw_res->intfs[phys_enc->intf_idx - INTF_0] = INTF_MODE_VIDEO;
->>> -}
->>> -
->>>   static int dpu_encoder_phys_vid_wait_for_vblank(
->>>           struct dpu_encoder_phys *phys_enc)
->>>   {
->>> @@ -680,7 +673,6 @@ static void dpu_encoder_phys_vid_init_ops(struct 
->>> dpu_encoder_phys_ops *ops)
->>>       ops->enable = dpu_encoder_phys_vid_enable;
->>>       ops->disable = dpu_encoder_phys_vid_disable;
->>>       ops->destroy = dpu_encoder_phys_vid_destroy;
->>> -    ops->get_hw_resources = dpu_encoder_phys_vid_get_hw_resources;
->>>       ops->control_vblank_irq = dpu_encoder_phys_vid_control_vblank_irq;
->>>       ops->wait_for_commit_done = 
->>> dpu_encoder_phys_vid_wait_for_commit_done;
->>>       ops->wait_for_vblank = dpu_encoder_phys_vid_wait_for_vblank;
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->>> index 2d385b4b7f5e..3f518c809e33 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->>> @@ -144,7 +144,6 @@ struct dpu_global_state {
->>>       uint32_t pingpong_to_enc_id[PINGPONG_MAX - PINGPONG_0];
->>>       uint32_t mixer_to_enc_id[LM_MAX - LM_0];
->>>       uint32_t ctl_to_enc_id[CTL_MAX - CTL_0];
->>> -    uint32_t intf_to_enc_id[INTF_MAX - INTF_0];
->>>       uint32_t dspp_to_enc_id[DSPP_MAX - DSPP_0];
->>>   };
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
->>> index 63ed0d7df848..8df21a46308e 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
->>> @@ -28,7 +28,6 @@ static inline bool reserved_by_other(uint32_t 
->>> *res_map, int idx,
->>>    */
->>>   struct dpu_rm_requirements {
->>>       struct msm_display_topology topology;
->>> -    struct dpu_encoder_hw_resources hw_res;
->>>   };
->>>   int dpu_rm_destroy(struct dpu_rm *rm)
->>> @@ -448,54 +447,6 @@ static int _dpu_rm_reserve_ctls(
->>>       return 0;
->>>   }
->>> -static int _dpu_rm_reserve_intf(
->>> -        struct dpu_rm *rm,
->>> -        struct dpu_global_state *global_state,
->>> -        uint32_t enc_id,
->>> -        uint32_t id)
->>> -{
->>> -    int idx = id - INTF_0;
->>> -
->>> -    if (idx < 0 || idx >= ARRAY_SIZE(rm->intf_blks)) {
->>> -        DPU_ERROR("invalid intf id: %d", id);
->>> -        return -EINVAL;
->>> -    }
->>> -
->>> -    if (!rm->intf_blks[idx]) {
->>> -        DPU_ERROR("couldn't find intf id %d\n", id);
->>> -        return -EINVAL;
->>> -    }
->>> -
->>> -    if (reserved_by_other(global_state->intf_to_enc_id, idx, enc_id)) {
->>> -        DPU_ERROR("intf id %d already reserved\n", id);
->>> -        return -ENAVAIL;
->>> -    }
->>> -
->>> -    global_state->intf_to_enc_id[idx] = enc_id;
->>> -    return 0;
->>> -}
->>> -
->>> -static int _dpu_rm_reserve_intf_related_hw(
->>> -        struct dpu_rm *rm,
->>> -        struct dpu_global_state *global_state,
->>> -        uint32_t enc_id,
->>> -        struct dpu_encoder_hw_resources *hw_res)
->>> -{
->>> -    int i, ret = 0;
->>> -    u32 id;
->>> -
->>> -    for (i = 0; i < ARRAY_SIZE(hw_res->intfs); i++) {
->>> -        if (hw_res->intfs[i] == INTF_MODE_NONE)
->>> -            continue;
->>> -        id = i + INTF_0;
->>> -        ret = _dpu_rm_reserve_intf(rm, global_state, enc_id, id);
->>> -        if (ret)
->>> -            return ret;
->>> -    }
->>> -
->>> -    return ret;
->>> -}
->>> -
->>>   static int _dpu_rm_make_reservation(
->>>           struct dpu_rm *rm,
->>>           struct dpu_global_state *global_state,
->>> @@ -517,11 +468,6 @@ static int _dpu_rm_make_reservation(
->>>           return ret;
->>>       }
->>> -    ret = _dpu_rm_reserve_intf_related_hw(rm, global_state, 
->>> enc->base.id,
->>> -                &reqs->hw_res);
->>> -    if (ret)
->>> -        return ret;
->>> -
->>>       return ret;
->>>   }
->>> @@ -530,8 +476,6 @@ static int _dpu_rm_populate_requirements(
->>>           struct dpu_rm_requirements *reqs,
->>>           struct msm_display_topology req_topology)
->>>   {
->>> -    dpu_encoder_get_hw_resources(enc, &reqs->hw_res);
->>> -
->>>       reqs->topology = req_topology;
->>>       DRM_DEBUG_KMS("num_lm: %d num_enc: %d num_intf: %d\n",
->>> @@ -561,8 +505,6 @@ void dpu_rm_release(struct dpu_global_state 
->>> *global_state,
->>>           ARRAY_SIZE(global_state->mixer_to_enc_id), enc->base.id);
->>>       _dpu_rm_clear_mapping(global_state->ctl_to_enc_id,
->>>           ARRAY_SIZE(global_state->ctl_to_enc_id), enc->base.id);
->>> -    _dpu_rm_clear_mapping(global_state->intf_to_enc_id,
->>> -        ARRAY_SIZE(global_state->intf_to_enc_id), enc->base.id);
->>>   }
->>>   int dpu_rm_reserve(
->>> @@ -626,11 +568,6 @@ int dpu_rm_get_assigned_resources(struct dpu_rm 
->>> *rm,
->>>           hw_to_enc_id = global_state->ctl_to_enc_id;
->>>           max_blks = ARRAY_SIZE(rm->ctl_blks);
->>>           break;
->>> -    case DPU_HW_BLK_INTF:
->>> -        hw_blks = rm->intf_blks;
->>> -        hw_to_enc_id = global_state->intf_to_enc_id;
->>> -        max_blks = ARRAY_SIZE(rm->intf_blks);
->>> -        break;
->>>       case DPU_HW_BLK_DSPP:
->>>           hw_blks = rm->dspp_blks;
->>>           hw_to_enc_id = global_state->dspp_to_enc_id;
->>> @@ -656,3 +593,8 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
->>>       return num_blks;
->>>   }
->>> +
->>> +struct dpu_hw_intf *dpu_rm_get_intf(struct dpu_rm *rm, enum dpu_intf 
->>> intf_idx)
->>> +{
->>> +    return to_dpu_hw_intf(rm->intf_blks[intf_idx - INTF_0]);
->>> +}
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
->>> index 0f27759211b5..ee50f6651b6e 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
->>> @@ -84,5 +84,13 @@ void dpu_rm_release(struct dpu_global_state 
->>> *global_state,
->>>   int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
->>>       struct dpu_global_state *global_state, uint32_t enc_id,
->>>       enum dpu_hw_blk_type type, struct dpu_hw_blk **blks, int 
->>> blks_size);
->>> +
->>> +/**
->>> + * dpu_rm_get_intf - Return a struct dpu_hw_intf instance given it's 
->>> index.
->>> + * @rm: DPU Resource Manager handle
->>> + * @intf_idx: INTF's index
->>> + */
->>> +struct dpu_hw_intf *dpu_rm_get_intf(struct dpu_rm *rm, enum dpu_intf 
->>> intf_idx);
->>> +
->>>   #endif /* __DPU_RM_H__ */
+> Changes in v3:
+>   - Sort the nodes alphabetically
+>   - Use - instead of _ as node names
+>   - Place the backlight and panel nodes under root
+>   - Change the name of edp_out to mdss_edp_out
+>   - Change the names of regulator nodes
+>   - Delete unused properties in the board file
 > 
+> 
+> Changes in v2:
+>   - Sort node references alphabetically
+>   - Improve readability
+>   - Move the pwm pinctrl to pwm node
+>   - Move the regulators to root
+>   - Define backlight power
+>   - Remove dummy regulator node
+>   - Cleanup pinctrl definitions
+> 
+>  arch/arm64/boot/dts/qcom/sc7280-crd.dts | 120 ++++++++++++++++++++++++++++++++
+>  1 file changed, 120 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> index e2efbdd..6dba5ac 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+> @@ -21,6 +21,59 @@
+>  	chosen {
+>  		stdout-path = "serial0:115200n8";
+>  	};
+> +
+> +	backlight_3v3_regulator: backlight-3v3-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "backlight_3v3_regulator";
+> +
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&pm8350c_gpios 7 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&edp_bl_power>;
+> +	};
+> +
+> +	edp_3v3_regulator: edp-3v3-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "edp_3v3_regulator";
+> +
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +
+> +		gpio = <&tlmm 80 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&edp_panel_power>;
+> +	};
+> +
+> +	edp_backlight: edp-backlight {
+> +		compatible = "pwm-backlight";
+> +
+> +		power-supply = <&backlight_3v3_regulator>;
+> +		pwms = <&pm8350c_pwm 3 65535>;
+> +	};
+> +
+> +	edp_panel: edp-panel {
+> +		compatible = "sharp,lq140m1jw46";
+> +
+> +		power-supply = <&edp_3v3_regulator>;
+> +		backlight = <&edp_backlight>;
+> +
+> +		ports {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			port@0 {
+> +				reg = <0>;
+> +				edp_panel_in: endpoint {
+> +					remote-endpoint = <&edp_out>;
+> +				};
+> +			};
+> +		};
+> +	};
+>  };
+>  
+>  &apps_rsc {
+> @@ -76,6 +129,44 @@ ap_ts_pen_1v8: &i2c13 {
+>  	};
+>  };
+>  
+> +&edp_out {
+> +	remote-endpoint = <&edp_panel_in>;
+> +};
+> +
+> +&mdss {
+> +	status = "okay";
+> +};
+> +
+> +&mdss_dp {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&dp_hot_plug_det>;
+> +	data-lanes = <0 1>;
+> +	vdda-1p2-supply = <&vreg_l6b_1p2>;
+> +	vdda-0p9-supply = <&vreg_l1b_0p8>;
+> +};
+> +
+> +&mdss_edp {
+> +	status = "okay";
+> +
+> +	vdda-1p2-supply = <&vreg_l6b_1p2>;
+> +	vdda-0p9-supply = <&vreg_l10c_0p8>;
+> +	/delete-property/ pinctrl-names;
+> +	/delete-property/ pinctrl-0;
+
+If the first device to enable &mdss_edp overwrites pinctrl-{names,0} in
+&mdss_dp and removes the properties in &mdss_edp, I think that's a sign
+that they should not be in the .dtsi in the first place.
+
+> +};
+> +
+> +&mdss_edp_phy {
+> +	status = "okay";
+> +
+> +	vdda-1p2-supply = <&vreg_l6b_1p2>;
+> +	vdda-0p9-supply = <&vreg_l10c_0p8>;
+> +};
+> +
+> +&mdss_mdp {
+> +	status = "okay";
+> +};
+> +
+>  &nvme_3v3_regulator {
+>  	gpio = <&tlmm 51 GPIO_ACTIVE_HIGH>;
+>  };
+> @@ -84,7 +175,36 @@ ap_ts_pen_1v8: &i2c13 {
+>  	pins = "gpio51";
+>  };
+>  
+> +&pm8350c_gpios {
+> +	edp_bl_power: edp-bl-power {
+> +		pins = "gpio7";
+> +		function = "normal";
+> +		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
+> +		bias-pull-down;
+
+Why do you pull down these two pins? They are both outputs.
+
+> +	};
+> +
+> +	edp_bl_pwm: edp-bl-pwm {
+> +		pins = "gpio8";
+> +		function = "func1";
+> +		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
+> +		bias-pull-down;
+> +	};
+> +};
+> +
+> +&pm8350c_pwm {
+
+As stated previously, this will prevent me from merging this patch until
+the LPG/PWM support has been accepted.
+
+As such I would recommend that you drop the backlight parts of this
+patch until that has landed - so we can merge the rest of this in the
+meantime.
+
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&edp_bl_pwm>;
+> +};
+> +
+>  &tlmm {
+> +	edp_panel_power: edp-panel-power {
+> +		pins = "gpio80";
+> +		function = "gpio";
+> +		bias-pull-down;
+
+Same here, why is this pulled down?
+
+Thanks,
+Bjorn
+
+> +	};
+> +
+>  	tp_int_odl: tp-int-odl {
+>  		pins = "gpio7";
+>  		function = "gpio";
+> -- 
+> 2.7.4
 > 
