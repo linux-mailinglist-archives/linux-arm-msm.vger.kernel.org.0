@@ -2,59 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A5CAA4B256B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 13:15:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2755D4B2584
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 13:22:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349908AbiBKMO3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Feb 2022 07:14:29 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:56146 "EHLO
+        id S1349072AbiBKMWY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Feb 2022 07:22:24 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237296AbiBKMO2 (ORCPT
+        with ESMTP id S240058AbiBKMWX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Feb 2022 07:14:28 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37BB4E77;
-        Fri, 11 Feb 2022 04:14:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644581668; x=1676117668;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=HAN8WqKwHhJw+Ev12W6Yi3/FMUqiwnIYY4bNw0vnbp0=;
-  b=wTmHsmW932AuRiESAgopoah323VAWzof+ltahGwz8SSADTEh7g6YERCh
-   jKFSSiq+38eIgIwo3ynNBSWXy8KvA4PfmApuAkjq91hKrjmkFFc4Um9tN
-   BDPeaKZ8FEHteFy0KXF2uS4wbAA0cWRivpN2fm+i0Qcfiw/I3w5O7DS2T
-   o=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 11 Feb 2022 04:14:27 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Feb 2022 04:14:27 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Fri, 11 Feb 2022 04:14:27 -0800
-Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Fri, 11 Feb 2022 04:14:24 -0800
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <robh+dt@kernel.org>, <varada@codeaurora.org>,
-        <mraghava@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     <stable@vger.kernel.org>, Kathiravan T <quic_kathirav@quicinc.com>
-Subject: [PATCH] arm64: dts: qcom: ipq8074: fix the sleep clock frequency
-Date:   Fri, 11 Feb 2022 17:44:15 +0530
-Message-ID: <1644581655-11568-1-git-send-email-quic_kathirav@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Fri, 11 Feb 2022 07:22:23 -0500
+Received: from eu-smtp-delivery-151.mimecast.com (eu-smtp-delivery-151.mimecast.com [185.58.85.151])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A86E5F26
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Feb 2022 04:22:22 -0800 (PST)
+Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ uk-mta-162-DXbbg0pDOby4ZKc9hJGobA-1; Fri, 11 Feb 2022 12:21:16 +0000
+X-MC-Unique: DXbbg0pDOby4ZKc9hJGobA-1
+Received: from AcuMS.Aculab.com (fd9f:af1c:a25b:0:994c:f5c2:35d6:9b65) by
+ AcuMS.aculab.com (fd9f:af1c:a25b:0:994c:f5c2:35d6:9b65) with Microsoft SMTP
+ Server (TLS) id 15.0.1497.28; Fri, 11 Feb 2022 12:21:15 +0000
+Received: from AcuMS.Aculab.com ([fe80::994c:f5c2:35d6:9b65]) by
+ AcuMS.aculab.com ([fe80::994c:f5c2:35d6:9b65%12]) with mapi id
+ 15.00.1497.028; Fri, 11 Feb 2022 12:21:15 +0000
+From:   David Laight <David.Laight@ACULAB.COM>
+To:     'Dmitry Baryshkov' <dmitry.baryshkov@linaro.org>,
+        Qing Wang <wangqing@vivo.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        "Andy Gross" <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: RE: [PATCH] media: qcom: use div64_u64() instead of do_div()
+Thread-Topic: [PATCH] media: qcom: use div64_u64() instead of do_div()
+Thread-Index: AQHYHmdc2KqcihxW0EasBc5qyOVNSayORPUg
+Date:   Fri, 11 Feb 2022 12:21:14 +0000
+Message-ID: <11c926109b394ae9bfc3230b68cdaf14@AcuMS.aculab.com>
+References: <1644395913-4091-1-git-send-email-wangqing@vivo.com>
+ <19b96972-cee7-937f-21ce-c78982ed2048@linaro.org>
+In-Reply-To: <19b96972-cee7-937f-21ce-c78982ed2048@linaro.org>
+Accept-Language: en-GB, en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.202.205.107]
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+Authentication-Results: relay.mimecast.com;
+        auth=pass smtp.auth=C51A453 smtp.mailfrom=david.laight@aculab.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: aculab.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,29 +67,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sleep clock frequency should be 32768Hz. Lets fix it.
-
-Cc: stable@vger.kernel.org
-Fixes: 41dac73e243d ("arm64: dts: Add ipq8074 SoC and HK01 board support")
-Link: https://lore.kernel.org/all/e2a447f8-6024-0369-f698-2027b6edcf9e@codeaurora.org/
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 26ba7ce9222c..b6287355ad08 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -13,7 +13,7 @@
- 	clocks {
- 		sleep_clk: sleep_clk {
- 			compatible = "fixed-clock";
--			clock-frequency = <32000>;
-+			clock-frequency = <32768>;
- 			#clock-cells = <0>;
- 		};
- 
--- 
-2.7.4
+RnJvbTogRG1pdHJ5IEJhcnlzaGtvdg0KPiBTZW50OiAxMCBGZWJydWFyeSAyMDIyIDEwOjE3DQo+
+IA0KPiBPbiAwOS8wMi8yMDIyIDExOjM4LCBRaW5nIFdhbmcgd3JvdGU6DQo+ID4gRnJvbTogV2Fu
+ZyBRaW5nIDx3YW5ncWluZ0B2aXZvLmNvbT4NCj4gPg0KPiA+IGRvX2RpdigpIGRvZXMgYSA2NC1i
+eS0zMiBkaXZpc2lvbi4NCj4gPiBXaGVuIHRoZSBkaXZpc29yIGlzIHU2NCwgZG9fZGl2KCkgdHJ1
+bmNhdGVzIGl0IHRvIDMyIGJpdHMsIHRoaXMgbWVhbnMgaXQNCj4gPiBjYW4gdGVzdCBub24temVy
+byBhbmQgYmUgdHJ1bmNhdGVkIHRvIHplcm8gZm9yIGRpdmlzaW9uLg0KPiA+DQo+ID4gZml4IGRv
+X2Rpdi5jb2NjaSB3YXJuaW5nOg0KPiA+IGRvX2RpdigpIGRvZXMgYSA2NC1ieS0zMiBkaXZpc2lv
+biwgcGxlYXNlIGNvbnNpZGVyIHVzaW5nIGRpdjY0X3U2NCBpbnN0ZWFkLg0KPiANCj4gDQo+IE5B
+Sw0KPiANCj4gVGhlIGRpdjY0X3U2NCBpcyBub3QgZXF1aXZhbGVudCB0byBkb19kaXYuIEl0IHJl
+dHVybnMgdGhlIHF1b3RpZW50DQo+IHJhdGhlciB0aGFuIG1vZGlmeWluZyB0aGUgZmlyc3QgYXJn
+LiBNb3Jlb3ZlciBpdCBpcyB1bm9wdGltYWwgb24gMzItYml0DQo+IGFyY2hlcy4NCj4gDQo+ID4N
+Cj4gPiBTaWduZWQtb2ZmLWJ5OiBXYW5nIFFpbmcgPHdhbmdxaW5nQHZpdm8uY29tPg0KPiA+IC0t
+LQ0KPiA+ICAgZHJpdmVycy9tZWRpYS9wbGF0Zm9ybS9xY29tL3ZlbnVzL3ZkZWMuYyB8IDIgKy0N
+Cj4gPiAgIDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwgMSBkZWxldGlvbigtKQ0KPiA+
+DQo+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvbWVkaWEvcGxhdGZvcm0vcWNvbS92ZW51cy92ZGVj
+LmMgYi9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL3Fjb20vdmVudXMvdmRlYy5jDQo+ID4gaW5kZXgg
+OTFkYTNmNS4uOTQxYTkwNA0KPiA+IC0tLSBhL2RyaXZlcnMvbWVkaWEvcGxhdGZvcm0vcWNvbS92
+ZW51cy92ZGVjLmMNCj4gPiArKysgYi9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL3Fjb20vdmVudXMv
+dmRlYy5jDQo+ID4gQEAgLTQzNSw3ICs0MzUsNyBAQCBzdGF0aWMgaW50IHZkZWNfc19wYXJtKHN0
+cnVjdCBmaWxlICpmaWxlLCB2b2lkICpmaCwgc3RydWN0IHY0bDJfc3RyZWFtcGFybSAqYSkNCj4g
+PiAgIAkJcmV0dXJuIC1FSU5WQUw7DQo+ID4NCj4gPiAgIAlmcHMgPSAodTY0KVVTRUNfUEVSX1NF
+QzsNCj4gPiAtCWRvX2RpdihmcHMsIHVzX3Blcl9mcmFtZSk7DQo+ID4gKwlkaXY2NF91NjQoZnBz
+LCB1c19wZXJfZnJhbWUpOw0KDQpUaGF0IG9uZSBpcyBwYXJ0aWN1bGFybHkgaW5zYW5lIHRvIGJl
+Z2luIHdpdGguDQpXaHkgd2FzIGl0IGV2ZW4gZG9fZGl2KCk/DQpJIGd1ZXNzIGJlY2F1c2U6DQoJ
+ZnBzID0gVVNFQ19QRVJfU0VDIC8gdXNfcGVyX2ZyYW1lOw0KY2F1c2VkIHRoZSBjb21waWxlciB0
+byBjYWxsIHRoZSA2NGJpdCBkaXZpZGUgZnVuY3Rpb24gYmVjYXVzZSB0aGUgJ3VzX3Blcl9mcmFt
+ZScNCmlzIDY0Yml0IC0gZXZlbiB0aG91Z2ggdGhlIGNvZGUgb25seSBtYWtlcyBzZW5zZSBpZiBp
+dCBpcyBzbWFsbC4NCg0KVGhlIGNvcnJlY3QgZml4IGhlcmUgaXMgcHJvYmFibHkgdG8gY2hhbmdl
+IHRoZSB0eXBlIG9mIHVzX3Blcl9mcmFtZSB0byAzMmJpdA0Kb3IganVzdCBkbzoNCglmcHMgPSBV
+U0VDX1BFUl9GUkFNIC8gKHVuc2lnbmVkIGludCl1c19wZXJfZnJhbWUuDQoNCk9oLCBhbmQgZnBz
+IGRlZmluaXRlbHkgZG9lc24ndCBuZWVkIHRvIGJlIDY0Yml0IGVpdGhlci4NCg0KSU1ITyBhbGwg
+KGFuZCBJIG1lYW4gQUxMKSBvZiB0aGVzZSBwYXRjaGVzIHRvIGNoYW5nZSBkb19kaXYoKSB0byBk
+aXY2NF91NjQoKQ0KbmVlZCBkcm9wcGluZy4NCk1heWJlIG9uZSBvciB0d28gYXJlIHJlYWwgcHJv
+YmxlbXMsIGJ1dCB0aGUgc3Vycm91bmRpbmcgY29kZSBuZWVkcw0KY29ycmVjdGx5IGV4YW1pbmlu
+Zy4NCg0KCURhdmlkDQoNCi0NClJlZ2lzdGVyZWQgQWRkcmVzcyBMYWtlc2lkZSwgQnJhbWxleSBS
+b2FkLCBNb3VudCBGYXJtLCBNaWx0b24gS2V5bmVzLCBNSzEgMVBULCBVSw0KUmVnaXN0cmF0aW9u
+IE5vOiAxMzk3Mzg2IChXYWxlcykNCg==
 
