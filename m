@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6922B4B1C2D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 03:26:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5733D4B1C30
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 03:27:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347284AbiBKC0L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 21:26:11 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43788 "EHLO
+        id S1347269AbiBKC00 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 21:26:26 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240448AbiBKC0K (ORCPT
+        with ESMTP id S240448AbiBKC00 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 21:26:10 -0500
+        Thu, 10 Feb 2022 21:26:26 -0500
 Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EED0BAB
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 18:26:11 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8624ABAB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 18:26:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644546371; x=1676082371;
+  t=1644546387; x=1676082387;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=YcwbUePQCMjnTa3cPwb9sMqUhB8PWHxbGQVUtPcWJNE=;
-  b=DaeUpGqqAOKtqw7cXqysMaEzdE6u0FMqSrXri4HbBq2bd904MxQeH9GT
-   EKvAeMT63YCeGQJN2i0KvPzTceaDbHz7eJ+4aYYPa1n3ieNtRAcXdMxPp
-   BUpnqitKD3o4nJngeVYHlB9n+2EPF4Ed/PdV8Hkecv80zIF4dEmN49kmH
-   U=;
+  bh=gPqCmztRkjWq1aj/0t4iHE11Dy8U2EJdueHDddtYRQs=;
+  b=CPpNNmCBUnttjqRz+q+RoVmBJcgTXnjUhcHico4oHQJKWgvPQ33rhLx+
+   5ph7Krtz/ydgCEMl/sJ7lhiDkh5yb5KGAA6nm4zH8YrX8IXGXK6quX3Jw
+   otMes9O+xn/J9H55+rY0ps1C9ByNv6CcrmVq48Xkp8yGjDXAqt2Xo2S1q
+   4=;
 Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 10 Feb 2022 18:26:11 -0800
+  by alexa-out.qualcomm.com with ESMTP; 10 Feb 2022 18:26:26 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2022 18:26:11 -0800
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2022 18:26:27 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Thu, 10 Feb 2022 18:26:10 -0800
+ 15.2.922.19; Thu, 10 Feb 2022 18:26:25 -0800
 Received: from [10.111.162.111] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 10 Feb
- 2022 18:26:07 -0800
-Message-ID: <8eb63d37-fd3e-e9cc-5249-bc6ed8958cd8@quicinc.com>
-Date:   Thu, 10 Feb 2022 18:26:05 -0800
+ 2022 18:26:22 -0800
+Message-ID: <9e36946d-523f-9650-4de8-8695b4cf0284@quicinc.com>
+Date:   Thu, 10 Feb 2022 18:26:20 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.1
-Subject: Re: [PATCH 2/3] drm/msm/dpu: Update the comment style
+Subject: Re: [PATCH 3/3] drm/msm/dpu: Update function parameter documentation
 Content-Language: en-US
 To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
 CC:     <linux-arm-msm@vger.kernel.org>,
@@ -59,13 +59,13 @@ CC:     <linux-arm-msm@vger.kernel.org>,
         <dri-devel@lists.freedesktop.org>,
         <freedreno@lists.freedesktop.org>
 References: <20220210114106.290669-1-vkoul@kernel.org>
- <20220210114106.290669-2-vkoul@kernel.org>
+ <20220210114106.290669-3-vkoul@kernel.org>
 From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220210114106.290669-2-vkoul@kernel.org>
+In-Reply-To: <20220210114106.290669-3-vkoul@kernel.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
@@ -80,14 +80,15 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 2/10/2022 3:41 AM, Vinod Koul wrote:
-> The multi line comment style is wrongly used as kernel-doc comment. This
-> gives a warning:
+> dpu_core_irq_callback_handler() function comments seem to have become
+> stale and emit a warning:
 > 
-> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:17:
-> warning: This comment starts with '/**', but isn't a kernel-doc comment.
-> Refer Documentation/doc-guide/kernel-doc.rst
+> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:147:
+> warning: Function parameter or member 'dpu_kms' not described in 'dpu_core_irq_callback_handler'
+> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c:147:
+> warning: Excess function parameter 'arg' description in 'dpu_core_irq_callback_handler'
 > 
-> Update the style to fix this.
+> Fix by updating the documentation
 > 
 > Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -96,15 +97,15 @@ Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> index a77a5eaa78ad..9341c88a336f 100644
+> index 9341c88a336f..27073fd49fee 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> @@ -13,7 +13,7 @@
->   #include "dpu_hw_mdss.h"
->   #include "dpu_trace.h"
+> @@ -140,7 +140,7 @@ static const struct dpu_intr_reg dpu_intr_set[] = {
 >   
-> -/**
-> +/*
->    * Register offsets in MDSS register file for the interrupt registers
->    * w.r.t. to the MDP base
+>   /**
+>    * dpu_core_irq_callback_handler - dispatch core interrupts
+> - * @arg:		private data of callback handler
+> + * @dpu_kms:		Pointer to DPU's KMS structure
+>    * @irq_idx:		interrupt index
 >    */
+>   static void dpu_core_irq_callback_handler(struct dpu_kms *dpu_kms, int irq_idx)
