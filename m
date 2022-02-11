@@ -2,68 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D57FF4B2A35
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 17:28:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F54A4B2B63
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 18:10:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351484AbiBKQZ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Feb 2022 11:25:59 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:54220 "EHLO
+        id S242360AbiBKRKY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Feb 2022 12:10:24 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:34554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351485AbiBKQZ6 (ORCPT
+        with ESMTP id S241138AbiBKRKW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Feb 2022 11:25:58 -0500
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAFB93AD;
-        Fri, 11 Feb 2022 08:25:55 -0800 (PST)
-Received: by mail-oi1-f173.google.com with SMTP id v67so10066191oie.9;
-        Fri, 11 Feb 2022 08:25:55 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=SNHEpqIX2AMyOXJaqG7yEXFoVSICVPmb7B0ilFWlNec=;
-        b=NITPRY5H7arMQsFaW9G4zKnHf8g3lskbRi216nO6LihTHSNIAj2/NLJof6xdAYorR8
-         QxXSuVrZ3QDuO8fG5v9CFV+bSxwVgK9WCR1tv9jmiPsV0mdXYK+p/xhIVGC8p2kvQiyx
-         x77k9fBYsn71f1Gw9WqIuXzU4XlEscgtnqE2tjrCVl+T/crmVxTiSqaZLSgUoUIimgdY
-         iHFXSt8FG6f695ZUHA+qvmzBMPEWyUphx0yMbGGPT0fktUeTNs8QxtD68mvDeMpmSKNh
-         IT0C1ThrqlgAwjLxkeemaPuxnH0icoCZgjLX+NxLcvsNY/iPiQsFXjSoutrPkNy+JgVK
-         1/+g==
-X-Gm-Message-State: AOAM533ULXE12O45eB0+C6lBWFmvyWe8aj142YVMdFrlFviw+3GPfgI7
-        lNKgA39WlTtROwcjhx/fSQ==
-X-Google-Smtp-Source: ABdhPJw8oaVkgx5Pu3uFJ78qknmKsHlv+NqPM1RqyBvjDOel/OiKPX344OCHUA71kPGl79Oq05bBpw==
-X-Received: by 2002:aca:c056:: with SMTP id q83mr582840oif.294.1644596755317;
-        Fri, 11 Feb 2022 08:25:55 -0800 (PST)
-Received: from robh.at.kernel.org ([2607:fb90:5fee:dfce:b6df:c3e1:b1e5:d6d8])
-        by smtp.gmail.com with ESMTPSA id x16sm9731092ooa.6.2022.02.11.08.25.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Feb 2022 08:25:54 -0800 (PST)
-Received: (nullmailer pid 467504 invoked by uid 1000);
-        Fri, 11 Feb 2022 16:25:52 -0000
-Date:   Fri, 11 Feb 2022 10:25:52 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Bartosz Dudziak <bartosz.dudziak@snejp.pl>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Jeffrey Hugo <jhugo@codeaurora.org>, linux-clk@vger.kernel.org,
-        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH v2 1/2] dt-bindings: clock: Add support for the MSM8226
- mmcc
-Message-ID: <YgaOEHwe7DKI6i1N@robh.at.kernel.org>
-References: <20220207185411.19118-1-bartosz.dudziak@snejp.pl>
- <20220207185411.19118-2-bartosz.dudziak@snejp.pl>
+        Fri, 11 Feb 2022 12:10:22 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52CD921F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Feb 2022 09:10:21 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 0EA23B82B1B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Feb 2022 17:10:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id AB2A0C340F0;
+        Fri, 11 Feb 2022 17:10:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1644599418;
+        bh=vNHqzIX8cJsbxrfjLDpBkQfJlgi88Cg+NCjHi8CEKV8=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=DZ45GTpWCZgmh1jkfY4aTkJThRDum1dLizlg3Tl+CkHTO9HMM0G6Sejxf7yEsy7jf
+         Uhx0ua/nxRSEayEiSxxEX+8aS69mlFBoePoRPncA4tC2cnulL3BmUu0TMhtKbdbWHc
+         616NHZRr08T6TF79T9AwOsEVhyr+k12zvF+WlnjtGpGL0BpuLsDOv3zpd/FO7ONP6l
+         gwjC3NggFViNDomVWkmChhGtsIFT6Q6AsDzbpypL8n397LykJj2exy55oAVIyXMLZa
+         /Q5qx3KwiFiLB2qkdpKkD7BgoJsRjKiRaJlw6Q8g4zwctCT5Ri1K8Erx+JhA3RUtxa
+         fsqKvkczssTQw==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 95CBCE6BBD2;
+        Fri, 11 Feb 2022 17:10:18 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220207185411.19118-2-bartosz.dudziak@snejp.pl>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH RESEND v3 0/7] dt-bindings: Convert multiple Qualcomm OPP and
+ CPUFreq bindings to DT schema
+From:   patchwork-bot+linux-arm-msm@kernel.org
+Message-Id: <164459941860.13057.13950593613175771169.git-patchwork-notify@kernel.org>
+Date:   Fri, 11 Feb 2022 17:10:18 +0000
+References: <20220203072226.51482-1-y.oudjana@protonmail.com>
+In-Reply-To: <20220203072226.51482-1-y.oudjana@protonmail.com>
+To:     Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,13 +57,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 07 Feb 2022 19:54:10 +0100, Bartosz Dudziak wrote:
-> Document the multimedia clock controller found on MSM8226.
-> 
-> Signed-off-by: Bartosz Dudziak <bartosz.dudziak@snejp.pl>
-> ---
->  Documentation/devicetree/bindings/clock/qcom,mmcc.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
+Hello:
 
-Acked-by: Rob Herring <robh@kernel.org>
+This series was applied to qcom/linux.git (for-next)
+by Bjorn Andersson <bjorn.andersson@linaro.org>:
+
+On Thu, 03 Feb 2022 07:24:00 +0000 you wrote:
+> This series is a compilation of DT schema conversions of multiple Qualcomm
+> OPP and CPUFreq bindings:
+> - qcom-cpufreq-nvmem (operating-points-v2-kryo-cpu)
+> - qcom-opp (operating-points-v2-qcom-level)
+> - qcom,cpr
+> 
+> Converting each one to DT schema introduces new dt_binding_check and
+> dtbs_check errors to the others, so it was better to combine them into
+> a series. Some errors were also caused by a couple of device trees having
+> OPP tables with names that do not follow opp-v2-base, so these got fixed
+> in this series as well. Finally, the lack of MSM8996 compatibles in
+> arm/qcom.yaml caused an error in the opp-v2-kryo-cpu example, so they were
+> added to the schema as well as to the msm8996-mtp device tree, which only
+> had qcom,msm8996-mtp as its compatible.
+> 
+> [...]
+
+Here is the summary with links:
+  - [RESEND,v3,1/7] dt-bindings: arm: qcom: Add msm8996 and apq8096 compatibles
+    https://git.kernel.org/qcom/c/134cfc5565d3
+  - [RESEND,v3,2/7] arm64: dts: qcom: msm8996-mtp: Add msm8996 compatible
+    https://git.kernel.org/qcom/c/3431a7f5bbf2
+  - [RESEND,v3,3/7] dt-bindings: opp: qcom-opp: Convert to DT schema
+    (no matching commit)
+  - [RESEND,v3,4/7] dt-bindings: opp: Convert qcom-nvmem-cpufreq to DT schema
+    (no matching commit)
+  - [RESEND,v3,5/7] arm64: dts: qcom: msm8996: Rename cluster OPP tables
+    https://git.kernel.org/qcom/c/f55dda215731
+  - [RESEND,v3,6/7] arm64: dts: qcom: qcs404: Rename CPU and CPR OPP tables
+    https://git.kernel.org/qcom/c/b7072cc5704d
+  - [RESEND,v3,7/7] dt-bindings: power: avs: qcom,cpr: Convert to DT schema
+    (no matching commit)
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
