@@ -2,66 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F149F4B1A1D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 01:09:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF3E14B1A2C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Feb 2022 01:11:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346109AbiBKAJI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Feb 2022 19:09:08 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:45130 "EHLO
+        id S242876AbiBKAK7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Feb 2022 19:10:59 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346113AbiBKAJH (ORCPT
+        with ESMTP id S234881AbiBKAK6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Feb 2022 19:09:07 -0500
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E8CB26FC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 16:09:07 -0800 (PST)
-Received: by mail-yb1-xb36.google.com with SMTP id p5so20080297ybd.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 16:09:07 -0800 (PST)
+        Thu, 10 Feb 2022 19:10:58 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 610BF26FC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Feb 2022 16:10:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WATbzyWdcGRXO+H4n4TlwQvCVpXdxX99IfXSiHQaJb8=;
-        b=b93jgUrYF0dCu5NDWSgMtP+vbQVBJLCf2aDT0Y+lRcokF2jyM/+FsfjtgOWYM7sVOQ
-         L9y/4hQbn4XsDH7gPrMUlQX/y1OXsEVkupawI9IdgVDDMt7uxy8eMA/1x+Np64t6LGUk
-         idOsCmm0IUWK6WwyHBejLs6AD0KrBg4N267nadMePCzx04nbSlQWVrCKG++oslg4sWFr
-         8wgXwCikb9leFKQOhADIqtXmSdyYwAgLVJm8h0IuQ+XuraZLObxgzoasCt8k/SIgRjhI
-         xtWdlnbvsPHSX3XQw4cfSgtsltsN7IFduqFmrGAzndg5R/FE/iqN2Pxgg5LvYdrdzwx/
-         UfLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WATbzyWdcGRXO+H4n4TlwQvCVpXdxX99IfXSiHQaJb8=;
-        b=MLjd2dM6RnWfUZ5mu+ZhRjVV4ceWj0hIwEylK3WKj9F8XbW4d2hcuRqVLUSfJW3C68
-         noXjhvFyPmTdcr64r2FzZYNE/nGn/H0ZJgOhTnt02gk21Jbd0hHIpc1S4YPDDk6B6rLh
-         iPT1iQi9y4OKUpVMSJSsDS/p/drGT44XceCAMvM/n6gPuWf3qv7x7WImLJpwpRMeppYP
-         qeRJng+YNm6Hw50wu0FXMGSWB6f8N4vbfIn+qrAe5nwM0t7U88lqseQ35zuX/ZN72V6k
-         5CR1kQIFD4jYcnVYsqcTaB5UHrjztnz1yxG39H+39vV1wsMpaTxvp08rBXre2byOHL8M
-         gMpw==
-X-Gm-Message-State: AOAM531gFczq+UY8+KC/Imqf+ygis5EaQOWSQxErg6PB7e8HYAVVTS7y
-        odpnL16MthANOS4UyMnOP6N0Y2Mk/krzjfWK8tYbUw==
-X-Google-Smtp-Source: ABdhPJzA9Zv+yu6ytLAOkKNwkbWM153MDa+UA7mEboGjwCS3aoQIkbG/Y7olNbzcU4lHkbC3e0tUmgUpsn7HEFRbjfE=
-X-Received: by 2002:a81:4402:: with SMTP id r2mr10071843ywa.126.1644538146951;
- Thu, 10 Feb 2022 16:09:06 -0800 (PST)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1644538257; x=1676074257;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=TXtiuweZkQZeXry8a7znX/b1/4DHIP+ypOqTEw/jN2c=;
+  b=wonrXnhSrJAsBEfKJFQ/6MRnTaZd9V4he+ZTemedQJL4Xti3EOp6Adqm
+   Rr1k+JfKFsMCmUEjg6pCA88YoSAtJl0QvKvTsL0qBQ73dnRo0GZltlF1u
+   yWJIBAM6pPH+uCZkInMD40i2H5MWavcG6dOS96cT+esgGeamXTatcTBo6
+   4=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 10 Feb 2022 16:10:57 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2022 16:10:57 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Thu, 10 Feb 2022 16:10:56 -0800
+Received: from [10.111.162.111] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Thu, 10 Feb
+ 2022 16:10:54 -0800
+Message-ID: <334b4d31-8665-a844-f5dc-a5fa19494f85@quicinc.com>
+Date:   Thu, 10 Feb 2022 16:10:51 -0800
 MIME-Version: 1.0
-References: <20220124171538.18088-1-rayyan@ansari.sh>
-In-Reply-To: <20220124171538.18088-1-rayyan@ansari.sh>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 11 Feb 2022 01:08:56 +0100
-Message-ID: <CACRpkdZ+R6vcQTf2t+WRhd1+0owbOTyuyNWurzhukn_aABL1JQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] dt-bindings: pinctrl: qcom,pmic-mpp: Document PM8226 compatible
-To:     Rayyan Ansari <rayyan@ansari.sh>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [Freedreno] [PATCH 1/7] drm/msm: move struct msm_display_info to
+ dpu driver
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     David Airlie <airlied@linux.ie>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        "Daniel Vetter" <daniel@ffwll.ch>,
+        <freedreno@lists.freedesktop.org>
+References: <20220203082611.2654810-1-dmitry.baryshkov@linaro.org>
+ <20220203082611.2654810-2-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220203082611.2654810-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,15 +73,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jan 24, 2022 at 6:17 PM Rayyan Ansari <rayyan@ansari.sh> wrote:
 
-> Document the Device Tree binding for PM8226 MPPs.
->
-> Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
 
-This patch and patch 2 applied to the pinctrl tree!
+On 2/3/2022 12:26 AM, Dmitry Baryshkov wrote:
+> The msm_display_info structure is not used by the rest of msm driver, so
+> move it into the dpu1 (dpu_encoder.h to be precise).
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-I suppose Bjorn will handle patch 3.
+Yes, this is true. Its not used by rest of msm driver.
 
-Yours,
-Linus Walleij
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 18 ++++++++++++++++++
+>   drivers/gpu/drm/msm/msm_drv.h               | 18 ------------------
+>   2 files changed, 18 insertions(+), 18 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> index e241914a9677..ebe3944355bb 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+> @@ -34,6 +34,24 @@ struct dpu_encoder_hw_resources {
+>   void dpu_encoder_get_hw_resources(struct drm_encoder *encoder,
+>   				  struct dpu_encoder_hw_resources *hw_res);
+>   
+> +/**
+> + * struct msm_display_info - defines display properties
+> + * @intf_type:          DRM_MODE_ENCODER_ type
+> + * @capabilities:       Bitmask of display flags
+> + * @num_of_h_tiles:     Number of horizontal tiles in case of split interface
+> + * @h_tile_instance:    Controller instance used per tile. Number of elements is
+> + *                      based on num_of_h_tiles
+> + * @is_te_using_watchdog_timer:  Boolean to indicate watchdog TE is
+> + *				 used instead of panel TE in cmd mode panels
+> + */
+> +struct msm_display_info {
+> +	int intf_type;
+> +	uint32_t capabilities;
+> +	uint32_t num_of_h_tiles;
+> +	uint32_t h_tile_instance[MAX_H_TILES_PER_DISPLAY];
+> +	bool is_te_using_watchdog_timer;
+> +};
+> +
+>   /**
+>    * dpu_encoder_assign_crtc - Link the encoder to the crtc it's assigned to
+>    * @encoder:	encoder pointer
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index d7574e6bd4e4..16f9e25ee19e 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -109,24 +109,6 @@ struct msm_display_topology {
+>   	u32 num_dspp;
+>   };
+>   
+> -/**
+> - * struct msm_display_info - defines display properties
+> - * @intf_type:          DRM_MODE_ENCODER_ type
+> - * @capabilities:       Bitmask of display flags
+> - * @num_of_h_tiles:     Number of horizontal tiles in case of split interface
+> - * @h_tile_instance:    Controller instance used per tile. Number of elements is
+> - *                      based on num_of_h_tiles
+> - * @is_te_using_watchdog_timer:  Boolean to indicate watchdog TE is
+> - *				 used instead of panel TE in cmd mode panels
+> - */
+> -struct msm_display_info {
+> -	int intf_type;
+> -	uint32_t capabilities;
+> -	uint32_t num_of_h_tiles;
+> -	uint32_t h_tile_instance[MAX_H_TILES_PER_DISPLAY];
+> -	bool is_te_using_watchdog_timer;
+> -};
+> -
+>   /* Commit/Event thread specific structure */
+>   struct msm_drm_thread {
+>   	struct drm_device *dev;
