@@ -2,67 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 078D64B3647
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Feb 2022 17:16:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E7CD4B371B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Feb 2022 19:22:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236969AbiBLQQs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Feb 2022 11:16:48 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:37218 "EHLO
+        id S229563AbiBLSVs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Feb 2022 13:21:48 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236966AbiBLQQr (ORCPT
+        with ESMTP id S229576AbiBLSVr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Feb 2022 11:16:47 -0500
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F46E181
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Feb 2022 08:16:44 -0800 (PST)
-Received: by mail-qk1-x72c.google.com with SMTP id bs32so10854568qkb.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Feb 2022 08:16:44 -0800 (PST)
+        Sat, 12 Feb 2022 13:21:47 -0500
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6927553B4A
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Feb 2022 10:21:42 -0800 (PST)
+Received: by mail-pl1-x62b.google.com with SMTP id y18so7238767plb.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Feb 2022 10:21:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3eUSYNapb5x0nBAO2PC3SgJkWjN+mXVFDgbj8Nms+A4=;
-        b=IbovKgOrNQZ3Y+TY6EwzkRLsveSQoXJQTPKGmLB0k2yGy8Az1EoFUDtWhRxpUNuGUF
-         Bi/b0nqzz/FhJ9ofd7eMA0WPGsDDtqWvA3Mcp4ixRwi+Re+NHW4loZ64UBCITo1LGeWM
-         eiWitKUKGEu/CqkVMJG254Notpcn1YpTIb9yntNl7VoYoHej75zs7XGnHE1EjC686AG9
-         nswBg8dTA4dbkTdaHVxf80xhj557cT+CBE3lhwx+76/7+kpZ0Amve+MpwhXit7CwfjOD
-         gbFAMWDz7V8Iw1fjbp7HIPOJNqr1bbGSqvnhpaaKN71bBdZW+fq1VeaqkWH6AVNQ1iKG
-         GrUw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sNJouDFC9SDFBdiALXK3vF3U2LCfEq9tgM00VfZjezI=;
+        b=qlS3W6Yfd1EKX+tTPjscR96Uge7Cd2o+tv+0w7wn8IO6AyAly1qvv61AMsnjTKvHgk
+         FFjkuasTcBV8g9ZpoMUT2W4rEQCJN0MfGobrTCwUc38Zm6oBSZBq9U3m329XJWfdzgQo
+         P9wEYk7OQfnNJ4QNlTDmHHBfLU2lmiVGW/l7SICINPln5KS2wnEYyNklxycf0y621i9V
+         OObEC2dSI5cnz2cW4InWJ/nbjbh5MQqA1UhsIjdzHAuYd4cv9vxSZHJc7NDSDEl4Udwf
+         K7bmIwD/CDZvZTxuce92cn2+dgAbetknocHJ3oWhDnQolmeLHpImhJkexAsZjUAANUYY
+         T+Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3eUSYNapb5x0nBAO2PC3SgJkWjN+mXVFDgbj8Nms+A4=;
-        b=4MHrD6EpchR3IGo9Dq1g0pDAfVHJ67+KLs15sI90MymKT6Jl4XxE/XApz4dtIvjVoJ
-         6BTuPUL0tviqo5+LpVobI8z9DXLOOM+5iq/EHmHnuz2gyyqI50rtLgnqtxYbRuPMnIsC
-         /yRvwaF1DORAoRB/7LaENJrjwlqYdaK+evRDsY3ZsYTX5vjzbK9m24UPh2YnWND9Q39d
-         xUX96H7ulTcEe+eL8h7Mze4BE+nqQlXDV61a3kdmZvZOBx+4GcOyXHI17D6Gi6CLJQkn
-         GP/LqQpoW3OjuwRgkyIwJWlW7POZTWk5L4htCfU2/N37HkiK8Xp791GK7z09rIEz8/Ew
-         2hyA==
-X-Gm-Message-State: AOAM531AeQEZszGfee38SN7W7KhkdKSYMfXFCydQVbUeWaoofUWwoCrZ
-        9aSYxV5aOexTSQXcybF0oXg7fJkgDzNNNg7NPifBdIL6A4w=
-X-Google-Smtp-Source: ABdhPJy4yNXKHI8Y5Y3irRuI3wCAhqkjdXkRQCIaGRHCH2HEY8Fz/S5Rz+oZlxZmAe/aD0Qa6GrZe3iD2sVhAlU010s=
-X-Received: by 2002:a05:620a:75b:: with SMTP id i27mr3354494qki.593.1644682603176;
- Sat, 12 Feb 2022 08:16:43 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sNJouDFC9SDFBdiALXK3vF3U2LCfEq9tgM00VfZjezI=;
+        b=D6LsSWDBRWduTQ8nRUul6gqyyDIdUNY3mRbN3cg2RkYbINgMT8e3vLrcJ7EH8V/Wfa
+         C/vMgMX6Tn0GwN1FyCMb6l/lLRbZh+7U3ec+eDYjKpJ/siuzrz6zhB7JBf4pD6uZK4yz
+         DcNyeeRkwkKUN6LebJBfc2hsURYYF3fk/iQJs0YOtcNQH+QqNjXYKy7w9Lg87iwhQpb7
+         6hGOwZPpLxDQ489CI6fYNlBSv0o/iK4u0DCs5xOsKDJSzit4n6zx38d6WHLC58fqYKmp
+         AV/z+3UPtvrZpeOrknur461OExJUXLZzda6siTwJiOqxBlunvdtSmfOhR8tV26oLXv+N
+         jiZw==
+X-Gm-Message-State: AOAM53036k4bG6P/7dLdlK+wmfBhLeYqD2HXYhsLpabi4lhrkEob0dhV
+        2SqT6NACTfti+MdTY/SZVqb8
+X-Google-Smtp-Source: ABdhPJxsr/pGGmSiWyM7KxkHsvgEXr4O05DL13LtmYjGc6YvZF/8LDBlImtlCCOOdp1XZN0hqCu4qA==
+X-Received: by 2002:a17:902:eb8c:: with SMTP id q12mr7008607plg.131.1644690101772;
+        Sat, 12 Feb 2022 10:21:41 -0800 (PST)
+Received: from localhost.localdomain ([27.111.75.57])
+        by smtp.gmail.com with ESMTPSA id g12sm14961987pfj.148.2022.02.12.10.21.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 12 Feb 2022 10:21:41 -0800 (PST)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     mhi@lists.linux.dev
+Cc:     quic_hemantk@quicinc.com, quic_bbhatt@quicinc.com,
+        quic_jhugo@quicinc.com, vinod.koul@linaro.org,
+        bjorn.andersson@linaro.org, dmitry.baryshkov@linaro.org,
+        quic_vbadigan@quicinc.com, quic_cang@quicinc.com,
+        quic_skananth@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, elder@linaro.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 00/25] Add initial support for MHI endpoint stack
+Date:   Sat, 12 Feb 2022 23:50:52 +0530
+Message-Id: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <1644621822-25407-1-git-send-email-quic_khsieh@quicinc.com>
- <d77140f5-73b3-b9a4-aa4b-b240105eb5d4@linaro.org> <f86504ba-835a-6e30-6c30-8bb89b1359c4@quicinc.com>
-In-Reply-To: <f86504ba-835a-6e30-6c30-8bb89b1359c4@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 12 Feb 2022 19:16:32 +0300
-Message-ID: <CAA8EJpqd_8VO1ah3HdhYJmFqRDQFquvrm-RfETZ5qjgC2ZU2tQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: populate intf_audio_select() base on hardware capability
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, vkoul@kernel.org,
-        daniel@ffwll.ch, airlied@linux.ie, agross@kernel.org,
-        bjorn.andersson@linaro.org, quic_aravindh@quicinc.com,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,163 +73,177 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 12 Feb 2022 at 03:59, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> On 2/11/2022 4:08 PM, Dmitry Baryshkov wrote:
-> > On 12/02/2022 02:23, Kuogee Hsieh wrote:
-> >> intf_audio_select() callback function use to configure
-> >> HDMI_DP_CORE_SELECT to decide audio output routes to HDMI or DP
-> >> interface. HDMI is obsoleted at newer chipset. To keep supporting
-> >> legacy hdmi application, intf_audio_select call back function have
-> >> to be populated base on hardware chip capability where legacy
-> >> chipsets have has_audio_select flag set to true.
-> >
-> > So, after thinking more about the patch, I have a bunch of questions:
-> >
-> > You are enabling this callback only for sdm845 and sm8150.
-> >
-> > Does this register exist on other (newer) platforms (but just defaults
-> > to DP)?
->
-> The register itself exists but there is no logic associated with it. Its
-> a no-op.
+Hello,
 
-Ack, thanks
+This series adds initial support for the Qualcomm specific Modem Host Interface
+(MHI) bus in endpoint devices like SDX55 modems. The MHI bus in endpoint devices
+communicates with the MHI bus in host machines like x86 over any physical bus
+like PCIe. The MHI host support is already in mainline [1] and been used by PCIe
+based modems and WLAN devices running vendor code (downstream).
 
->
-> >
-> > Neither sdm845 nor sm8150 support INTF_HDMI. What's the purpose of the
-> > register on these platforms?
->
-> Yes we also had a similar thought earlier that this register has meaning
-> only on chipsets which have HDMI and DP but our hardware team suggested
-> sm8250 and its derivatives should be the cut-off point to stop using
-> this register. So we are just following that.
+Overview
+========
 
-Ack
+This series aims at adding the MHI support in the endpoint devices with the goal
+of getting data connectivity using the mainline kernel running on the modems.
+Modems here refer to the combination of an APPS processor (Cortex A grade) and
+a baseband processor (DSP). The MHI bus is located in the APPS processor and it
+transfers data packets from the baseband processor to the host machine.
 
->
-> >
-> > Does that mean that we should program the register for HDMI (e.g. on 8998)?
-> >
-> Yes, we should program this for HDMI 8998 ( although the default value
-> of the register is 0 for HDMI ).
+The MHI Endpoint (MHI EP) stack proposed here is inspired by the downstream
+code written by Qualcomm. But the complete stack is mostly re-written to adapt
+to the "bus" framework and made it modular so that it can work with the upstream
+subsystems like "PCI Endpoint". The code structure of the MHI endpoint stack
+follows the MHI host stack to maintain uniformity.
 
-ok, so ideally we should add an argument switching between HDMI and DP audio.
-This can be done in a separate patch.
+With this initial MHI EP stack (along with few other drivers), we can establish
+the network interface between host and endpoint over the MHI software channels
+(IP_SW0) and can do things like IP forwarding, SSH, etc...
 
->
-> > And, as you are touching this piece of code, how do we control audio
-> > routing on newer platforms which have several hardware DP interfaces?
-> >
-> Thats unrelated to this register because on newer chipsets which have
-> two DPs there is no HDMI and hence this register remains a no-op.
+Stack Organization
+==================
 
-Yep. I just wondered whether this register would be reused to switch
-between DPs.
-It doesn't.
+The MHI EP stack has the concept of controller and device drivers as like the
+MHI host stack. The MHI EP controller driver can be a PCI Endpoint Function
+driver and the MHI device driver can be a MHI EP Networking driver or QRTR
+driver. The MHI EP controller driver is tied to the PCI Endpoint subsystem and
+handles all bus related activities like mapping the host memory, raising IRQ,
+passing link specific events etc... The MHI EP networking driver is tied to the
+Networking stack and handles all networking related activities like
+sending/receiving the SKBs from netdev, statistics collection etc...
 
->
-> But coming to the overall question on multi-DP audio.
->
-> This is not a new question. I had first asked about this to Bjorn for
-> sc8180x. The current hdmi-codec interface which is used for single DP
-> audio will have to be extended to support this to support which stream
-> to pass the audio on. This is an open item which was left to be done
-> later on because the only chipset which has multi-DP in upstream is
-> sc8180x. We dont have that hardware with us for development. When we
-> start working on that, we will have to implement what I just mentioned.
+This series only contains the MHI EP code, whereas the PCIe EPF driver and MHI
+EP Networking drivers are not yet submitted and can be found here [2]. Though
+the MHI EP stack doesn't have the build time dependency, it cannot function
+without them.
 
-The implementation depends on the question whether the SoC can output
-several DP audio streams in parallel,
-but as the register in question is not used, it's definitely a
-separate question.
+Test setup
+==========
 
->
-> Thanks
->
-> Abhinav
->
-> >
-> >>
-> >> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> >> ---
-> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 ++
-> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 1 +
-> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c     | 9 ++++++---
-> >>   3 files changed, 9 insertions(+), 3 deletions(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >> index 272b14b..23680e7 100644
-> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >> @@ -201,6 +201,7 @@ static const struct dpu_caps sdm845_dpu_caps = {
-> >>       .has_dim_layer = true,
-> >>       .has_idle_pc = true,
-> >>       .has_3d_merge = true,
-> >> +    .has_audio_select = true,
-> >>       .max_linewidth = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
-> >>       .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
-> >>       .max_hdeci_exp = MAX_HORZ_DECIMATION,
-> >> @@ -229,6 +230,7 @@ static const struct dpu_caps sm8150_dpu_caps = {
-> >>       .has_dim_layer = true,
-> >>       .has_idle_pc = true,
-> >>       .has_3d_merge = true,
-> >> +    .has_audio_select = true,
-> >>       .max_linewidth = 4096,
-> >>       .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
-> >>       .max_hdeci_exp = MAX_HORZ_DECIMATION,
-> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> >> index e5a96d6..b33f91b 100644
-> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> >> @@ -357,6 +357,7 @@ struct dpu_caps {
-> >>       bool has_dim_layer;
-> >>       bool has_idle_pc;
-> >>       bool has_3d_merge;
-> >> +    bool has_audio_select;
-> >>       /* SSPP limits */
-> >>       u32 max_linewidth;
-> >>       u32 pixel_ram_size;
-> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> >> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> >> index 282e3c6..e608f4d 100644
-> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> >> @@ -261,14 +261,17 @@ static void dpu_hw_intf_audio_select(struct
-> >> dpu_hw_mdp *mdp)
-> >>   }
-> >>   static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
-> >> -        unsigned long cap)
-> >> +        unsigned long cap,
-> >> +        const struct dpu_mdss_cfg *m)
-> >>   {
-> >>       ops->setup_split_pipe = dpu_hw_setup_split_pipe;
-> >>       ops->setup_clk_force_ctrl = dpu_hw_setup_clk_force_ctrl;
-> >>       ops->get_danger_status = dpu_hw_get_danger_status;
-> >>       ops->setup_vsync_source = dpu_hw_setup_vsync_source;
-> >>       ops->get_safe_status = dpu_hw_get_safe_status;
-> >> -    ops->intf_audio_select = dpu_hw_intf_audio_select;
-> >> +
-> >> +    if (m->caps->has_audio_select)
-> >> +        ops->intf_audio_select = dpu_hw_intf_audio_select;
-> >>   }
-> >>   static const struct dpu_mdp_cfg *_top_offset(enum dpu_mdp mdp,
-> >> @@ -320,7 +323,7 @@ struct dpu_hw_mdp *dpu_hw_mdptop_init(enum dpu_mdp
-> >> idx,
-> >>        */
-> >>       mdp->idx = idx;
-> >>       mdp->caps = cfg;
-> >> -    _setup_mdp_ops(&mdp->ops, mdp->caps->features);
-> >> +    _setup_mdp_ops(&mdp->ops, mdp->caps->features, m);
-> >>       return mdp;
-> >>   }
-> >
-> >
+This series has been tested on Telit FN980 TLB board powered by Qualcomm SDX55
+(a.k.a X55 modem) and Qualcomm SM8450 based dev board.
 
+For testing the stability and performance, networking tools such as iperf, ssh
+and ping are used.
 
+Limitations
+===========
+
+We are not _yet_ there to get the data packets from the modem as that involves
+the Qualcomm IP Accelerator (IPA) integration with MHI endpoint stack. But we
+are planning to add support for it in the coming days.
+
+References
+==========
+
+MHI bus: https://www.kernel.org/doc/html/latest/mhi/mhi.html
+Linaro connect presentation around this topic: https://connect.linaro.org/resources/lvc21f/lvc21f-222/
+
+Thanks,
+Mani
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/bus/mhi
+[2] https://git.linaro.org/landing-teams/working/qualcomm/kernel.git/log/?h=tracking-qcomlt-sdx55-drivers
+
+Changes in v3:
+
+* Splitted the patch 20/23 into two.
+* Fixed the error handling in patch 21/23.
+* Removed spurious change in patch 01/23.
+* Added check for xfer callbacks in client driver probe.
+
+Changes in v2:
+
+v2 mostly addresses the issues seen while testing the stack on SM8450 that is a
+SMP platform and also incorporates the review comments from Alex.
+
+Major changes are:
+
+* Added a cleanup patch for getting rid of SHIFT macros and used the bitfield
+  operations.
+* Added the endianess patches that were submitted to MHI list and used the
+  endianess conversion in EP patches also.
+* Added support for multiple event rings.
+* Fixed the MSI generation based on the event ring index.
+* Fixed the doorbell list handling by making use of list splice and not locking
+  the entire list manipulation.
+* Added new APIs for wrapping the reading and writing to host memory (Dmitry).
+* Optimized the read_channel and queue_skb function logics.
+* Added Hemant's R-o-b tag.
+
+Manivannan Sadhasivam (23):
+  bus: mhi: Move host MHI code to "host" directory
+  bus: mhi: Move common MHI definitions out of host directory
+  bus: mhi: Make mhi_state_str[] array static inline and move to
+    common.h
+  bus: mhi: Cleanup the register definitions used in headers
+  bus: mhi: Get rid of SHIFT macros and use bitfield operations
+  bus: mhi: ep: Add support for registering MHI endpoint controllers
+  bus: mhi: ep: Add support for registering MHI endpoint client drivers
+  bus: mhi: ep: Add support for creating and destroying MHI EP devices
+  bus: mhi: ep: Add support for managing MMIO registers
+  bus: mhi: ep: Add support for ring management
+  bus: mhi: ep: Add support for sending events to the host
+  bus: mhi: ep: Add support for managing MHI state machine
+  bus: mhi: ep: Add support for processing MHI endpoint interrupts
+  bus: mhi: ep: Add support for powering up the MHI endpoint stack
+  bus: mhi: ep: Add support for powering down the MHI endpoint stack
+  bus: mhi: ep: Add support for handling MHI_RESET
+  bus: mhi: ep: Add support for handling SYS_ERR condition
+  bus: mhi: ep: Add support for processing command ring
+  bus: mhi: ep: Add support for reading from the host
+  bus: mhi: ep: Add support for processing transfer ring
+  bus: mhi: ep: Add support for queueing SKBs to the host
+  bus: mhi: ep: Add support for suspending and resuming channels
+  bus: mhi: ep: Add uevent support for module autoloading
+
+Paul Davey (2):
+  bus: mhi: Fix pm_state conversion to string
+  bus: mhi: Fix MHI DMA structure endianness
+
+ drivers/bus/Makefile                      |    2 +-
+ drivers/bus/mhi/Kconfig                   |   28 +-
+ drivers/bus/mhi/Makefile                  |    9 +-
+ drivers/bus/mhi/common.h                  |  319 ++++
+ drivers/bus/mhi/ep/Kconfig                |   10 +
+ drivers/bus/mhi/ep/Makefile               |    2 +
+ drivers/bus/mhi/ep/internal.h             |  254 ++++
+ drivers/bus/mhi/ep/main.c                 | 1601 +++++++++++++++++++++
+ drivers/bus/mhi/ep/mmio.c                 |  274 ++++
+ drivers/bus/mhi/ep/ring.c                 |  267 ++++
+ drivers/bus/mhi/ep/sm.c                   |  174 +++
+ drivers/bus/mhi/host/Kconfig              |   31 +
+ drivers/bus/mhi/{core => host}/Makefile   |    4 +-
+ drivers/bus/mhi/{core => host}/boot.c     |   17 +-
+ drivers/bus/mhi/{core => host}/debugfs.c  |   40 +-
+ drivers/bus/mhi/{core => host}/init.c     |  123 +-
+ drivers/bus/mhi/{core => host}/internal.h |  427 +-----
+ drivers/bus/mhi/{core => host}/main.c     |   46 +-
+ drivers/bus/mhi/{ => host}/pci_generic.c  |    0
+ drivers/bus/mhi/{core => host}/pm.c       |   36 +-
+ include/linux/mhi_ep.h                    |  293 ++++
+ include/linux/mod_devicetable.h           |    2 +
+ scripts/mod/file2alias.c                  |   10 +
+ 23 files changed, 3442 insertions(+), 527 deletions(-)
+ create mode 100644 drivers/bus/mhi/common.h
+ create mode 100644 drivers/bus/mhi/ep/Kconfig
+ create mode 100644 drivers/bus/mhi/ep/Makefile
+ create mode 100644 drivers/bus/mhi/ep/internal.h
+ create mode 100644 drivers/bus/mhi/ep/main.c
+ create mode 100644 drivers/bus/mhi/ep/mmio.c
+ create mode 100644 drivers/bus/mhi/ep/ring.c
+ create mode 100644 drivers/bus/mhi/ep/sm.c
+ create mode 100644 drivers/bus/mhi/host/Kconfig
+ rename drivers/bus/mhi/{core => host}/Makefile (54%)
+ rename drivers/bus/mhi/{core => host}/boot.c (96%)
+ rename drivers/bus/mhi/{core => host}/debugfs.c (90%)
+ rename drivers/bus/mhi/{core => host}/init.c (93%)
+ rename drivers/bus/mhi/{core => host}/internal.h (50%)
+ rename drivers/bus/mhi/{core => host}/main.c (98%)
+ rename drivers/bus/mhi/{ => host}/pci_generic.c (100%)
+ rename drivers/bus/mhi/{core => host}/pm.c (97%)
+ create mode 100644 include/linux/mhi_ep.h
 
 -- 
-With best wishes
-Dmitry
+2.25.1
+
