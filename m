@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA0ED4B372C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Feb 2022 19:25:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3F6B4B3732
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Feb 2022 19:25:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229708AbiBLSWj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S229699AbiBLSWj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Sat, 12 Feb 2022 13:22:39 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:45774 "EHLO
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229800AbiBLSWg (ORCPT
+        with ESMTP id S229765AbiBLSWi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Feb 2022 13:22:36 -0500
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 498A0606C8
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Feb 2022 10:22:28 -0800 (PST)
-Received: by mail-pl1-x631.google.com with SMTP id u12so7230245plf.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Feb 2022 10:22:28 -0800 (PST)
+        Sat, 12 Feb 2022 13:22:38 -0500
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 600275FF0D
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Feb 2022 10:22:33 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id e17so2445244pfv.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Feb 2022 10:22:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=g49+wFi0+L2EFX9slEZO36BXMBmO9BAHKtkIF7AjIc4=;
-        b=Qaj0Oks+qpWWnbjrfPIrbHozo3YeLmLdIG/TvZbU5V6dTbOje+t2Np1msaSIll/jGZ
-         fRn3bd46oK30vNMMF+3mmzFg9Mi6CgjKNyQIyKYruUjJXJdl/qLwxHdxZli4GArgp/O/
-         eYLnTc4kBSIGs6PxY6IMH5VXSV+6AAXKTnzF/pid6ZTfk+lVeYCgv77UFucBnnLgoXrb
-         8e1hGrMPM81vZ5MBQGXLPn3ql+ub/Y9HZiUN4Um7iWlpphmp4yjmGEu4kuGj1VT1WhPq
-         AjnRbF1rJgyhuN+n7ibTQZ3AGqW62jAQ988nKYUuMpm2yHII2SkntIPjZ4S23eazPB+0
-         HoJA==
+        bh=dRyVbSQXppN/OUuF4/pZFzmZtZ5UsMfwyjfSr89DRIw=;
+        b=y0/VsjANcaLH2vRblATIxK3xx4jk4uiGpLeyo6hO672fh0QEeXI08eUWqVw232OvCW
+         xOIyO4AhXpI3LL6nxCd8BmoFThKPLWU4skh9MF1zHMKRAUJSs9ujn/ZNQ4Z3wfpdrNZb
+         kIs37yfnIntz2BU9NfUYtFbsxLiPAUNvchXn37NFg1nF3qINiukzPz/Vk8rMXlxSl67Q
+         38m6theu77LbsBfaQovsETvlxyoUKsel4WgVZHO7gwNCQw83BM0yrIRYZ5tfNUkG5idf
+         Ebt3KbC/QO4xrpBKPtyprXbH1amIboXJfuVKDbolURzZxT9rR+0vXzouPOHIfFmexzP2
+         bHkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=g49+wFi0+L2EFX9slEZO36BXMBmO9BAHKtkIF7AjIc4=;
-        b=WqX2uBqOl6ZX2aLQ4pK0U3n6rohzkVizemxkqC2l5Mrh561NeikkJ0Pqq678H+mQB+
-         mHKjsqVdsyiUQ8Jj36NqI41OC+EESjDBYJwWnBgtOi9mrwmtthIUp582awIU8YiNoCwk
-         OW1h4i0oOyP4hWl5CTQK5etp5qJhUiwoLWrc0PI3MvMbEri0Rz7GCSASdHAWN0Bu7tYy
-         ymqlo/xoUHUpJiu1mPx0WU/15hwpVlqGqISIgrqv5c+aBYHnkdPSxMkg3ndB/oacnk7o
-         U3BLOJV97wruXDxPRb9mQ8UO+uYJarHX/5z6/F7A2bKuHtGnUc1IQJSOuB07eztoTLfr
-         76VQ==
-X-Gm-Message-State: AOAM530EO3JuARq/NGrT5LcYpzgzLy0RZctaLwV9pyox0GcIiz/EuppR
-        cjwyOrkIRamWDZk87NxZKQcd
-X-Google-Smtp-Source: ABdhPJwcmUlXO8ifxo1TZGZofZ1qRsSxT5ttiDr7LbbIKnn76r/wYRjgD2Q7FbM7DaU+VwrkvIGPWg==
-X-Received: by 2002:a17:902:d486:: with SMTP id c6mr6965799plg.141.1644690147753;
-        Sat, 12 Feb 2022 10:22:27 -0800 (PST)
+        bh=dRyVbSQXppN/OUuF4/pZFzmZtZ5UsMfwyjfSr89DRIw=;
+        b=JkVqVxZH9aTBXunUo+rEJgA3LzE1SrZ7dY40KxdYH5vLjxWQNofbHlW1zAPtqX3PfE
+         Igbh5x4dP+U9pYGoy3K8uq8Nb80uIgj7s7N778Cgyksho8BoqGr/g6BLFFxuyun3i6Sw
+         EMMLHdvF71dggsgrTCMR+tPdH8ooNIvOm8km1IHLrOZfzNozem1l0bSh6993qGOWoIS3
+         u2GJZQVDQpJrh05eLN4P02zi7m07OXlkSEQgTymUwIofkEgyj53hSOypcJlgAOv7/IzS
+         ctZqIVEkBD32cy9X52XhhiGFECRb7dunr0esG5uE3tJrreZe3ZIss46SUMyVf510VUUs
+         zurw==
+X-Gm-Message-State: AOAM53191IpecLnP2N8wNp9vDkciKHdjZIlh7kPwRmxqSWy7HzUN2VUh
+        BuYoQHLffFwElOA7TrS9mXyl
+X-Google-Smtp-Source: ABdhPJxubjawu1rUQHWDhi1P1ZgIgZ89wp/2lwaVUSDQqFAkJ4M4AnqMt65H7xfVqgts9O46SjG95w==
+X-Received: by 2002:a63:555b:: with SMTP id f27mr5780074pgm.468.1644690152896;
+        Sat, 12 Feb 2022 10:22:32 -0800 (PST)
 Received: from localhost.localdomain ([27.111.75.57])
-        by smtp.gmail.com with ESMTPSA id g12sm14961987pfj.148.2022.02.12.10.22.22
+        by smtp.gmail.com with ESMTPSA id g12sm14961987pfj.148.2022.02.12.10.22.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Feb 2022 10:22:27 -0800 (PST)
+        Sat, 12 Feb 2022 10:22:32 -0800 (PST)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     mhi@lists.linux.dev
 Cc:     quic_hemantk@quicinc.com, quic_bbhatt@quicinc.com,
@@ -57,9 +57,9 @@ Cc:     quic_hemantk@quicinc.com, quic_bbhatt@quicinc.com,
         quic_skananth@quicinc.com, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, elder@linaro.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v3 09/25] bus: mhi: ep: Add support for registering MHI endpoint client drivers
-Date:   Sat, 12 Feb 2022 23:51:01 +0530
-Message-Id: <20220212182117.49438-10-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 10/25] bus: mhi: ep: Add support for creating and destroying MHI EP devices
+Date:   Sat, 12 Feb 2022 23:51:02 +0530
+Message-Id: <20220212182117.49438-11-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
 References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
@@ -75,190 +75,107 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This commit adds support for registering MHI endpoint client drivers
-with the MHI endpoint stack. MHI endpoint client drivers binds to one
-or more MHI endpoint devices inorder to send and receive the upper-layer
-protocol packets like IP packets, modem control messages, and diagnostics
-messages over MHI bus.
+This commit adds support for creating and destroying MHI endpoint devices.
+The MHI endpoint devices binds to the MHI endpoint channels and are used
+to transfer data between MHI host and endpoint device.
+
+There is a single MHI EP device for each channel pair. The devices will be
+created when the corresponding channels has been started by the host and
+will be destroyed during MHI EP power down and reset.
 
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/bus/mhi/ep/main.c | 86 +++++++++++++++++++++++++++++++++++++++
- include/linux/mhi_ep.h    | 53 ++++++++++++++++++++++++
- 2 files changed, 139 insertions(+)
+ drivers/bus/mhi/ep/main.c | 77 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 77 insertions(+)
 
 diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index b006011d025d..f66404181972 100644
+index f66404181972..fcaacf9ddbd1 100644
 --- a/drivers/bus/mhi/ep/main.c
 +++ b/drivers/bus/mhi/ep/main.c
-@@ -196,9 +196,89 @@ void mhi_ep_unregister_controller(struct mhi_ep_cntrl *mhi_cntrl)
+@@ -67,6 +67,83 @@ static struct mhi_ep_device *mhi_ep_alloc_device(struct mhi_ep_cntrl *mhi_cntrl,
+ 	return mhi_dev;
  }
- EXPORT_SYMBOL_GPL(mhi_ep_unregister_controller);
  
-+static int mhi_ep_driver_probe(struct device *dev)
++/*
++ * MHI channels are always defined in pairs with UL as the even numbered
++ * channel and DL as odd numbered one.
++ */
++static int mhi_ep_create_device(struct mhi_ep_cntrl *mhi_cntrl, u32 ch_id)
 +{
-+	struct mhi_ep_device *mhi_dev = to_mhi_ep_device(dev);
-+	struct mhi_ep_driver *mhi_drv = to_mhi_ep_driver(dev->driver);
-+	struct mhi_ep_chan *ul_chan = mhi_dev->ul_chan;
-+	struct mhi_ep_chan *dl_chan = mhi_dev->dl_chan;
++	struct mhi_ep_chan *mhi_chan = &mhi_cntrl->mhi_chan[ch_id];
++	struct mhi_ep_device *mhi_dev;
++	int ret;
 +
-+	/* Client drivers should have callbacks for both channels */
-+	if (!mhi_drv->ul_xfer_cb || !mhi_drv->dl_xfer_cb)
++	/* Check if the channel name is same for both UL and DL */
++	if (strcmp(mhi_chan->name, mhi_chan[1].name))
 +		return -EINVAL;
 +
-+	ul_chan->xfer_cb = mhi_drv->ul_xfer_cb;
-+	dl_chan->xfer_cb = mhi_drv->dl_xfer_cb;
++	mhi_dev = mhi_ep_alloc_device(mhi_cntrl, MHI_DEVICE_XFER);
++	if (IS_ERR(mhi_dev))
++		return PTR_ERR(mhi_dev);
 +
-+	return mhi_drv->probe(mhi_dev, mhi_dev->id);
++	/* Configure primary channel */
++	mhi_dev->ul_chan = mhi_chan;
++	get_device(&mhi_dev->dev);
++	mhi_chan->mhi_dev = mhi_dev;
++
++	/* Configure secondary channel as well */
++	mhi_chan++;
++	mhi_dev->dl_chan = mhi_chan;
++	get_device(&mhi_dev->dev);
++	mhi_chan->mhi_dev = mhi_dev;
++
++	/* Channel name is same for both UL and DL */
++	mhi_dev->name = mhi_chan->name;
++	dev_set_name(&mhi_dev->dev, "%s_%s",
++		     dev_name(&mhi_cntrl->mhi_dev->dev),
++		     mhi_dev->name);
++
++	ret = device_add(&mhi_dev->dev);
++	if (ret)
++		put_device(&mhi_dev->dev);
++
++	return ret;
 +}
 +
-+static int mhi_ep_driver_remove(struct device *dev)
++static int mhi_ep_destroy_device(struct device *dev, void *data)
 +{
-+	struct mhi_ep_device *mhi_dev = to_mhi_ep_device(dev);
-+	struct mhi_ep_driver *mhi_drv = to_mhi_ep_driver(dev->driver);
-+	struct mhi_result result = {};
-+	struct mhi_ep_chan *mhi_chan;
-+	int dir;
++	struct mhi_ep_device *mhi_dev;
++	struct mhi_ep_cntrl *mhi_cntrl;
++	struct mhi_ep_chan *ul_chan, *dl_chan;
 +
-+	/* Skip if it is a controller device */
++	if (dev->bus != &mhi_ep_bus_type)
++		return 0;
++
++	mhi_dev = to_mhi_ep_device(dev);
++	mhi_cntrl = mhi_dev->mhi_cntrl;
++
++	/* Only destroy devices created for channels */
 +	if (mhi_dev->dev_type == MHI_DEVICE_CONTROLLER)
 +		return 0;
 +
-+	/* Disconnect the channels associated with the driver */
-+	for (dir = 0; dir < 2; dir++) {
-+		mhi_chan = dir ? mhi_dev->ul_chan : mhi_dev->dl_chan;
++	ul_chan = mhi_dev->ul_chan;
++	dl_chan = mhi_dev->dl_chan;
 +
-+		if (!mhi_chan)
-+			continue;
++	if (ul_chan)
++		put_device(&ul_chan->mhi_dev->dev);
 +
-+		mutex_lock(&mhi_chan->lock);
-+		/* Send channel disconnect status to the client driver */
-+		if (mhi_chan->xfer_cb) {
-+			result.transaction_status = -ENOTCONN;
-+			result.bytes_xferd = 0;
-+			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
-+		}
++	if (dl_chan)
++		put_device(&dl_chan->mhi_dev->dev);
 +
-+		/* Set channel state to DISABLED */
-+		mhi_chan->state = MHI_CH_STATE_DISABLED;
-+		mhi_chan->xfer_cb = NULL;
-+		mutex_unlock(&mhi_chan->lock);
-+	}
++	dev_dbg(&mhi_cntrl->mhi_dev->dev, "Destroying device for chan:%s\n",
++		 mhi_dev->name);
 +
-+	/* Remove the client driver now */
-+	mhi_drv->remove(mhi_dev);
++	/* Notify the client and remove the device from MHI bus */
++	device_del(dev);
++	put_device(dev);
 +
 +	return 0;
 +}
 +
-+int __mhi_ep_driver_register(struct mhi_ep_driver *mhi_drv, struct module *owner)
-+{
-+	struct device_driver *driver = &mhi_drv->driver;
-+
-+	if (!mhi_drv->probe || !mhi_drv->remove)
-+		return -EINVAL;
-+
-+	driver->bus = &mhi_ep_bus_type;
-+	driver->owner = owner;
-+	driver->probe = mhi_ep_driver_probe;
-+	driver->remove = mhi_ep_driver_remove;
-+
-+	return driver_register(driver);
-+}
-+EXPORT_SYMBOL_GPL(__mhi_ep_driver_register);
-+
-+void mhi_ep_driver_unregister(struct mhi_ep_driver *mhi_drv)
-+{
-+	driver_unregister(&mhi_drv->driver);
-+}
-+EXPORT_SYMBOL_GPL(mhi_ep_driver_unregister);
-+
- static int mhi_ep_match(struct device *dev, struct device_driver *drv)
+ static int parse_ch_cfg(struct mhi_ep_cntrl *mhi_cntrl,
+ 			const struct mhi_ep_cntrl_config *config)
  {
- 	struct mhi_ep_device *mhi_dev = to_mhi_ep_device(dev);
-+	struct mhi_ep_driver *mhi_drv = to_mhi_ep_driver(drv);
-+	const struct mhi_device_id *id;
- 
- 	/*
- 	 * If the device is a controller type then there is no client driver
-@@ -207,6 +287,12 @@ static int mhi_ep_match(struct device *dev, struct device_driver *drv)
- 	if (mhi_dev->dev_type == MHI_DEVICE_CONTROLLER)
- 		return 0;
- 
-+	for (id = mhi_drv->id_table; id->chan[0]; id++)
-+		if (!strcmp(mhi_dev->name, id->chan)) {
-+			mhi_dev->id = id;
-+			return 1;
-+		}
-+
- 	return 0;
- };
- 
-diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
-index 20238e9df1b3..da865f9d3646 100644
---- a/include/linux/mhi_ep.h
-+++ b/include/linux/mhi_ep.h
-@@ -122,7 +122,60 @@ struct mhi_ep_device {
- 	enum mhi_device_type dev_type;
- };
- 
-+/**
-+ * struct mhi_ep_driver - Structure representing a MHI Endpoint client driver
-+ * @id_table: Pointer to MHI Endpoint device ID table
-+ * @driver: Device driver model driver
-+ * @probe: CB function for client driver probe function
-+ * @remove: CB function for client driver remove function
-+ * @ul_xfer_cb: CB function for UL data transfer
-+ * @dl_xfer_cb: CB function for DL data transfer
-+ */
-+struct mhi_ep_driver {
-+	const struct mhi_device_id *id_table;
-+	struct device_driver driver;
-+	int (*probe)(struct mhi_ep_device *mhi_ep,
-+		     const struct mhi_device_id *id);
-+	void (*remove)(struct mhi_ep_device *mhi_ep);
-+	void (*ul_xfer_cb)(struct mhi_ep_device *mhi_dev,
-+			   struct mhi_result *result);
-+	void (*dl_xfer_cb)(struct mhi_ep_device *mhi_dev,
-+			   struct mhi_result *result);
-+};
-+
- #define to_mhi_ep_device(dev) container_of(dev, struct mhi_ep_device, dev)
-+#define to_mhi_ep_driver(drv) container_of(drv, struct mhi_ep_driver, driver)
-+
-+/*
-+ * module_mhi_ep_driver() - Helper macro for drivers that don't do
-+ * anything special other than using default mhi_ep_driver_register() and
-+ * mhi_ep_driver_unregister().  This eliminates a lot of boilerplate.
-+ * Each module may only use this macro once.
-+ */
-+#define module_mhi_ep_driver(mhi_drv) \
-+	module_driver(mhi_drv, mhi_ep_driver_register, \
-+		      mhi_ep_driver_unregister)
-+
-+/*
-+ * Macro to avoid include chaining to get THIS_MODULE
-+ */
-+#define mhi_ep_driver_register(mhi_drv) \
-+	__mhi_ep_driver_register(mhi_drv, THIS_MODULE)
-+
-+/**
-+ * __mhi_ep_driver_register - Register a driver with MHI Endpoint bus
-+ * @mhi_drv: Driver to be associated with the device
-+ * @owner: The module owner
-+ *
-+ * Return: 0 if driver registrations succeeds, a negative error code otherwise.
-+ */
-+int __mhi_ep_driver_register(struct mhi_ep_driver *mhi_drv, struct module *owner);
-+
-+/**
-+ * mhi_ep_driver_unregister - Unregister a driver from MHI Endpoint bus
-+ * @mhi_drv: Driver associated with the device
-+ */
-+void mhi_ep_driver_unregister(struct mhi_ep_driver *mhi_drv);
- 
- /**
-  * mhi_ep_register_controller - Register MHI Endpoint controller
 -- 
 2.25.1
 
