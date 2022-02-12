@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 368D74B3751
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Feb 2022 19:25:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D13534B3747
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Feb 2022 19:25:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229903AbiBLSXd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Feb 2022 13:23:33 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47850 "EHLO
+        id S230061AbiBLSXo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Feb 2022 13:23:44 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:48274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229920AbiBLSXb (ORCPT
+        with ESMTP id S230090AbiBLSXm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Feb 2022 13:23:31 -0500
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED36B60062
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Feb 2022 10:23:15 -0800 (PST)
-Received: by mail-pl1-x62b.google.com with SMTP id c3so7265670pls.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Feb 2022 10:23:15 -0800 (PST)
+        Sat, 12 Feb 2022 13:23:42 -0500
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89832606C4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Feb 2022 10:23:20 -0800 (PST)
+Received: by mail-pl1-x629.google.com with SMTP id 10so7268574plj.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Feb 2022 10:23:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=nOeAtH9KqQy90Wc3/INZFeCi473Iwk1s2/Fhz+I9C3k=;
-        b=QVyTtzeYWyHPclKxH4SZFHtF3XCzqOxoFhFxXy2EYmqZBAs4qu7xculGq8C+XBIAQ6
-         mnNoxhoezaVExurBfqUDBoG3+QukjV1xsSgsJlIjJlO4sV87QeTciq+pweb+NPWSneBR
-         C44eWQfK50ltPyKIiD3qTuO3qum1GxmwW1cyNx2oPma5DknsnycP2tuaKg0k5GAqKJth
-         cGarVlOqQcCCVWh1BuSIgqN4LpBclde/55vIUNGLj4jA9IZafiqXmx+yLG7dL9UbQ1ov
-         AgAP9+h1euN1dD2TQP2QT2et4qNLNxru/nSDrpDxYGV0ko9UG+GcGfi9BiKBR3fFxRIc
-         JqlQ==
+        bh=m/hPWm0+5LcdOB8NWzzaMRU3PadY6NbOKvxGtL82+j4=;
+        b=MAYIMl8lfe4WoVIa2YvE97sC8uSrnnZiWqPEW1iuYn1xqCViy5MGkLuyrr4oy3Yqgb
+         3Fb/y0+eVDYDTesbT61m0ivf/4VJ20M5qr98GpUTO0nDl3YdW6gm7W2D7zkFhx9waMBy
+         GwfctOKxATTTcPAwC8z52r/TCI2xZELn9C1PJrElhW1YLlPJA43lcJx4r0TDWFUQVIXT
+         woNBDUGgPObzMsWbJ4vvorjGixuKglumXzccBAehLGuZDnJASuAwYYkpqAjxDKy6cuPe
+         8lAE9IbqF6ODOwZCZSM2dLD31/ORj7MRAoJA6Tx6mvBiC76XV5fdr3B033CU2svNeZd+
+         dB6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=nOeAtH9KqQy90Wc3/INZFeCi473Iwk1s2/Fhz+I9C3k=;
-        b=AmqCR5qvi2yME9t6EflWlF+LPCgcVGkl12mXE1dG6vKVI28tFSoh1rzfo/1T0hWZ//
-         v9ASH6r9ZicUeGTZNTz4OJsiFpON9ehaMnKgr1b3g8j59gRbhWzanNgGnrB6KofDOVDO
-         fIYzJSp+02g7XXXwDejlofHg6dWUbwG7FGwSloOdwD6lExMBBPOrtLLGu/AP95y5CUPj
-         J0PFLFSQ07meq085F5u+JZ93dTt6kAu0mPehw4Z2SfKVg52wwa55VWaCWFqU9BNsicIT
-         NppRuRSUergUkldiOKiQkXMAWbqZOeu7qXSBMB45ywHaBxLr2cdar0TgZkWx/0TZubh+
-         Tjww==
-X-Gm-Message-State: AOAM5315FqcUDZkQvO3UsGY2lk7IN0N+nOPKjvPvWgslieNjqU43m4Fs
-        tabll37ZYsn3aiH/m9241dlj
-X-Google-Smtp-Source: ABdhPJx6sakHNoUbIv6WLbXVv5/bnUcjzl4CHpRshFMWafwsldLiP14yjSqXEdQQorWGmy1gsOxkKA==
-X-Received: by 2002:a17:90b:4c0d:: with SMTP id na13mr6274373pjb.96.1644690195423;
-        Sat, 12 Feb 2022 10:23:15 -0800 (PST)
+        bh=m/hPWm0+5LcdOB8NWzzaMRU3PadY6NbOKvxGtL82+j4=;
+        b=evYtw1r9g+DN5nzYPmXbYFDGxtOCxQ2dPneN3sklO7YOEnt8QK7GID8n3uFnjX64Fj
+         hKD/fJ/wi/soJCHR2261qiWE5CqJIW+Tb8tj7ufpQ8iIEiL40t0tr6aq3OGTl5dte/yW
+         s6oNRR2bkKYdCZtJN8SLjYgf0jKmPQ/9c+0eBKHui8kneH/smRO3bRL6bWi9zEFjU7oN
+         +l2zp+PfnvD++d7bma/93eR5FOWUnRlqCazHFv1UzYbBgqWWQ6vd4m/WjM8VevB+ZriV
+         nu/Q4JQGLrf2a6o79VD/bf9htWfkhmplILSkb+e3BgJ9C2+dnO2zXdOgHUb7609QNhLq
+         NBjA==
+X-Gm-Message-State: AOAM530b/z/nDYYEkqRT9hdgoCeY30vLRmVIqLtguCQ02ON3fIg8cr/v
+        nmnqRxLAsyIM3wNdIQvP1vzq
+X-Google-Smtp-Source: ABdhPJwRrc/SxpGGHBJIIaKyU1LDqCDZZdi4badsonGW1XzxaGDljBrPXmLf3jIz6WrVI9Sh1b7dtA==
+X-Received: by 2002:a17:90b:398:: with SMTP id ga24mr6372706pjb.108.1644690199968;
+        Sat, 12 Feb 2022 10:23:19 -0800 (PST)
 Received: from localhost.localdomain ([27.111.75.57])
-        by smtp.gmail.com with ESMTPSA id g12sm14961987pfj.148.2022.02.12.10.23.11
+        by smtp.gmail.com with ESMTPSA id g12sm14961987pfj.148.2022.02.12.10.23.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Feb 2022 10:23:15 -0800 (PST)
+        Sat, 12 Feb 2022 10:23:19 -0800 (PST)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     mhi@lists.linux.dev
 Cc:     quic_hemantk@quicinc.com, quic_bbhatt@quicinc.com,
@@ -57,9 +57,9 @@ Cc:     quic_hemantk@quicinc.com, quic_bbhatt@quicinc.com,
         quic_skananth@quicinc.com, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, elder@linaro.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v3 19/25] bus: mhi: ep: Add support for handling SYS_ERR condition
-Date:   Sat, 12 Feb 2022 23:51:11 +0530
-Message-Id: <20220212182117.49438-20-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 20/25] bus: mhi: ep: Add support for processing command ring
+Date:   Sat, 12 Feb 2022 23:51:12 +0530
+Message-Id: <20220212182117.49438-21-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
 References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
@@ -75,85 +75,192 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for handling SYS_ERR (System Error) condition in the MHI
-endpoint stack. The SYS_ERR flag will be asserted by the endpoint device
-when it detects an internal error. The host will then issue reset and
-reinitializes MHI to recover from the error state.
+Add support for processing the command ring. Command ring is used by the
+host to issue channel specific commands to the ep device. Following
+commands are supported:
+
+1. Start channel
+2. Stop channel
+3. Reset channel
+
+Once the device receives the command doorbell interrupt from host, it
+executes the command and generates a command completion event to the
+host in the primary event ring.
 
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/bus/mhi/ep/internal.h |  1 +
- drivers/bus/mhi/ep/main.c     | 24 ++++++++++++++++++++++++
- drivers/bus/mhi/ep/sm.c       |  2 ++
- 3 files changed, 27 insertions(+)
+ drivers/bus/mhi/ep/main.c | 151 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 151 insertions(+)
 
-diff --git a/drivers/bus/mhi/ep/internal.h b/drivers/bus/mhi/ep/internal.h
-index ee8c5974f0c0..8654af7caf40 100644
---- a/drivers/bus/mhi/ep/internal.h
-+++ b/drivers/bus/mhi/ep/internal.h
-@@ -241,6 +241,7 @@ int mhi_ep_set_mhi_state(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state mhi_stat
- int mhi_ep_set_m0_state(struct mhi_ep_cntrl *mhi_cntrl);
- int mhi_ep_set_m3_state(struct mhi_ep_cntrl *mhi_cntrl);
- int mhi_ep_set_ready_state(struct mhi_ep_cntrl *mhi_cntrl);
-+void mhi_ep_handle_syserr(struct mhi_ep_cntrl *mhi_cntrl);
- 
- /* MHI EP memory management functions */
- int mhi_ep_alloc_map(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr, size_t size,
 diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index ddedd0fb19aa..6378ac5c7e37 100644
+index 6378ac5c7e37..4c2ee517832c 100644
 --- a/drivers/bus/mhi/ep/main.c
 +++ b/drivers/bus/mhi/ep/main.c
-@@ -611,6 +611,30 @@ static void mhi_ep_reset_worker(struct work_struct *work)
- 	}
+@@ -21,6 +21,7 @@
+ 
+ static DEFINE_IDA(mhi_ep_cntrl_ida);
+ 
++static int mhi_ep_create_device(struct mhi_ep_cntrl *mhi_cntrl, u32 ch_id);
+ static int mhi_ep_destroy_device(struct device *dev, void *data);
+ 
+ static int mhi_ep_send_event(struct mhi_ep_cntrl *mhi_cntrl, u32 ring_idx,
+@@ -185,6 +186,156 @@ void mhi_ep_unmap_free(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr, phys_addr_t
+ 	mhi_cntrl->free_addr(mhi_cntrl, phys - offset, virt - offset, size);
  }
  
-+/*
-+ * We don't need to do anything special other than setting the MHI SYS_ERR
-+ * state. The host issue will reset all contexts and issue MHI RESET so that we
-+ * could also recover from error state.
-+ */
-+void mhi_ep_handle_syserr(struct mhi_ep_cntrl *mhi_cntrl)
++int mhi_ep_process_cmd_ring(struct mhi_ep_ring *ring, struct mhi_ep_ring_element *el)
 +{
++	struct mhi_ep_cntrl *mhi_cntrl = ring->mhi_cntrl;
 +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
++	struct mhi_result result = {};
++	struct mhi_ep_chan *mhi_chan;
++	struct mhi_ep_ring *ch_ring;
++	u32 tmp, ch_id;
 +	int ret;
 +
-+	/* If MHI EP is not enabled, nothing to do */
-+	if (!mhi_cntrl->is_enabled)
-+		return;
++	ch_id = MHI_TRE_GET_CMD_CHID(el);
++	mhi_chan = &mhi_cntrl->mhi_chan[ch_id];
++	ch_ring = &mhi_cntrl->mhi_chan[ch_id].ring;
 +
-+	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_SYS_ERR);
-+	if (ret)
-+		return;
++	switch (MHI_TRE_GET_CMD_TYPE(el)) {
++	case MHI_PKT_TYPE_START_CHAN_CMD:
++		dev_dbg(dev, "Received START command for channel (%d)\n", ch_id);
 +
-+	/* Signal host that the device went to SYS_ERR state */
-+	ret = mhi_ep_send_state_change_event(mhi_cntrl, MHI_STATE_SYS_ERR);
-+	if (ret)
-+		dev_err(dev, "Failed sending SYS_ERR state change event: %d\n", ret);
++		mutex_lock(&mhi_chan->lock);
++		/* Initialize and configure the corresponding channel ring */
++		if (!ch_ring->started) {
++			ret = mhi_ep_ring_start(mhi_cntrl, ch_ring,
++				(union mhi_ep_ring_ctx *)&mhi_cntrl->ch_ctx_cache[ch_id]);
++			if (ret) {
++				dev_err(dev, "Failed to start ring for channel (%d)\n", ch_id);
++				ret = mhi_ep_send_cmd_comp_event(mhi_cntrl,
++							MHI_EV_CC_UNDEFINED_ERR);
++				if (ret)
++					dev_err(dev, "Error sending completion event (%d)\n",
++						MHI_EV_CC_UNDEFINED_ERR);
++
++				goto err_unlock;
++			}
++		}
++
++		/* Enable DB for the channel */
++		mhi_ep_mmio_enable_chdb_a7(mhi_cntrl, ch_id);
++
++		/* Set channel state to RUNNING */
++		mhi_chan->state = MHI_CH_STATE_RUNNING;
++		tmp = le32_to_cpu(mhi_cntrl->ch_ctx_cache[ch_id].chcfg);
++		tmp &= ~CHAN_CTX_CHSTATE_MASK;
++		tmp |= FIELD_PREP(CHAN_CTX_CHSTATE_MASK, MHI_CH_STATE_RUNNING);
++		mhi_cntrl->ch_ctx_cache[ch_id].chcfg = cpu_to_le32(tmp);
++
++		ret = mhi_ep_send_cmd_comp_event(mhi_cntrl, MHI_EV_CC_SUCCESS);
++		if (ret) {
++			dev_err(dev, "Error sending command completion event (%d)\n",
++				MHI_EV_CC_SUCCESS);
++			goto err_unlock;
++		}
++
++		mutex_unlock(&mhi_chan->lock);
++
++		/*
++		 * Create MHI device only during UL channel start. Since the MHI
++		 * channels operate in a pair, we'll associate both UL and DL
++		 * channels to the same device.
++		 *
++		 * We also need to check for mhi_dev != NULL because, the host
++		 * will issue START_CHAN command during resume and we don't
++		 * destroy the device during suspend.
++		 */
++		if (!(ch_id % 2) && !mhi_chan->mhi_dev) {
++			ret = mhi_ep_create_device(mhi_cntrl, ch_id);
++			if (ret) {
++				dev_err(dev, "Error creating device for channel (%d)\n", ch_id);
++				return ret;
++			}
++		}
++
++		break;
++	case MHI_PKT_TYPE_STOP_CHAN_CMD:
++		dev_dbg(dev, "Received STOP command for channel (%d)\n", ch_id);
++		if (!ch_ring->started) {
++			dev_err(dev, "Channel (%d) not opened\n", ch_id);
++			return -ENODEV;
++		}
++
++		mutex_lock(&mhi_chan->lock);
++		/* Disable DB for the channel */
++		mhi_ep_mmio_disable_chdb_a7(mhi_cntrl, ch_id);
++
++		/* Send channel disconnect status to client drivers */
++		result.transaction_status = -ENOTCONN;
++		result.bytes_xferd = 0;
++		mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
++
++		/* Set channel state to STOP */
++		mhi_chan->state = MHI_CH_STATE_STOP;
++		tmp = le32_to_cpu(mhi_cntrl->ch_ctx_cache[ch_id].chcfg);
++		tmp &= ~CHAN_CTX_CHSTATE_MASK;
++		tmp |= FIELD_PREP(CHAN_CTX_CHSTATE_MASK, MHI_CH_STATE_STOP);
++		mhi_cntrl->ch_ctx_cache[ch_id].chcfg = cpu_to_le32(tmp);
++
++		ret = mhi_ep_send_cmd_comp_event(mhi_cntrl, MHI_EV_CC_SUCCESS);
++		if (ret) {
++			dev_err(dev, "Error sending command completion event (%d)\n",
++				MHI_EV_CC_SUCCESS);
++			goto err_unlock;
++		}
++
++		mutex_unlock(&mhi_chan->lock);
++		break;
++	case MHI_PKT_TYPE_RESET_CHAN_CMD:
++		dev_dbg(dev, "Received STOP command for channel (%d)\n", ch_id);
++		if (!ch_ring->started) {
++			dev_err(dev, "Channel (%d) not opened\n", ch_id);
++			return -ENODEV;
++		}
++
++		mutex_lock(&mhi_chan->lock);
++		/* Stop and reset the transfer ring */
++		mhi_ep_ring_reset(mhi_cntrl, ch_ring);
++
++		/* Send channel disconnect status to client driver */
++		result.transaction_status = -ENOTCONN;
++		result.bytes_xferd = 0;
++		mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
++
++		/* Set channel state to DISABLED */
++		mhi_chan->state = MHI_CH_STATE_DISABLED;
++		tmp = le32_to_cpu(mhi_cntrl->ch_ctx_cache[ch_id].chcfg);
++		tmp &= ~CHAN_CTX_CHSTATE_MASK;
++		tmp |= FIELD_PREP(CHAN_CTX_CHSTATE_MASK, MHI_CH_STATE_DISABLED);
++		mhi_cntrl->ch_ctx_cache[ch_id].chcfg = cpu_to_le32(tmp);
++
++		ret = mhi_ep_send_cmd_comp_event(mhi_cntrl, MHI_EV_CC_SUCCESS);
++		if (ret) {
++			dev_err(dev, "Error sending command completion event (%d)\n",
++				MHI_EV_CC_SUCCESS);
++			goto err_unlock;
++		}
++
++		mutex_unlock(&mhi_chan->lock);
++		break;
++	default:
++		dev_err(dev, "Invalid command received: %d for channel (%d)\n",
++			MHI_TRE_GET_CMD_TYPE(el), ch_id);
++		return -EINVAL;
++	}
++
++	return 0;
++
++err_unlock:
++	mutex_unlock(&mhi_chan->lock);
++
++	return ret;
 +}
 +
- int mhi_ep_power_up(struct mhi_ep_cntrl *mhi_cntrl)
+ static int mhi_ep_cache_host_cfg(struct mhi_ep_cntrl *mhi_cntrl)
  {
  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-diff --git a/drivers/bus/mhi/ep/sm.c b/drivers/bus/mhi/ep/sm.c
-index 68e7f99b9137..9a75ecfe1adf 100644
---- a/drivers/bus/mhi/ep/sm.c
-+++ b/drivers/bus/mhi/ep/sm.c
-@@ -93,6 +93,7 @@ int mhi_ep_set_m0_state(struct mhi_ep_cntrl *mhi_cntrl)
- 
- 	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_M0);
- 	if (ret) {
-+		mhi_ep_handle_syserr(mhi_cntrl);
- 		spin_unlock_bh(&mhi_cntrl->state_lock);
- 		return ret;
- 	}
-@@ -128,6 +129,7 @@ int mhi_ep_set_m3_state(struct mhi_ep_cntrl *mhi_cntrl)
- 	spin_lock_bh(&mhi_cntrl->state_lock);
- 	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_M3);
- 	if (ret) {
-+		mhi_ep_handle_syserr(mhi_cntrl);
- 		spin_unlock_bh(&mhi_cntrl->state_lock);
- 		return ret;
- 	}
 -- 
 2.25.1
 
