@@ -2,73 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B47B94B3762
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Feb 2022 19:32:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F15684B3898
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Feb 2022 00:24:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229550AbiBLScM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Feb 2022 13:32:12 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:53340 "EHLO
+        id S232466AbiBLXYm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Feb 2022 18:24:42 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229537AbiBLScL (ORCPT
+        with ESMTP id S230252AbiBLXYl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Feb 2022 13:32:11 -0500
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8B5F6007A
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Feb 2022 10:32:07 -0800 (PST)
-Received: by mail-pf1-x433.google.com with SMTP id l19so16168704pfu.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Feb 2022 10:32:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=k1GjCBbNsUNDeB/NEvjqCXptHC69sOQf+TjIBj9Sw04=;
-        b=ftiSBuk/1tSprlDBPhgh31aZa63ugUXxmTOF9wYT4/EAP/4Ukv/V9JDYbyMzkMoYKX
-         6bwCgAz75tRMg07/K1dUMSD1ENiZAo/G20AP778vg2kFYzP7ciP/vO/I/fsD4FFiM2Um
-         4ploK0v7S8azbkS6QK7kBw++NxGzxXJqPF1tRBSo5AbdxBypFb1A6HBpQ294w8fmLSVu
-         7W+MOXuz21mLPHinCdg3KEC85oQictL1L3qsMz+NfefNDntj8zKOzMKdsKxiG4iPmtOe
-         +iWypqP55fW+4EJru5KhRwe3jEOF+5HFeU+TyuZ9sgKh/wYQVhvSPnXADvXnm7LXuqD4
-         N1ZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=k1GjCBbNsUNDeB/NEvjqCXptHC69sOQf+TjIBj9Sw04=;
-        b=H6Q0K7uFvCZizD/CzJs4rHsr9hzs2Z7p4DCo2A+awNCmU6DH+y5UugFdZRLu1LomYP
-         B4ZYlM+IL6MdHaVjOiw2saPipyQAD8QBUXAcCBT5vYq9jb7d3X3f39NXRiH/BNRVD3Th
-         +3jDYRVRCwHBieF/GYqkdwbzwFfPSlDrVGFYIhWVHpEHCaw3GluyVfS5GQKXVq62sSsh
-         d+eewXFWomd9pltY5/7xi2DeI5rbv1/AzwUx/GeVXRvZf8UQjENqgBe40NS+AFN7x2Wp
-         1f3hmoXQ+rpQHk2l5RQ0qefbJt/OrO1vXz46WZF/PNJWC8ZiLfiTxyf0TVjOSLusWXSi
-         sTQQ==
-X-Gm-Message-State: AOAM531jHOZesjr9/WsxuKu3enzvM5IQ2KLMXUjrItswc8Ze4djnlg0n
-        NRZJmsAMapKM7sHfvHbqWmeo
-X-Google-Smtp-Source: ABdhPJxxifnFdagwvJAn2Fnuz4nX6eZGGIUA4d/EQlKEjlI0MzoQN0e3OlDlWdkRWmDQ4EME5lMlNA==
-X-Received: by 2002:a63:2bc8:: with SMTP id r191mr5704442pgr.347.1644690727297;
-        Sat, 12 Feb 2022 10:32:07 -0800 (PST)
-Received: from thinkpad ([27.111.75.57])
-        by smtp.gmail.com with ESMTPSA id l14sm9412353pjf.1.2022.02.12.10.32.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Feb 2022 10:32:06 -0800 (PST)
-Date:   Sun, 13 Feb 2022 00:02:00 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     mhi@lists.linux.dev
-Cc:     quic_hemantk@quicinc.com, quic_bbhatt@quicinc.com,
-        quic_jhugo@quicinc.com, vinod.koul@linaro.org,
-        bjorn.andersson@linaro.org, dmitry.baryshkov@linaro.org,
-        quic_vbadigan@quicinc.com, quic_cang@quicinc.com,
-        quic_skananth@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, elder@linaro.org
-Subject: Re: [PATCH v3 09/25] bus: mhi: ep: Add support for registering MHI
- endpoint client drivers
-Message-ID: <20220212183200.GB9933@thinkpad>
-References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
- <20220212182117.49438-10-manivannan.sadhasivam@linaro.org>
+        Sat, 12 Feb 2022 18:24:41 -0500
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30F675FF08;
+        Sat, 12 Feb 2022 15:24:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1644708277; x=1676244277;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=lQp3ufLwimneT4WugYp2XgpX6NjnaubtrZ0Hin9414M=;
+  b=CUOiWJ5zeCfHOllj/TIBiKVUo86V29Mk3bMJ2igojKhxScJ1My1KxTmh
+   WZjNB9oXT6WRxm00h7N5sbD4skx96X9tXR+xMkpStScDfoO1k5Z3UW8/A
+   mfYLH+xbE6zdQ7dfnYrKxV0eHibIg0QOFfwmNJGhW2IsDgv/09LM5Pzsh
+   2Stn/p0BLeeUbS1T/Ecny/Ss1c1k2OixrWE2nAAWFLocjmuH36IIxEh4u
+   Hz35KAwtWxFAkLwIy4U4uWJTibSYDKQi8AX8iCcXHJF3A/jzye8DQNI8B
+   zKzW9kkjEGxuSjCasvaAAK5MQ+iK2DHKwqp6PL9bLTeIFJgWAX2c41WEN
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10256"; a="230548832"
+X-IronPort-AV: E=Sophos;i="5.88,364,1635231600"; 
+   d="scan'208";a="230548832"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Feb 2022 15:24:36 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,364,1635231600"; 
+   d="scan'208";a="679829752"
+Received: from lkp-server01.sh.intel.com (HELO d95dc2dabeb1) ([10.239.97.150])
+  by fmsmga001.fm.intel.com with ESMTP; 12 Feb 2022 15:24:32 -0800
+Received: from kbuild by d95dc2dabeb1 with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1nJ1km-0006kd-9m; Sat, 12 Feb 2022 23:24:32 +0000
+Date:   Sun, 13 Feb 2022 07:24:12 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, judyhsiao@chromium.org
+Cc:     kbuild-all@lists.01.org,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Subject: Re: [PATCH v11 07/10] ASoC: qcom: Add support for codec dma driver
+Message-ID: <202202130736.eUu0rQGL-lkp@intel.com>
+References: <1644665093-4695-8-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220212182117.49438-10-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <1644665093-4695-8-git-send-email-quic_srivasam@quicinc.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,198 +72,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Feb 12, 2022 at 11:51:01PM +0530, Manivannan Sadhasivam wrote:
-> This commit adds support for registering MHI endpoint client drivers
-> with the MHI endpoint stack. MHI endpoint client drivers binds to one
-> or more MHI endpoint devices inorder to send and receive the upper-layer
-> protocol packets like IP packets, modem control messages, and diagnostics
-> messages over MHI bus.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  drivers/bus/mhi/ep/main.c | 86 +++++++++++++++++++++++++++++++++++++++
->  include/linux/mhi_ep.h    | 53 ++++++++++++++++++++++++
->  2 files changed, 139 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> index b006011d025d..f66404181972 100644
-> --- a/drivers/bus/mhi/ep/main.c
-> +++ b/drivers/bus/mhi/ep/main.c
-> @@ -196,9 +196,89 @@ void mhi_ep_unregister_controller(struct mhi_ep_cntrl *mhi_cntrl)
->  }
->  EXPORT_SYMBOL_GPL(mhi_ep_unregister_controller);
->  
-> +static int mhi_ep_driver_probe(struct device *dev)
-> +{
-> +	struct mhi_ep_device *mhi_dev = to_mhi_ep_device(dev);
-> +	struct mhi_ep_driver *mhi_drv = to_mhi_ep_driver(dev->driver);
-> +	struct mhi_ep_chan *ul_chan = mhi_dev->ul_chan;
-> +	struct mhi_ep_chan *dl_chan = mhi_dev->dl_chan;
-> +
-> +	/* Client drivers should have callbacks for both channels */
-> +	if (!mhi_drv->ul_xfer_cb || !mhi_drv->dl_xfer_cb)
-> +		return -EINVAL;
-> +
+Hi Srinivasa,
 
-Hmm, I had a change that moved this check to __mhi_ep_driver_register() but I
-missed to apply it. Will do it in next iteration.
+Thank you for the patch! Perhaps something to improve:
 
-Thanks,
-Mani
+[auto build test WARNING on broonie-sound/for-next]
+[also build test WARNING on v5.17-rc3 next-20220211]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-> +	ul_chan->xfer_cb = mhi_drv->ul_xfer_cb;
-> +	dl_chan->xfer_cb = mhi_drv->dl_xfer_cb;
-> +
-> +	return mhi_drv->probe(mhi_dev, mhi_dev->id);
-> +}
-> +
-> +static int mhi_ep_driver_remove(struct device *dev)
-> +{
-> +	struct mhi_ep_device *mhi_dev = to_mhi_ep_device(dev);
-> +	struct mhi_ep_driver *mhi_drv = to_mhi_ep_driver(dev->driver);
-> +	struct mhi_result result = {};
-> +	struct mhi_ep_chan *mhi_chan;
-> +	int dir;
-> +
-> +	/* Skip if it is a controller device */
-> +	if (mhi_dev->dev_type == MHI_DEVICE_CONTROLLER)
-> +		return 0;
-> +
-> +	/* Disconnect the channels associated with the driver */
-> +	for (dir = 0; dir < 2; dir++) {
-> +		mhi_chan = dir ? mhi_dev->ul_chan : mhi_dev->dl_chan;
-> +
-> +		if (!mhi_chan)
-> +			continue;
-> +
-> +		mutex_lock(&mhi_chan->lock);
-> +		/* Send channel disconnect status to the client driver */
-> +		if (mhi_chan->xfer_cb) {
-> +			result.transaction_status = -ENOTCONN;
-> +			result.bytes_xferd = 0;
-> +			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
-> +		}
-> +
-> +		/* Set channel state to DISABLED */
-> +		mhi_chan->state = MHI_CH_STATE_DISABLED;
-> +		mhi_chan->xfer_cb = NULL;
-> +		mutex_unlock(&mhi_chan->lock);
-> +	}
-> +
-> +	/* Remove the client driver now */
-> +	mhi_drv->remove(mhi_dev);
-> +
-> +	return 0;
-> +}
-> +
-> +int __mhi_ep_driver_register(struct mhi_ep_driver *mhi_drv, struct module *owner)
-> +{
-> +	struct device_driver *driver = &mhi_drv->driver;
-> +
-> +	if (!mhi_drv->probe || !mhi_drv->remove)
-> +		return -EINVAL;
-> +
-> +	driver->bus = &mhi_ep_bus_type;
-> +	driver->owner = owner;
-> +	driver->probe = mhi_ep_driver_probe;
-> +	driver->remove = mhi_ep_driver_remove;
-> +
-> +	return driver_register(driver);
-> +}
-> +EXPORT_SYMBOL_GPL(__mhi_ep_driver_register);
-> +
-> +void mhi_ep_driver_unregister(struct mhi_ep_driver *mhi_drv)
-> +{
-> +	driver_unregister(&mhi_drv->driver);
-> +}
-> +EXPORT_SYMBOL_GPL(mhi_ep_driver_unregister);
-> +
->  static int mhi_ep_match(struct device *dev, struct device_driver *drv)
->  {
->  	struct mhi_ep_device *mhi_dev = to_mhi_ep_device(dev);
-> +	struct mhi_ep_driver *mhi_drv = to_mhi_ep_driver(drv);
-> +	const struct mhi_device_id *id;
->  
->  	/*
->  	 * If the device is a controller type then there is no client driver
-> @@ -207,6 +287,12 @@ static int mhi_ep_match(struct device *dev, struct device_driver *drv)
->  	if (mhi_dev->dev_type == MHI_DEVICE_CONTROLLER)
->  		return 0;
->  
-> +	for (id = mhi_drv->id_table; id->chan[0]; id++)
-> +		if (!strcmp(mhi_dev->name, id->chan)) {
-> +			mhi_dev->id = id;
-> +			return 1;
-> +		}
-> +
->  	return 0;
->  };
->  
-> diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
-> index 20238e9df1b3..da865f9d3646 100644
-> --- a/include/linux/mhi_ep.h
-> +++ b/include/linux/mhi_ep.h
-> @@ -122,7 +122,60 @@ struct mhi_ep_device {
->  	enum mhi_device_type dev_type;
->  };
->  
-> +/**
-> + * struct mhi_ep_driver - Structure representing a MHI Endpoint client driver
-> + * @id_table: Pointer to MHI Endpoint device ID table
-> + * @driver: Device driver model driver
-> + * @probe: CB function for client driver probe function
-> + * @remove: CB function for client driver remove function
-> + * @ul_xfer_cb: CB function for UL data transfer
-> + * @dl_xfer_cb: CB function for DL data transfer
-> + */
-> +struct mhi_ep_driver {
-> +	const struct mhi_device_id *id_table;
-> +	struct device_driver driver;
-> +	int (*probe)(struct mhi_ep_device *mhi_ep,
-> +		     const struct mhi_device_id *id);
-> +	void (*remove)(struct mhi_ep_device *mhi_ep);
-> +	void (*ul_xfer_cb)(struct mhi_ep_device *mhi_dev,
-> +			   struct mhi_result *result);
-> +	void (*dl_xfer_cb)(struct mhi_ep_device *mhi_dev,
-> +			   struct mhi_result *result);
-> +};
-> +
->  #define to_mhi_ep_device(dev) container_of(dev, struct mhi_ep_device, dev)
-> +#define to_mhi_ep_driver(drv) container_of(drv, struct mhi_ep_driver, driver)
-> +
-> +/*
-> + * module_mhi_ep_driver() - Helper macro for drivers that don't do
-> + * anything special other than using default mhi_ep_driver_register() and
-> + * mhi_ep_driver_unregister().  This eliminates a lot of boilerplate.
-> + * Each module may only use this macro once.
-> + */
-> +#define module_mhi_ep_driver(mhi_drv) \
-> +	module_driver(mhi_drv, mhi_ep_driver_register, \
-> +		      mhi_ep_driver_unregister)
-> +
-> +/*
-> + * Macro to avoid include chaining to get THIS_MODULE
-> + */
-> +#define mhi_ep_driver_register(mhi_drv) \
-> +	__mhi_ep_driver_register(mhi_drv, THIS_MODULE)
-> +
-> +/**
-> + * __mhi_ep_driver_register - Register a driver with MHI Endpoint bus
-> + * @mhi_drv: Driver to be associated with the device
-> + * @owner: The module owner
-> + *
-> + * Return: 0 if driver registrations succeeds, a negative error code otherwise.
-> + */
-> +int __mhi_ep_driver_register(struct mhi_ep_driver *mhi_drv, struct module *owner);
-> +
-> +/**
-> + * mhi_ep_driver_unregister - Unregister a driver from MHI Endpoint bus
-> + * @mhi_drv: Driver associated with the device
-> + */
-> +void mhi_ep_driver_unregister(struct mhi_ep_driver *mhi_drv);
->  
->  /**
->   * mhi_ep_register_controller - Register MHI Endpoint controller
-> -- 
-> 2.25.1
-> 
+url:    https://github.com/0day-ci/linux/commits/Srinivasa-Rao-Mandadapu/Add-support-for-audio-on-SC7280-based-targets/20220212-192806
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+config: nios2-randconfig-s031-20220213 (https://download.01.org/0day-ci/archive/20220213/202202130736.eUu0rQGL-lkp@intel.com/config)
+compiler: nios2-linux-gcc (GCC) 11.2.0
+reproduce:
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # apt-get install sparse
+        # sparse version: v0.6.4-dirty
+        # https://github.com/0day-ci/linux/commit/81d86e5446d7b811a902e4834e65730b0fb393f5
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Srinivasa-Rao-Mandadapu/Add-support-for-audio-on-SC7280-based-targets/20220212-192806
+        git checkout 81d86e5446d7b811a902e4834e65730b0fb393f5
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__' O=build_dir ARCH=nios2 SHELL=/bin/bash sound/soc/qcom/
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+
+sparse warnings: (new ones prefixed by >>)
+>> sound/soc/qcom/lpass-platform.c:1223:52: sparse: sparse: incorrect type in argument 1 (different address spaces) @@     expected void volatile [noderef] __iomem *dst @@     got void * @@
+   sound/soc/qcom/lpass-platform.c:1223:52: sparse:     expected void volatile [noderef] __iomem *dst
+   sound/soc/qcom/lpass-platform.c:1223:52: sparse:     got void *
+>> sound/soc/qcom/lpass-platform.c:1228:56: sparse: sparse: incorrect type in argument 2 (different address spaces) @@     expected void const volatile [noderef] __iomem *src @@     got unsigned char *dma_buf @@
+   sound/soc/qcom/lpass-platform.c:1228:56: sparse:     expected void const volatile [noderef] __iomem *src
+   sound/soc/qcom/lpass-platform.c:1228:56: sparse:     got unsigned char *dma_buf
+
+vim +1223 sound/soc/qcom/lpass-platform.c
+
+  1209	
+  1210	static int lpass_platform_copy(struct snd_soc_component *component,
+  1211				       struct snd_pcm_substream *substream, int channel,
+  1212				       unsigned long pos, void __user *buf, unsigned long bytes)
+  1213	{
+  1214		struct snd_pcm_runtime *rt = substream->runtime;
+  1215		unsigned int dai_id = component->id;
+  1216		int ret = 0;
+  1217	
+  1218		unsigned char *dma_buf = rt->dma_area + pos +
+  1219					channel * (rt->dma_bytes / rt->channels);
+  1220	
+  1221		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
+  1222			if (is_cdc_dma_port(dai_id))
+> 1223				ret = copy_from_user_toio((void __force *)dma_buf, buf, bytes);
+  1224			else
+  1225				ret = copy_from_user((void __force *)dma_buf, buf, bytes);
+  1226		} else if (substream->stream == SNDRV_PCM_STREAM_CAPTURE) {
+  1227			if (is_cdc_dma_port(dai_id))
+> 1228				ret = copy_to_user_fromio(buf, dma_buf, bytes);
+  1229			else
+  1230				ret = copy_to_user(buf, dma_buf, bytes);
+  1231		}
+  1232	
+  1233		return ret;
+  1234	}
+  1235	
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
