@@ -2,145 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F15684B3898
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Feb 2022 00:24:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D35C44B3A26
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 13 Feb 2022 09:33:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232466AbiBLXYm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Feb 2022 18:24:42 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43300 "EHLO
+        id S234389AbiBMIdu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 13 Feb 2022 03:33:50 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230252AbiBLXYl (ORCPT
+        with ESMTP id S229555AbiBMIdu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Feb 2022 18:24:41 -0500
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30F675FF08;
-        Sat, 12 Feb 2022 15:24:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1644708277; x=1676244277;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=lQp3ufLwimneT4WugYp2XgpX6NjnaubtrZ0Hin9414M=;
-  b=CUOiWJ5zeCfHOllj/TIBiKVUo86V29Mk3bMJ2igojKhxScJ1My1KxTmh
-   WZjNB9oXT6WRxm00h7N5sbD4skx96X9tXR+xMkpStScDfoO1k5Z3UW8/A
-   mfYLH+xbE6zdQ7dfnYrKxV0eHibIg0QOFfwmNJGhW2IsDgv/09LM5Pzsh
-   2Stn/p0BLeeUbS1T/Ecny/Ss1c1k2OixrWE2nAAWFLocjmuH36IIxEh4u
-   Hz35KAwtWxFAkLwIy4U4uWJTibSYDKQi8AX8iCcXHJF3A/jzye8DQNI8B
-   zKzW9kkjEGxuSjCasvaAAK5MQ+iK2DHKwqp6PL9bLTeIFJgWAX2c41WEN
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10256"; a="230548832"
-X-IronPort-AV: E=Sophos;i="5.88,364,1635231600"; 
-   d="scan'208";a="230548832"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Feb 2022 15:24:36 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,364,1635231600"; 
-   d="scan'208";a="679829752"
-Received: from lkp-server01.sh.intel.com (HELO d95dc2dabeb1) ([10.239.97.150])
-  by fmsmga001.fm.intel.com with ESMTP; 12 Feb 2022 15:24:32 -0800
-Received: from kbuild by d95dc2dabeb1 with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1nJ1km-0006kd-9m; Sat, 12 Feb 2022 23:24:32 +0000
-Date:   Sun, 13 Feb 2022 07:24:12 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org
-Cc:     kbuild-all@lists.01.org,
-        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Subject: Re: [PATCH v11 07/10] ASoC: qcom: Add support for codec dma driver
-Message-ID: <202202130736.eUu0rQGL-lkp@intel.com>
-References: <1644665093-4695-8-git-send-email-quic_srivasam@quicinc.com>
+        Sun, 13 Feb 2022 03:33:50 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5137A5E77A;
+        Sun, 13 Feb 2022 00:33:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1644741225; x=1676277225;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=JURP9AmcoLc1fhFWvK5ML0fsoJH7goTwLeATaM2KKRI=;
+  b=yrvwxFISmglv7i+bAGfVWvVNt2q58xsdIlx/iwv7LR5t2jhjC3X2uHCp
+   gSZ6YYeYKWIytkmG7GN4w3N0bDu4IJ6Mun2IxBK5JFbXSLD3PHMUjtm7g
+   kZBivaKSXHEytU1QfCPyFXjhVr0dFxlJdP0kgh1OJkv7gSBhhgFJ/eOs0
+   E=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 13 Feb 2022 00:33:44 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2022 00:33:43 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Sun, 13 Feb 2022 00:33:43 -0800
+Received: from jprakash-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Sun, 13 Feb 2022 00:33:36 -0800
+From:   Jishnu Prakash <quic_jprakash@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <devicetree@vger.kernel.org>, <mka@chromium.org>,
+        <dmitry.baryshkov@linaro.org>, <robh+dt@kernel.org>,
+        <knaack.h@gmx.de>, <lars@metafoo.de>, <pmeerw@pmeerw.net>,
+        <manivannan.sadhasivam@linaro.org>, <linus.walleij@linaro.org>,
+        <quic_kgunda@quicinc.com>, <quic_aghayal@quicinc.com>,
+        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
+        <quic_subbaram@quicinc.com>, <jic23@kernel.org>, <amitk@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm-owner@vger.kernel.org>, <linux-iio@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>,
+        Jishnu Prakash <quic_jprakash@quicinc.com>
+Subject: [PATCH V5 0/4] thermal: qcom: Add support for PMIC5 Gen2 ADC_TM
+Date:   Sun, 13 Feb 2022 14:03:07 +0530
+Message-ID: <1644741191-12039-1-git-send-email-quic_jprakash@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1644665093-4695-8-git-send-email-quic_srivasam@quicinc.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Srinivasa,
+Changes in v5:
+Fixed some compilation errors in patch 4.
 
-Thank you for the patch! Perhaps something to improve:
+Changes in v4:
+Addressed comments given by Jonathan (for using put_unaligned_le16)
+and by Dmitry (for using separate init function and correcting args_count)
+for qcom-spmi-adc-tm5.c in patch 4.
+Added init function in patch 3.
 
-[auto build test WARNING on broonie-sound/for-next]
-[also build test WARNING on v5.17-rc3 next-20220211]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Changes in v3:
+Addressed comments given by Jonathan for qcom-spmi-adc-tm5.yaml.
+Addressed comments given by Dmitry and Jonathan for qcom-spmi-adc-tm5.c.
+Split patch for qcom-spmi-adc-tm5.c into two parts, one to refactor
+code to support multiple device generations and the second to add
+actual Gen2 ADC_TM changes.
 
-url:    https://github.com/0day-ci/linux/commits/Srinivasa-Rao-Mandadapu/Add-support-for-audio-on-SC7280-based-targets/20220212-192806
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
-config: nios2-randconfig-s031-20220213 (https://download.01.org/0day-ci/archive/20220213/202202130736.eUu0rQGL-lkp@intel.com/config)
-compiler: nios2-linux-gcc (GCC) 11.2.0
-reproduce:
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # apt-get install sparse
-        # sparse version: v0.6.4-dirty
-        # https://github.com/0day-ci/linux/commit/81d86e5446d7b811a902e4834e65730b0fb393f5
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Srinivasa-Rao-Mandadapu/Add-support-for-audio-on-SC7280-based-targets/20220212-192806
-        git checkout 81d86e5446d7b811a902e4834e65730b0fb393f5
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__' O=build_dir ARCH=nios2 SHELL=/bin/bash sound/soc/qcom/
+Changes in v2:
+Split IIO file changes into separate patch.
+Addressed comments given by Dmitry for qcom-spmi-adc-tm5.c.
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+Changes in v1:
+PMIC5 Gen2 ADC_TM is supported on PMIC7 chips and is a close
+counterpart of PMIC7 ADC. It has the same functionality as
+PMIC5 ADC_TM, to support generating interrupts on ADC value
+crossing upper or lower thresholds for monitored channels.
 
+Jishnu Prakash (4):
+  dt-bindings: thermal: qcom: add PMIC5 Gen2 ADC_TM bindings
+  iio: adc: qcom-vadc-common: add reverse scaling for PMIC5 Gen2 ADC_TM
+  thermal: qcom: Add support for multiple generations of devices
+  thermal: qcom: add support for PMIC5 Gen2 ADCTM
 
-sparse warnings: (new ones prefixed by >>)
->> sound/soc/qcom/lpass-platform.c:1223:52: sparse: sparse: incorrect type in argument 1 (different address spaces) @@     expected void volatile [noderef] __iomem *dst @@     got void * @@
-   sound/soc/qcom/lpass-platform.c:1223:52: sparse:     expected void volatile [noderef] __iomem *dst
-   sound/soc/qcom/lpass-platform.c:1223:52: sparse:     got void *
->> sound/soc/qcom/lpass-platform.c:1228:56: sparse: sparse: incorrect type in argument 2 (different address spaces) @@     expected void const volatile [noderef] __iomem *src @@     got unsigned char *dma_buf @@
-   sound/soc/qcom/lpass-platform.c:1228:56: sparse:     expected void const volatile [noderef] __iomem *src
-   sound/soc/qcom/lpass-platform.c:1228:56: sparse:     got unsigned char *dma_buf
+ .../bindings/thermal/qcom-spmi-adc-tm5.yaml        | 110 ++++-
+ drivers/iio/adc/qcom-vadc-common.c                 |  11 +
+ drivers/thermal/qcom/qcom-spmi-adc-tm5.c           | 486 +++++++++++++++++++--
+ include/linux/iio/adc/qcom-vadc-common.h           |   2 +
+ 4 files changed, 569 insertions(+), 40 deletions(-)
 
-vim +1223 sound/soc/qcom/lpass-platform.c
+-- 
+2.7.4
 
-  1209	
-  1210	static int lpass_platform_copy(struct snd_soc_component *component,
-  1211				       struct snd_pcm_substream *substream, int channel,
-  1212				       unsigned long pos, void __user *buf, unsigned long bytes)
-  1213	{
-  1214		struct snd_pcm_runtime *rt = substream->runtime;
-  1215		unsigned int dai_id = component->id;
-  1216		int ret = 0;
-  1217	
-  1218		unsigned char *dma_buf = rt->dma_area + pos +
-  1219					channel * (rt->dma_bytes / rt->channels);
-  1220	
-  1221		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
-  1222			if (is_cdc_dma_port(dai_id))
-> 1223				ret = copy_from_user_toio((void __force *)dma_buf, buf, bytes);
-  1224			else
-  1225				ret = copy_from_user((void __force *)dma_buf, buf, bytes);
-  1226		} else if (substream->stream == SNDRV_PCM_STREAM_CAPTURE) {
-  1227			if (is_cdc_dma_port(dai_id))
-> 1228				ret = copy_to_user_fromio(buf, dma_buf, bytes);
-  1229			else
-  1230				ret = copy_to_user(buf, dma_buf, bytes);
-  1231		}
-  1232	
-  1233		return ret;
-  1234	}
-  1235	
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
