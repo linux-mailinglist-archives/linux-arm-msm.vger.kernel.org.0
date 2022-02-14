@@ -2,69 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4E864B44D9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 09:50:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A39F34B44DF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 09:50:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242400AbiBNIsy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Feb 2022 03:48:54 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:48598 "EHLO
+        id S242314AbiBNIuN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Feb 2022 03:50:13 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230025AbiBNIsx (ORCPT
+        with ESMTP id S233183AbiBNIuM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Feb 2022 03:48:53 -0500
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA6A051E4B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 00:48:45 -0800 (PST)
-Received: by mail-pj1-x102b.google.com with SMTP id a11-20020a17090a740b00b001b8b506c42fso18304280pjg.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 00:48:45 -0800 (PST)
+        Mon, 14 Feb 2022 03:50:12 -0500
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41F5F5F279
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 00:50:04 -0800 (PST)
+Received: by mail-pf1-x429.google.com with SMTP id f6so7073152pfj.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 00:50:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=0213eCef7TIL2MvkZ9Bue/8Mgn370BBknHdTEHhXe/g=;
-        b=N6LBIUpcan1t9ObXkdAU+NPD4v4f8dIucFdC4Cu7UZJMUpcUaVvnzzxLK6i2RslHrq
-         p0gJIFzrkZyKw5tP4b+eiJsA4LVKNCqCfL2CQJcIcDZA/uvduL2VdRQGrfxwVnO7Ih4u
-         Ui+PzrJ13MEas9XSVEtOPVkvXGUOi//ZU/LNqWjr0UT2G9sp4H0eIdOm1Gi2mXgZHaoG
-         xpZVdaKlC24PCJcWpA861wBU0uHIib1SkOqaVCjW6BK+pDdYSG88azN4cYYONXOWFLnP
-         5sl7yjAX/UKnAQpKUhBnAt2PsRcKkRFbtmhvYdqWovgU7ZxoC80Gz9lHWgvagVbjLq9q
-         k1gw==
+        bh=Iy4s+sH4IijtoXttifBEvscv0QbXaesAxYnXzr5xIco=;
+        b=UiSqg5nEGEYUdC8/j2+pP2pBJraqro5uN50BO1QvB2QndJyh/6BLtJ7WQz+Mx71yAp
+         vxVo6mIt6SWHpLdFQghE81u42xhJ62dEY6+LVHnFltVzKr5JLAJC8jXRvcxDbnXoO/6r
+         zsLLGgeSdBselyZchNtMHIwypkFXHLeVhkJSEEYnQbf42ieeKyuE99vgj2g8RCAspLx7
+         P1bsG8IASe9eO/6hwaegBh/VEik8sXiJPfWUp2mUZre5XFkezUF/kfNwIFIDXL8mFZX2
+         gUSVI3hccS4hjubpoUOmcnyd1O3owCk1SHQfSYP+jyq72N+xHdJD3Q9l7oeoY9EY2pMM
+         /1qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=0213eCef7TIL2MvkZ9Bue/8Mgn370BBknHdTEHhXe/g=;
-        b=SKNueDJNsyMto25gVD1u1kCMf8M8bF6/Hc2tk/OLBJJF+QKolqjDWns7W/wkS4n7Ed
-         57hI01WCVAC/XwYv0d8NBSFQjj4UKiozPMkPQ9RpDRo/RcFxByDKSPSbYDFPTnqTQrfN
-         1uyWstL6zSwLVejlDIfeCUgAVVP2hn/Gu1NlgfcNX9mFyH4mrQhaNvWvkohtC9hPYmfy
-         BJVksSer39f4XYM18kcIieY6WIc4ZM5h39AOECeeknWQTkPd0Ze2delmWZ6MtdhqjlhG
-         aZ/HyT2MDTLdayOs1GLnNznp/T0OtGeoXuoDYlyGCGPGh7aFfmvrZCX8/AQBpGXL4jLY
-         2AvQ==
-X-Gm-Message-State: AOAM531IJ0FXYlJ+0SUm/ZzmlcSB6vEdAoYBEnZP8+4xZ4f5oTe/ViKu
-        DSjEFWoocy1aNhjbjcjB3msv
-X-Google-Smtp-Source: ABdhPJy52FiMd9G529k12vI66yqIZ6MrIxLiIgDZyifJdFJLMd3J5AU1HT+lH8N/AVlvOUJy2veSWg==
-X-Received: by 2002:a17:902:a9c6:: with SMTP id b6mr13409917plr.90.1644828525268;
-        Mon, 14 Feb 2022 00:48:45 -0800 (PST)
+        bh=Iy4s+sH4IijtoXttifBEvscv0QbXaesAxYnXzr5xIco=;
+        b=bLys13jnKa6THFQeQeQ/xfDZ7zmsGG7nWPzY9eA0ifCfDAMN9s5KOlpJ5j+a5wrd8C
+         wJusq6GcQ25QDggkIltwYfISFIFyR/j1ZqC0GLgrvL/b/9AF5WRS89ldgmPREsKOt1mj
+         eTJusEYKPEYGecnYNtGMx9cNewkZeQHnhoXVvHydNXwkB16mvnfFc6nZeaud2deW8UuY
+         upx4pp7xV6MA37NSQJy2ZC0cdHpy1DzKscP1D1xSHAHDE5T6Ok/f3PA9P26QuZ+VnSLS
+         idI2v8l64sjWziW5K+ZnRQ8rEXQmERa3x8m5nXlKqQy8rL49+/YzlsqPSSuLjb/oaACn
+         s/Sw==
+X-Gm-Message-State: AOAM532F+urtcKbhSkRhZFXaz5CyjKY5f52XEM6yH+LLpkGaj9b/TD31
+        pe0ONN40N1AkdNOWbxwGHFl6/a/lfKUKJfY=
+X-Google-Smtp-Source: ABdhPJzDId7et9KmPWwuqiCL+6zIlpobDnaYfXKOR7zZwfofxC8JPnCWCpmbzmg6aLyM83B2vkoHHQ==
+X-Received: by 2002:a65:6090:: with SMTP id t16mr10730170pgu.323.1644828603709;
+        Mon, 14 Feb 2022 00:50:03 -0800 (PST)
 Received: from thinkpad ([2409:4072:817:5a6f:3104:62c0:1941:5033])
-        by smtp.gmail.com with ESMTPSA id t24sm36171906pfg.92.2022.02.14.00.48.41
+        by smtp.gmail.com with ESMTPSA id om1sm13688419pjb.55.2022.02.14.00.50.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Feb 2022 00:48:45 -0800 (PST)
-Date:   Mon, 14 Feb 2022 14:18:39 +0530
+        Mon, 14 Feb 2022 00:50:03 -0800 (PST)
+Date:   Mon, 14 Feb 2022 14:19:57 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
 Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: Re: [PATCH 7/8] clk: qcom: Add SDX65 APCS clock controller support
-Message-ID: <20220214084839.GG3494@thinkpad>
-References: <1644822247-27884-1-git-send-email-quic_rohiagar@quicinc.com>
+        jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/8] mailbox: qcom: Add support for SDX65 APCS IPC
+Message-ID: <20220214084957.GH3494@thinkpad>
+References: <1644821755-27059-1-git-send-email-quic_rohiagar@quicinc.com>
+ <20220214083409.GB3494@thinkpad>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1644822247-27884-1-git-send-email-quic_rohiagar@quicinc.com>
+In-Reply-To: <20220214083409.GB3494@thinkpad>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,202 +72,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 14, 2022 at 12:34:07PM +0530, Rohit Agarwal wrote:
-> Add a driver for the SDX65 APCS clock controller. It is part of the APCS
-> hardware block, which among other things implements also a combined mux
-> and half integer divider functionality. The APCS clock controller has 3
-> parent clocks:
+On Mon, Feb 14, 2022 at 02:04:14PM +0530, Manivannan Sadhasivam wrote:
+> On Mon, Feb 14, 2022 at 12:25:55PM +0530, Rohit Agarwal wrote:
+> > In SDX65, the IPC bits are located in the APCS GCC block. Also, this block
+> > can provide clock functionality. Hence, add support for IPC with correct
+> > offset and name of the clock provider.
+> > 
+> > Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
 > 
-> 1. Board XO
-> 2. Fixed rate GPLL0
-> 3. A7 PLL
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > 
-> This is required for enabling CPU frequency scaling on SDX65-based
-> platforms.
+> Thanks,
+> Mani
 > 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> > ---
+> >  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 5 +++++
+> >  1 file changed, 5 insertions(+)
+> > 
+> > diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> > index 9325d2a..3f8612c 100644
+> > --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> > +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> > @@ -53,6 +53,10 @@ static const struct qcom_apcs_ipc_data sdx55_apcs_data = {
+> >  	.offset = 0x1008, .clk_name = "qcom-sdx55-acps-clk"
+> >  };
+> >  
+> > +static const struct qcom_apcs_ipc_data sdx65_apcs_data = {
+> > +	.offset = 0x1008, .clk_name = "qcom-sdx65-acps-clk"
+> > +};
+> > +
 
-I assume that the SDX65 is alomst a replica of SDX55. So why can't we use
-"qcom-sdx55-acps-clk"?
+After looking at patch 7/8, I think we should be able to reuse
+"qcom-sdx55-acps-clk" for SDX65.
 
 Thanks,
 Mani
-
-> ---
->  drivers/clk/qcom/Kconfig      |   9 +++
->  drivers/clk/qcom/Makefile     |   1 +
->  drivers/clk/qcom/apcs-sdx65.c | 130 ++++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 140 insertions(+)
->  create mode 100644 drivers/clk/qcom/apcs-sdx65.c
-> 
-> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> index 1904ba1..49e89f8 100644
-> --- a/drivers/clk/qcom/Kconfig
-> +++ b/drivers/clk/qcom/Kconfig
-> @@ -63,6 +63,15 @@ config QCOM_CLK_APCS_SDX55
->  	  Say Y if you want to support CPU frequency scaling on devices
->  	  such as SDX55.
->  
-> +config QCOM_CLK_APCS_SDX65
-> +        tristate "SDX65 APCS Clock Controller"
-> +        depends on QCOM_APCS_IPC || COMPILE_TEST
-> +        help
-> +          Support for the APCS Clock Controller on SDX65 platform. The
-> +          APCS is managing the mux and divider which feeds the CPUs.
-> +          Say Y if you want to support CPU frequency scaling on devices
-> +          such as SDX65.
-> +
->  config QCOM_CLK_RPM
->  	tristate "RPM based Clock Controller"
->  	depends on MFD_QCOM_RPM
-> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-> index 3d855c1..f914f31 100644
-> --- a/drivers/clk/qcom/Makefile
-> +++ b/drivers/clk/qcom/Makefile
-> @@ -51,6 +51,7 @@ obj-$(CONFIG_QCOM_A7PLL) += a7-pll.o
->  obj-$(CONFIG_QCOM_CLK_APCS_MSM8916) += apcs-msm8916.o
->  obj-$(CONFIG_QCOM_CLK_APCC_MSM8996) += clk-cpu-8996.o
->  obj-$(CONFIG_QCOM_CLK_APCS_SDX55) += apcs-sdx55.o
-> +obj-$(CONFIG_QCOM_CLK_APCS_SDX65) += apcs-sdx65.o
->  obj-$(CONFIG_QCOM_CLK_RPM) += clk-rpm.o
->  obj-$(CONFIG_QCOM_CLK_RPMH) += clk-rpmh.o
->  obj-$(CONFIG_QCOM_CLK_SMD_RPM) += clk-smd-rpm.o
-> diff --git a/drivers/clk/qcom/apcs-sdx65.c b/drivers/clk/qcom/apcs-sdx65.c
-> new file mode 100644
-> index 0000000..c0cc16a
-> --- /dev/null
-> +++ b/drivers/clk/qcom/apcs-sdx65.c
-> @@ -0,0 +1,130 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/clk.h>
-> +#include <linux/clk-provider.h>
-> +#include <linux/cpu.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/pm_domain.h>
-> +#include <linux/regmap.h>
-> +#include <linux/slab.h>
-> +
-> +#include "clk-regmap.h"
-> +#include "clk-regmap-mux-div.h"
-> +
-> +static const u32 apcs_mux_clk_parent_map[] = { 0, 1, 5 };
-> +
-> +static const struct clk_parent_data pdata[] = {
-> +	{ .fw_name = "ref" },
-> +	{ .fw_name = "aux" },
-> +	{ .fw_name = "pll" },
-> +};
-> +
-> +static int a7cc_notifier_cb(struct notifier_block *nb, unsigned long event,
-> +				void *data)
-> +{
-> +	int ret = 0;
-> +	struct clk_regmap_mux_div *md = container_of(nb,
-> +						struct clk_regmap_mux_div,
-> +						clk_nb);
-> +	if (event == PRE_RATE_CHANGE)
-> +		ret = mux_div_set_src_div(md, 1, 2);
-> +
-> +	return notifier_from_errno(ret);
-> +}
-> +
-> +static int qcom_apcs_sdx65_clk_probe(struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct device *parent = dev->parent;
-> +	struct device *cpu_dev;
-> +	struct clk_regmap_mux_div *a7cc;
-> +	struct regmap *regmap;
-> +	struct clk_init_data init = { };
-> +	int ret;
-> +
-> +	regmap = dev_get_regmap(parent, NULL);
-> +	if (!regmap) {
-> +		dev_err(dev, "Failed to get parent regmap\n");
-> +		return -ENODEV;
-> +	}
-> +
-> +	a7cc = devm_kzalloc(dev, sizeof(*a7cc), GFP_KERNEL);
-> +	if (!a7cc)
-> +		return -ENOMEM;
-> +
-> +	init.name = "a7mux";
-> +	init.parent_data = pdata;
-> +	init.num_parents = ARRAY_SIZE(pdata);
-> +	init.ops = &clk_regmap_mux_div_ops;
-> +
-> +	a7cc->clkr.hw.init = &init;
-> +	a7cc->clkr.regmap = regmap;
-> +	a7cc->reg_offset = 0x8;
-> +	a7cc->hid_width = 5;
-> +	a7cc->hid_shift = 0;
-> +	a7cc->src_width = 3;
-> +	a7cc->src_shift = 8;
-> +	a7cc->parent_map = apcs_mux_clk_parent_map;
-> +
-> +	a7cc->pclk = devm_clk_get(parent, "pll");
-> +	if (IS_ERR(a7cc->pclk))
-> +		return dev_err_probe(dev, PTR_ERR(a7cc->pclk),
-> +					 "Failed to get PLL clk\n");
-> +
-> +	a7cc->clk_nb.notifier_call = a7cc_notifier_cb;
-> +	ret = clk_notifier_register(a7cc->pclk, &a7cc->clk_nb);
-> +	if (ret)
-> +		return dev_err_probe(dev, ret,
-> +					 "Failed to register clock notifier\n");
-> +
-> +	ret = devm_clk_register_regmap(dev, &a7cc->clkr);
-> +	if (ret) {
-> +		dev_err_probe(dev, ret, "Failed to register regmap clock\n");
-> +		goto err;
-> +	}
-> +
-> +	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get,
-> +					&a7cc->clkr.hw);
-> +	if (ret) {
-> +		dev_err_probe(dev, ret, "Failed to add clock provider\n");
-> +		goto err;
-> +	}
-> +
-> +	platform_set_drvdata(pdev, a7cc);
-> +
-> +	cpu_dev = get_cpu_device(0);
-> +	dev_pm_domain_attach(cpu_dev, true);
-> +
-> +	return 0;
-> +
-> +err:
-> +	clk_notifier_unregister(a7cc->pclk, &a7cc->clk_nb);
-> +	return ret;
-> +}
-> +
-> +static int qcom_apcs_sdx65_clk_remove(struct platform_device *pdev)
-> +{
-> +	struct device *cpu_dev = get_cpu_device(0);
-> +	struct clk_regmap_mux_div *a7cc = platform_get_drvdata(pdev);
-> +
-> +	clk_notifier_unregister(a7cc->pclk, &a7cc->clk_nb);
-> +	dev_pm_domain_detach(cpu_dev, true);
-> +
-> +	return 0;
-> +}
-> +
-> +static struct platform_driver qcom_apcs_sdx65_clk_driver = {
-> +	.probe = qcom_apcs_sdx65_clk_probe,
-> +	.remove = qcom_apcs_sdx65_clk_remove,
-> +	.driver = {
-> +		.name = "qcom-sdx65-acps-clk",
-> +	},
-> +};
-> +module_platform_driver(qcom_apcs_sdx65_clk_driver);
-> +MODULE_LICENSE("GPL v2");
-> +MODULE_DESCRIPTION("Qualcomm SDX65 APCS Clock driver");
-> -- 
-> 2.7.4
-> 
+> >  static const struct regmap_config apcs_regmap_config = {
+> >  	.reg_bits = 32,
+> >  	.reg_stride = 4,
+> > @@ -159,6 +163,7 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
+> >  	{ .compatible = "qcom,sm8150-apss-shared", .data = &apps_shared_apcs_data },
+> >  	{ .compatible = "qcom,sm6115-apcs-hmss-global", .data = &msm8994_apcs_data },
+> >  	{ .compatible = "qcom,sdx55-apcs-gcc", .data = &sdx55_apcs_data },
+> > +	{ .compatible = "qcom,sdx65-apcs-gcc", .data = &sdx65_apcs_data },
+> >  	{}
+> >  };
+> >  MODULE_DEVICE_TABLE(of, qcom_apcs_ipc_of_match);
+> > -- 
+> > 2.7.4
+> > 
