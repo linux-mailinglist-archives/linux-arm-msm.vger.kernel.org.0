@@ -2,92 +2,238 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28D2D4B589E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 18:35:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 459714B593A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 18:59:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357145AbiBNRfU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Feb 2022 12:35:20 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:57534 "EHLO
+        id S1357303AbiBNR7u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Feb 2022 12:59:50 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:51148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357134AbiBNRfR (ORCPT
+        with ESMTP id S1357304AbiBNR7o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Feb 2022 12:35:17 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 948BC6540F;
-        Mon, 14 Feb 2022 09:35:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644860109; x=1676396109;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=5XlD8vp21eTKSkpNbt94DxzMkq8qEZEWW+TU+APGf4I=;
-  b=qyVG0PHTuWbB4FeptwwoG57i23sdo2wLxbD9+Tsl8fCkUYoQdM6DaqO1
-   qSGN9m9eQd7/adVm9MZZtfetF6zFKeet03fbDyy1nv4UAszvkd1dyVHus
-   gGwNjB7TS9egE4924hLZZFd7oTdt6IAGRdf/wJhZJ9Qk7YfK52vyeUdZG
-   o=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 14 Feb 2022 09:35:09 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Feb 2022 09:35:08 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Mon, 14 Feb 2022 09:35:08 -0800
-Received: from [10.216.62.158] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 14 Feb
- 2022 09:35:02 -0800
-Subject: Re: [PATCH v13 07/10] ASoC: qcom: Add support for codec dma driver
-To:     Mark Brown <broonie@kernel.org>
-CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@codeaurora.org>,
-        <perex@perex.cz>, <tiwai@suse.com>,
-        <srinivas.kandagatla@linaro.org>, <rohitkr@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-References: <1644832778-16064-1-git-send-email-quic_srivasam@quicinc.com>
- <1644832778-16064-2-git-send-email-quic_srivasam@quicinc.com>
- <YgppMcVjs0KuE5y8@sirena.org.uk>
- <669f2d39-8c14-68b9-6d89-a26e0e2e8857@quicinc.com>
- <YgqBmvAQvh9WRMj+@sirena.org.uk>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-Message-ID: <3a13a99d-6b8b-bab5-3adc-fdd2565fc93a@quicinc.com>
-Date:   Mon, 14 Feb 2022 23:04:58 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Mon, 14 Feb 2022 12:59:44 -0500
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B97C8652C4;
+        Mon, 14 Feb 2022 09:59:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1644861576; x=1676397576;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=h2nLBru7ddRK3E/s9FlkhXeaiYmRggwF6jnGtDIawQM=;
+  b=Sloqki10VqDXu7WjcYfWp/ghAEDGs/sr7tcTOBgoi+zrXMpDHcyqcqL1
+   PUlKE5hIs7UGernl6VnpKSJ/hWsGm1CXBCqmB6ph5PRgFopkuhytnZ6su
+   PzN+TWQjFyTVsuAwQsqIT2+r4ePIQ+Xv39f93CGisgqLwK/wj09U0VyfY
+   QtROqf9dSSZOz1OpuuY6eDNQh3iXioHt2Ba/Qzs8ZL3nBggmRYKBwkmwr
+   10mN4QEJu5DdBThhhxmQ+NZaBC6Jz3TswNEXCkRQCLQHM3GNjmgW5hGYB
+   agDNmKD/0zwEYsoEaf/15yDRnytWSqreuwU9Tvt7XoAZkjdWeOXLYKU8S
+   w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10258"; a="247744026"
+X-IronPort-AV: E=Sophos;i="5.88,368,1635231600"; 
+   d="scan'208";a="247744026"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Feb 2022 09:59:36 -0800
+X-IronPort-AV: E=Sophos;i="5.88,368,1635231600"; 
+   d="scan'208";a="703210237"
+Received: from ideak-desk.fi.intel.com ([10.237.68.141])
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Feb 2022 09:59:31 -0800
+Date:   Mon, 14 Feb 2022 19:59:27 +0200
+From:   Imre Deak <imre.deak@intel.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        intel-gfx@lists.freedesktop.org, linux-usb@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Sean Paul <sean@poorly.run>, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] drm: Add HPD state to
+ drm_connector_oob_hotplug_event()
+Message-ID: <20220214175927.GA594729@ideak-desk.fi.intel.com>
+References: <20220208044328.588860-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <YgqBmvAQvh9WRMj+@sirena.org.uk>
-Content-Type: text/plain; charset="windows-1252"; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220208044328.588860-1-bjorn.andersson@linaro.org>
+X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Feb 07, 2022 at 08:43:27PM -0800, Bjorn Andersson wrote:
+> In some implementations, such as the Qualcomm platforms, the display
+> driver has no way to query the current HPD state and as such it's
+> impossible to distinguish between disconnect and attention events.
+> 
+> Add a parameter to drm_connector_oob_hotplug_event() to pass the HPD
+> state.
+> 
+> Also push the test for unchanged state in the displayport altmode driver
+> into the i915 driver, to allow other drivers to act upon each update.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> Note that the Intel driver has only been compile tested with this patch.
+> 
+>  drivers/gpu/drm/drm_connector.c          |  6 ++++--
+>  drivers/gpu/drm/i915/display/intel_dp.c  | 14 +++++++++++---
+>  drivers/gpu/drm/i915/i915_drv.h          |  3 +++
+>  drivers/usb/typec/altmodes/displayport.c |  9 ++-------
+>  include/drm/drm_connector.h              |  5 +++--
+>  5 files changed, 23 insertions(+), 14 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
+> index a50c82bc2b2f..ad7295597c0f 100644
+> --- a/drivers/gpu/drm/drm_connector.c
+> +++ b/drivers/gpu/drm/drm_connector.c
+> @@ -2825,6 +2825,7 @@ struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode)
+>  /**
+>   * drm_connector_oob_hotplug_event - Report out-of-band hotplug event to connector
+>   * @connector_fwnode: fwnode_handle to report the event on
+> + * @hpd_state: number of data lanes available
+>   *
+>   * On some hardware a hotplug event notification may come from outside the display
+>   * driver / device. An example of this is some USB Type-C setups where the hardware
+> @@ -2834,7 +2835,8 @@ struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode)
+>   * This function can be used to report these out-of-band events after obtaining
+>   * a drm_connector reference through calling drm_connector_find_by_fwnode().
+>   */
+> -void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode)
+> +void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode,
+> +				     bool hpd_state)
+>  {
+>  	struct drm_connector *connector;
+>  
+> @@ -2843,7 +2845,7 @@ void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode)
+>  		return;
+>  
+>  	if (connector->funcs->oob_hotplug_event)
+> -		connector->funcs->oob_hotplug_event(connector);
+> +		connector->funcs->oob_hotplug_event(connector, hpd_state);
+>  
+>  	drm_connector_put(connector);
+>  }
+> diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
+> index 146b83916005..00520867d37b 100644
+> --- a/drivers/gpu/drm/i915/display/intel_dp.c
+> +++ b/drivers/gpu/drm/i915/display/intel_dp.c
+> @@ -4816,15 +4816,23 @@ static int intel_dp_connector_atomic_check(struct drm_connector *conn,
+>  	return intel_modeset_synced_crtcs(state, conn);
+>  }
+>  
+> -static void intel_dp_oob_hotplug_event(struct drm_connector *connector)
+> +static void intel_dp_oob_hotplug_event(struct drm_connector *connector, bool hpd_state)
+>  {
+>  	struct intel_encoder *encoder = intel_attached_encoder(to_intel_connector(connector));
+>  	struct drm_i915_private *i915 = to_i915(connector->dev);
+> +	bool need_work = false;
+>  
+>  	spin_lock_irq(&i915->irq_lock);
+> -	i915->hotplug.event_bits |= BIT(encoder->hpd_pin);
+> +	if (hpd_state != i915->hotplug.oob_hotplug_state) {
 
-On 2/14/2022 9:51 PM, Mark Brown wrote:
-Thanks Brown for your time!!!
-> On Mon, Feb 14, 2022 at 08:10:20PM +0530, Srinivasa Rao Mandadapu wrote:
->> On 2/14/2022 8:07 PM, Mark Brown wrote:
->>> I only have this patch from both v12 and v13, which were sent very close
->>> together.  Please check what's going on here.
->> As only one patch has update, so sent only one patch. will do resend all
->> patches if needed.
-> You should always send all patches in a series, sending only some
-> patches at best makes it very difficult to follow what the current
-> version of the series is intended to look like.
-Okay. Sorry for inconvenience. Resent all patches again.
+hpd_state is speific to the encoder (pin) so similarly to event_bits
+oob_hotplug_state should be a bitmask as well.
+
+> +		i915->hotplug.event_bits |= BIT(encoder->hpd_pin);
+> +
+> +		i915->hotplug.oob_hotplug_state = hpd_state;
+> +		need_work = true;
+> +	}
+>  	spin_unlock_irq(&i915->irq_lock);
+> -	queue_delayed_work(system_wq, &i915->hotplug.hotplug_work, 0);
+> +
+> +	if (need_work)
+> +		queue_delayed_work(system_wq, &i915->hotplug.hotplug_work, 0);
+>  }
+>  
+>  static const struct drm_connector_funcs intel_dp_connector_funcs = {
+> diff --git a/drivers/gpu/drm/i915/i915_drv.h b/drivers/gpu/drm/i915/i915_drv.h
+> index 8c1706fd81f9..543ebf1cfcf4 100644
+> --- a/drivers/gpu/drm/i915/i915_drv.h
+> +++ b/drivers/gpu/drm/i915/i915_drv.h
+> @@ -149,6 +149,9 @@ struct i915_hotplug {
+>  	/* Whether or not to count short HPD IRQs in HPD storms */
+>  	u8 hpd_short_storm_enabled;
+>  
+> +	/* Last state reported by oob_hotplug_event */
+> +	bool oob_hotplug_state;
+> +
+>  	/*
+>  	 * if we get a HPD irq from DP and a HPD irq from non-DP
+>  	 * the non-DP HPD could block the workqueue on a mode config
+> diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
+> index c1d8c23baa39..a4596be4d34a 100644
+> --- a/drivers/usb/typec/altmodes/displayport.c
+> +++ b/drivers/usb/typec/altmodes/displayport.c
+> @@ -59,7 +59,6 @@ struct dp_altmode {
+>  	struct typec_displayport_data data;
+>  
+>  	enum dp_state state;
+> -	bool hpd;
+>  
+>  	struct mutex lock; /* device lock */
+>  	struct work_struct work;
+> @@ -143,10 +142,7 @@ static int dp_altmode_status_update(struct dp_altmode *dp)
+>  		if (!ret)
+>  			dp->state = DP_STATE_CONFIGURE;
+>  	} else {
+> -		if (dp->hpd != hpd) {
+> -			drm_connector_oob_hotplug_event(dp->connector_fwnode);
+> -			dp->hpd = hpd;
+> -		}
+> +		drm_connector_oob_hotplug_event(dp->connector_fwnode, hpd);
+>  	}
+>  
+>  	return ret;
+> @@ -573,8 +569,7 @@ void dp_altmode_remove(struct typec_altmode *alt)
+>  	cancel_work_sync(&dp->work);
+>  
+>  	if (dp->connector_fwnode) {
+> -		if (dp->hpd)
+> -			drm_connector_oob_hotplug_event(dp->connector_fwnode);
+> +		drm_connector_oob_hotplug_event(dp->connector_fwnode, false);
+>  
+>  		fwnode_handle_put(dp->connector_fwnode);
+>  	}
+> diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
+> index 64cf5f88c05b..7c90b8eb2ace 100644
+> --- a/include/drm/drm_connector.h
+> +++ b/include/drm/drm_connector.h
+> @@ -1141,7 +1141,7 @@ struct drm_connector_funcs {
+>  	 * This will get called when a hotplug-event for a drm-connector
+>  	 * has been received from a source outside the display driver / device.
+>  	 */
+> -	void (*oob_hotplug_event)(struct drm_connector *connector);
+> +	void (*oob_hotplug_event)(struct drm_connector *connector, bool hpd_state);
+>  };
+>  
+>  /**
+> @@ -1742,7 +1742,8 @@ drm_connector_is_unregistered(struct drm_connector *connector)
+>  		DRM_CONNECTOR_UNREGISTERED;
+>  }
+>  
+> -void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode);
+> +void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode,
+> +				     bool hpd_state);
+>  const char *drm_get_connector_type_name(unsigned int connector_type);
+>  const char *drm_get_connector_status_name(enum drm_connector_status status);
+>  const char *drm_get_subpixel_order_name(enum subpixel_order order);
+> -- 
+> 2.33.1
+> 
