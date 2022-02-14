@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE9154B55AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 17:12:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BCEB34B55BB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 17:12:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356189AbiBNQKl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S1356158AbiBNQKl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 14 Feb 2022 11:10:41 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:53736 "EHLO
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:53890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356171AbiBNQK1 (ORCPT
+        with ESMTP id S1354679AbiBNQK3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Feb 2022 11:10:27 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42E9460D88
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 08:10:19 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id u1so13932362wrg.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 08:10:19 -0800 (PST)
+        Mon, 14 Feb 2022 11:10:29 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9425C60AA9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 08:10:20 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id h6so27663938wrb.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 08:10:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9s/z+n4KaWgaeVcMwcxi+7rViKwYhtyikW3FoYPGfSA=;
-        b=uUOmDYB6td1KbzRksk9ZevF3lw4x0Tss16WQRRN4ySyXeNkN3ePvfUXCbPgwMgAtSX
-         DZQUHEfAenAjpRRTldgEnyAAfllPcn01ebJoQoJeJwHQQVtC2vfjzM4zu/viPjPt55hk
-         p8NUvhQAerwFYlM0tDQRal3OH/wGxvuELHY6wstPhz3nvZ6Ag8EYOnkMujTrhtVQIkrY
-         HGRIlpnxUHDlcaK4/wPZp02aMVZWegl9nKXAkBkGniQZdSVAnzFaqT1rBExhBG6NXx6i
-         9nssIrSgg0O7hlvChfMRCnF6VI+IIGK3mqBMs8CapkEs4xb3MIjnCRaD4IWdghuugD3L
-         otcg==
+        bh=IUtpmLCf9yTc9kWokK2MlmVKVquFj/Legtc727MewIE=;
+        b=btySNnlz0WTv3SxDvb6en4QwwHjfz27GoTaiu9YtS3uxm9ZHGIOM9AR+J8PnRBTTox
+         0Qz5ldjUG7ILquLzkZJQAphl3v2jYP4R5Tnx4Bv3UWkMqnOgPJ/KXyGEmMXKADNA286G
+         V0VYFnm3TM5Pz69zuVM443jJDh92pTsv1l35xhIf3ibXHmI8QtDcYkQwHRLcuw1x1XsI
+         V484M0NSsH+wwYJo71DDd1KdEFG0JawGAINeYhgVtenlJTt+mHQDDgPz/wc9i3iZcVlz
+         X9BZZzFvr0gx1pUAhMNXRlwLElg2OiC1Ocirge7zw0cVh1iouKR2naDEzIGNh1iCG05F
+         mmdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9s/z+n4KaWgaeVcMwcxi+7rViKwYhtyikW3FoYPGfSA=;
-        b=koHx6hj4m2GMo3xvigNqzxbqqEGnWgxQ1cpChIliGxmgHrAHRsoyXYc+vUztoRuZLb
-         9G7D8IkX4wmlwIbSbUj+6mIVBNKZouwyWlbi0us0uhTx9bk/oXp0d3lHtNdPr6MpdKLM
-         7758DkMoIYa+ssj5qqlO3wc6CvHIa3uGeUYrmIFUFxNM1P3a2di5rxo47jYcQzobUv0K
-         Rl9IXyHOv7bPrgta/+Mfc+Q9MRdQ15TbyBKPtK/4yVdHvJZfn1/o2gWWgn/prypB5qj0
-         v01JMg4Ie3aMrybtopWckvNVRntJlbH09/liyFVBYYgOJPNjhjVdAkl4IfAVQ8eFHjXZ
-         hVfg==
-X-Gm-Message-State: AOAM531sOCgt6uo4JUvnvDJy0oMJ6ADnrLEJ9BKVi4kV26dTTE9pcOjn
-        lbGACnB4otuBQyoBVDO5fVG3OQ==
-X-Google-Smtp-Source: ABdhPJwGLpofrDLBscQigRPET/R+Ijt+AIrNzYJp/vUQEWhSY29nKc4lMGJH04Bv9emQomZVTL1CZQ==
-X-Received: by 2002:a05:6000:1c16:: with SMTP id ba22mr289607wrb.470.1644855017798;
-        Mon, 14 Feb 2022 08:10:17 -0800 (PST)
+        bh=IUtpmLCf9yTc9kWokK2MlmVKVquFj/Legtc727MewIE=;
+        b=DdvySpeEX9VtinokdfVI1viR8nQH6wWvYJky2bg3HTrWFcF1VVOShYcygAAyK3Ykm/
+         ODblC2AnkpPgejhr+D6C/XiTpMCjRPF44LvwdU0+EJVKfS5zpRa7+LYxxmSeWah79xKr
+         uuwUFYk31zbnFzdr32njRP9l2Uv7G6h23m6SVlJj/j7WRcvOUwKTAYsoWCcU+VMPJUyz
+         8OWuVqrUasKxB1im3IHIqn+Q7kXKEUH/jOqk9CYnR+UKrrbqq3LqwrBCewOjQBAj5COW
+         CF0H841lB5i8o3Atm4+Iq/KY5Wvi+INg3ZSvwWk0k4KBBGCBWBB/geHT2mEv2r6Y5xPp
+         43lQ==
+X-Gm-Message-State: AOAM532WIJ7UQrNZD4T4IIsOWwXo8eXfO57Q9HXtWrcm+j1mNK3d7ZMT
+        VqNzoCkKXlS+PaQGNJsQzjqoVg==
+X-Google-Smtp-Source: ABdhPJxD9AKOFD2a5c5WIs6al1TF5dEEfngUAFPQo51nQmlCFG0MXUIfA3JITED7CRvF8qx3PLNGhQ==
+X-Received: by 2002:a5d:5850:: with SMTP id i16mr297819wrf.64.1644855019003;
+        Mon, 14 Feb 2022 08:10:19 -0800 (PST)
 Received: from srini-hackbox.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.gmail.com with ESMTPSA id k28sm13677022wms.23.2022.02.14.08.10.16
+        by smtp.gmail.com with ESMTPSA id k28sm13677022wms.23.2022.02.14.08.10.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Feb 2022 08:10:17 -0800 (PST)
+        Mon, 14 Feb 2022 08:10:18 -0800 (PST)
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 To:     robh+dt@kernel.org, gregkh@linuxfoundation.org
 Cc:     devicetree@vger.kernel.org, ekangupt@qti.qualcomm.com,
@@ -56,9 +56,9 @@ Cc:     devicetree@vger.kernel.org, ekangupt@qti.qualcomm.com,
         linux-arm-msm@vger.kernel.org,
         Vamsi Krishna Gattupalli <quic_vgattupa@quicinc.com>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH v4 08/12] misc: fastrpc: Add support to secure memory map
-Date:   Mon, 14 Feb 2022 16:09:58 +0000
-Message-Id: <20220214161002.6831-9-srinivas.kandagatla@linaro.org>
+Subject: [PATCH v4 09/12] misc: fastrpc: Add helper function to get list and page
+Date:   Mon, 14 Feb 2022 16:09:59 +0000
+Message-Id: <20220214161002.6831-10-srinivas.kandagatla@linaro.org>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20220214161002.6831-1-srinivas.kandagatla@linaro.org>
 References: <20220214161002.6831-1-srinivas.kandagatla@linaro.org>
@@ -66,7 +66,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,224 +76,47 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Vamsi Krishna Gattupalli <quic_vgattupa@quicinc.com>
 
-This patch adds support to secure memory allocations for DSP.
-It repurposes the reserved field in struct fastrpc_invoke_args
-to add attributes to invoke request, for example to setup a secure memory
-map for dsp. Secure memory is assigned to DSP Virtual Machine IDs using
-Qualcomm SCM calls.
+Add helper functions to get invoke buffer and page start pointers.
 
 Signed-off-by: Vamsi Krishna Gattupalli <quic_vgattupa@quicinc.com>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 ---
- drivers/misc/Kconfig        |  1 +
- drivers/misc/fastrpc.c      | 65 ++++++++++++++++++++++++++++++++-----
- include/uapi/misc/fastrpc.h |  5 ++-
- 3 files changed, 61 insertions(+), 10 deletions(-)
+ drivers/misc/fastrpc.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
-index 0f5a49fc7c9e..974edd7ce40f 100644
---- a/drivers/misc/Kconfig
-+++ b/drivers/misc/Kconfig
-@@ -259,6 +259,7 @@ config QCOM_FASTRPC
- 	depends on ARCH_QCOM || COMPILE_TEST
- 	depends on RPMSG
- 	select DMA_SHARED_BUFFER
-+	select QCOM_SCM
- 	help
- 	  Provides a communication mechanism that allows for clients to
- 	  make remote method invocations across processor boundary to
 diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 5329d69ecd38..eb1e6d111c77 100644
+index eb1e6d111c77..1cec85e8eaa1 100644
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -17,6 +17,7 @@
- #include <linux/rpmsg.h>
- #include <linux/scatterlist.h>
- #include <linux/slab.h>
-+#include <linux/qcom_scm.h>
- #include <uapi/misc/fastrpc.h>
+@@ -833,6 +833,16 @@ static int fastrpc_create_maps(struct fastrpc_invoke_ctx *ctx)
+ 	return 0;
+ }
  
- #define ADSP_DOMAIN_ID (0)
-@@ -25,6 +26,7 @@
- #define CDSP_DOMAIN_ID (3)
- #define FASTRPC_DEV_MAX		4 /* adsp, mdsp, slpi, cdsp*/
- #define FASTRPC_MAX_SESSIONS	13 /*12 compute, 1 cpz*/
-+#define FASTRPC_MAX_VMIDS	16
- #define FASTRPC_ALIGN		128
- #define FASTRPC_MAX_FDLIST	16
- #define FASTRPC_MAX_CRCLIST	64
-@@ -195,6 +197,7 @@ struct fastrpc_map {
- 	void *va;
- 	u64 len;
- 	u64 raddr;
-+	u32 attr;
- 	struct kref refcount;
- };
- 
-@@ -232,6 +235,9 @@ struct fastrpc_session_ctx {
- struct fastrpc_channel_ctx {
- 	int domain_id;
- 	int sesscount;
-+	int vmcount;
-+	u32 perms;
-+	struct qcom_scm_vmperm vmperms[FASTRPC_MAX_VMIDS];
- 	struct rpmsg_device *rpdev;
- 	struct fastrpc_session_ctx session[FASTRPC_MAX_SESSIONS];
- 	spinlock_t lock;
-@@ -279,6 +285,20 @@ static void fastrpc_free_map(struct kref *ref)
- 	map = container_of(ref, struct fastrpc_map, refcount);
- 
- 	if (map->table) {
-+		if (map->attr & FASTRPC_ATTR_SECUREMAP) {
-+			struct qcom_scm_vmperm perm;
-+			int err = 0;
++static struct fastrpc_invoke_buf *fastrpc_invoke_buf_start(union fastrpc_remote_arg *pra, int len)
++{
++	return (struct fastrpc_invoke_buf *)(&pra[len]);
++}
 +
-+			perm.vmid = QCOM_SCM_VMID_HLOS;
-+			perm.perm = QCOM_SCM_PERM_RWX;
-+			err = qcom_scm_assign_mem(map->phys, map->size,
-+				&(map->fl->cctx->vmperms[0].vmid), &perm, 1);
-+			if (err) {
-+				dev_err(map->fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
-+						map->phys, map->size, err);
-+				return;
-+			}
-+		}
- 		dma_buf_unmap_attachment(map->attach, map->table,
- 					 DMA_BIDIRECTIONAL);
- 		dma_buf_detach(map->buf, map->attach);
-@@ -655,7 +675,7 @@ static const struct dma_buf_ops fastrpc_dma_buf_ops = {
- };
- 
- static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
--			      u64 len, struct fastrpc_map **ppmap)
-+			      u64 len, u32 attr, struct fastrpc_map **ppmap)
++static struct fastrpc_phy_page *fastrpc_phy_page_start(struct fastrpc_invoke_buf *buf, int len)
++{
++	return (struct fastrpc_phy_page *)(&buf[len]);
++}
++
+ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
  {
- 	struct fastrpc_session_ctx *sess = fl->sctx;
- 	struct fastrpc_map *map = NULL;
-@@ -697,6 +717,22 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
- 	map->len = len;
- 	kref_init(&map->refcount);
+ 	struct device *dev = ctx->fl->sctx->dev;
+@@ -860,9 +870,8 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
+ 		return err;
  
-+	if (attr & FASTRPC_ATTR_SECUREMAP) {
-+		/*
-+		 * If subsystem VMIDs are defined in DTSI, then do
-+		 * hyp_assign from HLOS to those VM(s)
-+		 */
-+		unsigned int perms = BIT(QCOM_SCM_VMID_HLOS);
-+
-+		map->attr = attr;
-+		err = qcom_scm_assign_mem(map->phys, (u64)map->size, &perms,
-+				fl->cctx->vmperms, fl->cctx->vmcount);
-+		if (err) {
-+			dev_err(sess->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d",
-+					map->phys, map->size, err);
-+			goto map_err;
-+		}
-+	}
- 	spin_lock(&fl->lock);
- 	list_add_tail(&map->node, &fl->maps);
- 	spin_unlock(&fl->lock);
-@@ -781,16 +817,13 @@ static int fastrpc_create_maps(struct fastrpc_invoke_ctx *ctx)
- 	int i, err;
- 
- 	for (i = 0; i < ctx->nscalars; ++i) {
--		/* Make sure reserved field is set to 0 */
--		if (ctx->args[i].reserved)
--			return -EINVAL;
- 
- 		if (ctx->args[i].fd == 0 || ctx->args[i].fd == -1 ||
- 		    ctx->args[i].length == 0)
- 			continue;
- 
- 		err = fastrpc_map_create(ctx->fl, ctx->args[i].fd,
--					 ctx->args[i].length, &ctx->maps[i]);
-+			 ctx->args[i].length, ctx->args[i].attr, &ctx->maps[i]);
- 		if (err) {
- 			dev_err(dev, "Error Creating map %d\n", err);
- 			return -EINVAL;
-@@ -1124,7 +1157,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
- 	fl->pd = USER_PD;
- 
- 	if (init.filelen && init.filefd) {
--		err = fastrpc_map_create(fl, init.filefd, init.filelen, &map);
-+		err = fastrpc_map_create(fl, init.filefd, init.filelen, 0, &map);
- 		if (err)
- 			goto err;
- 	}
-@@ -1233,7 +1266,6 @@ static int fastrpc_release_current_dsp_process(struct fastrpc_user *fl)
- 	args[0].ptr = (u64)(uintptr_t) &tgid;
- 	args[0].length = sizeof(tgid);
- 	args[0].fd = -1;
--	args[0].reserved = 0;
- 	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_RELEASE, 1, 0);
- 
- 	return fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
-@@ -1374,7 +1406,6 @@ static int fastrpc_init_attach(struct fastrpc_user *fl, int pd)
- 	args[0].ptr = (u64)(uintptr_t) &tgid;
- 	args[0].length = sizeof(tgid);
- 	args[0].fd = -1;
--	args[0].reserved = 0;
- 	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_ATTACH, 1, 0);
- 	fl->pd = pd;
- 
-@@ -1947,9 +1978,10 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- {
- 	struct device *rdev = &rpdev->dev;
- 	struct fastrpc_channel_ctx *data;
--	int i, err, domain_id = -1;
-+	int i, err, domain_id = -1, vmcount;
- 	const char *domain;
- 	bool secure_dsp;
-+	unsigned int vmids[FASTRPC_MAX_VMIDS];
- 
- 	err = of_property_read_string(rdev->of_node, "label", &domain);
- 	if (err) {
-@@ -1969,10 +2001,25 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 		return -EINVAL;
- 	}
- 
-+	vmcount = of_property_read_variable_u32_array(rdev->of_node,
-+				"qcom,vmids", &vmids[0], 0, FASTRPC_MAX_VMIDS);
-+	if (vmcount < 0)
-+		vmcount = 0;
-+	else if (!qcom_scm_is_available())
-+		return -EPROBE_DEFER;
-+
- 	data = kzalloc(sizeof(*data), GFP_KERNEL);
- 	if (!data)
- 		return -ENOMEM;
- 
-+	if (vmcount) {
-+		data->vmcount = vmcount;
-+		data->perms = BIT(QCOM_SCM_VMID_HLOS);
-+		for (i = 0; i < data->vmcount; i++) {
-+			data->vmperms[i].vmid = vmids[i];
-+			data->vmperms[i].perm = QCOM_SCM_PERM_RWX;
-+		}
-+	}
- 
- 	secure_dsp = !(of_property_read_bool(rdev->of_node, "qcom,non-secure-domain"));
- 	data->secure = secure_dsp;
-diff --git a/include/uapi/misc/fastrpc.h b/include/uapi/misc/fastrpc.h
-index f39edac20305..5e29f2cfa42d 100644
---- a/include/uapi/misc/fastrpc.h
-+++ b/include/uapi/misc/fastrpc.h
-@@ -63,11 +63,14 @@ enum fastrpc_proc_attr {
- 	FASTRPC_MODE_PRIVILEGED		= (1 << 6),
- };
- 
-+/* Fastrpc attribute for memory protection of buffers */
-+#define FASTRPC_ATTR_SECUREMAP	(1)
-+
- struct fastrpc_invoke_args {
- 	__u64 ptr;
- 	__u64 length;
- 	__s32 fd;
--	__u32 reserved;
-+	__u32 attr;
- };
- 
- struct fastrpc_invoke {
+ 	rpra = ctx->buf->virt;
+-	list = ctx->buf->virt + ctx->nscalars * sizeof(*rpra);
+-	pages = ctx->buf->virt + ctx->nscalars * (sizeof(*list) +
+-		sizeof(*rpra));
++	list = fastrpc_invoke_buf_start(rpra, ctx->nscalars);
++	pages = fastrpc_phy_page_start(list, ctx->nscalars);
+ 	args = (uintptr_t)ctx->buf->virt + metalen;
+ 	rlen = pkt_size - metalen;
+ 	ctx->rpra = rpra;
 -- 
 2.21.0
 
