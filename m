@@ -2,83 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 692804B50FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 14:04:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 656754B5193
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 14:24:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345552AbiBNNE0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Feb 2022 08:04:26 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:51934 "EHLO
+        id S1346810AbiBNNYR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Feb 2022 08:24:17 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353128AbiBNNE0 (ORCPT
+        with ESMTP id S230031AbiBNNYR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Feb 2022 08:04:26 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B17F84D609;
-        Mon, 14 Feb 2022 05:04:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644843859; x=1676379859;
-  h=from:to:cc:subject:date:message-id;
-  bh=qx6pEXqoFPXIkh9XX2jchiqtkp6Y1daXAlw0FUECkxg=;
-  b=nurytHB2UNqNRPCqO/5IcEDK51n3gN6+eQwvdFRyRASYN5wMS5IOIoMM
-   vKir/v+Fy/fnMPLo7uRwfcyQUGCJpn/L8yGeDA7Yh/UHlEePzXYvJ/Zek
-   ty16EtVkVlLKAbtT6c8hM1uUm5mtxR5PH6K/KjFSyhcjOF6dqDuqfuyY5
-   4=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 14 Feb 2022 05:04:19 -0800
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 14 Feb 2022 05:04:16 -0800
-X-QCInternal: smtphost
-Received: from hu-vnivarth-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.111.166])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 14 Feb 2022 18:34:06 +0530
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
-        id 682783C9F; Mon, 14 Feb 2022 18:34:05 +0530 (+0530)
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, msavaliy@qti.qualcomm.com,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Subject: [PATCH] arm64: dts: qcom: sc7280: Configure cts sleep pinctrl to bias-disable for sc7280-idp
-Date:   Mon, 14 Feb 2022 18:33:48 +0530
-Message-Id: <1644843828-20464-1-git-send-email-quic_vnivarth@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Mon, 14 Feb 2022 08:24:17 -0500
+X-Greylist: delayed 487 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 14 Feb 2022 05:24:09 PST
+Received: from theia.8bytes.org (8bytes.org [IPv6:2a01:238:4383:600:38bc:a715:4b6d:a889])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E46748889
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 05:24:09 -0800 (PST)
+Received: by theia.8bytes.org (Postfix, from userid 1000)
+        id A1DAB2FB; Mon, 14 Feb 2022 14:15:59 +0100 (CET)
+Date:   Mon, 14 Feb 2022 14:15:58 +0100
+From:   Joerg Roedel <joro@8bytes.org>
+To:     Heiko Stuebner <heiko@sntech.de>
+Cc:     will@kernel.org, Robin Murphy <robin.murphy@arm.com>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org
+Subject: Re: [PATCH] iommu/rockchip: : Use standard driver registration
+Message-ID: <YgpWDkcftsILEjpq@8bytes.org>
+References: <05ca5e1b29bdd350f4e20b9ceb031a2c281e23d2.1644005728.git.robin.murphy@arm.com>
+ <c08d58bff340da6a829e76d66d2fa090a9718384.1644005728.git.robin.murphy@arm.com>
+ <4984895.Adqdaih0Sd@phil>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4984895.Adqdaih0Sd@phil>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-WLAN rail was leaking power during RBSC/sleep even after turning BT off.
-Change sleep pinctrl configuration to handle same.
+On Fri, Feb 04, 2022 at 10:34:05PM +0100, Heiko Stuebner wrote:
+> Am Freitag, 4. Februar 2022, 21:16:41 CET schrieb Robin Murphy:
+> > It's been a long time since there was any reason to register IOMMU
+> > drivers early. Convert to the standard platform driver helper.
+> > 
+> > CC: Heiko Stuebner <heiko@sntech.de>
+> > Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+> 
+> Reviewed-by: Heiko Stuebner <heiko@sntech.de>
 
-Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index d623d71..de18319 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -516,10 +516,10 @@
- 		pins = "gpio28";
- 		function = "gpio";
- 		/*
--		 * Configure a pull-down on CTS to match the pull of
--		 * the Bluetooth module.
-+		 * Configure a disable on CTS to lower power usage
-+		 * when BT is turned off.
- 		 */
--		bias-pull-down;
-+		bias-disable;
- 	};
- 
- 	qup_uart7_sleep_rts: qup-uart7-sleep-rts {
--- 
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
-
+Applied both, thanks.
