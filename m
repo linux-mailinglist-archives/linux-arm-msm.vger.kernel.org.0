@@ -2,71 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71F424B5D2F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 22:47:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 58CFD4B5D50
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 22:54:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229869AbiBNVr2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Feb 2022 16:47:28 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:40284 "EHLO
+        id S231587AbiBNVyA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Feb 2022 16:54:00 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229798AbiBNVr1 (ORCPT
+        with ESMTP id S230107AbiBNVx7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Feb 2022 16:47:27 -0500
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE4EE18C595
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 13:47:18 -0800 (PST)
-Received: by mail-oi1-x235.google.com with SMTP id q8so18888999oiw.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 13:47:18 -0800 (PST)
+        Mon, 14 Feb 2022 16:53:59 -0500
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBE9B1A3433
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 13:53:50 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id bx31so24204591ljb.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 13:53:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=KZ8Tp8JYnqcpdvEmr+9vUKPtUjGKxrOWPg9ikND1TsQ=;
-        b=kEDFFQ9AnhAiPYpTrzxVGENiaHYM4WNo0h7IYAhmBWdtr2Nehv4FPMpQzGIGBTTSdT
-         V2UaMvUYGZkYk57yH9eb+iYHLKrErwgOdY4eUHXzNN6zGjZ4AEMBjYejLDsaYiKpifNI
-         ow94ZcKv1MDiVK1Cw9O4RE9jJAmxCrV45JbGI=
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=5UYOLxh4TlD6ViuNIkg6Jb9xRmU+W8ec1/tWgAbtnt8=;
+        b=jZPWRFcDx1nna/L5OgRKUorwPX0ZWcMYlnY+MuXnln5sXYos8tRoKFsDrWHm//3epp
+         UxgcdI+OzIQZlz3cyb1quqLEKsnuIuBFprWOyMO6S5mxyw/1dPYsleLs8e6v93h773TA
+         q9ze9xjGvz/mzhKDdeUQQSSuSY7jedH5KfGdiyYNmkQEFab0hPv99tUNRo8enlw5wD5a
+         mQHN26mf2lUmA4SvvMuGUKKaiY3IpGKtUgaxmbE5iR8UYuOrcPomI8roxBVgrn5ATmfi
+         QqP66pdPJmJkQ2MVizSCNXKi3zANoS2hUQKQNM7r4tr/AgjPfEzVD/6NPgbjFVaCecYG
+         x9Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=KZ8Tp8JYnqcpdvEmr+9vUKPtUjGKxrOWPg9ikND1TsQ=;
-        b=XNx1jUoKazLX/A4OckRpcpB9Pv6zc8ruXcCPdz329CQIrcRvIBdmJTMA3qQZYfnDNO
-         5fkRFM1GZIJONNpObrrHhrcsDQBSCHJg+mjIGRxTbiF7MMLZDvuk0hbdp1IGMtXsEsrQ
-         QW2x0BqRA/C80FQARp2DjsaRWQbAUJ6R+w5hLLpW7EH/MUxiQpf5RFTJ3zDQ74rePG8i
-         mgYP++YFCdzJntnEd8Vgtei+dUKkwKHzTa1QUa7pBSYv7ZRiIfmmgN3ds3WEnoumIton
-         rZy3pq6Oh2FurJZLlto2vH3dTmb3OFVWBZxkr6A4OVfS/nL40KBfet3RvPV+47LlTWQv
-         cfnQ==
-X-Gm-Message-State: AOAM532BG6MTC5gwtzuYyc1ONBhRO9Yhm4MOBr3G5BQ6Flb6y8559flT
-        0oFAccC828sj6lElwXmKcxKg6Heqtj7icmy+EWfvJw==
-X-Google-Smtp-Source: ABdhPJy6QtgovTMrBoMRA7cWoi8cXunIMQ3hmVjFFwyt7eXnabvshXHxsyp6QmnTk4CMzG+koej6x98aKMZeKBq0p4E=
-X-Received: by 2002:aca:df44:0:b0:2ce:285f:cb99 with SMTP id
- w65-20020acadf44000000b002ce285fcb99mr412149oig.40.1644875238208; Mon, 14 Feb
- 2022 13:47:18 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 14 Feb 2022 13:47:17 -0800
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=5UYOLxh4TlD6ViuNIkg6Jb9xRmU+W8ec1/tWgAbtnt8=;
+        b=4bNfAuRBMef0uXkPNBo4/T0t36bSWSqE+BrPFIRfDBxu0oy7ZJxmcA51GJP02JFPK+
+         4ac4/E3cgFtvJrhmwez7jBVzy7JMB4rAghzcpbhYiWwSN8UeCq2ugxXQuqh3mPr+GkQB
+         2Gq9+pPidWi95Trx3rKuX+TD51xuumi5W7HvZmQbcq+XnBOKCAVevFYu61bMWy4wnHb6
+         7qzFf22bbY0X2v3chcLgvgNDhhOF9bi8GTm+f2JKI027Sq1KscYF3btz0ESDjgja0l7C
+         1H6lUHkp+BMXEr2/ildog7c9dp1jM0SJk1NjfvXkBcen60tlN8FV+WPLci1jBYGRoUoW
+         wypA==
+X-Gm-Message-State: AOAM533jD7zjnEIZR33glaBK+2TYlLsEWXvyEuyc24IeOdlPXYu/9+cA
+        UJhpMxfqAsDNxpQEa6QfAQIZpQ==
+X-Google-Smtp-Source: ABdhPJwm3GIZiCT8lvk98vyqmyMz9gjEsoBR3ML8UtMUVeiNpyTh7N6IYQlg3dD08Eszj4zvEMV9KA==
+X-Received: by 2002:a05:651c:2121:: with SMTP id a33mr499102ljq.35.1644875629173;
+        Mon, 14 Feb 2022 13:53:49 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id v18sm2300931lft.281.2022.02.14.13.53.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Feb 2022 13:53:48 -0800 (PST)
+Message-ID: <2643f247-f9d7-2d28-3f39-490939ef8137@linaro.org>
+Date:   Tue, 15 Feb 2022 00:53:47 +0300
 MIME-Version: 1.0
-In-Reply-To: <1644668672-29790-2-git-send-email-quic_srivasam@quicinc.com>
-References: <1644668672-29790-1-git-send-email-quic_srivasam@quicinc.com> <1644668672-29790-2-git-send-email-quic_srivasam@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Mon, 14 Feb 2022 13:47:17 -0800
-Message-ID: <CAE-0n52uBY7GzjtFwV67y5mfqZRoK9ooW-kT3=4sH=8NtVK7FQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] ASoC: codec: wcd938x: Add switch control for
- selecting CTIA/OMTP Headset
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, alsa-devel@alsa-project.org,
-        bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
-        broonie@kernel.org, devicetree@vger.kernel.org,
-        judyhsiao@chromium.org, lgirdwood@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        perex@perex.cz, quic_plai@quicinc.com, robh+dt@kernel.org,
-        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org,
-        tiwai@suse.com
-Cc:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [PATCH v2] drm/msm: populate intf_audio_select() base on hardware
+ capability
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, vkoul@kernel.org,
+        daniel@ffwll.ch, airlied@linux.ie, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1644875214-12944-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1644875214-12944-1-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,82 +79,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2022-02-12 04:24:31)
-> diff --git a/sound/soc/codecs/wcd938x.c b/sound/soc/codecs/wcd938x.c
-> index eff200a..08d16a9 100644
-> --- a/sound/soc/codecs/wcd938x.c
-> +++ b/sound/soc/codecs/wcd938x.c
-> @@ -194,6 +194,7 @@ struct wcd938x_priv {
->         int ear_rx_path;
->         int variant;
->         int reset_gpio;
-> +       int us_euro_gpio;
->         u32 micb1_mv;
->         u32 micb2_mv;
->         u32 micb3_mv;
-> @@ -4196,6 +4197,33 @@ static void wcd938x_dt_parse_micbias_info(struct device *dev, struct wcd938x_pri
->                 dev_info(dev, "%s: Micbias4 DT property not found\n", __func__);
->  }
->
-> +static bool wcd938x_swap_gnd_mic(struct snd_soc_component *component, bool active)
-> +{
-> +       int value;
+On 15/02/2022 00:46, Kuogee Hsieh wrote:
+> intf_audio_select() callback function use to configure
+> HDMI_DP_CORE_SELECT to decide audio output routes to HDMI or DP
+> interface. HDMI is obsoleted at newer chipset. To keep supporting
+> legacy hdmi application, intf_audio_select call back function have
+> to be populated base on hardware chip capability where legacy
+> chipsets have has_audio_select flag set to true.
+> 
+> Changes in V2:
+> -- remove has_audio_select flag
+> -- add BIT(DPU_MDP_AUDIO_SELECT) into dpu_mdp_cfg
+> 
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 1 +
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c     | 4 +++-
+>   3 files changed, 5 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 272b14b..9c2df26 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -265,7 +265,7 @@ static const struct dpu_mdp_cfg sdm845_mdp[] = {
+>   	{
+>   	.name = "top_0", .id = MDP_TOP,
+>   	.base = 0x0, .len = 0x45C,
+> -	.features = 0,
+> +	.features = BIT(DPU_MDP_AUDIO_SELECT),
+>   	.highest_bank_bit = 0x2,
+>   	.clk_ctrls[DPU_CLK_CTRL_VIG0] = {
+>   			.reg_off = 0x2AC, .bit_off = 0},
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index e5a96d6..fb7b5b5 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -87,6 +87,7 @@ enum {
+>   	DPU_MDP_BWC,
+>   	DPU_MDP_UBWC_1_0,
+>   	DPU_MDP_UBWC_1_5,
+> +	DPU_MDP_AUDIO_SELECT,
+>   	DPU_MDP_MAX
+>   };
+>   
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> index 282e3c6..ab3ef16 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> @@ -268,7 +268,9 @@ static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
+>   	ops->get_danger_status = dpu_hw_get_danger_status;
+>   	ops->setup_vsync_source = dpu_hw_setup_vsync_source;
+>   	ops->get_safe_status = dpu_hw_get_safe_status;
+> -	ops->intf_audio_select = dpu_hw_intf_audio_select;
 > +
-> +       struct wcd938x_priv *wcd938x;
-> +
-> +       if (!component) {
+> +	if (cap & BIT(DPU_MDP_AUDIO_SELECT))
+> +		ops->intf_audio_select = dpu_hw_intf_audio_select;
+>   }
+>   
+>   static const struct dpu_mdp_cfg *_top_offset(enum dpu_mdp mdp,
 
-So component is NULL
 
-> +               dev_err(component->dev, "%s component is NULL\n", __func__);
-
-And now we deref component. Great NULL pointer exception Batman! Please
-test your code and remove useless checks. It makes the code harder to
-read and slows things down.
-
-> +               return false;
-> +       }
-> +
-> +       wcd938x = snd_soc_component_get_drvdata(component);
-> +       if (!wcd938x) {
-> +               dev_err(component->dev, "%s private data is NULL\n", __func__);
-
-Is this possible? I doubt it so can we just remove it?
-
-> +               return false;
-> +       }
-> +
-> +       value = gpio_get_value(wcd938x->us_euro_gpio);
-> +
-> +       gpio_set_value(wcd938x->us_euro_gpio, !value);
-> +       /* 20us sleep required after changing the gpio state*/
-
-Add a space before ending comment with */
-
-> +       usleep_range(20, 30);
-> +
-> +       return true;
-> +}
-> +
-> +
->  static int wcd938x_populate_dt_data(struct wcd938x_priv *wcd938x, struct device *dev)
->  {
->         struct wcd_mbhc_config *cfg = &wcd938x->mbhc_cfg;
-> @@ -4208,6 +4236,16 @@ static int wcd938x_populate_dt_data(struct wcd938x_priv *wcd938x, struct device
->                 return wcd938x->reset_gpio;
->         }
->
-> +       wcd938x->us_euro_gpio = of_get_named_gpio(dev->of_node, "us-euro-gpios", 0);
-
-Why do we need to use of GPIO APIs here? Can this driver be converted to
-use GPIO descriptors via the gpiod APIs?
-
-> +       if (wcd938x->us_euro_gpio < 0) {
-> +               dev_err(dev, "Failed to get us-euro-gpios gpio: err = %d\n", wcd938x->us_euro_gpio);
-> +       } else {
-> +               cfg->swap_gnd_mic = wcd938x_swap_gnd_mic;
-> +               gpio_direction_output(wcd938x->us_euro_gpio, 0);
-> +               /* 20us sleep required after pulling the reset gpio to LOW */
-> +               usleep_range(20, 30);
-> +       }
-> +
+-- 
+With best wishes
+Dmitry
