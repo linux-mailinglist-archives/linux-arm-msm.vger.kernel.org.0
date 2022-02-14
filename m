@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6174A4B43EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 09:19:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D2AB4B43EC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 09:20:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241895AbiBNIUD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Feb 2022 03:20:03 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:48068 "EHLO
+        id S241908AbiBNIUE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Feb 2022 03:20:04 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:48106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231706AbiBNIUC (ORCPT
+        with ESMTP id S241904AbiBNIUE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Feb 2022 03:20:02 -0500
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A3D025C41
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 00:19:55 -0800 (PST)
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com [209.85.208.72])
+        Mon, 14 Feb 2022 03:20:04 -0500
+Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1004E25C47
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 00:19:57 -0800 (PST)
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com [209.85.208.69])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 045DF4033A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 08:19:54 +0000 (UTC)
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id B93F5407E6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 08:19:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1644826794;
-        bh=r/A1exu5teyjmoBiQRL2ADp+LBFLDHTow6yiZCZgmss=;
+        s=20210705; t=1644826795;
+        bh=23CQAl/07AaN2dxN1TfTdDj5so/NCdWTbjb57ZtNLwo=;
         h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
          MIME-Version;
-        b=Al9b/Wn99YgpwfS893Yi3OAZ6+/tGR3RsNPMLHOZge29hmyFm0Y/9SllL3ZhP5ycx
-         52n5VRNDgiKpoZTsu9jVgyCKMNqJpqawREyMRvqipSRvROevn8bv5eeQySbzahh7HM
-         sk3RIQEtQiOyWYjsSrnLeBQqz8MUmjfY9nt4keWe17oiffU5+GANoyDQB7107GqB2C
-         +JnXqWehb4Akp3Lk1B3UHNyiT6tlFkze4AeS/qL6If9A8035T5gmxa9DcqgiJYA7MB
-         l7gqtvBYn/nDRv5IwX/NJipgIrDcpOebyaYjo8UI9x2bsBoXv8HSneP+zz9kQbSrsf
-         SRmUJpo+pl4Ug==
-Received: by mail-ed1-f72.google.com with SMTP id z21-20020a05640235d500b0041092b29ad6so3544041edc.19
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 00:19:54 -0800 (PST)
+        b=Ah1UupAoINeRCa+UtdPXztTePkYfs2ooX5tQRF6YqDHLCj4fOsLrLszYyo1SzXCyq
+         axMRDOzHIudG+Pqc0ec6ebKh4zmyKcerOvHSWvpFsbPW1YBYwnjGWpY7zVcRZHWhNe
+         OaNIWiFdGgZPeE5n3cjNx1f3goxIl7Fp2KpN8B9BniBYhXMv4Ferp1VQhCznIrLVdy
+         LE2uktIzvLNe2G04mkiN0IDujzL7SkBspAqMUePvKEv2g0zqb9XiwMEpvmQDavRPyO
+         +4WpWvTRdL15qFsiBc1D+9I87h2YPFqisEBAeWqc7GlVwK6qDLc1rhee4/NHUBylnn
+         nRJ1FYkb1mKAg==
+Received: by mail-ed1-f69.google.com with SMTP id z8-20020a05640240c800b0041003c827edso8127036edb.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 00:19:55 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=r/A1exu5teyjmoBiQRL2ADp+LBFLDHTow6yiZCZgmss=;
-        b=wUP5xVakh16dxSL9y1MCSe5xhOegVu0eAnzo0wYomagWRpJXN6O23CvRb7Z0MJ9Hm9
-         LB129yorevhVPCRWcoi09NgqEo8LQpxDdsJ35wbXQzLe5RW/LtoMRC1BlQEzaJp4U0In
-         /FQzIe5xl1IhQfzq5aVE8IHUulEQwsNBeYlf2uvXCHzE8WjJD03LNFcAl9OnwDhS/DHT
-         IHhLyhNc172nIFxpDvPaBHIgFZIIlP8+SIixoxKQfOt25DNBwU2I/qeW96rrr1RLz6rJ
-         UETqrt8Klca/6jMONyeTfDgZECgtqhPQS0LD3aG1NzJaCWyojLvCi7F/d2iwYzdGP+v6
-         BfvA==
-X-Gm-Message-State: AOAM531VG7HAkwSsbdVy9VrFC0PlFnsrJvSY8qCehbSJRJu9QxMunCgP
-        FbkAdSHKqT/ryf/W/EJbngswz1PRnlr5U7vnSGp7TwBp20o4GU5X2eWwcVF/AvGgCDLR5qDserq
-        Zz+chg2brO5kAyUGtOYGG/odsDfNLHtlz5cndi39lqz0=
-X-Received: by 2002:a05:6402:278c:: with SMTP id b12mr14039641ede.103.1644826793447;
-        Mon, 14 Feb 2022 00:19:53 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJzdbYmf42KnCNX/mcVtFFEqTiPZLsd8EmrJGHsXn4X5T6VWqFxb6wiz0GiywYV8Bjax6MTWGA==
-X-Received: by 2002:a05:6402:278c:: with SMTP id b12mr14039619ede.103.1644826793319;
-        Mon, 14 Feb 2022 00:19:53 -0800 (PST)
+        bh=23CQAl/07AaN2dxN1TfTdDj5so/NCdWTbjb57ZtNLwo=;
+        b=2UxxYdq9VfQLyetdL3ha1fGXFmUYZUJAYt0GhRPhe004voGrbBQHna9GijuFm3BZda
+         SZTjPPJo3xQnOVdEq7lWPDMCRV5vdb4/CI5Oi4QMHLxcBOkeTXh+0DWi39siMr8/7uXg
+         bVDv3mMoZAAVOdRvppR65TNYj5IMYvaGlEl9R3igKGAWlp5FLkeSuGZAi9b6TvkbmoLE
+         AyXL5pvgMY2zvbl4RklE9o3B+fW1GOeN4HI2IjSit1S085zLpqa7U8q3EWMPosgx7tcU
+         ge4NnHNqY7gnGDqElo6BgTu9E/5UexiXCl8pNqoTdkRId03sXHLqNZVbKOGXpyJLuZ+t
+         733A==
+X-Gm-Message-State: AOAM531aShniqSETbcIGvY1fpme4FEaDSPW0uc1qZBnUYBXkcLaqGmvB
+        sog/HakzryZT+zqxAKrtF88ZIW8ZGrSEhWIhByJ9f/CFLXn5GRAf0Z+SH1tZLkJmwQb4PTzfJic
+        hZyZvC9/J6XXIZFU8rBAEw8+2PlXR0nlEs8ast2YejMg=
+X-Received: by 2002:a17:907:3d01:: with SMTP id gm1mr10671210ejc.695.1644826795048;
+        Mon, 14 Feb 2022 00:19:55 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJyduVMGZqiqcBn+5NbYVmKbo23S2Kx2GnaG0uOcebe1lzeD4dxVvKdv5SiQHDzJAeAj67dMnw==
+X-Received: by 2002:a17:907:3d01:: with SMTP id gm1mr10671188ejc.695.1644826794896;
+        Mon, 14 Feb 2022 00:19:54 -0800 (PST)
 Received: from localhost.localdomain (xdsl-188-155-168-84.adslplus.ch. [188.155.168.84])
-        by smtp.gmail.com with ESMTPSA id b20sm2022941ede.23.2022.02.14.00.19.51
+        by smtp.gmail.com with ESMTPSA id b20sm2022941ede.23.2022.02.14.00.19.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Feb 2022 00:19:52 -0800 (PST)
+        Mon, 14 Feb 2022 00:19:54 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 To:     Lee Jones <lee.jones@linaro.org>, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
@@ -75,9 +75,9 @@ To:     Lee Jones <lee.jones@linaro.org>, Rob Herring <robh+dt@kernel.org>,
         linux-arm-kernel@lists.infradead.org,
         linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
         linux-rockchip@lists.infradead.org
-Subject: [PATCH 1/4] dt-bindings: pwm: google,cros-ec: include generic pwm schema
-Date:   Mon, 14 Feb 2022 09:19:13 +0100
-Message-Id: <20220214081916.162014-2-krzysztof.kozlowski@canonical.com>
+Subject: [PATCH 2/4] arm64: dts: mt8183: align Google CROS EC PWM node name with dtschema
+Date:   Mon, 14 Feb 2022 09:19:14 +0100
+Message-Id: <20220214081916.162014-3-krzysztof.kozlowski@canonical.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220214081916.162014-1-krzysztof.kozlowski@canonical.com>
 References: <20220214081916.162014-1-krzysztof.kozlowski@canonical.com>
@@ -93,53 +93,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Include generic pwm.yaml schema, which enforces PWM node naming.  Keep
-the old name in bindings as deprecated.
+dtschema expects PWM node name to be a generic "pwm".  This also matches
+Devicetree specification requirements about generic node names.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 ---
- Documentation/devicetree/bindings/mfd/google,cros-ec.yaml    | 4 ++++
- .../devicetree/bindings/pwm/google,cros-ec-pwm.yaml          | 5 ++++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-index d1f53bd449f7..0255b7028496 100644
---- a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-+++ b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-@@ -89,6 +89,10 @@ properties:
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
+index 8f7bf33f607d..2d7a193272ae 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
+@@ -92,7 +92,7 @@ volume_up {
+ };
  
-   ec-pwm:
-     $ref: "/schemas/pwm/google,cros-ec-pwm.yaml#"
-+    deprecated: true
-+
-+  pwm:
-+    $ref: "/schemas/pwm/google,cros-ec-pwm.yaml#"
- 
-   keyboard-controller:
-     $ref: "/schemas/input/google,cros-ec-keyb.yaml#"
-diff --git a/Documentation/devicetree/bindings/pwm/google,cros-ec-pwm.yaml b/Documentation/devicetree/bindings/pwm/google,cros-ec-pwm.yaml
-index 4cfbffd8414a..7ab6912a845f 100644
---- a/Documentation/devicetree/bindings/pwm/google,cros-ec-pwm.yaml
-+++ b/Documentation/devicetree/bindings/pwm/google,cros-ec-pwm.yaml
-@@ -16,6 +16,9 @@ description: |
-   An EC PWM node should be only found as a sub-node of the EC node (see
-   Documentation/devicetree/bindings/mfd/google,cros-ec.yaml).
- 
-+allOf:
-+  - $ref: pwm.yaml#
-+
- properties:
-   compatible:
-     const: google,cros-ec-pwm
-@@ -39,7 +42,7 @@ examples:
-             compatible = "google,cros-ec-spi";
-             reg = <0>;
- 
--            cros_ec_pwm: ec-pwm {
-+            cros_ec_pwm: pwm {
-                 compatible = "google,cros-ec-pwm";
-                 #pwm-cells = <1>;
-             };
+ &cros_ec {
+-	cros_ec_pwm: ec-pwm {
++	cros_ec_pwm: pwm {
+ 		compatible = "google,cros-ec-pwm";
+ 		#pwm-cells = <1>;
+ 		status = "disabled";
 -- 
 2.32.0
 
