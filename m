@@ -2,106 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AFFE14B42D2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 08:29:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 25D5D4B434A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 09:09:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241317AbiBNH2q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Feb 2022 02:28:46 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47014 "EHLO
+        id S229908AbiBNIJb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Feb 2022 03:09:31 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:39580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241257AbiBNH2p (ORCPT
+        with ESMTP id S241577AbiBNIJa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Feb 2022 02:28:45 -0500
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A92583204F
-        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Feb 2022 23:28:37 -0800 (PST)
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com [209.85.208.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 043E540339
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 07:28:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1644823716;
-        bh=stPjNYKT8jIgNyF2oAsLzVlTYEd+kLoCabs8ksrQu4Y=;
-        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-         In-Reply-To:Content-Type;
-        b=jMUvOorPXRbTgIjo4QR8OnJfJhD41D7iRu6JLBzukJQF1jiU2Y2nWVL+Q+iZnJjEn
-         oWNg9FbFxvORs0j4MDeFe82rEJ0KZFXtSwXovnFPpjPw5sSOoFAKfKT9MZMdRBvabI
-         Phf2HfAlqj8F6rO6e1oq6ujY983lW5M4U5tlrh1+fo52PPRqF80f2+WBiDDt2wGunr
-         oBbctpjNdwymicPGTAD6qWgYxRvOf6xhvgw0Z4jjZvDgqaWftgi1KWWxdCn7ZTUYT3
-         9EgTXrMlR/Sqepi8jx//r76tb7fysw2Fv1ngo6TqA2+TmAYYy2JBpCnL3T/stMMUYa
-         xfDRnXpv8A9lg==
-Received: by mail-ed1-f70.google.com with SMTP id m11-20020a056402430b00b00410678d119eso5264114edc.21
-        for <linux-arm-msm@vger.kernel.org>; Sun, 13 Feb 2022 23:28:36 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=stPjNYKT8jIgNyF2oAsLzVlTYEd+kLoCabs8ksrQu4Y=;
-        b=4uaq1I2xI7QbUMuk8IxYRCKf45sAdL6H85T8yhR0/MvA/RjBH8WbNSA26zIOLkIroS
-         kh7lDDgS90u+scW98idS5xjINdw1BwU6GhPO+OBy7s1POW9yQg2WU9DXzAEHjI6Kmb+J
-         lHsREis9zM6JYi/GFRlbDEBQ/AGUvpzzj55oBIVL90diVDaLxL3PCvUz8i94LHHrZU6z
-         CkkkJka57upXwYxmE52OlCkoFpzlGwSZe5titTfOCbbabKbktQMaqhPSXOzs7crKfOou
-         brrxSHXIEIzhXhdAFY9js7ALK+JfQcEnt2U6h4bDsojXzwk4GaAzD9QHDyaS3Q/hVo7H
-         poyQ==
-X-Gm-Message-State: AOAM5313xF3W6mP8jOc6D0fMiGZTuRgdrLggMDa0KnxUVQSu4/+n+FDb
-        GjMY/YjwWgrQ5zgtJluU5E40Cn5CyYxSFEXoRNjq56CpDuFejgcGALwxluW5Xetm9PBxu+88Q0z
-        41/gmL0ds6Xq3Z/DMdGgbyJL7ZpXglG1sHPKafJ58XQw=
-X-Received: by 2002:a05:6402:51d2:: with SMTP id r18mr14335299edd.88.1644823715489;
-        Sun, 13 Feb 2022 23:28:35 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJyzkInTRfFMDmTIqQtdD3PzZngKjB6pp383xOK8wNzWd9H/435n+6VZuhhh/TUUVZehlXzKrw==
-X-Received: by 2002:a05:6402:51d2:: with SMTP id r18mr14335283edd.88.1644823715381;
-        Sun, 13 Feb 2022 23:28:35 -0800 (PST)
-Received: from [192.168.0.103] (xdsl-188-155-168-84.adslplus.ch. [188.155.168.84])
-        by smtp.gmail.com with ESMTPSA id n2sm10098365ejl.86.2022.02.13.23.28.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 13 Feb 2022 23:28:34 -0800 (PST)
-Message-ID: <b7dad94f-4e59-cb4b-251d-05f747bb0862@canonical.com>
-Date:   Mon, 14 Feb 2022 08:28:34 +0100
+        Mon, 14 Feb 2022 03:09:30 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CDAC5F8E4;
+        Mon, 14 Feb 2022 00:09:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1644826162; x=1676362162;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=4gRqdwpdcbamSHfFSPt2D5EeeVOtpQgJGkim5FH8yTw=;
+  b=MBhIxx+O1aaiR4Ex65K+rD92KTSBB5hsIOJRxml1YQI0kEAeLN+mtKNX
+   BXbY/geMs3eD1zI0YR/dB+K6nhInupjCFc52Veg+mC6TrcYRPJb4hvnJL
+   sWObSmU+rHMNSrOBFI1huo9jKr+KHlR6WNPPI/wMc5LActjokM/xJHesO
+   c=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 14 Feb 2022 00:09:21 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Feb 2022 00:08:51 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Mon, 14 Feb 2022 00:08:49 -0800
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.922.19; Mon, 14 Feb 2022 00:08:40 -0800
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@codeaurora.org>,
+        <perex@perex.cz>, <tiwai@suse.com>,
+        <srinivas.kandagatla@linaro.org>, <rohitkr@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v12 00/10] Add support for audio on SC7280 based targets
+Date:   Mon, 14 Feb 2022 13:38:21 +0530
+Message-ID: <1644826102-15276-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH 1/3] dt-bindings: remoteproc: qcom: Add interconnects
- property
-Content-Language: en-US
-To:     Sibi Sankar <quic_sibis@quicinc.com>, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org
-Cc:     ohad@wizery.com, agross@kernel.org, mathieu.poirier@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        evgreen@chromium.org, dianders@chromium.org, swboyd@chromium.org,
-        mka@chromium.org
-References: <1644813252-12897-1-git-send-email-quic_sibis@quicinc.com>
- <1644813252-12897-2-git-send-email-quic_sibis@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <1644813252-12897-2-git-send-email-quic_sibis@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/02/2022 05:34, Sibi Sankar wrote:
-> Add interconnects property to support the bandwidth requirements
-> during modem bootup on SC7280 SoCs.
-> 
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
->  .../devicetree/bindings/remoteproc/qcom,q6v5.txt   | 23 ++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
-> 
+This patch set is to add support for Audio over wcd codec,
+digital mics, through digital codecs and without ADSP.
 
-There were several properties added within last months, so in total you
-changed these bindings quite a lot. Please convert them to YAML.
+Changes Since V11:
+    -- Fix kernel robot issue on arguments type mismatch.
+Changes Since V10:
+    -- Split bulk clock voting to individual clock voting as per use case in cdc-dma driver.
+    -- Add missing codec dma clocks.
+    -- Update rxtx lpm buffer size.
+Changes Since V9:
+    -- Change individual clock voting to bulk clock voting of lpass-sc7280 platform driver.
+    -- Remove redundant clocks in lpass variant structure.
+    -- Add mclk for MI2S based headset path.
+    -- Remove unused lpass variant structure members in lpass header.
+Changes Since V8:
+    -- Fix errors in sc7280 lpass cpu dt-bindings.
+    -- Move to quicinc domain email id's.
+Changes Since V7:
+    -- Fix indentation errors.
+    -- Bisect patches to avoid interdependency.
+Changes Since V6:
+    -- Split cdc dma regmap config macros.
+    -- Add write dma reg fields for i2s path.
+    -- Add helper function to distinguish rxtx and va dma ports.
+    -- Optimizing clock and reg name in cpu dt-bindings.
+    -- Update buffer management for cdc dma path.
+    -- Remove Kconfig fields of machine driver.
+Changes Since V5:
+    -- Include MI2S primary node to snd_soc_dai_driver in lpass-sc7280 platform driver.
+    -- Move dependency patch list to corresponding patch.
+    -- Add support for missing cdc-dma ports.
+    -- Change if/else conditional statements to switch cases.
+    -- Add missing error handlings.
+    -- Typo errors fix.
+Changes Since V4:
+    -- Remove unused variable in lpass-sc7280 platform driver.
+Changes Since V3:
+    -- Remove redundant power domain controls. As power domains can be configured from dtsi.
+Changes Since V2:
+    -- Split lpass sc7280 cpu driver patch and create regmap config patch.
+    -- Create patches based on latest kernel tip.
+    -- Add helper function to get dma control and lpaif handle.
+    -- Remove unused variables.
+Changes Since V1:
+    -- Typo errors fix
+    -- CPU driver readable/writable apis optimization.
+    -- Add Missing config patch
+    -- Add Common api for repeated dmactl initialization.
 
+Srinivasa Rao Mandadapu (10):
+  ASoC: qcom: SC7280: Update config for building codec dma drivers
+  ASoC: qcom: Move lpass_pcm_data structure to lpass header
+  ASoC: qcom: lpass: Add dma fields for codec dma lpass interface
+  ASoC: qcom: Add helper function to get dma control and lpaif handle
+  ASoC: qcom: Add register definition for codec rddma and wrdma
+  ASoC: qcom: Add regmap config support for codec dma driver
+  ASoC: qcom: Add support for codec dma driver
+  ASoC: qcom: Add lpass CPU driver for codec dma control
+  ASoC: dt-bindings: Add SC7280 lpass cpu bindings
+  ASoC: qcom: lpass-sc7280: Add platform driver for lpass audio
 
-Best regards,
-Krzysztof
+ .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  |  75 ++-
+ sound/soc/qcom/Kconfig                             |  11 +
+ sound/soc/qcom/Makefile                            |   4 +
+ sound/soc/qcom/lpass-cdc-dma.c                     | 304 ++++++++++
+ sound/soc/qcom/lpass-cpu.c                         | 244 +++++++-
+ sound/soc/qcom/lpass-lpaif-reg.h                   | 127 ++++-
+ sound/soc/qcom/lpass-platform.c                    | 617 ++++++++++++++++++---
+ sound/soc/qcom/lpass-sc7280.c                      | 447 +++++++++++++++
+ sound/soc/qcom/lpass.h                             | 145 +++++
+ 9 files changed, 1887 insertions(+), 87 deletions(-)
+ create mode 100644 sound/soc/qcom/lpass-cdc-dma.c
+ create mode 100644 sound/soc/qcom/lpass-sc7280.c
+
+-- 
+2.7.4
+
