@@ -2,69 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2035D4B55B9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 17:12:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E2C3D4B55FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 17:22:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356224AbiBNQKv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Feb 2022 11:10:51 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:54034 "EHLO
+        id S1356352AbiBNQWH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Feb 2022 11:22:07 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:34200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356221AbiBNQKh (ORCPT
+        with ESMTP id S233486AbiBNQWG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Feb 2022 11:10:37 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9F6760D94
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 08:10:23 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id j26so16838191wrb.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 08:10:23 -0800 (PST)
+        Mon, 14 Feb 2022 11:22:06 -0500
+Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0155FC31
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 08:21:58 -0800 (PST)
+Received: by mail-il1-x134.google.com with SMTP id n5so12708451ilk.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 08:21:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=BnDmn/bGiXHzA/HR2vbnCnaA9xu9dPUN92kb7gNI0E8=;
-        b=fhjDpQtldi51DoRrxcjQ4QySV3xYa4dsWTGNWasn8tE0fuqrmf4455PekHoGnbh8RA
-         WeYNa1sLTEAXVDjHPs6FCcCGMW/ddc+XtlyOxsiergq5Sj365kJaJPXOFIR+K1HFhiZw
-         LpH/Y64V3JSBZOBKnClGh1LEqEaPNrR4mNuuVV2sKkYH/k+H1Ju6IMkKiVDL33FpVBzs
-         kI1sHKCRfns2dKeyKs0M4qOYbE0yP1cqZsyH4CByyUBLh+IFYXVDHc2Ho8MerthnhOZ+
-         uzPIG68U6Bgd+YTs7aISfXUtIKfE5d10L7Xh0AvUPnvZR5Qx66cj5RJ1eddpzIzC4dvh
-         MZDw==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=y/lXxznWJk6t4L5VwAqaMS0+NBIKS0zk3kQAGJ/1b/k=;
+        b=JZLXUfRWra54tioTiu2lrYxDJmGtcUX8NNdySo/F7BWBvDruBVnf1bOydWNgXOogN5
+         Iz7arnCufrG1kJ9V7DcoDSRxMCbNRVV3btf8XwNiGUJYm3d1E2eS92/RlK7bOd1VQe5G
+         IQJLzFRnqEVjliOJs+NOd9nwMMPcEvNaZXjNo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=BnDmn/bGiXHzA/HR2vbnCnaA9xu9dPUN92kb7gNI0E8=;
-        b=pOieOmzWwtHylQqVg3IgHtEZJOdlLWyH23dGCbSTLPxAuNmKmd0CcuKSztdzqeLDcD
-         yIPBFAU9NZlIMAj9FhMEkBjSOLz7DKWjCuxB9+mb8pG5w7zC9Yn+sitg6uFnGdqERYqp
-         4kXWWwJsYQGFvq6WixR5GOhQv+kFiypp4kCcL1ZLIbI0b0R4x6criKumEoo+dld2SgzB
-         wUCJEHFzF1ku0f1S3IViMAwHzX93TFSFWp9xBJsUmK31yKqeK97Ag0jvZUZZAPND3R7e
-         MQVQ2LZ7w81leOfLWvG3rIPUGiH+jziBbwZvEBcZD9VSDfX4o68c+wZehzrwVvSUUQCu
-         3c4A==
-X-Gm-Message-State: AOAM532GG8MMWQ6/1dTBesZ1to5WC88TeZP8IhIrJ8EsSoSNT+C8AjY8
-        LA6QinmFgApruISml3YEOtFfjw==
-X-Google-Smtp-Source: ABdhPJyvVNBAhdJFt9bEImTAf3pCwZ2mTB73doCzcfrhpO5RxC/wz5x0irX8twik5gNfsvHgH4rVdw==
-X-Received: by 2002:a05:6000:1847:: with SMTP id c7mr273776wri.103.1644855022517;
-        Mon, 14 Feb 2022 08:10:22 -0800 (PST)
-Received: from srini-hackbox.lan (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.gmail.com with ESMTPSA id k28sm13677022wms.23.2022.02.14.08.10.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Feb 2022 08:10:22 -0800 (PST)
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To:     robh+dt@kernel.org, gregkh@linuxfoundation.org
-Cc:     devicetree@vger.kernel.org, ekangupt@qti.qualcomm.com,
-        bkumar@qti.qualcomm.com, linux-kernel@vger.kernel.org,
-        srini@kernel.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, Jeya R <jeyr@codeaurora.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH v4 12/12] arm64: dts: qcom: add non-secure domain property to fastrpc nodes
-Date:   Mon, 14 Feb 2022 16:10:02 +0000
-Message-Id: <20220214161002.6831-13-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20220214161002.6831-1-srinivas.kandagatla@linaro.org>
-References: <20220214161002.6831-1-srinivas.kandagatla@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=y/lXxznWJk6t4L5VwAqaMS0+NBIKS0zk3kQAGJ/1b/k=;
+        b=lfDXR2uy9LEOMYLPynoVvhxfipEwzw+wFkhnQ/iePchg4AV7nkfVFjounMBqv1fBZH
+         /nRpXcJ7ghKFw22lmWXJaiR9ydkm7prCrjDoi4Tw+7AB/wFyvJHkcyp2B22rTn/Cho1q
+         184XTaWLPGFwsRNKWSMnALECkK8OGEeamLRon7lJXBUUVaVpd1exESReuTm5VFuphu8o
+         9uI0GgUDwrqsvE0aBQh+PD9gdH5Tb2av1MCubU6OU0kjCLMupO0g3Lx0aoZJw8QlNyi/
+         JsJ0yqgVyVOHqXU+lZDsMInCCnw4G+sbfLReOearPN6qfaDEunEh1TRSddOjCukoZmaA
+         Ts/g==
+X-Gm-Message-State: AOAM533ebuV6zthqKQv/NyK2OULv7plsZgpkdUNE315sdaJ6UNTXWN8a
+        aXCxfF/JlZKGsxSD4P+QgHi7Vj2AtLbLQg==
+X-Google-Smtp-Source: ABdhPJxx+5WhSNXWNoCQYkar7DA4vgxUc46AqK1b0iINKeq/8pikMyiJ1oWf5Q8BQW3dRXVLSsptng==
+X-Received: by 2002:a05:6e02:1a82:: with SMTP id k2mr96956ilv.217.1644855717464;
+        Mon, 14 Feb 2022 08:21:57 -0800 (PST)
+Received: from mail-il1-f177.google.com (mail-il1-f177.google.com. [209.85.166.177])
+        by smtp.gmail.com with ESMTPSA id d16sm21207246iow.13.2022.02.14.08.21.57
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Feb 2022 08:21:57 -0800 (PST)
+Received: by mail-il1-f177.google.com with SMTP id z7so12713271ilb.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 08:21:57 -0800 (PST)
+X-Received: by 2002:a05:6e02:19cf:: with SMTP id r15mr119973ill.180.1644855716786;
+ Mon, 14 Feb 2022 08:21:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+References: <20220214081916.162014-1-krzysztof.kozlowski@canonical.com> <20220214081916.162014-4-krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20220214081916.162014-4-krzysztof.kozlowski@canonical.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 14 Feb 2022 08:21:45 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=VNarYKq8cZVqWfFKccTqxH46Wmm8Tr979EVsiAoOnT_g@mail.gmail.com>
+Message-ID: <CAD=FV=VNarYKq8cZVqWfFKccTqxH46Wmm8Tr979EVsiAoOnT_g@mail.gmail.com>
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: align Google CROS EC PWM node name
+ with dtschema
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     Lee Jones <lee.jones@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+        Benson Leung <bleung@chromium.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, chrome-platform@lists.linux.dev,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-pwm <linux-pwm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        "moderated list:ARM/Mediatek SoC support" 
+        <linux-mediatek@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,141 +90,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jeya R <jeyr@codeaurora.org>
+Hi,
 
-FastRPC DSP domain would be set as secure if non-secure dsp property is not
-added to the fastrpc DT node. Add this property to DT files of msm8916,
-sdm845, sm8150, sm8250 and sm8350 so that nothing is broken after secure
-domain patchset.
+On Mon, Feb 14, 2022 at 12:20 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@canonical.com> wrote:
+>
+> dtschema expects PWM node name to be a generic "pwm".  This also matches
+> Devicetree specification requirements about generic node names.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi               | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dts | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi             | 2 +-
+>  arch/arm64/boot/dts/qcom/sc7280-idp-ec-h1.dtsi             | 2 +-
+>  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi                 | 2 +-
+>  5 files changed, 5 insertions(+), 5 deletions(-)
 
-This patch is purely for backward compatibility reasons.
-
-Signed-off-by: Jeya R <jeyr@codeaurora.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 1 +
- arch/arm64/boot/dts/qcom/sdm845.dtsi  | 2 ++
- arch/arm64/boot/dts/qcom/sm8150.dtsi  | 3 +++
- arch/arm64/boot/dts/qcom/sm8250.dtsi  | 3 +++
- arch/arm64/boot/dts/qcom/sm8350.dtsi  | 3 +++
- 5 files changed, 12 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 41897eb3736a..a1543012c4fa 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1370,6 +1370,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,smd-channels = "fastrpcsmd-apps-dsp";
- 					label = "adsp";
-+					qcom,non-secure-domain;
- 
- 					#address-cells = <1>;
- 					#size-cells = <0>;
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index cfdeaa81f1bb..c9d613063966 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -838,6 +838,7 @@
- 				compatible = "qcom,fastrpc";
- 				qcom,glink-channels = "fastrpcglink-apps-dsp";
- 				label = "adsp";
-+				qcom,non-secure-domain;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 
-@@ -888,6 +889,7 @@
- 				compatible = "qcom,fastrpc";
- 				qcom,glink-channels = "fastrpcglink-apps-dsp";
- 				label = "cdsp";
-+				qcom,non-secure-domain;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 9255982adb69..637c6a6d4054 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -1755,6 +1755,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "sdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -2997,6 +2998,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "cdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -3442,6 +3444,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "adsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index c97ea638f6aa..3be4e630c2fe 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2594,6 +2594,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "sdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -2659,6 +2660,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "cdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -4429,6 +4431,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "adsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 53b39e718fb6..a9a11c747a3a 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -1996,6 +1996,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "sdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -2065,6 +2066,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "cdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -2367,6 +2369,7 @@
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "adsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
--- 
-2.21.0
-
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
