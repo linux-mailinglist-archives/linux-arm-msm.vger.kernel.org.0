@@ -2,122 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A39F34B44DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 09:50:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8ADCE4B4536
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 10:09:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242314AbiBNIuN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Feb 2022 03:50:13 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49378 "EHLO
+        id S242625AbiBNJJL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Feb 2022 04:09:11 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:58024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233183AbiBNIuM (ORCPT
+        with ESMTP id S234743AbiBNJJL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Feb 2022 03:50:12 -0500
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41F5F5F279
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 00:50:04 -0800 (PST)
-Received: by mail-pf1-x429.google.com with SMTP id f6so7073152pfj.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 00:50:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Iy4s+sH4IijtoXttifBEvscv0QbXaesAxYnXzr5xIco=;
-        b=UiSqg5nEGEYUdC8/j2+pP2pBJraqro5uN50BO1QvB2QndJyh/6BLtJ7WQz+Mx71yAp
-         vxVo6mIt6SWHpLdFQghE81u42xhJ62dEY6+LVHnFltVzKr5JLAJC8jXRvcxDbnXoO/6r
-         zsLLGgeSdBselyZchNtMHIwypkFXHLeVhkJSEEYnQbf42ieeKyuE99vgj2g8RCAspLx7
-         P1bsG8IASe9eO/6hwaegBh/VEik8sXiJPfWUp2mUZre5XFkezUF/kfNwIFIDXL8mFZX2
-         gUSVI3hccS4hjubpoUOmcnyd1O3owCk1SHQfSYP+jyq72N+xHdJD3Q9l7oeoY9EY2pMM
-         /1qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Iy4s+sH4IijtoXttifBEvscv0QbXaesAxYnXzr5xIco=;
-        b=bLys13jnKa6THFQeQeQ/xfDZ7zmsGG7nWPzY9eA0ifCfDAMN9s5KOlpJ5j+a5wrd8C
-         wJusq6GcQ25QDggkIltwYfISFIFyR/j1ZqC0GLgrvL/b/9AF5WRS89ldgmPREsKOt1mj
-         eTJusEYKPEYGecnYNtGMx9cNewkZeQHnhoXVvHydNXwkB16mvnfFc6nZeaud2deW8UuY
-         upx4pp7xV6MA37NSQJy2ZC0cdHpy1DzKscP1D1xSHAHDE5T6Ok/f3PA9P26QuZ+VnSLS
-         idI2v8l64sjWziW5K+ZnRQ8rEXQmERa3x8m5nXlKqQy8rL49+/YzlsqPSSuLjb/oaACn
-         s/Sw==
-X-Gm-Message-State: AOAM532F+urtcKbhSkRhZFXaz5CyjKY5f52XEM6yH+LLpkGaj9b/TD31
-        pe0ONN40N1AkdNOWbxwGHFl6/a/lfKUKJfY=
-X-Google-Smtp-Source: ABdhPJzDId7et9KmPWwuqiCL+6zIlpobDnaYfXKOR7zZwfofxC8JPnCWCpmbzmg6aLyM83B2vkoHHQ==
-X-Received: by 2002:a65:6090:: with SMTP id t16mr10730170pgu.323.1644828603709;
-        Mon, 14 Feb 2022 00:50:03 -0800 (PST)
-Received: from thinkpad ([2409:4072:817:5a6f:3104:62c0:1941:5033])
-        by smtp.gmail.com with ESMTPSA id om1sm13688419pjb.55.2022.02.14.00.50.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Feb 2022 00:50:03 -0800 (PST)
-Date:   Mon, 14 Feb 2022 14:19:57 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/8] mailbox: qcom: Add support for SDX65 APCS IPC
-Message-ID: <20220214084957.GH3494@thinkpad>
-References: <1644821755-27059-1-git-send-email-quic_rohiagar@quicinc.com>
- <20220214083409.GB3494@thinkpad>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220214083409.GB3494@thinkpad>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Mon, 14 Feb 2022 04:09:11 -0500
+Received: from m43-7.mailgun.net (m43-7.mailgun.net [69.72.43.7])
+        by lindbergh.monkeyblade.net (Postfix) with UTF8SMTPS id 2DEA760056
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 01:09:04 -0800 (PST)
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1644829744; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=0IElTyYDBIfvi2zer1ahdbOZj2DmTRQFW8xbpLmh/s8=;
+ b=p3iTfhY7Lz+8WOKwRNYabAC1feAty1MmEF2jJi/9MHDZnaVJuZzTJwLg5W1KzzPlzefh21Uj
+ RSnnOdDH9TAhHj9kJVUXM/0nsbsmuzrK1vueo3f1SmFFL17mm54jo4pKePt5KwWMMigR+3CA
+ hfe9BgBRplyFMV0EjkSJ+L05A+o=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 620a1c2e3047cf1c0a528731 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 14 Feb 2022 09:09:02
+ GMT
+Sender: zijuhu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 713F0C4360C; Mon, 14 Feb 2022 09:09:01 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A4C18C4338F;
+        Mon, 14 Feb 2022 09:09:00 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 14 Feb 2022 17:09:00 +0800
+From:   zijuhu@codeaurora.org
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, c-hbandi@codeaurora.org,
+        hemantg@codeaurora.org, rjliao@codeaurora.org,
+        tjiang@codeaurora.org, Zijun Hu <quic_zijuhu@quicinc.com>
+Subject: Re: [PATCH v2] Bluetooth: btusb: Improve stability for QCA devices
+In-Reply-To: <59F65F10-0988-4E50-8956-69C601F05434@holtmann.org>
+References: <1644566620-16748-1-git-send-email-zijuhu@codeaurora.org>
+ <59F65F10-0988-4E50-8956-69C601F05434@holtmann.org>
+Message-ID: <d7fa066f93e5869d955da46c43f6b142@codeaurora.org>
+X-Sender: zijuhu@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 14, 2022 at 02:04:14PM +0530, Manivannan Sadhasivam wrote:
-> On Mon, Feb 14, 2022 at 12:25:55PM +0530, Rohit Agarwal wrote:
-> > In SDX65, the IPC bits are located in the APCS GCC block. Also, this block
-> > can provide clock functionality. Hence, add support for IPC with correct
-> > offset and name of the clock provider.
-> > 
-> > Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+On 2022-02-12 00:22, Marcel Holtmann wrote:
+> Hi Zijun,
 > 
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>> Controller will reset after NVM is downloaded for QCA
+>> device, so wait a moment for reset Done then go ahead
+>> to improve stability.
+>> 
+>> Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+>> ---
+>> drivers/bluetooth/btusb.c | 5 +++++
+>> 1 file changed, 5 insertions(+)
+>> 
+>> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+>> index e03dfbd92fcc..20e36f53d2e7 100644
+>> --- a/drivers/bluetooth/btusb.c
+>> +++ b/drivers/bluetooth/btusb.c
+>> @@ -2994,6 +2994,7 @@ static int btusb_set_bdaddr_wcn6855(struct 
+>> hci_dev *hdev,
+>> #define QCA_PATCH_UPDATED	0x80
+>> #define QCA_DFU_TIMEOUT		3000
+>> #define QCA_FLAG_MULTI_NVM      0x80
+>> +#define QCA_BT_RESET_WAIT_MS    100
+>> 
+>> #define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
+>> #define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
+>> @@ -3320,6 +3321,10 @@ static int btusb_setup_qca(struct hci_dev 
+>> *hdev)
+>> 		err = btusb_setup_qca_load_nvm(hdev, &ver, info);
+>> 		if (err < 0)
+>> 			return err;
+>> +		/* Controller will reset after NVM is downloaded, so wait a moment
+>> +		 * for reset Done, it will improve stability.
+>> +		 */
+>> +		msleep(QCA_BT_RESET_WAIT_MS);
 > 
-> Thanks,
-> Mani
+> how hard is to just grab the data sheet and figure out the appropriate
+> time to wait? I will be all documented and then reference the
+> documentation.
 > 
-> > ---
-> >  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 5 +++++
-> >  1 file changed, 5 insertions(+)
-> > 
-> > diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> > index 9325d2a..3f8612c 100644
-> > --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> > +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-> > @@ -53,6 +53,10 @@ static const struct qcom_apcs_ipc_data sdx55_apcs_data = {
-> >  	.offset = 0x1008, .clk_name = "qcom-sdx55-acps-clk"
-> >  };
-> >  
-> > +static const struct qcom_apcs_ipc_data sdx65_apcs_data = {
-> > +	.offset = 0x1008, .clk_name = "qcom-sdx65-acps-clk"
-> > +};
-> > +
 
-After looking at patch 7/8, I think we should be able to reuse
-"qcom-sdx55-acps-clk" for SDX65.
+let me explain more for this patch:
+a BT enable failure issue is reported for WCN6855 2.1 chip, the root
+cause located is that HCI command is sent before controller reset is 
+Done.
+100ms delay is suggested by firmware team and it is a appropriate 
+interval
+based on verification. so these info is not available from data sheet 
+currently.
 
-Thanks,
-Mani
-> >  static const struct regmap_config apcs_regmap_config = {
-> >  	.reg_bits = 32,
-> >  	.reg_stride = 4,
-> > @@ -159,6 +163,7 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
-> >  	{ .compatible = "qcom,sm8150-apss-shared", .data = &apps_shared_apcs_data },
-> >  	{ .compatible = "qcom,sm6115-apcs-hmss-global", .data = &msm8994_apcs_data },
-> >  	{ .compatible = "qcom,sdx55-apcs-gcc", .data = &sdx55_apcs_data },
-> > +	{ .compatible = "qcom,sdx65-apcs-gcc", .data = &sdx65_apcs_data },
-> >  	{}
-> >  };
-> >  MODULE_DEVICE_TABLE(of, qcom_apcs_ipc_of_match);
-> > -- 
-> > 2.7.4
-> > 
+> I really dislike this "add a sleep here and sleep there". It might
+> just work for now. The next hardware generation comes around or if
+> placed on a different board just behaves a little bit different. And
+> at some point we are at 10 seconds sleep and you start complaining why
+> the controller initialization takes so long. Stop guessing and
+> reference the data sheet.
+> 
+
+you are right.
+i will only restrict that delay to WCN6855 2.1 chip this issue is 
+reported for.
+
+> Regards
+> 
+> Marcel
