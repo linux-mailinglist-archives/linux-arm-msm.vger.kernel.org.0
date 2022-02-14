@@ -2,80 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E5B34B5A11
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 19:40:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D6BBC4B5AAF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 20:50:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234470AbiBNSkr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Feb 2022 13:40:47 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:47528 "EHLO
+        id S229478AbiBNTpQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Feb 2022 14:45:16 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:49402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350782AbiBNSkn (ORCPT
+        with ESMTP id S229436AbiBNTpQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Feb 2022 13:40:43 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69F0A65797
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 10:40:32 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id p14so15094283ejf.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 10:40:32 -0800 (PST)
+        Mon, 14 Feb 2022 14:45:16 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E6B2116D35
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Feb 2022 11:44:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=8VBh79+Ny4PA51B+SNydGU0RP7+vIBXuirFrG98oTUI=;
-        b=EKWS4ZcN8j/y+e+UDo7BAsXTLiGLDGVs1ahspXmtcfR36HMSDxYj4hnPSyGmHAnnGB
-         +o0BNZO8w66S0VO8zRU11UabZr7OR0PfCFxN5d7VnMf35XOdZ1DjnPvoO+zbAJVMildU
-         ZErWmf0OHl7TzS7q/vDAk6cY3JRIzUxQrSaj5MaX3tQ8Lwx3jQaEgrVWJNAPcbq1adHh
-         iF3BDX6SzSJXPHZJzbiq/clCj72pkLNkFMVbK/gkq/iWtIN49/buPAexp5UtaXj8eimY
-         xOrhH+kOxVi9Vw0j4kYPv9zxx8flEN/kB8ffEI4sXUFNVY+pgvJuMIp8upux4H8YViQF
-         RWRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=8VBh79+Ny4PA51B+SNydGU0RP7+vIBXuirFrG98oTUI=;
-        b=DN3JiiDqOCmIxZch+CqE7fteip3aqFL6XHxrxtYKMO0fmy/bk6ok32GdsF39YynIq9
-         e+qhzrDgmyu5Fx++QlfLDLtCOGv+LAshvlqVhz8tiDyQdmCtnaBDHLQPqgrlGfLRfK8d
-         QNga2JTwbYlolwDk2XBLSXhru93bXueRP2WdlsGSM58UJwRtlTBLAbKsKIfLjOUB/w2s
-         CX+qTe+8QT0cJF4aRCYCLhOnp7cs2oSMSqICfSOqBQ55F/g5gAZ6nWkqRGkc0lTM/64c
-         M7jtzKJGYdwIlzTdRC4pEDS+udlKEV5uU9u1sfePWN5pnS7ciA08obmlGiAmf7829gNC
-         bzBw==
-X-Gm-Message-State: AOAM531jH4LmWfTLDwLwEMo/4h/HySotp24l6tF4m9U/1V0QAI7f79V2
-        rzUp7mBZH9C8Y0wAPdGJw4EsSZbTyKSu8Q==
-X-Google-Smtp-Source: ABdhPJzcf/bY0fMRy6QzFYpyNVamteykkK9AxwzIMrV2bm0KQUR//QzDoLIE52Qt54+xHwPIA0ZJmg==
-X-Received: by 2002:a17:906:5d0d:: with SMTP id g13mr74936ejt.351.1644864021411;
-        Mon, 14 Feb 2022 10:40:21 -0800 (PST)
-Received: from [192.168.0.30] (cpc78119-cwma10-2-0-cust590.7-3.cable.virginm.net. [81.96.50.79])
-        by smtp.gmail.com with ESMTPSA id y16sm8076378ejd.72.2022.02.14.10.40.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Feb 2022 10:40:20 -0800 (PST)
-Message-ID: <cf69e1b7-28cb-eaf1-1eaf-c4a7fc7e4ddf@linaro.org>
-Date:   Mon, 14 Feb 2022 18:40:19 +0000
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1644867899; x=1676403899;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=o399d9ecTHK4e95M+tUkgumsvYPEBP7LORzPvfD9GG0=;
+  b=Uk5LB3iSu7K8UX419oBQjhoIwVoz1spdFRYG9gSCQCzwtQIFOpK4JQW+
+   6fDqSXma6hdQ5j16oPo1WaxBnj014M/oUa/3rDBC5fRxFQBu6bkQQQ5b6
+   jEOMI9TjFV8Wu0UYlJiC+V8DI2/v/LPNuLQ1UhqXiZLUtv7J2xFu/LL6g
+   o=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 14 Feb 2022 11:08:23 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Feb 2022 11:08:22 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Mon, 14 Feb 2022 11:08:21 -0800
+Received: from [10.111.168.21] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Mon, 14 Feb
+ 2022 11:08:19 -0800
+Message-ID: <fe8841b6-1dc5-3126-3bf8-258b61d5ee7e@quicinc.com>
+Date:   Mon, 14 Feb 2022 11:08:17 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v4 1/8] mfd: qcom-spmi-pmic: expose the PMIC revid
- information to clients
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [PATCH v5 4/6] drm/msm/dpu: stop embedding dpu_hw_blk into
+ dpu_hw_intf
 Content-Language: en-US
-To:     Jonathan Cameron <jic23@kernel.org>
-Cc:     Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        sumit.semwal@linaro.org, amit.pundir@linaro.org,
-        john.stultz@linaro.org
-References: <20220211211959.502514-1-caleb.connolly@linaro.org>
- <20220211211959.502514-2-caleb.connolly@linaro.org>
- <20220213165550.13051272@jic23-huawei>
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20220213165550.13051272@jic23-huawei>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20220121210618.3482550-1-dmitry.baryshkov@linaro.org>
+ <20220121210618.3482550-5-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220121210618.3482550-5-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,37 +73,121 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-I've found some pretty bad bugs with this patch (specifically qcom_pmic_get()),
-please do not merge, they'll be fixed in the next revision.
 
-On 13/02/2022 16:55, Jonathan Cameron wrote:
-> On Fri, 11 Feb 2022 21:19:52 +0000
-> Caleb Connolly <caleb.connolly@linaro.org> wrote:
->
->> Some PMIC functions such as the RRADC need to be aware of the PMIC
->> chip revision information to implement errata or otherwise adjust
->> behaviour, export the PMIC information to enable this.
->>
->> This is specifically required to enable the RRADC to adjust
->> coefficients based on which chip fab the PMIC was produced in,
->> this can vary per unique device and therefore has to be read at
->> runtime.
->>
->> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-> Hi Caleb,
->
-> Looks fine to me, though obviously needs a tag from Lee as MFD maintainer.
-> I'm assuming I'll take this series through IIO once everyone is happy
-> with the changes and hence it'll pick up my SoB, so I'm not giving
-> RBs or similar in the meantime.
->
-> Thanks,
->
-> Jonathan
-
--- 
-Kind Regards,
-Caleb (they/them)
-
+On 1/21/2022 1:06 PM, Dmitry Baryshkov wrote:
+> Now as dpu_hw_intf is not hanled by dpu_rm_get_assigned_resources, there
+> is no point in embedding the (empty) struct dpu_hw_blk into dpu_hw_intf
+> (and using typecasts between dpu_hw_blk and dpu_hw_intf). Drop it and
+> use dpu_hw_intf directly.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h | 11 -----------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      | 17 +++--------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h      |  9 ++++++---
+>   3 files changed, 9 insertions(+), 28 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+> index 3568be80dab5..230d122fa43b 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+> @@ -78,7 +78,6 @@ struct dpu_hw_intf_ops {
+>   };
+>   
+>   struct dpu_hw_intf {
+> -	struct dpu_hw_blk base;
+>   	struct dpu_hw_blk_reg_map hw;
+>   
+>   	/* intf */
+> @@ -90,16 +89,6 @@ struct dpu_hw_intf {
+>   	struct dpu_hw_intf_ops ops;
+>   };
+>   
+> -/**
+> - * to_dpu_hw_intf - convert base object dpu_hw_base to container
+> - * @hw: Pointer to base hardware block
+> - * return: Pointer to hardware block container
+> - */
+> -static inline struct dpu_hw_intf *to_dpu_hw_intf(struct dpu_hw_blk *hw)
+> -{
+> -	return container_of(hw, struct dpu_hw_intf, base);
+> -}
+> -
+>   /**
+>    * dpu_hw_intf_init(): Initializes the intf driver for the passed
+>    * interface idx.
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> index 8df21a46308e..96554e962e38 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> @@ -74,14 +74,8 @@ int dpu_rm_destroy(struct dpu_rm *rm)
+>   			dpu_hw_ctl_destroy(hw);
+>   		}
+>   	}
+> -	for (i = 0; i < ARRAY_SIZE(rm->intf_blks); i++) {
+> -		struct dpu_hw_intf *hw;
+> -
+> -		if (rm->intf_blks[i]) {
+> -			hw = to_dpu_hw_intf(rm->intf_blks[i]);
+> -			dpu_hw_intf_destroy(hw);
+> -		}
+> -	}
+> +	for (i = 0; i < ARRAY_SIZE(rm->hw_intf); i++)
+> +		dpu_hw_intf_destroy(rm->hw_intf[i]);
+>   
+>   	return 0;
+>   }
+> @@ -179,7 +173,7 @@ int dpu_rm_init(struct dpu_rm *rm,
+>   			DPU_ERROR("failed intf object creation: err %d\n", rc);
+>   			goto fail;
+>   		}
+> -		rm->intf_blks[intf->id - INTF_0] = &hw->base;
+> +		rm->hw_intf[intf->id - INTF_0] = hw;
+>   	}
+>   
+>   	for (i = 0; i < cat->ctl_count; i++) {
+> @@ -593,8 +587,3 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+>   
+>   	return num_blks;
+>   }
+> -
+> -struct dpu_hw_intf *dpu_rm_get_intf(struct dpu_rm *rm, enum dpu_intf intf_idx)
+> -{
+> -	return to_dpu_hw_intf(rm->intf_blks[intf_idx - INTF_0]);
+> -}
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> index ee50f6651b6e..9b13200a050a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> @@ -18,14 +18,14 @@ struct dpu_global_state;
+>    * @pingpong_blks: array of pingpong hardware resources
+>    * @mixer_blks: array of layer mixer hardware resources
+>    * @ctl_blks: array of ctl hardware resources
+> - * @intf_blks: array of intf hardware resources
+> + * @hw_intf: array of intf hardware resources
+>    * @dspp_blks: array of dspp hardware resources
+>    */
+>   struct dpu_rm {
+>   	struct dpu_hw_blk *pingpong_blks[PINGPONG_MAX - PINGPONG_0];
+>   	struct dpu_hw_blk *mixer_blks[LM_MAX - LM_0];
+>   	struct dpu_hw_blk *ctl_blks[CTL_MAX - CTL_0];
+> -	struct dpu_hw_blk *intf_blks[INTF_MAX - INTF_0];
+> +	struct dpu_hw_intf *hw_intf[INTF_MAX - INTF_0];
+>   	struct dpu_hw_blk *dspp_blks[DSPP_MAX - DSPP_0];
+>   	struct dpu_hw_blk *merge_3d_blks[MERGE_3D_MAX - MERGE_3D_0];
+>   };
+> @@ -90,7 +90,10 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+>    * @rm: DPU Resource Manager handle
+>    * @intf_idx: INTF's index
+>    */
+> -struct dpu_hw_intf *dpu_rm_get_intf(struct dpu_rm *rm, enum dpu_intf intf_idx);
+> +static inline struct dpu_hw_intf *dpu_rm_get_intf(struct dpu_rm *rm, enum dpu_intf intf_idx)
+> +{
+> +	return rm->hw_intf[intf_idx - INTF_0];
+> +}
+>   
+>   #endif /* __DPU_RM_H__ */
+>   
