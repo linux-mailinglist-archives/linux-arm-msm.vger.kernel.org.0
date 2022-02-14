@@ -2,370 +2,345 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4368B4B4020
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 04:13:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B9B3A4B4065
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Feb 2022 04:38:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232964AbiBNDN7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 13 Feb 2022 22:13:59 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50258 "EHLO
+        id S232422AbiBNDiJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 13 Feb 2022 22:38:09 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231181AbiBNDN6 (ORCPT
+        with ESMTP id S231546AbiBNDiJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 13 Feb 2022 22:13:58 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F38450B00;
-        Sun, 13 Feb 2022 19:13:44 -0800 (PST)
+        Sun, 13 Feb 2022 22:38:09 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 325FC55BED;
+        Sun, 13 Feb 2022 19:38:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644808425; x=1676344425;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=tlsmcNbWhzdVL9mWP1sv0mxxPXwsBd8TziZhrT0xNmo=;
-  b=haWw0U1lSAZlL7wy/StVPQ6VHkY/kqtPgTssdZ44QPm/SgkecX7VOxsl
-   +xxhelPyrkCEWKpAFnMI+qur21Kz2/aX2OQfSLPt39VYA1CGpxUt3RlE5
-   NqDtEIkz9JUFCtadboI2R6//wTIiN9WFGZHVbor5dU70r1ZV3xLATJc3U
-   c=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 13 Feb 2022 19:13:44 -0800
+  t=1644809882; x=1676345882;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=HK11ocDcsvfPYA+9p24DXEGsA5DtOG8fG1arE+3kQgA=;
+  b=XjeMCpx133cjApbGnZyl3y+COuZaAHqfRIA+zE8r0/wl2Cef9AOItAPm
+   SSLqhJU9NOrocXz3Xo0wwhQStgYtY7V7mBVzD+fXzFHh4xRnl/lHiNlaf
+   MmPZNfmOkF7g8PP6MoWbeaE1+us7SkB8DwnMR3m9rF/efjqjHJngnSmbA
+   w=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 13 Feb 2022 19:38:02 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2022 19:13:44 -0800
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2022 19:38:01 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Sun, 13 Feb 2022 19:13:44 -0800
-Received: from blr-ubuntu-253.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Sun, 13 Feb 2022 19:13:40 -0800
-From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     Jiri Slaby <jirislaby@kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        "Shanker Donthineni" <shankerd@codeaurora.org>,
-        Adam Wallis <awallis@codeaurora.org>,
-        Timur Tabi <timur@codeaurora.org>,
-        Elliot Berman <eberman@codeaurora.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-Subject: [PATCHv5] tty: hvc: dcc: Bind driver to CPU core0 for reads and writes
-Date:   Mon, 14 Feb 2022 08:43:22 +0530
-Message-ID: <20220214031322.7498-1-quic_saipraka@quicinc.com>
-X-Mailer: git-send-email 2.33.1
+ 15.2.986.15; Sun, 13 Feb 2022 19:38:00 -0800
+Received: from [10.50.50.207] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Sun, 13 Feb
+ 2022 19:37:57 -0800
+Message-ID: <8628fb7b-8c81-9f3c-4803-1fcdc68b92d4@quicinc.com>
+Date:   Mon, 14 Feb 2022 09:07:53 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.2
+Subject: Re: [PATCHv9 4/5] lib: Add register read/write tracing support
+Content-Language: en-US
+To:     Arnd Bergmann <arnd@arndb.de>, Steven Rostedt <rostedt@goodmis.org>
+CC:     gregkh <gregkh@linuxfoundation.org>, <quic_psodagud@quicinc.com>,
+        "Trilok Soni" <quic_tsoni@quicinc.com>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Prasad Sodagudi <psodagud@codeaurora.org>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Marc Zyngier <maz@kernel.org>
+References: <cover.1642482334.git.quic_saipraka@quicinc.com>
+ <ed2994d6adb306b540ed0ece19ecaf2c2817fd42.1642482334.git.quic_saipraka@quicinc.com>
+From:   Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+In-Reply-To: <ed2994d6adb306b540ed0ece19ecaf2c2817fd42.1642482334.git.quic_saipraka@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Shanker Donthineni <shankerd@codeaurora.org>
+Hi Steve, Arnd
 
-Some debuggers, such as Trace32 from Lauterbach GmbH, do not handle
-reads/writes from/to DCC on secondary cores. Each core has its
-own DCC device registers, so when a core reads or writes from/to DCC,
-it only accesses its own DCC device. Since kernel code can run on
-any core, every time the kernel wants to write to the console, it
-might write to a different DCC.
+On 1/24/2022 12:03 PM, Sai Prakash Ranjan wrote:
+> From: Prasad Sodagudi <psodagud@codeaurora.org>
+>
+> Generic MMIO read/write i.e., __raw_{read,write}{b,l,w,q} accessors
+> are typically used to read/write from/to memory mapped registers
+> and can cause hangs or some undefined behaviour in following few
+> cases,
+>
+> * If the access to the register space is unclocked, for example: if
+>    there is an access to multimedia(MM) block registers without MM
+>    clocks.
+>
+> * If the register space is protected and not set to be accessible from
+>    non-secure world, for example: only EL3 (EL: Exception level) access
+>    is allowed and any EL2/EL1 access is forbidden.
+>
+> * If xPU(memory/register protection units) is controlling access to
+>    certain memory/register space for specific clients.
+>
+> and more...
+>
+> Such cases usually results in instant reboot/SErrors/NOC or interconnect
+> hangs and tracing these register accesses can be very helpful to debug
+> such issues during initial development stages and also in later stages.
+>
+> So use ftrace trace events to log such MMIO register accesses which
+> provides rich feature set such as early enablement of trace events,
+> filtering capability, dumping ftrace logs on console and many more.
+>
+> Sample output:
+>
+> rwmmio_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
+> rwmmio_post_write: __qcom_geni_serial_console_write+0x160/0x1e0 width=32 val=0xa0d5d addr=0xfffffbfffdbff700
+> rwmmio_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 addr=0xfffffbfffdbff610
+> rwmmio_post_read: qcom_geni_serial_poll_bit+0x94/0x138 width=32 val=0x0 addr=0xfffffbfffdbff610
+>
+> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
+> Co-developed-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+> Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
+> ---
+>   arch/Kconfig                  |  3 ++
+>   arch/arm64/Kconfig            |  1 +
+>   include/trace/events/rwmmio.h | 97 +++++++++++++++++++++++++++++++++++
+>   lib/Kconfig                   |  7 +++
+>   lib/Makefile                  |  2 +
+>   lib/trace_readwrite.c         | 47 +++++++++++++++++
+>   6 files changed, 157 insertions(+)
+>   create mode 100644 include/trace/events/rwmmio.h
+>   create mode 100644 lib/trace_readwrite.c
+>
+> diff --git a/arch/Kconfig b/arch/Kconfig
+> index fdba59052abc..54dd42db882d 100644
+> --- a/arch/Kconfig
+> +++ b/arch/Kconfig
+> @@ -1322,6 +1322,9 @@ config ARCH_HAS_ELFCORE_COMPAT
+>   config ARCH_HAS_PARANOID_L1D_FLUSH
+>   	bool
+>   
+> +config ARCH_HAVE_TRACE_MMIO_ACCESS
+> +	bool
+> +
+>   config DYNAMIC_SIGFRAME
+>   	bool
+>   
+> diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+> index 3bb0b67292b5..eaa48df2c3bd 100644
+> --- a/arch/arm64/Kconfig
+> +++ b/arch/arm64/Kconfig
+> @@ -46,6 +46,7 @@ config ARM64
+>   	select ARCH_HAS_ZONE_DMA_SET if EXPERT
+>   	select ARCH_HAVE_ELF_PROT
+>   	select ARCH_HAVE_NMI_SAFE_CMPXCHG
+> +	select ARCH_HAVE_TRACE_MMIO_ACCESS
+>   	select ARCH_INLINE_READ_LOCK if !PREEMPTION
+>   	select ARCH_INLINE_READ_LOCK_BH if !PREEMPTION
+>   	select ARCH_INLINE_READ_LOCK_IRQ if !PREEMPTION
+> diff --git a/include/trace/events/rwmmio.h b/include/trace/events/rwmmio.h
+> new file mode 100644
+> index 000000000000..3c3fefbef87d
+> --- /dev/null
+> +++ b/include/trace/events/rwmmio.h
+> @@ -0,0 +1,97 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +#undef TRACE_SYSTEM
+> +#define TRACE_SYSTEM rwmmio
+> +
+> +#if !defined(_TRACE_RWMMIO_H) || defined(TRACE_HEADER_MULTI_READ)
+> +#define _TRACE_RWMMIO_H
+> +
+> +#include <linux/tracepoint.h>
+> +
+> +DECLARE_EVENT_CLASS(rwmmio_rw_template,
+> +
+> +	TP_PROTO(unsigned long caller, u64 val, u8 width, volatile void __iomem *addr),
+> +
+> +	TP_ARGS(caller, val, width, addr),
+> +
+> +	TP_STRUCT__entry(
+> +		__field(u64, caller)
+> +		__field(u64, val)
+> +		__field(u64, addr)
+> +		__field(u8, width)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__entry->caller = caller;
+> +		__entry->val = val;
+> +		__entry->addr = (unsigned long)(void *)addr;
+> +		__entry->width = width;
+> +	),
+> +
+> +	TP_printk("%pS width=%d val=%#llx addr=%#llx",
+> +		(void *)(unsigned long)__entry->caller, __entry->width,
+> +		__entry->val, __entry->addr)
+> +);
+> +
+> +DEFINE_EVENT(rwmmio_rw_template, rwmmio_write,
+> +	TP_PROTO(unsigned long caller, u64 val, u8 width, volatile void __iomem *addr),
+> +	TP_ARGS(caller, val, width, addr)
+> +);
+> +
+> +DEFINE_EVENT(rwmmio_rw_template, rwmmio_post_write,
+> +	TP_PROTO(unsigned long caller, u64 val, u8 width, volatile void __iomem *addr),
+> +	TP_ARGS(caller, val, width, addr)
+> +);
+> +
+> +TRACE_EVENT(rwmmio_read,
+> +
+> +	TP_PROTO(unsigned long caller, u8 width, const volatile void __iomem *addr),
+> +
+> +	TP_ARGS(caller, width, addr),
+> +
+> +	TP_STRUCT__entry(
+> +		__field(u64, caller)
+> +		__field(u64, addr)
+> +		__field(u8, width)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__entry->caller = caller;
+> +		__entry->addr = (unsigned long)(void *)addr;
+> +		__entry->width = width;
+> +	),
+> +
+> +	TP_printk("%pS width=%d addr=%#llx",
+> +		 (void *)(unsigned long)__entry->caller, __entry->width, __entry->addr)
+> +);
+> +
+> +TRACE_EVENT(rwmmio_post_read,
+> +
+> +	TP_PROTO(unsigned long caller, u64 val, u8 width, const volatile void __iomem *addr),
+> +
+> +	TP_ARGS(caller, val, width, addr),
+> +
+> +	TP_STRUCT__entry(
+> +		__field(u64, caller)
+> +		__field(u64, val)
+> +		__field(u64, addr)
+> +		__field(u8, width)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__entry->caller = caller;
+> +		__entry->val = val;
+> +		__entry->addr = (unsigned long)(void *)addr;
+> +		__entry->width = width;
+> +	),
+> +
+> +	TP_printk("%pS width=%d val=%#llx addr=%#llx",
+> +		 (void *)(unsigned long)__entry->caller, __entry->width,
+> +		 __entry->val, __entry->addr)
+> +);
+> +
+> +#endif /* _TRACE_RWMMIO_H */
+> +
+> +#include <trace/define_trace.h>
+> diff --git a/lib/Kconfig b/lib/Kconfig
+> index c80fde816a7e..ea520c315c0f 100644
+> --- a/lib/Kconfig
+> +++ b/lib/Kconfig
+> @@ -119,6 +119,13 @@ config INDIRECT_IOMEM_FALLBACK
+>   	  mmio accesses when the IO memory address is not a registered
+>   	  emulated region.
+>   
+> +config TRACE_MMIO_ACCESS
+> +	bool "Register read/write tracing"
+> +	depends on TRACING && ARCH_HAVE_TRACE_MMIO_ACCESS
+> +	help
+> +	  Create tracepoints for MMIO read/write operations. These trace events
+> +	  can be used for logging all MMIO read/write operations.
+> +
+>   source "lib/crypto/Kconfig"
+>   
+>   config CRC_CCITT
+> diff --git a/lib/Makefile b/lib/Makefile
+> index 300f569c626b..43813b0061cd 100644
+> --- a/lib/Makefile
+> +++ b/lib/Makefile
+> @@ -152,6 +152,8 @@ lib-y += logic_pio.o
+>   
+>   lib-$(CONFIG_INDIRECT_IOMEM) += logic_iomem.o
+>   
+> +obj-$(CONFIG_TRACE_MMIO_ACCESS) += trace_readwrite.o
+> +
+>   obj-$(CONFIG_GENERIC_HWEIGHT) += hweight.o
+>   
+>   obj-$(CONFIG_BTREE) += btree.o
+> diff --git a/lib/trace_readwrite.c b/lib/trace_readwrite.c
+> new file mode 100644
+> index 000000000000..88637038b30c
+> --- /dev/null
+> +++ b/lib/trace_readwrite.c
+> @@ -0,0 +1,47 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Register read and write tracepoints
+> + *
+> + * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/ftrace.h>
+> +#include <linux/module.h>
+> +#include <asm-generic/io.h>
+> +
+> +#define CREATE_TRACE_POINTS
+> +#include <trace/events/rwmmio.h>
+> +
+> +#ifdef CONFIG_TRACE_MMIO_ACCESS
+> +void log_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
+> +		    unsigned long caller_addr)
+> +{
+> +	trace_rwmmio_write(caller_addr, val, width, addr);
+> +}
+> +EXPORT_SYMBOL_GPL(log_write_mmio);
+> +EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_write);
+> +
+> +void log_post_write_mmio(u64 val, u8 width, volatile void __iomem *addr,
+> +			 unsigned long caller_addr)
+> +{
+> +	trace_rwmmio_post_write(caller_addr, val, width, addr);
+> +}
+> +EXPORT_SYMBOL_GPL(log_post_write_mmio);
+> +EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_post_write);
+> +
+> +void log_read_mmio(u8 width, const volatile void __iomem *addr,
+> +		   unsigned long caller_addr)
+> +{
+> +	trace_rwmmio_read(caller_addr, width, addr);
+> +}
+> +EXPORT_SYMBOL_GPL(log_read_mmio);
+> +EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_read);
+> +
+> +void log_post_read_mmio(u64 val, u8 width, const volatile void __iomem *addr,
+> +			unsigned long caller_addr)
+> +{
+> +	trace_rwmmio_post_read(caller_addr, val, width, addr);
+> +}
+> +EXPORT_SYMBOL_GPL(log_post_read_mmio);
+> +EXPORT_TRACEPOINT_SYMBOL_GPL(rwmmio_post_read);
+> +#endif /* CONFIG_TRACE_MMIO_ACCESS */
 
-In SMP mode, Trace32 creates multiple windows, and each window shows
-the DCC output only from that core's DCC. The result is that console
-output is either lost or scattered across windows.
+Does this version look good to you?
 
-Selecting this option will enable code that serializes all console
-input and output to core 0. The DCC driver will create input and
-output FIFOs that all cores will use. Reads and writes from/to DCC
-are handled by a workqueue that runs only core 0.
-
-Signed-off-by: Shanker Donthineni <shankerd@codeaurora.org>
-Acked-by: Adam Wallis <awallis@codeaurora.org>
-Signed-off-by: Timur Tabi <timur@codeaurora.org>
-Signed-off-by: Elliot Berman <eberman@codeaurora.org>
-Signed-off-by: Sai Prakash Ranjan <quic_saipraka@quicinc.com>
----
-
-Changes in v5:
- * Use get_cpu() and put_cpu() for CPU id check in preemptible context.
- * Revert back to build time Kconfig.
- * Remove unnecessary hotplug locks, they result in sleeping in atomic context bugs.
- * Add a comment for the spinlock.
-
-Changes in v4:
- * Use module parameter for runtime choice of enabling this feature.
- * Use hotplug locks to avoid race between cpu online check and work schedule.
- * Remove ifdefs and move to common ops.
- * Remove unnecessary check for this configuration.
- * Use macros for buf size instead of magic numbers.
- * v3 - https://lore.kernel.org/lkml/20211213141013.21464-1-quic_saipraka@quicinc.com/
-
-Changes in v3:
- * Handle case where core0 is not online.
-
-Changes in v2:
- * Checkpatch warning fixes.
- * Use of IS_ENABLED macros instead of ifdefs.
-
----
- drivers/tty/hvc/Kconfig   |  20 +++++
- drivers/tty/hvc/hvc_dcc.c | 171 +++++++++++++++++++++++++++++++++++++-
- 2 files changed, 188 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/tty/hvc/Kconfig b/drivers/tty/hvc/Kconfig
-index 8d60e0ff67b4..c0754a2e3fe4 100644
---- a/drivers/tty/hvc/Kconfig
-+++ b/drivers/tty/hvc/Kconfig
-@@ -87,6 +87,26 @@ config HVC_DCC
- 	  driver. This console is used through a JTAG only on ARM. If you don't have
- 	  a JTAG then you probably don't want this option.
- 
-+config HVC_DCC_SERIALIZE_SMP
-+	bool "Use DCC only on core 0"
-+	depends on SMP && HVC_DCC
-+	help
-+	  Some debuggers, such as Trace32 from Lauterbach GmbH, do not handle
-+	  reads/writes from/to DCC on more than one core. Each core has its
-+	  own DCC device registers, so when a core reads or writes from/to DCC,
-+	  it only accesses its own DCC device. Since kernel code can run on
-+	  any core, every time the kernel wants to write to the console, it
-+	  might write to a different DCC.
-+
-+	  In SMP mode, Trace32 creates multiple windows, and each window shows
-+	  the DCC output only from that core's DCC. The result is that console
-+	  output is either lost or scattered across windows.
-+
-+	  Selecting this option will enable code that serializes all console
-+	  input and output to core 0. The DCC driver will create input and
-+	  output FIFOs that all cores will use. Reads and writes from/to DCC
-+	  are handled by a workqueue that runs only core 0.
-+
- config HVC_RISCV_SBI
- 	bool "RISC-V SBI console support"
- 	depends on RISCV_SBI_V01
-diff --git a/drivers/tty/hvc/hvc_dcc.c b/drivers/tty/hvc/hvc_dcc.c
-index 8e0edb7d93fd..6144135c24ed 100644
---- a/drivers/tty/hvc/hvc_dcc.c
-+++ b/drivers/tty/hvc/hvc_dcc.c
-@@ -2,9 +2,13 @@
- /* Copyright (c) 2010, 2014 The Linux Foundation. All rights reserved.  */
- 
- #include <linux/console.h>
-+#include <linux/cpumask.h>
- #include <linux/init.h>
-+#include <linux/kfifo.h>
- #include <linux/serial.h>
- #include <linux/serial_core.h>
-+#include <linux/smp.h>
-+#include <linux/spinlock.h>
- 
- #include <asm/dcc.h>
- #include <asm/processor.h>
-@@ -15,6 +19,15 @@
- #define DCC_STATUS_RX		(1 << 30)
- #define DCC_STATUS_TX		(1 << 29)
- 
-+#define DCC_INBUF_SIZE		128
-+#define DCC_OUTBUF_SIZE		1024
-+
-+/* Lock to serialize access to DCC fifo */
-+static DEFINE_SPINLOCK(dcc_lock);
-+
-+static DEFINE_KFIFO(inbuf, unsigned char, DCC_INBUF_SIZE);
-+static DEFINE_KFIFO(outbuf, unsigned char, DCC_OUTBUF_SIZE);
-+
- static void dcc_uart_console_putchar(struct uart_port *port, int ch)
- {
- 	while (__dcc_getstatus() & DCC_STATUS_TX)
-@@ -67,24 +80,176 @@ static int hvc_dcc_get_chars(uint32_t vt, char *buf, int count)
- 	return i;
- }
- 
-+/*
-+ * Check if the DCC is enabled. If CONFIG_HVC_DCC_SERIALIZE_SMP is enabled,
-+ * then we assume then this function will be called first on core0. That way,
-+ * dcc_core0_available will be true only if it's available on core0.
-+ */
- static bool hvc_dcc_check(void)
- {
- 	unsigned long time = jiffies + (HZ / 10);
-+	static bool dcc_core0_available;
-+
-+	/*
-+	 * If we're not on core 0, but we previously confirmed that DCC is
-+	 * active, then just return true.
-+	 */
-+	int cpu = get_cpu();
-+
-+	if (IS_ENABLED(CONFIG_HVC_DCC_SERIALIZE_SMP) && cpu && dcc_core0_available) {
-+		put_cpu();
-+		return true;
-+	}
-+
-+	put_cpu();
- 
- 	/* Write a test character to check if it is handled */
- 	__dcc_putchar('\n');
- 
- 	while (time_is_after_jiffies(time)) {
--		if (!(__dcc_getstatus() & DCC_STATUS_TX))
-+		if (!(__dcc_getstatus() & DCC_STATUS_TX)) {
-+			dcc_core0_available = true;
- 			return true;
-+		}
- 	}
- 
- 	return false;
- }
- 
-+/*
-+ * Workqueue function that writes the output FIFO to the DCC on core 0.
-+ */
-+static void dcc_put_work(struct work_struct *work)
-+{
-+	unsigned char ch;
-+	unsigned long irqflags;
-+
-+	spin_lock_irqsave(&dcc_lock, irqflags);
-+
-+	/* While there's data in the output FIFO, write it to the DCC */
-+	while (kfifo_get(&outbuf, &ch))
-+		hvc_dcc_put_chars(0, &ch, 1);
-+
-+	/* While we're at it, check for any input characters */
-+	while (!kfifo_is_full(&inbuf)) {
-+		if (!hvc_dcc_get_chars(0, &ch, 1))
-+			break;
-+		kfifo_put(&inbuf, ch);
-+	}
-+
-+	spin_unlock_irqrestore(&dcc_lock, irqflags);
-+}
-+
-+static DECLARE_WORK(dcc_pwork, dcc_put_work);
-+
-+/*
-+ * Workqueue function that reads characters from DCC and puts them into the
-+ * input FIFO.
-+ */
-+static void dcc_get_work(struct work_struct *work)
-+{
-+	unsigned char ch;
-+	unsigned long irqflags;
-+
-+	/*
-+	 * Read characters from DCC and put them into the input FIFO, as
-+	 * long as there is room and we have characters to read.
-+	 */
-+	spin_lock_irqsave(&dcc_lock, irqflags);
-+
-+	while (!kfifo_is_full(&inbuf)) {
-+		if (!hvc_dcc_get_chars(0, &ch, 1))
-+			break;
-+		kfifo_put(&inbuf, ch);
-+	}
-+	spin_unlock_irqrestore(&dcc_lock, irqflags);
-+}
-+
-+static DECLARE_WORK(dcc_gwork, dcc_get_work);
-+
-+/*
-+ * Write characters directly to the DCC if we're on core 0 and the FIFO
-+ * is empty, or write them to the FIFO if we're not.
-+ */
-+static int hvc_dcc0_put_chars(u32 vt, const char *buf, int count)
-+{
-+	int len;
-+	unsigned long irqflags;
-+
-+	if (!IS_ENABLED(CONFIG_HVC_DCC_SERIALIZE_SMP))
-+		return hvc_dcc_put_chars(vt, buf, count);
-+
-+	spin_lock_irqsave(&dcc_lock, irqflags);
-+	if (smp_processor_id() || (!kfifo_is_empty(&outbuf))) {
-+		len = kfifo_in(&outbuf, buf, count);
-+		spin_unlock_irqrestore(&dcc_lock, irqflags);
-+
-+		/*
-+		 * We just push data to the output FIFO, so schedule the
-+		 * workqueue that will actually write that data to DCC.
-+		 * No hotplug lock required as we are in atomic context
-+		 * with interrupts and preemption disabled.
-+		 */
-+		if (cpu_online(0))
-+			schedule_work_on(0, &dcc_pwork);
-+
-+		return len;
-+	}
-+
-+	/*
-+	 * If we're already on core 0, and the FIFO is empty, then just
-+	 * write the data to DCC.
-+	 */
-+	len = hvc_dcc_put_chars(vt, buf, count);
-+	spin_unlock_irqrestore(&dcc_lock, irqflags);
-+
-+	return len;
-+}
-+
-+/*
-+ * Read characters directly from the DCC if we're on core 0 and the FIFO
-+ * is empty, or read them from the FIFO if we're not.
-+ */
-+static int hvc_dcc0_get_chars(u32 vt, char *buf, int count)
-+{
-+	int len;
-+	unsigned long irqflags;
-+
-+	if (!IS_ENABLED(CONFIG_HVC_DCC_SERIALIZE_SMP))
-+		return hvc_dcc_get_chars(vt, buf, count);
-+
-+	spin_lock_irqsave(&dcc_lock, irqflags);
-+
-+	if (smp_processor_id() || (!kfifo_is_empty(&inbuf))) {
-+		len = kfifo_out(&inbuf, buf, count);
-+		spin_unlock_irqrestore(&dcc_lock, irqflags);
-+
-+		/*
-+		 * If the FIFO was empty, there may be characters in the DCC
-+		 * that we haven't read yet.  Schedule a workqueue to fill
-+		 * the input FIFO, so that the next time this function is
-+		 * called, we'll have data. No hotplug lock required as we are
-+		 * in atomic context with interrupts and preemption disabled.
-+		 */
-+		if (!len && cpu_online(0))
-+			schedule_work_on(0, &dcc_gwork);
-+
-+		return len;
-+	}
-+
-+	/*
-+	 * If we're already on core 0, and the FIFO is empty, then just
-+	 * read the data from DCC.
-+	 */
-+	len = hvc_dcc_get_chars(vt, buf, count);
-+	spin_unlock_irqrestore(&dcc_lock, irqflags);
-+
-+	return len;
-+}
-+
- static const struct hv_ops hvc_dcc_get_put_ops = {
--	.get_chars = hvc_dcc_get_chars,
--	.put_chars = hvc_dcc_put_chars,
-+	.get_chars = hvc_dcc0_get_chars,
-+	.put_chars = hvc_dcc0_put_chars,
- };
- 
- static int __init hvc_dcc_console_init(void)
-
-base-commit: 395a61741f7ea29e1f4a0d6e160197fe8e377572
--- 
-2.33.1
-
+Thanks,
+Sai
