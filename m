@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D1AA44B783E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Feb 2022 21:51:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A66A4B773E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Feb 2022 21:50:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241992AbiBOQzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Feb 2022 11:55:25 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42910 "EHLO
+        id S241995AbiBOQz2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Feb 2022 11:55:28 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241951AbiBOQzZ (ORCPT
+        with ESMTP id S233779AbiBOQz0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Feb 2022 11:55:25 -0500
+        Tue, 15 Feb 2022 11:55:26 -0500
 Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36CDD117C80
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 08:55:14 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id x3-20020a05600c21c300b0037c01ad715bso1816975wmj.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 08:55:14 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 438EC119870
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 08:55:15 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id bg21-20020a05600c3c9500b0035283e7a012so1834704wmb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 08:55:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=hcPH4oH9GnF8hGwcWO7jHpeOxnV4mrgJbNMQI2Ecch0=;
-        b=dq7sNddLWYcmWkSf5MYvhBmg2CbWwx06Z8YIS29fybZDdqlnPMacTIRENZVSoUu+xb
-         xIgx88zabYzQ0hDlxk0cLhhoCeP5BsIQ7Z4WYQx3ZvpN+WumiPXvBEDbifs/hxuInN8w
-         CWFA6Z6T/grY53gHv/dnYKGuR5lAltnMhTYKVuG6ZzuUE8js0RUIL5/31gir/0nnjCuq
-         PHq0ERUAZT3pXroFMLasKpNCAeRue+YGnQuyOJpgbCifYsiCQFh6kx2m3JqSXEq8ZzOe
-         MIA3WoyvPmz0GCIcrO85HWy3200zYewK6oqRS3F1PRHUqny5hClViNCfBl1XPvy8Fe9W
-         Be0A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Swi01zs1Aek9C9Aenj93GPF/NdOk2jeLKINKBsWtsPE=;
+        b=vKwxljKk6S8XX1j0GMsWuJ/i/SKLoRTmsaTrBDP2QeBbHF03+/AGil3AfJSHxkWuTc
+         nHIPtyEOr6+kyphQ1EPT6+XjwS9kIBJeQblspJiNgH8ijy8JxVs4IQ0uYhnAaXIae2KT
+         E4wNON7INsWidjwaPb2olfzziTsy/Uqw88xcUykirmtEj9M9QmPPg9p1ARwbHIFqlR3Z
+         Clwtjr9R8d9SYDGVPVMhy3uN59/0/r2vV9ewIe1m0W96BJD1YL/7dgr5hQB4FrRlkdzM
+         A32h395Xtju8KCpSiYcvYTqw5aL8REM8ydWuWmI+OG9zQMBUV1gxMxmrpzx+guqJ/Q5M
+         HMXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=hcPH4oH9GnF8hGwcWO7jHpeOxnV4mrgJbNMQI2Ecch0=;
-        b=lTXuDHA85HzfXZAHJ4h0Nl9Gc/YuOAEAm/1tWkB3PzCP/f6lHkoMfB1cXeJniGXUkn
-         Qg6ropW9TrEP+HmnU1rD4GJGm4QrNLz1KUSUiemL7cXTIxBC9na14Km9kdaqH6IDmoot
-         yNbkl2qC0oIkbuwIGd9s3cvkZxg5Jq562kCx4xIDpOwrSH1/hVtHDlEHKwHyUB8Ks6dm
-         dWG6TUuPGyxmxb3sJGJtB9qKKrWLonzwwFNR+Sz4jr9Z1hi4BJSpYqq3VI6vssvv0sHx
-         b3rpNkkR282GrdKeUBEr4cWqXn55wgjZIzXYPpRLpV0SnggbugIr6bUn8eACcW8JAcm3
-         1JNg==
-X-Gm-Message-State: AOAM533xT6HHnuZeO+a2qHAQfKWjTHynddCFCXyCnIlmQoLaRO5zYK2N
-        lRBuFIUC5kNrXNiqR3R20+d2j2a+3UX62F6r
-X-Google-Smtp-Source: ABdhPJx+aFJMloZ6hU43Nu2XRhwrQXtRTsBANIfJyHcQ9qupap4v/vQ9sX3L0w3vgvdGI8GhOgZsog==
-X-Received: by 2002:a05:600c:34cf:b0:37b:d0dc:ea9 with SMTP id d15-20020a05600c34cf00b0037bd0dc0ea9mr3822365wmq.97.1644944112793;
-        Tue, 15 Feb 2022 08:55:12 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Swi01zs1Aek9C9Aenj93GPF/NdOk2jeLKINKBsWtsPE=;
+        b=0GCqlhFbgtOzNCsccedD17L/0M0w2ECB0pi1sezM0B2596HPOIEW/Fy+V5f7YS9aLm
+         nlVNVnNXPgED+MQmMsu+Q07KRee7/tSFtq/4+a8x6oxEf5fCdphgq4xIAFBd5qsklzcV
+         kmo/cPb1/lWaNCF2oO1cjhgrehVLya+d98YYewdZL90jD4HUbDgU5hooGu0vM96ywsZW
+         kHIlh1zeP+vMHCUhlapYGTXtQ/FVbCqWMbANC+8djMaFM8wg/eCwRJ+mloEjTpr7VnI1
+         Dfx48QUnG6FZ2hDTjYIGXOQ65NJV/6X2Fufzthr/PZo6VDRRD6mM9NnK08BA7DpSV9lb
+         g/KA==
+X-Gm-Message-State: AOAM530FEh1G9R0pRlEmwSvcQZHBD5UIoYkR27ThCC1KJL9XhHtEykpC
+        jlvjqrAanJCnQ5McMJ2X4aHD6A==
+X-Google-Smtp-Source: ABdhPJzPn72jb6qRBRw7JdWF65eN1GK0XwwDwaYELn2FLXBAmo9JV4T28Y232vAJE1AOsqLBBMHJjQ==
+X-Received: by 2002:a05:600c:5c1:: with SMTP id p1mr3843147wmd.151.1644944113856;
+        Tue, 15 Feb 2022 08:55:13 -0800 (PST)
 Received: from localhost.localdomain (cpc78119-cwma10-2-0-cust590.7-3.cable.virginm.net. [81.96.50.79])
-        by smtp.gmail.com with ESMTPSA id f14sm15373652wmq.3.2022.02.15.08.55.11
+        by smtp.gmail.com with ESMTPSA id f14sm15373652wmq.3.2022.02.15.08.55.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Feb 2022 08:55:12 -0800 (PST)
+        Tue, 15 Feb 2022 08:55:13 -0800 (PST)
 From:   Caleb Connolly <caleb.connolly@linaro.org>
 To:     caleb.connolly@linaro.org, Jonathan Cameron <jic23@kernel.org>,
         Lars-Peter Clausen <lars@metafoo.de>,
@@ -59,15 +59,17 @@ To:     caleb.connolly@linaro.org, Jonathan Cameron <jic23@kernel.org>,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
 Cc:     sumit.semwal@linaro.org, amit.pundir@linaro.org,
         john.stultz@linaro.org
-Subject: [PATCH v5 0/9] iio: adc: introduce Qualcomm SPMI Round Robin ADC
-Date:   Tue, 15 Feb 2022 16:54:47 +0000
-Message-Id: <20220215165456.1205583-1-caleb.connolly@linaro.org>
+Subject: [PATCH v5 1/9] spmi: add a helper to look up an SPMI device from a device node
+Date:   Tue, 15 Feb 2022 16:54:48 +0000
+Message-Id: <20220215165456.1205583-2-caleb.connolly@linaro.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220215165456.1205583-1-caleb.connolly@linaro.org>
+References: <20220215165456.1205583-1-caleb.connolly@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,86 +77,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The RRADC is responsible for reading data about the current and
-voltage from the USB or DC in jacks, it can also read the battery
-ID (resistence) and some temperatures. It is found on the PMI8998 and
-PM660 Qualcomm PMICs.
+The helper function spmi_device_from_of() takes a device node and
+returns the SPMI device associated with it.
+This is like of_find_device_by_node but for SPMI devices.
 
-The RRADC has to calibrate some ADC values based on which chip fab
-the PMIC was produced in, to facilitate this the patches
-("mfd: qcom-spmi-pmic: expose the PMIC revid information to clients")
-and ("mfd: qcom-spmi-pmic: read fab id on supported PMICs")
-expose the PMIC revision information and fab_id as a struct and register
-them as driver data in the Qualcomm SPMI PMIC driver so that it can be
-read by the RRADC.
+Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+---
+ drivers/spmi/spmi.c  | 16 ++++++++++++++++
+ include/linux/spmi.h |  2 ++
+ 2 files changed, 18 insertions(+)
 
-The first 3 patches add support for looking up an SPMI device from a
-struct device_node, as well as introducing support for looking up the
-base USID of a Qcom PMIC, see patch comments for more details. These
-Address Bjorns comments on v2.
-
-Changes since v4:
- * Addressed Jonathan's comments on v4
- * Reworked the qcom-spmi-pmic patches to properly walk the devicetree
-   to find the base USID. I've tested this on SDM845 which has two PMICs
-   (pm8998 and pmi8998) and I'm able to look up the PMIC revid from all
-   4 USIDs.
-
-Changes since v3:
- * Split PMIC patch in two, rework to support function drivers on a
-   sibling USID
- * Completely rework RRADC driver to make use of the modern IIO
-   framework. This required re-arranging a lot of the equations and
-   results in some lost precision, where relevant I've left comments to
-   explain this. I don't think any of it is significant enough to
-   justify doing post-processing in driver.
-	Thanks a lot Jonathan and John Stultz for helping me out with
-	this 
-
-Changes since v2:
- * Add missing include (thanks kernel test robot :D)
- * Rework some confusing function return values, specifically
-   rradc_read_status_in_cont_mode and rradc_prepare_batt_id_conversion
-   both of which didn't correctly handle "ret". This also bought up an
-   issue as the previous implementation didn't actually wait for the
-   channel to be ready. It doesn't seem like that's strictly necessary
-   (same data is reported if I wait for the status to be good or not)
-   but I've included it anyway for good measure.
-
-Changes since v1:
- * Rework the RRADC driver based on Jonathan's feedback
- * Pick up Rob's reviewed by for the dt-binding patch.
-
- --
-
-Caleb Connolly (9):
-  spmi: add a helper to look up an SPMI device from a device node
-  mfd: qcom-spmi-pmic: expose the PMIC revid information to clients
-  mfd: qcom-spmi-pmic: read fab id on supported PMICs
-  dt-bindings: iio: adc: document qcom-spmi-rradc
-  iio: adc: qcom-spmi-rradc: introduce round robin adc
-  arm64: dts: qcom: pmi8998: add rradc node
-  arm64: dts: qcom: sdm845-oneplus: enable rradc
-  arm64: dts: qcom: sdm845-db845c: enable rradc
-  arm64: dts: qcom: sdm845-xiaomi-beryllium: enable rradc
-
- .../bindings/iio/adc/qcom,spmi-rradc.yaml     |   54 +
- arch/arm64/boot/dts/qcom/pmi8998.dtsi         |    8 +
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |    4 +
- .../boot/dts/qcom/sdm845-oneplus-common.dtsi  |    4 +
- .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts |    4 +
- drivers/iio/adc/Kconfig                       |   12 +
- drivers/iio/adc/Makefile                      |    1 +
- drivers/iio/adc/qcom-spmi-rradc.c             | 1016 +++++++++++++++++
- drivers/mfd/qcom-spmi-pmic.c                  |  183 ++-
- drivers/spmi/spmi.c                           |   16 +
- include/linux/spmi.h                          |    2 +
- include/soc/qcom/qcom-spmi-pmic.h             |   61 +
- 12 files changed, 1308 insertions(+), 57 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-rradc.yaml
- create mode 100644 drivers/iio/adc/qcom-spmi-rradc.c
- create mode 100644 include/soc/qcom/qcom-spmi-pmic.h
-
+diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
+index b37ead9e2fad..d2e425e1d4c9 100644
+--- a/drivers/spmi/spmi.c
++++ b/drivers/spmi/spmi.c
+@@ -386,6 +386,22 @@ static struct bus_type spmi_bus_type = {
+ 	.uevent		= spmi_drv_uevent,
+ };
+ 
++/**
++ * spmi_device_from_of() - get the associated SPMI device from a device node
++ *
++ * @np:		device node
++ *
++ * Returns the struct spmi_device associated with a device node or NULL.
++ */
++inline struct spmi_device *spmi_device_from_of(struct device_node *np)
++{
++	struct device *dev = bus_find_device_by_of_node(&spmi_bus_type, np);
++
++	if (dev)
++		return to_spmi_device(dev);
++	return NULL;
++}
++
+ /**
+  * spmi_controller_alloc() - Allocate a new SPMI device
+  * @ctrl:	associated controller
+diff --git a/include/linux/spmi.h b/include/linux/spmi.h
+index 729bcbf9f5ad..6ee476bc1cd6 100644
+--- a/include/linux/spmi.h
++++ b/include/linux/spmi.h
+@@ -7,6 +7,7 @@
+ #include <linux/types.h>
+ #include <linux/device.h>
+ #include <linux/mod_devicetable.h>
++#include <linux/of.h>
+ 
+ /* Maximum slave identifier */
+ #define SPMI_MAX_SLAVE_ID		16
+@@ -164,6 +165,7 @@ static inline void spmi_driver_unregister(struct spmi_driver *sdrv)
+ 	module_driver(__spmi_driver, spmi_driver_register, \
+ 			spmi_driver_unregister)
+ 
++inline struct spmi_device *spmi_device_from_of(struct device_node *np);
+ int spmi_register_read(struct spmi_device *sdev, u8 addr, u8 *buf);
+ int spmi_ext_register_read(struct spmi_device *sdev, u8 addr, u8 *buf,
+ 			   size_t len);
 -- 
 2.35.1
 
