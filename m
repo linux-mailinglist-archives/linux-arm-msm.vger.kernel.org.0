@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 570FC4B72E3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Feb 2022 17:42:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5712D4B70B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Feb 2022 17:39:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240921AbiBOPmw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Feb 2022 10:42:52 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43740 "EHLO
+        id S230172AbiBOPor (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Feb 2022 10:44:47 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:32846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240541AbiBOPmm (ORCPT
+        with ESMTP id S237834AbiBOPo2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Feb 2022 10:42:42 -0500
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CA81D2279
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 07:37:41 -0800 (PST)
-Received: by mail-oo1-xc32.google.com with SMTP id x6-20020a4a4106000000b003193022319cso1082938ooa.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 07:37:40 -0800 (PST)
+        Tue, 15 Feb 2022 10:44:28 -0500
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C754FEACAE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 07:38:38 -0800 (PST)
+Received: by mail-ot1-x332.google.com with SMTP id g4-20020a9d1284000000b005acec6d2d26so993715otg.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 07:38:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=/RGLD8nwzu2VhuFoIMV+jbsfE56tgO0QtQZcVsmbSeg=;
-        b=l6fAXQm8Wcu/W89W5Bq27vFP7GjHxqydLmmOHkiwoIcJ5mOuVMXHyvROhRRg5u5a0c
-         7BjNXoiLUfV1nrjmUKiPnbXoWXbOpl1wODxwPb7Y4zWa86tC3ZvMeakI+b+Zaim6YptS
-         CMl6kvWf8GkgRqem5iMddRtOT4fuuRF9rNCnkkga9+nMemDSXeVOZQi5ThxDyehk+l13
-         DXWiGZ1apMEofA/mqweXCHhuYRcjpMEn1yuQ/dZzPPhODZSoj5ucfAxb+y/M+s0xD6a9
-         qIwrgQbPg6F0SBP2goXQuxJZ9NMMlnKDEjDOgoQTGypS6w8LVst+mE4/tthr00fdXrOq
-         P5gw==
+        bh=79WoF2L7ukRve2muk/tu/qHceOSi7bzysI2aa/CMOXA=;
+        b=u+qiAmMOMV006XAEAVy3+E51xvWwpbl/M44DS9AVHJQYZ//BkQvjVaCX2SED2bSXRa
+         FZYV3PLwmtaF7OXCdmRAtrXZFnVZfWtxrMfv8hvMpT8038Hec3Tv4OZ4cIhVCBa/4SkQ
+         yswmsguvYLWFlJGabBCCfIG2axLhmtPaTA5tevam0QWEP3PE06ZAntBv0NFkVfYNuDMN
+         nFezDI1R4ZkuoZ1rOV8AKY4cMKh2BPDm/loCi+o+YAHzOf/l4bf3cj5BmR8LCuvBtN3Z
+         IrC4iu1ZMOVqk/AdYbUgcHrEe3rVQCR3ILiGQv9LzIlCDtWo5PG3RVWBbiVDPhDwUqRD
+         fkFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=/RGLD8nwzu2VhuFoIMV+jbsfE56tgO0QtQZcVsmbSeg=;
-        b=wsFiDljWPyr7YfPt+x6DbVS/LQhohtgfPFj+ahHrxiunakOCQwRf37DZwU0OyOF/kG
-         GEmLZJmdejqYCST3DEyFvptX0JrIowqiL5imerwxgKXUm1217Nk4awloH0j7b5YTW9o8
-         leMaZDVLZ1xVy3ZelKtQkiBHLeF3ZN1sMqTAAh+NkTuPSQ8bon6A6PfUdYPT0952ZnSm
-         R2pV/DGDQufUEgFuBe3fway4rwkd09hup8f3HjgaiEVUuasdzE5A9/rxK/gmqvw3zxS/
-         yF4M2FMerLkXpne8xCDFU8VzLP87VfdptWnmVTUlMFHohPOT/kdnhZjUs/EgVI8U1TfP
-         9ueQ==
-X-Gm-Message-State: AOAM532xWD0f936GxHYpFY6wjnZQNrt4DMgJoIiq874vqRcl7bykUJpy
-        MOdNyCFMmP6m61gIU9hfPPT9IKS+KJ5J4Q==
-X-Google-Smtp-Source: ABdhPJyweGcF6YG2GJE+SrOC7EUNHhPllRZZN6Fn7aiHfQp4+viH4TuuPxXPv6Gg6s2fCnuNRok5QQ==
-X-Received: by 2002:a05:6870:5ba5:b0:d1:9c2d:975f with SMTP id em37-20020a0568705ba500b000d19c2d975fmr1613502oab.325.1644939459658;
-        Tue, 15 Feb 2022 07:37:39 -0800 (PST)
+        bh=79WoF2L7ukRve2muk/tu/qHceOSi7bzysI2aa/CMOXA=;
+        b=syHXgsBaNMyksOHrk+fUwkKJ5HKZE/l6Jx1DaAvAkh0+pyzReiYipHE/hnsbnjSG5V
+         igXOK5v20EM2WKgMGQdKwWgN4CvBpXYksGIdzzMhr5+2h98O8c8BVzgkQ/hgwE9P8j9K
+         USIlGT9uYofDJ/9Nj2479zZ8IaC98gU3ExbT7/Cjw0ynUaWh7kl5rHR1xj5ewxABIrPg
+         wa/nIGvBboBArtpr80IAbvFKRlT9/M+rygRACEVQb7rrsU/qrLJjoYE/r4+c2hvpqYgO
+         KaXvk/gittk/Zm621mHeLpNYvclyn25jS2qO5RV8AmgrIbGsp8YhCtxiekbK9bGF6bn8
+         oGVg==
+X-Gm-Message-State: AOAM531PSYlD8QSa+gOmF9TZk5pgiJFyiWckgzWYrb8o1zLRv9cwtkA5
+        HuFZXSqdpJncUMl0UQmAiUpogg==
+X-Google-Smtp-Source: ABdhPJyL8e6CearK0+dFt9ezcISvk12UqF5WTlFgl2h6Btw5pZx1UfT+UVx6fy6p8BwzPrP8YAqiig==
+X-Received: by 2002:a9d:7017:: with SMTP id k23mr1508338otj.63.1644939517851;
+        Tue, 15 Feb 2022 07:38:37 -0800 (PST)
 Received: from yoga ([2600:1700:a0:3dc8:5c39:baff:fe03:898d])
-        by smtp.gmail.com with ESMTPSA id t22sm14343175oiw.2.2022.02.15.07.37.38
+        by smtp.gmail.com with ESMTPSA id t31sm16069416oaa.9.2022.02.15.07.38.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Feb 2022 07:37:39 -0800 (PST)
-Date:   Tue, 15 Feb 2022 09:37:36 -0600
+        Tue, 15 Feb 2022 07:38:37 -0800 (PST)
+Date:   Tue, 15 Feb 2022 09:38:35 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -57,14 +57,15 @@ Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 1/8] drm/msm/dpu: fix dp audio condition
-Message-ID: <YgvIwLa8dGx/JqIR@yoga>
+Subject: Re: [PATCH v2 3/8] drm/msm/dpu: remove msm_dp cached in
+ dpu_encoder_virt
+Message-ID: <YgvI+0vqMp5ZPDU0@yoga>
 References: <20220215141643.3444941-1-dmitry.baryshkov@linaro.org>
- <20220215141643.3444941-2-dmitry.baryshkov@linaro.org>
+ <20220215141643.3444941-4-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220215141643.3444941-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220215141643.3444941-4-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -77,32 +78,49 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Tue 15 Feb 08:16 CST 2022, Dmitry Baryshkov wrote:
 
-> DP audio enablement code which is comparing intf_type,
-> DRM_MODE_ENCODER_TMDS (= 2) with DRM_MODE_CONNECTOR_DisplayPort (= 10).
-> Which would never succeed. Fix it to check for DRM_MODE_ENCODER_TMDS.
+> Stop caching msm_dp instance in dpu_encoder_virt since it's not used
+> now.
 > 
-> Fixes: d13e36d7d222 ("drm/msm/dp: add audio support for Display Port on MSM")
+> Fixes: 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display enable and disable")
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 5 -----
+>  1 file changed, 5 deletions(-)
 > 
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 132844801e92..c59976deb1cb 100644
+> index c59976deb1cb..401e37f50d54 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -1099,7 +1099,7 @@ static void _dpu_encoder_virt_enable_helper(struct drm_encoder *drm_enc)
->  	}
+> @@ -168,7 +168,6 @@ enum dpu_enc_rc_states {
+>   * @vsync_event_work:		worker to handle vsync event for autorefresh
+>   * @topology:                   topology of the display
+>   * @idle_timeout:		idle timeout duration in milliseconds
+> - * @dp:				msm_dp pointer, for DP encoders
+>   */
+>  struct dpu_encoder_virt {
+>  	struct drm_encoder base;
+> @@ -207,8 +206,6 @@ struct dpu_encoder_virt {
+>  	struct msm_display_topology topology;
 >  
+>  	u32 idle_timeout;
+> -
+> -	struct msm_dp *dp;
+>  };
 >  
-> -	if (dpu_enc->disp_info.intf_type == DRM_MODE_CONNECTOR_DisplayPort &&
-> +	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_TMDS &&
->  		dpu_enc->cur_master->hw_mdptop &&
->  		dpu_enc->cur_master->hw_mdptop->ops.intf_audio_select)
->  		dpu_enc->cur_master->hw_mdptop->ops.intf_audio_select(
+>  #define to_dpu_encoder_virt(x) container_of(x, struct dpu_encoder_virt, base)
+> @@ -2123,8 +2120,6 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
+>  		timer_setup(&dpu_enc->vsync_event_timer,
+>  				dpu_encoder_vsync_event_handler,
+>  				0);
+> -	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS)
+> -		dpu_enc->dp = priv->dp[disp_info->h_tile_instance[0]];
+>  
+>  	INIT_DELAYED_WORK(&dpu_enc->delayed_off_work,
+>  			dpu_encoder_off_work);
 > -- 
 > 2.34.1
 > 
