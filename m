@@ -2,69 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D9E164B776C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Feb 2022 21:50:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D1AA44B783E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Feb 2022 21:51:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241517AbiBOQwO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Feb 2022 11:52:14 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:57172 "EHLO
+        id S241992AbiBOQzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Feb 2022 11:55:25 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241911AbiBOQwL (ORCPT
+        with ESMTP id S241951AbiBOQzZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Feb 2022 11:52:11 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D48A49262
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 08:51:59 -0800 (PST)
+        Tue, 15 Feb 2022 11:55:25 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36CDD117C80
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 08:55:14 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id x3-20020a05600c21c300b0037c01ad715bso1816975wmj.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 08:55:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644943920; x=1676479920;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=PPjjo/q9IwYwsoSEHYecd35SUubaNNSnfDWTscRVK/M=;
-  b=xWMtVqxHm4ePu/mEZpuUI9XUNMxB7/vDzYaOUgIFGorXHYc+SDZI+fIn
-   VE2iGBUZM2DcK0s2qiKnVZLm6LC7zEmvNvvGR+ccUVDPV2mhP48DLh2cK
-   L0y82bcdfWw597kjQiK0LANwojzkDn5NTXU9dg3a2RW9+KjCx4KgrygiW
-   k=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 15 Feb 2022 08:51:59 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Feb 2022 08:51:59 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Tue, 15 Feb 2022 08:51:58 -0800
-Received: from [10.111.168.21] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Tue, 15 Feb
- 2022 08:51:56 -0800
-Message-ID: <fc8c0e0f-7a30-8782-aead-8ee77c3ba562@quicinc.com>
-Date:   Tue, 15 Feb 2022 08:51:55 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [PATCH v2 5/8] drm/msm/dpu: encoder: drop unused mode_fixup
- callback
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hcPH4oH9GnF8hGwcWO7jHpeOxnV4mrgJbNMQI2Ecch0=;
+        b=dq7sNddLWYcmWkSf5MYvhBmg2CbWwx06Z8YIS29fybZDdqlnPMacTIRENZVSoUu+xb
+         xIgx88zabYzQ0hDlxk0cLhhoCeP5BsIQ7Z4WYQx3ZvpN+WumiPXvBEDbifs/hxuInN8w
+         CWFA6Z6T/grY53gHv/dnYKGuR5lAltnMhTYKVuG6ZzuUE8js0RUIL5/31gir/0nnjCuq
+         PHq0ERUAZT3pXroFMLasKpNCAeRue+YGnQuyOJpgbCifYsiCQFh6kx2m3JqSXEq8ZzOe
+         MIA3WoyvPmz0GCIcrO85HWy3200zYewK6oqRS3F1PRHUqny5hClViNCfBl1XPvy8Fe9W
+         Be0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hcPH4oH9GnF8hGwcWO7jHpeOxnV4mrgJbNMQI2Ecch0=;
+        b=lTXuDHA85HzfXZAHJ4h0Nl9Gc/YuOAEAm/1tWkB3PzCP/f6lHkoMfB1cXeJniGXUkn
+         Qg6ropW9TrEP+HmnU1rD4GJGm4QrNLz1KUSUiemL7cXTIxBC9na14Km9kdaqH6IDmoot
+         yNbkl2qC0oIkbuwIGd9s3cvkZxg5Jq562kCx4xIDpOwrSH1/hVtHDlEHKwHyUB8Ks6dm
+         dWG6TUuPGyxmxb3sJGJtB9qKKrWLonzwwFNR+Sz4jr9Z1hi4BJSpYqq3VI6vssvv0sHx
+         b3rpNkkR282GrdKeUBEr4cWqXn55wgjZIzXYPpRLpV0SnggbugIr6bUn8eACcW8JAcm3
+         1JNg==
+X-Gm-Message-State: AOAM533xT6HHnuZeO+a2qHAQfKWjTHynddCFCXyCnIlmQoLaRO5zYK2N
+        lRBuFIUC5kNrXNiqR3R20+d2j2a+3UX62F6r
+X-Google-Smtp-Source: ABdhPJx+aFJMloZ6hU43Nu2XRhwrQXtRTsBANIfJyHcQ9qupap4v/vQ9sX3L0w3vgvdGI8GhOgZsog==
+X-Received: by 2002:a05:600c:34cf:b0:37b:d0dc:ea9 with SMTP id d15-20020a05600c34cf00b0037bd0dc0ea9mr3822365wmq.97.1644944112793;
+        Tue, 15 Feb 2022 08:55:12 -0800 (PST)
+Received: from localhost.localdomain (cpc78119-cwma10-2-0-cust590.7-3.cable.virginm.net. [81.96.50.79])
+        by smtp.gmail.com with ESMTPSA id f14sm15373652wmq.3.2022.02.15.08.55.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Feb 2022 08:55:12 -0800 (PST)
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+To:     caleb.connolly@linaro.org, Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20220215141643.3444941-1-dmitry.baryshkov@linaro.org>
- <20220215141643.3444941-6-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220215141643.3444941-6-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        Lee Jones <lee.jones@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     sumit.semwal@linaro.org, amit.pundir@linaro.org,
+        john.stultz@linaro.org
+Subject: [PATCH v5 0/9] iio: adc: introduce Qualcomm SPMI Round Robin ADC
+Date:   Tue, 15 Feb 2022 16:54:47 +0000
+Message-Id: <20220215165456.1205583-1-caleb.connolly@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,124 +75,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The RRADC is responsible for reading data about the current and
+voltage from the USB or DC in jacks, it can also read the battery
+ID (resistence) and some temperatures. It is found on the PMI8998 and
+PM660 Qualcomm PMICs.
 
+The RRADC has to calibrate some ADC values based on which chip fab
+the PMIC was produced in, to facilitate this the patches
+("mfd: qcom-spmi-pmic: expose the PMIC revid information to clients")
+and ("mfd: qcom-spmi-pmic: read fab id on supported PMICs")
+expose the PMIC revision information and fab_id as a struct and register
+them as driver data in the Qualcomm SPMI PMIC driver so that it can be
+read by the RRADC.
 
-On 2/15/2022 6:16 AM, Dmitry Baryshkov wrote:
-> Both cmd and vid backends provide useless mode_fixup() callback. Drop
-> it.
-> 
+The first 3 patches add support for looking up an SPMI device from a
+struct device_node, as well as introducing support for looking up the
+base USID of a Qcom PMIC, see patch comments for more details. These
+Address Bjorns comments on v2.
 
-Thanks for not removing the atomic_check().
+Changes since v4:
+ * Addressed Jonathan's comments on v4
+ * Reworked the qcom-spmi-pmic patches to properly walk the devicetree
+   to find the base USID. I've tested this on SDM845 which has two PMICs
+   (pm8998 and pmi8998) and I'm able to look up the PMIC revid from all
+   4 USIDs.
 
-BTW, can you please include that in the change log so that others 
-reviewing it know.
+Changes since v3:
+ * Split PMIC patch in two, rework to support function drivers on a
+   sibling USID
+ * Completely rework RRADC driver to make use of the modern IIO
+   framework. This required re-arranging a lot of the equations and
+   results in some lost precision, where relevant I've left comments to
+   explain this. I don't think any of it is significant enough to
+   justify doing post-processing in driver.
+	Thanks a lot Jonathan and John Stultz for helping me out with
+	this 
 
-That being said,
+Changes since v2:
+ * Add missing include (thanks kernel test robot :D)
+ * Rework some confusing function return values, specifically
+   rradc_read_status_in_cont_mode and rradc_prepare_batt_id_conversion
+   both of which didn't correctly handle "ret". This also bought up an
+   issue as the previous implementation didn't actually wait for the
+   channel to be ready. It doesn't seem like that's strictly necessary
+   (same data is reported if I wait for the status to be good or not)
+   but I've included it anyway for good measure.
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Changes since v1:
+ * Rework the RRADC driver based on Jonathan's feedback
+ * Pick up Rob's reviewed by for the dt-binding patch.
 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  4 ----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |  4 ----
->   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   | 10 ----------
->   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   | 14 --------------
->   4 files changed, 32 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 480d02ccff8c..394916e8fe08 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -602,10 +602,6 @@ static int dpu_encoder_virt_atomic_check(
->   		if (phys->ops.atomic_check)
->   			ret = phys->ops.atomic_check(phys, crtc_state,
->   					conn_state);
-> -		else if (phys->ops.mode_fixup)
-> -			if (!phys->ops.mode_fixup(phys, mode, adj_mode))
-> -				ret = -EINVAL;
-> -
->   		if (ret) {
->   			DPU_ERROR_ENC(dpu_enc,
->   					"mode unsupported, phys idx %d\n", i);
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-> index e7270eb6b84b..7b14948c4c87 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-> @@ -84,7 +84,6 @@ struct dpu_encoder_virt_ops {
->    * @is_master:			Whether this phys_enc is the current master
->    *				encoder. Can be switched at enable time. Based
->    *				on split_role and current mode (CMD/VID).
-> - * @mode_fixup:			DRM Call. Fixup a DRM mode.
->    * @mode_set:			DRM Call. Set a DRM mode.
->    *				This likely caches the mode, for use at enable.
->    * @enable:			DRM Call. Enable a DRM mode.
-> @@ -117,9 +116,6 @@ struct dpu_encoder_phys_ops {
->   			struct dentry *debugfs_root);
->   	void (*prepare_commit)(struct dpu_encoder_phys *encoder);
->   	bool (*is_master)(struct dpu_encoder_phys *encoder);
-> -	bool (*mode_fixup)(struct dpu_encoder_phys *encoder,
-> -			const struct drm_display_mode *mode,
-> -			struct drm_display_mode *adjusted_mode);
->   	void (*mode_set)(struct dpu_encoder_phys *encoder,
->   			struct drm_display_mode *mode,
->   			struct drm_display_mode *adjusted_mode);
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> index 35071964d0f6..1796f83b47ae 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> @@ -45,15 +45,6 @@ static bool dpu_encoder_phys_cmd_is_master(struct dpu_encoder_phys *phys_enc)
->   	return (phys_enc->split_role != ENC_ROLE_SLAVE);
->   }
->   
-> -static bool dpu_encoder_phys_cmd_mode_fixup(
-> -		struct dpu_encoder_phys *phys_enc,
-> -		const struct drm_display_mode *mode,
-> -		struct drm_display_mode *adj_mode)
-> -{
-> -	DPU_DEBUG_CMDENC(to_dpu_encoder_phys_cmd(phys_enc), "\n");
-> -	return true;
-> -}
-> -
->   static void _dpu_encoder_phys_cmd_update_intf_cfg(
->   		struct dpu_encoder_phys *phys_enc)
->   {
-> @@ -756,7 +747,6 @@ static void dpu_encoder_phys_cmd_init_ops(
->   	ops->prepare_commit = dpu_encoder_phys_cmd_prepare_commit;
->   	ops->is_master = dpu_encoder_phys_cmd_is_master;
->   	ops->mode_set = dpu_encoder_phys_cmd_mode_set;
-> -	ops->mode_fixup = dpu_encoder_phys_cmd_mode_fixup;
->   	ops->enable = dpu_encoder_phys_cmd_enable;
->   	ops->disable = dpu_encoder_phys_cmd_disable;
->   	ops->destroy = dpu_encoder_phys_cmd_destroy;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> index ddd9d89cd456..1831fe37c88c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> @@ -225,19 +225,6 @@ static void programmable_fetch_config(struct dpu_encoder_phys *phys_enc,
->   	spin_unlock_irqrestore(phys_enc->enc_spinlock, lock_flags);
->   }
->   
-> -static bool dpu_encoder_phys_vid_mode_fixup(
-> -		struct dpu_encoder_phys *phys_enc,
-> -		const struct drm_display_mode *mode,
-> -		struct drm_display_mode *adj_mode)
-> -{
-> -	DPU_DEBUG_VIDENC(phys_enc, "\n");
-> -
-> -	/*
-> -	 * Modifying mode has consequences when the mode comes back to us
-> -	 */
-> -	return true;
-> -}
-> -
->   static void dpu_encoder_phys_vid_setup_timing_engine(
->   		struct dpu_encoder_phys *phys_enc)
->   {
-> @@ -676,7 +663,6 @@ static void dpu_encoder_phys_vid_init_ops(struct dpu_encoder_phys_ops *ops)
->   {
->   	ops->is_master = dpu_encoder_phys_vid_is_master;
->   	ops->mode_set = dpu_encoder_phys_vid_mode_set;
-> -	ops->mode_fixup = dpu_encoder_phys_vid_mode_fixup;
->   	ops->enable = dpu_encoder_phys_vid_enable;
->   	ops->disable = dpu_encoder_phys_vid_disable;
->   	ops->destroy = dpu_encoder_phys_vid_destroy;
+ --
+
+Caleb Connolly (9):
+  spmi: add a helper to look up an SPMI device from a device node
+  mfd: qcom-spmi-pmic: expose the PMIC revid information to clients
+  mfd: qcom-spmi-pmic: read fab id on supported PMICs
+  dt-bindings: iio: adc: document qcom-spmi-rradc
+  iio: adc: qcom-spmi-rradc: introduce round robin adc
+  arm64: dts: qcom: pmi8998: add rradc node
+  arm64: dts: qcom: sdm845-oneplus: enable rradc
+  arm64: dts: qcom: sdm845-db845c: enable rradc
+  arm64: dts: qcom: sdm845-xiaomi-beryllium: enable rradc
+
+ .../bindings/iio/adc/qcom,spmi-rradc.yaml     |   54 +
+ arch/arm64/boot/dts/qcom/pmi8998.dtsi         |    8 +
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |    4 +
+ .../boot/dts/qcom/sdm845-oneplus-common.dtsi  |    4 +
+ .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts |    4 +
+ drivers/iio/adc/Kconfig                       |   12 +
+ drivers/iio/adc/Makefile                      |    1 +
+ drivers/iio/adc/qcom-spmi-rradc.c             | 1016 +++++++++++++++++
+ drivers/mfd/qcom-spmi-pmic.c                  |  183 ++-
+ drivers/spmi/spmi.c                           |   16 +
+ include/linux/spmi.h                          |    2 +
+ include/soc/qcom/qcom-spmi-pmic.h             |   61 +
+ 12 files changed, 1308 insertions(+), 57 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-rradc.yaml
+ create mode 100644 drivers/iio/adc/qcom-spmi-rradc.c
+ create mode 100644 include/soc/qcom/qcom-spmi-pmic.h
+
+-- 
+2.35.1
+
