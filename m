@@ -2,66 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E58F4B6D26
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Feb 2022 14:16:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 071CC4B6D8F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Feb 2022 14:34:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237913AbiBONRF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Feb 2022 08:17:05 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46804 "EHLO
+        id S238286AbiBONej (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Feb 2022 08:34:39 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:59726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232006AbiBONRE (ORCPT
+        with ESMTP id S233398AbiBONei (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Feb 2022 08:17:04 -0500
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53240C7D4E;
-        Tue, 15 Feb 2022 05:16:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1644931014; x=1676467014;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=w/fCEkspTynMx/KBUNmalbFEyHPshGMZWUJ7Yi9YEdY=;
-  b=VX4GJyTTpn49ihfaU96YFA3qbY232+7ltnC49JbTlqVZbPeW8IAIFC3g
-   KygJFJKrtY+CrtC7bd4de63mCvsyeCK/4LThZHtxf6rZntEBI0lV/zvCZ
-   02zStrQr14gAneRRxkwylbtwEEyJP9T7pLWlrOPTbdT7ybUFh/M2pNg6E
-   2RYM3LzLiT5ATbAdB2ZKtazS6W35dlKZpA7buRWAmGRd5lnky8Vfu/ZVv
-   qyHtV9Yhz+ABSH9FKPSqO321gvBpMJiQ3qKWs4rqqy+avcs57id29Xhmy
-   ob/F5uD5sNKOMsNqXVGotuUPvoaDF1OSsScZ2snWUxJMEoM9ybvadp40z
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10258"; a="230976804"
-X-IronPort-AV: E=Sophos;i="5.88,370,1635231600"; 
-   d="scan'208";a="230976804"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Feb 2022 05:16:54 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,370,1635231600"; 
-   d="scan'208";a="703670560"
-Received: from lkp-server01.sh.intel.com (HELO d95dc2dabeb1) ([10.239.97.150])
-  by orsmga005.jf.intel.com with ESMTP; 15 Feb 2022 05:16:50 -0800
-Received: from kbuild by d95dc2dabeb1 with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1nJxhJ-0009gq-Kk; Tue, 15 Feb 2022 13:16:49 +0000
-Date:   Tue, 15 Feb 2022 21:16:16 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Deepak Kumar Singh <quic_deesin@quicinc.com>,
-        bjorn.andersson@linaro.org, quic_clew@quicinc.com,
-        mathieu.poirier@linaro.org
-Cc:     kbuild-all@lists.01.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Deepak Kumar Singh <quic_deesin@quicinc.com>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH V4 2/2] soc: qcom: smem: validate fields of shared
- structures
-Message-ID: <202202152150.EZ8yJDzm-lkp@intel.com>
-References: <1644849974-8043-2-git-send-email-quic_deesin@quicinc.com>
+        Tue, 15 Feb 2022 08:34:38 -0500
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD932106C8B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 05:34:27 -0800 (PST)
+Received: by mail-lj1-x22b.google.com with SMTP id t14so26699682ljh.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 05:34:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=FpMQGcGZWWQzG0kZg6uuu5PvhBUL2zM3Ju911VmhPtM=;
+        b=qsLWLUb1doRFnrcdUOi4Pyd6HfnrZVJSYAAxq9hNz3ukpLbmtZ8yiBrOUBcbffivG6
+         h1HgvSNqffqpkrVjlZZvDa7uZxcC5AJJI9pEHGWV21eoZ6j3A5eFifnR5ruKG99FcI7+
+         vC+3BOsR6x9KBgRhgVlJ0FrG3dMEB/O/tVqRh/Vgz1rCCgDyKCwAOaaJ5ikXwxkG2J36
+         X8PCpRJlp6LZPDM561RUADoISOGiN4qFZJqUue4GjJa9Qv2EY4bL/DIHIWZnLasGHYxL
+         WxJ7qVdyAFdvgzfp5jPvkQQz0Ip2VvOzE9ec8lFUhT7AMpFfYOTdNMDnpDGMy8QckGUM
+         BR+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=FpMQGcGZWWQzG0kZg6uuu5PvhBUL2zM3Ju911VmhPtM=;
+        b=sCAhRmbhah2kpPxHQ5JnFUU6G7xsK+SncZnxzQglunpyI+sR8BdJmcuT3k2caZZNS8
+         5h2YUXXNXlEmu0WFzWLPVcxaNrzOt7wr06liaHP6qBLfsEsU8e7CaiZLJHg8KlR9t2Mc
+         hU3T3+ubO5TnW9Ffe8Qj9K4QtAlbsS4JCQY04EeaU3iWHQNoS7tEaqcnn2lp0MZpzkUS
+         LDx9jHSu6ZLV7qaMFPttu+FJEqg2UZ1zgcQfSf/q43spd0wMRIahRDZwW2Yy+DzUBk4X
+         8nG65mqG6+ReSLaa2JjZZSwPnn1/I+AkdzKdF1FHUQsoTqj7l+nH5w0jqz/XfQbrLoFK
+         qRug==
+X-Gm-Message-State: AOAM532w1t/sCzxSIw13RVZrL5ftnnZ1NkGU2jCQRRYAji1hCKGHB7KM
+        U3W4KnEUI+iO4zGMlxaZd5aahg==
+X-Google-Smtp-Source: ABdhPJzZlmO8XhwuSPsPu+m0PXlPr3E1d27zIzV3UniIzyZfCph+iH1HU62A7UAc/0I0xYAfx5JrwQ==
+X-Received: by 2002:a2e:a554:: with SMTP id e20mr2522511ljn.504.1644932066052;
+        Tue, 15 Feb 2022 05:34:26 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id bf10sm4413791ljb.130.2022.02.15.05.34.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Feb 2022 05:34:25 -0800 (PST)
+Message-ID: <db5ecfec-c61e-43ff-4e76-5517fd671503@linaro.org>
+Date:   Tue, 15 Feb 2022 16:34:24 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1644849974-8043-2-git-send-email-quic_deesin@quicinc.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [PATCH v4 2/2] drm/msm/dp: enable widebus feature for display
+ port
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, vkoul@kernel.org,
+        daniel@ffwll.ch, airlied@linux.ie, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1644878346-28511-1-git-send-email-quic_khsieh@quicinc.com>
+ <1644878346-28511-3-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1644878346-28511-3-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,156 +81,352 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Deepak,
+On 15/02/2022 01:39, Kuogee Hsieh wrote:
+> Widebus feature will transmit two pixel data per pixel clock to interface.
+> This feature now is required to be enabled to easy migrant to higher
+> resolution applications in future. However since some legacy chipsets
+> does not support this feature, this feature is enabled base on chip's
+> hardware revision.
+> 
+> changes in v2:
+> -- remove compression related code from timing
+> -- remove op_info from  struct msm_drm_private
+> -- remove unnecessary wide_bus_en variables
+> -- pass wide_bus_en into timing configuration by struct msm_dp
+> 
+> Changes in v3:
+> -- split patch into 3 patches
+> -- enable widebus feature base on chip hardware revision
+> 
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  4 +++-
+>   drivers/gpu/drm/msm/dp/dp_catalog.c         | 36 +++++++++++++++++++++++++++--
+>   drivers/gpu/drm/msm/dp/dp_catalog.h         |  3 ++-
+>   drivers/gpu/drm/msm/dp/dp_ctrl.c            | 13 +++++++----
+>   drivers/gpu/drm/msm/dp/dp_ctrl.h            |  1 +
+>   drivers/gpu/drm/msm/dp/dp_display.c         | 30 ++++++++++++++++++++++++
+>   drivers/gpu/drm/msm/dp/dp_display.h         |  2 ++
+>   drivers/gpu/drm/msm/dp/dp_panel.c           |  4 ++--
+>   drivers/gpu/drm/msm/dp/dp_panel.h           |  2 +-
+>   drivers/gpu/drm/msm/msm_drv.h               |  6 +++++
+>   10 files changed, 90 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 0c22839..b2d23c2 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -2167,8 +2167,10 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
+>   		timer_setup(&dpu_enc->vsync_event_timer,
+>   				dpu_encoder_vsync_event_handler,
+>   				0);
+> -	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS)
+> +	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS) {
+>   		dpu_enc->dp = priv->dp[disp_info->h_tile_instance[0]];
+> +		dpu_enc->wide_bus_en = msm_dp_wide_bus_enable(dpu_enc->dp);
+> +	}
 
-Thank you for the patch! Perhaps something to improve:
+Please revert the order of the patches and move this chunk into the DPU 
+patch.
 
-[auto build test WARNING on linus/master]
-[also build test WARNING on v5.17-rc4 next-20220215]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+>   
+>   	INIT_DELAYED_WORK(&dpu_enc->delayed_off_work,
+>   			dpu_encoder_off_work);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> index 64f0b26..99d087e 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> @@ -483,6 +483,27 @@ int dp_catalog_ctrl_set_pattern_state_bit(struct dp_catalog *dp_catalog,
+>   }
+>   
+>   /**
+> + * dp_catalog_hw_revision() - retrieve DP hw revision
+> + *
+> + * @dp_catalog: DP catalog structure
+> + *
+> + * return: u32
+> + *
+> + * This function return the DP controller hw revision
+> + *
+> + */
+> +u32 dp_catalog_hw_revision(struct dp_catalog *dp_catalog)
+> +{
+> +	u32 revision;
+> +	struct dp_catalog_private *catalog = container_of(dp_catalog,
+> +				struct dp_catalog_private, dp_catalog);
+> +
+> +	revision = dp_read_ahb(catalog, REG_DP_HW_VERSION);
+> +
+> +	return revision;
+> +}
+> +
+> +/**
+>    * dp_catalog_ctrl_reset() - reset DP controller
+>    *
+>    * @dp_catalog: DP catalog structure
+> @@ -739,10 +760,11 @@ u32 dp_catalog_ctrl_read_phy_pattern(struct dp_catalog *dp_catalog)
+>   }
+>   
+>   /* panel related catalog functions */
+> -int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog)
+> +int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog, bool wide_bus_en)
+>   {
+>   	struct dp_catalog_private *catalog = container_of(dp_catalog,
+>   				struct dp_catalog_private, dp_catalog);
+> +	u32 reg;
+>   
+>   	dp_write_link(catalog, REG_DP_TOTAL_HOR_VER,
+>   				dp_catalog->total);
+> @@ -751,7 +773,17 @@ int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog)
+>   	dp_write_link(catalog, REG_DP_HSYNC_VSYNC_WIDTH_POLARITY,
+>   				dp_catalog->width_blanking);
+>   	dp_write_link(catalog, REG_DP_ACTIVE_HOR_VER, dp_catalog->dp_active);
+> -	dp_write_p0(catalog, MMSS_DP_INTF_CONFIG, 0);
+> +
+> +	reg = dp_read_p0(catalog, MMSS_DP_INTF_CONFIG);
+> +
+> +	if (wide_bus_en)
+> +		reg |= BIT(4);	/* DATABUS_WIDEN */
+> +	else
+> +		reg &= ~BIT(4);
+> +
+> +	DRM_DEBUG_DP("wide_bus_en=%d reg=%x\n", wide_bus_en, reg);
+> +
+> +	dp_write_p0(catalog, MMSS_DP_INTF_CONFIG, reg);
+>   	return 0;
+>   }
+>   
+> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
+> index 7dea101..a3a0129 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
+> @@ -95,6 +95,7 @@ void dp_catalog_ctrl_config_misc(struct dp_catalog *dp_catalog, u32 cc, u32 tb);
+>   void dp_catalog_ctrl_config_msa(struct dp_catalog *dp_catalog, u32 rate,
+>   				u32 stream_rate_khz, bool fixed_nvid);
+>   int dp_catalog_ctrl_set_pattern_state_bit(struct dp_catalog *dp_catalog, u32 pattern);
+> +u32 dp_catalog_hw_revision(struct dp_catalog *dp_catalog);
+>   void dp_catalog_ctrl_reset(struct dp_catalog *dp_catalog);
+>   bool dp_catalog_ctrl_mainlink_ready(struct dp_catalog *dp_catalog);
+>   void dp_catalog_ctrl_enable_irq(struct dp_catalog *dp_catalog, bool enable);
+> @@ -115,7 +116,7 @@ void dp_catalog_ctrl_send_phy_pattern(struct dp_catalog *dp_catalog,
+>   u32 dp_catalog_ctrl_read_phy_pattern(struct dp_catalog *dp_catalog);
+>   
+>   /* DP Panel APIs */
+> -int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog);
+> +int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog, bool wide_bus_en);
+>   void dp_catalog_dump_regs(struct dp_catalog *dp_catalog);
+>   void dp_catalog_panel_tpg_enable(struct dp_catalog *dp_catalog,
+>   				struct drm_display_mode *drm_mode);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index 245e1b9..1c4cf9d 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -154,7 +154,7 @@ static void dp_ctrl_config_ctrl(struct dp_ctrl_private *ctrl)
+>   	dp_catalog_ctrl_config_ctrl(ctrl->catalog, config);
+>   }
+>   
+> -static void dp_ctrl_configure_source_params(struct dp_ctrl_private *ctrl)
+> +static void dp_ctrl_configure_source_params(struct dp_ctrl_private *ctrl, bool wide_bus_en)
+>   {
+>   	u32 cc, tb;
+>   
+> @@ -167,7 +167,7 @@ static void dp_ctrl_configure_source_params(struct dp_ctrl_private *ctrl)
+>   		ctrl->panel->dp_mode.bpp);
+>   	cc = dp_link_get_colorimetry_config(ctrl->link);
+>   	dp_catalog_ctrl_config_misc(ctrl->catalog, cc, tb);
+> -	dp_panel_timing_cfg(ctrl->panel);
+> +	dp_panel_timing_cfg(ctrl->panel, wide_bus_en);
+>   }
+>   
+>   /*
+> @@ -1796,6 +1796,7 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
+>   	int ret = 0;
+>   	bool mainlink_ready = false;
+>   	struct dp_ctrl_private *ctrl;
+> +	u32 pixel_rate_orig;
+>   
+>   	if (!dp_ctrl)
+>   		return -EINVAL;
+> @@ -1804,6 +1805,10 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
+>   
+>   	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
+>   
+> +	pixel_rate_orig = ctrl->dp_ctrl.pixel_rate;
+> +	if (dp_ctrl->wide_bus_en)
+> +		ctrl->dp_ctrl.pixel_rate >>= 1;
+> +
+>   	DRM_DEBUG_DP("rate=%d, num_lanes=%d, pixel_rate=%d\n",
+>   		ctrl->link->link_params.rate,
+>   		ctrl->link->link_params.num_lanes, ctrl->dp_ctrl.pixel_rate);
+> @@ -1839,11 +1844,11 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
+>   	 */
+>   	reinit_completion(&ctrl->video_comp);
+>   
+> -	dp_ctrl_configure_source_params(ctrl);
+> +	dp_ctrl_configure_source_params(ctrl, dp_ctrl->wide_bus_en);
+>   
+>   	dp_catalog_ctrl_config_msa(ctrl->catalog,
+>   		ctrl->link->link_params.rate,
+> -		ctrl->dp_ctrl.pixel_rate, dp_ctrl_use_fixed_nvid(ctrl));
+> +		pixel_rate_orig, dp_ctrl_use_fixed_nvid(ctrl));
+>   
+>   	dp_ctrl_setup_tr_unit(ctrl);
+>   
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> index 2433edb..4dff44d 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> @@ -17,6 +17,7 @@ struct dp_ctrl {
+>   	bool orientation;
+>   	atomic_t aborted;
+>   	u32 pixel_rate;
+> +	bool wide_bus_en;
+>   };
+>   
+>   int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index e89556ad..d45a3aa 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -117,6 +117,8 @@ struct dp_display_private {
+>   	struct dp_event event_list[DP_EVENT_Q_MAX];
+>   	spinlock_t event_lock;
+>   
+> +	bool wide_bus_en;
+> +
+>   	struct dp_audio *audio;
+>   };
+>   
+> @@ -845,6 +847,8 @@ static int dp_display_enable(struct dp_display_private *dp, u32 data)
+>   		return 0;
+>   	}
+>   
+> +	dp->ctrl->wide_bus_en = dp->wide_bus_en;
+> +
+>   	rc = dp_ctrl_on_stream(dp->ctrl);
+>   	if (!rc)
+>   		dp_display->power_on = true;
+> @@ -979,6 +983,7 @@ int dp_display_get_modes(struct msm_dp *dp,
+>   		dp->connector, dp_mode);
+>   	if (dp_mode->drm_mode.clock)
+>   		dp->max_pclk_khz = dp_mode->drm_mode.clock;
+> +
+>   	return ret;
+>   }
+>   
+> @@ -1451,6 +1456,28 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
+>   	}
+>   }
+>   
+> +bool msm_dp_wide_bus_enable(struct msm_dp *dp_display)
+> +{
+> +	struct dp_display_private *dp;
+> +	u32 revision, major, minor;
+> +
+> +	dp = container_of(dp_display, struct dp_display_private, dp_display);
+> +
+> +	/* for the time being widebus only support on DP */
+> +	if (dp_display->connector_type  == DRM_MODE_CONNECTOR_DisplayPort) {
+> +		revision = dp_catalog_hw_revision(dp->catalog);
+> +		major = ((revision >> 28) & 0x0ff);
+> +		minor = ((revision >> 16) & 0x0fff);
+> +
+> +	DRM_DEBUG_DP("id=%d major=%d minor=%d\n", dp->id, major, minor);
+> +
+> +		if (major >= 1 && minor >= 2)
+> +			return true;
+> +	}
+> +
+> +	return false;
+> +}
+> +
+>   void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
+>   {
+>   	struct dp_display_private *dp;
+> @@ -1505,6 +1532,9 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+>   	dp_priv->panel->connector = dp_display->connector;
+>   
+>   	priv->connectors[priv->num_connectors++] = dp_display->connector;
+> +
+> +	dp_priv->wide_bus_en = msm_dp_wide_bus_enable(dp_display);
+> +
+>   	return 0;
+>   }
+>   
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+> index 8e80e3b..d9cb9ee 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
+> @@ -23,6 +23,8 @@ struct msm_dp {
+>   
+>   	hdmi_codec_plugged_cb plugged_cb;
+>   
+> +	bool wide_bus_en;
+> +
+>   	u32 max_pclk_khz;
+>   
+>   	u32 max_dp_lanes;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+> index 71db10c..71deb1e 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+> @@ -353,7 +353,7 @@ void dp_panel_dump_regs(struct dp_panel *dp_panel)
+>   	dp_catalog_dump_regs(catalog);
+>   }
+>   
+> -int dp_panel_timing_cfg(struct dp_panel *dp_panel)
+> +int dp_panel_timing_cfg(struct dp_panel *dp_panel, bool wide_bus_en)
+>   {
+>   	u32 data, total_ver, total_hor;
+>   	struct dp_catalog *catalog;
+> @@ -404,7 +404,7 @@ int dp_panel_timing_cfg(struct dp_panel *dp_panel)
+>   
+>   	catalog->dp_active = data;
+>   
+> -	dp_catalog_panel_timing_cfg(catalog);
+> +	dp_catalog_panel_timing_cfg(catalog, wide_bus_en);
+>   	panel->panel_on = true;
+>   
+>   	return 0;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+> index 9023e5b..5ec341a 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+> @@ -57,7 +57,7 @@ struct dp_panel {
+>   
+>   int dp_panel_init_panel_info(struct dp_panel *dp_panel);
+>   int dp_panel_deinit(struct dp_panel *dp_panel);
+> -int dp_panel_timing_cfg(struct dp_panel *dp_panel);
+> +int dp_panel_timing_cfg(struct dp_panel *dp_panel, bool wide_bus_en);
+>   void dp_panel_dump_regs(struct dp_panel *dp_panel);
+>   int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+>   		struct drm_connector *connector);
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index 07f6c41..667f3a8 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -398,6 +398,7 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display);
+>   void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display);
+>   
+>   void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor);
+> +bool msm_dp_wide_bus_enable(struct msm_dp *dp_display);
+>   
+>   #else
+>   static inline int __init msm_dp_register(void)
+> @@ -448,6 +449,11 @@ static inline void msm_dp_debugfs_init(struct msm_dp *dp_display,
+>   {
+>   }
+>   
+> +bool msm_dp_wide_bus_enable(struct msm_dp *dp_display)
+> +{
+> +	return false;
+> +}
+> +
+>   #endif
+>   
+>   void __init msm_mdp_register(void);
 
-url:    https://github.com/0day-ci/linux/commits/Deepak-Kumar-Singh/soc-qcom-smem-map-only-partitions-used-by-local-HOST/20220214-224750
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git 754e0b0e35608ed5206d6a67a791563c631cec07
-config: openrisc-randconfig-s031-20220214 (https://download.01.org/0day-ci/archive/20220215/202202152150.EZ8yJDzm-lkp@intel.com/config)
-compiler: or1k-linux-gcc (GCC) 11.2.0
-reproduce:
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # apt-get install sparse
-        # sparse version: v0.6.4-dirty
-        # https://github.com/0day-ci/linux/commit/cfc33be784b2bfdafba0ae278dfbf92bdd9111da
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Deepak-Kumar-Singh/soc-qcom-smem-map-only-partitions-used-by-local-HOST/20220214-224750
-        git checkout cfc33be784b2bfdafba0ae278dfbf92bdd9111da
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__' O=build_dir ARCH=openrisc SHELL=/bin/bash drivers/soc/qcom/
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-
-
-sparse warnings: (new ones prefixed by >>)
-   drivers/soc/qcom/smem.c:430:16: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct smem_header *header @@     got void [noderef] __iomem *virt_base @@
-   drivers/soc/qcom/smem.c:430:16: sparse:     expected struct smem_header *header
-   drivers/soc/qcom/smem.c:430:16: sparse:     got void [noderef] __iomem *virt_base
-   drivers/soc/qcom/smem.c:517:16: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct smem_header *header @@     got void [noderef] __iomem *virt_base @@
-   drivers/soc/qcom/smem.c:517:16: sparse:     expected struct smem_header *header
-   drivers/soc/qcom/smem.c:517:16: sparse:     got void [noderef] __iomem *virt_base
-   drivers/soc/qcom/smem.c:534:50: sparse: sparse: incorrect type in return expression (different address spaces) @@     expected void * @@     got void [noderef] __iomem * @@
-   drivers/soc/qcom/smem.c:534:50: sparse:     expected void *
-   drivers/soc/qcom/smem.c:534:50: sparse:     got void [noderef] __iomem *
->> drivers/soc/qcom/smem.c:695:22: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct smem_partition_header *phdr @@     got void [noderef] __iomem *virt_base @@
-   drivers/soc/qcom/smem.c:695:22: sparse:     expected struct smem_partition_header *phdr
-   drivers/soc/qcom/smem.c:695:22: sparse:     got void [noderef] __iomem *virt_base
->> drivers/soc/qcom/smem.c:699:27: sparse: sparse: cast to restricted __le32
->> drivers/soc/qcom/smem.c:699:27: sparse: sparse: cast to restricted __le32
->> drivers/soc/qcom/smem.c:699:27: sparse: sparse: cast to restricted __le32
->> drivers/soc/qcom/smem.c:699:27: sparse: sparse: cast to restricted __le32
->> drivers/soc/qcom/smem.c:699:27: sparse: sparse: cast to restricted __le32
->> drivers/soc/qcom/smem.c:699:27: sparse: sparse: cast to restricted __le32
-   drivers/soc/qcom/smem.c:703:22: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct smem_partition_header *phdr @@     got void [noderef] __iomem *virt_base @@
-   drivers/soc/qcom/smem.c:703:22: sparse:     expected struct smem_partition_header *phdr
-   drivers/soc/qcom/smem.c:703:22: sparse:     got void [noderef] __iomem *virt_base
-   drivers/soc/qcom/smem.c:707:27: sparse: sparse: cast to restricted __le32
-   drivers/soc/qcom/smem.c:707:27: sparse: sparse: cast to restricted __le32
-   drivers/soc/qcom/smem.c:707:27: sparse: sparse: cast to restricted __le32
-   drivers/soc/qcom/smem.c:707:27: sparse: sparse: cast to restricted __le32
-   drivers/soc/qcom/smem.c:707:27: sparse: sparse: cast to restricted __le32
-   drivers/soc/qcom/smem.c:707:27: sparse: sparse: cast to restricted __le32
-   drivers/soc/qcom/smem.c:710:24: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct smem_header *header @@     got void [noderef] __iomem *virt_base @@
-   drivers/soc/qcom/smem.c:710:24: sparse:     expected struct smem_header *header
-   drivers/soc/qcom/smem.c:710:24: sparse:     got void [noderef] __iomem *virt_base
-   drivers/soc/qcom/smem.c:723:30: sparse: sparse: incompatible types in comparison expression (different address spaces):
-   drivers/soc/qcom/smem.c:723:30: sparse:    void *
-   drivers/soc/qcom/smem.c:723:30: sparse:    void [noderef] __iomem *
-   drivers/soc/qcom/smem.c:744:36: sparse: sparse: subtraction of different types can't work (different address spaces)
-   drivers/soc/qcom/smem.c:753:28: sparse: sparse: subtraction of different types can't work (different address spaces)
-   drivers/soc/qcom/smem.c:762:36: sparse: sparse: subtraction of different types can't work (different address spaces)
-   drivers/soc/qcom/smem.c:777:16: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct smem_header *header @@     got void [noderef] __iomem *virt_base @@
-   drivers/soc/qcom/smem.c:777:16: sparse:     expected struct smem_header *header
-   drivers/soc/qcom/smem.c:777:16: sparse:     got void [noderef] __iomem *virt_base
-   drivers/soc/qcom/smem.c:810:57: sparse: sparse: restricted __le32 degrades to integer
-   drivers/soc/qcom/smem.c:831:16: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct smem_partition_header *header @@     got void [noderef] __iomem * @@
-   drivers/soc/qcom/smem.c:831:16: sparse:     expected struct smem_partition_header *header
-   drivers/soc/qcom/smem.c:831:16: sparse:     got void [noderef] __iomem *
-   drivers/soc/qcom/smem.c:982:22: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct smem_ptable *ptable @@     got void [noderef] __iomem * @@
-   drivers/soc/qcom/smem.c:982:22: sparse:     expected struct smem_ptable *ptable
-   drivers/soc/qcom/smem.c:982:22: sparse:     got void [noderef] __iomem *
-   drivers/soc/qcom/smem.c:1091:16: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct smem_header *header @@     got void [noderef] __iomem *virt_base @@
-   drivers/soc/qcom/smem.c:1091:16: sparse:     expected struct smem_header *header
-   drivers/soc/qcom/smem.c:1091:16: sparse:     got void [noderef] __iomem *virt_base
->> drivers/soc/qcom/smem.c:1112:31: sparse: sparse: incorrect type in argument 1 (different address spaces) @@     expected void const volatile [noderef] __iomem *addr @@     got restricted __le32 * @@
-   drivers/soc/qcom/smem.c:1112:31: sparse:     expected void const volatile [noderef] __iomem *addr
-   drivers/soc/qcom/smem.c:1112:31: sparse:     got restricted __le32 *
-   drivers/soc/qcom/smem.c:1112:67: sparse: sparse: incorrect type in argument 1 (different address spaces) @@     expected void const volatile [noderef] __iomem *addr @@     got restricted __le32 * @@
-   drivers/soc/qcom/smem.c:1112:67: sparse:     expected void const volatile [noderef] __iomem *addr
-   drivers/soc/qcom/smem.c:1112:67: sparse:     got restricted __le32 *
-   drivers/soc/qcom/smem.c: note: in included file (through arch/openrisc/include/asm/io.h, include/linux/io.h):
-   include/asm-generic/io.h:267:16: sparse: sparse: cast to restricted __le32
-   include/asm-generic/io.h:267:16: sparse: sparse: cast to restricted __le32
-   include/asm-generic/io.h:267:16: sparse: sparse: cast to restricted __le32
-   include/asm-generic/io.h:267:16: sparse: sparse: cast to restricted __le32
-   include/asm-generic/io.h:267:16: sparse: sparse: cast to restricted __le32
-   include/asm-generic/io.h:267:16: sparse: sparse: cast to restricted __le32
-   include/asm-generic/io.h:267:16: sparse: sparse: cast to restricted __le32
-   include/asm-generic/io.h:267:16: sparse: sparse: cast to restricted __le32
-   include/asm-generic/io.h:267:16: sparse: sparse: cast to restricted __le32
-   include/asm-generic/io.h:267:16: sparse: sparse: cast to restricted __le32
-   include/asm-generic/io.h:267:16: sparse: sparse: cast to restricted __le32
-   include/asm-generic/io.h:267:16: sparse: sparse: cast to restricted __le32
-
-vim +695 drivers/soc/qcom/smem.c
-
-4b638df4c9d556 Bjorn Andersson    2015-06-26  675  
-4b638df4c9d556 Bjorn Andersson    2015-06-26  676  /**
-4b638df4c9d556 Bjorn Andersson    2015-06-26  677   * qcom_smem_get_free_space() - retrieve amount of free space in a partition
-4b638df4c9d556 Bjorn Andersson    2015-06-26  678   * @host:	the remote processor identifying a partition, or -1
-4b638df4c9d556 Bjorn Andersson    2015-06-26  679   *
-4b638df4c9d556 Bjorn Andersson    2015-06-26  680   * To be used by smem clients as a quick way to determine if any new
-4b638df4c9d556 Bjorn Andersson    2015-06-26  681   * allocations has been made.
-4b638df4c9d556 Bjorn Andersson    2015-06-26  682   */
-4b638df4c9d556 Bjorn Andersson    2015-06-26  683  int qcom_smem_get_free_space(unsigned host)
-4b638df4c9d556 Bjorn Andersson    2015-06-26  684  {
-70716a4ee6c89c Deepak Kumar Singh 2022-02-14  685  	struct smem_partition *part;
-4b638df4c9d556 Bjorn Andersson    2015-06-26  686  	struct smem_partition_header *phdr;
-4b638df4c9d556 Bjorn Andersson    2015-06-26  687  	struct smem_header *header;
-4b638df4c9d556 Bjorn Andersson    2015-06-26  688  	unsigned ret;
-4b638df4c9d556 Bjorn Andersson    2015-06-26  689  
-4b638df4c9d556 Bjorn Andersson    2015-06-26  690  	if (!__smem)
-4b638df4c9d556 Bjorn Andersson    2015-06-26  691  		return -EPROBE_DEFER;
-4b638df4c9d556 Bjorn Andersson    2015-06-26  692  
-70716a4ee6c89c Deepak Kumar Singh 2022-02-14  693  	if (host < SMEM_HOST_COUNT && __smem->partitions[host].virt_base) {
-70716a4ee6c89c Deepak Kumar Singh 2022-02-14  694  		part = &__smem->partitions[host];
-70716a4ee6c89c Deepak Kumar Singh 2022-02-14 @695  		phdr = part->virt_base;
-9806884d8cd552 Stephen Boyd       2015-09-02  696  		ret = le32_to_cpu(phdr->offset_free_cached) -
-9806884d8cd552 Stephen Boyd       2015-09-02  697  		      le32_to_cpu(phdr->offset_free_uncached);
-cfc33be784b2bf Deepak Kumar Singh 2022-02-14  698  
-cfc33be784b2bf Deepak Kumar Singh 2022-02-14 @699  		if (ret > le32_to_cpu(part->size))
-cfc33be784b2bf Deepak Kumar Singh 2022-02-14  700  			return -EINVAL;
-70716a4ee6c89c Deepak Kumar Singh 2022-02-14  701  	} else if (__smem->global_partition.virt_base) {
-70716a4ee6c89c Deepak Kumar Singh 2022-02-14  702  		part = &__smem->global_partition;
-70716a4ee6c89c Deepak Kumar Singh 2022-02-14  703  		phdr = part->virt_base;
-d52e404874369f Chris Lew          2017-10-11  704  		ret = le32_to_cpu(phdr->offset_free_cached) -
-d52e404874369f Chris Lew          2017-10-11  705  		      le32_to_cpu(phdr->offset_free_uncached);
-cfc33be784b2bf Deepak Kumar Singh 2022-02-14  706  
-cfc33be784b2bf Deepak Kumar Singh 2022-02-14  707  		if (ret > le32_to_cpu(part->size))
-cfc33be784b2bf Deepak Kumar Singh 2022-02-14  708  			return -EINVAL;
-4b638df4c9d556 Bjorn Andersson    2015-06-26  709  	} else {
-4b638df4c9d556 Bjorn Andersson    2015-06-26  710  		header = __smem->regions[0].virt_base;
-9806884d8cd552 Stephen Boyd       2015-09-02  711  		ret = le32_to_cpu(header->available);
-cfc33be784b2bf Deepak Kumar Singh 2022-02-14  712  
-cfc33be784b2bf Deepak Kumar Singh 2022-02-14  713  		if (ret > __smem->regions[0].size)
-cfc33be784b2bf Deepak Kumar Singh 2022-02-14  714  			return -EINVAL;
-4b638df4c9d556 Bjorn Andersson    2015-06-26  715  	}
-4b638df4c9d556 Bjorn Andersson    2015-06-26  716  
-4b638df4c9d556 Bjorn Andersson    2015-06-26  717  	return ret;
-4b638df4c9d556 Bjorn Andersson    2015-06-26  718  }
-4b638df4c9d556 Bjorn Andersson    2015-06-26  719  EXPORT_SYMBOL(qcom_smem_get_free_space);
-4b638df4c9d556 Bjorn Andersson    2015-06-26  720  
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+-- 
+With best wishes
+Dmitry
