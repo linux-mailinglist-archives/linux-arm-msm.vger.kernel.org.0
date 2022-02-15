@@ -2,78 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D5B34B71FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Feb 2022 17:41:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 570FC4B72E3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Feb 2022 17:42:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240335AbiBOPml (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Feb 2022 10:42:41 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43678 "EHLO
+        id S240921AbiBOPmw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Feb 2022 10:42:52 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241266AbiBOPlH (ORCPT
+        with ESMTP id S240541AbiBOPmm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Feb 2022 10:41:07 -0500
-Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D586013FAEA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 07:34:44 -0800 (PST)
-Received: by mail-oo1-xc2c.google.com with SMTP id 189-20020a4a03c6000000b003179d7b30d8so23616027ooi.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 07:34:44 -0800 (PST)
+        Tue, 15 Feb 2022 10:42:42 -0500
+Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CA81D2279
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 07:37:41 -0800 (PST)
+Received: by mail-oo1-xc32.google.com with SMTP id x6-20020a4a4106000000b003193022319cso1082938ooa.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 07:37:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=lICLxHXDz47Zrz6aevlppIMXuruBJmDOc0eDfWsdodY=;
-        b=aOv1eEN1wu7TUzfxLlt1pmrdqkCiCXVvy082d8mxVz2pU32xBefNtT/wpBtTs0PUsU
-         WwFnGpSIkEloJ/856De8fJh4guiKI0xAxyFNlzg4vVoQVc/WnoFJ/NrTRFzi2ESDqdqS
-         IId/m6wv/SOKu9M6zd5nap7i4WyFfVMLuaIL0gyYX6toG5+s7nLWd+i+tirCg8zHzsMg
-         SDTg2Cpv+nQTB3Nnka8YtN0Uh4zlr3FkijikOZoQ5KLcIGJr7Z+UqG6JPYyP/wxZaOAP
-         3ttr8rjFy8T8qhCw4YXvCBSfZSHlCEBXR4Qtn7kxh0iUgk7GOTH7GMz/rHQvW+sJrFCU
-         EvzA==
+         :content-disposition:in-reply-to;
+        bh=/RGLD8nwzu2VhuFoIMV+jbsfE56tgO0QtQZcVsmbSeg=;
+        b=l6fAXQm8Wcu/W89W5Bq27vFP7GjHxqydLmmOHkiwoIcJ5mOuVMXHyvROhRRg5u5a0c
+         7BjNXoiLUfV1nrjmUKiPnbXoWXbOpl1wODxwPb7Y4zWa86tC3ZvMeakI+b+Zaim6YptS
+         CMl6kvWf8GkgRqem5iMddRtOT4fuuRF9rNCnkkga9+nMemDSXeVOZQi5ThxDyehk+l13
+         DXWiGZ1apMEofA/mqweXCHhuYRcjpMEn1yuQ/dZzPPhODZSoj5ucfAxb+y/M+s0xD6a9
+         qIwrgQbPg6F0SBP2goXQuxJZ9NMMlnKDEjDOgoQTGypS6w8LVst+mE4/tthr00fdXrOq
+         P5gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=lICLxHXDz47Zrz6aevlppIMXuruBJmDOc0eDfWsdodY=;
-        b=7TV718owiSs7dEPm2fXIi351tunmgpJ1sjDe02hhDXCKUb2pTP0Dc+g/f2/GDXIyxI
-         lAzjviBirxQHGUB1wy6kI96rmEr3+colkN0oIFMnPu9Co4ebnGsOwIRRvOSfC9dAO53x
-         cJsh7qSbyS/tGCfYyDDSlCkBVI6hKPMIMruLnd2M8UdwPnip9LOVfzRO8k/rQ+0FImxD
-         cyyO8fVQYm/liSfqg4tq/qX5T+1SgSt83I7fA9CkNGNby4Txw7kV3BhhBQbmVIbUmLzi
-         bEhcGXs2/+U012joxfOYjYuL/1uZS6iB/o776P4hQGsvUFGcufQa+czpL0ikoCx6p5OY
-         6GSQ==
-X-Gm-Message-State: AOAM532T7G03XAFaC4+sLW8xZGJqcKfIMSRPc1P9UGtlcShuTsCJarcL
-        LvaL/XyJ9kZgW8Q4CCXjkNPjHw==
-X-Google-Smtp-Source: ABdhPJzbWwU42jNoOxbpoCebn0T7UnHfSr29OBuXpn3I/sQBF5m3RpPW5CFBWyczhtgGB+fVXx6EUA==
-X-Received: by 2002:a05:6870:1059:b0:ce:c0c9:5b2 with SMTP id 25-20020a056870105900b000cec0c905b2mr1573971oaj.4.1644939283973;
-        Tue, 15 Feb 2022 07:34:43 -0800 (PST)
+         :mime-version:content-disposition:in-reply-to;
+        bh=/RGLD8nwzu2VhuFoIMV+jbsfE56tgO0QtQZcVsmbSeg=;
+        b=wsFiDljWPyr7YfPt+x6DbVS/LQhohtgfPFj+ahHrxiunakOCQwRf37DZwU0OyOF/kG
+         GEmLZJmdejqYCST3DEyFvptX0JrIowqiL5imerwxgKXUm1217Nk4awloH0j7b5YTW9o8
+         leMaZDVLZ1xVy3ZelKtQkiBHLeF3ZN1sMqTAAh+NkTuPSQ8bon6A6PfUdYPT0952ZnSm
+         R2pV/DGDQufUEgFuBe3fway4rwkd09hup8f3HjgaiEVUuasdzE5A9/rxK/gmqvw3zxS/
+         yF4M2FMerLkXpne8xCDFU8VzLP87VfdptWnmVTUlMFHohPOT/kdnhZjUs/EgVI8U1TfP
+         9ueQ==
+X-Gm-Message-State: AOAM532xWD0f936GxHYpFY6wjnZQNrt4DMgJoIiq874vqRcl7bykUJpy
+        MOdNyCFMmP6m61gIU9hfPPT9IKS+KJ5J4Q==
+X-Google-Smtp-Source: ABdhPJyweGcF6YG2GJE+SrOC7EUNHhPllRZZN6Fn7aiHfQp4+viH4TuuPxXPv6Gg6s2fCnuNRok5QQ==
+X-Received: by 2002:a05:6870:5ba5:b0:d1:9c2d:975f with SMTP id em37-20020a0568705ba500b000d19c2d975fmr1613502oab.325.1644939459658;
+        Tue, 15 Feb 2022 07:37:39 -0800 (PST)
 Received: from yoga ([2600:1700:a0:3dc8:5c39:baff:fe03:898d])
-        by smtp.gmail.com with ESMTPSA id b8sm5414114oae.30.2022.02.15.07.34.42
+        by smtp.gmail.com with ESMTPSA id t22sm14343175oiw.2.2022.02.15.07.37.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Feb 2022 07:34:43 -0800 (PST)
-Date:   Tue, 15 Feb 2022 09:34:41 -0600
+        Tue, 15 Feb 2022 07:37:39 -0800 (PST)
+Date:   Tue, 15 Feb 2022 09:37:36 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     Stephan Gerhold <stephan@gerhold.net>,
-        linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH 09/15] rpmsg: smd: Drop unnecessary condition for channel
- creation
-Message-ID: <YgvIEYOAZTFHN6fb@yoga>
-References: <20220112194118.178026-1-luca@z3ntu.xyz>
- <Yfhjil3pfZLa5g3j@builder.lan>
- <2615776.mvXUDI8C0e@g550jk>
- <3503848.e9J7NaK4W3@g550jk>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 1/8] drm/msm/dpu: fix dp audio condition
+Message-ID: <YgvIwLa8dGx/JqIR@yoga>
+References: <20220215141643.3444941-1-dmitry.baryshkov@linaro.org>
+ <20220215141643.3444941-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3503848.e9J7NaK4W3@g550jk>
+In-Reply-To: <20220215141643.3444941-2-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -84,121 +75,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 13 Feb 14:51 CST 2022, Luca Weiss wrote:
+On Tue 15 Feb 08:16 CST 2022, Dmitry Baryshkov wrote:
 
-> Hi Bjorn,
+> DP audio enablement code which is comparing intf_type,
+> DRM_MODE_ENCODER_TMDS (= 2) with DRM_MODE_CONNECTOR_DisplayPort (= 10).
+> Which would never succeed. Fix it to check for DRM_MODE_ENCODER_TMDS.
 > 
-> On Sonntag, 6. Februar 2022 21:17:22 CET Luca Weiss wrote:
-> > Hi Bjorn,
-> > 
-> > On Montag, 31. Jänner 2022 23:32:42 CET Bjorn Andersson wrote:
-> > > On Sun 16 Jan 10:30 CST 2022, Stephan Gerhold wrote:
-> > > > On Sun, Jan 16, 2022 at 05:08:29PM +0100, Luca Weiss wrote:
-> > > > > On Mittwoch, 12. Jänner 2022 22:39:53 CET Stephan Gerhold wrote:
-> > > > > > On Wed, Jan 12, 2022 at 08:40:58PM +0100, Luca Weiss wrote:
-> > > > > > > From: Vladimir Lypak <vladimir.lypak@gmail.com>
-> > > > > > > 
-> > > > > > > RPM Firmware on variety of newer SoCs such as MSM8917 (also likely
-> > > > > > > MSM8937, MSM8940, MSM8952), MSM8953 and on some MSM8916 devices)
-> > > > > > > doesn't
-> > > > > > > initiate opening of the SMD channel if it was previously opened by
-> > > > > > > bootloader. This doesn't allow probing of smd-rpm driver on such
-> > > > > > > devices
-> > > > > > > because there is a check that requires RPM this behaviour.
-> > > > > > > 
-> > > > > > > Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-> > > > > > > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > > > > > > Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> > > > > > 
-> > > > > > This is effectively a "Revert "Revert "rpmsg: smd: Create device for
-> > > > > > all
-> > > > > > channels""":
-> > > > > > 
-> > > > > > https://lore.kernel.org/linux-arm-msm/20171212235857.10432-3-bjorn.a
-> > > > > > nd
-> > > > > > ersson @linaro.org/
-> > > > > > https://lore.kernel.org/linux-arm-msm/20180315181244.8859-1-bjorn.an
-> > > > > > de
-> > > > > > rsson
-> > > > > > @linaro.org/
-> > > > > > 
-> > > > > > Won't this cause the same regression reported by Srinivas again?
-> > > > > 
-> > > > > Do you have any suggestion on another way to solve this? Without this
-> > > > > commit the regulators just won't probe at all, I haven't looked very
-> > > > > deep into it though given this patch solves it.
-> > > > > 
-> > > > > I guess worst case it'll become a devicetree property to enable this
-> > > > > quirk?
-> > > > 
-> > > > My spontaneous suggestion would be to skip the check only for the
-> > > > "rpm_requests" channel, e.g. something like
-> > > > 
-> > > > 	if (remote_state != SMD_CHANNEL_OPENING &&
-> > > > 	
-> > > > 	    remote_state != SMD_CHANNEL_OPENED &&
-> > > > 	    strcmp(channel->name, "rpm_requests")
-> > > > 		
-> > > > 		continue;
-> > > > 
-> > > > This will avoid changing the behavior for anything but the RPM channel.
-> > > > I don't think anything else is affected by the same problem (since the
-> > > > bootloader or earlier firmware should not make use of any other
-> > > > channel).
-> > > > Also, we definitely *always* want to open the channel to the RPM because
-> > > > otherwise almost everything breaks.
-> > > 
-> > > Last time this came up I asked if someone could test if the RPM is stuck
-> > > in the state machine trying to close the channel and as such we could
-> > > kick it by making sure that we "ack" the closing of the channel and
-> > > hence it would come back up again.
-> > > 
-> > > But I don't remember seeing any outcome of this.
-> > 
-> > Do you have a link to this or should I go digging in the archives?
-> 
-> Replying to myself, I went searching but couldn't find anything. If you have 
-> some PoC code I'd be happy to try but as I'm not familiar with rpm/smd at all 
-> I'd have to read myself into it first.
-> 
+> Fixes: d13e36d7d222 ("drm/msm/dp: add audio support for Display Port on MSM")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-A quick search didn't turn anything up on my side either.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-And while I had suggestions of what could be tried, I don't have any
-devices myself that manifest this problem, so I haven't been able to
-debug it.
-
-> If Stephans suggestion with the strcmp(channel->name, "rpm_requests") is ok 
-> then I'd test this and use that in v2. I'd personally rather not spend too 
-> much time on this issue right now as it's blocking msm8953 completely (no 
-> regulators = no nothing),
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-
-It's been a long time since this problem was initially reported, so I
-rather see us land the strcmp() hack to unblock you and others. Then
-someone who knows SMD can take a proper look at this.
-
-Regards,
-Bjorn
-
-> Regards
-> Luca
-> 
-> > 
-> > Regards
-> > Luca
-> > 
-> > > > Many solutions are possible though so at the end it is mostly up to
-> > > > Bjorn to decide I think. :)
-> > > 
-> > > I would prefer to get an answer to above question, but if that doesn't
-> > > work (or look like crap) I'm willing to take your suggestion of skipping
-> > > the continue for the rpm_requests channel. Obviously with a comment
-> > > above describing why we're carrying that special case.
-> > > 
-> > > Regards,
-> > > Bjorn
-> 
-> 
-> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 132844801e92..c59976deb1cb 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -1099,7 +1099,7 @@ static void _dpu_encoder_virt_enable_helper(struct drm_encoder *drm_enc)
+>  	}
+>  
+>  
+> -	if (dpu_enc->disp_info.intf_type == DRM_MODE_CONNECTOR_DisplayPort &&
+> +	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_TMDS &&
+>  		dpu_enc->cur_master->hw_mdptop &&
+>  		dpu_enc->cur_master->hw_mdptop->ops.intf_audio_select)
+>  		dpu_enc->cur_master->hw_mdptop->ops.intf_audio_select(
+> -- 
+> 2.34.1
 > 
