@@ -2,77 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F24934B67D8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Feb 2022 10:41:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BD0884B6842
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Feb 2022 10:55:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234411AbiBOJlS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Feb 2022 04:41:18 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60928 "EHLO
+        id S236135AbiBOJz5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Feb 2022 04:55:57 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:57700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233978AbiBOJlS (ORCPT
+        with ESMTP id S236129AbiBOJz4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Feb 2022 04:41:18 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ACA4E373D;
-        Tue, 15 Feb 2022 01:41:09 -0800 (PST)
+        Tue, 15 Feb 2022 04:55:56 -0500
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65F1410CF3B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 01:55:46 -0800 (PST)
+Received: by mail-lj1-x22c.google.com with SMTP id e17so25911153ljk.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 01:55:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644918069; x=1676454069;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=7jFBmRsokxLTHy5wctRuheDhtuL9EHujzt5OiFap7wI=;
-  b=AoBbRyQHq/hanCOHcD7oX/W0hHSoGVtrkJDhZhk5ARbG4buV0jzFK7t5
-   6YFEKIOy6/JmDwMsKfBkqfpSTJdC+5rLDK+W4HmQ6LV5lHm0SzPiJzHLe
-   eDubsxmahsA9IbLcIGIa9lDPdsY5MTYIqSX1ZzLal6X3CvuFKjP3aDPrD
-   c=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 15 Feb 2022 01:41:08 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Feb 2022 01:41:08 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Tue, 15 Feb 2022 01:41:07 -0800
-Received: from [10.216.25.137] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Tue, 15 Feb
- 2022 01:41:02 -0800
-Message-ID: <0e006cc0-2760-195a-35b9-0a2f6e8452c5@quicinc.com>
-Date:   Tue, 15 Feb 2022 15:10:58 +0530
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=46FfI5X1BSFeVo5mcmXLhOyINdGGM+w+Dd3G0ef81t4=;
+        b=e6FZRxnD6PTlzKm6mn+luAsr6Y5MkCucNkdmiztanZom9yc2MLgh01sVaFjfNEAZE+
+         vCFOZ77rna74dybPM7t6oFdNBkufZDayY2TP3eSmuf3J09xFPF2B1xsNQJ1QD/7y7LEg
+         zUUDe8ZkqXBYXayxWuJpoCULHvivnk5DoLxjTPRrXUIK8hfUS8XzZRRuxUtv3ddLCIU3
+         0Mh6uKDBvoj8pa93mzYBVEuMQg9SowGfNPWBV2siYnHyauS/6HKkfGy4quumjomPhsFI
+         1hUibRGezXE+z+VmahEROLOUkYc2eTFR0mIFX25T3MCKILxB7vHklIkGmm3rZvfp0Ge4
+         nYqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=46FfI5X1BSFeVo5mcmXLhOyINdGGM+w+Dd3G0ef81t4=;
+        b=L1Lq+877PokAEwGiuqu/539XfsMk+WjXltcTLi1dawUK025Sgt0dQ2/EOhSpZ7qX/S
+         EpN8up0ARBsRzEgv3aFAh55EsLJDiAh6WoVL6PkYaRWOjPvn2ESVCisZHbQiAraF1q3K
+         1SNpLzZBcWlCeFubLn7dGC7QE2SU0rsD95lN4lUzP+ceJSU2K5VLWqvb/ZiaiwUfjOtT
+         TyL16t28imoB3md6thxj0LJgcwrS/6o5ETu7Br2+c6QL69ciRdRYoDtEvHLwBdacmdSP
+         mSKHuE3QzSKQWps+3xJ7edy8hDe8r34UOasLtOAQJxPHCZvP3gikVZ5rALTC2VLExgwp
+         Vf4w==
+X-Gm-Message-State: AOAM533KsWHioSa6OP44r1ao5/frnAGb324XFtYZPjUae0a4m6e7zofB
+        VQj4OJVsenc6gIB1/QUam9YGeG1vgwhEbg==
+X-Google-Smtp-Source: ABdhPJxihYcxc+bZWzxnuYG8vahFYHta1BJMmIUgjpdI8oNvOaWe6hval1HLogwrMQB4SnTv/DBs2w==
+X-Received: by 2002:a05:651c:1792:: with SMTP id bn18mr1959525ljb.18.1644918944736;
+        Tue, 15 Feb 2022 01:55:44 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id q30sm738704ljc.134.2022.02.15.01.55.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Feb 2022 01:55:44 -0800 (PST)
+Message-ID: <9b0fbece-8618-6b48-0240-3bab45e54a77@linaro.org>
+Date:   Tue, 15 Feb 2022 12:55:43 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v10 6/6] usb: dwc3: qcom: Enable the interrupts during
- probe
-Content-Language: en-US
-To:     Steev Klimaszewski <steev@kali.org>,
-        Pavan Kondeti <quic_pkondeti@quicinc.com>
-CC:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_ppratap@quicinc.com>
-References: <1642398248-21753-1-git-send-email-quic_c_sanm@quicinc.com>
- <1642398248-21753-7-git-send-email-quic_c_sanm@quicinc.com>
- <93b68251-7e7e-ac92-fb47-346c410744b2@kali.org>
- <20220118095255.GB11385@hu-pkondeti-hyd.qualcomm.com>
- <78c90e46-666b-bc9b-235d-ae4c69e19929@quicinc.com>
- <601cdc74-392f-dd4f-7ea0-8e65c6b6d7e2@quicinc.com>
- <52b37547-3e78-b18c-307d-7eedf5baab0d@kali.org>
-From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-In-Reply-To: <52b37547-3e78-b18c-307d-7eedf5baab0d@kali.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [PATCH v2] arm64: dts: qcom: sm8450: add interconnect nodes
+Content-Language: en-GB
+To:     Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220203002936.3009402-1-vkoul@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220203002936.3009402-1-vkoul@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,44 +77,159 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Steev,
+On 03/02/2022 03:29, Vinod Koul wrote:
+> And the various interconnect nodes found in SM8450 SoC and use it for
+> UFS controller.
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+> 
+> Changes in v2:
+> 	- Fix the mc_virt node
+> 	- Add clk_virt node
+> 	- Rebase to rc1
+> 
+>   arch/arm64/boot/dts/qcom/sm8450.dtsi | 85 ++++++++++++++++++++++++++++
+>   1 file changed, 85 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index 10c25ad2d0c7..ccc67918c46a 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -8,6 +8,7 @@
+>   #include <dt-bindings/clock/qcom,rpmh.h>
+>   #include <dt-bindings/gpio/gpio.h>
+>   #include <dt-bindings/power/qcom-rpmpd.h>
+> +#include <dt-bindings/interconnect/qcom,sm8450.h>
+>   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>   
+>   / {
+> @@ -250,6 +251,18 @@ scm: scm {
+>   		};
+>   	};
+>   
+> +	clk_virt: interconnect@0 {
+> +		compatible = "qcom,sm8450-clk-virt";
+> +		#interconnect-cells = <2>;
+> +		qcom,bcm-voters = <&apps_bcm_voter>;
+> +	};
+> +
+> +	mc_virt: interconnect@1 {
+> +		compatible = "qcom,sm8450-mc-virt";
+> +		#interconnect-cells = <2>;
+> +		qcom,bcm-voters = <&apps_bcm_voter>;
+> +	};
+> +
+>   	memory@a0000000 {
+>   		device_type = "memory";
+>   		/* We expect the bootloader to fill in the size */
+> @@ -620,6 +633,54 @@ i2c14: i2c@a98000 {
+>   			};
+>   		};
+>   
+> +		config_noc: interconnect@1500000 {
+> +			compatible = "qcom,sm8450-config-noc";
+> +			reg = <0 0x01500000 0 0x1c000>;
+> +			#interconnect-cells = <2>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		system_noc: interconnect@1680000 {
+> +			compatible = "qcom,sm8450-system-noc";
+> +			reg = <0 0x01680000 0 0x1e200>;
+> +			#interconnect-cells = <2>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		pcie_noc: interconnect@16c0000 {
+> +			compatible = "qcom,sm8450-pcie-anoc";
+> +			reg = <0 0x016c0000 0 0xe280>;
+> +			#interconnect-cells = <2>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		aggre1_noc: interconnect@16e0000 {
+> +			compatible = "qcom,sm8450-aggre1-noc";
+> +			reg = <0 0x016e0000 0 0x1c080>;
+> +			#interconnect-cells = <2>;
+> +			clocks = <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		aggre2_noc: interconnect@1700000 {
+> +			compatible = "qcom,sm8450-aggre2-noc";
+> +			reg = <0 0x01700000 0 0x31080>;
+> +			#interconnect-cells = <2>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +			clocks = <&gcc GCC_AGGRE_NOC_PCIE_0_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_NOC_PCIE_1_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+> +				 <&rpmhcc RPMH_IPA_CLK>;
+> +		};
+> +
+> +		mmss_noc: interconnect@1740000 {
+> +			compatible = "qcom,sm8450-mmss-noc";
+> +			reg = <0 0x01740000 0 0x1f080>;
+> +			#interconnect-cells = <2>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+>   		tcsr_mutex: hwlock@1f40000 {
+>   			compatible = "qcom,tcsr-mutex";
+>   			reg = <0x0 0x01f40000 0x0 0x40000>;
+> @@ -988,6 +1049,13 @@ cpufreq_hw: cpufreq@17d91000 {
+>   			#freq-domain-cells = <1>;
+>   		};
+>   
+> +		gem_noc: interconnect@19100000 {
+> +			compatible = "qcom,sm8450-gem-noc";
+> +			reg = <0 0x19100000 0 0xbb800>;
+> +			#interconnect-cells = <2>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+>   		ufs_mem_hc: ufshc@1d84000 {
+>   			compatible = "qcom,sm8450-ufshc", "qcom,ufshc",
+>   				     "jedec,ufs-2.0";
+> @@ -1004,6 +1072,9 @@ ufs_mem_hc: ufshc@1d84000 {
+>   
+>   			iommus = <&apps_smmu 0xe0 0x0>;
+>   
+> +			interconnects = <&aggre1_noc MASTER_UFS_MEM &mc_virt SLAVE_EBI1>,
 
-On 1/28/2022 2:06 PM, Steev Klimaszewski wrote:
-> Hi Sandeep,
->
-> On 1/25/22 3:17 AM, Sandeep Maheswaram wrote:
->> Hi Steev,
->>
->>> I didn't face any such issue with devices connected.
->>>
->>> I think this is because I used IRQ_TYPE_EDGE_BOTH in device tree and 
->>> Steev has IRQ_TYPE_LEVEL_HIGH in his device tree.
->>>
->>> When i changed to IRQ_TYPE_LEVEL_HIGH I also observed a storm of 
->>> interrupts in my device though it booted .
->>>
->>> Regards
->>>
->>> Sandeep
->>>
->> Can you try with IRQ_TYPE_EDGE_BOTH in your device tree and see if 
->> you are getting the issue.
->>
->> Regards
->>
->> Sandeep
->>
-> I just tested here, changing both of the IRQ_TYPE_LEVEL_HIGH in the 
-> yoga's dts to EDGE_BOTH and I still do not get a booting system.
->
-> -- Steev
->
-Please let us know what devices are connected to your setup and share 
-the device tree file you are using.
+As you have #interconnect-cells = <2> for all the NoCs, this should be:
 
-Please share the failure logs also,
+		interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI1 0>,
 
-Regards
+> +					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_UFS_MEM_CFG>;
+> +			interconnect-names = "ufs-ddr", "cpu-ufs";
+>   			clock-names =
+>   				"core_clk",
+>   				"bus_aggr_clk",
+> @@ -1102,6 +1173,20 @@ usb_1_dwc3: usb@a600000 {
+>   				phy-names = "usb2-phy", "usb3-phy";
+>   			};
+>   		};
+> +
+> +		nsp_noc: interconnect@320c0000 {
+> +			compatible = "qcom,sm8450-nsp-noc";
+> +			reg = <0 0x320c0000 0 0x10000>;
+> +			#interconnect-cells = <2>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+> +
+> +		lpass_ag_noc: interconnect@3c40000 {
+> +			compatible = "qcom,sm8450-lpass-ag-noc";
+> +			reg = <0 0x3c40000 0 0x17200>;
+> +			#interconnect-cells = <2>;
+> +			qcom,bcm-voters = <&apps_bcm_voter>;
+> +		};
+>   	};
+>   
+>   	timer {
 
-Sandeep
 
+-- 
+With best wishes
+Dmitry
