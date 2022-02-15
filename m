@@ -2,157 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E3224B73CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Feb 2022 17:44:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9412F4B77E7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Feb 2022 21:51:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241724AbiBOQkf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Feb 2022 11:40:35 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49856 "EHLO
+        id S232694AbiBOQqa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Feb 2022 11:46:30 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:37756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241717AbiBOQke (ORCPT
+        with ESMTP id S229471AbiBOQq3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Feb 2022 11:40:34 -0500
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 301BBEFF91
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 08:40:24 -0800 (PST)
-Received: by mail-oi1-x22d.google.com with SMTP id s24so21351764oic.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 08:40:24 -0800 (PST)
+        Tue, 15 Feb 2022 11:46:29 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A0F61019EA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 08:46:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=I1kj9pE4xw6JAJzinakuQqOKg6JJ0KzkGT4gYU3pHWA=;
-        b=UCeI7kpxKycxeDv1CKWVXZiSqQZl7pCD/Zi0Nn3FNq3/b6tW5KckWNvCu73yVCLynj
-         tCJq1ODydHRD39fH5qHnxqOJqJLVz3jkbcavRpeXAJnRcNuHIOo+HTRZHB0Mc4d3Bi3p
-         Od1LuZhoT50Uce+glyEI0gfVmvUrW/OVI2bql8B1YEiCpeiZvZWdeRjn5da4UlWV79pH
-         CRT5vtEZAD9Sx8lZHCTtt85jWIigmAFLchrwoWa1JwKM3vC/n55xqG6/8vrLMauyGD6f
-         wvs17n2TNHLYXbPIdfFxRxabOftLSvL7hWs9hIQS7BzWVIKRCFImVfyqpNH2RFUZf2I5
-         MXww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=I1kj9pE4xw6JAJzinakuQqOKg6JJ0KzkGT4gYU3pHWA=;
-        b=70Er0wfrLaWSnTSQxlL/1CcxZCTK3RvFQcNAE1tVZWrMb7oEYLypEloOeoyPFmJjT3
-         0dLjL1sjkNOvourUZtWvgGLfi3sbanz/ZGPfXj6Ma8YfRRxLWZQiChZU7DHZGIcdfI1r
-         sB38g959lErg4Js57aSssznS4Cl5dgK1ucjs+EFYimAPnWLavsBplrOrJJo9fKW6X0/Y
-         nju8w4wFk/ZW69n1J2YtKwB+dKhgB3lPELki8RBLh8RrcFGcQKuJNQsSHXGY75cUcyAs
-         N+vVQsf7D6b6H61+Kdn639FY/mBSlrg8z6OP8/Hq6yZ4BtRaGOpWSm3EPCEfyPLlubam
-         AW0Q==
-X-Gm-Message-State: AOAM530UaPusGrSUk48PXVf93BWMOfvPB+NMQvXlJOSsnjSUu3P1ZPnz
-        qcipz6JF6s8QCXepObjRkrhuYvxYVZoXCg==
-X-Google-Smtp-Source: ABdhPJwywAFvvPp04iK1gyctbPPD1igrq3/W2+Vd3W1gPOO1Z7BW13OeaSkecxF5Lrcky9rnyejdRw==
-X-Received: by 2002:aca:3886:0:b0:2cf:6189:ee47 with SMTP id f128-20020aca3886000000b002cf6189ee47mr1954823oia.58.1644943223401;
-        Tue, 15 Feb 2022 08:40:23 -0800 (PST)
-Received: from yoga ([2600:1700:a0:3dc8:5c39:baff:fe03:898d])
-        by smtp.gmail.com with ESMTPSA id x3sm1703671oiv.29.2022.02.15.08.40.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Feb 2022 08:40:22 -0800 (PST)
-Date:   Tue, 15 Feb 2022 10:40:20 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 10/15] arm64: dts: qcom: Add MSM8953 device tree
-Message-ID: <YgvXdFZfWEzHF2Oy@yoga>
-References: <20220112194118.178026-1-luca@z3ntu.xyz>
- <20220112194118.178026-11-luca@z3ntu.xyz>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1644943579; x=1676479579;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=YMyJIc2B7Ri2sZ8bucdp08+gCVrS5NBg0UZ2pv7ST9k=;
+  b=aieIi8F75JnVnFlp75q3dmZODx0ncA3l5oZoK5nfbNi/mn6EkOkKQTn6
+   ebAxBCoZgtPshqZlxX6M3gyKy6RopGOj1pR2T0ZnURRuLfxmHhLGXFU7p
+   L7I8OQGeHmBOlSjAFJ3NVVQGga2hBt1SjwdMfOdeCbFD31kxamOwXfAE2
+   Q=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 15 Feb 2022 08:46:19 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Feb 2022 08:46:18 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Tue, 15 Feb 2022 08:46:18 -0800
+Received: from [10.111.168.21] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Tue, 15 Feb
+ 2022 08:46:16 -0800
+Message-ID: <8997c7e3-90b2-4ab7-7a69-782175f1eb3c@quicinc.com>
+Date:   Tue, 15 Feb 2022 08:46:14 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220112194118.178026-11-luca@z3ntu.xyz>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [PATCH v3] drm/msm/dpu: Only create debugfs for PRIMARY minor
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20220212003811.1818774-1-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220212003811.1818774-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SCC_BODY_URI_ONLY,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 12 Jan 13:40 CST 2022, Luca Weiss wrote:
 
-> From: Vladimir Lypak <vladimir.lypak@gmail.com>
+
+On 2/11/2022 4:38 PM, Dmitry Baryshkov wrote:
+> From: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> Add a base DT for MSM8953 SoC.
+> dpu_kms_debugfs_init() is invoked for each minor being registered. Most
+> of the files created are unrelated to the minor, so there's no reason to
+> present them per minor.
+> The exception to this is the DisplayPort code, which ends up invoking
+> dp_debug_get() for each minor, each time associate the allocated object
+> with dp->debug.
 > 
-> Co-developed-by: Luca Weiss <luca@z3ntu.xyz>
-> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> As such dp_debug will create debugfs files in both the PRIMARY and the
+> RENDER minor's debugfs directory, but only the last reference will be
+> remembered.
+> 
+> The only use of this reference today is in the cleanup path in
+> dp_display_deinit_sub_modules() and the dp_debug_private object does
+> outlive the debugfs entries in either case, so there doesn't seem to be
+> any adverse effects of this, but per the code the current behavior is
+> unexpected, so change it to only create debugfs files for the PRIMARY
+> minor.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> [DB: slightly change description and in-patch comment]
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/msm8953.dtsi | 1337 +++++++++++++++++++++++++
->  1 file changed, 1337 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8953.dtsi
+> This is a replacement for
+> https://patchwork.freedesktop.org/patch/467273/ with the patch
+> subject and comment being fixed.
+> ---
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-> new file mode 100644
-> index 000000000000..59918b527750
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-> @@ -0,0 +1,1337 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/* Copyright (c) 2022, The Linux Foundation. All rights reserved. */
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 5f0dc44119c9..c394bd6b2e5d 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -271,6 +271,10 @@ static int dpu_kms_debugfs_init(struct msm_kms *kms, struct drm_minor *minor)
+>   	if (!p)
+>   		return -EINVAL;
+>   
+> +	/* Only create a set of debugfs for the primary node, ignore render nodes */
+> +	if (minor->type != DRM_MINOR_PRIMARY)
+> +		return 0;
 > +
-> +#include <dt-bindings/clock/qcom,gcc-msm8953.h>
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/interrupt-controller/arm-gic.h>
-> +#include <dt-bindings/power/qcom-rpmpd.h>
-> +#include <dt-bindings/thermal/thermal.h>
-> +
-> +/ {
-> +	interrupt-parent = <&intc>;
-> +
-> +	#address-cells = <2>;
-> +	#size-cells = <2>;
-
-Why do you have address/size-cells of 2, and then limit them to 1 in
-/soc?
-
-> +
-> +	aliases {
-> +		i2c1 = &i2c_1;
-> +		i2c2 = &i2c_2;
-> +		i2c3 = &i2c_3;
-> +		i2c4 = &i2c_4;
-> +		i2c5 = &i2c_5;
-> +		i2c6 = &i2c_6;
-> +		i2c7 = &i2c_7;
-> +		i2c8 = &i2c_8;
-
-It was expressed a while back that you should specify alias only for the
-things that you have enabled in your .dts.
-
-> +	};
-[..]
-> +		tcsr_mutex: hwlock@1905000 {
-> +			compatible = "qcom,tcsr-mutex";
-> +			reg = <0x1905000 0x20000>;
-> +			#hwlock-cells = <1>;
-> +		};
-> +
-> +		tcsr: syscon@1937000 {
-> +			compatible = "qcom,tcsr-msm8953", "syscon";
-> +			reg = <0x1937000 0x30000>;
-> +		};
-> +
-> +		tcsr_phy_clk_scheme_sel: syscon@193f044 {
-
-I don't fancy exposing a single word from the middle of &tcsr using a
-syscon. The tcsr node should express the TCSR region and if we need to
-reference bits of information within that we should do that in some
-structured way.
-
-Wouldn't nvmem be a good candidate for this?
-
-> +			compatible = "syscon";
-> +			reg = <0x193f044 0x4>;
-> +		};
-> +
-
-Regards,
-Bjorn
+>   	dev = dpu_kms->dev;
+>   	priv = dev->dev_private;
+>   
