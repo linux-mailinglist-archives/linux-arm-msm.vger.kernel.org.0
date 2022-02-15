@@ -2,436 +2,374 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 890384B79A6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Feb 2022 22:49:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E186B4B7A8A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Feb 2022 23:39:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244362AbiBOVZf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Feb 2022 16:25:35 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55356 "EHLO
+        id S235889AbiBOWjc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Feb 2022 17:39:32 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233069AbiBOVZc (ORCPT
+        with ESMTP id S229481AbiBOWjc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Feb 2022 16:25:32 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB050E6849;
-        Tue, 15 Feb 2022 13:25:21 -0800 (PST)
+        Tue, 15 Feb 2022 17:39:32 -0500
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7A38C1153
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 14:39:20 -0800 (PST)
+Received: by mail-io1-xd30.google.com with SMTP id c188so230522iof.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 14:39:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644960321; x=1676496321;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=F1asBOOLlzQIe1kAG6800NHD+px+H0YDVrbKdN5SOVo=;
-  b=SgttUCEvXZLb6mjBuYRQKqV9TXfOIp7iQkQPm2Wh5y7fXXeWDkeov1JQ
-   JJ6+Yt8SLGSZQKHc54IB21Q+oTWARCHZshPIu5JoGmL5ZglqJC7nhFQEo
-   njvgeu16azINbTONPcBefL70TMl0Orm9Nk50mWQhYECqXs35f/uBWC3um
-   I=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 15 Feb 2022 13:25:21 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Feb 2022 13:25:21 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Tue, 15 Feb 2022 13:25:20 -0800
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Tue, 15 Feb 2022 13:25:20 -0800
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <vkoul@kernel.org>,
-        <daniel@ffwll.ch>, <airlied@linux.ie>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v5 2/2] drm/msm/dp: enable widebus feature for display port
-Date:   Tue, 15 Feb 2022 13:25:02 -0800
-Message-ID: <1644960302-4096-3-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1644960302-4096-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1644960302-4096-1-git-send-email-quic_khsieh@quicinc.com>
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=0NCefjHL0aciOj3WmwkeznTZGAyUpobYxe+pW9I0SwA=;
+        b=IDB7dnMeQsAlBFU1buKUPfDx7DjqZllS6v+zPGZFEB+87IVtmPmpzafYXaZ1YDEA51
+         JPf2z7uU/v+V2/lwEy/O6bG20rDBuveTsrvQD+yE7esuM1LWdP3aYQwh0xuD8pDoltMf
+         kw9EL7VRmmp/XdjhQ2yyNLwtkbK2IqnNZMnp5Q99hMue72UN5kqB0htRrHfJ4WzNb6Tt
+         A32mzDld9SAykti6ei+NN9VqTFJB0u72oE9EqE7IXVSucUgxfLY7ty4J+SbOMx5gmx1c
+         v0BOG++ooM5GilB2nMTQLX0Xof5DQrJ4n4H1cAyHj+WStUfRnBuGW0zQuoVLjSfPKaKN
+         CcJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=0NCefjHL0aciOj3WmwkeznTZGAyUpobYxe+pW9I0SwA=;
+        b=b3CxxWn+DovvXUX5XdSGTi1xZeONE7K7pm+oxQcpBz/xHNFtoAvVXIL6ezey8YMtKf
+         o/3juaP+DFp4GqrkWAsF4tw9HU7Y11zOd0uoq4tqJfHLUPJ30Xtrwo1qfFaXClaXhLHI
+         Sf82Wp3scsiypvBoTxBQ3Au1FnnMRpIpRRA/Dn1Wp1Baec68SDxfEPc7761mQ17sZZ6K
+         FLgoxzW95X//QFdssxPtQAc2qD14k0MYWVS75OSzeC1hCtYo5chRZWGKy3JPAnK+5aQd
+         iychmSkGInDaxZ63zCB3wTWO/E1ivsltS00U+yKf1LBWC8HwZHqr/mwY5cR0ZnCiK3lC
+         X7Cg==
+X-Gm-Message-State: AOAM533v84ZRVXoiJEJtul2mZ4JUbBYTpKw9EFBFP1p/HVlXxntZjJ95
+        I0OTmzo3oeghqdrRKq2UVvGwRg==
+X-Google-Smtp-Source: ABdhPJzImD2raOCQWXFbglufoGJomifdzEbJDDHc/aap00EAlaI8944KnapVaW+7djwfb/8Ux6i8Vw==
+X-Received: by 2002:a05:6638:2492:: with SMTP id x18mr695722jat.164.1644964758784;
+        Tue, 15 Feb 2022 14:39:18 -0800 (PST)
+Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id c12sm3210646ilo.70.2022.02.15.14.39.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Feb 2022 14:39:18 -0800 (PST)
+Message-ID: <3396cc98-8640-8f5a-fad3-c7a913faaa58@linaro.org>
+Date:   Tue, 15 Feb 2022 16:39:17 -0600
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v3 13/25] bus: mhi: ep: Add support for sending events to
+ the host
+Content-Language: en-US
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        mhi@lists.linux.dev
+Cc:     quic_hemantk@quicinc.com, quic_bbhatt@quicinc.com,
+        quic_jhugo@quicinc.com, vinod.koul@linaro.org,
+        bjorn.andersson@linaro.org, dmitry.baryshkov@linaro.org,
+        quic_vbadigan@quicinc.com, quic_cang@quicinc.com,
+        quic_skananth@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
+ <20220212182117.49438-14-manivannan.sadhasivam@linaro.org>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <20220212182117.49438-14-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Widebus feature will transmit two pixel data per pixel clock to interface.
-This feature now is required to be enabled to easy migrant to higher
-resolution applications in future. However since some legacy chipsets
-does not support this feature, this feature is enabled base on chip's
-hardware revision.
+On 2/12/22 12:21 PM, Manivannan Sadhasivam wrote:
+> Add support for sending the events to the host over MHI bus from the
+> endpoint. Following events are supported:
+> 
+> 1. Transfer completion event
+> 2. Command completion event
+> 3. State change event
+> 4. Execution Environment (EE) change event
+> 
+> An event is sent whenever an operation has been completed in the MHI EP
+> device. Event is sent using the MHI event ring and additionally the host
+> is notified using an IRQ if required.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-changes in v2:
--- remove compression related code from timing
--- remove op_info from  struct msm_drm_private
--- remove unnecessary wide_bus_en variables
--- pass wide_bus_en into timing configuration by struct msm_dp
+A few things can be simplified here.
 
-Changes in v3:
--- split patch into 3 patches
--- enable widebus feature base on chip hardware revision
+					-Alex
 
-Changes in v5:
--- DP_INTF_CONFIG_DATABUS_WIDEN
+> ---
+>   drivers/bus/mhi/common.h      |  15 ++++
+>   drivers/bus/mhi/ep/internal.h |   8 ++-
+>   drivers/bus/mhi/ep/main.c     | 126 ++++++++++++++++++++++++++++++++++
+>   include/linux/mhi_ep.h        |   8 +++
+>   4 files changed, 155 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/common.h b/drivers/bus/mhi/common.h
+> index 728c82928d8d..26d94ed52b34 100644
+> --- a/drivers/bus/mhi/common.h
+> +++ b/drivers/bus/mhi/common.h
+> @@ -176,6 +176,21 @@
+>   #define MHI_TRE_GET_EV_LINKSPEED(tre)			((MHI_TRE_GET_DWORD(tre, 1) >> 24) & 0xFF)
+>   #define MHI_TRE_GET_EV_LINKWIDTH(tre)			(MHI_TRE_GET_DWORD(tre, 0) & 0xFF)
+>   
+> +/* State change event */
+> +#define MHI_SC_EV_PTR					0
+> +#define MHI_SC_EV_DWORD0(state)				cpu_to_le32(state << 24)
+> +#define MHI_SC_EV_DWORD1(type)				cpu_to_le32(type << 16)
+> +
+> +/* EE event */
+> +#define MHI_EE_EV_PTR					0
+> +#define MHI_EE_EV_DWORD0(ee)				cpu_to_le32(ee << 24)
+> +#define MHI_EE_EV_DWORD1(type)				cpu_to_le32(type << 16)
+> +
+> +/* Command Completion event */
+> +#define MHI_CC_EV_PTR(ptr)				cpu_to_le64(ptr)
+> +#define MHI_CC_EV_DWORD0(code)				cpu_to_le32(code << 24)
+> +#define MHI_CC_EV_DWORD1(type)				cpu_to_le32(type << 16)
+> +
+>   /* Transfer descriptor macros */
+>   #define MHI_TRE_DATA_PTR(ptr)				cpu_to_le64(ptr)
+>   #define MHI_TRE_DATA_DWORD0(len)			cpu_to_le32(len & MHI_MAX_MTU)
+> diff --git a/drivers/bus/mhi/ep/internal.h b/drivers/bus/mhi/ep/internal.h
+> index 48d6e9667d55..fd63f79c6aec 100644
+> --- a/drivers/bus/mhi/ep/internal.h
+> +++ b/drivers/bus/mhi/ep/internal.h
+> @@ -131,8 +131,8 @@ enum mhi_ep_ring_type {
+>   };
+>   
+>   struct mhi_ep_ring_element {
+> -	u64 ptr;
+> -	u32 dword[2];
+> +	__le64 ptr;
+> +	__le32 dword[2];
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  4 +++-
- drivers/gpu/drm/msm/dp/dp_catalog.c         | 34 +++++++++++++++++++++++++++--
- drivers/gpu/drm/msm/dp/dp_catalog.h         |  3 ++-
- drivers/gpu/drm/msm/dp/dp_ctrl.c            | 13 +++++++----
- drivers/gpu/drm/msm/dp/dp_ctrl.h            |  1 +
- drivers/gpu/drm/msm/dp/dp_display.c         | 32 +++++++++++++++++++++++++++
- drivers/gpu/drm/msm/dp/dp_display.h         |  2 ++
- drivers/gpu/drm/msm/dp/dp_panel.c           |  4 ++--
- drivers/gpu/drm/msm/dp/dp_panel.h           |  2 +-
- drivers/gpu/drm/msm/msm_drv.h               |  6 +++++
- 10 files changed, 90 insertions(+), 11 deletions(-)
+Yay!
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 2b2dbb7..1e96cede 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -2138,8 +2138,10 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
- 		timer_setup(&dpu_enc->vsync_event_timer,
- 				dpu_encoder_vsync_event_handler,
- 				0);
--	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS)
-+	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS) {
- 		dpu_enc->dp = priv->dp[disp_info->h_tile_instance[0]];
-+		dpu_enc->wide_bus_en = msm_dp_wide_bus_enable(dpu_enc->dp);
-+	}
- 
- 	INIT_DELAYED_WORK(&dpu_enc->delayed_off_work,
- 			dpu_encoder_off_work);
-diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-index 6ae9b29..524eccc 100644
---- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-+++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-@@ -24,6 +24,8 @@
- #define DP_INTERRUPT_STATUS_ACK_SHIFT	1
- #define DP_INTERRUPT_STATUS_MASK_SHIFT	2
- 
-+#define DP_INTF_CONFIG_DATABUS_WIDEN     BIT(4)
-+
- #define DP_INTERRUPT_STATUS1 \
- 	(DP_INTR_AUX_I2C_DONE| \
- 	DP_INTR_WRONG_ADDR | DP_INTR_TIMEOUT | \
-@@ -483,6 +485,22 @@ int dp_catalog_ctrl_set_pattern(struct dp_catalog *dp_catalog,
- }
- 
- /**
-+ * dp_catalog_hw_revision() - retrieve DP hw revision
-+ *
-+ * @dp_catalog: DP catalog structure
-+ *
-+ * Return: DP controller hw revision
-+ *
-+ */
-+u32 dp_catalog_hw_revision(struct dp_catalog *dp_catalog)
-+{
-+	struct dp_catalog_private *catalog = container_of(dp_catalog,
-+				struct dp_catalog_private, dp_catalog);
-+
-+	return dp_read_ahb(catalog, REG_DP_HW_VERSION);
-+}
-+
-+/**
-  * dp_catalog_ctrl_reset() - reset DP controller
-  *
-  * @dp_catalog: DP catalog structure
-@@ -739,10 +757,11 @@ u32 dp_catalog_ctrl_read_phy_pattern(struct dp_catalog *dp_catalog)
- }
- 
- /* panel related catalog functions */
--int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog)
-+int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog, bool wide_bus_en)
- {
- 	struct dp_catalog_private *catalog = container_of(dp_catalog,
- 				struct dp_catalog_private, dp_catalog);
-+	u32 reg;
- 
- 	dp_write_link(catalog, REG_DP_TOTAL_HOR_VER,
- 				dp_catalog->total);
-@@ -751,7 +770,18 @@ int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog)
- 	dp_write_link(catalog, REG_DP_HSYNC_VSYNC_WIDTH_POLARITY,
- 				dp_catalog->width_blanking);
- 	dp_write_link(catalog, REG_DP_ACTIVE_HOR_VER, dp_catalog->dp_active);
--	dp_write_p0(catalog, MMSS_DP_INTF_CONFIG, 0);
-+
-+	reg = dp_read_p0(catalog, MMSS_DP_INTF_CONFIG);
-+
-+	if (wide_bus_en)
-+		reg |= DP_INTF_CONFIG_DATABUS_WIDEN;
-+	else
-+		reg &= ~DP_INTF_CONFIG_DATABUS_WIDEN;
-+
-+
-+	DRM_DEBUG_DP("wide_bus_en=%d reg=%x\n", wide_bus_en, reg);
-+
-+	dp_write_p0(catalog, MMSS_DP_INTF_CONFIG, reg);
- 	return 0;
- }
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
-index 6965afa..2ba1ea4 100644
---- a/drivers/gpu/drm/msm/dp/dp_catalog.h
-+++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
-@@ -95,6 +95,7 @@ void dp_catalog_ctrl_config_misc(struct dp_catalog *dp_catalog, u32 cc, u32 tb);
- void dp_catalog_ctrl_config_msa(struct dp_catalog *dp_catalog, u32 rate,
- 				u32 stream_rate_khz, bool fixed_nvid);
- int dp_catalog_ctrl_set_pattern(struct dp_catalog *dp_catalog, u32 pattern);
-+u32 dp_catalog_hw_revision(struct dp_catalog *dp_catalog);
- void dp_catalog_ctrl_reset(struct dp_catalog *dp_catalog);
- bool dp_catalog_ctrl_mainlink_ready(struct dp_catalog *dp_catalog);
- void dp_catalog_ctrl_enable_irq(struct dp_catalog *dp_catalog, bool enable);
-@@ -115,7 +116,7 @@ void dp_catalog_ctrl_send_phy_pattern(struct dp_catalog *dp_catalog,
- u32 dp_catalog_ctrl_read_phy_pattern(struct dp_catalog *dp_catalog);
- 
- /* DP Panel APIs */
--int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog);
-+int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog, bool wide_bus_en);
- void dp_catalog_dump_regs(struct dp_catalog *dp_catalog);
- void dp_catalog_panel_tpg_enable(struct dp_catalog *dp_catalog,
- 				struct drm_display_mode *drm_mode);
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index c724cb0..b07574c 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -154,7 +154,7 @@ static void dp_ctrl_config_ctrl(struct dp_ctrl_private *ctrl)
- 	dp_catalog_ctrl_config_ctrl(ctrl->catalog, config);
- }
- 
--static void dp_ctrl_configure_source_params(struct dp_ctrl_private *ctrl)
-+static void dp_ctrl_configure_source_params(struct dp_ctrl_private *ctrl, bool wide_bus_en)
- {
- 	u32 cc, tb;
- 
-@@ -167,7 +167,7 @@ static void dp_ctrl_configure_source_params(struct dp_ctrl_private *ctrl)
- 		ctrl->panel->dp_mode.bpp);
- 	cc = dp_link_get_colorimetry_config(ctrl->link);
- 	dp_catalog_ctrl_config_misc(ctrl->catalog, cc, tb);
--	dp_panel_timing_cfg(ctrl->panel);
-+	dp_panel_timing_cfg(ctrl->panel, wide_bus_en);
- }
- 
- /*
-@@ -1799,6 +1799,7 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
- 	int ret = 0;
- 	bool mainlink_ready = false;
- 	struct dp_ctrl_private *ctrl;
-+	u32 pixel_rate_orig;
- 
- 	if (!dp_ctrl)
- 		return -EINVAL;
-@@ -1807,6 +1808,10 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
- 
- 	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
- 
-+	pixel_rate_orig = ctrl->dp_ctrl.pixel_rate;
-+	if (dp_ctrl->wide_bus_en)
-+		ctrl->dp_ctrl.pixel_rate >>= 1;
-+
- 	DRM_DEBUG_DP("rate=%d, num_lanes=%d, pixel_rate=%d\n",
- 		ctrl->link->link_params.rate,
- 		ctrl->link->link_params.num_lanes, ctrl->dp_ctrl.pixel_rate);
-@@ -1842,11 +1847,11 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
- 	 */
- 	reinit_completion(&ctrl->video_comp);
- 
--	dp_ctrl_configure_source_params(ctrl);
-+	dp_ctrl_configure_source_params(ctrl, dp_ctrl->wide_bus_en);
- 
- 	dp_catalog_ctrl_config_msa(ctrl->catalog,
- 		ctrl->link->link_params.rate,
--		ctrl->dp_ctrl.pixel_rate, dp_ctrl_use_fixed_nvid(ctrl));
-+		pixel_rate_orig, dp_ctrl_use_fixed_nvid(ctrl));
- 
- 	dp_ctrl_setup_tr_unit(ctrl);
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-index 2363a2d..a0a5fbb 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-@@ -17,6 +17,7 @@ struct dp_ctrl {
- 	bool orientation;
- 	atomic_t aborted;
- 	u32 pixel_rate;
-+	bool wide_bus_en;
- };
- 
- int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset);
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 7cc4d21..8ecccf2 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -115,6 +115,8 @@ struct dp_display_private {
- 	struct dp_event event_list[DP_EVENT_Q_MAX];
- 	spinlock_t event_lock;
- 
-+	bool wide_bus_en;
-+
- 	struct dp_audio *audio;
- };
- 
-@@ -848,6 +850,8 @@ static int dp_display_enable(struct dp_display_private *dp, u32 data)
- 		return 0;
- 	}
- 
-+	dp->ctrl->wide_bus_en = dp->wide_bus_en;
-+
- 	rc = dp_ctrl_on_stream(dp->ctrl);
- 	if (!rc)
- 		dp_display->power_on = true;
-@@ -972,6 +976,7 @@ int dp_display_get_modes(struct msm_dp *dp,
- 		dp->connector, dp_mode);
- 	if (dp_mode->drm_mode.clock)
- 		dp->max_pclk_khz = dp_mode->drm_mode.clock;
-+
- 	return ret;
- }
- 
-@@ -1437,6 +1442,28 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
- 	dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
- }
- 
-+bool msm_dp_wide_bus_enable(struct msm_dp *dp_display)
-+{
-+	struct dp_display_private *dp;
-+	u32 revision, major, minor;
-+
-+	dp = container_of(dp_display, struct dp_display_private, dp_display);
-+
-+	/* for the time being widebus only support on DP */
-+	if (dp_display->connector_type  == DRM_MODE_CONNECTOR_DisplayPort) {
-+		revision = dp_catalog_hw_revision(dp->catalog);
-+		major = ((revision >> 28) & 0x0ff);
-+		minor = ((revision >> 16) & 0x0fff);
-+
-+		DRM_DEBUG_DP("id=%d major=%d minor=%d\n", dp->id, major, minor);
-+
-+		if (major >= 1 && minor >= 2)
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
- void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
- {
- 	struct dp_display_private *dp;
-@@ -1460,6 +1487,7 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
- 			struct drm_encoder *encoder)
- {
- 	struct msm_drm_private *priv;
-+	struct dp_display_private *dp_priv;
- 	int ret;
- 
- 	if (WARN_ON(!encoder) || WARN_ON(!dp_display) || WARN_ON(!dev))
-@@ -1468,6 +1496,8 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
- 	priv = dev->dev_private;
- 	dp_display->drm_dev = dev;
- 
-+	dp_priv = container_of(dp_display, struct dp_display_private, dp_display);
-+
- 	ret = dp_display_request_irq(dp_display);
- 	if (ret) {
- 		DRM_ERROR("request_irq failed, ret=%d\n", ret);
-@@ -1498,6 +1528,8 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
- 
- 	priv->bridges[priv->num_bridges++] = dp_display->bridge;
- 
-+	dp_priv->wide_bus_en = msm_dp_wide_bus_enable(dp_display);
-+
- 	return 0;
- }
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-index e3adcd5..b718cc9 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.h
-+++ b/drivers/gpu/drm/msm/dp/dp_display.h
-@@ -24,6 +24,8 @@ struct msm_dp {
- 
- 	hdmi_codec_plugged_cb plugged_cb;
- 
-+	bool wide_bus_en;
-+
- 	u32 max_pclk_khz;
- 
- 	u32 max_dp_lanes;
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-index 71db10c..71deb1e 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.c
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -353,7 +353,7 @@ void dp_panel_dump_regs(struct dp_panel *dp_panel)
- 	dp_catalog_dump_regs(catalog);
- }
- 
--int dp_panel_timing_cfg(struct dp_panel *dp_panel)
-+int dp_panel_timing_cfg(struct dp_panel *dp_panel, bool wide_bus_en)
- {
- 	u32 data, total_ver, total_hor;
- 	struct dp_catalog *catalog;
-@@ -404,7 +404,7 @@ int dp_panel_timing_cfg(struct dp_panel *dp_panel)
- 
- 	catalog->dp_active = data;
- 
--	dp_catalog_panel_timing_cfg(catalog);
-+	dp_catalog_panel_timing_cfg(catalog, wide_bus_en);
- 	panel->panel_on = true;
- 
- 	return 0;
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
-index 9023e5b..5ec341a 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.h
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.h
-@@ -57,7 +57,7 @@ struct dp_panel {
- 
- int dp_panel_init_panel_info(struct dp_panel *dp_panel);
- int dp_panel_deinit(struct dp_panel *dp_panel);
--int dp_panel_timing_cfg(struct dp_panel *dp_panel);
-+int dp_panel_timing_cfg(struct dp_panel *dp_panel, bool wide_bus_en);
- void dp_panel_dump_regs(struct dp_panel *dp_panel);
- int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
- 		struct drm_connector *connector);
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index d7574e6..2945612c 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -399,6 +399,7 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display);
- void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display);
- 
- void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor);
-+bool msm_dp_wide_bus_enable(struct msm_dp *dp_display);
- 
- #else
- static inline int __init msm_dp_register(void)
-@@ -449,6 +450,11 @@ static inline void msm_dp_debugfs_init(struct msm_dp *dp_display,
- {
- }
- 
-+bool msm_dp_wide_bus_enable(struct msm_dp *dp_display)
-+{
-+	return false;
-+}
-+
- #endif
- 
- void __init msm_mdp_register(void);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+>   };
+>   
+>   /* Ring element */
+> @@ -227,4 +227,8 @@ void mhi_ep_mmio_get_mhi_state(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state *s
+>   void mhi_ep_mmio_init(struct mhi_ep_cntrl *mhi_cntrl);
+>   void mhi_ep_mmio_update_ner(struct mhi_ep_cntrl *mhi_cntrl);
+>   
+> +/* MHI EP core functions */
+> +int mhi_ep_send_state_change_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state state);
+> +int mhi_ep_send_ee_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ep_execenv exec_env);
+> +
+>   #endif
+> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+> index 2c8045766292..61f066c6286b 100644
+> --- a/drivers/bus/mhi/ep/main.c
+> +++ b/drivers/bus/mhi/ep/main.c
+> @@ -18,6 +18,131 @@
+>   
+>   static DEFINE_IDA(mhi_ep_cntrl_ida);
+>   
+> +static int mhi_ep_send_event(struct mhi_ep_cntrl *mhi_cntrl, u32 ring_idx,
+> +			     struct mhi_ep_ring_element *el)
+> +{
+> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> +	union mhi_ep_ring_ctx *ctx;
+> +	struct mhi_ep_ring *ring;
+> +	int ret;
+> +
+> +	mutex_lock(&mhi_cntrl->event_lock);
+> +	ring = &mhi_cntrl->mhi_event[ring_idx].ring;
+> +	ctx = (union mhi_ep_ring_ctx *)&mhi_cntrl->ev_ctx_cache[ring_idx];
+> +	if (!ring->started) {
+> +		ret = mhi_ep_ring_start(mhi_cntrl, ring, ctx);
+> +		if (ret) {
+> +			dev_err(dev, "Error starting event ring (%d)\n", ring_idx);
+> +			goto err_unlock;
+> +		}
+> +	}
+> +
+> +	/* Add element to the event ring */
+> +	ret = mhi_ep_ring_add_element(ring, el);
+> +	if (ret) {
+> +		dev_err(dev, "Error adding element to event ring (%d)\n", ring_idx);
+> +		goto err_unlock;
+> +	}
+> +
+> +	/* Ensure that the ring pointer gets updated in host memory before triggering IRQ */
+> +	smp_wmb();
+
+I think the barrier might already be provided by the mutex_unlock().
+
+> +
+> +	mutex_unlock(&mhi_cntrl->event_lock);
+> +
+> +	/*
+> +	 * Raise IRQ to host only if the BEI flag is not set in TRE. Host might
+> +	 * set this flag for interrupt moderation as per MHI protocol.
+> +	 */
+
+I don't think the BEI flag is meaningful in an event ring element.
+You'd want to determine if it was present in the *transfer* ring
+element for which this event is signaling the completion.
+
+> +	if (!MHI_EP_TRE_GET_BEI(el))
+> +		mhi_cntrl->raise_irq(mhi_cntrl, ring->irq_vector);
+> +
+> +	return 0;
+> +
+> +err_unlock:
+> +	mutex_unlock(&mhi_cntrl->event_lock);
+> +
+> +	return ret;
+> +}
+> +
+> +static int mhi_ep_send_completion_event(struct mhi_ep_cntrl *mhi_cntrl,
+> +					struct mhi_ep_ring *ring, u32 len,
+> +					enum mhi_ev_ccs code)
+> +{
+> +	struct mhi_ep_ring_element event = {};
+> +	__le32 tmp;
+> +
+> +	event.ptr = le64_to_cpu(ring->ring_ctx->generic.rbase) +
+> +			ring->rd_offset * sizeof(struct mhi_ep_ring_element);
+
+I'm not sure at the moment where this will be called.  But
+it might be easier to pass in the transfer channel pointer
+rather than compute its address here.
+
+> +
+> +	tmp = event.dword[0];
+
+You already know event.dword[0] is zero.  No need to read
+its value here (or that of dword[1] below).
+
+> +	tmp |= MHI_TRE_EV_DWORD0(code, len);
+> +	event.dword[0] = tmp;
+> +
+> +	tmp = event.dword[1];
+> +	tmp |= MHI_TRE_EV_DWORD1(ring->ch_id, MHI_PKT_TYPE_TX_EVENT);
+> +	event.dword[1] = tmp;
+> +
+> +	return mhi_ep_send_event(mhi_cntrl, ring->er_index, &event);
+> +}
+> +
+> +int mhi_ep_send_state_change_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state state)
+> +{
+> +	struct mhi_ep_ring_element event = {};
+> +	__le32 tmp;
+> +
+> +	tmp = event.dword[0];
+
+No need to read a known zero value.  (Fix this througout.)
+
+> +	tmp |= MHI_SC_EV_DWORD0(state);
+> +	event.dword[0] = tmp;
+> +
+> +	tmp = event.dword[1];
+> +	tmp |= MHI_SC_EV_DWORD1(MHI_PKT_TYPE_STATE_CHANGE_EVENT);
+> +	event.dword[1] = tmp;
+> +
+> +	return mhi_ep_send_event(mhi_cntrl, 0, &event);
+> +}
+> +
+> +int mhi_ep_send_ee_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ep_execenv exec_env)
+> +{
+> +	struct mhi_ep_ring_element event = {};
+> +	__le32 tmp;
+> +
+> +	tmp = event.dword[0];
+> +	tmp |= MHI_EE_EV_DWORD0(exec_env);
+> +	event.dword[0] = tmp;
+> +
+> +	tmp = event.dword[1];
+> +	tmp |= MHI_SC_EV_DWORD1(MHI_PKT_TYPE_EE_EVENT);
+> +	event.dword[1] = tmp;
+> +
+> +	return mhi_ep_send_event(mhi_cntrl, 0, &event);
+> +}
+> +
+> +static int mhi_ep_send_cmd_comp_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ev_ccs code)
+> +{
+> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> +	struct mhi_ep_ring_element event = {};
+> +	__le32 tmp;
+> +
+> +	if (code > MHI_EV_CC_BAD_TRE) {
+
+I think you can probably guarantee this won't ever happen
+
+> +		dev_err(dev, "Invalid command completion code (%d)\n", code);
+> +		return -EINVAL;
+> +	}
+> +
+> +	event.ptr = le64_to_cpu(mhi_cntrl->cmd_ctx_cache->rbase)
+> +			+ (mhi_cntrl->mhi_cmd->ring.rd_offset *
+> +			(sizeof(struct mhi_ep_ring_element)));
+
+No need for the parentheses around the sizeof() call.  Here too
+it might be easier and clearer to pass in the command ring element
+this event is signaling the completion of.
+
+> +
+> +	tmp = event.dword[0];
+> +	tmp |= MHI_CC_EV_DWORD0(code);
+> +	event.dword[0] = tmp;
+> +
+> +	tmp = event.dword[1];
+> +	tmp |= MHI_CC_EV_DWORD1(MHI_PKT_TYPE_CMD_COMPLETION_EVENT);
+> +	event.dword[1] = tmp;
+> +
+> +	return mhi_ep_send_event(mhi_cntrl, 0, &event);
+> +}
+> +
+>   static void mhi_ep_ring_worker(struct work_struct *work)
+>   {
+>   	struct mhi_ep_cntrl *mhi_cntrl = container_of(work,
+> @@ -270,6 +395,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+>   
+>   	INIT_LIST_HEAD(&mhi_cntrl->ch_db_list);
+>   	spin_lock_init(&mhi_cntrl->list_lock);
+> +	mutex_init(&mhi_cntrl->event_lock);
+>   
+>   	/* Set MHI version and AMSS EE before enumeration */
+>   	mhi_ep_mmio_write(mhi_cntrl, MHIVER, config->mhi_version);
+> diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
+> index 33828a6c4e63..062133a68118 100644
+> --- a/include/linux/mhi_ep.h
+> +++ b/include/linux/mhi_ep.h
+> @@ -59,6 +59,9 @@ struct mhi_ep_db_info {
+>    * @mhi_event: Points to the event ring configurations table
+>    * @mhi_cmd: Points to the command ring configurations table
+>    * @sm: MHI Endpoint state machine
+> + * @ch_ctx_cache: Cache of host channel context data structure
+> + * @ev_ctx_cache: Cache of host event context data structure
+> + * @cmd_ctx_cache: Cache of host command context data structure
+>    * @ch_ctx_host_pa: Physical address of host channel context data structure
+>    * @ev_ctx_host_pa: Physical address of host event context data structure
+>    * @cmd_ctx_host_pa: Physical address of host command context data structure
+> @@ -67,6 +70,7 @@ struct mhi_ep_db_info {
+>    * @ch_db_list: List of queued channel doorbells
+>    * @st_transition_list: List of state transitions
+>    * @list_lock: Lock for protecting state transition and channel doorbell lists
+> + * @event_lock: Lock for protecting event rings
+>    * @chdb: Array of channel doorbell interrupt info
+>    * @raise_irq: CB function for raising IRQ to the host
+>    * @alloc_addr: CB function for allocating memory in endpoint for storing host context
+> @@ -94,6 +98,9 @@ struct mhi_ep_cntrl {
+>   	struct mhi_ep_cmd *mhi_cmd;
+>   	struct mhi_ep_sm *sm;
+>   
+> +	struct mhi_chan_ctxt *ch_ctx_cache;
+> +	struct mhi_event_ctxt *ev_ctx_cache;
+> +	struct mhi_cmd_ctxt *cmd_ctx_cache;
+>   	u64 ch_ctx_host_pa;
+>   	u64 ev_ctx_host_pa;
+>   	u64 cmd_ctx_host_pa;
+> @@ -104,6 +111,7 @@ struct mhi_ep_cntrl {
+>   	struct list_head ch_db_list;
+>   	struct list_head st_transition_list;
+>   	spinlock_t list_lock;
+> +	struct mutex event_lock;
+>   	struct mhi_ep_db_info chdb[4];
+>   
+>   	void (*raise_irq)(struct mhi_ep_cntrl *mhi_cntrl, u32 vector);
 
