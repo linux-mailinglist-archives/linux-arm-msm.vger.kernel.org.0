@@ -2,69 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 39AC34B6EB8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Feb 2022 15:18:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 604BA4B6F3C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Feb 2022 15:46:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234403AbiBOOTG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Feb 2022 09:19:06 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44562 "EHLO
+        id S238760AbiBOOjk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Feb 2022 09:39:40 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:48236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232528AbiBOOTG (ORCPT
+        with ESMTP id S238756AbiBOOjj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Feb 2022 09:19:06 -0500
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B9B6B16D3;
-        Tue, 15 Feb 2022 06:18:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1644934736; x=1676470736;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=orXD2LKbgOOvkF5cZIbblDrtOCqS+mecgx/2vVgqzeg=;
-  b=dQ221f7RBdHamEGjA4ZwlQzgVXMhh85r/wU7GIiJtSM59ZzbOnQijcf+
-   SkwLpwkI2XDPwf4wUZwLjkO1yYUJKarA9deXXUInvZ28dLRNrJUFv1RoL
-   omsYeVBdjJD2FKIA926ypYW2PfXulPWoSlLH515uWu4VzVXKT+dyLbwx0
-   ONHIJQPzbHu3WVLeG8R7tsiaqbQfVSS1TyQwuxHmP9hjrtNTHGBoxjNqW
-   NbTFd88KANa2siTC7B2A+Z/IUNC3KxqmsrHtRbsWwPIRTCOOImCSBaL+/
-   UkOhnlHhVcM4dEObQvZ2sqb9bpFj4Kf9hCmLUfFYSwqWUrFtnr6TrrdH0
-   Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10258"; a="230987963"
-X-IronPort-AV: E=Sophos;i="5.88,371,1635231600"; 
-   d="scan'208";a="230987963"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Feb 2022 06:18:55 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,371,1635231600"; 
-   d="scan'208";a="486195062"
-Received: from lkp-server01.sh.intel.com (HELO d95dc2dabeb1) ([10.239.97.150])
-  by orsmga003.jf.intel.com with ESMTP; 15 Feb 2022 06:18:51 -0800
-Received: from kbuild by d95dc2dabeb1 with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1nJyfL-0009k8-3w; Tue, 15 Feb 2022 14:18:51 +0000
-Date:   Tue, 15 Feb 2022 22:18:09 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Satya Priya <quic_c_skakit@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     kbuild-all@lists.01.org, Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Das Srinagesh <gurus@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        quic_collinsd@quicinc.com, quic_subbaram@quicinc.com,
-        quic_jprakash@quicinc.com, Satya Priya <quic_c_skakit@quicinc.com>
-Subject: Re: [PATCH V6 3/6] mfd: pm8008: Add mfd cell struct to register LDOs
-Message-ID: <202202152228.Mmfx9SWj-lkp@intel.com>
-References: <1644915231-7308-4-git-send-email-quic_c_skakit@quicinc.com>
+        Tue, 15 Feb 2022 09:39:39 -0500
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A609C102420
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 06:39:28 -0800 (PST)
+Received: by mail-oi1-x232.google.com with SMTP id 4so20883867oil.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 06:39:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Lf/4yqUubIAsBX3zBqJUmMO3ziUy/Ck0QlY5xnv6TAw=;
+        b=gCNi9H6h5bownQSUa/VlA7DaUpzKEcyHZY+rUbUzonZgquaJz2Rg9EN+8hFdSbUT5Y
+         5Uj/XSNONMm2HRGEkBJEFXX3k10LrTPETlA2Bk8MUvsH5uUnDaH/YJoByOUVzXqKFVQz
+         juPMxVhFJ2wUNzdliMpAqPOtvUKmzBiUC+4wsobuYOgWHMDWBz0/pi9Txbr3nD7xYFoP
+         Xzo/H+26Pk5J83rLP2ymnZPGgE7ZaC4r5wIHXj5TF5TFbbVejqj3AmApIiAUB1fsCk4U
+         8JXQh2BkHfKK1wXPfgPRZZL4uY8VZsL921qAAsocG0C6h2idZgYi9kuUuvns+VUyDj0k
+         QaTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Lf/4yqUubIAsBX3zBqJUmMO3ziUy/Ck0QlY5xnv6TAw=;
+        b=EAQHoiikplkN3EedvwEf1YD5Hcc2IPaAeOnLttupLvGFm7rLEmC2ALLxLuL7Uu+5uU
+         FMDBzH+alSsD27oDZEJXtOseXcv8UgQ+VGFzOLNgV2I2BpBuqWNdzG4Y5s0dhofiJqS3
+         g040xbU7h0kNIo2ppYfifNxuTcALKuoXCMOx+U1fno6/w1Bwu+64XkWzvQIlTJ7sqkGx
+         bUhQBoAztbr0TgMSLD1VLL1hSXbDLl0AjMRJlfN1rQOdGXIAD/otPAfPuQsRAJkSWc1o
+         lZJ1JmYTohHAiopq2fr5bPHPIHA6jLRMDiaeaxGZ2rgN+cGwEFNAbRH40aP9Hq+BMDlE
+         autw==
+X-Gm-Message-State: AOAM533HJ9ArQYcnXluPi/WQb7XQVk/ItlS7DQdYo7MQBCH0rQuVo3gN
+        dO2+zL2cMzu3aYYuxUPmTrbESw==
+X-Google-Smtp-Source: ABdhPJxKNfH/q+wfB2DRDx/TNV/ggNE+Wkg7gQclH/9vKbhBCkLSPxGUW40rpsmK/TP/T3bl6N4Qqg==
+X-Received: by 2002:a05:6808:f05:: with SMTP id m5mr1561528oiw.337.1644935967969;
+        Tue, 15 Feb 2022 06:39:27 -0800 (PST)
+Received: from yoga ([2600:1700:a0:3dc8:5c39:baff:fe03:898d])
+        by smtp.gmail.com with ESMTPSA id u5sm14029206ooo.46.2022.02.15.06.39.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Feb 2022 06:39:27 -0800 (PST)
+Date:   Tue, 15 Feb 2022 08:39:25 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Jarrett Schultz <jaschultz@microsoft.com>
+Cc:     Rob Herring <robh@kernel.org>,
+        Jarrett Schultz <jaschultzms@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Mark Gross <markgross@kernel.org>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "platform-driver-x86@vger.kernel.org" 
+        <platform-driver-x86@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>
+Subject: Re: [EXTERNAL] Re: [PATCH RESEND v4 1/4] dt-bindings: platform:
+ microsoft: Document surface xbl
+Message-ID: <Ygu7HdrLnzFj3BrV@yoga>
+References: <20211221182826.2141789-1-jaschultzMS@gmail.com>
+ <20211221182826.2141789-2-jaschultzMS@gmail.com>
+ <YcJiBk5f071eJ5+n@robh.at.kernel.org>
+ <DM6PR21MB13238271EE4163A0F8A52B19A5289@DM6PR21MB1323.namprd21.prod.outlook.com>
+ <BYAPR21MB1320B5FD66C8FA8C066A716AA5349@BYAPR21MB1320.namprd21.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1644915231-7308-4-git-send-email-quic_c_skakit@quicinc.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <BYAPR21MB1320B5FD66C8FA8C066A716AA5349@BYAPR21MB1320.namprd21.prod.outlook.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,120 +85,140 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Satya,
+On Mon 14 Feb 19:04 CST 2022, Jarrett Schultz wrote:
 
-Thank you for the patch! Yet something to improve:
+> Jarrett Schultz wrote:
+> > From: Jarrett Schultz
+> > 
+> > Rob Herring wrote:
+> > > From: Rob Herring <robh@kernel.org>
+> > >
+> > > On Tue, Dec 21, 2021 at 10:28:23AM -0800, Jarrett Schultz wrote:
+> > > > From: Jarrett Schultz <jaschultz@microsoft.com>
+> > > >
+> > > > +title: Surface Extensible Bootloader for Microsoft Surface Duo
+> > > > +
+> > > > +maintainers:
+> > > > +  - Jarrett Schultz <jaschultz@microsoft.com>
+> > > > +
+> > > > +description: |
+> > > > +  Defined to expose information that is used during production when
+> > > > +  device is in manufacturing mode. Some of the information included
+> > > > +  in this imem section is -
+> > >
+> > > If this is onchip sram, we have a binding for that. That's not an MFD.
+> > 
+> > I now have this driver working with nvmem, but I could not find the binding
+> > that you are talking about here. Could you point me to the binding?
+> > 
+> > Thanks,
+> > Jarrett
+> > 
+> 
+> Rob,
+> 
+> I followed up with my team members who have let me know that this lies
+> in DDR rather than SRAM. Could you please point me to the correct
+> binding to use?
+> 
 
-[auto build test ERROR on next-20220214]
-[also build test ERROR on v5.17-rc4]
-[cannot apply to robh/for-next broonie-regulator/for-next lee-mfd/for-mfd-next v5.17-rc4 v5.17-rc3 v5.17-rc2]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+It might be DDR, but it's on-chip and the memory region that you
+describe is a region within "imem" - something used for various purposes
+by Qualcomm, presumably also in your device. Unfortunately we haven't
+specified a binding for "imem", only some of its regions.
 
-url:    https://github.com/0day-ci/linux/commits/Satya-Priya/Add-Qualcomm-Technologies-Inc-PM8008-regulator-driver/20220215-165525
-base:    259cbfc98c55ba3b6ef6e61fb7cfc3751dfded1e
-config: sh-allmodconfig (https://download.01.org/0day-ci/archive/20220215/202202152228.Mmfx9SWj-lkp@intel.com/config)
-compiler: sh4-linux-gcc (GCC) 11.2.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/0day-ci/linux/commit/12b686033a10eae2956b1c8436bfaa8c411baa92
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Satya-Priya/Add-Qualcomm-Technologies-Inc-PM8008-regulator-driver/20220215-165525
-        git checkout 12b686033a10eae2956b1c8436bfaa8c411baa92
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=sh SHELL=/bin/bash drivers/mfd/
+Perhaps it would be appropriate to express the entire imem as nvmem, in
+addition to the region-specific logic, if that suits you.
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+Regards,
+Bjorn
 
-All errors (new ones prefixed by >>):
-
->> drivers/mfd/qcom-pm8008.c:272:1: error: expected ',' or ';' before 'static'
-     272 | static struct i2c_driver pm8008_mfd_driver = {
-         | ^~~~~~
-   In file included from drivers/mfd/qcom-pm8008.c:7:
-   drivers/mfd/qcom-pm8008.c: In function 'pm8008_mfd_driver_init':
->> drivers/mfd/qcom-pm8008.c:279:19: error: 'pm8008_mfd_driver' undeclared (first use in this function); did you mean 'pm8008_mfd_driver_init'?
-     279 | module_i2c_driver(pm8008_mfd_driver);
-         |                   ^~~~~~~~~~~~~~~~~
-   include/linux/i2c.h:886:42: note: in definition of macro 'i2c_add_driver'
-     886 |         i2c_register_driver(THIS_MODULE, driver)
-         |                                          ^~~~~~
-   include/linux/i2c.h:954:9: note: in expansion of macro 'module_driver'
-     954 |         module_driver(__i2c_driver, i2c_add_driver, \
-         |         ^~~~~~~~~~~~~
-   drivers/mfd/qcom-pm8008.c:279:1: note: in expansion of macro 'module_i2c_driver'
-     279 | module_i2c_driver(pm8008_mfd_driver);
-         | ^~~~~~~~~~~~~~~~~
-   drivers/mfd/qcom-pm8008.c:279:19: note: each undeclared identifier is reported only once for each function it appears in
-     279 | module_i2c_driver(pm8008_mfd_driver);
-         |                   ^~~~~~~~~~~~~~~~~
-   include/linux/i2c.h:886:42: note: in definition of macro 'i2c_add_driver'
-     886 |         i2c_register_driver(THIS_MODULE, driver)
-         |                                          ^~~~~~
-   include/linux/i2c.h:954:9: note: in expansion of macro 'module_driver'
-     954 |         module_driver(__i2c_driver, i2c_add_driver, \
-         |         ^~~~~~~~~~~~~
-   drivers/mfd/qcom-pm8008.c:279:1: note: in expansion of macro 'module_i2c_driver'
-     279 | module_i2c_driver(pm8008_mfd_driver);
-         | ^~~~~~~~~~~~~~~~~
-   In file included from include/linux/device.h:32,
-                    from include/linux/acpi.h:15,
-                    from include/linux/i2c.h:13,
-                    from drivers/mfd/qcom-pm8008.c:7:
-   drivers/mfd/qcom-pm8008.c: In function 'pm8008_mfd_driver_exit':
-   drivers/mfd/qcom-pm8008.c:279:19: error: 'pm8008_mfd_driver' undeclared (first use in this function); did you mean 'pm8008_mfd_driver_exit'?
-     279 | module_i2c_driver(pm8008_mfd_driver);
-         |                   ^~~~~~~~~~~~~~~~~
-   include/linux/device/driver.h:267:24: note: in definition of macro 'module_driver'
-     267 |         __unregister(&(__driver) , ##__VA_ARGS__); \
-         |                        ^~~~~~~~
-   drivers/mfd/qcom-pm8008.c:279:1: note: in expansion of macro 'module_i2c_driver'
-     279 | module_i2c_driver(pm8008_mfd_driver);
-         | ^~~~~~~~~~~~~~~~~
-   drivers/mfd/qcom-pm8008.c: In function 'pm8008_mfd_driver_init':
-   include/linux/device/driver.h:263:1: error: control reaches end of non-void function [-Werror=return-type]
-     263 | } \
-         | ^
-   include/linux/i2c.h:954:9: note: in expansion of macro 'module_driver'
-     954 |         module_driver(__i2c_driver, i2c_add_driver, \
-         |         ^~~~~~~~~~~~~
-   drivers/mfd/qcom-pm8008.c:279:1: note: in expansion of macro 'module_i2c_driver'
-     279 | module_i2c_driver(pm8008_mfd_driver);
-         | ^~~~~~~~~~~~~~~~~
-   At top level:
-   drivers/mfd/qcom-pm8008.c:230:12: warning: 'pm8008_probe' defined but not used [-Wunused-function]
-     230 | static int pm8008_probe(struct i2c_client *client)
-         |            ^~~~~~~~~~~~
-   cc1: some warnings being treated as errors
-
-Kconfig warnings: (for reference only)
-   WARNING: unmet direct dependencies detected for SND_SOC_LPASS_RX_MACRO
-   Depends on SOUND && !UML && SND && SND_SOC && COMMON_CLK
-   Selected by
-   - SND_SOC_SC7280 && SOUND && !UML && SND && SND_SOC && SND_SOC_QCOM && (I2C && SOUNDWIRE || COMPILE_TEST
-   WARNING: unmet direct dependencies detected for SND_SOC_LPASS_TX_MACRO
-   Depends on SOUND && !UML && SND && SND_SOC && COMMON_CLK
-   Selected by
-   - SND_SOC_SC7280 && SOUND && !UML && SND && SND_SOC && SND_SOC_QCOM && (I2C && SOUNDWIRE || COMPILE_TEST
-
-
-vim +272 drivers/mfd/qcom-pm8008.c
-
-6b149f3310a466 Guru Das Srinagesh 2021-05-25  271  
-6b149f3310a466 Guru Das Srinagesh 2021-05-25 @272  static struct i2c_driver pm8008_mfd_driver = {
-6b149f3310a466 Guru Das Srinagesh 2021-05-25  273  	.driver = {
-6b149f3310a466 Guru Das Srinagesh 2021-05-25  274  		.name = "pm8008",
-6b149f3310a466 Guru Das Srinagesh 2021-05-25  275  		.of_match_table = pm8008_match,
-6b149f3310a466 Guru Das Srinagesh 2021-05-25  276  	},
-6b149f3310a466 Guru Das Srinagesh 2021-05-25  277  	.probe_new = pm8008_probe,
-6b149f3310a466 Guru Das Srinagesh 2021-05-25  278  };
-6b149f3310a466 Guru Das Srinagesh 2021-05-25 @279  module_i2c_driver(pm8008_mfd_driver);
-6b149f3310a466 Guru Das Srinagesh 2021-05-25  280  
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+> Thanks,
+> Jarrett
+> 
+> > >
+> > > > +    * board_id
+> > > > +    * battery_present
+> > > > +    * hw_init_retries
+> > > > +    * is_customer_mode
+> > > > +    * is_act_mode
+> > > > +    * pmic_reset_reason
+> > > > +    * touch_fw_version
+> > > > +    * ocp_error_location
+> > >
+> > > nvmem binding doesn't work for describing these fields?
+> > >
+> > > > +  See sysfs documentation for more information.
+> > >
+> > > sysfs? Not relevant to the binding.
+> > >
+> > > > +
+> > > > +properties:
+> > > > +  compatible:
+> > > > +    const: simple-mfd
+> > > > +
+> > > > +  reg:
+> > > > +    maxItems: 1
+> > > > +
+> > > > +additionalProperties: false
+> > > > +
+> > > > +required:
+> > > > +  - compatible
+> > > > +  - reg
+> > > > +  - ranges
+> > > > +  - address-cells
+> > > > +  - size-cells
+> > > > +
+> > > > +examples:
+> > > > +  - |
+> > > > +    / {
+> > > > +        compatible = "foo";
+> > > > +        model = "foo";
+> > >
+> > > No need to make this the root node with a fake compatible.
+> > >
+> > > > +        #address-cells = <2>;
+> > > > +        #size-cells = <2>;
+> > > > +
+> > > > +        imem@146bf000 {
+> > > > +          compatible = "simple-mfd";
+> > > > +          reg = <0x0 0x146bf000 0x0 0x1000>;
+> > > > +          ranges = <0x0 0x0 0x146bf000 0x1000>;
+> > > > +          #address-cells = <1>;
+> > > > +          #size-cells = <1>;
+> > > > +          status = "okay";
+> > >
+> > > Don't show status in examples.
+> > >
+> > > > +
+> > > > +          xbl@a94 {
+> > > > +            compatible = "microsoft,sm8150-surface-duo-xbl";
+> > > > +            reg = <0xa94 0x100>;
+> > > > +            status = "okay";
+> > > > +          };
+> > > > +        };
+> > > > +      };
+> > > > diff --git a/MAINTAINERS b/MAINTAINERS index
+> > > > 13f9a84a617e..5d0ca2a98b57 100644
+> > > > --- a/MAINTAINERS
+> > > > +++ b/MAINTAINERS
+> > > > @@ -12649,6 +12649,13 @@ F:	Documentation/driver-
+> > > api/surface_aggregator/clients/dtx.rst
+> > > >  F:	drivers/platform/surface/surface_dtx.c
+> > > >  F:	include/uapi/linux/surface_aggregator/dtx.h
+> > > >
+> > > > +MICROSOFT SURFACE DUO XBL DRIVER
+> > > > +M:	Jarrett Schultz <jaschultz@microsoft.com>
+> > > > +L:	linux-arm-msm@vger.kernel.org
+> > > > +L:	platform-driver-x86@vger.kernel.org
+> > > > +S:	Supported
+> > > > +F:	Documentation/devicetree/bindings/platform/microsoft/surface-
+> > > xbl.yaml
+> > > > +
+> > > >  MICROSOFT SURFACE GPE LID SUPPORT DRIVER
+> > > >  M:	Maximilian Luz <luzmaximilian@gmail.com>
+> > > >  L:	platform-driver-x86@vger.kernel.org
+> > > > --
+> > > > 2.25.1
+> > > >
+> > > >
