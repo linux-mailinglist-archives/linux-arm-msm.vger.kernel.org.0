@@ -2,76 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A788A4B7D27
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 03:21:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E4864B7D3C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 03:21:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343501AbiBPCDa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Feb 2022 21:03:30 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:56000 "EHLO
+        id S1343528AbiBPCE5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Feb 2022 21:04:57 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:34360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245754AbiBPCD3 (ORCPT
+        with ESMTP id S233356AbiBPCE4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Feb 2022 21:03:29 -0500
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D950EB82FA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 18:03:17 -0800 (PST)
-Received: by mail-oi1-x232.google.com with SMTP id q8so986720oiw.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 18:03:17 -0800 (PST)
+        Tue, 15 Feb 2022 21:04:56 -0500
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2937DB876
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 18:04:44 -0800 (PST)
+Received: by mail-ot1-x32b.google.com with SMTP id s6-20020a0568301e0600b0059ea5472c98so538059otr.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 18:04:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=fyU/OTkUyEuUQG4MRg7zhhXJejHomtDIZYMm7FS8VaQ=;
-        b=SdpEypARxFwWHtRMsHtdq0Eh50pLyZ/m1DbxP1ydnXK5nbGGgQv6yWoDNeAtpo1R+6
-         f7iIqoFs8ZfQesNEFnwNAq2WjSV9cX7L4Hz8KqUZ4vqqtXwYDh/M0dIaTILiymxjILzw
-         /0DVa6p4+LvWkiE2IeHH4Du1IHnlfrqLL31RiS3t1hk7VFgzPxFzUpawof3GJC7CA2Jj
-         LEkVHrDkmB2zt5eeHJ7QfQ1wp7RRp7e4Epa0lIYAHWqJq39lmqdgLoXGq3D9irtMR7YG
-         +PL9f/jVwtVFul+w3ZOONOqWccFB8aRCjtCbpA1fUOkOoPELkL4C52tRbqnwGNNU9d9a
-         at7A==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=/tBhDX/ITHqt+Xaf4QurjW8MT9jM8yc7lXHoiZOp3Cg=;
+        b=atjUPY4PqUpqM6boTFlmuPpu2NqNp4C9u3GmxDDa11LaEJYX2FHloxmBBfGPVKLcY7
+         bEoSxe/IISXfe25C/yvH7KSU6klOchVHmOfYuUxraJYv+hL6RXZVCapBEDNsHZgFd7bm
+         AEwaPzeoXka7K++a0++nP7oL9kpy8r2Q1cENc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=fyU/OTkUyEuUQG4MRg7zhhXJejHomtDIZYMm7FS8VaQ=;
-        b=ZcPdztfOk41gzPTN/EOuV4f01KJ3q0Jn9RPX97QBhqW+Pggtsnc8k+bPCE/CNxJPFI
-         8qK37GSgf8i01kK8z/IccQbSN72bCvZBm7frXqBNpmMDjrZbxBZHcCWOzuT5xO/PgkVa
-         f4w2WEpgG1cY4xRlA3GGzJ/fSvQBFkpw7oVb9yuwtEYWnGVrdjrXYis3ccQTuXuy+DGI
-         xtl1a1n/+1gTO6LzBi6s0KjdDLNJp2rld3ntb8dENG0UyQ5yM9CvE4qsrq8WLXBT3EEh
-         kAHhoI0rzhf2LAbbWw3hL7JGJ9jdV/3BzSOxg5uLLDzxA0Ib9YRuvNf8qZGBQRm32n36
-         qktg==
-X-Gm-Message-State: AOAM533GdOkA7dEVVCLhzbFsrt8Su9YlnHkxxnIpEf/nya/WI/LbZk+A
-        JeO+AFdh7g1LCC5XKQDjmpY6ug==
-X-Google-Smtp-Source: ABdhPJyGYGO4TFM0B7TvlVq7wHeMoHy+oVnJNhmBVb5bhehWE0Jkky7ehV5ykiS70CxF0BYMOvqaFQ==
-X-Received: by 2002:aca:2112:0:b0:2d3:ffce:90c4 with SMTP id 18-20020aca2112000000b002d3ffce90c4mr296649oiz.62.1644976997189;
-        Tue, 15 Feb 2022 18:03:17 -0800 (PST)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id q28sm702657ots.76.2022.02.15.18.03.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Feb 2022 18:03:16 -0800 (PST)
-Date:   Tue, 15 Feb 2022 20:03:14 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 2/2] drm/msm/dpu: Add SC8180x to hw catalog
-Message-ID: <YgxbYnpbBeOIkGWi@builder.lan>
-References: <20220215043353.1256754-1-bjorn.andersson@linaro.org>
- <20220215043353.1256754-2-bjorn.andersson@linaro.org>
- <be397e2e-05ab-5c18-8e2d-16c443f0a6d1@quicinc.com>
- <Ygvisfhi0SY6XdAz@builder.lan>
- <6a3ef247-b26b-d505-cd85-92fb277163dd@quicinc.com>
- <CAA8EJprCaiPW=Kk0B69RNNwAk0xcqaxQA031sfR0ky+BfzcWKQ@mail.gmail.com>
- <ceb861e5-b1c8-d33e-c0b0-bea0b4cc0b66@quicinc.com>
- <CAA8EJppj+OBPVUgvefO38zp1RHpJw5pL0-4DCkgn3iAcPH-ptA@mail.gmail.com>
- <d0cac12e-7c03-2ba3-fb8d-aee09b72a1b1@quicinc.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=/tBhDX/ITHqt+Xaf4QurjW8MT9jM8yc7lXHoiZOp3Cg=;
+        b=Sy5xunHPTQFGxoW+2OvXtpQkis+O1VPttd7q1BXZDxkULMtFGBnI+vBsvWbasde+qq
+         OWN8+cKqMkOqvmz1QDUsH0vUjJGCc2tsSOCmQ52k7T75sS//HkNt2gP/45m+nDf1IdRE
+         QrBzCtyFb4Lqhg5aA1Ssw/dOQriNyYd9Dd7qx3fvLZgK04wngIK4HdVhl3Vd/Q4VB1Iv
+         Ra1O8/R5AVb59MeBBF+Rfy0Mh1oXl/chgnHoOrs9KfEY2T05UDM0xhosSh0idilzdqxT
+         4AsqAFjz1jBGVp+CFu+4vgnrp1be8+Uvytm/46mTqK1S52Am6LiMRMztHvH+ZtlbTeGz
+         GqNw==
+X-Gm-Message-State: AOAM532vZyeUJ8dsSQm6Uot3ZQLUD8udWEiw5w4B3vUp/jS8e/6vVExw
+        g2AicVioh1i2OSK7V2E85WuLt9EZ3DEwIfxuQlgNrQ==
+X-Google-Smtp-Source: ABdhPJx8NyXO2S+5pnQ4E+yS4HiS4D2K1ICpkfdi20xTaewG2/NvlGwgkLI68JBEZ3CJEex1hQ8pG0O2t3F13u0TYWY=
+X-Received: by 2002:a9d:22e9:0:b0:5ac:1754:342c with SMTP id
+ y96-20020a9d22e9000000b005ac1754342cmr151451ota.159.1644977082732; Tue, 15
+ Feb 2022 18:04:42 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 15 Feb 2022 18:04:42 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d0cac12e-7c03-2ba3-fb8d-aee09b72a1b1@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <1644915231-7308-3-git-send-email-quic_c_skakit@quicinc.com>
+References: <1644915231-7308-1-git-send-email-quic_c_skakit@quicinc.com> <1644915231-7308-3-git-send-email-quic_c_skakit@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Tue, 15 Feb 2022 18:04:42 -0800
+Message-ID: <CAE-0n53CLquafH2fOWa2rX1H=q+CvEU2qNwL3TAY+jWkk8q8sQ@mail.gmail.com>
+Subject: Re: [PATCH V6 2/6] dt-bindings: mfd: pm8008: Add regulators node
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Satya Priya <quic_c_skakit@quicinc.com>
+Cc:     Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Das Srinagesh <gurus@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_collinsd@quicinc.com,
+        quic_subbaram@quicinc.com, quic_jprakash@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,71 +73,124 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 15 Feb 19:34 CST 2022, Abhinav Kumar wrote:
+Quoting Satya Priya (2022-02-15 00:53:47)
+> Add regulators node and their supply nodes. Add separate compatible
+> "qcom,pm8008-regulators" to differentiate between pm8008 infra
+> and pm8008 regulators mfd devices.
+>
+> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-> 
-> 
-> On 2/15/2022 4:20 PM, Dmitry Baryshkov wrote:
-> > On Tue, 15 Feb 2022 at 23:21, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> > > On 2/15/2022 10:42 AM, Dmitry Baryshkov wrote:
-> > > > On Tue, 15 Feb 2022 at 20:42, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> > > > > On 2/15/2022 9:28 AM, Bjorn Andersson wrote:
-> > > > > > On Tue 15 Feb 11:14 CST 2022, Abhinav Kumar wrote:
-> > > > > > > On 2/14/2022 8:33 PM, Bjorn Andersson wrote:
-> > > > > > > > From: Rob Clark <robdclark@chromium.org>
-[..]
-> > > > (thus leading us to cases when someone would forget to add INTF_EDP
-> > > > next to INTF_DP)
-> > > > 
-> > > > Also, if we are switching from INTF_DP to INTF_EDP, should we stop
-> > > > using end-to-end numbering (like MSM_DP_CONTROLLER_2 for INTF_5) and
-> > > > add a separate numbering scheme for INTF_EDP?
-> > > > 
-> > > We should change the controller ID to match what it actually is.
-> > > 
-> > > Now that you pointed this out, this looks even more confusing to me to
-> > > say that  MSM_DP_CONTROLLER_2 is actually a EDP controller because
-> > > fundamentally and even hardware block wise they are different.
-> > 
-> > So, do we split msm_priv->dp too? It's indexed using
-> > MSM_DP_CONTROLLER_n entries.
-> > Do we want to teach drm/msm/dp code that there are priv->dp[] and
-> > priv->edp arrays?
-> 
-> ok so now priv->dp and priv->edp arrays are also in the picture here :)
-> 
-> Actually all these questions should have probably come when we were figuring
-> out how best to re-use eDP and DP driver.
-> 
-> Either way atleast, its good we are documenting all these questions on this
-> thread so that anyone can refer this to know what all was missed out :)
-> 
-> priv->dp is of type msm_dp. When re-using DP driver for eDP and since
-> struct msm_dp is the shared struct between dpu and the msm/dp, I get your
-> point of re-using MSM_DP_CONTROLLER_* as thats being use to index.
-> 
-> So MSM_DP_CONTROLLER_* is more of an index into the DP driver and not really
-> a hardware indexing scheme.
-> 
-> If we split into two arrays, we need more changes to dpu_encoder too.
-> 
-> Too instrusive a change at this point, even though probably correct.
-> 
+Please remove my tag.
 
-I'm sorry, but performing such a split would create a whole bunch of
-duplication and I don't see the reasons yet. Can you please give me an
-example of when the DPU _code_ would benefit from being specifically
-written for EDP vs DP?
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> ---
+> Changes in V2:
+>  - As per Rob's comments changed "pm8008[a-z]?-regulator" to
+>    "^pm8008[a-z]?-regulators".
+>
+> Changes in V3:
+>  - Fixed bot errors.
+>  - As per stephen's comments, changed "^pm8008[a-z]?-regulators$" to
+>    "regulators".
+>
+> Changes in V4:
+>  - Changed compatible string to "qcom,pm8008-regulators"
+>
+> Changes in V5:
+>  - Remove compatible for regulators node.
+>  - Move supply nodes of the regulators to chip level.
+>
+> Changes in V6:
+>  - No changes.
+>
+>  .../devicetree/bindings/mfd/qcom,pm8008.yaml       | 49 +++++++++++++++++++---
+>  1 file changed, 44 insertions(+), 5 deletions(-)
+>
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+> index ec3138c..1ec43f7 100644
+> --- a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+> @@ -44,6 +46,25 @@ properties:
+>    "#size-cells":
+>      const: 0
+>
+> +  vdd_l1_l2-supply:
+> +    description: Input supply phandle of ldo1 and ldo2 regulators.
+> +
+> +  vdd_l3_l4-supply:
+> +    description: Input supply phandle of ldo3 and ldo4 regulators.
+> +
+> +  vdd_l5-supply:
+> +    description: Input supply phandle of ldo5 regulator.
+> +
+> +  vdd_l6-supply:
+> +    description: Input supply phandle of ldo6 regulator.
+> +
+> +  vdd_l7-supply:
+> +    description: Input supply phandle of ldo7 regulator.
+> +
+> +  regulators:
+> +    type: object
+> +    $ref: "../regulator/qcom,pm8008-regulator.yaml#"
+> +
+>  patternProperties:
+>    "^gpio@[0-9a-f]+$":
+>      type: object
+> @@ -88,10 +109,8 @@ patternProperties:
+>  required:
+>    - compatible
+>    - reg
+> -  - interrupts
+>    - "#address-cells"
+>    - "#size-cells"
+> -  - "#interrupt-cells"
 
-Things where it doesn't make sense to enable certain features in
-runtime - but really have different implementation for the two interface
-types.
+Shouldn't interrupts and interrupt-cells still be required for
+qcom,pm8008? This binding seems like it is for two different nodes.
 
-> But are you seeing more changes required even if we just change INTF_DP to
-> INTF_eDP for the eDP entries? What are the challenges there?
-> 
+>
+>  additionalProperties: false
+>
+> @@ -102,7 +121,7 @@ examples:
+>      qupv3_se13_i2c {
+>        #address-cells = <1>;
+>        #size-cells = <0>;
+> -      pm8008i@8 {
+> +      pm8008_infra: pm8008@8 {
+>          compatible = "qcom,pm8008";
+>          reg = <0x8>;
+>          #address-cells = <1>;
+> @@ -123,6 +142,26 @@ examples:
+>            #interrupt-cells = <2>;
+>          };
+>        };
+> -    };
+>
+> +      pm8008_regulators: pm8008@9 {
+> +        compatible = "qcom,pm8008";
 
-What are the benefits?
+Isn't this supposed to be "qcom,pm8008-regulators"?
 
-Regards,
-Bjorn
+> +        reg = <0x9>;
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        vdd_l1_l2-supply = <&vreg_s8b_1p2>;
+> +        vdd_l3_l4-supply = <&vreg_s1b_1p8>;
+> +        vdd_l5-supply = <&vreg_bob>;
+> +        vdd_l6-supply = <&vreg_bob>;
+> +        vdd_l7-supply = <&vreg_bob>;
+> +
+> +        regulators {
+
+I still don't get the need for this extra container. Please remove it.
+
+> +          pm8008_l1: ldo1 {
+> +            regulator-name = "pm8008_l1";
+> +            regulator-min-microvolt = <950000>;
+> +            regulator-max-microvolt = <1300000>;
+> +          };
+> +        };
+> +      };
+> +    };
