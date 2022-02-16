@@ -2,80 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B5B04B8A7A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 14:42:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A88FC4B8AAD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 14:49:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233574AbiBPNmN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Feb 2022 08:42:13 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47494 "EHLO
+        id S234383AbiBPNt7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Feb 2022 08:49:59 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229673AbiBPNmM (ORCPT
+        with ESMTP id S230377AbiBPNt6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Feb 2022 08:42:12 -0500
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64DD57E0B8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 05:42:00 -0800 (PST)
-Received: by mail-qk1-x731.google.com with SMTP id o25so1667482qkj.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 05:42:00 -0800 (PST)
+        Wed, 16 Feb 2022 08:49:58 -0500
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 582CE29E94F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 05:49:43 -0800 (PST)
+Received: by mail-ej1-x636.google.com with SMTP id lw4so4684258ejb.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 05:49:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=6j4YO9EeLP9xv8Xofu+6ziA8nbjvJoJDR5KXEsjK89o=;
-        b=yf6JAkflOueXZXjKL+iAIQxIwZIGxKZ7CY258oto5DyyFf5IthKzMVJM2DeQRRhOqk
-         l8ueu39PfduoZtUvNjM9OphHk4pJBh+GyvNFLoGJIMSCyg9q9JxYTE2hoaVuu5iiU+On
-         dbEUrxVOsGwKNq2e8Y5n82fxvVXjPG85mn9ZmvyCiU+ZTG2FgeHe+3gGx0uNeIel9kXv
-         U05clhL49ren8zZ23jryW+YpeFtqO4F7BgH7LO01ddgi+a0kfUFHUTujF/CGFYH1IvC1
-         q9SNuZXU7wBDt2nsjtk5yj1vaXdMK9au30VeEvSihkUlrWXbu21EL0MQl1fjOXovJh1l
-         SPPQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fKk1mVCfbZkwhS/LzM66Qj9IJA+2ONDuD6eMwPF/Ffs=;
+        b=XOpDtqoI64jRxY35r4jobRhEHqKMo7V2IC73E+Am39ThSwItt2ETdg3kUyws9qNZFz
+         75/uBkCvfpi4kfoCwwQxeOVOShm/+24gwhXmJTbgnPdml1Bvxg9zcIL9u14m7cOS0RcS
+         ZBRr8GotliWqHzBN3rebcktUqUfQMnGH8cPGSAfxTn8OdLhe9ywB+DFZD9pjRWQUJNbd
+         n7m3On4Z4PMvSaUFB/3NmFxri3nFQV25jg5SvLTHdi8SpL6v1ace4YBxiGZw684coTDo
+         oAN3dpGhC9QvvD/j+MKVmnJf276GIGyMn5cpQKLIRUl4VtB9QgiGAbMIMk1vgNF5xB9e
+         D3zQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=6j4YO9EeLP9xv8Xofu+6ziA8nbjvJoJDR5KXEsjK89o=;
-        b=yYSKmqiz1y4rySw9kiQustb5sj9oGAKa2tTDjJow2+diO+QDUq67molkeEdzM/uNYC
-         +6R+qxMUfwF4yaPLCgJ6ZN3g/qjpy5eOKLG1hzPHjKKjcbewFV37ImPWwNEfeFlP7xAp
-         rrZrL/j4cZFH3AIHTKRylFq7mITQFvx8fAFShk2saXpo0xZIu15nfctID7IglH8OlnFz
-         nNWiLy+SkUtGI+NqtuHiPzAntm5B0MAL4txMc/b2nYKJWbS9TSf2NA3eWEmRlYFsH0Xa
-         XaltGy5c3YJpzm/B/7NCQ/QrUvPWEt5SiKmP3zlzRoTl/RghO8ogcIRqGOgYNR2xPfkd
-         s3qg==
-X-Gm-Message-State: AOAM531p+taXhOnoVaCKdY77vqVad7MMwQsWpV+V4WLRvEVqtCQpoj7C
-        8vUPqAGVRSptqunLTSLlqb4SRA==
-X-Google-Smtp-Source: ABdhPJzFphhQVJqA67KCg9ZUhVDEZdpxfr6kz8Rh2VHfiSVWGlE0XV5lyzkM4ska8HCF3TAoDvKWlQ==
-X-Received: by 2002:a05:620a:991:b0:508:18c1:e4d with SMTP id x17-20020a05620a099100b0050818c10e4dmr1183003qkx.479.1645018919368;
-        Wed, 16 Feb 2022 05:41:59 -0800 (PST)
-Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id t11sm13670938qkp.82.2022.02.16.05.41.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Feb 2022 05:41:58 -0800 (PST)
-Message-ID: <8481b845-31c2-a830-4fe1-27798618fc2e@linaro.org>
-Date:   Wed, 16 Feb 2022 07:41:56 -0600
+        bh=fKk1mVCfbZkwhS/LzM66Qj9IJA+2ONDuD6eMwPF/Ffs=;
+        b=ABRgksVMsVWXXH261uF7bUinzDDBsHc4to1aXLcUBazgHtJfSjkrOKmTUrwhf6DMKv
+         JVl8OoQ+Jlhd+gjhACvQ0X1l5GTLWnxu2sYalc/5iaZJyycncApGmb+Ktrcn/aLGOEb/
+         a3rdMnTGESRkQ4SGj3PB+BGp4JsZEQsWRgMz09LeCSVn5EhCijoau7S6UooMwNWrBKrQ
+         EsN4fBbt/SmV2CtqDPkuEmqDgVzhau91vCbvNFdixphmg/rm0YMZklVT53SZvs/tyRjA
+         751AdzLUg25FQdteMczSsZb6vI9LvPPqa4c0p4vzryt3OBnx72mcuXBnN8B0PDhnO/kV
+         CUEw==
+X-Gm-Message-State: AOAM530hyiT7yTjOqO8fuJ5R55zL5fE53Dk61XygqL+GYLC2MUDZSlRS
+        r7k6NVuIZkpbHAqwcANdv96OMQ==
+X-Google-Smtp-Source: ABdhPJzoWnijrS5OAcNV38rRHCReqgsNR7AuC5oMWHp9rx1MOGkHhGxmHXD+QpOE7+KXtU6qc39Y5g==
+X-Received: by 2002:a17:906:364d:b0:6cd:9109:cfd4 with SMTP id r13-20020a170906364d00b006cd9109cfd4mr2411821ejb.198.1645019381562;
+        Wed, 16 Feb 2022 05:49:41 -0800 (PST)
+Received: from localhost.localdomain (cpc78119-cwma10-2-0-cust590.7-3.cable.virginm.net. [81.96.50.79])
+        by smtp.gmail.com with ESMTPSA id o20sm1711996edc.84.2022.02.16.05.49.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Feb 2022 05:49:40 -0800 (PST)
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+To:     caleb.connolly@linaro.org, Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     sumit.semwal@linaro.org, amit.pundir@linaro.org,
+        john.stultz@linaro.org
+Subject: [PATCH v7 0/9] iio: adc: introduce Qualcomm SPMI Round Robin ADC
+Date:   Wed, 16 Feb 2022 13:49:11 +0000
+Message-Id: <20220216134920.239989-1-caleb.connolly@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v3 01/25] bus: mhi: Fix pm_state conversion to string
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
-        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
-        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
-        dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
-        quic_cang@quicinc.com, quic_skananth@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Paul Davey <paul.davey@alliedtelesis.co.nz>,
-        Hemant Kumar <hemantk@codeaurora.org>, stable@vger.kernel.org
-References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
- <20220212182117.49438-2-manivannan.sadhasivam@linaro.org>
- <0c95c9a5-cf66-dcec-bfde-0ca201206c8b@linaro.org>
- <20220216113353.GB6225@workstation>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <20220216113353.GB6225@workstation>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,90 +75,93 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/16/22 5:33 AM, Manivannan Sadhasivam wrote:
-> On Tue, Feb 15, 2022 at 02:01:54PM -0600, Alex Elder wrote:
->> On 2/12/22 12:20 PM, Manivannan Sadhasivam wrote:
->>> From: Paul Davey <paul.davey@alliedtelesis.co.nz>
->>>
->>> On big endian architectures the mhi debugfs files which report pm state
->>> give "Invalid State" for all states.  This is caused by using
->>> find_last_bit which takes an unsigned long* while the state is passed in
->>> as an enum mhi_pm_state which will be of int size.
->>
->> I think this would have fixed it too, but your fix is better.
->>
->> 	int index = find_last_bit(&(unsigned long)state, 32);
->>
->>> Fix by using __fls to pass the value of state instead of find_last_bit.
->>>
->>> Fixes: a6e2e3522f29 ("bus: mhi: core: Add support for PM state transitions")
->>> Signed-off-by: Paul Davey <paul.davey@alliedtelesis.co.nz>
->>> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
->>> Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
->>> Cc: stable@vger.kernel.org
->>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>> ---
->>>    drivers/bus/mhi/core/init.c | 8 +++++---
->>>    1 file changed, 5 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
->>> index 046f407dc5d6..af484b03558a 100644
->>> --- a/drivers/bus/mhi/core/init.c
->>> +++ b/drivers/bus/mhi/core/init.c
->>> @@ -79,10 +79,12 @@ static const char * const mhi_pm_state_str[] = {
->>>    const char *to_mhi_pm_state_str(enum mhi_pm_state state)
->>
->> The mhi_pm_state enumerated type is an enumerated sequence, not
->> a bit mask.  So knowing what the last (most significant) set bit
->> is not meaningful.  Or normally it shouldn't be.
->>
->> If mhi_pm_state really were a bit mask, then its values should
->> be defined that way, i.e.,
->>
->> 	MHI_PM_STATE_DISABLE	= 1 << 0,
->> 	MHI_PM_STATE_DISABLE	= 1 << 1,
->> 	. . .
->>
->> What's really going on is that the state value passed here
->> *is* a bitmask, whose bit positions are those mhi_pm_state
->> values.  So the state argument should have type u32.
->>
-> 
-> I agree with you. It should be u32.
-> 
->> This is a *separate* bug/issue.  It could be fixed separately
->> (before this patch), but I'd be OK with just explaining why
->> this change would occur as part of this modified patch.
->>
-> 
-> It makes sense to do it in the same patch itself as the change is
-> minimal and moreover this patch will also get backported to stable.
+The RRADC is responsible for reading data about the current and
+voltage from the USB or DC in jacks, it can also read the battery
+ID (resistence) and some temperatures. It is found on the PMI8998 and
+PM660 Qualcomm PMICs.
 
-Sounds good to me.	-Alex
+The RRADC has to calibrate some ADC values based on which chip fab
+the PMIC was produced in, to facilitate this the patches
+("mfd: qcom-spmi-pmic: expose the PMIC revid information to clients")
+and ("mfd: qcom-spmi-pmic: read fab id on supported PMICs")
+expose the PMIC revision information and fab_id as a struct and register
+them as driver data in the Qualcomm SPMI PMIC driver so that it can be
+read by the RRADC.
 
->>>    {
->>> -	unsigned long pm_state = state;
->>> -	int index = find_last_bit(&pm_state, 32);
->>> +	int index;
->>> -	if (index >= ARRAY_SIZE(mhi_pm_state_str))
->>> +	if (state)
->>> +		index = __fls(state);
->>> +
->>> +	if (!state || index >= ARRAY_SIZE(mhi_pm_state_str))
->>>    		return "Invalid State";
->>
->> Do this test and return first, and skip the additional
->> check for "if (state)".
->>
-> 
-> We need to calculate index for the second check, so I guess the current
-> code is fine.
-> 
-> Thanks,
-> Mani
-> 
->> 					-Alex
->>
->>>    	return mhi_pm_state_str[index];
->>
+The first 3 patches add support for looking up an SPMI device from a
+struct device_node, as well as introducing support for looking up the
+base USID of a Qcom PMIC, see patch comments for more details. These
+Address Bjorns comments on v2.
+
+Changes since v6:
+ * Fix printf format warning in rradc
+
+Changes since v5:
+ * Add missing EXPORT_SYMBOL_GPL() to
+   ("spmi: add a helper to look up an SPMI device from a device node")
+
+Changes since v4:
+ * Addressed Jonathan's comments on v4
+ * Reworked the qcom-spmi-pmic patches to properly walk the devicetree
+   to find the base USID. I've tested this on SDM845 which has two PMICs
+   (pm8998 and pmi8998) and I'm able to look up the PMIC revid from all
+   4 USIDs.
+
+Changes since v3:
+ * Split PMIC patch in two, rework to support function drivers on a
+   sibling USID
+ * Completely rework RRADC driver to make use of the modern IIO
+   framework. This required re-arranging a lot of the equations and
+   results in some lost precision, where relevant I've left comments to
+   explain this. I don't think any of it is significant enough to
+   justify doing post-processing in driver.
+	Thanks a lot Jonathan and John Stultz for helping me out with
+	this 
+
+Changes since v2:
+ * Add missing include (thanks kernel test robot :D)
+ * Rework some confusing function return values, specifically
+   rradc_read_status_in_cont_mode and rradc_prepare_batt_id_conversion
+   both of which didn't correctly handle "ret". This also bought up an
+   issue as the previous implementation didn't actually wait for the
+   channel to be ready. It doesn't seem like that's strictly necessary
+   (same data is reported if I wait for the status to be good or not)
+   but I've included it anyway for good measure.
+
+Changes since v1:
+ * Rework the RRADC driver based on Jonathan's feedback
+ * Pick up Rob's reviewed by for the dt-binding patch.
+
+ --
+
+Caleb Connolly (9):
+  spmi: add a helper to look up an SPMI device from a device node
+  mfd: qcom-spmi-pmic: expose the PMIC revid information to clients
+  mfd: qcom-spmi-pmic: read fab id on supported PMICs
+  dt-bindings: iio: adc: document qcom-spmi-rradc
+  iio: adc: qcom-spmi-rradc: introduce round robin adc
+  arm64: dts: qcom: pmi8998: add rradc node
+  arm64: dts: qcom: sdm845-oneplus: enable rradc
+  arm64: dts: qcom: sdm845-db845c: enable rradc
+  arm64: dts: qcom: sdm845-xiaomi-beryllium: enable rradc
+
+ .../bindings/iio/adc/qcom,spmi-rradc.yaml     |   54 +
+ arch/arm64/boot/dts/qcom/pmi8998.dtsi         |    8 +
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts    |    4 +
+ .../boot/dts/qcom/sdm845-oneplus-common.dtsi  |    4 +
+ .../boot/dts/qcom/sdm845-xiaomi-beryllium.dts |    4 +
+ drivers/iio/adc/Kconfig                       |   12 +
+ drivers/iio/adc/Makefile                      |    1 +
+ drivers/iio/adc/qcom-spmi-rradc.c             | 1016 +++++++++++++++++
+ drivers/mfd/qcom-spmi-pmic.c                  |  183 ++-
+ drivers/spmi/spmi.c                           |   17 +
+ include/linux/spmi.h                          |    2 +
+ include/soc/qcom/qcom-spmi-pmic.h             |   61 +
+ 12 files changed, 1309 insertions(+), 57 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-rradc.yaml
+ create mode 100644 drivers/iio/adc/qcom-spmi-rradc.c
+ create mode 100644 include/soc/qcom/qcom-spmi-pmic.h
+
+-- 
+2.35.1
 
