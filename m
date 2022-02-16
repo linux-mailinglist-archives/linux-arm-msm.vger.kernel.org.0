@@ -2,49 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4928C4B8BCD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 15:50:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 582344B8C98
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 16:38:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235255AbiBPOup (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Feb 2022 09:50:45 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43700 "EHLO
+        id S235547AbiBPPiU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Feb 2022 10:38:20 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:34804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235229AbiBPOul (ORCPT
+        with ESMTP id S235550AbiBPPiT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Feb 2022 09:50:41 -0500
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id B64262A39D0;
-        Wed, 16 Feb 2022 06:50:28 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7ECD1113E;
-        Wed, 16 Feb 2022 06:50:28 -0800 (PST)
-Received: from bogus (unknown [10.57.3.35])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3C16E3F66F;
-        Wed, 16 Feb 2022 06:50:26 -0800 (PST)
-Date:   Wed, 16 Feb 2022 14:49:37 +0000
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Marc Zyngier <maz@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Maulik Shah <quic_mkshah@quicinc.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 1/3] cpuidle: psci: Call cpu_cluster_pm_enter() on the
- last CPU
-Message-ID: <20220216144937.znsba7zbdenl7427@bogus>
-References: <20220216132830.32490-1-shawn.guo@linaro.org>
- <20220216132830.32490-2-shawn.guo@linaro.org>
+        Wed, 16 Feb 2022 10:38:19 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0952E291F86
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 07:38:06 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id d27so4110379wrc.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 07:38:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=4D8vkLWPsB+L5NVGMdhKjexz7qk9u2esSIMnsRYj4yw=;
+        b=ZH3t3VjooA0WMKhqp/ZjVeXyOXGVqiAfn7O1tA87Uj+1ncONnemMgy3RuoMPrWErOn
+         I3aHn+NFoulMcZCMFNDCh5t6uuQF9Z/XWn98klHsiY32L45yb8tdKoR2526NEQ4eJ5Lk
+         xo7SD80kHm1YeAsh18wiPuwtaKUJjDoiXQmsO4tkwR87eCJAlPTX8X/RwY7ar7I4sfxu
+         3lVB42wzr5NDJW2X0mSYt31UjNAA83Rp4E2Fr4GpVBJA4YFvRKhVYNnLYJcDm6k1COae
+         HUBU59F0LDM+12oAqQWSGuASDICxU7uLIj79gyCgtJVXcG1qzwBHz8xrM8oqAaM3Fw0C
+         NI2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=4D8vkLWPsB+L5NVGMdhKjexz7qk9u2esSIMnsRYj4yw=;
+        b=fN4Ex/mcA2yJjcfAo9iWdOKxh+/G0rpqgrVXrPj1M0yEzoMQ/1hw0EYOR3U7fo1yyU
+         QjgUVsG+qpTP8Y+n9c3FthxSZKqXqtjwfuXFYVtucYjMkslx1JmS/1G0hjpczLxWNlAT
+         otX85ZrH+oTrQq95xNI3R8ElF+sZawiabdSk0SSpud8bwokZS90ekGeR2DCkGKDp39SI
+         Ndrl/xzazn2Av/XfZ2YMD5QiB3PTCFoeYYdBR9IznveiY3AtCoaunEZ4Y8PLJE5+3dJh
+         XRNye94uoqJ4WmENg0Y7C0PS3M92SKTPtp9wkT+sgtPb5yCDwnYtF2qToyavBhGw2Wl/
+         1iGg==
+X-Gm-Message-State: AOAM532Ib/HclJBWFZGiMJeaiMKBludBFVwrC7UenoGyorPtBRUlqrz1
+        7u+4nSe//UAT1UoQ/qDUxrcL5A==
+X-Google-Smtp-Source: ABdhPJzwHrl5EQgylw3JeoAybMGg4Xtm2WpU9q/hqKvoLx1ryIPLVXKSfbFhx9NIFxZSg7OvNw7AjA==
+X-Received: by 2002:a05:6000:36b:b0:1e3:8a3b:add8 with SMTP id f11-20020a056000036b00b001e38a3badd8mr2675144wrf.283.1645025884614;
+        Wed, 16 Feb 2022 07:38:04 -0800 (PST)
+Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.googlemail.com with ESMTPSA id az2sm28127598wmb.2.2022.02.16.07.38.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Feb 2022 07:38:04 -0800 (PST)
+Message-ID: <09b00fe9-1770-1723-3c4c-6c494da87e8d@linaro.org>
+Date:   Wed, 16 Feb 2022 15:38:02 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220216132830.32490-2-shawn.guo@linaro.org>
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v6 7/7] pinctrl: qcom: Update clock voting as optional
+Content-Language: en-US
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org, Linus Walleij <linus.walleij@linaro.org>,
+        linux-gpio@vger.kernel.org
+Cc:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <1644851994-22732-1-git-send-email-quic_srivasam@quicinc.com>
+ <1644851994-22732-8-git-send-email-quic_srivasam@quicinc.com>
+ <a209336a-9108-f1ac-ee6d-a838df115c6d@linaro.org>
+ <b663f63f-4a5a-3a2a-9be7-fa7258ce93c5@quicinc.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <b663f63f-4a5a-3a2a-9be7-fa7258ce93c5@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -53,30 +84,100 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+Ulf (as you he is the author of cpuidle-psci-domains.c and can help you
-with that if you require)
 
-On Wed, Feb 16, 2022 at 09:28:28PM +0800, Shawn Guo wrote:
-> Make a call to cpu_cluster_pm_enter() on the last CPU going to low power
-> state (and cpu_cluster_pm_exit() on the firt CPU coming back), so that
-> platforms can be notified to set up hardware for getting into the cluster
-> low power state.
->
 
-NACK. We are not getting the notion of CPU cluster back to cpuidle again.
-That must die. Remember the cluster doesn't map to idle states especially
-in the DSU systems where HMP CPUs are in the same cluster but can be in 
-different power domains.
+On 16/02/2022 14:41, Srinivasa Rao Mandadapu wrote:
+> 
+> On 2/16/2022 7:50 PM, Srinivas Kandagatla wrote:
+> Thanks for Your Time Srini!!!
+>>
+>> On 14/02/2022 15:19, Srinivasa Rao Mandadapu wrote:
+>>> Update bulk clock voting to optional voting as ADSP bypass platform 
+>>> doesn't
+>>> need macro and decodec clocks, these are maintained as power domains and
+>>> operated from lpass audio core cc.
+>>>
+>>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>>> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>>> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>>> ---
+>>>   drivers/pinctrl/qcom/pinctrl-lpass-lpi.c        | 16 +++++++++-------
+>>>   drivers/pinctrl/qcom/pinctrl-lpass-lpi.h        |  1 +
+>>>   drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c |  1 +
+>>>   3 files changed, 11 insertions(+), 7 deletions(-)
+>>>
+>>> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c 
+>>> b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+>>> index 8a82fd9..103f0a6c 100644
+>>> --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+>>> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+>>> @@ -407,13 +407,15 @@ int lpi_pinctrl_probe(struct platform_device 
+>>> *pdev)
+>>>           return dev_err_probe(dev, PTR_ERR(pctrl->slew_base),
+>>>                        "Slew resource not provided\n");
+>>>   -    ret = devm_clk_bulk_get(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
+>>> -    if (ret)
+>>> -        return dev_err_probe(dev, ret, "Can't get clocks\n");
+>>> -
+>>> -    ret = clk_bulk_prepare_enable(MAX_LPI_NUM_CLKS, pctrl->clks);
+>>> -    if (ret)
+>>> -        return dev_err_probe(dev, ret, "Can't enable clocks\n");
+>>> +    if (!data->is_clk_optional) {
+>>> +        ret = devm_clk_bulk_get(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
+>>> +        if (ret)
+>>> +            return dev_err_probe(dev, ret, "Can't get clocks\n");
+>>> +
+>>> +        ret = clk_bulk_prepare_enable(MAX_LPI_NUM_CLKS, pctrl->clks);
+>>> +        if (ret)
+>>> +            return dev_err_probe(dev, ret, "Can't enable clocks\n");
+>>> +    }
+>>>         pctrl->desc.pctlops = &lpi_gpio_pinctrl_ops;
+>>>       pctrl->desc.pmxops = &lpi_gpio_pinmux_ops;
+>>> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h 
+>>> b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
+>>> index a511d72..c1079bf 100644
+>>> --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
+>>> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
+>>> @@ -77,6 +77,7 @@ struct lpi_pinctrl_variant_data {
+>>>       int ngroups;
+>>>       const struct lpi_function *functions;
+>>>       int nfunctions;
+>>> +    int is_clk_optional;
+>>>   };
+>>>     int lpi_pinctrl_probe(struct platform_device *pdev);
+>>> diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c 
+>>> b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
+>>> index 5bf30d97..4277e31 100644
+>>> --- a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
+>>> +++ b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
+>>> @@ -143,6 +143,7 @@ static const struct lpi_pinctrl_variant_data 
+>>> sc7280_lpi_data = {
+>>>       .ngroups = ARRAY_SIZE(sc7280_groups),
+>>>       .functions = sc7280_functions,
+>>>       .nfunctions = ARRAY_SIZE(sc7280_functions),
+>>> +    .is_clk_optional = 1,
+>>
+>> This is forcefully set assuming that sc7280 is always used in ADSP 
+>> bypass mode. Which is not correct.
+>>
+>> Can't you use devm_clk_bulk_get_optional instead?
+> 
+> Yes. Agreed. Initially used devm_clk_bulk_get_optional, but Bjorn 
+> suggested for conditional check instead of optional.
+> 
+> Again Shall we go for optional clock voting?
 
-You need to decide which PSCI CPU_SUSPEND mode you want to use first. If it is
-Platform Co-ordinated(PC), then you need not notify anything to the platform.
-Just request the desired idle state on each CPU and platform will take care
-from there.
+That means that the condition has to be dynamic based on the platform 
+using DSP or not. Which is impossible to deduce without some help from DT.
 
-If for whatever reason you have chosen OS initiated mode(OSI), then specify
-the PSCI power domains correctly in the DT which will make use of the
-cpuidle-psci-domains and handle the so called "cluster" state correctly.
+I would prefer to stay with optional clock unless Bjorn has some strong 
+objection on not using int.
 
--- 
-Regards,
-Sudeep
+--srini
+
+> 
+>>
+>> --srini
+>>
+>>>   };
+>>>     static const struct of_device_id lpi_pinctrl_of_match[] = {
