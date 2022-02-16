@@ -2,69 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A92B4B8D70
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 17:11:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E9B04B8DB7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 17:20:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236130AbiBPQK7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Feb 2022 11:10:59 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:48842 "EHLO
+        id S236268AbiBPQU3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Feb 2022 11:20:29 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236246AbiBPQKx (ORCPT
+        with ESMTP id S233990AbiBPQU2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Feb 2022 11:10:53 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 813392AB520;
-        Wed, 16 Feb 2022 08:10:41 -0800 (PST)
+        Wed, 16 Feb 2022 11:20:28 -0500
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E83532AE28C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 08:20:15 -0800 (PST)
+Received: by mail-qk1-x732.google.com with SMTP id r78so1567149qka.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 08:20:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645027841; x=1676563841;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=Ib5SmAKHpTplEuIM0dXiMmh+itfc+HJvdBcTnIJLNb8=;
-  b=geYLt21WFmd+lwBzxX6VvNoeF7YNSL3PoDb3jq4hA+HGtu2eaDb6l0EG
-   NBEdaIvYctRXIeQhTA7I9Cyq/6HqkOtgs/kAwJjOxdpJs9jK1g/nXF8Al
-   7gJ/F1VZDx1erxA0W0RdtF6rlNzmb9qacQ8JJNZP8ZOKi3hoUygE38rqg
-   4=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 16 Feb 2022 08:10:41 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Feb 2022 08:10:40 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Wed, 16 Feb 2022 08:10:40 -0800
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 16 Feb 2022 08:10:34 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@codeaurora.org>,
-        <perex@perex.cz>, <tiwai@suse.com>,
-        <srinivas.kandagatla@linaro.org>, <rohitkr@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        <linux-gpio@vger.kernel.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [PATCH v7 6/7] pinctrl: qcom: Add SC7280 lpass pin configuration
-Date:   Wed, 16 Feb 2022 21:39:42 +0530
-Message-ID: <1645027783-15199-7-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1645027783-15199-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1645027783-15199-1-git-send-email-quic_srivasam@quicinc.com>
+        d=ndufresne-ca.20210112.gappssmtp.com; s=20210112;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=KMrWgD9hlBT67vq70Rol+E2yH6VcMSsxVJIcHIW4zaw=;
+        b=h9xTqWs9Pm9+1oqVfjSwLgMUYWUxBSgeh9sTjYuVgNGx6JudRj8cWesIAFsHbTp9ay
+         snIIghfEzPX/UFiJO+zBoYrQ0QhHKvjW85zXESdNeD1Lbj2Owy18jbz/DSWFZSMhrGnG
+         yFNmOnMxJhFhTSujkzeki5624tDxk8ZzogBGHEHec9j7lz3PJ5dP1kvK7aEw6xebWUpA
+         lypyq4VVPDf6NACaIVS8DII9oMv8oMNGfbkyx+V+lbF2UoJlj+os8pQVqMIMUlmv1MDv
+         NBSnhV/Dx5NP3Ppso+fZjEuqz0HWQml40YpYnpiESl/k9cylgzzIN4c0zSWkDZSaWIJE
+         FTEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:user-agent:mime-version:content-transfer-encoding;
+        bh=KMrWgD9hlBT67vq70Rol+E2yH6VcMSsxVJIcHIW4zaw=;
+        b=inpvMgU+hDTZVkTVWe8wzSKlgQ6Bm1wxYI24y8pCcoimqDdXO1/l02XGrut3vwy9KU
+         QkcYgAPW4fJm+WP9p5Git5EZ6NEGPXtr0wVsPbsD1vrxour7rHGrL9Op8hbxdFN+Hlgz
+         zjc1SHghPSduM7HQ5LXSvQLUOqeyb165xYWH3AOR01+Ch0KLaFcB8Of9079uIWvW0jTP
+         VV0bfTd0NRrfiiaHgr9Pcfv8GwImU7BQbXTLKAEDu2qN57S0NSdQWrSKl7/VrRDEpW2y
+         C7vxB1DL+/pssBR3+88DKXT4wbeHiCDlOWcQ5tddYBWx8aVZJd6UtESm6/pphQbCDzjM
+         qcYA==
+X-Gm-Message-State: AOAM530RVRsVfw27U36BaUR1HB0PGTvBxNhPtRLrpxhap0MIZeasf24f
+        wtLSGETlnxvucsYWKzxLsOAXIg==
+X-Google-Smtp-Source: ABdhPJwrLwLUVwHhYJOe6+myAylAya52vEpkINWxto774N7xCKLb0Ks0MtXGRLS16LhR6DKN5XLsAg==
+X-Received: by 2002:a37:946:0:b0:47d:6768:edcc with SMTP id 67-20020a370946000000b0047d6768edccmr1666095qkj.120.1645028415084;
+        Wed, 16 Feb 2022 08:20:15 -0800 (PST)
+Received: from nicolas-tpx395.localdomain (173-246-12-168.qc.cable.ebox.net. [173.246.12.168])
+        by smtp.gmail.com with ESMTPSA id f5sm19161439qkp.97.2022.02.16.08.20.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Feb 2022 08:20:14 -0800 (PST)
+Message-ID: <4e1cc50854da4075fc7ebf71e24aa8372905c668.camel@ndufresne.ca>
+Subject: Re: [PATCH v3 5/6] venus: Add a handling of QC10C compressed format
+From:   Nicolas Dufresne <nicolas@ndufresne.ca>
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-api@vger.kernel.org
+Cc:     hverkuil-cisco@xs4all.nl
+Date:   Wed, 16 Feb 2022 11:20:12 -0500
+In-Reply-To: <20220117155559.234026-6-stanimir.varbanov@linaro.org>
+References: <20220117155559.234026-1-stanimir.varbanov@linaro.org>
+         <20220117155559.234026-6-stanimir.varbanov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.42.3 (3.42.3-1.fc35) 
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,221 +73,128 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add pin control support for SC7280 LPASS LPI.
+Le lundi 17 janvier 2022 à 17:55 +0200, Stanimir Varbanov a écrit :
+> This adds QC10C compressed pixel format in the Venus driver, and
+> make it possible to discover from v4l2 clients.
+> 
+> Note: The QC10C format shouldn't be possible to discpver by the
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
----
- drivers/pinctrl/qcom/Kconfig                    |   8 ++
- drivers/pinctrl/qcom/Makefile                   |   1 +
- drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c | 168 ++++++++++++++++++++++++
- 3 files changed, 177 insertions(+)
- create mode 100644 drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
+discpver -> discover
 
-diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-index c678737..0de6cc0 100644
---- a/drivers/pinctrl/qcom/Kconfig
-+++ b/drivers/pinctrl/qcom/Kconfig
-@@ -357,6 +357,14 @@ config PINCTRL_LPASS_LPI
- 	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
- 	  (Low Power Island) found on the Qualcomm Technologies Inc SoCs.
- 
-+config PINCTRL_SC7280_LPASS_LPI
-+	tristate "Qualcomm Technologies Inc SC7280 LPASS LPI pin controller driver"
-+	select PINCTRL_LPASS_LPI
-+	help
-+	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
-+	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
-+	  (Low Power Island) found on the Qualcomm Technologies Inc SC7280 platform.
-+
- config PINCTRL_SM8250_LPASS_LPI
- 	tristate "Qualcomm Technologies Inc SM8250 LPASS LPI pin controller driver"
- 	select PINCTRL_LPASS_LPI
-diff --git a/drivers/pinctrl/qcom/Makefile b/drivers/pinctrl/qcom/Makefile
-index c10d14d2..a008ee0 100644
---- a/drivers/pinctrl/qcom/Makefile
-+++ b/drivers/pinctrl/qcom/Makefile
-@@ -41,4 +41,5 @@ obj-$(CONFIG_PINCTRL_SM8250) += pinctrl-sm8250.o
- obj-$(CONFIG_PINCTRL_SM8350) += pinctrl-sm8350.o
- obj-$(CONFIG_PINCTRL_SM8450) += pinctrl-sm8450.o
- obj-$(CONFIG_PINCTRL_LPASS_LPI) += pinctrl-lpass-lpi.o
-+obj-$(CONFIG_PINCTRL_SC7280_LPASS_LPI) += pinctrl-sc7280-lpass-lpi.o
- obj-$(CONFIG_PINCTRL_SM8250_LPASS_LPI) += pinctrl-sm8250-lpass-lpi.o
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-new file mode 100644
-index 0000000..c29d8af
---- /dev/null
-+++ b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-@@ -0,0 +1,168 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-+ * ALSA SoC platform-machine driver for QTi LPASS
-+ */
-+
-+#include <linux/clk.h>
-+#include <linux/gpio/driver.h>
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+
-+#include "pinctrl-lpass-lpi.h"
-+
-+enum lpass_lpi_functions {
-+	LPI_MUX_dmic1_clk,
-+	LPI_MUX_dmic1_data,
-+	LPI_MUX_dmic2_clk,
-+	LPI_MUX_dmic2_data,
-+	LPI_MUX_dmic3_clk,
-+	LPI_MUX_dmic3_data,
-+	LPI_MUX_i2s1_clk,
-+	LPI_MUX_i2s1_data,
-+	LPI_MUX_i2s1_ws,
-+	LPI_MUX_i2s2_clk,
-+	LPI_MUX_i2s2_data,
-+	LPI_MUX_i2s2_ws,
-+	LPI_MUX_qua_mi2s_data,
-+	LPI_MUX_qua_mi2s_sclk,
-+	LPI_MUX_qua_mi2s_ws,
-+	LPI_MUX_swr_rx_clk,
-+	LPI_MUX_swr_rx_data,
-+	LPI_MUX_swr_tx_clk,
-+	LPI_MUX_swr_tx_data,
-+	LPI_MUX_wsa_swr_clk,
-+	LPI_MUX_wsa_swr_data,
-+	LPI_MUX_gpio,
-+	LPI_MUX__,
-+};
-+
-+static int gpio0_pins[] = { 0 };
-+static int gpio1_pins[] = { 1 };
-+static int gpio2_pins[] = { 2 };
-+static int gpio3_pins[] = { 3 };
-+static int gpio4_pins[] = { 4 };
-+static int gpio5_pins[] = { 5 };
-+static int gpio6_pins[] = { 6 };
-+static int gpio7_pins[] = { 7 };
-+static int gpio8_pins[] = { 8 };
-+static int gpio9_pins[] = { 9 };
-+static int gpio10_pins[] = { 10 };
-+static int gpio11_pins[] = { 11 };
-+static int gpio12_pins[] = { 12 };
-+static int gpio13_pins[] = { 13 };
-+static int gpio14_pins[] = { 14 };
-+
-+/* sc7280 variant specific data */
-+static const struct pinctrl_pin_desc sc7280_lpi_pins[] = {
-+	PINCTRL_PIN(0, "gpio0"),
-+	PINCTRL_PIN(1, "gpio1"),
-+	PINCTRL_PIN(2, "gpio2"),
-+	PINCTRL_PIN(3, "gpio3"),
-+	PINCTRL_PIN(4, "gpio4"),
-+	PINCTRL_PIN(5, "gpio5"),
-+	PINCTRL_PIN(6, "gpio6"),
-+	PINCTRL_PIN(7, "gpio7"),
-+	PINCTRL_PIN(8, "gpio8"),
-+	PINCTRL_PIN(9, "gpio9"),
-+	PINCTRL_PIN(10, "gpio10"),
-+	PINCTRL_PIN(11, "gpio11"),
-+	PINCTRL_PIN(12, "gpio12"),
-+	PINCTRL_PIN(13, "gpio13"),
-+	PINCTRL_PIN(14, "gpio14"),
-+};
-+
-+static const char * const swr_tx_clk_groups[] = { "gpio0" };
-+static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio14" };
-+static const char * const swr_rx_clk_groups[] = { "gpio3" };
-+static const char * const swr_rx_data_groups[] = { "gpio4", "gpio5" };
-+static const char * const dmic1_clk_groups[] = { "gpio6" };
-+static const char * const dmic1_data_groups[] = { "gpio7" };
-+static const char * const dmic2_clk_groups[] = { "gpio8" };
-+static const char * const dmic2_data_groups[] = { "gpio9" };
-+static const char * const i2s2_clk_groups[] = { "gpio10" };
-+static const char * const i2s2_ws_groups[] = { "gpio11" };
-+static const char * const dmic3_clk_groups[] = { "gpio12" };
-+static const char * const dmic3_data_groups[] = { "gpio13" };
-+static const char * const qua_mi2s_sclk_groups[] = { "gpio0" };
-+static const char * const qua_mi2s_ws_groups[] = { "gpio1" };
-+static const char * const qua_mi2s_data_groups[] = { "gpio2", "gpio3", "gpio4" };
-+static const char * const i2s1_clk_groups[] = { "gpio6" };
-+static const char * const i2s1_ws_groups[] = { "gpio7" };
-+static const char * const i2s1_data_groups[] = { "gpio8", "gpio9" };
-+static const char * const wsa_swr_clk_groups[] = { "gpio10" };
-+static const char * const wsa_swr_data_groups[] = { "gpio11" };
-+static const char * const i2s2_data_groups[] = { "gpio12", "gpio13" };
-+
-+static const struct lpi_pingroup sc7280_groups[] = {
-+	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
-+	LPI_PINGROUP(1, 2, swr_tx_data, qua_mi2s_ws, _, _),
-+	LPI_PINGROUP(2, 4, swr_tx_data, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(3, 8, swr_rx_clk, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(4, 10, swr_rx_data, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(5, 12, swr_rx_data, _, _, _),
-+	LPI_PINGROUP(6, LPI_NO_SLEW, dmic1_clk, i2s1_clk, _,  _),
-+	LPI_PINGROUP(7, LPI_NO_SLEW, dmic1_data, i2s1_ws, _, _),
-+	LPI_PINGROUP(8, LPI_NO_SLEW, dmic2_clk, i2s1_data, _, _),
-+	LPI_PINGROUP(9, LPI_NO_SLEW, dmic2_data, i2s1_data, _, _),
-+	LPI_PINGROUP(10, 16, i2s2_clk, wsa_swr_clk, _, _),
-+	LPI_PINGROUP(11, 18, i2s2_ws, wsa_swr_data, _, _),
-+	LPI_PINGROUP(12, LPI_NO_SLEW, dmic3_clk, i2s2_data, _, _),
-+	LPI_PINGROUP(13, LPI_NO_SLEW, dmic3_data, i2s2_data, _, _),
-+	LPI_PINGROUP(14, 6, swr_tx_data, _, _, _),
-+};
-+
-+static const struct lpi_function sc7280_functions[] = {
-+	LPI_FUNCTION(dmic1_clk),
-+	LPI_FUNCTION(dmic1_data),
-+	LPI_FUNCTION(dmic2_clk),
-+	LPI_FUNCTION(dmic2_data),
-+	LPI_FUNCTION(dmic3_clk),
-+	LPI_FUNCTION(dmic3_data),
-+	LPI_FUNCTION(i2s1_clk),
-+	LPI_FUNCTION(i2s1_data),
-+	LPI_FUNCTION(i2s1_ws),
-+	LPI_FUNCTION(i2s2_clk),
-+	LPI_FUNCTION(i2s2_data),
-+	LPI_FUNCTION(i2s2_ws),
-+	LPI_FUNCTION(qua_mi2s_data),
-+	LPI_FUNCTION(qua_mi2s_sclk),
-+	LPI_FUNCTION(qua_mi2s_ws),
-+	LPI_FUNCTION(swr_rx_clk),
-+	LPI_FUNCTION(swr_rx_data),
-+	LPI_FUNCTION(swr_tx_clk),
-+	LPI_FUNCTION(swr_tx_data),
-+	LPI_FUNCTION(wsa_swr_clk),
-+	LPI_FUNCTION(wsa_swr_data),
-+};
-+
-+static const struct lpi_pinctrl_variant_data sc7280_lpi_data = {
-+	.pins = sc7280_lpi_pins,
-+	.npins = ARRAY_SIZE(sc7280_lpi_pins),
-+	.groups = sc7280_groups,
-+	.ngroups = ARRAY_SIZE(sc7280_groups),
-+	.functions = sc7280_functions,
-+	.nfunctions = ARRAY_SIZE(sc7280_functions),
-+};
-+
-+static const struct of_device_id lpi_pinctrl_of_match[] = {
-+	{
-+	       .compatible = "qcom,sc7280-lpass-lpi-pinctrl",
-+	       .data = &sc7280_lpi_data,
-+	},
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
-+
-+static struct platform_driver lpi_pinctrl_driver = {
-+	.driver = {
-+		   .name = "qcom-sc7280-lpass-lpi-pinctrl",
-+		   .of_match_table = lpi_pinctrl_of_match,
-+	},
-+	.probe = lpi_pinctrl_probe,
-+	.remove = lpi_pinctrl_remove,
-+};
-+
-+module_platform_driver(lpi_pinctrl_driver);
-+MODULE_DESCRIPTION("QTI SC7280 LPI GPIO pin control driver");
-+MODULE_LICENSE("GPL");
--- 
-2.7.4
+It is not super clear though, did you mean to say that it won't be enumerated
+after the header have been parsed ?
+
+> client if the decoded bitstream is not 10-bits.
+> 
+> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+> ---
+>  drivers/media/platform/qcom/venus/helpers.c | 26 ++++-----------------
+>  drivers/media/platform/qcom/venus/vdec.c    | 19 ++++++++++++---
+>  2 files changed, 20 insertions(+), 25 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+> index adbfa4fbe139..69a9a9471a27 100644
+> --- a/drivers/media/platform/qcom/venus/helpers.c
+> +++ b/drivers/media/platform/qcom/venus/helpers.c
+> @@ -594,6 +594,8 @@ static u32 to_hfi_raw_fmt(u32 v4l2_fmt)
+>  		return HFI_COLOR_FORMAT_NV21;
+>  	case V4L2_PIX_FMT_QC08C:
+>  		return HFI_COLOR_FORMAT_NV12_UBWC;
+> +	case V4L2_PIX_FMT_QC10C:
+> +		return HFI_COLOR_FORMAT_YUV420_TP10_UBWC;
+>  	default:
+>  		break;
+>  	}
+> @@ -1176,7 +1178,8 @@ int venus_helper_set_format_constraints(struct venus_inst *inst)
+>  	if (!IS_V6(inst->core))
+>  		return 0;
+>  
+> -	if (inst->opb_fmt == HFI_COLOR_FORMAT_NV12_UBWC)
+> +	if (inst->opb_fmt == HFI_COLOR_FORMAT_NV12_UBWC ||
+> +	    inst->opb_fmt == HFI_COLOR_FORMAT_YUV420_TP10_UBWC)
+>  		return 0;
+>  
+>  	pconstraint.buffer_type = HFI_BUFFER_OUTPUT2;
+> @@ -1747,27 +1750,6 @@ int venus_helper_get_out_fmts(struct venus_inst *inst, u32 v4l2_fmt,
+>  	if (!caps)
+>  		return -EINVAL;
+>  
+> -	if (inst->bit_depth == VIDC_BITDEPTH_10 &&
+> -	    inst->session_type == VIDC_SESSION_TYPE_DEC) {
+> -		found_ubwc =
+> -			find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT,
+> -					   HFI_COLOR_FORMAT_YUV420_TP10_UBWC);
+> -		found = find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT2,
+> -					   HFI_COLOR_FORMAT_NV12);
+> -		if (found_ubwc && found) {
+> -			/*
+> -			 * Hard-code DPB buffers to be 10bit UBWC and decoder
+> -			 * output buffers in 8bit NV12 until V4L2 is able to
+> -			 * expose compressed/tiled formats to applications.
+> -			 */
+> -			*out_fmt = HFI_COLOR_FORMAT_YUV420_TP10_UBWC;
+> -			*out2_fmt = HFI_COLOR_FORMAT_NV12;
+> -			return 0;
+> -		}
+> -
+> -		return -EINVAL;
+> -	}
+> -
+>  	if (ubwc) {
+>  		ubwc_fmt = fmt | HFI_COLOR_FORMAT_UBWC_BASE;
+>  		found_ubwc = find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT,
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index eb02e45a512b..c8261c6cb0fb 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -35,6 +35,10 @@ static const struct venus_format vdec_formats[] = {
+>  		.num_planes = 1,
+>  		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
+>  	}, {
+> +		.pixfmt = V4L2_PIX_FMT_QC10C,
+> +		.num_planes = 1,
+> +		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
+> +	},{
+>  		.pixfmt = V4L2_PIX_FMT_NV12,
+>  		.num_planes = 1,
+>  		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
+> @@ -114,6 +118,10 @@ find_format(struct venus_inst *inst, u32 pixfmt, u32 type)
+>  	    !venus_helper_check_format(inst, fmt[i].pixfmt))
+>  		return NULL;
+>  
+> +	if (V4L2_TYPE_IS_CAPTURE(type) && fmt[i].pixfmt == V4L2_PIX_FMT_QC10C &&
+> +	    !(inst->bit_depth == VIDC_BITDEPTH_10))
+> +		return NULL;
+> +
+>  	return &fmt[i];
+>  }
+>  
+> @@ -133,11 +141,16 @@ find_format_by_index(struct venus_inst *inst, unsigned int index, u32 type)
+>  		if (fmt[i].type != type)
+>  			continue;
+>  
+> -		if (V4L2_TYPE_IS_OUTPUT(type))
+> +		if (V4L2_TYPE_IS_OUTPUT(type)) {
+>  			valid = venus_helper_check_codec(inst, fmt[i].pixfmt);
+> -		else if (V4L2_TYPE_IS_CAPTURE(type))
+> +		} else if (V4L2_TYPE_IS_CAPTURE(type)) {
+>  			valid = venus_helper_check_format(inst, fmt[i].pixfmt);
+>  
+> +			if (fmt[i].pixfmt == V4L2_PIX_FMT_QC10C &&
+> +			    !(inst->bit_depth == VIDC_BITDEPTH_10))
+> +				valid = false;
+> +		}
+> +
+>  		if (k == index && valid)
+>  			break;
+>  		if (valid)
+> @@ -1537,7 +1550,7 @@ static const struct hfi_inst_ops vdec_hfi_ops = {
+>  static void vdec_inst_init(struct venus_inst *inst)
+>  {
+>  	inst->hfi_codec = HFI_VIDEO_CODEC_H264;
+> -	inst->fmt_out = &vdec_formats[7];
+> +	inst->fmt_out = &vdec_formats[8];
+>  	inst->fmt_cap = &vdec_formats[0];
+>  	inst->width = frame_width_min(inst);
+>  	inst->height = ALIGN(frame_height_min(inst), 32);
 
