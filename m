@@ -2,65 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 602784B8F39
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 18:34:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AB6B4B8F8F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 18:43:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237160AbiBPRe3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Feb 2022 12:34:29 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:41864 "EHLO
+        id S236139AbiBPRnh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Feb 2022 12:43:37 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237153AbiBPRe2 (ORCPT
+        with ESMTP id S233989AbiBPRng (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Feb 2022 12:34:28 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D39F322219C;
-        Wed, 16 Feb 2022 09:34:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645032855; x=1676568855;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=QDaYh0iqrHliOt1N2iz2hytGKoPr5ruk/0n5f/Sk460=;
-  b=euPcbDszLoYUqnNAT0xQQT5dR+GRYS8hO3IDtySE1bLWGhMDwNSJhIFE
-   BH64ftYwNnAzL0xZxsMzhizzFrt0qkhR+1xu/MSvc+XcvoEyop7kWVmg/
-   msDOZ1doi5N5G0xOiKteLbJpDjN2HFfWf7IwWAC75OBkLRc7Y0U0VuoG6
-   M=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 16 Feb 2022 09:34:15 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Feb 2022 09:34:14 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Wed, 16 Feb 2022 09:34:14 -0800
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 16 Feb 2022 09:34:13 -0800
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <vkoul@kernel.org>,
-        <daniel@ffwll.ch>, <airlied@linux.ie>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v6 2/2] drm/msm/dp: enable widebus feature for display port
-Date:   Wed, 16 Feb 2022 09:34:00 -0800
-Message-ID: <1645032840-17178-3-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1645032840-17178-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1645032840-17178-1-git-send-email-quic_khsieh@quicinc.com>
+        Wed, 16 Feb 2022 12:43:36 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A761123E5C8;
+        Wed, 16 Feb 2022 09:43:22 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3A89160BD4;
+        Wed, 16 Feb 2022 17:43:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A235CC004E1;
+        Wed, 16 Feb 2022 17:43:17 +0000 (UTC)
+Date:   Wed, 16 Feb 2022 23:13:14 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
+        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
+        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
+        dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
+        quic_cang@quicinc.com, quic_skananth@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 06/25] bus: mhi: Cleanup the register definitions used
+ in headers
+Message-ID: <20220216174314.GG6225@workstation>
+References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
+ <20220212182117.49438-7-manivannan.sadhasivam@linaro.org>
+ <058a6e9f-8feb-8e66-dcc3-ffbea6ca4a4d@linaro.org>
+ <20220216172145.GE6225@workstation>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220216172145.GE6225@workstation>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,UPPERCASE_50_75 autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,374 +53,634 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Widebus feature will transmit two pixel data per pixel clock to interface.
-This feature now is required to be enabled to easy migrant to higher
-resolution applications in future. However since some legacy chipsets
-does not support this feature, this feature is enabled base on chip's
-hardware revision.
+On Wed, Feb 16, 2022 at 10:51:45PM +0530, Manivannan Sadhasivam wrote:
+> On Tue, Feb 15, 2022 at 02:02:28PM -0600, Alex Elder wrote:
+> > On 2/12/22 12:20 PM, Manivannan Sadhasivam wrote:
+> > > Cleanup includes:
+> > > 
+> > > 1. Moving the MHI register definitions to common.h header with REG_ prefix
+> > >     and using them in the host/internal.h file as an alias. This makes it
+> > >     possible to reuse the register definitions in EP stack that differs by
+> > >     a fixed offset.
+> > 
+> > I like that you're doing this.  But I don't see the point of this
+> > kind of definition, made in "drivers/bus/mhi/host/internal.h
+> > ":
+> > 
+> >   #define MHIREGLEN	REG_MHIREGLEN
+> > 
+> > Just use REG_MHIREGLEN in the host code too.  (Or use MHIREGLEN in
+> > both places, whichever you prefer.)
+> > 
+> 
+> My intention is to use the original MHI register definitions in both
+> host and endpoint. So REG_ prefix acts like an overlay here. Earlier I
+> was defining the MHI registers in both host and endpoint separately.
+> 
+> But I came up with this after your v2 review.
+> 
 
-changes in v2:
--- remove compression related code from timing
--- remove op_info from  struct msm_drm_private
--- remove unnecessary wide_bus_en variables
--- pass wide_bus_en into timing configuration by struct msm_dp
+Hmm, I got your suggestion now. Just looked at patch 08/25. Please
+ignore my above comment.
 
-Changes in v3:
--- split patch into 3 patches
--- enable widebus feature base on chip hardware revision
+Thanks,
+Mani
 
-Changes in v5:
--- DP_INTF_CONFIG_DATABUS_WIDEN
-
-Changes in v6:
--- fix static inline bool msm_dp_wide_bus_enable() at msm_drv.h
-
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reported-by: kernel test robot <lkp@intel.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  4 +++-
- drivers/gpu/drm/msm/dp/dp_catalog.c         | 34 +++++++++++++++++++++++++++--
- drivers/gpu/drm/msm/dp/dp_catalog.h         |  3 ++-
- drivers/gpu/drm/msm/dp/dp_ctrl.c            | 13 +++++++----
- drivers/gpu/drm/msm/dp/dp_ctrl.h            |  1 +
- drivers/gpu/drm/msm/dp/dp_display.c         | 32 +++++++++++++++++++++++++++
- drivers/gpu/drm/msm/dp/dp_display.h         |  2 ++
- drivers/gpu/drm/msm/dp/dp_panel.c           |  4 ++--
- drivers/gpu/drm/msm/dp/dp_panel.h           |  2 +-
- drivers/gpu/drm/msm/msm_drv.h               |  6 +++++
- 10 files changed, 90 insertions(+), 11 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 2b2dbb7..1e96cede 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -2138,8 +2138,10 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
- 		timer_setup(&dpu_enc->vsync_event_timer,
- 				dpu_encoder_vsync_event_handler,
- 				0);
--	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS)
-+	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS) {
- 		dpu_enc->dp = priv->dp[disp_info->h_tile_instance[0]];
-+		dpu_enc->wide_bus_en = msm_dp_wide_bus_enable(dpu_enc->dp);
-+	}
- 
- 	INIT_DELAYED_WORK(&dpu_enc->delayed_off_work,
- 			dpu_encoder_off_work);
-diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-index 6ae9b29..524eccc 100644
---- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-+++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-@@ -24,6 +24,8 @@
- #define DP_INTERRUPT_STATUS_ACK_SHIFT	1
- #define DP_INTERRUPT_STATUS_MASK_SHIFT	2
- 
-+#define DP_INTF_CONFIG_DATABUS_WIDEN     BIT(4)
-+
- #define DP_INTERRUPT_STATUS1 \
- 	(DP_INTR_AUX_I2C_DONE| \
- 	DP_INTR_WRONG_ADDR | DP_INTR_TIMEOUT | \
-@@ -483,6 +485,22 @@ int dp_catalog_ctrl_set_pattern(struct dp_catalog *dp_catalog,
- }
- 
- /**
-+ * dp_catalog_hw_revision() - retrieve DP hw revision
-+ *
-+ * @dp_catalog: DP catalog structure
-+ *
-+ * Return: DP controller hw revision
-+ *
-+ */
-+u32 dp_catalog_hw_revision(struct dp_catalog *dp_catalog)
-+{
-+	struct dp_catalog_private *catalog = container_of(dp_catalog,
-+				struct dp_catalog_private, dp_catalog);
-+
-+	return dp_read_ahb(catalog, REG_DP_HW_VERSION);
-+}
-+
-+/**
-  * dp_catalog_ctrl_reset() - reset DP controller
-  *
-  * @dp_catalog: DP catalog structure
-@@ -739,10 +757,11 @@ u32 dp_catalog_ctrl_read_phy_pattern(struct dp_catalog *dp_catalog)
- }
- 
- /* panel related catalog functions */
--int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog)
-+int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog, bool wide_bus_en)
- {
- 	struct dp_catalog_private *catalog = container_of(dp_catalog,
- 				struct dp_catalog_private, dp_catalog);
-+	u32 reg;
- 
- 	dp_write_link(catalog, REG_DP_TOTAL_HOR_VER,
- 				dp_catalog->total);
-@@ -751,7 +770,18 @@ int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog)
- 	dp_write_link(catalog, REG_DP_HSYNC_VSYNC_WIDTH_POLARITY,
- 				dp_catalog->width_blanking);
- 	dp_write_link(catalog, REG_DP_ACTIVE_HOR_VER, dp_catalog->dp_active);
--	dp_write_p0(catalog, MMSS_DP_INTF_CONFIG, 0);
-+
-+	reg = dp_read_p0(catalog, MMSS_DP_INTF_CONFIG);
-+
-+	if (wide_bus_en)
-+		reg |= DP_INTF_CONFIG_DATABUS_WIDEN;
-+	else
-+		reg &= ~DP_INTF_CONFIG_DATABUS_WIDEN;
-+
-+
-+	DRM_DEBUG_DP("wide_bus_en=%d reg=%x\n", wide_bus_en, reg);
-+
-+	dp_write_p0(catalog, MMSS_DP_INTF_CONFIG, reg);
- 	return 0;
- }
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
-index 6965afa..2ba1ea4 100644
---- a/drivers/gpu/drm/msm/dp/dp_catalog.h
-+++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
-@@ -95,6 +95,7 @@ void dp_catalog_ctrl_config_misc(struct dp_catalog *dp_catalog, u32 cc, u32 tb);
- void dp_catalog_ctrl_config_msa(struct dp_catalog *dp_catalog, u32 rate,
- 				u32 stream_rate_khz, bool fixed_nvid);
- int dp_catalog_ctrl_set_pattern(struct dp_catalog *dp_catalog, u32 pattern);
-+u32 dp_catalog_hw_revision(struct dp_catalog *dp_catalog);
- void dp_catalog_ctrl_reset(struct dp_catalog *dp_catalog);
- bool dp_catalog_ctrl_mainlink_ready(struct dp_catalog *dp_catalog);
- void dp_catalog_ctrl_enable_irq(struct dp_catalog *dp_catalog, bool enable);
-@@ -115,7 +116,7 @@ void dp_catalog_ctrl_send_phy_pattern(struct dp_catalog *dp_catalog,
- u32 dp_catalog_ctrl_read_phy_pattern(struct dp_catalog *dp_catalog);
- 
- /* DP Panel APIs */
--int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog);
-+int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog, bool wide_bus_en);
- void dp_catalog_dump_regs(struct dp_catalog *dp_catalog);
- void dp_catalog_panel_tpg_enable(struct dp_catalog *dp_catalog,
- 				struct drm_display_mode *drm_mode);
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index c724cb0..b07574c 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -154,7 +154,7 @@ static void dp_ctrl_config_ctrl(struct dp_ctrl_private *ctrl)
- 	dp_catalog_ctrl_config_ctrl(ctrl->catalog, config);
- }
- 
--static void dp_ctrl_configure_source_params(struct dp_ctrl_private *ctrl)
-+static void dp_ctrl_configure_source_params(struct dp_ctrl_private *ctrl, bool wide_bus_en)
- {
- 	u32 cc, tb;
- 
-@@ -167,7 +167,7 @@ static void dp_ctrl_configure_source_params(struct dp_ctrl_private *ctrl)
- 		ctrl->panel->dp_mode.bpp);
- 	cc = dp_link_get_colorimetry_config(ctrl->link);
- 	dp_catalog_ctrl_config_misc(ctrl->catalog, cc, tb);
--	dp_panel_timing_cfg(ctrl->panel);
-+	dp_panel_timing_cfg(ctrl->panel, wide_bus_en);
- }
- 
- /*
-@@ -1799,6 +1799,7 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
- 	int ret = 0;
- 	bool mainlink_ready = false;
- 	struct dp_ctrl_private *ctrl;
-+	u32 pixel_rate_orig;
- 
- 	if (!dp_ctrl)
- 		return -EINVAL;
-@@ -1807,6 +1808,10 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
- 
- 	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
- 
-+	pixel_rate_orig = ctrl->dp_ctrl.pixel_rate;
-+	if (dp_ctrl->wide_bus_en)
-+		ctrl->dp_ctrl.pixel_rate >>= 1;
-+
- 	DRM_DEBUG_DP("rate=%d, num_lanes=%d, pixel_rate=%d\n",
- 		ctrl->link->link_params.rate,
- 		ctrl->link->link_params.num_lanes, ctrl->dp_ctrl.pixel_rate);
-@@ -1842,11 +1847,11 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
- 	 */
- 	reinit_completion(&ctrl->video_comp);
- 
--	dp_ctrl_configure_source_params(ctrl);
-+	dp_ctrl_configure_source_params(ctrl, dp_ctrl->wide_bus_en);
- 
- 	dp_catalog_ctrl_config_msa(ctrl->catalog,
- 		ctrl->link->link_params.rate,
--		ctrl->dp_ctrl.pixel_rate, dp_ctrl_use_fixed_nvid(ctrl));
-+		pixel_rate_orig, dp_ctrl_use_fixed_nvid(ctrl));
- 
- 	dp_ctrl_setup_tr_unit(ctrl);
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-index 2363a2d..a0a5fbb 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-@@ -17,6 +17,7 @@ struct dp_ctrl {
- 	bool orientation;
- 	atomic_t aborted;
- 	u32 pixel_rate;
-+	bool wide_bus_en;
- };
- 
- int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset);
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 7cc4d21..8ecccf2 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -115,6 +115,8 @@ struct dp_display_private {
- 	struct dp_event event_list[DP_EVENT_Q_MAX];
- 	spinlock_t event_lock;
- 
-+	bool wide_bus_en;
-+
- 	struct dp_audio *audio;
- };
- 
-@@ -848,6 +850,8 @@ static int dp_display_enable(struct dp_display_private *dp, u32 data)
- 		return 0;
- 	}
- 
-+	dp->ctrl->wide_bus_en = dp->wide_bus_en;
-+
- 	rc = dp_ctrl_on_stream(dp->ctrl);
- 	if (!rc)
- 		dp_display->power_on = true;
-@@ -972,6 +976,7 @@ int dp_display_get_modes(struct msm_dp *dp,
- 		dp->connector, dp_mode);
- 	if (dp_mode->drm_mode.clock)
- 		dp->max_pclk_khz = dp_mode->drm_mode.clock;
-+
- 	return ret;
- }
- 
-@@ -1437,6 +1442,28 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
- 	dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
- }
- 
-+bool msm_dp_wide_bus_enable(struct msm_dp *dp_display)
-+{
-+	struct dp_display_private *dp;
-+	u32 revision, major, minor;
-+
-+	dp = container_of(dp_display, struct dp_display_private, dp_display);
-+
-+	/* for the time being widebus only support on DP */
-+	if (dp_display->connector_type  == DRM_MODE_CONNECTOR_DisplayPort) {
-+		revision = dp_catalog_hw_revision(dp->catalog);
-+		major = ((revision >> 28) & 0x0ff);
-+		minor = ((revision >> 16) & 0x0fff);
-+
-+		DRM_DEBUG_DP("id=%d major=%d minor=%d\n", dp->id, major, minor);
-+
-+		if (major >= 1 && minor >= 2)
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
- void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
- {
- 	struct dp_display_private *dp;
-@@ -1460,6 +1487,7 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
- 			struct drm_encoder *encoder)
- {
- 	struct msm_drm_private *priv;
-+	struct dp_display_private *dp_priv;
- 	int ret;
- 
- 	if (WARN_ON(!encoder) || WARN_ON(!dp_display) || WARN_ON(!dev))
-@@ -1468,6 +1496,8 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
- 	priv = dev->dev_private;
- 	dp_display->drm_dev = dev;
- 
-+	dp_priv = container_of(dp_display, struct dp_display_private, dp_display);
-+
- 	ret = dp_display_request_irq(dp_display);
- 	if (ret) {
- 		DRM_ERROR("request_irq failed, ret=%d\n", ret);
-@@ -1498,6 +1528,8 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
- 
- 	priv->bridges[priv->num_bridges++] = dp_display->bridge;
- 
-+	dp_priv->wide_bus_en = msm_dp_wide_bus_enable(dp_display);
-+
- 	return 0;
- }
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-index e3adcd5..b718cc9 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.h
-+++ b/drivers/gpu/drm/msm/dp/dp_display.h
-@@ -24,6 +24,8 @@ struct msm_dp {
- 
- 	hdmi_codec_plugged_cb plugged_cb;
- 
-+	bool wide_bus_en;
-+
- 	u32 max_pclk_khz;
- 
- 	u32 max_dp_lanes;
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-index 71db10c..71deb1e 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.c
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -353,7 +353,7 @@ void dp_panel_dump_regs(struct dp_panel *dp_panel)
- 	dp_catalog_dump_regs(catalog);
- }
- 
--int dp_panel_timing_cfg(struct dp_panel *dp_panel)
-+int dp_panel_timing_cfg(struct dp_panel *dp_panel, bool wide_bus_en)
- {
- 	u32 data, total_ver, total_hor;
- 	struct dp_catalog *catalog;
-@@ -404,7 +404,7 @@ int dp_panel_timing_cfg(struct dp_panel *dp_panel)
- 
- 	catalog->dp_active = data;
- 
--	dp_catalog_panel_timing_cfg(catalog);
-+	dp_catalog_panel_timing_cfg(catalog, wide_bus_en);
- 	panel->panel_on = true;
- 
- 	return 0;
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
-index 9023e5b..5ec341a 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.h
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.h
-@@ -57,7 +57,7 @@ struct dp_panel {
- 
- int dp_panel_init_panel_info(struct dp_panel *dp_panel);
- int dp_panel_deinit(struct dp_panel *dp_panel);
--int dp_panel_timing_cfg(struct dp_panel *dp_panel);
-+int dp_panel_timing_cfg(struct dp_panel *dp_panel, bool wide_bus_en);
- void dp_panel_dump_regs(struct dp_panel *dp_panel);
- int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
- 		struct drm_connector *connector);
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index d7574e6..4f9c24e 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -399,6 +399,7 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display);
- void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display);
- 
- void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor);
-+bool msm_dp_wide_bus_enable(struct msm_dp *dp_display);
- 
- #else
- static inline int __init msm_dp_register(void)
-@@ -449,6 +450,11 @@ static inline void msm_dp_debugfs_init(struct msm_dp *dp_display,
- {
- }
- 
-+static inline bool msm_dp_wide_bus_enable(struct msm_dp *dp_display)
-+{
-+	return false;
-+}
-+
- #endif
- 
- void __init msm_mdp_register(void);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+> > 
+> > > 2. Using the GENMASK macro for masks
+> > 
+> > Great!
+> > 
+> > > 3. Removing brackets for single values
+> > 
+> > They're normally called "parentheses."  Brackets more typically []
+> > (and {} is "braces", though that's not always the case).
+> > 
+> 
+> Ah, sorry for that. I used to call them "round brackets", so that came in ;)
+> 
+> > > 4. Using lowercase for hex values
+> > 
+> > I think I saw a few upper case hex values in another patch.
+> > Not a big deal, just FYI.
+> > 
+> 
+> Will change them.
+> 
+> > > 5. Using two digits for hex values where applicable
+> > 
+> > I think I suggested most of these things, so of course
+> > they look awesome to me.
+> > 
+> > You could use bitfield accessor macros in a few more places.
+> > For example, this:
+> > 
+> > #define MHI_TRE_CMD_RESET_DWORD1(chid)  (cpu_to_le32((chid << 24) | \
+> > 					    (MHI_CMD_RESET_CHAN << 16)))
+> > 
+> > Could use something more like this:
+> > 
+> > #define MHI_CMD_CHANNEL_MASK	GENMASK(31, 24)
+> > #define MHI_CMD_COMMAND_MASK	GENMASK(23, 16)
+> > 
+> > #define MHI_TRE_CMD_RESET_DWORD1(chid) \
+> > 	(le32_encode_bits(chid, MHI_CMD_CHANNEL_MASK) | \	
+> > 	 le32_encode_bits(MHI_CMD_RESET_CHAN, MHI_CMD_CMD_MASK))
+> > 
+> 
+> This adds more code and also makes the reading a bit complicated. I'd
+> prefer to stick with open coding for these.
+> 
+> Thanks,
+> Mani
+> 
+> > (But of course I already said I preferred CPU byte order on
+> > these values...)
+> > 
+> > I would like to see you get rid of one-to-one definitions
+> > I mentioned at the top.  I haven't done an exhaustive check
+> > of all the symbols, but this looks good generally, so:
+> > 
+> > Reviewed-by: Alex Elder <elder@linaro.org>
+> > 
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > ---
+> > >   drivers/bus/mhi/common.h        | 243 ++++++++++++++++++++++++-----
+> > >   drivers/bus/mhi/host/internal.h | 265 +++++++++-----------------------
+> > >   2 files changed, 278 insertions(+), 230 deletions(-)
+> > > 
+> > > diff --git a/drivers/bus/mhi/common.h b/drivers/bus/mhi/common.h
+> > > index 288e47168649..f226f06d4ff9 100644
+> > > --- a/drivers/bus/mhi/common.h
+> > > +++ b/drivers/bus/mhi/common.h
+> > > @@ -9,62 +9,223 @@
+> > >   #include <linux/mhi.h>
+> > > +/* MHI registers */
+> > > +#define REG_MHIREGLEN					0x00
+> > > +#define REG_MHIVER					0x08
+> > > +#define REG_MHICFG					0x10
+> > > +#define REG_CHDBOFF					0x18
+> > > +#define REG_ERDBOFF					0x20
+> > > +#define REG_BHIOFF					0x28
+> > > +#define REG_BHIEOFF					0x2c
+> > > +#define REG_DEBUGOFF					0x30
+> > > +#define REG_MHICTRL					0x38
+> > > +#define REG_MHISTATUS					0x48
+> > > +#define REG_CCABAP_LOWER				0x58
+> > > +#define REG_CCABAP_HIGHER				0x5c
+> > > +#define REG_ECABAP_LOWER				0x60
+> > > +#define REG_ECABAP_HIGHER				0x64
+> > > +#define REG_CRCBAP_LOWER				0x68
+> > > +#define REG_CRCBAP_HIGHER				0x6c
+> > > +#define REG_CRDB_LOWER					0x70
+> > > +#define REG_CRDB_HIGHER					0x74
+> > > +#define REG_MHICTRLBASE_LOWER				0x80
+> > > +#define REG_MHICTRLBASE_HIGHER				0x84
+> > > +#define REG_MHICTRLLIMIT_LOWER				0x88
+> > > +#define REG_MHICTRLLIMIT_HIGHER				0x8c
+> > > +#define REG_MHIDATABASE_LOWER				0x98
+> > > +#define REG_MHIDATABASE_HIGHER				0x9c
+> > > +#define REG_MHIDATALIMIT_LOWER				0xa0
+> > > +#define REG_MHIDATALIMIT_HIGHER				0xa4
+> > > +
+> > > +/* MHI BHI registers */
+> > > +#define REG_BHI_BHIVERSION_MINOR			0x00
+> > > +#define REG_BHI_BHIVERSION_MAJOR			0x04
+> > > +#define REG_BHI_IMGADDR_LOW				0x08
+> > > +#define REG_BHI_IMGADDR_HIGH				0x0c
+> > > +#define REG_BHI_IMGSIZE					0x10
+> > > +#define REG_BHI_RSVD1					0x14
+> > > +#define REG_BHI_IMGTXDB					0x18
+> > > +#define REG_BHI_RSVD2					0x1c
+> > > +#define REG_BHI_INTVEC					0x20
+> > > +#define REG_BHI_RSVD3					0x24
+> > > +#define REG_BHI_EXECENV					0x28
+> > > +#define REG_BHI_STATUS					0x2c
+> > > +#define REG_BHI_ERRCODE					0x30
+> > > +#define REG_BHI_ERRDBG1					0x34
+> > > +#define REG_BHI_ERRDBG2					0x38
+> > > +#define REG_BHI_ERRDBG3					0x3c
+> > > +#define REG_BHI_SERIALNU				0x40
+> > > +#define REG_BHI_SBLANTIROLLVER				0x44
+> > > +#define REG_BHI_NUMSEG					0x48
+> > > +#define REG_BHI_MSMHWID(n)				(0x4c + (0x4 * (n)))
+> > > +#define REG_BHI_OEMPKHASH(n)				(0x64 + (0x4 * (n)))
+> > > +#define REG_BHI_RSVD5					0xc4
+> > > +
+> > > +/* BHI register bits */
+> > > +#define BHI_TXDB_SEQNUM_BMSK				GENMASK(29, 0)
+> > > +#define BHI_TXDB_SEQNUM_SHFT				0
+> > > +#define BHI_STATUS_MASK					GENMASK(31, 30)
+> > > +#define BHI_STATUS_SHIFT				30
+> > > +#define BHI_STATUS_ERROR				0x03
+> > > +#define BHI_STATUS_SUCCESS				0x02
+> > > +#define BHI_STATUS_RESET				0x00
+> > > +
+> > > +/* MHI BHIE registers */
+> > > +#define REG_BHIE_MSMSOCID_OFFS				0x00
+> > > +#define REG_BHIE_TXVECADDR_LOW_OFFS			0x2c
+> > > +#define REG_BHIE_TXVECADDR_HIGH_OFFS			0x30
+> > > +#define REG_BHIE_TXVECSIZE_OFFS				0x34
+> > > +#define REG_BHIE_TXVECDB_OFFS				0x3c
+> > > +#define REG_BHIE_TXVECSTATUS_OFFS			0x44
+> > > +#define REG_BHIE_RXVECADDR_LOW_OFFS			0x60
+> > > +#define REG_BHIE_RXVECADDR_HIGH_OFFS			0x64
+> > > +#define REG_BHIE_RXVECSIZE_OFFS				0x68
+> > > +#define REG_BHIE_RXVECDB_OFFS				0x70
+> > > +#define REG_BHIE_RXVECSTATUS_OFFS			0x78
+> > > +
+> > > +/* BHIE register bits */
+> > > +#define BHIE_TXVECDB_SEQNUM_BMSK			GENMASK(29, 0)
+> > > +#define BHIE_TXVECDB_SEQNUM_SHFT			0
+> > > +#define BHIE_TXVECSTATUS_SEQNUM_BMSK			GENMASK(29, 0)
+> > > +#define BHIE_TXVECSTATUS_SEQNUM_SHFT			0
+> > > +#define BHIE_TXVECSTATUS_STATUS_BMSK			GENMASK(31, 30)
+> > > +#define BHIE_TXVECSTATUS_STATUS_SHFT			30
+> > > +#define BHIE_TXVECSTATUS_STATUS_RESET			0x00
+> > > +#define BHIE_TXVECSTATUS_STATUS_XFER_COMPL		0x02
+> > > +#define BHIE_TXVECSTATUS_STATUS_ERROR			0x03
+> > > +#define BHIE_RXVECDB_SEQNUM_BMSK			GENMASK(29, 0)
+> > > +#define BHIE_RXVECDB_SEQNUM_SHFT			0
+> > > +#define BHIE_RXVECSTATUS_SEQNUM_BMSK			GENMASK(29, 0)
+> > > +#define BHIE_RXVECSTATUS_SEQNUM_SHFT			0
+> > > +#define BHIE_RXVECSTATUS_STATUS_BMSK			GENMASK(31, 30)
+> > > +#define BHIE_RXVECSTATUS_STATUS_SHFT			30
+> > > +#define BHIE_RXVECSTATUS_STATUS_RESET			0x00
+> > > +#define BHIE_RXVECSTATUS_STATUS_XFER_COMPL		0x02
+> > > +#define BHIE_RXVECSTATUS_STATUS_ERROR			0x03
+> > > +
+> > > +/* MHI register bits */
+> > > +#define MHIREGLEN_MHIREGLEN_MASK			GENMASK(31, 0)
+> > > +#define MHIREGLEN_MHIREGLEN_SHIFT			0
+> > > +#define MHIVER_MHIVER_MASK				GENMASK(31, 0)
+> > > +#define MHIVER_MHIVER_SHIFT				0
+> > > +#define MHICFG_NHWER_MASK				GENMASK(31, 24)
+> > > +#define MHICFG_NHWER_SHIFT				24
+> > > +#define MHICFG_NER_MASK					GENMASK(23, 16)
+> > > +#define MHICFG_NER_SHIFT				16
+> > > +#define MHICFG_NHWCH_MASK				GENMASK(15, 8)
+> > > +#define MHICFG_NHWCH_SHIFT				8
+> > > +#define MHICFG_NCH_MASK					GENMASK(7, 0)
+> > > +#define MHICFG_NCH_SHIFT				0
+> > > +#define CHDBOFF_CHDBOFF_MASK				GENMASK(31, 0)
+> > > +#define CHDBOFF_CHDBOFF_SHIFT				0
+> > > +#define ERDBOFF_ERDBOFF_MASK				GENMASK(31, 0)
+> > > +#define ERDBOFF_ERDBOFF_SHIFT				0
+> > > +#define BHIOFF_BHIOFF_MASK				GENMASK(31, 0)
+> > > +#define BHIOFF_BHIOFF_SHIFT				0
+> > > +#define BHIEOFF_BHIEOFF_MASK				GENMASK(31, 0)
+> > > +#define BHIEOFF_BHIEOFF_SHIFT				0
+> > > +#define DEBUGOFF_DEBUGOFF_MASK				GENMASK(31, 0)
+> > > +#define DEBUGOFF_DEBUGOFF_SHIFT				0
+> > > +#define MHICTRL_MHISTATE_MASK				GENMASK(15, 8)
+> > > +#define MHICTRL_MHISTATE_SHIFT				8
+> > > +#define MHICTRL_RESET_MASK				BIT(1)
+> > > +#define MHICTRL_RESET_SHIFT				1
+> > > +#define MHISTATUS_MHISTATE_MASK				GENMASK(15, 8)
+> > > +#define MHISTATUS_MHISTATE_SHIFT			8
+> > > +#define MHISTATUS_SYSERR_MASK				BIT(2)
+> > > +#define MHISTATUS_SYSERR_SHIFT				2
+> > > +#define MHISTATUS_READY_MASK				BIT(0)
+> > > +#define MHISTATUS_READY_SHIFT				0
+> > > +#define CCABAP_LOWER_CCABAP_LOWER_MASK			GENMASK(31, 0)
+> > > +#define CCABAP_LOWER_CCABAP_LOWER_SHIFT			0
+> > > +#define CCABAP_HIGHER_CCABAP_HIGHER_MASK		GENMASK(31, 0)
+> > > +#define CCABAP_HIGHER_CCABAP_HIGHER_SHIFT		0
+> > > +#define ECABAP_LOWER_ECABAP_LOWER_MASK			GENMASK(31, 0)
+> > > +#define ECABAP_LOWER_ECABAP_LOWER_SHIFT			0
+> > > +#define ECABAP_HIGHER_ECABAP_HIGHER_MASK		GENMASK(31, 0)
+> > > +#define ECABAP_HIGHER_ECABAP_HIGHER_SHIFT		0
+> > > +#define CRCBAP_LOWER_CRCBAP_LOWER_MASK			GENMASK(31, 0)
+> > > +#define CRCBAP_LOWER_CRCBAP_LOWER_SHIFT			0
+> > > +#define CRCBAP_HIGHER_CRCBAP_HIGHER_MASK		GENMASK(31, 0)
+> > > +#define CRCBAP_HIGHER_CRCBAP_HIGHER_SHIFT		0
+> > > +#define CRDB_LOWER_CRDB_LOWER_MASK			GENMASK(31, 0)
+> > > +#define CRDB_LOWER_CRDB_LOWER_SHIFT			0
+> > > +#define CRDB_HIGHER_CRDB_HIGHER_MASK			GENMASK(31, 0)
+> > > +#define CRDB_HIGHER_CRDB_HIGHER_SHIFT			0
+> > > +#define MHICTRLBASE_LOWER_MHICTRLBASE_LOWER_MASK	GENMASK(31, 0)
+> > > +#define MHICTRLBASE_LOWER_MHICTRLBASE_LOWER_SHIFT	0
+> > > +#define MHICTRLBASE_HIGHER_MHICTRLBASE_HIGHER_MASK	GENMASK(31, 0)
+> > > +#define MHICTRLBASE_HIGHER_MHICTRLBASE_HIGHER_SHIFT	0
+> > > +#define MHICTRLLIMIT_LOWER_MHICTRLLIMIT_LOWER_MASK	GENMASK(31, 0)
+> > > +#define MHICTRLLIMIT_LOWER_MHICTRLLIMIT_LOWER_SHIFT	0
+> > > +#define MHICTRLLIMIT_HIGHER_MHICTRLLIMIT_HIGHER_MASK	GENMASK(31, 0)
+> > > +#define MHICTRLLIMIT_HIGHER_MHICTRLLIMIT_HIGHER_SHIFT	0
+> > > +#define MHIDATABASE_LOWER_MHIDATABASE_LOWER_MASK	GENMASK(31, 0)
+> > > +#define MHIDATABASE_LOWER_MHIDATABASE_LOWER_SHIFT	0
+> > > +#define MHIDATABASE_HIGHER_MHIDATABASE_HIGHER_MASK	GENMASK(31, 0)
+> > > +#define MHIDATABASE_HIGHER_MHIDATABASE_HIGHER_SHIFT	0
+> > > +#define MHIDATALIMIT_LOWER_MHIDATALIMIT_LOWER_MASK	GENMASK(31, 0)
+> > > +#define MHIDATALIMIT_LOWER_MHIDATALIMIT_LOWER_SHIFT	0
+> > > +#define MHIDATALIMIT_HIGHER_MHIDATALIMIT_HIGHER_MASK	GENMASK(31, 0)
+> > > +#define MHIDATALIMIT_HIGHER_MHIDATALIMIT_HIGHER_SHIFT	0
+> > > +
+> > >   /* Command Ring Element macros */
+> > >   /* No operation command */
+> > > -#define MHI_TRE_CMD_NOOP_PTR (0)
+> > > -#define MHI_TRE_CMD_NOOP_DWORD0 (0)
+> > > -#define MHI_TRE_CMD_NOOP_DWORD1 (cpu_to_le32(MHI_CMD_NOP << 16))
+> > > +#define MHI_TRE_CMD_NOOP_PTR				0
+> > > +#define MHI_TRE_CMD_NOOP_DWORD0				0
+> > > +#define MHI_TRE_CMD_NOOP_DWORD1				cpu_to_le32(MHI_CMD_NOP << 16)
+> > >   /* Channel reset command */
+> > > -#define MHI_TRE_CMD_RESET_PTR (0)
+> > > -#define MHI_TRE_CMD_RESET_DWORD0 (0)
+> > > -#define MHI_TRE_CMD_RESET_DWORD1(chid) (cpu_to_le32((chid << 24) | \
+> > > -					(MHI_CMD_RESET_CHAN << 16)))
+> > > +#define MHI_TRE_CMD_RESET_PTR				0
+> > > +#define MHI_TRE_CMD_RESET_DWORD0			0
+> > > +#define MHI_TRE_CMD_RESET_DWORD1(chid)			(cpu_to_le32((chid << 24) | \
+> > > +							(MHI_CMD_RESET_CHAN << 16)))
+> > >   /* Channel stop command */
+> > > -#define MHI_TRE_CMD_STOP_PTR (0)
+> > > -#define MHI_TRE_CMD_STOP_DWORD0 (0)
+> > > -#define MHI_TRE_CMD_STOP_DWORD1(chid) (cpu_to_le32((chid << 24) | \
+> > > -				       (MHI_CMD_STOP_CHAN << 16)))
+> > > +#define MHI_TRE_CMD_STOP_PTR				0
+> > > +#define MHI_TRE_CMD_STOP_DWORD0				0
+> > > +#define MHI_TRE_CMD_STOP_DWORD1(chid)			(cpu_to_le32((chid << 24) | \
+> > > +							(MHI_CMD_STOP_CHAN << 16)))
+> > >   /* Channel start command */
+> > > -#define MHI_TRE_CMD_START_PTR (0)
+> > > -#define MHI_TRE_CMD_START_DWORD0 (0)
+> > > -#define MHI_TRE_CMD_START_DWORD1(chid) (cpu_to_le32((chid << 24) | \
+> > > -					(MHI_CMD_START_CHAN << 16)))
+> > > +#define MHI_TRE_CMD_START_PTR				0
+> > > +#define MHI_TRE_CMD_START_DWORD0			0
+> > > +#define MHI_TRE_CMD_START_DWORD1(chid)			(cpu_to_le32((chid << 24) | \
+> > > +							(MHI_CMD_START_CHAN << 16)))
+> > > -#define MHI_TRE_GET_DWORD(tre, word) (le32_to_cpu((tre)->dword[(word)]))
+> > > -#define MHI_TRE_GET_CMD_CHID(tre) ((MHI_TRE_GET_DWORD(tre, 1) >> 24) & 0xFF)
+> > > -#define MHI_TRE_GET_CMD_TYPE(tre) ((MHI_TRE_GET_DWORD(tre, 1) >> 16) & 0xFF)
+> > > +#define MHI_TRE_GET_DWORD(tre, word)			le32_to_cpu((tre)->dword[(word)])
+> > > +#define MHI_TRE_GET_CMD_CHID(tre)			((MHI_TRE_GET_DWORD(tre, 1) >> 24) & 0xFF)
+> > > +#define MHI_TRE_GET_CMD_TYPE(tre)			((MHI_TRE_GET_DWORD(tre, 1) >> 16) & 0xFF)
+> > >   /* Event descriptor macros */
+> > > -#define MHI_TRE_EV_PTR(ptr) (cpu_to_le64(ptr))
+> > > -#define MHI_TRE_EV_DWORD0(code, len) (cpu_to_le32((code << 24) | len))
+> > > -#define MHI_TRE_EV_DWORD1(chid, type) (cpu_to_le32((chid << 24) | (type << 16)))
+> > > -#define MHI_TRE_GET_EV_PTR(tre) (le64_to_cpu((tre)->ptr))
+> > > -#define MHI_TRE_GET_EV_CODE(tre) ((MHI_TRE_GET_DWORD(tre, 0) >> 24) & 0xFF)
+> > > -#define MHI_TRE_GET_EV_LEN(tre) (MHI_TRE_GET_DWORD(tre, 0) & 0xFFFF)
+> > > -#define MHI_TRE_GET_EV_CHID(tre) ((MHI_TRE_GET_DWORD(tre, 1) >> 24) & 0xFF)
+> > > -#define MHI_TRE_GET_EV_TYPE(tre) ((MHI_TRE_GET_DWORD(tre, 1) >> 16) & 0xFF)
+> > > -#define MHI_TRE_GET_EV_STATE(tre) ((MHI_TRE_GET_DWORD(tre, 0) >> 24) & 0xFF)
+> > > -#define MHI_TRE_GET_EV_EXECENV(tre) ((MHI_TRE_GET_DWORD(tre, 0) >> 24) & 0xFF)
+> > > -#define MHI_TRE_GET_EV_SEQ(tre) MHI_TRE_GET_DWORD(tre, 0)
+> > > -#define MHI_TRE_GET_EV_TIME(tre) (MHI_TRE_GET_EV_PTR(tre))
+> > > -#define MHI_TRE_GET_EV_COOKIE(tre) lower_32_bits(MHI_TRE_GET_EV_PTR(tre))
+> > > -#define MHI_TRE_GET_EV_VEID(tre) ((MHI_TRE_GET_DWORD(tre, 0) >> 16) & 0xFF)
+> > > -#define MHI_TRE_GET_EV_LINKSPEED(tre) ((MHI_TRE_GET_DWORD(tre, 1) >> 24) & 0xFF)
+> > > -#define MHI_TRE_GET_EV_LINKWIDTH(tre) (MHI_TRE_GET_DWORD(tre, 0) & 0xFF)
+> > > +/* Transfer completion event */
+> > > +#define MHI_TRE_EV_PTR(ptr)				cpu_to_le64(ptr)
+> > > +#define MHI_TRE_EV_DWORD0(code, len)			cpu_to_le32((code << 24) | len)
+> > > +#define MHI_TRE_EV_DWORD1(chid, type)			cpu_to_le32((chid << 24) | (type << 16))
+> > > +#define MHI_TRE_GET_EV_PTR(tre)				le64_to_cpu((tre)->ptr)
+> > > +#define MHI_TRE_GET_EV_CODE(tre)			((MHI_TRE_GET_DWORD(tre, 0) >> 24) & 0xFF)
+> > > +#define MHI_TRE_GET_EV_LEN(tre)				(MHI_TRE_GET_DWORD(tre, 0) & 0xFFFF)
+> > > +#define MHI_TRE_GET_EV_CHID(tre)			((MHI_TRE_GET_DWORD(tre, 1) >> 24) & 0xFF)
+> > > +#define MHI_TRE_GET_EV_TYPE(tre)			((MHI_TRE_GET_DWORD(tre, 1) >> 16) & 0xFF)
+> > > +#define MHI_TRE_GET_EV_STATE(tre)			((MHI_TRE_GET_DWORD(tre, 0) >> 24) & 0xFF)
+> > > +#define MHI_TRE_GET_EV_EXECENV(tre)			((MHI_TRE_GET_DWORD(tre, 0) >> 24) & 0xFF)
+> > > +#define MHI_TRE_GET_EV_SEQ(tre)				MHI_TRE_GET_DWORD(tre, 0)
+> > > +#define MHI_TRE_GET_EV_TIME(tre)			MHI_TRE_GET_EV_PTR(tre)
+> > > +#define MHI_TRE_GET_EV_COOKIE(tre)			lower_32_bits(MHI_TRE_GET_EV_PTR(tre))
+> > > +#define MHI_TRE_GET_EV_VEID(tre)			((MHI_TRE_GET_DWORD(tre, 0) >> 16) & 0xFF)
+> > > +#define MHI_TRE_GET_EV_LINKSPEED(tre)			((MHI_TRE_GET_DWORD(tre, 1) >> 24) & 0xFF)
+> > > +#define MHI_TRE_GET_EV_LINKWIDTH(tre)			(MHI_TRE_GET_DWORD(tre, 0) & 0xFF)
+> > >   /* Transfer descriptor macros */
+> > > -#define MHI_TRE_DATA_PTR(ptr) (cpu_to_le64(ptr))
+> > > -#define MHI_TRE_DATA_DWORD0(len) (cpu_to_le32(len & MHI_MAX_MTU))
+> > > -#define MHI_TRE_DATA_DWORD1(bei, ieot, ieob, chain) (cpu_to_le32((2 << 16) | (bei << 10) \
+> > > -	| (ieot << 9) | (ieob << 8) | chain))
+> > > +#define MHI_TRE_DATA_PTR(ptr)				cpu_to_le64(ptr)
+> > > +#define MHI_TRE_DATA_DWORD0(len)			cpu_to_le32(len & MHI_MAX_MTU)
+> > > +#define MHI_TRE_DATA_DWORD1(bei, ieot, ieob, chain)	(cpu_to_le32((2 << 16) | (bei << 10) \
+> > > +							| (ieot << 9) | (ieob << 8) | chain))
+> > >   /* RSC transfer descriptor macros */
+> > > -#define MHI_RSCTRE_DATA_PTR(ptr, len) (cpu_to_le64(((u64)len << 48) | ptr))
+> > > -#define MHI_RSCTRE_DATA_DWORD0(cookie) (cpu_to_le32(cookie))
+> > > -#define MHI_RSCTRE_DATA_DWORD1 (cpu_to_le32(MHI_PKT_TYPE_COALESCING << 16))
+> > > +#define MHI_RSCTRE_DATA_PTR(ptr, len)			cpu_to_le64(((u64)len << 48) | ptr)
+> > > +#define MHI_RSCTRE_DATA_DWORD0(cookie)			cpu_to_le32(cookie)
+> > > +#define MHI_RSCTRE_DATA_DWORD1				cpu_to_le32(MHI_PKT_TYPE_COALESCING << 16)
+> > >   enum mhi_pkt_type {
+> > >   	MHI_PKT_TYPE_INVALID = 0x0,
+> > > diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+> > > index 622de6ba1a0b..762055a6ec9f 100644
+> > > --- a/drivers/bus/mhi/host/internal.h
+> > > +++ b/drivers/bus/mhi/host/internal.h
+> > > @@ -11,197 +11,84 @@
+> > >   extern struct bus_type mhi_bus_type;
+> > > -#define MHIREGLEN (0x0)
+> > > -#define MHIREGLEN_MHIREGLEN_MASK (0xFFFFFFFF)
+> > > -#define MHIREGLEN_MHIREGLEN_SHIFT (0)
+> > > -
+> > > -#define MHIVER (0x8)
+> > > -#define MHIVER_MHIVER_MASK (0xFFFFFFFF)
+> > > -#define MHIVER_MHIVER_SHIFT (0)
+> > > -
+> > > -#define MHICFG (0x10)
+> > > -#define MHICFG_NHWER_MASK (0xFF000000)
+> > > -#define MHICFG_NHWER_SHIFT (24)
+> > > -#define MHICFG_NER_MASK (0xFF0000)
+> > > -#define MHICFG_NER_SHIFT (16)
+> > > -#define MHICFG_NHWCH_MASK (0xFF00)
+> > > -#define MHICFG_NHWCH_SHIFT (8)
+> > > -#define MHICFG_NCH_MASK (0xFF)
+> > > -#define MHICFG_NCH_SHIFT (0)
+> > > -
+> > > -#define CHDBOFF (0x18)
+> > > -#define CHDBOFF_CHDBOFF_MASK (0xFFFFFFFF)
+> > > -#define CHDBOFF_CHDBOFF_SHIFT (0)
+> > > -
+> > > -#define ERDBOFF (0x20)
+> > > -#define ERDBOFF_ERDBOFF_MASK (0xFFFFFFFF)
+> > > -#define ERDBOFF_ERDBOFF_SHIFT (0)
+> > > -
+> > > -#define BHIOFF (0x28)
+> > > -#define BHIOFF_BHIOFF_MASK (0xFFFFFFFF)
+> > > -#define BHIOFF_BHIOFF_SHIFT (0)
+> > > -
+> > > -#define BHIEOFF (0x2C)
+> > > -#define BHIEOFF_BHIEOFF_MASK (0xFFFFFFFF)
+> > > -#define BHIEOFF_BHIEOFF_SHIFT (0)
+> > > -
+> > > -#define DEBUGOFF (0x30)
+> > > -#define DEBUGOFF_DEBUGOFF_MASK (0xFFFFFFFF)
+> > > -#define DEBUGOFF_DEBUGOFF_SHIFT (0)
+> > > -
+> > > -#define MHICTRL (0x38)
+> > > -#define MHICTRL_MHISTATE_MASK (0x0000FF00)
+> > > -#define MHICTRL_MHISTATE_SHIFT (8)
+> > > -#define MHICTRL_RESET_MASK (0x2)
+> > > -#define MHICTRL_RESET_SHIFT (1)
+> > > -
+> > > -#define MHISTATUS (0x48)
+> > > -#define MHISTATUS_MHISTATE_MASK (0x0000FF00)
+> > > -#define MHISTATUS_MHISTATE_SHIFT (8)
+> > > -#define MHISTATUS_SYSERR_MASK (0x4)
+> > > -#define MHISTATUS_SYSERR_SHIFT (2)
+> > > -#define MHISTATUS_READY_MASK (0x1)
+> > > -#define MHISTATUS_READY_SHIFT (0)
+> > > -
+> > > -#define CCABAP_LOWER (0x58)
+> > > -#define CCABAP_LOWER_CCABAP_LOWER_MASK (0xFFFFFFFF)
+> > > -#define CCABAP_LOWER_CCABAP_LOWER_SHIFT (0)
+> > > -
+> > > -#define CCABAP_HIGHER (0x5C)
+> > > -#define CCABAP_HIGHER_CCABAP_HIGHER_MASK (0xFFFFFFFF)
+> > > -#define CCABAP_HIGHER_CCABAP_HIGHER_SHIFT (0)
+> > > -
+> > > -#define ECABAP_LOWER (0x60)
+> > > -#define ECABAP_LOWER_ECABAP_LOWER_MASK (0xFFFFFFFF)
+> > > -#define ECABAP_LOWER_ECABAP_LOWER_SHIFT (0)
+> > > -
+> > > -#define ECABAP_HIGHER (0x64)
+> > > -#define ECABAP_HIGHER_ECABAP_HIGHER_MASK (0xFFFFFFFF)
+> > > -#define ECABAP_HIGHER_ECABAP_HIGHER_SHIFT (0)
+> > > -
+> > > -#define CRCBAP_LOWER (0x68)
+> > > -#define CRCBAP_LOWER_CRCBAP_LOWER_MASK (0xFFFFFFFF)
+> > > -#define CRCBAP_LOWER_CRCBAP_LOWER_SHIFT (0)
+> > > -
+> > > -#define CRCBAP_HIGHER (0x6C)
+> > > -#define CRCBAP_HIGHER_CRCBAP_HIGHER_MASK (0xFFFFFFFF)
+> > > -#define CRCBAP_HIGHER_CRCBAP_HIGHER_SHIFT (0)
+> > > -
+> > > -#define CRDB_LOWER (0x70)
+> > > -#define CRDB_LOWER_CRDB_LOWER_MASK (0xFFFFFFFF)
+> > > -#define CRDB_LOWER_CRDB_LOWER_SHIFT (0)
+> > > -
+> > > -#define CRDB_HIGHER (0x74)
+> > > -#define CRDB_HIGHER_CRDB_HIGHER_MASK (0xFFFFFFFF)
+> > > -#define CRDB_HIGHER_CRDB_HIGHER_SHIFT (0)
+> > > -
+> > > -#define MHICTRLBASE_LOWER (0x80)
+> > > -#define MHICTRLBASE_LOWER_MHICTRLBASE_LOWER_MASK (0xFFFFFFFF)
+> > > -#define MHICTRLBASE_LOWER_MHICTRLBASE_LOWER_SHIFT (0)
+> > > -
+> > > -#define MHICTRLBASE_HIGHER (0x84)
+> > > -#define MHICTRLBASE_HIGHER_MHICTRLBASE_HIGHER_MASK (0xFFFFFFFF)
+> > > -#define MHICTRLBASE_HIGHER_MHICTRLBASE_HIGHER_SHIFT (0)
+> > > -
+> > > -#define MHICTRLLIMIT_LOWER (0x88)
+> > > -#define MHICTRLLIMIT_LOWER_MHICTRLLIMIT_LOWER_MASK (0xFFFFFFFF)
+> > > -#define MHICTRLLIMIT_LOWER_MHICTRLLIMIT_LOWER_SHIFT (0)
+> > > -
+> > > -#define MHICTRLLIMIT_HIGHER (0x8C)
+> > > -#define MHICTRLLIMIT_HIGHER_MHICTRLLIMIT_HIGHER_MASK (0xFFFFFFFF)
+> > > -#define MHICTRLLIMIT_HIGHER_MHICTRLLIMIT_HIGHER_SHIFT (0)
+> > > -
+> > > -#define MHIDATABASE_LOWER (0x98)
+> > > -#define MHIDATABASE_LOWER_MHIDATABASE_LOWER_MASK (0xFFFFFFFF)
+> > > -#define MHIDATABASE_LOWER_MHIDATABASE_LOWER_SHIFT (0)
+> > > -
+> > > -#define MHIDATABASE_HIGHER (0x9C)
+> > > -#define MHIDATABASE_HIGHER_MHIDATABASE_HIGHER_MASK (0xFFFFFFFF)
+> > > -#define MHIDATABASE_HIGHER_MHIDATABASE_HIGHER_SHIFT (0)
+> > > -
+> > > -#define MHIDATALIMIT_LOWER (0xA0)
+> > > -#define MHIDATALIMIT_LOWER_MHIDATALIMIT_LOWER_MASK (0xFFFFFFFF)
+> > > -#define MHIDATALIMIT_LOWER_MHIDATALIMIT_LOWER_SHIFT (0)
+> > > -
+> > > -#define MHIDATALIMIT_HIGHER (0xA4)
+> > > -#define MHIDATALIMIT_HIGHER_MHIDATALIMIT_HIGHER_MASK (0xFFFFFFFF)
+> > > -#define MHIDATALIMIT_HIGHER_MHIDATALIMIT_HIGHER_SHIFT (0)
+> > > +/* MHI registers */
+> > > +#define MHIREGLEN			REG_MHIREGLEN
+> > > +#define MHIVER				REG_MHIVER
+> > > +#define MHICFG				REG_MHICFG
+> > > +#define CHDBOFF				REG_CHDBOFF
+> > > +#define ERDBOFF				REG_ERDBOFF
+> > > +#define BHIOFF				REG_BHIOFF
+> > > +#define BHIEOFF				REG_BHIEOFF
+> > > +#define DEBUGOFF			REG_DEBUGOFF
+> > > +#define MHICTRL				REG_MHICTRL
+> > > +#define MHISTATUS			REG_MHISTATUS
+> > > +#define CCABAP_LOWER			REG_CCABAP_LOWER
+> > > +#define CCABAP_HIGHER			REG_CCABAP_HIGHER
+> > > +#define ECABAP_LOWER			REG_ECABAP_LOWER
+> > > +#define ECABAP_HIGHER			REG_ECABAP_HIGHER
+> > > +#define CRCBAP_LOWER			REG_CRCBAP_LOWER
+> > > +#define CRCBAP_HIGHER			REG_CRCBAP_HIGHER
+> > > +#define CRDB_LOWER			REG_CRDB_LOWER
+> > > +#define CRDB_HIGHER			REG_CRDB_HIGHER
+> > > +#define MHICTRLBASE_LOWER		REG_MHICTRLBASE_LOWER
+> > > +#define MHICTRLBASE_HIGHER		REG_MHICTRLBASE_HIGHER
+> > > +#define MHICTRLLIMIT_LOWER		REG_MHICTRLLIMIT_LOWER
+> > > +#define MHICTRLLIMIT_HIGHER		REG_MHICTRLLIMIT_HIGHER
+> > > +#define MHIDATABASE_LOWER		REG_MHIDATABASE_LOWER
+> > > +#define MHIDATABASE_HIGHER		REG_MHIDATABASE_HIGHER
+> > > +#define MHIDATALIMIT_LOWER		REG_MHIDATALIMIT_LOWER
+> > > +#define MHIDATALIMIT_HIGHER		REG_MHIDATALIMIT_HIGHER
+> > >   /* Host request register */
+> > > -#define MHI_SOC_RESET_REQ_OFFSET (0xB0)
+> > > -#define MHI_SOC_RESET_REQ BIT(0)
+> > > -
+> > > -/* MHI BHI offfsets */
+> > > -#define BHI_BHIVERSION_MINOR (0x00)
+> > > -#define BHI_BHIVERSION_MAJOR (0x04)
+> > > -#define BHI_IMGADDR_LOW (0x08)
+> > > -#define BHI_IMGADDR_HIGH (0x0C)
+> > > -#define BHI_IMGSIZE (0x10)
+> > > -#define BHI_RSVD1 (0x14)
+> > > -#define BHI_IMGTXDB (0x18)
+> > > -#define BHI_TXDB_SEQNUM_BMSK (0x3FFFFFFF)
+> > > -#define BHI_TXDB_SEQNUM_SHFT (0)
+> > > -#define BHI_RSVD2 (0x1C)
+> > > -#define BHI_INTVEC (0x20)
+> > > -#define BHI_RSVD3 (0x24)
+> > > -#define BHI_EXECENV (0x28)
+> > > -#define BHI_STATUS (0x2C)
+> > > -#define BHI_ERRCODE (0x30)
+> > > -#define BHI_ERRDBG1 (0x34)
+> > > -#define BHI_ERRDBG2 (0x38)
+> > > -#define BHI_ERRDBG3 (0x3C)
+> > > -#define BHI_SERIALNU (0x40)
+> > > -#define BHI_SBLANTIROLLVER (0x44)
+> > > -#define BHI_NUMSEG (0x48)
+> > > -#define BHI_MSMHWID(n) (0x4C + (0x4 * (n)))
+> > > -#define BHI_OEMPKHASH(n) (0x64 + (0x4 * (n)))
+> > > -#define BHI_RSVD5 (0xC4)
+> > > -#define BHI_STATUS_MASK (0xC0000000)
+> > > -#define BHI_STATUS_SHIFT (30)
+> > > -#define BHI_STATUS_ERROR (3)
+> > > -#define BHI_STATUS_SUCCESS (2)
+> > > -#define BHI_STATUS_RESET (0)
+> > > -
+> > > -/* MHI BHIE offsets */
+> > > -#define BHIE_MSMSOCID_OFFS (0x0000)
+> > > -#define BHIE_TXVECADDR_LOW_OFFS (0x002C)
+> > > -#define BHIE_TXVECADDR_HIGH_OFFS (0x0030)
+> > > -#define BHIE_TXVECSIZE_OFFS (0x0034)
+> > > -#define BHIE_TXVECDB_OFFS (0x003C)
+> > > -#define BHIE_TXVECDB_SEQNUM_BMSK (0x3FFFFFFF)
+> > > -#define BHIE_TXVECDB_SEQNUM_SHFT (0)
+> > > -#define BHIE_TXVECSTATUS_OFFS (0x0044)
+> > > -#define BHIE_TXVECSTATUS_SEQNUM_BMSK (0x3FFFFFFF)
+> > > -#define BHIE_TXVECSTATUS_SEQNUM_SHFT (0)
+> > > -#define BHIE_TXVECSTATUS_STATUS_BMSK (0xC0000000)
+> > > -#define BHIE_TXVECSTATUS_STATUS_SHFT (30)
+> > > -#define BHIE_TXVECSTATUS_STATUS_RESET (0x00)
+> > > -#define BHIE_TXVECSTATUS_STATUS_XFER_COMPL (0x02)
+> > > -#define BHIE_TXVECSTATUS_STATUS_ERROR (0x03)
+> > > -#define BHIE_RXVECADDR_LOW_OFFS (0x0060)
+> > > -#define BHIE_RXVECADDR_HIGH_OFFS (0x0064)
+> > > -#define BHIE_RXVECSIZE_OFFS (0x0068)
+> > > -#define BHIE_RXVECDB_OFFS (0x0070)
+> > > -#define BHIE_RXVECDB_SEQNUM_BMSK (0x3FFFFFFF)
+> > > -#define BHIE_RXVECDB_SEQNUM_SHFT (0)
+> > > -#define BHIE_RXVECSTATUS_OFFS (0x0078)
+> > > -#define BHIE_RXVECSTATUS_SEQNUM_BMSK (0x3FFFFFFF)
+> > > -#define BHIE_RXVECSTATUS_SEQNUM_SHFT (0)
+> > > -#define BHIE_RXVECSTATUS_STATUS_BMSK (0xC0000000)
+> > > -#define BHIE_RXVECSTATUS_STATUS_SHFT (30)
+> > > -#define BHIE_RXVECSTATUS_STATUS_RESET (0x00)
+> > > -#define BHIE_RXVECSTATUS_STATUS_XFER_COMPL (0x02)
+> > > -#define BHIE_RXVECSTATUS_STATUS_ERROR (0x03)
+> > > -
+> > > -#define SOC_HW_VERSION_OFFS (0x224)
+> > > -#define SOC_HW_VERSION_FAM_NUM_BMSK (0xF0000000)
+> > > -#define SOC_HW_VERSION_FAM_NUM_SHFT (28)
+> > > -#define SOC_HW_VERSION_DEV_NUM_BMSK (0x0FFF0000)
+> > > -#define SOC_HW_VERSION_DEV_NUM_SHFT (16)
+> > > -#define SOC_HW_VERSION_MAJOR_VER_BMSK (0x0000FF00)
+> > > -#define SOC_HW_VERSION_MAJOR_VER_SHFT (8)
+> > > -#define SOC_HW_VERSION_MINOR_VER_BMSK (0x000000FF)
+> > > -#define SOC_HW_VERSION_MINOR_VER_SHFT (0)
+> > > +#define MHI_SOC_RESET_REQ_OFFSET	0xb0
+> > > +#define MHI_SOC_RESET_REQ		BIT(0)
+> > > +
+> > > +/* MHI BHI registers */
+> > > +#define BHI_BHIVERSION_MINOR		REG_BHI_BHIVERSION_MINOR
+> > > +#define BHI_BHIVERSION_MAJOR		REG_BHI_BHIVERSION_MAJOR
+> > > +#define BHI_IMGADDR_LOW			REG_BHI_IMGADDR_LOW
+> > > +#define BHI_IMGADDR_HIGH		REG_BHI_IMGADDR_HIGH
+> > > +#define BHI_IMGSIZE			REG_BHI_IMGSIZE
+> > > +#define BHI_RSVD1			REG_BHI_RSVD1
+> > > +#define BHI_IMGTXDB			REG_BHI_IMGTXDB
+> > > +#define BHI_RSVD2			REG_BHI_RSVD2
+> > > +#define BHI_INTVEC			REG_BHI_INTVEC
+> > > +#define BHI_RSVD3			REG_BHI_RSVD3
+> > > +#define BHI_EXECENV			REG_BHI_EXECENV
+> > > +#define BHI_STATUS			REG_BHI_STATUS
+> > > +#define BHI_ERRCODE			REG_BHI_ERRCODE
+> > > +#define BHI_ERRDBG1			REG_BHI_ERRDBG1
+> > > +#define BHI_ERRDBG2			REG_BHI_ERRDBG2
+> > > +#define BHI_ERRDBG3			REG_BHI_ERRDBG3
+> > > +#define BHI_SERIALNU			REG_BHI_SERIALNU
+> > > +#define BHI_SBLANTIROLLVER		REG_BHI_SBLANTIROLLVER
+> > > +#define BHI_NUMSEG			REG_BHI_NUMSEG
+> > > +#define BHI_MSMHWID(n)			REG_BHI_MSMHWID(n)
+> > > +#define BHI_OEMPKHASH(n)		REG_BHI_OEMPKHASH(n)
+> > > +#define BHI_RSVD5			REG_BHI_RSVD5
+> > > +
+> > > +/* MHI BHIE registers */
+> > > +#define BHIE_MSMSOCID_OFFS		REG_BHIE_MSMSOCID_OFFS
+> > > +#define BHIE_TXVECADDR_LOW_OFFS		REG_BHIE_TXVECADDR_LOW_OFFS
+> > > +#define BHIE_TXVECADDR_HIGH_OFFS	REG_BHIE_TXVECADDR_HIGH_OFFS
+> > > +#define BHIE_TXVECSIZE_OFFS		REG_BHIE_TXVECSIZE_OFFS
+> > > +#define BHIE_TXVECDB_OFFS		REG_BHIE_TXVECDB_OFFS
+> > > +#define BHIE_TXVECSTATUS_OFFS		REG_BHIE_TXVECSTATUS_OFFS
+> > > +#define BHIE_RXVECADDR_LOW_OFFS		REG_BHIE_RXVECADDR_LOW_OFFS
+> > > +#define BHIE_RXVECADDR_HIGH_OFFS	REG_BHIE_RXVECADDR_HIGH_OFFS
+> > > +#define BHIE_RXVECSIZE_OFFS		REG_BHIE_RXVECSIZE_OFFS
+> > > +#define BHIE_RXVECDB_OFFS		REG_BHIE_RXVECDB_OFFS
+> > > +#define BHIE_RXVECSTATUS_OFFS		REG_BHIE_RXVECSTATUS_OFFS
+> > > +
+> > > +#define SOC_HW_VERSION_OFFS		0x224
+> > > +#define SOC_HW_VERSION_FAM_NUM_BMSK	GENMASK(31, 28)
+> > > +#define SOC_HW_VERSION_FAM_NUM_SHFT	28
+> > > +#define SOC_HW_VERSION_DEV_NUM_BMSK	GENMASK(27, 16)
+> > > +#define SOC_HW_VERSION_DEV_NUM_SHFT	16
+> > > +#define SOC_HW_VERSION_MAJOR_VER_BMSK	GENMASK(15, 8)
+> > > +#define SOC_HW_VERSION_MAJOR_VER_SHFT	8
+> > > +#define SOC_HW_VERSION_MINOR_VER_BMSK	GENMASK(7, 0)
+> > > +#define SOC_HW_VERSION_MINOR_VER_SHFT	0
+> > >   struct mhi_ctxt {
+> > >   	struct mhi_event_ctxt *er_ctxt;
+> > 
+> 
