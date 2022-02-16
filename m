@@ -2,91 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A8BF4B91A7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 20:45:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EC5D4B91AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 20:46:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235752AbiBPTp5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Feb 2022 14:45:57 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60862 "EHLO
+        id S238151AbiBPTqs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Feb 2022 14:46:48 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:33714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238306AbiBPTps (ORCPT
+        with ESMTP id S233709AbiBPTqr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Feb 2022 14:45:48 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E1922B0B0E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 11:45:34 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id q8so3578266oiw.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 11:45:34 -0800 (PST)
+        Wed, 16 Feb 2022 14:46:47 -0500
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12BD775609
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 11:46:33 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id f37so5813103lfv.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 11:46:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=e6yQe3558orWsQDh5OT0ACtDm6j/DudE1IMag6+wpmU=;
-        b=cyEisrUfIYIupzeDc7DssR+Xl1dljHVZGnaXZLOJ0ziRL9XEgpuPaEYsbq7SlI+9ZG
-         Ua5Zl1a6J7kqGWvycX7gvk6s15vhFJ9PFMimaQCl21vgdBChejWxlu8gpQPFAE9i077Y
-         6woHb+/Pu54ONADW/KcHt9XYwKvRdZjNmkgYuslxYg+6kC/qiS3oDMOLp4iRWVoJ7I45
-         oY+Rncu3rJRnMxGMeO3CRQWTnSw5H9g3UWfmw3TjntSAukFkDR03YHncuEhAFKTwpbsv
-         CnH8va2j8l1tXNVqLwtOPFNQmGmfFQfD8i7wgpHpP5ZSpDJSvJpbJ76cMSQFvhlG5AVz
-         D7Lw==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=uvWE/yj/OeuVvo4+R9I+L8o+ByCA0ueyAfIxcm7QgWE=;
+        b=ev9zKFY/4CtWAI9lKnzI3eo6j9rsu/JCoybpWKSiJgSjtmFQwGHMsITHVzMqktd/2p
+         96lKNr0Lbt/S+n3RdxjB4CIVu5SCrOowu+Ok+j5qzBnLYWFOmAORceY7fd491VGtYVtA
+         l/DgJDsz3Xs2Ro+FoWXfRgfM41oz0naYnQDY0dofD2pG+07VgyjdkL5rNd9W7/Par2m8
+         VhEAvlNHHR2N/QcaSjLr1aQSwGh66c9+dO1G8S/WQPAoAlzj6N71vMpaaoQycFmtbWGP
+         5liWEXBm1E1kqeB0ZMMKRCCAiBYGw/cmghuSXcVovlWZBijJrDDxKr7cMrSPaVdcZq5M
+         Louw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=e6yQe3558orWsQDh5OT0ACtDm6j/DudE1IMag6+wpmU=;
-        b=qunHjPBJt43ZD3gt0EREP5NXhBh+DyNtmOQi/QmKLFVW/olF3/aq0uGKxQpWOhZLf6
-         pUXQTJQbB+POTiK2NwlTDCm/hreqmpKW8uHSeohnNI2ILy1ykupvHPKEEVPJaJZCcKP0
-         bSHzEhRAaOvDeEU4jLquhx9bRiiK2w7/GnMk1HCy9TnibAggtVoYDUlVHxQG0lPbYuWw
-         pQLlcaTi5kNa5TW5HN6s+It7Us7OyYJ1q2GQBBTbudd2xYZjmo1ri95pdYijVcFYh1oy
-         HUu4uBEkTlulLLPr4paDfustAWnckFlJGo1R5ReaaFtYStZmOXbqeItQdJJttNoxejZh
-         DFNg==
-X-Gm-Message-State: AOAM533JCWQ1yBfeOrNztlDOg/SVbuzMEJf58hDfv0X8SDrefAJoR4qX
-        IlgfJfBMTk50fFK5DLrc/KhPvw==
-X-Google-Smtp-Source: ABdhPJyJlq7VFOgJ7PeIDbfRTtmz7YoxDnNxuFCSIuzLyAfTeNEgRv2wIwMRQjwpbTLb9U0w3eCjWw==
-X-Received: by 2002:a05:6808:2314:b0:2cd:dc2:3edc with SMTP id bn20-20020a056808231400b002cd0dc23edcmr1395304oib.145.1645040733552;
-        Wed, 16 Feb 2022 11:45:33 -0800 (PST)
-Received: from yoga (rrcs-97-77-166-58.sw.biz.rr.com. [97.77.166.58])
-        by smtp.gmail.com with ESMTPSA id c19sm2666744oaq.0.2022.02.16.11.45.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Feb 2022 11:45:33 -0800 (PST)
-Date:   Wed, 16 Feb 2022 13:45:30 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Peter Chen <peter.chen@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Roger Quadros <rogerq@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        Bastien Nocera <hadess@hadess.net>,
-        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v20 5/5] arm64: dts: qcom: sc7180-trogdor: Add nodes for
- onboard USB hub
-Message-ID: <Yg1UWjGlmtDbjXVD@yoga>
-References: <20220119204345.3769662-1-mka@chromium.org>
- <20220119124327.v20.5.Ie0d2c1214b767bb5551dd4cad38398bd40e4466f@changeid>
- <YgJMkFAxjazkUDZd@kroah.com>
- <YgLCswtX/0THkzXT@google.com>
- <CAD=FV=WMP8M5HTRNv9_scvrytbpE0iBdUack=XaHoypGNLJeVA@mail.gmail.com>
- <Ygv3FSDS/fq1oePy@kroah.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=uvWE/yj/OeuVvo4+R9I+L8o+ByCA0ueyAfIxcm7QgWE=;
+        b=BAEWUGqyLKbNbXCaTstIRPccoYAI9mHLUBTsG0oQ8tfRcmve4oxHo0AqWNomGJIgEu
+         8dDIOaRFHyaXzUuzWqgI1ywAODyDY+kVDCENb1EL10c+Fy7GSoL2cz10zihIh29JakXU
+         d0BDa0HfB+Ly8YKqJQwV4bRB0So6aMYygIVWOfZIf5tyn0dnXJvVom0CVYw7aK6Ys0j3
+         Wd1+5MrfDXT6FfYb42uYdyZwvuzDIWPn8463f3WVlsecfvYJjpjNygOO9+HujpmMgDEa
+         AB4s6MstypIx9/2Xir8Gy01V7ho3k8kz8x2JCSUhI3QfD81LVVbYBifPXt7D/jX9sWqa
+         r41w==
+X-Gm-Message-State: AOAM531W9MTSloigBI7M/ygeCz9lg4MNdd/woNUDRDw+u00rVV3NBH7o
+        2Kj+g/BcrsWfIGpnNhsA9ThkLw==
+X-Google-Smtp-Source: ABdhPJwOWZq5dN2bcSGr8vqpPDvB0eV+jRHRyk29Q0rKlcGMRokPfbbSi+qNpj3iiZ4PBNIo8Krf0A==
+X-Received: by 2002:a05:6512:2246:b0:438:b832:31d6 with SMTP id i6-20020a056512224600b00438b83231d6mr3128381lfu.39.1645040791316;
+        Wed, 16 Feb 2022 11:46:31 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id g17sm4886712lfr.30.2022.02.16.11.46.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Feb 2022 11:46:30 -0800 (PST)
+Message-ID: <a75893b8-f868-845b-2da2-1a2840a83caa@linaro.org>
+Date:   Wed, 16 Feb 2022 22:46:30 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Ygv3FSDS/fq1oePy@kroah.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [REPOST PATCH v4 03/13] drm/msm/disp/dpu1: Add support for DSC
+Content-Language: en-GB
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+References: <20220210103423.271016-1-vkoul@kernel.org>
+ <20220210103423.271016-4-vkoul@kernel.org>
+ <8de66b66-5f02-600e-aa4c-bf2dad37487f@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <8de66b66-5f02-600e-aa4c-bf2dad37487f@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -94,58 +81,416 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 15 Feb 12:55 CST 2022, Greg Kroah-Hartman wrote:
-
-> On Tue, Feb 15, 2022 at 09:54:54AM -0800, Doug Anderson wrote:
-> > Hi,
-> > 
-> > On Tue, Feb 8, 2022 at 11:21 AM Matthias Kaehlcke <mka@chromium.org> wrote:
-> > >
-> > > On Tue, Feb 08, 2022 at 11:57:20AM +0100, Greg Kroah-Hartman wrote:
-> > > > On Wed, Jan 19, 2022 at 12:43:45PM -0800, Matthias Kaehlcke wrote:
-> > > > > Add nodes for the onboard USB hub on trogdor devices. Remove the
-> > > > > 'always-on' property from the hub regulator, since the regulator
-> > > > > is now managed by the onboard_usb_hub driver.
-> > > > >
-> > > > > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> > > > > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> > > > > Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> > > > > ---
-> > > >
-> > > > No DT maintainer approval yet?  :(
-> > >
-> > > Bjorn usually just picks DT changes into the QCOM tree when they are
-> > > ready, so I wouldn't interpret anything into the lack of an explicit
-> > > Ack.
-> > 
-> > Right, so the expectation is that this patch wouldn't land through the
-> > USB tree but would instead land through the Qualcomm tree, probably a
-> > revision after the code lands in the USB tree to avoid dependency
-> > problems.
+On 16/02/2022 21:57, Abhinav Kumar wrote:
 > 
-> But our tools pick up the whole series.  I can't just do "i will pick
-> patches 1-4 only" easily, and neither can any other maintainer.
 > 
-
-Most other maintainers uses -P to selectively pick the patches that
-applies to their subsystem. That said, I really do recognize the
-inconvenience on your part and the number of patches being sent your
-way.
-
-> Why not just get their ack so that I know it can come through the USB
-> tree?  That's what normally happens for other changes like this where a
-> driver change is required first.
+> On 2/10/2022 2:34 AM, Vinod Koul wrote:
+>> Display Stream Compression (DSC) is one of the hw blocks in dpu, so add
+>> support by adding hw blocks for DSC
+>>
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > 
+> Somehow second patch of this series is not showing up on patchwork in 
+> your REPOST.
+> 
+> It jumps from 1 to 3.
 
-Because while the change looks good I don't think it's fine to take it
-through the USB tree - the dts tree typically looks like a shotgun hit
-across the dts files. And you and I have already seen several times that
-dts changes do conflict when you take some of them in the USB tree.
+patch 2: https://patchwork.freedesktop.org/patch/473356/?series=99959&rev=1
 
-Unfortunately I see only two ways around this problem, either you start
-picking selectively or I manage to convince all contributors that they
-must split their series to keep dts changes separate (which isn't a bad
-idea in itself).
+> 
+> That being said, please fix the copyright to 2022 in all your files.
+> 
+>> ---
+>>   drivers/gpu/drm/msm/Makefile                  |   1 +
+>>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  13 ++
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c    | 210 ++++++++++++++++++
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h    |  77 +++++++
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |  13 ++
+>>   5 files changed, 314 insertions(+)
+>>   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+>>   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
+>>
+>> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+>> index 03ab55c37beb..7ec3c70c77ce 100644
+>> --- a/drivers/gpu/drm/msm/Makefile
+>> +++ b/drivers/gpu/drm/msm/Makefile
+>> @@ -56,6 +56,7 @@ msm-y := \
+>>       disp/dpu1/dpu_formats.o \
+>>       disp/dpu1/dpu_hw_catalog.o \
+>>       disp/dpu1/dpu_hw_ctl.o \
+>> +    disp/dpu1/dpu_hw_dsc.o \
+>>       disp/dpu1/dpu_hw_interrupts.o \
+>>       disp/dpu1/dpu_hw_intf.o \
+>>       disp/dpu1/dpu_hw_lm.o \
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>> index 31af04afda7d..5fc0888351c7 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>> @@ -556,6 +556,16 @@ struct dpu_merge_3d_cfg  {
+>>       const struct dpu_merge_3d_sub_blks *sblk;
+>>   };
+>> +/**
+>> + * struct dpu_dsc_cfg - information of DSC blocks
+>> + * @id                 enum identifying this block
+>> + * @base               register offset of this block
+>> + * @features           bit mask identifying sub-blocks/features
+>> + */
+>> +struct dpu_dsc_cfg {
+>> +    DPU_HW_BLK_INFO;
+>> +};
+>> +
+>>   /**
+>>    * struct dpu_intf_cfg - information of timing engine blocks
+>>    * @id                 enum identifying this block
+>> @@ -752,6 +762,9 @@ struct dpu_mdss_cfg {
+>>       u32 merge_3d_count;
+>>       const struct dpu_merge_3d_cfg *merge_3d;
+>> +    u32 dsc_count;
+>> +    struct dpu_dsc_cfg *dsc;
+>> +
+>>       u32 intf_count;
+>>       const struct dpu_intf_cfg *intf;
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+>> new file mode 100644
+>> index 000000000000..449d6f1dad28
+>> --- /dev/null
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+>> @@ -0,0 +1,210 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2020-2021, Linaro Limited
+>> + */
+>> +
+>> +#include "dpu_kms.h"
+>> +#include "dpu_hw_catalog.h"
+>> +#include "dpu_hwio.h"
+>> +#include "dpu_hw_mdss.h"
+>> +#include "dpu_hw_dsc.h"
+>> +
+>> +#define DSC_COMMON_MODE                    0x000
+>> +#define DSC_ENC                         0X004
+>> +#define DSC_PICTURE                     0x008
+>> +#define DSC_SLICE                       0x00C
+>> +#define DSC_CHUNK_SIZE                  0x010
+>> +#define DSC_DELAY                       0x014
+>> +#define DSC_SCALE_INITIAL               0x018
+>> +#define DSC_SCALE_DEC_INTERVAL          0x01C
+>> +#define DSC_SCALE_INC_INTERVAL          0x020
+>> +#define DSC_FIRST_LINE_BPG_OFFSET       0x024
+>> +#define DSC_BPG_OFFSET                  0x028
+>> +#define DSC_DSC_OFFSET                  0x02C
+>> +#define DSC_FLATNESS                    0x030
+>> +#define DSC_RC_MODEL_SIZE               0x034
+>> +#define DSC_RC                          0x038
+>> +#define DSC_RC_BUF_THRESH               0x03C
+>> +#define DSC_RANGE_MIN_QP                0x074
+>> +#define DSC_RANGE_MAX_QP                0x0B0
+>> +#define DSC_RANGE_BPG_OFFSET            0x0EC
+>> +
+>> +static void dpu_hw_dsc_disable(struct dpu_hw_dsc *dsc)
+>> +{
+>> +    struct dpu_hw_blk_reg_map *c = &dsc->hw;
+>> +
+>> +    DPU_REG_WRITE(c, DSC_COMMON_MODE, 0);
+>> +}
+>> +
+>> +static void dpu_hw_dsc_config(struct dpu_hw_dsc *hw_dsc,
+>> +                  struct msm_display_dsc_config *dsc, u32 mode)
+>> +{
+>> +    struct dpu_hw_blk_reg_map *c = &hw_dsc->hw;
+>> +    u32 data, lsb, bpp;
+>> +    u32 initial_lines = dsc->initial_lines;
+>> +    bool is_cmd_mode = !(mode & DSC_MODE_VIDEO);
+>> +
+>> +    DPU_REG_WRITE(c, DSC_COMMON_MODE, mode);
+>> +
+>> +    if (is_cmd_mode)
+>> +        initial_lines += 1;
+>> +
+>> +    data = (initial_lines << 20);
+>> +    data |= ((dsc->slice_last_group_size - 1) << 18);
+>> +    /* bpp is 6.4 format, 4 LSBs bits are for fractional part */
+>> +    data |= dsc->drm->bits_per_pixel << 12;
+>> +    lsb = dsc->drm->bits_per_pixel % 4;
+>> +    bpp = dsc->drm->bits_per_pixel / 4;
+>> +    bpp *= 4;
+>> +    bpp <<= 4;
+>> +    bpp |= lsb;
+>> +
+>> +    data |= bpp << 8;
+>> +    data |= (dsc->drm->block_pred_enable << 7);
+>> +    data |= (dsc->drm->line_buf_depth << 3);
+>> +    data |= (dsc->drm->simple_422 << 2);
+>> +    data |= (dsc->drm->convert_rgb << 1);
+>> +    data |= dsc->drm->bits_per_component;
+>> +
+>> +    DPU_REG_WRITE(c, DSC_ENC, data);
+>> +
+>> +    data = dsc->drm->pic_width << 16;
+>> +    data |= dsc->drm->pic_height;
+>> +    DPU_REG_WRITE(c, DSC_PICTURE, data);
+>> +
+>> +    data = dsc->drm->slice_width << 16;
+>> +    data |= dsc->drm->slice_height;
+>> +    DPU_REG_WRITE(c, DSC_SLICE, data);
+>> +
+>> +    data = dsc->drm->slice_chunk_size << 16;
+>> +    DPU_REG_WRITE(c, DSC_CHUNK_SIZE, data);
+>> +
+>> +    data = dsc->drm->initial_dec_delay << 16;
+>> +    data |= dsc->drm->initial_xmit_delay;
+>> +    DPU_REG_WRITE(c, DSC_DELAY, data);
+>> +
+>> +    data = dsc->drm->initial_scale_value;
+>> +    DPU_REG_WRITE(c, DSC_SCALE_INITIAL, data);
+>> +
+>> +    data = dsc->drm->scale_decrement_interval;
+>> +    DPU_REG_WRITE(c, DSC_SCALE_DEC_INTERVAL, data);
+>> +
+>> +    data = dsc->drm->scale_increment_interval;
+>> +    DPU_REG_WRITE(c, DSC_SCALE_INC_INTERVAL, data);
+>> +
+>> +    data = dsc->drm->first_line_bpg_offset;
+>> +    DPU_REG_WRITE(c, DSC_FIRST_LINE_BPG_OFFSET, data);
+>> +
+>> +    data = dsc->drm->nfl_bpg_offset << 16;
+>> +    data |= dsc->drm->slice_bpg_offset;
+>> +    DPU_REG_WRITE(c, DSC_BPG_OFFSET, data);
+>> +
+>> +    data = dsc->drm->initial_offset << 16;
+>> +    data |= dsc->drm->final_offset;
+>> +    DPU_REG_WRITE(c, DSC_DSC_OFFSET, data);
+>> +
+>> +    data = dsc->det_thresh_flatness << 10;
+>> +    data |= dsc->drm->flatness_max_qp << 5;
+>> +    data |= dsc->drm->flatness_min_qp;
+>> +    DPU_REG_WRITE(c, DSC_FLATNESS, data);
+>> +
+>> +    data = dsc->drm->rc_model_size;
+>> +    DPU_REG_WRITE(c, DSC_RC_MODEL_SIZE, data);
+>> +
+>> +    data = dsc->drm->rc_tgt_offset_low << 18;
+>> +    data |= dsc->drm->rc_tgt_offset_high << 14;
+>> +    data |= dsc->drm->rc_quant_incr_limit1 << 9;
+>> +    data |= dsc->drm->rc_quant_incr_limit0 << 4;
+>> +    data |= dsc->drm->rc_edge_factor;
+>> +    DPU_REG_WRITE(c, DSC_RC, data);
+>> +}
+>> +
+>> +static void dpu_hw_dsc_config_thresh(struct dpu_hw_dsc *hw_dsc,
+>> +                     struct msm_display_dsc_config *dsc)
+>> +{
+>> +    struct drm_dsc_rc_range_parameters *rc = dsc->drm->rc_range_params;
+>> +    struct dpu_hw_blk_reg_map *c = &hw_dsc->hw;
+>> +    u32 off;
+>> +    int i;
+>> +
+>> +    off = DSC_RC_BUF_THRESH;
+>> +    for (i = 0; i < DSC_NUM_BUF_RANGES - 1 ; i++) {
+>> +        DPU_REG_WRITE(c, off, dsc->drm->rc_buf_thresh[i]);
+>> +        off += 4;
+>> +    }
+>> +
+>> +    off = DSC_RANGE_MIN_QP;
+>> +    for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
+>> +        DPU_REG_WRITE(c, off, rc[i].range_min_qp);
+>> +        off += 4;
+>> +    }
+>> +
+>> +    off = DSC_RANGE_MAX_QP;
+>> +    for (i = 0; i < 15; i++) {
+>> +        DPU_REG_WRITE(c, off, rc[i].range_max_qp);
+>> +        off += 4;
+>> +    }
+>> +
+>> +    off = DSC_RANGE_BPG_OFFSET;
+>> +    for (i = 0; i < 15; i++) {
+>> +        DPU_REG_WRITE(c, off, rc[i].range_bpg_offset);
+>> +        off += 4;
+>> +    }
+>> +}
+>> +
+>> +static struct dpu_dsc_cfg *_dsc_offset(enum dpu_dsc dsc,
+>> +                       struct dpu_mdss_cfg *m,
+>> +                       void __iomem *addr,
+>> +                       struct dpu_hw_blk_reg_map *b)
+>> +{
+>> +    int i;
+>> +
+>> +    for (i = 0; i < m->dsc_count; i++) {
+>> +        if (dsc == m->dsc[i].id) {
+>> +            b->base_off = addr;
+>> +            b->blk_off = m->dsc[i].base;
+>> +            b->length = m->dsc[i].len;
+>> +            b->hwversion = m->hwversion;
+>> +            b->log_mask = DPU_DBG_MASK_DSC;
+>> +            return &m->dsc[i];
+>> +        }
+>> +    }
+>> +
+>> +    return NULL;
+>> +}
+>> +
+>> +static void _setup_dsc_ops(struct dpu_hw_dsc_ops *ops,
+>> +               unsigned long cap)
+>> +{
+>> +    ops->dsc_disable = dpu_hw_dsc_disable;
+>> +    ops->dsc_config = dpu_hw_dsc_config;
+>> +    ops->dsc_config_thresh = dpu_hw_dsc_config_thresh;
+>> +};
+>> +
+>> +struct dpu_hw_dsc *dpu_hw_dsc_init(enum dpu_dsc idx, void __iomem *addr,
+>> +                   struct dpu_mdss_cfg *m)
+>> +{
+>> +    struct dpu_hw_dsc *c;
+>> +    struct dpu_dsc_cfg *cfg;
+>> +
+>> +    c = kzalloc(sizeof(*c), GFP_KERNEL);
+>> +    if (!c)
+>> +        return ERR_PTR(-ENOMEM);
+>> +
+>> +    cfg = _dsc_offset(idx, m, addr, &c->hw);
+>> +    if (IS_ERR_OR_NULL(cfg)) {
+>> +        kfree(c);
+>> +        return ERR_PTR(-EINVAL);
+>> +    }
+>> +
+>> +    c->idx = idx;
+>> +    c->caps = cfg;
+>> +    _setup_dsc_ops(&c->ops, c->caps->features);
+>> +
+>> +    return c;
+>> +}
+>> +
+>> +void dpu_hw_dsc_destroy(struct dpu_hw_dsc *dsc)
+>> +{
+>> +    kfree(dsc);
+>> +}
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
+>> new file mode 100644
+>> index 000000000000..648c9e4d8749
+>> --- /dev/null
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
+>> @@ -0,0 +1,77 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +/* Copyright (c) 2020-2021, Linaro Limited */
+>> +
+>> +#ifndef _DPU_HW_DSC_H
+>> +#define _DPU_HW_DSC_H
+>> +
+>> +#include <drm/drm_dsc.h>
+>> +
+>> +#define DSC_MODE_SPLIT_PANEL            BIT(0)
+>> +#define DSC_MODE_MULTIPLEX              BIT(1)
+>> +#define DSC_MODE_VIDEO                  BIT(2)
+>> +
+>> +struct dpu_hw_dsc;
+>> +
+>> +/**
+>> + * struct dpu_hw_dsc_ops - interface to the dsc hardware driver 
+>> functions
+>> + * Assumption is these functions will be called after clocks are enabled
+>> + */
+>> +struct dpu_hw_dsc_ops {
+>> +    /**
+>> +     * dsc_disable - disable dsc
+>> +     * @hw_dsc: Pointer to dsc context
+>> +     */
+>> +    void (*dsc_disable)(struct dpu_hw_dsc *hw_dsc);
+>> +
+>> +    /**
+>> +     * dsc_config - configures dsc encoder
+>> +     * @hw_dsc: Pointer to dsc context
+>> +     * @dsc: panel dsc parameters
+>> +     * @mode: dsc topology mode to be set
+>> +     */
+>> +    void (*dsc_config)(struct dpu_hw_dsc *hw_dsc,
+>> +               struct msm_display_dsc_config *dsc, u32 mode);
+>> +
+>> +    /**
+>> +     * dsc_config_thresh - programs panel thresholds
+>> +     * @hw_dsc: Pointer to dsc context
+>> +     * @dsc: panel dsc parameters
+>> +     */
+>> +    void (*dsc_config_thresh)(struct dpu_hw_dsc *hw_dsc,
+>> +                  struct msm_display_dsc_config *dsc);
+>> +};
+>> +
+>> +struct dpu_hw_dsc {
+>> +    struct dpu_hw_blk base;
+>> +    struct dpu_hw_blk_reg_map hw;
+>> +
+>> +    /* dsc */
+>> +    enum dpu_dsc idx;
+>> +    const struct dpu_dsc_cfg *caps;
+>> +
+>> +    /* ops */
+>> +    struct dpu_hw_dsc_ops ops;
+>> +};
+>> +
+>> +/**
+>> + * dpu_hw_dsc_init - initializes the dsc block for the passed dsc idx.
+>> + * @idx:  DSC index for which driver object is required
+>> + * @addr: Mapped register io address of MDP
+>> + * @m:    Pointer to mdss catalog data
+>> + * Returns: Error code or allocated dpu_hw_dsc context
+>> + */
+>> +struct dpu_hw_dsc *dpu_hw_dsc_init(enum dpu_dsc idx, void __iomem *addr,
+>> +                   struct dpu_mdss_cfg *m);
+>> +
+>> +/**
+>> + * dpu_hw_dsc_destroy - destroys dsc driver context
+>> + * @dsc:   Pointer to dsc driver context returned by dpu_hw_dsc_init
+>> + */
+>> +void dpu_hw_dsc_destroy(struct dpu_hw_dsc *dsc);
+>> +
+>> +static inline struct dpu_hw_dsc *to_dpu_hw_dsc(struct dpu_hw_blk *hw)
+>> +{
+>> +    return container_of(hw, struct dpu_hw_dsc, base);
+>> +}
+>> +
+>> +#endif /* _DPU_HW_DSC_H */
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+>> index bb9ceadeb0bb..b0ce8cb97d22 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+>> @@ -97,6 +97,7 @@ enum dpu_hw_blk_type {
+>>       DPU_HW_BLK_WB,
+>>       DPU_HW_BLK_DSPP,
+>>       DPU_HW_BLK_MERGE_3D,
+>> +    DPU_HW_BLK_DSC,
+>>       DPU_HW_BLK_MAX,
+>>   };
+>> @@ -176,6 +177,17 @@ enum dpu_ctl {
+>>       CTL_MAX
+>>   };
+>> +enum dpu_dsc {
+>> +    DSC_NONE = 0,
+>> +    DSC_0,
+>> +    DSC_1,
+>> +    DSC_2,
+>> +    DSC_3,
+>> +    DSC_4,
+>> +    DSC_5,
+>> +    DSC_MAX
+>> +};
+>> +
+>>   enum dpu_pingpong {
+>>       PINGPONG_0 = 1,
+>>       PINGPONG_1,
+>> @@ -437,5 +449,6 @@ struct dpu_mdss_color {
+>>   #define DPU_DBG_MASK_VBIF     (1 << 8)
+>>   #define DPU_DBG_MASK_ROT      (1 << 9)
+>>   #define DPU_DBG_MASK_DSPP     (1 << 10)
+>> +#define DPU_DBG_MASK_DSC      (1 << 11)
+>>   #endif  /* _DPU_HW_MDSS_H */
 
-Regards,
-Bjorn
+
+-- 
+With best wishes
+Dmitry
