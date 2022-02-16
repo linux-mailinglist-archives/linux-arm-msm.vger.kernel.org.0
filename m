@@ -2,78 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1B9E4B8B6D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 15:30:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E84E64B8B98
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 15:39:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235020AbiBPOas (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Feb 2022 09:30:48 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:51192 "EHLO
+        id S232537AbiBPOjo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Feb 2022 09:39:44 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235049AbiBPOar (ORCPT
+        with ESMTP id S229674AbiBPOjn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Feb 2022 09:30:47 -0500
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12D7A293B5A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 06:30:35 -0800 (PST)
-Received: by mail-il1-x12d.google.com with SMTP id h11so1534217ilq.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 06:30:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=dwLzMfgNOWmPItYOyAcXlCBWmY3dWHk4dvllDYGGKro=;
-        b=dSxb8Nr+ifXWcZ0I82j4ax+ByfppReil7K8ujbNKL6eXDywtEFRQKzyxi51Nj9/69i
-         7vTlIFJJnyMqDHCr2sUy3FdkC6RTJoC5PbeiV0ESZFAfx0LKgm8q/xepRzC7t/IaCwvm
-         1dx7GRSl9juxHh8nSSXZhMDJZ7Im02Dl/T6r/5fqQ7P2s03F3bz0ARILUzI9ADkTDofY
-         dJiouJBNVUNa7BjnSTj5DGgZ5pVVETa/8+Urd50gc1UqXk7yC94t3HoZAsWibiZJV/8S
-         TgnyjKgTpaoqR/HXz4Fzt6apOXvga7w7h5numvVR3b9f4o/PtP5j2tu1QgPp/5IMMbYX
-         sj7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=dwLzMfgNOWmPItYOyAcXlCBWmY3dWHk4dvllDYGGKro=;
-        b=eZURel72s2ywWWuwzstoi3ek6rzqiElDoOSLuVSZTCz4dFOMau28gO2pb3mrg6Fh7S
-         BBVDZWidee3iByAD+CfIWmI7fTwynGLVyumc4fRcDSpe0ACPEoPBU0MAMz+Y/4c/WyvS
-         N5Jx624oWynx3PXuLCHpqlLjS2Gp9xkVtQF9qZiqdW+hwOuSx0+ogIxIsO5pEaxJapKg
-         kWm9wpu934MBGAWZIjQRABYFonA1RXjLVGHOkIw7c4OyeZ9BZezzcOP32LNR3m9mtPv4
-         r6ijrkYmjKCbPkTWAfEZRXY0w3eGwRsbxSEkWkKf+yTdkX9pv36gEAi5ueZOYzfOpRAp
-         FUKA==
-X-Gm-Message-State: AOAM532czNXtXk+3LIFKaS2r2lEU6SeqBnAIPoPauK3iABYYk3LPO6mR
-        ZTrtDXlpZCEnaRYspOoTYpwe3g==
-X-Google-Smtp-Source: ABdhPJxnk7ohLYgxeus111vwVw6vOxg/Z6Csxrw8XxEvSKc50SMWXaCimdxVwcp1YuGMSmpzFML95w==
-X-Received: by 2002:a05:6e02:54e:b0:2be:8108:c0dc with SMTP id i14-20020a056e02054e00b002be8108c0dcmr2010087ils.65.1645021834217;
-        Wed, 16 Feb 2022 06:30:34 -0800 (PST)
-Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id v62sm19625810iof.26.2022.02.16.06.30.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Feb 2022 06:30:33 -0800 (PST)
-Message-ID: <d0557bb0-7d9f-2abc-2b78-7d7ab078a2e0@linaro.org>
-Date:   Wed, 16 Feb 2022 08:30:32 -0600
+        Wed, 16 Feb 2022 09:39:43 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 255BA2A64E0;
+        Wed, 16 Feb 2022 06:39:31 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 9D284B81EC6;
+        Wed, 16 Feb 2022 14:39:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A58EC004E1;
+        Wed, 16 Feb 2022 14:39:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1645022368;
+        bh=yICmxNU28lCRdCrR490KpNGJYusepKied6d/R03vGi4=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=fiGImpU+swl24FQ/pSJSGhxKF/6eSiYXxMzZoLhiUt4GRpFnHC+RWL8y1YNeEFn1Q
+         DLPIYbUXLnurEoj4HI2aCRxv3HYMlXh8yFWmkC5rUCEA6CLipzmXQKAYR5lQaaWfTG
+         QdM3LgJmvNWP6PRmhGsqZ+7kQ3xFtmgOApXHoRPYJP0WXvDQ+pfKo+MO0FQlJdgv46
+         wpeLwZN2cstsCq/ujP4mR0JBMmTaZkShLmGCekNOASaUQ+mP6YlqAgYGEzMj4f1Fj+
+         w/xIY9Z/S3xL2mh90ycrFdt9D01NgWSK2u5ZBeOyr77+sNRebTEViMB1vNL6d6dl30
+         bI6wUo2tnKvbA==
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <maz@kernel.org>)
+        id 1nKLSo-008LuX-CC; Wed, 16 Feb 2022 14:39:26 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v3 05/25] bus: mhi: Make mhi_state_str[] array static
- inline and move to common.h
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
-        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
-        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
-        dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
-        quic_cang@quicinc.com, quic_skananth@quicinc.com,
+Date:   Wed, 16 Feb 2022 14:39:26 +0000
+From:   Marc Zyngier <maz@kernel.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Thomas Gleixner <tglx@linutronix.de>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
- <20220212182117.49438-6-manivannan.sadhasivam@linaro.org>
- <f5222344-b74f-083c-d0f6-48fb3f034542@linaro.org>
- <20220216113942.GC6225@workstation>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <20220216113942.GC6225@workstation>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v5 1/3] cpuidle: psci: Call cpu_cluster_pm_enter() on the
+ last CPU
+In-Reply-To: <20220216132830.32490-2-shawn.guo@linaro.org>
+References: <20220216132830.32490-1-shawn.guo@linaro.org>
+ <20220216132830.32490-2-shawn.guo@linaro.org>
+User-Agent: Roundcube Webmail/1.4.13
+Message-ID: <b690d382d989bd99eaf870e79f63cfb9@kernel.org>
+X-Sender: maz@kernel.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: shawn.guo@linaro.org, tglx@linutronix.de, quic_mkshah@quicinc.com, bjorn.andersson@linaro.org, lorenzo.pieralisi@arm.com, sudeep.holla@arm.com, rafael@kernel.org, daniel.lezcano@linaro.org, robh+dt@kernel.org, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,235 +75,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/16/22 5:39 AM, Manivannan Sadhasivam wrote:
-> On Tue, Feb 15, 2022 at 02:02:21PM -0600, Alex Elder wrote:
->> On 2/12/22 12:20 PM, Manivannan Sadhasivam wrote:
->>> mhi_state_str[] array could be used by MHI endpoint stack also. So let's
->>> make the array as "static inline function" and move it inside the
->>> "common.h" header so that the endpoint stack could also make use of it.
->>>
->>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>
->> I like the use of a function to encapsulate this rather than
->> using the array as before.
->>
->> But I still don't like declaring this much static data in a static inline
->> function in a header file.  Define it as a "real" function
->> somewhere common and declare it here instead.
->>
+On 2022-02-16 13:28, Shawn Guo wrote:
+> Make a call to cpu_cluster_pm_enter() on the last CPU going to low 
+> power
+> state (and cpu_cluster_pm_exit() on the firt CPU coming back), so that
+> platforms can be notified to set up hardware for getting into the 
+> cluster
+> low power state.
 > 
-> The problem is we don't have a common c file to define this as a
-> function. Even if we add one, then it would be an overkill.
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> ---
+>  drivers/cpuidle/cpuidle-psci.c | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+> 
+> diff --git a/drivers/cpuidle/cpuidle-psci.c 
+> b/drivers/cpuidle/cpuidle-psci.c
+> index b51b5df08450..c748c1a7d7b1 100644
+> --- a/drivers/cpuidle/cpuidle-psci.c
+> +++ b/drivers/cpuidle/cpuidle-psci.c
+> @@ -37,6 +37,7 @@ struct psci_cpuidle_data {
+>  static DEFINE_PER_CPU_READ_MOSTLY(struct psci_cpuidle_data, 
+> psci_cpuidle_data);
+>  static DEFINE_PER_CPU(u32, domain_state);
+>  static bool psci_cpuidle_use_cpuhp;
+> +static atomic_t cpus_in_idle;
+> 
+>  void psci_set_domain_state(u32 state)
+>  {
+> @@ -67,6 +68,14 @@ static int __psci_enter_domain_idle_state(struct
+> cpuidle_device *dev,
+>  	if (ret)
+>  		return -1;
+> 
+> +	if (atomic_inc_return(&cpus_in_idle) == num_online_cpus()) {
+> +		ret = cpu_cluster_pm_enter();
+> +		if (ret) {
+> +			ret = -1;
+> +			goto dec_atomic;
+> +		}
+> +	}
+> +
+>  	/* Do runtime PM to manage a hierarchical CPU toplogy. */
+>  	rcu_irq_enter_irqson();
+>  	if (s2idle)
+> @@ -88,6 +97,10 @@ static int __psci_enter_domain_idle_state(struct
+> cpuidle_device *dev,
+>  		pm_runtime_get_sync(pd_dev);
+>  	rcu_irq_exit_irqson();
+> 
+> +	if (atomic_read(&cpus_in_idle) == num_online_cpus())
+> +		cpu_cluster_pm_exit();
+> +dec_atomic:
+> +	atomic_dec(&cpus_in_idle);
+>  	cpu_pm_exit();
+> 
+>  	/* Clear the domain state to start fresh when back from idle. */
 
-OK, I accept that.	-Alex
+Is it just me, or does anyone else find it a bit odd that a cpuidle 
+driver
+calls back into the core cpuidle code to generate new events?
 
-> 
-> This pattern is more commonly used throughout the kernel source.
-> 
->> One more minor comment below.
->>
->> 					-Alex
->>
->>> ---
->>>    drivers/bus/mhi/common.h       | 29 +++++++++++++++++++++++++----
->>>    drivers/bus/mhi/host/boot.c    |  2 +-
->>>    drivers/bus/mhi/host/debugfs.c |  6 +++---
->>>    drivers/bus/mhi/host/init.c    | 12 ------------
->>>    drivers/bus/mhi/host/main.c    |  8 ++++----
->>>    drivers/bus/mhi/host/pm.c      | 14 +++++++-------
->>>    6 files changed, 40 insertions(+), 31 deletions(-)
->>>
->>> diff --git a/drivers/bus/mhi/common.h b/drivers/bus/mhi/common.h
->>> index 0d13a202d334..288e47168649 100644
->>> --- a/drivers/bus/mhi/common.h
->>> +++ b/drivers/bus/mhi/common.h
->>> @@ -159,9 +159,30 @@ struct mhi_cmd_ctxt {
->>>    	__le64 wp __packed __aligned(4);
->>>    };
->>> -extern const char * const mhi_state_str[MHI_STATE_MAX];
->>> -#define TO_MHI_STATE_STR(state) ((state >= MHI_STATE_MAX || \
->>> -				  !mhi_state_str[state]) ? \
->>> -				"INVALID_STATE" : mhi_state_str[state])
->>> +static inline const char * const mhi_state_str(enum mhi_state state)
->>> +{
->>> +	switch (state) {
->>> +	case MHI_STATE_RESET:
->>> +		return "RESET";
->>> +	case MHI_STATE_READY:
->>> +		return "READY";
->>> +	case MHI_STATE_M0:
->>> +		return "M0";
->>> +	case MHI_STATE_M1:
->>> +		return "M1";
->>> +	case MHI_STATE_M2:
->>> +		return"M2";
->>
->> Add space after "return" here and in a few places below.
->>
-> 
-> Ack.
-> 
-> Thanks,
-> Mani
-> 
->>> +	case MHI_STATE_M3:
->>> +		return"M3";
->>> +	case MHI_STATE_M3_FAST:
->>> +		return"M3 FAST";
->>> +	case MHI_STATE_BHI:
->>> +		return"BHI";
->>> +	case MHI_STATE_SYS_ERR:
->>> +		return "SYS ERROR";
->>> +	default:
->>> +		return "Unknown state";
->>> +	}
->>> +};
->>>    #endif /* _MHI_COMMON_H */
->>> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
->>> index 74295d3cc662..93cb705614c6 100644
->>> --- a/drivers/bus/mhi/host/boot.c
->>> +++ b/drivers/bus/mhi/host/boot.c
->>> @@ -68,7 +68,7 @@ static int __mhi_download_rddm_in_panic(struct mhi_controller *mhi_cntrl)
->>>    	dev_dbg(dev, "Entered with pm_state:%s dev_state:%s ee:%s\n",
->>>    		to_mhi_pm_state_str(mhi_cntrl->pm_state),
->>> -		TO_MHI_STATE_STR(mhi_cntrl->dev_state),
->>> +		mhi_state_str(mhi_cntrl->dev_state),
->>>    		TO_MHI_EXEC_STR(mhi_cntrl->ee));
->>>    	/*
->>> diff --git a/drivers/bus/mhi/host/debugfs.c b/drivers/bus/mhi/host/debugfs.c
->>> index d818586c229d..399d0db1f1eb 100644
->>> --- a/drivers/bus/mhi/host/debugfs.c
->>> +++ b/drivers/bus/mhi/host/debugfs.c
->>> @@ -20,7 +20,7 @@ static int mhi_debugfs_states_show(struct seq_file *m, void *d)
->>>    	seq_printf(m, "PM state: %s Device: %s MHI state: %s EE: %s wake: %s\n",
->>>    		   to_mhi_pm_state_str(mhi_cntrl->pm_state),
->>>    		   mhi_is_active(mhi_cntrl) ? "Active" : "Inactive",
->>> -		   TO_MHI_STATE_STR(mhi_cntrl->dev_state),
->>> +		   mhi_state_str(mhi_cntrl->dev_state),
->>>    		   TO_MHI_EXEC_STR(mhi_cntrl->ee),
->>>    		   mhi_cntrl->wake_set ? "true" : "false");
->>> @@ -206,13 +206,13 @@ static int mhi_debugfs_regdump_show(struct seq_file *m, void *d)
->>>    	seq_printf(m, "Host PM state: %s Device state: %s EE: %s\n",
->>>    		   to_mhi_pm_state_str(mhi_cntrl->pm_state),
->>> -		   TO_MHI_STATE_STR(mhi_cntrl->dev_state),
->>> +		   mhi_state_str(mhi_cntrl->dev_state),
->>>    		   TO_MHI_EXEC_STR(mhi_cntrl->ee));
->>>    	state = mhi_get_mhi_state(mhi_cntrl);
->>>    	ee = mhi_get_exec_env(mhi_cntrl);
->>>    	seq_printf(m, "Device EE: %s state: %s\n", TO_MHI_EXEC_STR(ee),
->>> -		   TO_MHI_STATE_STR(state));
->>> +		   mhi_state_str(state));
->>>    	for (i = 0; regs[i].name; i++) {
->>>    		if (!regs[i].base)
->>> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
->>> index 4bd62f32695d..0e301f3f305e 100644
->>> --- a/drivers/bus/mhi/host/init.c
->>> +++ b/drivers/bus/mhi/host/init.c
->>> @@ -44,18 +44,6 @@ const char * const dev_state_tran_str[DEV_ST_TRANSITION_MAX] = {
->>>    	[DEV_ST_TRANSITION_DISABLE] = "DISABLE",
->>>    };
->>> -const char * const mhi_state_str[MHI_STATE_MAX] = {
->>> -	[MHI_STATE_RESET] = "RESET",
->>> -	[MHI_STATE_READY] = "READY",
->>> -	[MHI_STATE_M0] = "M0",
->>> -	[MHI_STATE_M1] = "M1",
->>> -	[MHI_STATE_M2] = "M2",
->>> -	[MHI_STATE_M3] = "M3",
->>> -	[MHI_STATE_M3_FAST] = "M3 FAST",
->>> -	[MHI_STATE_BHI] = "BHI",
->>> -	[MHI_STATE_SYS_ERR] = "SYS ERROR",
->>> -};
->>> -
->>>    const char * const mhi_ch_state_type_str[MHI_CH_STATE_TYPE_MAX] = {
->>>    	[MHI_CH_STATE_TYPE_RESET] = "RESET",
->>>    	[MHI_CH_STATE_TYPE_STOP] = "STOP",
->>> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
->>> index 85f4f7c8d7c6..e436c2993d97 100644
->>> --- a/drivers/bus/mhi/host/main.c
->>> +++ b/drivers/bus/mhi/host/main.c
->>> @@ -479,8 +479,8 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
->>>    	ee = mhi_get_exec_env(mhi_cntrl);
->>>    	dev_dbg(dev, "local ee: %s state: %s device ee: %s state: %s\n",
->>>    		TO_MHI_EXEC_STR(mhi_cntrl->ee),
->>> -		TO_MHI_STATE_STR(mhi_cntrl->dev_state),
->>> -		TO_MHI_EXEC_STR(ee), TO_MHI_STATE_STR(state));
->>> +		mhi_state_str(mhi_cntrl->dev_state),
->>> +		TO_MHI_EXEC_STR(ee), mhi_state_str(state));
->>>    	if (state == MHI_STATE_SYS_ERR) {
->>>    		dev_dbg(dev, "System error detected\n");
->>> @@ -846,7 +846,7 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
->>>    			new_state = MHI_TRE_GET_EV_STATE(local_rp);
->>>    			dev_dbg(dev, "State change event to state: %s\n",
->>> -				TO_MHI_STATE_STR(new_state));
->>> +				mhi_state_str(new_state));
->>>    			switch (new_state) {
->>>    			case MHI_STATE_M0:
->>> @@ -873,7 +873,7 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
->>>    			}
->>>    			default:
->>>    				dev_err(dev, "Invalid state: %s\n",
->>> -					TO_MHI_STATE_STR(new_state));
->>> +					mhi_state_str(new_state));
->>>    			}
->>>    			break;
->>> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
->>> index c35c5ddc7220..088ade0f3e0b 100644
->>> --- a/drivers/bus/mhi/host/pm.c
->>> +++ b/drivers/bus/mhi/host/pm.c
->>> @@ -545,7 +545,7 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
->>>    	dev_dbg(dev, "Exiting with PM state: %s, MHI state: %s\n",
->>>    		to_mhi_pm_state_str(mhi_cntrl->pm_state),
->>> -		TO_MHI_STATE_STR(mhi_cntrl->dev_state));
->>> +		mhi_state_str(mhi_cntrl->dev_state));
->>>    	mutex_unlock(&mhi_cntrl->pm_mutex);
->>>    }
->>> @@ -689,7 +689,7 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
->>>    exit_sys_error_transition:
->>>    	dev_dbg(dev, "Exiting with PM state: %s, MHI state: %s\n",
->>>    		to_mhi_pm_state_str(mhi_cntrl->pm_state),
->>> -		TO_MHI_STATE_STR(mhi_cntrl->dev_state));
->>> +		mhi_state_str(mhi_cntrl->dev_state));
->>>    	mutex_unlock(&mhi_cntrl->pm_mutex);
->>>    }
->>> @@ -864,7 +864,7 @@ int mhi_pm_suspend(struct mhi_controller *mhi_cntrl)
->>>    	if (!ret || MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
->>>    		dev_err(dev,
->>>    			"Did not enter M3 state, MHI state: %s, PM state: %s\n",
->>> -			TO_MHI_STATE_STR(mhi_cntrl->dev_state),
->>> +			mhi_state_str(mhi_cntrl->dev_state),
->>>    			to_mhi_pm_state_str(mhi_cntrl->pm_state));
->>>    		return -EIO;
->>>    	}
->>> @@ -890,7 +890,7 @@ static int __mhi_pm_resume(struct mhi_controller *mhi_cntrl, bool force)
->>>    	dev_dbg(dev, "Entered with PM state: %s, MHI state: %s\n",
->>>    		to_mhi_pm_state_str(mhi_cntrl->pm_state),
->>> -		TO_MHI_STATE_STR(mhi_cntrl->dev_state));
->>> +		mhi_state_str(mhi_cntrl->dev_state));
->>>    	if (mhi_cntrl->pm_state == MHI_PM_DISABLE)
->>>    		return 0;
->>> @@ -900,7 +900,7 @@ static int __mhi_pm_resume(struct mhi_controller *mhi_cntrl, bool force)
->>>    	if (mhi_get_mhi_state(mhi_cntrl) != MHI_STATE_M3) {
->>>    		dev_warn(dev, "Resuming from non M3 state (%s)\n",
->>> -			 TO_MHI_STATE_STR(mhi_get_mhi_state(mhi_cntrl)));
->>> +			 mhi_state_str(mhi_get_mhi_state(mhi_cntrl)));
->>>    		if (!force)
->>>    			return -EINVAL;
->>>    	}
->>> @@ -937,7 +937,7 @@ static int __mhi_pm_resume(struct mhi_controller *mhi_cntrl, bool force)
->>>    	if (!ret || MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
->>>    		dev_err(dev,
->>>    			"Did not enter M0 state, MHI state: %s, PM state: %s\n",
->>> -			TO_MHI_STATE_STR(mhi_cntrl->dev_state),
->>> +			mhi_state_str(mhi_cntrl->dev_state),
->>>    			to_mhi_pm_state_str(mhi_cntrl->pm_state));
->>>    		return -EIO;
->>>    	}
->>> @@ -1088,7 +1088,7 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
->>>    	state = mhi_get_mhi_state(mhi_cntrl);
->>>    	dev_dbg(dev, "Attempting power on with EE: %s, state: %s\n",
->>> -		TO_MHI_EXEC_STR(current_ee), TO_MHI_STATE_STR(state));
->>> +		TO_MHI_EXEC_STR(current_ee), mhi_state_str(state));
->>>    	if (state == MHI_STATE_SYS_ERR) {
->>>    		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
->>
+Also, why is this PSCI specific? I would assume that the core cpuidle 
+code
+should be responsible for these transitions, not a random cpuidle 
+driver.
 
+Thanks,
+
+         M.
+-- 
+Jazz is not dead. It just smells funny...
