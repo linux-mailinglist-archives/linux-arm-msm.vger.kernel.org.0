@@ -2,71 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E84E64B8B98
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 15:39:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 95EA84B8BA3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 15:41:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232537AbiBPOjo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Feb 2022 09:39:44 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44936 "EHLO
+        id S235143AbiBPOlr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Feb 2022 09:41:47 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229674AbiBPOjn (ORCPT
+        with ESMTP id S229674AbiBPOlq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Feb 2022 09:39:43 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 255BA2A64E0;
-        Wed, 16 Feb 2022 06:39:31 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 9D284B81EC6;
-        Wed, 16 Feb 2022 14:39:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A58EC004E1;
-        Wed, 16 Feb 2022 14:39:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1645022368;
-        bh=yICmxNU28lCRdCrR490KpNGJYusepKied6d/R03vGi4=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=fiGImpU+swl24FQ/pSJSGhxKF/6eSiYXxMzZoLhiUt4GRpFnHC+RWL8y1YNeEFn1Q
-         DLPIYbUXLnurEoj4HI2aCRxv3HYMlXh8yFWmkC5rUCEA6CLipzmXQKAYR5lQaaWfTG
-         QdM3LgJmvNWP6PRmhGsqZ+7kQ3xFtmgOApXHoRPYJP0WXvDQ+pfKo+MO0FQlJdgv46
-         wpeLwZN2cstsCq/ujP4mR0JBMmTaZkShLmGCekNOASaUQ+mP6YlqAgYGEzMj4f1Fj+
-         w/xIY9Z/S3xL2mh90ycrFdt9D01NgWSK2u5ZBeOyr77+sNRebTEViMB1vNL6d6dl30
-         bI6wUo2tnKvbA==
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
-        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <maz@kernel.org>)
-        id 1nKLSo-008LuX-CC; Wed, 16 Feb 2022 14:39:26 +0000
+        Wed, 16 Feb 2022 09:41:46 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC4072716B;
+        Wed, 16 Feb 2022 06:41:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645022493; x=1676558493;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=NTr5l/kjPw/+EYpzQlgU6KSNc69rhpWj63Jfbws9zPY=;
+  b=DygwmQC5pIRj564kjAiDpm98tmPYtTZom6ML5reMZWeG8FuRiusPgxAF
+   EPlkKHkDFdQK0dVFha55gKMe9Fols0CyDYbGTJgkbOM10dNEtIn94DJkP
+   udonTevDXJawwfIshfypa2Wg7HN4yCfljwFSV3boIDG6gEaYfJPBilvOr
+   Y=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 16 Feb 2022 06:41:31 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Feb 2022 06:41:30 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Wed, 16 Feb 2022 06:41:30 -0800
+Received: from [10.216.55.237] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Wed, 16 Feb
+ 2022 06:41:24 -0800
+Subject: Re: [PATCH v6 7/7] pinctrl: qcom: Update clock voting as optional
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@codeaurora.org>,
+        <perex@perex.cz>, <tiwai@suse.com>, <rohitkr@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        <linux-gpio@vger.kernel.org>
+CC:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <1644851994-22732-1-git-send-email-quic_srivasam@quicinc.com>
+ <1644851994-22732-8-git-send-email-quic_srivasam@quicinc.com>
+ <a209336a-9108-f1ac-ee6d-a838df115c6d@linaro.org>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+Message-ID: <b663f63f-4a5a-3a2a-9be7-fa7258ce93c5@quicinc.com>
+Date:   Wed, 16 Feb 2022 20:11:21 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Date:   Wed, 16 Feb 2022 14:39:26 +0000
-From:   Marc Zyngier <maz@kernel.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Thomas Gleixner <tglx@linutronix.de>,
-        Maulik Shah <quic_mkshah@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 1/3] cpuidle: psci: Call cpu_cluster_pm_enter() on the
- last CPU
-In-Reply-To: <20220216132830.32490-2-shawn.guo@linaro.org>
-References: <20220216132830.32490-1-shawn.guo@linaro.org>
- <20220216132830.32490-2-shawn.guo@linaro.org>
-User-Agent: Roundcube Webmail/1.4.13
-Message-ID: <b690d382d989bd99eaf870e79f63cfb9@kernel.org>
-X-Sender: maz@kernel.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: shawn.guo@linaro.org, tglx@linutronix.de, quic_mkshah@quicinc.com, bjorn.andersson@linaro.org, lorenzo.pieralisi@arm.com, sudeep.holla@arm.com, rafael@kernel.org, daniel.lezcano@linaro.org, robh+dt@kernel.org, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <a209336a-9108-f1ac-ee6d-a838df115c6d@linaro.org>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,73 +77,88 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-02-16 13:28, Shawn Guo wrote:
-> Make a call to cpu_cluster_pm_enter() on the last CPU going to low 
-> power
-> state (and cpu_cluster_pm_exit() on the firt CPU coming back), so that
-> platforms can be notified to set up hardware for getting into the 
-> cluster
-> low power state.
-> 
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> ---
->  drivers/cpuidle/cpuidle-psci.c | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
-> 
-> diff --git a/drivers/cpuidle/cpuidle-psci.c 
-> b/drivers/cpuidle/cpuidle-psci.c
-> index b51b5df08450..c748c1a7d7b1 100644
-> --- a/drivers/cpuidle/cpuidle-psci.c
-> +++ b/drivers/cpuidle/cpuidle-psci.c
-> @@ -37,6 +37,7 @@ struct psci_cpuidle_data {
->  static DEFINE_PER_CPU_READ_MOSTLY(struct psci_cpuidle_data, 
-> psci_cpuidle_data);
->  static DEFINE_PER_CPU(u32, domain_state);
->  static bool psci_cpuidle_use_cpuhp;
-> +static atomic_t cpus_in_idle;
-> 
->  void psci_set_domain_state(u32 state)
->  {
-> @@ -67,6 +68,14 @@ static int __psci_enter_domain_idle_state(struct
-> cpuidle_device *dev,
->  	if (ret)
->  		return -1;
-> 
-> +	if (atomic_inc_return(&cpus_in_idle) == num_online_cpus()) {
-> +		ret = cpu_cluster_pm_enter();
-> +		if (ret) {
-> +			ret = -1;
-> +			goto dec_atomic;
-> +		}
-> +	}
-> +
->  	/* Do runtime PM to manage a hierarchical CPU toplogy. */
->  	rcu_irq_enter_irqson();
->  	if (s2idle)
-> @@ -88,6 +97,10 @@ static int __psci_enter_domain_idle_state(struct
-> cpuidle_device *dev,
->  		pm_runtime_get_sync(pd_dev);
->  	rcu_irq_exit_irqson();
-> 
-> +	if (atomic_read(&cpus_in_idle) == num_online_cpus())
-> +		cpu_cluster_pm_exit();
-> +dec_atomic:
-> +	atomic_dec(&cpus_in_idle);
->  	cpu_pm_exit();
-> 
->  	/* Clear the domain state to start fresh when back from idle. */
 
-Is it just me, or does anyone else find it a bit odd that a cpuidle 
-driver
-calls back into the core cpuidle code to generate new events?
+On 2/16/2022 7:50 PM, Srinivas Kandagatla wrote:
+Thanks for Your Time Srini!!!
+>
+> On 14/02/2022 15:19, Srinivasa Rao Mandadapu wrote:
+>> Update bulk clock voting to optional voting as ADSP bypass platform 
+>> doesn't
+>> need macro and decodec clocks, these are maintained as power domains and
+>> operated from lpass audio core cc.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> ---
+>>   drivers/pinctrl/qcom/pinctrl-lpass-lpi.c        | 16 +++++++++-------
+>>   drivers/pinctrl/qcom/pinctrl-lpass-lpi.h        |  1 +
+>>   drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c |  1 +
+>>   3 files changed, 11 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c 
+>> b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+>> index 8a82fd9..103f0a6c 100644
+>> --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+>> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+>> @@ -407,13 +407,15 @@ int lpi_pinctrl_probe(struct platform_device 
+>> *pdev)
+>>           return dev_err_probe(dev, PTR_ERR(pctrl->slew_base),
+>>                        "Slew resource not provided\n");
+>>   -    ret = devm_clk_bulk_get(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
+>> -    if (ret)
+>> -        return dev_err_probe(dev, ret, "Can't get clocks\n");
+>> -
+>> -    ret = clk_bulk_prepare_enable(MAX_LPI_NUM_CLKS, pctrl->clks);
+>> -    if (ret)
+>> -        return dev_err_probe(dev, ret, "Can't enable clocks\n");
+>> +    if (!data->is_clk_optional) {
+>> +        ret = devm_clk_bulk_get(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
+>> +        if (ret)
+>> +            return dev_err_probe(dev, ret, "Can't get clocks\n");
+>> +
+>> +        ret = clk_bulk_prepare_enable(MAX_LPI_NUM_CLKS, pctrl->clks);
+>> +        if (ret)
+>> +            return dev_err_probe(dev, ret, "Can't enable clocks\n");
+>> +    }
+>>         pctrl->desc.pctlops = &lpi_gpio_pinctrl_ops;
+>>       pctrl->desc.pmxops = &lpi_gpio_pinmux_ops;
+>> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h 
+>> b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
+>> index a511d72..c1079bf 100644
+>> --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
+>> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
+>> @@ -77,6 +77,7 @@ struct lpi_pinctrl_variant_data {
+>>       int ngroups;
+>>       const struct lpi_function *functions;
+>>       int nfunctions;
+>> +    int is_clk_optional;
+>>   };
+>>     int lpi_pinctrl_probe(struct platform_device *pdev);
+>> diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c 
+>> b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
+>> index 5bf30d97..4277e31 100644
+>> --- a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
+>> +++ b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
+>> @@ -143,6 +143,7 @@ static const struct lpi_pinctrl_variant_data 
+>> sc7280_lpi_data = {
+>>       .ngroups = ARRAY_SIZE(sc7280_groups),
+>>       .functions = sc7280_functions,
+>>       .nfunctions = ARRAY_SIZE(sc7280_functions),
+>> +    .is_clk_optional = 1,
+>
+> This is forcefully set assuming that sc7280 is always used in ADSP 
+> bypass mode. Which is not correct.
+>
+> Can't you use devm_clk_bulk_get_optional instead?
 
-Also, why is this PSCI specific? I would assume that the core cpuidle 
-code
-should be responsible for these transitions, not a random cpuidle 
-driver.
+Yes. Agreed. Initially used devm_clk_bulk_get_optional, but Bjorn 
+suggested for conditional check instead of optional.
 
-Thanks,
+Again Shall we go for optional clock voting?
 
-         M.
--- 
-Jazz is not dead. It just smells funny...
+>
+> --srini
+>
+>>   };
+>>     static const struct of_device_id lpi_pinctrl_of_match[] = {
