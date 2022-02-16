@@ -2,73 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F6064B80FC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 08:08:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D588D4B80F3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 08:08:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229735AbiBPHH4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Feb 2022 02:07:56 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:35642 "EHLO
+        id S229562AbiBPHHa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Feb 2022 02:07:30 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:34500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229609AbiBPHHj (ORCPT
+        with ESMTP id S229563AbiBPHH2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Feb 2022 02:07:39 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 923CB21FED4;
-        Tue, 15 Feb 2022 23:06:53 -0800 (PST)
+        Wed, 16 Feb 2022 02:07:28 -0500
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CE4EDF4F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 23:06:43 -0800 (PST)
+Received: by mail-pl1-x62c.google.com with SMTP id w1so1309235plb.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Feb 2022 23:06:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1644995213; x=1676531213;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=1EZcRDQzy8Bp06L63yFNgTwYFlFWyoSkNe0jThSsp6s=;
-  b=uXPd6eAP5XA96jhKs1gQoY9NUydxaGtJoAu6kmGilCuPsSLrXYR3yqaH
-   FU9EHrUE76zzIFkepzf2N8pql49ZSbD62VftshKae+qJWk92w//An+iL3
-   6Ra02h3zWE2LrAbVDzovzujLDr+IWr+od1wtRGGe25T6aqhcpaR2F++2I
-   8=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 15 Feb 2022 22:53:21 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Feb 2022 22:53:20 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Tue, 15 Feb 2022 22:53:20 -0800
-Received: from [10.216.55.237] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Tue, 15 Feb
- 2022 22:53:14 -0800
-Subject: Re: [RESEND v13 07/10] ASoC: qcom: Add support for codec dma driver
-To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <alsa-devel@alsa-project.org>, <bgoswami@codeaurora.org>,
-        <bjorn.andersson@linaro.org>, <broonie@kernel.org>,
-        <devicetree@vger.kernel.org>, <judyhsiao@chromium.org>,
-        <lgirdwood@gmail.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <perex@perex.cz>,
-        <quic_plai@quicinc.com>, <robh+dt@kernel.org>,
-        <rohitkr@codeaurora.org>, <srinivas.kandagatla@linaro.org>,
-        <tiwai@suse.com>
-CC:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
-References: <1644850708-11099-1-git-send-email-quic_srivasam@quicinc.com>
- <1644850708-11099-8-git-send-email-quic_srivasam@quicinc.com>
- <CAE-0n507RB89eoTPGUemdWh4cbcXtWkxKLt_0nCy8xGeJhb1sA@mail.gmail.com>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-Message-ID: <0093b56c-95a0-7344-1480-2473f790db90@quicinc.com>
-Date:   Wed, 16 Feb 2022 12:23:11 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=1gUe7cNWWp5jPSyyMpftZXbqEu5b63DOSsVxveCq2ps=;
+        b=YhhVuKCFyI88R7IDLGbF3CCuBuXJHPwiMtygUFF2fAj5ktD8iBNf8Pf8twO3WsUvH6
+         +DjNim9Fqz6pmCZnL8/ffg2aP8Cgol13mFhdBMS0Unj5MZeDcwWGMfNNwIZ/1Tw/t8xb
+         CqxLPXowrcghODk5fAovPVXGa+Vga4RpdpBrBy0EyH0U12t/iwT853h8V/U8RlVHpnOO
+         dHvnoBc0x6HxLaGsaTa4IVwe4+nyrMs81AhDfERVVqz4NcVGDolX1J4ryaKnSe0AuCa0
+         WOZM11ujyL5xNAPUtTA8xViyLYHEKX7ZrYmZ/HFrfwhlPH1jf/oQ6azrGh8BwuIColne
+         Y0ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=1gUe7cNWWp5jPSyyMpftZXbqEu5b63DOSsVxveCq2ps=;
+        b=HJ1GJPGro0jjY/5Xa1ljtZG+q9Ve0R/yQDYx7y3w5DoPiU4pKTLfiulPd43oXxa94X
+         Q2jLAd7YyxvNUN9W9r4QQXamvjCAnH2K6ESXQNQ1b82EqUuhyuK6CAmz85QbUZuYtDk7
+         61wU09tlPXkzeL/+oDoNO0Gkrv7V77Rx8q1Qt/pwbLB301GbJ802tMx434dIRgamOuOv
+         nVbKkx5uEBGMW0of7w2zXLVHnrBF6AnCSMLA7CMHSrA04ynunew0ylVEpWQRteTD9pJf
+         BSrJhUbzM3KQtR4SUxYATW5A+p2sw2nOx6OHVkYiauy7i84tSU3NVSnRehlLaqU4yZMg
+         lMgA==
+X-Gm-Message-State: AOAM531iJKypJ75EgVkbdar9FlZEnblqxXuD2mMNsX+L/PkGmFTh32I4
+        nNdcAWLFdoxlXl6GxQmhhb/J
+X-Google-Smtp-Source: ABdhPJyd2T4i7KV4O+k8PTpsysusmBElWwsfEQJ8CzBHSFSmMz8TmlqmEnn9P+3VQ1x+bunGMW6qbQ==
+X-Received: by 2002:a17:90b:f0c:b0:1b9:c6b7:7cd6 with SMTP id br12-20020a17090b0f0c00b001b9c6b77cd6mr187155pjb.231.1644995070475;
+        Tue, 15 Feb 2022 23:04:30 -0800 (PST)
+Received: from workstation ([117.193.208.189])
+        by smtp.gmail.com with ESMTPSA id c14sm40572968pfm.169.2022.02.15.23.04.26
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 15 Feb 2022 23:04:29 -0800 (PST)
+Date:   Wed, 16 Feb 2022 12:34:24 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
+        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
+        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
+        dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
+        quic_cang@quicinc.com, quic_skananth@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Paul Davey <paul.davey@alliedtelesis.co.nz>,
+        stable@vger.kernel.org
+Subject: Re: [PATCH v3 02/25] bus: mhi: Fix MHI DMA structure endianness
+Message-ID: <20220216070424.GA6225@workstation>
+References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
+ <20220212182117.49438-3-manivannan.sadhasivam@linaro.org>
+ <2ddfa2c9-0e03-e4f7-e0e5-78230bef43fe@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n507RB89eoTPGUemdWh4cbcXtWkxKLt_0nCy8xGeJhb1sA@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2ddfa2c9-0e03-e4f7-e0e5-78230bef43fe@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,819 +79,294 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Feb 15, 2022 at 02:02:01PM -0600, Alex Elder wrote:
+> On 2/12/22 12:20 PM, Manivannan Sadhasivam wrote:
+> > From: Paul Davey <paul.davey@alliedtelesis.co.nz>
+> > 
+> > The MHI driver does not work on big endian architectures.  The
+> > controller never transitions into mission mode.  This appears to be due
+> > to the modem device expecting the various contexts and transfer rings to
+> > have fields in little endian order in memory, but the driver constructs
+> > them in native endianness.
+> 
+> Yes, this is true.
+> 
+> > Fix MHI event, channel and command contexts and TRE handling macros to
+> > use explicit conversion to little endian.  Mark fields in relevant
+> > structures as little endian to document this requirement.
+> 
+> Basically every field in the external interface whose size
+> is greater than one byte must have its endianness noted.
+> From what I can tell, you did that for all of the exposed
+> structures defined in "drivers/bus/mhi/core/internal.h",
+> which is good.
+> 
+> *However* some of the *constants* were defined the wrong way.
+> 
+> Basically, all of the constant values should be expressed
+> in host byte order.  And any needed byte swapping should be
+> done at the time the value is read from memory--immediately.
+> That way, we isolate that activity to the one place we
+> interface with the possibly "foreign" format, and from then
+> on, everything may be assumed to be in natural (CPU) byte order.
+> 
 
-On 2/15/2022 6:57 AM, Stephen Boyd wrote:
-Thanks for your time and valuable review comments Stephen!!!
-> Quoting Srinivasa Rao Mandadapu (2022-02-14 06:58:25)
->> Upadate lpass cpu and platform driver to support audio over codec dma
->> in ADSP bypass use case.
->>
->> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
->> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->> Reported-by: kernel test robot <lkp@intel.com>
->> ---
->>   sound/soc/qcom/lpass-cpu.c      |  59 ++++-
->>   sound/soc/qcom/lpass-platform.c | 499 ++++++++++++++++++++++++++++++++++++++--
->>   2 files changed, 537 insertions(+), 21 deletions(-)
->>
->> diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
->> index 4fb9669..a5a46bc 100644
->> --- a/sound/soc/qcom/lpass-cpu.c
->> +++ b/sound/soc/qcom/lpass-cpu.c
->> @@ -1042,7 +1042,9 @@ static void of_lpass_cpu_parse_dai_data(struct device *dev,
->>                  }
->>                  if (id == LPASS_DP_RX) {
->>                          data->hdmi_port_enable = 1;
->> -               } else {
->> +               } else if (is_cdc_dma_port(id))
-> Please add braces if any of the other arms of the if statement have
-> braces
-Okay.
->
-> 	} else if (is_cdc_dma_port(id)) {
->
->> +                       data->codec_dma_enable = 1;
->> +               else {
->
-> 	} else {
->
->>                          data->mi2s_playback_sd_mode[id] =
->>                                  of_lpass_cpu_parse_sd_lines(dev, node,
->>                                                              "qcom,playback-sd-lines");
->> @@ -1057,6 +1059,7 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
->>   {
->>          struct lpass_data *drvdata;
->>          struct device_node *dsp_of_node;
->> +       struct resource *res;
->>          struct lpass_variant *variant;
->>          struct device *dev = &pdev->dev;
->>          const struct of_device_id *match;
->> @@ -1082,6 +1085,58 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
->>
->>          of_lpass_cpu_parse_dai_data(dev, drvdata);
->>
->> +       drvdata->num_clks =  variant->num_clks;
->> +       if (drvdata->codec_dma_enable) {
->> +               drvdata->rxtx_lpaif =
->> +                               devm_platform_ioremap_resource_byname(pdev, "lpass-rxtx-lpaif");
->> +               if (IS_ERR(drvdata->rxtx_lpaif))
->> +                       return PTR_ERR(drvdata->rxtx_lpaif);
->> +
->> +               drvdata->va_lpaif = devm_platform_ioremap_resource_byname(pdev, "lpass-va-lpaif");
->> +               if (IS_ERR(drvdata->va_lpaif))
->> +                       return PTR_ERR(drvdata->va_lpaif);
->> +
->> +               lpass_rxtx_regmap_config.max_register = LPAIF_CDC_RXTX_WRDMAPER_REG(variant,
->> +                                       variant->rxtx_wrdma_channels +
->> +                                       variant->rxtx_wrdma_channel_start, LPASS_CDC_DMA_TX3);
->> +
->> +               drvdata->rxtx_lpaif_map = devm_regmap_init_mmio(dev, drvdata->rxtx_lpaif,
->> +                                       &lpass_rxtx_regmap_config);
->> +               if (IS_ERR(drvdata->rxtx_lpaif_map)) {
->> +                       dev_err(dev, "error initializing rxtx regmap: %ld\n",
->> +                               PTR_ERR(drvdata->rxtx_lpaif_map));
-> The regmap core already prints when things go wrong. Let's just use that
-> instead of adding another error message.
-Okay. Will remove print here.
->
->> +                       return PTR_ERR(drvdata->rxtx_lpaif_map);
->> +               }
->> +               lpass_va_regmap_config.max_register = LPAIF_CDC_VA_WRDMAPER_REG(variant,
->> +                                       variant->va_wrdma_channels +
->> +                                       variant->va_wrdma_channel_start, LPASS_CDC_DMA_VA_TX0);
->> +
->> +               drvdata->va_lpaif_map = devm_regmap_init_mmio(dev, drvdata->va_lpaif,
->> +                                       &lpass_va_regmap_config);
->> +               if (IS_ERR(drvdata->va_lpaif_map)) {
->> +                       dev_err(dev, "error initializing va regmap: %ld\n",
->> +                               PTR_ERR(drvdata->va_lpaif_map));
->> +                       return PTR_ERR(drvdata->va_lpaif_map);
->> +               }
->> +               drvdata->cdc_clks = devm_kcalloc(dev, variant->cdc_dma_num_clks,
->> +                                       sizeof(*drvdata->cdc_clks), GFP_KERNEL);
->> +               drvdata->cdc_num_clks = variant->cdc_dma_num_clks;
->> +
->> +               for (i = 0; i < drvdata->cdc_num_clks; i++)
->> +                       drvdata->cdc_clks[i].id = variant->cdc_dma_clk_names[i];
->> +
->> +               ret = devm_clk_bulk_get(dev, drvdata->cdc_num_clks, drvdata->cdc_clks);
-> Do you care about particular clks? If not please use
-> devm_clk_bulk_get_all() and stop storing clk names and counts.
-Yes, individual clocks are required in cdc dma driver.  Will change 
-individual clock voting with naming.
->
->> +               if (ret) {
->> +                       dev_err(dev, "Failed to get clocks %d\n", ret);
->> +                       return ret;
->> +               }
->> +
->> +               res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "lpass-rxtx-cdc-dma-lpm");
->> +               drvdata->rxtx_cdc_dma_lpm_buf = res->start;
->> +
->> +               res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "lpass-va-cdc-dma-lpm");
->> +               drvdata->va_cdc_dma_lpm_buf = res->start;
->> +       }
->>          drvdata->lpaif = devm_platform_ioremap_resource_byname(pdev, "lpass-lpaif");
->>          if (IS_ERR(drvdata->lpaif))
->>                  return PTR_ERR(drvdata->lpaif);
->> @@ -1124,7 +1179,7 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
->>
->>          for (i = 0; i < variant->num_dai; i++) {
->>                  dai_id = variant->dai_driver[i].id;
->> -               if (dai_id == LPASS_DP_RX)
->> +               if (dai_id == LPASS_DP_RX || is_cdc_dma_port(dai_id))
->>                          continue;
->>
->>                  drvdata->mi2s_osr_clk[dai_id] = devm_clk_get_optional(dev,
->> diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
->> index 5d77240..12b8d40 100644
->> --- a/sound/soc/qcom/lpass-platform.c
->> +++ b/sound/soc/qcom/lpass-platform.c
->> @@ -20,6 +20,9 @@
->>
->>   #define LPASS_PLATFORM_BUFFER_SIZE     (24 *  2 * 1024)
->>   #define LPASS_PLATFORM_PERIODS         2
->> +#define LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE (8 * 1024)
->> +#define LPASS_VA_CDC_DMA_LPM_BUFF_SIZE (12 * 1024)
->> +#define LPASS_CDC_DMA_REGISTER_FIELDS_MAX 15
->>
->>   static const struct snd_pcm_hardware lpass_platform_pcm_hardware = {
->>          .info                   =       SNDRV_PCM_INFO_MMAP |
->> @@ -45,6 +48,99 @@ static const struct snd_pcm_hardware lpass_platform_pcm_hardware = {
->>          .fifo_size              =       0,
->>   };
->>
->> +static const struct snd_pcm_hardware lpass_platform_rxtx_hardware = {
->> +       .info                   =       SNDRV_PCM_INFO_MMAP |
->> +                                       SNDRV_PCM_INFO_MMAP_VALID |
->> +                                       SNDRV_PCM_INFO_INTERLEAVED |
->> +                                       SNDRV_PCM_INFO_PAUSE |
->> +                                       SNDRV_PCM_INFO_RESUME,
->> +       .formats                =       SNDRV_PCM_FMTBIT_S16 |
->> +                                       SNDRV_PCM_FMTBIT_S24 |
->> +                                       SNDRV_PCM_FMTBIT_S32,
->> +       .rates                  =       SNDRV_PCM_RATE_8000_192000,
->> +       .rate_min               =       8000,
->> +       .rate_max               =       192000,
->> +       .channels_min           =       1,
->> +       .channels_max           =       8,
->> +       .buffer_bytes_max       =       LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE,
->> +       .period_bytes_max       =       LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE /
->> +                                               LPASS_PLATFORM_PERIODS,
->> +       .period_bytes_min       =       LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE /
->> +                                               LPASS_PLATFORM_PERIODS,
->> +       .periods_min            =       LPASS_PLATFORM_PERIODS,
->> +       .periods_max            =       LPASS_PLATFORM_PERIODS,
->> +       .fifo_size              =       0,
->> +};
->> +
->> +static const struct snd_pcm_hardware lpass_platform_va_hardware = {
->> +       .info                   =       SNDRV_PCM_INFO_MMAP |
->> +                                       SNDRV_PCM_INFO_MMAP_VALID |
->> +                                       SNDRV_PCM_INFO_INTERLEAVED |
->> +                                       SNDRV_PCM_INFO_PAUSE |
->> +                                       SNDRV_PCM_INFO_RESUME,
->> +       .formats                =       SNDRV_PCM_FMTBIT_S16 |
->> +                                       SNDRV_PCM_FMTBIT_S24 |
->> +                                       SNDRV_PCM_FMTBIT_S32,
->> +       .rates                  =       SNDRV_PCM_RATE_8000_192000,
->> +       .rate_min               =       8000,
->> +       .rate_max               =       192000,
->> +       .channels_min           =       1,
->> +       .channels_max           =       8,
->> +       .buffer_bytes_max       =       LPASS_VA_CDC_DMA_LPM_BUFF_SIZE,
->> +       .period_bytes_max       =       LPASS_VA_CDC_DMA_LPM_BUFF_SIZE /
->> +                                               LPASS_PLATFORM_PERIODS,
->> +       .period_bytes_min       =       LPASS_VA_CDC_DMA_LPM_BUFF_SIZE /
->> +                                               LPASS_PLATFORM_PERIODS,
->> +       .periods_min            =       LPASS_PLATFORM_PERIODS,
->> +       .periods_max            =       LPASS_PLATFORM_PERIODS,
->> +       .fifo_size              =       0,
->> +};
->> +
->> +static int lpass_platform_alloc_rxtx_dmactl_fields(struct device *dev,
->> +                                        struct regmap *map)
->> +{
->> +       struct lpass_data *drvdata = dev_get_drvdata(dev);
->> +       struct lpass_variant *v = drvdata->variant;
->> +       struct lpaif_dmactl *rd_dmactl, *wr_dmactl;
->> +       int rval;
->> +
->> +       rd_dmactl = devm_kzalloc(dev, sizeof(*rd_dmactl), GFP_KERNEL);
->> +       if (rd_dmactl == NULL)
-> 	if (!rd_dmactl)
->
-> is kernel idiomatic. Please follow that style.
-Okay. will change.
->
->> +               return -ENOMEM;
->> +
->> +       wr_dmactl = devm_kzalloc(dev, sizeof(*wr_dmactl), GFP_KERNEL);
->> +       if (wr_dmactl == NULL)
->> +               return -ENOMEM;
->> +
->> +       drvdata->rxtx_rd_dmactl = rd_dmactl;
->> +       drvdata->rxtx_wr_dmactl = wr_dmactl;
->> +
->> +       rval = devm_regmap_field_bulk_alloc(dev, map, &rd_dmactl->intf,
->> +                                           &v->rxtx_rdma_intf, LPASS_CDC_DMA_REGISTER_FIELDS_MAX);
->> +       if (rval)
->> +               return rval;
->> +
->> +       return devm_regmap_field_bulk_alloc(dev, map, &wr_dmactl->intf,
->> +                                           &v->rxtx_wrdma_intf, LPASS_CDC_DMA_REGISTER_FIELDS_MAX);
->> +}
->> +
->> +static int lpass_platform_alloc_va_dmactl_fields(struct device *dev,
->> +                                        struct regmap *map)
->> +{
->> +       struct lpass_data *drvdata = dev_get_drvdata(dev);
->> +       struct lpass_variant *v = drvdata->variant;
->> +       struct lpaif_dmactl *wr_dmactl;
->> +
->> +       wr_dmactl = devm_kzalloc(dev, sizeof(*wr_dmactl), GFP_KERNEL);
->> +       if (wr_dmactl == NULL)
->> +               return -ENOMEM;
->> +
->> +       drvdata->va_wr_dmactl = wr_dmactl;
->> +       return devm_regmap_field_bulk_alloc(dev, map, &wr_dmactl->intf,
->> +                                           &v->va_wrdma_intf, LPASS_CDC_DMA_REGISTER_FIELDS_MAX);
->> +}
->> +
->> +
->>   static int lpass_platform_alloc_dmactl_fields(struct device *dev,
->>                                           struct regmap *map)
->>   {
->> @@ -123,25 +219,55 @@ static int lpass_platform_pcmops_open(struct snd_soc_component *component,
->>                  return dma_ch;
->>          }
->>
->> -       if (cpu_dai->driver->id == LPASS_DP_RX) {
->> -               map = drvdata->hdmiif_map;
->> -               drvdata->hdmi_substream[dma_ch] = substream;
->> -       } else {
->> +       switch (dai_id) {
->> +       case MI2S_PRIMARY ... MI2S_QUINARY:
->>                  map = drvdata->lpaif_map;
->>                  drvdata->substream[dma_ch] = substream;
->> +               break;
->> +       case LPASS_DP_RX:
->> +               map = drvdata->hdmiif_map;
->> +               drvdata->hdmi_substream[dma_ch] = substream;
->> +               break;
->> +       case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
->> +       case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
->> +               map = drvdata->rxtx_lpaif_map;
->> +               drvdata->rxtx_substream[dma_ch] = substream;
->> +               break;
->> +       case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
->> +               map = drvdata->va_lpaif_map;
->> +               drvdata->va_substream[dma_ch] = substream;
->> +               break;
->> +       default:
->> +               break;
->>          }
->> +
->>          data->dma_ch = dma_ch;
->> -       ret = regmap_write(map,
->> -                       LPAIF_DMACTL_REG(v, dma_ch, dir, data->i2s_port), 0);
->> -       if (ret) {
->> -               dev_err(soc_runtime->dev,
->> -                       "error writing to rdmactl reg: %d\n", ret);
->> -               return ret;
->> +       switch (dai_id) {
->> +       case MI2S_PRIMARY ... MI2S_QUINARY:
->> +       case LPASS_DP_RX:
->> +               ret = regmap_write(map, LPAIF_DMACTL_REG(v, dma_ch, dir, data->i2s_port), 0);
->> +               if (ret) {
->> +                       kfree(data);
->> +                       dev_err(soc_runtime->dev, "error writing to rdmactl reg: %d\n", ret);
->> +                       return ret;
->> +               }
->> +               snd_soc_set_runtime_hwparams(substream, &lpass_platform_pcm_hardware);
->> +               runtime->dma_bytes = lpass_platform_pcm_hardware.buffer_bytes_max;
->> +               break;
->> +       case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
->> +       case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
->> +               snd_soc_set_runtime_hwparams(substream, &lpass_platform_rxtx_hardware);
->> +               runtime->dma_bytes = lpass_platform_rxtx_hardware.buffer_bytes_max;
->> +               snd_pcm_set_runtime_buffer(substream, &substream->dma_buffer);
->> +               break;
->> +       case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
->> +               snd_soc_set_runtime_hwparams(substream, &lpass_platform_va_hardware);
->> +               runtime->dma_bytes = lpass_platform_va_hardware.buffer_bytes_max;
->> +               snd_pcm_set_runtime_buffer(substream, &substream->dma_buffer);
->> +               break;
->> +       default:
->> +               break;
->>          }
->> -       snd_soc_set_runtime_hwparams(substream, &lpass_platform_pcm_hardware);
->> -
->> -       runtime->dma_bytes = lpass_platform_pcm_hardware.buffer_bytes_max;
->> -
->>          ret = snd_pcm_hw_constraint_integer(runtime,
->>                          SNDRV_PCM_HW_PARAM_PERIODS);
->>          if (ret < 0) {
->> @@ -166,10 +292,25 @@ static int lpass_platform_pcmops_close(struct snd_soc_component *component,
->>          unsigned int dai_id = cpu_dai->driver->id;
->>
->>          data = runtime->private_data;
->> -       if (dai_id == LPASS_DP_RX)
->> -               drvdata->hdmi_substream[data->dma_ch] = NULL;
->> -       else
->> +
->> +       switch (dai_id) {
->> +       case MI2S_PRIMARY ... MI2S_QUINARY:
->>                  drvdata->substream[data->dma_ch] = NULL;
->> +               break;
->> +       case LPASS_DP_RX:
->> +               drvdata->hdmi_substream[data->dma_ch] = NULL;
->> +               break;
->> +       case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
->> +       case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
->> +               drvdata->rxtx_substream[data->dma_ch] = NULL;
->> +               break;
->> +       case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
->> +               drvdata->va_substream[data->dma_ch] = NULL;
->> +               break;
->> +       default:
->> +               break;
->> +       }
->> +
->>          if (v->free_dma_channel)
->>                  v->free_dma_channel(drvdata, data->dma_ch, dai_id);
->>
->> @@ -209,9 +350,25 @@ static void __lpass_get_lpaif_handle(struct snd_pcm_substream *substream,
->>                  l_dmactl = drvdata->hdmi_rd_dmactl;
->>                  l_map = drvdata->hdmiif_map;
->>                  break;
->> +       case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
->> +               l_id = pcm_data->dma_ch;
->> +               l_dmactl = drvdata->rxtx_rd_dmactl;
->> +               l_map = drvdata->rxtx_lpaif_map;
->> +               break;
->> +       case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
->> +               l_id = pcm_data->dma_ch - v->rxtx_wrdma_channel_start;
->> +               l_dmactl = drvdata->rxtx_wr_dmactl;
->> +               l_map = drvdata->rxtx_lpaif_map;
->> +               break;
->> +       case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
->> +               l_id = pcm_data->dma_ch - v->va_wrdma_channel_start;
->> +               l_dmactl = drvdata->va_wr_dmactl;
->> +               l_map = drvdata->va_lpaif_map;
->> +               break;
->>          default:
->>                  break;
->>          }
->> +
->>          if (dmactl)
->>                  *dmactl = l_dmactl;
->>          if (id)
->> @@ -299,6 +456,10 @@ static int lpass_platform_pcmops_hw_params(struct snd_soc_component *component,
->>                  }
->>
->>                  break;
->> +       case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
->> +       case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
->> +       case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX0:
->> +               break;
->>          default:
->>                  dev_err(soc_runtime->dev, "%s: invalid  interface: %d\n", __func__, dai_id);
->>                  break;
->> @@ -387,6 +548,9 @@ static int lpass_platform_pcmops_hw_free(struct snd_soc_component *component,
->>          struct regmap *map;
->>          unsigned int dai_id = cpu_dai->driver->id;
->>
->> +       if (is_cdc_dma_port(dai_id))
->> +               return 0;
->> +
->>          __lpass_get_lpaif_handle(substream, component, NULL, NULL, &map);
->>          if (!map) {
->>                  dev_err(soc_runtime->dev, "failed to get dmactl handle\n");
->> @@ -449,6 +613,14 @@ static int lpass_platform_pcmops_prepare(struct snd_soc_component *component,
->>                  return ret;
->>          }
->>
->> +       if (is_cdc_dma_port(dai_id)) {
->> +               ret = regmap_fields_write(dmactl->fifowm, id, LPAIF_DMACTL_FIFOWM_8);
->> +               if (ret) {
->> +                       dev_err(soc_runtime->dev, "error writing fifowm field to dmactl reg: %d, id: %d\n",
->> +                               ret, id);
->> +                       return ret;
->> +               }
->> +       }
->>          ret = regmap_fields_write(dmactl->enable, id, LPAIF_DMACTL_ENABLE_ON);
->>          if (ret) {
->>                  dev_err(soc_runtime->dev, "error writing to rdmactl reg: %d\n",
->> @@ -532,6 +704,35 @@ static int lpass_platform_pcmops_trigger(struct snd_soc_component *component,
->>                          val_mask = LPAIF_IRQ_ALL(ch);
->>                          val_irqen = LPAIF_IRQ_ALL(ch);
->>                          break;
->> +               case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
->> +               case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
->> +                       ret = regmap_fields_write(dmactl->dyncclk, id, LPAIF_DMACTL_DYNCLK_ON);
->> +                       if (ret) {
->> +                               dev_err(soc_runtime->dev,
->> +                                       "error writing to rdmactl reg field: %d\n", ret);
->> +                               return ret;
->> +                       }
->> +                       reg_irqclr = LPAIF_RXTX_IRQCLEAR_REG(v, LPAIF_IRQ_PORT_HOST);
->> +                       val_irqclr = LPAIF_IRQ_ALL(ch);
->> +
->> +                       reg_irqen = LPAIF_RXTX_IRQEN_REG(v, LPAIF_IRQ_PORT_HOST);
->> +                       val_mask = LPAIF_IRQ_ALL(ch);
->> +                       val_irqen = LPAIF_IRQ_ALL(ch);
->> +                       break;
->> +               case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
->> +                       ret = regmap_fields_write(dmactl->dyncclk, id, LPAIF_DMACTL_DYNCLK_ON);
->> +                       if (ret) {
->> +                               dev_err(soc_runtime->dev,
->> +                                       "error writing to rdmactl reg field: %d\n", ret);
->> +                               return ret;
->> +                       }
->> +                       reg_irqclr = LPAIF_VA_IRQCLEAR_REG(v, LPAIF_IRQ_PORT_HOST);
->> +                       val_irqclr = LPAIF_IRQ_ALL(ch);
->> +
->> +                       reg_irqen = LPAIF_VA_IRQEN_REG(v, LPAIF_IRQ_PORT_HOST);
->> +                       val_mask = LPAIF_IRQ_ALL(ch);
->> +                       val_irqen = LPAIF_IRQ_ALL(ch);
->> +                       break;
->>                  default:
->>                          dev_err(soc_runtime->dev, "%s: invalid %d interface\n", __func__, dai_id);
->>                          return -EINVAL;
->> @@ -583,6 +784,37 @@ static int lpass_platform_pcmops_trigger(struct snd_soc_component *component,
->>                          val_mask = LPAIF_IRQ_ALL(ch);
->>                          val_irqen = 0;
->>                          break;
->> +               case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
->> +               case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
->> +                       ret = regmap_fields_write(dmactl->dyncclk, id, LPAIF_DMACTL_DYNCLK_OFF);
->> +                       if (ret) {
->> +                               dev_err(soc_runtime->dev,
->> +                                       "error writing to rdmactl reg field: %d\n", ret);
->> +                               return ret;
->> +                       }
->> +
->> +                       reg_irqclr = LPAIF_RXTX_IRQCLEAR_REG(v, LPAIF_IRQ_PORT_HOST);
->> +                       val_irqclr = LPAIF_IRQ_ALL(ch);
->> +
->> +                       reg_irqen = LPAIF_RXTX_IRQEN_REG(v, LPAIF_IRQ_PORT_HOST);
->> +                       val_mask = LPAIF_IRQ_ALL(ch);
->> +                       val_irqen = LPAIF_IRQ_ALL(ch);
->> +                       break;
->> +               case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
->> +                       ret = regmap_fields_write(dmactl->dyncclk, id, LPAIF_DMACTL_DYNCLK_OFF);
->> +                       if (ret) {
->> +                               dev_err(soc_runtime->dev,
->> +                                       "error writing to rdmactl reg field: %d\n", ret);
->> +                               return ret;
->> +                       }
->> +
->> +                       reg_irqclr = LPAIF_VA_IRQCLEAR_REG(v, LPAIF_IRQ_PORT_HOST);
->> +                       val_irqclr = LPAIF_IRQ_ALL(ch);
->> +
->> +                       reg_irqen = LPAIF_VA_IRQEN_REG(v, LPAIF_IRQ_PORT_HOST);
->> +                       val_mask = LPAIF_IRQ_ALL(ch);
->> +                       val_irqen = LPAIF_IRQ_ALL(ch);
->> +                       break;
->>                  default:
->>                          dev_err(soc_runtime->dev, "%s: invalid %d interface\n", __func__, dai_id);
->>                          return -EINVAL;
->> @@ -642,6 +874,39 @@ static snd_pcm_uframes_t lpass_platform_pcmops_pointer(
->>          return bytes_to_frames(substream->runtime, curr_addr - base_addr);
->>   }
->>
->> +static int lpass_platform_cdc_dma_mmap(struct snd_soc_component *component,
-> 'component' is not used.
-Okay. will remove it.
->
->> +                                      struct snd_pcm_substream *substream,
->> +                                      struct vm_area_struct *vma)
->> +{
->> +       struct snd_pcm_runtime *runtime = substream->runtime;
->> +       unsigned long size, offset;
->> +
->> +       vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
->> +       size = vma->vm_end - vma->vm_start;
->> +       offset = vma->vm_pgoff << PAGE_SHIFT;
->> +       return io_remap_pfn_range(vma, vma->vm_start,
->> +                       (runtime->dma_addr + offset) >> PAGE_SHIFT,
->> +                       size, vma->vm_page_prot);
->> +
->> +}
->> +
->> +static int lpass_platform_pcmops_mmap(struct snd_soc_component *component,
->> +                                     struct snd_pcm_substream *substream,
->> +                                     struct vm_area_struct *vma)
->> +{
->> +       struct snd_soc_pcm_runtime *soc_runtime = asoc_substream_to_rtd(substream);
->> +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(soc_runtime, 0);
->> +       unsigned int dai_id = cpu_dai->driver->id;
->> +       int err;
->> +
->> +       if (is_cdc_dma_port(dai_id))
->> +               err = lpass_platform_cdc_dma_mmap(component, substream, vma);
-> return lpass_platform_cdc_dma_mmap(...)
-Okay. Will change it.
->
->> +       else
-> Drop else
-Okay.
->
->> +               err = snd_pcm_lib_default_mmap(substream, vma);
-> return snd_pcm_lib_default_mmap(...)
-Okay.
->
->> +
->> +       return err;
-> err is no longer required.
-Okay. will remove it.
->
->> +}
->> +
->>   static irqreturn_t lpass_dma_interrupt_handler(
->>                          struct snd_pcm_substream *substream,
->>                          struct lpass_data *drvdata,
->> @@ -674,6 +939,17 @@ static irqreturn_t lpass_dma_interrupt_handler(
->>                  reg = LPAIF_IRQCLEAR_REG(v, LPAIF_IRQ_PORT_HOST);
->>                  val = 0;
->>          break;
->> +       case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
->> +       case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
->> +               map = drvdata->rxtx_lpaif_map;
->> +               reg = LPAIF_RXTX_IRQCLEAR_REG(v, LPAIF_IRQ_PORT_HOST);
->> +               val = 0;
->> +       break;
->> +       case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
->> +               map = drvdata->va_lpaif_map;
->> +               reg = LPAIF_VA_IRQCLEAR_REG(v, LPAIF_IRQ_PORT_HOST);
->> +               val = 0;
->> +       break;
->>          default:
->>          dev_err(soc_runtime->dev, "%s: invalid  %d interface\n", __func__, dai_id);
->>          return -EINVAL;
->> @@ -781,18 +1057,122 @@ static irqreturn_t lpass_platform_hdmiif_irq(int irq, void *data)
->>                                  return rv;
->>                  }
->>          }
->> +       return IRQ_HANDLED;
->> +}
->> +
->> +static irqreturn_t lpass_platform_rxtxif_irq(int irq, void *data)
->> +{
->> +       struct lpass_data *drvdata = data;
->> +       struct lpass_variant *v = drvdata->variant;
->> +       unsigned int irqs;
->> +       int rv, chan;
-> Why is 'rv' int vs. irqreturn_t? Is something that isn't an irqreturn_t
-> type being returned from lpass_dma_interrupt_handler()? That's bad. If
-> the regmap read fails in the irq handler we are in pretty bad shape. I'd
-> say that we don't care to handle that case, or at the least, don't care
-> about the return value and can simply get out of this irq handler as
-> fast as possible.
-Okay.  will change accordingly.
->
->> +
->> +       rv = regmap_read(drvdata->rxtx_lpaif_map,
->> +                       LPAIF_RXTX_IRQSTAT_REG(v, LPAIF_IRQ_PORT_HOST), &irqs);
->> +       if (rv)
->> +               return IRQ_NONE;
->> +       /* Handle per channel interrupts */
->> +       for (chan = 0; chan < LPASS_MAX_CDC_DMA_CHANNELS; chan++) {
->> +               if (irqs & LPAIF_IRQ_ALL(chan) && drvdata->rxtx_substream[chan]) {
->> +                       rv = lpass_dma_interrupt_handler(
->> +                                               drvdata->rxtx_substream[chan],
->> +                                               drvdata, chan, irqs);
->> +                       if (rv != IRQ_HANDLED)
->> +                               return rv;
->> +               }
->> +       }
->>
->>          return IRQ_HANDLED;
->>   }
->>
->> +static irqreturn_t lpass_platform_vaif_irq(int irq, void *data)
->> +{
->> +       struct lpass_data *drvdata = data;
->> +       struct lpass_variant *v = drvdata->variant;
->> +       unsigned int irqs;
->> +       int rv, chan;
->> +
->> +       rv = regmap_read(drvdata->va_lpaif_map,
->> +                       LPAIF_VA_IRQSTAT_REG(v, LPAIF_IRQ_PORT_HOST), &irqs);
->> +       if (rv)
->> +               return IRQ_NONE;
->> +       /* Handle per channel interrupts */
->> +       for (chan = 0; chan < LPASS_MAX_VA_CDC_DMA_CHANNELS; chan++) {
->> +               if (irqs & LPAIF_IRQ_ALL(chan) && drvdata->va_substream[chan]) {
->> +                       rv = lpass_dma_interrupt_handler(
->> +                                               drvdata->va_substream[chan],
->> +                                               drvdata, chan, irqs);
->> +                       if (rv != IRQ_HANDLED)
->> +                               return rv;
->> +               }
->> +       }
->> +       return IRQ_HANDLED;
->> +}
->> +
->> +static int lpass_platform_prealloc_cdc_dma_buffer(struct snd_soc_component *component,
->> +                                                 struct snd_pcm *pcm, int dai_id)
->> +{
->> +       struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
->> +       struct snd_pcm_substream *substream;
->> +       struct snd_dma_buffer *buf;
->> +       int ret;
->> +
->> +       if (pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream)
->> +               substream = pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream;
->> +       else
->> +               substream = pcm->streams[SNDRV_PCM_STREAM_CAPTURE].substream;
->> +
->> +       ret = dma_coerce_mask_and_coherent(pcm->card->dev, DMA_BIT_MASK(64));
-> Why isn't the dma mask setup for this device?
-Okay. It seems redundant here.  Will remove it.
->
->> +       if (ret)
->> +               return ret;
->> +
->> +       buf = &substream->dma_buffer;
->> +       buf->dev.dev = pcm->card->dev;
->> +       buf->private_data = NULL;
->> +
->> +       /* Assign Codec DMA buffer pointers */
->> +       buf->dev.type = SNDRV_DMA_TYPE_CONTINUOUS;
->> +
->> +       switch (dai_id) {
->> +       case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
->> +               buf->bytes = lpass_platform_rxtx_hardware.buffer_bytes_max;
->> +               buf->addr = drvdata->rxtx_cdc_dma_lpm_buf;
->> +               break;
->> +       case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
->> +               buf->bytes = lpass_platform_rxtx_hardware.buffer_bytes_max;
->> +               buf->addr = drvdata->rxtx_cdc_dma_lpm_buf + LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE;
->> +               break;
->> +       case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
->> +               buf->bytes = lpass_platform_va_hardware.buffer_bytes_max;
->> +               buf->addr = drvdata->va_cdc_dma_lpm_buf;
->> +               break;
->> +       default:
->> +               break;
->> +       }
->> +
->> +       buf->area = (unsigned char * __force)ioremap(buf->addr, buf->bytes);
-> Why aren't we using the DMA mapping framework?
-Here, Need to use hardware memory, that is LPASS LPM region for codec DMA.
->
->> +
->> +       return 0;
->> +}
->> +
->>   static int lpass_platform_pcm_new(struct snd_soc_component *component,
->>                                    struct snd_soc_pcm_runtime *soc_runtime)
->>   {
->>          struct snd_pcm *pcm = soc_runtime->pcm;
->> +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(soc_runtime, 0);
->> +       unsigned int dai_id = cpu_dai->driver->id;
->> +
->>          size_t size = lpass_platform_pcm_hardware.buffer_bytes_max;
->>
->> -       return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV,
->> -                                           component->dev, size);
->> +       /*
->> +        * Lpass codec dma can access only lpass lpm hardware memory.
->> +        * ioremap is for HLOS to access hardware memory.
->> +        */
->> +       if (is_cdc_dma_port(dai_id))
->> +               return lpass_platform_prealloc_cdc_dma_buffer(component, pcm, dai_id);
->> +       else
->> +               return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV,
->> +                                               component->dev, size);
-> else return is an anti-pattern. Please remove the else and deindent the
-> return.
-Okay. Will change it.
->
->>   }
->>
->>   static int lpass_platform_pcmops_suspend(struct snd_soc_component *component)
->> @@ -827,6 +1207,31 @@ static int lpass_platform_pcmops_resume(struct snd_soc_component *component)
->>          return regcache_sync(map);
->>   }
->>
->> +static int lpass_platform_copy(struct snd_soc_component *component,
->> +                              struct snd_pcm_substream *substream, int channel,
->> +                              unsigned long pos, void __user *buf, unsigned long bytes)
->> +{
->> +       struct snd_pcm_runtime *rt = substream->runtime;
->> +       unsigned int dai_id = component->id;
->> +       int ret = 0;
->> +
->> +       void __iomem *dma_buf = rt->dma_area + pos +
->> +                               channel * (rt->dma_bytes / rt->channels);
->> +
->> +       if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
->> +               if (is_cdc_dma_port(dai_id))
->> +                       ret = copy_from_user_toio(dma_buf, buf, bytes);
->> +               else
->> +                       ret = copy_from_user((void __force *)dma_buf, buf, bytes);
->> +       } else if (substream->stream == SNDRV_PCM_STREAM_CAPTURE) {
->> +               if (is_cdc_dma_port(dai_id))
->> +                       ret = copy_to_user_fromio(buf, dma_buf, bytes);
->> +               else
->> +                       ret = copy_to_user(buf, (void __force *)dma_buf, bytes);
-> Having __force in here highlights the lack of DMA API usage. I guess
-> there's a sound dma wrapper library in sound/core/memalloc.c? Why can't
-> that be used?
-Didn't see any memcopy wrapper functions in memalloc.c. Could You please 
-elaborate or share some example.
->
->> +       }
->> +
->> +       return ret;
->> +}
->>
->>   static const struct snd_soc_component_driver lpass_component_driver = {
->>          .name           = DRV_NAME,
->> @@ -837,9 +1242,11 @@ static const struct snd_soc_component_driver lpass_component_driver = {
->>          .prepare        = lpass_platform_pcmops_prepare,
->>          .trigger        = lpass_platform_pcmops_trigger,
->>          .pointer        = lpass_platform_pcmops_pointer,
->> +       .mmap           = lpass_platform_pcmops_mmap,
->>          .pcm_construct  = lpass_platform_pcm_new,
->>          .suspend                = lpass_platform_pcmops_suspend,
->>          .resume                 = lpass_platform_pcmops_resume,
->> +       .copy_user              = lpass_platform_copy,
->>
->>   };
->>
->> @@ -877,6 +1284,60 @@ int asoc_qcom_lpass_platform_register(struct platform_device *pdev)
->>                  return ret;
->>          }
->>
->> +       if (drvdata->codec_dma_enable) {
->> +               ret = regmap_write(drvdata->rxtx_lpaif_map,
->> +                       LPAIF_RXTX_IRQEN_REG(v, LPAIF_IRQ_PORT_HOST), 0x0);
->> +               if (ret) {
->> +                       dev_err(&pdev->dev, "error writing to rxtx irqen reg: %d\n", ret);
->> +                       return ret;
->> +               }
->> +               ret = regmap_write(drvdata->va_lpaif_map,
->> +                       LPAIF_VA_IRQEN_REG(v, LPAIF_IRQ_PORT_HOST), 0x0);
->> +               if (ret) {
->> +                       dev_err(&pdev->dev, "error writing to rxtx irqen reg: %d\n", ret);
->> +                       return ret;
->> +               }
->> +               drvdata->rxtxif_irq = platform_get_irq_byname(pdev, "lpass-irq-rxtxif");
->> +               if (drvdata->rxtxif_irq < 0)
->> +                       return -ENODEV;
->> +
->> +               ret = devm_request_irq(&pdev->dev, drvdata->rxtxif_irq,
->> +                               lpass_platform_rxtxif_irq, IRQF_TRIGGER_RISING,
-> Drop flags and get it from firmware please.
-Same is followed in existing for other i2s and HDMI interrupts. Could 
-You please give some example if it's really matters?
->
->> +                               "lpass-irq-rxtxif", drvdata);
->> +               if (ret) {
->> +                       dev_err(&pdev->dev, "rxtx irq request failed: %d\n", ret);
->> +                       return ret;
->> +               }
->> +
->> +               ret = lpass_platform_alloc_rxtx_dmactl_fields(&pdev->dev,
->> +                                                drvdata->rxtx_lpaif_map);
->> +               if (ret) {
->> +                       dev_err(&pdev->dev,
->> +                               "error initializing rxtx dmactl fields: %d\n", ret);
->> +                       return ret;
->> +               }
->> +
->> +               drvdata->vaif_irq = platform_get_irq_byname(pdev, "lpass-irq-vaif");
->> +               if (drvdata->vaif_irq < 0)
->> +                       return -ENODEV;
->> +
->> +               ret = devm_request_irq(&pdev->dev, drvdata->vaif_irq,
->> +                               lpass_platform_vaif_irq, IRQF_TRIGGER_RISING,
-> Drop flags and get it from firmware please.
-Some Example Please!!!
->
->> +                               "lpass-irq-vaif", drvdata);
->> +               if (ret) {
->> +                       dev_err(&pdev->dev, "va irq request failed: %d\n", ret);
->> +                       return ret;
->> +               }
->> +
->> +               ret = lpass_platform_alloc_va_dmactl_fields(&pdev->dev,
->> +                                                drvdata->va_lpaif_map);
->> +               if (ret) {
->> +                       dev_err(&pdev->dev,
->> +                               "error initializing va dmactl fields: %d\n", ret);
->> +                       return ret;
->> +               }
->> +       }
->> +
->>          if (drvdata->hdmi_port_enable) {
->>                  drvdata->hdmiif_irq = platform_get_irq_byname(pdev, "lpass-irq-hdmi");
->>                  if (drvdata->hdmiif_irq < 0)
->> --
->> 2.7.4
->>
+Well, I did think about it but I convinced myself that doing the
+conversion in code rather in defines make the code look messy.
+Also in some places it just makes it look complicated. More below:
+
+> I will point out what I mean, below.
+> 
+> > Fixes: a6e2e3522f29 ("bus: mhi: core: Add support for PM state transitions")
+> > Fixes: 6cd330ae76ff ("bus: mhi: core: Add support for ringing channel/event ring doorbells")
+> > Signed-off-by: Paul Davey <paul.davey@alliedtelesis.co.nz>
+> > Cc: stable@vger.kernel.org
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >   drivers/bus/mhi/core/debugfs.c  |  26 +++----
+> >   drivers/bus/mhi/core/init.c     |  36 +++++-----
+> >   drivers/bus/mhi/core/internal.h | 119 ++++++++++++++++----------------
+> >   drivers/bus/mhi/core/main.c     |  22 +++---
+> >   drivers/bus/mhi/core/pm.c       |   4 +-
+> >   5 files changed, 104 insertions(+), 103 deletions(-)
+> > 
+
+[...]
+
+> > @@ -277,57 +277,58 @@ enum mhi_cmd_type {
+> >   /* No operation command */
+> >   #define MHI_TRE_CMD_NOOP_PTR (0)
+> >   #define MHI_TRE_CMD_NOOP_DWORD0 (0)
+> > -#define MHI_TRE_CMD_NOOP_DWORD1 (MHI_CMD_NOP << 16)
+> > +#define MHI_TRE_CMD_NOOP_DWORD1 (cpu_to_le32(MHI_CMD_NOP << 16))
+> 
+> This just looks wrong to me.  The original definition
+> should be fine, but then where it's *used* it should
+> be passed to cpu_to_le32().  I realize this might be
+> a special case, where these "DWORD" values are getting
+> written out to command ring elements, but even so, the
+> byte swapping that's happening is important and should
+> be made obvious in the code using these symbols.
+> 
+> This comment applies to many more similar definitions
+> below.  I don't know; maybe it looks cumbersome if
+> it's done in the code, but I still think it's better to
+> consistenly define symbols like this in CPU byte order
+> and do the conversions explicitly only when the values
+> are read/written to "foreign" (external interface)
+> memory.
+> 
+
+Defines like MHI_TRE_GET_CMD_CHID are making the conversion look messy
+to me. In this we first extract the DWORD from TRE and then doing
+shifting + masking to get the CHID.
+
+So without splitting the DWORD extraction and GET_CHID macros
+separately, we can't just do the conversion in code. And we may end up
+doing the conversion in defines just for these special cases but that
+will break the uniformity.
+
+So IMO it looks better if we trust the defines to do the conversion itself.
+
+Please let me know if you think the other way.
+
+Thanks,
+Mani
+
+> Outside of this issue, the remainder of the patch looks
+> OK to me.
+> 
+> 					-Alex
+> 
+> >   /* Channel reset command */
+> >   #define MHI_TRE_CMD_RESET_PTR (0)
+> >   #define MHI_TRE_CMD_RESET_DWORD0 (0)
+> > -#define MHI_TRE_CMD_RESET_DWORD1(chid) ((chid << 24) | \
+> > -					(MHI_CMD_RESET_CHAN << 16))
+> > +#define MHI_TRE_CMD_RESET_DWORD1(chid) (cpu_to_le32((chid << 24) | \
+> > +					(MHI_CMD_RESET_CHAN << 16)))
+> >   /* Channel stop command */
+> >   #define MHI_TRE_CMD_STOP_PTR (0)
+> >   #define MHI_TRE_CMD_STOP_DWORD0 (0)
+> > -#define MHI_TRE_CMD_STOP_DWORD1(chid) ((chid << 24) | \
+> > -				       (MHI_CMD_STOP_CHAN << 16))
+> > +#define MHI_TRE_CMD_STOP_DWORD1(chid) (cpu_to_le32((chid << 24) | \
+> > +				       (MHI_CMD_STOP_CHAN << 16)))
+> >   /* Channel start command */
+> >   #define MHI_TRE_CMD_START_PTR (0)
+> >   #define MHI_TRE_CMD_START_DWORD0 (0)
+> > -#define MHI_TRE_CMD_START_DWORD1(chid) ((chid << 24) | \
+> > -					(MHI_CMD_START_CHAN << 16))
+> > +#define MHI_TRE_CMD_START_DWORD1(chid) (cpu_to_le32((chid << 24) | \
+> > +					(MHI_CMD_START_CHAN << 16)))
+> > -#define MHI_TRE_GET_CMD_CHID(tre) (((tre)->dword[1] >> 24) & 0xFF)
+> > -#define MHI_TRE_GET_CMD_TYPE(tre) (((tre)->dword[1] >> 16) & 0xFF)
+> > +#define MHI_TRE_GET_DWORD(tre, word) (le32_to_cpu((tre)->dword[(word)]))
+> > +#define MHI_TRE_GET_CMD_CHID(tre) ((MHI_TRE_GET_DWORD(tre, 1) >> 24) & 0xFF)
+> > +#define MHI_TRE_GET_CMD_TYPE(tre) ((MHI_TRE_GET_DWORD(tre, 1) >> 16) & 0xFF)
+> >   /* Event descriptor macros */
+> > -#define MHI_TRE_EV_PTR(ptr) (ptr)
+> > -#define MHI_TRE_EV_DWORD0(code, len) ((code << 24) | len)
+> > -#define MHI_TRE_EV_DWORD1(chid, type) ((chid << 24) | (type << 16))
+> > -#define MHI_TRE_GET_EV_PTR(tre) ((tre)->ptr)
+> > -#define MHI_TRE_GET_EV_CODE(tre) (((tre)->dword[0] >> 24) & 0xFF)
+> > -#define MHI_TRE_GET_EV_LEN(tre) ((tre)->dword[0] & 0xFFFF)
+> > -#define MHI_TRE_GET_EV_CHID(tre) (((tre)->dword[1] >> 24) & 0xFF)
+> > -#define MHI_TRE_GET_EV_TYPE(tre) (((tre)->dword[1] >> 16) & 0xFF)
+> > -#define MHI_TRE_GET_EV_STATE(tre) (((tre)->dword[0] >> 24) & 0xFF)
+> > -#define MHI_TRE_GET_EV_EXECENV(tre) (((tre)->dword[0] >> 24) & 0xFF)
+> > -#define MHI_TRE_GET_EV_SEQ(tre) ((tre)->dword[0])
+> > -#define MHI_TRE_GET_EV_TIME(tre) ((tre)->ptr)
+> > -#define MHI_TRE_GET_EV_COOKIE(tre) lower_32_bits((tre)->ptr)
+> > -#define MHI_TRE_GET_EV_VEID(tre) (((tre)->dword[0] >> 16) & 0xFF)
+> > -#define MHI_TRE_GET_EV_LINKSPEED(tre) (((tre)->dword[1] >> 24) & 0xFF)
+> > -#define MHI_TRE_GET_EV_LINKWIDTH(tre) ((tre)->dword[0] & 0xFF)
+> > +#define MHI_TRE_EV_PTR(ptr) (cpu_to_le64(ptr))
+> > +#define MHI_TRE_EV_DWORD0(code, len) (cpu_to_le32((code << 24) | len))
+> > +#define MHI_TRE_EV_DWORD1(chid, type) (cpu_to_le32((chid << 24) | (type << 16)))
+> > +#define MHI_TRE_GET_EV_PTR(tre) (le64_to_cpu((tre)->ptr))
+> > +#define MHI_TRE_GET_EV_CODE(tre) ((MHI_TRE_GET_DWORD(tre, 0) >> 24) & 0xFF)
+> > +#define MHI_TRE_GET_EV_LEN(tre) (MHI_TRE_GET_DWORD(tre, 0) & 0xFFFF)
+> > +#define MHI_TRE_GET_EV_CHID(tre) ((MHI_TRE_GET_DWORD(tre, 1) >> 24) & 0xFF)
+> > +#define MHI_TRE_GET_EV_TYPE(tre) ((MHI_TRE_GET_DWORD(tre, 1) >> 16) & 0xFF)
+> > +#define MHI_TRE_GET_EV_STATE(tre) ((MHI_TRE_GET_DWORD(tre, 0) >> 24) & 0xFF)
+> > +#define MHI_TRE_GET_EV_EXECENV(tre) ((MHI_TRE_GET_DWORD(tre, 0) >> 24) & 0xFF)
+> > +#define MHI_TRE_GET_EV_SEQ(tre) MHI_TRE_GET_DWORD(tre, 0)
+> > +#define MHI_TRE_GET_EV_TIME(tre) (MHI_TRE_GET_EV_PTR(tre))
+> > +#define MHI_TRE_GET_EV_COOKIE(tre) lower_32_bits(MHI_TRE_GET_EV_PTR(tre))
+> > +#define MHI_TRE_GET_EV_VEID(tre) ((MHI_TRE_GET_DWORD(tre, 0) >> 16) & 0xFF)
+> > +#define MHI_TRE_GET_EV_LINKSPEED(tre) ((MHI_TRE_GET_DWORD(tre, 1) >> 24) & 0xFF)
+> > +#define MHI_TRE_GET_EV_LINKWIDTH(tre) (MHI_TRE_GET_DWORD(tre, 0) & 0xFF)
+> >   /* Transfer descriptor macros */
+> > -#define MHI_TRE_DATA_PTR(ptr) (ptr)
+> > -#define MHI_TRE_DATA_DWORD0(len) (len & MHI_MAX_MTU)
+> > -#define MHI_TRE_DATA_DWORD1(bei, ieot, ieob, chain) ((2 << 16) | (bei << 10) \
+> > -	| (ieot << 9) | (ieob << 8) | chain)
+> > +#define MHI_TRE_DATA_PTR(ptr) (cpu_to_le64(ptr))
+> > +#define MHI_TRE_DATA_DWORD0(len) (cpu_to_le32(len & MHI_MAX_MTU))
+> > +#define MHI_TRE_DATA_DWORD1(bei, ieot, ieob, chain) (cpu_to_le32((2 << 16) | (bei << 10) \
+> > +	| (ieot << 9) | (ieob << 8) | chain))
+> >   /* RSC transfer descriptor macros */
+> > -#define MHI_RSCTRE_DATA_PTR(ptr, len) (((u64)len << 48) | ptr)
+> > -#define MHI_RSCTRE_DATA_DWORD0(cookie) (cookie)
+> > -#define MHI_RSCTRE_DATA_DWORD1 (MHI_PKT_TYPE_COALESCING << 16)
+> > +#define MHI_RSCTRE_DATA_PTR(ptr, len) (cpu_to_le64(((u64)len << 48) | ptr))
+> > +#define MHI_RSCTRE_DATA_DWORD0(cookie) (cpu_to_le32(cookie))
+> > +#define MHI_RSCTRE_DATA_DWORD1 (cpu_to_le32(MHI_PKT_TYPE_COALESCING << 16))
+> >   enum mhi_pkt_type {
+> >   	MHI_PKT_TYPE_INVALID = 0x0,
+> > @@ -500,7 +501,7 @@ struct state_transition {
+> >   struct mhi_ring {
+> >   	dma_addr_t dma_handle;
+> >   	dma_addr_t iommu_base;
+> > -	u64 *ctxt_wp; /* point to ctxt wp */
+> > +	__le64 *ctxt_wp; /* point to ctxt wp */
+> >   	void *pre_aligned;
+> >   	void *base;
+> >   	void *rp;
+> > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> > index ffde617f93a3..85f4f7c8d7c6 100644
+> > --- a/drivers/bus/mhi/core/main.c
+> > +++ b/drivers/bus/mhi/core/main.c
+> > @@ -114,7 +114,7 @@ void mhi_ring_er_db(struct mhi_event *mhi_event)
+> >   	struct mhi_ring *ring = &mhi_event->ring;
+> >   	mhi_event->db_cfg.process_db(mhi_event->mhi_cntrl, &mhi_event->db_cfg,
+> > -				     ring->db_addr, *ring->ctxt_wp);
+> > +				     ring->db_addr, le64_to_cpu(*ring->ctxt_wp));
+> >   }
+> >   void mhi_ring_cmd_db(struct mhi_controller *mhi_cntrl, struct mhi_cmd *mhi_cmd)
+> > @@ -123,7 +123,7 @@ void mhi_ring_cmd_db(struct mhi_controller *mhi_cntrl, struct mhi_cmd *mhi_cmd)
+> >   	struct mhi_ring *ring = &mhi_cmd->ring;
+> >   	db = ring->iommu_base + (ring->wp - ring->base);
+> > -	*ring->ctxt_wp = db;
+> > +	*ring->ctxt_wp = cpu_to_le64(db);
+> >   	mhi_write_db(mhi_cntrl, ring->db_addr, db);
+> >   }
+> > @@ -140,7 +140,7 @@ void mhi_ring_chan_db(struct mhi_controller *mhi_cntrl,
+> >   	 * before letting h/w know there is new element to fetch.
+> >   	 */
+> >   	dma_wmb();
+> > -	*ring->ctxt_wp = db;
+> > +	*ring->ctxt_wp = cpu_to_le64(db);
+> >   	mhi_chan->db_cfg.process_db(mhi_cntrl, &mhi_chan->db_cfg,
+> >   				    ring->db_addr, db);
+> > @@ -432,7 +432,7 @@ irqreturn_t mhi_irq_handler(int irq_number, void *dev)
+> >   	struct mhi_event_ctxt *er_ctxt =
+> >   		&mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
+> >   	struct mhi_ring *ev_ring = &mhi_event->ring;
+> > -	dma_addr_t ptr = er_ctxt->rp;
+> > +	dma_addr_t ptr = le64_to_cpu(er_ctxt->rp);
+> >   	void *dev_rp;
+> >   	if (!is_valid_ring_ptr(ev_ring, ptr)) {
+> > @@ -537,14 +537,14 @@ static void mhi_recycle_ev_ring_element(struct mhi_controller *mhi_cntrl,
+> >   	/* Update the WP */
+> >   	ring->wp += ring->el_size;
+> > -	ctxt_wp = *ring->ctxt_wp + ring->el_size;
+> > +	ctxt_wp = le64_to_cpu(*ring->ctxt_wp) + ring->el_size;
+> >   	if (ring->wp >= (ring->base + ring->len)) {
+> >   		ring->wp = ring->base;
+> >   		ctxt_wp = ring->iommu_base;
+> >   	}
+> > -	*ring->ctxt_wp = ctxt_wp;
+> > +	*ring->ctxt_wp = cpu_to_le64(ctxt_wp);
+> >   	/* Update the RP */
+> >   	ring->rp += ring->el_size;
+> > @@ -801,7 +801,7 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
+> >   	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> >   	u32 chan;
+> >   	int count = 0;
+> > -	dma_addr_t ptr = er_ctxt->rp;
+> > +	dma_addr_t ptr = le64_to_cpu(er_ctxt->rp);
+> >   	/*
+> >   	 * This is a quick check to avoid unnecessary event processing
+> > @@ -940,7 +940,7 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
+> >   		mhi_recycle_ev_ring_element(mhi_cntrl, ev_ring);
+> >   		local_rp = ev_ring->rp;
+> > -		ptr = er_ctxt->rp;
+> > +		ptr = le64_to_cpu(er_ctxt->rp);
+> >   		if (!is_valid_ring_ptr(ev_ring, ptr)) {
+> >   			dev_err(&mhi_cntrl->mhi_dev->dev,
+> >   				"Event ring rp points outside of the event ring\n");
+> > @@ -970,7 +970,7 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
+> >   	int count = 0;
+> >   	u32 chan;
+> >   	struct mhi_chan *mhi_chan;
+> > -	dma_addr_t ptr = er_ctxt->rp;
+> > +	dma_addr_t ptr = le64_to_cpu(er_ctxt->rp);
+> >   	if (unlikely(MHI_EVENT_ACCESS_INVALID(mhi_cntrl->pm_state)))
+> >   		return -EIO;
+> > @@ -1011,7 +1011,7 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
+> >   		mhi_recycle_ev_ring_element(mhi_cntrl, ev_ring);
+> >   		local_rp = ev_ring->rp;
+> > -		ptr = er_ctxt->rp;
+> > +		ptr = le64_to_cpu(er_ctxt->rp);
+> >   		if (!is_valid_ring_ptr(ev_ring, ptr)) {
+> >   			dev_err(&mhi_cntrl->mhi_dev->dev,
+> >   				"Event ring rp points outside of the event ring\n");
+> > @@ -1533,7 +1533,7 @@ static void mhi_mark_stale_events(struct mhi_controller *mhi_cntrl,
+> >   	/* mark all stale events related to channel as STALE event */
+> >   	spin_lock_irqsave(&mhi_event->lock, flags);
+> > -	ptr = er_ctxt->rp;
+> > +	ptr = le64_to_cpu(er_ctxt->rp);
+> >   	if (!is_valid_ring_ptr(ev_ring, ptr)) {
+> >   		dev_err(&mhi_cntrl->mhi_dev->dev,
+> >   			"Event ring rp points outside of the event ring\n");
+> > diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
+> > index 4aae0baea008..c35c5ddc7220 100644
+> > --- a/drivers/bus/mhi/core/pm.c
+> > +++ b/drivers/bus/mhi/core/pm.c
+> > @@ -218,7 +218,7 @@ int mhi_ready_state_transition(struct mhi_controller *mhi_cntrl)
+> >   			continue;
+> >   		ring->wp = ring->base + ring->len - ring->el_size;
+> > -		*ring->ctxt_wp = ring->iommu_base + ring->len - ring->el_size;
+> > +		*ring->ctxt_wp = cpu_to_le64(ring->iommu_base + ring->len - ring->el_size);
+> >   		/* Update all cores */
+> >   		smp_wmb();
+> > @@ -420,7 +420,7 @@ static int mhi_pm_mission_mode_transition(struct mhi_controller *mhi_cntrl)
+> >   			continue;
+> >   		ring->wp = ring->base + ring->len - ring->el_size;
+> > -		*ring->ctxt_wp = ring->iommu_base + ring->len - ring->el_size;
+> > +		*ring->ctxt_wp = cpu_to_le64(ring->iommu_base + ring->len - ring->el_size);
+> >   		/* Update to all cores */
+> >   		smp_wmb();
+> 
