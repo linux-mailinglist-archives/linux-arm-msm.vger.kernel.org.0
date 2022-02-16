@@ -2,205 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13FFB4B84E6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 10:53:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE1A24B86BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 12:34:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232559AbiBPJwa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Feb 2022 04:52:30 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:51904 "EHLO
+        id S231785AbiBPLeS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Feb 2022 06:34:18 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232582AbiBPJw0 (ORCPT
+        with ESMTP id S231660AbiBPLeR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Feb 2022 04:52:26 -0500
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5B491020
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 01:51:58 -0800 (PST)
-Received: by mail-oi1-x22c.google.com with SMTP id r19so1847877oic.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 01:51:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=idK/WPsNn9ovkHFdsU7Sif7/eTWJW74G0kzJx4BCAZk=;
-        b=oWhRr51VmZU2S2gYaR5kbbLcR2oXecbmfKsZjko7tJ8FT7VDZbsbDpzlXUSHGGZE2R
-         OCD3N5//IxagJbjaThbI3lobLqGexsB2KenC9HSrf4i9MBD65cK/kpSzy2HWdrqNZ5Is
-         Nu62dR40mf/Edvdo7eW3xe2jHPksS/QIpKevTsyiNmGKhTguFs17sCXWQ5J3/+mhtLa+
-         9PKQQLnuQn/H790sO1tDsu5Yr1lBmLXa7HP54dfazNtxFOCfMRMXx1MxO4pWhehIRlIr
-         Yb4DmxqjB9nD+wHD/KEZlpoiCFlEK6aUVt6Tt1nivmpzvrC17wOYBnpIf4dIoR0ni0Cy
-         fhTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=idK/WPsNn9ovkHFdsU7Sif7/eTWJW74G0kzJx4BCAZk=;
-        b=P6R5PCeKYcAtUhVFliSgEc5skqp+RWHvH3hcQbRQvjEp6HDa0/VFl3KqIXj0RKk5uG
-         gsw2HmR43yTG4OvK7HvKsRwDDrgnh6UXnPv+CZ15v/7L4njxsZJC7UuysrHuE6NEkDCg
-         +T6J+X9qXVYNBPFosNwbqOk8wRTMfwhXWg8Ea0YFjel2wh/3nVViV6oWalpDAZTeK5AE
-         VB9RUT1ERGYjgnprnxSYR3Ea7cFRGmUip939742JVVFBTZ3spxlv9T+3SN0io3h6Me5W
-         HomXM2femsP5jFR25AdDnBLsmYbQtFrR3Hrjb2ro/o01Jrx2XqFGlIIRtLOwoISDQmNk
-         xI6Q==
-X-Gm-Message-State: AOAM533cs3Oc7NK67TGArfIS7oSeIIQr2o9GYlHkykj3UwicBuGHuXVE
-        qGpPPyv7YK/KkkEdwXF78xhaNYXPRr2tGZ7n
-X-Google-Smtp-Source: ABdhPJwIrThB4NcxBobY13FmQry+UoAcN8imJp73VfgJGon0wEf9Bswt2u/KdjQIAJpntb8vjP7PSw==
-X-Received: by 2002:aca:b585:0:b0:2ca:e90c:3b59 with SMTP id e127-20020acab585000000b002cae90c3b59mr286602oif.80.1645005101046;
-        Wed, 16 Feb 2022 01:51:41 -0800 (PST)
-Received: from [192.168.11.51] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id t192sm1520931oie.14.2022.02.16.01.51.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Feb 2022 01:51:40 -0800 (PST)
-Message-ID: <55aa0436-64f5-1ecb-d95d-721e45f6fb95@kali.org>
-Date:   Wed, 16 Feb 2022 03:51:38 -0600
+        Wed, 16 Feb 2022 06:34:17 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF8A51F8C9D;
+        Wed, 16 Feb 2022 03:34:04 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 4CDE8B81E9B;
+        Wed, 16 Feb 2022 11:34:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E7F4C004E1;
+        Wed, 16 Feb 2022 11:33:57 +0000 (UTC)
+Date:   Wed, 16 Feb 2022 17:03:53 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
+        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
+        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
+        dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
+        quic_cang@quicinc.com, quic_skananth@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Paul Davey <paul.davey@alliedtelesis.co.nz>,
+        Hemant Kumar <hemantk@codeaurora.org>, stable@vger.kernel.org
+Subject: Re: [PATCH v3 01/25] bus: mhi: Fix pm_state conversion to string
+Message-ID: <20220216113353.GB6225@workstation>
+References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
+ <20220212182117.49438-2-manivannan.sadhasivam@linaro.org>
+ <0c95c9a5-cf66-dcec-bfde-0ca201206c8b@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.6.0
-Subject: Re: [PATCH v10 6/6] usb: dwc3: qcom: Enable the interrupts during
- probe
-Content-Language: en-US
-To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
-        Pavan Kondeti <quic_pkondeti@quicinc.com>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com
-References: <1642398248-21753-1-git-send-email-quic_c_sanm@quicinc.com>
- <1642398248-21753-7-git-send-email-quic_c_sanm@quicinc.com>
- <93b68251-7e7e-ac92-fb47-346c410744b2@kali.org>
- <20220118095255.GB11385@hu-pkondeti-hyd.qualcomm.com>
- <78c90e46-666b-bc9b-235d-ae4c69e19929@quicinc.com>
- <601cdc74-392f-dd4f-7ea0-8e65c6b6d7e2@quicinc.com>
- <52b37547-3e78-b18c-307d-7eedf5baab0d@kali.org>
- <0e006cc0-2760-195a-35b9-0a2f6e8452c5@quicinc.com>
- <47ae3e73-5880-bfb7-fc14-7dd95a75ce14@kali.org>
- <bb36a205-fbfe-536e-5bf6-4a717ffd4e6e@quicinc.com>
-From:   Steev Klimaszewski <steev@kali.org>
-In-Reply-To: <bb36a205-fbfe-536e-5bf6-4a717ffd4e6e@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0c95c9a5-cf66-dcec-bfde-0ca201206c8b@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sandeep,
+On Tue, Feb 15, 2022 at 02:01:54PM -0600, Alex Elder wrote:
+> On 2/12/22 12:20 PM, Manivannan Sadhasivam wrote:
+> > From: Paul Davey <paul.davey@alliedtelesis.co.nz>
+> > 
+> > On big endian architectures the mhi debugfs files which report pm state
+> > give "Invalid State" for all states.  This is caused by using
+> > find_last_bit which takes an unsigned long* while the state is passed in
+> > as an enum mhi_pm_state which will be of int size.
+> 
+> I think this would have fixed it too, but your fix is better.
+> 
+> 	int index = find_last_bit(&(unsigned long)state, 32);
+> 
+> > Fix by using __fls to pass the value of state instead of find_last_bit.
+> > 
+> > Fixes: a6e2e3522f29 ("bus: mhi: core: Add support for PM state transitions")
+> > Signed-off-by: Paul Davey <paul.davey@alliedtelesis.co.nz>
+> > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> > Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+> > Cc: stable@vger.kernel.org
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >   drivers/bus/mhi/core/init.c | 8 +++++---
+> >   1 file changed, 5 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> > index 046f407dc5d6..af484b03558a 100644
+> > --- a/drivers/bus/mhi/core/init.c
+> > +++ b/drivers/bus/mhi/core/init.c
+> > @@ -79,10 +79,12 @@ static const char * const mhi_pm_state_str[] = {
+> >   const char *to_mhi_pm_state_str(enum mhi_pm_state state)
+> 
+> The mhi_pm_state enumerated type is an enumerated sequence, not
+> a bit mask.  So knowing what the last (most significant) set bit
+> is not meaningful.  Or normally it shouldn't be.
+> 
+> If mhi_pm_state really were a bit mask, then its values should
+> be defined that way, i.e.,
+> 
+> 	MHI_PM_STATE_DISABLE	= 1 << 0,
+> 	MHI_PM_STATE_DISABLE	= 1 << 1,
+> 	. . .
+> 
+> What's really going on is that the state value passed here
+> *is* a bitmask, whose bit positions are those mhi_pm_state
+> values.  So the state argument should have type u32.
+> 
 
-On 2/16/22 12:27 AM, Sandeep Maheswaram wrote:
-> Hi Steev
->
-> On 2/16/2022 8:52 AM, Steev Klimaszewski wrote:
->> Hi Sandeep,
->>
->> On 2/15/22 3:40 AM, Sandeep Maheswaram wrote:
->>> Hi Steev,
->>>
->>>>>>
->>>>> Can you try with IRQ_TYPE_EDGE_BOTH in your device tree and see if 
->>>>> you are getting the issue.
->>>>>
->>>>> Regards
->>>>>
->>>>> Sandeep
->>>>>
->>>> I just tested here, changing both of the IRQ_TYPE_LEVEL_HIGH in the 
->>>> yoga's dts to EDGE_BOTH and I still do not get a booting system.
->>>>
->>>> -- Steev
->>>>
->>> Please let us know what devices are connected to your setup and 
->>> share the device tree file you are using.
->>>
->>> Please share the failure logs also,
->>>
->>> Regards
->>>
->>> Sandeep
->>>
->> The setup is a Lenovo Yoga C630 (Windows on ARM laptop).  I do not 
->> have any sort of serial console access to the device, unfortunately.  
->> Even when taking it apart, it seems to have some sort of 26pin debug 
->> adapter port that I've never seen before which you can see on the far 
->> right in this picture of the motherboard at 
->> https://i.ebayimg.com/images/g/a2EAAOSwwzZiCxPM/s-l1600.jpg
->>
->> I do not have anything plugged in to the USB ports (sometimes the 
->> power adapter, but I have tried both on mains as well as off.)
->>
->> Which I added as a commit to my kernel tree, and pushed so you can 
->> see the full dts here: 
->> https://github.com/steev/linux/blob/c8234e664491e35e3edcd211f3b78c04436402b0/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
->>
->> I am booting with the command line arguments of
->>
->> clk_ignore_unused verbose module_blacklist=msm video=efifb 
->> earlyconsole=efifb
->>
->> I can't provide a boot log, because I'm not actually getting 
->> anything.  Booting a different kernel, and it doesn't appear that 
->> anything is logged at all.
->>
->>
->> -- steev
->>
-> Can you try with below change
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi 
-> b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> index 0d6286d..0a9c0f7 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -3796,8 +3796,8 @@
->
->                         interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
->                                      <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
-> -                                    <GIC_SPI 488 IRQ_TYPE_LEVEL_HIGH>,
-> -                                    <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>;
-> +                                    <GIC_SPI 488 IRQ_TYPE_EDGE_BOTH>,
-> +                                    <GIC_SPI 489 IRQ_TYPE_EDGE_BOTH>;
->                         interrupt-names = "hs_phy_irq", "ss_phy_irq",
->                                           "dm_hs_phy_irq", 
-> "dp_hs_phy_irq";
->
-> @@ -3844,8 +3844,8 @@
->
->                         interrupts = <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
->                                      <GIC_SPI 487 IRQ_TYPE_LEVEL_HIGH>,
-> -                                    <GIC_SPI 490 IRQ_TYPE_LEVEL_HIGH>,
-> -                                    <GIC_SPI 491 IRQ_TYPE_LEVEL_HIGH>;
-> +                                    <GIC_SPI 490 IRQ_TYPE_EDGE_BOTH>,
-> +                                    <GIC_SPI 491 IRQ_TYPE_EDGE_BOTH>;
->                         interrupt-names = "hs_phy_irq", "ss_phy_irq",
->                                           "dm_hs_phy_irq", 
-> "dp_hs_phy_irq";
->
-> Regards
->
-> Sandeep
+I agree with you. It should be u32.
 
-That does allow it to boot, however.... it breaks USB.
+> This is a *separate* bug/issue.  It could be fixed separately
+> (before this patch), but I'd be OK with just explaining why
+> this change would occur as part of this modified patch.
+> 
 
-[    2.013325] genirq: Setting trigger mode 3 for irq 35 failed 
-(gic_set_type+0x0/0x1b0)
-[    2.014063] dwc3-qcom a6f8800.usb: dp_hs_phy_irq failed: -22
-[    2.014134] dwc3-qcom a6f8800.usb: failed to setup IRQs, err=-22
-[    2.014351] dwc3-qcom: probe of a6f8800.usb failed with error -22
-[    2.018496] genirq: Setting trigger mode 3 for irq 39 failed 
-(gic_set_type+0x0/0x1b0)
-[    2.019124] dwc3-qcom a8f8800.usb: dp_hs_phy_irq failed: -22
-[    2.019193] dwc3-qcom a8f8800.usb: failed to setup IRQs, err=-22
-[    2.019372] dwc3-qcom: probe of a8f8800.usb failed with error -22
+It makes sense to do it in the same patch itself as the change is
+minimal and moreover this patch will also get backported to stable.
 
-steev@limitless:~$ lsusb
-steev@limitless:~$
+> >   {
+> > -	unsigned long pm_state = state;
+> > -	int index = find_last_bit(&pm_state, 32);
+> > +	int index;
+> > -	if (index >= ARRAY_SIZE(mhi_pm_state_str))
+> > +	if (state)
+> > +		index = __fls(state);
+> > +
+> > +	if (!state || index >= ARRAY_SIZE(mhi_pm_state_str))
+> >   		return "Invalid State";
+> 
+> Do this test and return first, and skip the additional
+> check for "if (state)".
+> 
 
+We need to calculate index for the second check, so I guess the current
+code is fine.
 
--- steev
+Thanks,
+Mani
 
+> 					-Alex
+> 
+> >   	return mhi_pm_state_str[index];
+> 
