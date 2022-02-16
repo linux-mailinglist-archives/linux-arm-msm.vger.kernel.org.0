@@ -2,63 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 220424B7E66
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 04:15:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF5C04B7E54
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Feb 2022 04:15:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245051AbiBPDHm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Feb 2022 22:07:42 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:59332 "EHLO
+        id S241174AbiBPDIS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Feb 2022 22:08:18 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:34060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237823AbiBPDHl (ORCPT
+        with ESMTP id S240415AbiBPDIS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Feb 2022 22:07:41 -0500
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11C168BE01;
-        Tue, 15 Feb 2022 19:07:28 -0800 (PST)
-Received: by mail-qt1-x831.google.com with SMTP id o3so851993qtm.12;
-        Tue, 15 Feb 2022 19:07:28 -0800 (PST)
+        Tue, 15 Feb 2022 22:08:18 -0500
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C15C59A994;
+        Tue, 15 Feb 2022 19:08:06 -0800 (PST)
+Received: by mail-qk1-x72a.google.com with SMTP id g24so654026qkl.3;
+        Tue, 15 Feb 2022 19:08:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=uo90ND7vxwikC6O42ZnqZ8gM49VogQOE7nhLljaIMVw=;
-        b=qQwnN28YhIiQjTZSULZQV5TguS1d/XvVlJEUPbGB5upCPYJNokkSDdphv31QN1j7pQ
-         2fqxFL00OxshOvSVs9TnflPo3Iq5lsCE/+HgRdJdE4YWXGZA0Lp6Flsc9cG25c4gxpF4
-         tTXhdQDLBDC7j7g3VaMP1Du/zYDV1WFr5weXTO47VzVWW6pNs12H1gSrTqtLUAe3CjWg
-         5y3b9/6q6jsKPb+gVDxBxJui0AaVRq+SibXaoDY5w9i+MBZqqd0cTWewWovW5VilJq3V
-         ztUbkEdZXdUkUZ5tQqs5tc63uNISS8mPEDHn6WMs6aHLXJgRPp5+EzDBNzXM2UFCY+yo
-         AHuw==
+        bh=vIE0Izbh9CwLFYpchTer+Bxxv7Md5jVRn5sGjgstL6s=;
+        b=MZMRcETkkIkyTNGCOxnG5mHkgMIpGdQxIMbLccGCcWtZDo+OHc1NUu4+nsmfjtqpcC
+         zqdBbkhar5/XBh/+qb4ChDQ2aXIOJ696r6+DUa6ZgVBhDq2IQJmaQNM31vuv2+vWHoKU
+         gDLrgNYT5AivhBKptqoq8LfawnOi1+feZ69N5Nq49WBZQfqzyFeFfXBtEqG9Zv2Up7/i
+         iZN6tvBq9qpFf3VY8zJyzFPDwysYu3NgwqP5hu5T0ygv81gX/g6l2cCFCgXv4fE3MLY7
+         4Dx5tsXfiy7szMZMNRAVQ59T3Xh3EyK5Kh4G9amEE8sJG4gvaKgnmXbYbWppJ1nRE7bB
+         FS+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=uo90ND7vxwikC6O42ZnqZ8gM49VogQOE7nhLljaIMVw=;
-        b=SWZtM9nzVmIPnY2xH8rPSZfXWrTo58FUWL1xU6xR5Jo8ZZZBZx9TxQE33YrOPd/oYT
-         y6pimwMbtZMzL9QwRMNwhdYKfnco7FdqdDK4PfhyDLSC+4OxlS0PKP1OqQWoLgxT92Ki
-         Rl8R+ztgeOq7ubfUtACaFAO47hHdcKJ5+C1yuws6QwRNvBSEmdwWDBYdmA2+R9vicUEm
-         inTdI6JEZl4u0hhd3DAx1etp1j4jt7jK1Pd6RFlNA0u4meyHhLJ7xa71iJyayFuqBDhC
-         OvEoqEspmedox4CgeBlXEDAB0spYUo8U9HTTL0qMQFJixeABrYhiINZV0JMPENMDzBXe
-         NC8w==
-X-Gm-Message-State: AOAM530jPWEeFCbDobcSdiAkJSIzff0ePHSuoeayug6Kkzz/dAhD1WNi
-        jR+kpuCTXLQK5idqwaF7QnLpKghzxGc=
-X-Google-Smtp-Source: ABdhPJyRFrgWXQPlF/0WIAZLi/P13Nwm7gdMLmGfhlXUOmdKItQ+y9elCqEXcwltlSuX3Ytw7iUijA==
-X-Received: by 2002:ac8:5e49:0:b0:2d6:cb37:9ee9 with SMTP id i9-20020ac85e49000000b002d6cb379ee9mr720460qtx.652.1644980847279;
-        Tue, 15 Feb 2022 19:07:27 -0800 (PST)
+        bh=vIE0Izbh9CwLFYpchTer+Bxxv7Md5jVRn5sGjgstL6s=;
+        b=obPD2mREG/TSK5G0nLfRwjAatFh1VWjerDOEptCJ2zLm/hobkvgRCZGWYOOmxc7B3F
+         87wmZGXgCdL0cJtvTqQ96ysHohOQbZXL8zP9h//K0dmayE3h4BIMihqN8ECKGAucPTFA
+         f3HUhaSXMZrEY/+aUgGgLrAQ3EgOXE8n7xR8AS2wdrV4VrWGZ2YD/SDw6DOjstF3pLai
+         BN45m2hGmLrCgAMDFW2SAM7w7jqcdSs/2xAvIZzbf4PlV3VphTP7k2PhPxqymLam3lUg
+         3tgHOnTzcCuJqXhsL509Za/Wz/T0jbqR4OlaivtapV71P02OVJN7IMp5QfKCBUdCPppM
+         dnzQ==
+X-Gm-Message-State: AOAM5320lGuqcR1Tj8hOYzyFtARdLa2fr7tnwctuGV0Yd+tjw84dozB9
+        0RmlYENJ/faG1SOFVYHgmV0=
+X-Google-Smtp-Source: ABdhPJxEVNCkpcWgbfXh/7WBA6twoGsjSe1NCVHH+26p8DPZx7adBZFbzUb2YWEP5yv3HAOhzB6vCQ==
+X-Received: by 2002:a05:620a:152a:b0:46d:5918:e7cd with SMTP id n10-20020a05620a152a00b0046d5918e7cdmr418881qkk.494.1644980886019;
+        Tue, 15 Feb 2022 19:08:06 -0800 (PST)
 Received: from localhost.localdomain ([193.203.214.57])
-        by smtp.gmail.com with ESMTPSA id h19sm10307679qtx.12.2022.02.15.19.07.24
+        by smtp.gmail.com with ESMTPSA id w19sm15781791qkp.6.2022.02.15.19.08.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Feb 2022 19:07:26 -0800 (PST)
+        Tue, 15 Feb 2022 19:08:05 -0800 (PST)
 From:   cgel.zte@gmail.com
 X-Google-Original-From: chi.minghao@zte.com.cn
 To:     agross@kernel.org
-Cc:     bjorn.andersson@linaro.org, mathieu.poirier@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+Cc:     bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         "Minghao Chi (CGEL ZTE)" <chi.minghao@zte.com.cn>,
         Zeal Robot <zealci@zte.com.cn>
-Subject: [PATCH] rpmsg: use struct_size over open coded arithmetic
-Date:   Wed, 16 Feb 2022 03:07:20 +0000
-Message-Id: <20220216030720.1839503-1-chi.minghao@zte.com.cn>
+Subject: [PATCH] soc/qcom: use struct_size over open coded arithmetic
+Date:   Wed, 16 Feb 2022 03:07:59 +0000
+Message-Id: <20220216030759.1839582-1-chi.minghao@zte.com.cn>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -77,11 +76,10 @@ From: "Minghao Chi (CGEL ZTE)" <chi.minghao@zte.com.cn>
 Replace zero-length array with flexible-array member and make use
 of the struct_size() helper in kzalloc(). For example:
 
-struct glink_defer_cmd {
+struct apr_rx_buf {
 	struct list_head node;
-
-	struct glink_msg msg;
-	u8 data[];
+	int len;
+	uint8_t buf[];
 };
 
 Make use of the struct_size() helper instead of an open-coded version
@@ -90,20 +88,20 @@ in order to avoid any potential type mistakes.
 Reported-by: Zeal Robot <zealci@zte.com.cn>
 Signed-off-by: Minghao Chi (CGEL ZTE) <chi.minghao@zte.com.cn>
 ---
- drivers/rpmsg/qcom_glink_native.c | 2 +-
+ drivers/soc/qcom/apr.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 1030cfa80e04..f4f4e392d0d1 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -792,7 +792,7 @@ static int qcom_glink_rx_defer(struct qcom_glink *glink, size_t extra)
- 		return -ENXIO;
+diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
+index 82ca12c9328a..0813dbc5e462 100644
+--- a/drivers/soc/qcom/apr.c
++++ b/drivers/soc/qcom/apr.c
+@@ -171,7 +171,7 @@ static int apr_callback(struct rpmsg_device *rpdev, void *buf,
+ 		return -EINVAL;
  	}
  
--	dcmd = kzalloc(sizeof(*dcmd) + extra, GFP_ATOMIC);
-+	dcmd = kzalloc(struct_size(dcmd, data, extra), GFP_ATOMIC);
- 	if (!dcmd)
+-	abuf = kzalloc(sizeof(*abuf) + len, GFP_ATOMIC);
++	abuf = kzalloc((struct_size(abuf, buf, len), GFP_ATOMIC);
+ 	if (!abuf)
  		return -ENOMEM;
  
 -- 
