@@ -2,302 +2,242 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A30D14B9BDB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 10:17:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D7C394B9BFE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 10:27:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236055AbiBQJRS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Feb 2022 04:17:18 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43144 "EHLO
+        id S238656AbiBQJ1c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Feb 2022 04:27:32 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230490AbiBQJRR (ORCPT
+        with ESMTP id S238647AbiBQJ1b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Feb 2022 04:17:17 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 594B71954ED;
-        Thu, 17 Feb 2022 01:17:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645089421; x=1676625421;
-  h=message-id:date:mime-version:subject:from:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=oUrBOOhUtVa5tBC0AGFI7A9amW5osL3J4YgUSZTAuO0=;
-  b=rJOiQeqRq8DdNPymW5K5LOiv4pe4GoHRTmq0qQxheMh60jE91bur9PHY
-   MPYLn8l/R4BztVukimpGtILEx91U3BHlumhuxN/W9JBIHEoQjsFLWdghk
-   LgoPJ/B0pZiOeauU5zC0Rn5LJIrv6fwrk2Lmb9UxuW+FGoPPICO37qOyA
-   Q=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 17 Feb 2022 01:17:00 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Feb 2022 01:17:00 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Thu, 17 Feb 2022 01:16:59 -0800
-Received: from [10.239.133.9] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Thu, 17 Feb
- 2022 01:16:41 -0800
-Message-ID: <ab88b2b2-e44b-e783-3372-d23f56ce24e9@quicinc.com>
-Date:   Thu, 17 Feb 2022 17:16:23 +0800
+        Thu, 17 Feb 2022 04:27:31 -0500
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32BB91A0C0A;
+        Thu, 17 Feb 2022 01:27:16 -0800 (PST)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 8E4B13F758;
+        Thu, 17 Feb 2022 10:27:09 +0100 (CET)
+Date:   Thu, 17 Feb 2022 10:27:07 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [REPOST PATCH v4 13/13] drm/msm/dsi: Add support for DSC
+ configuration
+Message-ID: <20220217092707.2bfzga74xyicl4kb@SoMainline.org>
+References: <20220210103423.271016-1-vkoul@kernel.org>
+ <20220210103423.271016-14-vkoul@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [PATCH v3 00/10] Coresight: Add support for TPDM and TPDA
-Content-Language: en-US
-From:   Jinlong Mao <quic_jinlmao@quicinc.com>
-To:     Mike Leach <mike.leach@linaro.org>
-CC:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20220209105706.18852-1-quic_jinlmao@quicinc.com>
- <CAJ9a7VhZtNrj9S4T=dNDOWT9fEcnm1qqtp+4h3EqytidDwEd5Q@mail.gmail.com>
- <0c87c995-142c-9c8f-5a9a-02e3a1119cce@quicinc.com>
-In-Reply-To: <0c87c995-142c-9c8f-5a9a-02e3a1119cce@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220210103423.271016-14-vkoul@kernel.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/11/2022 12:17 PM, Jinlong Mao wrote:
->
-> On 2/10/2022 6:30 PM, Mike Leach wrote:
->> Hello  Mao,
->>
->> I have looked through this set and have a few general questions.
->>
->> My understanding based on the information in the code is that the TPDM
->> devices will always send data to the TPDA device, the TPDM is not
->> capable of directly driving the ATB itself?
->> The TPDA device  will then packetize the inputs and output these to
->> the ATB over the normal CoreSight architecture to a standard ETR / ETF
->> for collection.
->>
->> Looking at the TPDM driver - it is assigned a trace ID but never
->> actually uses it in the hardware. My assumption here is that this is
->> used purely to satisfy the requirement that the CoreSight core has
->> that all sources have a unique trace id?
->>
->> For the TPDA driver you assign an ATID as an attribute in device tree,
->> and then program this into the devices control register.
->>
->> The trace IDs in ETM / ETE / STM, are programmed into the hardware and
->> these values drive the ATID value on the trace bus. So assigning an
->> ATID value to the TPDA driver through device tree will lead to clashes
->> with the assignment of trace IDs in the other driver software.
->>
->> The topology here appears to me that you have multiple  "data source"
->> devices TPDM, supplying a TPDA - which is the real CoreSight "trace
->> source" from the viewpoint of the trace bus and CoreSight
->> infrastructure.
->> To get this to work in the current CoreSight driver stack, you have
->> assigned the TPDM as a source type, and the TPDA as a link to ensure
->> that when a TPDM is started, all the components on the path to the
->> sink are activated.
->> This is fine.
->>
->> If my assumptions above are all accurate I suggest the following 
->> improvements
->>
->> For TPDA drop the device tree assignment of ATID and instead use the
->> coresight_get_system_trace_id() function you introduce in the 2nd
->> patch in this set.
->>
->> For TPDM you have assigned a unique source sub-type
->> CORESIGHT_DEV_SUBTYPE_SOURCE_SYS.- this could become
->> CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY. If the trace ID assigned to
->> this device is only to satisfy the unique ID requirement and is not
->> used elsewhere, then the sub type could become
->> CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY. We can agree that this sub
->> type does not need a unique ID and acts as none ATB a source for
->> another component, The core code can be altered to drop the
->> requirement for this sub-type and trace ID can be dropped for this
->> component.
->>
->> You should be aware that we are in the process of re-designed how
->> trace IDs are allocated. The current mechanism does not scale for
->> large multi-core systems (currently broken for any system > 46 cores),
->> and as you have discovered there is a need for additional allocation
->> of IDs. Also the ETE / TRBE combination does not need a trace ID.  A
->> dynamic allocation system is being proposed.
->>
->> Regards
->>
->> Mike
->
->
-> Hi  Mike,
->
-> Your assumptions above are all correct.
-> TPDMs connect to the same TPDA will share the atid of the TPDA.
-> We have a PC tool to parse the TPDM trace data. It needs the fixed 
-> atid for each TPDA to identify the data.
-> So we configure the atid for TPDA in device tree with fixed ids.
-> I will discuss with internal tool team to see if TPDA's id can become 
-> dynamic when parse the data.
->
-> Apart from the TPDA's atid, we also have some other sources with fixed 
-> id in HW on our internal device.
-> Do you have any suggestion to how to allocate the IDs for the source 
-> with fixed id in HW ?
->
-> Thanks
-> Jinlong Mao
->
-Hi Mike & Mathieu & Suzuki,
+Vinod,
 
+On 2022-02-10 16:04:23, Vinod Koul wrote:
+> When DSC is enabled, we need to configure DSI registers accordingly and
+> configure the respective stream compression registers.
+> 
+> Add support to calculate the register setting based on DSC params and
+> timing information and configure these registers.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-Could you please help to review the other patches while we are 
-discussing with internal tool team about the trace_id change ?
+I supplied a rather extensive - yet merely scratching the surface -
+review of this patch in:
 
+    https://lore.kernel.org/linux-arm-msm/20211211000315.pavmcc7cc73ilb6l@SoMainline.org/
 
-Thanks
+It seems none of those points have been addressed, bar creating a mesa
+MR to update dsi.xml with a subpar description of the registers (offsets
+only).
 
-Jinlong Mao
+For every point that is intentionally ignored, please at least supply a
+justification of why you think this is the right thing to do.
 
+Thanks,
+- Marijn
 
->
->>
->>
->> On Wed, 9 Feb 2022 at 10:57, Mao Jinlong <quic_jinlmao@quicinc.com> 
->> wrote:
->>> This series adds support for the trace performance monitoring and
->>> diagnostics hardware (TPDM and TPDA). It is composed of two major
->>> elements.
->>> a) Changes for original coresight framework to support for TPDM and 
->>> TPDA.
->>> b) Add driver code for TPDM and TPDA.
->>>
->>> Introduction of changes for original coresight framework
->>> Support TPDM as new coresight source.
->>> Since only STM and ETM are supported as coresight source originally.
->>> TPDM is a newly added coresight source. We need to change
->>> the original way of saving coresight path to support more types source
->>> for coresight driver.
->>> The following patch is to add support more coresight sources.
->>>      Use IDR to maintain all the enabled sources' paths.
->>>      coresight: Use bitmap to assign trace id to the sources
->>>
->>> Introduction of TPDM and TPDA
->>> TPDM - The trace performance monitoring and diagnostics monitor or 
->>> TPDM in
->>> short serves as data collection component for various dataset types
->>> specified in the QPMDA(Qualcomm performance monitoring and diagnostics
->>> architecture) spec. The primary use case of the TPDM is to collect data
->>> from different data sources and send it to a TPDA for packetization,
->>> timestamping and funneling.
->>>      Coresight: Add coresight TPDM source driver
->>>      dt-bindings: arm: Adds CoreSight TPDM hardware definitions
->>>      coresight-tpdm: Add DSB dataset support
->>>      coresight-tpdm: Add integration test support
->>>      docs: sysfs: coresight: Add sysfs ABI documentation for TPDM
->>>
->>> TPDA - The trace performance monitoring and diagnostics aggregator or
->>> TPDA in short serves as an arbitration and packetization engine for the
->>> performance monitoring and diagnostics network as specified in the 
->>> QPMDA
->>> (Qualcomm performance monitoring and diagnostics architecture)
->>> specification. The primary use case of the TPDA is to provide
->>> packetization, funneling and timestamping of Monitor data as specified
->>> in the QPMDA specification.
->>> The following patch is to add driver for TPDA.
->>>      Coresight: Add TPDA link driver
->>>      dt-bindings: arm: Adds CoreSight TPDA hardware definitions
->>>
->>> The last patch of this series is a device tree modification, which add
->>> the TPDM and TPDA configuration to device tree for validating.
->>>      ARM: dts: msm: Add coresight components for SM8250
->>>
->>> Once this series patches are applied properly, the tpdm and tpda nodes
->>> should be observed at the coresight path /sys/bus/coresight/devices
->>> e.g.
->>> /sys/bus/coresight/devices # ls -l | grep tpd
->>> tpda0 -> ../../../devices/platform/soc@0/6004000.tpda/tpda0
->>> tpdm0 -> ../../../devices/platform/soc@0/6c08000.mm.tpdm/tpdm0
->>>
->>> We can use the commands are similar to the below to validate TPDMs.
->>> Enable coresight sink first.
->>>
->>> echo 1 > /sys/bus/coresight/devices/tmc_etf0/enable_sink
->>> echo 1 > /sys/bus/coresight/devices/tpdm0/enable_source
->>> echo 1 > /sys/bus/coresight/devices/tpdm0/integration_test
->>> echo 2 > /sys/bus/coresight/devices/tpdm0/integration_test
->>> The test data will be collected in the coresight sink which is enabled.
->>> If rwp register of the sink is keeping updating when do
->>> integration_test (by cat tmc_etf0/mgmt/rwp), it means there is data
->>> generated from TPDM to sink.
->>>
->>> Changes from V2:
->>> 1. Use bitmap to assign the trace id. (Mathieu Poirier)
->>>
->>> Mao Jinlong (10):
->>>    Use IDR to maintain all the enabled sources' paths.
->>>    coresight: Use bitmap to assign trace id to the sources
->>>    Coresight: Add coresight TPDM source driver
->>>    dt-bindings: arm: Adds CoreSight TPDM hardware definitions
->>>    coresight-tpdm: Add DSB dataset support
->>>    coresight-tpdm: Add integration test support
->>>    docs: sysfs: coresight: Add sysfs ABI documentation for TPDM
->>>    Coresight: Add TPDA link driver
->>>    dt-bindings: arm: Adds CoreSight TPDA hardware definitions
->>>    ARM: dts: msm: Add coresight components for SM8250
->>>
->>>   .../testing/sysfs-bus-coresight-devices-tpdm  |   6 +
->>>   .../bindings/arm/coresight-tpda.yaml          | 129 ++++
->>>   .../bindings/arm/coresight-tpdm.yaml          |  81 ++
->>>   .../devicetree/bindings/arm/coresight.txt     |   7 +
->>>   MAINTAINERS                                   |   1 +
->>>   .../arm64/boot/dts/qcom/sm8250-coresight.dtsi | 690 
->>> ++++++++++++++++++
->>>   arch/arm64/boot/dts/qcom/sm8250.dtsi          |   2 +
->>>   drivers/hwtracing/coresight/Kconfig           |  33 +
->>>   drivers/hwtracing/coresight/Makefile          |   2 +
->>>   drivers/hwtracing/coresight/coresight-core.c  | 127 ++--
->>>   drivers/hwtracing/coresight/coresight-tpda.c  | 193 +++++
->>>   drivers/hwtracing/coresight/coresight-tpda.h  |  32 +
->>>   drivers/hwtracing/coresight/coresight-tpdm.c  | 270 +++++++
->>>   drivers/hwtracing/coresight/coresight-tpdm.h  |  57 ++
->>>   include/linux/coresight-pmu.h                 |  11 +
->>>   include/linux/coresight.h                     |   1 +
->>>   16 files changed, 1592 insertions(+), 50 deletions(-)
->>>   create mode 100644 
->>> Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->>>   create mode 100644 
->>> Documentation/devicetree/bindings/arm/coresight-tpda.yaml
->>>   create mode 100644 
->>> Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
->>>   create mode 100644 arch/arm64/boot/dts/qcom/sm8250-coresight.dtsi
->>>   create mode 100644 drivers/hwtracing/coresight/coresight-tpda.c
->>>   create mode 100644 drivers/hwtracing/coresight/coresight-tpda.h
->>>   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.c
->>>   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.h
->>>
->>> -- 
->>> 2.17.1
->>>
->>
->> -- 
->> Mike Leach
->> Principal Engineer, ARM Ltd.
->> Manchester Design Centre. UK
+> ---
+>  drivers/gpu/drm/msm/dsi/dsi.xml.h  |  10 +++
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 109 ++++++++++++++++++++++++++++-
+>  2 files changed, 118 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi.xml.h b/drivers/gpu/drm/msm/dsi/dsi.xml.h
+> index 49b551ad1bff..c1c85df58c4b 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi.xml.h
+> +++ b/drivers/gpu/drm/msm/dsi/dsi.xml.h
+> @@ -706,4 +706,14 @@ static inline uint32_t DSI_VERSION_MAJOR(uint32_t val)
+>  #define REG_DSI_CPHY_MODE_CTRL					0x000002d4
+>  
+>  
+> +#define REG_DSI_VIDEO_COMPRESSION_MODE_CTRL			0x0000029c
+> +
+> +#define REG_DSI_VIDEO_COMPRESSION_MODE_CTRL2			0x000002a0
+> +
+> +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL			0x000002a4
+> +
+> +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2			0x000002a8
+> +
+> +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL3			0x000002ac
+> +
+>  #endif /* DSI_XML */
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 438c80750682..3d8d5a1daaa3 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -908,6 +908,20 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
+>  		dsi_write(msm_host, REG_DSI_CPHY_MODE_CTRL, BIT(0));
+>  }
+>  
+> +static int dsi_dsc_update_pic_dim(struct msm_display_dsc_config *dsc,
+> +				  int pic_width, int pic_height)
+> +{
+> +	if (!dsc || !pic_width || !pic_height) {
+> +		pr_err("DSI: invalid input: pic_width: %d pic_height: %d\n", pic_width, pic_height);
+> +		return -EINVAL;
+> +	}
+> +
+> +	dsc->drm->pic_width = pic_width;
+> +	dsc->drm->pic_height = pic_height;
+> +
+> +	return 0;
+> +}
+> +
+>  static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>  {
+>  	struct drm_display_mode *mode = msm_host->mode;
+> @@ -940,7 +954,68 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>  		hdisplay /= 2;
+>  	}
+>  
+> +	if (msm_host->dsc) {
+> +		struct msm_display_dsc_config *dsc = msm_host->dsc;
+> +
+> +		/* update dsc params with timing params */
+> +		dsi_dsc_update_pic_dim(dsc, mode->hdisplay, mode->vdisplay);
+> +		DBG("Mode Width- %d x Height %d\n", dsc->drm->pic_width, dsc->drm->pic_height);
+> +
+> +		/* we do the calculations for dsc parameters here so that
+> +		 * panel can use these parameters
+> +		 */
+> +		dsi_populate_dsc_params(dsc);
+> +
+> +		/* Divide the display by 3 but keep back/font porch and
+> +		 * pulse width same
+> +		 */
+> +		h_total -= hdisplay;
+> +		hdisplay /= 3;
+> +		h_total += hdisplay;
+> +		ha_end = ha_start + hdisplay;
+> +	}
+> +
+>  	if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
+> +		if (msm_host->dsc) {
+> +			struct msm_display_dsc_config *dsc = msm_host->dsc;
+> +			u32 reg, intf_width, slice_per_intf;
+> +			u32 total_bytes_per_intf;
+> +
+> +			/* first calculate dsc parameters and then program
+> +			 * compress mode registers
+> +			 */
+> +			intf_width = hdisplay;
+> +			slice_per_intf = DIV_ROUND_UP(intf_width, dsc->drm->slice_width);
+> +
+> +			dsc->drm->slice_count = 1;
+> +			dsc->bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width * 8, 8);
+> +			total_bytes_per_intf = dsc->bytes_in_slice * slice_per_intf;
+> +
+> +			dsc->eol_byte_num = total_bytes_per_intf % 3;
+> +			dsc->pclk_per_line =  DIV_ROUND_UP(total_bytes_per_intf, 3);
+> +			dsc->bytes_per_pkt = dsc->bytes_in_slice * dsc->drm->slice_count;
+> +			dsc->pkt_per_line = slice_per_intf / dsc->drm->slice_count;
+> +
+> +			reg = dsc->bytes_per_pkt << 16;
+> +			reg |= (0x0b << 8);    /* dtype of compressed image */
+> +
+> +			/* pkt_per_line:
+> +			 * 0 == 1 pkt
+> +			 * 1 == 2 pkt
+> +			 * 2 == 4 pkt
+> +			 * 3 pkt is not supported
+> +			 * above translates to ffs() - 1
+> +			 */
+> +			reg |= (ffs(dsc->pkt_per_line) - 1) << 6;
+> +
+> +			dsc->eol_byte_num = total_bytes_per_intf % 3;
+> +			reg |= dsc->eol_byte_num << 4;
+> +			reg |= 1;
+> +
+> +			dsi_write(msm_host,
+> +				  REG_DSI_VIDEO_COMPRESSION_MODE_CTRL, reg);
+> +		}
+> +
+>  		dsi_write(msm_host, REG_DSI_ACTIVE_H,
+>  			DSI_ACTIVE_H_START(ha_start) |
+>  			DSI_ACTIVE_H_END(ha_end));
+> @@ -959,8 +1034,40 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>  			DSI_ACTIVE_VSYNC_VPOS_START(vs_start) |
+>  			DSI_ACTIVE_VSYNC_VPOS_END(vs_end));
+>  	} else {		/* command mode */
+> +		if (msm_host->dsc) {
+> +			struct msm_display_dsc_config *dsc = msm_host->dsc;
+> +			u32 reg, reg_ctrl, reg_ctrl2;
+> +			u32 slice_per_intf, bytes_in_slice, total_bytes_per_intf;
+> +
+> +			reg_ctrl = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL);
+> +			reg_ctrl2 = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2);
+> +
+> +			slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->drm->slice_width);
+> +			bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width *
+> +						      dsc->drm->bits_per_pixel, 8);
+> +			dsc->drm->slice_chunk_size = bytes_in_slice;
+> +			total_bytes_per_intf = dsc->bytes_in_slice * slice_per_intf;
+> +			dsc->pkt_per_line = slice_per_intf / dsc->drm->slice_count;
+> +
+> +			reg = 0x39 << 8;
+> +			reg |= ffs(dsc->pkt_per_line) << 6;
+> +
+> +			dsc->eol_byte_num = total_bytes_per_intf % 3;
+> +			reg |= dsc->eol_byte_num << 4;
+> +			reg |= 1;
+> +
+> +			reg_ctrl |= reg;
+> +			reg_ctrl2 |= bytes_in_slice;
+> +
+> +			dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL, reg);
+> +			dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2, reg_ctrl2);
+> +		}
+> +
+>  		/* image data and 1 byte write_memory_start cmd */
+> -		wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
+> +		if (!msm_host->dsc)
+> +			wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
+> +		else
+> +			wc = mode->hdisplay / 2 + 1;
+>  
+>  		dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL,
+>  			DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
+> -- 
+> 2.31.1
+> 
