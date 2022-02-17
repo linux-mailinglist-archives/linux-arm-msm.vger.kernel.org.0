@@ -2,72 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 93E454B952C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 01:57:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AB034B9542
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 02:13:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229461AbiBQA5O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Feb 2022 19:57:14 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:53326 "EHLO
+        id S229965AbiBQBNQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Feb 2022 20:13:16 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229942AbiBQA5O (ORCPT
+        with ESMTP id S229946AbiBQBNP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Feb 2022 19:57:14 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFAEA1AD89
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 16:56:54 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id u16so5953629ljk.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 16:56:54 -0800 (PST)
+        Wed, 16 Feb 2022 20:13:15 -0500
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42BCD24F09
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 17:13:00 -0800 (PST)
+Received: by mail-lj1-x22a.google.com with SMTP id t14so5943382ljh.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 17:13:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Hwfp/OQtDrohKTPClg8y0ZHlR72Rccgb37q08oBGNNU=;
-        b=wCumKQyTDNnf03yAzx77D+z7zRRNqJ4/GpBs0W//gkl2tJsZtQ0WTYSnytdMx7z0cq
-         nHnx79/Fpzha7WKPXs7RNNosMZ+tQv/9j6OxYlVpiLvO++veN61jxyQuHm/QinCYmpRp
-         TL3uJ4O78M8B0JMlXOryRZ0LLciTPsscRWuLhRzqKGcK8A/LOd2SPQmaF6BZ+k4cZFAm
-         RBZXCBfaB0jlhstTiAwDlWovJtu+E06x47IRmQAICFS49D5AZgNYcoNh5+y8n+HU6keq
-         EByfRV7o3jpneA7pGXIQYkMrWdzRrl5doGupGYnxocTeyCMgY1j9XRVj4c94fLZ2NrKg
-         AReA==
+        bh=Tmtpl0AbZecSHMm8IZEt8YMKXM9Alo4sDPM/uRA5w+s=;
+        b=nNzxrNdphUe3vVZTvMJ0kuHImuYO2Yqu2lu87JgDF/CYKZZYO94Wr90QxHat/+P8KT
+         3Z0H/R4OqKrxk41H60i2FH1Fdo76VTz9aGewj8MiIVNpxHclSNZRHWuyqehZWIYUDE3L
+         BdGgoUZvEBPU1werIb6BuO4tgULRODaphQUrUm+YVAtRt2AKwQiUEAFUPrcUhBCBrC0R
+         mO1SIl38GSFx55ZppXKGS+V4AC/ohvzCEMiZAplIixnNmXgQpHwd442QDeH+y7RMNsdx
+         xLa9sFWeOhSmo3ODETzKjyBHceVZCq7gtQf1i9nbV+Fa2CPvbTWAymf1NVfCGBkPopzP
+         G9gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=Hwfp/OQtDrohKTPClg8y0ZHlR72Rccgb37q08oBGNNU=;
-        b=hJMHalz/SXi2GhgqDupG48k2TjBt82xuYRCZchvs0EIeMgVIToEqvIXqIK/IbEMLsu
-         8scWUK2j7R0fsaP1KeayOMJWlrUeobPNYoAzb5cQZVUFYH/CvkIb+eNrefEOoM+Io4q+
-         mPBA+Uwa5pae1SPVEKAYMs1nzmBDfiitY7TvWWTvGhNFiOeuLa9/35UW8rSqRLYodLm8
-         f2GJ/p0Hb6N19/kC+u+2J0bP6jMTm3nbAsByTpugxYavU5o3mopVwJGKzvE7f8gGFKMO
-         WHhBHhwlyYlJWryHlMGVniGuAofPmCNEjgnluqKWn1SfFFbix6JycklBLvdbAfHhy0TT
-         BaRw==
-X-Gm-Message-State: AOAM533fhyt2EYDSR6t5640ZJQVECYZLFfuwluf9H/FFQkYCOaJQagd2
-        TqxfyiSY1mw2hShhWXZmzNWa1A==
-X-Google-Smtp-Source: ABdhPJywcCKmVMRJ7u3WwWkWGcT35bBfuJOChMjdMtRkeyMwmQJXwNnnrmgn8ej+Zgj41sCPxqvcUg==
-X-Received: by 2002:a05:651c:1792:b0:235:1df3:7b8e with SMTP id bn18-20020a05651c179200b002351df37b8emr473604ljb.464.1645059413145;
-        Wed, 16 Feb 2022 16:56:53 -0800 (PST)
+        bh=Tmtpl0AbZecSHMm8IZEt8YMKXM9Alo4sDPM/uRA5w+s=;
+        b=PC0tgMdb+SrilDAdSUcTyv/PeRE9eXom8iR2mpTAXU723TWZUjDkYsMkVUnW1U62+P
+         tIYrHMS3UfZeCBF6RTcTuOXQSOD40gm1q1TFQQ8sTlxtX2dH1IPbWcLlWbtnbjSxNuI3
+         Wn+T79nJAoOpgr581kcSmIlNYnYV5f2hE+Bpxa91UeCIqyc1DFm+qjOm1VcX7Pq0L+eV
+         WPtNhVcyTg3HkU6b0ljoPMFIXFV9jgSw7QcoYseKh9mSHE7//345yPr/KLrgc6HfD7fi
+         VcwfXSIke1IF4Ry9B1RBHSx7nUA8huXC75Nofw613Yu/HKSSW9OO2TT9mIV8k+RQuCTc
+         52og==
+X-Gm-Message-State: AOAM531idLzvd0XjKrTE1LB9jw8dz2aoN9Gy9tr5+LBE4vwGesc85Qsa
+        7rhkssXSUwAVVqe5YYOPfpScEA==
+X-Google-Smtp-Source: ABdhPJxw6LYAVH39y4cXLHEacyNL7bI+7n7CZ9QWjggY3M6duuviy5HpyWy9LlF45ErbUgKI86Uf1Q==
+X-Received: by 2002:a05:651c:311:b0:246:1250:d6f with SMTP id a17-20020a05651c031100b0024612500d6fmr499834ljp.455.1645060378553;
+        Wed, 16 Feb 2022 17:12:58 -0800 (PST)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id h9sm1533330ljb.77.2022.02.16.16.56.52
+        by smtp.gmail.com with ESMTPSA id s21sm654434lfs.37.2022.02.16.17.12.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Feb 2022 16:56:52 -0800 (PST)
-Message-ID: <bb35fa5f-b873-a345-714e-ce2e7a18b574@linaro.org>
-Date:   Thu, 17 Feb 2022 03:56:52 +0300
+        Wed, 16 Feb 2022 17:12:57 -0800 (PST)
+Message-ID: <064a42eb-bdeb-a689-de25-07c393cb6580@linaro.org>
+Date:   Thu, 17 Feb 2022 04:12:57 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.1
-Subject: Re: [PATCH v4 1/2] drm/msm/dpu: simplify clocks handling
+Subject: Re: [PATCH] drm/msm/dpu: Disable boot loader configured data paths
 Content-Language: en-GB
-To:     Stephen Boyd <swboyd@chromium.org>,
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20220131210513.2177652-1-dmitry.baryshkov@linaro.org>
- <20220131210513.2177652-2-dmitry.baryshkov@linaro.org>
- <CAE-0n520mZdGaMWwjBEb7SSbLf31Sd7t3pe9dJ5FLVnsSVJZFg@mail.gmail.com>
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20220215043708.1256854-1-bjorn.andersson@linaro.org>
+ <460e0036-74b5-bccd-c11c-2573290012ae@linaro.org> <YgvDrXoK4a0+HLpz@yoga>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAE-0n520mZdGaMWwjBEb7SSbLf31Sd7t3pe9dJ5FLVnsSVJZFg@mail.gmail.com>
+In-Reply-To: <YgvDrXoK4a0+HLpz@yoga>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -80,96 +77,193 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/02/2022 05:31, Stephen Boyd wrote:
-> Quoting Dmitry Baryshkov (2022-01-31 13:05:12)
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
->> index 60fe06018581..4d184122d63e 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
->> @@ -405,10 +394,11 @@ int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
+On 15/02/2022 18:15, Bjorn Andersson wrote:
+> On Tue 15 Feb 08:44 CST 2022, Dmitry Baryshkov wrote:
+> 
+>> On 15/02/2022 07:37, Bjorn Andersson wrote:
+>>> It's typical for the bootloader to configure CTL_0 for the boot splash
+>>> or EFIFB, but for non-DSI use cases the DPU driver tend to pick another
+>>> CTL and the system might end up with two configured data paths producing
+>>> data on the same INTF. In particular as the IOMMU configuration isn't
+>>> retained from the bootloader one of the data paths will push underflow
+>>> color, resulting in screen flickering.
+>>>
+>>> Naturally the end goal would be to inherit the bootloader's
+>>> configuration and provide the user with a glitch-free handover from the
+>>> boot configuration to a running DPU.
+>>>
+>>> But such effort will affect clocks, regulators, power-domains etc, and
+>>> will take time to implement. So in the meantime this patch simply
+>>> disables all the data paths, on platforms that has CTL_FETCH_ACTIVE, to
+>>> avoid the graphical artifacts.
+>>>
+>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 13 +++++++++++++
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h |  6 ++++++
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c    |  2 ++
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c     | 17 +++++++++++++++++
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h     |  8 ++++++++
+>>>    5 files changed, 46 insertions(+)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+>>> index 02da9ecf71f1..69d4849484fa 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+>>> @@ -357,6 +357,18 @@ static void dpu_hw_ctl_clear_all_blendstages(struct dpu_hw_ctl *ctx)
+>>>    	DPU_REG_WRITE(c, CTL_FETCH_PIPE_ACTIVE, 0);
+>>>    }
+>>> +static void dpu_hw_ctl_disable_boot_config(struct dpu_hw_ctl *ctx)
+>>> +{
+>>> +	if (ctx->caps->features & BIT(DPU_CTL_FETCH_ACTIVE)) {
 >>
->>                  trace_dpu_core_perf_update_clk(kms->dev, stop_req, clk_rate);
+>> I see that you are changing only CTL_FETCH_PIPE_ACTIVE. However it still
+>> seems like a hack.
+> 
+> You're not wrong, it certainly seems a little bit hacky.
+> 
+> I think that it would be more appropriate to try to inherit the
+> bootloader configuration. So the proposal here is, in my view, a
+> stop-gap until we start to look at "continuous splash".
+> 
+>> What if instead we always disable boot config for all paths except CTL_0 (or
+>> CTL_0 and CTL_1)?
 >>
->> -               ret = _dpu_core_perf_set_core_clk_rate(kms, clk_rate);
->> +               if (clk_rate > kms->perf.max_core_clk_rate)
->> +                       clk_rate = kms->perf.max_core_clk_rate;
 > 
-> Using
+> On my laptop the bootloader sets up efifb using CTL_0. When Linux brings
+> up the eDP interface it seems to skip DPU_CTL_SPLIT_DISPLAY ctls and
+> picks CTL_2.
 > 
-> 	clk_rate = min(clk_rate, kms->perf.max_core_clk_rate)
-> 
-> would be type safer. And min_t() would be explicit if the types don't
-> match, but we should try to make them be compatible.
+> As mentioned in the message, I now have both CTL_0 and CTL_2 pushing
+> data to the one interface; resulting in flickering.
 
-Ack
+Ah, I thought, it's the other way.
+
+Yep, the SPLIT_DISPLAY CTLs are precious, ideally they should be used 
+only when required.
 
 > 
->> +               ret = dev_pm_opp_set_rate(&kms->pdev->dev, clk_rate);
->>                  if (ret) {
->> -                       DPU_ERROR("failed to set %s clock rate %llu\n",
->> -                                       kms->perf.core_clk->clk_name, clk_rate);
->> +                       DPU_ERROR("failed to set core clock rate %llu\n", clk_rate);
->>                          return ret;
->>                  }
+>>> +		/*
+>>> +		 * Disable the pipe fetch and trigger a start, to disable the
+>>> +		 * data path
+>>> +		 */
+>>> +		DPU_REG_WRITE(&ctx->hw, CTL_FETCH_PIPE_ACTIVE, 0);
+>>> +		DPU_REG_WRITE(&ctx->hw, CTL_START, 0x1);
 >>
->> @@ -529,13 +519,13 @@ void dpu_core_perf_destroy(struct dpu_core_perf *perf)
->>   int dpu_core_perf_init(struct dpu_core_perf *perf,
->>                  struct drm_device *dev,
->>                  struct dpu_mdss_cfg *catalog,
->> -               struct dss_clk *core_clk)
->> +               struct clk *core_clk)
->>   {
->>          perf->dev = dev;
->>          perf->catalog = catalog;
->>          perf->core_clk = core_clk;
+>> What about video vs cmd modes?
 >>
->> -       perf->max_core_clk_rate = core_clk->max_rate;
->> +       perf->max_core_clk_rate = clk_get_rate(core_clk);
->>          if (!perf->max_core_clk_rate) {
->>                  DPU_DEBUG("optional max core clk rate, use default\n");
->>                  perf->max_core_clk_rate = DPU_PERF_DEFAULT_MAX_CORE_CLK_RATE;
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->> index 2d385b4b7f5e..5f562413bb63 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->> @@ -21,7 +21,6 @@
->>   #include "dpu_hw_lm.h"
->>   #include "dpu_hw_interrupts.h"
->>   #include "dpu_hw_top.h"
->> -#include "dpu_io_util.h"
->>   #include "dpu_rm.h"
->>   #include "dpu_core_perf.h"
->>
->> @@ -113,7 +112,8 @@ struct dpu_kms {
->>          struct platform_device *pdev;
->>          bool rpm_enabled;
->>
->> -       struct dss_module_power mp;
->> +       struct clk_bulk_data *clocks;
->> +       int num_clocks;
 > 
-> size_t?
+> Initially I was resetting a whole bunch of properties in the CTL, but
+> all I want to do is stop the data flow. It's my expectation that the
+> steps to follow will reset the interfaces and configure the actual data
+> paths anew.
 > 
+> Perhaps I'm missing some steps here, the documentation is not clear and
+> this has the expected visual outcome...
+
+CTL_START is used only for WB and DSI command mode. Thus I'm surprised 
+that you need it for the eDP (which should be using video mode).
+
+> 
+> Regards,
+> Bjorn
+> 
+>>> +	}
+>>> +}
+>>> +
+>>>    static void dpu_hw_ctl_setup_blendstage(struct dpu_hw_ctl *ctx,
+>>>    	enum dpu_lm lm, struct dpu_hw_stage_cfg *stage_cfg)
+>>>    {
+>>> @@ -590,6 +602,7 @@ static void _setup_ctl_ops(struct dpu_hw_ctl_ops *ops,
+>>>    	ops->trigger_pending = dpu_hw_ctl_trigger_pending;
+>>>    	ops->reset = dpu_hw_ctl_reset_control;
+>>>    	ops->wait_reset_status = dpu_hw_ctl_wait_reset_status;
+>>> +	ops->disable_boot_config = dpu_hw_ctl_disable_boot_config;
+>>>    	ops->clear_all_blendstages = dpu_hw_ctl_clear_all_blendstages;
+>>>    	ops->setup_blendstage = dpu_hw_ctl_setup_blendstage;
+>>>    	ops->get_bitmask_sspp = dpu_hw_ctl_get_bitmask_sspp;
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+>>> index 806c171e5df2..c2734f6ab760 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+>>> @@ -159,6 +159,12 @@ struct dpu_hw_ctl_ops {
+>>>    	 */
+>>>    	void (*clear_all_blendstages)(struct dpu_hw_ctl *ctx);
+>>> +	/**
+>>> +	 * Disable the configuration setup by the bootloader
+>>> +	 * @ctx	      : ctl path ctx pointer
+>>> +	 */
+>>> +	void (*disable_boot_config)(struct dpu_hw_ctl *ctx);
+>>> +
+>>>    	/**
+>>>    	 * Configure layer mixer to pipe configuration
+>>>    	 * @ctx       : ctl path ctx pointer
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>>> index cedc631f8498..eef2f017031a 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>>> @@ -1107,6 +1107,8 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+>>>    	dpu_kms->rm_init = true;
+>>> +	dpu_rm_clear_boot_config(&dpu_kms->rm, dpu_kms->catalog);
+>>> +
+>>>    	dpu_kms->hw_mdp = dpu_hw_mdptop_init(MDP_TOP, dpu_kms->mmio,
+>>>    					     dpu_kms->catalog);
+>>>    	if (IS_ERR(dpu_kms->hw_mdp)) {
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>>> index f9c83d6e427a..3365c5e41e28 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>>> @@ -4,6 +4,7 @@
+>>>     */
+>>>    #define pr_fmt(fmt)	"[drm:%s] " fmt, __func__
+>>> +#include <linux/delay.h>
+>>>    #include "dpu_kms.h"
+>>>    #include "dpu_hw_lm.h"
+>>>    #include "dpu_hw_ctl.h"
+>>> @@ -229,6 +230,22 @@ int dpu_rm_init(struct dpu_rm *rm,
+>>>    	return rc ? rc : -EFAULT;
+>>>    }
+>>> +void dpu_rm_clear_boot_config(struct dpu_rm *rm, struct dpu_mdss_cfg *cat)
+>>> +{
+>>> +	struct dpu_hw_ctl *ctl;
+>>> +	int i;
+>>> +
+>>> +	for (i = CTL_0; i < CTL_MAX; i++) {
+>>> +		if (!rm->ctl_blks[i - CTL_0])
+>>> +			continue;
+>>> +
+>>> +		DPU_DEBUG("disabling ctl%d boot configuration\n", i - CTL_0);
+>>> +
+>>> +		ctl = to_dpu_hw_ctl(rm->ctl_blks[i - CTL_0]);
+>>> +		ctl->ops.disable_boot_config(ctl);
+>>> +	}
+>>> +}
+>>> +
+>>>    static bool _dpu_rm_needs_split_display(const struct msm_display_topology *top)
+>>>    {
+>>>    	return top->num_intf > 1;
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+>>> index 1f12c8d5b8aa..d3e084541e67 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+>>> @@ -88,5 +88,13 @@ void dpu_rm_release(struct dpu_global_state *global_state,
+>>>    int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+>>>    	struct dpu_global_state *global_state, uint32_t enc_id,
+>>>    	enum dpu_hw_blk_type type, struct dpu_hw_blk **blks, int blks_size);
+>>> +
+>>> +/**
+>>> + * dpu_rm_clear_boot_config() - Tear down any data paths configured by boot
+>>> + * @rm: DPU Resource Manager handle
+>>> + * @cat: Pointer to hardware catalog
+>>> + */
+>>> +void dpu_rm_clear_boot_config(struct dpu_rm *rm, struct dpu_mdss_cfg *cat);
+>>> +
+>>>    #endif /* __DPU_RM_H__ */
 >>
->>          /* reference count bandwidth requests, so we know when we can
->>           * release bandwidth.  Each atomic update increments, and frame-
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
->> index 131c1f1a869c..8c038416e119 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
->> @@ -29,7 +29,8 @@ struct dpu_irq_controller {
->>   struct dpu_mdss {
->>          struct msm_mdss base;
->>          void __iomem *mmio;
->> -       struct dss_module_power mp;
->> +       struct clk_bulk_data *clocks;
->> +       int num_clocks;
-> 
-> size_t?
-> 
->>          struct dpu_irq_controller irq_controller;
->>   };
 >>
+>> -- 
+>> With best wishes
+>> Dmitry
 
 
 -- 
