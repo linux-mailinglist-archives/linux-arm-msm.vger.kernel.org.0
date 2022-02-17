@@ -2,73 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 464C24BAA02
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 20:41:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B8C5A4BAA2F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 20:50:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242318AbiBQTl0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Feb 2022 14:41:26 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:57604 "EHLO
+        id S245493AbiBQTst (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Feb 2022 14:48:49 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237309AbiBQTlZ (ORCPT
+        with ESMTP id S245490AbiBQTsi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Feb 2022 14:41:25 -0500
-Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAC5F12E173
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 11:41:10 -0800 (PST)
-Received: by mail-oo1-xc33.google.com with SMTP id s203-20020a4a3bd4000000b003191c2dcbe8so824045oos.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 11:41:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=3wvP+CouT5s7ckbu1I32aqEIyb+Q3SaOSxhlymVyShY=;
-        b=JYLlipsvhfV7sqXYVa9saWxp8b9zR4ENVos6xsFloI664t0SttD4jiRU6dK7Qx9iEt
-         S61i1/8tNV3jUM9VR3ZG7wp64r5V9E5vQnsZaBANQYM82bvxAaQ8ox9L1jtOsfI5rKNU
-         GTeaDejUOd6Xe6Z2bxX5z5J05qs9XflVLniFE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=3wvP+CouT5s7ckbu1I32aqEIyb+Q3SaOSxhlymVyShY=;
-        b=SVhDcGFtsmP/BJhu5HCCy+kIjmggOZyyACwLpBDmuIS+P/LUPiDv8yks9uaH3YOdLb
-         eyvRBepU4X1MIor9IU7wz2DIDCvuVi3wM0Kwfzehp/JobwFbtMvpzbi3rAMbZZ3NhTH0
-         W9Pfzx7MW2KgHkNULeGVznYEFW8KBKBruxgfYJwaEzv40sT4k/bzetOkuFARiWzGSyJp
-         h7kWdcsgtzZzEBngOSPXGopnMD3ImTUXqzASsBSEXTsjY/tPps4XV5jITssWPdNQQMAV
-         58Cw+dLzgrbny4NjZWQKlERWys8Nu/Squzd+BZcfSNZH3wzINzT6N1nBp+Sh6nRcC6p7
-         EjSQ==
-X-Gm-Message-State: AOAM530afeBefW/OG60YtQkrqfwZgKp9mK1OSKhsLeube+4h8RZFMLoX
-        H7CxbjCBhoXKaRjDOin3CSKLPJFG7EsbQZUkhthSrA==
-X-Google-Smtp-Source: ABdhPJzxaar8ksZKNkxlbNXjnGcgtRXh0N8gzo3lIPEiGAozeBu5nup8a4c7u8qz9MRLb9V5pCHw9rvSl1uX+9jgK+s=
-X-Received: by 2002:a4a:d58b:0:b0:319:8746:ac3e with SMTP id
- z11-20020a4ad58b000000b003198746ac3emr1291325oos.1.1645126868547; Thu, 17 Feb
- 2022 11:41:08 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 17 Feb 2022 11:41:08 -0800
-MIME-Version: 1.0
-In-Reply-To: <13007276-c827-0cc4-5db1-396c5184bb35@quicinc.com>
-References: <1644850708-11099-1-git-send-email-quic_srivasam@quicinc.com>
- <1644850708-11099-5-git-send-email-quic_srivasam@quicinc.com>
- <CAE-0n504R0avU9Ybj68jxqDRH-Ya5ro0hPo5GJ=2zC6p2SZ_=g@mail.gmail.com> <13007276-c827-0cc4-5db1-396c5184bb35@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 17 Feb 2022 11:41:08 -0800
-Message-ID: <CAE-0n538Lhp7U=pEB_7R5EARG6LveeO=jvF+kE7HCCEXUEm-kQ@mail.gmail.com>
-Subject: Re: [RESEND v13 04/10] ASoC: qcom: Add helper function to get dma
- control and lpaif handle
+        Thu, 17 Feb 2022 14:48:38 -0500
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEA8F27141;
+        Thu, 17 Feb 2022 11:48:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1645127298; x=1676663298;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=46Ao89wMcgm6jN7Eq+CdMeAAf93pn4JVEULNHnEFEMY=;
+  b=RNfvLN9HHOmMFNJd8zoe75azhYolL5YDMrdv3HrlnIx4y5ue2/7AbOzg
+   IZwLNMYemYZSQmZNn2NXQd+LzqRv2oWUNDDXdtkXmMAMi3X00i8NcC+mR
+   sn0iB9owU7JB8soJ1OJm+aCmwmeAlfA/C+yfX5buHhaBD2sCHjJJ4/ee6
+   ZAeIrY/VBe3ObWIw11WFwrNb10unlIUE7n/rFtCJecTkTCPj0oOSx2hIp
+   jT0rlnksMFnTIJdSd2GSV0eGMpBBgJxKMMf9ml6DO3jPscPbpcbDAqPmr
+   5wuJgw1NsMFWpe1oC+WME//8ko+rzYs3eoZkiMraZMqoNBxQ4ZEwBG8xx
+   Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10261"; a="311703355"
+X-IronPort-AV: E=Sophos;i="5.88,376,1635231600"; 
+   d="scan'208";a="311703355"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Feb 2022 11:48:12 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,376,1635231600"; 
+   d="scan'208";a="774877289"
+Received: from lkp-server01.sh.intel.com (HELO 6f05bf9e3301) ([10.239.97.150])
+  by fmsmga006.fm.intel.com with ESMTP; 17 Feb 2022 11:48:07 -0800
+Received: from kbuild by 6f05bf9e3301 with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1nKmkz-0000Xa-E7; Thu, 17 Feb 2022 19:48:01 +0000
+Date:   Fri, 18 Feb 2022 03:47:09 +0800
+From:   kernel test robot <lkp@intel.com>
 To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, alsa-devel@alsa-project.org,
-        bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
-        broonie@kernel.org, devicetree@vger.kernel.org,
-        judyhsiao@chromium.org, lgirdwood@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        perex@perex.cz, quic_plai@quicinc.com, robh+dt@kernel.org,
-        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org,
-        tiwai@suse.com
-Cc:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, judyhsiao@chromium.org
+Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Subject: Re: [PATCH] ASoC: codecs: Add power domains support in digital macro
+ codecs
+Message-ID: <202202180153.WSEbQejW-lkp@intel.com>
+References: <1645108786-25990-1-git-send-email-quic_srivasam@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1645108786-25990-1-git-send-email-quic_srivasam@quicinc.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,77 +73,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2022-02-15 21:11:29)
->
-> On 2/15/2022 6:40 AM, Stephen Boyd wrote:
-> Thanks for your time Stephen!!!
-> > Quoting Srinivasa Rao Mandadapu (2022-02-14 06:58:22)
-> >> Add support function to get dma control and lpaif handle to avoid
-> >> repeated code in platform driver
-> >>
-> >> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> >> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> >> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> >> Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> >> ---
-> >>   sound/soc/qcom/lpass-platform.c | 113 +++++++++++++++++++++++-----------------
-> >>   1 file changed, 66 insertions(+), 47 deletions(-)
-> >>
-> >> diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
-> >> index a44162c..5d77240 100644
-> >> --- a/sound/soc/qcom/lpass-platform.c
-> >> +++ b/sound/soc/qcom/lpass-platform.c
-> >> @@ -177,6 +177,49 @@ static int lpass_platform_pcmops_close(struct snd_soc_component *component,
-> >>          return 0;
-> >>   }
-> >>
-> >> +static void __lpass_get_lpaif_handle(struct snd_pcm_substream *substream,
-> > const?
-> Okay. will add const to substream pointer.
-> >
-> >> +                                    struct snd_soc_component *component,
-> > const?
-> Here const is giving compilation errors in below code.
+Hi Srinivasa,
 
-Ok
+Thank you for the patch! Yet something to improve:
 
-> >
-> >> +                       l_id = pcm_data->dma_ch;
-> >> +                       l_dmactl = drvdata->rd_dmactl;
-> >> +               } else {
-> >> +                       l_dmactl = drvdata->wr_dmactl;
-> >> +                       l_id = pcm_data->dma_ch - v->wrdma_channel_start;
-> >> +               }
-> >> +               l_map = drvdata->lpaif_map;
-> >> +               break;
-> >> +       case LPASS_DP_RX:
-> >> +               l_id = pcm_data->dma_ch;
-> >> +               l_dmactl = drvdata->hdmi_rd_dmactl;
-> >> +               l_map = drvdata->hdmiif_map;
-> >> +               break;
-> >> +       default:
-> >> +               break;
-> >> +       }
-> >> +       if (dmactl)
-> >> +               *dmactl = l_dmactl;
-> >> +       if (id)
-> >> +               *id = l_id;
-> >> +       if (map)
-> >> +               *map = l_map;
-> > Why not 'return 0' here and return -EINVAL in the default case above? Then
-> > we can skip the checks for !map or !dmactl below and simply bail out if
-> > it failed with an error value.
->
-> Here the check is for input params. some users call for only damctl or
-> only map.
+[auto build test ERROR on broonie-sound/for-next]
+[also build test ERROR on next-20220217]
+[cannot apply to v5.17-rc4]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-Yes the check is to make sure there's a pointer to store the value into.
-I get that. The users are all internal to this driver though because
-the function is static. If the function returned an error because it
-couldn't find something then we wouldn't have to test the resulting
-pointers for success, instead we could check for a return value.
-Similarly, it may be clearer to have a single get for each item and then
-return a pointer from the function vs. passing it in to extract
-something. It may duplicate some code but otherwise the code would be
-clearer because we're getting one thing and can pass an error value
-through the pointer with PTR_ERR().
+url:    https://github.com/0day-ci/linux/commits/Srinivasa-Rao-Mandadapu/ASoC-codecs-Add-power-domains-support-in-digital-macro-codecs/20220217-224032
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+config: hexagon-randconfig-r045-20220217 (https://download.01.org/0day-ci/archive/20220218/202202180153.WSEbQejW-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project d271fc04d5b97b12e6b797c6067d3c96a8d7470e)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/0day-ci/linux/commit/a1e8b5e6a2baa8ce5b2373bfbdfce5a771132448
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Srinivasa-Rao-Mandadapu/ASoC-codecs-Add-power-domains-support-in-digital-macro-codecs/20220217-224032
+        git checkout a1e8b5e6a2baa8ce5b2373bfbdfce5a771132448
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=hexagon SHELL=/bin/bash
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All errors (new ones prefixed by >>):
+
+>> ld.lld: error: undefined symbol: lpass_macro_pds_init
+   >>> referenced by lpass-rx-macro.c
+   >>> soc/codecs/lpass-rx-macro.o:(rx_macro_probe) in archive sound/built-in.a
+   >>> referenced by lpass-rx-macro.c
+   >>> soc/codecs/lpass-rx-macro.o:(rx_macro_probe) in archive sound/built-in.a
+   >>> referenced by lpass-tx-macro.c
+   >>> soc/codecs/lpass-tx-macro.o:(tx_macro_probe) in archive sound/built-in.a
+   >>> referenced 1 more times
+--
+>> ld.lld: error: undefined symbol: lpass_macro_pds_exit
+   >>> referenced by lpass-rx-macro.c
+   >>> soc/codecs/lpass-rx-macro.o:(rx_macro_remove) in archive sound/built-in.a
+   >>> referenced by lpass-rx-macro.c
+   >>> soc/codecs/lpass-rx-macro.o:(rx_macro_remove) in archive sound/built-in.a
+   >>> referenced by lpass-tx-macro.c
+   >>> soc/codecs/lpass-tx-macro.o:(tx_macro_remove) in archive sound/built-in.a
+   >>> referenced 1 more times
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
