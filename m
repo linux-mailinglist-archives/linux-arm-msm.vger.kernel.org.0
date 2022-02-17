@@ -2,141 +2,354 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 442614BAC86
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 23:24:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2762F4BAC99
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 23:32:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343749AbiBQWYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Feb 2022 17:24:30 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42026 "EHLO
+        id S1343870AbiBQWc7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Feb 2022 17:32:59 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:40870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343843AbiBQWY3 (ORCPT
+        with ESMTP id S230527AbiBQWc6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Feb 2022 17:24:29 -0500
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A71FF2C115
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 14:24:14 -0800 (PST)
-Received: by mail-oi1-x234.google.com with SMTP id q5so1139586oij.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 14:24:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=/neFhOJyXKG5xSPOlx3CJHDkEqEd9BRroYvm8Izt9PU=;
-        b=sYKcZLjYBIoEo8liVjK/NRa/cSfQMrW3EijXiy4Gakbj3BtmY1jTwBXZjgSm1KwYvw
-         EUbw9qFK1Vis7+Hn8aLBdvJXtLaqo/KtJudsA5aapscIzSc+eLy9CuN27UAerGmKiZvw
-         diOIyVr9vCMyCf+4jLgVKfUqhXcVfZg3t11inoh1V2nqpb0VyfiDWvz1qPUc7JjFhPj/
-         4OmoXMJb14GlZEAzFIoUVlJPpBLSMD6w4h29JdMio6mIafyrmJJfZNjMcS5XBhBm2dGe
-         ka6IbIduW9AfZdcOCpq1ckB9ClPUd8UBs8K3gmoB1UrDwBARBlw03epOB2JJQ/inDZ/D
-         vkfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/neFhOJyXKG5xSPOlx3CJHDkEqEd9BRroYvm8Izt9PU=;
-        b=cyLzA5xKCM2+w2IHnzas8FT2TWabBIGNw9HSdXPUV+wfy9TfTjpbe5dI2aEtRX0Acb
-         TMk+hmS7xsOJzKYbJdKGobPfLDv22mv3/HOQMZSrTH7rnxbGYm2JnqHOnScRdz/4TyxE
-         ECZmL528oqqhKcUPo8Kep2aqEy6k1ijKKoMS9rJXvnzCLpEcHEd8+5q5m2P24XZcijSM
-         Tl9/tmnGgpekY62dN31mq3mG5u/qqua6B6Nn0THuVowDKzco3E+8cyxAYCar8YE98lgJ
-         n8VpxrmJMqdkHZFIzBepOpr/FqnqHyXlX6dIdWY1xu3dGX603NIeP7/nSRNfFdlKJyF0
-         m8BA==
-X-Gm-Message-State: AOAM531ajeBj4tVkCYrlhBPcp6HL0e92S9FIFiKL3G5cJXJ3fcm/vuqX
-        WG4J9Es8ycrx9/SUMfn8mUq6QrV7O6wjog==
-X-Google-Smtp-Source: ABdhPJyAHPTbyHfEMbFh3qbEs6lUXgioZ89TvaZDWuHOUNgl2HglyEel/rwjbbS0NIYVNx5zst55qw==
-X-Received: by 2002:a05:6808:238f:b0:2ce:df34:1812 with SMTP id bp15-20020a056808238f00b002cedf341812mr3789990oib.147.1645136653688;
-        Thu, 17 Feb 2022 14:24:13 -0800 (PST)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id w13sm545096ooj.5.2022.02.17.14.24.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Feb 2022 14:24:13 -0800 (PST)
-Date:   Thu, 17 Feb 2022 14:26:20 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Satya Priya <quic_c_skakit@quicinc.com>
-Cc:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, mka@chromium.org,
-        swboyd@chromium.org, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, satya priya <skakit@codeaurora.org>
-Subject: Re: [PATCH V3 2/4] leds: Add pm8350c support to Qualcomm LPG driver
-Message-ID: <Yg7LjJFi51cmDUQr@ripper>
-References: <1635507893-25490-1-git-send-email-quic_c_skakit@quicinc.com>
- <1635507893-25490-3-git-send-email-quic_c_skakit@quicinc.com>
+        Thu, 17 Feb 2022 17:32:58 -0500
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAC081688D7;
+        Thu, 17 Feb 2022 14:32:42 -0800 (PST)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id EB6B93F680;
+        Thu, 17 Feb 2022 23:32:40 +0100 (CET)
+Date:   Thu, 17 Feb 2022 23:32:39 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [REPOST PATCH v4 07/13] drm/msm/disp/dpu1: Add support for DSC
+ in encoder
+Message-ID: <20220217223239.2i256klkbjkogovz@SoMainline.org>
+References: <20220210103423.271016-1-vkoul@kernel.org>
+ <20220210103423.271016-8-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1635507893-25490-3-git-send-email-quic_c_skakit@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20220210103423.271016-8-vkoul@kernel.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 29 Oct 04:44 PDT 2021, Satya Priya wrote:
-
-> From: satya priya <skakit@codeaurora.org>
+On 2022-02-10 16:04:17, Vinod Koul wrote:
+> We need to configure the encoder for DSC configuration and calculate DSC
+> parameters for the given timing so this patch adds that support by
+> adding dpu_encoder_prep_dsc() which is invoked when DSC is enabled.
 > 
-> Add pm8350c compatible and lpg_data to the driver.
-> 
-> Signed-off-by: satya priya <skakit@codeaurora.org>
-
-Sorry for the OCD, but I would really like for you to capitalize 's' and
-'p' in your name.
-
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
-> Changes in V2:
->  - Added const for lpg_channel_data[] struct.
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 164 +++++++++++++++++-
+>  .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |   8 +
+>  2 files changed, 171 insertions(+), 1 deletion(-)
 > 
-> Changes in V3:
->  - Correct the num_channels and add respective base addresses.
-> 
->  drivers/leds/rgb/leds-qcom-lpg.c | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
-> 
-> diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
-> index 45ef4ec..ad99a9b 100644
-> --- a/drivers/leds/rgb/leds-qcom-lpg.c
-> +++ b/drivers/leds/rgb/leds-qcom-lpg.c
-> @@ -1275,9 +1275,22 @@ static const struct lpg_data pm8150l_lpg_data = {
->  	},
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 1e648db439f9..95a7bf362e81 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -21,6 +21,7 @@
+>  #include "dpu_hw_intf.h"
+>  #include "dpu_hw_ctl.h"
+>  #include "dpu_hw_dspp.h"
+> +#include "dpu_hw_dsc.h"
+>  #include "dpu_formats.h"
+>  #include "dpu_encoder_phys.h"
+>  #include "dpu_crtc.h"
+> @@ -136,6 +137,8 @@ enum dpu_enc_rc_states {
+>   * @cur_slave:		As above but for the slave encoder.
+>   * @hw_pp:		Handle to the pingpong blocks used for the display. No.
+>   *			pingpong blocks can be different than num_phys_encs.
+> + * @hw_dsc:		Handle to the DSC blocks used for the display.
+> + * @dsc_mask:		The bitmask of used DSC blocks.
+
+No need for "^The" prefix here.
+
+>   * @intfs_swapped:	Whether or not the phys_enc interfaces have been swapped
+>   *			for partial update right-only cases, such as pingpong
+>   *			split where virtual pingpong does not generate IRQs
+> @@ -169,6 +172,7 @@ enum dpu_enc_rc_states {
+>   * @topology:                   topology of the display
+>   * @idle_timeout:		idle timeout duration in milliseconds
+>   * @dp:				msm_dp pointer, for DP encoders
+> + * @dsc:			msm_display_dsc_config pointer, for DSC-enabled encoders
+>   */
+>  struct dpu_encoder_virt {
+>  	struct drm_encoder base;
+> @@ -182,6 +186,9 @@ struct dpu_encoder_virt {
+>  	struct dpu_encoder_phys *cur_master;
+>  	struct dpu_encoder_phys *cur_slave;
+>  	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
+> +	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
+> +
+> +	unsigned int dsc_mask;
+>  
+>  	bool intfs_swapped;
+>  
+> @@ -209,6 +216,9 @@ struct dpu_encoder_virt {
+>  	u32 idle_timeout;
+>  
+>  	struct msm_dp *dp;
+> +
+> +	/* DSC configuration */
+> +	struct msm_display_dsc_config *dsc;
 >  };
 >  
-> +static const struct lpg_data pm8350c_pwm_data = {
-> +	.pwm_9bit_mask = BIT(2),
+>  #define to_dpu_encoder_virt(x) container_of(x, struct dpu_encoder_virt, base)
+> @@ -972,7 +982,8 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
+>  	struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC];
+>  	struct dpu_hw_blk *hw_lm[MAX_CHANNELS_PER_ENC];
+>  	struct dpu_hw_blk *hw_dspp[MAX_CHANNELS_PER_ENC] = { NULL };
+> -	int num_lm, num_ctl, num_pp;
+> +	struct dpu_hw_blk *hw_dsc[MAX_CHANNELS_PER_ENC];
+> +	int num_lm, num_ctl, num_pp, num_dsc;
+>  	int i, j;
+>  
+>  	if (!drm_enc) {
+> @@ -1027,6 +1038,23 @@ static void dpu_encoder_virt_mode_set(struct drm_encoder *drm_enc,
+>  		dpu_enc->hw_pp[i] = i < num_pp ? to_dpu_hw_pingpong(hw_pp[i])
+>  						: NULL;
+>  
+> +	dpu_enc->dsc_mask = 0;
+> +
+> +	if (dpu_enc->dsc) {
+> +		unsigned int dsc_mask = 0;
 
-As you might have seen in v12 I dropped pwm_9bit_mask.
+Perhaps move this definition outside the if, and unconditionally
+perform:
+
+	dpu_enc->dsc_mask = dsc_mask;
+
+Below the if, instead of having to write it twice when ->dsc is truthy?
 
 > +
-
-Afaict there's a tri-channel current sink in pm8350c as well, so you
-should have:
-
-        .triled_base = 0xef00,
-
-And then associated .triled_mask in the relevant channels.
-
-Regards,
-Bjorn
-
-> +	.num_channels = 4,
-> +	.channels = (const struct lpg_channel_data[]) {
-> +		{ .base = 0xe800 },
-> +		{ .base = 0xe900 },
-> +		{ .base = 0xea00 },
-> +		{ .base = 0xeb00 },
-> +	},
-> +};
+> +		num_dsc = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
+> +							drm_enc->base.id, DPU_HW_BLK_DSC,
+> +							hw_dsc, ARRAY_SIZE(hw_dsc));
+> +		for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
+> +			dpu_enc->hw_dsc[i] = i < num_dsc ? to_dpu_hw_dsc(hw_dsc[i]) : NULL;
 > +
->  static const struct of_device_id lpg_of_table[] = {
->  	{ .compatible = "qcom,pm8150b-lpg", .data = &pm8150b_lpg_data },
->  	{ .compatible = "qcom,pm8150l-lpg", .data = &pm8150l_lpg_data },
-> +	{ .compatible = "qcom,pm8350c-pwm", .data = &pm8350c_pwm_data },
->  	{ .compatible = "qcom,pm8916-pwm", .data = &pm8916_pwm_data },
->  	{ .compatible = "qcom,pm8941-lpg", .data = &pm8941_lpg_data },
->  	{ .compatible = "qcom,pm8994-lpg", .data = &pm8994_lpg_data },
+> +		for (i = 0; i < num_dsc; i++)
+> +			dsc_mask |= BIT(dpu_enc->hw_dsc[i]->idx - DSC_0);
+
+Perhaps you can merge these loops?  Assuming hw_dsc is already
+NULL-initialized, you only need to iterate to `i<num_dsc` once without
+extra conditional anyway?
+
+> +
+> +		dpu_enc->dsc_mask = dsc_mask;
+> +	}
+> +
+>  	cstate = to_dpu_crtc_state(drm_crtc->state);
+>  
+>  	for (i = 0; i < num_lm; i++) {
+> @@ -1739,6 +1767,127 @@ static void dpu_encoder_vsync_event_work_handler(struct kthread_work *work)
+>  			nsecs_to_jiffies(ktime_to_ns(wakeup_time)));
+>  }
+>  
+> +static void
+> +dpu_encoder_dsc_pclk_param_calc(struct msm_display_dsc_config *dsc, u32 width)
+> +{
+> +	int slice_count, slice_per_intf;
+> +	int bytes_in_slice, total_bytes_per_intf;
+> +
+> +	if (!dsc || !dsc->drm->slice_width || !dsc->drm->slice_count) {
+> +		DPU_ERROR("Invalid DSC/slices\n");
+
+What's the forward slash for?
+
+> +		return;
+> +	}
+> +
+> +	slice_count = dsc->drm->slice_count;
+> +	slice_per_intf = DIV_ROUND_UP(width, dsc->drm->slice_width);
+> +
+> +	/*
+> +	 * If slice_count is greater than slice_per_intf then default to 1.
+> +	 * This can happen during partial update.
+> +	 */
+> +	if (slice_count > slice_per_intf)
+> +		slice_count = 1;
+> +
+> +	bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width *
+> +				      dsc->drm->bits_per_pixel, 8);
+> +	total_bytes_per_intf = bytes_in_slice * slice_per_intf;
+> +
+> +	dsc->eol_byte_num = total_bytes_per_intf % 3;
+> +	dsc->pclk_per_line =  DIV_ROUND_UP(total_bytes_per_intf, 3);
+> +	dsc->bytes_in_slice = bytes_in_slice;
+> +	dsc->bytes_per_pkt = bytes_in_slice * slice_count;
+> +	dsc->pkt_per_line = slice_per_intf / slice_count;
+> +}
+
+I've seen the same calculations duplicated twice in dsi code.  Since the
+msm_display_dsc_config struct is available in a header, perhaps a single
+- easily reviewable and maintainable - calculation function should be
+available there too?
+
+- Marijn
+
+> +
+> +static void
+> +dpu_encoder_dsc_initial_line_calc(struct msm_display_dsc_config *dsc,
+> +				  u32 enc_ip_width)
+> +{
+> +	int ssm_delay, total_pixels, soft_slice_per_enc;
+> +
+> +	soft_slice_per_enc = enc_ip_width / dsc->drm->slice_width;
+> +
+> +	/*
+> +	 * minimum number of initial line pixels is a sum of:
+> +	 * 1. sub-stream multiplexer delay (83 groups for 8bpc,
+> +	 *    91 for 10 bpc) * 3
+> +	 * 2. for two soft slice cases, add extra sub-stream multiplexer * 3
+> +	 * 3. the initial xmit delay
+> +	 * 4. total pipeline delay through the "lock step" of encoder (47)
+> +	 * 5. 6 additional pixels as the output of the rate buffer is
+> +	 *    48 bits wide
+> +	 */
+> +	ssm_delay = ((dsc->drm->bits_per_component < 10) ? 84 : 92);
+> +	total_pixels = ssm_delay * 3 + dsc->drm->initial_xmit_delay + 47;
+> +	if (soft_slice_per_enc > 1)
+> +		total_pixels += (ssm_delay * 3);
+> +	dsc->initial_lines = DIV_ROUND_UP(total_pixels, dsc->drm->slice_width);
+> +}
+> +
+> +static void dpu_encoder_dsc_pipe_cfg(struct dpu_hw_dsc *hw_dsc,
+> +				     struct dpu_hw_pingpong *hw_pp,
+> +				     struct msm_display_dsc_config *dsc,
+> +				     u32 common_mode)
+> +{
+> +	if (hw_dsc->ops.dsc_config)
+> +		hw_dsc->ops.dsc_config(hw_dsc, dsc, common_mode);
+> +
+> +	if (hw_dsc->ops.dsc_config_thresh)
+> +		hw_dsc->ops.dsc_config_thresh(hw_dsc, dsc);
+> +
+> +	if (hw_pp->ops.setup_dsc)
+> +		hw_pp->ops.setup_dsc(hw_pp);
+> +
+> +	if (hw_pp->ops.enable_dsc)
+> +		hw_pp->ops.enable_dsc(hw_pp);
+> +}
+> +
+> +static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
+> +				 struct msm_display_dsc_config *dsc)
+> +{
+> +	/* coding only for 2LM, 2enc, 1 dsc config */
+> +	struct dpu_encoder_phys *enc_master = dpu_enc->cur_master;
+> +	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
+> +	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
+> +	int this_frame_slices;
+> +	int intf_ip_w, enc_ip_w;
+> +	int dsc_common_mode;
+> +	int pic_width;
+> +	int i;
+> +
+> +	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
+> +		hw_pp[i] = dpu_enc->hw_pp[i];
+> +		hw_dsc[i] = dpu_enc->hw_dsc[i];
+> +
+> +		if (!hw_pp[i] || !hw_dsc[i]) {
+> +			DPU_ERROR_ENC(dpu_enc, "invalid params for DSC\n");
+> +			return;
+> +		}
+> +	}
+> +
+> +	dsc_common_mode = 0;
+> +	pic_width = dsc->drm->pic_width;
+> +
+> +	dsc_common_mode = DSC_MODE_MULTIPLEX | DSC_MODE_SPLIT_PANEL;
+> +	if (enc_master->intf_mode == INTF_MODE_VIDEO)
+> +		dsc_common_mode |= DSC_MODE_VIDEO;
+> +
+> +	this_frame_slices = pic_width / dsc->drm->slice_width;
+> +	intf_ip_w = this_frame_slices * dsc->drm->slice_width;
+> +
+> +	dpu_encoder_dsc_pclk_param_calc(dsc, intf_ip_w);
+> +
+> +	/*
+> +	 * dsc merge case: when using 2 encoders for the same stream,
+> +	 * no. of slices need to be same on both the encoders.
+> +	 */
+> +	enc_ip_w = intf_ip_w / 2;
+> +	dpu_encoder_dsc_initial_line_calc(dsc, enc_ip_w);
+> +
+> +	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
+> +		dpu_encoder_dsc_pipe_cfg(hw_dsc[i], hw_pp[i], dsc, dsc_common_mode);
+> +}
+> +
+>  void dpu_encoder_prepare_for_kickoff(struct drm_encoder *drm_enc)
+>  {
+>  	struct dpu_encoder_virt *dpu_enc;
+> @@ -1770,6 +1919,9 @@ void dpu_encoder_prepare_for_kickoff(struct drm_encoder *drm_enc)
+>  			dpu_encoder_helper_hw_reset(dpu_enc->phys_encs[i]);
+>  		}
+>  	}
+> +
+> +	if (dpu_enc->dsc)
+> +		dpu_encoder_prep_dsc(dpu_enc, dpu_enc->dsc);
+>  }
+>  
+>  void dpu_encoder_kickoff(struct drm_encoder *drm_enc)
+> @@ -2015,6 +2167,8 @@ static int dpu_encoder_setup_display(struct dpu_encoder_virt *dpu_enc,
+>  		dpu_enc->idle_pc_supported =
+>  				dpu_kms->catalog->caps->has_idle_pc;
+>  
+> +	dpu_enc->dsc = disp_info->dsc;
+> +
+>  	mutex_lock(&dpu_enc->enc_lock);
+>  	for (i = 0; i < disp_info->num_of_h_tiles && !ret; i++) {
+>  		/*
+> @@ -2244,3 +2398,11 @@ enum dpu_intf_mode dpu_encoder_get_intf_mode(struct drm_encoder *encoder)
+>  
+>  	return INTF_MODE_NONE;
+>  }
+> +
+> +unsigned int dpu_encoder_helper_get_dsc(struct dpu_encoder_phys *phys_enc)
+> +{
+> +	struct drm_encoder *encoder = phys_enc->parent;
+> +	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(encoder);
+> +
+> +	return dpu_enc->dsc_mask;
+> +}
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> index e7270eb6b84b..7b90d644a41b 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> @@ -332,6 +332,14 @@ static inline enum dpu_3d_blend_mode dpu_encoder_helper_get_3d_blend_mode(
+>  	return BLEND_3D_NONE;
+>  }
+>  
+> +/**
+> + * dpu_encoder_helper_get_dsc - get DSC blocks mask for the DPU encoder
+> + *   This helper function is used by physical encoder to get DSC blocks mask
+> + *   used for this encoder.
+> + * @phys_enc: Pointer to physical encoder structure
+> + */
+> +unsigned int dpu_encoder_helper_get_dsc(struct dpu_encoder_phys *phys_enc);
+> +
+>  /**
+>   * dpu_encoder_helper_split_config - split display configuration helper function
+>   *	This helper function may be used by physical encoders to configure
 > -- 
-> 2.7.4
+> 2.31.1
 > 
