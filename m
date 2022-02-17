@@ -2,182 +2,292 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3FAD4BA39C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 15:52:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 90D864BA403
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 16:11:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230294AbiBQOuY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Feb 2022 09:50:24 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42842 "EHLO
+        id S242174AbiBQPMC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Feb 2022 10:12:02 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:36296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234556AbiBQOuX (ORCPT
+        with ESMTP id S235746AbiBQPMB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Feb 2022 09:50:23 -0500
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A48029E940
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 06:50:09 -0800 (PST)
-Received: by mail-io1-xd2e.google.com with SMTP id c14so176785ioa.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 06:50:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=BB2sDvKYuJ4OLXpcVUGPxnotzFekLMPB3gl02E+RGsM=;
-        b=YiEwitx6YvoB2nLcFD8bvXs7jZb3EykcXZmD7fGnXJ62QfN2Yn6CVFt4RdwWssx2KC
-         dYoKA5BRbuFUaYUc0lWFTViyLS/tKHsiTwvaJTXxoqhp+UbIFWgR3DsuLjYujvXsK4+L
-         iYKOsW6iphIC3oCHcdqoTdJSeHmYt2TXAdZfJA3N8jEbmY4ngcKM1DtFQnGcQKbz/FTN
-         1SysA6Dqjq6au3OA26TkTt981TV/iENjZKyVxNnYikqzBDKKME3POcalIrzUemOIuP+F
-         wgLo0vnfYDHl2Dsd8ty/kO0axIPJ2hGoCIB8R6C0Bkjbn3xx7FuZfBEk149pUrr6YNyd
-         Nw1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=BB2sDvKYuJ4OLXpcVUGPxnotzFekLMPB3gl02E+RGsM=;
-        b=cblvYIAU3ifo9Jymxt6w2acx3s/GA3XkBlm3GzLKTYLTh57vIcI2MyrwEVyyro6blk
-         nSXrohfE5jBajc7n3nuoni1kHvvprHqooJVmPQDCr5wL/JA7OzkeMe7/XJ/aU3h12inB
-         bfH2oEKzcpfLO/xx8D2Fzou7XPnyCPpcAr4Oiqb55lGbxmxOHYB4QHk+034mCUTEZ5Nn
-         7u2j/NKOLT2OpTAyo1Aa7nUHNRYazFCY+fDd+lJXrKMU1krDQlZl7A56aRLOTmz7VLDn
-         rMguzwZmmNGI7TIRfjBMz8icrWyGyCIzW4vScX3WfB/6A14oJn2hcWiAkQQw/L7kuF/c
-         AxMg==
-X-Gm-Message-State: AOAM530eg8n0/cKhV6Um4URyEPdx+gqidTa1bWlDI1WbTBEb6frSzZU1
-        fzKRaRwBG/lHLT1v9WM3cJq0oA==
-X-Google-Smtp-Source: ABdhPJyMLeE45HvinoisFgWKSjp6PKe7sDpN4NNHmMEA8u9XTMVU1hPsnC7IB6GtHV9pPqbHeyxaCA==
-X-Received: by 2002:a05:6602:1485:b0:635:213f:abd2 with SMTP id a5-20020a056602148500b00635213fabd2mr2158395iow.8.1645109408688;
-        Thu, 17 Feb 2022 06:50:08 -0800 (PST)
-Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id z23sm2016397iol.11.2022.02.17.06.50.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Feb 2022 06:50:08 -0800 (PST)
-Message-ID: <c0b89a9e-156c-c56a-c387-5d9ee2c83871@linaro.org>
-Date:   Thu, 17 Feb 2022 08:50:07 -0600
+        Thu, 17 Feb 2022 10:12:01 -0500
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 681C3DFBE;
+        Thu, 17 Feb 2022 07:11:45 -0800 (PST)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 966EC3F74E;
+        Thu, 17 Feb 2022 16:11:43 +0100 (CET)
+Date:   Thu, 17 Feb 2022 16:11:42 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-kernel@vger.kernel.org,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Subject: Re: [Freedreno] [PATCH v3 12/13] drm/msm/dsi: Add support for DSC
+ configuration
+Message-ID: <20220217151142.sbp6wslxbxeohsgf@SoMainline.org>
+References: <20211116062256.2417186-1-vkoul@kernel.org>
+ <20211116062256.2417186-13-vkoul@kernel.org>
+ <20211211000315.pavmcc7cc73ilb6l@SoMainline.org>
+ <Yg4t/G3tgcmkswHg@matsya>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v3 09/25] bus: mhi: ep: Add support for registering MHI
- endpoint client drivers
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
-        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
-        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
-        dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
-        quic_cang@quicinc.com, quic_skananth@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
- <20220212182117.49438-10-manivannan.sadhasivam@linaro.org>
- <94abdf83-5749-14b1-7a57-ceceb1b27167@linaro.org>
- <20220217102038.GB11964@workstation>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <20220217102038.GB11964@workstation>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yg4t/G3tgcmkswHg@matsya>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/17/22 4:20 AM, Manivannan Sadhasivam wrote:
-> On Tue, Feb 15, 2022 at 02:02:50PM -0600, Alex Elder wrote:
-> 
-> [...]
-> 
->>> +static int mhi_ep_driver_remove(struct device *dev)
->>> +{
->>> +	struct mhi_ep_device *mhi_dev = to_mhi_ep_device(dev);
->>> +	struct mhi_ep_driver *mhi_drv = to_mhi_ep_driver(dev->driver);
->>> +	struct mhi_result result = {};
->>> +	struct mhi_ep_chan *mhi_chan;
->>> +	int dir;
->>> +
->>> +	/* Skip if it is a controller device */
->>> +	if (mhi_dev->dev_type == MHI_DEVICE_CONTROLLER)
->>> +		return 0;
->>> +
->>
->> It would be my preference to encapsulate the body of the
->> following loop into a called function, then call that once
->> for the UL channel and once for the DL channel.
->>
-> 
-> This follows the host stack, so I'd like to keep it the same.
+Hi Vinod,
 
-I think you should change both, but I'll leave that up to you.
+Thanks for taking time to go through this review, please find some
+clarifications below.
 
->>> +	/* Disconnect the channels associated with the driver */
->>> +	for (dir = 0; dir < 2; dir++) {
->>> +		mhi_chan = dir ? mhi_dev->ul_chan : mhi_dev->dl_chan;
->>> +
->>> +		if (!mhi_chan)
->>> +			continue;
->>> +
->>> +		mutex_lock(&mhi_chan->lock);
->>> +		/* Send channel disconnect status to the client driver */
->>> +		if (mhi_chan->xfer_cb) {
->>> +			result.transaction_status = -ENOTCONN;
->>> +			result.bytes_xferd = 0;
->>> +			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
->>
->> It appears the result is ignored here.  If so, can we
->> define the xfer_cb() function so that a NULL pointer may
->> be supplied by the caller in cases like this?
->>
+On 2022-02-17 16:44:04, Vinod Koul wrote:
+> Hi Marijn,
 > 
-> result is not ignored, only the bytes_xfered. "transaction_status" will
-> be used by the client drivers for error handling.
-
-Sorry, I was looking at the code *after* the call, and was
-ignoring that it was information being passed in...  My
-mistake.
-
->>> +		}
->>> +
->>> +		/* Set channel state to DISABLED */
->>
->> That comment is a little tautological.  Just omit it.
->>
->>> +		mhi_chan->state = MHI_CH_STATE_DISABLED;
->>> +		mhi_chan->xfer_cb = NULL;
->>> +		mutex_unlock(&mhi_chan->lock);
->>> +	}
->>> +
->>> +	/* Remove the client driver now */
->>> +	mhi_drv->remove(mhi_dev);
->>> +
->>> +	return 0;
->>> +}
+> On 11-12-21, 01:03, Marijn Suijten wrote:
 > 
-> [...]
+> > > +static int dsi_dsc_update_pic_dim(struct msm_display_dsc_config *dsc,
+> > > +				  int pic_width, int pic_height)
+> > 
+> > This function - adopted from downstream - does not seem to perform a
+> > whole lot, especially without the modulo checks against the slice size.
+> > Perhaps it can be inlined?
 > 
->>> +struct mhi_ep_driver {
->>> +	const struct mhi_device_id *id_table;
->>> +	struct device_driver driver;
->>> +	int (*probe)(struct mhi_ep_device *mhi_ep,
->>> +		     const struct mhi_device_id *id);
->>> +	void (*remove)(struct mhi_ep_device *mhi_ep);
->>
->> I get confused by the "ul" versus "dl" naming scheme here.
->> Is "ul" from the perspective of the host, meaning upload
->> is from the host toward the WWAN network (and therefore
->> toward the SDX AP), and download is from the WWAN toward
->> the host?  Somewhere this should be stated clearly in
->> comments; maybe I just missed it.
->>
+> Most of the code here is :)
 > 
-> Yes UL and DL are as per host context. I didn't state this explicitly
-> since this is the MHI host stack behaviour but I'll add a comment for
-> clarity
+> This was split from downstream code to check and update dimension. We
+> can inline this, or should we leave that to compiler. I am not a very
+> big fan of inlining...
 
-Sounds good, thanks.
+It doesn't seem beneficial to code readability to have this function,
+which is only called just once and also has the same struct members read
+in a `DBG()` directly, abstracted away to a function.  Not really
+concerned about generated code/performance FWIW.
 
-					-Alex
+Also note that the caller isn't checking the `-EINVAL` result...
 
+> > 
+> > > +{
+> > > +	if (!dsc || !pic_width || !pic_height) {
+> > > +		pr_err("DSI: invalid input: pic_width: %d pic_height: %d\n", pic_width, pic_height);
+> > > +		return -EINVAL;
+> > > +	}
+> > > +
+> > > +	dsc->drm->pic_width = pic_width;
+> > > +	dsc->drm->pic_height = pic_height;
+> > > +
+> > > +	return 0;
+> > > +}
+> > > +
+> > >  static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+> > >  {
+> > >  	struct drm_display_mode *mode = msm_host->mode;
+> > > @@ -940,7 +954,68 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+> > >  		hdisplay /= 2;
+> > >  	}
+> > >  
+> > > +	if (msm_host->dsc) {
+> > > +		struct msm_display_dsc_config *dsc = msm_host->dsc;
+> > > +
+> > > +		/* update dsc params with timing params */
+> > > +		dsi_dsc_update_pic_dim(dsc, mode->hdisplay, mode->vdisplay);
+
+That is, the result code here should be checked (or function inlined).
+
+> > > +		DBG("Mode Width- %d x Height %d\n", dsc->drm->pic_width, dsc->drm->pic_height);
+> > 
+> > This seems to be pretty non-standard and perhaps unnecessary debug code,
+> > with a stray dash in there.  Is is needed here, and if so how about
+> > using %dx%d\n to format width and height?
 > 
-> Thanks,
-> Mani
+> I can update that, sure...
+> 
+> > 
+> > > +
+> > > +		/* we do the calculations for dsc parameters here so that
+> > > +		 * panel can use these parameters
+> > > +		 */
+> > > +		dsi_populate_dsc_params(dsc);
+> > > +
+> > > +		/* Divide the display by 3 but keep back/font porch and
+> > > +		 * pulse width same
+> > > +		 */
+> > 
+> > A more general nit on the comments in this patch series: it is
+> > appreciated if comments explain the rationale rather than - or in
+> > addition to - merely paraphrasing the code that follows.
+> 
+> Yes it might be the case here, but in this case I wanted to explicitly
+> point out hat we need to divide display by 3...
 
+The main point here is justifying _why_ there's a division by 3 for the
+active portion of the signal, I presume that's the compression ratio
+(having not read into the DSC compression standard yet at all)?
+
+> > 
+> > > +		h_total -= hdisplay;
+> > > +		hdisplay /= 3;
+> > > +		h_total += hdisplay;
+> > > +		ha_end = ha_start + hdisplay;
+> > > +	}
+> > > +
+> > >  	if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
+> > > +		if (msm_host->dsc) {
+> > > +			struct msm_display_dsc_config *dsc = msm_host->dsc;
+> > > +			u32 reg, intf_width, slice_per_intf;
+> > > +			u32 total_bytes_per_intf;
+> > > +
+> > > +			/* first calculate dsc parameters and then program
+> > > +			 * compress mode registers
+> > > +			 */
+> > > +			intf_width = hdisplay;
+> > > +			slice_per_intf = DIV_ROUND_UP(intf_width, dsc->drm->slice_width);
+> > > +
+> > > +			dsc->drm->slice_count = 1;
+> > > +			dsc->bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width * 8, 8);
+> > 
+> > If I am not mistaken this is the same value as dsc->drm->slice_width,
+> > since a multiple of 8 is inherently "a multiple of 8" and hence needs no
+> > rounding when divided by 8 again.
+> 
+> Yes this doesnt look right, I will update
+> 
+> > Also note that the cmdmode variant below uses bits_per_pixel here; is
+> > that discrepancy intended?
+> 
+> Nope both should use bits_per_pixel..
+> 
+> > > +			total_bytes_per_intf = dsc->bytes_in_slice * slice_per_intf;
+> > > +
+> > > +			dsc->eol_byte_num = total_bytes_per_intf % 3;
+> > > +			dsc->pclk_per_line =  DIV_ROUND_UP(total_bytes_per_intf, 3);
+> > > +			dsc->bytes_per_pkt = dsc->bytes_in_slice * dsc->drm->slice_count;
+> > > +			dsc->pkt_per_line = slice_per_intf / dsc->drm->slice_count;
+> > > +
+> > > +			reg = dsc->bytes_per_pkt << 16;
+> > > +			reg |= (0x0b << 8);    /* dtype of compressed image */
+> > > +
+> > > +			/* pkt_per_line:
+> > > +			 * 0 == 1 pkt
+> > > +			 * 1 == 2 pkt
+> > > +			 * 2 == 4 pkt
+> > > +			 * 3 pkt is not supported
+> > > +			 * above translates to ffs() - 1
+> > > +			 */
+> > > +			reg |= (ffs(dsc->pkt_per_line) - 1) << 6;
+> > > +
+> > > +			dsc->eol_byte_num = total_bytes_per_intf % 3;
+> > 
+> > This was already calculated and assigned just a couple lines above.
+> 
+> Yup, dropped now.
+> 
+> > 
+> > > +			reg |= dsc->eol_byte_num << 4;
+> > > +			reg |= 1;
+> > 
+> > Note that the XML register file exists to map out the layout of these
+> > registers, including bit offset, size, and (enum) constant values.  It
+> > is appreciated if you can replace all these magical shifts and magic
+> > flags/bits with the appropriate enum constants and constructor
+> > functions, after mapping them out in the XML file.
+> 
+> Yeah I am trying to get those details, if I manage to get it, will
+> update for sure as Dmitry already pointed in MESA PR.
+
+That'd be lovely.  In any case, even if you can't get the meaning for
+all these bits, offsets and constants, it's still desired to at least
+add them to the XML as "unknown" or something (including offset in the
+name).  Then perhaps the details can be filled in over time while
+keeping the driver free of magic constants.  See for example how some of
+the Adreno register XML descriptions set this up.
+
+For example, without those details we can already state that
+`eol_byte_num` has an offset of 4 in the MODE_CTL register, and probably
+a size of 2 bits since its value is always modulo 3.  Likewise
+pkt_per_line can be turned into an `<enum>` and so on for the other
+segments that build up this register.  Let me know in the mesa MR if you
+need assistance/suggestions for mapping out the registers in XML.
+
+> > > +
+> > > +			dsi_write(msm_host,
+> > > +				  REG_DSI_VIDEO_COMPRESSION_MODE_CTRL, reg);
+> > > +		}
+> > > +
+> > >  		dsi_write(msm_host, REG_DSI_ACTIVE_H,
+> > >  			DSI_ACTIVE_H_START(ha_start) |
+> > >  			DSI_ACTIVE_H_END(ha_end));
+> > > @@ -959,8 +1034,40 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+> > >  			DSI_ACTIVE_VSYNC_VPOS_START(vs_start) |
+> > >  			DSI_ACTIVE_VSYNC_VPOS_END(vs_end));
+> > >  	} else {		/* command mode */
+> > > +		if (msm_host->dsc) {
+> > > +			struct msm_display_dsc_config *dsc = msm_host->dsc;
+> > > +			u32 reg, reg_ctrl, reg_ctrl2;
+> > > +			u32 slice_per_intf, bytes_in_slice, total_bytes_per_intf;
+> > > +
+> > > +			reg_ctrl = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL);
+> > > +			reg_ctrl2 = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2);
+> > 
+> > Shouldn't old values be masked out first, before writing new bits or
+> > values below?  The video-mode variant doesn't read back old register
+> > values.
+> 
+> This follows downstream where the registers are read, modified and
+> written back
+
+Are you sure about this?  The register values are never cleared, meaning
+that only bits get added through the `|=` below but never unset - unless
+downstream clears these registers elsewhere before ending up in (their
+equivalent of) dsi_timing_setup.
+
+> > > +
+> > > +			slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->drm->slice_width);
+> > > +			bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width *
+> > > +						      dsc->drm->bits_per_pixel, 8);
+> > > +			dsc->drm->slice_chunk_size = bytes_in_slice;
+> > > +			total_bytes_per_intf = dsc->bytes_in_slice * slice_per_intf;
+> > > +			dsc->pkt_per_line = slice_per_intf / dsc->drm->slice_count;
+> > > +
+> > > +			reg = 0x39 << 8;
+> > 
+> > Same comment about moving magic constants and shifts into the XML file.
+> 
+> yes if we get details of bits
+
+As mentioned above, even without those details this constant can be
+represented in the XML, as belonging to offset `8` of the register.
+
+> > 
+> > > +			reg |= ffs(dsc->pkt_per_line) << 6;
+> > 
+> > Doesn't the calculation need -1 here just like video mode?
+> 
+> yes will update now
+
+Thanks.  I forgot to mention: there seem to be a lot of similarities
+between the video and commandmode computations, can those possibly be
+factored out of the if-else to save on duplication and accidental
+mismatches like these?
+
+- Marijn
