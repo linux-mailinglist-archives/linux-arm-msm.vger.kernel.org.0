@@ -2,74 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 382FD4B9EB7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 12:34:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D0FE4B9FA3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 13:04:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239791AbiBQLeS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Feb 2022 06:34:18 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:34412 "EHLO
+        id S229996AbiBQMFB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Feb 2022 07:05:01 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239787AbiBQLeR (ORCPT
+        with ESMTP id S229719AbiBQMFA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Feb 2022 06:34:17 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE157277925
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 03:34:01 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id p9so6509123ejd.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 03:34:01 -0800 (PST)
+        Thu, 17 Feb 2022 07:05:00 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06B6D6168
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 04:04:46 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id k60-20020a17090a4cc200b001b932781f3eso6214474pjh.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 04:04:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=LIJbkcpxWhEu+HDqv6mv/542M4vTfuWftkC1BaPuPbU=;
-        b=TbT4HVYGoCKKxlNKiPmpU3SWwZu5CDTjF38mWAh6T0DazaZgHk+5lHNO40yFFoCoTJ
-         IhX5v53CL1y0eY6Bdqq1t2Zih8HsaZ0p9WiMQHisl/7D5UNkZv20RitrLquvOEsp7uZ8
-         2UOrYUbwo+MkwjM2gosoNiJxw+R7zAXFc42lLSMGTafO8g3dSGIgRFgCj0kPS5WGaJmq
-         OGUcbMkoR6mS7EZ9CLLKNKC4g+4cwCCWM2lYGVH8WGBInhQkswKz3DmFM6AnpiEF4tr8
-         WalK7TefoPlqQBGrhd9NNSP8YyvXhC6UAYqJ2+qziFFn8PPn+bfEI9C2KIcYA2gBPfKA
-         5dKA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=mpkGaHYhzDT/ywTqBANboh+oafdc1Ua2ViLPT/QoCeg=;
+        b=eaq+/s/imLxDnW1yvcbqmJSkDOtbiRD9g5qyu4gLTnTKG6y22OTiQ5PEVi8uJ/iPZi
+         nKNJbuG5j2sqnSldTwlrbJv1XSXNIjvx8dOydio2AYa21EvypE5oNSDqQtT4r5PkaYLd
+         jpQojSfKwHlR5BwPE0G65igiyIzUXwBTsV/ky9f1opwVe17pTyqGj6gYWExRQ2b2+SVL
+         kg4AZ22HB4ZLnbozYKCCI+xzdPTTmHMQiM0KOTOll8DnTNYMv/avIw4E533gOYTGLlnK
+         BkFADZzt/uHWqkIkKBwIWWijHfTLpTHs0GLOjP0/GJ/5Nqu4nhKMgkV3zaGMMoy/+MHv
+         2gqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=LIJbkcpxWhEu+HDqv6mv/542M4vTfuWftkC1BaPuPbU=;
-        b=KPyO2nGDYnSsG43ivIeZHcJubwLlLN7UiIACrG4PqGjfZb/Z/vLcuEdbinmOYtoWZO
-         iMrTEKzkprVRKJDpQuYSau2kdAuRhDIwAP9MUsZ2rw4oN7bu6FySTIglwPnE+r13wB09
-         ihtV8SwXDOdYRhuFs5qXFHJuJmc8XbOxZczIH6YLbSdgsp/l9chALdIEBvL94iB5vRgM
-         dw6+8/2z39mDpMssiM5hlNGNE8R6oXyGrULF2am+UcnpA+/ovPR2LBVwGVmhlikfYkVQ
-         212Xt/do+crz5FgVj1b2c4rd8lXjqwT2y7eG22MF0zPLVxEO2cD74TNiJfU9RydsvIZ7
-         7uhg==
-X-Gm-Message-State: AOAM533MJjk6f6WpA1e5H8XbKpsrlMxxSrQkLxFD1LcmdrQknXOYnzMi
-        7379kShL4GA9zZD3BX3I8YO2xA==
-X-Google-Smtp-Source: ABdhPJw4Erll/uCqjzTBT96QBBylhZa1svkxPBZvtY01p3v7Q1PQeyr8NcLtaKJsoJkrerC/ucp6eA==
-X-Received: by 2002:a17:906:b57:b0:6ce:e31a:524 with SMTP id v23-20020a1709060b5700b006cee31a0524mr1969824ejg.290.1645097640461;
-        Thu, 17 Feb 2022 03:34:00 -0800 (PST)
-Received: from [192.168.1.9] (hst-221-75.medicom.bg. [84.238.221.75])
-        by smtp.googlemail.com with ESMTPSA id u4sm1076625ejn.216.2022.02.17.03.33.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Feb 2022 03:33:59 -0800 (PST)
-Message-ID: <55dbdf8b-290c-85ff-235e-9e5649540b6e@linaro.org>
-Date:   Thu, 17 Feb 2022 13:33:58 +0200
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=mpkGaHYhzDT/ywTqBANboh+oafdc1Ua2ViLPT/QoCeg=;
+        b=sEeIodNhyW3OORKN+767LazVKyl3RB3M5+iWsIk5yWyRC99YRiQlB1rOHvzxeztQJA
+         9B1+Oc/GDoFoItcCyv7uBF1ye0Vf39HdWKR2K1+PLiO+JDh4HkXoTs3VoKE/mUn62Eh9
+         QZN0zZ4hm3H2++j9+GL5aj/0grN4g4gTP7XoFmjW63sRVs88u0+ibpk7yrgcnlZCV5Mx
+         6TRxyKwKPFhm6+mlF3zgnnnSzE7p4/UQfQ+pAJ+BxsdWSYXeB+tH2sOpdNa1wY1ac4Md
+         yudBk75aQZvdgtLmuzv7uznCvSzDkrCBRKwerhh+qT3jWO0a9VFwi8rLICjOlWSNOKU7
+         XYwQ==
+X-Gm-Message-State: AOAM531XtUneLXGAm+cuLdu4exxtVmSarTfh9TzxgSlNMXkcXT+vjA9D
+        zhje51ukbxtQcqGWQhoswXfQ
+X-Google-Smtp-Source: ABdhPJzcVHEw66R2MLVUG9O9nL5wzGMkOiCICyWXg/OIVTdHnj+ROhHdrr2oeqInTOgJxE2iDmBbdQ==
+X-Received: by 2002:a17:902:bb89:b0:14d:85a7:6eea with SMTP id m9-20020a170902bb8900b0014d85a76eeamr2506343pls.158.1645099485450;
+        Thu, 17 Feb 2022 04:04:45 -0800 (PST)
+Received: from workstation ([117.193.211.41])
+        by smtp.gmail.com with ESMTPSA id mv17sm1336990pjb.14.2022.02.17.04.04.41
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 17 Feb 2022 04:04:44 -0800 (PST)
+Date:   Thu, 17 Feb 2022 17:34:39 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
+        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
+        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
+        dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
+        quic_cang@quicinc.com, quic_skananth@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 10/25] bus: mhi: ep: Add support for creating and
+ destroying MHI EP devices
+Message-ID: <20220217120439.GC11964@workstation>
+References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
+ <20220212182117.49438-11-manivannan.sadhasivam@linaro.org>
+ <1cdd8e0c-85d7-dd91-a6f1-1390e7854350@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v3 5/6] venus: Add a handling of QC10C compressed format
-Content-Language: en-US
-To:     Nicolas Dufresne <nicolas@ndufresne.ca>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-api@vger.kernel.org
-Cc:     hverkuil-cisco@xs4all.nl
-References: <20220117155559.234026-1-stanimir.varbanov@linaro.org>
- <20220117155559.234026-6-stanimir.varbanov@linaro.org>
- <4e1cc50854da4075fc7ebf71e24aa8372905c668.camel@ndufresne.ca>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-In-Reply-To: <4e1cc50854da4075fc7ebf71e24aa8372905c668.camel@ndufresne.ca>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1cdd8e0c-85d7-dd91-a6f1-1390e7854350@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,139 +78,74 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Feb 15, 2022 at 02:02:57PM -0600, Alex Elder wrote:
 
+[...]
 
-On 2/16/22 18:20, Nicolas Dufresne wrote:
-> Le lundi 17 janvier 2022 à 17:55 +0200, Stanimir Varbanov a écrit :
->> This adds QC10C compressed pixel format in the Venus driver, and
->> make it possible to discover from v4l2 clients.
->>
->> Note: The QC10C format shouldn't be possible to discpver by the
+> > +
+> > +	mhi_dev = mhi_ep_alloc_device(mhi_cntrl, MHI_DEVICE_XFER);
+> > +	if (IS_ERR(mhi_dev))
+> > +		return PTR_ERR(mhi_dev);
 > 
-> discpver -> discover
-> 
-> It is not super clear though, did you mean to say that it won't be enumerated
-> after the header have been parsed ?
-
-The opposite. It will be enumerable by the client only after parsing the
-header.
-
-> 
->> client if the decoded bitstream is not 10-bits.
->>
->> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->> ---
->>  drivers/media/platform/qcom/venus/helpers.c | 26 ++++-----------------
->>  drivers/media/platform/qcom/venus/vdec.c    | 19 ++++++++++++---
->>  2 files changed, 20 insertions(+), 25 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
->> index adbfa4fbe139..69a9a9471a27 100644
->> --- a/drivers/media/platform/qcom/venus/helpers.c
->> +++ b/drivers/media/platform/qcom/venus/helpers.c
->> @@ -594,6 +594,8 @@ static u32 to_hfi_raw_fmt(u32 v4l2_fmt)
->>  		return HFI_COLOR_FORMAT_NV21;
->>  	case V4L2_PIX_FMT_QC08C:
->>  		return HFI_COLOR_FORMAT_NV12_UBWC;
->> +	case V4L2_PIX_FMT_QC10C:
->> +		return HFI_COLOR_FORMAT_YUV420_TP10_UBWC;
->>  	default:
->>  		break;
->>  	}
->> @@ -1176,7 +1178,8 @@ int venus_helper_set_format_constraints(struct venus_inst *inst)
->>  	if (!IS_V6(inst->core))
->>  		return 0;
->>  
->> -	if (inst->opb_fmt == HFI_COLOR_FORMAT_NV12_UBWC)
->> +	if (inst->opb_fmt == HFI_COLOR_FORMAT_NV12_UBWC ||
->> +	    inst->opb_fmt == HFI_COLOR_FORMAT_YUV420_TP10_UBWC)
->>  		return 0;
->>  
->>  	pconstraint.buffer_type = HFI_BUFFER_OUTPUT2;
->> @@ -1747,27 +1750,6 @@ int venus_helper_get_out_fmts(struct venus_inst *inst, u32 v4l2_fmt,
->>  	if (!caps)
->>  		return -EINVAL;
->>  
->> -	if (inst->bit_depth == VIDC_BITDEPTH_10 &&
->> -	    inst->session_type == VIDC_SESSION_TYPE_DEC) {
->> -		found_ubwc =
->> -			find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT,
->> -					   HFI_COLOR_FORMAT_YUV420_TP10_UBWC);
->> -		found = find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT2,
->> -					   HFI_COLOR_FORMAT_NV12);
->> -		if (found_ubwc && found) {
->> -			/*
->> -			 * Hard-code DPB buffers to be 10bit UBWC and decoder
->> -			 * output buffers in 8bit NV12 until V4L2 is able to
->> -			 * expose compressed/tiled formats to applications.
->> -			 */
->> -			*out_fmt = HFI_COLOR_FORMAT_YUV420_TP10_UBWC;
->> -			*out2_fmt = HFI_COLOR_FORMAT_NV12;
->> -			return 0;
->> -		}
->> -
->> -		return -EINVAL;
->> -	}
->> -
->>  	if (ubwc) {
->>  		ubwc_fmt = fmt | HFI_COLOR_FORMAT_UBWC_BASE;
->>  		found_ubwc = find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT,
->> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
->> index eb02e45a512b..c8261c6cb0fb 100644
->> --- a/drivers/media/platform/qcom/venus/vdec.c
->> +++ b/drivers/media/platform/qcom/venus/vdec.c
->> @@ -35,6 +35,10 @@ static const struct venus_format vdec_formats[] = {
->>  		.num_planes = 1,
->>  		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
->>  	}, {
->> +		.pixfmt = V4L2_PIX_FMT_QC10C,
->> +		.num_planes = 1,
->> +		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
->> +	},{
->>  		.pixfmt = V4L2_PIX_FMT_NV12,
->>  		.num_planes = 1,
->>  		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
->> @@ -114,6 +118,10 @@ find_format(struct venus_inst *inst, u32 pixfmt, u32 type)
->>  	    !venus_helper_check_format(inst, fmt[i].pixfmt))
->>  		return NULL;
->>  
->> +	if (V4L2_TYPE_IS_CAPTURE(type) && fmt[i].pixfmt == V4L2_PIX_FMT_QC10C &&
->> +	    !(inst->bit_depth == VIDC_BITDEPTH_10))
->> +		return NULL;
->> +
->>  	return &fmt[i];
->>  }
->>  
->> @@ -133,11 +141,16 @@ find_format_by_index(struct venus_inst *inst, unsigned int index, u32 type)
->>  		if (fmt[i].type != type)
->>  			continue;
->>  
->> -		if (V4L2_TYPE_IS_OUTPUT(type))
->> +		if (V4L2_TYPE_IS_OUTPUT(type)) {
->>  			valid = venus_helper_check_codec(inst, fmt[i].pixfmt);
->> -		else if (V4L2_TYPE_IS_CAPTURE(type))
->> +		} else if (V4L2_TYPE_IS_CAPTURE(type)) {
->>  			valid = venus_helper_check_format(inst, fmt[i].pixfmt);
->>  
->> +			if (fmt[i].pixfmt == V4L2_PIX_FMT_QC10C &&
->> +			    !(inst->bit_depth == VIDC_BITDEPTH_10))
->> +				valid = false;
->> +		}
->> +
->>  		if (k == index && valid)
->>  			break;
->>  		if (valid)
->> @@ -1537,7 +1550,7 @@ static const struct hfi_inst_ops vdec_hfi_ops = {
->>  static void vdec_inst_init(struct venus_inst *inst)
->>  {
->>  	inst->hfi_codec = HFI_VIDEO_CODEC_H264;
->> -	inst->fmt_out = &vdec_formats[7];
->> +	inst->fmt_out = &vdec_formats[8];
->>  	inst->fmt_cap = &vdec_formats[0];
->>  	inst->width = frame_width_min(inst);
->>  	inst->height = ALIGN(frame_height_min(inst), 32);
+> It looks like the only possible error is no memory, so you could
+> just have mhi_ep_alloc_device() return NULL.
 > 
 
--- 
-regards,
-Stan
+I think returning the actual error is more safe as we may end up adding more
+stuff into this function in the future.
+
+> > +
+> > +	/* Configure primary channel */
+> > +	mhi_dev->ul_chan = mhi_chan;
+> > +	get_device(&mhi_dev->dev);
+> > +	mhi_chan->mhi_dev = mhi_dev;
+> > +
+> > +	/* Configure secondary channel as well */
+> > +	mhi_chan++;
+> > +	mhi_dev->dl_chan = mhi_chan;
+> > +	get_device(&mhi_dev->dev);
+> > +	mhi_chan->mhi_dev = mhi_dev;
+> > +
+> > +	/* Channel name is same for both UL and DL */
+> > +	mhi_dev->name = mhi_chan->name;
+> > +	dev_set_name(&mhi_dev->dev, "%s_%s",
+> > +		     dev_name(&mhi_cntrl->mhi_dev->dev),
+> > +		     mhi_dev->name);
+> > +
+> > +	ret = device_add(&mhi_dev->dev);
+> > +	if (ret)
+> > +		put_device(&mhi_dev->dev);
+> > +
+> > +	return ret;
+> > +}
+> > +
+> > +static int mhi_ep_destroy_device(struct device *dev, void *data)
+> > +{
+> > +	struct mhi_ep_device *mhi_dev;
+> > +	struct mhi_ep_cntrl *mhi_cntrl;
+> > +	struct mhi_ep_chan *ul_chan, *dl_chan;
+> > +
+> > +	if (dev->bus != &mhi_ep_bus_type)
+> > +		return 0;
+> > +
+> > +	mhi_dev = to_mhi_ep_device(dev);
+> > +	mhi_cntrl = mhi_dev->mhi_cntrl;
+> > +
+> > +	/* Only destroy devices created for channels */
+> > +	if (mhi_dev->dev_type == MHI_DEVICE_CONTROLLER)
+> > +		return 0;
+> > +
+> > +	ul_chan = mhi_dev->ul_chan;
+> > +	dl_chan = mhi_dev->dl_chan;
+> 
+> Aren't they required to supply *both* channels?  Or maybe
+> it's just required that there are transfer callback functions
+> for both channels.  Anyway, no need to check for null, because
+> the creation function guarantees they're both non-null I think.
+> 
+
+mhi_ep_destroy_device() will be called for each device separately. So we
+must check for NULL.
+
+Thanks,
+Mani
