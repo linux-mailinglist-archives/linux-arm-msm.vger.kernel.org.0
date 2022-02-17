@@ -2,76 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA1494B9554
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 02:19:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 946214B9558
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 02:19:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230105AbiBQBTf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Feb 2022 20:19:35 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38662 "EHLO
+        id S230147AbiBQBUB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Feb 2022 20:20:01 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:40414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229854AbiBQBTe (ORCPT
+        with ESMTP id S230145AbiBQBUB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Feb 2022 20:19:34 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F81129E97E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 17:19:20 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id bx31so6051444ljb.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 17:19:20 -0800 (PST)
+        Wed, 16 Feb 2022 20:20:01 -0500
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42F4B2A0D41
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 17:19:48 -0800 (PST)
+Received: by mail-oi1-x234.google.com with SMTP id q8so4337151oiw.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 17:19:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=kMKPhd0npteRtxVZwKfbcEl24HZLUAKelJIe2aka2pM=;
-        b=RwgjYHlL8W6BhynFFkJdVdN61lp0QOzzW4MA/4PRxpytoGAmx1ougIAkLmtFqLtVvu
-         jNh2JRC/F8VPala0iyOhHWHRW2SQ1oSVautONKoWf/ZPSF8yv+a1byQ+lTsmLpDXDI7p
-         Wl9aI57y9xyD1JAhjM2TWuzsBOZ+spU0us1CekG8JtaPra5BstyD+CdILMdPjz1Mo3c2
-         wf0Th94Dsead5lWNKp5QpwT58dnmCp5wEMsEpuYV+HVeOhPbxDFX3dyOzU6oF2mfgs/z
-         3sLRl0eP9g06bkqJMGiKbZBaYOKRyC697BUgMc41uG4APIyZquAHtSlHfVRYc1DfPQ9S
-         B0YA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=HRx8T4zgpY2IuuhghOcb/JTF1D7VMe7Nw9viYbE3X18=;
+        b=v2UobaC4GMeY+ccR+REFy6YKl7AYAKAaCuO8ahX4AxZXnRH3rvcAM4gwUtIXRWonpa
+         8GKUVv0gBBq5EFnnNr9Dcd4yPeSKQqpXdrY9WmRfYZB1LTiqL4pnY3w6jT9o1usOqVHz
+         5SPJ4AW7Sfc6rTjTJxn3BBdSeEzAvW3/YxmNqdCoGhXv1fJKaOlfAO9eWT+I2NHTC2p9
+         DQxYmE3cQc/n56Xfe4bWbXK65XPOuCxTBzoEKbT8dtQIqU52EB/JEA5PJjtIq7UQld6X
+         CPfeZylGmD4tDh5FU/IriqB/cGNDpkN9UztOEyZKDS3tQWXsWpLz7hYYYtJjFrTMqs/n
+         Egfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=kMKPhd0npteRtxVZwKfbcEl24HZLUAKelJIe2aka2pM=;
-        b=gMQqg2hG859TYvsFydluEnpj5FQgXJCRv/U+WpXt0FYUxp4XjiZas0/6PvnDSH2Vjq
-         uNJKesplQqtNETiKzFP5dCS7GvOIcuGy8/M+Zt+b3Msnr/v+XlXHPhe/P2hbwCvIhj6/
-         cM13lMa0XPMHPzhF14Z6f2RWNKCCA2Ee+g9g6ixkHJrL9vVBe6toGUBtEBQ6bJA7laHI
-         5NJYT5H7tiRAzJuWo7iXhRVyY7NM1lBqKxnjiyXoe0Mp8ZxvHJOiY1DIVZMllUPKuLpj
-         swD9aimvQmNpI1ElErcZMks1WeYtoaBZf8PRpUJga914pZkS/RPVznkiInUo/QV4Bqj2
-         Hezw==
-X-Gm-Message-State: AOAM530SGf5QwPYaVv7rsQklvCTwA3JXpcG8O8WPR1ns47w5VY4C4lst
-        jyRVCqSs7lGbi59rASuq2vzPNA==
-X-Google-Smtp-Source: ABdhPJz8y34JTSGKQBsk0X7QOYfnpLq+Ms9tNqiaoYMjtBQwRXrHujmunH33fJl5BYPlwEa4GF/ONg==
-X-Received: by 2002:a2e:3808:0:b0:232:f354:e625 with SMTP id f8-20020a2e3808000000b00232f354e625mr517419lja.278.1645060758955;
-        Wed, 16 Feb 2022 17:19:18 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id l12sm3301904lfg.32.2022.02.16.17.19.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Feb 2022 17:19:18 -0800 (PST)
-Message-ID: <7a8a8fbd-c20d-7831-a35d-ddbe0e0ad1e3@linaro.org>
-Date:   Thu, 17 Feb 2022 04:19:17 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [PATCH 5/6] drm/msm/dpu: remove struct dpu_encoder_irq
-Content-Language: en-GB
-To:     Stephen Boyd <swboyd@chromium.org>,
+        bh=HRx8T4zgpY2IuuhghOcb/JTF1D7VMe7Nw9viYbE3X18=;
+        b=r8CyO5B2QJhSzyu8wClgMpbZUtkMP292aP6cMW3FY507CplLGY9Vj+nbrgOvZdPgQK
+         zhAMqph9jHiAp3wMMyrOjIMPrmEQKcMdT0B0ORTUmBvaDJSTkpb9aTlMQapiwEneXE5J
+         X3xW7DZsQu+M0fzdMzsvyWEtj3SXltwulajLhVNZrc4yx47V5bH3ihMt0PWO7HBhFFdO
+         vtqgwKMwv790T0FbNsEvrddwwMSO/xa3N4/n7cj3LWe3ztXZOijXkasISWt4uURgpIAQ
+         ovJHQY1X3hJ2gkCXfNs2SwDLBeJDmmU5Q80KhRLJ/hwCbPJa64sQ9ChnLZ0QqwcQYtSg
+         g7bQ==
+X-Gm-Message-State: AOAM530/4QTs2hF8PVLgsgcR0sYukpeCgJ9mQ4mc10e7LLqfsULARjbP
+        pNsQV1x8JxiSik/3tmZir/XYqA==
+X-Google-Smtp-Source: ABdhPJzFKV8F1Qszo2LP+Rfa4K3QqRtxV7RkYbAa3hv/J2IVrKtru8oTym09tqhA0ntDsTa9UOHl0g==
+X-Received: by 2002:a54:438f:0:b0:2d4:4348:d58b with SMTP id u15-20020a54438f000000b002d44348d58bmr187510oiv.102.1645060787279;
+        Wed, 16 Feb 2022 17:19:47 -0800 (PST)
+Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id h27sm15665329ote.57.2022.02.16.17.19.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Feb 2022 17:19:46 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20220201151056.2480055-1-dmitry.baryshkov@linaro.org>
- <20220201151056.2480055-6-dmitry.baryshkov@linaro.org>
- <CAE-0n50p7nxqger_9i22TnWACNM4SM5OP+f9mS7wUZwi1dP1Ag@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAE-0n50p7nxqger_9i22TnWACNM4SM5OP+f9mS7wUZwi1dP1Ag@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 1/2] drm/msm/dpu: Add INTF_5 interrupts
+Date:   Wed, 16 Feb 2022 17:21:54 -0800
+Message-Id: <20220217012155.1717511-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.33.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,52 +70,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/02/2022 05:22, Stephen Boyd wrote:
-> Quoting Dmitry Baryshkov (2022-02-01 07:10:55)
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
->> index ff2218155b44..803fd6f25da1 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
->> @@ -231,7 +216,7 @@ struct dpu_encoder_phys {
->>          atomic_t pending_ctlstart_cnt;
->>          atomic_t pending_kickoff_cnt;
->>          wait_queue_head_t pending_kickoff_wq;
->> -       struct dpu_encoder_irq irq[INTR_IDX_MAX];
->> +       int irq[INTR_IDX_MAX];
->>   };
->>
->>   static inline int dpu_encoder_phys_inc_pending(struct dpu_encoder_phys *phys)
->> @@ -729,20 +727,8 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
->>          phys_enc->split_role = p->split_role;
->>          phys_enc->intf_mode = INTF_MODE_VIDEO;
->>          phys_enc->enc_spinlock = p->enc_spinlock;
->> -       for (i = 0; i < INTR_IDX_MAX; i++) {
->> -               irq = &phys_enc->irq[i];
->> -               irq->irq_idx = -EINVAL;
->> -       }
->> -
->> -       irq = &phys_enc->irq[INTR_IDX_VSYNC];
->> -       irq->name = "vsync_irq";
->> -       irq->intr_idx = INTR_IDX_VSYNC;
->> -       irq->func = dpu_encoder_phys_vid_vblank_irq;
->> -
->> -       irq = &phys_enc->irq[INTR_IDX_UNDERRUN];
->> -       irq->name = "underrun";
->> -       irq->intr_idx = INTR_IDX_UNDERRUN;
->> -       irq->func = dpu_encoder_phys_vid_underrun_irq;
->> +       for (i = 0; i < INTR_IDX_MAX; i++)
-> 
-> Can this use ARRAY_SIZE(phys_enc->irq)? Safer that way.
+SC8180x has the eDP controller wired up to INTF_5, so add the interrupt
+register block for this interface to the list.
 
-Ack
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
 
-> 
->> +               phys_enc->irq[i] = -EINVAL;
->>
->>          atomic_set(&phys_enc->vblank_refcount, 0);
->>          atomic_set(&phys_enc->pending_kickoff_cnt, 0);
+Changes since v2:
+- None
 
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 6 ++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h | 1 +
+ 2 files changed, 7 insertions(+)
 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+index a77a5eaa78ad..dd2161e7bdb6 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+@@ -23,6 +23,7 @@
+ #define MDP_INTF_2_OFF			0x6B000
+ #define MDP_INTF_3_OFF			0x6B800
+ #define MDP_INTF_4_OFF			0x6C000
++#define MDP_INTF_5_OFF			0x6C800
+ #define MDP_AD4_0_OFF			0x7C000
+ #define MDP_AD4_1_OFF			0x7D000
+ #define MDP_AD4_INTR_EN_OFF		0x41c
+@@ -93,6 +94,11 @@ static const struct dpu_intr_reg dpu_intr_set[] = {
+ 		MDP_INTF_4_OFF+INTF_INTR_EN,
+ 		MDP_INTF_4_OFF+INTF_INTR_STATUS
+ 	},
++	{
++		MDP_INTF_5_OFF+INTF_INTR_CLEAR,
++		MDP_INTF_5_OFF+INTF_INTR_EN,
++		MDP_INTF_5_OFF+INTF_INTR_STATUS
++	},
+ 	{
+ 		MDP_AD4_0_OFF + MDP_AD4_INTR_CLEAR_OFF,
+ 		MDP_AD4_0_OFF + MDP_AD4_INTR_EN_OFF,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+index 1ab75cccd145..37379966d8ec 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+@@ -22,6 +22,7 @@ enum dpu_hw_intr_reg {
+ 	MDP_INTF2_INTR,
+ 	MDP_INTF3_INTR,
+ 	MDP_INTF4_INTR,
++	MDP_INTF5_INTR,
+ 	MDP_AD4_0_INTR,
+ 	MDP_AD4_1_INTR,
+ 	MDP_INTF0_7xxx_INTR,
 -- 
-With best wishes
-Dmitry
+2.33.1
+
