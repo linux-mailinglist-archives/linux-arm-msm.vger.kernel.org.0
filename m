@@ -2,95 +2,315 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DEC5C4BA477
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 16:35:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B7804BA464
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 16:31:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242417AbiBQPgL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Feb 2022 10:36:11 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50360 "EHLO
+        id S237325AbiBQPbS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Feb 2022 10:31:18 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:39666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229562AbiBQPgL (ORCPT
+        with ESMTP id S232835AbiBQPbR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Feb 2022 10:36:11 -0500
-X-Greylist: delayed 364 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 17 Feb 2022 07:35:56 PST
-Received: from wnew1-smtp.messagingengine.com (wnew1-smtp.messagingengine.com [64.147.123.26])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B3BA2B2C6F;
-        Thu, 17 Feb 2022 07:35:56 -0800 (PST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailnew.west.internal (Postfix) with ESMTP id A1B112B00557;
-        Thu, 17 Feb 2022 10:29:47 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Thu, 17 Feb 2022 10:29:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; bh=vPxH7aW8wFaF6FXxK1Tw28k9hOtTqlkQkEM3+5
-        o6jE0=; b=SKicWjolSaPozz4NfRffQADKTRa8SEffMe5aQcKtd5lFyBpLDt9rpx
-        lRP2rE4ApYRhmgKVpBfH7BUfvPtPeaJqlUxO7tea12zpdpDY04X0Rk4Wzvm/0ZoS
-        bM9ZPdq+YzX2qwCpaqoxi8rUS8mWLsHS3RlcExLv5/3ezauOwd/jsbJecAE12du8
-        t0TwYYglg+xQPo2d4HFvarzzsJZS79QlNHYHbKk7DjiHpaPyDAjibY/lwvxKNOrP
-        2mTuYEEbdEr9xbkt4ABKNRgumz+7xR3u2AvNV/WpV81e6RdcsqN7YcjuSf0aSA+E
-        OFfXdUGkZgDjeaCidXwp22AujZB4RykA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=vPxH7aW8wFaF6FXxK
-        1Tw28k9hOtTqlkQkEM3+5o6jE0=; b=oJYseGpVhw6dopA1gjS4mMuicF/26jeNc
-        jTj1bCOqJtkD1BhBSWRNk9gTswXHBj7WJriUFIpasbTYniqKRPPi0h5uz56Fw2eA
-        zYu/fU9u5WfyghNUJA7eYYayFsjBWEJaGwKBwGGuAXcFfyHhcKjvW3Qzu8pXCkaU
-        Hmvpkve1IT5oBvwaa84AllJ/sL+fLiiSXeCJ58FNYn913ZMxq6ozepcxzKBGUS+7
-        GG2QQlI+7fOUC8SLI7L8Cw1gleON+e9EJQh3QOC72pG4QUlK6XxgSolAd6D2KQ4m
-        i0hZYhkaSQqnDvquoNuNotHLEGJcZ3oIhXiWP9VqwaCgSDG3yBRqQ==
-X-ME-Sender: <xms:6mkOYlse3lyINLCZgOGstWHLrrOqs40UFtvdUFY263AwJZ-zPmjnng>
-    <xme:6mkOYufKskfIV7amhqoAKjXRah1-kcUfPnn3LhN1XFp2JpzkNt0wQYfdd0HySmjeF
-    GuSn9bVDhMsNw>
-X-ME-Received: <xmr:6mkOYoxGwH-ylT7PGvPu8_tuSXwwsL6U-WT7_ZAty5oZP_FxuDsKxAxvp2Nd557noGnntn5I9zhXcpXsg3Z-f3PIQtWQiM-g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrjeekgdejhecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhmqeen
-    ucggtffrrghtthgvrhhnpeevueehjefgfffgiedvudekvdektdelleelgefhleejieeuge
-    egveeuuddukedvteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
-    fhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
-X-ME-Proxy: <xmx:6mkOYsM9M9puVPWvhJy0JQlkQpq5OhzTFeFQLlqLUQ-BVYTV4TRmWw>
-    <xmx:6mkOYl9CVjfu6xx8VC6Nr-bu-ghoA49QksuqCsEOTZVF3TgfF8VzZg>
-    <xmx:6mkOYsU41iGpazbSrPqas-haUyoVCHVL8UxnAHkDsxP3oaOLjKOfyg>
-    <xmx:62kOYo0cg8oz0wLBN43MwFWvllnjYuYMP_AUuaVxt_aKFTi8CJNgWErSeqU>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Feb 2022 10:29:46 -0500 (EST)
-Date:   Thu, 17 Feb 2022 16:29:39 +0100
-From:   Greg KH <greg@kroah.com>
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, pure.logic@nexus-software.ie,
-        bjorn.andersson@linaro.org, robh@kernel.org,
-        linux-kernel@vger.kernel.org, quic_rjendra@quicinc.com,
-        quic_saipraka@quicinc.com
-Subject: Re: [PATCH V1] arm64: dts: qcom: sc7280: Set the default dr_mode for
- usb2 to enable EUD.
-Message-ID: <Yg5p45LkdsAtFFKV@kroah.com>
-References: <1644903488-20557-1-git-send-email-quic_schowdhu@quicinc.com>
+        Thu, 17 Feb 2022 10:31:17 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 161532B164F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 07:31:02 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id u1so9663890wrg.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 07:31:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=sqrY7cr1RKA78TNpBuiiBPVSVoBxKNilTCABh+xfoi4=;
+        b=RWjrOwsj/w51HG/vxAaXh9kRWM7cfeMqFGi6yy7em512H3WE3w+qQwnkhYJRru5He0
+         4+/cdiaNwLkCyeygmx0FygthSHkzVTxTmTCq8HGWUcWGyN/iUrrSELdJbvUgNoYTVIHE
+         cNw7knyCE/Ll0z5mvCrwq0+df7niRY6Z4KM91SwxoH9y2r8HfCLtSlUn/X6G4VMcXKPH
+         RXoavbgr6dTYPFEe+yfQeHwTPB9/3BSWcSbPeTWngXjifoDUJwoTf7Ub6DIv7Ub0wP8R
+         pdqJqHovXHXaIAnH8HBtrATsbp/9Eog+TCkLRNb6x2qSDYvdkwOf8TpDLgyHdEP2wC1S
+         sxIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=sqrY7cr1RKA78TNpBuiiBPVSVoBxKNilTCABh+xfoi4=;
+        b=YXLWVp9YB/V+FxizQrKAlrk455MExpAExC7k7ndXFyhmFyJsUfDuIOZvWNQOgMw3mg
+         f2PbdDXl9r+NylqhZbhrJcoB4XxWBcbgnO6sM3H2hjxL01+Ju/DQef7t5bLVPF/12kRd
+         P6HhCgD0e52NrEDNNeEdIJxy3nC+4l0TnipHeQH54/CMpFTtm1o3Gu/ZNfAPNnmAW7O+
+         yHI7+cYlZWnFQkV0c21qowz3EYTJVaaubfi3XubLQLj6kaXcr9SIQT2Xxd1gKSZrw0jw
+         tKrY7CHBGTc39+UUJPt78K4DqzRFFnwZ7y2k9ld4R2XPas7G8oq5L2JSKGbIHSg77Hb3
+         krLg==
+X-Gm-Message-State: AOAM531slIJvvgeBG4QMK+EDuun69LYY/YeCR6eBbDMdONTCA0QVUxj3
+        mut6po4aDGdxo/jGJ6pZrpSTQKsGWFOSGYu86snY+w==
+X-Google-Smtp-Source: ABdhPJzaOOM9K/l0lss/puzUbxcEcPggkEXXEuDNTQPmwxXqOqgESnLLklMo6KboIgoXcbITVviR8XCovB0E+8oIqyA=
+X-Received: by 2002:a5d:6da8:0:b0:1e3:c0b:153d with SMTP id
+ u8-20020a5d6da8000000b001e30c0b153dmr2663917wrs.658.1645111860444; Thu, 17
+ Feb 2022 07:31:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1644903488-20557-1-git-send-email-quic_schowdhu@quicinc.com>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+References: <20220209105706.18852-1-quic_jinlmao@quicinc.com>
+ <CAJ9a7VhZtNrj9S4T=dNDOWT9fEcnm1qqtp+4h3EqytidDwEd5Q@mail.gmail.com> <0c87c995-142c-9c8f-5a9a-02e3a1119cce@quicinc.com>
+In-Reply-To: <0c87c995-142c-9c8f-5a9a-02e3a1119cce@quicinc.com>
+From:   Mike Leach <mike.leach@linaro.org>
+Date:   Thu, 17 Feb 2022 15:30:49 +0000
+Message-ID: <CAJ9a7Vi=yYAEiHy-hAZNLKamRi-kQMGh02LSiVC6qGbeCOOUCg@mail.gmail.com>
+Subject: Re: [PATCH v3 00/10] Coresight: Add support for TPDM and TPDA
+To:     Jinlong Mao <quic_jinlmao@quicinc.com>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 15, 2022 at 11:08:08AM +0530, Souradeep Chowdhury wrote:
-> Update the dr_mode for usb2 to 'otg' from 'host' to enable role switch for Embedded USB
-> Debugger(EUD) Node.
+Hi,
 
-Please properly wrap your changelog at 72 columns.
 
-thanks,
+On Fri, 11 Feb 2022 at 04:17, Jinlong Mao <quic_jinlmao@quicinc.com> wrote:
+>
+>
+> On 2/10/2022 6:30 PM, Mike Leach wrote:
+> > Hello  Mao,
+> >
+> > I have looked through this set and have a few general questions.
+> >
+> > My understanding based on the information in the code is that the TPDM
+> > devices will always send data to the TPDA device, the TPDM is not
+> > capable of directly driving the ATB itself?
+> > The TPDA device  will then packetize the inputs and output these to
+> > the ATB over the normal CoreSight architecture to a standard ETR / ETF
+> > for collection.
+> >
+> > Looking at the TPDM driver - it is assigned a trace ID but never
+> > actually uses it in the hardware. My assumption here is that this is
+> > used purely to satisfy the requirement that the CoreSight core has
+> > that all sources have a unique trace id?
+> >
+> > For the TPDA driver you assign an ATID as an attribute in device tree,
+> > and then program this into the devices control register.
+> >
+> > The trace IDs in ETM / ETE / STM, are programmed into the hardware and
+> > these values drive the ATID value on the trace bus. So assigning an
+> > ATID value to the TPDA driver through device tree will lead to clashes
+> > with the assignment of trace IDs in the other driver software.
+> >
+> > The topology here appears to me that you have multiple  "data source"
+> > devices TPDM, supplying a TPDA - which is the real CoreSight "trace
+> > source" from the viewpoint of the trace bus and CoreSight
+> > infrastructure.
+> > To get this to work in the current CoreSight driver stack, you have
+> > assigned the TPDM as a source type, and the TPDA as a link to ensure
+> > that when a TPDM is started, all the components on the path to the
+> > sink are activated.
+> > This is fine.
+> >
+> > If my assumptions above are all accurate I suggest the following improvements
+> >
+> > For TPDA drop the device tree assignment of ATID and instead use the
+> > coresight_get_system_trace_id() function you introduce in the 2nd
+> > patch in this set.
+> >
+> > For TPDM you have assigned a unique source sub-type
+> > CORESIGHT_DEV_SUBTYPE_SOURCE_SYS.- this could become
+> > CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY. If the trace ID assigned to
+> > this device is only to satisfy the unique ID requirement and is not
+> > used elsewhere, then the sub type could become
+> > CORESIGHT_DEV_SUBTYPE_SOURCE_DATA_ONLY. We can agree that this sub
+> > type does not need a unique ID and acts as none ATB a source for
+> > another component, The core code can be altered to drop the
+> > requirement for this sub-type and trace ID can be dropped for this
+> > component.
+> >
+> > You should be aware that we are in the process of re-designed how
+> > trace IDs are allocated. The current mechanism does not scale for
+> > large multi-core systems (currently broken for any system > 46 cores),
+> > and as you have discovered there is a need for additional allocation
+> > of IDs. Also the ETE / TRBE combination does not need a trace ID.  A
+> > dynamic allocation system is being proposed.
+> >
+> > Regards
+> >
+> > Mike
+>
+>
+> Hi  Mike,
+>
+> Your assumptions above are all correct.
+> TPDMs connect to the same TPDA will share the atid of the TPDA.
+> We have a PC tool to parse the TPDM trace data. It needs the fixed atid
+> for each TPDA to identify the data.
+> So we configure the atid for TPDA in device tree with fixed ids.
+> I will discuss with internal tool team to see if TPDA's id can become
+> dynamic when parse the data.
+>
+I understand that it is essential to know the ID when extracting the
+trace from a sink with a coresight frame fomatter.
+However, tools such as perf, achieve this by saving the metadata for
+the session. If you are programming the trace ID, then it should be
+possible to read back the same register to get the required
+information for your trace session.
 
-greg k-h
+If this is genuinely not possible for your system, then treat as a
+fixed ID as I describe below.
+
+> Apart from the TPDA's atid, we also have some other sources with fixed
+> id in HW on our internal device.
+> Do you have any suggestion to how to allocate the IDs for the source
+> with fixed id in HW ?
+>
+>
+Fixed IDs in hardware - assuming that these devices do write directly
+onto the trace bus using the ATID, should be accommodated by reserving
+the fixed ID in any scheme used to allocate IDs,
+In your case this would be to set a bit at the correct area in the bitfield.
+
+As mentioned we are working on an updated system to dynamically
+allocate IDs for CoreSight sources - a reservation scheme for fixed ID
+devices will be provided
+.
+
+Regards
+
+Mike
+
+ >< Thanks
+> Jinlong Mao
+>
+>
+> >
+> >
+> > On Wed, 9 Feb 2022 at 10:57, Mao Jinlong <quic_jinlmao@quicinc.com> wrote:
+> >> This series adds support for the trace performance monitoring and
+> >> diagnostics hardware (TPDM and TPDA). It is composed of two major
+> >> elements.
+> >> a) Changes for original coresight framework to support for TPDM and TPDA.
+> >> b) Add driver code for TPDM and TPDA.
+> >>
+> >> Introduction of changes for original coresight framework
+> >> Support TPDM as new coresight source.
+> >> Since only STM and ETM are supported as coresight source originally.
+> >> TPDM is a newly added coresight source. We need to change
+> >> the original way of saving coresight path to support more types source
+> >> for coresight driver.
+> >> The following patch is to add support more coresight sources.
+> >>      Use IDR to maintain all the enabled sources' paths.
+> >>      coresight: Use bitmap to assign trace id to the sources
+> >>
+> >> Introduction of TPDM and TPDA
+> >> TPDM - The trace performance monitoring and diagnostics monitor or TPDM in
+> >> short serves as data collection component for various dataset types
+> >> specified in the QPMDA(Qualcomm performance monitoring and diagnostics
+> >> architecture) spec. The primary use case of the TPDM is to collect data
+> >> from different data sources and send it to a TPDA for packetization,
+> >> timestamping and funneling.
+> >>      Coresight: Add coresight TPDM source driver
+> >>      dt-bindings: arm: Adds CoreSight TPDM hardware definitions
+> >>      coresight-tpdm: Add DSB dataset support
+> >>      coresight-tpdm: Add integration test support
+> >>      docs: sysfs: coresight: Add sysfs ABI documentation for TPDM
+> >>
+> >> TPDA - The trace performance monitoring and diagnostics aggregator or
+> >> TPDA in short serves as an arbitration and packetization engine for the
+> >> performance monitoring and diagnostics network as specified in the QPMDA
+> >> (Qualcomm performance monitoring and diagnostics architecture)
+> >> specification. The primary use case of the TPDA is to provide
+> >> packetization, funneling and timestamping of Monitor data as specified
+> >> in the QPMDA specification.
+> >> The following patch is to add driver for TPDA.
+> >>      Coresight: Add TPDA link driver
+> >>      dt-bindings: arm: Adds CoreSight TPDA hardware definitions
+> >>
+> >> The last patch of this series is a device tree modification, which add
+> >> the TPDM and TPDA configuration to device tree for validating.
+> >>      ARM: dts: msm: Add coresight components for SM8250
+> >>
+> >> Once this series patches are applied properly, the tpdm and tpda nodes
+> >> should be observed at the coresight path /sys/bus/coresight/devices
+> >> e.g.
+> >> /sys/bus/coresight/devices # ls -l | grep tpd
+> >> tpda0 -> ../../../devices/platform/soc@0/6004000.tpda/tpda0
+> >> tpdm0 -> ../../../devices/platform/soc@0/6c08000.mm.tpdm/tpdm0
+> >>
+> >> We can use the commands are similar to the below to validate TPDMs.
+> >> Enable coresight sink first.
+> >>
+> >> echo 1 > /sys/bus/coresight/devices/tmc_etf0/enable_sink
+> >> echo 1 > /sys/bus/coresight/devices/tpdm0/enable_source
+> >> echo 1 > /sys/bus/coresight/devices/tpdm0/integration_test
+> >> echo 2 > /sys/bus/coresight/devices/tpdm0/integration_test
+> >> The test data will be collected in the coresight sink which is enabled.
+> >> If rwp register of the sink is keeping updating when do
+> >> integration_test (by cat tmc_etf0/mgmt/rwp), it means there is data
+> >> generated from TPDM to sink.
+> >>
+> >> Changes from V2:
+> >> 1. Use bitmap to assign the trace id. (Mathieu Poirier)
+> >>
+> >> Mao Jinlong (10):
+> >>    Use IDR to maintain all the enabled sources' paths.
+> >>    coresight: Use bitmap to assign trace id to the sources
+> >>    Coresight: Add coresight TPDM source driver
+> >>    dt-bindings: arm: Adds CoreSight TPDM hardware definitions
+> >>    coresight-tpdm: Add DSB dataset support
+> >>    coresight-tpdm: Add integration test support
+> >>    docs: sysfs: coresight: Add sysfs ABI documentation for TPDM
+> >>    Coresight: Add TPDA link driver
+> >>    dt-bindings: arm: Adds CoreSight TPDA hardware definitions
+> >>    ARM: dts: msm: Add coresight components for SM8250
+> >>
+> >>   .../testing/sysfs-bus-coresight-devices-tpdm  |   6 +
+> >>   .../bindings/arm/coresight-tpda.yaml          | 129 ++++
+> >>   .../bindings/arm/coresight-tpdm.yaml          |  81 ++
+> >>   .../devicetree/bindings/arm/coresight.txt     |   7 +
+> >>   MAINTAINERS                                   |   1 +
+> >>   .../arm64/boot/dts/qcom/sm8250-coresight.dtsi | 690 ++++++++++++++++++
+> >>   arch/arm64/boot/dts/qcom/sm8250.dtsi          |   2 +
+> >>   drivers/hwtracing/coresight/Kconfig           |  33 +
+> >>   drivers/hwtracing/coresight/Makefile          |   2 +
+> >>   drivers/hwtracing/coresight/coresight-core.c  | 127 ++--
+> >>   drivers/hwtracing/coresight/coresight-tpda.c  | 193 +++++
+> >>   drivers/hwtracing/coresight/coresight-tpda.h  |  32 +
+> >>   drivers/hwtracing/coresight/coresight-tpdm.c  | 270 +++++++
+> >>   drivers/hwtracing/coresight/coresight-tpdm.h  |  57 ++
+> >>   include/linux/coresight-pmu.h                 |  11 +
+> >>   include/linux/coresight.h                     |   1 +
+> >>   16 files changed, 1592 insertions(+), 50 deletions(-)
+> >>   create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> >>   create mode 100644 Documentation/devicetree/bindings/arm/coresight-tpda.yaml
+> >>   create mode 100644 Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
+> >>   create mode 100644 arch/arm64/boot/dts/qcom/sm8250-coresight.dtsi
+> >>   create mode 100644 drivers/hwtracing/coresight/coresight-tpda.c
+> >>   create mode 100644 drivers/hwtracing/coresight/coresight-tpda.h
+> >>   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.c
+> >>   create mode 100644 drivers/hwtracing/coresight/coresight-tpdm.h
+> >>
+> >> --
+> >> 2.17.1
+> >>
+> >
+> > --
+> > Mike Leach
+> > Principal Engineer, ARM Ltd.
+> > Manchester Design Centre. UK
+
+
+
+-- 
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
