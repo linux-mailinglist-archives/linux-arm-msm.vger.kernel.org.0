@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 154644B9749
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 04:54:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E0A64B9742
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 04:54:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233212AbiBQDyW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Feb 2022 22:54:22 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:39192 "EHLO
+        id S229604AbiBQDyT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Feb 2022 22:54:19 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233219AbiBQDyW (ORCPT
+        with ESMTP id S233203AbiBQDyS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Feb 2022 22:54:22 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40FD42A22A2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 19:54:05 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id o2so7616270lfd.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 19:54:05 -0800 (PST)
+        Wed, 16 Feb 2022 22:54:18 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0D2F2A229E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 19:54:03 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id bu29so7670196lfb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 19:54:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NPj9DuFzc5wZ5qQDoHU9zhJ7waGhcTk9Ut8y80UuXAM=;
-        b=tFwAzo8/ZkBmIsV8kBDnMGFLrFx0YVbo1/v1NkcCxew+ugdeUOkOLEF5s1l60HAIlg
-         +UTcM3jBsiedN7bjiJAIJKVjlE5h6jJj6zOZOd2DzqQoitC2oq5iBFLy0c8dnIAnqJWj
-         rghldG033hGjmte5SyVgNEFOEWDbG/w7Zi22lR7R1I475hMEycqGDSEsWG831dLwlHDD
-         J6kTLO8Fkj1etrUG38xREAO8qn6lq1KKFkLkZjesz2WibititxP6O1VH3MYyrvllCEoS
-         OSnK6cD4Ysk65dH/afwvZ6+tq88MJkR4Sruku8tmBIFTk69oOzHybRAU7KZdudRQUZjm
-         rwjw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=2AdJ+qrckMHTJcRwxA8dkshi8PG6FFViBpmjAV8cCbI=;
+        b=YdeBlsi7Cyzf4Eq7wBVPnTETdHlYz6euXzIFkcUr+cR2wdgIgI1YnhPQVMwj0VQQa4
+         FZezexG9HiA/r7U7Wrbfo6UVTtfPfAh085oHq0rKVj0zyfhCZvbpGlE60CQccHo8tTNg
+         GVvT0+k93R5zSgbiwBcte3drWUZwyPfCQMGiLYxXLwHX5W7kg0gfrPO3YllduuEmZNWJ
+         Uyfvl4gPmNpii/3+gmD677VfDLTvosb/dxY03SWkMBEbjjrr27jutKebs0vCzpkMmoDl
+         uFAjzc1S1IPfxOGfpAQEfx/1EwCRz/NphQB/n9xYAUMm4eimR5wddnZFGWvwzA7cFA7S
+         Bavw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=NPj9DuFzc5wZ5qQDoHU9zhJ7waGhcTk9Ut8y80UuXAM=;
-        b=o4yasYmzaVQV3CKoXAqefI4zQwQnrJ9rE+TQiGpFnDYu73Wq5BTFek+4BCr6GfNup1
-         kk5nl+mHEu7yon2tBPQ2tKWItMRS9E8ONsUb4ZPtXkLTiQ62rzhB4YOaQ2SAmGzF+kmO
-         dmwDyhEwN2rMXmGIveMzPt5TzLwhsxIrE6lrbaoOUAjgC25JzGINBCut2T6l58XFTN0a
-         PFdHsR17ceMT+a+jRZFkTGMHa9Aiiz/3RNeiCYQ4y5cRR7W6XXXQeoDpNEU355aMIhs0
-         4ZBiPXvSn5E3bt2PdNSUJkyN+SyGooWd3AXe20IqWYfnXc/wSK0gpripXShtazZeenK3
-         Rs0w==
-X-Gm-Message-State: AOAM531oPneSIchYpMY1FZwqjDsCokfJXU5tcSOLxRG3FPk95hMEHfbk
-        Tsqe3rLNvLfA9TI8MkKk6Od+xw==
-X-Google-Smtp-Source: ABdhPJwrDPuNGRBBpzwRI7zFEF/VQ/jywG2z0N4Dw+fa1UFbf/A6EiND5HP39WpqV+2Wru3RRtG8Gw==
-X-Received: by 2002:ac2:4250:0:b0:443:3d07:7b5a with SMTP id m16-20020ac24250000000b004433d077b5amr805701lfl.305.1645070040403;
-        Wed, 16 Feb 2022 19:54:00 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=2AdJ+qrckMHTJcRwxA8dkshi8PG6FFViBpmjAV8cCbI=;
+        b=AOUHitW0fG1qpBWqt+Lc3c5Xkjbb4eQeqgFSWC+qEV7hAUjH8fWMGCSoPeA5rsoES5
+         X7+aCFgl55qnchJQvAlvsYgE4F9dVB2dj9FZSUmRLtJde/I9IZlCTciP/KjpRSinb8Gv
+         VgS3dR916MKz+MR2fYAdxY9wbkZAVYpi3S45pK9T837lZY4NzTnZuU5iXW36JU8Ci/h8
+         Oilp99aEaVXxxd6E0SCrpKBXJ2dnjsV3nTZuGcqhXsW89+nUpYQzwFRr9CYSYNgD3Bcp
+         9zHspUTd0MXHHYcJMhMF4tefy9srwPONa+cLzxQCswZbKaq3YTPm3Qb4AbcKpf+S9IB8
+         UWnQ==
+X-Gm-Message-State: AOAM531BegvzZEFZ2vO+MRZ5a+VZ9XS0TRxsoTO3vguHC3IeF7VlSAz+
+        OETwZ4XXqQo1k33nDjgIgok2mw==
+X-Google-Smtp-Source: ABdhPJyFslGnM3IMNPCamQzXQZWO667qKtPpEi0zc/zicfSSW+fwFF20dF3cNkNm6OSOOBid7Ik3mQ==
+X-Received: by 2002:a05:6512:481:b0:43d:f703:721e with SMTP id v1-20020a056512048100b0043df703721emr803431lfq.55.1645070041209;
+        Wed, 16 Feb 2022 19:54:01 -0800 (PST)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id h9sm1575454ljb.77.2022.02.16.19.53.59
+        by smtp.gmail.com with ESMTPSA id h9sm1575454ljb.77.2022.02.16.19.54.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 16 Feb 2022 19:54:00 -0800 (PST)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -56,10 +56,12 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH v2 0/7] drm/msm/dpu: cleanup dpu encoder code
-Date:   Thu, 17 Feb 2022 06:53:51 +0300
-Message-Id: <20220217035358.465904-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 1/7] drm/msm/dpu: fix dp audio condition
+Date:   Thu, 17 Feb 2022 06:53:52 +0300
+Message-Id: <20220217035358.465904-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220217035358.465904-1-dmitry.baryshkov@linaro.org>
+References: <20220217035358.465904-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -72,35 +74,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patchset targets DPU encoder code, removing unused artifacts (empty
-callbacks, MSM bus client id, etc).
+DP audio enablement code which is comparing intf_type,
+DRM_MODE_ENCODER_TMDS (= 2) with DRM_MODE_CONNECTOR_DisplayPort (= 10).
+Which would never succeed. Fix it to check for DRM_MODE_ENCODER_TMDS.
 
-Changes since v2:
- - Expand commit message of 7th patch (pull connector from
-   dpu_encoder_phys to dpu_encoder_virt)
- - Drop intf_type patch for now, as it causes controversy
+Fixes: d13e36d7d222 ("drm/msm/dp: add audio support for Display Port on MSM")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Changes since v1:
- - Split dp audio fixup from the intf_type patch
- - Remove atomic_check() removal, used by the posted WB support
-
-Dmitry Baryshkov (7):
-  drm/msm/dpu: fix dp audio condition
-  drm/msm: move struct msm_display_info to dpu driver
-  drm/msm/dpu: remove msm_dp cached in dpu_encoder_virt
-  drm/msm/dpu: drop bus_scaling_client field
-  drm/msm/dpu: encoder: drop unused mode_fixup callback
-  drm/msm/dpu: switch dpu_encoder to use atomic_mode_set
-  drm/msm/dpu: pull connector from dpu_encoder_phys to dpu_encoder_virt
-
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 59 +++++--------------
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h   | 18 ++++++
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  | 14 ++---
- .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 28 ++-------
- .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  | 28 ++-------
- drivers/gpu/drm/msm/msm_drv.h                 | 18 ------
- 6 files changed, 45 insertions(+), 120 deletions(-)
-
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 1e648db439f9..02d0fae1c6dc 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -1099,7 +1099,7 @@ static void _dpu_encoder_virt_enable_helper(struct drm_encoder *drm_enc)
+ 	}
+ 
+ 
+-	if (dpu_enc->disp_info.intf_type == DRM_MODE_CONNECTOR_DisplayPort &&
++	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_TMDS &&
+ 		dpu_enc->cur_master->hw_mdptop &&
+ 		dpu_enc->cur_master->hw_mdptop->ops.intf_audio_select)
+ 		dpu_enc->cur_master->hw_mdptop->ops.intf_audio_select(
 -- 
 2.34.1
 
