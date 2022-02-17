@@ -2,70 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF8674B950B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 01:27:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 185434B9516
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 01:40:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229772AbiBQA1W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Feb 2022 19:27:22 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47650 "EHLO
+        id S229832AbiBQAkV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Feb 2022 19:40:21 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229779AbiBQA1V (ORCPT
+        with ESMTP id S229802AbiBQAkU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Feb 2022 19:27:21 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD64618D9F2;
-        Wed, 16 Feb 2022 16:27:07 -0800 (PST)
+        Wed, 16 Feb 2022 19:40:20 -0500
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5D67124C34
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 16:40:06 -0800 (PST)
+Received: by mail-lj1-x236.google.com with SMTP id bn33so5893047ljb.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 16:40:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645057628; x=1676593628;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=5PVdiB2tCTktZM9TnHRDaSdcjaUKK7T/KCy0M9sHFuU=;
-  b=BD6xYV26mMpwAk2qG/Phu8Cf33xsC1S9754NiKxR0o0f6OIEYkNqn1pX
-   DNuQI7eANhniwNW+2AIU6IVdid2EO1cokVfS67h35g4ScMoGMQeGbGuTv
-   L5xwDb+FG3B7MexY3GwAjd8+MhHZ+Aceh2xfbQUa89mO8VcHKeAPJaQNM
-   I=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 16 Feb 2022 16:27:08 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Feb 2022 16:27:07 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Wed, 16 Feb 2022 16:27:06 -0800
-Received: from [10.111.174.92] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.19; Wed, 16 Feb
- 2022 16:27:04 -0800
-Message-ID: <35696c4b-cb84-610d-96de-73126aa6810b@quicinc.com>
-Date:   Wed, 16 Feb 2022 16:27:02 -0800
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=irfOfdSIE9rR3XmORLk7Bf5d4a0WcfMYhHYf+s3tbSs=;
+        b=AILDcMvPG9itOtC+CSIt/42wtECc07XURtltr7tN1l6iwwVFUcer9QlOidGe1bE6Oo
+         lJ3mxg5ho54gQsy4Y/h37a+rnbQJbxMwwHw4jUe4/O069PV3zrcMlH0VyS+hnJCf0p/V
+         URQ3OT2qwI+4bahYujfrfw5Vrmj2Zs8/ybeC+XbUjCDSXju+aZRbUbxsyKVEaPewEZnz
+         3fJwD7K39V77Cc5eE+fYj1bxFEellkt8bIitHmWKG0BYzfcebAK5JXISaKBQhEC5kyl4
+         LUQ47gj+LjKBylW4dOtUv3SufxPxUbos5KcWkY4qz17jlaQivgaVkUA8SAleUnizDbjX
+         XZjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=irfOfdSIE9rR3XmORLk7Bf5d4a0WcfMYhHYf+s3tbSs=;
+        b=Pay9nv31PhDG2nKvMCk69paWEthrewPR0BIGbX3AhSPa7kUK7uLs2WdVnVGJDFDiEY
+         xBOyiZ9IenQCkT1rk0FTvpkKfuIGs2kklGUbhGgkF+Z51bT2fYk2tlWOGiMlJr9mQboZ
+         ZGDLNvqMEHKaDMMuSpC7OuRUjNfMXZnAGyMqpIfagP8nO3a2ZCyjUjA5RVC1+fEf5nPe
+         vhnUdFDnb6JEr/hWDLNXzJOOqtanG6RykfznVWmLz/MzK9S5vbLBreBsyoalEZakEMAn
+         kKjiBXyHejxCf7+BJVaaRBJlYipr5JwLA6XgnBrNC3zNLUFWYxpnEGgKotbZ74WnWH3Y
+         AUtg==
+X-Gm-Message-State: AOAM532p72eRAXqs4LQpjSoKTQ6iFzLa33K8L9zOKq4g+aRB+C0+JzQP
+        6QkmYWSv9kmtvwlc3+MxA7OwUeN0aAoPAA==
+X-Google-Smtp-Source: ABdhPJzv0HhA2eC9Ca8TvfoEl3imb6op8FIsLTF5dy8X5bvs6IGsJDWqpBElKJJ5mKwrc8q714fGLg==
+X-Received: by 2002:a2e:9c15:0:b0:23f:96fa:4b96 with SMTP id s21-20020a2e9c15000000b0023f96fa4b96mr426058lji.293.1645058404997;
+        Wed, 16 Feb 2022 16:40:04 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id l18sm4966807ljc.11.2022.02.16.16.40.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Feb 2022 16:40:04 -0800 (PST)
+Message-ID: <8aeec164-836b-d964-3b40-fb0874612250@linaro.org>
+Date:   Thu, 17 Feb 2022 03:40:03 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.1
-Subject: Re: [REPOST PATCH v4 02/13] drm/msm/dsi: Pass DSC params to drm_panel
-Content-Language: en-US
-To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20220210103423.271016-1-vkoul@kernel.org>
- <20220210103423.271016-3-vkoul@kernel.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220210103423.271016-3-vkoul@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Subject: Re: [PATCH v3 3/3] drm/msm/dp: replace DRM_DEBUG_DP marco with
+ drm_dbg_dp
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
+        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, vkoul@kernel.org
+Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1643828199-8564-1-git-send-email-quic_khsieh@quicinc.com>
+ <1643828199-8564-4-git-send-email-quic_khsieh@quicinc.com>
+ <CAE-0n534MH7ih4nKbjY5EewcZ0J73Zp_A=Q-CJ0M_z3nWoVaVQ@mail.gmail.com>
+ <f480811d-3e82-a6c7-1e57-fabe51604f9b@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <f480811d-3e82-a6c7-1e57-fabe51604f9b@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,163 +83,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 17/02/2022 03:22, Kuogee Hsieh wrote:
+> 
+> On 2/16/2022 3:46 PM, Stephen Boyd wrote:
+>> Quoting Kuogee Hsieh (2022-02-02 10:56:39)
+>>
+>> Please add some commit text
+>>
+>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>>> ---
+>>>   drivers/gpu/drm/msm/dp/dp_audio.c   |  49 +++++++++++------
+>>>   drivers/gpu/drm/msm/dp/dp_catalog.c |  34 +++++++-----
+>>>   drivers/gpu/drm/msm/dp/dp_ctrl.c    | 106 
+>>> +++++++++++++++++++-----------------
+>>>   drivers/gpu/drm/msm/dp/dp_display.c |  68 +++++++++++++----------
+>>>   drivers/gpu/drm/msm/dp/dp_drm.c     |   4 +-
+>>>   drivers/gpu/drm/msm/dp/dp_link.c    |  99 
+>>> +++++++++++++++++++--------------
+>>>   drivers/gpu/drm/msm/dp/dp_panel.c   |  43 +++++++++------
+>>>   drivers/gpu/drm/msm/dp/dp_parser.c  |   2 +-
+>>>   drivers/gpu/drm/msm/dp/dp_power.c   |  20 ++++---
+>>>   9 files changed, 246 insertions(+), 179 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/dp/dp_audio.c 
+>>> b/drivers/gpu/drm/msm/dp/dp_audio.c
+>>> index d7e4a39..4fbbe0a 100644
+>>> --- a/drivers/gpu/drm/msm/dp/dp_audio.c
+>>> +++ b/drivers/gpu/drm/msm/dp/dp_audio.c
+>>> @@ -136,7 +136,8 @@ static void dp_audio_stream_sdp(struct 
+>>> dp_audio_private *audio)
+>>>          parity_byte = dp_audio_calculate_parity(new_value);
+>>>          value |= ((new_value << HEADER_BYTE_1_BIT)
+>>>                          | (parity_byte << PARITY_BYTE_1_BIT));
+>>> -       DRM_DEBUG_DP("Header Byte 1: value = 0x%x, parity_byte = 
+>>> 0x%x\n",
+>>> +       drm_dbg_dp((struct drm_device *)NULL,
+>> Why can't we pass the platform device pointer? Surely the cast is not
+>> necessary and in fact harmful.
+> 
+> Platform device only available at top level (dp_display.c), other level 
+> has no access to platform device or drm_device.
+
+You can pass the platform device (or even better, drm device) to other 
+driver blocks too. It's not something to be kept in secret in 
+dp_display.c only.
+
+> 
+> I will just apss NULL, such as  drm_dbg_dp(NULL, ...), if not device 
+> available.
 
 
-On 2/10/2022 2:34 AM, Vinod Koul wrote:
-> When DSC is enabled, we need to pass the DSC parameters to panel driver
-> as well, so add a dsc parameter in panel and set it when DSC is enabled
-> 
-> Also, fetch and pass DSC configuration for DSI panels to DPU encoder,
-> which will enable and configure DSC hardware blocks accordingly.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c |  2 ++
->   drivers/gpu/drm/msm/dsi/dsi.c           |  5 +++++
->   drivers/gpu/drm/msm/dsi/dsi.h           |  1 +
->   drivers/gpu/drm/msm/dsi/dsi_host.c      | 22 ++++++++++++++++++++++
->   drivers/gpu/drm/msm/msm_drv.h           |  8 ++++++++
->   include/drm/drm_panel.h                 |  7 +++++++
->   6 files changed, 45 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 47fe11a84a77..ef6ddac22767 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -578,6 +578,8 @@ static int _dpu_kms_initialize_dsi(struct drm_device *dev,
->   			MSM_DISPLAY_CAP_CMD_MODE :
->   			MSM_DISPLAY_CAP_VID_MODE;
->   
-> +		info.dsc = msm_dsi_get_dsc_config(priv->dsi[i]);
-> +
->   		if (msm_dsi_is_bonded_dsi(priv->dsi[i]) && priv->dsi[other]) {
->   			rc = msm_dsi_modeset_init(priv->dsi[other], dev, encoder);
->   			if (rc) {
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
-> index 052548883d27..3aeac15e7421 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.c
-> @@ -20,6 +20,11 @@ bool msm_dsi_is_cmd_mode(struct msm_dsi *msm_dsi)
->   	return !(host_flags & MIPI_DSI_MODE_VIDEO);
->   }
->   
-> +struct msm_display_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi)
-> +{
-> +	return msm_dsi_host_get_dsc_config(msm_dsi->host);
-> +}
-> +
->   static int dsi_get_phy(struct msm_dsi *msm_dsi)
->   {
->   	struct platform_device *pdev = msm_dsi->pdev;
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-> index c8dedc95428c..16cd9b2fce86 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.h
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
-> @@ -152,6 +152,7 @@ int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
->   int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
->   void msm_dsi_host_snapshot(struct msm_disp_state *disp_state, struct mipi_dsi_host *host);
->   void msm_dsi_host_test_pattern_en(struct mipi_dsi_host *host);
-> +struct msm_display_dsc_config *msm_dsi_host_get_dsc_config(struct mipi_dsi_host *host);
->   
->   /* dsi phy */
->   struct msm_dsi_phy;
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 27553194f9fa..7e9913eff724 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -2059,9 +2059,24 @@ int msm_dsi_host_modeset_init(struct mipi_dsi_host *host,
->   {
->   	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
->   	const struct msm_dsi_cfg_handler *cfg_hnd = msm_host->cfg_hnd;
-> +	struct drm_panel *panel;
->   	int ret;
->   
->   	msm_host->dev = dev;
-> +	panel = msm_dsi_host_get_panel(&msm_host->base);
-> +
-> +	if (panel && panel->dsc) {
-> +		struct msm_display_dsc_config *dsc = msm_host->dsc;
-> +
-> +		if (!dsc) {
-> +			dsc = devm_kzalloc(&msm_host->pdev->dev, sizeof(*dsc), GFP_KERNEL);
-> +			if (!dsc)
-> +				return -ENOMEM;
-> +			dsc->drm = panel->dsc;
-> +			msm_host->dsc = dsc;
-> +		}
-> +	}
-> +
->   	ret = cfg_hnd->ops->tx_buf_alloc(msm_host, SZ_4K);
->   	if (ret) {
->   		pr_err("%s: alloc tx gem obj failed, %d\n", __func__, ret);
-> @@ -2626,3 +2641,10 @@ void msm_dsi_host_test_pattern_en(struct mipi_dsi_host *host)
->   		dsi_write(msm_host, REG_DSI_TEST_PATTERN_GEN_CMD_STREAM0_TRIGGER,
->   				DSI_TEST_PATTERN_GEN_CMD_STREAM0_TRIGGER_SW_TRIGGER);
->   }
-> +
-> +struct msm_display_dsc_config *msm_dsi_host_get_dsc_config(struct mipi_dsi_host *host)
-> +{
-> +	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
-> +
-> +	return msm_host->dsc;
-> +}
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index 384f9bad4760..e7a312edfe67 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -119,6 +119,7 @@ struct msm_display_topology {
->    *                      based on num_of_h_tiles
->    * @is_te_using_watchdog_timer:  Boolean to indicate watchdog TE is
->    *				 used instead of panel TE in cmd mode panels
-> + * @dsc:		DSC configuration data for DSC-enabled displays
->    */
->   struct msm_display_info {
->   	int intf_type;
-> @@ -126,6 +127,7 @@ struct msm_display_info {
->   	uint32_t num_of_h_tiles;
->   	uint32_t h_tile_instance[MAX_H_TILES_PER_DISPLAY];
->   	bool is_te_using_watchdog_timer;
-> +	struct msm_display_dsc_config *dsc;
->   };
->   
->   /* Commit/Event thread specific structure */
-> @@ -365,6 +367,7 @@ void msm_dsi_snapshot(struct msm_disp_state *disp_state, struct msm_dsi *msm_dsi
->   bool msm_dsi_is_cmd_mode(struct msm_dsi *msm_dsi);
->   bool msm_dsi_is_bonded_dsi(struct msm_dsi *msm_dsi);
->   bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi);
-> +struct msm_display_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi);
->   #else
->   static inline void __init msm_dsi_register(void)
->   {
-> @@ -393,6 +396,11 @@ static inline bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi)
->   {
->   	return false;
->   }
-> +
-> +static inline struct msm_display_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi)
-> +{
-> +	return NULL;
-> +}
->   #endif
->   
->   #ifdef CONFIG_DRM_MSM_DP
-> diff --git a/include/drm/drm_panel.h b/include/drm/drm_panel.h
-> index 4602f833eb51..eb8ae9bf32ed 100644
-> --- a/include/drm/drm_panel.h
-> +++ b/include/drm/drm_panel.h
-> @@ -171,6 +171,13 @@ struct drm_panel {
->   	 * Panel entry in registry.
->   	 */
->   	struct list_head list;
-> +
-> +	/**
-> +	 * @dsc:
-> +	 *
-> +	 * Panel DSC pps payload to be sent
-> +	 */
-> +	struct drm_dsc_config *dsc;
->   };
->   
->   void drm_panel_init(struct drm_panel *panel, struct device *dev,
+
+-- 
+With best wishes
+Dmitry
