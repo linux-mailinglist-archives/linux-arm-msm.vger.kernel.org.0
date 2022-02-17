@@ -2,378 +2,330 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E2B54BA32E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 15:40:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 455854BA36B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 15:47:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241849AbiBQOk0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Feb 2022 09:40:26 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:33484 "EHLO
+        id S241901AbiBQOrz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Feb 2022 09:47:55 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:58834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230241AbiBQOk0 (ORCPT
+        with ESMTP id S231644AbiBQOrz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Feb 2022 09:40:26 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3395A2B1A95;
-        Thu, 17 Feb 2022 06:40:10 -0800 (PST)
+        Thu, 17 Feb 2022 09:47:55 -0500
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7096115E6E7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 06:47:40 -0800 (PST)
+Received: by mail-io1-xd30.google.com with SMTP id c18so1372484ioc.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 06:47:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645108810; x=1676644810;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=a+kKBz6yV1M6y9CTJGuY92ZGrZo1pILupnRxcnKXd+Y=;
-  b=nR1i4KlkOGr/YLUhKXM6850MV1fwexPND4njgBwvo7GaZXBm7tJFMc63
-   32d5oW10JDy9aEVoURuEWWVsl7ptjd3gXb8xmkD/Tq1cm136nA/4jEYPw
-   gPkmjXUVOmYCZADPOO22/jaXnYjctVvSdIfmHetiy2Gm6uKVVzYZmcU1o
-   g=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 17 Feb 2022 06:40:07 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Feb 2022 06:40:06 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Thu, 17 Feb 2022 06:40:06 -0800
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Thu, 17 Feb 2022 06:40:00 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@codeaurora.org>,
-        <perex@perex.cz>, <tiwai@suse.com>,
-        <srinivas.kandagatla@linaro.org>, <rohitkr@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [PATCH] ASoC: codecs: Add power domains support in digital macro codecs
-Date:   Thu, 17 Feb 2022 20:09:46 +0530
-Message-ID: <1645108786-25990-1-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=0LwNHxMLBqWHq5UdmZcwyo12hCqKdpdE8z/NMC5mOnQ=;
+        b=f4gEnGMI525rjiUi4DZX0djNgTslPdt5e+8rG9KofRiRGAgxnzNRhi8FA0jqVgs9no
+         glP06rtX6XMFdFbCoVpMQq471WApvxcZ/Q13zENAzWIseHrjbf22QFegTofArtcU5Y8q
+         Md7iTAGHviOkLuYkslG8Z4KxjfhyxWry6UKBaStc656ax4DYLXObmsn7Q322tZ70rZuQ
+         CJ/qcqVSGFbHBZiG37Lbn5VFMj9VJtcLvnDRV934gLI08G4F8WQ7rwZhQw0UmO69AA5O
+         v4MZBYlUMjqRVKTZgvoOcB38K5PlBJu7dlKMZM7J5gn1/nLHYaCUsp24QNxcZCIHbTye
+         KRcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=0LwNHxMLBqWHq5UdmZcwyo12hCqKdpdE8z/NMC5mOnQ=;
+        b=gpv7oXlzB4+WUvL2IHJfnp03nh/sgQjHK2DV+4Nr6KVSortylt4PF0CdttoRKva0r1
+         +Enn8JPdlbCXyzR900zerxwVVlJPk6zACROuzYUxuUZ2OFhYc9XP5AKRFjE/2zNLOZm/
+         UosMLF0uTL5PcXkMVDXbUMSyWPuapEkNzYlZus3tmHDjbcmwir/nB5tmvPt7kOOOB4+L
+         DcuQtWTSDdkoBYfrxkwM3PGtYtRYaIh727zdsA9y64wDGsA5Coam1ordpV1t/WwVOskC
+         uLxgxp8jlfkiNa56XZsE82SH1zT15kAnRzCiJtfiORMcsxZUI7sJeTfnkiV9owNsHhH/
+         N/TA==
+X-Gm-Message-State: AOAM533/G+5jk5u7k6O+6GMR0t3tAHvO6vqeR6BuAu4KKHXnW2Q0P78s
+        /yipuF+YX3Kh5eosq69pCcKN5tO0cx3WdLe5
+X-Google-Smtp-Source: ABdhPJwYbU2SBo3j8jg7jYBmG36dJ69vqpIRCj4Pc+VDCa653h1SKlhGTiJW48GmhuJt6nMp6zLIyw==
+X-Received: by 2002:a05:6638:1409:b0:30f:843:f953 with SMTP id k9-20020a056638140900b0030f0843f953mr2212765jad.22.1645109259664;
+        Thu, 17 Feb 2022 06:47:39 -0800 (PST)
+Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id f16sm2043929ioz.49.2022.02.17.06.47.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Feb 2022 06:47:38 -0800 (PST)
+Message-ID: <95007a30-cf83-992c-79bd-80e332a7b6cf@linaro.org>
+Date:   Thu, 17 Feb 2022 08:47:37 -0600
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v3 08/25] bus: mhi: ep: Add support for registering MHI
+ endpoint controllers
+Content-Language: en-US
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
+        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
+        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
+        dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
+        quic_cang@quicinc.com, quic_skananth@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
+ <20220212182117.49438-9-manivannan.sadhasivam@linaro.org>
+ <4cc78936-b419-4738-b5b2-65c53be06f33@linaro.org>
+ <20220217095319.GA11964@workstation>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <20220217095319.GA11964@workstation>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for enabling required power domains in digital macro codecs.
-macro and dcodec power domains are being requested as clocks by HLOS
-in ADSP based architectures and ADSP internally handling as powerdomains.
-In ADSP bypass case need to handle them as power domains explicitly.
+On 2/17/22 3:53 AM, Manivannan Sadhasivam wrote:
+> On Tue, Feb 15, 2022 at 02:02:41PM -0600, Alex Elder wrote:
+> 
+> [...]
+> 
+>>> +#define MHI_REG_OFFSET				0x100
+>>> +#define BHI_REG_OFFSET				0x200
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
----
- sound/soc/codecs/Kconfig              |  4 ++
- sound/soc/codecs/Makefile             |  2 +
- sound/soc/codecs/lpass-macro-common.c | 72 +++++++++++++++++++++++++++++++++++
- sound/soc/codecs/lpass-macro-common.h | 18 +++++++++
- sound/soc/codecs/lpass-rx-macro.c     | 13 ++++++-
- sound/soc/codecs/lpass-tx-macro.c     | 10 +++++
- sound/soc/codecs/lpass-va-macro.c     | 11 +++++-
- sound/soc/qcom/Kconfig                |  1 +
- 8 files changed, 129 insertions(+), 2 deletions(-)
- create mode 100644 sound/soc/codecs/lpass-macro-common.c
- create mode 100644 sound/soc/codecs/lpass-macro-common.h
+. . .
 
-diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
-index c2627f7..d3a850f 100644
---- a/sound/soc/codecs/Kconfig
-+++ b/sound/soc/codecs/Kconfig
-@@ -244,6 +244,7 @@ config SND_SOC_ALL_CODECS
- 	imply SND_SOC_WCD9335
- 	imply SND_SOC_WCD934X
- 	imply SND_SOC_WCD938X_SDW
-+	imply SND_SOC_LPASS_MACRO_COMMON
- 	imply SND_SOC_LPASS_RX_MACRO
- 	imply SND_SOC_LPASS_TX_MACRO
- 	imply SND_SOC_WL1273
-@@ -2008,6 +2009,9 @@ config SND_SOC_TPA6130A2
- 	tristate "Texas Instruments TPA6130A2 headphone amplifier"
- 	depends on I2C
- 
-+config SND_SOC_LPASS_MACRO_COMMON
-+        tristate
-+
- config SND_SOC_LPASS_WSA_MACRO
- 	depends on COMMON_CLK
- 	select REGMAP_MMIO
-diff --git a/sound/soc/codecs/Makefile b/sound/soc/codecs/Makefile
-index b4e11c3..c3c6059 100644
---- a/sound/soc/codecs/Makefile
-+++ b/sound/soc/codecs/Makefile
-@@ -112,6 +112,7 @@ snd-soc-l3-objs := l3.o
- snd-soc-lm4857-objs := lm4857.o
- snd-soc-lm49453-objs := lm49453.o
- snd-soc-lochnagar-sc-objs := lochnagar-sc.o
-+snd-soc-lpass-macro-common-objs := lpass-macro-common.o
- snd-soc-lpass-rx-macro-objs := lpass-rx-macro.o
- snd-soc-lpass-tx-macro-objs := lpass-tx-macro.o
- snd-soc-lpass-wsa-macro-objs := lpass-wsa-macro.o
-@@ -676,6 +677,7 @@ obj-$(CONFIG_SND_SOC_MAX9877)	+= snd-soc-max9877.o
- obj-$(CONFIG_SND_SOC_MAX98504)	+= snd-soc-max98504.o
- obj-$(CONFIG_SND_SOC_SIMPLE_AMPLIFIER)	+= snd-soc-simple-amplifier.o
- obj-$(CONFIG_SND_SOC_TPA6130A2)	+= snd-soc-tpa6130a2.o
-+obj-$(CONFIG_SND_SOC_LPASS_MACRO_COMMON)	+= snd-soc-lpass-macro-common.o
- obj-$(CONFIG_SND_SOC_LPASS_WSA_MACRO)	+= snd-soc-lpass-wsa-macro.o
- obj-$(CONFIG_SND_SOC_LPASS_VA_MACRO)	+= snd-soc-lpass-va-macro.o
- obj-$(CONFIG_SND_SOC_LPASS_RX_MACRO)	+= snd-soc-lpass-rx-macro.o
-diff --git a/sound/soc/codecs/lpass-macro-common.c b/sound/soc/codecs/lpass-macro-common.c
-new file mode 100644
-index 0000000..b8e50e6
---- /dev/null
-+++ b/sound/soc/codecs/lpass-macro-common.c
-@@ -0,0 +1,72 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+// Copyright (c) 2022, The Linux Foundation. All rights reserved.
-+
-+#include <linux/export.h>
-+#include <linux/module.h>
-+#include <linux/init.h>
-+#include <linux/of_platform.h>
-+#include <linux/platform_device.h>
-+#include <linux/pm_domain.h>
-+#include <linux/pm_runtime.h>
-+
-+#include "lpass-macro-common.h"
-+
-+int lpass_macro_pds_init(struct platform_device *pdev, struct lpass_macro **pds)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct lpass_macro *l_pds;
-+	int ret;
-+
-+	const struct property *prop = of_find_property(dev->of_node, "power-domains", NULL);
-+
-+	if (!prop)
-+		return 0;
-+
-+	l_pds = devm_kzalloc(dev, sizeof(*l_pds), GFP_KERNEL);
-+	if (!l_pds)
-+		return -ENOMEM;
-+
-+	l_pds->macro_pd = dev_pm_domain_attach_by_name(dev,  "macro");
-+	if (IS_ERR_OR_NULL(l_pds->macro_pd)) {
-+		ret = PTR_ERR(l_pds->macro_pd) ? : -ENODATA;
-+		return ret;
-+	}
-+	ret = pm_runtime_get_sync(l_pds->macro_pd);
-+	if (ret < 0) {
-+		dev_err(dev, "%s failed for macro_pd, ret %d\n", __func__, ret);
-+		dev_pm_domain_detach(l_pds->macro_pd, false);
-+		pm_runtime_put_noidle(l_pds->macro_pd);
-+		return ret;
-+	}
-+
-+	l_pds->dcodec_pd = dev_pm_domain_attach_by_name(dev, "dcodec");
-+	if (IS_ERR_OR_NULL(l_pds->dcodec_pd)) {
-+		ret = PTR_ERR(l_pds->dcodec_pd) ? : -ENODATA;
-+		dev_pm_domain_detach(l_pds->macro_pd, false);
-+		return ret;
-+	}
-+
-+	ret = pm_runtime_get_sync(l_pds->dcodec_pd);
-+	if (ret < 0) {
-+		dev_err(dev, "%s failed for dcodec_pd, ret %d\n", __func__, ret);
-+
-+		dev_pm_domain_detach(l_pds->dcodec_pd, false);
-+		pm_runtime_put_noidle(l_pds->dcodec_pd);
-+		return ret;
-+	}
-+	*pds = l_pds;
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(lpass_macro_pds_init);
-+
-+void lpass_macro_pds_exit(struct platform_device *pdev, struct lpass_macro *pds)
-+{
-+	pm_runtime_put(pds->macro_pd);
-+	pm_runtime_put(pds->dcodec_pd);
-+	dev_pm_domain_detach(pds->macro_pd, false);
-+	dev_pm_domain_detach(pds->dcodec_pd, false);
-+}
-+EXPORT_SYMBOL_GPL(lpass_macro_pds_exit);
-+
-+MODULE_DESCRIPTION("QTI SC7280 LPI GPIO pin control driver");
-+MODULE_LICENSE("GPL");
-diff --git a/sound/soc/codecs/lpass-macro-common.h b/sound/soc/codecs/lpass-macro-common.h
-new file mode 100644
-index 0000000..c343f0e
---- /dev/null
-+++ b/sound/soc/codecs/lpass-macro-common.h
-@@ -0,0 +1,18 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (c) 2022, The Linux Foundation. All rights reserved.
-+ */
-+
-+#ifndef __LPASS_MACRO_COMMON_H__
-+#define __LPASS_MACRO_COMMON_H__
-+
-+
-+struct lpass_macro {
-+	struct device *macro_pd;
-+	struct device *dcodec_pd;
-+};
-+
-+int lpass_macro_pds_init(struct platform_device *pdev, struct lpass_macro **pds);
-+void lpass_macro_pds_exit(struct platform_device *pdev, struct lpass_macro *pds);
-+
-+#endif /* __LPASS_MACRO_COMMON_H__ */
-diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
-index 29d214f..db32090 100644
---- a/sound/soc/codecs/lpass-rx-macro.c
-+++ b/sound/soc/codecs/lpass-rx-macro.c
-@@ -14,6 +14,8 @@
- #include <linux/of_clk.h>
- #include <linux/clk-provider.h>
- 
-+#include "lpass-macro-common.h"
-+
- #define CDC_RX_TOP_TOP_CFG0		(0x0000)
- #define CDC_RX_TOP_SWR_CTRL		(0x0008)
- #define CDC_RX_TOP_DEBUG		(0x000C)
-@@ -606,7 +608,7 @@ struct rx_macro {
- 	int is_softclip_on;
- 	int is_aux_hpf_on;
- 	int softclip_clk_users;
--
-+	struct lpass_macro *pds;
- 	struct regmap *regmap;
- 	struct clk_bulk_data clks[RX_NUM_CLKS_MAX];
- 	struct clk_hw hw;
-@@ -3537,6 +3539,12 @@ static int rx_macro_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
-+	ret = lpass_macro_pds_init(pdev, &rx->pds);
-+	if (ret < 0) {
-+		dev_err(dev, "Enabling power domains failed in %s\n", __func__);
-+		return ret;
-+	}
-+
- 	base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(base))
- 		return PTR_ERR(base);
-@@ -3575,6 +3583,9 @@ static int rx_macro_remove(struct platform_device *pdev)
- 
- 	of_clk_del_provider(pdev->dev.of_node);
- 	clk_bulk_disable_unprepare(RX_NUM_CLKS_MAX, rx->clks);
-+
-+	lpass_macro_pds_exit(pdev, rx->pds);
-+
- 	return 0;
- }
- 
-diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
-index 9c96ab1..4d1e5ab 100644
---- a/sound/soc/codecs/lpass-tx-macro.c
-+++ b/sound/soc/codecs/lpass-tx-macro.c
-@@ -13,6 +13,8 @@
- #include <linux/of_clk.h>
- #include <linux/clk-provider.h>
- 
-+#include "lpass-macro-common.h"
-+
- #define CDC_TX_CLK_RST_CTRL_MCLK_CONTROL (0x0000)
- #define CDC_TX_MCLK_EN_MASK		BIT(0)
- #define CDC_TX_MCLK_ENABLE		BIT(0)
-@@ -266,6 +268,7 @@ struct tx_macro {
- 	u16 dmic_clk_div;
- 	bool bcs_enable;
- 	int dec_mode[NUM_DECIMATORS];
-+	struct lpass_macro *pds;
- 	bool bcs_clk_en;
- };
- #define to_tx_macro(_hw) container_of(_hw, struct tx_macro, hw)
-@@ -1802,6 +1805,11 @@ static int tx_macro_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
-+	ret = lpass_macro_pds_init(pdev, &tx->pds);
-+	if (ret < 0) {
-+		dev_err(dev, "Enabling power domains failed in %s\n", __func__);
-+		return ret;
-+	}
- 	base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(base))
- 		return PTR_ERR(base);
-@@ -1859,6 +1867,8 @@ static int tx_macro_remove(struct platform_device *pdev)
- 
- 	clk_bulk_disable_unprepare(TX_NUM_CLKS_MAX, tx->clks);
- 
-+	lpass_macro_pds_exit(pdev, tx->pds);
-+
- 	return 0;
- }
- 
-diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
-index 11147e3..b29b9a1 100644
---- a/sound/soc/codecs/lpass-va-macro.c
-+++ b/sound/soc/codecs/lpass-va-macro.c
-@@ -15,6 +15,8 @@
- #include <sound/soc-dapm.h>
- #include <sound/tlv.h>
- 
-+#include "lpass-macro-common.h"
-+
- /* VA macro registers */
- #define CDC_VA_CLK_RST_CTRL_MCLK_CONTROL	(0x0000)
- #define CDC_VA_MCLK_CONTROL_EN			BIT(0)
-@@ -195,6 +197,7 @@ struct va_macro {
- 	struct regmap *regmap;
- 	struct clk_bulk_data clks[VA_NUM_CLKS_MAX];
- 	struct clk_hw hw;
-+	struct lpass_macro *pds;
- 
- 	s32 dmic_0_1_clk_cnt;
- 	s32 dmic_2_3_clk_cnt;
-@@ -1413,7 +1416,11 @@ static int va_macro_probe(struct platform_device *pdev)
- 		dev_err(dev, "Error getting VA Clocks (%d)\n", ret);
- 		return ret;
- 	}
--
-+	ret = lpass_macro_pds_init(pdev, &va->pds);
-+	if (ret < 0) {
-+		dev_err(dev, "Enabling power domains failed %s\n", __func__);
-+		return ret;
-+	}
- 	ret = of_property_read_u32(dev->of_node, "qcom,dmic-sample-rate",
- 				   &sample_rate);
- 	if (ret) {
-@@ -1468,6 +1475,8 @@ static int va_macro_remove(struct platform_device *pdev)
- 
- 	clk_bulk_disable_unprepare(VA_NUM_CLKS_MAX, va->clks);
- 
-+	lpass_macro_pds_exit(pdev, va->pds);
-+
- 	return 0;
- }
- 
-diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
-index 52db003..6ffd51a 100644
---- a/sound/soc/qcom/Kconfig
-+++ b/sound/soc/qcom/Kconfig
-@@ -194,6 +194,7 @@ config SND_SOC_SC7280
- 	select SND_SOC_LPASS_SC7280
- 	select SND_SOC_MAX98357A
- 	select SND_SOC_WCD938X
-+	select SND_SOC_LPASS_MACRO_COMMON
- 	select SND_SOC_LPASS_RX_MACRO
- 	select SND_SOC_LPASS_TX_MACRO
- 	help
--- 
-2.7.4
+> [...]
+> 
+>>> +/* Generic context */
+>>> +struct mhi_generic_ctx {
+>>> +	__u32 reserved0;
+>>> +	__u32 reserved1;
+>>> +	__u32 reserved2;
+>>> +
+>>> +	__u64 rbase __packed __aligned(4);
+>>> +	__u64 rlen __packed __aligned(4);
+>>> +	__u64 rp __packed __aligned(4);
+>>> +	__u64 wp __packed __aligned(4);
+>>> +};
+>>
+>> I'm pretty sure this constitutes an external interface, so
+>> every field should have its endianness annotated.
+>>
+>> Mentioned elsewhere, I think you can define the structure
+>> with those attributes rather than the multiple fields.
+>>
+> 
+> As I said before, this was suggested by Arnd during MHI host review. He
+> suggested adding the alignment and packed to only members that require
+> them.
+> 
+> But I think I should change it now...
+
+Despite suggesting this more than once, I'm not 100% sure it's
+even a correct suggestion.  I trust Arnd's judgement, and I
+can see the value of being explicit about *which* fields have
+the alignment requirement.  So I'll leave it up to you to
+decide...  If you make my suggested change, be sure to test
+it.  But I'm fine if you leave these as-is.
+
+>>> +enum mhi_ep_ring_type {
+>>> +	RING_TYPE_CMD = 0,
+>>> +	RING_TYPE_ER,
+>>> +	RING_TYPE_CH,
+>>> +};
+>>> +
+>>> +struct mhi_ep_ring_element {
+>>> +	u64 ptr;
+>>> +	u32 dword[2];
+>>> +};
+>>
+>> Are these host resident rings?  Even if not, this is an external
+>> interface, so this should be defined with explicit endianness.
+>> The cpu_to_le64() call will be a no-op so there is no cost
+>> to correcting this.
+>>
+> 
+> Ah, this should be reusing the "struct mhi_tre" defined in host. Will do.
+> 
+>>> +
+>>> +/* Ring element */
+>>> +union mhi_ep_ring_ctx {
+>>> +	struct mhi_cmd_ctxt cmd;
+>>> +	struct mhi_event_ctxt ev;
+>>> +	struct mhi_chan_ctxt ch;
+>>> +	struct mhi_generic_ctx generic;
+>>> +};
+>>> +
+>>> +struct mhi_ep_ring {
+>>> +	struct mhi_ep_cntrl *mhi_cntrl;
+>>> +	int (*ring_cb)(struct mhi_ep_ring *ring, struct mhi_ep_ring_element *el);
+>>> +	union mhi_ep_ring_ctx *ring_ctx;
+>>> +	struct mhi_ep_ring_element *ring_cache;
+>>> +	enum mhi_ep_ring_type type;
+>>> +	size_t rd_offset;
+>>> +	size_t wr_offset;
+>>> +	size_t ring_size;
+>>> +	u32 db_offset_h;
+>>> +	u32 db_offset_l;
+>>> +	u32 ch_id;
+>>> +};
+>>
+>> Not sure about the db_offset fields, etc. here, but it's possible
+>> they need endianness annotations.  I'm going to stop making this
+>> comment; please make sure anything that's exposed to the host
+>> specifies that it's little endian.  (The host and endpoint should
+>> have a common definition of these shared structures anyway; maybe
+>> I'm misreading this or assuming something incorrectly.)
+>>
+> 
+> db_offset_* just holds the register offsets so they don't require
+> endianness annotation. All MMIO read/write are using readl/writel APIs
+> and they handle the endianness conversion implicitly.
+> 
+> Rest of the host memory accesses are annotated properly.
+
+OK, good.
+
+> 
+>>> +
+> 
+> [...]
+> 
+>>> +	/*
+>>> +	 * Allocate max_channels supported by the MHI endpoint and populate
+>>> +	 * only the defined channels
+>>> +	 */
+>>> +	mhi_cntrl->mhi_chan = kcalloc(mhi_cntrl->max_chan, sizeof(*mhi_cntrl->mhi_chan),
+>>> +				      GFP_KERNEL);
+>>> +	if (!mhi_cntrl->mhi_chan)
+>>> +		return -ENOMEM;
+>>> +
+>>> +	for (i = 0; i < config->num_channels; i++) {
+>>> +		struct mhi_ep_chan *mhi_chan;
+>>
+>> This entire block could be encapsulated in mhi_channel_add()
+>> or something,
+> 
+> Wrapping up in a function is useful if the same code is used in
+> different places. But I don't think it adds any value here.
+> 
+>>
+>>> +		ch_cfg = &config->ch_cfg[i];
+>>
+>> Move the above assignment down a few lines, to just before
+>> where it's used.
+>>
+> 
+> No, ch_cfg is used just below this.
+
+Yes you're right, I missed that.
+
+>>> +
+>>> +		chan = ch_cfg->num;
+>>> +		if (chan >= mhi_cntrl->max_chan) {
+>>> +			dev_err(dev, "Channel %d not available\n", chan);
+>>
+>> Maybe report the maximum channel so it's obvious why it's
+>> not available.
+>>
+>>> +			goto error_chan_cfg;
+>>> +		}
+>>> +
+>>> +		/* Bi-directional and direction less channels are not supported */
+>>> +		if (ch_cfg->dir == DMA_BIDIRECTIONAL || ch_cfg->dir == DMA_NONE) {
+>>> +			dev_err(dev, "Invalid channel configuration\n");
+>>
+>> Maybe be more specific in your message about what's wrong here.
+>>
+>>> +			goto error_chan_cfg;
+>>> +		}
+>>> +
+>>> +		mhi_chan = &mhi_cntrl->mhi_chan[chan];
+>>> +		mhi_chan->name = ch_cfg->name;
+>>> +		mhi_chan->chan = chan;
+>>> +		mhi_chan->dir = ch_cfg->dir;
+>>> +		mutex_init(&mhi_chan->lock);
+>>> +	}
+>>> +
+>>> +	return 0;
+>>> +
+>>> +error_chan_cfg:
+>>> +	kfree(mhi_cntrl->mhi_chan);
+>>
+>> I'm not sure what the caller does, but maybe null this
+>> after it's freed, or don't assign mhi_cntrll->mhi_chan
+>> until the initialization is successful.
+>>
+> 
+> This is not required here as there will be no access to the pointer
+> after failing.
+
+OK.
+
+>>> +	return ret;
+>>> +}
+>>> +
+>>> +/*
+>>> + * Allocate channel and command rings here. Event rings will be allocated
+>>> + * in mhi_ep_power_up() as the config comes from the host.
+>>> + */
+>>> +int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+>>> +				const struct mhi_ep_cntrl_config *config)
+>>> +{
+>>> +	struct mhi_ep_device *mhi_dev;
+>>> +	int ret;
+>>> +
+>>> +	if (!mhi_cntrl || !mhi_cntrl->cntrl_dev)
+>>> +		return -EINVAL;
+>>> +
+>>> +	ret = parse_ch_cfg(mhi_cntrl, config);
+>>> +	if (ret)
+>>> +		return ret;
+>>> +
+>>> +	mhi_cntrl->mhi_cmd = kcalloc(NR_OF_CMD_RINGS, sizeof(*mhi_cntrl->mhi_cmd), GFP_KERNEL);
+>>
+>> I said before I thought it was silly to even define NR_OF_CMD_RINGS.
+>> Does the MHI specification actually allow more than one command
+>> ring for a given MHI controller?  Ever?
+>>
+> 
+> MHI spec doesn't limit the number of command rings. Eventhough I don't
+> envision adding more command rings in the future, I'm going to keep this
+> macro for now as the MHI host does the same.
+
+OK.
+
+> [...]
+> 
+>>> diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
+>>> new file mode 100644
+>>> index 000000000000..20238e9df1b3
+>>> --- /dev/null
+>>> +++ b/include/linux/mhi_ep.h
+> 
+> [...]
+> 
+>>> +struct mhi_ep_device {
+>>> +	struct device dev;
+>>> +	struct mhi_ep_cntrl *mhi_cntrl;
+>>> +	const struct mhi_device_id *id;
+>>> +	const char *name;
+>>> +	struct mhi_ep_chan *ul_chan;
+>>> +	struct mhi_ep_chan *dl_chan;
+>>> +	enum mhi_device_type dev_type;
+>>
+>> There are two device types, controller and transfer.  Unless
+>> there is ever going to be anything more than that, I think
+>> the distinction is better represented as a Boolean, such as:
+>>
+>> 	bool controller;
+> 
+> Again, this is how it is done in MHI host also. Since I'm going to
+> maintain both stacks, it makes it easier for me if similarities are
+> maintained. But I'll keep this suggestion and the one above for later.
+
+Sounds good.  Thanks.
+
+					-Alex
+
+> Thanks,
+> Mani
 
