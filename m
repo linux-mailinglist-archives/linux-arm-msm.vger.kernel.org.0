@@ -2,80 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BEAE4BAC64
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 23:13:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B0F804BAC6B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 23:16:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343811AbiBQWMW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Feb 2022 17:12:22 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:52588 "EHLO
+        id S1343836AbiBQWRD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Feb 2022 17:17:03 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:39006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238460AbiBQWMV (ORCPT
+        with ESMTP id S230212AbiBQWRD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Feb 2022 17:12:21 -0500
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAF2E46B04
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 14:12:04 -0800 (PST)
-Received: by mail-lj1-x231.google.com with SMTP id b38so1492726ljr.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 14:12:04 -0800 (PST)
+        Thu, 17 Feb 2022 17:17:03 -0500
+Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC66A165C32
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 14:16:45 -0800 (PST)
+Received: by mail-oo1-xc33.google.com with SMTP id p206-20020a4a2fd7000000b0031bfec11983so1283913oop.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 14:16:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=kali.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=fok+ZHJzCFX/n/jxgSoRYhLWeuG5QrIoZryS5Uauy3E=;
-        b=vJZys44/RDSh+zGe+7ruMk6w3qXD/RkkNwzCmppGjnhxUwneTl2KUNwovV5hnerjJ/
-         ms55xe4q+K6b9vUOg0DoKWJKV5AX8YhLSCo5XoNiEL3MGRFP9blrG72sWXBDjBAbvSIu
-         qkyxNoPeNZPniUI06gtFnLl/mdKoyxyIN44/vHzj7KX2RsgQsaVs2bi2x5e8ccn1Y6pV
-         kOT97oV9afpMD4OOrh6WEwFPXJEg4tIhhLsqkP4CvSvTe6PPPSPEqmBkS3BsQOyCHM50
-         P7ah3r5KNscsQADB18f8LWFROSmo/mg3G/c8mC3+DHIzYTAGaSApv3iB92wBt3ZYRBYz
-         v17g==
+        bh=3Qu8seh4Erze8eL9+0IzxF6u8DsEwe3aHTII3NoEQbE=;
+        b=lkCn22DouqlTdK8owy6Rxc2C+gzFjraIPgRjzRk2l9lkxHw9kfi+nQ3+3mVt8N4XRe
+         oHGu2GJXKn9wbmHDS2SAJgsP1F872qP11Pj5Xvy4ezv9Wfuq6EogtSPLwGD9hoSqUUc1
+         ZES0CKmFvIydFeZQOQ3hSBi9vpNvUsujOTZk1eCFtrCv+wcOjAxccOP+BuCIc5jNB/Qb
+         tlWzwQPtt+vDm+ffZ+oYbqGIYbqBw3K8xhro/YpaXVXSXEQe8bgHh5/7+zVpHeuXeNGw
+         2AgpEm0x+111s+YA3v18d87MWF892Fy47QC0WXxFj0JSZ4Vq4Z+nO97Wl71d3mgNL2xo
+         QF4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=fok+ZHJzCFX/n/jxgSoRYhLWeuG5QrIoZryS5Uauy3E=;
-        b=Ywvm1R1bwklfZZzWfiVV7TYThodKlgBtPhWzGKvMPjW59suUSv95uE6+OAaD4Zd2A4
-         42Reqrj2xmdUSnUlwo0MpC8e2ZrdTRSP0J2OuprUpRy1aUP5hQ2iambPtqcuq+8K2e6K
-         RCkY35zJX1cYrNMVY2bKT37O+KeJgFnXdqsdLi8SmrakSO8Ci0M62YxEhNGAFMGEyL7+
-         jgfXSuW/YVgTH9b/LcMJ9dERR+5MNuITGRwdPGZHPCSgK5Dlv86C4lpi+8C6tOLdGBaA
-         uWdaUnk7zBkODT0HsArCuHZ3qV2aoBg+j4l7N2TSSd0MbVysFtGEdpp4Vl79gsqUX+XQ
-         7EYA==
-X-Gm-Message-State: AOAM532yrV+PdZ2c5IbN5K5MZrP7sOieCb6UvbEZaRAAYNcwxIiT37Gn
-        B8FiTORVhMUqENGCN+v+kioj+A==
-X-Google-Smtp-Source: ABdhPJxQCBRO+aXEgN8BbXuQptXRlCL+23sNs8FbudVG7e+7WzdRi7zw1UUWuW8pcX4Vj1hDENxqkg==
-X-Received: by 2002:a2e:bd0e:0:b0:244:cb77:9d64 with SMTP id n14-20020a2ebd0e000000b00244cb779d64mr3572539ljq.384.1645135923266;
-        Thu, 17 Feb 2022 14:12:03 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id 10sm79058lfz.170.2022.02.17.14.12.02
+        bh=3Qu8seh4Erze8eL9+0IzxF6u8DsEwe3aHTII3NoEQbE=;
+        b=XJfkRnTVIsOAFPh2Ue/HNF+eWb1I5XAgOPgdluqAmI+C4oYfhgKG74jwlY7D7RskgD
+         p2pOsbUJ/OoYMeN1sXu3KE4MRt62KcfsDxwyBZvuHFwAQ/uWosRorPSb5HPuTyFvfHMl
+         Q5nbREaP/iRrFKyOG4hMyjFosodWvk2HkZ+ZiLq0Lsa1uHCZCIKS3YzEPYYfxaYA2ZPl
+         4feeXCuTQ8MjffefG1rC/S3VyWsQrjHgPcjXW259SY7yyjEscPyDwPfCJf6MAMLCeThr
+         S9/TjgN3iiuENBvQ8SF0vU4WuXEy4E9iZxFb3PotdgnUOXGmDiiXmgUx2ETxBvVVAB5u
+         6/rQ==
+X-Gm-Message-State: AOAM532D/91Nc0oG8UCLekcSaQDNHI5TXDDofZZHtrzJFsrrz7JvBhM2
+        HTBh3keTZLo0sAgYGIKCkUXDoA==
+X-Google-Smtp-Source: ABdhPJzptwAO0OnmpuzRq2rLwK8dCCZXdwiu3z4y+uJud/SrSlSKf5pCZV7ZlUaEHwAHDPPdWVYJhA==
+X-Received: by 2002:a05:6870:9893:b0:d2:87e4:c71c with SMTP id eg19-20020a056870989300b000d287e4c71cmr1788986oab.132.1645136205008;
+        Thu, 17 Feb 2022 14:16:45 -0800 (PST)
+Received: from [192.168.11.51] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
+        by smtp.gmail.com with ESMTPSA id k17sm518081otk.80.2022.02.17.14.16.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Feb 2022 14:12:02 -0800 (PST)
-Message-ID: <643681f1-0887-ad61-2686-2f4408f56637@linaro.org>
-Date:   Fri, 18 Feb 2022 01:12:02 +0300
+        Thu, 17 Feb 2022 14:16:44 -0800 (PST)
+Message-ID: <5bc3b4d9-1bbb-479a-64f4-768f47075ec0@kali.org>
+Date:   Thu, 17 Feb 2022 16:16:42 -0600
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [PATCH v3 03/13] drm/msm/disp/dpu1: Add support for DSC in
- pingpong block
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20211116062256.2417186-1-vkoul@kernel.org>
- <20211116062256.2417186-4-vkoul@kernel.org>
- <20220217215437.gvxmfjgfqzljactz@SoMainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220217215437.gvxmfjgfqzljactz@SoMainline.org>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.6.0
+Subject: Re: [PATCH v10 6/6] usb: dwc3: qcom: Enable the interrupts during
+ probe
+Content-Language: en-US
+To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
+        Pavan Kondeti <quic_pkondeti@quicinc.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com
+References: <1642398248-21753-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1642398248-21753-7-git-send-email-quic_c_sanm@quicinc.com>
+ <93b68251-7e7e-ac92-fb47-346c410744b2@kali.org>
+ <20220118095255.GB11385@hu-pkondeti-hyd.qualcomm.com>
+ <78c90e46-666b-bc9b-235d-ae4c69e19929@quicinc.com>
+ <601cdc74-392f-dd4f-7ea0-8e65c6b6d7e2@quicinc.com>
+ <52b37547-3e78-b18c-307d-7eedf5baab0d@kali.org>
+ <0e006cc0-2760-195a-35b9-0a2f6e8452c5@quicinc.com>
+ <47ae3e73-5880-bfb7-fc14-7dd95a75ce14@kali.org>
+ <bb36a205-fbfe-536e-5bf6-4a717ffd4e6e@quicinc.com>
+ <55aa0436-64f5-1ecb-d95d-721e45f6fb95@kali.org>
+ <cad907b6-4434-45e7-bd70-b93c0035d90c@quicinc.com>
+From:   Steev Klimaszewski <steev@kali.org>
+In-Reply-To: <cad907b6-4434-45e7-bd70-b93c0035d90c@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -86,132 +93,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/02/2022 00:54, Marijn Suijten wrote:
-> On 2021-11-16 11:52:46, Vinod Koul wrote:
->> In SDM845, DSC can be enabled by writing to pingpong block registers, so
->> add support for DSC in hw_pp
-> 
-> Nit: I don't think the ", so add support for DSC in XXX" part in this
-> and other commit messages add anything.  You've already stated that in
-> the title, the commit body is just extra justification (and can perhaps
-> be filled with extra details about the patch contents instead).
-> 
->> Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Signed-off-by: Vinod Koul <vkoul@kernel.org>
->> ---
->>   .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   | 32 +++++++++++++++++++
->>   .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   | 14 ++++++++
->>   2 files changed, 46 insertions(+)
+Hi Sandeep,
+
+On 2/17/22 12:05 AM, Sandeep Maheswaram wrote:
+>
+> Hi Steev,
+>
+> On 2/16/2022 3:21 PM, Steev Klimaszewski wrote:
+>> That does allow it to boot, however.... it breaks USB.
 >>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
->> index 55766c97c4c8..47c6ab6caf95 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
->> @@ -28,6 +28,9 @@
->>   #define PP_FBC_MODE                     0x034
->>   #define PP_FBC_BUDGET_CTL               0x038
->>   #define PP_FBC_LOSSY_MODE               0x03C
->> +#define PP_DSC_MODE                     0x0a0
->> +#define PP_DCE_DATA_IN_SWAP             0x0ac
-> 
-> This enum does not seem used here, is it used in another patch?
-> 
->> +#define PP_DCE_DATA_OUT_SWAP            0x0c8
->>   
->>   #define PP_DITHER_EN			0x000
->>   #define PP_DITHER_BITDEPTH		0x004
->> @@ -245,6 +248,32 @@ static u32 dpu_hw_pp_get_line_count(struct dpu_hw_pingpong *pp)
->>   	return line;
->>   }
->>   
->> +static int dpu_hw_pp_dsc_enable(struct dpu_hw_pingpong *pp)
->> +{
->> +	struct dpu_hw_blk_reg_map *c = &pp->hw;
->> +
->> +	DPU_REG_WRITE(c, PP_DSC_MODE, 1);
->> +	return 0;
->> +}
->> +
->> +static void dpu_hw_pp_dsc_disable(struct dpu_hw_pingpong *pp)
->> +{
->> +	struct dpu_hw_blk_reg_map *c = &pp->hw;
->> +
->> +	DPU_REG_WRITE(c, PP_DSC_MODE, 0);
->> +}
->> +
->> +static int dpu_hw_pp_setup_dsc(struct dpu_hw_pingpong *pp)
->> +{
->> +	struct dpu_hw_blk_reg_map *pp_c = &pp->hw;
->> +	int data;
->> +
->> +	data = DPU_REG_READ(pp_c, PP_DCE_DATA_OUT_SWAP);
->> +	data |= BIT(18); /* endian flip */
->> +	DPU_REG_WRITE(pp_c, PP_DCE_DATA_OUT_SWAP, data);
->> +	return 0;
->> +}
->> +
->>   static void _setup_pingpong_ops(struct dpu_hw_pingpong *c,
->>   				unsigned long features)
->>   {
->> @@ -256,6 +285,9 @@ static void _setup_pingpong_ops(struct dpu_hw_pingpong *c,
->>   	c->ops.get_autorefresh = dpu_hw_pp_get_autorefresh_config;
->>   	c->ops.poll_timeout_wr_ptr = dpu_hw_pp_poll_timeout_wr_ptr;
->>   	c->ops.get_line_count = dpu_hw_pp_get_line_count;
->> +	c->ops.setup_dsc = dpu_hw_pp_setup_dsc;
->> +	c->ops.enable_dsc = dpu_hw_pp_dsc_enable;
->> +	c->ops.disable_dsc = dpu_hw_pp_dsc_disable;
->>   
->>   	if (test_bit(DPU_PINGPONG_DITHER, &features))
->>   		c->ops.setup_dither = dpu_hw_pp_setup_dither;
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
->> index 89d08a715c16..12758468d9ca 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
->> @@ -124,6 +124,20 @@ struct dpu_hw_pingpong_ops {
->>   	 */
->>   	void (*setup_dither)(struct dpu_hw_pingpong *pp,
->>   			struct dpu_hw_dither_cfg *cfg);
->> +	/**
->> +	 * Enable DSC
->> +	 */
->> +	int (*enable_dsc)(struct dpu_hw_pingpong *pp);
->> +
->> +	/**
->> +	 * Disable DSC
->> +	 */
->> +	void (*disable_dsc)(struct dpu_hw_pingpong *pp);
-> 
-> It looks like most other callbacks in dpu1 use an `enable` function with
-> a boolean, instead of having a separate disable function.  That should
-> simplify the implementation down to a single ternary-if, too.  Would
-> that be desired to use here?
-
-Just my 2c. I personally hate the unified functions with the boolean 
-argument. One of the reasons being the return value. Typically you do 
-not expect that the disable function can fail (or return an error). But 
-the unified function provides an error (to be handled) even in the 
-disable case.
-
-Last, but not least, overall the kernel API is biased towards separate 
-enable and disable calls.
-
-> 
-> - Marijn
-> 
->> +
->> +	/**
->> +	 * Setup DSC
->> +	 */
->> +	int (*setup_dsc)(struct dpu_hw_pingpong *pp);
->>   };
->>   
->>   struct dpu_hw_merge_3d;
->> -- 
->> 2.31.1
+>> [    2.013325] genirq: Setting trigger mode 3 for irq 35 failed 
+>> (gic_set_type+0x0/0x1b0)
+>> [    2.014063] dwc3-qcom a6f8800.usb: dp_hs_phy_irq failed: -22
+>> [    2.014134] dwc3-qcom a6f8800.usb: failed to setup IRQs, err=-22
+>> [    2.014351] dwc3-qcom: probe of a6f8800.usb failed with error -22
+>> [    2.018496] genirq: Setting trigger mode 3 for irq 39 failed 
+>> (gic_set_type+0x0/0x1b0)
+>> [    2.019124] dwc3-qcom a8f8800.usb: dp_hs_phy_irq failed: -22
+>> [    2.019193] dwc3-qcom a8f8800.usb: failed to setup IRQs, err=-22
+>> [    2.019372] dwc3-qcom: probe of a8f8800.usb failed with error -22
 >>
+>> steev@limitless:~$ lsusb
+>> steev@limitless:~$
+>>
+>>
+>> -- steev
+>>
+> Can you try with only IRQ_TYPE_EDGE_RISING as you are using GIC 
+> interrupts  where IRQ_TYPE_EDGE_FALLING may not be supported
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi 
+> b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index 0d6286d..ee3b031 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -3796,8 +3796,8 @@
+>
+>                         interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+>                                      <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
+> -                                    <GIC_SPI 488 IRQ_TYPE_LEVEL_HIGH>,
+> -                                    <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>;
+> +                                    <GIC_SPI 488 IRQ_TYPE_EDGE_RISING>,
+> +                                    <GIC_SPI 489 IRQ_TYPE_EDGE_RISING>;
+>                         interrupt-names = "hs_phy_irq", "ss_phy_irq",
+>                                           "dm_hs_phy_irq", 
+> "dp_hs_phy_irq";
+>
+> @@ -3844,8 +3844,8 @@
+>
+>                         interrupts = <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
+>                                      <GIC_SPI 487 IRQ_TYPE_LEVEL_HIGH>,
+> -                                    <GIC_SPI 490 IRQ_TYPE_LEVEL_HIGH>,
+> -                                    <GIC_SPI 491 IRQ_TYPE_LEVEL_HIGH>;
+> +                                    <GIC_SPI 490 IRQ_TYPE_EDGE_RISING>,
+> +                                    <GIC_SPI 491 IRQ_TYPE_EDGE_RISING>;
+>                         interrupt-names = "hs_phy_irq", "ss_phy_irq",
+>                                           "dm_hs_phy_irq", 
+> "dp_hs_phy_irq";
+> Regards
+>
+> Sandeep
+>
+With this change, and with either EDGE_RISING or EDGE_BOTH in the lenovo 
+yoga c630 dts, it does indeed boot.  Leaving LEVEL_HIGH in the c630, it 
+does also boot, but there is a delay of about 30 seconds (I'm assuming 
+interrupt storm?) during the boot.
 
+-- steev
 
--- 
-With best wishes
-Dmitry
