@@ -2,242 +2,321 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D7C394B9BFE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 10:27:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 187434B9C86
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 10:54:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238656AbiBQJ1c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Feb 2022 04:27:32 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46996 "EHLO
+        id S231820AbiBQJxm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Feb 2022 04:53:42 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238647AbiBQJ1b (ORCPT
+        with ESMTP id S238872AbiBQJxj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Feb 2022 04:27:31 -0500
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32BB91A0C0A;
-        Thu, 17 Feb 2022 01:27:16 -0800 (PST)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 8E4B13F758;
-        Thu, 17 Feb 2022 10:27:09 +0100 (CET)
-Date:   Thu, 17 Feb 2022 10:27:07 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [REPOST PATCH v4 13/13] drm/msm/dsi: Add support for DSC
- configuration
-Message-ID: <20220217092707.2bfzga74xyicl4kb@SoMainline.org>
-References: <20220210103423.271016-1-vkoul@kernel.org>
- <20220210103423.271016-14-vkoul@kernel.org>
+        Thu, 17 Feb 2022 04:53:39 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B736B0D3B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 01:53:25 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id b8so5062644pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 01:53:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=lmIsIBblKAW0X/CfLZXrJaii643DzdyL4PqmGD4lPJc=;
+        b=yxDmCYsLkl6a4NEL4s2RIdKDrqOpfQBwC2DORfc0svGXRIgSZXUh8iVhtaTforc2cu
+         9EeNcoBxKqLcKD/9VhOhyXigiid7j6uXuLGkdC7V1/cq3HjGZeaGpMHHCnze6WXFAGth
+         2YlE7DvVwNzS0M1yQ7h3Z9JN4DXw/TtRSGuXN2UxbXwArJI6D0jZpsLsEs/HLjnFmyKn
+         z7c9mCZJCWUY9V/ORzJKFrCBfHBL8AyxcahvlvE8SqWnNadznOJxYafsSA9A96yc97zz
+         yqZVAVp9kq/aY34iV9n/Z0Ve3py1XN7YQYLAgn5nmgga+YkcMJ27qtCMwZZM0R7nxiLB
+         MTlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=lmIsIBblKAW0X/CfLZXrJaii643DzdyL4PqmGD4lPJc=;
+        b=xq0c+ercl2r+l3+FXhYPSl4EzC4ba/rQbSai5eOQ4EXRpORfwax27hznto4f8eso2+
+         ry+SrbKUkVXBN/MH9PmCXNlWJhlHhWPJ3FfpVAdbD/LGA+tKvYZE0bzAnkSH0eJCptZy
+         eNODAeE2dKSbblUOMNyqY/7KR3+WDVScOU2iZFNzZaY6Dc7NIM6rKXQKXmFcrrXXX4F+
+         cAF5lGPqdyuX5qPAnt5aV2iTwCwddlBdyVi9AXVZe1mvjcIdjGvqj17UiEXrF4MjNiV9
+         BEohDiWoPy0QxP75A5vvTstepOZBGp3NEczVIPpvNPGhJdVxR6rfIpa8nR54aHPskEfW
+         6OrQ==
+X-Gm-Message-State: AOAM5314rW9BAgUkJwjaWjysHR3NBF50iF6VnCOBfx8i9ykbsDT4aJNB
+        ENr8eX8JygdrJScrVv6yMFP3
+X-Google-Smtp-Source: ABdhPJxG7lKpGFzqlOJWBLCdpuGI46+qOePrLiXQ3VPvSGslAtVIr37Bl6iFtmNg/z4O0O6WLk9hMg==
+X-Received: by 2002:a17:902:f605:b0:14f:5d75:4fb0 with SMTP id n5-20020a170902f60500b0014f5d754fb0mr2068752plg.101.1645091604859;
+        Thu, 17 Feb 2022 01:53:24 -0800 (PST)
+Received: from workstation ([117.193.211.41])
+        by smtp.gmail.com with ESMTPSA id f16sm2160620pfe.52.2022.02.17.01.53.20
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 17 Feb 2022 01:53:24 -0800 (PST)
+Date:   Thu, 17 Feb 2022 15:23:19 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
+        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
+        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
+        dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
+        quic_cang@quicinc.com, quic_skananth@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 08/25] bus: mhi: ep: Add support for registering MHI
+ endpoint controllers
+Message-ID: <20220217095319.GA11964@workstation>
+References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
+ <20220212182117.49438-9-manivannan.sadhasivam@linaro.org>
+ <4cc78936-b419-4738-b5b2-65c53be06f33@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220210103423.271016-14-vkoul@kernel.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <4cc78936-b419-4738-b5b2-65c53be06f33@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Vinod,
+On Tue, Feb 15, 2022 at 02:02:41PM -0600, Alex Elder wrote:
 
-On 2022-02-10 16:04:23, Vinod Koul wrote:
-> When DSC is enabled, we need to configure DSI registers accordingly and
-> configure the respective stream compression registers.
+[...]
+
+> > +#define MHI_REG_OFFSET				0x100
+> > +#define BHI_REG_OFFSET				0x200
 > 
-> Add support to calculate the register setting based on DSC params and
-> timing information and configure these registers.
+> Rather than defining the REG_OFFSET values here and adding
+> them to every definition below, why not have the base
+> address used (e.g., in mhi_write_reg_field()) be adjusted
+> by the constant amount?
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> I'm just looking at mhi_init_mmio() (in the existing code)
+> as an example, but for example, the base address used
+> comes from mhi_cntrl->regs.  Can you instead just define
+> a pointer somewhere that is the base of the MHI register
+> range, which is already offset by the appropriate amount?
+> 
 
-I supplied a rather extensive - yet merely scratching the surface -
-review of this patch in:
+I've defined two set of APIs for MHI and BHI read/write. They will add the
+respective offsets.
 
-    https://lore.kernel.org/linux-arm-msm/20211211000315.pavmcc7cc73ilb6l@SoMainline.org/
+> > +
 
-It seems none of those points have been addressed, bar creating a mesa
-MR to update dsi.xml with a subpar description of the registers (offsets
-only).
+[...]
 
-For every point that is intentionally ignored, please at least supply a
-justification of why you think this is the right thing to do.
+> > +/* Generic context */
+> > +struct mhi_generic_ctx {
+> > +	__u32 reserved0;
+> > +	__u32 reserved1;
+> > +	__u32 reserved2;
+> > +
+> > +	__u64 rbase __packed __aligned(4);
+> > +	__u64 rlen __packed __aligned(4);
+> > +	__u64 rp __packed __aligned(4);
+> > +	__u64 wp __packed __aligned(4);
+> > +};
+> 
+> I'm pretty sure this constitutes an external interface, so
+> every field should have its endianness annotated.
+> 
+> Mentioned elsewhere, I think you can define the structure
+> with those attributes rather than the multiple fields.
+> 
+
+As I said before, this was suggested by Arnd during MHI host review. He
+suggested adding the alignment and packed to only members that require
+them.
+
+But I think I should change it now...
+
+> > +
+> > +enum mhi_ep_ring_type {
+> > +	RING_TYPE_CMD = 0,
+> > +	RING_TYPE_ER,
+> > +	RING_TYPE_CH,
+> > +};
+> > +
+> > +struct mhi_ep_ring_element {
+> > +	u64 ptr;
+> > +	u32 dword[2];
+> > +};
+> 
+> Are these host resident rings?  Even if not, this is an external
+> interface, so this should be defined with explicit endianness.
+> The cpu_to_le64() call will be a no-op so there is no cost
+> to correcting this.
+> 
+
+Ah, this should be reusing the "struct mhi_tre" defined in host. Will do.
+
+> > +
+> > +/* Ring element */
+> > +union mhi_ep_ring_ctx {
+> > +	struct mhi_cmd_ctxt cmd;
+> > +	struct mhi_event_ctxt ev;
+> > +	struct mhi_chan_ctxt ch;
+> > +	struct mhi_generic_ctx generic;
+> > +};
+> > +
+> > +struct mhi_ep_ring {
+> > +	struct mhi_ep_cntrl *mhi_cntrl;
+> > +	int (*ring_cb)(struct mhi_ep_ring *ring, struct mhi_ep_ring_element *el);
+> > +	union mhi_ep_ring_ctx *ring_ctx;
+> > +	struct mhi_ep_ring_element *ring_cache;
+> > +	enum mhi_ep_ring_type type;
+> > +	size_t rd_offset;
+> > +	size_t wr_offset;
+> > +	size_t ring_size;
+> > +	u32 db_offset_h;
+> > +	u32 db_offset_l;
+> > +	u32 ch_id;
+> > +};
+> 
+> Not sure about the db_offset fields, etc. here, but it's possible
+> they need endianness annotations.  I'm going to stop making this
+> comment; please make sure anything that's exposed to the host
+> specifies that it's little endian.  (The host and endpoint should
+> have a common definition of these shared structures anyway; maybe
+> I'm misreading this or assuming something incorrectly.)
+> 
+
+db_offset_* just holds the register offsets so they don't require
+endianness annotation. All MMIO read/write are using readl/writel APIs
+and they handle the endianness conversion implicitly.
+
+Rest of the host memory accesses are annotated properly.
+
+> > +
+
+[...]
+
+> > +	/*
+> > +	 * Allocate max_channels supported by the MHI endpoint and populate
+> > +	 * only the defined channels
+> > +	 */
+> > +	mhi_cntrl->mhi_chan = kcalloc(mhi_cntrl->max_chan, sizeof(*mhi_cntrl->mhi_chan),
+> > +				      GFP_KERNEL);
+> > +	if (!mhi_cntrl->mhi_chan)
+> > +		return -ENOMEM;
+> > +
+> > +	for (i = 0; i < config->num_channels; i++) {
+> > +		struct mhi_ep_chan *mhi_chan;
+> 
+> This entire block could be encapsulated in mhi_channel_add()
+> or something,
+
+Wrapping up in a function is useful if the same code is used in
+different places. But I don't think it adds any value here.
+
+> 
+> > +		ch_cfg = &config->ch_cfg[i];
+> 
+> Move the above assignment down a few lines, to just before
+> where it's used.
+> 
+
+No, ch_cfg is used just below this.
+
+> > +
+> > +		chan = ch_cfg->num;
+> > +		if (chan >= mhi_cntrl->max_chan) {
+> > +			dev_err(dev, "Channel %d not available\n", chan);
+> 
+> Maybe report the maximum channel so it's obvious why it's
+> not available.
+> 
+> > +			goto error_chan_cfg;
+> > +		}
+> > +
+> > +		/* Bi-directional and direction less channels are not supported */
+> > +		if (ch_cfg->dir == DMA_BIDIRECTIONAL || ch_cfg->dir == DMA_NONE) {
+> > +			dev_err(dev, "Invalid channel configuration\n");
+> 
+> Maybe be more specific in your message about what's wrong here.
+> 
+> > +			goto error_chan_cfg;
+> > +		}
+> > +
+> > +		mhi_chan = &mhi_cntrl->mhi_chan[chan];
+> > +		mhi_chan->name = ch_cfg->name;
+> > +		mhi_chan->chan = chan;
+> > +		mhi_chan->dir = ch_cfg->dir;
+> > +		mutex_init(&mhi_chan->lock);
+> > +	}
+> > +
+> > +	return 0;
+> > +
+> > +error_chan_cfg:
+> > +	kfree(mhi_cntrl->mhi_chan);
+> 
+> I'm not sure what the caller does, but maybe null this
+> after it's freed, or don't assign mhi_cntrll->mhi_chan
+> until the initialization is successful.
+> 
+
+This is not required here as there will be no access to the pointer
+after failing.
+
+> 
+> > +	return ret;
+> > +}
+> > +
+> > +/*
+> > + * Allocate channel and command rings here. Event rings will be allocated
+> > + * in mhi_ep_power_up() as the config comes from the host.
+> > + */
+> > +int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+> > +				const struct mhi_ep_cntrl_config *config)
+> > +{
+> > +	struct mhi_ep_device *mhi_dev;
+> > +	int ret;
+> > +
+> > +	if (!mhi_cntrl || !mhi_cntrl->cntrl_dev)
+> > +		return -EINVAL;
+> > +
+> > +	ret = parse_ch_cfg(mhi_cntrl, config);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	mhi_cntrl->mhi_cmd = kcalloc(NR_OF_CMD_RINGS, sizeof(*mhi_cntrl->mhi_cmd), GFP_KERNEL);
+> 
+> I said before I thought it was silly to even define NR_OF_CMD_RINGS.
+> Does the MHI specification actually allow more than one command
+> ring for a given MHI controller?  Ever?
+> 
+
+MHI spec doesn't limit the number of command rings. Eventhough I don't
+envision adding more command rings in the future, I'm going to keep this
+macro for now as the MHI host does the same.
+
+[...]
+
+> > diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
+> > new file mode 100644
+> > index 000000000000..20238e9df1b3
+> > --- /dev/null
+> > +++ b/include/linux/mhi_ep.h
+
+[...]
+
+> > +struct mhi_ep_device {
+> > +	struct device dev;
+> > +	struct mhi_ep_cntrl *mhi_cntrl;
+> > +	const struct mhi_device_id *id;
+> > +	const char *name;
+> > +	struct mhi_ep_chan *ul_chan;
+> > +	struct mhi_ep_chan *dl_chan;
+> > +	enum mhi_device_type dev_type;
+> 
+> There are two device types, controller and transfer.  Unless
+> there is ever going to be anything more than that, I think
+> the distinction is better represented as a Boolean, such as:
+> 
+> 	bool controller;
+
+Again, this is how it is done in MHI host also. Since I'm going to
+maintain both stacks, it makes it easier for me if similarities are
+maintained. But I'll keep this suggestion and the one above for later.
 
 Thanks,
-- Marijn
-
-> ---
->  drivers/gpu/drm/msm/dsi/dsi.xml.h  |  10 +++
->  drivers/gpu/drm/msm/dsi/dsi_host.c | 109 ++++++++++++++++++++++++++++-
->  2 files changed, 118 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.xml.h b/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> index 49b551ad1bff..c1c85df58c4b 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> @@ -706,4 +706,14 @@ static inline uint32_t DSI_VERSION_MAJOR(uint32_t val)
->  #define REG_DSI_CPHY_MODE_CTRL					0x000002d4
->  
->  
-> +#define REG_DSI_VIDEO_COMPRESSION_MODE_CTRL			0x0000029c
-> +
-> +#define REG_DSI_VIDEO_COMPRESSION_MODE_CTRL2			0x000002a0
-> +
-> +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL			0x000002a4
-> +
-> +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2			0x000002a8
-> +
-> +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL3			0x000002ac
-> +
->  #endif /* DSI_XML */
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 438c80750682..3d8d5a1daaa3 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -908,6 +908,20 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
->  		dsi_write(msm_host, REG_DSI_CPHY_MODE_CTRL, BIT(0));
->  }
->  
-> +static int dsi_dsc_update_pic_dim(struct msm_display_dsc_config *dsc,
-> +				  int pic_width, int pic_height)
-> +{
-> +	if (!dsc || !pic_width || !pic_height) {
-> +		pr_err("DSI: invalid input: pic_width: %d pic_height: %d\n", pic_width, pic_height);
-> +		return -EINVAL;
-> +	}
-> +
-> +	dsc->drm->pic_width = pic_width;
-> +	dsc->drm->pic_height = pic_height;
-> +
-> +	return 0;
-> +}
-> +
->  static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->  {
->  	struct drm_display_mode *mode = msm_host->mode;
-> @@ -940,7 +954,68 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->  		hdisplay /= 2;
->  	}
->  
-> +	if (msm_host->dsc) {
-> +		struct msm_display_dsc_config *dsc = msm_host->dsc;
-> +
-> +		/* update dsc params with timing params */
-> +		dsi_dsc_update_pic_dim(dsc, mode->hdisplay, mode->vdisplay);
-> +		DBG("Mode Width- %d x Height %d\n", dsc->drm->pic_width, dsc->drm->pic_height);
-> +
-> +		/* we do the calculations for dsc parameters here so that
-> +		 * panel can use these parameters
-> +		 */
-> +		dsi_populate_dsc_params(dsc);
-> +
-> +		/* Divide the display by 3 but keep back/font porch and
-> +		 * pulse width same
-> +		 */
-> +		h_total -= hdisplay;
-> +		hdisplay /= 3;
-> +		h_total += hdisplay;
-> +		ha_end = ha_start + hdisplay;
-> +	}
-> +
->  	if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
-> +		if (msm_host->dsc) {
-> +			struct msm_display_dsc_config *dsc = msm_host->dsc;
-> +			u32 reg, intf_width, slice_per_intf;
-> +			u32 total_bytes_per_intf;
-> +
-> +			/* first calculate dsc parameters and then program
-> +			 * compress mode registers
-> +			 */
-> +			intf_width = hdisplay;
-> +			slice_per_intf = DIV_ROUND_UP(intf_width, dsc->drm->slice_width);
-> +
-> +			dsc->drm->slice_count = 1;
-> +			dsc->bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width * 8, 8);
-> +			total_bytes_per_intf = dsc->bytes_in_slice * slice_per_intf;
-> +
-> +			dsc->eol_byte_num = total_bytes_per_intf % 3;
-> +			dsc->pclk_per_line =  DIV_ROUND_UP(total_bytes_per_intf, 3);
-> +			dsc->bytes_per_pkt = dsc->bytes_in_slice * dsc->drm->slice_count;
-> +			dsc->pkt_per_line = slice_per_intf / dsc->drm->slice_count;
-> +
-> +			reg = dsc->bytes_per_pkt << 16;
-> +			reg |= (0x0b << 8);    /* dtype of compressed image */
-> +
-> +			/* pkt_per_line:
-> +			 * 0 == 1 pkt
-> +			 * 1 == 2 pkt
-> +			 * 2 == 4 pkt
-> +			 * 3 pkt is not supported
-> +			 * above translates to ffs() - 1
-> +			 */
-> +			reg |= (ffs(dsc->pkt_per_line) - 1) << 6;
-> +
-> +			dsc->eol_byte_num = total_bytes_per_intf % 3;
-> +			reg |= dsc->eol_byte_num << 4;
-> +			reg |= 1;
-> +
-> +			dsi_write(msm_host,
-> +				  REG_DSI_VIDEO_COMPRESSION_MODE_CTRL, reg);
-> +		}
-> +
->  		dsi_write(msm_host, REG_DSI_ACTIVE_H,
->  			DSI_ACTIVE_H_START(ha_start) |
->  			DSI_ACTIVE_H_END(ha_end));
-> @@ -959,8 +1034,40 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->  			DSI_ACTIVE_VSYNC_VPOS_START(vs_start) |
->  			DSI_ACTIVE_VSYNC_VPOS_END(vs_end));
->  	} else {		/* command mode */
-> +		if (msm_host->dsc) {
-> +			struct msm_display_dsc_config *dsc = msm_host->dsc;
-> +			u32 reg, reg_ctrl, reg_ctrl2;
-> +			u32 slice_per_intf, bytes_in_slice, total_bytes_per_intf;
-> +
-> +			reg_ctrl = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL);
-> +			reg_ctrl2 = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2);
-> +
-> +			slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->drm->slice_width);
-> +			bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width *
-> +						      dsc->drm->bits_per_pixel, 8);
-> +			dsc->drm->slice_chunk_size = bytes_in_slice;
-> +			total_bytes_per_intf = dsc->bytes_in_slice * slice_per_intf;
-> +			dsc->pkt_per_line = slice_per_intf / dsc->drm->slice_count;
-> +
-> +			reg = 0x39 << 8;
-> +			reg |= ffs(dsc->pkt_per_line) << 6;
-> +
-> +			dsc->eol_byte_num = total_bytes_per_intf % 3;
-> +			reg |= dsc->eol_byte_num << 4;
-> +			reg |= 1;
-> +
-> +			reg_ctrl |= reg;
-> +			reg_ctrl2 |= bytes_in_slice;
-> +
-> +			dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL, reg);
-> +			dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2, reg_ctrl2);
-> +		}
-> +
->  		/* image data and 1 byte write_memory_start cmd */
-> -		wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
-> +		if (!msm_host->dsc)
-> +			wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
-> +		else
-> +			wc = mode->hdisplay / 2 + 1;
->  
->  		dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL,
->  			DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
-> -- 
-> 2.31.1
-> 
+Mani
