@@ -2,61 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C164E4B9EA5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 12:33:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 382FD4B9EB7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 12:34:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239774AbiBQLdK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Feb 2022 06:33:10 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:56910 "EHLO
+        id S239791AbiBQLeS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Feb 2022 06:34:18 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:34412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230199AbiBQLdI (ORCPT
+        with ESMTP id S239787AbiBQLeR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Feb 2022 06:33:08 -0500
-Received: from mxd2.seznam.cz (mxd2.seznam.cz [IPv6:2a02:598:2::210])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35E9C16FDE6;
-        Thu, 17 Feb 2022 03:32:50 -0800 (PST)
-Received: from email.seznam.cz
-        by email-smtpc28b.ng.seznam.cz (email-smtpc28b.ng.seznam.cz [10.23.18.41])
-        id 273a50137c34047a26939c4d;
-        Thu, 17 Feb 2022 12:32:41 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seznam.cz; s=beta;
-        t=1645097561; bh=OUyasi79Ox50nzN/nFOW3Z5Xbf/pXzHWWvMd9FuZe3I=;
-        h=Received:From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:
-         References:MIME-Version:Content-Transfer-Encoding:X-szn-frgn:
-         X-szn-frgc;
-        b=bwBbo/2DaUGGRjHuIla+x3Yj41JY6yiRHRWcIa8W0ptMTvGq0G/nVsT7veAtjBuuG
-         ec0THa/mxEnIStM4Cs9qCntdJnRzVtkGOKoVatUq7NyWNJ89AMO6GjZYHjUOZVLeBE
-         b/2m/+Clo92wqTySuCOv8bBF0S2GYEvww1qSoOK8=
-Received: from localhost.localdomain (ip-111-27.static.ccinternet.cz [147.161.27.111])
-        by email-relay20.ng.seznam.cz (Seznam SMTPD 1.3.136) with ESMTP;
-        Thu, 17 Feb 2022 12:32:38 +0100 (CET)  
-From:   michael.srba@seznam.cz
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Saravana Kannan <saravanak@google.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, Michael Srba <michael.srba@seznam.cz>,
-        Michael Srba <Michael.Srba@seznam.cz>
-Subject: [PATCH v6 5/5] arm64: dts: qcom: msm8998: reserve potentially inaccessible clocks
-Date:   Thu, 17 Feb 2022 12:30:04 +0100
-Message-Id: <20220217113004.22757-5-michael.srba@seznam.cz>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220217113004.22757-1-michael.srba@seznam.cz>
-References: <20220217113004.22757-1-michael.srba@seznam.cz>
+        Thu, 17 Feb 2022 06:34:17 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE157277925
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 03:34:01 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id p9so6509123ejd.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 03:34:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=LIJbkcpxWhEu+HDqv6mv/542M4vTfuWftkC1BaPuPbU=;
+        b=TbT4HVYGoCKKxlNKiPmpU3SWwZu5CDTjF38mWAh6T0DazaZgHk+5lHNO40yFFoCoTJ
+         IhX5v53CL1y0eY6Bdqq1t2Zih8HsaZ0p9WiMQHisl/7D5UNkZv20RitrLquvOEsp7uZ8
+         2UOrYUbwo+MkwjM2gosoNiJxw+R7zAXFc42lLSMGTafO8g3dSGIgRFgCj0kPS5WGaJmq
+         OGUcbMkoR6mS7EZ9CLLKNKC4g+4cwCCWM2lYGVH8WGBInhQkswKz3DmFM6AnpiEF4tr8
+         WalK7TefoPlqQBGrhd9NNSP8YyvXhC6UAYqJ2+qziFFn8PPn+bfEI9C2KIcYA2gBPfKA
+         5dKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=LIJbkcpxWhEu+HDqv6mv/542M4vTfuWftkC1BaPuPbU=;
+        b=KPyO2nGDYnSsG43ivIeZHcJubwLlLN7UiIACrG4PqGjfZb/Z/vLcuEdbinmOYtoWZO
+         iMrTEKzkprVRKJDpQuYSau2kdAuRhDIwAP9MUsZ2rw4oN7bu6FySTIglwPnE+r13wB09
+         ihtV8SwXDOdYRhuFs5qXFHJuJmc8XbOxZczIH6YLbSdgsp/l9chALdIEBvL94iB5vRgM
+         dw6+8/2z39mDpMssiM5hlNGNE8R6oXyGrULF2am+UcnpA+/ovPR2LBVwGVmhlikfYkVQ
+         212Xt/do+crz5FgVj1b2c4rd8lXjqwT2y7eG22MF0zPLVxEO2cD74TNiJfU9RydsvIZ7
+         7uhg==
+X-Gm-Message-State: AOAM533MJjk6f6WpA1e5H8XbKpsrlMxxSrQkLxFD1LcmdrQknXOYnzMi
+        7379kShL4GA9zZD3BX3I8YO2xA==
+X-Google-Smtp-Source: ABdhPJw4Erll/uCqjzTBT96QBBylhZa1svkxPBZvtY01p3v7Q1PQeyr8NcLtaKJsoJkrerC/ucp6eA==
+X-Received: by 2002:a17:906:b57:b0:6ce:e31a:524 with SMTP id v23-20020a1709060b5700b006cee31a0524mr1969824ejg.290.1645097640461;
+        Thu, 17 Feb 2022 03:34:00 -0800 (PST)
+Received: from [192.168.1.9] (hst-221-75.medicom.bg. [84.238.221.75])
+        by smtp.googlemail.com with ESMTPSA id u4sm1076625ejn.216.2022.02.17.03.33.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Feb 2022 03:33:59 -0800 (PST)
+Message-ID: <55dbdf8b-290c-85ff-235e-9e5649540b6e@linaro.org>
+Date:   Thu, 17 Feb 2022 13:33:58 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v3 5/6] venus: Add a handling of QC10C compressed format
+Content-Language: en-US
+To:     Nicolas Dufresne <nicolas@ndufresne.ca>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-api@vger.kernel.org
+Cc:     hverkuil-cisco@xs4all.nl
+References: <20220117155559.234026-1-stanimir.varbanov@linaro.org>
+ <20220117155559.234026-6-stanimir.varbanov@linaro.org>
+ <4e1cc50854da4075fc7ebf71e24aa8372905c668.camel@ndufresne.ca>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+In-Reply-To: <4e1cc50854da4075fc7ebf71e24aa8372905c668.camel@ndufresne.ca>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-szn-frgn: <296634cd-0321-4093-8f8c-edfc4ed832ee>
-X-szn-frgc: <0>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,53 +77,139 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Michael Srba <michael.srba@seznam.cz>
 
-With the gcc driver now being more complete and describing clocks which
-might not always be write-accessible to the OS, conservatively specify
-all such clocks as protected in the SoC dts.
-The board dts - or even user-supplied dts - can override this property
-to reflect the actual configuration.
 
-Signed-off-by: Michael Srba <Michael.Srba@seznam.cz>
----
- CHANGES:
- - v2: add this patch
- - v3: fix missing Signed-off-by
- - v4: add a proper explanation as per review, (hopefully) fix the subject and commit message
- - v5: none
- - v6: none
----
+On 2/16/22 18:20, Nicolas Dufresne wrote:
+> Le lundi 17 janvier 2022 à 17:55 +0200, Stanimir Varbanov a écrit :
+>> This adds QC10C compressed pixel format in the Venus driver, and
+>> make it possible to discover from v4l2 clients.
+>>
+>> Note: The QC10C format shouldn't be possible to discpver by the
+> 
+> discpver -> discover
+> 
+> It is not super clear though, did you mean to say that it won't be enumerated
+> after the header have been parsed ?
 
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+The opposite. It will be enumerable by the client only after parsing the
+header.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index f273bc1ff629..16dccf9d881e 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -863,6 +863,21 @@ gcc: clock-controller@100000 {
- 
- 			clock-names = "xo", "sleep_clk";
- 			clocks = <&xo>, <&sleep_clk>;
-+
-+			/*
-+			 * The hypervisor typically configures the memory region where these clocks
-+			 * reside as read-only for the HLOS. If the HLOS tried to enable or disable
-+			 * these clocks on a device with such configuration (e.g. because they are
-+			 * enabled but unused during boot-up), the device will most likely decide
-+			 * to reboot.
-+			 * In light of that, we are conservative here and we list all such clocks
-+			 * as protected. The board dts (or a user-supplied dts) can override the
-+			 * list of protected clocks if it differs from the norm, and it is in fact
-+			 * desired for the HLOS to manage these clocks
-+			 */
-+			protected-clocks = <AGGRE2_SNOC_NORTH_AXI>,
-+					   <SSC_XO>,
-+					   <SSC_CNOC_AHBS_CLK>;
- 		};
- 
- 		rpm_msg_ram: sram@778000 {
+> 
+>> client if the decoded bitstream is not 10-bits.
+>>
+>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>> ---
+>>  drivers/media/platform/qcom/venus/helpers.c | 26 ++++-----------------
+>>  drivers/media/platform/qcom/venus/vdec.c    | 19 ++++++++++++---
+>>  2 files changed, 20 insertions(+), 25 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+>> index adbfa4fbe139..69a9a9471a27 100644
+>> --- a/drivers/media/platform/qcom/venus/helpers.c
+>> +++ b/drivers/media/platform/qcom/venus/helpers.c
+>> @@ -594,6 +594,8 @@ static u32 to_hfi_raw_fmt(u32 v4l2_fmt)
+>>  		return HFI_COLOR_FORMAT_NV21;
+>>  	case V4L2_PIX_FMT_QC08C:
+>>  		return HFI_COLOR_FORMAT_NV12_UBWC;
+>> +	case V4L2_PIX_FMT_QC10C:
+>> +		return HFI_COLOR_FORMAT_YUV420_TP10_UBWC;
+>>  	default:
+>>  		break;
+>>  	}
+>> @@ -1176,7 +1178,8 @@ int venus_helper_set_format_constraints(struct venus_inst *inst)
+>>  	if (!IS_V6(inst->core))
+>>  		return 0;
+>>  
+>> -	if (inst->opb_fmt == HFI_COLOR_FORMAT_NV12_UBWC)
+>> +	if (inst->opb_fmt == HFI_COLOR_FORMAT_NV12_UBWC ||
+>> +	    inst->opb_fmt == HFI_COLOR_FORMAT_YUV420_TP10_UBWC)
+>>  		return 0;
+>>  
+>>  	pconstraint.buffer_type = HFI_BUFFER_OUTPUT2;
+>> @@ -1747,27 +1750,6 @@ int venus_helper_get_out_fmts(struct venus_inst *inst, u32 v4l2_fmt,
+>>  	if (!caps)
+>>  		return -EINVAL;
+>>  
+>> -	if (inst->bit_depth == VIDC_BITDEPTH_10 &&
+>> -	    inst->session_type == VIDC_SESSION_TYPE_DEC) {
+>> -		found_ubwc =
+>> -			find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT,
+>> -					   HFI_COLOR_FORMAT_YUV420_TP10_UBWC);
+>> -		found = find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT2,
+>> -					   HFI_COLOR_FORMAT_NV12);
+>> -		if (found_ubwc && found) {
+>> -			/*
+>> -			 * Hard-code DPB buffers to be 10bit UBWC and decoder
+>> -			 * output buffers in 8bit NV12 until V4L2 is able to
+>> -			 * expose compressed/tiled formats to applications.
+>> -			 */
+>> -			*out_fmt = HFI_COLOR_FORMAT_YUV420_TP10_UBWC;
+>> -			*out2_fmt = HFI_COLOR_FORMAT_NV12;
+>> -			return 0;
+>> -		}
+>> -
+>> -		return -EINVAL;
+>> -	}
+>> -
+>>  	if (ubwc) {
+>>  		ubwc_fmt = fmt | HFI_COLOR_FORMAT_UBWC_BASE;
+>>  		found_ubwc = find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT,
+>> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+>> index eb02e45a512b..c8261c6cb0fb 100644
+>> --- a/drivers/media/platform/qcom/venus/vdec.c
+>> +++ b/drivers/media/platform/qcom/venus/vdec.c
+>> @@ -35,6 +35,10 @@ static const struct venus_format vdec_formats[] = {
+>>  		.num_planes = 1,
+>>  		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
+>>  	}, {
+>> +		.pixfmt = V4L2_PIX_FMT_QC10C,
+>> +		.num_planes = 1,
+>> +		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
+>> +	},{
+>>  		.pixfmt = V4L2_PIX_FMT_NV12,
+>>  		.num_planes = 1,
+>>  		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
+>> @@ -114,6 +118,10 @@ find_format(struct venus_inst *inst, u32 pixfmt, u32 type)
+>>  	    !venus_helper_check_format(inst, fmt[i].pixfmt))
+>>  		return NULL;
+>>  
+>> +	if (V4L2_TYPE_IS_CAPTURE(type) && fmt[i].pixfmt == V4L2_PIX_FMT_QC10C &&
+>> +	    !(inst->bit_depth == VIDC_BITDEPTH_10))
+>> +		return NULL;
+>> +
+>>  	return &fmt[i];
+>>  }
+>>  
+>> @@ -133,11 +141,16 @@ find_format_by_index(struct venus_inst *inst, unsigned int index, u32 type)
+>>  		if (fmt[i].type != type)
+>>  			continue;
+>>  
+>> -		if (V4L2_TYPE_IS_OUTPUT(type))
+>> +		if (V4L2_TYPE_IS_OUTPUT(type)) {
+>>  			valid = venus_helper_check_codec(inst, fmt[i].pixfmt);
+>> -		else if (V4L2_TYPE_IS_CAPTURE(type))
+>> +		} else if (V4L2_TYPE_IS_CAPTURE(type)) {
+>>  			valid = venus_helper_check_format(inst, fmt[i].pixfmt);
+>>  
+>> +			if (fmt[i].pixfmt == V4L2_PIX_FMT_QC10C &&
+>> +			    !(inst->bit_depth == VIDC_BITDEPTH_10))
+>> +				valid = false;
+>> +		}
+>> +
+>>  		if (k == index && valid)
+>>  			break;
+>>  		if (valid)
+>> @@ -1537,7 +1550,7 @@ static const struct hfi_inst_ops vdec_hfi_ops = {
+>>  static void vdec_inst_init(struct venus_inst *inst)
+>>  {
+>>  	inst->hfi_codec = HFI_VIDEO_CODEC_H264;
+>> -	inst->fmt_out = &vdec_formats[7];
+>> +	inst->fmt_out = &vdec_formats[8];
+>>  	inst->fmt_cap = &vdec_formats[0];
+>>  	inst->width = frame_width_min(inst);
+>>  	inst->height = ALIGN(frame_height_min(inst), 32);
+> 
+
 -- 
-2.34.1
-
+regards,
+Stan
