@@ -2,74 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C29D94BA76D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 18:48:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D5204BA77F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 18:52:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243857AbiBQRtH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Feb 2022 12:49:07 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47940 "EHLO
+        id S243877AbiBQRvw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Feb 2022 12:51:52 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231926AbiBQRtG (ORCPT
+        with ESMTP id S243899AbiBQRvu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Feb 2022 12:49:06 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8DB7291FB8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 09:48:51 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id k3-20020a1ca103000000b0037bdea84f9cso4619071wme.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 09:48:51 -0800 (PST)
+        Thu, 17 Feb 2022 12:51:50 -0500
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D58A29410F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 09:51:33 -0800 (PST)
+Received: by mail-qv1-xf2e.google.com with SMTP id fh9so9781631qvb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 09:51:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=eA6IIhqYEfrRDuKOGshN1p14BWrOpnI8vaNPig+Er3U=;
-        b=Z7Lvy/Lu0PgnLPUDuFPsdG49Zyk4N0fWd92pQXI2BU3ytXBKNzd+AoncQRZWkjzXbZ
-         oxp4AAYZ1qPDAOmTUD4Ti47DXQMMtwT4+Qd767pUOA99nTaU6PHtqDb3tcKd0CcuVBrl
-         5KGTiHLLJEjsVcJvTXRSy49WeEQ04aBzlIPZDYzvzssbiOJ6QHjoZTgr1/mw/YibIEFp
-         PpyGXZABs9l0LsrBr4WR/YZl5zmsdVWuUGuhPDk3w4W4WWlXz+7CGL2svqs5EE5uQ+U8
-         FYSNfFI79gOtkhewdBFZLQqcYqZeFdew3rJTLJ6tDdqvqP7slTd1dNFLv2M//KNbcWct
-         X25A==
+        bh=7P1LnNg8m8iNH6efSsOJFujkEPn8411mWUjnE7PK0ss=;
+        b=TqwCB19EBIJfH+fraIvA8pPYGh8RvpHppRDQv/w6QmUB9MZafHO7H5S10vRCAHAFTw
+         oO1RsM90wkJ8bDZQpsJGmmZpt6v5s7uuB0j0U7Fz2N1v2WWlWdHvFyQ+aUJBKVecMH43
+         ru1PK422VTVlrP0zGqpYp0waanXnhM0JoCFw26lIa1NXzQVlvTkdf3Kmk5xmJurJz04F
+         pdX8iHKTft4SnJn4QP1MgWh8ojDJDJorF0BAQ/pZOOTGJKmHRmjgBfcfyX6+oGTfKghL
+         U4gmw5GICQm0R5BZqpXHakD70bDjVacvoCCdkmdFkkyafEYWo/4Oq1e1LW28Jmmu2z8N
+         Dx+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=eA6IIhqYEfrRDuKOGshN1p14BWrOpnI8vaNPig+Er3U=;
-        b=jPAaP3F8mluJSutDSXV/8Y1WXTsQuF18GRz2XSw4j/F5aTsMjGoZyhiy3BESCWLZf6
-         Va/UOiatLo65nTX5RUF7QW0Lom1yq8C4bdzAnHDmGhdZnxjblpImivwYlzg1wrunTyTi
-         29bWCL3cE/Pl0SP1wjjEVpzdoSIYL1Yn63gvKS0l99wauwuQbuyccnoL63hkja9aszgE
-         O4z1e3Y7bCOMndL2fDY7ux5cr4YUdITkSWfFKbhVxuPBvl+fz0YmCf5tzwC/YKVGQwGw
-         dhjaBW2l8TTMgLqcQVzC/gRz1obT/0RUhqebkq6GVttaAYenXbnum0BI29xe5TTm9Du8
-         MqtA==
-X-Gm-Message-State: AOAM531nahumvk3BZXBQFI6E0T2gKWycPEueSLbSp1HujshSWb/i0p9a
-        nOT2rKq38sByxhvBUTR/7wwWM9xJ6z1blxWOPtYLtA==
-X-Google-Smtp-Source: ABdhPJwwa3LmENnFrJD5FLhvk02XJs/Qc9bfHqvayUmoxC5bFLZFN14JD0xFcO6PeEfXXckQgirXkhtlEZYLaYPTxoI=
-X-Received: by 2002:a05:600c:1f05:b0:37b:d9aa:e210 with SMTP id
- bd5-20020a05600c1f0500b0037bd9aae210mr7242831wmb.63.1645120130134; Thu, 17
- Feb 2022 09:48:50 -0800 (PST)
+        bh=7P1LnNg8m8iNH6efSsOJFujkEPn8411mWUjnE7PK0ss=;
+        b=RdTfRbgfsq8NA82fMo+fBVSVb+tDvWfdnerCJo761rMy4xvM9oK2hVhOZKDWAk1mdE
+         W6Ugs7M2x8SgBXkXA+BkZRIcEZ7TnHmRtLI9cqytrYzMzT6LHDaKDoSD6EUovR4Dr/82
+         /FXidD5sxqgnqwbqkDGFTWbj3mogjMmU/k/yJ2iG/6xyKUtL3GYNhamqqfVMugzHXR+d
+         e9l5Sd/NbBZFLnmqiMsoWBf4qRnKiFIl05n8EP4ghz84k9xsIB6yH1w4CyqxKBmnnfXz
+         nIZjvSg2S+/wruXoNdql/eGkRl0WjjSERJ7sh4wFggZepCW7VX7wDpVJ7PQcZTXZzWhV
+         ignA==
+X-Gm-Message-State: AOAM532+GkeTfsu0AqsiK4tNNRtHuUoS+KeUEQkfVGZYWo4gy6o3V1F9
+        XByM8zbNiE1HfwMYw920gcVIOzctH2QSsmXfKe0SQg==
+X-Google-Smtp-Source: ABdhPJyA/qAp/R7b2qoAIWMXbTiDnTMtqIKpF913w0ZLzTM0L4hxqtE3L9HqZlQ1nOVFtI9/iUyaknibzgc8RXr15ys=
+X-Received: by 2002:ac8:5716:0:b0:2d6:4f00:6a76 with SMTP id
+ 22-20020ac85716000000b002d64f006a76mr3395452qtw.682.1645120291246; Thu, 17
+ Feb 2022 09:51:31 -0800 (PST)
 MIME-Version: 1.0
-References: <20220209105706.18852-1-quic_jinlmao@quicinc.com> <20220209105706.18852-5-quic_jinlmao@quicinc.com>
-In-Reply-To: <20220209105706.18852-5-quic_jinlmao@quicinc.com>
-From:   Mike Leach <mike.leach@linaro.org>
-Date:   Thu, 17 Feb 2022 17:48:39 +0000
-Message-ID: <CAJ9a7ViO2S_sUCNaZ711SNDz-jmYiWxCBcBYOc-gVGkoCG-VDA@mail.gmail.com>
-Subject: Re: [PATCH v3 04/10] dt-bindings: arm: Adds CoreSight TPDM hardware definitions
-To:     Mao Jinlong <quic_jinlmao@quicinc.com>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org
+References: <20220131120403.2481995-1-vkoul@kernel.org>
+In-Reply-To: <20220131120403.2481995-1-vkoul@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 17 Feb 2022 20:51:19 +0300
+Message-ID: <CAA8EJpoqCJbYgOUpEhcoae3=Mivp8c7PZU8XO78EMZMR+NQQKw@mail.gmail.com>
+Subject: Re: [PATCH v5] i2c: qcom-geni: Add support for GPI DMA
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Wolfram Sang <wsa@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Alexey Minnekhanov <alexeymin@postmarketos.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,164 +71,437 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Wed, 9 Feb 2022 at 10:57, Mao Jinlong <quic_jinlmao@quicinc.com> wrote:
+On Mon, 31 Jan 2022 at 15:04, Vinod Koul <vkoul@kernel.org> wrote:
 >
-> Adds new coresight-tpdm.yaml file describing the bindings required
-> to define tpdm in the device trees.
+> QUP Serial engines supports data transfers thru FIFO mode, SE DMA mode and
+> lastly GPI DMA mode. Former two are already supported and this adds supports the
+> last mode.
 >
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> In GPI DMA mode, the firmware is issued commands by driver to perform DMA
+> and setup the serial port.
+>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->  .../bindings/arm/coresight-tpdm.yaml          | 81 +++++++++++++++++++
->  .../devicetree/bindings/arm/coresight.txt     |  7 ++
->  MAINTAINERS                                   |  1 +
->  3 files changed, 89 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
 >
-> diff --git a/Documentation/devicetree/bindings/arm/coresight-tpdm.yaml b/Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
-> new file mode 100644
-> index 000000000000..7ebc1bf7abc2
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
-> @@ -0,0 +1,81 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +# Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/arm/coresight-tpdm.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Trace, Profiling and Diagnostics Monitor - TPDM
-> +
-> +description: |
-> +  The TPDM or Monitor serves as data collection component for various dataset
-> +  types specified in the QPMDA spec. It covers Implementation defined ((ImplDef),
-> +  Basic Counts (BC), Tenure Counts (TC), Continuous Multi-Bit (CMB), and Discrete
-> +  Single Bit (DSB). It performs data collection in the data producing clock
-> +  domain and transfers it to the data collection time domain, generally ATB
-> +  clock domain.
-> +
-> +  The primary use case of the TPDM is to collect data from different data
-> +  sources and send it to a TPDA for packetization, timestamping, and funneling.
-> +
-> +maintainers:
-> +  - Suzuki K Poulose <suzuki.poulose@arm.com>
-> +  - Mathieu Poirier <mathieu.poirier@linaro.org>
-> +
-> +properties:
-> +  $nodename:
-> +    pattern: "^tpdm(@[0-9a-f]+)$"
-> +  compatible:
-> +    items:
-> +      - const: qcom,coresight-tpdm
-> +      - const: arm,primecell
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  clock-names:
-> +   items:
-> +     - const: apb_pclk
-> +
-> +  out-ports:
-> +    description: |
-> +      Output connections from the TPDM to legacy CoreSight trace bus.
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +    properties:
-> +      port:
-> +        description: Output connection from the TPDM to legacy CoreSight
-> +          Trace bus.
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +
-
-As we discussed in patch 0/10 of this set - the TDPM actually sends
-data to TDPA - not to coresight. These descriptions should match that.
-
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  # minimum TPDM definition.
-> +  - |
-> +    tpdm@6980000 {
-> +      compatible = "qcom,coresight-tpdm", "arm,primecell";
-> +      reg = <0x6980000 0x1000>;
-> +
-> +      clocks = <&aoss_qmp>;
-> +      clock-names = "apb_pclk";
-> +
-> +      out-ports {
-> +        port {
-> +          tpdm_turing_out_funnel_turing: endpoint {
-> +            remote-endpoint =
-> +              <&funnel_turing_in_tpdm_turing>;
-> +          };
-> +        };
-> +      };
-> +    };
-> +
-
-example looks OK, but I would like to see something of a _tdpa in the
-nameing as that is the funnel / link the tdpm sends data to.
-
-Regards
-
-Mike
-
-> +...
-> diff --git a/Documentation/devicetree/bindings/arm/coresight.txt b/Documentation/devicetree/bindings/arm/coresight.txt
-> index c68d93a35b6c..f7ce8af48574 100644
-> --- a/Documentation/devicetree/bindings/arm/coresight.txt
-> +++ b/Documentation/devicetree/bindings/arm/coresight.txt
-> @@ -52,6 +52,10 @@ its hardware characteristcs.
->                         "arm,coresight-cti", "arm,primecell";
->                         See coresight-cti.yaml for full CTI definitions.
+> Changes since v4:
+>  - Fix buildbot warn
+>  - Fix flase warn reported by Alexey
+>  - Fix feedback from Bjorn and cleanup the probe code and add more details
+>    in changelog
 >
-> +               - Trace, Profiling and Diagnostics Monitor (TPDM):
-> +                       "qcom,coresight-tpdm", "arm,primecell";
-> +                       See coresight-tpdm.yaml for full TPDM definitions.
+> Changes since v3:
+>  - remove separate tx and rx function for gsi dma and make a common one
+>  - remove global structs and use local variables instead
+>
+>  drivers/i2c/busses/i2c-qcom-geni.c | 300 ++++++++++++++++++++++++++---
+>  1 file changed, 273 insertions(+), 27 deletions(-)
+>
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+> index 6d635a7c104c..696253d178a6 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -3,7 +3,9 @@
+>
+>  #include <linux/acpi.h>
+>  #include <linux/clk.h>
+> +#include <linux/dmaengine.h>
+>  #include <linux/dma-mapping.h>
+> +#include <linux/dma/qcom-gpi-dma.h>
+>  #include <linux/err.h>
+>  #include <linux/i2c.h>
+>  #include <linux/interrupt.h>
+> @@ -48,6 +50,9 @@
+>  #define LOW_COUNTER_SHFT       10
+>  #define CYCLE_COUNTER_MSK      GENMASK(9, 0)
+>
+> +#define I2C_PACK_TX            BIT(0)
+> +#define I2C_PACK_RX            BIT(1)
 > +
->         * reg: physical base address and length of the register
->           set(s) of the component.
+>  enum geni_i2c_err_code {
+>         GP_IRQ0,
+>         NACK,
+> @@ -89,6 +94,9 @@ struct geni_i2c_dev {
+>         void *dma_buf;
+>         size_t xfer_len;
+>         dma_addr_t dma_addr;
+> +       struct dma_chan *tx_c;
+> +       struct dma_chan *rx_c;
+> +       bool gpi_mode;
+>  };
 >
-> @@ -82,6 +86,9 @@ its hardware characteristcs.
->  * Required properties for Coresight Cross Trigger Interface (CTI)
->         See coresight-cti.yaml for full CTI definitions.
+>  struct geni_i2c_err_log {
+> @@ -456,12 +464,199 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+>         return gi2c->err;
+>  }
 >
-> +* Required properties for Trace, Profiling and Diagnostics Monitor (TPDM)
-> +       See coresight-tpdm.yaml for full TPDM definitions.
+> +static void i2c_gpi_cb_result(void *cb, const struct dmaengine_result *result)
+> +{
+> +       struct geni_i2c_dev *gi2c = cb;
 > +
->  * Required properties for devices that don't show up on the AMBA bus, such as
->    non-configurable replicators and non-configurable funnels:
+> +       if (result->result != DMA_TRANS_NOERROR) {
+> +               dev_err(gi2c->se.dev, "DMA txn failed:%d\n", result->result);
+> +               return;
+> +       }
+> +
+> +       if (result->residue)
+> +               dev_dbg(gi2c->se.dev, "DMA xfer has pending: %d\n", result->residue);
+> +
+> +       complete(&gi2c->done);
+> +}
+> +
+> +static void geni_i2c_gpi_unmap(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+> +                              void *tx_buf, dma_addr_t tx_addr,
+> +                              void *rx_buf, dma_addr_t rx_addr)
+> +{
+> +       if (tx_buf) {
+> +               dma_unmap_single(gi2c->se.dev->parent, tx_addr, msg->len, DMA_TO_DEVICE);
+> +               i2c_put_dma_safe_msg_buf(tx_buf, msg, false);
+> +       }
+> +
+> +       if (rx_buf) {
+> +               dma_unmap_single(gi2c->se.dev->parent, rx_addr, msg->len, DMA_FROM_DEVICE);
+> +               i2c_put_dma_safe_msg_buf(rx_buf, msg, false);
+> +       }
+> +}
+> +
+> +static int geni_i2c_gpi(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+> +                          struct dma_slave_config *config, dma_addr_t *dma_addr_p,
+> +                          void **buf, unsigned int op, struct dma_chan *dma_chan)
+> +{
+> +       struct gpi_i2c_config *peripheral;
+> +       unsigned int flags;
+> +       void *dma_buf;
+> +       dma_addr_t addr;
+> +       enum dma_data_direction map_dirn;
+> +       enum dma_transfer_direction dma_dirn;
+> +       struct dma_async_tx_descriptor *desc;
+> +       int ret;
+> +
+> +       peripheral = config->peripheral_config;
+> +
+> +       dma_buf = i2c_get_dma_safe_msg_buf(msg, 1);
+> +       if (!dma_buf)
+> +               return -ENOMEM;
+> +
+> +       if (op == I2C_WRITE)
+> +               map_dirn = DMA_TO_DEVICE;
+> +       else
+> +               map_dirn = DMA_FROM_DEVICE;
+> +
+> +       addr = dma_map_single(gi2c->se.dev->parent, dma_buf, msg->len, map_dirn);
+> +       if (dma_mapping_error(gi2c->se.dev->parent, addr)) {
+> +               i2c_put_dma_safe_msg_buf(dma_buf, msg, false);
+> +               return -ENOMEM;
+> +       }
+> +
+> +       /* set the length as message for rx txn */
+> +       peripheral->rx_len = msg->len;
+> +       peripheral->op = op;
+> +
+> +       ret = dmaengine_slave_config(dma_chan, config);
+> +       if (ret) {
+> +               dev_err(gi2c->se.dev, "dma config error: %d for op:%d\n", ret, op);
+> +               goto err_config;
+> +       }
+> +
+> +       peripheral->set_config = 0;
+> +       peripheral->multi_msg = true;
+> +       flags = DMA_PREP_INTERRUPT | DMA_CTRL_ACK;
+> +
+> +       if (op == I2C_WRITE)
+> +               dma_dirn = DMA_MEM_TO_DEV;
+> +       else
+> +               dma_dirn = DMA_DEV_TO_MEM;
+> +
+> +       desc = dmaengine_prep_slave_single(dma_chan, addr, msg->len, dma_dirn, flags);
+> +       if (!desc) {
+> +               dev_err(gi2c->se.dev, "prep_slave_sg failed\n");
+> +               ret = -EIO;
+> +               goto err_config;
+> +       }
+> +
+> +       desc->callback_result = i2c_gpi_cb_result;
+> +       desc->callback_param = gi2c;
+> +
+> +       dmaengine_submit(desc);
+> +       *dma_addr_p = addr;
+> +
+> +       return 0;
+> +
+> +err_config:
+> +       dma_unmap_single(gi2c->se.dev->parent, addr, msg->len, map_dirn);
+> +       i2c_put_dma_safe_msg_buf(dma_buf, msg, false);
+> +       return ret;
+> +}
+> +
+> +static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], int num)
+> +{
+> +       struct dma_slave_config config = {};
+> +       struct gpi_i2c_config peripheral = {};
+> +       int i, ret = 0, timeout;
+> +       dma_addr_t tx_addr, rx_addr;
+> +       void *tx_buf = NULL, *rx_buf = NULL;
+> +       const struct geni_i2c_clk_fld *itr = gi2c->clk_fld;
+> +
+> +       config.peripheral_config = &peripheral;
+> +       config.peripheral_size = sizeof(peripheral);
+> +
+> +       peripheral.pack_enable = I2C_PACK_TX | I2C_PACK_RX;
+> +       peripheral.cycle_count = itr->t_cycle_cnt;
+> +       peripheral.high_count = itr->t_high_cnt;
+> +       peripheral.low_count = itr->t_low_cnt;
+> +       peripheral.clk_div = itr->clk_div;
+> +       peripheral.set_config = 1;
+> +       peripheral.multi_msg = false;
+> +
+> +       for (i = 0; i < num; i++) {
+> +               gi2c->cur = &msgs[i];
+> +               dev_dbg(gi2c->se.dev, "msg[%d].len:%d\n", i, gi2c->cur->len);
+> +
+> +               peripheral.stretch = 0;
+> +               if (i < num - 1)
+> +                       peripheral.stretch = 1;
+> +
+> +               peripheral.addr = msgs[i].addr;
+> +
+> +               if (msgs[i].flags & I2C_M_RD) {
+> +                       ret =  geni_i2c_gpi(gi2c, &msgs[i], &config, &rx_addr, &rx_buf, I2C_READ, gi2c->rx_c);
+> +                       if (ret)
+> +                               goto err;
+> +               }
+> +
+> +               ret =  geni_i2c_gpi(gi2c, &msgs[i], &config, &tx_addr, &tx_buf, I2C_WRITE, gi2c->tx_c);
+> +               if (ret)
+> +                       goto err;
+> +
+> +               if (msgs[i].flags & I2C_M_RD)
+> +                       dma_async_issue_pending(gi2c->rx_c);
+> +               dma_async_issue_pending(gi2c->tx_c);
+> +
+> +               timeout = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
+> +               if (!timeout) {
+> +                       dev_err(gi2c->se.dev, "I2C timeout gpi flags:%d addr:0x%x\n",
+> +                               gi2c->cur->flags, gi2c->cur->addr);
+> +                       ret = gi2c->err = -ETIMEDOUT;
+> +                       goto err;
+> +               }
+> +
+> +               geni_i2c_gpi_unmap(gi2c, &msgs[i], tx_buf, tx_addr, rx_buf, rx_addr);
+> +       }
+> +
+> +       return 0;
+> +
+> +err:
+> +       dmaengine_terminate_sync(gi2c->rx_c);
+> +       dmaengine_terminate_sync(gi2c->tx_c);
+> +       geni_i2c_gpi_unmap(gi2c, &msgs[i], tx_buf, tx_addr, rx_buf, rx_addr);
+> +       return ret;
+> +}
+> +
+> +static int geni_i2c_fifo_xfer(struct geni_i2c_dev *gi2c,
+> +                             struct i2c_msg msgs[], int num)
+> +{
+> +       int i, ret = 0;
+> +
+> +       for (i = 0; i < num; i++) {
+> +               u32 m_param = i < (num - 1) ? STOP_STRETCH : 0;
+> +
+> +               m_param |= ((msgs[i].addr << SLV_ADDR_SHFT) & SLV_ADDR_MSK);
+> +
+> +               gi2c->cur = &msgs[i];
+> +               if (msgs[i].flags & I2C_M_RD)
+> +                       ret = geni_i2c_rx_one_msg(gi2c, &msgs[i], m_param);
+> +               else
+> +                       ret = geni_i2c_tx_one_msg(gi2c, &msgs[i], m_param);
+> +
+> +               if (ret)
+> +                       break;
+
+I'd suggest to 'return ret' here and change the return line to 'return num'.
+
+> +       }
+> +
+> +       return ret;
+> +}
+> +
+>  static int geni_i2c_xfer(struct i2c_adapter *adap,
+>                          struct i2c_msg msgs[],
+>                          int num)
+>  {
+>         struct geni_i2c_dev *gi2c = i2c_get_adapdata(adap);
+> -       int i, ret;
+> +       int ret;
 >
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index ea3e6c914384..434bbe98d22b 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1906,6 +1906,7 @@ T:        git git://git.kernel.org/pub/scm/linux/kernel/git/coresight/linux.git
->  F:     Documentation/ABI/testing/sysfs-bus-coresight-devices-*
->  F:     Documentation/devicetree/bindings/arm/coresight-cpu-debug.txt
->  F:     Documentation/devicetree/bindings/arm/coresight-cti.yaml
-> +F:     Documentation/devicetree/bindings/arm/coresight-tpdm.yaml
->  F:     Documentation/devicetree/bindings/arm/coresight.txt
->  F:     Documentation/devicetree/bindings/arm/ete.yaml
->  F:     Documentation/devicetree/bindings/arm/trbe.yaml
+>         gi2c->err = 0;
+>         reinit_completion(&gi2c->done);
+> @@ -475,22 +670,11 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
+>         }
+>
+>         qcom_geni_i2c_conf(gi2c);
+> -       for (i = 0; i < num; i++) {
+> -               u32 m_param = i < (num - 1) ? STOP_STRETCH : 0;
+> -
+> -               m_param |= ((msgs[i].addr << SLV_ADDR_SHFT) & SLV_ADDR_MSK);
+> -
+> -               gi2c->cur = &msgs[i];
+> -               if (msgs[i].flags & I2C_M_RD)
+> -                       ret = geni_i2c_rx_one_msg(gi2c, &msgs[i], m_param);
+> -               else
+> -                       ret = geni_i2c_tx_one_msg(gi2c, &msgs[i], m_param);
+>
+> -               if (ret)
+> -                       break;
+> -       }
+> -       if (ret == 0)
+> -               ret = num;
+> +       if (gi2c->gpi_mode)
+> +               ret = geni_i2c_gpi_xfer(gi2c, msgs, num);
+> +       else
+> +               ret = geni_i2c_fifo_xfer(gi2c, msgs, num);
+
+We should return num if ret is 0 here (or in
+geni_i2c_fifo_xfer()/geni_i2c_gpi_xfer()).
+
+>
+>         pm_runtime_mark_last_busy(gi2c->se.dev);
+>         pm_runtime_put_autosuspend(gi2c->se.dev);
+> @@ -517,11 +701,52 @@ static const struct acpi_device_id geni_i2c_acpi_match[] = {
+>  MODULE_DEVICE_TABLE(acpi, geni_i2c_acpi_match);
+>  #endif
+>
+> +static void release_gpi_dma(struct geni_i2c_dev *gi2c)
+> +{
+> +       if (gi2c->rx_c)
+> +               dma_release_channel(gi2c->rx_c);
+> +
+> +       if (gi2c->tx_c)
+> +               dma_release_channel(gi2c->tx_c);
+> +}
+> +
+> +static int setup_gpi_dma(struct geni_i2c_dev *gi2c)
+> +{
+> +       int ret;
+> +
+> +       geni_se_select_mode(&gi2c->se, GENI_GPI_DMA);
+> +       gi2c->tx_c = dma_request_chan(gi2c->se.dev, "tx");
+> +       if (IS_ERR(gi2c->tx_c)) {
+> +               ret = dev_err_probe(gi2c->se.dev, PTR_ERR(gi2c->tx_c),
+> +                                   "Failed to get tx DMA ch\n");
+> +               if (ret < 0)
+> +                       goto err_tx;
+> +       }
+> +
+> +       gi2c->rx_c = dma_request_chan(gi2c->se.dev, "rx");
+> +       if (IS_ERR(gi2c->rx_c)) {
+> +               ret = dev_err_probe(gi2c->se.dev, PTR_ERR(gi2c->rx_c),
+> +                                   "Failed to get rx DMA ch\n");
+> +               if (ret < 0)
+> +                       goto err_rx;
+> +       }
+> +
+> +       dev_dbg(gi2c->se.dev, "Grabbed GPI dma channels\n");
+> +       return 0;
+> +
+> +err_rx:
+> +       dma_release_channel(gi2c->tx_c);
+> +       gi2c->tx_c = NULL;
+> +err_tx:
+> +       gi2c->rx_c = NULL;
+> +       return ret;
+> +}
+> +
+>  static int geni_i2c_probe(struct platform_device *pdev)
+>  {
+>         struct geni_i2c_dev *gi2c;
+>         struct resource *res;
+> -       u32 proto, tx_depth;
+> +       u32 proto, tx_depth, fifo_disable;
+>         int ret;
+>         struct device *dev = &pdev->dev;
+>
+> @@ -601,27 +826,43 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>                 return ret;
+>         }
+>         proto = geni_se_read_proto(&gi2c->se);
+> -       tx_depth = geni_se_get_tx_fifo_depth(&gi2c->se);
+>         if (proto != GENI_SE_I2C) {
+>                 dev_err(dev, "Invalid proto %d\n", proto);
+>                 geni_se_resources_off(&gi2c->se);
+>                 return -ENXIO;
+>         }
+> -       gi2c->tx_wm = tx_depth - 1;
+> -       geni_se_init(&gi2c->se, gi2c->tx_wm, tx_depth);
+> -       geni_se_config_packing(&gi2c->se, BITS_PER_BYTE, PACKING_BYTES_PW,
+> -                                                       true, true, true);
+> +
+> +       fifo_disable = readl_relaxed(gi2c->se.base + GENI_IF_DISABLE_RO) & FIFO_IF_DISABLE;
+> +       if (fifo_disable) {
+> +               /* FIFO is disabled, so we can only use GPI DMA */
+> +               gi2c->gpi_mode = true;
+> +               ret = setup_gpi_dma(gi2c);
+> +               if (ret) {
+> +                       dev_err(dev, "Failed to setup GPI DMA mode:%d ret\n", ret);
+> +                       return ret;
+> +               }
+> +
+> +               dev_dbg(dev, "Using GPI DMA mode for I2C\n");
+> +       } else {
+> +               gi2c->gpi_mode = false;
+> +               tx_depth = geni_se_get_tx_fifo_depth(&gi2c->se);
+> +               gi2c->tx_wm = tx_depth - 1;
+> +               geni_se_init(&gi2c->se, gi2c->tx_wm, tx_depth);
+> +               geni_se_config_packing(&gi2c->se, BITS_PER_BYTE,
+> +                                      PACKING_BYTES_PW, true, true, true);
+> +
+> +               dev_dbg(dev, "i2c fifo/se-dma mode. fifo depth:%d\n", tx_depth);
+> +       }
+> +
+>         ret = geni_se_resources_off(&gi2c->se);
+>         if (ret) {
+>                 dev_err(dev, "Error turning off resources %d\n", ret);
+> -               return ret;
+> +               goto err_dma;
+>         }
+>
+>         ret = geni_icc_disable(&gi2c->se);
+>         if (ret)
+> -               return ret;
+> -
+> -       dev_dbg(dev, "i2c fifo/se-dma mode. fifo depth:%d\n", tx_depth);
+> +               goto err_dma;
+>
+>         gi2c->suspended = 1;
+>         pm_runtime_set_suspended(gi2c->se.dev);
+> @@ -633,18 +874,23 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>         if (ret) {
+>                 dev_err(dev, "Error adding i2c adapter %d\n", ret);
+>                 pm_runtime_disable(gi2c->se.dev);
+> -               return ret;
+> +               goto err_dma;
+>         }
+>
+>         dev_dbg(dev, "Geni-I2C adaptor successfully added\n");
+>
+>         return 0;
+> +
+> +err_dma:
+> +       release_gpi_dma(gi2c);
+> +       return ret;
+>  }
+>
+>  static int geni_i2c_remove(struct platform_device *pdev)
+>  {
+>         struct geni_i2c_dev *gi2c = platform_get_drvdata(pdev);
+>
+> +       release_gpi_dma(gi2c);
+>         i2c_del_adapter(&gi2c->adap);
+>         pm_runtime_disable(gi2c->se.dev);
+>         return 0;
 > --
-> 2.17.1
+> 2.31.1
 >
 
 
 -- 
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+With best wishes
+Dmitry
