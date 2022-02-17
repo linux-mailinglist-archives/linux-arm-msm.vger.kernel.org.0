@@ -2,97 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDBC74B985C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 06:37:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CAFA4B9885
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Feb 2022 06:55:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234348AbiBQFhx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Feb 2022 00:37:53 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60668 "EHLO
+        id S233867AbiBQFzu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Feb 2022 00:55:50 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:34212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234096AbiBQFhx (ORCPT
+        with ESMTP id S232434AbiBQFzt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Feb 2022 00:37:53 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B24D223F0B5;
-        Wed, 16 Feb 2022 21:37:39 -0800 (PST)
+        Thu, 17 Feb 2022 00:55:49 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B237E297207
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 21:55:35 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id p22so7954688lfu.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Feb 2022 21:55:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645076259; x=1676612259;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=QR8r+SBjQSmizFHophkWcfmalBaeXb/3dO5Js2Rryd8=;
-  b=JBX9qCkd6Y+Rt2+OaiYXFcJbvbd1BF2g+WoImnDHhQxPAuk7BTQkePol
-   U1E2wq08RSLBeRODBHpuWQ8UiKq50f3L6EAnhZ+R7c0FF3iIT6xGjtqG8
-   L4ogMfNoplY8JyiF6o08+AMU19dTRD4jl/fuohStjeGSWtS6WwwH0sbuX
-   M=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 16 Feb 2022 21:37:39 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Feb 2022 21:37:37 -0800
-Received: from nalasex01b.na.qualcomm.com (10.47.209.197) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Wed, 16 Feb 2022 21:37:37 -0800
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.922.19; Wed, 16 Feb 2022 21:37:31 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@codeaurora.org>,
-        <perex@perex.cz>, <tiwai@suse.com>,
-        <srinivas.kandagatla@linaro.org>, <rohitkr@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        <linux-gpio@vger.kernel.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [PATCH v7 7/7] pinctrl: qcom: Update clock voting as optional
-Date:   Thu, 17 Feb 2022 11:06:59 +0530
-Message-ID: <1645076219-26157-1-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/0CR4bg/aP+HYLaxgruFj36yg6CA19rL8bNRs6En6EY=;
+        b=Pmt47riEYW0RnTKnLKfpZ9wNNpw8xDqXNVZSeeR56zhnZ/pS8uhfwEePar4mneJanK
+         KW9qulmsVBHGditbxVswz6KGfXGDReNfoibGEr2+eHaaUlkOkOhjrP8n/6UJg2kRDTp9
+         /Gmv97l1SX/f8hLNSaRZSUmuJfW88xAjsBmrP7DRFIh88SaXKuDaUlQJf0c5CfUC8T1s
+         76Ieits0v0zlePNU7SWz/i48TJnTMj7H+wNtxty0QyX9XyHqUVYmhqHLg3C1De4mJWup
+         yobSJmm3ZTlnnKRGQaPdNBmHl4vjsrMoUSP9nZ4wIE3Svi53hkCd/6uytWqgyInksfNH
+         E07A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/0CR4bg/aP+HYLaxgruFj36yg6CA19rL8bNRs6En6EY=;
+        b=geL7ikXtY5ORnvzDYb4FCmFP9z/8I1V1OLiRHAxnX42I5g5izVSyV7qw2g2MaKIrDw
+         TNrg89a84BfKiP1NKNeTDUMmHv3sx4EdQuwyZ67dLbU6tqu9LZgKjRgRTizTf3g47q9G
+         RmwBykuyIWfcqKC0iHz/9SWvh8SpnExK4sG2Qc/dYrxKn+dnZ1zR/HlzT0KlqcrhFFuC
+         lgb+07SdfWWlY9ZPfdrm2nwPNajzZQ+RdRWMP3Bq5izfgMKYa3imWx1eyp+elrgNG7X5
+         udsDF6kpEn9EG54ADFOcaceOpHLiQjHZ1v8Ah3K4e18vXz1EDuJCYCVCZqVnG9Iy5Bxn
+         GuiQ==
+X-Gm-Message-State: AOAM532cruM8DiockMqOwKEclApTik6rCHxWObVY+VBsk8/X+1fRnXdp
+        8DT2rlpgpTV6LhGbr/BnBdgIDw==
+X-Google-Smtp-Source: ABdhPJyCqRQFL/8kW2qka2z7yQ2e41iQFhz/oVM7tj5ddheolaV0OojmGa7YZrgNoSsrXFrq5WWMUw==
+X-Received: by 2002:a05:6512:696:b0:443:7fb9:1ae3 with SMTP id t22-20020a056512069600b004437fb91ae3mr1078435lfe.249.1645077330914;
+        Wed, 16 Feb 2022 21:55:30 -0800 (PST)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id u13sm5015998lfs.260.2022.02.16.21.55.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Feb 2022 21:55:30 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH v5 0/5] drm/msm: rework clock handling
+Date:   Thu, 17 Feb 2022 08:55:24 +0300
+Message-Id: <20220217055529.499829-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update bulk clock voting to optional voting as ADSP bypass platform doesn't
-need macro and decodec clocks, these are maintained as power domains and
-operated from lpass audio core cc.
+msm_dss_clk_*() functions significantly duplicate clk_bulk_* family of
+functions. Drop custom code and use bulk clocks directly. This also
+removes dependency of DP driver on the DPU driver internals.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
----
- drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Note that DP changes were compile-only tested.
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-index 8a82fd9..30a86c3 100644
---- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-@@ -407,7 +407,7 @@ int lpi_pinctrl_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, PTR_ERR(pctrl->slew_base),
- 				     "Slew resource not provided\n");
- 
--	ret = devm_clk_bulk_get(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
-+	ret = devm_clk_bulk_get_optional(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
- 	if (ret)
- 		return dev_err_probe(dev, ret, "Can't get clocks\n");
- 
+Changes since v4:
+ - Use size_t for num_clocks in dpu_kms/dpu_mdss
+ - Use min() in dpu_core_perf_crtc_update()
+ - Drop overcomplicated clock rate setting wrappers inside DP code.
+   We were setting the opp for one clock and setting a rate for a single
+   clock! Call dev_pm_opp_set_rate() and clk_set_rate() directly.
+
+Changes since v3:
+ - Switched to devm_clk_bulk_get_all() per Stephen's suggestion.
+ - Removed a call to of_clk_set_defaults() (per Stephen's suggestion
+   again). It duplicates a call in platform_probe().
+ - Split the first patch (moving helpers to msm_io_utils.c), it's unused
+   now.
+
+Changes since v2:
+ - Retain conditional code/prints in DP code to ease debugging
+ - Rebase on top of msm-next and [1]
+ - Split helper functions to msm_io_utils.c as suggested by Jessica
+
+Changes since v1:
+ - Rebase on top of current tree to fix conflicts
+
+Dmitry Baryshkov (5):
+  drm/msm/dpu: simplify clocks handling
+  drm/msm/dp: "inline" dp_ctrl_set_clock_rate("ctrl_link")
+  drm/msm/dp: set stream_pixel rate directly
+  drm/msm/dp: inline dp_power_clk_set_rate()
+  drm/msm/dp: rewrite dss_module_power to use bulk clock functions
+
+ drivers/gpu/drm/msm/Makefile                  |   1 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c |  23 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.h |   6 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c   | 187 ------------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.h   |  40 ----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  46 ++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c      |  26 +--
+ drivers/gpu/drm/msm/dp/dp_ctrl.c              |  13 +-
+ drivers/gpu/drm/msm/dp/dp_parser.c            |  43 ++--
+ drivers/gpu/drm/msm/dp/dp_parser.h            |   6 +-
+ drivers/gpu/drm/msm/dp/dp_power.c             | 105 ++--------
+ 12 files changed, 74 insertions(+), 426 deletions(-)
+ delete mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.c
+ delete mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_io_util.h
+
 -- 
-2.7.4
+2.34.1
 
