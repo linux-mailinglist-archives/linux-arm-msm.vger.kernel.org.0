@@ -2,116 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3C254BB687
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 11:12:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E71A4BB719
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 11:45:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233938AbiBRKMw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Feb 2022 05:12:52 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:39800 "EHLO
+        id S232027AbiBRKp1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Feb 2022 05:45:27 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:32830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233935AbiBRKMu (ORCPT
+        with ESMTP id S231599AbiBRKp0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Feb 2022 05:12:50 -0500
-Received: from mxd1.seznam.cz (mxd1.seznam.cz [IPv6:2a02:598:a::78:210])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC68154F95;
-        Fri, 18 Feb 2022 02:12:31 -0800 (PST)
-Received: from email.seznam.cz
-        by email-smtpc18b.ko.seznam.cz (email-smtpc18b.ko.seznam.cz [10.53.18.21])
-        id 26b949fe7db71d97271085a0;
-        Fri, 18 Feb 2022 11:12:09 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seznam.cz; s=beta;
-        t=1645179129; bh=7ubBe+jigkJQ0b6P8fnTBoTjIXf8z/f1esHNa37llBM=;
-        h=Received:From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:
-         References:MIME-Version:Content-Transfer-Encoding:X-szn-frgn:
-         X-szn-frgc;
-        b=hlxlmWoJJn13dG+VSKAK84GGxFB41suXLecdq5OnXsMMG3kKG/b/N06+qvqpxkTme
-         5y7v2APIUqnsU1JxGYDU/rAbCdMqCrfH71HYsrNGCJ6UMUF8ezFsIV0E6vbqMwcXAT
-         TyHrxwf7riXYET+tr8TJrqLMFWJOgpa2+oezNfJA=
-Received: from localhost.localdomain (ip-111-27.static.ccinternet.cz [147.161.27.111])
-        by email-relay21.ko.seznam.cz (Seznam SMTPD 1.3.136) with ESMTP;
-        Fri, 18 Feb 2022 11:12:03 +0100 (CET)  
-From:   michael.srba@seznam.cz
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Saravana Kannan <saravanak@google.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, Michael Srba <michael.srba@seznam.cz>,
-        Michael Srba <Michael.Srba@seznam.cz>
-Subject: [PATCH v7 5/5] arm64: dts: qcom: msm8998: reserve potentially inaccessible clocks
-Date:   Fri, 18 Feb 2022 11:09:33 +0100
-Message-Id: <20220218100933.32736-5-michael.srba@seznam.cz>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220218100933.32736-1-michael.srba@seznam.cz>
-References: <20220218100933.32736-1-michael.srba@seznam.cz>
+        Fri, 18 Feb 2022 05:45:26 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7718D25A97C;
+        Fri, 18 Feb 2022 02:45:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645181109; x=1676717109;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=PyusTaFdH1hjIYp8YUpy2ulfjwpj8H2e2xRoOTVv3lo=;
+  b=SaOIQkQcYrX7Soxt3SQ7CvjWVUj9RDZKYVShwyk6NqkMd/DJ6KxFk2oY
+   xK6c8GSKhX4DpfHBBUxvQhp8D9rVAuKZHrWv9+pZ4Yfmrp3RAdb6+Op1Q
+   11uBrTIqsScPoMNk00s1jKtQUW9NK61Y+AIK+D0D1so+wivcvecZ5j5mx
+   w=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 18 Feb 2022 02:45:09 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2022 02:45:08 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Fri, 18 Feb 2022 02:45:08 -0800
+Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Fri, 18 Feb 2022 02:45:04 -0800
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+To:     <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <pure.logic@nexus-software.ie>,
+        <bjorn.andersson@linaro.org>, <greg@kroah.com>, <robh@kernel.org>
+CC:     <linux-kernel@vger.kernel.org>, <quic_rjendra@quicinc.com>,
+        <quic_saipraka@quicinc.com>, <quic_schowdhu@quicinc.com>
+Subject: [Resend PATCH V1 0/2] Revert device tree changes for EUD
+Date:   Fri, 18 Feb 2022 16:13:44 +0530
+Message-ID: <cover.1645177190.git.quic_schowdhu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-szn-frgn: <4a764dfa-d00d-40b6-bad3-37115b067571>
-X-szn-frgc: <0>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Michael Srba <michael.srba@seznam.cz>
+Revert the device tree changes for Embedded USB Debugger(EUD)
+from the usb tree to avoid conflicts as device tree changes
+for EUD are supposed to go from qcom Tree.
 
-With the gcc driver now being more complete and describing clocks which
-might not always be write-accessible to the OS, conservatively specify
-all such clocks as protected in the SoC dts.
-The board dts - or even user-supplied dts - can override this property
-to reflect the actual configuration.
+Changes in this patch
 
-Signed-off-by: Michael Srba <Michael.Srba@seznam.cz>
----
- CHANGES:
- - v2: add this patch
- - v3: fix missing Signed-off-by
- - v4: add a proper explanation as per review, (hopefully) fix the subject and commit message
- - v5: none
- - v6: none
- - v7: none
----
+*Fixed the issue with revert statement.
+*Added the signed-off tag.
 
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+Souradeep Chowdhury (2):
+  Revert "arm64: dts: qcom: sc7280: Set the default dr_mode for usb2"
+  Revert "arm64: dts: qcom: sc7280: Add EUD dt node and dwc3 connector"
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index f273bc1ff629..16dccf9d881e 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -863,6 +863,21 @@ gcc: clock-controller@100000 {
- 
- 			clock-names = "xo", "sleep_clk";
- 			clocks = <&xo>, <&sleep_clk>;
-+
-+			/*
-+			 * The hypervisor typically configures the memory region where these clocks
-+			 * reside as read-only for the HLOS. If the HLOS tried to enable or disable
-+			 * these clocks on a device with such configuration (e.g. because they are
-+			 * enabled but unused during boot-up), the device will most likely decide
-+			 * to reboot.
-+			 * In light of that, we are conservative here and we list all such clocks
-+			 * as protected. The board dts (or a user-supplied dts) can override the
-+			 * list of protected clocks if it differs from the norm, and it is in fact
-+			 * desired for the HLOS to manage these clocks
-+			 */
-+			protected-clocks = <AGGRE2_SNOC_NORTH_AXI>,
-+					   <SSC_XO>,
-+					   <SSC_CNOC_AHBS_CLK>;
- 		};
- 
- 		rpm_msg_ram: sram@778000 {
--- 
-2.34.1
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts |  4 ----
+ arch/arm64/boot/dts/qcom/sc7280.dtsi    | 36 ---------------------------------
+ 2 files changed, 40 deletions(-)
+
+--
+2.7.4
 
