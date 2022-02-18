@@ -2,66 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 32A304BAE46
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 01:19:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA7E14BAE51
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 01:22:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230100AbiBRASt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Feb 2022 19:18:49 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:54156 "EHLO
+        id S230119AbiBRAWM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Feb 2022 19:22:12 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:38540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230083AbiBRASq (ORCPT
+        with ESMTP id S230061AbiBRAWM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Feb 2022 19:18:46 -0500
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F9D63E5D6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 16:18:30 -0800 (PST)
-Received: by mail-oi1-x22c.google.com with SMTP id a6so1363999oid.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 16:18:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=A0w/SqOdMz9JqzxXphVHbdn/ofl6hS1bJpMLgWc1xKY=;
-        b=RBDdLXcavqALvL2aPUvJnlvKaIQ1sNCTlGXUjSixkUx6zPkIULCzeE7lGRnnYdGkyY
-         pQEFeiJzwfJIfdf1nIN6cHzlhLbuJK9eRgGN/PXncVdznskcbaZrjp7SfS+PEs1yZCg7
-         4FALdj7QCzEXJm9vAG6IikJTTdxED3fi4wiI4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=A0w/SqOdMz9JqzxXphVHbdn/ofl6hS1bJpMLgWc1xKY=;
-        b=1jZtRkHLfouuhgFxTXtfTiVvLyr/JZC5L0KdB4hZR6iJSqE7Un0xogbcQA2ZBNOT+u
-         lKLqL953kjWB7lM+/6w62LfN/sHk2XcWDg8EkmINzx6Ls8ycbWdBhhGA9FjEtZCgWvWp
-         ZSCeJ7mTtUzOdumMCA288f5+rAgeqJk8rMO0anwNXJzlDKr5jEX01zYi+C/dyEjSTF1c
-         WRObwD7ET0VP0kVgmAVPmiP0KaN6UJ2vR7oNAmdbro1rTlVccgH2krQE7n3URzCxlDMW
-         yWKBHucAigDIPO2Q8k3TopVVJTNYlFLrzHKsr/5LuOP0cv5/SnVdv/Ksw+7J76vg7cQk
-         nyaw==
-X-Gm-Message-State: AOAM530WQtkKR1nctvxJHqvuffHsizkQ0kRyUlIsmeZyxM9JVO+h9CTj
-        dvwBJ7TPlHpRfMZLxhvqLFcs2/vDUNhdtSSgC+RSWQ6fXqA=
-X-Google-Smtp-Source: ABdhPJwqNt21JkBwrP+UAPtFRk28p6wGEEJdk3rvAFbwcRwFIjPQ29AefqdWopg67l9g+04pxITxo3m5CSJlse7/eLE=
-X-Received: by 2002:a05:6808:b2f:b0:2cf:9af3:1687 with SMTP id
- t15-20020a0568080b2f00b002cf9af31687mr2216175oij.112.1645143510019; Thu, 17
- Feb 2022 16:18:30 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 17 Feb 2022 16:18:29 -0800
+        Thu, 17 Feb 2022 19:22:12 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC9AADECD;
+        Thu, 17 Feb 2022 16:21:56 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 618E361B18;
+        Fri, 18 Feb 2022 00:21:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD55BC340E8;
+        Fri, 18 Feb 2022 00:21:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1645143715;
+        bh=avOzWfAlv22MRwZJspRmhyj/pOnSsNZHtgRFvg0cZ4s=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=rJXShRFAcO9xfoDxZu32Jx6jR/w0AVEHg61Vwe4mYymmYH2OHNaTSVK6011W9czT9
+         X6r3O5Q92DrNtD7QKJvhEjHZq6k+O9A3BiP6XjK/7j2ANJb+lFguXE+R5bzWGsjeZa
+         rpvqnXEWui51MiuUC4eEn9uzHwD+PeH+DUjgm6dMDuCIeNpS9/R8F4e9o7gfXFMb7k
+         aSqgcd2lv0tRLnf9mxtH+dbqGZ4p/INhuZ8MVurGO+PQllwvH4ciUN+8p91OKomxMb
+         eT8JxKBpHLYy7CqOM1O3g52rTUp/jYnJtgmc15ELIvOerwbjDy1g0TO8XbHbdajVud
+         A3/8Fi/3/I5bA==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <20220215201539.3970459-3-dmitry.baryshkov@linaro.org>
-References: <20220215201539.3970459-1-dmitry.baryshkov@linaro.org> <20220215201539.3970459-3-dmitry.baryshkov@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1644919753-28855-1-git-send-email-quic_rohiagar@quicinc.com>
+References: <1644919753-28855-1-git-send-email-quic_rohiagar@quicinc.com>
+Subject: Re: [PATCH v2 7/7] clk: qcom: Add SDX65 APCS clock controller support
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, manivannan.sadhasivam@linaro.org,
+        mturquette@baylibre.com
+Date:   Thu, 17 Feb 2022 16:21:53 -0800
 User-Agent: alot/0.10
-Date:   Thu, 17 Feb 2022 16:18:29 -0800
-Message-ID: <CAE-0n52DNP_vgG5E2L1hnh_sPxWsDgZVVL-_XoEfbH3yOUqoGQ@mail.gmail.com>
-Subject: Re: [PATCH 2/5] dt-bindings: clocks: qcom,sdm845-camcc: add clocks/clock-names
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Message-Id: <20220218002155.AD55BC340E8@smtp.kernel.org>
+X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -70,11 +58,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-02-15 12:15:36)
-> The driver can parse bi-tcxo clock from the clocks passed in the device
-> tree. Specify it in schema.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+Quoting Rohit Agarwal (2022-02-15 02:09:13)
+> Add a driver config support for the SDX65 APCS clock controller. It is pa=
+rt
 
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+Maybe "Add a driver config" is a little strong for the patch contents.
+More like "Update APCS Kconfig to reflect support for another SoC".
+
+> of the APCS hardware block, which among other things implements a combined
+> mux and half integer divider functionality. The APCS clock controller has=
+ 3
+> parent clocks:
+>=20
+> 1. Board XO
+> 2. Fixed rate GPLL0
+> 3. A7 PLL
+>=20
+> This is required for enabling CPU frequency scaling on SDX65-based
+> platforms.
+>=20
+> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
