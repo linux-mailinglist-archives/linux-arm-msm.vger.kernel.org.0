@@ -2,77 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C41524BC043
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 20:27:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 43C2E4BC05E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 20:43:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237117AbiBRT2I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Feb 2022 14:28:08 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:56694 "EHLO
+        id S236834AbiBRTnY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Feb 2022 14:43:24 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233267AbiBRT2H (ORCPT
+        with ESMTP id S232313AbiBRTnX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Feb 2022 14:28:07 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8427335869
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 11:27:49 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id o2so7337896lfd.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 11:27:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=dSkwxdtJ7mPWSSSM389YG6BGKFFrs7uF7NULsF3otKQ=;
-        b=rX2f5T3QqmsMYZfX/LAdi8UDeY7DIzLQyz0GkVZRF5WdMfHmrS3F3EZvx2qXh+ldT0
-         +xIaMI+FmPPDSqzPOdP4uijPQoMwMpbHqLSw9YFRUyqpghlr07ZcHjnlzLNlUFjV7DIC
-         X+sY/SLWuYwcXw35FWTNRYk4dKoryU6ArrWUi6YpieoANnHtbPxYH7OOQr6j/k1G023m
-         Ghcvttr8vhg8iccO6dhZXRoFdBt2Z1s+gbIrdRtoXYuf9M4UoqtSfYMqJlkVjIegq1qw
-         IRnr8vPrNMJ4ZMgPrfT/JWO76TpHHl8phi5uDlRQF86z4Tya6gUfZGzGnPd0h6pn5iX3
-         1YVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=dSkwxdtJ7mPWSSSM389YG6BGKFFrs7uF7NULsF3otKQ=;
-        b=DoJ5329b0ZeO/NKTEJlGeAFn0pEzZ/W0/N4Wg3oXuBpXFQPdbJ5zAEB7eLQCIdw9Qf
-         z55HKvo51rzXWW7tpNN6aFKbl/bpen/6W+qDuhf/Ve3DMTYw3dQbCDJQI+OIzP6rT4je
-         30EMep7AmEvRnuXu8fQhzJcujGLCvgrK0/F8by1Qnx0ziVTlEP8mLq62HJ+sJ2Wlw5py
-         /7tC7Mul1LrHwWvhEcaczTjJ1o8R6Jn8eszRVDFGBgp3ZsVKHxe7vZt05ltvxHbeb/G1
-         ACXuo/TDejmLxYCkN//8Sik4/UcJ1s1G/Tq5XIwlI2bBHgY+0HLisej+f6nxhfZmuK4N
-         I99Q==
-X-Gm-Message-State: AOAM5300gMGGARPrEqhyya+wFUKW4ihayO77k1cnWtK8kaxAEyv4ooaJ
-        p+W2UBEEJeNZ8S7L6NhWnlWCCA==
-X-Google-Smtp-Source: ABdhPJwe2iQk4YzsedccWeQbQQtrgZLiKdtan5bdBm+/i0gHBWiHPdzFRwWX6ZegZ9BKKTwgYatdcA==
-X-Received: by 2002:a05:6512:338c:b0:443:b61e:60d0 with SMTP id h12-20020a056512338c00b00443b61e60d0mr3128828lfg.124.1645212467720;
-        Fri, 18 Feb 2022 11:27:47 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u17sm411376ljd.137.2022.02.18.11.27.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Feb 2022 11:27:46 -0800 (PST)
-Message-ID: <9e2c9151-d460-14d6-46f7-bc32b60ec4ca@linaro.org>
-Date:   Fri, 18 Feb 2022 22:27:45 +0300
+        Fri, 18 Feb 2022 14:43:23 -0500
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4CFFD5543;
+        Fri, 18 Feb 2022 11:43:05 -0800 (PST)
+Received: from [192.168.1.101] (abxk63.neoplus.adsl.tpnet.pl [83.9.4.63])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id E5A433F941;
+        Fri, 18 Feb 2022 20:42:58 +0100 (CET)
+Message-ID: <b0ec7470-29f9-255b-1789-d4bd69ff34c1@somainline.org>
+Date:   Fri, 18 Feb 2022 20:42:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v2 1/2] drm/msm/dpu: Add a function to retrieve the
- current CTL status
-Content-Language: en-GB
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>, robdclark@gmail.com
-Cc:     sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
-        abhinavk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, martin.botka@somainline.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        paul.bouchara@somainline.org
-References: <20210911163919.47173-1-angelogioacchino.delregno@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20210911163919.47173-1-angelogioacchino.delregno@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Thunderbird/91.6.1
+Subject: Re: [PATCH v7 2/5] clk: qcom: gcc-msm8998: add SSC-related clocks
+Content-Language: en-US
+To:     michael.srba@seznam.cz, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Saravana Kannan <saravanak@google.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20220218100933.32736-1-michael.srba@seznam.cz>
+ <20220218100933.32736-2-michael.srba@seznam.cz>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20220218100933.32736-2-michael.srba@seznam.cz>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,63 +55,109 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/09/2021 19:39, AngeloGioacchino Del Regno wrote:
-> Add a function that returns whether the requested CTL is active or not:
-> this will be used in a later commit to fix command mode panel issues.
+
+
+On 18.02.2022 11:09, michael.srba@seznam.cz wrote:
+> From: Michael Srba <Michael.Srba@seznam.cz>
 > 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+> Add four clocks which need to be manipulated in order to initialize the AHB
+> bus which exposes the SCC block in the global address space.
+> 
+> If a device is known to be configured such that writing to these
+> registers from Linux is not permitted, the 'protected-clocks'
+> device tree property must be used to denote that fact.
+> 
+> Signed-off-by: Michael Srba <Michael.Srba@seznam.cz>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 6 ++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h | 7 +++++++
->   2 files changed, 13 insertions(+)
+>  CHANGES:
+>  - v2: none
+>  - v3: none
+>  - v4: reword the commit message
+>  - v5: none
+>  - v6: none
+>  - v7: change 'struct clk_init_data' to 'const struct clk_init_data', use imperative in commit message
+> ---
+>  drivers/clk/qcom/gcc-msm8998.c | 56 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 56 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index 64740ddb983e..3b6fd73eb3a8 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -91,6 +91,11 @@ static inline void dpu_hw_ctl_trigger_start(struct dpu_hw_ctl *ctx)
->   	DPU_REG_WRITE(&ctx->hw, CTL_START, 0x1);
->   }
->   
-> +static inline bool dpu_hw_ctl_is_started(struct dpu_hw_ctl *ctx)
-> +{
-> +	return !!(DPU_REG_READ(&ctx->hw, CTL_START) & BIT(0));
-> +}
-> +
->   static inline void dpu_hw_ctl_trigger_pending(struct dpu_hw_ctl *ctx)
->   {
->   	trace_dpu_hw_ctl_trigger_prepare(ctx->pending_flush_mask,
-> @@ -579,6 +584,7 @@ static void _setup_ctl_ops(struct dpu_hw_ctl_ops *ops,
->   	ops->get_pending_flush = dpu_hw_ctl_get_pending_flush;
->   	ops->get_flush_register = dpu_hw_ctl_get_flush_register;
->   	ops->trigger_start = dpu_hw_ctl_trigger_start;
-> +	ops->is_started = dpu_hw_ctl_is_started;
->   	ops->trigger_pending = dpu_hw_ctl_trigger_pending;
->   	ops->reset = dpu_hw_ctl_reset_control;
->   	ops->wait_reset_status = dpu_hw_ctl_wait_reset_status;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> index 806c171e5df2..ac1544474022 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> @@ -61,6 +61,13 @@ struct dpu_hw_ctl_ops {
->   	 */
->   	void (*trigger_start)(struct dpu_hw_ctl *ctx);
->   
-> +	/**
-> +	 * check if the ctl is started
-> +	 * @ctx       : ctl path ctx pointer
-> +	 * @Return: true if started, false if stopped
-> +	 */
-> +	bool (*is_started)(struct dpu_hw_ctl *ctx);
-> +
->   	/**
->   	 * kickoff prepare is in progress hw operation for sw
->   	 * controlled interfaces: DSI cmd mode and WB interface
+> diff --git a/drivers/clk/qcom/gcc-msm8998.c b/drivers/clk/qcom/gcc-msm8998.c
+> index 407e2c5caea4..2d14c3d672fc 100644
+> --- a/drivers/clk/qcom/gcc-msm8998.c
+> +++ b/drivers/clk/qcom/gcc-msm8998.c
+> @@ -2833,6 +2833,58 @@ static struct clk_branch gcc_rx1_usb2_clkref_clk = {
+>  	},
+>  };
+>  
+> +static struct clk_branch gcc_im_sleep_clk = {
+> +	.halt_reg = 0x4300C,
+Please use lowercase hex to keep things consistent.
 
 
--- 
-With best wishes
-Dmitry
+> +	.halt_check = BRANCH_HALT,
+> +	.clkr = {
+> +		.enable_reg = 0x4300C,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(const struct clk_init_data){
+> +			.name = "gcc_im_sleep_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_branch aggre2_snoc_north_axi_clk = {
+> +	.halt_reg = 0x83010,
+> +	.halt_check = BRANCH_HALT,
+> +	.clkr = {
+> +		.enable_reg = 0x83010,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(const struct clk_init_data){
+> +			.name = "aggre2_snoc_north_axi_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_branch ssc_xo_clk = {
+> +	.halt_reg = 0x63018,
+> +	.halt_check = BRANCH_HALT,
+> +	.clkr = {
+> +		.enable_reg = 0x63018,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(const struct clk_init_data){
+> +			.name = "ssc_xo_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_branch ssc_cnoc_ahbs_clk = {
+> +	.halt_reg = 0x6300C,
+And here too.
+
+
+> +	.halt_check = BRANCH_HALT,
+> +	.clkr = {
+> +		.enable_reg = 0x6300C,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(const struct clk_init_data){
+> +			.name = "ssc_cnoc_ahbs_clk",
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+>  static struct gdsc pcie_0_gdsc = {
+>  	.gdscr = 0x6b004,
+>  	.gds_hw_ctrl = 0x0,
+> @@ -3036,6 +3088,10 @@ static struct clk_regmap *gcc_msm8998_clocks[] = {
+>  	[GCC_MSS_MNOC_BIMC_AXI_CLK] = &gcc_mss_mnoc_bimc_axi_clk.clkr,
+>  	[GCC_MMSS_GPLL0_CLK] = &gcc_mmss_gpll0_clk.clkr,
+>  	[HMSS_GPLL0_CLK_SRC] = &hmss_gpll0_clk_src.clkr,
+> +	[GCC_IM_SLEEP] = &gcc_im_sleep_clk.clkr,
+> +	[AGGRE2_SNOC_NORTH_AXI] = &aggre2_snoc_north_axi_clk.clkr,
+> +	[SSC_XO] = &ssc_xo_clk.clkr,
+> +	[SSC_CNOC_AHBS_CLK] = &ssc_cnoc_ahbs_clk.clkr,
+>  };
+>  
+>  static struct gdsc *gcc_msm8998_gdscs[] = {
+> 
