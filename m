@@ -2,83 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C720F4BC1C4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 22:21:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 435B14BC206
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 22:29:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238368AbiBRVVm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Feb 2022 16:21:42 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:34202 "EHLO
+        id S234570AbiBRV3Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Feb 2022 16:29:16 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:39438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238342AbiBRVVm (ORCPT
+        with ESMTP id S235638AbiBRV3Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Feb 2022 16:21:42 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFBFFF7D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 13:21:23 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id m14so7752578lfu.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 13:21:23 -0800 (PST)
+        Fri, 18 Feb 2022 16:29:16 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1388D21B1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 13:28:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=C8PWVqmEeS2R4u71x+UbBku/kDbzCPMunA9RTJqGotA=;
-        b=vP3mIBw4kFS7x3xWGL70abm1jaIEx14umqK/4z89FbH9yAnBhEGrIEbpGhBnH+IgO+
-         Iw9AT4MK71d/XVuNpxojLZjsa1jqMgarsn86u3UakpwbMd8EMD2v8rKu8Ol3MMv/Ovgz
-         /dDsyR5p3R+kI4OYliZp4hW1ydvTBPJSMqrbXlj6vzxUdaSQivkIXNDaHz7kmEPLBD0R
-         BQqQLRLeSX2c9yPYU8cC1v7Mshrj2N5RLmGdI0QwK1Ke3vBShLj7KGlYYz1NFJflBLHN
-         86gUCDxGCytRURix3u/ErgtL7KWvdvk0rK0FatgPVlQ/xW6O5CGUuvcBRsLINMgWisRT
-         TBRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=C8PWVqmEeS2R4u71x+UbBku/kDbzCPMunA9RTJqGotA=;
-        b=gv6PEZwd9+TfL8jFeBtZbokRuPc6/yjXJc85T5OGELYb14RprCkF1m/N/lyjFJfUD1
-         FZklEVtXU33ctrvM/MClxQcyzcfJx8ptDQ19jBY23HKvS/dGO11D+wpLKoiAx50sgRh0
-         yl2B8z/xRWt1hxQewJBuFngesoYvNWAPJTZRINL1uhejcFFayh95KP6zb81fqrvi1nOx
-         oAyChuFGISx1tu7hiqi5Q7RXyI9+VqpYFYeYTUVOwUIRCpeyp1jYLei8DIgoIOC7Db4z
-         O21jmQH7mJHufTRzZzwN+Y8EnGryiTHK9wbaILdq+fcv5BtDkd7BdQW5FAvTRP/rn0s9
-         TKKg==
-X-Gm-Message-State: AOAM532aq/GPWmCN0MR+kotXQvgqZSni1wGytpbI8voHl/7nRK3WFskg
-        nk7dEo7kITD9hdZGxFi1o9C8ng==
-X-Google-Smtp-Source: ABdhPJxVJKzR4mlUZlWpKN4hS8WZlhHDwwvMfb/OqEvGU0lL5OXCxw4Pk862Lm3VUnmdt96VGPRM5g==
-X-Received: by 2002:a05:6512:36d0:b0:442:4cb2:df5 with SMTP id e16-20020a05651236d000b004424cb20df5mr6498129lfs.648.1645219282144;
-        Fri, 18 Feb 2022 13:21:22 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id 7sm372446lft.194.2022.02.18.13.21.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Feb 2022 13:21:21 -0800 (PST)
-Message-ID: <9f1e2df6-4f28-1d91-7654-ff2d9339dfd9@linaro.org>
-Date:   Sat, 19 Feb 2022 00:21:20 +0300
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645219739; x=1676755739;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=wflnsAcwa0j1WYpBAhesYugAkvNeswI7swhveSWuY1g=;
+  b=tgykeciabXBX+eWZ5vEvZ5GNLd17xVvQQG1WGn1qbjxwq/PrVDagUw0T
+   Iw9BUHP6LMnaV87igFbhjOQBQ+xGDh79+txCb7DjXgp7mtimZqMbNGzMa
+   YD+iHHlKQ3448/HgnGVNO71tKNBNnYoETQ+xZGwnbty2vwKTL2DRrODYM
+   k=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 18 Feb 2022 13:28:58 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2022 13:28:58 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Fri, 18 Feb 2022 13:28:57 -0800
+Received: from [10.110.101.104] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Fri, 18 Feb
+ 2022 13:28:56 -0800
+Message-ID: <013284ad-11c7-e21c-3ca4-0e8b7b804b98@quicinc.com>
+Date:   Fri, 18 Feb 2022 13:28:56 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [REPOST PATCH v4 08/13] drm/msm/disp/dpu1: Don't use DSC with
- mode_3d
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [RFC PATCH v2 2/5] drm/msm/dp: support attaching bridges to the
+ DP encoder
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+CC:     Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20220210103423.271016-1-vkoul@kernel.org>
- <20220210103423.271016-9-vkoul@kernel.org>
- <67006cc4-3385-fe03-bb4d-58623729a8a8@quicinc.com> <Yg3mvEvqYs89dJWI@matsya>
- <4b89f5fe-0752-3c6a-3fb0-192f1f2e7b9e@quicinc.com>
- <acf0a2a2-f2e5-906a-3c51-525abd18ee6f@linaro.org>
- <a38432a8-7920-e26d-7391-a49bebbc57f9@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <a38432a8-7920-e26d-7391-a49bebbc57f9@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20220211224006.1797846-1-dmitry.baryshkov@linaro.org>
+ <20220211224006.1797846-3-dmitry.baryshkov@linaro.org>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <20220211224006.1797846-3-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,135 +74,143 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/02/2022 23:46, Abhinav Kumar wrote:
-> 
-> 
-> On 2/16/2022 11:12 PM, Dmitry Baryshkov wrote:
->> On 17/02/2022 09:33, Abhinav Kumar wrote:
->>>
->>>
->>> On 2/16/2022 10:10 PM, Vinod Koul wrote:
->>>> On 16-02-22, 19:11, Abhinav Kumar wrote:
->>>>>
->>>>>
->>>>> On 2/10/2022 2:34 AM, Vinod Koul wrote:
->>>>>> We cannot enable mode_3d when we are using the DSC. So pass
->>>>>> configuration to detect DSC is enabled and not enable mode_3d
->>>>>> when we are using DSC
->>>>>>
->>>>>> We add a helper dpu_encoder_helper_get_dsc() to detect dsc
->>>>>> enabled and pass this to .setup_intf_cfg()
->>>>>>
->>>>>> Signed-off-by: Vinod Koul <vkoul@kernel.org>
->>>>>
->>>>> We should not use 3D mux only when we use DSC merge topology.
->>>>> I agree that today we use only 2-2-1 topology for DSC which means 
->>>>> its using
->>>>> DSC merge.
->>>>>
->>>>> But generalizing that 3D mux should not be used for DSC is not right.
->>>>>
->>>>> You can detect DSC merge by checking if there are two encoders and one
->>>>> interface in the topology and if so, you can disable 3D mux.
->>>>
->>>> Right now with DSC we disable that as suggested by Dmitry last time.
->>>> Whenever we introduce merge we should revisit this, for now this should
->>>> suffice
->>>>
->>>
->>> Sorry I didnt follow.
->>>
->>> The topology which you are supporting today IS DSC merge 2-2-1. I 
->>> didnt get what you mean by "whenever we introduce".
->>>
->>> I didnt follow Dmitry's comment either.
->>>
->>> "anybody adding support for SDE_RM_TOPOLOGY_DUALPIPE_3DMERGE_DSC 
->>> handle this."
->>>
->>> 3D mux shouldnt be used when DSC merge is used.
->>>
->>> The topology Dmitry is referring to will not use DSC merge but you 
->>> are using it here and thats why you had to make this patch in the 
->>> first place. So I am not sure why would someone who uses 3D merge 
->>> topology worry about DSC merge. Your patch is the one which deals 
->>> with the topology in question.
->>>
->>> What I am suggesting is a small but necessary improvement to this patch.
->>
->> It seems that we can replace this patch by changing 
->> dpu_encoder_helper_get_3d_blend_mode() to contain the following 
->> condition (instead of the one present there). Does the following seem 
->> correct to you:
->>
->> static inline enum dpu_3d_blend_mode 
->> dpu_encoder_helper_get_3d_blend_mode(
->>                  struct dpu_encoder_phys *phys_enc)
->> {
->>          struct dpu_crtc_state *dpu_cstate;
->>
->>          if (!phys_enc || phys_enc->enable_state == DPU_ENC_DISABLING)
->>                  return BLEND_3D_NONE;
->>
->>          dpu_cstate = to_dpu_crtc_state(phys_enc->parent->crtc->state);
->>
->> +    /* Use merge_3d unless DSCMERGE topology is used */
->>          if (phys_enc->split_role == ENC_ROLE_SOLO &&
->> +           hweight(dpu_encoder_helper_get_dsc(phys_enc)) != 1 &&
 
-Yes, the correct should be:
-hweight(...) == 2
+On 2/11/2022 2:40 PM, Dmitry Baryshkov wrote:
+> Currently DP driver will allocate panel bridge for eDP panels. This
+> supports only the following topology:
+>
+> - eDP encoder ⇒ eDP panel (wrapped using panel-bridge)
+>
+> Simplify this code to just check if there is any next bridge in the
+> chain (be it a panel bridge or regular bridge). Rename panel_bridge
+> field to next_bridge accordingly.
+>
+> This allows one to use e.g. one of the following display topologies:
+>
+> - eDP encoder ⇒ ptn3460 ⇒ fixed LVDS panel
+> - eDP encoder ⇒ ptn3460 ⇒ LVDS connector with EDID lines for panel autodetect
+> - eDP encoder ⇒ ptn3460 ⇒ THC63LVD1024 ⇒ DPI panel.
+> - eDP encoder ⇒ LT8912 ⇒ DSI panel
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
->>              dpu_cstate->num_mixers == CRTC_DUAL_MIXERS)
->>                  return BLEND_3D_H_ROW_INT;
->>
->>          return BLEND_3D_NONE;
->> }
-> 
-> This will not be enough. To detect whether DSC merge is enabled you need 
-> to query the topology. The above condition only checks if DSC is enabled 
-> not DSC merge.
-> 
-> So the above function can be modified to use a helper like below instead 
-> of the hweight.
-> 
-> bool dpu_encoder_get_dsc_merge_info(struct dpu_encoder_virt *dpu_enc)
-> {
->      struct msm_display_topology topology = {0};
-> 
->      topology = dpu_encoder_get_topology(...);
-> 
->      if (topology.num_dsc > topology.num_intf)
+> Tested-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 
-num_intf is 1 or 2. If it's one, the split_role is SOLO
-hweight would return a num of bits in the DSC mask. It's 0, 1 or 2.
-So, if the split_role is SOLO and hweight is 2, we get exactly your 
-condition.
-
-Does that sound correct?
-
->          return true;
->      else
->          return false;
-> }
-> 
-> if (!dpu_encoder_get_dsc_merge_info() && other conditions listed above)
->      return BLEND_3D_H_ROW_INT;
-> else
->      BLEND_3D_NONE;
->>
->>
->>>
->>> All that you have to do is in query whether DSC merge is used from 
->>> the topology. You can do it in multiple ways:
->>>
->>> 1) Either query this from the encoder
->>> 2) Store a bool "dsc_merge" in the intf_cfg
->>>
->>
->>
-
-
--- 
-With best wishes
-Dmitry
+> ---
+>   drivers/gpu/drm/msm/dp/dp_display.c |  2 +-
+>   drivers/gpu/drm/msm/dp/dp_display.h |  2 +-
+>   drivers/gpu/drm/msm/dp/dp_drm.c     |  4 ++--
+>   drivers/gpu/drm/msm/dp/dp_parser.c  | 31 +++++++++++++++--------------
+>   drivers/gpu/drm/msm/dp/dp_parser.h  |  2 +-
+>   5 files changed, 21 insertions(+), 20 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 44d42c76c2a3..45f9a912ecc5 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -266,7 +266,7 @@ static int dp_display_bind(struct device *dev, struct device *master,
+>   		goto end;
+>   	}
+>   
+> -	dp->dp_display.panel_bridge = dp->parser->panel_bridge;
+> +	dp->dp_display.next_bridge = dp->parser->next_bridge;
+>   
+>   	dp->aux->drm_dev = drm;
+>   	rc = dp_aux_register(dp->aux);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+> index e3adcd578a90..7af2b186d2d9 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
+> @@ -16,7 +16,7 @@ struct msm_dp {
+>   	struct drm_bridge *bridge;
+>   	struct drm_connector *connector;
+>   	struct drm_encoder *encoder;
+> -	struct drm_bridge *panel_bridge;
+> +	struct drm_bridge *next_bridge;
+>   	bool is_connected;
+>   	bool audio_enabled;
+>   	bool power_on;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+> index 26ef41a4c1b6..80f59cf99089 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+> @@ -236,9 +236,9 @@ struct drm_bridge *msm_dp_bridge_init(struct msm_dp *dp_display, struct drm_devi
+>   		return ERR_PTR(rc);
+>   	}
+>   
+> -	if (dp_display->panel_bridge) {
+> +	if (dp_display->next_bridge) {
+>   		rc = drm_bridge_attach(dp_display->encoder,
+> -					dp_display->panel_bridge, bridge,
+> +					dp_display->next_bridge, bridge,
+>   					DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+>   		if (rc < 0) {
+>   			DRM_ERROR("failed to attach panel bridge: %d\n", rc);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
+> index a7acc23f742b..901d7967370f 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
+> @@ -265,23 +265,16 @@ static int dp_parser_clock(struct dp_parser *parser)
+>   	return 0;
+>   }
+>   
+> -static int dp_parser_find_panel(struct dp_parser *parser)
+> +static int dp_parser_find_next_bridge(struct dp_parser *parser)
+>   {
+>   	struct device *dev = &parser->pdev->dev;
+> -	struct drm_panel *panel;
+> -	int rc;
+> +	struct drm_bridge *bridge;
+>   
+> -	rc = drm_of_find_panel_or_bridge(dev->of_node, 1, 0, &panel, NULL);
+> -	if (rc) {
+> -		DRM_ERROR("failed to acquire DRM panel: %d\n", rc);
+> -		return rc;
+> -	}
+> +	bridge = devm_drm_of_get_bridge(dev, dev->of_node, 1, 0);
+> +	if (IS_ERR(bridge))
+> +		return PTR_ERR(bridge);
+>   
+> -	parser->panel_bridge = devm_drm_panel_bridge_add(dev, panel);
+> -	if (IS_ERR(parser->panel_bridge)) {
+> -		DRM_ERROR("failed to create panel bridge\n");
+> -		return PTR_ERR(parser->panel_bridge);
+> -	}
+> +	parser->next_bridge = bridge;
+>   
+>   	return 0;
+>   }
+> @@ -307,10 +300,18 @@ static int dp_parser_parse(struct dp_parser *parser, int connector_type)
+>   	if (rc)
+>   		return rc;
+>   
+> +	/*
+> +	 * Currently we support external bridges only for eDP connectors.
+> +	 *
+> +	 * No external bridges are expected for the DisplayPort connector,
+> +	 * it is physically present in a form of a DP or USB-C connector.
+> +	 */
+>   	if (connector_type == DRM_MODE_CONNECTOR_eDP) {
+> -		rc = dp_parser_find_panel(parser);
+> -		if (rc)
+> +		rc = dp_parser_find_next_bridge(parser);
+> +		if (rc) {
+> +			DRM_ERROR("DP: failed to find next bridge\n");
+>   			return rc;
+> +		}
+>   	}
+>   
+>   	/* Map the corresponding regulator information according to
+> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
+> index 3172da089421..4cec851e38d9 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_parser.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_parser.h
+> @@ -123,7 +123,7 @@ struct dp_parser {
+>   	struct dp_display_data disp_data;
+>   	const struct dp_regulator_cfg *regulator_cfg;
+>   	u32 max_dp_lanes;
+> -	struct drm_bridge *panel_bridge;
+> +	struct drm_bridge *next_bridge;
+>   
+>   	int (*parse)(struct dp_parser *parser, int connector_type);
+>   };
