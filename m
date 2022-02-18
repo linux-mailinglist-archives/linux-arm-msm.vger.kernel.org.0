@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F8FC4BC255
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 22:52:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AC12D4BC29A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 23:32:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239001AbiBRVw6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Feb 2022 16:52:58 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47124 "EHLO
+        id S238592AbiBRWdP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Feb 2022 17:33:15 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:40788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235061AbiBRVw6 (ORCPT
+        with ESMTP id S237959AbiBRWdO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Feb 2022 16:52:58 -0500
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 216823F884
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 13:52:40 -0800 (PST)
-Received: by mail-lj1-x22a.google.com with SMTP id c15so6160903ljf.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 13:52:40 -0800 (PST)
+        Fri, 18 Feb 2022 17:33:14 -0500
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E0361D314
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 14:32:56 -0800 (PST)
+Received: by mail-lj1-x233.google.com with SMTP id a42so6269149ljq.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 14:32:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=O4CsnBjYy03NrYURxvtz1s+vFa+ZGHorTAV/ULTGx+o=;
-        b=yts1Vje/3ZqmS8WRYE1+0krC4ok8bChd+aSKmoTLV1pUUCUG2CQILVwTBjNgZU5DaU
-         EzbLBHg/Cm0/e9CwdCsLx4fbhTzts+1Jk2Egi0DZjRv4csNR8xZH6WPMoA7BkyQBpfT8
-         5zOpWpyFcuxiLE97AcwIAQ5E6th49sX0JaHZ3KnMRAo3GJZSJ+eMELkOc8n284zBaXIg
-         WuwcHqspo8en6PF8KG3D8Bybiy16H5DXXclXIubOEiPL0Blwy7jDHE3pJpWrUZVmlw92
-         q+gaXClXQ0fXaVjePXONxQiXADwuq4H6JIyo3R1UZF8ZLZJ5BY4HlOvF3NJzgJRBFNu7
-         bpHw==
+        bh=EmbZ+Rs0DCCaaiAlhr8hnJNWT7G3P69JhJhCoYAgkyI=;
+        b=lgDmZYH5oDnn3u94HVyLPuaezlpg5OtCTcfDmaDnbgSf75cqELOA+SzUY4iECFi9fI
+         PEqrL73l6GDWCZcoaDs0YhUamvyfzKd6M+U5bHhdP6UZ4cpH5FI5NckuqQum6FfI8Gyi
+         YnlEA/T1IytaeKeAwKAbCBscRsLaUJCBGfBEzO1c5JDkbUm0ifiVCH36JnfelR4xpTBy
+         5KqKjx8+PZswPbsQn46J42Q09hf0XkF7DmaZLjbWwugorJAEZeufIAuKvs9Df6pe/s7Y
+         2pRkjEdtXc00quRYaWhiWkOXwQ5e+umtJ1XlOfGm47AhqQLPCx9RYc2NMeo/PuGDy4pp
+         v3Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=O4CsnBjYy03NrYURxvtz1s+vFa+ZGHorTAV/ULTGx+o=;
-        b=7yWDD8juuOTb42Jy1GPeFANoTgY1sinaGjROw5MEVwvXYKYpsRmtThstPM/RknZNlS
-         F7D3XqMkkvyJrT66n/lQGHdtkCz+9GYIvB1M4+Y4o5oVdU0qXGsNXPALcKJdpxZH2WEI
-         6UqAlRWj8o/tC7WZGPuAhauvoNppDPqg8wfSScTrlq98aZMd61TCvXDLod4ZgzukZleH
-         a2syPxZgUtYVisNXOu4EC+msJwZ2sb6LxY7jOC1yO0du74a0smF5pLB+v0M2RNgbq1C3
-         qqJcmnCHfMk6IQ36OijZZoKwVjB95+kTF4q5+4+NogM92dMwcgmmtWWrnh9QI7OyEs2n
-         DOIQ==
-X-Gm-Message-State: AOAM531PcQL3bauQSZiHUtLoOoZYvXFrj4bRRgCsobrTSfebYJhZ2iPw
-        i5viozzbWT8eeZkBsSR5gTQ2Vg==
-X-Google-Smtp-Source: ABdhPJyE66f/SQndtIl1uuz70XtwABe9awB7k+cnZicYMWXjL4GOkIiAAav9AwDKGw7n86qQ2feJVw==
-X-Received: by 2002:a2e:3013:0:b0:246:2ca9:365e with SMTP id w19-20020a2e3013000000b002462ca9365emr1229795ljw.291.1645221158445;
-        Fri, 18 Feb 2022 13:52:38 -0800 (PST)
+        bh=EmbZ+Rs0DCCaaiAlhr8hnJNWT7G3P69JhJhCoYAgkyI=;
+        b=SLpETsOuXZIOeBagv/foBogtxxEyhDhXaEeUl3GMi3zPizNSiR/WRFldUA9Q4IY5Lb
+         cAfumN04oJ1CTjJIue1ZevaQs8CAibvB32yvl9MJ8wJ36upn3FAjUg/wLGnUXZN29KIk
+         ku4qYQWK48V0EnOeiWnTDAYjS1S3Cbj9Q66Fsn7b/Fi9Vfhib7zJ6CaxphlTiY5FKFRR
+         qCx0VtHxgl6D5LUDdPDPqMbUN9ixd2Yh/re2daH1Cs7JyviARe7/2OIu5q59M/8NiW0H
+         nJ4eGZyoFOz8zLkq2bOPEf3qhqSTOoRZgOg/uF8hfNNnzsg3yR26qBkByiyXNZ9qr7Ad
+         WL8g==
+X-Gm-Message-State: AOAM530CBCFxgg2KbMtabKoU+BeiPz/VmECW83sU/vx/h6Hy3Rk9hW97
+        ysnZ4GzuF5vz/CyYXpfPOew5LA==
+X-Google-Smtp-Source: ABdhPJxXJfznG7eTeQS4X2nWtTN4ctoIdPjwRRirntuU8kEYIG5c3G3gt+3Cb65jn+sWGLZQpxByng==
+X-Received: by 2002:a2e:8198:0:b0:246:e7d:45d2 with SMTP id e24-20020a2e8198000000b002460e7d45d2mr6871560ljg.495.1645223574954;
+        Fri, 18 Feb 2022 14:32:54 -0800 (PST)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id c25sm380996lfs.213.2022.02.18.13.52.37
+        by smtp.gmail.com with ESMTPSA id c1sm392401lfc.49.2022.02.18.14.32.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Feb 2022 13:52:37 -0800 (PST)
-Message-ID: <091d8484-b7a7-05da-65df-f99d0a9be3c5@linaro.org>
-Date:   Sat, 19 Feb 2022 00:52:37 +0300
+        Fri, 18 Feb 2022 14:32:54 -0800 (PST)
+Message-ID: <b25d422e-cdd8-bcb9-1815-1d89f170d421@linaro.org>
+Date:   Sat, 19 Feb 2022 01:32:53 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.0
@@ -104,9 +104,15 @@ On 19/02/2022 00:31, Kuogee Hsieh wrote:
 > [   40.593709] panel-edp soc@0:edp_panel: No display modes
 > [   40.600285] panel-edp soc@0:edp_panel: No display modes
 
-Thanks for testing this series!
+So, before the patch the drm core was getting modes from the 
+drm_connector (which means, modes from drm driver itself). With this 
+patch the panel-edp tries to get modes.
 
-Could you please post the result of `modetest -c` after this patch?
+Could you please check, why panel_edp_get_modes() fails? Assuming that 
+you use platform panel-edp binding (rather than 'edp-panel') could you 
+please check you have either of the following:
+- ddc bus for EDID?
+- either num_timing or num_modes in your panel desc.
 
 
 > 
