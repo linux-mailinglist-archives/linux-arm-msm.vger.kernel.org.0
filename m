@@ -2,188 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 854B14BB78B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 12:02:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0945F4BB7A0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 12:05:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234333AbiBRLCR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Feb 2022 06:02:17 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55352 "EHLO
+        id S233260AbiBRLGM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Feb 2022 06:06:12 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234307AbiBRLCP (ORCPT
+        with ESMTP id S232944AbiBRLGM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Feb 2022 06:02:15 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46C5C23D3CB;
-        Fri, 18 Feb 2022 03:01:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645182118; x=1676718118;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=mq183hP0BaGYbuci31d1MFfN1q8alC0YOOwb4tVpnBg=;
-  b=tVc1JFyKn48Rr4koWOZRWP93BsnEW5z2nNJahhwktIWabNm3Kun3OuKk
-   JdpZh67YgrC0oxA/ieLNYXK9SXSwBYj9pNSlW0EEYEgSc5JUcq+tq828u
-   Um1IR2Se6BzbgI5QlgMxtiwVJFi6BpTCREBiymOUb3J9skPRc6ulHGMct
-   4=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 18 Feb 2022 03:01:55 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2022 03:01:54 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Fri, 18 Feb 2022 03:01:54 -0800
-Received: from c-skakit-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Fri, 18 Feb 2022 03:01:50 -0800
-From:   Satya Priya <quic_c_skakit@quicinc.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-CC:     Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Das Srinagesh <gurus@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
-        <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
-        <quic_jprakash@quicinc.com>,
-        Satya Priya <quic_c_skakit@quicinc.com>
-Subject: [PATCH V7 5/5] arm64: dts: qcom: sc7280: Add pm8008 support for sc7280-idp
-Date:   Fri, 18 Feb 2022 16:31:03 +0530
-Message-ID: <1645182064-15843-6-git-send-email-quic_c_skakit@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1645182064-15843-1-git-send-email-quic_c_skakit@quicinc.com>
-References: <1645182064-15843-1-git-send-email-quic_c_skakit@quicinc.com>
+        Fri, 18 Feb 2022 06:06:12 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 270452944C3;
+        Fri, 18 Feb 2022 03:05:56 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id D9005B825D4;
+        Fri, 18 Feb 2022 11:05:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2737C340EB;
+        Fri, 18 Feb 2022 11:05:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1645182353;
+        bh=J59lH66krrvcoll/JdbSTQBtYjQWh/7nSG+XW1P3Unw=;
+        h=Date:From:To:Subject:References:In-Reply-To:From;
+        b=Tw5n0BFffkeKDKXKhP01gh3KO8XEAHxA3XInRcYgJYasJvhxI6fqYoakKs/+gC7Mh
+         6q1t5pjGBPIDeGxBl/W/Jr64oqrvxfdwZETsAqsVJh7oN2ayT1WzHzM7Ujhy6xvC3n
+         6vGmPRIh75+kAeYOHicH9KpLWQ03d+n+1Zfbl6PXS4gCkErbTtiRs+FGdBMlHEUlp2
+         65jyP8K4iSiGDNYQZPtgx65vlCzG6jV12yJIqvAnphMuThbjnwAO+18EeqoQmYsFqZ
+         2OJLukE/SOmkZTRsvxyzQC7tuOtLpYS3EHssWSQSopmhglSvy8rrMz2SrQutEyDuGL
+         9spWLWbuHzWXQ==
+Date:   Fri, 18 Feb 2022 16:35:49 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Wolfram Sang <wsa@kernel.org>, jorcrous@amazon.com,
+        linux-arm-msm@vger.kernel.org,
+        Akash Asthana <akashast@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mukesh Savaliya <msavaliy@codeaurora.org>,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] i2c: qcom-geni: Fix return value for master_xfer
+Message-ID: <Yg99jVuvHLrYWXcH@matsya>
+References: <20220209210356.2848-1-jorcrous@amazon.com>
+ <Yg9qlwvh08tXDqTv@ninjato>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yg9qlwvh08tXDqTv@ninjato>
+X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add pm8008_infra and pm8008_regulators support for sc7280 idp.
+On 18-02-22, 10:44, Wolfram Sang wrote:
+> On Wed, Feb 09, 2022 at 09:03:56PM +0000, jorcrous@amazon.com wrote:
+> > From: Jordan Crouse <jorcrous@amazon.com>
+> > 
+> > The master_xfer function is supposed to return the number of messages that
+> > were processed. Both  geni_i2c_gpi_xfer and geni_i2c_fifo_xfer are
+> > returning 0 which is being interpeted as a error in the upper layers.
+> > 
+> > Fixes: 8133682618cb ("i2c: qcom-geni: Add support for GPI DMA")
+> > Signed-off-by: Jordan Crouse <jorcrous@amazon.com>
+> 
+> For the record, this patch is not upstream yet and needs to be folded
+> into the next version of the GPI DMA patch by Vinod.
 
-Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
----
-Changes in V2:
- - As per Stephen's comments, replaced '_' with '-' for node names.
+I have folder this into into my patch and will be posting updated one
+(this was also in Dmitry's review)
 
-Changes in V3:
- - Changed the regulator node names as l1, l2 etc
- - Changed "pm8008-regulators" to "regulators"
- - Changed "qcom,min-dropout-voltage" to "regulator-min-dropout-voltage-microvolt"
-
-Changes in V4:
- - Moved all common stuff to pm8008.dtsi and added board specific configurations here.
-
-Changes in V5:
- - Changed the node names as per pm8008.dtsi
- - Moved supply nodes to chip level (mfd node).
- - Removed the regulator-mindropout property.
-
-Changes in V6:
- - No changes.
-
-Changes in V7:
- - No Changes.
-
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 66 ++++++++++++++++++++++++++++++++
- 1 file changed, 66 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index ecbf2b8..371ad19 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -263,6 +263,62 @@
- 	};
- };
- 
-+&i2c1 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	status = "okay";
-+
-+	#include "pm8008.dtsi"
-+};
-+
-+&pm8008_infra {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pm8008_active>;
-+};
-+
-+&pm8008_regulators {
-+	vdd_l1_l2-supply = <&vreg_s8b_1p2>;
-+	vdd_l3_l4-supply = <&vreg_s1b_1p8>;
-+	vdd_l5-supply = <&vreg_bob>;
-+	vdd_l6-supply = <&vreg_bob>;
-+	vdd_l7-supply = <&vreg_bob>;
-+};
-+
-+&pm8008_l1 {
-+	regulator-min-microvolt = <950000>;
-+	regulator-max-microvolt = <1300000>;
-+};
-+
-+&pm8008_l2 {
-+	regulator-min-microvolt = <950000>;
-+	regulator-max-microvolt = <1250000>;
-+};
-+
-+&pm8008_l3 {
-+	regulator-min-microvolt = <1650000>;
-+	regulator-max-microvolt = <3000000>;
-+};
-+
-+&pm8008_l4 {
-+	regulator-min-microvolt = <1504000>;
-+	regulator-max-microvolt = <1600000>;
-+};
-+
-+&pm8008_l5 {
-+	regulator-min-microvolt = <2600000>;
-+	regulator-max-microvolt = <3000000>;
-+};
-+
-+&pm8008_l6 {
-+	regulator-min-microvolt = <2600000>;
-+	regulator-max-microvolt = <3000000>;
-+};
-+
-+&pm8008_l7 {
-+	regulator-min-microvolt = <3000000>;
-+	regulator-max-microvolt = <3544000>;
-+};
-+
- &qfprom {
- 	vcc-supply = <&vreg_l1c_1p8>;
- };
-@@ -375,6 +431,16 @@
- 	drive-strength = <2>;
- };
- 
-+&pm8350c_gpios {
-+	pm8008_active: pm8008_active {
-+		pins = "gpio4";
-+		function = "normal";
-+		bias-disable;
-+		output-high;
-+		power-source = <0>;
-+	};
-+};
-+
- &qspi_cs0 {
- 	bias-disable;
- };
+Thanks
 -- 
-2.7.4
-
+~Vinod
