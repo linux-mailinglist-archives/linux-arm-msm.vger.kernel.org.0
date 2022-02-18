@@ -2,81 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C8144BC239
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 22:37:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F8FC4BC255
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 22:52:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239945AbiBRVhH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Feb 2022 16:37:07 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42166 "EHLO
+        id S239001AbiBRVw6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Feb 2022 16:52:58 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239943AbiBRVhH (ORCPT
+        with ESMTP id S235061AbiBRVw6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Feb 2022 16:37:07 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFFBC3A5F1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 13:36:48 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id j7so7800619lfu.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 13:36:48 -0800 (PST)
+        Fri, 18 Feb 2022 16:52:58 -0500
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 216823F884
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 13:52:40 -0800 (PST)
+Received: by mail-lj1-x22a.google.com with SMTP id c15so6160903ljf.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 13:52:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=n9yp2F/tFbPYbNUub6ORMzULNCV7x8Jlyoxm8mDT9LM=;
-        b=Vzr8WauP0HUY6liDBBny5+hyIdwaYSB7eC8COVdVPuuehStAkuOCBNtdW+EB7vYzT/
-         H9gQvBm04uo+QRZ83sJECp7nWUQBFcYTMHJDcPZ+lXanfAEUq6V7a/pvQsdVqtAwbuuX
-         Aaww0DIIgs5T0c1t5HcDcI3J2P2t1VHfyX9Mae3YWroLW9EomXY6CfBCIiwX0rkND1Zm
-         uBza6AD97DSxFT4mwF+lecomueWaVfFNz6FJIucnwwjktFoZ9eFIRkVYzu/LbWdPrFO1
-         v40FUCYG/BhllxpVG7ljKeh7/cx79qEyJdClSBEJRS2I5JzmvaBL5v3JEKRojKabVPO1
-         LS5A==
+        bh=O4CsnBjYy03NrYURxvtz1s+vFa+ZGHorTAV/ULTGx+o=;
+        b=yts1Vje/3ZqmS8WRYE1+0krC4ok8bChd+aSKmoTLV1pUUCUG2CQILVwTBjNgZU5DaU
+         EzbLBHg/Cm0/e9CwdCsLx4fbhTzts+1Jk2Egi0DZjRv4csNR8xZH6WPMoA7BkyQBpfT8
+         5zOpWpyFcuxiLE97AcwIAQ5E6th49sX0JaHZ3KnMRAo3GJZSJ+eMELkOc8n284zBaXIg
+         WuwcHqspo8en6PF8KG3D8Bybiy16H5DXXclXIubOEiPL0Blwy7jDHE3pJpWrUZVmlw92
+         q+gaXClXQ0fXaVjePXONxQiXADwuq4H6JIyo3R1UZF8ZLZJ5BY4HlOvF3NJzgJRBFNu7
+         bpHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=n9yp2F/tFbPYbNUub6ORMzULNCV7x8Jlyoxm8mDT9LM=;
-        b=Nv2d3aJgQV0ArdSWYBgQHBIHRFYd8iaAnuJy31IvmONZ0PDLQDXFYjzx8b6yth1fAn
-         MdnxmKpj0GVGg2tmsJSfIhvfQkzAicX7cshsCOgDaD1a5F5RSCIirDxT6+OFLUXuQgy7
-         HQQ63D0IhYq0ISoi8wjaJz7TvwhEGgfBeXACVRzZYLjL1Cwr7S+ZPKrngjxHkutq4aEa
-         o7wLMFqfHfLI8/8R+OH/LSJbCfLpdJ8WfRhxifT1jBxlu+QulWO7o80bngdMVo8dj23e
-         H2DAZT6SyQ5DaZ5zJ3bDzKytxAWESKr10l02orSAX9VykOiGCQ0wrv4pJDejScTIWNMw
-         yYyg==
-X-Gm-Message-State: AOAM532fxLQ9W8oAtP6jZkxtdxC2KdC1hSlUKg/ZdmhpmHXfptS6zu/Z
-        qJFvdgC2Cw+z1V6zFy1OqdtpBQ==
-X-Google-Smtp-Source: ABdhPJyg1rjvoJjmNealuZAHVqqpmiKSoqxUfMtoP0Z2gXj+zdSFLGc9yJCrsBJCytQTPBU0xzhdhQ==
-X-Received: by 2002:ac2:4e04:0:b0:442:bfb6:c832 with SMTP id e4-20020ac24e04000000b00442bfb6c832mr7105656lfr.519.1645220207016;
-        Fri, 18 Feb 2022 13:36:47 -0800 (PST)
+        bh=O4CsnBjYy03NrYURxvtz1s+vFa+ZGHorTAV/ULTGx+o=;
+        b=7yWDD8juuOTb42Jy1GPeFANoTgY1sinaGjROw5MEVwvXYKYpsRmtThstPM/RknZNlS
+         F7D3XqMkkvyJrT66n/lQGHdtkCz+9GYIvB1M4+Y4o5oVdU0qXGsNXPALcKJdpxZH2WEI
+         6UqAlRWj8o/tC7WZGPuAhauvoNppDPqg8wfSScTrlq98aZMd61TCvXDLod4ZgzukZleH
+         a2syPxZgUtYVisNXOu4EC+msJwZ2sb6LxY7jOC1yO0du74a0smF5pLB+v0M2RNgbq1C3
+         qqJcmnCHfMk6IQ36OijZZoKwVjB95+kTF4q5+4+NogM92dMwcgmmtWWrnh9QI7OyEs2n
+         DOIQ==
+X-Gm-Message-State: AOAM531PcQL3bauQSZiHUtLoOoZYvXFrj4bRRgCsobrTSfebYJhZ2iPw
+        i5viozzbWT8eeZkBsSR5gTQ2Vg==
+X-Google-Smtp-Source: ABdhPJyE66f/SQndtIl1uuz70XtwABe9awB7k+cnZicYMWXjL4GOkIiAAav9AwDKGw7n86qQ2feJVw==
+X-Received: by 2002:a2e:3013:0:b0:246:2ca9:365e with SMTP id w19-20020a2e3013000000b002462ca9365emr1229795ljw.291.1645221158445;
+        Fri, 18 Feb 2022 13:52:38 -0800 (PST)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id l24sm451725ljb.90.2022.02.18.13.36.45
+        by smtp.gmail.com with ESMTPSA id c25sm380996lfs.213.2022.02.18.13.52.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Feb 2022 13:36:46 -0800 (PST)
-Message-ID: <e8bd7d02-1de6-4de0-9b01-68152f22e8a2@linaro.org>
-Date:   Sat, 19 Feb 2022 00:36:45 +0300
+        Fri, 18 Feb 2022 13:52:37 -0800 (PST)
+Message-ID: <091d8484-b7a7-05da-65df-f99d0a9be3c5@linaro.org>
+Date:   Sat, 19 Feb 2022 00:52:37 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.0
-Subject: Re: [Freedreno] [REPOST PATCH v4 08/13] drm/msm/disp/dpu1: Don't use
- DSC with mode_3d
+Subject: Re: [RFC PATCH v2 4/5] drm/msm/dp: replace dp_connector with
+ drm_bridge_connector
 Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
-        freedreno@lists.freedesktop.org
-References: <20220210103423.271016-1-vkoul@kernel.org>
- <20220210103423.271016-9-vkoul@kernel.org>
- <67006cc4-3385-fe03-bb4d-58623729a8a8@quicinc.com> <Yg3mvEvqYs89dJWI@matsya>
- <4b89f5fe-0752-3c6a-3fb0-192f1f2e7b9e@quicinc.com>
- <acf0a2a2-f2e5-906a-3c51-525abd18ee6f@linaro.org>
- <a38432a8-7920-e26d-7391-a49bebbc57f9@quicinc.com>
- <9f1e2df6-4f28-1d91-7654-ff2d9339dfd9@linaro.org>
- <5b27912e-3e49-675e-86f5-ac6be8dc21c5@quicinc.com>
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+References: <20220211224006.1797846-1-dmitry.baryshkov@linaro.org>
+ <20220211224006.1797846-5-dmitry.baryshkov@linaro.org>
+ <572c0402-55da-077b-1809-3d1caf7ce743@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <5b27912e-3e49-675e-86f5-ac6be8dc21c5@quicinc.com>
+In-Reply-To: <572c0402-55da-077b-1809-3d1caf7ce743@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -89,151 +82,272 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/02/2022 00:29, Abhinav Kumar wrote:
+On 19/02/2022 00:31, Kuogee Hsieh wrote:
 > 
+> On 2/11/2022 2:40 PM, Dmitry Baryshkov wrote:
+>> There is little point in having both connector and root bridge
+>> implementation in the same driver. Move connector's functionality to the
+>> bridge to let next bridge in chain to override it.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
-> On 2/18/2022 1:21 PM, Dmitry Baryshkov wrote:
->> On 18/02/2022 23:46, Abhinav Kumar wrote:
->>>
->>>
->>> On 2/16/2022 11:12 PM, Dmitry Baryshkov wrote:
->>>> On 17/02/2022 09:33, Abhinav Kumar wrote:
->>>>>
->>>>>
->>>>> On 2/16/2022 10:10 PM, Vinod Koul wrote:
->>>>>> On 16-02-22, 19:11, Abhinav Kumar wrote:
->>>>>>>
->>>>>>>
->>>>>>> On 2/10/2022 2:34 AM, Vinod Koul wrote:
->>>>>>>> We cannot enable mode_3d when we are using the DSC. So pass
->>>>>>>> configuration to detect DSC is enabled and not enable mode_3d
->>>>>>>> when we are using DSC
->>>>>>>>
->>>>>>>> We add a helper dpu_encoder_helper_get_dsc() to detect dsc
->>>>>>>> enabled and pass this to .setup_intf_cfg()
->>>>>>>>
->>>>>>>> Signed-off-by: Vinod Koul <vkoul@kernel.org>
->>>>>>>
->>>>>>> We should not use 3D mux only when we use DSC merge topology.
->>>>>>> I agree that today we use only 2-2-1 topology for DSC which means 
->>>>>>> its using
->>>>>>> DSC merge.
->>>>>>>
->>>>>>> But generalizing that 3D mux should not be used for DSC is not 
->>>>>>> right.
->>>>>>>
->>>>>>> You can detect DSC merge by checking if there are two encoders 
->>>>>>> and one
->>>>>>> interface in the topology and if so, you can disable 3D mux.
->>>>>>
->>>>>> Right now with DSC we disable that as suggested by Dmitry last time.
->>>>>> Whenever we introduce merge we should revisit this, for now this 
->>>>>> should
->>>>>> suffice
->>>>>>
->>>>>
->>>>> Sorry I didnt follow.
->>>>>
->>>>> The topology which you are supporting today IS DSC merge 2-2-1. I 
->>>>> didnt get what you mean by "whenever we introduce".
->>>>>
->>>>> I didnt follow Dmitry's comment either.
->>>>>
->>>>> "anybody adding support for SDE_RM_TOPOLOGY_DUALPIPE_3DMERGE_DSC 
->>>>> handle this."
->>>>>
->>>>> 3D mux shouldnt be used when DSC merge is used.
->>>>>
->>>>> The topology Dmitry is referring to will not use DSC merge but you 
->>>>> are using it here and thats why you had to make this patch in the 
->>>>> first place. So I am not sure why would someone who uses 3D merge 
->>>>> topology worry about DSC merge. Your patch is the one which deals 
->>>>> with the topology in question.
->>>>>
->>>>> What I am suggesting is a small but necessary improvement to this 
->>>>> patch.
->>>>
->>>> It seems that we can replace this patch by changing 
->>>> dpu_encoder_helper_get_3d_blend_mode() to contain the following 
->>>> condition (instead of the one present there). Does the following 
->>>> seem correct to you:
->>>>
->>>> static inline enum dpu_3d_blend_mode 
->>>> dpu_encoder_helper_get_3d_blend_mode(
->>>>                  struct dpu_encoder_phys *phys_enc)
->>>> {
->>>>          struct dpu_crtc_state *dpu_cstate;
->>>>
->>>>          if (!phys_enc || phys_enc->enable_state == DPU_ENC_DISABLING)
->>>>                  return BLEND_3D_NONE;
->>>>
->>>>          dpu_cstate = to_dpu_crtc_state(phys_enc->parent->crtc->state);
->>>>
->>>> +    /* Use merge_3d unless DSCMERGE topology is used */
->>>>          if (phys_enc->split_role == ENC_ROLE_SOLO &&
->>>> +           hweight(dpu_encoder_helper_get_dsc(phys_enc)) != 1 &&
->>
->> Yes, the correct should be:
->> hweight(...) == 2
->>
->>>>              dpu_cstate->num_mixers == CRTC_DUAL_MIXERS)
->>>>                  return BLEND_3D_H_ROW_INT;
->>>>
->>>>          return BLEND_3D_NONE;
->>>> }
->>>
->>> This will not be enough. To detect whether DSC merge is enabled you 
->>> need to query the topology. The above condition only checks if DSC is 
->>> enabled not DSC merge.
->>>
->>> So the above function can be modified to use a helper like below 
->>> instead of the hweight.
->>>
->>> bool dpu_encoder_get_dsc_merge_info(struct dpu_encoder_virt *dpu_enc)
->>> {
->>>      struct msm_display_topology topology = {0};
->>>
->>>      topology = dpu_encoder_get_topology(...);
->>>
->>>      if (topology.num_dsc > topology.num_intf)
->>
->> num_intf is 1 or 2. If it's one, the split_role is SOLO
->> hweight would return a num of bits in the DSC mask. It's 0, 1 or 2.
->> So, if the split_role is SOLO and hweight is 2, we get exactly your 
->> condition.
->>
-> num_intf is 1 in this case as only single interface is used. But even 4 
-> dsc encoders going to 2 interfaces its DSC merge. So assuming num_intf 
-> as 1 always is not right. Thats why I suggested a generalized confition 
-> like above.
+> This patch break primary (edp) display
+> 
+> -- right half of screen garbled
+> 
+> -- screen shift vertically
+> 
+> below are error messages seen --
+> 
+> [   36.679216] panel-edp soc@0:edp_panel: No display modes
+> [   36.687272] panel-edp soc@0:edp_panel: No display modes
+> [   40.593709] panel-edp soc@0:edp_panel: No display modes
+> [   40.600285] panel-edp soc@0:edp_panel: No display modes
 
-Ah, quadpipe. Yes, then I was incorrect.
+Thanks for testing this series!
+
+Could you please post the result of `modetest -c` after this patch?
+
 
 > 
->> Does that sound correct?
+>> ---
+>>   drivers/gpu/drm/msm/dp/dp_display.c |  22 +++---
+>>   drivers/gpu/drm/msm/dp/dp_drm.c     | 113 ++++++++++------------------
+>>   2 files changed, 52 insertions(+), 83 deletions(-)
 >>
->>>          return true;
->>>      else
->>>          return false;
->>> }
->>>
->>> if (!dpu_encoder_get_dsc_merge_info() && other conditions listed above)
->>>      return BLEND_3D_H_ROW_INT;
->>> else
->>>      BLEND_3D_NONE;
->>>>
->>>>
->>>>>
->>>>> All that you have to do is in query whether DSC merge is used from 
->>>>> the topology. You can do it in multiple ways:
->>>>>
->>>>> 1) Either query this from the encoder
->>>>> 2) Store a bool "dsc_merge" in the intf_cfg
->>>>>
->>>>
->>>>
->>
->>
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
+>> b/drivers/gpu/drm/msm/dp/dp_display.c
+>> index 45f9a912ecc5..59e5e5b8e5b4 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>> @@ -1501,6 +1501,17 @@ int msm_dp_modeset_init(struct msm_dp 
+>> *dp_display, struct drm_device *dev,
+>>       dp_display->encoder = encoder;
+>> +    dp_display->bridge = msm_dp_bridge_init(dp_display, dev, encoder);
+>> +    if (IS_ERR(dp_display->bridge)) {
+>> +        ret = PTR_ERR(dp_display->bridge);
+>> +        DRM_DEV_ERROR(dev->dev,
+>> +            "failed to create dp bridge: %d\n", ret);
+>> +        dp_display->bridge = NULL;
+>> +        return ret;
+>> +    }
+>> +
+>> +    priv->bridges[priv->num_bridges++] = dp_display->bridge;
+>> +
+>>       dp_display->connector = dp_drm_connector_init(dp_display);
+>>       if (IS_ERR(dp_display->connector)) {
+>>           ret = PTR_ERR(dp_display->connector);
+>> @@ -1514,17 +1525,6 @@ int msm_dp_modeset_init(struct msm_dp 
+>> *dp_display, struct drm_device *dev,
+>>       priv->connectors[priv->num_connectors++] = dp_display->connector;
+>> -    dp_display->bridge = msm_dp_bridge_init(dp_display, dev, encoder);
+>> -    if (IS_ERR(dp_display->bridge)) {
+>> -        ret = PTR_ERR(dp_display->bridge);
+>> -        DRM_DEV_ERROR(dev->dev,
+>> -            "failed to create dp bridge: %d\n", ret);
+>> -        dp_display->bridge = NULL;
+>> -        return ret;
+>> -    }
+>> -
+>> -    priv->bridges[priv->num_bridges++] = dp_display->bridge;
+>> -
+>>       return 0;
+>>   }
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c 
+>> b/drivers/gpu/drm/msm/dp/dp_drm.c
+>> index 80f59cf99089..57800b865fe6 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+>> @@ -6,6 +6,7 @@
+>>   #include <drm/drm_atomic_helper.h>
+>>   #include <drm/drm_atomic.h>
+>>   #include <drm/drm_bridge.h>
+>> +#include <drm/drm_bridge_connector.h>
+>>   #include <drm/drm_crtc.h>
+>>   #include "msm_drv.h"
+>> @@ -20,24 +21,16 @@ struct msm_dp_bridge {
+>>   #define to_dp_display(x)     container_of((x), struct msm_dp_bridge, 
+>> bridge)
+>> -struct dp_connector {
+>> -    struct drm_connector base;
+>> -    struct msm_dp *dp_display;
+>> -};
+>> -#define to_dp_connector(x) container_of(x, struct dp_connector, base)
+>> -
+>>   /**
+>> - * dp_connector_detect - callback to determine if connector is connected
+>> - * @conn: Pointer to drm connector structure
+>> - * @force: Force detect setting from drm framework
+>> - * Returns: Connector 'is connected' status
+>> + * dp_bridge_detect - callback to determine if connector is connected
+>> + * @bridge: Pointer to drm bridge structure
+>> + * Returns: Bridge's 'is connected' status
+>>    */
+>> -static enum drm_connector_status dp_connector_detect(struct 
+>> drm_connector *conn,
+>> -        bool force)
+>> +static enum drm_connector_status dp_bridge_detect(struct drm_bridge 
+>> *bridge)
+>>   {
+>>       struct msm_dp *dp;
+>> -    dp = to_dp_connector(conn)->dp_display;
+>> +    dp = to_dp_display(bridge)->dp_display;
+>>       DRM_DEBUG_DP("is_connected = %s\n",
+>>           (dp->is_connected) ? "true" : "false");
+>> @@ -47,11 +40,12 @@ static enum drm_connector_status 
+>> dp_connector_detect(struct drm_connector *conn,
+>>   }
+>>   /**
+>> - * dp_connector_get_modes - callback to add drm modes via 
+>> drm_mode_probed_add()
+>> + * dp_bridge_get_modes - callback to add drm modes via 
+>> drm_mode_probed_add()
+>> + * @bridge: Poiner to drm bridge
+>>    * @connector: Pointer to drm connector structure
+>>    * Returns: Number of modes added
+>>    */
+>> -static int dp_connector_get_modes(struct drm_connector *connector)
+>> +static int dp_bridge_get_modes(struct drm_bridge *bridge, struct 
+>> drm_connector *connector)
+>>   {
+>>       int rc = 0;
+>>       struct msm_dp *dp;
+>> @@ -61,7 +55,7 @@ static int dp_connector_get_modes(struct 
+>> drm_connector *connector)
+>>       if (!connector)
+>>           return 0;
+>> -    dp = to_dp_connector(connector)->dp_display;
+>> +    dp = to_dp_display(bridge)->dp_display;
+>>       dp_mode = kzalloc(sizeof(*dp_mode),  GFP_KERNEL);
+>>       if (!dp_mode)
+>> @@ -102,18 +96,20 @@ static int dp_connector_get_modes(struct 
+>> drm_connector *connector)
+>>   }
+>>   /**
+>> - * dp_connector_mode_valid - callback to determine if specified mode 
+>> is valid
+>> - * @connector: Pointer to drm connector structure
+>> + * dp_bridge_mode_valid - callback to determine if specified mode is 
+>> valid
+>> + * @bridge: Pointer to drm bridge structure
+>> + * @info: display info
+>>    * @mode: Pointer to drm mode structure
+>>    * Returns: Validity status for specified mode
+>>    */
+>> -static enum drm_mode_status dp_connector_mode_valid(
+>> -        struct drm_connector *connector,
+>> -        struct drm_display_mode *mode)
+>> +static enum drm_mode_status dp_bridge_mode_valid(
+>> +        struct drm_bridge *bridge,
+>> +        const struct drm_display_info *info,
+>> +        const struct drm_display_mode *mode)
+>>   {
+>>       struct msm_dp *dp_disp;
+>> -    dp_disp = to_dp_connector(connector)->dp_display;
+>> +    dp_disp = to_dp_display(bridge)->dp_display;
+>>       if ((dp_disp->max_pclk_khz <= 0) ||
+>>               (dp_disp->max_pclk_khz > DP_MAX_PIXEL_CLK_KHZ) ||
+>> @@ -123,55 +119,6 @@ static enum drm_mode_status dp_connector_mode_valid(
+>>       return dp_display_validate_mode(dp_disp, mode->clock);
+>>   }
+>> -static const struct drm_connector_funcs dp_connector_funcs = {
+>> -    .detect = dp_connector_detect,
+>> -    .fill_modes = drm_helper_probe_single_connector_modes,
+>> -    .destroy = drm_connector_cleanup,
+>> -    .reset = drm_atomic_helper_connector_reset,
+>> -    .atomic_duplicate_state = 
+>> drm_atomic_helper_connector_duplicate_state,
+>> -    .atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
+>> -};
+>> -
+>> -static const struct drm_connector_helper_funcs 
+>> dp_connector_helper_funcs = {
+>> -    .get_modes = dp_connector_get_modes,
+>> -    .mode_valid = dp_connector_mode_valid,
+>> -};
+>> -
+>> -/* connector initialization */
+>> -struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display)
+>> -{
+>> -    struct drm_connector *connector = NULL;
+>> -    struct dp_connector *dp_connector;
+>> -    int ret;
+>> -
+>> -    dp_connector = devm_kzalloc(dp_display->drm_dev->dev,
+>> -                    sizeof(*dp_connector),
+>> -                    GFP_KERNEL);
+>> -    if (!dp_connector)
+>> -        return ERR_PTR(-ENOMEM);
+>> -
+>> -    dp_connector->dp_display = dp_display;
+>> -
+>> -    connector = &dp_connector->base;
+>> -
+>> -    ret = drm_connector_init(dp_display->drm_dev, connector,
+>> -            &dp_connector_funcs,
+>> -            dp_display->connector_type);
+>> -    if (ret)
+>> -        return ERR_PTR(ret);
+>> -
+>> -    drm_connector_helper_add(connector, &dp_connector_helper_funcs);
+>> -
+>> -    /*
+>> -     * Enable HPD to let hpd event is handled when cable is connected.
+>> -     */
+>> -    connector->polled = DRM_CONNECTOR_POLL_HPD;
+>> -
+>> -    drm_connector_attach_encoder(connector, dp_display->encoder);
+>> -
+>> -    return connector;
+>> -}
+>> -
+>>   static void dp_bridge_mode_set(struct drm_bridge *drm_bridge,
+>>                   const struct drm_display_mode *mode,
+>>                   const struct drm_display_mode *adjusted_mode)
+>> @@ -211,6 +158,9 @@ static const struct drm_bridge_funcs dp_bridge_ops 
+>> = {
+>>       .disable      = dp_bridge_disable,
+>>       .post_disable = dp_bridge_post_disable,
+>>       .mode_set     = dp_bridge_mode_set,
+>> +    .mode_valid   = dp_bridge_mode_valid,
+>> +    .get_modes    = dp_bridge_get_modes,
+>> +    .detect       = dp_bridge_detect,
+>>   };
+>>   struct drm_bridge *msm_dp_bridge_init(struct msm_dp *dp_display, 
+>> struct drm_device *dev,
+>> @@ -228,7 +178,12 @@ struct drm_bridge *msm_dp_bridge_init(struct 
+>> msm_dp *dp_display, struct drm_devi
+>>       bridge = &dp_bridge->bridge;
+>>       bridge->funcs = &dp_bridge_ops;
+>> -    bridge->encoder = encoder;
+>> +    bridge->type = dp_display->connector_type;
+>> +
+>> +    bridge->ops =
+>> +        DRM_BRIDGE_OP_DETECT |
+>> +        DRM_BRIDGE_OP_HPD |
+>> +        DRM_BRIDGE_OP_MODES;
+>>       rc = drm_bridge_attach(encoder, bridge, NULL, 
+>> DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+>>       if (rc) {
+>> @@ -249,3 +204,17 @@ struct drm_bridge *msm_dp_bridge_init(struct 
+>> msm_dp *dp_display, struct drm_devi
+>>       return bridge;
+>>   }
+>> +
+>> +/* connector initialization */
+>> +struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display)
+>> +{
+>> +    struct drm_connector *connector = NULL;
+>> +
+>> +    connector = drm_bridge_connector_init(dp_display->drm_dev, 
+>> dp_display->encoder);
+>> +    if (IS_ERR(connector))
+>> +        return connector;
+>> +
+>> +    drm_connector_attach_encoder(connector, dp_display->encoder);
+>> +
+>> +    return connector;
+>> +}
 
 
 -- 
