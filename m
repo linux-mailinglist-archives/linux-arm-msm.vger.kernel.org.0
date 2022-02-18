@@ -2,59 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 539C84BAEAF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 01:54:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F1DE54BAEF7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 02:03:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230238AbiBRAyW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Feb 2022 19:54:22 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:49368 "EHLO
+        id S230451AbiBRBDw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Feb 2022 20:03:52 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:41640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230224AbiBRAyV (ORCPT
+        with ESMTP id S230429AbiBRBDv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Feb 2022 19:54:21 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E087EBE6;
-        Thu, 17 Feb 2022 16:54:05 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 85662B8216F;
-        Fri, 18 Feb 2022 00:54:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22BCCC340E8;
-        Fri, 18 Feb 2022 00:54:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1645145643;
-        bh=kA1MAHUBUfgVI2vNOFXSWLVuF8lmw0953XqNn2JrIPc=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=CBC4v4EGq+lqPewuzEukMMasEIXysfSLPopPSzz47ZDgaGfHOh3hg/RPfUAAazBlU
-         F1Q55Nm+WGxBS2JM0/ZCCjMHJaAqLAQc/RkrglqKTAI4bDhrwEbHe82S0T/RPhqbMf
-         3z/drkBAlDBcjowwSTz7Cipnj9dk1190sTLuHHcbFyBeFA2VbgrONkhbDMmTY/N8Mo
-         o1i66HZe55fAMdoABaNwobF8WWFIKAHcJC8bdph5e2VAm+sdPPOIZ8UT1pQ9W+YIev
-         bhKbG18XY8wk4Miehdd4gHkhwDUG4aEUDqZ6TDU5UEmqUtEYQ6d5wYG20+fLSnrqZQ
-         KjUZhlgxM2NTA==
-Content-Type: text/plain; charset="utf-8"
+        Thu, 17 Feb 2022 20:03:51 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7264285A87
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 17:03:35 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id p15so11214341ejc.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 17:03:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=YhNqz0TwV7gSLYgP9YWbRspB12calUNnn7qInjIWMb8=;
+        b=kjaQXcd+qDo6HeXDPEWhbFh7itNDJeBgJ0jJRODQBOZ7hs979pzm2WflsUaeHt87yP
+         QfxDMnIRoaJ7eDkvmb/yckwyk9YSdc1FaxiFI9ozai/ESqHRWGC3j6y8tn1v5Pwbp/xi
+         y+HpVyyGh9scpSCcn61WSMOXHDjMnjoadxSfY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=YhNqz0TwV7gSLYgP9YWbRspB12calUNnn7qInjIWMb8=;
+        b=7e+jbo5T5s1dL8mhKY0Gj8jwA279YF9xpZS1WwxzNO6G2ChKT/Cf9J26nAzRV2BQvY
+         GCwnEKDLF1Sebt0LFIntVGaU+VYn1TXIp/tU/jmZJObRIQDkkbmafKLO/6bBygH5A++g
+         ODP/SG2sKQzncmeiDiuxCwDaYDnAL89xqNE3yDO6SJBDQOmVg77q/BGiulXpXHkeRPyX
+         TLM+XCy3WmjIWcdK0YMsQz3zNEfG4LCQEvfjpm9EEd728KQvJmWXBKviN5u3lB6s81k7
+         H5BG4WbArTZWe58nKnMuTJLc9LMEtBYsHOYZInyv/npk9A3bnkz1cMVXlTlUYI/aM7RY
+         se7w==
+X-Gm-Message-State: AOAM531ebwqCkcF92B5djk9xf0dwv0/bLdhOWgW7LsOQV7OrIz/Lk9nJ
+        Szny+c43/7dgWVan8R33GYPWENcebt5YPaF/2Hk=
+X-Google-Smtp-Source: ABdhPJzWcKvCgXxrpC1DmoW+jiJmvHekPMzoY65I6wSlyZBCextU+9wFgWENbS6qtyP+HFOShParag==
+X-Received: by 2002:a17:906:7c58:b0:6b3:fd31:2e1a with SMTP id g24-20020a1709067c5800b006b3fd312e1amr4509021ejp.50.1645146214475;
+        Thu, 17 Feb 2022 17:03:34 -0800 (PST)
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com. [209.85.221.47])
+        by smtp.gmail.com with ESMTPSA id j9sm1699313ejo.106.2022.02.17.17.03.34
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Feb 2022 17:03:34 -0800 (PST)
+Received: by mail-wr1-f47.google.com with SMTP id h6so11818395wrb.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 17:03:34 -0800 (PST)
+X-Received: by 2002:a5d:64ef:0:b0:1e3:1e05:d042 with SMTP id
+ g15-20020a5d64ef000000b001e31e05d042mr4049131wri.679.1645146213585; Thu, 17
+ Feb 2022 17:03:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220217232408.78932-1-konrad.dybcio@somainline.org>
-References: <20220217232408.78932-1-konrad.dybcio@somainline.org>
-Subject: Re: [PATCH v2] clk: qcom: gcc-msm8994: Remove NoC clocks
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
+References: <1644494255-6632-1-git-send-email-quic_sbillaka@quicinc.com> <1644494255-6632-3-git-send-email-quic_sbillaka@quicinc.com>
+In-Reply-To: <1644494255-6632-3-git-send-email-quic_sbillaka@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 17 Feb 2022 17:03:13 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=VVvcn1VpLXjd+X9Xe50sS_vY5ukKJE8i=eAZf1Phofuw@mail.gmail.com>
+Message-ID: <CAD=FV=VVvcn1VpLXjd+X9Xe50sS_vY5ukKJE8i=eAZf1Phofuw@mail.gmail.com>
+Subject: Re: [PATCH v4 2/5] arm64: dts: qcom: sc7280: Add support for eDP
+ panel on CRD
+To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Date:   Thu, 17 Feb 2022 16:54:01 -0800
-User-Agent: alot/0.10
-Message-Id: <20220218005403.22BCCC340E8@smtp.kernel.org>
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        Rob Herring <robh+dt@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, quic_kalyant@quicinc.com,
+        quic_abhinavk@quicinc.com, quic_khsieh@quicinc.com,
+        quic_mkrishn@quicinc.com, quic_vproddut@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -63,21 +90,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Konrad Dybcio (2022-02-17 15:24:08)
-> Just like in commit 05cf3ec00d460b50088d421fb878a0f83f57e262
-> ("clk: qcom: gcc-msm8996: Drop (again) gcc_aggre1_pnoc_ahb_clk")
-> adding NoC clocks turned out to be a huge mistake, as they cause a lot of
-> issues at little benefit (basically letting Linux know about their
-> children's frequencies), especially when mishandled or misconfigured.
->=20
-> Adding these ones broke SDCC approx 99 out of 100 times, but that somehow
-> went unnoticed. To prevent further issues like this one, remove them.
->=20
-> This commit is effectively a revert of 74a33fac3aab77558ca0d80c9935
-> (clk: qcom: gcc-msm8994: Add missing NoC clocks) with ABI preservation.
->=20
-> Fixes: 74a33fac3aab ("clk: qcom: gcc-msm8994: Add missing NoC clocks")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> ---
+Hi,
 
-Applied to clk-fixes
+On Thu, Feb 10, 2022 at 3:58 AM Sankeerth Billakanti
+<quic_sbillaka@quicinc.com> wrote:
+>
+> +       backlight_3v3_regulator: backlight-3v3-regulator {
+> +               compatible = "regulator-fixed";
+> +               regulator-name = "backlight_3v3_regulator";
+> +
+> +               regulator-min-microvolt = <3300000>;
+> +               regulator-max-microvolt = <3300000>;
+> +
+> +               gpio = <&pm8350c_gpios 7 GPIO_ACTIVE_HIGH>;
+> +               enable-active-high;
+> +
+> +               pinctrl-names = "default";
+> +               pinctrl-0 = <&edp_bl_power>;
+> +       };
+
+So I'm pretty sure that this is wrong and what you had on a previous
+patch was more correct. Specifically the PMIC's GPIO 7 truly _is_ an
+enable pin for the backlight. In the schematics I see it's named as
+"PMIC_EDP_BL_EN" and is essentially the same net as "EDP_BL_EN". This
+is distinct from the backlight _regulator_ that is named VREG_EDP_BP.
+I believe the VREG_EDP_BP is essentially sourced directly from
+PPVAR_SYS. That's how it works on herobrine and I believe that CRD is
+the same. You currently don't model ppvar_sys, but it's basically just
+a variable-voltage rail that could be provided somewhat directly from
+the battery or could be provided from Type C components. I believe
+that the panel backlight is designed to handle this fairly wide
+voltage range and it's done this way to get the best efficiency.
+
+So personally I'd prefer if you do something like herobrine and model
+PPVAR_SYS. Then the backlight can use ppvar_sys as its regulator and
+you can go back to providing this as an "enable" pin for the
+backlight.
+
+I know, technically it doesn't _really_ matter, but it's nice to model
+it more correctly.
