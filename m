@@ -2,86 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C46D4BB1BE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 07:01:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CDC9C4BB25E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 07:34:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231159AbiBRGBR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Feb 2022 01:01:17 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:51508 "EHLO
+        id S231585AbiBRGeN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Feb 2022 01:34:13 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:51104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231152AbiBRGBP (ORCPT
+        with ESMTP id S229768AbiBRGeA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Feb 2022 01:01:15 -0500
-Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A29EE26512B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 22:00:58 -0800 (PST)
-Received: by mail-oo1-xc2a.google.com with SMTP id w10-20020a4ae08a000000b0031bdf7a6d76so2342618oos.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 22:00:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=vC5rr9/FFwl108xT94dxdS0audFET9/KpZypiZZFFo0=;
-        b=UYyjQv6/7mpgSZOWGk2/ust+6hOD4YjQAmr5tQ5iB2PeMarCwuNe5WoWL/dGHhgvg9
-         UAbaXSrf5MWippiTC8ws2jSkTlePYQ6tehyZjxPtBc5uAmU3g1bRYXAyb6bXqgS0ouAd
-         Ua6Oxx4UzemOIaFN3q8Rccy9D9rGc8UNh4b4nhxyvOnJZheCXdFW+q70UZr5+9A+Lu0U
-         aT2kyp7Y+5vOn+OyNyYW6NFy0CTpObikM5/eUuI+JFi0loqXNagB0UJbmFodqmIdR1e5
-         T40vkrs+IfV8K3ekT33j48RnBGf6dLsD/v9gpBw7hX7kE1CYVtkzpglin6tJQe5bFrqz
-         5mJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=vC5rr9/FFwl108xT94dxdS0audFET9/KpZypiZZFFo0=;
-        b=BCmQXZzV5CPNudgpgvet8AbI3dgPCxBZqJvyzFgeN3UwUF7iO47Jbe0Hdu4eu1B5jC
-         060rsLTrfP43m2On8sQjQyQ8eO8Gg9H9MU1yIN0Ge+h1iFdFezoeyIfADaD5pR7OIFcb
-         pYLLp2n8CnV3yXGZXdyWPP+bReFJhw36ONzzCofvA9MzmynVau/v2TfC/R2He23e9i99
-         1XNDz7Xb4uChxZemNUJ0ZIi13+lPmSBS77UKnmdRet33BvI0A+1b+AWA4MzmxZ+3Hkpk
-         RE+cnCosS/sBzZAUFQttphsQUphrWNpBkdUH5FfqkHPUP72bnqE7keWr19qhHMasuuvr
-         4XXw==
-X-Gm-Message-State: AOAM5303Nu3nXlwtjEr4WQZx5Kifsnj0XhFM/pqsEu7ecvrR3EFpG9ka
-        n8rHnCfLPVg+YmLlHlhpB6JbVg==
-X-Google-Smtp-Source: ABdhPJwMUgPMYZgFc7a9CJBSMUtuUqp+3FcdwropR0b3xxEM7qtpwzSq3DvZN9WJm2f428LBq/Z1TQ==
-X-Received: by 2002:a05:6870:d24f:b0:cc:f65f:68e4 with SMTP id h15-20020a056870d24f00b000ccf65f68e4mr2408028oac.167.1645164057943;
-        Thu, 17 Feb 2022 22:00:57 -0800 (PST)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id bc36sm948918oob.45.2022.02.17.22.00.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Feb 2022 22:00:57 -0800 (PST)
-Date:   Thu, 17 Feb 2022 22:03:03 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, quic_kalyant@quicinc.com,
-        quic_abhinavk@quicinc.com, quic_khsieh@quicinc.com,
-        quic_mkrishn@quicinc.com, quic_vproddut@quicinc.com
-Subject: Re: [PATCH v4 2/5] arm64: dts: qcom: sc7280: Add support for eDP
- panel on CRD
-Message-ID: <Yg82lyRCi3XJHCU2@ripper>
-References: <1644494255-6632-1-git-send-email-quic_sbillaka@quicinc.com>
- <1644494255-6632-3-git-send-email-quic_sbillaka@quicinc.com>
- <CAD=FV=VVvcn1VpLXjd+X9Xe50sS_vY5ukKJE8i=eAZf1Phofuw@mail.gmail.com>
+        Fri, 18 Feb 2022 01:34:00 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D360A369D7;
+        Thu, 17 Feb 2022 22:33:43 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 020EAB82537;
+        Fri, 18 Feb 2022 06:33:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF86AC340EC;
+        Fri, 18 Feb 2022 06:33:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1645166020;
+        bh=oQK3hn8aIgAl4tYz+ZxnTVfrY4IVhUqyJJf7MAjs6rg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=WrLbA6+NkvFz3cXjrHpU9UPR+Oqb0OvTNd5Wip3xvgwDS4CsMCWIQJPM5xX/BYwtn
+         WA/Bquj+XlOa96Rd6lDPFE2GFs35/Tza5wNk48smSNr4I+xPlB7vCKxsvm4XO8L794
+         GF+q0yfoSq9cueq4RZlrTbk3G8moWVqW4bI8Y+0aQbTT0WSjoyWaQMLgXa8l5WCLTx
+         YpN+iaVMsF5eBIqNHvEe9c9Got1aA3YvrXCKFlRbBw32bdWOuuZEpwlp733OALEA3X
+         WrEVX2/jdtDTpacFun+dD9Vxw6eLHRqQEYd6o/gpu/aeXqbIah3LkzIZHGcRqo0wKM
+         nmOhsEnkrgEkA==
+Date:   Fri, 18 Feb 2022 12:03:36 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Wolfram Sang <wsa@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Alexey Minnekhanov <alexeymin@postmarketos.org>
+Subject: Re: [PATCH v5] i2c: qcom-geni: Add support for GPI DMA
+Message-ID: <Yg89wEi9I4LpcPus@matsya>
+References: <20220131120403.2481995-1-vkoul@kernel.org>
+ <Yg6Hc2pT8DFKS2dT@ripper>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAD=FV=VVvcn1VpLXjd+X9Xe50sS_vY5ukKJE8i=eAZf1Phofuw@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+In-Reply-To: <Yg6Hc2pT8DFKS2dT@ripper>
+X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,59 +59,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 17 Feb 17:03 PST 2022, Doug Anderson wrote:
+On 17-02-22, 09:35, Bjorn Andersson wrote:
 
-> Hi,
-> 
-> On Thu, Feb 10, 2022 at 3:58 AM Sankeerth Billakanti
-> <quic_sbillaka@quicinc.com> wrote:
-> >
-> > +       backlight_3v3_regulator: backlight-3v3-regulator {
-> > +               compatible = "regulator-fixed";
-> > +               regulator-name = "backlight_3v3_regulator";
+> > +static void i2c_gpi_cb_result(void *cb, const struct dmaengine_result *result)
+> > +{
+> > +	struct geni_i2c_dev *gi2c = cb;
 > > +
-> > +               regulator-min-microvolt = <3300000>;
-> > +               regulator-max-microvolt = <3300000>;
+> > +	if (result->result != DMA_TRANS_NOERROR) {
+> > +		dev_err(gi2c->se.dev, "DMA txn failed:%d\n", result->result);
+> 
+> Iiuc the API the expectation is that if we get !NOERROR we shouldn't
+> expect to get NOERROR after that.
+>
+> If so we're just returning here and leaving geni_i2c_gpi_xfer() to just
+> timeout in a HZ or so. Given that xfer happens under the adaptor lock,
+> how about carrying an error in geni_i2c_dev and complete(&done) here as
+> well?
+
+Yes we should call complete for errors too, will add that
+
+> > +static int setup_gpi_dma(struct geni_i2c_dev *gi2c)
+> > +{
+> > +	int ret;
 > > +
-> > +               gpio = <&pm8350c_gpios 7 GPIO_ACTIVE_HIGH>;
-> > +               enable-active-high;
+> > +	geni_se_select_mode(&gi2c->se, GENI_GPI_DMA);
+> > +	gi2c->tx_c = dma_request_chan(gi2c->se.dev, "tx");
+> > +	if (IS_ERR(gi2c->tx_c)) {
+> > +		ret = dev_err_probe(gi2c->se.dev, PTR_ERR(gi2c->tx_c),
+> > +				    "Failed to get tx DMA ch\n");
+> > +		if (ret < 0)
+> > +			goto err_tx;
+> > +	}
 > > +
-> > +               pinctrl-names = "default";
-> > +               pinctrl-0 = <&edp_bl_power>;
-> > +       };
+> > +	gi2c->rx_c = dma_request_chan(gi2c->se.dev, "rx");
+> > +	if (IS_ERR(gi2c->rx_c)) {
+> > +		ret = dev_err_probe(gi2c->se.dev, PTR_ERR(gi2c->rx_c),
+> > +				    "Failed to get rx DMA ch\n");
+> > +		if (ret < 0)
+> > +			goto err_rx;
+> > +	}
+> > +
+> > +	dev_dbg(gi2c->se.dev, "Grabbed GPI dma channels\n");
+> > +	return 0;
+> > +
+> > +err_rx:
+> > +	dma_release_channel(gi2c->tx_c);
+> > +	gi2c->tx_c = NULL;
 > 
-> So I'm pretty sure that this is wrong and what you had on a previous
-> patch was more correct. Specifically the PMIC's GPIO 7 truly _is_ an
-> enable pin for the backlight. In the schematics I see it's named as
-> "PMIC_EDP_BL_EN" and is essentially the same net as "EDP_BL_EN". This
-> is distinct from the backlight _regulator_ that is named VREG_EDP_BP.
-> I believe the VREG_EDP_BP is essentially sourced directly from
-> PPVAR_SYS. That's how it works on herobrine and I believe that CRD is
-> the same. You currently don't model ppvar_sys, but it's basically just
-> a variable-voltage rail that could be provided somewhat directly from
-> the battery or could be provided from Type C components. I believe
-> that the panel backlight is designed to handle this fairly wide
-> voltage range and it's done this way to get the best efficiency.
+> You're not accessing tx_c or rx_c again when returning an error here. So
+> I don't think there's a reason to clear them.
+
+Will drop that
+
+> >  static int geni_i2c_remove(struct platform_device *pdev)
+> >  {
+> >  	struct geni_i2c_dev *gi2c = platform_get_drvdata(pdev);
+> >  
+> > +	release_gpi_dma(gi2c);
 > 
-> So personally I'd prefer if you do something like herobrine and model
-> PPVAR_SYS. Then the backlight can use ppvar_sys as its regulator and
-> you can go back to providing this as an "enable" pin for the
-> backlight.
+> Your i2c devices aren't torn down until i2c_del_adapter(), so you might
+> still end up trying to use the two channels here, after releasing them.
 > 
-> I know, technically it doesn't _really_ matter, but it's nice to model
-> it more correctly.
+> In other words, I think you should reorder these.
 
-While I've not seen your schematics, the proposal does look similar to
-what I have on sc8180x, where there's a power rail, the BL_EN and a pwm
-signal.
+Agreed it should be other way round!
 
-If that's the case I think representing BL_EN using the enable-gpios
-property directly in the pwm-backlight node seems more appropriate (with
-power-supply being the actual thing that powers the backlight).
-
-If however gpio 7 is wired to something like the enable-pin on an actual
-LDO the proposal here seems reasonable, but it seems unlikely that the
-output of that would be named "backlight_3v3_regulator"?
-
-Regards,
-Bjorn
+Thanks
+-- 
+~Vinod
