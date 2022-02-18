@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72C444BBC4D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 16:39:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A0D964BBC6E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 16:48:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232545AbiBRPje (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Feb 2022 10:39:34 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49678 "EHLO
+        id S237204AbiBRPtB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Feb 2022 10:49:01 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:56714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236420AbiBRPjd (ORCPT
+        with ESMTP id S237225AbiBRPs0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Feb 2022 10:39:33 -0500
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B068E3D4BA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 07:39:16 -0800 (PST)
-Received: by mail-il1-x134.google.com with SMTP id f13so4904853ilq.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 07:39:16 -0800 (PST)
+        Fri, 18 Feb 2022 10:48:26 -0500
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28462273759
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 07:47:47 -0800 (PST)
+Received: by mail-io1-xd29.google.com with SMTP id z2so8015352iow.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 07:47:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=VwsaeoUeJ22T2TW4cn8CPvPj+OsxArfVqqwFY08bAhM=;
-        b=iWVaM+KGzRMFJt1OBbMJFdA2FcyOSEQR4LJ7B81mwaESj4YsbaNUwnluUs8nnJkpr9
-         8Y2VZcJOibqh8n6TUaulLniXUAS4QEojAdBYeszkKKO7H2l5YAQ+ne9qiIGDUET5QYYA
-         l95Ad8eQGGduWud19c++DFbRXjBUrq8/lvK0kqknaRTl35e+9xOSWUhcsnou7/pJPVw5
-         ruh2w/+RkhxXCbu7OU06kJYc1vtvJJztX+G85OcEw1TttFno97aN70OiJ44hjDyDtnYv
-         u7Wob04aDWuZxJGP8DprZrJNQuslZEMpZgnYAgvzQ+Cnw6UZHWCFkACU0AfrqQHYAe84
-         yeEQ==
+        bh=0d+ENbVi/YpblJNfRhmkBPMtWMK0eYnnrjx3M98By1Q=;
+        b=iSzm9e9rhgQdjya/dXkRvAM1FpOkM7gQVMGxVGb2x1Y4goZHEdAoK2B9HxrblJG4pO
+         6wf6/kKjkJtiISXXLCHwzlpVKNoAPwhYEAYu+mPgoa2BvPLoJO7yTR2zYtPDUCqWAUEy
+         N48CXZ0HChG5SH0ZIL5VnwzVvgZ9GIlevIoprkPkXl5mx2XSmkhVJWPlhld6nWFEo+/J
+         +hkfWO2MHK6Rqd2hZ+YCH+eIWG4CR8/KnQG7OaEOpnERc0DH6Bg6qUfusAvUqTv4iAOz
+         XPFjiOXk8YeQfwOZW2tfENayg5tdXx0HCC6mZrQB7p+W85ysXB/3elBm+s+DNC5YF4MH
+         PHNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=VwsaeoUeJ22T2TW4cn8CPvPj+OsxArfVqqwFY08bAhM=;
-        b=2aJVtJPVg6/CfBRw2D+uZ8ww+VXzFaFQCI99dNwuMfqhTdXGBw5D4LiQuU2ohK1w0c
-         grpyq73NUhpcYWpK/ACKpFGYwh6owvW94xEuSvt02NNGPoOj+UjZV7MRwAHTXxKr9gMr
-         2SXmnle/SjkRaIgmogfUqtq4BpDajyP2SNh/AE/YNs+nHPNuXwR0zLh/IXMIYHMllnoP
-         Vlya4jKC32hGrvb4hxH78NnxNIAYEF95O6zVv5Ks8p0K5PMedILRWBvHbQJc50oS5Tfg
-         kIaTT5yN+1kosybvwKafSHI4gJLwccq6+G9fbC+MiBJrJbNK+mPgBSe5nwwxiYcryjaG
-         5vqw==
-X-Gm-Message-State: AOAM532QO33rBx+LUT13kajfEcfePrceb+lDsMK+ISl6azA5BnrnwbJ1
-        eH9VosCNn9U3ZFVEVQOGVDqgdQ==
-X-Google-Smtp-Source: ABdhPJykOdkq3B8Pv6DQ8GuwWzQ7X7zppMZWqePsHUFZupRBGwOfgPOmn3jonMYG9dIRKCQQdlZzEw==
-X-Received: by 2002:a92:2603:0:b0:2bf:86bc:f860 with SMTP id n3-20020a922603000000b002bf86bcf860mr6030831ile.75.1645198755464;
-        Fri, 18 Feb 2022 07:39:15 -0800 (PST)
+        bh=0d+ENbVi/YpblJNfRhmkBPMtWMK0eYnnrjx3M98By1Q=;
+        b=Mpe46UBzEKmAAr8OjwiPNZTOC0SMDQk2ebt7dcahCEA8TEpIjPDzkuQZh5Mscr0Uhq
+         A0Fkj+W9c8NBPnBlOrPO6E5+PjYXY0UR7OuOrFPSO8tkPeNkfmwdfsO6qe5w9DyLomLJ
+         99D7aVMX34jfeFh/f7vMjDUXpK/94TSIh5oncnFsOvKgOUAfeDECKg5NvmVLq7PyO+qP
+         PD/pwiMMZhqoKK7VNEn2ZJvdZmUqvFWlno7F0VdIInXsPMrIxmWba/xApQQgHYdJ1h7I
+         mbr3g/sN0F0gBzsUrhj/jcMGStlq1ZhFyVPNOxULX1y2OtdKqfQ1hl5ulyXpAXPbDlsz
+         Pxxw==
+X-Gm-Message-State: AOAM530uKayFSvVjuTMtGFnEwPxTD2IjQub3Cxa/zqaqNZRTx79YcRPm
+        7V8QfaJIkwFjfNfhKQ2sfJW7Yg==
+X-Google-Smtp-Source: ABdhPJwHpswjOEoA8nxD3wFPtsUtlFlgSNXvQOMW/OrH5MyURG9TSAVfOrvj6jF1aUyljKqJYuYP6Q==
+X-Received: by 2002:a05:6638:168b:b0:314:7a8d:19d4 with SMTP id f11-20020a056638168b00b003147a8d19d4mr5936881jat.199.1645199266560;
+        Fri, 18 Feb 2022 07:47:46 -0800 (PST)
 Received: from [172.22.22.26] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id g21sm4495723iow.4.2022.02.18.07.39.14
+        by smtp.googlemail.com with ESMTPSA id f10sm3550646ilj.73.2022.02.18.07.47.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Feb 2022 07:39:14 -0800 (PST)
-Message-ID: <7de37015-da47-1f2e-9879-d84021905fed@linaro.org>
-Date:   Fri, 18 Feb 2022 09:39:13 -0600
+        Fri, 18 Feb 2022 07:47:46 -0800 (PST)
+Message-ID: <e516d27b-922a-dbbe-e0da-143eb2ab31d8@linaro.org>
+Date:   Fri, 18 Feb 2022 09:47:44 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.0
@@ -66,9 +66,9 @@ Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
 References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
  <20220212182117.49438-13-manivannan.sadhasivam@linaro.org>
  <20504c14-6df5-83d1-53e9-85c682a5a3c7@linaro.org>
- <20220218080704.GD11964@workstation>
+ <20220218080704.GD11964@workstation> <20220218152327.GA11639@thinkpad>
 From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <20220218080704.GD11964@workstation>
+In-Reply-To: <20220218152327.GA11639@thinkpad>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,113 +81,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/18/22 2:07 AM, Manivannan Sadhasivam wrote:
-> On Tue, Feb 15, 2022 at 02:03:13PM -0600, Alex Elder wrote:
->> On 2/12/22 12:21 PM, Manivannan Sadhasivam wrote:
->>> Add support for managing the MHI ring. The MHI ring is a circular queue
->>> of data structures used to pass the information between host and the
->>> endpoint.
+On 2/18/22 9:23 AM, Manivannan Sadhasivam wrote:
 >>>
->>> MHI support 3 types of rings:
+>>> I'm pretty sure I mentioned this before...  I don't really like these
+>>> "DWORD" macros that simply write compute register values to write
+>>> out to the TREs.  A TRE is a structure, not a set of registers.  And
+>>> a whole TRE can be written or read in a single ARM instruction in
+>>> some cases--but most likely you need to define it as a structure
+>>> for that to happen.
 >>>
->>> 1. Transfer ring
->>> 2. Event ring
->>> 3. Command ring
->>>
->>> All rings reside inside the host memory and the MHI EP device maps it to
->>> the device memory using blocks like PCIe iATU. The mapping is handled in
->>> the MHI EP controller driver itself.
->>>
->>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>>> struct mhi_tre {
+>>> 	__le64 addr;
+>>> 	__le16 len_opcode
+>>> 	__le16 reserved;
+>>> 	__le32 flags;
+>>> };
+>> Changing the TRE structure requires changes to both host and endpoint
+>> stack. So I'll tackle this as an improvement later.
 >>
->> Great explanation.  One more thing to add, is that the command
->> and transfer rings are directed from the host to the MHI EP device,
->> while the event rings are directed from the EP device toward the
->> host.
->>
-> 
-> That's correct, will add.
-> 
->> I notice that you've improved a few things I had notes about,
->> and I don't recall suggesting them.  I'm very happy about that.
->>
->> I have a few more comments here, some worth thinking about
->> at least.
->>
->> 					-Alex
->>
->>> ---
->>>    drivers/bus/mhi/ep/Makefile   |   2 +-
->>>    drivers/bus/mhi/ep/internal.h |  33 +++++
->>>    drivers/bus/mhi/ep/main.c     |  59 +++++++-
->>>    drivers/bus/mhi/ep/ring.c     | 267 ++++++++++++++++++++++++++++++++++
->>>    include/linux/mhi_ep.h        |  11 ++
->>>    5 files changed, 370 insertions(+), 2 deletions(-)
->>>    create mode 100644 drivers/bus/mhi/ep/ring.c
->>>
->>> diff --git a/drivers/bus/mhi/ep/Makefile b/drivers/bus/mhi/ep/Makefile
->>> index a1555ae287ad..7ba0e04801eb 100644
->>> --- a/drivers/bus/mhi/ep/Makefile
->>> +++ b/drivers/bus/mhi/ep/Makefile
+>> Added to TODO list.
+> Just did a comparision w/ IPA code and I convinced myself that this conversion
+> should happen now itself. So please ignore my above comment.
 
-. . .
+This might not be that much work, but if it is, I somewhat
+apologize for that.  Still, I believe the code will be better
+as a result, so I'm not *that* sorry.
 
->>> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
->>> index 950b5bcabe18..2c8045766292 100644
->>> --- a/drivers/bus/mhi/ep/main.c
->>> +++ b/drivers/bus/mhi/ep/main.c
->>> @@ -18,6 +18,48 @@
->>>    static DEFINE_IDA(mhi_ep_cntrl_ida);
->>
->> The following function handles command or channel interrupt work.
->>
-> 
-> Both
+If you do this though, I would recommend you do it as a
+separate, prerequisite bit of work.  Your series is too
+long, and making it longer by adding this will just delay
+*everything* a bit more.  So, I'd advise updating the
+existing host code this way first, then adapt your patch
+series to do things the new way.
 
-What I meant was to suggest a comment that stated that it
-is used for both of those.  Not really a bit deal though.
+Alternatively, do this later (as you earlier said you would),
+and don't delay this series any more.  If it works, it works,
+and you can always improve it in the future.
 
->>> +static void mhi_ep_ring_worker(struct work_struct *work)
->>> +{
->>> +	struct mhi_ep_cntrl *mhi_cntrl = container_of(work,
->>> +				struct mhi_ep_cntrl, ring_work);
->>> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->>> +	struct mhi_ep_ring_item *itr, *tmp;
->>> +	struct mhi_ep_ring *ring;
->>> +	struct mhi_ep_chan *chan;
->>> +	unsigned long flags;
->>> +	LIST_HEAD(head);
->>> +	int ret;
->>> +
->>> +	/* Process the command ring first */
->>> +	ret = mhi_ep_process_ring(&mhi_cntrl->mhi_cmd->ring);
->>> +	if (ret) {
->>
->> At the moment I'm not sure where this work gets scheduled.
->> But what if there is no command to process?  It looks
->> like you go update the cached pointer no matter what
->> to see if there's anything new.  But it seems like you
->> ought to be able to do this when interrupted for a
->> command rather than all the time.
->>
-> 
-> No, ring cache is not getting updated all the time. If you look into
-> process_ring(), first the write pointer is read from MMIO and there is a
-> check to see if there are elements in the ring or not. Only if that
-> check passes, the ring cache will get updated.
-> 
-> Since the same work item is used for both cmd and transfer rings, this
-> check is necessary. The other option would be to use different work items
-> for command and transfer rings. This is something I want to try once
-> this initial version gets merged.
-
-OK.  I accept your explanation (even though I confess I did not
-go back and look at the code again...).
-
-Thanks Mani.
+And now that your series is getting closer to golden, maybe
+you can break it into a few smaller series?  I don't know,
+that also can lead to some confusion, so I won't strongly
+advocate that.  But it's something to consider for future
+work regardless.
 
 					-Alex
-
-> Thanks,
-> Mani
-
