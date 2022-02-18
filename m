@@ -2,88 +2,451 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2736B4BB7D3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 12:11:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DE97D4BB81D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 12:31:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232063AbiBRLLA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Feb 2022 06:11:00 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:36376 "EHLO
+        id S234481AbiBRLbS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Feb 2022 06:31:18 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234503AbiBRLKj (ORCPT
+        with ESMTP id S234229AbiBRLbS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Feb 2022 06:10:39 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C29E62B4071;
-        Fri, 18 Feb 2022 03:10:16 -0800 (PST)
+        Fri, 18 Feb 2022 06:31:18 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 752672AF906;
+        Fri, 18 Feb 2022 03:31:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645182616; x=1676718616;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=CbfVTNhsS2bqMRasM6gcxO6lnE300E5ZKpXg7xb5KNY=;
-  b=C+qqt7AMdUnShTjExaUd6elC+3gVikMiE4f22bxqgQ51MRjNe6GyA70Z
-   lOBcwj2Tqh38aCQXJAcFTeYOJf/P06YQutYKT8YwUtm1ks23v6e5xR/J1
-   f7FAhmibvkRe36QREUJRdtl32D+V8atMvU0P37JzZaqYyVaSOZndGdUtW
-   4=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 18 Feb 2022 03:10:16 -0800
+  t=1645183861; x=1676719861;
+  h=from:to:cc:subject:date:message-id;
+  bh=psg+WGVjYEtfI96XgW3zTOLv9aveKT017gbE39QzLFQ=;
+  b=MUwXO964T21nxhzaGLBg2TZWCgDA2Y8g4ntHjkkkdxua/6cTpVnKwZ+Y
+   nO9SZpZvx6Z43u+0DN0aspxAvuTJLEuEoJSizfT8XMxKj2nTZToW1lSWN
+   QpSRLsDGzUEXzVcAkbC3hnxkDU6FvuJ64CWu75IqteWIH1jcJkGlTd+Ug
+   8=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 18 Feb 2022 03:31:01 -0800
 X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2022 03:10:15 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Fri, 18 Feb 2022 03:10:15 -0800
-Received: from [10.216.13.71] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Fri, 18 Feb
- 2022 03:10:09 -0800
-Message-ID: <25bb20e4-3de5-65fb-0520-fad8f352cc08@quicinc.com>
-Date:   Fri, 18 Feb 2022 16:40:05 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH 0/8] Add APCS support for SDX65
-Content-Language: en-US
-To:     Stephen Boyd <sboyd@kernel.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <dianders@chromium.org>,
-        <jassisinghbrar@gmail.com>, <linus.walleij@linaro.org>,
-        <linux@armlinux.org.uk>, <mani@kernel.org>,
-        <mturquette@baylibre.com>, <robh+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <1644821540-17928-1-git-send-email-quic_rohiagar@quicinc.com>
- <20220217220829.76DB9C340E8@smtp.kernel.org>
-From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
-In-Reply-To: <20220217220829.76DB9C340E8@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 18 Feb 2022 03:30:59 -0800
+X-QCInternal: smtphost
+Received: from vpolimer-linux.qualcomm.com ([10.204.67.235])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 18 Feb 2022 17:00:46 +0530
+Received: by vpolimer-linux.qualcomm.com (Postfix, from userid 463814)
+        id 2BC544B49; Fri, 18 Feb 2022 17:00:45 +0530 (IST)
+From:   Vinod Polimera <quic_vpolimer@quicinc.com>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dmitry.baryshkov@linaro.org, dianders@chromium.org,
+        quic_kalyant@quicinc.com
+Subject: [v1] drm/msm/disp/dpu1: add inline rotation support for sc7280 target
+Date:   Fri, 18 Feb 2022 17:00:33 +0530
+Message-Id: <1645183833-26657-1-git-send-email-quic_vpolimer@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+- Some DPU versions support inline rot90. It is supported only for
+limited amount of UBWC formats.
+- There are two versions of inline rotators, v1 (present on sm8250 and
+sm7250) and v2 (sc7280). These versions differ in the list of supported
+formats and in the scaler possibilities.
 
-On 2/18/2022 3:38 AM, Stephen Boyd wrote:
-> Quoting Rohit Agarwal (2022-02-13 22:52:20)
->> Hello,
->>
->> This series adds APCS mailbox and clock support for SDX65. The APCS IP
->> in SDX65 provides IPC and clock functionalities. Hence, mailbox support
->> is added to the "qcom-apcs-ipc-mailbox" driver and a dedicated clock
->> driver "apcs-sdx65" is added.
->>
-> Something is wrong with your series. I only see a couple patches and
-> they're not threaded.
+Changes in RFC:
+- Rebase changes to the latest code base.
+- Append rotation config variables with v2 and
+remove unused variables.(Dmitry)
+- Move pixel_ext setup separately from scaler3 config.(Dmitry)
+- Add 270 degree rotation to supported rotation list.(Dmitry)
 
-I uploaded the patches individually based on the maintainers which is why it is not coming as thread. I will upload the next version as a patch series with the comments addressed. Thanks!
+Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  44 ++++++++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  15 ++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 105 ++++++++++++++++++++-----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h      |   2 +
+ 4 files changed, 134 insertions(+), 32 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index aa75991..ae17a61 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -25,6 +25,9 @@
+ #define VIG_SM8250_MASK \
+ 	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3LITE))
+ 
++#define VIG_SC7280_MASK \
++	(VIG_SC7180_MASK | BIT(DPU_SSPP_INLINE_ROTATION))
++
+ #define DMA_SDM845_MASK \
+ 	(BIT(DPU_SSPP_SRC) | BIT(DPU_SSPP_QOS) | BIT(DPU_SSPP_QOS_8LVL) |\
+ 	BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_TS_PREFILL_REC1) |\
+@@ -102,6 +105,8 @@
+ #define MAX_DOWNSCALE_RATIO	4
+ #define SSPP_UNITY_SCALE	1
+ 
++#define INLINE_ROTATOR_V2	2
++
+ #define STRCAT(X, Y) (X Y)
+ 
+ static const uint32_t plane_formats[] = {
+@@ -177,6 +182,11 @@ static const uint32_t plane_formats_yuv[] = {
+ 	DRM_FORMAT_YVU420,
+ };
+ 
++static const uint32_t rotation_v2_formats[] = {
++	DRM_FORMAT_NV12,
++	/* TODO add formats after validation */
++};
++
+ /*************************************************************
+  * DPU sub blocks config
+  *************************************************************/
+@@ -465,7 +475,13 @@ static const struct dpu_ctl_cfg sc7280_ctl[] = {
+ 
+ /* SSPP common configuration */
+ 
+-#define _VIG_SBLK(num, sdma_pri, qseed_ver) \
++static const struct dpu_rotation_cfg dpu_rot_cfg_v2 = {
++	.rot_maxheight = 1088,
++	.rot_num_formats = ARRAY_SIZE(rotation_v2_formats),
++	.rot_format_list = rotation_v2_formats,
++};
++
++#define _VIG_SBLK(num, sdma_pri, qseed_ver, rot_cfg) \
+ 	{ \
+ 	.maxdwnscale = MAX_DOWNSCALE_RATIO, \
+ 	.maxupscale = MAX_UPSCALE_RATIO, \
+@@ -482,6 +498,7 @@ static const struct dpu_ctl_cfg sc7280_ctl[] = {
+ 	.num_formats = ARRAY_SIZE(plane_formats_yuv), \
+ 	.virt_format_list = plane_formats, \
+ 	.virt_num_formats = ARRAY_SIZE(plane_formats), \
++	.rotation_cfg = rot_cfg, \
+ 	}
+ 
+ #define _DMA_SBLK(num, sdma_pri) \
+@@ -498,13 +515,13 @@ static const struct dpu_ctl_cfg sc7280_ctl[] = {
+ 	}
+ 
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_0 =
+-				_VIG_SBLK("0", 5, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK("0", 5, DPU_SSPP_SCALER_QSEED3, NULL);
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_1 =
+-				_VIG_SBLK("1", 6, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK("1", 6, DPU_SSPP_SCALER_QSEED3, NULL);
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_2 =
+-				_VIG_SBLK("2", 7, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK("2", 7, DPU_SSPP_SCALER_QSEED3, NULL);
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_3 =
+-				_VIG_SBLK("3", 8, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK("3", 8, DPU_SSPP_SCALER_QSEED3, NULL);
+ 
+ static const struct dpu_sspp_sub_blks sdm845_dma_sblk_0 = _DMA_SBLK("8", 1);
+ static const struct dpu_sspp_sub_blks sdm845_dma_sblk_1 = _DMA_SBLK("9", 2);
+@@ -543,7 +560,10 @@ static const struct dpu_sspp_cfg sdm845_sspp[] = {
+ };
+ 
+ static const struct dpu_sspp_sub_blks sc7180_vig_sblk_0 =
+-				_VIG_SBLK("0", 4, DPU_SSPP_SCALER_QSEED4);
++				_VIG_SBLK("0", 4, DPU_SSPP_SCALER_QSEED4, NULL);
++
++static const struct dpu_sspp_sub_blks sc7280_vig_sblk_0 =
++				_VIG_SBLK("0", 4, DPU_SSPP_SCALER_QSEED4, &dpu_rot_cfg_v2);
+ 
+ static const struct dpu_sspp_cfg sc7180_sspp[] = {
+ 	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SC7180_MASK,
+@@ -557,13 +577,13 @@ static const struct dpu_sspp_cfg sc7180_sspp[] = {
+ };
+ 
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_0 =
+-				_VIG_SBLK("0", 5, DPU_SSPP_SCALER_QSEED3LITE);
++				_VIG_SBLK("0", 5, DPU_SSPP_SCALER_QSEED3LITE, NULL);
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_1 =
+-				_VIG_SBLK("1", 6, DPU_SSPP_SCALER_QSEED3LITE);
++				_VIG_SBLK("1", 6, DPU_SSPP_SCALER_QSEED3LITE, NULL);
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_2 =
+-				_VIG_SBLK("2", 7, DPU_SSPP_SCALER_QSEED3LITE);
++				_VIG_SBLK("2", 7, DPU_SSPP_SCALER_QSEED3LITE, NULL);
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_3 =
+-				_VIG_SBLK("3", 8, DPU_SSPP_SCALER_QSEED3LITE);
++				_VIG_SBLK("3", 8, DPU_SSPP_SCALER_QSEED3LITE, NULL);
+ 
+ static const struct dpu_sspp_cfg sm8250_sspp[] = {
+ 	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SM8250_MASK,
+@@ -585,8 +605,8 @@ static const struct dpu_sspp_cfg sm8250_sspp[] = {
+ };
+ 
+ static const struct dpu_sspp_cfg sc7280_sspp[] = {
+-	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SC7180_MASK,
+-		sc7180_vig_sblk_0, 0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
++	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SC7280_MASK,
++		sc7280_vig_sblk_0, 0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+ 	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
+ 		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+ 	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_CURSOR_SDM845_MASK,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+index 31af04a..ea55f3d 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+@@ -109,6 +109,7 @@ enum {
+  * @DPU_SSPP_TS_PREFILL      Supports prefill with traffic shaper
+  * @DPU_SSPP_TS_PREFILL_REC1 Supports prefill with traffic shaper multirec
+  * @DPU_SSPP_CDP             Supports client driven prefetch
++ * @DPU_SSPP_INLINE_ROTATION Support inline rotation
+  * @DPU_SSPP_MAX             maximum value
+  */
+ enum {
+@@ -129,6 +130,7 @@ enum {
+ 	DPU_SSPP_TS_PREFILL,
+ 	DPU_SSPP_TS_PREFILL_REC1,
+ 	DPU_SSPP_CDP,
++	DPU_SSPP_INLINE_ROTATION,
+ 	DPU_SSPP_MAX
+ };
+ 
+@@ -312,6 +314,18 @@ struct dpu_qos_lut_tbl {
+ };
+ 
+ /**
++ * struct dpu_rotation_cfg - define inline rotation config
++ * @rot_maxheight: max pre rotated height allowed for rotation
++ * @rot_num_formats: count of the formats
++ * @rot_format_list: list of supported rotator formats
++ */
++struct dpu_rotation_cfg {
++	u32 rot_maxheight;
++	u32 rot_num_formats;
++	const u32 *rot_format_list;
++};
++
++/**
+  * struct dpu_caps - define DPU capabilities
+  * @max_mixer_width    max layer mixer line width support.
+  * @max_mixer_blendstages max layer mixer blend stages or
+@@ -387,6 +401,7 @@ struct dpu_sspp_sub_blks {
+ 	u32 num_formats;
+ 	const u32 *virt_format_list;
+ 	u32 virt_num_formats;
++	const struct dpu_rotation_cfg *rotation_cfg;
+ };
+ 
+ /**
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index ca75089..39d934f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -528,11 +528,19 @@ static void _dpu_plane_setup_scaler3(struct dpu_plane *pdpu,
+ 		struct dpu_plane_state *pstate,
+ 		uint32_t src_w, uint32_t src_h, uint32_t dst_w, uint32_t dst_h,
+ 		struct dpu_hw_scaler3_cfg *scale_cfg,
+-		struct dpu_hw_pixel_ext *pixel_ext,
+ 		const struct dpu_format *fmt,
+ 		uint32_t chroma_subsmpl_h, uint32_t chroma_subsmpl_v)
+ {
+ 	uint32_t i;
++	bool inline_rotation = (pstate->rotation & DRM_MODE_ROTATE_90);
++
++	/*
++	 * For inline rotation cases, scaler config is post-rotation,
++	 * so swap the dimensions here. However, pixel extension will
++	 * need pre-rotation settings.
++	 */
++	if (inline_rotation)
++		swap(src_w, src_h);
+ 
+ 	scale_cfg->phase_step_x[DPU_SSPP_COMP_0] =
+ 		mult_frac((1 << PHASE_STEP_SHIFT), src_w, dst_w);
+@@ -571,11 +579,6 @@ static void _dpu_plane_setup_scaler3(struct dpu_plane *pdpu,
+ 			scale_cfg->preload_x[i] = DPU_QSEED3_DEFAULT_PRELOAD_H;
+ 			scale_cfg->preload_y[i] = DPU_QSEED3_DEFAULT_PRELOAD_V;
+ 		}
+-
+-		pixel_ext->num_ext_pxls_top[i] =
+-			scale_cfg->src_height[i];
+-		pixel_ext->num_ext_pxls_left[i] =
+-			scale_cfg->src_width[i];
+ 	}
+ 	if (!(DPU_FORMAT_IS_YUV(fmt)) && (src_h == dst_h)
+ 		&& (src_w == dst_w))
+@@ -591,6 +594,24 @@ static void _dpu_plane_setup_scaler3(struct dpu_plane *pdpu,
+ 	scale_cfg->enable = 1;
+ }
+ 
++static void _dpu_plane_setup_pixel_ext(struct dpu_plane_state *pstate,
++				struct dpu_hw_scaler3_cfg *scale_cfg,
++				struct dpu_hw_pixel_ext *pixel_ext)
++{
++	int i = 0;
++	bool inline_rotation = (pstate->rotation & DRM_MODE_ROTATE_90);
++
++	if (!scale_cfg && !scale_cfg->enable)
++		return;
++
++	for (i = 0; i < DPU_MAX_PLANES; i++) {
++		pixel_ext->num_ext_pxls_top[i] = inline_rotation ?
++				scale_cfg->src_width[i] : scale_cfg->src_height[i];
++		pixel_ext->num_ext_pxls_left[i] = inline_rotation ?
++				scale_cfg->src_height[i] : scale_cfg->src_width[i];
++	}
++}
++
+ static const struct dpu_csc_cfg dpu_csc_YUV2RGB_601L = {
+ 	{
+ 		/* S15.16 format */
+@@ -665,9 +686,12 @@ static void _dpu_plane_setup_scaler(struct dpu_plane *pdpu,
+ 			drm_rect_height(&pipe_cfg->src_rect),
+ 			drm_rect_width(&pipe_cfg->dst_rect),
+ 			drm_rect_height(&pipe_cfg->dst_rect),
+-			&scaler3_cfg, &pixel_ext, fmt,
++			&scaler3_cfg, fmt,
+ 			info->hsub, info->vsub);
+ 
++	/* configure pixel extension based on scalar config */
++	_dpu_plane_setup_pixel_ext(pstate, &scaler3_cfg, &pixel_ext);
++
+ 	if (pdpu->pipe_hw->ops.setup_pe)
+ 		pdpu->pipe_hw->ops.setup_pe(pdpu->pipe_hw,
+ 				&pixel_ext);
+@@ -967,6 +991,7 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 	const struct dpu_format *fmt;
+ 	struct drm_rect src, dst, fb_rect = { 0 };
+ 	uint32_t min_src_size, max_linewidth;
++	unsigned int rotation;
+ 
+ 	if (new_plane_state->crtc)
+ 		crtc_state = drm_atomic_get_new_crtc_state(state,
+@@ -1035,6 +1060,48 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 		return -E2BIG;
+ 	}
+ 
++	rotation = drm_rotation_simplify(new_plane_state->rotation,
++			    DRM_MODE_ROTATE_0 |
++			    DRM_MODE_ROTATE_90 |
++			    DRM_MODE_REFLECT_X |
++			    DRM_MODE_REFLECT_Y);
++
++	if (rotation & DRM_MODE_ROTATE_90) {
++		const struct msm_format *msm_fmt;
++		const struct dpu_format *fmt;
++		bool found = false;
++		u32 i, num_formats;
++		const u32 *supported_formats;
++
++		if ((pdpu->pipe_hw->cap->features & BIT(DPU_SSPP_INLINE_ROTATION)) &&
++			pdpu->pipe_hw->cap->sblk->rotation_cfg &&
++			(drm_rect_width(&src) >
++				pdpu->pipe_hw->cap->sblk->rotation_cfg->rot_maxheight)) {
++			DPU_DEBUG_PLANE(pdpu,
++			"invalid height for inline rot:%d max:%d\n",
++			src.y2, pdpu->pipe_hw->cap->sblk->rotation_cfg->rot_maxheight);
++			return -EINVAL;
++		}
++
++		msm_fmt = msm_framebuffer_format(new_plane_state->fb);
++		fmt = to_dpu_format(msm_fmt);
++		supported_formats = pdpu->pipe_hw->cap->sblk->rotation_cfg->rot_format_list;
++		num_formats = pdpu->pipe_hw->cap->sblk->rotation_cfg->rot_num_formats;
++
++		for (i = 0; i < num_formats; i++) {
++			/* check for valid formats supported by inline rotation */
++			if (fmt->base.pixel_format == supported_formats[i] &&
++				DPU_FORMAT_IS_UBWC(fmt))
++				found = true;
++		}
++
++		if (!found || !num_formats) {
++			DPU_DEBUG_PLANE(pdpu,
++			"supported_format not found num:%d\n", num_formats);
++			return -EINVAL;
++		}
++	}
++	pstate->rotation = rotation;
+ 	pstate->needs_qos_remap = drm_atomic_crtc_needs_modeset(crtc_state);
+ 
+ 	return 0;
+@@ -1150,21 +1217,18 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+ 				pstate->multirect_mode);
+ 
+ 	if (pdpu->pipe_hw->ops.setup_format) {
+-		unsigned int rotation;
+ 
+ 		src_flags = 0x0;
+ 
+-		rotation = drm_rotation_simplify(state->rotation,
+-						 DRM_MODE_ROTATE_0 |
+-						 DRM_MODE_REFLECT_X |
+-						 DRM_MODE_REFLECT_Y);
+-
+-		if (rotation & DRM_MODE_REFLECT_X)
++		if (pstate->rotation & DRM_MODE_REFLECT_X)
+ 			src_flags |= DPU_SSPP_FLIP_LR;
+ 
+-		if (rotation & DRM_MODE_REFLECT_Y)
++		if (pstate->rotation & DRM_MODE_REFLECT_Y)
+ 			src_flags |= DPU_SSPP_FLIP_UD;
+ 
++		if (pstate->rotation & DRM_MODE_ROTATE_90)
++			src_flags |= DPU_SSPP_ROT_90;
++
+ 		/* update format */
+ 		pdpu->pipe_hw->ops.setup_format(pdpu->pipe_hw, fmt, src_flags,
+ 				pstate->multirect_index);
+@@ -1462,6 +1526,8 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+ 	int zpos_max = DPU_ZPOS_MAX;
+ 	uint32_t num_formats;
+ 	int ret = -EINVAL;
++	unsigned int supported_rotations = DRM_MODE_ROTATE_0 |
++			DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y;
+ 
+ 	/* create and zero local structure */
+ 	pdpu = kzalloc(sizeof(*pdpu), GFP_KERNEL);
+@@ -1529,12 +1595,11 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+ 			BIT(DRM_MODE_BLEND_PREMULTI) |
+ 			BIT(DRM_MODE_BLEND_COVERAGE));
+ 
++	if (pdpu->pipe_hw->cap->features & BIT(DPU_SSPP_INLINE_ROTATION))
++		supported_rotations |= DRM_MODE_ROTATE_90 | DRM_MODE_ROTATE_270;
++
+ 	drm_plane_create_rotation_property(plane,
+-			DRM_MODE_ROTATE_0,
+-			DRM_MODE_ROTATE_0 |
+-			DRM_MODE_ROTATE_180 |
+-			DRM_MODE_REFLECT_X |
+-			DRM_MODE_REFLECT_Y);
++		    DRM_MODE_ROTATE_0, supported_rotations);
+ 
+ 	drm_plane_enable_fb_damage_clips(plane);
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+index 9d51dad..e72da02 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+@@ -25,6 +25,7 @@
+  * @pending:	whether the current update is still pending
+  * @plane_fetch_bw: calculated BW per plane
+  * @plane_clk: calculated clk per plane
++ * @rotation: simplified drm rotation hint
+  */
+ struct dpu_plane_state {
+ 	struct drm_plane_state base;
+@@ -37,6 +38,7 @@ struct dpu_plane_state {
+ 
+ 	u64 plane_fetch_bw;
+ 	u64 plane_clk;
++	unsigned int rotation;
+ };
+ 
+ /**
+-- 
+2.7.4
 
