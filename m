@@ -2,42 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0341A4BB780
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 12:01:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 598BC4BB77E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 12:01:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234278AbiBRLB4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Feb 2022 06:01:56 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:54722 "EHLO
+        id S233435AbiBRLCC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Feb 2022 06:02:02 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:54790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234289AbiBRLBz (ORCPT
+        with ESMTP id S234283AbiBRLB6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Feb 2022 06:01:55 -0500
+        Fri, 18 Feb 2022 06:01:58 -0500
 Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 669CB12D09A;
-        Fri, 18 Feb 2022 03:01:36 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3834815C1BD;
+        Fri, 18 Feb 2022 03:01:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645182097; x=1676718097;
+  t=1645182101; x=1676718101;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version;
-  bh=xC0tnBauPfrhyHvmFyGrK+yrVEmvEbfDV8uXMcB0bCk=;
-  b=NNFGcquHsNqbzcAy0ZnXGfQjFSlQ92a9/8wWXaqMQ2+bqYdc5Dda5ppq
-   kp84KQ+oGSEX9xkz/txtWB1ZG2MtV0XHFXwbru2iP9mwqKDPorHS9+y3i
-   /pnY6FE+g9AUCjFKcFx3F+2aRmlnD2LmhzvgGI2HzC+Jns4YVTgyh2AoQ
-   o=;
+  bh=LEi7vbeM1BKwa9AtkQH1WTnrKGLg9p8WD9c/eKb0VGU=;
+  b=Pvimo1rfphBpYPzR31cz89kIZ4pGte+VlzjUVv+kiJJ0uKIBepeEtQjP
+   M7HmP/tEB7kY7q+eU8W65e1nMPR3gBG7DQMd2ukbkP+riycG5M9T82j5D
+   69CvJJU2xuwoXQnfc4uQvscOj//NHXlUmhbXqlHa3Her8m/pJA5Y6vygw
+   k=;
 Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 18 Feb 2022 03:01:36 -0800
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 18 Feb 2022 03:01:41 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2022 03:01:36 -0800
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2022 03:01:40 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Fri, 18 Feb 2022 03:01:35 -0800
+ 15.2.986.15; Fri, 18 Feb 2022 03:01:40 -0800
 Received: from c-skakit-linux.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Fri, 18 Feb 2022 03:01:31 -0800
+ 15.2.986.15; Fri, 18 Feb 2022 03:01:36 -0800
 From:   Satya Priya <quic_c_skakit@quicinc.com>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>
@@ -50,9 +50,9 @@ CC:     Lee Jones <lee.jones@linaro.org>,
         <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
         <quic_jprakash@quicinc.com>,
         Satya Priya <quic_c_skakit@quicinc.com>
-Subject: [PATCH V7 1/5] dt-bindings: mfd: pm8008: Add pm8008 regulators
-Date:   Fri, 18 Feb 2022 16:30:59 +0530
-Message-ID: <1645182064-15843-2-git-send-email-quic_c_skakit@quicinc.com>
+Subject: [PATCH V7 2/5] mfd: pm8008: Add mfd cell struct to register LDOs
+Date:   Fri, 18 Feb 2022 16:31:00 +0530
+Message-ID: <1645182064-15843-3-git-send-email-quic_c_skakit@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1645182064-15843-1-git-send-email-quic_c_skakit@quicinc.com>
 References: <1645182064-15843-1-git-send-email-quic_c_skakit@quicinc.com>
@@ -71,135 +71,100 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add regulators and their supply nodes. Add separate compatible
-"qcom,pm8008-regulators" to differentiate between pm8008 infra
-and pm8008 regulators mfd devices.
+Add mfd cell struct with regulator driver name to match
+with the pm8008 regulator driver and probe the LDOs.
+
+Also, add a different compatible for the mfd node that
+contains regulators to make sure that the LDOs are
+registered with the correct mfd device.
 
 Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
 ---
-Changes in V2:
- - As per Rob's comments changed "pm8008[a-z]?-regulator" to
-   "^pm8008[a-z]?-regulators".
-
-Changes in V3:
- - Fixed bot errors.
- - As per stephen's comments, changed "^pm8008[a-z]?-regulators$" to
-   "regulators".
-
-Changes in V4:
- - Changed compatible string to "qcom,pm8008-regulators"
-
 Changes in V5:
- - Remove compatible for regulators node.
- - Move supply nodes of the regulators to chip level.
+ - Changes newly added from V5.
 
 Changes in V6:
- - No changes.
+ - Changed the mfd_cell struct to have only name of the regulator driver.
+ - Using device_get_match_data() instead of of_match_node() to match data.
+ - Fixed few nits.
 
 Changes in V7:
- - Removed the intermediate regulators node and added ldos
-   directly under mfd node.
+ - Fixed minor errors.
 
- .../devicetree/bindings/mfd/qcom,pm8008.yaml       | 50 +++++++++++++++++++---
- 1 file changed, 43 insertions(+), 7 deletions(-)
+ drivers/mfd/qcom-pm8008.c | 27 +++++++++++++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
-index ec3138c..6b3b53e 100644
---- a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
-+++ b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
-@@ -16,7 +16,9 @@ description: |
+diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
+index c472d7f..6cfb267 100644
+--- a/drivers/mfd/qcom-pm8008.c
++++ b/drivers/mfd/qcom-pm8008.c
+@@ -8,6 +8,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/irq.h>
+ #include <linux/irqdomain.h>
++#include <linux/mfd/core.h>
+ #include <linux/module.h>
+ #include <linux/of_device.h>
+ #include <linux/of_platform.h>
+@@ -27,6 +28,10 @@
+ #define INT_EN_CLR_OFFSET		0x16
+ #define INT_LATCHED_STS_OFFSET		0x18
  
- properties:
-   compatible:
--    const: qcom,pm8008
-+    enum:
-+      - qcom,pm8008
-+      - qcom,pm8008-regulators
- 
-   reg:
-     description:
-@@ -44,6 +46,21 @@ properties:
-   "#size-cells":
-     const: 0
- 
-+  vdd_l1_l2-supply:
-+    description: Input supply phandle of ldo1 and ldo2 regulators.
++static const struct mfd_cell pm8008_regulator_devs[] = {
++	MFD_CELL_NAME("qcom,pm8008-regulators"),
++};
 +
-+  vdd_l3_l4-supply:
-+    description: Input supply phandle of ldo3 and ldo4 regulators.
-+
-+  vdd_l5-supply:
-+    description: Input supply phandle of ldo5 regulator.
-+
-+  vdd_l6-supply:
-+    description: Input supply phandle of ldo6 regulator.
-+
-+  vdd_l7-supply:
-+    description: Input supply phandle of ldo7 regulator.
-+
- patternProperties:
-   "^gpio@[0-9a-f]+$":
-     type: object
-@@ -85,13 +102,16 @@ patternProperties:
+ enum {
+ 	PM8008_MISC,
+ 	PM8008_TEMP_ALARM,
+@@ -35,6 +40,11 @@ enum {
+ 	PM8008_NUM_PERIPHS,
+ };
  
-     additionalProperties: false
- 
-+  "^ldo[1-7]$":
-+    type: object
-+    $ref: "../regulator/regulator.yaml#"
-+    description: PM8008 regulator peripherals of PM8008 regulator device
++enum pm8008_type {
++	PM8008_INFRA,
++	PM8008_REGULATORS,
++};
 +
- required:
-   - compatible
-   - reg
--  - interrupts
-   - "#address-cells"
-   - "#size-cells"
--  - "#interrupt-cells"
+ #define PM8008_PERIPH_0_BASE	0x900
+ #define PM8008_PERIPH_1_BASE	0x2400
+ #define PM8008_PERIPH_2_BASE	0xC000
+@@ -221,6 +231,7 @@ static int pm8008_probe(struct i2c_client *client)
+ {
+ 	int rc;
+ 	struct pm8008_data *chip;
++	enum pm8008_type type;
  
- additionalProperties: false
+ 	chip = devm_kzalloc(&client->dev, sizeof(*chip), GFP_KERNEL);
+ 	if (!chip)
+@@ -239,13 +250,25 @@ static int pm8008_probe(struct i2c_client *client)
+ 			dev_err(chip->dev, "Failed to probe irq periphs: %d\n", rc);
+ 	}
  
-@@ -102,13 +122,11 @@ examples:
-     qupv3_se13_i2c {
-       #address-cells = <1>;
-       #size-cells = <0>;
--      pm8008i@8 {
-+      pm8008_infra: pm8008@8 {
-         compatible = "qcom,pm8008";
-         reg = <0x8>;
-         #address-cells = <1>;
-         #size-cells = <0>;
--        interrupt-controller;
--        #interrupt-cells = <2>;
- 
-         interrupt-parent = <&tlmm>;
-         interrupts = <32 IRQ_TYPE_EDGE_RISING>;
-@@ -123,6 +141,24 @@ examples:
-           #interrupt-cells = <2>;
-         };
-       };
--    };
- 
-+      pm8008_regulators: pm8008@9 {
-+        compatible = "qcom,pm8008-regulators";
-+        reg = <0x9>;
-+        #address-cells = <1>;
-+        #size-cells = <0>;
++	type = (uintptr_t) device_get_match_data(chip->dev);
++	if (type == PM8008_REGULATORS) {
++		rc = devm_mfd_add_devices(chip->dev, 0, pm8008_regulator_devs,
++				ARRAY_SIZE(pm8008_regulator_devs), NULL, 0, NULL);
++		if (rc) {
++			dev_err(chip->dev, "Failed to add children: %d\n", rc);
++			return rc;
++		}
++	}
 +
-+        vdd_l1_l2-supply = <&vreg_s8b_1p2>;
-+        vdd_l3_l4-supply = <&vreg_s1b_1p8>;
-+        vdd_l5-supply = <&vreg_bob>;
-+        vdd_l6-supply = <&vreg_bob>;
-+        vdd_l7-supply = <&vreg_bob>;
-+
-+        pm8008_l1: ldo1 {
-+          regulator-name = "pm8008_l1";
-+          regulator-min-microvolt = <950000>;
-+          regulator-max-microvolt = <1300000>;
-+        };
-+      };
-+    };
- ...
+ 	return devm_of_platform_populate(chip->dev);
+ }
+ 
+ static const struct of_device_id pm8008_match[] = {
+-	{ .compatible = "qcom,pm8008", },
+-	{ },
++	{ .compatible = "qcom,pm8008", .data = (void *)PM8008_INFRA },
++	{ .compatible = "qcom,pm8008-regulators", .data = (void *)PM8008_REGULATORS },
++	{ }
+ };
++MODULE_DEVICE_TABLE(of, pm8008_match);
+ 
+ static struct i2c_driver pm8008_mfd_driver = {
+ 	.driver = {
 -- 
 2.7.4
 
