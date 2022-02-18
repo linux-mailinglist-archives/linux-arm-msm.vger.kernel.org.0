@@ -2,73 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 374C14BBF7E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 19:29:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 964564BBFFE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 19:55:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239245AbiBRS3e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Feb 2022 13:29:34 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42490 "EHLO
+        id S236078AbiBRSzw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Feb 2022 13:55:52 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239236AbiBRS3c (ORCPT
+        with ESMTP id S235828AbiBRSzl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Feb 2022 13:29:32 -0500
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 943C99A4DA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 10:29:12 -0800 (PST)
-Received: by mail-oi1-x234.google.com with SMTP id q5so3985750oij.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 10:29:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=s0pxZKJbld76R2uR0ROoW1esO0UWLB+fAOl4SjbX6EI=;
-        b=wHrNoI7IQsgCPVEt07G945+ScXxzbbNOfLCbcZHXc3bj3CmsZ32FUL92ARQDS3p3Ui
-         cBOGhGGb11gDymn7g1BJkoDp3GQWKjeTAMPrDTUpWhiMK3azDKLIDOr9KDWiHFkmv50f
-         CLe1wwM4US3RJ2s4i96xbilz+a7OFc5HjfPqRSHhH0hEsH/svKq0lAPAs+3lmckyBw5J
-         Bu2PAwWeTEvBxkJzsWtLrYNitgUSojzEsRH9xjZT8f/Gp3CzBOlk1dZc4DD/z+8c1u3R
-         cjbNscxnSmyeetzTm6VC+1Q9Lpe+kUY2O6VB6HTxtzA7M93lTuAZ3Stvmfj4Ld0cfk0Y
-         k12w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=s0pxZKJbld76R2uR0ROoW1esO0UWLB+fAOl4SjbX6EI=;
-        b=QYZLEfE/eiBiRaCChXlGBkixfxmhgOD1/uBezZSQSthB6UWlDHRF/SoOg6xjy17rkH
-         jjcIR6tad4FRBPprjVEAPv6XJ43M9G2NR/XmERTOoTOghmJ/VK2z2cOkzaGoU2JnLWiQ
-         C3ZXppV5MB3aEgM/QXOH9SD+wW+w81w9cXAvDLs5jNBALNwWNjSSlBt295motAv+0yom
-         qWWmzT0HJb0YBQc8TDV7So14SyPF3PQxcTY4cHVdULYtkNL/38KK80asdbHgL7lMgDuD
-         hnhQLiyxGGOdyDHR9XFII/QOVGwv5wVtVUZ4YUkLx70y8adcG0yF2Qz6pZHhwPw6gYWA
-         FEdg==
-X-Gm-Message-State: AOAM531xv/WxVcOeoOw7t6TIMMh3pc7X4sDVbr6gilJsHi/LtQR2GRyD
-        Vg60/yOXzRBSAKMMZtVo0xguVA==
-X-Google-Smtp-Source: ABdhPJyEZHn4N3fzl75nhZyPRquR5a7h0wlQNiZ9GscZQA4vmW72Xa9Q//hg6LVBDjBOH8WlEpDMiQ==
-X-Received: by 2002:aca:5c46:0:b0:2d3:a858:c201 with SMTP id q67-20020aca5c46000000b002d3a858c201mr5343442oib.278.1645208951597;
-        Fri, 18 Feb 2022 10:29:11 -0800 (PST)
-Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id t5sm1742508otp.67.2022.02.18.10.29.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Feb 2022 10:29:11 -0800 (PST)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Pavel Machek <pavel@ucw.cz>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-pwm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Doug Anderson <dianders@chromium.org>
-Subject: [PATCH v13 2/2] leds: Add driver for Qualcomm LPG
-Date:   Fri, 18 Feb 2022 10:31:16 -0800
-Message-Id: <20220218183116.2261770-2-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20220218183116.2261770-1-bjorn.andersson@linaro.org>
-References: <20220218183116.2261770-1-bjorn.andersson@linaro.org>
+        Fri, 18 Feb 2022 13:55:41 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83D5A245FFD;
+        Fri, 18 Feb 2022 10:55:23 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 0A096B826CB;
+        Fri, 18 Feb 2022 18:55:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38B2CC340E9;
+        Fri, 18 Feb 2022 18:55:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1645210520;
+        bh=eUKS6E9NncUfZYV+33fY1sHXhPvqMeRk1t63GDlJox0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=FL5hbA3tczXm461XYJwRvxevsTVXko8g77DF3xVUmMcBoh7x1RvPjgS/u8R61sbtC
+         FrsQbyaji8geVOcCqmxB24Ln32XnkImzC3FCGFVU4MTkgt9+7ON29cX4zx5E/lmXfK
+         8p06T8Ka/Vyfhjz8twmbr4QUG8jz8Bw7S/M/i0QjcxsCvBKVazqaoHUpmFZwoy+aST
+         +S3iMna4+47ntp8mkuwScl/toftZ6WaQbF0ES7AephlgcQjmFSDPgDl5uCeFVYFTMq
+         UfodeAfZTF7TEomWhWZtZRD5jbzxCAHjAwMz4ZNhCrbNnboNeswd8GxiMwXO9RW+SO
+         0DNeC61PBsdWg==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Wolfram Sang <wsa@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Alexey Minnekhanov <alexeymin@postmarketos.org>,
+        jorcrous@amazon.com, dmitry.baryshkov@linaro.org
+Subject: [PATCH v6] i2c: qcom-geni: Add support for GPI DMA
+Date:   Sat, 19 Feb 2022 00:25:06 +0530
+Message-Id: <20220218185506.946510-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,1624 +58,436 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Light Pulse Generator (LPG) is a PWM-block found in a wide range of
-PMICs from Qualcomm. These PMICs typically comes with 1-8 LPG instances,
-with their output being routed to various other components, such as
-current sinks or GPIOs.
+QUP Serial engines supports data transfers thru FIFO mode, SE DMA mode
+and lastly GPI DMA mode. Former two are already supported and this adds
+supports for the last mode.
 
-Each LPG instance can operate on fixed parameters or based on a shared
-lookup-table, altering the duty cycle over time. This provides the means
-for hardware assisted transitions of LED brightness.
+In GPI DMA mode, the firmware is issued commands by driver to perform
+DMA and setup the serial port.
 
-A typical use case for the fixed parameter mode is to drive a PWM
-backlight control signal, the driver therefor allows each LPG instance
-to be exposed to the kernel either through the LED framework or the PWM
-framework.
-
-A typical use case for the LED configuration is to drive RGB LEDs in
-smartphones etc, for which the driver supports multiple channels to be
-ganged up to a MULTICOLOR LED. In this configuration the pattern
-generators will be synchronized, to allow for multi-color patterns.
-
-The idea of modelling this as a LED driver ontop of a PWM driver was
-considered, but setting the properties related to patterns does not fit
-in the PWM API. Similarly the idea of just duplicating the lower bits in
-a PWM and LED driver separately was considered, but this would not allow
-the PWM channels and LEDs to be configured on a per-board basis. The
-driver implements the more complex LED interface, and provides a PWM
-interface on the side of that, in the same driver.
-
-Tested-by: Luca Weiss <luca@z3ntu.xyz>
-Tested-by: Doug Anderson <dianders@chromium.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
-Changes since v12:
-- Initialize ret in lpg_pwm_apply()
 
-Changes since v11:
-- Extended commit message to cover decision to put pwm_chip in the LED driver
-- Added Documentation, in particular for the hw_pattern format
-- Added a lock to synchronize requests from LED and PWM frameworks
-- Turned out that the 9bit selector differs per channel in some PMICs, so
-  replaced bitmask in lpg_data with lookup based on QPNP SUBTYPE
-- Fixed kerneldoc for the struct device pointer in struct lpg
-- Rewrote conditional in lut_free() to make it easier to read
-- Corrected and deduplicated max_period expression in lpg_calc_freq()
-- Extended nom/dom to numerator/denominator in lpg_calc_freq()
-- Replaced 1 << 9 with LPG_RESOLUTION in one more place in lpg_calc_freq()
-- Use FIELD_PREP() in lpg_apply_freq() as masks was introduced for reading the
-  same in get_state()
-- Cleaned up the pattern format, to allow specifying both low and high pause
-  with and without pingpong mode.
-- Only update frequency and pwm_value if PWM channel is enabled in lpg_pwm_apply
-- Make lpg_pwm_get_state() read the hardware state, in order to pick up e.g.
-  bootloader backlight configuration
-- Use devm_bitmap_zalloc() to allocate the lut_bitmap
-- Use dev_err_probe() in lpg_probe()
-- Extended Kconfig help text to mention module name and satisfy checkpatch
+Changes since v5:
+ - Fix comments by Bjorn, Dmitry and Jordan
 
- Documentation/leds/leds-qcom-lpg.rst |   76 ++
- drivers/leds/Kconfig                 |    3 +
- drivers/leds/Makefile                |    3 +
- drivers/leds/rgb/Kconfig             |   18 +
- drivers/leds/rgb/Makefile            |    3 +
- drivers/leds/rgb/leds-qcom-lpg.c     | 1401 ++++++++++++++++++++++++++
- 6 files changed, 1504 insertions(+)
- create mode 100644 Documentation/leds/leds-qcom-lpg.rst
- create mode 100644 drivers/leds/rgb/Kconfig
- create mode 100644 drivers/leds/rgb/Makefile
- create mode 100644 drivers/leds/rgb/leds-qcom-lpg.c
+Changes since v4:
+ - Fix buildbot warn
+ - Fix flase warn reported by Alexey
+ - Fix feedback from Bjorn and cleanup the probe code and add more details
+   in changelog
 
-diff --git a/Documentation/leds/leds-qcom-lpg.rst b/Documentation/leds/leds-qcom-lpg.rst
-new file mode 100644
-index 000000000000..d4825a289888
---- /dev/null
-+++ b/Documentation/leds/leds-qcom-lpg.rst
-@@ -0,0 +1,76 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+
-+==============================
-+Kernel driver for Qualcomm LPG
-+==============================
-+
-+Description
-+-----------
-+
-+The Qualcomm LPG can be found in a variety of Qualcomm PMICs and consists of a
-+number of PWM channels, a programmable pattern lookup table and a RGB LED
-+current sink.
-+
-+To facilitate the various use cases, the LPG channels can be exposed as
-+individual LEDs, grouped together as RGB LEDs or otherwise be accessed as PWM
-+channels. The output of each PWM channel is routed to other hardware
-+blocks, such as the RGB current sink, GPIO pins etc.
-+
-+The each PWM channel can operate with a period between 27us and 384 seconds and
-+has a 9 bit resolution of the duty cycle.
-+
-+In order to provide support for status notifications with the CPU subsystem in
-+deeper idle states the LPG provides pattern support. This consists of a shared
-+lookup table of brightness values and per channel properties to select the
-+range within the table to use, the rate and if the pattern should repeat.
-+
-+The pattern for a channel can be programmed using the "pattern" trigger, using
-+the hw_pattern attribute.
-+
-+/sys/class/leds/<led>/hw_pattern
-+--------------------------------
-+
-+Specify a hardware pattern for a Qualcomm LPG LED.
-+
-+The pattern is a series of brightness and hold-time pairs, with the hold-time
-+expressed in milliseconds. The hold time is a property of the pattern and must
-+therefor be identical for each element in the pattern (except for the pauses
-+described below).
-+
-+Simple pattern::
-+
-+    "255 500 0 500"
-+
-+        ^
-+        |
-+    255 +----+    +----+
-+	|    |    |    |      ...
-+      0 |    +----+    +----
-+        +---------------------->
-+	0    5   10   15     time (100ms)
-+
-+The LPG supports specifying a longer hold-time for the first and last element
-+in the pattern, the so called "low pause" and "high pause".
-+
-+Low-pause pattern::
-+
-+    "255 1000 0 500 255 500 0 500"
-+
-+        ^
-+        |
-+    255 +--------+    +----+    +----+    +--------+
-+	|        |    |    |    |    |    |        |      ...
-+      0 |        +----+    +----+    +----+        +----
-+        +----------------------------->
-+	0    5   10   15  20   25   time (100ms)
-+
-+Similarily, the last entry can be stretched by using a higher hold-time on the
-+last entry.
-+
-+In order to save space in the shared lookup table the LPG supports "ping-pong"
-+mode, in which case each run through the pattern is performed by first running
-+the pattern forward, then backwards. This mode is automatically used by the
-+driver when the given pattern is a palindrome. In this case the "high pause"
-+denotes the wait time before the pattern is run in reverse and as such the
-+specified hold-time of the middle item in the pattern is allowed to have a
-+different hold-time.
-diff --git a/drivers/leds/Kconfig b/drivers/leds/Kconfig
-index 6090e647daee..a49979f41eee 100644
---- a/drivers/leds/Kconfig
-+++ b/drivers/leds/Kconfig
-@@ -869,6 +869,9 @@ source "drivers/leds/blink/Kconfig"
- comment "Flash and Torch LED drivers"
- source "drivers/leds/flash/Kconfig"
+Changes since v3:
+ - remove separate tx and rx function for gsi dma and make a common one
+ - remove global structs and use local variables instead
+
+
+ drivers/i2c/busses/i2c-qcom-geni.c | 303 ++++++++++++++++++++++++++---
+ 1 file changed, 275 insertions(+), 28 deletions(-)
+
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index 6d635a7c104c..e03544ba827c 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -3,7 +3,9 @@
  
-+comment "RGB LED drivers"
-+source "drivers/leds/rgb/Kconfig"
-+
- comment "LED Triggers"
- source "drivers/leds/trigger/Kconfig"
+ #include <linux/acpi.h>
+ #include <linux/clk.h>
++#include <linux/dmaengine.h>
+ #include <linux/dma-mapping.h>
++#include <linux/dma/qcom-gpi-dma.h>
+ #include <linux/err.h>
+ #include <linux/i2c.h>
+ #include <linux/interrupt.h>
+@@ -48,6 +50,9 @@
+ #define LOW_COUNTER_SHFT	10
+ #define CYCLE_COUNTER_MSK	GENMASK(9, 0)
  
-diff --git a/drivers/leds/Makefile b/drivers/leds/Makefile
-index e58ecb36360f..4fd2f92cd198 100644
---- a/drivers/leds/Makefile
-+++ b/drivers/leds/Makefile
-@@ -99,6 +99,9 @@ obj-$(CONFIG_LEDS_USER)			+= uleds.o
- # Flash and Torch LED Drivers
- obj-$(CONFIG_LEDS_CLASS_FLASH)		+= flash/
++#define I2C_PACK_TX		BIT(0)
++#define I2C_PACK_RX		BIT(1)
++
+ enum geni_i2c_err_code {
+ 	GP_IRQ0,
+ 	NACK,
+@@ -89,6 +94,9 @@ struct geni_i2c_dev {
+ 	void *dma_buf;
+ 	size_t xfer_len;
+ 	dma_addr_t dma_addr;
++	struct dma_chan *tx_c;
++	struct dma_chan *rx_c;
++	bool gpi_mode;
+ };
  
-+# RGB LED Drivers
-+obj-$(CONFIG_LEDS_CLASS_MULTICOLOR)	+= rgb/
-+
- # LED Triggers
- obj-$(CONFIG_LEDS_TRIGGERS)		+= trigger/
+ struct geni_i2c_err_log {
+@@ -456,12 +464,202 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+ 	return gi2c->err;
+ }
  
-diff --git a/drivers/leds/rgb/Kconfig b/drivers/leds/rgb/Kconfig
-new file mode 100644
-index 000000000000..5dd27ad80856
---- /dev/null
-+++ b/drivers/leds/rgb/Kconfig
-@@ -0,0 +1,18 @@
-+# SPDX-License-Identifier: GPL-2.0
-+
-+if LEDS_CLASS_MULTICOLOR
-+
-+config LEDS_QCOM_LPG
-+	tristate "LED support for Qualcomm LPG"
-+	depends on OF
-+	depends on SPMI
-+	help
-+	  This option enables support for the Light Pulse Generator found in a
-+	  wide variety of Qualcomm PMICs. The LPG consists of a number of PWM
-+	  channels and typically a shared pattern lookup table and a current
-+	  sink, intended to drive RGB LEDs. Each channel can either be used as
-+	  a LED, grouped to represent a RGB LED or exposed as PWM channels.
-+
-+	  If compiled as a module, the module will be named leds-qcom-lpg.
-+
-+endif # LEDS_CLASS_MULTICOLOR
-diff --git a/drivers/leds/rgb/Makefile b/drivers/leds/rgb/Makefile
-new file mode 100644
-index 000000000000..83114f44c4ea
---- /dev/null
-+++ b/drivers/leds/rgb/Makefile
-@@ -0,0 +1,3 @@
-+# SPDX-License-Identifier: GPL-2.0
-+
-+obj-$(CONFIG_LEDS_QCOM_LPG)	+= leds-qcom-lpg.o
-diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
-new file mode 100644
-index 000000000000..c1ad678d4dce
---- /dev/null
-+++ b/drivers/leds/rgb/leds-qcom-lpg.c
-@@ -0,0 +1,1401 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2017-2022 Linaro Ltd
-+ * Copyright (c) 2010-2012, The Linux Foundation. All rights reserved.
-+ */
-+#include <linux/bits.h>
-+#include <linux/bitfield.h>
-+#include <linux/led-class-multicolor.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/of_device.h>
-+#include <linux/platform_device.h>
-+#include <linux/pwm.h>
-+#include <linux/regmap.h>
-+#include <linux/slab.h>
-+
-+#define LPG_SUBTYPE_REG		0x05
-+#define  LPG_SUBTYPE_LPG	0x2
-+#define  LPG_SUBTYPE_PWM	0xb
-+#define  LPG_SUBTYPE_LPG_LITE	0x11
-+#define LPG_PATTERN_CONFIG_REG	0x40
-+#define LPG_SIZE_CLK_REG	0x41
-+#define  PWM_CLK_SELECT_MASK	GENMASK(1, 0)
-+#define LPG_PREDIV_CLK_REG	0x42
-+#define  PWM_FREQ_PRE_DIV_MASK	GENMASK(6, 5)
-+#define  PWM_FREQ_EXP_MASK	GENMASK(2, 0)
-+#define PWM_TYPE_CONFIG_REG	0x43
-+#define PWM_VALUE_REG		0x44
-+#define PWM_ENABLE_CONTROL_REG	0x46
-+#define PWM_SYNC_REG		0x47
-+#define LPG_RAMP_DURATION_REG	0x50
-+#define LPG_HI_PAUSE_REG	0x52
-+#define LPG_LO_PAUSE_REG	0x54
-+#define LPG_HI_IDX_REG		0x56
-+#define LPG_LO_IDX_REG		0x57
-+#define PWM_SEC_ACCESS_REG	0xd0
-+#define PWM_DTEST_REG(x)	(0xe2 + (x) - 1)
-+
-+#define TRI_LED_SRC_SEL		0x45
-+#define TRI_LED_EN_CTL		0x46
-+#define TRI_LED_ATC_CTL		0x47
-+
-+#define LPG_LUT_REG(x)		(0x40 + (x) * 2)
-+#define RAMP_CONTROL_REG	0xc8
-+
-+#define LPG_RESOLUTION		512
-+#define LPG_MAX_M		7
-+
-+struct lpg_channel;
-+struct lpg_data;
-+
-+/**
-+ * struct lpg - LPG device context
-+ * @dev:	pointer to LPG device
-+ * @map:	regmap for register access
-+ * @lock:	used to synchronize LED and pwm callback requests
-+ * @pwm:	PWM-chip object, if operating in PWM mode
-+ * @data:	reference to version specific data
-+ * @lut_base:	base address of the LUT block (optional)
-+ * @lut_size:	number of entries in the LUT block
-+ * @lut_bitmap:	allocation bitmap for LUT entries
-+ * @triled_base: base address of the TRILED block (optional)
-+ * @triled_src:	power-source for the TRILED
-+ * @triled_has_atc_ctl:	true if there is TRI_LED_ATC_CTL register
-+ * @triled_has_src_sel:	true if there is TRI_LED_SRC_SEL register
-+ * @channels:	list of PWM channels
-+ * @num_channels: number of @channels
-+ */
-+struct lpg {
-+	struct device *dev;
-+	struct regmap *map;
-+
-+	struct mutex lock;
-+
-+	struct pwm_chip pwm;
-+
-+	const struct lpg_data *data;
-+
-+	u32 lut_base;
-+	u32 lut_size;
-+	unsigned long *lut_bitmap;
-+
-+	u32 triled_base;
-+	u32 triled_src;
-+	bool triled_has_atc_ctl;
-+	bool triled_has_src_sel;
-+
-+	struct lpg_channel *channels;
-+	unsigned int num_channels;
-+};
-+
-+/**
-+ * struct lpg_channel - per channel data
-+ * @lpg:	reference to parent lpg
-+ * @base:	base address of the PWM channel
-+ * @triled_mask: mask in TRILED to enable this channel
-+ * @lut_mask:	mask in LUT to start pattern generator for this channel
-+ * @subtype:	PMIC hardware block subtype
-+ * @in_use:	channel is exposed to LED framework
-+ * @color:	color of the LED attached to this channel
-+ * @dtest_line:	DTEST line for output, or 0 if disabled
-+ * @dtest_value: DTEST line configuration
-+ * @pwm_value:	duty (in microseconds) of the generated pulses, overridden by LUT
-+ * @enabled:	output enabled?
-+ * @period:	period (in nanoseconds) of the generated pulses
-+ * @clk:	base frequency of the clock generator
-+ * @pre_div:	divider of @clk
-+ * @pre_div_exp: exponential divider of @clk
-+ * @ramp_enabled: duty cycle is driven by iterating over lookup table
-+ * @ramp_ping_pong: reverse through pattern, rather than wrapping to start
-+ * @ramp_oneshot: perform only a single pass over the pattern
-+ * @ramp_reverse: iterate over pattern backwards
-+ * @ramp_tick_ms: length (in milliseconds) of one step in the pattern
-+ * @ramp_lo_pause_ms: pause (in milliseconds) before iterating over pattern
-+ * @ramp_hi_pause_ms: pause (in milliseconds) after iterating over pattern
-+ * @pattern_lo_idx: start index of associated pattern
-+ * @pattern_hi_idx: last index of associated pattern
-+ */
-+struct lpg_channel {
-+	struct lpg *lpg;
-+
-+	u32 base;
-+	unsigned int triled_mask;
-+	unsigned int lut_mask;
-+	unsigned int subtype;
-+
-+	bool in_use;
-+
-+	int color;
-+
-+	u32 dtest_line;
-+	u32 dtest_value;
-+
-+	u16 pwm_value;
-+	bool enabled;
-+
-+	u64 period;
-+	unsigned int clk;
-+	unsigned int pre_div;
-+	unsigned int pre_div_exp;
-+
-+	bool ramp_enabled;
-+	bool ramp_ping_pong;
-+	bool ramp_oneshot;
-+	bool ramp_reverse;
-+	unsigned short ramp_tick_ms;
-+	unsigned long ramp_lo_pause_ms;
-+	unsigned long ramp_hi_pause_ms;
-+
-+	unsigned int pattern_lo_idx;
-+	unsigned int pattern_hi_idx;
-+};
-+
-+/**
-+ * struct lpg_led - logical LED object
-+ * @lpg:		lpg context reference
-+ * @cdev:		LED class device
-+ * @mcdev:		Multicolor LED class device
-+ * @num_channels:	number of @channels
-+ * @channels:		list of channels associated with the LED
-+ */
-+struct lpg_led {
-+	struct lpg *lpg;
-+
-+	struct led_classdev cdev;
-+	struct led_classdev_mc mcdev;
-+
-+	unsigned int num_channels;
-+	struct lpg_channel *channels[];
-+};
-+
-+/**
-+ * struct lpg_channel_data - per channel initialization data
-+ * @base:		base address for PWM channel registers
-+ * @triled_mask:	bitmask for controlling this channel in TRILED
-+ */
-+struct lpg_channel_data {
-+	unsigned int base;
-+	u8 triled_mask;
-+};
-+
-+/**
-+ * struct lpg_data - initialization data
-+ * @lut_base:		base address of LUT block
-+ * @lut_size:		number of entries in LUT
-+ * @triled_base:	base address of TRILED
-+ * @triled_has_atc_ctl:	true if there is TRI_LED_ATC_CTL register
-+ * @triled_has_src_sel:	true if there is TRI_LED_SRC_SEL register
-+ * @num_channels:	number of channels in LPG
-+ * @channels:		list of channel initialization data
-+ */
-+struct lpg_data {
-+	unsigned int lut_base;
-+	unsigned int lut_size;
-+	unsigned int triled_base;
-+	bool triled_has_atc_ctl;
-+	bool triled_has_src_sel;
-+	int num_channels;
-+	const struct lpg_channel_data *channels;
-+};
-+
-+static int triled_set(struct lpg *lpg, unsigned int mask, unsigned int enable)
++static void i2c_gpi_cb_result(void *cb, const struct dmaengine_result *result)
 +{
-+	/* Skip if we don't have a triled block */
-+	if (!lpg->triled_base)
-+		return 0;
++	struct geni_i2c_dev *gi2c = cb;
 +
-+	return regmap_update_bits(lpg->map, lpg->triled_base + TRI_LED_EN_CTL,
-+				  mask, enable);
++	if (result->result != DMA_TRANS_NOERROR) {
++		dev_err(gi2c->se.dev, "DMA txn failed:%d\n", result->result);
++		goto err_trans;
++	}
++
++	if (result->residue)
++		dev_dbg(gi2c->se.dev, "DMA xfer has pending: %d\n", result->residue);
++
++err_trans:
++	complete(&gi2c->done);
 +}
 +
-+static int lpg_lut_store(struct lpg *lpg, struct led_pattern *pattern,
-+			 size_t len, unsigned int *lo_idx, unsigned int *hi_idx)
++static void geni_i2c_gpi_unmap(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
++			       void *tx_buf, dma_addr_t tx_addr,
++			       void *rx_buf, dma_addr_t rx_addr)
 +{
-+	unsigned int idx;
-+	u16 val;
-+	int i;
++	if (tx_buf) {
++		dma_unmap_single(gi2c->se.dev->parent, tx_addr, msg->len, DMA_TO_DEVICE);
++		i2c_put_dma_safe_msg_buf(tx_buf, msg, false);
++	}
 +
-+	idx = bitmap_find_next_zero_area(lpg->lut_bitmap, lpg->lut_size,
-+					 0, len, 0);
-+	if (idx >= lpg->lut_size)
++	if (rx_buf) {
++		dma_unmap_single(gi2c->se.dev->parent, rx_addr, msg->len, DMA_FROM_DEVICE);
++		i2c_put_dma_safe_msg_buf(rx_buf, msg, false);
++	}
++}
++
++static int geni_i2c_gpi(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
++			   struct dma_slave_config *config, dma_addr_t *dma_addr_p,
++			   void **buf, unsigned int op, struct dma_chan *dma_chan)
++{
++	struct gpi_i2c_config *peripheral;
++	unsigned int flags;
++	void *dma_buf;
++	dma_addr_t addr;
++	enum dma_data_direction map_dirn;
++	enum dma_transfer_direction dma_dirn;
++	struct dma_async_tx_descriptor *desc;
++	int ret;
++
++	peripheral = config->peripheral_config;
++
++	dma_buf = i2c_get_dma_safe_msg_buf(msg, 1);
++	if (!dma_buf)
 +		return -ENOMEM;
 +
-+	for (i = 0; i < len; i++) {
-+		val = pattern[i].brightness;
-+
-+		regmap_bulk_write(lpg->map, lpg->lut_base + LPG_LUT_REG(idx + i),
-+				  &val, sizeof(val));
-+	}
-+
-+	bitmap_set(lpg->lut_bitmap, idx, len);
-+
-+	*lo_idx = idx;
-+	*hi_idx = idx + len - 1;
-+
-+	return 0;
-+}
-+
-+static void lpg_lut_free(struct lpg *lpg, unsigned int lo_idx, unsigned int hi_idx)
-+{
-+	int len;
-+
-+	len = hi_idx - lo_idx + 1;
-+	if (len == 1)
-+		return;
-+
-+	bitmap_clear(lpg->lut_bitmap, lo_idx, len);
-+}
-+
-+static int lpg_lut_sync(struct lpg *lpg, unsigned int mask)
-+{
-+	return regmap_write(lpg->map, lpg->lut_base + RAMP_CONTROL_REG, mask);
-+}
-+
-+static const unsigned int lpg_clk_rates[] = {1024, 32768, 19200000};
-+static const unsigned int lpg_pre_divs[] = {1, 3, 5, 6};
-+
-+static int lpg_calc_freq(struct lpg_channel *chan, uint64_t period)
-+{
-+	unsigned int clk, best_clk = 0;
-+	unsigned int div, best_div = 0;
-+	unsigned int m, best_m = 0;
-+	unsigned int error;
-+	unsigned int best_err = UINT_MAX;
-+	u64 best_period = 0;
-+	u64 max_period;
-+
-+	/*
-+	 * The PWM period is determined by:
-+	 *
-+	 *          resolution * pre_div * 2^M
-+	 * period = --------------------------
-+	 *                   refclk
-+	 *
-+	 * With resolution fixed at 2^9 bits, pre_div = {1, 3, 5, 6} and
-+	 * M = [0..7].
-+	 *
-+	 * This allows for periods between 27uS and 384s, as the PWM framework
-+	 * wants a period of equal or lower length than requested, reject
-+	 * anything below 27uS.
-+	 */
-+	if (period <= (u64)NSEC_PER_SEC * LPG_RESOLUTION / 19200000)
-+		return -EINVAL;
-+
-+	/* Limit period to largest possible value, to avoid overflows */
-+	max_period = (u64)NSEC_PER_SEC * LPG_RESOLUTION * 6 * (1 << LPG_MAX_M) / 1024;
-+	if (period > max_period)
-+		period = max_period;
-+
-+	/*
-+	 * Search for the pre_div, clk and M by solving the rewritten formula
-+	 * for each clk and pre_div value:
-+	 *
-+	 *                       period * clk
-+	 * M = log2 -------------------------------------
-+	 *           NSEC_PER_SEC * pre_div * resolution
-+	 */
-+	for (clk = 0; clk < ARRAY_SIZE(lpg_clk_rates); clk++) {
-+		u64 numerator = period * lpg_clk_rates[clk];
-+
-+		for (div = 0; div < ARRAY_SIZE(lpg_pre_divs); div++) {
-+			u64 denominator = (u64)NSEC_PER_SEC * lpg_pre_divs[div] * LPG_RESOLUTION;
-+			u64 actual;
-+			u64 ratio;
-+
-+			if (numerator < denominator)
-+				continue;
-+
-+			ratio = div64_u64(numerator, denominator);
-+			m = ilog2(ratio);
-+			if (m > LPG_MAX_M)
-+				m = LPG_MAX_M;
-+
-+			actual = DIV_ROUND_UP_ULL(denominator * (1 << m), lpg_clk_rates[clk]);
-+
-+			error = period - actual;
-+			if (error < best_err) {
-+				best_err = error;
-+
-+				best_div = div;
-+				best_m = m;
-+				best_clk = clk;
-+				best_period = actual;
-+			}
-+		}
-+	}
-+
-+	chan->clk = best_clk;
-+	chan->pre_div = best_div;
-+	chan->pre_div_exp = best_m;
-+	chan->period = best_period;
-+
-+	return 0;
-+}
-+
-+static void lpg_calc_duty(struct lpg_channel *chan, uint64_t duty)
-+{
-+	unsigned int max = LPG_RESOLUTION - 1;
-+	unsigned int val;
-+
-+	val = div64_u64(duty * lpg_clk_rates[chan->clk],
-+			(u64)NSEC_PER_SEC * lpg_pre_divs[chan->pre_div] * (1 << chan->pre_div_exp));
-+
-+	chan->pwm_value = min(val, max);
-+}
-+
-+static void lpg_apply_freq(struct lpg_channel *chan)
-+{
-+	unsigned long val;
-+	struct lpg *lpg = chan->lpg;
-+
-+	if (!chan->enabled)
-+		return;
-+
-+	/* Clock register values are off-by-one from lpg_clk_rates table */
-+	val = chan->clk + 1;
-+
-+	/* Specify 9bit resolution, based on the subtype of the channel */
-+	switch (chan->subtype) {
-+	case LPG_SUBTYPE_LPG:
-+		val |= GENMASK(5, 4);
-+		break;
-+	case LPG_SUBTYPE_PWM:
-+		val |= BIT(2);
-+		break;
-+	case LPG_SUBTYPE_LPG_LITE:
-+	default:
-+		val |= BIT(4);
-+		break;
-+	}
-+
-+	regmap_write(lpg->map, chan->base + LPG_SIZE_CLK_REG, val);
-+
-+	val = FIELD_PREP(PWM_FREQ_PRE_DIV_MASK, chan->pre_div) |
-+	      FIELD_PREP(PWM_FREQ_EXP_MASK, chan->pre_div_exp);
-+	regmap_write(lpg->map, chan->base + LPG_PREDIV_CLK_REG, val);
-+}
-+
-+#define LPG_ENABLE_GLITCH_REMOVAL	BIT(5)
-+
-+static void lpg_enable_glitch(struct lpg_channel *chan)
-+{
-+	struct lpg *lpg = chan->lpg;
-+
-+	regmap_update_bits(lpg->map, chan->base + PWM_TYPE_CONFIG_REG,
-+			   LPG_ENABLE_GLITCH_REMOVAL, 0);
-+}
-+
-+static void lpg_disable_glitch(struct lpg_channel *chan)
-+{
-+	struct lpg *lpg = chan->lpg;
-+
-+	regmap_update_bits(lpg->map, chan->base + PWM_TYPE_CONFIG_REG,
-+			   LPG_ENABLE_GLITCH_REMOVAL,
-+			   LPG_ENABLE_GLITCH_REMOVAL);
-+}
-+
-+static void lpg_apply_pwm_value(struct lpg_channel *chan)
-+{
-+	struct lpg *lpg = chan->lpg;
-+	u16 val = chan->pwm_value;
-+
-+	if (!chan->enabled)
-+		return;
-+
-+	regmap_bulk_write(lpg->map, chan->base + PWM_VALUE_REG, &val, sizeof(val));
-+}
-+
-+#define LPG_PATTERN_CONFIG_LO_TO_HI	BIT(4)
-+#define LPG_PATTERN_CONFIG_REPEAT	BIT(3)
-+#define LPG_PATTERN_CONFIG_TOGGLE	BIT(2)
-+#define LPG_PATTERN_CONFIG_PAUSE_HI	BIT(1)
-+#define LPG_PATTERN_CONFIG_PAUSE_LO	BIT(0)
-+
-+static void lpg_apply_lut_control(struct lpg_channel *chan)
-+{
-+	struct lpg *lpg = chan->lpg;
-+	unsigned int hi_pause;
-+	unsigned int lo_pause;
-+	unsigned int conf = 0;
-+	unsigned int lo_idx = chan->pattern_lo_idx;
-+	unsigned int hi_idx = chan->pattern_hi_idx;
-+	u16 step = chan->ramp_tick_ms;
-+
-+	if (!chan->ramp_enabled || chan->pattern_lo_idx == chan->pattern_hi_idx)
-+		return;
-+
-+	hi_pause = DIV_ROUND_UP(chan->ramp_hi_pause_ms, step);
-+	lo_pause = DIV_ROUND_UP(chan->ramp_lo_pause_ms, step);
-+
-+	if (!chan->ramp_reverse)
-+		conf |= LPG_PATTERN_CONFIG_LO_TO_HI;
-+	if (!chan->ramp_oneshot)
-+		conf |= LPG_PATTERN_CONFIG_REPEAT;
-+	if (chan->ramp_ping_pong)
-+		conf |= LPG_PATTERN_CONFIG_TOGGLE;
-+	if (chan->ramp_hi_pause_ms)
-+		conf |= LPG_PATTERN_CONFIG_PAUSE_HI;
-+	if (chan->ramp_lo_pause_ms)
-+		conf |= LPG_PATTERN_CONFIG_PAUSE_LO;
-+
-+	regmap_write(lpg->map, chan->base + LPG_PATTERN_CONFIG_REG, conf);
-+	regmap_write(lpg->map, chan->base + LPG_HI_IDX_REG, hi_idx);
-+	regmap_write(lpg->map, chan->base + LPG_LO_IDX_REG, lo_idx);
-+
-+	regmap_bulk_write(lpg->map, chan->base + LPG_RAMP_DURATION_REG, &step, sizeof(step));
-+	regmap_write(lpg->map, chan->base + LPG_HI_PAUSE_REG, hi_pause);
-+	regmap_write(lpg->map, chan->base + LPG_LO_PAUSE_REG, lo_pause);
-+}
-+
-+#define LPG_ENABLE_CONTROL_OUTPUT		BIT(7)
-+#define LPG_ENABLE_CONTROL_BUFFER_TRISTATE	BIT(5)
-+#define LPG_ENABLE_CONTROL_SRC_PWM		BIT(2)
-+#define LPG_ENABLE_CONTROL_RAMP_GEN		BIT(1)
-+
-+static void lpg_apply_control(struct lpg_channel *chan)
-+{
-+	unsigned int ctrl;
-+	struct lpg *lpg = chan->lpg;
-+
-+	ctrl = LPG_ENABLE_CONTROL_BUFFER_TRISTATE;
-+
-+	if (chan->enabled)
-+		ctrl |= LPG_ENABLE_CONTROL_OUTPUT;
-+
-+	if (chan->pattern_lo_idx != chan->pattern_hi_idx)
-+		ctrl |= LPG_ENABLE_CONTROL_RAMP_GEN;
++	if (op == I2C_WRITE)
++		map_dirn = DMA_TO_DEVICE;
 +	else
-+		ctrl |= LPG_ENABLE_CONTROL_SRC_PWM;
++		map_dirn = DMA_FROM_DEVICE;
 +
-+	regmap_write(lpg->map, chan->base + PWM_ENABLE_CONTROL_REG, ctrl);
-+
-+	/*
-+	 * Due to LPG hardware bug, in the PWM mode, having enabled PWM,
-+	 * We have to write PWM values one more time.
-+	 */
-+	if (chan->enabled)
-+		lpg_apply_pwm_value(chan);
-+}
-+
-+#define LPG_SYNC_PWM	BIT(0)
-+
-+static void lpg_apply_sync(struct lpg_channel *chan)
-+{
-+	struct lpg *lpg = chan->lpg;
-+
-+	regmap_write(lpg->map, chan->base + PWM_SYNC_REG, LPG_SYNC_PWM);
-+}
-+
-+static int lpg_parse_dtest(struct lpg *lpg)
-+{
-+	struct lpg_channel *chan;
-+	struct device_node *np = lpg->dev->of_node;
-+	int count;
-+	int ret;
-+	int i;
-+
-+	count = of_property_count_u32_elems(np, "qcom,dtest");
-+	if (count == -EINVAL) {
-+		return 0;
-+	} else if (count < 0) {
-+		ret = count;
-+		goto err_malformed;
-+	} else if (count != lpg->data->num_channels * 2) {
-+		dev_err(lpg->dev, "qcom,dtest needs to be %d items\n",
-+			lpg->data->num_channels * 2);
-+		return -EINVAL;
++	addr = dma_map_single(gi2c->se.dev->parent, dma_buf, msg->len, map_dirn);
++	if (dma_mapping_error(gi2c->se.dev->parent, addr)) {
++		i2c_put_dma_safe_msg_buf(dma_buf, msg, false);
++		return -ENOMEM;
 +	}
 +
-+	for (i = 0; i < lpg->data->num_channels; i++) {
-+		chan = &lpg->channels[i];
++	/* set the length as message for rx txn */
++	peripheral->rx_len = msg->len;
++	peripheral->op = op;
 +
-+		ret = of_property_read_u32_index(np, "qcom,dtest", i * 2,
-+						 &chan->dtest_line);
-+		if (ret)
-+			goto err_malformed;
-+
-+		ret = of_property_read_u32_index(np, "qcom,dtest", i * 2 + 1,
-+						 &chan->dtest_value);
-+		if (ret)
-+			goto err_malformed;
++	ret = dmaengine_slave_config(dma_chan, config);
++	if (ret) {
++		dev_err(gi2c->se.dev, "dma config error: %d for op:%d\n", ret, op);
++		goto err_config;
 +	}
 +
-+	return 0;
++	peripheral->set_config = 0;
++	peripheral->multi_msg = true;
++	flags = DMA_PREP_INTERRUPT | DMA_CTRL_ACK;
 +
-+err_malformed:
-+	dev_err(lpg->dev, "malformed qcom,dtest\n");
-+	return ret;
-+}
-+
-+static void lpg_apply_dtest(struct lpg_channel *chan)
-+{
-+	struct lpg *lpg = chan->lpg;
-+
-+	if (!chan->dtest_line)
-+		return;
-+
-+	regmap_write(lpg->map, chan->base + PWM_SEC_ACCESS_REG, 0xa5);
-+	regmap_write(lpg->map, chan->base + PWM_DTEST_REG(chan->dtest_line),
-+		     chan->dtest_value);
-+}
-+
-+static void lpg_apply(struct lpg_channel *chan)
-+{
-+	lpg_disable_glitch(chan);
-+	lpg_apply_freq(chan);
-+	lpg_apply_pwm_value(chan);
-+	lpg_apply_control(chan);
-+	lpg_apply_sync(chan);
-+	lpg_apply_lut_control(chan);
-+	lpg_enable_glitch(chan);
-+}
-+
-+static void lpg_brightness_set(struct lpg_led *led, struct led_classdev *cdev,
-+			       struct mc_subled *subleds)
-+{
-+	enum led_brightness brightness;
-+	struct lpg_channel *chan;
-+	unsigned int triled_enabled = 0;
-+	unsigned int triled_mask = 0;
-+	unsigned int lut_mask = 0;
-+	unsigned int duty;
-+	struct lpg *lpg = led->lpg;
-+	int i;
-+
-+	for (i = 0; i < led->num_channels; i++) {
-+		chan = led->channels[i];
-+		brightness = subleds[i].brightness;
-+
-+		if (brightness == LED_OFF) {
-+			chan->enabled = false;
-+			chan->ramp_enabled = false;
-+		} else if (chan->pattern_lo_idx != chan->pattern_hi_idx) {
-+			lpg_calc_freq(chan, NSEC_PER_MSEC);
-+
-+			chan->enabled = true;
-+			chan->ramp_enabled = true;
-+
-+			lut_mask |= chan->lut_mask;
-+			triled_enabled |= chan->triled_mask;
-+		} else {
-+			lpg_calc_freq(chan, NSEC_PER_MSEC);
-+
-+			duty = div_u64(brightness * chan->period, cdev->max_brightness);
-+			lpg_calc_duty(chan, duty);
-+			chan->enabled = true;
-+			chan->ramp_enabled = false;
-+
-+			triled_enabled |= chan->triled_mask;
-+		}
-+
-+		triled_mask |= chan->triled_mask;
-+
-+		lpg_apply(chan);
-+	}
-+
-+	/* Toggle triled lines */
-+	if (triled_mask)
-+		triled_set(lpg, triled_mask, triled_enabled);
-+
-+	/* Trigger start of ramp generator(s) */
-+	if (lut_mask)
-+		lpg_lut_sync(lpg, lut_mask);
-+}
-+
-+static void lpg_brightness_single_set(struct led_classdev *cdev,
-+				      enum led_brightness value)
-+{
-+	struct lpg_led *led = container_of(cdev, struct lpg_led, cdev);
-+	struct mc_subled info;
-+
-+	mutex_lock(&led->lpg->lock);
-+
-+	info.brightness = value;
-+	lpg_brightness_set(led, cdev, &info);
-+
-+	mutex_unlock(&led->lpg->lock);
-+}
-+
-+static void lpg_brightness_mc_set(struct led_classdev *cdev,
-+				  enum led_brightness value)
-+{
-+	struct led_classdev_mc *mc = lcdev_to_mccdev(cdev);
-+	struct lpg_led *led = container_of(mc, struct lpg_led, mcdev);
-+
-+	mutex_lock(&led->lpg->lock);
-+
-+	led_mc_calc_color_components(mc, value);
-+	lpg_brightness_set(led, cdev, mc->subled_info);
-+
-+	mutex_unlock(&led->lpg->lock);
-+}
-+
-+static int lpg_blink_set(struct lpg_led *led,
-+			 unsigned long *delay_on, unsigned long *delay_off)
-+{
-+	struct lpg_channel *chan;
-+	unsigned int period;
-+	unsigned int triled_mask = 0;
-+	struct lpg *lpg = led->lpg;
-+	u64 duty;
-+	int i;
-+
-+	if (!*delay_on && !*delay_off) {
-+		*delay_on = 500;
-+		*delay_off = 500;
-+	}
-+
-+	duty = *delay_on * NSEC_PER_MSEC;
-+	period = (*delay_on + *delay_off) * NSEC_PER_MSEC;
-+
-+	for (i = 0; i < led->num_channels; i++) {
-+		chan = led->channels[i];
-+
-+		lpg_calc_freq(chan, period);
-+		lpg_calc_duty(chan, duty);
-+
-+		chan->enabled = true;
-+		chan->ramp_enabled = false;
-+
-+		triled_mask |= chan->triled_mask;
-+
-+		lpg_apply(chan);
-+	}
-+
-+	/* Enable triled lines */
-+	triled_set(lpg, triled_mask, triled_mask);
-+
-+	chan = led->channels[0];
-+	duty = div_u64(chan->pwm_value * chan->period, LPG_RESOLUTION);
-+	*delay_on = div_u64(duty, NSEC_PER_MSEC);
-+	*delay_off = div_u64(chan->period - duty, NSEC_PER_MSEC);
-+
-+	return 0;
-+}
-+
-+static int lpg_blink_single_set(struct led_classdev *cdev,
-+				unsigned long *delay_on, unsigned long *delay_off)
-+{
-+	struct lpg_led *led = container_of(cdev, struct lpg_led, cdev);
-+	int ret;
-+
-+	mutex_lock(&led->lpg->lock);
-+
-+	ret = lpg_blink_set(led, delay_on, delay_off);
-+
-+	mutex_unlock(&led->lpg->lock);
-+
-+	return ret;
-+}
-+
-+static int lpg_blink_mc_set(struct led_classdev *cdev,
-+			    unsigned long *delay_on, unsigned long *delay_off)
-+{
-+	struct led_classdev_mc *mc = lcdev_to_mccdev(cdev);
-+	struct lpg_led *led = container_of(mc, struct lpg_led, mcdev);
-+	int ret;
-+
-+	mutex_lock(&led->lpg->lock);
-+
-+	ret = lpg_blink_set(led, delay_on, delay_off);
-+
-+	mutex_unlock(&led->lpg->lock);
-+
-+	return ret;
-+}
-+
-+static int lpg_pattern_set(struct lpg_led *led, struct led_pattern *pattern,
-+			   u32 len, int repeat)
-+{
-+	struct lpg_channel *chan;
-+	struct lpg *lpg = led->lpg;
-+	unsigned int brightness_a;
-+	unsigned int brightness_b;
-+	unsigned int actual_len;
-+	unsigned int hi_pause;
-+	unsigned int lo_pause;
-+	unsigned int delta_t;
-+	unsigned int lo_idx;
-+	unsigned int hi_idx;
-+	unsigned int i;
-+	bool ping_pong = true;
-+	int ret;
-+
-+	/* Hardware only support oneshot or indefinite loops */
-+	if (repeat != -1 && repeat != 1)
-+		return -EINVAL;
-+
-+	/*
-+	 * Specifying a pattern of length 1 causes the hardware to iterate
-+	 * through the entire LUT, so prohibit this.
-+	 */
-+	if (len < 2)
-+		return -EINVAL;
-+
-+	/*
-+	 * The LPG plays patterns with at a fixed pace, a "low pause" can be
-+	 * used to stretch the first delay of the pattern and a "high pause"
-+	 * the last one.
-+	 *
-+	 * In order to save space the pattern can be played in "ping pong"
-+	 * mode, in which the pattern is first played forward, then "high
-+	 * pause" is applied, then the pattern is played backwards and finally
-+	 * the "low pause" is applied.
-+	 *
-+	 * The middle elements of the pattern are used to determine delta_t and
-+	 * the "low pause" and "high pause" multipliers are derrived from this.
-+	 *
-+	 * The first element in the pattern is used to determine "low pause".
-+	 *
-+	 * If the specified pattern is a palindrome the ping pong mode is
-+	 * enabled. In this scenario the delta_t of the middle entry (i.e. the
-+	 * last in the programmed pattern) determines the "high pause".
-+	 */
-+
-+	/* Detect palindromes and use "ping pong" to reduce LUT usage */
-+	for (i = 0; i < len / 2; i++) {
-+		brightness_a = pattern[i].brightness;
-+		brightness_b = pattern[len - i - 1].brightness;
-+
-+		if (brightness_a != brightness_b) {
-+			ping_pong = false;
-+			break;
-+		}
-+	}
-+
-+	/* The pattern length to be written to the LUT */
-+	if (ping_pong)
-+		actual_len = (len + 1) / 2;
++	if (op == I2C_WRITE)
++		dma_dirn = DMA_MEM_TO_DEV;
 +	else
-+		actual_len = len;
++		dma_dirn = DMA_DEV_TO_MEM;
 +
-+	/*
-+	 * Validate that all delta_t in the pattern are the same, with the
-+	 * exception of the middle element in case of ping_pong.
-+	 */
-+	delta_t = pattern[1].delta_t;
-+	for (i = 2; i < len; i++) {
-+		if (pattern[i].delta_t != delta_t) {
-+			/*
-+			 * Allow last entry in the full or shortened pattern to
-+			 * specify hi pause. Reject other variations.
-+			 */
-+			if (i != actual_len - 1)
-+				return -EINVAL;
-+		}
++	desc = dmaengine_prep_slave_single(dma_chan, addr, msg->len, dma_dirn, flags);
++	if (!desc) {
++		dev_err(gi2c->se.dev, "prep_slave_sg failed\n");
++		ret = -EIO;
++		goto err_config;
 +	}
 +
-+	/* LPG_RAMP_DURATION_REG is a 9bit */
-+	if (delta_t >= BIT(9))
-+		return -EINVAL;
++	desc->callback_result = i2c_gpi_cb_result;
++	desc->callback_param = gi2c;
 +
-+	/* Find "low pause" and "high pause" in the pattern */
-+	lo_pause = pattern[0].delta_t;
-+	hi_pause = pattern[actual_len - 1].delta_t;
++	dmaengine_submit(desc);
++	*dma_addr_p = addr;
 +
-+	mutex_lock(&lpg->lock);
-+	ret = lpg_lut_store(lpg, pattern, actual_len, &lo_idx, &hi_idx);
-+	if (ret < 0)
-+		goto out_unlock;
++	return 0;
 +
-+	for (i = 0; i < led->num_channels; i++) {
-+		chan = led->channels[i];
-+
-+		chan->ramp_tick_ms = delta_t;
-+		chan->ramp_ping_pong = ping_pong;
-+		chan->ramp_oneshot = repeat != -1;
-+
-+		chan->ramp_lo_pause_ms = lo_pause;
-+		chan->ramp_hi_pause_ms = hi_pause;
-+
-+		chan->pattern_lo_idx = lo_idx;
-+		chan->pattern_hi_idx = hi_idx;
-+	}
-+
-+out_unlock:
-+	mutex_unlock(&lpg->lock);
-+
++err_config:
++	dma_unmap_single(gi2c->se.dev->parent, addr, msg->len, map_dirn);
++	i2c_put_dma_safe_msg_buf(dma_buf, msg, false);
 +	return ret;
 +}
 +
-+static int lpg_pattern_single_set(struct led_classdev *cdev,
-+				  struct led_pattern *pattern, u32 len,
-+				  int repeat)
++static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], int num)
 +{
-+	struct lpg_led *led = container_of(cdev, struct lpg_led, cdev);
-+	int ret;
++	struct dma_slave_config config = {};
++	struct gpi_i2c_config peripheral = {};
++	int i, ret = 0, timeout;
++	dma_addr_t tx_addr, rx_addr;
++	void *tx_buf = NULL, *rx_buf = NULL;
++	const struct geni_i2c_clk_fld *itr = gi2c->clk_fld;
 +
-+	ret = lpg_pattern_set(led, pattern, len, repeat);
-+	if (ret < 0)
-+		return ret;
++	config.peripheral_config = &peripheral;
++	config.peripheral_size = sizeof(peripheral);
 +
-+	lpg_brightness_single_set(cdev, LED_FULL);
++	peripheral.pack_enable = I2C_PACK_TX | I2C_PACK_RX;
++	peripheral.cycle_count = itr->t_cycle_cnt;
++	peripheral.high_count = itr->t_high_cnt;
++	peripheral.low_count = itr->t_low_cnt;
++	peripheral.clk_div = itr->clk_div;
++	peripheral.set_config = 1;
++	peripheral.multi_msg = false;
 +
-+	return 0;
-+}
++	for (i = 0; i < num; i++) {
++		gi2c->cur = &msgs[i];
++		dev_dbg(gi2c->se.dev, "msg[%d].len:%d\n", i, gi2c->cur->len);
 +
-+static int lpg_pattern_mc_set(struct led_classdev *cdev,
-+			      struct led_pattern *pattern, u32 len,
-+			      int repeat)
-+{
-+	struct led_classdev_mc *mc = lcdev_to_mccdev(cdev);
-+	struct lpg_led *led = container_of(mc, struct lpg_led, mcdev);
-+	int ret;
++		peripheral.stretch = 0;
++		if (i < num - 1)
++			peripheral.stretch = 1;
 +
-+	ret = lpg_pattern_set(led, pattern, len, repeat);
-+	if (ret < 0)
-+		return ret;
++		peripheral.addr = msgs[i].addr;
 +
-+	led_mc_calc_color_components(mc, LED_FULL);
-+	lpg_brightness_set(led, cdev, mc->subled_info);
++		if (msgs[i].flags & I2C_M_RD) {
++			ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
++					    &rx_addr, &rx_buf, I2C_READ, gi2c->rx_c);
++			if (ret)
++				goto err;
++		}
 +
-+	return 0;
-+}
++		ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
++				    &tx_addr, &tx_buf, I2C_WRITE, gi2c->tx_c);
++		if (ret)
++			goto err;
 +
-+static int lpg_pattern_clear(struct lpg_led *led)
-+{
-+	struct lpg_channel *chan;
-+	struct lpg *lpg = led->lpg;
-+	int i;
++		if (msgs[i].flags & I2C_M_RD)
++			dma_async_issue_pending(gi2c->rx_c);
++		dma_async_issue_pending(gi2c->tx_c);
 +
-+	mutex_lock(&lpg->lock);
++		timeout = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
++		if (!timeout) {
++			dev_err(gi2c->se.dev, "I2C timeout gpi flags:%d addr:0x%x\n",
++				gi2c->cur->flags, gi2c->cur->addr);
++			ret = gi2c->err = -ETIMEDOUT;
++			goto err;
++		}
 +
-+	chan = led->channels[0];
-+	lpg_lut_free(lpg, chan->pattern_lo_idx, chan->pattern_hi_idx);
-+
-+	for (i = 0; i < led->num_channels; i++) {
-+		chan = led->channels[i];
-+		chan->pattern_lo_idx = 0;
-+		chan->pattern_hi_idx = 0;
++		geni_i2c_gpi_unmap(gi2c, &msgs[i], tx_buf, tx_addr, rx_buf, rx_addr);
 +	}
 +
-+	mutex_unlock(&lpg->lock);
++	return num;
 +
-+	return 0;
++err:
++	dmaengine_terminate_sync(gi2c->rx_c);
++	dmaengine_terminate_sync(gi2c->tx_c);
++	geni_i2c_gpi_unmap(gi2c, &msgs[i], tx_buf, tx_addr, rx_buf, rx_addr);
++	return ret;
 +}
 +
-+static int lpg_pattern_single_clear(struct led_classdev *cdev)
++static int geni_i2c_fifo_xfer(struct geni_i2c_dev *gi2c,
++			      struct i2c_msg msgs[], int num)
 +{
-+	struct lpg_led *led = container_of(cdev, struct lpg_led, cdev);
++	int i, ret = 0;
 +
-+	return lpg_pattern_clear(led);
++	for (i = 0; i < num; i++) {
++		u32 m_param = i < (num - 1) ? STOP_STRETCH : 0;
++
++		m_param |= ((msgs[i].addr << SLV_ADDR_SHFT) & SLV_ADDR_MSK);
++
++		gi2c->cur = &msgs[i];
++		if (msgs[i].flags & I2C_M_RD)
++			ret = geni_i2c_rx_one_msg(gi2c, &msgs[i], m_param);
++		else
++			ret = geni_i2c_tx_one_msg(gi2c, &msgs[i], m_param);
++
++		if (ret)
++			return ret;
++	}
++
++	return num;
 +}
 +
-+static int lpg_pattern_mc_clear(struct led_classdev *cdev)
+ static int geni_i2c_xfer(struct i2c_adapter *adap,
+ 			 struct i2c_msg msgs[],
+ 			 int num)
+ {
+ 	struct geni_i2c_dev *gi2c = i2c_get_adapdata(adap);
+-	int i, ret;
++	int ret;
+ 
+ 	gi2c->err = 0;
+ 	reinit_completion(&gi2c->done);
+@@ -475,28 +673,17 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
+ 	}
+ 
+ 	qcom_geni_i2c_conf(gi2c);
+-	for (i = 0; i < num; i++) {
+-		u32 m_param = i < (num - 1) ? STOP_STRETCH : 0;
+-
+-		m_param |= ((msgs[i].addr << SLV_ADDR_SHFT) & SLV_ADDR_MSK);
+-
+-		gi2c->cur = &msgs[i];
+-		if (msgs[i].flags & I2C_M_RD)
+-			ret = geni_i2c_rx_one_msg(gi2c, &msgs[i], m_param);
+-		else
+-			ret = geni_i2c_tx_one_msg(gi2c, &msgs[i], m_param);
+ 
+-		if (ret)
+-			break;
+-	}
+-	if (ret == 0)
+-		ret = num;
++	if (gi2c->gpi_mode)
++		ret = geni_i2c_gpi_xfer(gi2c, msgs, num);
++	else
++		ret = geni_i2c_fifo_xfer(gi2c, msgs, num);
+ 
+ 	pm_runtime_mark_last_busy(gi2c->se.dev);
+ 	pm_runtime_put_autosuspend(gi2c->se.dev);
+ 	gi2c->cur = NULL;
+ 	gi2c->err = 0;
+-	return ret;
++	return num;
+ }
+ 
+ static u32 geni_i2c_func(struct i2c_adapter *adap)
+@@ -517,11 +704,50 @@ static const struct acpi_device_id geni_i2c_acpi_match[] = {
+ MODULE_DEVICE_TABLE(acpi, geni_i2c_acpi_match);
+ #endif
+ 
++static void release_gpi_dma(struct geni_i2c_dev *gi2c)
 +{
-+	struct led_classdev_mc *mc = lcdev_to_mccdev(cdev);
-+	struct lpg_led *led = container_of(mc, struct lpg_led, mcdev);
++	if (gi2c->rx_c)
++		dma_release_channel(gi2c->rx_c);
 +
-+	return lpg_pattern_clear(led);
++	if (gi2c->tx_c)
++		dma_release_channel(gi2c->tx_c);
 +}
 +
-+static int lpg_pwm_request(struct pwm_chip *chip, struct pwm_device *pwm)
++static int setup_gpi_dma(struct geni_i2c_dev *gi2c)
 +{
-+	struct lpg *lpg = container_of(chip, struct lpg, pwm);
-+	struct lpg_channel *chan = &lpg->channels[pwm->hwpwm];
++	int ret;
 +
-+	return chan->in_use ? -EBUSY : 0;
-+}
-+
-+/*
-+ * Limitations:
-+ * - Updating both duty and period is not done atomically, so the output signal
-+ *   will momentarily be a mix of the settings.
-+ * - Changed parameters takes effect immediately.
-+ * - A disabled channel outputs a logical 0.
-+ */
-+static int lpg_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
-+			 const struct pwm_state *state)
-+{
-+	struct lpg *lpg = container_of(chip, struct lpg, pwm);
-+	struct lpg_channel *chan = &lpg->channels[pwm->hwpwm];
-+	int ret = 0;
-+
-+	if (state->polarity != PWM_POLARITY_NORMAL)
-+		return -EINVAL;
-+
-+	mutex_lock(&lpg->lock);
-+
-+	if (state->enabled) {
-+		ret = lpg_calc_freq(chan, state->period);
++	geni_se_select_mode(&gi2c->se, GENI_GPI_DMA);
++	gi2c->tx_c = dma_request_chan(gi2c->se.dev, "tx");
++	if (IS_ERR(gi2c->tx_c)) {
++		ret = dev_err_probe(gi2c->se.dev, PTR_ERR(gi2c->tx_c),
++				    "Failed to get tx DMA ch\n");
 +		if (ret < 0)
-+			goto out_unlock;
-+
-+		lpg_calc_duty(chan, state->duty_cycle);
-+	}
-+	chan->enabled = state->enabled;
-+
-+	lpg_apply(chan);
-+
-+	triled_set(lpg, chan->triled_mask, chan->enabled ? chan->triled_mask : 0);
-+
-+out_unlock:
-+	mutex_unlock(&lpg->lock);
-+
-+	return ret;
-+}
-+
-+static void lpg_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
-+			      struct pwm_state *state)
-+{
-+	struct lpg *lpg = container_of(chip, struct lpg, pwm);
-+	struct lpg_channel *chan = &lpg->channels[pwm->hwpwm];
-+	unsigned int pre_div;
-+	unsigned int refclk;
-+	unsigned int val;
-+	unsigned int m;
-+	u16 pwm_value;
-+	int ret;
-+
-+	ret = regmap_read(lpg->map, chan->base + LPG_SIZE_CLK_REG, &val);
-+	if (ret)
-+		return;
-+
-+	refclk = lpg_clk_rates[(val & PWM_CLK_SELECT_MASK) - 1];
-+
-+	ret = regmap_read(lpg->map, chan->base + LPG_PREDIV_CLK_REG, &val);
-+	if (ret)
-+		return;
-+
-+	pre_div = lpg_pre_divs[FIELD_GET(PWM_FREQ_PRE_DIV_MASK, val)];
-+	m = FIELD_GET(PWM_FREQ_EXP_MASK, val);
-+
-+	ret = regmap_bulk_read(lpg->map, chan->base + PWM_VALUE_REG, &pwm_value, sizeof(pwm_value));
-+	if (ret)
-+		return;
-+
-+	ret = regmap_read(lpg->map, chan->base + PWM_ENABLE_CONTROL_REG, &val);
-+	if (ret)
-+		return;
-+
-+	state->enabled = FIELD_GET(LPG_ENABLE_CONTROL_OUTPUT, val);
-+	state->period = DIV_ROUND_UP_ULL((u64)NSEC_PER_SEC * LPG_RESOLUTION * pre_div * (1 << m), refclk);
-+	state->duty_cycle = DIV_ROUND_UP_ULL((u64)NSEC_PER_SEC * pwm_value * pre_div * (1 << m), refclk);
-+	state->polarity = PWM_POLARITY_NORMAL;
-+
-+	if (state->duty_cycle > state->period)
-+		state->duty_cycle = state->period;
-+}
-+
-+static const struct pwm_ops lpg_pwm_ops = {
-+	.request = lpg_pwm_request,
-+	.apply = lpg_pwm_apply,
-+	.get_state = lpg_pwm_get_state,
-+	.owner = THIS_MODULE,
-+};
-+
-+static int lpg_add_pwm(struct lpg *lpg)
-+{
-+	int ret;
-+
-+	lpg->pwm.base = -1;
-+	lpg->pwm.dev = lpg->dev;
-+	lpg->pwm.npwm = lpg->num_channels;
-+	lpg->pwm.ops = &lpg_pwm_ops;
-+
-+	ret = pwmchip_add(&lpg->pwm);
-+	if (ret)
-+		dev_err(lpg->dev, "failed to add PWM chip: ret %d\n", ret);
-+
-+	return ret;
-+}
-+
-+static int lpg_parse_channel(struct lpg *lpg, struct device_node *np,
-+			     struct lpg_channel **channel)
-+{
-+	struct lpg_channel *chan;
-+	u32 color = LED_COLOR_ID_GREEN;
-+	u32 reg;
-+	int ret;
-+
-+	ret = of_property_read_u32(np, "reg", &reg);
-+	if (ret || !reg || reg > lpg->num_channels) {
-+		dev_err(lpg->dev, "invalid \"reg\" of %pOFn\n", np);
-+		return -EINVAL;
++			goto err_tx;
 +	}
 +
-+	chan = &lpg->channels[reg - 1];
-+	chan->in_use = true;
-+
-+	ret = of_property_read_u32(np, "color", &color);
-+	if (ret < 0 && ret != -EINVAL) {
-+		dev_err(lpg->dev, "failed to parse \"color\" of %pOF\n", np);
-+		return ret;
++	gi2c->rx_c = dma_request_chan(gi2c->se.dev, "rx");
++	if (IS_ERR(gi2c->rx_c)) {
++		ret = dev_err_probe(gi2c->se.dev, PTR_ERR(gi2c->rx_c),
++				    "Failed to get rx DMA ch\n");
++		if (ret < 0)
++			goto err_rx;
 +	}
 +
-+	chan->color = color;
-+
-+	*channel = chan;
-+
++	dev_dbg(gi2c->se.dev, "Grabbed GPI dma channels\n");
 +	return 0;
++
++err_rx:
++	dma_release_channel(gi2c->tx_c);
++err_tx:
++	return ret;
 +}
 +
-+static int lpg_add_led(struct lpg *lpg, struct device_node *np)
-+{
-+	struct led_init_data init_data = {};
-+	struct led_classdev *cdev;
-+	struct device_node *child;
-+	struct mc_subled *info;
-+	struct lpg_led *led;
-+	const char *state;
-+	int num_channels;
-+	u32 color = 0;
-+	int ret;
-+	int i;
+ static int geni_i2c_probe(struct platform_device *pdev)
+ {
+ 	struct geni_i2c_dev *gi2c;
+ 	struct resource *res;
+-	u32 proto, tx_depth;
++	u32 proto, tx_depth, fifo_disable;
+ 	int ret;
+ 	struct device *dev = &pdev->dev;
+ 
+@@ -601,27 +827,43 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 	proto = geni_se_read_proto(&gi2c->se);
+-	tx_depth = geni_se_get_tx_fifo_depth(&gi2c->se);
+ 	if (proto != GENI_SE_I2C) {
+ 		dev_err(dev, "Invalid proto %d\n", proto);
+ 		geni_se_resources_off(&gi2c->se);
+ 		return -ENXIO;
+ 	}
+-	gi2c->tx_wm = tx_depth - 1;
+-	geni_se_init(&gi2c->se, gi2c->tx_wm, tx_depth);
+-	geni_se_config_packing(&gi2c->se, BITS_PER_BYTE, PACKING_BYTES_PW,
+-							true, true, true);
 +
-+	ret = of_property_read_u32(np, "color", &color);
-+	if (ret < 0 && ret != -EINVAL) {
-+		dev_err(lpg->dev, "failed to parse \"color\" of %pOF\n", np);
-+		return ret;
-+	}
-+
-+	if (color == LED_COLOR_ID_RGB)
-+		num_channels = of_get_available_child_count(np);
-+	else
-+		num_channels = 1;
-+
-+	led = devm_kzalloc(lpg->dev, struct_size(led, channels, num_channels), GFP_KERNEL);
-+	if (!led)
-+		return -ENOMEM;
-+
-+	led->lpg = lpg;
-+	led->num_channels = num_channels;
-+
-+	if (color == LED_COLOR_ID_RGB) {
-+		info = devm_kcalloc(lpg->dev, num_channels, sizeof(*info), GFP_KERNEL);
-+		if (!info)
-+			return -ENOMEM;
-+		i = 0;
-+		for_each_available_child_of_node(np, child) {
-+			ret = lpg_parse_channel(lpg, child, &led->channels[i]);
-+			if (ret < 0)
-+				return ret;
-+
-+			info[i].color_index = led->channels[i]->color;
-+			info[i].intensity = 0;
-+			i++;
++	fifo_disable = readl_relaxed(gi2c->se.base + GENI_IF_DISABLE_RO) & FIFO_IF_DISABLE;
++	if (fifo_disable) {
++		/* FIFO is disabled, so we can only use GPI DMA */
++		gi2c->gpi_mode = true;
++		ret = setup_gpi_dma(gi2c);
++		if (ret) {
++			dev_err(dev, "Failed to setup GPI DMA mode:%d ret\n", ret);
++			return ret;
 +		}
 +
-+		led->mcdev.subled_info = info;
-+		led->mcdev.num_colors = num_channels;
-+
-+		cdev = &led->mcdev.led_cdev;
-+		cdev->brightness_set = lpg_brightness_mc_set;
-+		cdev->blink_set = lpg_blink_mc_set;
-+
-+		/* Register pattern accessors only if we have a LUT block */
-+		if (lpg->lut_base) {
-+			cdev->pattern_set = lpg_pattern_mc_set;
-+			cdev->pattern_clear = lpg_pattern_mc_clear;
-+		}
++		dev_dbg(dev, "Using GPI DMA mode for I2C\n");
 +	} else {
-+		ret = lpg_parse_channel(lpg, np, &led->channels[0]);
-+		if (ret < 0)
-+			return ret;
++		gi2c->gpi_mode = false;
++		tx_depth = geni_se_get_tx_fifo_depth(&gi2c->se);
++		gi2c->tx_wm = tx_depth - 1;
++		geni_se_init(&gi2c->se, gi2c->tx_wm, tx_depth);
++		geni_se_config_packing(&gi2c->se, BITS_PER_BYTE,
++				       PACKING_BYTES_PW, true, true, true);
 +
-+		cdev = &led->cdev;
-+		cdev->brightness_set = lpg_brightness_single_set;
-+		cdev->blink_set = lpg_blink_single_set;
-+
-+		/* Register pattern accessors only if we have a LUT block */
-+		if (lpg->lut_base) {
-+			cdev->pattern_set = lpg_pattern_single_set;
-+			cdev->pattern_clear = lpg_pattern_single_clear;
-+		}
++		dev_dbg(dev, "i2c fifo/se-dma mode. fifo depth:%d\n", tx_depth);
 +	}
 +
-+	cdev->default_trigger = of_get_property(np, "linux,default-trigger", NULL);
-+	cdev->max_brightness = LPG_RESOLUTION - 1;
+ 	ret = geni_se_resources_off(&gi2c->se);
+ 	if (ret) {
+ 		dev_err(dev, "Error turning off resources %d\n", ret);
+-		return ret;
++		goto err_dma;
+ 	}
+ 
+ 	ret = geni_icc_disable(&gi2c->se);
+ 	if (ret)
+-		return ret;
+-
+-	dev_dbg(dev, "i2c fifo/se-dma mode. fifo depth:%d\n", tx_depth);
++		goto err_dma;
+ 
+ 	gi2c->suspended = 1;
+ 	pm_runtime_set_suspended(gi2c->se.dev);
+@@ -633,12 +875,16 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 	if (ret) {
+ 		dev_err(dev, "Error adding i2c adapter %d\n", ret);
+ 		pm_runtime_disable(gi2c->se.dev);
+-		return ret;
++		goto err_dma;
+ 	}
+ 
+ 	dev_dbg(dev, "Geni-I2C adaptor successfully added\n");
+ 
+ 	return 0;
 +
-+	if (!of_property_read_string(np, "default-state", &state) &&
-+	    !strcmp(state, "on"))
-+		cdev->brightness = cdev->max_brightness;
-+	else
-+		cdev->brightness = LED_OFF;
-+
-+	cdev->brightness_set(cdev, cdev->brightness);
-+
-+	init_data.fwnode = of_fwnode_handle(np);
-+
-+	if (color == LED_COLOR_ID_RGB)
-+		ret = devm_led_classdev_multicolor_register_ext(lpg->dev, &led->mcdev, &init_data);
-+	else
-+		ret = devm_led_classdev_register_ext(lpg->dev, &led->cdev, &init_data);
-+	if (ret)
-+		dev_err(lpg->dev, "unable to register %s\n", cdev->name);
-+
++err_dma:
++	release_gpi_dma(gi2c);
 +	return ret;
-+}
-+
-+static int lpg_init_channels(struct lpg *lpg)
-+{
-+	const struct lpg_data *data = lpg->data;
-+	struct lpg_channel *chan;
-+	int i;
-+
-+	lpg->num_channels = data->num_channels;
-+	lpg->channels = devm_kcalloc(lpg->dev, data->num_channels,
-+				     sizeof(struct lpg_channel), GFP_KERNEL);
-+	if (!lpg->channels)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < data->num_channels; i++) {
-+		chan = &lpg->channels[i];
-+
-+		chan->lpg = lpg;
-+		chan->base = data->channels[i].base;
-+		chan->triled_mask = data->channels[i].triled_mask;
-+		chan->lut_mask = BIT(i);
-+
-+		regmap_read(lpg->map, chan->base + LPG_SUBTYPE_REG, &chan->subtype);
-+	}
-+
-+	return 0;
-+}
-+
-+static int lpg_init_triled(struct lpg *lpg)
-+{
-+	struct device_node *np = lpg->dev->of_node;
-+	int ret;
-+
-+	/* Skip initialization if we don't have a triled block */
-+	if (!lpg->data->triled_base)
-+		return 0;
-+
-+	lpg->triled_base = lpg->data->triled_base;
-+	lpg->triled_has_atc_ctl = lpg->data->triled_has_atc_ctl;
-+	lpg->triled_has_src_sel = lpg->data->triled_has_src_sel;
-+
-+	if (lpg->triled_has_src_sel) {
-+		ret = of_property_read_u32(np, "qcom,power-source", &lpg->triled_src);
-+		if (ret || lpg->triled_src == 2 || lpg->triled_src > 3) {
-+			dev_err(lpg->dev, "invalid power source\n");
-+			return -EINVAL;
-+		}
-+	}
-+
-+	/* Disable automatic trickle charge LED */
-+	if (lpg->triled_has_atc_ctl)
-+		regmap_write(lpg->map, lpg->triled_base + TRI_LED_ATC_CTL, 0);
-+
-+	/* Configure power source */
-+	if (lpg->triled_has_src_sel)
-+		regmap_write(lpg->map, lpg->triled_base + TRI_LED_SRC_SEL, lpg->triled_src);
-+
-+	/* Default all outputs to off */
-+	regmap_write(lpg->map, lpg->triled_base + TRI_LED_EN_CTL, 0);
-+
-+	return 0;
-+}
-+
-+static int lpg_init_lut(struct lpg *lpg)
-+{
-+	const struct lpg_data *data = lpg->data;
-+
-+	if (!data->lut_base)
-+		return 0;
-+
-+	lpg->lut_base = data->lut_base;
-+	lpg->lut_size = data->lut_size;
-+
-+	lpg->lut_bitmap = devm_bitmap_zalloc(lpg->dev, lpg->lut_size, GFP_KERNEL);
-+	if (!lpg->lut_bitmap)
-+		return -ENOMEM;
-+
-+	return 0;
-+}
-+
-+static int lpg_probe(struct platform_device *pdev)
-+{
-+	struct device_node *np;
-+	struct lpg *lpg;
-+	int ret;
-+	int i;
-+
-+	lpg = devm_kzalloc(&pdev->dev, sizeof(*lpg), GFP_KERNEL);
-+	if (!lpg)
-+		return -ENOMEM;
-+
-+	lpg->data = of_device_get_match_data(&pdev->dev);
-+	if (!lpg->data)
-+		return -EINVAL;
-+
-+	platform_set_drvdata(pdev, lpg);
-+
-+	lpg->dev = &pdev->dev;
-+	mutex_init(&lpg->lock);
-+
-+	lpg->map = dev_get_regmap(pdev->dev.parent, NULL);
-+	if (!lpg->map)
-+		return dev_err_probe(&pdev->dev, -ENXIO, "parent regmap unavailable\n");
-+
-+	ret = lpg_init_channels(lpg);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = lpg_parse_dtest(lpg);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = lpg_init_triled(lpg);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = lpg_init_lut(lpg);
-+	if (ret < 0)
-+		return ret;
-+
-+	for_each_available_child_of_node(pdev->dev.of_node, np) {
-+		ret = lpg_add_led(lpg, np);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	for (i = 0; i < lpg->num_channels; i++)
-+		lpg_apply_dtest(&lpg->channels[i]);
-+
-+	return lpg_add_pwm(lpg);
-+}
-+
-+static int lpg_remove(struct platform_device *pdev)
-+{
-+	struct lpg *lpg = platform_get_drvdata(pdev);
-+
-+	pwmchip_remove(&lpg->pwm);
-+
-+	return 0;
-+}
-+
-+static const struct lpg_data pm8916_pwm_data = {
-+	.num_channels = 1,
-+	.channels = (const struct lpg_channel_data[]) {
-+		{ .base = 0xbc00 },
-+	},
-+};
-+
-+static const struct lpg_data pm8941_lpg_data = {
-+	.lut_base = 0xb000,
-+	.lut_size = 64,
-+
-+	.triled_base = 0xd000,
-+	.triled_has_atc_ctl = true,
-+	.triled_has_src_sel = true,
-+
-+	.num_channels = 8,
-+	.channels = (const struct lpg_channel_data[]) {
-+		{ .base = 0xb100 },
-+		{ .base = 0xb200 },
-+		{ .base = 0xb300 },
-+		{ .base = 0xb400 },
-+		{ .base = 0xb500, .triled_mask = BIT(5) },
-+		{ .base = 0xb600, .triled_mask = BIT(6) },
-+		{ .base = 0xb700, .triled_mask = BIT(7) },
-+		{ .base = 0xb800 },
-+	},
-+};
-+
-+static const struct lpg_data pm8994_lpg_data = {
-+	.lut_base = 0xb000,
-+	.lut_size = 64,
-+
-+	.num_channels = 6,
-+	.channels = (const struct lpg_channel_data[]) {
-+		{ .base = 0xb100 },
-+		{ .base = 0xb200 },
-+		{ .base = 0xb300 },
-+		{ .base = 0xb400 },
-+		{ .base = 0xb500 },
-+		{ .base = 0xb600 },
-+	},
-+};
-+
-+static const struct lpg_data pmi8994_lpg_data = {
-+	.lut_base = 0xb000,
-+	.lut_size = 24,
-+
-+	.triled_base = 0xd000,
-+	.triled_has_atc_ctl = true,
-+	.triled_has_src_sel = true,
-+
-+	.num_channels = 4,
-+	.channels = (const struct lpg_channel_data[]) {
-+		{ .base = 0xb100, .triled_mask = BIT(5) },
-+		{ .base = 0xb200, .triled_mask = BIT(6) },
-+		{ .base = 0xb300, .triled_mask = BIT(7) },
-+		{ .base = 0xb400 },
-+	},
-+};
-+
-+static const struct lpg_data pmi8998_lpg_data = {
-+	.lut_base = 0xb000,
-+	.lut_size = 49,
-+
-+	.triled_base = 0xd000,
-+
-+	.num_channels = 6,
-+	.channels = (const struct lpg_channel_data[]) {
-+		{ .base = 0xb100 },
-+		{ .base = 0xb200 },
-+		{ .base = 0xb300, .triled_mask = BIT(5) },
-+		{ .base = 0xb400, .triled_mask = BIT(6) },
-+		{ .base = 0xb500, .triled_mask = BIT(7) },
-+		{ .base = 0xb600 },
-+	},
-+};
-+
-+static const struct lpg_data pm8150b_lpg_data = {
-+	.lut_base = 0xb000,
-+	.lut_size = 24,
-+
-+	.triled_base = 0xd000,
-+
-+	.num_channels = 2,
-+	.channels = (const struct lpg_channel_data[]) {
-+		{ .base = 0xb100, .triled_mask = BIT(7) },
-+		{ .base = 0xb200, .triled_mask = BIT(6) },
-+	},
-+};
-+
-+static const struct lpg_data pm8150l_lpg_data = {
-+	.lut_base = 0xb000,
-+	.lut_size = 48,
-+
-+	.triled_base = 0xd000,
-+
-+	.num_channels = 5,
-+	.channels = (const struct lpg_channel_data[]) {
-+		{ .base = 0xb100, .triled_mask = BIT(7) },
-+		{ .base = 0xb200, .triled_mask = BIT(6) },
-+		{ .base = 0xb300, .triled_mask = BIT(5) },
-+		{ .base = 0xbc00 },
-+		{ .base = 0xbd00 },
-+
-+	},
-+};
-+
-+static const struct of_device_id lpg_of_table[] = {
-+	{ .compatible = "qcom,pm8150b-lpg", .data = &pm8150b_lpg_data },
-+	{ .compatible = "qcom,pm8150l-lpg", .data = &pm8150l_lpg_data },
-+	{ .compatible = "qcom,pm8916-pwm", .data = &pm8916_pwm_data },
-+	{ .compatible = "qcom,pm8941-lpg", .data = &pm8941_lpg_data },
-+	{ .compatible = "qcom,pm8994-lpg", .data = &pm8994_lpg_data },
-+	{ .compatible = "qcom,pmi8994-lpg", .data = &pmi8994_lpg_data },
-+	{ .compatible = "qcom,pmi8998-lpg", .data = &pmi8998_lpg_data },
-+	{ .compatible = "qcom,pmc8180c-lpg", .data = &pm8150l_lpg_data },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(of, lpg_of_table);
-+
-+static struct platform_driver lpg_driver = {
-+	.probe = lpg_probe,
-+	.remove = lpg_remove,
-+	.driver = {
-+		.name = "qcom-spmi-lpg",
-+		.of_match_table = lpg_of_table,
-+	},
-+};
-+module_platform_driver(lpg_driver);
-+
-+MODULE_DESCRIPTION("Qualcomm LPG LED driver");
-+MODULE_LICENSE("GPL v2");
+ }
+ 
+ static int geni_i2c_remove(struct platform_device *pdev)
+@@ -646,6 +892,7 @@ static int geni_i2c_remove(struct platform_device *pdev)
+ 	struct geni_i2c_dev *gi2c = platform_get_drvdata(pdev);
+ 
+ 	i2c_del_adapter(&gi2c->adap);
++	release_gpi_dma(gi2c);
+ 	pm_runtime_disable(gi2c->se.dev);
+ 	return 0;
+ }
 -- 
-2.33.1
+2.31.1
 
