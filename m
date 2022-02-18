@@ -2,78 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 49D6F4BBE57
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 18:26:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 78D9D4BBF76
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 19:29:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237814AbiBRR1A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Feb 2022 12:27:00 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:51698 "EHLO
+        id S239227AbiBRS33 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Feb 2022 13:29:29 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234582AbiBRR1A (ORCPT
+        with ESMTP id S236005AbiBRS32 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Feb 2022 12:27:00 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7783164EA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 09:26:42 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id bx31so5414037ljb.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 09:26:42 -0800 (PST)
+        Fri, 18 Feb 2022 13:29:28 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2495398F6C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 10:29:11 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id a6so3975413oid.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 10:29:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=ZYe2t/FMZ93x2Kic1ao1JKybApih1A56RL1y9i2FhLE=;
-        b=gOzR/3gjf7/yY5lV5TZ57e/x1QHxbFE+SzLfqHEUg96Sgohxk75AEOBey92ZQc0yen
-         4aThrlFgnRNf9Z68Q3QFatelLW9CVGwuBcW36NUiY4xO1gMmIPMkP+kho7g8aOG8ifL/
-         yJkCIbLgpPXbQ3o35h4BggnBXVBhURaMExrK8uukcO82l+LdThbMAp/h+DKVZ+grqSh9
-         s8l9HHb/JNFM5ttGIW9a1vz10ButIC84JkWcSsHyr2BEA40yNmf/Ig37ndCdp5XWrs2N
-         JzB4n7vom3dKNRvlqiuYWluuxWMgOykrBmx9eq8BE49uM0RSwVgS8NQdOUpMzkpuCBi1
-         PNzQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cFSq9u4vD4UcKyJIIrFupSdAy07113Uhr4g6Ew3+KZg=;
+        b=FSc5Pv2P+ySfnR7n+Ln1v2i0xuZ5WpguCxqWsQYjEnrxIJFV/z4tRvEe2mCmzPGTks
+         LFKm6xqBJbPmkB2A4lzQ2Hbgxhi56UyA90PlILf65z8N9P5Diea6xljQYjxa62O7UfGT
+         oHUei0ETX5Ttc2N9Y60F1Wsoa4Szg9+f99tti1oKev6q7IhPBmCYds5wESLrQuc+/eTT
+         ZJjrZII0c2sOVBaI+8Qi2gLViMHek5NyCFQzbzHve40/M3z6IpDbhiJnXSPY3xg1fUdR
+         06qp37X0UiZBpXqcPxAg7hWiuohuRnCmNnWebB3nbUS+PC9S+UFiBrG5F76+pTWvV/Hr
+         0B5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=ZYe2t/FMZ93x2Kic1ao1JKybApih1A56RL1y9i2FhLE=;
-        b=DJv3mOhGg+CfImfgP8/NMX73Tdf3rPzu54XeP7v2mMPzcZoxBPgYUfUEoS8Q447pR/
-         sTWh30HSpuiYOcQevA2wqQ+v3l98Y9mUkB5FEjXrYJI+FLpLX7LliGBkLdgs7Z9pivvO
-         WHfbENRdwUbGBEG3dbo1REdbt2yTmrFDF6XoALJQS+Emj5vfN9SYxw50PgPry70/4+6W
-         P1gHJIjf8DaFMvp4ZKPNLdrSjA3YATFbrPAnJwwu0Y+2820fIBPlZag1Gqm7H9Es+3Sk
-         dvqGFd4R7VJoP2LBbYfNH8TBM7fze9IWmYgyHLnJsesAuQWdxa0tdMhTwWI8mmMXw52D
-         gx5Q==
-X-Gm-Message-State: AOAM530yhKGhFoUWDKe00NisDMhSqU6rDiWvMuC9uYFEIX4Ipmnm2B+Q
-        O/GbOKKU2j9ANPh+jsSzyd/9mg==
-X-Google-Smtp-Source: ABdhPJzF6KsEJtgTA6aUDgNsa2gJAo/6KzTixWf4JHc5zKVLW0gmtaXhNhMuSUe6ZlrOXZsTogAVWQ==
-X-Received: by 2002:a2e:99d1:0:b0:244:bad9:4ab7 with SMTP id l17-20020a2e99d1000000b00244bad94ab7mr6398922ljj.269.1645205200824;
-        Fri, 18 Feb 2022 09:26:40 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id r3sm272173lfi.260.2022.02.18.09.26.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Feb 2022 09:26:40 -0800 (PST)
-Message-ID: <fab2ccb6-9c00-90cb-5986-8e1544c14596@linaro.org>
-Date:   Fri, 18 Feb 2022 20:26:39 +0300
+        bh=cFSq9u4vD4UcKyJIIrFupSdAy07113Uhr4g6Ew3+KZg=;
+        b=4B4vVLpGOgIvNih+sftXypaTPr24RZ9CWrFFPcEGWn8g/x4JfcFFv+GoUZ3AO0tC9b
+         MZMKz/m3BWS6EuyZa39ugFkP0wZIHJanFCsQzismg2gevvoLnQb128MPyJwNEcWPZ2TK
+         yYq5sw0rww9wMEwtijkT8NNeWjizsunjbhLO/yS7UxODiXCR6v1YStM85WJVrTqKaD9U
+         sfDXtfPk/t14iBN5XL5Xx4ECmVucXddh+AhC7Nx9HpSx8Fn32Zaz9POU10JP1X/NcKKN
+         gn7ELM8L0Q98pQPJADJgCzjcqyl1Poyi+yctq1GAcU2WrtT4hf/chkOfksFkzfKCHfTX
+         kghA==
+X-Gm-Message-State: AOAM530ap0wI1ClLS0rIaJHjgOQL/9dMu2DJDZqbvFbSmw6nl/ZkU2B5
+        Bhr0hqhFrTfAyfPpcrv0y/Pf+A==
+X-Google-Smtp-Source: ABdhPJzipan26q7Kr1WPJtXmIQjRduE4kKD2gVEfvqnpxsMURORRiE9THsaoHG4yUOV6QrcvLuNgkg==
+X-Received: by 2002:a05:6808:1b11:b0:2d0:5d57:af3b with SMTP id bx17-20020a0568081b1100b002d05d57af3bmr3884106oib.306.1645208950441;
+        Fri, 18 Feb 2022 10:29:10 -0800 (PST)
+Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id t5sm1742508otp.67.2022.02.18.10.29.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Feb 2022 10:29:09 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Pavel Machek <pavel@ucw.cz>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-pwm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v13 1/2] dt-bindings: leds: Add Qualcomm Light Pulse Generator binding
+Date:   Fri, 18 Feb 2022 10:31:15 -0800
+Message-Id: <20220218183116.2261770-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v2 2/2] drm/msm/dpu: Fix timeout issues on command mode
- panels
-Content-Language: en-GB
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>, robdclark@gmail.com
-Cc:     sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
-        abhinavk@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, martin.botka@somainline.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        paul.bouchara@somainline.org
-References: <20210911163919.47173-1-angelogioacchino.delregno@somainline.org>
- <20210911163919.47173-2-angelogioacchino.delregno@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20210911163919.47173-2-angelogioacchino.delregno@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,46 +75,201 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/09/2021 19:39, AngeloGioacchino Del Regno wrote:
-> In function dpu_encoder_phys_cmd_wait_for_commit_done we are always
-> checking if the relative CTL is started by waiting for an interrupt
-> to fire: it is fine to do that, but then sometimes we call this
-> function while the CTL is up and has never been put down, but that
-> interrupt gets raised only when the CTL gets a state change from
-> 0 to 1 (disabled to enabled), so we're going to wait for something
-> that will never happen on its own.
-> 
-> Solving this while avoiding to restart the CTL is actually possible
-> and can be done by just checking if it is already up and running
-> when the wait_for_commit_done function is called: in this case, so,
-> if the CTL was already running, we can say that the commit is done
-> if the command transmission is complete (in other terms, if the
-> interface has been flushed).
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+This adds the binding document describing the three hardware blocks
+related to the Light Pulse Generator found in a wide range of Qualcomm
+PMICs.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
+---
 
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> index aa01698d6b25..aa5d3b3cef15 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> @@ -682,6 +682,9 @@ static int dpu_encoder_phys_cmd_wait_for_commit_done(
->   	if (!dpu_encoder_phys_cmd_is_master(phys_enc))
->   		return 0;
->   
-> +	if (phys_enc->hw_ctl->ops.is_started(phys_enc->hw_ctl))
-> +		return dpu_encoder_phys_cmd_wait_for_tx_complete(phys_enc);
-> +
->   	return _dpu_encoder_phys_cmd_wait_for_ctl_start(phys_enc);
->   }
->   
+Changes since v12:
+- None
 
+ .../bindings/leds/leds-qcom-lpg.yaml          | 173 ++++++++++++++++++
+ 1 file changed, 173 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
 
+diff --git a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+new file mode 100644
+index 000000000000..336bd8e10efd
+--- /dev/null
++++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+@@ -0,0 +1,173 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/leds/leds-qcom-lpg.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Light Pulse Generator
++
++maintainers:
++  - Bjorn Andersson <bjorn.andersson@linaro.org>
++
++description: >
++  The Qualcomm Light Pulse Generator consists of three different hardware blocks;
++  a ramp generator with lookup table, the light pulse generator and a three
++  channel current sink. These blocks are found in a wide range of Qualcomm PMICs.
++
++properties:
++  compatible:
++    enum:
++      - qcom,pm8150b-lpg
++      - qcom,pm8150l-lpg
++      - qcom,pm8916-pwm
++      - qcom,pm8941-lpg
++      - qcom,pm8994-lpg
++      - qcom,pmc8180c-lpg
++      - qcom,pmi8994-lpg
++      - qcom,pmi8998-lpg
++
++  "#pwm-cells":
++    const: 2
++
++  "#address-cells":
++    const: 1
++
++  "#size-cells":
++    const: 0
++
++  qcom,power-source:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description:
++      power-source used to drive the output, as defined in the datasheet.
++      Should be specified if the TRILED block is present
++    enum: [0, 1, 3]
++
++  qcom,dtest:
++    $ref: /schemas/types.yaml#/definitions/uint32-matrix
++    description: >
++      A list of integer pairs, where each pair represent the dtest line the
++      particular channel should be connected to and the flags denoting how the
++      value should be outputed, as defined in the datasheet. The number of
++      pairs should be the same as the number of channels.
++    items:
++      items:
++        - description: dtest line to attach
++        - description: flags for the attachment
++
++  multi-led:
++    type: object
++    $ref: leds-class-multicolor.yaml#
++    properties:
++      "#address-cells":
++        const: 1
++
++      "#size-cells":
++        const: 0
++
++    patternProperties:
++      "^led@[0-9a-f]$":
++        type: object
++        $ref: common.yaml#
++
++patternProperties:
++  "^led@[0-9a-f]$":
++    type: object
++    $ref: common.yaml#
++
++    properties:
++      reg: true
++
++    required:
++      - reg
++
++required:
++  - compatible
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/leds/common.h>
++
++    led-controller {
++      compatible = "qcom,pmi8994-lpg";
++
++      #address-cells = <1>;
++      #size-cells = <0>;
++
++      qcom,power-source = <1>;
++
++      qcom,dtest = <0 0>,
++                   <0 0>,
++                   <0 0>,
++                   <4 1>;
++
++      led@1 {
++        reg = <1>;
++        color = <LED_COLOR_ID_GREEN>;
++        function = LED_FUNCTION_INDICATOR;
++        function-enumerator = <1>;
++      };
++
++      led@2 {
++        reg = <2>;
++        color = <LED_COLOR_ID_GREEN>;
++        function = LED_FUNCTION_INDICATOR;
++        function-enumerator = <0>;
++        default-state = "on";
++      };
++
++      led@3 {
++        reg = <3>;
++        color = <LED_COLOR_ID_GREEN>;
++        function = LED_FUNCTION_INDICATOR;
++        function-enumerator = <2>;
++      };
++
++      led@4 {
++        reg = <4>;
++        color = <LED_COLOR_ID_GREEN>;
++        function = LED_FUNCTION_INDICATOR;
++        function-enumerator = <3>;
++      };
++    };
++  - |
++    #include <dt-bindings/leds/common.h>
++
++    led-controller {
++      compatible = "qcom,pmi8994-lpg";
++
++      #address-cells = <1>;
++      #size-cells = <0>;
++
++      qcom,power-source = <1>;
++
++      multi-led {
++        color = <LED_COLOR_ID_RGB>;
++        function = LED_FUNCTION_STATUS;
++
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        led@1 {
++          reg = <1>;
++          color = <LED_COLOR_ID_RED>;
++        };
++
++        led@2 {
++          reg = <2>;
++          color = <LED_COLOR_ID_GREEN>;
++        };
++
++        led@3 {
++          reg = <3>;
++          color = <LED_COLOR_ID_BLUE>;
++        };
++      };
++    };
++  - |
++    pwm-controller {
++      compatible = "qcom,pm8916-pwm";
++      #pwm-cells = <2>;
++    };
++...
 -- 
-With best wishes
-Dmitry
+2.33.1
+
