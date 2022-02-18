@@ -2,60 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F13D84BAE35
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 01:17:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ACFAF4BAE47
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 01:19:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229579AbiBRAQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Feb 2022 19:16:47 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:45370 "EHLO
+        id S230051AbiBRASZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Feb 2022 19:18:25 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:52846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229893AbiBRAQq (ORCPT
+        with ESMTP id S230047AbiBRASY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Feb 2022 19:16:46 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0B55396AB;
-        Thu, 17 Feb 2022 16:16:30 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 8FA10B82437;
-        Fri, 18 Feb 2022 00:16:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF4DC340E8;
-        Fri, 18 Feb 2022 00:16:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1645143388;
-        bh=2kWXeoctbsWvcDjrtxkz9u4o+5N4Ldwg/Eo/KgfyIVI=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=ahd67xoyk8mcqBq4gtOKS9qtV+aD+a0RWx0ypDbSL6SSmaWbcEW0/2lluwUOGmZOK
-         5fDO1DbyO1C+1cFE4Mjitc+OtLshdpQTNQNlwBw5aq5rl21DGiule/a0kBcCBi8MZg
-         amniiC/Q5iCJg4t+09/y1yGaffCR+B3GrHjYaaVKRnO/l6so4/SB5Ej+7bP1+frWQk
-         y6eK+nLVDNf/BNIhVEiLjhXLoRrwt70g2nTEUuYO2wVCFyaxbGmnhchvonmUlNdkx1
-         KIKYjyXlp7h8umDI1YVnhKcFaoCqduhsU/UcvQD2ySTr58KMo3A5I/8AMmaNMKKpC4
-         N0Qkzp+L0V4IA==
-Content-Type: text/plain; charset="utf-8"
+        Thu, 17 Feb 2022 19:18:24 -0500
+Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7791A3E0E0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 16:18:07 -0800 (PST)
+Received: by mail-oo1-xc29.google.com with SMTP id e19-20020a4ab993000000b0031a98fe3a9dso1619365oop.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 16:18:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=hEW6W+WPb66D5yQ2HyIlOM4vWPvf0YgZjVX0YM4ZwrU=;
+        b=Ede8pUTVciwdV/PbVRfW4xH/weuMY9hLAfTAUcQifXPFB0t8O1+/rpu29GyBRzH0Fv
+         b41j6430H5X3BZkOmWOYFQD3HJZuIaIqnG2umegoXdMcVc0iakXBVGwFluzAmjR2f4yu
+         GRnSC86SW6XZfqMNEkA5uwjbo7RLKTeuJZPBQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=hEW6W+WPb66D5yQ2HyIlOM4vWPvf0YgZjVX0YM4ZwrU=;
+        b=AE7Om9jyujLEkaoje40R4PfbZWkPNCYyuhOI7khWz0lfeDP7W3/aASWeNFcQDa7bkp
+         IwHKOb1C0Mkqwr3CaoG3tKL9nZtFTkV3D7iYLmVdvnpf751Kz2YNK/frTeZdAu794gQK
+         6RFed9jcx4lMko5CWWtLkiLzoAYv/y7JuVR43YEg7sM9g2g9TjxJ1GbnOWJfCaBvxZsU
+         tlqfpgdgahezbrSajllp7G+FVjQAYwNXnFSh0jDrt85JBGSY2VhruVRrWk79Gjew5UbU
+         zOPLhH5yvO1mjz43YPEDEvWHko2rpwU0tHxZ/F9bS13i6tWqyzp7Au/EOBJKIVtQYCkn
+         aPrg==
+X-Gm-Message-State: AOAM532CI+WCJIE3WJbDwvrp/6glfZxDAoKSn/kX4ZFRPL9cuKm2fjZ6
+        kXybU+yB/yHkPebIsTDGO8Ahg7LlOECtYGI3fBo8f/NiZQc=
+X-Google-Smtp-Source: ABdhPJx6rfQGpfogn9b+3AWL3uxEzo7fTCqTdSw67tFVNcpJOgvBYjrkdrK/g917csIE+MLe8s8h6Wp/Sknz8nrtzoE=
+X-Received: by 2002:a05:6870:5829:b0:c8:9f42:f919 with SMTP id
+ r41-20020a056870582900b000c89f42f919mr2119170oap.54.1645143486794; Thu, 17
+ Feb 2022 16:18:06 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 17 Feb 2022 16:18:06 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220217232408.78932-1-konrad.dybcio@somainline.org>
-References: <20220217232408.78932-1-konrad.dybcio@somainline.org>
-Subject: Re: [PATCH v2] clk: qcom: gcc-msm8994: Remove NoC clocks
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Date:   Thu, 17 Feb 2022 16:16:26 -0800
+In-Reply-To: <20220215201539.3970459-2-dmitry.baryshkov@linaro.org>
+References: <20220215201539.3970459-1-dmitry.baryshkov@linaro.org> <20220215201539.3970459-2-dmitry.baryshkov@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Message-Id: <20220218001628.3FF4DC340E8@smtp.kernel.org>
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Date:   Thu, 17 Feb 2022 16:18:06 -0800
+Message-ID: <CAE-0n51kA+XBLdRheZ+A6Y2zmWp9Zc7o_Agap4FXtY1oxxJ4Lg@mail.gmail.com>
+Subject: Re: [PATCH 1/5] dt-bindings: clocks: convert SDM845 Camera CC
+ bindings to YAML
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,20 +71,10 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Konrad Dybcio (2022-02-17 15:24:08)
-> Just like in commit 05cf3ec00d460b50088d421fb878a0f83f57e262
-> ("clk: qcom: gcc-msm8996: Drop (again) gcc_aggre1_pnoc_ahb_clk")
-> adding NoC clocks turned out to be a huge mistake, as they cause a lot of
-> issues at little benefit (basically letting Linux know about their
-> children's frequencies), especially when mishandled or misconfigured.
->=20
-> Adding these ones broke SDCC approx 99 out of 100 times, but that somehow
-> went unnoticed. To prevent further issues like this one, remove them.
->=20
-> This commit is effectively a revert of 74a33fac3aab77558ca0d80c9935
-> (clk: qcom: gcc-msm8994: Add missing NoC clocks) with ABI preservation.
->=20
-> Fixes: 74a33fac3aab ("clk: qcom: gcc-msm8994: Add missing NoC clocks")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Quoting Dmitry Baryshkov (2022-02-15 12:15:35)
+> Convert clock/qcom,camcc.txt to clock/qcom,sdm845-camcc.yaml.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
-Is boot broken on msm8994? I can take this for clk-fixes then.
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
