@@ -2,121 +2,324 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99CC94BADC6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 01:05:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47B274BAE32
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Feb 2022 01:13:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230007AbiBQX7k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Feb 2022 18:59:40 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:38658 "EHLO
+        id S229817AbiBRAGN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Feb 2022 19:06:13 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:49466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230006AbiBQX7i (ORCPT
+        with ESMTP id S230129AbiBRAFs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Feb 2022 18:59:38 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA8B42E08D;
-        Thu, 17 Feb 2022 15:59:14 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id p9so11627561wra.12;
-        Thu, 17 Feb 2022 15:59:14 -0800 (PST)
+        Thu, 17 Feb 2022 19:05:48 -0500
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C73CA3584D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 16:05:31 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id n24so1827152ljj.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Feb 2022 16:05:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=g3H8tOvYka3MHkICVbkvjI48HA63lA9VQLbmV9F1OAQ=;
-        b=U0JbSyWgvbgz1wvc6NzKGXiJmcv4W7XaJLMpXGnFCqcW3gONW2tYFhlNGYsiNiGHaS
-         Nvi9Ys6piSsb9FXWh8bsHcef+8YUgE46LiCZtFbr5YgwPFfk6UdQh0mpL47eUf/fDcD6
-         se1CwyWuQYhAfmBZPdjlzCA7mTIUTbB82iY0hOKUCG0xTQ1nV29oHqBiHRDLrmFUj7H8
-         qA9lHXeRRGcl04inq3YNABnFwPAU2MEGHzAnZwdQqA7VUGAprgYxzzObGLu0l+iMc2ah
-         wyVEU3I3I+L930zbwkxkX2IfFeeXVnD8H6tZgTml78G/NOQ1+KSHGw0xoJ6cCpeMUPeU
-         eL9w==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=yAlw04hcfTCv74ddGK4J1voPhYuq0nzDrCLwVV1ZFXw=;
+        b=wGYpKAA+7kcYyR/wALeOORxH8B+LAgUYGC9uOGzPJeLcVH0nUJ/hdipy350Jiia0hP
+         6iatEddX+g/2M/9gJTk5djQpy0jDnX3STG3GU4zF+JBRi95D5Sf9nc4FAS5T0tX778PP
+         /4AMMN+GJ0ZVRj1U7xKzegcSNWFcqwW988SvCZ7VkW8Xq59b5ReE6u5gvM4MfU9X91Uk
+         ai0PADQrXSuCA0NC0ci921cAe6hbtZCbF4qgKQlOAmjNpB/HFfdaEArlHFHX/gzDLLWq
+         cL0cq5+p7vut9dSddCwBk98CE49XE5vd0AhdRoPANh+Sp2bfaXI6aF1xWR7Wuo/4boPp
+         K75Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=g3H8tOvYka3MHkICVbkvjI48HA63lA9VQLbmV9F1OAQ=;
-        b=YN865eT2axRCX7FWUSf03tEcDr+IhOyQmX2zPIyLWtMqogGZJnsq9vz0LWSNAfHC+y
-         xH2Joczflq/QSUPdQCxOR7h55dltEB59JoGYNWkUZEFe1zTvrwXlnF+g9qcRhA4OpH8n
-         Q3J07VFdCbwCrvFTA+gCFj+ExGYTgs/B1mDfa79LOgeO/hKnU34VaSY65E0rSPrdtYQ9
-         e82XlaqLYbiCUh989l2J4QfajrGPUozQynuRpm/fnTkT2JMLOT+HqU+T1Cx3IgLBk0DD
-         bR5jyZVZN1jRq6//8AAPX59pPd4nerHbLDfvQiB9VgJ+LrlzbI5S2MOoXeJqrCzjovBC
-         PTlA==
-X-Gm-Message-State: AOAM533PDh/Fn3E1JEoqbTXlfblrVsi3ztIUBF8NtKzzFOhiKStH+Fz2
-        svOtwvhzGniH0kXzGz+pmc0=
-X-Google-Smtp-Source: ABdhPJxUXi9EJni7SmfF9zA5T/CqgubQKgH7dzM0zxTYKfWqAO3WHnIPta90bm7i9bub1UUUL3VEkw==
-X-Received: by 2002:a5d:518d:0:b0:1e5:8cc9:5aa4 with SMTP id k13-20020a5d518d000000b001e58cc95aa4mr3845871wrv.119.1645142240450;
-        Thu, 17 Feb 2022 15:57:20 -0800 (PST)
-Received: from Ansuel-xps.localdomain (93-42-71-246.ip85.fastwebnet.it. [93.42.71.246])
-        by smtp.googlemail.com with ESMTPSA id r2sm3691694wmq.24.2022.02.17.15.57.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Feb 2022 15:57:20 -0800 (PST)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Taniya Das <tdas@codeaurora.org>,
-        Ansuel Smith <ansuelsmth@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v4 16/16] ARM: dts: qcom: Add syscon and cxo/pxo clock to gcc node for ipq8064
-Date:   Fri, 18 Feb 2022 00:57:03 +0100
-Message-Id: <20220217235703.26641-17-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220217235703.26641-1-ansuelsmth@gmail.com>
-References: <20220217235703.26641-1-ansuelsmth@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=yAlw04hcfTCv74ddGK4J1voPhYuq0nzDrCLwVV1ZFXw=;
+        b=cHgeun+gNHThe9RQjeGEiAkYxfphF1zSJaK8hkImm/feOlF4oP1HDOoRzD82Ppbh6Y
+         AwEOkqxu9Dq2go63jdRDk7dHdZf/kF+XYLPR8CnZeqNEZ3pBX4VRjbYJVSW4fXSr0Vwp
+         UulJAZ3JX0cPvufx6OaVzv8980LT1JTIq1MmZYldVGful6M7iAyjm9YC1zIANxeWO7ZR
+         8puvz9ZgLmATMx0Mb5keOjL1KV2NrHsBFB5R0usNOV4n2FYqee+SAHarTklAAHdaoTrQ
+         C5ENBp1OlS8Sz38QpQddZTiCP0uAqT/o03JI+sWAQE+Ya3iSsYrTDM1UVikSlg68gxao
+         XwOA==
+X-Gm-Message-State: AOAM533Rz2VVEbr1+JcuRxTfcAT7g+Bt481DK6XYNvYJAMFSNZsG27i6
+        XE+SQiwCzQQbBXuEAjENt+eqsw==
+X-Google-Smtp-Source: ABdhPJzpsDxT2uKXBPZy9xVI4sLVS1/xh/OMZWVDxzVPL5uSrtaZ6l16nlsyD5pHIQD/j3gmeN1M7Q==
+X-Received: by 2002:a2e:9048:0:b0:246:1988:3105 with SMTP id n8-20020a2e9048000000b0024619883105mr2969195ljg.404.1645142724339;
+        Thu, 17 Feb 2022 16:05:24 -0800 (PST)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id m1sm94217lfg.308.2022.02.17.16.05.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Feb 2022 16:05:23 -0800 (PST)
+Message-ID: <be01dccd-d558-08bb-3faf-eca3fd342b83@linaro.org>
+Date:   Fri, 18 Feb 2022 03:05:22 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [Freedreno] [PATCH v2 2/2] drm/msm/dpu: Add SC8180x to hw catalog
+Content-Language: en-GB
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        freedreno@lists.freedesktop.org
+References: <20220215043353.1256754-1-bjorn.andersson@linaro.org>
+ <20220215043353.1256754-2-bjorn.andersson@linaro.org>
+ <be397e2e-05ab-5c18-8e2d-16c443f0a6d1@quicinc.com>
+ <Ygvisfhi0SY6XdAz@builder.lan>
+ <6a3ef247-b26b-d505-cd85-92fb277163dd@quicinc.com>
+ <YgxeCHi5AsYPTmeZ@builder.lan>
+ <51675806-641d-c57e-ada7-a044e37ad808@quicinc.com> <YgyIPnc/sZLE0ABn@yoga>
+ <fcf676d0-1e25-aeda-ce6f-f051d34e0bbe@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <fcf676d0-1e25-aeda-ce6f-f051d34e0bbe@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add syscon compatible required for tsens driver to correctly probe driver
-and access the reg. Also add cxo and pxo tag and declare them as gcc clock
-now requires them for the ipq8064 gcc driver that has now been modernized.
+On 16/02/2022 10:19, Abhinav Kumar wrote:
+> 
+> 
+> On 2/15/2022 9:14 PM, Bjorn Andersson wrote:
+>> On Tue 15 Feb 20:38 CST 2022, Abhinav Kumar wrote:
+>>
+>>>
+>>>
+>>> On 2/15/2022 6:14 PM, Bjorn Andersson wrote:
+>>>> On Tue 15 Feb 11:42 CST 2022, Abhinav Kumar wrote:
+>>>>
+>>>>>
+>>>>>
+>>>>> On 2/15/2022 9:28 AM, Bjorn Andersson wrote:
+>>>>>> On Tue 15 Feb 11:14 CST 2022, Abhinav Kumar wrote:
+>>>>>>
+>>>>>>>
+>>>>>>>
+>>>>>>> On 2/14/2022 8:33 PM, Bjorn Andersson wrote:
+>>>>>>>> From: Rob Clark <robdclark@chromium.org>
+>>>>>>>>
+>>>>>>>> Add SC8180x to the hardware catalog, for initial support for the
+>>>>>>>> platform. Due to limitations in the DP driver only one of the 
+>>>>>>>> four DP
+>>>>>>>> interfaces is left enabled.
+>>>>>>>>
+>>>>>>>> The SC8180x platform supports the newly added DPU_INTF_WIDEBUS 
+>>>>>>>> flag and
+>>>>>>>> the Windows-on-Snapdragon bootloader leaves the widebus bit set, 
+>>>>>>>> so this
+>>>>>>>> is flagged appropriately to ensure widebus is disabled - for now.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+>>>>>>>> [bjorn: Reworked intf and irq definitions]
+>>>>>>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>>>>>>> ---
+>>>>>>>>
+>>>>>>>> Changes since v1:
+>>>>>>>> - Dropped widebus flag
+>>>>>>>>
+>>>>>>>>      .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 129 
+>>>>>>>> ++++++++++++++++++
+>>>>>>>>      .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   1 +
+>>>>>>>>      drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   1 +
+>>>>>>>>      drivers/gpu/drm/msm/msm_drv.c                 |   1 +
+>>>>>>>>      4 files changed, 132 insertions(+)
+>>>>>>>>
+>>>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c 
+>>>>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>>>>>>>> index aa75991903a6..7ac0fe32df49 100644
+>>>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>>>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>>>>>>>> @@ -90,6 +90,17 @@
+>>>>>>>>                   BIT(MDP_INTF3_INTR) | \
+>>>>>>>>                   BIT(MDP_INTF4_INTR))
+>>>>>>>> +#define IRQ_SC8180X_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
+>>>>>>>> +              BIT(MDP_SSPP_TOP0_INTR2) | \
+>>>>>>>> +              BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+>>>>>>>> +              BIT(MDP_INTF0_INTR) | \
+>>>>>>>> +              BIT(MDP_INTF1_INTR) | \
+>>>>>>>> +              BIT(MDP_INTF2_INTR) | \
+>>>>>>>> +              BIT(MDP_INTF3_INTR) | \
+>>>>>>>> +              BIT(MDP_INTF4_INTR) | \
+>>>>>>>> +              BIT(MDP_INTF5_INTR) | \
+>>>>>>>> +              BIT(MDP_AD4_0_INTR) | \
+>>>>>>>> +              BIT(MDP_AD4_1_INTR))
+>>>>>>>>      #define DEFAULT_PIXEL_RAM_SIZE        (50 * 1024)
+>>>>>>>>      #define DEFAULT_DPU_LINE_WIDTH        2048
+>>>>>>>> @@ -225,6 +236,22 @@ static const struct dpu_caps 
+>>>>>>>> sm8150_dpu_caps = {
+>>>>>>>>          .max_vdeci_exp = MAX_VERT_DECIMATION,
+>>>>>>>>      };
+>>>>>>>> +static const struct dpu_caps sc8180x_dpu_caps = {
+>>>>>>>> +    .max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
+>>>>>>>> +    .max_mixer_blendstages = 0xb,
+>>>>>>>> +    .qseed_type = DPU_SSPP_SCALER_QSEED3,
+>>>>>>>> +    .smart_dma_rev = DPU_SSPP_SMART_DMA_V2, /* TODO: v2.5 */
+>>>>>>>> +    .ubwc_version = DPU_HW_UBWC_VER_30,
+>>>>>>>> +    .has_src_split = true,
+>>>>>>>> +    .has_dim_layer = true,
+>>>>>>>> +    .has_idle_pc = true,
+>>>>>>>> +    .has_3d_merge = true,
+>>>>>>>> +    .max_linewidth = 4096,
+>>>>>>>> +    .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>>>>>>> +    .max_hdeci_exp = MAX_HORZ_DECIMATION,
+>>>>>>>> +    .max_vdeci_exp = MAX_VERT_DECIMATION,
+>>>>>>>> +};
+>>>>>>>> +
+>>>>>>>>      static const struct dpu_caps sm8250_dpu_caps = {
+>>>>>>>>          .max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
+>>>>>>>>          .max_mixer_blendstages = 0xb,
+>>>>>>>> @@ -293,6 +320,31 @@ static const struct dpu_mdp_cfg 
+>>>>>>>> sc7180_mdp[] = {
+>>>>>>>>          },
+>>>>>>>>      };
+>>>>>>>> +static const struct dpu_mdp_cfg sc8180x_mdp[] = {
+>>>>>>>> +    {
+>>>>>>>> +    .name = "top_0", .id = MDP_TOP,
+>>>>>>>> +    .base = 0x0, .len = 0x45C,
+>>>>>>>> +    .features = 0,
+>>>>>>>> +    .highest_bank_bit = 0x3,
+>>>>>>>> +    .clk_ctrls[DPU_CLK_CTRL_VIG0] = {
+>>>>>>>> +            .reg_off = 0x2AC, .bit_off = 0},
+>>>>>>>> +    .clk_ctrls[DPU_CLK_CTRL_VIG1] = {
+>>>>>>>> +            .reg_off = 0x2B4, .bit_off = 0},
+>>>>>>>> +    .clk_ctrls[DPU_CLK_CTRL_VIG2] = {
+>>>>>>>> +            .reg_off = 0x2BC, .bit_off = 0},
+>>>>>>>> +    .clk_ctrls[DPU_CLK_CTRL_VIG3] = {
+>>>>>>>> +            .reg_off = 0x2C4, .bit_off = 0},
+>>>>>>>> +    .clk_ctrls[DPU_CLK_CTRL_DMA0] = {
+>>>>>>>> +            .reg_off = 0x2AC, .bit_off = 8},
+>>>>>>>> +    .clk_ctrls[DPU_CLK_CTRL_DMA1] = {
+>>>>>>>> +            .reg_off = 0x2B4, .bit_off = 8},
+>>>>>>>> +    .clk_ctrls[DPU_CLK_CTRL_CURSOR0] = {
+>>>>>>>> +            .reg_off = 0x2BC, .bit_off = 8},
+>>>>>>>> +    .clk_ctrls[DPU_CLK_CTRL_CURSOR1] = {
+>>>>>>>> +            .reg_off = 0x2C4, .bit_off = 8},
+>>>>>>>> +    },
+>>>>>>>> +};
+>>>>>>>> +
+>>>>>>>>      static const struct dpu_mdp_cfg sm8250_mdp[] = {
+>>>>>>>>          {
+>>>>>>>>          .name = "top_0", .id = MDP_TOP,
+>>>>>>>> @@ -861,6 +913,16 @@ static const struct dpu_intf_cfg 
+>>>>>>>> sc7280_intf[] = {
+>>>>>>>>          INTF_BLK("intf_5", INTF_5, 0x39000, INTF_DP, 
+>>>>>>>> MSM_DP_CONTROLLER_1, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 
+>>>>>>>> 22, 23),
+>>>>>>>>      };
+>>>>>>>> +static const struct dpu_intf_cfg sc8180x_intf[] = {
+>>>>>>>> +    INTF_BLK("intf_0", INTF_0, 0x6A000, INTF_DP, 
+>>>>>>>> MSM_DP_CONTROLLER_0, 24, INTF_SC7180_MASK, MDP_SSPP_TOP0_INTR, 
+>>>>>>>> 24, 25),
+>>>>>>>> +    INTF_BLK("intf_1", INTF_1, 0x6A800, INTF_DSI, 0, 24, 
+>>>>>>>> INTF_SC7180_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
+>>>>>>>> +    INTF_BLK("intf_2", INTF_2, 0x6B000, INTF_DSI, 1, 24, 
+>>>>>>>> INTF_SC7180_MASK, MDP_SSPP_TOP0_INTR, 28, 29),
+>>>>>>>> +    /* INTF_3 is for MST, wired to INTF_DP 0 and 1, use dummy 
+>>>>>>>> index until this is supported */
+>>>>>>>> +    INTF_BLK("intf_3", INTF_3, 0x6B800, INTF_DP, 999, 24, 
+>>>>>>>> INTF_SC7180_MASK, MDP_SSPP_TOP0_INTR, 30, 31),
+>>>>>>>> +    INTF_BLK("intf_4", INTF_4, 0x6C000, INTF_DP, 
+>>>>>>>> MSM_DP_CONTROLLER_1, 24, INTF_SC7180_MASK, MDP_SSPP_TOP0_INTR, 
+>>>>>>>> 20, 21),
+>>>>>>>> +    INTF_BLK("intf_5", INTF_5, 0x6C800, INTF_DP, 
+>>>>>>>> MSM_DP_CONTROLLER_2, 24, INTF_SC7180_MASK, MDP_SSPP_TOP0_INTR, 
+>>>>>>>> 22, 23),
+>>>>>>>
+>>>>>>> This is a continued discussion from
+>>>>>>> https://patchwork.freedesktop.org/patch/474179/.
+>>>>>>>
+>>>>>>> Shouldnt INTF_5 be marked as INTF_eDP?
+>>>>>>>
+>>>>>>
+>>>>>> Might be, I didn't even know we had an INTF_EDP define...
+>>>>>>
+>>>>>> Is there any reason to distinguish DP and EDP in the DPU?  I see 
+>>>>>> sc7280
+>>>>>> doesn't distinguish the DP and EDP interfaces.
+>>>>>>
+>>>>>> Regards,
+>>>>>> Bjorn
+>>>>>>
+>>>>>
+>>>>> Like I have mentioned in the other patch, I think we have enough 
+>>>>> confusion
+>>>>> between eDP and DP with the common driver. Since DPU does have 
+>>>>> separate
+>>>>> interfaces I think we should fix that.
+>>>>>
+>>>>> Regarding sc7280 using INTF_DP, I synced up with Sankeerth. He 
+>>>>> referred to
+>>>>> your change
+>>>>> https://patchwork.freedesktop.org/patch/457776/?series=92992&rev=5 
+>>>>> as it was
+>>>>> posted earlier and ended up using the same INTF_DP macro. So its 
+>>>>> turning out
+>>>>> to be a cyclical error.
+>>>>>
+>>>>
+>>>> That made me take a second look at the HPG, and sure enough INTF_5 on
+>>>> SC7280 is connected to a eDP/DP Combo PHY. We have the same setup in
+>>>> SC8280XP.
+>>>>
+>>>> In SC8180X, INTF_5 is documented as being connected to a eDP (only) 
+>>>> PHY,
+>>>> so perhaps it makes sense to do it there, but for the others its wrong.
+>>>>
+>>>
+>>> Here you are specifying the controller in the catalog.
+>>
+>> No, I'm specifying the type of the INTF. We then use the type of the
+>> intf and the index to match that to a particular DP TX block.
+>>
+>>> So independent of the PHY thats being used, shouldnt this remain
+>>> INTF_eDP?
+>>>
+>>
+>> I don't think it's going to help anyone to say that an interface
+>> connected to a PHY that can be either DP or EDP, should be INTF_EDP.
+>>
+>> People are going to make assumptions in the code such as INTF_EDP does
+>> not have audio and then someone designs a board based on SC7280 with DP
+>> output where they expect audio. Or assumptions about HPD, panel etc...
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- arch/arm/boot/dts/qcom-ipq8064.dtsi | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+Well, eDP links can embed audio streams (like DP links do).
 
-diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-index 11481313bdb6..5524a68cf3d1 100644
---- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-@@ -298,13 +298,13 @@ smem: smem@41000000 {
- 	};
- 
- 	clocks {
--		cxo_board {
-+		cxo_board: cxo_board {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
- 			clock-frequency = <25000000>;
- 		};
- 
--		pxo_board {
-+		pxo_board: pxo_board {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
- 			clock-frequency = <25000000>;
-@@ -736,7 +736,9 @@ tsens_calib_backup: calib_backup@410 {
- 		};
- 
- 		gcc: clock-controller@900000 {
--			compatible = "qcom,gcc-ipq8064";
-+			compatible = "qcom,gcc-ipq8064", "syscon";
-+			clocks = <&pxo_board>, <&cxo_board>;
-+			clock-names = "pxo", "cxo";
- 			reg = <0x00900000 0x4000>;
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
+>>
+>> I'm not saying that we have all the details figured out on how that's
+>> going to be controlled, but until there's a reason to distinguish
+>> INTF_DP from INTF_EDP I think we should not make one up. And I don't see
+>> that those differences should be hard coded in the DPU driver.
+>>
+>>
+>> If it's confusing to people that DP might be driving an EDP output, then
+>> perhaps we can just name it TMDS again? ;)
+> 
+> If you prefer to have TMDS, then like I commented earlier we dont really 
+> need this change https://patchwork.freedesktop.org/patch/474271/ :)
+> 
+> Whats the benefit of making that change? DRM_ENCODER_TMDS_* can be eDP 
+> and DP . Then there is no confusion or guess work in the encoder.
+> 
+> DRM_ENCODER_DSI - INTF_DSI
+> DRM_ENCODER_VIRTUAL - INTF_WB
+> DRM_ENCODER_TMDS - INTF_DP OR INTF_eDP ( doesnt matter )
+
+The benefit for me was in the cleaness that we are asking for the 
+INTF_DP with index #3 or INTF_DSI idx 1. The less knowledge he have 
+behind the scenes the better is the code.
+
+> 
+>>
+>> Regards,
+>> Bjorn
+
+
 -- 
-2.34.1
-
+With best wishes
+Dmitry
