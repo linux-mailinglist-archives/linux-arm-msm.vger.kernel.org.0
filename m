@@ -2,175 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 73AE34BC60D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Feb 2022 07:40:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EAC2F4BC623
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Feb 2022 08:03:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241350AbiBSGkZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 19 Feb 2022 01:40:25 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38506 "EHLO
+        id S241377AbiBSHD2 convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 19 Feb 2022 02:03:28 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:58022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230412AbiBSGkZ (ORCPT
+        with ESMTP id S230412AbiBSHD1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 19 Feb 2022 01:40:25 -0500
-X-Greylist: delayed 465 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 18 Feb 2022 22:40:06 PST
-Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3333619E72B;
-        Fri, 18 Feb 2022 22:40:06 -0800 (PST)
-Received: from authenticated-user (box.trvn.ru [194.87.146.52])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        by box.trvn.ru (Postfix) with ESMTPSA id 749F3403DB;
-        Sat, 19 Feb 2022 11:32:15 +0500 (+05)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-        t=1645252337; bh=i/Xc3rXnQ31VWvth9DwfVBUyC4C2QCHs5CrNABz1B+g=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=PvRkxicWdFiMqfWBz74nha0w4PHEwhZR6tF+ZDG/YTlzojHskGlrFlKuOZCPY38Hv
-         PO+bgGJg9jaFsh/YzW6ZCBvMKBRwUDYCPUmzxFUck0aFWgdnQHVwC0V7QSUEs0yXUs
-         q3W5YjWWXjtmxvTSCfdvWtdQAkzm7vCiardPMfmRY7k5QAZ8CHkgu6MRufc7h+9S60
-         aapOH3eKCgnbfw0KOS2wJlNcIwbw8+Aoso9wtFH8s39LrHawpb1Z09qDkGQu0deBXg
-         DZVh1cKyesH+Ql4Yry6HZqk/4LrdXYJqP7FE8DP4Cejj+rgguo/7vippcA16DMtYA4
-         dKgygWZpkdOGQ==
+        Sat, 19 Feb 2022 02:03:27 -0500
+X-Greylist: delayed 1014 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 18 Feb 2022 23:03:09 PST
+Received: from sniper.hansae.com (sniper.hansae.com [180.67.130.116])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9343B1B4848
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 23:03:08 -0800 (PST)
+Received: from unknown (HELO 180.67.130.106) (192.168.0.106)
+        by 192.168.0.116 with ESMTP; 19 Feb 2022 15:44:05 +0900
+X-Original-SENDERIP: 192.168.0.106
+X-Original-SENDERCOUNTRY: unknown
+X-Original-MAILFROM: christina.tan1960@gmail.com
+Received: from [192.168.0.23] (host-vc-200-115-30-148.is.net.ar [200.115.30.148])
+        by 180.67.130.106 with ESMTPA
+        ; Sat, 19 Feb 2022 15:44:05 +0900
+Message-ID: <D1BBA564-8AA0-4C88-B79D-AEA038B59C7A@180.67.130.106>
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Date:   Sat, 19 Feb 2022 11:32:15 +0500
-From:   Nikita Travkin <nikita@trvn.ru>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     linus.walleij@linaro.org, mturquette@baylibre.com,
-        bjorn.andersson@linaro.org, agross@kernel.org, tdas@codeaurora.org,
-        svarbanov@mm-sol.com, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH 1/4] clk: qcom: clk-rcg2: Fail Duty-Cycle configuration if
- MND divider is not enabled.
-In-Reply-To: <20220217223736.DFC2EC340E8@smtp.kernel.org>
-References: <20211209163720.106185-1-nikita@trvn.ru>
- <20211209163720.106185-2-nikita@trvn.ru>
- <20220108005209.5140EC36AEB@smtp.kernel.org>
- <991533e0fddd6999c8a06a536ae57999@trvn.ru>
- <20220110201452.2B3E4C36AE3@smtp.kernel.org>
- <cc4241105bfd2249c1c309a4efa2e6aa@trvn.ru>
- <20220217223736.DFC2EC340E8@smtp.kernel.org>
-Message-ID: <6c3d2f619b1e87ef21effc02bb6df1cb@trvn.ru>
-X-Sender: nikita@trvn.ru
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: Att: linux-arm-msm@vger.kernel.org Apply Fast for Details!!! 
+To:     linux-arm-msm@vger.kernel.org
+From:   "Angel Investors Group" <christina.tan1960@gmail.com>
+Date:   Sat, 19 Feb 2022 03:45:57 -0300
+Reply-To: seedcapital@groupmail.com
+X-Spam-Status: Yes, score=7.1 required=5.0 tests=BAYES_50,DKIM_ADSP_CUSTOM_MED,
+        FORGED_GMAIL_RCVD,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
+        FREEMAIL_REPLYTO,NML_ADSP_CUSTOM_MED,SPF_HELO_NONE,SPF_SOFTFAIL,
+        SPOOFED_FREEM_REPTO,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [christina.tan1960[at]gmail.com]
+        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
+        *       in digit
+        *      [christina.tan1960[at]gmail.com]
+        *  1.0 FORGED_GMAIL_RCVD 'From' gmail.com does not match 'Received'
+        *      headers
+        *  0.7 SPF_SOFTFAIL SPF: sender does not match SPF record (softfail)
+        *  0.0 DKIM_ADSP_CUSTOM_MED No valid author signature, adsp_override
+        *      is CUSTOM_MED
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+        *  0.9 NML_ADSP_CUSTOM_MED ADSP custom_med hit, and not from a mailing
+        *       list
+        *  2.5 SPOOFED_FREEM_REPTO Forged freemail sender with freemail
+        *      reply-to
+X-Spam-Level: *******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hello linux-arm-msm@vger.kernel.org
 
-Stephen Boyd писал(а) 18.02.2022 03:37:
-> Quoting Nikita Travkin (2022-01-26 07:14:21)
->> Stephen Boyd писал(а) 11.01.2022 01:14:
->> > Quoting Nikita Travkin (2022-01-07 23:25:19)
->> >> Hi,
->> >>
->> >> Stephen Boyd писал(а) 08.01.2022 05:52:
->> >> > Quoting Nikita Travkin (2021-12-09 08:37:17)
->> >> I'm adding this error here primarily to bring attention of the
->> >> user (e.g. developer enabling some peripheral that needs
->> >> duty cycle control) who might have to change their clock tree
->> >> to make this control effective. So, assuming that if someone
->> >> sets the duty cycle to 50% then they might set it to some other
->> >> value later, it makes sense to fail the first call anyway.
->> >>
->> >> If you think there are some other possibilities for this call
->> >> to happen specifically with 50% duty cycle (e.g. some
->> >> preparations or cleanups in the clk subsystem or some drivers
->> >> that I'm not aware of) then I can make an exemption in the check
->> >> for that.
->> >>
->> >
->> > I don't see anywhere in clk_set_duty_cycle() where it would bail out
->> > early if the duty cycle was set to what it already is. The default for
->> > these clks is 50%, so I worry that some driver may try to set the duty
->> > cycle to 50% and then fail now. Either we need to check the duty cycle
->> > in the core before calling down into the driver or we need to check it
->> > here in the driver. Can you send a patch to check the current duty cycle
->> > in the core before calling down into the clk ops?
->>
->> Hi, sorry for a rather delayed response,
->> I spent a bit of time looking at how to make the clk core be
->> careful with ineffective duty-cycle calls and I can't find a
->> nice way to do this... My idea was something like this:
->>
->> static int clk_core_set_duty_cycle_nolock(struct clk_core *core,
->>                                           struct clk_duty *duty)
->> {       /* ... */
->>
->>         /* Update core->duty values */
->>         clk_core_update_duty_cycle_nolock(core);
->>
->>         if ( /* duty doesn't match core->duty */ ) {
->>                 ret = core->ops->set_duty_cycle(core->hw, duty);
->>         /* ... */
->> }
->>
->> However there seem to be drawbacks to any variant of the
->> comparison that I could come up with:
->>
->> Naive one would be to do
->>     if (duty->num != core->duty->num || duty->den != core->duty->den)
->> but it won't correctly compare e.g. 1/2 and 10/20.
->>
->> Other idea was to do
->>     if (duty->den / duty->num != core->duty->den / core->duty->num)
->> but it will likely fail with very close values (e.g. 100/500 and 101/500)
->>
->> I briefly thought of some more sophisticated math but I don't
->> like the idea of complicating this too far.
->>
->> I briefly grepped the kernel sources for duty-cycle related methods
->> and I saw only one user of the clk_set_duty_cycle:
->>     sound/soc/meson/axg-tdm-interface.c
->> Notably it sets the cycle to 1/2 in some cases, though it seems to
->> be tied to the drivers/clk/meson/sclk-div.c clock driver by being
->> the blocks of the same SoC.
-> 
-> Indeed, so this patch is untested? I doubt the qcom driver is being used
-> with the one caller of clk_set_duty_cycle() in the kernel.
-> 
+Are You Seriously In Need Of Project Financing, Equity Financing, Mortgage Loans, Business Loans, Car Loans e.t.c ? Apply Fast for Details!!
+Kindly contact me by Email: seedcapitalpartnersllc@aol.com, for procedures.
 
-While right now, to my knowledge, there is no users of the duty cycle
-control, I'm adding a generic driver that uses it in another series [1]
-with an intention to use it across multiple qcom based devices.
+Thank you.
 
-While making it I spent quite a bit of time staring at the oscilloscope
-to figure out that I need changes from patch 4/4 of this series and I'd
-like to make this quirk a bit more obvious to others.
+V.J 
 
-[1] https://lore.kernel.org/linux-pwm/20220212162342.72646-1-nikita@trvn.ru/
-
->>
->> Thinking of it a bit more, I saw another approach to the problem
->> I want to solve: Since I just want to make developers aware of the
->> hardware quirk, maybe I don't need to fail the set but just put a
->> WARN or even WARN_ONCE there? This way the behavior will be unchanged.
->>
-> 
-> I don't like the idea of a WARN or a WARN_ONCE as most likely nobody is
-> going to read it or do anything about it. Returning an error should be
-> fine then. If the duty cycle call fails for 50% then that's something we
-> have to live with.
-
-I intend this WARN or error to be hit by a person bringing up something
-new, user should never see it. For example a possible story could be:
-
-- Backlight control is connected to the clock on device X
-- Developer adds (future) pwm-clk adapter and pwm-backlight to the DT
-- Backlight slider in UI doesn't work anyway. (don't think UIs show
-  errors here)
-- Developer troubleshoots the thing and either finds WARN in dmesg
-  or that the sysfs write errors out.
-
-In my experience, people bringing devices up pay a very close attention
-to dmesg so I think giving a WARN is fine, but I'm fine with whichever
-approach you prefer.
-
-Nikita
