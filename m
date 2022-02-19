@@ -2,79 +2,237 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 424314BC447
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Feb 2022 02:10:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F1A74BC49F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Feb 2022 02:42:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239711AbiBSBAY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Feb 2022 20:00:24 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:58606 "EHLO
+        id S240845AbiBSBjd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Feb 2022 20:39:33 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237550AbiBSBAX (ORCPT
+        with ESMTP id S231910AbiBSBj1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Feb 2022 20:00:23 -0500
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACF47F31
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 17:00:05 -0800 (PST)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-2d07ae0b1c5so83475427b3.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 17:00:05 -0800 (PST)
+        Fri, 18 Feb 2022 20:39:27 -0500
+Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8C638CDAF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 17:39:07 -0800 (PST)
+Received: by mail-oo1-xc29.google.com with SMTP id p206-20020a4a2fd7000000b0031bfec11983so5688725oop.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 17:39:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=k3p1TOHnp8ibReid/wlK2AdeCyYC3VYEsyH0rt4m/18=;
-        b=Q6ad1wBmQLiGWGDUHiw3DYzrQq8jQBW0rGotDaYSJJSR48pS+3vN2M7i+PTu/xG/1V
-         RCf/caCxaPMWHcrekyhl6T1ks1q71CtxMVw020/2JIcj+2spY5GhHMcnoiI7LUFK2fT5
-         cwH5fAYxIfoldIoCummO70wSxdyLdxUOJvJw2mnWc6kPCGJGV/xE1LC8jBpJq1E8liWo
-         Q3uOWKZ2ci3ZKQnGIta21g/tiRusFCoy06NERifc37aLbIB6YG2XBMbuI8qn1BmZSbX4
-         FWfXZYlfRp8fuugMg6GkqymrGvJ9ip1Kqt7LPFOKxN3fi3XX0uOO535N25m2Ntll+4H7
-         JC0g==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=RjemXSV75Vw9palHMQyo5enZxXAZmf41kHPQ4eZELJo=;
+        b=AyMfeiJMS0vSJv5HMaokxLm+QZ9zNKlhrrZ2aY8umxmkCsSlQxiLiJRO4UxQhtW6HJ
+         i15x6OajGsIHWsKHFrrm+PiEJXzsNY/bpsizuVIYqNYyvN7nbdFT3CgtdaGoZjovHBcY
+         RnWEe2eyoThWh0g2DZxHfLGCfURX9iuwfyfmQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=k3p1TOHnp8ibReid/wlK2AdeCyYC3VYEsyH0rt4m/18=;
-        b=mFAX8mkW2PY+DiJtgM7KElBYR+Ktzg+q6XpAOacK5FCkF6UoS61q6JcUuyba1JzqRp
-         N5cAT66TUEkQZZrN7GUP0jAPaqm+uBCVyzhU8OMONrwpk4vONjBVwRFlTSoZ3o8L39/i
-         PgYY8T8g6iB0TnW6HSgy9iIoHQh5yjr6ZgwJor321ujDD0QJkOBYgVlsqjYqrL49QnGV
-         kzTZZebXR5BkDUjCMSr0tAmgMJ0BKqIC79qyL98s3Vt06ShAMGWcd3sc/ZBGXaO8Sm8r
-         ICEHd45Fm3ih8W0s2AdJrImIVSv6vIGuT7lhclVEuU6EvFbJqoIpfbVFz37qY/ApGGMu
-         1v/w==
-X-Gm-Message-State: AOAM532qj7fequj8OnyVRzfkIDIwE6fSaOM8poOO8O7jK5yWl1XfqE5A
-        ZnSaqGgSIw8hL1jKEc2H1W0O2UPEzeLQ9+87IvNxdQ==
-X-Google-Smtp-Source: ABdhPJy5lvr/5BdU9dWCEkrmF1Limpcr1nd4UMux2+ecuOsy226OZ8G7s89yorkXyPof85uI3HTJ+H1z33ObBuYxibc=
-X-Received: by 2002:a81:f92:0:b0:2d0:5383:7ca with SMTP id 140-20020a810f92000000b002d0538307camr10333597ywp.268.1645232403490;
- Fri, 18 Feb 2022 17:00:03 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=RjemXSV75Vw9palHMQyo5enZxXAZmf41kHPQ4eZELJo=;
+        b=B+XeyRSffGI+Lorr+p5UD/bHRhBwexaDSNHQdr5ciM3otfjWi68HEnirlPqL7vEbR9
+         WCE+GgT/6lcHrG8+kkyd8UdJdwTxK/5HovFVZiunEMV+veWw8Ot+EyPxALu8uVO6qN3k
+         2xt3wnRGkC3zuBWaP/kL0dW70azVHk+mbwhlyNUWv7K1J+J2jtCQCCD9ulaJV8seQkjX
+         HxfrZsAaVOi5Za43Jzcj/Sq6C0Q/H7akUQLMzUEL9KybWVuys8IMitTTeW9vZespA79o
+         BDrKU+SxL79dUymmSoSID0Ig/kbAAmURLh9DJYmlVlzLgEQNf2H1vfPE8nB2k/E3CVMA
+         qXYQ==
+X-Gm-Message-State: AOAM530eLAghnMZ8Fa4jNxXmWGvfFCTyz65eLol1flMTtU3IbCYBUfDF
+        pgHW1eNDtIgQabwV7G0x0RyQRf2WOFdglYpZu8fa/A==
+X-Google-Smtp-Source: ABdhPJwXxe1c3WauETFWf8LaaMFkHaOzvltuFdBobBGGMqsHsPktQBUX+6qtWVkVyHL9zO0d5lroDGq4n/a4iXlur7c=
+X-Received: by 2002:a05:6870:631a:b0:d1:7d97:806 with SMTP id
+ s26-20020a056870631a00b000d17d970806mr3779181oao.8.1645234746846; Fri, 18 Feb
+ 2022 17:39:06 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 18 Feb 2022 17:39:06 -0800
 MIME-Version: 1.0
-References: <20211122080938.20623-1-shawn.guo@linaro.org>
-In-Reply-To: <20211122080938.20623-1-shawn.guo@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Sat, 19 Feb 2022 01:59:52 +0100
-Message-ID: <CACRpkdZBGZfB6qLHYc=VqudQSO117v=b1C=VdsuxogJ9Q59N5A@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: qcm2290: Add GPIO wakeirq map
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+In-Reply-To: <1645182064-15843-2-git-send-email-quic_c_skakit@quicinc.com>
+References: <1645182064-15843-1-git-send-email-quic_c_skakit@quicinc.com> <1645182064-15843-2-git-send-email-quic_c_skakit@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Fri, 18 Feb 2022 17:39:06 -0800
+Message-ID: <CAE-0n51X=LJMjDb9KS0rqQDqLR5srzxCOJCRS4oJgPSXbvaSiQ@mail.gmail.com>
+Subject: Re: [PATCH V7 1/5] dt-bindings: mfd: pm8008: Add pm8008 regulators
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Satya Priya <quic_c_skakit@quicinc.com>
+Cc:     Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Das Srinagesh <gurus@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_collinsd@quicinc.com,
+        quic_subbaram@quicinc.com, quic_jprakash@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 22, 2021 at 9:09 AM Shawn Guo <shawn.guo@linaro.org> wrote:
-
-> It adds the map of wakeup capable GPIOs and the pins at MPM wake
-> controller on QCM2290, so that these GPIOs can wake up the SoC from
-> vlow/vmin low power mode.
+Quoting Satya Priya (2022-02-18 03:00:59)
+> Add regulators and their supply nodes. Add separate compatible
+> "qcom,pm8008-regulators" to differentiate between pm8008 infra
+> and pm8008 regulators mfd devices.
 >
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+> ---
 
-Ooops missed patch, I just applied it.
+Is the register layout compatible with SPMI regulators? The gpio node
+seems to be fully compatible and the same driver probes there for SPMI
+and i2c, so I wonder why we can't extend the existing SPMI gpio and
+regulator bindings to have the new compatible strings for pm8008. Is
+anything really different, or do we have the same device talking i2c
+instead of SPMI now? Possibly it's exposing the different hardware
+blocks inside the PMIC at different i2c addresses. It looks like the i2c
+address is 0x8 and then there's 16-bits of address space inside the i2c
+device to do things. 0x9 is the i2c address for the regulators and then
+each ldo is at some offset in there?
 
-Yours,
-Linus Walleij
+> Changes in V2:
+>  - As per Rob's comments changed "pm8008[a-z]?-regulator" to
+>    "^pm8008[a-z]?-regulators".
+>
+> Changes in V3:
+>  - Fixed bot errors.
+>  - As per stephen's comments, changed "^pm8008[a-z]?-regulators$" to
+>    "regulators".
+>
+> Changes in V4:
+>  - Changed compatible string to "qcom,pm8008-regulators"
+>
+> Changes in V5:
+>  - Remove compatible for regulators node.
+>  - Move supply nodes of the regulators to chip level.
+>
+> Changes in V6:
+>  - No changes.
+>
+> Changes in V7:
+>  - Removed the intermediate regulators node and added ldos
+>    directly under mfd node.
+>
+>  .../devicetree/bindings/mfd/qcom,pm8008.yaml       | 50 +++++++++++++++++++---
+>  1 file changed, 43 insertions(+), 7 deletions(-)
+>
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+> index ec3138c..6b3b53e 100644
+> --- a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+> @@ -16,7 +16,9 @@ description: |
+>
+>  properties:
+>    compatible:
+> -    const: qcom,pm8008
+> +    enum:
+> +      - qcom,pm8008
+> +      - qcom,pm8008-regulators
+>
+>    reg:
+>      description:
+> @@ -44,6 +46,21 @@ properties:
+>    "#size-cells":
+>      const: 0
+>
+> +  vdd_l1_l2-supply:
+> +    description: Input supply phandle of ldo1 and ldo2 regulators.
+> +
+> +  vdd_l3_l4-supply:
+> +    description: Input supply phandle of ldo3 and ldo4 regulators.
+> +
+> +  vdd_l5-supply:
+> +    description: Input supply phandle of ldo5 regulator.
+> +
+> +  vdd_l6-supply:
+> +    description: Input supply phandle of ldo6 regulator.
+> +
+> +  vdd_l7-supply:
+> +    description: Input supply phandle of ldo7 regulator.
+> +
+>  patternProperties:
+>    "^gpio@[0-9a-f]+$":
+>      type: object
+> @@ -85,13 +102,16 @@ patternProperties:
+>
+>      additionalProperties: false
+>
+> +  "^ldo[1-7]$":
+> +    type: object
+> +    $ref: "../regulator/regulator.yaml#"
+> +    description: PM8008 regulator peripherals of PM8008 regulator device
+> +
+>  required:
+>    - compatible
+>    - reg
+> -  - interrupts
+>    - "#address-cells"
+>    - "#size-cells"
+> -  - "#interrupt-cells"
+>
+>  additionalProperties: false
+>
+> @@ -102,13 +122,11 @@ examples:
+>      qupv3_se13_i2c {
+>        #address-cells = <1>;
+>        #size-cells = <0>;
+> -      pm8008i@8 {
+> +      pm8008_infra: pm8008@8 {
+>          compatible = "qcom,pm8008";
+>          reg = <0x8>;
+>          #address-cells = <1>;
+>          #size-cells = <0>;
+> -        interrupt-controller;
+> -        #interrupt-cells = <2>;
+>
+>          interrupt-parent = <&tlmm>;
+>          interrupts = <32 IRQ_TYPE_EDGE_RISING>;
+
+I still fail to see what this part of the diff has to do with
+regulators. Can it be split off to a different patch with a clear
+description of why interrupt-controller and #interrupt-cells is no
+longer required for qcom,pm8008?
+
+It really looks like we're combining the binding for qcom,pm8008 and
+qcom,pm8008-regulators at the same level, which looks wrong. We don't
+want to describe the least common denominator between the two bindings.
+Why not make two different bindings and files? One for the interrupty
+gpio/interrupt controller device (at 0x8) and one for the regulator one
+(at 0x9)?
+
+> @@ -123,6 +141,24 @@ examples:
+>            #interrupt-cells = <2>;
+>          };
+>        };
+> -    };
+>
+> +      pm8008_regulators: pm8008@9 {
+
+pmic@9, or regulators@9? The node name should be generic.
+
+> +        compatible = "qcom,pm8008-regulators";
+> +        reg = <0x9>;
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        vdd_l1_l2-supply = <&vreg_s8b_1p2>;
+> +        vdd_l3_l4-supply = <&vreg_s1b_1p8>;
+> +        vdd_l5-supply = <&vreg_bob>;
+> +        vdd_l6-supply = <&vreg_bob>;
+> +        vdd_l7-supply = <&vreg_bob>;
+> +
+> +        pm8008_l1: ldo1 {
+> +          regulator-name = "pm8008_l1";
+> +          regulator-min-microvolt = <950000>;
+> +          regulator-max-microvolt = <1300000>;
+> +        };
+> +      };
+
+For some i2c devices that appear on multiple i2c addresses we make an
+i2c client for each address in the driver that attaches to the node we
+put in DT. I suppose that won't work easily here. Either way, it would
+make it much clearer if this existing binding was left alone. Is there
+other functionality inside the i2c address 0x9 register space that isn't
+regulators?
