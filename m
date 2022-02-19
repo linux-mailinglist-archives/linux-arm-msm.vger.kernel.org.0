@@ -2,133 +2,292 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 955964BC831
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Feb 2022 12:34:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E955A4BC841
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Feb 2022 12:45:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239086AbiBSLe3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 19 Feb 2022 06:34:29 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42096 "EHLO
+        id S241848AbiBSLpu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 19 Feb 2022 06:45:50 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238581AbiBSLe2 (ORCPT
+        with ESMTP id S241670AbiBSLpt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 19 Feb 2022 06:34:28 -0500
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12hn2224.outbound.protection.outlook.com [52.100.166.224])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89B7350454
-        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Feb 2022 03:34:10 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=bdLNeT3l4QuzkgnDEIaoKU9LRZRRLcOug/jSBk59JIjTh/IGzM/SesaRtJwkZHbvP5A8Nm8xlBiU8NkIMBHnsuUFi07LejjS1hwWtkLaV069Jw/zIuC4Z0hZYHafW2/NA4XgNSOih7BqB7ywIayNnUNeARzXrNsEOpu4YrjT21nQlhJ91C/5qx7fCvj/t7QI0qQxsKtj8ZhJzLCY+Ft92t8TFPdwtrKmrM5Xx0kW8ZTUzoN5tZTuVDu0t20uhmRgWMRPboOa2/S/e9yjdmZTl8PRBtZnrWMXJ3wiqj8EJWIZmeARDN26OuX4JHVIERd8qja1siGgzII85KY1biskew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5+iJiA0J6jviS6/j+q9zQZlf+odb/fFUug6nr0gp3M4=;
- b=lOYLCBYut9b+LGoZZQakBPLpf+92B1QVoT52J8KflI7wAUgSYlLpnBEu2J1j7kR0sQb3NCrjWmynO2sjhsXcaPKpmNp4JDkI/6ij9eK2GGO64tWWcDohO9gTDPmQV24a7k05gxcYecVA7Zd4TlI945igkNrIpMkeITz95M1TclGlu6Dwbc/PYbDTuG012eVi75+3YxAQ7WBggyj3NPIOuPySml+l6J5N816f6Yp2Ueqj0NMg56iJfKXKKVY1GsRlLQn1aUJhy3w//1V6M/RYBk3EyZX5hQ6x9HOFuEmM/pnVF/pfZakGyVDDjH+BRJ24IywDZZtPmbC2rHvL4aDp5w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 216.169.5.195) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=u-csd.com;
- dmarc=none action=none header.from=u-csd.com; dkim=none (message not signed);
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucsd4.onmicrosoft.com;
- s=selector1-ucsd4-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5+iJiA0J6jviS6/j+q9zQZlf+odb/fFUug6nr0gp3M4=;
- b=BvfDy/OOk2kBRl5r3GFSaYBpBTdGjJ8LG7r6bzCgAxkPmZr/Rkqy8E+NVHiMT5av1nqtsMJLidjagNAMEeHWH+J9hCOqpt3z885HDpCAoG2pHlZlrmUNmfUinFqAqQbZgJ4VNzLnrOtsOZWyHN0D3RLBwwswhRx0J+oUPc5byo4=
-Received: from MWHPR2201CA0059.namprd22.prod.outlook.com
- (2603:10b6:301:16::33) by CY4PR06MB2327.namprd06.prod.outlook.com
- (2603:10b6:903:15::10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4995.16; Sat, 19 Feb
- 2022 11:34:00 +0000
-Received: from MW2NAM10FT039.eop-nam10.prod.protection.outlook.com
- (2603:10b6:301:16:cafe::1) by MWHPR2201CA0059.outlook.office365.com
- (2603:10b6:301:16::33) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4975.11 via Frontend
- Transport; Sat, 19 Feb 2022 11:34:00 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 216.169.5.195)
- smtp.mailfrom=u-csd.com; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=u-csd.com;
-Received-SPF: Fail (protection.outlook.com: domain of u-csd.com does not
- designate 216.169.5.195 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.169.5.195; helo=UCSDEX1.u-csd.local;
-Received: from UCSDEX1.u-csd.local (216.169.5.195) by
- MW2NAM10FT039.mail.protection.outlook.com (10.13.155.30) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.4995.16 via Frontend Transport; Sat, 19 Feb 2022 11:34:00 +0000
-Received: from UCSDEX1.u-csd.local (192.168.16.43) by UCSDEX1.u-csd.local
- (192.168.16.43) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.18; Sat, 19 Feb
- 2022 05:25:25 -0600
-Received: from [199.231.186.244] (199.231.186.244) by UCSDEX1.u-csd.local
- (192.168.16.43) with Microsoft SMTP Server id 15.1.2375.18 via Frontend
- Transport; Sat, 19 Feb 2022 05:25:25 -0600
-Content-Type: text/plain; charset="iso-8859-1"
+        Sat, 19 Feb 2022 06:45:49 -0500
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 177DA1DE895
+        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Feb 2022 03:45:30 -0800 (PST)
+Received: by mail-pg1-x52a.google.com with SMTP id z4so10052878pgh.12
+        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Feb 2022 03:45:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=veaGMrL3hdVDtkxd6HVx0RSMj8qvQYZM3xAFP3X71zw=;
+        b=U6HzRM3NDm4llX+1fgA1l6/KSVeT81P/QYXqKhy9SBiJLp1+gMadwyWTKO87g6Ea+P
+         HODGFPPnJi9gQcQWxVlJtM1LvmIx3v8f4lIAXy216Lt5Lmn5y1Mj7Bk087aDG+bcApZk
+         67YKtpLfVM+YnDQd5LjFcx998TmRK8P/JTXUgrnHrL/hrV05lidLdihK82L/PkvrMg57
+         hQiWff8KV0d4kBQAfOrPhctRhXCHgVxgoD+pqIHLcGejvNfnJnkgGBvf2I5gpGkxdIJq
+         FkQxp4Kqz9l6pe1OpQMpD0OVmXYxD/w7Lms9r6zMoTJCLizDG9MKu/TiWImQf6E/SqC2
+         +pSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=veaGMrL3hdVDtkxd6HVx0RSMj8qvQYZM3xAFP3X71zw=;
+        b=baJWXHT7VVq+pis6rAas3vpLE4yb4hB+7Tfly3Q3AhXG8u80KoNnPTVsANjuqdDU8e
+         y0Dge2yYbgu2QYhdBap0oXDVd4EdlaKF6f2LcC0FsyAfY0M2ihKYd8SwIHbMOSSpe8ZZ
+         jT4Df2yC9+icO0OoNL04NMIl66l+GYqdbEBEjeVsKs0vgg3PAc32zyX8BEDm5Qf36FOb
+         QyBc+S7dIWUzzu9MdZBwyFBRXAX5qBOGzFQB91plAw8OZ/A0HsSyVKss7JkpAL/MM7Ib
+         O7MPxfr6SQYufH7Pq/5fXQEx6EJfiR2nxYoD/V1gtwj3X5l66bR4/lPF2dBt0h1fZNWF
+         JkzA==
+X-Gm-Message-State: AOAM533ZxUC8OObzHsotHJsBgQSzVBCl1isDS/XKUrgVVE3RjxlePRcp
+        hD+v5MBIQaMzIzHcazgXPC8Lng==
+X-Google-Smtp-Source: ABdhPJxCBlGh5Cpn08bVcmNqIL5s+aerMII9LZLpkI4mNIzjZ6/m+jMr2eRveLEdq0NYIertNtEHGg==
+X-Received: by 2002:a05:6a00:148b:b0:4e0:1001:1063 with SMTP id v11-20020a056a00148b00b004e010011063mr11974580pfu.15.1645271129521;
+        Sat, 19 Feb 2022 03:45:29 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id g20sm6221007pfj.64.2022.02.19.03.45.25
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 19 Feb 2022 03:45:28 -0800 (PST)
+Date:   Sat, 19 Feb 2022 19:45:21 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Marc Zyngier <maz@kernel.org>
+Cc:     Sudeep Holla <sudeep.holla@arm.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 1/3] cpuidle: psci: Call cpu_cluster_pm_enter() on the
+ last CPU
+Message-ID: <20220219114520.GG31965@dragon>
+References: <20220216132830.32490-1-shawn.guo@linaro.org>
+ <20220216132830.32490-2-shawn.guo@linaro.org>
+ <20220216144937.znsba7zbdenl7427@bogus>
+ <9bda65e5bb85b00eaca71d95ad78e93b@kernel.org>
+ <20220217073130.GD31965@dragon>
+ <875ypd50z0.wl-maz@kernel.org>
+ <20220217133702.GF31965@dragon>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: HI..
-To:     <linux-arm-msm@vger.kernel.org>
-From:   "Kristina Pia Johansson " <info@u-csd.com>
-Date:   Sat, 19 Feb 2022 06:25:25 -0500
-Reply-To: <piakjp2022@gmail.com>
-Message-ID: <e3502d15-7a0b-4e73-a5ab-c7ee05043bbb@UCSDEX1.u-csd.local>
-X-CrossPremisesHeadersFilteredBySendConnector: UCSDEX1.u-csd.local
-X-OrganizationHeadersPreserved: UCSDEX1.u-csd.local
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: dc80dd94-cf30-4c2d-22e3-08d9f39bb978
-X-MS-TrafficTypeDiagnostic: CY4PR06MB2327:EE_
-X-Microsoft-Antispam-PRVS: <CY4PR06MB2327A1E2D28A4D27E7E13EEC97389@CY4PR06MB2327.namprd06.prod.outlook.com>
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Forefront-Antispam-Report: CIP:216.169.5.195;CTRY:US;LANG:en;SCL:5;SRV:;IPV:NLI;SFV:SPM;H:UCSDEX1.u-csd.local;PTR:InfoDomainNonexistent;CAT:OSPM;SFS:(13230001)(346002)(39860400002)(376002)(396003)(136003)(40470700004)(36840700001)(46966006)(3480700007)(316002)(40460700003)(82310400004)(81166007)(82740400003)(356005)(86362001)(31696002)(6916009)(6706004)(16576012)(5660300002)(36860700001)(4744005)(8936002)(70586007)(70206006)(2906002)(7116003)(8676002)(47076005)(9686003)(508600001)(40480700001)(2860700004)(956004)(336012)(186003)(26005)(31686004)(16900700008);DIR:OUT;SFP:1501;
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?sdnBQ3vPx+5XNmlFvFs7++VuV2NA2qwtlQWmHOqhwhMj2eiib+JfC2lKOi?=
- =?iso-8859-1?Q?2Fw5SrJmWHnHdUELMwwLLwhofcHzyRVprpNTksHzIzYFwm2RfzBnAlTWf/?=
- =?iso-8859-1?Q?jSxUFGMfAOlNai35WkCd/IK1aOUdRYlcUg1IS7j/aE7e+J3XRb2hjtA4IU?=
- =?iso-8859-1?Q?vz3edbeWoOPVw03TOkrNVPaC9wUg6XIY3Lzi1qYnOqPMaiCnbxr0sf38V9?=
- =?iso-8859-1?Q?QBZva1eXshW0PmoFlnYwJ4Fvs1BxmbPys96CRX1VeWhAqeX0aIB55LD6H+?=
- =?iso-8859-1?Q?ZFmA5Xwtk0Gqbj8M3NCvlPOhCRF4bifaqqOOxoULa70IlHWRn69bME3dLi?=
- =?iso-8859-1?Q?MDN51ftB1PF6+Y+baTBPjA81QC24jf705wH8PP2lBd69i/Uy+6X1sTWJ2f?=
- =?iso-8859-1?Q?ZJ20MkKGLLikc4+npYI8hq4LIqCcaH6aUB9lPiV7RtOape/SSJpdNarJ5x?=
- =?iso-8859-1?Q?SMEq6Sv1cGSbO5rFwnd/lqd0kM4Xk54QnzXZ6R3Kl7MSSfOo4WfIQLKB5U?=
- =?iso-8859-1?Q?iAozKUweG7iGeEZG0SGpxCrElzxrj82abU/FWr+B7nELEwjHFZdxwhR2qi?=
- =?iso-8859-1?Q?+L0fDSEFulLhifzf+bxurxPm0QYzjy+7SOQJiwg3jRWhI6HCx/NnVIAFSU?=
- =?iso-8859-1?Q?dH4ASmFSFXVABqHJIhkzsVWpHsvtxEuwEHSoT3q46RmGGNv84nIt2O+8u4?=
- =?iso-8859-1?Q?EWjiD4w+Xnkwpd0l9RzziJdJibZubl39tF2tUIIBS76A+wCGqUMy69VKAf?=
- =?iso-8859-1?Q?aA2EFBv91zalgE6JdS5ikPYGJwEhaZiaP1dLszEYQZScszAxSJA+/YIEqL?=
- =?iso-8859-1?Q?WR/IgdNMEc0svD/r2nwYYVDTuVPOp3KUp8iYBoykz/JSQ/J2losSFZs/j2?=
- =?iso-8859-1?Q?UynOq4sDo0xuXY8ypNz4j+flGyrD/tT77/Sv3tBCltE+IlIfE3mVr675CH?=
- =?iso-8859-1?Q?ytMrbmTYbzKBaD1bdR12mpTWDKKBscBI0IWHsZeFzk4ZxcbiOkjm99u9qb?=
- =?iso-8859-1?Q?R+v/epc4HblxTVd1iRXitJWV7PyGSZtWjCvwZII0QdiMOY1uTp3aajNjh0?=
- =?iso-8859-1?Q?Fvxyj5a0fILhKL0NV15FbCQ=3D?=
-X-OriginatorOrg: u-csd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Feb 2022 11:34:00.5524
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: dc80dd94-cf30-4c2d-22e3-08d9f39bb978
-X-MS-Exchange-CrossTenant-Id: 663d4886-a028-4654-8be0-f6e600c88247
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=663d4886-a028-4654-8be0-f6e600c88247;Ip=[216.169.5.195];Helo=[UCSDEX1.u-csd.local]
-X-MS-Exchange-CrossTenant-AuthSource: MW2NAM10FT039.eop-nam10.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR06MB2327
-X-Spam-Status: No, score=3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,FREEMAIL_FORGED_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,RCVD_IN_SBL_CSS,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: ***
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220217133702.GF31965@dragon>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi
+On Thu, Feb 17, 2022 at 09:37:03PM +0800, Shawn Guo wrote:
+> On Thu, Feb 17, 2022 at 08:52:35AM +0000, Marc Zyngier wrote:
+> > On Thu, 17 Feb 2022 07:31:32 +0000,
+> > Shawn Guo <shawn.guo@linaro.org> wrote:
+> > > 
+> > > On Wed, Feb 16, 2022 at 03:58:41PM +0000, Marc Zyngier wrote:
+> > > > On 2022-02-16 14:49, Sudeep Holla wrote:
+> > > > > +Ulf (as you he is the author of cpuidle-psci-domains.c and can help you
+> > > > > with that if you require)
+> > > 
+> > > Thanks, Sudeep!
+> > > 
+> > > > > 
+> > > > > On Wed, Feb 16, 2022 at 09:28:28PM +0800, Shawn Guo wrote:
+> > > > > > Make a call to cpu_cluster_pm_enter() on the last CPU going to low
+> > > > > > power
+> > > > > > state (and cpu_cluster_pm_exit() on the firt CPU coming back), so that
+> > > > > > platforms can be notified to set up hardware for getting into the
+> > > > > > cluster
+> > > > > > low power state.
+> > > > > > 
+> > > > > 
+> > > > > NACK. We are not getting the notion of CPU cluster back to cpuidle
+> > > > > again.
+> > > > > That must die. Remember the cluster doesn't map to idle states
+> > > > > especially
+> > > > > in the DSU systems where HMP CPUs are in the same cluster but can be in
+> > > > > different power domains.
+> > > 
+> > > The 'cluster' in cpu_cluster_pm_enter() doesn't necessarily means
+> > > a physical CPU cluster.  I think the documentation of the function has a
+> > > better description.
+> > > 
+> > >  * Notifies listeners that all cpus in a power domain are entering a low power
+> > >  * state that may cause some blocks in the same power domain to reset.
+> > > 
+> > > So cpu_domain_pm_enter() might be a better name?  Anyways ...
+> > > 
+> > > > > 
+> > > > > You need to decide which PSCI CPU_SUSPEND mode you want to use first. If
+> > > > > it is
+> > > > > Platform Co-ordinated(PC), then you need not notify anything to the
+> > > > > platform.
+> > > > > Just request the desired idle state on each CPU and platform will take
+> > > > > care
+> > > > > from there.
+> > > > > 
+> > > > > If for whatever reason you have chosen OS initiated mode(OSI), then
+> > > > > specify
+> > > > > the PSCI power domains correctly in the DT which will make use of the
+> > > > > cpuidle-psci-domains and handle the so called "cluster" state correctly.
+> > > 
+> > > Yes, I'm running a Qualcomm platform that has OSI supported in PSCI.
+> > > 
+> > > > 
+> > > > My understanding is that what Shawn is after is a way to detect the "last
+> > > > man standing" on the system to kick off some funky wake-up controller that
+> > > > really should be handled by the power controller (because only that guy
+> > > > knows for sure who is the last CPU on the block).
+> > > > 
+> > > > There was previously some really funky stuff (copy pasted from the existing
+> > > > rpmh_rsc_cpu_pm_callback()), which I totally objected to having hidden in
+> > > > an irqchip driver.
+> > > > 
+> > > > My ask was that if we needed such information, and assuming that it is
+> > > > possible to obtain it in a reliable way, this should come from the core
+> > > > code, and not be invented by random drivers.
+> > > 
+> > > Thanks Marc for explain my problem!
+> > > 
+> > > Right, all I need is a notification in MPM irqchip driver when the CPU
+> > > domain/cluster is about to enter low power state.  As cpu_pm -
+> > > kernel/cpu_pm.c, already has helper cpu_cluster_pm_enter() sending
+> > > CPU_CLUSTER_PM_ENTER event, I just need to find a caller to this cpu_pm
+> > > helper.  
+> > > 
+> > > Is .power_off hook of generic_pm_domain a better place for calling the
+> > > helper?
+> > 
+> > I really don't understand why you want a cluster PM event generated by
+> > the idle driver.  Specially considering that you are not after a
+> > *cluster* PM event, but after some sort of system-wide event (last man
+> > standing).
+> 
+> That's primarily because MPM driver is used in the idle context, either
+> s2idle or cpuidle, and idle driver already has some infrastructure that
+> could help trigger the event.
+> 
+> > It looks to me that having a predicate that can be called from a PM
+> > notifier event to find out whether you're the last in line would be
+> > better suited, and could further be used to remove the crap from the
+> > rpmh-rsc driver.
+> 
+> I will see if I can come up with a patch for discussion.
 
-I hope that you are at your best and doing well. The purpose of this letter=
- is seeking for a pen pal like friendship and I'd love to and be honored to=
- be friends with you if you do not mind.. If the Idea sounds OK with you, j=
-ust say yes and we can take it on from there. I look forward to hear hearin=
-g from you.. My name is Kristina From Sweden 36 years , this will mean a lo=
-t to me to hear back from you.
+How about this?
 
-Warm Regards.
+---8<-----------
+From 0176b2311764959bb5f3322865bf85440eaf769e Mon Sep 17 00:00:00 2001
+From: Shawn Guo <shawn.guo@linaro.org>
+Date: Sat, 19 Feb 2022 13:35:47 +0800
+Subject: [PATCH] PM: cpu: Add CPU_LAST_PM_ENTER and CPU_FIRST_PM_EXIT support
 
-Kristina
+It becomes a common situation on some platforms that certain hardware
+setup needs to be done on the last standing cpu, and rpmh-rsc[1] is such
+an existing example.  As figuring out the last standing cpu is really
+something generic, it adds CPU_LAST_PM_ENTER (and CPU_FIRST_PM_EXIT)
+event support to cpu_pm helper, so that individual driver can be
+notified when the last standing cpu is about to enter low power state.
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/soc/qcom/rpmh-rsc.c?id=v5.16#n773
+
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+---
+ include/linux/cpu_pm.h | 15 +++++++++++++++
+ kernel/cpu_pm.c        | 33 +++++++++++++++++++++++++++++++--
+ 2 files changed, 46 insertions(+), 2 deletions(-)
+
+diff --git a/include/linux/cpu_pm.h b/include/linux/cpu_pm.h
+index 552b8f9ea05e..153344307b7c 100644
+--- a/include/linux/cpu_pm.h
++++ b/include/linux/cpu_pm.h
+@@ -55,6 +55,21 @@ enum cpu_pm_event {
+ 
+ 	/* A cpu power domain is exiting a low power state */
+ 	CPU_CLUSTER_PM_EXIT,
++
++	/*
++	 * A cpu is entering a low power state after all other cpus
++	 * in the system have entered the lower power state.
++	 */
++	CPU_LAST_PM_ENTER,
++
++	/* The last cpu failed to enter a low power state */
++	CPU_LAST_PM_ENTER_FAILED,
++
++	/*
++	 * A cpu is exiting a low power state before any other cpus
++	 * in the system exits the low power state.
++	 */
++	CPU_FIRST_PM_EXIT,
+ };
+ 
+ #ifdef CONFIG_CPU_PM
+diff --git a/kernel/cpu_pm.c b/kernel/cpu_pm.c
+index 246efc74e3f3..7c104446e1e9 100644
+--- a/kernel/cpu_pm.c
++++ b/kernel/cpu_pm.c
+@@ -26,6 +26,8 @@ static struct {
+ 	.lock  = __RAW_SPIN_LOCK_UNLOCKED(cpu_pm_notifier.lock),
+ };
+ 
++static atomic_t cpus_in_pm;
++
+ static int cpu_pm_notify(enum cpu_pm_event event)
+ {
+ 	int ret;
+@@ -116,7 +118,20 @@ EXPORT_SYMBOL_GPL(cpu_pm_unregister_notifier);
+  */
+ int cpu_pm_enter(void)
+ {
+-	return cpu_pm_notify_robust(CPU_PM_ENTER, CPU_PM_ENTER_FAILED);
++	int ret;
++
++	ret = cpu_pm_notify_robust(CPU_PM_ENTER, CPU_PM_ENTER_FAILED);
++	if (ret)
++		return ret;
++
++	if (atomic_inc_return(&cpus_in_pm) == num_online_cpus()) {
++		ret = cpu_pm_notify_robust(CPU_LAST_PM_ENTER,
++					   CPU_LAST_PM_ENTER_FAILED);
++		if (ret)
++			return ret;
++	}
++
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(cpu_pm_enter);
+ 
+@@ -134,7 +149,21 @@ EXPORT_SYMBOL_GPL(cpu_pm_enter);
+  */
+ int cpu_pm_exit(void)
+ {
+-	return cpu_pm_notify(CPU_PM_EXIT);
++	int ret;
++
++	ret = cpu_pm_notify(CPU_PM_EXIT);
++	if (ret)
++		return ret;
++
++	if (atomic_read(&cpus_in_pm) == num_online_cpus()) {
++		ret = cpu_pm_notify(CPU_FIRST_PM_EXIT);
++		if (ret)
++			return ret;
++	}
++
++	atomic_dec(&cpus_in_pm);
++
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(cpu_pm_exit);
+ 
+-- 
+2.17.1
+
