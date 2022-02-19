@@ -2,56 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0483F4BC316
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Feb 2022 00:56:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 19D7B4BC37A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Feb 2022 01:34:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239837AbiBRX5O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Feb 2022 18:57:14 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:53168 "EHLO
+        id S239130AbiBSAeU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Feb 2022 19:34:20 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235407AbiBRX5O (ORCPT
+        with ESMTP id S236378AbiBSAeT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Feb 2022 18:57:14 -0500
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 198E25B3E2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 15:56:55 -0800 (PST)
-Received: by mail-oi1-x232.google.com with SMTP id y7so4812229oih.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 15:56:55 -0800 (PST)
+        Fri, 18 Feb 2022 19:34:19 -0500
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E39B177E76
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 16:34:02 -0800 (PST)
+Received: by mail-oi1-x22a.google.com with SMTP id p15so4880009oip.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 16:34:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=haJuFFTFpK8hEVGyrQHNZT48/0gIUU8knpfQcqZph0U=;
-        b=doa6V5p8QeWkqR4Q5ZT2DQZYInLatLb4EV+ktRjUzUFW/Niipkg0hJz3nSMMhAEvwd
-         feyZ4nSc/Z91e6nxX6Hk+V+Zn5qvO6h05AKrOeD3FD8d+2ce4yJ4tojYpOxYwa+Yg9Pl
-         3tEUFCcZtYSB2hl1ciNo+OLvSasKPesX+0NlE=
+        bh=vKhJiLpJMNrNDVVoSI5LLnimpnVQVH6BtXENhzvuHFA=;
+        b=HfSALada/6cdeAWOKMWVGJzL12lUov2M6fbxXPfW2tmBWRqARWU+NKd3/1Vy/kDmRb
+         3p/eOHoOWPVhINTFz7+naFVDuNjT5wcLMkNyAt/SGqPvvJ7MXFxlsUxHTMT+UmgnGGDk
+         qHyGd4NQRt6w1lA1Q0iPNMVDQadOxp/FbcvMU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=haJuFFTFpK8hEVGyrQHNZT48/0gIUU8knpfQcqZph0U=;
-        b=eQn/glIQVR77+KmKeq4i2IJpGf0oHJ3Z5RpHd1fTVFU0f9y/TaCiNLQ9BpYkuTJmrL
-         awgUUHr5VZBZmFOzwPSuvWOJSvAkhW5QsqYGKWCzJcVyZ5u61GN9wJbZee8D7GrA6lKj
-         G9YxK+MFXkd/Ik07/EGMqgxHudsBPgUk85Lxfum4UgXPwb6oujAYCM1P92OtAYwKrllz
-         itEXvxNxTVyBUN1JAtRsVNuyQoT+QQWliqziIQoFBUWdit3rYPULV4AhdCwztnp8CBna
-         lYFlXz8MMJYTOknTxDkSJgfYt+OdW2YVrbnErGlxoSqPKbodQ3s+iNG9OkNgcolP6572
-         +ApQ==
-X-Gm-Message-State: AOAM530hga5E+NtnpRfXj8m2c6OPUD4gTAr9Vb2k26qT2MoyAZH3dX5i
-        CW8y4bmfBNSv/BhdpO/H83pYRKMSusfbDIX6IHaIbg==
-X-Google-Smtp-Source: ABdhPJycjVhIt7LaJC6nw+2gP/RssZ5zR7b6sFNM/Q/O18LuQGxLRPdyc01dAmOYShVxdMIldPKkbH4O0zTKx4U/UuA=
-X-Received: by 2002:aca:df44:0:b0:2ce:285f:cb99 with SMTP id
- w65-20020acadf44000000b002ce285fcb99mr6100266oig.40.1645228614405; Fri, 18
- Feb 2022 15:56:54 -0800 (PST)
+        bh=vKhJiLpJMNrNDVVoSI5LLnimpnVQVH6BtXENhzvuHFA=;
+        b=Q7t1Mg95NvRBWL6ZUI9idmGFXVLnMTa2IaMdC7Q9B3oHVN2uClSj6Ik2PE8kWsFLSP
+         Hchf2szHFItpVmBemD+rV25AxGK2Ri08mR2+NbB/qHqEpq2zo1ESewWY+cm+vbp+QWJC
+         lJRJRXlw9Jq7/kxTN1AP37DOlHHMeIK3p63Xcmme4xOPOGtOs8RvbxXU2PkhUI/lvUGj
+         lHtrU/Pc/Z2pFuO2hcCcup+UScBpmItzcjKHoGsLr4kzDpP1/GQZ0U09oW2NlwD5kQwm
+         9zFJSMl6fXuwCVn1hKdQ+rtzHHLoHVN/EaALjXDdv9YkfkhsQF0KcXsrYoeMXyvgLK3u
+         Vxpw==
+X-Gm-Message-State: AOAM530v/KxBHrNRTDzerj/D+mzdgcyQJw0WCZake3scN7ISjj9RvOdz
+        ey6hkr5xgMXtngt48dmuTZDNrkDdN3j7XjMH1LG+dA==
+X-Google-Smtp-Source: ABdhPJyLUHKLgsnFWoq7fgkInpdSdDIj0KpGrczwZENMDX/brDIe6HYXp+lshMaGOJ+HdFljHgy4t77LBqEvf2IZHBM=
+X-Received: by 2002:a05:6808:f88:b0:2d4:c8c2:b898 with SMTP id
+ o8-20020a0568080f8800b002d4c8c2b898mr445075oiw.112.1645230841936; Fri, 18 Feb
+ 2022 16:34:01 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 18 Feb 2022 15:56:53 -0800
+ HTTPREST; Fri, 18 Feb 2022 16:34:01 -0800
 MIME-Version: 1.0
-In-Reply-To: <20220211224006.1797846-2-dmitry.baryshkov@linaro.org>
-References: <20220211224006.1797846-1-dmitry.baryshkov@linaro.org> <20220211224006.1797846-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220211224006.1797846-4-dmitry.baryshkov@linaro.org>
+References: <20220211224006.1797846-1-dmitry.baryshkov@linaro.org> <20220211224006.1797846-4-dmitry.baryshkov@linaro.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Fri, 18 Feb 2022 15:56:53 -0800
-Message-ID: <CAE-0n52iHFtHppZj-g0V1UP5oWzXjbNDjpOd-hgR+F=TqFzjVg@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 1/5] drm/msm/dp: fix panel bridge attachment
+Date:   Fri, 18 Feb 2022 16:34:01 -0800
+Message-ID: <CAE-0n52NCAMXjEWtt_L-KcW0=FRw3o=fQOMBzX+9SkjH8BVhwQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 3/5] drm/msm/dp: support finding next bridge even
+ for DP interfaces
 To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -71,75 +72,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-02-11 14:40:02)
-> In commit 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display
-> enable and disable") the DP driver received a drm_bridge instance, which
-> is always attached to the encoder as a root bridge. However it conflicts
-> with the panel_bridge support for eDP panels. The panel bridge attaches
-> to the encoder before the "dp" bridge has a chace to do so. Change
-
-s/chace/chance/
-
-> panel_bridge attachment to come after dp_bridge attachment.
-
-s/panel_bridge/panel bridge/ possibly? And maybe clarify that dp_bridge
-is the "DP driver's drm_bridge instance created in
-msm_dp_bridge_init()"?
-
-My understanding is that we want to pass the bridge created in
-msm_dp_bridge_init() as the 'previous' bridge so that it attaches the
-panel bridge to the output of the DP bridge that's attached to the
-encoder.
-
+Quoting Dmitry Baryshkov (2022-02-11 14:40:04)
+> It is possible to supply display-connector (bridge) to the DP interface,
+> add support for parsing it too.
 >
-> Fixes: 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display enable and disable")
-> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
 
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-
->  drivers/gpu/drm/msm/dp/dp_drm.c | 21 +++++++++++----------
->  1 file changed, 11 insertions(+), 10 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
-> index d4d360d19eba..26ef41a4c1b6 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
-> @@ -169,16 +169,6 @@ struct drm_connector *dp_drm_connector_init(struct msm_dp *dp_display)
->
->         drm_connector_attach_encoder(connector, dp_display->encoder);
->
-> -       if (dp_display->panel_bridge) {
-> -               ret = drm_bridge_attach(dp_display->encoder,
-> -                                       dp_display->panel_bridge, NULL,
-> -                                       DRM_BRIDGE_ATTACH_NO_CONNECTOR);
-> -               if (ret < 0) {
-> -                       DRM_ERROR("failed to attach panel bridge: %d\n", ret);
-> -                       return ERR_PTR(ret);
-> -               }
-> -       }
-> -
->         return connector;
->  }
->
-> @@ -246,5 +236,16 @@ struct drm_bridge *msm_dp_bridge_init(struct msm_dp *dp_display, struct drm_devi
->                 return ERR_PTR(rc);
->         }
->
-> +       if (dp_display->panel_bridge) {
-> +               rc = drm_bridge_attach(dp_display->encoder,
-> +                                       dp_display->panel_bridge, bridge,
-> +                                       DRM_BRIDGE_ATTACH_NO_CONNECTOR);
-> +               if (rc < 0) {
-> +                       DRM_ERROR("failed to attach panel bridge: %d\n", rc);
-> +                       drm_bridge_remove(bridge);
-> +                       return ERR_PTR(rc);
-> +               }
-> +       }
-> +
->         return bridge;
-
-Not a problem with this patch, but what is this pointer used for? I see
-it's assigned to priv->bridges and num_bridges is incremented but nobody
-seems to look at that.
