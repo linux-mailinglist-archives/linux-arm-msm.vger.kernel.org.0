@@ -2,89 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84C9F4BCA2E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Feb 2022 19:47:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 33E514BCA53
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Feb 2022 19:56:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242981AbiBSSqV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 19 Feb 2022 13:46:21 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:58650 "EHLO
+        id S237377AbiBSS5O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 19 Feb 2022 13:57:14 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242911AbiBSSqU (ORCPT
+        with ESMTP id S236969AbiBSS5N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 19 Feb 2022 13:46:20 -0500
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0DCC178BD2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Feb 2022 10:46:00 -0800 (PST)
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com [209.85.208.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 08928402FD
-        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Feb 2022 18:45:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1645296359;
-        bh=eJ6HQrRnH7eCjaR+k7F77ct8AqISDRTidseB01nTcCM=;
-        h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-         MIME-Version;
-        b=jW6DWiNMtuUSYkoNS8Z4CjBwgSwZWnHasheVPDyf/SEXPf0Kqd4gz4/uWX93BCqaf
-         DIDAorSTOqikEiiMyiE4zNULFYSjD6OkAVFycqPI4oN6W877AYAueEeY6F4feARK9L
-         T4HdgSqrXn2uQSCYhYgJnSXVAa5TY7aMdSXUil87qLmJ44PMOlwxMIlx8iPp/4mYUn
-         09Z7iFFgJ441Em/zQU7bAS3r2B34T+/WzhiYoWnx0V+sJUfIE7Mazoj1DkkDhnpZie
-         nWiMVywTwJwsiDe1d5kKGB2riGstPaeRPorch0bLSd9kflBBFowD8O+69VKpo1ee4Y
-         rwM1AfU1t1+Wg==
-Received: by mail-ed1-f70.google.com with SMTP id o5-20020a50c905000000b00410effbf65dso7571191edh.17
-        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Feb 2022 10:45:59 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=eJ6HQrRnH7eCjaR+k7F77ct8AqISDRTidseB01nTcCM=;
-        b=S+8VJj32MmQkTKS952jJdXy9bMYFsMsIpzcJFKPH34I1RpknR8cO1e4oLULE4zoz8T
-         PaJG2vCg4ykZkzZKNuf0YycMtk5a3hTlj1nddDrFPNEgwqaNZsMmzzQP8P4PyDBjCNbC
-         uLxpy6IWfwXRETlSDzM8enN4rKCAo9TUZBOuANdVSLhf93E0WBISRUPVd7sZlg6x8fK/
-         mEOqjFJsBfIExKjWBfOl9g5u5w5PNAf8nQsH/0tPdjWs3J8uOtx8evqAVZUDCsBvrgLh
-         8TnbiKHUiw0hzklg0IR+4QcdKRA36xZaQbJljmwO0EJHbry/sUXDGL1xhXkriDxMgRgY
-         j8xA==
-X-Gm-Message-State: AOAM532YHL8ovdm1ATJhuyp+dRuAEKry6aZDM3TAmt3n64OjxB+j7ja7
-        Vim2rsdzdKqUazB/JxOZhWXdq/89J53CtBe/Na9CDkPBYpizA3tT1QIY1UfPTwt3ptlTddI76+c
-        yk5ViEqAKvEFtHs1AMi/DmUsC2Ucg9CJAXOq18oVIcZ0=
-X-Received: by 2002:aa7:c612:0:b0:40f:2a41:bddb with SMTP id h18-20020aa7c612000000b0040f2a41bddbmr13789840edq.291.1645296358467;
-        Sat, 19 Feb 2022 10:45:58 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJwCUQahoUlw1/KaqiAKlfUzjGeKC0o8en5bVZWTPpKsIDqk+8vzgYr9LfT4H6VG0K4MxnLXbw==
-X-Received: by 2002:aa7:c612:0:b0:40f:2a41:bddb with SMTP id h18-20020aa7c612000000b0040f2a41bddbmr13789828edq.291.1645296358336;
-        Sat, 19 Feb 2022 10:45:58 -0800 (PST)
-Received: from localhost.localdomain (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
-        by smtp.gmail.com with ESMTPSA id j11sm4847509eda.106.2022.02.19.10.45.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Feb 2022 10:45:57 -0800 (PST)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-To:     Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Wei Xu <xuwei5@hisilicon.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Nishanth Menon <nm@ti.com>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Tero Kristo <kristo@kernel.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Chanho Park <chanho61.park@samsung.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Jan Kotas <jank@cadence.com>, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [RFC PATCH 8/8] arm64: dts: ti: use 'freq-table' in UFS node
-Date:   Sat, 19 Feb 2022 19:45:54 +0100
-Message-Id: <20220219184554.44887-1-krzysztof.kozlowski@canonical.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220219184224.44339-1-krzysztof.kozlowski@canonical.com>
-References: <20220219184224.44339-1-krzysztof.kozlowski@canonical.com>
+        Sat, 19 Feb 2022 13:57:13 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D439C488BE;
+        Sat, 19 Feb 2022 10:56:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645297013; x=1676833013;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=OEri4uDqfVq3Sq55bw1JpjblsjiHhv7blHvy92mJyQM=;
+  b=kWTI+FBMYB1yp11DnYtcBWgtIFFCEOYbhKYsMKgOPBzz5pWJ8sRbS9Xb
+   uSx7qW640h5vwXw7ZibsDTLmZyyaIFmvJabVOsq3sIg+dQcKVJsdZiw9Z
+   Svsu4IOYmlYldLI6bjnTE8+cYv3GrQ0KiaozT/SSqGVlL0hRa3qkCPPsX
+   s=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 19 Feb 2022 10:56:53 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Feb 2022 10:56:52 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Sat, 19 Feb 2022 10:56:52 -0800
+Received: from [10.216.20.52] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Sat, 19 Feb
+ 2022 10:56:45 -0800
+Message-ID: <e279b9ec-92af-1b86-9ea0-09c9c36e1404@quicinc.com>
+Date:   Sun, 20 Feb 2022 00:26:42 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [RESEND v13 08/10] ASoC: qcom: Add lpass CPU driver for codec dma
+ control
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
+        <alsa-devel@alsa-project.org>, <bgoswami@codeaurora.org>,
+        <bjorn.andersson@linaro.org>, <broonie@kernel.org>,
+        <devicetree@vger.kernel.org>, <judyhsiao@chromium.org>,
+        <lgirdwood@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <perex@perex.cz>,
+        <quic_plai@quicinc.com>, <robh+dt@kernel.org>,
+        <rohitkr@codeaurora.org>, <srinivas.kandagatla@linaro.org>,
+        <tiwai@suse.com>
+CC:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <1644850708-11099-1-git-send-email-quic_srivasam@quicinc.com>
+ <1644850708-11099-9-git-send-email-quic_srivasam@quicinc.com>
+ <CAE-0n52jD_BvQm4CeTkiR723-3uKC9G4fFeynFbs5Ukg_S762g@mail.gmail.com>
+ <d70291a6-7e3f-0406-2826-3a30f2d5650b@quicinc.com>
+ <CAE-0n51zr2qZ4qSzsC4=3d_jCYGvSxh8_3znrEQFaNrGfRU2Gw@mail.gmail.com>
+From:   "Srinivasa Rao Mandadapu (Temp)" <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <CAE-0n51zr2qZ4qSzsC4=3d_jCYGvSxh8_3znrEQFaNrGfRU2Gw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -93,29 +79,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The 'freq-table-hz' property is deprecated by UFS bindings.
-The uint32-array requires also element to be passed within one <> block.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
----
- arch/arm64/boot/dts/ti/k3-j721e-main.dtsi | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
-index 599861259a30..c3afef0321ae 100644
---- a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
-@@ -1257,7 +1257,9 @@ ufs@4e84000 {
- 			compatible = "cdns,ufshc-m31-16nm", "jedec,ufs-2.0";
- 			reg = <0x0 0x4e84000 0x0 0x10000>;
- 			interrupts = <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
--			freq-table-hz = <250000000 250000000>, <19200000 19200000>, <19200000 19200000>;
-+			freq-table = <250000000 250000000
-+				      19200000 19200000
-+				      19200000 19200000>;
- 			clocks = <&k3_clks 277 0>, <&k3_clks 277 1>, <&k3_clks 277 1>;
- 			clock-names = "core_clk", "phy_clk", "ref_clk";
- 			dma-coherent;
--- 
-2.32.0
-
+On 2/18/2022 1:23 AM, Stephen Boyd wrote:
+Thanks for Your time Stephen!!!
+> Quoting Srinivasa Rao Mandadapu (2022-02-16 01:42:42)
+>> On 2/15/2022 7:03 AM, Stephen Boyd wrote:
+>> Thanks for your time Stephen!!!
+>>> Quoting Srinivasa Rao Mandadapu (2022-02-14 06:58:26)
+>>>> +       struct snd_soc_pcm_runtime *soc_runtime = asoc_substream_to_rtd(substream);
+>>>> +       struct lpaif_dmactl *dmactl;
+>>>> +       int ret = 0, id;
+>>>> +
+>>>> +       switch (cmd) {
+>>>> +       case SNDRV_PCM_TRIGGER_START:
+>>>> +       case SNDRV_PCM_TRIGGER_RESUME:
+>>>> +       case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
+>>>> +               __lpass_platform_codec_intf_init(dai, substream);
+>>>> +               break;
+>>>> +       case SNDRV_PCM_TRIGGER_STOP:
+>>>> +       case SNDRV_PCM_TRIGGER_SUSPEND:
+>>>> +       case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+>>>> +               __lpass_get_dmactl_handle(substream, dai, &dmactl, &id);
+>>>> +               if (!dmactl) {
+>>>> +                       dev_err(soc_runtime->dev, "failed to get dmactl handle\n");
+>>> This same message is in many places. I really hope it never gets printed
+>>> because finding out which line it got printed at is going to be
+>>> impossible.
+>> Okay. Will add function name in each print.
+> Are they useful prints at all? They seem like development prints that
+> won't trigger after the driver is developed. Why can't we just remove
+> them?
+Okay. Will remove prints.
