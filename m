@@ -2,60 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BEBBB4BC9B7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Feb 2022 19:13:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2159B4BC9C6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Feb 2022 19:20:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241526AbiBSSNb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 19 Feb 2022 13:13:31 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50732 "EHLO
+        id S242776AbiBSSUw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 19 Feb 2022 13:20:52 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232963AbiBSSNb (ORCPT
+        with ESMTP id S232963AbiBSSUv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 19 Feb 2022 13:13:31 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4220C7E;
-        Sat, 19 Feb 2022 10:13:11 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6967E60C03;
-        Sat, 19 Feb 2022 18:13:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF9CC004E1;
-        Sat, 19 Feb 2022 18:13:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1645294390;
-        bh=dSDjdBicoltX5N4N78Mx82dOF5tuxV4/33SM9lnQ3Vs=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=WwNxslP6zEk8o0IfSWmgnalERt7cPVL3t9bx0Tug0cFBWtue80yEultX9bm+DXGmi
-         P3o7EvGo42Eh9xMWiyOjDbp7ixM9leIsmp8W+xre8YzjJSw8sxOj2s9ZTXrerbQU/+
-         ZuM+gAoskupaRsIHDwXVtsuUaHuq1akvHi2FgRbZJerovba2TWY3AFGYlbiU0agQbL
-         Ji2LixFJPM9WulM7ecrs7z/MqHXGhsOuONFEkRuJqO+TSGYPT7ph+oIu6Is9miNePN
-         kzp2sueHVwDPACxBzRzEPU5K35yedB2DqHenCuvmyPMmCuEwdEjdhuqY6A6zhpyoYl
-         wxAA5Qv9xHWTQ==
-Date:   Sat, 19 Feb 2022 18:19:55 +0000
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        sumit.semwal@linaro.org, amit.pundir@linaro.org,
-        john.stultz@linaro.org
-Subject: Re: [PATCH v7 1/9] spmi: add a helper to look up an SPMI device
- from a device node
-Message-ID: <20220219181955.10b707cc@jic23-huawei>
-In-Reply-To: <20220216134920.239989-2-caleb.connolly@linaro.org>
-References: <20220216134920.239989-1-caleb.connolly@linaro.org>
-        <20220216134920.239989-2-caleb.connolly@linaro.org>
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.31; x86_64-pc-linux-gnu)
+        Sat, 19 Feb 2022 13:20:51 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A12F1107C7;
+        Sat, 19 Feb 2022 10:20:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645294832; x=1676830832;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=43FQQoiARr1oUUz161OUOBUs6C7jlfJSnj8zmZ358yI=;
+  b=uFRALQ/cDeAw4dbsRiKGohQr/rr4dB18wc12TSddB12GneDGvuLOskd8
+   IaFW3LObYRuhChxI6RT558HIYFpO9LRGukyVoaRRoKAOjlfo3XdgKUHAc
+   xgDCfE+AlR4aArP6iFgxhMLpF5Ni/G2IU7rOvkCGALtTbydG9woe6a1Bv
+   M=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 19 Feb 2022 10:20:31 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Feb 2022 10:20:30 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Sat, 19 Feb 2022 10:20:30 -0800
+Received: from [10.216.20.52] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Sat, 19 Feb
+ 2022 10:20:23 -0800
+Message-ID: <5a6e307d-f8b0-50b6-f295-fdf6ccd20232@quicinc.com>
+Date:   Sat, 19 Feb 2022 23:50:19 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH v6 3/7] pinctrl: qcom: Update macro name to LPI specific
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Linus Walleij <linus.walleij@linaro.org>, <agross@kernel.org>,
+        <alsa-devel@alsa-project.org>, <bgoswami@codeaurora.org>,
+        <bjorn.andersson@linaro.org>, <broonie@kernel.org>,
+        <devicetree@vger.kernel.org>, <judyhsiao@chromium.org>,
+        <lgirdwood@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <perex@perex.cz>, <quic_plai@quicinc.com>, <robh+dt@kernel.org>,
+        <rohitkr@codeaurora.org>, <srinivas.kandagatla@linaro.org>,
+        <tiwai@suse.com>
+CC:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <1644851994-22732-1-git-send-email-quic_srivasam@quicinc.com>
+ <1644851994-22732-4-git-send-email-quic_srivasam@quicinc.com>
+ <CAE-0n527fs5rfPG1HonW_9ZTugANnWNYSs_0+wts+zDK=zcZjA@mail.gmail.com>
+From:   "Srinivasa Rao Mandadapu (Temp)" <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <CAE-0n527fs5rfPG1HonW_9ZTugANnWNYSs_0+wts+zDK=zcZjA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -64,77 +77,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 16 Feb 2022 13:49:12 +0000
-Caleb Connolly <caleb.connolly@linaro.org> wrote:
 
-> The helper function spmi_device_from_of() takes a device node and
-> returns the SPMI device associated with it.
-> This is like of_find_device_by_node but for SPMI devices.
-> 
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-> ---
->  drivers/spmi/spmi.c  | 17 +++++++++++++++++
->  include/linux/spmi.h |  2 ++
->  2 files changed, 19 insertions(+)
-> 
-> diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
-> index b37ead9e2fad..de550b777451 100644
-> --- a/drivers/spmi/spmi.c
-> +++ b/drivers/spmi/spmi.c
-> @@ -386,6 +386,23 @@ static struct bus_type spmi_bus_type = {
->  	.uevent		= spmi_drv_uevent,
->  };
->  
-> +/**
-> + * spmi_device_from_of() - get the associated SPMI device from a device node
-> + *
-
-https://www.kernel.org/doc/html/latest/doc-guide/kernel-doc.html
-"Each function argument should be described in order, immediately following the
- short function description. Do not leave a blank line between the function
- description and the arguments, nor between the arguments."
-
-> + * @np:		device node
-> + *
-> + * Returns the struct spmi_device associated with a device node or NULL.
-> + */
-> +inline struct spmi_device *spmi_device_from_of(struct device_node *np)
-> +{
-> +	struct device *dev = bus_find_device_by_of_node(&spmi_bus_type, np);
-> +
-> +	if (dev)
-> +		return to_spmi_device(dev);
-> +	return NULL;
-> +}
-> +EXPORT_SYMBOL_GPL(spmi_device_from_of);
-> +
->  /**
->   * spmi_controller_alloc() - Allocate a new SPMI device
->   * @ctrl:	associated controller
-> diff --git a/include/linux/spmi.h b/include/linux/spmi.h
-> index 729bcbf9f5ad..6ee476bc1cd6 100644
-> --- a/include/linux/spmi.h
-> +++ b/include/linux/spmi.h
-> @@ -7,6 +7,7 @@
->  #include <linux/types.h>
->  #include <linux/device.h>
->  #include <linux/mod_devicetable.h>
-> +#include <linux/of.h>
-
-If all you need is struct device_node * then normally preferred to
-use a forwards definition rather than including the header.
-
-struct device_node;
-
->  
->  /* Maximum slave identifier */
->  #define SPMI_MAX_SLAVE_ID		16
-> @@ -164,6 +165,7 @@ static inline void spmi_driver_unregister(struct spmi_driver *sdrv)
->  	module_driver(__spmi_driver, spmi_driver_register, \
->  			spmi_driver_unregister)
->  
-> +inline struct spmi_device *spmi_device_from_of(struct device_node *np);
->  int spmi_register_read(struct spmi_device *sdev, u8 addr, u8 *buf);
->  int spmi_ext_register_read(struct spmi_device *sdev, u8 addr, u8 *buf,
->  			   size_t len);
-
+On 2/19/2022 8:06 AM, Stephen Boyd wrote:
+Thanks for Your time Stephen!!!
+> Quoting Srinivasa Rao Mandadapu (2022-02-14 07:19:50)
+>> Update NO_SLEW macro to LPI_NO_SLEW macro as this driver lpi specific.
+> Is this to avoid NO_SLEW somewhere else?
+The above comment addressed resent v7 patches.
+>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> ---
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
