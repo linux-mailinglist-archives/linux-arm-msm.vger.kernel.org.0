@@ -2,67 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C34B44BC51F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Feb 2022 04:02:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FEF84BC52A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Feb 2022 04:07:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241222AbiBSDCd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Feb 2022 22:02:33 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49116 "EHLO
+        id S241252AbiBSDD5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Feb 2022 22:03:57 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:54790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238136AbiBSDCc (ORCPT
+        with ESMTP id S239536AbiBSDD5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Feb 2022 22:02:32 -0500
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 321B0652D4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 19:02:15 -0800 (PST)
-Received: by mail-oi1-x22b.google.com with SMTP id p15so5121251oip.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 19:02:15 -0800 (PST)
+        Fri, 18 Feb 2022 22:03:57 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D147189A9A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 19:03:39 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id x193so5171283oix.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Feb 2022 19:03:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=/aL39Z+/g+dDunOKEkaaG/tOKqWyPS3k7avsFh9Lne4=;
-        b=flpsNJFtWTy2yRtjs2ojwi77DizDk9HOYIt6foK4Q7ndEtm6poQ1iskpuPaG2xOxy2
-         cKXdZHfmbw9BxA7ZHFeCycVv0NXHeDbY2DeuNFxMCmc3luBSdvoQPqErDxqH9jQYcSCt
-         scvso1n2GPqzKjcKfb1I0gnt1GAEyX/9tdepI=
+         :subject:to;
+        bh=zIB+88SZu/CTl47f1fdTeX2AI5RUdEbWO+4zjIrvIzM=;
+        b=J4SJ7j5uTIF6325BNiAXQXv0efYxC/HzwgbEKT3PY/NqwzZU5+zH/6+Cd5iItGU9l2
+         /eor0oEEJhiuQ8Dgq1+viv0K8pWJS24WfjjGNPeQU0LXv/Xsompp6ztvXrDE48I60fVG
+         jIWiASD20CAYMHlNMfNi5CrEOEwnyC9sKZPvo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=/aL39Z+/g+dDunOKEkaaG/tOKqWyPS3k7avsFh9Lne4=;
-        b=CUrYQBG0GqqGJJhsP6YaQYgTm4mOiOC2yGNPVGVFyPkcFpPygzTRIZNGrEhm8+1beH
-         fO7D1BeMuGPXqp53/261RiYFIiWrwe18khfV+rZCE+tzJbdprQgbRtj7oWMY8T9a0AAh
-         5NpjRR8TAdPBjTpPWTw4KEkqpmzZ8eWk6YKY9h2vOlW0ZQp9XxQ6oVEF315bw0uPbH/9
-         sIKtHUtKl7rLKxMbW9XvUAhIP4X06mmRrttYc4VyZQDRRm+EM6rmu+c/NSgL7yrCX+Ye
-         BajuFK3faIZDxi24KeaVc9pa55Hg9LwEWpipeSPOOeaWQJvWVooMf2jWLv6yowliyrLQ
-         oRTQ==
-X-Gm-Message-State: AOAM530PZD2SKLGwPOAwh58rbjbKkPmt3D9KilLmtDEYic1/3rRGl42+
-        ZFIDDblgJeDwhXx+A+Xs6Kzu8+lBRd5L4XmT12tDSw==
-X-Google-Smtp-Source: ABdhPJyTrVif3DX8Xtnalz1sr5dnWdhvQiHw4aCJ/Me1nIAlSUMyfKMCXaya8cz45jki7GYCtRslmo+guYGfBJ1+0Tc=
-X-Received: by 2002:aca:df44:0:b0:2ce:285f:cb99 with SMTP id
- w65-20020acadf44000000b002ce285fcb99mr6329158oig.40.1645239734376; Fri, 18
- Feb 2022 19:02:14 -0800 (PST)
+         :user-agent:date:message-id:subject:to;
+        bh=zIB+88SZu/CTl47f1fdTeX2AI5RUdEbWO+4zjIrvIzM=;
+        b=32VJFylyiAdmeUFKl+PoyKo9fT6I1llLDSKc0YAPEM6O5OeTQTFTRQFMOmxgYOKiah
+         qmY62KnMlkrBquRD0yAjKnkw6RShpgK4Kek7wUk1g5b9cn7Bh4gdlpEm9ilrKIxFV3lE
+         UCS6gvQwkIrPWyeR+LpOt938feqvlTsOo+EGAPYOk82AdyMpSo9UEpfVe+mjwEvpYbYr
+         nbwu2g3+TEdpd16yMWO/8MFY6dpk23tn7bzBYnarTWw3qcbWK328LoozbgrMWJmDtpyd
+         qK1Hn/hgWI35Ogxv49Z33B1SyW21CkOnNzFMM82+gr9q/LaTWZ30I6+arGNh8Fnxg+NH
+         u1OQ==
+X-Gm-Message-State: AOAM530MXbgE3S1fXYy/4FeXDW+5vcqdLdhQ23iHBfgK4PYmvqCeengw
+        oI6tmi72Eb3KJlq6HvnKoF+J7M1gY/NN5Y5Du/1d3w==
+X-Google-Smtp-Source: ABdhPJyTyySKaogGebiYw5qOlLQGTpdp3qqpV2Sh4WlZmZiT0rP6wCEw1BDRdNlhT/JVspPiNudlDVaQIpYcAmd99sw=
+X-Received: by 2002:a05:6808:f88:b0:2d4:c8c2:b898 with SMTP id
+ o8-20020a0568080f8800b002d4c8c2b898mr626747oiw.112.1645239819056; Fri, 18 Feb
+ 2022 19:03:39 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 18 Feb 2022 19:02:13 -0800
+ HTTPREST; Fri, 18 Feb 2022 19:03:38 -0800
 MIME-Version: 1.0
-In-Reply-To: <1645133788-5057-5-git-send-email-quic_khsieh@quicinc.com>
-References: <1645133788-5057-1-git-send-email-quic_khsieh@quicinc.com> <1645133788-5057-5-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1645078066-9365-1-git-send-email-quic_srivasam@quicinc.com>
+References: <1645078066-9365-1-git-send-email-quic_srivasam@quicinc.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Fri, 18 Feb 2022 19:02:13 -0800
-Message-ID: <CAE-0n51v_2V4CnLzciagKYxtzALcyL5e1PgTDw28Aq7iFGNt_A@mail.gmail.com>
-Subject: Re: [PATCH v8 4/4] drm/msm/dp: enable widebus feature for display port
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dmitry.baryshkov@linaro.org, dri-devel@lists.freedesktop.org,
-        robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Fri, 18 Feb 2022 19:03:38 -0800
+Message-ID: <CAE-0n51j9x2-5ZBPOkhewih6ojvE=a-Ot3htQ7JPKYzBm32UJA@mail.gmail.com>
+Subject: Re: [PATCH v14 00/10] Add support for audio on SC7280 based targets
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        agross@kernel.org, alsa-devel@alsa-project.org,
+        bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
+        broonie@kernel.org, devicetree@vger.kernel.org,
+        judyhsiao@chromium.org, lgirdwood@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        perex@perex.cz, quic_plai@quicinc.com, robh+dt@kernel.org,
+        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org,
+        tiwai@suse.com
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,134 +72,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-02-17 13:36:28)
-> Widebus feature will transmit two pixel data per pixel clock to interface.
-> This feature now is required to be enabled to easy migrant to higher
-
-s/migrant/migrate/?
-
-> resolution applications in future. However since some legacy chipsets
-
-s/in/in the/
-
-> does not support this feature, this feature is enabled base on chip's
-
-s/does not/don't/
-
-> hardware revision.
+Quoting Srinivasa Rao Mandadapu (2022-02-16 22:07:36)
+> This patch set is to add support for Audio over wcd codec,
+> digital mics, through digital codecs and without ADSP.
 >
-> changes in v2:
-> -- remove compression related code from timing
-> -- remove op_info from  struct msm_drm_private
-> -- remove unnecessary wide_bus_en variables
-> -- pass wide_bus_en into timing configuration by struct msm_dp
->
-> Changes in v3:
-> -- split patch into 3 patches
-> -- enable widebus feature base on chip hardware revision
->
-> Changes in v5:
-> -- DP_INTF_CONFIG_DATABUS_WIDEN
->
-> Changes in v6:
-> -- static inline bool msm_dp_wide_bus_enable() in msm_drv.h
->
-> Changes in v7:
-> -- add Tested-by
->
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> Reported-by: kernel test robot <lkp@intel.com>
-> Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  4 +++-
->  drivers/gpu/drm/msm/dp/dp_catalog.c         | 34 +++++++++++++++++++++++++++--
->  drivers/gpu/drm/msm/dp/dp_catalog.h         |  3 ++-
->  drivers/gpu/drm/msm/dp/dp_ctrl.c            | 13 +++++++----
->  drivers/gpu/drm/msm/dp/dp_ctrl.h            |  1 +
->  drivers/gpu/drm/msm/dp/dp_display.c         | 30 +++++++++++++++++++++++++
->  drivers/gpu/drm/msm/dp/dp_display.h         |  2 ++
->  drivers/gpu/drm/msm/dp/dp_panel.c           |  4 ++--
->  drivers/gpu/drm/msm/dp/dp_panel.h           |  2 +-
->  drivers/gpu/drm/msm/msm_drv.h               |  6 +++++
->  10 files changed, 88 insertions(+), 11 deletions(-)
+> Changes Since V13:
+>     -- Change bulk cdc clock voting to individual clock voting.
+>     -- Remove redundant code, conditional check and prints.
+>     -- Fix typo errors.
 
-My mind is blown by the amount of lines that have to change to plumb
-through wide_bus_en bool argument. This driver has too many layers.
-
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> index 64f0b26..5c809c6f 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> @@ -1796,6 +1796,7 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
->         int ret = 0;
->         bool mainlink_ready = false;
->         struct dp_ctrl_private *ctrl;
-> +       u32 pixel_rate_orig;
-
-Why u32? Just unsigned long pixel_rate?
-
->
->         if (!dp_ctrl)
->                 return -EINVAL;
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index e89556ad..bc86c03 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -979,6 +983,7 @@ int dp_display_get_modes(struct msm_dp *dp,
->                 dp->connector, dp_mode);
->         if (dp_mode->drm_mode.clock)
->                 dp->max_pclk_khz = dp_mode->drm_mode.clock;
-> +
->         return ret;
->  }
->
-
-This hunk is useless.
-
-> @@ -1451,6 +1456,28 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
->         }
->  }
->
-> +bool msm_dp_wide_bus_enable(struct msm_dp *dp_display)
-> +{
-> +       struct dp_display_private *dp;
-> +       u32 revision, major, minor;
-> +
-> +       dp = container_of(dp_display, struct dp_display_private, dp_display);
-> +
-> +       /* for the time being widebus only support on DP */
-
-/* TODO: For the time being only support widebus on DP */
-
-> +       if (dp_display->connector_type  == DRM_MODE_CONNECTOR_DisplayPort) {
-> +               revision = dp_catalog_hw_revision(dp->catalog);
-> +               major = ((revision >> 28) & 0x0ff);
-> +               minor = ((revision >> 16) & 0x0fff);
-
-Use GENMASK() and FIELD_GET()?
-
-> +
-> +               DRM_DEBUG_DP("id=%d major=%d minor=%d\n", dp->id, major, minor);
-> +
-> +               if (major >= 1 && minor >= 2)
-> +                       return true;
-> +       }
-> +
-> +       return false;
-> +}
-> +
->  void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
->  {
->         struct dp_display_private *dp;
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index 07f6c41..d11bf5c 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -398,6 +398,7 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display);
->  void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display);
->
->  void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor);
-> +bool msm_dp_wide_bus_enable(struct msm_dp *dp_display);
-
-A better name would be msm_dp_wide_bus_available()
+Seems we're still discussing on v13. Will you reply to the review
+comments or post v15?
