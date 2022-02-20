@@ -2,268 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F6FD4BD15A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Feb 2022 21:20:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 58C8F4BD203
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Feb 2022 22:27:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244889AbiBTUUW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Feb 2022 15:20:22 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:48154 "EHLO
+        id S245134AbiBTVX4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 20 Feb 2022 16:23:56 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:36482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244841AbiBTUUN (ORCPT
+        with ESMTP id S232384AbiBTVXy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Feb 2022 15:20:13 -0500
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A03A14C781;
-        Sun, 20 Feb 2022 12:19:51 -0800 (PST)
-Received: from localhost.localdomain (ip-213-127-118-180.ip.prioritytelecom.net [213.127.118.180])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id C9ADBC83DA;
-        Sun, 20 Feb 2022 20:19:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1645388390; bh=CbA6DVdWqZm5Wo8SIEQaLKpVWa7Jf08sFkfHRu2Cgz0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=wtlYfW9r4VABCJ2DHAb2Ae4bIh5S1RZZgewxXkt3PLtYFK1TDxf+LzcUqly4oDNt7
-         ixAxtSiNEWXxb4i3nZDXm2j6JBkW9ZnqxMbyjBZ3JMxkMwNGF2qWbmPvF//iTyxmdZ
-         1nspnfoj6Lyst/ui77411Q0bJ1GspDgiON8lZJhE=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca@z3ntu.xyz>, Andy Gross <agross@kernel.org>,
+        Sun, 20 Feb 2022 16:23:54 -0500
+Received: from mxd1.seznam.cz (mxd1.seznam.cz [IPv6:2a02:598:a::78:210])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1032237BD1;
+        Sun, 20 Feb 2022 13:23:29 -0800 (PST)
+Received: from email.seznam.cz
+        by email-smtpc21a.ko.seznam.cz (email-smtpc21a.ko.seznam.cz [10.53.18.26])
+        id 0f7fd9d054718db90ed6158e;
+        Sun, 20 Feb 2022 22:23:02 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seznam.cz; s=beta;
+        t=1645392182; bh=5CacqU51VJnf8YWAFmHJVLRausKpihvis5Guh6QHwhQ=;
+        h=Received:From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
+         Content-Transfer-Encoding:X-szn-frgn:X-szn-frgc;
+        b=ZUE7joK5ur5Zt/TkQbwZwSYoVVIZ3i7XUYS7RwpD9Evb7/toknWqNg0VZpfnLz9gp
+         qgiN5nVisJT2JazY3o43cRIGEYRYwho0n/StEHMMyxyBmKR/UnvC7Heu8e4qYJyY2C
+         6u0k9lXb70DPyDVXFN/WxYnuTH8bKDR0XPMLiihE=
+Received: from localhost.localdomain (ip-111-27.static.ccinternet.cz [147.161.27.111])
+        by email-relay14.ko.seznam.cz (Seznam SMTPD 1.3.136) with ESMTP;
+        Sun, 20 Feb 2022 22:22:59 +0100 (CET)  
+From:   michael.srba@seznam.cz
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 10/10] arm64: dts: qcom: sdm632: Add device tree for Fairphone 3
-Date:   Sun, 20 Feb 2022 21:19:03 +0100
-Message-Id: <20220220201909.445468-11-luca@z3ntu.xyz>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220220201909.445468-1-luca@z3ntu.xyz>
-References: <20220220201909.445468-1-luca@z3ntu.xyz>
+        Stephen Boyd <sboyd@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Saravana Kannan <saravanak@google.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, Michael Srba <Michael.Srba@seznam.cz>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v8 1/5] dt-bindings: clock: gcc-msm8998: Add definitions of SSC-related clocks
+Date:   Sun, 20 Feb 2022 22:20:30 +0100
+Message-Id: <20220220212034.9152-1-michael.srba@seznam.cz>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+X-szn-frgn: <ec6037db-07ca-4972-977a-a276e0cc6604>
+X-szn-frgc: <0>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device tree for the Fairphone 3 smartphone which is based on
-Snapdragon 632 (sdm632).
+From: Michael Srba <Michael.Srba@seznam.cz>
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+Add definitions of four clocks which need to be manipulated in order to
+initialize the AHB bus which exposes the SCC block in the global address
+space.
+
+Signed-off-by: Michael Srba <Michael.Srba@seznam.cz>
+Acked-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
 ---
-Changes in v2:
-- drop msm8953-pm8953.dtsi -> move config from that into this patch
+ CHANGES:
+ - v2: none
+ - v3: none
+ - v4: none
+ - v5: none
+ - v6: none
+ - v7: use imperative in commit message
+ - v8: none
+---
+ include/dt-bindings/clock/qcom,gcc-msm8998.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../boot/dts/qcom/sdm632-fairphone-fp3.dts    | 183 ++++++++++++++++++
- 2 files changed, 184 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index bcdc9abf0c42..0d9388a3686b 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -92,6 +92,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-ganges-kirin.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-discovery.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-pioneer.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-voyager.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sdm632-fairphone-fp3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm636-sony-xperia-ganges-mermaid.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm660-xiaomi-lavender.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-new file mode 100644
-index 000000000000..8b815b2a60a7
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts
-@@ -0,0 +1,183 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2022, Luca Weiss <luca@z3ntu.xyz>
-+ */
-+/dts-v1/;
-+
-+#include "sdm632.dtsi"
-+#include "pm8953.dtsi"
-+
-+/ {
-+	model = "Fairphone 3";
-+	compatible = "fairphone,fp3", "qcom,sdm632";
-+	chassis-type = "handset";
-+	qcom,msm-id = <349 0>;
-+	qcom,board-id = <8 0x10000>;
-+
-+	aliases {
-+		mmc0 = &sdhc_1;
-+		mmc1 = &sdhc_2;
-+		serial0 = &uart_0;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		volume-up {
-+			label = "volume_up";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&tlmm 85 GPIO_ACTIVE_LOW>;
-+		};
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+};
-+
-+&hsusb_phy {
-+	status = "okay";
-+	vdd-supply = <&pm8953_l3>;
-+	vdda-pll-supply = <&pm8953_l7>;
-+	vdda-phy-dpdm-supply = <&pm8953_l13>;
-+};
-+
-+&pm8953_resin {
-+	status = "okay";
-+	linux,code = <KEY_VOLUMEDOWN>;
-+};
-+
-+&sdhc_1 {
-+	status = "okay";
-+	vmmc-supply = <&pm8953_l8>;
-+	vqmmc-supply = <&pm8953_l5>;
-+};
-+
-+&sdhc_2 {
-+	status = "okay";
-+	vmmc-supply = <&pm8953_l11>;
-+	vqmmc-supply = <&pm8953_l12>;
-+
-+	cd-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
-+};
-+
-+&rpm_requests {
-+	pm8953-regulators {
-+		compatible = "qcom,rpm-pm8953-regulators";
-+
-+		vdd_l1-supply = <&pm8953_s3>;
-+		vdd_l2_l3-supply = <&pm8953_s3>;
-+		vdd_l4_l5_l6_l7_l16_l19-supply = <&pm8953_s4>;
-+		vdd_l8_l11_l12_l13_l14_l15-supply = <&vph_pwr>;
-+		vdd_l9_l10_l17_l18_l22-supply = <&vph_pwr>;
-+
-+		pm8953_s3: s3 {
-+			regulator-min-microvolt = <984000>;
-+			regulator-max-microvolt = <1240000>;
-+		};
-+		pm8953_s4: s4 {
-+			regulator-min-microvolt = <1036000>;
-+			regulator-max-microvolt = <2040000>;
-+		};
-+		pm8953_s5: s5 {
-+			regulator-min-microvolt = <1036000>;
-+			regulator-max-microvolt = <2040000>;
-+		};
-+
-+		pm8953_l1: l1 {
-+			regulator-min-microvolt = <975000>;
-+			regulator-max-microvolt = <1050000>;
-+		};
-+		pm8953_l2: l2 {
-+			regulator-min-microvolt = <975000>;
-+			regulator-max-microvolt = <1175000>;
-+		};
-+		pm8953_l3: l3 {
-+			regulator-min-microvolt = <925000>;
-+			regulator-max-microvolt = <925000>;
-+		};
-+		pm8953_l5: l5 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+		pm8953_l6: l6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+		pm8953_l7: l7 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1900000>;
-+		};
-+		pm8953_l8: l8 {
-+			regulator-min-microvolt = <2900000>;
-+			regulator-max-microvolt = <2900000>;
-+		};
-+		pm8953_l9: l9 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+		pm8953_l10: l10 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <3000000>;
-+		};
-+		pm8953_l11: l11 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+		pm8953_l12: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+		pm8953_l13: l13 {
-+			regulator-min-microvolt = <3125000>;
-+			regulator-max-microvolt = <3125000>;
-+		};
-+		pm8953_l16: l16 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+		pm8953_l17: l17 {
-+			regulator-min-microvolt = <2850000>;
-+			regulator-max-microvolt = <2850000>;
-+		};
-+		pm8953_l19: l19 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1350000>;
-+		};
-+		pm8953_l22: l22 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+		};
-+		pm8953_l23: l23 {
-+			regulator-min-microvolt = <975000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+	};
-+};
-+
-+&tlmm {
-+	/*
-+	 * 0-3: unused but protected by TZ
-+	 * 135-138: fingerprint reader (SPI)
-+	 */
-+	gpio-reserved-ranges = <0 4>, <135 4>;
-+};
-+
-+&uart_0 {
-+	status = "okay";
-+};
-+
-+&usb3 {
-+	status = "okay";
-+};
-+
-+&usb3_dwc3 {
-+	dr_mode = "peripheral";
-+};
+diff --git a/include/dt-bindings/clock/qcom,gcc-msm8998.h b/include/dt-bindings/clock/qcom,gcc-msm8998.h
+index 72c99e486d86..1badb4f9c58f 100644
+--- a/include/dt-bindings/clock/qcom,gcc-msm8998.h
++++ b/include/dt-bindings/clock/qcom,gcc-msm8998.h
+@@ -186,6 +186,10 @@
+ #define UFS_UNIPRO_CORE_CLK_SRC					177
+ #define GCC_MMSS_GPLL0_CLK					178
+ #define HMSS_GPLL0_CLK_SRC					179
++#define GCC_IM_SLEEP						180
++#define AGGRE2_SNOC_NORTH_AXI					181
++#define SSC_XO							182
++#define SSC_CNOC_AHBS_CLK					183
+ 
+ #define PCIE_0_GDSC						0
+ #define UFS_GDSC						1
 -- 
-2.35.1
+2.34.1
 
