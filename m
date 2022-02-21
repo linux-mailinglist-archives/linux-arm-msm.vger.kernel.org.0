@@ -2,240 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B48444BE532
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Feb 2022 19:00:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B73AB4BE28C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Feb 2022 18:55:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378446AbiBUOw3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Feb 2022 09:52:29 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38778 "EHLO
+        id S1378607AbiBUPAH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Feb 2022 10:00:07 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:58532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378442AbiBUOw2 (ORCPT
+        with ESMTP id S1378615AbiBUPAE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Feb 2022 09:52:28 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6EF413D73;
-        Mon, 21 Feb 2022 06:52:04 -0800 (PST)
+        Mon, 21 Feb 2022 10:00:04 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5995F5F64;
+        Mon, 21 Feb 2022 06:59:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645455125; x=1676991125;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references;
-  bh=H3+DEJkpDEMljnyOr4RtnL4RrB1E5lIn4hbGJmNSw+U=;
-  b=qmLfhCD8oFAZu2l7JstaI0iTuuK0XenV5XYvOSzxWtxVcjzFSvzd/+I6
-   T3/a6HPbDNtmtC3LnQIEkqMvsNoH1pqmIU8CAF4WWQysrIRh5WFOHJKJe
-   eX/r4kXrDCcSFtz6NTFkzcstyMDLF1/TbmPZ+6zQn8/SeubEOUAw7lD7I
-   Y=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 21 Feb 2022 06:52:05 -0800
+  t=1645455579; x=1676991579;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=18VrRwILwh7yofAr5KlIeJlDHPccvTfxrd+4gwwYXM0=;
+  b=SYZvxDg+sxEXDGbzFp+ViGfbAEm657CTDsSmGTvTftRdCyfE5e43ethZ
+   s/yFmvifThsouOq865feEl4X/+Mn3rTjE0CSnWoIDdSNe96tlgNUhfZvg
+   txOAiRoS6ypKQLV+HoRpmGYt+y2K8eSZDFTI1gzJMDH2cJZOvxUaugaWi
+   s=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 21 Feb 2022 06:59:38 -0800
 X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 21 Feb 2022 06:52:03 -0800
-X-QCInternal: smtphost
-Received: from vpolimer-linux.qualcomm.com ([10.204.67.235])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 21 Feb 2022 20:21:43 +0530
-Received: by vpolimer-linux.qualcomm.com (Postfix, from userid 463814)
-        id F14D05392; Mon, 21 Feb 2022 20:21:41 +0530 (IST)
-From:   Vinod Polimera <quic_vpolimer@quicinc.com>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
-        dianders@chromium.org, krzysztof.kozlowski@canonical.com,
-        thierry.reding@gmail.com, sam@ravnborg.org, airlied@linux.ie,
-        daniel@ffwll.ch
-Cc:     Vinod Polimera <quic_vpolimer@quicinc.com>,
-        quic_kalyant@quicinc.com, quic_sbillaka@quicinc.com,
-        quic_vproddut@quicinc.com
-Subject: [PATCH v2 4/4] drm/msm/disp/dpu1: add PSR support for eDP interface in dpu driver
-Date:   Mon, 21 Feb 2022 20:21:26 +0530
-Message-Id: <1645455086-9359-5-git-send-email-quic_vpolimer@quicinc.com>
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Feb 2022 06:59:37 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Mon, 21 Feb 2022 06:59:37 -0800
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Mon, 21 Feb 2022 06:59:30 -0800
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@codeaurora.org>,
+        <perex@perex.cz>, <tiwai@suse.com>,
+        <srinivas.kandagatla@linaro.org>, <rohitkr@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        <linux-gpio@vger.kernel.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v8 0/7] Add pin control support for lpass sc7280
+Date:   Mon, 21 Feb 2022 20:29:07 +0530
+Message-ID: <1645455554-22370-1-git-send-email-quic_srivasam@quicinc.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1645455086-9359-1-git-send-email-quic_vpolimer@quicinc.com>
-References: <1645455086-9359-1-git-send-email-quic_vpolimer@quicinc.com>
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable PSR on eDP interface using drm self-refresh librabry.
-This patch uses a trigger from self-refresh library to enter/exit
-into PSR, when there are no updates from framework.
+This patch series is to split lpass variant common pin control
+functions and SoC specific functions and to add lpass sc7280 pincontrol support.
+It also Adds dt-bindings for lpass sc7280 lpass lpi pincontrol.
 
-Changes in V2:
-- Move dp functions to bridge code.
-- As per Dmitry review suggestions.
+Changes Since V7:
+    -- Update optional clock voting with conditional check.
+    -- Add const to lpi_pinctrl_variant_data structure.
+    -- Update required headers and remove redundant.
+    -- Change EXPORT_SYMBOL to EXPORT_SYMBOL_GPL
+    -- Fix typo errors.
+Changes Since V6:
+    -- Update conditional clock voting to optional clock voting.
+    -- Update Kconfig depends on field with select.
+    -- Fix typo errors. 
+Changes Since V5:
+    -- Create new patch by updating macro name to lpi specific.
+    -- Create new patch by updating lpi pin group structure with core group_desc structure.
+    -- Fix typo errors.
+    -- Sort macros in the make file and configuration file.
+Changes Since V4:
+    -- Update commit message and description of the chip specific extraction patch.
+    -- Sort macros in kconfig and makefile.
+    -- Update optional clock voting to conditional clock voting.
+    -- Fix typo errors.
+    -- Move to quicinc domain email id's.
+Changes Since V3:
+    -- Update separate Kconfig fields for sm8250 and sc7280.
+    -- Update module license and description.
+    -- Move static variables to corresponding .c files from header file.
 
-Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
-Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 31 +++++++++++++++++++++++++----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 30 +++++++++++++++++++++++++++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  2 +-
- 3 files changed, 57 insertions(+), 6 deletions(-)
+Changes Since V2:
+    -- Add new dt-bindings for sc7280 lpi driver.
+    -- Make clock voting change as separate patch.
+    -- Split existing pincontrol driver and make common functions 
+       as part of separate file.
+    -- Rename lpass pincontrol lpi dt-bindings to sm8250 specific dt-bindings
+		
+Changes Since V1:
+    -- Make lpi pinctrl variant data structure as constant
+    -- Add appropriate commit message
+    -- Change signedoff by sequence.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index e7c9fe1..ba3240c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -18,6 +18,7 @@
- #include <drm/drm_probe_helper.h>
- #include <drm/drm_rect.h>
- #include <drm/drm_vblank.h>
-+#include <drm/drm_self_refresh_helper.h>
- 
- #include "dpu_kms.h"
- #include "dpu_hw_lm.h"
-@@ -951,6 +952,14 @@ static void dpu_crtc_disable(struct drm_crtc *crtc,
- 
- 	DRM_DEBUG_KMS("crtc%d\n", crtc->base.id);
- 
-+	if (old_crtc_state->self_refresh_active) {
-+		drm_for_each_encoder_mask(encoder, crtc->dev,
-+				 old_crtc_state->encoder_mask) {
-+			dpu_encoder_assign_crtc(encoder, NULL);
-+		}
-+		return;
-+	}
-+
- 	/* Disable/save vblank irq handling */
- 	drm_crtc_vblank_off(crtc);
- 
-@@ -962,7 +971,12 @@ static void dpu_crtc_disable(struct drm_crtc *crtc,
- 		 */
- 		if (dpu_encoder_get_intf_mode(encoder) == INTF_MODE_VIDEO)
- 			release_bandwidth = true;
--		dpu_encoder_assign_crtc(encoder, NULL);
-+		/* If disable is triggered during psr active(e.g: screen dim in PSR),
-+		 * we will need encoder->crtc connection to process the device sleep &
-+		 * preserve it during psr sequence.
-+		 */
-+		if (!crtc->state->self_refresh_active)
-+			dpu_encoder_assign_crtc(encoder, NULL);
- 	}
- 
- 	/* wait for frame_event_done completion */
-@@ -1010,6 +1024,8 @@ static void dpu_crtc_enable(struct drm_crtc *crtc,
- 	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
- 	struct drm_encoder *encoder;
- 	bool request_bandwidth = false;
-+	struct drm_crtc_state *old_crtc_state =
-+		drm_atomic_get_old_crtc_state(state, crtc);
- 
- 	pm_runtime_get_sync(crtc->dev->dev);
- 
-@@ -1032,8 +1048,10 @@ static void dpu_crtc_enable(struct drm_crtc *crtc,
- 	trace_dpu_crtc_enable(DRMID(crtc), true, dpu_crtc);
- 	dpu_crtc->enabled = true;
- 
--	drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
--		dpu_encoder_assign_crtc(encoder, crtc);
-+	if (!old_crtc_state->self_refresh_active) {
-+		drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
-+			dpu_encoder_assign_crtc(encoder, crtc);
-+	}
- 
- 	/* Enable/restore vblank irq handling */
- 	drm_crtc_vblank_on(crtc);
-@@ -1497,7 +1515,7 @@ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
- {
- 	struct drm_crtc *crtc = NULL;
- 	struct dpu_crtc *dpu_crtc = NULL;
--	int i;
-+	int i, ret;
- 
- 	dpu_crtc = kzalloc(sizeof(*dpu_crtc), GFP_KERNEL);
- 	if (!dpu_crtc)
-@@ -1534,6 +1552,11 @@ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
- 	/* initialize event handling */
- 	spin_lock_init(&dpu_crtc->event_lock);
- 
-+	ret = drm_self_refresh_helper_init(crtc);
-+	if (ret)
-+		DPU_ERROR("Failed to initialize %s with SR helpers %d\n",
-+			crtc->name, ret);
-+
- 	DRM_DEBUG_KMS("%s: successfully initialized crtc\n", dpu_crtc->name);
- 	return crtc;
- }
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 6eac417..ba9d8ea 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -217,6 +217,14 @@ static u32 dither_matrix[DITHER_MATRIX_SZ] = {
- 	15, 7, 13, 5, 3, 11, 1, 9, 12, 4, 14, 6, 0, 8, 2, 10
- };
- 
-+static inline bool is_self_refresh_active(struct drm_crtc_state *state)
-+{
-+	if (state && state->self_refresh_active)
-+		return true;
-+
-+	return false;
-+}
-+
- static void _dpu_encoder_setup_dither(struct dpu_hw_pingpong *hw_pp, unsigned bpc)
- {
- 	struct dpu_hw_dither_cfg dither_cfg = { 0 };
-@@ -629,7 +637,8 @@ static int dpu_encoder_virt_atomic_check(
- 		if (drm_atomic_crtc_needs_modeset(crtc_state)) {
- 			dpu_rm_release(global_state, drm_enc);
- 
--			if (!crtc_state->active_changed || crtc_state->active)
-+			if (!crtc_state->active_changed || crtc_state->active ||
-+					crtc_state->self_refresh_active)
- 				ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
- 						drm_enc, crtc_state, topology);
- 		}
-@@ -1182,11 +1191,30 @@ static void dpu_encoder_virt_disable(struct drm_encoder *drm_enc,
- {
- 	struct dpu_encoder_virt *dpu_enc = NULL;
- 	struct msm_drm_private *priv;
-+	struct drm_crtc *crtc;
-+	struct drm_crtc_state *old_state;
- 	int i = 0;
- 
- 	dpu_enc = to_dpu_encoder_virt(drm_enc);
- 	DPU_DEBUG_ENC(dpu_enc, "\n");
- 
-+	if (!drm_enc) {
-+		DPU_ERROR("invalid encoder\n");
-+		return;
-+	}
-+	dpu_enc = to_dpu_encoder_virt(drm_enc);
-+
-+	crtc = dpu_enc->crtc;
-+
-+	old_state = drm_atomic_get_old_crtc_state(state, crtc);
-+
-+	/*
-+	 * The encoder turn off already occurred when self refresh mode
-+	 * was set earlier, in the old_state for the corresponding crtc.
-+	 */
-+	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS && is_self_refresh_active(old_state))
-+		return;
-+
- 	mutex_lock(&dpu_enc->enc_lock);
- 	dpu_enc->enabled = false;
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 47fe11a..d550f90 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -495,7 +495,7 @@ static void dpu_kms_wait_for_commit_done(struct msm_kms *kms,
- 		return;
- 	}
- 
--	if (!crtc->state->active) {
-+	if (!drm_atomic_crtc_effectively_active(crtc->state)) {
- 		DPU_DEBUG("[crtc:%d] not active\n", crtc->base.id);
- 		return;
- 	}
+Srinivasa Rao Mandadapu (7):
+  dt-bindings: pinctrl: qcom: Update lpass lpi file name to SoC specific
+  dt-bindings: pinctrl: qcom: Add sc7280 lpass lpi pinctrl bindings
+  pinctrl: qcom: Update macro name to LPI specific
+  pinctrl: qcom: Update lpi pin group structure
+  pinctrl: qcom: Extract chip specific LPASS LPI code
+  pinctrl: qcom: Add SC7280 lpass pin configuration
+  pinctrl: qcom: Update clock voting as optional
+
+Tested this on SM8250 MTP with WSA and WCD codecs.
+Tested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+
+ .../bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml   | 133 -----------
+ .../pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml     | 115 ++++++++++
+ .../pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml     | 133 +++++++++++
+ drivers/pinctrl/qcom/Kconfig                       |  16 ++
+ drivers/pinctrl/qcom/Makefile                      |   2 +
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c           | 255 ++-------------------
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.h           |  86 +++++++
+ drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c    | 169 ++++++++++++++
+ drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c    | 166 ++++++++++++++
+ 9 files changed, 705 insertions(+), 370 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc7280-lpass-lpi-pinctrl.yaml
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8250-lpass-lpi-pinctrl.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
+
 -- 
 2.7.4
 
