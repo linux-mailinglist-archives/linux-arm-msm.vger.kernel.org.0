@@ -2,52 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8567E4BE288
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Feb 2022 18:55:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B8F904BE9C9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Feb 2022 19:08:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358602AbiBUNMz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Feb 2022 08:12:55 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47720 "EHLO
+        id S1358742AbiBUNO5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Feb 2022 08:14:57 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350923AbiBUNMw (ORCPT
+        with ESMTP id S1358791AbiBUNOy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Feb 2022 08:12:52 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB35E1EED5;
-        Mon, 21 Feb 2022 05:12:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645449149; x=1676985149;
-  h=from:to:cc:subject:date:message-id;
-  bh=G7oTbgnW/y7+oRzp7iXZzH5BC58ZLVjZyl7jNT6m2Z8=;
-  b=LdPwZU66Nr+bx0t1XDmcph2ydGHan+ebdb65MdBo8c+aUUrNuKIR5iSP
-   nBsxNsJCHZFkkNlLQFXBG6oL1N992cBb2hCUg6PZe/MI9McdW98XjBE8i
-   Dn+8iUS6bT23MJhNIOSborsemk1yzc7NFQF+CORUe/qVbMIwqU9FyaAhJ
-   M=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 21 Feb 2022 05:12:28 -0800
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 21 Feb 2022 05:12:26 -0800
-X-QCInternal: smtphost
-Received: from vpolimer-linux.qualcomm.com ([10.204.67.235])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 21 Feb 2022 18:42:12 +0530
-Received: by vpolimer-linux.qualcomm.com (Postfix, from userid 463814)
-        id 41F47231E; Mon, 21 Feb 2022 18:42:12 +0530 (IST)
-From:   Vinod Polimera <quic_vpolimer@quicinc.com>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Vinod Polimera <quic_vpolimer@quicinc.com>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        dmitry.baryshkov@linaro.org, dianders@chromium.org,
-        quic_kalyant@quicinc.com
-Subject: [v1] arm64/dts/qcom/sc7280: update mdp clk to max supported value to support higher refresh rates
-Date:   Mon, 21 Feb 2022 18:42:06 +0530
-Message-Id: <1645449126-17718-1-git-send-email-quic_vpolimer@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        Mon, 21 Feb 2022 08:14:54 -0500
+Received: from fllv0015.ext.ti.com (fllv0015.ext.ti.com [198.47.19.141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39DF21EEE0;
+        Mon, 21 Feb 2022 05:14:28 -0800 (PST)
+Received: from fllv0035.itg.ti.com ([10.64.41.0])
+        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 21LDDfnW088797;
+        Mon, 21 Feb 2022 07:13:41 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1645449221;
+        bh=vXu1G0emev+TnkGG5qABAZXlSG+xfFg5QuWYDC2AHek=;
+        h=Date:From:To:CC:Subject:References:In-Reply-To;
+        b=Dsv0NFIKFcID9DYTIhgmbO2DQxxSezhh1ln6oR81gCTGWrdNBtZdwVr6RXFw0Zu+D
+         b0h2t3fENlvfOJnnHPQW02XoYC9hDG1fbYEE0q8uOdf/GQ3eLloxdoTVIzGVOpsHrF
+         jPBp3q/6mkYDibbPuzFybwbnJyfSz9WIkaQN4Lg0=
+Received: from DLEE109.ent.ti.com (dlee109.ent.ti.com [157.170.170.41])
+        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 21LDDfnC096479
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Mon, 21 Feb 2022 07:13:41 -0600
+Received: from DLEE111.ent.ti.com (157.170.170.22) by DLEE109.ent.ti.com
+ (157.170.170.41) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2308.14; Mon, 21
+ Feb 2022 07:13:40 -0600
+Received: from lelv0326.itg.ti.com (10.180.67.84) by DLEE111.ent.ti.com
+ (157.170.170.22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2308.14 via
+ Frontend Transport; Mon, 21 Feb 2022 07:13:40 -0600
+Received: from localhost (ileax41-snat.itg.ti.com [10.172.224.153])
+        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 21LDDeog070333;
+        Mon, 21 Feb 2022 07:13:40 -0600
+Date:   Mon, 21 Feb 2022 07:13:40 -0600
+From:   Nishanth Menon <nm@ti.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+CC:     Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Wei Xu <xuwei5@hisilicon.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Tero Kristo <kristo@kernel.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Chanho Park <chanho61.park@samsung.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Jan Kotas <jank@cadence.com>, <linux-scsi@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: Re: [RFC PATCH 8/8] arm64: dts: ti: use 'freq-table' in UFS node
+Message-ID: <20220221131340.q3hjpjevqrfvhggv@specimen>
+References: <20220219184224.44339-1-krzysztof.kozlowski@canonical.com>
+ <20220219184554.44887-1-krzysztof.kozlowski@canonical.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20220219184554.44887-1-krzysztof.kozlowski@canonical.com>
+User-Agent: NeoMutt/20171215
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -55,28 +79,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Panels with higher refresh rate will need mdp clk above 300Mhz.
-Select max frequency for mdp clock during bootup, dpu driver will
-scale down the clock as per usecase when first update from the framework is received.
+On 19:45-20220219, Krzysztof Kozlowski wrote:
+> The 'freq-table-hz' property is deprecated by UFS bindings.
+> The uint32-array requires also element to be passed within one <> block.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> ---
+>  arch/arm64/boot/dts/ti/k3-j721e-main.dtsi | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
+> index 599861259a30..c3afef0321ae 100644
+> --- a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
+> +++ b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
+> @@ -1257,7 +1257,9 @@ ufs@4e84000 {
+>  			compatible = "cdns,ufshc-m31-16nm", "jedec,ufs-2.0";
+>  			reg = <0x0 0x4e84000 0x0 0x10000>;
+>  			interrupts = <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
+> -			freq-table-hz = <250000000 250000000>, <19200000 19200000>, <19200000 19200000>;
+> +			freq-table = <250000000 250000000
 
-Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+<min max> is much more readable and less error prone in case of a large
+set.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index baf1653..7af96fc 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2895,7 +2895,7 @@
- 				assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>,
- 						<&dispcc DISP_CC_MDSS_VSYNC_CLK>,
- 						<&dispcc DISP_CC_MDSS_AHB_CLK>;
--				assigned-clock-rates = <300000000>,
-+				assigned-clock-rates = <506666667>,
- 							<19200000>,
- 							<19200000>;
- 				operating-points-v2 = <&mdp_opp_table>;
+> +				      19200000 19200000
+> +				      19200000 19200000>;
+
+are you sure the removal of the tuple adds value?
+
+>  			clocks = <&k3_clks 277 0>, <&k3_clks 277 1>, <&k3_clks 277 1>;
+>  			clock-names = "core_clk", "phy_clk", "ref_clk";
+>  			dma-coherent;
+> -- 
+> 2.32.0
+> 
+
 -- 
-2.7.4
-
+Regards,
+Nishanth Menon
+Key (0xDDB5849D1736249D)/Fingerprint: F8A2 8693 54EB 8232 17A3  1A34 DDB5 849D 1736 249D
