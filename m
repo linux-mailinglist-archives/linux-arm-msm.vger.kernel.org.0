@@ -2,163 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 723004BDBA9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Feb 2022 18:40:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D9954BDD33
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Feb 2022 18:45:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350825AbiBUOmP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Feb 2022 09:42:15 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:52840 "EHLO
+        id S1378431AbiBUOw0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Feb 2022 09:52:26 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378158AbiBUOmG (ORCPT
+        with ESMTP id S1378419AbiBUOwZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Feb 2022 09:42:06 -0500
-Received: from m43-7.mailgun.net (m43-7.mailgun.net [69.72.43.7])
-        by lindbergh.monkeyblade.net (Postfix) with UTF8SMTPS id 519521C9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 06:41:42 -0800 (PST)
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1645454502; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=X7DJq3qZnxS9ZNz4Hv7Z9IEBP+2GgBCe/ukmflBEl+U=; b=pYeCynIuO1PW5MALPbtoA5QkQtMt3MpKO+3d8n2Pk14BuPILPjNW2LgDt6ofk2NT3xqwwKgz
- kB6a2nWAcx2/1i9y5jx4MG6XXtuh5odyFrHBEWafNIr12lNfwKhqkWJ03ZiKzWvrZdDdEDZK
- jDZkotWxyjeuye8ZmccTBE8UYL8=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 6213a4a639713d0712a0d9d9 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 21 Feb 2022 14:41:42
- GMT
-Sender: quic_akhilpo=quicinc.com@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D2EC6C43619; Mon, 21 Feb 2022 14:41:41 +0000 (UTC)
+        Mon, 21 Feb 2022 09:52:25 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36A6D13D70;
+        Mon, 21 Feb 2022 06:52:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645455122; x=1676991122;
+  h=from:to:cc:subject:date:message-id;
+  bh=0r70U4Ls0HL3+dHw7RRmyaZy44+ZP9FEugYbM/LwvYU=;
+  b=wT/DnJ4JrG9uxvsNDHKnfYR24S4zlE+ekx2Lv10vuWK23PdvPAR+yEYW
+   b7BzyjIfwgvnhNu9qDUfTb9tGLPKHxfpe/SrFIAOA2sGw2OYxaDaJCq2t
+   pxo7mDeLbI5Jl8H0/EOzZcZe/eisQHd5fOvbxmg1JEh072fTvKvjyjpHC
+   g=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 21 Feb 2022 06:52:01 -0800
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 21 Feb 2022 06:51:59 -0800
+X-QCInternal: smtphost
+Received: from vpolimer-linux.qualcomm.com ([10.204.67.235])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 21 Feb 2022 20:21:32 +0530
+Received: by vpolimer-linux.qualcomm.com (Postfix, from userid 463814)
+        id AAA7E5392; Mon, 21 Feb 2022 20:21:31 +0530 (IST)
+From:   Vinod Polimera <quic_vpolimer@quicinc.com>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        dianders@chromium.org, krzysztof.kozlowski@canonical.com,
+        thierry.reding@gmail.com, sam@ravnborg.org, airlied@linux.ie,
+        daniel@ffwll.ch
+Cc:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        quic_kalyant@quicinc.com, quic_sbillaka@quicinc.com,
+        quic_vproddut@quicinc.com
+Subject: [PATCH v2 0/4] Add PSR support for eDP
+Date:   Mon, 21 Feb 2022 20:21:22 +0530
+Message-Id: <1645455086-9359-1-git-send-email-quic_vpolimer@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
-Received: from hyd-lnxbld559.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BED46C4361C;
-        Mon, 21 Feb 2022 14:41:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org BED46C4361C
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=fail (p=none dis=none) header.from=quicinc.com
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=quicinc.com
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-To:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS 
-        <devicetree@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 5/5] arm64: dts: qcom: sc7280: Support gpu speedbin
-Date:   Mon, 21 Feb 2022 20:11:02 +0530
-Message-Id: <20220221201039.5.I4c2cb95f06f0c37038c80cc1ad20563fdf0618e2@changeid>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1645454462-27867-1-git-send-email-quic_akhilpo@quicinc.com>
-References: <1645454462-27867-1-git-send-email-quic_akhilpo@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add speedbin fuse and additional OPPs for gpu to support sc7280 SKUs.
+*** BLURB HERE ***
 
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
----
+Vinod Polimera (4):
+  drm/msm/dp: Add basic PSR support for eDP
+  drm/bridge: use atomic enable/disable for bridge callbacks
+  drm/msm/disp/dpu1: use atomic enable/disable callbacks for encoder
+    functions
+  drm/msm/disp/dpu1: add PSR support for eDP interface in dpu driver
 
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 46 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+ drivers/gpu/drm/bridge/panel.c              | 102 ++++++++++++++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  31 ++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  40 ++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |   2 +-
+ drivers/gpu/drm/msm/dp/dp_catalog.c         |  81 +++++++++++++
+ drivers/gpu/drm/msm/dp/dp_catalog.h         |   4 +
+ drivers/gpu/drm/msm/dp/dp_ctrl.c            |  63 ++++++++++
+ drivers/gpu/drm/msm/dp/dp_ctrl.h            |   3 +
+ drivers/gpu/drm/msm/dp/dp_display.c         |  14 +++
+ drivers/gpu/drm/msm/dp/dp_display.h         |   1 +
+ drivers/gpu/drm/msm/dp/dp_drm.c             | 177 +++++++++++++++++++++++++++-
+ drivers/gpu/drm/msm/dp/dp_link.c            |  22 ++++
+ drivers/gpu/drm/msm/dp/dp_panel.c           |  21 ++++
+ drivers/gpu/drm/msm/dp/dp_panel.h           |   6 +
+ drivers/gpu/drm/msm/dp/dp_reg.h             |  19 +++
+ drivers/gpu/drm/msm/msm_drv.h               |   6 +
+ 16 files changed, 568 insertions(+), 24 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 365a2e0..f8fc8b8 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -605,6 +605,11 @@
- 			power-domains = <&rpmhpd SC7280_MX>;
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-+
-+			gpu_speed_bin: gpu_speed_bin@1e9 {
-+				reg = <0x1e9 0x2>;
-+				bits = <5 8>;
-+			};
- 		};
- 
- 		sdhc_1: sdhci@7c4000 {
-@@ -1762,6 +1767,9 @@
- 			interconnect-names = "gfx-mem";
- 			#cooling-cells = <2>;
- 
-+			nvmem-cells = <&gpu_speed_bin>;
-+			nvmem-cell-names = "speed_bin";
-+
- 			gpu_opp_table: opp-table {
- 				compatible = "operating-points-v2";
- 
-@@ -1769,18 +1777,56 @@
- 					opp-hz = /bits/ 64 <315000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
- 					opp-peak-kBps = <1804000>;
-+					opp-supported-hw = <0x03>;
- 				};
- 
- 				opp-450000000 {
- 					opp-hz = /bits/ 64 <450000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
- 					opp-peak-kBps = <4068000>;
-+					opp-supported-hw = <0x03>;
- 				};
- 
- 				opp-550000000 {
- 					opp-hz = /bits/ 64 <550000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
- 					opp-peak-kBps = <6832000>;
-+					opp-supported-hw = <0x03>;
-+				};
-+
-+				opp-608000000 {
-+					opp-hz = /bits/ 64 <608000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
-+					opp-peak-kBps = <8368000>;
-+					opp-supported-hw = <0x02>;
-+				};
-+
-+				opp-700000000 {
-+					opp-hz = /bits/ 64 <700000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
-+					opp-peak-kBps = <8532000>;
-+					opp-supported-hw = <0x02>;
-+				};
-+
-+				opp-812000000 {
-+					opp-hz = /bits/ 64 <812000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
-+					opp-peak-kBps = <8532000>;
-+					opp-supported-hw = <0x02>;
-+				};
-+
-+				opp-840000000 {
-+					opp-hz = /bits/ 64 <840000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
-+					opp-peak-kBps = <8532000>;
-+					opp-supported-hw = <0x02>;
-+				};
-+
-+				opp-900000000 {
-+					opp-hz = /bits/ 64 <900000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
-+					opp-peak-kBps = <8532000>;
-+					opp-supported-hw = <0x02>;
- 				};
- 			};
- 		};
 -- 
 2.7.4
 
