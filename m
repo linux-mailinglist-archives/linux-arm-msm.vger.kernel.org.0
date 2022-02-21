@@ -2,48 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B8F904BE9C9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Feb 2022 19:08:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7573C4BE608
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Feb 2022 19:01:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358742AbiBUNO5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Feb 2022 08:14:57 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49450 "EHLO
+        id S1358876AbiBUNVK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Feb 2022 08:21:10 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358791AbiBUNOy (ORCPT
+        with ESMTP id S1358875AbiBUNUi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Feb 2022 08:14:54 -0500
-Received: from fllv0015.ext.ti.com (fllv0015.ext.ti.com [198.47.19.141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39DF21EEE0;
-        Mon, 21 Feb 2022 05:14:28 -0800 (PST)
-Received: from fllv0035.itg.ti.com ([10.64.41.0])
-        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 21LDDfnW088797;
-        Mon, 21 Feb 2022 07:13:41 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1645449221;
-        bh=vXu1G0emev+TnkGG5qABAZXlSG+xfFg5QuWYDC2AHek=;
-        h=Date:From:To:CC:Subject:References:In-Reply-To;
-        b=Dsv0NFIKFcID9DYTIhgmbO2DQxxSezhh1ln6oR81gCTGWrdNBtZdwVr6RXFw0Zu+D
-         b0h2t3fENlvfOJnnHPQW02XoYC9hDG1fbYEE0q8uOdf/GQ3eLloxdoTVIzGVOpsHrF
-         jPBp3q/6mkYDibbPuzFybwbnJyfSz9WIkaQN4Lg0=
-Received: from DLEE109.ent.ti.com (dlee109.ent.ti.com [157.170.170.41])
-        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 21LDDfnC096479
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Mon, 21 Feb 2022 07:13:41 -0600
-Received: from DLEE111.ent.ti.com (157.170.170.22) by DLEE109.ent.ti.com
- (157.170.170.41) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2308.14; Mon, 21
- Feb 2022 07:13:40 -0600
-Received: from lelv0326.itg.ti.com (10.180.67.84) by DLEE111.ent.ti.com
- (157.170.170.22) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2308.14 via
- Frontend Transport; Mon, 21 Feb 2022 07:13:40 -0600
-Received: from localhost (ileax41-snat.itg.ti.com [10.172.224.153])
-        by lelv0326.itg.ti.com (8.15.2/8.15.2) with ESMTP id 21LDDeog070333;
-        Mon, 21 Feb 2022 07:13:40 -0600
-Date:   Mon, 21 Feb 2022 07:13:40 -0600
-From:   Nishanth Menon <nm@ti.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-CC:     Alim Akhtar <alim.akhtar@samsung.com>,
+        Mon, 21 Feb 2022 08:20:38 -0500
+Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C76531EEDB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 05:20:15 -0800 (PST)
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com [209.85.218.72])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id A66793F1C8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 13:20:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1645449614;
+        bh=khb30gE+RkFEqmWXwauRdw21yNeM7x8VXwtb7dTjxrk=;
+        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+         In-Reply-To:Content-Type;
+        b=t7KNvlr5/wlubIja/R1BCH3ZwjcG8zSQdxBU/37EH48lJvMdmiVNiGyOgf823LFJr
+         b6SmvODIzTM0RoTRa9Ylb6zx8ZIYLqKohCHKg9gGr4uO3QGLLtjUis557bC7iAsmO3
+         N7qqjNA+LGT5i0WTfSCVYoJ1uMDFKbYaKenviqqd4h/T2+4YqwemEiW0shqoGCbqz+
+         8enAkM1yhLvId1ZHMLIGpRhLqKp3dGSyx28/NEmcuu1gwsAP6bgHY0GC6Mng5ODpQq
+         mcuQf+7c5G1/KSszmdshERWaTpcQFLvp0sCRlMy+1SVAwWU2v8Xzu+rsL8Kulc8dcB
+         lgWQY3/SqI03g==
+Received: by mail-ej1-f72.google.com with SMTP id la22-20020a170907781600b006a7884de505so4649531ejc.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 05:20:14 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=khb30gE+RkFEqmWXwauRdw21yNeM7x8VXwtb7dTjxrk=;
+        b=CK6FvvmUmXXgAHxwvmxrdD6134M9RwOU9H9bUINcOYVyKq1aM32x3Del0B1arMebl7
+         bpv9aRRgavvyU7/9M3JdgKSJa4WG+i+A4emd7Jy50Q5yKVyAGgiwHh0twrB9haSjY5PG
+         GtAt5Vqih7o6cNS8XGGC/F5UYIov8jnRI78IXIeApVcZQ4rrD61trPu4L4fYkDfwF2xs
+         vS81qNwW1wJ9yIFxX+x/VMgmJwIONFG5xHo2t55wQccAI/1BI8412nt7UiNfxtO9l4L4
+         vCkH72qWHOo3gwUBG56SemHBVit+d/soM3VV4aUSGPSMMOyRpZ2LE2tVYCSFYwa2BZEF
+         JGWA==
+X-Gm-Message-State: AOAM531p9fN722YmLjDeAdTM9+szdwalNU3ErG6iSOKi9e4dY6mNyGeX
+        jszGU1H/IQXE4aZKnPv3r2ng8ZGIZXzUudlW6o7ugXUMrL4bSIsURNjrCNp+cOzSSGuppWHdAgh
+        MvlqNzsU0HJ6DxYLVnbqwueUW+z+S+KJ3pOdg11aHXEA=
+X-Received: by 2002:a50:aa87:0:b0:40f:28a0:d0d6 with SMTP id q7-20020a50aa87000000b0040f28a0d0d6mr21735610edc.368.1645449614307;
+        Mon, 21 Feb 2022 05:20:14 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJyn8wRl+WsEMmydGs9g9zLLhKIDtqHUJiepwJxzF0w7Uxxo57NBO0zLCpmBeBDH0NoWgBQ/Vw==
+X-Received: by 2002:a50:aa87:0:b0:40f:28a0:d0d6 with SMTP id q7-20020a50aa87000000b0040f28a0d0d6mr21735589edc.368.1645449614162;
+        Mon, 21 Feb 2022 05:20:14 -0800 (PST)
+Received: from [192.168.0.122] (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
+        by smtp.gmail.com with ESMTPSA id 18sm5084626ejj.1.2022.02.21.05.20.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Feb 2022 05:20:13 -0800 (PST)
+Message-ID: <19705501-2391-14a4-0eac-4b2b647a9735@canonical.com>
+Date:   Mon, 21 Feb 2022 14:20:12 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [RFC PATCH 8/8] arm64: dts: ti: use 'freq-table' in UFS node
+Content-Language: en-US
+To:     Nishanth Menon <nm@ti.com>
+Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
         Avri Altman <avri.altman@wdc.com>,
         Rob Herring <robh+dt@kernel.org>,
         Wei Xu <xuwei5@hisilicon.com>, Andy Gross <agross@kernel.org>,
@@ -54,24 +77,20 @@ CC:     Alim Akhtar <alim.akhtar@samsung.com>,
         "Martin K. Petersen" <martin.petersen@oracle.com>,
         Chanho Park <chanho61.park@samsung.com>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Jan Kotas <jank@cadence.com>, <linux-scsi@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-Subject: Re: [RFC PATCH 8/8] arm64: dts: ti: use 'freq-table' in UFS node
-Message-ID: <20220221131340.q3hjpjevqrfvhggv@specimen>
+        Jan Kotas <jank@cadence.com>, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org
 References: <20220219184224.44339-1-krzysztof.kozlowski@canonical.com>
  <20220219184554.44887-1-krzysztof.kozlowski@canonical.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20220219184554.44887-1-krzysztof.kozlowski@canonical.com>
-User-Agent: NeoMutt/20171215
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+ <20220221131340.q3hjpjevqrfvhggv@specimen>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20220221131340.q3hjpjevqrfvhggv@specimen>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,42 +98,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19:45-20220219, Krzysztof Kozlowski wrote:
-> The 'freq-table-hz' property is deprecated by UFS bindings.
-> The uint32-array requires also element to be passed within one <> block.
+On 21/02/2022 14:13, Nishanth Menon wrote:
+> On 19:45-20220219, Krzysztof Kozlowski wrote:
+>> The 'freq-table-hz' property is deprecated by UFS bindings.
+>> The uint32-array requires also element to be passed within one <> block.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+>> ---
+>>  arch/arm64/boot/dts/ti/k3-j721e-main.dtsi | 4 +++-
+>>  1 file changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
+>> index 599861259a30..c3afef0321ae 100644
+>> --- a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
+>> +++ b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
+>> @@ -1257,7 +1257,9 @@ ufs@4e84000 {
+>>  			compatible = "cdns,ufshc-m31-16nm", "jedec,ufs-2.0";
+>>  			reg = <0x0 0x4e84000 0x0 0x10000>;
+>>  			interrupts = <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
+>> -			freq-table-hz = <250000000 250000000>, <19200000 19200000>, <19200000 19200000>;
+>> +			freq-table = <250000000 250000000
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-> ---
->  arch/arm64/boot/dts/ti/k3-j721e-main.dtsi | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+> <min max> is much more readable and less error prone in case of a large
+> set.
+
+Pairs are easily visible if split per line, so readability is similar.
+Not much is lost.
+
 > 
-> diff --git a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
-> index 599861259a30..c3afef0321ae 100644
-> --- a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
-> +++ b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
-> @@ -1257,7 +1257,9 @@ ufs@4e84000 {
->  			compatible = "cdns,ufshc-m31-16nm", "jedec,ufs-2.0";
->  			reg = <0x0 0x4e84000 0x0 0x10000>;
->  			interrupts = <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
-> -			freq-table-hz = <250000000 250000000>, <19200000 19200000>, <19200000 19200000>;
-> +			freq-table = <250000000 250000000
-
-<min max> is much more readable and less error prone in case of a large
-set.
-
-> +				      19200000 19200000
-> +				      19200000 19200000>;
-
-are you sure the removal of the tuple adds value?
-
->  			clocks = <&k3_clks 277 0>, <&k3_clks 277 1>, <&k3_clks 277 1>;
->  			clock-names = "core_clk", "phy_clk", "ref_clk";
->  			dma-coherent;
-> -- 
-> 2.32.0
+>> +				      19200000 19200000
+>> +				      19200000 19200000>;
 > 
+> are you sure the removal of the tuple adds value?
 
--- 
-Regards,
-Nishanth Menon
-Key (0xDDB5849D1736249D)/Fingerprint: F8A2 8693 54EB 8232 17A3  1A34 DDB5 849D 1736 249D
+DT schema requires it, or rather: I do not know how to express uint32
+tuples in DT schema. All my tries failed.
+
+
+Best regards,
+Krzysztof
