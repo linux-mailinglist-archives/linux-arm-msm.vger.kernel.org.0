@@ -2,90 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 579134BE404
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Feb 2022 18:58:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7839B4BE5C2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Feb 2022 19:01:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378024AbiBUOg3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Feb 2022 09:36:29 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46974 "EHLO
+        id S1378115AbiBUOlp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Feb 2022 09:41:45 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:51914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377884AbiBUOfu (ORCPT
+        with ESMTP id S233354AbiBUOln (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Feb 2022 09:35:50 -0500
-Received: from mx.tkos.co.il (guitar.tcltek.co.il [84.110.109.230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C2F01C116;
-        Mon, 21 Feb 2022 06:35:26 -0800 (PST)
-Received: from tarshish.tkos.co.il (unknown [10.0.8.2])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mx.tkos.co.il (Postfix) with ESMTPS id EBA2F440F4B;
-        Mon, 21 Feb 2022 16:34:50 +0200 (IST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tkos.co.il;
-        s=default; t=1645454091;
-        bh=8Yo/rDOE+4o1/9eoH/MnPevjHwozuDlo2GnwOqB7MmI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=NdB14XKWAaLzWE8tbZZn3/N4aBXMUw6ftC1P0+k7dhaZv5qH3SNN6CC29N/35ZtVQ
-         W76PKfv+3I1oup2BdznTUuC6sKh33uV/eSiV0nvoGBZNQrcvz4XhuRucRUgy/5/ob8
-         SrMm1XeKI5cOiSe3kXIDX6pFFuovK3omvw17Tc9NFgN48IkFIV5qkBOJfArFqSvMo0
-         t91MWA30Dqo7NfS+LjRR4i1RBLgOeTWxjoDslgVTj0SFb2wN9KoEam3OsmmZfXOMhw
-         LL+tgf/uauWlJHVTOIyVvBwPhpZC8C4zk6IhMFFGAKe7Q/4le1DSNHHweji2d7ulAv
-         QVmeqBxf95W9g==
-From:   Baruch Siach <baruch@tkos.co.il>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Robert Marko <robert.marko@sartura.hr>
-Cc:     Baruch Siach <baruch.siach@siklu.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: ipq6018: Add mdio bus description
-Date:   Mon, 21 Feb 2022 16:33:22 +0200
-Message-Id: <5e7e06e0cb189bab4586646470894bbda572785d.1645454002.git.baruch@tkos.co.il>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <a4b1ad7b15c13f368b637efdb903da143b830a88.1645454002.git.baruch@tkos.co.il>
-References: <a4b1ad7b15c13f368b637efdb903da143b830a88.1645454002.git.baruch@tkos.co.il>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        Mon, 21 Feb 2022 09:41:43 -0500
+Received: from so254-9.mailgun.net (so254-9.mailgun.net [198.61.254.9])
+        by lindbergh.monkeyblade.net (Postfix) with UTF8SMTPS id ACBF7205CF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 06:41:19 -0800 (PST)
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1645454480; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=xUsJwQqKxY3LkEa3BP/FKFjRWiH9Bwosxaz/JVSIBxA=; b=ZIvXYMRY/6Bfe4HQCIRayKzzftPf2XQu+fpc5FVGr54b8O+xhLAtQQezG1I/N3d5IjQUXfUd
+ o+3n33MLfU8WCPkIMa3YH8wOAK6QltkG9uMX6ewF9C6UfiXf0K+BUkTkQuiWI7xdBzWDzbRX
+ RcbEoYnSNhVs5JjXNOp3xrmXx/g=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 6213a48c0ae862b7cf2fdca9 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 21 Feb 2022 14:41:16
+ GMT
+Sender: quic_akhilpo=quicinc.com@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 66CC7C43637; Mon, 21 Feb 2022 14:41:15 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
+Received: from hyd-lnxbld559.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0E40EC4338F;
+        Mon, 21 Feb 2022 14:41:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 0E40EC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=fail (p=none dis=none) header.from=quicinc.com
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=quicinc.com
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+To:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS 
+        <devicetree@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Douglas Anderson <dianders@chromium.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH 0/5] Support 7c3 gpu SKUs
+Date:   Mon, 21 Feb 2022 20:10:57 +0530
+Message-Id: <1645454462-27867-1-git-send-email-quic_akhilpo@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Baruch Siach <baruch.siach@siklu.com>
+This series supercedes [1]. Major change in this series is that it is now
+optional to include a gpu name in the gpu-list. This helps to avoid the
+confusion when we have different SKUs with different gpu names. And also
+I am pretty happy that the overall changes are smaller now.
 
-The IPQ60xx has the same MDIO bug block as IPQ4019. Add IO range and
-clock resources description.
+[1] https://patchwork.freedesktop.org/series/99048/
 
-Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
----
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 10 ++++++++++
- 1 file changed, 10 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index 5eb7dc9cc231..093011d18ca6 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -635,6 +635,16 @@ qrtr_requests {
- 			};
- 		};
- 
-+		mdio: mdio@90000 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			compatible = "qcom,ipq6018-mdio", "qcom,ipq4019-mdio";
-+			reg = <0x0 0x90000 0x0 0x64>;
-+			clocks = <&gcc GCC_MDIO_AHB_CLK>;
-+			clock-names = "gcc_mdio_ahb_clk";
-+			status = "disabled";
-+		};
-+
- 		qusb_phy_1: qusb@59000 {
- 			compatible = "qcom,ipq6018-qusb2-phy";
- 			reg = <0x0 0x059000 0x0 0x180>;
+Akhil P Oommen (5):
+  drm/msm: Use generic name for gpu resources
+  drm/msm/adreno: Generate name from chipid for 7c3
+  drm/msm/a6xx: Add support for 7c3 SKUs
+  drm/msm/adreno: Expose speedbin to userspace
+  arm64: dts: qcom: sc7280: Support gpu speedbin
+
+ arch/arm64/boot/dts/qcom/sc7280.dtsi       | 46 ++++++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 18 ++++++++++--
+ drivers/gpu/drm/msm/adreno/adreno_device.c |  1 -
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 35 +++++++++++++++++++----
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  3 ++
+ drivers/gpu/drm/msm/msm_gpu.c              |  4 +--
+ 6 files changed, 96 insertions(+), 11 deletions(-)
+
 -- 
-2.34.1
+2.7.4
 
