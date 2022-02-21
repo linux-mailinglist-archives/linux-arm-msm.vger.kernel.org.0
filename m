@@ -2,117 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB5834BD758
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Feb 2022 08:44:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 819084BD735
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Feb 2022 08:43:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346153AbiBUHaN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Feb 2022 02:30:13 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:48136 "EHLO
+        id S242775AbiBUHfA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Feb 2022 02:35:00 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231397AbiBUHaM (ORCPT
+        with ESMTP id S1346307AbiBUHes (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Feb 2022 02:30:12 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E633D2E7;
-        Sun, 20 Feb 2022 23:29:49 -0800 (PST)
+        Mon, 21 Feb 2022 02:34:48 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93FCF13E93;
+        Sun, 20 Feb 2022 23:34:10 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id i14so25390929wrc.10;
+        Sun, 20 Feb 2022 23:34:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645428589; x=1676964589;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=6D4yV8bDeMxm5+FUJ/FpEuulvTmINQkkeXa+l9x7HIE=;
-  b=AABymVGNKr2E3P14+5d5gEFIQJLd2utnI84hSHH6adTREjOyzEYoKpUi
-   a3ODLMiO8mhoOUK4d4bJE+6vR8IzSYnesNeFWe108wwwdl7fxrIs9CIME
-   J0damegyWna03ypJoak0MHDtzhRXxHp+sfEqlDUKRwTJ2kkuplgFsImvV
-   o=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 20 Feb 2022 23:29:49 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Feb 2022 23:29:49 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Sun, 20 Feb 2022 23:29:49 -0800
-Received: from [10.216.3.188] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Sun, 20 Feb
- 2022 23:29:45 -0800
-Message-ID: <c1d80103-168a-b9eb-938b-4351115a0e08@quicinc.com>
-Date:   Mon, 21 Feb 2022 12:59:41 +0530
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=R+qoR05yyHcZH4vSpMFd8zmkj+IJ0A8LVRiydiNyLQE=;
+        b=bfJ5+9lJe1regsuOgOS62d6ohx+ewAGRCfg62qzUyvYZ+eec9jm0xpboi7mUJnHtRv
+         b81hAbPB3zc1/p3GtZnBfH5tb7iVphRT8k0sM1SUj/jymWXJOxMc+o3E8aRz24F9Qgbt
+         oQES8SLZ7qCM/r0yZHgLqC4AxDNlB8kFFZDMskAc36MeaGYxUDuqJqJkjZ1Yy8hHwxZj
+         JOYxBcGX0LlyvJUGOmRPN0lHOojK1SeGpCeoE5u8FSU19yXr4CDHEL28OV7ApyphpHzU
+         m/XuzUzdkLylwL8QK8qfXcgfIMIDEBt4xE83umKA13INLGHzsXmpMvThU1wPS76KJel0
+         ndhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=R+qoR05yyHcZH4vSpMFd8zmkj+IJ0A8LVRiydiNyLQE=;
+        b=g5urPmb7r+199O+WmoOQNU+h9fKfh1awGZFezOfrRM4EOgtsqvH+UyBQj/rqvOV+Bp
+         oTOmOzzJpcZEqkzKhPREicem3GEs9jNEqdSSNqxvIIeuVd77Omi/gWcHRPIF1UGjTdcd
+         lUNaiazwep9xUbP6bXGgRdhJQrnejhRov0QIl/zwVpRlsPqAqvMMeSmpQCl+YpWRls0z
+         eufJwcCCWZcvGf1NrtHB07rp9p/IQ1gcnpAYZ/IOdRzCkFpYs0oY0KBeJVsVaB2EyQhA
+         HKsKlp0oipeJQo/o6jEW0yLwz+lVC2iPqPjat6UWNbEd40QOrFBAgn/y+LP8oIV6GO6+
+         Aqdw==
+X-Gm-Message-State: AOAM531CcUCPjGTdLWySUBsN0AylVDwTSB/9VNAxOUc9clXDchDk/16z
+        a/gFfqvA+MjzN2hyUrzJ+SRUczkbka66kw==
+X-Google-Smtp-Source: ABdhPJx0lw3Y5VqBWVHfEPeyySbm9dv8MgG72DRRcySxMXil771gs/YOCQimQJH9Iw+6HqFyEOkkeQ==
+X-Received: by 2002:adf:e7cd:0:b0:1e3:31a4:4b55 with SMTP id e13-20020adfe7cd000000b001e331a44b55mr13981624wrn.650.1645428849129;
+        Sun, 20 Feb 2022 23:34:09 -0800 (PST)
+Received: from localhost.localdomain ([94.73.33.246])
+        by smtp.gmail.com with ESMTPSA id f13sm29876580wri.82.2022.02.20.23.34.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 20 Feb 2022 23:34:08 -0800 (PST)
+From:   =?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>
+To:     robdclark@gmail.com
+Cc:     sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
+        swboyd@chromium.org, bjorn.andersson@linaro.org,
+        dmitry.baryshkov@linaro.org, maxime@cerno.tech,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        =?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>
+Subject: [PATCH] drm/msm/dp: switch to devm_drm_of_get_bridge
+Date:   Mon, 21 Feb 2022 08:33:39 +0100
+Message-Id: <20220221073339.10742-1-jose.exposito89@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v3 2/7] mailbox: qcom: Add support for SDX65 APCS IPC
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <robh+dt@kernel.org>, <jassisinghbrar@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1645420953-21176-1-git-send-email-quic_rohiagar@quicinc.com>
- <1645420953-21176-3-git-send-email-quic_rohiagar@quicinc.com>
- <20220221053514.GA15108@thinkpad>
-From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
-In-Reply-To: <20220221053514.GA15108@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The function "drm_of_find_panel_or_bridge" has been deprecated in
+favor of "devm_drm_of_get_bridge".
 
-On 2/21/2022 11:05 AM, Manivannan Sadhasivam wrote:
-> On Mon, Feb 21, 2022 at 10:52:28AM +0530, Rohit Agarwal wrote:
->> In SDX65, the IPC bits are located in the APCS GCC block. Also, this block
->> can provide clock functionality. Hence, add support for IPC with correct
->> offset and name of the clock provider.
->>
->> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
->> ---
->>   drivers/mailbox/qcom-apcs-ipc-mailbox.c | 5 +++++
->>   1 file changed, 5 insertions(+)
->>
->> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
->> index 9325d2a..54d7659 100644
->> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
->> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
->> @@ -53,6 +53,10 @@ static const struct qcom_apcs_ipc_data sdx55_apcs_data = {
->>   	.offset = 0x1008, .clk_name = "qcom-sdx55-acps-clk"
->>   };
->>   
->> +static const struct qcom_apcs_ipc_data sdx65_apcs_data = {
->> +	.offset = 0x1008, .clk_name = "qcom-sdx55-acps-clk"
->> +};
-> What I suggested was reusing the "qcom,sdx55-apcs-gcc" compatible in devicetree.
-> So with that, you won't need this specific compatible for SDX65 that essentially
-> duplicates SDX55.
-Clear. Will update. Thanks!
-> Thanks,
-> Mani
->
->> +
->>   static const struct regmap_config apcs_regmap_config = {
->>   	.reg_bits = 32,
->>   	.reg_stride = 4,
->> @@ -159,6 +163,7 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
->>   	{ .compatible = "qcom,sm8150-apss-shared", .data = &apps_shared_apcs_data },
->>   	{ .compatible = "qcom,sm6115-apcs-hmss-global", .data = &msm8994_apcs_data },
->>   	{ .compatible = "qcom,sdx55-apcs-gcc", .data = &sdx55_apcs_data },
->> +	{ .compatible = "qcom,sdx65-apcs-gcc", .data = &sdx65_apcs_data },
->>   	{}
->>   };
->>   MODULE_DEVICE_TABLE(of, qcom_apcs_ipc_of_match);
->> -- 
->> 2.7.4
->>
+Switch to the new function and reduce boilerplate.
+
+Signed-off-by: José Expósito <jose.exposito89@gmail.com>
+---
+ drivers/gpu/drm/msm/dp/dp_parser.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
+index a7acc23f742b..0951752e2d98 100644
+--- a/drivers/gpu/drm/msm/dp/dp_parser.c
++++ b/drivers/gpu/drm/msm/dp/dp_parser.c
+@@ -268,16 +268,8 @@ static int dp_parser_clock(struct dp_parser *parser)
+ static int dp_parser_find_panel(struct dp_parser *parser)
+ {
+ 	struct device *dev = &parser->pdev->dev;
+-	struct drm_panel *panel;
+-	int rc;
+ 
+-	rc = drm_of_find_panel_or_bridge(dev->of_node, 1, 0, &panel, NULL);
+-	if (rc) {
+-		DRM_ERROR("failed to acquire DRM panel: %d\n", rc);
+-		return rc;
+-	}
+-
+-	parser->panel_bridge = devm_drm_panel_bridge_add(dev, panel);
++	parser->panel_bridge = devm_drm_of_get_bridge(dev, dev->of_node, 1, 0);
+ 	if (IS_ERR(parser->panel_bridge)) {
+ 		DRM_ERROR("failed to create panel bridge\n");
+ 		return PTR_ERR(parser->panel_bridge);
+-- 
+2.25.1
+
