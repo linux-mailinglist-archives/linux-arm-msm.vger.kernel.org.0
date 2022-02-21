@@ -2,60 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECC374BD39B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Feb 2022 03:22:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 419274BD38F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Feb 2022 03:22:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230157AbiBUCLo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Feb 2022 21:11:44 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46362 "EHLO
+        id S1343515AbiBUCRw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 20 Feb 2022 21:17:52 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:33590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245723AbiBUCLk (ORCPT
+        with ESMTP id S238348AbiBUCRw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Feb 2022 21:11:40 -0500
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1335E41339
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Feb 2022 18:11:18 -0800 (PST)
-Received: by mail-lj1-x22a.google.com with SMTP id p20so4116524ljo.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Feb 2022 18:11:17 -0800 (PST)
+        Sun, 20 Feb 2022 21:17:52 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E9814CD68
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Feb 2022 18:17:29 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id p22so15927536lfu.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Feb 2022 18:17:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=StWvY7rx9c/UKNsbC0bY7XQZaNNooBHW/CMpMoC4kqY=;
-        b=nhO6XgGEVTLZkc2kgMSlQQZalBbox+T4puQ0bXAMblqRkFPITH340cWuFZqkQbBSCu
-         NhOnlwzex1ptjYru7bVtJz+0ezHV0iV+PUTVNnsGdw7MU7tpCx8G3ya/2q0AMjeSPvke
-         Js+aXH+Q3OlJW8E4J1SmqvukF6daxOmeRfDNc8FyTP4eqOqte7si43HBRRRQLKgB4pzt
-         uHgszG94YDSbh/dVgGahj/pL40HbUU9hue16Lk1CPhy3ADRT5o6h4k6uwG0dAd0+p52l
-         KW7H9Nne/gtqcim+8S/rii2KFbmxHEMSTCiy3+LGi97MORJ49c245kEFPuoESuwocp/G
-         c3ZQ==
+        bh=eb896sueNM4NHpigYPMkh5NK55eQiNdPOGg2uyxmUwE=;
+        b=FU4dSv1ZSLXJ2sgUfR7Y2KHFmTT4TqLKUqNnrjcCeboM4ZE0FkQ2lRUZ97k5t+lNrI
+         u4VNugYm+ggJk3+UNK2J4/O8xpFiH1ZUAGXUR77OHNd8WkDsKGjNE3Nys/MAr4eyLEUX
+         VRBvTuc/iMALphJberS1xU6csyYguaKJJEoymBXa9roTEAhMuT9GMge2FRoGitNdBsae
+         wGCy3HC+ODsdJ98fmtjmbOQAVg5zwnWprZoojBI+bJjIW1w9HnEavBWXWb/9Bc74aU7S
+         au4TN6VV5v0uM127oSckWfnOvSNw7vH2lW2Ml0z7auHuTr/errwS1BvaqYQtffkVtXMT
+         FqgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=StWvY7rx9c/UKNsbC0bY7XQZaNNooBHW/CMpMoC4kqY=;
-        b=gbGtrfrhj8IRUlDZkORfrRXRfkc9znzO8S7LN8oHhFLSbkVGEQ31PX2maB5YRG34Sb
-         Q/h5ZUqWEjQn+TxsYBmfH8KBAJY8foUs6UlOvcoiBAiOHNrGIlIIChG4tP8M0LdoFuT6
-         565D5AOl7q5N/mvoDWxxTJ77xneJKtSeXvqYe4+1Dr7NnN9bZP8UI4OEZ1LI455Iso8l
-         9WobicterZGvfaaCcqDTXQk462+9Bl1Bm+ijqurShp1U8FWC1tgUSmdznAuulVUzvwvQ
-         Wa7KJEEiux2B+kKmyMapLbjc0sBiwPypAJ7CK/PpsRTgtTUFGobGxxgqJjOH+oxuOl6J
-         XNPg==
-X-Gm-Message-State: AOAM530HXfXgh27YoZmDG2nOggh1OIF1lJlf/dsYNZzGF2VOJvJUz9QG
-        k+2UbHkf0aNxTcQG8mI9YH/zpg==
-X-Google-Smtp-Source: ABdhPJytczHSW5Lt8K4JKWpz4Zh/38ImgD89iZLLmEHMFLh8P0OcK65RnzVHIdwE1ahPgvLgsu6Yyw==
-X-Received: by 2002:a2e:9ad5:0:b0:244:c85f:d546 with SMTP id p21-20020a2e9ad5000000b00244c85fd546mr13557291ljj.303.1645409476413;
-        Sun, 20 Feb 2022 18:11:16 -0800 (PST)
+        bh=eb896sueNM4NHpigYPMkh5NK55eQiNdPOGg2uyxmUwE=;
+        b=EYFE0K3mQEtkdd/mZ8S97Q1osQy9cYpsz/lnYrusDi6JGVZN0kceA+QawTiFGO8mi8
+         q0tUG7XXA6uRjiyBq8gCB4a+FvCL5G4kYkc+3ELZPKy/BeR5Rce50FNH/yDfltDIlPtC
+         ltn1jlKFdm6ARa4mamjFgTDwX24WiRXTjI22dW1ubmkUh+j6ZwLEWaoeAxNKB7Usy3La
+         6pytxxvWTDEz62osAxbNVTEDPYkQK811KJDSHnt7F1gARWTyktVOgxgixASQXm1T14e1
+         gi2QbiKhraNmQXgOEMGrx0nfDvqsJGXjYYPVBHvqk64YUveq+hcDtsHdUiH7c2gEWJ8i
+         63Jw==
+X-Gm-Message-State: AOAM531+gvR02b0Z/eW+B9LJ0Su0VN+pYvbD6ZYUxc7zHlUWk3brHyhb
+        lQPXO2e8h6jisVY12zxjynDeFQ==
+X-Google-Smtp-Source: ABdhPJzbA9aXh3dYLrH4glJrMZRMzNuqetdxDYq2qKoFNE2JfpglCmr900uihhRF09ObDGDKRwUqPA==
+X-Received: by 2002:a05:6512:3b88:b0:443:7b08:2fcb with SMTP id g8-20020a0565123b8800b004437b082fcbmr12370342lfv.621.1645409847655;
+        Sun, 20 Feb 2022 18:17:27 -0800 (PST)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id y11sm1125372ljj.69.2022.02.20.18.11.15
+        by smtp.gmail.com with ESMTPSA id 6sm969170lfq.241.2022.02.20.18.17.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 20 Feb 2022 18:11:15 -0800 (PST)
-Message-ID: <977340f4-1a5d-a103-4669-ab0168df8cd6@linaro.org>
-Date:   Mon, 21 Feb 2022 05:11:14 +0300
+        Sun, 20 Feb 2022 18:17:26 -0800 (PST)
+Message-ID: <abbccac6-7637-c981-e22f-6ea057b1fa55@linaro.org>
+Date:   Mon, 21 Feb 2022 05:17:26 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.0
-Subject: Re: [REPOST PATCH v4 13/13] drm/msm/dsi: Add support for DSC
- configuration
+Subject: Re: [REPOST PATCH v4 01/13] drm/msm/dsi: add support for dsc data
 Content-Language: en-GB
 To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -67,9 +66,9 @@ Cc:     linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
 References: <20220210103423.271016-1-vkoul@kernel.org>
- <20220210103423.271016-14-vkoul@kernel.org>
+ <20220210103423.271016-2-vkoul@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220210103423.271016-14-vkoul@kernel.org>
+In-Reply-To: <20220210103423.271016-2-vkoul@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,177 +82,219 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 10/02/2022 13:34, Vinod Koul wrote:
-> When DSC is enabled, we need to configure DSI registers accordingly and
-> configure the respective stream compression registers.
+> Display Stream Compression (DSC) parameters need to be calculated. Add
+> helpers and struct msm_display_dsc_config in msm_drv for this
+> msm_display_dsc_config uses drm_dsc_config for DSC parameters.
 > 
-> Add support to calculate the register setting based on DSC params and
-> timing information and configure these registers.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->   drivers/gpu/drm/msm/dsi/dsi.xml.h  |  10 +++
->   drivers/gpu/drm/msm/dsi/dsi_host.c | 109 ++++++++++++++++++++++++++++-
->   2 files changed, 118 insertions(+), 1 deletion(-)
+>   drivers/gpu/drm/msm/dsi/dsi_host.c | 132 +++++++++++++++++++++++++++++
+>   drivers/gpu/drm/msm/msm_drv.h      |  15 ++++
+>   2 files changed, 147 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.xml.h b/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> index 49b551ad1bff..c1c85df58c4b 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> @@ -706,4 +706,14 @@ static inline uint32_t DSI_VERSION_MAJOR(uint32_t val)
->   #define REG_DSI_CPHY_MODE_CTRL					0x000002d4
->   
->   
-> +#define REG_DSI_VIDEO_COMPRESSION_MODE_CTRL			0x0000029c
-> +
-> +#define REG_DSI_VIDEO_COMPRESSION_MODE_CTRL2			0x000002a0
-> +
-> +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL			0x000002a4
-> +
-> +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2			0x000002a8
-> +
-> +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL3			0x000002ac
-> +
->   #endif /* DSI_XML */
 > diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 438c80750682..3d8d5a1daaa3 100644
+> index 6b3ced4aaaf5..27553194f9fa 100644
 > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
 > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -908,6 +908,20 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
->   		dsi_write(msm_host, REG_DSI_CPHY_MODE_CTRL, BIT(0));
+> @@ -31,6 +31,8 @@
+>   
+>   #define DSI_RESET_TOGGLE_DELAY_MS 20
+>   
+> +static int dsi_populate_dsc_params(struct msm_display_dsc_config *dsc);
+> +
+>   static int dsi_get_version(const void __iomem *base, u32 *major, u32 *minor)
+>   {
+>   	u32 ver;
+> @@ -157,6 +159,7 @@ struct msm_dsi_host {
+>   	struct regmap *sfpb;
+>   
+>   	struct drm_display_mode *mode;
+> +	struct msm_display_dsc_config *dsc;
+>   
+>   	/* connected device info */
+>   	struct device_node *device_node;
+> @@ -1718,6 +1721,135 @@ static int dsi_host_parse_lane_data(struct msm_dsi_host *msm_host,
+>   	return -EINVAL;
 >   }
 >   
-> +static int dsi_dsc_update_pic_dim(struct msm_display_dsc_config *dsc,
-> +				  int pic_width, int pic_height)
+> +static u32 dsi_dsc_rc_buf_thresh[DSC_NUM_BUF_RANGES - 1] = {
+> +	0x0e, 0x1c, 0x2a, 0x38, 0x46, 0x54, 0x62,
+> +	0x69, 0x70, 0x77, 0x79, 0x7b, 0x7d, 0x7e
+> +};
+> +
+> +/* only 8bpc, 8bpp added */
+> +static char min_qp[DSC_NUM_BUF_RANGES] = {
+> +	0, 0, 1, 1, 3, 3, 3, 3, 3, 3, 5, 5, 5, 7, 13
+> +};
+> +
+> +static char max_qp[DSC_NUM_BUF_RANGES] = {
+> +	4, 4, 5, 6, 7, 7, 7, 8, 9, 10, 11, 12, 13, 13, 15
+> +};
+> +
+> +static char bpg_offset[DSC_NUM_BUF_RANGES] = {
+> +	2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -12, -12, -12, -12
+> +};
+> +
+> +static int dsi_populate_dsc_params(struct msm_display_dsc_config *dsc)
 > +{
-> +	if (!dsc || !pic_width || !pic_height) {
-> +		pr_err("DSI: invalid input: pic_width: %d pic_height: %d\n", pic_width, pic_height);
-> +		return -EINVAL;
+> +	int mux_words_size;
+> +	int groups_per_line, groups_total;
+> +	int min_rate_buffer_size;
+> +	int hrd_delay;
+> +	int pre_num_extra_mux_bits, num_extra_mux_bits;
+> +	int slice_bits;
+> +	int target_bpp_x16;
+> +	int data;
+> +	int final_value, final_scale;
+> +	int i;
+> +
+> +	dsc->drm->rc_model_size = 8192;
+> +	dsc->drm->first_line_bpg_offset = 12;
+> +	dsc->drm->rc_edge_factor = 6;
+> +	dsc->drm->rc_tgt_offset_high = 3;
+> +	dsc->drm->rc_tgt_offset_low = 3;
+> +	dsc->drm->simple_422 = 0;
+> +	dsc->drm->convert_rgb = 1;
+> +	dsc->drm->vbr_enable = 0;
+> +
+> +	/* handle only bpp = bpc = 8 */
+> +	for (i = 0; i < DSC_NUM_BUF_RANGES - 1 ; i++)
+> +		dsc->drm->rc_buf_thresh[i] = dsi_dsc_rc_buf_thresh[i];
+> +
+> +	for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
+> +		dsc->drm->rc_range_params[i].range_min_qp = min_qp[i];
+> +		dsc->drm->rc_range_params[i].range_max_qp = max_qp[i];
+> +		dsc->drm->rc_range_params[i].range_bpg_offset = bpg_offset[i];
 > +	}
 > +
-> +	dsc->drm->pic_width = pic_width;
-> +	dsc->drm->pic_height = pic_height;
+> +	dsc->drm->initial_offset = 6144; /* Not bpp 12 */
+> +	if (dsc->drm->bits_per_pixel != 8)
+> +		dsc->drm->initial_offset = 2048;	/* bpp = 12 */
+> +
+> +	mux_words_size = 48;		/* bpc == 8/10 */
+> +	if (dsc->drm->bits_per_component == 12)
+> +		mux_words_size = 64;
+> +
+> +	dsc->drm->initial_xmit_delay = 512;
+> +	dsc->drm->initial_scale_value = 32;
+> +	dsc->drm->first_line_bpg_offset = 12;
+> +	dsc->drm->line_buf_depth = dsc->drm->bits_per_component + 1;
+> +
+> +	/* bpc 8 */
+> +	dsc->drm->flatness_min_qp = 3;
+> +	dsc->drm->flatness_max_qp = 12;
+> +	dsc->det_thresh_flatness = 7 + 2 * (dsc->drm->bits_per_component - 8);
+> +	dsc->drm->rc_quant_incr_limit0 = 11;
+> +	dsc->drm->rc_quant_incr_limit1 = 11;
+> +	dsc->drm->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
+> +
+> +	/* FIXME: need to call drm_dsc_compute_rc_parameters() so that rest of
+> +	 * params are calculated
+> +	 */
+> +	dsc->slice_last_group_size = 3 - (dsc->drm->slice_width % 3);
+> +	groups_per_line = DIV_ROUND_UP(dsc->drm->slice_width, 3);
+> +	dsc->drm->slice_chunk_size = dsc->drm->slice_width * dsc->drm->bits_per_pixel / 8;
+> +	if ((dsc->drm->slice_width * dsc->drm->bits_per_pixel) % 8)
+> +		dsc->drm->slice_chunk_size++;
+> +
+> +	/* rbs-min */
+> +	min_rate_buffer_size =  dsc->drm->rc_model_size - dsc->drm->initial_offset +
+> +				dsc->drm->initial_xmit_delay * dsc->drm->bits_per_pixel +
+> +				groups_per_line * dsc->drm->first_line_bpg_offset;
+> +
+> +	hrd_delay = DIV_ROUND_UP(min_rate_buffer_size, dsc->drm->bits_per_pixel);
+> +
+> +	dsc->drm->initial_dec_delay = hrd_delay - dsc->drm->initial_xmit_delay;
+> +
+> +	dsc->drm->initial_scale_value = 8 * dsc->drm->rc_model_size /
+> +				       (dsc->drm->rc_model_size - dsc->drm->initial_offset);
+> +
+> +	slice_bits = 8 * dsc->drm->slice_chunk_size * dsc->drm->slice_height;
+> +
+> +	groups_total = groups_per_line * dsc->drm->slice_height;
+> +
+> +	data = dsc->drm->first_line_bpg_offset * 2048;
+> +
+> +	dsc->drm->nfl_bpg_offset = DIV_ROUND_UP(data, (dsc->drm->slice_height - 1));
+> +
+> +	pre_num_extra_mux_bits = 3 * (mux_words_size + (4 * dsc->drm->bits_per_component + 4) - 2);
+> +
+> +	num_extra_mux_bits = pre_num_extra_mux_bits - (mux_words_size -
+> +			     ((slice_bits - pre_num_extra_mux_bits) % mux_words_size));
+> +
+> +	data = 2048 * (dsc->drm->rc_model_size - dsc->drm->initial_offset + num_extra_mux_bits);
+> +	dsc->drm->slice_bpg_offset = DIV_ROUND_UP(data, groups_total);
+> +
+> +	/* bpp * 16 + 0.5 */
+> +	data = dsc->drm->bits_per_pixel * 16;
+> +	data *= 2;
+> +	data++;
+> +	data /= 2;
+> +	target_bpp_x16 = data;
+> +
+> +	data = (dsc->drm->initial_xmit_delay * target_bpp_x16) / 16;
+> +	final_value =  dsc->drm->rc_model_size - data + num_extra_mux_bits;
+> +	dsc->drm->final_offset = final_value;
+> +
+> +	final_scale = 8 * dsc->drm->rc_model_size / (dsc->drm->rc_model_size - final_value);
+> +
+> +	data = (final_scale - 9) * (dsc->drm->nfl_bpg_offset + dsc->drm->slice_bpg_offset);
+> +	dsc->drm->scale_increment_interval = (2048 * dsc->drm->final_offset) / data;
+> +
+> +	dsc->drm->scale_decrement_interval = groups_per_line / (dsc->drm->initial_scale_value - 8);
 > +
 > +	return 0;
 > +}
 > +
->   static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>   static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
 >   {
->   	struct drm_display_mode *mode = msm_host->mode;
-> @@ -940,7 +954,68 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->   		hdisplay /= 2;
->   	}
+>   	struct device *dev = &msm_host->pdev->dev;
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index d7574e6bd4e4..384f9bad4760 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -30,6 +30,7 @@
+>   #include <drm/drm_plane_helper.h>
+>   #include <drm/drm_probe_helper.h>
+>   #include <drm/drm_fb_helper.h>
+> +#include <drm/drm_dsc.h>
+>   #include <drm/msm_drm.h>
+>   #include <drm/drm_gem.h>
 >   
-> +	if (msm_host->dsc) {
-> +		struct msm_display_dsc_config *dsc = msm_host->dsc;
-> +
-> +		/* update dsc params with timing params */
-> +		dsi_dsc_update_pic_dim(dsc, mode->hdisplay, mode->vdisplay);
-> +		DBG("Mode Width- %d x Height %d\n", dsc->drm->pic_width, dsc->drm->pic_height);
-> +
-> +		/* we do the calculations for dsc parameters here so that
-> +		 * panel can use these parameters
-> +		 */
-> +		dsi_populate_dsc_params(dsc);
-> +
-> +		/* Divide the display by 3 but keep back/font porch and
-> +		 * pulse width same
-> +		 */
-> +		h_total -= hdisplay;
-> +		hdisplay /= 3;
-> +		h_total += hdisplay;
-> +		ha_end = ha_start + hdisplay;
-> +	}
-> +
->   	if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
-> +		if (msm_host->dsc) {
-> +			struct msm_display_dsc_config *dsc = msm_host->dsc;
-> +			u32 reg, intf_width, slice_per_intf;
-> +			u32 total_bytes_per_intf;
-> +
-> +			/* first calculate dsc parameters and then program
-> +			 * compress mode registers
-> +			 */
-> +			intf_width = hdisplay;
-> +			slice_per_intf = DIV_ROUND_UP(intf_width, dsc->drm->slice_width);
-> +
-> +			dsc->drm->slice_count = 1;
-> +			dsc->bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width * 8, 8);
-> +			total_bytes_per_intf = dsc->bytes_in_slice * slice_per_intf;
-> +
-> +			dsc->eol_byte_num = total_bytes_per_intf % 3;
-> +			dsc->pclk_per_line =  DIV_ROUND_UP(total_bytes_per_intf, 3);
-> +			dsc->bytes_per_pkt = dsc->bytes_in_slice * dsc->drm->slice_count;
-> +			dsc->pkt_per_line = slice_per_intf / dsc->drm->slice_count;
-> +
-> +			reg = dsc->bytes_per_pkt << 16;
-> +			reg |= (0x0b << 8);    /* dtype of compressed image */
-> +
-> +			/* pkt_per_line:
-> +			 * 0 == 1 pkt
-> +			 * 1 == 2 pkt
-> +			 * 2 == 4 pkt
-> +			 * 3 pkt is not supported
-> +			 * above translates to ffs() - 1
-> +			 */
-> +			reg |= (ffs(dsc->pkt_per_line) - 1) << 6;
-> +
-> +			dsc->eol_byte_num = total_bytes_per_intf % 3;
-> +			reg |= dsc->eol_byte_num << 4;
-> +			reg |= 1;
-> +
-> +			dsi_write(msm_host,
-> +				  REG_DSI_VIDEO_COMPRESSION_MODE_CTRL, reg);
-> +		}
-> +
->   		dsi_write(msm_host, REG_DSI_ACTIVE_H,
->   			DSI_ACTIVE_H_START(ha_start) |
->   			DSI_ACTIVE_H_END(ha_end));
-> @@ -959,8 +1034,40 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->   			DSI_ACTIVE_VSYNC_VPOS_START(vs_start) |
->   			DSI_ACTIVE_VSYNC_VPOS_END(vs_end));
->   	} else {		/* command mode */
-> +		if (msm_host->dsc) {
-> +			struct msm_display_dsc_config *dsc = msm_host->dsc;
-> +			u32 reg, reg_ctrl, reg_ctrl2;
-> +			u32 slice_per_intf, bytes_in_slice, total_bytes_per_intf;
-> +
-> +			reg_ctrl = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL);
-> +			reg_ctrl2 = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2);
-> +
-> +			slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->drm->slice_width);
-> +			bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width *
-> +						      dsc->drm->bits_per_pixel, 8);
-> +			dsc->drm->slice_chunk_size = bytes_in_slice;
-> +			total_bytes_per_intf = dsc->bytes_in_slice * slice_per_intf;
-
-Should we use dsc->bytes_in_slice or just bytes_in_slice here?
-
-> +			dsc->pkt_per_line = slice_per_intf / dsc->drm->slice_count;
-> +
-> +			reg = 0x39 << 8;
-> +			reg |= ffs(dsc->pkt_per_line) << 6;
-> +
-> +			dsc->eol_byte_num = total_bytes_per_intf % 3;
-> +			reg |= dsc->eol_byte_num << 4;
-> +			reg |= 1;
-> +
-> +			reg_ctrl |= reg;
-> +			reg_ctrl2 |= bytes_in_slice;
-> +
-> +			dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL, reg);
-> +			dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2, reg_ctrl2);
-> +		}
-> +
->   		/* image data and 1 byte write_memory_start cmd */
-> -		wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
-> +		if (!msm_host->dsc)
-> +			wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
-> +		else
-> +			wc = mode->hdisplay / 2 + 1;
+> @@ -134,6 +135,20 @@ struct msm_drm_thread {
+>   	struct kthread_worker *worker;
+>   };
 >   
->   		dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL,
->   			DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
+> +/* DSC config */
+> +struct msm_display_dsc_config {
+> +	struct drm_dsc_config *drm;
+> +
+> +	u32 initial_lines;
+> +	u32 pkt_per_line;
+> +	u32 bytes_in_slice;
+> +	u32 bytes_per_pkt;
+> +	u32 eol_byte_num;
+> +	u32 pclk_per_line;
+> +	u32 slice_last_group_size;
+> +	u32 det_thresh_flatness;
+
+I have been looking throught the dsc params calculation. And it looks 
+like this struct is not necessary at all.
+
+inital_lines can be passed to dpu_encoder_dsc_pipe_cfg() / 
+hw_dsc->ops.dsc_config() directly.
+
+slice_last_group_size and det_thresh_flatness can be calculated in 
+dpu_hw_dsc_config() directly. And the rest is only used in 
+dsi_timing_setup(), where they are calculated an immediately used to set 
+the hardware. Let's probably drop it, unless there is a good reason to 
+have it?
+
+> +};
+> +
+>   struct msm_drm_private {
+>   
+>   	struct drm_device *dev;
 
 
 -- 
