@@ -2,188 +2,209 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B67584BF69F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 11:51:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 984374BF72F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 12:24:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229779AbiBVKu4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 05:50:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55544 "EHLO
+        id S230521AbiBVLYE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 06:24:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231497AbiBVKuz (ORCPT
+        with ESMTP id S231682AbiBVLYD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 05:50:55 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4870F15C9F0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 02:50:30 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id f19-20020a17090ac29300b001bc68ecce4aso2018323pjt.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 02:50:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=5xXqSAHagTJE559oaHlLg/c+Ad153OGfu++AbH4hfUg=;
-        b=OrsEBm7pYEKVo7jsPe5iEQgv05yoY6LM/3nzwZfwEc0v+O1p7b0nqzk1rpVF3+j3xe
-         jWqHh6tOYIuqpKa7TgO3hnCugDGGSAqLYOnoXMTemq4l6Y6vHSp5pVOWAGXWLBzO6EqA
-         mhvFHUJYwbvAuYmrLfBHDKdz66c/2vjQEWt35H01fAWsewYejDNjU7/gJUJ2OIKd/5CQ
-         KeYs81u+9yaLCon4PhyrQ+LpvXO4Fy54vfPvW2OZZYzOIRB/moqLPG2ssQR5vgXMP/Mp
-         0NDqIp/m5d26fo05wORFLxVQDJ5b6bKpPB9CIcusKEiGfiaiauIS1i2xyo9i2oEG/i7V
-         77Jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=5xXqSAHagTJE559oaHlLg/c+Ad153OGfu++AbH4hfUg=;
-        b=zS4+L+b1b5YI0CieZ3NsqSxdf+naqbFnI0YTdLrXpH0DjWw0o7seHdPMdGHQGXtTss
-         jLkMTP2Cm+oqkNX9V8DSgCPpkXkoU9NcvbidzGz+1Ky7HyycjyUkPW2xsH1cdbLEcrbs
-         EpqgyqEwFqgRffRD04s0SI/1JWku5tggiZq3MJ/Pwnse544D3sRuAFjUVRnTIa6072y5
-         aMhdZs+3ibZnGpuZJJvcZFhRkPxjjGEtrzB+ehIjwH8MRlOEZ1ZdUtML1eCxhw3JmbDU
-         d8PGNhUuMwL4OlJ2Ij82gBgE5CW4mGERuy4CmMJW5wkJI8DF54xKS+uG/LO5D+Iwv5DL
-         Xw6g==
-X-Gm-Message-State: AOAM530jiwWhSUSkuebuO1kppXagtqSVBXLHhoEJETZlD/HJQpAxMakY
-        h1cOWk/7PS0C5WOTibwNtW94
-X-Google-Smtp-Source: ABdhPJzZA3ZxDPNU12CTVzpzjl2/dqPRLeN5wlC8uzUVshTTZKvXpplM4yqxqutaEaPsHx19Mx065w==
-X-Received: by 2002:a17:90b:240e:b0:1b9:2963:d5a1 with SMTP id nr14-20020a17090b240e00b001b92963d5a1mr3495898pjb.227.1645527029752;
-        Tue, 22 Feb 2022 02:50:29 -0800 (PST)
-Received: from thinkpad ([117.217.186.202])
-        by smtp.gmail.com with ESMTPSA id c1sm8539189pfl.130.2022.02.22.02.50.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 02:50:29 -0800 (PST)
-Date:   Tue, 22 Feb 2022 16:20:23 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
-        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
-        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
-        dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
-        quic_cang@quicinc.com, quic_skananth@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 22/25] bus: mhi: ep: Add support for processing
- transfer ring
-Message-ID: <20220222105023.GG5029@thinkpad>
-References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
- <20220212182117.49438-23-manivannan.sadhasivam@linaro.org>
- <f91de912-977b-4e78-2e8c-12f4c09134bd@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f91de912-977b-4e78-2e8c-12f4c09134bd@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Tue, 22 Feb 2022 06:24:03 -0500
+Received: from m43-7.mailgun.net (m43-7.mailgun.net [69.72.43.7])
+        by lindbergh.monkeyblade.net (Postfix) with UTF8SMTPS id A9145131949
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 03:23:38 -0800 (PST)
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1645529018; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: From: References: Cc: To: Subject: MIME-Version: Date:
+ Message-ID: Sender; bh=ykOz9QTcSokzbehPDZ8vrVEtjNsi5wpt4JO8Bvanv2M=; b=ZkdRZdQsB/dIHM5/n8+TnP/4qhjMr9VTe/ERht3V+izx1/UUPmBJJXHnh7hlaTaVNEeHEoHD
+ NUWYrSg4EnpjlDJR+3ymZOn6WRowSazw4qBFJrDY+u5MOS6UUH+YjzGI/glrekEExKUf+4f+
+ EUWrbKUh6fStvL9RvaV7xjPPlac=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 6214c7b8afeb9481f5366976 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 22 Feb 2022 11:23:36
+ GMT
+Sender: tdas=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8958BC4361A; Tue, 22 Feb 2022 11:23:36 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H5,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
+Received: from [192.168.0.102] (unknown [49.204.183.34])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CFFD8C4338F;
+        Tue, 22 Feb 2022 11:23:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org CFFD8C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Message-ID: <99454f74-9166-b20a-cb3a-44bad30eed1b@codeaurora.org>
+Date:   Tue, 22 Feb 2022 16:53:29 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [v1 1/2] clk: qcom: gdsc: Use the default transition delay for
+ GDSCs
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220209172513.17873-1-tdas@codeaurora.org>
+ <YgRBnExwlzI+lPlR@builder.lan> <20220210072842.3E796C004E1@smtp.kernel.org>
+ <9f343332-9a0e-cbf9-9fb1-17127036b0b6@codeaurora.org>
+ <YhP5MD+d8btWBUl8@ripper>
+From:   Taniya Das <tdas@codeaurora.org>
+In-Reply-To: <YhP5MD+d8btWBUl8@ripper>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 15, 2022 at 04:40:18PM -0600, Alex Elder wrote:
-> On 2/12/22 12:21 PM, Manivannan Sadhasivam wrote:
-> > Add support for processing the transfer ring from host. For the transfer
-> > ring associated with DL channel, the xfer callback will simply invoked.
-> > For the case of UL channel, the ring elements will be read in a buffer
-> > till the write pointer and later passed to the client driver using the
-> > xfer callback.
-> > 
-> > The client drivers should provide the callbacks for both UL and DL
-> > channels during registration.
+Hello Bjorn,
+
+Thanks for your comments.
+
+On 2/22/2022 2:12 AM, Bjorn Andersson wrote:
+> On Mon 21 Feb 08:55 PST 2022, Taniya Das wrote:
 > 
-> I think you already checked and guaranteed that.
+>> Hi Stephen, Bjorn,
+>>
+>> Thanks for your comments.
+>>
+>> On 2/10/2022 12:58 PM, Stephen Boyd wrote:
+>>> Quoting Bjorn Andersson (2022-02-09 14:35:08)
+>>>> On Wed 09 Feb 11:25 CST 2022, Taniya Das wrote:
+>>>>
+>>>>> Do not update the transition delay and use the default reset values.
+>>>>>
+>>>>> Fixes: 45dd0e55317cc ("clk: qcom: Add support for GDSCs)
+>>>>> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+>>>>> ---
+>>>>>    drivers/clk/qcom/gdsc.c | 6 +++++-
+>>>>>    drivers/clk/qcom/gdsc.h | 1 +
+>>>>>    2 files changed, 6 insertions(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+>>>>> index 7e1dd8ccfa38..e7b213450640 100644
+>>>>> --- a/drivers/clk/qcom/gdsc.c
+>>>>> +++ b/drivers/clk/qcom/gdsc.c
+>>>>> @@ -380,7 +380,11 @@ static int gdsc_init(struct gdsc *sc)
+>>>>>          */
+>>>>>         mask = HW_CONTROL_MASK | SW_OVERRIDE_MASK |
+>>>>>                EN_REST_WAIT_MASK | EN_FEW_WAIT_MASK | CLK_DIS_WAIT_MASK;
+>>>>> -     val = EN_REST_WAIT_VAL | EN_FEW_WAIT_VAL | CLK_DIS_WAIT_VAL;
+>>>>> +
+>>>>> +     regmap_read(sc->regmap, sc->gdscr, &val);
+>>>>> +
+>>>>> +     if (!(sc->flags & DEFAULT_TRANSITION_DELAY))
+>>>>
+>>>> I dug a little bit more into this and noticed that on various platforms
+>>>> CLK_DIS_WAIT_VAL for the GPU_CX GDSC is supposed to be 8 (whereas both
+>>>> hw default and CLK_DIS_WAIT_VAL is 2).
+>>>>
+>>
+>> Yes, only for certain GPU_CC these would be updated and that too in case the
+>> design team suggests. Downstream we would set the value from probe itself,
+>> or we can pick these from device tree as required and suggested.
+>>
 > 
-> I have a question and suggestion below.  But it could
-> be considered an optimization that could be implemented
-> in the future, so:
+> I don't expect that value to be "configurable", so pushing it to DT
+> doesn't seem like the proper solution.
 > 
-> Reviewed-by: Alex Elder <elder@linaro.org>
+>>>> I'm not able to find anything helpful in the git log describing what the
+>>>> value does, but it seems that a "just use hw default" flag won't cut it
+>>>> for this scenario.
+>>>>
+>>
+>> This value is used for the number of clock cycles it would wait before the
+>> GDSCR ACK signals/halting the clock.
+>>
 > 
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >   drivers/bus/mhi/ep/main.c | 49 +++++++++++++++++++++++++++++++++++++++
-> >   1 file changed, 49 insertions(+)
-> > 
-> > diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> > index b937c6cda9ba..baf383a4857b 100644
-> > --- a/drivers/bus/mhi/ep/main.c
-> > +++ b/drivers/bus/mhi/ep/main.c
-> > @@ -439,6 +439,55 @@ static int mhi_ep_read_channel(struct mhi_ep_cntrl *mhi_cntrl,
-> >   	return 0;
-> >   }
-> > +int mhi_ep_process_tre_ring(struct mhi_ep_ring *ring, struct mhi_ep_ring_element *el)
-> > +{
-> > +	struct mhi_ep_cntrl *mhi_cntrl = ring->mhi_cntrl;
-> > +	struct mhi_result result = {};
-> > +	u32 len = MHI_EP_DEFAULT_MTU;
-> > +	struct mhi_ep_chan *mhi_chan;
-> > +	int ret;
-> > +
-> > +	mhi_chan = &mhi_cntrl->mhi_chan[ring->ch_id];
-> > +
-> > +	/*
-> > +	 * Bail out if transfer callback is not registered for the channel.
-> > +	 * This is most likely due to the client driver not loaded at this point.
-> > +	 */
-> > +	if (!mhi_chan->xfer_cb) {
-> > +		dev_err(&mhi_chan->mhi_dev->dev, "Client driver not available\n");
-> > +		return -ENODEV;
-> > +	}
-> > +
-> > +	if (ring->ch_id % 2) {
-> > +		/* DL channel */
-> > +		result.dir = mhi_chan->dir;
-> > +		mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
-> > +	} else {
-> > +		/* UL channel */
-> > +		do {
-> > +			result.buf_addr = kzalloc(len, GFP_KERNEL);
+> That makes sense.
 > 
-> So you allocate an 8KB buffer into which you copy
-> received data, then pass that to the ->xfer_cb()
-> function.  Then you free that buffer.  Repeatedly.
+>>>
+>>> I'd prefer we invert the logic so that we don't need to litter this flag
+>>> all over the place. I recall that the wait values were incorrect a long
+>>> time ago on early gdsc using designs but hopefully they've been fixed
+>>> now and we can simply use the default power on reset (POR) values.
+>>
+>> I am okay to invert the logic, but I am not sure if they could cause any
+>> issues to the older targets. They were broken in HW design long back, but
+>> got fixed in most families of target and most GDSCs.
+>>
 > 
-> Two questions about this:
-> - This suggests that after copying the data in, the
->   ->xfer_cb() function will copy it again, is that
->   correct?
-> - If that is correct, why not just reuse the same 8KB
->   buffer, allocated once outside the loop?
+> I don't fancy us having a flag with the purpose of "don't set the
+> timings to 2, 8 and 2" and then rely on open coded writes in probe to
+> set it to something else where needed.
+> 
+> So I definitely would prefer to flip this around, to make the cases
+> where we want to write different values explicit.
+> 
+> But as you say, unless we make sure that all existing platforms do write
+> 2, 8 and 2 we risk introducing regressions from the current behavior.
+> 
+>> As mentioned if explicitly they need to be updated, it is best to do from
+>> the probe.
+>> This was done in SC7180 GPUCC driver.
+>>          /* Configure clk_dis_wait for gpu_cx_gdsc */
+>>          regmap_update_bits(regmap, 0x106c, CLK_DIS_WAIT_MASK,
+>>                                          8 << CLK_DIS_WAIT_SHIFT);
+> 
+> But we call regmap_update_bits() from probe, which sets the CLK_DIS_WAIT
+> to 8, then we call qcom_cc_really_probe() which will end up in
+> gdsc_init() which replaces that with a 2.
+> 
+> Perhaps I'm missing something?
 > 
 
-The allocation was moved into the loop so that the TRE length buffer could be
-allocated but I somehow decided to allocate the Max length buffer. So this could
-be moved outside of the loop.
+It was my miss when I did a cleanup to move the DIS_WAIT_VAL before 
+registering the clocks.
 
-Thanks,
-Mani
+>>
+>>
+>> Please let me know if we are okay to add the invert logic.
+>>
+> 
+> I'm still favoring a scheme where we add 3 integers to struct gdsc and
+> in gdsc_init() we check if they are non-zero we write the value to the
+> register.
+> 
+Sure, will update the gdsc_init() to default "2, 8, 2" in case of 
+non-zero value.
 
-> It might also be nice to consider whether you could
-> allocate the buffer here and have the ->xfer_cb()
-> function be responsible for freeing it (and ideally,
-> pass it along rather than copying it again).
+> Although being a big patch, we could maintain the existing behaviour by
+> giving all existing struct gdsc definitions the values 2, 8 and 2 to
+> avoid regressions and we (everyone) can then go through the platforms
+> one by one and remove the unnecessary assignments - but more
+> importantly, double check with downstream if they need a different
+> value.
 > 
-> > +			if (!result.buf_addr)
-> > +				return -ENOMEM;
-> > +
-> > +			ret = mhi_ep_read_channel(mhi_cntrl, ring, &result, len);
-> > +			if (ret < 0) {
-> > +				dev_err(&mhi_chan->mhi_dev->dev, "Failed to read channel\n");
-> > +				kfree(result.buf_addr);
-> > +				return ret;
-> > +			}
-> > +
-> > +			result.dir = mhi_chan->dir;
-> > +			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
-> > +			kfree(result.buf_addr);
-> > +			result.bytes_xferd = 0;
-> > +
-> > +			/* Read until the ring becomes empty */
-> > +		} while (!mhi_ep_queue_is_empty(mhi_chan->mhi_dev, DMA_TO_DEVICE));
-> > +	}
-> > +
-> > +	return 0;
-> > +}
-> > +
-> >   static int mhi_ep_cache_host_cfg(struct mhi_ep_cntrl *mhi_cntrl)
-> >   {
-> >   	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+
+Sure, that would help.
+
+> This will also have the side effect going forward that it will be more
+> explicit and people writing gdsc definitions should double check these
+> values.
 > 
+> Regards,
+> Bjorn
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
+
+--
