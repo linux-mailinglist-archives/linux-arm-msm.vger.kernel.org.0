@@ -2,126 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0630D4BFA61
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 15:08:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 318054BFA6C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 15:09:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232011AbiBVOIg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 09:08:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41428 "EHLO
+        id S232748AbiBVOJf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 09:09:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230163AbiBVOIg (ORCPT
+        with ESMTP id S232714AbiBVOJe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 09:08:36 -0500
-Received: from fllv0015.ext.ti.com (fllv0015.ext.ti.com [198.47.19.141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABCB513113F;
-        Tue, 22 Feb 2022 06:08:10 -0800 (PST)
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-        by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 21ME7MkP005019;
-        Tue, 22 Feb 2022 08:07:22 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-        s=ti-com-17Q1; t=1645538842;
-        bh=8HPnjRNTg1rgRuGDrTg7AuCbtaoqyKy2IHjGLaHD7Fs=;
-        h=Date:From:To:CC:Subject:References:In-Reply-To;
-        b=ctwrzo4XA7iB3hzjs0/vCaLdhyfnlm9x8Tdm/vef0FUl6cqTWqKcvKg8na866ipQ3
-         LkfBXKjRm6agy3zbZ0R+Hv1+oLn5AMKHSzkk/YA4GXqoL7gpruaaFDcenNcJOSZymK
-         u2NjCkYLufIp1G3dAt7RFNAxpFND1thYMo9NUp/8=
-Received: from DFLE114.ent.ti.com (dfle114.ent.ti.com [10.64.6.35])
-        by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 21ME7MSc086515
-        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Tue, 22 Feb 2022 08:07:22 -0600
-Received: from DFLE115.ent.ti.com (10.64.6.36) by DFLE114.ent.ti.com
- (10.64.6.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2308.14; Tue, 22
- Feb 2022 08:07:21 -0600
-Received: from fllv0040.itg.ti.com (10.64.41.20) by DFLE115.ent.ti.com
- (10.64.6.36) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2308.14 via
- Frontend Transport; Tue, 22 Feb 2022 08:07:21 -0600
-Received: from localhost (ileax41-snat.itg.ti.com [10.172.224.153])
-        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 21ME7LqE034437;
-        Tue, 22 Feb 2022 08:07:21 -0600
-Date:   Tue, 22 Feb 2022 08:07:21 -0600
-From:   Nishanth Menon <nm@ti.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-CC:     Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Wei Xu <xuwei5@hisilicon.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Tero Kristo <kristo@kernel.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Chanho Park <chanho61.park@samsung.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Jan Kotas <jank@cadence.com>, <linux-scsi@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-Subject: Re: [RFC PATCH 8/8] arm64: dts: ti: use 'freq-table' in UFS node
-Message-ID: <20220222140721.bzbspfcethml2psm@running>
-References: <20220219184224.44339-1-krzysztof.kozlowski@canonical.com>
- <20220219184554.44887-1-krzysztof.kozlowski@canonical.com>
- <20220221131340.q3hjpjevqrfvhggv@specimen>
- <19705501-2391-14a4-0eac-4b2b647a9735@canonical.com>
+        Tue, 22 Feb 2022 09:09:34 -0500
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7B0915F61F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 06:09:00 -0800 (PST)
+Received: by mail-qv1-xf29.google.com with SMTP id 8so6085768qvf.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 06:09:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Xqy5QKYZUVik+xQ3v/BV4Q233CuzTNH+f5Hje8r4UrI=;
+        b=aGIIG0timJUg6GqBs7BQEga6tkXr3leN8qS/gdipqyzpUFCqQkhRhM7UZe2pVyLcgm
+         NOb3dsFsdJciYIMXJuNhQY2WUhYIwifHoKXAxGkcT+WEJUP6rAWREQ8BsToWjyfTPIrv
+         1Gia/lwpYFtICvwKofZOdKvajWAV0p2Yj6N4JVAbKmVeu1/iV0LKcPwccNE71C6LFLrI
+         1UL2sV6UmJqsZt9jsrcCgwaKVMRq3o3rBAMI85FQ/PZRZZ3ywz5wKyIOOlqhsHSRTe/y
+         b20BwfwS8h8HFx5aY6uAhL/6Ug/B65sontRAmVB2YUKzm9kzcsNjicDtP4SeQiYeumNs
+         VAzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Xqy5QKYZUVik+xQ3v/BV4Q233CuzTNH+f5Hje8r4UrI=;
+        b=svCYalhIEfyCGCyCz1hyyyhHdSiJMY3dbUF+vUaezQqYIKxdKsfihKfchcwdWe7ykr
+         wnHVtz6B3/NEeY3mbUbh5Gq6VHoQ3+EDI96ymsKbb5YA7865WDmgN3tj77zyG2Qq6qC+
+         +qxWMin3qjRmkyaQ1sODBqtYS3HsR3TJ2gqJc7rhEmIVQM6s9fTVyrt+QZD9MuvI0Ypp
+         qN9LMfL1Fva/zRrBe6+4NSX771JdasxjUfQHuMV5kkU33KFlMmyADxHPpJgf8P2m3Kza
+         MwARvrCVafas+W0NBK7GzrJaSkyJfVVdixeDbR8VwGs3ywDKABLh6WQrGAxGZuanNt+I
+         8Tdw==
+X-Gm-Message-State: AOAM531o2ohVjpfd3w7baVvvB1bRquvyFNftmLO8jdESqI3w+pjjbXFq
+        aE5CmNNyMYu+bptDYvI9dnXpBA==
+X-Google-Smtp-Source: ABdhPJyu9Jgp+cBMPis6i+EmxSqRp8Qurp/ec9d0f6KFWdqDr/xI0wAEwk7qjS45pCIqzW1QSNPz9Q==
+X-Received: by 2002:a05:622a:607:b0:2d7:35db:81e4 with SMTP id z7-20020a05622a060700b002d735db81e4mr21875783qta.281.1645538939986;
+        Tue, 22 Feb 2022 06:08:59 -0800 (PST)
+Received: from [172.22.22.26] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id m5sm6184543qkd.36.2022.02.22.06.08.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Feb 2022 06:08:59 -0800 (PST)
+Message-ID: <72118049-0ae0-69a9-97de-2c132e5f3b6c@linaro.org>
+Date:   Tue, 22 Feb 2022 08:08:57 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <19705501-2391-14a4-0eac-4b2b647a9735@canonical.com>
-User-Agent: NeoMutt/20171215
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v3 15/25] bus: mhi: ep: Add support for processing MHI
+ endpoint interrupts
+Content-Language: en-US
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
+        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
+        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
+        dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
+        quic_cang@quicinc.com, quic_skananth@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
+ <20220212182117.49438-16-manivannan.sadhasivam@linaro.org>
+ <d5bf8b66-e9ec-4750-9d9d-deb55cbcee94@linaro.org>
+ <20220222081859.GC5029@thinkpad>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <20220222081859.GC5029@thinkpad>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14:20-20220221, Krzysztof Kozlowski wrote:
-> On 21/02/2022 14:13, Nishanth Menon wrote:
-> > On 19:45-20220219, Krzysztof Kozlowski wrote:
-> >> The 'freq-table-hz' property is deprecated by UFS bindings.
-> >> The uint32-array requires also element to be passed within one <> block.
-> >>
-> >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-> >> ---
-> >>  arch/arm64/boot/dts/ti/k3-j721e-main.dtsi | 4 +++-
-> >>  1 file changed, 3 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
-> >> index 599861259a30..c3afef0321ae 100644
-> >> --- a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
-> >> +++ b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
-> >> @@ -1257,7 +1257,9 @@ ufs@4e84000 {
-> >>  			compatible = "cdns,ufshc-m31-16nm", "jedec,ufs-2.0";
-> >>  			reg = <0x0 0x4e84000 0x0 0x10000>;
-> >>  			interrupts = <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
-> >> -			freq-table-hz = <250000000 250000000>, <19200000 19200000>, <19200000 19200000>;
-> >> +			freq-table = <250000000 250000000
-> > 
-> > <min max> is much more readable and less error prone in case of a large
-> > set.
+On 2/22/22 2:18 AM, Manivannan Sadhasivam wrote:
+> On Tue, Feb 15, 2022 at 04:39:30PM -0600, Alex Elder wrote:
+>> On 2/12/22 12:21 PM, Manivannan Sadhasivam wrote:
+>>> Add support for processing MHI endpoint interrupts such as control
+>>> interrupt, command interrupt and channel interrupt from the host.
+>>>
+>>> The interrupts will be generated in the endpoint device whenever host
+>>> writes to the corresponding doorbell registers. The doorbell logic
+>>> is handled inside the hardware internally.
+>>>
+>>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>>
+>> Unless I'm mistaken, you have some bugs here.
+>>
+>> Beyond that, I question whether you should be using workqueues
+>> for handling all interrupts.  For now, it's fine, but there
+>> might be room for improvement after this is accepted upstream
+>> (using threaded interrupt handlers, for example).
+>>
 > 
-> Pairs are easily visible if split per line, so readability is similar.
-> Not much is lost.
-> 
-> > 
-> >> +				      19200000 19200000
-> >> +				      19200000 19200000>;
-> > 
-> > are you sure the removal of the tuple adds value?
-> 
-> DT schema requires it, or rather: I do not know how to express uint32
-> tuples in DT schema. All my tries failed.
+> Only reason I didn't use bottom halves is that the memory for TRE buffers need
+> to be allocated each time, so essentially the caller should not sleep.
 
-https://www.kernel.org/doc/Documentation/devicetree/bindings/opp/opp-v1.yaml
-comes to mind..
+Threaded interrupt handlers can sleep.  If scheduled, they run
+immediately after hard interrupt handlers.  For receive buffers,
+yes, replacing a receive buffer just consumed would require an
+allocation, but for transmit I think it might be possible to
+avoid the need to do a memory allocation.  (Things to think
+about at some future date.)
 
--- 
-Regards,
-Nishanth Menon
-Key (0xDDB5849D1736249D) / Fingerprint: F8A2 8693 54EB 8232 17A3  1A34 DDB5 849D 1736 249D
+> This is currently a limitation of iATU where there are only 8 windows for
+> mapping the host memory and each memory region size is also limited.
+
+Those are hard limitations, and probably what constrains you the most.
+
+					-Alex
+> 
+>> 					-Alex
+>>
+>>> ---
+>>>    drivers/bus/mhi/ep/main.c | 113 +++++++++++++++++++++++++++++++++++++-
+>>>    include/linux/mhi_ep.h    |   2 +
+>>>    2 files changed, 113 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+>>> index ccb3c2795041..072b872e735b 100644
+>>> --- a/drivers/bus/mhi/ep/main.c
+>>> +++ b/drivers/bus/mhi/ep/main.c
+>>> @@ -185,6 +185,56 @@ static void mhi_ep_ring_worker(struct work_struct *work)
+>>>    	}
+>>>    }
+>>> +static void mhi_ep_queue_channel_db(struct mhi_ep_cntrl *mhi_cntrl,
+>>> +				    unsigned long ch_int, u32 ch_idx)
+>>> +{
+>>> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>>> +	struct mhi_ep_ring_item *item;
+>>> +	struct mhi_ep_ring *ring;
+>>> +	unsigned int i;
+>>
+>> Why not u32 i?  And why is the ch_int argument unsigned long?  The value
+>> passed in is a u32.
+>>
+> 
+> for_each_set_bit() expects the 2nd argument to be of type "unsigned long".
+> 
+> Thanks,
+> Mani
+
