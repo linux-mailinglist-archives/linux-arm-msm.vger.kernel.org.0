@@ -2,74 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 77F994BEF8F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 03:43:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 118694BEFD7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 04:16:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232589AbiBVClc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Feb 2022 21:41:32 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:57268 "EHLO
+        id S239494AbiBVDMa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Feb 2022 22:12:30 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231561AbiBVClb (ORCPT
+        with ESMTP id S230183AbiBVDM3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Feb 2022 21:41:31 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 314F125C6F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 18:41:07 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id j17so3514690wrc.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 18:41:07 -0800 (PST)
+        Mon, 21 Feb 2022 22:12:29 -0500
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B8AC5FA2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 19:12:05 -0800 (PST)
+Received: by mail-qv1-xf2e.google.com with SMTP id a19so37624514qvm.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 19:12:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=F8EZpKYd1YA4m/weW3nrPOkwMsmkl5R8bOsF2q/+kU0=;
-        b=HForMk1XC3MkMzJ+J54cA80wGm/GIyofNGNmGWu0B8Es9sy9F550QKc7PUw548wNL0
-         fM7pt+A0LbhkzaNepRQYFk1jOVT8b5S6Js1iAB05M9QtEBVnPGTXzSupaslIdr/LyQEQ
-         sBJX+EyhNEQCp71dIvjb4Jmkyum8WCTOHXBMhZSBiE1tYvmHZdHFNJ5VsxTXmeQKq6mm
-         C8bg2FsKuCLOoD2tmIPjQhr7/8TSBmGmf6AE/WQPXRwJvHlfoJD3I6CEIC6uMHkDY9C9
-         lpWTvufU+4islN8fKp3GLLJtfmTWMkQ+TH7FxEiY9eE/HFibNBNfvsRnYWmPBDo7uZh5
-         D0XA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qFJMqR0Uyd2kPZ5TICCuCWl+NAqTGxv/k2Ys7IDjf1s=;
+        b=eyN6+87FrkdQPVOr02hchsIoth9vEfXRogzh61Xd1oI5aXdVT2uFWCEPPJYTrRv/Oq
+         VCXMlqOIk0eiOge3ouDVg2be5IvzO2TyduP2cS0nh9yWZttszDJZi6DFD3FF6ziAIufA
+         NygeTb8+dUkED6jzSHG85PAHSaXfRwqG1s/I7LyzCJbCtP/Aobb08J9aGGLTYB7QEmLM
+         JdIIRgC58FkZtiXfZ07Cl92oz2NQvr2rct3+QCxxbEG2JUZkZgx5EeeaLOHw6rbKBbcp
+         7ZF2OoukMgUCAkU6dyrbi04NWD/T1lz6Wt7AE3oDyjdLdd3MvkPV6Ig9D4LpPcy6s5iW
+         sIKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=F8EZpKYd1YA4m/weW3nrPOkwMsmkl5R8bOsF2q/+kU0=;
-        b=qbdSaWL78mH3DI1de3JcOJyONJOwcsFylICkXChxgKGSKO3kPh45qRRzYKuT+DTSpy
-         Bdg4k7jMqS3v+bJxDW6m3LmyvxE8EQjQa/8rmOKuCd/JWCWjfmXa9Pe3LpBS9htvCIRv
-         3vF5ZJ5e92+n5IDO2Fx/7DahGr5wX8DI8DTza54un2qT1EsleSJ+u8KPrpvdYWKYmcyl
-         7yI+UBRbObxbDwx6oVO++7fdFkIbuA0a/7cVSvZiYm4G6+QLw0EaABUzqb3OgrhJkhmq
-         0MJ5kRcvix4FJ97fKdhpnEMC4boIvU3HUS7tGDEPT8G4V9qJLg+nJ8bpYTxek58M5RV4
-         Aatg==
-X-Gm-Message-State: AOAM5301R3gsZIys3UN0AInHWGyNTaEIppiJyaOCap8Ef0e3qqt5o584
-        PxmSP08IKmn1sLntCOM5wMQV8g==
-X-Google-Smtp-Source: ABdhPJxajEOCGHoJBRvOvFIfTrVcQeI5sLbNDPNbpduQzv3/9EyjjE2qz5FGJzbFat4Y5ELvavGxkw==
-X-Received: by 2002:a5d:5090:0:b0:1e4:b66b:11a2 with SMTP id a16-20020a5d5090000000b001e4b66b11a2mr17906213wrt.360.1645497665611;
-        Mon, 21 Feb 2022 18:41:05 -0800 (PST)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id e7sm30613620wrg.44.2022.02.21.18.41.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Feb 2022 18:41:05 -0800 (PST)
-Message-ID: <144e802c-588c-12e2-5815-5847d2a9fe29@linaro.org>
-Date:   Tue, 22 Feb 2022 02:41:04 +0000
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qFJMqR0Uyd2kPZ5TICCuCWl+NAqTGxv/k2Ys7IDjf1s=;
+        b=y//Svu1Sa1t9rO4NQnn39XXGIr0sZ039GZr7PFJ8vINjnOilIBnrHWsElne56aQMCf
+         n+vpAm7PhVW+qgKLtRAyDC1DnlKsEdUq9qCmxiklYQ410HNBtMzBcD8bZyU9Vxtyd720
+         pmSGOz+SPap6RXbvJEWlD6eFKnYeCrYV/NZxzkxotkK5B9jpNurJg0++anFt/kSqpJck
+         8WLeMHm7UylGJV3oviyEJEzZ/2Xnjwnm+GLtg6yP9CZtZf5AAISMsOwj8fsPnupqWMtF
+         hLgsEIN1MK0buSS51TyqFChoN8CSiM/uJQYn9ifzLHejHM1iloGI27OJaIaZQNyQwy0p
+         irng==
+X-Gm-Message-State: AOAM530uwlmDdq7MphHDLsWy1RPIbPyrYNM3KtOdmh85K6tWSPIAe6zT
+        omBu/vd6nbkX8sz9qxca4WHeE6qp6ybMmk9gV4yXqg==
+X-Google-Smtp-Source: ABdhPJzuBSQDu4totjZ87w+DOzd95iK77ndN1yjJvntgthnFEFwtdZKse38DWkEDhFKlI/9NC/pR/5/P6bLR2axIZn4=
+X-Received: by 2002:ac8:5b88:0:b0:2de:23e3:62c0 with SMTP id
+ a8-20020ac85b88000000b002de23e362c0mr7377707qta.62.1645499524196; Mon, 21 Feb
+ 2022 19:12:04 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq6018: Add mdio bus description
-Content-Language: en-US
-To:     Baruch Siach <baruch@tkos.co.il>, Andy Gross <agross@kernel.org>,
+References: <20220222012638.6650-1-konrad.dybcio@somainline.org>
+In-Reply-To: <20220222012638.6650-1-konrad.dybcio@somainline.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 22 Feb 2022 05:26:03 +0300
+Message-ID: <CAA8EJppM=3R-h0Yai4JTSfc3j-nvV_oCgK+t5Vz_8X6A_AfO=Q@mail.gmail.com>
+Subject: Re: [RFC PATCH] drm/msm/dpu1: Add a common DPU1 compatible
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Robert Marko <robert.marko@sartura.hr>
-Cc:     Baruch Siach <baruch.siach@siklu.com>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <a4b1ad7b15c13f368b637efdb903da143b830a88.1645454002.git.baruch@tkos.co.il>
- <5e7e06e0cb189bab4586646470894bbda572785d.1645454002.git.baruch@tkos.co.il>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <5e7e06e0cb189bab4586646470894bbda572785d.1645454002.git.baruch@tkos.co.il>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,37 +78,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/02/2022 14:33, Baruch Siach wrote:
-> From: Baruch Siach <baruch.siach@siklu.com>
-> 
-> The IPQ60xx has the same MDIO bug block as IPQ4019. Add IO range and
-> clock resources description.
-> 
-> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
-> ---
->   arch/arm64/boot/dts/qcom/ipq6018.dtsi | 10 ++++++++++
->   1 file changed, 10 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> index 5eb7dc9cc231..093011d18ca6 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> @@ -635,6 +635,16 @@ qrtr_requests {
->   			};
->   		};
->   
-> +		mdio: mdio@90000 {
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +			compatible = "qcom,ipq6018-mdio", "qcom,ipq4019-mdio";
-> +			reg = <0x0 0x90000 0x0 0x64>;
-> +			clocks = <&gcc GCC_MDIO_AHB_CLK>;
-> +			clock-names = "gcc_mdio_ahb_clk";
-> +			status = "disabled";
-> +		};
-> +
->   		qusb_phy_1: qusb@59000 {
->   			compatible = "qcom,ipq6018-qusb2-phy";
->   			reg = <0x0 0x059000 0x0 0x180>;
+Hi,
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+On Tue, 22 Feb 2022 at 04:26, Konrad Dybcio
+<konrad.dybcio@somainline.org> wrote:
+>
+> There is *almost no reason* to keep separate compatibles for different
+> SoCs utilizing the DPU1 driver, as it checks the HW version at runtime.
+>
+> Introduce a common compatible, while not removing the old ones to keep
+> old DT compatibility.
+
+I don't quite like this idea. Specifying more or less exact
+compatibility string gives us more flexibility.
+Few recent usecases to mention:
+- qcom,mdp5 compatibility. If we had soc-specific compatibilities, we
+would be able to switch the drivers w/o changing the dts. With a
+single compatibility we would have to change the dts if we were to
+change one of the boards form mdp5 to dpu1.
+- qcom,mdss-dsi-ctrl vs qcm2290. We have to add special compat string
+to account for the different io addresses. If we were using
+soc-specific compats, it would be one from many, not one vs many
+usage.
+
+>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> ---
+> Bar some very very very unlikely edge cases (such as need for some random
+> quick being applied to one SoC from a family that shares DPU hw rev, but
+> not the others, there is little to no reason to keep adding compatibles
+> that don't mean anything.
+>
+> If this change is cool, then the question about what to do with
+> dt-bindings arises...
+>
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 47fe11a84a77..335018542a3a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -1348,6 +1348,9 @@ static const struct dev_pm_ops dpu_pm_ops = {
+>  };
+>
+>  const struct of_device_id dpu_dt_match[] = {
+> +       { .compatible = "qcom,dpu1" },
+> +
+> +       /* Legacy compatibles for old DTs */
+>         { .compatible = "qcom,sdm845-dpu", },
+>         { .compatible = "qcom,sc7180-dpu", },
+>         { .compatible = "qcom,sc7280-dpu", },
+> --
+> 2.35.1
+>
+
+
+-- 
+With best wishes
+Dmitry
