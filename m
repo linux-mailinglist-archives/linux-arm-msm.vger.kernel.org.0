@@ -2,77 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 681204C057F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 00:45:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9948E4C0586
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 00:48:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236267AbiBVXp7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 18:45:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44782 "EHLO
+        id S236354AbiBVXsm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 18:48:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235650AbiBVXp6 (ORCPT
+        with ESMTP id S236345AbiBVXsU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 18:45:58 -0500
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30F56DF4D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 15:45:31 -0800 (PST)
-Received: by mail-ot1-x335.google.com with SMTP id j8-20020a056830014800b005ad00ef6d5dso10798499otp.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 15:45:31 -0800 (PST)
+        Tue, 22 Feb 2022 18:48:20 -0500
+Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E61551313
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 15:47:49 -0800 (PST)
+Received: by mail-oo1-xc2c.google.com with SMTP id w10-20020a4ae08a000000b0031bdf7a6d76so19883248oos.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 15:47:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=cmsRrWwzrQv3gMJ4N18EGVNpjJmfIvBVGVuIwDsI4bg=;
-        b=s20ySE/OqEIu+s9WQyxiUwpdqpGyYu4yNSpQ81BRyu365f16tbQI14hBPwvm0qVPjy
-         r/QkTKVJMOOdweRBZvdBwVZx2WeNP88wBuYM7XR6JZGDAhS2WXV6gVUtr37zBC3ui+gB
-         OsCAr9fiMYNUJ1l8GjemZcgHe5FPuaqAagLFLtWWdDeF1jMTE9bycqsK9eb/v0m/P/gX
-         n/V/FUt7hpojpEQtp+pKV++pZktmgTbupsJarBc704kckybyYXvQt8eKlgcUGB8UXX74
-         AhnbPkowAr02Es+JDRElEG0TluCZD/Dc9N87kHsZbiEJghYKWXUc55gUjXXj+urzDbR9
-         0o5w==
+        bh=mNfJggOV7YP6vqkDY7Togq40JzvOACLm16iiua2Y2uw=;
+        b=l2HJoH0cwLBgMyfkawLfhKR8cFTCEKZmdiN6esWuoyfxi5CbTTS9ue0w5bVdWhEVOV
+         MW2W/F0yQYGIkYeKN1tKmj9WgwBYNJX4T5SK94vU8V3SxHXEdgUDqToZdv/UE9WrmFrv
+         XPUA24QHlpi02giWZWhtxkCjfc4ThgxbejQSRCkj7rabK4txPFIOjWGkcuZiwb/WaVe3
+         t4p4S0DJFjbboRWjUtQaWHZ0Az1AZEsBqcz0Qb8OfOOr85TN6fpajrmmycUVV38qp78L
+         MHNZ4S3N/XT03ji5SDddX+/vAcYTLwc6W2KjK7eIXMJGRsz2VvjLrZ+f3JRWaCbNNbbO
+         lqng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=cmsRrWwzrQv3gMJ4N18EGVNpjJmfIvBVGVuIwDsI4bg=;
-        b=MdkihvL/a8OpivKvovAGwqlJeioiIiPQEueUT9c9NozdkrMxba67OEmExYe6bLemww
-         AvzVykqBZZPWlqFwb6XOMcR01le1DyotjrlltjJ1optFxlnFZUug+l56iYE7R7X6u+7s
-         wLatOXytlxiawi1jEXR/ID0SldUf8CfbGxzXydpHC4ARNmPRhY4ZPexpVaXYnW7HmLLn
-         Hp7UonPNfaUHL3i2SxQz1wXmjJA8etOMwDMOL8B3uj/X8Vcg1i1k1JVtJOhXqZ9tyKTD
-         gKz7/ZpQiacSg7GdhlbaHb2uJSxiGC1SLAPUxTlN4nLaD71oEy1A+cWAE09QC0iZ7IEN
-         2StA==
-X-Gm-Message-State: AOAM531t5g6c2rtFacfleFEiZIEqOZ/CrXXtrWPYZZBjZM41bhc7pYtg
-        4sT1gurE7UYE3mHQ9WipoLYGaA==
-X-Google-Smtp-Source: ABdhPJzRrBj19AnSO5X3bi/rkXuZ6iZK1ftdF/7G6DTbKFm3oyrdzXI0PZ62x3IJREJRKf4txMEMcA==
-X-Received: by 2002:a05:6830:342:b0:5af:186d:f947 with SMTP id h2-20020a056830034200b005af186df947mr4680326ote.94.1645573530157;
-        Tue, 22 Feb 2022 15:45:30 -0800 (PST)
+        bh=mNfJggOV7YP6vqkDY7Togq40JzvOACLm16iiua2Y2uw=;
+        b=alwYXcluk4RMfX9C++tfy8RzFKPTmE2IQKLLsq6hqsJsgc3v5d3oXBigMAbyeVnEFy
+         0H3muFBMEEr6TP4roPO5+iV1vxvTFi5GfnR8TcgW1AtQIGWQvt+zHyXdfqyyXsMXugNx
+         JVZc1g2R/vgTf6mm1hPagzQ9+NRuP2y9qoOd7uqIygaSmXqBv17vEKzZXQtYYLV/BjQ3
+         i+pLFt93TCeN0B14bXMLri3fqUUEhd2fB9Yn0PYM4xBRno4FVV51eHEUtaajwt3R0YJO
+         +sAcrrR5CodNvY4Yi8moaQK2+7FxAc7ENzPVMKvElaRIQPDVeriKVIb+OTmhSW5BOhyy
+         9dKA==
+X-Gm-Message-State: AOAM530y0jhQtsUxToxsZ2FgJfo7lOBjww7BlchEKyjWi/jNDYDAcKz4
+        Sx7WfazX9frKyQjUy2H50+CQ2Q==
+X-Google-Smtp-Source: ABdhPJzDOUvvuAGYdNLbTLaY4ZLSk9mbdrprvLOzCJJVN9oMZ575y6rrP65j/r/BKWpecEMZ8EIrMQ==
+X-Received: by 2002:a05:6870:5b9e:b0:cf:f6de:3e89 with SMTP id em30-20020a0568705b9e00b000cff6de3e89mr2705326oab.94.1645573669196;
+        Tue, 22 Feb 2022 15:47:49 -0800 (PST)
 Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id m18sm6961150otq.31.2022.02.22.15.45.29
+        by smtp.gmail.com with ESMTPSA id o15sm6764241ooi.31.2022.02.22.15.47.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 15:45:29 -0800 (PST)
-Date:   Tue, 22 Feb 2022 15:47:30 -0800
+        Tue, 22 Feb 2022 15:47:48 -0800 (PST)
+Date:   Tue, 22 Feb 2022 15:49:49 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Vinod Koul <vkoul@kernel.org>,
         Kishon Vijay Abraham I <kishon@ti.com>,
         Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
         Bjorn Helgaas <bhelgaas@google.com>,
         Krzysztof Wilczy??ski <kw@linux.com>,
         linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
         devicetree@vger.kernel.org, linux-phy@lists.infradead.org
 Subject: Re: [PATCH v5 4/5] PCI: qcom: Add interconnect support to
  2.7.0/1.9.0 ops
-Message-ID: <YhV2EhQvReObX/4J@ripper>
+Message-ID: <YhV2nemA+t0cCdlP@ripper>
 References: <20211218141024.500952-1-dmitry.baryshkov@linaro.org>
  <20211218141024.500952-5-dmitry.baryshkov@linaro.org>
- <Yfv7gh8YycxH2Wtm@ripper>
- <527f0365-1544-ad73-cf49-b839ae629340@linaro.org>
- <20220211161208.GB448@lpieralisi>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220211161208.GB448@lpieralisi>
+In-Reply-To: <20211218141024.500952-5-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -83,124 +79,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 11 Feb 08:12 PST 2022, Lorenzo Pieralisi wrote:
+On Sat 18 Dec 06:10 PST 2021, Dmitry Baryshkov wrote:
 
-> On Fri, Feb 04, 2022 at 05:38:33PM +0300, Dmitry Baryshkov wrote:
-> > On 03/02/2022 18:57, Bjorn Andersson wrote:
-> > > On Sat 18 Dec 06:10 PST 2021, Dmitry Baryshkov wrote:
-> > > 
-> > > > Add optional interconnect support for the 2.7.0/1.9.0 hosts. Set the
-> > > > bandwidth according to the values from the downstream driver.
-> > > > 
-> > > 
-> > > What memory transactions will travel this path? I would expect there to
-> > > be two different paths involved, given the rather low bw numbers I
-> > > presume this is the config path?
-> > 
-> > I think so. Downstream votes on this path for most of the known SoCs. Two
-> > spotted omissions are ipq8074 and qcs404.
-> > 
-> > > 
-> > > Is there no vote for the data path?
-> > 
-> > CNSS devices can vote additionally on the MASTER_PCI to memory paths:
-> > For sm845 (45 = MASTER_PCIE):
-> >                 qcom,msm-bus,vectors-KBps =
-> >                         <45 512 0 0>,
-> >                         <45 512 600000 800000>; /* ~4.6Gbps (MCS12) */
-> > 
-> > On sm8150/sm8250 qca bindings do not contain a vote, but wil6210 does (100 =
-> > MASTER_PCIE_1):
-> >                 qcom,msm-bus,vectors-KBps =
-> >                         <100 512 0 0>,
-> >                         <100 512 600000 800000>; /* ~4.6Gbps (MCS12) */
-> > 
-> > For sm8450 there are two paths used by cnss:
-> > 		<&pcie_noc MASTER_PCIE_0 &pcie_noc SLAVE_ANOC_PCIE_GEM_NOC>,
-> > 		<&gem_noc MASTER_ANOC_PCIE_GEM_NOC &mc_virt SLAVE_EBI1>;
-> > 
-> > with multiple entries per each path.
-> > 
-> > So, I'm not sure about these values.
+> Add optional interconnect support for the 2.7.0/1.9.0 hosts. Set the
+> bandwidth according to the values from the downstream driver.
 > 
-> This discussion is gating the series, please let me know if you want me
-> to cherry-pick the other patches or you will resend the series.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
 > 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index d8d400423a0a..55ac3caa6d7d 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -12,6 +12,7 @@
+>  #include <linux/crc8.h>
+>  #include <linux/delay.h>
+>  #include <linux/gpio/consumer.h>
+> +#include <linux/interconnect.h>
+>  #include <linux/interrupt.h>
+>  #include <linux/io.h>
+>  #include <linux/iopoll.h>
+> @@ -167,6 +168,7 @@ struct qcom_pcie_resources_2_7_0 {
+>  	struct clk *pipe_clk_src;
+>  	struct clk *phy_pipe_clk;
+>  	struct clk *ref_clk_src;
+> +	struct icc_path *path;
 
-Please pick the other patches and I'll work with Dmitry to conclude how
-this is actually connected to the busses inside the SoC.
+I think it's fair to assume that pretty much all platforms will have a
+data path to reach the config registers and for the PCI to reach DDR.
 
-Thanks,
+So how about we place this in the common struct qcom_pcie instead?
+
+Regards,
 Bjorn
 
-> Lorenzo
+>  };
+>  
+>  union qcom_pcie_resources {
+> @@ -1121,6 +1123,10 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+>  	if (IS_ERR(res->pci_reset))
+>  		return PTR_ERR(res->pci_reset);
+>  
+> +	res->path = devm_of_icc_get(dev, "pci");
+> +	if (IS_ERR(res->path))
+> +		return PTR_ERR(res->path);
+> +
+>  	res->supplies[0].supply = "vdda";
+>  	res->supplies[1].supply = "vddpe-3v3";
+>  	ret = devm_regulator_bulk_get(dev, ARRAY_SIZE(res->supplies),
+> @@ -1183,6 +1189,9 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+>  	if (pcie->cfg->pipe_clk_need_muxing)
+>  		clk_set_parent(res->pipe_clk_src, res->phy_pipe_clk);
+>  
+> +	if (res->path)
+> +		icc_set_bw(res->path, 500, 800);
+> +
+>  	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
+>  	if (ret < 0)
+>  		goto err_disable_regulators;
+> @@ -1241,6 +1250,8 @@ static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
+>  	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+>  
+>  	clk_bulk_disable_unprepare(res->num_clks, res->clks);
+> +	if (res->path)
+> +		icc_set_bw(res->path, 0, 0);
+>  
+>  	/* Set TCXO as clock source for pcie_pipe_clk_src */
+>  	if (pcie->cfg->pipe_clk_need_muxing)
+> -- 
+> 2.34.1
 > 
-> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > ---
-> > > >   drivers/pci/controller/dwc/pcie-qcom.c | 11 +++++++++++
-> > > >   1 file changed, 11 insertions(+)
-> > > > 
-> > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > index d8d400423a0a..55ac3caa6d7d 100644
-> > > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > @@ -12,6 +12,7 @@
-> > > >   #include <linux/crc8.h>
-> > > >   #include <linux/delay.h>
-> > > >   #include <linux/gpio/consumer.h>
-> > > > +#include <linux/interconnect.h>
-> > > >   #include <linux/interrupt.h>
-> > > >   #include <linux/io.h>
-> > > >   #include <linux/iopoll.h>
-> > > > @@ -167,6 +168,7 @@ struct qcom_pcie_resources_2_7_0 {
-> > > >   	struct clk *pipe_clk_src;
-> > > >   	struct clk *phy_pipe_clk;
-> > > >   	struct clk *ref_clk_src;
-> > > > +	struct icc_path *path;
-> > > >   };
-> > > >   union qcom_pcie_resources {
-> > > > @@ -1121,6 +1123,10 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
-> > > >   	if (IS_ERR(res->pci_reset))
-> > > >   		return PTR_ERR(res->pci_reset);
-> > > > +	res->path = devm_of_icc_get(dev, "pci");
-> > > 
-> > > The paths are typically identified using a string of the form
-> > > <source>-<destination>.
-> > > 
-> > > 
-> > > I don't see the related update to the DT binding for the introduction of
-> > > the interconnect.
-> > > 
-> > > Regards,
-> > > Bjorn
-> > > 
-> > > > +	if (IS_ERR(res->path))
-> > > > +		return PTR_ERR(res->path);
-> > > > +
-> > > >   	res->supplies[0].supply = "vdda";
-> > > >   	res->supplies[1].supply = "vddpe-3v3";
-> > > >   	ret = devm_regulator_bulk_get(dev, ARRAY_SIZE(res->supplies),
-> > > > @@ -1183,6 +1189,9 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
-> > > >   	if (pcie->cfg->pipe_clk_need_muxing)
-> > > >   		clk_set_parent(res->pipe_clk_src, res->phy_pipe_clk);
-> > > > +	if (res->path)
-> > > > +		icc_set_bw(res->path, 500, 800);
-> > > > +
-> > > >   	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
-> > > >   	if (ret < 0)
-> > > >   		goto err_disable_regulators;
-> > > > @@ -1241,6 +1250,8 @@ static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
-> > > >   	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-> > > >   	clk_bulk_disable_unprepare(res->num_clks, res->clks);
-> > > > +	if (res->path)
-> > > > +		icc_set_bw(res->path, 0, 0);
-> > > >   	/* Set TCXO as clock source for pcie_pipe_clk_src */
-> > > >   	if (pcie->cfg->pipe_clk_need_muxing)
-> > > > -- 
-> > > > 2.34.1
-> > > > 
-> > 
-> > 
-> > -- 
-> > With best wishes
-> > Dmitry
