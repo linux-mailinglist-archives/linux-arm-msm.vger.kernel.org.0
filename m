@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECE054BFBAF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 16:02:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B37654BFBAB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 16:02:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231174AbiBVPB5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 10:01:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48342 "EHLO
+        id S233231AbiBVPBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 10:01:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231871AbiBVPBN (ORCPT
+        with ESMTP id S230280AbiBVPBM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 10:01:13 -0500
+        Tue, 22 Feb 2022 10:01:12 -0500
 Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D30910EC6B
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 07:00:08 -0800 (PST)
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com [209.85.221.72])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A803D10EC71
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 07:00:09 -0800 (PST)
+Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com [209.85.167.69])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id EA46D3FCA8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 15:00:06 +0000 (UTC)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 83CB43FCA0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 15:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1645542006;
-        bh=4OhXJxblf34wMx5+uRUs16cf2JFWMcvDQKlBG/4EIbg=;
+        s=20210705; t=1645542008;
+        bh=AXkZYdVX5Zodn+3WZgtIGj/ZSa6Qs/Xzl3ZJQ9geNsQ=;
         h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
          MIME-Version;
-        b=Rdy5IgroHscYIVGFB2/xRhp+CT0/SgnjZiWGmaHpKCe7Vg5++z1SVwH3C8AKYt3fX
-         sX5lZoOj0z0PjC0EXg8mKmfxhBDoIOYFwuP0Yd00rWdFkj+Gy+4qUzH39H0JisYEVZ
-         7ZjwlVxfFBQuo00my9tAwkIiTgvisuAKzqzq999VOjcHoOwd+fUryWYBIMDIepJPLo
-         Dg2uPLX1hqO+J/Tbdv3kK4ByFlCCxNuZAAZ8GrP7UejwPYrB/1SRGyT5AtPEPHI6pz
-         wZbwt6BZh0U/SWhN8w9qy5ka4blUROpgdxXh1cfeZ+k7/Po1AizcIYfRCz9HwRfn1O
-         1R5bYqIxDvgqA==
-Received: by mail-wr1-f72.google.com with SMTP id c16-20020adfa310000000b001ed9cd8f4c7so337112wrb.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 07:00:06 -0800 (PST)
+        b=SEI0dP+ccLbsdkdyR9+wuZHjOWLgur0Dz+xxKn7evx5gBkqr6bk+UM/cj3juuaaPS
+         QzNwP15bx/+jHqqQ8N1iK2QDX82T3m27F/NM3DvUjGBhUBaN6vFbDXps6yHHHAzQIf
+         RtozXvY+lct/Lhfg6AqkX0gQVZk9S7cxRJAmaYz9X9AECVMvffUmvjL3Fhj6U2K4PM
+         vjAuevb2VOQu4mFkzss2yjeSxYXxyp0FCyIQ5ohgh76kp5XFwLzxYJbdlUkaybNSu4
+         YNyB7YtK4WKDGMdfU9xBKTmg+nwGL5O3ADOQwtuie38mR2eyNzxtlvzaVj9f2Lv3CV
+         v3bxhjni7iaGQ==
+Received: by mail-lf1-f69.google.com with SMTP id v13-20020ac2592d000000b004435f5315dbso2832986lfi.21
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 07:00:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4OhXJxblf34wMx5+uRUs16cf2JFWMcvDQKlBG/4EIbg=;
-        b=n/tjr0m0Mjyq6PShDjzCwhylBHTMDZ/jiQJagyhStC1cCtgwBsUNchS7vF+CHflB7P
-         tRnMourVO/Ly2jcMiX4E6Jo1m9i1zWqnUYzMIRGLJdoF14OixkghRnFxt6VS18hcpMz/
-         i1VDg7pwaEE51/e8CluhXRynIkaULqnZIt5PkOUNd96fyFkWwhlv5aQWuJIzJ8LOQjeg
-         EH6oMWLJ+ayDQq4ciQQYU4CwvxuXQvdAQrkdQFd3O+30dJViz0yC632ZXT7UYZ/De69T
-         584nRBxd0JcD+tI6h9MwlVonT9M93N4L+KIXC0QuT+NnRlMds10vzH3ZOSFlgvfpZqif
-         R9Ig==
-X-Gm-Message-State: AOAM531v9uI2fAXOmMZhK7WHjuebxbUYLXp+uVHKFeEuKD5xWPw9eQFp
-        TW6FcoG38Z4S0J1ic2CzwBhCYzu9Bpe3PdCcJve63mZZ0PD3H29a988HgywATPSgIf7qKzyJX/J
-        99eB6wx/24xehSRygvD2eoxVetFmkKtfTX2jznHFUlwc=
-X-Received: by 2002:aa7:cd81:0:b0:410:d64e:aa31 with SMTP id x1-20020aa7cd81000000b00410d64eaa31mr26939007edv.167.1645541995664;
-        Tue, 22 Feb 2022 06:59:55 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJyaJdWHb8xk+e2xSEaK1p8tjIOgBKlnOjh9riknUovYkgJh1fsrFc3SbrR3EFVhnzBs85hG8A==
-X-Received: by 2002:aa7:cd81:0:b0:410:d64e:aa31 with SMTP id x1-20020aa7cd81000000b00410d64eaa31mr26938989edv.167.1645541995521;
-        Tue, 22 Feb 2022 06:59:55 -0800 (PST)
+        bh=AXkZYdVX5Zodn+3WZgtIGj/ZSa6Qs/Xzl3ZJQ9geNsQ=;
+        b=UxfAmRwQM4hIudLhdDiG6HfPNhQwdPIyOS0UjQ9mpDiSUGmxKmGSUdIpUifYsczHMJ
+         O0GV29whNjn8SgUXsdgwYp3nYxNrwcjOMgD+8ewuaL4+KSytLNFOCHRpDlucyaW4Aeh3
+         mzIRj7ugnK9fSj/Tc49HtV0cDjw2eutJDYTdUWanT+pi90XXXHookfTXstyqyxOuUHNk
+         jti/wNa87rOtONAlfAB5p7TrNBh4i1LKf2Dm4w3zVhTQLcFmLRl8CbR8RvqLLv8dfraH
+         ivE9vuVr1877cJ5hQaxbXp2N1sxqpezfac5P85QPiGTIvqQBBUiPfafWoZoNtrxU+khi
+         lm8g==
+X-Gm-Message-State: AOAM532RyuRCzDPO7EQIc2kajvqpMikV1uvIVou92Wr9Dl76k9ikNEtt
+        Aq/hUQJ9RnPiqL+UaRAj9ZyHW4lJsLi8/ITr3PWe59stmgb71ZTg+SxYQg7Sz5Ma6rJeJBEatz9
+        Bnn16TpqW12P64jyVFPJWGlFeV+Qm1BLDTKlg26ZOvFM=
+X-Received: by 2002:aa7:c703:0:b0:410:b96a:6bf with SMTP id i3-20020aa7c703000000b00410b96a06bfmr26705748edq.439.1645541997725;
+        Tue, 22 Feb 2022 06:59:57 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJwfSFtNX/a3KL4lHPEAhSPb3vHh30FiudcrzDoMBrPmGyj5vo81xOj/2DV7Q8M391vFSdj/vQ==
+X-Received: by 2002:aa7:c703:0:b0:410:b96a:6bf with SMTP id i3-20020aa7c703000000b00410b96a06bfmr26705712edq.439.1645541997526;
+        Tue, 22 Feb 2022 06:59:57 -0800 (PST)
 Received: from localhost.localdomain (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
-        by smtp.gmail.com with ESMTPSA id m2sm2467960ejb.20.2022.02.22.06.59.54
+        by smtp.gmail.com with ESMTPSA id m2sm2467960ejb.20.2022.02.22.06.59.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 06:59:55 -0800 (PST)
+        Tue, 22 Feb 2022 06:59:56 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 To:     Alim Akhtar <alim.akhtar@samsung.com>,
         Avri Altman <avri.altman@wdc.com>,
@@ -77,9 +77,9 @@ To:     Alim Akhtar <alim.akhtar@samsung.com>,
         linux-arm-kernel@lists.infradead.org,
         linux-samsung-soc@vger.kernel.org,
         linux-mediatek@lists.infradead.org
-Subject: [PATCH v2 10/15] arm64: dts: hi3670: use 'freq-table' in UFS node
-Date:   Tue, 22 Feb 2022 15:58:49 +0100
-Message-Id: <20220222145854.358646-11-krzysztof.kozlowski@canonical.com>
+Subject: [PATCH v2 11/15] arm64: dts: ti: use 'freq-table' in UFS node
+Date:   Tue, 22 Feb 2022 15:58:50 +0100
+Message-Id: <20220222145854.358646-12-krzysztof.kozlowski@canonical.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220222145854.358646-1-krzysztof.kozlowski@canonical.com>
 References: <20220222145854.358646-1-krzysztof.kozlowski@canonical.com>
@@ -100,24 +100,24 @@ The uint32-array requires also element to be passed within one <> block.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 ---
- arch/arm64/boot/dts/hisilicon/hi3670.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/ti/k3-j721e-main.dtsi | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/hisilicon/hi3670.dtsi b/arch/arm64/boot/dts/hisilicon/hi3670.dtsi
-index 636c8817df7e..754b3a66ec0d 100644
---- a/arch/arm64/boot/dts/hisilicon/hi3670.dtsi
-+++ b/arch/arm64/boot/dts/hisilicon/hi3670.dtsi
-@@ -671,8 +671,8 @@ ufs: ufs@ff3c0000 {
- 			clocks = <&crg_ctrl HI3670_CLK_GATE_UFSIO_REF>,
- 				 <&crg_ctrl HI3670_CLK_GATE_UFS_SUBSYS>;
- 			clock-names = "ref_clk", "phy_clk";
--			freq-table-hz = <0 0
--					 0 0>;
-+			freq-table = <0 0>,
-+				     <0 0>;
- 			/* offset: 0x84; bit: 12 */
- 			resets = <&crg_rst 0x84 12>;
- 			reset-names = "rst";
+diff --git a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
+index 599861259a30..34aff40c6b8e 100644
+--- a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
+@@ -1257,7 +1257,9 @@ ufs@4e84000 {
+ 			compatible = "cdns,ufshc-m31-16nm", "jedec,ufs-2.0";
+ 			reg = <0x0 0x4e84000 0x0 0x10000>;
+ 			interrupts = <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
+-			freq-table-hz = <250000000 250000000>, <19200000 19200000>, <19200000 19200000>;
++			freq-table = <250000000 250000000>,
++				     <19200000 19200000>,
++				     <19200000 19200000>;
+ 			clocks = <&k3_clks 277 0>, <&k3_clks 277 1>, <&k3_clks 277 1>;
+ 			clock-names = "core_clk", "phy_clk", "ref_clk";
+ 			dma-coherent;
 -- 
 2.32.0
 
