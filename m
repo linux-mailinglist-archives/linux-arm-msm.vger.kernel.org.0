@@ -2,74 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 717E84BF4A6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 10:27:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DBA34BF5D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 11:29:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229927AbiBVJ1y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 04:27:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37646 "EHLO
+        id S230522AbiBVK3x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 05:29:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230166AbiBVJ1t (ORCPT
+        with ESMTP id S230505AbiBVK3x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 04:27:49 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 952CEB0C47;
-        Tue, 22 Feb 2022 01:27:24 -0800 (PST)
+        Tue, 22 Feb 2022 05:29:53 -0500
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2173A15A23C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 02:29:26 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id f19-20020a17090ac29300b001bc68ecce4aso1964976pjt.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 02:29:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645522044; x=1677058044;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=LFQp/ZxtUokCWlxkpsscjeCoS50+fMvujr/3gkeQpGM=;
-  b=mFGAVa8g/gQUw/mvB2CQsMC3iKo56IwLVyYU9cYH5jEm9X6y8ik6i7Sr
-   Rrw1marApJddHVVAqMlmkp3fQOOM/DxFIvC8OtBrwIMim1HRrTHBUgxhr
-   QtXy8tZKHbhbPLX7pYkJn27ZqsT5mgQ4leVxefqEVed1fSv82IXJDKaQx
-   0=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 22 Feb 2022 01:27:24 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Feb 2022 01:27:23 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Tue, 22 Feb 2022 01:27:23 -0800
-Received: from [10.216.35.124] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Tue, 22 Feb
- 2022 01:27:18 -0800
-Message-ID: <efd3c978-6d37-a386-4953-758df73e1e1f@quicinc.com>
-Date:   Tue, 22 Feb 2022 14:57:14 +0530
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=I8N9I9PwP/XCNr+2csSo/sMAacbFuh57jh3fuP7bfBA=;
+        b=UXtTS1Yr7V+T77NkElhcUOujgsp4vV1rJakeOetJN6dfzyDpOhdd/j6b0npyTvJLp/
+         qgoxFdMNTuwDa76gCYcxUKYecuFZoO8dAMp+DHXEB2+kQY/F7gQcfw2wkC7Uj60bByy7
+         BsmG9IU5Xod0pgB5j5XNurzfiMycEo2h7FbtE8+B9a1c3R29pVLpmPmprUGbCbOySVCa
+         /H83KhOTmQnYr/hYsCiF+hLU2F02mXTcQEbwro/y0DmoKfUQ84jRpND46O4BGMVwJygv
+         IjJIuhlrIGXQUvzlNUbQjRmxb+SLyFP1g3+pcks34NqdVkT7SPwNxRdPyMBAx55dutXl
+         znLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=I8N9I9PwP/XCNr+2csSo/sMAacbFuh57jh3fuP7bfBA=;
+        b=Jv9NAZka2S74ueolXI82eo8q27AEyl3+nbZ4KvFTkPWHhthFlzN/CzensYyTdh2Jfn
+         0eQsK8jfXyjHCBe3uoHNARaYUYDKilvmgrbGNOwtED9g3Yji4bHdnYr2dt8YoAcejWCm
+         f0KPC+ArA8cucPT3snwOBHJep2p+bYaOK+nwyJFl51PkzgXd+cUM/pGI4URANzHDBktB
+         JWrOKCs40dTRnab90E7E4TgJYmWLBzfcBWNFYphdWxOurs9H9sNV8uTxSKl1oJSjPzF5
+         WfInmmcXlZZfFNl0niO0krgfT1SceR8Xk6peT6sBVwRVn+sRQ5yQPf84+99jpWh6+k1a
+         ne6Q==
+X-Gm-Message-State: AOAM532IA94HuCzcUhjBDv7LpyxwMtYywyGd+eCZojwYV+TloNhJF9wy
+        Kli0BrSuX50VAcwWgdVhS25a
+X-Google-Smtp-Source: ABdhPJztFD/ewvO/vm6rTg2gkWVH+DEE1Xj7uyJ4+gJIpHCxlSPCOtCrE3yJGyZF1gdY+bT/mdI0wg==
+X-Received: by 2002:a17:90a:174f:b0:1bc:66ef:d733 with SMTP id 15-20020a17090a174f00b001bc66efd733mr3454083pjm.88.1645525765550;
+        Tue, 22 Feb 2022 02:29:25 -0800 (PST)
+Received: from thinkpad ([117.217.186.202])
+        by smtp.gmail.com with ESMTPSA id s10sm16967161pfu.186.2022.02.22.02.29.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Feb 2022 02:29:25 -0800 (PST)
+Date:   Tue, 22 Feb 2022 15:59:18 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
+        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
+        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
+        dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
+        quic_cang@quicinc.com, quic_skananth@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 19/25] bus: mhi: ep: Add support for handling SYS_ERR
+ condition
+Message-ID: <20220222102918.GE5029@thinkpad>
+References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
+ <20220212182117.49438-20-manivannan.sadhasivam@linaro.org>
+ <40212d64-7423-014a-2a8d-cad5cc41795f@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH 1/2] usb: xhci: refactor quirks and plat private data
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Aswath Govindraju <a-govindraju@ti.com>,
-        Doug Anderson <dianders@chromium.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Mathias Nyman" <mathias.nyman@intel.com>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Pawel Laszczak <pawell@cadence.com>,
-        Peter Chen <peter.chen@kernel.org>,
-        Roger Quadros <rogerq@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>
-References: <1644949454-814-1-git-send-email-quic_c_sanm@quicinc.com>
- <1644949454-814-2-git-send-email-quic_c_sanm@quicinc.com>
- <CAE-0n522ctciYfxCxKqF0p3QFWcZU03nP5HoKsc=uKnokg7BCQ@mail.gmail.com>
-From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-In-Reply-To: <CAE-0n522ctciYfxCxKqF0p3QFWcZU03nP5HoKsc=uKnokg7BCQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <40212d64-7423-014a-2a8d-cad5cc41795f@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,48 +77,111 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Feb 15, 2022 at 04:39:55PM -0600, Alex Elder wrote:
+> On 2/12/22 12:21 PM, Manivannan Sadhasivam wrote:
+> > Add support for handling SYS_ERR (System Error) condition in the MHI
+> > endpoint stack. The SYS_ERR flag will be asserted by the endpoint device
+> > when it detects an internal error. The host will then issue reset and
+> > reinitializes MHI to recover from the error state.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+> I have a few small comments, but this look good enough for me.
+> 
+> Reviewed-by: Alex Elder <elder@linaro.org>
+> 
+> > ---
+> >   drivers/bus/mhi/ep/internal.h |  1 +
+> >   drivers/bus/mhi/ep/main.c     | 24 ++++++++++++++++++++++++
+> >   drivers/bus/mhi/ep/sm.c       |  2 ++
+> >   3 files changed, 27 insertions(+)
+> > 
+> > diff --git a/drivers/bus/mhi/ep/internal.h b/drivers/bus/mhi/ep/internal.h
+> > index ee8c5974f0c0..8654af7caf40 100644
+> > --- a/drivers/bus/mhi/ep/internal.h
+> > +++ b/drivers/bus/mhi/ep/internal.h
+> > @@ -241,6 +241,7 @@ int mhi_ep_set_mhi_state(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state mhi_stat
+> >   int mhi_ep_set_m0_state(struct mhi_ep_cntrl *mhi_cntrl);
+> >   int mhi_ep_set_m3_state(struct mhi_ep_cntrl *mhi_cntrl);
+> >   int mhi_ep_set_ready_state(struct mhi_ep_cntrl *mhi_cntrl);
+> > +void mhi_ep_handle_syserr(struct mhi_ep_cntrl *mhi_cntrl);
+> >   /* MHI EP memory management functions */
+> >   int mhi_ep_alloc_map(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr, size_t size,
+> > diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+> > index ddedd0fb19aa..6378ac5c7e37 100644
+> > --- a/drivers/bus/mhi/ep/main.c
+> > +++ b/drivers/bus/mhi/ep/main.c
+> > @@ -611,6 +611,30 @@ static void mhi_ep_reset_worker(struct work_struct *work)
+> >   	}
+> >   }
+> > +/*
+> > + * We don't need to do anything special other than setting the MHI SYS_ERR
+> > + * state. The host issue will reset all contexts and issue MHI RESET so that we
+> 
+> s/host issue/host/
+> 
+> > + * could also recover from error state.
+> > + */
+> > +void mhi_ep_handle_syserr(struct mhi_ep_cntrl *mhi_cntrl)
+> > +{
+> > +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> > +	int ret;
+> > +
+> > +	/* If MHI EP is not enabled, nothing to do */
+> > +	if (!mhi_cntrl->is_enabled)
+> 
+> Is this an expected condition?  SYS_ERR with the endpoint
+> disabled?
+> 
 
-On 2/16/2022 7:43 AM, Stephen Boyd wrote:
-> Quoting Sandeep Maheswaram (2022-02-15 10:24:13)
->> From: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
->>
->> This refactoring allows drivers like dwc3 host glue driver to
->> specify their xhci quirks.
->>
->> Signed-off-by: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
-> Your SoB should be here as well.
-okay. Will add in next version.
->
->> diff --git a/include/linux/usb/xhci-plat.h b/include/linux/usb/xhci-plat.h
->> new file mode 100644
->> index 0000000..58a56ae
->> --- /dev/null
->> +++ b/include/linux/usb/xhci-plat.h
->> @@ -0,0 +1,24 @@
->> +/* SPDX-License-Identifier: GPL-2.0 */
->> +/*
->> + * xhci-plat.h - xHCI host controller driver platform Bus Glue.
->> + *
->> + * Copyright (C) 2015 Renesas Electronics Corporation
->> + */
->> +
->> +#ifndef _XHCI_PLAT_H
->> +#define _XHCI_PLAT_H
->> +
->> +#include <linux/types.h>
->> +#include <linux/usb/hcd.h>
-> It would be great to remove this include and forward declare struct
-> usb_hcd instead to avoid include hell. Maybe a followup patch?
-okay.  Will do in next version.
->> +
->> +struct xhci_plat_priv {
->> +       const char *firmware_name;
->> +       unsigned long long quirks;
->> +       int (*plat_setup)(struct usb_hcd *hcd);
->> +       void (*plat_start)(struct usb_hcd *hcd);
->> +       int (*init_quirk)(struct usb_hcd *hcd);
->> +       int (*suspend_quirk)(struct usb_hcd *hcd);
->> +       int (*resume_quirk)(struct usb_hcd *hcd);
->> +};
->> +
->> +#endif /* _XHCI_PLAT_H */
+I hit a case during bringup but I don't exactly remember where. So I'll probably
+remove this check.
+
+> > +		return;
+> > +
+> > +	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_SYS_ERR);
+> > +	if (ret)
+> > +		return;
+> > +
+> > +	/* Signal host that the device went to SYS_ERR state */
+> > +	ret = mhi_ep_send_state_change_event(mhi_cntrl, MHI_STATE_SYS_ERR);
+> > +	if (ret)
+> > +		dev_err(dev, "Failed sending SYS_ERR state change event: %d\n", ret);
+> > +}
+> > +
+> >   int mhi_ep_power_up(struct mhi_ep_cntrl *mhi_cntrl)
+> >   {
+> >   	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> > diff --git a/drivers/bus/mhi/ep/sm.c b/drivers/bus/mhi/ep/sm.c
+> > index 68e7f99b9137..9a75ecfe1adf 100644
+> > --- a/drivers/bus/mhi/ep/sm.c
+> > +++ b/drivers/bus/mhi/ep/sm.c
+> > @@ -93,6 +93,7 @@ int mhi_ep_set_m0_state(struct mhi_ep_cntrl *mhi_cntrl)
+> >   	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_M0);
+> >   	if (ret) {
+> > +		mhi_ep_handle_syserr(mhi_cntrl);
+> >   		spin_unlock_bh(&mhi_cntrl->state_lock);
+> >   		return ret;
+> >   	}
+> > @@ -128,6 +129,7 @@ int mhi_ep_set_m3_state(struct mhi_ep_cntrl *mhi_cntrl)
+> >   	spin_lock_bh(&mhi_cntrl->state_lock);
+> >   	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_M3);
+> 
+> Are there any other spots that should do this?  For example, in
+> mhi_ep_set_ready_state() you don't check the return value of
+> the call to mhi_ep_set_mhi_state().  It seems to me it should
+> be possible to preclude bogus state changes anyway, but I'm
+> not completely sure.
+> 
+
+The check should be there, I will add it to ready_state() also.
+
+Thanks,
+Mani
+
+> >   	if (ret) {
+> > +		mhi_ep_handle_syserr(mhi_cntrl);
+> >   		spin_unlock_bh(&mhi_cntrl->state_lock);
+> >   		return ret;
+> >   	}
+> 
