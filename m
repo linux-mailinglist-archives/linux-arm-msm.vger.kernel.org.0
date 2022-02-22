@@ -2,68 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 295BE4BF208
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 07:22:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BE834BF258
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 08:04:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230248AbiBVGXT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 01:23:19 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:45064 "EHLO
+        id S230339AbiBVHDs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 02:03:48 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:47826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230245AbiBVGXT (ORCPT
+        with ESMTP id S230316AbiBVHDr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 01:23:19 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66F531EC65
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 22:22:54 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id j7so22756851lfu.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 22:22:54 -0800 (PST)
+        Tue, 22 Feb 2022 02:03:47 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2384D111DD1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 23:03:23 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id ci24-20020a17090afc9800b001bc3071f921so1463497pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 23:03:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=iM+9d1vlrH8gvtpIKyDvBZU+m+WcrI9EbVXkjqnwrgU=;
-        b=jpGdL2UWzg/HKSOtVLZnndwPDPtVWzbb/QNHcN8zho5Y4LDCr6KGRRmZM1LjG6NEDY
-         JqmJeTejQukUyQGDA/TWOzev/9JOJU5/DGz2EpyXttNZDomlw9luYuOahhTVUDvPBTYL
-         MaZb+lHFrE7aj9PKwD5qN3a8tgkzWQa9MHgCVQyi3fUxfiY1ScQBxWTbK7R8iv0ALLHD
-         8jrPCcI9OzfYNrYyr/PyC0P1xA2vEbufk887wsdKkDQA6oHSCj3ZJu2CHd9eydQAnmiW
-         cmxImIEI6Y0qWMdGJAOw9fBHJkagYwdTyhVhRfp8rXrTKnpnk74wCD/YWowxVPCcl+ls
-         V0KA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=k22nQ+5l32+0KCOFzN+ckiNqLiyZfk5xD9lBCarBIVw=;
+        b=dKO3WsZTKTO0oOs9bIYneg0c9r0x03J/xXk/thIOoGwyvBxO5GhRkLvKLhj4I+U25k
+         XFTmrowAMgVkgi0DIeS/Ibsl1EwoZSEw+FNmjc/KX0rQLCSjVVMypX42qcEnl4a6KGGa
+         OGqg9pLz5MODnATkjh1dgtjYk7hyreF69/2itXn3PVGWlvZKKrxb4WhHM5a9H3bieePl
+         ccSwMrNycbvaZ6avy+xfZguQhpDOXgf77CfKSMk0ycFVCiQQErHAdb6LdmWV0UFXT0qM
+         jpsnlCK9pAQ7EVCEJIv7xYMEUG2m611XgqBTFCXDE6gAZScTgbSnj/g0bCoyVVPGQZKv
+         mmVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=iM+9d1vlrH8gvtpIKyDvBZU+m+WcrI9EbVXkjqnwrgU=;
-        b=GHU2FYESFmHdy5JLXCE3iBGlW7jOqjlvtNrEXAA5zvMMHs8s44FSpp1rAvxEeZ5Ikt
-         0ofW8D0Jg6GvldDgUnMCWgxt3UYFDd8FkXiJd9SbDqxjGHa4By4oEFSA66U6fekQV/3W
-         1v6fq8JoLGzLRrm5nxrh+7B6O8FTWdt8VLGnM5NgTHdztzD6Uqidq3tqHgSTuQEvi1W/
-         Ahy3A+Uxzk71SvDEGnpi8WAo2rgCTpvt+f8EYw4+zKL+TO7o8cizqhHM+UGuojLtmDr0
-         UBszbnzyhVZ7R5QyYgs5syawglH7CDvqJtsc2YeN/pw7tIeML0SV6oQkFtfdMBMFTigL
-         OvJw==
-X-Gm-Message-State: AOAM5305zabzd4d2i/oW+9jthxJAAjOHWA69mRSQ5HMtjmNCpkM/c1Z4
-        dBKnC5lsNjDD5dPJn0CBIuuG+Q==
-X-Google-Smtp-Source: ABdhPJzGc5/AYdPbOPH3yazzGj2gw4n70PKZg3iu2vcQFrpdXtOfIZtRtK2lwEwAqOAfSpt9NBsT+Q==
-X-Received: by 2002:a05:6512:3e0e:b0:443:3cba:9e26 with SMTP id i14-20020a0565123e0e00b004433cba9e26mr16341176lfv.590.1645510972828;
-        Mon, 21 Feb 2022 22:22:52 -0800 (PST)
-Received: from eriador.lumag.spb.ru ([188.162.65.160])
-        by smtp.gmail.com with ESMTPSA id j24sm1216245lfb.59.2022.02.21.22.22.51
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=k22nQ+5l32+0KCOFzN+ckiNqLiyZfk5xD9lBCarBIVw=;
+        b=SuIcnJnf9KT7kmVXPQn9rkfg2r5mAi+Vo4KRZqY3HQg+ABB4eDMYSCfflBlYaYaWkF
+         L0MgaUS7QnLSKFl9YEskuueAIDd/LwfYyobDt/iu5jUumq/u+gXbE8r5209T6KmH1tVh
+         u1f+UeGVmLqwpb9LA1ukabAPRneePYb90h1U+9x5iejlsrjmbmrHx+ZBOIG9IZhdwKkN
+         jl4xcjiwAvKxTZlchTNDzVJrhLtrQrD1wiR+0o5gEO3rCPdDVrDFyfE3LTCYxtiQ+mY8
+         ROPkbBu6y6LqsyAGinUz9kY/e3IDs53/0qhfszjFW6BiNbjI4tb21sQpwerOHcbQQH5R
+         4JtQ==
+X-Gm-Message-State: AOAM532KIyHUuSUkCOl0VtDOnr5qncIttS9/9VpVnCwjpLZnSpjMHX9v
+        tzbFlqPgGemQhP8SES8/XEdu
+X-Google-Smtp-Source: ABdhPJy7/psO5wxTN0D7lIAQo485hkGSjgCavz8S8ufkE8CcXGSZIK3H7bBXdsvO0q33WUeR0F4Otw==
+X-Received: by 2002:a17:902:9348:b0:14f:c715:2a94 with SMTP id g8-20020a170902934800b0014fc7152a94mr6019782plp.66.1645513402581;
+        Mon, 21 Feb 2022 23:03:22 -0800 (PST)
+Received: from thinkpad ([117.217.186.202])
+        by smtp.gmail.com with ESMTPSA id s48sm14373311pfw.111.2022.02.21.23.03.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Feb 2022 22:22:52 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 4/4] drm/msm/dpu: drop INTF_EDP from interface type conditions
-Date:   Tue, 22 Feb 2022 09:22:46 +0300
-Message-Id: <20220222062246.242577-5-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220222062246.242577-1-dmitry.baryshkov@linaro.org>
-References: <20220222062246.242577-1-dmitry.baryshkov@linaro.org>
+        Mon, 21 Feb 2022 23:03:22 -0800 (PST)
+Date:   Tue, 22 Feb 2022 12:33:15 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
+        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
+        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
+        dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
+        quic_cang@quicinc.com, quic_skananth@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 14/25] bus: mhi: ep: Add support for managing MHI
+ state machine
+Message-ID: <20220222070315.GB5029@thinkpad>
+References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
+ <20220212182117.49438-15-manivannan.sadhasivam@linaro.org>
+ <6f31cea5-865d-c2b9-5887-f053d1e2001a@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6f31cea5-865d-c2b9-5887-f053d1e2001a@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -74,43 +77,128 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To remove possible confusion between (old) INTF_EDP and newer INTF_DP,
-stop using INTF_EDP in DPU's code. Until the 8x74/8x84 SoCs are
-supported by DPU driver, there is no point in using INTF_EDP.
+On Tue, Feb 15, 2022 at 04:39:24PM -0600, Alex Elder wrote:
+> On 2/12/22 12:21 PM, Manivannan Sadhasivam wrote:
+> > Add support for managing the MHI state machine by controlling the state
+> > transitions. Only the following MHI state transitions are supported:
+> > 
+> > 1. Ready state
+> > 2. M0 state
+> > 3. M3 state
+> > 4. SYS_ERR state
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+> Minor suggestions here.		-Alex
+> 
+> > ---
+> >   drivers/bus/mhi/ep/Makefile   |   2 +-
+> >   drivers/bus/mhi/ep/internal.h |  11 +++
+> >   drivers/bus/mhi/ep/main.c     |  51 ++++++++++-
+> >   drivers/bus/mhi/ep/sm.c       | 168 ++++++++++++++++++++++++++++++++++
+> >   include/linux/mhi_ep.h        |   6 ++
+> >   5 files changed, 236 insertions(+), 2 deletions(-)
+> >   create mode 100644 drivers/bus/mhi/ep/sm.c
+> > 
+> > diff --git a/drivers/bus/mhi/ep/Makefile b/drivers/bus/mhi/ep/Makefile
+> > index 7ba0e04801eb..aad85f180b70 100644
+> > --- a/drivers/bus/mhi/ep/Makefile
+> > +++ b/drivers/bus/mhi/ep/Makefile
+> > @@ -1,2 +1,2 @@
+> >   obj-$(CONFIG_MHI_BUS_EP) += mhi_ep.o
+> > -mhi_ep-y := main.o mmio.o ring.o
+> > +mhi_ep-y := main.o mmio.o ring.o sm.o
+> > diff --git a/drivers/bus/mhi/ep/internal.h b/drivers/bus/mhi/ep/internal.h
+> > index fd63f79c6aec..e4e8f06c2898 100644
+> > --- a/drivers/bus/mhi/ep/internal.h
+> > +++ b/drivers/bus/mhi/ep/internal.h
+> > @@ -173,6 +173,11 @@ struct mhi_ep_event {
+> >   	struct mhi_ep_ring ring;
+> >   };
+> > +struct mhi_ep_state_transition {
+> > +	struct list_head node;
+> > +	enum mhi_state state;
+> > +};
+> > +
+> >   struct mhi_ep_chan {
+> >   	char *name;
+> >   	struct mhi_ep_device *mhi_dev;
+> > @@ -230,5 +235,11 @@ void mhi_ep_mmio_update_ner(struct mhi_ep_cntrl *mhi_cntrl);
+> >   /* MHI EP core functions */
+> >   int mhi_ep_send_state_change_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state state);
+> >   int mhi_ep_send_ee_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ep_execenv exec_env);
+> > +bool mhi_ep_check_mhi_state(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state cur_mhi_state,
+> > +			    enum mhi_state mhi_state);
+> > +int mhi_ep_set_mhi_state(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state mhi_state);
+> > +int mhi_ep_set_m0_state(struct mhi_ep_cntrl *mhi_cntrl);
+> > +int mhi_ep_set_m3_state(struct mhi_ep_cntrl *mhi_cntrl);
+> > +int mhi_ep_set_ready_state(struct mhi_ep_cntrl *mhi_cntrl);
+> >   #endif
+> > diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+> > index 61f066c6286b..ccb3c2795041 100644
+> > --- a/drivers/bus/mhi/ep/main.c
+> > +++ b/drivers/bus/mhi/ep/main.c
+> > @@ -185,6 +185,43 @@ static void mhi_ep_ring_worker(struct work_struct *work)
+> >   	}
+> >   }
+> > +static void mhi_ep_state_worker(struct work_struct *work)
+> > +{
+> > +	struct mhi_ep_cntrl *mhi_cntrl = container_of(work, struct mhi_ep_cntrl, state_work);
+> > +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> > +	struct mhi_ep_state_transition *itr, *tmp;
+> > +	unsigned long flags;
+> > +	LIST_HEAD(head);
+> > +	int ret;
+> > +
+> > +	spin_lock_irqsave(&mhi_cntrl->list_lock, flags);
+> > +	list_splice_tail_init(&mhi_cntrl->st_transition_list, &head);
+> > +	spin_unlock_irqrestore(&mhi_cntrl->list_lock, flags);
+> > +
+> > +	list_for_each_entry_safe(itr, tmp, &head, node) {
+> > +		list_del(&itr->node);
+> > +		dev_dbg(dev, "Handling MHI state transition to %s\n",
+> > +			 mhi_state_str(itr->state));
+> > +
+> > +		switch (itr->state) {
+> > +		case MHI_STATE_M0:
+> > +			ret = mhi_ep_set_m0_state(mhi_cntrl);
+> > +			if (ret)
+> > +				dev_err(dev, "Failed to transition to M0 state\n");
+> > +			break;
+> > +		case MHI_STATE_M3:
+> > +			ret = mhi_ep_set_m3_state(mhi_cntrl);
+> > +			if (ret)
+> > +				dev_err(dev, "Failed to transition to M3 state\n");
+> > +			break;
+> > +		default:
+> > +			dev_err(dev, "Invalid MHI state transition: %d\n", itr->state);
+> > +			break;
+> > +		}
+> > +		kfree(itr);
+> > +	}
+> > +}
+> > +
+> >   static void mhi_ep_release_device(struct device *dev)
+> >   {
+> >   	struct mhi_ep_device *mhi_dev = to_mhi_ep_device(dev);
+> > @@ -386,6 +423,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+> >   	}
+> >   	INIT_WORK(&mhi_cntrl->ring_work, mhi_ep_ring_worker);
+> > +	INIT_WORK(&mhi_cntrl->state_work, mhi_ep_state_worker);
+> >   	mhi_cntrl->ring_wq = alloc_workqueue("mhi_ep_ring_wq", 0, 0);
+> >   	if (!mhi_cntrl->ring_wq) {
+> > @@ -393,8 +431,16 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+> >   		goto err_free_cmd;
+> >   	}
+> > +	mhi_cntrl->state_wq = alloc_workqueue("mhi_ep_state_wq", 0, 0);
+> 
+> Maybe it's not a big deal, but do we really need several separate
+> work queues?  Would one suffice?  Could a system workqueue be used
+> in some cases (such as state changes)?
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 3 +--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 2 +-
- 2 files changed, 2 insertions(+), 3 deletions(-)
+Good question. The reason to have 2 separate workqueue was to avoid running the
+two work items parallely during bringup. But the code has changed a lot afterwards,
+so this could go into the other workqueue.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index 478a608ba7f2..e76d240f554d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -92,8 +92,7 @@ static void drm_mode_to_intf_timing_params(
- 	}
- 
- 	/* for DP/EDP, Shift timings to align it to bottom right */
--	if ((phys_enc->hw_intf->cap->type == INTF_DP) ||
--		(phys_enc->hw_intf->cap->type == INTF_EDP)) {
-+	if (phys_enc->hw_intf->cap->type == INTF_DP) {
- 		timing->h_back_porch += timing->h_front_porch;
- 		timing->h_front_porch = 0;
- 		timing->v_back_porch += timing->v_front_porch;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-index 116e2b5b1a90..1548614c508b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-@@ -141,7 +141,7 @@ static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
- 	hsync_ctl = (hsync_period << 16) | p->hsync_pulse_width;
- 	display_hctl = (hsync_end_x << 16) | hsync_start_x;
- 
--	if (ctx->cap->type == INTF_EDP || ctx->cap->type == INTF_DP) {
-+	if (ctx->cap->type == INTF_DP) {
- 		active_h_start = hsync_start_x;
- 		active_h_end = active_h_start + p->xres - 1;
- 		active_v_start = display_v_start;
--- 
-2.34.1
-
+Thanks,
+Mani
