@@ -2,93 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 76C064C04A6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 23:32:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 679DD4C04F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 00:00:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233476AbiBVWdQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 17:33:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47348 "EHLO
+        id S233110AbiBVXAx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 18:00:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236063AbiBVWdP (ORCPT
+        with ESMTP id S230322AbiBVXAx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 17:33:15 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A5F6C6277
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 14:32:48 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id s13so7630192wrb.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 14:32:48 -0800 (PST)
+        Tue, 22 Feb 2022 18:00:53 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBB4B28E3D;
+        Tue, 22 Feb 2022 15:00:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:mime-version:content-transfer-encoding
-         :content-description:subject:to:date:reply-to;
-        bh=eaaB5Fi4OIw8X99OdVt3/5VwsoSH3pqqZ03p7mumtcE=;
-        b=Ji76bk0r8Cnr9nUxpSSOGV+UUkcEZVOB+euzpBsEQqG5MolANYIlU9D2OyGAkuUgnN
-         fb2A9uj8C04EOGGpJrJjkEZRGUCvZ4d3G1OU2I+TzcVk71Qy4NZDtTV4lqIY2NqJGHq+
-         BIV98+2ezXXU8Ro9z9j82q9BMV2KS56zoFEe3jKUVEoiuO1oNVqonnia+AiaDoK7UQqw
-         PNIK3/YP3/owjc0Ry2y3WQ8XbKgUU2MbKZklL1VYkbgeKe/ojkJ28gq1DhvLjWWg+npX
-         3GQOCvFwT/sA+NpZZmN+esjAop1dY4FJoyuW091wdNJuvMW1pxhfojjjc/KuaQFo/BHR
-         mS0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:mime-version
-         :content-transfer-encoding:content-description:subject:to:date
-         :reply-to;
-        bh=eaaB5Fi4OIw8X99OdVt3/5VwsoSH3pqqZ03p7mumtcE=;
-        b=GVd3rnGXafUxJxsfHKFEDttg78YBWR4BmEPZsuOm2fpbPxPasebxUkE8lKymkbcag8
-         p/XEJY6+W3kBLC2AaXLa2G8jDbCcCgt2H+ujkraVcmsLQ1RGco93XtcycO+aW6OZ2IMf
-         HXd/W+1JwGseFpdtJO7E/2oKFDR/lxcIfQABV/pHeiytoes/L/Mm0sq3rQOG/EwHU5ur
-         Use6oD/oLKgGnHbWrei2Oy5gWO30yzFtSLj0LeqaKHMv1ZTbsFdtonU5NU0wulmIbTG/
-         ix3FhTlE/HeImNusp2k4G04qw5p/XvEDw1DQn13gOVpwlgKGXqxpVYzKdoxBNeAKIlW/
-         95WQ==
-X-Gm-Message-State: AOAM5316z61MJSnrUefMPjXxiKNCMt7FcwS6SrWlPZtHIBzd0iPR4ske
-        vcyIJL1i8aUCAM10dQX2D+Q=
-X-Google-Smtp-Source: ABdhPJw2uyb92aludExkhk7nqEG29dlcGdIccNBS+jWOXzQuUT9ewbnoSmBIgcm+cWdoDJcLTUBc/A==
-X-Received: by 2002:a05:6000:1103:b0:1e6:2787:cdf4 with SMTP id z3-20020a056000110300b001e62787cdf4mr21146939wrw.31.1645569166950;
-        Tue, 22 Feb 2022 14:32:46 -0800 (PST)
-Received: from [192.168.0.133] ([5.193.8.34])
-        by smtp.gmail.com with ESMTPSA id n2sm4550904wmq.6.2022.02.22.14.32.43
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 22 Feb 2022 14:32:46 -0800 (PST)
-Message-ID: <6215648e.1c69fb81.fc252.0995@mx.google.com>
-From:   Mrs Maria Elisabeth Schaeffler <chairtydonation5@gmail.com>
-X-Google-Original-From: Mrs Maria Elisabeth Schaeffler
-Content-Type: text/plain; charset="iso-8859-1"
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645570827; x=1677106827;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=EawFH4047Ael+XRg9iDI+y8o+jjMELVeSdzV2qH9/ZA=;
+  b=yF+vPcQmvIWPHDBSOp5S40P+2RaZjE75IAUYWHIG/TUgaUsByukoncTE
+   ZbdAjdx/WM0PxhZVnAkw5adiDSWBhbWN957ZfNS+A8ihAyl4irRPXMBRu
+   mWVE2VV9utI8onEHaLGcvXgFcKKwDGtFurX0GHbYm+YDSfNir/b5FpBl6
+   w=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 22 Feb 2022 15:00:26 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Feb 2022 15:00:26 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Tue, 22 Feb 2022 15:00:25 -0800
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Tue, 22 Feb 2022 15:00:24 -0800
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <vkoul@kernel.org>,
+        <daniel@ffwll.ch>, <airlied@linux.ie>, <agross@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
+CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v9 0/2]  drm/msm/dpu: enable widebus feature base on chip hardware revision
+Date:   Tue, 22 Feb 2022 15:00:12 -0800
+Message-ID: <1645570816-21150-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: Spende
-To:     Recipients <Mrs@vger.kernel.org>
-Date:   Wed, 23 Feb 2022 02:32:38 +0400
-Reply-To: elisabethschaeffler01@gmail.com
-X-Spam-Status: No, score=2.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        LOTS_OF_MONEY,MONEY_FREEMAIL_REPTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,TO_MALFORMED,T_HK_NAME_FM_MR_MRS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: **
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hallo,
+revise widebus timing engine programming and enable widebus feature base on chip
 
-Ich bin Frau Maria Elisabeth Schaeffler, eine deutsche Wirtschaftsmagnatin,=
- Investorin und Philanthropin. Ich bin der Vorsitzende von Wipro Limited. I=
-ch habe 25 Prozent meines pers=F6nlichen Verm=F6gens f=FCr wohlt=E4tige Zwe=
-cke ausgegeben. Und ich habe auch versprochen zu geben
-der Rest von 25% geht dieses Jahr 2021 an Einzelpersonen. Ich habe mich ent=
-schlossen, Ihnen 1.500.000,00 Euro zu spenden. Wenn Sie an meiner Spende in=
-teressiert sind, kontaktieren Sie mich f=FCr weitere Informationen.
+Kuogee Hsieh (4):
+  drm/msm/dpu: adjust display_v_end for eDP and DP
+  drm/msm/dpu: replace BIT(x) with correspond marco define string
+  drm/msm/dpu:  revise timing engine programming to support widebus
+    feature
+  drm/msm/dp: enable widebus feature for display port
 
-Sie k=F6nnen auch =FCber den untenstehenden Link mehr =FCber mich lesen
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 14 ++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |  2 +
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   | 14 +++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        | 63 ++++++++++++++++------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |  2 +
+ drivers/gpu/drm/msm/dp/dp_catalog.c                | 34 +++++++++++-
+ drivers/gpu/drm/msm/dp/dp_catalog.h                |  3 +-
+ drivers/gpu/drm/msm/dp/dp_ctrl.c                   | 13 +++--
+ drivers/gpu/drm/msm/dp/dp_ctrl.h                   |  1 +
+ drivers/gpu/drm/msm/dp/dp_display.c                | 20 ++++++-
+ drivers/gpu/drm/msm/dp/dp_display.h                |  2 +
+ drivers/gpu/drm/msm/dp/dp_panel.c                  |  4 +-
+ drivers/gpu/drm/msm/dp/dp_panel.h                  |  2 +-
+ drivers/gpu/drm/msm/msm_drv.h                      |  6 +++
+ 14 files changed, 152 insertions(+), 28 deletions(-)
 
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-https://en.wikipedia.org/wiki/Maria-Elisabeth_Schaeffler
-
-Sch=F6ne Gr=FC=DFe
-Gesch=E4ftsf=FChrer Wipro Limited
-Maria-Elisabeth_Schaeffler
-Email: elisabethschaeffler01@gmail.com
