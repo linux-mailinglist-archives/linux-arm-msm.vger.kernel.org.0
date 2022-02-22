@@ -2,83 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 473D44C0414
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 22:49:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E2A9D4C0418
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 22:50:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235872AbiBVVuE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 16:50:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45196 "EHLO
+        id S235875AbiBVVue (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 16:50:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230274AbiBVVuE (ORCPT
+        with ESMTP id S230274AbiBVVud (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 16:50:04 -0500
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47B5E41FB0;
-        Tue, 22 Feb 2022 13:49:38 -0800 (PST)
-Received: by mail-oo1-f43.google.com with SMTP id x6-20020a4a4106000000b003193022319cso19613428ooa.4;
-        Tue, 22 Feb 2022 13:49:38 -0800 (PST)
+        Tue, 22 Feb 2022 16:50:33 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27EAA7EB3C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 13:50:07 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id a8so47125460ejc.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 13:50:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MDe1/XbZZwpMzP4Bd4iYW6ooJa1SuvyIIVKBTpf5jUo=;
+        b=JIbNmgkRgP4fmF8fqKDxZPoO3hitMDXsTDRzZdAS3R1lGW5Qw/2Pfw8K2nfHxZpCxZ
+         CMraYxwZL0nqKfhrIzAlWOz+jA4Q6lyHsTp9H2qhakiBhCRJmo2r7cSThBodJyHwFBhC
+         9sy0CGhOAlttN6NzFmMpVWtPN3xc3gm7AOi00=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Ebwfl2eVC7RMG7TrRM62AKX6vi1kQ80HjW8V9xOBqJU=;
-        b=Ypy9FnlWRpeVYg0dWWGRyBK7DT4M4xe4LP4wUO8dXiyHPJvkD853gczRAm8kAbDMIh
-         k6H7h2Gjz00IKIkFptm6Hdluu1llNd3ce1kIp+6dja7cJjMS0GjFFKoxmtODCAU1n+hu
-         ycjv+rxzs6Vz5fKbpPmyPsTxg2K34lVIJsK2cxPQI0R1mLoECwSncMwkFQF/JxIBc7Ky
-         uAR6UabT+174X0IKZc1ZB9D3YIbwDkrBz1iuliijRphHI8g/h4u6jMVQg6jQxQQHK9uJ
-         BlSNA6jvtPbQkP/9Gswh1QTSq4C6sc/zwHlJOBpqTou10dueZQsFDyc++JcWrRyP9gKv
-         /NeQ==
-X-Gm-Message-State: AOAM5323f1lsfjmuuyKZNGI9kpO0slsx6KggvYazrhsz9isbmUvZcDb7
-        00gsMBgkHYwzCWR285/XhA==
-X-Google-Smtp-Source: ABdhPJxB8cT0SXmsf75AE57wSFwspy0iLoY6gC+c1PVenxqa73yKtWDGjBo+zNh2nmJog+nWTPzFhg==
-X-Received: by 2002:a05:6870:961a:b0:d2:858c:ea4 with SMTP id d26-20020a056870961a00b000d2858c0ea4mr2609588oaq.186.1645566577595;
-        Tue, 22 Feb 2022 13:49:37 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id er36sm3094947oab.9.2022.02.22.13.49.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 13:49:36 -0800 (PST)
-Received: (nullmailer pid 3648870 invoked by uid 1000);
-        Tue, 22 Feb 2022 21:49:36 -0000
-Date:   Tue, 22 Feb 2022 15:49:36 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Loic Poulain <loic.poulain@linaro.org>
-Cc:     robdclark@gmail.com, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dmitry.baryshkov@linaro.org, robh+dt@kernel.org,
-        bjorn.andersson@linaro.org
-Subject: Re: [PATCH v3 2/2] dt-bindings: msm: disp: add yaml schemas for
- QCM2290 DPU bindings
-Message-ID: <YhVacAAFoPxC8S4q@robh.at.kernel.org>
-References: <1644852547-10067-1-git-send-email-loic.poulain@linaro.org>
- <1644852547-10067-2-git-send-email-loic.poulain@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MDe1/XbZZwpMzP4Bd4iYW6ooJa1SuvyIIVKBTpf5jUo=;
+        b=2Y64333kBeGBJ0JvQkIdPSFpMlemKUAwOpGn731m/wr4yh3kWUSx2Np7oTQY1Eg93y
+         wIL4/fRbdn113BZcKu15zCytYVuY+VXfBdJXukfF3mk800wFgCQmGLihkIFxfegaBd8V
+         +wlGX9jkFKIfEYjwv/G1RAefIh+j9KYbY4+8+fZE3XKArYz31IzHnYdhziar0tVUFxVV
+         4fPyWyRhHdJgKpG4DOzFFBpozujZhVvsld25CNkAz+rSdLzoKVO5BHcg6xzKJQCy2ajG
+         ETmWztdNRJiS4FfYiJoqU2nzzdCNitNDed9zkLCeiOU0pnFaJojuH13XBBVTcpeHrjhw
+         zSdw==
+X-Gm-Message-State: AOAM532D5JldewLQSlfCUILjIKdmR9dBHUn+ir5RvoDlzANf2cCZJeXe
+        SvxdVSzgvYvxV8cZ3BlQ58kuHMZuyaBhIFaeMUM=
+X-Google-Smtp-Source: ABdhPJxNVjDq+CipqZPyLFJNmOSfJEtdJ5qn6MiGH9JLDpgfrTP+un5TtCprdgEaRPKn1Q7OmUt9bA==
+X-Received: by 2002:a17:906:bcf8:b0:6cf:6223:8995 with SMTP id op24-20020a170906bcf800b006cf62238995mr20665430ejb.467.1645566605351;
+        Tue, 22 Feb 2022 13:50:05 -0800 (PST)
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com. [209.85.221.44])
+        by smtp.gmail.com with ESMTPSA id d18sm6655628ejd.95.2022.02.22.13.50.04
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Feb 2022 13:50:04 -0800 (PST)
+Received: by mail-wr1-f44.google.com with SMTP id d17so1136051wrc.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 13:50:04 -0800 (PST)
+X-Received: by 2002:a5d:64ea:0:b0:1ea:8148:6b97 with SMTP id
+ g10-20020a5d64ea000000b001ea81486b97mr4692080wri.679.1645566604132; Tue, 22
+ Feb 2022 13:50:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1644852547-10067-2-git-send-email-loic.poulain@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+References: <1645449126-17718-1-git-send-email-quic_vpolimer@quicinc.com>
+ <CAE-0n507XcYRz4=Uw-K37kPsLRqi_gN2L9y1wcu_X-UJP+6ySg@mail.gmail.com>
+ <CAD=FV=WvstZkDJcHJPAT0aez3X=uSKzDX0paQRHYD4DEktkMEQ@mail.gmail.com> <CAE-0n51V+bfDUb_heV_DVkS+KOzDcjYzxpU=E8cCGFESrUwpeg@mail.gmail.com>
+In-Reply-To: <CAE-0n51V+bfDUb_heV_DVkS+KOzDcjYzxpU=E8cCGFESrUwpeg@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 22 Feb 2022 13:49:51 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=XAvq5LuhZua3FU39RRsicC2dzGAZkG4NHYx8QaP7ov4A@mail.gmail.com>
+Message-ID: <CAD=FV=XAvq5LuhZua3FU39RRsicC2dzGAZkG4NHYx8QaP7ov4A@mail.gmail.com>
+Subject: Re: [v1] arm64/dts/qcom/sc7280: update mdp clk to max supported value
+ to support higher refresh rates
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        quic_kalyant@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 14 Feb 2022 16:29:07 +0100, Loic Poulain wrote:
-> QCM2290 MSM Mobile Display Subsystem (MDSS) encapsulates sub-blocks
-> like DPU display controller, DSI etc. Add YAML schema for DPU device
-> tree bindings
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-> ---
->  v2: no change
->  v3: no change (resent with reviewed-by + freedreno list)
-> 
->  .../bindings/display/msm/dpu-qcm2290.yaml          | 214 +++++++++++++++++++++
->  1 file changed, 214 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml
-> 
+Hi,
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+On Tue, Feb 22, 2022 at 1:46 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Doug Anderson (2022-02-22 13:25:05)
+> > Hi,
+> >
+> > On Tue, Feb 22, 2022 at 12:58 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> > >
+> > > Quoting Vinod Polimera (2022-02-21 05:12:06)
+> > > > Panels with higher refresh rate will need mdp clk above 300Mhz.
+> > > > Select max frequency for mdp clock during bootup, dpu driver will
+> > > > scale down the clock as per usecase when first update from the framework is received.
+> > > >
+> > > > Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+> > >
+> > > Please add a Fixes tag.
+> > >
+> > > > ---
+> > > >  arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 +-
+> > > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > > >
+> > > > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > > > index baf1653..7af96fc 100644
+> > > > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > > > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > > > @@ -2895,7 +2895,7 @@
+> > > >                                 assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>,
+> > > >                                                 <&dispcc DISP_CC_MDSS_VSYNC_CLK>,
+> > > >                                                 <&dispcc DISP_CC_MDSS_AHB_CLK>;
+> > > > -                               assigned-clock-rates = <300000000>,
+> > > > +                               assigned-clock-rates = <506666667>,
+> > >
+> > > Why not simply remove the clock assignment and set the rate based on the
+> > > OPP when the driver probes?
+> >
+> > I was curious so I dug. It turns out that it _is_ using the OPP. It's
+> > just that the kernel driver currently assumes that the initial rate is
+> > the max rate. :-P You can actually see in msm_dss_parse_clock() that
+> > it walks through each of its clocks at boot and records the boot rate
+> > and stashes it as the "max_rate". That's not a scheme I've seen done
+> > commonly, so if nothing else it deserves a comment in the commit
+> > message.
+>
+> That sounds like a scheme to detect the max frequency of the clk before
+> an OPP table is written. It would be better to convert that code to use
+> OPP tables if available and then drop this assigned clock property from
+> the DT (in both places).
+
+Ah, good point! You could just check what the max OPP table rate is.
+Then you don't need to worry about specifying the same clock rate
+twice.
+
+
+> > One other note is that I think there are _two_ places in the dtsi that
+> > are setting this same clock rate, right? The parent node `mdss`, which
+> > you're not touching, and the child `mdss_mdp`, which you are touching.
+> > Seems like you should just do it in one place. If it needs to be done
+> > by the parent then the child could just assume that the clock has
+> > already been set by the parent.
+> >
+>
+> I see that it's this way on sc7180 too, which is sad but it seems nobody
+> noticed.
+
+Never too late to fix it! :-)
+
+-Doug
