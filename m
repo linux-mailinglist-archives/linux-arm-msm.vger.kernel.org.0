@@ -2,121 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E6534C02CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 21:06:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 282094C0373
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 21:58:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235378AbiBVUGx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 15:06:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54300 "EHLO
+        id S235642AbiBVU6e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 15:58:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231683AbiBVUGw (ORCPT
+        with ESMTP id S231699AbiBVU6d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 15:06:52 -0500
-Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17D76F210A;
-        Tue, 22 Feb 2022 12:06:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
-        s=the; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:
-        Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=GZ/WSWgJBiEHXHtoaYeS23vkf3k0hR1lrwLvk6dfqQY=; b=C3sRnNBZ9WphMIrOCeHKtbYK1Z
-        4BUp8uWwLjKHugkczVmwkQFLYAx32RzaAOuAsJ6Gh6phWD7HlRwWlnBjafl60VWYMSRz13GuMmPDU
-        ltYUt4ur4nth7jHVgdhIDTts6ppa7lV9BiwwJk6cpBlSlCtqLRhiCTkq9MqW3qkbAT8ptGwvr8ffy
-        8JylfP3UpLceoAQoW/vFlVrCfa7eqwZ/i3+OMMxXe4FX1bS42h2aeek65DCEnX/kwZUv8RCZw/jbM
-        iX6deNsMoWnKQhDtMPcd+mbCnDdiGkv2jR3Z+pgE81jKbbFhMiPc/c4T8RlP/WadtJmyEqcC+ZEyh
-        fA1pedyA==;
-Received: from noodles by the.earth.li with local (Exim 4.94.2)
-        (envelope-from <noodles@earth.li>)
-        id 1nMbQU-00CR3y-GA; Tue, 22 Feb 2022 20:06:22 +0000
-Date:   Tue, 22 Feb 2022 20:06:22 +0000
-From:   Jonathan McDowell <noodles@earth.li>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 00/18] Multiple addition to ipq8064 dtsi
-Message-ID: <YhVCPiBr+aEwQqkG@earth.li>
-References: <20220218002956.6590-1-ansuelsmth@gmail.com>
+        Tue, 22 Feb 2022 15:58:33 -0500
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FD73B3E51
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 12:58:07 -0800 (PST)
+Received: by mail-oi1-x232.google.com with SMTP id i5so16007806oih.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 12:58:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=NynQNF0vX996pWM8oXRiHAyv1zn8urGitpw21EUF3Ig=;
+        b=L/8fx6WNUMxviiyfdvx+MGczbT7qrRWXltvUI3yYAlhX786QC8OveavbrQQljj6iAB
+         XSYVJXmNJhCpKFngP93KQCqgOXuVJ8JuEiIX2Pa3TYI46TQVRX7lavz7/HA9pcZ/GRwr
+         Pazm7NAEKcHpghc7LdbcTZgvieufT8c5NUjQc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=NynQNF0vX996pWM8oXRiHAyv1zn8urGitpw21EUF3Ig=;
+        b=gZ68zGkcot2lrmpfh9nvBvz9Dp94ZxekBcZRruqi7G8CX8CgTpCW/pX14kTLE1ihej
+         wAdIbf8BA/uplsWyZcJyxmUi8rcCs/OZA6XeN81UrVkLjzEw1CMRlVcbE/PNE2mFuznU
+         3MhC8dilygFIKNb+d/8F0Gn00tKZ1343dzTwJt6QHrvsR6rNFm6WRSRjc2DrZApHYSOd
+         djjjsP0vc1oDUysWOqjR2kWlNnTnDJD/L+j3PuxwJT7FtolXDL6hs4xCj1BdB1eSqWDe
+         hSume2UvENPbikugA8+2u3TZ/onN9Gdba+vu1o6/aqRo79U5bnO4p6WCnR5U2mAYuYfE
+         osZA==
+X-Gm-Message-State: AOAM531FtatsI5YvrijvVBQCjC/nhSI90lacKF6+0Q35Eve+K2Ijga5c
+        TSkWLTyFAXwIDRo/9llbeI3YMHYINbuUO8UMOON7bg==
+X-Google-Smtp-Source: ABdhPJx6fQYRY7rvcoUFumSJbC7mrI8sA642kTB5r6LSvTKI5ctWF6uGfP0c5mRHN4PAc2LCLE3717+B+ntjiMevFFI=
+X-Received: by 2002:a05:6808:f88:b0:2d4:c8c2:b898 with SMTP id
+ o8-20020a0568080f8800b002d4c8c2b898mr2943846oiw.112.1645563486853; Tue, 22
+ Feb 2022 12:58:06 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 22 Feb 2022 20:58:06 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220218002956.6590-1-ansuelsmth@gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <1645449126-17718-1-git-send-email-quic_vpolimer@quicinc.com>
+References: <1645449126-17718-1-git-send-email-quic_vpolimer@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Tue, 22 Feb 2022 20:58:06 +0000
+Message-ID: <CAE-0n507XcYRz4=Uw-K37kPsLRqi_gN2L9y1wcu_X-UJP+6ySg@mail.gmail.com>
+Subject: Re: [v1] arm64/dts/qcom/sc7280: update mdp clk to max supported value
+ to support higher refresh rates
+To:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dmitry.baryshkov@linaro.org, dianders@chromium.org,
+        quic_kalyant@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 18, 2022 at 01:29:38AM +0100, Ansuel Smith wrote:
-> This try to complete the ipq8064 dtsi and introduce 2 new dtsi
-> ipq8064-v2 and ipq8065. While some node are still missing (cpufreq node,
-> l2 scale node, fab scale node) this would add most of the missing node
-> to make ipq8064 actually usable.
-> 
-> Some of the changes are the fix for the pci IO that cause any secondary
-> wifi card with ath10k to fail init.
-> Adds regulators definition for RPM.
-> Adds many missing gsbi nodes used by all the devices.
-> Enable the usb phy by default as they are actually enabled internally by
-> xlate only if the dwc3 driver is used.
-> Add opp table and declare idle state for ipq8064.
-> Fix some dtc warning.
-> 
-> This also add the ipq8064-v2.0 dtsi and the ipq8065 dtsi used by more
-> recent devices based on this SoC.
+Quoting Vinod Polimera (2022-02-21 05:12:06)
+> Panels with higher refresh rate will need mdp clk above 300Mhz.
+> Select max frequency for mdp clock during bootup, dpu driver will
+> scale down the clock as per usecase when first update from the framework is received.
+>
+> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
 
-A couple of comments directly on 2 patches, but otherwise for the set:
+Please add a Fixes tag.
 
-Tested-by: Jonathan McDowell <noodles@earth.li>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index baf1653..7af96fc 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -2895,7 +2895,7 @@
+>                                 assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>,
+>                                                 <&dispcc DISP_CC_MDSS_VSYNC_CLK>,
+>                                                 <&dispcc DISP_CC_MDSS_AHB_CLK>;
+> -                               assigned-clock-rates = <300000000>,
+> +                               assigned-clock-rates = <506666667>,
 
-> v2:
-> - Added missing patch
-> - Added additional gsbi6 spi
-> - Added extra description for L2 cache opp
-> - Fxied smb208 enabled by default that is problematic for rb3011 devices
-> 
-> Ansuel Smith (18):
->   ARM: dts: qcom: add multiple missing pin definition for ipq8064
->   ARM: dts: qcom: add gsbi6 missing definition for ipq8064
->   ARM: dts: qcom: add missing rpm regulators and cells for ipq8064
->   ARM: dts: qcom: disable smb208 regulators for ipq8064-rb3011
->   ARM: dts: qcom: add missing snps,dwmac compatible for gmac ipq8064
->   ARM: dts: qcom: enable usb phy by default for ipq8064
->   ARM: dts: qcom: reduce pci IO size to 64K for ipq8064
->   ARM: dts: qcom: fix dtc warning for missing #address-cells for ipq8064
->   ARM: dts: qcom: add smem node for ipq8064
->   ARM: dts: qcom: add saw for l2 cache and kraitcc for ipq8064
->   ARM: dts: qcom: add sic non secure node for ipq8064
->   ARM: dts: qcom: fix and add some missing gsbi node for ipq8064
->   ARM: dts: qcom: add opp table for cpu and l2 for ipq8064
->   ARM: dts: qcom: add speedbin efuse nvmem binding
->   ARM: dts: qcom: add multiple missing binding for cpu and l2 for
->     ipq8064
->   ARM: dts: qcom: remove redundant binding from ipq8064 rb3011 dts
->   ARM: dts: qcom: add ipq8064-v2.0 dtsi
->   ARM: dts: qcom: add ipq8065 dtsi
-> 
->  arch/arm/boot/dts/qcom-ipq8064-rb3011.dts |  21 +-
->  arch/arm/boot/dts/qcom-ipq8064-v2.0.dtsi  |  70 ++++
->  arch/arm/boot/dts/qcom-ipq8064.dtsi       | 375 +++++++++++++++++++++-
->  arch/arm/boot/dts/qcom-ipq8065.dtsi       | 168 ++++++++++
->  4 files changed, 603 insertions(+), 31 deletions(-)
->  create mode 100644 arch/arm/boot/dts/qcom-ipq8064-v2.0.dtsi
->  create mode 100644 arch/arm/boot/dts/qcom-ipq8065.dtsi
-> 
-> -- 
-> 2.34.1
-> 
+Why not simply remove the clock assignment and set the rate based on the
+OPP when the driver probes?
 
-J.
-
--- 
-"evilwm - we sold our souls to the window manager" --
-http://www.6809.org.uk/evilwm/
+>                                                         <19200000>,
+>                                                         <19200000>;
+>                                 operating-points-v2 = <&mdp_opp_table>;
