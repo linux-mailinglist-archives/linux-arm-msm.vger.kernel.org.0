@@ -2,73 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00F014C00B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 18:58:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A9D934C00D7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 19:02:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234768AbiBVR7C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 12:59:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45226 "EHLO
+        id S234730AbiBVSCY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 13:02:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232898AbiBVR7B (ORCPT
+        with ESMTP id S234188AbiBVSCX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 12:59:01 -0500
-Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1004D171864
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 09:58:36 -0800 (PST)
-Received: by mail-oo1-xc33.google.com with SMTP id i10-20020a4aab0a000000b002fccf890d5fso18701821oon.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 09:58:36 -0800 (PST)
+        Tue, 22 Feb 2022 13:02:23 -0500
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE31E27CED
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 10:01:57 -0800 (PST)
+Received: by mail-ot1-x32d.google.com with SMTP id a7-20020a9d5c87000000b005ad1467cb59so10204382oti.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 10:01:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=9Y2AqDKUpMQgTsOg3FI79lbQQePJo1iYlm+XyAflgx0=;
-        b=LmfyH44UGzXt6wILF+bnLCqYn5OW6LnPIuT7x/JfxAHL5ZgBH/SB0zz1GaU07zcKc/
-         4vYk85m6gonT+gcZxME1BSo79mzDwxWs/DQMWtRFmpqqANaKCNGtCNVWZYpUTvyW7pcJ
-         s2aiFwVT0mO15/chQySqSzZTEL6OTIoxG7sUkG0CHgcdu6qRTesl53RZEWD1iYvozm0e
-         I/ABk/YjAZeMhehY75hopIW0b+A1jb1wO0tDxGW+AoMDSRKNcaz3NsaH9+/dpPirWAT5
-         wdoLeS6F2wvtIjEkHbZjwUb3ePZ/CBKeWx4JUssJ9dzTW0PoBgqEI0gCOfbPsDGUL/UL
-         HbTw==
+        bh=SdxXBssqIsA1l+C6PXrlMorWOAj9zYyZXBKmUKMGGC8=;
+        b=SeLZhPFd5FksIREpIbjxg8L6cWMzA7jyGFZvXFmarSW6JT2CTchwa88hMEEegG0g5J
+         sEW9T5K1xDqNe35ep+WkFnGIoyYK9JRUkmbehMKUmXqwoGxe5RV2CXqke77ey4RWVyeJ
+         7gx4hkcqB7snXXVsFY+KEmoJxlA3DiSa3MYgmW30PwOLzM7V4Due72mSc3aLyDy85Llq
+         JRFQLPf6vlyG2/L23ui3GG7IcZTqHYNYD1f+MJTK5pbOv1TGJ2Cfqux4LxbwiwgdW81s
+         rDJWqiJJk5M5Wy52Vi5uwOy4yFtV/SnnUQxNsVhy3OW85Z0Y24e+qRRRrT6dPzvHUzk/
+         PZ3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=9Y2AqDKUpMQgTsOg3FI79lbQQePJo1iYlm+XyAflgx0=;
-        b=SVeKgoZ2SoRoVBe3TZ861RtWUUKgpxcfiuKgiPRN+y20uMdjREuCiocc8CL4DI2Ngl
-         RQ5JdbP2n3//+E8hYTyLYtYmfUMB7D0L4t19WK+vGAQAHrWO58y/GY458SoSq5ThSkcx
-         cZxiBXVME6MgGRA4pToT8hXRbz96DzHrGlkmCxoeRNDcogNLEEGQaUDJXP6yOVpgBbAQ
-         I6knmVl6us+g38DK4e2n3GL1xk5/EH3uyXykpAwzZH8mjdyMLXMTxcYtlt6epLvQ/+mx
-         H1OWX5GzZslgrBFly0SAWbsAlDzg3ACVMPO5SRXAnKqMyLVQwYTrhictCZSrTr2G0aJO
-         rHvA==
-X-Gm-Message-State: AOAM530njf/U5MGn7HUGn1+xNGuWLRJZk1pQjGLKuLRzAvlqAj3MUjNU
-        MWJNEEEHx2FLmOWOMLmizULxow==
-X-Google-Smtp-Source: ABdhPJyj87/YvJOCybKJXx1u/9jXrSrA/hbB7V18Hg9PLPl52iAsQhxw+fIIZM13P1F+EGTEAGWXrA==
-X-Received: by 2002:a05:6871:7a8:b0:c5:a1b3:43eb with SMTP id o40-20020a05687107a800b000c5a1b343ebmr2265517oap.103.1645552715430;
-        Tue, 22 Feb 2022 09:58:35 -0800 (PST)
+        bh=SdxXBssqIsA1l+C6PXrlMorWOAj9zYyZXBKmUKMGGC8=;
+        b=7BQg+uMBMag9xuVQ1aPYh9mJThME1q9MZXiuUlEHgzFLwHHoXhgsWJrbEnGVXRBM3R
+         9KXnYwezWFLtKN2MNTJ1QXh4gDLTN+2JTxl7RaqE14i5r8WoU/Np6o9CLMqFYm365hob
+         68zJye5unf5UXbpdztCQVhvwhI2vBA+JC0EAGQvdbLDa9lRwHyXd0KaqYohphMGwDFVf
+         BuL8EUfD1YreU7j0BdOnvo3ZGenbAzXF+MHTv3abdhwyElc3K2tmSoAAggsd5ZbiWmN8
+         IU59IE2rhZdHBpgPDawqFc0pAEiniLLDk2IiSdxI8Y89FF0JbzL7XYSQsvjVQtTOp6Q3
+         H92g==
+X-Gm-Message-State: AOAM532eQJF+xNDE/oS+rtqfMPIlJ6EoPf2RdRxep7HzTG08OLxMN6Eh
+        D/GN7yyyOlegVap92FTKSvetmA==
+X-Google-Smtp-Source: ABdhPJxWEHC+Mm9/uZ3OOHosJbLQd2o6I9x0B1SYOT+wH5/0geWhywMJzUO7D5r90LvBSBOGtL/1qw==
+X-Received: by 2002:a05:6830:44f:b0:5ac:fdb6:28d7 with SMTP id d15-20020a056830044f00b005acfdb628d7mr8649483otc.182.1645552917118;
+        Tue, 22 Feb 2022 10:01:57 -0800 (PST)
 Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id g18sm1751484otp.17.2022.02.22.09.58.34
+        by smtp.gmail.com with ESMTPSA id 8sm6335790ota.60.2022.02.22.10.01.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 09:58:34 -0800 (PST)
-Date:   Tue, 22 Feb 2022 10:00:34 -0800
+        Tue, 22 Feb 2022 10:01:56 -0800 (PST)
+Date:   Tue, 22 Feb 2022 10:03:57 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Satya Priya <quic_c_skakit@quicinc.com>
-Cc:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>, Wei Xu <xuwei5@hisilicon.com>,
+        Nishanth Menon <nm@ti.com>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Tero Kristo <kristo@kernel.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Jan Kotas <jank@cadence.com>, Li Wei <liwei213@huawei.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Yaniv Gardi <ygardi@codeaurora.org>,
+        linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Doug Anderson <dianders@chromium.org>
-Subject: Re: [PATCH V4 4/4] arm64: dts: qcom: Enable pm8350c pwm for
- sc7280-idp2
-Message-ID: <YhUkwmis0ZY9gypR@ripper>
-References: <1645509309-16142-1-git-send-email-quic_c_skakit@quicinc.com>
- <1645509309-16142-5-git-send-email-quic_c_skakit@quicinc.com>
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org
+Subject: Re: [PATCH v2 04/15] dt-bindings: ufs: drop unused/old ufs-qcom PHY
+ bindings
+Message-ID: <YhUljWBHi6vbMth4@ripper>
+References: <20220222145854.358646-1-krzysztof.kozlowski@canonical.com>
+ <20220222145854.358646-5-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1645509309-16142-5-git-send-email-quic_c_skakit@quicinc.com>
+In-Reply-To: <20220222145854.358646-5-krzysztof.kozlowski@canonical.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,37 +87,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 21 Feb 21:55 PST 2022, Satya Priya wrote:
+On Tue 22 Feb 06:58 PST 2022, Krzysztof Kozlowski wrote:
 
-> Enable pm8350c pmic pwm support for backlight on sc7280-idp2.
+> The Qualcomm UFS PHY bindings are documented in
+> bindings/phy/qcom,qmp-phy.yaml and the compatibles from separate file
+> bindings/ufs/ufs-qcom.txt are not used at all.
 > 
-> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 > ---
-> Changes in V3:
->  - New patch added in V3, to enable pwm support on sc7280-idp2 board.
+>  .../devicetree/bindings/ufs/ufs-qcom.txt      | 63 -------------------
+>  1 file changed, 63 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/ufs/ufs-qcom.txt
 > 
-> Changes in V4:
->  - No changes.
-> 
->  arch/arm64/boot/dts/qcom/sc7280-idp2.dts | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp2.dts b/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
-> index 73b9911..d4f7cab 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
-> @@ -34,3 +34,7 @@
->  &nvme_3v3_regulator {
->  	gpio = <&tlmm 51 GPIO_ACTIVE_HIGH>;
->  };
-> +
-> +&pm8350c_pwm {
-> +	status = "okay";
-> +};
+> diff --git a/Documentation/devicetree/bindings/ufs/ufs-qcom.txt b/Documentation/devicetree/bindings/ufs/ufs-qcom.txt
+> deleted file mode 100644
+> index fd59f93e9556..000000000000
+> --- a/Documentation/devicetree/bindings/ufs/ufs-qcom.txt
+> +++ /dev/null
+> @@ -1,63 +0,0 @@
+> -* Qualcomm Technologies Inc Universal Flash Storage (UFS) PHY
+> -
+> -UFSPHY nodes are defined to describe on-chip UFS PHY hardware macro.
+> -Each UFS PHY node should have its own node.
+> -
+> -To bind UFS PHY with UFS host controller, the controller node should
+> -contain a phandle reference to UFS PHY node.
+> -
+> -Required properties:
+> -- compatible        : compatible list, contains one of the following -
+> -			"qcom,ufs-phy-qmp-20nm" for 20nm ufs phy,
+> -			"qcom,ufs-phy-qmp-14nm" for legacy 14nm ufs phy,
+> -			"qcom,msm8996-ufs-phy-qmp-14nm" for 14nm ufs phy
+> -			 present on MSM8996 chipset.
+> -- reg               : should contain PHY register address space (mandatory),
+> -- reg-names         : indicates various resources passed to driver (via reg proptery) by name.
+> -                      Required "reg-names" is "phy_mem".
+> -- #phy-cells        : This property shall be set to 0
+> -- vdda-phy-supply   : phandle to main PHY supply for analog domain
+> -- vdda-pll-supply   : phandle to PHY PLL and Power-Gen block power supply
+> -- clocks	    : List of phandle and clock specifier pairs
+> -- clock-names       : List of clock input name strings sorted in the same
+> -		      order as the clocks property. "ref_clk_src", "ref_clk",
+> -		      "tx_iface_clk" & "rx_iface_clk" are mandatory but
+> -		      "ref_clk_parent" is optional
+> -
+> -Optional properties:
+> -- vdda-phy-max-microamp : specifies max. load that can be drawn from phy supply
+> -- vdda-pll-max-microamp : specifies max. load that can be drawn from pll supply
+> -- vddp-ref-clk-supply   : phandle to UFS device ref_clk pad power supply
+> -- vddp-ref-clk-max-microamp : specifies max. load that can be drawn from this supply
+> -- resets : specifies the PHY reset in the UFS controller
+> -
+> -Example:
+> -
+> -	ufsphy1: ufsphy@fc597000 {
+> -		compatible = "qcom,ufs-phy-qmp-20nm";
+> -		reg = <0xfc597000 0x800>;
+> -		reg-names = "phy_mem";
+> -		#phy-cells = <0>;
+> -		vdda-phy-supply = <&pma8084_l4>;
+> -		vdda-pll-supply = <&pma8084_l12>;
+> -		vdda-phy-max-microamp = <50000>;
+> -		vdda-pll-max-microamp = <1000>;
+> -		clock-names = "ref_clk_src",
+> -			"ref_clk_parent",
+> -			"ref_clk",
+> -			"tx_iface_clk",
+> -			"rx_iface_clk";
+> -		clocks = <&clock_rpm clk_ln_bb_clk>,
+> -			<&clock_gcc clk_pcie_1_phy_ldo >,
+> -			<&clock_gcc clk_ufs_phy_ldo>,
+> -			<&clock_gcc clk_gcc_ufs_tx_cfg_clk>,
+> -			<&clock_gcc clk_gcc_ufs_rx_cfg_clk>;
+> -		resets = <&ufshc 0>;
+> -	};
+> -
+> -	ufshc: ufshc@fc598000 {
+> -		#reset-cells = <1>;
+> -		...
+> -		phys = <&ufsphy1>;
+> -		phy-names = "ufsphy";
+> -	};
 > -- 
-> 2.7.4
+> 2.32.0
 > 
