@@ -2,79 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B3E54BFC44
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 16:18:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6034E4BFC52
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 16:21:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233412AbiBVPS6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 10:18:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46350 "EHLO
+        id S233394AbiBVPVj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 10:21:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233369AbiBVPSq (ORCPT
+        with ESMTP id S232729AbiBVPVj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 10:18:46 -0500
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFF0E14A6ED
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 07:18:20 -0800 (PST)
-Received: by mail-io1-xd2a.google.com with SMTP id d19so9961214ioc.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 07:18:20 -0800 (PST)
+        Tue, 22 Feb 2022 10:21:39 -0500
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CC891617DB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 07:21:13 -0800 (PST)
+Received: by mail-yb1-xb36.google.com with SMTP id v186so41904101ybg.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 07:21:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=xBV5CfTYWd1OPj8rDibNSsYE0rmrF2IsLJinLQ/4VQk=;
-        b=Hm8SzBkNIXZgJ9JetW86MwmzMLxbeT5wbqrh9AG1ecTuQQMYvLCHy0Mrnblhek+uQ7
-         5vN46g40HF6mIgtlX6UwIbDDwfyLHeZfIfM9pF9QHSo+8AaPKRRWWnL+I0oNnck1L1cL
-         VG2Af7J4IXpDS/VEuv3HyJ64JIVLYIxiOvcDHmflxGooyRQa/2EkctT4xBrWzt0PNLtk
-         CUaN6O5LEw+W1VZ7IU+IfzK0db41N7tcAAGUtcNYDz9fvGTAP4xsjH99YVVo6p1YoAiQ
-         lIJcgCKvA6ueFhDCMg+NT/usYUx0O6QSUm3A9d3A2YeWR7NsF16OKl2S/RkEhbZE345u
-         SJVA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=HVdVMfysf95jTHRvOxuNoVjxuB0CjZvhXhqlbIHuN0Y=;
+        b=KTh8aFNGaoyntsSAxBWClVP9/nSFTBS6irzubM66J/T39Yf6IABij0qQupUfuzzdZH
+         ihIj4SU7EJtHUp3eNKbXfhrrfrdHCRjI06QOYhuWfa0CrRe5czKlGZ0kFgPhNtdusiE/
+         0cWGtj2Eo8LQ48RmeuO5gh48DJcz9Ic28mn3vkGeynwoJm2hTtHUmOW3NPXIa4x6jgsf
+         6IVhC3O85FyU1YztP8Nj8fRJuiHPBP5iQXLzDxOET1eFSu7QBjKPOJvhBmaOXJMJnFLm
+         a5nEmVP4VCmsyQ2WvCMH6N508jNFlxP3rso6X+xul9CMCySIXCetVpdBnk8Y2gRuOE2p
+         bnRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=xBV5CfTYWd1OPj8rDibNSsYE0rmrF2IsLJinLQ/4VQk=;
-        b=N4yLZHpFMP/uVg3My7Opi96RFedD3NsbnTEu0Y1tf2LOJb0thmtYuXriVgIP1WOYbf
-         aMajsyQAy7doHfteSZ9G3foKFMaMug+t8u1iV9QxynvcmH83ofxbrVfuXBw4P43kHCFQ
-         0oroswmex2OnEgS7BHjb4+IBUFvJBcTlkMaZrlJHaw588t6pOJ7yUIrtAgHuvw80pOSZ
-         yr4QoRNQvfbaZRST/W7Fvo0aH2+VZUtmHXo3oDc5pAiAdXrSS1u+OQgW2P2+CeXKr7a/
-         rvSqS2At8ZKRoLRBM+V6OiRJYctdbK49mwsl0JqgsqWxb9ZYdhzHHCJsOORvte8RybD9
-         UBlg==
-X-Gm-Message-State: AOAM533+9xal4FZmlIC6dV68PkEaCgcZbf1f8JuEGUej99FpFJZiaxLK
-        dXtEdg7mjLv3iEPodr6cKv6uGg==
-X-Google-Smtp-Source: ABdhPJyMvIEt4P/tuJaiYPOYcuZuTEcosqlAjiBFoPqe4vzK4hj8jmvdHrMpZt9qMBLSbpg2p6Rn3Q==
-X-Received: by 2002:a05:6638:1405:b0:30d:69cd:f44 with SMTP id k5-20020a056638140500b0030d69cd0f44mr18926507jad.208.1645543100023;
-        Tue, 22 Feb 2022 07:18:20 -0800 (PST)
-Received: from [172.22.22.26] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id r7sm7860220ilc.24.2022.02.22.07.18.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Feb 2022 07:18:19 -0800 (PST)
-Message-ID: <f3248103-9450-dcf0-719d-77c6dcd85bfe@linaro.org>
-Date:   Tue, 22 Feb 2022 09:18:18 -0600
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=HVdVMfysf95jTHRvOxuNoVjxuB0CjZvhXhqlbIHuN0Y=;
+        b=2lCyC41KFaQwu2U2BmccZV46MC4eHNbtgG6ukUWS/EWpcpXAIhJD8Wk0KdV/Dw8Ru3
+         LCuB8X2yl1BGHd11qQzgvC6xQ/k5aPvUcSfII1DbmwIxfpZak6pfFGVf3hMaeneqE7Tp
+         Q8quia6nmtIpW8qSKHQ03+of0nh8HR5CyEJeEBgPePUYJX8YQpqi/oG6xMrDHygrXYEa
+         fFRmqSs3j92gz5cfEhlKI4dXUoAGSn/9pfSqHsjhBgNHX/0f6Ot6/WGAKch98adSx3Xa
+         Z3Z98rCLgRc2lqlD4tAyZsEfypjrdu6hwpIV1Y8iOtIAK4a04Qe4Zy8lggFYIh/SsBsl
+         slYg==
+X-Gm-Message-State: AOAM532UMLDnTQsub5NYLe2X+xmm+ceB1QVnKkhQ7j201qeP9aDqeylu
+        1ut10ifM5Gzytp5WQOh4QuNpphMFXHF2afwfCwWArkke+lEgwg==
+X-Google-Smtp-Source: ABdhPJyCcJARRbkiTPXc35f6YTtpOe1UTQH526CZggy98Wmxv6UfuXKgc5itp4zRkLxISttmSWvkXXI+3Fq9wJhPrqM=
+X-Received: by 2002:a25:aac3:0:b0:624:ab10:49dc with SMTP id
+ t61-20020a25aac3000000b00624ab1049dcmr6967837ybi.291.1645543272820; Tue, 22
+ Feb 2022 07:21:12 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v3 23/25] bus: mhi: ep: Add support for queueing SKBs to
- the host
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
-        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
-        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
-        dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
-        quic_cang@quicinc.com, quic_skananth@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
- <20220212182117.49438-24-manivannan.sadhasivam@linaro.org>
- <766e6568-0b80-c745-dd8f-7f401fb0422d@linaro.org>
- <20220222143825.GH5029@thinkpad>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <20220222143825.GH5029@thinkpad>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20220216212433.1373903-1-luca@z3ntu.xyz> <20220216212433.1373903-2-luca@z3ntu.xyz>
+In-Reply-To: <20220216212433.1373903-2-luca@z3ntu.xyz>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 22 Feb 2022 16:21:01 +0100
+Message-ID: <CACRpkdZhtdyni0cKT43nd9YVSnA_Dza6=kuECuXLJKbDG2rbEA@mail.gmail.com>
+Subject: Re: [PATCH 1/5] dt-bindings: bluetooth: broadcom: add BCM43430A0
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,158 +70,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/22/22 8:38 AM, Manivannan Sadhasivam wrote:
-> On Tue, Feb 15, 2022 at 04:40:29PM -0600, Alex Elder wrote:
->> On 2/12/22 12:21 PM, Manivannan Sadhasivam wrote:
->>> Add support for queueing SKBs to the host over the transfer ring of the
->>> relevant channel. The mhi_ep_queue_skb() API will be used by the client
->>> networking drivers to queue the SKBs to the host over MHI bus.
->>>
->>> The host will add ring elements to the transfer ring periodically for
->>> the device and the device will write SKBs to the ring elements. If a
->>> single SKB doesn't fit in a ring element (TRE), it will be placed in
->>> multiple ring elements and the overflow event will be sent for all ring
->>> elements except the last one. For the last ring element, the EOT event
->>> will be sent indicating the packet boundary.
->>>
->>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>
->> I'm a little confused by this, so maybe you can provide
->> a better explanation somehow.
->>
->> 					-Alex
->>
->>> ---
->>>    drivers/bus/mhi/ep/main.c | 102 ++++++++++++++++++++++++++++++++++++++
->>>    include/linux/mhi_ep.h    |  13 +++++
->>>    2 files changed, 115 insertions(+)
->>>
->>> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
->>> index baf383a4857b..e4186b012257 100644
->>> --- a/drivers/bus/mhi/ep/main.c
->>> +++ b/drivers/bus/mhi/ep/main.c
->>> @@ -488,6 +488,108 @@ int mhi_ep_process_tre_ring(struct mhi_ep_ring *ring, struct mhi_ep_ring_element
->>>    	return 0;
->>>    }
->>> +int mhi_ep_queue_skb(struct mhi_ep_device *mhi_dev, enum dma_data_direction dir,
->>> +		     struct sk_buff *skb, size_t len, enum mhi_flags mflags)
->>
->> Why are both skb and len supplied?  Will an skb be supplied
->> without wanting to send all of it?  Must len be less than
->> skb->len?  I'm a little confused about the interface.
->>
->> Also, the data direction is *out*, right?  You'll never
->> be queueing a "receive" SKB?
->>
-> 
-> This was done to be compatible with the MHI host API where the host can queue
-> SKBs in both directions. But I think I should stop doing this.
+On Wed, Feb 16, 2022 at 10:25 PM Luca Weiss <luca@z3ntu.xyz> wrote:
 
+> Document the compatible string for BCM43430A0 bluetooth.
+>
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 
-OK.
+Looks good to me:
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
->>> +{
->>> +	struct mhi_ep_chan *mhi_chan = (dir == DMA_FROM_DEVICE) ? mhi_dev->dl_chan :
->>> +								mhi_dev->ul_chan;
->>> +	struct mhi_ep_cntrl *mhi_cntrl = mhi_dev->mhi_cntrl;
->>> +	struct device *dev = &mhi_chan->mhi_dev->dev;
->>> +	struct mhi_ep_ring_element *el;
->>> +	struct mhi_ep_ring *ring;
->>> +	size_t bytes_to_write;
->>> +	enum mhi_ev_ccs code;
->>> +	void *read_from_loc;
->>> +	u32 buf_remaining;
->>> +	u64 write_to_loc;
->>> +	u32 tre_len;
->>> +	int ret = 0;
->>> +
->>> +	if (dir == DMA_TO_DEVICE)
->>> +		return -EINVAL;
->>
->> Can't you just preclude this from happening, or
->> know it won't happen by inspection?
->>
->>> +
->>> +	buf_remaining = len;
->>> +	ring = &mhi_cntrl->mhi_chan[mhi_chan->chan].ring;
->>> +
->>> +	mutex_lock(&mhi_chan->lock);
->>> +
->>> +	do {
->>> +		/* Don't process the transfer ring if the channel is not in RUNNING state */
->>> +		if (mhi_chan->state != MHI_CH_STATE_RUNNING) {
->>> +			dev_err(dev, "Channel not available\n");
->>> +			ret = -ENODEV;
->>> +			goto err_exit;
->>> +		}
->>> +
->>
->> It would be nice if the caller could know whether there
->> was enough room *before* you start transferring things.
->> It's probably a lot of work to get to that point though.
->>
-> 
-> No, the caller will do this check but the check is included here so that we
-> don't run out of buffers when the packet needs to be splitted.
-> 
->>> +		if (mhi_ep_queue_is_empty(mhi_dev, dir)) {
->>> +			dev_err(dev, "TRE not available!\n");
->>> +			ret = -EINVAL;
->>> +			goto err_exit;
->>> +		}
->>> +
->>> +		el = &ring->ring_cache[ring->rd_offset];
->>> +		tre_len = MHI_EP_TRE_GET_LEN(el);
->>> +		if (skb->len > tre_len) {
->>> +			dev_err(dev, "Buffer size (%d) is too large for TRE (%d)!\n",
->>> +				skb->len, tre_len);
->>
->> This means the receive buffer must be big enough to hold
->> any incoming SKB.  This is *without* checking for the
->> CHAIN flag in the TRE, so what you describe in the
->> patch description seems not to be true.  I.e., multiple
->> TREs in a TRD will *not* be consumed if the SKB data
->> requires more than what's left in the current TRE.
->>
-> 
-> I think I removed this check for v3 but somehow the change got lost :/
-
-Looking at this now, it's possible I got confused about
-which direction the data was moving; but I'm not really
-sure.
-
- From the perspective of the endpoint device, this is the
-*transmit* function.  But when the device is transmitting,
-it is moving data into the *receive* buffers that the host
-has allocated and supplied via the transfer ring.
-
-My statement seems to be correct though, with this logic,
-the host must supply a buffer large enough to receive the
-entire next SKB, or it will get an error back.  I no longer
-know what happens when this function (mhi_ep_queue_skb())
-returns an error--is the skb dropped?
-
-> But anyway, there is no need to check for CHAIN flag while writing to host.
-> CHAIN flag is only used or even make sense when host writes data to device, so
-
-I'm not sure that's correct, but I don't want to get into that issue here.
-We can talk about that separately.
-
-> that it knows the packet boundary and could use the CHAIN flag to tell the
-> device where the boundary lies.
-
-This doesn't sound to me like what the purpose of the CHAIN flag is,
-but perhaps I'm misunderstanding you.  Let's have a quick private
-chat about this so we don't waste any more e-mail bandwidth.
-
-					-Alex
-
-> But when the device writes to host, it already has the pre-queued elements from
-> host that has no idea where the packet boundary lies. So the host would've set
-> only EOT on all TREs and expects the device to send OVERFLOW event for TREs that
-> don't have the complete packet. Then finally, when device sends EOT event, the
-> host will detect the boundary.
-> 
-> Thanks,
-> Mani
-
+Yours,
+Linus Walleij
