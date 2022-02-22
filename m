@@ -2,73 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 826CB4BFAFF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 15:38:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 504604BFB59
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 15:59:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232864AbiBVOi6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 09:38:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58508 "EHLO
+        id S233010AbiBVPAJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 10:00:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232613AbiBVOi6 (ORCPT
+        with ESMTP id S232916AbiBVPAI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 09:38:58 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD5DF4E3AD
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 06:38:32 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id cp23-20020a17090afb9700b001bbfe0fbe94so2834698pjb.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 06:38:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=GdNESGAYnggKJpJiijh4S9vzX+uCdLNrQ6NluL3JdoA=;
-        b=IEon9R3z+ocvwbvLWf0JV8sifD88RrbTiR6iamfDR8lButPGg9lzCX5nlgsN2kFu/p
-         PRhcLkBR04Z6nAyOHwecnCGkiXOQxovkuow5vY/JPwdoJAt1wU9jF5B6xiTlGAD7Y1f5
-         BRZZyEIZN+ckJVqkQtsQL9sJKOGa4xC61omEHyyAZeQW+FFhYNbqMHmdu2VXwUpIZv/a
-         FV7iQe6sSFsdq/UT5f8cyPfYyT1SI787HV+SSeCtoznlk7GXhkfFe+6f9sUoJKgp5lcT
-         1SNvnJSPFPmrgjhCpD/klGlveW/Ml8dlujlCrwAi1R88pfBG6O5rdR54xzFPrKB4prBC
-         Mgaw==
+        Tue, 22 Feb 2022 10:00:08 -0500
+Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D39F10DA54
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 06:59:43 -0800 (PST)
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com [209.85.218.69])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id C7E803FCB1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 14:59:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1645541981;
+        bh=+TIgQRioLLZ9zOW6KKmdTDTPf4m59BMseVHbquTVcCc=;
+        h=From:To:Subject:Date:Message-Id:MIME-Version;
+        b=Hg3sk6AEE3RSA/qbTAKERDjf8+2yL3I5TGp5O3i6JYvGxHOTthP+9YEIyF8X8HpWb
+         /NTvBUHW8fzu9QRd4QnBzztaEypjOO8kBccS7JE9sXY2tauUa3EeXzudym6V3IPmHO
+         GFiyQdsTPrTfU2fLAdOVY3ELhwekPbeaf0lcb0o7O04b4W3Le2yAoIe5QNZnfjlkCv
+         jxBwaZ8x4PZlaP57r1NxYcc45LnV4IEAUu7DoCd0Me94nlY9BlXX/QAbuCnBJugbL0
+         0KTn7XPsyvbdQZpARE/v8obRLzSi6uUOtB9OxJlLIzMRpRHLU94OTO2rNy0sSSP7dG
+         RfRJ73HWqA0Zg==
+Received: by mail-ej1-f69.google.com with SMTP id sa7-20020a170906eda700b006d1b130d65bso1937677ejb.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 06:59:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=GdNESGAYnggKJpJiijh4S9vzX+uCdLNrQ6NluL3JdoA=;
-        b=xz1Mramjy32bhlSoj4g5gQfDttHdNL99iZRl5tXdbgK9uZ2aBV895ystosvSPhBl/7
-         3kvKDQJ3bxIGm1JBfiulxsOkuFIwoDORVs/ZgaJ4sj0HISP1sRovC0+3x0myuFnN5nhJ
-         Y2lP2qN/1OOM8r7j+Yqw4aD/i6N34yxkP8VaFcL5BQvLVq/AuxKI0Vz6iFUgZc9S7VSE
-         hDDSbcNh0emUm208WQ4LpCw036c2Pm4PNWg4MWnZRXSMNq2YY72R6P2fNxLf3pV1gKIp
-         D3aCV0LbJcfIJrbGb8b8pPo2ebAmMTE26r2ishDlJ9FT/gQS9Dmo6+EqvRtqi0kzNP38
-         QvNA==
-X-Gm-Message-State: AOAM533nBLtGq8KIUohrYXQUO1xzI7gg8QyipcaZpB+1AEha8FjOpSxs
-        RdipucC8UDF8HeP+9LBFIyrjvyvNsqsXsGo=
-X-Google-Smtp-Source: ABdhPJxVL1yJ+jHsMKViEQIZWuX+YqfYVcdCnfbo+s68aK+kiS6owg/rfxJ+w7tDrAPpKNoLpZ8/PA==
-X-Received: by 2002:a17:903:2451:b0:14f:b91:fe3c with SMTP id l17-20020a170903245100b0014f0b91fe3cmr24146090pls.120.1645540712069;
-        Tue, 22 Feb 2022 06:38:32 -0800 (PST)
-Received: from thinkpad ([117.217.186.202])
-        by smtp.gmail.com with ESMTPSA id l8sm21942913pgt.77.2022.02.22.06.38.27
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+TIgQRioLLZ9zOW6KKmdTDTPf4m59BMseVHbquTVcCc=;
+        b=Qdda0jm/64ZfW8JR5JZRNoKF5bj5Iz3YxzCkKWICP/8xhQ4sfWRRssPhkgZUle6KCk
+         5ZxdOguhqMjndHeukSkbl4QtgGW838da/5WJUzCyCGRf7LaJxukjMv1ehl4FD2EvtFe8
+         6KQbF5GJVH/vTcjrZBdLbMsab5x8sYl2Z9yMcwCKI0CRg6HP7sRP5r6spEPNgAmcGHJz
+         uu9D+mGb0och3OV/afYxO4Th7GiC4taUVGG1mA7xxgRQ2BjXy2FT/O8iGjvWKdcsXJmp
+         m6O0Y4NsSnJlTj+gNdkMwMO2IfsdOSZweUyJ4TdcxQPNUV2RBHZRmd5yV36VJ595KfSK
+         Ky/g==
+X-Gm-Message-State: AOAM531eqirt+HVPjdxbOUikoFQjgkSDbGuJPeU0OGyJqqHECHe1wfOF
+        9ycnzulXm6keWhjdqJz/FLC2dzspQR50sZPtsc+OeOKGack6FlCRbvJp1OgElLxJnTxl17JGTpj
+        ahH7OLFKjQY+K/4Nq/gFq2wOy8Bx9puu63HiI5E+TA5U=
+X-Received: by 2002:aa7:c391:0:b0:410:83fb:abab with SMTP id k17-20020aa7c391000000b0041083fbababmr27025534edq.435.1645541980500;
+        Tue, 22 Feb 2022 06:59:40 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJwFDKifwtFFrCmwLKT4NC984SQd8SdrxWDXIgJnHsNvfVTg37pGq0CPqLSpORQdHqU3VFVDJQ==
+X-Received: by 2002:aa7:c391:0:b0:410:83fb:abab with SMTP id k17-20020aa7c391000000b0041083fbababmr27025516edq.435.1645541980307;
+        Tue, 22 Feb 2022 06:59:40 -0800 (PST)
+Received: from localhost.localdomain (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
+        by smtp.gmail.com with ESMTPSA id m2sm2467960ejb.20.2022.02.22.06.59.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 06:38:31 -0800 (PST)
-Date:   Tue, 22 Feb 2022 20:08:25 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
-        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
-        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
-        dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
-        quic_cang@quicinc.com, quic_skananth@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 23/25] bus: mhi: ep: Add support for queueing SKBs to
- the host
-Message-ID: <20220222143825.GH5029@thinkpad>
-References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
- <20220212182117.49438-24-manivannan.sadhasivam@linaro.org>
- <766e6568-0b80-c745-dd8f-7f401fb0422d@linaro.org>
+        Tue, 22 Feb 2022 06:59:39 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+To:     Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Wei Xu <xuwei5@hisilicon.com>, Nishanth Menon <nm@ti.com>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Tero Kristo <kristo@kernel.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Jan Kotas <jank@cadence.com>, Li Wei <liwei213@huawei.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Yaniv Gardi <ygardi@codeaurora.org>,
+        linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org
+Subject: [PATCH v2 00/15] dt-bindings: ufs: add common platform bindings + fixes
+Date:   Tue, 22 Feb 2022 15:58:39 +0100
+Message-Id: <20220222145854.358646-1-krzysztof.kozlowski@canonical.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <766e6568-0b80-c745-dd8f-7f401fb0422d@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,128 +92,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 15, 2022 at 04:40:29PM -0600, Alex Elder wrote:
-> On 2/12/22 12:21 PM, Manivannan Sadhasivam wrote:
-> > Add support for queueing SKBs to the host over the transfer ring of the
-> > relevant channel. The mhi_ep_queue_skb() API will be used by the client
-> > networking drivers to queue the SKBs to the host over MHI bus.
-> > 
-> > The host will add ring elements to the transfer ring periodically for
-> > the device and the device will write SKBs to the ring elements. If a
-> > single SKB doesn't fit in a ring element (TRE), it will be placed in
-> > multiple ring elements and the overflow event will be sent for all ring
-> > elements except the last one. For the last ring element, the EOT event
-> > will be sent indicating the packet boundary.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
-> I'm a little confused by this, so maybe you can provide
-> a better explanation somehow.
-> 
-> 					-Alex
-> 
-> > ---
-> >   drivers/bus/mhi/ep/main.c | 102 ++++++++++++++++++++++++++++++++++++++
-> >   include/linux/mhi_ep.h    |  13 +++++
-> >   2 files changed, 115 insertions(+)
-> > 
-> > diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> > index baf383a4857b..e4186b012257 100644
-> > --- a/drivers/bus/mhi/ep/main.c
-> > +++ b/drivers/bus/mhi/ep/main.c
-> > @@ -488,6 +488,108 @@ int mhi_ep_process_tre_ring(struct mhi_ep_ring *ring, struct mhi_ep_ring_element
-> >   	return 0;
-> >   }
-> > +int mhi_ep_queue_skb(struct mhi_ep_device *mhi_dev, enum dma_data_direction dir,
-> > +		     struct sk_buff *skb, size_t len, enum mhi_flags mflags)
-> 
-> Why are both skb and len supplied?  Will an skb be supplied
-> without wanting to send all of it?  Must len be less than
-> skb->len?  I'm a little confused about the interface.
-> 
-> Also, the data direction is *out*, right?  You'll never
-> be queueing a "receive" SKB?
-> 
+Hi,
 
-This was done to be compatible with the MHI host API where the host can queue
-SKBs in both directions. But I think I should stop doing this.
+Not tested on hardware, so please kindly test.
+Bindings maintainers might need checking - taken from git log.
 
-> > +{
-> > +	struct mhi_ep_chan *mhi_chan = (dir == DMA_FROM_DEVICE) ? mhi_dev->dl_chan :
-> > +								mhi_dev->ul_chan;
-> > +	struct mhi_ep_cntrl *mhi_cntrl = mhi_dev->mhi_cntrl;
-> > +	struct device *dev = &mhi_chan->mhi_dev->dev;
-> > +	struct mhi_ep_ring_element *el;
-> > +	struct mhi_ep_ring *ring;
-> > +	size_t bytes_to_write;
-> > +	enum mhi_ev_ccs code;
-> > +	void *read_from_loc;
-> > +	u32 buf_remaining;
-> > +	u64 write_to_loc;
-> > +	u32 tre_len;
-> > +	int ret = 0;
-> > +
-> > +	if (dir == DMA_TO_DEVICE)
-> > +		return -EINVAL;
-> 
-> Can't you just preclude this from happening, or
-> know it won't happen by inspection?
-> 
-> > +
-> > +	buf_remaining = len;
-> > +	ring = &mhi_cntrl->mhi_chan[mhi_chan->chan].ring;
-> > +
-> > +	mutex_lock(&mhi_chan->lock);
-> > +
-> > +	do {
-> > +		/* Don't process the transfer ring if the channel is not in RUNNING state */
-> > +		if (mhi_chan->state != MHI_CH_STATE_RUNNING) {
-> > +			dev_err(dev, "Channel not available\n");
-> > +			ret = -ENODEV;
-> > +			goto err_exit;
-> > +		}
-> > +
-> 
-> It would be nice if the caller could know whether there
-> was enough room *before* you start transferring things.
-> It's probably a lot of work to get to that point though.
-> 
+Changes since v1
+================
+1. Make freq-table as matrix of tuples (Nishanth).
+2. New patches: convert all bindings and fix up DTS files.
+3. Several minor fixes in UFS bindings.
 
-No, the caller will do this check but the check is included here so that we
-don't run out of buffers when the packet needs to be splitted.
+Dependencies
+============
+1. The DTS patches (10-15) depend on scsi/ufs driver change (patch 9), so
+   they should go in a following release, after merging driver.
 
-> > +		if (mhi_ep_queue_is_empty(mhi_dev, dir)) {
-> > +			dev_err(dev, "TRE not available!\n");
-> > +			ret = -EINVAL;
-> > +			goto err_exit;
-> > +		}
-> > +
-> > +		el = &ring->ring_cache[ring->rd_offset];
-> > +		tre_len = MHI_EP_TRE_GET_LEN(el);
-> > +		if (skb->len > tre_len) {
-> > +			dev_err(dev, "Buffer size (%d) is too large for TRE (%d)!\n",
-> > +				skb->len, tre_len);
-> 
-> This means the receive buffer must be big enough to hold
-> any incoming SKB.  This is *without* checking for the
-> CHAIN flag in the TRE, so what you describe in the
-> patch description seems not to be true.  I.e., multiple
-> TREs in a TRD will *not* be consumed if the SKB data
-> requires more than what's left in the current TRE.
-> 
+   This is also might affect out-of-tree users of these DTSes (other
+   projects, e.g. U-boot).
 
-I think I removed this check for v3 but somehow the change got lost :/
+Best regards,
+Krzysztof
 
-But anyway, there is no need to check for CHAIN flag while writing to host.
-CHAIN flag is only used or even make sense when host writes data to device, so
-that it knows the packet boundary and could use the CHAIN flag to tell the
-device where the boundary lies.
+Krzysztof Kozlowski (15):
+  dt-bindings: ufs: add common platform bindings
+  dt-bindings: ufs: samsung,exynos-ufs: use common bindings
+  dt-bindings: ufs: cdns,ufshc: convert to dtschema
+  dt-bindings: ufs: drop unused/old ufs-qcom PHY bindings
+  dt-bindings: ufs: qcom,ufs: convert to dtschema
+  dt-bindings: ufs: hisilicon,ufs: convert to dtschema
+  dt-bindings: ufs: mediatek,ufs: convert to dtschema
+  dt-bindings: ufs: snps,tc-dwc-g210: convert to dtschema
+  scsi: ufs: deprecate 'freq-table-hz' property
+  arm64: dts: hi3670: use 'freq-table' in UFS node
+  arm64: dts: ti: use 'freq-table' in UFS node
+  arm64: dts: qcom: use 'freq-table' in UFS node
+  arm64: dts: qcom: msm8996: drop unsupported UFS
+    vddp-ref-clk-max-microamp
+  arm64: dts: qcom: msm8996: correct UFS compatible
+  arm64: dts: qcom: sm8350: drop duplicated ref_clk in UFS
 
-But when the device writes to host, it already has the pre-queued elements from
-host that has no idea where the packet boundary lies. So the host would've set
-only EOT on all TREs and expects the device to send OVERFLOW event for TREs that
-don't have the complete packet. Then finally, when device sends EOT event, the
-host will detect the boundary.
+ .../devicetree/bindings/ufs/cdns,ufshc.txt    |  32 ---
+ .../devicetree/bindings/ufs/cdns,ufshc.yaml   |  68 +++++
+ .../bindings/ufs/hisilicon,ufs.yaml           |  90 +++++++
+ .../devicetree/bindings/ufs/mediatek,ufs.yaml |  67 +++++
+ .../devicetree/bindings/ufs/qcom,ufs.yaml     | 241 ++++++++++++++++++
+ .../bindings/ufs/samsung,exynos-ufs.yaml      |  13 +-
+ .../bindings/ufs/snps,tc-dwc-g210.yaml        |  51 ++++
+ .../bindings/ufs/tc-dwc-g210-pltfrm.txt       |  26 --
+ .../devicetree/bindings/ufs/ti,j721e-ufs.yaml |   9 +-
+ .../devicetree/bindings/ufs/ufs-common.yaml   |  88 +++++++
+ .../devicetree/bindings/ufs/ufs-hisi.txt      |  42 ---
+ .../devicetree/bindings/ufs/ufs-mediatek.txt  |  45 ----
+ .../devicetree/bindings/ufs/ufs-qcom.txt      |  63 -----
+ .../devicetree/bindings/ufs/ufshcd-pltfrm.txt |  90 -------
+ MAINTAINERS                                   |   1 +
+ arch/arm64/boot/dts/hisilicon/hi3670.dtsi     |   4 +-
+ .../boot/dts/qcom/msm8996-xiaomi-common.dtsi  |   1 -
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |   5 +-
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         |   2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |   2 +-
+ arch/arm64/boot/dts/qcom/sm8350.dtsi          |   5 +-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          |   2 +-
+ arch/arm64/boot/dts/ti/k3-j721e-main.dtsi     |   4 +-
+ drivers/scsi/ufs/ufshcd-pltfrm.c              |  21 +-
+ 26 files changed, 641 insertions(+), 335 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/ufs/cdns,ufshc.txt
+ create mode 100644 Documentation/devicetree/bindings/ufs/cdns,ufshc.yaml
+ create mode 100644 Documentation/devicetree/bindings/ufs/hisilicon,ufs.yaml
+ create mode 100644 Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml
+ create mode 100644 Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+ create mode 100644 Documentation/devicetree/bindings/ufs/snps,tc-dwc-g210.yaml
+ delete mode 100644 Documentation/devicetree/bindings/ufs/tc-dwc-g210-pltfrm.txt
+ create mode 100644 Documentation/devicetree/bindings/ufs/ufs-common.yaml
+ delete mode 100644 Documentation/devicetree/bindings/ufs/ufs-hisi.txt
+ delete mode 100644 Documentation/devicetree/bindings/ufs/ufs-mediatek.txt
+ delete mode 100644 Documentation/devicetree/bindings/ufs/ufs-qcom.txt
+ delete mode 100644 Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
 
-Thanks,
-Mani
+-- 
+2.32.0
+
