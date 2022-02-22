@@ -2,103 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B8524BED02
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Feb 2022 23:08:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 57CD64BEF3F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 02:53:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235228AbiBUWIc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Feb 2022 17:08:32 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:35472 "EHLO
+        id S238320AbiBVBQ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Feb 2022 20:16:27 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:52366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235173AbiBUWIb (ORCPT
+        with ESMTP id S238206AbiBVBQQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Feb 2022 17:08:31 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24D2022BE9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 14:08:08 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id l123-20020a1c2581000000b0037b9d960079so324990wml.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 14:08:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=60je+LDflCDSpm+PbhIAk73PJa9MombVHWRyiPaaQWE=;
-        b=Xc+ttGq4R78QFtqn/s4XTJgEVdfnTa45KWY338EVWaVgUeKsd/3rzs+fljLfLy8hAQ
-         ywWMhR2Cef3L70rleLY3XxSLO150C8Wot5CTouwd52Gtj1uJhB/b2iIgmJvpP2w0kLFM
-         mihbHvkyKnJPifkH+8karxCKTZmcW7VoSXkUbPFhY5Nw9AysNrWDYEnqDpPfSnQVU6zT
-         KGo1CqfO7RE7J2yaI2Bg3H1pgRXHh8A8wDw1QQkhVzpEc15sOc9/1ZykQQzm5aPwxh9L
-         6qmL+OmU70hdvpnlqSo84pRS5CW+tnnrPWOyG1b/8wclFKf4ipsZBYOejtkoCKIRN6+R
-         P/lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=60je+LDflCDSpm+PbhIAk73PJa9MombVHWRyiPaaQWE=;
-        b=nznF7pJhLMRtAJf9mQEJGTUFJgndkTe9KwFLa/6tJIcFsJmEmQD9G+XQ03lYPLUT8h
-         3IlZrD8jCxp+3BRUz9wk4vtmQU5eJSSflPC9oPgd+yViJKQxIhCD+X7X7v9iw8auUlMN
-         GfzOMcOkPIrJ6SYltI+hDSLUZxyJnLqRmdD3xeftm7mgcr8Zt3GFMRwlJVUl3ZE7oN3d
-         1SBslZNQYlOx+UwPhKam6PvRSRwkII5xVkHBOxhYoGRWGPZfgS/K40O554pAj8/isxky
-         DNIiUSwZegCV5oScUiIoNcu5P0fYavVrcXPXxr6CA4CpFtp2bzODtRYVICY9e0TNcg+g
-         +l+g==
-X-Gm-Message-State: AOAM5318YC0sLnDUlIs/SRr1tF7Ld8bxp7KVaYDMNDz4D/BFol+nRxZn
-        th9k6VQeuxkwNlVw1m3Qu+GgsQ==
-X-Google-Smtp-Source: ABdhPJySvP8m2Z4xEHLtT7V1pqg8A5o8lAHBN72Y7cEMji5QGaJrIVqIDM4jOtJiknnTHt3q4gAjOQ==
-X-Received: by 2002:a05:600c:14c6:b0:37c:440:c0e with SMTP id i6-20020a05600c14c600b0037c04400c0emr817905wmh.87.1645481286698;
-        Mon, 21 Feb 2022 14:08:06 -0800 (PST)
-Received: from localhost.localdomain (cpc78119-cwma10-2-0-cust590.7-3.cable.virginm.net. [81.96.50.79])
-        by smtp.gmail.com with ESMTPSA id w8sm51626093wre.83.2022.02.21.14.08.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Feb 2022 14:08:06 -0800 (PST)
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-To:     caleb.connolly@linaro.org, Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Mon, 21 Feb 2022 20:16:16 -0500
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D2EC24F2E;
+        Mon, 21 Feb 2022 17:15:50 -0800 (PST)
+Received: from localhost.localdomain (abxh33.neoplus.adsl.tpnet.pl [83.9.1.33])
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 97EDB3F586;
+        Tue, 22 Feb 2022 02:15:46 +0100 (CET)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     sumit.semwal@linaro.org, amit.pundir@linaro.org,
-        john.stultz@linaro.org
-Subject: [PATCH v8 9/9] arm64: dts: qcom: sdm845-xiaomi-beryllium: enable rradc
-Date:   Mon, 21 Feb 2022 22:07:43 +0000
-Message-Id: <20220221220743.541704-10-caleb.connolly@linaro.org>
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/4] dt-bindings: clock: add QCOM SM6350 display clock bindings
+Date:   Tue, 22 Feb 2022 02:15:28 +0100
+Message-Id: <20220222011534.3502-1-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220221220743.541704-1-caleb.connolly@linaro.org>
-References: <20220221220743.541704-1-caleb.connolly@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the PMI8998 RRADC.
+Add device tree bindings for display clock controller for
+Qualcomm Technology Inc's SM6350 SoC.
 
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../bindings/clock/qcom,dispcc-sm6350.yaml    | 86 +++++++++++++++++++
+ .../dt-bindings/clock/qcom,dispcc-sm6350.h    | 48 +++++++++++
+ 2 files changed, 134 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,dispcc-sm6350.yaml
+ create mode 100644 include/dt-bindings/clock/qcom,dispcc-sm6350.h
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-index 367389526b41..b3b6aa4e0fa3 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-@@ -312,6 +312,10 @@ resin {
- 	};
- };
- 
-+&pmi8998_rradc {
-+	status = "okay";
-+};
+diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6350.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6350.yaml
+new file mode 100644
+index 000000000000..e706678b353a
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6350.yaml
+@@ -0,0 +1,86 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,dispcc-sm6350.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
- /* QUAT I2S Uses 1 I2S SD Line for audio on TAS2559/60 amplifiers */
- &q6afedai {
- 	qi2s@22 {
++title: Qualcomm Display Clock & Reset Controller Binding for SM6350
++
++maintainers:
++  - Konrad Dybcio <konrad.dybcio@somainline.org>
++
++description: |
++  Qualcomm display clock control module which supports the clocks, resets and
++  power domains on SM6350.
++
++  See also dt-bindings/clock/qcom,dispcc-sm6350.h.
++
++properties:
++  compatible:
++    const: qcom,sm6350-dispcc
++
++  clocks:
++    items:
++      - description: Board XO source
++      - description: GPLL0 source from GCC
++      - description: Byte clock from DSI PHY
++      - description: Pixel clock from DSI PHY
++      - description: Link clock from DP PHY
++      - description: VCO DIV clock from DP PHY
++
++  clock-names:
++    items:
++      - const: bi_tcxo
++      - const: gcc_disp_gpll0_clk
++      - const: dsi0_phy_pll_out_byteclk
++      - const: dsi0_phy_pll_out_dsiclk
++      - const: dp_phy_pll_link_clk
++      - const: dp_phy_pll_vco_div_clk
++
++  '#clock-cells':
++    const: 1
++
++  '#reset-cells':
++    const: 1
++
++  '#power-domain-cells':
++    const: 1
++
++  reg:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - '#clock-cells'
++  - '#reset-cells'
++  - '#power-domain-cells'
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,gcc-sm6350.h>
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    clock-controller@af00000 {
++      compatible = "qcom,sm6350-dispcc";
++      reg = <0x0af00000 0x20000>;
++      clocks = <&rpmhcc RPMH_CXO_CLK>,
++               <&gcc GCC_DISP_GPLL0_CLK>,
++               <&dsi_phy 0>,
++               <&dsi_phy 1>,
++               <&dp_phy 0>,
++               <&dp_phy 1>;
++      clock-names = "bi_tcxo",
++                    "gcc_disp_gpll0_clk",
++                    "dsi0_phy_pll_out_byteclk",
++                    "dsi0_phy_pll_out_dsiclk",
++                    "dp_phy_pll_link_clk",
++                    "dp_phy_pll_vco_div_clk";
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++    };
++...
+diff --git a/include/dt-bindings/clock/qcom,dispcc-sm6350.h b/include/dt-bindings/clock/qcom,dispcc-sm6350.h
+new file mode 100644
+index 000000000000..cb54aae2723e
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,dispcc-sm6350.h
+@@ -0,0 +1,48 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++/*
++ * Copyright (c) 2021, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2021, Konrad Dybcio <konrad.dybcio@somainline.org>
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_DISP_CC_SM6350_H
++#define _DT_BINDINGS_CLK_QCOM_DISP_CC_SM6350_H
++
++/* DISP_CC clocks */
++#define DISP_CC_PLL0				0
++#define DISP_CC_MDSS_AHB_CLK			1
++#define DISP_CC_MDSS_AHB_CLK_SRC		2
++#define DISP_CC_MDSS_BYTE0_CLK			3
++#define DISP_CC_MDSS_BYTE0_CLK_SRC		4
++#define DISP_CC_MDSS_BYTE0_DIV_CLK_SRC		5
++#define DISP_CC_MDSS_BYTE0_INTF_CLK		6
++#define DISP_CC_MDSS_DP_AUX_CLK			7
++#define DISP_CC_MDSS_DP_AUX_CLK_SRC		8
++#define DISP_CC_MDSS_DP_CRYPTO_CLK		9
++#define DISP_CC_MDSS_DP_CRYPTO_CLK_SRC		10
++#define DISP_CC_MDSS_DP_LINK_CLK		11
++#define DISP_CC_MDSS_DP_LINK_CLK_SRC		12
++#define DISP_CC_MDSS_DP_LINK_DIV_CLK_SRC	13
++#define DISP_CC_MDSS_DP_LINK_INTF_CLK		14
++#define DISP_CC_MDSS_DP_PIXEL_CLK		15
++#define DISP_CC_MDSS_DP_PIXEL_CLK_SRC		16
++#define DISP_CC_MDSS_ESC0_CLK			17
++#define DISP_CC_MDSS_ESC0_CLK_SRC		18
++#define DISP_CC_MDSS_MDP_CLK			19
++#define DISP_CC_MDSS_MDP_CLK_SRC		20
++#define DISP_CC_MDSS_MDP_LUT_CLK		21
++#define DISP_CC_MDSS_NON_GDSC_AHB_CLK		22
++#define DISP_CC_MDSS_PCLK0_CLK			23
++#define DISP_CC_MDSS_PCLK0_CLK_SRC		24
++#define DISP_CC_MDSS_ROT_CLK			25
++#define DISP_CC_MDSS_ROT_CLK_SRC		26
++#define DISP_CC_MDSS_RSCC_AHB_CLK		27
++#define DISP_CC_MDSS_RSCC_VSYNC_CLK		28
++#define DISP_CC_MDSS_VSYNC_CLK			29
++#define DISP_CC_MDSS_VSYNC_CLK_SRC		30
++#define DISP_CC_SLEEP_CLK			31
++#define DISP_CC_XO_CLK				32
++
++/* GDSCs */
++#define MDSS_GDSC				0
++
++#endif
 -- 
 2.35.1
 
