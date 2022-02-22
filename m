@@ -2,134 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 019AD4C04A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 23:30:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 76C064C04A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 23:32:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236066AbiBVWah (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 17:30:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42038 "EHLO
+        id S233476AbiBVWdQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 17:33:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236065AbiBVWag (ORCPT
+        with ESMTP id S236063AbiBVWdP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 17:30:36 -0500
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9757A107A80;
-        Tue, 22 Feb 2022 14:30:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1645569010; x=1677105010;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=xNrJu+yqd7ua9/SEuv5UXQMlKTb2A3rhgHibGD43eDA=;
-  b=fwFbKn2EdqS4n+FSU3xwEEEWMu6Ss65sEKQ13ZUMXLDq8Q+sn2rG+iWi
-   HjjHPszovfFdetBosQnPf0IAG2ZtrlMEKzSCMAjSQ70Su1ivqVmDZaTdt
-   vpLANBKXaMhttM0hK2ZMH+7LCwmxjMC59u1ojB0YAZP5TyaTf8tKT6LyK
-   hzRlNrNNmNX24lGsNFOZ3C9j0RZU6fnump7w2zQbMfRIMPFwYc/gFXU+K
-   Rw/ryqjY0QP1sqYIo4M9NMhE5ACGCunsNmtd92bDuLeH7V1IFKvMNSKCm
-   RfJ2uH3mlXeX4g7c5k7MNIxamLYXazZPhpGfpdX97rz3Jmj1Ha2CjLkIP
-   g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10266"; a="252017977"
-X-IronPort-AV: E=Sophos;i="5.88,389,1635231600"; 
-   d="scan'208";a="252017977"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Feb 2022 14:30:10 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,389,1635231600"; 
-   d="scan'208";a="505699824"
-Received: from lkp-server01.sh.intel.com (HELO 788b1cd46f0d) ([10.239.97.150])
-  by orsmga002.jf.intel.com with ESMTP; 22 Feb 2022 14:30:06 -0800
-Received: from kbuild by 788b1cd46f0d with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1nMdfZ-0000gI-9L; Tue, 22 Feb 2022 22:30:05 +0000
-Date:   Wed, 23 Feb 2022 06:29:11 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     michael.srba@seznam.cz, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-Cc:     kbuild-all@lists.01.org, Linus Walleij <linus.walleij@linaro.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Saravana Kannan <saravanak@google.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, Michael Srba <Michael.Srba@seznam.cz>
-Subject: Re: [PATCH v8 4/5] drivers: bus: add driver for initializing the SSC
- bus on (some) qcom SoCs
-Message-ID: <202202230613.3K7X7na5-lkp@intel.com>
-References: <20220220212034.9152-4-michael.srba@seznam.cz>
+        Tue, 22 Feb 2022 17:33:15 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A5F6C6277
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 14:32:48 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id s13so7630192wrb.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 14:32:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:mime-version:content-transfer-encoding
+         :content-description:subject:to:date:reply-to;
+        bh=eaaB5Fi4OIw8X99OdVt3/5VwsoSH3pqqZ03p7mumtcE=;
+        b=Ji76bk0r8Cnr9nUxpSSOGV+UUkcEZVOB+euzpBsEQqG5MolANYIlU9D2OyGAkuUgnN
+         fb2A9uj8C04EOGGpJrJjkEZRGUCvZ4d3G1OU2I+TzcVk71Qy4NZDtTV4lqIY2NqJGHq+
+         BIV98+2ezXXU8Ro9z9j82q9BMV2KS56zoFEe3jKUVEoiuO1oNVqonnia+AiaDoK7UQqw
+         PNIK3/YP3/owjc0Ry2y3WQ8XbKgUU2MbKZklL1VYkbgeKe/ojkJ28gq1DhvLjWWg+npX
+         3GQOCvFwT/sA+NpZZmN+esjAop1dY4FJoyuW091wdNJuvMW1pxhfojjjc/KuaQFo/BHR
+         mS0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:mime-version
+         :content-transfer-encoding:content-description:subject:to:date
+         :reply-to;
+        bh=eaaB5Fi4OIw8X99OdVt3/5VwsoSH3pqqZ03p7mumtcE=;
+        b=GVd3rnGXafUxJxsfHKFEDttg78YBWR4BmEPZsuOm2fpbPxPasebxUkE8lKymkbcag8
+         p/XEJY6+W3kBLC2AaXLa2G8jDbCcCgt2H+ujkraVcmsLQ1RGco93XtcycO+aW6OZ2IMf
+         HXd/W+1JwGseFpdtJO7E/2oKFDR/lxcIfQABV/pHeiytoes/L/Mm0sq3rQOG/EwHU5ur
+         Use6oD/oLKgGnHbWrei2Oy5gWO30yzFtSLj0LeqaKHMv1ZTbsFdtonU5NU0wulmIbTG/
+         ix3FhTlE/HeImNusp2k4G04qw5p/XvEDw1DQn13gOVpwlgKGXqxpVYzKdoxBNeAKIlW/
+         95WQ==
+X-Gm-Message-State: AOAM5316z61MJSnrUefMPjXxiKNCMt7FcwS6SrWlPZtHIBzd0iPR4ske
+        vcyIJL1i8aUCAM10dQX2D+Q=
+X-Google-Smtp-Source: ABdhPJw2uyb92aludExkhk7nqEG29dlcGdIccNBS+jWOXzQuUT9ewbnoSmBIgcm+cWdoDJcLTUBc/A==
+X-Received: by 2002:a05:6000:1103:b0:1e6:2787:cdf4 with SMTP id z3-20020a056000110300b001e62787cdf4mr21146939wrw.31.1645569166950;
+        Tue, 22 Feb 2022 14:32:46 -0800 (PST)
+Received: from [192.168.0.133] ([5.193.8.34])
+        by smtp.gmail.com with ESMTPSA id n2sm4550904wmq.6.2022.02.22.14.32.43
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Tue, 22 Feb 2022 14:32:46 -0800 (PST)
+Message-ID: <6215648e.1c69fb81.fc252.0995@mx.google.com>
+From:   Mrs Maria Elisabeth Schaeffler <chairtydonation5@gmail.com>
+X-Google-Original-From: Mrs Maria Elisabeth Schaeffler
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220220212034.9152-4-michael.srba@seznam.cz>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Spende
+To:     Recipients <Mrs@vger.kernel.org>
+Date:   Wed, 23 Feb 2022 02:32:38 +0400
+Reply-To: elisabethschaeffler01@gmail.com
+X-Spam-Status: No, score=2.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        LOTS_OF_MONEY,MONEY_FREEMAIL_REPTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,TO_MALFORMED,T_HK_NAME_FM_MR_MRS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hallo,
 
-Thank you for the patch! Yet something to improve:
+Ich bin Frau Maria Elisabeth Schaeffler, eine deutsche Wirtschaftsmagnatin,=
+ Investorin und Philanthropin. Ich bin der Vorsitzende von Wipro Limited. I=
+ch habe 25 Prozent meines pers=F6nlichen Verm=F6gens f=FCr wohlt=E4tige Zwe=
+cke ausgegeben. Und ich habe auch versprochen zu geben
+der Rest von 25% geht dieses Jahr 2021 an Einzelpersonen. Ich habe mich ent=
+schlossen, Ihnen 1.500.000,00 Euro zu spenden. Wenn Sie an meiner Spende in=
+teressiert sind, kontaktieren Sie mich f=FCr weitere Informationen.
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on clk/clk-next linus/master v5.17-rc5 next-20220217]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Sie k=F6nnen auch =FCber den untenstehenden Link mehr =FCber mich lesen
 
-url:    https://github.com/0day-ci/linux/commits/michael-srba-seznam-cz/dt-bindings-clock-gcc-msm8998-Add-definitions-of-SSC-related-clocks/20220221-052431
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-config: s390-allmodconfig (https://download.01.org/0day-ci/archive/20220223/202202230613.3K7X7na5-lkp@intel.com/config)
-compiler: s390-linux-gcc (GCC) 11.2.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/0day-ci/linux/commit/33b907599d7992605f1cdd439529acd9bb8a8e2b
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review michael-srba-seznam-cz/dt-bindings-clock-gcc-msm8998-Add-definitions-of-SSC-related-clocks/20220221-052431
-        git checkout 33b907599d7992605f1cdd439529acd9bb8a8e2b
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=s390 SHELL=/bin/bash
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+https://en.wikipedia.org/wiki/Maria-Elisabeth_Schaeffler
 
-All errors (new ones prefixed by >>):
-
-   s390-linux-ld: kernel/dma/coherent.o: in function `dma_init_coherent_memory':
-   coherent.c:(.text+0x122): undefined reference to `memremap'
-   s390-linux-ld: coherent.c:(.text+0x230): undefined reference to `memunmap'
-   s390-linux-ld: kernel/dma/coherent.o: in function `dma_declare_coherent_memory':
-   coherent.c:(.text+0x69c): undefined reference to `memunmap'
-   s390-linux-ld: drivers/irqchip/irq-al-fic.o: in function `al_fic_init_dt':
-   irq-al-fic.c:(.init.text+0x7a): undefined reference to `of_iomap'
-   s390-linux-ld: irq-al-fic.c:(.init.text+0x4f4): undefined reference to `iounmap'
-   s390-linux-ld: drivers/bus/qcom-ssc-block-bus.o: in function `qcom_ssc_block_bus_remove':
->> qcom-ssc-block-bus.c:(.text+0x1ac): undefined reference to `iounmap'
->> s390-linux-ld: qcom-ssc-block-bus.c:(.text+0x1c2): undefined reference to `iounmap'
-   s390-linux-ld: drivers/clk/clk-fixed-mmio.o: in function `fixed_mmio_clk_setup':
-   clk-fixed-mmio.c:(.text+0x90): undefined reference to `of_iomap'
-   s390-linux-ld: clk-fixed-mmio.c:(.text+0xcc): undefined reference to `iounmap'
-   s390-linux-ld: drivers/clk/clk-lan966x.o: in function `lan966x_clk_probe':
-   clk-lan966x.c:(.text+0x5d4): undefined reference to `devm_platform_ioremap_resource'
-   s390-linux-ld: clk-lan966x.c:(.text+0x748): undefined reference to `devm_ioremap_resource'
-   s390-linux-ld: drivers/clocksource/timer-of.o: in function `timer_of_init':
-   timer-of.c:(.init.text+0x152): undefined reference to `of_iomap'
-   s390-linux-ld: timer-of.c:(.init.text+0x77e): undefined reference to `iounmap'
-   s390-linux-ld: drivers/clocksource/timer-of.o: in function `timer_of_cleanup':
-   timer-of.c:(.init.text+0x968): undefined reference to `iounmap'
-   s390-linux-ld: drivers/clocksource/timer-microchip-pit64b.o: in function `mchp_pit64b_dt_init_timer':
-   timer-microchip-pit64b.c:(.init.text+0x6a6): undefined reference to `of_iomap'
-   s390-linux-ld: timer-microchip-pit64b.c:(.init.text+0xd04): undefined reference to `iounmap'
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+Sch=F6ne Gr=FC=DFe
+Gesch=E4ftsf=FChrer Wipro Limited
+Maria-Elisabeth_Schaeffler
+Email: elisabethschaeffler01@gmail.com
