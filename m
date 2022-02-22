@@ -2,71 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83AE64BF1E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 07:07:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E48734BF203
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 07:22:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230193AbiBVGG6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 01:06:58 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:38322 "EHLO
+        id S230241AbiBVGXQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 01:23:16 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:44726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230192AbiBVGG5 (ORCPT
+        with ESMTP id S230204AbiBVGXO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 01:06:57 -0500
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA49B63C0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 22:06:31 -0800 (PST)
-Received: by mail-pj1-x102e.google.com with SMTP id ev16-20020a17090aead000b001bc3835fea8so1535744pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 22:06:31 -0800 (PST)
+        Tue, 22 Feb 2022 01:23:14 -0500
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5E3B6E7BE
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 22:22:49 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id e17so17864970ljk.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 22:22:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=qgHTWYmGSpSQewssga0wRsMEIRFp9xeMp+WIkFk7p5A=;
-        b=nMfJb0FTo0WK1hPaiPc6ulx2U5XLhgf6QXbUiC/UwK+BnIYEeyE5ywWITJj3THcNcd
-         Ule/6v2avPFqd4e4MoDxoUwmjtFOS0kkHtxSOyKgrl1Utg5rZ/mz+CRB4F4Ndy9uPLQh
-         3K4tKqrfwkuqKKt26VjRgR2r1GTwiXvqcS7Q1eG9AjND+rN0LswAMzuaBgfTe7djm6n9
-         KkQg/O9lFxfI9uyrpUKIzY475uqyxYdBETuvsu/A7hkR3G8Rbf5lJNGJERa4FZZpEVH+
-         ykhXRlZA/xeSgh2BpzgcK+IfFfBrwfN8QahenGPLEWF4jP/toTjZdJHwchwLfRxGfBEM
-         H3dQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LIq4bg+MO6Oyb37j5MwhzM5fJY4ZyeCVsa1dQRFEVag=;
+        b=M9KyMlC5z7brdQgMY8m7UEY+DN4P18MeL7FBguxBLadrVu7YscCPClmcEAdrnGHkJ+
+         Zll6X5mzu9C7UQNAMdJeSQnh4VnoruGB1WL4/fYt+YgA36Ig2N4T4SnrmIc+Mz8kxxXb
+         luOmdhvvXjWdyLn1BMXLH6WC9STKmS9VL2FQHv9GXcDQe9qctmvdnZb9fll76AAb9v6y
+         Bb+Lv+Z7NbvFDoojK839CrYuiLImyhGWIUlBE4DU77vRAKeuc1YUxtl4W73bGV2sl95j
+         ozljGlv2MK0zXmw53HvuCQwfOHptsDWS7khKVD2hEB7rNAckRWSEmStM1U2kbdO1B6hN
+         2loQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=qgHTWYmGSpSQewssga0wRsMEIRFp9xeMp+WIkFk7p5A=;
-        b=ZG3aDpffjri7I0FZKN5RB2ugbJjdGw9qrzlKZdwC/kdfVyEGStZM7QTqk07979dSX/
-         W8D8sRghnhpRD0WFVvK6BCLSRhZn1Dcb9rs3X1oZDWebX8AbdGIXOekUHtbdSdmCWWk0
-         WeLJ1Ap/UHeR5SiNuUI5JasLXStxMsqu8jPzkHyoAL5FJH1qJRCGsU0iJKLtldNu/EEE
-         JHHsfASNHow/FQprJf4blKfwBLR/dGhcWLcK7McUrPgu8DnBdrzCqC8OPVLoW+k5EFow
-         k/OMd1l0+91zaYeTD0xYJobvhtYIJxkFkJ6bv2mhbAi7+6eG+7vsarVu659Qx9a/fGLw
-         fmOw==
-X-Gm-Message-State: AOAM531nG8KyVt/tx1swSFKOWnz/9ygIplxqjmxDPH7vJdtjeqUsWpVU
-        0y4Xd8ySyIPDJrGE+qBBXo81
-X-Google-Smtp-Source: ABdhPJz4P4fmg8n8s9VjF3Evdup+GYQ2pd94Qpr1uLHIF36Jzk2LaJFZSmO+9IR63s55ftOqRh8NFg==
-X-Received: by 2002:a17:902:8f8b:b0:149:6639:4b86 with SMTP id z11-20020a1709028f8b00b0014966394b86mr22081150plo.60.1645509991315;
-        Mon, 21 Feb 2022 22:06:31 -0800 (PST)
-Received: from thinkpad ([117.217.186.202])
-        by smtp.gmail.com with ESMTPSA id g21-20020a17090a7d1500b001b968e82819sm1197687pjl.10.2022.02.21.22.06.25
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LIq4bg+MO6Oyb37j5MwhzM5fJY4ZyeCVsa1dQRFEVag=;
+        b=dMPl1d8mFc2GqEGuPXg1DH0I407FX3JLIMtVXdqWoUFqlhqHtlKosjKU6z6C/YRoFh
+         I8qZgMkPU1gU/zt9G/7YeElTE+/ebIovTZHHnG5xqg2/18BZ+3zcNSaxA6MAIg/sSd7q
+         +J9u5GrOSv2nBTerCVSUjWHlBbExRN2OealKuobJSxy0HYg7xaM8FICRx9i+niSuscmQ
+         COpsOA5qdbahZhusI64X40CxWV5+5a92E2mOZC2W2iab3Vhqlxtzk1dO2lG5nx9U972D
+         WWL1wLM6+wSnNA9/21i/TovQ925SOF9dbw/OnFSeXgKTQFKDNdSk4UMCQO3ENbBADYP8
+         9u9A==
+X-Gm-Message-State: AOAM5328S8BMB7Sq/uewLjAbwJXJP5l7hAiifN5Z+sv2S3wDgB3fhPmq
+        JJDmLAagPSgYeyXjQtOm7/Nwog==
+X-Google-Smtp-Source: ABdhPJzwn/5oF3bIJoVV/+i21nTWzNVckHU+8VeQm2lh4uABLti6/ykYwPcHN5EkYFE0IsGYCA2oEg==
+X-Received: by 2002:a2e:86cb:0:b0:246:12b0:940c with SMTP id n11-20020a2e86cb000000b0024612b0940cmr16682411ljj.40.1645510968017;
+        Mon, 21 Feb 2022 22:22:48 -0800 (PST)
+Received: from eriador.lumag.spb.ru ([188.162.65.160])
+        by smtp.gmail.com with ESMTPSA id j24sm1216245lfb.59.2022.02.21.22.22.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Feb 2022 22:06:30 -0800 (PST)
-Date:   Tue, 22 Feb 2022 11:36:23 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
-        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
-        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
-        dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
-        quic_cang@quicinc.com, quic_skananth@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 13/25] bus: mhi: ep: Add support for sending events to
- the host
-Message-ID: <20220222060623.GA5029@thinkpad>
-References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
- <20220212182117.49438-14-manivannan.sadhasivam@linaro.org>
- <3396cc98-8640-8f5a-fad3-c7a913faaa58@linaro.org>
+        Mon, 21 Feb 2022 22:22:47 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH 0/4] drm/msm/dpu: clearly document INTF_DP vs INTF_EDP difference
+Date:   Tue, 22 Feb 2022 09:22:42 +0300
+Message-Id: <20220222062246.242577-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3396cc98-8640-8f5a-fad3-c7a913faaa58@linaro.org>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -77,108 +72,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 15, 2022 at 04:39:17PM -0600, Alex Elder wrote:
-> On 2/12/22 12:21 PM, Manivannan Sadhasivam wrote:
-> > Add support for sending the events to the host over MHI bus from the
-> > endpoint. Following events are supported:
-> > 
-> > 1. Transfer completion event
-> > 2. Command completion event
-> > 3. State change event
-> > 4. Execution Environment (EE) change event
-> > 
-> > An event is sent whenever an operation has been completed in the MHI EP
-> > device. Event is sent using the MHI event ring and additionally the host
-> > is notified using an IRQ if required.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
-> A few things can be simplified here.
-> 
-> 					-Alex
-> 
-> > ---
-> >   drivers/bus/mhi/common.h      |  15 ++++
-> >   drivers/bus/mhi/ep/internal.h |   8 ++-
-> >   drivers/bus/mhi/ep/main.c     | 126 ++++++++++++++++++++++++++++++++++
-> >   include/linux/mhi_ep.h        |   8 +++
-> >   4 files changed, 155 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/bus/mhi/common.h b/drivers/bus/mhi/common.h
-> > index 728c82928d8d..26d94ed52b34 100644
-> > --- a/drivers/bus/mhi/common.h
-> > +++ b/drivers/bus/mhi/common.h
-> > @@ -176,6 +176,21 @@
-> >   #define MHI_TRE_GET_EV_LINKSPEED(tre)			((MHI_TRE_GET_DWORD(tre, 1) >> 24) & 0xFF)
-> >   #define MHI_TRE_GET_EV_LINKWIDTH(tre)			(MHI_TRE_GET_DWORD(tre, 0) & 0xFF)
-> > +/* State change event */
-> > +#define MHI_SC_EV_PTR					0
-> > +#define MHI_SC_EV_DWORD0(state)				cpu_to_le32(state << 24)
-> > +#define MHI_SC_EV_DWORD1(type)				cpu_to_le32(type << 16)
-> > +
-> > +/* EE event */
-> > +#define MHI_EE_EV_PTR					0
-> > +#define MHI_EE_EV_DWORD0(ee)				cpu_to_le32(ee << 24)
-> > +#define MHI_EE_EV_DWORD1(type)				cpu_to_le32(type << 16)
-> > +
-> > +/* Command Completion event */
-> > +#define MHI_CC_EV_PTR(ptr)				cpu_to_le64(ptr)
-> > +#define MHI_CC_EV_DWORD0(code)				cpu_to_le32(code << 24)
-> > +#define MHI_CC_EV_DWORD1(type)				cpu_to_le32(type << 16)
-> > +
-> >   /* Transfer descriptor macros */
-> >   #define MHI_TRE_DATA_PTR(ptr)				cpu_to_le64(ptr)
-> >   #define MHI_TRE_DATA_DWORD0(len)			cpu_to_le32(len & MHI_MAX_MTU)
-> > diff --git a/drivers/bus/mhi/ep/internal.h b/drivers/bus/mhi/ep/internal.h
-> > index 48d6e9667d55..fd63f79c6aec 100644
-> > --- a/drivers/bus/mhi/ep/internal.h
-> > +++ b/drivers/bus/mhi/ep/internal.h
-> > @@ -131,8 +131,8 @@ enum mhi_ep_ring_type {
-> >   };
-> >   struct mhi_ep_ring_element {
-> > -	u64 ptr;
-> > -	u32 dword[2];
-> > +	__le64 ptr;
-> > +	__le32 dword[2];
-> 
-> Yay!
-> 
-> >   };
-> >   /* Ring element */
-> > @@ -227,4 +227,8 @@ void mhi_ep_mmio_get_mhi_state(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state *s
-> >   void mhi_ep_mmio_init(struct mhi_ep_cntrl *mhi_cntrl);
-> >   void mhi_ep_mmio_update_ner(struct mhi_ep_cntrl *mhi_cntrl);
-> > +/* MHI EP core functions */
-> > +int mhi_ep_send_state_change_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state state);
-> > +int mhi_ep_send_ee_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ep_execenv exec_env);
-> > +
-> >   #endif
-> > diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> > index 2c8045766292..61f066c6286b 100644
-> > --- a/drivers/bus/mhi/ep/main.c
-> > +++ b/drivers/bus/mhi/ep/main.c
+Recent dicussion on the mailing list [1], [2] outlined a need to document
+which intf type is used for DP and which one is used for eDP interfaces.
 
-[...]
+This series implements my proposal [3]:
 
-> > +static int mhi_ep_send_completion_event(struct mhi_ep_cntrl *mhi_cntrl,
-> > +					struct mhi_ep_ring *ring, u32 len,
-> > +					enum mhi_ev_ccs code)
-> > +{
-> > +	struct mhi_ep_ring_element event = {};
-> > +	__le32 tmp;
-> > +
-> > +	event.ptr = le64_to_cpu(ring->ring_ctx->generic.rbase) +
-> > +			ring->rd_offset * sizeof(struct mhi_ep_ring_element);
-> 
-> I'm not sure at the moment where this will be called.  But
-> it might be easier to pass in the transfer channel pointer
-> rather than compute its address here.
-> 
+- Keep INTF_EDP reserved for 8x74/8x84
+- Use INTF_DP for all contemporary DP and eDP ports
+- Documet this in dpu_hw_mdss.h
+- Remove INTF_EDP usage in dpu1 driver.
 
-Passing the ring element to these functions won't help. Because, the ring
-element only has the address of the buffer it points to. But what we need here
-is the address of the ring element itself and that can only be found in ring
-context.
+Main reasons behind this proposal:
+- It's not always possible to separate eDP and DP. For example INTF_5 on
+  sc7280 is connected to combo eDP/DP PHY.
+- Using INTF_EDP would require us to split too many pieces, ending up
+  with a singnificant amount of code duplication...
+- ... for nothing. From the DPU point of view there is no difference
+  between DP and eDP interfaces as found on current SoC generations.
 
-Thanks,
-Mani
+[1]: https://lore.kernel.org/linux-arm-msm/0dac8ffa-89a6-d972-bdc1-3f7755c5169d@linaro.org/
+[2]: https://lore.kernel.org/linux-arm-msm/be397e2e-05ab-5c18-8e2d-16c443f0a6d1@quicinc.com/
+[3]: https://lore.kernel.org/linux-arm-msm/e2fab93e-82a6-4837-4ee5-ee1b16caa84d@linaro.org/
+
+Dmitry Baryshkov (4):
+  drm/msm/dpu: document INTF_EDP/INTF_DP difference
+  drm/msm/dpu: drop INTF_TYPE_MAX symbol
+  drm/msm/dpu: drop obsolete INTF_EDP comment
+  drm/msm/dpu: drop INTF_EDP from interface type conditions
+
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   | 14 +-------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |  9 ++++++++-
+ 3 files changed, 10 insertions(+), 15 deletions(-)
+
+-- 
+2.34.1
+
