@@ -2,76 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9948E4C0586
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 00:48:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80C334C05A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 00:55:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236354AbiBVXsm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 18:48:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50232 "EHLO
+        id S234386AbiBVX4G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 18:56:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236345AbiBVXsU (ORCPT
+        with ESMTP id S236336AbiBVX4C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 18:48:20 -0500
-Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E61551313
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 15:47:49 -0800 (PST)
-Received: by mail-oo1-xc2c.google.com with SMTP id w10-20020a4ae08a000000b0031bdf7a6d76so19883248oos.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 15:47:49 -0800 (PST)
+        Tue, 22 Feb 2022 18:56:02 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F257C338BD;
+        Tue, 22 Feb 2022 15:55:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=mNfJggOV7YP6vqkDY7Togq40JzvOACLm16iiua2Y2uw=;
-        b=l2HJoH0cwLBgMyfkawLfhKR8cFTCEKZmdiN6esWuoyfxi5CbTTS9ue0w5bVdWhEVOV
-         MW2W/F0yQYGIkYeKN1tKmj9WgwBYNJX4T5SK94vU8V3SxHXEdgUDqToZdv/UE9WrmFrv
-         XPUA24QHlpi02giWZWhtxkCjfc4ThgxbejQSRCkj7rabK4txPFIOjWGkcuZiwb/WaVe3
-         t4p4S0DJFjbboRWjUtQaWHZ0Az1AZEsBqcz0Qb8OfOOr85TN6fpajrmmycUVV38qp78L
-         MHNZ4S3N/XT03ji5SDddX+/vAcYTLwc6W2KjK7eIXMJGRsz2VvjLrZ+f3JRWaCbNNbbO
-         lqng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=mNfJggOV7YP6vqkDY7Togq40JzvOACLm16iiua2Y2uw=;
-        b=alwYXcluk4RMfX9C++tfy8RzFKPTmE2IQKLLsq6hqsJsgc3v5d3oXBigMAbyeVnEFy
-         0H3muFBMEEr6TP4roPO5+iV1vxvTFi5GfnR8TcgW1AtQIGWQvt+zHyXdfqyyXsMXugNx
-         JVZc1g2R/vgTf6mm1hPagzQ9+NRuP2y9qoOd7uqIygaSmXqBv17vEKzZXQtYYLV/BjQ3
-         i+pLFt93TCeN0B14bXMLri3fqUUEhd2fB9Yn0PYM4xBRno4FVV51eHEUtaajwt3R0YJO
-         +sAcrrR5CodNvY4Yi8moaQK2+7FxAc7ENzPVMKvElaRIQPDVeriKVIb+OTmhSW5BOhyy
-         9dKA==
-X-Gm-Message-State: AOAM530y0jhQtsUxToxsZ2FgJfo7lOBjww7BlchEKyjWi/jNDYDAcKz4
-        Sx7WfazX9frKyQjUy2H50+CQ2Q==
-X-Google-Smtp-Source: ABdhPJzDOUvvuAGYdNLbTLaY4ZLSk9mbdrprvLOzCJJVN9oMZ575y6rrP65j/r/BKWpecEMZ8EIrMQ==
-X-Received: by 2002:a05:6870:5b9e:b0:cf:f6de:3e89 with SMTP id em30-20020a0568705b9e00b000cff6de3e89mr2705326oab.94.1645573669196;
-        Tue, 22 Feb 2022 15:47:49 -0800 (PST)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id o15sm6764241ooi.31.2022.02.22.15.47.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 15:47:48 -0800 (PST)
-Date:   Tue, 22 Feb 2022 15:49:49 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Wilczy??ski <kw@linux.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: Re: [PATCH v5 4/5] PCI: qcom: Add interconnect support to
- 2.7.0/1.9.0 ops
-Message-ID: <YhV2nemA+t0cCdlP@ripper>
-References: <20211218141024.500952-1-dmitry.baryshkov@linaro.org>
- <20211218141024.500952-5-dmitry.baryshkov@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645574136; x=1677110136;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=tYgaWv6WfZ0FOsgSVokq4FS/wwrsSmaAJ13BslMvT2A=;
+  b=a6qy41XoBaBL3uc0lhPUBEdUhhptQrLgBKFupam6fXewuXWVAFwQdEjk
+   EN1go7jvDnY/NiiwlgH9BAg+Bt5A3X5uW4qxdMBFRNgatIDlfHT6+RnLb
+   Q8fpDXctRhMBUWgvHqW+6lTIdCQEGJZUH1NzcE0bZ1wRElrsp7aOVsNvc
+   4=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 22 Feb 2022 15:55:35 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Feb 2022 15:55:35 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Tue, 22 Feb 2022 15:55:34 -0800
+Received: from [10.110.64.217] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Tue, 22 Feb
+ 2022 15:55:33 -0800
+Message-ID: <a5410cc6-54da-5f7f-325a-850a1aa2a83c@quicinc.com>
+Date:   Tue, 22 Feb 2022 15:55:32 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211218141024.500952-5-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v8 3/4] drm/msm/dpu: revise timing engine programming to
+ support widebus feature
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
+        <airlied@linux.ie>, <bjorn.andersson@linaro.org>,
+        <daniel@ffwll.ch>, <dmitry.baryshkov@linaro.org>,
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <vkoul@kernel.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1645133788-5057-1-git-send-email-quic_khsieh@quicinc.com>
+ <1645133788-5057-4-git-send-email-quic_khsieh@quicinc.com>
+ <CAE-0n51Rewcp7uefTBJ2HwJN7gp-aTxrWe71XQ-RKosqw8uq8Q@mail.gmail.com>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <CAE-0n51Rewcp7uefTBJ2HwJN7gp-aTxrWe71XQ-RKosqw8uq8Q@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,75 +74,94 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 18 Dec 06:10 PST 2021, Dmitry Baryshkov wrote:
 
-> Add optional interconnect support for the 2.7.0/1.9.0 hosts. Set the
-> bandwidth according to the values from the downstream driver.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index d8d400423a0a..55ac3caa6d7d 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -12,6 +12,7 @@
->  #include <linux/crc8.h>
->  #include <linux/delay.h>
->  #include <linux/gpio/consumer.h>
-> +#include <linux/interconnect.h>
->  #include <linux/interrupt.h>
->  #include <linux/io.h>
->  #include <linux/iopoll.h>
-> @@ -167,6 +168,7 @@ struct qcom_pcie_resources_2_7_0 {
->  	struct clk *pipe_clk_src;
->  	struct clk *phy_pipe_clk;
->  	struct clk *ref_clk_src;
-> +	struct icc_path *path;
-
-I think it's fair to assume that pretty much all platforms will have a
-data path to reach the config registers and for the PCI to reach DDR.
-
-So how about we place this in the common struct qcom_pcie instead?
-
-Regards,
-Bjorn
-
->  };
->  
->  union qcom_pcie_resources {
-> @@ -1121,6 +1123,10 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
->  	if (IS_ERR(res->pci_reset))
->  		return PTR_ERR(res->pci_reset);
->  
-> +	res->path = devm_of_icc_get(dev, "pci");
-> +	if (IS_ERR(res->path))
-> +		return PTR_ERR(res->path);
-> +
->  	res->supplies[0].supply = "vdda";
->  	res->supplies[1].supply = "vddpe-3v3";
->  	ret = devm_regulator_bulk_get(dev, ARRAY_SIZE(res->supplies),
-> @@ -1183,6 +1189,9 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
->  	if (pcie->cfg->pipe_clk_need_muxing)
->  		clk_set_parent(res->pipe_clk_src, res->phy_pipe_clk);
->  
-> +	if (res->path)
-> +		icc_set_bw(res->path, 500, 800);
-> +
->  	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
->  	if (ret < 0)
->  		goto err_disable_regulators;
-> @@ -1241,6 +1250,8 @@ static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
->  	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
->  
->  	clk_bulk_disable_unprepare(res->num_clks, res->clks);
-> +	if (res->path)
-> +		icc_set_bw(res->path, 0, 0);
->  
->  	/* Set TCXO as clock source for pcie_pipe_clk_src */
->  	if (pcie->cfg->pipe_clk_need_muxing)
-> -- 
-> 2.34.1
-> 
+On 2/18/2022 6:53 PM, Stephen Boyd wrote:
+> Quoting Kuogee Hsieh (2022-02-17 13:36:27)
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> index 0d315b4..0c22839 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> @@ -217,6 +219,14 @@ static u32 dither_matrix[DITHER_MATRIX_SZ] = {
+>>          15, 7, 13, 5, 3, 11, 1, 9, 12, 4, 14, 6, 0, 8, 2, 10
+>>   };
+>>
+>> +
+>> +bool dpu_encoder_is_widebus_enabled(struct drm_encoder *drm_enc)
+> const?
+>
+>> +{
+>> +       struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
+> const?
+>
+>> +
+>> +       return dpu_enc->wide_bus_en;
+>> +}
+>> +
+>>   static void _dpu_encoder_setup_dither(struct dpu_hw_pingpong *hw_pp, unsigned bpc)
+>>   {
+>>          struct dpu_hw_dither_cfg dither_cfg = { 0 };
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+>> index 99a5d73..893d74d 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+>> @@ -168,4 +168,6 @@ int dpu_encoder_get_linecount(struct drm_encoder *drm_enc);
+>>    */
+>>   int dpu_encoder_get_frame_count(struct drm_encoder *drm_enc);
+>>
+>> +bool dpu_encoder_is_widebus_enabled(struct drm_encoder *drm_enc);
+> const drm_enc?
+>
+>> +
+>>   #endif /* __DPU_ENCODER_H__ */
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>> index c2cd185..4e4fa56 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>> @@ -147,17 +156,36 @@ static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
+>>          hsync_ctl = (hsync_period << 16) | p->hsync_pulse_width;
+>>          display_hctl = (hsync_end_x << 16) | hsync_start_x;
+>>
+>> -       if (ctx->cap->type == INTF_EDP || ctx->cap->type == INTF_DP) {
+>> +       /*
+>> +        * DATA_HCTL_EN controls data timing which can be different from
+>> +        * video timing. It is recommended to enable it for all cases, except
+>> +        * if compression is enabled in 1 pixel per clock mode
+>> +        */
+>> +       if (p->wide_bus_en)
+>> +               intf_cfg2 |= (INTF_CFG2_DATABUS_WIDEN | INTF_CFG2_DATA_HCTL_EN);
+> Drop useless parenthesis please.
+>
+>> +
+>> +       data_width = p->width;
+>> +
+>> +       hsync_data_start_x = hsync_start_x;
+>> +       hsync_data_end_x =  hsync_start_x + data_width - 1;
+>> +
+>> +       display_data_hctl = (hsync_data_end_x << 16) | hsync_data_start_x;
+>> +
+>> +       if (dp_intf) {
+>> +               /* DP timing adjustment */
+>> +               display_v_start += p->hsync_pulse_width + p->h_back_porch;
+>> +               display_v_end   -= p->h_front_porch;
+> Is this code movement intentional?
+yes, this timing adjustment is required for DP/eDP
+>
+>> +
+>>                  active_h_start = hsync_start_x;
+>>                  active_h_end = active_h_start + p->xres - 1;
+>>                  active_v_start = display_v_start;
+> display_v_start is different now.
+>
+>>                  active_v_end = active_v_start + (p->yres * hsync_period) - 1;
+>>
+>> -               display_v_start += p->hsync_pulse_width + p->h_back_porch;
+>> -               display_v_end   -= p->h_front_porch;
+>> -
+>>                  active_hctl = (active_h_end << 16) | active_h_start;
+>>                  display_hctl = active_hctl;
+>> +
+>> +               intf_cfg |= INTF_CFG_ACTIVE_H_EN;
+>> +               intf_cfg |= INTF_CFG_ACTIVE_V_EN;
+> 		  intf_cfg |= INTF_CFG_ACTIVE_H_EN | INTF_CFG_ACTIVE_V_EN;
+>
+> would be one less line.
