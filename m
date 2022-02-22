@@ -2,96 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6786A4BEF29
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 02:53:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BA46B4BEF93
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 03:43:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238671AbiBVBsg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Feb 2022 20:48:36 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:36756 "EHLO
+        id S231588AbiBVC1z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Feb 2022 21:27:55 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:52110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229734AbiBVBsg (ORCPT
+        with ESMTP id S229447AbiBVC1z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Feb 2022 20:48:36 -0500
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45C6424BE2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Feb 2022 17:48:12 -0800 (PST)
-Received: from localhost.localdomain (abxh33.neoplus.adsl.tpnet.pl [83.9.1.33])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 31C5E3F424;
-        Tue, 22 Feb 2022 02:48:10 +0100 (CET)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-To:     ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sm8250-edo: Add dual CS35L41 amps
-Date:   Tue, 22 Feb 2022 02:48:05 +0100
-Message-Id: <20220222014806.22446-1-konrad.dybcio@somainline.org>
-X-Mailer: git-send-email 2.35.1
+        Mon, 21 Feb 2022 21:27:55 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E2F624580;
+        Mon, 21 Feb 2022 18:27:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645496851; x=1677032851;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=Z0dCkhFrHYypecMqCx7KI+gQczqt9hRDEfCKOGE+e9k=;
+  b=ija/iJlZyhdjwPAY4cm+zY+HGN8JRnZUZdcjlXCa3d+c8dz+x7lokJT9
+   lCr/o+lMD9/zjjoJd4IzcgQRUu6XHSNfZiEJthfKrfZEnM9S3jPkrLqk4
+   qOIHPfplrngvr2l4w5fZg5leeNwJCqe4XXvSRWa1JRhMuNkIg6FNpN2s7
+   E=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 21 Feb 2022 18:27:30 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Feb 2022 18:27:30 -0800
+Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Mon, 21 Feb 2022 18:27:29 -0800
+Received: from [10.231.205.174] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Mon, 21 Feb
+ 2022 18:27:27 -0800
+Message-ID: <ab72af9e-b1dc-8562-b2c7-ac329af7a1b2@quicinc.com>
+Date:   Tue, 22 Feb 2022 10:26:48 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [PATCH v5 08/10] bindings: spmi: spmi-pmic-arb: mark interrupt
+ properties as optional
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        <devicetree@vger.kernel.org>, <collinsd@codeaurora.org>,
+        <subbaram@codeaurora.org>, <tglx@linutronix.de>, <maz@kernel.org>
+References: <1643178713-17178-1-git-send-email-quic_fenglinw@quicinc.com>
+ <1643178713-17178-9-git-send-email-quic_fenglinw@quicinc.com>
+ <Yf2qVi8Xj/iYYRNm@robh.at.kernel.org>
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+In-Reply-To: <Yf2qVi8Xj/iYYRNm@robh.at.kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SCC_BODY_URI_ONLY,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add nodes for dual Cirrus Logic CS35L41 audio amps connected via I2C.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
----
- .../boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 30 ++++++++++++++++++-
- 1 file changed, 29 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-index 82d9d09a3d09..96eab8ccf222 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-@@ -470,7 +470,35 @@ &i2c2 {
- 	status = "okay";
- 	clock-frequency = <1000000>;
- 
--	/* Dual Cirrus Logic CS35L41 amps @ 40, 41 */
-+	cs35l41_l: cs35l41@40 {
-+		compatible = "cirrus,cs35l41";
-+		reg = <0x40>;
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
-+		reset-gpios = <&tlmm 10 GPIO_ACTIVE_HIGH>;
-+		cirrus,boost-peak-milliamp = <4000>;
-+		cirrus,boost-ind-nanohenry = <1000>;
-+		cirrus,boost-cap-microfarad = <15>;
-+		cirrus,asp-sdout-hiz = <3>;
-+		cirrus,gpio2-src-select = <2>;
-+		cirrus,gpio2-output-enable;
-+		#sound-dai-cells = <1>;
-+	};
-+
-+	cs35l41_r: cs35l41@41 {
-+		compatible = "cirrus,cs35l41";
-+		reg = <0x41>;
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
-+		reset-gpios = <&tlmm 10 GPIO_ACTIVE_HIGH>;
-+		cirrus,boost-peak-milliamp = <4000>;
-+		cirrus,boost-ind-nanohenry = <1000>;
-+		cirrus,boost-cap-microfarad = <15>;
-+		cirrus,asp-sdout-hiz = <3>;
-+		cirrus,gpio2-src-select = <2>;
-+		cirrus,gpio2-output-enable;
-+		#sound-dai-cells = <1>;
-+	};
- };
- 
- &i2c5 {
--- 
-2.35.1
-
+On 2022/2/5 6:36, Rob Herring wrote:
+> On Wed, Jan 26, 2022 at 02:31:50PM +0800, Fenglin Wu wrote:
+>> From: David Collins <collinsd@codeaurora.org>
+>>
+>> Mark all interrupt related properties as optional instead of
+>> required.  Some boards do not required PMIC IRQ support and it
+>> isn't needed to handle SPMI bus transactions, so specify it as
+>> optional.
+>>
+>> Signed-off-by: David Collins <collinsd@codeaurora.org>
+>> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+>> ---
+>>   Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.txt | 2 ++
+>>   1 file changed, 2 insertions(+)
+> 
+> This will collide with converting it to DT schema[1].
+> 
+> Rob
+> 
+> [1] https://lore.kernel.org/all/20220131172450.2528065-2-vkoul@kernel.org/
+Noticed that, I just didn't know which one would get merged 1st. I can 
+update it once the DT schema change get accepted and be present in 
+spmi-next branch.
