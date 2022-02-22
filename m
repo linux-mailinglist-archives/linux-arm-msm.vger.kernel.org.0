@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DBA34BF5D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 11:29:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AEF94BF606
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 11:35:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230522AbiBVK3x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 05:29:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56346 "EHLO
+        id S231265AbiBVKfg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 05:35:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230505AbiBVK3x (ORCPT
+        with ESMTP id S231256AbiBVKff (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 05:29:53 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2173A15A23C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 02:29:26 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id f19-20020a17090ac29300b001bc68ecce4aso1964976pjt.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 02:29:26 -0800 (PST)
+        Tue, 22 Feb 2022 05:35:35 -0500
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E940615B3E9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 02:35:09 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id ck4-20020a17090afe0400b001bc64ee7d3cso2102543pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 02:35:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=I8N9I9PwP/XCNr+2csSo/sMAacbFuh57jh3fuP7bfBA=;
-        b=UXtTS1Yr7V+T77NkElhcUOujgsp4vV1rJakeOetJN6dfzyDpOhdd/j6b0npyTvJLp/
-         qgoxFdMNTuwDa76gCYcxUKYecuFZoO8dAMp+DHXEB2+kQY/F7gQcfw2wkC7Uj60bByy7
-         BsmG9IU5Xod0pgB5j5XNurzfiMycEo2h7FbtE8+B9a1c3R29pVLpmPmprUGbCbOySVCa
-         /H83KhOTmQnYr/hYsCiF+hLU2F02mXTcQEbwro/y0DmoKfUQ84jRpND46O4BGMVwJygv
-         IjJIuhlrIGXQUvzlNUbQjRmxb+SLyFP1g3+pcks34NqdVkT7SPwNxRdPyMBAx55dutXl
-         znLA==
+        bh=6n3VRa/D2GqDHXoAIdoTyfHyQ43B5WXlaWf6FDGebB8=;
+        b=StqIqmVXW/v1Ki1c0Lzfr4M7dgO1nPOW5q1kB5ViTN15zBXaOlkzohWk9Bpp8etMt0
+         R1aixOuKgsLlc8uXxlHM42QtEYgdbE3L+oEeEd+dRXr4GhPqB1I8P5E13NcIycvdrmeh
+         G2GZLaH0VFMlTJDIHS5AXY5FGvgeatjH7lByRuJODgrv/EUIdUFmuVJ7gU05g27sx/7Z
+         xEX1XmwkETnc6S18GLLWFAPiptYNeRdgZ+enPfSYxkIp6A+jXY5bfmTNJ+B8V1cX4jG2
+         yY5X7ZfTwT8eTW+TFBcn+hkBhy9nVMbVSUE0Y98LR18bE4oRp9655UGFbQUmVENPPQ4d
+         x5lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=I8N9I9PwP/XCNr+2csSo/sMAacbFuh57jh3fuP7bfBA=;
-        b=Jv9NAZka2S74ueolXI82eo8q27AEyl3+nbZ4KvFTkPWHhthFlzN/CzensYyTdh2Jfn
-         0eQsK8jfXyjHCBe3uoHNARaYUYDKilvmgrbGNOwtED9g3Yji4bHdnYr2dt8YoAcejWCm
-         f0KPC+ArA8cucPT3snwOBHJep2p+bYaOK+nwyJFl51PkzgXd+cUM/pGI4URANzHDBktB
-         JWrOKCs40dTRnab90E7E4TgJYmWLBzfcBWNFYphdWxOurs9H9sNV8uTxSKl1oJSjPzF5
-         WfInmmcXlZZfFNl0niO0krgfT1SceR8Xk6peT6sBVwRVn+sRQ5yQPf84+99jpWh6+k1a
-         ne6Q==
-X-Gm-Message-State: AOAM532IA94HuCzcUhjBDv7LpyxwMtYywyGd+eCZojwYV+TloNhJF9wy
-        Kli0BrSuX50VAcwWgdVhS25a
-X-Google-Smtp-Source: ABdhPJztFD/ewvO/vm6rTg2gkWVH+DEE1Xj7uyJ4+gJIpHCxlSPCOtCrE3yJGyZF1gdY+bT/mdI0wg==
-X-Received: by 2002:a17:90a:174f:b0:1bc:66ef:d733 with SMTP id 15-20020a17090a174f00b001bc66efd733mr3454083pjm.88.1645525765550;
-        Tue, 22 Feb 2022 02:29:25 -0800 (PST)
+        bh=6n3VRa/D2GqDHXoAIdoTyfHyQ43B5WXlaWf6FDGebB8=;
+        b=FPv++0FZ+JKyqWpZepRcX8mTBANTwkDoTnuUJMevGRx22iPLYk6laasTImZgxH2/pS
+         HCoOjMy9c5BsOe8F0PMIIb0mUyxrQTpyf2Ffg6FvNjz4BTcErtx/Fc83sYd+Y9WSVwvW
+         0xUiBbCVwErbhV2VJn3eJR47z1kzDawkenZxRZVmXO22+SxsXah7Toqg7uHaKwOaW83g
+         7HCwFxRGqCRTxH32zNAX9USFzqj43oocvhM3m48hj65vwNU67mL8PQrzAS+CZ+yaCehx
+         JROiBtDhN/PxF3oJQfBi6PLIneaLIEsv8EtqRF1mcWyWMnt8HLJXWS/KJjNT1ZB6acnT
+         aokw==
+X-Gm-Message-State: AOAM530ONsDpSOInxy+a8aDrGPGYYbZvL2JNndJkjgluuEEopGSBcLnx
+        sNVBXuryBINYUW8rkkK9FTqV
+X-Google-Smtp-Source: ABdhPJxiYqpf88KXSvuj96Qc4L/U4W4AlGzyaOMDS/LFG0Gps5+G30kp66V8Z/IGZ81OGm2Mu3MOUg==
+X-Received: by 2002:a17:902:e88d:b0:14f:446b:264b with SMTP id w13-20020a170902e88d00b0014f446b264bmr22530782plg.166.1645526109352;
+        Tue, 22 Feb 2022 02:35:09 -0800 (PST)
 Received: from thinkpad ([117.217.186.202])
-        by smtp.gmail.com with ESMTPSA id s10sm16967161pfu.186.2022.02.22.02.29.20
+        by smtp.gmail.com with ESMTPSA id c9sm16944241pfv.70.2022.02.22.02.35.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 02:29:25 -0800 (PST)
-Date:   Tue, 22 Feb 2022 15:59:18 +0530
+        Tue, 22 Feb 2022 02:35:08 -0800 (PST)
+Date:   Tue, 22 Feb 2022 16:05:02 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Alex Elder <elder@linaro.org>
 Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
@@ -57,19 +57,19 @@ Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
         dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
         quic_cang@quicinc.com, quic_skananth@quicinc.com,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 19/25] bus: mhi: ep: Add support for handling SYS_ERR
- condition
-Message-ID: <20220222102918.GE5029@thinkpad>
+Subject: Re: [PATCH v3 20/25] bus: mhi: ep: Add support for processing
+ command ring
+Message-ID: <20220222103502.GF5029@thinkpad>
 References: <20220212182117.49438-1-manivannan.sadhasivam@linaro.org>
- <20220212182117.49438-20-manivannan.sadhasivam@linaro.org>
- <40212d64-7423-014a-2a8d-cad5cc41795f@linaro.org>
+ <20220212182117.49438-21-manivannan.sadhasivam@linaro.org>
+ <05956282-57f4-996b-13ae-282fb40e1578@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <40212d64-7423-014a-2a8d-cad5cc41795f@linaro.org>
+In-Reply-To: <05956282-57f4-996b-13ae-282fb40e1578@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,111 +77,133 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 15, 2022 at 04:39:55PM -0600, Alex Elder wrote:
+On Tue, Feb 15, 2022 at 04:40:01PM -0600, Alex Elder wrote:
 > On 2/12/22 12:21 PM, Manivannan Sadhasivam wrote:
-> > Add support for handling SYS_ERR (System Error) condition in the MHI
-> > endpoint stack. The SYS_ERR flag will be asserted by the endpoint device
-> > when it detects an internal error. The host will then issue reset and
-> > reinitializes MHI to recover from the error state.
+> > Add support for processing the command ring. Command ring is used by the
+> > host to issue channel specific commands to the ep device. Following
+> > commands are supported:
+> > 
+> > 1. Start channel
+> > 2. Stop channel
+> > 3. Reset channel
+> > 
+> > Once the device receives the command doorbell interrupt from host, it
+> > executes the command and generates a command completion event to the
+> > host in the primary event ring.
 > > 
 > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > 
-> I have a few small comments, but this look good enough for me.
+> I'll let you consider my few comments below, but whether or not you
+> address them, this looks OK to me.
 > 
 > Reviewed-by: Alex Elder <elder@linaro.org>
 > 
 > > ---
-> >   drivers/bus/mhi/ep/internal.h |  1 +
-> >   drivers/bus/mhi/ep/main.c     | 24 ++++++++++++++++++++++++
-> >   drivers/bus/mhi/ep/sm.c       |  2 ++
-> >   3 files changed, 27 insertions(+)
+> >   drivers/bus/mhi/ep/main.c | 151 ++++++++++++++++++++++++++++++++++++++
+> >   1 file changed, 151 insertions(+)
 > > 
-> > diff --git a/drivers/bus/mhi/ep/internal.h b/drivers/bus/mhi/ep/internal.h
-> > index ee8c5974f0c0..8654af7caf40 100644
-> > --- a/drivers/bus/mhi/ep/internal.h
-> > +++ b/drivers/bus/mhi/ep/internal.h
-> > @@ -241,6 +241,7 @@ int mhi_ep_set_mhi_state(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_state mhi_stat
-> >   int mhi_ep_set_m0_state(struct mhi_ep_cntrl *mhi_cntrl);
-> >   int mhi_ep_set_m3_state(struct mhi_ep_cntrl *mhi_cntrl);
-> >   int mhi_ep_set_ready_state(struct mhi_ep_cntrl *mhi_cntrl);
-> > +void mhi_ep_handle_syserr(struct mhi_ep_cntrl *mhi_cntrl);
-> >   /* MHI EP memory management functions */
-> >   int mhi_ep_alloc_map(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr, size_t size,
 > > diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> > index ddedd0fb19aa..6378ac5c7e37 100644
+> > index 6378ac5c7e37..4c2ee517832c 100644
 > > --- a/drivers/bus/mhi/ep/main.c
 > > +++ b/drivers/bus/mhi/ep/main.c
-> > @@ -611,6 +611,30 @@ static void mhi_ep_reset_worker(struct work_struct *work)
-> >   	}
+> > @@ -21,6 +21,7 @@
+> >   static DEFINE_IDA(mhi_ep_cntrl_ida);
+> > +static int mhi_ep_create_device(struct mhi_ep_cntrl *mhi_cntrl, u32 ch_id);
+> >   static int mhi_ep_destroy_device(struct device *dev, void *data);
+> >   static int mhi_ep_send_event(struct mhi_ep_cntrl *mhi_cntrl, u32 ring_idx,
+> > @@ -185,6 +186,156 @@ void mhi_ep_unmap_free(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr, phys_addr_t
+> >   	mhi_cntrl->free_addr(mhi_cntrl, phys - offset, virt - offset, size);
 > >   }
-> > +/*
-> > + * We don't need to do anything special other than setting the MHI SYS_ERR
-> > + * state. The host issue will reset all contexts and issue MHI RESET so that we
-> 
-> s/host issue/host/
-> 
-> > + * could also recover from error state.
-> > + */
-> > +void mhi_ep_handle_syserr(struct mhi_ep_cntrl *mhi_cntrl)
+> > +int mhi_ep_process_cmd_ring(struct mhi_ep_ring *ring, struct mhi_ep_ring_element *el)
 > > +{
+> > +	struct mhi_ep_cntrl *mhi_cntrl = ring->mhi_cntrl;
 > > +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> > +	struct mhi_result result = {};
+> > +	struct mhi_ep_chan *mhi_chan;
+> > +	struct mhi_ep_ring *ch_ring;
+> > +	u32 tmp, ch_id;
 > > +	int ret;
 > > +
-> > +	/* If MHI EP is not enabled, nothing to do */
-> > +	if (!mhi_cntrl->is_enabled)
+> > +	ch_id = MHI_TRE_GET_CMD_CHID(el);
+> > +	mhi_chan = &mhi_cntrl->mhi_chan[ch_id];
+> > +	ch_ring = &mhi_cntrl->mhi_chan[ch_id].ring;
+> > +
+> > +	switch (MHI_TRE_GET_CMD_TYPE(el)) {
 > 
-> Is this an expected condition?  SYS_ERR with the endpoint
-> disabled?
+> No MHI_PKT_TYPE_NOOP_CMD?
 > 
 
-I hit a case during bringup but I don't exactly remember where. So I'll probably
-remove this check.
+Not now.
 
-> > +		return;
+> > +	case MHI_PKT_TYPE_START_CHAN_CMD:
+> > +		dev_dbg(dev, "Received START command for channel (%d)\n", ch_id);
 > > +
-> > +	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_SYS_ERR);
-> > +	if (ret)
-> > +		return;
-> > +
-> > +	/* Signal host that the device went to SYS_ERR state */
-> > +	ret = mhi_ep_send_state_change_event(mhi_cntrl, MHI_STATE_SYS_ERR);
-> > +	if (ret)
-> > +		dev_err(dev, "Failed sending SYS_ERR state change event: %d\n", ret);
-> > +}
-> > +
-> >   int mhi_ep_power_up(struct mhi_ep_cntrl *mhi_cntrl)
-> >   {
-> >   	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> > diff --git a/drivers/bus/mhi/ep/sm.c b/drivers/bus/mhi/ep/sm.c
-> > index 68e7f99b9137..9a75ecfe1adf 100644
-> > --- a/drivers/bus/mhi/ep/sm.c
-> > +++ b/drivers/bus/mhi/ep/sm.c
-> > @@ -93,6 +93,7 @@ int mhi_ep_set_m0_state(struct mhi_ep_cntrl *mhi_cntrl)
-> >   	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_M0);
-> >   	if (ret) {
-> > +		mhi_ep_handle_syserr(mhi_cntrl);
-> >   		spin_unlock_bh(&mhi_cntrl->state_lock);
-> >   		return ret;
-> >   	}
-> > @@ -128,6 +129,7 @@ int mhi_ep_set_m3_state(struct mhi_ep_cntrl *mhi_cntrl)
-> >   	spin_lock_bh(&mhi_cntrl->state_lock);
-> >   	ret = mhi_ep_set_mhi_state(mhi_cntrl, MHI_STATE_M3);
+> > +		mutex_lock(&mhi_chan->lock);
+> > +		/* Initialize and configure the corresponding channel ring */
+> > +		if (!ch_ring->started) {
+> > +			ret = mhi_ep_ring_start(mhi_cntrl, ch_ring,
+> > +				(union mhi_ep_ring_ctx *)&mhi_cntrl->ch_ctx_cache[ch_id]);
+> > +			if (ret) {
+> > +				dev_err(dev, "Failed to start ring for channel (%d)\n", ch_id);
+> > +				ret = mhi_ep_send_cmd_comp_event(mhi_cntrl,
+> > +							MHI_EV_CC_UNDEFINED_ERR);
+> > +				if (ret)
+> > +					dev_err(dev, "Error sending completion event (%d)\n",
+> > +						MHI_EV_CC_UNDEFINED_ERR);
 > 
-> Are there any other spots that should do this?  For example, in
-> mhi_ep_set_ready_state() you don't check the return value of
-> the call to mhi_ep_set_mhi_state().  It seems to me it should
-> be possible to preclude bogus state changes anyway, but I'm
-> not completely sure.
+> Print the value of ret in the above message (not UNDEFINED_ERR).
+> 
+> > +
+> > +				goto err_unlock;
+> > +			}
+> > +		}
+> > +
+> > +		/* Enable DB for the channel */
+> > +		mhi_ep_mmio_enable_chdb_a7(mhi_cntrl, ch_id);
+> 
+> If an error occurs later, this will be enabled.  Is that what
+> you want?  Maybe wait to enable the doorbell until everything
+> else succeeds.
 > 
 
-The check should be there, I will add it to ready_state() also.
+Makes sense. Will move this to the end.
+
+> > +
+> > +		/* Set channel state to RUNNING */
+> > +		mhi_chan->state = MHI_CH_STATE_RUNNING;
+> > +		tmp = le32_to_cpu(mhi_cntrl->ch_ctx_cache[ch_id].chcfg);
+> > +		tmp &= ~CHAN_CTX_CHSTATE_MASK;
+> > +		tmp |= FIELD_PREP(CHAN_CTX_CHSTATE_MASK, MHI_CH_STATE_RUNNING);
+> > +		mhi_cntrl->ch_ctx_cache[ch_id].chcfg = cpu_to_le32(tmp);
+> > +
+> > +		ret = mhi_ep_send_cmd_comp_event(mhi_cntrl, MHI_EV_CC_SUCCESS);
+> > +		if (ret) {
+> > +			dev_err(dev, "Error sending command completion event (%d)\n",
+> > +				MHI_EV_CC_SUCCESS);
+> > +			goto err_unlock;
+> > +		}
+> > +
+> > +		mutex_unlock(&mhi_chan->lock);
+> > +
+> > +		/*
+> > +		 * Create MHI device only during UL channel start. Since the MHI
+> > +		 * channels operate in a pair, we'll associate both UL and DL
+> > +		 * channels to the same device.
+> > +		 *
+> > +		 * We also need to check for mhi_dev != NULL because, the host
+> > +		 * will issue START_CHAN command during resume and we don't
+> > +		 * destroy the device during suspend.
+> > +		 */
+> > +		if (!(ch_id % 2) && !mhi_chan->mhi_dev) {
+> > +			ret = mhi_ep_create_device(mhi_cntrl, ch_id);
+> > +			if (ret) {
+> 
+> If this occurs, the host will already have been told the
+> request completed successfully.  Is that a problem that
+> can/should be avoided?
+> 
+
+This should result in SYSERR. Will handle.
 
 Thanks,
 Mani
-
-> >   	if (ret) {
-> > +		mhi_ep_handle_syserr(mhi_cntrl);
-> >   		spin_unlock_bh(&mhi_cntrl->state_lock);
-> >   		return ret;
-> >   	}
-> 
