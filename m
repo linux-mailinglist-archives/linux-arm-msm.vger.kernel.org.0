@@ -2,153 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B2974BF157
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 06:32:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BDD84BF199
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Feb 2022 06:42:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229469AbiBVFas (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 00:30:48 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:54478 "EHLO
+        id S229715AbiBVFhe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 00:37:34 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:48564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229683AbiBVFa3 (ORCPT
+        with ESMTP id S229691AbiBVFhV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 00:30:29 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23DCE7084E;
-        Mon, 21 Feb 2022 21:30:03 -0800 (PST)
+        Tue, 22 Feb 2022 00:37:21 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF22B12752;
+        Mon, 21 Feb 2022 21:36:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645507804; x=1677043804;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=dyGCqEWolvHRVduWhviEQyQaBM1jwneMhkEEEZgRg3s=;
-  b=Q+H4CnPYpO3k1/j0tItfEbW4nOwV5EPuHE54o7wM9187M6bxH8SbB3Gw
-   BWGXoc0uibP8yorS/Rs09qbF4BGl32SW3wJhq+hYzpfgF9lJFqunlGOPq
-   n+HkMlKSYe8M47eqiHqXlCLW9YfiyTs5zzLYbB9YqvponjhgANzO1+Fp0
-   A=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 21 Feb 2022 20:45:56 -0800
+  t=1645508216; x=1677044216;
+  h=from:to:cc:subject:date:message-id;
+  bh=gkq4ET5LSzTZdmH2fPQsTBFW+lLqT0HQdhlrLZFcJmU=;
+  b=c1tcvF3GEUFLnm5stkdS9VPcNv1RLmgo9SWlfFuyOWm9qqUa5HwOUjda
+   SKYghdVrzu5yXrbr37vggjKGNFU5Cs9y3jPxsVoHD5Z50lQyI8BAWJEJa
+   fF7YOv2nsL1acwbBaJuaiTotHSWv4bJP2DKv8UzkUIXWaoYVb+HvBUDs9
+   U=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 21 Feb 2022 20:56:45 -0800
 X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Feb 2022 20:45:55 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Mon, 21 Feb 2022 20:45:55 -0800
-Received: from [10.216.54.2] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Mon, 21 Feb
- 2022 20:45:51 -0800
-Subject: Re: [PATCH V3 2/4] leds: Add pm8350c support to Qualcomm LPG driver
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-CC:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, <mka@chromium.org>,
-        <swboyd@chromium.org>, <linux-leds@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        satya priya <skakit@codeaurora.org>
-References: <1635507893-25490-1-git-send-email-quic_c_skakit@quicinc.com>
- <1635507893-25490-3-git-send-email-quic_c_skakit@quicinc.com>
- <Yg7LjJFi51cmDUQr@ripper>
-From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
-Message-ID: <d6dada9f-3b81-01c4-47a6-0750dafa2864@quicinc.com>
-Date:   Tue, 22 Feb 2022 10:15:47 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <Yg7LjJFi51cmDUQr@ripper>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 21 Feb 2022 20:56:44 -0800
+X-QCInternal: smtphost
+Received: from hu-rohiagar-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.106.138])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 22 Feb 2022 10:26:29 +0530
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
+        id 4BCB344B1; Tue, 22 Feb 2022 10:26:28 +0530 (+0530)
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+To:     bjorn.andersson@linaro.org, agross@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>
+Subject: [PATCH v4 0/5] Add APCS support for SDX65
+Date:   Tue, 22 Feb 2022 10:26:20 +0530
+Message-Id: <1645505785-2271-1-git-send-email-quic_rohiagar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/18/2022 3:56 AM, Bjorn Andersson wrote:
+Hello,
 
-> On Fri 29 Oct 04:44 PDT 2021, Satya Priya wrote:
->
->> From: satya priya <skakit@codeaurora.org>
->>
->> Add pm8350c compatible and lpg_data to the driver.
->>
->> Signed-off-by: satya priya <skakit@codeaurora.org>
-> Sorry for the OCD, but I would really like for you to capitalize 's' and
-> 'p' in your name.
+Changes from v3:
+ - Removed the redundant patches after addressing Mani's comments.
+ - Rebased on top of v5.17-rc5.
 
+Changes from v2:
+ - Addressed Stephen's comments and made necessary changes.
+ - Rebased on top
 
-I had corrected this in the v3-resend version.
+Changes from v1:
+ - Addressed Mani's comments and made necessary changes.
+ - Removed the last patch from the series as it became redundant after making changes.
 
-https://patchwork.kernel.org/project/linux-arm-msm/patch/1637917920-22041-3-git-send-email-quic_c_skakit@quicinc.com/
+This series adds APCS mailbox and clock support for SDX65. The APCS IP in SDX65
+provides IPC and clock functionalities.
 
+Thanks,
+Rohit
 
->
->> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
->> ---
->> Changes in V2:
->>   - Added const for lpg_channel_data[] struct.
->>
->> Changes in V3:
->>   - Correct the num_channels and add respective base addresses.
->>
->>   drivers/leds/rgb/leds-qcom-lpg.c | 13 +++++++++++++
->>   1 file changed, 13 insertions(+)
->>
->> diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
->> index 45ef4ec..ad99a9b 100644
->> --- a/drivers/leds/rgb/leds-qcom-lpg.c
->> +++ b/drivers/leds/rgb/leds-qcom-lpg.c
->> @@ -1275,9 +1275,22 @@ static const struct lpg_data pm8150l_lpg_data = {
->>   	},
->>   };
->>   
->> +static const struct lpg_data pm8350c_pwm_data = {
->> +	.pwm_9bit_mask = BIT(2),
-> As you might have seen in v12 I dropped pwm_9bit_mask.
+Rohit Agarwal (5):
+  dt-bindings: clock: Add A7 PLL binding for SDX65
+  clk: qcom: Add A7 PLL support for SDX65
+  ARM: dts: qcom: sdx65: Add support for A7 PLL clock
+  ARM: dts: qcom: sdx65: Add support for APCS block
+  clk: qcom: Add SDX65 APCS clock controller support
 
+ Documentation/devicetree/bindings/clock/qcom,a7pll.yaml |  2 +-
+ arch/arm/boot/dts/qcom-sdx65.dtsi                       | 17 +++++++++++++++++
+ drivers/clk/qcom/Kconfig                                | 12 ++++++------
+ 3 files changed, 24 insertions(+), 7 deletions(-)
 
-Yeah, I'll drop this.
+-- 
+2.7.4
 
-
->> +
-> Afaict there's a tri-channel current sink in pm8350c as well, so you
-> should have:
->
->          .triled_base = 0xef00,
->
-> And then associated .triled_mask in the relevant channels.
-
-
-Okay, I'll add them.
-
-
-> Regards,
-> Bjorn
->
->> +	.num_channels = 4,
->> +	.channels = (const struct lpg_channel_data[]) {
->> +		{ .base = 0xe800 },
->> +		{ .base = 0xe900 },
->> +		{ .base = 0xea00 },
->> +		{ .base = 0xeb00 },
->> +	},
->> +};
->> +
->>   static const struct of_device_id lpg_of_table[] = {
->>   	{ .compatible = "qcom,pm8150b-lpg", .data = &pm8150b_lpg_data },
->>   	{ .compatible = "qcom,pm8150l-lpg", .data = &pm8150l_lpg_data },
->> +	{ .compatible = "qcom,pm8350c-pwm", .data = &pm8350c_pwm_data },
->>   	{ .compatible = "qcom,pm8916-pwm", .data = &pm8916_pwm_data },
->>   	{ .compatible = "qcom,pm8941-lpg", .data = &pm8941_lpg_data },
->>   	{ .compatible = "qcom,pm8994-lpg", .data = &pm8994_lpg_data },
->> -- 
->> 2.7.4
->>
