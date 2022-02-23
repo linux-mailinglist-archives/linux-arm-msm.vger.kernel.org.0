@@ -2,80 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2ADBE4C185E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 17:18:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EF614C1942
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 18:04:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242697AbiBWQTH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Feb 2022 11:19:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55836 "EHLO
+        id S243109AbiBWREx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Feb 2022 12:04:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242676AbiBWQTG (ORCPT
+        with ESMTP id S243106AbiBWREu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Feb 2022 11:19:06 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA7681CFD9;
-        Wed, 23 Feb 2022 08:18:38 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id u1so40455147wrg.11;
-        Wed, 23 Feb 2022 08:18:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vu8Twnocn3vA4ricnLle2PUL2O6gazUeaL13927N0Bw=;
-        b=dU+Uq1hgyWoO4vVyQn1ujrktF0A2z0Zg7WmMjPHYBcM7m32p0tLKDSKQUVOjkCMPLd
-         NQHbsrDFQJ+vyYL92d2dYicS/odftSePDJWQl66P3pkpro62ARe5Evkii3sEAMhedGz/
-         VFdy0DKVRaEzQRiD/Gvgek/8tfHZlcsqxdoTTboE1sZ6EDbkjpUblB+t7bYdi29J4ezG
-         kiAJa5BditVgo5ThrGJQRtTECHC3i0GaVzlOEyfeeg0Hn67Nc3paqFSnSd+LK2M61yQa
-         Spy4a7vFsxx5Q9z8kV6/13pMYxzPbFFunOBddsseJsE5vcaC5Sdu4ypUcXOJMIql03aX
-         XVXQ==
+        Wed, 23 Feb 2022 12:04:50 -0500
+Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47E6B5044E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 09:04:22 -0800 (PST)
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com [209.85.218.69])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 8D4833FCA8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 17:04:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1645635860;
+        bh=RoNX8EzuGJlB3iCJ6r1tFSNiwtZPxPTTbVDAWTvRXkY=;
+        h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+         In-Reply-To:Content-Type;
+        b=t5lclKDlzHrV61E3xQ7fimMgjmM2n5rDd0btVK9I03TPKpnyFIIm7x4t9qhP4eMcQ
+         Pag/ncTK9Vi3NuWdd1turQqeqE47fC1MhwFwYRArN1cfOpgkyi266UZLHv3GQDD9bv
+         L21QYatk7gs4XC151kHhISS6MyqlStmBqnvevhqhpa6Rd0J9+rsAyU5EIUkF2INYMX
+         0qd/vRYuFKtkGPf1nAf8Vq4TNGg0e0merwJ0fflacQBN0+JNq+HMQK0Q+NSqyyP+TU
+         BtILrZKNYYZ9AxY2xiYBwxcRnQNMkxTzFhhVScfQX9hD+BxvcHaq3OrUP5yY4kWXXD
+         1feqbyIF1d0yA==
+Received: by mail-ej1-f69.google.com with SMTP id qa30-20020a170907869e00b006cee5e080easo7309190ejc.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 09:04:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vu8Twnocn3vA4ricnLle2PUL2O6gazUeaL13927N0Bw=;
-        b=w4GKuCT5HFQzp3e32u30pLvwu0USuzaQSEZST2OwCc/YJrxeiIfL3A/8nYIN6QAA6e
-         bsKbX43lTQH1kh0LGM0bpIKekQdalT2f+u24rxiaTI2N9c+9ZxTr5gAbNfWpOARlHwcl
-         KXV1o7JuunfBmhehhn0jdo7eK8AZy4SMmf9pu88ArU8uCWWBr62g8WXXUgmv5Oikjbxv
-         BY88YbUofy3lPFvTGFaClC+zzxXU6rhlqO0LsEd+BuzE6cYTk/+JSjMfdtLQfYKnYtIU
-         4mUG1TQPkgib/LIWJekv5uowjPGxpI0raLIUMh65fnumb3hKVnMjDKlB1NBJMa5hjxiu
-         9VTQ==
-X-Gm-Message-State: AOAM532HNLvIe4ZXjtijdqMOH3IGsXqQUiYmhSXuVHIvKE+Zz5JeRByf
-        1Fs8njflQNxChUpHoA0bYYmtzT9NeNmKPLAheGE=
-X-Google-Smtp-Source: ABdhPJxUxsUu4B6LPuO8RFWw7Yn5lu+ezbPGrbFjXiTTcZQRl7UW8msM5NNY5SAhTMaB4e82kLY55STtgN9hvzTG0J0=
-X-Received: by 2002:a05:6000:1202:b0:1ed:b03e:69a0 with SMTP id
- e2-20020a056000120200b001edb03e69a0mr275388wrx.93.1645633117146; Wed, 23 Feb
- 2022 08:18:37 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=RoNX8EzuGJlB3iCJ6r1tFSNiwtZPxPTTbVDAWTvRXkY=;
+        b=0u9YkVGkSbmPXzhfIO47MaHunT/VIs3iIJis2OOIDoA+l7lwk2vFXM+0V0Cn1xYexq
+         G9K1fqq4D/EqBkcNH2a9hb2lI0g329Jzvv4jecRGAoxesfUiGyqPKkxVr5T3mW3v/1iy
+         Y8SHpbY9+uPVBoICNVEirEjYSjjNsT53AB/6+0xHn+Y0VDyFyp166E9p45QoyUOC61Rr
+         SSRt8ManGDVrSvV/pM5+nzsPBwTgd/IBxX37OJI9SAQqIK9W6/noe8u4/l+4v+B8jh9Y
+         klLDcf5C1fDh/GUcVtzxFRHSTucujcny12V/zVLFMsGuvN9BkstXUMXKXs6SE4P2UwQf
+         D8Xg==
+X-Gm-Message-State: AOAM532HYU8zr41782FW+WuPEPwhA+t6aJVstVcXkJM1X8Qxg4M63o+a
+        tee1R8CxhauE3w3zY/80mgIBwH7OyvShZyaU8Ff+mYhnX4uQ6UAakAz2BkZh0ANDxQ+fz+FxJcZ
+        Tlq0klsVt+iDEDdPA2g1nZ9v2zAjifhcoecWcLiCCuz4=
+X-Received: by 2002:a05:6402:5209:b0:412:7cd8:a8fc with SMTP id s9-20020a056402520900b004127cd8a8fcmr343341edd.51.1645635859398;
+        Wed, 23 Feb 2022 09:04:19 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJwKr+v6ocNLmVN3Di+yw0uJzDvkvv4Lb5lc33wOhtzJOFkvu7xL2E/jifTka6zh9g0DFLs/uA==
+X-Received: by 2002:a05:6402:5209:b0:412:7cd8:a8fc with SMTP id s9-20020a056402520900b004127cd8a8fcmr343312edd.51.1645635859189;
+        Wed, 23 Feb 2022 09:04:19 -0800 (PST)
+Received: from [192.168.0.126] (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
+        by smtp.gmail.com with ESMTPSA id fy37sm73162ejc.219.2022.02.23.09.04.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Feb 2022 09:04:17 -0800 (PST)
+Message-ID: <7fcd5ed9-4577-950a-0cdc-22917e8e26af@canonical.com>
+Date:   Wed, 23 Feb 2022 18:04:16 +0100
 MIME-Version: 1.0
-References: <20220219193957.577054-1-robdclark@gmail.com> <a065a843-e7c3-a75b-aa8e-d4b264146df0@linaro.org>
-In-Reply-To: <a065a843-e7c3-a75b-aa8e-d4b264146df0@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 23 Feb 2022 08:18:56 -0800
-Message-ID: <CAF6AEGuAq_OT_bFon+WvGr+kU1wA_u=bRirC8BjN=5eYNopiOA@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: Avoid dirtyfb stalls on video mode displays
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Kalyan Thota <quic_kalyant@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Mark Yacoub <markyacoub@google.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [RFT PATCH 0/3] Fix kfree() of const memory on setting
+ driver_override
+Content-Language: en-US
+To:     Robin Murphy <robin.murphy@arm.com>,
+        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+        Abel Vesa <abel.vesa@nxp.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Yangtao Li <tiny.windzz@gmail.com>,
-        David Heidelberg <david@ixit.cz>, Xu Wang <vulab@iscas.ac.cn>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-clk@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org
+References: <20220222132707.266883-1-krzysztof.kozlowski@canonical.com>
+ <708eabb1-7b35-d525-d4c3-451d4a3de84f@rasmusvillemoes.dk>
+ <afa7001d-901e-55bf-b8dc-77051b1e7f78@canonical.com>
+ <0442526f-b6d9-8868-ac1c-dd11a2d3b2ab@arm.com>
+ <636e5b92-8ed8-35a1-d6e9-516d5b35be91@canonical.com>
+ <e0bc8dd2-bea9-354b-3b48-3123e0bbf717@arm.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+In-Reply-To: <e0bc8dd2-bea9-354b-3b48-3123e0bbf717@arm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,63 +103,91 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 23, 2022 at 2:00 AM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On 19/02/2022 22:39, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > Someone on IRC once asked an innocent enough sounding question:  Why
-> > with xf86-video-modesetting is es2gears limited at 120fps.
-> >
-> > So I broke out the perfetto tracing mesa MR and took a look.  It turns
-> > out the problem was drm_atomic_helper_dirtyfb(), which would end up
-> > waiting for vblank.. es2gears would rapidly push two frames to Xorg,
-> > which would blit them to screen and in idle hook (I assume) call the
-> > DIRTYFB ioctl.  Which in turn would do an atomic update to flush the
-> > dirty rects, which would stall until the next vblank.  And then the
-> > whole process would repeat.
-> >
-> > But this is a bit silly, we only need dirtyfb for command mode DSI
-> > panels.  So lets just skip it otherwise.
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  | 13 +++++
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h  |  9 ++++
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c   |  1 +
-> >   drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c |  9 ++++
-> >   drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c  |  1 +
-> >   drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h  |  1 +
-> >   drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c |  8 +++
-> >   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c  |  1 +
-> >   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h  |  1 +
-> >   drivers/gpu/drm/msm/msm_fb.c              | 64 ++++++++++++++++++++++-
-> >   drivers/gpu/drm/msm/msm_kms.h             |  2 +
-> >   11 files changed, 109 insertions(+), 1 deletion(-)
-> >
->
-> I have checked your previous dirtyfb patch (and corresponding discussion).
->
-> I'm not fond of the idea of acquiring locks, computing the value, then
-> releasing the locks and reacquiring the locks again. I understand the
-> original needs_dirtyfb approach was frowned upon. Do we have a chance of
-> introducing drm_atomic_helper_dirtyfb_unlocked()? Which would perform
-> all the steps of the orignal helper, but without locks acquirement (and
-> state allocation/freeing)?
->
+On 23/02/2022 16:08, Robin Murphy wrote:
+> On 2022-02-23 14:22, Krzysztof Kozlowski wrote:
+>> On 23/02/2022 15:04, Robin Murphy wrote:
+>>> On 2022-02-22 14:06, Krzysztof Kozlowski wrote:
+>>>> On 22/02/2022 14:51, Rasmus Villemoes wrote:
+>>>>> On 22/02/2022 14.27, Krzysztof Kozlowski wrote:
+>>>>>> Hi,
+>>>>>>
+>>>>>> Drivers still seem to use driver_override incorrectly. Perhaps my old
+>>>>>> patch makes sense now?
+>>>>>> https://lore.kernel.org/all/1550484960-2392-3-git-send-email-krzk@kernel.org/
+>>>>>>
+>>>>>> Not tested - please review and test (e.g. by writing to dirver_override
+>>>>>> sysfs entry with KASAN enabled).
+>>>>>
+>>>>> Perhaps it would make sense to update the core code to release using
+>>>>> kfree_const(), allowing drivers to set the initial value with
+>>>>> kstrdup_const(). Drivers that currently use kstrdup() or kasprintf()
+>>>>> will continue to work [but if they kstrdup() a string literal they could
+>>>>> be changed to use kstrdup_const].
+>>>>
+>>>> The core here means several buses, so the change would not be that
+>>>> small. However I don't see the reason why "driver_override" is special
+>>>> and should be freed with kfree_const() while most of other places don't
+>>>> use it.
+>>>>
+>>>> The driver_override field definition is here obvious: "char *", so any
+>>>> assignments of "const char *" are logically wrong (although GCC does not
+>>>> warn of this literal string const discarding). Adding kfree_const() is
+>>>> hiding the problem - someone did not read the definition of assigned field.
+>>>
+>>> That's not the issue, though, is it? If I take the struct
+>>> platform_device definition at face value, this should be perfectly valid:
+>>>
+>>> 	static char foo[] = "foo";
+>>> 	pdev->driver_override = &foo;
+>>
+>>
+>> Yes, that's not the issue. It's rather about the interface. By
+>> convention we do not modify string literals but "char *driver_override"
+>> indicates that this is modifiable memory. I would argue that it even
+>> means that ownership is passed. Therefore passing string literal to
+>> "char *driver_override" is wrong from logical point of view.
+>>
+>> Plus, as you mentioned later, can lead to undefined behavior.
+> 
+> But does anything actually need to modify a driver_override string? I 
+> wouldn't have thought so. I see at least two buses that *do* define 
+> theirs as const char *, but still assume to kfree() them.
 
-The locking is really more just to avoid racing state access with
-state being free'd.  The sort of race you could have is perhaps
-dirtyfb racing with attaching the fb to a cmd mode
-plane->crtc->encoder chain.  I think this is relatively harmless since
-that act would flush the fb anyways.
+I think the drivers/clk/imx/clk-scu.c (fixed here) does not actually
+need it. It uses the feature to create multiple platform devices for
+each clock, with unique names matching the clock (e.g. pwm0_clk,
+pwm1_clk) and then bind all them via common clock driver.
 
-But it did give me an idea for a possibly simpler approach.. we might
-be able to just keep a refcnt of cmd mode panels the fb is indirectly
-attached to, and then msm_framebuffer_dirtyfb() simply has to check if
-that count is greater than zero.  If we increment/decrement the count
-in fb->prepare()/cleanup() that should also solve the race.
+It looks therefore like something for convenience of debugging or going
+through sysfs devices.
 
-BR,
--R
+Removal of driver_override from such drivers is a bit too much here,
+because I would not be able to test it.
+
+> 
+>>> And in fact that's effectively how the direct assignment form works
+>>> anyway - string literals are static arrays of type char (or wchar_t),
+>>> *not* const char, however trying to modify them is undefined behaviour.
+>>>
+>>> There's a big difference between "non-const" and "kfree()able", and
+>>> AFAICS there's no obvious clue that the latter is actually a requirement.
+>>
+>> Then maybe kfreeable should be made a requirement? Or at least clearly
+>> documented?
+> 
+> Indeed, there's clearly some room for improvement still. And I'm not 
+> suggesting that these changes aren't already sensible as they are, just 
+> that the given justification seems a little unfair :)
+
+Yeah, maybe also my "const" in the title and commit is not accurate. I
+think that literal strings are part of .rodata (and objdump confirm)
+thus are considered const.
+
+> Even kfree_const() can't help if someone has put their string in the 
+> middle of some larger block of kmalloc()ed memory, so perhaps 
+> encouraging a dedicated setter function rather than just exposing a raw 
+> string pointer is the ideal solution in the long term.
+
+
+Best regards,
+Krzysztof
