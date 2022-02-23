@@ -2,150 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C44B4C0DF8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 09:02:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B1EFE4C0E2A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 09:24:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238945AbiBWICs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Feb 2022 03:02:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40028 "EHLO
+        id S235019AbiBWIYc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Feb 2022 03:24:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238934AbiBWICq (ORCPT
+        with ESMTP id S236773AbiBWIYb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Feb 2022 03:02:46 -0500
+        Wed, 23 Feb 2022 03:24:31 -0500
 Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EB81329A6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 00:02:19 -0800 (PST)
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com [209.85.218.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B5495A596
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 00:24:03 -0800 (PST)
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com [209.85.208.71])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 203FF3F1CF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 08:02:18 +0000 (UTC)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 2034E3FCA8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 08:24:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1645603338;
-        bh=F9L5hLNqBFC/G3cYjeWZqj5d6f79Ia9tSMyyGBS1M1k=;
-        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+        s=20210705; t=1645604642;
+        bh=OUH0bTj/LUGqclp4FyWkS6uNhE/OcvDSgnjHRV7vNUM=;
+        h=Message-ID:Date:MIME-Version:Subject:To:References:From:
          In-Reply-To:Content-Type;
-        b=h6ChC/ZEQ6w5pvD+aVSqQWwaK6Rwj8cBM7K8bMvCfdrn6K/tZlrGvHlxwKgoMct8/
-         TXNuYz3mkTP/PDf1Y5bKmAzyPU8J8CGzbtGG/bCsiGzqSghsjJL6la9azLLspAkz3q
-         MlqTfIDRWtfqxHQQeYQZxeS+ixDrR81RGlnys5K57gJgoslT6R43Xdgn3fi1YIr12E
-         SMu6r0IHNujsj+51sdYUs0uNJno6kyB+gn63WgoGIII1UAzT3l9LinXGnIW7ECgsi4
-         5DLRd+scahl6wwFsVsdGVpuuEaFs4hZgbzKW2bb/RWToC37boG+ohkv8NtSFhVqzGB
-         pfaCIm58HI8/Q==
-Received: by mail-ej1-f71.google.com with SMTP id la22-20020a170907781600b006a7884de505so6774610ejc.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 00:02:18 -0800 (PST)
+        b=FTi15mZpVUkRJF4UJ+tE1nQnXghlR5psWwL1gec7Cx1xKuv0mHwnO1auXfabylr5N
+         CpW3p3ABXoIwiHF9oFi3mmiT4qO+6rg2/O4oi0dQslBn8dA6QR9aa+vm90tJUC/k2H
+         VKoqnmm8QJHsDVgfeA2iIT3ES1ICcUAnnmfpRDl43vrLHL4e1odRpaQmqJHfLboH8p
+         0KyJzI3t5tiQrh10Y+DpJ3qkG3AXXOBT3Gc0DD/yXTk37p6jhE0Tdc1XkrqP6xD19V
+         d1UTtJ2bD0RLM2Ak/J3bz4XjNlNWLy3l5fhhS/P9rIvsDc7PtNdAFR/MhfYF510LCG
+         BN6XqrkzAn/8A==
+Received: by mail-ed1-f71.google.com with SMTP id l3-20020a50cbc3000000b0041083c11173so13252332edi.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 00:24:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+         :content-language:to:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=F9L5hLNqBFC/G3cYjeWZqj5d6f79Ia9tSMyyGBS1M1k=;
-        b=2UiNBTKWd+9EpXPN9MFbW0SS+56U7SjwyGZc72/9GPoobpCN43Jrxt6YgL9jQrbDJ1
-         yjJlyqNrV36CjdIy/A6vvJPnyuO2WTHEKNsGPVJR8/glQkBHr8SE3Jhk9p0oIGljrdgS
-         mB4pzS2J6A0wk5/nLX7gZOEVjSMq+HBtk1xAkJr1CUlLm6NsBEqgyNG4OCsy1Ig1U+GE
-         bgLC6pCOY130QAjWTu8p8uyOD+xBdiE0O/miTfHHHv9S4yvYnXUJngB25CsBTac/pWcf
-         AZob0LwfFFutRo7QF5HilhrZmfz7mV4xWfxZLfq5c3o5LpdJqn3VXoDakvWVZdu6VbDK
-         ua+g==
-X-Gm-Message-State: AOAM532H8uPhYJNjqvoMaS6UTU5okY8Sj+a2OXttagdFDUPnvoQAjymY
-        ADveEIGkjerCXI0FQg83i217g/qJdSHVRhOCbxX4XR61S79Y1kHELmeEK4vbG3Ttr48gbkEJvZT
-        GgOErKknaDwdO7vhPhDa1kaGGwaoaCqYSxTlRCMkGgkk=
-X-Received: by 2002:a17:906:264d:b0:6b1:13e0:9981 with SMTP id i13-20020a170906264d00b006b113e09981mr21312808ejc.611.1645603337785;
-        Wed, 23 Feb 2022 00:02:17 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJwb79s+yZlz4qu+PKRA8PiTD34CcHHW78p/lh72TMgvG0k6gMdEgEFK2Xo4Q69VI8lr7ixkRQ==
-X-Received: by 2002:a17:906:264d:b0:6b1:13e0:9981 with SMTP id i13-20020a170906264d00b006b113e09981mr21312791ejc.611.1645603337540;
-        Wed, 23 Feb 2022 00:02:17 -0800 (PST)
-Received: from [192.168.0.124] (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
-        by smtp.gmail.com with ESMTPSA id v23sm7198330ejy.178.2022.02.23.00.02.16
+        bh=OUH0bTj/LUGqclp4FyWkS6uNhE/OcvDSgnjHRV7vNUM=;
+        b=ifNNg1br6ZMX1vmuDDn52octG2NZVOKwlZJjPg/JGJvTtErhpLUKOI8OhgcnRV7+ya
+         f2Vn9xhcY6dk2yDpvhxv3wm5F2IuC4dPUll7shM0TMGmRw7xTR1m2FAF1+5VnLNIA2Mx
+         3Qfupd5qtBC9EFvwZVi6ZknGE5FgpEJ8daJhgN1n66jX69/KF4ftWU9hBbEj4qwOK871
+         t1gG4mmjzSCuqNkTYJCX4mwpnDzlAWy7lSJYiSg8aKrpYXdf/atNNEcuMjYES/FnbNLk
+         2XZxgUpPQwg5jLWcUNMVsHAVqDQjvIRhTHs9kCGM4iwsNWTar8GX+70JZBB7lCxfsSgD
+         qjMA==
+X-Gm-Message-State: AOAM533l3yaWCwo/1Jecl0m7nu1LVahIfQ3EtT16fqptjxc3yc+iGgfe
+        RvvOM+bukclM9eiMrn0bso0n0hyAOABEkXy7XjRD2XdOXAyHdGb8wcTHMgM8NkOuhxXGOSX+WF9
+        Naw+ZFiMrqyC4a/VfnevSWidOYrNQJJ2z2HorkWYuWI8=
+X-Received: by 2002:a17:906:3109:b0:6cc:7a1:8db0 with SMTP id 9-20020a170906310900b006cc07a18db0mr22106106ejx.266.1645604640501;
+        Wed, 23 Feb 2022 00:24:00 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJzmlOe0uOWGCSaW649hZ3pFA8AEz4z12SvTxoyLOxSd5Mf7R4zHsjAvMUopfEcfA/lfYgjr1A==
+X-Received: by 2002:a17:906:3109:b0:6cc:7a1:8db0 with SMTP id 9-20020a170906310900b006cc07a18db0mr22106094ejx.266.1645604640319;
+        Wed, 23 Feb 2022 00:24:00 -0800 (PST)
+Received: from [192.168.0.125] (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
+        by smtp.gmail.com with ESMTPSA id p16sm1162411ejn.33.2022.02.23.00.23.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Feb 2022 00:02:16 -0800 (PST)
-Message-ID: <d49c5648-44d2-5630-fae2-52d182eb74e2@canonical.com>
-Date:   Wed, 23 Feb 2022 09:02:16 +0100
+        Wed, 23 Feb 2022 00:23:59 -0800 (PST)
+Message-ID: <968cf18e-af5c-0503-79b1-a622938d4e0a@canonical.com>
+Date:   Wed, 23 Feb 2022 09:23:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.0
-Subject: Re: [PATCH] dt-bindings: arm: qcom: Document sa8540p, sc8180x and
- sc8280xp
+Subject: Re: [PATCH v2 09/15] scsi: ufs: deprecate 'freq-table-hz' property
 Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220223034613.3725242-1-bjorn.andersson@linaro.org>
+To:     Alim Akhtar <alim.akhtar@samsung.com>,
+        'Avri Altman' <avri.altman@wdc.com>,
+        'Rob Herring' <robh+dt@kernel.org>,
+        'Andy Gross' <agross@kernel.org>,
+        'Bjorn Andersson' <bjorn.andersson@linaro.org>,
+        'Wei Xu' <xuwei5@hisilicon.com>, 'Nishanth Menon' <nm@ti.com>,
+        'Vignesh Raghavendra' <vigneshr@ti.com>,
+        'Tero Kristo' <kristo@kernel.org>,
+        "'James E.J. Bottomley'" <jejb@linux.ibm.com>,
+        "'Martin K. Petersen'" <martin.petersen@oracle.com>,
+        'Jan Kotas' <jank@cadence.com>, 'Li Wei' <liwei213@huawei.com>,
+        'Stanley Chu' <stanley.chu@mediatek.com>,
+        'Yaniv Gardi' <ygardi@codeaurora.org>,
+        linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org
+References: <20220222145854.358646-1-krzysztof.kozlowski@canonical.com>
+ <CGME20220222150007epcas5p22f05e6c8e80a5ad18a9528cd0ead865d@epcas5p2.samsung.com>
+ <20220222145854.358646-10-krzysztof.kozlowski@canonical.com>
+ <0c8b01d8280b$868abc20$93a03460$@samsung.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <20220223034613.3725242-1-bjorn.andersson@linaro.org>
+In-Reply-To: <0c8b01d8280b$868abc20$93a03460$@samsung.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/02/2022 04:46, Bjorn Andersson wrote:
-> Add compatibles for the sa8540p automotive, as well as sc8180x and
-> sc8280xp compute platforms. Also add compatibles for the ADP devboard,
-> the Lenovo Flex 5G, Microsoft Surface Pro X and the sc8280xp QRD.
+On 22/02/2022 17:44, Alim Akhtar wrote:
+> Hi Krzysztof
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  .../devicetree/bindings/arm/qcom.yaml         | 20 +++++++++++++++++++
->  1 file changed, 20 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index e8b1606bc849..1042f71300af 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -39,8 +39,11 @@ description: |
->          msm8994
->          msm8996
->          sa8155p
-> +        sa8540p
->          sc7180
->          sc7280
-> +        sc8180x
-> +        sc8280xp
->          sdm630
->          sdm660
->          sdm845
-> @@ -224,6 +227,18 @@ properties:
->                - google,senor
->            - const: qcom,sc7280
->  
-> +      - items:
-> +          - enum:
-> +              - qcom,sc8180x-primus
-> +              - lenovo,flex-5g
-> +              - microsoft,surface-prox
+>> -----Original Message-----
+>> From: Krzysztof Kozlowski [mailto:krzysztof.kozlowski@canonical.com]
+>> Sent: Tuesday, February 22, 2022 8:29 PM
+>> To: Alim Akhtar <alim.akhtar@samsung.com>; Avri Altman
+>> <avri.altman@wdc.com>; Rob Herring <robh+dt@kernel.org>; Krzysztof
+>> Kozlowski <krzysztof.kozlowski@canonical.com>; Andy Gross
+>> <agross@kernel.org>; Bjorn Andersson <bjorn.andersson@linaro.org>; Wei
+>> Xu <xuwei5@hisilicon.com>; Nishanth Menon <nm@ti.com>; Vignesh
+>> Raghavendra <vigneshr@ti.com>; Tero Kristo <kristo@kernel.org>; James E.J.
+>> Bottomley <jejb@linux.ibm.com>; Martin K. Petersen
+>> <martin.petersen@oracle.com>; Jan Kotas <jank@cadence.com>; Li Wei
+>> <liwei213@huawei.com>; Stanley Chu <stanley.chu@mediatek.com>; Yaniv
+>> Gardi <ygardi@codeaurora.org>; linux-scsi@vger.kernel.org;
+>> devicetree@vger.kernel.org; linux-kernel@vger.kernel.org; linux-arm-
+>> msm@vger.kernel.org; linux-arm-kernel@lists.infradead.org; linux-samsung-
+>> soc@vger.kernel.org; linux-mediatek@lists.infradead.org
+>> Subject: [PATCH v2 09/15] scsi: ufs: deprecate 'freq-table-hz' property
+>>
+>> The 'freq-table-hz' is not correct in DT schema, because '-hz' suffix
+> defines
+>> uint32 type, not an array.  Therefore deprecate 'freq-table-hz'
+>> and use 'freq-table' instead.
+>>
+> May be once all the dts change migrate to using 'freq-table', just remove
+> 'freq-table-hz' from driver.
 
-How about ordering this enum alphabetically? I think most of other
-places in this file is ordered.
-
-> +          - const: qcom,sc8180x
-> +
-> +      - items:
-> +          - enum:
-> +              - qcom,sc8280xp-qrd
-> +          - const: qcom,sc8280xp
-> +
->        - items:
->            - enum:
->                - xiaomi,lavender
-> @@ -252,6 +267,11 @@ properties:
->                - qcom,sa8155p-adp
->            - const: qcom,sa8155p
->  
-> +      - items:
-> +          - enum:
-> +              - qcom,sa8540p-adp
-> +          - const: qcom,sa8540p
-> +
->        - items:
->            - enum:
->                - fairphone,fp4
+At some point in the future 'freq-table-hz' parsing could be removed,
+but now you have both old and new DTS, so it should stay. Also for DTB
+compatibility.
 
 
 Best regards,
