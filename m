@@ -2,221 +2,344 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 978754C19D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 18:21:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 632AF4C19DB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 18:23:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229509AbiBWRWF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Feb 2022 12:22:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55208 "EHLO
+        id S241057AbiBWRXx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Feb 2022 12:23:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243359AbiBWRWE (ORCPT
+        with ESMTP id S243383AbiBWRXw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Feb 2022 12:22:04 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F9156559
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 09:21:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645636895; x=1677172895;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=5EKhfuk/coV4wXHsSnx1QP6vOM5XWSxtlOIzzZeCWkA=;
-  b=pbI0u3edXPCHwb7h12YxV9xy0JpkcDuTFZmAMu1Tsk+yd8TMv+3xvfC5
-   4EX8TxDV3LI2cQZRB1UiFoLs41VozAZyK5ZEwOkhT3Nw08vLviSZKqMDV
-   /n+XbUoviGbCtUvQ5P1bSrtN/4w/ALXd022bkOPvU69ZWhmR9qwGgP5+s
-   w=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 23 Feb 2022 09:21:34 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Feb 2022 09:21:34 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Wed, 23 Feb 2022 09:21:33 -0800
-Received: from [10.110.64.217] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Wed, 23 Feb
- 2022 09:21:32 -0800
-Message-ID: <7f9e2181-bb1a-c734-2e90-c5922952acb4@quicinc.com>
-Date:   Wed, 23 Feb 2022 09:21:32 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [RFC PATCH v2 4/5] drm/msm/dp: replace dp_connector with
- drm_bridge_connector
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>
-CC:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20220211224006.1797846-1-dmitry.baryshkov@linaro.org>
- <20220211224006.1797846-5-dmitry.baryshkov@linaro.org>
- <572c0402-55da-077b-1809-3d1caf7ce743@quicinc.com>
- <b25d422e-cdd8-bcb9-1815-1d89f170d421@linaro.org>
- <CAE-0n51afuHURLHaZBa77H_n+cm4Tj1Du-rpLH-HsrkY5xQVJA@mail.gmail.com>
- <CAA8EJpobtpc5mB48g6K=+KaZQ-o8m_QTZr-dQvwz-9cEwiJ_Kg@mail.gmail.com>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <CAA8EJpobtpc5mB48g6K=+KaZQ-o8m_QTZr-dQvwz-9cEwiJ_Kg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Wed, 23 Feb 2022 12:23:52 -0500
+Received: from so254-9.mailgun.net (so254-9.mailgun.net [198.61.254.9])
+        by lindbergh.monkeyblade.net (Postfix) with UTF8SMTPS id 62CEA51E5C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 09:23:18 -0800 (PST)
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1645637002; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=mRnkL5n6eiIsjYh2V2ShFb4AjLUxMZbIXAv47aXX/9I=; b=FnevQHUe+glN4Omxa6KVvFcOl3v/ij1hCv6UYCWhvlumvCbB4xoVzle4T8/qVlb7qxNWtzAr
+ v1b9OdfHGyOGLXqDTeGq491iIs4uWd91gX/LrZSrfGF6Vv61iMhJvsJOdPMsvrOXoL1bRAz7
+ /15t/j/FQePWhux30HNGd9nkPSg=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 62166d7627716a695236be77 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 23 Feb 2022 17:23:02
+ GMT
+Sender: tdas=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5C95DC4360C; Wed, 23 Feb 2022 17:23:01 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
+Received: from hu-tdas-hyd.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: tdas)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D5A47C4338F;
+        Wed, 23 Feb 2022 17:22:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org D5A47C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Taniya Das <tdas@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        =?UTF-8?q?Michael=20Turquette=20=C2=A0?= <mturquette@baylibre.com>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
+        Taniya Das <tdas@codeaurora.org>
+Subject: [v5 1/2] dt-bindings: clock: Add YAML schemas for LPASS clocks on SC7280
+Date:   Wed, 23 Feb 2022 22:52:47 +0530
+Message-Id: <20220223172248.18877-1-tdas@codeaurora.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The LPASS(Low Power Audio Subsystem) clock provider have a bunch of generic
+properties that are needed in a device tree. Also add clock ids for
+LPASS core clocks and audio clock IDs for LPASS client to request for
+the clocks.
 
-On 2/18/2022 6:22 PM, Dmitry Baryshkov wrote:
-> On Sat, 19 Feb 2022 at 03:55, Stephen Boyd <swboyd@chromium.org> wrote:
->> Quoting Dmitry Baryshkov (2022-02-18 14:32:53)
->>> On 19/02/2022 00:31, Kuogee Hsieh wrote:
->>>> On 2/11/2022 2:40 PM, Dmitry Baryshkov wrote:
->>>>> There is little point in having both connector and root bridge
->>>>> implementation in the same driver. Move connector's functionality to the
->>>>> bridge to let next bridge in chain to override it.
->>>>>
->>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> This patch break primary (edp) display
->>>>
->>>> -- right half of screen garbled
->>>>
->>>> -- screen shift vertically
->>>>
->>>> below are error messages seen --
->>>>
->>>> [   36.679216] panel-edp soc@0:edp_panel: No display modes
->>>> [   36.687272] panel-edp soc@0:edp_panel: No display modes
->>>> [   40.593709] panel-edp soc@0:edp_panel: No display modes
->>>> [   40.600285] panel-edp soc@0:edp_panel: No display modes
->>> So, before the patch the drm core was getting modes from the
->>> drm_connector (which means, modes from drm driver itself). With this
->>> patch the panel-edp tries to get modes.
->>>
->>> Could you please check, why panel_edp_get_modes() fails? Assuming that
->>> you use platform panel-edp binding (rather than 'edp-panel') could you
->>> please check you have either of the following:
->>> - ddc bus for EDID?
->> I don't see anywhere where the ddc pointer is set for the dp bridge in
->> msm_dp_bridge_init(). Is that required though? I'd think simple panel is
->> still being used here so reading EDID isn't required.
-> I meant the 'ddc-i2c-bus' property for the corresponding eDP panel.
->
->>> - either num_timing or num_modes in your panel desc.
-> After reading the panel-edp's code I don't have another cause for
-> panel_edp_get_modes(). It should either have a DDC bus specified using
-> the mentioned device tree property, or it should have specified the
-> timings.
->
-> Kuogee, which platform were you using when testing this patch? Could
-> you please share the dts fragment?
+Reviewed-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Taniya Das <tdas@codeaurora.org>
+---
+ .../clock/qcom,sc7280-lpasscorecc.yaml        | 172 ++++++++++++++++++
+ .../clock/qcom,lpassaudiocc-sc7280.h          |  43 +++++
+ .../clock/qcom,lpasscorecc-sc7280.h           |  26 +++
+ 3 files changed, 241 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
+ create mode 100644 include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h
+ create mode 100644 include/dt-bindings/clock/qcom,lpasscorecc-sc7280.h
 
-I cherry-picked your patches on top of our internal release which is 
-usually have some (or many) patches behind msm-next.
-
-where is "ddc-i2c-bus" located?
-
-                         msm_edp: edp@aea0000 {
-                                 compatible = "qcom,sc7280-edp";
-
-                                 reg = <0 0xaea0000 0 0x200>,
-                                       <0 0xaea0200 0 0x200>,
-                                       <0 0xaea0400 0 0xc00>,
-                                       <0 0xaea1000 0 0x400>;
-
-                                 interrupt-parent = <&mdss>;
-                                 interrupts = <14>;
-
-                                 clocks = <&rpmhcc RPMH_CXO_CLK>,
-                                          <&gcc GCC_EDP_CLKREF_EN>,
-                                          <&dispcc DISP_CC_MDSS_AHB_CLK>,
-                                          <&dispcc 
-DISP_CC_MDSS_EDP_AUX_CLK>,
-                                          <&dispcc 
-DISP_CC_MDSS_EDP_LINK_CLK>,
-                                          <&dispcc 
-DISP_CC_MDSS_EDP_LINK_INTF_CLK>,
-                                          <&dispcc 
-DISP_CC_MDSS_EDP_PIXEL_CLK>;
-                                 clock-names = "core_xo",
-                                               "core_ref",
-                                               "core_iface",
-                                               "core_aux",
-                                               "ctrl_link",
-                                               "ctrl_link_iface",
-                                               "stream_pixel";
-                                 #clock-cells = <1>;
-                                 assigned-clocks = <&dispcc 
-DISP_CC_MDSS_EDP_LINK_CLK_SRC>,
-                                                   <&dispcc 
-DISP_CC_MDSS_EDP_PIXEL_CLK_SRC>;
-                                 assigned-clock-parents = <&edp_phy 0>, 
-<&edp_phy 1>;
-
-                                 phys = <&edp_phy>;
-                                 phy-names = "dp";
-
-                                 operating-points-v2 = <&edp_opp_table>;
-                                 power-domains = <&rpmhpd SC7280_CX>;
-
-                                 #address-cells = <1>;
-                                 #size-cells = <0>;
-
-                                 status = "disabled";
-
-                                 ports {
-                                         #address-cells = <1>;
-                                         #size-cells = <0>;
-                                         port@0 {
-                                                 reg = <0>;
-                                                 edp_in: endpoint {
-remote-endpoint = <&dpu_intf5_out>;
-                                                 };
-                                         };
-                                 };
-
-                             edp_opp_table: opp-table {
-                                         compatible = "operating-points-v2";
-
-                                         opp-160000000 {
-                                                 opp-hz = /bits/ 64 
-<160000000>;
-                                                 required-opps = 
-<&rpmhpd_opp_low_svs>;
-                                         };
-
-                                         opp-270000000 {
-                                                 opp-hz = /bits/ 64 
-<270000000>;
-                                                 required-opps = 
-<&rpmhpd_opp_svs>;
-                                         };
-
-                                         opp-540000000 {
-                                                 opp-hz = /bits/ 64 
-<540000000>;
-                                                 required-opps = 
-<&rpmhpd_opp_nom>;
-                                         };
-
-                                         opp-810000000 {
-                                                 opp-hz = /bits/ 64 
-<810000000>;
-                                                 required-opps = 
-<&rpmhpd_opp_nom>;
-                                         };
-                                 };
-                         };
+diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
+new file mode 100644
+index 000000000000..bad9135489de
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
+@@ -0,0 +1,172 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,sc7280-lpasscorecc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm LPASS Core & Audio Clock Controller Binding for SC7280
++
++maintainers:
++  - Taniya Das <tdas@codeaurora.org>
++
++description: |
++  Qualcomm LPASS core and audio clock control module which supports the
++  clocks and power domains on SC7280.
++
++  See also:
++  - dt-bindings/clock/qcom,lpasscorecc-sc7280.h
++  - dt-bindings/clock/qcom,lpassaudiocc-sc7280.h
++
++properties:
++  clocks: true
++
++  clock-names: true
++
++  compatible:
++    enum:
++      - qcom,sc7280-lpassaoncc
++      - qcom,sc7280-lpassaudiocc
++      - qcom,sc7280-lpasscorecc
++      - qcom,sc7280-lpasshm
++
++  power-domains:
++    maxItems: 1
++
++  '#clock-cells':
++    const: 1
++
++  '#power-domain-cells':
++    const: 1
++
++  reg:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - '#clock-cells'
++  - '#power-domain-cells'
++
++additionalProperties: false
++
++allOf:
++  - if:
++      properties:
++        compatible:
++          contains:
++            const: qcom,sc7280-lpassaudiocc
++
++    then:
++      properties:
++        clocks:
++          items:
++            - description: Board XO source
++            - description: LPASS_AON_CC_MAIN_RCG_CLK_SRC
++
++        clock-names:
++          items:
++            - const: bi_tcxo
++            - const: lpass_aon_cc_main_rcg_clk_src
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sc7280-lpassaoncc
++
++    then:
++      properties:
++        clocks:
++          items:
++            - description: Board XO source
++            - description: Board XO active only source
++            - description: LPASS_AON_CC_MAIN_RCG_CLK_SRC
++
++        clock-names:
++          items:
++            - const: bi_tcxo
++            - const: bi_tcxo_ao
++            - const: iface
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sc7280-lpasshm
++              - qcom,sc7280-lpasscorecc
++
++    then:
++      properties:
++        clocks:
++          items:
++            - description: Board XO source
++
++        clock-names:
++          items:
++            - const: bi_tcxo
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    #include <dt-bindings/clock/qcom,gcc-sc7280.h>
++    #include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
++    #include <dt-bindings/clock/qcom,lpasscorecc-sc7280.h>
++    lpass_audiocc: clock-controller@3300000 {
++      compatible = "qcom,sc7280-lpassaudiocc";
++      reg = <0x3300000 0x30000>;
++      clocks = <&rpmhcc RPMH_CXO_CLK>,
++               <&lpass_aon LPASS_AON_CC_MAIN_RCG_CLK_SRC>;
++      clock-names = "bi_tcxo", "lpass_aon_cc_main_rcg_clk_src";
++      power-domains = <&lpass_aon LPASS_AON_CC_LPASS_AUDIO_HM_GDSC>;
++      #clock-cells = <1>;
++      #power-domain-cells = <1>;
++    };
++
++  - |
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    #include <dt-bindings/clock/qcom,gcc-sc7280.h>
++    #include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
++    #include <dt-bindings/clock/qcom,lpasscorecc-sc7280.h>
++    lpass_hm: clock-controller@3c00000 {
++      compatible = "qcom,sc7280-lpasshm";
++      reg = <0x3c00000 0x28>;
++      clocks = <&rpmhcc RPMH_CXO_CLK>;
++      clock-names = "bi_tcxo";
++      #clock-cells = <1>;
++      #power-domain-cells = <1>;
++    };
++
++  - |
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    #include <dt-bindings/clock/qcom,gcc-sc7280.h>
++    #include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
++    #include <dt-bindings/clock/qcom,lpasscorecc-sc7280.h>
++    lpasscore: clock-controller@3900000 {
++      compatible = "qcom,sc7280-lpasscorecc";
++      reg = <0x3900000 0x50000>;
++      clocks = <&rpmhcc RPMH_CXO_CLK>;
++      clock-names = "bi_tcxo";
++      power-domains = <&lpass_hm LPASS_CORE_CC_LPASS_CORE_HM_GDSC>;
++      #clock-cells = <1>;
++      #power-domain-cells = <1>;
++    };
++
++  - |
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    #include <dt-bindings/clock/qcom,gcc-sc7280.h>
++    #include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
++    #include <dt-bindings/clock/qcom,lpasscorecc-sc7280.h>
++    lpass_aon: clock-controller@3380000 {
++      compatible = "qcom,sc7280-lpassaoncc";
++      reg = <0x3380000 0x30000>;
++      clocks = <&rpmhcc RPMH_CXO_CLK>, <&rpmhcc RPMH_CXO_CLK_A>,
++               <&lpasscore LPASS_CORE_CC_CORE_CLK>;
++      clock-names = "bi_tcxo", "bi_tcxo_ao","iface";
++      #clock-cells = <1>;
++      #power-domain-cells = <1>;
++    };
++
++...
+diff --git a/include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h b/include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h
+new file mode 100644
+index 000000000000..20ef2ea673f3
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h
+@@ -0,0 +1,43 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++/*
++ * Copyright (c) 2021, The Linux Foundation. All rights reserved.
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_LPASS_AUDIO_CC_SC7280_H
++#define _DT_BINDINGS_CLK_QCOM_LPASS_AUDIO_CC_SC7280_H
++
++/* LPASS_AUDIO_CC clocks */
++#define LPASS_AUDIO_CC_PLL				0
++#define LPASS_AUDIO_CC_PLL_OUT_AUX2			1
++#define LPASS_AUDIO_CC_PLL_OUT_AUX2_DIV_CLK_SRC		2
++#define LPASS_AUDIO_CC_PLL_OUT_MAIN_DIV_CLK_SRC		3
++#define LPASS_AUDIO_CC_CDIV_RX_MCLK_DIV_CLK_SRC		4
++#define LPASS_AUDIO_CC_CODEC_MEM0_CLK			5
++#define LPASS_AUDIO_CC_CODEC_MEM1_CLK			6
++#define LPASS_AUDIO_CC_CODEC_MEM2_CLK			7
++#define LPASS_AUDIO_CC_CODEC_MEM_CLK			8
++#define LPASS_AUDIO_CC_EXT_MCLK0_CLK			9
++#define LPASS_AUDIO_CC_EXT_MCLK0_CLK_SRC		10
++#define LPASS_AUDIO_CC_EXT_MCLK1_CLK			11
++#define LPASS_AUDIO_CC_EXT_MCLK1_CLK_SRC		12
++#define LPASS_AUDIO_CC_RX_MCLK_2X_CLK			13
++#define LPASS_AUDIO_CC_RX_MCLK_CLK			14
++#define LPASS_AUDIO_CC_RX_MCLK_CLK_SRC			15
++
++/* LPASS_AON_CC clocks */
++#define LPASS_AON_CC_PLL				0
++#define LPASS_AON_CC_PLL_OUT_EVEN			1
++#define LPASS_AON_CC_PLL_OUT_MAIN_CDIV_DIV_CLK_SRC	2
++#define LPASS_AON_CC_PLL_OUT_ODD			3
++#define LPASS_AON_CC_AUDIO_HM_H_CLK			4
++#define LPASS_AON_CC_CDIV_TX_MCLK_DIV_CLK_SRC		5
++#define LPASS_AON_CC_MAIN_RCG_CLK_SRC			6
++#define LPASS_AON_CC_TX_MCLK_2X_CLK			7
++#define LPASS_AON_CC_TX_MCLK_CLK			8
++#define LPASS_AON_CC_TX_MCLK_RCG_CLK_SRC		9
++#define LPASS_AON_CC_VA_MEM0_CLK			10
++
++/* LPASS_AON_CC power domains */
++#define LPASS_AON_CC_LPASS_AUDIO_HM_GDSC		0
++
++#endif
+diff --git a/include/dt-bindings/clock/qcom,lpasscorecc-sc7280.h b/include/dt-bindings/clock/qcom,lpasscorecc-sc7280.h
+new file mode 100644
+index 000000000000..28ed2a07aacc
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,lpasscorecc-sc7280.h
+@@ -0,0 +1,26 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++/*
++ * Copyright (c) 2021, The Linux Foundation. All rights reserved.
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_LPASS_CORE_CC_SC7280_H
++#define _DT_BINDINGS_CLK_QCOM_LPASS_CORE_CC_SC7280_H
++
++/* LPASS_CORE_CC clocks */
++#define LPASS_CORE_CC_DIG_PLL				0
++#define LPASS_CORE_CC_DIG_PLL_OUT_MAIN_DIV_CLK_SRC	1
++#define LPASS_CORE_CC_DIG_PLL_OUT_ODD			2
++#define LPASS_CORE_CC_CORE_CLK				3
++#define LPASS_CORE_CC_CORE_CLK_SRC			4
++#define LPASS_CORE_CC_EXT_IF0_CLK_SRC			5
++#define LPASS_CORE_CC_EXT_IF0_IBIT_CLK			6
++#define LPASS_CORE_CC_EXT_IF1_CLK_SRC			7
++#define LPASS_CORE_CC_EXT_IF1_IBIT_CLK			8
++#define LPASS_CORE_CC_LPM_CORE_CLK			9
++#define LPASS_CORE_CC_LPM_MEM0_CORE_CLK			10
++#define LPASS_CORE_CC_SYSNOC_MPORT_CORE_CLK		11
++
++/* LPASS_CORE_CC power domains */
++#define LPASS_CORE_CC_LPASS_CORE_HM_GDSC		0
++
++#endif
+--
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
+of the Code Aurora Forum, hosted by the  Linux Foundation.
 
