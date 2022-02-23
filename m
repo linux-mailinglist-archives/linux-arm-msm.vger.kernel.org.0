@@ -2,77 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BB2F4C0A03
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 04:11:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 47AEA4C0AA8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 04:44:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233126AbiBWDMA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 22:12:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53190 "EHLO
+        id S237422AbiBWDol (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 22:44:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235348AbiBWDL7 (ORCPT
+        with ESMTP id S231295AbiBWDok (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 22:11:59 -0500
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A5B064EC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 19:11:31 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id v22so20739955ljh.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 19:11:31 -0800 (PST)
+        Tue, 22 Feb 2022 22:44:40 -0500
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C6BB606D8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 19:44:13 -0800 (PST)
+Received: by mail-ot1-x334.google.com with SMTP id w16-20020a056830281000b005ad480e8dd5so9543585otu.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 19:44:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=O0U/79EjLtUrpYJBtUzSqOjzMDezOuNDhWownL6VLv0=;
-        b=YhceP4vMLZwowYK0g+xVT8qDOHotKWjiYCknA/tqJsbaR2OCsrpR7XrBUEfYM9CMzb
-         CGlkgVhBaph2Vi6vLpTuaiKlDEv7r79u4WAL/puFusvG0VVSN+BsV6QJmMW7sLqOc+zT
-         vL1/aBbzU1LJ6N/LXaspVmo4+tL2MyhG6LvRsomH+gpT9XEySRYD3i6v1vCW2vSZLxj+
-         OHm6d/wKGdaq9D2OMf1jMgierxH3vzhO/G6H8bmhfoKHDKSzmYJipOfma81LlXNnG3aC
-         wF8EmkZW+c0eiqC67yX/NQK8g0F+RVsdWPiJ5R9LUTsfqLymTyTPRPoykhqssON8c93t
-         CgOA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1cHDW5RUUyNmE9gCTFJFCIDcotOQWpizv8XZqucavco=;
+        b=PQuuKWbRymj1GpDSMBPB97c3vG3n94NvkjICYWR8/tEFtEs5VpHWMMswkSvLReHbvw
+         PgASX/SAndR0laYmeziouM8hHgvSahCUL3IF0psMWLWGi8vd+DUvgmgv4kM+w6Q7lqrE
+         Mj4fEnDoj+F6S5LdkUtsAPpfv2GVo+cD5lLq+3ZQ9UdxFIKRFLrexg2QXyI/JnEAsyW2
+         NdDHj+94zFj26Fr2BWZdr7OdVpKuSLQUhhxHeOzUhDPkWLmXIzgWt1fQzLyu+meYG84g
+         ayfUYwmfvQ0tp7JoxkFWq9SZzgrZAraPEOX4COL8CIwuDC8inIZ8J+YqySCGw1k98GpO
+         CTPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=O0U/79EjLtUrpYJBtUzSqOjzMDezOuNDhWownL6VLv0=;
-        b=n+Ks5yl/G2/MvqurVbwv5uMwGqvA3TXmG/Xd8egiqFPexa6CJche1wyenYHFrKKhRI
-         H7vGXtZnb5MFkuqugkYo7I3GLKiegSa2gGyrHxdhORcRu8PCoEocLMAsRcbsLLxGzSLr
-         46h2ni7bRXWuSntz/IOncv5U3qawSLbkAXfJyMHFi4EBQ8RME8mGFNBuWJyEFR1im3i/
-         s7jHxSMoBEMEMqRBzwqOWD7x2A4QqjMPZ3gAEcQjEqHsG3hd8jlEW8Y6xXnQXMBWtgEG
-         N6QXgWRW8IyaQUH9B60v0mPj6pbreqor1CGj5ye/ASugPmeyS9Twqe42sdir5LRO8d18
-         PIZg==
-X-Gm-Message-State: AOAM532eHb6j7l6cDh6mi6jOza1N+6lvDo2TtxbWX0NN4qCAxst9omO2
-        UDTzmmKn/NYrJ1UMQ8G7OvTTy35B9KqAHw==
-X-Google-Smtp-Source: ABdhPJxOawgiicXBd03JJbBfMaaHtv4v26OmN6NlFSWWnE5H+9tb28Xe+ocBCmmRqjy2yQQ+xmbniw==
-X-Received: by 2002:a2e:7009:0:b0:244:d483:b2b1 with SMTP id l9-20020a2e7009000000b00244d483b2b1mr20644597ljc.308.1645585889812;
-        Tue, 22 Feb 2022 19:11:29 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id y27sm1954570ljd.33.2022.02.22.19.11.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Feb 2022 19:11:29 -0800 (PST)
-Message-ID: <6f1225ea-d889-9cf8-3a3d-181e319bd453@linaro.org>
-Date:   Wed, 23 Feb 2022 06:11:28 +0300
+        bh=1cHDW5RUUyNmE9gCTFJFCIDcotOQWpizv8XZqucavco=;
+        b=JSX0rzgumuXMEtkGlMqL1M7xPHVhB2qaHqT5kRtSGRrBBwGGHiPh87wWTwxmFU4chm
+         U18xIiyIpJY7H5uwn8clDQMr+leNusOPzCT3EQEMM3F996c7+6zTf0ZcqNpqtSvrHRf7
+         vBuwvPa5duAv42gHKLxMNkrNdJgGVIHmnwWehsh5XjFkez64RQTxHfsi9o/zTfOQ5nPp
+         i/xF0xrDV11gEwnM38H78c6tUslb0E7/NKKyEddXxkuEfEv78QpRU45pEV8FVu8poAlA
+         HR7l9VTMabpt9JcPgUYvQM95R+rCGczzNU+GUpCuSI5J1dIIlTle/9+tEQxfdpCl55vs
+         dXXw==
+X-Gm-Message-State: AOAM531jH3XwK0ZPuZxwN9nknceynuZIFtAm6+PlC/JzbsLgk7e0R8vu
+        ImjqF2kjDLHQ0CrH17gurW71vhX/hRrcxw==
+X-Google-Smtp-Source: ABdhPJzDnK/fNmE1i9MA/5k+F+RWareX1DjVjHvQ5QpI2TwBvJhwkKQygA+4v9c1RsYzzy1aw+MzlQ==
+X-Received: by 2002:a9d:67d3:0:b0:5ad:147a:7ff9 with SMTP id c19-20020a9d67d3000000b005ad147a7ff9mr9333208otn.37.1645587852796;
+        Tue, 22 Feb 2022 19:44:12 -0800 (PST)
+Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id f38sm6124552otf.22.2022.02.22.19.44.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Feb 2022 19:44:12 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: arm: qcom: Document sa8540p, sc8180x and sc8280xp
+Date:   Tue, 22 Feb 2022 19:46:13 -0800
+Message-Id: <20220223034613.3725242-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH] drm/msm/gpu: Fix crash on devices without devfreq support
-Content-Language: en-GB
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Linux Kernel Functional Testing <lkft@linaro.org>,
-        Anders Roxell <anders.roxell@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20220219183310.557435-1-robdclark@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220219183310.557435-1-robdclark@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,117 +70,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/02/2022 21:33, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> Avoid going down devfreq paths on devices where devfreq is not
-> initialized.
-> 
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> Reported-by: Anders Roxell <anders.roxell@linaro.org>
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->   drivers/gpu/drm/msm/msm_gpu_devfreq.c | 31 +++++++++++++++++++++------
->   1 file changed, 25 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> index 9bf319be11f6..26a3669a97b3 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> @@ -83,12 +83,17 @@ static struct devfreq_dev_profile msm_devfreq_profile = {
->   static void msm_devfreq_boost_work(struct kthread_work *work);
->   static void msm_devfreq_idle_work(struct kthread_work *work);
->   
-> +static bool has_devfreq(struct msm_gpu *gpu)
-> +{
-> +	return !!gpu->funcs->gpu_busy;
+Add compatibles for the sa8540p automotive, as well as sc8180x and
+sc8280xp compute platforms. Also add compatibles for the ADP devboard,
+the Lenovo Flex 5G, Microsoft Surface Pro X and the sc8280xp QRD.
 
-I see that devfreq init will be skipped if gpu_busy is NULL.
-Can we use gpu->devfreq instead of this condition?
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ .../devicetree/bindings/arm/qcom.yaml         | 20 +++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-I noticed that you have replaced some of gpu->devfreq checks with 
-has_devreq() calls. Is there any difference?
-
-> +}
-> +
->   void msm_devfreq_init(struct msm_gpu *gpu)
->   {
->   	struct msm_gpu_devfreq *df = &gpu->devfreq;
->   
->   	/* We need target support to do devfreq */
-> -	if (!gpu->funcs->gpu_busy)
-> +	if (!has_devfreq(gpu))
->   		return;
->   
->   	dev_pm_qos_add_request(&gpu->pdev->dev, &df->idle_freq,
-> @@ -149,6 +154,9 @@ void msm_devfreq_cleanup(struct msm_gpu *gpu)
->   {
->   	struct msm_gpu_devfreq *df = &gpu->devfreq;
->   
-> +	if (!has_devfreq(gpu))
-> +		return;
-> +
->   	devfreq_cooling_unregister(gpu->cooling);
->   	dev_pm_qos_remove_request(&df->boost_freq);
->   	dev_pm_qos_remove_request(&df->idle_freq);
-> @@ -156,16 +164,24 @@ void msm_devfreq_cleanup(struct msm_gpu *gpu)
->   
->   void msm_devfreq_resume(struct msm_gpu *gpu)
->   {
-> -	gpu->devfreq.busy_cycles = 0;
-> -	gpu->devfreq.time = ktime_get();
-> +	struct msm_gpu_devfreq *df = &gpu->devfreq;
->   
-> -	devfreq_resume_device(gpu->devfreq.devfreq);
-> +	if (!has_devfreq(gpu))
-> +		return;
-> +
-> +	df->busy_cycles = 0;
-> +	df->time = ktime_get();
-> +
-> +	devfreq_resume_device(df->devfreq);
->   }
->   
->   void msm_devfreq_suspend(struct msm_gpu *gpu)
->   {
->   	struct msm_gpu_devfreq *df = &gpu->devfreq;
->   
-> +	if (!has_devfreq(gpu))
-> +		return;
-> +
->   	devfreq_suspend_device(df->devfreq);
->   
->   	cancel_idle_work(df);
-> @@ -185,6 +201,9 @@ void msm_devfreq_boost(struct msm_gpu *gpu, unsigned factor)
->   	struct msm_gpu_devfreq *df = &gpu->devfreq;
->   	uint64_t freq;
->   
-> +	if (!has_devfreq(gpu))
-> +		return;
-> +
->   	freq = get_freq(gpu);
->   	freq *= factor;
->   
-> @@ -207,7 +226,7 @@ void msm_devfreq_active(struct msm_gpu *gpu)
->   	struct devfreq_dev_status status;
->   	unsigned int idle_time;
->   
-> -	if (!df->devfreq)
-> +	if (!has_devfreq(gpu))
->   		return;
->   
->   	/*
-> @@ -253,7 +272,7 @@ void msm_devfreq_idle(struct msm_gpu *gpu)
->   {
->   	struct msm_gpu_devfreq *df = &gpu->devfreq;
->   
-> -	if (!df->devfreq)
-> +	if (!has_devfreq(gpu))
->   		return;
->   
->   	msm_hrtimer_queue_work(&df->idle_work, ms_to_ktime(1),
-
-
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index e8b1606bc849..1042f71300af 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -39,8 +39,11 @@ description: |
+         msm8994
+         msm8996
+         sa8155p
++        sa8540p
+         sc7180
+         sc7280
++        sc8180x
++        sc8280xp
+         sdm630
+         sdm660
+         sdm845
+@@ -224,6 +227,18 @@ properties:
+               - google,senor
+           - const: qcom,sc7280
+ 
++      - items:
++          - enum:
++              - qcom,sc8180x-primus
++              - lenovo,flex-5g
++              - microsoft,surface-prox
++          - const: qcom,sc8180x
++
++      - items:
++          - enum:
++              - qcom,sc8280xp-qrd
++          - const: qcom,sc8280xp
++
+       - items:
+           - enum:
+               - xiaomi,lavender
+@@ -252,6 +267,11 @@ properties:
+               - qcom,sa8155p-adp
+           - const: qcom,sa8155p
+ 
++      - items:
++          - enum:
++              - qcom,sa8540p-adp
++          - const: qcom,sa8540p
++
+       - items:
+           - enum:
+               - fairphone,fp4
 -- 
-With best wishes
-Dmitry
+2.33.1
+
