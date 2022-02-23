@@ -2,204 +2,402 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB0764C178C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 16:46:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DEAF04C1798
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 16:47:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242291AbiBWPqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Feb 2022 10:46:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59148 "EHLO
+        id S235048AbiBWPrg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Feb 2022 10:47:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240701AbiBWPqb (ORCPT
+        with ESMTP id S233481AbiBWPrg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Feb 2022 10:46:31 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5999C114B;
-        Wed, 23 Feb 2022 07:46:03 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id j22so14229181wrb.13;
-        Wed, 23 Feb 2022 07:46:03 -0800 (PST)
+        Wed, 23 Feb 2022 10:47:36 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D71544DF73;
+        Wed, 23 Feb 2022 07:47:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iSfHBOu4v5+uNUdMQr8U/N7yggvNFIAnsnuq86CDDN8=;
-        b=fbSjZORrBhhHrOCnk7S6YM3Zgzp9jGKaOTrH8ZsFi5jfiwjUcFu0MuHrtjOPxu+gs7
-         Y+mCisYdpElaLEUtLaAjsRd7peyj017FJk05vLUo8er05hHuNjVK1YKynFp4YRqwEUuR
-         1fmvddyZjGTXvLzE0MGil9SQG/CYtr6b34brfpE+xAS5Vwuu17htp9yTLmD/crR2nLSM
-         IiB8DsDCctlx0FzteoDu8FzHbhR7cAmK0HOEG11kRS10z8F/wzxEqlWWhHxFZeUQnvn1
-         gDqTQ5DoJrtjLe94YeNpNhK+uTWC+VEdRrgNYVMGcP7vWXQz1SOtOZjVtGDTKJXn/C7Y
-         O3tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iSfHBOu4v5+uNUdMQr8U/N7yggvNFIAnsnuq86CDDN8=;
-        b=JAfwy/J3ryIOZoJ5u2bIm1m1b2oMdzJPdMcolJ+pDQrJkWOIO2KxDEYDIaia1fVuzy
-         EijlZmktd2AZIE4/52wke2FoMujxv/rVdyokKkopkstZrvLFejdch/x43z7a9/X2V63h
-         0YJDdpJFmIZ3PEk7ay5XIGSWAye+gbIYrHU/ZHzrH5XgI1P3AMhsAEp9ikkM5TJ9mN05
-         AtM4DjY7fjTTlh1DRrZ1RGJYznl8rBAVUgCaq+466KRE6+RCZMGa33O/Q6jhH0RT+A6Y
-         7oUZIcXreT+cD3KN2pOMB4Ql3+oKXNNURHnC0YKqBm3n9pe+wSpC0agjY/AGQswSjWcU
-         kkoQ==
-X-Gm-Message-State: AOAM530nDqd1T4aBqrEBwAH51LHxH56pFzxQQr7qU4XwjtleyhhV+00P
-        3wKLhnIBlSQXR5kwgzZyZwu9coFmCUaPoaCQlZBuWMOeH8w=
-X-Google-Smtp-Source: ABdhPJyosEjfWY4mjWeCmJhqIR2Tgf0/QybyKJGd2Qa9zYQaZY/M3wuO912/5weuamaNpFuLr3U9YbFz3d8lNVyzudc=
-X-Received: by 2002:a05:6000:1a8b:b0:1ea:bc4:e52e with SMTP id
- f11-20020a0560001a8b00b001ea0bc4e52emr176951wry.574.1645631162104; Wed, 23
- Feb 2022 07:46:02 -0800 (PST)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645631228; x=1677167228;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=YYctxn0kpK727CV6skfZz0Ey30lYJIa7enZ014ijZ4g=;
+  b=nHkHW3io7FpSrNi7JTHVpuRdJHRGuQRrvPqL4chYKK2GsMxbR7c4Kgkz
+   BdBabDq1pXUEBg5DZI3vWga6+g43NhYtbSDz8N4GMzpvsiiGl2w4Q6oXj
+   xrctlJryKj/FvHu6dH8Lvv96MaUBBB6gpF3460doeXmyC/lTUsYUq2Yc/
+   o=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 23 Feb 2022 07:47:07 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Feb 2022 07:47:07 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Wed, 23 Feb 2022 07:47:06 -0800
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Wed, 23 Feb 2022 07:47:01 -0800
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@codeaurora.org>,
+        <perex@perex.cz>, <tiwai@suse.com>,
+        <srinivas.kandagatla@linaro.org>, <rohitkr@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
+Subject: [PATCH v2] ASoC: codecs: Add power domains support in digital macro codecs
+Date:   Wed, 23 Feb 2022 21:16:38 +0530
+Message-ID: <1645631198-4701-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-References: <20220219183310.557435-1-robdclark@gmail.com> <6f1225ea-d889-9cf8-3a3d-181e319bd453@linaro.org>
-In-Reply-To: <6f1225ea-d889-9cf8-3a3d-181e319bd453@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 23 Feb 2022 07:46:21 -0800
-Message-ID: <CAF6AEGut-75ri+U=B2eBtNeYQu5ECKPmk51b2_pCgu91uKy1ow@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/gpu: Fix crash on devices without devfreq support
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Linux Kernel Functional Testing <lkft@linaro.org>,
-        Anders Roxell <anders.roxell@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Feb 22, 2022 at 7:11 PM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On 19/02/2022 21:33, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > Avoid going down devfreq paths on devices where devfreq is not
-> > initialized.
-> >
-> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> > Reported-by: Anders Roxell <anders.roxell@linaro.org>
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >   drivers/gpu/drm/msm/msm_gpu_devfreq.c | 31 +++++++++++++++++++++------
-> >   1 file changed, 25 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> > index 9bf319be11f6..26a3669a97b3 100644
-> > --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> > +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> > @@ -83,12 +83,17 @@ static struct devfreq_dev_profile msm_devfreq_profile = {
-> >   static void msm_devfreq_boost_work(struct kthread_work *work);
-> >   static void msm_devfreq_idle_work(struct kthread_work *work);
-> >
-> > +static bool has_devfreq(struct msm_gpu *gpu)
-> > +{
-> > +     return !!gpu->funcs->gpu_busy;
->
-> I see that devfreq init will be skipped if gpu_busy is NULL.
-> Can we use gpu->devfreq instead of this condition?
+Add support for enabling required power domains in digital macro codecs.
+macro and dcodec power domains are being requested as clocks by HLOS
+in ADSP based architectures and ADSP internally handling as powerdomains.
+In ADSP bypass case need to handle them as power domains explicitly.
 
-We could, but then we couldn't also use the same has_devfreq() helper
-in msm_devfreq_init().  I thought it was clearer to use the same
-helper everywhere.
+Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Reported-by: kernel test robot <lkp@intel.com>
+---
+Changes since v1:
+    -- Add missing macros in Kconfig.
 
-> I noticed that you have replaced some of gpu->devfreq checks with
-> has_devreq() calls. Is there any difference?
+ sound/soc/codecs/Kconfig              |  7 ++++
+ sound/soc/codecs/Makefile             |  2 +
+ sound/soc/codecs/lpass-macro-common.c | 72 +++++++++++++++++++++++++++++++++++
+ sound/soc/codecs/lpass-macro-common.h | 18 +++++++++
+ sound/soc/codecs/lpass-rx-macro.c     | 13 ++++++-
+ sound/soc/codecs/lpass-tx-macro.c     | 10 +++++
+ sound/soc/codecs/lpass-va-macro.c     | 11 +++++-
+ sound/soc/qcom/Kconfig                |  1 +
+ 8 files changed, 132 insertions(+), 2 deletions(-)
+ create mode 100644 sound/soc/codecs/lpass-macro-common.c
+ create mode 100644 sound/soc/codecs/lpass-macro-common.h
 
-It amounts to the same thing because if you don't have gpu_busy, then
-devfreq is never initialized.  I just thought it clearer to use the
-same check in all places.
+diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
+index c2627f7..4de029a 100644
+--- a/sound/soc/codecs/Kconfig
++++ b/sound/soc/codecs/Kconfig
+@@ -244,6 +244,7 @@ config SND_SOC_ALL_CODECS
+ 	imply SND_SOC_WCD9335
+ 	imply SND_SOC_WCD934X
+ 	imply SND_SOC_WCD938X_SDW
++	imply SND_SOC_LPASS_MACRO_COMMON
+ 	imply SND_SOC_LPASS_RX_MACRO
+ 	imply SND_SOC_LPASS_TX_MACRO
+ 	imply SND_SOC_WL1273
+@@ -2008,6 +2009,9 @@ config SND_SOC_TPA6130A2
+ 	tristate "Texas Instruments TPA6130A2 headphone amplifier"
+ 	depends on I2C
+ 
++config SND_SOC_LPASS_MACRO_COMMON
++        tristate
++
+ config SND_SOC_LPASS_WSA_MACRO
+ 	depends on COMMON_CLK
+ 	select REGMAP_MMIO
+@@ -2016,16 +2020,19 @@ config SND_SOC_LPASS_WSA_MACRO
+ config SND_SOC_LPASS_VA_MACRO
+ 	depends on COMMON_CLK
+ 	select REGMAP_MMIO
++	select SND_SOC_LPASS_MACRO_COMMON
+ 	tristate "Qualcomm VA Macro in LPASS(Low Power Audio SubSystem)"
+ 
+ config SND_SOC_LPASS_RX_MACRO
+ 	depends on COMMON_CLK
+ 	select REGMAP_MMIO
++	select SND_SOC_LPASS_MACRO_COMMON
+ 	tristate "Qualcomm RX Macro in LPASS(Low Power Audio SubSystem)"
+ 
+ config SND_SOC_LPASS_TX_MACRO
+ 	depends on COMMON_CLK
+ 	select REGMAP_MMIO
++	select SND_SOC_LPASS_MACRO_COMMON
+ 	tristate "Qualcomm TX Macro in LPASS(Low Power Audio SubSystem)"
+ 
+ endmenu
+diff --git a/sound/soc/codecs/Makefile b/sound/soc/codecs/Makefile
+index b4e11c3..c3c6059 100644
+--- a/sound/soc/codecs/Makefile
++++ b/sound/soc/codecs/Makefile
+@@ -112,6 +112,7 @@ snd-soc-l3-objs := l3.o
+ snd-soc-lm4857-objs := lm4857.o
+ snd-soc-lm49453-objs := lm49453.o
+ snd-soc-lochnagar-sc-objs := lochnagar-sc.o
++snd-soc-lpass-macro-common-objs := lpass-macro-common.o
+ snd-soc-lpass-rx-macro-objs := lpass-rx-macro.o
+ snd-soc-lpass-tx-macro-objs := lpass-tx-macro.o
+ snd-soc-lpass-wsa-macro-objs := lpass-wsa-macro.o
+@@ -676,6 +677,7 @@ obj-$(CONFIG_SND_SOC_MAX9877)	+= snd-soc-max9877.o
+ obj-$(CONFIG_SND_SOC_MAX98504)	+= snd-soc-max98504.o
+ obj-$(CONFIG_SND_SOC_SIMPLE_AMPLIFIER)	+= snd-soc-simple-amplifier.o
+ obj-$(CONFIG_SND_SOC_TPA6130A2)	+= snd-soc-tpa6130a2.o
++obj-$(CONFIG_SND_SOC_LPASS_MACRO_COMMON)	+= snd-soc-lpass-macro-common.o
+ obj-$(CONFIG_SND_SOC_LPASS_WSA_MACRO)	+= snd-soc-lpass-wsa-macro.o
+ obj-$(CONFIG_SND_SOC_LPASS_VA_MACRO)	+= snd-soc-lpass-va-macro.o
+ obj-$(CONFIG_SND_SOC_LPASS_RX_MACRO)	+= snd-soc-lpass-rx-macro.o
+diff --git a/sound/soc/codecs/lpass-macro-common.c b/sound/soc/codecs/lpass-macro-common.c
+new file mode 100644
+index 0000000..b8e50e6
+--- /dev/null
++++ b/sound/soc/codecs/lpass-macro-common.c
+@@ -0,0 +1,72 @@
++// SPDX-License-Identifier: GPL-2.0-only
++// Copyright (c) 2022, The Linux Foundation. All rights reserved.
++
++#include <linux/export.h>
++#include <linux/module.h>
++#include <linux/init.h>
++#include <linux/of_platform.h>
++#include <linux/platform_device.h>
++#include <linux/pm_domain.h>
++#include <linux/pm_runtime.h>
++
++#include "lpass-macro-common.h"
++
++int lpass_macro_pds_init(struct platform_device *pdev, struct lpass_macro **pds)
++{
++	struct device *dev = &pdev->dev;
++	struct lpass_macro *l_pds;
++	int ret;
++
++	const struct property *prop = of_find_property(dev->of_node, "power-domains", NULL);
++
++	if (!prop)
++		return 0;
++
++	l_pds = devm_kzalloc(dev, sizeof(*l_pds), GFP_KERNEL);
++	if (!l_pds)
++		return -ENOMEM;
++
++	l_pds->macro_pd = dev_pm_domain_attach_by_name(dev,  "macro");
++	if (IS_ERR_OR_NULL(l_pds->macro_pd)) {
++		ret = PTR_ERR(l_pds->macro_pd) ? : -ENODATA;
++		return ret;
++	}
++	ret = pm_runtime_get_sync(l_pds->macro_pd);
++	if (ret < 0) {
++		dev_err(dev, "%s failed for macro_pd, ret %d\n", __func__, ret);
++		dev_pm_domain_detach(l_pds->macro_pd, false);
++		pm_runtime_put_noidle(l_pds->macro_pd);
++		return ret;
++	}
++
++	l_pds->dcodec_pd = dev_pm_domain_attach_by_name(dev, "dcodec");
++	if (IS_ERR_OR_NULL(l_pds->dcodec_pd)) {
++		ret = PTR_ERR(l_pds->dcodec_pd) ? : -ENODATA;
++		dev_pm_domain_detach(l_pds->macro_pd, false);
++		return ret;
++	}
++
++	ret = pm_runtime_get_sync(l_pds->dcodec_pd);
++	if (ret < 0) {
++		dev_err(dev, "%s failed for dcodec_pd, ret %d\n", __func__, ret);
++
++		dev_pm_domain_detach(l_pds->dcodec_pd, false);
++		pm_runtime_put_noidle(l_pds->dcodec_pd);
++		return ret;
++	}
++	*pds = l_pds;
++	return ret;
++}
++EXPORT_SYMBOL_GPL(lpass_macro_pds_init);
++
++void lpass_macro_pds_exit(struct platform_device *pdev, struct lpass_macro *pds)
++{
++	pm_runtime_put(pds->macro_pd);
++	pm_runtime_put(pds->dcodec_pd);
++	dev_pm_domain_detach(pds->macro_pd, false);
++	dev_pm_domain_detach(pds->dcodec_pd, false);
++}
++EXPORT_SYMBOL_GPL(lpass_macro_pds_exit);
++
++MODULE_DESCRIPTION("QTI SC7280 LPI GPIO pin control driver");
++MODULE_LICENSE("GPL");
+diff --git a/sound/soc/codecs/lpass-macro-common.h b/sound/soc/codecs/lpass-macro-common.h
+new file mode 100644
+index 0000000..c343f0e
+--- /dev/null
++++ b/sound/soc/codecs/lpass-macro-common.h
+@@ -0,0 +1,18 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * Copyright (c) 2022, The Linux Foundation. All rights reserved.
++ */
++
++#ifndef __LPASS_MACRO_COMMON_H__
++#define __LPASS_MACRO_COMMON_H__
++
++
++struct lpass_macro {
++	struct device *macro_pd;
++	struct device *dcodec_pd;
++};
++
++int lpass_macro_pds_init(struct platform_device *pdev, struct lpass_macro **pds);
++void lpass_macro_pds_exit(struct platform_device *pdev, struct lpass_macro *pds);
++
++#endif /* __LPASS_MACRO_COMMON_H__ */
+diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
+index 29d214f..db32090 100644
+--- a/sound/soc/codecs/lpass-rx-macro.c
++++ b/sound/soc/codecs/lpass-rx-macro.c
+@@ -14,6 +14,8 @@
+ #include <linux/of_clk.h>
+ #include <linux/clk-provider.h>
+ 
++#include "lpass-macro-common.h"
++
+ #define CDC_RX_TOP_TOP_CFG0		(0x0000)
+ #define CDC_RX_TOP_SWR_CTRL		(0x0008)
+ #define CDC_RX_TOP_DEBUG		(0x000C)
+@@ -606,7 +608,7 @@ struct rx_macro {
+ 	int is_softclip_on;
+ 	int is_aux_hpf_on;
+ 	int softclip_clk_users;
+-
++	struct lpass_macro *pds;
+ 	struct regmap *regmap;
+ 	struct clk_bulk_data clks[RX_NUM_CLKS_MAX];
+ 	struct clk_hw hw;
+@@ -3537,6 +3539,12 @@ static int rx_macro_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
++	ret = lpass_macro_pds_init(pdev, &rx->pds);
++	if (ret < 0) {
++		dev_err(dev, "Enabling power domains failed in %s\n", __func__);
++		return ret;
++	}
++
+ 	base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(base))
+ 		return PTR_ERR(base);
+@@ -3575,6 +3583,9 @@ static int rx_macro_remove(struct platform_device *pdev)
+ 
+ 	of_clk_del_provider(pdev->dev.of_node);
+ 	clk_bulk_disable_unprepare(RX_NUM_CLKS_MAX, rx->clks);
++
++	lpass_macro_pds_exit(pdev, rx->pds);
++
+ 	return 0;
+ }
+ 
+diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+index 9c96ab1..4d1e5ab 100644
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -13,6 +13,8 @@
+ #include <linux/of_clk.h>
+ #include <linux/clk-provider.h>
+ 
++#include "lpass-macro-common.h"
++
+ #define CDC_TX_CLK_RST_CTRL_MCLK_CONTROL (0x0000)
+ #define CDC_TX_MCLK_EN_MASK		BIT(0)
+ #define CDC_TX_MCLK_ENABLE		BIT(0)
+@@ -266,6 +268,7 @@ struct tx_macro {
+ 	u16 dmic_clk_div;
+ 	bool bcs_enable;
+ 	int dec_mode[NUM_DECIMATORS];
++	struct lpass_macro *pds;
+ 	bool bcs_clk_en;
+ };
+ #define to_tx_macro(_hw) container_of(_hw, struct tx_macro, hw)
+@@ -1802,6 +1805,11 @@ static int tx_macro_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
++	ret = lpass_macro_pds_init(pdev, &tx->pds);
++	if (ret < 0) {
++		dev_err(dev, "Enabling power domains failed in %s\n", __func__);
++		return ret;
++	}
+ 	base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(base))
+ 		return PTR_ERR(base);
+@@ -1859,6 +1867,8 @@ static int tx_macro_remove(struct platform_device *pdev)
+ 
+ 	clk_bulk_disable_unprepare(TX_NUM_CLKS_MAX, tx->clks);
+ 
++	lpass_macro_pds_exit(pdev, tx->pds);
++
+ 	return 0;
+ }
+ 
+diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
+index 11147e3..b29b9a1 100644
+--- a/sound/soc/codecs/lpass-va-macro.c
++++ b/sound/soc/codecs/lpass-va-macro.c
+@@ -15,6 +15,8 @@
+ #include <sound/soc-dapm.h>
+ #include <sound/tlv.h>
+ 
++#include "lpass-macro-common.h"
++
+ /* VA macro registers */
+ #define CDC_VA_CLK_RST_CTRL_MCLK_CONTROL	(0x0000)
+ #define CDC_VA_MCLK_CONTROL_EN			BIT(0)
+@@ -195,6 +197,7 @@ struct va_macro {
+ 	struct regmap *regmap;
+ 	struct clk_bulk_data clks[VA_NUM_CLKS_MAX];
+ 	struct clk_hw hw;
++	struct lpass_macro *pds;
+ 
+ 	s32 dmic_0_1_clk_cnt;
+ 	s32 dmic_2_3_clk_cnt;
+@@ -1413,7 +1416,11 @@ static int va_macro_probe(struct platform_device *pdev)
+ 		dev_err(dev, "Error getting VA Clocks (%d)\n", ret);
+ 		return ret;
+ 	}
+-
++	ret = lpass_macro_pds_init(pdev, &va->pds);
++	if (ret < 0) {
++		dev_err(dev, "Enabling power domains failed %s\n", __func__);
++		return ret;
++	}
+ 	ret = of_property_read_u32(dev->of_node, "qcom,dmic-sample-rate",
+ 				   &sample_rate);
+ 	if (ret) {
+@@ -1468,6 +1475,8 @@ static int va_macro_remove(struct platform_device *pdev)
+ 
+ 	clk_bulk_disable_unprepare(VA_NUM_CLKS_MAX, va->clks);
+ 
++	lpass_macro_pds_exit(pdev, va->pds);
++
+ 	return 0;
+ }
+ 
+diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
+index 52db003..6ffd51a 100644
+--- a/sound/soc/qcom/Kconfig
++++ b/sound/soc/qcom/Kconfig
+@@ -194,6 +194,7 @@ config SND_SOC_SC7280
+ 	select SND_SOC_LPASS_SC7280
+ 	select SND_SOC_MAX98357A
+ 	select SND_SOC_WCD938X
++	select SND_SOC_LPASS_MACRO_COMMON
+ 	select SND_SOC_LPASS_RX_MACRO
+ 	select SND_SOC_LPASS_TX_MACRO
+ 	help
+-- 
+2.7.4
 
-BR,
--R
-
-> > +}
-> > +
-> >   void msm_devfreq_init(struct msm_gpu *gpu)
-> >   {
-> >       struct msm_gpu_devfreq *df = &gpu->devfreq;
-> >
-> >       /* We need target support to do devfreq */
-> > -     if (!gpu->funcs->gpu_busy)
-> > +     if (!has_devfreq(gpu))
-> >               return;
-> >
-> >       dev_pm_qos_add_request(&gpu->pdev->dev, &df->idle_freq,
-> > @@ -149,6 +154,9 @@ void msm_devfreq_cleanup(struct msm_gpu *gpu)
-> >   {
-> >       struct msm_gpu_devfreq *df = &gpu->devfreq;
-> >
-> > +     if (!has_devfreq(gpu))
-> > +             return;
-> > +
-> >       devfreq_cooling_unregister(gpu->cooling);
-> >       dev_pm_qos_remove_request(&df->boost_freq);
-> >       dev_pm_qos_remove_request(&df->idle_freq);
-> > @@ -156,16 +164,24 @@ void msm_devfreq_cleanup(struct msm_gpu *gpu)
-> >
-> >   void msm_devfreq_resume(struct msm_gpu *gpu)
-> >   {
-> > -     gpu->devfreq.busy_cycles = 0;
-> > -     gpu->devfreq.time = ktime_get();
-> > +     struct msm_gpu_devfreq *df = &gpu->devfreq;
-> >
-> > -     devfreq_resume_device(gpu->devfreq.devfreq);
-> > +     if (!has_devfreq(gpu))
-> > +             return;
-> > +
-> > +     df->busy_cycles = 0;
-> > +     df->time = ktime_get();
-> > +
-> > +     devfreq_resume_device(df->devfreq);
-> >   }
-> >
-> >   void msm_devfreq_suspend(struct msm_gpu *gpu)
-> >   {
-> >       struct msm_gpu_devfreq *df = &gpu->devfreq;
-> >
-> > +     if (!has_devfreq(gpu))
-> > +             return;
-> > +
-> >       devfreq_suspend_device(df->devfreq);
-> >
-> >       cancel_idle_work(df);
-> > @@ -185,6 +201,9 @@ void msm_devfreq_boost(struct msm_gpu *gpu, unsigned factor)
-> >       struct msm_gpu_devfreq *df = &gpu->devfreq;
-> >       uint64_t freq;
-> >
-> > +     if (!has_devfreq(gpu))
-> > +             return;
-> > +
-> >       freq = get_freq(gpu);
-> >       freq *= factor;
-> >
-> > @@ -207,7 +226,7 @@ void msm_devfreq_active(struct msm_gpu *gpu)
-> >       struct devfreq_dev_status status;
-> >       unsigned int idle_time;
-> >
-> > -     if (!df->devfreq)
-> > +     if (!has_devfreq(gpu))
-> >               return;
-> >
-> >       /*
-> > @@ -253,7 +272,7 @@ void msm_devfreq_idle(struct msm_gpu *gpu)
-> >   {
-> >       struct msm_gpu_devfreq *df = &gpu->devfreq;
-> >
-> > -     if (!df->devfreq)
-> > +     if (!has_devfreq(gpu))
-> >               return;
-> >
-> >       msm_hrtimer_queue_work(&df->idle_work, ms_to_ktime(1),
->
->
-> --
-> With best wishes
-> Dmitry
