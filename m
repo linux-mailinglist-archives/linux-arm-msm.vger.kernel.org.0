@@ -2,92 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6833A4C1F2F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 23:57:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 140364C1FCF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 00:38:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244612AbiBWW5p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Feb 2022 17:57:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39196 "EHLO
+        id S244892AbiBWXi2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Feb 2022 18:38:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbiBWW5o (ORCPT
+        with ESMTP id S244873AbiBWXiX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Feb 2022 17:57:44 -0500
-Received: from gloria.sntech.de (gloria.sntech.de [185.11.138.130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66B5147061;
-        Wed, 23 Feb 2022 14:57:13 -0800 (PST)
-Received: from [185.156.123.69] (helo=phil.localnet)
-        by gloria.sntech.de with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <heiko@sntech.de>)
-        id 1nN0ZC-0005UO-OL; Wed, 23 Feb 2022 23:57:02 +0100
-From:   Heiko Stuebner <heiko@sntech.de>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Lee Jones <lee.jones@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Benson Leung <bleung@chromium.org>,
-        Guenter Roeck <groeck@chromium.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Uwe =?ISO-8859-1?Q?Kleine=2DK=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        devicetree@vger.kernel.org, chrome-platform@lists.linux.dev,
-        linux-kernel@vger.kernel.org, linux-pwm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org
-Subject: Re: [PATCH 1/4] dt-bindings: pwm: google,cros-ec: include generic pwm schema
-Date:   Wed, 23 Feb 2022 23:57:00 +0100
-Message-ID: <3248917.W5uN0jUHDo@phil>
-In-Reply-To: <YhX7UZSDaqNyD1rV@google.com>
-References: <20220214081916.162014-1-krzysztof.kozlowski@canonical.com> <20220214081916.162014-2-krzysztof.kozlowski@canonical.com> <YhX7UZSDaqNyD1rV@google.com>
+        Wed, 23 Feb 2022 18:38:23 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FF425A0A9;
+        Wed, 23 Feb 2022 15:37:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645659475; x=1677195475;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=NbdLTpNQ3jh8gkc2GZROWVng6uHNoRVJJzbDZHL59Lo=;
+  b=BOCmol2+RLRXA/59WL8Kv7QSlRcteHi1q8H66cVYLwMbyiL+EMlnSpll
+   aYmpHkzmwA35j8OL2fC157MS0qnwgIqDow1jPoNEWzKYihuwbuPuOoSS/
+   pHvaPi1JYWJ14i47vSHQnXLQcl70n3bpvkBS9HD89Flkr5b3Is3oQi1ja
+   Q=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 23 Feb 2022 15:37:54 -0800
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Feb 2022 15:37:54 -0800
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Wed, 23 Feb 2022 15:37:53 -0800
+From:   Elliot Berman <quic_eberman@quicinc.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Elliot Berman <quic_eberman@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Murali Nalajala <quic_mnalajala@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagiri@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Andy Gross <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH 00/11] Gunyah Hypervisor drivers
+Date:   Wed, 23 Feb 2022 15:37:18 -0800
+Message-ID: <20220223233729.1571114-1-quic_eberman@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE,T_SPF_HELO_TEMPERROR autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Lee,
+Gunyah is a Type-1 hypervisor independent of any
+high-level OS kernel, and runs in a higher CPU privilege level. It does
+not depend on any lower-privileged OS kernel/code for its core
+functionality. This increases its security and can support a much smaller
+trusted computing base than Type-2 hypervisors. This series adds the initial
+support for Gunyah hypercalls, IPC via message queues, communication with the
+Gunyah Resource Manager to enable Gunyah's paravirtualized console.
 
-Am Mittwoch, 23. Februar 2022, 10:16:01 CET schrieb Lee Jones:
-> On Mon, 14 Feb 2022, Krzysztof Kozlowski wrote:
-> 
-> > Include generic pwm.yaml schema, which enforces PWM node naming.  Keep
-> > the old name in bindings as deprecated.
-> > 
-> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-> > ---
-> >  Documentation/devicetree/bindings/mfd/google,cros-ec.yaml    | 4 ++++
-> 
-> Acked-by: Lee Jones <lee.jones@linaro.org>
+Gunyah is an open source hypervisor. The source repo is available at
+https://github.com/quic/gunyah-hypervisor.
 
-what is your expectation regarding this patch?
+Elliot Berman (11):
+  docs: gunyah: Introduce Gunyah Hypervisor
+  dt-bindings: Add binding for gunyah hypervisor
+  arm64: gunyah: Add Gunyah hypercalls ABI
+  gunyah: Common types and error codes for Gunyah hypercalls
+  virt: gunyah: Add sysfs nodes
+  virt: gunyah: Add capabilities bus and devices
+  gunyah: msgq: Add Gunyah message queues
+  gunyah: rsc_mgr: Add resource manager RPC core
+  gunyah: rsc_mgr: Add auxiliary devices for console
+  gunyah: rsc_mgr: Add RPC for console services
+  gunyah: Add tty console driver for RM Console Serivces
 
-Are you planning to merge it or are you expecting this to go through
-some other tree?
+ .../ABI/testing/sysfs-hypervisor-gunyah       |  37 +
+ .../bindings/gunyah/message-queue.yml         | 100 +++
+ .../bindings/gunyah/qcom,hypervisor.yml       | 122 ++++
+ Documentation/virt/gunyah/index.rst           |  99 +++
+ Documentation/virt/gunyah/message-queue.rst   |  52 ++
+ Documentation/virt/index.rst                  |   1 +
+ MAINTAINERS                                   |  12 +
+ arch/arm64/include/asm/gunyah/hypercall.h     | 199 ++++++
+ drivers/virt/Kconfig                          |   2 +
+ drivers/virt/Makefile                         |   1 +
+ drivers/virt/gunyah/Kconfig                   |  27 +
+ drivers/virt/gunyah/Makefile                  |   8 +
+ drivers/virt/gunyah/device.c                  | 108 +++
+ drivers/virt/gunyah/gunyah_private.h          |  18 +
+ drivers/virt/gunyah/msgq.c                    | 295 ++++++++
+ drivers/virt/gunyah/rsc_mgr.c                 | 632 ++++++++++++++++++
+ drivers/virt/gunyah/rsc_mgr.h                 |  53 ++
+ drivers/virt/gunyah/rsc_mgr_console.c         | 410 ++++++++++++
+ drivers/virt/gunyah/rsc_mgr_rpc.c             | 129 ++++
+ drivers/virt/gunyah/sysfs.c                   | 152 +++++
+ include/linux/gunyah.h                        | 138 ++++
+ include/linux/gunyah_rsc_mgr.h                |  44 ++
+ 22 files changed, 2639 insertions(+)
+ create mode 100644 Documentation/ABI/testing/sysfs-hypervisor-gunyah
+ create mode 100644 Documentation/devicetree/bindings/gunyah/message-queue.yml
+ create mode 100644 Documentation/devicetree/bindings/gunyah/qcom,hypervisor.yml
+ create mode 100644 Documentation/virt/gunyah/index.rst
+ create mode 100644 Documentation/virt/gunyah/message-queue.rst
+ create mode 100644 arch/arm64/include/asm/gunyah/hypercall.h
+ create mode 100644 drivers/virt/gunyah/Kconfig
+ create mode 100644 drivers/virt/gunyah/Makefile
+ create mode 100644 drivers/virt/gunyah/device.c
+ create mode 100644 drivers/virt/gunyah/gunyah_private.h
+ create mode 100644 drivers/virt/gunyah/msgq.c
+ create mode 100644 drivers/virt/gunyah/rsc_mgr.c
+ create mode 100644 drivers/virt/gunyah/rsc_mgr.h
+ create mode 100644 drivers/virt/gunyah/rsc_mgr_console.c
+ create mode 100644 drivers/virt/gunyah/rsc_mgr_rpc.c
+ create mode 100644 drivers/virt/gunyah/sysfs.c
+ create mode 100644 include/linux/gunyah.h
+ create mode 100644 include/linux/gunyah_rsc_mgr.h
 
-The binding-change here is backward-comaptible in that the old
-node-name is still in it, only marked as deprecated, so in theory
-this patch should be able to be applied on its own without
-causing defects.
-
-
-Heiko
-
-> 
-> >  .../devicetree/bindings/pwm/google,cros-ec-pwm.yaml          | 5 ++++-
-> >  2 files changed, 8 insertions(+), 1 deletion(-)
-> 
-> 
-
-
-
+-- 
+2.25.1
 
