@@ -2,76 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC74F4C1209
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 12:57:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C23C54C1357
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 13:57:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240219AbiBWL5m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Feb 2022 06:57:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59118 "EHLO
+        id S240665AbiBWM5l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Feb 2022 07:57:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233602AbiBWL5m (ORCPT
+        with ESMTP id S240664AbiBWM5h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Feb 2022 06:57:42 -0500
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BB544925A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 03:57:14 -0800 (PST)
-Received: by mail-qv1-xf29.google.com with SMTP id h13so7669308qvk.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 03:57:14 -0800 (PST)
+        Wed, 23 Feb 2022 07:57:37 -0500
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E776646C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 04:57:09 -0800 (PST)
+Received: by mail-pg1-x52b.google.com with SMTP id 27so14617604pgk.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 04:57:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Sz/TsBK4wrm9NAX8eMKN5KJLVIsMXNpGW7xZZ6AIY/U=;
-        b=kgDfSg1eFSmoCKyv5tAO9ymORcbkmV8Dw9/lGclBVFg0VRGDQJStPALWtmnxhrP3aP
-         ddbDSEbakDsUlrEqAGUpGDur67d3XK9izYYjAQnRoHBgZ9hO83iLbeESWJaxf2GlW7u/
-         RPlURiOP8PuLZveENHVY4cF1U+XawaEh1CCpSakj9AA76dVYVdibVirHNDDp1Zqzt+oF
-         Udnup+p3E/icOfEBQW1pN72XeqyiKW4WD4FjX0XfgJ1OC+Ouj3CH8JCUPy1P7lLLT/ag
-         kBuE0JWFdSOmir86132ruSClPY3McqFKVWIpWGee0yBqrozQnEUtIIXSRRbgF01nzj3r
-         Mj8g==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Y7p50x25eNVekjg+ymUsqrkEEJjrygmLcJW+jfWZAL4=;
+        b=hO8KtL8T4lW0iWOfKNJYOgSwDXKQ2KB3KpJKEZEvQhwg0KLrxXK6yXpgWqV4WFOSf/
+         M8SBPEbEW9VOXbbRa1vNA80wMeq+e7FX30FoOtjlyWclj0Eqz1mB6EHH5XWCMVafnhJ/
+         hRe7wV8PAx7uSGxJBGvxc4pTf90yD3nNgO7xBPd/T1vrZy2CFwpPcnOuek84uzQYbD82
+         0+tns0Wgb067H6YDGtrOj/rArns/nnmTbWmrd1NWDHUuUEPZg+7yacwY0etNwWTLweuD
+         nkNaWHAHT9Vp0vo0FvDTnXCeevZmgs0j89+Ln4OM/+jbp0EyVUFUZAs6YELjkyEPsGba
+         mQjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Sz/TsBK4wrm9NAX8eMKN5KJLVIsMXNpGW7xZZ6AIY/U=;
-        b=iRc//zH6mDqZAp/gzJvPqh5VaPYuED4YyHQjhhTKcgUX4bIu+Stg59qYu9ehYnY5rz
-         +jilwGL30w1rC2inwpBLXVddF6vGnKQwvTI1Qs2MkqWIiw/JpaGsCVnkV3fmXujtJnTx
-         ZU0RNYzuebS31b0dDAUYwlxry65dL1hM2qNzkGJBgZdc+NSZCEgMU81TZg+LnF8tivDr
-         bKKY2YSMO9N4Fx15oQwTMVlSn8iZJQsn8yPYA6JBNBCKK+dRVIgOFRHpyZEvmOaK2l8e
-         bkpZuIV3XndTyYaQIGoJhMOLUU2NNAZuDgy3m8QEctSmbwhE88GlbWn63V8ocff7QsQR
-         bs3A==
-X-Gm-Message-State: AOAM53165ATo2sLcUNe2qOuYrIlhvSkUGyb3NmaAbQXZuvDprVB6nj+H
-        mbMCO4QLn5fmp2XfwxAyl4ysKOTlbDAgNdnrZSLGbA==
-X-Google-Smtp-Source: ABdhPJyd9W7Dm6dao+jkvi5TzRKXnAJlelbOAkvifRbROGVcT9HGdc2jR0RXv3zxEVyUcC712KQkjzTdElakKICXvJg=
-X-Received: by 2002:a05:622a:1206:b0:2de:6fa4:41fb with SMTP id
- y6-20020a05622a120600b002de6fa441fbmr4366794qtx.295.1645617433629; Wed, 23
- Feb 2022 03:57:13 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Y7p50x25eNVekjg+ymUsqrkEEJjrygmLcJW+jfWZAL4=;
+        b=XV8qRsXhyQMbBaBV4FPQuzd0HzX/fCWSzyVWjAeLocVUb4kW+Zvd5EGs6I2EWbFl+0
+         ZW6GNWGHNxbr7hWZTRGDf6enu3BHcgRxTGXAFgjXxIKEKRkxZ+RY9E/KnSd56hrPaKA0
+         f2s6jmTaxFGDE17RE4SXVclgDWeEFSaE7bLfKB8mPhRrU2TSiJL615GeEuVIt15LBXiW
+         pMh3eWCq0Ur5uwFr4aGbZ8w8s1lle1dcWzz5AijTTex4wQpgbb7aXJi0wtHBk0UShDVy
+         /pDJiJunnF/D79h7/9ji5RHI4atZGO69sKe0dGbmEFQhN2Uk26QgzYU9C2zIO8yX9G/A
+         9RRA==
+X-Gm-Message-State: AOAM53149HhHcs77aD8P3eGojEHz8rs5i+VmDy9VKJma7pTojXM6x0nJ
+        tNdmwsJduoBlFGkSFFy6e9dYQQ==
+X-Google-Smtp-Source: ABdhPJw3oJNN7uI+1rZGMolJCYaTrvpcScHLNMedFT8pmYEybpvBHt++jzQGrywlVm4DHkTdSX/gEQ==
+X-Received: by 2002:a05:6a00:1743:b0:4e0:c65e:d656 with SMTP id j3-20020a056a00174300b004e0c65ed656mr30187313pfc.5.1645621028776;
+        Wed, 23 Feb 2022 04:57:08 -0800 (PST)
+Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id z23sm22136243pfj.87.2022.02.23.04.57.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Feb 2022 04:57:07 -0800 (PST)
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Marc Zyngier <maz@kernel.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>
+Cc:     Valentin Schneider <valentin.schneider@arm.com>,
+        Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH v6 0/3] Add Qualcomm MPM irqchip driver support
+Date:   Wed, 23 Feb 2022 20:55:33 +0800
+Message-Id: <20220223125536.230224-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20220223114011.219044-1-marijn.suijten@somainline.org>
-In-Reply-To: <20220223114011.219044-1-marijn.suijten@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 23 Feb 2022 14:57:02 +0300
-Message-ID: <CAA8EJppddv_TV_9t2iw4+cBv_L5_c78rx-QLJqpRRuoD+3S=+A@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm/dpu: Bind pingpong block to intf on active
- ctls in cmd encoder
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, Bernard <bernard@vivo.com>,
-        Zhen Lei <thunder.leizhen@huawei.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,102 +78,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 23 Feb 2022 at 14:40, Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
->
-> As per the specification of DPU_CTL_ACTIVE_CFG the configuration of
-> active blocks should be proactively specified, and the pingpong block is
-> no different.
->
-> The downstream display driver [1] confirms this by also calling
-> bind_pingpong_blk on CTL_ACTIVE_CFG.  Note that this else-if is always
-> entered, as setup_intf_cfg - unlike this mainline dpu driver that
-> combines both behind the same function pointer - is left NULL in favour
-> of using setup_intf_cfg_v1 when CTL_ACTIVE_CFG is set.
->
-> This solves continuous timeouts on at least the Qualcomm sm6125 SoC:
->
->     [drm:dpu_encoder_frame_done_timeout:2091] [dpu error]enc31 frame done timeout
->     [drm:_dpu_encoder_phys_cmd_handle_ppdone_timeout.isra.0] *ERROR* id:31 pp:0 kickoff timeout 0 cnt 1 koff_cnt 1
->     [drm:dpu_encoder_phys_cmd_prepare_for_kickoff] *ERROR* failed wait_for_idle: id:31 ret:-110 pp:0
->
-> In the same way this pingpong block should also be unbound followed by
-> an interface flush when the encoder is disabled, according to the
-> downstream display driver [2].
->
-> [1]: https://source.codeaurora.org/quic/la/platform/vendor/opensource/display-drivers/tree/msm/sde/sde_encoder_phys_cmd.c?h=LA.UM.9.16.r1-08500-MANNAR.0#n167
-> [2]: https://source.codeaurora.org/quic/la/platform/vendor/opensource/display-drivers/tree/msm/sde/sde_encoder.c?h=LA.UM.9.16.r1-08500-MANNAR.0#n2986
->
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+It starts from updating cpu_pm to support CPU_LAST_PM_ENTER (and
+CPU_FIRST_PM_EXIT) event, and then adds DT binding and driver support
+for Qualcomm MPM (MSM Power Manager) interrupt controller.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Changes for v6:
+- Add new event CPU_LAST_PM_ENTER (and CPU_FIRST_PM_EXIT) in cpu_pm
+- Drop vendor driver notes from commit log
+- Check NULL mpm_gic_map instead to save the use of MPM_NO_PARENT_IRQ
+- Add lock protection for register read in qcom_mpm_handler()
+- Return IRQ_NONE if there is no pending interrupt
+- Drop IRQF_TRIGGER_RISING flag from devm_request_irq() call since it's
+  being specified in DT
+- Drop dev_set_drvdata() call which is a leftover from previous version
+- Fix dt_binding_check errors reported by upgraded dtschema
 
-As we are quite late in the development cycle, I'd delay this into the
-next release, if you don't mind.
+Changes for v5:
+- Drop inline attributes and let compiler to decide
+- Use _irqsave/_irqrestore flavour for spin lock
+- Assignment on a single for irq_resolve_mapping() call
+- Add documentation to explain vMPM ownership transition
+- Move MPM pin map data into device tree and so use a generic compatible
+- Drop the code that counts CPUs in PM and use CPU_CLUSTER_PM_ENTER
+  notification instead
 
-> ---
->
-> Changes since v1:
-> - Always unbind the pingpong block in dpu_encoder_phys_cmd_disable,
->   instead of only if this encoder is the master.
->
-> v1: https://lore.kernel.org/lkml/20211222105513.44860-1-marijn.suijten@somainline.org/
->
->  .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> index 8e433af7aea4..1be01cbd960e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> @@ -71,6 +71,13 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
->         intf_cfg.stream_sel = cmd_enc->stream_sel;
->         intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
->         ctl->ops.setup_intf_cfg(ctl, &intf_cfg);
-> +
-> +       /* setup which pp blk will connect to this intf */
-> +       if (test_bit(DPU_CTL_ACTIVE_CFG, &ctl->caps->features) && phys_enc->hw_intf->ops.bind_pingpong_blk)
-> +               phys_enc->hw_intf->ops.bind_pingpong_blk(
-> +                               phys_enc->hw_intf,
-> +                               true,
-> +                               phys_enc->hw_pp->idx);
->  }
->
->  static void dpu_encoder_phys_cmd_pp_tx_done_irq(void *arg, int irq_idx)
-> @@ -507,6 +514,7 @@ static void dpu_encoder_phys_cmd_disable(struct dpu_encoder_phys *phys_enc)
->  {
->         struct dpu_encoder_phys_cmd *cmd_enc =
->                 to_dpu_encoder_phys_cmd(phys_enc);
-> +       struct dpu_hw_ctl *ctl;
->
->         if (!phys_enc->hw_pp) {
->                 DPU_ERROR("invalid encoder\n");
-> @@ -523,6 +531,17 @@ static void dpu_encoder_phys_cmd_disable(struct dpu_encoder_phys *phys_enc)
->
->         if (phys_enc->hw_pp->ops.enable_tearcheck)
->                 phys_enc->hw_pp->ops.enable_tearcheck(phys_enc->hw_pp, false);
-> +
-> +       if (phys_enc->hw_intf->ops.bind_pingpong_blk) {
-> +               phys_enc->hw_intf->ops.bind_pingpong_blk(
-> +                               phys_enc->hw_intf,
-> +                               false,
-> +                               phys_enc->hw_pp->idx);
-> +
-> +               ctl = phys_enc->hw_ctl;
-> +               ctl->ops.update_pending_flush_intf(ctl, phys_enc->intf_idx);
-> +       }
-> +
->         phys_enc->enable_state = DPU_ENC_DISABLED;
->  }
->
->
-> base-commit: 3c30cf91b5ecc7272b3d2942ae0505dd8320b81c
-> --
-> 2.35.1
->
+Changes for v4:
+- Add the missing include of <linux/interrupt.h> to fix build errors
+  on arm architecture.
+- Leave IRQCHIP_PLATFORM_DRIVER infrastructural unchanged, and use
+  of_find_device_by_node() to get platform_device pointer.
 
+Changes for v3:
+- Support module build
+- Use relaxed accessors
+- Add barrier call to ensure MMIO write completes
+- Use d->chip_data to pass driver private data
+- Use raw spinlock
+- USe BIT() for bit shift
+- Create a single irq domain to cover both types of MPM pins
+- Call irq_resolve_mapping() to find out Linux irq number
+- Save the use of ternary conditional operator and use switch/case for
+  .irq_set_type call
+- Drop unnecessary .irq_disable hook
+- Align qcom_mpm_chip and qcom_mpm_ops members vertically
+- Use helper irq_domain_translate_twocell()
+- Move mailbox requesting forward in probe function
+- Improve the documentation on qcm2290_gic_pins[]
+- Use IRQCHIP_PLATFORM_DRIVER infrastructural
+- Use cpu_pm notifier instead of .suspend_late hook to write MPM for
+  sleep, so that MPM can be set up for both suspend and idle context.
+  The TIMER0/1 setup is currently omitted for idle use case though,
+  as I haven't been able to successfully test the idle context.
+
+Shawn Guo (3):
+  PM: cpu: Add CPU_LAST_PM_ENTER and CPU_FIRST_PM_EXIT support
+  dt-bindings: interrupt-controller: Add Qualcomm MPM support
+  irqchip: Add Qualcomm MPM controller driver
+
+ .../interrupt-controller/qcom,mpm.yaml        |  96 ++++
+ drivers/irqchip/Kconfig                       |   8 +
+ drivers/irqchip/Makefile                      |   1 +
+ drivers/irqchip/qcom-mpm.c                    | 439 ++++++++++++++++++
+ include/linux/cpu_pm.h                        |  15 +
+ kernel/cpu_pm.c                               |  33 +-
+ 6 files changed, 590 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
+ create mode 100644 drivers/irqchip/qcom-mpm.c
 
 -- 
-With best wishes
-Dmitry
+2.25.1
+
