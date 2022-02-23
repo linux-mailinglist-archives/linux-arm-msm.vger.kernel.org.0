@@ -2,256 +2,301 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 099A64C1D34
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 21:36:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BCED4C1DC7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 22:33:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241313AbiBWUgk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Feb 2022 15:36:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60632 "EHLO
+        id S242772AbiBWVdv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Feb 2022 16:33:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240361AbiBWUgk (ORCPT
+        with ESMTP id S242736AbiBWVdu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Feb 2022 15:36:40 -0500
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC1D7457B7;
-        Wed, 23 Feb 2022 12:36:10 -0800 (PST)
-Received: by mail-ot1-f47.google.com with SMTP id p12-20020a05683019cc00b005af1442c9e9so8967946otp.13;
-        Wed, 23 Feb 2022 12:36:10 -0800 (PST)
+        Wed, 23 Feb 2022 16:33:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 465DB4ECE8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 13:33:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1645652000;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=JVrDSsHDee470/2N5kdB0CUYnm9UIRcjrM+Vqrir8YU=;
+        b=RAzwl9Sez1TeT+nmEa1yYBZAZQ4KRu+18SqJ5YvCiLsN5ZoOFX4CZPFTlGdfYriTr4/+WA
+        XXnR0ENpAnH0WVYQ6IDWFU8hF6VB+UXAFAgohlr+Zsldn+5r5XNapYpdZ3IxnHR1NhHHKK
+        OVHzWqSkiwNvtpVRgw7agSTzlkdlpqo=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-612-RQ9fkL3jPLOTpDxwOf_EMw-1; Wed, 23 Feb 2022 16:33:19 -0500
+X-MC-Unique: RQ9fkL3jPLOTpDxwOf_EMw-1
+Received: by mail-wr1-f70.google.com with SMTP id j8-20020adfc688000000b001e3322ced69so10767088wrg.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 13:33:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=AtS1UhK3oifjJ90VCpSbRXxg8A7dCgkWJ8FEFysGrNE=;
-        b=CBPkKjgroBHtOSYBtixEUBb2xjmn7meWcCZu5FrElZ2RsVCOQ0FuT2IRa+zOw/QOe/
-         a4xpXyYfu9GJf1rnnrLN8nAYPtQwho3U7wZZrXhSMasl+TX2R7HkKEPcVc82LCDJSyvl
-         H1efaC+/IFhVn5+FjtBet3+aRBX0hgBcpMvWZ2XiTKZ4OlUg+U++yvggYOcync/Ms+jB
-         nLu7amStk9UMRp+xYoJOvvsHuJAwXBvED7Jd8k8G4z83KfgefmjcPcj9kN90qZKJryWy
-         S5x/c6fLMNHM9P6QS91FpI9JYAWUqPP46vJWpXYfiFIDKlDRrgvu9RMe0HjD55xnoeDg
-         AFQA==
-X-Gm-Message-State: AOAM5310tEIiZSsFXJfq3j5zq0vmT52iUUqcXyPqTsjKN4JK7M8P8jxM
-        tRh0BIHmB9PnXoHayjEKBRZmCw8sWQ==
-X-Google-Smtp-Source: ABdhPJz3ckJaYRybKmgJJ/q1yQDRwRp85ZQ09OgnYrUvPTy8PaiR7k8K4X4hzPGzUBOutazacMW3fw==
-X-Received: by 2002:a9d:452:0:b0:5a3:8357:f43 with SMTP id 76-20020a9d0452000000b005a383570f43mr524585otc.319.1645648570113;
-        Wed, 23 Feb 2022 12:36:10 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id f16sm355550oae.6.2022.02.23.12.36.08
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=JVrDSsHDee470/2N5kdB0CUYnm9UIRcjrM+Vqrir8YU=;
+        b=6z1VHLFkQWkBkmzOrO8Q2SRr9xtQu/s6RFDta/6Fh7a8t2xMBagPmv4BWlyOya941T
+         4muWdzthqbX1n0PSuNxaoDQvuPzQXcIwNwNoxu5l6TH66vCpFDabYdSMbmhvY0XCziYW
+         wPezdU2B9DFBdGO9HBwI5tUoI5O4QomwjZPHe4xn1ePqEeR9vnh3T3/TxQ/GmhlDi6Qe
+         FKU2K+/4yxouqpZQ3fLXoVy2rx2JHawMguCr7mS0egKJ05p9PlZoa0lfYYOg7DDSxEA+
+         VrmKIxYOgvIkgRLCjwcU+Q4lEk/ZGTgb0IGBUz30AKnUDRAua7alwX+ZwrKm5rxxjAz/
+         BaSA==
+X-Gm-Message-State: AOAM531GLJt9thVgYMar6FkkBYnG0nXrkOEnlfMiDjxED5/hRXOZPLSP
+        0+GoVqnu9rnE46JfMUulm03Rr8LuSdIGnH1o+s1mHG9zvuUIGy2ppcSLCiL8356TG54aa4m4vqz
+        Wulr/rcZMhW3P69znIqsGHtbREA==
+X-Received: by 2002:a5d:6f0a:0:b0:1e4:a354:a7e with SMTP id ay10-20020a5d6f0a000000b001e4a3540a7emr1081139wrb.423.1645651998035;
+        Wed, 23 Feb 2022 13:33:18 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJzVh3zKelOjcgzztRyyTOBFC5U69RZ7Dwi6phYx+UQ7pZLlXHi6mmPrXmx8tSFwquULC08JMw==
+X-Received: by 2002:a5d:6f0a:0:b0:1e4:a354:a7e with SMTP id ay10-20020a5d6f0a000000b001e4a3540a7emr1081114wrb.423.1645651997698;
+        Wed, 23 Feb 2022 13:33:17 -0800 (PST)
+Received: from redhat.com ([2.55.166.187])
+        by smtp.gmail.com with ESMTPSA id l5sm677279wmq.7.2022.02.23.13.33.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 12:36:09 -0800 (PST)
-Received: (nullmailer pid 1426824 invoked by uid 1000);
-        Wed, 23 Feb 2022 20:36:08 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     devicetree@vger.kernel.org, svarbanov@mm-sol.com,
-        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
-        linux-pci@vger.kernel.org, lorenzo.pieralisi@arm.com,
-        bhelgaas@google.com, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
-        agross@kernel.org
-In-Reply-To: <20220223192946.473172-3-bhupesh.sharma@linaro.org>
-References: <20220223192946.473172-1-bhupesh.sharma@linaro.org> <20220223192946.473172-3-bhupesh.sharma@linaro.org>
-Subject: Re: [PATCH 2/6] dt-bindings: phy: qcom,qmp: Add SM8150 PCIe PHY bindings
-Date:   Wed, 23 Feb 2022 14:36:08 -0600
-Message-Id: <1645648568.439634.1426821.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        Wed, 23 Feb 2022 13:33:17 -0800 (PST)
+Date:   Wed, 23 Feb 2022 16:33:10 -0500
+From:   "Michael S. Tsirkin" <mst@redhat.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Stuart Yoder <stuyoder@gmail.com>,
+        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+        Abel Vesa <abel.vesa@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        "K. Y. Srinivasan" <kys@microsoft.com>,
+        Haiyang Zhang <haiyangz@microsoft.com>,
+        Stephen Hemminger <sthemmin@microsoft.com>,
+        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Vineeth Vijayan <vneethv@linux.ibm.com>,
+        Peter Oberparleiter <oberpar@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Andy Gross <agross@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Jason Wang <jasowang@redhat.com>, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, NXP Linux Team <linux-imx@nxp.com>,
+        linux-arm-kernel@lists.infradead.org, linux-hyperv@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Subject: Re: [PATCH v2 01/11] driver: platform: add and use helper for safer
+ setting of driver_override
+Message-ID: <20220223162538-mutt-send-email-mst@kernel.org>
+References: <20220223191310.347669-1-krzysztof.kozlowski@canonical.com>
+ <20220223191310.347669-2-krzysztof.kozlowski@canonical.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220223191310.347669-2-krzysztof.kozlowski@canonical.com>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 24 Feb 2022 00:59:42 +0530, Bhupesh Sharma wrote:
-> Add the following two PCIe PHYs found on SM8150, to the QMP binding:
+On Wed, Feb 23, 2022 at 08:13:00PM +0100, Krzysztof Kozlowski wrote:
+> Several core drivers and buses expect that driver_override is a
+> dynamically allocated memory thus later they can kfree() it.
 > 
-> QMP GEN3x1 PHY - 1 lane
-> QMP GEN3x2 PHY - 2 lanes
+> However such assumption is not documented, there were in the past and
+> there are already users setting it to a string literal. This leads to
+> kfree() of static memory during device release (e.g. in error paths or
+> during unbind):
 > 
-> Cc: Rob Herring <robh@kernel.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>     kernel BUG at ../mm/slub.c:3960!
+>     Internal error: Oops - BUG: 0 [#1] PREEMPT SMP ARM
+>     ...
+>     (kfree) from [<c058da50>] (platform_device_release+0x88/0xb4)
+>     (platform_device_release) from [<c0585be0>] (device_release+0x2c/0x90)
+>     (device_release) from [<c0a69050>] (kobject_put+0xec/0x20c)
+>     (kobject_put) from [<c0f2f120>] (exynos5_clk_probe+0x154/0x18c)
+>     (exynos5_clk_probe) from [<c058de70>] (platform_drv_probe+0x6c/0xa4)
+>     (platform_drv_probe) from [<c058b7ac>] (really_probe+0x280/0x414)
+>     (really_probe) from [<c058baf4>] (driver_probe_device+0x78/0x1c4)
+>     (driver_probe_device) from [<c0589854>] (bus_for_each_drv+0x74/0xb8)
+>     (bus_for_each_drv) from [<c058b48c>] (__device_attach+0xd4/0x16c)
+>     (__device_attach) from [<c058a638>] (bus_probe_device+0x88/0x90)
+>     (bus_probe_device) from [<c05871fc>] (device_add+0x3dc/0x62c)
+>     (device_add) from [<c075ff10>] (of_platform_device_create_pdata+0x94/0xbc)
+>     (of_platform_device_create_pdata) from [<c07600ec>] (of_platform_bus_create+0x1a8/0x4fc)
+>     (of_platform_bus_create) from [<c0760150>] (of_platform_bus_create+0x20c/0x4fc)
+>     (of_platform_bus_create) from [<c07605f0>] (of_platform_populate+0x84/0x118)
+>     (of_platform_populate) from [<c0f3c964>] (of_platform_default_populate_init+0xa0/0xb8)
+>     (of_platform_default_populate_init) from [<c01031f8>] (do_one_initcall+0x8c/0x404)
+>     (do_one_initcall) from [<c0f012c0>] (kernel_init_freeable+0x3d0/0x4d8)
+>     (kernel_init_freeable) from [<c0a7def0>] (kernel_init+0x8/0x114)
+>     (kernel_init) from [<c01010b4>] (ret_from_fork+0x14/0x20)
+> 
+> Provide a helper which clearly documents the usage of driver_override.
+> This will allow later to reuse the helper and reduce amount of
+> duplicated code.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 > ---
->  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
+>  drivers/base/driver.c           | 44 +++++++++++++++++++++++++++++++++
+>  drivers/base/platform.c         | 24 +++---------------
+>  include/linux/device/driver.h   |  1 +
+>  include/linux/platform_device.h |  6 ++++-
+>  4 files changed, 54 insertions(+), 21 deletions(-)
 > 
+> diff --git a/drivers/base/driver.c b/drivers/base/driver.c
+> index 8c0d33e182fd..79efe51bb4c0 100644
+> --- a/drivers/base/driver.c
+> +++ b/drivers/base/driver.c
+> @@ -30,6 +30,50 @@ static struct device *next_device(struct klist_iter *i)
+>  	return dev;
+>  }
+>  
+> +/*
+> + * set_driver_override() - Helper to set or clear driver override.
+> + * @dev: Device to change
+> + * @override: Address of string to change (e.g. &device->driver_override);
+> + *            The contents will be freed and hold newly allocated override.
+> + * @s: NULL terminated string, new driver name to force a match, pass empty
 
-Running 'make dtbs_check' with the schema in this patch gives the
-following warnings. Consider if they are expected or the schema is
-incorrect. These may not be new warnings.
+Don't you mean NUL terminated?
+Do all callers really validate that it's NUL terminated?
 
-Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-This will change in the future.
+> + *     string to clear it
+> + *
+> + * Helper to setr or clear driver override in a device, intended for the cases
 
-Full log is available here: https://patchwork.ozlabs.org/patch/1596890
+set?
+
+> + * when the driver_override field is allocated by driver/bus code.
+> + *
+> + * Returns: 0 on success or a negative error code on failure.
+> + */
+> +int driver_set_override(struct device *dev, char **override, const char *s)
+> +{
+> +	char *new, *old, *cp;
+> +
+> +	if (!dev || !override || !s)
+> +		return -EINVAL;
+> +
+> +	new = kstrndup(s, strlen(s), GFP_KERNEL);
 
 
-phy@1c06000: '#clock-cells' is a required property
-	arch/arm64/boot/dts/qcom/msm8998-asus-novago-tp370ql.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm845-db845c.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+what's the point of this kstrndup then? why not just kstrdup?
 
-phy@1c07000: '#clock-cells' is a required property
-	arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dt.yaml
+> +	if (!new)
+> +		return -ENOMEM;
+> +
+> +	cp = strchr(new, '\n');
+> +	if (cp)
+> +		*cp = '\0';
+> +
+> +	device_lock(dev);
+> +	old = *override;
+> +	if (strlen(new)) {
 
-phy@1c07000: 'lanes@1c06000' does not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
-	arch/arm/boot/dts/qcom-sdx55-mtp.dt.yaml
-	arch/arm/boot/dts/qcom-sdx55-t55.dt.yaml
-	arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dt.yaml
+We are re-reading the string like 3 times here.
 
-phy@1c0a000: '#clock-cells' is a required property
-	arch/arm64/boot/dts/qcom/sdm845-db845c.dt.yaml
+> +		*override = new;
+> +	} else {
+> +		kfree(new);
+> +		*override = NULL;
+> +	}
+> +	device_unlock(dev);
+> +
+> +	kfree(old);
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(driver_set_override);
+> +
+>  /**
+>   * driver_for_each_device - Iterator for devices bound to a driver.
+>   * @drv: Driver we're iterating.
+> diff --git a/drivers/base/platform.c b/drivers/base/platform.c
+> index 6cb04ac48bf0..d8853b32ea10 100644
+> --- a/drivers/base/platform.c
+> +++ b/drivers/base/platform.c
+> @@ -1275,31 +1275,15 @@ static ssize_t driver_override_store(struct device *dev,
+>  				     const char *buf, size_t count)
+>  {
+>  	struct platform_device *pdev = to_platform_device(dev);
+> -	char *driver_override, *old, *cp;
+> +	int ret;
+>  
+>  	/* We need to keep extra room for a newline */
+>  	if (count >= (PAGE_SIZE - 1))
+>  		return -EINVAL;
 
-phy@1c0e000: '#clock-cells' is a required property
-	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
-	arch/arm64/boot/dts/qcom/sc7280-crd.dt.yaml
-	arch/arm64/boot/dts/qcom/sc7280-idp2.dt.yaml
-	arch/arm64/boot/dts/qcom/sc7280-idp.dt.yaml
+Given everyone seems to repeat this check, how about passing
+in count and doing the validation in the helper?
+We will then also avoid the need to do strlen and strchr.
 
-phy@1c0e000: 'lanes@1c0e200' does not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
-	arch/arm64/boot/dts/qcom/sc7280-crd.dt.yaml
-	arch/arm64/boot/dts/qcom/sc7280-herobrine.dt.yaml
-	arch/arm64/boot/dts/qcom/sc7280-idp2.dt.yaml
-	arch/arm64/boot/dts/qcom/sc7280-idp.dt.yaml
 
-phy@1c16000: '#clock-cells' is a required property
-	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
-
-phy@1d87000: '#clock-cells' is a required property
-	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
-	arch/arm64/boot/dts/qcom/sa8155p-adp.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm845-db845c.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm845-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8150-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8150-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8350-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8350-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8450-qrd.dt.yaml
-
-phy@1d87000: 'lanes@1d87400', 'vdda-max-microamp', 'vdda-pll-max-microamp' do not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
-	arch/arm64/boot/dts/qcom/sm8450-qrd.dt.yaml
-
-phy@1d87000: 'vdda-max-microamp', 'vdda-pll-max-microamp' do not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
-	arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dt.yaml
-
-phy@1da7000: '#clock-cells' is a required property
-	arch/arm64/boot/dts/qcom/msm8998-asus-novago-tp370ql.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8998-oneplus-dumpling.dt.yaml
-
-phy@34000: '#clock-cells' is a required property
-	arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dt.yaml
-
-phy@58000: '#clock-cells' is a required property
-	arch/arm64/boot/dts/qcom/ipq8074-hk01.dt.yaml
-
-phy@627000: '#clock-cells' is a required property
-	arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
-	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dt.yaml
-
-phy@627000: 'vdda-phy-max-microamp', 'vdda-pll-max-microamp', 'vddp-ref-clk-always-on', 'vddp-ref-clk-max-microamp' do not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
-	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dt.yaml
-
-phy@7410000: '#clock-cells' is a required property
-	arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
-
-phy@78000: '#clock-cells' is a required property
-	arch/arm64/boot/dts/qcom/ipq8074-hk01.dt.yaml
-
-phy@88e9000: '#clock-cells' is a required property
-	arch/arm64/boot/dts/qcom/sdm845-db845c.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm845-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8150-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8150-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano-bahamut.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano-griffin.dt.yaml
-
-phy@88eb000: '#clock-cells' is a required property
-	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
-	arch/arm64/boot/dts/qcom/sa8155p-adp.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm845-cheza-r1.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm845-cheza-r2.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm845-cheza-r3.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm845-db845c.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm845-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8150-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
-
-phy@c010000: '#clock-cells' is a required property
-	arch/arm64/boot/dts/qcom/msm8998-asus-novago-tp370ql.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8998-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-lilac.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-maple.dt.yaml
-	arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-poplar.dt.yaml
-
-phy@ff6000: '#clock-cells' is a required property
-	arch/arm/boot/dts/qcom-sdx55-mtp.dt.yaml
-	arch/arm/boot/dts/qcom-sdx55-t55.dt.yaml
-	arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dt.yaml
-
-phy-wrapper@88e9000: '#clock-cells' is a required property
-	arch/arm64/boot/dts/qcom/sm8350-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8350-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8450-qrd.dt.yaml
-
-phy-wrapper@88e9000: 'vdda-phy-supply' is a required property
-	arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dt.yaml
-
-phy-wrapper@88e9000: 'vdda-pll-supply' is a required property
-	arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx214.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dt.yaml
-
-phy-wrapper@88eb000: '#clock-cells' is a required property
-	arch/arm64/boot/dts/qcom/sm8350-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8350-mtp.dt.yaml
-
-ssphy@78000: 'lane@78200' does not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
-	arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dt.yaml
+> -	driver_override = kstrndup(buf, count, GFP_KERNEL);
+> -	if (!driver_override)
+> -		return -ENOMEM;
+> -
+> -	cp = strchr(driver_override, '\n');
+> -	if (cp)
+> -		*cp = '\0';
+> -
+> -	device_lock(dev);
+> -	old = pdev->driver_override;
+> -	if (strlen(driver_override)) {
+> -		pdev->driver_override = driver_override;
+> -	} else {
+> -		kfree(driver_override);
+> -		pdev->driver_override = NULL;
+> -	}
+> -	device_unlock(dev);
+> -
+> -	kfree(old);
+> +	ret = driver_set_override(dev, &pdev->driver_override, buf);
+> +	if (ret)
+> +		return ret;
+>  
+>  	return count;
+>  }
+> diff --git a/include/linux/device/driver.h b/include/linux/device/driver.h
+> index 15e7c5e15d62..81c0d9f65a40 100644
+> --- a/include/linux/device/driver.h
+> +++ b/include/linux/device/driver.h
+> @@ -151,6 +151,7 @@ extern int __must_check driver_create_file(struct device_driver *driver,
+>  extern void driver_remove_file(struct device_driver *driver,
+>  			       const struct driver_attribute *attr);
+>  
+> +int driver_set_override(struct device *dev, char **override, const char *s);
+>  extern int __must_check driver_for_each_device(struct device_driver *drv,
+>  					       struct device *start,
+>  					       void *data,
+> diff --git a/include/linux/platform_device.h b/include/linux/platform_device.h
+> index 7c96f169d274..37ac14459499 100644
+> --- a/include/linux/platform_device.h
+> +++ b/include/linux/platform_device.h
+> @@ -31,7 +31,11 @@ struct platform_device {
+>  	struct resource	*resource;
+>  
+>  	const struct platform_device_id	*id_entry;
+> -	char *driver_override; /* Driver name to force a match */
+> +	/*
+> +	 * Driver name to force a match, use
+> +	 * driver_set_override() to set or clear it.
+> +	 */
+> +	char *driver_override;
+>  
+>  	/* MFD cell pointer */
+>  	struct mfd_cell *mfd_cell;
+> -- 
+> 2.32.0
 
