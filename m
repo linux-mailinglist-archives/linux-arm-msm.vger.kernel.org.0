@@ -2,135 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AF2C4C182A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 17:08:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2ADBE4C185E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 17:18:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242620AbiBWQJB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Feb 2022 11:09:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37646 "EHLO
+        id S242697AbiBWQTH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Feb 2022 11:19:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242617AbiBWQJB (ORCPT
+        with ESMTP id S242676AbiBWQTG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Feb 2022 11:09:01 -0500
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5C51B7173;
-        Wed, 23 Feb 2022 08:08:33 -0800 (PST)
-Received: by mail-oi1-f172.google.com with SMTP id x193so18861862oix.0;
-        Wed, 23 Feb 2022 08:08:33 -0800 (PST)
+        Wed, 23 Feb 2022 11:19:06 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA7681CFD9;
+        Wed, 23 Feb 2022 08:18:38 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id u1so40455147wrg.11;
+        Wed, 23 Feb 2022 08:18:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=vu8Twnocn3vA4ricnLle2PUL2O6gazUeaL13927N0Bw=;
+        b=dU+Uq1hgyWoO4vVyQn1ujrktF0A2z0Zg7WmMjPHYBcM7m32p0tLKDSKQUVOjkCMPLd
+         NQHbsrDFQJ+vyYL92d2dYicS/odftSePDJWQl66P3pkpro62ARe5Evkii3sEAMhedGz/
+         VFdy0DKVRaEzQRiD/Gvgek/8tfHZlcsqxdoTTboE1sZ6EDbkjpUblB+t7bYdi29J4ezG
+         kiAJa5BditVgo5ThrGJQRtTECHC3i0GaVzlOEyfeeg0Hn67Nc3paqFSnSd+LK2M61yQa
+         Spy4a7vFsxx5Q9z8kV6/13pMYxzPbFFunOBddsseJsE5vcaC5Sdu4ypUcXOJMIql03aX
+         XVXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=VlLFX4EqJjMes8RQHVfh/XZ71GjRDL6L1TFesEM7wzE=;
-        b=U9Iq+jpKmAgE6T1X8+9vDb6hjAy3KHE9oilTJfE1alCPZJKvsKb9/yXmNAqp61hoDt
-         FPOxhqrrIKVz+0aQ6Xh+9hkUedbWmjhmlbFuVVLBVen406wUB/9ye7vQPRy/mtnKhTRW
-         c7eb72DtKfyWRnYquwUSybtboPOkGFjxx5ycJg3R2pYYUx5BhMxnXJVWfzZQ0VsTxPfa
-         9gyg9bOb98mii7sKjLnWr3FEutNpNeBAZ25xmaNXpnBa/fxbcLeBk/NTC3WwiFXcXMCd
-         Q0jKJuRtBoNwqEsaXzfLSz+tMYoS1C8o9Wfh55RHvIFaXIjo95zVvihyOzEvP3KyuZd4
-         JyJg==
-X-Gm-Message-State: AOAM533h/37sj60twFQTPXYO4bWbXX13Sb/JQfbSc3Cgl/D6BCBRqn62
-        zZOVTWwD5L9vxgDnlIlaqw==
-X-Google-Smtp-Source: ABdhPJwJKDQ6JefrLm3QtPQRxB642eYP2C3FBUp8cNjO1ona+VQ8wvG7WgEvKHU/GtcuAWfkCx9uoA==
-X-Received: by 2002:a05:6808:2101:b0:2d4:2b3a:9acb with SMTP id r1-20020a056808210100b002d42b3a9acbmr4960666oiw.231.1645632513102;
-        Wed, 23 Feb 2022 08:08:33 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id bc16sm10542255oib.26.2022.02.23.08.08.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 08:08:32 -0800 (PST)
-Received: (nullmailer pid 1021548 invoked by uid 1000);
-        Wed, 23 Feb 2022 16:08:31 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        linux-phy@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, Kishon Vijay Abraham I <kishon@ti.com>
-In-Reply-To: <20220223044213.3776600-1-bjorn.andersson@linaro.org>
-References: <20220223044213.3776600-1-bjorn.andersson@linaro.org>
-Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,qmp: add sc8180x and sc8280xp ufs compatibles
-Date:   Wed, 23 Feb 2022 10:08:31 -0600
-Message-Id: <1645632511.468790.1021547.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vu8Twnocn3vA4ricnLle2PUL2O6gazUeaL13927N0Bw=;
+        b=w4GKuCT5HFQzp3e32u30pLvwu0USuzaQSEZST2OwCc/YJrxeiIfL3A/8nYIN6QAA6e
+         bsKbX43lTQH1kh0LGM0bpIKekQdalT2f+u24rxiaTI2N9c+9ZxTr5gAbNfWpOARlHwcl
+         KXV1o7JuunfBmhehhn0jdo7eK8AZy4SMmf9pu88ArU8uCWWBr62g8WXXUgmv5Oikjbxv
+         BY88YbUofy3lPFvTGFaClC+zzxXU6rhlqO0LsEd+BuzE6cYTk/+JSjMfdtLQfYKnYtIU
+         4mUG1TQPkgib/LIWJekv5uowjPGxpI0raLIUMh65fnumb3hKVnMjDKlB1NBJMa5hjxiu
+         9VTQ==
+X-Gm-Message-State: AOAM532HNLvIe4ZXjtijdqMOH3IGsXqQUiYmhSXuVHIvKE+Zz5JeRByf
+        1Fs8njflQNxChUpHoA0bYYmtzT9NeNmKPLAheGE=
+X-Google-Smtp-Source: ABdhPJxUxsUu4B6LPuO8RFWw7Yn5lu+ezbPGrbFjXiTTcZQRl7UW8msM5NNY5SAhTMaB4e82kLY55STtgN9hvzTG0J0=
+X-Received: by 2002:a05:6000:1202:b0:1ed:b03e:69a0 with SMTP id
+ e2-20020a056000120200b001edb03e69a0mr275388wrx.93.1645633117146; Wed, 23 Feb
+ 2022 08:18:37 -0800 (PST)
+MIME-Version: 1.0
+References: <20220219193957.577054-1-robdclark@gmail.com> <a065a843-e7c3-a75b-aa8e-d4b264146df0@linaro.org>
+In-Reply-To: <a065a843-e7c3-a75b-aa8e-d4b264146df0@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 23 Feb 2022 08:18:56 -0800
+Message-ID: <CAF6AEGuAq_OT_bFon+WvGr+kU1wA_u=bRirC8BjN=5eYNopiOA@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Avoid dirtyfb stalls on video mode displays
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Mark Yacoub <markyacoub@google.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        David Heidelberg <david@ixit.cz>, Xu Wang <vulab@iscas.ac.cn>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 22 Feb 2022 20:42:12 -0800, Bjorn Andersson wrote:
-> Add compatible for the UFS PHY found in the Qualcomm SC8280XP platform
-> and document the required clocks for this and the SC8180X UFS PHY.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 3 +++
->  1 file changed, 3 insertions(+)
-> 
+On Wed, Feb 23, 2022 at 2:00 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On 19/02/2022 22:39, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > Someone on IRC once asked an innocent enough sounding question:  Why
+> > with xf86-video-modesetting is es2gears limited at 120fps.
+> >
+> > So I broke out the perfetto tracing mesa MR and took a look.  It turns
+> > out the problem was drm_atomic_helper_dirtyfb(), which would end up
+> > waiting for vblank.. es2gears would rapidly push two frames to Xorg,
+> > which would blit them to screen and in idle hook (I assume) call the
+> > DIRTYFB ioctl.  Which in turn would do an atomic update to flush the
+> > dirty rects, which would stall until the next vblank.  And then the
+> > whole process would repeat.
+> >
+> > But this is a bit silly, we only need dirtyfb for command mode DSI
+> > panels.  So lets just skip it otherwise.
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  | 13 +++++
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h  |  9 ++++
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c   |  1 +
+> >   drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c |  9 ++++
+> >   drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c  |  1 +
+> >   drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.h  |  1 +
+> >   drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c |  8 +++
+> >   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c  |  1 +
+> >   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h  |  1 +
+> >   drivers/gpu/drm/msm/msm_fb.c              | 64 ++++++++++++++++++++++-
+> >   drivers/gpu/drm/msm/msm_kms.h             |  2 +
+> >   11 files changed, 109 insertions(+), 1 deletion(-)
+> >
+>
+> I have checked your previous dirtyfb patch (and corresponding discussion).
+>
+> I'm not fond of the idea of acquiring locks, computing the value, then
+> releasing the locks and reacquiring the locks again. I understand the
+> original needs_dirtyfb approach was frowned upon. Do we have a chance of
+> introducing drm_atomic_helper_dirtyfb_unlocked()? Which would perform
+> all the steps of the orignal helper, but without locks acquirement (and
+> state allocation/freeing)?
+>
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+The locking is really more just to avoid racing state access with
+state being free'd.  The sort of race you could have is perhaps
+dirtyfb racing with attaching the fb to a cmd mode
+plane->crtc->encoder chain.  I think this is relatively harmless since
+that act would flush the fb anyways.
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml:284:1: [error] syntax error: found character '\t' that cannot start any token (syntax)
+But it did give me an idea for a possibly simpler approach.. we might
+be able to just keep a refcnt of cmd mode panels the fb is indirectly
+attached to, and then msm_framebuffer_dirtyfb() simply has to check if
+that count is greater than zero.  If we increment/decrement the count
+in fb->prepare()/cleanup() that should also solve the race.
 
-dtschema/dtc warnings/errors:
-make[1]: *** Deleting file 'Documentation/devicetree/bindings/phy/qcom,qmp-phy.example.dts'
-Traceback (most recent call last):
-  File "/usr/local/bin/dt-extract-example", line 46, in <module>
-    binding = yaml.load(open(args.yamlfile, encoding='utf-8').read())
-  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/main.py", line 434, in load
-    return constructor.get_single_data()
-  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/constructor.py", line 119, in get_single_data
-    node = self.composer.get_single_node()
-  File "_ruamel_yaml.pyx", line 706, in _ruamel_yaml.CParser.get_single_node
-  File "_ruamel_yaml.pyx", line 724, in _ruamel_yaml.CParser._compose_document
-  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
-  File "_ruamel_yaml.pyx", line 773, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 850, in _ruamel_yaml.CParser._compose_sequence_node
-  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
-  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
-  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
-  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
-  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
-  File "_ruamel_yaml.pyx", line 773, in _ruamel_yaml.CParser._compose_node
-  File "_ruamel_yaml.pyx", line 852, in _ruamel_yaml.CParser._compose_sequence_node
-  File "_ruamel_yaml.pyx", line 904, in _ruamel_yaml.CParser._parse_next_event
-ruamel.yaml.scanner.ScannerError: while scanning a plain scalar
-  in "<unicode string>", line 283, column 17
-found a tab character that violates indentation
-  in "<unicode string>", line 284, column 1
-make[1]: *** [Documentation/devicetree/bindings/Makefile:25: Documentation/devicetree/bindings/phy/qcom,qmp-phy.example.dts] Error 1
-make[1]: *** Waiting for unfinished jobs....
-./Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml:  while scanning a plain scalar
-  in "<unicode string>", line 283, column 17
-found a tab character that violates indentation
-  in "<unicode string>", line 284, column 1
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml: ignoring, error parsing file
-make: *** [Makefile:1398: dt_binding_check] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/1596499
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+BR,
+-R
