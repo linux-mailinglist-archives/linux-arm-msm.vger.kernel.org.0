@@ -2,402 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DEAF04C1798
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 16:47:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AF2C4C182A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 17:08:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235048AbiBWPrg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Feb 2022 10:47:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33984 "EHLO
+        id S242620AbiBWQJB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Feb 2022 11:09:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233481AbiBWPrg (ORCPT
+        with ESMTP id S242617AbiBWQJB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Feb 2022 10:47:36 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D71544DF73;
-        Wed, 23 Feb 2022 07:47:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645631228; x=1677167228;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=YYctxn0kpK727CV6skfZz0Ey30lYJIa7enZ014ijZ4g=;
-  b=nHkHW3io7FpSrNi7JTHVpuRdJHRGuQRrvPqL4chYKK2GsMxbR7c4Kgkz
-   BdBabDq1pXUEBg5DZI3vWga6+g43NhYtbSDz8N4GMzpvsiiGl2w4Q6oXj
-   xrctlJryKj/FvHu6dH8Lvv96MaUBBB6gpF3460doeXmyC/lTUsYUq2Yc/
-   o=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 23 Feb 2022 07:47:07 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Feb 2022 07:47:07 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Wed, 23 Feb 2022 07:47:06 -0800
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Wed, 23 Feb 2022 07:47:01 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@codeaurora.org>,
-        <perex@perex.cz>, <tiwai@suse.com>,
-        <srinivas.kandagatla@linaro.org>, <rohitkr@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [PATCH v2] ASoC: codecs: Add power domains support in digital macro codecs
-Date:   Wed, 23 Feb 2022 21:16:38 +0530
-Message-ID: <1645631198-4701-1-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        Wed, 23 Feb 2022 11:09:01 -0500
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5C51B7173;
+        Wed, 23 Feb 2022 08:08:33 -0800 (PST)
+Received: by mail-oi1-f172.google.com with SMTP id x193so18861862oix.0;
+        Wed, 23 Feb 2022 08:08:33 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=VlLFX4EqJjMes8RQHVfh/XZ71GjRDL6L1TFesEM7wzE=;
+        b=U9Iq+jpKmAgE6T1X8+9vDb6hjAy3KHE9oilTJfE1alCPZJKvsKb9/yXmNAqp61hoDt
+         FPOxhqrrIKVz+0aQ6Xh+9hkUedbWmjhmlbFuVVLBVen406wUB/9ye7vQPRy/mtnKhTRW
+         c7eb72DtKfyWRnYquwUSybtboPOkGFjxx5ycJg3R2pYYUx5BhMxnXJVWfzZQ0VsTxPfa
+         9gyg9bOb98mii7sKjLnWr3FEutNpNeBAZ25xmaNXpnBa/fxbcLeBk/NTC3WwiFXcXMCd
+         Q0jKJuRtBoNwqEsaXzfLSz+tMYoS1C8o9Wfh55RHvIFaXIjo95zVvihyOzEvP3KyuZd4
+         JyJg==
+X-Gm-Message-State: AOAM533h/37sj60twFQTPXYO4bWbXX13Sb/JQfbSc3Cgl/D6BCBRqn62
+        zZOVTWwD5L9vxgDnlIlaqw==
+X-Google-Smtp-Source: ABdhPJwJKDQ6JefrLm3QtPQRxB642eYP2C3FBUp8cNjO1ona+VQ8wvG7WgEvKHU/GtcuAWfkCx9uoA==
+X-Received: by 2002:a05:6808:2101:b0:2d4:2b3a:9acb with SMTP id r1-20020a056808210100b002d42b3a9acbmr4960666oiw.231.1645632513102;
+        Wed, 23 Feb 2022 08:08:33 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id bc16sm10542255oib.26.2022.02.23.08.08.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Feb 2022 08:08:32 -0800 (PST)
+Received: (nullmailer pid 1021548 invoked by uid 1000);
+        Wed, 23 Feb 2022 16:08:31 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        linux-phy@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, Kishon Vijay Abraham I <kishon@ti.com>
+In-Reply-To: <20220223044213.3776600-1-bjorn.andersson@linaro.org>
+References: <20220223044213.3776600-1-bjorn.andersson@linaro.org>
+Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,qmp: add sc8180x and sc8280xp ufs compatibles
+Date:   Wed, 23 Feb 2022 10:08:31 -0600
+Message-Id: <1645632511.468790.1021547.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for enabling required power domains in digital macro codecs.
-macro and dcodec power domains are being requested as clocks by HLOS
-in ADSP based architectures and ADSP internally handling as powerdomains.
-In ADSP bypass case need to handle them as power domains explicitly.
+On Tue, 22 Feb 2022 20:42:12 -0800, Bjorn Andersson wrote:
+> Add compatible for the UFS PHY found in the Qualcomm SC8280XP platform
+> and document the required clocks for this and the SC8180X UFS PHY.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Reported-by: kernel test robot <lkp@intel.com>
----
-Changes since v1:
-    -- Add missing macros in Kconfig.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
- sound/soc/codecs/Kconfig              |  7 ++++
- sound/soc/codecs/Makefile             |  2 +
- sound/soc/codecs/lpass-macro-common.c | 72 +++++++++++++++++++++++++++++++++++
- sound/soc/codecs/lpass-macro-common.h | 18 +++++++++
- sound/soc/codecs/lpass-rx-macro.c     | 13 ++++++-
- sound/soc/codecs/lpass-tx-macro.c     | 10 +++++
- sound/soc/codecs/lpass-va-macro.c     | 11 +++++-
- sound/soc/qcom/Kconfig                |  1 +
- 8 files changed, 132 insertions(+), 2 deletions(-)
- create mode 100644 sound/soc/codecs/lpass-macro-common.c
- create mode 100644 sound/soc/codecs/lpass-macro-common.h
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml:284:1: [error] syntax error: found character '\t' that cannot start any token (syntax)
 
-diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
-index c2627f7..4de029a 100644
---- a/sound/soc/codecs/Kconfig
-+++ b/sound/soc/codecs/Kconfig
-@@ -244,6 +244,7 @@ config SND_SOC_ALL_CODECS
- 	imply SND_SOC_WCD9335
- 	imply SND_SOC_WCD934X
- 	imply SND_SOC_WCD938X_SDW
-+	imply SND_SOC_LPASS_MACRO_COMMON
- 	imply SND_SOC_LPASS_RX_MACRO
- 	imply SND_SOC_LPASS_TX_MACRO
- 	imply SND_SOC_WL1273
-@@ -2008,6 +2009,9 @@ config SND_SOC_TPA6130A2
- 	tristate "Texas Instruments TPA6130A2 headphone amplifier"
- 	depends on I2C
- 
-+config SND_SOC_LPASS_MACRO_COMMON
-+        tristate
-+
- config SND_SOC_LPASS_WSA_MACRO
- 	depends on COMMON_CLK
- 	select REGMAP_MMIO
-@@ -2016,16 +2020,19 @@ config SND_SOC_LPASS_WSA_MACRO
- config SND_SOC_LPASS_VA_MACRO
- 	depends on COMMON_CLK
- 	select REGMAP_MMIO
-+	select SND_SOC_LPASS_MACRO_COMMON
- 	tristate "Qualcomm VA Macro in LPASS(Low Power Audio SubSystem)"
- 
- config SND_SOC_LPASS_RX_MACRO
- 	depends on COMMON_CLK
- 	select REGMAP_MMIO
-+	select SND_SOC_LPASS_MACRO_COMMON
- 	tristate "Qualcomm RX Macro in LPASS(Low Power Audio SubSystem)"
- 
- config SND_SOC_LPASS_TX_MACRO
- 	depends on COMMON_CLK
- 	select REGMAP_MMIO
-+	select SND_SOC_LPASS_MACRO_COMMON
- 	tristate "Qualcomm TX Macro in LPASS(Low Power Audio SubSystem)"
- 
- endmenu
-diff --git a/sound/soc/codecs/Makefile b/sound/soc/codecs/Makefile
-index b4e11c3..c3c6059 100644
---- a/sound/soc/codecs/Makefile
-+++ b/sound/soc/codecs/Makefile
-@@ -112,6 +112,7 @@ snd-soc-l3-objs := l3.o
- snd-soc-lm4857-objs := lm4857.o
- snd-soc-lm49453-objs := lm49453.o
- snd-soc-lochnagar-sc-objs := lochnagar-sc.o
-+snd-soc-lpass-macro-common-objs := lpass-macro-common.o
- snd-soc-lpass-rx-macro-objs := lpass-rx-macro.o
- snd-soc-lpass-tx-macro-objs := lpass-tx-macro.o
- snd-soc-lpass-wsa-macro-objs := lpass-wsa-macro.o
-@@ -676,6 +677,7 @@ obj-$(CONFIG_SND_SOC_MAX9877)	+= snd-soc-max9877.o
- obj-$(CONFIG_SND_SOC_MAX98504)	+= snd-soc-max98504.o
- obj-$(CONFIG_SND_SOC_SIMPLE_AMPLIFIER)	+= snd-soc-simple-amplifier.o
- obj-$(CONFIG_SND_SOC_TPA6130A2)	+= snd-soc-tpa6130a2.o
-+obj-$(CONFIG_SND_SOC_LPASS_MACRO_COMMON)	+= snd-soc-lpass-macro-common.o
- obj-$(CONFIG_SND_SOC_LPASS_WSA_MACRO)	+= snd-soc-lpass-wsa-macro.o
- obj-$(CONFIG_SND_SOC_LPASS_VA_MACRO)	+= snd-soc-lpass-va-macro.o
- obj-$(CONFIG_SND_SOC_LPASS_RX_MACRO)	+= snd-soc-lpass-rx-macro.o
-diff --git a/sound/soc/codecs/lpass-macro-common.c b/sound/soc/codecs/lpass-macro-common.c
-new file mode 100644
-index 0000000..b8e50e6
---- /dev/null
-+++ b/sound/soc/codecs/lpass-macro-common.c
-@@ -0,0 +1,72 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+// Copyright (c) 2022, The Linux Foundation. All rights reserved.
-+
-+#include <linux/export.h>
-+#include <linux/module.h>
-+#include <linux/init.h>
-+#include <linux/of_platform.h>
-+#include <linux/platform_device.h>
-+#include <linux/pm_domain.h>
-+#include <linux/pm_runtime.h>
-+
-+#include "lpass-macro-common.h"
-+
-+int lpass_macro_pds_init(struct platform_device *pdev, struct lpass_macro **pds)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct lpass_macro *l_pds;
-+	int ret;
-+
-+	const struct property *prop = of_find_property(dev->of_node, "power-domains", NULL);
-+
-+	if (!prop)
-+		return 0;
-+
-+	l_pds = devm_kzalloc(dev, sizeof(*l_pds), GFP_KERNEL);
-+	if (!l_pds)
-+		return -ENOMEM;
-+
-+	l_pds->macro_pd = dev_pm_domain_attach_by_name(dev,  "macro");
-+	if (IS_ERR_OR_NULL(l_pds->macro_pd)) {
-+		ret = PTR_ERR(l_pds->macro_pd) ? : -ENODATA;
-+		return ret;
-+	}
-+	ret = pm_runtime_get_sync(l_pds->macro_pd);
-+	if (ret < 0) {
-+		dev_err(dev, "%s failed for macro_pd, ret %d\n", __func__, ret);
-+		dev_pm_domain_detach(l_pds->macro_pd, false);
-+		pm_runtime_put_noidle(l_pds->macro_pd);
-+		return ret;
-+	}
-+
-+	l_pds->dcodec_pd = dev_pm_domain_attach_by_name(dev, "dcodec");
-+	if (IS_ERR_OR_NULL(l_pds->dcodec_pd)) {
-+		ret = PTR_ERR(l_pds->dcodec_pd) ? : -ENODATA;
-+		dev_pm_domain_detach(l_pds->macro_pd, false);
-+		return ret;
-+	}
-+
-+	ret = pm_runtime_get_sync(l_pds->dcodec_pd);
-+	if (ret < 0) {
-+		dev_err(dev, "%s failed for dcodec_pd, ret %d\n", __func__, ret);
-+
-+		dev_pm_domain_detach(l_pds->dcodec_pd, false);
-+		pm_runtime_put_noidle(l_pds->dcodec_pd);
-+		return ret;
-+	}
-+	*pds = l_pds;
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(lpass_macro_pds_init);
-+
-+void lpass_macro_pds_exit(struct platform_device *pdev, struct lpass_macro *pds)
-+{
-+	pm_runtime_put(pds->macro_pd);
-+	pm_runtime_put(pds->dcodec_pd);
-+	dev_pm_domain_detach(pds->macro_pd, false);
-+	dev_pm_domain_detach(pds->dcodec_pd, false);
-+}
-+EXPORT_SYMBOL_GPL(lpass_macro_pds_exit);
-+
-+MODULE_DESCRIPTION("QTI SC7280 LPI GPIO pin control driver");
-+MODULE_LICENSE("GPL");
-diff --git a/sound/soc/codecs/lpass-macro-common.h b/sound/soc/codecs/lpass-macro-common.h
-new file mode 100644
-index 0000000..c343f0e
---- /dev/null
-+++ b/sound/soc/codecs/lpass-macro-common.h
-@@ -0,0 +1,18 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (c) 2022, The Linux Foundation. All rights reserved.
-+ */
-+
-+#ifndef __LPASS_MACRO_COMMON_H__
-+#define __LPASS_MACRO_COMMON_H__
-+
-+
-+struct lpass_macro {
-+	struct device *macro_pd;
-+	struct device *dcodec_pd;
-+};
-+
-+int lpass_macro_pds_init(struct platform_device *pdev, struct lpass_macro **pds);
-+void lpass_macro_pds_exit(struct platform_device *pdev, struct lpass_macro *pds);
-+
-+#endif /* __LPASS_MACRO_COMMON_H__ */
-diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
-index 29d214f..db32090 100644
---- a/sound/soc/codecs/lpass-rx-macro.c
-+++ b/sound/soc/codecs/lpass-rx-macro.c
-@@ -14,6 +14,8 @@
- #include <linux/of_clk.h>
- #include <linux/clk-provider.h>
- 
-+#include "lpass-macro-common.h"
-+
- #define CDC_RX_TOP_TOP_CFG0		(0x0000)
- #define CDC_RX_TOP_SWR_CTRL		(0x0008)
- #define CDC_RX_TOP_DEBUG		(0x000C)
-@@ -606,7 +608,7 @@ struct rx_macro {
- 	int is_softclip_on;
- 	int is_aux_hpf_on;
- 	int softclip_clk_users;
--
-+	struct lpass_macro *pds;
- 	struct regmap *regmap;
- 	struct clk_bulk_data clks[RX_NUM_CLKS_MAX];
- 	struct clk_hw hw;
-@@ -3537,6 +3539,12 @@ static int rx_macro_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
-+	ret = lpass_macro_pds_init(pdev, &rx->pds);
-+	if (ret < 0) {
-+		dev_err(dev, "Enabling power domains failed in %s\n", __func__);
-+		return ret;
-+	}
-+
- 	base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(base))
- 		return PTR_ERR(base);
-@@ -3575,6 +3583,9 @@ static int rx_macro_remove(struct platform_device *pdev)
- 
- 	of_clk_del_provider(pdev->dev.of_node);
- 	clk_bulk_disable_unprepare(RX_NUM_CLKS_MAX, rx->clks);
-+
-+	lpass_macro_pds_exit(pdev, rx->pds);
-+
- 	return 0;
- }
- 
-diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
-index 9c96ab1..4d1e5ab 100644
---- a/sound/soc/codecs/lpass-tx-macro.c
-+++ b/sound/soc/codecs/lpass-tx-macro.c
-@@ -13,6 +13,8 @@
- #include <linux/of_clk.h>
- #include <linux/clk-provider.h>
- 
-+#include "lpass-macro-common.h"
-+
- #define CDC_TX_CLK_RST_CTRL_MCLK_CONTROL (0x0000)
- #define CDC_TX_MCLK_EN_MASK		BIT(0)
- #define CDC_TX_MCLK_ENABLE		BIT(0)
-@@ -266,6 +268,7 @@ struct tx_macro {
- 	u16 dmic_clk_div;
- 	bool bcs_enable;
- 	int dec_mode[NUM_DECIMATORS];
-+	struct lpass_macro *pds;
- 	bool bcs_clk_en;
- };
- #define to_tx_macro(_hw) container_of(_hw, struct tx_macro, hw)
-@@ -1802,6 +1805,11 @@ static int tx_macro_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
-+	ret = lpass_macro_pds_init(pdev, &tx->pds);
-+	if (ret < 0) {
-+		dev_err(dev, "Enabling power domains failed in %s\n", __func__);
-+		return ret;
-+	}
- 	base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(base))
- 		return PTR_ERR(base);
-@@ -1859,6 +1867,8 @@ static int tx_macro_remove(struct platform_device *pdev)
- 
- 	clk_bulk_disable_unprepare(TX_NUM_CLKS_MAX, tx->clks);
- 
-+	lpass_macro_pds_exit(pdev, tx->pds);
-+
- 	return 0;
- }
- 
-diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
-index 11147e3..b29b9a1 100644
---- a/sound/soc/codecs/lpass-va-macro.c
-+++ b/sound/soc/codecs/lpass-va-macro.c
-@@ -15,6 +15,8 @@
- #include <sound/soc-dapm.h>
- #include <sound/tlv.h>
- 
-+#include "lpass-macro-common.h"
-+
- /* VA macro registers */
- #define CDC_VA_CLK_RST_CTRL_MCLK_CONTROL	(0x0000)
- #define CDC_VA_MCLK_CONTROL_EN			BIT(0)
-@@ -195,6 +197,7 @@ struct va_macro {
- 	struct regmap *regmap;
- 	struct clk_bulk_data clks[VA_NUM_CLKS_MAX];
- 	struct clk_hw hw;
-+	struct lpass_macro *pds;
- 
- 	s32 dmic_0_1_clk_cnt;
- 	s32 dmic_2_3_clk_cnt;
-@@ -1413,7 +1416,11 @@ static int va_macro_probe(struct platform_device *pdev)
- 		dev_err(dev, "Error getting VA Clocks (%d)\n", ret);
- 		return ret;
- 	}
--
-+	ret = lpass_macro_pds_init(pdev, &va->pds);
-+	if (ret < 0) {
-+		dev_err(dev, "Enabling power domains failed %s\n", __func__);
-+		return ret;
-+	}
- 	ret = of_property_read_u32(dev->of_node, "qcom,dmic-sample-rate",
- 				   &sample_rate);
- 	if (ret) {
-@@ -1468,6 +1475,8 @@ static int va_macro_remove(struct platform_device *pdev)
- 
- 	clk_bulk_disable_unprepare(VA_NUM_CLKS_MAX, va->clks);
- 
-+	lpass_macro_pds_exit(pdev, va->pds);
-+
- 	return 0;
- }
- 
-diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
-index 52db003..6ffd51a 100644
---- a/sound/soc/qcom/Kconfig
-+++ b/sound/soc/qcom/Kconfig
-@@ -194,6 +194,7 @@ config SND_SOC_SC7280
- 	select SND_SOC_LPASS_SC7280
- 	select SND_SOC_MAX98357A
- 	select SND_SOC_WCD938X
-+	select SND_SOC_LPASS_MACRO_COMMON
- 	select SND_SOC_LPASS_RX_MACRO
- 	select SND_SOC_LPASS_TX_MACRO
- 	help
--- 
-2.7.4
+dtschema/dtc warnings/errors:
+make[1]: *** Deleting file 'Documentation/devicetree/bindings/phy/qcom,qmp-phy.example.dts'
+Traceback (most recent call last):
+  File "/usr/local/bin/dt-extract-example", line 46, in <module>
+    binding = yaml.load(open(args.yamlfile, encoding='utf-8').read())
+  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/main.py", line 434, in load
+    return constructor.get_single_data()
+  File "/usr/local/lib/python3.8/dist-packages/ruamel/yaml/constructor.py", line 119, in get_single_data
+    node = self.composer.get_single_node()
+  File "_ruamel_yaml.pyx", line 706, in _ruamel_yaml.CParser.get_single_node
+  File "_ruamel_yaml.pyx", line 724, in _ruamel_yaml.CParser._compose_document
+  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
+  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
+  File "_ruamel_yaml.pyx", line 773, in _ruamel_yaml.CParser._compose_node
+  File "_ruamel_yaml.pyx", line 850, in _ruamel_yaml.CParser._compose_sequence_node
+  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
+  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
+  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
+  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
+  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
+  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
+  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
+  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
+  File "_ruamel_yaml.pyx", line 775, in _ruamel_yaml.CParser._compose_node
+  File "_ruamel_yaml.pyx", line 889, in _ruamel_yaml.CParser._compose_mapping_node
+  File "_ruamel_yaml.pyx", line 773, in _ruamel_yaml.CParser._compose_node
+  File "_ruamel_yaml.pyx", line 852, in _ruamel_yaml.CParser._compose_sequence_node
+  File "_ruamel_yaml.pyx", line 904, in _ruamel_yaml.CParser._parse_next_event
+ruamel.yaml.scanner.ScannerError: while scanning a plain scalar
+  in "<unicode string>", line 283, column 17
+found a tab character that violates indentation
+  in "<unicode string>", line 284, column 1
+make[1]: *** [Documentation/devicetree/bindings/Makefile:25: Documentation/devicetree/bindings/phy/qcom,qmp-phy.example.dts] Error 1
+make[1]: *** Waiting for unfinished jobs....
+./Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml:  while scanning a plain scalar
+  in "<unicode string>", line 283, column 17
+found a tab character that violates indentation
+  in "<unicode string>", line 284, column 1
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml: ignoring, error parsing file
+make: *** [Makefile:1398: dt_binding_check] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/1596499
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
 
