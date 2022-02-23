@@ -2,365 +2,420 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8ED54C060C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 01:28:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E5E964C064F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 01:42:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236383AbiBWA2b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Feb 2022 19:28:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33630 "EHLO
+        id S231518AbiBWAm4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Feb 2022 19:42:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236186AbiBWA2X (ORCPT
+        with ESMTP id S236520AbiBWAmv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Feb 2022 19:28:23 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29481541A2;
-        Tue, 22 Feb 2022 16:27:57 -0800 (PST)
+        Tue, 22 Feb 2022 19:42:51 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBB86DF1B;
+        Tue, 22 Feb 2022 16:42:23 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id u1so36596663wrg.11;
+        Tue, 22 Feb 2022 16:42:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645576077; x=1677112077;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=lQNhUNRJ6jhE4wofcy3rrI3mYvQRhxudjndjPhWyZSk=;
-  b=MFUXMvmZEaykaO3ieJAhPincNIQmlNtfynPeU0x3OYXoljLJ+LrQaMil
-   MpZy9YEUdtmcjeNSU8b0fCCADNv3LrSN8nEA72mhMsWQ0pRd6bMNt/n0m
-   0dySyySncDAKEBiowipzZl7DpE6y3YctrMeivf30PjbwTmvZv7fLwhEHn
-   Q=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 22 Feb 2022 16:27:57 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Feb 2022 16:27:56 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Tue, 22 Feb 2022 16:27:56 -0800
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Tue, 22 Feb 2022 16:27:55 -0800
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <vkoul@kernel.org>,
-        <daniel@ffwll.ch>, <airlied@linux.ie>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <bjorn.andersson@linaro.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v10 4/4] drm/msm/dp: enable widebus feature for display port
-Date:   Tue, 22 Feb 2022 16:27:40 -0800
-Message-ID: <1645576060-3046-5-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1645576060-3046-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1645576060-3046-1-git-send-email-quic_khsieh@quicinc.com>
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6oTbqU1vAVjHf+OpgmCVyRyofxucMxq+K7k6cJNbcKs=;
+        b=H+Fp8FlgoBK9vTUolZsptwzHJKpk/A7k1kQJ8wDzePw+hPIkcUFMZ30ko4VG/K1s7+
+         t3FF4/6es7Uc4edOP1ZtydXGk1Pu6N9pxx/uZ2siHjMen9s+hnlhzCUTjEB5r4pM+cEz
+         AEOJC6Zbl45EC4jDjLzOPY6Vhe52+ibF4ZchjG/KmfKFaNIp1vdHb/rVkPlmYWAEz+mF
+         BUw31xT8/8RCLw4I4qF0qIEsE3MKB8tmYkQ+d+IFYFax1YakeF4PtctVHy4i3LxYO62+
+         Ixhu+sZ7o5i2nigADRRLmG2DXWkdX8xhG/D9TwZWN1ZKEb3EHFMLimFT4+xbfkgJsdoa
+         GfZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6oTbqU1vAVjHf+OpgmCVyRyofxucMxq+K7k6cJNbcKs=;
+        b=iw6NVaY3ceLx5uaKGvThg5ec3+CusKRUeGMAl7NzkSIpf1vwbfdjCxPPKtmYbAY0+d
+         x/OEy3q8tCwSrjbt3rcgdStgv3jBgPLRdc77ud8/zR+y2cyep+yJGWBdkwiJIgIt+CGl
+         vyuE5T3aOoNmhknMGV6syhHvhLafWNeKufxQ6WETMUPT6RzLh8uYU/VG5fthPsyvuyPE
+         5oaIUmqN/NSbwrTeDl/jCobRGfbWoqFqjmD/QEisTDwEyZfjp/Y5HDkEW7igVvC1aGvf
+         Viz/eLYuliZ/4sFFoqciaK1KkdzpT16hx+AZWafmxXPWG5ySsysQPqXWRACOlRccTrFb
+         8OrQ==
+X-Gm-Message-State: AOAM5335ejbn47mBFXJGu4m6Bz5NsMjMuYsMXAH2utN5z9uIIhTn8QNb
+        X0qqaK6hhZmNfGDeIrRknBncfmILx4HH42zDxiM=
+X-Google-Smtp-Source: ABdhPJzBl9v9iFFSUwnZ/z/vXoqOGgXis3IM8UKmLp+CxlODdEUkf0INwJILm0EmtSxCnMW3xDACQ/5KgBh6mfqmKWw=
+X-Received: by 2002:a05:6000:1202:b0:1ed:b03e:69a0 with SMTP id
+ e2-20020a056000120200b001edb03e69a0mr237756wrx.93.1645576942223; Tue, 22 Feb
+ 2022 16:42:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20220222012252.6373-1-konrad.dybcio@somainline.org>
+In-Reply-To: <20220222012252.6373-1-konrad.dybcio@somainline.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Tue, 22 Feb 2022 16:42:41 -0800
+Message-ID: <CAF6AEGterCCwF8acnUV+R+mpe5SRd25qhnLOnsWjN1TfyN3_CQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] drm/msm/adreno: Add A619 support
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Martin Botka <martin.botka@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        jamipkettunen@somainline.org, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Douglas Anderson <dianders@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Widebus feature will transmit two pixel data per pixel clock to interface.
-This feature now is required to be enabled to easy migrant to higher
-resolution applications in future. However since some legacy chipsets
-does not support this feature, this feature is enabled base on chip's
-hardware revision.
+On Mon, Feb 21, 2022 at 5:23 PM Konrad Dybcio
+<konrad.dybcio@somainline.org> wrote:
+>
+> Add support for the Adreno 619 GPU, as found in Snapdragon 690 (SM6350),
+> 480 (SM4350) and 750G (SM7225).
+>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c      | 11 ++--
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 70 +++++++++++++++++++++-
+>  drivers/gpu/drm/msm/adreno/a6xx_hfi.c      | 66 +++++++++++++++++++-
+>  drivers/gpu/drm/msm/adreno/adreno_device.c | 14 +++++
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h    | 13 +++-
+>  5 files changed, 166 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> index 3e325e2a2b1b..e8d4cca6cd46 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> @@ -527,6 +527,8 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+>                 pdc_in_aop = true;
+>         else if (adreno_is_a618(adreno_gpu) || adreno_is_a640_family(adreno_gpu))
+>                 pdc_address_offset = 0x30090;
+> +       else if (adreno_is_a619(adreno_gpu))
+> +               pdc_address_offset = 0x300a0;
+>         else
+>                 pdc_address_offset = 0x30080;
+>
+> @@ -601,7 +603,8 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+>
+>         pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD0_MSGID + 4, 0x10108);
+>         pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD0_ADDR + 4, 0x30000);
+> -       if (adreno_is_a618(adreno_gpu) || adreno_is_a650_family(adreno_gpu))
+> +       if (adreno_is_a618(adreno_gpu) || adreno_is_a619(adreno_gpu) ||
+> +                       adreno_is_a650_family(adreno_gpu))
+>                 pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD0_DATA + 4, 0x2);
+>         else
+>                 pdc_write(pdcptr, REG_A6XX_PDC_GPU_TCS3_CMD0_DATA + 4, 0x3);
+> @@ -1537,7 +1540,7 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+>                         SZ_16M - SZ_16K, 0x04000, "icache");
+>                 if (ret)
+>                         goto err_memory;
+> -       } else if (adreno_is_a640_family(adreno_gpu)) {
+> +       } else {
 
-changes in v2:
--- remove compression related code from timing
--- remove op_info from  struct msm_drm_private
--- remove unnecessary wide_bus_en variables
--- pass wide_bus_en into timing configuration by struct msm_dp
+Was this intended?  It would result in extra/unneeded memory
+allocations on a615/a618/a630..
 
-Changes in v3:
--- split patch into 3 patches
--- enable widebus feature base on chip hardware revision
+From looking at the patch, I'm under the impression that a619 is kinda
+like a618 but with newer gmu?  Possibly these cases should be based on
+gmu version rather than gpu version?
 
-Changes in v5:
--- DP_INTF_CONFIG_DATABUS_WIDEN
+Maybe Akhil has an opinion?
 
-Changes in v6:
--- static inline bool msm_dp_wide_bus_enable() in msm_drv.h
+>                 ret = a6xx_gmu_memory_alloc(gmu, &gmu->icache,
+>                         SZ_256K - SZ_16K, 0x04000, "icache");
+>                 if (ret)
+> @@ -1547,9 +1550,9 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+>                         SZ_256K - SZ_16K, 0x44000, "dcache");
+>                 if (ret)
+>                         goto err_memory;
+> -       } else {
+> -               BUG_ON(adreno_is_a660_family(adreno_gpu));
+> +       }
+>
+> +       if (adreno_is_a630(adreno_gpu) || adreno_is_a615_family(adreno_gpu)) {
+>                 /* HFI v1, has sptprac */
+>                 gmu->legacy = true;
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 17cfad6424db..ed9abb2d5e5c 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -224,6 +224,74 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>         a6xx_flush(gpu, ring);
+>  }
+>
+> +/* For a615 family (a615, a616, a618 and a619) */
 
-Changes in v7:
--- add Tested-by
+Hmm, we aren't actually using for a618.. not sure if that is good or bad..
 
-Changes in v9:
--- add wide_bus_en to msm_dp_desc
+The values don't appear to match what is captured in devcore dumps
+from a618, maybe Akhil could check
 
-Changes in v10:
--- add wide_bus_en boolean to dp_catalog struc to avoid passing it as parameter
+BR,
+-R
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  4 +++-
- drivers/gpu/drm/msm/dp/dp_catalog.c         | 32 ++++++++++++++++++++++++++++-
- drivers/gpu/drm/msm/dp/dp_catalog.h         |  2 ++
- drivers/gpu/drm/msm/dp/dp_ctrl.c            |  7 ++++++-
- drivers/gpu/drm/msm/dp/dp_ctrl.h            |  1 +
- drivers/gpu/drm/msm/dp/dp_display.c         | 21 +++++++++++++++++--
- drivers/gpu/drm/msm/dp/dp_display.h         |  2 ++
- drivers/gpu/drm/msm/msm_drv.h               |  6 ++++++
- 8 files changed, 70 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 9a8d992..5356d50 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -2138,8 +2138,10 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
- 		timer_setup(&dpu_enc->vsync_event_timer,
- 				dpu_encoder_vsync_event_handler,
- 				0);
--	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS)
-+	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS) {
- 		dpu_enc->dp = priv->dp[disp_info->h_tile_instance[0]];
-+		dpu_enc->wide_bus_en = msm_dp_wide_bus_available(dpu_enc->dp);
-+	}
- 
- 	INIT_DELAYED_WORK(&dpu_enc->delayed_off_work,
- 			dpu_encoder_off_work);
-diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-index 6ae9b29..c789f4e 100644
---- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-+++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-@@ -24,6 +24,8 @@
- #define DP_INTERRUPT_STATUS_ACK_SHIFT	1
- #define DP_INTERRUPT_STATUS_MASK_SHIFT	2
- 
-+#define DP_INTF_CONFIG_DATABUS_WIDEN     BIT(4)
-+
- #define DP_INTERRUPT_STATUS1 \
- 	(DP_INTR_AUX_I2C_DONE| \
- 	DP_INTR_WRONG_ADDR | DP_INTR_TIMEOUT | \
-@@ -483,6 +485,22 @@ int dp_catalog_ctrl_set_pattern(struct dp_catalog *dp_catalog,
- }
- 
- /**
-+ * dp_catalog_hw_revision() - retrieve DP hw revision
-+ *
-+ * @dp_catalog: DP catalog structure
-+ *
-+ * Return: DP controller hw revision
-+ *
-+ */
-+u32 dp_catalog_hw_revision(struct dp_catalog *dp_catalog)
-+{
-+	struct dp_catalog_private *catalog = container_of(dp_catalog,
-+				struct dp_catalog_private, dp_catalog);
-+
-+	return dp_read_ahb(catalog, REG_DP_HW_VERSION);
-+}
-+
-+/**
-  * dp_catalog_ctrl_reset() - reset DP controller
-  *
-  * @dp_catalog: DP catalog structure
-@@ -743,6 +761,7 @@ int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog)
- {
- 	struct dp_catalog_private *catalog = container_of(dp_catalog,
- 				struct dp_catalog_private, dp_catalog);
-+	u32 reg;
- 
- 	dp_write_link(catalog, REG_DP_TOTAL_HOR_VER,
- 				dp_catalog->total);
-@@ -751,7 +770,18 @@ int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog)
- 	dp_write_link(catalog, REG_DP_HSYNC_VSYNC_WIDTH_POLARITY,
- 				dp_catalog->width_blanking);
- 	dp_write_link(catalog, REG_DP_ACTIVE_HOR_VER, dp_catalog->dp_active);
--	dp_write_p0(catalog, MMSS_DP_INTF_CONFIG, 0);
-+
-+	reg = dp_read_p0(catalog, MMSS_DP_INTF_CONFIG);
-+
-+	if (dp_catalog->wide_bus_en)
-+		reg |= DP_INTF_CONFIG_DATABUS_WIDEN;
-+	else
-+		reg &= ~DP_INTF_CONFIG_DATABUS_WIDEN;
-+
-+
-+	DRM_DEBUG_DP("wide_bus_en=%d reg=%x\n", dp_catalog->wide_bus_en, reg);
-+
-+	dp_write_p0(catalog, MMSS_DP_INTF_CONFIG, reg);
- 	return 0;
- }
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
-index 6965afa..02a3e8a 100644
---- a/drivers/gpu/drm/msm/dp/dp_catalog.h
-+++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
-@@ -70,6 +70,7 @@ struct dp_catalog {
- 	enum dp_catalog_audio_sdp_type sdp_type;
- 	enum dp_catalog_audio_header_type sdp_header;
- 	u32 audio_data;
-+	bool wide_bus_en;
- };
- 
- /* Debug module */
-@@ -95,6 +96,7 @@ void dp_catalog_ctrl_config_misc(struct dp_catalog *dp_catalog, u32 cc, u32 tb);
- void dp_catalog_ctrl_config_msa(struct dp_catalog *dp_catalog, u32 rate,
- 				u32 stream_rate_khz, bool fixed_nvid);
- int dp_catalog_ctrl_set_pattern(struct dp_catalog *dp_catalog, u32 pattern);
-+u32 dp_catalog_hw_revision(struct dp_catalog *dp_catalog);
- void dp_catalog_ctrl_reset(struct dp_catalog *dp_catalog);
- bool dp_catalog_ctrl_mainlink_ready(struct dp_catalog *dp_catalog);
- void dp_catalog_ctrl_enable_irq(struct dp_catalog *dp_catalog, bool enable);
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index c724cb0..b714c5c 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1799,6 +1799,7 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
- 	int ret = 0;
- 	bool mainlink_ready = false;
- 	struct dp_ctrl_private *ctrl;
-+	unsigned long pixel_rate_orig;
- 
- 	if (!dp_ctrl)
- 		return -EINVAL;
-@@ -1807,6 +1808,10 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
- 
- 	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
- 
-+	pixel_rate_orig = ctrl->dp_ctrl.pixel_rate;
-+	if (dp_ctrl->wide_bus_en)
-+		ctrl->dp_ctrl.pixel_rate >>= 1;
-+
- 	DRM_DEBUG_DP("rate=%d, num_lanes=%d, pixel_rate=%d\n",
- 		ctrl->link->link_params.rate,
- 		ctrl->link->link_params.num_lanes, ctrl->dp_ctrl.pixel_rate);
-@@ -1846,7 +1851,7 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
- 
- 	dp_catalog_ctrl_config_msa(ctrl->catalog,
- 		ctrl->link->link_params.rate,
--		ctrl->dp_ctrl.pixel_rate, dp_ctrl_use_fixed_nvid(ctrl));
-+		pixel_rate_orig, dp_ctrl_use_fixed_nvid(ctrl));
- 
- 	dp_ctrl_setup_tr_unit(ctrl);
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-index 2363a2d..a0a5fbb 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-@@ -17,6 +17,7 @@ struct dp_ctrl {
- 	bool orientation;
- 	atomic_t aborted;
- 	u32 pixel_rate;
-+	bool wide_bus_en;
- };
- 
- int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset);
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 7cc4d21..ba76358 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -115,12 +115,15 @@ struct dp_display_private {
- 	struct dp_event event_list[DP_EVENT_Q_MAX];
- 	spinlock_t event_lock;
- 
-+	bool wide_bus_en;
-+
- 	struct dp_audio *audio;
- };
- 
- struct msm_dp_desc {
- 	phys_addr_t io_start;
- 	unsigned int connector_type;
-+	bool wide_bus_en;
- };
- 
- struct msm_dp_config {
-@@ -137,8 +140,8 @@ static const struct msm_dp_config sc7180_dp_cfg = {
- 
- static const struct msm_dp_config sc7280_dp_cfg = {
- 	.descs = (const struct msm_dp_desc[]) {
--		[MSM_DP_CONTROLLER_0] =	{ .io_start = 0x0ae90000, .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
--		[MSM_DP_CONTROLLER_1] =	{ .io_start = 0x0aea0000, .connector_type = DRM_MODE_CONNECTOR_eDP },
-+		[MSM_DP_CONTROLLER_0] =	{ .io_start = 0x0ae90000, .connector_type = DRM_MODE_CONNECTOR_DisplayPort, .wide_bus_en = true },
-+		[MSM_DP_CONTROLLER_1] =	{ .io_start = 0x0aea0000, .connector_type = DRM_MODE_CONNECTOR_eDP, .wide_bus_en = true },
- 	},
- 	.num_descs = 2,
- };
-@@ -808,6 +811,10 @@ static int dp_init_sub_modules(struct dp_display_private *dp)
- 		goto error_ctrl;
- 	}
- 
-+	/* populate wide_bus_en to differernt layers */
-+	dp->ctrl->wide_bus_en = dp->wide_bus_en;
-+	dp->catalog->wide_bus_en = dp->wide_bus_en;
-+
- 	return rc;
- 
- error_ctrl:
-@@ -1251,6 +1258,7 @@ static int dp_display_probe(struct platform_device *pdev)
- 	dp->pdev = pdev;
- 	dp->name = "drm_dp";
- 	dp->dp_display.connector_type = desc->connector_type;
-+	dp->wide_bus_en = desc->wide_bus_en;
- 
- 	rc = dp_init_sub_modules(dp);
- 	if (rc) {
-@@ -1437,6 +1445,15 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
- 	dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
- }
- 
-+bool msm_dp_wide_bus_available(struct msm_dp *dp_display)
-+{
-+	struct dp_display_private *dp;
-+
-+	dp = container_of(dp_display, struct dp_display_private, dp_display);
-+
-+	return dp->wide_bus_en;
-+}
-+
- void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
- {
- 	struct dp_display_private *dp;
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-index e3adcd5..b718cc9 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.h
-+++ b/drivers/gpu/drm/msm/dp/dp_display.h
-@@ -24,6 +24,8 @@ struct msm_dp {
- 
- 	hdmi_codec_plugged_cb plugged_cb;
- 
-+	bool wide_bus_en;
-+
- 	u32 max_pclk_khz;
- 
- 	u32 max_dp_lanes;
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index d7574e6..d413deb 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -399,6 +399,7 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display);
- void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display);
- 
- void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor);
-+bool msm_dp_wide_bus_available(struct msm_dp *dp_display);
- 
- #else
- static inline int __init msm_dp_register(void)
-@@ -449,6 +450,11 @@ static inline void msm_dp_debugfs_init(struct msm_dp *dp_display,
- {
- }
- 
-+static inline bool msm_dp_wide_bus_available(struct msm_dp *dp_display)
-+{
-+	return false;
-+}
-+
- #endif
- 
- void __init msm_mdp_register(void);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+> +const struct adreno_reglist a615_hwcg[] = {
+> +       {REG_A6XX_RBBM_CLOCK_CNTL_SP0,  0x02222222},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL2_SP0, 0x02222220},
+> +       {REG_A6XX_RBBM_CLOCK_DELAY_SP0, 0x00000080},
+> +       {REG_A6XX_RBBM_CLOCK_HYST_SP0,  0x0000F3CF},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL_TP0,  0x02222222},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL_TP1,  0x02222222},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL2_TP0, 0x22222222},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL2_TP1, 0x22222222},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL3_TP0, 0x22222222},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL3_TP1, 0x22222222},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL4_TP0, 0x00022222},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL4_TP1, 0x00022222},
+> +       {REG_A6XX_RBBM_CLOCK_HYST_TP0,  0x77777777},
+> +       {REG_A6XX_RBBM_CLOCK_HYST_TP1,  0x77777777},
+> +       {REG_A6XX_RBBM_CLOCK_HYST2_TP0, 0x77777777},
+> +       {REG_A6XX_RBBM_CLOCK_HYST2_TP1, 0x77777777},
+> +       {REG_A6XX_RBBM_CLOCK_HYST3_TP0, 0x77777777},
+> +       {REG_A6XX_RBBM_CLOCK_HYST3_TP1, 0x77777777},
+> +       {REG_A6XX_RBBM_CLOCK_HYST4_TP0, 0x00077777},
+> +       {REG_A6XX_RBBM_CLOCK_HYST4_TP1, 0x00077777},
+> +       {REG_A6XX_RBBM_CLOCK_DELAY_TP0, 0x11111111},
+> +       {REG_A6XX_RBBM_CLOCK_DELAY_TP1, 0x11111111},
+> +       {REG_A6XX_RBBM_CLOCK_DELAY2_TP0, 0x11111111},
+> +       {REG_A6XX_RBBM_CLOCK_DELAY2_TP1, 0x11111111},
+> +       {REG_A6XX_RBBM_CLOCK_DELAY3_TP0, 0x11111111},
+> +       {REG_A6XX_RBBM_CLOCK_DELAY3_TP1, 0x11111111},
+> +       {REG_A6XX_RBBM_CLOCK_DELAY4_TP0, 0x00011111},
+> +       {REG_A6XX_RBBM_CLOCK_DELAY4_TP1, 0x00011111},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL_UCHE,  0x22222222},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL2_UCHE, 0x22222222},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL3_UCHE, 0x22222222},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL4_UCHE, 0x00222222},
+> +       {REG_A6XX_RBBM_CLOCK_HYST_UCHE,  0x00000004},
+> +       {REG_A6XX_RBBM_CLOCK_DELAY_UCHE, 0x00000002},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL_RB0, 0x22222222},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL2_RB0, 0x00002222},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL_CCU0, 0x00002020},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL_CCU1, 0x00002220},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL_CCU2, 0x00002220},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL_CCU3, 0x00002220},
+> +       {REG_A6XX_RBBM_CLOCK_HYST_RB_CCU0, 0x00040F00},
+> +       {REG_A6XX_RBBM_CLOCK_HYST_RB_CCU1, 0x00040F00},
+> +       {REG_A6XX_RBBM_CLOCK_HYST_RB_CCU2, 0x00040F00},
+> +       {REG_A6XX_RBBM_CLOCK_HYST_RB_CCU3, 0x00040F00},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL_RAC, 0x05022022},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL2_RAC, 0x00005555},
+> +       {REG_A6XX_RBBM_CLOCK_DELAY_RAC, 0x00000011},
+> +       {REG_A6XX_RBBM_CLOCK_HYST_RAC, 0x00445044},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL_TSE_RAS_RBBM, 0x04222222},
+> +       {REG_A6XX_RBBM_CLOCK_MODE_GPC, 0x00222222},
+> +       {REG_A6XX_RBBM_CLOCK_MODE_VFD, 0x00002222},
+> +       {REG_A6XX_RBBM_CLOCK_HYST_TSE_RAS_RBBM, 0x00000000},
+> +       {REG_A6XX_RBBM_CLOCK_HYST_GPC, 0x04104004},
+> +       {REG_A6XX_RBBM_CLOCK_HYST_VFD, 0x00000000},
+> +       {REG_A6XX_RBBM_CLOCK_DELAY_HLSQ, 0x00000000},
+> +       {REG_A6XX_RBBM_CLOCK_DELAY_TSE_RAS_RBBM, 0x00004000},
+> +       {REG_A6XX_RBBM_CLOCK_DELAY_GPC, 0x00000200},
+> +       {REG_A6XX_RBBM_CLOCK_DELAY_VFD, 0x00002222},
+> +       {REG_A6XX_RBBM_CLOCK_DELAY_HLSQ_2, 0x00000002},
+> +       {REG_A6XX_RBBM_CLOCK_MODE_HLSQ, 0x00002222},
+> +       {REG_A6XX_RBBM_CLOCK_CNTL_GMU_GX, 0x00000222},
+> +       {REG_A6XX_RBBM_CLOCK_DELAY_GMU_GX, 0x00000111},
+> +       {REG_A6XX_RBBM_CLOCK_HYST_GMU_GX, 0x00000555},
+> +       {},
+> +};
+> +
+>  const struct adreno_reglist a630_hwcg[] = {
+>         {REG_A6XX_RBBM_CLOCK_CNTL_SP0, 0x22222222},
+>         {REG_A6XX_RBBM_CLOCK_CNTL_SP1, 0x22222222},
+> @@ -527,7 +595,7 @@ static void a6xx_set_hwcg(struct msm_gpu *gpu, bool state)
+>         gpu_write(gpu, REG_A6XX_RBBM_CLOCK_CNTL, state ? clock_cntl_on : 0);
+>  }
+>
+> -/* For a615, a616, a618, A619, a630, a640 and a680 */
+> +/* For a615, a616, a618, a619, a630, a640 and a680 */
+>  static const u32 a6xx_protect[] = {
+>         A6XX_PROTECT_RDONLY(0x00000, 0x04ff),
+>         A6XX_PROTECT_RDONLY(0x00501, 0x0005),
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+> index d73fce5fdf1f..db88fa6122d2 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+> @@ -205,8 +205,8 @@ static int a6xx_hfi_get_fw_version(struct a6xx_gmu *gmu, u32 *version)
+>  {
+>         struct a6xx_hfi_msg_fw_version msg = { 0 };
+>
+> -       /* Currently supporting version 1.1 */
+> -       msg.supported_version = (1 << 28) | (1 << 16);
+> +       /* Currently supporting version 1.10 */
+> +       msg.supported_version = (1 << 28) | (1 << 19) | (1 << 17);
+>
+>         return a6xx_hfi_send_msg(gmu, HFI_H2F_MSG_FW_VERSION, &msg, sizeof(msg),
+>                 version, sizeof(*version));
+> @@ -285,6 +285,66 @@ static void a618_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+>         msg->cnoc_cmds_data[1][0] =  0x60000001;
+>  }
+>
+> +static void a619_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+> +{
+> +       msg->bw_level_num = 13;
+> +
+> +       msg->ddr_cmds_num = 1;
+> +       msg->ddr_wait_bitmask = 0x0;
+> +
+> +       msg->ddr_cmds_addrs[0] = 0x50000;
+> +       msg->ddr_cmds_addrs[1] = 0x50004;
+> +       msg->ddr_cmds_addrs[2] = 0x50080;
+> +
+> +       msg->ddr_cmds_data[0][0]  = 0x40000000;
+> +       msg->ddr_cmds_data[0][1]  = 0x40000000;
+> +       msg->ddr_cmds_data[0][2]  = 0x40000000;
+> +       msg->ddr_cmds_data[1][0]  = 0x6000030c;
+> +       msg->ddr_cmds_data[1][1]  = 0x600000db;
+> +       msg->ddr_cmds_data[1][2]  = 0x60000008;
+> +       msg->ddr_cmds_data[2][0]  = 0x60000618;
+> +       msg->ddr_cmds_data[2][1]  = 0x600001b6;
+> +       msg->ddr_cmds_data[2][2]  = 0x60000008;
+> +       msg->ddr_cmds_data[3][0]  = 0x60000925;
+> +       msg->ddr_cmds_data[3][1]  = 0x60000291;
+> +       msg->ddr_cmds_data[3][2]  = 0x60000008;
+> +       msg->ddr_cmds_data[4][0]  = 0x60000dc1;
+> +       msg->ddr_cmds_data[4][1]  = 0x600003dc;
+> +       msg->ddr_cmds_data[4][2]  = 0x60000008;
+> +       msg->ddr_cmds_data[5][0]  = 0x600010ad;
+> +       msg->ddr_cmds_data[5][1]  = 0x600004ae;
+> +       msg->ddr_cmds_data[5][2]  = 0x60000008;
+> +       msg->ddr_cmds_data[6][0]  = 0x600014c3;
+> +       msg->ddr_cmds_data[6][1]  = 0x600005d4;
+> +       msg->ddr_cmds_data[6][2]  = 0x60000008;
+> +       msg->ddr_cmds_data[7][0]  = 0x6000176a;
+> +       msg->ddr_cmds_data[7][1]  = 0x60000693;
+> +       msg->ddr_cmds_data[7][2]  = 0x60000008;
+> +       msg->ddr_cmds_data[8][0]  = 0x60001f01;
+> +       msg->ddr_cmds_data[8][1]  = 0x600008b5;
+> +       msg->ddr_cmds_data[8][2]  = 0x60000008;
+> +       msg->ddr_cmds_data[9][0]  = 0x60002940;
+> +       msg->ddr_cmds_data[9][1]  = 0x60000b95;
+> +       msg->ddr_cmds_data[9][2]  = 0x60000008;
+> +       msg->ddr_cmds_data[10][0] = 0x60002f68;
+> +       msg->ddr_cmds_data[10][1] = 0x60000d50;
+> +       msg->ddr_cmds_data[10][2] = 0x60000008;
+> +       msg->ddr_cmds_data[11][0] = 0x60003700;
+> +       msg->ddr_cmds_data[11][1] = 0x60000f71;
+> +       msg->ddr_cmds_data[11][2] = 0x60000008;
+> +       msg->ddr_cmds_data[12][0] = 0x60003fce;
+> +       msg->ddr_cmds_data[12][1] = 0x600011ea;
+> +       msg->ddr_cmds_data[12][2] = 0x60000008;
+> +
+> +       msg->cnoc_cmds_num = 3;
+> +       msg->cnoc_wait_bitmask = 0x0;
+> +
+> +       msg->cnoc_cmds_addrs[0] = 0x50054;
+> +
+> +       msg->cnoc_cmds_data[0][0] =  0x40000000;
+> +       msg->cnoc_cmds_data[1][0] =  0x60000001;
+> +}
+> +
+>  static void a640_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+>  {
+>         /*
+> @@ -462,6 +522,8 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
+>
+>         if (adreno_is_a618(adreno_gpu))
+>                 a618_build_bw_table(&msg);
+> +       else if (adreno_is_a619(adreno_gpu))
+> +               a619_build_bw_table(&msg);
+>         else if (adreno_is_a640_family(adreno_gpu))
+>                 a640_build_bw_table(&msg);
+>         else if (adreno_is_a650(adreno_gpu))
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> index fb261930ad1c..4dc6801ad5d9 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -264,6 +264,19 @@ static const struct adreno_info gpulist[] = {
+>                 .gmem = SZ_512K,
+>                 .inactive_period = DRM_MSM_INACTIVE_PERIOD,
+>                 .init = a6xx_gpu_init,
+> +       }, {
+> +               .rev = ADRENO_REV(6, 1, 9, ANY_ID),
+> +               .revn = 619,
+> +               .name = "A619",
+> +               .fw = {
+> +                       [ADRENO_FW_SQE] = "a630_sqe.fw",
+> +                       [ADRENO_FW_GMU] = "a619_gmu.bin",
+> +               },
+> +               .gmem = SZ_512K,
+> +               .inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> +               .init = a6xx_gpu_init,
+> +               .zapfw = "a615_zap.mdt",
+> +               .hwcg = a615_hwcg,
+>         }, {
+>                 .rev = ADRENO_REV(6, 3, 0, ANY_ID),
+>                 .revn = 630,
+> @@ -356,6 +369,7 @@ MODULE_FIRMWARE("qcom/a530_zap.mdt");
+>  MODULE_FIRMWARE("qcom/a530_zap.b00");
+>  MODULE_FIRMWARE("qcom/a530_zap.b01");
+>  MODULE_FIRMWARE("qcom/a530_zap.b02");
+> +MODULE_FIRMWARE("qcom/a619_gmu.bin");
+>  MODULE_FIRMWARE("qcom/a630_sqe.fw");
+>  MODULE_FIRMWARE("qcom/a630_gmu.bin");
+>  MODULE_FIRMWARE("qcom/a630_zap.mbn");
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> index cffabe7d33c1..9e3b4ea7f9bc 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -57,7 +57,7 @@ struct adreno_reglist {
+>         u32 value;
+>  };
+>
+> -extern const struct adreno_reglist a630_hwcg[], a640_hwcg[], a650_hwcg[], a660_hwcg[];
+> +extern const struct adreno_reglist a615_hwcg[], a630_hwcg[], a640_hwcg[], a650_hwcg[], a660_hwcg[];
+>
+>  struct adreno_info {
+>         struct adreno_rev rev;
+> @@ -241,6 +241,11 @@ static inline int adreno_is_a618(struct adreno_gpu *gpu)
+>         return gpu->revn == 618;
+>  }
+>
+> +static inline int adreno_is_a619(struct adreno_gpu *gpu)
+> +{
+> +       return gpu->revn == 619;
+> +}
+> +
+>  static inline int adreno_is_a630(struct adreno_gpu *gpu)
+>  {
+>         return gpu->revn == 630;
+> @@ -267,6 +272,12 @@ static inline int adreno_is_a660(struct adreno_gpu *gpu)
+>         return gpu->revn == 660;
+>  }
+>
+> +/* check for a615, a616, a618, a619 or any derivatives */
+> +static inline int adreno_is_a615_family(struct adreno_gpu *gpu)
+> +{
+> +       return gpu->revn == 615 || gpu->revn == 616 || gpu->revn == 618 || gpu->revn == 619;
+> +}
+> +
+>  static inline int adreno_is_a660_family(struct adreno_gpu *gpu)
+>  {
+>         return adreno_is_a660(gpu) || adreno_is_7c3(gpu);
+> --
+> 2.35.1
+>
