@@ -2,50 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B59B4C1C48
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 20:32:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 69F704C1CC5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 21:04:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237350AbiBWTcP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Feb 2022 14:32:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51256 "EHLO
+        id S238027AbiBWUFZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Feb 2022 15:05:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237108AbiBWTcP (ORCPT
+        with ESMTP id S233174AbiBWUFY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Feb 2022 14:32:15 -0500
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 762E46311;
-        Wed, 23 Feb 2022 11:31:42 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A84B8ED1;
-        Wed, 23 Feb 2022 11:31:42 -0800 (PST)
-Received: from bogus (unknown [10.57.3.200])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 05E953F66F;
-        Wed, 23 Feb 2022 11:31:39 -0800 (PST)
-Date:   Wed, 23 Feb 2022 19:30:50 +0000
-From:   Sudeep Holla <sudeep.holla@arm.com>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Marc Zyngier <maz@kernel.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Valentin Schneider <valentin.schneider@arm.com>,
-        Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Maulik Shah <quic_mkshah@quicinc.com>,
+        Wed, 23 Feb 2022 15:05:24 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5E2C40E63;
+        Wed, 23 Feb 2022 12:04:56 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 448A1B821A3;
+        Wed, 23 Feb 2022 20:04:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3349C340E7;
+        Wed, 23 Feb 2022 20:04:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1645646693;
+        bh=M0+mVIZ0Lc26AANZRRAz4t6SzyvF92PylFUdbqphFSM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=htHMZ4ejkmVw5UZH147OWWvzPaFhKffm1si8PWKoQ3tnFx1yOLEVU9zQwxK66D03d
+         wplmLYlyIr1r52XdFqTtlesPjts/kWIf+iN1ATyktMdKEcaUJvlYonZ1V6H/8HPLI/
+         jMTrjWGhifOrhupEC9mn93Sk6u/MBMyXLCtr0HLQ/nz2PeL0MlAZGOz+uRBQ2dNQP+
+         1Ic12cGDQBffBc1oiHIM2JMAZUrS567iuIBAS786fIZ1Fhesjvllp4NBTINXzKcMxj
+         GOt37pF22BkcR2HDO2jvs15Y7ID8CBJEsV/Q3gpu+i821dkJIfTeyhhFcFWSUe12Qd
+         deVfLFRokXTYQ==
+Date:   Wed, 23 Feb 2022 20:04:42 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Stuart Yoder <stuyoder@gmail.com>,
+        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+        Abel Vesa <abel.vesa@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        "K. Y. Srinivasan" <kys@microsoft.com>,
+        Haiyang Zhang <haiyangz@microsoft.com>,
+        Stephen Hemminger <sthemmin@microsoft.com>,
+        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 1/3] PM: cpu: Add CPU_LAST_PM_ENTER and
- CPU_FIRST_PM_EXIT support
-Message-ID: <20220223193050.y7parhlmnspcyom3@bogus>
-References: <20220223125536.230224-1-shawn.guo@linaro.org>
- <20220223125536.230224-2-shawn.guo@linaro.org>
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Vineeth Vijayan <vneethv@linux.ibm.com>,
+        Peter Oberparleiter <oberpar@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Andy Gross <agross@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        "Michael S. Tsirkin" <mst@redhat.com>,
+        Jason Wang <jasowang@redhat.com>, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, NXP Linux Team <linux-imx@nxp.com>,
+        linux-arm-kernel@lists.infradead.org, linux-hyperv@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Subject: Re: [PATCH v2 07/11] spi: use helper for safer setting of
+ driver_override
+Message-ID: <YhaTWiSQl6pTVxqC@sirena.org.uk>
+References: <20220223191310.347669-1-krzysztof.kozlowski@canonical.com>
+ <20220223191441.348109-1-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="PaAAhqOBo3hBuacY"
 Content-Disposition: inline
-In-Reply-To: <20220223125536.230224-2-shawn.guo@linaro.org>
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+In-Reply-To: <20220223191441.348109-1-krzysztof.kozlowski@canonical.com>
+X-Cookie: I smell a wumpus.
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -54,29 +89,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Feb 23, 2022 at 08:55:34PM +0800, Shawn Guo wrote:
-> It becomes a common situation on some platforms that certain hardware
-> setup needs to be done on the last standing cpu, and rpmh-rsc[1] is such
-> an existing example.  As figuring out the last standing cpu is really
-> something generic, it adds CPU_LAST_PM_ENTER (and CPU_FIRST_PM_EXIT)
-> event support to cpu_pm helper, so that individual driver can be
-> notified when the last standing cpu is about to enter low power state.
 
-Sorry for not getting back on the previous email thread.
-When I meant I didn't want to use CPU_CLUSTER_PM_{ENTER,EXIT}, I wasn't
-thinking new ones to be added as alternative. With this OSI cpuidle, we
-have introduces the concept of power domains and I was check if we can
-associate these requirements to them rather than introducing the first
-and last cpu notion. The power domains already identify them in order
-to turn on or off. Not sure if there is any notification mechanism in
-genpd/power domains. I really don't like this addition. It is disintegrating
-all the solutions for OSI and makes it hard to understand.
+--PaAAhqOBo3hBuacY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-One solution I can think of(not sure if others like or if that is feasible)
-is to create a parent power domain that encloses all the last level CPU
-power domains, which means when the last one is getting powered off, you
-will be asked to power off and you can take whatever action you want.
+On Wed, Feb 23, 2022 at 08:14:37PM +0100, Krzysztof Kozlowski wrote:
 
---
-Regards,
-Sudeep
+> Remove also "const" from the definition of spi_device.driver_override,
+> because it is not correct.  The SPI driver already treats it as
+> dynamic, not const, memory.
+
+We don't modify the string do we, we just allocate a new one?
+
+--PaAAhqOBo3hBuacY
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmIWk1kACgkQJNaLcl1U
+h9DKugf+JTJnnQWx+6mOA4DxLKfWqeASwwB38nUbBFMpWAEhjMvez2XAp0h33Cp9
+bH+dZ5NjHjeUoLGkWBHxWiyuu1r4QrqL7E32x/mV1JsG7I2svj0l0XyCx7Xw7lqT
+QIFJxxSknnL1YtmnB53Rz55GDGQhIg4ewuv/ayCjk0oBDS6G2WBS2UAx2FWJQg2l
+0ALu1QKfCU2DfjLPbmMqLoJb9anvSLyPxe38+Q2dqLx6kUl1WqVWz/Af6dJp9YWY
+UDYfURm/JqyzEo/wiM5ZS39VO9Kv8M7EO9MFJvwxdkmM1evQah6crAugVx/WeCQy
+4Tv/1RJYx8DyQ53XSPVEVcgh9tSx9w==
+=g4g9
+-----END PGP SIGNATURE-----
+
+--PaAAhqOBo3hBuacY--
