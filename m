@@ -2,65 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 08ACA4C0C83
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 07:22:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BD0E94C0CE6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 08:00:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231704AbiBWGXX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Feb 2022 01:23:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40826 "EHLO
+        id S235084AbiBWHBV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Feb 2022 02:01:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234868AbiBWGXX (ORCPT
+        with ESMTP id S233368AbiBWHBU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Feb 2022 01:23:23 -0500
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7391E54BC6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Feb 2022 22:22:56 -0800 (PST)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1nMl2t-0005cM-1S; Wed, 23 Feb 2022 07:22:39 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1nMl2s-000lHS-6g; Wed, 23 Feb 2022 07:22:37 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1nMl2q-004y0T-ML; Wed, 23 Feb 2022 07:22:36 +0100
-Date:   Wed, 23 Feb 2022 07:22:33 +0100
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Heiko Stuebner <heiko@sntech.de>
-Cc:     linux-mediatek@lists.infradead.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Lee Jones <lee.jones@linaro.org>, linux-pwm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Benson Leung <bleung@chromium.org>,
-        linux-arm-msm@vger.kernel.org, chrome-platform@lists.linux.dev,
-        devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        linux-rockchip@lists.infradead.org, Andy Gross <agross@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Guenter Roeck <groeck@chromium.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH 0/4] mfd/pwm: dt-bindings: google, cros-ec:
- include generic pwm schema
-Message-ID: <20220223062233.4m2xejozz4d47gmo@pengutronix.de>
-References: <20220214081916.162014-1-krzysztof.kozlowski@canonical.com>
- <164557235424.1264579.14486504733557463529.b4-ty@sntech.de>
+        Wed, 23 Feb 2022 02:01:20 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 613B549C82;
+        Tue, 22 Feb 2022 23:00:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645599653; x=1677135653;
+  h=message-id:date:mime-version:subject:from:to:cc:
+   references:in-reply-to:content-transfer-encoding;
+  bh=P8IB5i4i8mccW/2mm5mdBV6fgyPwz4NSzRZVqW15XCw=;
+  b=PYm9O+WRwZkcs2lBRKgPWNCB7V2uSXVyXtvpYZ1yKyUR1YQsvXonsjbB
+   wAUxOaEEOo7S/KwirSgjEA/yP9x7P0eeD4tGYj73vecgNxVIbLru5wnz2
+   ScB4sDqUMpzMOmgkx2/Bjaq7DHpIEOv9k830Z6nTSScYUEKxpfrwBTj0f
+   Y=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 22 Feb 2022 23:00:52 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Feb 2022 23:00:51 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Tue, 22 Feb 2022 23:00:51 -0800
+Received: from [10.216.58.51] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Tue, 22 Feb
+ 2022 23:00:45 -0800
+Message-ID: <9a618cb6-c528-94f1-c10c-248e2a04aa13@quicinc.com>
+Date:   Wed, 23 Feb 2022 12:30:42 +0530
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="tz6kkjgucct6gsdy"
-Content-Disposition: inline
-In-Reply-To: <164557235424.1264579.14486504733557463529.b4-ty@sntech.de>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH v6 5/7] pinctrl: qcom: Extract chip specific LPASS LPI
+ code
+Content-Language: en-US
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Linus Walleij <linus.walleij@linaro.org>, <agross@kernel.org>,
+        <alsa-devel@alsa-project.org>, <bgoswami@codeaurora.org>,
+        <bjorn.andersson@linaro.org>, <broonie@kernel.org>,
+        <devicetree@vger.kernel.org>, <judyhsiao@chromium.org>,
+        <lgirdwood@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <perex@perex.cz>, <quic_plai@quicinc.com>, <robh+dt@kernel.org>,
+        <rohitkr@codeaurora.org>, <srinivas.kandagatla@linaro.org>,
+        <tiwai@suse.com>
+CC:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <1644851994-22732-1-git-send-email-quic_srivasam@quicinc.com>
+ <1644851994-22732-6-git-send-email-quic_srivasam@quicinc.com>
+ <CAE-0n53-GRneymVoac=AT6M17aYseS88vM-o1xZxmk8sFQOYhw@mail.gmail.com>
+ <ee5004ea-0aa9-b7ef-061a-e07d0d47c7c6@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <ee5004ea-0aa9-b7ef-061a-e07d0d47c7c6@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,59 +80,35 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---tz6kkjgucct6gsdy
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 2/20/2022 12:02 AM, Srinivasa Rao Mandadapu (Temp) wrote:
+>
+> On 2/19/2022 8:13 AM, Stephen Boyd wrote:
+> Thanks for Your time Stephen!!!
+>> Quoting Srinivasa Rao Mandadapu (2022-02-14 07:19:52)
+>>> diff --git a/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c 
+>>> b/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
+>>> new file mode 100644
+>>> index 0000000..27e358e
+>>> --- /dev/null
+>>> +++ b/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
+>>> @@ -0,0 +1,166 @@
+>>> +// SPDX-License-Identifier: GPL-2.0-only
+>>> +/*
+>>> + * Copyright (c) 2016-2019, The Linux Foundation. All rights reserved.
+>>> + * Copyright (c) 2020 Linaro Ltd.
+>>> + */
+>>> +
+>>> +#include <linux/clk.h>
+>>> +#include <linux/gpio/driver.h>
+>>> +#include <linux/module.h>
+>>> +#include <linux/platform_device.h>
+>>> +
+>>> +#include "pinctrl-lpass-lpi.h"
+>> Please include ../core.h here as well for the pin_group definition.
+> Okay. will add it.
 
-Hello,
+Actually, core.h was included in pinctrl-lpass-lpi.h. Including again 
+here giving redefinition errors.
 
-On Wed, Feb 23, 2022 at 12:27:08AM +0100, Heiko Stuebner wrote:
-> On Mon, 14 Feb 2022 09:19:12 +0100, Krzysztof Kozlowski wrote:
-> > DTS patches are independent. Not tested, but I really hope no downstrea=
-m kernel
-> > depends on pwm node naming... If it does, please change it to compatibl=
-e. :)
-> >=20
-> > Best regards,
-> > Krzysztof
-> >=20
-> > Krzysztof Kozlowski (4):
-> >   dt-bindings: pwm: google,cros-ec: include generic pwm schema
-> >   arm64: dts: mt8183: align Google CROS EC PWM node name with dtschema
-> >   arm64: dts: qcom: align Google CROS EC PWM node name with dtschema
-> >   arm64: dts: rk3399: align Google CROS EC PWM node name with dtschema
-> >=20
-> > [...]
->=20
-> Applied, thanks!
->=20
-> [4/4] arm64: dts: rk3399: align Google CROS EC PWM node name with dtschema
->       commit: 474a84be692d893f45a54b405dcbc137cbf77949
+Already sent V8 with this change. will revert it and post again in v9.
 
-I expected that all patches in this series go in together via an ARM
-tree. Or are there expectations that this goes via PWM?
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---tz6kkjgucct6gsdy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmIV0qYACgkQwfwUeK3K
-7Al9mQgAhD+Y70LUATDqKKM6Uf5x8vV8s8vkHGeNWj6YC7RgYVH/gsKh2FZTHebB
-13Z4Tmc+6U7nbvDhzVU3v+6p4QqjwRJO1dINTZZwkPXYBS1wopfnGkdrjJWcXSWL
-i2pFlGJm9Sh/16uLjIUsGMr+/V4ftEHzphi9fAvKUcbLlGmOIVA4KkA1IM3kUUqM
-QvrvXSxms4ktaL+IEnjtza+lr8VhuYyeLCnrapNYBQ8qzvlIEy77IQN7xTiaQ5KY
-/jsRBUw82H0YuUxCx4pHX3b7Y17mOXBrWJtt5EWwsjNNEjAuGnyE/1WCxC8sht/6
-p1Wso+Y/5o80Ph14XipAdR7uEVIEBQ==
-=96Gc
------END PGP SIGNATURE-----
-
---tz6kkjgucct6gsdy--
