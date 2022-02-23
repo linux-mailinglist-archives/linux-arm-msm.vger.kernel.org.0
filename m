@@ -2,518 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E07E4C1B84
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 20:11:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CDCDF4C1B9F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 20:14:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242459AbiBWTLa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Feb 2022 14:11:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53044 "EHLO
+        id S244207AbiBWTOs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Feb 2022 14:14:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229913AbiBWTL3 (ORCPT
+        with ESMTP id S244217AbiBWTOr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Feb 2022 14:11:29 -0500
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C61413BA6A;
-        Wed, 23 Feb 2022 11:11:00 -0800 (PST)
-Received: by mail-pg1-x52f.google.com with SMTP id 27so15811366pgk.10;
-        Wed, 23 Feb 2022 11:11:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=U7778EYWKPetxG2p6JCpYoeLlj8Df0ot/0i2d64XmHA=;
-        b=Mklz/50+LgHT2n/Cq/zcsO52+OU6HOGtfMa/WK+nkD4Q4vV5LzK5Y3WprWx/H6eJ3o
-         JwY0WDx9UwOb9Ox73WhrjgoO6vM6vZXc6hViev10rIs8S8NmmpxKn59ROPy4PxIO45/e
-         HxO0IHvoIq3z9mVgVPezKKqHY8/sE3buULpJ8/Smoq/nOHKUIiI4dqPctzTo3Rfv7ibc
-         FmY4atfX7FVU1IqEAUqSW/ceQboy15FNS98pKgKuolGtY2sIXN+qEBlnnTxKpIar83RY
-         i37bWwKLGVmoTUlXYlYcsW5+0vSeogkZSR1zyRAAc8DgOuCAfxzUmlRcwqyYytVt5OF4
-         G4Ig==
+        Wed, 23 Feb 2022 14:14:47 -0500
+Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A0AA31213
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 11:14:05 -0800 (PST)
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com [209.85.218.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 2CAB53FC9F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 19:13:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1645643630;
+        bh=7G3yQO1ggdyvs1MDXGTTghLlHGfX3RftlATUX++IZLE=;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version;
+        b=luY9iMPs+zOgPUjc3lGcYqRFqe/kgDKBuG377FSaA9DlxUgwVbV7Yy+XbcK6QQtI0
+         ZFKpIQcXY0dlasZg/pvWgJ3lsZ8LQqjNqmR0hJqJFhVcDeFnsPppA+aF3vo43WPIsQ
+         0/5EWrpyHUF14zyXBFi+OC5pjPvyUR+tBAe+qLgpoHmWcL9Zwx2IdLAdfceRgNLEQS
+         RDG1Y8KyFH7RsEN2nxJfSzykeEmlkKajXwcVplgljJoUwaNBc8wi7sJWxGaag+qAwX
+         c7Px+aVNCLCDGNHDbioyNISpASkWrnUBKYDKOhjAjb/RN2QP0/qmlkudGQvjw/o2vg
+         yGX9bKM6r3HZA==
+Received: by mail-ej1-f70.google.com with SMTP id qf24-20020a1709077f1800b006ce8c140d3dso7494291ejc.18
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 11:13:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=U7778EYWKPetxG2p6JCpYoeLlj8Df0ot/0i2d64XmHA=;
-        b=TDPwKYkT7LV0h7XlYgg/eAOIspG++wmLpJTHLcsl69TOEHwhWEWeKe72JTBODIBzkX
-         PvVhhzjbn0BzcpVXuJ2vbMSknht+jpXeeSs5byRWMYIHiQsEp6pZU2i1Q1IsAQ7DZOeh
-         tvWgmL4AWmzOkPMHfZvMyd8C+iKRrBpN4hf8fK5tZHBvu9GMwI72FAPeRaeLkP6/ALea
-         s1Mslf2Sxx2OjCnfdE2AthCCw+hZxf7FGyralsgGoPkRJ7PAMQ9T3eoj8AhPE+ru/6LJ
-         OdvFyD2cQdvoE1xegMjPaL5PqmPtbBsPYBzC7WMKYs03wWx8wBo4Uq5wP9uP/cGEfKbv
-         6TUg==
-X-Gm-Message-State: AOAM533QuhnQDO+E9VdTVmECYeTvHYJuQpcmRv+j59CxMeXZh4f6mxyZ
-        9MpaorYYhIAyQO527dM/gOg=
-X-Google-Smtp-Source: ABdhPJx7+cG9abaFNeKqgPL6c4soagBjgECe4/mCOgVRsMPwE23LfjVvurfNhX75ABG1rBjlsJzsyg==
-X-Received: by 2002:a63:a545:0:b0:34c:9ba5:6125 with SMTP id r5-20020a63a545000000b0034c9ba56125mr819656pgu.392.1645643460134;
-        Wed, 23 Feb 2022 11:11:00 -0800 (PST)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id n85sm265896pfd.142.2022.02.23.11.10.58
+        bh=7G3yQO1ggdyvs1MDXGTTghLlHGfX3RftlATUX++IZLE=;
+        b=MAGk8M6tIXMKuGUI0WJPo7rRUtROrCQk1kEMnuV+HztXzxPe4V7CjvAY9IZpuRVmt4
+         QwselB5YxlIqoH56d2GmQy3ja3DFfw10yvtkjQfEiYedJ/O0DFTd8eANW7Pk7XmAR5Ei
+         S4m7V8x1LxJoHqCiRkRXUV6J1YBo2BL3nUN74mfV+r4KkL4OqUThEbsNAoTvfxlI8QU9
+         5OYhDfNrkqeLGqajwUUFHuN0Ouz9c+ypNDeIEYu1ki58N5cZiZ6MME6bXqzUSYH2LjMZ
+         v/CHWm+zFAQhZSJ6CuASacjUl2ggNcNvgufIfpmmpYs+zGqTi8uC8n/+uR78XYwEhgQx
+         eIpA==
+X-Gm-Message-State: AOAM531HWlgXfBMhZwTOX5boXpc34MqnmPHPPFUgWCuiw0IXGrHSAvCq
+        5FuCIM+M4afBbXEEZSgZDuLgojD/GZOHqCOfUNTxmtFQrIO8CunoBt4MNeF6U6OQjcw/gkjcAzu
+        rIi92QTyi/zj7fQn1jODMUwufqAk6zwDnc5VYfhPQsdo=
+X-Received: by 2002:a17:907:3e1d:b0:6d1:cb2e:a5f7 with SMTP id hp29-20020a1709073e1d00b006d1cb2ea5f7mr912429ejc.34.1645643627842;
+        Wed, 23 Feb 2022 11:13:47 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJzGBRIhr5hXOOi9m1HuHlbXHVVNJ7NbK5fFuNrM/4KQXFCcM1cXqPM7bQRPgfLpUUwT4AX8Nw==
+X-Received: by 2002:a17:907:3e1d:b0:6d1:cb2e:a5f7 with SMTP id hp29-20020a1709073e1d00b006d1cb2ea5f7mr912389ejc.34.1645643627533;
+        Wed, 23 Feb 2022 11:13:47 -0800 (PST)
+Received: from localhost.localdomain (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
+        by smtp.gmail.com with ESMTPSA id q5sm212611ejc.115.2022.02.23.11.13.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 11:10:59 -0800 (PST)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kalyan Thota <quic_kalyant@quicinc.com>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Maxime Ripard <maxime@cerno.tech>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
-        <ville.syrjala@linux.intel.com>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm: Avoid dirtyfb stalls on video mode displays (v2)
-Date:   Wed, 23 Feb 2022 11:11:08 -0800
-Message-Id: <20220223191118.881321-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        Wed, 23 Feb 2022 11:13:47 -0800 (PST)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Stuart Yoder <stuyoder@gmail.com>,
+        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+        Abel Vesa <abel.vesa@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        "K. Y. Srinivasan" <kys@microsoft.com>,
+        Haiyang Zhang <haiyangz@microsoft.com>,
+        Stephen Hemminger <sthemmin@microsoft.com>,
+        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Vineeth Vijayan <vneethv@linux.ibm.com>,
+        Peter Oberparleiter <oberpar@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Andy Gross <agross@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        "Michael S. Tsirkin" <mst@redhat.com>,
+        Jason Wang <jasowang@redhat.com>, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, NXP Linux Team <linux-imx@nxp.com>,
+        linux-arm-kernel@lists.infradead.org, linux-hyperv@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Subject: [PATCH v2 00/11] Fix broken usage of driver_override (and kfree of static memory)
+Date:   Wed, 23 Feb 2022 20:12:59 +0100
+Message-Id: <20220223191310.347669-1-krzysztof.kozlowski@canonical.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+Hi,
 
-Someone on IRC once asked an innocent enough sounding question:  Why
-with xf86-video-modesetting is es2gears limited at 120fps.
+This is a continuation of my old patchset from 2019. [1]
+Back then, few drivers set driver_override wrong. I fixed Exynos
+in a different way after discussions. QCOM NGD was not fixed
+and a new user appeared - IMX SCU.
 
-So I broke out the perfetto tracing mesa MR and took a look.  It turns
-out the problem was drm_atomic_helper_dirtyfb(), which would end up
-waiting for vblank.. es2gears would rapidly push two frames to Xorg,
-which would blit them to screen and in idle hook (I assume) call the
-DIRTYFB ioctl.  Which in turn would do an atomic update to flush the
-dirty rects, which would stall until the next vblank.  And then the
-whole process would repeat.
+It seems "char *" in driver_override looks too consty, so we
+tend to make a mistake of storing there string literals.
 
-But this is a bit silly, we only need dirtyfb for command mode DSI
-panels.  So track in plane state whether dirtyfb is required, and
-track in the fb how many attached planes require dirtyfb so that we
-can skip it when not required.  (Note, mdp4 does not actually have
-cmd mode support.)
+Changes of latest since v1 (not the old 2019 solution):
+=======================================================
+https://lore.kernel.org/all/708eabb1-7b35-d525-d4c3-451d4a3de84f@rasmusvillemoes.dk/
+1. Add helper for setting driver_override.
+2. Use the helper.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c   | 20 ++++++++++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c  |  5 +--
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h  |  3 ++
- drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c | 19 ++++++++--
- drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c  |  8 +++++
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h   |  5 +++
- drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 21 +++++++++--
- drivers/gpu/drm/msm/msm_atomic.c           | 15 --------
- drivers/gpu/drm/msm/msm_drv.h              |  6 ++--
- drivers/gpu/drm/msm/msm_fb.c               | 41 ++++++++++++++++++----
- 10 files changed, 110 insertions(+), 33 deletions(-)
+Dependencies (and stable):
+==========================
+1. All patches, including last three fixes, depend on first patch
+   introducing the helper.
+2. The last three commits - fixes - are probably not backportable
+   directly, because of this dependency. I don't know how to express
+   it here, since stable-kernel-rules.rst mentions only commits as
+   possible dependencies.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 662b7bc9c219..7763558ef566 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -1046,6 +1046,20 @@ struct plane_state {
- 	u32 pipe_id;
- };
- 
-+static bool dpu_crtc_needs_dirtyfb(struct drm_crtc_state *cstate)
-+{
-+	struct drm_crtc *crtc = cstate->crtc;
-+	struct drm_encoder *encoder;
-+
-+	drm_for_each_encoder_mask (encoder, crtc->dev, cstate->encoder_mask) {
-+		if (dpu_encoder_get_intf_mode(encoder) == INTF_MODE_CMD) {
-+			return true;
-+		}
-+	}
-+
-+	return false;
-+}
-+
- static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
- 		struct drm_atomic_state *state)
- {
-@@ -1066,6 +1080,7 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
- 	const struct drm_plane_state *pipe_staged[SSPP_MAX];
- 	int left_zpos_cnt = 0, right_zpos_cnt = 0;
- 	struct drm_rect crtc_rect = { 0 };
-+	bool needs_dirtyfb = dpu_crtc_needs_dirtyfb(crtc_state);
- 
- 	pstates = kzalloc(sizeof(*pstates) * DPU_STAGE_MAX * 4, GFP_KERNEL);
- 
-@@ -1097,6 +1112,7 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
- 
- 	 /* get plane state for all drm planes associated with crtc state */
- 	drm_atomic_crtc_state_for_each_plane_state(plane, pstate, crtc_state) {
-+		struct dpu_plane_state *dpu_pstate = to_dpu_plane_state(pstate);
- 		struct drm_rect dst, clip = crtc_rect;
- 
- 		if (IS_ERR_OR_NULL(pstate)) {
-@@ -1108,11 +1124,13 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
- 		if (cnt >= DPU_STAGE_MAX * 4)
- 			continue;
- 
--		pstates[cnt].dpu_pstate = to_dpu_plane_state(pstate);
-+		pstates[cnt].dpu_pstate = dpu_pstate;
- 		pstates[cnt].drm_pstate = pstate;
- 		pstates[cnt].stage = pstate->normalized_zpos;
- 		pstates[cnt].pipe_id = dpu_plane_pipe(plane);
- 
-+		dpu_pstate->needs_dirtyfb = needs_dirtyfb;
-+
- 		if (pipe_staged[pstates[cnt].pipe_id]) {
- 			multirect_plane[multirect_count].r0 =
- 				pipe_staged[pstates[cnt].pipe_id];
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index ca75089c9d61..6565682fe227 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -902,7 +902,7 @@ static int dpu_plane_prepare_fb(struct drm_plane *plane,
- 
- 	if (pstate->aspace) {
- 		ret = msm_framebuffer_prepare(new_state->fb,
--				pstate->aspace);
-+				pstate->aspace, pstate->needs_dirtyfb);
- 		if (ret) {
- 			DPU_ERROR("failed to prepare framebuffer\n");
- 			return ret;
-@@ -933,7 +933,8 @@ static void dpu_plane_cleanup_fb(struct drm_plane *plane,
- 
- 	DPU_DEBUG_PLANE(pdpu, "FB[%u]\n", old_state->fb->base.id);
- 
--	msm_framebuffer_cleanup(old_state->fb, old_pstate->aspace);
-+	msm_framebuffer_cleanup(old_state->fb, old_pstate->aspace,
-+				old_pstate->needs_dirtyfb);
- }
- 
- static bool dpu_plane_validate_src(struct drm_rect *src,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-index 9d51dad5c6a5..50781e2d3577 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-@@ -25,6 +25,7 @@
-  * @pending:	whether the current update is still pending
-  * @plane_fetch_bw: calculated BW per plane
-  * @plane_clk: calculated clk per plane
-+ * @needs_dirtyfb: whether attached CRTC needs pixel data explicitly flushed
-  */
- struct dpu_plane_state {
- 	struct drm_plane_state base;
-@@ -37,6 +38,8 @@ struct dpu_plane_state {
- 
- 	u64 plane_fetch_bw;
- 	u64 plane_clk;
-+
-+	bool needs_dirtyfb;
- };
- 
- /**
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c
-index 49bdabea8ed5..3e20f72d75ef 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_plane.c
-@@ -7,6 +7,7 @@
- #include <drm/drm_atomic.h>
- #include <drm/drm_damage_helper.h>
- #include <drm/drm_fourcc.h>
-+#include <drm/drm_gem_atomic_helper.h>
- 
- #include "mdp4_kms.h"
- 
-@@ -90,6 +91,20 @@ static const struct drm_plane_funcs mdp4_plane_funcs = {
- 		.atomic_destroy_state = drm_atomic_helper_plane_destroy_state,
- };
- 
-+static int mdp4_plane_prepare_fb(struct drm_plane *plane,
-+				 struct drm_plane_state *new_state)
-+{
-+	struct msm_drm_private *priv = plane->dev->dev_private;
-+	struct msm_kms *kms = priv->kms;
-+
-+	if (!new_state->fb)
-+		return 0;
-+
-+	drm_gem_plane_helper_prepare_fb(plane, new_state);
-+
-+	return msm_framebuffer_prepare(new_state->fb, kms->aspace, false);
-+}
-+
- static void mdp4_plane_cleanup_fb(struct drm_plane *plane,
- 				  struct drm_plane_state *old_state)
- {
-@@ -102,7 +117,7 @@ static void mdp4_plane_cleanup_fb(struct drm_plane *plane,
- 		return;
- 
- 	DBG("%s: cleanup: FB[%u]", mdp4_plane->name, fb->base.id);
--	msm_framebuffer_cleanup(fb, kms->aspace);
-+	msm_framebuffer_cleanup(fb, kms->aspace, false);
- }
- 
- 
-@@ -130,7 +145,7 @@ static void mdp4_plane_atomic_update(struct drm_plane *plane,
- }
- 
- static const struct drm_plane_helper_funcs mdp4_plane_helper_funcs = {
--		.prepare_fb = msm_atomic_prepare_fb,
-+		.prepare_fb = mdp4_plane_prepare_fb,
- 		.cleanup_fb = mdp4_plane_cleanup_fb,
- 		.atomic_check = mdp4_plane_atomic_check,
- 		.atomic_update = mdp4_plane_atomic_update,
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-index bb7d066618e6..b966cd69f99d 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-@@ -690,6 +690,8 @@ static int mdp5_crtc_atomic_check(struct drm_crtc *crtc,
- {
- 	struct drm_crtc_state *crtc_state = drm_atomic_get_new_crtc_state(state,
- 									  crtc);
-+	struct mdp5_crtc_state *mdp5_cstate = to_mdp5_crtc_state(crtc_state);
-+	struct mdp5_interface *intf = mdp5_cstate->pipeline.intf;
- 	struct mdp5_kms *mdp5_kms = get_kms(crtc);
- 	struct drm_plane *plane;
- 	struct drm_device *dev = crtc->dev;
-@@ -706,12 +708,18 @@ static int mdp5_crtc_atomic_check(struct drm_crtc *crtc,
- 	DBG("%s: check", crtc->name);
- 
- 	drm_atomic_crtc_state_for_each_plane_state(plane, pstate, crtc_state) {
-+		struct mdp5_plane_state *mdp5_pstate =
-+				to_mdp5_plane_state(pstate);
-+
- 		if (!pstate->visible)
- 			continue;
- 
- 		pstates[cnt].plane = plane;
- 		pstates[cnt].state = to_mdp5_plane_state(pstate);
- 
-+		mdp5_pstate->needs_dirtyfb =
-+			intf->mode == MDP5_INTF_DSI_MODE_COMMAND;
-+
- 		/*
- 		 * if any plane on this crtc uses 2 hwpipes, then we need
- 		 * the crtc to have a right hwmixer.
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
-index ac269a6802df..29bf11f08601 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.h
-@@ -100,6 +100,11 @@ struct mdp5_plane_state {
- 
- 	/* assigned by crtc blender */
- 	enum mdp_mixer_stage_id stage;
-+
-+	/* whether attached CRTC needs pixel data explicitly flushed to
-+	 * display (ex. DSI command mode display)
-+	 */
-+	bool needs_dirtyfb;
- };
- #define to_mdp5_plane_state(x) \
- 		container_of(x, struct mdp5_plane_state, base)
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-index c6b69afcbac8..b176338ab59b 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-@@ -8,6 +8,7 @@
- #include <drm/drm_atomic.h>
- #include <drm/drm_damage_helper.h>
- #include <drm/drm_fourcc.h>
-+#include <drm/drm_gem_atomic_helper.h>
- #include <drm/drm_print.h>
- 
- #include "mdp5_kms.h"
-@@ -140,18 +141,34 @@ static const struct drm_plane_funcs mdp5_plane_funcs = {
- 		.atomic_print_state = mdp5_plane_atomic_print_state,
- };
- 
-+static int mdp5_plane_prepare_fb(struct drm_plane *plane,
-+				 struct drm_plane_state *new_state)
-+{
-+	struct msm_drm_private *priv = plane->dev->dev_private;
-+	struct msm_kms *kms = priv->kms;
-+	bool needs_dirtyfb = to_mdp5_plane_state(new_state)->needs_dirtyfb;
-+
-+	if (!new_state->fb)
-+		return 0;
-+
-+	drm_gem_plane_helper_prepare_fb(plane, new_state);
-+
-+	return msm_framebuffer_prepare(new_state->fb, kms->aspace, needs_dirtyfb);
-+}
-+
- static void mdp5_plane_cleanup_fb(struct drm_plane *plane,
- 				  struct drm_plane_state *old_state)
- {
- 	struct mdp5_kms *mdp5_kms = get_kms(plane);
- 	struct msm_kms *kms = &mdp5_kms->base.base;
- 	struct drm_framebuffer *fb = old_state->fb;
-+	bool needed_dirtyfb = to_mdp5_plane_state(old_state)->needs_dirtyfb;
- 
- 	if (!fb)
- 		return;
- 
- 	DBG("%s: cleanup: FB[%u]", plane->name, fb->base.id);
--	msm_framebuffer_cleanup(fb, kms->aspace);
-+	msm_framebuffer_cleanup(fb, kms->aspace, needed_dirtyfb);
- }
- 
- static int mdp5_plane_atomic_check_with_state(struct drm_crtc_state *crtc_state,
-@@ -437,7 +454,7 @@ static void mdp5_plane_atomic_async_update(struct drm_plane *plane,
- }
- 
- static const struct drm_plane_helper_funcs mdp5_plane_helper_funcs = {
--		.prepare_fb = msm_atomic_prepare_fb,
-+		.prepare_fb = mdp5_plane_prepare_fb,
- 		.cleanup_fb = mdp5_plane_cleanup_fb,
- 		.atomic_check = mdp5_plane_atomic_check,
- 		.atomic_update = mdp5_plane_atomic_update,
-diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-index 27c9ae563f2f..1686fbb611fd 100644
---- a/drivers/gpu/drm/msm/msm_atomic.c
-+++ b/drivers/gpu/drm/msm/msm_atomic.c
-@@ -5,7 +5,6 @@
-  */
- 
- #include <drm/drm_atomic_uapi.h>
--#include <drm/drm_gem_atomic_helper.h>
- #include <drm/drm_vblank.h>
- 
- #include "msm_atomic_trace.h"
-@@ -13,20 +12,6 @@
- #include "msm_gem.h"
- #include "msm_kms.h"
- 
--int msm_atomic_prepare_fb(struct drm_plane *plane,
--			  struct drm_plane_state *new_state)
--{
--	struct msm_drm_private *priv = plane->dev->dev_private;
--	struct msm_kms *kms = priv->kms;
--
--	if (!new_state->fb)
--		return 0;
--
--	drm_gem_plane_helper_prepare_fb(plane, new_state);
--
--	return msm_framebuffer_prepare(new_state->fb, kms->aspace);
--}
--
- /*
-  * Helpers to control vblanks while we flush.. basically just to ensure
-  * that vblank accounting is switched on, so we get valid seqn/timestamp
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index 57b0cd6f917e..9f68aa685ed7 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -239,8 +239,6 @@ struct msm_format {
- 
- struct msm_pending_timer;
- 
--int msm_atomic_prepare_fb(struct drm_plane *plane,
--			  struct drm_plane_state *new_state);
- int msm_atomic_init_pending_timer(struct msm_pending_timer *timer,
- 		struct msm_kms *kms, int crtc_idx);
- void msm_atomic_destroy_pending_timer(struct msm_pending_timer *timer);
-@@ -299,9 +297,9 @@ int msm_gem_prime_pin(struct drm_gem_object *obj);
- void msm_gem_prime_unpin(struct drm_gem_object *obj);
- 
- int msm_framebuffer_prepare(struct drm_framebuffer *fb,
--		struct msm_gem_address_space *aspace);
-+		struct msm_gem_address_space *aspace, bool needs_dirtyfb);
- void msm_framebuffer_cleanup(struct drm_framebuffer *fb,
--		struct msm_gem_address_space *aspace);
-+		struct msm_gem_address_space *aspace, bool needed_dirtyfb);
- uint32_t msm_framebuffer_iova(struct drm_framebuffer *fb,
- 		struct msm_gem_address_space *aspace, int plane);
- struct drm_gem_object *msm_framebuffer_bo(struct drm_framebuffer *fb, int plane);
-diff --git a/drivers/gpu/drm/msm/msm_fb.c b/drivers/gpu/drm/msm/msm_fb.c
-index 4d34df5354e0..96b379a08327 100644
---- a/drivers/gpu/drm/msm/msm_fb.c
-+++ b/drivers/gpu/drm/msm/msm_fb.c
-@@ -18,16 +18,36 @@
- struct msm_framebuffer {
- 	struct drm_framebuffer base;
- 	const struct msm_format *format;
-+
-+	/* Count of # of attached planes which need dirtyfb: */
-+	refcount_t dirtyfb;
- };
- #define to_msm_framebuffer(x) container_of(x, struct msm_framebuffer, base)
- 
- static struct drm_framebuffer *msm_framebuffer_init(struct drm_device *dev,
- 		const struct drm_mode_fb_cmd2 *mode_cmd, struct drm_gem_object **bos);
- 
-+static int msm_framebuffer_dirtyfb(struct drm_framebuffer *fb,
-+				   struct drm_file *file_priv, unsigned int flags,
-+				   unsigned int color, struct drm_clip_rect *clips,
-+				   unsigned int num_clips)
-+{
-+	struct msm_framebuffer *msm_fb = to_msm_framebuffer(fb);
-+
-+	/* If this fb is not used on any display requiring pixel data to be
-+	 * flushed, then skip dirtyfb
-+	 */
-+	if (refcount_read(&msm_fb->dirtyfb) == 0)
-+		return 0;
-+
-+	return drm_atomic_helper_dirtyfb(fb, file_priv, flags, color,
-+					 clips, num_clips);
-+}
-+
- static const struct drm_framebuffer_funcs msm_framebuffer_funcs = {
- 	.create_handle = drm_gem_fb_create_handle,
- 	.destroy = drm_gem_fb_destroy,
--	.dirty = drm_atomic_helper_dirtyfb,
-+	.dirty = msm_framebuffer_dirtyfb,
- };
- 
- #ifdef CONFIG_DEBUG_FS
-@@ -48,17 +68,19 @@ void msm_framebuffer_describe(struct drm_framebuffer *fb, struct seq_file *m)
- }
- #endif
- 
--/* prepare/pin all the fb's bo's for scanout.  Note that it is not valid
-- * to prepare an fb more multiple different initiator 'id's.  But that
-- * should be fine, since only the scanout (mdpN) side of things needs
-- * this, the gpu doesn't care about fb's.
-+/* prepare/pin all the fb's bo's for scanout.
-  */
- int msm_framebuffer_prepare(struct drm_framebuffer *fb,
--		struct msm_gem_address_space *aspace)
-+		struct msm_gem_address_space *aspace,
-+		bool needs_dirtyfb)
- {
-+	struct msm_framebuffer *msm_fb = to_msm_framebuffer(fb);
- 	int ret, i, n = fb->format->num_planes;
- 	uint64_t iova;
- 
-+	if (needs_dirtyfb)
-+		refcount_inc(&msm_fb->dirtyfb);
-+
- 	for (i = 0; i < n; i++) {
- 		ret = msm_gem_get_and_pin_iova(fb->obj[i], aspace, &iova);
- 		drm_dbg_state(fb->dev, "FB[%u]: iova[%d]: %08llx (%d)", fb->base.id, i, iova, ret);
-@@ -70,10 +92,15 @@ int msm_framebuffer_prepare(struct drm_framebuffer *fb,
- }
- 
- void msm_framebuffer_cleanup(struct drm_framebuffer *fb,
--		struct msm_gem_address_space *aspace)
-+		struct msm_gem_address_space *aspace,
-+		bool needed_dirtyfb)
- {
-+	struct msm_framebuffer *msm_fb = to_msm_framebuffer(fb);
- 	int i, n = fb->format->num_planes;
- 
-+	if (needed_dirtyfb)
-+		refcount_dec(&msm_fb->dirtyfb);
-+
- 	for (i = 0; i < n; i++)
- 		msm_gem_unpin_iova(fb->obj[i], aspace);
- }
+[1] https://lore.kernel.org/all/1550484960-2392-3-git-send-email-krzk@kernel.org/
+
+Best regards,
+Krzysztof
+
+Krzysztof Kozlowski (11):
+  driver: platform: add and use helper for safer setting of
+    driver_override
+  amba: use helper for safer setting of driver_override
+  fsl-mc: use helper for safer setting of driver_override
+  hv: vmbus: use helper for safer setting of driver_override
+  pci: use helper for safer setting of driver_override
+  s390: cio: use helper for safer setting of driver_override
+  spi: use helper for safer setting of driver_override
+  vdpa: use helper for safer setting of driver_override
+  clk: imx: scu: fix kfree() of static memory on setting driver_override
+  slimbus: qcom-ngd: fix kfree() of static memory on setting
+    driver_override
+  rpmsg: fix kfree() of static memory on setting driver_override
+
+ drivers/amba/bus.c              | 24 +++---------------
+ drivers/base/driver.c           | 44 +++++++++++++++++++++++++++++++++
+ drivers/base/platform.c         | 24 +++---------------
+ drivers/bus/fsl-mc/fsl-mc-bus.c | 22 +++--------------
+ drivers/clk/imx/clk-scu.c       |  7 +++++-
+ drivers/hv/vmbus_drv.c          | 24 +++---------------
+ drivers/pci/pci-sysfs.c         | 24 +++---------------
+ drivers/rpmsg/rpmsg_internal.h  | 13 ++++++++--
+ drivers/rpmsg/rpmsg_ns.c        | 14 +++++++++--
+ drivers/s390/cio/css.c          | 24 +++---------------
+ drivers/slimbus/qcom-ngd-ctrl.c | 12 ++++++++-
+ drivers/spi/spi.c               | 20 +++------------
+ drivers/vdpa/vdpa.c             | 25 +++----------------
+ include/linux/device/driver.h   |  1 +
+ include/linux/platform_device.h |  6 ++++-
+ include/linux/spi/spi.h         |  2 +-
+ 16 files changed, 123 insertions(+), 163 deletions(-)
+
 -- 
-2.34.1
+2.32.0
 
