@@ -2,117 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 14F684C0C2F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 06:31:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C482A4C0C70
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 07:12:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238499AbiBWFbu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Feb 2022 00:31:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42554 "EHLO
+        id S236992AbiBWGM2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Feb 2022 01:12:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238495AbiBWFbj (ORCPT
+        with ESMTP id S232836AbiBWGM0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Feb 2022 00:31:39 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D47456D942;
-        Tue, 22 Feb 2022 21:30:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645594245; x=1677130245;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=v44Gg2Pi51r7C5Yz0LglEBe7K1Ubw4buBZxC3226XpA=;
-  b=kazKmxAFupOl/tUMRjhxJqGshBUJeh9xLNdkDg5qg8swLaDEZDHnW3st
-   Pp3uw0rFRhIw0siyZ88X1JJubsmxKvUpjKkWslXZLoA79Go2a3vo3gCT7
-   bfyiKSKP/+Wdj1TEPVBvdGkFdeuWI2mp0ChyQYvnzEVq2GokV/m5yLX/3
-   g=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 22 Feb 2022 21:29:48 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Feb 2022 21:29:47 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Tue, 22 Feb 2022 21:29:15 -0800
-Received: from c-skakit-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Tue, 22 Feb 2022 21:29:11 -0800
-From:   Satya Priya <quic_c_skakit@quicinc.com>
-To:     <bjorn.andersson@linaro.org>
-CC:     <corbet@lwn.net>, <devicetree@vger.kernel.org>,
-        <dianders@chromium.org>, <lee.jones@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-leds@vger.kernel.org>,
-        <linux-pwm@vger.kernel.org>, <luca@z3ntu.xyz>, <pavel@ucw.cz>,
-        <robh+dt@kernel.org>, <thierry.reding@gmail.com>,
-        <u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH v13 2/2] leds: Add driver for Qualcomm LPG
-Date:   Wed, 23 Feb 2022 10:58:54 +0530
-Message-ID: <1645594134-16082-1-git-send-email-quic_c_skakit@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <20220218183116.2261770-2-bjorn.andersson@linaro.org>
-References: <20220218183116.2261770-2-bjorn.andersson@linaro.org>
+        Wed, 23 Feb 2022 01:12:26 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 981A1606E5;
+        Tue, 22 Feb 2022 22:11:59 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2A08B61372;
+        Wed, 23 Feb 2022 06:11:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52AEC340E7;
+        Wed, 23 Feb 2022 06:11:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1645596718;
+        bh=Zzp79czQ3FQU8Aa3rLV91ozFlYAoZO237NxSGoIc2KM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=VJYkAMFGNzU0dC8I/5eWGEjC7KNcue/AbTZy0tg/Ui7zJMnogyeYmokKFtmrD68hc
+         KXJ2cbWw2MuxxW4LgT4Fk6I6bMDOMAi7E4RHYX+aN1EAfx3Qe/+2qJ8KYMqnX0u7TY
+         w6wMasYjGj5N62cMKKotdTy3q+0L68ZPNtuSOLuFQ/ubuGldJiw69x5/XkxPmBv5Vz
+         V+crRvn/TsrEMsoP5mnlN0HGfHPcSikh6y1Tj6bSxqBNQrZapqt84r7hVrRMj1uQO5
+         En0hLVKHuiEMHAzkprlwAjJHX5Jrs2ramR2L9FpbKCzd23y5o7i9ToMc2Mcjc2y5p/
+         3S9uYSIctIQ5g==
+Date:   Wed, 23 Feb 2022 11:41:54 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,qmp: add sc8180x and sc8280xp
+ ufs compatibles
+Message-ID: <YhXQKiVIa0eOhMFR@matsya>
+References: <20220223044213.3776600-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220223044213.3776600-1-bjorn.andersson@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bjorn Andersson <bjorn.andersson@linaro.org>
+On 22-02-22, 20:42, Bjorn Andersson wrote:
+> Add compatible for the UFS PHY found in the Qualcomm SC8280XP platform
+> and document the required clocks for this and the SC8180X UFS PHY.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+> index e417cd667997..455317dee5ea 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+> @@ -32,6 +32,7 @@ properties:
+>        - qcom,sc8180x-qmp-pcie-phy
+>        - qcom,sc8180x-qmp-ufs-phy
+>        - qcom,sc8180x-qmp-usb3-phy
+> +      - qcom,sc8280xp-qmp-ufs-phy
+>        - qcom,sdm845-qhp-pcie-phy
+>        - qcom,sdm845-qmp-pcie-phy
+>        - qcom,sdm845-qmp-ufs-phy
+> @@ -280,6 +281,8 @@ allOf:
+>                - qcom,sdm845-qmp-ufs-phy
+>                - qcom,sm8150-qmp-ufs-phy
+>                - qcom,sm8250-qmp-ufs-phy
+> +	      - qcom,sc8180x-qmp-ufs-phy
+> +	      - qcom,sc8280xp-qmp-ufs-phy
 
-The Light Pulse Generator (LPG) is a PWM-block found in a wide range of
-PMICs from Qualcomm. These PMICs typically comes with 1-8 LPG instances,
-with their output being routed to various other components, such as
-current sinks or GPIOs.
+The indent does not seem to match here
 
-Each LPG instance can operate on fixed parameters or based on a shared
-lookup-table, altering the duty cycle over time. This provides the means
-for hardware assisted transitions of LED brightness.
-
-A typical use case for the fixed parameter mode is to drive a PWM
-backlight control signal, the driver therefor allows each LPG instance
-to be exposed to the kernel either through the LED framework or the PWM
-framework.
-
-A typical use case for the LED configuration is to drive RGB LEDs in
-smartphones etc, for which the driver supports multiple channels to be
-ganged up to a MULTICOLOR LED. In this configuration the pattern
-generators will be synchronized, to allow for multi-color patterns.
-
-The idea of modelling this as a LED driver ontop of a PWM driver was
-considered, but setting the properties related to patterns does not fit
-in the PWM API. Similarly the idea of just duplicating the lower bits in
-a PWM and LED driver separately was considered, but this would not allow
-the PWM channels and LEDs to be configured on a per-board basis. The
-driver implements the more complex LED interface, and provides a PWM
-interface on the side of that, in the same driver.
-
-Tested-by: Luca Weiss <luca@z3ntu.xyz>
-Tested-by: Doug Anderson <dianders@chromium.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
-
-Tested-by: Satya Priya <quic_c_skakit@quicinc.com>
-
- Documentation/leds/leds-qcom-lpg.rst |   76 ++
- drivers/leds/Kconfig                 |    3 +
- drivers/leds/Makefile                |    3 +
- drivers/leds/rgb/Kconfig             |   18 +
- drivers/leds/rgb/Makefile            |    3 +
- drivers/leds/rgb/leds-qcom-lpg.c     | 1401 ++++++++++++++++++++++++++++++++++
- 6 files changed, 1504 insertions(+)
- create mode 100644 Documentation/leds/leds-qcom-lpg.rst
- create mode 100644 drivers/leds/rgb/Kconfig
- create mode 100644 drivers/leds/rgb/Makefile
- create mode 100644 drivers/leds/rgb/leds-qcom-lpg.c
-
+-- 
+~Vinod
