@@ -2,80 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 205B24C0DF0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 09:00:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C44B4C0DF8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Feb 2022 09:02:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231245AbiBWIAb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Feb 2022 03:00:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35656 "EHLO
+        id S238945AbiBWICs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Feb 2022 03:02:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238204AbiBWIAa (ORCPT
+        with ESMTP id S238934AbiBWICq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Feb 2022 03:00:30 -0500
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A2A979C63
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 00:00:02 -0800 (PST)
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com [209.85.208.69])
+        Wed, 23 Feb 2022 03:02:46 -0500
+Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EB81329A6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 00:02:19 -0800 (PST)
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com [209.85.218.71])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 444693FCA5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 08:00:01 +0000 (UTC)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 203FF3F1CF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 08:02:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1645603201;
-        bh=0xTh4hFbTPwbf+ePQ8BHMeIBtxU7/uHwVLEfcY4fm78=;
+        s=20210705; t=1645603338;
+        bh=F9L5hLNqBFC/G3cYjeWZqj5d6f79Ia9tSMyyGBS1M1k=;
         h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
          In-Reply-To:Content-Type;
-        b=XXBpG94nBYkvSPOPtvuP3dGLRH5InnZ6umkC7oOEsvG/gclfQVW7mWq8cQ4o/KeAR
-         Gg+OYlDpr+iSu/k/gxXQpQkSFFUtyDmhsOsaLWczsFOpXODA+Jmmv2kc99MFGzd8aO
-         wLK6mpw1Dz6UjgV8isd8Ai6YqdA0VnsDiPDz0Tlzse0aGgAj88wn5LaScqH1BoD55x
-         CZ20f5Ep0D+K35o7iij4CKyBRFv0t98uRBqwDttYGwMPoy17arG7ZmOo92mCU9oLwq
-         YMQe4OIT6/6px61fqYqbz3m0A4HK/D/zQqgrx5ygMBnR087WulubdroWaGnqbnc1Tx
-         I7EmkkkeYgMPA==
-Received: by mail-ed1-f69.google.com with SMTP id l14-20020aa7cace000000b003f7f8e1cbbdso13201564edt.20
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 00:00:01 -0800 (PST)
+        b=h6ChC/ZEQ6w5pvD+aVSqQWwaK6Rwj8cBM7K8bMvCfdrn6K/tZlrGvHlxwKgoMct8/
+         TXNuYz3mkTP/PDf1Y5bKmAzyPU8J8CGzbtGG/bCsiGzqSghsjJL6la9azLLspAkz3q
+         MlqTfIDRWtfqxHQQeYQZxeS+ixDrR81RGlnys5K57gJgoslT6R43Xdgn3fi1YIr12E
+         SMu6r0IHNujsj+51sdYUs0uNJno6kyB+gn63WgoGIII1UAzT3l9LinXGnIW7ECgsi4
+         5DLRd+scahl6wwFsVsdGVpuuEaFs4hZgbzKW2bb/RWToC37boG+ohkv8NtSFhVqzGB
+         pfaCIm58HI8/Q==
+Received: by mail-ej1-f71.google.com with SMTP id la22-20020a170907781600b006a7884de505so6774610ejc.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 00:02:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=0xTh4hFbTPwbf+ePQ8BHMeIBtxU7/uHwVLEfcY4fm78=;
-        b=emFV39TeDHaTx4si/R3iuO3voAnDOfigxmAvQJyR6BLsxMiHr5AfZyBaptmO6qYtXG
-         kJ7QiZSAR6Chb10jfNj21qcgpoSumtolagyum7XRmprCdeT/5gzgHyeQmQko8f7u/GsA
-         O8J1Lpddg8Rj+nlH7K8FU5Pb4g6SiX1Fos+FqLP6at0TypQz5rzEjkTZQ+AVPefgUOO2
-         VeA4pWjwwg8rJpXSKeUN1iHM3ZYHQTgggXrTQXVI70vIanouWXbsAi7guBvQgMpJuIE6
-         D1utYaD9lU7q4tCHtlxQG2mit9Ir5DvMbxHhlKY+H0XAdA9DL9wnZfXeClBjgBeXLUNt
-         4PQg==
-X-Gm-Message-State: AOAM531Mz5ShFIU2BW31mmzCiPQqvrlj4O53Jr5EGQTf0aHhwxZzwtpp
-        U41wv8w8zOg5YxaOi/TX4lJ4eyp12Oqei4phFDXv1Mazk2K8Xxjocapoh3IJRIMtF2uMEFyp5NC
-        W7aJtb7qYPUFS6BfyAqp+0B0KrRi9gJ4UIGvYVo794Zs=
-X-Received: by 2002:a17:907:78c2:b0:6b7:ecfd:7b94 with SMTP id kv2-20020a17090778c200b006b7ecfd7b94mr21592115ejc.370.1645603200882;
-        Wed, 23 Feb 2022 00:00:00 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJzbTuWFvalNHVl71bvqSMslTNLiOjQOQDzYAoctBuKPGYWkAs8WXXS8I9PjQCBFuI0UnVbTAg==
-X-Received: by 2002:a17:907:78c2:b0:6b7:ecfd:7b94 with SMTP id kv2-20020a17090778c200b006b7ecfd7b94mr21592099ejc.370.1645603200691;
-        Wed, 23 Feb 2022 00:00:00 -0800 (PST)
+        bh=F9L5hLNqBFC/G3cYjeWZqj5d6f79Ia9tSMyyGBS1M1k=;
+        b=2UiNBTKWd+9EpXPN9MFbW0SS+56U7SjwyGZc72/9GPoobpCN43Jrxt6YgL9jQrbDJ1
+         yjJlyqNrV36CjdIy/A6vvJPnyuO2WTHEKNsGPVJR8/glQkBHr8SE3Jhk9p0oIGljrdgS
+         mB4pzS2J6A0wk5/nLX7gZOEVjSMq+HBtk1xAkJr1CUlLm6NsBEqgyNG4OCsy1Ig1U+GE
+         bgLC6pCOY130QAjWTu8p8uyOD+xBdiE0O/miTfHHHv9S4yvYnXUJngB25CsBTac/pWcf
+         AZob0LwfFFutRo7QF5HilhrZmfz7mV4xWfxZLfq5c3o5LpdJqn3VXoDakvWVZdu6VbDK
+         ua+g==
+X-Gm-Message-State: AOAM532H8uPhYJNjqvoMaS6UTU5okY8Sj+a2OXttagdFDUPnvoQAjymY
+        ADveEIGkjerCXI0FQg83i217g/qJdSHVRhOCbxX4XR61S79Y1kHELmeEK4vbG3Ttr48gbkEJvZT
+        GgOErKknaDwdO7vhPhDa1kaGGwaoaCqYSxTlRCMkGgkk=
+X-Received: by 2002:a17:906:264d:b0:6b1:13e0:9981 with SMTP id i13-20020a170906264d00b006b113e09981mr21312808ejc.611.1645603337785;
+        Wed, 23 Feb 2022 00:02:17 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJwb79s+yZlz4qu+PKRA8PiTD34CcHHW78p/lh72TMgvG0k6gMdEgEFK2Xo4Q69VI8lr7ixkRQ==
+X-Received: by 2002:a17:906:264d:b0:6b1:13e0:9981 with SMTP id i13-20020a170906264d00b006b113e09981mr21312791ejc.611.1645603337540;
+        Wed, 23 Feb 2022 00:02:17 -0800 (PST)
 Received: from [192.168.0.124] (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
-        by smtp.gmail.com with ESMTPSA id h5sm7085865ejo.124.2022.02.22.23.59.59
+        by smtp.gmail.com with ESMTPSA id v23sm7198330ejy.178.2022.02.23.00.02.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Feb 2022 00:00:00 -0800 (PST)
-Message-ID: <3abfe9cb-68d7-5644-c422-226ca259e7c9@canonical.com>
-Date:   Wed, 23 Feb 2022 08:59:59 +0100
+        Wed, 23 Feb 2022 00:02:16 -0800 (PST)
+Message-ID: <d49c5648-44d2-5630-fae2-52d182eb74e2@canonical.com>
+Date:   Wed, 23 Feb 2022 09:02:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.0
-Subject: Re: [PATCH 1/2] dt-bindings: clock: Add sc8280xp to the RPMh clock
- controller binding
+Subject: Re: [PATCH] dt-bindings: arm: qcom: Document sa8540p, sc8180x and
+ sc8280xp
 Content-Language: en-US
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220223044516.3776637-1-bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220223034613.3725242-1-bjorn.andersson@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <20220223044516.3776637-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20220223034613.3725242-1-bjorn.andersson@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
@@ -88,18 +85,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/02/2022 05:45, Bjorn Andersson wrote:
-> The Qualcomm SC8280XP has a RPMh clock controller, so add a compatible
-> for this to the binding.
+On 23/02/2022 04:46, Bjorn Andersson wrote:
+> Add compatibles for the sa8540p automotive, as well as sc8180x and
+> sc8280xp compute platforms. Also add compatibles for the ADP devboard,
+> the Lenovo Flex 5G, Microsoft Surface Pro X and the sc8280xp QRD.
 > 
 > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->  Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>  .../devicetree/bindings/arm/qcom.yaml         | 20 +++++++++++++++++++
+>  1 file changed, 20 insertions(+)
 > 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index e8b1606bc849..1042f71300af 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -39,8 +39,11 @@ description: |
+>          msm8994
+>          msm8996
+>          sa8155p
+> +        sa8540p
+>          sc7180
+>          sc7280
+> +        sc8180x
+> +        sc8280xp
+>          sdm630
+>          sdm660
+>          sdm845
+> @@ -224,6 +227,18 @@ properties:
+>                - google,senor
+>            - const: qcom,sc7280
+>  
+> +      - items:
+> +          - enum:
+> +              - qcom,sc8180x-primus
+> +              - lenovo,flex-5g
+> +              - microsoft,surface-prox
 
+How about ordering this enum alphabetically? I think most of other
+places in this file is ordered.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> +          - const: qcom,sc8180x
+> +
+> +      - items:
+> +          - enum:
+> +              - qcom,sc8280xp-qrd
+> +          - const: qcom,sc8280xp
+> +
+>        - items:
+>            - enum:
+>                - xiaomi,lavender
+> @@ -252,6 +267,11 @@ properties:
+>                - qcom,sa8155p-adp
+>            - const: qcom,sa8155p
+>  
+> +      - items:
+> +          - enum:
+> +              - qcom,sa8540p-adp
+> +          - const: qcom,sa8540p
+> +
+>        - items:
+>            - enum:
+>                - fairphone,fp4
 
 
 Best regards,
