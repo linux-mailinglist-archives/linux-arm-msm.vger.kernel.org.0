@@ -2,78 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C01EA4C2196
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 03:13:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 85FCD4C225B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 04:28:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230019AbiBXCKz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Feb 2022 21:10:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42900 "EHLO
+        id S229596AbiBXD2g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Feb 2022 22:28:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229976AbiBXCKz (ORCPT
+        with ESMTP id S229458AbiBXD2f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Feb 2022 21:10:55 -0500
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AAFB1CF0B2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 18:10:26 -0800 (PST)
-Received: by mail-pl1-x633.google.com with SMTP id ay3so458557plb.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 18:10:26 -0800 (PST)
+        Wed, 23 Feb 2022 22:28:35 -0500
+Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9921D14CD8C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 19:28:06 -0800 (PST)
+Received: by mail-oo1-xc36.google.com with SMTP id x6-20020a4a4106000000b003193022319cso1655588ooa.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 19:28:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ZnYyCAf+hdzZPaSLfbrxFcyypRq31HWt0QkCGBGFrL0=;
-        b=h37je/lozqkhikqOTu3IGvHe+nLK0KNm8oY9hgpZZM5j8B6EkUFcaHMCGg7sas6KEP
-         5OQmnC/Kmd4pFkA8nL5z90Tv1In8T53po07djNVrq4oRAQIdJ0/O025JwGnUn6NwUpO4
-         BRo7mgX9IK6Z/zaBJWUDibiLcprRQq+KZq+2fBcD0NJvUNbKveqbtkWIetmy/zjiJOC3
-         s5OznjvRYi91RQoX0drMOtVjoDiyIoojBDgaJTn/XfGupUBeS6fgD23coiiuCQMVtTwQ
-         J12ea7XNE0K5fcwHtI4m63QNrparwJzIup8BbjyK8yQF4UJT+Iz8J32XWGx3Vkc1lAoh
-         Byyg==
+        bh=GFVa3DjQlyegmWMDp165z9Si+REv56L8MkHfgIOzldw=;
+        b=dNy3JhchndOVm31lCDbIR/z5g12ami92rgQQUFF9y2yVWKDel6PcmxwLFkURQLfga2
+         jBEEF3ET08xlVDTZC9zQAqmljTx3MRdpdT5qiZuuFHaHGSpfCgaQiBGZ58xEnul5JThI
+         TAjcTJExcy2XrZcxzxH28Sy8wLLDrx2R+37zWUYEDMNTepNw8EEiWATmTpXkLH2VWcXZ
+         JcvAO9zhAx7W3rIi9NRjDauFkN1jaUdzrVV/VcIdfVO9GD2ZOHAQEOfdA3rWBUvVM28m
+         houvSqynzQy4KR0j6FnNffG1i0A++mCgyzcnE8qZcjg57PDh/xPhSKiL0HAitnlOseDK
+         J6bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ZnYyCAf+hdzZPaSLfbrxFcyypRq31HWt0QkCGBGFrL0=;
-        b=40Fe5tUoaANCANq9OGubCh9kJfX91AwA9LfrVqiFD34FZrLL+yFnmXGME77mx+idGx
-         WHy1AEgJ4bV3uVZgLQWn6gyZnNeH0SRO9D1oX0DGOA/l77zd8KQpr/mIvWc+MYK8g6lB
-         iDgPcrBaq5WiGZde97uYjpNHUhUUraXXn/gvuf5PeDTzfrPGvWmMClkIcYZDwngBZEZD
-         eqTZFlfix5IggTh/bCxivDMfHaMIdBKd7euZ1KoEtnn1dOOl5tMixQ8d+OQcCApOGiM6
-         XNVSmelEg2TfbJNGrki9p6fw4nXwPz/KVPohRVTNZ+Iz6W9JE+QCTHzStO4WjddGRxxq
-         hG9A==
-X-Gm-Message-State: AOAM5329rHIzOdArKqwl/EA/oFytSoDt/uyCLraDPzSO7w9PanxxOtrY
-        rZhhDa0C3eUYTzNBxlW/r5SGsg==
-X-Google-Smtp-Source: ABdhPJw2Rk8+ph45n2HaQvviEcQivEktRcnCj9JX+OTKugbwjD1rinTtyuEnbDe9efILwF8LiouLMw==
-X-Received: by 2002:a17:90b:110a:b0:1b9:eb62:7c00 with SMTP id gi10-20020a17090b110a00b001b9eb627c00mr492851pjb.67.1645668625737;
-        Wed, 23 Feb 2022 18:10:25 -0800 (PST)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id y23sm719167pgi.36.2022.02.23.18.10.21
+        bh=GFVa3DjQlyegmWMDp165z9Si+REv56L8MkHfgIOzldw=;
+        b=oke16tpU6YCo8iKoMWrbIIA3wCAhVQlWOgivCcwJpZjAbkKGCvY9UnPFWyY/b3jc7j
+         bijBTX7epBEetol9Xv92M9nEC/pkxxxqb4rIDfd0zXF/pj2MDT3/lrgRUqCfhP3h4Bfe
+         94fyF0hkvYpELONhSEZ1Rc2LaoWRD0svfkd89RTwd0ZKApybSMtIXvMKj2hLEasGYBLM
+         MMgYuuv5U7XfJ90FW2v1e/I8Jp8rpeMVkofgLxnTq001ItF83EWRnoWGYU6zLtTEjHAg
+         AqphfZYrreZ2ovu2Rw5+JZ9BzQFNQdmr4yLHySW7dGD0oYlOpOEafX4wa9Hx0N+k+zBr
+         pmrA==
+X-Gm-Message-State: AOAM530MxvVhvDfdEl90qBs9O8yxGzQedakJCf5nvZaZgVnqtvCybICK
+        L6pvfygDBCBlMOHCFyWZpXj5Gw==
+X-Google-Smtp-Source: ABdhPJwBogg0rsy9M4oHjP62JFiYF9ZgSvTm6VvFPZuJ/jwjMjUwWgMnC52O8KBeVvY5KHw1Cc/k6w==
+X-Received: by 2002:a05:6870:8919:b0:d3:7c1a:da69 with SMTP id i25-20020a056870891900b000d37c1ada69mr290520oao.317.1645673285839;
+        Wed, 23 Feb 2022 19:28:05 -0800 (PST)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id u16sm672689oth.53.2022.02.23.19.28.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 18:10:25 -0800 (PST)
-Date:   Thu, 24 Feb 2022 10:10:17 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     kernel test robot <lkp@intel.com>
-Cc:     Marc Zyngier <maz@kernel.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>, kbuild-all@lists.01.org,
-        Valentin Schneider <valentin.schneider@arm.com>,
-        Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Maulik Shah <quic_mkshah@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 3/3] irqchip: Add Qualcomm MPM controller driver
-Message-ID: <20220224021017.GA269879@dragon>
-References: <20220223125536.230224-4-shawn.guo@linaro.org>
- <202202240730.8ES2LbM6-lkp@intel.com>
+        Wed, 23 Feb 2022 19:28:05 -0800 (PST)
+Date:   Wed, 23 Feb 2022 21:28:03 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm GPI DMA Driver
+Message-ID: <Yhb7Q91cEdgayc6c@builder.lan>
+References: <20220222042409.1185564-1-vkoul@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <202202240730.8ES2LbM6-lkp@intel.com>
+In-Reply-To: <20220222042409.1185564-1-vkoul@kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,41 +70,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 24, 2022 at 07:43:21AM +0800, kernel test robot wrote:
-> Hi Shawn,
-> 
-> I love your patch! Perhaps something to improve:
-> 
-> [auto build test WARNING on tip/irq/core]
-> [also build test WARNING on robh/for-next linus/master v5.17-rc5 next-20220222]
-> [If your patch is applied to the wrong git tree, kindly drop us a note.
-> And when submitting patch, we suggest to use '--base' as documented in
-> https://git-scm.com/docs/git-format-patch]
-> 
-> url:    https://github.com/0day-ci/linux/commits/Shawn-Guo/Add-Qualcomm-MPM-irqchip-driver-support/20220223-210123
-> base:   https://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git d2206fcabdfaff3958ab67cc5b8f63257e57b889
-> config: arm64-allyesconfig (https://download.01.org/0day-ci/archive/20220224/202202240730.8ES2LbM6-lkp@intel.com/config)
-> compiler: aarch64-linux-gcc (GCC) 11.2.0
-> reproduce (this is a W=1 build):
->         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
->         chmod +x ~/bin/make.cross
->         # https://github.com/0day-ci/linux/commit/17f8a23f57bf6d0177f6ef6f78237b37bd853e8d
->         git remote add linux-review https://github.com/0day-ci/linux
->         git fetch --no-tags linux-review Shawn-Guo/Add-Qualcomm-MPM-irqchip-driver-support/20220223-210123
->         git checkout 17f8a23f57bf6d0177f6ef6f78237b37bd853e8d
->         # save the config file to linux build tree
->         mkdir build_dir
->         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=arm64 SHELL=/bin/bash drivers/irqchip/
-> 
-> If you fix the issue, kindly add following tag as appropriate
-> Reported-by: kernel test robot <lkp@intel.com>
-> 
-> All warnings (new ones prefixed by >>):
-> 
-> >> drivers/irqchip/qcom-mpm.c:210:21: warning: no previous prototype for 'get_mpm_gic_map' [-Wmissing-prototypes]
->      210 | struct mpm_gic_map *get_mpm_gic_map(struct qcom_mpm_priv *priv, int pin)
->          |                     ^~~~~~~~~~~~~~~
+On Mon 21 Feb 22:24 CST 2022, Vinod Koul wrote:
 
-Oops!  The 'static' declaration got lost.  Will fix in the next version.
+> Qualcomm GPI DMA Driver is used for DMA transfers for Serial engines
+> like Geni I2C and SPI.
+> 
+> Enable this dma driver
+> 
 
-Shawn
+Can you please include a motivation in the commit message why this has
+to be builtin?
+
+Thanks,
+Bjorn
+
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  arch/arm64/configs/defconfig | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 30516dc0b70e..d73913f082d7 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -948,6 +948,7 @@ CONFIG_PL330_DMA=y
+>  CONFIG_TEGRA20_APB_DMA=y
+>  CONFIG_TEGRA210_ADMA=m
+>  CONFIG_QCOM_BAM_DMA=y
+> +CONFIG_QCOM_GPI_DMA=y
+>  CONFIG_QCOM_HIDMA_MGMT=y
+>  CONFIG_QCOM_HIDMA=y
+>  CONFIG_RCAR_DMAC=y
+> -- 
+> 2.34.1
+> 
