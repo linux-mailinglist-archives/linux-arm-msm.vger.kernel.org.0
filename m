@@ -2,70 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C644D4C225F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 04:28:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E4E84C2278
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 04:40:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229489AbiBXD0o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Feb 2022 22:26:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32848 "EHLO
+        id S229546AbiBXDjW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Feb 2022 22:39:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbiBXD0n (ORCPT
+        with ESMTP id S229502AbiBXDjV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Feb 2022 22:26:43 -0500
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD4CE20A3A6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 19:26:14 -0800 (PST)
-Received: by mail-ot1-x329.google.com with SMTP id u17-20020a056830231100b005ad13358af9so438684ote.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 19:26:14 -0800 (PST)
+        Wed, 23 Feb 2022 22:39:21 -0500
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92770230E73
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 19:38:52 -0800 (PST)
+Received: by mail-oi1-x231.google.com with SMTP id 12so1170340oix.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 19:38:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=on9uKzhYwhweFCf7oKVhfgEYko95i4/WUYrvIP0RTh8=;
-        b=cf2SIGl7qEZZ35vEtrjchIJROC+VBCHm8ieSMJbnyzNLy/6Oy3/nbIQgeoaHJ5PDhP
-         we/r2F7Bdh+5d925PQkFdcQKzpvDiiFQN7PUd2e/VHB5R+h+M+gCNtrvI4aJpmxEH8g1
-         /xPmRVU9M7A3dYQRCwPRy5Fwd/DON54lJWqOR4N6Onx5UHsAm05UCxkt46fiPtEkmzsO
-         FQkjmYloVmegueTVRGf3gBwz82CC/Vj+ApB/GfJG8k/nZjyTXRv5bxDTVc5B5SF6qbw5
-         SVUnljrsfqTGSLbzU9MIJq0ZVvpeFyupq2fWuErvA588KcGbJkCly+nNBQch5HVfSZ/T
-         a/3w==
+        bh=BxZQsI9Ur9IiwZjtiMx8X36wZnIDnwb/WkHly+HDiJ0=;
+        b=Rbt5kRB9jY34xgGOun2ec/5vxnlaxjSDv/VEnPbfJXnK23qcSZHzdzPKJ6bj7KYNjq
+         agHsYvSPUYBTX4uU3LIsBm9GsUpdviPDbKjuxIylmDkG7c0aE+qwsL5GxJtJpL1Ipmnt
+         ViRt5M5yr9aW02T81YhiJ4yZvevufWJ9TT2XPa0IMROh0GaqO0V3lyp1GmkQSSzgsw+t
+         /nvW3mq1RiF3UdzoKzE8G9VIawHhYJQVBYHpaPUbk3k3YzvYuVvUzOqhrFwUqx48nHyz
+         +BRlzQFPqVJvUMfC0pEgXPS9GCZN2JHXAFBQC01S8pFlxtFICxvUZP/68f1CzYNW7jcx
+         ByCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=on9uKzhYwhweFCf7oKVhfgEYko95i4/WUYrvIP0RTh8=;
-        b=Z0JU8FZNcdD0P1Re4MevT9l+/ULHgBan4WWMlE0d88xaHZr65ABTZvrn3+r6P6smuw
-         U2tgYJP3alsTNHm2e0/jL4czv57gNsVjmUExSBI+BcrNGwgE+Pq0M3CZh1xvWfzCWDiH
-         vTvpWELNp1FwM058QQuKelCRftxS15IXye1bD5OwwK4FWoXawOVjyvxd5gYFv9qSrApT
-         Kp0TQ/xudbwSOktJ6Kp09gNIu42ncbE+R0OZXi6OMquMDTBMWFs+uHbxOHXHgkZDtNt6
-         u3BqUmD9Io/Wp3fvhGiXb+S4rptRoGtX34NQ+ceCWDRJ7i+YUd4Zvi2hiAbnMSwKi0Cm
-         U/8A==
-X-Gm-Message-State: AOAM532mIHOCV9O7bEAoGcVMrtWtqkL8qlJ9rnL+5MPM5B6Oeu8lvPgm
-        AxmK48PuI5QRyE9UWSqXoJTX8g==
-X-Google-Smtp-Source: ABdhPJx0t/baNQZIQ1Fhsp08N+U5PnUxdY2SAXMYI8Gr8J2zArlZuLhUaYTFliNf2BUItuJ2wDK56w==
-X-Received: by 2002:a9d:5f15:0:b0:5af:5928:d5a1 with SMTP id f21-20020a9d5f15000000b005af5928d5a1mr236017oti.343.1645673174040;
-        Wed, 23 Feb 2022 19:26:14 -0800 (PST)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id g11sm763472oan.35.2022.02.23.19.26.13
+        bh=BxZQsI9Ur9IiwZjtiMx8X36wZnIDnwb/WkHly+HDiJ0=;
+        b=SkSPpyM4FS8UHZOKcB7xjnr7D8NGALghcacEdi6cl3Zizl2JmPZINbM30+t3i0esfY
+         qWgaa6vyq0jrivLPLcKuLZOStv0wRevEIB8VEk5nxAgYuOMH03d45g8o82t9ZBWy0h/1
+         EVZRLe6M2/BhJ2lMkrhHwPTGAOv/im6bl+1DKK2PbSgb4G/wgkggZEhrrdpERg9F9hit
+         kns16XSdx4rjYXLczXoDhP+eUqGsknhzp9wWB9cN5lI/VMo4tcSQcgB4ee5Tp/IjWAMq
+         7hhqdHT/CJUzDqKWW1uUJFIpfpIOVA4l/t40ZIRdGzUPrqUVOKx0sXpKoLhZCEvWkKAd
+         ttxA==
+X-Gm-Message-State: AOAM533YTexqH07tPJKFX4dWJmpPaoYfM+yguAxYy+G6Qy9Dx7MW9+wE
+        GnEAkDDip43kIoDOBmx6tcpBtw==
+X-Google-Smtp-Source: ABdhPJx/a05kDy7ptP7NFqPsOLT7fdqL4YQxuTTF/e/43UwH3umPwSZ4jPFdksemYz4YuVIi15TVKA==
+X-Received: by 2002:aca:aa07:0:b0:2d4:4386:a195 with SMTP id t7-20020acaaa07000000b002d44386a195mr6126653oie.107.1645673931738;
+        Wed, 23 Feb 2022 19:38:51 -0800 (PST)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id q16sm779705oiv.16.2022.02.23.19.38.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 19:26:13 -0800 (PST)
-Date:   Wed, 23 Feb 2022 19:28:11 -0800
+        Wed, 23 Feb 2022 19:38:51 -0800 (PST)
+Date:   Wed, 23 Feb 2022 21:38:49 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Deepak Kumar Singh <quic_deesin@quicinc.com>
-Cc:     quic_clew@quicinc.com, mathieu.poirier@linaro.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH V4 2/2] soc: qcom: smem: validate fields of shared
- structures
-Message-ID: <Yhb7S2mwkEIcZO5X@ripper>
-References: <1644849974-8043-1-git-send-email-quic_deesin@quicinc.com>
- <1644849974-8043-2-git-send-email-quic_deesin@quicinc.com>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 01/16] dt-bindings: clock: split qcom,gcc.yaml to
+ common and specific schema
+Message-ID: <Yhb9yeQqTy6UVeiC@builder.lan>
+References: <20220217235703.26641-1-ansuelsmth@gmail.com>
+ <20220217235703.26641-2-ansuelsmth@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1644849974-8043-2-git-send-email-quic_deesin@quicinc.com>
+In-Reply-To: <20220217235703.26641-2-ansuelsmth@gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,232 +78,213 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 14 Feb 06:46 PST 2022, Deepak Kumar Singh wrote:
+On Thu 17 Feb 17:56 CST 2022, Ansuel Smith wrote:
 
-> Structures in shared memory that can be modified by remote
-> processors may have untrusted values, they should be validated
-> before use.
+> Split qcom,gcc.yaml to common and specific schema to use it as a
+> template for schema that needs to use the gcc bindings and require
+> to add additional bindings.
 > 
-> Adding proper validation before using fields of shared
-> structures.
-
-I'm not able to find patch 1/2, did you send it out or is it just me
-being unlucky finding it?
-
-> 
-> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 > ---
->  drivers/soc/qcom/smem.c | 81 +++++++++++++++++++++++++++++++++++++++++--------
->  1 file changed, 68 insertions(+), 13 deletions(-)
+>  .../bindings/clock/qcom,gcc-other.yaml        | 76 +++++++++++++++++++
+>  .../devicetree/bindings/clock/qcom,gcc.yaml   | 63 ++-------------
+>  2 files changed, 82 insertions(+), 57 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
 > 
-> diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
-> index 96444ff..644844b 100644
-> --- a/drivers/soc/qcom/smem.c
-> +++ b/drivers/soc/qcom/smem.c
-> @@ -367,13 +367,18 @@ static int qcom_smem_alloc_private(struct qcom_smem *smem,
->  	struct smem_partition_header *phdr;
->  	size_t alloc_size;
->  	void *cached;
-> +	void *p_end;
->  
->  	phdr = (struct smem_partition_header __force *)part->virt_base;
-> +	p_end = (void *)phdr + part->size;
->  
->  	hdr = phdr_to_first_uncached_entry(phdr);
->  	end = phdr_to_last_uncached_entry(phdr);
->  	cached = phdr_to_last_cached_entry(phdr);
->  
-> +	if (WARN_ON((void *)end > p_end || (void *)cached > p_end))
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+> new file mode 100644
+> index 000000000000..824d80530683
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
 
-cached is a void * already, do you really need to cast it?
+This work for me.
 
-> +		return -EINVAL;
-> +
->  	while (hdr < end) {
->  		if (hdr->canary != SMEM_PRIVATE_CANARY)
->  			goto bad_canary;
-> @@ -383,6 +388,9 @@ static int qcom_smem_alloc_private(struct qcom_smem *smem,
->  		hdr = uncached_entry_next(hdr);
->  	}
->  
-> +	if (WARN_ON((void *)hdr > p_end))
-> +		return -EINVAL;
-> +
->  	/* Check that we don't grow into the cached region */
->  	alloc_size = sizeof(*hdr) + ALIGN(size, 8);
->  	if ((void *)hdr + alloc_size > cached) {
-> @@ -501,6 +509,8 @@ static void *qcom_smem_get_global(struct qcom_smem *smem,
->  	struct smem_header *header;
->  	struct smem_region *region;
->  	struct smem_global_entry *entry;
-> +	u64 entry_offset;
-> +	u32 e_size;
->  	u32 aux_base;
->  	unsigned i;
->  
-> @@ -515,9 +525,13 @@ static void *qcom_smem_get_global(struct qcom_smem *smem,
->  		region = &smem->regions[i];
->  
->  		if ((u32)region->aux_base == aux_base || !aux_base) {
-> +			e_size = le32_to_cpu(entry->size);
-> +			entry_offset = le32_to_cpu(entry->offset);
-> +
->  			if (size != NULL)
-> -				*size = le32_to_cpu(entry->size);
-> -			return region->virt_base + le32_to_cpu(entry->offset);
-> +				*size = e_size;
-> +
-> +			return region->virt_base + entry_offset;
+> @@ -0,0 +1,76 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,gcc.yaml#
 
-The only change I see here is that you read entry->size regardless of
-size being requested or not, so I don't see any "sanity checking" here.
+But shouldn't this be qcom,gcc-other.yaml then?
 
->  		}
->  	}
->  
-> @@ -531,8 +545,12 @@ static void *qcom_smem_get_private(struct qcom_smem *smem,
->  {
->  	struct smem_private_entry *e, *end;
->  	struct smem_partition_header *phdr;
-> +	void *item_ptr, *p_end;
-> +	u32 padding_data;
-> +	u32 e_size;
->  
->  	phdr = (struct smem_partition_header __force *)part->virt_base;
-> +	p_end = (void *)phdr + part->size;
->  
->  	e = phdr_to_first_uncached_entry(phdr);
->  	end = phdr_to_last_uncached_entry(phdr);
-> @@ -542,36 +560,65 @@ static void *qcom_smem_get_private(struct qcom_smem *smem,
->  			goto invalid_canary;
->  
->  		if (le16_to_cpu(e->item) == item) {
-> -			if (size != NULL)
-> -				*size = le32_to_cpu(e->size) -
-> -					le16_to_cpu(e->padding_data);
-> +			if (size != NULL) {
-> +				e_size = le32_to_cpu(e->size);
-> +				padding_data = le16_to_cpu(e->padding_data);
->  
-> -			return uncached_entry_to_item(e);
-> +				if (WARN_ON(e_size > part->size || padding_data > e_size))
-> +					return ERR_PTR(-EINVAL);
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +				*size = e_size - padding_data;
-> +			}
+> +title: Qualcomm Global Clock & Reset Controller Binding
 > +
-> +			item_ptr = uncached_entry_to_item(e);
-> +			if (WARN_ON(item_ptr > p_end))
-> +				return ERR_PTR(-EINVAL);
+> +maintainers:
+> +  - Stephen Boyd <sboyd@kernel.org>
+> +  - Taniya Das <tdas@codeaurora.org>
 > +
-> +			return item_ptr;
->  		}
->  
->  		e = uncached_entry_next(e);
->  	}
->  
-> +	if (WARN_ON((void *)e > p_end))
-> +		return ERR_PTR(-EINVAL);
+> +description:
+> +  Qualcomm global clock control module which supports the clocks, resets and
+> +  power domains.
 > +
->  	/* Item was not found in the uncached list, search the cached list */
->  
->  	e = phdr_to_first_cached_entry(phdr, part->cacheline);
->  	end = phdr_to_last_cached_entry(phdr);
->  
-> +	if (WARN_ON((void *)e < (void *)phdr || (void *)end > p_end))
-> +		return ERR_PTR(-EINVAL);
+> +  See also:
+> +  - dt-bindings/clock/qcom,gcc-apq8084.h
+> +  - dt-bindings/reset/qcom,gcc-apq8084.h
+> +  - dt-bindings/clock/qcom,gcc-ipq4019.h
+> +  - dt-bindings/clock/qcom,gcc-ipq6018.h
+> +  - dt-bindings/reset/qcom,gcc-ipq6018.h
+> +  - dt-bindings/clock/qcom,gcc-ipq806x.h (qcom,gcc-ipq8064)
+> +  - dt-bindings/reset/qcom,gcc-ipq806x.h (qcom,gcc-ipq8064)
+> +  - dt-bindings/clock/qcom,gcc-msm8939.h
+> +  - dt-bindings/clock/qcom,gcc-msm8953.h
+> +  - dt-bindings/reset/qcom,gcc-msm8939.h
+> +  - dt-bindings/clock/qcom,gcc-msm8660.h
+> +  - dt-bindings/reset/qcom,gcc-msm8660.h
+> +  - dt-bindings/clock/qcom,gcc-msm8974.h (qcom,gcc-msm8226 and qcom,gcc-msm8974)
+> +  - dt-bindings/reset/qcom,gcc-msm8974.h (qcom,gcc-msm8226 and qcom,gcc-msm8974)
+> +  - dt-bindings/clock/qcom,gcc-mdm9607.h
+> +  - dt-bindings/clock/qcom,gcc-mdm9615.h
+> +  - dt-bindings/reset/qcom,gcc-mdm9615.h
+> +  - dt-bindings/clock/qcom,gcc-sdm660.h  (qcom,gcc-sdm630 and qcom,gcc-sdm660)
 > +
->  	while (e > end) {
->  		if (e->canary != SMEM_PRIVATE_CANARY)
->  			goto invalid_canary;
->  
->  		if (le16_to_cpu(e->item) == item) {
-> -			if (size != NULL)
-> -				*size = le32_to_cpu(e->size) -
-> -					le16_to_cpu(e->padding_data);
-> +			if (size != NULL) {
-> +				e_size = le32_to_cpu(e->size);
-> +				padding_data = le16_to_cpu(e->padding_data);
+> +allOf:
+> +  - $ref: "qcom,gcc.yaml#"
 > +
-> +				if (WARN_ON(e_size > part->size || padding_data > e_size))
-> +					return ERR_PTR(-EINVAL);
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,gcc-apq8084
+> +      - qcom,gcc-ipq4019
+> +      - qcom,gcc-ipq6018
+> +      - qcom,gcc-ipq8064
+> +      - qcom,gcc-mdm9607
+> +      - qcom,gcc-msm8226
+> +      - qcom,gcc-msm8660
+> +      - qcom,gcc-msm8916
+> +      - qcom,gcc-msm8939
+> +      - qcom,gcc-msm8953
+> +      - qcom,gcc-msm8960
+> +      - qcom,gcc-msm8974
+> +      - qcom,gcc-msm8974pro
+> +      - qcom,gcc-msm8974pro-ac
+> +      - qcom,gcc-mdm9615
+> +      - qcom,gcc-sdm630
+> +      - qcom,gcc-sdm660
 > +
-> +				*size = e_size - padding_data;
-> +			}
+> +required:
+> +  - compatible
 > +
-> +			item_ptr = cached_entry_to_item(e);
-> +			if (WARN_ON(item_ptr < (void *)phdr))
-> +				return ERR_PTR(-EINVAL);
->  
-> -			return cached_entry_to_item(e);
-> +			return item_ptr;
->  		}
->  
->  		e = cached_entry_next(e, part->cacheline);
->  	}
->  
-> +	if (WARN_ON((void *)e < (void *)phdr))
-> +		return ERR_PTR(-EINVAL);
+> +unevaluatedProperties: false
 > +
->  	return ERR_PTR(-ENOENT);
->  
->  invalid_canary:
-> @@ -648,14 +695,23 @@ int qcom_smem_get_free_space(unsigned host)
->  		phdr = part->virt_base;
->  		ret = le32_to_cpu(phdr->offset_free_cached) -
->  		      le32_to_cpu(phdr->offset_free_uncached);
-> +
-> +		if (ret > le32_to_cpu(part->size))
-> +			return -EINVAL;
->  	} else if (__smem->global_partition.virt_base) {
->  		part = &__smem->global_partition;
->  		phdr = part->virt_base;
->  		ret = le32_to_cpu(phdr->offset_free_cached) -
->  		      le32_to_cpu(phdr->offset_free_uncached);
-> +
-> +		if (ret > le32_to_cpu(part->size))
-> +			return -EINVAL;
->  	} else {
->  		header = __smem->regions[0].virt_base;
->  		ret = le32_to_cpu(header->available);
-> +
-> +		if (ret > __smem->regions[0].size)
-> +			return -EINVAL;
->  	}
->  
->  	return ret;
-> @@ -918,13 +974,12 @@ qcom_smem_enumerate_partitions(struct qcom_smem *smem, u16 local_host)
->  static int qcom_smem_map_toc(struct qcom_smem *smem, struct smem_region *region)
+> +examples:
+> +  # Example for GCC for MSM8960:
+> +  - |
+> +    clock-controller@900000 {
+> +      compatible = "qcom,gcc-msm8960";
+> +      reg = <0x900000 0x4000>;
+> +      #clock-cells = <1>;
+> +      #reset-cells = <1>;
+> +      #power-domain-cells = <1>;
+> +    };
+> +...
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+> index f66d703bd913..ea1dd94d8bf1 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+> @@ -1,60 +1,20 @@
+> -# SPDX-License-Identifier: GPL-2.0-only
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
 
-I presume this function was introduced in patch 1?
+We would need to double check with existing copyright holders. My
+suggestion is that we change that separately.
 
->  {
->  	u32 ptable_start;
-> -	int ret;
+>  %YAML 1.2
+>  ---
+> -$id: http://devicetree.org/schemas/clock/qcom,gcc.yaml#
+> +$id: http://devicetree.org/schemas/clock/qcom,gcc-common.yaml#
 
-Below changes doesn't affect "ret", so it should probably have been
-removed in the previous patch.
+You forgot to change this back to just gcc.yaml.
 
->  
->  	/* map starting 4K for smem header */
-> -	region->virt_base = devm_ioremap_wc(dev, region->aux_base, SZ_4K);
-> +	region->virt_base = devm_ioremap_wc(smem->dev, region->aux_base, SZ_4K);
-
-I don't see "dev" in the scope here, did this compile after patch 1?
-
->  	ptable_start = region->aux_base + region->size - SZ_4K;
->  	/* map last 4k for toc */
-> -	smem->ptable = devm_ioremap_wc(dev, ptable_start, SZ_4K);
-> +	smem->ptable = devm_ioremap_wc(smem->dev, ptable_start, SZ_4K);
-
-Ditto.
+With those two things this looks good to me.
 
 Regards,
-Bjorn
+Bjron
 
+>  $schema: http://devicetree.org/meta-schemas/core.yaml#
 >  
->  	if (!region->virt_base || !smem->ptable)
->  		return -ENOMEM;
+> -title: Qualcomm Global Clock & Reset Controller Binding
+> +title: Qualcomm Global Clock & Reset Controller Binding Common Bindings
+>  
+>  maintainers:
+>    - Stephen Boyd <sboyd@kernel.org>
+>    - Taniya Das <tdas@codeaurora.org>
+>  
+>  description: |
+> -  Qualcomm global clock control module which supports the clocks, resets and
+> -  power domains.
+> -
+> -  See also:
+> -  - dt-bindings/clock/qcom,gcc-apq8084.h
+> -  - dt-bindings/reset/qcom,gcc-apq8084.h
+> -  - dt-bindings/clock/qcom,gcc-ipq4019.h
+> -  - dt-bindings/clock/qcom,gcc-ipq6018.h
+> -  - dt-bindings/reset/qcom,gcc-ipq6018.h
+> -  - dt-bindings/clock/qcom,gcc-ipq806x.h (qcom,gcc-ipq8064)
+> -  - dt-bindings/reset/qcom,gcc-ipq806x.h (qcom,gcc-ipq8064)
+> -  - dt-bindings/clock/qcom,gcc-msm8939.h
+> -  - dt-bindings/clock/qcom,gcc-msm8953.h
+> -  - dt-bindings/reset/qcom,gcc-msm8939.h
+> -  - dt-bindings/clock/qcom,gcc-msm8660.h
+> -  - dt-bindings/reset/qcom,gcc-msm8660.h
+> -  - dt-bindings/clock/qcom,gcc-msm8974.h (qcom,gcc-msm8226 and qcom,gcc-msm8974)
+> -  - dt-bindings/reset/qcom,gcc-msm8974.h (qcom,gcc-msm8226 and qcom,gcc-msm8974)
+> -  - dt-bindings/clock/qcom,gcc-mdm9607.h
+> -  - dt-bindings/clock/qcom,gcc-mdm9615.h
+> -  - dt-bindings/reset/qcom,gcc-mdm9615.h
+> -  - dt-bindings/clock/qcom,gcc-sdm660.h  (qcom,gcc-sdm630 and qcom,gcc-sdm660)
+> +  Common bindings for Qualcomm global clock control module which supports
+> +  the clocks, resets and power domains.
+>  
+>  properties:
+> -  compatible:
+> -    enum:
+> -      - qcom,gcc-apq8084
+> -      - qcom,gcc-ipq4019
+> -      - qcom,gcc-ipq6018
+> -      - qcom,gcc-ipq8064
+> -      - qcom,gcc-mdm9607
+> -      - qcom,gcc-msm8226
+> -      - qcom,gcc-msm8660
+> -      - qcom,gcc-msm8916
+> -      - qcom,gcc-msm8939
+> -      - qcom,gcc-msm8953
+> -      - qcom,gcc-msm8960
+> -      - qcom,gcc-msm8974
+> -      - qcom,gcc-msm8974pro
+> -      - qcom,gcc-msm8974pro-ac
+> -      - qcom,gcc-mdm9615
+> -      - qcom,gcc-sdm630
+> -      - qcom,gcc-sdm660
+> -
+>    '#clock-cells':
+>      const: 1
+>  
+> @@ -72,22 +32,11 @@ properties:
+>        Protected clock specifier list as per common clock binding.
+>  
+>  required:
+> -  - compatible
+>    - reg
+>    - '#clock-cells'
+>    - '#reset-cells'
+>    - '#power-domain-cells'
+>  
+> -additionalProperties: false
+> +additionalProperties: true
+>  
+> -examples:
+> -  # Example for GCC for MSM8960:
+> -  - |
+> -    clock-controller@900000 {
+> -      compatible = "qcom,gcc-msm8960";
+> -      reg = <0x900000 0x4000>;
+> -      #clock-cells = <1>;
+> -      #reset-cells = <1>;
+> -      #power-domain-cells = <1>;
+> -    };
+>  ...
 > -- 
-> 2.7.4
+> 2.34.1
 > 
