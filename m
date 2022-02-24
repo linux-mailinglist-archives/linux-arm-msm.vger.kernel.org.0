@@ -2,150 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AEAF34C322C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 17:51:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 283634C3230
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 17:53:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230493AbiBXQvn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Feb 2022 11:51:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51812 "EHLO
+        id S229633AbiBXQwZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Feb 2022 11:52:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230419AbiBXQvl (ORCPT
+        with ESMTP id S229978AbiBXQwY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Feb 2022 11:51:41 -0500
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91AAF10E579
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 08:51:10 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id 12so3357466oix.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 08:51:10 -0800 (PST)
+        Thu, 24 Feb 2022 11:52:24 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 709553586B;
+        Thu, 24 Feb 2022 08:51:46 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id qx21so5603428ejb.13;
+        Thu, 24 Feb 2022 08:51:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=N8RCTotc4cmUTmsRA5J7naJcJh1Q7sGDDwovYyQT86k=;
-        b=fg9hkYcI5u3dbEw84om3H3LjBjjbFYuyGuZzo+47DtuUpbVS1U4m45qC/FWjkCJ0Fq
-         Eve4HcWP9XH/q1aMs4G4ocbr+xm+z0OIssB4urMuHCRuI/h6X87iF+ZPNhLWVkMUAt0+
-         MTrapkTrtRJFqglGwZ0sh0i1pHqLXoEFoC9Fcl+8BV0ksyQ4oiITyBSys7yZZhX4vEnF
-         C27Xn8uPVBu11qhWxaVSvdAR46bqzbW+nttpUdMm5PDNRVqQKBQFEYPhyBtPGYCFsVZo
-         XmjrNqjO8pHZW7S7UelvdUQw+nGMK8Y3c7Q5UP6CqicM2vNVAoClaawvVilgXSWCOjPg
-         4YOA==
+         :content-disposition:in-reply-to:user-agent;
+        bh=0BX8BM017uCOv9ckNj58aZrZbCd/kR/+hefTXMO9tPo=;
+        b=kiIocb6M3Uuv4xiRzAdVw033se264t+5e8SmYP5ibq1I4FYRMAbbkXLawlWwzOm54C
+         xHb9/0YbSlMUpw2Y6llCywFgYrAx7ZpZqQ+LatVEGnWWdWhVfJOQgo+QQSMiaB0nhH26
+         kpkq/SZK9dynlhtQuiHfpLZe9Mhcoq6diD0oyzZr+Eab5VLwELySFw3E0vHze+1GYjcg
+         a7cktJzM4p6B4R9ymuUjhoB5MBJsi2ax6GGP6CGvS9MpQvS2yOvXYqUupHSeCx/uSRcg
+         PBt4OTHJvYUrvjPylxPIa+CChh3DpYRgOwluNXETDaED4nhajMnp9x/THJUOxJfe+68g
+         DzYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=N8RCTotc4cmUTmsRA5J7naJcJh1Q7sGDDwovYyQT86k=;
-        b=B65VQ3VuL60Ov09cqpG5tyt+sHkxI4hp/rw9ChDwZMSYSJNf20grflYDV6YhRUd1Qn
-         U2lUTEkQN8i0BA2UJ3ZHwE1flPd7dws6qUEuRbDDe4KigscZ+Yjudo5Q6Qv4QGW0csWX
-         c3gN93cCnWj/J8hV55cQoVDgiHZCBj58X8rnsP4Zutob/txjmooMnfoIggQMA/dVT325
-         8agBtOe9X5jgHiGpjW8C8SCSEctx3uuTleCWnCEU3KjIptOX4nnFj/msOsmVtWky8BZd
-         b83EeGXgC96F2voMTmGK162yIPL9WZpp8Hie2iSmfBfi9VYZGaTSIeUeuRL2P7tszyEU
-         AfcA==
-X-Gm-Message-State: AOAM530TqFk+nu8l9ffP60xSU2SSIkSmzzg2IakZ3EZWOYTuKlXSu3/s
-        hAa5/7nmgfJvX4+bzUklWpQg2A==
-X-Google-Smtp-Source: ABdhPJyH21pu5ycMxU9OVqYiNC++pfYrdMu5u7iIlq5TKIHOHUPz7vUGqYR/Y3LCAml5DLdoA8oD4g==
-X-Received: by 2002:a05:6808:1801:b0:2d7:206e:36fd with SMTP id bh1-20020a056808180100b002d7206e36fdmr3705715oib.3.1645721469908;
-        Thu, 24 Feb 2022 08:51:09 -0800 (PST)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id lc4-20020a056871418400b000c8a240183csm33827oab.25.2022.02.24.08.51.08
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=0BX8BM017uCOv9ckNj58aZrZbCd/kR/+hefTXMO9tPo=;
+        b=q0d+qe+miDlHrQtrL3aAVTcYOPTh5r2IqEd5/F6rQOf3TMCfxCfQH1Fl0kLayU1sZk
+         6Yer7JpcT6ivvv7mgbek8wi63WwhW16JmZV6TSSaZRd/V9sFGCPu3uEPCkmIhVTghPzB
+         H9CP5rtCgfw8pdb70v9zbMqxyDLXVP9o6Czb3oIxHiI1DidN5kufSKxmD0lvjUdDpRve
+         LMg2QxfF7RQYOEx+RfS4J0VU+XYV51b0Gaes8Q+HRbsumzD68qmNWGz0YuX6HMyXAXsG
+         vMjcgQKxkcO00ukPPaGf1bWpWQIfv6DUUBZzYxbIFZGb1fC+Ea9RtMu/1ANfnwYtWA6p
+         UQ7g==
+X-Gm-Message-State: AOAM531+xG7c1bJwT1zAPYutuRRcATc/BrDYIbZ+OsSe+Yrx9qzbDRfN
+        DpdFEbjSrU443oifsv4aIuA=
+X-Google-Smtp-Source: ABdhPJyWV1zkvb8+mEvqp9ZSTYLeQknbMbcIBqw4G7wy2t0xWvm2gOYKTOxfOHmqMh5tXSGKmjzpjg==
+X-Received: by 2002:a17:906:af79:b0:6ce:61d3:7e9b with SMTP id os25-20020a170906af7900b006ce61d37e9bmr3085459ejb.191.1645721505223;
+        Thu, 24 Feb 2022 08:51:45 -0800 (PST)
+Received: from orome ([62.96.65.119])
+        by smtp.gmail.com with ESMTPSA id j3sm1600520ejj.9.2022.02.24.08.51.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Feb 2022 08:51:09 -0800 (PST)
-Date:   Thu, 24 Feb 2022 10:51:07 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, Wei Xu <xuwei5@hisilicon.com>,
-        Nishanth Menon <nm@ti.com>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Tero Kristo <kristo@kernel.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Jan Kotas <jank@cadence.com>, Li Wei <liwei213@huawei.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Yaniv Gardi <ygardi@codeaurora.org>,
-        linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Thu, 24 Feb 2022 08:51:44 -0800 (PST)
+Date:   Thu, 24 Feb 2022 17:51:41 +0100
+From:   Thierry Reding <thierry.reding@gmail.com>
+To:     Marc Zyngier <maz@kernel.org>
+Cc:     linux-kernel@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Joey Gouly <joey.gouly@arm.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH v2 09/15] scsi: ufs: deprecate 'freq-table-hz' property
-Message-ID: <Yhe3e1coeUIGu+NB@builder.lan>
-References: <20220222145854.358646-1-krzysztof.kozlowski@canonical.com>
- <20220222145854.358646-10-krzysztof.kozlowski@canonical.com>
- <YhUodbzxx4wbr+gy@ripper>
- <455a8a87-63e7-7864-f765-142be18d1fa8@canonical.com>
+        linux-arm-msm@vger.kernel.org, kernel-team@android.com
+Subject: Re: [PATCH 1/5] gpio: Don't fiddle with irqchips marked as immutable
+Message-ID: <Yhe3neSJbAxRbt+Z@orome>
+References: <20220223154405.54912-1-maz@kernel.org>
+ <20220223154405.54912-2-maz@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="vbN/cyUZyiD0I2CK"
 Content-Disposition: inline
-In-Reply-To: <455a8a87-63e7-7864-f765-142be18d1fa8@canonical.com>
+In-Reply-To: <20220223154405.54912-2-maz@kernel.org>
+User-Agent: Mutt/2.2.1 (c8109e14) (2022-02-19)
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 23 Feb 03:15 CST 2022, Krzysztof Kozlowski wrote:
 
-> On 22/02/2022 19:16, Bjorn Andersson wrote:
-> > On Tue 22 Feb 06:58 PST 2022, Krzysztof Kozlowski wrote:
-> > 
-> >> The 'freq-table-hz' is not correct in DT schema, because '-hz' suffix
-> >> defines uint32 type, not an array.  Therefore deprecate 'freq-table-hz'
-> >> and use 'freq-table' instead.
-> >>
-> > 
-> > Patch looks good in itself, but why don't we use opp-table to describe
-> > the performance states?
-> > 
-> > In particular looking at the two columns of frequencies for various
-> > Qualcomm boards they require different performance-states.
-> > 
-> > A concrete example is sm8350.dtsi, which specifies 75MHz and 300MHz as
-> > the first frequency pair. The lower level requires the VDD_CX power rail
-> > to be at least &rpmhpd_opp_low_svs, the higher frequency has a
-> > required-opps of &rpmhpd_opp_nom.
-> > 
-> > 
-> > As this isn't possible to express in the current binding we've just been
-> > forced to always run at a higher voltage level and kept this in the todo
-> > list.
-> > 
-> > But rather than migrating freq-table-hz to freq-table and then having to
-> > introduce an opp table to express the power constraints, could we
-> > perhaps skip the intermediate step?
-> > 
-> > Or would you have any other suggestion about how we can represent the
-> > required-opps level together with the freq-table (if that's what we want
-> > to stick with).
-> 
-> Usage of OPP tables is interesting solution. It would solve your problem
-> of power rail levels. This would need several opp-tables - one for each
-> clock, which is not a big problem.
-> 
+--vbN/cyUZyiD0I2CK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Ahh, so we can only have a single clock, but multiple regulators and
-interconnect paths tied to the opp table.
+On Wed, Feb 23, 2022 at 03:44:01PM +0000, Marc Zyngier wrote:
+> In order to move away from gpiolib messing with the internals of
+> unsuspecting irqchips, add a flag by which irqchips advertise
+> that they are not to be messed with, and do solemnly swear that
+> they correctly call into the gpiolib helpers wueh required.
+>=20
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
+> ---
+>  drivers/gpio/gpiolib.c | 7 ++++++-
+>  include/linux/irq.h    | 2 ++
+>  kernel/irq/debugfs.c   | 1 +
+>  3 files changed, 9 insertions(+), 1 deletion(-)
 
-We have a couple of cases where it would have been nice to be able to
-key the opp-table off some index (e.g. the UFS gear or PCI Gen) and
-control multiple clocks. So I think we need to look into this further...
+I kind of like this. The bit where the const cast is essentially guarded
+by an "immutable" flag is a bit funky, but it doesn't look like there is
+a good way to do it by making all references const without doing a huge
+all-at-once conversion.
 
-> The problem is that I do not have any UFS hardware (none of my Samsung
-> Exynos boards have UFS... I don't have even arm64 Exynos chips :( ), so
-> implementing it theoretically will be painful.
-> OTOH, I believe that having a working dtschema is very useful. Having
-> dtschema without errors/warnings is even worth some churn/intermediary work.
-> 
-> The intermediary work is also not that big. Once proper OPP is
-> implemented, we will have "just" two deprecated properties in the bindings.
-> 
+I've always found it a bit irritating that irq_chip was somewhere
+between a container for chip-specific data and an "ops" structure. I
+think it'd be even nicer if this was split into an extra struct
+irq_chip_ops, which could then always be const and a struct irq_chip
+that contained primarily chip-specific data as well as a pointer to
+struct irq_chip_ops.
 
-Fair enough, was just hoping to avoid the middle step. But that's fine,
-we'll continue to carry this on our todo list then.
+But again, this seems fairly tricky to pull off given all the
+interdependencies and we can iterate on this in the future, so this
+seems like a good enough compromise:
 
-Thanks,
-Bjorn
+Acked-by: Thierry Reding <treding@nvidia.com>
+
+--vbN/cyUZyiD0I2CK
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmIXt5oACgkQ3SOs138+
+s6Hsmg//ZlvIGlAISsBwoAWBpifpjvE4OPtPa2w5okmTJxjSFYwmu1dcqaGOQbqk
+PM58PdveLzwtzZUMy2BFNGtyE1cXPfDvIQlUP2QXjkpmpOH0nZvLbKLtbaOKPe5/
+k7ZT1snfCCPyCSkTt3ObyRr/vd09RHkcocvJ3BPX8qgcFs8RP+csLO4LbtPdN4Mp
+DTPbjaUqdqG2RvSuEtRrHenTZ6f+g+39LrwgfzRXztvQvFtNEmK+D/sZDENkTVtm
++YIJBgiANbzhXtib+/9FaG3MJECmu6ZBNNSaZat91Ksn+TWDz/RYRdZSsEcposEx
+eH5P6Oas2DsQ8P8ny7jplcGV1nOGobRdQBRWnWHXKDGrsDBaVzdFjc4Z/rzoRshO
+a5kV7CL+T6Gu+xVWS81PBBcUcwFsIpn5QWe32g3g0cPuNJpsWYpM6lnbH+CrQcQR
+LTOMQiTe8hyf6vdhTbdMfb6I/i3JscSm23KJYgZD1Se1bYkzi6DbCf62W2ygqHgT
+yakOPdNcZP8KZKp85niKcUdG/ecW9HtTSBGSLDkyMUgBqg4Jr/2uC6C1h/ra3t/D
+HlMJDYR4rrx0kR6JDiHl4Be0AJPPo2YksA+YZzVYIOgv0dMLzk9JX0AXeSwo6xBT
+Byu+xRCU7+shobZGJlJOJXnRXw7XwLhg3pdOwotfppxKxXcUgzU=
+=JQTC
+-----END PGP SIGNATURE-----
+
+--vbN/cyUZyiD0I2CK--
