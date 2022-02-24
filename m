@@ -2,115 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B2CD54C2EAF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 15:53:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D4894C2FC3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 16:34:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235620AbiBXOx3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Feb 2022 09:53:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52624 "EHLO
+        id S232525AbiBXPei (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Feb 2022 10:34:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233763AbiBXOx2 (ORCPT
+        with ESMTP id S229594AbiBXPeh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Feb 2022 09:53:28 -0500
-Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F1A116043E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 06:52:57 -0800 (PST)
-Received: by mail-qv1-xf32.google.com with SMTP id a1so3930669qvl.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 06:52:57 -0800 (PST)
+        Thu, 24 Feb 2022 10:34:37 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C06FE1C60D7;
+        Thu, 24 Feb 2022 07:34:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tI8CvWg+ssaQJOFIxe9Ug9FFFdfMXmAocHJte6H9sd8=;
-        b=L+2YgQH+bKNqze7jBfAY65lTykr+fyqXwFDfq4qmu87DLjRqZShxhlIhZHzUudkU8H
-         etIUeZYJweFhWZrxn+YWHuJYij9oGbnZIG2HCtkkGT/XUeUimOaHjMCJi3f/VpvEePr6
-         zntfT9yIfCBvSOUEmsPIYussYZzW7EZpe/C0i/CUYTmDq9GGyHKg8TRRmTmtszJUShyp
-         e+PBf8Otcyb0a/mJM9AdMp9LmtVAxYpqg+AykkEDeCnqxdyGsbHvIa0Wat6ydjU31jQO
-         t7xo8T4J9EuwFJ/x+xNNOsiDjtVYtATHzx8hrJqyObtjG+Gb6ejUgAjYguuXo3Mv4+dx
-         JcAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tI8CvWg+ssaQJOFIxe9Ug9FFFdfMXmAocHJte6H9sd8=;
-        b=6MboW6oqZ27WxNQrgGwQK0vMVdo+yOUwO8XoBSLWDJJpqRRuKzRiolQoZjvxV/G+QW
-         dy3au4DbUcv8ZcfOZJYVF/bgjEBGGr/eCtMG+3XsR0jZQmPv5JtPtPTGy3QNO6bFyaD7
-         jnaydGbSFyMBJP7e2kVjxM5y1mlX0DKo5wyXonLRuwaaJLTjbZpY83efkJc+40nH04//
-         4EA9nnAOcWpKM9Wkq2TFfiQSjyo2GmTnZxNf5bKHrOS82pSfrhevpW/6BoDu+9BoHtSN
-         rF6q0RQMIl/GqPji+8kXS/Zn+r6kxdYD58Znx7e+qp5m9Ho5d5Lfe2b93j/ftS7dsLjh
-         HcrA==
-X-Gm-Message-State: AOAM531ewqTbej90dbEZ6qO4sJkPxxfaOmGIdthPgSLETE6Dcd+gQH04
-        jD3Jvms++SCGhs4M6wadAYjFjq6rCTsor9wVtI0xgw==
-X-Google-Smtp-Source: ABdhPJyipTRKZTc+dDLKioP00ztl/m1yyc6CIiZX/LXNRpWTBXH6mmehjqQNSw5u2Ap+TGvrEpB+JURvzQCFTP3QfT8=
-X-Received: by 2002:ac8:5cc9:0:b0:2de:8838:5888 with SMTP id
- s9-20020ac85cc9000000b002de88385888mr2646241qta.370.1645714376485; Thu, 24
- Feb 2022 06:52:56 -0800 (PST)
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645716847; x=1677252847;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=EpIXWae+G9lfElx7qaQlLyXt/zO4Kstfz079ACqe7Ik=;
+  b=KLShlowvqRsYUfJjYIFiTIPVqKb0DDmxuS1H4KHDuaMYgon4G8pIcg1e
+   9QhQz5MHaJPw/iw+KdjkZGeQIpct8W3tOeZfjtytJQYgD/U1C4F6Wp7mu
+   HejQpPZ/7Y+hB037wNgnTvtfvo3R/XCrb+YrELnV7N9bxCvXpOK3RNUyA
+   E=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 24 Feb 2022 07:34:07 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Feb 2022 07:34:06 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Thu, 24 Feb 2022 07:34:06 -0800
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Thu, 24 Feb 2022 07:34:01 -0800
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@codeaurora.org>,
+        <perex@perex.cz>, <tiwai@suse.com>,
+        <srinivas.kandagatla@linaro.org>, <rohitkr@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Subject: [PATCH v16 0/9] Add support for audio on SC7280 based targets
+Date:   Thu, 24 Feb 2022 21:03:39 +0530
+Message-ID: <1645716828-15305-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-References: <20220224123248.67073-1-bhupesh.sharma@linaro.org>
-In-Reply-To: <20220224123248.67073-1-bhupesh.sharma@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 24 Feb 2022 17:52:45 +0300
-Message-ID: <CAA8EJprRgsZRSXBQumveAn029j+w6xO8K2kZUO4rzZaefuYe7Q@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,qmp: Mark '#clock-cells' as a
- 'optional' property
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-phy@lists.infradead.org,
-        robh+dt@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 24 Feb 2022 at 15:33, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
->
-> Since '#clock-cells' is not a required property for several
-> QCoM boards supporting qmp-phy(s) (for e.g. sm8150, sm8250 or sm8350 SoC
-> based boards), mark it as an optional property instead.
+This patch set is to add support for Audio over wcd codec,
+digital mics, through digital codecs and without ADSP.
 
-I believe the description is not correct. the clock-cells should not
-be used at all, so it should be removed from the root node.
-Also we should describe phy@ properties.
+Changes Since V15:
+    -- Bisect patches to avoid build failure in other architectures.
+    -- Remove redundant variables lpass variant structure.
+Changes Since V14:
+    -- Split common wrapper function to separate wrapper for each handle in platform driver.
+    -- Update cdc dma buffer handling with memremap with ioremap.    
+    -- Remove redundant error prints.
+    -- Update irq flag.
+Changes Since V13:
+    -- Change bulk cdc clock voting to individual clock voting.
+    -- Remove redundant code, conditional check and prints.
+    -- Fix typo errors.
+Changes Since V12:
+    -- Fix arguments type mismatch.
+Changes Since V11:
+    -- Fix kernel robot issue on arguments type mismatch.
+Changes Since V10:
+    -- Split bulk clock voting to individual clock voting as per use case in cdc-dma driver.
+    -- Add missing codec dma clocks.
+    -- Update rxtx lpm buffer size.
+Changes Since V9:
+    -- Change individual clock voting to bulk clock voting of lpass-sc7280 platform driver.
+    -- Remove redundant clocks in lpass variant structure.
+    -- Add mclk for MI2S based headset path.
+    -- Remove unused lpass variant structure members in lpass header.
+Changes Since V8:
+    -- Fix errors in sc7280 lpass cpu dt-bindings.
+    -- Move to quicinc domain email id's.
+Changes Since V7:
+    -- Fix indentation errors.
+    -- Bisect patches to avoid interdependency.
+Changes Since V6:
+    -- Split cdc dma regmap config macros.
+    -- Add write dma reg fields for i2s path.
+    -- Add helper function to distinguish rxtx and va dma ports.
+    -- Optimizing clock and reg name in cpu dt-bindings.
+    -- Update buffer management for cdc dma path.
+    -- Remove Kconfig fields of machine driver.
+Changes Since V5:
+    -- Include MI2S primary node to snd_soc_dai_driver in lpass-sc7280 platform driver.
+    -- Move dependency patch list to corresponding patch.
+    -- Add support for missing cdc-dma ports.
+    -- Change if/else conditional statements to switch cases.
+    -- Add missing error handlings.
+    -- Typo errors fix.
+Changes Since V4:
+    -- Remove unused variable in lpass-sc7280 platform driver.
+Changes Since V3:
+    -- Remove redundant power domain controls. As power domains can be configured from dtsi.
+Changes Since V2:
+    -- Split lpass sc7280 cpu driver patch and create regmap config patch.
+    -- Create patches based on latest kernel tip.
+    -- Add helper function to get dma control and lpaif handle.
+    -- Remove unused variables.
+Changes Since V1:
+    -- Typo errors fix
+    -- CPU driver readable/writable apis optimization.
+    -- Add Missing config patch
+    -- Add Common api for repeated dmactl initialization.
+Srinivasa Rao Mandadapu (9):
+  ASoC: qcom: Move lpass_pcm_data structure to lpass header
+  ASoC: qcom: lpass: Add dma fields for codec dma lpass interface
+  ASoC: qcom: Add helper function to get dma control and lpaif handle
+  ASoC: qcom: Add register definition for codec rddma and wrdma
+  ASoC: qcom: Add regmap config support for codec dma driver
+  ASoC: qcom: Add support for codec dma driver
+  ASoC: qcom: Add lpass CPU driver for codec dma control
+  ASoC: dt-bindings: Add SC7280 lpass cpu bindings
+  ASoC: qcom: lpass-sc7280: Add platform driver for lpass audio
 
->
-> This fixes the following '$ make dtbs_check' warning(s):
->
-> sm8350-microsoft-surface-duo2.dt.yaml: phy@1d87000:
->   '#clock-cells' is a required property
->
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> index 9e0f60e682c4..746a929c63bb 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> @@ -115,7 +115,6 @@ patternProperties:
->  required:
->    - compatible
->    - reg
-> -  - "#clock-cells"
->    - "#address-cells"
->    - "#size-cells"
->    - ranges
-> --
-> 2.35.1
->
-
+ .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  |  75 ++-
+ sound/soc/qcom/Kconfig                             |  11 +
+ sound/soc/qcom/Makefile                            |   4 +
+ sound/soc/qcom/lpass-cdc-dma.c                     | 301 ++++++++++
+ sound/soc/qcom/lpass-cpu.c                         | 253 ++++++++-
+ sound/soc/qcom/lpass-lpaif-reg.h                   | 127 ++++-
+ sound/soc/qcom/lpass-platform.c                    | 628 ++++++++++++++++++---
+ sound/soc/qcom/lpass-sc7280.c                      | 438 ++++++++++++++
+ sound/soc/qcom/lpass.h                             | 141 +++++
+ 9 files changed, 1890 insertions(+), 88 deletions(-)
+ create mode 100644 sound/soc/qcom/lpass-cdc-dma.c
+ create mode 100644 sound/soc/qcom/lpass-sc7280.c
 
 -- 
-With best wishes
-Dmitry
+2.7.4
+
