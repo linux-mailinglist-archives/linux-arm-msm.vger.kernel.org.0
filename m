@@ -2,279 +2,282 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A14D64C2481
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 08:34:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 166C34C248F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 08:47:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229846AbiBXHfW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Feb 2022 02:35:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42256 "EHLO
+        id S229940AbiBXHrh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Feb 2022 02:47:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229545AbiBXHfW (ORCPT
+        with ESMTP id S229962AbiBXHrf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Feb 2022 02:35:22 -0500
-Received: from m43-7.mailgun.net (m43-7.mailgun.net [69.72.43.7])
-        by lindbergh.monkeyblade.net (Postfix) with UTF8SMTPS id 16F6E36692
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 23:34:52 -0800 (PST)
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1645688092; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=oFK2R0oCH7AhIg/zGtTiYf6v6AqrPbUgoWGnqg4HWaI=; b=i6AEXbmvztAjSk6PLSu98ImvKJD/5gEhmvDHU4uRp2L7A1S4+yO99KEDXvj5HARug4x79B49
- bgxymXoYDKaDX4NvBOi9v6iEqLCQdDe20q+KUB91ZKawCksdvPLY5/pgK0FC9EhhKJxpxidc
- 2dfuU9mAgSUN30AgR4t3wqRmsJY=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 621734c76f8d3f13899f7dd8 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 24 Feb 2022 07:33:27
- GMT
-Sender: sricharan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2785EC4360C; Thu, 24 Feb 2022 07:33:26 +0000 (UTC)
+        Thu, 24 Feb 2022 02:47:35 -0500
+Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50D8460046
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 23:47:05 -0800 (PST)
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com [209.85.208.69])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 35FDF3FCAF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 07:46:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1645688818;
+        bh=FxOVZjnNiVO0i9jH0i6UiovfwrDBwVKl5GL2sYOaVX4=;
+        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+         In-Reply-To:Content-Type;
+        b=VhYoG/RYpgw5FNmYOedWcWBGGYvb+xDhzh6fZaD4mKNKfvWxN3a+qHHWy4sM/txq3
+         N1B3lVXsmTtU92O4cJ39uSm+6FpKIwhgF9s6b54Jh3JASJ4jl3KieY75Jg9H9WSaza
+         Dtz8m/2/zYUALfdvmolPpbDZSFbnqeBBTmezVRD41NIXK3O1Re6iF5FRz92vbEyIU+
+         UUzUGUZIcKIN3JLdEB2LnzzrTU0n+ICyaIyQNenCI3Ek8UJay3faxjUx4cl8XbN28R
+         8L6KD9OGfrp3Rc2V/DnVKhjqWRh1AiwKawri8EwMi1QQuqkgG9e5rgFTwVkfDir1Mi
+         XjMY3a2zvshuQ==
+Received: by mail-ed1-f69.google.com with SMTP id eg48-20020a05640228b000b00413041cd917so353770edb.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 23:46:58 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=FxOVZjnNiVO0i9jH0i6UiovfwrDBwVKl5GL2sYOaVX4=;
+        b=Cac3/DcZIi5a5bs2SfXTeECX7ro8OBW56MXzLTvjp0DkbI1vJjFoi6ItsaCmLAoBze
+         0xYyjcO6JBMEHmAjf/M7q8unkplCYCHshcU7ctu/ICZOE006dN6jGcw3xeTqCnBp6sNe
+         bHjLtDVMFXXxjKztlGa0GacRHQm05T7ZaE7DCw6bzLTdSmEdItd9JGe5Uw0oaWWRzwZ8
+         QyU27/8nzRUWj37D+utVusOOoup6e8jMOdXz6t2gvt349MNFdnKmBveLIJx6gWl872qF
+         /mZLr0qtA9Itmem/snulz2Dmo5ncknHys01G/r07tGVFSkA3wDSKBv7OmRLtaU4/+3Al
+         tFdg==
+X-Gm-Message-State: AOAM532hNchhajrTElwJvcHavvdVpvHY48q8pENm0WDarWCMNWs/gqA1
+        mLoYgeKlT0sxyZpcvyxZ7d3C0+f6X0tTEcayF84hFuSzexhQjkESHypqgrDVADZYSL7Vyqa7c3u
+        z22V9zr1jDNciRVBYjgYEGPHKs9DH91Ar+ZVy8D5jOf0=
+X-Received: by 2002:a17:907:365:b0:6d1:bf9:9164 with SMTP id rs5-20020a170907036500b006d10bf99164mr1290208ejb.598.1645688811416;
+        Wed, 23 Feb 2022 23:46:51 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJyF2QxOV5sZ3l9SN1ANQlm/aYyNKUMNdm1sWIKjHtTsjqFzwsoCzjjUbc5J7jIvGVZuZRXOYQ==
+X-Received: by 2002:a17:907:365:b0:6d1:bf9:9164 with SMTP id rs5-20020a170907036500b006d10bf99164mr1290164ejb.598.1645688811188;
+        Wed, 23 Feb 2022 23:46:51 -0800 (PST)
+Received: from [192.168.0.127] (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
+        by smtp.gmail.com with ESMTPSA id t24sm914666ejx.187.2022.02.23.23.46.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Feb 2022 23:46:50 -0800 (PST)
+Message-ID: <3e4f387b-53fb-b031-223c-88adac7d4dae@canonical.com>
+Date:   Thu, 24 Feb 2022 08:46:49 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v2 01/11] driver: platform: add and use helper for safer
+ setting of driver_override
+Content-Language: en-US
+To:     "Michael S. Tsirkin" <mst@redhat.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Stuart Yoder <stuyoder@gmail.com>,
+        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+        Abel Vesa <abel.vesa@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        "K. Y. Srinivasan" <kys@microsoft.com>,
+        Haiyang Zhang <haiyangz@microsoft.com>,
+        Stephen Hemminger <sthemmin@microsoft.com>,
+        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Vineeth Vijayan <vneethv@linux.ibm.com>,
+        Peter Oberparleiter <oberpar@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Andy Gross <agross@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Jason Wang <jasowang@redhat.com>, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, NXP Linux Team <linux-imx@nxp.com>,
+        linux-arm-kernel@lists.infradead.org, linux-hyperv@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Rasmus Villemoes <linux@rasmusvillemoes.dk>
+References: <20220223191310.347669-1-krzysztof.kozlowski@canonical.com>
+ <20220223191310.347669-2-krzysztof.kozlowski@canonical.com>
+ <20220223162538-mutt-send-email-mst@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20220223162538-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H5,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
-Received: from [192.168.0.104] (unknown [183.82.176.175])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sricharan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 75381C4338F;
-        Thu, 24 Feb 2022 07:33:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 75381C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH] mtd: nand: raw: qcom_nandc: Don't clear_bam_transaction
- on READID
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>, pragalla@codeaurora.org,
-        ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mdalam@codeaurora.org,
-        bbhatt@codeaurora.org, hemantk@codeaurora.org
-References: <20220113184427.2259509-1-konrad.dybcio@somainline.org>
- <20220114082718.32a2fc83@xps13> <20220126111613.3ab0021e@xps13>
- <20220126103316.GA212068@thinkpad> <20220126114200.4cc3c21b@xps13>
- <fc80a6e7-bd44-3b3e-fca2-1316a76d65f5@codeaurora.org>
- <a6fcc533-e7cd-7b55-4db0-cec80c07b46a@codeaurora.org>
- <0a8d6550-aa19-0af1-abae-66bf34c91ea8@somainline.org>
- <be779ed9-bd80-8f01-fe7f-d3c07d3d85aa@codeaurora.org>
- <12cad24a-fa2f-9a82-cf43-241a0a6fe4f6@somainline.org>
- <20220201145204.54646475@xps13>
- <d79bf21d-5a90-0074-cef6-896f66e80d28@somainline.org>
- <c63d5410-7f08-80fe-28ac-f4867038ff30@codeaurora.org>
- <cc1302f4-9150-0145-421c-bf2b7a7bf258@codeaurora.org>
- <6b839237-74f0-7270-2f33-f5c17e6b59de@somainline.org>
-From:   Sricharan Ramabadhran <sricharan@codeaurora.org>
-Message-ID: <2fb9d943-d6c8-06b1-08cc-b0c3a8256082@codeaurora.org>
-Date:   Thu, 24 Feb 2022 13:03:16 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
-MIME-Version: 1.0
-In-Reply-To: <6b839237-74f0-7270-2f33-f5c17e6b59de@somainline.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
-
-On 2/8/2022 10:15 PM, Konrad Dybcio wrote:
->
-> On 4.02.2022 18:17, Sricharan Ramabadhran wrote:
->> On 2/2/2022 12:54 PM, Sricharan Ramabadhran wrote:
->>> Hi Konrad/Miquel,
->>>
->>> On 2/1/2022 9:21 PM, Konrad Dybcio wrote:
->>>> On 01/02/2022 14:52, Miquel Raynal wrote:
->>>>> Hi Konrad,
->>>>>
->>>>> konrad.dybcio@somainline.org wrote on Mon, 31 Jan 2022 20:54:12 +0100:
->>>>>
->>>>>> On 31/01/2022 15:13, Sricharan Ramabadhran wrote:
->>>>>>> Hi Konrad,
->>>>>>>
->>>>>>> On 1/31/2022 3:39 PM, Konrad Dybcio wrote:
->>>>>>>> On 28/01/2022 18:50, Sricharan Ramabadhran wrote:
->>>>>>>>> Hi Konrad,
->>>>>>>>>
->>>>>>>>> On 1/28/2022 9:55 AM, Sricharan Ramabadhran wrote:
->>>>>>>>>> Hi Miquel,
->>>>>>>>>>
->>>>>>>>>> On 1/26/2022 4:12 PM, Miquel Raynal wrote:
->>>>>>>>>>> Hi Mani,
->>>>>>>>>>>
->>>>>>>>>>> mani@kernel.org wrote on Wed, 26 Jan 2022 16:03:16 +0530:
->>>>>>>>>>>> On Wed, Jan 26, 2022 at 11:16:13AM +0100, Miquel Raynal wrote:
->>>>>>>>>>>>> Hello,
->>>>>>>>>>>>>
->>>>>>>>>>>>> miquel.raynal@bootlin.com wrote on Fri, 14 Jan 2022 08:27:18 +0100:
->>>>>>>>>>>>>> Hi Konrad,
->>>>>>>>>>>>>>
->>>>>>>>>>>>>> konrad.dybcio@somainline.org wrote on Thu, 13 Jan 2022 19:44:26 >>>>>>>> +0100:
->>>>>>>>>>>>>>> While I have absolutely 0 idea why and how, running >>>>>>>>> clear_bam_transaction
->>>>>>>>>>>>>>> when READID is issued makes the DMA totally clog up and refuse >>>>>>>>> to function
->>>>>>>>>>>>>>> at all on mdm9607. In fact, it is so bad that all the data >>>>>>>>> gets garbled
->>>>>>>>>>>>>>> and after a short while in the nand probe flow, the CPU >>>>>>>>> decides that
->>>>>>>>>>>>>>> sepuku is the only option.
->>>>>>>>>>>>>>>
->>>>>>>>>>>>>>> Removing _READID from the if condition makes it work like a >>>>>>>>> charm, I can
->>>>>>>>>>>>>>> read data and mount partitions without a problem.
->>>>>>>>>>>>>>>
->>>>>>>>>>>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
->>>>>>>>>>>>>>> ---
->>>>>>>>>>>>>>> This is totally just an observation which took me an inhumane >>>>>>>>> amount of
->>>>>>>>>>>>>>> debug prints to find.. perhaps there's a better reason behind >>>>>>>>> this, but
->>>>>>>>>>>>>>> I can't seem to find any answers.. Therefore, this is a BIG RFC!
->>>>>>>>>>>>>> I'm adding two people from codeaurora who worked a lot on this >>>>>>>> driver.
->>>>>>>>>>>>>> Hopefully they will have an idea :)
->>>>>>>>>>>>> Sadre, I've spent a significant amount of time reviewing your >>>>>>> patches,
->>>>>>>>>>>>> now it's your turn to not take a month to answer to your peers
->>>>>>>>>>>>> proposals.
->>>>>>>>>>>>>
->>>>>>>>>>>>> Please help reviewing this patch.
->>>>>>>>>>>> Sorry. I was hoping that Qcom folks would chime in as I don't >>>>>> have any idea
->>>>>>>>>>>> about the mdm9607 platform. It could be that the mail server >>>>>> migration from
->>>>>>>>>>>> codeaurora to quicinc put a barrier here.
->>>>>>>>>>>>
->>>>>>>>>>>> Let me ping them internally.
->>>>>>>>>>> Oh, ok, I didn't know. Thanks!
->>>>>>>>>>      Sorry Miquel, somehow we did not get this email in our inbox.
->>>>>>>>>>      Thanks to Mani for pinging us, we will test this up today and >>>> get back.
->>>>>>>>>         While we could not reproduce this issue on our ipq boards (do >>> not have a mdm9607 right now) and
->>>>>>>>>          issue does not look any obvious.
->>>>>>>>>         can you please give the debug logs that you did for the above >>> stage by stage ?
->>>>>>>> I won't have access to the board for about two weeks, sorry.
->>>>>>>>
->>>>>>>> When I get to it, I'll surely try to send you the logs, though there
->>>>>>>>
->>>>>>>> wasn't much more than just something jumping to who-knows-where
->>>>>>>>
->>>>>>>> after clear_bam_transaction was called, resulting in values >> associated with
->>>>>>>>
->>>>>>>> the NAND being all zeroed out in pr_err/_debug/etc.
->>>>>>>>
->>>>>>>       Ok sure. So was the READID command itself failing (or) the > subsequent one ?
->>>>>>>      We can check which parameter reset by the clear_bam_transaction is > causing the
->>>>>>>      failure.  Meanwhile, looping in Pradeep who has access to the > board, so in a better
->>>>>>>      position to debug.
->>>>>> I'm sorry I have so few details on hand, and no kernel tree (no access to that machine either, for now).
->>>>>>
->>>>>>
->>>>>> I will try to describe to the best of my abilities what I recall.
->>>>>>
->>>>>>
->>>>>> My methodology of making sure things don't go haywire was to print the oob size
->>>>>>
->>>>>> of our NAND basically every two lines of code (yes, i was very desperate at one point),
->>>>>>
->>>>>> as that was zeroed out when *the bug* happened,
->>>>> This does look like a pointer error at some point and some kernel data
->>>>> has been corrupted very badly by the driver.
->>>>>
->>>>>> leading to a kernel bug/panic/stall
->>>>>>
->>>>>> (can't recall what exactly it was, but it said something along the lines of "no support for
->>>>>>
->>>>>> oob size 0" and then it didn't fail graceully, leading to some bad jumps and ultimately
->>>>>>
->>>>>> a dead platform..)
->>>>>>
->>>>>>
->>>>>> after hours of digging, I found out that everything goes fine until clear_bam_transaction is called,
->>>>> Do you remember if this function was called for the first time when
->>>>> this happened?
->>>> I think so, if I recall correctly there are no more callers in this path, as readid is the first nand command executed in flash probe flow.
->>>>
->>>>
->>>>
->>>>>> after that gets executed every nand op starts reading all zeroes (for example in JEDEC ID check)
->>>>>>
->>>>>> so I added the changes from this patch, and things magically started working... My suspicion is
->>>>>>
->>>>>> that the underlying FIFO isn't fully drained (is it a FIFO on 9607? bah, i work on too many socs at once)
->>>>> I don't see it in the list of supported devices, what's the exact
->>>>> compatible used?
->>>> qcom,ipq4019-nand
->>>>
->>>>
->>>>
->>>>>> and this function only makes Linux think it is, without actually draining it, and the leftover
->>>>>>
->>>>>> commands get executed with some parts of them getting overwritten, resulting in the
->>>>>>
->>>>>> famous garbage in - garbage out situation, but that's only a guesstimate..
->>>>> I would bet for a non allocated bam-ish pointer that is reset to zero
->>>>> in the clear_bam_transaction() helper.
->>>>>
->>>>> Can you get your hands on the board again?
->>>> Sure, but as I mentioned previously, only in about 2 weeks, I can't really do any dev before then.. :(
->>>>
->>>>
->>>>
->>>>> It would be nice to check if the allocation always occurs before use,
->>>>> and if yes on how much bytes.
->>>>>
->>>>> If the pointer is not dangling, then perhaps something else smashes
->>>>> that pointer.
->>>>
->>>> Konrad
->>>>
->>>>>> Do note this somehow worked fine on 5.11 and then broke on 5.12/13. I went as far as replacing most
->>>>>>
->>>>>> of the kernel with the updated/downgraded parts via git checkout (i tried many combinations),
->>>>>>
->>>>>> to no avail.. I even tried different compilers and optimization levels, thinking it could have been
->>>>>>
->>>>>> a codegen issue, but no luck either.
->>>>>>
->>>>>>
->>>>>> I.. do understand this email is a total mess to read, as much as it was to write, but
->>>>>>
->>>>>> without access to my code and the machine itself I can't give you solid details, and
->>>>>>
->>>>>> the fact this situation is far from ordinary doesn't help either..
->>>>>>
->>>>>>
->>>>>> The latest (ancient, not quite pretty, but probably working if my memory is correct) version of my patches
->>>>>>
->>>>>> for the mdm9607 is available at [1], I will push the new revision after I get access to the workstation.
->>>>>>
->>>    + few more who have access to the board.
->>>
->>>     Going by the description, for kernel corruption, we can try out a KASAN build.
->>>     Since you have mentioned it worked till 5.11, you bisected the driver till 5.11 head and it worked ?
->>>
->>     Tried running a KASAN enabled image on IPQ board, but no luck. Nothing came out.
->>     Only if someone with the board can help here, we can proceed
+On 23/02/2022 22:33, Michael S. Tsirkin wrote:
+> On Wed, Feb 23, 2022 at 08:13:00PM +0100, Krzysztof Kozlowski wrote:
+>> Several core drivers and buses expect that driver_override is a
+>> dynamically allocated memory thus later they can kfree() it.
 >>
+>> However such assumption is not documented, there were in the past and
+>> there are already users setting it to a string literal. This leads to
+>> kfree() of static memory during device release (e.g. in error paths or
+>> during unbind):
 >>
->> Regards,
->>    Sricharan
+>>     kernel BUG at ../mm/slub.c:3960!
+>>     Internal error: Oops - BUG: 0 [#1] PREEMPT SMP ARM
+>>     ...
+>>     (kfree) from [<c058da50>] (platform_device_release+0x88/0xb4)
+>>     (platform_device_release) from [<c0585be0>] (device_release+0x2c/0x90)
+>>     (device_release) from [<c0a69050>] (kobject_put+0xec/0x20c)
+>>     (kobject_put) from [<c0f2f120>] (exynos5_clk_probe+0x154/0x18c)
+>>     (exynos5_clk_probe) from [<c058de70>] (platform_drv_probe+0x6c/0xa4)
+>>     (platform_drv_probe) from [<c058b7ac>] (really_probe+0x280/0x414)
+>>     (really_probe) from [<c058baf4>] (driver_probe_device+0x78/0x1c4)
+>>     (driver_probe_device) from [<c0589854>] (bus_for_each_drv+0x74/0xb8)
+>>     (bus_for_each_drv) from [<c058b48c>] (__device_attach+0xd4/0x16c)
+>>     (__device_attach) from [<c058a638>] (bus_probe_device+0x88/0x90)
+>>     (bus_probe_device) from [<c05871fc>] (device_add+0x3dc/0x62c)
+>>     (device_add) from [<c075ff10>] (of_platform_device_create_pdata+0x94/0xbc)
+>>     (of_platform_device_create_pdata) from [<c07600ec>] (of_platform_bus_create+0x1a8/0x4fc)
+>>     (of_platform_bus_create) from [<c0760150>] (of_platform_bus_create+0x20c/0x4fc)
+>>     (of_platform_bus_create) from [<c07605f0>] (of_platform_populate+0x84/0x118)
+>>     (of_platform_populate) from [<c0f3c964>] (of_platform_default_populate_init+0xa0/0xb8)
+>>     (of_platform_default_populate_init) from [<c01031f8>] (do_one_initcall+0x8c/0x404)
+>>     (do_one_initcall) from [<c0f012c0>] (kernel_init_freeable+0x3d0/0x4d8)
+>>     (kernel_init_freeable) from [<c0a7def0>] (kernel_init+0x8/0x114)
+>>     (kernel_init) from [<c01010b4>] (ret_from_fork+0x14/0x20)
 >>
-> I have the board with me again. Please tell me where do we start :)
+>> Provide a helper which clearly documents the usage of driver_override.
+>> This will allow later to reuse the helper and reduce amount of
+>> duplicated code.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+>> ---
+>>  drivers/base/driver.c           | 44 +++++++++++++++++++++++++++++++++
+>>  drivers/base/platform.c         | 24 +++---------------
+>>  include/linux/device/driver.h   |  1 +
+>>  include/linux/platform_device.h |  6 ++++-
+>>  4 files changed, 54 insertions(+), 21 deletions(-)
+>>
+>> diff --git a/drivers/base/driver.c b/drivers/base/driver.c
+>> index 8c0d33e182fd..79efe51bb4c0 100644
+>> --- a/drivers/base/driver.c
+>> +++ b/drivers/base/driver.c
+>> @@ -30,6 +30,50 @@ static struct device *next_device(struct klist_iter *i)
+>>  	return dev;
+>>  }
+>>  
+>> +/*
+>> + * set_driver_override() - Helper to set or clear driver override.
+>> + * @dev: Device to change
+>> + * @override: Address of string to change (e.g. &device->driver_override);
+>> + *            The contents will be freed and hold newly allocated override.
+>> + * @s: NULL terminated string, new driver name to force a match, pass empty
+> 
+> Don't you mean NUL terminated?
 
-  Sorry for the delayed response.
+Yeah, NUL.
 
-      As a first step, Can you enable KASAN and check if you get any 
-warnings ?
+> Do all callers really validate that it's NUL terminated?
 
-      Then, can you check inside clear_bam_transaction, which parameter 
-resetting specifically is causing the issue ?
-
-
-Regards,
-   Sricharan
+Good point, the callers use it in device attributes (sysfs) only, so it
+might come non-NUL. Previously this was solved by kstrndup() which is
+always terminating the string.
 
 
+> 
+>> + *     string to clear it
+>> + *
+>> + * Helper to setr or clear driver override in a device, intended for the cases
+> 
+> set?
+D'oh!
+
+> 
+>> + * when the driver_override field is allocated by driver/bus code.
+>> + *
+>> + * Returns: 0 on success or a negative error code on failure.
+>> + */
+>> +int driver_set_override(struct device *dev, char **override, const char *s)
+>> +{
+>> +	char *new, *old, *cp;
+>> +
+>> +	if (!dev || !override || !s)
+>> +		return -EINVAL;
+>> +
+>> +	new = kstrndup(s, strlen(s), GFP_KERNEL);
+> 
+> 
+> what's the point of this kstrndup then? why not just kstrdup?
+
+Thanks, it's a copy-paste. Useless now, but I'll pass the count directly
+from the callers and then this will be NULL-terminating it.
+
+> 
+>> +	if (!new)
+>> +		return -ENOMEM;
+>> +
+>> +	cp = strchr(new, '\n');
+>> +	if (cp)
+>> +		*cp = '\0';
+>> +
+>> +	device_lock(dev);
+>> +	old = *override;
+>> +	if (strlen(new)) {
+> 
+> We are re-reading the string like 3 times here.
+
+Yep, the same in old code. I guess we could compare just pointers -
+whether 'cp' is not NULL and different than 's'.
+
+> 
+>> +		*override = new;
+>> +	} else {
+>> +		kfree(new);
+>> +		*override = NULL;
+>> +	}
+>> +	device_unlock(dev);
+>> +
+>> +	kfree(old);
+>> +
+>> +	return 0;
+>> +}
+>> +EXPORT_SYMBOL_GPL(driver_set_override);
+>> +
+>>  /**
+>>   * driver_for_each_device - Iterator for devices bound to a driver.
+>>   * @drv: Driver we're iterating.
+>> diff --git a/drivers/base/platform.c b/drivers/base/platform.c
+>> index 6cb04ac48bf0..d8853b32ea10 100644
+>> --- a/drivers/base/platform.c
+>> +++ b/drivers/base/platform.c
+>> @@ -1275,31 +1275,15 @@ static ssize_t driver_override_store(struct device *dev,
+>>  				     const char *buf, size_t count)
+>>  {
+>>  	struct platform_device *pdev = to_platform_device(dev);
+>> -	char *driver_override, *old, *cp;
+>> +	int ret;
+>>  
+>>  	/* We need to keep extra room for a newline */
+>>  	if (count >= (PAGE_SIZE - 1))
+>>  		return -EINVAL;
+> 
+> Given everyone seems to repeat this check, how about passing
+> in count and doing the validation in the helper?
+
+Good idea.
+
+> We will then also avoid the need to do strlen and strchr.
+
+The strlen() could be removed, but the strchr() should stay. What
+solution do you have in mind to remove strchr()?
+
+Thanks for review.
+
+
+Best regards,
+Krzysztof
