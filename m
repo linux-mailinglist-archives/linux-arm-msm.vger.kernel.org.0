@@ -2,55 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 240324C395F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 00:00:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D01284C3984
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 00:07:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234015AbiBXXAA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Feb 2022 18:00:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39446 "EHLO
+        id S232318AbiBXXIT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Feb 2022 18:08:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235524AbiBXW76 (ORCPT
+        with ESMTP id S229593AbiBXXIT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Feb 2022 17:59:58 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5B6E1A39F9;
-        Thu, 24 Feb 2022 14:59:18 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8113B61BE9;
-        Thu, 24 Feb 2022 22:59:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD38FC340E9;
-        Thu, 24 Feb 2022 22:59:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1645743557;
-        bh=f2axcuH0kVopEF8vAExYdzBNZLYU0uQakKJNSchWm5M=;
-        h=From:To:In-Reply-To:References:Subject:Date:From;
-        b=VYfGAOW1AxjxGX8UPLm1rigdSYIbh7syZ1RgBDueITaWA5si+3d9LXvylh/U7jNh4
-         oKdBg59TCj3/kkUJzA8sovGeuYxD+1sMAPFyLJLdLdp+PrDVaoIi19r5MqLAzkfEp8
-         szue+1klWRROpYaxRDBFKGF0SIwTkOVTKpgC+SE5awEXjNa7dr7TGRrRoVd3xsm/XD
-         MsqGeBsQankiZXittQZfkjbVeXjxtyzJbOuapwZ/aq2I0XGiWwjTDuyaHEoYJ8X52Y
-         Da2iHEmkUIqq5akYK/BQOo/DqkAiCKaU/IygJwgf1rQnIF/1TMohUKWvGkImhCDfRo
-         FWDtuQrkk7how==
-From:   Mark Brown <broonie@kernel.org>
-To:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, perex@perex.cz, quic_plai@quicinc.com,
-        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        swboyd@chromium.org, robh+dt@kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        srinivas.kandagatla@linaro.org, bgoswami@codeaurora.org,
-        judyhsiao@chromium.org, tiwai@suse.com, rohitkr@codeaurora.org,
-        lgirdwood@gmail.com, bjorn.andersson@linaro.org
-In-Reply-To: <1645716828-15305-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1645716828-15305-1-git-send-email-quic_srivasam@quicinc.com>
-Subject: Re: [PATCH v16 0/9] Add support for audio on SC7280 based targets
-Message-Id: <164574355449.4011497.10462197371710891447.b4-ty@kernel.org>
-Date:   Thu, 24 Feb 2022 22:59:14 +0000
+        Thu, 24 Feb 2022 18:08:19 -0500
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 627DB166E3C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 15:07:45 -0800 (PST)
+Received: by mail-oo1-xc35.google.com with SMTP id i10-20020a4aab0a000000b002fccf890d5fso4092495oon.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 15:07:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=Pdeuz0/x/UcCtYy9gpg2IQ952VwG4ymNYye+kPVrhEE=;
+        b=MXLd3ZBdlTAX8agVsf5V28nQzQKnvYmBdeWKkk4KtN/pYmKhumnwNbQKw9+cabjXba
+         MaFCVsrXZmsjSPu8usBX4MX+ijiaHhNMJwhQWS/i7sQEGQhS6DHlxIgLLVTYXmR4gJ6B
+         AHqT9bQBCkjyLZWgU0zDNym6micA8Z5G9oSGk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=Pdeuz0/x/UcCtYy9gpg2IQ952VwG4ymNYye+kPVrhEE=;
+        b=729TvkVt/q07TB6q7mikULu91fA9wKG0CDomrGZG17Q0RJosaf5kOlE+/V6s5it4IC
+         yaZbTwgr4b7sJMxOQaNwuYyeDaa6dMrNShqMK0WNTgCq8GW78jcJIswfmRrvWxcLCbWz
+         CyTvexdzBL0ao9jPl8c2gJcoJ/6/75BPetk4VmvDLrQlfeeZdkm8N87e8WQNr/fDpgrl
+         cPf3wbxQT7sOm6UpoZW3CSf3EqjNXsBZD2+mYs+is4FfvOSFgqAV/EoKbwWx5dih+ufu
+         4qoba++xlNrekXS3Ibk1WG4Gyq2EDIvF0k0phBdEyj5oaOtVm2WK2c8liuLzu13VT1v5
+         Wavg==
+X-Gm-Message-State: AOAM530YAuknRtEZO3b7eYyNxEp7oAeHfl8Vu3ufmLE7XIprZvcGEBj2
+        E1NF0nlkUZZ5+FwQXSaxaHjRs+gNNLby/nyH3wA2Dg==
+X-Google-Smtp-Source: ABdhPJwi6oQyJF5w8BHt7yH3mUbw2csLqO5u0sEOxg0VRQOmL+MfVdN2LSc5EljloA4RnFakZW/IGmhVAukd4UTMxjA=
+X-Received: by 2002:a05:6870:5829:b0:c8:9f42:f919 with SMTP id
+ r41-20020a056870582900b000c89f42f919mr206276oap.54.1645744064750; Thu, 24 Feb
+ 2022 15:07:44 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 24 Feb 2022 15:07:44 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <1645695814-21102-1-git-send-email-quic_pmaliset@quicinc.com>
+References: <1645695814-21102-1-git-send-email-quic_pmaliset@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Thu, 24 Feb 2022 15:07:44 -0800
+Message-ID: <CAE-0n51ky1pmqDJAEOUqW2ycZU6c1PFLE17OPUyZZaRZSx4GQA@mail.gmail.com>
+Subject: Re: [PATCH v3] PCI: qcom: Add system PM support
+To:     Prasad Malisetty <quic_pmaliset@quicinc.com>, agross@kernel.org,
+        bhelgaas@google.com, bjorn.andersson@linaro.org, kw@linux.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pci@vger.kernel.org, lorenzo.pieralisi@arm.com,
+        robh@kernel.org
+Cc:     quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+        manivannan.sadhasivam@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -59,122 +70,117 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 24 Feb 2022 21:03:39 +0530, Srinivasa Rao Mandadapu wrote:
-> This patch set is to add support for Audio over wcd codec,
-> digital mics, through digital codecs and without ADSP.
-> 
-> Changes Since V15:
->     -- Bisect patches to avoid build failure in other architectures.
->     -- Remove redundant variables lpass variant structure.
-> Changes Since V14:
->     -- Split common wrapper function to separate wrapper for each handle in platform driver.
->     -- Update cdc dma buffer handling with memremap with ioremap.
->     -- Remove redundant error prints.
->     -- Update irq flag.
-> Changes Since V13:
->     -- Change bulk cdc clock voting to individual clock voting.
->     -- Remove redundant code, conditional check and prints.
->     -- Fix typo errors.
-> Changes Since V12:
->     -- Fix arguments type mismatch.
-> Changes Since V11:
->     -- Fix kernel robot issue on arguments type mismatch.
-> Changes Since V10:
->     -- Split bulk clock voting to individual clock voting as per use case in cdc-dma driver.
->     -- Add missing codec dma clocks.
->     -- Update rxtx lpm buffer size.
-> Changes Since V9:
->     -- Change individual clock voting to bulk clock voting of lpass-sc7280 platform driver.
->     -- Remove redundant clocks in lpass variant structure.
->     -- Add mclk for MI2S based headset path.
->     -- Remove unused lpass variant structure members in lpass header.
-> Changes Since V8:
->     -- Fix errors in sc7280 lpass cpu dt-bindings.
->     -- Move to quicinc domain email id's.
-> Changes Since V7:
->     -- Fix indentation errors.
->     -- Bisect patches to avoid interdependency.
-> Changes Since V6:
->     -- Split cdc dma regmap config macros.
->     -- Add write dma reg fields for i2s path.
->     -- Add helper function to distinguish rxtx and va dma ports.
->     -- Optimizing clock and reg name in cpu dt-bindings.
->     -- Update buffer management for cdc dma path.
->     -- Remove Kconfig fields of machine driver.
-> Changes Since V5:
->     -- Include MI2S primary node to snd_soc_dai_driver in lpass-sc7280 platform driver.
->     -- Move dependency patch list to corresponding patch.
->     -- Add support for missing cdc-dma ports.
->     -- Change if/else conditional statements to switch cases.
->     -- Add missing error handlings.
->     -- Typo errors fix.
-> Changes Since V4:
->     -- Remove unused variable in lpass-sc7280 platform driver.
-> Changes Since V3:
->     -- Remove redundant power domain controls. As power domains can be configured from dtsi.
-> Changes Since V2:
->     -- Split lpass sc7280 cpu driver patch and create regmap config patch.
->     -- Create patches based on latest kernel tip.
->     -- Add helper function to get dma control and lpaif handle.
->     -- Remove unused variables.
-> Changes Since V1:
->     -- Typo errors fix
->     -- CPU driver readable/writable apis optimization.
->     -- Add Missing config patch
->     -- Add Common api for repeated dmactl initialization.
-> Srinivasa Rao Mandadapu (9):
->   ASoC: qcom: Move lpass_pcm_data structure to lpass header
->   ASoC: qcom: lpass: Add dma fields for codec dma lpass interface
->   ASoC: qcom: Add helper function to get dma control and lpaif handle
->   ASoC: qcom: Add register definition for codec rddma and wrdma
->   ASoC: qcom: Add regmap config support for codec dma driver
->   ASoC: qcom: Add support for codec dma driver
->   ASoC: qcom: Add lpass CPU driver for codec dma control
->   ASoC: dt-bindings: Add SC7280 lpass cpu bindings
->   ASoC: qcom: lpass-sc7280: Add platform driver for lpass audio
-> 
-> [...]
+Quoting Prasad Malisetty (2022-02-24 01:43:34)
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index c19cd506..f4a5e3c 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1616,6 +1621,96 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>         return ret;
+>  }
+>
+> +static int qcom_pcie_send_pme_turnoff_msg(struct qcom_pcie *pcie)
+> +{
+> +       int ret;
+> +       u32 val, poll_val;
+> +       u64 l23_rdy_poll_timeout = 100000; /* microseconds */
 
-Applied to
+unsigned long instead of u64? But why is it a local variable at all?
+Just inline it in the one place it is used?
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+> +       struct dw_pcie *pci = pcie->pci;
+> +       struct device *dev = pci->dev;
+> +
+> +       val = readl(pcie->elbi + PCIE20_ELBI_SYS_CTRL);
+> +       val |= PCIE_PME_TURNOFF_MSG;
+> +       writel(val, pcie->elbi + PCIE20_ELBI_SYS_CTRL);
+> +
+> +       ret = readl_poll_timeout((pcie->parf + PCIE20_PARF_PM_STTS), poll_val,
+> +                       (poll_val & PCIE_PM_LINKST_IN_L2),
+> +                       10000, l23_rdy_poll_timeout);
+> +       if (!ret)
+> +               dev_dbg(dev, "Device entered L23_Ready state\n");
+> +       else
+> +               dev_err(dev, "Device failed to enter L23_Ready. PM_STTS 0x%x\n",
+> +                       readl_relaxed(pcie->parf + PCIE20_PARF_PM_STTS));
+> +
+> +       return ret;
+> +}
+> +
+> +static void qcom_pcie_host_disable(struct qcom_pcie *pcie)
+> +{
+> +       qcom_ep_reset_assert(pcie);
+> +
+> +       /* Put PHY into POWER DOWN state */
+> +       phy_power_off(pcie->phy);
+> +
+> +       writel(PHY_POWER_DOWN, pcie->parf + PCIE20_PARF_PHY_CTRL);
+> +
+> +       if (pcie->ops->post_deinit)
+> +               pcie->ops->post_deinit(pcie);
+> +
+> +       /* Disable PCIe clocks and regulators */
+> +       pcie->ops->deinit(pcie);
+> +}
+> +
+> +static int __maybe_unused qcom_pcie_pm_suspend_noirq(struct device *dev)
+> +{
+> +       int ret;
+> +       struct qcom_pcie *pcie = dev_get_drvdata(dev);
+> +       struct dw_pcie *pci = pcie->pci;
+> +
+> +       if (!dw_pcie_link_up(pci)) {
+> +               dev_dbg(dev, "Power has been turned off already\n");
+> +               return 0;
+> +       }
+> +
+> +       ret = qcom_pcie_send_pme_turnoff_msg(pcie);
+> +       if (ret)
+> +               return ret;
+> +
+> +       /* Power down the PHY, disable clock and regulators */
+> +       qcom_pcie_host_disable(pcie);
+> +
+> +       return 0;
+> +}
+> +
+> +/* Resume the PCIe link */
+> +static int __maybe_unused qcom_pcie_pm_resume_noirq(struct device *dev)
+> +{
+> +       int ret;
+> +       struct qcom_pcie *pcie = dev_get_drvdata(dev);
+> +       struct dw_pcie *pci = pcie->pci;
+> +       struct pcie_port *pp = &pci->pp;
+> +
+> +       ret = qcom_pcie_host_init(pp);
+> +       if (ret) {
+> +               dev_err(dev, "cannot initialize host\n");
+> +               return ret;
+> +       }
+> +
+> +       dw_pcie_setup_rc(pp);
+> +
+> +       qcom_pcie_start_link(pci);
+> +
+> +       ret = dw_pcie_wait_for_link(pci);
+> +       if (ret)
+> +               dev_err(dev, "Link never came up, Resume failed\n");
 
-Thanks!
+But we ignore and don't return ret? Please add a comment about why
+that's done, or return ret below.
 
-[1/9] ASoC: qcom: Move lpass_pcm_data structure to lpass header
-      commit: 74190d7cd3e8ab5123206d383dbfe125a4b7bb19
-[2/9] ASoC: qcom: lpass: Add dma fields for codec dma lpass interface
-      commit: ddd60045caa59d4b3d4b2a4b48fefd4974198587
-[3/9] ASoC: qcom: Add helper function to get dma control and lpaif handle
-      commit: 16413d5c5a2ed81d8fece1c5fe0b85752ecdbdf2
-[4/9] ASoC: qcom: Add register definition for codec rddma and wrdma
-      commit: dc8d9766bc03efee4d1b6dd912659858fdf981de
-[5/9] ASoC: qcom: Add regmap config support for codec dma driver
-      commit: b138706225c9ce9fac7a4955df31d8f68bb1d409
-[6/9] ASoC: qcom: Add support for codec dma driver
-      commit: 7d7209557b6712e8aa72ac1ce67a3fe209f5f889
-[7/9] ASoC: qcom: Add lpass CPU driver for codec dma control
-      commit: b81af585ea54ee9f749391e594ee9cbd44061eae
-[8/9] ASoC: dt-bindings: Add SC7280 lpass cpu bindings
-      commit: f3fc4fbfa2d2a09cb279af4e290d0a6dbbc93c7e
-[9/9] ASoC: qcom: lpass-sc7280: Add platform driver for lpass audio
-      commit: b62c4e5fba2f910bc9f23ae152d11627e4c2f00f
+> +
+> +       return 0;
+> +}
+> +
+> +static const struct dev_pm_ops qcom_pcie_pm_ops = {
+> +       SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_pm_suspend_noirq, qcom_pcie_pm_resume_noirq)
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+Why is noirq used? Please add a comment. And better yet don't use noirq
+hooks and use the normal suspend/resume hooks.
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+> +};
+> +
+>  static const struct of_device_id qcom_pcie_match[] = {
+>         { .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
+>         { .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
