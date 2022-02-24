@@ -2,59 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 085914C3627
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 20:50:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BF9F4C364A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 20:57:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234007AbiBXTvG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Feb 2022 14:51:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46992 "EHLO
+        id S232659AbiBXT52 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Feb 2022 14:57:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233242AbiBXTvF (ORCPT
+        with ESMTP id S233179AbiBXT50 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Feb 2022 14:51:05 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEDBF254558;
-        Thu, 24 Feb 2022 11:50:35 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6050F61792;
-        Thu, 24 Feb 2022 19:50:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50395C340E9;
-        Thu, 24 Feb 2022 19:50:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1645732234;
-        bh=8xsZGWwjXv7cnRarGpQnyDw9mQoGNr7rSbI+e2asYPE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=D+7+mnurlkrzPUi/r78FbvehdnSEeF8WqcKgku78MYtyKCxkVSejeIRIC9sguz6qK
-         zzENdoFMyCuSXm/2Yaf8b/Z0FJ1w2qGpH/8QMjfsuxlKBqxb+HR/mvAi7ubSJaxCvY
-         W1omnMVv2zxFweonRgjVOB7b3crbLsQqK+0CzXQ7V4P+J9CdRwTL4QdHHSMO+5V5md
-         YC+QzPPKvrEfl7NZ5yW5r0nT0HXMqPRvbOup9e1oPooYS4BRwN0foSSwxFDaET/gyq
-         Q/JfWSy23nth1KCMjEJY6gZWYqF86wfXVsSZz8WncIMCtzAnB5iltaAS0NF2vEnftA
-         rDNV7dQIaBZpQ==
-Date:   Thu, 24 Feb 2022 19:50:26 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, quic_plai@quicinc.com, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Subject: Re: [PATCH v3] ASoC: codecs: Add power domains support in digital
- macro codecs
-Message-ID: <Yhfhgrvl38WcNOFu@sirena.org.uk>
-References: <1645708759-8833-1-git-send-email-quic_srivasam@quicinc.com>
+        Thu, 24 Feb 2022 14:57:26 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE8981081B2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 11:56:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645732615; x=1677268615;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=OJeM4qaTFepSVbOBg2qH/XgWIgF/iecAFxSWBy5tu9Y=;
+  b=EEJqY+0on1ld8Rf5kHU2fGwlgchphbheCwRlsAMbm8gvOxVHP3T839hw
+   7h02n+UDGwLHKL4IIPWwfMGNQbcCGEdwQ6FUAP9bHBJf9WJ/ypDKQaGrS
+   +T/VX5f05Cmd3W2cOQWs6M+oMBlTkc74XiF6QYUxytJsdSXuxhzsaL5LO
+   s=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 24 Feb 2022 11:56:52 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Feb 2022 11:56:51 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Thu, 24 Feb 2022 11:56:51 -0800
+Received: from [10.110.44.69] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Thu, 24 Feb
+ 2022 11:56:50 -0800
+Message-ID: <9913cc2b-7dba-d861-c413-16cb783ca860@quicinc.com>
+Date:   Thu, 24 Feb 2022 11:56:49 -0800
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="7N28iCaW0tsV26lc"
-Content-Disposition: inline
-In-Reply-To: <1645708759-8833-1-git-send-email-quic_srivasam@quicinc.com>
-X-Cookie: I smell a wumpus.
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [RFC PATCH v2 2/5] drm/msm/dp: support attaching bridges to the
+ DP encoder
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20220211224006.1797846-1-dmitry.baryshkov@linaro.org>
+ <20220211224006.1797846-3-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220211224006.1797846-3-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -64,31 +75,143 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---7N28iCaW0tsV26lc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-On Thu, Feb 24, 2022 at 06:49:19PM +0530, Srinivasa Rao Mandadapu wrote:
+On 2/11/2022 2:40 PM, Dmitry Baryshkov wrote:
+> Currently DP driver will allocate panel bridge for eDP panels. This
+> supports only the following topology:
+> 
+> - eDP encoder ⇒ eDP panel (wrapped using panel-bridge)
+> 
+> Simplify this code to just check if there is any next bridge in the
+> chain (be it a panel bridge or regular bridge). Rename panel_bridge
+> field to next_bridge accordingly.
+> 
+> This allows one to use e.g. one of the following display topologies:
+> 
+> - eDP encoder ⇒ ptn3460 ⇒ fixed LVDS panel
+> - eDP encoder ⇒ ptn3460 ⇒ LVDS connector with EDID lines for panel autodetect
+> - eDP encoder ⇒ ptn3460 ⇒ THC63LVD1024 ⇒ DPI panel.
+> - eDP encoder ⇒ LT8912 ⇒ DSI panel
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> +	l_pds->macro_pd = dev_pm_domain_attach_by_name(dev, "macro");
-> +	if (IS_ERR_OR_NULL(l_pds->macro_pd))
-> +		return NULL;
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-Shouldn't there also be a DT binding update for the users?
-
---7N28iCaW0tsV26lc
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmIX4YIACgkQJNaLcl1U
-h9Ar2gf+P1DXI3jrG/N8JSEhOsEnIRpZ3hzB1gV86SjrpMkT9QH9/z/RD5pyWp49
-EC4g6Qdwatg7wK62yEeqfrXP0VgbP5she7silonyEFCznDycxQgBTy8p3Twn4OXq
-nsaVoeEHQkvtKNaleckz7pgfDyNkLdM8HxiS/xldfVFGkpjq/whXEjOgQwGq2t/B
-SPbvRiYnEZDIxBEOjJXtmi5wTQe1MsbG/1aOxz6SQDfVECf6drS6FUwW71Li+Ggv
-Alv09mzQeaGRCDCSUlDSn2wR/UazmQ92TBngzBl17QKjLeiJ7BWQIKyCHG34vjvR
-VAIXMWWSCKxwmkHShmvqZbHd9SzNYQ==
-=qS1/
------END PGP SIGNATURE-----
-
---7N28iCaW0tsV26lc--
+> ---
+>   drivers/gpu/drm/msm/dp/dp_display.c |  2 +-
+>   drivers/gpu/drm/msm/dp/dp_display.h |  2 +-
+>   drivers/gpu/drm/msm/dp/dp_drm.c     |  4 ++--
+>   drivers/gpu/drm/msm/dp/dp_parser.c  | 31 +++++++++++++++--------------
+>   drivers/gpu/drm/msm/dp/dp_parser.h  |  2 +-
+>   5 files changed, 21 insertions(+), 20 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 44d42c76c2a3..45f9a912ecc5 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -266,7 +266,7 @@ static int dp_display_bind(struct device *dev, struct device *master,
+>   		goto end;
+>   	}
+>   
+> -	dp->dp_display.panel_bridge = dp->parser->panel_bridge;
+> +	dp->dp_display.next_bridge = dp->parser->next_bridge;
+>   
+>   	dp->aux->drm_dev = drm;
+>   	rc = dp_aux_register(dp->aux);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+> index e3adcd578a90..7af2b186d2d9 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
+> @@ -16,7 +16,7 @@ struct msm_dp {
+>   	struct drm_bridge *bridge;
+>   	struct drm_connector *connector;
+>   	struct drm_encoder *encoder;
+> -	struct drm_bridge *panel_bridge;
+> +	struct drm_bridge *next_bridge;
+>   	bool is_connected;
+>   	bool audio_enabled;
+>   	bool power_on;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+> index 26ef41a4c1b6..80f59cf99089 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+> @@ -236,9 +236,9 @@ struct drm_bridge *msm_dp_bridge_init(struct msm_dp *dp_display, struct drm_devi
+>   		return ERR_PTR(rc);
+>   	}
+>   
+> -	if (dp_display->panel_bridge) {
+> +	if (dp_display->next_bridge) {
+>   		rc = drm_bridge_attach(dp_display->encoder,
+> -					dp_display->panel_bridge, bridge,
+> +					dp_display->next_bridge, bridge,
+>   					DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+>   		if (rc < 0) {
+>   			DRM_ERROR("failed to attach panel bridge: %d\n", rc);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
+> index a7acc23f742b..901d7967370f 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
+> @@ -265,23 +265,16 @@ static int dp_parser_clock(struct dp_parser *parser)
+>   	return 0;
+>   }
+>   
+> -static int dp_parser_find_panel(struct dp_parser *parser)
+> +static int dp_parser_find_next_bridge(struct dp_parser *parser)
+>   {
+>   	struct device *dev = &parser->pdev->dev;
+> -	struct drm_panel *panel;
+> -	int rc;
+> +	struct drm_bridge *bridge;
+>   
+> -	rc = drm_of_find_panel_or_bridge(dev->of_node, 1, 0, &panel, NULL);
+> -	if (rc) {
+> -		DRM_ERROR("failed to acquire DRM panel: %d\n", rc);
+> -		return rc;
+> -	}
+> +	bridge = devm_drm_of_get_bridge(dev, dev->of_node, 1, 0);
+> +	if (IS_ERR(bridge))
+> +		return PTR_ERR(bridge);
+>   
+> -	parser->panel_bridge = devm_drm_panel_bridge_add(dev, panel);
+> -	if (IS_ERR(parser->panel_bridge)) {
+> -		DRM_ERROR("failed to create panel bridge\n");
+> -		return PTR_ERR(parser->panel_bridge);
+> -	}
+> +	parser->next_bridge = bridge;
+>   
+>   	return 0;
+>   }
+> @@ -307,10 +300,18 @@ static int dp_parser_parse(struct dp_parser *parser, int connector_type)
+>   	if (rc)
+>   		return rc;
+>   
+> +	/*
+> +	 * Currently we support external bridges only for eDP connectors.
+> +	 *
+> +	 * No external bridges are expected for the DisplayPort connector,
+> +	 * it is physically present in a form of a DP or USB-C connector.
+> +	 */
+>   	if (connector_type == DRM_MODE_CONNECTOR_eDP) {
+> -		rc = dp_parser_find_panel(parser);
+> -		if (rc)
+> +		rc = dp_parser_find_next_bridge(parser);
+> +		if (rc) {
+> +			DRM_ERROR("DP: failed to find next bridge\n");
+>   			return rc;
+> +		}
+>   	}
+>   
+>   	/* Map the corresponding regulator information according to
+> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
+> index 3172da089421..4cec851e38d9 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_parser.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_parser.h
+> @@ -123,7 +123,7 @@ struct dp_parser {
+>   	struct dp_display_data disp_data;
+>   	const struct dp_regulator_cfg *regulator_cfg;
+>   	u32 max_dp_lanes;
+> -	struct drm_bridge *panel_bridge;
+> +	struct drm_bridge *next_bridge;
+>   
+>   	int (*parse)(struct dp_parser *parser, int connector_type);
+>   };
