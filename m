@@ -2,131 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 901834C2025
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 00:43:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD7694C20BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 01:41:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244937AbiBWXoZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Feb 2022 18:44:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38046 "EHLO
+        id S229705AbiBXAlh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Feb 2022 19:41:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234743AbiBWXoZ (ORCPT
+        with ESMTP id S229731AbiBXAlf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Feb 2022 18:44:25 -0500
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A42E546178;
-        Wed, 23 Feb 2022 15:43:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1645659836; x=1677195836;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=WbgvSw8pNkgMa5w8BxkuxdJqDj+0ilOkj3tUNUJuZbE=;
-  b=FpHv5riwIVdB55ZmG3P+AmilqId7gE7ic5XYod51eAexij5tH5us2YLv
-   9ByIV2bSyHdJk2AD2pTFb4ySd9+QVEX/50FH1VM+PUvy9ElkFvAt4VPHV
-   YFV5f3xthOHmkYLw29JMds2Af7RUloXnEDETnMGKivBdoVtRqJmy/eJhs
-   j1vVIELQkFPEMTmsyCdyORd0jXHW6sKbVXTMs5/vngL9DRvrrKQ0sSK5m
-   m8WtOb9Gkw8NcF0V523qUZpkiZbX7y9nIcMP1VL86Zy3T5lXZpwot6IvC
-   T5vaRz+e7bMJKU6hPlnEgqkNLdr08fmTkEOB9CLz0LXY0fuOmzX0aJIjb
-   Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10267"; a="251844286"
-X-IronPort-AV: E=Sophos;i="5.88,392,1635231600"; 
-   d="scan'208";a="251844286"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Feb 2022 15:43:56 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,392,1635231600"; 
-   d="scan'208";a="591891255"
-Received: from lkp-server01.sh.intel.com (HELO 788b1cd46f0d) ([10.239.97.150])
-  by fmsmga008.fm.intel.com with ESMTP; 23 Feb 2022 15:43:52 -0800
-Received: from kbuild by 788b1cd46f0d with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1nN1IV-0001xt-S9; Wed, 23 Feb 2022 23:43:51 +0000
-Date:   Thu, 24 Feb 2022 07:43:21 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Shawn Guo <shawn.guo@linaro.org>, Marc Zyngier <maz@kernel.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>
-Cc:     kbuild-all@lists.01.org,
-        Valentin Schneider <valentin.schneider@arm.com>,
-        Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Maulik Shah <quic_mkshah@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>
-Subject: Re: [PATCH v6 3/3] irqchip: Add Qualcomm MPM controller driver
-Message-ID: <202202240730.8ES2LbM6-lkp@intel.com>
-References: <20220223125536.230224-4-shawn.guo@linaro.org>
+        Wed, 23 Feb 2022 19:41:35 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B14E6B91EB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 16:41:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645663260; x=1677199260;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=T1BsiMbxSIkgWGJ3lFZKEyZTI31MdLBkfQ8ytEFnx0A=;
+  b=sscuWsuabGFa7Cq9XVbNCw1dz2eV0SyJyEbEqvnYrgg1Jz3Ptys4szCv
+   IkNIta4FRghE/PnZzZ7iI+I3ZsfMBnaL7kpjtDSC9OzV8j8An8tEOKqDV
+   WpxctJd3B2LwZnRHo0c1UBJYzvQn/VP4oi/t0hEyv7ARi+qfdqsPXvvRC
+   0=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 23 Feb 2022 16:40:59 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Feb 2022 16:40:58 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Wed, 23 Feb 2022 16:40:58 -0800
+Received: from [10.110.6.143] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Wed, 23 Feb
+ 2022 16:40:57 -0800
+Message-ID: <552d9809-0499-23b5-e437-a77c893b96c2@quicinc.com>
+Date:   Wed, 23 Feb 2022 16:40:56 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220223125536.230224-4-shawn.guo@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [RFC PATCH v2 4/5] drm/msm/dp: replace dp_connector with
+ drm_bridge_connector
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20220211224006.1797846-1-dmitry.baryshkov@linaro.org>
+ <20220211224006.1797846-5-dmitry.baryshkov@linaro.org>
+ <572c0402-55da-077b-1809-3d1caf7ce743@quicinc.com>
+ <b25d422e-cdd8-bcb9-1815-1d89f170d421@linaro.org>
+ <CAE-0n51afuHURLHaZBa77H_n+cm4Tj1Du-rpLH-HsrkY5xQVJA@mail.gmail.com>
+ <CAA8EJpobtpc5mB48g6K=+KaZQ-o8m_QTZr-dQvwz-9cEwiJ_Kg@mail.gmail.com>
+ <7f9e2181-bb1a-c734-2e90-c5922952acb4@quicinc.com>
+ <493749c1-6305-1a94-4e05-519c825e9d4d@linaro.org>
+ <a803c7a9-de4c-8fe5-d80d-56366df78611@quicinc.com>
+ <CAE-0n50VWH9Mum_W9e+6X1vjxvS3KWDqBtPfKHL-weA7S+_3Hg@mail.gmail.com>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <CAE-0n50VWH9Mum_W9e+6X1vjxvS3KWDqBtPfKHL-weA7S+_3Hg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Shawn,
 
-I love your patch! Perhaps something to improve:
+On 2/23/2022 1:33 PM, Stephen Boyd wrote:
+> Quoting Kuogee Hsieh (2022-02-23 10:27:26)
+>> On 2/23/2022 10:22 AM, Dmitry Baryshkov wrote:
+>>> On 23/02/2022 20:21, Kuogee Hsieh wrote:
+>>>
+>>> In the panel device node.
+>>>
+>>> Can you please share it too?
+>>
+>> &soc {
+>>           edp_power_supply: edp_power {
+>>                   compatible = "regulator-fixed";
+>>                   regulator-name = "edp_backlight_power";
+>>
+>>                   regulator-always-on;
+>>                   regulator-boot-on;
+>>           };
+>>
+>>           edp_backlight: edp_backlight {
+>>                   compatible = "pwm-backlight";
+>>
+>>                   pwms = <&pm8350c_pwm 3 65535>;
+>>                   power-supply = <&edp_power_supply>;
+>>                   enable-gpio = <&pm8350c_gpios 7 GPIO_ACTIVE_HIGH>;
+>>
+>>                   pinctrl-names = "default";
+>>                   pinctrl-0 = <&backlight_pwm_default>;
+>>           };
+>>
+>>           edp_panel: edp_panel {
+>>                   compatible = "sharp_lq140m1jw46";
+> Is that supposed to be sharp,lq140m1jw46 with a comma instead of an
+> underscore?
 
-[auto build test WARNING on tip/irq/core]
-[also build test WARNING on robh/for-next linus/master v5.17-rc5 next-20220222]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Stephen,
 
-url:    https://github.com/0day-ci/linux/commits/Shawn-Guo/Add-Qualcomm-MPM-irqchip-driver-support/20220223-210123
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git d2206fcabdfaff3958ab67cc5b8f63257e57b889
-config: arm64-allyesconfig (https://download.01.org/0day-ci/archive/20220224/202202240730.8ES2LbM6-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 11.2.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/0day-ci/linux/commit/17f8a23f57bf6d0177f6ef6f78237b37bd853e8d
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Shawn-Guo/Add-Qualcomm-MPM-irqchip-driver-support/20220223-210123
-        git checkout 17f8a23f57bf6d0177f6ef6f78237b37bd853e8d
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=arm64 SHELL=/bin/bash drivers/irqchip/
+This is our internal branch which does not have patches up to date yet.
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+I will cherry-pick newer edp related patches which are under review now 
+to re test it.
 
-All warnings (new ones prefixed by >>):
-
->> drivers/irqchip/qcom-mpm.c:210:21: warning: no previous prototype for 'get_mpm_gic_map' [-Wmissing-prototypes]
-     210 | struct mpm_gic_map *get_mpm_gic_map(struct qcom_mpm_priv *priv, int pin)
-         |                     ^~~~~~~~~~~~~~~
-
-
-vim +/get_mpm_gic_map +210 drivers/irqchip/qcom-mpm.c
-
-   209	
- > 210	struct mpm_gic_map *get_mpm_gic_map(struct qcom_mpm_priv *priv, int pin)
-   211	{
-   212		struct mpm_gic_map *maps = priv->maps;
-   213		int i;
-   214	
-   215		for (i = 0; i < priv->map_cnt; i++) {
-   216			if (maps[i].pin == pin)
-   217				return &maps[i];
-   218		}
-   219	
-   220		return NULL;
-   221	}
-   222	
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
