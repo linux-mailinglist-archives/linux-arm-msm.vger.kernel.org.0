@@ -2,67 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 419814C34DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 19:40:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B4EB4C34F4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 19:45:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232927AbiBXSkj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Feb 2022 13:40:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37060 "EHLO
+        id S232438AbiBXSoH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Feb 2022 13:44:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232921AbiBXSkh (ORCPT
+        with ESMTP id S229850AbiBXSoG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Feb 2022 13:40:37 -0500
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C748225F35B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 10:40:03 -0800 (PST)
-Received: by mail-oi1-x22e.google.com with SMTP id k2so4149416oia.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 10:40:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=JG8OwsrxHVatgWkESDwLdKHhhAoyBfhLVcqDq6Xl4j8=;
-        b=Nue9dIyLnLRe51dVkAI9WgHex7MOMePw8sXd9sVZ39rl9dgLANUQngeIVHGPbKj6eV
-         3O1kZoMWMcr61E8XZwkNNSfVhBdJLiHZAiFspq0RiIXI2UqCFSvgde2iSFiEHH28tvqd
-         a/Sc0t6/OxUTUQWKB4AllUyv3M9MW1ZPZ/KO8=
+        Thu, 24 Feb 2022 13:44:06 -0500
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F704223211;
+        Thu, 24 Feb 2022 10:43:36 -0800 (PST)
+Received: by mail-oi1-f176.google.com with SMTP id l25so4103119oic.13;
+        Thu, 24 Feb 2022 10:43:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=JG8OwsrxHVatgWkESDwLdKHhhAoyBfhLVcqDq6Xl4j8=;
-        b=a78b+wsJq+fXyVcsYQqGaor+vgIRxHvpBD+eB9SEmhmYKmnLPTx8jTMt928AtZt5DO
-         Hzxp8VBiIDnaGPPvxd1bN1cDCxNVhXKlCNcJ1YjDMBLINsZ8CcYWdRNZhQuaC0mKBXGd
-         7JJpfUGxdIZWiVznHweGbkx14Onf4uqrUCHo8PAfPvwaFEj07QPDsQSCmtdOC8g+BLRG
-         NeCxVSQ8QxTSXNjCHoBZDpI3vsh/dzmk4uOk4ye2g1Po0aM7wjT6ah8D/HG0PM7RBnGQ
-         3ftvMUlV/Z9bDvhDHCTeqmdbUUcLwlEh5NwRuQGkwXy/uZ6Mg1QDb8DBPc7WAL1iTzoS
-         gI4g==
-X-Gm-Message-State: AOAM530zJum/W4YRM/R5uc484Gmn5iEsoxX4bjw1LlJJM5T42orT2hTB
-        lREnF9OEn+pI7Y707rupjYfNjMlRmIHT8acOXzN8hRwgQwU=
-X-Google-Smtp-Source: ABdhPJx3XVZBAQZNQYSBRrLu+brA6da/H1Y+gwNqMyQmx/VI8HDEXVpWlfluK1fpgehTBZ551KVTM8WR/64X1gQR5m8=
-X-Received: by 2002:a05:6870:5829:b0:c8:9f42:f919 with SMTP id
- r41-20020a056870582900b000c89f42f919mr1934057oap.54.1645728003149; Thu, 24
- Feb 2022 10:40:03 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 24 Feb 2022 10:40:02 -0800
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=rDAV/WWC011qVv0D0YjIr6Ze1/ltKncfCfMwzEnMjjQ=;
+        b=o8+zIulVbhgAZbFoTuYA4+uz+LExCbxhjmPDq3Omw15z7+w/aqEUCHK9d0z9xJkHXh
+         mKHcsMJ7mej35QfkeczYztLX0kO9yZ+h1937eGKxEWZ971MbVpQkKsr3QWomuWPwlX1t
+         dCJTaEe2F6Gp2Osk/42gzv+xEiCi5ZgL1cM70nIr2uruBVITXS6u9pSFDax1Y8s3Y0u8
+         QaSsis8leehdU+kXf3c7S1NbYhSaU1uRFdv/rsWX8lxCJd3W+9subBTQ+wXJqnMuXkwA
+         fbqBR06H3RIcvEUt2e2RvsHjNcgKbYVnYnLKifjqjKpDK21jNiuW8rKqW3Xvzc9YCyft
+         vT/Q==
+X-Gm-Message-State: AOAM530VzZDLAb9U6F3xMMMVJ3r5MxlsbrzUeuIHkbjPL5PKShlUqGdm
+        2cfeDs72SlHMEs8zjytYIg==
+X-Google-Smtp-Source: ABdhPJyzToIn+k8zZMPupkt5bsE/2FY1U+G91saHHxKA8Ux7j9WTKJiq5dYRPnNsAu8lEQhspejNdg==
+X-Received: by 2002:a05:6808:1448:b0:2d7:dc0:c271 with SMTP id x8-20020a056808144800b002d70dc0c271mr5178534oiv.127.1645728215536;
+        Thu, 24 Feb 2022 10:43:35 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id p22-20020a056870831600b000ccfbea4f23sm236718oae.33.2022.02.24.10.43.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Feb 2022 10:43:34 -0800 (PST)
+Received: (nullmailer pid 3382450 invoked by uid 1000);
+        Thu, 24 Feb 2022 18:43:33 -0000
+Date:   Thu, 24 Feb 2022 12:43:33 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Taniya Das <tdas@codeaurora.org>, linux-clk@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH v5 01/15] dt-bindings: clock: split qcom,gcc.yaml to
+ common and specific schema
+Message-ID: <YhfR1fx+A0ZOrn5g@robh.at.kernel.org>
+References: <20220224164831.21475-1-ansuelsmth@gmail.com>
+ <20220224164831.21475-2-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <1645122930-23863-4-git-send-email-quic_khsieh@quicinc.com>
-References: <1645122930-23863-1-git-send-email-quic_khsieh@quicinc.com> <1645122930-23863-4-git-send-email-quic_khsieh@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 24 Feb 2022 10:40:02 -0800
-Message-ID: <CAE-0n50nMVEG5ccU=m0hNoyPnWvyugjRSXL9hoW=VOxm6+w2uw@mail.gmail.com>
-Subject: Re: [PATCH v4 3/3] drm/msm/dp: replace DRM_DEBUG_DP marco with drm_dbg_dp
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dmitry.baryshkov@linaro.org, dri-devel@lists.freedesktop.org,
-        robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220224164831.21475-2-ansuelsmth@gmail.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,14 +70,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-02-17 10:35:30)
-> Since DRM_DEBUG_DP is deprecated in favor of drm_dbg_dp(NULL, ...),
-> this patch replace all DRM_DEBUG_DP with drm_dbg_dp().
->
-> Changes in v4:
-> -- replace (strucr drm_dev *)NULL with drm_dev
->
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+On Thu, 24 Feb 2022 17:48:17 +0100, Ansuel Smith wrote:
+> Split qcom,gcc.yaml to common and specific schema to use it as a
+> template for schema that needs to use the gcc bindings and require
+> to add additional bindings.
+> 
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 > ---
+>  .../bindings/clock/qcom,gcc-other.yaml        | 76 +++++++++++++++++++
+>  .../devicetree/bindings/clock/qcom,gcc.yaml   | 59 +-------------
+>  2 files changed, 80 insertions(+), 55 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+> 
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
