@@ -2,60 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C75D4C2B7D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 13:17:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8043D4C2BD3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 13:33:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234152AbiBXMQQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Feb 2022 07:16:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46878 "EHLO
+        id S234400AbiBXMdm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Feb 2022 07:33:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231600AbiBXMQP (ORCPT
+        with ESMTP id S234381AbiBXMdh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Feb 2022 07:16:15 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28DD52325D3;
-        Thu, 24 Feb 2022 04:15:46 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id D0E22B82189;
-        Thu, 24 Feb 2022 12:15:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8962C340E9;
-        Thu, 24 Feb 2022 12:15:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1645704943;
-        bh=9EYwuXUUNe4s56JSespRsmrf4WVo2K2M5a/Ux3TMvqs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=EO20dRI6IsJOnpEYkrjAoI8Gfmbt38X+lccQKIlTplkGD+mQ39K3JwP5YURGYwyM+
-         bipJHv7pDLoOpYdsF9A4LJf5cwubCHeEtD8dGw9MLIL/sM9jfBbRKaide45qafv78J
-         I/SqNA0SLapUbLI9tNOp8kmck8xHVZW+p/khy9R2ri5yuhICOVMl38CDiVBxib9tnL
-         hyIM3Gguyjxmfx6/opYrxLAIw6xmGnYUUmy5Omjq4HQZU5zz3/LtVmORuo9g16IjSk
-         dmLGWDPW6VmWy4Ldc7h0vDUlv1LPE1/nRhAwEt+LMWm9RKjoSQ/4Mbkbdt0JWxpjzh
-         /aPqggDSVmVQQ==
-Date:   Thu, 24 Feb 2022 12:15:36 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, quic_plai@quicinc.com, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Subject: Re: [PATCH v15 6/10] ASoC: qcom: Add regmap config support for codec
- dma driver
-Message-ID: <Yhd26Cbe6ecbiVYH@sirena.org.uk>
-References: <1645630745-25051-1-git-send-email-quic_srivasam@quicinc.com>
- <1645630745-25051-7-git-send-email-quic_srivasam@quicinc.com>
+        Thu, 24 Feb 2022 07:33:37 -0500
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A868E192E34
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 04:33:06 -0800 (PST)
+Received: by mail-pf1-x433.google.com with SMTP id d17so1780228pfl.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 04:33:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Uhqs7VB4RRUY7J0XXRbx7LXxMKz2KfECenS4KOr6xXI=;
+        b=S2Vf0RYPXrLy1meYNbj0MlVf+rxsZCVo9rIwPYSB9gJ6S5SYMAh2+CxyH7aT8MxeCO
+         dG8YQYAMoOCI/bT8oW3od3qZtQ9PzGMqzBfDkCrtglJFkC/+7ub+TbPnhFtW8mYrb23/
+         zBeEVeuMsoq7MNg7p74+vABGuT790eFGGmOu780oEtfRK4x5u546ovA1JU8Xm68k7fHe
+         ZMslKDPkEsB6k/FKtgdi7g0w36Ys9ssAVaebqZ8Jc+Fli3GAaNhIGl/ynY8WlqXmqKXi
+         zATDRMYfxSNP5j3WbCiWA7cqbThaduhq2O7mFEag0NgYKPiaX4ZYaq9Z4U4ekcww1l+H
+         F9uA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Uhqs7VB4RRUY7J0XXRbx7LXxMKz2KfECenS4KOr6xXI=;
+        b=uTob4q8mC5ShvsZkfTclcbcMxu1jQ7r5tEcwDxMYZSEH653F/t6ytoydhu9BUmQMNU
+         2AlX5x85lHc5VXVWF618HRrqZnddxo5DuxCoVprOF0nALMGW6BRQO3BUp2vrorbIEeRx
+         JmAkV/2YVOQWadkch77vndQPiJWnmfnFlYH9LVHZKW3BTpA1WliKWQxBcNbbzLjPBqev
+         ZnM4FkceCH3KbUp0JCZYRgCJ57t99FFQMwvNLqly2ihmdqy61Ys9pRrqjL7gG4+NCwDj
+         kcZrBxV2uzhE0ScnhxvD3mm4tq/eMaxm+4v+lICiRoVbRpOXMRstb2LnrShsxixCH2KS
+         csWQ==
+X-Gm-Message-State: AOAM533D/189Y2N6b8pxEXWgQv188AJal0jG+xUOuEBnaK15nIvkFEwo
+        34HgMcJetNn9p8N2dDvU3BymPcqbIjtIjQ==
+X-Google-Smtp-Source: ABdhPJxE9MbifRXJoWthHwSxtlJ7G04wYvzC85z9VEDcnm5iRZLyuDKyBimvDL1t5y8moHqRV9v0bQ==
+X-Received: by 2002:a63:114c:0:b0:373:a701:3736 with SMTP id 12-20020a63114c000000b00373a7013736mr2134339pgr.117.1645705985897;
+        Thu, 24 Feb 2022 04:33:05 -0800 (PST)
+Received: from localhost.localdomain ([223.179.129.209])
+        by smtp.gmail.com with ESMTPSA id ep5-20020a17090ae64500b001bc56af507dsm6237567pjb.47.2022.02.24.04.32.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Feb 2022 04:33:05 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        agross@kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-phy@lists.infradead.org,
+        robh+dt@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 1/2] dt-bindings: phy: qcom,qmp: Mark '#clock-cells' as a 'optional' property
+Date:   Thu, 24 Feb 2022 18:02:47 +0530
+Message-Id: <20220224123248.67073-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="FvdNv5j3qU77ttYL"
-Content-Disposition: inline
-In-Reply-To: <1645630745-25051-7-git-send-email-quic_srivasam@quicinc.com>
-X-Cookie: You will soon forget this.
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -64,38 +71,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Since '#clock-cells' is not a required property for several
+QCoM boards supporting qmp-phy(s) (for e.g. sm8150, sm8250 or sm8350 SoC
+based boards), mark it as an optional property instead.
 
---FvdNv5j3qU77ttYL
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+This fixes the following '$ make dtbs_check' warning(s):
 
-On Wed, Feb 23, 2022 at 09:09:01PM +0530, Srinivasa Rao Mandadapu wrote:
-> Update regmap configuration for supporting headset playback and
-> capture and DMIC capture using codec dma interface
+sm8350-microsoft-surface-duo2.dt.yaml: phy@1d87000:
+  '#clock-cells' is a required property
 
-This breaks an x86 allmodconfig build:
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: Rob Herring <robh+dt@kernel.org>
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+ Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 1 -
+ 1 file changed, 1 deletion(-)
 
-/mnt/kernel/sound/soc/qcom/lpass-cpu.c:976:29: error: 'lpass_va_regmap_config' defined but not used [-Werror=unused-variable]
-  976 | static struct regmap_config lpass_va_regmap_config = {
-      |                             ^~~~~~~~~~~~~~~~~~~~~~
-/mnt/kernel/sound/soc/qcom/lpass-cpu.c:966:29: error: 'lpass_rxtx_regmap_config' defined but not used [-Werror=unused-variable]
-  966 | static struct regmap_config lpass_rxtx_regmap_config = {
-      |                             ^~~~~~~~~~~~~~~~~~~~~~~~
+diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+index 9e0f60e682c4..746a929c63bb 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+@@ -115,7 +115,6 @@ patternProperties:
+ required:
+   - compatible
+   - reg
+-  - "#clock-cells"
+   - "#address-cells"
+   - "#size-cells"
+   - ranges
+-- 
+2.35.1
 
-
---FvdNv5j3qU77ttYL
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmIXdugACgkQJNaLcl1U
-h9DUDAf+O6sb93bAoBGhzMwOIQTlMCUY6RbjN6tCvv7xqIeI3FKZu9UXYMvTvRqr
-oozDPOY5L+qBqOgtN4YDhD5ocrIt7MD6P+vEiXxPZc7nSDJZiiu17gTIrQNAHkOJ
-aiTh9Ur/Kabr3RogUR0sKm2XwLrsxBvHNpfBKG+0cKTCKCP2gcmbeA6W0AJJMesI
-q+Nuh5wO0oOEA8gUyx3qAxS9JAunaHmTPrvlGx/wGoXyDJ3kx30ON/rMyrWIFCQp
-ZOEJ4wqTVfc52iIHPI/GssqOwAQRuhNt/wLiAMcla4rIMS2JAu4xjUK2z1KGoyHH
-f6iH6riNaGRSyCi2k2zz6Sfj9nXxeg==
-=jFE4
------END PGP SIGNATURE-----
-
---FvdNv5j3qU77ttYL--
