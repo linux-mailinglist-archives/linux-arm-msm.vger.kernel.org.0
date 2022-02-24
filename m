@@ -2,67 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D01284C3984
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 00:07:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A02FD4C39A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 00:24:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232318AbiBXXIT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Feb 2022 18:08:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39130 "EHLO
+        id S233296AbiBXXZ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Feb 2022 18:25:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229593AbiBXXIT (ORCPT
+        with ESMTP id S229914AbiBXXZ2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Feb 2022 18:08:19 -0500
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 627DB166E3C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 15:07:45 -0800 (PST)
-Received: by mail-oo1-xc35.google.com with SMTP id i10-20020a4aab0a000000b002fccf890d5fso4092495oon.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 15:07:45 -0800 (PST)
+        Thu, 24 Feb 2022 18:25:28 -0500
+Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D10527579D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 15:24:57 -0800 (PST)
+Received: by mail-oo1-xc33.google.com with SMTP id p206-20020a4a2fd7000000b0031bfec11983so4045712oop.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 15:24:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=Pdeuz0/x/UcCtYy9gpg2IQ952VwG4ymNYye+kPVrhEE=;
-        b=MXLd3ZBdlTAX8agVsf5V28nQzQKnvYmBdeWKkk4KtN/pYmKhumnwNbQKw9+cabjXba
-         MaFCVsrXZmsjSPu8usBX4MX+ijiaHhNMJwhQWS/i7sQEGQhS6DHlxIgLLVTYXmR4gJ6B
-         AHqT9bQBCkjyLZWgU0zDNym6micA8Z5G9oSGk=
+        bh=ykl5+gmxA4yVeV9VmJK6ewapdNVNECzVgJJevXCRQuc=;
+        b=TqnUO6z4Q6nA3vvMK4mvsAFxAm2dn/5v+tTeKoc+l5Bx/GpmNS+0w9whrVtnIekxTU
+         Y8I0pVxPqJRS9yvOk8U+qh/lJUlnOu2zJ/2ALFyxMTPDBuazPTdITNufwlzT5F7g4qRB
+         PHeHFonNG6dDZgQ1E9it56/ppFnxJ2JeZDODU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=Pdeuz0/x/UcCtYy9gpg2IQ952VwG4ymNYye+kPVrhEE=;
-        b=729TvkVt/q07TB6q7mikULu91fA9wKG0CDomrGZG17Q0RJosaf5kOlE+/V6s5it4IC
-         yaZbTwgr4b7sJMxOQaNwuYyeDaa6dMrNShqMK0WNTgCq8GW78jcJIswfmRrvWxcLCbWz
-         CyTvexdzBL0ao9jPl8c2gJcoJ/6/75BPetk4VmvDLrQlfeeZdkm8N87e8WQNr/fDpgrl
-         cPf3wbxQT7sOm6UpoZW3CSf3EqjNXsBZD2+mYs+is4FfvOSFgqAV/EoKbwWx5dih+ufu
-         4qoba++xlNrekXS3Ibk1WG4Gyq2EDIvF0k0phBdEyj5oaOtVm2WK2c8liuLzu13VT1v5
-         Wavg==
-X-Gm-Message-State: AOAM530YAuknRtEZO3b7eYyNxEp7oAeHfl8Vu3ufmLE7XIprZvcGEBj2
-        E1NF0nlkUZZ5+FwQXSaxaHjRs+gNNLby/nyH3wA2Dg==
-X-Google-Smtp-Source: ABdhPJwi6oQyJF5w8BHt7yH3mUbw2csLqO5u0sEOxg0VRQOmL+MfVdN2LSc5EljloA4RnFakZW/IGmhVAukd4UTMxjA=
+        bh=ykl5+gmxA4yVeV9VmJK6ewapdNVNECzVgJJevXCRQuc=;
+        b=Y8OgEvOuI9c0MKLADjT4oOXQeveHVBsoNblSualg7lNBm7/dbbL7KMFso/2P1Jth5+
+         lr2LMbdcZVN9PdLpwyJG4VAU79oP6e79N5Qam7ZgpQQMYlV4JjOR9tJ84T6cMyiFR0xX
+         9tOuQZcugw9oj0fM/w7K8qIu9GPsTl5evcYtON234iokx0rXSMl44aacK9W/6LH8zYn3
+         6FwyI2dS+yGs+3WnjPCntgBrbjmbVryrX+WZCNDdtefsQtVJ3E0XO5Zzt3jcK0W2P5J0
+         QESqanAuHA0E7yHMZivKsGl6z/89a8Bdq04f77p+JUDiQgcVmDQ/bCHUBbNWFSiUixFF
+         MBiw==
+X-Gm-Message-State: AOAM533XJVGesKBCuGATCPm8Lb/jWlrA9sQ868rFYFRKiTKrTbG8Bgef
+        mmVWYFb3Mov74Qd1NrfIOEGYrncJiQrLGQ/RAuZUkA==
+X-Google-Smtp-Source: ABdhPJxPu46LL0CWhZZy8QN5RXliJtD35auxrUHD4Ow5T5vwfCuYokKQpnP4+gcm1fxEoLSBSOT66tZKar/j9/lM6lM=
 X-Received: by 2002:a05:6870:5829:b0:c8:9f42:f919 with SMTP id
- r41-20020a056870582900b000c89f42f919mr206276oap.54.1645744064750; Thu, 24 Feb
- 2022 15:07:44 -0800 (PST)
+ r41-20020a056870582900b000c89f42f919mr233403oap.54.1645745096848; Thu, 24 Feb
+ 2022 15:24:56 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 24 Feb 2022 15:07:44 -0800
+ HTTPREST; Thu, 24 Feb 2022 15:24:56 -0800
 MIME-Version: 1.0
-In-Reply-To: <1645695814-21102-1-git-send-email-quic_pmaliset@quicinc.com>
-References: <1645695814-21102-1-git-send-email-quic_pmaliset@quicinc.com>
+In-Reply-To: <1645716828-15305-10-git-send-email-quic_srivasam@quicinc.com>
+References: <1645716828-15305-1-git-send-email-quic_srivasam@quicinc.com> <1645716828-15305-10-git-send-email-quic_srivasam@quicinc.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Thu, 24 Feb 2022 15:07:44 -0800
-Message-ID: <CAE-0n51ky1pmqDJAEOUqW2ycZU6c1PFLE17OPUyZZaRZSx4GQA@mail.gmail.com>
-Subject: Re: [PATCH v3] PCI: qcom: Add system PM support
-To:     Prasad Malisetty <quic_pmaliset@quicinc.com>, agross@kernel.org,
-        bhelgaas@google.com, bjorn.andersson@linaro.org, kw@linux.com,
+Date:   Thu, 24 Feb 2022 15:24:56 -0800
+Message-ID: <CAE-0n51Lc8N=yfx0N=sSGYQLDSpUK_q3HEUkb6d4s1sdQ6W_3A@mail.gmail.com>
+Subject: Re: [PATCH v16 9/9] ASoC: qcom: lpass-sc7280: Add platform driver for
+ lpass audio
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        agross@kernel.org, alsa-devel@alsa-project.org,
+        bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
+        broonie@kernel.org, devicetree@vger.kernel.org,
+        judyhsiao@chromium.org, lgirdwood@gmail.com,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pci@vger.kernel.org, lorenzo.pieralisi@arm.com,
-        robh@kernel.org
-Cc:     quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
-        manivannan.sadhasivam@linaro.org
+        perex@perex.cz, quic_plai@quicinc.com, robh+dt@kernel.org,
+        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org,
+        tiwai@suse.com
+Cc:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,117 +74,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Prasad Malisetty (2022-02-24 01:43:34)
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index c19cd506..f4a5e3c 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1616,6 +1621,96 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->         return ret;
->  }
->
-> +static int qcom_pcie_send_pme_turnoff_msg(struct qcom_pcie *pcie)
-> +{
-> +       int ret;
-> +       u32 val, poll_val;
-> +       u64 l23_rdy_poll_timeout = 100000; /* microseconds */
+Quoting Srinivasa Rao Mandadapu (2022-02-24 07:33:48)
+> diff --git a/sound/soc/qcom/lpass-sc7280.c b/sound/soc/qcom/lpass-sc7280.c
+> new file mode 100644
+> index 0000000..70c4df8
+> --- /dev/null
+> +++ b/sound/soc/qcom/lpass-sc7280.c
+> @@ -0,0 +1,438 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
+> + *
+> + * lpass-sc7180.c -- ALSA SoC platform-machine driver for QTi LPASS
 
-unsigned long instead of u64? But why is it a local variable at all?
-Just inline it in the one place it is used?
+Should be sc7280, but really the filename should be removed entirely.
 
-> +       struct dw_pcie *pci = pcie->pci;
-> +       struct device *dev = pci->dev;
+> + */
 > +
-> +       val = readl(pcie->elbi + PCIE20_ELBI_SYS_CTRL);
-> +       val |= PCIE_PME_TURNOFF_MSG;
-> +       writel(val, pcie->elbi + PCIE20_ELBI_SYS_CTRL);
+> +#include <linux/module.h>
+> +#include <sound/pcm.h>
+> +#include <sound/soc.h>
+> +#include <linux/pm_runtime.h>
 > +
-> +       ret = readl_poll_timeout((pcie->parf + PCIE20_PARF_PM_STTS), poll_val,
-> +                       (poll_val & PCIE_PM_LINKST_IN_L2),
-> +                       10000, l23_rdy_poll_timeout);
-> +       if (!ret)
-> +               dev_dbg(dev, "Device entered L23_Ready state\n");
-> +       else
-> +               dev_err(dev, "Device failed to enter L23_Ready. PM_STTS 0x%x\n",
-> +                       readl_relaxed(pcie->parf + PCIE20_PARF_PM_STTS));
-> +
-> +       return ret;
-> +}
-> +
-> +static void qcom_pcie_host_disable(struct qcom_pcie *pcie)
-> +{
-> +       qcom_ep_reset_assert(pcie);
-> +
-> +       /* Put PHY into POWER DOWN state */
-> +       phy_power_off(pcie->phy);
-> +
-> +       writel(PHY_POWER_DOWN, pcie->parf + PCIE20_PARF_PHY_CTRL);
-> +
-> +       if (pcie->ops->post_deinit)
-> +               pcie->ops->post_deinit(pcie);
-> +
-> +       /* Disable PCIe clocks and regulators */
-> +       pcie->ops->deinit(pcie);
-> +}
-> +
-> +static int __maybe_unused qcom_pcie_pm_suspend_noirq(struct device *dev)
-> +{
-> +       int ret;
-> +       struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> +       struct dw_pcie *pci = pcie->pci;
-> +
-> +       if (!dw_pcie_link_up(pci)) {
-> +               dev_dbg(dev, "Power has been turned off already\n");
-> +               return 0;
-> +       }
-> +
-> +       ret = qcom_pcie_send_pme_turnoff_msg(pcie);
-> +       if (ret)
-> +               return ret;
-> +
-> +       /* Power down the PHY, disable clock and regulators */
-> +       qcom_pcie_host_disable(pcie);
-> +
-> +       return 0;
-> +}
-> +
-> +/* Resume the PCIe link */
-> +static int __maybe_unused qcom_pcie_pm_resume_noirq(struct device *dev)
-> +{
-> +       int ret;
-> +       struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> +       struct dw_pcie *pci = pcie->pci;
-> +       struct pcie_port *pp = &pci->pp;
-> +
-> +       ret = qcom_pcie_host_init(pp);
-> +       if (ret) {
-> +               dev_err(dev, "cannot initialize host\n");
-> +               return ret;
-> +       }
-> +
-> +       dw_pcie_setup_rc(pp);
-> +
-> +       qcom_pcie_start_link(pci);
-> +
-> +       ret = dw_pcie_wait_for_link(pci);
-> +       if (ret)
-> +               dev_err(dev, "Link never came up, Resume failed\n");
+> +#include <dt-bindings/sound/sc7180-lpass.h>
 
-But we ignore and don't return ret? Please add a comment about why
-that's done, or return ret below.
-
-> +
-> +       return 0;
-> +}
-> +
-> +static const struct dev_pm_ops qcom_pcie_pm_ops = {
-> +       SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_pm_suspend_noirq, qcom_pcie_pm_resume_noirq)
-
-Why is noirq used? Please add a comment. And better yet don't use noirq
-hooks and use the normal suspend/resume hooks.
-
-> +};
-> +
->  static const struct of_device_id qcom_pcie_match[] = {
->         { .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
->         { .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
+Is that right? Or is it supposed to be dt-bindings/sound/sc7280-lpass.h?
