@@ -2,70 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DFA54C22EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 05:15:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AFCA54C22F9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 05:18:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229934AbiBXEPj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Feb 2022 23:15:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60406 "EHLO
+        id S229784AbiBXETV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Feb 2022 23:19:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229926AbiBXEPi (ORCPT
+        with ESMTP id S229437AbiBXETT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Feb 2022 23:15:38 -0500
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71F1523A1B6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 20:15:09 -0800 (PST)
-Received: by mail-oi1-x232.google.com with SMTP id x193so1338730oix.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 20:15:09 -0800 (PST)
+        Wed, 23 Feb 2022 23:19:19 -0500
+Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5E44246341
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 20:18:49 -0800 (PST)
+Received: by mail-oo1-xc34.google.com with SMTP id w10-20020a4ae08a000000b0031bdf7a6d76so1705103oos.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 20:18:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=oelzMdYs7Pg9Rl+pgaKSACJUiLmrAGYDWU5DTT17hyE=;
-        b=eBvrEF4bIaUxbwXOylYwWAyMfqd5WxpFN888rypI0aHzRyzqHJJpClWMHbDqYiq+3S
-         gvIjnqk2XlHwUhdp4xhab0tlYq+RKMbAbat28UhMlPT1vCs7K2KOXLHTvoqAJ/UMO7Wk
-         awIvDgdCepgfaE4G06K7DhXLmO+ye5h7KO5ex2/UwcbUgcjUpGNKwiAvhzioZfce/nUk
-         8kA5pwGfbcdnRBTdngd7bn8NQHRPvphn/siWBFLhwVepQ+V4kfjIpXYgWH2194OUowMl
-         KYMsciEzFFgyvKgE8jJTP4n/3b0mqGMWuKgQXDIBq6cjPTkORRwh2SFY+U5pZWapi+rB
-         Rhxw==
+        bh=3k6nsUndnaxGq9KrFdUGS0lUU74/xXQS8rZbei+mTJ4=;
+        b=QfXCIdQg6ynE2/b9iuVz8gzFFfvo480TDTQblLZrdL0X4oVElQTIXreVApwCaJt+8X
+         Y6OW+WD47gnndn3OyBb57hzI53/WV9iaNGhUMYITbREv0uap8GI/jQkBmKnLWczFekIU
+         eFBx1xoZH9Beyq65wwttB7uYpSmsHGwV4aPLvi4vF1SbJ6nQAI2m6HtVilBiNQnKst/d
+         OTZO2w4H5vS33BdxGztGMJdHLNKVtT6pVh6M1gYpy3HGJUIW0rL4PSv+nUIJvWy3eaVG
+         dtxi+MamoE+T7gqUIxQU2nVpZU+ktfhVijwSh+A+bUCFoDQuTg8GQ5lEc23vo9wiGngo
+         3dqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=oelzMdYs7Pg9Rl+pgaKSACJUiLmrAGYDWU5DTT17hyE=;
-        b=eNAUJakUnVNhj5ssKbfC893upSLZiPh7GU5IZgesRz2EFLT6V+9QPwdBItfN5lOh4I
-         GjLUVBG88X+T4FokEd3LaJTazUCXYHqBl/u9sL+RPACqmntQ+5mSJcPDLmNPqqFNcscD
-         R1ZrzH2tGUaJ5dosQ+CbexaNTsTvd5/dlzm9RVtdoyGlpohWmdCvTZ1e6/PhaQTiEEi9
-         2ZCbWHOFl1qnZwcdqKQu5o8v03DWT6OgDKjlzLLALP4qv+WTz883LQgcal2Wjy++ZFXe
-         +W+Zl6gX+07sU2Z0ktTcj0UVuVfKkhYrv0pv/xTpRNg7srSxFteeP4Do3BwUq1kIUMjJ
-         t/tA==
-X-Gm-Message-State: AOAM531EnmTT6cu1bB9UGmv5CdQEQk3CghEdSKy7RIq7R1o8sluDcfsj
-        zgUk61b1yKf/m03cf0Qu7R9Xng==
-X-Google-Smtp-Source: ABdhPJxITOuU97vSupZI0i1M4HQ1oAx5B0u8OVQz++lLuC7TEEiYLcj5DHfSpKu+S4RVKBWSymiHcA==
-X-Received: by 2002:a05:6808:30a7:b0:2d4:fb78:8ab2 with SMTP id bl39-20020a05680830a700b002d4fb788ab2mr408172oib.325.1645676108821;
-        Wed, 23 Feb 2022 20:15:08 -0800 (PST)
+        bh=3k6nsUndnaxGq9KrFdUGS0lUU74/xXQS8rZbei+mTJ4=;
+        b=tHDEnBT+PgMh2g4W1Rnu4ILDxKCBSSUsk5gSn/BdecOUNt5Tts0uiSA9TKdmRUo+cF
+         tnDOCDKCfQHYLd5prB5QjTauTYQZQmDubYFJ358Rb2lXY1ROoUSbzXqC6hLSFE1o09Uu
+         QfBZ9N4CfpTFjhIfGNkg/WuSVX1EoD+Rd0CFRsFJJn/W30ZE5Bo5tyzXPMZnds+O8g1k
+         X5j47XQM/br6zbBqwIGGwCjzu+sDmotToARqGfbrPo2HcmR92Uw2JyU4T1MYjDMnD/rr
+         p5XGWVf4jbJmTpsQXzt9nHAWznKd+52/9jBFfhIu81L9TWnoIc62BwL61eHzP+mwG19u
+         KClw==
+X-Gm-Message-State: AOAM53171a23hWNoMe0c/v1pQ/vViM8+JvjOPIYyqfsU1XZaxi1Rf6ri
+        dKnkK0GerHhcj3XMXeYlj43yZg==
+X-Google-Smtp-Source: ABdhPJwxeRMbnIgdkJ0zYIx+4TkSJMsh+2992YU/H+8qTI/VUzh/b5ekIWMqVJXeUOq07tWHjkG02g==
+X-Received: by 2002:a05:6870:d8b1:b0:ce:c0c9:5f7 with SMTP id dv49-20020a056870d8b100b000cec0c905f7mr5517709oab.73.1645676329255;
+        Wed, 23 Feb 2022 20:18:49 -0800 (PST)
 Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id el40sm992150oab.22.2022.02.23.20.15.08
+        by smtp.gmail.com with ESMTPSA id g11sm818174oan.35.2022.02.23.20.18.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 20:15:08 -0800 (PST)
-Date:   Wed, 23 Feb 2022 22:15:06 -0600
+        Wed, 23 Feb 2022 20:18:48 -0800 (PST)
+Date:   Wed, 23 Feb 2022 22:18:46 -0600
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        devicetree@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
-Subject: Re: [PATCH 0/5] Wifi & Bluetooth on LG G Watch R
-Message-ID: <YhcGSmd5M3W+fI6c@builder.lan>
-References: <20220216212433.1373903-1-luca@z3ntu.xyz>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 4/5] arm64: dts: qcom: msm8996: add cxo and sleep-clk to
+ gcc node
+Message-ID: <YhcHJmM0WaBYP+dw@builder.lan>
+References: <20220215201539.3970459-1-dmitry.baryshkov@linaro.org>
+ <20220215201539.3970459-5-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220216212433.1373903-1-luca@z3ntu.xyz>
+In-Reply-To: <20220215201539.3970459-5-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,32 +75,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 16 Feb 15:24 CST 2022, Luca Weiss wrote:
+On Tue 15 Feb 14:15 CST 2022, Dmitry Baryshkov wrote:
 
-> This series adds the BCM43430A0 chip providing Bluetooth & Wifi on the
-> LG G Watch R.
+> Supply proper cxo (RPM_SMD_BB_CLK1) and sleep_clk to the gcc clock
+> controller node.
 > 
 
-I picked the dts changes, but would prefer that the other two changes
-goes through the BT tree. I see that you haven't copied Marcel on the
-dt-binding change though, so please resubmit those two patches together.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Thanks,
-Bjorn
-
-> Luca Weiss (5):
->   dt-bindings: bluetooth: broadcom: add BCM43430A0
->   Bluetooth: hci_bcm: add BCM43430A0
->   ARM: dts: qcom: msm8226: Add pinctrl for sdhci nodes
->   ARM: dts: qcom: apq8026-lg-lenok: Add Wifi
->   ARM: dts: qcom: apq8026-lg-lenok: Add Bluetooth
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/msm8996.dtsi | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 > 
->  .../bindings/net/broadcom-bluetooth.yaml      |  1 +
->  arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts   | 98 ++++++++++++++++---
->  arch/arm/boot/dts/qcom-msm8226.dtsi           | 57 +++++++++++
->  drivers/bluetooth/hci_bcm.c                   |  1 +
->  4 files changed, 144 insertions(+), 13 deletions(-)
-> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> index 91bc974aeb0a..7a46f0f67cbb 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> @@ -679,8 +679,10 @@ gcc: clock-controller@300000 {
+>  			#power-domain-cells = <1>;
+>  			reg = <0x00300000 0x90000>;
+>  
+> -			clocks = <&rpmcc RPM_SMD_LN_BB_CLK>;
+> -			clock-names = "cxo2";
+> +			clocks = <&rpmcc RPM_SMD_BB_CLK1>,
+> +				 <&rpmcc RPM_SMD_LN_BB_CLK>,
+> +				 <&sleep_clk>;
+> +			clock-names = "cxo", "cxo2", "sleep_clk";
+>  		};
+>  
+>  		tsens0: thermal-sensor@4a9000 {
 > -- 
-> 2.35.1
+> 2.34.1
 > 
