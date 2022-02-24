@@ -2,69 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF73B4C370D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 21:50:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B18F04C3712
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 21:50:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229746AbiBXUtz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Feb 2022 15:49:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51056 "EHLO
+        id S234422AbiBXUuq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Feb 2022 15:50:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229455AbiBXUtz (ORCPT
+        with ESMTP id S233891AbiBXUup (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Feb 2022 15:49:55 -0500
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE5B81C8855
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 12:49:24 -0800 (PST)
-Received: by mail-qt1-x82d.google.com with SMTP id n11so642928qtk.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 12:49:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VyQBdQeq30UmUiqwlI0GZfDYUe6OZQF6NDdZxu0b9es=;
-        b=DlQD2EHGRUBoc/E0dh0hZrxOrEYga+JU0zzMecSmJFvU0l7vdl8Dyb4jMjY6eFRNMl
-         jpPefec6vhJo9beapyUy3Aq7D7X87670T0fKNglEM6m+c5LvcI5uNDAUg5VwaWz1sGHA
-         Sqc666ajb+V85fYRTiKz3z9vlHx2JXXdw3SHoOaqtNWr/I8spOb4wDL+lP/G+IuqaVU8
-         YQuEJJry+vthMfycKkveSyxrc2PZw0HvB8wgNQbQ4eKw8XHyww6T4x3//csh9pHGQPbt
-         WkfOqSsIKgiUAkku0lMm8DgVePmfkU/dDwNCEWbVsNSDtQKSl0M8j1Y2qWeQYPfkROoW
-         YocA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VyQBdQeq30UmUiqwlI0GZfDYUe6OZQF6NDdZxu0b9es=;
-        b=BGryXpv50zq6cPqyuJSoJWPi4ZL4vRK36avTVP16oOw8zDOfevcWwtipxd6gNxN0I2
-         9h364mQbhd60u5Res0J8tWky+opwCcGf0kXCbEkak5XorUmPmQl9oCLrgO/cwnkzoazZ
-         3ZecHTNOWbzIQad/UFGjjRLZp+i1h9/BU0Iyy6FoJTvjkooLnx4OOGEdv0vtmannnoPk
-         CEDXd0Ljj2MZeBA0zlLIQpbmUnUu4n+FYpnlock5kSl2Pwqo9qEJesgrYFNLDJhu45Y/
-         irXtZOSkU7SvKzYmOyes2vuE20eEDRdfR2f83mTQpXMdHK4shv4VcZmSTOsKWcIxLhOc
-         q5Vg==
-X-Gm-Message-State: AOAM532FiC9eD8Pmla65SdAHBJ8I/cQutnjq2ZJb85PfACQUrzj0Tf+J
-        FVsPpSDv5r5jsVVvYuXaYZhp3RACnDCl4UnQopXEDw==
-X-Google-Smtp-Source: ABdhPJx1lIYR/oq8NfFLg2T+0jojl7BBRYD0j2U/Ua/gdPrYCKluwQ1CgEY8WNy/xq/flALhgfmObgBmrbZt8GF/CAo=
-X-Received: by 2002:ac8:5713:0:b0:2de:4e16:5b25 with SMTP id
- 19-20020ac85713000000b002de4e165b25mr4077178qtw.682.1645735764109; Thu, 24
- Feb 2022 12:49:24 -0800 (PST)
+        Thu, 24 Feb 2022 15:50:45 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5734277930
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 12:50:14 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6FE50618EB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 20:50:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id CBD14C340F1;
+        Thu, 24 Feb 2022 20:50:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1645735813;
+        bh=zr9E9ssD5brw+nuxYtZqWsrIVMVF09LHt1z02ih3I7M=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=GI11wp9x8Wm7J50WPAr6t+jYhahaNnhAAz33DGBIYMBMxTEi/Q0BxYIAf1Xzxk2Lh
+         1yHOUnstQFH8QvwmOD10WRndjJqDIakC3nHqpB5KYvku4/OnwOE6ojaM7U+efq9IEd
+         wq12vj6NPsXJj/xUJLWtNpZl5Y0Q+c+GK2Bga77IqTjHd8TNOzKPCfWM3Z4f9BquBy
+         UEDVvOZVIOCPBaoYq1OnGzPJnO2QN4Z3r/46hKR/JFBYWPpBUXEncnUqzymj5EtmWH
+         GXDG0yRrhVb89iU2J5Sdzz/reSUQMMfysH3elTTTPKgoYIZclA5Gn0UFSKrE4NFiUQ
+         ktAEg2IwzuRog==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id AF22DEAC09C;
+        Thu, 24 Feb 2022 20:50:13 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20220211224006.1797846-1-dmitry.baryshkov@linaro.org>
- <20220211224006.1797846-4-dmitry.baryshkov@linaro.org> <9348028b-a898-428e-a855-9df18e577328@quicinc.com>
-In-Reply-To: <9348028b-a898-428e-a855-9df18e577328@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 24 Feb 2022 23:49:13 +0300
-Message-ID: <CAA8EJpo0C1vtiZAeBDU0G0rg5CEHwc5fmdkeKRiEyOvfPxNm-Q@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 3/5] drm/msm/dp: support finding next bridge even
- for DP interfaces
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 1/3] dt-bindings: power: rpmpd: Add MSM8226 to rpmpd binding
+From:   patchwork-bot+linux-arm-msm@kernel.org
+Message-Id: <164573581371.20860.7193275477399025068.git-patchwork-notify@kernel.org>
+Date:   Thu, 24 Feb 2022 20:50:13 +0000
+References: <20220220223004.507739-1-luca@z3ntu.xyz>
+In-Reply-To: <20220220223004.507739-1-luca@z3ntu.xyz>
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,84 +56,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 24 Feb 2022 at 23:13, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
->
->
-> On 2/11/2022 2:40 PM, Dmitry Baryshkov wrote:
-> > It is possible to supply display-connector (bridge) to the DP interface,
-> > add support for parsing it too.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >   drivers/gpu/drm/msm/dp/dp_parser.c | 19 ++++++++++++-------
-> >   1 file changed, 12 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
-> > index 901d7967370f..1056b8d5755b 100644
-> > --- a/drivers/gpu/drm/msm/dp/dp_parser.c
-> > +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-> > @@ -301,17 +301,22 @@ static int dp_parser_parse(struct dp_parser *parser, int connector_type)
-> >               return rc;
-> >
-> >       /*
-> > -      * Currently we support external bridges only for eDP connectors.
-> > +      * External bridges are mandatory for eDP interfaces: one has to
-> > +      * provide at least an eDP panel (which gets wrapped into panel-bridge).
-> >        *
-> > -      * No external bridges are expected for the DisplayPort connector,
-> > -      * it is physically present in a form of a DP or USB-C connector.
-> > +      * For DisplayPort interfaces external bridges are optional, so
-> > +      * silently ignore an error if one is not present (-ENODEV).
-> >        */
-> > -     if (connector_type == DRM_MODE_CONNECTOR_eDP) {
-> > -             rc = dp_parser_find_next_bridge(parser);
-> > -             if (rc) {
-> > -                     DRM_ERROR("DP: failed to find next bridge\n");
-> > +     rc = dp_parser_find_next_bridge(parser);
-> > +     if (rc == -ENODEV) {
-> > +             if (connector_type == DRM_MODE_CONNECTOR_eDP) {
-> > +                     DRM_ERROR("eDP: next bridge is not present\n");
-> >                       return rc;
-> >               }
-> > +     } else if (rc) {
-> > +             if (rc != -EPROBE_DEFER)
-> > +                     DRM_ERROR("DP: error parsing next bridge: %d\n", rc);
-> > +             return rc;
-> >       }
->
-> How is this silently ignoring?
->
-> static int dp_display_bind(struct device *dev, struct device *master,
->                 void *data)
-> {
->      int rc = 0;
->      struct dp_display_private *dp = dev_get_dp_display_private(dev);
->      struct msm_drm_private *priv = dev_get_drvdata(master);
->      struct drm_device *drm = priv->dev;
->
->      dp->dp_display.drm_dev = drm;
->      priv->dp[dp->id] = &dp->dp_display;
->
->      rc = dp->parser->parse(dp->parser, dp->dp_display.connector_type);
->      if (rc) {
->          DRM_ERROR("device tree parsing failed\n");
->          goto end;
->      }
->
-> dp_display_bind will still fail if a bridge is not found.
->
-> If supplying a bridge is optional even this should succeed right?
+Hello:
 
-It will succeed as dp_parser_parse() will not return -ENODEV if the
-connector is not eDP.
-To rephrase the comment:
-For the dp_parser_find_next_bridge() result:
-- for eDP the driver passes all errors to the calling function.
-- for DP the driver ignores -ENODEV (no external bridge is supplied),
-but passes all other errors (which can mean e.g. that the bridge is
-not properly declared or that it did hasn't been probed yet).
+This series was applied to qcom/linux.git (for-next)
+by Bjorn Andersson <bjorn.andersson@linaro.org>:
 
+On Sun, 20 Feb 2022 23:30:01 +0100 you wrote:
+> Add compatible and constants for the power domains exposed by the
+> MSM8226 RPM.
+> 
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+>  Documentation/devicetree/bindings/power/qcom,rpmpd.yaml | 1 +
+>  include/dt-bindings/power/qcom-rpmpd.h                  | 5 +++++
+>  2 files changed, 6 insertions(+)
+
+Here is the summary with links:
+  - [1/3] dt-bindings: power: rpmpd: Add MSM8226 to rpmpd binding
+    (no matching commit)
+  - [2/3] soc: qcom: rpmpd: Add MSM8226 support
+    https://git.kernel.org/qcom/c/20f36361b7dd
+  - [3/3] ARM: dts: qcom: msm8226: add power domains
+    https://git.kernel.org/qcom/c/134553625187
+
+You are awesome, thank you!
 -- 
-With best wishes
-Dmitry
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
