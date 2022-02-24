@@ -2,63 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AA9E4C3682
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 21:06:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 806EC4C369C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 21:11:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234169AbiBXUF7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Feb 2022 15:05:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46180 "EHLO
+        id S234241AbiBXULP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Feb 2022 15:11:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234163AbiBXUF6 (ORCPT
+        with ESMTP id S232032AbiBXULP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Feb 2022 15:05:58 -0500
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C39A2763E2;
-        Thu, 24 Feb 2022 12:05:28 -0800 (PST)
-Received: by mail-oi1-f182.google.com with SMTP id z7so4655262oid.4;
-        Thu, 24 Feb 2022 12:05:28 -0800 (PST)
+        Thu, 24 Feb 2022 15:11:15 -0500
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65FB8278282
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 12:10:44 -0800 (PST)
+Received: by mail-oi1-x22d.google.com with SMTP id a6so4667336oid.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 12:10:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=tp/pxUAsN1dsuv2WMgFOFlatJS81kJvAhFMGsLib+Ik=;
+        b=QD5DoxG2HFUYczwhvfPpKRZtnIME+v8s7w+BMnIyEY0/+LA6uzKnzx48TQFLyCi7F0
+         ZXnFA/+CXBjbSFYOtS/HtPQdxpoqKQCikgKMJ5nqywsutlOh215hj+5w2XnG7hcGhqfP
+         ettNPp5G8VpeUXSppkEJD7y/PNFkQQpjRzdLxM5Tk2YLpzBQRCJaMqG6jpW6LUISA0MG
+         v0BXQJ9gVeL2EVPR1q60Ac2A9Or1s6tbjQPqawwfA3VHvUv9z2gYfs1VgaS4+kIcdWyl
+         KckZ6LmxFupOpCf7p0rOAYnEGLcZDBB1clh3kSO+0qp2AO0mGbovLAP+k1RJ+ejdlYn7
+         YEKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=EwIjA2cxi6Zdyhj63jC+/ls8eLXGyDyFeI0zXBrFAkQ=;
-        b=aCkUbo7c+1hJNe75gFl9xCLsIMg62YGtGXguDrLa0lUOCfjMEcPKlBjykEHLHJFkev
-         U5SsHLghXYX61iCJdHxl2Yi0e8p27Dui/adGNG0kRm9SH7O2XRQf9b74ivifisA6azPb
-         98oyfccHHvuxcRyETV1xgr/4Q5yCAcwYAObLT/NcuGrY05S2hhJCLQ5Co1bmFNT6sgLc
-         i2lucYteRdUJjQ/DmbLik8i2OOaYdzO8dXP8boYR9w0TIfpIi+NN1JGMFwCj+wFFI1Si
-         gAiFsEkMEHcxo9Vx66YZ2N64kXMPnTlvZEGUxsBwkn2uTuyN86p6g7SM4b1+AsIDV/D5
-         yNpw==
-X-Gm-Message-State: AOAM532BzqJBfRrNXo8siHY2sA8bBSzjJAZ/JD4ilsFwgoBKHe06pjfM
-        pHPcR+qQmNVKTwYxNBLYRA==
-X-Google-Smtp-Source: ABdhPJyjQU+gebS9JGc2UZ/FTDV4dMqOLrfIbq7JvO5O6KblWMX8vIYvqv+UcWPwoh5gzByfhx3U6w==
-X-Received: by 2002:a05:6871:419c:b0:d6:e34d:b206 with SMTP id lc28-20020a056871419c00b000d6e34db206mr26562oab.170.1645733127913;
-        Thu, 24 Feb 2022 12:05:27 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id ep36-20020a056870a9a400b000d6bd82a92fsm394811oab.18.2022.02.24.12.05.26
+        bh=tp/pxUAsN1dsuv2WMgFOFlatJS81kJvAhFMGsLib+Ik=;
+        b=6X5OgHW/f0kWD4ZAUIPuOZcveR6fKKTuNhtQHK3/YKmv9tCdGyfxSGYMcNZeJBew4L
+         3nV8NEhGiBncVbkmKeR27OWVXrrjZcpECdFFqO7T7NAG9OL/wL/nzXrf3UYvt6IbpWYS
+         Dfj6LwcXmmY0kQBslkWIVFvQyWaPSZLAvuDw/8PYWtlGucgplr2/u9DfA9QegMm8M9IG
+         wo+PGol0n8nZYjoVkV/zgO3IhqTCH4/F2ne256MP7KdJX6CwuE1dUTY5Bs1ZtquvIKA4
+         oVTDdIFap8yAmijnQmP8C6wHURg1ribhwU35nveaVzba5MfQpLFrX5bKqxusaOI77TV0
+         pCaw==
+X-Gm-Message-State: AOAM532MpcsLQZqTkSIW9bWw9vWwaBhMSSV7vh6UbicTJBUgPXMW1ZfJ
+        bQsZriSz/7XMBERVPCT/SoCKgQ==
+X-Google-Smtp-Source: ABdhPJyN1tJXc2OmNxcbayjctonbYe7XOluBMlLa7fjoRQREv6clqrbNE7J3VS7gOJPpy7RKF/DD4A==
+X-Received: by 2002:a05:6870:6014:b0:d6:ca51:2108 with SMTP id t20-20020a056870601400b000d6ca512108mr2044865oaa.47.1645733443809;
+        Thu, 24 Feb 2022 12:10:43 -0800 (PST)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id p16-20020a05680811d000b002d72ec3a921sm249592oiv.21.2022.02.24.12.10.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Feb 2022 12:05:27 -0800 (PST)
-Received: (nullmailer pid 3498178 invoked by uid 1000);
-        Thu, 24 Feb 2022 20:05:24 -0000
-Date:   Thu, 24 Feb 2022 14:05:24 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        jassisinghbrar@gmail.com, manivannan.sadhasivam@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/7] dt-bindings: mailbox: Add binding for SDX65 APCS
-Message-ID: <YhflBNX/iRsC8LBq@robh.at.kernel.org>
-References: <1645420953-21176-1-git-send-email-quic_rohiagar@quicinc.com>
- <1645420953-21176-2-git-send-email-quic_rohiagar@quicinc.com>
+        Thu, 24 Feb 2022 12:10:43 -0800 (PST)
+Date:   Thu, 24 Feb 2022 14:10:40 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Luca Weiss <luca@z3ntu.xyz>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 02/10] dt-bindings: thermal: tsens: Add msm8953
+ compatible
+Message-ID: <YhfmQFFCmb74dOvV@builder.lan>
+References: <20220220201909.445468-1-luca@z3ntu.xyz>
+ <20220220201909.445468-3-luca@z3ntu.xyz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1645420953-21176-2-git-send-email-quic_rohiagar@quicinc.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+In-Reply-To: <20220220201909.445468-3-luca@z3ntu.xyz>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,33 +84,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 21, 2022 at 10:52:27AM +0530, Rohit Agarwal wrote:
-> Add devicetree YAML binding for SDX65 APCS GCC block. The APCS block
-> acts as the mailbox controller and also provides a clock output and
-> takes 3 clock sources (pll, aux, ref) as input.
+On Sun 20 Feb 14:18 CST 2022, Luca Weiss wrote:
+
+> Document the compatible string for tsens found in msm8953.
 > 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> Acked-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Acked-by: Amit Kucheria <amitk@kernel.org>
+> Acked-by: Rob Herring <robh@kernel.org>
+
+Daniel, can you please pick this patch through your tree?
+
+Thanks,
+Bjorn
+
 > ---
->  Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml | 1 +
+> Changes in v2:
+> - no changes
+> 
+>  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
 >  1 file changed, 1 insertion(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-> index 01e9d91..688ae8b 100644
-> --- a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-> +++ b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
-> @@ -91,6 +91,7 @@ allOf:
->          compatible:
->            enum:
->              - qcom,sdx55-apcs-gcc
-> +            - qcom,sdx65-apcs-gcc
-
-Did you test this on your dts file? This doesn't work. You need to also 
-add the compatible to the main 'compatible' schema.
-
->      then:
->        properties:
->          clocks:
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> index d3b9e9b600a2..b6406bcc683f 100644
+> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> @@ -43,6 +43,7 @@ properties:
+>        - description: v2 of TSENS
+>          items:
+>            - enum:
+> +              - qcom,msm8953-tsens
+>                - qcom,msm8996-tsens
+>                - qcom,msm8998-tsens
+>                - qcom,sc7180-tsens
 > -- 
-> 2.7.4
-> 
+> 2.35.1
 > 
