@@ -2,77 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 398384C361C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 20:48:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 085914C3627
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 20:50:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233199AbiBXTtZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Feb 2022 14:49:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46218 "EHLO
+        id S234007AbiBXTvG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Feb 2022 14:51:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233190AbiBXTtZ (ORCPT
+        with ESMTP id S233242AbiBXTvF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Feb 2022 14:49:25 -0500
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88467253BF9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 11:48:54 -0800 (PST)
-Received: by mail-oi1-x230.google.com with SMTP id p15so4564921oip.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 11:48:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=YpCPN12fmyvtZ3VxGfCIknwO/QSMW1ppj6lyaT35Vx4=;
-        b=pK19w9BTReh2iS/hVdIV2GaNUrOGpjc4L69qtRJOPPfr/BiDh2FLe64nCxdJqhA8Wu
-         3/Adks73h/3ybVh6pMLtOj5Rlt5pkOUUj3YA1vj2HGImylA0gbGBg5aPYXJFKqQo6yun
-         EMrxE65v/RHEZ0fOMJa8J2HlmBFKD9hSfbe46xWK13a69K2oRfMQGCAeTWXl57MqXn/p
-         A6BVUdxy++vBh04rxe72suQaBVkTEM04uVxQoZUGmXKWA+Y49Q6YHXt5g8DhGAyMUgFi
-         D/Vayc8QHg4BCz24ntf1vLT+/aaHIj68xC1KNZq99Z3CaklVCKLNNfwOnFXlc+4jmfln
-         J9bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=YpCPN12fmyvtZ3VxGfCIknwO/QSMW1ppj6lyaT35Vx4=;
-        b=mQXX0awO94TDQ94hfzoZ+wLaMsb+NoIv6fpPUuIPNa516R9gNJwpV/a2/fJ4/+t7R/
-         hLQUf4tof+7385DEWe6P/SP6Cel23cN3miTB2CqOrxozxJQO2A8t2sYAW0a43iT8y7il
-         Xo5qwCqORzBjEurS+4S5ULDR+9dpuFXHDdydf3Mi7yzHaeEjJZzENN4p8TGDAVNRZXga
-         zWHFx2XT8uTuBHhcLx8ZrJ/Bzq+9FECOjkr4kgfEhrWCyCYzo4Kmi6ijrTN/doDNMpZC
-         hv/vXrrmLiACfQhRaJWw8PCCJkQZY0YPFgQqSswDm4iwlp4nM9pByXxI5RA/9BUlvLwd
-         pmHw==
-X-Gm-Message-State: AOAM533/WIueMfXFZAG4mubsxDwBt1V3UuvivKuaAEJHQ0SRqL0+jisL
-        F8m360D10bsFslRbl9dsIroZI7YTM8pNbA==
-X-Google-Smtp-Source: ABdhPJzKeCMq10+IjJPvyVIa2uOMWEU2rndAS06yEdTPF6U16PF6kORu+SzOAcMwVifHKbtDyUiFTA==
-X-Received: by 2002:a05:6870:2418:b0:d3:1052:aac0 with SMTP id n24-20020a056870241800b000d31052aac0mr1919223oap.80.1645732133566;
-        Thu, 24 Feb 2022 11:48:53 -0800 (PST)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id bl16-20020a056808309000b002d43b28a8bdsm241679oib.14.2022.02.24.11.48.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Feb 2022 11:48:53 -0800 (PST)
-Date:   Thu, 24 Feb 2022 13:48:51 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Baruch Siach <baruch.siach@siklu.com>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 2/3] dt-bindings: pwm: add IPQ6018 binding
-Message-ID: <YhfhIyRKwl1bJObC@builder.lan>
-References: <17dd231f496d09ed8502bdd505eaa77bb6637e4b.1644226245.git.baruch@tkos.co.il>
- <dee024e7add1b2c919b23472c90391239a0a2572.1644226245.git.baruch@tkos.co.il>
+        Thu, 24 Feb 2022 14:51:05 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEDBF254558;
+        Thu, 24 Feb 2022 11:50:35 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6050F61792;
+        Thu, 24 Feb 2022 19:50:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50395C340E9;
+        Thu, 24 Feb 2022 19:50:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1645732234;
+        bh=8xsZGWwjXv7cnRarGpQnyDw9mQoGNr7rSbI+e2asYPE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=D+7+mnurlkrzPUi/r78FbvehdnSEeF8WqcKgku78MYtyKCxkVSejeIRIC9sguz6qK
+         zzENdoFMyCuSXm/2Yaf8b/Z0FJ1w2qGpH/8QMjfsuxlKBqxb+HR/mvAi7ubSJaxCvY
+         W1omnMVv2zxFweonRgjVOB7b3crbLsQqK+0CzXQ7V4P+J9CdRwTL4QdHHSMO+5V5md
+         YC+QzPPKvrEfl7NZ5yW5r0nT0HXMqPRvbOup9e1oPooYS4BRwN0foSSwxFDaET/gyq
+         Q/JfWSy23nth1KCMjEJY6gZWYqF86wfXVsSZz8WncIMCtzAnB5iltaAS0NF2vEnftA
+         rDNV7dQIaBZpQ==
+Date:   Thu, 24 Feb 2022 19:50:26 +0000
+From:   Mark Brown <broonie@kernel.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        robh+dt@kernel.org, quic_plai@quicinc.com, bgoswami@codeaurora.org,
+        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Subject: Re: [PATCH v3] ASoC: codecs: Add power domains support in digital
+ macro codecs
+Message-ID: <Yhfhgrvl38WcNOFu@sirena.org.uk>
+References: <1645708759-8833-1-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="7N28iCaW0tsV26lc"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <dee024e7add1b2c919b23472c90391239a0a2572.1644226245.git.baruch@tkos.co.il>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <1645708759-8833-1-git-send-email-quic_srivasam@quicinc.com>
+X-Cookie: I smell a wumpus.
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,132 +63,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 07 Feb 03:30 CST 2022, Baruch Siach wrote:
 
-> From: Baruch Siach <baruch.siach@siklu.com>
-> 
-> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
-> 
-> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
+--7N28iCaW0tsV26lc
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+On Thu, Feb 24, 2022 at 06:49:19PM +0530, Srinivasa Rao Mandadapu wrote:
 
-Regards,
-Bjorn
+> +	l_pds->macro_pd = dev_pm_domain_attach_by_name(dev, "macro");
+> +	if (IS_ERR_OR_NULL(l_pds->macro_pd))
+> +		return NULL;
 
-> ---
-> This series does not convert the TCSR binding documentation to YAML. As
-> a result, this commit adds a new dt_binding_check warning:
-> 
-> /example-0/syscon@1937000: failed to match any schema with compatible: ['qcom,tcsr-ipq 6018', 'syscon', 'simple-mfd']
-> 
-> If that is a blocker to IPQ6018 PWM support, so be it. Patches will wait
-> for someone else to push them further.
-> 
-> v10:
-> 
->   No change
-> 
-> v9:
-> 
->   Add 'ranges' property to example (Rob)
-> 
->   Drop label in example (Rob)
-> 
-> v8:
-> 
->   Add size cell to 'reg' (Rob)
-> 
-> v7:
-> 
->   Use 'reg' instead of 'offset' (Rob)
-> 
->   Drop 'clock-names' and 'assigned-clock*' (Bjorn)
-> 
->   Use single cell address/size in example node (Bjorn)
-> 
->   Move '#pwm-cells' lower in example node (Bjorn)
-> 
->   List 'reg' as required
-> 
-> v6:
-> 
->   Device node is child of TCSR; remove phandle (Rob Herring)
-> 
->   Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
-> 
-> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
->     Andersson, Kathiravan T)
-> 
-> v4: Update the binding example node as well (Rob Herring's bot)
-> 
-> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
-> 
-> v2: Make #pwm-cells const (Rob Herring)
-> ---
->  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 53 +++++++++++++++++++
->  1 file changed, 53 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
-> new file mode 100644
-> index 000000000000..857086ad539e
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
-> @@ -0,0 +1,53 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pwm/ipq-pwm.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm IPQ6018 PWM controller
-> +
-> +maintainers:
-> +  - Baruch Siach <baruch@tkos.co.il>
-> +
-> +properties:
-> +  "#pwm-cells":
-> +    const: 2
-> +
-> +  compatible:
-> +    const: qcom,ipq6018-pwm
-> +
-> +  reg:
-> +    description: Offset of PWM register in the TCSR block.
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - "#pwm-cells"
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
-> +
-> +    syscon@1937000 {
-> +        compatible = "qcom,tcsr-ipq6018", "syscon", "simple-mfd";
-> +        reg = <0x01937000 0x21000>;
-> +        #address-cells = <1>;
-> +        #size-cells = <1>;
-> +        ranges = <0 0x1937000 0x21000>;
-> +
-> +        pwm: pwm@a010 {
-> +            compatible = "qcom,ipq6018-pwm";
-> +            reg = <0xa010 0x20>;
-> +            clocks = <&gcc GCC_ADSS_PWM_CLK>;
-> +            assigned-clocks = <&gcc GCC_ADSS_PWM_CLK>;
-> +            assigned-clock-rates = <100000000>;
-> +            #pwm-cells = <2>;
-> +        };
-> +    };
-> -- 
-> 2.34.1
-> 
+Shouldn't there also be a DT binding update for the users?
+
+--7N28iCaW0tsV26lc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmIX4YIACgkQJNaLcl1U
+h9Ar2gf+P1DXI3jrG/N8JSEhOsEnIRpZ3hzB1gV86SjrpMkT9QH9/z/RD5pyWp49
+EC4g6Qdwatg7wK62yEeqfrXP0VgbP5she7silonyEFCznDycxQgBTy8p3Twn4OXq
+nsaVoeEHQkvtKNaleckz7pgfDyNkLdM8HxiS/xldfVFGkpjq/whXEjOgQwGq2t/B
+SPbvRiYnEZDIxBEOjJXtmi5wTQe1MsbG/1aOxz6SQDfVECf6drS6FUwW71Li+Ggv
+Alv09mzQeaGRCDCSUlDSn2wR/UazmQ92TBngzBl17QKjLeiJ7BWQIKyCHG34vjvR
+VAIXMWWSCKxwmkHShmvqZbHd9SzNYQ==
+=qS1/
+-----END PGP SIGNATURE-----
+
+--7N28iCaW0tsV26lc--
