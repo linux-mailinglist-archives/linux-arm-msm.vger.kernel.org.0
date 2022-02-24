@@ -2,79 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 508E54C2332
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 06:06:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ABC214C238B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 06:26:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230075AbiBXFGk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Feb 2022 00:06:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33162 "EHLO
+        id S230200AbiBXF0g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Feb 2022 00:26:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229976AbiBXFGj (ORCPT
+        with ESMTP id S230150AbiBXF0f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Feb 2022 00:06:39 -0500
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F473234023;
-        Wed, 23 Feb 2022 21:06:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1645679169; x=1677215169;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=U7f8LlXFoOldvk1lVMQCofNeheZhhHppftkOlnZeRd4=;
-  b=fMiusDqYsubgM7pAojrXR2kNl+FJMPdWMTNmh7r+CMuiBLho6P+IO98+
-   i+2d3ROs5Hsc+pml9cHm9YApDW/4ZTjutY6eN41Ntl7wqKHjo0b57620H
-   bH49+KXIYWh2BqQya+3E+EXw8f68PeY78yBQ7/tM8S4upYBK6v1dnw+e8
-   jA9qCfWR7WoA+tXAssNlOaFY32VoBwajB6E2KtwRTLOP15hHDF82h9cOn
-   1vC4Quygc4IaM9Nzgv3m013mBztvxgRfLK43RyuMc/Lw2ODfct4EvqiWV
-   twiE2oTYtl+F9QrcfCTC5wjbALI582HuikljiOsx2Gzn9mkMql7C5+8P7
-   g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10267"; a="250979557"
-X-IronPort-AV: E=Sophos;i="5.88,393,1635231600"; 
-   d="scan'208";a="250979557"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Feb 2022 21:06:08 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,393,1635231600"; 
-   d="scan'208";a="684156805"
-Received: from lkp-server01.sh.intel.com (HELO 788b1cd46f0d) ([10.239.97.150])
-  by fmsmga001.fm.intel.com with ESMTP; 23 Feb 2022 21:06:03 -0800
-Received: from kbuild by 788b1cd46f0d with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1nN6KJ-0002Hs-0U; Thu, 24 Feb 2022 05:06:03 +0000
-Date:   Thu, 24 Feb 2022 13:05:17 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kalyan Thota <quic_kalyant@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Mark Yacoub <markyacoub@google.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Yangtao Li <tiny.windzz@gmail.com>,
-        David Heidelberg <david@ixit.cz>, Xu Wang <vulab@iscas.ac.cn>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
+        Thu, 24 Feb 2022 00:26:35 -0500
+Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85C4723A198
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 21:26:04 -0800 (PST)
+Received: by mail-oo1-xc32.google.com with SMTP id r41-20020a4a966c000000b0031bf85a4124so2056292ooi.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Feb 2022 21:26:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Tw4v6SIeCtyNKcihbNMjW9ZZRaY552Shl54PzjveJOY=;
+        b=zROO5G05EgE9deAL93mq0HzLDhWeRrJl99TvZBjG+FxXm5ugk8J2q8AMGj97YB/2UV
+         2ysx8XEPYFPzAtKtrXxi6SB4qtKgZwIovI9ljIsAh5AHlCDvuOGYR6F5Cxz+1MESrIB/
+         UTPyOvkWTEx3yF/6RnLHk/YqscK3vWjtutlTSh4NIPjtdFVuny9cPqwNW2g2gdmIkdOj
+         8CaWZPVCouZh0ODaimL27ppaVVoduDCpvIiCgAt26GHsRs10QQanWGJat4092Rx/z2EP
+         orWXFWMJ/LC0Il62vL7MXeN/na65oHz4LERNCtVzV8qyVXHZc+vXUVwae+1igUvnr/m+
+         QHCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Tw4v6SIeCtyNKcihbNMjW9ZZRaY552Shl54PzjveJOY=;
+        b=HSl3QTYx7YUgZN+YObeQy9Xyq59tVmsIs9P0jZK5/DHNJZ3oQMnLyzLcBepUZrz9wC
+         0zb2fLmXRyvB6UZEwhTksoR4VZeWSw89pKsEDD+NdpEu+KvPIqkIInTsZFGjUF6XU0kL
+         qN3iNY/4vtPgBL4SUDQKcNjkhLqnHUWORDEGQCgWSs5obsdHPe5HXA3cVCxNN5ysfUEj
+         H/2ZDU8a6qhMM2+/t/p0JI2FEJZSe+vCGzb2skOH/dUaV6UBZ1+LnqyWf+M3XmhDY9Cq
+         kpcC+Y0XJcC1HaOQEKmgsqKsnLAMTvNkyeGcFTqwF4/PN1QmVzu2iw5WhuuvA9yV4A20
+         u88Q==
+X-Gm-Message-State: AOAM532nDlJfUNTLVYQieGKeSjjfaq5D5G8GvZyrG0NT4y0lfIsP6dnj
+        sgX3f748iqmLFHFJzF73xVEt1g==
+X-Google-Smtp-Source: ABdhPJxfBxLiNfW+heAdlLgV9izaD5JVM+3+8zuYgh+a1DFT0kUsKKMwkC/tdlxfqeD66N1guwnt1Q==
+X-Received: by 2002:a05:6870:c6a3:b0:d6:bf4b:52b9 with SMTP id cv35-20020a056870c6a300b000d6bf4b52b9mr469282oab.234.1645680363504;
+        Wed, 23 Feb 2022 21:26:03 -0800 (PST)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id bl13sm472437oib.9.2022.02.23.21.26.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Feb 2022 21:26:02 -0800 (PST)
+Date:   Wed, 23 Feb 2022 23:26:01 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Xilin Wu <wuxilin123@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        robh+dt@kernel.org, keescook@chromium.org, anton@enomsg.org,
+        ccross@android.com, tony.luck@intel.com,
+        angelogioacchino.delregno@somainline.org,
+        konrad.dybcio@somainline.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm: Avoid dirtyfb stalls on video mode displays
-Message-ID: <202202241211.iXHxUcF2-lkp@intel.com>
-References: <20220219193957.577054-1-robdclark@gmail.com>
+Subject: Re: [PATCH/RESEND] arm64: dts: qcom: Add support for Samsung Galaxy
+ Book2
+Message-ID: <YhcW6YRwNbNPnpWH@builder.lan>
+References: <20220223145130.544586-1-wuxilin123@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220219193957.577054-1-robdclark@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <20220223145130.544586-1-wuxilin123@gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,260 +75,816 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+On Wed 23 Feb 08:51 CST 2022, Xilin Wu wrote:
 
-I love your patch! Perhaps something to improve:
+> Add support for Samsung Galaxy Book2 (W737) tablets.
+> 
+> Currently working features:
+> - Bootloader preconfigured display at 1280p
+> - UFS
+> - Wacom Digitizer
+> - Two USB 3 ports
+> - Sound
+> - Bluetooth
+> - Wi-Fi
 
-[auto build test WARNING on drm/drm-next]
-[also build test WARNING on drm-intel/for-linux-next drm-tip/drm-tip v5.17-=
-rc5 next-20220223]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Nice list of supported features! Hopefully you can figure out how to
+configure the second DSI input on the sn65dsi86 as well, so you can get
+the display and GPU drivers up and running as well.
 
-url:    https://github.com/0day-ci/linux/commits/Rob-Clark/drm-msm-Avoid-di=
-rtyfb-stalls-on-video-mode-displays/20220220-185344
-base:   git://anongit.freedesktop.org/drm/drm drm-next
-config: mips-randconfig-r021-20220224 (https://download.01.org/0day-ci/arch=
-ive/20220224/202202241211.iXHxUcF2-lkp@intel.com/config)
-compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project d271fc=
-04d5b97b12e6b797c6067d3c96a8d7470e)
-reproduce (this is a W=3D1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/=
-make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install mips cross compiling tool for clang build
-        # apt-get install binutils-mips-linux-gnu
-        # https://github.com/0day-ci/linux/commit/e5d737074c502ff040a67f7fe=
-1f8a9e2a308dec9
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Rob-Clark/drm-msm-Avoid-dirtyfb-st=
-alls-on-video-mode-displays/20220220-185344
-        git checkout e5d737074c502ff040a67f7fe1f8a9e2a308dec9
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=3D$HOME/0day COMPILER=3Dclang make.cross W=3D=
-1 O=3Dbuild_dir ARCH=3Dmips SHELL=3D/bin/bash drivers/gpu/drm/msm/
+I've picked up the patch, looking forward to more contributions on this.
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+Regards,
+Bjorn
 
-All warnings (new ones prefixed by >>):
-
->> drivers/gpu/drm/msm/msm_fb.c:47:27: warning: unused variable 'plane_stat=
-e'
-   struct drm_plane_state
-   ^
-   fatal error: error in backend: Nested variants found in inline asm strin=
-g: ' .set push
-   .set mips64r2
-   .if ( 0x00 ) !=3D -1)) 0x00 ) !=3D -1)) : ($( static struct ftrace_branc=
-h_data __attribute__((__aligned__(4))) __attribute__((__section__("_ftrace_=
-branch"))) __if_trace =3D $( .func =3D __func__, .file =3D "arch/mips/inclu=
-de/asm/atomic.h", .line =3D 156, $); 0x00 ) !=3D -1)) : $))) ) && ( 0 ); .s=
-et push; .set mips64r2; .rept 1; sync 0x00; .endr; .set pop; .else; ; .endif
-   1: ll $1, $2 # atomic_fetch_sub
-   subu $0, $1, $3
-   sc $0, $2
-   beqz $0, 1b
-   .set pop
-   move $0, $1
-   '
-   PLEASE submit a bug report to https://github.com/llvm/llvm-project/issue=
-s/ and include the crash backtrace, preprocessed source, and associated run=
- script.
-   Stack dump:
-   0. Program arguments: clang -Wp,-MMD,drivers/gpu/drm/msm/.msm_fb.o.d -no=
-stdinc -Iarch/mips/include -I./arch/mips/include/generated -Iinclude -I./in=
-clude -Iarch/mips/include/uapi -I./arch/mips/include/generated/uapi -Iinclu=
-de/uapi -I./include/generated/uapi -include include/linux/compiler-version.=
-h -include include/linux/kconfig.h -include include/linux/compiler_types.h =
--D__KERNEL__ -DVMLINUX_LOAD_ADDRESS=3D0xffffffff84000000 -DLINKER_LOAD_ADDR=
-ESS=3D0x84000000 -DDATAOFFSET=3D0 -Qunused-arguments -fmacro-prefix-map=3D=
-=3D -DKBUILD_EXTRA_WARN1 -Wall -Wundef -Werror=3Dstrict-prototypes -Wno-tri=
-graphs -fno-strict-aliasing -fno-common -fshort-wchar -fno-PIE -Werror=3Dim=
-plicit-function-declaration -Werror=3Dimplicit-int -Werror=3Dreturn-type -W=
-no-format-security -std=3Dgnu89 --target=3Dmipsel-linux -fintegrated-as -We=
-rror=3Dunknown-warning-option -Werror=3Dignored-optimization-argument -mno-=
-check-zero-division -mabi=3D32 -G 0 -mno-abicalls -fno-pic -pipe -msoft-flo=
-at -DGAS_HAS_SET_HARDFLOAT -Wa,-msoft-float -ffreestanding -EL -fno-stack-c=
-heck -march=3Dmips32 -Wa,--trap -DTOOLCHAIN_SUPPORTS_VIRT -Iarch/mips/inclu=
-de/asm/mach-ralink -Iarch/mips/include/asm/mach-ralink/mt7620 -Iarch/mips/i=
-nclude/asm/mach-generic -fno-asynchronous-unwind-tables -fno-delete-null-po=
-inter-checks -Wno-frame-address -Wno-address-of-packed-member -Os -Wframe-l=
-arger-than=3D1024 -fno-stack-protector -Wimplicit-fallthrough -Wno-gnu -mno=
--global-merge -Wno-unused-but-set-variable -Wno-unused-const-variable -ftri=
-vial-auto-var-init=3Dpattern -fno-stack-clash-protection -pg -Wdeclaration-=
-after-statement -Wvla -Wno-pointer-sign -Wcast-function-type -Wno-array-bou=
-nds -fno-strict-overflow -fno-stack-check -Werror=3Ddate-time -Werror=3Dinc=
-ompatible-pointer-types -Wextra -Wunused -Wno-unused-parameter -Wmissing-de=
-clarations -Wmissing-format-attribute -Wmissing-prototypes -Wold-style-defi=
-nition -Wmissing-include-dirs -Wunused-but-set-variable -Wunused-const-vari=
-able -Wno-missing-field-initializers -Wno-sign-compare -Wno-type-limits -I =
-drivers/gpu/drm/msm -I drivers/gpu/drm/msm/disp/dpu1 -I drivers/gpu/drm/msm=
- -I ./drivers/gpu/drm/msm -ffunction-sections -fdata-sections -DKBUILD_MODF=
-ILE=3D"drivers/gpu/drm/msm/msm" -DKBUILD_BASENAME=3D"msm_fb" -DKBUILD_MODNA=
-ME=3D"msm" -D__KBUILD_MODNAME=3Dkmod_msm -c -o drivers/gpu/drm/msm/msm_fb.o=
- drivers/gpu/drm/msm/msm_fb.c
-   1. <eof> parser at end of file
-   2. Code generation
-   3. Running pass 'Function Pass Manager' on module 'drivers/gpu/drm/msm/m=
-sm_fb.c'.
-   4. Running pass 'Mips Assembly Printer' on function '@msm_framebuffer_cr=
-eate'
-   #0 0x000055e0318e4d7f Signals.cpp:0:0
-   #1 0x000055e0318e2c5c llvm::sys::CleanupOnSignal(unsigned long) (/opt/cr=
-oss/clang-d271fc04d5/bin/clang-15+0x348ec5c)
-   #2 0x000055e031822fd7 llvm::CrashRecoveryContext::HandleExit(int) (/opt/=
-cross/clang-d271fc04d5/bin/clang-15+0x33cefd7)
-   #3 0x000055e0318db30e llvm::sys::Process::Exit(int, bool) (/opt/cross/cl=
-ang-d271fc04d5/bin/clang-15+0x348730e)
-   #4 0x000055e02f506ccb (/opt/cross/clang-d271fc04d5/bin/clang-15+0x10b2cc=
-b)
-   #5 0x000055e031829a8c llvm::report_fatal_error(llvm::Twine const&, bool)=
- (/opt/cross/clang-d271fc04d5/bin/clang-15+0x33d5a8c)
-   #6 0x000055e0325335c0 llvm::AsmPrinter::emitInlineAsm(llvm::MachineInstr=
- const (/opt/cross/clang-d271fc04d5/bin/clang-15+0x40df5c0)
-   #7 0x000055e03252f4f4 llvm::AsmPrinter::emitFunctionBody() (/opt/cross/c=
-lang-d271fc04d5/bin/clang-15+0x40db4f4)
-   #8 0x000055e02ff70887 llvm::MipsAsmPrinter::runOnMachineFunction(llvm::M=
-achineFunction&) (/opt/cross/clang-d271fc04d5/bin/clang-15+0x1b1c887)
-   #9 0x000055e030c2d54d llvm::MachineFunctionPass::runOnFunction(llvm::Fun=
-ction&) (.part.53) MachineFunctionPass.cpp:0:0
-   #10 0x000055e031074807 llvm::FPPassManager::runOnFunction(llvm::Function=
-&) (/opt/cross/clang-d271fc04d5/bin/clang-15+0x2c20807)
-   #11 0x000055e031074981 llvm::FPPassManager::runOnModule(llvm::Module&) (=
-/opt/cross/clang-d271fc04d5/bin/clang-15+0x2c20981)
-   #12 0x000055e0310754ff llvm::legacy::PassManagerImpl::run(llvm::Module&)=
- (/opt/cross/clang-d271fc04d5/bin/clang-15+0x2c214ff)
-   #13 0x000055e031bff147 clang::EmitBackendOutput(clang::DiagnosticsEngine=
-&, clang::HeaderSearchOptions const&, clang::CodeGenOptions const&, clang::=
-TargetOptions const&, clang::LangOptions const&, llvm::StringRef, clang::Ba=
-ckendAction, std::unique_ptr<llvm::raw_pwrite_stream, std::default_delete<l=
-lvm::raw_pwrite_stream> >) (/opt/cross/clang-d271fc04d5/bin/clang-15+0x37ab=
-147)
-   #14 0x000055e03284d693 clang::BackendConsumer::HandleTranslationUnit(cla=
-ng::ASTContext&) (/opt/cross/clang-d271fc04d5/bin/clang-15+0x43f9693)
-   #15 0x000055e0333286e9 clang::ParseAST(clang::Sema&, bool, bool) (/opt/c=
-ross/clang-d271fc04d5/bin/clang-15+0x4ed46e9)
-   #16 0x000055e03284c4cf clang::CodeGenAction::ExecuteAction() (/opt/cross=
-/clang-d271fc04d5/bin/clang-15+0x43f84cf)
-   #17 0x000055e03224f561 clang::FrontendAction::Execute() (/opt/cross/clan=
-g-d271fc04d5/bin/clang-15+0x3dfb561)
-   #18 0x000055e0321e5faa clang::CompilerInstance::ExecuteAction(clang::Fro=
-ntendAction&) (/opt/cross/clang-d271fc04d5/bin/clang-15+0x3d91faa)
-   #19 0x000055e032313cbb (/opt/cross/clang-d271fc04d5/bin/clang-15+0x3ebfc=
-bb)
-   #20 0x000055e02f50827c cc1_main(llvm::ArrayRef<char char (/opt/cross/cla=
-ng-d271fc04d5/bin/clang-15+0x10b427c)
-   #21 0x000055e02f504f4b ExecuteCC1Tool(llvm::SmallVectorImpl<char driver.=
-cpp:0:0
-   #22 0x000055e03207ed95 void llvm::function_ref<void ()>::callback_fn<cla=
-ng::driver::CC1Command::Execute(llvm::ArrayRef<llvm::Optional<llvm::StringR=
-ef> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::alloca=
-tor<char> const::'lambda'()>(long) Job.cpp:0:0
-   #23 0x000055e031822e93 llvm::CrashRecoveryContext::RunSafely(llvm::funct=
-ion_ref<void ()>) (/opt/cross/clang-d271fc04d5/bin/clang-15+0x33cee93)
-   #24 0x000055e03207f68e clang::driver::CC1Command::Execute(llvm::ArrayRef=
-<llvm::Optional<llvm::StringRef> >, std::__cxx11::basic_string<char, std::c=
-har_traits<char>, std::allocator<char> const (.part.216) Job.cpp:0:0
-   #25 0x000055e032054267 clang::driver::Compilation::ExecuteCommand(clang:=
-:driver::Command const&, clang::driver::Command const (/opt/cross/clang-d27=
-1fc04d5/bin/clang-15+0x3c00267)
-   #26 0x000055e032054c47 clang::driver::Compilation::ExecuteJobs(clang::dr=
-iver::JobList const&, llvm::SmallVectorImpl<std::pair<int, clang::driver::C=
-ommand >&) const (/opt/cross/clang-d271fc04d5/bin/clang-15+0x3c00c47)
-   #27 0x000055e03205e2f9 clang::driver::Driver::ExecuteCompilation(clang::=
-driver::Compilation&, llvm::SmallVectorImpl<std::pair<int, clang::driver::C=
-ommand >&) (/opt/cross/clang-d271fc04d5/bin/clang-15+0x3c0a2f9)
-   #28 0x000055e02f42d63f main (/opt/cross/clang-d271fc04d5/bin/clang-15+0x=
-fd963f)
-   #29 0x00007f8e07c7ed0a __libc_start_main (/lib/x86_64-linux-gnu/libc.so.=
-6+0x26d0a)
-   #30 0x000055e02f504a6a _start (/opt/cross/clang-d271fc04d5/bin/clang-15+=
-0x10b0a6a)
-   clang-15: error: clang frontend command failed with exit code 70 (use -v=
- to see invocation)
-   clang version 15.0.0 (git://gitmirror/llvm_project d271fc04d5b97b12e6b79=
-7c6067d3c96a8d7470e)
-   Target: mipsel-unknown-linux
-   Thread model: posix
-   InstalledDir: /opt/cross/clang-d271fc04d5/bin
-   clang-15: note: diagnostic msg:
-   Makefile arch drivers fs include kernel nr_bisected scripts source usr
-
-
-vim +/plane_state +47 drivers/gpu/drm/msm/msm_fb.c
-
-    23=09
-    24	static struct drm_framebuffer *msm_framebuffer_init(struct drm_devic=
-e *dev,
-    25			const struct drm_mode_fb_cmd2 *mode_cmd, struct drm_gem_object **b=
-os);
-    26=09
-    27	static int msm_framebuffer_dirtyfb(struct drm_framebuffer *fb,
-    28					   struct drm_file *file_priv, unsigned int flags,
-    29					   unsigned int color, struct drm_clip_rect *clips,
-    30					   unsigned int num_clips)
-    31	{
-    32		struct msm_drm_private *priv =3D fb->dev->dev_private;
-    33		struct drm_modeset_acquire_ctx ctx;
-    34		struct drm_plane *plane;
-    35		bool needs_flush =3D false;
-    36		int ret =3D 0;
-    37=09
-    38		/*
-    39		 * When called from ioctl, we are interruptible, but not when called
-    40		 * internally (ie. defio worker)
-    41		 */
-    42		drm_modeset_acquire_init(&ctx,
-    43			file_priv ? DRM_MODESET_ACQUIRE_INTERRUPTIBLE : 0);
-    44=09
-    45	retry:
-    46		drm_for_each_plane(plane, fb->dev) {
-  > 47			struct drm_plane_state *plane_state;
-    48			struct drm_crtc *crtc;
-    49=09
-    50			ret =3D drm_modeset_lock(&plane->mutex, &ctx);
-    51			if (ret)
-    52				goto out;
-    53=09
-    54			if (plane->state->fb !=3D fb) {
-    55				drm_modeset_unlock(&plane->mutex);
-    56				continue;
-    57			}
-    58=09
-    59			crtc =3D plane->state->crtc;
-    60=09
-    61			ret =3D drm_modeset_lock(&crtc->mutex, &ctx);
-    62			if (ret)
-    63				goto out;
-    64=09
-    65			if (priv->kms->funcs->needs_dirtyfb(crtc)) {
-    66				needs_flush =3D true;
-    67				break;
-    68			}
-    69		}
-    70=09
-    71	out:
-    72		if (ret =3D=3D -EDEADLK) {
-    73			ret =3D drm_modeset_backoff(&ctx);
-    74			if (!ret)
-    75				goto retry;
-    76		}
-    77=09
-    78		drm_modeset_drop_locks(&ctx);
-    79		drm_modeset_acquire_fini(&ctx);
-    80=09
-    81		if (needs_flush) {
-    82			ret =3D drm_atomic_helper_dirtyfb(fb, file_priv, flags,
-    83							color, clips, num_clips);
-    84		}
-    85=09
-    86		return ret;
-    87	}
-    88=09
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+> 
+> Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi          |   2 +-
+>  .../boot/dts/qcom/sdm850-samsung-w737.dts     | 748 ++++++++++++++++++
+>  3 files changed, 750 insertions(+), 1 deletion(-)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index f7232052d286..5daef0e8011f 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -104,6 +104,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-sony-xperia-tama-akatsuki.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-sony-xperia-tama-apollo.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm6350-sony-xperia-lena-pdx213.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm7225-fairphone-fp4.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index cfdeaa81f1bb..11ca5c636404 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -1967,7 +1967,7 @@ uart15: serial@a9c000 {
+>  			};
+>  		};
+>  
+> -		system-cache-controller@1100000 {
+> +		llcc: system-cache-controller@1100000 {
+>  			compatible = "qcom,sdm845-llcc";
+>  			reg = <0 0x01100000 0 0x200000>, <0 0x01300000 0 0x50000>;
+>  			reg-names = "llcc_base", "llcc_broadcast_base";
+> diff --git a/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
+> new file mode 100644
+> index 000000000000..2a552d817b03
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts
+> @@ -0,0 +1,748 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Samsung Galaxy Book2
+> + *
+> + * Copyright (c) 2022, Xilin Wu <strongtz@yeah.net>
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> +#include <dt-bindings/input/gpio-keys.h>
+> +#include <dt-bindings/input/input.h>
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include <dt-bindings/sound/qcom,q6afe.h>
+> +#include <dt-bindings/sound/qcom,q6asm.h>
+> +#include "sdm850.dtsi"
+> +#include "pm8998.dtsi"
+> +
+> +/*
+> + * Update following upstream (sdm845.dtsi) reserved
+> + * memory mappings for firmware loading to succeed
+> + */
+> +/delete-node/ &qseecom_mem;
+> +/delete-node/ &wlan_msa_mem;
+> +/delete-node/ &slpi_mem;
+> +/delete-node/ &ipa_fw_mem;
+> +/delete-node/ &ipa_gsi_mem;
+> +/delete-node/ &gpu_mem;
+> +/delete-node/ &mpss_region;
+> +/delete-node/ &adsp_mem;
+> +/delete-node/ &cdsp_mem;
+> +/delete-node/ &venus_mem;
+> +/delete-node/ &mba_region;
+> +/delete-node/ &spss_mem;
+> +
+> +/ {
+> +	model = "Samsung Galaxy Book2";
+> +	compatible = "samsung,w737", "qcom,sdm845";
+> +	chassis-type = "convertible";
+> +
+> +	chosen {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		// Firmware initialized the display at 1280p instead of 1440p
+> +		framebuffer0: framebuffer@80400000 {
+> +			compatible = "simple-framebuffer";
+> +			reg = <0 0x80400000 0 (1920 * 1280 * 4)>;
+> +			width = <1920>;
+> +			height = <1280>;
+> +			stride = <(1920 * 4)>;
+> +			format = "a8r8g8b8";
+> +		};
+> +	};
+> +
+> +	aliases {
+> +		hsuart0 = &uart6;
+> +	};
+> +
+> +	/* Reserved memory changes */
+> +	reserved-memory {
+> +		/* Bootloader display framebuffer region */
+> +		cont_splash_mem: memory@80400000 {
+> +			reg = <0x0 0x80400000 0x0 0x960000>;
+> +			no-map;
+> +		};
+> +
+> +		qseecom_mem: memory@8b500000 {
+> +			reg = <0 0x8b500000 0 0xa00000>;
+> +			no-map;
+> +		};
+> +
+> +		wlan_msa_mem: memory@8c400000 {
+> +			reg = <0 0x8c400000 0 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		slpi_mem: memory@8c500000 {
+> +			reg = <0 0x8c500000 0 0x1200000>;
+> +			no-map;
+> +		};
+> +
+> +		ipa_fw_mem: memory@8d700000 {
+> +			reg = <0 0x8d700000 0 0x100000>;
+> +			no-map;
+> +		};
+> +
+> +		gpu_mem: memory@8d800000 {
+> +			reg = <0 0x8d800000 0 0x5000>;
+> +			no-map;
+> +		};
+> +
+> +		mpss_region: memory@8e000000 {
+> +			reg = <0 0x8e000000 0 0x8000000>;
+> +			no-map;
+> +		};
+> +
+> +		adsp_mem: memory@96000000 {
+> +			reg = <0 0x96000000 0 0x2000000>;
+> +			no-map;
+> +		};
+> +
+> +		cdsp_mem: memory@98000000 {
+> +			reg = <0 0x98000000 0 0x800000>;
+> +			no-map;
+> +		};
+> +
+> +		venus_mem: memory@98800000 {
+> +			reg = <0 0x98800000 0 0x500000>;
+> +			no-map;
+> +		};
+> +
+> +		mba_region: memory@98d00000 {
+> +			reg = <0 0x98d00000 0 0x200000>;
+> +			no-map;
+> +		};
+> +
+> +		spss_mem: memory@98f00000 {
+> +			reg = <0 0x98f00000 0 0x100000>;
+> +			no-map;
+> +		};
+> +	};
+> +};
+> +
+> +&adsp_pas {
+> +	firmware-name = "qcom/samsung/w737/qcadsp850.mbn";
+> +	status = "okay";
+> +};
+> +
+> +&apps_rsc {
+> +	pm8998-rpmh-regulators {
+> +		compatible = "qcom,pm8998-rpmh-regulators";
+> +		qcom,pmic-id = "a";
+> +
+> +		vdd-l2-l8-l17-supply = <&vreg_s3a_1p35>;
+> +		vdd-l7-l12-l14-l15-supply = <&vreg_s5a_2p04>;
+> +
+> +		vreg_s2a_1p125: smps2 {
+> +		};
+> +
+> +		vreg_s3a_1p35: smps3 {
+> +			regulator-min-microvolt = <1352000>;
+> +			regulator-max-microvolt = <1352000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_s4a_1p8: smps4 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_s5a_2p04: smps5 {
+> +			regulator-min-microvolt = <2040000>;
+> +			regulator-max-microvolt = <2040000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_s7a_1p025: smps7 {
+> +		};
+> +
+> +		vdd_qusb_hs0:
+> +		vdda_hp_pcie_core:
+> +		vdda_mipi_csi0_0p9:
+> +		vdda_mipi_csi1_0p9:
+> +		vdda_mipi_csi2_0p9:
+> +		vdda_mipi_dsi0_pll:
+> +		vdda_mipi_dsi1_pll:
+> +		vdda_qlink_lv:
+> +		vdda_qlink_lv_ck:
+> +		vdda_qrefs_0p875:
+> +		vdda_pcie_core:
+> +		vdda_pll_cc_ebi01:
+> +		vdda_pll_cc_ebi23:
+> +		vdda_sp_sensor:
+> +		vdda_ufs1_core:
+> +		vdda_ufs2_core:
+> +		vdda_usb1_ss_core:
+> +		vdda_usb2_ss_core:
+> +		vreg_l1a_0p875: ldo1 {
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <880000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vddpx_10:
+> +		vreg_l2a_1p2: ldo2 {
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-always-on;
+> +		};
+> +
+> +		vreg_l3a_1p0: ldo3 {
+> +		};
+> +
+> +		vdd_wcss_cx:
+> +		vdd_wcss_mx:
+> +		vdda_wcss_pll:
+> +		vreg_l5a_0p8: ldo5 {
+> +			regulator-min-microvolt = <800000>;
+> +			regulator-max-microvolt = <800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vddpx_13:
+> +		vreg_l6a_1p8: ldo6 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l7a_1p8: ldo7 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l8a_1p2: ldo8 {
+> +		};
+> +
+> +		vreg_l9a_1p8: ldo9 {
+> +		};
+> +
+> +		vreg_l10a_1p8: ldo10 {
+> +		};
+> +
+> +		vreg_l11a_1p0: ldo11 {
+> +		};
+> +
+> +		vdd_qfprom:
+> +		vdd_qfprom_sp:
+> +		vdda_apc1_cs_1p8:
+> +		vdda_gfx_cs_1p8:
+> +		vdda_qrefs_1p8:
+> +		vdda_qusb_hs0_1p8:
+> +		vddpx_11:
+> +		vreg_l12a_1p8: ldo12 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vddpx_2:
+> +		vreg_l13a_2p95: ldo13 {
+> +		};
+> +
+> +		vreg_l14a_1p88: ldo14 {
+> +			regulator-min-microvolt = <1880000>;
+> +			regulator-max-microvolt = <1880000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-always-on;
+> +		};
+> +
+> +		vreg_l15a_1p8: ldo15 {
+> +		};
+> +
+> +		vreg_l16a_2p7: ldo16 {
+> +		};
+> +
+> +		vreg_l17a_1p3: ldo17 {
+> +			regulator-min-microvolt = <1304000>;
+> +			regulator-max-microvolt = <1304000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l18a_1p8: ldo18 {
+> +		};
+> +
+> +		vreg_l19a_3p0: ldo19 {
+> +			regulator-min-microvolt = <3100000>;
+> +			regulator-max-microvolt = <3108000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l20a_2p95: ldo20 {
+> +			regulator-min-microvolt = <2960000>;
+> +			regulator-max-microvolt = <2960000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l21a_2p95: ldo21 {
+> +		};
+> +
+> +		vreg_l22a_2p85: ldo22 {
+> +		};
+> +
+> +		vreg_l23a_3p3: ldo23 {
+> +			regulator-min-microvolt = <3300000>;
+> +			regulator-max-microvolt = <3312000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vdda_qusb_hs0_3p1:
+> +		vreg_l24a_3p075: ldo24 {
+> +			regulator-min-microvolt = <3075000>;
+> +			regulator-max-microvolt = <3083000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l25a_3p3: ldo25 {
+> +			regulator-min-microvolt = <3104000>;
+> +			regulator-max-microvolt = <3112000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vdda_hp_pcie_1p2:
+> +		vdda_hv_ebi0:
+> +		vdda_hv_ebi1:
+> +		vdda_hv_ebi2:
+> +		vdda_hv_ebi3:
+> +		vdda_mipi_csi_1p25:
+> +		vdda_mipi_dsi0_1p2:
+> +		vdda_mipi_dsi1_1p2:
+> +		vdda_pcie_1p2:
+> +		vdda_ufs1_1p2:
+> +		vdda_ufs2_1p2:
+> +		vdda_usb1_ss_1p2:
+> +		vdda_usb2_ss_1p2:
+> +		vreg_l26a_1p2: ldo26 {
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1208000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l28a_3p0: ldo28 {
+> +		};
+> +
+> +		vreg_lvs1a_1p8: lvs1 {
+> +		};
+> +
+> +		vreg_lvs2a_1p8: lvs2 {
+> +		};
+> +	};
+> +};
+> +
+> +&cdsp_pas {
+> +	firmware-name = "qcom/samsung/w737/qccdsp850.mbn";
+> +	status = "okay";
+> +};
+> +
+> +&gcc {
+> +	protected-clocks = <GCC_QSPI_CORE_CLK>,
+> +			   <GCC_QSPI_CORE_CLK_SRC>,
+> +			   <GCC_QSPI_CNOC_PERIPH_AHB_CLK>,
+> +			   <GCC_LPASS_Q6_AXI_CLK>,
+> +			   <GCC_LPASS_SWAY_CLK>;
+> +};
+> +
+> +&i2c10 {
+> +	status = "okay";
+> +	clock-frequency = <400000>;
+> +
+> +	/* SN65DSI86 @ 0x2c */
+> +	/* The panel requires dual DSI, which is not supported by the bridge driver */
+> +};
+> +
+> +&i2c11 {
+> +	status = "okay";
+> +	clock-frequency = <400000>;
+> +
+> +	/* HID-I2C Touchscreen @ 0x20 */
+> +};
+> +
+> +&i2c15 {
+> +	status = "okay";
+> +	clock-frequency = <400000>;
+> +
+> +	digitizer@9 {
+> +		compatible = "wacom,w9013", "hid-over-i2c";
+> +		reg = <0x9>;
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&pen_irq_l>, <&pen_pdct_l>, <&pen_rst_l>;
+> +
+> +		post-power-on-delay-ms = <120>;
+> +
+> +		interrupt-parent = <&tlmm>;
+> +		interrupts = <119 IRQ_TYPE_LEVEL_LOW>;
+> +
+> +		hid-descr-addr = <0x1>;
+> +	};
+> +};
+> +
+> +&ipa {
+> +	status = "okay";
+> +	memory-region = <&ipa_fw_mem>;
+> +	firmware-name = "qcom/samsung/w737/ipa_fws.elf";
+> +};
+> +
+> +/* No idea why it causes an SError when enabled */
+> +&llcc {
+> +	status = "disabled";
+> +};
+> +
+> +&mss_pil {
+> +	status = "okay";
+> +	firmware-name = "qcom/samsung/w737/qcdsp1v2850.mbn", "qcom/samsung/w737/qcdsp2850.mbn";
+> +};
+> +
+> +&qup_i2c10_default {
+> +	pinconf {
+> +		pins = "gpio55", "gpio56";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +};
+> +
+> +&qup_i2c11_default {
+> +	pinconf {
+> +		pins = "gpio31", "gpio32";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +};
+> +
+> +&qup_i2c12_default {
+> +	drive-strength = <2>;
+> +	bias-disable;
+> +};
+> +
+> +&qup_uart6_default {
+> +	pinmux {
+> +		 pins = "gpio45", "gpio46", "gpio47", "gpio48";
+> +		 function = "qup6";
+> +	};
+> +
+> +	cts {
+> +		pins = "gpio45";
+> +		bias-pull-down;
+> +	};
+> +
+> +	rts-tx {
+> +		pins = "gpio46", "gpio47";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+> +	rx {
+> +		pins = "gpio48";
+> +		bias-pull-up;
+> +	};
+> +};
+> +
+> +&qupv3_id_0 {
+> +	status = "okay";
+> +};
+> +
+> +&qupv3_id_1 {
+> +	status = "okay";
+> +};
+> +
+> +&q6asmdai {
+> +	dai@0 {
+> +		reg = <0>;
+> +	};
+> +
+> +	dai@1 {
+> +		reg = <1>;
+> +	};
+> +
+> +	dai@2 {
+> +		reg = <2>;
+> +	};
+> +};
+> +
+> +&sound {
+> +	compatible = "qcom,sdm845-sndcard";
+> +	model = "Samsung-W737";
+> +
+> +	audio-routing =
+> +		"RX_BIAS", "MCLK",
+> +		"AMIC2", "MIC BIAS2",
+> +		"SpkrLeft IN", "SPK1 OUT",
+> +		"SpkrRight IN", "SPK2 OUT",
+> +		"MM_DL1",  "MultiMedia1 Playback",
+> +		"MM_DL3",  "MultiMedia3 Playback",
+> +		"MultiMedia2 Capture", "MM_UL2";
+> +
+> +	mm1-dai-link {
+> +		link-name = "MultiMedia1";
+> +		cpu {
+> +			sound-dai = <&q6asmdai  MSM_FRONTEND_DAI_MULTIMEDIA1>;
+> +		};
+> +	};
+> +
+> +	mm2-dai-link {
+> +		link-name = "MultiMedia2";
+> +		cpu {
+> +			sound-dai = <&q6asmdai  MSM_FRONTEND_DAI_MULTIMEDIA2>;
+> +		};
+> +	};
+> +
+> +	mm3-dai-link {
+> +		link-name = "MultiMedia3";
+> +		cpu {
+> +			sound-dai = <&q6asmdai  MSM_FRONTEND_DAI_MULTIMEDIA3>;
+> +		};
+> +	};
+> +
+> +	slim-dai-link {
+> +		link-name = "SLIM Playback";
+> +		cpu {
+> +			sound-dai = <&q6afedai SLIMBUS_0_RX>;
+> +		};
+> +
+> +		platform {
+> +			sound-dai = <&q6routing>;
+> +		};
+> +
+> +		codec {
+> +			sound-dai =  <&left_spkr>, <&right_spkr>, <&swm 0>, <&wcd9340 0>;
+> +		};
+> +	};
+> +
+> +	slimcap-dai-link {
+> +		link-name = "SLIM Capture";
+> +		cpu {
+> +			sound-dai = <&q6afedai SLIMBUS_0_TX>;
+> +		};
+> +
+> +		platform {
+> +			sound-dai = <&q6routing>;
+> +		};
+> +
+> +		codec {
+> +			sound-dai = <&wcd9340 1>;
+> +		};
+> +	};
+> +
+> +	slim-wcd-dai-link {
+> +		link-name = "SLIM WCD Playback";
+> +		cpu {
+> +			sound-dai = <&q6afedai SLIMBUS_1_RX>;
+> +		};
+> +
+> +		platform {
+> +			sound-dai = <&q6routing>;
+> +		};
+> +
+> +		codec {
+> +			sound-dai =  <&wcd9340 2>;
+> +		};
+> +	};
+> +};
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <0 6>, <85 4>;
+> +
+> +	pen_irq_l: pen-irq-l {
+> +		pinmux {
+> +			pins = "gpio119";
+> +			function = "gpio";
+> +		};
+> +
+> +		pinconf {
+> +			pins = "gpio119";
+> +			bias-disable;
+> +		};
+> +	};
+> +
+> +	pen_pdct_l: pen-pdct-l {
+> +		pinmux {
+> +			pins = "gpio124";
+> +			function = "gpio";
+> +		};
+> +
+> +		pinconf {
+> +			pins = "gpio124";
+> +			bias-disable;
+> +			drive-strength = <2>;
+> +			output-high;
+> +		};
+> +	};
+> +
+> +	pen_rst_l: pen-rst-l {
+> +		pinmux  {
+> +			pins = "gpio21";
+> +			function = "gpio";
+> +		};
+> +
+> +		pinconf {
+> +			pins = "gpio21";
+> +			bias-disable;
+> +			drive-strength = <2>;
+> +
+> +			/*
+> +			 * The pen driver doesn't currently support
+> +			 * driving this reset line.  By specifying
+> +			 * output-high here we're relying on the fact
+> +			 * that this pin has a default pulldown at boot
+> +			 * (which makes sure the pen was in reset if it
+> +			 * was powered) and then we set it high here to
+> +			 * take it out of reset.  Better would be if the
+> +			 * pen driver could control this and we could
+> +			 * remove "output-high" here.
+> +			 */
+> +			output-high;
+> +		};
+> +	};
+> +
+> +	wcd_intr_default: wcd_intr_default {
+> +		pins = "gpio54";
+> +		function = "gpio";
+> +
+> +		input-enable;
+> +		bias-pull-down;
+> +		drive-strength = <2>;
+> +	};
+> +};
+> +
+> +&uart6 {
+> +	status = "okay";
+> +
+> +	bluetooth {
+> +		compatible = "qcom,wcn3990-bt";
+> +
+> +		vddio-supply = <&vreg_s4a_1p8>;
+> +		vddxo-supply = <&vreg_l7a_1p8>;
+> +		vddrf-supply = <&vreg_l17a_1p3>;
+> +		vddch0-supply = <&vreg_l25a_3p3>;
+> +		vddch1-supply = <&vreg_l23a_3p3>;
+> +		max-speed = <3200000>;
+> +	};
+> +};
+> +
+> +&ufs_mem_hc {
+> +	status = "okay";
+> +
+> +	reset-gpios = <&tlmm 150 GPIO_ACTIVE_LOW>;
+> +
+> +	vcc-supply = <&vreg_l20a_2p95>;
+> +	vcc-max-microamp = <600000>;
+> +};
+> +
+> +&ufs_mem_phy {
+> +	status = "okay";
+> +
+> +	vdda-phy-supply = <&vdda_ufs1_core>;
+> +	vdda-pll-supply = <&vdda_ufs1_1p2>;
+> +};
+> +
+> +&usb_1 {
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_dwc3 {
+> +	dr_mode = "host";
+> +};
+> +
+> +&usb_1_hsphy {
+> +	status = "okay";
+> +
+> +	vdd-supply = <&vdda_usb1_ss_core>;
+> +	vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
+> +	vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
+> +
+> +	qcom,imp-res-offset-value = <8>;
+> +	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
+> +	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
+> +	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
+> +};
+> +
+> +&usb_1_qmpphy {
+> +	status = "okay";
+> +
+> +	vdda-phy-supply = <&vdda_usb1_ss_1p2>;
+> +	vdda-pll-supply = <&vdda_usb1_ss_core>;
+> +};
+> +
+> +&usb_2 {
+> +	status = "okay";
+> +};
+> +
+> +&usb_2_dwc3 {
+> +	dr_mode = "host";
+> +};
+> +
+> +&usb_2_hsphy {
+> +	status = "okay";
+> +
+> +	vdd-supply = <&vdda_usb2_ss_core>;
+> +	vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
+> +	vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
+> +
+> +	qcom,imp-res-offset-value = <8>;
+> +	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_22_8_MA>;
+> +};
+> +
+> +&usb_2_qmpphy {
+> +	status = "okay";
+> +
+> +	vdda-phy-supply = <&vdda_usb2_ss_1p2>;
+> +	vdda-pll-supply = <&vdda_usb2_ss_core>;
+> +};
+> +
+> +&venus {
+> +	status = "okay";
+> +	firmware-name = "qcom/samsung/w737/qcvss850.mbn";
+> +};
+> +
+> +&wcd9340{
+> +	pinctrl-0 = <&wcd_intr_default>;
+> +	pinctrl-names = "default";
+> +	clock-names = "extclk";
+> +	clocks = <&rpmhcc RPMH_LN_BB_CLK2>;
+> +	reset-gpios = <&tlmm 64 0>;
+> +	vdd-buck-supply = <&vreg_s4a_1p8>;
+> +	vdd-buck-sido-supply = <&vreg_s4a_1p8>;
+> +	vdd-tx-supply = <&vreg_s4a_1p8>;
+> +	vdd-rx-supply = <&vreg_s4a_1p8>;
+> +	vdd-io-supply = <&vreg_s4a_1p8>;
+> +	qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
+> +	qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
+> +	qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
+> +
+> +	swm: swm@c85 {
+> +		left_spkr: wsa8810-left{
+> +			compatible = "sdw10217211000";
+> +			reg = <0 3>;
+> +			powerdown-gpios = <&wcdgpio 1 GPIO_ACTIVE_HIGH>;
+> +			#thermal-sensor-cells = <0>;
+> +			sound-name-prefix = "SpkrLeft";
+> +			#sound-dai-cells = <0>;
+> +		};
+> +
+> +		right_spkr: wsa8810-right{
+> +			compatible = "sdw10217211000";
+> +			powerdown-gpios = <&wcdgpio 2 GPIO_ACTIVE_HIGH>;
+> +			reg = <0 4>;
+> +			#thermal-sensor-cells = <0>;
+> +			sound-name-prefix = "SpkrRight";
+> +			#sound-dai-cells = <0>;
+> +		};
+> +	};
+> +};
+> +
+> +&wifi {
+> +	status = "okay";
+> +
+> +	vdd-0.8-cx-mx-supply = <&vreg_l5a_0p8>;
+> +	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
+> +	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
+> +	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
+> +	vdd-3.3-ch1-supply = <&vreg_l23a_3p3>;
+> +
+> +	qcom,snoc-host-cap-8bit-quirk;
+> +};
+> -- 
+> 2.25.1
+> 
