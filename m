@@ -2,137 +2,222 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB6254C2675
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 09:44:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E4AAB4C2869
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Feb 2022 10:44:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230180AbiBXIoD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Feb 2022 03:44:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54958 "EHLO
+        id S232695AbiBXJor (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Feb 2022 04:44:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231918AbiBXIoB (ORCPT
+        with ESMTP id S230354AbiBXJoq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Feb 2022 03:44:01 -0500
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40BE5583AA
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 00:43:31 -0800 (PST)
-Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com [209.85.208.197])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 1AA053F1BE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 08:43:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1645692210;
-        bh=Dcj0D0zPsXPEVS1eNhpQqfPztDcGavIHA1/tOM5ybJI=;
-        h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-         In-Reply-To:Content-Type;
-        b=PmeF1MjGoM4FAzZig19wP3N+L3TGBSVTIwlbjlu0lqqjH2vGsGKn1376wvCwS51US
-         VeE6QmVvE+K90fma/E1nPhIqS+FA9+vUV08n1xYx6vraJSU4dyfOSoT7U/KtwIaavb
-         WAa1+AILGxhgDIIUpT4BBsjYQslqpcfr+sy4rrAQBeEmubFaW4m3ByvlgFf3TzbzY7
-         Dt/zWCYQGDymmBDe4od8eBEq7AtXrkL+yjXVPtbR/6tKa+Jai/Gess0gXMRZnIN496
-         0UCuN5dDF/UjQczQAoN1pgx1z6bJtciit8P0z/fCzQNCKbgWEoizt05yjNmv6jN1XS
-         qEIAjFWKoT0ig==
-Received: by mail-lj1-f197.google.com with SMTP id r27-20020a2e575b000000b002463f43ca0aso735196ljd.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 00:43:30 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=Dcj0D0zPsXPEVS1eNhpQqfPztDcGavIHA1/tOM5ybJI=;
-        b=Rwu0qglOPeNtjq2c4BrjyZHu5CSeMkeF1SqyMyKARpjPoJkaDSJ5PQXdGLhsMIkAgi
-         QDgoLzNkzyKCNQMd2f6c6BYJpuPLtssTkjGjxpvjxmOpd3jjVl2efPugjr5T7lnRlxnO
-         2qFiwC3DLDyRYSdjdnfkxm+LnVixxBKPcLZ6p5swJNu9FbULrm9csy+BYE+eQqmghl/L
-         v59D/4wD9SPRpgUIm3umSrxgiwHLMYsCq5p1KHL3xxHFMds74tJY9xhEfeOEJlg0Mf4S
-         IqW4GTYCQJl7483T7oaUxck+q2rIPn9YAfMxeGrZk3T/pxvuNB92O20x1KIIY5qIAusI
-         egRA==
-X-Gm-Message-State: AOAM531LOTPQ6HRAVfgKvy4VnxL96lKMIFYWzsbuIHrU+EJyoOa2aEX0
-        25e400etBsAWwRQxHqks9dYZ+5qo5/MNloGHTOf851GSyMZwSoFgp8dQDgkGEEzD/c/W2LA9yAx
-        lGWnVnFShRHs0ZXEmPdKMp5E6aPeC1hZAhjxOxIq2zUk=
-X-Received: by 2002:a05:6402:2744:b0:404:ba60:fec6 with SMTP id z4-20020a056402274400b00404ba60fec6mr1261649edd.235.1645692198571;
-        Thu, 24 Feb 2022 00:43:18 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJyR9ltyboSTjtHA8dcoqW8jhNMCdSS02AQooqb5CLRWmWM576orT/UQwLqy77zZSpmBsHCJBQ==
-X-Received: by 2002:a05:6402:2744:b0:404:ba60:fec6 with SMTP id z4-20020a056402274400b00404ba60fec6mr1261610edd.235.1645692198343;
-        Thu, 24 Feb 2022 00:43:18 -0800 (PST)
-Received: from [192.168.0.127] (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
-        by smtp.gmail.com with ESMTPSA id 16sm1006988eji.94.2022.02.24.00.43.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Feb 2022 00:43:17 -0800 (PST)
-Message-ID: <cd89539b-92b8-0376-03c2-1a9268721b92@canonical.com>
-Date:   Thu, 24 Feb 2022 09:43:16 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v2 01/11] driver: platform: add and use helper for safer
- setting of driver_override
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Stuart Yoder <stuyoder@gmail.com>,
-        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
-        Abel Vesa <abel.vesa@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        "K. Y. Srinivasan" <kys@microsoft.com>,
-        Haiyang Zhang <haiyangz@microsoft.com>,
-        Stephen Hemminger <sthemmin@microsoft.com>,
-        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Vineeth Vijayan <vneethv@linux.ibm.com>,
-        Peter Oberparleiter <oberpar@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Andy Gross <agross@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        "Michael S. Tsirkin" <mst@redhat.com>,
-        Jason Wang <jasowang@redhat.com>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, NXP Linux Team <linux-imx@nxp.com>,
-        linux-arm-kernel@lists.infradead.org, linux-hyperv@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Rasmus Villemoes <linux@rasmusvillemoes.dk>
-References: <20220223215342.GA155282@bhelgaas>
- <bc4f3314-46f2-72a8-f25c-c9774d987ca1@canonical.com>
-In-Reply-To: <bc4f3314-46f2-72a8-f25c-c9774d987ca1@canonical.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Thu, 24 Feb 2022 04:44:46 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8903227DF19;
+        Thu, 24 Feb 2022 01:44:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645695856; x=1677231856;
+  h=from:to:cc:subject:date:message-id;
+  bh=8KrzqDLljxAwScOeVJvPz90vTEXH8Hc6e5p+0sdJ57k=;
+  b=DFkX5+0DHykcIp93QEjldl5OieHwXwsEw0x0A9/w8lYAdm0ZLhBpnRYM
+   A2sg3UILnIwKQJvHzNLzxWuXEg+A9DOi8DDzIqQf6msqI1kF7kHXy0TYL
+   hoVDKBHaC5K2YeJinNyEM7fyzyglFBppRyIDAmD0e4P5Xk7fOGWAFqyWm
+   k=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 24 Feb 2022 01:44:16 -0800
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 24 Feb 2022 01:44:15 -0800
+X-QCInternal: smtphost
+Received: from pmaliset-linux.qualcomm.com ([10.206.64.233])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 24 Feb 2022 15:13:59 +0530
+Received: by pmaliset-linux.qualcomm.com (Postfix, from userid 3848298)
+        id D1F2521153; Thu, 24 Feb 2022 15:13:57 +0530 (IST)
+From:   Prasad Malisetty <quic_pmaliset@quicinc.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        lorenzo.pieralisi@arm.com, robh@kernel.org, kw@linux.com,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+        manivannan.sadhasivam@linaro.org, swboyd@chromium.org,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>
+Subject: [PATCH v3] PCI: qcom: Add system PM support
+Date:   Thu, 24 Feb 2022 15:13:34 +0530
+Message-Id: <1645695814-21102-1-git-send-email-quic_pmaliset@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/02/2022 08:47, Krzysztof Kozlowski wrote:
-> On 23/02/2022 22:53, Bjorn Helgaas wrote:
->> On Wed, Feb 23, 2022 at 08:13:00PM +0100, Krzysztof Kozlowski wrote:
->>> Several core drivers and buses expect that driver_override is a
->>> dynamically allocated memory thus later they can kfree() it.
->>> ...
->>
->>> + * set_driver_override() - Helper to set or clear driver override.
->>
->> Doesn't match actual function name.
-> 
-> Good point. I wonder why build W=1 did not complain... I need to check.
-> 
+Add suspend_noirq and resume_noirq callbacks to handle
+system suspend and resume in dwc PCIe controller driver.
 
-I see why - I missed kerneldoc /** opener.
+When system suspends, send PME turnoff message to enter
+link into L2 state. Along with powerdown the PHY, disable
+pipe clock, switch gcc_pcie_1_pipe_clk_src to XO if mux is
+supported and disable the pcie clocks, regulators.
 
+When system resumes, PCIe link will be re-established and
+setup rc settings.
 
-Best regards,
-Krzysztof
+Signed-off-by: Prasad Malisetty <quic_pmaliset@quicinc.com>
+
+---
+Changes in v2:
+	- Removed unnecessary variable initializations and comments.
+	- Removed platform specific variables declarations.
+	- Added MACRO names for the BIT shiftings.
+
+Changes since v1:
+	- Removed unnecessary logs and modified log level suggested by Manivannan.
+	- Removed platform specific callbacks as PM support is generic.
+---
+ drivers/pci/controller/dwc/pcie-qcom.c | 96 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 96 insertions(+)
+
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index c19cd506..f4a5e3c 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -48,6 +48,7 @@
+ #define PCIE20_PARF_PHY_REFCLK			0x4C
+ #define PHY_REFCLK_SSP_EN			BIT(16)
+ #define PHY_REFCLK_USE_PAD			BIT(12)
++#define PHY_POWER_DOWN				0x1
+ 
+ #define PCIE20_PARF_DBI_BASE_ADDR		0x168
+ #define PCIE20_PARF_SLV_ADDR_SPACE_SIZE		0x16C
+@@ -62,6 +63,8 @@
+ 
+ #define PCIE20_ELBI_SYS_CTRL			0x04
+ #define PCIE20_ELBI_SYS_CTRL_LT_ENABLE		BIT(0)
++#define PCIE_PME_TURNOFF_MSG			BIT(4)
++#define PCIE_PM_LINKST_IN_L2			BIT(5)
+ 
+ #define PCIE20_AXI_MSTR_RESP_COMP_CTRL0		0x818
+ #define CFG_REMOTE_RD_REQ_BRIDGE_SIZE_2K	0x4
+@@ -73,6 +76,8 @@
+ 
+ #define PCIE20_PARF_Q2A_FLUSH			0x1AC
+ 
++#define PCIE20_PARF_PM_STTS			0x24
++
+ #define PCIE20_MISC_CONTROL_1_REG		0x8BC
+ #define DBI_RO_WR_EN				1
+ 
+@@ -1616,6 +1621,96 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
++static int qcom_pcie_send_pme_turnoff_msg(struct qcom_pcie *pcie)
++{
++	int ret;
++	u32 val, poll_val;
++	u64 l23_rdy_poll_timeout = 100000; /* microseconds */
++	struct dw_pcie *pci = pcie->pci;
++	struct device *dev = pci->dev;
++
++	val = readl(pcie->elbi + PCIE20_ELBI_SYS_CTRL);
++	val |= PCIE_PME_TURNOFF_MSG;
++	writel(val, pcie->elbi + PCIE20_ELBI_SYS_CTRL);
++
++	ret = readl_poll_timeout((pcie->parf + PCIE20_PARF_PM_STTS), poll_val,
++			(poll_val & PCIE_PM_LINKST_IN_L2),
++			10000, l23_rdy_poll_timeout);
++	if (!ret)
++		dev_dbg(dev, "Device entered L23_Ready state\n");
++	else
++		dev_err(dev, "Device failed to enter L23_Ready. PM_STTS 0x%x\n",
++			readl_relaxed(pcie->parf + PCIE20_PARF_PM_STTS));
++
++	return ret;
++}
++
++static void qcom_pcie_host_disable(struct qcom_pcie *pcie)
++{
++	qcom_ep_reset_assert(pcie);
++
++	/* Put PHY into POWER DOWN state */
++	phy_power_off(pcie->phy);
++
++	writel(PHY_POWER_DOWN, pcie->parf + PCIE20_PARF_PHY_CTRL);
++
++	if (pcie->ops->post_deinit)
++		pcie->ops->post_deinit(pcie);
++
++	/* Disable PCIe clocks and regulators */
++	pcie->ops->deinit(pcie);
++}
++
++static int __maybe_unused qcom_pcie_pm_suspend_noirq(struct device *dev)
++{
++	int ret;
++	struct qcom_pcie *pcie = dev_get_drvdata(dev);
++	struct dw_pcie *pci = pcie->pci;
++
++	if (!dw_pcie_link_up(pci)) {
++		dev_dbg(dev, "Power has been turned off already\n");
++		return 0;
++	}
++
++	ret = qcom_pcie_send_pme_turnoff_msg(pcie);
++	if (ret)
++		return ret;
++
++	/* Power down the PHY, disable clock and regulators */
++	qcom_pcie_host_disable(pcie);
++
++	return 0;
++}
++
++/* Resume the PCIe link */
++static int __maybe_unused qcom_pcie_pm_resume_noirq(struct device *dev)
++{
++	int ret;
++	struct qcom_pcie *pcie = dev_get_drvdata(dev);
++	struct dw_pcie *pci = pcie->pci;
++	struct pcie_port *pp = &pci->pp;
++
++	ret = qcom_pcie_host_init(pp);
++	if (ret) {
++		dev_err(dev, "cannot initialize host\n");
++		return ret;
++	}
++
++	dw_pcie_setup_rc(pp);
++
++	qcom_pcie_start_link(pci);
++
++	ret = dw_pcie_wait_for_link(pci);
++	if (ret)
++		dev_err(dev, "Link never came up, Resume failed\n");
++
++	return 0;
++}
++
++static const struct dev_pm_ops qcom_pcie_pm_ops = {
++	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_pm_suspend_noirq, qcom_pcie_pm_resume_noirq)
++};
++
+ static const struct of_device_id qcom_pcie_match[] = {
+ 	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
+ 	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
+@@ -1648,6 +1743,7 @@ static struct platform_driver qcom_pcie_driver = {
+ 	.probe = qcom_pcie_probe,
+ 	.driver = {
+ 		.name = "qcom-pcie",
++		.pm = &qcom_pcie_pm_ops,
+ 		.suppress_bind_attrs = true,
+ 		.of_match_table = qcom_pcie_match,
+ 	},
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
