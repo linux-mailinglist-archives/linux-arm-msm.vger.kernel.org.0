@@ -2,55 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E0894C44C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 13:43:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4660D4C452E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 14:03:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237943AbiBYMnR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 07:43:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51600 "EHLO
+        id S240786AbiBYNEZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 08:04:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234787AbiBYMnQ (ORCPT
+        with ESMTP id S234439AbiBYNEY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 07:43:16 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AEA366CA7;
-        Fri, 25 Feb 2022 04:42:43 -0800 (PST)
+        Fri, 25 Feb 2022 08:04:24 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A8C11DA032;
+        Fri, 25 Feb 2022 05:03:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645792963; x=1677328963;
+  t=1645794232; x=1677330232;
   h=from:to:cc:subject:date:message-id:mime-version;
-  bh=AT1s6mxLl73YBSbnXvb/jOl8sFuazgHmyNXd1cgW2TE=;
-  b=tahNXAzMOaIruIJ9h/hhpjcLBKFemOFixQulXfZ6jEuJBWJvBMj658kJ
-   VvJw1CAfADNKIbweT1IVVtiPwtD6O14eLkEnSNOhCCQzvgOGn67chwhxe
-   LNyRiDE9N/5Wn+2JlJWTB2UE7XyvXOZnZVyu8Y2jX/8NNks4HZuyK9PMx
-   M=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 25 Feb 2022 04:42:42 -0800
+  bh=tLTi208t9PkSrFC828ZdMyJbU0Jlyi2aKs/bqY+wFKI=;
+  b=mwumVu94efXK5F6BUwUY7mkkqHgECU5YrJmd+RWCmRkBS3zieEThmsNj
+   ZfGC2iHfPqtzBHGP72q4dhJa7Q2u/9jUC1cQYM4f1Q/76c7En1xYX7krN
+   5kpOY0vrCXoFwdJRJT/NgQCJXFo3oJBRuHanjZc0DX5ewu01gPZAjRu4e
+   g=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 25 Feb 2022 05:03:52 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2022 04:42:42 -0800
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2022 05:03:51 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Fri, 25 Feb 2022 04:42:41 -0800
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ 15.2.986.15; Fri, 25 Feb 2022 05:03:50 -0800
+Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Fri, 25 Feb 2022 04:42:36 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@codeaurora.org>,
-        <perex@perex.cz>, <tiwai@suse.com>,
-        <srinivas.kandagatla@linaro.org>, <rohitkr@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [PATCH] ASoC: qcom: lpass-platform: Update warning print to control excess logging
-Date:   Fri, 25 Feb 2022 18:12:23 +0530
-Message-ID: <1645792943-24845-1-git-send-email-quic_srivasam@quicinc.com>
+ 15.2.986.15; Fri, 25 Feb 2022 05:03:47 -0800
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+To:     <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <pure.logic@nexus-software.ie>,
+        <bjorn.andersson@linaro.org>, <greg@kroah.com>, <robh@kernel.org>
+CC:     <linux-kernel@vger.kernel.org>, <quic_rjendra@quicinc.com>,
+        <quic_saipraka@quicinc.com>, <quic_schowdhu@quicinc.com>
+Subject: [PATCH V2 0/2] Revert device tree changes for EUD
+Date:   Fri, 25 Feb 2022 18:32:59 +0530
+Message-ID: <cover.1645793187.git.quic_schowdhu@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,30 +62,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update dev_warn to dev_warn_ratelimit to control excess xrun logging
-in lpass platform driver.
+Revert the device tree changes for Embedded USB Debugger(EUD)
+from the usb tree to avoid conflicts as device tree changes
+for EUD are supposed to go from qcom Tree.
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
----
- sound/soc/qcom/lpass-platform.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Changes in V2
 
-diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
-index b3af971..1ce0878 100644
---- a/sound/soc/qcom/lpass-platform.c
-+++ b/sound/soc/qcom/lpass-platform.c
-@@ -986,7 +986,8 @@ static irqreturn_t lpass_dma_interrupt_handler(
- 				"error writing to irqclear reg: %d\n", rv);
- 			return IRQ_NONE;
- 		}
--		dev_warn(soc_runtime->dev, "xrun warning\n");
-+		dev_warn_ratelimited(soc_runtime->dev, "xrun warning\n");
-+
- 		snd_pcm_stop_xrun(substream);
- 		ret = IRQ_HANDLED;
- 	}
--- 
+*Added the reason in revert statement.
+
+Souradeep Chowdhury (2):
+  Revert "arm64: dts: qcom: sc7280: Set the default dr_mode for usb2"
+  Revert "arm64: dts: qcom: sc7280: Add EUD dt node and dwc3 connector"
+
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts |  4 ----
+ arch/arm64/boot/dts/qcom/sc7280.dtsi    | 36 ---------------------------------
+ 2 files changed, 40 deletions(-)
+
+--
 2.7.4
 
