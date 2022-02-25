@@ -2,47 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 892D34C426A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 11:35:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 972244C42E7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 11:56:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239568AbiBYKgL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 05:36:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36160 "EHLO
+        id S230368AbiBYK5N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 05:57:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239566AbiBYKgJ (ORCPT
+        with ESMTP id S239738AbiBYK5M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 05:36:09 -0500
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD0FD22EDDE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 02:35:35 -0800 (PST)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id AF8B93F6C8;
-        Fri, 25 Feb 2022 11:35:32 +0100 (CET)
-Date:   Fri, 25 Feb 2022 11:35:31 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        kernel test robot <lkp@intel.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>
-Subject: Re: [PATCH] drm/msm/dpu: wire up MSM8998's DSPP blocks
-Message-ID: <20220225103531.sczny6wtlgomvdxd@SoMainline.org>
-References: <20220222031948.228727-1-dmitry.baryshkov@linaro.org>
+        Fri, 25 Feb 2022 05:57:12 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09C092DF1;
+        Fri, 25 Feb 2022 02:56:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645786599; x=1677322599;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=G9dzvbF/4cH2J4t8oHKAF2cRlYPFFAbxeUqSbhr+27A=;
+  b=JInRLXDn36ODut3iKnDPKiqhRJcoE7HYoaogB8Qjt3A3Y3Ze7vm7Qtvh
+   xuvJaMfFDYVhBI/dFexnnWm3SyY+RBLpgSnTQerIO8tVnWVb9fYyU/fwC
+   iWP+ab36fIhxGvhT8N+QTMBtAprxCCd31d+0v4dQzS5B3FFh0oTc30BQE
+   c=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 25 Feb 2022 02:56:38 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2022 02:56:37 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Fri, 25 Feb 2022 02:56:37 -0800
+Received: from [10.216.25.108] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Fri, 25 Feb
+ 2022 02:56:31 -0800
+Message-ID: <206b65f8-90ba-e15d-d7b7-dce0a01fe936@quicinc.com>
+Date:   Fri, 25 Feb 2022 16:26:28 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220222031948.228727-1-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH v3] ASoC: codecs: Add power domains support in digital
+ macro codecs
+Content-Language: en-US
+To:     Mark Brown <broonie@kernel.org>
+CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@codeaurora.org>,
+        <perex@perex.cz>, <tiwai@suse.com>,
+        <srinivas.kandagatla@linaro.org>, <rohitkr@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <1645708759-8833-1-git-send-email-quic_srivasam@quicinc.com>
+ <Yhfhgrvl38WcNOFu@sirena.org.uk>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <Yhfhgrvl38WcNOFu@sirena.org.uk>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -51,41 +76,13 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-02-22 06:19:48, Dmitry Baryshkov wrote:
-> The commit adding msm8998 support didn't added msm8998's DSPP blocks
 
-You might have meant: [did*] add(ed) msm8998's DSPP blocks configuration
-[to the source /code file], but did not...
-
-Or however you wish to word this :)
-
-- Marijn
-
-> configuration, but did not use them in msm8998_cfg_init(). Wire them up
-> to be used for display post processing.
-> 
-> Reported-by: kernel test robot <lkp@intel.com>
-> Fixes: 94391a14fc27 ("drm/msm/dpu1: Add MSM8998 to hw catalog")
-> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> Cc: Jami Kettunen <jami.kettunen@somainline.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index aa4d20762ccb..f74bc7acd901 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -1496,6 +1496,8 @@ static void msm8998_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
->  		.sspp = msm8998_sspp,
->  		.mixer_count = ARRAY_SIZE(msm8998_lm),
->  		.mixer = msm8998_lm,
-> +		.dspp_count = ARRAY_SIZE(msm8998_dspp),
-> +		.dspp = msm8998_dspp,
->  		.pingpong_count = ARRAY_SIZE(sdm845_pp),
->  		.pingpong = sdm845_pp,
->  		.intf_count = ARRAY_SIZE(msm8998_intf),
-> -- 
-> 2.34.1
-> 
+On 2/25/2022 1:20 AM, Mark Brown wrote:
+Thanks for your time Brown!!!
+> On Thu, Feb 24, 2022 at 06:49:19PM +0530, Srinivasa Rao Mandadapu wrote:
+>
+>> +	l_pds->macro_pd = dev_pm_domain_attach_by_name(dev, "macro");
+>> +	if (IS_ERR_OR_NULL(l_pds->macro_pd))
+>> +		return NULL;
+> Shouldn't there also be a DT binding update for the users?
+Okay. Will send dt-bindings patch too.
