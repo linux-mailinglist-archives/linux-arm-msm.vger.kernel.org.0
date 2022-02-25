@@ -2,75 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B1764C3B60
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 03:02:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 286104C3C6E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 04:30:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236649AbiBYCBy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Feb 2022 21:01:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40144 "EHLO
+        id S229812AbiBYDa7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Feb 2022 22:30:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236479AbiBYCBk (ORCPT
+        with ESMTP id S237037AbiBYDa7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Feb 2022 21:01:40 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F68B7DA90
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 18:01:06 -0800 (PST)
+        Thu, 24 Feb 2022 22:30:59 -0500
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70B3B15471A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 19:30:27 -0800 (PST)
+Received: by mail-ot1-x32c.google.com with SMTP id j3-20020a9d7683000000b005aeed94f4e9so2770628otl.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 19:30:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645754466; x=1677290466;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=SJJC8z/VPDe1vAc6GcuJV6DiVRoR3WeMA4ImoW+jaJU=;
-  b=kdkuGYc7j2/HH9X79x1dLXsmpZkFZnwSNf7kcweEWkW5wnectpUiBY0g
-   swKs4o7iirhco54yrIOFD0HaCF8LMMirOHehnaM+dJUm/Kh/0nE4lmo4n
-   H/BGlZoyDKwUnkFEnJhYfZpxQSb62qas7Ds/DK40PAVPQiJjKlkSZGYOc
-   M=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 24 Feb 2022 18:01:06 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Feb 2022 18:01:05 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Thu, 24 Feb 2022 18:01:05 -0800
-Received: from [10.110.44.69] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Thu, 24 Feb
- 2022 18:01:04 -0800
-Message-ID: <9398567b-6517-8eb3-f5d5-d8c88cb10814@quicinc.com>
-Date:   Thu, 24 Feb 2022 18:01:04 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [Freedreno] [RFC PATCH v2 1/5] drm/msm/dp: fix panel bridge
- attachment
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Stephen Boyd <swboyd@chromium.org>,
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fXXZvdlTybfcJufCRJu6AzZ8AhUXW83H0a85LXNskao=;
+        b=EYCQiacCdeDF0+9tvuZErbGuAPAIvcBmUw4GMyBwZJuLA/ACOPsZCm5rpU4i847Czd
+         Fe5ydtfXeye3HqVmCvPApOoEZM83h6vV10MulxJPDFxAkTA7k7MOa2AED/wS1jCQzAtJ
+         nr7W0HcR44jCemYM0w4mWDTcoMzlqQYlxxqgBTZWvOP8Dr+Vjnh1cwkkCst/FLj2VJOg
+         HgYi1S4m0K5WVsajI+WUVeCq7YPf4Xqei7pjGLPyZ4oo/OYtmtUOy2y9c76Ohcj7LdTV
+         p5ufXq6u011pqS1tGWR1ORhDrhb4FbWmpmgsnAUV0lFWUb9nTv6vwpCtz8c+LaeGjfeo
+         RGpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fXXZvdlTybfcJufCRJu6AzZ8AhUXW83H0a85LXNskao=;
+        b=2CTNIylE7cE4gG1wwk8WVjJhZvlGzR2IVOlEKF0wrimfWQqleepyjaBfNBtM7YFMF4
+         5h2CYTuEQQrHk+IufeKzyTtpq1W/fZbS8vktnRYkFKEMVhAlieUWFrnyyuHtDrlcc2ew
+         ChyFxn2lCIKqURaG1IGDj43fsuXD7vxVxiagQTDkMN6Fj02Cpw2yZ2iee784cF9kXOV3
+         cpDzfaCl+6o8flqqSm/DXphpQVoZZ9oU8VEc/Sixwuk43ntJXOQtllBtvEUhzNaLht24
+         qy14KHpaaqrq/S8PDAYKKfgusNjYZleMpGr6mFb6Pbt1+PvYBJwCyXwQLcG/uR4bnlsx
+         ujSw==
+X-Gm-Message-State: AOAM533HL/fizMb731guoo12vrH/WlHpocGmNyfRQNewa5MtwI9DA5CL
+        sxsJfZsAb+tFCMIrT4WTftwW7w==
+X-Google-Smtp-Source: ABdhPJyKdA0REsFSweiq4F2TgdrIsVFq4tGWuKvM+LH6k0VZ5nIshAagqnGhRkkxnv1GYtUDpQVkAw==
+X-Received: by 2002:a05:6830:33cf:b0:5af:4018:fc2a with SMTP id q15-20020a05683033cf00b005af4018fc2amr2116489ott.161.1645759826638;
+        Thu, 24 Feb 2022 19:30:26 -0800 (PST)
+Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id a23-20020a056830101700b005ad0bd6fe0csm598253otp.47.2022.02.24.19.30.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Feb 2022 19:30:26 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sibi Sankar <quic_sibis@quicinc.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        "Rob Clark" <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>,
-        "Daniel Vetter" <daniel@ffwll.ch>
-References: <20220211224006.1797846-1-dmitry.baryshkov@linaro.org>
- <20220211224006.1797846-2-dmitry.baryshkov@linaro.org>
- <CAE-0n52iHFtHppZj-g0V1UP5oWzXjbNDjpOd-hgR+F=TqFzjVg@mail.gmail.com>
- <a1b1d3ef-4131-b8a9-5300-89092bce271b@linaro.org>
- <a219b978-21a8-a2d6-62c0-69c451b10c09@quicinc.com>
- <CAA8EJpp5RjazoHD3GEE-1wJZtG3hZV9PRc3TtsBFFCcsB4zCNg@mail.gmail.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJpp5RjazoHD3GEE-1wJZtG3hZV9PRc3TtsBFFCcsB4zCNg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] remoteproc: qcom: q6v5: Add interconnect path proxy vote
+Date:   Thu, 24 Feb 2022 19:32:24 -0800
+Message-Id: <20220225033224.2238425-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.33.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,159 +70,119 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Many remoteproc instances requires that Linux casts a proxy vote for an
+interconnect path during boot, until they can do it themselves. Add
+support for voting for a single path.
+
+As this is a shared problem between both PAS and MSS drivers, the path
+is acquired and votes casted from the common helper code.
+
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+
+Sibi posted recently a patch to add interconnect votes from the modem driver,
+today I needed the same feature for one of the PAS remoteprocs. After
+essentially duplicating Sibi's patch I realized that it doesn't look too bad to
+put this in the common Q6V5 code.
+
+The main difference is that this would be messy if we need to support multiple
+paths, so we probably would have to push it out to the individual drivers at
+that point.
+
+Sibi's patch can be found here.
+https://lore.kernel.org/all/1644813252-12897-3-git-send-email-quic_sibis@quicinc.com/
 
 
-On 2/24/2022 12:41 PM, Dmitry Baryshkov wrote:
-> On Thu, 24 Feb 2022 at 21:25, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>
->>
->>
->> On 2/18/2022 6:26 PM, Dmitry Baryshkov wrote:
->>> On 19/02/2022 02:56, Stephen Boyd wrote:
->>>> Quoting Dmitry Baryshkov (2022-02-11 14:40:02)
->>>>> In commit 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display
->>>>> enable and disable") the DP driver received a drm_bridge instance, which
->>>>> is always attached to the encoder as a root bridge. However it conflicts
->>>>> with the panel_bridge support for eDP panels. The panel bridge attaches
->>>>> to the encoder before the "dp" bridge has a chace to do so. Change
->>>>
->>>> s/chace/chance/
->>>>
->>>>> panel_bridge attachment to come after dp_bridge attachment.
->>>>
->>>> s/panel_bridge/panel bridge/ possibly? And maybe clarify that dp_bridge
->>>> is the "DP driver's drm_bridge instance created in
->>>> msm_dp_bridge_init()"?
->>>>
->>>> My understanding is that we want to pass the bridge created in
->>>> msm_dp_bridge_init() as the 'previous' bridge so that it attaches the
->>>> panel bridge to the output of the DP bridge that's attached to the
->>>> encoder.
->>>
->>> Thanks! I'll update the commit log when pushing the patches.
->>
->> Please correct if i am missing something here.
->>
->> You are right that the eDP panel's panel bridge attaches to the encoder
->> in dp_drm_connector_init() which happens before msm_dp_bridge_init() and
->> hence it will attach directly to the encoder.
->>
->> But we are talking about different encoders here. DP's dp_display has a
->> different encoder compared to the EDP's dp_display.
-> 
-> The encoders are different. However both encoders use the same
-> codepath, which includes dp_bridge. It controls dp_display by calling
-> msm_dp_display_foo() functions.
-> 
->> So DP's bridge will still be attached to its encoder's root.
-> 
-> There is one dp_bridge per each encoder. Consider sc8180x which has 3
-> DP controllers (and thus 3 dp_bridges).
-> 
+This makes the implementation pick up one path, relevant DT bindings would
+still need to be updated in order be allowed to this in the DeviceTree files.
 
-Sorry, but I still didnt follow this.
+ drivers/remoteproc/qcom_q6v5.c | 21 ++++++++++++++++++++-
+ drivers/remoteproc/qcom_q6v5.h |  3 +++
+ 2 files changed, 23 insertions(+), 1 deletion(-)
 
-So for eDP, dp_drm_connector_init() will attach the panel_bridge
-and then msm_dp_bridge_init() will add a drm_bridge.
+diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
+index 442a388f8102..5280ec9b5449 100644
+--- a/drivers/remoteproc/qcom_q6v5.c
++++ b/drivers/remoteproc/qcom_q6v5.c
+@@ -8,6 +8,7 @@
+  */
+ #include <linux/kernel.h>
+ #include <linux/platform_device.h>
++#include <linux/interconnect.h>
+ #include <linux/interrupt.h>
+ #include <linux/module.h>
+ #include <linux/soc/qcom/qcom_aoss.h>
+@@ -51,9 +52,17 @@ int qcom_q6v5_prepare(struct qcom_q6v5 *q6v5)
+ {
+ 	int ret;
+ 
++	ret = icc_set_bw(q6v5->path, 0, UINT_MAX);
++	if (ret < 0) {
++		dev_err(q6v5->dev, "failed to set bandwidth request\n");
++		return ret;
++	}
++
+ 	ret = q6v5_load_state_toggle(q6v5, true);
+-	if (ret)
++	if (ret) {
++		icc_set_bw(q6v5->path, 0, 0);
+ 		return ret;
++	}
+ 
+ 	reinit_completion(&q6v5->start_done);
+ 	reinit_completion(&q6v5->stop_done);
+@@ -78,6 +87,9 @@ int qcom_q6v5_unprepare(struct qcom_q6v5 *q6v5)
+ 	disable_irq(q6v5->handover_irq);
+ 	q6v5_load_state_toggle(q6v5, false);
+ 
++	/* Disable interconnect vote, in case handover never happened */
++	icc_set_bw(q6v5->path, 0, 0);
++
+ 	return !q6v5->handover_issued;
+ }
+ EXPORT_SYMBOL_GPL(qcom_q6v5_unprepare);
+@@ -160,6 +172,8 @@ static irqreturn_t q6v5_handover_interrupt(int irq, void *data)
+ 	if (q6v5->handover)
+ 		q6v5->handover(q6v5);
+ 
++	icc_set_bw(q6v5->path, 0, 0);
++
+ 	q6v5->handover_issued = true;
+ 
+ 	return IRQ_HANDLED;
+@@ -332,6 +346,11 @@ int qcom_q6v5_init(struct qcom_q6v5 *q6v5, struct platform_device *pdev,
+ 		return load_state ? -ENOMEM : -EINVAL;
+ 	}
+ 
++	q6v5->path = devm_of_icc_get(&pdev->dev, NULL);
++	if (IS_ERR(q6v5->path))
++		return dev_err_probe(&pdev->dev, PTR_ERR(q6v5->path),
++				     "failed to acquire interconnect path\n");
++
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(qcom_q6v5_init);
+diff --git a/drivers/remoteproc/qcom_q6v5.h b/drivers/remoteproc/qcom_q6v5.h
+index f35e04471ed7..5a859c41896e 100644
+--- a/drivers/remoteproc/qcom_q6v5.h
++++ b/drivers/remoteproc/qcom_q6v5.h
+@@ -7,6 +7,7 @@
+ #include <linux/completion.h>
+ #include <linux/soc/qcom/qcom_aoss.h>
+ 
++struct icc_path;
+ struct rproc;
+ struct qcom_smem_state;
+ struct qcom_sysmon;
+@@ -18,6 +19,8 @@ struct qcom_q6v5 {
+ 	struct qcom_smem_state *state;
+ 	struct qmp *qmp;
+ 
++	struct icc_path *path;
++
+ 	unsigned stop_bit;
+ 
+ 	int wdog_irq;
+-- 
+2.33.1
 
-And yes in that case, the drm_bridge will be after the panel_bridge
-
-But since panel_bridge is at the root for eDP it should be okay.
-
-Your commit text was mentioning about DP.
-
-For DP, for each controller in the catalog, we will call modeset_init() 
-which should skip this part for DP
-
-   if (dp_display->panel_bridge) {
-         ret = drm_bridge_attach(dp_display->encoder,
-                     dp_display->panel_bridge, NULL,
-                     DRM_BRIDGE_ATTACH_NO_CONNECTOR);
-         if (ret < 0) {
-             DRM_ERROR("failed to attach panel bridge: %d\n", ret);
-             return ERR_PTR(ret);
-         }
-     }
-
-Followed by calling msm_dp_bridge_init() which will actually attach the 
-bridge:
-
-drm_bridge_attach(encoder, bridge, NULL, DRM_BRIDGE_ATTACH_NO_CONNECTOR);
-
-Now, even for 3 DP controllers, this shall be true as there will be 3 
-separate encoders and 3 dp_displays and hence 3 drm_bridges.
-
-What am i missing here?
-
->>
->> So what are we achieving with this change?
->>
->>>
->>>>
->>>>>
->>>>> Fixes: 8a3b4c17f863 ("drm/msm/dp: employ bridge mechanism for display
->>>>> enable and disable")
->>>>> Cc: Kuogee Hsieh <quic_khsieh@quicinc.com>
->>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>>> ---
->>>>
->>>> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
->>>>
->>>>>    drivers/gpu/drm/msm/dp/dp_drm.c | 21 +++++++++++----------
->>>>>    1 file changed, 11 insertions(+), 10 deletions(-)
->>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c
->>>>> b/drivers/gpu/drm/msm/dp/dp_drm.c
->>>>> index d4d360d19eba..26ef41a4c1b6 100644
->>>>> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
->>>>> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
->>>>> @@ -169,16 +169,6 @@ struct drm_connector
->>>>> *dp_drm_connector_init(struct msm_dp *dp_display)
->>>>>
->>>>>           drm_connector_attach_encoder(connector, dp_display->encoder);
->>>>>
->>>>> -       if (dp_display->panel_bridge) {
->>>>> -               ret = drm_bridge_attach(dp_display->encoder,
->>>>> -                                       dp_display->panel_bridge, NULL,
->>>>> -                                       DRM_BRIDGE_ATTACH_NO_CONNECTOR);
->>>>> -               if (ret < 0) {
->>>>> -                       DRM_ERROR("failed to attach panel bridge:
->>>>> %d\n", ret);
->>>>> -                       return ERR_PTR(ret);
->>>>> -               }
->>>>> -       }
->>>>> -
->>>>>           return connector;
->>>>>    }
->>>>>
->>>>> @@ -246,5 +236,16 @@ struct drm_bridge *msm_dp_bridge_init(struct
->>>>> msm_dp *dp_display, struct drm_devi
->>>>>                   return ERR_PTR(rc);
->>>>>           }
->>>>>
->>>>> +       if (dp_display->panel_bridge) {
->>>>> +               rc = drm_bridge_attach(dp_display->encoder,
->>>>> +                                       dp_display->panel_bridge,
->>>>> bridge,
->>>>> +                                       DRM_BRIDGE_ATTACH_NO_CONNECTOR);
->>>>> +               if (rc < 0) {
->>>>> +                       DRM_ERROR("failed to attach panel bridge:
->>>>> %d\n", rc);
->>>>> +                       drm_bridge_remove(bridge);
->>>>> +                       return ERR_PTR(rc);
->>>>> +               }
->>>>> +       }
->>>>> +
->>>>>           return bridge;
->>>>
->>>> Not a problem with this patch, but what is this pointer used for? I see
->>>> it's assigned to priv->bridges and num_bridges is incremented but nobody
->>>> seems to look at that.
->>>
->>>
->>> That's on my todo list. to remove connectors array and to destroy
->>> created bridges during drm device destruction.
->>>
-> 
-> 
-> 
