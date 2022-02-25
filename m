@@ -2,98 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42CD54C50CA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 22:36:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 81A974C512F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 23:06:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230154AbiBYVhZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 16:37:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51744 "EHLO
+        id S233828AbiBYWGa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 17:06:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229595AbiBYVhY (ORCPT
+        with ESMTP id S230052AbiBYWG3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 16:37:24 -0500
-X-Greylist: delayed 62 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 25 Feb 2022 13:36:51 PST
-Received: from mx1.smtp.larsendata.com (mx1.smtp.larsendata.com [91.221.196.215])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7927421132D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 13:36:51 -0800 (PST)
-Received: from mail01.mxhotel.dk (mail01.mxhotel.dk [91.221.196.236])
-        by mx1.smtp.larsendata.com (Halon) with ESMTPS
-        id e5c00027-9682-11ec-9faa-0050568c148b;
-        Fri, 25 Feb 2022 21:35:48 +0000 (UTC)
-Received: from ravnborg.org (80-162-45-141-cable.dk.customer.tdc.net [80.162.45.141])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sam@ravnborg.org)
-        by mail01.mxhotel.dk (Postfix) with ESMTPSA id 90DCF194B1C;
-        Fri, 25 Feb 2022 22:35:50 +0100 (CET)
-Date:   Fri, 25 Feb 2022 22:35:42 +0100
-X-Report-Abuse-To: abuse@mxhotel.dk
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Ville =?iso-8859-1?Q?Syrj=E4l=E4?= 
-        <ville.syrjala@linux.intel.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        freedreno <freedreno@lists.freedesktop.org>
-Subject: Re: [Freedreno] [PATCH 1/3] drm: Extend DEFINE_DRM_GEM_FOPS() for
- optional fops
-Message-ID: <YhlLrujgN2Ovv5JW@ravnborg.org>
-References: <20220225202614.225197-1-robdclark@gmail.com>
- <Yhk92RwhBqAAHcuT@intel.com>
- <CAF6AEGtiGA3TOtAvud66TOz_=ODHACS5jfsYPVQFvex-+1xBBA@mail.gmail.com>
+        Fri, 25 Feb 2022 17:06:29 -0500
+X-Greylist: delayed 462 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 25 Feb 2022 14:05:55 PST
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D835C1F636C;
+        Fri, 25 Feb 2022 14:05:55 -0800 (PST)
+Received: from localhost.localdomain (89-166-24-184.bb.dnainternet.fi [89.166.24.184])
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 809A83F67D;
+        Fri, 25 Feb 2022 22:58:09 +0100 (CET)
+From:   Jami Kettunen <jami.kettunen@somainline.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Caleb Connolly <caleb@connolly.tech>
+Subject: [PATCH] arm64: dts: qcom: msm8998-oneplus-common: Add NFC
+Date:   Fri, 25 Feb 2022 23:56:42 +0200
+Message-Id: <20220225215642.3916-1-jami.kettunen@somainline.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGtiGA3TOtAvud66TOz_=ODHACS5jfsYPVQFvex-+1xBBA@mail.gmail.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+The OnePlus 5/5T both have an NXP PN553 which is supported by the
+nxp-nci-i2c driver in mainline. It detects/reads NFC tags using
+"nfctool" and with the NearD test scripts data can also be written
+to be received by another device.
 
-> > > diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
-> > > index 35e7f44c2a75..987e78b18244 100644
-> > > --- a/include/drm/drm_gem.h
-> > > +++ b/include/drm/drm_gem.h
-> > > @@ -327,7 +327,7 @@ struct drm_gem_object {
-> > >   * non-static version of this you're probably doing it wrong and will break the
-> > >   * THIS_MODULE reference by accident.
-> > >   */
-> > > -#define DEFINE_DRM_GEM_FOPS(name) \
-> > > +#define DEFINE_DRM_GEM_FOPS(name, ...) \
-> > >       static const struct file_operations name = {\
-> > >               .owner          = THIS_MODULE,\
-> > >               .open           = drm_open,\
-> > > @@ -338,6 +338,7 @@ struct drm_gem_object {
-> > >               .read           = drm_read,\
-> > >               .llseek         = noop_llseek,\
-> > >               .mmap           = drm_gem_mmap,\
-> > > +             ##__VA_ARGS__\
-> > >       }
-> >
-> > Would it not be less convoluted to make the macro only provide
-> > the initializers? So you'd get something like:
-> >
-> > static const struct file_operations foo = {
-> >         DRM_GEM_FOPS,
-> >         .my_stuff = whatever,
-> > };
-> >
-> 
-> Hmm, I like my color of the bikeshed, but I guess it is a matter of opinion ;-)
-Or less surprise. Most similar macros provides initializers only.
+Signed-off-by: Jami Kettunen <jami.kettunen@somainline.org>
+Reviewed-by: Caleb Connolly <caleb@connolly.tech>
+---
+ .../boot/dts/qcom/msm8998-oneplus-common.dtsi | 31 +++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
-Try "git grep DRM_.*OPS  | grep define" in include/drm
-and take a look at the hits.
+diff --git a/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi
+index 9823d48a91b1..dbaea360bffc 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi
+@@ -188,6 +188,23 @@ rmi4_f12: rmi4-f12@12 {
+ 	};
+ };
+ 
++&blsp1_i2c6 {
++	status = "okay";
++
++	nfc@28 {
++		compatible = "nxp,nxp-nci-i2c";
++		reg = <0x28>;
++
++		interrupt-parent = <&tlmm>;
++		interrupts = <92 IRQ_TYPE_LEVEL_HIGH>;
++
++		enable-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&nfc_int_active &nfc_enable_active>;
++	};
++};
++
+ &blsp1_uart3 {
+ 	status = "okay";
+ 
+@@ -462,6 +479,20 @@ ts_reset_active: ts-reset-active {
+ 		drive-strength = <8>;
+ 		bias-pull-up;
+ 	};
++
++	nfc_int_active: nfc-int-active {
++		pins = "gpio92";
++		function = "gpio";
++		drive-strength = <6>;
++		bias-pull-up;
++	};
++
++	nfc_enable_active: nfc-enable-active {
++		pins = "gpio12", "gpio116";
++		function = "gpio";
++		drive-strength = <6>;
++		bias-pull-up;
++	};
+ };
+ 
+ &ufshc {
+-- 
+2.35.1
 
-	Sam
