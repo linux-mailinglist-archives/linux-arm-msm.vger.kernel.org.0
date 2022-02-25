@@ -2,99 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B37824C4F85
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 21:20:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 244BD4C4F98
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 21:25:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235731AbiBYUT7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 15:19:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38290 "EHLO
+        id S236100AbiBYU0N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 15:26:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235385AbiBYUT6 (ORCPT
+        with ESMTP id S236392AbiBYU0M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 15:19:58 -0500
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CC701DAC68;
-        Fri, 25 Feb 2022 12:19:25 -0800 (PST)
-Received: from g550jk.localnet (ip-213-127-118-180.ip.prioritytelecom.net [213.127.118.180])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 92CA5C85F5;
-        Fri, 25 Feb 2022 20:19:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1645820363; bh=GnyUUiNHpUn3QnisFNkFdrmk5sr7MjhAKDiPsbgu4M8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=ib18iXolVkkvwEM7reE5uHeb8mdqqho5kueaWEP+Fx99qfBhb9c1ShwqpbLdj/L82
-         08o12yhNliPUJI/QNTj0hRei2PgjVYOYm8RMORMKEpHODc9cby5wY2SqwKM/ZlRh1F
-         NCWtlGERvfPkQvR2ApvKaLIEGWSXtzZ2yO8zrBD8=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        devicetree@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        Marcel Holtmann <marcel@holtmann.org>
-Subject: Re: [PATCH 0/5] Wifi & Bluetooth on LG G Watch R
-Date:   Fri, 25 Feb 2022 21:19:23 +0100
-Message-ID: <4379033.LvFx2qVVIh@g550jk>
-In-Reply-To: <YhcGSmd5M3W+fI6c@builder.lan>
-References: <20220216212433.1373903-1-luca@z3ntu.xyz> <YhcGSmd5M3W+fI6c@builder.lan>
+        Fri, 25 Feb 2022 15:26:12 -0500
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57FE22177CB;
+        Fri, 25 Feb 2022 12:25:39 -0800 (PST)
+Received: by mail-pl1-x62f.google.com with SMTP id ay5so2910012plb.1;
+        Fri, 25 Feb 2022 12:25:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BvDoeq2u/2/duKShEemTMjq5MiVNSY0a+G2ydC7I2To=;
+        b=o1OzQU49xzdYXAIsISiigma1Fn1Py86Q0QNyrGPPa0fv+WsPYfNfXr1B1+bxBehh14
+         s0qbzbLhDuZvMkoj6/IVcPxbkTVZDTOdaxhMm6kyhQJwTjhMffNp20HpAf9iKwWiNdXv
+         /2N0LtfkO1twBvlK3a7WAavAY5YFq3yfwdmhw246OSen3fLSUyyh9xbIEmV/u9SMJKIx
+         DkQ5dQfIvMX040iewmWXjUyH34DDlYnG2NKoA2ySHhLZhARVAo+0XxXXWm1K7W03u4nn
+         t0eUtmYJEgm9lOgtb0AZ8HJX60KtMwgTEmBK78I7a0kfIu+IsRV9N051e62+xc+9SzG1
+         hmEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BvDoeq2u/2/duKShEemTMjq5MiVNSY0a+G2ydC7I2To=;
+        b=x/vsM7lIAayQEaeifF9cyM4i10EvmpkbLlmhkGufh9aoHsVzDvijhMkb2ktyzenSvB
+         olxeG6ru3w9nPkrraD0CRGQUvnlus5OtDms9AtVRvpHdVX4QoQkq8LVsjRMEBD/++hvS
+         NCipPzTIeiXRuo28qRptAZKfhstGgYiEEK5Js/gFML/1i4hBuhmc8oBd4Bt1XFI0lk7d
+         DpnadkFOHoPZXDVNNQf9i+qfg1YDAtELv7gsTvqhxifntFKj3FYTCbL+Uha7hBmRCuK9
+         AapA0eP4SNu6R2Y5FMCxwj3+R3cb3zqKlg9ZBjFd17y6HtL4ajzP338htSlKnb1FRHB1
+         Cfjw==
+X-Gm-Message-State: AOAM533zfdu53idlj0nVc7MaHuojJ1xR9Ydm3DZN/eQiwv8HO+Pb9oAT
+        WJaqMSR344qtNkWe4OPqE/4=
+X-Google-Smtp-Source: ABdhPJx1OEwFFgxKLCQGCjpGEvJKL0DuprEa4VCYsCHFLhVId9kxLr0Y7/KAYE9GBz6ewotnoJPTCg==
+X-Received: by 2002:a17:90a:c6:b0:1bc:c0be:4696 with SMTP id v6-20020a17090a00c600b001bcc0be4696mr4856224pjd.7.1645820738785;
+        Fri, 25 Feb 2022 12:25:38 -0800 (PST)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id q3-20020a634303000000b00374da8cb24fsm3319914pga.50.2022.02.25.12.25.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Feb 2022 12:25:37 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 1/3] drm: Extend DEFINE_DRM_GEM_FOPS() for optional fops
+Date:   Fri, 25 Feb 2022 12:26:12 -0800
+Message-Id: <20220225202614.225197-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn
+From: Rob Clark <robdclark@chromium.org>
 
-On Donnerstag, 24. Februar 2022 05:15:06 CET Bjorn Andersson wrote:
-> On Wed 16 Feb 15:24 CST 2022, Luca Weiss wrote:
-> > This series adds the BCM43430A0 chip providing Bluetooth & Wifi on the
-> > LG G Watch R.
-> 
-> I picked the dts changes, but would prefer that the other two changes
-> goes through the BT tree. I see that you haven't copied Marcel on the
-> dt-binding change though, so please resubmit those two patches together.
+Extend the helper macro so we don't have to throw it away if driver adds
+support for optional fops, like show_fdinfo().
 
-Thank you, will resubmit the first two!
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ include/drm/drm_gem.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Just to be clear, as far as I understand each patch gets sent based on its own 
-get_maintainer.pl, and the cover letter gets sent to the superset of all 
-individual patch recipients?
-I'm using this script that's largely based on something I found online a while 
-ago
-https://github.com/z3ntu/dotfiles/blob/master/scripts/usr/local/bin/cocci_cc
-
-Also just checked and Marcel isn't listed as maintainer of the relevant dt 
-bindings in MAINTAINERS, maybe they should get added there?
-
-(also CCed Marcel on this email)
-
-Regards
-Luca
-
-> 
-> Thanks,
-> Bjorn
-> 
-> > Luca Weiss (5):
-> >   dt-bindings: bluetooth: broadcom: add BCM43430A0
-> >   Bluetooth: hci_bcm: add BCM43430A0
-> >   ARM: dts: qcom: msm8226: Add pinctrl for sdhci nodes
-> >   ARM: dts: qcom: apq8026-lg-lenok: Add Wifi
-> >   ARM: dts: qcom: apq8026-lg-lenok: Add Bluetooth
-> >  
-> >  .../bindings/net/broadcom-bluetooth.yaml      |  1 +
-> >  arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts   | 98 ++++++++++++++++---
-> >  arch/arm/boot/dts/qcom-msm8226.dtsi           | 57 +++++++++++
-> >  drivers/bluetooth/hci_bcm.c                   |  1 +
-> >  4 files changed, 144 insertions(+), 13 deletions(-)
-
-
-
+diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
+index 35e7f44c2a75..987e78b18244 100644
+--- a/include/drm/drm_gem.h
++++ b/include/drm/drm_gem.h
+@@ -327,7 +327,7 @@ struct drm_gem_object {
+  * non-static version of this you're probably doing it wrong and will break the
+  * THIS_MODULE reference by accident.
+  */
+-#define DEFINE_DRM_GEM_FOPS(name) \
++#define DEFINE_DRM_GEM_FOPS(name, ...) \
+ 	static const struct file_operations name = {\
+ 		.owner		= THIS_MODULE,\
+ 		.open		= drm_open,\
+@@ -338,6 +338,7 @@ struct drm_gem_object {
+ 		.read		= drm_read,\
+ 		.llseek		= noop_llseek,\
+ 		.mmap		= drm_gem_mmap,\
++		##__VA_ARGS__\
+ 	}
+ 
+ void drm_gem_object_release(struct drm_gem_object *obj);
+-- 
+2.35.1
 
