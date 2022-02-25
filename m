@@ -2,111 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A32304C4E62
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 20:11:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F27D4C4E68
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 20:13:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234259AbiBYTMY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 14:12:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35570 "EHLO
+        id S234333AbiBYTNg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 14:13:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234344AbiBYTMX (ORCPT
+        with ESMTP id S234316AbiBYTNe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 14:12:23 -0500
-Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D48E420D537;
-        Fri, 25 Feb 2022 11:11:50 -0800 (PST)
-Received: by mail-oo1-f47.google.com with SMTP id x6-20020a4a4106000000b003193022319cso7626859ooa.4;
-        Fri, 25 Feb 2022 11:11:50 -0800 (PST)
+        Fri, 25 Feb 2022 14:13:34 -0500
+Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6A031B84D6;
+        Fri, 25 Feb 2022 11:12:59 -0800 (PST)
+Received: by mail-oi1-f169.google.com with SMTP id q5so8334735oij.6;
+        Fri, 25 Feb 2022 11:12:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ptG46z6H5ifEKTx2dBnfEYgkcUc6HPFhRtrAbm9h2S0=;
-        b=S8siLbfa+uUxbstKleeGY35T4+KCDWGjThdtV2DNSH16L3ct5xGs18RsoEecyu9dke
-         3lTLGCE2Vyhy+kuS11S6uvkhzmW+yLzhQLiEPfSzwwMVLeHg8ZuZo6fcKu5bZUNFkfj4
-         MQKP43FgWnEcr1FmfVolZyoICX3F4sCoFPEGmwPNiXln4Mm6XJ/zXEkycABMMuWL2AHR
-         rQX6fseW+Y4kI9id/39CF4WkxpMUXIyyt92N8PYg6xO2WPrJGvbEl0+US7Rcx3LhibwR
-         e1vo2nrXdbWSH1paDh3rCyEr8G+1aA3JF+oyAkUC/cZBa8UkI0ACh1NazyUAKIUncpFi
-         wNdQ==
-X-Gm-Message-State: AOAM533TTQrWrefv/kbsfLG5s5DCxWc7/9YPaEAA5J/DIjoE2bXSfH+F
-        2a8j1sPzzxZuOaVVuqH/j67ZTBOTXg==
-X-Google-Smtp-Source: ABdhPJzWcs65ePV5falZWYBKART4XIExLG7Jl4rNz0RlRKlhWRGox/P8effT9Lz52v++C+k7FNY9wQ==
-X-Received: by 2002:a05:6870:70a8:b0:d3:e21:8545 with SMTP id v40-20020a05687070a800b000d30e218545mr2101513oae.321.1645816310209;
-        Fri, 25 Feb 2022 11:11:50 -0800 (PST)
+        bh=hsWKgvGzJx8KQAPzg/ZffFICmo2pX0WAshALYxArcSI=;
+        b=LZUVj5oVYrHLDtWYRQq/7vZUFRaEa2grzeMKH0ntWgjojI0mSEeiPN8JVi9HfY7cUr
+         vJfFlnNX5er5LJXPRzjvV4N3+YxGzM2yYTPLgHkSfl0JUuhvigP8oByl16WHnKCvJRo6
+         e8dx9gOcMPPgNF3BlUSP8nZzMUEyZIiMpiTWusqxbiMS0MzXqempEW4QKCaYXA5kSrR7
+         +z6WcyJqwlWgUAO0QPog0ELic3DMoFAdqnKcvl64vyuGU3X90019LtMBX3cZ6/PNbHNI
+         sFYznk6u+TfqfQ122HLYgXX8UjtIOcFrJtahbu536PAcLbWhhEJl/TOwrWypZTdchJhm
+         t9fg==
+X-Gm-Message-State: AOAM533RYiBVCYyfzX2GsJY6kK2oxR2U8EBlq3JJzkvnPRo8TbPlWjbl
+        L6GYhVBNRyW8JnPYB7679Q==
+X-Google-Smtp-Source: ABdhPJxAfyFyZ2XrI1If28g1kdo6xoiQ8gbvJxdOs/yznvvzU7zyAqG9LZ2xK7FYlP9QNMTM7bhFzQ==
+X-Received: by 2002:a05:6808:309e:b0:2d5:35e5:e1ac with SMTP id bl30-20020a056808309e00b002d535e5e1acmr595013oib.86.1645816379136;
+        Fri, 25 Feb 2022 11:12:59 -0800 (PST)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id u12-20020a056808114c00b002d72b6e5676sm1887530oiu.29.2022.02.25.11.11.49
+        by smtp.gmail.com with ESMTPSA id a12-20020a9d5c8c000000b005ad51592bd8sm1533901oti.49.2022.02.25.11.12.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Feb 2022 11:11:49 -0800 (PST)
-Received: (nullmailer pid 1267526 invoked by uid 1000);
-        Fri, 25 Feb 2022 19:11:48 -0000
-Date:   Fri, 25 Feb 2022 13:11:48 -0600
+        Fri, 25 Feb 2022 11:12:58 -0800 (PST)
+Received: (nullmailer pid 1269280 invoked by uid 1000);
+        Fri, 25 Feb 2022 19:12:57 -0000
+Date:   Fri, 25 Feb 2022 13:12:57 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     marijn.suijten@somainline.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        martin.botka@somainline.org, linux-arm-msm@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Baruch Siach <baruch.siach@siklu.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq6018: Add mdio bus description
-Message-ID: <Yhkp9CH0SpBKKlzZ@robh.at.kernel.org>
-References: <a4b1ad7b15c13f368b637efdb903da143b830a88.1645454002.git.baruch@tkos.co.il>
- <5e7e06e0cb189bab4586646470894bbda572785d.1645454002.git.baruch@tkos.co.il>
+        linux-clk@vger.kernel.org, jamipkettunen@somainline.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Rob Herring <robh+dt@kernel.org>,
+        angelogioacchino.delregno@somainline.org
+Subject: Re: [PATCH 1/4] dt-bindings: clock: add QCOM SM6350 display clock
+ bindings
+Message-ID: <YhkqOe2rP20qUb2W@robh.at.kernel.org>
+References: <20220222011534.3502-1-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <5e7e06e0cb189bab4586646470894bbda572785d.1645454002.git.baruch@tkos.co.il>
+In-Reply-To: <20220222011534.3502-1-konrad.dybcio@somainline.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 21, 2022 at 04:33:22PM +0200, Baruch Siach wrote:
-> From: Baruch Siach <baruch.siach@siklu.com>
+On Tue, 22 Feb 2022 02:15:28 +0100, Konrad Dybcio wrote:
+> Add device tree bindings for display clock controller for
+> Qualcomm Technology Inc's SM6350 SoC.
 > 
-> The IPQ60xx has the same MDIO bug block as IPQ4019. Add IO range and
-> clock resources description.
-> 
-> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 > ---
->  arch/arm64/boot/dts/qcom/ipq6018.dtsi | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+>  .../bindings/clock/qcom,dispcc-sm6350.yaml    | 86 +++++++++++++++++++
+>  .../dt-bindings/clock/qcom,dispcc-sm6350.h    | 48 +++++++++++
+>  2 files changed, 134 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,dispcc-sm6350.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,dispcc-sm6350.h
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> index 5eb7dc9cc231..093011d18ca6 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> @@ -635,6 +635,16 @@ qrtr_requests {
->  			};
->  		};
->  
-> +		mdio: mdio@90000 {
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +			compatible = "qcom,ipq6018-mdio", "qcom,ipq4019-mdio";
 
-This looks correct with the fallback based on your description, but it
-doesn't match the schema.
-
-You tested this with the schemas, right? That's why we have them.
-
-> +			reg = <0x0 0x90000 0x0 0x64>;
-> +			clocks = <&gcc GCC_MDIO_AHB_CLK>;
-> +			clock-names = "gcc_mdio_ahb_clk";
-> +			status = "disabled";
-> +		};
-> +
->  		qusb_phy_1: qusb@59000 {
->  			compatible = "qcom,ipq6018-qusb2-phy";
->  			reg = <0x0 0x059000 0x0 0x180>;
-> -- 
-> 2.34.1
-> 
-> 
+Reviewed-by: Rob Herring <robh@kernel.org>
