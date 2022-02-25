@@ -2,52 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 103304C3A3C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 01:22:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AD9A4C3A93
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 01:55:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235992AbiBYAWL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Feb 2022 19:22:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37788 "EHLO
+        id S233523AbiBYAze (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Feb 2022 19:55:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235989AbiBYAWJ (ORCPT
+        with ESMTP id S231524AbiBYAzd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Feb 2022 19:22:09 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D460D26134;
-        Thu, 24 Feb 2022 16:21:37 -0800 (PST)
+        Thu, 24 Feb 2022 19:55:33 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 014DA1DFDDE;
+        Thu, 24 Feb 2022 16:55:02 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6F40F61CE5;
-        Fri, 25 Feb 2022 00:21:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4277C340E9;
-        Fri, 25 Feb 2022 00:21:36 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9879A61D2A;
+        Fri, 25 Feb 2022 00:55:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83EFC340E9;
+        Fri, 25 Feb 2022 00:55:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1645748496;
-        bh=zL7K5H0gG9i3MojJhvMFQOdtVRIDLw7kDEqM24zLUlA=;
+        s=k20201202; t=1645750502;
+        bh=m2a9gv/y1JadmYnquzrpWqHyqdS8KQdTGa1Zi5eG/bE=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=dUfqYmeiNZpNTuzZiH/9xYLYzlWiB4P+/auqvVlPa1U+gKz5qhfFBVwj9UZ6LMYQx
-         vgeM1YWVAWtz1xOeeXZ6z9dGQoDigFZzzxCEll27gpvgN6mDTtiATjXZRG05uQ8lby
-         oMpky7ylgWVr8jY5UeKL/0+TFKV/HinmxsqAhf/rxUU/VmUB5onQ3BwOdTqHqx2Zgo
-         pq9LG0+SIhHwFTFsouc26LuFSxSJ8mlo+ozcg5qPuGZ32lQ2VkzEDiGm5zHB/p+rKg
-         2Bm1X9/3DZIUWhuIhi7nmiqvH78+v5RV2N7Grt8OvlQnZAxPlncSP2Yy9d1bnPGURK
-         cKT4DzX3hqhkQ==
+        b=dAzGlRvuMUyQPpRy3MwW/nhkky5D9Tk5wLVzwa7hg+BS0xDU3N/KTX21n9DYcyBg0
+         q+qyCIA7KUiMgxAxIVNuTjpJ9lYMbouTMUCYa5r+wIVpXvd2hifJlTbh6Yzl10ijlt
+         esQXgOAD4jjNnBi4T17gPcx2fvC9YENmjnSQJOgD/2imhUxnUuWhOV7dOzg55jS7M9
+         AshIX0de+1zYqLAISvwZ/YVPh759t23V3D8ttGiWqFd6OSJWrXgGduF0/k3Q1nF3q7
+         FH5b8dwFohaeI6g/u+z/0CSoHRNpfeczzn/ErcC1BhVtVkdigdqHdvpWVxDDpdjAKU
+         5CfcxisMELUlQ==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220223185606.3941-2-tdas@codeaurora.org>
-References: <20220223185606.3941-1-tdas@codeaurora.org> <20220223185606.3941-2-tdas@codeaurora.org>
-Subject: Re: [v2 2/2] clk: qcom: dispcc: Update the transition delay for MDSS GDSC
+In-Reply-To: <20220220212034.9152-2-michael.srba@seznam.cz>
+References: <20220220212034.9152-1-michael.srba@seznam.cz> <20220220212034.9152-2-michael.srba@seznam.cz>
+Subject: Re: [PATCH v8 2/5] clk: qcom: gcc-msm8998: add SSC-related clocks
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-soc@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>
-Date:   Thu, 24 Feb 2022 16:21:35 -0800
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Saravana Kannan <saravanak@google.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, Michael Srba <Michael.Srba@seznam.cz>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Rob Herring <robh+dt@kernel.org>, michael.srba@seznam.cz
+Date:   Thu, 24 Feb 2022 16:55:00 -0800
 User-Agent: alot/0.10
-Message-Id: <20220225002136.C4277C340E9@smtp.kernel.org>
+Message-Id: <20220225005501.E83EFC340E9@smtp.kernel.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -58,22 +63,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Taniya Das (2022-02-23 10:56:06)
-> On SC7180 we observe black screens because the gdsc is being
-> enabled/disabled very rapidly and the GDSC FSM state does not work as
-> expected. This is due to the fact that the GDSC reset value is being
-> updated from SW.
+Quoting michael.srba@seznam.cz (2022-02-20 13:20:31)
+> From: Michael Srba <Michael.Srba@seznam.cz>
 >=20
-> The recommended transition delay for mdss core gdsc updated for
-> SC7180/SC7280/SM8250.
+> Add four clocks which need to be manipulated in order to initialize the A=
+HB
+> bus which exposes the SCC block in the global address space.
 >=20
-> Fixes: dd3d06622138 ("clk: qcom: Add display clock controller driver for =
-SC7180")
-> Fixes: 1a00c962f9cd ("clk: qcom: Add display clock controller driver for =
-SC7280")
-> Fixes: 80a18f4a8567 ("clk: qcom: Add display clock controller driver for =
-SM8150 and SM8250")
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> If a device is known to be configured such that writing to these
+> registers from Linux is not permitted, the 'protected-clocks'
+> device tree property must be used to denote that fact.
+>=20
+> Signed-off-by: Michael Srba <Michael.Srba@seznam.cz>
 > ---
 
-Applied to clk-fixes
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
