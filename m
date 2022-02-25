@@ -2,98 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 48F724C4126
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 10:18:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DCAB4C413D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 10:24:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238940AbiBYJSy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 04:18:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60668 "EHLO
+        id S239015AbiBYJYL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 04:24:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229714AbiBYJSx (ORCPT
+        with ESMTP id S239034AbiBYJYK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 04:18:53 -0500
-Received: from new2-smtp.messagingengine.com (new2-smtp.messagingengine.com [66.111.4.224])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BDD824FBA2;
-        Fri, 25 Feb 2022 01:18:22 -0800 (PST)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailnew.nyi.internal (Postfix) with ESMTP id E1F5A5804B6;
-        Fri, 25 Feb 2022 04:18:21 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Fri, 25 Feb 2022 04:18:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-        :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; bh=FX2A5mROcHA+clXESla3Vvycg0OLSU6abMHavk
-        eJOIg=; b=oiw/3bwgh8kqVwbPPYyY9kdisE2C/vLxKHgP5Pwr3+W2obOG6+Wmg9
-        meL5i4jw7aGSEFv7fjzvXyQmfUYlCuTg7kAieEHtknl6mV6G/yqVRrzIpUSenk+4
-        gnynEyA/OLEFQ97ojVxvjs/QZU/M0yVc5kqXqWVFdbNLxU5gcbutrUr48uFwoPLS
-        dMPFF6zdpLPF/VpLlGji2B/FMJWWbkAGdcNzKuUtjqI9YyuVdYyjnueklzgJtbLK
-        fDOiRdCr+pLgDoNSY/Ljc4dW6CnZ9t5SoHW99scFYbERWWDWljW0+AsDj3S/LWQP
-        eGs8OGGu/NN5X5XMD/DzeCFyItZSyRww==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=FX2A5mROcHA+clXES
-        la3Vvycg0OLSU6abMHavkeJOIg=; b=fV40NxMvQ7r4Tp7PHb4kMGq634spoWuTj
-        vaQgj5Kty78QA4f06NnSRO8zy4xLQYu7QhgZWzwsX9yhCJ0fHVWT/VKGHKKqeZWR
-        Hux+jzUJ9fmxPnWCZvo+c++9vk71UYixUW+YHGLn/JLU7dSZPhom7Bi22Xu+55wi
-        OcfmIkX8oW68+0M029sQ6o1WtGAPn8ooOOkWL1vEsWTP6n1qpuBe8jB/jjkCPpyM
-        F79hMTAtrMMFxz7cKy4Rj8+pwQRnYgptxIzbR+sqPK2IFBrNY05ipM7QSP+awNNt
-        oqtwkxxO5dPA8byeFkEUsic45azzj5fMQeRNE0/ITEguOYp9BQdTA==
-X-ME-Sender: <xms:3Z4YYi4PrI1z-g42JXvi9__WUnhUkIx2Ney5cFkA0k4cnKTBeUeFxg>
-    <xme:3Z4YYr7mQxK-h3OnRFGY1v4QKP7SGP23tR13Cc8DeKhQ2-IoRFgEZmbGUOZukTxxM
-    1Vo4RqeXPnh3g>
-X-ME-Received: <xmr:3Z4YYhdLwDrNTmSFOe3QCTZ1ruKPamN3kNpxCRYB1LQWEuI9Zt02Cj3bxZeP96ICoZUse9in3Wyx89LbeE5hmiLpfolz8L6C>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrleeggddtvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhmqeen
-    ucggtffrrghtthgvrhhnpeevueehjefgfffgiedvudekvdektdelleelgefhleejieeuge
-    egveeuuddukedvteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
-    fhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
-X-ME-Proxy: <xmx:3Z4YYvIObjdH1IUIhyC_6vuFaix4MvXOwxgpRUeT66OzyF-heDDGeg>
-    <xmx:3Z4YYmKNpVp-6jSYpVM4xH9q1q-4nnmXsFdNiYLEwA4aNj6QDp1zrQ>
-    <xmx:3Z4YYgzbwShnnnrNduMEUU2vuOP609O2bPekxy9h8ifb8yU7IOSgtg>
-    <xmx:3Z4YYrCDUAUATHLuPVqjpdjswDMk1oW84b8lgybdSb2qfK-icA-5Yw>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Feb 2022 04:18:21 -0500 (EST)
-Date:   Fri, 25 Feb 2022 10:18:19 +0100
-From:   Greg KH <greg@kroah.com>
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, pure.logic@nexus-software.ie,
-        bjorn.andersson@linaro.org, robh@kernel.org,
-        linux-kernel@vger.kernel.org, quic_rjendra@quicinc.com,
-        quic_saipraka@quicinc.com
-Subject: Re: [Resend PATCH V1 2/2] Revert "arm64: dts: qcom: sc7280: Add EUD
- dt node and dwc3 connector"
-Message-ID: <Yhie2/fNhHQ7QMHZ@kroah.com>
-References: <cover.1645177190.git.quic_schowdhu@quicinc.com>
- <2bf8d74c1871b0e06de53f800fb77484677e610a.1645177190.git.quic_schowdhu@quicinc.com>
+        Fri, 25 Feb 2022 04:24:10 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4585A1B8FCB
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 01:23:28 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id az26-20020a05600c601a00b0037c078db59cso1277290wmb.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 01:23:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=CN3ckV7V7XY2Z/PXd5eMoT2Xt0bXtTULBgiFUcwvDV0=;
+        b=yyqeERueu3u0ZjNKrABkQFIPOEykZ2OzixnO1rjGXau8PrMSZR5lW8ygRfvU8TnJny
+         8aNSGSoLZpIwXEIGxGb5Np4UI4xrLwAqSenS9p51hVApZAC7mQ4w4cIEDUjP1pSOrEa9
+         IKFi/hknh+h36u6E9khuzeiT3M5T/Nn9db1jir2HltEroWypBB9TwAYyLtbZ1K7PV3/V
+         qusC7kyGVwa66ScnE9EKgMUxL0SkEIQyO/VFQTZ+Y1pAV6H8WXm9h5UARlBXIIh1q6bq
+         95SIfOiBigkTZx1apW3F61LD004ww3e6l+ktm45ubrC3ELcz9br9iszrBKS/RfIHwSQI
+         3Hlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=CN3ckV7V7XY2Z/PXd5eMoT2Xt0bXtTULBgiFUcwvDV0=;
+        b=KfDDt+g1yha2ujVaTNGFDW9SNHgMH7GxTEOdZRe81GAKUBB7oXA+Zu77OAkkI2K3pc
+         4oSsHpI7RvCY76Fm+6vVC50zkB0jdpzcYStVXEDV/6UHwGoYGprL33CpLy1r9DQuiEUR
+         MpgSWRJbe8AZQKng+fshoH8bk5tkRXz3RAfSD1RvPFobB+xvDUpbON2Ke0xGQuNlcIC1
+         FoAsxVhr2+MbqjiMsBH5T8AitvD6zkJvC/xBsoZbbsRnlbfRQUU1/vFXA+dWouNZA9fv
+         wftQUKqS1tUegw+vkT15B6As3ryaeVZ5LCz0B7w6MtuaqlBeAAoXn39J29pOG9x4vuPi
+         2JVA==
+X-Gm-Message-State: AOAM532ofmQknKUZRHspDeLL2J6/PUNhql0s+y36v+4NU2cLTTApqa0t
+        yoeB9InqFRLZpN+l9H1zNNIW5w==
+X-Google-Smtp-Source: ABdhPJzk67cSQJnn5+JKcm3bvir6uAjLX4KqIrLecspN4qJsRTg7viCmegRw8hkil1HaYQPmAghpsw==
+X-Received: by 2002:a7b:c347:0:b0:37e:68e6:d85c with SMTP id l7-20020a7bc347000000b0037e68e6d85cmr1844984wmj.176.1645781006811;
+        Fri, 25 Feb 2022 01:23:26 -0800 (PST)
+Received: from google.com (cpc155339-bagu17-2-0-cust87.1-3.cable.virginm.net. [86.27.177.88])
+        by smtp.gmail.com with ESMTPSA id g16-20020a7bc4d0000000b0037bbe255339sm5209340wmk.15.2022.02.25.01.23.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Feb 2022 01:23:26 -0800 (PST)
+Date:   Fri, 25 Feb 2022 09:23:24 +0000
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Dan Carpenter <dan.carpenter@oracle.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        sumit.semwal@linaro.org, amit.pundir@linaro.org,
+        john.stultz@linaro.org, kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH v8 2/9] mfd: qcom-spmi-pmic: expose the PMIC revid
+ information to clients
+Message-ID: <YhigDPC6r7dTJUXd@google.com>
+References: <20220221220743.541704-1-caleb.connolly@linaro.org>
+ <20220221220743.541704-3-caleb.connolly@linaro.org>
+ <Yhft4zNcbD3ojN6i@builder.lan>
+ <YhiYY/sXMvQ4VCZd@google.com>
+ <20220225090452.GP3943@kadam>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <2bf8d74c1871b0e06de53f800fb77484677e610a.1645177190.git.quic_schowdhu@quicinc.com>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220225090452.GP3943@kadam>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 18, 2022 at 04:13:46PM +0530, Souradeep Chowdhury wrote:
-> This reverts commit a0c68e493007a8c72b6b00f6ac95590a86edc937.
+On Fri, 25 Feb 2022, Dan Carpenter wrote:
+
+> On Fri, Feb 25, 2022 at 08:50:43AM +0000, Lee Jones wrote:
+> > On Thu, 24 Feb 2022, Bjorn Andersson wrote:
+> > 
+> > > On Mon 21 Feb 16:07 CST 2022, Caleb Connolly wrote:
+> > > 
+> > > > Some PMIC functions such as the RRADC need to be aware of the PMIC
+> > > > chip revision information to implement errata or otherwise adjust
+> > > > behaviour, export the PMIC information to enable this.
+> > > > 
+> > > > This is specifically required to enable the RRADC to adjust
+> > > > coefficients based on which chip fab the PMIC was produced in,
+> > > > this can vary per unique device and therefore has to be read at
+> > > > runtime.
+> > > > 
+> > > > [bugs in previous revision]
+> > > > Reported-by: kernel test robot <lkp@intel.com>
+> > > > Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+> > > 
+> > > This says is that "kernel test robot" and Dan reported that something
+> > > needed to be fixed and this patch is the fix for this.
+> > > 
+> > > So even though their emails asks for you to give them credit like this
+> > > you can't do it for new patches.
+> > 
+> > Right, or else you'd have to give credit to anyone who provided you
+> > with a review.  This could potentially grow to quite a long list.
+> > 
 > 
-> Revert all the changes to add the Embedded USB Debugger(EUD) Node
-> in the device tree, the connector node and also changes to usb2 Node
-> associated with this.
+> I always feel like people who find crashing bugs should get credit but
+> no credit for complaining about style.  It's like we reward people for
+> reporting bugs after it gets merged but not before.
+> 
+> We've had this debate before and people don't agree with me or they say
+> that it's fine to just include the Reported-by kbuild tags and let
+> people figure out from the context that probably kbuild didn't tell
+> people to write a new driver.
 
-Again, why?
+Reviews will often consist of both style and logic recommendations.
+If not spotted and remedied, the latter of which would likely result
+in undesired behaviour a.k.a. bugs.  So at what point, or what type of
+bug would warrant a tag?
 
-thanks,
+If people insist on providing tags for spotting bugs, at least place
+them chronologically with a little info.
 
-greg k-h
+Signed-off-by: Author <author@example.com>
+Reported-by: Bug Blaster <b.b@kernel.org> # off-by-one in .probe()
+Signed-off-by: Maintainer <maintainer@kernel.org>
+
+> Also I think that counting Reviewed-by/Acked-by tags should be
+> discouraged.  It's useful as a communication between maintainers but it
+> shouldn't be rewarded.
+
+100%
+
+-- 
+Lee Jones [李琼斯]
+Principal Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
