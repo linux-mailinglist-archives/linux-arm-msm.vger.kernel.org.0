@@ -2,88 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B47224C4E6D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 20:13:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C4B154C4E8B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 20:21:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234361AbiBYTNw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 14:13:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40034 "EHLO
+        id S231959AbiBYTW1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 14:22:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234316AbiBYTNv (ORCPT
+        with ESMTP id S231551AbiBYTW0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 14:13:51 -0500
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BEC81BBF50;
-        Fri, 25 Feb 2022 11:13:19 -0800 (PST)
-Received: by mail-oi1-f172.google.com with SMTP id y7so8342148oih.5;
-        Fri, 25 Feb 2022 11:13:19 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=6CeaqLyIxWM5I+T0XX9mjVdw7W8EHbW4/9lxu7rLHXk=;
-        b=ADUAFah9EY1b3PpUJFLQTogij27reCA4O1LVhFnFuR2IZRNd/47z2BhyxBA+7701F7
-         sIYETehetWi7rsBKUKV59/u/2Fm4TABi034wmmmilpSCpPsx5jjdNeoOn/ocRHuMXk7+
-         pCPJ6BGIDbysm4jTz5Z8B9zj8M806J5EQb7jm7iomTy2yqHfA0kikcWDMLiC4qf1ezKs
-         uGAqGAP1xrL+axiKOQU+73zsIdxS//XHZtZrwJQ0lICDR8YJOtb/Qx843ToRKeTT1M89
-         H0VYMMmpIuBvPWCh2Wmuio9YRJlxXHCYElzoqt/ShWajUzcfe2bmLpolB/6hQSZYm7yx
-         RD7w==
-X-Gm-Message-State: AOAM533d26niy0wckEdTLmtJ9zOMsJ1ut6na6Z8Kl0ogc25479s94J+s
-        bSMJgVNAgYm1ZS2QrrO9xg==
-X-Google-Smtp-Source: ABdhPJyh/wasr6vqvD+N7tIc56hS+EJ8IcxkguQEnVPLvXTdeOZ3f7bSVOYYC16KfQseaf3anQKekA==
-X-Received: by 2002:a05:6808:23cd:b0:2d4:b5ce:e2fb with SMTP id bq13-20020a05680823cd00b002d4b5cee2fbmr2584419oib.78.1645816398643;
-        Fri, 25 Feb 2022 11:13:18 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id g35-20020a9d2da6000000b005af5fb99326sm1485024otb.63.2022.02.25.11.13.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Feb 2022 11:13:18 -0800 (PST)
-Received: (nullmailer pid 1269956 invoked by uid 1000);
-        Fri, 25 Feb 2022 19:13:17 -0000
-Date:   Fri, 25 Feb 2022 13:13:17 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        jamipkettunen@somainline.org, linux-clk@vger.kernel.org,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        martin.botka@somainline.org, Andy Gross <agross@kernel.org>,
-        marijn.suijten@somainline.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        angelogioacchino.delregno@somainline.org,
-        Taniya Das <tdas@codeaurora.org>
-Subject: Re: [PATCH 3/4] dt-bindings: clock: add SM6350 QCOM Graphics clock
- bindings
-Message-ID: <YhkqTXUGUj7vIXFJ@robh.at.kernel.org>
-References: <20220222011534.3502-1-konrad.dybcio@somainline.org>
- <20220222011534.3502-3-konrad.dybcio@somainline.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220222011534.3502-3-konrad.dybcio@somainline.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+        Fri, 25 Feb 2022 14:22:26 -0500
+Received: from m43-7.mailgun.net (m43-7.mailgun.net [69.72.43.7])
+        by lindbergh.monkeyblade.net (Postfix) with UTF8SMTPS id 8FCCA195308
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 11:21:51 -0800 (PST)
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1645816913; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=tZD1ax3jsnPy6TzQA2DQRsI4QX4jijvlAnNWj4gYHnE=; b=fQbDfI3QtiqoG0lPJ6QYYbvHzJKQtoWndFFAOowX33FcnWtBPovG0rSxSAfyjQaDpzGfhRpr
+ 8RXDoNxSDvDjvVKxn4mkXdcYfEOEPWatDbBmtLNvZSyz1mLv6WJbLQrLvgMRS63eiTqIxIkL
+ IvrLZxIjzksI61E7m5GI5QdHDJ0=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 62192c4ce1c212bb9c4ab205 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 25 Feb 2022 19:21:48
+ GMT
+Sender: quic_akhilpo=quicinc.com@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id DF1D3C43637; Fri, 25 Feb 2022 19:21:47 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+Received: from hyd-lnxbld559.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 152C0C4338F;
+        Fri, 25 Feb 2022 19:21:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 152C0C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=fail (p=none dis=none) header.from=quicinc.com
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=quicinc.com
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+To:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS 
+        <devicetree@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Douglas Anderson <dianders@chromium.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/5] Support 7c3 gpu SKUs
+Date:   Sat, 26 Feb 2022 00:51:27 +0530
+Message-Id: <1645816893-22815-1-git-send-email-quic_akhilpo@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 22 Feb 2022 02:15:30 +0100, Konrad Dybcio wrote:
-> Add device tree bindings for graphics clock controller for
-> Qualcomm Technology Inc's SM6350 SoCs.
-> 
-> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> ---
->  .../devicetree/bindings/clock/qcom,gpucc.yaml |  2 +
->  include/dt-bindings/clock/qcom,gpucc-sm6350.h | 37 +++++++++++++++++++
->  2 files changed, 39 insertions(+)
->  create mode 100644 include/dt-bindings/clock/qcom,gpucc-sm6350.h
-> 
+This series supercedes [1]. Major change in this series is that it is now
+optional to include a gpu name in the gpu-list. This helps to avoid the
+confusion when we have different SKUs with different gpu names. And also
+I am pretty happy that the overall changes are smaller now.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+[1] https://patchwork.freedesktop.org/series/99048/
+
+Changes in v2:
+- use devm_kasprintf() to generate gpu name (Rob)
+
+Akhil P Oommen (5):
+  drm/msm: Use generic name for gpu resources
+  drm/msm/adreno: Generate name from chipid for 7c3
+  drm/msm/a6xx: Add support for 7c3 SKUs
+  drm/msm/adreno: Expose speedbin to userspace
+  arm64: dts: qcom: sc7280: Support gpu speedbin
+
+ arch/arm64/boot/dts/qcom/sc7280.dtsi       | 46 ++++++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 18 ++++++++++--
+ drivers/gpu/drm/msm/adreno/adreno_device.c |  1 -
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 36 +++++++++++++++++++----
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  3 ++
+ drivers/gpu/drm/msm/msm_gpu.c              |  4 +--
+ 6 files changed, 97 insertions(+), 11 deletions(-)
+
+-- 
+2.7.4
+
