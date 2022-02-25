@@ -2,76 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 510134C4709
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 15:02:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D4E64C473A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 15:16:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238418AbiBYODI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 09:03:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51550 "EHLO
+        id S241713AbiBYOQt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 09:16:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231189AbiBYODE (ORCPT
+        with ESMTP id S229872AbiBYOQq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 09:03:04 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9E04BDE4E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 06:02:31 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id r187-20020a1c2bc4000000b003810e6b192aso1763004wmr.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 06:02:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Qk5zAx/v4pV2NZHwekGx/zCPF5BYYqJTYfuyv4JLKnY=;
-        b=qSqHaAhVw1FQbAxP/QAKts4bG5uOwjXiLlvlpqNoykQNaeeBXx32Edu43dPFStbZCG
-         cnQTUAezVOLG2KcozYpdObnmmiXEODrRfjE3sgIO4puFvZRT7+VS21wqJ0ZA2wY+Gmie
-         q4OMiLbz4SyMAB+tqwh9ilNBqpa8fyiAkMWeuXzAlAdESXgegz2460ZT7qY9jn215v+v
-         fFkTJxtJT5oB6R3OaoW7TwhajdFxuXkE77nR3r5OB7lbU1dHY2s/K9xrZjilvGNH8x5m
-         7MSD0/mhJ8tj8BYvyIVdzEon2/I5Hjt4/zFb6EWNseBMC8roVJ3usS25uz22iiIOt6BF
-         fLlA==
+        Fri, 25 Feb 2022 09:16:46 -0500
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C125210473;
+        Fri, 25 Feb 2022 06:16:14 -0800 (PST)
+Received: by mail-oi1-f174.google.com with SMTP id 12so7510463oix.12;
+        Fri, 25 Feb 2022 06:16:14 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=Qk5zAx/v4pV2NZHwekGx/zCPF5BYYqJTYfuyv4JLKnY=;
-        b=snptrP765xyU8Oyt3pdaxyZgQ8bFUOOdNE1wKzUXZGioVciV68/ywuLPkWCUczOY7G
-         LUXgo3dqRVMrH+9ImcpiYU8lZy7Go8w7OPP9ZwXEpl/+ARfew/Jf54JVMCR1qbke/7ah
-         4f4/L8K/k6tUZr4F7MPDJRIBIV3p4E8w2bsY7GGtSWzGLbljQyruxaQj6RBL3L4wshqQ
-         Xd5zKfR4Du6nihx6PXUZpx7BBgrZZVUyZqVXL0Zi9/RM12JBc411t6ws4OZUV3XH1gT0
-         BwA0kMMhhRrxuaZOo35+FWLXkkwtPCHqApHihYgUl2uVRyaMOt2O3xKMkkybGmTKx36t
-         ytUQ==
-X-Gm-Message-State: AOAM532o50st6NJnP3wdasww9uQvz1QNec9+F/YPTigm0RWg3Sc0kZgR
-        fBCE82tJpNg+laMkxi7DI74Klg==
-X-Google-Smtp-Source: ABdhPJzNfT6n5Kc9L2VQ5D1j+nBD0b/pLVfgouVRVGcRtPNPueTZJNk9DqZCS70uXP1DUkfwvKJuoQ==
-X-Received: by 2002:a05:600c:508:b0:380:fd39:2c42 with SMTP id i8-20020a05600c050800b00380fd392c42mr2814366wmc.178.1645797750075;
-        Fri, 25 Feb 2022 06:02:30 -0800 (PST)
-Received: from ?IPV6:2a01:e34:ed2f:f020:25a:d4d2:9383:c638? ([2a01:e34:ed2f:f020:25a:d4d2:9383:c638])
-        by smtp.googlemail.com with ESMTPSA id f21-20020a7bcd15000000b0034efd01ee16sm2462450wmj.42.2022.02.25.06.02.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Feb 2022 06:02:29 -0800 (PST)
-Message-ID: <422bd780-354d-d4ac-7b7a-8060325fc13e@linaro.org>
-Date:   Fri, 25 Feb 2022 15:02:27 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v3] drivers: thermal: tsens: respect thermal_device_mode
- in threshold irq reporting
-Content-Language: en-US
-To:     Benjamin Li <benl@squareup.com>, Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zac Crosby <zac@squareup.com>, Andy Gross <agross@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220120200153.1214-1-benl@squareup.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <20220120200153.1214-1-benl@squareup.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=u34k0AC5/CDX3ztycNN10YHu6FGX1mXLVB5DOobgxjQ=;
+        b=3mnk1oF+UiVL/vyBmvaRpyjANF41RKqyqDD0IGKhgkAgWF24RGaImqUndKubkH5r9S
+         wtLllIwBFfEjBka3glEcIRqTERAMP57PvFHzH4Tl2rumTzThe1sE8ECKoBnoMgybJkcb
+         3qrKycpVzobw2JGXW4ukveHqRtmHjKFdYm63asGXSNJb4VJf0LEN3Lyv2pSv0r5inc8h
+         t6TgCaLAhf2ndxT3pYSqgCwiKXe2mM2A0z0pg26fcI9T2dCJ1qoCyWW3XuyDaw9HH340
+         3yZVeuSz2G/YxTb/7lrF10lYvW16gt5iZKBhFmSBrgKZsiedrijxUTjQUN6o2FjOgK7A
+         uFFg==
+X-Gm-Message-State: AOAM532p+mKbBsdHT1dvf8/fgl9kBHZZ0c9ri74fb1dipgf7Vl4PT+JC
+        97cU5EuiQRMDbBQBnatzx0GVlLw4qA==
+X-Google-Smtp-Source: ABdhPJzzMZgmxUhR8u/KeuADsvTo8SJ96KMpPuaxyVoSa5xh1WmCWCIHDMCoHioPv/3JyFd0UWO5OQ==
+X-Received: by 2002:a05:6808:3027:b0:2cf:d108:b59 with SMTP id ay39-20020a056808302700b002cfd1080b59mr1592705oib.309.1645798573542;
+        Fri, 25 Feb 2022 06:16:13 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id eq37-20020a056870a92500b000c6699dad62sm1357189oab.41.2022.02.25.06.16.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Feb 2022 06:16:12 -0800 (PST)
+Received: (nullmailer pid 857895 invoked by uid 1000);
+        Fri, 25 Feb 2022 14:16:07 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>
+In-Reply-To: <20220225053257.2479279-1-bjorn.andersson@linaro.org>
+References: <20220225053257.2479279-1-bjorn.andersson@linaro.org>
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add sc8280xp TLMM binding
+Date:   Fri, 25 Feb 2022 08:16:07 -0600
+Message-Id: <1645798567.343483.857894.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,120 +62,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/01/2022 21:01, Benjamin Li wrote:
-> 'echo disabled > .../thermal_zoneX/mode' will disable the thermal core's
-> polling mechanism to check for threshold trips. This is used sometimes to
-> run performance test cases.
+On Thu, 24 Feb 2022 21:32:56 -0800, Bjorn Andersson wrote:
+> The Qualcomm SC8280XP platform contains a single block of registers
+> for the TLMM block. This provides pinconf and pinmux for 228 GPIOs, 2
+> UFS_RESET pins and one SDC interface.
 > 
-> However, tsens supports an interrupt mechanism to receive notification of
-> trips, implemented in commit 634e11d5b450 ("drivers: thermal: tsens: Add
-> interrupt support").
-> 
-> Currently the thermal zone mode that's set by userspace is not checked
-> before propagating threshold trip events from IRQs. Let's fix this to
-> restore the abilty to disable thermal throttling at runtime.
-> 
-> ====================
-> 
-> Tested on MSM8939 running 5.16.0. This platform has 8 cores; the first
-> four thermal zones control cpu0-3 and the last zone is for the other four
-> CPUs together.
-> 
->    for f in /sys/class/thermal/thermal_zone*; do
->      echo "disabled" > $f/mode
->      echo $f | paste - $f/type $f/mode
->    done
-> 
-> /sys/class/thermal/thermal_zone0	cpu0-thermal	disabled
-> /sys/class/thermal/thermal_zone1	cpu1-thermal	disabled
-> /sys/class/thermal/thermal_zone2	cpu2-thermal	disabled
-> /sys/class/thermal/thermal_zone3	cpu3-thermal	disabled
-> /sys/class/thermal/thermal_zone4	cpu4567-thermal	disabled
-> 
-> With mitigation thresholds at 75 degC and load running, we can now cruise
-> past temp=75000 without CPU throttling kicking in.
-> 
->    watch -n 1 "grep '' /sys/class/thermal/*/temp
->        /sys/class/thermal/*/cur_state
->        /sys/bus/cpu/devices/cpu*/cpufreq/cpuinfo_cur_freq"
-> 
-> /sys/class/thermal/thermal_zone0/temp:82000
-> /sys/class/thermal/thermal_zone1/temp:84000
-> /sys/class/thermal/thermal_zone2/temp:87000
-> /sys/class/thermal/thermal_zone3/temp:84000
-> /sys/class/thermal/thermal_zone4/temp:84000
-> /sys/class/thermal/cooling_device0/cur_state:0
-> /sys/class/thermal/cooling_device1/cur_state:0
-> /sys/bus/cpu/devices/cpu0/cpufreq/cpuinfo_cur_freq:1113600
-> /sys/bus/cpu/devices/cpu1/cpufreq/cpuinfo_cur_freq:1113600
-> /sys/bus/cpu/devices/cpu2/cpufreq/cpuinfo_cur_freq:1113600
-> /sys/bus/cpu/devices/cpu3/cpufreq/cpuinfo_cur_freq:1113600
-> /sys/bus/cpu/devices/cpu4/cpufreq/cpuinfo_cur_freq:800000
-> /sys/bus/cpu/devices/cpu5/cpufreq/cpuinfo_cur_freq:800000
-> /sys/bus/cpu/devices/cpu6/cpufreq/cpuinfo_cur_freq:800000
-> /sys/bus/cpu/devices/cpu7/cpufreq/cpuinfo_cur_freq:800000
-> 
-> Reported-by: Zac Crosby <zac@squareup.com>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Benjamin Li <benl@squareup.com>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
-> Changes in v3:
-> - Upgraded logging to dev_info_ratelimited and revised log message.
-> - Remove unrelated hunk.
+>  .../pinctrl/qcom,sc8280xp-pinctrl.yaml        | 153 ++++++++++++++++++
+>  1 file changed, 153 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-pinctrl.yaml
 > 
-> Some drivers that support thermal zone disabling implement a set_mode
-> operation and simply disable the sensor or the relevant IRQ(s), so they
-> actually don't log anything when zones are disabled. These drivers are
-> imx_thermal.c, intel_quark_dts_thermal.c, and int3400_thermal.c.
-> 
-> For tsens.c, implementing a change_mode would require migrating the driver
-> from devm_thermal_zone_of_sensor_register to thermal_zone_device_register
-> (or updating thermal_of.c to add a change_mode operation in thermal_zone_
-> of_device_ops).
-> 
-> stm_thermal.c seems to use this patch's model of not disabling IRQs when
-> the zone is disabled (they still perform the thermal_zone_device_update
-> upon IRQ, but return -EAGAIN from their get_temp).
 
-What is the concern by changing the core code to have a correct handling 
-of the disabled / enabled state in this driver ? (and by this way give 
-the opportunity to other drivers to fix their code)
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
+yamllint warnings/errors:
 
-> Changes in v2:
-> - Reordered sentences in first part of commit message to make sense.
-> 
->   drivers/thermal/qcom/tsens.c | 12 ++++++++----
->   1 file changed, 8 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> index 99a8d9f3e03c..dd0002829536 100644
-> --- a/drivers/thermal/qcom/tsens.c
-> +++ b/drivers/thermal/qcom/tsens.c
-> @@ -509,10 +509,14 @@ static irqreturn_t tsens_irq_thread(int irq, void *data)
->   		spin_unlock_irqrestore(&priv->ul_lock, flags);
->   
->   		if (trigger) {
-> -			dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
-> -				hw_id, __func__, temp);
-> -			thermal_zone_device_update(s->tzd,
-> -						   THERMAL_EVENT_UNSPECIFIED);
-> +			if (s->tzd->mode == THERMAL_DEVICE_ENABLED) {
-> +				dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
-> +					hw_id, __func__, temp);
-> +				thermal_zone_device_update(s->tzd, THERMAL_EVENT_UNSPECIFIED);
-> +			} else {
-> +				dev_info_ratelimited(priv->dev, "[%u] %s: TZ update trigger (%d mC) skipped - zone disabled, operating outside of safety limits!\n",
-> +					hw_id, __func__, temp);
-> +			}
->   		} else {
->   			dev_dbg(priv->dev, "[%u] %s: no violation:  %d\n",
->   				hw_id, __func__, temp);
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-pinctrl.example.dt.yaml:0:0: /example-0/pinctrl@3100000: failed to match any schema with compatible: ['qcom,sc8280x-tlmm']
 
+doc reference errors (make refcheckdocs):
 
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+See https://patchwork.ozlabs.org/patch/1597478
 
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
