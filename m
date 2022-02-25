@@ -2,72 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 851254C46C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 14:39:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 510134C4709
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 15:02:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239525AbiBYNkV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 08:40:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46810 "EHLO
+        id S238418AbiBYODI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 09:03:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239345AbiBYNkU (ORCPT
+        with ESMTP id S231189AbiBYODE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 08:40:20 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D62C4210469;
-        Fri, 25 Feb 2022 05:39:48 -0800 (PST)
+        Fri, 25 Feb 2022 09:03:04 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9E04BDE4E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 06:02:31 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id r187-20020a1c2bc4000000b003810e6b192aso1763004wmr.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 06:02:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645796388; x=1677332388;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=9OdzSD1XsrbczLLfCeXnsbqUptTDr7RDbwNE8J8aeuI=;
-  b=WcFh0F4uU2bpE/EzvuDvnZOdsFzkrvpTiRmBk7VH9J7TSk+Sm+G+ZeBl
-   w27RpULu+7AMCAY45QRf7cnKfH1St0sURTCeyPwv0hO1KSCBpLZ4ddPQU
-   axJ66nujcRKuD/MY1ESNi9TsznzFuSvhkT2zME4Wv4yLV54bJdXRpSvzn
-   o=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 25 Feb 2022 05:39:48 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2022 05:39:48 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Fri, 25 Feb 2022 05:39:47 -0800
-Received: from [10.216.25.108] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Fri, 25 Feb
- 2022 05:39:41 -0800
-Message-ID: <5f4a158f-d50a-0022-5a62-46ce84fec12c@quicinc.com>
-Date:   Fri, 25 Feb 2022 19:09:38 +0530
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Qk5zAx/v4pV2NZHwekGx/zCPF5BYYqJTYfuyv4JLKnY=;
+        b=qSqHaAhVw1FQbAxP/QAKts4bG5uOwjXiLlvlpqNoykQNaeeBXx32Edu43dPFStbZCG
+         cnQTUAezVOLG2KcozYpdObnmmiXEODrRfjE3sgIO4puFvZRT7+VS21wqJ0ZA2wY+Gmie
+         q4OMiLbz4SyMAB+tqwh9ilNBqpa8fyiAkMWeuXzAlAdESXgegz2460ZT7qY9jn215v+v
+         fFkTJxtJT5oB6R3OaoW7TwhajdFxuXkE77nR3r5OB7lbU1dHY2s/K9xrZjilvGNH8x5m
+         7MSD0/mhJ8tj8BYvyIVdzEon2/I5Hjt4/zFb6EWNseBMC8roVJ3usS25uz22iiIOt6BF
+         fLlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Qk5zAx/v4pV2NZHwekGx/zCPF5BYYqJTYfuyv4JLKnY=;
+        b=snptrP765xyU8Oyt3pdaxyZgQ8bFUOOdNE1wKzUXZGioVciV68/ywuLPkWCUczOY7G
+         LUXgo3dqRVMrH+9ImcpiYU8lZy7Go8w7OPP9ZwXEpl/+ARfew/Jf54JVMCR1qbke/7ah
+         4f4/L8K/k6tUZr4F7MPDJRIBIV3p4E8w2bsY7GGtSWzGLbljQyruxaQj6RBL3L4wshqQ
+         Xd5zKfR4Du6nihx6PXUZpx7BBgrZZVUyZqVXL0Zi9/RM12JBc411t6ws4OZUV3XH1gT0
+         BwA0kMMhhRrxuaZOo35+FWLXkkwtPCHqApHihYgUl2uVRyaMOt2O3xKMkkybGmTKx36t
+         ytUQ==
+X-Gm-Message-State: AOAM532o50st6NJnP3wdasww9uQvz1QNec9+F/YPTigm0RWg3Sc0kZgR
+        fBCE82tJpNg+laMkxi7DI74Klg==
+X-Google-Smtp-Source: ABdhPJzNfT6n5Kc9L2VQ5D1j+nBD0b/pLVfgouVRVGcRtPNPueTZJNk9DqZCS70uXP1DUkfwvKJuoQ==
+X-Received: by 2002:a05:600c:508:b0:380:fd39:2c42 with SMTP id i8-20020a05600c050800b00380fd392c42mr2814366wmc.178.1645797750075;
+        Fri, 25 Feb 2022 06:02:30 -0800 (PST)
+Received: from ?IPV6:2a01:e34:ed2f:f020:25a:d4d2:9383:c638? ([2a01:e34:ed2f:f020:25a:d4d2:9383:c638])
+        by smtp.googlemail.com with ESMTPSA id f21-20020a7bcd15000000b0034efd01ee16sm2462450wmj.42.2022.02.25.06.02.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Feb 2022 06:02:29 -0800 (PST)
+Message-ID: <422bd780-354d-d4ac-7b7a-8060325fc13e@linaro.org>
+Date:   Fri, 25 Feb 2022 15:02:27 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH] soundwire: qcom: remove redundant wait for completion
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v3] drivers: thermal: tsens: respect thermal_device_mode
+ in threshold irq reporting
 Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@codeaurora.org>,
-        <perex@perex.cz>, <tiwai@suse.com>, <rohitkr@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>, <koul@kernel.org>,
-        <yung-chuan.liao@linux.intel.com>,
-        <pierre-louis.bossart@linux.intel.com>, <sanyog.r.kale@intel.com>
-CC:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
-References: <1645795667-20176-1-git-send-email-quic_srivasam@quicinc.com>
- <861cd4c1-43a9-8175-7ad1-e7e51f5781b4@linaro.org>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <861cd4c1-43a9-8175-7ad1-e7e51f5781b4@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Benjamin Li <benl@squareup.com>, Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Zac Crosby <zac@squareup.com>, Andy Gross <agross@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220120200153.1214-1-benl@squareup.com>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <20220120200153.1214-1-benl@squareup.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,46 +79,120 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 20/01/2022 21:01, Benjamin Li wrote:
+> 'echo disabled > .../thermal_zoneX/mode' will disable the thermal core's
+> polling mechanism to check for threshold trips. This is used sometimes to
+> run performance test cases.
+> 
+> However, tsens supports an interrupt mechanism to receive notification of
+> trips, implemented in commit 634e11d5b450 ("drivers: thermal: tsens: Add
+> interrupt support").
+> 
+> Currently the thermal zone mode that's set by userspace is not checked
+> before propagating threshold trip events from IRQs. Let's fix this to
+> restore the abilty to disable thermal throttling at runtime.
+> 
+> ====================
+> 
+> Tested on MSM8939 running 5.16.0. This platform has 8 cores; the first
+> four thermal zones control cpu0-3 and the last zone is for the other four
+> CPUs together.
+> 
+>    for f in /sys/class/thermal/thermal_zone*; do
+>      echo "disabled" > $f/mode
+>      echo $f | paste - $f/type $f/mode
+>    done
+> 
+> /sys/class/thermal/thermal_zone0	cpu0-thermal	disabled
+> /sys/class/thermal/thermal_zone1	cpu1-thermal	disabled
+> /sys/class/thermal/thermal_zone2	cpu2-thermal	disabled
+> /sys/class/thermal/thermal_zone3	cpu3-thermal	disabled
+> /sys/class/thermal/thermal_zone4	cpu4567-thermal	disabled
+> 
+> With mitigation thresholds at 75 degC and load running, we can now cruise
+> past temp=75000 without CPU throttling kicking in.
+> 
+>    watch -n 1 "grep '' /sys/class/thermal/*/temp
+>        /sys/class/thermal/*/cur_state
+>        /sys/bus/cpu/devices/cpu*/cpufreq/cpuinfo_cur_freq"
+> 
+> /sys/class/thermal/thermal_zone0/temp:82000
+> /sys/class/thermal/thermal_zone1/temp:84000
+> /sys/class/thermal/thermal_zone2/temp:87000
+> /sys/class/thermal/thermal_zone3/temp:84000
+> /sys/class/thermal/thermal_zone4/temp:84000
+> /sys/class/thermal/cooling_device0/cur_state:0
+> /sys/class/thermal/cooling_device1/cur_state:0
+> /sys/bus/cpu/devices/cpu0/cpufreq/cpuinfo_cur_freq:1113600
+> /sys/bus/cpu/devices/cpu1/cpufreq/cpuinfo_cur_freq:1113600
+> /sys/bus/cpu/devices/cpu2/cpufreq/cpuinfo_cur_freq:1113600
+> /sys/bus/cpu/devices/cpu3/cpufreq/cpuinfo_cur_freq:1113600
+> /sys/bus/cpu/devices/cpu4/cpufreq/cpuinfo_cur_freq:800000
+> /sys/bus/cpu/devices/cpu5/cpufreq/cpuinfo_cur_freq:800000
+> /sys/bus/cpu/devices/cpu6/cpufreq/cpuinfo_cur_freq:800000
+> /sys/bus/cpu/devices/cpu7/cpufreq/cpuinfo_cur_freq:800000
+> 
+> Reported-by: Zac Crosby <zac@squareup.com>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Benjamin Li <benl@squareup.com>
+> ---
+> Changes in v3:
+> - Upgraded logging to dev_info_ratelimited and revised log message.
+> - Remove unrelated hunk.
+> 
+> Some drivers that support thermal zone disabling implement a set_mode
+> operation and simply disable the sensor or the relevant IRQ(s), so they
+> actually don't log anything when zones are disabled. These drivers are
+> imx_thermal.c, intel_quark_dts_thermal.c, and int3400_thermal.c.
+> 
+> For tsens.c, implementing a change_mode would require migrating the driver
+> from devm_thermal_zone_of_sensor_register to thermal_zone_device_register
+> (or updating thermal_of.c to add a change_mode operation in thermal_zone_
+> of_device_ops).
+> 
+> stm_thermal.c seems to use this patch's model of not disabling IRQs when
+> the zone is disabled (they still perform the thermal_zone_device_update
+> upon IRQ, but return -EAGAIN from their get_temp).
 
-On 2/25/2022 7:07 PM, Srinivas Kandagatla wrote:
-Thanks for Your time Srini!!
->
-> On 25/02/2022 13:27, Srinivasa Rao Mandadapu wrote:
->> Remove wait_for_completion_timeout from soundwire probe
->> as it seems unnecessary and device enumeration is anyway not
->> happening here.
->
-> May be some details on the side effects of this wait would be good to 
-> add in the log.
-Okay. Will elaborate issue observed here.
->
->> Also, as device enumeration event is dependent on wcd938x probe to be
->> completed, its of no use waiting here.
->
-> fix tag is missing
->
-> Fixes: 06dd96738d618 ("soundwire: qcom: wait for enumeration to be 
-> complete in probe")
-Okay. Will add and re post.
->
->>
->> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
->> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->> ---
->>   drivers/soundwire/qcom.c | 2 --
->>   1 file changed, 2 deletions(-)
->>
->> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
->> index 5481341..9a32a24 100644
->> --- a/drivers/soundwire/qcom.c
->> +++ b/drivers/soundwire/qcom.c
->> @@ -1309,8 +1309,6 @@ static int qcom_swrm_probe(struct 
->> platform_device *pdev)
->>       }
->>         qcom_swrm_init(ctrl);
->> -    wait_for_completion_timeout(&ctrl->enumeration,
->> -                    msecs_to_jiffies(TIMEOUT_MS));
->>       ret = qcom_swrm_register_dais(ctrl);
->>       if (ret)
->>           goto err_master_add;
+What is the concern by changing the core code to have a correct handling 
+of the disabled / enabled state in this driver ? (and by this way give 
+the opportunity to other drivers to fix their code)
+
+
+> Changes in v2:
+> - Reordered sentences in first part of commit message to make sense.
+> 
+>   drivers/thermal/qcom/tsens.c | 12 ++++++++----
+>   1 file changed, 8 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index 99a8d9f3e03c..dd0002829536 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -509,10 +509,14 @@ static irqreturn_t tsens_irq_thread(int irq, void *data)
+>   		spin_unlock_irqrestore(&priv->ul_lock, flags);
+>   
+>   		if (trigger) {
+> -			dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
+> -				hw_id, __func__, temp);
+> -			thermal_zone_device_update(s->tzd,
+> -						   THERMAL_EVENT_UNSPECIFIED);
+> +			if (s->tzd->mode == THERMAL_DEVICE_ENABLED) {
+> +				dev_dbg(priv->dev, "[%u] %s: TZ update trigger (%d mC)\n",
+> +					hw_id, __func__, temp);
+> +				thermal_zone_device_update(s->tzd, THERMAL_EVENT_UNSPECIFIED);
+> +			} else {
+> +				dev_info_ratelimited(priv->dev, "[%u] %s: TZ update trigger (%d mC) skipped - zone disabled, operating outside of safety limits!\n",
+> +					hw_id, __func__, temp);
+> +			}
+>   		} else {
+>   			dev_dbg(priv->dev, "[%u] %s: no violation:  %d\n",
+>   				hw_id, __func__, temp);
+
+
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
