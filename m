@@ -2,121 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF0694C4F45
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 21:08:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A12C4C4F60
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 21:15:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235773AbiBYUI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 15:08:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34264 "EHLO
+        id S236024AbiBYUQL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 15:16:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229989AbiBYUI4 (ORCPT
+        with ESMTP id S236043AbiBYUQK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 15:08:56 -0500
-Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 712931F03AD;
-        Fri, 25 Feb 2022 12:08:23 -0800 (PST)
-Received: by mail-oo1-f41.google.com with SMTP id d134-20020a4a528c000000b00319244f4b04so7841376oob.8;
-        Fri, 25 Feb 2022 12:08:23 -0800 (PST)
+        Fri, 25 Feb 2022 15:16:10 -0500
+Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4937E2023A2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 12:15:35 -0800 (PST)
+Received: by mail-il1-x12f.google.com with SMTP id q4so5240102ilt.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 12:15:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vj/W5XS6HVqNQijF0TxsmTuehT9DxzRkoqLx906rHIM=;
+        b=Mxn8YgkVkM1NAMOHsI5/Evv7qtSJv6/K7jCFjq4seUaGTlzuQsVRcHPdmGB90sClDz
+         S3hPrn1jRtmjDHaRqn2rMgvvfQFI8Qdy06vvH/1v0jfktxZrf8X4ssMZdmrD+L3oavnG
+         i5tCmh7uJk1pBSq52eS98VuFujt1yOgFtOF+9EyZzFpwUdvVd3i/aN5UnqhToVQBnCRB
+         2IH09cJ6FYGqJ7LH6tIUlgAoGZhZMI8jaDp+fMyebZV1pK2zsZSes2p4hovnrzMU4rJ0
+         tPbwIFQEUXcco+DkbN6NQ+YQ67zspnMsrrn00FEG+gf0K8UOUQQS6sOzy9+bE5UB3UkD
+         iCxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=eSN9xBrzll6WZ5DtL2zb4WDB6X1vP1dIkQzJiEVk3gs=;
-        b=zu2Pcj/6rZhTNNRJ6d7Tu4gFSaTzDka5CxWjUNtymjj3llZuMI8sKJX7Pmj3h3xjQu
-         KBwHmLaA3+D2rRJAE+6rbju6nhmqiVdjFS9Z2eG/oNRPvYyBjSfeCtk+TFgq1o6P/3e+
-         XTJMX5SfSODCGO4HF55lpXEIbNczhDA0Vym/eQuYTYpYvqRJsWazpDiJSRgbuIkviKfE
-         y79GZer59dkr6vCYfMDZBRvp0vCp+y1yuESSRna/cUIAAXVCI/9mdsigcJAoXhQQCZV3
-         /Ua9B3P67G8RSonnuSlCRWmFCKm/tGNYW5iJPZPvxMoC2Cq58bhA96pv+NEV73SvMev6
-         oFGQ==
-X-Gm-Message-State: AOAM5306gF1R+Huh9VcZ+rTx3Vd6RH0pDMNUbQpRqKJmZWjTEdBIztgj
-        uYTgAjSysIqQQxk+Orfvkg==
-X-Google-Smtp-Source: ABdhPJz8rtS1F8qP+GJ8zMHk8V/DpQMJtqZDeBbUq+EMimoP4vbaCgTou2GcIA44VfSPZnqQT44Cew==
-X-Received: by 2002:a05:6870:45aa:b0:d4:5d51:b0ac with SMTP id y42-20020a05687045aa00b000d45d51b0acmr2155254oao.59.1645819702787;
-        Fri, 25 Feb 2022 12:08:22 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id a12-20020a9d5c8c000000b005ad51592bd8sm1600580oti.49.2022.02.25.12.08.21
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vj/W5XS6HVqNQijF0TxsmTuehT9DxzRkoqLx906rHIM=;
+        b=U77VVWFGNDImfFsP7ciL/LAgIX6Va8046QkVg8Af3fyGvG5RLotDtlMCw7xFtulWA/
+         omUXcLCz5qAsJwybx+37zxD/+9L3f0wO40HGGiY9I8+KY9WxbMUH8yc3xqBbd39KXved
+         Y6Qcv3Re1ZVnU3CAXIQN2is8iJoAtqmlupFm27Egbn6XXxtRSNvUj6O48RMNwbYAUUEN
+         1UcpwJSjSx+yKhdOfejElkQKMzz369vFUSOGWHjUfZ9bvHstx4BnWejlMo1WubMMHeuS
+         554rhS7S1HZtAMFLxp0Mt7s8Z75Bkt68hBpGW5FfrtdLxn+7qlcaRM58zpXFvC5xBoR9
+         B80Q==
+X-Gm-Message-State: AOAM532inBAGVNNR379kQ8EM7nklcQpFpSx3RVM6qDPQu3VNuXRpZqIT
+        LycDYDRj/P3chvtYTc/yJVNllQ==
+X-Google-Smtp-Source: ABdhPJy8DFOwVj/VbIrrBosIJ3nw4eHyrvgZRJn5JpQwpU8L0+W+sYtDdyHjhCx6tiNJqBmUNXTikA==
+X-Received: by 2002:a92:c990:0:b0:2be:4192:79d8 with SMTP id y16-20020a92c990000000b002be419279d8mr7140965iln.29.1645820134605;
+        Fri, 25 Feb 2022 12:15:34 -0800 (PST)
+Received: from presto.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.gmail.com with ESMTPSA id v17-20020a927a11000000b002c29e9b5186sm2241799ilc.43.2022.02.25.12.15.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Feb 2022 12:08:22 -0800 (PST)
-Received: (nullmailer pid 1348651 invoked by uid 1000);
-        Fri, 25 Feb 2022 20:08:21 -0000
-Date:   Fri, 25 Feb 2022 14:08:21 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     agross@kernel.org, bhupesh.linux@gmail.com,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Vinod Koul <vkoul@kernel.org>, devicetree@vger.kernel.org,
-        linux-phy@lists.infradead.org
-Subject: Re: [PATCH 2/2] dt-bindings: phy: qcom,qmp: Describe
- 'vdda-max-microamp' & 'vdda-pll-max-microamp' properties
-Message-ID: <Yhk3NYfTlGqBJiz7@robh.at.kernel.org>
-References: <20220224123248.67073-1-bhupesh.sharma@linaro.org>
- <20220224123248.67073-2-bhupesh.sharma@linaro.org>
- <1645711159.080022.2923124.nullmailer@robh.at.kernel.org>
+        Fri, 25 Feb 2022 12:15:33 -0800 (PST)
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, kuba@kernel.org
+Cc:     rdunlap@infradead.org, bjorn.andersson@linaro.org,
+        mka@chromium.org, evgreen@chromium.org, cpratapa@codeaurora.org,
+        avuyyuru@codeaurora.org, jponduru@codeaurora.org,
+        subashab@codeaurora.org, elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH net] net: ipa: fix a build dependency
+Date:   Fri, 25 Feb 2022 14:15:30 -0600
+Message-Id: <20220225201530.182085-1-elder@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1645711159.080022.2923124.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Feb 24, 2022 at 07:59:19AM -0600, Rob Herring wrote:
-> On Thu, 24 Feb 2022 18:02:48 +0530, Bhupesh Sharma wrote:
-> > Since a few boards based on QCoM qmp phy use the
-> > 'vdda-max-microamp' & 'vdda-pll-max-microamp' properties to
-> > describe the ufs phy nodes, add them to the dt-bindings doc as well.
-> > 
-> > This fixes the following '$ make dtbs_check' warning(s):
-> > 
-> > sm8350-microsoft-surface-duo2.dt.yaml: phy@1d87000:
-> >   'vdda-max-microamp', 'vdda-pll-max-microamp' do not match any of
-> >    the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
-> > 
-> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Cc: Vinod Koul <vkoul@kernel.org>
-> > Cc: Rob Herring <robh+dt@kernel.org>
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
-> >  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 8 ++++++++
-> >  1 file changed, 8 insertions(+)
-> > 
-> 
-> Running 'make dtbs_check' with the schema in this patch gives the
-> following warnings. Consider if they are expected or the schema is
-> incorrect. These may not be new warnings.
-> 
-> Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-> This will change in the future.
-> 
-> Full log is available here: https://patchwork.ozlabs.org/patch/1597137
-> 
-> 
-> phy@1c07000: 'lanes@1c06000' does not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
-> 	arch/arm/boot/dts/qcom-sdx55-mtp.dt.yaml
-> 	arch/arm/boot/dts/qcom-sdx55-t55.dt.yaml
-> 	arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dt.yaml
-> 
-> phy@1c0e000: 'lanes@1c0e200' does not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
-> 	arch/arm64/boot/dts/qcom/sc7280-crd.dt.yaml
-> 	arch/arm64/boot/dts/qcom/sc7280-herobrine.dt.yaml
-> 	arch/arm64/boot/dts/qcom/sc7280-idp2.dt.yaml
-> 	arch/arm64/boot/dts/qcom/sc7280-idp.dt.yaml
-> 
-> phy@1d87000: 'lanes@1d87400' does not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
-> 	arch/arm64/boot/dts/qcom/sm8450-qrd.dt.yaml
-> 
-> phy@627000: 'vdda-phy-max-microamp', 'vddp-ref-clk-always-on', 'vddp-ref-clk-max-microamp' do not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dt.yaml
-> 	arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dt.yaml
+An IPA build problem arose in the linux-next tree the other day.
+The problem is that a recent commit adds a new dependency on some
+code, and the Kconfig file for IPA doesn't reflect that dependency.
+As a result, some configurations can fail to build (particularly
+when COMPILE_TEST is enabled).
 
-I'm curious why these are not fixed too?
+The recent patch adds calls to qmp_get(), qmp_put(), and qmp_send(),
+and those are built based on the QCOM_AOSS_QMP config option.  If
+that symbol is not defined, stubs are defined, so we just need to
+ensure QCOM_AOSS_QMP is compatible with QCOM_IPA, or it's not
+defined.
 
-Rob
+Reported-by: Randy Dunlap <rdunlap@infradead.org>
+Fixes: 34a081761e4e3 ("net: ipa: request IPA register values be retained")
+Signed-off-by: Alex Elder <elder@linaro.org>
+---
+ drivers/net/ipa/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/net/ipa/Kconfig b/drivers/net/ipa/Kconfig
+index d037682fb7adb..e0164a55c1e66 100644
+--- a/drivers/net/ipa/Kconfig
++++ b/drivers/net/ipa/Kconfig
+@@ -3,6 +3,7 @@ config QCOM_IPA
+ 	depends on NET && QCOM_SMEM
+ 	depends on ARCH_QCOM || COMPILE_TEST
+ 	depends on QCOM_RPROC_COMMON || (QCOM_RPROC_COMMON=n && COMPILE_TEST)
++	depends on QCOM_AOSS_QMP || QCOM_AOSS_QMP=n
+ 	select QCOM_MDT_LOADER if ARCH_QCOM
+ 	select QCOM_SCM
+ 	select QCOM_QMI_HELPERS
+-- 
+2.32.0
+
