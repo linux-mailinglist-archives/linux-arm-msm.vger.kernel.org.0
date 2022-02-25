@@ -2,51 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01E9E4C3E3D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 07:10:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F71F4C3ED4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 08:16:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233510AbiBYGKv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 01:10:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54760 "EHLO
+        id S235033AbiBYHRS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 02:17:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231511AbiBYGKu (ORCPT
+        with ESMTP id S238034AbiBYHRS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 01:10:50 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A3F47305E;
-        Thu, 24 Feb 2022 22:10:16 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C238F619E8;
-        Fri, 25 Feb 2022 06:10:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A499DC340E7;
-        Fri, 25 Feb 2022 06:10:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1645769415;
-        bh=KjHqun70ceY4y9Hq5jQPzKS0oEJN18YZnI/4cs6MxCs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=du/UUF+lpOkb1Cx5KQhNkeTYU4QJyT/NpkImGREqcGTMUF6quJEoU5Ut92Zb8kK9R
-         RRCFDqJJWGkXRZ915EmkdZFlTVqrE4QrquwTq9TVs27NzoOQ8j9syqzYceM5tAnWGI
-         D+zLdw5SMEglCWL4ZthlVudiEPiE0jTP0jQZuriqvGOwICJi8N/CsvIY093BjU77le
-         h6ssdkSzjilAc7Zhadwqxz9h5HmIf8Fq5yBtwkwEHF+XZoHx91RrpVSTWV1XpfuzfA
-         4lK3zPCjy6dtj0gt3tjZSiRfxLHBLLiQ+aAlduVzTWiI15g9TuvXbmgGhr8QCSK7UM
-         z9GkvqSc9bieg==
-Date:   Fri, 25 Feb 2022 11:40:11 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: defconfig: Enable Qualcomm GPI DMA Driver
-Message-ID: <Yhhywyf2ms44Lec2@matsya>
-References: <20220225044033.1376769-1-vkoul@kernel.org>
- <YhhwEaPdyUcHBL+V@builder.lan>
+        Fri, 25 Feb 2022 02:17:18 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42AE1657F;
+        Thu, 24 Feb 2022 23:16:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645773400; x=1677309400;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=Eha8UfFU5sTXgWjY6/4IUTMY/kkCOwxcj1l/44F5h+U=;
+  b=as9waMjut2vhMOAY3TXveAsWvwMzZkNvXC+CyIiUhA9mP8bYgYYtK8V1
+   AW9hAc3vLx2a8mSmVMK2VNPrF6/TfGdjO1Dj+S2fq6lKeHoY4vrAH85X0
+   IJiMqQxQ3bJyyWRY6qrzNoGZ7TB7KgHDaoanLZs7UEoejXmn2gzteitVw
+   U=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 24 Feb 2022 23:16:39 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Feb 2022 23:16:39 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Thu, 24 Feb 2022 23:16:39 -0800
+Received: from [10.216.57.207] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Thu, 24 Feb
+ 2022 23:16:35 -0800
+Message-ID: <b9205016-1f33-74fd-c314-c307412bfca3@quicinc.com>
+Date:   Fri, 25 Feb 2022 12:46:26 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YhhwEaPdyUcHBL+V@builder.lan>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH] ARM: dts: qcom: Add chosen node information for SDX65.
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     <agross@kernel.org>, <robh+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1644574845-23248-1-git-send-email-quic_rohiagar@quicinc.com>
+ <YhfgAL8z6rO+zU3w@builder.lan>
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+In-Reply-To: <YhfgAL8z6rO+zU3w@builder.lan>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -55,41 +68,65 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24-02-22, 23:58, Bjorn Andersson wrote:
-> On Thu 24 Feb 22:40 CST 2022, Vinod Koul wrote:
-> 
-> > Qualcomm GPI DMA Driver is used for DMA transfers for Serial engines
-> > like Geni I2C and SPI.
-> > 
-> > Enable this dma driver
-> > 
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > ---
-> > 
-> > Changes in v2:
-> >  - As dicussed with Bjorn GPI DMA is used by Serial engines SPI/I2C so we
-> >    can make this a module rather than inbuilt
-> > 
-> >  arch/arm64/configs/defconfig | 1 +
-> >  1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> > index 30516dc0b70e..d73913f082d7 100644
-> > --- a/arch/arm64/configs/defconfig
-> > +++ b/arch/arm64/configs/defconfig
-> > @@ -948,6 +948,7 @@ CONFIG_PL330_DMA=y
-> >  CONFIG_TEGRA20_APB_DMA=y
-> >  CONFIG_TEGRA210_ADMA=m
-> >  CONFIG_QCOM_BAM_DMA=y
-> > +CONFIG_QCOM_GPI_DMA=y
-> 
-> Would you like me to change this to =m as I apply the patch, just to
-> make it match changelog? ;)
 
-:(
+On 2/25/2022 1:14 AM, Bjorn Andersson wrote:
+> On Fri 11 Feb 04:20 CST 2022, Rohit Agarwal wrote:
+>
+>> Add chosen node in the base dtsi file of SDX65.
+>>
+> While this happens to be the same on most boards, it is still a
+> board-specific decision which UART is the debug uart, or if there is one
+> at all...
+>
+> So this property should remain in the dts.
+>
+> Thanks,
+> Bjorn
 
-Crap, looks like i forgot to add and did the amend, would be great if
-you can, or I can send a v3...
+Without the chosen node in base dtsi, the device is not booting up.
+Can we have an empty chosen node in the base dtsi and the board-specific 
+details
+updated in the respective dts file. The device boots up with this.
 
--- 
-~Vinod
+Thanks,
+Rohit
+
+>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+>> ---
+>>   arch/arm/boot/dts/qcom-sdx65-mtp.dts | 4 ----
+>>   arch/arm/boot/dts/qcom-sdx65.dtsi    | 4 ++++
+>>   2 files changed, 4 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/arch/arm/boot/dts/qcom-sdx65-mtp.dts b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
+>> index 59457da..3a75c21 100644
+>> --- a/arch/arm/boot/dts/qcom-sdx65-mtp.dts
+>> +++ b/arch/arm/boot/dts/qcom-sdx65-mtp.dts
+>> @@ -14,10 +14,6 @@
+>>   	aliases {
+>>   		serial0 = &blsp1_uart3;
+>>   	};
+>> -
+>> -	chosen {
+>> -		stdout-path = "serial0:115200n8";
+>> -	};
+>>   };
+>>   
+>>   &blsp1_uart3 {
+>> diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
+>> index 796641d..653df15 100644
+>> --- a/arch/arm/boot/dts/qcom-sdx65.dtsi
+>> +++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
+>> @@ -17,6 +17,10 @@
+>>   	qcom,msm-id = <458 0x10000>, <483 0x10000>, <509 0x10000>;
+>>   	interrupt-parent = <&intc>;
+>>   
+>> +	chosen {
+>> +		stdout-path = "serial0:115200n8";
+>> +	};
+>> +
+>>   	memory {
+>>   		device_type = "memory";
+>>   		reg = <0 0>;
+>> -- 
+>> 2.7.4
+>>
