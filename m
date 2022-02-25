@@ -2,72 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9588C4C4ECE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 20:32:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 310CF4C4EDB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 20:33:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234977AbiBYTc6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 14:32:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45100 "EHLO
+        id S234916AbiBYTeU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 14:34:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234808AbiBYTcq (ORCPT
+        with ESMTP id S234759AbiBYTeT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 14:32:46 -0500
-Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com [209.85.161.45])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA44B1D0365;
-        Fri, 25 Feb 2022 11:32:13 -0800 (PST)
-Received: by mail-oo1-f45.google.com with SMTP id w10-20020a4ae08a000000b0031bdf7a6d76so7570999oos.10;
-        Fri, 25 Feb 2022 11:32:13 -0800 (PST)
+        Fri, 25 Feb 2022 14:34:19 -0500
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95A3B1986F0;
+        Fri, 25 Feb 2022 11:33:47 -0800 (PST)
+Received: by mail-ot1-f42.google.com with SMTP id g6-20020a9d6486000000b005acf9a0b644so4308820otl.12;
+        Fri, 25 Feb 2022 11:33:47 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=kRILqCarovlsZz7thgDDibtWJZEbIzmqyc2ox6LuLpY=;
-        b=Cm3D0xI4Yt+LUUrm5/sUCrpd33+npF9MlJLlZvbTR5xcFgxPB5Tjn2WkLQckkBPeLU
-         P3+87Tg6iBbcH65XgBTXng58T8iO+POj6tj7fdb6Bl/r5TP11ogVXLX0I66fEB2fwvgs
-         uh6a4six2iVyP1Syt6DTmgaluj2HP0tdkljkD3C1zs9WSstmrs/9Vi1KNq/zwzlhjgR+
-         1FdytNb52tU6MyFdSK+h8giw+8/T8xFM2M8v++qAmbY4qfeGytakJWQrU0lfPBdoyh3K
-         nRCfQ8CAYxoraPs554Aw6BIreffuBZNa4hTyxYsWpfC328+e/iHT6uJ8bd/7mw9axec7
-         7Jaw==
-X-Gm-Message-State: AOAM532z0u0el2JDZ1snmZswXjOLbgt/3k1JqeoAjaiTgi6te0BDCW/u
-        /Spacpou5X3wS2DJxhvKJg==
-X-Google-Smtp-Source: ABdhPJzwAL+432KfYz3I8h/Kv7X9CZCjqxcsRfm56jxdkR8gD0rIcbp3XoQRwtlfUGG0WF8u8xo2dg==
-X-Received: by 2002:a05:6870:9a85:b0:d6:fb74:eef9 with SMTP id hp5-20020a0568709a8500b000d6fb74eef9mr685677oab.50.1645817533317;
-        Fri, 25 Feb 2022 11:32:13 -0800 (PST)
+        bh=LXWgeu8+968e0Kmo1u41wpbvPdau1hEHUCnnzvatggs=;
+        b=fKOWqXIo2ZTw5ILsrdzx/IpT63kph4r3+5H8szQe/vQ8Bb8EY39rZvz4jGDCJk3iAC
+         XmpkrwwmhyRQTaOQZX+24nf4whMPV+/qUN/twmORXeE01OrbtPeKO7zM4FYouDaUKa/E
+         UGebIKNnWHob1rx7nODdrs0POHNXuhpR+Y59dC0FB26Oi3gAQJmPQ/bU2mG1yGiYX4Xi
+         jotQBgaTajwkYLOA5F0t6vXovgYjrdWu18ZmQ4SXblWxfJ4AGRBxsgzdiALCmuZ9VIaA
+         Fm36MkN4FD8m07F0PEnrAYg8nR9519jlp9qPTtDZRxo/qPqc5sxevcmWWuLw9IwFztPN
+         RDDw==
+X-Gm-Message-State: AOAM533J5YKOaL2LVuluAWz12X7ZbNKXa5xUb0tVrwAhCaSqWnDGuMlB
+        X9df49KL8i3AB+W8TxgKQw==
+X-Google-Smtp-Source: ABdhPJzWS5GZdRiTixomm/Zw4NMpp3+A1z1Lq0uTL92KKpb/O56qwbzhuIIrXP/F+SlhamPdwaRolA==
+X-Received: by 2002:a9d:b93:0:b0:5af:82ec:574e with SMTP id 19-20020a9d0b93000000b005af82ec574emr3573389oth.209.1645817626861;
+        Fri, 25 Feb 2022 11:33:46 -0800 (PST)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id a10-20020a05687073ca00b000d128dfeebfsm1652359oan.2.2022.02.25.11.32.11
+        by smtp.gmail.com with ESMTPSA id a27-20020a4ae93b000000b0031be7c7d2d3sm1524442ooe.0.2022.02.25.11.33.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Feb 2022 11:32:12 -0800 (PST)
-Received: (nullmailer pid 1296393 invoked by uid 1000);
-        Fri, 25 Feb 2022 19:32:11 -0000
-Date:   Fri, 25 Feb 2022 13:32:11 -0600
+        Fri, 25 Feb 2022 11:33:46 -0800 (PST)
+Received: (nullmailer pid 1299041 invoked by uid 1000);
+        Fri, 25 Feb 2022 19:33:45 -0000
+Date:   Fri, 25 Feb 2022 13:33:45 -0600
 From:   Rob Herring <robh@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     Vignesh Raghavendra <vigneshr@ti.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Yaniv Gardi <ygardi@codeaurora.org>,
-        Nishanth Menon <nm@ti.com>, Avri Altman <avri.altman@wdc.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        linux-kernel@vger.kernel.org, Li Wei <liwei213@huawei.com>,
-        devicetree@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
+Cc:     Avri Altman <avri.altman@wdc.com>,
         "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Yaniv Gardi <ygardi@codeaurora.org>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Li Wei <liwei213@huawei.com>,
         Alim Akhtar <alim.akhtar@samsung.com>,
+        Jan Kotas <jank@cadence.com>, Wei Xu <xuwei5@hisilicon.com>,
         Stanley Chu <stanley.chu@mediatek.com>,
-        linux-samsung-soc@vger.kernel.org, Jan Kotas <jank@cadence.com>,
-        Andy Gross <agross@kernel.org>,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>, linux-scsi@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Tero Kristo <kristo@kernel.org>, linux-kernel@vger.kernel.org,
+        Nishanth Menon <nm@ti.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Wei Xu <xuwei5@hisilicon.com>, Tero Kristo <kristo@kernel.org>
-Subject: Re: [PATCH v2 04/15] dt-bindings: ufs: drop unused/old ufs-qcom PHY
- bindings
-Message-ID: <Yhkuu/cMDl0fMx/8@robh.at.kernel.org>
+        Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH v2 05/15] dt-bindings: ufs: qcom,ufs: convert to dtschema
+Message-ID: <YhkvGS8dSA0Sh0nR@robh.at.kernel.org>
 References: <20220222145854.358646-1-krzysztof.kozlowski@canonical.com>
- <20220222145854.358646-5-krzysztof.kozlowski@canonical.com>
+ <20220222145854.358646-6-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220222145854.358646-5-krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20220222145854.358646-6-krzysztof.kozlowski@canonical.com>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
@@ -79,16 +78,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 22 Feb 2022 15:58:43 +0100, Krzysztof Kozlowski wrote:
-> The Qualcomm UFS PHY bindings are documented in
-> bindings/phy/qcom,qmp-phy.yaml and the compatibles from separate file
-> bindings/ufs/ufs-qcom.txt are not used at all.
+On Tue, 22 Feb 2022 15:58:44 +0100, Krzysztof Kozlowski wrote:
+> Convert the Qualcomm Universal Flash Storage (UFS) Controller to DT
+> schema format.
+> 
+> Except the conversion, add also properties already present in DTS:
+> iommus, interconnects and power-domains.
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 > ---
->  .../devicetree/bindings/ufs/ufs-qcom.txt      | 63 -------------------
->  1 file changed, 63 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/ufs/ufs-qcom.txt
+>  .../devicetree/bindings/ufs/qcom,ufs.yaml     | 241 ++++++++++++++++++
+>  .../devicetree/bindings/ufs/ufshcd-pltfrm.txt |  90 -------
+>  2 files changed, 241 insertions(+), 90 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
 > 
 
 Reviewed-by: Rob Herring <robh@kernel.org>
