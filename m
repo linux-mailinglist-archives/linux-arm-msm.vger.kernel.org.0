@@ -2,45 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 205854C3F89
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 08:53:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AB924C3FB5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 09:01:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233958AbiBYHyB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 02:54:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39382 "EHLO
+        id S229674AbiBYICO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 03:02:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233774AbiBYHyA (ORCPT
+        with ESMTP id S238335AbiBYICN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 02:54:00 -0500
-X-Greylist: delayed 448 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 24 Feb 2022 23:53:29 PST
-Received: from mail.powerangels.com.pl (mail.powerangels.com.pl [45.86.209.159])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55FB37DAB8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Feb 2022 23:53:29 -0800 (PST)
-Received: by mail.powerangels.com.pl (Postfix, from userid 1001)
-        id F039A82C85; Fri, 25 Feb 2022 02:45:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=powerangels.com.pl;
-        s=mail; t=1645775160;
-        bh=07NAgW1e0WiNB9zqagiM2BnwZfWBCpNa2E4+ccxBPgw=;
-        h=Date:From:To:Subject:From;
-        b=f0E7Fx2O/Su96e2Kf26w03pi8gUJX2lDupSv1M6pXOnov4GNCsNn7FDGPfVah8LI/
-         YuOZheFjq/hdSBHhVChxusNxjhkg4599sNDmjJTVmsi3OfHsqGcYhUtwxmYfCjpKmy
-         cb5y/hZS+x19d8ulFvUFzGvmvRNQ19BN376+q46osFt8yY8ADiD1NUW8UAS4NEmk4j
-         3P9vDl8gWr9xw1P86PZK9fIBRCA1yICerCKGvEWCeO3MJUYyVcrdQBnNJiNLWBmi3a
-         25JFeWg9a7g4kz4TEqqYP3sVbhCzsEAvtnYwqLI+28tS5AjRGwFf7zdA7cRtwZJHEG
-         GcZVsKuTT7xyw==
-Received: by mail.powerangels.com.pl for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 07:45:30 GMT
-Message-ID: <20220225024500-0.1.j.20l9.0.8i3bdful19@powerangels.com.pl>
-Date:   Fri, 25 Feb 2022 07:45:30 GMT
-From:   "Jakub Daroch" <jakub.daroch@powerangels.com.pl>
-To:     <linux-arm-msm@vger.kernel.org>
-Subject: Wycena paneli fotowoltaicznych
-X-Mailer: mail.powerangels.com.pl
+        Fri, 25 Feb 2022 03:02:13 -0500
+X-Greylist: delayed 62 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 25 Feb 2022 00:01:39 PST
+Received: from mail.meizu.com (unknown [14.29.68.187])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97527DF1B;
+        Fri, 25 Feb 2022 00:01:39 -0800 (PST)
+Received: from IT-EXMB-1-125.meizu.com (172.16.1.125) by mz-mail04.meizu.com
+ (172.16.1.16) with Microsoft SMTP Server (TLS) id 14.3.487.0; Fri, 25 Feb
+ 2022 16:00:37 +0800
+Received: from meizu.meizu.com (172.16.137.70) by IT-EXMB-1-125.meizu.com
+ (172.16.1.125) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2308.14; Fri, 25 Feb
+ 2022 16:00:35 +0800
+From:   Haowen Bai <baihaowen@meizu.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Haowen Bai" <baihaowen@meizu.com>
+Subject: [PATCH] soc: qcom: qmi: Use min() instead of doing it manually
+Date:   Fri, 25 Feb 2022 16:00:31 +0800
+Message-ID: <1645776031-13516-1-git-send-email-baihaowen@meizu.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.2 required=5.0 tests=BAYES_20,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [172.16.137.70]
+X-ClientProxiedBy: IT-EXMB-1-124.meizu.com (172.16.1.124) To
+ IT-EXMB-1-125.meizu.com (172.16.1.125)
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_SOFTFAIL,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -48,17 +45,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dzie=C5=84 dobry,
+Fix following coccicheck warning:
+drivers/soc/qcom/qmi_interface.c:773:12-13: WARNING opportunity for min()
 
-dostrzegam mo=C5=BCliwo=C5=9B=C4=87 wsp=C3=B3=C5=82pracy z Pa=C5=84stwa f=
-irm=C4=85.
+Signed-off-by: Haowen Bai <baihaowen@meizu.com>
+---
+ drivers/soc/qcom/qmi_interface.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-=C5=9Awiadczymy kompleksow=C4=85 obs=C5=82ug=C4=99 inwestycji w fotowolta=
-ik=C4=99, kt=C3=B3ra obni=C5=BCa koszty energii elektrycznej nawet o 90%.
+diff --git a/drivers/soc/qcom/qmi_interface.c b/drivers/soc/qcom/qmi_interface.c
+index c8c4c73..3337a70 100644
+--- a/drivers/soc/qcom/qmi_interface.c
++++ b/drivers/soc/qcom/qmi_interface.c
+@@ -770,7 +770,7 @@ static ssize_t qmi_send_message(struct qmi_handle *qmi,
+ 
+ 	kfree(msg);
+ 
+-	return ret < 0 ? ret : 0;
++	return min(ret, 0);
+ }
+ 
+ /**
+-- 
+2.7.4
 
-Czy s=C4=85 Pa=C5=84stwo zainteresowani weryfikacj=C4=85 wst=C4=99pnych p=
-ropozycji?
-
-
-Pozdrawiam,
-Jakub Daroch
