@@ -2,67 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8CB44C5166
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 23:17:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C34D4C518A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 23:31:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234190AbiBYWSR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 17:18:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60560 "EHLO
+        id S233664AbiBYWbj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 17:31:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233442AbiBYWSQ (ORCPT
+        with ESMTP id S237539AbiBYWbh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 17:18:16 -0500
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F77852E14
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 14:17:42 -0800 (PST)
-Received: by mail-oi1-x232.google.com with SMTP id a6so8678742oid.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 14:17:42 -0800 (PST)
+        Fri, 25 Feb 2022 17:31:37 -0500
+Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E24C210458
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 14:31:04 -0800 (PST)
+Received: by mail-oo1-xc36.google.com with SMTP id 189-20020a4a03c6000000b003179d7b30d8so8441373ooi.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 14:31:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=dXvo0FUwxGOK+PzYKSVnOxYz4S+No09K3o4P0/XBEQY=;
-        b=Zka9dxzwevyuRP7bh7bB+2VLzJcEohGN+IkaQhrqR9tqMLIIhFDAdgjwyUobMemgHG
-         HxbUt/MRrIU5ANvMryCf/IOd5w5VhcWy+QIBZrpdrCO4tJhHOIU/JKKO4sbYy5isTFRF
-         SvjEbvOQ88lMyrUNYjFcACdeObaqTYceEfTfc=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=6stLPZaGS6nvvDwpshyXkfYQ31q2L27yLoTEa6odkug=;
+        b=BVADKUGIFH+Bz3Dro3Gs/TYsaEH+nA+XwmrpLfL+vrZos9iYY47ifY/dqQ/HNuqq5M
+         1V2JXPmwcOBXBafqjVqLfIfeVznzTYtRZMx1OJ5gHDNqyX4N5uCLun6jUbGkE9nvVpZ/
+         YVUc7bOvJdesdT/U/GIxu1EIJdxZgZpfBpbSk8QQ3Z3/SB3d6J1Fr6bqvqwlOfHvMj7b
+         23rycgAIRL2evFaiSMc65U9f6MZLzHAr25lKIswG2bMpnbOSqVDd1mfLu2W43p71OFFQ
+         Z9Dqp9y7hfC8andTVv6qj1r1QRPpUEPt60+Q6DAzDVYha740SVdY4+f0+hdJRjCEo2t2
+         Z4bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=dXvo0FUwxGOK+PzYKSVnOxYz4S+No09K3o4P0/XBEQY=;
-        b=AZ7xDnSENMrF5yb2PiljdKPkOKepjWDh1NZ7iPaVM7+CWlWIQuKf1gWhi/4FjZMdcm
-         gBcReNbgvpl48oSF/o+HnQ3RxWVvPlYU96G1HQnHQhIGRvXkFXrexF0coRj9OckVB5Sd
-         8Oph7HlmZbPnNrBCPRqOnzKbSMsH4PlbGKiHzHLo+nmrl1OxJ8soAArBpAhQUh9lkcI8
-         +xkOfzerFWS1oSsaqCMkt8QZ1XPFnyFZrSwC6l4ixMYHIIkTkKjS+ixxc+wl3S8eCSpm
-         R5VHOSOwX1m5hoL94QPgWLG2Zssj5BH9ClkQhomappOcE/kdm0U4xAnMgIolywzg6uvj
-         f5YA==
-X-Gm-Message-State: AOAM531Na2wYsAkmHjKWpm8Cn77llrKAD/9Med3uVPt4Y5YxqKPquxV9
-        1IsbnyK0kUXbbMoo/w7ETbRiok67R680cJCDGffc5Q==
-X-Google-Smtp-Source: ABdhPJwZkpsXKtTOoOCmoxhBmLUBoDoC7bnujscOdTuslS997FSPo3U4IMVbsNIzko5zK+fYiQ4P/xGtoL+aut7gVPs=
-X-Received: by 2002:a05:6808:1a28:b0:2d7:3c61:e0d6 with SMTP id
- bk40-20020a0568081a2800b002d73c61e0d6mr3055013oib.32.1645827461436; Fri, 25
- Feb 2022 14:17:41 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 25 Feb 2022 14:17:41 -0800
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=6stLPZaGS6nvvDwpshyXkfYQ31q2L27yLoTEa6odkug=;
+        b=7DZcHxSLq7jY/vVZjUEoZKu2bn5IAGRMiJZcuOrsRllh944vp2PkCipQG9SmFxL5hV
+         oNXPAFIyyn+b6ufhNigloRVhzLgwdfAtF0g6Y/DxDeF7duBPOipGvrljQghNR7nKU5li
+         bfo5LfnWF73MlBQj9oB1EVWNXHlcYQ/tiuGr1Yim6qW8Nam7viWvL2E6V5QoXHD2U7uu
+         5qLCZpAGNqdMF3K5C0eANO9ed8TSM1+sN3cFIE4xAe95RuvsNXvGBieU6s/Zw3k4P76t
+         ZVf3T57cLopROSabhweZ/vG62kzo3MUR4OmSY7YTM360Is2yeY29a17pPvUV7GWp7LCi
+         NzCg==
+X-Gm-Message-State: AOAM531c/gHg2n+r2gRsz8TRdbWPWpOqntCkwYBgLcsuEqQRzxdNLoTY
+        PStVuAE8P74Q1y/MLOLtxUP+AA==
+X-Google-Smtp-Source: ABdhPJyJ618LE128s4aGt50PcKa9gGTGS6OS3+AvbniRvT1Q1aLS/G5jaqcOrZ8I2fWH+kBdeS94+Q==
+X-Received: by 2002:a05:6870:b9b:b0:d0:effc:7620 with SMTP id lg27-20020a0568700b9b00b000d0effc7620mr2371117oab.56.1645828263696;
+        Fri, 25 Feb 2022 14:31:03 -0800 (PST)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id w11-20020a056808140b00b002c0966d9521sm2165316oiv.10.2022.02.25.14.31.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Feb 2022 14:31:02 -0800 (PST)
+Date:   Fri, 25 Feb 2022 14:32:59 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dan Carpenter <dan.carpenter@oracle.com>
+Cc:     Lee Jones <lee.jones@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        sumit.semwal@linaro.org, amit.pundir@linaro.org,
+        john.stultz@linaro.org, kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH v8 2/9] mfd: qcom-spmi-pmic: expose the PMIC revid
+ information to clients
+Message-ID: <YhlZG6xJ75ieskyT@ripper>
+References: <20220221220743.541704-1-caleb.connolly@linaro.org>
+ <20220221220743.541704-3-caleb.connolly@linaro.org>
+ <Yhft4zNcbD3ojN6i@builder.lan>
+ <YhiYY/sXMvQ4VCZd@google.com>
+ <20220225090452.GP3943@kadam>
 MIME-Version: 1.0
-In-Reply-To: <1645824192-29670-5-git-send-email-quic_khsieh@quicinc.com>
-References: <1645824192-29670-1-git-send-email-quic_khsieh@quicinc.com> <1645824192-29670-5-git-send-email-quic_khsieh@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Fri, 25 Feb 2022 14:17:40 -0800
-Message-ID: <CAE-0n53s11KHrj-rzRkjV4q775XCoxzZCLK-HRCt=H1++DR-YQ@mail.gmail.com>
-Subject: Re: [PATCH v12 4/4] drm/msm/dp: enable widebus feature for display port
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dmitry.baryshkov@linaro.org, dri-devel@lists.freedesktop.org,
-        robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220225090452.GP3943@kadam>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,49 +83,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-02-25 13:23:12)
-> Widebus feature will transmit two pixel data per pixel clock to interface.
-> This feature now is required to be enabled to easy migrant to higher
-> resolution applications in future. However since some legacy chipsets
-> does not support this feature, this feature is enabled by setting
-> wide_bus_en flag to true within msm_dp_desc struct.
->
-> changes in v2:
-> -- remove compression related code from timing
-> -- remove op_info from  struct msm_drm_private
-> -- remove unnecessary wide_bus_en variables
-> -- pass wide_bus_en into timing configuration by struct msm_dp
->
-> Changes in v3:
-> -- split patch into 3 patches
-> -- enable widebus feature base on chip hardware revision
->
-> Changes in v5:
-> -- DP_INTF_CONFIG_DATABUS_WIDEN
->
-> Changes in v6:
-> -- static inline bool msm_dp_wide_bus_enable() in msm_drv.h
->
-> Changes in v7:
-> -- add Tested-by
->
-> Changes in v9:
-> -- add wide_bus_en to msm_dp_desc
->
-> Changes in v10:
-> -- add wide_bus_en boolean to dp_catalog struc to avoid passing it as parameter
->
-> Changes in v11:
-> -- add const to dp_catalog_hw_revision()
-> -- add const to msm_dp_wide_bus_available()
->
-> Changes in v12:
-> -- dp_catalog_hw_revision(const struct dp_catalog *dp_catalog)
-> -- msm_dp_wide_bus_available(const struct msm_dp *dp_display)
->
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> Reported-by: kernel test robot <lkp@intel.com>
-> Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
+On Fri 25 Feb 01:04 PST 2022, Dan Carpenter wrote:
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> On Fri, Feb 25, 2022 at 08:50:43AM +0000, Lee Jones wrote:
+> > On Thu, 24 Feb 2022, Bjorn Andersson wrote:
+> > 
+> > > On Mon 21 Feb 16:07 CST 2022, Caleb Connolly wrote:
+> > > 
+> > > > Some PMIC functions such as the RRADC need to be aware of the PMIC
+> > > > chip revision information to implement errata or otherwise adjust
+> > > > behaviour, export the PMIC information to enable this.
+> > > > 
+> > > > This is specifically required to enable the RRADC to adjust
+> > > > coefficients based on which chip fab the PMIC was produced in,
+> > > > this can vary per unique device and therefore has to be read at
+> > > > runtime.
+> > > > 
+> > > > [bugs in previous revision]
+> > > > Reported-by: kernel test robot <lkp@intel.com>
+> > > > Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+> > > 
+> > > This says is that "kernel test robot" and Dan reported that something
+> > > needed to be fixed and this patch is the fix for this.
+> > > 
+> > > So even though their emails asks for you to give them credit like this
+> > > you can't do it for new patches.
+> > 
+> > Right, or else you'd have to give credit to anyone who provided you
+> > with a review.  This could potentially grow to quite a long list.
+> > 
+> 
+> I always feel like people who find crashing bugs should get credit but
+> no credit for complaining about style.  It's like we reward people for
+> reporting bugs after it gets merged but not before.
+> 
+> We've had this debate before and people don't agree with me or they say
+> that it's fine to just include the Reported-by kbuild tags and let
+> people figure out from the context that probably kbuild didn't tell
+> people to write a new driver.
+> 
+
+I certainly would like to be able to recognize any form of review effort
+going into the evolution of a patch, but if we use Reported-by for that
+purpose we're loosing the ability to credit the effort to find the
+regressions in the kernel.
+
+
+And while it's clear that Reported-by could mean that you spotted a bug
+in a previous revision of the patch, should this then be used to denote
+anyone that came with any sort of feedback?
+
+Do we want to "repurpose" Reported-by to be a list of anyone providing
+any input to any previous revision of the patches? (Reported-by doesn't
+sound like the right tag for that to me)
+
+> Also I think that counting Reviewed-by/Acked-by tags should be
+> discouraged.  It's useful as a communication between maintainers but it
+> shouldn't be rewarded.
+> 
+
+For acked-by I definitely agree. At least in my subsystems I see a quite
+good flow of Reviewed-bys from community members and am very happy about
+that. It communicates that people approves of the patch, in contrast to
+the more common case of no one dissaproving the patch and it's merged
+just with my S-o-b...
+
+Regards,
+Bjorn
