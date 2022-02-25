@@ -2,137 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 225EC4C4BC5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 18:14:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7468D4C4BCB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 18:15:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243511AbiBYROR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 12:14:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55418 "EHLO
+        id S238376AbiBYRPk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 12:15:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240804AbiBYROQ (ORCPT
+        with ESMTP id S238153AbiBYRPj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 12:14:16 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A91AB1A8043;
-        Fri, 25 Feb 2022 09:13:43 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4E5EE61D73;
-        Fri, 25 Feb 2022 17:13:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E452C340E7;
-        Fri, 25 Feb 2022 17:13:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1645809222;
-        bh=4sE4Gtevnk8/TCjMANbcRjCHG8DgJ5S+RZAsg3tQewo=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=aKNMEZYO9GYS47EsbtSGoBp7jQ6cq+PB2zbte+AwwqqiqpcVRMxGDM0F0Afex5ZJW
-         4rYESli2esu86LIUX6eb+GIiQqKG0aJoZCwpzqlHuXkixzO/1AezAk2443Z9c992ps
-         XywAbCY1/AWyw1jhDZ3bHZQXnfC+/H1QPWErc949Yi5ixSLpl4/cO2POfTAAfrxKho
-         CAVXpDY7lijl79zw4wxpFlP592n7RcY/q2RQ45t4e4X5U4/DfLgdvmThUjLUu/hMNF
-         a6Vl3pNKPQMeAYVdX3MJ7TCbUyat1DVH9TvH+imzTBTV3gNbtHMVmiV6Fa05o9r3/n
-         oKdbLx9yzFJlA==
-Date:   Fri, 25 Feb 2022 11:13:41 -0600
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Stuart Yoder <stuyoder@gmail.com>,
-        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
-        Abel Vesa <abel.vesa@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        "K. Y. Srinivasan" <kys@microsoft.com>,
-        Haiyang Zhang <haiyangz@microsoft.com>,
-        Stephen Hemminger <sthemmin@microsoft.com>,
-        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Vineeth Vijayan <vneethv@linux.ibm.com>,
-        Peter Oberparleiter <oberpar@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Andy Gross <agross@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        "Michael S. Tsirkin" <mst@redhat.com>,
-        Jason Wang <jasowang@redhat.com>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, NXP Linux Team <linux-imx@nxp.com>,
-        linux-arm-kernel@lists.infradead.org, linux-hyperv@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Subject: Re: [PATCH v2 05/11] pci: use helper for safer setting of
- driver_override
-Message-ID: <20220225171341.GA364850@bhelgaas>
+        Fri, 25 Feb 2022 12:15:39 -0500
+Received: from new3-smtp.messagingengine.com (new3-smtp.messagingengine.com [66.111.4.229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81F9F210D6A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 09:15:06 -0800 (PST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailnew.nyi.internal (Postfix) with ESMTP id 055605801FE;
+        Fri, 25 Feb 2022 12:15:04 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Fri, 25 Feb 2022 12:15:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
+        :cc:content-transfer-encoding:content-type:date:date:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to; s=fm2; bh=iUgs2R/IwLQZ5n
+        lNE4MGZv9HXqqJZHvXl5mJ7B8lu5o=; b=oRmvCz91/PJg9Rrmhvsz7HwPGdd26O
+        QMm32XzeRYouAgJxLugPxt4AxVypPIKBP+sV1msLK7FHeJcNqjsoJZj6EEpDlSbu
+        fGrbeILuEzO80Ejx9TGU7Du0i4LPvmpmPdrfC3fRNJ4hWU4XBf6Km/Ya3qdbs2Wp
+        L4+YN2ZgOfVKeQWLNQSKPwerQHumRbc72w3xpNCnY8J5bEQ/KvL/5H9z7ng/7Rhb
+        p/Qa1X+ktYxkNnGNZU8riC5ELQXEP1cLgDBF9p/sB9zr04So/wvVQYwOZRjSOLmN
+        kJv0G2C/v97I6LcYSTUYxi/nJyA9xStJsC93KHXLY8b33QZmSvbvZBuw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm2; bh=iUgs2R/IwLQZ5nlNE4MGZv9HXqqJZHvXl5mJ7B8lu
+        5o=; b=T1iiqR/uxNXc8cIfG6kBDNrAwcOXxXF3KGDcPJEgbXvmaOOlyG0Cn6AWF
+        8iq2YshO0GKQLioCHRhbSwmZd+L3jCx2FE0hKIyGLYKCOr0TaMIz1BpFzFos8GH4
+        1TbbXKJg14BCk/g00YLmtLaDr4+7AZPJPtFf4pb1+Jyhs9GiQbyAyoEATBQjFkRW
+        wUj94bP8EmZBiL72HmCohVsy2MssuKDPNm+tvG39GjElz/VNJz2vs3kVjSodRXt/
+        tJ9X5XPQqe7ND3h0Obw8lIosBoIX/59QOTJds2rjlS7bbj1jca61XrbP99/11Mx8
+        ZUxZ1SG4Wpa+nXUfDXpleFzU9lkAw==
+X-ME-Sender: <xms:lg4ZYjxhBO7JhE7TKGxyWlfmalvHiOXT9KZsLHNsn86q7kYKyjmB3w>
+    <xme:lg4ZYrRqfzq6IjH1bJsIefBKwfK_KFVDI0uahv8L6F_jTPc9-rpKNkLhdQ4X7SPFx
+    3_78smvJKoyxRmc-Uw>
+X-ME-Received: <xmr:lg4ZYtV-bs9ZtwBSMtHOXZ2UjXfsTTJXsiThf04jPpoNHXFpPxf8CGQizARa7lcENS8Lk2ljcJu8g3VegXqbHouMGzoybbni-HJcDwg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrleeggdellecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefhvffufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpeforgigihhm
+    vgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrfgrth
+    htvghrnhepjeeugfegkeffgfeuvedtvddufffhjeffjeejvddvudduteehhfefhfefgeei
+    keeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmh
+    grgihimhgvsegtvghrnhhordhtvggthh
+X-ME-Proxy: <xmx:lw4ZYtjKPn9UdvYvxOJrr1nRiiOSqOQPhaXWqqszTD5G-QOW2-q6QA>
+    <xmx:lw4ZYlAyXiNcGM6ouRj99KDwqgZKdC6UooVpTmwMMtDVs7naPxwoHw>
+    <xmx:lw4ZYmLo9fKhutur7r3Z_i_FFM1ttRFQDVDwKZdhLb_oRWL_AjIDWw>
+    <xmx:mA4ZYtbH8qFZSS710j8-LVax9tjlrNipMqW4ck3WguOBrUnLp0kVKw>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 25 Feb 2022 12:15:02 -0500 (EST)
+From:   Maxime Ripard <maxime@cerno.tech>
+To:     Maxime Ripard <maxime@cerno.tech>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel.vetter@intel.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Phil Elwell <phil@raspberrypi.com>,
+        Tim Gover <tim.gover@raspberrypi.com>,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org,
+        Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dom Cobley <dom@raspberrypi.com>, Sean Paul <sean@poorly.run>
+Subject: Re: (subset) [PATCH v2 12/22] drm/msm/mdp5: Remove redundant zpos initialisation
+Date:   Fri, 25 Feb 2022 18:14:43 +0100
+Message-Id: <164580928297.726994.399905348574066667.b4-ty@cerno.tech>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220221095918.18763-13-maxime@cerno.tech>
+References: <20220221095918.18763-1-maxime@cerno.tech> <20220221095918.18763-13-maxime@cerno.tech>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0aff95ff-5b79-8ae9-48fd-720a9f27cbce@canonical.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Feb 25, 2022 at 10:36:20AM +0100, Krzysztof Kozlowski wrote:
-> On 25/02/2022 00:52, Bjorn Helgaas wrote:
-> > On Thu, Feb 24, 2022 at 08:49:15AM +0100, Krzysztof Kozlowski wrote:
-> >> On 23/02/2022 22:51, Bjorn Helgaas wrote:
-> >>> In subject, to match drivers/pci/ convention, do something like:
-> >>>
-> >>>   PCI: Use driver_set_override() instead of open-coding
-> >>>
-> >>> On Wed, Feb 23, 2022 at 08:13:04PM +0100, Krzysztof Kozlowski wrote:
-> >>>> Use a helper for seting driver_override to reduce amount of duplicated
-> >>>> code.
-> >>>> @@ -567,31 +567,15 @@ static ssize_t driver_override_store(struct device *dev,
-> >>>>  				     const char *buf, size_t count)
-> >>>>  {
-> >>>>  	struct pci_dev *pdev = to_pci_dev(dev);
-> >>>> -	char *driver_override, *old, *cp;
-> >>>> +	int ret;
-> >>>>  
-> >>>>  	/* We need to keep extra room for a newline */
-> >>>>  	if (count >= (PAGE_SIZE - 1))
-> >>>>  		return -EINVAL;
-> >>>
-> >>> This check makes no sense in the new function.  Michael alluded to
-> >>> this as well.
-> >>
-> >> I am not sure if I got your comment properly. You mean here:
-> >> 1. Move this check to driver_set_override()?
-> >> 2. Remove the check entirely?
-> > 
-> > I was mistaken about the purpose of the comment and the check.  I
-> > thought it had to do with *this* function, and this function doesn't
-> > add a newline, and there's no obvious connection with PAGE_SIZE.
-> > 
-> > But looking closer, I think the "extra room for a newline" is really
-> > to make sure that *driver_override_show()* can add a newline and have
-> > it still fit within the PAGE_SIZE sysfs limit.
-> > 
-> > Most driver_override_*() functions have the same comment, so maybe
-> > this was obvious to everybody except me :)  I do see that spi.c adds
-> > "when displaying value" at the end, which helps a lot.
-> > 
-> > Sorry for the wild goose chase.
+On Mon, 21 Feb 2022 10:59:08 +0100, Maxime Ripard wrote:
+> The mdp KMS driver will call drm_plane_create_zpos_property() with an
+> init value depending on the plane purpose.
 > 
-> I think I will move this check anyway to driver_set_override() helper,
-> because there is no particular benefit to have duplicated all over. The
-> helper will receive "count" argument so can perform all checks.
+> Since the initial value wasn't carried over in the state, the driver had
+> to set it again in mdp5_plane_reset(). However, the helpers have been
+> adjusted to set it properly at reset, so this is not needed anymore.
+> 
+> [...]
 
-Thanks, I think that would be good!
+Applied to drm/drm-misc (drm-misc-next).
 
-Bjorn
+Thanks!
+Maxime
