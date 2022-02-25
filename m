@@ -2,215 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D4804C4D7D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 19:18:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A32304C4E62
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 20:11:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230300AbiBYSS0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 13:18:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55922 "EHLO
+        id S234259AbiBYTMY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 14:12:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230292AbiBYSSY (ORCPT
+        with ESMTP id S234344AbiBYTMX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 13:18:24 -0500
-Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75549D006B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 10:17:51 -0800 (PST)
-Received: by mail-oo1-xc34.google.com with SMTP id p206-20020a4a2fd7000000b0031bfec11983so7259769oop.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 10:17:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=wxzgaXVTKy5EES1TRJ7ejkTF/2tYnEDDcA0Li/fS4aE=;
-        b=mYVpuGrtEWbchzTcq8SzisB3Dmr81a3xOW3aHe6d4yX24JJ3Vr+Th2CqS0G1Je67B1
-         Iu19HV1xT6cHIE8Z0VjU74wriirnietFRbihvYJrPGUzbgXHhiHBz+A9qP0pELuWp5RB
-         bRnr+UhecER3aTJWhtvbTKocdkStd3ogbRpzs=
+        Fri, 25 Feb 2022 14:12:23 -0500
+Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D48E420D537;
+        Fri, 25 Feb 2022 11:11:50 -0800 (PST)
+Received: by mail-oo1-f47.google.com with SMTP id x6-20020a4a4106000000b003193022319cso7626859ooa.4;
+        Fri, 25 Feb 2022 11:11:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=wxzgaXVTKy5EES1TRJ7ejkTF/2tYnEDDcA0Li/fS4aE=;
-        b=7XcJ6AyyS8aLeOeHTNrz99F87ZGii782HsShrM77obGR4T5apAVnOZ/g5ceBr8gHuk
-         fhtDD11TOWg+IdMbr4PpvCtxgb7iIRHcltEAIdTfNGWCX8n9Qo2Qrz4wctLn4qsc2v+U
-         ayREjcfpchS986VmaydCvedz9hwH0B3Rqa/9G0YDlmB73h8Pc1aGTXEgTS6Zk2r8fdqa
-         MjJFzYauBHEenGp5OVGWILMSe6Qe3+jytaw7jYe+AXfgRztfuUaKAJ0vgbZ640RVuD6p
-         hZ5DQiuPLO0lEphRJpsI8vKs8idErN4vkGCUKUkLmDw4fdDmirhUjvmDEvA6Ozccah0x
-         m39w==
-X-Gm-Message-State: AOAM530K5MiOlauS3HdEtRxq9B8qt0dypAhDX/OQByctNDtyXF+pvRNT
-        Z10eYkfSzARyfnE4afI37iqglK6xTk316RNwFVoTyQ==
-X-Google-Smtp-Source: ABdhPJwfMBN5RkiK03guTIfAYSQ9o6xUbKeaGtFGCKz0ZfpXn/qVV5a+Aj+7sZkaSz+fl2A+/TOH2UtDw3hJRPtW/Dw=
-X-Received: by 2002:a05:6870:631a:b0:d1:7d97:806 with SMTP id
- s26-20020a056870631a00b000d17d970806mr1859018oao.8.1645813070807; Fri, 25 Feb
- 2022 10:17:50 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 25 Feb 2022 10:17:50 -0800
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ptG46z6H5ifEKTx2dBnfEYgkcUc6HPFhRtrAbm9h2S0=;
+        b=S8siLbfa+uUxbstKleeGY35T4+KCDWGjThdtV2DNSH16L3ct5xGs18RsoEecyu9dke
+         3lTLGCE2Vyhy+kuS11S6uvkhzmW+yLzhQLiEPfSzwwMVLeHg8ZuZo6fcKu5bZUNFkfj4
+         MQKP43FgWnEcr1FmfVolZyoICX3F4sCoFPEGmwPNiXln4Mm6XJ/zXEkycABMMuWL2AHR
+         rQX6fseW+Y4kI9id/39CF4WkxpMUXIyyt92N8PYg6xO2WPrJGvbEl0+US7Rcx3LhibwR
+         e1vo2nrXdbWSH1paDh3rCyEr8G+1aA3JF+oyAkUC/cZBa8UkI0ACh1NazyUAKIUncpFi
+         wNdQ==
+X-Gm-Message-State: AOAM533TTQrWrefv/kbsfLG5s5DCxWc7/9YPaEAA5J/DIjoE2bXSfH+F
+        2a8j1sPzzxZuOaVVuqH/j67ZTBOTXg==
+X-Google-Smtp-Source: ABdhPJzWcs65ePV5falZWYBKART4XIExLG7Jl4rNz0RlRKlhWRGox/P8effT9Lz52v++C+k7FNY9wQ==
+X-Received: by 2002:a05:6870:70a8:b0:d3:e21:8545 with SMTP id v40-20020a05687070a800b000d30e218545mr2101513oae.321.1645816310209;
+        Fri, 25 Feb 2022 11:11:50 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id u12-20020a056808114c00b002d72b6e5676sm1887530oiu.29.2022.02.25.11.11.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Feb 2022 11:11:49 -0800 (PST)
+Received: (nullmailer pid 1267526 invoked by uid 1000);
+        Fri, 25 Feb 2022 19:11:48 -0000
+Date:   Fri, 25 Feb 2022 13:11:48 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        Baruch Siach <baruch.siach@siklu.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq6018: Add mdio bus description
+Message-ID: <Yhkp9CH0SpBKKlzZ@robh.at.kernel.org>
+References: <a4b1ad7b15c13f368b637efdb903da143b830a88.1645454002.git.baruch@tkos.co.il>
+ <5e7e06e0cb189bab4586646470894bbda572785d.1645454002.git.baruch@tkos.co.il>
 MIME-Version: 1.0
-In-Reply-To: <1645576060-3046-5-git-send-email-quic_khsieh@quicinc.com>
-References: <1645576060-3046-1-git-send-email-quic_khsieh@quicinc.com> <1645576060-3046-5-git-send-email-quic_khsieh@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Fri, 25 Feb 2022 10:17:50 -0800
-Message-ID: <CAE-0n53Vcvw+mjbKByWE2PqRAiqHuJWVngiH-8AbJAVrc3Ph4w@mail.gmail.com>
-Subject: Re: [PATCH v10 4/4] drm/msm/dp: enable widebus feature for display port
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@linux.ie, bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        dmitry.baryshkov@linaro.org, dri-devel@lists.freedesktop.org,
-        robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_aravindh@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5e7e06e0cb189bab4586646470894bbda572785d.1645454002.git.baruch@tkos.co.il>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2022-02-22 16:27:40)
-> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> index 6ae9b29..c789f4e 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> @@ -483,6 +485,22 @@ int dp_catalog_ctrl_set_pattern(struct dp_catalog *dp_catalog,
->  }
->
->  /**
-> + * dp_catalog_hw_revision() - retrieve DP hw revision
-> + *
-> + * @dp_catalog: DP catalog structure
-> + *
-> + * Return: DP controller hw revision
-> + *
-> + */
-> +u32 dp_catalog_hw_revision(struct dp_catalog *dp_catalog)
+On Mon, Feb 21, 2022 at 04:33:22PM +0200, Baruch Siach wrote:
+> From: Baruch Siach <baruch.siach@siklu.com>
+> 
+> The IPQ60xx has the same MDIO bug block as IPQ4019. Add IO range and
+> clock resources description.
+> 
+> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
+> ---
+>  arch/arm64/boot/dts/qcom/ipq6018.dtsi | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> index 5eb7dc9cc231..093011d18ca6 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> @@ -635,6 +635,16 @@ qrtr_requests {
+>  			};
+>  		};
+>  
+> +		mdio: mdio@90000 {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			compatible = "qcom,ipq6018-mdio", "qcom,ipq4019-mdio";
 
-Could be const
+This looks correct with the fallback based on your description, but it
+doesn't match the schema.
 
-> +{
-> +       struct dp_catalog_private *catalog = container_of(dp_catalog,
-> +                               struct dp_catalog_private, dp_catalog);
-> +
-> +       return dp_read_ahb(catalog, REG_DP_HW_VERSION);
+You tested this with the schemas, right? That's why we have them.
 
-If dp_read_ahb() took a const catalog, which it could.
-
-> +}
+> +			reg = <0x0 0x90000 0x0 0x64>;
+> +			clocks = <&gcc GCC_MDIO_AHB_CLK>;
+> +			clock-names = "gcc_mdio_ahb_clk";
+> +			status = "disabled";
+> +		};
 > +
-> +/**
->   * dp_catalog_ctrl_reset() - reset DP controller
->   *
->   * @dp_catalog: DP catalog structure
-> @@ -743,6 +761,7 @@ int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog)
->  {
->         struct dp_catalog_private *catalog = container_of(dp_catalog,
->                                 struct dp_catalog_private, dp_catalog);
-> +       u32 reg;
->
->         dp_write_link(catalog, REG_DP_TOTAL_HOR_VER,
->                                 dp_catalog->total);
-> @@ -751,7 +770,18 @@ int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog)
->         dp_write_link(catalog, REG_DP_HSYNC_VSYNC_WIDTH_POLARITY,
->                                 dp_catalog->width_blanking);
->         dp_write_link(catalog, REG_DP_ACTIVE_HOR_VER, dp_catalog->dp_active);
-> -       dp_write_p0(catalog, MMSS_DP_INTF_CONFIG, 0);
-> +
-> +       reg = dp_read_p0(catalog, MMSS_DP_INTF_CONFIG);
-> +
-> +       if (dp_catalog->wide_bus_en)
-> +               reg |= DP_INTF_CONFIG_DATABUS_WIDEN;
-> +       else
-> +               reg &= ~DP_INTF_CONFIG_DATABUS_WIDEN;
-> +
-> +
-> +       DRM_DEBUG_DP("wide_bus_en=%d reg=%x\n", dp_catalog->wide_bus_en, reg);
-
-Use %#x to get 0x prefix on the hex please.
-
-> +
-> +       dp_write_p0(catalog, MMSS_DP_INTF_CONFIG, reg);
->         return 0;
->  }
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> index 2363a2d..a0a5fbb 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> @@ -17,6 +17,7 @@ struct dp_ctrl {
->         bool orientation;
->         atomic_t aborted;
->         u32 pixel_rate;
-> +       bool wide_bus_en;
->  };
->
->  int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset);
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 7cc4d21..ba76358 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -1437,6 +1445,15 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
->         dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
->  }
->
-> +bool msm_dp_wide_bus_available(struct msm_dp *dp_display)
-
-const?
-
-> +{
-> +       struct dp_display_private *dp;
-> +
-> +       dp = container_of(dp_display, struct dp_display_private, dp_display);
-> +
-> +       return dp->wide_bus_en;
-> +}
-> +
->  void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
->  {
->         struct dp_display_private *dp;
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-> index e3adcd5..b718cc9 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
-> @@ -24,6 +24,8 @@ struct msm_dp {
->
->         hdmi_codec_plugged_cb plugged_cb;
->
-> +       bool wide_bus_en;
-> +
->         u32 max_pclk_khz;
->
->         u32 max_dp_lanes;
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index d7574e6..d413deb 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -399,6 +399,7 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display);
->  void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp_display);
->
->  void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor);
-> +bool msm_dp_wide_bus_available(struct msm_dp *dp_display);
->
->  #else
->  static inline int __init msm_dp_register(void)
-> @@ -449,6 +450,11 @@ static inline void msm_dp_debugfs_init(struct msm_dp *dp_display,
->  {
->  }
->
-> +static inline bool msm_dp_wide_bus_available(struct msm_dp *dp_display)
-
-const?
-
-> +{
-> +       return false;
-> +}
-> +
->  #endif
->
->  void __init msm_mdp_register(void);
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
+>  		qusb_phy_1: qusb@59000 {
+>  			compatible = "qcom,ipq6018-qusb2-phy";
+>  			reg = <0x0 0x059000 0x0 0x180>;
+> -- 
+> 2.34.1
+> 
+> 
