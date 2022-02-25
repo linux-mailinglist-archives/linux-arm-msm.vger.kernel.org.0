@@ -2,58 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10E2D4C4539
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 14:04:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F4734C464C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 14:28:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240866AbiBYNEb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 08:04:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35784 "EHLO
+        id S241328AbiBYN2l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 08:28:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240860AbiBYNEb (ORCPT
+        with ESMTP id S241330AbiBYN2j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 08:04:31 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8F971E5218;
-        Fri, 25 Feb 2022 05:03:58 -0800 (PST)
+        Fri, 25 Feb 2022 08:28:39 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C38351CC7C3;
+        Fri, 25 Feb 2022 05:28:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645794239; x=1677330239;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=SVcnr/MKuVL+9FJHAqv0VJ7SxmLSFd6NhR7e4rPAJBM=;
-  b=PzLdfcPLO9qb7RDjRYl+2bAiGCaRKctadOkisRazbC5IW7aQg8WWRWYM
-   K1VrpwWUB8qMJpAOQnUJjAIPdeB0WutY7dZ2KISWeVapGJ6DJwgYBFqIq
-   aF+dLGs/lDNTXKtwwPPn5RHm3Bd94C6blYVHp4vVfUjhzip/NXKe+KAwY
-   M=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 25 Feb 2022 05:03:58 -0800
+  t=1645795688; x=1677331688;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=E2ShHUOrtOZLWXAXYu6EW8hVXUIjgHz04oYFBI5vdm0=;
+  b=bu6WDsCuH0zyq8gA2ZGm/LGcAT8WzIJIEFBqQ2g4ceGti9ZHjo9gnbTj
+   EUVSPQeinrJVt48tO6eaT0uBoka6CbTh3yQLxiJg5gYAx6ou8GyyOXbgA
+   nGFvg4hfMSjI6SXiDq2YMuUER66TglM8mLN2NELEQDEl/6d0fZGDS2Ffn
+   k=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 25 Feb 2022 05:28:07 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2022 05:03:58 -0800
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2022 05:28:06 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Fri, 25 Feb 2022 05:03:58 -0800
-Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
+ 15.2.986.15; Fri, 25 Feb 2022 05:28:06 -0800
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Fri, 25 Feb 2022 05:03:54 -0800
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-To:     <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <pure.logic@nexus-software.ie>,
-        <bjorn.andersson@linaro.org>, <greg@kroah.com>, <robh@kernel.org>
-CC:     <linux-kernel@vger.kernel.org>, <quic_rjendra@quicinc.com>,
-        <quic_saipraka@quicinc.com>, <quic_schowdhu@quicinc.com>
-Subject: [PATCH V2 2/2] Revert "arm64: dts: qcom: sc7280: Add EUD dt node and dwc3 connector"
-Date:   Fri, 25 Feb 2022 18:33:01 +0530
-Message-ID: <8c863e7e76003511dff36383b518ab66d2dd6552.1645793187.git.quic_schowdhu@quicinc.com>
+ 15.2.986.15; Fri, 25 Feb 2022 05:27:59 -0800
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@codeaurora.org>,
+        <perex@perex.cz>, <tiwai@suse.com>,
+        <srinivas.kandagatla@linaro.org>, <rohitkr@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>, <koul@kernel.org>,
+        <yung-chuan.liao@linux.intel.com>,
+        <pierre-louis.bossart@linux.intel.com>, <sanyog.r.kale@intel.com>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
+Subject: [PATCH] soundwire: qcom: remove redundant wait for completion
+Date:   Fri, 25 Feb 2022 18:57:47 +0530
+Message-ID: <1645795667-20176-1-git-send-email-quic_srivasam@quicinc.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1645793187.git.quic_schowdhu@quicinc.com>
-References: <cover.1645793187.git.quic_schowdhu@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
@@ -65,72 +69,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This reverts commit a0c68e493007a8c72b6b00f6ac95590a86edc937.
+Remove wait_for_completion_timeout from soundwire probe
+as it seems unnecessary and device enumeration is anyway not
+happening here.
+Also, as device enumeration event is dependent on wcd938x probe to be
+completed, its of no use waiting here.
 
-Revert all the changes to add the Embedded USB Debugger(EUD) Node
-in the device tree, the connector node and also changes to usb2 Node
-associated with this.The changes need to be reverted as DT changes
-for QCOM should go through the QCOM tree and not the USB tree.
-
-Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 36 ------------------------------------
- 1 file changed, 36 deletions(-)
+ drivers/soundwire/qcom.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 96917fe..937c2e0 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2583,12 +2583,6 @@
- 				phys = <&usb_2_hsphy>;
- 				phy-names = "usb2-phy";
- 				maximum-speed = "high-speed";
--				usb-role-switch;
--				port {
--					usb2_role_switch: endpoint {
--						remote-endpoint = <&eud_ep>;
--					};
--				};
- 			};
- 		};
+diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+index 5481341..9a32a24 100644
+--- a/drivers/soundwire/qcom.c
++++ b/drivers/soundwire/qcom.c
+@@ -1309,8 +1309,6 @@ static int qcom_swrm_probe(struct platform_device *pdev)
+ 	}
  
-@@ -2630,36 +2624,6 @@
- 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
--		eud: eud@88e0000 {
--			compatible = "qcom,sc7280-eud","qcom,eud";
--			reg = <0 0x88e0000 0 0x2000>,
--			      <0 0x88e2000 0 0x1000>;
--			interrupts-extended = <&pdc 11 IRQ_TYPE_LEVEL_HIGH>;
--			ports {
--				port@0 {
--					eud_ep: endpoint {
--						remote-endpoint = <&usb2_role_switch>;
--					};
--				};
--				port@1 {
--					eud_con: endpoint {
--						remote-endpoint = <&con_eud>;
--					};
--				};
--			};
--		};
--
--		eud_typec: connector {
--			compatible = "usb-c-connector";
--			ports {
--				port@0 {
--					con_eud: endpoint {
--						remote-endpoint = <&eud_con>;
--					};
--				};
--			};
--		};
--
- 		nsp_noc: interconnect@a0c0000 {
- 			reg = <0 0x0a0c0000 0 0x10000>;
- 			compatible = "qcom,sc7280-nsp-noc";
+ 	qcom_swrm_init(ctrl);
+-	wait_for_completion_timeout(&ctrl->enumeration,
+-				    msecs_to_jiffies(TIMEOUT_MS));
+ 	ret = qcom_swrm_register_dais(ctrl);
+ 	if (ret)
+ 		goto err_master_add;
 -- 
 2.7.4
 
