@@ -2,79 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88DCA4C4CBF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 18:41:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 52A884C4D29
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 19:03:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243939AbiBYRmW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 12:42:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55092 "EHLO
+        id S231877AbiBYSEB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 13:04:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239434AbiBYRmT (ORCPT
+        with ESMTP id S231755AbiBYSEB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 12:42:19 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12E5320DB3B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 09:41:46 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id j17so5682533wrc.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 09:41:46 -0800 (PST)
+        Fri, 25 Feb 2022 13:04:01 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00DBA2255AC
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 10:03:29 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id d3so5726404wrf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 10:03:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=hK70hB1bYpjbVyMofhuVieiReBXP1Q8ylw0iiDbK2jc=;
-        b=pYT807/Ddu+PJ4DbYHixEmSpN6a5NdIAWnVilVXYLIw2wDgEczBiK+koTqrBFwnDnt
-         dBT+ZnL3Nd2Dio5qWZbHsNXD+P3Swo88zMHWww/1CdBAOr922HWY4EurVXkQ4KiJwshn
-         hfE09/D0MjzsrKFdYMIZDwvu5Kc0uslxs+k3/eHM0ulyZJG1+TYrWbSpP+kleu+/fjBU
-         8vRKc28RTptiuoehyUSq+WJ2kcobxNR25JW8eRW7FJzwOwpKbUwpsWgfKOvXASRsWCEq
-         hvj3SJc3RC/jRQxaeTOuDsj75bkqR96qNa0xvN61upLYTmE/8aHsg4JVTNIUAJK3OwVN
-         Gskg==
+        bh=myxelBqy30bTcJ8ZX5UhYCHIKBHFqSW0CcEE1Z58khk=;
+        b=jOi89ia8H2rFcP3T7+wURDQtxvvySEXht1DO13PIwFY9RJIC/QiSqLOm1dtVkdAyaf
+         AbYh/oSAOyApE9Q1Kn/SpPICp4CNncqYnBYGAUyAGspr1g1GvGGFqLdM7rgD91v4+oxu
+         PWhLDigQFqAdiLhHI/JPrvGC+Rv/YYNnLlA2yzJVwr5dfMs7NQkqFay3wPrgTRyqGr0y
+         RosJil9OVqTiq+9ABreNkg2ZbxVtQefuRQwZhgN+VwviRBOoLfunc9ocRyUzinV0JAqi
+         VyCJrUSUMQH+F3MGkSN1QVb2Czn2J3jI73XkYiBHEI5aCts8fyqgVSGdE5ov+B7vV6UQ
+         Q+RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=hK70hB1bYpjbVyMofhuVieiReBXP1Q8ylw0iiDbK2jc=;
-        b=B/OhgBVyyE1l3XjrLv4LjPvFTeattT2mN+6fXQXD8mj4AwBX2LFQNinJqYkwA9gYmX
-         ZrfD+8CVDKsJsBQBiUxZJSu4KeHhz+4k1bt+EHyX+3XVsw4JUGmxVmTUvwr73InQMykn
-         AwISWshb6KB8c5eyNHLGafFg2I3gyED7zrhEKA72CT3IF0AxO2VKi/3/k/aMeG9D/Zt5
-         CJupt+nteG97JBuX7aJndkbv7cCwQRdjVci1KDLJsOVvXC7i8Soq+n9fQipfmYswKX1W
-         qBwyWux/PjqD/r7QAf8K3svNfgA34zG6SOa3Py7bwCzkwe+TvpPO/HecWVwRsP6gpqpo
-         RDhw==
-X-Gm-Message-State: AOAM532ZocP4U6JDM/KS1szYjqTS5NcmwT6JQ5iw7jckCu2vp3QOxT5O
-        /pRHqu2+ivoXVa/5oMu9QIpywlUg64ICyw==
-X-Google-Smtp-Source: ABdhPJyqECsYMSy9W//bYsi3ZSr60A6g/+WllmvOLJTwk4EhLJjt7hkciZ9zBGH3oFXlXWDiHg4/KQ==
-X-Received: by 2002:a5d:514b:0:b0:1ee:aed1:d48f with SMTP id u11-20020a5d514b000000b001eeaed1d48fmr5708767wrt.662.1645810904477;
-        Fri, 25 Feb 2022 09:41:44 -0800 (PST)
-Received: from ?IPV6:2a01:e34:ed2f:f020:e11c:33b1:8704:339f? ([2a01:e34:ed2f:f020:e11c:33b1:8704:339f])
-        by smtp.googlemail.com with ESMTPSA id z5-20020adfdf85000000b001e713f774d3sm2850442wrl.61.2022.02.25.09.41.43
+        bh=myxelBqy30bTcJ8ZX5UhYCHIKBHFqSW0CcEE1Z58khk=;
+        b=2GKOE84IQR52TVCPCWW18McxYDrG+n1El1/0uA52NL7qMFlVb6U1q6xNbuKDZhwZtJ
+         3tGesiY4/kVkpHpjUifZx/o9SgPP5pMpviKOimLub18mQ/VZF4EBGsvmV1ORb0bs+mG2
+         dfO6cWj8vwJ0dnfJ9D7+vSH4WjUix3ZUJRFrV5kedXM9CmMLN2McpMG2n8hmQ0qeQYxZ
+         8hZZ040FW8qZBpJYJHFn5YUG/bngp61mScIt10FGpLfaCzZDf4gZnRWUQgXJtn/X2NxE
+         DNsupboKyH74J1wOBN5J2/8Oqs2USxsLIBOnsNDwPxR+e4YBNJlVeaMrCxmLHSDTIVxe
+         ESXw==
+X-Gm-Message-State: AOAM531mS+N3LqPDltwRqu1zEaGUA/ergrRNOPsxSvQEiclM/QgvuudP
+        Az5CixeA00I+zWalI7Buz2yYQw==
+X-Google-Smtp-Source: ABdhPJxjMNMdYhsq1gDFcmAYq8MGRlkuy47ls/d6GXdHncZa9U6DNBLuj8UsSq1feDuCyGWhxSUoJg==
+X-Received: by 2002:a5d:5245:0:b0:1ed:9eca:cf3d with SMTP id k5-20020a5d5245000000b001ed9ecacf3dmr6811167wrc.666.1645812207584;
+        Fri, 25 Feb 2022 10:03:27 -0800 (PST)
+Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
+        by smtp.googlemail.com with ESMTPSA id s3-20020adfbc03000000b001e4b0e4a7fdsm2918057wrg.93.2022.02.25.10.03.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Feb 2022 09:41:43 -0800 (PST)
-Message-ID: <3abfc379-d353-6caf-0cf0-83559a460be6@linaro.org>
-Date:   Fri, 25 Feb 2022 18:41:42 +0100
+        Fri, 25 Feb 2022 10:03:26 -0800 (PST)
+Message-ID: <4811be6f-7e86-2a62-94cf-98504d5e64e7@linaro.org>
+Date:   Fri, 25 Feb 2022 18:03:25 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.0
-Subject: Re: [PATCH v3] drivers: thermal: tsens: respect thermal_device_mode
- in threshold irq reporting
+Subject: Re: [PATCH v2] soundwire: qcom: remove redundant wait for completion
 Content-Language: en-US
-To:     Benjamin Li <benl@squareup.com>
-Cc:     Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zac Crosby <zac@squareup.com>, Andy Gross <agross@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220120200153.1214-1-benl@squareup.com>
- <422bd780-354d-d4ac-7b7a-8060325fc13e@linaro.org>
- <CACOsgWZ7KFSqC21sSq7hGYk_g2RoKTPPfoYQwcWmwCNSx5c-YQ@mail.gmail.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <CACOsgWZ7KFSqC21sSq7hGYk_g2RoKTPPfoYQwcWmwCNSx5c-YQ@mail.gmail.com>
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, quic_plai@quicinc.com,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org, yung-chuan.liao@linux.intel.com,
+        sanyog.r.kale@intel.com
+Cc:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <1645800257-27025-1-git-send-email-quic_srivasam@quicinc.com>
+ <a99a59eb-cd59-f566-b98d-486c94f32eec@linaro.org>
+ <06650d56-eed3-73ad-d6b4-6b56a5a70669@linux.intel.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <06650d56-eed3-73ad-d6b4-6b56a5a70669@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,39 +84,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/02/2022 17:46, Benjamin Li wrote:
-> On Fri, Feb 25, 2022 at 6:02 AM Daniel Lezcano
-> <daniel.lezcano@linaro.org> wrote:
->>> Some drivers that support thermal zone disabling implement a set_mode
->>> operation and simply disable the sensor or the relevant IRQ(s), so they
->>> actually don't log anything when zones are disabled. These drivers are
->>> imx_thermal.c, intel_quark_dts_thermal.c, and int3400_thermal.c.
->>>
->>> For tsens.c, implementing a change_mode would require migrating the driver
->>> from devm_thermal_zone_of_sensor_register to thermal_zone_device_register
->>> (or updating thermal_of.c to add a change_mode operation in thermal_zone_
->>> of_device_ops).
->>>
->>> stm_thermal.c seems to use this patch's model of not disabling IRQs when
->>> the zone is disabled (they still perform the thermal_zone_device_update
->>> upon IRQ, but return -EAGAIN from their get_temp).
->>
->> What is the concern by changing the core code to have a correct handling
->> of the disabled / enabled state in this driver ? (and by this way give
->> the opportunity to other drivers to fix their code)'
+
+
+On 25/02/2022 15:43, Pierre-Louis Bossart wrote:
 > 
-> It seems fine, is that the preference? Updating thermal_of.c to add a
-> change_mode
-> operation in thermal_zone_of_device_ops?
+> 
+> On 2/25/22 08:45, Srinivas Kandagatla wrote:
+>>
+>>
+>> On 25/02/2022 14:44, Srinivasa Rao Mandadapu wrote:
+>>> Remove wait_for_completion_timeout from soundwire probe as it seems
+>>> unnecessary and device enumeration is anyway not happening here,
+>>> hence this api is blocking till it completes max wait time.
+>>> Also, as device enumeration event is dependent on wcd938x probe to be
+>>> completed, its of no use waiting here.
+>>> Waiting here increasing the boot time almost 4 seconds and impacting
+>>> other modules like touch screen.
+>>>
+>>> Fixes: 06dd96738d618 ("soundwire: qcom: wait for enumeration to be
+>>> complete in probe")
+>>>
+>>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>>> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>>> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>>
+>> LGTM,
+>>
+>> Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> 
+> I don't get the idea, sorry.
+> 
+> If you look at the code, these are the cases where this 'struct
+> completion' is used
+> 
+> 	struct completion enumeration;
+> 	complete(&ctrl->enumeration);
+> 	/* Enable Auto enumeration */
+> 	init_completion(&ctrl->enumeration);
+> 	wait_for_completion_timeout(&ctrl->enumeration,
+> 
+> 
+> so if you remove the wait_for_completeion, then you might just as well
+> remove the whole thing and revert 06dd96738d618
+> 
+> what am I missing?
+Yes, that makes more sense to revert it, as it is the only user of this 
+completion.
+We could add it back when we really need this again in pm runtime setup 
+if required.
 
-I'm not a big fan of this duplicated ops structure but preferably it 
-would be better to put it there (except if you see a better way to do it)
-
-
-
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+--srini
+> 
+> 
+>>> ---
+>>>    drivers/soundwire/qcom.c | 2 --
+>>>    1 file changed, 2 deletions(-)
+>>>
+>>> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+>>> index 5481341..9a32a24 100644
+>>> --- a/drivers/soundwire/qcom.c
+>>> +++ b/drivers/soundwire/qcom.c
+>>> @@ -1309,8 +1309,6 @@ static int qcom_swrm_probe(struct
+>>> platform_device *pdev)
+>>>        }
+>>>          qcom_swrm_init(ctrl);
+>>> -    wait_for_completion_timeout(&ctrl->enumeration,
+>>> -                    msecs_to_jiffies(TIMEOUT_MS));
+>>>        ret = qcom_swrm_register_dais(ctrl);
+>>>        if (ret)
+>>>            goto err_master_add;
