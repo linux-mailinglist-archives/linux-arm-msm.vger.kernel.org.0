@@ -2,59 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D4E64C473A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 15:16:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B97564C4757
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 15:21:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241713AbiBYOQt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 09:16:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40170 "EHLO
+        id S234634AbiBYOWB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 09:22:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229872AbiBYOQq (ORCPT
+        with ESMTP id S231362AbiBYOWA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 09:16:46 -0500
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C125210473;
-        Fri, 25 Feb 2022 06:16:14 -0800 (PST)
-Received: by mail-oi1-f174.google.com with SMTP id 12so7510463oix.12;
-        Fri, 25 Feb 2022 06:16:14 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=u34k0AC5/CDX3ztycNN10YHu6FGX1mXLVB5DOobgxjQ=;
-        b=3mnk1oF+UiVL/vyBmvaRpyjANF41RKqyqDD0IGKhgkAgWF24RGaImqUndKubkH5r9S
-         wtLllIwBFfEjBka3glEcIRqTERAMP57PvFHzH4Tl2rumTzThe1sE8ECKoBnoMgybJkcb
-         3qrKycpVzobw2JGXW4ukveHqRtmHjKFdYm63asGXSNJb4VJf0LEN3Lyv2pSv0r5inc8h
-         t6TgCaLAhf2ndxT3pYSqgCwiKXe2mM2A0z0pg26fcI9T2dCJ1qoCyWW3XuyDaw9HH340
-         3yZVeuSz2G/YxTb/7lrF10lYvW16gt5iZKBhFmSBrgKZsiedrijxUTjQUN6o2FjOgK7A
-         uFFg==
-X-Gm-Message-State: AOAM532p+mKbBsdHT1dvf8/fgl9kBHZZ0c9ri74fb1dipgf7Vl4PT+JC
-        97cU5EuiQRMDbBQBnatzx0GVlLw4qA==
-X-Google-Smtp-Source: ABdhPJzzMZgmxUhR8u/KeuADsvTo8SJ96KMpPuaxyVoSa5xh1WmCWCIHDMCoHioPv/3JyFd0UWO5OQ==
-X-Received: by 2002:a05:6808:3027:b0:2cf:d108:b59 with SMTP id ay39-20020a056808302700b002cfd1080b59mr1592705oib.309.1645798573542;
-        Fri, 25 Feb 2022 06:16:13 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id eq37-20020a056870a92500b000c6699dad62sm1357189oab.41.2022.02.25.06.16.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Feb 2022 06:16:12 -0800 (PST)
-Received: (nullmailer pid 857895 invoked by uid 1000);
-        Fri, 25 Feb 2022 14:16:07 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>
-In-Reply-To: <20220225053257.2479279-1-bjorn.andersson@linaro.org>
-References: <20220225053257.2479279-1-bjorn.andersson@linaro.org>
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add sc8280xp TLMM binding
-Date:   Fri, 25 Feb 2022 08:16:07 -0600
-Message-Id: <1645798567.343483.857894.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        Fri, 25 Feb 2022 09:22:00 -0500
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 10D8022A246;
+        Fri, 25 Feb 2022 06:21:28 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CEED2106F;
+        Fri, 25 Feb 2022 06:21:27 -0800 (PST)
+Received: from bogus (unknown [10.57.3.206])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id BC0373F5A1;
+        Fri, 25 Feb 2022 06:21:25 -0800 (PST)
+Date:   Fri, 25 Feb 2022 14:20:36 +0000
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Marc Zyngier <maz@kernel.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Valentin Schneider <valentin.schneider@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 1/3] PM: cpu: Add CPU_LAST_PM_ENTER and
+ CPU_FIRST_PM_EXIT support
+Message-ID: <20220225142036.cxh7u24wljgwu3od@bogus>
+References: <20220223125536.230224-1-shawn.guo@linaro.org>
+ <20220223125536.230224-2-shawn.guo@linaro.org>
+ <20220223193050.y7parhlmnspcyom3@bogus>
+ <20220225043311.GB269879@dragon>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220225043311.GB269879@dragon>
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,38 +56,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 24 Feb 2022 21:32:56 -0800, Bjorn Andersson wrote:
-> The Qualcomm SC8280XP platform contains a single block of registers
-> for the TLMM block. This provides pinconf and pinmux for 228 GPIOs, 2
-> UFS_RESET pins and one SDC interface.
+On Fri, Feb 25, 2022 at 12:33:11PM +0800, Shawn Guo wrote:
+> On Wed, Feb 23, 2022 at 07:30:50PM +0000, Sudeep Holla wrote:
+> > On Wed, Feb 23, 2022 at 08:55:34PM +0800, Shawn Guo wrote:
+> > > It becomes a common situation on some platforms that certain hardware
+> > > setup needs to be done on the last standing cpu, and rpmh-rsc[1] is such
+> > > an existing example.  As figuring out the last standing cpu is really
+> > > something generic, it adds CPU_LAST_PM_ENTER (and CPU_FIRST_PM_EXIT)
+> > > event support to cpu_pm helper, so that individual driver can be
+> > > notified when the last standing cpu is about to enter low power state.
+> > 
+> > Sorry for not getting back on the previous email thread.
+> > When I meant I didn't want to use CPU_CLUSTER_PM_{ENTER,EXIT}, I wasn't
+> > thinking new ones to be added as alternative. With this OSI cpuidle, we
+> > have introduces the concept of power domains and I was check if we can
+> > associate these requirements to them rather than introducing the first
+> > and last cpu notion. The power domains already identify them in order
+> > to turn on or off. Not sure if there is any notification mechanism in
+> > genpd/power domains. I really don't like this addition. It is disintegrating
+> > all the solutions for OSI and makes it hard to understand.
+> > 
+> > One solution I can think of(not sure if others like or if that is feasible)
+> > is to create a parent power domain that encloses all the last level CPU
+> > power domains, which means when the last one is getting powered off, you
+> > will be asked to power off and you can take whatever action you want.
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  .../pinctrl/qcom,sc8280xp-pinctrl.yaml        | 153 ++++++++++++++++++
->  1 file changed, 153 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-pinctrl.yaml
+> Thanks Sudeep for the input!  Yes, it works for me (if I understand your
+> suggestion correctly).  So the needed changes on top of the current
+> version would be:
+> 
+> 1) Declare MPM as a PD (power domain) provider and have it be the
+>    parent PD of cpu cluster (the platform has only one cluster including
+>    4 cpus).
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+[...]
 
-yamllint warnings/errors:
+> 
+> Let's me know if this is what you are asking for, thanks!
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-pinctrl.example.dt.yaml:0:0: /example-0/pinctrl@3100000: failed to match any schema with compatible: ['qcom,sc8280x-tlmm']
+Matches exactly. I don't know if there is anything I am missing to see,
+but if this possible, for me it is easier to understand as this is all
+linked to power-domains like other things in OSI cpuidle.
 
-doc reference errors (make refcheckdocs):
+So yes, I prefer this, but let us see what others have to say about this.
 
-See https://patchwork.ozlabs.org/patch/1597478
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+-- 
+Regards,
+Sudeep
