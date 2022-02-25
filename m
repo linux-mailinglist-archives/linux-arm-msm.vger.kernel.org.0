@@ -2,58 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E64EC4C4CA0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 18:37:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 88DCA4C4CBF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 18:41:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243826AbiBYRh1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 12:37:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40508 "EHLO
+        id S243939AbiBYRmW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 12:42:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234338AbiBYRh0 (ORCPT
+        with ESMTP id S239434AbiBYRmT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 12:37:26 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3302D1CDDD7;
-        Fri, 25 Feb 2022 09:36:54 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C39BF61DCC;
-        Fri, 25 Feb 2022 17:36:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBAFBC340F3;
-        Fri, 25 Feb 2022 17:36:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1645810613;
-        bh=55H8QnkGyEAbQODvLLv1iG3nCue5egT78H9wUUdabyY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hMv88cuvWCQOH6mGcVBbEzK6DWIpYvK4DnMLDdnVesDTCJ2xSdl4tsjVtFy/3CPty
-         NewkLpFWycLmp2VHz6m054taatL1WcaIq3TWBuuTqlDuL2aEtaHZwT9z4JTlTQPSGF
-         UV+TWxc26verVUXZ/YOrSa2etLOLN+rh5npH/qFYu7cMK1ISTv7AJRzL4Dgx+9fh9E
-         SkVvVGG8ppsncrUALjroOF9SkbeHtw5AvZifOEvMLF7xo7i3hOBBLg3ng/8IqiVBok
-         0wTjksjdA7NMtHOo9CVIp80OuzcO2T/ffuInbagScXHCscJlU/oAkg+ehZr7mxn6ML
-         hMadthx1UJPvw==
-Date:   Fri, 25 Feb 2022 17:36:45 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        robh+dt@kernel.org, quic_plai@quicinc.com, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org
-Subject: Re: [PATCH v4 0/2] Add power domains support for digital macro codecs
-Message-ID: <YhkTrflXM2aI1qOu@sirena.org.uk>
-References: <1645786624-12311-1-git-send-email-quic_srivasam@quicinc.com>
+        Fri, 25 Feb 2022 12:42:19 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12E5320DB3B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 09:41:46 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id j17so5682533wrc.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 09:41:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=hK70hB1bYpjbVyMofhuVieiReBXP1Q8ylw0iiDbK2jc=;
+        b=pYT807/Ddu+PJ4DbYHixEmSpN6a5NdIAWnVilVXYLIw2wDgEczBiK+koTqrBFwnDnt
+         dBT+ZnL3Nd2Dio5qWZbHsNXD+P3Swo88zMHWww/1CdBAOr922HWY4EurVXkQ4KiJwshn
+         hfE09/D0MjzsrKFdYMIZDwvu5Kc0uslxs+k3/eHM0ulyZJG1+TYrWbSpP+kleu+/fjBU
+         8vRKc28RTptiuoehyUSq+WJ2kcobxNR25JW8eRW7FJzwOwpKbUwpsWgfKOvXASRsWCEq
+         hvj3SJc3RC/jRQxaeTOuDsj75bkqR96qNa0xvN61upLYTmE/8aHsg4JVTNIUAJK3OwVN
+         Gskg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=hK70hB1bYpjbVyMofhuVieiReBXP1Q8ylw0iiDbK2jc=;
+        b=B/OhgBVyyE1l3XjrLv4LjPvFTeattT2mN+6fXQXD8mj4AwBX2LFQNinJqYkwA9gYmX
+         ZrfD+8CVDKsJsBQBiUxZJSu4KeHhz+4k1bt+EHyX+3XVsw4JUGmxVmTUvwr73InQMykn
+         AwISWshb6KB8c5eyNHLGafFg2I3gyED7zrhEKA72CT3IF0AxO2VKi/3/k/aMeG9D/Zt5
+         CJupt+nteG97JBuX7aJndkbv7cCwQRdjVci1KDLJsOVvXC7i8Soq+n9fQipfmYswKX1W
+         qBwyWux/PjqD/r7QAf8K3svNfgA34zG6SOa3Py7bwCzkwe+TvpPO/HecWVwRsP6gpqpo
+         RDhw==
+X-Gm-Message-State: AOAM532ZocP4U6JDM/KS1szYjqTS5NcmwT6JQ5iw7jckCu2vp3QOxT5O
+        /pRHqu2+ivoXVa/5oMu9QIpywlUg64ICyw==
+X-Google-Smtp-Source: ABdhPJyqECsYMSy9W//bYsi3ZSr60A6g/+WllmvOLJTwk4EhLJjt7hkciZ9zBGH3oFXlXWDiHg4/KQ==
+X-Received: by 2002:a5d:514b:0:b0:1ee:aed1:d48f with SMTP id u11-20020a5d514b000000b001eeaed1d48fmr5708767wrt.662.1645810904477;
+        Fri, 25 Feb 2022 09:41:44 -0800 (PST)
+Received: from ?IPV6:2a01:e34:ed2f:f020:e11c:33b1:8704:339f? ([2a01:e34:ed2f:f020:e11c:33b1:8704:339f])
+        by smtp.googlemail.com with ESMTPSA id z5-20020adfdf85000000b001e713f774d3sm2850442wrl.61.2022.02.25.09.41.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Feb 2022 09:41:43 -0800 (PST)
+Message-ID: <3abfc379-d353-6caf-0cf0-83559a460be6@linaro.org>
+Date:   Fri, 25 Feb 2022 18:41:42 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="B9sA1yustykLxY/n"
-Content-Disposition: inline
-In-Reply-To: <1645786624-12311-1-git-send-email-quic_srivasam@quicinc.com>
-X-Cookie: I smell a wumpus.
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v3] drivers: thermal: tsens: respect thermal_device_mode
+ in threshold irq reporting
+Content-Language: en-US
+To:     Benjamin Li <benl@squareup.com>
+Cc:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Zac Crosby <zac@squareup.com>, Andy Gross <agross@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220120200153.1214-1-benl@squareup.com>
+ <422bd780-354d-d4ac-7b7a-8060325fc13e@linaro.org>
+ <CACOsgWZ7KFSqC21sSq7hGYk_g2RoKTPPfoYQwcWmwCNSx5c-YQ@mail.gmail.com>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <CACOsgWZ7KFSqC21sSq7hGYk_g2RoKTPPfoYQwcWmwCNSx5c-YQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,30 +82,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 25/02/2022 17:46, Benjamin Li wrote:
+> On Fri, Feb 25, 2022 at 6:02 AM Daniel Lezcano
+> <daniel.lezcano@linaro.org> wrote:
+>>> Some drivers that support thermal zone disabling implement a set_mode
+>>> operation and simply disable the sensor or the relevant IRQ(s), so they
+>>> actually don't log anything when zones are disabled. These drivers are
+>>> imx_thermal.c, intel_quark_dts_thermal.c, and int3400_thermal.c.
+>>>
+>>> For tsens.c, implementing a change_mode would require migrating the driver
+>>> from devm_thermal_zone_of_sensor_register to thermal_zone_device_register
+>>> (or updating thermal_of.c to add a change_mode operation in thermal_zone_
+>>> of_device_ops).
+>>>
+>>> stm_thermal.c seems to use this patch's model of not disabling IRQs when
+>>> the zone is disabled (they still perform the thermal_zone_device_update
+>>> upon IRQ, but return -EAGAIN from their get_temp).
+>>
+>> What is the concern by changing the core code to have a correct handling
+>> of the disabled / enabled state in this driver ? (and by this way give
+>> the opportunity to other drivers to fix their code)'
+> 
+> It seems fine, is that the preference? Updating thermal_of.c to add a
+> change_mode
+> operation in thermal_zone_of_device_ops?
 
---B9sA1yustykLxY/n
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I'm not a big fan of this duplicated ops structure but preferably it 
+would be better to put it there (except if you see a better way to do it)
 
-On Fri, Feb 25, 2022 at 04:27:02PM +0530, Srinivasa Rao Mandadapu wrote:
-> This patch set is to add power domains support for RX, TX and VA macros.
 
-This conflicts with some of the other work going on with these drivers
-which got merged, could you rebase please?
 
---B9sA1yustykLxY/n
-Content-Type: application/pgp-signature; name="signature.asc"
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmIZE6wACgkQJNaLcl1U
-h9CTQgf+LVtyrqYcATwwJ43HX06LqU+W1JD8UoZhseiY/fovF4Sg5mRvGyw6pp7T
-es9X9DBynLKonb4b3h/hDFxbWkrvhXby2zJvQuWLe7qGajh0lMdXFGClAk0spXV/
-dxhBuQfeoQCeX6SdOTa81+7HSjfWADnMNQZuBe7Qr3RXPhtxAuBdWREzua9U3364
-cvzHZldWHYRVSrQkHMmDGYcf+iD09/aoix8KsnsHGt0c3sNtUcttViYYUyaZHK8n
-+NfT87FeTRKupxuwxrrlBGaP4F015+VX3AwIcSRxu6fLr2D8Iko4oc/M+HJQhXcN
-lSn+Mhv7UFP4TFzJaR/0Jx1obJ8iAw==
-=JP8I
------END PGP SIGNATURE-----
-
---B9sA1yustykLxY/n--
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
