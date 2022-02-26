@@ -2,44 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D1064C585F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Feb 2022 22:55:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 87ABB4C5888
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Feb 2022 23:42:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229786AbiBZVm0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Feb 2022 16:42:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48836 "EHLO
+        id S229902AbiBZWll (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Feb 2022 17:41:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229781AbiBZVmY (ORCPT
+        with ESMTP id S229802AbiBZWlk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Feb 2022 16:42:24 -0500
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 727EA4BB97
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Feb 2022 13:41:49 -0800 (PST)
-Received: from localhost.localdomain (abxh33.neoplus.adsl.tpnet.pl [83.9.1.33])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 3E00B3F415;
-        Sat, 26 Feb 2022 22:41:47 +0100 (CET)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-To:     ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Sat, 26 Feb 2022 17:41:40 -0500
+X-Greylist: delayed 9108 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 26 Feb 2022 14:41:05 PST
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28CB12294A6;
+        Sat, 26 Feb 2022 14:41:05 -0800 (PST)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 19ECF3E866;
+        Sat, 26 Feb 2022 23:41:03 +0100 (CET)
+Date:   Sat, 26 Feb 2022 23:41:01 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
         Jami Kettunen <jami.kettunen@somainline.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] clk: qcom: smd: Add missing MSM8998 RPM clocks
-Date:   Sat, 26 Feb 2022 22:41:26 +0100
-Message-Id: <20220226214126.21209-3-konrad.dybcio@somainline.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220226214126.21209-1-konrad.dybcio@somainline.org>
-References: <20220226214126.21209-1-konrad.dybcio@somainline.org>
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] dt-bindings: clock: add QCOM SM6125 display clock
+ bindings
+Message-ID: <20220226224101.fwp4wvlpsiedtm4m@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220226200911.230030-1-marijn.suijten@somainline.org>
+ <20220226200911.230030-3-marijn.suijten@somainline.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220226200911.230030-3-marijn.suijten@somainline.org>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -47,124 +72,166 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add missing RPM-provided clocks on msm8998 and reorder the definitions
-where needed.
+On 2022-02-26 21:09:10, Marijn Suijten wrote:
+> From: Martin Botka <martin.botka@somainline.org>
+> 
+> Add device tree bindings for display clock controller for
+> Qualcomm Technology Inc's SM6125 SoC.
+> 
+> Signed-off-by: Martin Botka <martin.botka@somainline.org>
 
-JAMI: fixed for a0384ecfe2aa ("clk: qcom: smd-rpm: De-duplicate identical entries")
-JAMI: fixed for 36354c32bd76 ("clk: qcom: smd-rpm: Add .recalc_rate hook for clk_smd_rpm_branch_ops")
-Tested-by: Jami Kettunen <jami.kettunen@somainline.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
----
- drivers/clk/qcom/clk-smd-rpm.c | 40 +++++++++++++++++++++++-----------
- 1 file changed, 27 insertions(+), 13 deletions(-)
+This of course lacks the mandatory sign-off after getting permission to
+apply my own review and mailing-list review, and resending the patch:
 
-diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
-index 418f017e933f..afc6dc930011 100644
---- a/drivers/clk/qcom/clk-smd-rpm.c
-+++ b/drivers/clk/qcom/clk-smd-rpm.c
-@@ -816,15 +816,18 @@ static const struct rpm_smd_clk_desc rpm_clk_qcs404 = {
- 	.num_clks = ARRAY_SIZE(qcs404_clks),
- };
- 
--DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(msm8998, ln_bb_clk3_pin, ln_bb_clk3_a_pin,
--				     3, 19200000);
-+DEFINE_CLK_SMD_RPM_XO_BUFFER(msm8998, ln_bb_clk3, ln_bb_clk3_a, 3, 19200000);
-+DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(msm8998, ln_bb_clk3_pin, ln_bb_clk3_a_pin, 3, 19200000);
- DEFINE_CLK_SMD_RPM(msm8998, aggre1_noc_clk, aggre1_noc_a_clk,
- 		   QCOM_SMD_RPM_AGGR_CLK, 1);
- DEFINE_CLK_SMD_RPM(msm8998, aggre2_noc_clk, aggre2_noc_a_clk,
- 		   QCOM_SMD_RPM_AGGR_CLK, 2);
- DEFINE_CLK_SMD_RPM_XO_BUFFER(msm8998, rf_clk3, rf_clk3_a, 6, 19200000);
- DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(msm8998, rf_clk3_pin, rf_clk3_a_pin, 6, 19200000);
-+
- static struct clk_smd_rpm *msm8998_clks[] = {
-+	[RPM_SMD_XO_CLK_SRC] = &sdm660_bi_tcxo,
-+	[RPM_SMD_XO_A_CLK_SRC] = &sdm660_bi_tcxo_a,
- 	[RPM_SMD_BIMC_CLK] = &msm8916_bimc_clk,
- 	[RPM_SMD_BIMC_A_CLK] = &msm8916_bimc_a_clk,
- 	[RPM_SMD_PCNOC_CLK] = &msm8916_pcnoc_clk,
-@@ -837,12 +840,22 @@ static struct clk_smd_rpm *msm8998_clks[] = {
- 	[RPM_SMD_CE1_A_CLK] = &msm8992_ce1_a_clk,
- 	[RPM_SMD_DIV_CLK1] = &msm8974_div_clk1,
- 	[RPM_SMD_DIV_A_CLK1] = &msm8974_div_a_clk1,
-+	[RPM_SMD_DIV_CLK2] = &msm8974_div_clk2,
-+	[RPM_SMD_DIV_A_CLK2] = &msm8974_div_a_clk2,
-+	[RPM_SMD_DIV_CLK3] = &msm8992_div_clk3,
-+	[RPM_SMD_DIV_A_CLK3] = &msm8992_div_clk3_a,
- 	[RPM_SMD_IPA_CLK] = &msm8976_ipa_clk,
- 	[RPM_SMD_IPA_A_CLK] = &msm8976_ipa_a_clk,
- 	[RPM_SMD_LN_BB_CLK1] = &msm8916_bb_clk1,
- 	[RPM_SMD_LN_BB_CLK1_A] = &msm8916_bb_clk1_a,
- 	[RPM_SMD_LN_BB_CLK2] = &msm8916_bb_clk2,
- 	[RPM_SMD_LN_BB_CLK2_A] = &msm8916_bb_clk2_a,
-+	[RPM_SMD_LN_BB_CLK3] = &msm8998_ln_bb_clk3,
-+	[RPM_SMD_LN_BB_CLK3_A] = &msm8998_ln_bb_clk3_a,
-+	[RPM_SMD_LN_BB_CLK1_PIN] = &msm8916_bb_clk1_pin,
-+	[RPM_SMD_LN_BB_CLK1_A_PIN] = &msm8916_bb_clk1_a_pin,
-+	[RPM_SMD_LN_BB_CLK2_PIN] = &msm8916_bb_clk2_pin,
-+	[RPM_SMD_LN_BB_CLK2_A_PIN] = &msm8916_bb_clk2_a_pin,
- 	[RPM_SMD_LN_BB_CLK3_PIN] = &msm8998_ln_bb_clk3_pin,
- 	[RPM_SMD_LN_BB_CLK3_A_PIN] = &msm8998_ln_bb_clk3_a_pin,
- 	[RPM_SMD_MMAXI_CLK] = &msm8996_mmssnoc_axi_rpm_clk,
-@@ -855,10 +868,14 @@ static struct clk_smd_rpm *msm8998_clks[] = {
- 	[RPM_SMD_QDSS_A_CLK] = &msm8916_qdss_a_clk,
- 	[RPM_SMD_RF_CLK1] = &msm8916_rf_clk1,
- 	[RPM_SMD_RF_CLK1_A] = &msm8916_rf_clk1_a,
--	[RPM_SMD_RF_CLK2_PIN] = &msm8916_rf_clk2_pin,
--	[RPM_SMD_RF_CLK2_A_PIN] = &msm8916_rf_clk2_a_pin,
-+	[RPM_SMD_RF_CLK2] = &msm8916_rf_clk2,
-+	[RPM_SMD_RF_CLK2_A] = &msm8916_rf_clk2_a,
- 	[RPM_SMD_RF_CLK3] = &msm8998_rf_clk3,
- 	[RPM_SMD_RF_CLK3_A] = &msm8998_rf_clk3_a,
-+	[RPM_SMD_RF_CLK1_PIN] = &msm8916_rf_clk1_pin,
-+	[RPM_SMD_RF_CLK1_A_PIN] = &msm8916_rf_clk1_a_pin,
-+	[RPM_SMD_RF_CLK2_PIN] = &msm8916_rf_clk2_pin,
-+	[RPM_SMD_RF_CLK2_A_PIN] = &msm8916_rf_clk2_a_pin,
- 	[RPM_SMD_RF_CLK3_PIN] = &msm8998_rf_clk3_pin,
- 	[RPM_SMD_RF_CLK3_A_PIN] = &msm8998_rf_clk3_a_pin,
- };
-@@ -868,9 +885,6 @@ static const struct rpm_smd_clk_desc rpm_clk_msm8998 = {
- 	.num_clks = ARRAY_SIZE(msm8998_clks),
- };
- 
--DEFINE_CLK_SMD_RPM_XO_BUFFER(sdm660, ln_bb_clk3, ln_bb_clk3_a, 3, 19200000);
--DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(sdm660, ln_bb_clk3_pin, ln_bb_clk3_pin_a, 3, 19200000);
--
- static struct clk_smd_rpm *sdm660_clks[] = {
- 	[RPM_SMD_XO_CLK_SRC] = &sdm660_bi_tcxo,
- 	[RPM_SMD_XO_A_CLK_SRC] = &sdm660_bi_tcxo_a,
-@@ -900,16 +914,16 @@ static struct clk_smd_rpm *sdm660_clks[] = {
- 	[RPM_SMD_LN_BB_A_CLK] = &msm8916_bb_clk1_a,
- 	[RPM_SMD_LN_BB_CLK2] = &msm8916_bb_clk2,
- 	[RPM_SMD_LN_BB_CLK2_A] = &msm8916_bb_clk2_a,
--	[RPM_SMD_LN_BB_CLK3] = &sdm660_ln_bb_clk3,
--	[RPM_SMD_LN_BB_CLK3_A] = &sdm660_ln_bb_clk3_a,
-+	[RPM_SMD_LN_BB_CLK3] = &msm8998_ln_bb_clk3,
-+	[RPM_SMD_LN_BB_CLK3_A] = &msm8998_ln_bb_clk3_a,
- 	[RPM_SMD_RF_CLK1_PIN] = &msm8916_rf_clk1_pin,
- 	[RPM_SMD_RF_CLK1_A_PIN] = &msm8916_rf_clk1_a_pin,
- 	[RPM_SMD_LN_BB_CLK1_PIN] = &msm8916_bb_clk1_pin,
- 	[RPM_SMD_LN_BB_CLK1_A_PIN] = &msm8916_bb_clk1_a_pin,
- 	[RPM_SMD_LN_BB_CLK2_PIN] = &msm8916_bb_clk2_pin,
- 	[RPM_SMD_LN_BB_CLK2_A_PIN] = &msm8916_bb_clk2_a_pin,
--	[RPM_SMD_LN_BB_CLK3_PIN] = &sdm660_ln_bb_clk3_pin,
--	[RPM_SMD_LN_BB_CLK3_A_PIN] = &sdm660_ln_bb_clk3_pin_a,
-+	[RPM_SMD_LN_BB_CLK3_PIN] = &msm8998_ln_bb_clk3_pin,
-+	[RPM_SMD_LN_BB_CLK3_A_PIN] = &msm8998_ln_bb_clk3_a_pin,
- };
- 
- static const struct rpm_smd_clk_desc rpm_clk_sdm660 = {
-@@ -1011,8 +1025,8 @@ static struct clk_smd_rpm *sm6125_clks[] = {
- 	[RPM_SMD_LN_BB_CLK1_A] = &msm8916_bb_clk1_a,
- 	[RPM_SMD_LN_BB_CLK2] = &msm8916_bb_clk2,
- 	[RPM_SMD_LN_BB_CLK2_A] = &msm8916_bb_clk2_a,
--	[RPM_SMD_LN_BB_CLK3] = &sdm660_ln_bb_clk3,
--	[RPM_SMD_LN_BB_CLK3_A] = &sdm660_ln_bb_clk3_a,
-+	[RPM_SMD_LN_BB_CLK3] = &msm8998_ln_bb_clk3,
-+	[RPM_SMD_LN_BB_CLK3_A] = &msm8998_ln_bb_clk3_a,
- 	[RPM_SMD_QUP_CLK] = &sm6125_qup_clk,
- 	[RPM_SMD_QUP_A_CLK] = &sm6125_qup_a_clk,
- 	[RPM_SMD_MMRT_CLK] = &sm6125_mmrt_clk,
--- 
-2.35.1
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 
+> ---
+>  .../bindings/clock/qcom,dispcc-sm6125.yaml    | 87 +++++++++++++++++++
+>  .../dt-bindings/clock/qcom,dispcc-sm6125.h    | 41 +++++++++
+>  2 files changed, 128 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,dispcc-sm6125.h
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
+> new file mode 100644
+> index 000000000000..3465042d0d9f
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
+> @@ -0,0 +1,87 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,dispcc-sm6125.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Display Clock Controller Binding for SM6125
+> +
+> +maintainers:
+> +  - Martin Botka <martin.botka@somainline.org>
+> +
+> +description: |
+> +  Qualcomm display clock control module which supports the clocks and
+> +  power domains on SM6125.
+> +
+> +  See also:
+> +    dt-bindings/clock/qcom,dispcc-sm6125.h
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sm6125-dispcc
+> +
+> +  clocks:
+> +    items:
+> +      - description: Board XO source
+> +      - description: Byte clock from DSI PHY0
+> +      - description: Pixel clock from DSI PHY0
+> +      - description: Pixel clock from DSI PHY1
+> +      - description: Link clock from DP PHY
+> +      - description: VCO DIV clock from DP PHY
+> +      - description: AHB config clock from GCC
+> +
+> +  clock-names:
+> +    items:
+> +      - const: bi_tcxo
+> +      - const: dsi0_phy_pll_out_byteclk
+> +      - const: dsi0_phy_pll_out_dsiclk
+> +      - const: dsi1_phy_pll_out_dsiclk
+> +      - const: dp_phy_pll_link_clk
+> +      - const: dp_phy_pll_vco_div_clk
+> +      - const: cfg_ahb_clk
+> +
+> +  '#clock-cells':
+> +    const: 1
+> +
+> +  '#power-domain-cells':
+> +    const: 1
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +  - '#clock-cells'
+> +  - '#power-domain-cells'
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,rpmcc.h>
+> +    #include <dt-bindings/clock/qcom,gcc-sm6125.h>
+> +    clock-controller@5f00000 {
+> +      compatible = "qcom,sm6125-dispcc";
+> +      reg = <0x5f00000 0x20000>;
+> +      clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
+> +               <&dsi0_phy 0>,
+> +               <&dsi0_phy 1>,
+> +               <0>,
+> +               <&dp_phy 0>,
+> +               <&dp_phy 1>,
+> +               <&gcc GCC_DISP_AHB_CLK>;
+> +      clock-names = "bi_tcxo",
+> +                    "dsi0_phy_pll_out_byteclk",
+> +                    "dsi0_phy_pll_out_dsiclk",
+> +                    "dsi1_phy_pll_out_dsiclk",
+> +                    "dp_phy_pll_link_clk",
+> +                    "dp_phy_pll_vco_div_clk",
+> +                    "cfg_ahb_clk";
+> +      #clock-cells = <1>;
+> +      #power-domain-cells = <1>;
+> +    };
+> +...
+> diff --git a/include/dt-bindings/clock/qcom,dispcc-sm6125.h b/include/dt-bindings/clock/qcom,dispcc-sm6125.h
+> new file mode 100644
+> index 000000000000..4ff974f4fcc3
+> --- /dev/null
+> +++ b/include/dt-bindings/clock/qcom,dispcc-sm6125.h
+> @@ -0,0 +1,41 @@
+> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+> +/*
+> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#ifndef _DT_BINDINGS_CLK_QCOM_DISP_CC_SM6125_H
+> +#define _DT_BINDINGS_CLK_QCOM_DISP_CC_SM6125_H
+> +
+> +#define DISP_CC_PLL0			0
+> +#define DISP_CC_MDSS_AHB_CLK		1
+> +#define DISP_CC_MDSS_AHB_CLK_SRC	2
+> +#define DISP_CC_MDSS_BYTE0_CLK		3
+> +#define DISP_CC_MDSS_BYTE0_CLK_SRC	4
+> +#define DISP_CC_MDSS_BYTE0_INTF_CLK	5
+> +#define DISP_CC_MDSS_DP_AUX_CLK		6
+> +#define DISP_CC_MDSS_DP_AUX_CLK_SRC	7
+> +#define DISP_CC_MDSS_DP_CRYPTO_CLK	8
+> +#define DISP_CC_MDSS_DP_CRYPTO_CLK_SRC	9
+> +#define DISP_CC_MDSS_DP_LINK_CLK	10
+> +#define DISP_CC_MDSS_DP_LINK_CLK_SRC	11
+> +#define DISP_CC_MDSS_DP_LINK_INTF_CLK	12
+> +#define DISP_CC_MDSS_DP_PIXEL_CLK	13
+> +#define DISP_CC_MDSS_DP_PIXEL_CLK_SRC	14
+> +#define DISP_CC_MDSS_ESC0_CLK		15
+> +#define DISP_CC_MDSS_ESC0_CLK_SRC	16
+> +#define DISP_CC_MDSS_MDP_CLK		17
+> +#define DISP_CC_MDSS_MDP_CLK_SRC	18
+> +#define DISP_CC_MDSS_MDP_LUT_CLK	19
+> +#define DISP_CC_MDSS_NON_GDSC_AHB_CLK	20
+> +#define DISP_CC_MDSS_PCLK0_CLK		21
+> +#define DISP_CC_MDSS_PCLK0_CLK_SRC	22
+> +#define DISP_CC_MDSS_ROT_CLK		23
+> +#define DISP_CC_MDSS_ROT_CLK_SRC	24
+> +#define DISP_CC_MDSS_VSYNC_CLK		25
+> +#define DISP_CC_MDSS_VSYNC_CLK_SRC	26
+> +#define DISP_CC_XO_CLK			27
+> +
+> +/* DISP_CC GDSCR */
+> +#define MDSS_GDSC			0
+> +
+> +#endif
+> -- 
+> 2.35.1
+> 
