@@ -2,410 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0266A4C5523
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Feb 2022 11:20:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D973C4C552D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Feb 2022 11:32:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230509AbiBZKVD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Feb 2022 05:21:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49200 "EHLO
+        id S231145AbiBZKc4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Feb 2022 05:32:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229819AbiBZKVC (ORCPT
+        with ESMTP id S231140AbiBZKcy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Feb 2022 05:21:02 -0500
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EE431EDA03;
-        Sat, 26 Feb 2022 02:20:28 -0800 (PST)
-Received: from localhost.localdomain (ip-213-127-118-180.ip.prioritytelecom.net [213.127.118.180])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 02483C8606;
-        Sat, 26 Feb 2022 10:20:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1645870827; bh=BBTPR8ndkMJKzpJc4293l6J8Otn5feMmw3gXpcNORDE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=hK04Tbp110tYvso8tQ7qoodu6F9dvH7vbcPoOuTYIKvaGoWSB51/Fx/aPWNzrE4TO
-         Rve3F4TLP0Jq2D+q6OEeFU3Zyco66Fpejyt7qumPwEivxTJ+BgaqkMzxlsQrl1Q8EG
-         H9jms7yd4fuf3M7KqVCwDGniPg7nqfmdCj5paRH0=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca@z3ntu.xyz>, Arnd Bergmann <arnd@arndb.de>,
-        Olof Johansson <olof@lixom.net>, soc@kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Sat, 26 Feb 2022 05:32:54 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 695D725794C;
+        Sat, 26 Feb 2022 02:32:20 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id D2407B80E9E;
+        Sat, 26 Feb 2022 10:32:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2B0C340E8;
+        Sat, 26 Feb 2022 10:32:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1645871537;
+        bh=J/i1dumb0mZxElEmXwi6DbevV9tFlTtn/ahQ4gUjGfM=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=VQ3sc0i4kFjee2QupZiMhQ0MpUFtnztiKVXCqH6ohlwYJO3Y9R0aSnIM7GaMEwKaB
+         f+agBQMCQOA1Q8k89ExF3VN8x+K3f4q/o6pmpuA3iBde2QpfIBnIprRpqNupmUOsHG
+         pijwu7HidrvZ0jjNXU8KI+V7NBsyVsnwcPFmGA3Xanjtaaal3ofgJJUBln54k4xGIt
+         TBNjwan1XrIk1/gCxSmxeckO1J7Wa5kd2vERWoMWpOxoVg/IugU4ThUryaKGgCh2H3
+         XlKGa1cNeogu0rK+2V2V0Bu2dsMQeJcZkccYQeMlF06supyUhMSafincETd5TtVsq6
+         hrrp3uGFZE/Cg==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=billy-the-mountain.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <maz@kernel.org>)
+        id 1nNuN5-00AimC-3q; Sat, 26 Feb 2022 10:32:15 +0000
+Date:   Sat, 26 Feb 2022 10:32:10 +0000
+Message-ID: <877d9h7wb9.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Thierry Reding <thierry.reding@gmail.com>
+Cc:     linux-kernel@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Joey Gouly <joey.gouly@arm.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] ARM: dts: qcom: Add support for ASUS ZenWatch 2
-Date:   Sat, 26 Feb 2022 11:19:39 +0100
-Message-Id: <20220226101939.1011551-2-luca@z3ntu.xyz>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220226101939.1011551-1-luca@z3ntu.xyz>
-References: <20220226101939.1011551-1-luca@z3ntu.xyz>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        Andy Gross <agross@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, kernel-team@android.com
+Subject: Re: [PATCH 1/5] gpio: Don't fiddle with irqchips marked as immutable
+In-Reply-To: <Yhe3neSJbAxRbt+Z@orome>
+References: <20220223154405.54912-1-maz@kernel.org>
+        <20220223154405.54912-2-maz@kernel.org>
+        <Yhe3neSJbAxRbt+Z@orome>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: thierry.reding@gmail.com, linux-kernel@vger.kernel.org, linus.walleij@linaro.org, brgl@bgdev.pl, joey.gouly@arm.com, jonathanh@nvidia.com, marcan@marcan.st, sven@svenpeter.dev, alyssa@rosenzweig.io, bjorn.andersson@linaro.org, agross@kernel.org, tglx@linutronix.de, linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for this smartwatch, based on Snapdragon 400 SoC.
+On Thu, 24 Feb 2022 16:51:41 +0000,
+Thierry Reding <thierry.reding@gmail.com> wrote:
+> 
+> On Wed, Feb 23, 2022 at 03:44:01PM +0000, Marc Zyngier wrote:
+> > In order to move away from gpiolib messing with the internals of
+> > unsuspecting irqchips, add a flag by which irqchips advertise
+> > that they are not to be messed with, and do solemnly swear that
+> > they correctly call into the gpiolib helpers wueh required.
+> > 
+> > Signed-off-by: Marc Zyngier <maz@kernel.org>
+> > ---
+> >  drivers/gpio/gpiolib.c | 7 ++++++-
+> >  include/linux/irq.h    | 2 ++
+> >  kernel/irq/debugfs.c   | 1 +
+> >  3 files changed, 9 insertions(+), 1 deletion(-)
+> 
+> I kind of like this. The bit where the const cast is essentially guarded
+> by an "immutable" flag is a bit funky, but it doesn't look like there is
+> a good way to do it by making all references const without doing a huge
+> all-at-once conversion.
 
-Currently supported functionality:
-* Internal storage
-* USB
-* Charger
-* Power button
-* Vibration motor
-* Bluetooth
-* Wifi
+Exactly. Somehow, we need to advertise it to the gpiolib code, and
+this does the job. I hope to be able to simply drop it once everthing
+is converted. One day.
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
-Please note that this patch soft-depends on "Bluetooth: hci_bcm: add
-BCM43430A0 & BCM43430A1" which I sent out yesterday.
+> I've always found it a bit irritating that irq_chip was somewhere
+> between a container for chip-specific data and an "ops" structure. I
+> think it'd be even nicer if this was split into an extra struct
+> irq_chip_ops, which could then always be const and a struct irq_chip
+> that contained primarily chip-specific data as well as a pointer to
+> struct irq_chip_ops.
 
- arch/arm/boot/dts/Makefile                    |   1 +
- .../boot/dts/qcom-apq8026-asus-sparrow.dts    | 294 ++++++++++++++++++
- arch/arm/boot/dts/qcom-msm8226.dtsi           |   9 +
- 3 files changed, 304 insertions(+)
- create mode 100644 arch/arm/boot/dts/qcom-apq8026-asus-sparrow.dts
+But that's the thing: it almost is a pure 'ops' structure. Only two
+things are getting in the way of it:
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 235ad559acb2..4b2489580f7c 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -967,6 +967,7 @@ dtb-$(CONFIG_ARCH_OXNAS) += \
- 	ox820-cloudengines-pogoplug-series-3.dtb
- dtb-$(CONFIG_ARCH_QCOM) += \
- 	qcom-apq8016-sbc.dtb \
-+	qcom-apq8026-asus-sparrow.dtb \
- 	qcom-apq8026-lg-lenok.dtb \
- 	qcom-apq8060-dragonboard.dtb \
- 	qcom-apq8064-cm-qs600.dtb \
-diff --git a/arch/arm/boot/dts/qcom-apq8026-asus-sparrow.dts b/arch/arm/boot/dts/qcom-apq8026-asus-sparrow.dts
-new file mode 100644
-index 000000000000..ace8cea27949
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom-apq8026-asus-sparrow.dts
-@@ -0,0 +1,294 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2022, Luca Weiss <luca@z3ntu.xyz>
-+ */
-+
-+/dts-v1/;
-+
-+#include "qcom-msm8226.dtsi"
-+#include "qcom-pm8226.dtsi"
-+
-+/ {
-+	model = "ASUS ZenWatch 2";
-+	compatible = "asus,sparrow", "qcom,apq8026";
-+	chassis-type = "watch";
-+	qcom,msm-id = <199 0x20000>;
-+	qcom,board-id = <8 3005>;
-+
-+	reserved-memory {
-+		sbl_region: sbl@2f00000 {
-+			reg = <0x02f00000 0x100000>;
-+			no-map;
-+		};
-+		external_image_region: external-image@3100000 {
-+			reg = <0x3100000 0x200000>;
-+			no-map;
-+		};
-+		peripheral_region: peripheral@3300000 {
-+			reg = <0x3300000 0x600000>;
-+			no-map;
-+		};
-+		adsp_region: adsp@3900000 {
-+			reg = <0x3900000 0x1400000>;
-+			no-map;
-+		};
-+		modem_region: modem@4d00000 {
-+			reg = <0x4d00000 0x1b00000>;
-+			no-map;
-+		};
-+		modem_efs_region: modem-efs@7f00000 {
-+			reg = <0x7f00000 0x100000>;
-+			no-map;
-+		};
-+	};
-+
-+	vreg_wlan: wlan-regulator {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "wl-reg";
-+		regulator-min-microvolt = <2950000>;
-+		regulator-max-microvolt = <2950000>;
-+
-+		gpio = <&tlmm 35 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&wlan_regulator_default_state>;
-+	};
-+};
-+
-+&blsp1_uart1 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&blsp1_uart1_default_state>;
-+
-+	bluetooth {
-+		compatible = "brcm,bcm43430a1-bt";
-+		max-speed = <3000000>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&bluetooth_default_state>;
-+
-+		host-wakeup-gpios = <&tlmm 48 GPIO_ACTIVE_HIGH>;
-+		device-wakeup-gpios = <&tlmm 61 GPIO_ACTIVE_HIGH>;
-+		shutdown-gpios = <&tlmm 34 GPIO_ACTIVE_HIGH>;
-+	};
-+};
-+
-+&pm8226_vib {
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	pm8226-regulators {
-+		compatible = "qcom,rpm-pm8226-regulators";
-+
-+		pm8226_s3: s3 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1300000>;
-+		};
-+		pm8226_s4: s4 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2200000>;
-+		};
-+		pm8226_s5: s5 {
-+			regulator-min-microvolt = <1150000>;
-+			regulator-max-microvolt = <1150000>;
-+		};
-+
-+		pm8226_l1: l1 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+		pm8226_l2: l2 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+		pm8226_l3: l3 {
-+			regulator-min-microvolt = <750000>;
-+			regulator-max-microvolt = <1337500>;
-+		};
-+		pm8226_l4: l4 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+		pm8226_l5: l5 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+		pm8226_l6: l6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+		pm8226_l7: l7 {
-+			regulator-min-microvolt = <1900000>;
-+			regulator-max-microvolt = <1900000>;
-+		};
-+		pm8226_l8: l8 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+		pm8226_l9: l9 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+		pm8226_l10: l10 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+		pm8226_l12: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+		pm8226_l14: l14 {
-+			regulator-min-microvolt = <2750000>;
-+			regulator-max-microvolt = <2750000>;
-+		};
-+		pm8226_l15: l15 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3000000>;
-+		};
-+		pm8226_l16: l16 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3000000>;
-+		};
-+		pm8226_l17: l17 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+		pm8226_l18: l18 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+		pm8226_l19: l19 {
-+			regulator-min-microvolt = <2850000>;
-+			regulator-max-microvolt = <2850000>;
-+		};
-+		pm8226_l20: l20 {
-+			regulator-min-microvolt = <3075000>;
-+			regulator-max-microvolt = <3075000>;
-+		};
-+		pm8226_l21: l21 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+		pm8226_l22: l22 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+		pm8226_l23: l23 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+		pm8226_l24: l24 {
-+			regulator-min-microvolt = <1300000>;
-+			regulator-max-microvolt = <1350000>;
-+		};
-+		pm8226_l25: l25 {
-+			regulator-min-microvolt = <1775000>;
-+			regulator-max-microvolt = <2125000>;
-+		};
-+		pm8226_l26: l26 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+		pm8226_l27: l27 {
-+			regulator-min-microvolt = <2050000>;
-+			regulator-max-microvolt = <2050000>;
-+		};
-+		pm8226_l28: l28 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8226_lvs1: lvs1 {};
-+	};
-+};
-+
-+&sdhc_1 {
-+	status = "okay";
-+
-+	vmmc-supply = <&pm8226_l17>;
-+	vqmmc-supply = <&pm8226_l6>;
-+
-+	bus-width = <8>;
-+	non-removable;
-+};
-+
-+&sdhc_3 {
-+	status = "okay";
-+
-+	max-frequency = <100000000>;
-+	non-removable;
-+
-+	vmmc-supply = <&vreg_wlan>;
-+	vqmmc-supply = <&pm8226_l6>;
-+
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	wifi@1 {
-+		compatible = "brcm,bcm43430a1-fmac", "brcm,bcm4329-fmac";
-+		reg = <1>;
-+
-+		interrupts-extended = <&tlmm 46 IRQ_TYPE_EDGE_FALLING>;
-+		interrupt-names = "host-wake";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&wlan_hostwake_default_state>;
-+	};
-+};
-+
-+&smbb {
-+	qcom,fast-charge-safe-current = <1500000>;
-+	qcom,fast-charge-current-limit = <350000>;
-+	qcom,fast-charge-safe-voltage = <4430000>;
-+	qcom,fast-charge-high-threshold-voltage = <4400000>;
-+	qcom,auto-recharge-threshold-voltage = <4300000>;
-+	qcom,minimum-input-voltage = <4400000>;
-+};
-+
-+&tlmm {
-+	blsp1_uart1_default_state: blsp1-uart1-default-state {
-+		pins = "gpio0", "gpio1", "gpio2", "gpio3";
-+		function = "blsp_uart1";
-+		drive-strength = <8>;
-+		bias-disable;
-+	};
-+
-+	bluetooth_default_state: bluetooth-default-state {
-+		pins = "gpio48", "gpio61";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-disable;
-+		input-enable;
-+	};
-+
-+	wlan_hostwake_default_state: wlan-hostwake-default-state {
-+		pins = "gpio46";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		input-enable;
-+	};
-+
-+	wlan_regulator_default_state: wlan-regulator-default-state {
-+		pins = "gpio35";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+};
-+
-+&usb {
-+	status = "okay";
-+	extcon = <&smbb>;
-+	dr_mode = "peripheral";
-+};
-+
-+&usb_hs_phy {
-+	extcon = <&smbb>;
-+	v1p8-supply = <&pm8226_l10>;
-+	v3p3-supply = <&pm8226_l20>;
-+};
-diff --git a/arch/arm/boot/dts/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom-msm8226.dtsi
-index dfeb47eb41a2..e24e53438b4d 100644
---- a/arch/arm/boot/dts/qcom-msm8226.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8226.dtsi
-@@ -153,6 +153,15 @@ sdhc_3: sdhci@f9864900 {
- 			status = "disabled";
- 		};
- 
-+		blsp1_uart1: serial@f991d000 {
-+			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
-+			reg = <0xf991d000 0x1000>;
-+			interrupts = <GIC_SPI 107 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc GCC_BLSP1_UART1_APPS_CLK>, <&gcc GCC_BLSP1_AHB_CLK>;
-+			clock-names = "core", "iface";
-+			status = "disabled";
-+		};
-+
- 		blsp1_uart3: serial@f991f000 {
- 			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
- 			reg = <0xf991f000 0x1000>;
+- the 'parent_dev' field: this is now sorted, as I moved it to the
+  irq_domain structure, and updated all the relevant drivers (see what
+  is currently in -next).
+
+- the .name field: it really should never be something that changes
+  from one instance of the chip to another. Which is why we have the
+  .irq_print_chip() method to handle that (and ideally we'd stick to
+  pure const names). I'm addressing this as I go, but everything in
+  drivers/irqchip/ should be fixed in -next.
+
+The "context" part really lives in irq_domain.
+
+> But again, this seems fairly tricky to pull off given all the
+> interdependencies and we can iterate on this in the future, so this
+> seems like a good enough compromise:
+> 
+> Acked-by: Thierry Reding <treding@nvidia.com>
+
+Thanks,
+
+	M.
+
 -- 
-2.35.1
-
+Without deviation from the norm, progress is not possible.
