@@ -2,143 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB3874C547E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Feb 2022 08:46:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A1D844C5510
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Feb 2022 11:04:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230252AbiBZHqr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Feb 2022 02:46:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33676 "EHLO
+        id S230354AbiBZKFN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Feb 2022 05:05:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230229AbiBZHqm (ORCPT
+        with ESMTP id S229819AbiBZKFN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Feb 2022 02:46:42 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D64A1DEA9A;
-        Fri, 25 Feb 2022 23:46:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1645861568; x=1677397568;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=RSfdJwuCbYLQ64ELpUKd+PcIHa7v60+qAk66UHs9+Vk=;
-  b=aIJAPRmXFwd1epD6mHI1Ey3nSTYv7/RYKez6CqLIzLK+qmVyjt3ukfBU
-   KizyjmR1JDhKnBUTJ3q517ygasysV3DSWyh9/FRMUF7XPbhUm2dTTSGoT
-   THL13TW98cSt4hkkOfQuIr9K1CO3oJ+BW4QCRSZxc7/uSBA6sgrJD6C09
-   s=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 25 Feb 2022 23:46:08 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2022 23:46:07 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Fri, 25 Feb 2022 23:46:07 -0800
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Fri, 25 Feb 2022 23:46:01 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@codeaurora.org>,
-        <perex@perex.cz>, <tiwai@suse.com>,
-        <srinivas.kandagatla@linaro.org>, <rohitkr@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [RESEND v4 2/2] ASoC: qcom: dt-bindings: Add bindings for power domains in lpass digital codecs
-Date:   Sat, 26 Feb 2022 13:15:31 +0530
-Message-ID: <1645861531-13829-3-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1645861531-13829-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1645861531-13829-1-git-send-email-quic_srivasam@quicinc.com>
+        Sat, 26 Feb 2022 05:05:13 -0500
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FBFB1BB738;
+        Sat, 26 Feb 2022 02:04:36 -0800 (PST)
+Received: from g550jk.localnet (ip-213-127-118-180.ip.prioritytelecom.net [213.127.118.180])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 7EFB6C8605;
+        Sat, 26 Feb 2022 10:04:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1645869873; bh=14M++uyqtpJ2bHvbR6v6//O3tEuusNJMpcS+REEUXqs=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=xVzzSlMKNrIxQmivffOp0HDrH69r5jo5kBdfQO3N6uXjNTU/3lLz8E1gQ1/Pihy1r
+         ++GwK0syHStoScnp7DOVghgfICns21IPRH4vSkY6ErWDIiML8WfApsyX2rTk1+Koby
+         PjTrTFtPW7eLGWADcvuaanq8w8cCVdHwfysoR+AI=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
+        Sebastian Reichel <sre@kernel.org>
+Subject: Re: [PATCH] Input: pm8941-pwrkey - respect reboot_mode for warm reset
+Date:   Sat, 26 Feb 2022 11:04:33 +0100
+Message-ID: <8317341.EvYhyI6sBW@g550jk>
+In-Reply-To: <20210714094045.GD11342@dragon>
+References: <20210629030509.2893-1-shawn.guo@linaro.org> <1824770.6rn2EVs8mz@g550jk> <20210714094045.GD11342@dragon>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Include power domain dt-bindings for lpass digital codecs RX, TX and
-VA macros, which are required for ADSP bypass architecture.
+Hi Shawn,
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
----
- Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml | 8 ++++++++
- Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml | 8 ++++++++
- Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml | 8 ++++++++
- 3 files changed, 24 insertions(+)
+On Mittwoch, 14. Juli 2021 11:40:46 CET Shawn Guo wrote:
+> Hi Luca,
+> 
+> On Sun, Jul 11, 2021 at 11:57:25AM +0200, Luca Weiss wrote:
+> > Hi Shawn,
+> > 
+> > On Dienstag, 29. Juni 2021 05:05:09 CEST Shawn Guo wrote:
+> > > On some devices, e.g. Sony Xperia M4 Aqua, warm reset is used to reboot
+> > > device into bootloader and recovery mode.  Instead of always doing hard
+> > > reset, add a check on reboot_mode for possible warm reset.
+> > > 
+> > > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> > > ---
+> > > 
+> > >  drivers/input/misc/pm8941-pwrkey.c | 6 +++++-
+> > >  1 file changed, 5 insertions(+), 1 deletion(-)
+> > > 
+> > > diff --git a/drivers/input/misc/pm8941-pwrkey.c
+> > > b/drivers/input/misc/pm8941-pwrkey.c index cf8104454e74..9b14d6eb1918
+> > > 100644
+> > > --- a/drivers/input/misc/pm8941-pwrkey.c
+> > > +++ b/drivers/input/misc/pm8941-pwrkey.c
+> > > @@ -27,6 +27,7 @@
+> > > 
+> > >  #define PON_PS_HOLD_RST_CTL2		0x5b
+> > >  #define  PON_PS_HOLD_ENABLE		BIT(7)
+> > >  #define  PON_PS_HOLD_TYPE_MASK		0x0f
+> > > 
+> > > +#define  PON_PS_HOLD_TYPE_WARM_RESET	1
+> > > 
+> > >  #define  PON_PS_HOLD_TYPE_SHUTDOWN	4
+> > >  #define  PON_PS_HOLD_TYPE_HARD_RESET	7
+> > > 
+> > > @@ -93,7 +94,10 @@ static int pm8941_reboot_notify(struct notifier_block
+> > > *nb, break;
+> > > 
+> > >  	case SYS_RESTART:
+> > > 
+> > >  	default:
+> > > -		reset_type = PON_PS_HOLD_TYPE_HARD_RESET;
+> > > +		if (reboot_mode == REBOOT_WARM)
+> > 
+> > This doesn't compile with CONFIG_INPUT_PM8941_PWRKEY=m
+> > 
+> >  ERROR: modpost: "reboot_mode" [drivers/input/misc/pm8941-pwrkey.ko]
+> >  undefined!
+> Thanks for the report!  I will add a patch to export the symbol.
+> 
+> > Also just to clarify, this is supposed to trigger when rebooting with
+> > LINUX_REBOOT_CMD_RESTART2 and adding an argument that way, right?
+> 
+> With either of the following two methods, 'reboot_mode' will be turned
+> into REBOOT_WARM.
+> 
+> - Boot kernel with 'reboot=warm' on cmdline
+> 
+> - Set warm mode via sysfs entry
+>   $ echo warm > /sys/kernel/reboot/mode
 
-diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml
-index bc762b3..6127df5 100644
---- a/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml
-@@ -39,6 +39,14 @@ properties:
-     items:
-       - const: mclk
- 
-+  power-domains:
-+    maxItems: 2
-+
-+  power-domain-names:
-+    items:
-+      - const: macro
-+      - const: dcodec
-+
- required:
-   - compatible
-   - reg
-diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml
-index 74f5386..3f0f99c 100644
---- a/Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml
-@@ -39,6 +39,14 @@ properties:
-     items:
-       - const: mclk
- 
-+  power-domains:
-+    maxItems: 2
-+
-+  power-domain-names:
-+    items:
-+      - const: macro
-+      - const: dcodec
-+
-   qcom,dmic-sample-rate:
-     description: dmic sample rate
-     $ref: /schemas/types.yaml#/definitions/uint32
-diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
-index 99f2c36..9868a5e 100644
---- a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
-@@ -37,6 +37,14 @@ properties:
-     items:
-       - const: fsgen
- 
-+  power-domains:
-+    maxItems: 2
-+
-+  power-domain-names:
-+    items:
-+      - const: macro
-+      - const: dcodec
-+
-   qcom,dmic-sample-rate:
-     description: dmic sample rate
-     $ref: /schemas/types.yaml#/definitions/uint32
--- 
-2.7.4
++CC Sebastian Reichel
+
+Do you have an idea how this situation should look from user space? Just using 
+LINUX_REBOOT_CMD_RESTART2 with the param won't work if the reboot mode also 
+has to be set to work - but that's also not the case on all boards.
+
+Just LINUX_REBOOT_CMD_RESTART2 works fine on newer qcom SoCs that iirc store it 
+in a pmic register that seems to survive a hard reboot.
+
+Would it be a good idea to introduce a new dt property for e.g.
+syscon-reboot-mode that makes it switch to warm reboot mode when a reboot mode 
+is passed to the kernel? That way user space wouldn't need to care whether a 
+particular board needs warm reboot or can just use the default hard reboot.
+
+Regards
+Luca
+
+> Shawn
+
+
+
 
