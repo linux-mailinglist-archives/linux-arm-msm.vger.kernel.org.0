@@ -2,80 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C34D4C518A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Feb 2022 23:31:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 82BC54C52DF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Feb 2022 02:02:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233664AbiBYWbj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 17:31:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45522 "EHLO
+        id S241003AbiBZBCi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Feb 2022 20:02:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237539AbiBYWbh (ORCPT
+        with ESMTP id S234829AbiBZBCh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 17:31:37 -0500
-Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E24C210458
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 14:31:04 -0800 (PST)
-Received: by mail-oo1-xc36.google.com with SMTP id 189-20020a4a03c6000000b003179d7b30d8so8441373ooi.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Feb 2022 14:31:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=6stLPZaGS6nvvDwpshyXkfYQ31q2L27yLoTEa6odkug=;
-        b=BVADKUGIFH+Bz3Dro3Gs/TYsaEH+nA+XwmrpLfL+vrZos9iYY47ifY/dqQ/HNuqq5M
-         1V2JXPmwcOBXBafqjVqLfIfeVznzTYtRZMx1OJ5gHDNqyX4N5uCLun6jUbGkE9nvVpZ/
-         YVUc7bOvJdesdT/U/GIxu1EIJdxZgZpfBpbSk8QQ3Z3/SB3d6J1Fr6bqvqwlOfHvMj7b
-         23rycgAIRL2evFaiSMc65U9f6MZLzHAr25lKIswG2bMpnbOSqVDd1mfLu2W43p71OFFQ
-         Z9Dqp9y7hfC8andTVv6qj1r1QRPpUEPt60+Q6DAzDVYha740SVdY4+f0+hdJRjCEo2t2
-         Z4bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=6stLPZaGS6nvvDwpshyXkfYQ31q2L27yLoTEa6odkug=;
-        b=7DZcHxSLq7jY/vVZjUEoZKu2bn5IAGRMiJZcuOrsRllh944vp2PkCipQG9SmFxL5hV
-         oNXPAFIyyn+b6ufhNigloRVhzLgwdfAtF0g6Y/DxDeF7duBPOipGvrljQghNR7nKU5li
-         bfo5LfnWF73MlBQj9oB1EVWNXHlcYQ/tiuGr1Yim6qW8Nam7viWvL2E6V5QoXHD2U7uu
-         5qLCZpAGNqdMF3K5C0eANO9ed8TSM1+sN3cFIE4xAe95RuvsNXvGBieU6s/Zw3k4P76t
-         ZVf3T57cLopROSabhweZ/vG62kzo3MUR4OmSY7YTM360Is2yeY29a17pPvUV7GWp7LCi
-         NzCg==
-X-Gm-Message-State: AOAM531c/gHg2n+r2gRsz8TRdbWPWpOqntCkwYBgLcsuEqQRzxdNLoTY
-        PStVuAE8P74Q1y/MLOLtxUP+AA==
-X-Google-Smtp-Source: ABdhPJyJ618LE128s4aGt50PcKa9gGTGS6OS3+AvbniRvT1Q1aLS/G5jaqcOrZ8I2fWH+kBdeS94+Q==
-X-Received: by 2002:a05:6870:b9b:b0:d0:effc:7620 with SMTP id lg27-20020a0568700b9b00b000d0effc7620mr2371117oab.56.1645828263696;
-        Fri, 25 Feb 2022 14:31:03 -0800 (PST)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id w11-20020a056808140b00b002c0966d9521sm2165316oiv.10.2022.02.25.14.31.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Feb 2022 14:31:02 -0800 (PST)
-Date:   Fri, 25 Feb 2022 14:32:59 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dan Carpenter <dan.carpenter@oracle.com>
-Cc:     Lee Jones <lee.jones@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        sumit.semwal@linaro.org, amit.pundir@linaro.org,
-        john.stultz@linaro.org, kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH v8 2/9] mfd: qcom-spmi-pmic: expose the PMIC revid
- information to clients
-Message-ID: <YhlZG6xJ75ieskyT@ripper>
-References: <20220221220743.541704-1-caleb.connolly@linaro.org>
- <20220221220743.541704-3-caleb.connolly@linaro.org>
- <Yhft4zNcbD3ojN6i@builder.lan>
- <YhiYY/sXMvQ4VCZd@google.com>
- <20220225090452.GP3943@kadam>
+        Fri, 25 Feb 2022 20:02:37 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC0C42036CB;
+        Fri, 25 Feb 2022 17:02:04 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 863DDB82FEA;
+        Sat, 26 Feb 2022 01:02:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C694C340E7;
+        Sat, 26 Feb 2022 01:02:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1645837322;
+        bh=f9wGFkLeWSGBEzWqLI2xtDVY/ByTASiBoT2L8HwEuTs=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=poq5h1NXaRU3oUcY34I+/bKIOLm8CKxUa7zLMYQ5tOZ/iyKx/zz9n8QeSGlgAHAzQ
+         W4d0AOeb8O5zmydkUK0GMMzP9YTe+U/wlh2QAfqRX4usMxq7CrtwFsaDIgSBBQvwWW
+         7C994qJQz/KRdRyY+UjRdeGJz0DtVlO0MFtdnvWLCzo6uxmZS7ClRD9KM4y3JINArb
+         Cy7jlaxJNM/3e49y88cNJ4IrSWk4hDslsI0k7IL3JAXsaNn2WmDFCQ/2tNsVmW6yDq
+         2WcZ+Xqm9mlV8yR3NQ2z+1mry2H2AxUGCx06MvE5wNq7gqhNkm2LH8qUJ3Y14CKj9J
+         PuqVcZsG+PhOg==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220225090452.GP3943@kadam>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20220205103613.1216218-7-j.neuschaefer@gmx.net>
+References: <20220205103613.1216218-1-j.neuschaefer@gmx.net> <20220205103613.1216218-7-j.neuschaefer@gmx.net>
+Subject: Re: [PATCH v2 6/7] clk: qcom: Declare mux table as const u32[]
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Jonathan =?utf-8?q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org
+To:     Jonathan =?utf-8?q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+        linux-clk@vger.kernel.org
+Date:   Fri, 25 Feb 2022 17:02:00 -0800
+User-Agent: alot/0.10
+Message-Id: <20220226010202.2C694C340E7@smtp.kernel.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,70 +60,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 25 Feb 01:04 PST 2022, Dan Carpenter wrote:
+Quoting Jonathan Neusch=C3=A4fer (2022-02-05 02:36:12)
+> Now that clk_register_mux_table takes a const u32 *, we can declare the
+> mux tables as const u32[].
+>=20
+> Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+> ---
 
-> On Fri, Feb 25, 2022 at 08:50:43AM +0000, Lee Jones wrote:
-> > On Thu, 24 Feb 2022, Bjorn Andersson wrote:
-> > 
-> > > On Mon 21 Feb 16:07 CST 2022, Caleb Connolly wrote:
-> > > 
-> > > > Some PMIC functions such as the RRADC need to be aware of the PMIC
-> > > > chip revision information to implement errata or otherwise adjust
-> > > > behaviour, export the PMIC information to enable this.
-> > > > 
-> > > > This is specifically required to enable the RRADC to adjust
-> > > > coefficients based on which chip fab the PMIC was produced in,
-> > > > this can vary per unique device and therefore has to be read at
-> > > > runtime.
-> > > > 
-> > > > [bugs in previous revision]
-> > > > Reported-by: kernel test robot <lkp@intel.com>
-> > > > Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-> > > 
-> > > This says is that "kernel test robot" and Dan reported that something
-> > > needed to be fixed and this patch is the fix for this.
-> > > 
-> > > So even though their emails asks for you to give them credit like this
-> > > you can't do it for new patches.
-> > 
-> > Right, or else you'd have to give credit to anyone who provided you
-> > with a review.  This could potentially grow to quite a long list.
-> > 
-> 
-> I always feel like people who find crashing bugs should get credit but
-> no credit for complaining about style.  It's like we reward people for
-> reporting bugs after it gets merged but not before.
-> 
-> We've had this debate before and people don't agree with me or they say
-> that it's fine to just include the Reported-by kbuild tags and let
-> people figure out from the context that probably kbuild didn't tell
-> people to write a new driver.
-> 
-
-I certainly would like to be able to recognize any form of review effort
-going into the evolution of a patch, but if we use Reported-by for that
-purpose we're loosing the ability to credit the effort to find the
-regressions in the kernel.
-
-
-And while it's clear that Reported-by could mean that you spotted a bug
-in a previous revision of the patch, should this then be used to denote
-anyone that came with any sort of feedback?
-
-Do we want to "repurpose" Reported-by to be a list of anyone providing
-any input to any previous revision of the patches? (Reported-by doesn't
-sound like the right tag for that to me)
-
-> Also I think that counting Reviewed-by/Acked-by tags should be
-> discouraged.  It's useful as a communication between maintainers but it
-> shouldn't be rewarded.
-> 
-
-For acked-by I definitely agree. At least in my subsystems I see a quite
-good flow of Reviewed-bys from community members and am very happy about
-that. It communicates that people approves of the patch, in contrast to
-the more common case of no one dissaproving the patch and it's merged
-just with my S-o-b...
-
-Regards,
-Bjorn
+Applied to clk-next
