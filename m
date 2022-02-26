@@ -2,56 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 82BC54C52DF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Feb 2022 02:02:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C036A4C540D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Feb 2022 06:58:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241003AbiBZBCi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Feb 2022 20:02:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60236 "EHLO
+        id S229501AbiBZF6t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Feb 2022 00:58:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234829AbiBZBCh (ORCPT
+        with ESMTP id S229468AbiBZF6s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Feb 2022 20:02:37 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC0C42036CB;
-        Fri, 25 Feb 2022 17:02:04 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 863DDB82FEA;
-        Sat, 26 Feb 2022 01:02:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C694C340E7;
-        Sat, 26 Feb 2022 01:02:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1645837322;
-        bh=f9wGFkLeWSGBEzWqLI2xtDVY/ByTASiBoT2L8HwEuTs=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=poq5h1NXaRU3oUcY34I+/bKIOLm8CKxUa7zLMYQ5tOZ/iyKx/zz9n8QeSGlgAHAzQ
-         W4d0AOeb8O5zmydkUK0GMMzP9YTe+U/wlh2QAfqRX4usMxq7CrtwFsaDIgSBBQvwWW
-         7C994qJQz/KRdRyY+UjRdeGJz0DtVlO0MFtdnvWLCzo6uxmZS7ClRD9KM4y3JINArb
-         Cy7jlaxJNM/3e49y88cNJ4IrSWk4hDslsI0k7IL3JAXsaNn2WmDFCQ/2tNsVmW6yDq
-         2WcZ+Xqm9mlV8yR3NQ2z+1mry2H2AxUGCx06MvE5wNq7gqhNkm2LH8qUJ3Y14CKj9J
-         PuqVcZsG+PhOg==
-Content-Type: text/plain; charset="utf-8"
+        Sat, 26 Feb 2022 00:58:48 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A67D932067;
+        Fri, 25 Feb 2022 21:58:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1645855094; x=1677391094;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=AmXUBSuHFySHyrVMXfN8pTiAjw657UhHtMjurHCjX2M=;
+  b=Yk3qdSqnLCsOMf/GtgQyH7Vo6791gz5s4AOHAD2aGPz4UmkIP0E/2zOl
+   +7+ZCwReJNBIUyvFiCG5Xn27Uu16WfvxnQ6Gz0yjevsuENLKZHP9LgkWm
+   SW7Jkrt/ZeKsjNjCnBeHeprURQoc3S26V+zgbiffdb3JVsf2NcfBN9WX1
+   Y=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 25 Feb 2022 21:58:14 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2022 21:58:13 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Fri, 25 Feb 2022 21:58:12 -0800
+Received: from [10.216.53.140] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Fri, 25 Feb
+ 2022 21:58:06 -0800
+Message-ID: <6e498021-bf08-3fd8-a3b8-2fcba054f4a0@quicinc.com>
+Date:   Sat, 26 Feb 2022 11:28:03 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220205103613.1216218-7-j.neuschaefer@gmx.net>
-References: <20220205103613.1216218-1-j.neuschaefer@gmx.net> <20220205103613.1216218-7-j.neuschaefer@gmx.net>
-Subject: Re: [PATCH v2 6/7] clk: qcom: Declare mux table as const u32[]
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Jonathan =?utf-8?q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org
-To:     Jonathan =?utf-8?q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-        linux-clk@vger.kernel.org
-Date:   Fri, 25 Feb 2022 17:02:00 -0800
-User-Agent: alot/0.10
-Message-Id: <20220226010202.2C694C340E7@smtp.kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH v16 6/9] ASoC: qcom: Add support for codec dma driver
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
+        <alsa-devel@alsa-project.org>, <bgoswami@codeaurora.org>,
+        <bjorn.andersson@linaro.org>, <broonie@kernel.org>,
+        <devicetree@vger.kernel.org>, <judyhsiao@chromium.org>,
+        <lgirdwood@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <perex@perex.cz>,
+        <quic_plai@quicinc.com>, <robh+dt@kernel.org>,
+        <rohitkr@codeaurora.org>, <srinivas.kandagatla@linaro.org>,
+        <tiwai@suse.com>
+CC:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <1645716828-15305-1-git-send-email-quic_srivasam@quicinc.com>
+ <1645716828-15305-7-git-send-email-quic_srivasam@quicinc.com>
+ <CAE-0n53K3Em52tTFK4zmcsf_ZzFbX4uQQ00_uH9=pq44chwyeg@mail.gmail.com>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <CAE-0n53K3Em52tTFK4zmcsf_ZzFbX4uQQ00_uH9=pq44chwyeg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -60,11 +76,162 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Jonathan Neusch=C3=A4fer (2022-02-05 02:36:12)
-> Now that clk_register_mux_table takes a const u32 *, we can declare the
-> mux tables as const u32[].
->=20
-> Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-> ---
 
-Applied to clk-next
+On 2/25/2022 5:10 AM, Stephen Boyd wrote:
+Thanks for your time Stephen!!!
+> Quoting Srinivasa Rao Mandadapu (2022-02-24 07:33:45)
+>> diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
+>> index 198f27c..b3af971 100644
+>> --- a/sound/soc/qcom/lpass-platform.c
+>> +++ b/sound/soc/qcom/lpass-platform.c
+>> @@ -684,6 +953,17 @@ static irqreturn_t lpass_dma_interrupt_handler(
+>>                  reg = LPAIF_IRQCLEAR_REG(v, LPAIF_IRQ_PORT_HOST);
+>>                  val = 0;
+>>          break;
+>> +       case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
+>> +       case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
+>> +               map = drvdata->rxtx_lpaif_map;
+>> +               reg = LPAIF_RXTX_IRQCLEAR_REG(v, LPAIF_IRQ_PORT_HOST);
+>> +               val = 0;
+>> +       break;
+>> +       case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
+>> +               map = drvdata->va_lpaif_map;
+>> +               reg = LPAIF_VA_IRQCLEAR_REG(v, LPAIF_IRQ_PORT_HOST);
+>> +               val = 0;
+>> +       break;
+> These breaks have the wrong indentation.
+Okay. will fix it.
+>
+>>          default:
+>>          dev_err(soc_runtime->dev, "%s: invalid  %d interface\n", __func__, dai_id);
+>>          return -EINVAL;
+>> @@ -791,16 +1071,115 @@ static irqreturn_t lpass_platform_hdmiif_irq(int irq, void *data)
+>>                                  return rv;
+>>                  }
+>>          }
+>> +       return IRQ_HANDLED;
+>> +}
+>> +
+>> +static irqreturn_t lpass_platform_rxtxif_irq(int irq, void *data)
+>> +{
+>> +       struct lpass_data *drvdata = data;
+>> +       struct lpass_variant *v = drvdata->variant;
+>> +       unsigned int irqs;
+>> +       irqreturn_t rv;
+>> +       int chan;
+>> +
+>> +       rv = regmap_read(drvdata->rxtx_lpaif_map,
+>> +                       LPAIF_RXTX_IRQSTAT_REG(v, LPAIF_IRQ_PORT_HOST), &irqs);
+>> +
+>> +       /* Handle per channel interrupts */
+>> +       for (chan = 0; chan < LPASS_MAX_CDC_DMA_CHANNELS; chan++) {
+>> +               if (irqs & LPAIF_IRQ_ALL(chan) && drvdata->rxtx_substream[chan]) {
+>> +                       rv = lpass_dma_interrupt_handler(
+>> +                                               drvdata->rxtx_substream[chan],
+>> +                                               drvdata, chan, irqs);
+>> +                       if (rv != IRQ_HANDLED)
+>> +                               return rv;
+>> +               }
+>> +       }
+>> +
+>> +       return IRQ_HANDLED;
+>> +}
+>> +
+>> +static irqreturn_t lpass_platform_vaif_irq(int irq, void *data)
+>> +{
+>> +       struct lpass_data *drvdata = data;
+>> +       struct lpass_variant *v = drvdata->variant;
+>> +       unsigned int irqs;
+>> +       irqreturn_t rv;
+>> +       int chan;
+>> +
+>> +       rv = regmap_read(drvdata->va_lpaif_map,
+>> +                       LPAIF_VA_IRQSTAT_REG(v, LPAIF_IRQ_PORT_HOST), &irqs);
+>>
+>> +       /* Handle per channel interrupts */
+>> +       for (chan = 0; chan < LPASS_MAX_VA_CDC_DMA_CHANNELS; chan++) {
+>> +               if (irqs & LPAIF_IRQ_ALL(chan) && drvdata->va_substream[chan]) {
+>> +                       rv = lpass_dma_interrupt_handler(
+>> +                                               drvdata->va_substream[chan],
+>> +                                               drvdata, chan, irqs);
+>> +                       if (rv != IRQ_HANDLED)
+>> +                               return rv;
+>> +               }
+>> +       }
+>>          return IRQ_HANDLED;
+>>   }
+>>
+>> +static int lpass_platform_prealloc_cdc_dma_buffer(struct snd_soc_component *component,
+>> +                                                 struct snd_pcm *pcm, int dai_id)
+>> +{
+>> +       struct lpass_data *drvdata = snd_soc_component_get_drvdata(component);
+>> +       struct snd_pcm_substream *substream;
+>> +       struct snd_dma_buffer *buf;
+>> +
+>> +       if (pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream)
+>> +               substream = pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream;
+>> +       else
+>> +               substream = pcm->streams[SNDRV_PCM_STREAM_CAPTURE].substream;
+>> +
+>> +       buf = &substream->dma_buffer;
+>> +       buf->dev.dev = pcm->card->dev;
+>> +       buf->private_data = NULL;
+>> +
+>> +       /* Assign Codec DMA buffer pointers */
+>> +       buf->dev.type = SNDRV_DMA_TYPE_CONTINUOUS;
+>> +
+>> +       switch (dai_id) {
+>> +       case LPASS_CDC_DMA_RX0 ... LPASS_CDC_DMA_RX9:
+>> +               buf->bytes = lpass_platform_rxtx_hardware.buffer_bytes_max;
+>> +               buf->addr = drvdata->rxtx_cdc_dma_lpm_buf;
+>> +               break;
+>> +       case LPASS_CDC_DMA_TX0 ... LPASS_CDC_DMA_TX8:
+>> +               buf->bytes = lpass_platform_rxtx_hardware.buffer_bytes_max;
+>> +               buf->addr = drvdata->rxtx_cdc_dma_lpm_buf + LPASS_RXTX_CDC_DMA_LPM_BUFF_SIZE;
+>> +               break;
+>> +       case LPASS_CDC_DMA_VA_TX0 ... LPASS_CDC_DMA_VA_TX8:
+>> +               buf->bytes = lpass_platform_va_hardware.buffer_bytes_max;
+>> +               buf->addr = drvdata->va_cdc_dma_lpm_buf;
+>> +               break;
+>> +       default:
+>> +               break;
+>> +       }
+>> +
+>> +       buf->area = (unsigned char * __force)memremap(buf->addr, buf->bytes, MEMREMAP_WT);
+> What's the cast and __force for now? MEMREMAP_WT is almost never used so
+Here dma_buffer structure has virtual address(buf->area) of unsigned 
+char pointer but memremap returns void pointer.
+> this looks wrong. Why can't MEMREMAP_WC be used? But if it's DMA then
+Okay. Will update the flag MEMREMAP_WT
+> why isn't dma_map_resource() being used?
+
+I am sorry bit confused here. You mean some thing like below.
+
+For Physical address mapping: buf->addr = dma_map_resource(pcm->card->dev, drvdata->va_cdc_dma_lpm_buf,
+			     buf->bytes, DMA_BIDIRECTIONAL, 0);
+For virtual address mapping. buf->area = (unsigned char * __force)memremap(buf->addr, buf->bytes, MEMREMAP_WC);
+
+>
+>> +
+>> +       return 0;
+>> +}
+>> +
+>>   static int lpass_platform_pcm_new(struct snd_soc_component *component,
+>>                                    struct snd_soc_pcm_runtime *soc_runtime)
+>>   {
+>>          struct snd_pcm *pcm = soc_runtime->pcm;
+>> +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(soc_runtime, 0);
+>> +       unsigned int dai_id = cpu_dai->driver->id;
+>> +
+>>          size_t size = lpass_platform_pcm_hardware.buffer_bytes_max;
+>>
+>> +       /*
+>> +        * Lpass codec dma can access only lpass lpm hardware memory.
+>> +        * ioremap is for HLOS to access hardware memory.
+>> +        */
+>> +       if (is_cdc_dma_port(dai_id))
+>> +               return lpass_platform_prealloc_cdc_dma_buffer(component, pcm, dai_id);
+>> +
+>>          return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV,
+>>                                              component->dev, size);
+>>   :
