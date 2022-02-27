@@ -2,126 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F08D4C5A77
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Feb 2022 11:24:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 166FC4C5B81
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Feb 2022 14:53:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229670AbiB0KYy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Feb 2022 05:24:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55220 "EHLO
+        id S231294AbiB0Nx3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Feb 2022 08:53:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229600AbiB0KYx (ORCPT
+        with ESMTP id S231261AbiB0Nx0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Feb 2022 05:24:53 -0500
+        Sun, 27 Feb 2022 08:53:26 -0500
 Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4918B1E3CF
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Feb 2022 02:24:17 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 059E2E0A3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Feb 2022 05:52:49 -0800 (PST)
 Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com [209.85.208.69])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 06B093FCAA
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Feb 2022 10:24:16 +0000 (UTC)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id E1BAC40306
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Feb 2022 13:52:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1645957456;
-        bh=gFalKRe8JlGPelOo/R9VR3IL4dqyePAFZHwDnlwRlEk=;
-        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-         In-Reply-To:Content-Type;
-        b=VkrIilcmGSywaYul+MfgVPHfCS+eszwAVdvvYAKa3YMuxGDkm+5rkDL7eT77QotuT
-         7yCf1uyw80BhArcYevCNWVvKaq0jtivxq2dHhFH3I7wNVpoPTnG5TmZepgSk1bndYs
-         h3i+GkU0zDI9M4HXwz/NNZ8aiWMpF1PmIEAOlevbCSFu+a7R6Ve0uYcqbDPf+HdKWr
-         GaEj/XH7eUHFlLc1JONf+78EwEDbXNAXNXpnbogG1bfA9L55vHVbx0UE0BphzA2jYs
-         gZNgtEmnMLg4wDp0TKPVUlkhVFxQIjTaCI4n/mLUdNKgHArp51fay6E8HnlvT10/DD
-         R8FAx96aeKj6g==
-Received: by mail-ed1-f69.google.com with SMTP id bq19-20020a056402215300b0040f276105a4so4068954edb.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Feb 2022 02:24:16 -0800 (PST)
+        s=20210705; t=1645969962;
+        bh=beBPqukoSZCIAAv6gBbQLkWehzWMNdiQtzWlJ1M8u3o=;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version;
+        b=bEZVUNXYiu7XYHCQe+vYgzn7eDTjxcQwQYgFxD/mjIfs37XUncrBksi6gJFFIdyIN
+         fFMOw0NwMVGw77JbcjMi2arbKKxYmkd1Cr4mTEOWIuD8n2QMagoibpuaYPlRWnq98M
+         OLDyXjL21vZPGvEGSoaCx6cD9QCZivuy+x3eznzmAdyZ3xZpMX9JsX4TnARxlohbpP
+         pHFq+ko+nRzrhU70pQS3pHK0CdB79hwhkezDVbjCdDPUuJxO2AiQvLKe5xSSpqo9Pq
+         QbVgeVzYb3QKCOGiuMuC64LTVCeZ6S/LE0CX9dVl3njk7ZHSwebxd2LA8Vj80ux8kq
+         RMvaVWE4vFQkQ==
+Received: by mail-ed1-f69.google.com with SMTP id m12-20020a056402510c00b00413298c3c42so4243803edd.15
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Feb 2022 05:52:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=gFalKRe8JlGPelOo/R9VR3IL4dqyePAFZHwDnlwRlEk=;
-        b=5QDcbugTK7ldWgu9Ju9rd9PRl7tUt82er2bOV0sve+vkK1LhChMz8J78qnhXGJkS7Y
-         FrgFEfBUom5f28cnPCUQZGA0wC4dlSvZbAFZKOWCvLgqHSrYhke+pktGC2xDptE1x2QK
-         oOrcCFUJwuusMR0AoyEjh9/Ym97IDmgGjxjxPkPQPstXLP1iuHNdFtF1sS4BDxSJ8hju
-         z2o8t110tKJChNxGmfdrF9ZognQFxU6NB8sYrhx7WN4W+R4kkEoPSm9FVFrY5g5o2ChW
-         6D0Ksl/suYJYbKuwmGQ710Hpfu/akRAtWUrkzxGs2OXQfCf+Dl3KJ3GkwL5Qf04Vhh8w
-         SWbA==
-X-Gm-Message-State: AOAM532T/uUuqDsuSMWGDbS6yG3rj6kXbyotFvykmnar7HA/KirgGUJx
-        5kLxaYQ+ZLuJV3Em4MlLhERD+FkQkQHLpVQrlUtw7zvSuSG9776P+XJeuyHZ81IEErJheLvl4W9
-        9kc6wUbU2MOsq6fYmWyo25KqxFGCbY76x1A0tH6cl0Q8=
-X-Received: by 2002:a17:906:d968:b0:6d0:fc05:bdc3 with SMTP id rp8-20020a170906d96800b006d0fc05bdc3mr11342164ejb.719.1645957455521;
-        Sun, 27 Feb 2022 02:24:15 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJwl3Y8M/TgNxwE3/0YwpdpPk65xBu71Ro8HLF5s9NgyHBBUg649P8bP26tAeg/OT/XsQvSm8w==
-X-Received: by 2002:a17:906:d968:b0:6d0:fc05:bdc3 with SMTP id rp8-20020a170906d96800b006d0fc05bdc3mr11342141ejb.719.1645957455350;
-        Sun, 27 Feb 2022 02:24:15 -0800 (PST)
-Received: from [192.168.0.133] (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
-        by smtp.gmail.com with ESMTPSA id el9-20020a170907284900b006cf8e3c83e3sm3243768ejc.168.2022.02.27.02.24.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 27 Feb 2022 02:24:14 -0800 (PST)
-Message-ID: <8ba5fb1b-2b5f-e625-0dbe-2acc3b6656e7@canonical.com>
-Date:   Sun, 27 Feb 2022 11:24:13 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v2 01/15] dt-bindings: ufs: add common platform bindings
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Wei Xu <xuwei5@hisilicon.com>, Nishanth Menon <nm@ti.com>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Tero Kristo <kristo@kernel.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Jan Kotas <jank@cadence.com>, Li Wei <liwei213@huawei.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Yaniv Gardi <ygardi@codeaurora.org>,
-        linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org
-References: <20220222145854.358646-1-krzysztof.kozlowski@canonical.com>
- <20220222145854.358646-2-krzysztof.kozlowski@canonical.com>
- <YhktWpoJekR2Lj0D@robh.at.kernel.org>
+        bh=beBPqukoSZCIAAv6gBbQLkWehzWMNdiQtzWlJ1M8u3o=;
+        b=xII3gLol6Mzd0hUgscxP3CbQFlBdRhvvQYBoOw7BdHxyekqfu669vnCChKpslS0MzH
+         9CALpLhorMzmC1Nv0Ul8xL6TbOVpFbsy2t5M1CKhbumIxy35tASrLCxRY45YYYvdAbxE
+         yW49cbMsOx806UXj4MAYYSOAzZEgdvEaXa+0Yrrk9XyrPOITT/+XhKD62BSwjC6hnL26
+         9ZvK/M18etPRS/MTLxy1vQDxync8YE08/GbQezDMrobw5r/TJ7rcGANTOYXOrnmLVBWJ
+         F720tAEMD0Xjl7hIT10L5eN1hA91t8AivyTkfT9/cz3lU2l+l/SZdAcJ/rdknjHhRqWb
+         Bd4Q==
+X-Gm-Message-State: AOAM532NK5F2LvrC2PmxH+sJtIp0Kj2Nks8MFtiJ5ZAALiuhJGBCgk1h
+        Ao3WNUTj3QvfuOCtJjT/yQaSQSqLYI9fxlofqRcuvaNleV2L/BlbLM0KNEd3cTqDutMdWseeCeM
+        abZx6j4saYpn5Qd6TNXhv2M/K/Cp/JkFOYrMB/yqS2gM=
+X-Received: by 2002:a05:6402:50d4:b0:413:2a27:6b56 with SMTP id h20-20020a05640250d400b004132a276b56mr15602873edb.228.1645969951024;
+        Sun, 27 Feb 2022 05:52:31 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJyMchrZ/z130i6cHNU0MCCxUHxTeH+44NX7i1itMtaADlHbWFNXu2qsfZhNkboTf+/7DLObYg==
+X-Received: by 2002:a05:6402:50d4:b0:413:2a27:6b56 with SMTP id h20-20020a05640250d400b004132a276b56mr15602826edb.228.1645969950731;
+        Sun, 27 Feb 2022 05:52:30 -0800 (PST)
+Received: from localhost.localdomain (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
+        by smtp.gmail.com with ESMTPSA id r22-20020a17090638d600b006d584aaa9c9sm3393333ejd.133.2022.02.27.05.52.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 27 Feb 2022 05:52:30 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <YhktWpoJekR2Lj0D@robh.at.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Stuart Yoder <stuyoder@gmail.com>,
+        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+        Abel Vesa <abel.vesa@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        "K. Y. Srinivasan" <kys@microsoft.com>,
+        Haiyang Zhang <haiyangz@microsoft.com>,
+        Stephen Hemminger <sthemmin@microsoft.com>,
+        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Vineeth Vijayan <vneethv@linux.ibm.com>,
+        Peter Oberparleiter <oberpar@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Andy Gross <agross@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        "Michael S. Tsirkin" <mst@redhat.com>,
+        Jason Wang <jasowang@redhat.com>, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, NXP Linux Team <linux-imx@nxp.com>,
+        linux-arm-kernel@lists.infradead.org, linux-hyperv@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Subject: [PATCH v3 00/11] Fix broken usage of driver_override (and kfree of static memory)
+Date:   Sun, 27 Feb 2022 14:52:03 +0100
+Message-Id: <20220227135214.145599-1-krzysztof.kozlowski@canonical.com>
+X-Mailer: git-send-email 2.32.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/02/2022 20:26, Rob Herring wrote:
-> On Tue, Feb 22, 2022 at 03:58:40PM +0100, Krzysztof Kozlowski wrote:
->> Add bindings for common parts (platform) of Universal Flash Storage
->> (UFS) Host Controllers in dtschema format.
->>
->> The 'freq-table-hz' is not correct in dtschema, because '-hz' suffix
->> defines uint32 type, not an array.  Therefore deprecate 'freq-table-hz'
->> and use 'freq-table' instead.
-> 
-> -hz is an array type. We can extend it to matrix if needed.
-> 
-> I do think this property is a bit questionable. Do we really need a 
-> minimum in DT and if not, wouldn't assigned-clocks-rate work? Or an OPP 
-> table.
-> 
+Hi,
 
-I think the proper solution is OPP table, see also comments from Bjorn:
-https://lore.kernel.org/all/YhUodbzxx4wbr+gy@ripper/
+This is a continuation of my old patchset from 2019. [1]
+Back then, few drivers set driver_override wrong. I fixed Exynos
+in a different way after discussions. QCOM NGD was not fixed
+and a new user appeared - IMX SCU.
 
-I would rather refrain from converting it to OPP tables, because I won't
-be able to test any changes in the driver.
+It seems "char *" in driver_override looks too consty, so we
+tend to make a mistake of storing there string literals.
 
+Changes since latest v2
+=======================
+1. Make all driver_override fields as "const char *", just like SPI
+   and VDPA. (Mark)
+2. Move "count" check to the new helper and add "count" argument. (Michael)
+3. Fix typos in docs, patch subject. Extend doc. (Michael, Bjorn)
+4. Compare pointers to reduce number of string readings in the helper.
+5. Fix clk-imx return value.
+
+Changes since latest v1 (not the old 2019 solution):
+====================================================
+https://lore.kernel.org/all/708eabb1-7b35-d525-d4c3-451d4a3de84f@rasmusvillemoes.dk/
+1. Add helper for setting driver_override.
+2. Use the helper.
+
+Dependencies (and stable):
+==========================
+1. All patches, including last three fixes, depend on the first patch
+   introducing the helper.
+2. The last three commits - fixes - are probably not backportable
+   directly, because of this dependency. I don't know how to express
+   this dependency here, since stable-kernel-rules.rst mentions only commits as
+   possible dependencies.
+
+[1] https://lore.kernel.org/all/1550484960-2392-3-git-send-email-krzk@kernel.org/
 
 Best regards,
 Krzysztof
+
+Krzysztof Kozlowski (11):
+  driver: platform: Add helper for safer setting of driver_override
+  amba: Use driver_set_override() instead of open-coding
+  fsl-mc: Use driver_set_override() instead of open-coding
+  hv: Use driver_set_override() instead of open-coding
+  PCI: Use driver_set_override() instead of open-coding
+  s390: cio: Use driver_set_override() instead of open-coding
+  spi: Use helper for safer setting of driver_override
+  vdpa: Use helper for safer setting of driver_override
+  clk: imx: scu: Fix kfree() of static memory on setting driver_override
+  slimbus: qcom-ngd: Fix kfree() of static memory on setting
+    driver_override
+  rpmsg: Fix kfree() of static memory on setting driver_override
+
+ drivers/amba/bus.c              | 28 +++---------------
+ drivers/base/driver.c           | 51 +++++++++++++++++++++++++++++++++
+ drivers/base/platform.c         | 28 +++---------------
+ drivers/bus/fsl-mc/fsl-mc-bus.c | 25 +++-------------
+ drivers/clk/imx/clk-scu.c       |  7 ++++-
+ drivers/hv/vmbus_drv.c          | 28 +++---------------
+ drivers/pci/pci-sysfs.c         | 28 +++---------------
+ drivers/rpmsg/rpmsg_core.c      |  3 +-
+ drivers/rpmsg/rpmsg_internal.h  | 13 +++++++--
+ drivers/rpmsg/rpmsg_ns.c        | 14 +++++++--
+ drivers/s390/cio/cio.h          |  7 ++++-
+ drivers/s390/cio/css.c          | 28 +++---------------
+ drivers/slimbus/qcom-ngd-ctrl.c | 13 ++++++++-
+ drivers/spi/spi.c               | 26 +++--------------
+ drivers/vdpa/vdpa.c             | 29 +++----------------
+ include/linux/amba/bus.h        |  7 ++++-
+ include/linux/device/driver.h   |  2 ++
+ include/linux/fsl/mc.h          |  6 ++--
+ include/linux/hyperv.h          |  7 ++++-
+ include/linux/pci.h             |  7 ++++-
+ include/linux/platform_device.h |  7 ++++-
+ include/linux/rpmsg.h           |  6 ++--
+ include/linux/spi/spi.h         |  2 ++
+ include/linux/vdpa.h            |  4 ++-
+ 24 files changed, 171 insertions(+), 205 deletions(-)
+
+-- 
+2.32.0
+
