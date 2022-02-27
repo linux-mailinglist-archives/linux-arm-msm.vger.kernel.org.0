@@ -2,197 +2,246 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E60C4C5A65
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Feb 2022 11:04:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BB724C5A71
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Feb 2022 11:16:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229982AbiB0KEf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Feb 2022 05:04:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56334 "EHLO
+        id S230063AbiB0KRN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Feb 2022 05:17:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229705AbiB0KEd (ORCPT
+        with ESMTP id S229941AbiB0KRJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Feb 2022 05:04:33 -0500
+        Sun, 27 Feb 2022 05:17:09 -0500
 Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 668FD5C644
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Feb 2022 02:03:57 -0800 (PST)
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com [209.85.208.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0741A6BDCC
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Feb 2022 02:16:32 -0800 (PST)
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com [209.85.218.69])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 52A4B3FCAC
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Feb 2022 10:03:55 +0000 (UTC)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id B94453F1D9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Feb 2022 10:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1645956235;
-        bh=IfVXPHlKvsF/IugNOxJ2nfDin24YI7mhh0WDRsHK5Xo=;
+        s=20210705; t=1645956990;
+        bh=kmoD7cJEJVkX+3PDX3ngx5DBAJIU55Xem09lH3DyvFU=;
         h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
          In-Reply-To:Content-Type;
-        b=P/mAev3ks6m/REqgAqjHXLVl9KPAHGZ/Ncc2NMJUUfNrHvhPodopMyItXyCVR180W
-         RaROqczYBdlKDPapvQL+s5nO/FXH/omMkqLBvDXnFURGRraBCv65VYYIySPd5EUJXr
-         9E2xNPoWZCEnZkFkWlCgPqDk81sEcTU74++b+0kAIw3WQ36k910aLmrQ/bc4BnwoGK
-         mNjn79OR/LX4TRMXYtbnZiYUvp1Q3xtJVru0dBrWGm3YPOurcud1eFdn2BRDa2xAOE
-         IJmgEHPPSJUbD5c46bFl90Y1FZS0e8vQgoYmLV8/CkOe/F+M7M/afvvfhEo7XmRXXL
-         Fzzf408yO0ebg==
-Received: by mail-ed1-f71.google.com with SMTP id e10-20020a056402190a00b00410f20467abso4037648edz.14
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Feb 2022 02:03:55 -0800 (PST)
+        b=aoKzJoNr1Es3Odo5u7zhJDU6gGIThkgoq/TpaK9S4yDlRvrMCPJYcx2CykkgJItHj
+         5owkTujBJ7ML9qFg7jlPuGdxhahip7l/iWY3OtgWqJSpJ8jmDXY21gmiuEYypb+inj
+         81nyhsmazPDsofZjisBvIBADqSIZDYHblHkbpL05dQQa5CUofEvfxOCOQ2VG6WIPnb
+         Tf/TfW/17kYtvrL3UjWIUGreGDbWvh85AXrBmn2/m6/tHrbb95Y6WYy56piUmXcWsW
+         whXPip/haTYenRVZLobVSLYQH00s3y3haU2qiVisM/Lqnyf+OgqIltbDNrj7It4Zk/
+         v10x1+qQnka5w==
+Received: by mail-ej1-f69.google.com with SMTP id d7-20020a1709061f4700b006bbf73a7becso4334105ejk.17
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Feb 2022 02:16:30 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=IfVXPHlKvsF/IugNOxJ2nfDin24YI7mhh0WDRsHK5Xo=;
-        b=n2nTQrz2kGmoNa5hsrT4DXBaqgJIXLVqrHo5gqI1qhVM1xvDwCqQnWt90cY+sOOo7N
-         4aG9uk0L0KeZFDhO6c7Am8norXjf7nTnfx1VaRxEpc8RsWZRsjIDtc+tKxJWICOZe2ia
-         BZKZFRUEoucpoA5Vaz60TNsxT5tfTOqnkrAIY/5CeNzBRX+6dmfcvmZ7BZpdiuenNSVJ
-         JhPwlqL7rYK0hKrbCCYrfONr26JFTDZlWOZgruwoz9Zi1eURSQLlbWdFuCuacGw6GXnf
-         04aKBoI8mRj6UXrH4LLQokRf0hD1+0lTiCmcNY3YsT9TtzAlmI19lh2hWJW/tGWWQn0/
-         ZtVg==
-X-Gm-Message-State: AOAM533q97jzy9oxnrJIF2Cq2TXXZCm1jPzHq+cGR02Y/UoL7lWBv9pu
-        f/FGm7oaVEokNQ0k/kyCYan3U2ypOqWEOL1szOHi8/8x9kJeuV8Ar2qSDMQ+8lZTNZHxwI8TPdh
-        U/361BPwrevvPUIYu58pnc+2B3jkHS+FlIZuHblwVFCI=
-X-Received: by 2002:a17:906:6d09:b0:6b9:2e0e:5bdd with SMTP id m9-20020a1709066d0900b006b92e0e5bddmr11270623ejr.246.1645956234705;
-        Sun, 27 Feb 2022 02:03:54 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJwPviELBAb3YlJF3dqApYWhzkERExWKru4Uij+RIvAJZ8xES86UbS47+QTJNfsojvKwn0q7ag==
-X-Received: by 2002:a17:906:6d09:b0:6b9:2e0e:5bdd with SMTP id m9-20020a1709066d0900b006b92e0e5bddmr11270607ejr.246.1645956234415;
-        Sun, 27 Feb 2022 02:03:54 -0800 (PST)
+        bh=kmoD7cJEJVkX+3PDX3ngx5DBAJIU55Xem09lH3DyvFU=;
+        b=ACEiQjodYaSdx3TaX622DDyy6fR89VG0jZmRuf1iiRoIXGs1xmAE4qSzUyvf4Mtejp
+         AHSUJ2Oqp9WDa2xEbD7G8u7CjVoR1E04k1ILNi6t66XA+cNI1TQJf4iW70gAG8NksdZN
+         l3DqxnPVWiV9BeZcRObIj9R6gbB60l3o69BXLGgtE26trgG1ZkveZL3o5b14eDWmZiMw
+         fZ/eq9fWHYgzNl7R8Aj1sjN9f7HljtE3Kmoo/rDo4UMHkR1QOvDPKsJzQCl8TDUZ7fko
+         jP22NcRl59ekNgJfI4usxXpHbSzzIwCMdZWWZKQcbao1p/OF0zysBHWLWqRwJMr7TAeC
+         dByA==
+X-Gm-Message-State: AOAM530aIYabK0Y4/nv+39NtzKIT2es0Dx33KFYWceB7vrvXhAmgTwRB
+        82H7mpuh95cg6lH0OTkfV2FuNnWQZi/D0dTVx5KB5vqo8dBMuDwNzJ8ycK3LoTJMNrOlkzMPUFc
+        pcWV6V/exT5iQzS7XHSud8tIMgozuSpAp/ALMf7NnogQ=
+X-Received: by 2002:a17:906:2bd7:b0:6ce:698b:7531 with SMTP id n23-20020a1709062bd700b006ce698b7531mr11343198ejg.146.1645956990006;
+        Sun, 27 Feb 2022 02:16:30 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJwUjjBwCh37I+1mUMUa+xGZDH63kIDP8OnGMhJgFxCCnxP5nXkd2cFmHtKPy6Ey882opgZY+w==
+X-Received: by 2002:a17:906:2bd7:b0:6ce:698b:7531 with SMTP id n23-20020a1709062bd700b006ce698b7531mr11343191ejg.146.1645956989684;
+        Sun, 27 Feb 2022 02:16:29 -0800 (PST)
 Received: from [192.168.0.133] (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
-        by smtp.gmail.com with ESMTPSA id ee21-20020a056402291500b00410d4261313sm4211234edb.24.2022.02.27.02.03.52
+        by smtp.gmail.com with ESMTPSA id e5-20020a170906374500b006d5825520a7sm3209628ejc.71.2022.02.27.02.16.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 27 Feb 2022 02:03:53 -0800 (PST)
-Message-ID: <ea5d34c6-fe75-c096-d5b2-6a327c9d0ae5@canonical.com>
-Date:   Sun, 27 Feb 2022 11:03:52 +0100
+        Sun, 27 Feb 2022 02:16:29 -0800 (PST)
+Message-ID: <94482135-71c2-f9a9-966c-4cd0b66a130b@canonical.com>
+Date:   Sun, 27 Feb 2022 11:16:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.0
-Subject: Re: [PATCH v2 2/3] dt-bindings: clock: add QCOM SM6125 display clock
- bindings
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add sc8280xp TLMM binding
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220226200911.230030-1-marijn.suijten@somainline.org>
- <20220226200911.230030-3-marijn.suijten@somainline.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>
+References: <20220225053257.2479279-1-bjorn.andersson@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <20220226200911.230030-3-marijn.suijten@somainline.org>
+In-Reply-To: <20220225053257.2479279-1-bjorn.andersson@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/02/2022 21:09, Marijn Suijten wrote:
-> From: Martin Botka <martin.botka@somainline.org>
+On 25/02/2022 06:32, Bjorn Andersson wrote:
+> The Qualcomm SC8280XP platform contains a single block of registers
+> for the TLMM block. This provides pinconf and pinmux for 228 GPIOs, 2
+> UFS_RESET pins and one SDC interface.
 > 
-> Add device tree bindings for display clock controller for
-> Qualcomm Technology Inc's SM6125 SoC.
-> 
-> Signed-off-by: Martin Botka <martin.botka@somainline.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->  .../bindings/clock/qcom,dispcc-sm6125.yaml    | 87 +++++++++++++++++++
->  .../dt-bindings/clock/qcom,dispcc-sm6125.h    | 41 +++++++++
->  2 files changed, 128 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,dispcc-sm6125.h
+>  .../pinctrl/qcom,sc8280xp-pinctrl.yaml        | 153 ++++++++++++++++++
+>  1 file changed, 153 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-pinctrl.yaml
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-pinctrl.yaml
 > new file mode 100644
-> index 000000000000..3465042d0d9f
+> index 000000000000..4199dfe992e0
 > --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
-> @@ -0,0 +1,87 @@
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-pinctrl.yaml
+> @@ -0,0 +1,153 @@
 > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 > +%YAML 1.2
 > +---
-> +$id: http://devicetree.org/schemas/clock/qcom,dispcc-sm6125.yaml#
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,sc8280xp-pinctrl.yaml#
 > +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +title: Qualcomm Display Clock Controller Binding for SM6125
+> +title: Qualcomm Technologies, Inc. SC8280XP TLMM block
 > +
 > +maintainers:
-> +  - Martin Botka <martin.botka@somainline.org>
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
 > +
 > +description: |
-> +  Qualcomm display clock control module which supports the clocks and
-> +  power domains on SM6125.
+> +  This binding describes the Top Level Mode Multiplexer block found in the
+> +  SC8280XP platform.
 > +
-> +  See also:
-> +    dt-bindings/clock/qcom,dispcc-sm6125.h
+> +allOf:
+> +  - $ref: "pinctrl.yaml#"
+
+This looks not needed. I see it was added in other QCOM schemas by
+https://lore.kernel.org/all/20211202063216.24439-1-zajec5@gmail.com/
+(+CC Rafał) but it is already part of qcom,tlmm-common.yaml. I think
+there is no need to include it twice.
+
+
+> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
 > +
 > +properties:
 > +  compatible:
-> +    enum:
-> +      - qcom,sm6125-dispcc
-> +
-> +  clocks:
-> +    items:
-> +      - description: Board XO source
-> +      - description: Byte clock from DSI PHY0
-> +      - description: Pixel clock from DSI PHY0
-> +      - description: Pixel clock from DSI PHY1
-> +      - description: Link clock from DP PHY
-> +      - description: VCO DIV clock from DP PHY
-> +      - description: AHB config clock from GCC
-> +
-> +  clock-names:
-> +    items:
-> +      - const: bi_tcxo
-> +      - const: dsi0_phy_pll_out_byteclk
-> +      - const: dsi0_phy_pll_out_dsiclk
-> +      - const: dsi1_phy_pll_out_dsiclk
-> +      - const: dp_phy_pll_link_clk
-> +      - const: dp_phy_pll_vco_div_clk
-> +      - const: cfg_ahb_clk
-> +
-> +  '#clock-cells':
-> +    const: 1
-> +
-> +  '#power-domain-cells':
-> +    const: 1
+> +    const: qcom,sc8280xp-tlmm
 > +
 > +  reg:
 > +    maxItems: 1
 > +
+> +  interrupts: true
+> +  interrupt-controller: true
+> +  '#interrupt-cells': true
+> +  gpio-controller: true
+> +  gpio-reserved-ranges: true
+> +  '#gpio-cells': true
+> +  gpio-ranges: true
+> +  wakeup-parent: true
+> +
 > +required:
 > +  - compatible
 > +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - '#clock-cells'
-> +  - '#power-domain-cells'
+> +  - reg-names
+
+I think you do not use it. The example does not have it so it should
+fail validation (dt_binding_check).
+
 > +
 > +additionalProperties: false
 > +
+> +patternProperties:
+> +  '-state$':
+> +    oneOf:
+> +      - $ref: "#/$defs/qcom-sc8280xp-tlmm-state"
+> +      - patternProperties:
+> +          ".*":
+> +            $ref: "#/$defs/qcom-sc8280xp-tlmm-state"
+> +
+> +'$defs':
+> +  qcom-sc8280xp-tlmm-state:
+> +    type: object
+> +    description:
+> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+> +      Client device subnodes use below standard properties.
+> +    $ref: "qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state"
+> +
+> +    properties:
+> +      pins:
+> +        description:
+> +          List of gpio pins affected by the properties specified in this
+> +          subnode.
+> +        items:
+> +          oneOf:
+> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-1][0-9]|22[0-7])$"
+> +            - enum: [ sdc2_clk, sdc2_cmd, sdc2_data, ufs_reset, ufs1_reset ]
+> +        minItems: 1
+> +        maxItems: 16
+> +
+> +      function:
+> +        description:
+> +          Specify the alternative function to be configured for the specified
+> +          pins.
+> +
+> +        enum: [ atest_char, atest_usb, audio_ref, cam_mclk, cci_async, cci_i2c,
+> +                cci_timer0, cci_timer1, cci_timer2, cci_timer3, cci_timer4,
+> +                cci_timer5, cci_timer6, cci_timer7, cci_timer8, cci_timer9,
+> +                cmu_rng, cri_trng, cri_trng0, cri_trng1, dbg_out, ddr_bist,
+> +                ddr_pxi0, ddr_pxi1, ddr_pxi2, ddr_pxi3, ddr_pxi4, ddr_pxi5,
+> +                ddr_pxi6, ddr_pxi7, dp2_hot, dp3_hot, edp0_lcd, edp1_lcd,
+> +                edp2_lcd, edp3_lcd, edp_hot, emac0_dll, emac0_mcg0, emac0_mcg1,
+> +                emac0_mcg2, emac0_mcg3, emac0_phy, emac0_ptp, emac1_dll0,
+> +                emac1_dll1, emac1_mcg0, emac1_mcg1, emac1_mcg2, emac1_mcg3,
+> +                emac1_phy, emac1_ptp, gcc_gp1, gcc_gp2, gcc_gp3, gcc_gp4,
+> +                gcc_gp5, gpio, hs1_mi2s, hs2_mi2s, hs3_mi2s, ibi_i3c,
+> +                jitter_bist, lpass_slimbus, mdp0_vsync0, mdp0_vsync1,
+> +                mdp0_vsync2, mdp0_vsync3, mdp0_vsync4, mdp0_vsync5,
+> +                mdp0_vsync6, mdp0_vsync7, mdp0_vsync8, mdp1_vsync0,
+> +                mdp1_vsync1, mdp1_vsync2, mdp1_vsync3, mdp1_vsync4,
+> +                mdp1_vsync5, mdp1_vsync6, mdp1_vsync7, mdp1_vsync8, mdp_vsync,
+> +                mi2s0_data0, mi2s0_data1, mi2s0_sck, mi2s0_ws, mi2s1_data0,
+> +                mi2s1_data1, mi2s1_sck, mi2s1_ws, mi2s2_data0, mi2s2_data1,
+> +                mi2s2_sck, mi2s2_ws, mi2s_mclk1, mi2s_mclk2, pcie2a_clkreq,
+> +                pcie2b_clkreq, pcie3a_clkreq, pcie3b_clkreq, pcie4_clkreq,
+> +                phase_flag, pll_bist, pll_clk, prng_rosc0, prng_rosc1,
+> +                prng_rosc2, prng_rosc3, qdss_cti, qdss_gpio, qspi, qspi_clk,
+> +                qspi_cs, qup0, qup1, qup2, qup3, qup4, qup5, qup6, qup7, qup8,
+> +                qup9, qup10, qup11, qup12, qup13, qup14, qup15, qup16, qup17,
+> +                qup18, qup19, qup20, qup21, qup22, qup23, rgmii_0, rgmii_1,
+> +                sd_write, sdc40, sdc42, sdc43, sdc4_clk, sdc4_cmd, tb_trig,
+> +                tgu, tsense_pwm1, tsense_pwm2, tsense_pwm3, tsense_pwm4,
+> +                usb0_dp, usb0_phy, usb0_sbrx, usb0_sbtx, usb0_usb4, usb1_dp,
+> +                usb1_phy, usb1_sbrx, usb1_sbtx, usb1_usb4, usb2phy_ac,
+> +                vsense_trigger ]
+> +
+> +      bias-disable: true
+> +      bias-pull-down: true
+> +      bias-pull-up: true
+> +      drive-strength: true
+> +      input-enable: true
+> +      output-high: true
+> +      output-low: true
+> +
+> +    required:
+> +      - pins
+> +      - function
+> +
+> +    additionalProperties: false
+> +
 > +examples:
 > +  - |
-> +    #include <dt-bindings/clock/qcom,rpmcc.h>
-> +    #include <dt-bindings/clock/qcom,gcc-sm6125.h>
-> +    clock-controller@5f00000 {
-> +      compatible = "qcom,sm6125-dispcc";
-> +      reg = <0x5f00000 0x20000>;
-> +      clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
-> +               <&dsi0_phy 0>,
-> +               <&dsi0_phy 1>,
-> +               <0>,
+> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +        pinctrl@3100000 {
+> +                compatible = "qcom,sc8280x-tlmm";
+> +                reg = <0x0f100000 0x300000>;
 
-This does not look like a valid phandle. This clock is required, isn't it?
+reg looks different than unit address.
 
 
 Best regards,
