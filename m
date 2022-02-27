@@ -2,77 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88DE14C58B2
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Feb 2022 00:38:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 567044C5923
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Feb 2022 04:29:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229471AbiBZXjA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Feb 2022 18:39:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36808 "EHLO
+        id S229848AbiB0D3k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 26 Feb 2022 22:29:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbiBZXi7 (ORCPT
+        with ESMTP id S229844AbiB0D3k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Feb 2022 18:38:59 -0500
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AE8223EE59
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Feb 2022 15:38:24 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id f11so12335756ljq.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Feb 2022 15:38:24 -0800 (PST)
+        Sat, 26 Feb 2022 22:29:40 -0500
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CD8521F5D2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Feb 2022 19:29:04 -0800 (PST)
+Received: by mail-qv1-xf29.google.com with SMTP id v18so9830077qvh.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 26 Feb 2022 19:29:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=L77jjy3Pjb6haSmnZfnNmFgIofaBblWDltlBIh2LtP8=;
-        b=ksCenEYJQP77iJl3VqiJjoJeFeq1I9QMUm9fBePnf75SO+2P4R5mUgZ2dv3tKUFnuu
-         gar7ZtWVt828sugg+VnjuYXnlA7qzZVyxJ/2Fc+Wjuq4KHtxJ0pKzrAByvjmsM6JlnqZ
-         o3WODvJDdShjW1l2b8nEOAU6Jfe/fzCXXKDuCF6N6sA1IHoRNmPLjt+RqDAg2H5bf3tY
-         LCjY63dHcBz2Zl5OxOMr0PeQmKwW2ry49C2tXCnEXCRwy7A7FgqnlQ8YOxCxkHfhq120
-         2UqBGKjlKA8KKmGeZBCTcW2qvmwr3Heq5LdFUYauq5193lbCmssb9S8fYYA5VgSjT+Lu
-         bCcw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7uVsTdS9A3VvM3V9jvyobaIfl/vvSxzX/obLWEqItyo=;
+        b=Gus3oS9RSn7V1sr7kHl81y1aya0zl1pkxCw11w+XDvu9TPjWigg3K7tlfZovWKB4ae
+         LoFSKEOnw1/CPf1ue5bg4+ZnXYbF9Y+zkicAyImn/QMeG0xf8RkYkMwE7td7V+XucgUg
+         0gDiET8OWcLiR/uTHn2wUh3WcY8POKYYZw/O/qikdZt/B8Oxa+/h0kWL0zlh0jNugHBG
+         Rv5B++uhoDoF5bNd2dF70oz4vn2VMV+FnUr/zAIOwkrn52j00Kfgxx5zPdTqm8q/d8vi
+         I5UERrNvI3oCAHu2jLszQfE2Ir4z01/zstiDc3a//KS3VlYN7Eft03BJzMvOQq3z/VZH
+         WOlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=L77jjy3Pjb6haSmnZfnNmFgIofaBblWDltlBIh2LtP8=;
-        b=QKwzWkll+JVnA/KmJasP1AYfvU7bJS1/rWp0YMGTisw+52EQ8Qe/dTf2uYKCdT6U5Q
-         NZZJTr4Q3juPmly1ttwBLDxIrp33YtsIhEdWBXMFiSOO5EueNhJj0lh58ikhsXzO7qv7
-         UDoG0SZG7zVYo7s7DAAX2lfyF/xexLHDK/EDb2YIUO5cG3R99KNGDI9guSDSCIDz6EYL
-         7EQcaBWLvUXyM2/jnGnD8FwdizY3cZ687USjnEBgA/RqZvNno5KZ6PVHGsfYQTUqqS1f
-         /X1TbnEb2gAPLHPGRLHPy20ZfZGrV+6Od+qkIqpo3/L2ULlb1Ccl8NEb6ZcGRu63P6kr
-         5vsg==
-X-Gm-Message-State: AOAM53261YSXlJrHW7Dm7qBAuZhYKPycKur3TVXnwovWmb/RbYPsAo+D
-        yDLG8hAgk4cjlXE6jTzZH+dFTA==
-X-Google-Smtp-Source: ABdhPJzI6jlwWxLLswkwolfMTDkejgzveyClOap+Ur9bxPwPT/5fOg85P4oWWg1y+wDGzOu5nl5a9A==
-X-Received: by 2002:a2e:7007:0:b0:246:2b76:31a with SMTP id l7-20020a2e7007000000b002462b76031amr9992267ljc.397.1645918702617;
-        Sat, 26 Feb 2022 15:38:22 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id b3-20020ac25623000000b004435fb1f5basm550208lff.78.2022.02.26.15.38.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 26 Feb 2022 15:38:22 -0800 (PST)
-Message-ID: <a6d28a2e-69fc-9bdf-da0d-28be35d9bfc2@linaro.org>
-Date:   Sun, 27 Feb 2022 02:38:21 +0300
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7uVsTdS9A3VvM3V9jvyobaIfl/vvSxzX/obLWEqItyo=;
+        b=b5H1+8wHyAtknLy2DGFfYkPiaUeawBHTPWrA0Wg9yGX7i8DKe4UBvsY2qlQpygn5Rs
+         GyEFlwlsXNTLhMYWZDgYDr69bnqybhhm364r2XstsCVs3ELkW/s4aHcUsjgYneCgo3Hg
+         G1u8F+DA5i2Qdz8jWbf8gA8NF0BSub5ZZ68HqDIj57SvN4fJuNJnsMOCrZbAboEVwKLC
+         47sBv+Cr7BzwbPBFswf15W6aGghZ21Z85ULQh6KVOFJVRlGoy5uW6f2g9cY7+mkgsxPn
+         Zahl1fWF8Eo3ZVBuoHKh03fIeaOd5Jku+2UXiqs6tSSva4WpOoKRYZ+CBhDyjGK74+TQ
+         U4Qw==
+X-Gm-Message-State: AOAM532j+xVRersFtM+FalzXDYXEOMefqEvfOT06i5EAktQmO41SGk5V
+        OVuw7SLjZBAONy14qvZQKjjZjjm+dLgemSX69OPF4w==
+X-Google-Smtp-Source: ABdhPJy7XFThPExoHd3VFYJIkPak1UpwZE6oPWxM0M9mvJOEkCCe6XwmadvukE4ueQzyWqWGH926oT69VQqrOB0s4xU=
+X-Received: by 2002:a0c:d807:0:b0:42c:1ff7:7242 with SMTP id
+ h7-20020a0cd807000000b0042c1ff77242mr10578010qvj.119.1645932543232; Sat, 26
+ Feb 2022 19:29:03 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,qmp: Mark '#clock-cells' as a
- 'optional' property
-Content-Language: en-GB
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-phy@lists.infradead.org,
-        robh+dt@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-References: <20220224123248.67073-1-bhupesh.sharma@linaro.org>
- <CAA8EJprRgsZRSXBQumveAn029j+w6xO8K2kZUO4rzZaefuYe7Q@mail.gmail.com>
- <CAH=2NtxQBS=c0W0cpX5EdNi12PrqiKEuzyvEtF8WrVE6nsU_rg@mail.gmail.com>
+References: <20220226200911.230030-1-marijn.suijten@somainline.org> <20220226200911.230030-2-marijn.suijten@somainline.org>
+In-Reply-To: <20220226200911.230030-2-marijn.suijten@somainline.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAH=2NtxQBS=c0W0cpX5EdNi12PrqiKEuzyvEtF8WrVE6nsU_rg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date:   Sun, 27 Feb 2022 06:28:52 +0300
+Message-ID: <CAA8EJppH2AKe7DK7mPhtz2CCW19WdJ0-NJihmFPDswRwTtKcfw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] clk: qcom: Fix sorting of SDX_GCC_65 in Makefile
+ and Kconfig
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Vamsi Krishna Lanka <quic_vamslank@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,72 +79,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/02/2022 12:16, Bhupesh Sharma wrote:
-> Hi Dmitry,
-> 
-> Thanks for your review comments.
-> 
-> On Thu, 24 Feb 2022 at 20:22, Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
->>
->> On Thu, 24 Feb 2022 at 15:33, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
->>>
->>> Since '#clock-cells' is not a required property for several
->>> QCoM boards supporting qmp-phy(s) (for e.g. sm8150, sm8250 or sm8350 SoC
->>> based boards), mark it as an optional property instead.
->>
->> I believe the description is not correct. the clock-cells should not
->> be used at all, so it should be removed from the root node.
-> 
-> Hmm.. 'clock-cells' is still used for describing qmp phy pcie nodes for certain
-> devices like 'msm8996.dtsi'. I am not sure if removing it would impact existing
-> dts files. But let me try cleaning them up in v2.
+On Sun, 27 Feb 2022 at 02:38, Marijn Suijten
+<marijn.suijten@somainline.org> wrote:
+>
+> In order to keep at least the list of `CONFIG_SM_` drivers sorted
+> alphabetically, SDX_GCC_65 should have been moved one line up.  This in
+> turn makes it easier and cleaner to add the followup SM_DISPCC_6125
+> driver in the right place, right before SM_DISPCC_8250.
+>
+> Fixes: d79afa201328 ("clk: qcom: Add SDX65 GCC support")
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-Checked. Unless I'm mistaken, msm8996.dtsi doesn't use #clock-cells in 
-root QMP PHY nodes.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> 
->> Also we should describe phy@ properties.
-> 
-> Sure, I will add them in v2.
-> 
-> Regards,
-> Bhupesh
-> 
->>>
->>> This fixes the following '$ make dtbs_check' warning(s):
->>>
->>> sm8350-microsoft-surface-duo2.dt.yaml: phy@1d87000:
->>>    '#clock-cells' is a required property
->>>
->>> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
->>> Cc: Vinod Koul <vkoul@kernel.org>
->>> Cc: Rob Herring <robh+dt@kernel.org>
->>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->>> ---
->>>   Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 1 -
->>>   1 file changed, 1 deletion(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
->>> index 9e0f60e682c4..746a929c63bb 100644
->>> --- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
->>> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
->>> @@ -115,7 +115,6 @@ patternProperties:
->>>   required:
->>>     - compatible
->>>     - reg
->>> -  - "#clock-cells"
->>>     - "#address-cells"
->>>     - "#size-cells"
->>>     - ranges
->>> --
->>> 2.35.1
->>>
->>
->>
->> --
->> With best wishes
->> Dmitry
+> ---
+>  drivers/clk/qcom/Kconfig  | 14 +++++++-------
+>  drivers/clk/qcom/Makefile |  2 +-
+>  2 files changed, 8 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index f5b54bfc992f..161b257da9ca 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -574,13 +574,6 @@ config SDX_GCC_55
+>           Say Y if you want to use peripheral devices such as UART,
+>           SPI, I2C, USB, SD/UFS, PCIe etc.
+>
+> -config SM_CAMCC_8250
+> -       tristate "SM8250 Camera Clock Controller"
+> -       select SM_GCC_8250
+> -       help
+> -         Support for the camera clock controller on SM8250 devices.
+> -         Say Y if you want to support camera devices and camera functionality.
+> -
+>  config SDX_GCC_65
+>         tristate "SDX65 Global Clock Controller"
+>         select QCOM_GDSC
+> @@ -589,6 +582,13 @@ config SDX_GCC_65
+>           Say Y if you want to use peripheral devices such as UART,
+>           SPI, I2C, USB, SD/UFS, PCIe etc.
+>
+> +config SM_CAMCC_8250
+> +       tristate "SM8250 Camera Clock Controller"
+> +       select SM_GCC_8250
+> +       help
+> +         Support for the camera clock controller on SM8250 devices.
+> +         Say Y if you want to support camera devices and camera functionality.
+> +
+>  config SM_DISPCC_8250
+>         tristate "SM8150 and SM8250 Display Clock Controller"
+>         depends on SM_GCC_8150 || SM_GCC_8250
+> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+> index d96d6793fc7d..3e4eb843b8d2 100644
+> --- a/drivers/clk/qcom/Makefile
+> +++ b/drivers/clk/qcom/Makefile
+> @@ -84,8 +84,8 @@ obj-$(CONFIG_SDM_GPUCC_845) += gpucc-sdm845.o
+>  obj-$(CONFIG_SDM_LPASSCC_845) += lpasscc-sdm845.o
+>  obj-$(CONFIG_SDM_VIDEOCC_845) += videocc-sdm845.o
+>  obj-$(CONFIG_SDX_GCC_55) += gcc-sdx55.o
+> -obj-$(CONFIG_SM_CAMCC_8250) += camcc-sm8250.o
+>  obj-$(CONFIG_SDX_GCC_65) += gcc-sdx65.o
+> +obj-$(CONFIG_SM_CAMCC_8250) += camcc-sm8250.o
+>  obj-$(CONFIG_SM_DISPCC_8250) += dispcc-sm8250.o
+>  obj-$(CONFIG_SM_GCC_6115) += gcc-sm6115.o
+>  obj-$(CONFIG_SM_GCC_6125) += gcc-sm6125.o
+> --
+> 2.35.1
+>
 
 
 -- 
