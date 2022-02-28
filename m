@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9ED304C6C90
+	by mail.lfdr.de (Postfix) with ESMTP id 540B84C6C8E
 	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 13:31:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236450AbiB1Mbn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Feb 2022 07:31:43 -0500
+        id S236476AbiB1Mbj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Feb 2022 07:31:39 -0500
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236493AbiB1Mbd (ORCPT
+        with ESMTP id S236484AbiB1Mbf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Feb 2022 07:31:33 -0500
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9023674DC9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 04:30:50 -0800 (PST)
-Received: by mail-pf1-x431.google.com with SMTP id g21so4692619pfj.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 04:30:50 -0800 (PST)
+        Mon, 28 Feb 2022 07:31:35 -0500
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AAB874DD9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 04:30:55 -0800 (PST)
+Received: by mail-pl1-x62c.google.com with SMTP id c9so10617516pll.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 04:30:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bdFGPaHLF7q33XjdHVVzEQl+cyICplAt+e9SLu2DgQs=;
-        b=gUhPwRnq9XhVBQx3qfYtwLHnwuC1oGeZOyn1dJzPmvpgvDSoAU0UOOH9HRRf5UYaZl
-         GGc1+3ndA+22UVupxmLiU4RcERkwzikYpcUvlTB+PE9juyCIVf9FbaxHFdl3Cig3dhwR
-         8QjLr0XpRYthcfjgDH7TposIL/q6LJGvSlvYqLo8KvmZf+ZNjXc9Bly1xBSv9qd31wMW
-         Ial6oxWTd8tvNChIYtc67Ou855rKIqqMyqIteumY5PM/8hA+ELlAY5QH7kTsci06tXLy
-         r8GaFA/UpH+b8XBQuob07RtiWzti5FybcmlnNHyrArEJe3tg3TkDGdUh6kiir91IT8EF
-         t/Kw==
+        bh=j3aWYND6Rah5MwBRKosGEcq2he6bs68uYcHr/zACh+Q=;
+        b=B8IPW5mdWip8zbN63uWgzsenAT++ZjK5Gzfd2G8hEShQnxQZU2uw4GUE+N5tGRjK7q
+         JdLLGD3gmOpS6X4Vvk5OaHgiCYtT5y9mx4kuMVvVpawFFnXyhUosdViFnIGfzdxjRZRl
+         DVy0iPbg0MpDRwBvrq1zxDWdMxeC4f4IrgoTaUL/Uuz9YOyul3k4Gqhu7gfY6Npjvm8o
+         GEYrgw1EWCTTkORX0gwcWVXJAnf4/DaRQYmqo3MQBcSRk3MV/gV/QAYJlpD6gqsbkhgt
+         2CBxzsdwv3+zRHjtK+1OMliIXfcjkzsl3DISJTg56FQ8G2oQ6+/vK7UZj9o/X5PdNC9F
+         6lOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bdFGPaHLF7q33XjdHVVzEQl+cyICplAt+e9SLu2DgQs=;
-        b=XQgPHCgkCtmdSbxJiYV+ciHeWEElHEnAwnJTD+bTlQcbD1PN+8XDvwN7cUgFfwWkOH
-         TvkuMbw+NALoeFVMWYRDPa0lJFVLy6h2r2mAyJoamce7SC6PSWhjUuCPWPK+CjGiZQfb
-         RcNsxu3gEtxqghYz2MvYfOFknvn7cgNlPQ803EdaTAdKuBuxuHc9nLyVcnwMeIMtSLfk
-         REiT9EaL7FgB9g0gJKfIiV8RKBsb9Q4s2eymIu1zDHpEoO8JUG89jNxg9zfhunSzWiuW
-         TTM1KuCi0RXk40l/W4HNJDYovdIyJv1IVgz2DFD4uz7d+KaqFSivzZd33rSc74vcnaPg
-         6M+Q==
-X-Gm-Message-State: AOAM530gVpOEMef5sWHFgkbX93OFLIYVi1kI8hPGSsqR+Q5qOgSVPULR
-        FI6jj7JHHcgjMERmPRlSvTW/dhjOXfE9Vw==
-X-Google-Smtp-Source: ABdhPJyVtSk4jTW5oYYXrdUlcKwpX55KSnC6bOeagoJLOg6Nd4/T2dIu/uH6Umd/slf4L2TkDJ8cyg==
-X-Received: by 2002:a05:6a00:1152:b0:4be:ab79:fcfa with SMTP id b18-20020a056a00115200b004beab79fcfamr21150362pfm.3.1646051449819;
-        Mon, 28 Feb 2022 04:30:49 -0800 (PST)
+        bh=j3aWYND6Rah5MwBRKosGEcq2he6bs68uYcHr/zACh+Q=;
+        b=xbyzTB28NIX/kh5fd1h6MPCJLYDBTQYpWz1RoQg36fQXpQZZqxvSNlj4BJRz8i4hTO
+         qX+oI+lPFMh/teVL0XRD0LBRYi3A5tcKtjGgoOtcsIHwPnRLpxN/QdPHREQK5c4eeQW4
+         1/I/+N+1kvRJ0a/oW7zFKCRISFWDSQNMnZoVdjejxo0Uudb9V1zvfr6UX52eQbVN2SR3
+         5Du95QEgW1/Zqt8vOgt7zuYVDgGFBsf47Tri6KrLgVWyDjvyQueiUP9rCqXWQhemk6o+
+         8lWd3JXjEz/niaK6+qRBwNtnqKTpfDM5HhP3BE6jaTMidMzevIR28ptRvwItXarjYB0g
+         /ecw==
+X-Gm-Message-State: AOAM530E4/yn/F7PsFy49jtu3kfyGVqn6YxPFm9wag2NnKsYplVjV487
+        ss2D6kVN7Kier/jqdubIJHRiqR1S4sRTAw==
+X-Google-Smtp-Source: ABdhPJxWcPHi467ng6xttXcLULyyw3GisHpRAFDT1q3PqYaIQQOlCff5blDsVc+bjTonIfz3jtrgvQ==
+X-Received: by 2002:a17:902:7c88:b0:151:6d4b:a27d with SMTP id y8-20020a1709027c8800b001516d4ba27dmr3526141pll.17.1646051454738;
+        Mon, 28 Feb 2022 04:30:54 -0800 (PST)
 Received: from localhost.localdomain ([223.179.136.225])
-        by smtp.gmail.com with ESMTPSA id f7-20020a056a0022c700b004f0e9d686dcsm13790001pfj.137.2022.02.28.04.30.45
+        by smtp.gmail.com with ESMTPSA id f7-20020a056a0022c700b004f0e9d686dcsm13790001pfj.137.2022.02.28.04.30.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Feb 2022 04:30:49 -0800 (PST)
+        Mon, 28 Feb 2022 04:30:54 -0800 (PST)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
@@ -56,9 +56,9 @@ Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
         linux-phy@lists.infradead.org, robh+dt@kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh@kernel.org>
-Subject: [PATCH v2 4/8] arm64: dts: qcom: sc7280: Fix qmp phy node (use phy@ instead of lanes@)
-Date:   Mon, 28 Feb 2022 18:00:15 +0530
-Message-Id: <20220228123019.382037-5-bhupesh.sharma@linaro.org>
+Subject: [PATCH v2 5/8] arm64: dts: qcom: sm8450: Fix qmp ufs phy node (use phy@ instead of lanes@)
+Date:   Mon, 28 Feb 2022 18:00:16 +0530
+Message-Id: <20220228123019.382037-6-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220228123019.382037-1-bhupesh.sharma@linaro.org>
 References: <20220228123019.382037-1-bhupesh.sharma@linaro.org>
@@ -76,29 +76,29 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Fix the 'make dtbs_check' warning:
 
-arch/arm64/boot/dts/qcom/sc7280-idp.dt.yaml: phy@1c0e000:
-  'lanes@1c0e200' does not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
+arch/arm64/boot/dts/qcom/sm8450-qrd.dt.yaml: phy@1d87000:
+ 'lanes@1d87400' does not match any of the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
 
 Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc: Rob Herring <robh@kernel.org>
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 937c2e0e93eb..575f1f00f602 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -1669,7 +1669,7 @@ pcie1_phy: phy@1c0e000 {
- 
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index 10c25ad2d0c7..68f7fe26f7b9 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -1049,7 +1049,7 @@ ufs_mem_phy: phy@1d87000 {
+ 			reset-names = "ufsphy";
  			status = "disabled";
  
--			pcie1_lane: lanes@1c0e200 {
-+			pcie1_lane: phy@1c0e200 {
- 				reg = <0 0x01c0e200 0 0x170>,
- 				      <0 0x01c0e400 0 0x200>,
- 				      <0 0x01c0ea00 0 0x1f0>,
+-			ufs_mem_phy_lanes: lanes@1d87400 {
++			ufs_mem_phy_lanes: phy@1d87400 {
+ 				reg = <0 0x01d87400 0 0x108>,
+ 				      <0 0x01d87600 0 0x1e0>,
+ 				      <0 0x01d87c00 0 0x1dc>,
 -- 
 2.35.1
 
