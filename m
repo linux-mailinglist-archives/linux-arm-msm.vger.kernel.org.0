@@ -2,104 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA88D4C7087
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 16:27:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 675684C70A0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 16:30:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237138AbiB1P1j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Feb 2022 10:27:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38784 "EHLO
+        id S237108AbiB1PbK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Feb 2022 10:31:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237124AbiB1P1i (ORCPT
+        with ESMTP id S236574AbiB1PbJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Feb 2022 10:27:38 -0500
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B92417EA1F;
-        Mon, 28 Feb 2022 07:26:59 -0800 (PST)
-Received: by mail-ot1-f43.google.com with SMTP id k9-20020a056830242900b005ad25f8ebfdso9750662ots.7;
-        Mon, 28 Feb 2022 07:26:59 -0800 (PST)
+        Mon, 28 Feb 2022 10:31:09 -0500
+Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E70B47EB03
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 07:30:29 -0800 (PST)
+Received: by mail-il1-x134.google.com with SMTP id y5so10204499ill.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 07:30:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=7xuq/jHgOUriIm1O/BV7S1L7sNlV9+5iBX6aT2AWV0s=;
+        b=Ckmgyi0L1ORPLOIs0I59pJKj3U54sFM9eXt7zVW3L8Zz3vVWcUMuDhm4H5a0vH4P0r
+         dMwwxS0/KGseXwyf0kqph5aogznMPR27U5WJtAkF1tTLkwgui7KkoFSBuNke67NYvHBn
+         zo4bt5FdK9LoYJx8RqwfwmVSextkRSxiTUfjgQUMI9y2NzVE8v6DcZBQfMygp4HF3c3/
+         K5PTTu5KC2uqpcwucSwCDYMzKUpA6YfJVXHgHqiEmkBagcqLNDZvufFiD6k4WPgOiNkq
+         vJu3UipP5TDqjLSQGIhc0SdYb16UTannauH9vGQH08ptV/XB1MlfgAQrD7j0WeyrBVEg
+         SBBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=rp3jXo0jowUC07M1Ixk3RLOx4sQHBELJ5AB4vK2RiB0=;
-        b=NCzFGVTq9yoWwrJnaOzU3Jom6JqG35Oo51bf7+5y7XkznEGReD/sV3PIFy3rpBaGex
-         lOesXSHyqGBQW+Q16mDMMCuGfvuI1pGqq67d3ew+NltQFJp0HGdDa0rQbZ6IyEVI+Hoi
-         HuyHhFkPJhh05F1prnRIbTknPhtKPawD6qYswE4Qbd/DLwqG1HDRPYzb3+b2tIenyqJO
-         FGPq4nYCSV457HHQz8RWD/wYW+NYR2Kj4C736oBvSQWBgAQZTU2YJAq7uVrf8k00vl9T
-         pL3NWKAEZNS+2ZkxqTHTNbzKX/hh2ukZp3OwSu2wshDJwA7RTtxw1hacviE8yvDjDK+y
-         lHhA==
-X-Gm-Message-State: AOAM530JceXtB3tOIAPUUcbpULNx9Y25QYnvpVcCflSLEPJx6HF3kF09
-        /x64UCD4bi/NKuLmkQq/W+Rwq5W9jw==
-X-Google-Smtp-Source: ABdhPJzxNAQPBbD8i478ScZWaCVovchVyiuczqMyUQ+9KiVnrzkL5S4/6wCNr6VwhVqnrJvmXiaSxw==
-X-Received: by 2002:a9d:71de:0:b0:5ad:32a4:4a9b with SMTP id z30-20020a9d71de000000b005ad32a44a9bmr9296658otj.336.1646062019011;
-        Mon, 28 Feb 2022 07:26:59 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id fq14-20020a0568710b0e00b000d4492531a2sm4805518oab.17.2022.02.28.07.26.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Feb 2022 07:26:58 -0800 (PST)
-Received: (nullmailer pid 1049707 invoked by uid 1000);
-        Mon, 28 Feb 2022 15:26:56 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-In-Reply-To: <20220228120258.997027-2-vladimir.zapolskiy@linaro.org>
-References: <20220228120258.997027-1-vladimir.zapolskiy@linaro.org> <20220228120258.997027-2-vladimir.zapolskiy@linaro.org>
-Subject: Re: [PATCH 1/8] dt-bindings: clock: add QCOM SM8450 camera clock bindings
-Date:   Mon, 28 Feb 2022 09:26:56 -0600
-Message-Id: <1646062016.591692.1049706.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=7xuq/jHgOUriIm1O/BV7S1L7sNlV9+5iBX6aT2AWV0s=;
+        b=xnAhBrQWH2qBpSCc6LdOmMB17MGGDGs0lsPtBsmWdBw+busibrDGyqd344Zx4M5zP1
+         CcalhS7lONgjldHlh0MdB06HgNdC4MR672CXW5eh3okz3Pe15VbWf9t5Qt94JEmRYVMC
+         Qhve/+55rdK5E1JBIz406Cyy57eKl7HY3FbcQDAK1H9t9ghyVoV9MOXh6y444CRBIU3k
+         6wzl48J6nK+QvjThFW5hgfpJ5Fo+mmz2N0h3SgAjEqsktSGn+4kyTgYRbfgFTekYI2HV
+         idpuI+ZSCVyIFp4dR/TjsIsmVMgAfFpyHlUN5KcrqhVCpqtkKeuuKbJ/69MzN6XIPF11
+         9WWA==
+X-Gm-Message-State: AOAM530tgdGqksKHyvLjBfnNmsdXsw5C1ZeXuKb4ZlKRpD35T068LBu7
+        22DiH+4+8cPKJEvNAti3TNl+1Q==
+X-Google-Smtp-Source: ABdhPJzwxFhKVHGQFdEn09+VOKy0nPF9+3HOs0WuXGTDKn+rgLpe2qPij7SospjNJcbvkVBrxkUuow==
+X-Received: by 2002:a05:6e02:1587:b0:2c2:5c48:a695 with SMTP id m7-20020a056e02158700b002c25c48a695mr19306744ilu.169.1646062229191;
+        Mon, 28 Feb 2022 07:30:29 -0800 (PST)
+Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id u17-20020a056e02111100b002c2a943034esm5952850ilk.5.2022.02.28.07.30.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Feb 2022 07:30:28 -0800 (PST)
+Message-ID: <6fc89860-9eea-630c-f193-272bf436ad81@linaro.org>
+Date:   Mon, 28 Feb 2022 09:30:26 -0600
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v4 01/27] bus: mhi: Fix pm_state conversion to string
+Content-Language: en-US
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        mhi@lists.linux.dev
+Cc:     quic_hemantk@quicinc.com, quic_bbhatt@quicinc.com,
+        quic_jhugo@quicinc.com, vinod.koul@linaro.org,
+        bjorn.andersson@linaro.org, dmitry.baryshkov@linaro.org,
+        quic_vbadigan@quicinc.com, quic_cang@quicinc.com,
+        quic_skananth@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Paul Davey <paul.davey@alliedtelesis.co.nz>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Hemant Kumar <hemantk@codeaurora.org>, stable@vger.kernel.org
+References: <20220228124344.77359-1-manivannan.sadhasivam@linaro.org>
+ <20220228124344.77359-2-manivannan.sadhasivam@linaro.org>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <20220228124344.77359-2-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 28 Feb 2022 14:02:57 +0200, Vladimir Zapolskiy wrote:
-> The change adds device tree bindings for camera clock controller
-> found on SM8450 SoC.
+On 2/28/22 6:43 AM, Manivannan Sadhasivam wrote:
+> From: Paul Davey <paul.davey@alliedtelesis.co.nz>
 > 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> On big endian architectures the mhi debugfs files which report pm state
+> give "Invalid State" for all states.  This is caused by using
+> find_last_bit which takes an unsigned long* while the state is passed in
+> as an enum mhi_pm_state which will be of int size.
+> 
+> Fix by using __fls to pass the value of state instead of find_last_bit.
+> 
+> Also the current API expects "mhi_pm_state" enumerator as the function
+> argument but the function only works with bitmasks. So as Alex suggested,
+> let's change the argument to u32 to avoid confusion.
+
+(Grumble grumble too much static data in header file.)
+
+Reviewed-by: Alex Elder <elder@linaro.org>
+
+> Fixes: a6e2e3522f29 ("bus: mhi: core: Add support for PM state transitions")
+> Signed-off-by: Paul Davey <paul.davey@alliedtelesis.co.nz>
+> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+> Cc: stable@vger.kernel.org
+> [mani: changed the function argument to u32]
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  .../bindings/clock/qcom,camcc-sm8450.yaml     |  87 ++++++++++
->  include/dt-bindings/clock/qcom,camcc-sm8450.h | 159 ++++++++++++++++++
->  2 files changed, 246 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,camcc-sm8450.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,camcc-sm8450.h
+>   drivers/bus/mhi/core/init.c     | 10 ++++++----
+>   drivers/bus/mhi/core/internal.h |  2 +-
+>   2 files changed, 7 insertions(+), 5 deletions(-)
 > 
-
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-Error: Documentation/devicetree/bindings/clock/qcom,camcc-sm8450.example.dts:28.34-35 syntax error
-FATAL ERROR: Unable to parse input tree
-make[1]: *** [scripts/Makefile.lib:378: Documentation/devicetree/bindings/clock/qcom,camcc-sm8450.example.dt.yaml] Error 1
-make[1]: *** Waiting for unfinished jobs....
-make: *** [Makefile:1398: dt_binding_check] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/1598821
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
+> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
+> index 046f407dc5d6..09394a1c29ec 100644
+> --- a/drivers/bus/mhi/core/init.c
+> +++ b/drivers/bus/mhi/core/init.c
+> @@ -77,12 +77,14 @@ static const char * const mhi_pm_state_str[] = {
+>   	[MHI_PM_STATE_LD_ERR_FATAL_DETECT] = "Linkdown or Error Fatal Detect",
+>   };
+>   
+> -const char *to_mhi_pm_state_str(enum mhi_pm_state state)
+> +const char *to_mhi_pm_state_str(u32 state)
+>   {
+> -	unsigned long pm_state = state;
+> -	int index = find_last_bit(&pm_state, 32);
+> +	int index;
+>   
+> -	if (index >= ARRAY_SIZE(mhi_pm_state_str))
+> +	if (state)
+> +		index = __fls(state);
+> +
+> +	if (!state || index >= ARRAY_SIZE(mhi_pm_state_str))
+>   		return "Invalid State";
+>   
+>   	return mhi_pm_state_str[index];
+> diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
+> index e2e10474a9d9..3508cbbf555d 100644
+> --- a/drivers/bus/mhi/core/internal.h
+> +++ b/drivers/bus/mhi/core/internal.h
+> @@ -622,7 +622,7 @@ void mhi_free_bhie_table(struct mhi_controller *mhi_cntrl,
+>   enum mhi_pm_state __must_check mhi_tryset_pm_state(
+>   					struct mhi_controller *mhi_cntrl,
+>   					enum mhi_pm_state state);
+> -const char *to_mhi_pm_state_str(enum mhi_pm_state state);
+> +const char *to_mhi_pm_state_str(u32 state);
+>   int mhi_queue_state_transition(struct mhi_controller *mhi_cntrl,
+>   			       enum dev_st_transition state);
+>   void mhi_pm_st_worker(struct work_struct *work);
 
