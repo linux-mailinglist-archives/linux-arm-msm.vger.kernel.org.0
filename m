@@ -2,132 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2FFA4C7BA0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 22:15:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D71BE4C7BA3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 22:15:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229664AbiB1VPo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Feb 2022 16:15:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45116 "EHLO
+        id S229838AbiB1VQQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Feb 2022 16:16:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230103AbiB1VPo (ORCPT
+        with ESMTP id S229902AbiB1VQQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Feb 2022 16:15:44 -0500
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A695DFD2;
-        Mon, 28 Feb 2022 13:15:04 -0800 (PST)
-Received: by mail-ot1-f43.google.com with SMTP id l21-20020a056830239500b005afd2a7eaa2so7713541ots.9;
-        Mon, 28 Feb 2022 13:15:04 -0800 (PST)
+        Mon, 28 Feb 2022 16:16:16 -0500
+Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8280B1114F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 13:15:35 -0800 (PST)
+Received: by mail-oo1-xc2a.google.com with SMTP id n5-20020a4a9545000000b0031d45a442feso12644285ooi.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 13:15:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=IjIt5oAd9CJM5MUxlpFz/Mn3QCxHZ0rV/10NRoEs5gA=;
+        b=k5FjNT1Y5NA+RXxHnRvQ0L4bZtfiVOvXd8x+XVq757ySkC4ojwcEUv2bSywlyH1Bs7
+         UMP0SExJnFb1TpzHauFo1VmYg0c/UkMxSq3BfChZgmtYQv/vBiUCPdb/IIkxIRkGKz5s
+         gnpRz+XBxJA0Pc09geHh4Hsu7EUVa/fEV1vMY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=y6AzB2ljaq086U1SKhDMlS54EEVDwXoqAsbqXMIOXW4=;
-        b=5v3jmBu0ZJGvoJliCVepx6QAZOysofgvt/eXCdblQSltmeIYdJmuDlqC+M9cqMlb5G
-         dLlT6qVyV0HZLBXLRG13oJkr2SXjd5aBPVTZgTHf8zSEvyORkc5KZPpceKbl8KmZ8C0X
-         2LvFATNInZ69bm02By/7XVFxcFdKouD6Ln4GSVJ0Bl/3BhlLxdVyWHsqt6b07p9LU9yQ
-         bwAfeUEQVL8O+U30rOIzS4hH71O3sF2hDb69AZ9YhmUGrI3WzC/B/5RlWqngU0iS3WEH
-         mkV5qAW/tjWTnNozF4AvOLQrqG4OhIvXkmjpOOi3ycT/T7fSOrJGBO8ApediAsnaO6KH
-         XS9A==
-X-Gm-Message-State: AOAM533KwmWfeLMZy6JWqI9TPJkEb/9B7joILKfqE39y2AVoQ5ymyqJx
-        90nGQcdYPjSVz8sMKh84qg==
-X-Google-Smtp-Source: ABdhPJw7aBN9mUJo0g3AXWmCIIBdVBxbVetccP0NRASyfXWxAf1XCNcG3srYD3XgcUmcOM7JuPoVKw==
-X-Received: by 2002:a9d:4712:0:b0:5ad:f2a:6394 with SMTP id a18-20020a9d4712000000b005ad0f2a6394mr10507051otf.281.1646082903555;
-        Mon, 28 Feb 2022 13:15:03 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id g7-20020a056870d20700b000d1614be328sm4994086oac.27.2022.02.28.13.15.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Feb 2022 13:15:02 -0800 (PST)
-Received: (nullmailer pid 1599409 invoked by uid 1000);
-        Mon, 28 Feb 2022 21:15:01 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     michael.srba@seznam.cz
-Cc:     Michael Srba <Michael.Srba@seznam.cz>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
-        linux-clk@vger.kernel.org, Saravana Kannan <saravanak@google.com>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        Stephen Boyd <sboyd@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>
-In-Reply-To: <20220228131435.29207-3-michael.srba@seznam.cz>
-References: <20220228131435.29207-1-michael.srba@seznam.cz> <20220228131435.29207-3-michael.srba@seznam.cz>
-Subject: Re: [PATCH v9 3/5] dt-bindings: bus: add device tree bindings for qcom,ssc-block-bus
-Date:   Mon, 28 Feb 2022 15:15:01 -0600
-Message-Id: <1646082901.647733.1599408.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=IjIt5oAd9CJM5MUxlpFz/Mn3QCxHZ0rV/10NRoEs5gA=;
+        b=k/4/RaanYTN3tJ/9S0jRzu7y2CnikKRts8dbiAEb3U671tVdx1dQp1MGfH8W7crx5J
+         ial/Pj6fAwIWV6dRBUjKH0w6UL2ItU0UOcMGgB5UfOmTJpDhIH3x0HTGdLd3dctxbQDj
+         6chbYWzqfepOmDy6USifYIKv3zqPX6CFGIofmO+qWafD/QI7FbJ0OHGa6KzSd/yzX7Zo
+         Qoo+sFQKCp3892zG+B8RLQ3zP0GWPJj9HZ6ojYr8kh2vJ3RQPfTSIz6jrtYv2rZAddf4
+         pHMLgTM5L3fD/NQmcRwXdieqYJMtYpcIrxx8keEjKSInyskuPA6dS8y+4h61PFPUAsPz
+         qqIw==
+X-Gm-Message-State: AOAM532PvvHecXkzmh8nmq7aco+geVqRSMPJ7YpNsnOsTx2kp2KNHCfE
+        yjTp5BP50RHGLQe8YgCLA91Gl2AT9M+qtcLqayzuWQ==
+X-Google-Smtp-Source: ABdhPJxOdycyN6mOUporN9zWCpjgv3JJjgWoljVwONiBtWqOqkw5qbUZhVnVbFz3AekiYeyOwAbKHtg7VOElvVbl1OM=
+X-Received: by 2002:a05:6870:3c18:b0:d7:22ed:20b0 with SMTP id
+ gk24-20020a0568703c1800b000d722ed20b0mr3883479oab.32.1646082934912; Mon, 28
+ Feb 2022 13:15:34 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 28 Feb 2022 13:15:34 -0800
+MIME-Version: 1.0
+In-Reply-To: <6e498021-bf08-3fd8-a3b8-2fcba054f4a0@quicinc.com>
+References: <1645716828-15305-1-git-send-email-quic_srivasam@quicinc.com>
+ <1645716828-15305-7-git-send-email-quic_srivasam@quicinc.com>
+ <CAE-0n53K3Em52tTFK4zmcsf_ZzFbX4uQQ00_uH9=pq44chwyeg@mail.gmail.com> <6e498021-bf08-3fd8-a3b8-2fcba054f4a0@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Mon, 28 Feb 2022 13:15:34 -0800
+Message-ID: <CAE-0n508Wcb7mnqx1TQN0vndOFRcJuyfvo_4YtJri+Kh-GfSbQ@mail.gmail.com>
+Subject: Re: [PATCH v16 6/9] ASoC: qcom: Add support for codec dma driver
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        agross@kernel.org, alsa-devel@alsa-project.org,
+        bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
+        broonie@kernel.org, devicetree@vger.kernel.org,
+        judyhsiao@chromium.org, lgirdwood@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        perex@perex.cz, quic_plai@quicinc.com, robh+dt@kernel.org,
+        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org,
+        tiwai@suse.com
+Cc:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 28 Feb 2022 14:14:33 +0100, michael.srba@seznam.cz wrote:
-> From: Michael Srba <Michael.Srba@seznam.cz>
-> 
-> Adds bindings for the AHB bus which exposes the SSC block in the global
-> address space. This bus (and the SSC block itself) is present on certain
-> qcom SoCs.
-> 
-> In typical configuration, this bus (as some of the clocks and registers
-> that we need to manipulate) is not accessible to the OS, and the
-> resources on this bus are indirectly accessed by communicating with a
-> hexagon CPU core residing in the SSC block. In this configuration, the
-> hypervisor is the one performing the bus initialization for the purposes
-> of bringing the haxagon CPU core out of reset.
-> 
-> However, it is possible to change the configuration, in which case this
-> binding serves to allow the OS to initialize the bus.
-> 
-> Signed-off-by: Michael Srba <Michael.Srba@seznam.cz>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> ---
->  CHANGES:
->  - v2: fix issues caught by by dt-schema
->  - v3: none
->  - v4: address the issues pointed out in the review
->  - v5: clarify type of additional properties; remove ssc_tlmm node for now
->  - v6: none
->  - v7: fix indentation, use imperative in commit message
->  - v8: none
->  - v9: fix typo in commit description; explain what SSC is in the 'decription' section of the binding
-> ---
->  .../bindings/bus/qcom,ssc-block-bus.yaml      | 147 ++++++++++++++++++
->  1 file changed, 147 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/bus/qcom,ssc-block-bus.yaml
-> 
+Quoting Srinivasa Rao Mandadapu (2022-02-25 21:58:03)
+>
+> On 2/25/2022 5:10 AM, Stephen Boyd wrote:
+> Thanks for your time Stephen!!!
+> > Quoting Srinivasa Rao Mandadapu (2022-02-24 07:33:45)
+> >> diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
+> >> index 198f27c..b3af971 100644
+[...]
+> >> +
+> >> +       buf->area = (unsigned char * __force)memremap(buf->addr, buf->bytes, MEMREMAP_WT);
+> > What's the cast and __force for now? MEMREMAP_WT is almost never used so
+> Here dma_buffer structure has virtual address(buf->area) of unsigned
+> char pointer but memremap returns void pointer.
+> > this looks wrong. Why can't MEMREMAP_WC be used? But if it's DMA then
+> Okay. Will update the flag MEMREMAP_WT
+> > why isn't dma_map_resource() being used?
+>
+> I am sorry bit confused here. You mean some thing like below.
+>
+> For Physical address mapping: buf->addr = dma_map_resource(pcm->card->dev, drvdata->va_cdc_dma_lpm_buf,
+>                              buf->bytes, DMA_BIDIRECTIONAL, 0);
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Yes, but I'm not sure about DMA_BIDIRECTIONAL. How does this
+va_cdc_dma_lpm_buf work? Does userspace fill it up with bytes and the
+DSP reads it out? More details please.
 
-yamllint warnings/errors:
+> For virtual address mapping. buf->area = (unsigned char * __force)memremap(buf->addr, buf->bytes, MEMREMAP_WC);
 
-dtschema/dtc warnings/errors:
-Error: Documentation/devicetree/bindings/bus/qcom,ssc-block-bus.example.dts:39.32-33 syntax error
-FATAL ERROR: Unable to parse input tree
-make[1]: *** [scripts/Makefile.lib:378: Documentation/devicetree/bindings/bus/qcom,ssc-block-bus.example.dt.yaml] Error 1
-make[1]: *** Waiting for unfinished jobs....
-make: *** [Makefile:1398: dt_binding_check] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/1598879
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+No. I'd expect dma_mmap_attrs() or dma_mmap_coherent() to be used to
+mmap it into userspace.  The dma_map_resource() API only returns a
+dma_addr_t type, which needs to be mapped via DMA APIs into a virtual
+address. Passing it to memremap is incorrect, because it may be possible
+to map it into an IOMMU, for which the DMA APIs know what to do in that
+situation.
