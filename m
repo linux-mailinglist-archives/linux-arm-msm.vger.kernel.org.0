@@ -2,309 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BDD74C7110
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 16:56:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 28F194C7123
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 17:01:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236013AbiB1P5H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Feb 2022 10:57:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37876 "EHLO
+        id S233141AbiB1QBo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Feb 2022 11:01:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235077AbiB1P5G (ORCPT
+        with ESMTP id S232976AbiB1QBo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Feb 2022 10:57:06 -0500
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84B0B75618
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 07:56:27 -0800 (PST)
-Received: by mail-il1-x131.google.com with SMTP id 9so10278598ily.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 07:56:27 -0800 (PST)
+        Mon, 28 Feb 2022 11:01:44 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D99583025;
+        Mon, 28 Feb 2022 08:01:05 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id o62-20020a1ca541000000b00380e3cc26b7so6376687wme.0;
+        Mon, 28 Feb 2022 08:01:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=hbd3PzDMWyEi8w1J5lNXrRbncO7Xk3kUZ9oTOFrvQJ0=;
-        b=gnVt4aXB09+0KeLqRM4g2nPuDlB7L1RPQLDLf6/lrCScKa5Sj3KEJvT6tKTEWxb+lt
-         sBGcD9j7GOlybUEoGBaKMHAlXl12KpI2wbp99B/NWIlsEs1KOdx0yUoFzAuA0UPod/5Q
-         S5iuU0zTKVHKPwAOgkInzloiyDAa59CzxgFP1NSE9V/1wB3yjprEMHwIrexRDyLHaeBb
-         bk00d5HPXL6uAZnqfDh0CBa1nwzwwG2eqDbBqdpWDQfTu04xv0ubZMrzhA0GapwKr8+V
-         DX0yOH4eZWnAPImR9sY3dZ/sHufathoWMbuJiq92cqIjEo6oV931oiNuF8IA+Do7DYdc
-         eUKw==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=aizF1/4lDI+yEy/WBxd8YVF7MFTOczvWHCG6YamD9nM=;
+        b=blm/2RrpCx2TsR/aMRP+1EJLebTjElVVfw8i40QiGlQMN6Wi4MltaOd+UtUI+4NfFD
+         OvIwLBmq5XdskxKXmbGsJfayfiwvCeecqgTkJnMpwimuFXPulAUNE5iV9YhTJHFU95qd
+         n8Ndhugd5pEd90a++PIz8mlF56J1Vx6yIEFPX+C6J9mqn75oWffmgBOskCPhEa/qDNwj
+         ZlMyqEqVWCIDC3l31oKWlahqUm6m8aW6WF/ezxGwyoiXUJpvyrkNusfWFeucWTq4hyqF
+         NmcFd8Opv10P0TT05CAnQEmiN4DKlzGYCa/ykxZRnKFOiNgFKfuA0gi+i9kuNYXp58M1
+         1Pzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=hbd3PzDMWyEi8w1J5lNXrRbncO7Xk3kUZ9oTOFrvQJ0=;
-        b=ae21tkllkz7y8ZYfPzmkWvoFaFrCFEdfHgJKPRQZQuBK0jPhcNVMUgLKjJF9+FgjdV
-         Nm6cswgChZqT89F66hhV6cY1TH1/kdScXyhJ7KhAK1dtiixcFKN2hLj9/HU43w00AOOZ
-         KX7D8w2XilFWN8NX9N1uqmgxCZWCgV4oSf43aEHU5vcogdKDL5k9/2sjKgxYWA0+uek2
-         LpOBcmwPCm5PmtWPDEThQmrjePYWgZ4WXBpnrfYQFyM5qjjpKtWH8u4/C0e2FoAoUzRT
-         YcSBQYFNE/RVi5xT4Iw0bzRKciXSKf1sQIV5gMq/d/SlghPZhGQRg8NxdfZlQOXvJ/aT
-         OjoA==
-X-Gm-Message-State: AOAM533zky2+EkCIARSW9pRYR+cbX1xrMqVJd/mFvZ1pXOHXQ+75rZ2T
-        1Iiihemz8yeJXS5kFl37z8mEbg==
-X-Google-Smtp-Source: ABdhPJzRqRtUCGEuwISwrH1DaDtQma/kz0pac+miSnEY/BWB/6pd4w316dfFAociGCu/nHgKE39XyQ==
-X-Received: by 2002:a92:cb44:0:b0:2be:33b0:2a52 with SMTP id f4-20020a92cb44000000b002be33b02a52mr18025563ilq.142.1646063786869;
-        Mon, 28 Feb 2022 07:56:26 -0800 (PST)
-Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id 14-20020a92180e000000b002c1bfa2a5e6sm6349898ily.65.2022.02.28.07.56.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Feb 2022 07:56:26 -0800 (PST)
-Message-ID: <c4bcf9f6-82d7-1e35-64bb-0973ed2ceb4a@linaro.org>
-Date:   Mon, 28 Feb 2022 09:56:25 -0600
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=aizF1/4lDI+yEy/WBxd8YVF7MFTOczvWHCG6YamD9nM=;
+        b=3wx3XNEpRoy60uY4W1IF0U460VzpM55GDoDJwk5C9fehh4caGZVozBRB0sX0gGogtS
+         regZ7gaS7Pkcl3QLqEKFLhc4rAlgM+H3/CNbc7lVpktekbmn7QjRbW58se/RxpiRgbQm
+         T/J9lzFpBCpvwPhIycPSRb//p90lVPoXFQEJYRF4iHZVJ7iBdk0zK/ar4ECEDQ6Ng5L9
+         Ykp6l7Xcs9zN2/VICElSPVx/BZHfDpij99A+nBu35DnygpCXoc4DYPjHcb0tRtDfQejr
+         D6YKmd1Et4c5x7MTWdEjhpmV26rg54DXyORTFUhOgREKEwyIjoa6yqQU082PiDaFf12C
+         tlnA==
+X-Gm-Message-State: AOAM533SsiBOPlre66kGxjc/QTAA04aRqinWVJGpNJHrxyRJwsk989VK
+        9v8Ixibh5825e1eJNLinmFlbz5LJh4wsceZznos=
+X-Google-Smtp-Source: ABdhPJzF+Eh23FRqoZaEV8ax1NSHQUu83RaAE2w3foKNDynSteZKOLsVwgh4y2QhxxN5kXgYFvHjBSOQuJyfTdpPugo=
+X-Received: by 2002:a05:600c:25cd:b0:381:4f09:a4b6 with SMTP id
+ 13-20020a05600c25cd00b003814f09a4b6mr8198514wml.44.1646064063544; Mon, 28 Feb
+ 2022 08:01:03 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v4 09/27] bus: mhi: Make mhi_state_str[] array static
- inline and move to common.h
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        mhi@lists.linux.dev
-Cc:     quic_hemantk@quicinc.com, quic_bbhatt@quicinc.com,
-        quic_jhugo@quicinc.com, vinod.koul@linaro.org,
-        bjorn.andersson@linaro.org, dmitry.baryshkov@linaro.org,
-        quic_vbadigan@quicinc.com, quic_cang@quicinc.com,
-        quic_skananth@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Hemant Kumar <hemantk@codeaurora.org>
-References: <20220228124344.77359-1-manivannan.sadhasivam@linaro.org>
- <20220228124344.77359-10-manivannan.sadhasivam@linaro.org>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <20220228124344.77359-10-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20220225202614.225197-1-robdclark@gmail.com> <20220225202614.225197-3-robdclark@gmail.com>
+ <CAF6AEGvXs9etrtBUP5fAx7z6pLMV76a-FEXrdk2gY8npDHrFnA@mail.gmail.com> <f460b115-6ff6-7f69-8b0d-174c4defc771@linux.intel.com>
+In-Reply-To: <f460b115-6ff6-7f69-8b0d-174c4defc771@linux.intel.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 28 Feb 2022 08:01:34 -0800
+Message-ID: <CAF6AEGsNHkODt4oOgAhLdrik1Jt-cfcyjk+nGzDhSMNfFMEWsA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] drm/msm: Expose client engine utilization via fdinfo
+To:     Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2/28/22 6:43 AM, Manivannan Sadhasivam wrote:
-> mhi_state_str[] array could be used by MHI endpoint stack also. So let's
-> make the array as "static inline function" and move it inside the
-> "common.h" header so that the endpoint stack could also make use of it.
-> 
-> Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+On Mon, Feb 28, 2022 at 6:33 AM Tvrtko Ursulin
+<tvrtko.ursulin@linux.intel.com> wrote:
+>
+>
+> On 25/02/2022 22:14, Rob Clark wrote:
+> > On Fri, Feb 25, 2022 at 12:25 PM Rob Clark <robdclark@gmail.com> wrote:
+> >>
+> >> From: Rob Clark <robdclark@chromium.org>
+> >>
+> >> Similar to AMD commit
+> >> 874442541133 ("drm/amdgpu: Add show_fdinfo() interface"), using the
+> >> infrastructure added in previous patches, we add basic client info
+> >> and GPU engine utilisation for msm.
+> >>
+> >> Example output:
+> >>
+> >>          # cat /proc/`pgrep glmark2`/fdinfo/6
+> >>          pos:    0
+> >>          flags:  02400002
+> >>          mnt_id: 21
+> >>          ino:    162
+> >>          drm-driver:     msm
+> >>          drm-client-id:  7
+> >>          drm-engine-gpu: 1734371319 ns
+> >>          drm-cycles-gpu: 1153645024
+>
+> Nice, so my vendor agnostic actually worked (with that single fixup of
+> accounting for the fact pdev tag is optional)?
+>
+> > Note that it might be useful to have a standardized way to report # of
+> > cycles and max freq, so userspace tool can derive %utilization in
+> > addition to just %busy
+>
+> How do you define %utilisation vs %busy - I don't exactly follow since I
+> see the two as same?
 
-I guess my grumbling on patch 1 belonged here.  I prefer your use
-of a switch statement though, and that alleviates my concern.
+so, say you are running at 50% of max clk, and gpu is busy 70% of the
+time.  The utilization is only 35% because the gpu could scale up the
+clk to get more work done.
 
-Reviewed-by: Alex Elder <elder@linaro.org>
+> Looking at your patch I guess I don't understand the difference between
+> 'elapsed' and 'cycles' inside your retire_submit(). Both are scoped to a
+> single context and are not global? If 'elapsed' is time context has
+> spent on the GPU, cycles isn't the same just in a different unit?
 
-> ---
->   drivers/bus/mhi/common.h       | 29 +++++++++++++++++++++++++----
->   drivers/bus/mhi/host/boot.c    |  2 +-
->   drivers/bus/mhi/host/debugfs.c |  6 +++---
->   drivers/bus/mhi/host/init.c    | 12 ------------
->   drivers/bus/mhi/host/main.c    |  8 ++++----
->   drivers/bus/mhi/host/pm.c      | 14 +++++++-------
->   6 files changed, 40 insertions(+), 31 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/common.h b/drivers/bus/mhi/common.h
-> index f2690bf11c99..ec75ba1e6686 100644
-> --- a/drivers/bus/mhi/common.h
-> +++ b/drivers/bus/mhi/common.h
-> @@ -275,9 +275,30 @@ struct mhi_ring_element {
->   	__le32 dword[2];
->   };
->   
-> -extern const char * const mhi_state_str[MHI_STATE_MAX];
-> -#define TO_MHI_STATE_STR(state) ((state >= MHI_STATE_MAX || \
-> -				  !mhi_state_str[state]) ? \
-> -				"INVALID_STATE" : mhi_state_str[state])
-> +static inline const char * const mhi_state_str(enum mhi_state state)
-> +{
-> +	switch (state) {
-> +	case MHI_STATE_RESET:
-> +		return "RESET";
-> +	case MHI_STATE_READY:
-> +		return "READY";
-> +	case MHI_STATE_M0:
-> +		return "M0";
-> +	case MHI_STATE_M1:
-> +		return "M1";
-> +	case MHI_STATE_M2:
-> +		return "M2";
-> +	case MHI_STATE_M3:
-> +		return "M3";
-> +	case MHI_STATE_M3_FAST:
-> +		return "M3 FAST";
-> +	case MHI_STATE_BHI:
-> +		return "BHI";
-> +	case MHI_STATE_SYS_ERR:
-> +		return "SYS ERROR";
-> +	default:
-> +		return "Unknown state";
-> +	}
-> +};
->   
->   #endif /* _MHI_COMMON_H */
-> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
-> index d5ba3c7efb61..b0da7ca4519c 100644
-> --- a/drivers/bus/mhi/host/boot.c
-> +++ b/drivers/bus/mhi/host/boot.c
-> @@ -67,7 +67,7 @@ static int __mhi_download_rddm_in_panic(struct mhi_controller *mhi_cntrl)
->   
->   	dev_dbg(dev, "Entered with pm_state:%s dev_state:%s ee:%s\n",
->   		to_mhi_pm_state_str(mhi_cntrl->pm_state),
-> -		TO_MHI_STATE_STR(mhi_cntrl->dev_state),
-> +		mhi_state_str(mhi_cntrl->dev_state),
->   		TO_MHI_EXEC_STR(mhi_cntrl->ee));
->   
->   	/*
-> diff --git a/drivers/bus/mhi/host/debugfs.c b/drivers/bus/mhi/host/debugfs.c
-> index bdc875d7bd4d..cfec7811dfbb 100644
-> --- a/drivers/bus/mhi/host/debugfs.c
-> +++ b/drivers/bus/mhi/host/debugfs.c
-> @@ -20,7 +20,7 @@ static int mhi_debugfs_states_show(struct seq_file *m, void *d)
->   	seq_printf(m, "PM state: %s Device: %s MHI state: %s EE: %s wake: %s\n",
->   		   to_mhi_pm_state_str(mhi_cntrl->pm_state),
->   		   mhi_is_active(mhi_cntrl) ? "Active" : "Inactive",
-> -		   TO_MHI_STATE_STR(mhi_cntrl->dev_state),
-> +		   mhi_state_str(mhi_cntrl->dev_state),
->   		   TO_MHI_EXEC_STR(mhi_cntrl->ee),
->   		   mhi_cntrl->wake_set ? "true" : "false");
->   
-> @@ -206,13 +206,13 @@ static int mhi_debugfs_regdump_show(struct seq_file *m, void *d)
->   
->   	seq_printf(m, "Host PM state: %s Device state: %s EE: %s\n",
->   		   to_mhi_pm_state_str(mhi_cntrl->pm_state),
-> -		   TO_MHI_STATE_STR(mhi_cntrl->dev_state),
-> +		   mhi_state_str(mhi_cntrl->dev_state),
->   		   TO_MHI_EXEC_STR(mhi_cntrl->ee));
->   
->   	state = mhi_get_mhi_state(mhi_cntrl);
->   	ee = mhi_get_exec_env(mhi_cntrl);
->   	seq_printf(m, "Device EE: %s state: %s\n", TO_MHI_EXEC_STR(ee),
-> -		   TO_MHI_STATE_STR(state));
-> +		   mhi_state_str(state));
->   
->   	for (i = 0; regs[i].name; i++) {
->   		if (!regs[i].base)
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index 016dcc35db80..a665b8e92408 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -45,18 +45,6 @@ const char * const dev_state_tran_str[DEV_ST_TRANSITION_MAX] = {
->   	[DEV_ST_TRANSITION_DISABLE] = "DISABLE",
->   };
->   
-> -const char * const mhi_state_str[MHI_STATE_MAX] = {
-> -	[MHI_STATE_RESET] = "RESET",
-> -	[MHI_STATE_READY] = "READY",
-> -	[MHI_STATE_M0] = "M0",
-> -	[MHI_STATE_M1] = "M1",
-> -	[MHI_STATE_M2] = "M2",
-> -	[MHI_STATE_M3] = "M3",
-> -	[MHI_STATE_M3_FAST] = "M3 FAST",
-> -	[MHI_STATE_BHI] = "BHI",
-> -	[MHI_STATE_SYS_ERR] = "SYS ERROR",
-> -};
-> -
->   const char * const mhi_ch_state_type_str[MHI_CH_STATE_TYPE_MAX] = {
->   	[MHI_CH_STATE_TYPE_RESET] = "RESET",
->   	[MHI_CH_STATE_TYPE_STOP] = "STOP",
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index dabf85b92a84..9021be7f2359 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -477,8 +477,8 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
->   	ee = mhi_get_exec_env(mhi_cntrl);
->   	dev_dbg(dev, "local ee: %s state: %s device ee: %s state: %s\n",
->   		TO_MHI_EXEC_STR(mhi_cntrl->ee),
-> -		TO_MHI_STATE_STR(mhi_cntrl->dev_state),
-> -		TO_MHI_EXEC_STR(ee), TO_MHI_STATE_STR(state));
-> +		mhi_state_str(mhi_cntrl->dev_state),
-> +		TO_MHI_EXEC_STR(ee), mhi_state_str(state));
->   
->   	if (state == MHI_STATE_SYS_ERR) {
->   		dev_dbg(dev, "System error detected\n");
-> @@ -844,7 +844,7 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
->   			new_state = MHI_TRE_GET_EV_STATE(local_rp);
->   
->   			dev_dbg(dev, "State change event to state: %s\n",
-> -				TO_MHI_STATE_STR(new_state));
-> +				mhi_state_str(new_state));
->   
->   			switch (new_state) {
->   			case MHI_STATE_M0:
-> @@ -871,7 +871,7 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
->   			}
->   			default:
->   				dev_err(dev, "Invalid state: %s\n",
-> -					TO_MHI_STATE_STR(new_state));
-> +					mhi_state_str(new_state));
->   			}
->   
->   			break;
-> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-> index bb8a23e80e19..3d90b8ecd3d9 100644
-> --- a/drivers/bus/mhi/host/pm.c
-> +++ b/drivers/bus/mhi/host/pm.c
-> @@ -541,7 +541,7 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
->   
->   	dev_dbg(dev, "Exiting with PM state: %s, MHI state: %s\n",
->   		to_mhi_pm_state_str(mhi_cntrl->pm_state),
-> -		TO_MHI_STATE_STR(mhi_cntrl->dev_state));
-> +		mhi_state_str(mhi_cntrl->dev_state));
->   
->   	mutex_unlock(&mhi_cntrl->pm_mutex);
->   }
-> @@ -684,7 +684,7 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
->   exit_sys_error_transition:
->   	dev_dbg(dev, "Exiting with PM state: %s, MHI state: %s\n",
->   		to_mhi_pm_state_str(mhi_cntrl->pm_state),
-> -		TO_MHI_STATE_STR(mhi_cntrl->dev_state));
-> +		mhi_state_str(mhi_cntrl->dev_state));
->   
->   	mutex_unlock(&mhi_cntrl->pm_mutex);
->   }
-> @@ -859,7 +859,7 @@ int mhi_pm_suspend(struct mhi_controller *mhi_cntrl)
->   	if (!ret || MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
->   		dev_err(dev,
->   			"Did not enter M3 state, MHI state: %s, PM state: %s\n",
-> -			TO_MHI_STATE_STR(mhi_cntrl->dev_state),
-> +			mhi_state_str(mhi_cntrl->dev_state),
->   			to_mhi_pm_state_str(mhi_cntrl->pm_state));
->   		return -EIO;
->   	}
-> @@ -885,7 +885,7 @@ static int __mhi_pm_resume(struct mhi_controller *mhi_cntrl, bool force)
->   
->   	dev_dbg(dev, "Entered with PM state: %s, MHI state: %s\n",
->   		to_mhi_pm_state_str(mhi_cntrl->pm_state),
-> -		TO_MHI_STATE_STR(mhi_cntrl->dev_state));
-> +		mhi_state_str(mhi_cntrl->dev_state));
->   
->   	if (mhi_cntrl->pm_state == MHI_PM_DISABLE)
->   		return 0;
-> @@ -895,7 +895,7 @@ static int __mhi_pm_resume(struct mhi_controller *mhi_cntrl, bool force)
->   
->   	if (mhi_get_mhi_state(mhi_cntrl) != MHI_STATE_M3) {
->   		dev_warn(dev, "Resuming from non M3 state (%s)\n",
-> -			 TO_MHI_STATE_STR(mhi_get_mhi_state(mhi_cntrl)));
-> +			 mhi_state_str(mhi_get_mhi_state(mhi_cntrl)));
->   		if (!force)
->   			return -EINVAL;
->   	}
-> @@ -932,7 +932,7 @@ static int __mhi_pm_resume(struct mhi_controller *mhi_cntrl, bool force)
->   	if (!ret || MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)) {
->   		dev_err(dev,
->   			"Did not enter M0 state, MHI state: %s, PM state: %s\n",
-> -			TO_MHI_STATE_STR(mhi_cntrl->dev_state),
-> +			mhi_state_str(mhi_cntrl->dev_state),
->   			to_mhi_pm_state_str(mhi_cntrl->pm_state));
->   		return -EIO;
->   	}
-> @@ -1083,7 +1083,7 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
->   
->   	state = mhi_get_mhi_state(mhi_cntrl);
->   	dev_dbg(dev, "Attempting power on with EE: %s, state: %s\n",
-> -		TO_MHI_EXEC_STR(current_ee), TO_MHI_STATE_STR(state));
-> +		TO_MHI_EXEC_STR(current_ee), mhi_state_str(state));
->   
->   	if (state == MHI_STATE_SYS_ERR) {
->   		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
+Correct, we capture (from GPU cmdstream) two counters both before and
+after a submit (aka execbuf) runs, one is a fixed-rate counter, which
+gives us elapsed time.  The second is a counter that increments every
+clk cycle, which gives us the # of cycles.  With the two values, we
+can calculate GPU frequency.
 
+BR,
+-R
+
+> Regards,
+>
+> Tvrtko
+>
