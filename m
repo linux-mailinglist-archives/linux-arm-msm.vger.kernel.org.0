@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 473D34C6C83
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 13:30:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D4BDB4C6C86
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 13:30:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236408AbiB1MbQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Feb 2022 07:31:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48570 "EHLO
+        id S233407AbiB1MbW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Feb 2022 07:31:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236407AbiB1MbQ (ORCPT
+        with ESMTP id S236441AbiB1MbT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Feb 2022 07:31:16 -0500
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6D5574DE2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 04:30:36 -0800 (PST)
-Received: by mail-pf1-x432.google.com with SMTP id g1so11033639pfv.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 04:30:36 -0800 (PST)
+        Mon, 28 Feb 2022 07:31:19 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D7FA74DDF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 04:30:41 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id ev16-20020a17090aead000b001bc3835fea8so11251576pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 04:30:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=c33H+KhNRIM+MtgBKw1JzAencmoLfjnJxvjWbztOR4M=;
-        b=nfY3uJRMInYtmcvYlqJiBa0oJZDzwXCW6rYKPRYJnf0y8YQHjn9slKGL0E7jnluWVq
-         9L5aYVt61ohxbKB+5MIfQCYbpEIaVZj2rQbiMWwMZVNGOWh+MBMiF8SEDOTg0DMF7FLN
-         8orujb0d4ioXcVd/tyAdV6N6w4r9eAIXnBW0ET8nptJ3IACdD9/wXZEVHpnoEorjJm0k
-         GRIGM2hXdETWo0580iEvja+ifU5779QIJUIQTvQE9H8CLvsHRVJoNg7OaDsMgIJbTMW8
-         26XgbOPnnE9qeNErnw8+mljIxj6m2cmQextFEU9Ru4HBPCcaX0RBpSvprbKe/ocHunJv
-         KZQw==
+        bh=nAVvmeFPIjPaZ8Ic6jkgvNjs8mBwZCyzpyJ7eU2Zm5c=;
+        b=PsrilE//k/KBeU5lfyDt7ncyeCRTEibDue38hBEJBUHIvkzBWoK+qMbmKZLMJ4NFhE
+         VRLAsCpCkYSIgkkDZRh8rep5UDSNHKG960QXJDENxs8hai9thhWS3pUfr0fDDSYxvE0L
+         cZzzQSGjLJi4360Cm6fw0xSijbym/jrkPTQDSsTIoh03gIS1JU6t1RsRNIHYm2CEMawU
+         wIVqC0ZtRXAIhzSYmHz954aD88uQaSm8ohACEB/zXvNOLOeGvxIXKDhtQ4yM5l/yoV7h
+         3mtikdVIHu0kqL1EGbBY5gNuHUh0ggqL3ZjSHU7zNP/PE4RjuGvVe9hM3u00v74aLf8e
+         yGiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=c33H+KhNRIM+MtgBKw1JzAencmoLfjnJxvjWbztOR4M=;
-        b=IxMjxxVd6jBeb/5FpITlIpxaU4G2xKg0bdyRP3JtVjaUcj4Cgr09MupyGtFU3MbFz7
-         5E9BgsvGHunKdTvdk+5CWxsvzxPoLQlFoToFzLZB5kyreafLHQe06ZoTWMDALXUDjP64
-         X7nE7qxNN5pkMZ+Dee9VMd8u5Nx/tZZ+PYVbrWutVfNoS+5i6JFBUksoOvFJ6c3K+MJw
-         XKd2ALoy8Id9t/k7lMNryuBef1TxNoXm5PYZkUtC1tdO/f3aWxOuRJt6iqOpxmS2u601
-         z4CeEh/glliZ7jH0V15BXQysD4xJss8CbFoUtIalQ0p5WewWrzbuVS/rqiCUe/vNxyNo
-         6rYQ==
-X-Gm-Message-State: AOAM533fydilIDA1iKWHm/jJu79EooZDRk+Nd5RSsSoW7xygBnyMzFgb
-        HQHNa35HpBxSXZSGQaPDxqrGFNumpE2DpQ==
-X-Google-Smtp-Source: ABdhPJxXWDcpwY6MdTNXZkLBQ9ksngNF8tb/ZSWnHf+xwxH6L3RJQeV0pSxXKaq6fG0OVCS+H9Ms6g==
-X-Received: by 2002:a05:6a00:130e:b0:4cc:3c7d:4dec with SMTP id j14-20020a056a00130e00b004cc3c7d4decmr21491088pfu.32.1646051436042;
-        Mon, 28 Feb 2022 04:30:36 -0800 (PST)
+        bh=nAVvmeFPIjPaZ8Ic6jkgvNjs8mBwZCyzpyJ7eU2Zm5c=;
+        b=kGZGDeyuCgF/vHTwRkoMyAjJqvJ/WLdArbjnEtBn7gXfsVkvaRBA3RpWx/d/PEiiEk
+         HyoutBfgAdWD2XZZ5rHGz//GDOL3JiCg6vibI41ZG2LEtowt2zYbyB4NCAXM/e9mWg8e
+         q0bH4ON4tQn4iAaRS4FV1YGXTAVO1pHT4vvjzjMcp7HXGzUY+LrcTkVyUZZgf8RVsvpl
+         y54shLaegjsr2LSwOaRvqSnYTP/ocbtX6/Eny3QjXWmy6n6ejjaYPZ7k23i37TAPDugh
+         4/jK6eReZa0gJUP4CS7flFTzykPaIl9G7Sqamz8dj4/Muwv0jxox0tg49aW5wQHwxL+1
+         9bvQ==
+X-Gm-Message-State: AOAM533elIbhetBiYU7VdFPaqvmDrD8UkqxcpHFmevV+g3hhjauxWwqf
+        q/YVmRa9l2yv5xwBIEIok9VvRwIivpeMQg==
+X-Google-Smtp-Source: ABdhPJy5t8eALRHCJam/DcW+LuiRUR5zjwBdLipSnmBRkvJ+XYeLJYVECL6zv2428OGGf5chqtp06w==
+X-Received: by 2002:a17:902:cec9:b0:151:532b:7074 with SMTP id d9-20020a170902cec900b00151532b7074mr9421726plg.123.1646051440499;
+        Mon, 28 Feb 2022 04:30:40 -0800 (PST)
 Received: from localhost.localdomain ([223.179.136.225])
-        by smtp.gmail.com with ESMTPSA id f7-20020a056a0022c700b004f0e9d686dcsm13790001pfj.137.2022.02.28.04.30.31
+        by smtp.gmail.com with ESMTPSA id f7-20020a056a0022c700b004f0e9d686dcsm13790001pfj.137.2022.02.28.04.30.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Feb 2022 04:30:35 -0800 (PST)
+        Mon, 28 Feb 2022 04:30:40 -0800 (PST)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
@@ -55,9 +55,9 @@ Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
         devicetree@vger.kernel.org, shawn.guo@linaro.org, vkoul@kernel.org,
         linux-phy@lists.infradead.org, robh+dt@kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: [PATCH v2 1/8] dt-bindings: phy: qcom,qmp: Mark '#clock-cells' as a 'optional' property
-Date:   Mon, 28 Feb 2022 18:00:12 +0530
-Message-Id: <20220228123019.382037-2-bhupesh.sharma@linaro.org>
+Subject: [PATCH v2 2/8] dt-bindings: phy: qcom,qmp: Describe 'vdda-max-microamp' & 'vdda-pll-max-microamp' properties
+Date:   Mon, 28 Feb 2022 18:00:13 +0530
+Message-Id: <20220228123019.382037-3-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220228123019.382037-1-bhupesh.sharma@linaro.org>
 References: <20220228123019.382037-1-bhupesh.sharma@linaro.org>
@@ -73,65 +73,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since '#clock-cells' is not a required property for qmp-phy(s)
-(atleast in the '/' node, but is used in 'phy@' subnode),
-so mark it as an optional property instead.
+Since a few boards based on QCoM qmp phy use the
+'vdda-max-microamp' & 'vdda-pll-max-microamp' properties to
+describe the ufs phy nodes, add them to the dt-bindings doc as well.
 
-This fixes the following 'make dtbs_check' warning(s):
+This fixes the following '$ make dtbs_check' warning(s):
 
 sm8350-microsoft-surface-duo2.dt.yaml: phy@1d87000:
-  '#clock-cells' is a required property
-
-Also, make the dt-bindings confirm to changes
-already made via commit 82d61e19fccb ("arm64: dts: qcom: msm8996:
- Move '#clock-cells' to QMP PHY child node"), by moving
-'#clock-cells' property from the '/' node to the 'phy@' subnode.
+  'vdda-max-microamp', 'vdda-pll-max-microamp' do not match any of
+   the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
 
 Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc: Vinod Koul <vkoul@kernel.org>
 Cc: Rob Herring <robh+dt@kernel.org>
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-index e417cd667997..48cd6b6171a1 100644
+index 48cd6b6171a1..70e7cd75e173 100644
 --- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
 +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-@@ -63,9 +63,6 @@ properties:
-       - description: Address and length of PHY's common serdes block.
-       - description: Address and length of PHY's DP_COM control block.
+@@ -87,6 +87,14 @@ properties:
+     minItems: 1
+     maxItems: 3
  
--  "#clock-cells":
--    enum: [ 1, 2 ]
--
-   "#address-cells":
-     enum: [ 1, 2 ]
- 
-@@ -109,11 +106,13 @@ patternProperties:
++  vdda-max-microamp:
++    description:
++      Specifies max. load that can be drawn from phy supply.
++
++  vdda-pll-max-microamp:
++    description:
++      Specifies max. load that can be drawn from pll supply.
++
+   vdda-phy-supply:
      description:
-       Each device node of QMP phy is required to have as many child nodes as
-       the number of lanes the PHY has.
-+    properties:
-+      "#clock-cells":
-+        enum: [ 0, 1, 2 ]
- 
- required:
-   - compatible
-   - reg
--  - "#clock-cells"
-   - "#address-cells"
-   - "#size-cells"
-   - ranges
-@@ -461,7 +460,6 @@ examples:
-     usb_2_qmpphy: phy-wrapper@88eb000 {
-         compatible = "qcom,sdm845-qmp-usb3-uni-phy";
-         reg = <0x088eb000 0x18c>;
--        #clock-cells = <1>;
-         #address-cells = <1>;
-         #size-cells = <1>;
-         ranges = <0x0 0x088eb000 0x2000>;
+       Phandle to a regulator supply to PHY core block.
 -- 
 2.35.1
 
