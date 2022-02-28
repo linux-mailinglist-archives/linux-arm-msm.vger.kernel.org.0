@@ -2,253 +2,235 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A97424C6F93
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 15:33:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A6B124C6FC0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 15:43:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234019AbiB1Oe1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Feb 2022 09:34:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51448 "EHLO
+        id S237265AbiB1OoX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Feb 2022 09:44:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234923AbiB1Oe0 (ORCPT
+        with ESMTP id S235117AbiB1OoW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Feb 2022 09:34:26 -0500
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A66F275D6;
-        Mon, 28 Feb 2022 06:33:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1646058827; x=1677594827;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=ucZ5anih82JGSYnw7NJxPpFc3x0RvGFm0k0UeSwKr+Y=;
-  b=gvYQn+U5cKOH1n1z9pD2lnLyoLZLOGI5VhKCS/K4P16ip2Hxq8Wj21ZB
-   CAXinEQGdxLGk4InHVUooplFc7+4n0a4e83CLgRWaz43v4ImvscGpaXGb
-   sOWBmJFaOClL5MqmwpqLA4pgoDwVebTBYKOFcMGByTg8CRQj+vy4Twc/e
-   9TeFys4kZuKI3WJd8AGGCaG3GR9/O/RsTzt/ttFXVNTd0vcbcGSMRTWhm
-   hEhwHeIYk002BEQQj9OGPu1Ml0QSU+FGF7KTeEOYUKu8uGpYXSPby8dyA
-   wj3RfSZ9NuHL7A0XOWJhvQfG/9pnTtNomYd5q8YW8JhKEkOokOzJDnED0
-   g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10271"; a="253086133"
-X-IronPort-AV: E=Sophos;i="5.90,142,1643702400"; 
-   d="scan'208";a="253086133"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2022 06:33:47 -0800
-X-IronPort-AV: E=Sophos;i="5.90,142,1643702400"; 
-   d="scan'208";a="708659832"
-Received: from jpdecker-mobl3.ger.corp.intel.com (HELO [10.213.235.138]) ([10.213.235.138])
-  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2022 06:33:44 -0800
-Message-ID: <f460b115-6ff6-7f69-8b0d-174c4defc771@linux.intel.com>
-Date:   Mon, 28 Feb 2022 14:33:41 +0000
+        Mon, 28 Feb 2022 09:44:22 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B68F5275DA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 06:43:42 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id j10-20020a17090a94ca00b001bc2a9596f6so11522524pjw.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 06:43:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=GfploZQCnavoHHMaVgX62AjpvQD4w7GvytKlAGcRxOA=;
+        b=IktNeqwTsyLMmTHrTSD6tn7vUkMomQpiiEWbsbZAm2tySUws7cZPxANnsLVhy7LdzU
+         thUWbXBoCHMDHQ7mAjcinHp+b538WbKoaeHESEu3wFw0hz5fkBmbPE2OZoDDWm3xtlz9
+         bb1neqbbyjpyobdRAX2bhlzXzhgeGir29Bz4aJYsHT4kX/AFb1CRGi+mtXB532Tjn1RC
+         QXc0LhEp824Mq0rR8/mqcI7fxfqBI4A50AIaJYtTv4jPeHymiH+5KQJhlfsi9370tm70
+         Hd2TGFDXdhtltCHwGz6XYJrSh1p/KmhLhnul75zDC9yg5sXpOQwLiGPvow4lU/1ZfoXR
+         SqzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=GfploZQCnavoHHMaVgX62AjpvQD4w7GvytKlAGcRxOA=;
+        b=tbsjqb66YSItQbsntRtrWxUQTcJiwyh15YUK0YK0wzidmLCX7ZzaBosNOyKUQ8LN8s
+         AEuvaBrQ7KKe+TvvTohEUllR/GUPJ5U6O9USeF+J5d4aS+sp4xn0HgY8soPAihwDa5Q3
+         TthfCOHPjPFu+rJEret60Mmywrvb2cpmlQ0tFcVodr7rSbTXGjc7TJtsmF347ANFt48F
+         oYZP9IyotDKYaMww8llvGZRvYSIxWh1H0JMm3v0/UOJxE/gOCffUWRLhjmZmV8U4oQmS
+         gDTlu3Rv/f3xAbqzj9JCBExnS9K0fR41dDZmqzY/wcke17gVLP0DYUYV2HZz3nIu52Wn
+         ZJHw==
+X-Gm-Message-State: AOAM532MP2GUaIbyHp2bmnimiZYoT1Np1Y1LZx70vmnakbLjgu8PwDn7
+        4tqPySQhK/XT2Dms7FguZjI0
+X-Google-Smtp-Source: ABdhPJxrQ24tgEDKvqEmFqdhbVLxNfzHfsiqhvbaWUkYWh9cbBVzlQwUi8txCIAjjyJUV+ixIPAX9Q==
+X-Received: by 2002:a17:902:9a41:b0:149:a13f:af62 with SMTP id x1-20020a1709029a4100b00149a13faf62mr20571044plv.147.1646059421928;
+        Mon, 28 Feb 2022 06:43:41 -0800 (PST)
+Received: from workstation ([117.207.25.37])
+        by smtp.gmail.com with ESMTPSA id g4-20020a625204000000b004f1063e3d6csm13148964pfb.125.2022.02.28.06.43.38
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 28 Feb 2022 06:43:41 -0800 (PST)
+Date:   Mon, 28 Feb 2022 20:13:36 +0530
+From:   'Manivannan Sadhasivam' <manivannan.sadhasivam@linaro.org>
+To:     David Laight <David.Laight@ACULAB.COM>
+Cc:     "mhi@lists.linux.dev" <mhi@lists.linux.dev>,
+        "quic_hemantk@quicinc.com" <quic_hemantk@quicinc.com>,
+        "quic_bbhatt@quicinc.com" <quic_bbhatt@quicinc.com>,
+        "quic_jhugo@quicinc.com" <quic_jhugo@quicinc.com>,
+        "vinod.koul@linaro.org" <vinod.koul@linaro.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
+        "quic_vbadigan@quicinc.com" <quic_vbadigan@quicinc.com>,
+        "quic_cang@quicinc.com" <quic_cang@quicinc.com>,
+        "quic_skananth@quicinc.com" <quic_skananth@quicinc.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "elder@linaro.org" <elder@linaro.org>
+Subject: Re: [PATCH v4 05/27] bus: mhi: Use bitfield operations for handling
+ DWORDs of ring elements
+Message-ID: <20220228144336.GB12451@workstation>
+References: <20220228124344.77359-1-manivannan.sadhasivam@linaro.org>
+ <20220228124344.77359-6-manivannan.sadhasivam@linaro.org>
+ <90b1d3954b8c4157a4045db82b562271@AcuMS.aculab.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH 3/3] drm/msm: Expose client engine utilization via fdinfo
-Content-Language: en-US
-To:     Rob Clark <robdclark@gmail.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20220225202614.225197-1-robdclark@gmail.com>
- <20220225202614.225197-3-robdclark@gmail.com>
- <CAF6AEGvXs9etrtBUP5fAx7z6pLMV76a-FEXrdk2gY8npDHrFnA@mail.gmail.com>
-From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Organization: Intel Corporation UK Plc
-In-Reply-To: <CAF6AEGvXs9etrtBUP5fAx7z6pLMV76a-FEXrdk2gY8npDHrFnA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
-        NICE_REPLY_A,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <90b1d3954b8c4157a4045db82b562271@AcuMS.aculab.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 25/02/2022 22:14, Rob Clark wrote:
-> On Fri, Feb 25, 2022 at 12:25 PM Rob Clark <robdclark@gmail.com> wrote:
->>
->> From: Rob Clark <robdclark@chromium.org>
->>
->> Similar to AMD commit
->> 874442541133 ("drm/amdgpu: Add show_fdinfo() interface"), using the
->> infrastructure added in previous patches, we add basic client info
->> and GPU engine utilisation for msm.
->>
->> Example output:
->>
->>          # cat /proc/`pgrep glmark2`/fdinfo/6
->>          pos:    0
->>          flags:  02400002
->>          mnt_id: 21
->>          ino:    162
->>          drm-driver:     msm
->>          drm-client-id:  7
->>          drm-engine-gpu: 1734371319 ns
->>          drm-cycles-gpu: 1153645024
-
-Nice, so my vendor agnostic actually worked (with that single fixup of 
-accounting for the fact pdev tag is optional)?
-
-> Note that it might be useful to have a standardized way to report # of
-> cycles and max freq, so userspace tool can derive %utilization in
-> addition to just %busy
-
-How do you define %utilisation vs %busy - I don't exactly follow since I 
-see the two as same?
-
-Looking at your patch I guess I don't understand the difference between 
-'elapsed' and 'cycles' inside your retire_submit(). Both are scoped to a 
-single context and are not global? If 'elapsed' is time context has 
-spent on the GPU, cycles isn't the same just in a different unit?
-
-Regards,
-
-Tvrtko
-
-> BR,
-> -R
+On Mon, Feb 28, 2022 at 02:00:07PM +0000, David Laight wrote:
+> From: Manivannan Sadhasivam
+> > Sent: 28 February 2022 12:43
+> > 
+> > Instead of using the hardcoded bits in DWORD definitions, let's use the
+> > bitfield operations to make it more clear how the DWORDs are structured.
 > 
->>
->> See also: https://patchwork.freedesktop.org/patch/468505/
->>
->> Signed-off-by: Rob Clark <robdclark@chromium.org>
->> ---
->>   drivers/gpu/drm/msm/msm_drv.c | 17 ++++++++++++++++-
->>   drivers/gpu/drm/msm/msm_gpu.c | 20 ++++++++++++++++++--
->>   drivers/gpu/drm/msm/msm_gpu.h | 19 +++++++++++++++++++
->>   3 files changed, 53 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
->> index 16f37f3d9061..fdf401e6f09e 100644
->> --- a/drivers/gpu/drm/msm/msm_drv.c
->> +++ b/drivers/gpu/drm/msm/msm_drv.c
->> @@ -911,7 +911,22 @@ static const struct drm_ioctl_desc msm_ioctls[] = {
->>          DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_QUERY, msm_ioctl_submitqueue_query, DRM_RENDER_ALLOW),
->>   };
->>
->> -DEFINE_DRM_GEM_FOPS(fops);
->> +static void msm_fop_show_fdinfo(struct seq_file *m, struct file *f)
->> +{
->> +       struct drm_file *file = f->private_data;
->> +       struct drm_device *dev = file->minor->dev;
->> +       struct msm_drm_private *priv = dev->dev_private;
->> +       struct drm_printer p = drm_seq_file_printer(m);
->> +
->> +       if (!priv->gpu)
->> +               return;
->> +
->> +       msm_gpu_show_fdinfo(priv->gpu, file->driver_priv, &p);
->> +}
->> +
->> +DEFINE_DRM_GEM_FOPS(fops,
->> +       .show_fdinfo = msm_fop_show_fdinfo,
->> +);
->>
->>   static const struct drm_driver msm_driver = {
->>          .driver_features    = DRIVER_GEM |
->> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
->> index 173ebd449f2f..6302f3fe564b 100644
->> --- a/drivers/gpu/drm/msm/msm_gpu.c
->> +++ b/drivers/gpu/drm/msm/msm_gpu.c
->> @@ -4,6 +4,8 @@
->>    * Author: Rob Clark <robdclark@gmail.com>
->>    */
->>
->> +#include "drm/drm_drv.h"
->> +
->>   #include "msm_gpu.h"
->>   #include "msm_gem.h"
->>   #include "msm_mmu.h"
->> @@ -146,6 +148,15 @@ int msm_gpu_pm_suspend(struct msm_gpu *gpu)
->>          return 0;
->>   }
->>
->> +void msm_gpu_show_fdinfo(struct msm_gpu *gpu, struct msm_file_private *ctx,
->> +                        struct drm_printer *p)
->> +{
->> +       drm_printf(p, "drm-driver:\t%s\n", gpu->dev->driver->name);
->> +       drm_printf(p, "drm-client-id:\t%u\n", ctx->seqno);
->> +       drm_printf(p, "drm-engine-gpu:\t%llu ns\n", ctx->elapsed_ns);
->> +       drm_printf(p, "drm-cycles-gpu:\t%llu\n", ctx->cycles);
->> +}
->> +
->>   int msm_gpu_hw_init(struct msm_gpu *gpu)
->>   {
->>          int ret;
->> @@ -643,7 +654,7 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
->>   {
->>          int index = submit->seqno % MSM_GPU_SUBMIT_STATS_COUNT;
->>          volatile struct msm_gpu_submit_stats *stats;
->> -       u64 elapsed, clock = 0;
->> +       u64 elapsed, clock = 0, cycles;
->>          unsigned long flags;
->>
->>          stats = &ring->memptrs->stats[index];
->> @@ -651,12 +662,17 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
->>          elapsed = (stats->alwayson_end - stats->alwayson_start) * 10000;
->>          do_div(elapsed, 192);
->>
->> +       cycles = stats->cpcycles_end - stats->cpcycles_start;
->> +
->>          /* Calculate the clock frequency from the number of CP cycles */
->>          if (elapsed) {
->> -               clock = (stats->cpcycles_end - stats->cpcycles_start) * 1000;
->> +               clock = cycles * 1000;
->>                  do_div(clock, elapsed);
->>          }
->>
->> +       submit->queue->ctx->elapsed_ns += elapsed;
->> +       submit->queue->ctx->cycles     += cycles;
->> +
->>          trace_msm_gpu_submit_retired(submit, elapsed, clock,
->>                  stats->alwayson_start, stats->alwayson_end);
->>
->> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
->> index 696e2ed8a236..ad4fe05dee03 100644
->> --- a/drivers/gpu/drm/msm/msm_gpu.h
->> +++ b/drivers/gpu/drm/msm/msm_gpu.h
->> @@ -328,6 +328,22 @@ struct msm_file_private {
->>          struct kref ref;
->>          int seqno;
->>
->> +       /**
->> +        * elapsed:
->> +        *
->> +        * The total (cumulative) elapsed time GPU was busy with rendering
->> +        * from this context in ns.
->> +        */
->> +       uint64_t elapsed_ns;
->> +
->> +       /**
->> +        * cycles:
->> +        *
->> +        * The total (cumulative) GPU cycles elapsed attributed to this
->> +        * context.
->> +        */
->> +       uint64_t cycles;
->> +
->>          /**
->>           * entities:
->>           *
->> @@ -511,6 +527,9 @@ static inline void gpu_write64(struct msm_gpu *gpu, u32 lo, u32 hi, u64 val)
->>   int msm_gpu_pm_suspend(struct msm_gpu *gpu);
->>   int msm_gpu_pm_resume(struct msm_gpu *gpu);
->>
->> +void msm_gpu_show_fdinfo(struct msm_gpu *gpu, struct msm_file_private *ctx,
->> +                        struct drm_printer *p);
->> +
->>   int msm_submitqueue_init(struct drm_device *drm, struct msm_file_private *ctx);
->>   struct msm_gpu_submitqueue *msm_submitqueue_get(struct msm_file_private *ctx,
->>                  u32 id);
->> --
->> 2.35.1
->>
+> That all makes it as clear as mud.
+
+It depends on how you see it ;)
+
+For instance,
+
+#define MHI_TRE_GET_CMD_TYPE(tre) ((MHI_TRE_GET_DWORD(tre, 1) >> 16) & 0xFF)
+
+vs
+
+#define MHI_TRE_GET_CMD_TYPE(tre) (FIELD_GET(GENMASK(23, 16), (MHI_TRE_GET_DWORD(tre, 1))))
+
+The later one makes it more obvious that the "type" field resides between bit 23
+and 16. Plus it avoids the extra masking.
+
+> Try reading it!
+> 
+
+Well I did before sending the patch.
+
+Thanks,
+Mani
+
+> 	David
+> 
+> > 
+> > Suggested-by: Alex Elder <elder@linaro.org>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  drivers/bus/mhi/host/internal.h | 58 +++++++++++++++++++--------------
+> >  1 file changed, 33 insertions(+), 25 deletions(-)
+> > 
+> > diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+> > index 156bf65b6810..1d1790e83a93 100644
+> > --- a/drivers/bus/mhi/host/internal.h
+> > +++ b/drivers/bus/mhi/host/internal.h
+> > @@ -7,6 +7,7 @@
+> >  #ifndef _MHI_INT_H
+> >  #define _MHI_INT_H
+> > 
+> > +#include <linux/bitfield.h>
+> >  #include <linux/mhi.h>
+> > 
+> >  extern struct bus_type mhi_bus_type;
+> > @@ -205,58 +206,65 @@ enum mhi_cmd_type {
+> >  /* No operation command */
+> >  #define MHI_TRE_CMD_NOOP_PTR (0)
+> >  #define MHI_TRE_CMD_NOOP_DWORD0 (0)
+> > -#define MHI_TRE_CMD_NOOP_DWORD1 (cpu_to_le32(MHI_CMD_NOP << 16))
+> > +#define MHI_TRE_CMD_NOOP_DWORD1 (cpu_to_le32(FIELD_PREP(GENMASK(23, 16), MHI_CMD_NOP)))
+> > 
+> >  /* Channel reset command */
+> >  #define MHI_TRE_CMD_RESET_PTR (0)
+> >  #define MHI_TRE_CMD_RESET_DWORD0 (0)
+> > -#define MHI_TRE_CMD_RESET_DWORD1(chid) (cpu_to_le32((chid << 24) | \
+> > -					(MHI_CMD_RESET_CHAN << 16)))
+> > +#define MHI_TRE_CMD_RESET_DWORD1(chid) (cpu_to_le32(FIELD_PREP(GENMASK(31, 24), chid)) | \
+> > +					FIELD_PREP(GENMASK(23, 16), MHI_CMD_RESET_CHAN))
+> > 
+> >  /* Channel stop command */
+> >  #define MHI_TRE_CMD_STOP_PTR (0)
+> >  #define MHI_TRE_CMD_STOP_DWORD0 (0)
+> > -#define MHI_TRE_CMD_STOP_DWORD1(chid) (cpu_to_le32((chid << 24) | \
+> > -				       (MHI_CMD_STOP_CHAN << 16)))
+> > +#define MHI_TRE_CMD_STOP_DWORD1(chid) (cpu_to_le32(FIELD_PREP(GENMASK(31, 24), chid)) | \
+> > +					FIELD_PREP(GENMASK(23, 16), MHI_CMD_STOP_CHAN))
+> > 
+> >  /* Channel start command */
+> >  #define MHI_TRE_CMD_START_PTR (0)
+> >  #define MHI_TRE_CMD_START_DWORD0 (0)
+> > -#define MHI_TRE_CMD_START_DWORD1(chid) (cpu_to_le32((chid << 24) | \
+> > -					(MHI_CMD_START_CHAN << 16)))
+> > +#define MHI_TRE_CMD_START_DWORD1(chid) (cpu_to_le32(FIELD_PREP(GENMASK(31, 24), chid)) | \
+> > +					FIELD_PREP(GENMASK(23, 16), MHI_CMD_START_CHAN))
+> > 
+> >  #define MHI_TRE_GET_DWORD(tre, word) (le32_to_cpu((tre)->dword[(word)]))
+> > -#define MHI_TRE_GET_CMD_CHID(tre) ((MHI_TRE_GET_DWORD(tre, 1) >> 24) & 0xFF)
+> > -#define MHI_TRE_GET_CMD_TYPE(tre) ((MHI_TRE_GET_DWORD(tre, 1) >> 16) & 0xFF)
+> > +#define MHI_TRE_GET_CMD_CHID(tre) (FIELD_GET(GENMASK(31, 24), (MHI_TRE_GET_DWORD(tre, 1))))
+> > +#define MHI_TRE_GET_CMD_TYPE(tre) (FIELD_GET(GENMASK(23, 16), (MHI_TRE_GET_DWORD(tre, 1))))
+> > 
+> >  /* Event descriptor macros */
+> >  #define MHI_TRE_EV_PTR(ptr) (cpu_to_le64(ptr))
+> > -#define MHI_TRE_EV_DWORD0(code, len) (cpu_to_le32((code << 24) | len))
+> > -#define MHI_TRE_EV_DWORD1(chid, type) (cpu_to_le32((chid << 24) | (type << 16)))
+> > +#define MHI_TRE_EV_DWORD0(code, len) (cpu_to_le32(FIELD_PREP(GENMASK(31, 24), code) | \
+> > +						FIELD_PREP(GENMASK(15, 0), len)))
+> > +#define MHI_TRE_EV_DWORD1(chid, type) (cpu_to_le32(FIELD_PREP(GENMASK(31, 24), chid) | \
+> > +						FIELD_PREP(GENMASK(23, 16), type)))
+> >  #define MHI_TRE_GET_EV_PTR(tre) (le64_to_cpu((tre)->ptr))
+> > -#define MHI_TRE_GET_EV_CODE(tre) ((MHI_TRE_GET_DWORD(tre, 0) >> 24) & 0xFF)
+> > -#define MHI_TRE_GET_EV_LEN(tre) (MHI_TRE_GET_DWORD(tre, 0) & 0xFFFF)
+> > -#define MHI_TRE_GET_EV_CHID(tre) ((MHI_TRE_GET_DWORD(tre, 1) >> 24) & 0xFF)
+> > -#define MHI_TRE_GET_EV_TYPE(tre) ((MHI_TRE_GET_DWORD(tre, 1) >> 16) & 0xFF)
+> > -#define MHI_TRE_GET_EV_STATE(tre) ((MHI_TRE_GET_DWORD(tre, 0) >> 24) & 0xFF)
+> > -#define MHI_TRE_GET_EV_EXECENV(tre) ((MHI_TRE_GET_DWORD(tre, 0) >> 24) & 0xFF)
+> > +#define MHI_TRE_GET_EV_CODE(tre) (FIELD_GET(GENMASK(31, 24), (MHI_TRE_GET_DWORD(tre, 0))))
+> > +#define MHI_TRE_GET_EV_LEN(tre) (FIELD_GET(GENMASK(15, 0), (MHI_TRE_GET_DWORD(tre, 0))))
+> > +#define MHI_TRE_GET_EV_CHID(tre) (FIELD_GET(GENMASK(31, 24), (MHI_TRE_GET_DWORD(tre, 1))))
+> > +#define MHI_TRE_GET_EV_TYPE(tre) (FIELD_GET(GENMASK(23, 16), (MHI_TRE_GET_DWORD(tre, 1))))
+> > +#define MHI_TRE_GET_EV_STATE(tre) (FIELD_GET(GENMASK(31, 24), (MHI_TRE_GET_DWORD(tre, 0))))
+> > +#define MHI_TRE_GET_EV_EXECENV(tre) (FIELD_GET(GENMASK(31, 24), (MHI_TRE_GET_DWORD(tre, 0))))
+> >  #define MHI_TRE_GET_EV_SEQ(tre) MHI_TRE_GET_DWORD(tre, 0)
+> >  #define MHI_TRE_GET_EV_TIME(tre) (MHI_TRE_GET_EV_PTR(tre))
+> >  #define MHI_TRE_GET_EV_COOKIE(tre) lower_32_bits(MHI_TRE_GET_EV_PTR(tre))
+> > -#define MHI_TRE_GET_EV_VEID(tre) ((MHI_TRE_GET_DWORD(tre, 0) >> 16) & 0xFF)
+> > -#define MHI_TRE_GET_EV_LINKSPEED(tre) ((MHI_TRE_GET_DWORD(tre, 1) >> 24) & 0xFF)
+> > -#define MHI_TRE_GET_EV_LINKWIDTH(tre) (MHI_TRE_GET_DWORD(tre, 0) & 0xFF)
+> > +#define MHI_TRE_GET_EV_VEID(tre) (FIELD_GET(GENMASK(23, 16), (MHI_TRE_GET_DWORD(tre, 0))))
+> > +#define MHI_TRE_GET_EV_LINKSPEED(tre) (FIELD_GET(GENMASK(31, 24), (MHI_TRE_GET_DWORD(tre, 1))))
+> > +#define MHI_TRE_GET_EV_LINKWIDTH(tre) (FIELD_GET(GENMASK(7, 0), (MHI_TRE_GET_DWORD(tre, 0))))
+> > 
+> >  /* Transfer descriptor macros */
+> >  #define MHI_TRE_DATA_PTR(ptr) (cpu_to_le64(ptr))
+> > -#define MHI_TRE_DATA_DWORD0(len) (cpu_to_le32(len & MHI_MAX_MTU))
+> > -#define MHI_TRE_DATA_DWORD1(bei, ieot, ieob, chain) (cpu_to_le32((2 << 16) | (bei << 10) \
+> > -	| (ieot << 9) | (ieob << 8) | chain))
+> > +#define MHI_TRE_DATA_DWORD0(len) (cpu_to_le32(FIELD_PREP(GENMASK(15, 0), len)))
+> > +#define MHI_TRE_TYPE_TRANSFER 2
+> > +#define MHI_TRE_DATA_DWORD1(bei, ieot, ieob, chain) (cpu_to_le32(FIELD_PREP(GENMASK(23, 16), \
+> > +							MHI_TRE_TYPE_TRANSFER) | \
+> > +							FIELD_PREP(BIT(10), bei) | \
+> > +							FIELD_PREP(BIT(9), ieot) | \
+> > +							FIELD_PREP(BIT(8), ieob) | \
+> > +							FIELD_PREP(BIT(0), chain)))
+> > 
+> >  /* RSC transfer descriptor macros */
+> > -#define MHI_RSCTRE_DATA_PTR(ptr, len) (cpu_to_le64(((u64)len << 48) | ptr))
+> > +#define MHI_RSCTRE_DATA_PTR(ptr, len) (cpu_to_le64(FIELD_PREP(GENMASK(64, 48), len) | ptr))
+> >  #define MHI_RSCTRE_DATA_DWORD0(cookie) (cpu_to_le32(cookie))
+> > -#define MHI_RSCTRE_DATA_DWORD1 (cpu_to_le32(MHI_PKT_TYPE_COALESCING << 16))
+> > +#define MHI_RSCTRE_DATA_DWORD1 (cpu_to_le32(FIELD_PREP(GENMASK(23, 16), MHI_PKT_TYPE_COALESCING)
+> > 
+> >  enum mhi_pkt_type {
+> >  	MHI_PKT_TYPE_INVALID = 0x0,
+> > --
+> > 2.25.1
+> 
+> -
+> Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1PT, UK
+> Registration No: 1397386 (Wales)
+> 
