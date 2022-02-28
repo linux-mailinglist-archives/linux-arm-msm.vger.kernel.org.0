@@ -2,128 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 686E64C7C88
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 22:55:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 02EAB4C7DE5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 23:58:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230029AbiB1V4B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Feb 2022 16:56:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54276 "EHLO
+        id S231617AbiB1W7c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Feb 2022 17:59:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229518AbiB1V4A (ORCPT
+        with ESMTP id S229765AbiB1W7b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Feb 2022 16:56:00 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 715B733A10;
-        Mon, 28 Feb 2022 13:55:21 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 044046125B;
-        Mon, 28 Feb 2022 21:55:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C98C340EE;
-        Mon, 28 Feb 2022 21:55:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1646085320;
-        bh=LczBSDm6Uc0Q4dRCm0NyjD8OkSIDDPEpgJolzKcX5WM=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=ab4/ozRU2o9MEojSPOGq6RYi8i99oEMq9fXG9q6fPoyrvn/pXBR2DHBrjHFTox6Wg
-         IZ3+X+ps0eN3pR4s8gMkJo4DoN/k5AnRtYkCK4y9KkQuAvNxQp9cjBfoQyAsg3eDLN
-         UAz1SfoZm2u0Wd9V2lZlvOdpUaD2cQdPJTu10pRDZllTb2F3XX1NciqLBV15eDk13x
-         rXhfo5P+bJFTDxTbGo94xGdW6Pdg1dQa5INCtEP4wul17JNK0mrfh+KEyEZnzG4fvt
-         qF/Eh0upvYNUwf9qsH4iHw7axG1aYPDOBL03vDKGQEApBAjfswVgRWiQ5RTD055gy5
-         zSBzrCiiYzqng==
-Received: by mail-ed1-f46.google.com with SMTP id w3so19488266edu.8;
-        Mon, 28 Feb 2022 13:55:20 -0800 (PST)
-X-Gm-Message-State: AOAM5313Lf3YKZ1sUQJ+ukXzZEqfG2KtCf+dKjFdiKimYYX0KbWFk3he
-        8LgeapKn8WplhBm2lPWSO+yVLX+SFKtCuVTKSw==
-X-Google-Smtp-Source: ABdhPJxVFM5uEo/WfiysGAqUH9IlTD4c6kjFVSqhWiuXsAa85mkhJYkbCEQGpBs6i+Uj8JqsYczIXsRnH5grwapZmNo=
-X-Received: by 2002:a05:6402:1cae:b0:410:d3ae:3c8a with SMTP id
- cz14-20020a0564021cae00b00410d3ae3c8amr21349170edb.215.1646085318679; Mon, 28
- Feb 2022 13:55:18 -0800 (PST)
+        Mon, 28 Feb 2022 17:59:31 -0500
+X-Greylist: delayed 179 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 28 Feb 2022 14:58:51 PST
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.51])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 972879F3BE;
+        Mon, 28 Feb 2022 14:58:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1646088947;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
+    bh=a/gAEMN65dNbL3ATcc5dOu/F+K7mQe5TkMeEHj9kOHk=;
+    b=kcn99mJFc13QRBZ1qprlucgyIq80zEm146rskwegsrB7yf41cOdtAd6uMPP+nOlBPs
+    TB670z7v/Q390MezIP4S/HzmFPlyMcOYQeXT64CWfy09iaeEyi80DmHvqZ4xcvzcHzSI
+    kBIDwxMEfLB7M4yi7ucc9gdr8PkszcTg/Ze6e47i5y5oG0wERpW66dxAGXvFwIPD1Ju8
+    PQz119l3P0KTSL4UlB9O2ci4vyDPQynRrzzuOR0IgScNeCky+Fa/Y8BXCor/B9Kp9JQU
+    E+T6odYpQbNoM8TaTJAeMZm4MzZLi1itW9tLxTtZDauMAGlpxRUUpCA/U9ugFhgmBH6F
+    GhYg==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXQ7UOGqRde+a0fyL/oVo="
+X-RZG-CLASS-ID: mo00
+Received: from droid..
+    by smtp.strato.de (RZmta 47.40.1 AUTH)
+    with ESMTPSA id kdc58dy1SMtkWqD
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 28 Feb 2022 23:55:46 +0100 (CET)
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-remoteproc@vger.kernel.org, phone-devel@vger.kernel.org,
+        Aleksander Morgado <aleksander@aleksander.es>,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH v2 0/2] Enable BAM-DMUX/WWAN on Qualcomm MSM8916
+Date:   Mon, 28 Feb 2022 23:53:58 +0100
+Message-Id: <20220228225400.146555-1-stephan@gerhold.net>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-References: <20220228131435.29207-1-michael.srba@seznam.cz>
- <20220228131435.29207-3-michael.srba@seznam.cz> <1646082901.647733.1599408.nullmailer@robh.at.kernel.org>
-In-Reply-To: <1646082901.647733.1599408.nullmailer@robh.at.kernel.org>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Mon, 28 Feb 2022 15:55:07 -0600
-X-Gmail-Original-Message-ID: <CAL_Jsq+j+LmZbCfnKUTveKAsBqqT_VGNcNrpVef=z_0yPBxMwA@mail.gmail.com>
-Message-ID: <CAL_Jsq+j+LmZbCfnKUTveKAsBqqT_VGNcNrpVef=z_0yPBxMwA@mail.gmail.com>
-Subject: Re: [PATCH v9 3/5] dt-bindings: bus: add device tree bindings for qcom,ssc-block-bus
-To:     Michael Srba <michael.srba@seznam.cz>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Florian Fainelli <f.fainelli@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        Stephen Boyd <sboyd@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 28, 2022 at 3:15 PM Rob Herring <robh@kernel.org> wrote:
->
-> On Mon, 28 Feb 2022 14:14:33 +0100, michael.srba@seznam.cz wrote:
-> > From: Michael Srba <Michael.Srba@seznam.cz>
-> >
-> > Adds bindings for the AHB bus which exposes the SSC block in the global
-> > address space. This bus (and the SSC block itself) is present on certain
-> > qcom SoCs.
-> >
-> > In typical configuration, this bus (as some of the clocks and registers
-> > that we need to manipulate) is not accessible to the OS, and the
-> > resources on this bus are indirectly accessed by communicating with a
-> > hexagon CPU core residing in the SSC block. In this configuration, the
-> > hypervisor is the one performing the bus initialization for the purposes
-> > of bringing the haxagon CPU core out of reset.
-> >
-> > However, it is possible to change the configuration, in which case this
-> > binding serves to allow the OS to initialize the bus.
-> >
-> > Signed-off-by: Michael Srba <Michael.Srba@seznam.cz>
-> > Reviewed-by: Rob Herring <robh@kernel.org>
-> > ---
-> >  CHANGES:
-> >  - v2: fix issues caught by by dt-schema
-> >  - v3: none
-> >  - v4: address the issues pointed out in the review
-> >  - v5: clarify type of additional properties; remove ssc_tlmm node for now
-> >  - v6: none
-> >  - v7: fix indentation, use imperative in commit message
-> >  - v8: none
-> >  - v9: fix typo in commit description; explain what SSC is in the 'decription' section of the binding
-> > ---
-> >  .../bindings/bus/qcom,ssc-block-bus.yaml      | 147 ++++++++++++++++++
-> >  1 file changed, 147 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/bus/qcom,ssc-block-bus.yaml
-> >
->
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
->
-> yamllint warnings/errors:
->
-> dtschema/dtc warnings/errors:
-> Error: Documentation/devicetree/bindings/bus/qcom,ssc-block-bus.example.dts:39.32-33 syntax error
-> FATAL ERROR: Unable to parse input tree
-> make[1]: *** [scripts/Makefile.lib:378: Documentation/devicetree/bindings/bus/qcom,ssc-block-bus.example.dt.yaml] Error 1
-> make[1]: *** Waiting for unfinished jobs....
-> make: *** [Makefile:1398: dt_binding_check] Error 2
+This series enables using mobile Internet/WWAN on devices based on Qualcomm
+MSM8916. The network driver for that has already landed in Linux 5.17.
 
-This can be ignored I guess as the bot doesn't handle missing cover
-letter... As I mentioned on v6, you should be sending series with a
-cover letter.
+The device tree node of BAM-DMUX does not have any own memory resources.
+It just bundles resources from other hardware blocks. It could be added to the
+device tree root node, but it logically belongs below the modem remote processor.
 
-Rob
+To allow adding it there, the qcom_q6v5_mss driver is modified slightly to
+create a platform device for it.
+
+Changes in v2:
+  - Avoid using of_platform_populate() and create platform device 
+    specifically only for "qcom,bam-dmux".
+
+Stephan Gerhold (2):
+  remoteproc: qcom_q6v5_mss: Create platform device for BAM-DMUX
+  arm64: dts: qcom: msm8916: Add BAM-DMUX for WWAN network interfaces
+
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 30 +++++++++++++++++++++++++++
+ drivers/remoteproc/qcom_q6v5_mss.c    |  8 +++++++
+ 2 files changed, 38 insertions(+)
+
+-- 
+2.35.1
+
