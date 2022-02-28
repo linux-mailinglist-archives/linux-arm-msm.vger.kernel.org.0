@@ -2,74 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BFE8C4C6F45
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 15:25:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A97424C6F93
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 15:33:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235631AbiB1OZx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Feb 2022 09:25:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54646 "EHLO
+        id S234019AbiB1Oe1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Feb 2022 09:34:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231794AbiB1OZx (ORCPT
+        with ESMTP id S234923AbiB1Oe0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Feb 2022 09:25:53 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C40BC69CE4;
-        Mon, 28 Feb 2022 06:25:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1646058314; x=1677594314;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=KjNPm8CkcwmZjG9ZCapTIjn+RZ9HMpspNn/kHxvBxHg=;
-  b=jzmdPWVVE6ZYTkRjSeGTIKUA+MqtNFn7Rt4PdeqpAXTFMkSAhDZ1q5jU
-   B8b0xMgB209xGm1cb7nPKiFdH6vcyMu0uEyafFohf2MKa5OE1f3R7Ycrw
-   4d73zrdcQHumqGJ8DZhiH8EO7ernakspW9BmYgrrb08ZYlRHjyh2fnrje
-   k=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 28 Feb 2022 06:25:14 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2022 06:25:14 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Mon, 28 Feb 2022 06:25:13 -0800
-Received: from [10.216.7.106] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Mon, 28 Feb
- 2022 06:25:09 -0800
-Subject: Re: [PATCH V7 5/5] arm64: dts: qcom: sc7280: Add pm8008 support for
- sc7280-idp
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-CC:     Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Das Srinagesh <gurus@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_collinsd@quicinc.com>,
-        <quic_subbaram@quicinc.com>, <quic_jprakash@quicinc.com>
-References: <1645182064-15843-1-git-send-email-quic_c_skakit@quicinc.com>
- <1645182064-15843-6-git-send-email-quic_c_skakit@quicinc.com>
- <CAE-0n509bg6RzieOtYuUvicU14D7bmgH-u02F1TB+hBZ+xH4CA@mail.gmail.com>
-From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
-Message-ID: <42570508-ed62-af26-220e-c776418a722e@quicinc.com>
-Date:   Mon, 28 Feb 2022 19:55:06 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Mon, 28 Feb 2022 09:34:26 -0500
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A66F275D6;
+        Mon, 28 Feb 2022 06:33:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1646058827; x=1677594827;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=ucZ5anih82JGSYnw7NJxPpFc3x0RvGFm0k0UeSwKr+Y=;
+  b=gvYQn+U5cKOH1n1z9pD2lnLyoLZLOGI5VhKCS/K4P16ip2Hxq8Wj21ZB
+   CAXinEQGdxLGk4InHVUooplFc7+4n0a4e83CLgRWaz43v4ImvscGpaXGb
+   sOWBmJFaOClL5MqmwpqLA4pgoDwVebTBYKOFcMGByTg8CRQj+vy4Twc/e
+   9TeFys4kZuKI3WJd8AGGCaG3GR9/O/RsTzt/ttFXVNTd0vcbcGSMRTWhm
+   hEhwHeIYk002BEQQj9OGPu1Ml0QSU+FGF7KTeEOYUKu8uGpYXSPby8dyA
+   wj3RfSZ9NuHL7A0XOWJhvQfG/9pnTtNomYd5q8YW8JhKEkOokOzJDnED0
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10271"; a="253086133"
+X-IronPort-AV: E=Sophos;i="5.90,142,1643702400"; 
+   d="scan'208";a="253086133"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2022 06:33:47 -0800
+X-IronPort-AV: E=Sophos;i="5.90,142,1643702400"; 
+   d="scan'208";a="708659832"
+Received: from jpdecker-mobl3.ger.corp.intel.com (HELO [10.213.235.138]) ([10.213.235.138])
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2022 06:33:44 -0800
+Message-ID: <f460b115-6ff6-7f69-8b0d-174c4defc771@linux.intel.com>
+Date:   Mon, 28 Feb 2022 14:33:41 +0000
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n509bg6RzieOtYuUvicU14D7bmgH-u02F1TB+hBZ+xH4CA@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH 3/3] drm/msm: Expose client engine utilization via fdinfo
 Content-Language: en-US
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+To:     Rob Clark <robdclark@gmail.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20220225202614.225197-1-robdclark@gmail.com>
+ <20220225202614.225197-3-robdclark@gmail.com>
+ <CAF6AEGvXs9etrtBUP5fAx7z6pLMV76a-FEXrdk2gY8npDHrFnA@mail.gmail.com>
+From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Organization: Intel Corporation UK Plc
+In-Reply-To: <CAF6AEGvXs9etrtBUP5fAx7z6pLMV76a-FEXrdk2gY8npDHrFnA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
+        NICE_REPLY_A,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -77,154 +73,182 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 2/19/2022 7:31 AM, Stephen Boyd wrote:
-> Quoting Satya Priya (2022-02-18 03:01:03)
->> Add pm8008_infra and pm8008_regulators support for sc7280 idp.
+On 25/02/2022 22:14, Rob Clark wrote:
+> On Fri, Feb 25, 2022 at 12:25 PM Rob Clark <robdclark@gmail.com> wrote:
 >>
->> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+>> From: Rob Clark <robdclark@chromium.org>
+>>
+>> Similar to AMD commit
+>> 874442541133 ("drm/amdgpu: Add show_fdinfo() interface"), using the
+>> infrastructure added in previous patches, we add basic client info
+>> and GPU engine utilisation for msm.
+>>
+>> Example output:
+>>
+>>          # cat /proc/`pgrep glmark2`/fdinfo/6
+>>          pos:    0
+>>          flags:  02400002
+>>          mnt_id: 21
+>>          ino:    162
+>>          drm-driver:     msm
+>>          drm-client-id:  7
+>>          drm-engine-gpu: 1734371319 ns
+>>          drm-cycles-gpu: 1153645024
+
+Nice, so my vendor agnostic actually worked (with that single fixup of 
+accounting for the fact pdev tag is optional)?
+
+> Note that it might be useful to have a standardized way to report # of
+> cycles and max freq, so userspace tool can derive %utilization in
+> addition to just %busy
+
+How do you define %utilisation vs %busy - I don't exactly follow since I 
+see the two as same?
+
+Looking at your patch I guess I don't understand the difference between 
+'elapsed' and 'cycles' inside your retire_submit(). Both are scoped to a 
+single context and are not global? If 'elapsed' is time context has 
+spent on the GPU, cycles isn't the same just in a different unit?
+
+Regards,
+
+Tvrtko
+
+> BR,
+> -R
+> 
+>>
+>> See also: https://patchwork.freedesktop.org/patch/468505/
+>>
+>> Signed-off-by: Rob Clark <robdclark@chromium.org>
 >> ---
->> Changes in V2:
->>   - As per Stephen's comments, replaced '_' with '-' for node names.
+>>   drivers/gpu/drm/msm/msm_drv.c | 17 ++++++++++++++++-
+>>   drivers/gpu/drm/msm/msm_gpu.c | 20 ++++++++++++++++++--
+>>   drivers/gpu/drm/msm/msm_gpu.h | 19 +++++++++++++++++++
+>>   3 files changed, 53 insertions(+), 3 deletions(-)
 >>
->> Changes in V3:
->>   - Changed the regulator node names as l1, l2 etc
->>   - Changed "pm8008-regulators" to "regulators"
->>   - Changed "qcom,min-dropout-voltage" to "regulator-min-dropout-voltage-microvolt"
->>
->> Changes in V4:
->>   - Moved all common stuff to pm8008.dtsi and added board specific configurations here.
->>
->> Changes in V5:
->>   - Changed the node names as per pm8008.dtsi
->>   - Moved supply nodes to chip level (mfd node).
->>   - Removed the regulator-mindropout property.
->>
->> Changes in V6:
->>   - No changes.
->>
->> Changes in V7:
->>   - No Changes.
->>
->>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 66 ++++++++++++++++++++++++++++++++
->>   1 file changed, 66 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> index ecbf2b8..371ad19 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> @@ -263,6 +263,62 @@
->>          };
+>> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+>> index 16f37f3d9061..fdf401e6f09e 100644
+>> --- a/drivers/gpu/drm/msm/msm_drv.c
+>> +++ b/drivers/gpu/drm/msm/msm_drv.c
+>> @@ -911,7 +911,22 @@ static const struct drm_ioctl_desc msm_ioctls[] = {
+>>          DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_QUERY, msm_ioctl_submitqueue_query, DRM_RENDER_ALLOW),
 >>   };
 >>
->> +&i2c1 {
-> Can we add another phandle?
->
-> &pm8008_bus: &i2c1 {
-
-Okay.
-
-
->> +       #address-cells = <1>;
->> +       #size-cells = <0>;
->> +       status = "okay";
+>> -DEFINE_DRM_GEM_FOPS(fops);
+>> +static void msm_fop_show_fdinfo(struct seq_file *m, struct file *f)
+>> +{
+>> +       struct drm_file *file = f->private_data;
+>> +       struct drm_device *dev = file->minor->dev;
+>> +       struct msm_drm_private *priv = dev->dev_private;
+>> +       struct drm_printer p = drm_seq_file_printer(m);
 >> +
->> +       #include "pm8008.dtsi"
->> +};
-> And then
->
-> #include "pm8008.dtsi"
-
-
-Okay.
-
-
-> and have the pm8008.dtsi file add itself as a child of &pm8008_bus? Then
-> we can easily see that pm8008 is a child of pm8008_bus without having to
-> figure out where the file is included. It also helps avoid polluting the
-> i2c node with things that shouldn't be there in case we want to include
-> configuration bits in the pm8008.dtsi file that aren't directly related
-> to the bus node.
->
+>> +       if (!priv->gpu)
+>> +               return;
 >> +
->> +&pm8008_infra {
->> +       pinctrl-names = "default";
->> +       pinctrl-0 = <&pm8008_active>;
->> +};
+>> +       msm_gpu_show_fdinfo(priv->gpu, file->driver_priv, &p);
+>> +}
 >> +
->> +&pm8008_regulators {
->> +       vdd_l1_l2-supply = <&vreg_s8b_1p2>;
->> +       vdd_l3_l4-supply = <&vreg_s1b_1p8>;
->> +       vdd_l5-supply = <&vreg_bob>;
->> +       vdd_l6-supply = <&vreg_bob>;
->> +       vdd_l7-supply = <&vreg_bob>;
->> +};
->> +
->> +&pm8008_l1 {
->> +       regulator-min-microvolt = <950000>;
->> +       regulator-max-microvolt = <1300000>;
->> +};
->> +
->> +&pm8008_l2 {
->> +       regulator-min-microvolt = <950000>;
->> +       regulator-max-microvolt = <1250000>;
->> +};
->> +
->> +&pm8008_l3 {
->> +       regulator-min-microvolt = <1650000>;
->> +       regulator-max-microvolt = <3000000>;
->> +};
->> +
->> +&pm8008_l4 {
->> +       regulator-min-microvolt = <1504000>;
->> +       regulator-max-microvolt = <1600000>;
->> +};
->> +
->> +&pm8008_l5 {
->> +       regulator-min-microvolt = <2600000>;
->> +       regulator-max-microvolt = <3000000>;
->> +};
->> +
->> +&pm8008_l6 {
->> +       regulator-min-microvolt = <2600000>;
->> +       regulator-max-microvolt = <3000000>;
->> +};
->> +
->> +&pm8008_l7 {
->> +       regulator-min-microvolt = <3000000>;
->> +       regulator-max-microvolt = <3544000>;
->> +};
->> +
->>   &qfprom {
->>          vcc-supply = <&vreg_l1c_1p8>;
->>   };
->> @@ -375,6 +431,16 @@
->>          drive-strength = <2>;
->>   };
+>> +DEFINE_DRM_GEM_FOPS(fops,
+>> +       .show_fdinfo = msm_fop_show_fdinfo,
+>> +);
 >>
->> +&pm8350c_gpios {
->> +       pm8008_active: pm8008_active {
-> No underscore in node names. pm8008_active: pm8008-active {
-
-
-Okay.
-
-
->> +               pins = "gpio4";
->> +               function = "normal";
->> +               bias-disable;
->> +               output-high;
-> Is this a reset signal? Should the driver be deasserting the reset when
-> it is ready? That could be the same time the gpio is acquired.
-
-
-I didn't get your question exactly.. hope this answers your query
-
-The pm8008 chip needs this gpio to be toggled , in order to come out of 
-reset and start any transactions..
-
-Please let me know if you have more queries
-
-
->> +               power-source = <0>;
->> +       };
->> +};
+>>   static const struct drm_driver msm_driver = {
+>>          .driver_features    = DRIVER_GEM |
+>> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+>> index 173ebd449f2f..6302f3fe564b 100644
+>> --- a/drivers/gpu/drm/msm/msm_gpu.c
+>> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+>> @@ -4,6 +4,8 @@
+>>    * Author: Rob Clark <robdclark@gmail.com>
+>>    */
+>>
+>> +#include "drm/drm_drv.h"
+>> +
+>>   #include "msm_gpu.h"
+>>   #include "msm_gem.h"
+>>   #include "msm_mmu.h"
+>> @@ -146,6 +148,15 @@ int msm_gpu_pm_suspend(struct msm_gpu *gpu)
+>>          return 0;
+>>   }
+>>
+>> +void msm_gpu_show_fdinfo(struct msm_gpu *gpu, struct msm_file_private *ctx,
+>> +                        struct drm_printer *p)
+>> +{
+>> +       drm_printf(p, "drm-driver:\t%s\n", gpu->dev->driver->name);
+>> +       drm_printf(p, "drm-client-id:\t%u\n", ctx->seqno);
+>> +       drm_printf(p, "drm-engine-gpu:\t%llu ns\n", ctx->elapsed_ns);
+>> +       drm_printf(p, "drm-cycles-gpu:\t%llu\n", ctx->cycles);
+>> +}
+>> +
+>>   int msm_gpu_hw_init(struct msm_gpu *gpu)
+>>   {
+>>          int ret;
+>> @@ -643,7 +654,7 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
+>>   {
+>>          int index = submit->seqno % MSM_GPU_SUBMIT_STATS_COUNT;
+>>          volatile struct msm_gpu_submit_stats *stats;
+>> -       u64 elapsed, clock = 0;
+>> +       u64 elapsed, clock = 0, cycles;
+>>          unsigned long flags;
+>>
+>>          stats = &ring->memptrs->stats[index];
+>> @@ -651,12 +662,17 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
+>>          elapsed = (stats->alwayson_end - stats->alwayson_start) * 10000;
+>>          do_div(elapsed, 192);
+>>
+>> +       cycles = stats->cpcycles_end - stats->cpcycles_start;
+>> +
+>>          /* Calculate the clock frequency from the number of CP cycles */
+>>          if (elapsed) {
+>> -               clock = (stats->cpcycles_end - stats->cpcycles_start) * 1000;
+>> +               clock = cycles * 1000;
+>>                  do_div(clock, elapsed);
+>>          }
+>>
+>> +       submit->queue->ctx->elapsed_ns += elapsed;
+>> +       submit->queue->ctx->cycles     += cycles;
+>> +
+>>          trace_msm_gpu_submit_retired(submit, elapsed, clock,
+>>                  stats->alwayson_start, stats->alwayson_end);
+>>
+>> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+>> index 696e2ed8a236..ad4fe05dee03 100644
+>> --- a/drivers/gpu/drm/msm/msm_gpu.h
+>> +++ b/drivers/gpu/drm/msm/msm_gpu.h
+>> @@ -328,6 +328,22 @@ struct msm_file_private {
+>>          struct kref ref;
+>>          int seqno;
+>>
+>> +       /**
+>> +        * elapsed:
+>> +        *
+>> +        * The total (cumulative) elapsed time GPU was busy with rendering
+>> +        * from this context in ns.
+>> +        */
+>> +       uint64_t elapsed_ns;
+>> +
+>> +       /**
+>> +        * cycles:
+>> +        *
+>> +        * The total (cumulative) GPU cycles elapsed attributed to this
+>> +        * context.
+>> +        */
+>> +       uint64_t cycles;
+>> +
+>>          /**
+>>           * entities:
+>>           *
+>> @@ -511,6 +527,9 @@ static inline void gpu_write64(struct msm_gpu *gpu, u32 lo, u32 hi, u64 val)
+>>   int msm_gpu_pm_suspend(struct msm_gpu *gpu);
+>>   int msm_gpu_pm_resume(struct msm_gpu *gpu);
+>>
+>> +void msm_gpu_show_fdinfo(struct msm_gpu *gpu, struct msm_file_private *ctx,
+>> +                        struct drm_printer *p);
+>> +
+>>   int msm_submitqueue_init(struct drm_device *drm, struct msm_file_private *ctx);
+>>   struct msm_gpu_submitqueue *msm_submitqueue_get(struct msm_file_private *ctx,
+>>                  u32 id);
+>> --
+>> 2.35.1
+>>
