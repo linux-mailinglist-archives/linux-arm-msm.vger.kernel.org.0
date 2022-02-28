@@ -2,109 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B7B144C633C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 07:40:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 135944C6376
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 08:00:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233321AbiB1Gkz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Feb 2022 01:40:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44180 "EHLO
+        id S233492AbiB1G7d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Feb 2022 01:59:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233335AbiB1Gkw (ORCPT
+        with ESMTP id S232045AbiB1G7c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Feb 2022 01:40:52 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 626523CFFF;
-        Sun, 27 Feb 2022 22:40:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1646030411; x=1677566411;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=bS9bdC9cgUN0ZMd9zmyc+OAsWWEL36/MhYU9UfQLxI4=;
-  b=czRoWifEq68tPg+0hMRFn3us5NceC5Jn2yhAf1bXcFeiobzt5bf7G5jt
-   8oMfphYgO+33DCydHU6IXnMh+uTFMOxaELtLaeii9xjASzLsBsEsHtPCL
-   xHw4/m2wvDiP5JM8biHPomIVLTKsDF7UBFLJIvYEwCNlnX7JbrGZVOUxr
-   Q=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 27 Feb 2022 22:40:11 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Feb 2022 22:40:09 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Sun, 27 Feb 2022 22:40:09 -0800
-Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Sun, 27 Feb 2022 22:40:03 -0800
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <quic_plai@quicinc.com>, <bgoswami@codeaurora.org>,
-        <perex@perex.cz>, <tiwai@suse.com>,
-        <srinivas.kandagatla@linaro.org>, <rohitkr@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <swboyd@chromium.org>, <judyhsiao@chromium.org>,
-        <yung-chuan.liao@linux.intel.com>,
-        <pierre-louis.bossart@linux.intel.com>, <sanyog.r.kale@intel.com>
-CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
-Subject: [PATCH v5 2/2] dt-bindings: soundwire: qcom: Add bindings for audio CSR reset control property
-Date:   Mon, 28 Feb 2022 12:09:37 +0530
-Message-ID: <1646030377-12092-3-git-send-email-quic_srivasam@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1646030377-12092-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1646030377-12092-1-git-send-email-quic_srivasam@quicinc.com>
+        Mon, 28 Feb 2022 01:59:32 -0500
+Received: from mx.tkos.co.il (guitar.tcltek.co.il [84.110.109.230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FB6A4B1C2;
+        Sun, 27 Feb 2022 22:58:53 -0800 (PST)
+Received: from tarshish.tkos.co.il (unknown [10.0.8.2])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx.tkos.co.il (Postfix) with ESMTPS id 15452440870;
+        Mon, 28 Feb 2022 08:58:11 +0200 (IST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tkos.co.il;
+        s=default; t=1646031491;
+        bh=UzHRfBvg6y4IkbCIkI3SNnDjUBtpXSSAF8obp5wXLIc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=IzEfQ8aL5rkycmm2Ngco9H+/lcKtjk/VEVA9LciyCIdf4ImNzuyOmKxlRKNPV87WY
+         ANAXHJeUq7PSleIR9ZEz5F1tNKQwn5vNUvaMzWKNal7QnNITUkKZI+kyUt5iHY5F1x
+         7NPEOlCOtlgNzYeHUN2H0Mt8e8hFB5WOQAMySJzw9i540Xteo8zXrRAK718Uq9jh7Z
+         v2DqD27jBet1YdnZMge0T2W75FmqgODMrwH80NGVSkY2Qh2VhIfpx8aACzecvxMU3V
+         icG9ABGVI4rkFFkToouCJv8JTEbKVQRUD17e3AA482Ds/0UQnlr0TUl2PhUqHkwEyu
+         7as/JDV1xDG0w==
+From:   Baruch Siach <baruch@tkos.co.il>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Robert Marko <robert.marko@sartura.hr>
+Cc:     Baruch Siach <baruch.siach@siklu.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v3 1/2] dt-bindings: net: ipq4019-mdio: Add ipq6018 compatible
+Date:   Mon, 28 Feb 2022 08:58:43 +0200
+Message-Id: <8de887697c90cd432b7ab5fe0d833c87fc17f0f1.1646031524.git.baruch@tkos.co.il>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update description for audio CSR reset control property, which is
-required for latest chipsets to allow software enabling in CGCR HCLK register.
+From: Baruch Siach <baruch.siach@siklu.com>
 
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+The IPQ60xx MDIO bus is the same as IPQ4019.
+
+Update the schema to allow qcom,ipq4019-mdio compatible as fallback for
+newer IPQ series.
+
+Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
 ---
- Documentation/devicetree/bindings/soundwire/qcom,sdw.txt | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/soundwire/qcom,sdw.txt b/Documentation/devicetree/bindings/soundwire/qcom,sdw.txt
-index b93a2b3..84c8f54 100644
---- a/Documentation/devicetree/bindings/soundwire/qcom,sdw.txt
-+++ b/Documentation/devicetree/bindings/soundwire/qcom,sdw.txt
-@@ -150,6 +150,18 @@ board specific bus parameters.
- 		    or applicable for the respective data port.
- 		    More info in MIPI Alliance SoundWire 1.0 Specifications.
+v3:
+
+  Correct the schema to fix yamllint failure (Rob's bot)
+
+v2:
+
+  Update the schema to allow fallback compatible (Rob Herring)
+---
+ .../devicetree/bindings/net/qcom,ipq4019-mdio.yaml     | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
+index 2af304341772..dde8e6931ed3 100644
+--- a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
++++ b/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
+@@ -14,9 +14,13 @@ allOf:
  
-+- reset:
-+	Usage: optional
-+	Value type: <prop-encoded-array>
-+	Definition: Should specify the SoundWire audio CSR reset controller interface,
-+		    which is required for SoundWire version 1.6.0 and above.
-+
-+- reset-names:
-+	Usage: optional
-+	Value type: <stringlist>
-+	Definition: should be "swr_audio_cgcr" for SoundWire audio CSR reset
-+		    controller interface.
-+
- Note:
- 	More Information on detail of encoding of these fields can be
- found in MIPI Alliance SoundWire 1.0 Specifications.
+ properties:
+   compatible:
+-    enum:
+-      - qcom,ipq4019-mdio
+-      - qcom,ipq5018-mdio
++    oneOf:
++      - const: qcom,ipq4019-mdio
++      - items:
++          - enum:
++              - qcom,ipq5018-mdio
++              - qcom,ipq6018-mdio
++          - const: qcom,ipq4019-mdio
+ 
+   "#address-cells":
+     const: 1
 -- 
-2.7.4
+2.34.1
 
