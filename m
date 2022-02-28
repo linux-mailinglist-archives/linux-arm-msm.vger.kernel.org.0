@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0615B4C788B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 20:15:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 241D14C7892
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 20:16:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229762AbiB1TQc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Feb 2022 14:16:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40964 "EHLO
+        id S229909AbiB1TQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Feb 2022 14:16:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229639AbiB1TQb (ORCPT
+        with ESMTP id S229876AbiB1TQq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Feb 2022 14:16:31 -0500
+        Mon, 28 Feb 2022 14:16:46 -0500
 Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45ECFE4498;
-        Mon, 28 Feb 2022 11:15:45 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E00DEE4D30;
+        Mon, 28 Feb 2022 11:15:58 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id D7325B8162F;
-        Mon, 28 Feb 2022 19:15:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5070DC340F2;
-        Mon, 28 Feb 2022 19:15:39 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 98AABB815CB;
+        Mon, 28 Feb 2022 19:15:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FE39C340F1;
+        Mon, 28 Feb 2022 19:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1646075742;
-        bh=rKHN0tABQaAaxZGmbVUu6SNde2wmYhf2Ll+XbGWr9NE=;
+        s=k20201202; t=1646075756;
+        bh=3bz7Qsk+snnXqiot5wWBZHY9JSrCtvtcLoIgzffSDeo=;
         h=From:To:In-Reply-To:References:Subject:Date:From;
-        b=shfwThSZNZuNKWBahhXUVqLxgnTEBvDCLAQzOUP7VoE3++J+qzsfTO3zIGbZ2gOqw
-         XVj73sMm7GIyEsO2+UniOaqzJawRCvIe9W8hKY4Gy30j6oBTFsMTSkc0ejSyuGp1nH
-         kzriIYWpT43tEQU2/bMWYKURtvz96CfwCPmdiiv99AexI2jL8KRHhB4W4eXh0uuyrw
-         g1HT35Q5KapaUD0LNz8by0H2QxxY/7NW5qmBwx9EDdZ2L3A1paO+f8L4pupnVAeI34
-         l3jC7dEDQGlrSqGxBVI9tIREPPTI7X4cKh30iwYcqhPbmiHJUP9snNnM5y3HmlnkaV
-         YYWvwb9aZWpwQ==
+        b=bKW3ESh7tv0gSsPTb5mEFFgrQeiokQxiZOcnp5MTxI+YZwiZu5V3aQKrDkufSZmCr
+         OGnZW+oZDnSBuD809U730F9n11csXcyR+ZaBEFXH9NXWa4/JvxFpSDL9N+cPPZo3FC
+         ZPi3xs3sE0anePHr17TA42bvJQLX4lJ/CpNImk2IP4lyXEzesvi9uE9jj/yvzMf9td
+         uJ7XI/DiovqcO+KD7BXT4QG6OOt+xRFV2xsUpN1gx1e56IB0R6tEq8mFymaS3/BDIb
+         kY8TLCHBEVj6o3TCFE8YS5k8cSjzPN9gwPcxy95HDSnYSG749MQ58zerECrGoKkcil
+         FOYPBqifMrczQ==
 From:   Mark Brown <broonie@kernel.org>
 To:     linux-arm-msm@vger.kernel.org, perex@perex.cz,
         linux-kernel@vger.kernel.org, bgoswami@codeaurora.org,
@@ -42,11 +42,11 @@ To:     linux-arm-msm@vger.kernel.org, perex@perex.cz,
         robh+dt@kernel.org,
         Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
         rohitkr@codeaurora.org, quic_plai@quicinc.com
-In-Reply-To: <1645786624-12311-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1645786624-12311-1-git-send-email-quic_srivasam@quicinc.com>
-Subject: Re: [PATCH v4 0/2] Add power domains support for digital macro codecs
-Message-Id: <164607573904.3538791.16540077443386812939.b4-ty@kernel.org>
-Date:   Mon, 28 Feb 2022 19:15:39 +0000
+In-Reply-To: <1645898959-11231-1-git-send-email-quic_srivasam@quicinc.com>
+References: <1645898959-11231-1-git-send-email-quic_srivasam@quicinc.com>
+Subject: Re: [PATCH v5 0/2] Add power domains support for digital macro codecs
+Message-Id: <164607575278.3538791.10960449349795091046.b4-ty@kernel.org>
+Date:   Mon, 28 Feb 2022 19:15:52 +0000
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -60,9 +60,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 25 Feb 2022 16:27:02 +0530, Srinivasa Rao Mandadapu wrote:
+On Sat, 26 Feb 2022 23:39:17 +0530, Srinivasa Rao Mandadapu wrote:
 > This patch set is to add power domains support for RX, TX and VA macros.
 > 
+> Changes since v4:
+>     -- Fix uninitialized variable return error
 > Changes since v3:
 >     -- Add dt-bindings support.
 > Changes since v2:
