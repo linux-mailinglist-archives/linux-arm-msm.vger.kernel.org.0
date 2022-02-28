@@ -2,65 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A02B4C7949
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 20:59:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0683A4C7977
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Feb 2022 21:09:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229720AbiB1Tuk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Feb 2022 14:50:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45416 "EHLO
+        id S229706AbiB1UBm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Feb 2022 15:01:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229800AbiB1TuU (ORCPT
+        with ESMTP id S229755AbiB1UBl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Feb 2022 14:50:20 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FDDB1045A4;
-        Mon, 28 Feb 2022 11:48:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1646077718; x=1677613718;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=NR4aZ/bRgNURQk62vE8gVk6b/hhnUrasqlZ5/snLD7I=;
-  b=dOXJhgdP/ZHR7u7E6VEABf6vIqaQ39ub3yXx6+y3bK6dhuPWBf7iyxaO
-   wzsrdaJxDosgrwvEjU4M0pS1KCd5XhFCrxA5D9CGCyZrPJ+gARBBNVpNv
-   91XoBCwmkzUEmldfjLOYGUp6WSlROD3iO4szW6kCZMRXO0Jd671tjbXOQ
-   A=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 28 Feb 2022 11:31:12 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2022 11:31:12 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Mon, 28 Feb 2022 11:31:11 -0800
-Received: from [10.216.31.79] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Mon, 28 Feb
- 2022 11:31:09 -0800
-Message-ID: <8e4f02ae-d3e8-57f2-2d08-e56759d3c082@quicinc.com>
-Date:   Tue, 1 Mar 2022 01:01:05 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH 5/5] irqchip/qcom-pdc: Drop open coded version of
- __assign_bit()
-To:     Marc Zyngier <maz@kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     Andy Gross <agross@kernel.org>,
+        Mon, 28 Feb 2022 15:01:41 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B69210FCF;
+        Mon, 28 Feb 2022 12:01:01 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 06A00B81643;
+        Mon, 28 Feb 2022 20:01:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E46EC340F1;
+        Mon, 28 Feb 2022 20:00:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1646078458;
+        bh=WX2GSxXiBauKudb0mEfuYngTCREWlWxYllb0lfJstnw=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=d2TVZTt2KkPq5p75E5jhIPc7tDj4A0MICF9a+hpYB+7RDSM32/j/yrisSBzLt+Qdd
+         ozC9qQ/ph78ht13NvqGPiiZCM69mBC5FwY10tiWhtecj8x/B2IGUpdOnzaPumuFWA7
+         0Xf8OTnEJAzVPjqyGUfKypoTeWbhD786eKc/MfpVyyzulhDuA5zOAr4UBTqZduwLRV
+         6G3O4BdSmakWemA9zpbQoKJR5hQO9YxeFB95GZ2zJ2rqvaQnfmjAe0DiRLoZ8V2nnz
+         aILsjZTXLbcUFi5odjscBHVMqfl6b5OycOPe4f2dQcPDIaOcPPmoA+HNFJ8mIVFvmw
+         DoHs3PwkeGUaA==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=billy-the-mountain.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <maz@kernel.org>)
+        id 1nOmCW-00BDhb-4H; Mon, 28 Feb 2022 20:00:56 +0000
+Date:   Mon, 28 Feb 2022 20:00:55 +0000
+Message-ID: <87y21u69s8.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>
+Cc:     <linux-kernel@vger.kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Thomas Gleixner <tglx@linutronix.de>,
         <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH 2/5] irqchip/qcom-pdc: Kill non-wakeup irqdomain
+In-Reply-To: <22ac147c-fb47-fc8c-8e10-8e67db94fbf8@quicinc.com>
 References: <20220224101226.88373-1-maz@kernel.org>
- <20220224101226.88373-6-maz@kernel.org>
-From:   "Maulik Shah (mkshah)" <quic_mkshah@quicinc.com>
-In-Reply-To: <20220224101226.88373-6-maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        <20220224101226.88373-3-maz@kernel.org>
+        <22ac147c-fb47-fc8c-8e10-8e67db94fbf8@quicinc.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: quic_mkshah@quicinc.com, linux-kernel@vger.kernel.org, agross@kernel.org, bjorn.andersson@linaro.org, tglx@linutronix.de, linux-arm-msm@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -69,19 +69,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Mon, 28 Feb 2022 19:29:41 +0000,
+"Maulik Shah (mkshah)" <quic_mkshah@quicinc.com> wrote:
+> 
+> Hi,
+> 
+> On 2/24/2022 3:42 PM, Marc Zyngier wrote:
+> > A careful look at the way the PDC driver works shows that:
+> > 
+> > - all interrupts are in the same space
+> > - all interrupts are treated the same
+> > 
+> > And yet the driver creates two domains based on whether
+> > the interrupt gets mapped directly or from the pinctrl code,
+> > which is obviously a waste of resources.
+> The GPIO is kept under separate domain to handle extra configuration
+> for wake GPIO handling.
 
-On 2/24/2022 3:42 PM, Marc Zyngier wrote:
-> The driver uses what looks like an open-coded version of __assign_bit().
-> Replace it with the real thing.
->
-> Signed-off-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Maulik Shah <quic_mkshah@quicinc.com>
+Which extra configuration? The irq_chip structure is the same, the
+translation is the same, the GIC mapping is the same, and the select
+method only serves to select between two irq domains that do the same
+thing.
 
-Thanks,
-Maulik
-> ---
->   drivers/irqchip/qcom-pdc.c | 7 ++-----
->   1 file changed, 2 insertions(+), 5 deletions(-)
->
->
+So please point me to what the difference is.
+
+> 
+> On targets like SM8150/SM8250 each wake up capable GPIO (if totan n)
+> line has dedicated parent PDC irq (if total m, n = m) associated with
+> it.
+> However on targets like sdx55 PDC has muxes where each wake GPIO (if
+> total n) line goes through each PDC muxes (if total m, n > m) and
+> any of these muxes can be used to route any one GPIO to PDC (and
+> parent GIC) but unlike other targets it doesn't have one to one
+> mapping for GPIO to GIC interrupt.
+> So this will need to be kept as is to support sdx55 target.
+
+As far as I can tell, the current code doesn't have any support for
+this. And if there is a mux involved in the interrupt routing, this
+should be something entierly separate, as the current code is strictly
+hierarchical.
+
+What am I missing?
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
