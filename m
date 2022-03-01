@@ -2,111 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C3D34C83C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 07:14:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A3D614C83C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 07:15:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230219AbiCAGPS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Mar 2022 01:15:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52820 "EHLO
+        id S232414AbiCAGPo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Mar 2022 01:15:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230147AbiCAGPR (ORCPT
+        with ESMTP id S232501AbiCAGPo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Mar 2022 01:15:17 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D96049938;
-        Mon, 28 Feb 2022 22:14:33 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id j10-20020a17090a94ca00b001bc2a9596f6so1313901pjw.5;
-        Mon, 28 Feb 2022 22:14:33 -0800 (PST)
+        Tue, 1 Mar 2022 01:15:44 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEE2A66200
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 22:15:03 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id i11so25177812lfu.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 22:15:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=PH1beb/z1ahch6wzT25gnsAtYDGOM8+pvUYjPY/TxPU=;
-        b=Ji/Kr0+XMyq6YybkY8r0kkCbklCqbzx1HBoKKROO/QrZrd7ON1mXhg6qDBAQsQdJVG
-         q6lHVxQbolqcqib660su51YX7c+aWaoeAoTVAZ/5O4TtX77BthmawBqf5aii29Vqz4aP
-         p0zGYw/mom4KUjW+mf/EURQtLSTX90Lv5WYHhScL8Bg7LfM2KTfexOA8AGDa78WB9A9U
-         RYixcx3Li+fFJyvHKSuKhTyixNi2uLVfgPP97qblBlm+VaT0+DTnEK25ySp10MFPN5Ji
-         66sv0Nkyxwu+c2z3BaGBNSh6ijats42Zw244fUhe60kRag0SyBBFN1Xr83hcGJWVXuQg
-         H+lA==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sU8qmTMKoXOI/8K1Qg71CzJ9WWwOfDi52Ddm0ZSLRcI=;
+        b=rNXZ4TbW1E/hhABdnuqFEuvQpUGKPo/pwp5FE2NW25Y2OGwxKKLL3GdRoqOZENMkz+
+         2Rc8LrSPOXk3mGbHiBLKn+fEEeRAXYteuBdJoKfD5fsfHr4aV3jL9IFN2Z12YymKMkG9
+         tIA9lZax34d+NUSvsKgqi6W0sYWIOIRx7+oYDUwA7GI3+j2x7aO3XrpySPfoE7Xvo5wU
+         PO07SvSiDqiEX1y8IQP1gfqJKIm6NZc4vEGY/YjPsPPs9VjLFtFBtZaruoQwV8DMkshs
+         7+5r2MvG7ezJ2pQklkGQaAtumgnLNWk0WZZHC+Ch4s38pomi9FGG5aYpzn3a+eYg8uX4
+         pweQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=PH1beb/z1ahch6wzT25gnsAtYDGOM8+pvUYjPY/TxPU=;
-        b=FNAL6gSklrait14PPSbBzhrYnuJoTyRPf6hqrpImIQpTt9jPGTafucfjzsziAhXwrO
-         qlLI+ZLfaVLWBRudBm/3tx5vzqC/IM/dYT4S23NXoAnMqW37bybIOmQu80nG2CvjZlDm
-         Me3AhY5b5GDVCtqwMllc74bQeNNd1RV2Z03aNx0+QvhE2RnpJ8KZm8TtajLmk8u3uvRK
-         R4ZCjOrJppQVm20CXkvA/V93ftqerodYGqFRwotUmKIinxAP/eNT+jl0PunSSlyRcXpa
-         64/cc64AYS7OCPYKxOkYPw7VFa/BeeDrOKASCrQ6WmJNz4mqMDBQXtagORrGQP/tCGCq
-         5IKQ==
-X-Gm-Message-State: AOAM532ApJxUxW/8r40Ly8wlwEVg6vNKbQLuDuZCIsJ2kL+Xfp5E3XpW
-        4JF7R6OauKiV0KMO9f570sh5h51Vc5jlwSYykv8=
-X-Google-Smtp-Source: ABdhPJwe2XwQj1/qqfwMVxlcczTF/DleUEyrIFi+5vVHSL0lyezr9cUT5DUPoXDMwseKl3j1rudLKw==
-X-Received: by 2002:a17:903:2285:b0:151:4b38:298e with SMTP id b5-20020a170903228500b001514b38298emr14222632plh.36.1646115273033;
-        Mon, 28 Feb 2022 22:14:33 -0800 (PST)
-Received: from localhost.localdomain ([159.226.95.43])
-        by smtp.googlemail.com with ESMTPSA id bo10-20020a17090b090a00b001bc8405bd55sm1024741pjb.30.2022.02.28.22.14.30
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sU8qmTMKoXOI/8K1Qg71CzJ9WWwOfDi52Ddm0ZSLRcI=;
+        b=eoJ4U3j49UkV+8+SBYD8Ii5xcbrelCCrpTo2Wp/OXG/208fjkbc8Z79tI6dDJ9HF0e
+         ueiYtuep7YIB35cOnxD0c1yTRxVPyU697B1kzblI5d05jkzWoVEvQXhf2W54jkanIgdQ
+         UCGXSpD+zBZr0kYAbPprj5nH3KPvazzTldhv0LZ7HkdHxr/aKrc15faeSrdz7nNotbBz
+         Ya5ZFEtt4Ecae5DUZzdq/TB1htJ9MN8ANayE8kwwaTfrjM7L5HWvKQIE2FGqhq2D5iZJ
+         gb98TASAcCaOAWTihAd72FFtMY6L9qoOypPGCzE77aTwi58krjjuf+y2yvpgRy0M/lho
+         PjYw==
+X-Gm-Message-State: AOAM533UMPydOioOxr9PzFf2VuNMjTSLUNjhFwj6hieVQw8uXwD8XxM+
+        JPviw9k3KiOibY20VaL2PJM1NA==
+X-Google-Smtp-Source: ABdhPJxLaSICjbnNXfBVYivUIl9Dfj4BXY86uV3Be4Z2ZKQuPsIjzb5VIOA/Tadwp43gEWCJ0S6jJA==
+X-Received: by 2002:a05:6512:481:b0:43d:f703:721e with SMTP id v1-20020a056512048100b0043df703721emr15055193lfq.55.1646115302007;
+        Mon, 28 Feb 2022 22:15:02 -0800 (PST)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id f15-20020ac25ccf000000b004442220c67fsm1318898lfq.27.2022.02.28.22.15.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Feb 2022 22:14:32 -0800 (PST)
-From:   Miaoqian Lin <linmq006@gmail.com>
+        Mon, 28 Feb 2022 22:15:01 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Sagar Dharia <sdharia@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org
-Cc:     linmq006@gmail.com
-Subject: [PATCH v2] slimbus: qcom:  Fix IRQ check in qcom_slim_probe
-Date:   Tue,  1 Mar 2022 06:14:21 +0000
-Message-Id: <20220301061421.14366-1-linmq006@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <239c3b32-6754-02ba-6bfd-7f05fa2adfed@linux.intel.com>
-References: <239c3b32-6754-02ba-6bfd-7f05fa2adfed@linux.intel.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH 0/7] arm64: dts: qcom: sm8450: add PCIe devices
+Date:   Tue,  1 Mar 2022 09:14:53 +0300
+Message-Id: <20220301061500.2110569-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-platform_get_irq() returns non-zero IRQ number on success,
-negative error number on failure.
-And the doc of platform_get_irq() provides a usage example:
+Add PCIe device tree nodes for Qualcomm SM8450. Enable PCIe devices on
+SM8450 HDK and QRD boards.
 
-    int irq = platform_get_irq(pdev, 0);
-    if (irq < 0)
-        return irq;
+Changes since
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=599422:
 
-Fix the check of return value to catch errors correctly.
+- Split from the driver patchset
+- Remove interconnect nodes (will be added later in cooperation with
+  driver changes)
+- Add PCIe1 support
+- Add SM8450-HDK changes
 
-Fixes: ad7fcbc308b0 ("slimbus: qcom: Add Qualcomm Slimbus controller driver")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
----
-changes in v2:
-- use more precise expression in commit message.
----
- drivers/slimbus/qcom-ctrl.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/slimbus/qcom-ctrl.c b/drivers/slimbus/qcom-ctrl.c
-index f04b961b96cd..ec58091fc948 100644
---- a/drivers/slimbus/qcom-ctrl.c
-+++ b/drivers/slimbus/qcom-ctrl.c
-@@ -510,9 +510,9 @@ static int qcom_slim_probe(struct platform_device *pdev)
- 	}
- 
- 	ctrl->irq = platform_get_irq(pdev, 0);
--	if (!ctrl->irq) {
-+	if (ctrl->irq < 0) {
- 		dev_err(&pdev->dev, "no slimbus IRQ\n");
--		return -ENODEV;
-+		return ctrl->irq;
- 	}
- 
- 	sctrl = &ctrl->ctrl;
+Dmitry Baryshkov (7):
+  arm64: dts: qcom: sm8450: add PCIe0 PHY node
+  arm64: dts: qcom: sm8450: add PCIe0 RC device
+  arm64: dts: qcom: sm8450: add PCIe1 PHY node
+  arm64: dts: qcom: sm8450: add PCIe1 root device
+  arm64: dts: qcom: sm8450-qrd: enable PCIe0 PHY device
+  arm64: dts: qcom: sm8450-qrd: enable PCIe0 host
+  arm64: dts: qcom: sm8450-hdk: add pcie nodes
+
+ arch/arm64/boot/dts/qcom/sm8450-hdk.dts |  21 ++
+ arch/arm64/boot/dts/qcom/sm8450-qrd.dts |  10 +
+ arch/arm64/boot/dts/qcom/sm8450.dtsi    | 274 +++++++++++++++++++++++-
+ 3 files changed, 303 insertions(+), 2 deletions(-)
+
 -- 
-2.17.1
+2.34.1
 
