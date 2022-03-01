@@ -2,74 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9926F4C8439
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 07:41:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92F214C843C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 07:42:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232680AbiCAGmQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Mar 2022 01:42:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49980 "EHLO
+        id S232384AbiCAGmq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Mar 2022 01:42:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229726AbiCAGmP (ORCPT
+        with ESMTP id S232258AbiCAGmq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Mar 2022 01:42:15 -0500
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE45F473BE
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 22:41:34 -0800 (PST)
-Received: by mail-pg1-x536.google.com with SMTP id o26so12976011pgb.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 22:41:34 -0800 (PST)
+        Tue, 1 Mar 2022 01:42:46 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35B685B3D3;
+        Mon, 28 Feb 2022 22:42:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=InAZmAMB2EBIfdWcEEf0JofPW20Wpd8LRNGnhF7kPbs=;
-        b=B7fb8aGFeDFXOEeCfZj/nNAct7zKzWJOyjVo12/VKnYysq2h4QYMFdKy983nKX/jUf
-         nTMdKvKRvOyyFdDVUqWlNBqQXAjbk1bonG3hX9MmLCJw2YhZFmQPVBkZbHmGICqH9kF2
-         m2H7XtV258bi6QKAP1JrtmgVIw6vE9NmA9jf4EIZTwpm+WFqzNVRmBbrpeJkQqn4eEIF
-         L36RST41sx/kdGJAupB626XeBpJ/nDuGufzo9RIhpcb8094D5c9zZ5eenEw55oD97p7m
-         gtgDIrfX68xfhxXkcZvv9sioK3KYvS0zaNr/htT2pLKcW4YHc5/JREVVH3+V6xymcfLs
-         hVCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=InAZmAMB2EBIfdWcEEf0JofPW20Wpd8LRNGnhF7kPbs=;
-        b=GJMDCHK6yoT1JxKGwOLoIFE2X8NfXtRE/CQZjoNIK2jCQopg5/0D3D59nvs0TgrphE
-         zyN2oWZk7OCFj6rFeqrgH2sQFYKrSYSgi40/7FkH4+p31u7F1ECr45dAwqtaXmAFHexc
-         QM7aIyMrD7mPWkLlouAwfigI6Ly+ocCJ/BD5wuFm9n21ilRWwxYtd6/BzYZWi7fTaWkW
-         HhHU3PH9IFfPxUQ98uRnUQNp3WDYEbYyfqJ4EjqGzJe6J2jK5DTgL3KvUfdYzi3qw08I
-         1S9QuHgK8LmiwbQxnJlTiNtR/dVyR4Asm68JcwovFY5hg2oTwbisBW0Re2vMqiiOFBpR
-         nBEQ==
-X-Gm-Message-State: AOAM532KwGNWLOtXL4RdcQ1r9DkBvnaYwYcgYmfB5OUFloLbI+GAYSYk
-        dt4w/V6ao6Q2QY/WoHFU4+pM
-X-Google-Smtp-Source: ABdhPJxox4MM6hAazw3C783WMUxznpatQbH85mhnrFWWVTeSbnAMeTz+NyiBsQjriKxl8C+LEGxOYQ==
-X-Received: by 2002:a05:6a00:1494:b0:4f0:ece9:a01c with SMTP id v20-20020a056a00149400b004f0ece9a01cmr25416030pfu.58.1646116894276;
-        Mon, 28 Feb 2022 22:41:34 -0800 (PST)
-Received: from workstation ([117.207.25.80])
-        by smtp.gmail.com with ESMTPSA id h3-20020a056a00170300b004f104c635e4sm16308420pfc.99.2022.02.28.22.41.30
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 28 Feb 2022 22:41:33 -0800 (PST)
-Date:   Tue, 1 Mar 2022 12:11:28 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
-        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
-        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
-        dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
-        quic_cang@quicinc.com, quic_skananth@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 17/27] bus: mhi: ep: Add support for processing MHI
- endpoint interrupts
-Message-ID: <20220301064128.GD12451@workstation>
-References: <20220228124344.77359-1-manivannan.sadhasivam@linaro.org>
- <20220228124344.77359-18-manivannan.sadhasivam@linaro.org>
- <3c611baf-1be9-4bf2-86c9-30a3b935a86b@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1646116925; x=1677652925;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=+NdqiysR3P7r86QCWKa44zgmY0F6oK3UcxdyTMbyOhM=;
+  b=jD85c6IbEXbfpg5T1oNtVIMb1Bvg9feu2cMq7ueZ7iZvWhGTAtoy9Tzh
+   v4Vx1IIIO+mmXKf/cnOLV8J+AsDXRyoxWngU3/2QyhZBRxodBZXEpM3ej
+   cNDgyQHjj8jDOgVdDY6baZkOXIu7sULq7GTPGqH6EPkqSNZbrejiCDHcu
+   8=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 28 Feb 2022 22:42:04 -0800
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2022 22:42:04 -0800
+Received: from [10.216.49.101] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Mon, 28 Feb
+ 2022 22:41:59 -0800
+Message-ID: <3bc0461d-3a2e-f994-e712-dfc8be04c9b4@quicinc.com>
+Date:   Tue, 1 Mar 2022 12:12:06 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3c611baf-1be9-4bf2-86c9-30a3b935a86b@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v2 03/11] clk: qcom: gdsc: add support for clocks tied to
+ the GDSC
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Wilczy??ski <kw@linux.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Prasad Malisetty <pmaliset@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20220204144645.3016603-1-dmitry.baryshkov@linaro.org>
+ <20220204144645.3016603-4-dmitry.baryshkov@linaro.org>
+ <Yf2jRAf5UKYSMYxe@builder.lan>
+ <f521a273-7250-ddca-0e56-b1b27bd75117@linaro.org>
+From:   Prasad Malisetty <quic_pmaliset@quicinc.com>
+In-Reply-To: <f521a273-7250-ddca-0e56-b1b27bd75117@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,234 +77,168 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 28, 2022 at 10:45:15AM -0600, Alex Elder wrote:
-> On 2/28/22 6:43 AM, Manivannan Sadhasivam wrote:
-> > Add support for processing MHI endpoint interrupts such as control
-> > interrupt, command interrupt and channel interrupt from the host.
-> > 
-> > The interrupts will be generated in the endpoint device whenever host
-> > writes to the corresponding doorbell registers. The doorbell logic
-> > is handled inside the hardware internally.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
-> One suggestion for future work, but otherwise this looks good.
-> 
-> Reviewed-by: Alex Elder <elder@linaro.org>
-> 
-> > ---
-> >   drivers/bus/mhi/ep/main.c | 123 +++++++++++++++++++++++++++++++++++++-
-> >   include/linux/mhi_ep.h    |   4 ++
-> >   2 files changed, 125 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> > index 7a29543586d0..ce690b1aeace 100644
-> > --- a/drivers/bus/mhi/ep/main.c
-> > +++ b/drivers/bus/mhi/ep/main.c
-> > @@ -143,6 +143,112 @@ static void mhi_ep_state_worker(struct work_struct *work)
-> >   	}
-> >   }
-> > +static void mhi_ep_queue_channel_db(struct mhi_ep_cntrl *mhi_cntrl, unsigned long ch_int,
-> > +				    u32 ch_idx)
-> > +{
-> > +	struct mhi_ep_ring_item *item;
-> > +	struct mhi_ep_ring *ring;
-> > +	bool work = !!ch_int;
-> > +	LIST_HEAD(head);
-> > +	u32 i;
-> > +
-> > +	/* First add the ring items to a local list */
-> > +	for_each_set_bit(i, &ch_int, 32) {
-> > +		/* Channel index varies for each register: 0, 32, 64, 96 */
-> > +		u32 ch_id = ch_idx + i;
-> > +
-> > +		ring = &mhi_cntrl->mhi_chan[ch_id].ring;
-> > +		item = kzalloc(sizeof(*item), GFP_ATOMIC);
-> 
-> It looks like this will be used a lot, so I suggest you
-> consider creating a slab cache of ring items to allocate
-> from.  I haven't suggested that elsewhere, but it's
-> possible there are other frequently-allocated structures
-> that would warrant that.
-> 
+++ Taniya
 
-Sure.
+Hi Dmitry,
 
-Thanks,
-Mani
+Greetings !!!
 
-> > +		if (!item)
-> > +			return;
-> > +
-> > +		item->ring = ring;
-> > +		list_add_tail(&item->node, &head);
-> > +	}
-> > +
-> > +	/* Now, splice the local list into ch_db_list and queue the work item */
-> > +	if (work) {
-> > +		spin_lock(&mhi_cntrl->list_lock);
-> > +		list_splice_tail_init(&head, &mhi_cntrl->ch_db_list);
-> > +		spin_unlock(&mhi_cntrl->list_lock);
-> > +	}
-> > +}
-> > +
-> > +/*
-> > + * Channel interrupt statuses are contained in 4 registers each of 32bit length.
-> > + * For checking all interrupts, we need to loop through each registers and then
-> > + * check for bits set.
-> > + */
-> > +static void mhi_ep_check_channel_interrupt(struct mhi_ep_cntrl *mhi_cntrl)
-> > +{
-> > +	u32 ch_int, ch_idx, i;
-> > +
-> > +	/* Bail out if there is no channel doorbell interrupt */
-> > +	if (!mhi_ep_mmio_read_chdb_status_interrupts(mhi_cntrl))
-> > +		return;
-> > +
-> > +	for (i = 0; i < MHI_MASK_ROWS_CH_EV_DB; i++) {
-> > +		ch_idx = i * MHI_MASK_CH_EV_LEN;
-> > +
-> > +		/* Only process channel interrupt if the mask is enabled */
-> > +		ch_int = mhi_cntrl->chdb[i].status & mhi_cntrl->chdb[i].mask;
-> > +		if (ch_int) {
-> > +			mhi_ep_queue_channel_db(mhi_cntrl, ch_int, ch_idx);
-> > +			mhi_ep_mmio_write(mhi_cntrl, MHI_CHDB_INT_CLEAR_n(i),
-> > +							mhi_cntrl->chdb[i].status);
-> > +		}
-> > +	}
-> > +}
-> > +
-> > +static void mhi_ep_process_ctrl_interrupt(struct mhi_ep_cntrl *mhi_cntrl,
-> > +					 enum mhi_state state)
-> > +{
-> > +	struct mhi_ep_state_transition *item;
-> > +
-> > +	item = kzalloc(sizeof(*item), GFP_ATOMIC);
-> > +	if (!item)
-> > +		return;
-> > +
-> > +	item->state = state;
-> > +	spin_lock(&mhi_cntrl->list_lock);
-> > +	list_add_tail(&item->node, &mhi_cntrl->st_transition_list);
-> > +	spin_unlock(&mhi_cntrl->list_lock);
-> > +
-> > +	queue_work(mhi_cntrl->wq, &mhi_cntrl->state_work);
-> > +}
-> > +
-> > +/*
-> > + * Interrupt handler that services interrupts raised by the host writing to
-> > + * MHICTRL and Command ring doorbell (CRDB) registers for state change and
-> > + * channel interrupts.
-> > + */
-> > +static irqreturn_t mhi_ep_irq(int irq, void *data)
-> > +{
-> > +	struct mhi_ep_cntrl *mhi_cntrl = data;
-> > +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> > +	enum mhi_state state;
-> > +	u32 int_value;
-> > +
-> > +	/* Acknowledge the ctrl interrupt */
-> > +	int_value = mhi_ep_mmio_read(mhi_cntrl, MHI_CTRL_INT_STATUS);
-> > +	mhi_ep_mmio_write(mhi_cntrl, MHI_CTRL_INT_CLEAR, int_value);
-> > +
-> > +	/* Check for ctrl interrupt */
-> > +	if (FIELD_GET(MHI_CTRL_INT_STATUS_MSK, int_value)) {
-> > +		dev_dbg(dev, "Processing ctrl interrupt\n");
-> > +		mhi_ep_process_ctrl_interrupt(mhi_cntrl, state);
-> > +	}
-> > +
-> > +	/* Check for command doorbell interrupt */
-> > +	if (FIELD_GET(MHI_CTRL_INT_STATUS_CRDB_MSK, int_value))
-> > +		dev_dbg(dev, "Processing command doorbell interrupt\n");
-> > +
-> > +	/* Check for channel interrupts */
-> > +	mhi_ep_check_channel_interrupt(mhi_cntrl);
-> > +
-> > +	return IRQ_HANDLED;
-> > +}
-> > +
-> >   static void mhi_ep_release_device(struct device *dev)
-> >   {
-> >   	struct mhi_ep_device *mhi_dev = to_mhi_ep_device(dev);
-> > @@ -339,7 +445,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
-> >   	struct mhi_ep_device *mhi_dev;
-> >   	int ret;
-> > -	if (!mhi_cntrl || !mhi_cntrl->cntrl_dev || !mhi_cntrl->mmio)
-> > +	if (!mhi_cntrl || !mhi_cntrl->cntrl_dev || !mhi_cntrl->mmio || !mhi_cntrl->irq)
-> >   		return -EINVAL;
-> >   	ret = mhi_ep_chan_init(mhi_cntrl, config);
-> > @@ -361,6 +467,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
-> >   	}
-> >   	INIT_LIST_HEAD(&mhi_cntrl->st_transition_list);
-> > +	INIT_LIST_HEAD(&mhi_cntrl->ch_db_list);
-> >   	spin_lock_init(&mhi_cntrl->state_lock);
-> >   	spin_lock_init(&mhi_cntrl->list_lock);
-> >   	mutex_init(&mhi_cntrl->event_lock);
-> > @@ -376,12 +483,20 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
-> >   		goto err_destroy_wq;
-> >   	}
-> > +	irq_set_status_flags(mhi_cntrl->irq, IRQ_NOAUTOEN);
-> > +	ret = request_irq(mhi_cntrl->irq, mhi_ep_irq, IRQF_TRIGGER_HIGH,
-> > +			  "doorbell_irq", mhi_cntrl);
-> > +	if (ret) {
-> > +		dev_err(mhi_cntrl->cntrl_dev, "Failed to request Doorbell IRQ\n");
-> > +		goto err_ida_free;
-> > +	}
-> > +
-> >   	/* Allocate the controller device */
-> >   	mhi_dev = mhi_ep_alloc_device(mhi_cntrl, MHI_DEVICE_CONTROLLER);
-> >   	if (IS_ERR(mhi_dev)) {
-> >   		dev_err(mhi_cntrl->cntrl_dev, "Failed to allocate controller device\n");
-> >   		ret = PTR_ERR(mhi_dev);
-> > -		goto err_ida_free;
-> > +		goto err_free_irq;
-> >   	}
-> >   	dev_set_name(&mhi_dev->dev, "mhi_ep%u", mhi_cntrl->index);
-> > @@ -398,6 +513,8 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
-> >   err_put_dev:
-> >   	put_device(&mhi_dev->dev);
-> > +err_free_irq:
-> > +	free_irq(mhi_cntrl->irq, mhi_cntrl);
-> >   err_ida_free:
-> >   	ida_free(&mhi_ep_cntrl_ida, mhi_cntrl->index);
-> >   err_destroy_wq:
-> > @@ -417,6 +534,8 @@ void mhi_ep_unregister_controller(struct mhi_ep_cntrl *mhi_cntrl)
-> >   	destroy_workqueue(mhi_cntrl->wq);
-> > +	free_irq(mhi_cntrl->irq, mhi_cntrl);
-> > +
-> >   	kfree(mhi_cntrl->mhi_cmd);
-> >   	kfree(mhi_cntrl->mhi_chan);
-> > diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
-> > index dc27a5de7d3c..43aa9b133db4 100644
-> > --- a/include/linux/mhi_ep.h
-> > +++ b/include/linux/mhi_ep.h
-> > @@ -70,6 +70,7 @@ struct mhi_ep_db_info {
-> >    * @list_lock: Lock for protecting state transition and channel doorbell lists
-> >    * @state_lock: Lock for protecting state transitions
-> >    * @st_transition_list: List of state transitions
-> > + * @ch_db_list: List of queued channel doorbells
-> >    * @wq: Dedicated workqueue for handling rings and state changes
-> >    * @state_work: State transition worker
-> >    * @raise_irq: CB function for raising IRQ to the host
-> > @@ -87,6 +88,7 @@ struct mhi_ep_db_info {
-> >    * @chdb_offset: Channel doorbell offset set by the host
-> >    * @erdb_offset: Event ring doorbell offset set by the host
-> >    * @index: MHI Endpoint controller index
-> > + * @irq: IRQ used by the endpoint controller
-> >    */
-> >   struct mhi_ep_cntrl {
-> >   	struct device *cntrl_dev;
-> > @@ -111,6 +113,7 @@ struct mhi_ep_cntrl {
-> >   	spinlock_t state_lock;
-> >   	struct list_head st_transition_list;
-> > +	struct list_head ch_db_list;
-> >   	struct workqueue_struct *wq;
-> >   	struct work_struct state_work;
-> > @@ -137,6 +140,7 @@ struct mhi_ep_cntrl {
-> >   	u32 chdb_offset;
-> >   	u32 erdb_offset;
-> >   	u32 index;
-> > +	int irq;
-> >   };
-> >   /**
-> 
+I discussed with internal team. setting gcc_pcie_n_pipe_clk src in pcie 
+driver doesn't have any relation with gdsc.
+
+But we are making sure that gcc_pcie_n_pipe_clk src is bi_tcxo before 
+enabling the clocks and switching to pipe_clk src after PHY is enalbe.
+
+During suspend switching back to bi_tcxo as we enabling the clock as 
+part of resume.
+
+  Hi Taniya,
+
+Please provide your inputs.
+
+Thanks
+
+-Prasad
+On 2/12/2022 1:22 AM, Dmitry Baryshkov wrote:
+> On 05/02/2022 01:05, Bjorn Andersson wrote:
+>> On Fri 04 Feb 08:46 CST 2022, Dmitry Baryshkov wrote:
+>>
+>>> On newer Qualcomm platforms GCC_PCIE_n_PIPE_CLK_SRC should be 
+>>> controlled
+>>> together with the PCIE_n_GDSC. The clock should be fed from the TCXO
+>>> before switching the GDSC off and can be fed from PCIE_n_PIPE_CLK once
+>>> the GDSC is on.
+>>>
+>>> Since commit aa9c0df98c29 ("PCI: qcom: Switch pcie_1_pipe_clk_src after
+>>> PHY init in SC7280") PCIe controller driver tries to manage this on 
+>>> it's
+>>> own, resulting in the non-optimal code. Furthermore, if the any of the
+>>> drivers will have the same requirements, the code would have to be
+>>> dupliacted there.
+>>>
+>>> Move handling of such clocks to the GDSC code, providing special GDSC
+>>> type.
+>>>
+>>
+>> As discussed on IRC, I'm inclined not to take this, because looks to me
+>> to be the same situation that we have with all GDSCs in SM8350 and
+>> onwards - that some clocks must be parked on a safe parent before the
+>> associated GDSC can be toggled.
+>>
+>> Prasad, please advice on what the actual requirements are wrt the
+>> gcc_pipe_clk_src. When does it need to provide a valid signal and when
+>> does it need to be parked?
+>
+> [Excuse me for the duplicate, Prasad's email was bouncing]
+>
+> Prasad, any comments?
+>
+>>
+>> Regards,
+>> Bjorn
+>>
+>>> Cc: Prasad Malisetty <pmaliset@codeaurora.org>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>   drivers/clk/qcom/gdsc.c | 41 
+>>> +++++++++++++++++++++++++++++++++++++++++
+>>>   drivers/clk/qcom/gdsc.h | 14 ++++++++++++++
+>>>   2 files changed, 55 insertions(+)
+>>>
+>>> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+>>> index 7e1dd8ccfa38..9913d1b70947 100644
+>>> --- a/drivers/clk/qcom/gdsc.c
+>>> +++ b/drivers/clk/qcom/gdsc.c
+>>> @@ -45,6 +45,7 @@
+>>>   #define TIMEOUT_US        500
+>>>     #define domain_to_gdsc(domain) container_of(domain, struct gdsc, 
+>>> pd)
+>>> +#define domain_to_pipe_clk_gdsc(domain) container_of(domain, struct 
+>>> pipe_clk_gdsc, base.pd)
+>>>     enum gdsc_status {
+>>>       GDSC_OFF,
+>>> @@ -549,3 +550,43 @@ int gdsc_gx_do_nothing_enable(struct 
+>>> generic_pm_domain *domain)
+>>>       return 0;
+>>>   }
+>>>   EXPORT_SYMBOL_GPL(gdsc_gx_do_nothing_enable);
+>>> +
+>>> +/*
+>>> + * Special operations for GDSCs with attached pipe clocks.
+>>> + * The clock should be parked to safe source (tcxo) before turning 
+>>> off the GDSC
+>>> + * and can be switched on as soon as the GDSC is on.
+>>> + *
+>>> + * We remove respective clock sources from clocks map and handle 
+>>> them manually.
+>>> + */
+>>> +int gdsc_pipe_enable(struct generic_pm_domain *domain)
+>>> +{
+>>> +    struct pipe_clk_gdsc *sc = domain_to_pipe_clk_gdsc(domain);
+>>> +    int i, ret;
+>>> +
+>>> +    ret = gdsc_enable(domain);
+>>> +    if (ret)
+>>> +        return ret;
+>>> +
+>>> +    for (i = 0; i< sc->num_clocks; i++)
+>>> +        regmap_update_bits(sc->base.regmap, sc->clocks[i].reg,
+>>> +                BIT(sc->clocks[i].shift + sc->clocks[i].width) - 
+>>> BIT(sc->clocks[i].shift),
+>>> +                sc->clocks[i].on_value << sc->clocks[i].shift);
+>>> +
+>>> +    return 0;
+>>> +}
+>>> +EXPORT_SYMBOL_GPL(gdsc_pipe_enable);
+>>> +
+>>> +int gdsc_pipe_disable(struct generic_pm_domain *domain)
+>>> +{
+>>> +    struct pipe_clk_gdsc *sc = domain_to_pipe_clk_gdsc(domain);
+>>> +    int i;
+>>> +
+>>> +    for (i = sc->num_clocks - 1; i >= 0; i--)
+>>> +        regmap_update_bits(sc->base.regmap, sc->clocks[i].reg,
+>>> +                BIT(sc->clocks[i].shift + sc->clocks[i].width) - 
+>>> BIT(sc->clocks[i].shift),
+>>> +                sc->clocks[i].off_value << sc->clocks[i].shift);
+>>> +
+>>> +    /* In case of an error do not try turning the clocks again. We 
+>>> can not be sure about the GDSC state. */
+>>> +    return gdsc_disable(domain);
+>>> +}
+>>> +EXPORT_SYMBOL_GPL(gdsc_pipe_disable);
+>>> diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
+>>> index d7cc4c21a9d4..b1a2f0abe41c 100644
+>>> --- a/drivers/clk/qcom/gdsc.h
+>>> +++ b/drivers/clk/qcom/gdsc.h
+>>> @@ -68,11 +68,25 @@ struct gdsc_desc {
+>>>       size_t num;
+>>>   };
+>>>   +struct pipe_clk_gdsc {
+>>> +    struct gdsc base;
+>>> +    int num_clocks;
+>>> +    struct {
+>>> +        u32 reg;
+>>> +        u32 shift;
+>>> +        u32 width;
+>>> +        u32 off_value;
+>>> +        u32 on_value;
+>>> +    } clocks[];
+>>> +};
+>>> +
+>>>   #ifdef CONFIG_QCOM_GDSC
+>>>   int gdsc_register(struct gdsc_desc *desc, struct 
+>>> reset_controller_dev *,
+>>>             struct regmap *);
+>>>   void gdsc_unregister(struct gdsc_desc *desc);
+>>>   int gdsc_gx_do_nothing_enable(struct generic_pm_domain *domain);
+>>> +int gdsc_pipe_enable(struct generic_pm_domain *domain);
+>>> +int gdsc_pipe_disable(struct generic_pm_domain *domain);
+>>>   #else
+>>>   static inline int gdsc_register(struct gdsc_desc *desc,
+>>>                   struct reset_controller_dev *rcdev,
+>>> -- 
+>>> 2.34.1
+>>>
+>
+>
