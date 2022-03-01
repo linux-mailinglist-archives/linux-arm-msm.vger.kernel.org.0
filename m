@@ -2,119 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C488F4C894C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 11:29:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BA3014C8A5C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 12:12:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234261AbiCAK3n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Mar 2022 05:29:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53846 "EHLO
+        id S234461AbiCALNM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Mar 2022 06:13:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234286AbiCAK3m (ORCPT
+        with ESMTP id S232621AbiCALNL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Mar 2022 05:29:42 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55EFC5E76E;
-        Tue,  1 Mar 2022 02:28:58 -0800 (PST)
+        Tue, 1 Mar 2022 06:13:11 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C14425E5;
+        Tue,  1 Mar 2022 03:12:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1646130538; x=1677666538;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=Fvtor8IGLpEt4IVg3IxMVK83oP7Tsh9UR2yVHJEbIcE=;
-  b=JCQyIrF831jjLpfvaSRTkXwnMzZr53PKGA97lXhanxfjvMkxH3SK2BrB
-   pTyEAHjS2z/+CEfhx3b9z+G3jYXBqi1/8meWNo1lktQCroHFoHX2h3/lH
-   2gco4Gq/QUPRoylL+hV+v8NH4qGJfVEc519Tn6PISJ+qcT3Q9OxOQYnk0
-   s=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 01 Mar 2022 02:28:57 -0800
+  t=1646133146; x=1677669146;
+  h=from:to:cc:subject:date:message-id;
+  bh=KqktSACkqjI7XXFCEKdNf7BXOn9rd2j3s7ltokrP7u4=;
+  b=BppDK/yhE2Q1LZL4Khkgc3BDhRP1KZzg3mTXeOEaYh9fAvLpZ3eoyDj1
+   bnDUqgUdJtjuCUNnchISxXvrICRCI3pOf7wo/lYr6TKFlECG3iiWUf7fp
+   bIiZg17qN39fITOAFrPbd5uTNs5rKUBDGJ6iizuw1xlwIudHbZp5lg0eU
+   U=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 01 Mar 2022 03:12:26 -0800
 X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2022 02:28:57 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Tue, 1 Mar 2022 02:28:57 -0800
-Received: from c-sanm-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Tue, 1 Mar 2022 02:28:52 -0800
-From:   Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Pawel Laszczak <pawell@cadence.com>,
-        Peter Chen <peter.chen@kernel.org>,
-        Roger Quadros <rogerq@kernel.org>,
-        Aswath Govindraju <a-govindraju@ti.com>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Subject: [PATCH v2 3/3] usb: dwc: host: add xhci_plat_priv quirk XHCI_SKIP_PHY_INIT
-Date:   Tue, 1 Mar 2022 15:58:27 +0530
-Message-ID: <1646130507-26796-4-git-send-email-quic_c_sanm@quicinc.com>
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 01 Mar 2022 03:12:24 -0800
+X-QCInternal: smtphost
+Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 01 Mar 2022 16:42:05 +0530
+Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
+        id DF90E58A9; Tue,  1 Mar 2022 16:42:04 +0530 (IST)
+From:   Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+To:     adrian.hunter@intel.com, ulf.hansson@linaro.org, robh+dt@kernel.org
+Cc:     quic_asutoshd@quicinc.com, quic_rampraka@quicinc.com,
+        quic_pragalla@quicinc.com, quic_sartgarg@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_sayalil@quicinc.com,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        krzysztof.kozlowski@canonical.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+Subject: [PATCH V1] arm64: dts: qcom: sc7280: Add GCC hardware register dt entry
+Date:   Tue,  1 Mar 2022 16:42:03 +0530
+Message-Id: <1646133123-22256-1-git-send-email-quic_c_sbhanu@quicinc.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1646130507-26796-1-git-send-email-quic_c_sanm@quicinc.com>
-References: <1646130507-26796-1-git-send-email-quic_c_sanm@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-dwc3 manages PHY by own DRD driver, so skip the management by
-HCD core.
-During runtime suspend phy was not getting suspend because
-runtime_usage value is 2.
+Add GCC hardware register dt entry for eMMC and SD card.
 
-Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
 ---
- drivers/usb/dwc3/host.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/usb/dwc3/host.c b/drivers/usb/dwc3/host.c
-index eda8719..d4fcf06 100644
---- a/drivers/usb/dwc3/host.c
-+++ b/drivers/usb/dwc3/host.c
-@@ -13,6 +13,12 @@
- #include <linux/platform_device.h>
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index c07765d..2b8461d 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -881,6 +881,9 @@
+ 			mmc-hs400-1_8v;
+ 			mmc-hs400-enhanced-strobe;
  
- #include "core.h"
-+#include <linux/usb/xhci-plat.h>
-+#include <linux/usb/xhci-quirks.h>
-+
-+static const struct xhci_plat_priv xhci_plat_dwc3_xhci = {
-+	.quirks = XHCI_SKIP_PHY_INIT,
-+};
++			/* Add dt entry for gcc hw reset */
++			resets = <&gcc GCC_SDCC1_BCR>;
++			reset-names = "core_reset";
+ 			sdhc1_opp_table: opp-table {
+ 				compatible = "operating-points-v2";
  
- static void dwc3_host_fill_xhci_irq_res(struct dwc3 *dwc,
- 					int irq, char *name)
-@@ -122,6 +128,13 @@ int dwc3_host_init(struct dwc3 *dwc)
- 		}
- 	}
+@@ -2686,6 +2689,9 @@
  
-+	ret = platform_device_add_data(xhci, &xhci_plat_dwc3_xhci,
-+			sizeof(xhci_plat_dwc3_xhci));
-+	if (ret) {
-+		dev_err(dwc->dev, "failed to add data to xHCI\n");
-+		goto err;
-+	}
-+
- 	ret = platform_device_add(xhci);
- 	if (ret) {
- 		dev_err(dwc->dev, "failed to register xHCI device\n");
+ 			qcom,dll-config = <0x0007642c>;
+ 
++			/* Add dt entry for gcc hw reset */
++			resets = <&gcc GCC_SDCC2_BCR>;
++			reset-names = "core_reset";
+ 			sdhc2_opp_table: opp-table {
+ 				compatible = "operating-points-v2";
+ 
 -- 
-2.7.4
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
