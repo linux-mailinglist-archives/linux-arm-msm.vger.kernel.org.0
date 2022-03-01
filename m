@@ -2,64 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D33724C8090
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 02:53:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AFFB84C81AA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 04:35:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230028AbiCAByg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Feb 2022 20:54:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60402 "EHLO
+        id S231738AbiCADgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Feb 2022 22:36:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230227AbiCAByf (ORCPT
+        with ESMTP id S229491AbiCADgJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Feb 2022 20:54:35 -0500
-Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C98C9F16
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 17:53:54 -0800 (PST)
-Received: by mail-oo1-xc2d.google.com with SMTP id i10-20020a4aab0a000000b002fccf890d5fso20923352oon.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 17:53:54 -0800 (PST)
+        Mon, 28 Feb 2022 22:36:09 -0500
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 480607030E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 19:35:28 -0800 (PST)
+Received: by mail-ot1-x32a.google.com with SMTP id k22-20020a9d4b96000000b005ad5211bd5aso11186638otf.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 19:35:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=SH7BKZxPThE9TeccoqRlmHSDAbpqji1kQcAbZPM4yik=;
-        b=ge1Da0sWeE+tqpMjsT64kOiWt8LAtWVXCsDWyFEpfMIYtGC3XmXur327uUyvKTqcJ9
-         pHSrCqJvbjI+J87pCRkOcUkWnZ6iv9y2s/dhTuqDW5KvoH0bFC5bTyW3KbzdBmyLWUg9
-         Toqim7tenpe3VhvO7sQRhxdXhduSoPWy2pCCR/xMAhUpGk08CsxgJkQhqq26fDMqbi4D
-         3t5Di6QRwd7b7R7ZcupOgGLqy/wfO49OAA9gp76WYJiQMls+cF9nlfDf6QbNcklF4QbM
-         4nUOsCOpcqBOp4CVSPFPc56vQPLjZ0GuPLuP6l2BHlNKtoGOE+VxSKO+r44Eduf+ET/W
-         j1YA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6TpT57l7j+VEVWnhi7VBvM0wYYn+eMC3kYTDkfBvy3Y=;
+        b=m6/oovAFI2rxU7OYUBCXzeFB+a/w+X2tXEmbsES52kGWzO2PRHd7yPle5WujrazpFB
+         AO9uyafF04NjtHyR+i1l0omWXP4mOarEM3dB1jHYkT8zPvATHLGxr1OrEs7jse2eT4AM
+         RKkJMpfOPaE5m6g1EM530RVCgEBM3mmGhOKI8kO3EeuPN/LxCzhcLSa5P70h0L5L/snp
+         KaZOj4FeWgS2m7e1cYj6QCDKh6SZPtuzX25M5pZqXwfXrThRJUr9SH/dbbLfmgwcBrbY
+         jFyfOOFWxZAyixsw+pK4YijAGFIEuRR4NK4o46BII9Lk8Gopt/vhXPKbmQtckVtJMtRq
+         M1pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=SH7BKZxPThE9TeccoqRlmHSDAbpqji1kQcAbZPM4yik=;
-        b=NgxXRJgiRC6ZmpD+j60LYB1hDOKgrSap5P/kTCKr1o4rypigS9PKc8o7+62IHLmRqm
-         N9mlMrG0PI2n3M/W5WHMgDgMd4/Fb6TkYGYqoqBczxx6/Mwy6WYNbCagpaL3Cp2od5vF
-         CO34Wq9Prmtu6w7WuK7X8P7Ck39Eyf6WLONgj7Ucy/Wc5msdojwqaY44q19XGmDTRRIj
-         QRFse9cMkwmHTKSQVAxZNn3tc9Hlu0yVYxngoftLkhMqtxSYUxu+dOtq2vUbTGKHT9Jc
-         pusadSjtvlcwgpNGGo2efEGPAi2tsU9aFZDqHLvZ/poAznJhlQvve6hanCmJDZmole5R
-         gKrQ==
-X-Gm-Message-State: AOAM531fy+pVITILoYKvu5zu49BfxXQDLOXP1CKK6p1DsRJj8I+MnS01
-        Yckea5H+j5Hvv6EzhYgG0Lve9g==
-X-Google-Smtp-Source: ABdhPJwkZfZQgsIvBnKi4vwbk0wX9q6loJUIaLI+i80+obbQoS3tfkqdkthJvfyCPGd6372X23Sm7g==
-X-Received: by 2002:a05:6870:e997:b0:ce:c0c9:61d with SMTP id r23-20020a056870e99700b000cec0c9061dmr10096537oao.111.1646099634137;
-        Mon, 28 Feb 2022 17:53:54 -0800 (PST)
-Received: from yoga ([2600:1700:a0:3dc8:5c39:baff:fe03:898d])
-        by smtp.gmail.com with ESMTPSA id 35-20020a9d0026000000b005ad363440a2sm5669549ota.64.2022.02.28.17.53.53
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6TpT57l7j+VEVWnhi7VBvM0wYYn+eMC3kYTDkfBvy3Y=;
+        b=UHbuYR8mlyWVMLPTWILFROE8arU22SW54gBHubXIpHZzkGLb6DXH8BdVHRjgFSnm9K
+         i63dPHmOMIfDBFkIgLB+ftBKQASxjrRMsc5Ur4gj4P5r4Mxaieh0P1uDVJiEAWsYUbMZ
+         hjJhUwJCO785ACJKeTwIvVJCoFfSUM6NTrPXv/oIo7L2fm/7u8tarhIyr4C56UcpJi/v
+         uExheX8saiKMGt8J8ihGqLfSX+6sfdz7JCEeIpOhf61DKJpvBmQH7XEuPbT9kaQmsfst
+         Tb7pS/fIrru3CrlwvCn0se86UgCjEAKQ6h8ML9nrjI/gCqLKFXEOIvWCqNteEfaUO4jC
+         Pz0Q==
+X-Gm-Message-State: AOAM531iRlouywdsxSg4fVB/7GJwQE6Gw485H10Wx0vaTAex5Gn9O36j
+        azTE+wg/z5U6yDDGidbGcXSGYA==
+X-Google-Smtp-Source: ABdhPJwdnilFD6W4jB2CzREpYQ2+PlfGHjlmFZDbx6RF3p2xwfnDtMwnnOylRst1W4QzurrpKUp5nw==
+X-Received: by 2002:a9d:76c6:0:b0:5a1:b25d:1311 with SMTP id p6-20020a9d76c6000000b005a1b25d1311mr11367633otl.297.1646105727580;
+        Mon, 28 Feb 2022 19:35:27 -0800 (PST)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id l4-20020a4a94c4000000b002ea822fbac8sm5753828ooi.21.2022.02.28.19.35.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Feb 2022 17:53:53 -0800 (PST)
-Date:   Mon, 28 Feb 2022 19:53:51 -0600
+        Mon, 28 Feb 2022 19:35:27 -0800 (PST)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     lotte bai <baihaowen88@gmail.com>
-Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] soc: qcom: qmi: Use min() instead of doing it manually
-Message-ID: <Yh18r0jpHjswyksi@yoga>
-References: <CAFo17PjBtoWcrQyxe-Twowf+_5FJ3_OOMjtv950VBR7NocWfhg@mail.gmail.com>
+To:     arm@kernel.org, soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Olof Johansson <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Steev Klimaszewski <steev@kali.org>
+Subject: [GIT PULL] Qualcomm ARM64 DeviceTree fixes for 5.17
+Date:   Mon, 28 Feb 2022 21:35:26 -0600
+Message-Id: <20220301033526.1801295-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFo17PjBtoWcrQyxe-Twowf+_5FJ3_OOMjtv950VBR7NocWfhg@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -70,36 +73,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 28 Feb 19:36 CST 2022, lotte bai wrote:
+Sorry for the late fixes request. If it's too late, please merge it towards
+v5.18.
 
-> Fix following coccicheck warning:
-> drivers/soc/qcom/qmi_interface.c:773:12-13: WARNING opportunity for min()
-> 
-
-Thanks for the patch Haowen.
-
-> Signed-off-by: Haowen Bai <baihaowen88@gmail.com>
-> ---
->  drivers/soc/qcom/qmi_interface.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soc/qcom/qmi_interface.c
-> b/drivers/soc/qcom/qmi_interface.c
-> index c8c4c73..3337a70 100644
-> --- a/drivers/soc/qcom/qmi_interface.c
-> +++ b/drivers/soc/qcom/qmi_interface.c
-> @@ -770,7 +770,7 @@ static ssize_t qmi_send_message(struct qmi_handle *qmi,
-> 
->          kfree(msg);
-> 
-> -       return ret < 0 ? ret : 0;
-> +       return min(ret, 0);
-
-The code isn't trying to say "return the minimum of ret and 0", it says
-"if ret is negative return that, otherwise return 0".
-
-Mathematically this happens to be the same, but for me as reader of the
-code they have different meaning.
-
-Regards,
+Thanks,
 Bjorn
+
+The following changes since commit e783362eb54cd99b2cac8b3a9aeac942e6f6ac07:
+
+  Linux 5.17-rc1 (2022-01-23 10:12:53 +0200)
+
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-fixes-for-5.17
+
+for you to fetch changes up to 382e3e0eb6a83f1cf73d4dfa3448ade1ed721f22:
+
+  arm64: dts: qcom: c630: disable crypto due to serror (2022-02-14 21:50:11 -0600)
+
+----------------------------------------------------------------
+Qualcomm ARM64 DeviceTree fixes for 5.17
+
+This starts off by fixing an issue introduced in a bug fix in the
+global clock controller, where the symbol clocks for UFS would
+end up picking the wrong parent clock which breaks UFS.
+
+It then makes sure that the reference clock for the USB blocks are
+enabled, even with booting without clk_ignore_unused.
+
+It corrects the apps SMMU interrupts defintion by adding a missing
+interrupt in the list.
+
+Lastly it disables the Qualcomm crypto hardware (for now) on the Lenovo
+Yoga C630, to prevent the cryptomanager tests during boot from crashing
+the device.
+
+----------------------------------------------------------------
+Bjorn Andersson (1):
+      arm64: dts: qcom: sm8350: Correct UFS symbol clocks
+
+Jonathan Marek (2):
+      arm64: dts: qcom: sm8450: enable GCC_USB3_0_CLKREF_EN for usb
+      arm64: dts: qcom: sm8450: fix apps_smmu interrupts
+
+Steev Klimaszewski (1):
+      arm64: dts: qcom: c630: disable crypto due to serror
+
+ .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts      |  5 ++++
+ arch/arm64/boot/dts/qcom/sm8350.dtsi               | 28 ++++++++++++++++++----
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               |  8 ++++---
+ 3 files changed, 33 insertions(+), 8 deletions(-)
