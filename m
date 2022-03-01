@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 372044C945C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 20:33:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 82A934C9481
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 20:40:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229999AbiCATeE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Mar 2022 14:34:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49948 "EHLO
+        id S236989AbiCATkm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Mar 2022 14:40:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235074AbiCATeD (ORCPT
+        with ESMTP id S236755AbiCATkl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Mar 2022 14:34:03 -0500
-Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56EC25130E
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Mar 2022 11:33:21 -0800 (PST)
-Received: by mail-oo1-xc2a.google.com with SMTP id x6-20020a4a4106000000b003193022319cso23653993ooa.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Mar 2022 11:33:21 -0800 (PST)
+        Tue, 1 Mar 2022 14:40:41 -0500
+Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DFC86548D
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Mar 2022 11:39:59 -0800 (PST)
+Received: by mail-oo1-xc31.google.com with SMTP id r41-20020a4a966c000000b0031bf85a4124so23687470ooi.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Mar 2022 11:39:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=s09G3d2GZOsH48PQv3S0tWQ6hmH5JZ2SdoKpay6rqJk=;
-        b=yGFDknXS4dWn2kPPs0YZ8VbbVl2xu4WwKbWtmFZwNpzY+jQAwuvKvp4uLHvBrvVuEg
-         AlKf+kfvQOC4Rzn8CwYOFhbXgSU3kysY+DRRHlzgLiVlSVF1sZ0JDrv5gChtiTZ4BqnG
-         vvps1rxy/SoW6ruB6OiysBYvDt5ka0OFCU2v6sCCP4o+OumiZLJD+fCcFhBRWJk8B+0J
-         F9RScnKJ7Bj2uKeTP5Xjxy8ND8HAlQGEaBFaRcxnWZHm+HSv3kzH4Hz+v9w+Yr6VkA5C
-         CRbr5gxZJT95C1iyLZQN901rnnugXmgDVZ5wTJHOiGTcxE1Lzd8LLnkUtEpz9hPpTJ/E
-         FUqw==
+        bh=iOuftU1chGXMf3eFiOe8yxe1FZrdlpvfysxHIVyleiw=;
+        b=pUUy8AdZ8gUokOkQvTGeZJyMqxOmaQzKxO9YGhxdsUHJvTxK5Ojjx/Hirtfd2GqLl0
+         f08asCK12JIjOPr5syWGB6KJJXmGID+hA5D+rg3LEI2GCYKV0zvhf/xCMkGSYTSnhIVG
+         2amm71llK/Lv88CvvpLul4OH5mtR/2AEUSrWfNaNCUKpTypgY2v+cNp9KYwfC8wbFUqv
+         dNbNDQM5VIk3wgcTRbWb22HijiJ97P4ochH0khPfKxYTZAUC0QGGTXLHdRdYGHepc/Zg
+         jcpo4J0BTsgFhNTVrVxiYCnfAdrh6M4uY9GjsD610VDUI2VWZqInlZ7T6UlCNQO2ggIS
+         GHOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=s09G3d2GZOsH48PQv3S0tWQ6hmH5JZ2SdoKpay6rqJk=;
-        b=rNtQvm48f7/H9FXO5q8/cpktuh+J1PZ+FLy6g1FHAZuiILjwSp+ToG0fcCD2P9+Zxg
-         UrqLIemYFXTapXRJ++NIW8ZccrDAbxzHFnq6Sf40VlUJvym+cqv59ftRCWK0P2d80AkO
-         s0r9rqGinwZQQW2c8Md77RRJc75gwLVTRwPogEfPNH3YcWhZ8wpopQZbPMKYt/q/ZQV3
-         Iqf/7/erEAns1CuY98pIcAAkim60htNFNkWUDOdXiMtaYbPFHaj/NneQMOszPzz8Kbz1
-         /L3Zr+6hT3yGyu3wlzXNsq3io4Mp4mckinIQKRMak3by91BSuFbREBHtwoBybageIMdv
-         O9TA==
-X-Gm-Message-State: AOAM5310OeVdCqBr+DXxYjVwhfS+hx5Z1fSD6SFDULUL4VZtYl5m2K7e
-        p+xJYCkdpGDIXbT8HoSDO51UlyDjpcITkhs9Kcycd3tGBAU=
-X-Google-Smtp-Source: ABdhPJwmfh2OsG89bUC0V88Pv5V+OirryKxA4WtgkuShXLUTWTDEFELIRd0Zf5/QIovCeCns4PvvaTR8bV0kSRfkf3g=
+        bh=iOuftU1chGXMf3eFiOe8yxe1FZrdlpvfysxHIVyleiw=;
+        b=LVCdgucsPIWp5jiv/3Dcz9VPzUpWk5a+xUoyFp28X0uHakr2boPoU9FWxQFPyuIluY
+         aLt9Ce6qiodBMNLYYWRkApe4PSQzb+0gmbFtLhUOXmxUxLRmwT1u/+fdLiU2BVRfkKpY
+         LBG32sk2vN3D/C/5ufj5ZVaQDIXmbl8uP85Cy2gSaboBggi2dqE5eGcZKOPKt9z3IAtG
+         y5C7ZC+osyln4b6AFH8+nGsGl0mJNmyYkzKjTjLqXrPBZhS0D3Y8rgmlrndXf1sjqcZX
+         D6HzXQNXzftYeRkTBs2UjqKI1uUUZb7u6e2InwMvN6HZioFfg58hP4uBuAL9BdZ+WTZO
+         Sz7w==
+X-Gm-Message-State: AOAM531a9f1bxI4Nhm95d5GHNhbJ0Pq1hPRF17gtcLIpfmpPsw9mdaDX
+        YQXtZqUuo+oEZRQY7l94B/JMjTIEmjF0khelCzlRlw==
+X-Google-Smtp-Source: ABdhPJz/qPuzEZTR9ZljdsTiZ+cLXv57fWdEG6zvfn3JtKxljL5qaf0Sq8My8qOZA9m/u6u+6gFx7s/axlGnWK6sASg=
 X-Received: by 2002:a05:6870:4508:b0:d7:162f:6682 with SMTP id
- e8-20020a056870450800b000d7162f6682mr8063116oao.126.1646163200654; Tue, 01
- Mar 2022 11:33:20 -0800 (PST)
+ e8-20020a056870450800b000d7162f6682mr8083444oao.126.1646163598081; Tue, 01
+ Mar 2022 11:39:58 -0800 (PST)
 MIME-Version: 1.0
 References: <20220126221725.710167-1-bhupesh.sharma@linaro.org>
- <20220126221725.710167-4-bhupesh.sharma@linaro.org> <Yfh6RSTegg2n5xuy@builder.lan>
-In-Reply-To: <Yfh6RSTegg2n5xuy@builder.lan>
+ <20220126221725.710167-8-bhupesh.sharma@linaro.org> <Yfh4cahRIdkY4KWg@builder.lan>
+In-Reply-To: <Yfh4cahRIdkY4KWg@builder.lan>
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Wed, 2 Mar 2022 01:03:09 +0530
-Message-ID: <CAH=2Ntzk0NJOy-8GD-8E+X2e2Rx9xOn_8uwU_m6VpE85_yVKNw@mail.gmail.com>
-Subject: Re: [PATCH 3/8] clk: qcom: gcc: Add PCIe, EMAC and UFS GDSCs for SM8150
+Date:   Wed, 2 Mar 2022 01:09:47 +0530
+Message-ID: <CAH=2NtzQk+sdBgMv5ZKPXQ1vWFrp3TOR1w2Ed1WEw_5U=1i65Q@mail.gmail.com>
+Subject: Re: [PATCH 7/8] clk: qcom: gcc-sm8150: use runtime PM for the clock controller
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
@@ -71,152 +71,95 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+HI Bjorn,
 
-On Tue, 1 Feb 2022 at 05:39, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+Thanks for the review. Sorry for the late reply.
+
+On Tue, 1 Feb 2022 at 05:31, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
 >
 > On Wed 26 Jan 16:17 CST 2022, Bhupesh Sharma wrote:
 >
-> > This adds the PCIe, EMAC and UFS GDSC structures for
-> > SM8150. The GDSC will allow the respective system to be
-> > brought out of reset.
+> > On sm8150 emac clk registers are powered up by the GDSC power
+> > domain. Use runtime PM calls to make sure that required power domain is
+> > powered on while we access clock controller's registers.
 > >
-> > Cc: Stephen Boyd <sboyd@kernel.org>
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
-> >  drivers/clk/qcom/gcc-sm8150.c               | 74 +++++++++++++++++----
-> >  include/dt-bindings/clock/qcom,gcc-sm8150.h |  9 ++-
-> >  2 files changed, 69 insertions(+), 14 deletions(-)
-> >
-> > diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
-> > index 245794485719..ada755ad55f7 100644
-> > --- a/drivers/clk/qcom/gcc-sm8150.c
-> > +++ b/drivers/clk/qcom/gcc-sm8150.c
-> > @@ -3448,22 +3448,67 @@ static struct clk_branch gcc_video_xo_clk = {
-> >       },
-> >  };
-> >
-> > +static struct gdsc emac_gdsc = {
-> > +     .gdscr = 0x6004,
-> > +     .pd = {
-> > +             .name = "emac_gdsc",
-> > +     },
-> > +     .pwrsts = PWRSTS_OFF_ON,
-> > +     .flags = POLL_CFG_GDSCR,
-> > +};
-> > +
-> > +static struct gdsc pcie_0_gdsc = {
-> > +     .gdscr = 0x6b004,
-> > +     .pd = {
-> > +             .name = "pcie_0_gdsc",
-> > +     },
-> > +     .pwrsts = PWRSTS_OFF_ON,
-> > +     .flags = POLL_CFG_GDSCR,
-> > +};
-> > +
-> > +static struct gdsc pcie_1_gdsc = {
-> > +     .gdscr = 0x8d004,
-> > +     .pd = {
-> > +             .name = "pcie_1_gdsc",
-> > +     },
-> > +     .pwrsts = PWRSTS_OFF_ON,
-> > +     .flags = POLL_CFG_GDSCR,
-> > +};
-> > +
-> > +static struct gdsc ufs_card_gdsc = {
-> > +     .gdscr = 0x75004,
-> > +     .pd = {
-> > +             .name = "ufs_card_gdsc",
-> > +     },
-> > +     .pwrsts = PWRSTS_OFF_ON,
-> > +     .flags = POLL_CFG_GDSCR,
-> > +};
-> > +
-> > +static struct gdsc ufs_phy_gdsc = {
-> > +     .gdscr = 0x77004,
-> > +     .pd = {
-> > +             .name = "ufs_phy_gdsc",
-> > +     },
-> > +     .pwrsts = PWRSTS_OFF_ON,
-> > +     .flags = POLL_CFG_GDSCR,
-> > +};
-> > +
-> >  static struct gdsc usb30_prim_gdsc = {
-> > -             .gdscr = 0xf004,
-> > -             .pd = {
-> > -                     .name = "usb30_prim_gdsc",
-> > -             },
-> > -             .pwrsts = PWRSTS_OFF_ON,
-> > -             .flags = POLL_CFG_GDSCR,
-> > +     .gdscr = 0xf004,
-> > +     .pd = {
-> > +             .name = "usb30_prim_gdsc",
-> > +     },
-> > +     .pwrsts = PWRSTS_OFF_ON,
-> > +     .flags = POLL_CFG_GDSCR,
-> >  };
-> >
-> >  static struct gdsc usb30_sec_gdsc = {
-> > -             .gdscr = 0x10004,
-> > -             .pd = {
-> > -                     .name = "usb30_sec_gdsc",
-> > -             },
-> > -             .pwrsts = PWRSTS_OFF_ON,
-> > -             .flags = POLL_CFG_GDSCR,
-> > +     .gdscr = 0x10004,
-> > +     .pd = {
-> > +             .name = "usb30_sec_gdsc",
-> > +     },
-> > +     .pwrsts = PWRSTS_OFF_ON,
-> > +     .flags = POLL_CFG_GDSCR,
-> >  };
-> >
-> >  static struct clk_regmap *gcc_sm8150_clocks[] = {
-> > @@ -3714,6 +3759,11 @@ static const struct qcom_reset_map gcc_sm8150_resets[] = {
-> >  };
-> >
-> >  static struct gdsc *gcc_sm8150_gdscs[] = {
-> > +     [EMAC_GDSC] = &emac_gdsc,
-> > +     [PCIE_0_GDSC] = &pcie_0_gdsc,
-> > +     [PCIE_1_GDSC] = &pcie_1_gdsc,
-> > +     [UFS_CARD_GDSC] = &ufs_card_gdsc,
-> > +     [UFS_PHY_GDSC] = &ufs_phy_gdsc,
-> >       [USB30_PRIM_GDSC] = &usb30_prim_gdsc,
-> >       [USB30_SEC_GDSC] = &usb30_sec_gdsc,
-> >  };
-> > diff --git a/include/dt-bindings/clock/qcom,gcc-sm8150.h b/include/dt-bindings/clock/qcom,gcc-sm8150.h
-> > index 3e1a91876610..35d80ae411a0 100644
-> > --- a/include/dt-bindings/clock/qcom,gcc-sm8150.h
-> > +++ b/include/dt-bindings/clock/qcom,gcc-sm8150.h
-> > @@ -241,7 +241,12 @@
-> >  #define GCC_USB_PHY_CFG_AHB2PHY_BCR                          28
-> >
-> >  /* GCC GDSCRs */
-> > -#define USB30_PRIM_GDSC                     4
-> > -#define USB30_SEC_GDSC                                               5
 >
-> These constants goes into .dtb files as numbers (4 and 5), changing them
-> will cause annoying-to-debug bugs in the transition while people still
-> are testing a new kernel with last weeks dtb.
->
-> So please add the new constants without affecting these numbers.
->
-> Rest looks good.
+> Typically the GCC registers need only "cx" enabled for us to much around
+> with its registers and I don't see you add any references to additional
+> resources, so can you please elaborate on how this affects the state of
+> the system to enable you to operate the emac registers?
 
-Ack. I will fix this in v2.
+Indeed. On second thought and further tests, I think we don't need
+this change. Only keeping EMAC GDSC in ON state (always) should fix
+the issue (added via [PATCH 8/8] in this series).
+
+So, I will drop this from v2.
 
 Regards,
 Bhupesh
 
-> > +#define EMAC_GDSC                                            0
-> > +#define PCIE_0_GDSC                                          1
-> > +#define      PCIE_1_GDSC                                             2
-> > +#define UFS_CARD_GDSC                                                3
-> > +#define UFS_PHY_GDSC                                         4
-> > +#define USB30_PRIM_GDSC                                              5
-> > +#define USB30_SEC_GDSC                                               6
+> > Cc: Stephen Boyd <sboyd@kernel.org>
+> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > ---
+> >  drivers/clk/qcom/gcc-sm8150.c | 27 +++++++++++++++++++++++++--
+> >  1 file changed, 25 insertions(+), 2 deletions(-)
 > >
-> >  #endif
+> > diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
+> > index ada755ad55f7..2e71afed81fd 100644
+> > --- a/drivers/clk/qcom/gcc-sm8150.c
+> > +++ b/drivers/clk/qcom/gcc-sm8150.c
+> > @@ -5,6 +5,7 @@
+> >  #include <linux/bitops.h>
+> >  #include <linux/err.h>
+> >  #include <linux/platform_device.h>
+> > +#include <linux/pm_runtime.h>
+> >  #include <linux/module.h>
+> >  #include <linux/of.h>
+> >  #include <linux/of_device.h>
+> > @@ -3792,19 +3793,41 @@ static const struct of_device_id gcc_sm8150_match_table[] = {
+> >  };
+> >  MODULE_DEVICE_TABLE(of, gcc_sm8150_match_table);
+> >
+> > +static void gcc_sm8150_pm_runtime_disable(void *data)
+> > +{
+> > +     pm_runtime_disable(data);
+> > +}
+> > +
+> >  static int gcc_sm8150_probe(struct platform_device *pdev)
+> >  {
+> >       struct regmap *regmap;
+> > +     int ret;
+> > +
+> > +     pm_runtime_enable(&pdev->dev);
+> > +
+> > +     ret = devm_add_action_or_reset(&pdev->dev, gcc_sm8150_pm_runtime_disable, &pdev->dev);
+> > +     if (ret)
+> > +             return ret;
+> > +
+> > +     ret = pm_runtime_resume_and_get(&pdev->dev);
+> > +     if (ret)
+> > +             return ret;
+> >
+> >       regmap = qcom_cc_map(pdev, &gcc_sm8150_desc);
+> > -     if (IS_ERR(regmap))
+> > +     if (IS_ERR(regmap)) {
+> > +             pm_runtime_put(&pdev->dev);
+> >               return PTR_ERR(regmap);
+> > +     }
+> >
+> >       /* Disable the GPLL0 active input to NPU and GPU via MISC registers */
+> >       regmap_update_bits(regmap, 0x4d110, 0x3, 0x3);
+> >       regmap_update_bits(regmap, 0x71028, 0x3, 0x3);
+> >
+> > -     return qcom_cc_really_probe(pdev, &gcc_sm8150_desc, regmap);
+> > +     ret = qcom_cc_really_probe(pdev, &gcc_sm8150_desc, regmap);
+> > +
+> > +     pm_runtime_put(&pdev->dev);
+> > +
+> > +     return ret;
+> >  }
+> >
+> >  static struct platform_driver gcc_sm8150_driver = {
 > > --
 > > 2.34.1
 > >
