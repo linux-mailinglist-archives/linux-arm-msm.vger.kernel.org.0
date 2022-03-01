@@ -2,69 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D01B94C8210
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 05:16:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E67BF4C8237
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 05:21:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231200AbiCAEQo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Feb 2022 23:16:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38590 "EHLO
+        id S229819AbiCAEWO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Feb 2022 23:22:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230015AbiCAEQn (ORCPT
+        with ESMTP id S231543AbiCAEWD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Feb 2022 23:16:43 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BAD55FF3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 20:16:03 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id ev16-20020a17090aead000b001bc3835fea8so1140728pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 20:16:03 -0800 (PST)
+        Mon, 28 Feb 2022 23:22:03 -0500
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A256419AC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 20:20:58 -0800 (PST)
+Received: by mail-ot1-x336.google.com with SMTP id 40-20020a9d032b000000b005b02923e2e6so1947992otv.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 20:20:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=KhWC54mH+BIWxrEus55KBPvsAOUPn79ymjvbcax9p8k=;
-        b=W/+o+gzPs0IucCzQpXe/hW7oHCroBWchswx4x+IW1T8ikPLDEevOIe12bLh3Zr+8e+
-         uiyAUzIziIqljsw8DZHFoOZRgUr7l0phA2WiuuLZvJ4liy0CSByqY3vGStiUALNWwd8j
-         8IrbdA4CkPgDrHESTOhcDW+OAsnwnH+pzzaCJH3tbdSt5c7wFTU1IFPZln6BJ8023MMj
-         oihelxVUqWgZ3H65KUlCyVS39o9AFr/9Y7zr+6kJVlfIxQYwvCl5k2CY2oDOEBADqEkh
-         jg7DfMSf5n5AdzPcTiVIEKfNxb5cTyiEOT9aVPstpGQkorKzjI00cw0dmJFnQdbgcPWe
-         MAhg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZgheNeV6VrgCPvvzDNqhywBXqs/fZYu3BC+daTMfd98=;
+        b=tq8MBO3V0zr88DDeg89MfKWnSi8V7O7E88Ji6hGxsAjoouxnJYBshPC3Q7Mk9Ft4vS
+         UcQy/Svc98lQ5E5rsI/9X+m74GEiJ3H6axrZLnbKfX/2xiJgcugHBdm1IE17E5GkN6t5
+         6pH1OK9zet+kGbtmm6SAkYSN6S5phi/IdZEvLRzEKSYEZ7xFix52udh+CzIB5gV0iMBt
+         oyqLm8KMEu+tWKc8vlnDJLz+mAvWsaO9gYASSn2THmbny3x20jCub+IWTKOsfZ4bIGIM
+         JmgYkvLrruEIELEg8VPyjAoT8QAc/cAKTb9VJKQRXjQ6XkbwoPxwOlS/XTupRh/hoMPf
+         RN2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=KhWC54mH+BIWxrEus55KBPvsAOUPn79ymjvbcax9p8k=;
-        b=PVEGssuOYCKxiywGbJXk+bdFdOxTrNc5tpS1tcZGGKaN8UZDuJmeuFIf8rfuysMDrL
-         /+oX/awVaAxWdOJKl0dnw/jl0YtHOAwGGX8FRq2isimCkfblfLa90bdSwf1Ceua+A97C
-         cvS12FqrXKcl2HlOsoOqSfpsx4fyjFlFD/EaLNOrbognnlmtD7CSxOG8OQM4Uq20mpXb
-         YuBcoHFWo6xrNnizsBXixG4XTpwxrTO/E6c1uAYHFM9FSMjAt+O3OZTYdHxOLAp0WSmZ
-         D5flNDxk/7lXNQpAsOuRgMybHBAfwIBl4B0HgznY4kYmAvG9wBDyHY+tYo+BaDm18vPQ
-         mRFw==
-X-Gm-Message-State: AOAM532XMGcqTCLK05gw4IpDx1XnwZxOvB8PJIvS4PmcPRkECUTwtUUV
-        1FN3Kh20JA4dzTL1CJKTxjCm5A==
-X-Google-Smtp-Source: ABdhPJx+KDbaCtnr5/iSs/iENqUtZNEYQYW6xikSgRQFLKJekESfaH4ej9ewUCPL03855qHDRMiBwA==
-X-Received: by 2002:a17:90b:3d02:b0:1bc:85fa:e24 with SMTP id pt2-20020a17090b3d0200b001bc85fa0e24mr19926186pjb.239.1646108163083;
-        Mon, 28 Feb 2022 20:16:03 -0800 (PST)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id f13-20020a056a001acd00b004f0f9a967basm15588688pfv.100.2022.02.28.20.16.00
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZgheNeV6VrgCPvvzDNqhywBXqs/fZYu3BC+daTMfd98=;
+        b=nkD3tcIc64yqDjtSGJjDZee9ry+U+gZB1PFCo5QHXFbT2oYkIaf9yD0lBVL/O4cusb
+         5nlerG0oWOXIT1xg5OKnPakKWauOlJStX9pJHgS+SI0FNItYmcmTZCxyyTjrH+ioVNwm
+         urJYO+xGZswZPtWrPQsrDFzL+Fz+RbtfIIyRnev6mGSUKBWV6ekIVTuMegzjNgiAF3N9
+         0bGUYfovdYOVg7PEvnGA1rQITprkWLHunPmjr5lG9s71obfXu+VAyg/6RTWGQ7KgomBo
+         96vYaNw+PRncuGi2dB1PvXoShjHjvNHcT1GOEnHkzsAnGNohI5vWlWvA4zhYaSXEh+uU
+         hroQ==
+X-Gm-Message-State: AOAM531rBS+6X+nkK03ZrIGARyC/ogcmGaH5q7eKubLavmzQS9n2OSJS
+        lnSwon7L7/iPXohLny8Ae6NBAg==
+X-Google-Smtp-Source: ABdhPJyBKG8Npw9lGTXw5Vd8d2rCiuknyYix4lQxzx5/5XgM7tkN6QTTj6l9z/JNu5hlFbALW/9lhw==
+X-Received: by 2002:a05:6830:b92:b0:5af:44c9:f115 with SMTP id a18-20020a0568300b9200b005af44c9f115mr11386307otv.24.1646108457198;
+        Mon, 28 Feb 2022 20:20:57 -0800 (PST)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id bh42-20020a056808182a00b002d538a8d5afsm7512671oib.7.2022.02.28.20.20.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Feb 2022 20:16:02 -0800 (PST)
-Date:   Tue, 1 Mar 2022 12:15:56 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, vkoul@kernel.org,
-        linux-phy@lists.infradead.org, robh+dt@kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCH v2 2/8] dt-bindings: phy: qcom,qmp: Describe
- 'vdda-max-microamp' & 'vdda-pll-max-microamp' properties
-Message-ID: <20220301041556.GJ269879@dragon>
-References: <20220228123019.382037-1-bhupesh.sharma@linaro.org>
- <20220228123019.382037-3-bhupesh.sharma@linaro.org>
+        Mon, 28 Feb 2022 20:20:56 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     arm@kernel.org, soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Olof Johansson <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Luca Weiss <luca@z3ntu.xyz>, Miaoqian Lin <linmq006@gmail.com>,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        Huang Yiwei <hyiwei@codeaurora.org>,
+        Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Xu Wang <vulab@iscas.ac.cn>,
+        Yang Li <yang.lee@linux.alibaba.com>
+Subject: [GIT PULL] Qualcomm driver updates for v5.18
+Date:   Mon, 28 Feb 2022 22:20:55 -0600
+Message-Id: <20220301042055.1804859-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220228123019.382037-3-bhupesh.sharma@linaro.org>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -75,49 +83,125 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 28, 2022 at 06:00:13PM +0530, Bhupesh Sharma wrote:
-> Since a few boards based on QCoM qmp phy use the
-> 'vdda-max-microamp' & 'vdda-pll-max-microamp' properties to
-> describe the ufs phy nodes, add them to the dt-bindings doc as well.
+The following changes since commit e783362eb54cd99b2cac8b3a9aeac942e6f6ac07:
 
-Does qmp-phy driver actually use them?
+  Linux 5.17-rc1 (2022-01-23 10:12:53 +0200)
 
-Shawn
+are available in the Git repository at:
 
-> 
-> This fixes the following '$ make dtbs_check' warning(s):
-> 
-> sm8350-microsoft-surface-duo2.dt.yaml: phy@1d87000:
->   'vdda-max-microamp', 'vdda-pll-max-microamp' do not match any of
->    the regexes: '^phy@[0-9a-f]+$', 'pinctrl-[0-9]+'
-> 
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> index 48cd6b6171a1..70e7cd75e173 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> @@ -87,6 +87,14 @@ properties:
->      minItems: 1
->      maxItems: 3
->  
-> +  vdda-max-microamp:
-> +    description:
-> +      Specifies max. load that can be drawn from phy supply.
-> +
-> +  vdda-pll-max-microamp:
-> +    description:
-> +      Specifies max. load that can be drawn from pll supply.
-> +
->    vdda-phy-supply:
->      description:
->        Phandle to a regulator supply to PHY core block.
-> -- 
-> 2.35.1
-> 
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-drivers-for-5.18
+
+for you to fetch changes up to 20f36361b7dd45787fa9872b3591f7148001eb6f:
+
+  soc: qcom: rpmpd: Add MSM8226 support (2022-02-24 14:12:34 -0600)
+
+----------------------------------------------------------------
+Qualcomm driver updates for v5.18
+
+This refactors the Qualcomm mdt file loader, to partially decouple it
+from the SCM peripheral-authentication-service. This is needed as newer
+platforms, such as the Qualcomm SM8450, require the metadata to remain
+accessible to TrustZone during a longer time. This is followed by the
+introduction of remoteproc drivers for SM8450 (Snapdragon 8 Gen 1).
+
+It changes the way hardware version differences are handled in the LLCC
+driver and introduces support for Qualcomm SM8450. While updating the dt
+binding for LLCC it also introduces the missing SM8350 compatible.
+
+The ocmem and aoss drivers gains missing put_device() calls and rpmpd
+gains a missing check for kcalloc() failure.
+
+The SPM driver is updated to avoid instantiating the SPM cpuidle devices
+if the CPUs aren't controlled by SPM, such as when Snapdragon 8916
+operates in 32-bit mode without PSCI.
+
+The RPM power-domain driver gains MSM8226 support.
+
+Lastly the socinfo driver gains knowledge about a few new SoCs and
+PMICs.
+
+----------------------------------------------------------------
+AngeloGioacchino Del Regno (2):
+      firmware: qcom: scm: Add function to set the maximum IOMMU pool size
+      firmware: qcom: scm: Add function to set IOMMU pagetable addressing
+
+Bjorn Andersson (13):
+      firmware: qcom: scm: Introduce pas_metadata context
+      soc: qcom: mdt_loader: Split out split-file-loader
+      soc: qcom: mdt_loader: Allow hash segment to be split out
+      soc: qcom: mdt_loader: Allow hash to reside in any segment
+      soc: qcom: mdt_loader: Extend check for split firmware
+      soc: qcom: mdt_loader: Reorder parts of __qcom_mdt_load()
+      soc: qcom: mdt_loader: Always invoke PAS mem_setup
+      soc: qcom: mdt_loader: Extract PAS operations
+      remoteproc: qcom: pas: Carry PAS metadata context
+      dt-bindings: remoteproc: qcom: pas: Add SM8450 PAS compatibles
+      remoteproc: qcom: pas: Add SM8450 remoteproc support
+      soc: qcom: socinfo: Add some more PMICs and SoCs
+      soc: qcom: mdt_loader: Fix split-firmware condition
+
+Christophe JAILLET (1):
+      soc: qcom: llcc: Use devm_bitmap_zalloc() when applicable
+
+Daniel Thompson (1):
+      soc: qcom: aoss: remove spurious IRQF_ONESHOT flags
+
+Huang Yiwei (1):
+      soc: qcom: llcc: Add support for 16 ways of allocation
+
+Jiasheng Jiang (1):
+      soc: qcom: rpmpd: Check for null return of devm_kcalloc
+
+Luca Weiss (2):
+      dt-bindings: power: rpmpd: Add MSM8226 to rpmpd binding
+      soc: qcom: rpmpd: Add MSM8226 support
+
+Marijn Suijten (1):
+      firmware: qcom: scm: Remove reassignment to desc following initializer
+
+Miaoqian Lin (2):
+      soc: qcom: ocmem: Fix missing put_device() call in of_get_ocmem
+      soc: qcom: aoss: Fix missing put_device call in qmp_get
+
+Sai Prakash Ranjan (7):
+      soc: qcom: llcc: Update the logic for version info extraction
+      soc: qcom: llcc: Add write-cache cacheable support
+      soc: qcom: llcc: Add missing llcc configuration data
+      soc: qcom: llcc: Update register offsets for newer LLCC HW
+      soc: qcom: llcc: Add configuration data for SM8450 SoC
+      dt-bindings: arm: msm: Add LLCC compatible for SM8350
+      dt-bindings: arm: msm: Add LLCC compatible for SM8450
+
+Stephan Gerhold (4):
+      cpuidle: qcom-spm: Check if any CPU is managed by SPM
+      firmware: qcom: scm: Simplify set_cold/warm_boot_addr()
+      firmware: qcom: scm: Drop cpumask parameter from set_boot_addr()
+      firmware: qcom: scm: Add support for MC boot address API
+
+Xu Wang (1):
+      soc: qcom: apr: Remove redundant 'flush_workqueue()' calls
+
+Yang Li (1):
+      firmware: qcom: scm: Fix some kernel-doc comments
+
+ .../devicetree/bindings/arm/msm/qcom,llcc.yaml     |   2 +
+ .../devicetree/bindings/power/qcom,rpmpd.yaml      |   1 +
+ .../devicetree/bindings/remoteproc/qcom,adsp.yaml  |  16 ++
+ arch/arm/mach-qcom/platsmp.c                       |   3 +-
+ drivers/cpuidle/cpuidle-qcom-spm.c                 |  28 ++-
+ drivers/firmware/qcom_scm.c                        | 215 ++++++++++---------
+ drivers/firmware/qcom_scm.h                        |   7 +
+ drivers/remoteproc/qcom_q6v5_mss.c                 |   7 +-
+ drivers/remoteproc/qcom_q6v5_pas.c                 |  36 +++-
+ drivers/soc/qcom/apr.c                             |   1 -
+ drivers/soc/qcom/llcc-qcom.c                       | 107 ++++++++--
+ drivers/soc/qcom/mdt_loader.c                      | 232 ++++++++++++++-------
+ drivers/soc/qcom/ocmem.c                           |   1 +
+ drivers/soc/qcom/qcom_aoss.c                       |   8 +-
+ drivers/soc/qcom/rpmpd.c                           |  20 ++
+ drivers/soc/qcom/socinfo.c                         |  12 ++
+ include/dt-bindings/power/qcom-rpmpd.h             |   5 +
+ include/linux/qcom_scm.h                           |  16 +-
+ include/linux/soc/qcom/llcc-qcom.h                 |   9 +-
+ include/linux/soc/qcom/mdt_loader.h                |  17 +-
+ 20 files changed, 528 insertions(+), 215 deletions(-)
