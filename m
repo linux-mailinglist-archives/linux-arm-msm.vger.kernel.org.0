@@ -2,69 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21D684C81C1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 04:47:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B54E04C81CD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 04:55:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232063AbiCADsL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Feb 2022 22:48:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38262 "EHLO
+        id S232083AbiCAD4C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Feb 2022 22:56:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232046AbiCADsJ (ORCPT
+        with ESMTP id S231882AbiCAD4B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Feb 2022 22:48:09 -0500
-Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3D7F21BC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 19:47:29 -0800 (PST)
-Received: by mail-oo1-xc31.google.com with SMTP id x6-20020a4a4106000000b003193022319cso21195099ooa.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 19:47:29 -0800 (PST)
+        Mon, 28 Feb 2022 22:56:01 -0500
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B4703631A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 19:55:21 -0800 (PST)
+Received: by mail-pl1-x633.google.com with SMTP id e13so12454158plh.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 19:55:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=h1OElnG4x1T4fzahm9wnw8ojuxCj+kiWdCPzk4ihLng=;
-        b=Sr0WtitDvf1kgdrN3J7mYOmYSoRZODO+RwwQlzbpjJG9NTAMcd0z6yB89XhArvDoBm
-         JyJ2cg+e8RoM7L2a52Kub3X3Ql0KESEsFq0Iq9N6fM2LNH3mYTPwJS8p7g+y+7hxKWee
-         j4wkS/CkaYzYi2gQ0rMIVHhKNz8ePTsXftrwMHSmKFahxngludTQH0EsXLpFHPZRwL5r
-         uKA82CddPdgi/xKHv/hLe7DhL1glgQMSWj9Rk2VZYmHGQrOHxFtincEyLntLow29+nBA
-         e/ha/hwT9lQxUrK+qG8ZXYgRraBRoAHcIb4VAny5AqTzenjMewFmpJGxjvsf8H9AvLrV
-         3eJQ==
+        bh=15kO8bfahYJFiPLc1vZ8MJvVn1yYn8uPD0/+xIeiCzc=;
+        b=EilyBazjY/CYJQ2FvktcGrpjYVDdZSwf5yyYmaY2goT1gbFkaye+c/ckNkZ1Ll8blJ
+         Qr/rn5vksZA7AEnaBQFwQYJ18o+zYovqOqyhI6bNQoPdojEebEUPpLl3Ge4IUxL3ZVaf
+         b7XjY+WneeUPE6Y3qY/mjHPmWQ+6/3Vs5p6Sc7IOcxBXxqS2CvuUweE69Fj2voyDSG23
+         Zz1TNbiS3kDJA9NKKYrG8oAjeQj4EfLjaIsDIfj5WeeY60lz+M6TkMgj9xtpgufbSMk4
+         NNsw8u3iKQOC9qva2Gsn3n2Ztopd/HR/UVTasU3n49dl7GAZZmvBamIvfylHv/pEzB57
+         qqAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=h1OElnG4x1T4fzahm9wnw8ojuxCj+kiWdCPzk4ihLng=;
-        b=rppvZH7k+IVRkSdyYmiQ3f+QTheqld7HwyNUiqbVufl6q9qaTnbF6pKGhylftFEYc+
-         yfsh3/7aLX6QJcxBQkgQ/alW7JlYZKHGkJBj2ElEqVvaZ7wf26Y6gWsnal69zFbuH7Jl
-         08NqQnk0pd38PSDC1ExII9jCU+4yspEmZm9iqlsLypafIjc5atvckkEAgvjh0g1fT9m0
-         Hfrd+mqSm6TVg/R+r/MEOUdyH8y3fDfzAaiHewPW2Z6X+yYCiCDIEBLEkDyX/QKoSwhP
-         HAsJQAXjJvJ2j/qdNPuW6LVctB/+8mOfRNDDPWWGyypP3AMICgtjtB/M8yiLNnHE+vz5
-         fNAg==
-X-Gm-Message-State: AOAM5327mXc8uFofkjjR4xNVGdMNbc3CqW42nFRSnMUXBFYMdssw3ffv
-        qj9vb8mXGY6IWiwH1E3p2EabOA==
-X-Google-Smtp-Source: ABdhPJx3Ydjw1e6f0f/FFdKlvUURmly7eAqEkjrIIGr3Z7CHOyPLM5ZJHANihQJ8aOtZ6dqbah2OAA==
-X-Received: by 2002:a05:6870:b4a7:b0:d7:3513:5e5a with SMTP id y39-20020a056870b4a700b000d735135e5amr3703381oap.38.1646106449102;
-        Mon, 28 Feb 2022 19:47:29 -0800 (PST)
-Received: from yoga ([2600:1700:a0:3dc8:5c39:baff:fe03:898d])
-        by smtp.gmail.com with ESMTPSA id i47-20020a9d172f000000b005aed7ea7b44sm5722198ota.73.2022.02.28.19.47.28
+        bh=15kO8bfahYJFiPLc1vZ8MJvVn1yYn8uPD0/+xIeiCzc=;
+        b=g4Xk53ux/9vOhRtpU+l9HiasBqxNrPcA84vErYbvTtnGEzEk6v7AZE80PZ2F7ip8cT
+         QA9fT4Zuh5jFTTG80kE8KumdF9s58baIdCt5t/WKC9nKsMXsnPmbpCOB9cliN/6JP7KJ
+         MyiQndG/1BfBI92+qicKHOLQvwdmKy7Gp6v508r0kTNQQA0mJamI/1BZ4J4J+S4G+1Xa
+         vO+xCOy5ydiMA9m7apNie1YKp+W5J57zyVDAR5vWfBtBAFo+DQxrnjg66ycAI1WY06Cp
+         pkwSniTy2tH1oNLHp6NQjGrDwJsx+Oh+qOOMA81kPAh38o0rmYbKTwrSu4r0rCFTrKlF
+         gkCA==
+X-Gm-Message-State: AOAM530R02MSbGFe+B+KWj4flaEcbbs2eiEOMjCR5q/z8jB0uW7VXmr7
+        yZkdfAW+BbAf8rt5OdtP+q7Izg==
+X-Google-Smtp-Source: ABdhPJxuiB7k3oJfg/cJ8oTZlkYgj+RGZQnKNSV1zCmzNyKWhT6YBLHZprxiz8RDQXnXGJu5GNMQAQ==
+X-Received: by 2002:a17:902:9a02:b0:14f:2d93:92f4 with SMTP id v2-20020a1709029a0200b0014f2d9392f4mr24778661plp.160.1646106921016;
+        Mon, 28 Feb 2022 19:55:21 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id h12-20020a056a00218c00b004c3a2450acasm16045071pfi.147.2022.02.28.19.55.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Feb 2022 19:47:28 -0800 (PST)
-Date:   Mon, 28 Feb 2022 21:47:26 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+        Mon, 28 Feb 2022 19:55:20 -0800 (PST)
+Date:   Tue, 1 Mar 2022 11:55:14 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
 To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
         agross@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, shawn.guo@linaro.org, vkoul@kernel.org,
+        devicetree@vger.kernel.org, vkoul@kernel.org,
         linux-phy@lists.infradead.org, robh+dt@kernel.org,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v2 8/8] dt-bindings: phy: qcom,qmp: Mark
- 'vdda-pll-supply' & 'vdda-phy-supply' as optional
-Message-ID: <Yh2XTjyBICVkn0Jy@yoga>
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH v2 1/8] dt-bindings: phy: qcom,qmp: Mark '#clock-cells'
+ as a 'optional' property
+Message-ID: <20220301035514.GE269879@dragon>
 References: <20220228123019.382037-1-bhupesh.sharma@linaro.org>
- <20220228123019.382037-9-bhupesh.sharma@linaro.org>
+ <20220228123019.382037-2-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220228123019.382037-9-bhupesh.sharma@linaro.org>
+In-Reply-To: <20220228123019.382037-2-bhupesh.sharma@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -75,56 +75,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 28 Feb 06:30 CST 2022, Bhupesh Sharma wrote:
+On Mon, Feb 28, 2022 at 06:00:12PM +0530, Bhupesh Sharma wrote:
+> Since '#clock-cells' is not a required property for qmp-phy(s)
+> (atleast in the '/' node, but is used in 'phy@' subnode),
+> so mark it as an optional property instead.
 
-> Fix the following 'make dtbs_check' warnings, by marking the
-> 'vdda-pll-supply' & 'vdda-phy-supply' properties as 'optional' in
-> 'qcom,qmp-phy' dt-binding:
+My understanding is that '#clock-cells' shouldn't be a property of qmp-phy
+node itself at all (not even optional), but a required property of 'phy'
+subnode.
+
 > 
-> arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dt.yaml:
->  phy-wrapper@88e9000: 'vdda-phy-supply' is a required property
+> This fixes the following 'make dtbs_check' warning(s):
 > 
-> arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami-pdx215.dt.yaml:
->  phy-wrapper@88e9000: 'vdda-pll-supply' is a required property
+> sm8350-microsoft-surface-duo2.dt.yaml: phy@1d87000:
+>   '#clock-cells' is a required property
 > 
-
-These two supplies denotes the power for the bus and the clock of the
-UFS PHY. As such I think we can expect that if pdx215 has functional UFS
-then it has these supplies, and the "bug" is in the dts.
-
-It's probably safe to assume that the two regulators are the same as on
-the MTP. So my suggestion is that you just wire them up in the same way
-as the MTP; and please Cc Konrad.
-
-
-PS. This change is unrelated to the rest of the series, please send such
-changes alone, because it could have been merged independently of the
-rest of the series...
-
-Regards,
-Bjorn
-
+> Also, make the dt-bindings confirm to changes
+> already made via commit 82d61e19fccb ("arm64: dts: qcom: msm8996:
+>  Move '#clock-cells' to QMP PHY child node"), by moving
+> '#clock-cells' property from the '/' node to the 'phy@' subnode.
+> 
 > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Rob Herring <robh@kernel.org>
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
 > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 > ---
->  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 3 ---
->  1 file changed, 3 deletions(-)
+>  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 8 +++-----
+>  1 file changed, 3 insertions(+), 5 deletions(-)
 > 
 > diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> index f8a43acd229a..82b102b7d42c 100644
+> index e417cd667997..48cd6b6171a1 100644
 > --- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
 > +++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-> @@ -436,9 +436,6 @@ allOf:
->            items:
->              - const: phy
->              - const: common
-> -      required:
-> -        - vdda-phy-supply
-> -        - vdda-pll-supply
->    - if:
->        properties:
->          compatible:
+> @@ -63,9 +63,6 @@ properties:
+>        - description: Address and length of PHY's common serdes block.
+>        - description: Address and length of PHY's DP_COM control block.
+>  
+> -  "#clock-cells":
+> -    enum: [ 1, 2 ]
+> -
+>    "#address-cells":
+>      enum: [ 1, 2 ]
+>  
+> @@ -109,11 +106,13 @@ patternProperties:
+>      description:
+>        Each device node of QMP phy is required to have as many child nodes as
+>        the number of lanes the PHY has.
+> +    properties:
+> +      "#clock-cells":
+> +        enum: [ 0, 1, 2 ]
+
+I'm not sure how to specify this is a required property for the child
+node.  Or is this already the case, @Rob?
+
+>  
+>  required:
+>    - compatible
+>    - reg
+> -  - "#clock-cells"
+>    - "#address-cells"
+>    - "#size-cells"
+>    - ranges
+> @@ -461,7 +460,6 @@ examples:
+>      usb_2_qmpphy: phy-wrapper@88eb000 {
+>          compatible = "qcom,sdm845-qmp-usb3-uni-phy";
+>          reg = <0x088eb000 0x18c>;
+> -        #clock-cells = <1>;
+
+These two changes look good to me.
+
+Shawn
+
+>          #address-cells = <1>;
+>          #size-cells = <1>;
+>          ranges = <0x0 0x088eb000 0x2000>;
 > -- 
 > 2.35.1
 > 
