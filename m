@@ -2,349 +2,522 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4980C4C8E91
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 16:07:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B2A6A4C8EC8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 16:18:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235482AbiCAPHw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Mar 2022 10:07:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56816 "EHLO
+        id S235280AbiCAPTc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Mar 2022 10:19:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235578AbiCAPHu (ORCPT
+        with ESMTP id S235563AbiCAPTb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Mar 2022 10:07:50 -0500
-Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 758A0A650E;
-        Tue,  1 Mar 2022 07:07:09 -0800 (PST)
-Received: by mail-oo1-f41.google.com with SMTP id y15-20020a4a650f000000b0031c19e9fe9dso22639471ooc.12;
-        Tue, 01 Mar 2022 07:07:09 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=hDEFHMjiNbMwfNx0jgRe+PVxlh5mka+OlSMk4HZIIWQ=;
-        b=xQiSTvm9flRQa6mPoZKjGO1CldgNb7mYL8ZjzyMiOwqz1AhA5Jtetp0+vTQ8De2PnD
-         Km4Th2U+B3kowUmjmTTqTN1kQJGGvrxXiYIhzRUtXuO5DBXur0+BQIYu4g26FT0mPi6Y
-         en/4AFsJpiGcl+OhsjW+TsNy6rc10g1kYXZt5aXZ5RXJrgcPiPv5OQG0Cwv6FW6WNXxV
-         kzkuxaWAe/482wIZBeZWc9o11LhDn+JbH68Lw6UvLK6GElA5f2UI3/yEUqQ5EJoWncJp
-         ZlePyy/VcNs4UVkOyJzrb2kElzcNbOUYGo802ymw44zqNAZNwpTUkkHoHb5jM3JLxRQN
-         LPDg==
-X-Gm-Message-State: AOAM5318IJUDYmf9Fo0QpvIsygiNIRsvSlB+MTvu1HFXc3OVK0abowEH
-        HV1rid1BvdpQYI0sv0edXw==
-X-Google-Smtp-Source: ABdhPJyKAaGoqiUnCAWLWBAZAADCzcbZzR9c9WPPix81jPcvOPiVOWd8EPhzQc7nZyHJcyfRcFHTGw==
-X-Received: by 2002:a4a:3447:0:b0:31b:f530:bc52 with SMTP id n7-20020a4a3447000000b0031bf530bc52mr12079526oof.74.1646147227896;
-        Tue, 01 Mar 2022 07:07:07 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id v7-20020a4aa507000000b0031c01a4ef37sm6067021ook.32.2022.03.01.07.07.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Mar 2022 07:07:07 -0800 (PST)
-Received: (nullmailer pid 1238363 invoked by uid 1000);
-        Tue, 01 Mar 2022 15:07:06 -0000
-Date:   Tue, 1 Mar 2022 09:07:06 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Subject: Re: [PATCH 1/8] dt-bindings: clock: add QCOM SM8450 camera clock
- bindings
-Message-ID: <Yh42msUo6GN0P5MX@robh.at.kernel.org>
-References: <20220228120258.997027-1-vladimir.zapolskiy@linaro.org>
- <20220228120258.997027-2-vladimir.zapolskiy@linaro.org>
+        Tue, 1 Mar 2022 10:19:31 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25B7A36B59;
+        Tue,  1 Mar 2022 07:18:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1646147930; x=1677683930;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=DpUbeK9rCW5mmGDlaG3iZGepsQWpQLt/Ci1wOJJLfR4=;
+  b=clytCVi4FrVsZ0M99M75VlaeESMKaLjOyD97uQf1m7S3YuU3H0k9okO4
+   FJU9UbPgqZzUVTWGNlSgImBWHqHO3DvUa0ZtD9XbsM6taiTl1uRItBIyT
+   j7MeRJVRkppRO3r2n+sxj423eox7ZWkvxD3Hke/Jv1OauDX47e7UuLFjT
+   M=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 01 Mar 2022 07:18:49 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2022 07:18:49 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Tue, 1 Mar 2022 07:18:48 -0800
+Received: from deesin-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Tue, 1 Mar 2022 07:18:45 -0800
+From:   Deepak Kumar Singh <quic_deesin@quicinc.com>
+To:     <bjorn.andersson@linaro.org>, <quic_clew@quicinc.com>,
+        <mathieu.poirier@linaro.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        Deepak Kumar Singh <quic_deesin@quicinc.com>,
+        Andy Gross <agross@kernel.org>
+Subject: [PATCH V5 1/2] soc: qcom: smem: map only partitions used by local HOST
+Date:   Tue, 1 Mar 2022 20:48:32 +0530
+Message-ID: <1646147913-15791-1-git-send-email-quic_deesin@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220228120258.997027-2-vladimir.zapolskiy@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Feb 28, 2022 at 02:02:57PM +0200, Vladimir Zapolskiy wrote:
-> The change adds device tree bindings for camera clock controller
-> found on SM8450 SoC.
-> 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> ---
->  .../bindings/clock/qcom,camcc-sm8450.yaml     |  87 ++++++++++
->  include/dt-bindings/clock/qcom,camcc-sm8450.h | 159 ++++++++++++++++++
->  2 files changed, 246 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,camcc-sm8450.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,camcc-sm8450.h
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,camcc-sm8450.yaml b/Documentation/devicetree/bindings/clock/qcom,camcc-sm8450.yaml
-> new file mode 100644
-> index 000000000000..835cf7d7a229
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,camcc-sm8450.yaml
-> @@ -0,0 +1,87 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/clock/qcom,camcc-sm8450.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Camera Clock & Reset Controller Binding for SM8450
-> +
-> +maintainers:
-> +  - Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> +
-> +description: |
-> +  Qualcomm camera clock control module which supports the clocks, resets and
-> +  power domains on SM8450.
-> +
-> +  See also dt-bindings/clock/qcom,camcc-sm8450.h
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sm8450-camcc
-> +
-> +  clocks:
-> +    items:
-> +      - description: Camera AHB clock from GCC
-> +      - description: Board XO source
-> +      - description: Board active XO source
-> +      - description: Sleep clock source
-> +
-> +  clock-names:
-> +    items:
-> +      - const: iface
-> +      - const: bi_tcxo
-> +      - const: bi_tcxo_ao
-> +      - const: sleep_clk
-> +
-> +  power-domains:
-> +    description:
-> +      A phandle and PM domain specifier for the MMCX power domain.
+SMEM driver is IO mapping complete region and CPU is doing a speculative
+read into a partition where local HOST does not have permission resulting
+in a NOC error.
 
-Need to define how many (maxItems: 1).
+Map only those partitions which are accessibly to local HOST.
 
-> +
-> +  required-opps:
-> +    description:
-> +      A phandle to an OPP node describing required MMCX performance point.
-> +
-> +  '#clock-cells':
-> +    const: 1
-> +
-> +  '#reset-cells':
-> +    const: 1
-> +
-> +  '#power-domain-cells':
-> +    const: 1
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - power-domains
-> +  - required-opps
-> +  - '#clock-cells'
-> +  - '#reset-cells'
-> +  - '#power-domain-cells'
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-sm8450.h>
-> +    #include <dt-bindings/clock/qcom,rpmh.h>
-> +    clock-controller@ade0000 {
-> +      compatible = "qcom,sm8450-camcc";
-> +      reg = <0 0xade0000 0 0x20000>;
-> +      clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-> +               <&rpmhcc RPMH_CXO_CLK>,
-> +               <&rpmhcc RPMH_CXO_CLK_A>,
-> +               <&sleep_clk>;
-> +      clock-names = "iface", bi_tcxo", "bi_tcxo_ao", "sleep_clk";
-> +      power-domains = <&rpmhpd SM8450_MMCX>;
-> +      required-opps = <&rpmhpd_opp_low_svs>;
-> +      #clock-cells = <1>;
-> +      #reset-cells = <1>;
-> +      #power-domain-cells = <1>;
-> +    };
-> +...
-> diff --git a/include/dt-bindings/clock/qcom,camcc-sm8450.h b/include/dt-bindings/clock/qcom,camcc-sm8450.h
-> new file mode 100644
-> index 000000000000..ad9c0af79f15
-> --- /dev/null
-> +++ b/include/dt-bindings/clock/qcom,camcc-sm8450.h
-> @@ -0,0 +1,159 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
+Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+---
+ drivers/soc/qcom/smem.c | 226 +++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 164 insertions(+), 62 deletions(-)
 
-Dual license please.
+diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+index e2057d8..2dde9b6 100644
+--- a/drivers/soc/qcom/smem.c
++++ b/drivers/soc/qcom/smem.c
+@@ -195,6 +195,20 @@ struct smem_partition_header {
+ 	__le32 reserved[3];
+ };
+ 
++/**
++ * struct smem_partition - describes smem partition
++ * @virt_base:	starting virtual address of partition
++ * @phys_base:	starting physical address of partition
++ * @cacheline:	alignment for "cached" entries
++ * @size:	size of partition
++ */
++struct smem_partition {
++	void __iomem *virt_base;
++	phys_addr_t phys_base;
++	size_t cacheline;
++	size_t size;
++};
++
+ static const u8 SMEM_PART_MAGIC[] = { 0x24, 0x50, 0x52, 0x54 };
+ 
+ /**
+@@ -250,11 +264,9 @@ struct smem_region {
+  * struct qcom_smem - device data for the smem device
+  * @dev:	device pointer
+  * @hwlock:	reference to a hwspinlock
+- * @global_partition:	pointer to global partition when in use
+- * @global_cacheline:	cacheline size for global partition
+- * @partitions:	list of pointers to partitions affecting the current
+- *		processor/host
+- * @cacheline:	list of cacheline sizes for each host
++ * @ptable: virtual base of partition table
++ * @global_partition: describes for global partition when in use
++ * @partitions: list of partitions of current processor/host
+  * @item_count: max accepted item number
+  * @socinfo:	platform device pointer
+  * @num_regions: number of @regions
+@@ -265,12 +277,11 @@ struct qcom_smem {
+ 
+ 	struct hwspinlock *hwlock;
+ 
+-	struct smem_partition_header *global_partition;
+-	size_t global_cacheline;
+-	struct smem_partition_header *partitions[SMEM_HOST_COUNT];
+-	size_t cacheline[SMEM_HOST_COUNT];
+ 	u32 item_count;
+ 	struct platform_device *socinfo;
++	struct smem_ptable *ptable;
++	struct smem_partition global_partition;
++	struct smem_partition partitions[SMEM_HOST_COUNT];
+ 
+ 	unsigned num_regions;
+ 	struct smem_region regions[];
+@@ -348,14 +359,17 @@ static struct qcom_smem *__smem;
+ #define HWSPINLOCK_TIMEOUT	1000
+ 
+ static int qcom_smem_alloc_private(struct qcom_smem *smem,
+-				   struct smem_partition_header *phdr,
++				   struct smem_partition *part,
+ 				   unsigned item,
+ 				   size_t size)
+ {
+ 	struct smem_private_entry *hdr, *end;
++	struct smem_partition_header *phdr;
+ 	size_t alloc_size;
+ 	void *cached;
+ 
++	phdr = (struct smem_partition_header __force *)part->virt_base;
++
+ 	hdr = phdr_to_first_uncached_entry(phdr);
+ 	end = phdr_to_last_uncached_entry(phdr);
+ 	cached = phdr_to_last_cached_entry(phdr);
+@@ -442,7 +456,7 @@ static int qcom_smem_alloc_global(struct qcom_smem *smem,
+  */
+ int qcom_smem_alloc(unsigned host, unsigned item, size_t size)
+ {
+-	struct smem_partition_header *phdr;
++	struct smem_partition *part;
+ 	unsigned long flags;
+ 	int ret;
+ 
+@@ -464,12 +478,12 @@ int qcom_smem_alloc(unsigned host, unsigned item, size_t size)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (host < SMEM_HOST_COUNT && __smem->partitions[host]) {
+-		phdr = __smem->partitions[host];
+-		ret = qcom_smem_alloc_private(__smem, phdr, item, size);
+-	} else if (__smem->global_partition) {
+-		phdr = __smem->global_partition;
+-		ret = qcom_smem_alloc_private(__smem, phdr, item, size);
++	if (host < SMEM_HOST_COUNT && __smem->partitions[host].virt_base) {
++		part = &__smem->partitions[host];
++		ret = qcom_smem_alloc_private(__smem, part, item, size);
++	} else if (__smem->global_partition.virt_base) {
++		part = &__smem->global_partition;
++		ret = qcom_smem_alloc_private(__smem, part, item, size);
+ 	} else {
+ 		ret = qcom_smem_alloc_global(__smem, item, size);
+ 	}
+@@ -511,12 +525,14 @@ static void *qcom_smem_get_global(struct qcom_smem *smem,
+ }
+ 
+ static void *qcom_smem_get_private(struct qcom_smem *smem,
+-				   struct smem_partition_header *phdr,
+-				   size_t cacheline,
++				   struct smem_partition *part,
+ 				   unsigned item,
+ 				   size_t *size)
+ {
+ 	struct smem_private_entry *e, *end;
++	struct smem_partition_header *phdr;
++
++	phdr = (struct smem_partition_header __force *)part->virt_base;
+ 
+ 	e = phdr_to_first_uncached_entry(phdr);
+ 	end = phdr_to_last_uncached_entry(phdr);
+@@ -538,7 +554,7 @@ static void *qcom_smem_get_private(struct qcom_smem *smem,
+ 
+ 	/* Item was not found in the uncached list, search the cached list */
+ 
+-	e = phdr_to_first_cached_entry(phdr, cacheline);
++	e = phdr_to_first_cached_entry(phdr, part->cacheline);
+ 	end = phdr_to_last_cached_entry(phdr);
+ 
+ 	while (e > end) {
+@@ -553,7 +569,7 @@ static void *qcom_smem_get_private(struct qcom_smem *smem,
+ 			return cached_entry_to_item(e);
+ 		}
+ 
+-		e = cached_entry_next(e, cacheline);
++		e = cached_entry_next(e, part->cacheline);
+ 	}
+ 
+ 	return ERR_PTR(-ENOENT);
+@@ -576,9 +592,8 @@ static void *qcom_smem_get_private(struct qcom_smem *smem,
+  */
+ void *qcom_smem_get(unsigned host, unsigned item, size_t *size)
+ {
+-	struct smem_partition_header *phdr;
++	struct smem_partition *part;
+ 	unsigned long flags;
+-	size_t cacheln;
+ 	int ret;
+ 	void *ptr = ERR_PTR(-EPROBE_DEFER);
+ 
+@@ -594,14 +609,12 @@ void *qcom_smem_get(unsigned host, unsigned item, size_t *size)
+ 	if (ret)
+ 		return ERR_PTR(ret);
+ 
+-	if (host < SMEM_HOST_COUNT && __smem->partitions[host]) {
+-		phdr = __smem->partitions[host];
+-		cacheln = __smem->cacheline[host];
+-		ptr = qcom_smem_get_private(__smem, phdr, cacheln, item, size);
+-	} else if (__smem->global_partition) {
+-		phdr = __smem->global_partition;
+-		cacheln = __smem->global_cacheline;
+-		ptr = qcom_smem_get_private(__smem, phdr, cacheln, item, size);
++	if (host < SMEM_HOST_COUNT && __smem->partitions[host].virt_base) {
++		part = &__smem->partitions[host];
++		ptr = qcom_smem_get_private(__smem, part, item, size);
++	} else if (__smem->global_partition.virt_base) {
++		part = &__smem->global_partition;
++		ptr = qcom_smem_get_private(__smem, part, item, size);
+ 	} else {
+ 		ptr = qcom_smem_get_global(__smem, item, size);
+ 	}
+@@ -622,6 +635,7 @@ EXPORT_SYMBOL(qcom_smem_get);
+  */
+ int qcom_smem_get_free_space(unsigned host)
+ {
++	struct smem_partition *part;
+ 	struct smem_partition_header *phdr;
+ 	struct smem_header *header;
+ 	unsigned ret;
+@@ -629,12 +643,14 @@ int qcom_smem_get_free_space(unsigned host)
+ 	if (!__smem)
+ 		return -EPROBE_DEFER;
+ 
+-	if (host < SMEM_HOST_COUNT && __smem->partitions[host]) {
+-		phdr = __smem->partitions[host];
++	if (host < SMEM_HOST_COUNT && __smem->partitions[host].virt_base) {
++		part = &__smem->partitions[host];
++		phdr = part->virt_base;
+ 		ret = le32_to_cpu(phdr->offset_free_cached) -
+ 		      le32_to_cpu(phdr->offset_free_uncached);
+-	} else if (__smem->global_partition) {
+-		phdr = __smem->global_partition;
++	} else if (__smem->global_partition.virt_base) {
++		part = &__smem->global_partition;
++		phdr = part->virt_base;
+ 		ret = le32_to_cpu(phdr->offset_free_cached) -
+ 		      le32_to_cpu(phdr->offset_free_uncached);
+ 	} else {
+@@ -646,6 +662,11 @@ int qcom_smem_get_free_space(unsigned host)
+ }
+ EXPORT_SYMBOL(qcom_smem_get_free_space);
+ 
++static bool addr_in_range(void __iomem *base, size_t size, void *addr)
++{
++	return base && (addr >= base && addr < base + size);
++}
++
+ /**
+  * qcom_smem_virt_to_phys() - return the physical address associated
+  * with an smem item pointer (previously returned by qcom_smem_get()
+@@ -655,17 +676,36 @@ EXPORT_SYMBOL(qcom_smem_get_free_space);
+  */
+ phys_addr_t qcom_smem_virt_to_phys(void *p)
+ {
+-	unsigned i;
++	struct smem_partition *part;
++	struct smem_region *area;
++	u64 offset;
++	u32 i;
++
++	for (i = 0; i < SMEM_HOST_COUNT; i++) {
++		part = &__smem->partitions[i];
++
++		if (addr_in_range(part->virt_base, part->size, p)) {
++			offset = p - part->virt_base;
++
++			return (phys_addr_t)part->phys_base + offset;
++		}
++	}
++
++	part = &__smem->global_partition;
++
++	if (addr_in_range(part->virt_base, part->size, p)) {
++		offset = p - part->virt_base;
++
++		return (phys_addr_t)part->phys_base + offset;
++	}
+ 
+ 	for (i = 0; i < __smem->num_regions; i++) {
+-		struct smem_region *region = &__smem->regions[i];
++		area = &__smem->regions[i];
+ 
+-		if (p < region->virt_base)
+-			continue;
+-		if (p < region->virt_base + region->size) {
+-			u64 offset = p - region->virt_base;
++		if (addr_in_range(area->virt_base, area->size, p)) {
++			offset = p - area->virt_base;
+ 
+-			return region->aux_base + offset;
++			return (phys_addr_t)area->aux_base + offset;
+ 		}
+ 	}
+ 
+@@ -689,7 +729,7 @@ static struct smem_ptable *qcom_smem_get_ptable(struct qcom_smem *smem)
+ 	struct smem_ptable *ptable;
+ 	u32 version;
+ 
+-	ptable = smem->regions[0].virt_base + smem->regions[0].size - SZ_4K;
++	ptable = smem->ptable;
+ 	if (memcmp(ptable->magic, SMEM_PTABLE_MAGIC, sizeof(ptable->magic)))
+ 		return ERR_PTR(-ENOENT);
+ 
+@@ -728,9 +768,14 @@ qcom_smem_partition_header(struct qcom_smem *smem,
+ 		struct smem_ptable_entry *entry, u16 host0, u16 host1)
+ {
+ 	struct smem_partition_header *header;
++	u32 phys_addr;
+ 	u32 size;
+ 
+-	header = smem->regions[0].virt_base + le32_to_cpu(entry->offset);
++	phys_addr = smem->regions[0].aux_base + le32_to_cpu(entry->offset);
++	header = devm_ioremap_wc(smem->dev, phys_addr, le32_to_cpu(entry->size));
++
++	if (!header)
++		return NULL;
+ 
+ 	if (memcmp(header->magic, SMEM_PART_MAGIC, sizeof(header->magic))) {
+ 		dev_err(smem->dev, "bad partition magic %4ph\n", header->magic);
+@@ -772,7 +817,7 @@ static int qcom_smem_set_global_partition(struct qcom_smem *smem)
+ 	bool found = false;
+ 	int i;
+ 
+-	if (smem->global_partition) {
++	if (smem->global_partition.virt_base) {
+ 		dev_err(smem->dev, "Already found the global partition\n");
+ 		return -EINVAL;
+ 	}
+@@ -807,8 +852,11 @@ static int qcom_smem_set_global_partition(struct qcom_smem *smem)
+ 	if (!header)
+ 		return -EINVAL;
+ 
+-	smem->global_partition = header;
+-	smem->global_cacheline = le32_to_cpu(entry->cacheline);
++	smem->global_partition.virt_base = (void __iomem *)header;
++	smem->global_partition.phys_base = smem->regions[0].aux_base +
++								le32_to_cpu(entry->offset);
++	smem->global_partition.size = le32_to_cpu(entry->size);
++	smem->global_partition.cacheline = le32_to_cpu(entry->cacheline);
+ 
+ 	return 0;
+ }
+@@ -848,7 +896,7 @@ qcom_smem_enumerate_partitions(struct qcom_smem *smem, u16 local_host)
+ 			return -EINVAL;
+ 		}
+ 
+-		if (smem->partitions[remote_host]) {
++		if (smem->partitions[remote_host].virt_base) {
+ 			dev_err(smem->dev, "duplicate host %hu\n", remote_host);
+ 			return -EINVAL;
+ 		}
+@@ -857,13 +905,47 @@ qcom_smem_enumerate_partitions(struct qcom_smem *smem, u16 local_host)
+ 		if (!header)
+ 			return -EINVAL;
+ 
+-		smem->partitions[remote_host] = header;
+-		smem->cacheline[remote_host] = le32_to_cpu(entry->cacheline);
++		smem->partitions[remote_host].virt_base = (void __iomem *)header;
++		smem->partitions[remote_host].phys_base = smem->regions[0].aux_base +
++										le32_to_cpu(entry->offset);
++		smem->partitions[remote_host].size = le32_to_cpu(entry->size);
++		smem->partitions[remote_host].cacheline = le32_to_cpu(entry->cacheline);
+ 	}
+ 
+ 	return 0;
+ }
+ 
++static int qcom_smem_map_toc(struct qcom_smem *smem, struct smem_region *region)
++{
++	u32 ptable_start;
++
++	/* map starting 4K for smem header */
++	region->virt_base = devm_ioremap_wc(smem->dev, region->aux_base, SZ_4K);
++	ptable_start = region->aux_base + region->size - SZ_4K;
++	/* map last 4k for toc */
++	smem->ptable = devm_ioremap_wc(smem->dev, ptable_start, SZ_4K);
++
++	if (!region->virt_base || !smem->ptable)
++		return -ENOMEM;
++
++	return 0;
++}
++
++static int qcom_smem_map_global(struct qcom_smem *smem, u32 size)
++{
++	u32 phys_addr;
++
++	phys_addr = smem->regions[0].aux_base;
++
++	smem->regions[0].size = size;
++	smem->regions[0].virt_base = devm_ioremap_wc(smem->dev, phys_addr, size);
++
++	if (!smem->regions[0].virt_base)
++		return -ENOMEM;
++
++	return 0;
++}
++
+ static int qcom_smem_resolve_mem(struct qcom_smem *smem, const char *name,
+ 				 struct smem_region *region)
+ {
+@@ -894,10 +976,12 @@ static int qcom_smem_probe(struct platform_device *pdev)
+ 	struct smem_header *header;
+ 	struct reserved_mem *rmem;
+ 	struct qcom_smem *smem;
++	unsigned long flags;
+ 	size_t array_size;
+ 	int num_regions;
+ 	int hwlock_id;
+ 	u32 version;
++	u32 size;
+ 	int ret;
+ 	int i;
+ 
+@@ -933,7 +1017,12 @@ static int qcom_smem_probe(struct platform_device *pdev)
+ 			return ret;
+ 	}
+ 
+-	for (i = 0; i < num_regions; i++) {
++
++	ret = qcom_smem_map_toc(smem, &smem->regions[0]);
++ 	if (ret)
++ 		return ret;
++
++	for (i = 1; i < num_regions; i++) {
+ 		smem->regions[i].virt_base = devm_ioremap_wc(&pdev->dev,
+ 							     smem->regions[i].aux_base,
+ 							     smem->regions[i].size);
+@@ -950,7 +1039,30 @@ static int qcom_smem_probe(struct platform_device *pdev)
+ 		return -EINVAL;
+ 	}
+ 
++	hwlock_id = of_hwspin_lock_get_id(pdev->dev.of_node, 0);
++	if (hwlock_id < 0) {
++		if (hwlock_id != -EPROBE_DEFER)
++			dev_err(&pdev->dev, "failed to retrieve hwlock\n");
++		return hwlock_id;
++	}
++
++	smem->hwlock = hwspin_lock_request_specific(hwlock_id);
++	if (!smem->hwlock)
++		return -ENXIO;
++
++	ret = hwspin_lock_timeout_irqsave(smem->hwlock, HWSPINLOCK_TIMEOUT, &flags);
++	if (ret)
++		return ret;
++	size = readl_relaxed(&header->available) + readl_relaxed(&header->free_offset);
++	hwspin_unlock_irqrestore(smem->hwlock, &flags);
++
+ 	version = qcom_smem_get_sbl_version(smem);
++	/*
++	 * smem header mapping is required only in heap version scheme, so unmap
++	 * it here. It will be remapped in qcom_smem_map_global() when whole
++	 * partition is mapped again.
++	 */
++	devm_iounmap(smem->dev, smem->regions[0].virt_base);
+ 	switch (version >> 16) {
+ 	case SMEM_GLOBAL_PART_VERSION:
+ 		ret = qcom_smem_set_global_partition(smem);
+@@ -959,6 +1071,7 @@ static int qcom_smem_probe(struct platform_device *pdev)
+ 		smem->item_count = qcom_smem_get_item_count(smem);
+ 		break;
+ 	case SMEM_GLOBAL_HEAP_VERSION:
++		qcom_smem_map_global(smem, size);
+ 		smem->item_count = SMEM_ITEM_COUNT;
+ 		break;
+ 	default:
+@@ -971,17 +1084,6 @@ static int qcom_smem_probe(struct platform_device *pdev)
+ 	if (ret < 0 && ret != -ENOENT)
+ 		return ret;
+ 
+-	hwlock_id = of_hwspin_lock_get_id(pdev->dev.of_node, 0);
+-	if (hwlock_id < 0) {
+-		if (hwlock_id != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "failed to retrieve hwlock\n");
+-		return hwlock_id;
+-	}
+-
+-	smem->hwlock = hwspin_lock_request_specific(hwlock_id);
+-	if (!smem->hwlock)
+-		return -ENXIO;
+-
+ 	__smem = smem;
+ 
+ 	smem->socinfo = platform_device_register_data(&pdev->dev, "qcom-socinfo",
+-- 
+2.7.4
 
-> +/*
-> + * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#ifndef _DT_BINDINGS_CLK_QCOM_CAM_CC_WAIPIO_H
-> +#define _DT_BINDINGS_CLK_QCOM_CAM_CC_WAIPIO_H
-> +
-> +/* CAM_CC clocks */
-> +#define CAM_CC_BPS_AHB_CLK					0
-> +#define CAM_CC_BPS_CLK						1
-> +#define CAM_CC_BPS_CLK_SRC					2
-> +#define CAM_CC_BPS_FAST_AHB_CLK					3
-> +#define CAM_CC_CAMNOC_AXI_CLK					4
-> +#define CAM_CC_CAMNOC_AXI_CLK_SRC				5
-> +#define CAM_CC_CAMNOC_DCD_XO_CLK				6
-> +#define CAM_CC_CCI_0_CLK					7
-> +#define CAM_CC_CCI_0_CLK_SRC					8
-> +#define CAM_CC_CCI_1_CLK					9
-> +#define CAM_CC_CCI_1_CLK_SRC					10
-> +#define CAM_CC_CORE_AHB_CLK					11
-> +#define CAM_CC_CPAS_AHB_CLK					12
-> +#define CAM_CC_CPAS_BPS_CLK					13
-> +#define CAM_CC_CPAS_FAST_AHB_CLK				14
-> +#define CAM_CC_CPAS_IFE_0_CLK					15
-> +#define CAM_CC_CPAS_IFE_1_CLK					16
-> +#define CAM_CC_CPAS_IFE_2_CLK					17
-> +#define CAM_CC_CPAS_IFE_LITE_CLK				18
-> +#define CAM_CC_CPAS_IPE_NPS_CLK					19
-> +#define CAM_CC_CPAS_SBI_CLK					20
-> +#define CAM_CC_CPAS_SFE_0_CLK					21
-> +#define CAM_CC_CPAS_SFE_1_CLK					22
-> +#define CAM_CC_CPHY_RX_CLK_SRC					23
-> +#define CAM_CC_CSI0PHYTIMER_CLK					24
-> +#define CAM_CC_CSI0PHYTIMER_CLK_SRC				25
-> +#define CAM_CC_CSI1PHYTIMER_CLK					26
-> +#define CAM_CC_CSI1PHYTIMER_CLK_SRC				27
-> +#define CAM_CC_CSI2PHYTIMER_CLK					28
-> +#define CAM_CC_CSI2PHYTIMER_CLK_SRC				29
-> +#define CAM_CC_CSI3PHYTIMER_CLK					30
-> +#define CAM_CC_CSI3PHYTIMER_CLK_SRC				31
-> +#define CAM_CC_CSI4PHYTIMER_CLK					32
-> +#define CAM_CC_CSI4PHYTIMER_CLK_SRC				33
-> +#define CAM_CC_CSI5PHYTIMER_CLK					34
-> +#define CAM_CC_CSI5PHYTIMER_CLK_SRC				35
-> +#define CAM_CC_CSID_CLK						36
-> +#define CAM_CC_CSID_CLK_SRC					37
-> +#define CAM_CC_CSID_CSIPHY_RX_CLK				38
-> +#define CAM_CC_CSIPHY0_CLK					39
-> +#define CAM_CC_CSIPHY1_CLK					40
-> +#define CAM_CC_CSIPHY2_CLK					41
-> +#define CAM_CC_CSIPHY3_CLK					42
-> +#define CAM_CC_CSIPHY4_CLK					43
-> +#define CAM_CC_CSIPHY5_CLK					44
-> +#define CAM_CC_FAST_AHB_CLK_SRC					45
-> +#define CAM_CC_GDSC_CLK						46
-> +#define CAM_CC_ICP_AHB_CLK					47
-> +#define CAM_CC_ICP_CLK						48
-> +#define CAM_CC_ICP_CLK_SRC					49
-> +#define CAM_CC_IFE_0_CLK					50
-> +#define CAM_CC_IFE_0_CLK_SRC					51
-> +#define CAM_CC_IFE_0_DSP_CLK					52
-> +#define CAM_CC_IFE_0_FAST_AHB_CLK				53
-> +#define CAM_CC_IFE_1_CLK					54
-> +#define CAM_CC_IFE_1_CLK_SRC					55
-> +#define CAM_CC_IFE_1_DSP_CLK					56
-> +#define CAM_CC_IFE_1_FAST_AHB_CLK				57
-> +#define CAM_CC_IFE_2_CLK					58
-> +#define CAM_CC_IFE_2_CLK_SRC					59
-> +#define CAM_CC_IFE_2_DSP_CLK					60
-> +#define CAM_CC_IFE_2_FAST_AHB_CLK				61
-> +#define CAM_CC_IFE_LITE_AHB_CLK					62
-> +#define CAM_CC_IFE_LITE_CLK					63
-> +#define CAM_CC_IFE_LITE_CLK_SRC					64
-> +#define CAM_CC_IFE_LITE_CPHY_RX_CLK				65
-> +#define CAM_CC_IFE_LITE_CSID_CLK				66
-> +#define CAM_CC_IFE_LITE_CSID_CLK_SRC				67
-> +#define CAM_CC_IPE_NPS_AHB_CLK					68
-> +#define CAM_CC_IPE_NPS_CLK					69
-> +#define CAM_CC_IPE_NPS_CLK_SRC					70
-> +#define CAM_CC_IPE_NPS_FAST_AHB_CLK				71
-> +#define CAM_CC_IPE_PPS_CLK					72
-> +#define CAM_CC_IPE_PPS_FAST_AHB_CLK				73
-> +#define CAM_CC_JPEG_CLK						74
-> +#define CAM_CC_JPEG_CLK_SRC					75
-> +#define CAM_CC_MCLK0_CLK					76
-> +#define CAM_CC_MCLK0_CLK_SRC					77
-> +#define CAM_CC_MCLK1_CLK					78
-> +#define CAM_CC_MCLK1_CLK_SRC					79
-> +#define CAM_CC_MCLK2_CLK					80
-> +#define CAM_CC_MCLK2_CLK_SRC					81
-> +#define CAM_CC_MCLK3_CLK					82
-> +#define CAM_CC_MCLK3_CLK_SRC					83
-> +#define CAM_CC_MCLK4_CLK					84
-> +#define CAM_CC_MCLK4_CLK_SRC					85
-> +#define CAM_CC_MCLK5_CLK					86
-> +#define CAM_CC_MCLK5_CLK_SRC					87
-> +#define CAM_CC_MCLK6_CLK					88
-> +#define CAM_CC_MCLK6_CLK_SRC					89
-> +#define CAM_CC_MCLK7_CLK					90
-> +#define CAM_CC_MCLK7_CLK_SRC					91
-> +#define CAM_CC_PLL0						92
-> +#define CAM_CC_PLL0_OUT_EVEN					93
-> +#define CAM_CC_PLL0_OUT_ODD					94
-> +#define CAM_CC_PLL1						95
-> +#define CAM_CC_PLL1_OUT_EVEN					96
-> +#define CAM_CC_PLL2						97
-> +#define CAM_CC_PLL3						98
-> +#define CAM_CC_PLL3_OUT_EVEN					99
-> +#define CAM_CC_PLL4						100
-> +#define CAM_CC_PLL4_OUT_EVEN					101
-> +#define CAM_CC_PLL5						102
-> +#define CAM_CC_PLL5_OUT_EVEN					103
-> +#define CAM_CC_PLL6						104
-> +#define CAM_CC_PLL6_OUT_EVEN					105
-> +#define CAM_CC_PLL7						106
-> +#define CAM_CC_PLL7_OUT_EVEN					107
-> +#define CAM_CC_PLL8						108
-> +#define CAM_CC_PLL8_OUT_EVEN					109
-> +#define CAM_CC_QDSS_DEBUG_CLK					110
-> +#define CAM_CC_QDSS_DEBUG_CLK_SRC				111
-> +#define CAM_CC_QDSS_DEBUG_XO_CLK				112
-> +#define CAM_CC_SBI_AHB_CLK					113
-> +#define CAM_CC_SBI_CLK						114
-> +#define CAM_CC_SFE_0_CLK					115
-> +#define CAM_CC_SFE_0_CLK_SRC					116
-> +#define CAM_CC_SFE_0_FAST_AHB_CLK				117
-> +#define CAM_CC_SFE_1_CLK					118
-> +#define CAM_CC_SFE_1_CLK_SRC					119
-> +#define CAM_CC_SFE_1_FAST_AHB_CLK				120
-> +#define CAM_CC_SLEEP_CLK					121
-> +#define CAM_CC_SLEEP_CLK_SRC					122
-> +#define CAM_CC_SLOW_AHB_CLK_SRC					123
-> +#define CAM_CC_XO_CLK_SRC					124
-> +
-> +/* CAM_CC resets */
-> +#define CAM_CC_BPS_BCR						0
-> +#define CAM_CC_ICP_BCR						1
-> +#define CAM_CC_IFE_0_BCR					2
-> +#define CAM_CC_IFE_1_BCR					3
-> +#define CAM_CC_IFE_2_BCR					4
-> +#define CAM_CC_IPE_0_BCR					5
-> +#define CAM_CC_QDSS_DEBUG_BCR					6
-> +#define CAM_CC_SBI_BCR						7
-> +#define CAM_CC_SFE_0_BCR					8
-> +#define CAM_CC_SFE_1_BCR					9
-> +
-> +/* CAM_CC GDSCRs */
-> +#define BPS_GDSC		0
-> +#define IPE_0_GDSC		1
-> +#define SBI_GDSC		2
-> +#define IFE_0_GDSC		3
-> +#define IFE_1_GDSC		4
-> +#define IFE_2_GDSC		5
-> +#define SFE_0_GDSC		6
-> +#define SFE_1_GDSC		7
-> +#define TITAN_TOP_GDSC		8
-> +
-> +#endif
-> -- 
-> 2.33.0
-> 
-> 
