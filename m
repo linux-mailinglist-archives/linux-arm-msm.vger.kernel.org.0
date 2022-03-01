@@ -2,104 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 61C2B4C917E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 18:28:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D5FBF4C91A3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 18:35:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236431AbiCAR3K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Mar 2022 12:29:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44442 "EHLO
+        id S236068AbiCARgW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Mar 2022 12:36:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234802AbiCAR3J (ORCPT
+        with ESMTP id S235879AbiCARgV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Mar 2022 12:29:09 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E32F50E2B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Mar 2022 09:28:27 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id k29-20020a05600c1c9d00b003817fdc0f00so1831698wms.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Mar 2022 09:28:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Y86hBfPWj9E4aTo+XMBrAu6Y5p4SQMawkPD4Q/SuKPY=;
-        b=ifR445Ptk0kZIwyK/iR5LauUeexT4h+Xm5fWIS9UfHsJTwIXI+TBUH0b1B1nklV58Q
-         e3posB9tDmWAuXNqOByYa8OEIeuEgFpyIkDoWKkxe1RAiCnFE6ZEzQVCpMvS62fGzNFV
-         nWcw5JV2lmoD9jxvmDMFuNVsgy/NwYWUQ6a0I1zB2e5jSr3/JFEIp9xW/NRIDhtT+/y6
-         uvAB7/5ZICC2qcmaHb2EAlpVYU+L8My5syB7aELi6iajmzjea09g2vNncJq3GY6hv/nP
-         g2d17hu4ZYUIRYCXpyuRUhAY/Kr9r3k7MyrtDEVfLOZZZFWPJ239r6w7DpTzLNolCHHw
-         A62A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=Y86hBfPWj9E4aTo+XMBrAu6Y5p4SQMawkPD4Q/SuKPY=;
-        b=7GgiDj1S6AOpCYINI315CzzpDPbdQrTV11uzTsJED0ArjAFpKa5DrvqcXGCBWDFYsf
-         EHokG3vOVxzAOeARiDcH5bNhgKwZzONtNe3BNrLsz/K1Jms5loyT8V+gjRdZ4K4WbfWy
-         I+WPciid499Ngf65GplroBEkpEwqXR+97zs99DGOptVFqPEYfDCuUdmsBuE7zbK80fH0
-         ZYxh9SYBM2HfnJYJjQiE/Lr5N83SVMBzTMfjjDZvb3+mMdjgx4tHjA0NEdIWWsVNxJzn
-         iYeIX9098trvUE2iWdW2eut+oPKfqAL2LlzNh8hgm2bexI480j/PVB5Iz9Nwl2fUxvAT
-         v0Mw==
-X-Gm-Message-State: AOAM533hMcG97+FrJfaz6Bs63f4tKO8E3j72xMeZEVS3RDzQCTQDRdQM
-        FMt1ubeWsJw09lifozKH598piA==
-X-Google-Smtp-Source: ABdhPJyP4zzjkBPeDrhk1IU4HHA4Z4mVRSeyWw7DiZ4BmjKx+FbF6/CkwhxttMvqrC0XO+mqNoqKvQ==
-X-Received: by 2002:a05:600c:a4b:b0:37b:ea2b:5583 with SMTP id c11-20020a05600c0a4b00b0037bea2b5583mr18173339wmq.139.1646155705687;
-        Tue, 01 Mar 2022 09:28:25 -0800 (PST)
-Received: from [192.168.86.34] (cpc90716-aztw32-2-0-cust825.18-1.cable.virginm.net. [86.26.103.58])
-        by smtp.googlemail.com with ESMTPSA id c4-20020adfed84000000b001e5b8d5b8dasm20457807wro.36.2022.03.01.09.28.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Mar 2022 09:28:24 -0800 (PST)
-Message-ID: <5f481315-021c-39d6-8c6c-91918851ab13@linaro.org>
-Date:   Tue, 1 Mar 2022 17:28:22 +0000
+        Tue, 1 Mar 2022 12:36:21 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 956D62BB1F;
+        Tue,  1 Mar 2022 09:35:40 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 4CC8BB81BE8;
+        Tue,  1 Mar 2022 17:35:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95E0C340F1;
+        Tue,  1 Mar 2022 17:35:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1646156137;
+        bh=PEiejDSUY1k4MnU/4nOtk9UWonjtqT6nqjDBDSe2n5I=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=p6QPTB1v+6ZwauZfmHyIJCwmYZEqj2Fidy4BmgQEh6J1gGUSlSPsVovYasy2RYLwQ
+         kvEwemgoM4fWt4jTM/cfueD++vhS2s7N5fHOBPUP7iFZlXCb+tfhUILmHG/KOMlGzW
+         PMI1UGdtrNliatVqv/0It8yGUxOCyrjLu7GeGWEgEXfcolHIB8JVK8LjcARo5QTbhf
+         awzH1WG5fIWCnMKv8r1INFkfGecyc7t55Rvhcdt1OOS/jsNwiJB6Yaoy1tORm55ftn
+         6m8WUn0XKnhXYl3YH/tng5sdWfJZ+RDYC6P38L3bhxS3U0KDRCBCiMP4NABCOPyeJW
+         kWw05SmBNjwnA==
+Received: by mail-ed1-f43.google.com with SMTP id x5so22961627edd.11;
+        Tue, 01 Mar 2022 09:35:37 -0800 (PST)
+X-Gm-Message-State: AOAM533fSqJi12+w7RoL6JBozJhFmLM/teMDIxPMGRknZ4r4kCr9JkmG
+        DJw/4d0KuszlTfkN9nUmwn15IiO2SVGGYI9wZA==
+X-Google-Smtp-Source: ABdhPJwhTYbzmnAgzwsjhoCIYrCWTDzQdNRDTWtDhUMgy4u2nP1CxHhhVU7hF4VFU3HyG9xqHf9dn54nSnSViLNBIYU=
+X-Received: by 2002:aa7:d415:0:b0:410:a0fa:dc40 with SMTP id
+ z21-20020aa7d415000000b00410a0fadc40mr25204137edq.46.1646156136108; Tue, 01
+ Mar 2022 09:35:36 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v3 10/11] slimbus: qcom-ngd: Fix kfree() of static memory
- on setting driver_override
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Stuart Yoder <stuyoder@gmail.com>,
-        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
-        Abel Vesa <abel.vesa@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        "K. Y. Srinivasan" <kys@microsoft.com>,
-        Haiyang Zhang <haiyangz@microsoft.com>,
-        Stephen Hemminger <sthemmin@microsoft.com>,
-        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Vineeth Vijayan <vneethv@linux.ibm.com>,
-        Peter Oberparleiter <oberpar@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Andy Gross <agross@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        "Michael S. Tsirkin" <mst@redhat.com>,
-        Jason Wang <jasowang@redhat.com>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, NXP Linux Team <linux-imx@nxp.com>,
-        linux-arm-kernel@lists.infradead.org, linux-hyperv@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Rasmus Villemoes <linux@rasmusvillemoes.dk>, stable@vger.kernel.org
-References: <20220227135214.145599-1-krzysztof.kozlowski@canonical.com>
- <20220227135329.145862-4-krzysztof.kozlowski@canonical.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20220227135329.145862-4-krzysztof.kozlowski@canonical.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+References: <1644852547-10067-1-git-send-email-loic.poulain@linaro.org> <1644852547-10067-2-git-send-email-loic.poulain@linaro.org>
+In-Reply-To: <1644852547-10067-2-git-send-email-loic.poulain@linaro.org>
+From:   Rob Herring <robh@kernel.org>
+Date:   Tue, 1 Mar 2022 11:35:24 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKg06h818-kMDrtROzHn8zPcjwgzWAE_q=egXPJHmg=-w@mail.gmail.com>
+Message-ID: <CAL_JsqKg06h818-kMDrtROzHn8zPcjwgzWAE_q=egXPJHmg=-w@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] dt-bindings: msm: disp: add yaml schemas for
+ QCM2290 DPU bindings
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        devicetree@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -107,55 +67,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 27/02/2022 13:53, Krzysztof Kozlowski wrote:
-> The driver_override field from platform driver should not be initialized
-> from static memory (string literal) because the core later kfree() it,
-> for example when driver_override is set via sysfs.
-> 
-> Use dedicated helper to set driver_override properly.
-> 
-> Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
-> Cc: <stable@vger.kernel.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-
-LGTM,
-
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
+On Mon, Feb 14, 2022 at 9:29 AM Loic Poulain <loic.poulain@linaro.org> wrote:
+>
+> QCM2290 MSM Mobile Display Subsystem (MDSS) encapsulates sub-blocks
+> like DPU display controller, DSI etc. Add YAML schema for DPU device
+> tree bindings
+>
+> Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
 > ---
->   drivers/slimbus/qcom-ngd-ctrl.c | 13 ++++++++++++-
->   1 file changed, 12 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-> index 7040293c2ee8..e5d9fdb81eb0 100644
-> --- a/drivers/slimbus/qcom-ngd-ctrl.c
-> +++ b/drivers/slimbus/qcom-ngd-ctrl.c
-> @@ -1434,6 +1434,7 @@ static int of_qcom_slim_ngd_register(struct device *parent,
->   	const struct of_device_id *match;
->   	struct device_node *node;
->   	u32 id;
-> +	int ret;
->   
->   	match = of_match_node(qcom_slim_ngd_dt_match, parent->of_node);
->   	data = match->data;
-> @@ -1455,7 +1456,17 @@ static int of_qcom_slim_ngd_register(struct device *parent,
->   		}
->   		ngd->id = id;
->   		ngd->pdev->dev.parent = parent;
-> -		ngd->pdev->driver_override = QCOM_SLIM_NGD_DRV_NAME;
-> +
-> +		ret = driver_set_override(&ngd->pdev->dev,
-> +					  &ngd->pdev->driver_override,
-> +					  QCOM_SLIM_NGD_DRV_NAME,
-> +					  strlen(QCOM_SLIM_NGD_DRV_NAME));
-> +		if (ret) {
-> +			platform_device_put(ngd->pdev);
-> +			kfree(ngd);
-> +			of_node_put(node);
-> +			return ret;
-> +		}
->   		ngd->pdev->dev.of_node = node;
->   		ctrl->ngd = ngd;
->   
+>  v2: no change
+>  v3: no change (resent with reviewed-by + freedreno list)
+>
+>  .../bindings/display/msm/dpu-qcm2290.yaml          | 214 +++++++++++++++++++++
+>  1 file changed, 214 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml
+
+This is now failing in linux-next. Please fix or revert:
+
+Error: Documentation/devicetree/bindings/display/msm/dpu-qcm2290.example.dts:81.3-82.1
+syntax error
+FATAL ERROR: Unable to parse input tree
+make[1]: *** [scripts/Makefile.lib:386:
+Documentation/devicetree/bindings/display/msm/dpu-qcm2290.example.dt.yaml]
+Error 1
+
+Rob
