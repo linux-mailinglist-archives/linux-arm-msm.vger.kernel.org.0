@@ -2,79 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B24C14C8024
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 02:10:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D33724C8090
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 02:53:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231704AbiCABLI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Feb 2022 20:11:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51418 "EHLO
+        id S230028AbiCAByg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Feb 2022 20:54:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231321AbiCABLH (ORCPT
+        with ESMTP id S230227AbiCAByf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Feb 2022 20:11:07 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C72155F54
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 17:10:27 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id p15so28352306ejc.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 17:10:27 -0800 (PST)
+        Mon, 28 Feb 2022 20:54:35 -0500
+Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C98C9F16
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 17:53:54 -0800 (PST)
+Received: by mail-oo1-xc2d.google.com with SMTP id i10-20020a4aab0a000000b002fccf890d5fso20923352oon.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 17:53:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BbqDwcjXsXCL6kTMj0YCp6PGwzr/251RPmtgzCoFEyg=;
-        b=Ik+NVh3CPD8GsoJYQqmUUGgp15DF5ACPGNAA3aEa+OtKST1rLe5gBLLmayjH3liIyT
-         zYsDmk39c7rHmGbFKJ4PImoNKy5RX5cy1kfe2mXgGT1zSW4ymL3cmNbnY7EaK9CpzaUe
-         bj+bd/arywMdD8u8U+Xuwf26B5pjNxrE1+n/8=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=SH7BKZxPThE9TeccoqRlmHSDAbpqji1kQcAbZPM4yik=;
+        b=ge1Da0sWeE+tqpMjsT64kOiWt8LAtWVXCsDWyFEpfMIYtGC3XmXur327uUyvKTqcJ9
+         pHSrCqJvbjI+J87pCRkOcUkWnZ6iv9y2s/dhTuqDW5KvoH0bFC5bTyW3KbzdBmyLWUg9
+         Toqim7tenpe3VhvO7sQRhxdXhduSoPWy2pCCR/xMAhUpGk08CsxgJkQhqq26fDMqbi4D
+         3t5Di6QRwd7b7R7ZcupOgGLqy/wfO49OAA9gp76WYJiQMls+cF9nlfDf6QbNcklF4QbM
+         4nUOsCOpcqBOp4CVSPFPc56vQPLjZ0GuPLuP6l2BHlNKtoGOE+VxSKO+r44Eduf+ET/W
+         j1YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BbqDwcjXsXCL6kTMj0YCp6PGwzr/251RPmtgzCoFEyg=;
-        b=Mcwp0cV0JgwyJHAezmXU0vTvXSPO/3/3DbYxxp/xE2tlLHTdVstZew4td7G1ul4H8q
-         j37/OTBa3DYZPy90yI6jhaJGItfPLmOWupdV9uJXT6d5kwinyQSnJmWMA4eTXNklHgQh
-         I1RiJOxwWnIoq22mBIDtRGztfHLKaSRhR7qV/dm0rx/DLTq00qHEUddu5Q7iwEPmBu9V
-         Ia9XlpXqCV0V9SJOvZR5YgNO6q8ZZ4Sy/vtcZuAz+/ABii0cw8CKdrAeT+LEm6sILq5Q
-         9zlKPldLFnFyi3c1hqKeO1oIy+my8xMyGAPoU6jk1WC88jCp1lPi9Oas4Qp+3YcwNFEI
-         B72g==
-X-Gm-Message-State: AOAM532TLgrrvJ5mySPlDWfRGGZqtsmGYUGQQwVCcIp/6Im0UAvmj8C7
-        yiIwegPM3G7DPXkukZcxvodglVrFOSxs9v1Q
-X-Google-Smtp-Source: ABdhPJzC12e9FSnFxKx2JeugPLkdSvAapmatBVr+kq4YmjzHHgLB5yD0cW8dsva5yCbaJHBDpNI2cQ==
-X-Received: by 2002:a17:906:199a:b0:6d1:aa59:2927 with SMTP id g26-20020a170906199a00b006d1aa592927mr16579554ejd.215.1646097025991;
-        Mon, 28 Feb 2022 17:10:25 -0800 (PST)
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com. [209.85.221.51])
-        by smtp.gmail.com with ESMTPSA id w19-20020a17090633d300b006ce3d425b22sm4816672eja.1.2022.02.28.17.10.24
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Feb 2022 17:10:25 -0800 (PST)
-Received: by mail-wr1-f51.google.com with SMTP id ay10so199755wrb.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 17:10:24 -0800 (PST)
-X-Received: by 2002:a5d:62cb:0:b0:1ef:5d3f:7b56 with SMTP id
- o11-20020a5d62cb000000b001ef5d3f7b56mr14343243wrv.513.1646097024460; Mon, 28
- Feb 2022 17:10:24 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=SH7BKZxPThE9TeccoqRlmHSDAbpqji1kQcAbZPM4yik=;
+        b=NgxXRJgiRC6ZmpD+j60LYB1hDOKgrSap5P/kTCKr1o4rypigS9PKc8o7+62IHLmRqm
+         N9mlMrG0PI2n3M/W5WHMgDgMd4/Fb6TkYGYqoqBczxx6/Mwy6WYNbCagpaL3Cp2od5vF
+         CO34Wq9Prmtu6w7WuK7X8P7Ck39Eyf6WLONgj7Ucy/Wc5msdojwqaY44q19XGmDTRRIj
+         QRFse9cMkwmHTKSQVAxZNn3tc9Hlu0yVYxngoftLkhMqtxSYUxu+dOtq2vUbTGKHT9Jc
+         pusadSjtvlcwgpNGGo2efEGPAi2tsU9aFZDqHLvZ/poAznJhlQvve6hanCmJDZmole5R
+         gKrQ==
+X-Gm-Message-State: AOAM531fy+pVITILoYKvu5zu49BfxXQDLOXP1CKK6p1DsRJj8I+MnS01
+        Yckea5H+j5Hvv6EzhYgG0Lve9g==
+X-Google-Smtp-Source: ABdhPJwkZfZQgsIvBnKi4vwbk0wX9q6loJUIaLI+i80+obbQoS3tfkqdkthJvfyCPGd6372X23Sm7g==
+X-Received: by 2002:a05:6870:e997:b0:ce:c0c9:61d with SMTP id r23-20020a056870e99700b000cec0c9061dmr10096537oao.111.1646099634137;
+        Mon, 28 Feb 2022 17:53:54 -0800 (PST)
+Received: from yoga ([2600:1700:a0:3dc8:5c39:baff:fe03:898d])
+        by smtp.gmail.com with ESMTPSA id 35-20020a9d0026000000b005ad363440a2sm5669549ota.64.2022.02.28.17.53.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Feb 2022 17:53:53 -0800 (PST)
+Date:   Mon, 28 Feb 2022 19:53:51 -0600
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     lotte bai <baihaowen88@gmail.com>
+Cc:     agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: qmi: Use min() instead of doing it manually
+Message-ID: <Yh18r0jpHjswyksi@yoga>
+References: <CAFo17PjBtoWcrQyxe-Twowf+_5FJ3_OOMjtv950VBR7NocWfhg@mail.gmail.com>
 MIME-Version: 1.0
-References: <1644591438-6514-1-git-send-email-quic_srivasam@quicinc.com> <1644591438-6514-3-git-send-email-quic_srivasam@quicinc.com>
-In-Reply-To: <1644591438-6514-3-git-send-email-quic_srivasam@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 28 Feb 2022 17:10:12 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=Xm7UVXX9NQfKs+BymsZpG+aoYqvXXRL5WhJjEZRqi7ug@mail.gmail.com>
-Message-ID: <CAD=FV=Xm7UVXX9NQfKs+BymsZpG+aoYqvXXRL5WhJjEZRqi7ug@mail.gmail.com>
-Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: sc7280: Add lpass cpu node
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Rohit kumar <rohitkr@codeaurora.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Judy Hsiao <judyhsiao@chromium.org>,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFo17PjBtoWcrQyxe-Twowf+_5FJ3_OOMjtv950VBR7NocWfhg@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,94 +70,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Mon 28 Feb 19:36 CST 2022, lotte bai wrote:
 
-On Fri, Feb 11, 2022 at 6:57 AM Srinivasa Rao Mandadapu
-<quic_srivasam@quicinc.com> wrote:
->
-> @@ -1750,6 +1751,64 @@
->                         #clock-cells = <1>;
->                 };
->
-> +               lpass_cpu: audio-subsystem@3260000 {
-> +                       compatible = "qcom,sc7280-lpass-cpu";
-> +                       reg = <0 0x3260000 0 0xC000>,
-> +                             <0 0x3280000 0 0x29000>,
-> +                             <0 0x3340000 0 0x29000>,
-> +                             <0 0x336C000 0 0x3000>,
-> +                             <0 0x3987000 0 0x68000>,
-> +                             <0 0x3B00000 0 0x29000>;
+> Fix following coccicheck warning:
+> drivers/soc/qcom/qmi_interface.c:773:12-13: WARNING opportunity for min()
+> 
 
-Lower case hex, please. ...and pad the address to 8 digits here (just
-don't do it in the unit address in the node name).
+Thanks for the patch Haowen.
 
+> Signed-off-by: Haowen Bai <baihaowen88@gmail.com>
+> ---
+>  drivers/soc/qcom/qmi_interface.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/soc/qcom/qmi_interface.c
+> b/drivers/soc/qcom/qmi_interface.c
+> index c8c4c73..3337a70 100644
+> --- a/drivers/soc/qcom/qmi_interface.c
+> +++ b/drivers/soc/qcom/qmi_interface.c
+> @@ -770,7 +770,7 @@ static ssize_t qmi_send_message(struct qmi_handle *qmi,
+> 
+>          kfree(msg);
+> 
+> -       return ret < 0 ? ret : 0;
+> +       return min(ret, 0);
 
-> +                       reg-names = "lpass-rxtx-cdc-dma-lpm",
-> +                                   "lpass-rxtx-lpaif",
-> +                                   "lpass-va-lpaif",
-> +                                   "lpass-va-cdc-dma-lpm",
-> +                                   "lpass-hdmiif",
-> +                                   "lpass-lpaif";
+The code isn't trying to say "return the minimum of ret and 0", it says
+"if ret is negative return that, otherwise return 0".
 
-The order of "reg" and "reg-names" needs to match the bindings
-exactly. It's almost certainly easier to change your device tree since
-the bindings have already landed.
+Mathematically this happens to be the same, but for me as reader of the
+code they have different meaning.
 
-That means that "lpass-hdmiif" will be first. ...and it will also
-change your node name since the first "reg" listed will now be
-3987000.
-
-
-> +                       iommus = <&apps_smmu 0x1820 0>,
-> +                                <&apps_smmu 0x1821 0>,
-> +                                <&apps_smmu 0x1832 0>;
-> +                       status = "disabled";
-> +
-> +                       power-domains = <&rpmhpd SC7280_LCX>;
-> +                       power-domain-names = "lcx";
-
-power-domain-names is not in the bindings.
-
-
-> +                       required-opps = <&rpmhpd_opp_nom>;
-> +
-> +                       clocks = <&lpass_aon LPASS_AON_CC_AUDIO_HM_H_CLK>,
-> +                                <&lpasscore LPASS_CORE_CC_SYSNOC_MPORT_CORE_CLK>,
-> +                                <&lpass_audiocc LPASS_AUDIO_CC_CODEC_MEM_CLK>,
-> +                                <&lpass_audiocc LPASS_AUDIO_CC_CODEC_MEM0_CLK>,
-> +                                <&lpass_audiocc LPASS_AUDIO_CC_CODEC_MEM1_CLK>,
-> +                                <&lpass_audiocc LPASS_AUDIO_CC_CODEC_MEM2_CLK>,
-> +                                <&lpasscore LPASS_CORE_CC_EXT_IF0_IBIT_CLK>,
-> +                                <&lpasscore LPASS_CORE_CC_EXT_IF1_IBIT_CLK>,
-> +                                <&lpass_aon LPASS_AON_CC_VA_MEM0_CLK>;
-> +                       clock-names = "aon_cc_audio_hm_h",
-> +                                     "core_cc_sysnoc_mport_core",
-> +                                     "audio_cc_codec_mem",
-> +                                     "audio_cc_codec_mem0",
-> +                                     "audio_cc_codec_mem1",
-> +                                     "audio_cc_codec_mem2",
-> +                                     "core_cc_ext_if0_ibit",
-> +                                     "core_cc_ext_if1_ibit",
-> +                                     "aon_cc_va_mem0";
-
-Clocks do not match bindings.
-
-
-> +                       #sound-dai-cells = <1>;
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +
-> +                       interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>,
-> +                                    <GIC_SPI 176 IRQ_TYPE_LEVEL_HIGH>,
-> +                                    <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>,
-> +                                    <GIC_SPI 268 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +                       interrupt-names = "lpass-irq-lpaif",
-> +                                         "lpass-irq-vaif",
-> +                                         "lpass-irq-rxtxif",
-> +                                         "lpass-irq-hdmi";
-
-interrupt-names ordering does not match bindings.
-
-
--Doug
+Regards,
+Bjorn
