@@ -2,66 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C7BA4C8C4A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 14:11:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 053884C8C60
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 14:16:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234196AbiCANLj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Mar 2022 08:11:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47106 "EHLO
+        id S234954AbiCANQm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Mar 2022 08:16:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234898AbiCANLh (ORCPT
+        with ESMTP id S234185AbiCANQm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Mar 2022 08:11:37 -0500
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B9BC46156
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Mar 2022 05:10:56 -0800 (PST)
-Received: by mail-pl1-x630.google.com with SMTP id n15so11146202plf.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Mar 2022 05:10:56 -0800 (PST)
+        Tue, 1 Mar 2022 08:16:42 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63AE897B84
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Mar 2022 05:16:01 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id bg16-20020a05600c3c9000b00380f6f473b0so1225483wmb.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Mar 2022 05:16:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=DV6f3J2QIRehyEDByQEpoJ2xwDbM5hUK+3WRGSJAWlw=;
-        b=YbuwEXN/UFumml2CqM42Aahs6NNSgs9Fax2qrLKsWK3mw8JfHkq7DpjMyrbU0N1Usx
-         bmHQu6FoE6V/joJwRIjThReEFs/kkPktEhABl7uNtKNe1ufj8eTNvGoE/AsPxa9tN0MH
-         YD2Vl0UrWh2AjVEa4A9t8oUMSSxRRk0ZSqcVsJea+OVqKXhqaDB7GRkUSKj/Nz/SRAAw
-         VdmyNV4CpfsY3QB28aRqjKtc+LtehkS1v37iQzSUSkodUzze9ZLvTqTekeE7yyzHrLvr
-         rDRrBC5VxnEFbnwtevr9seYx/NO/F3H4YESG9A5RcOi0srsUnLX2JDcq7Iij3SDDxdVy
-         u9ZQ==
+        bh=pyNbiqHEj/gKiNC++zu0j7isCRCwYOELWOEt14Enqvk=;
+        b=eTn1PzldnY+c4WFStTEyYpsY673Ic7FMhjmKYYv7gxlM9WJuCB0hKrORqzWwMaOAQs
+         cln4Tl/mrLk2OpB8PJBcUmRj3+YhatyF3OkFrfjj7sjv40aulgRrZsOZSaxb1dHbCIVz
+         Hfrn0cLTj1xSWCJqCT4270NZ3Hp1SXzqsIqxCO4E0PomTKBvvLMFY54ngYzBYeWn4bJ2
+         kXqmKyOuc23LlHLYpoNMolSMDtgGMQ8C9VEXwvsNRvX0N5Xb65XJr9RuRJC9gCH6MqNw
+         BJ0eJ2q95WHwKWDUqcvBvBAfkVnbhXjKpMAiVimpZwz8px0S/yGH/pmF2jPnu1M1fqCr
+         mnIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=DV6f3J2QIRehyEDByQEpoJ2xwDbM5hUK+3WRGSJAWlw=;
-        b=JwLd9p0GqwzznDX6l67azIcbOai6WA1/AQPkuyLL85tn11zbjISn/kuW4K3TiD68e2
-         49HyemQdE6VfoMwTmKu7DybqzTbTlwihE2CQn5W3eHeTcXilLB7yeAB7Z9XIClE2v8j8
-         XTvLZ0f46g4Ip5GjxidvP40QTB38XDM9OpqglbEG9i4AoHZIB6jqUoflAyH9q/aYoXXl
-         HYb/WH+9fdjVrj+/fMsym7+EwnYKK8DfSnP1B2UFik3seeKISlLdWUTnoCjlbFlNMBHY
-         a/c9x8ObTK1DLOhmX3nmiHtvKwMcboI+/lrGkvS/fZMk3JlHr8nwovd1YPweClX6/be+
-         ZXhA==
-X-Gm-Message-State: AOAM532J4k6VX1A8Cwh9iuDJFGBXxPG1ZDQA2cr/PPVMDRrqLHsXDWJE
-        7iP2p0O/xIv1hRYx2HlAN/Cylp6bKzQqr3kkV+RZlA==
-X-Google-Smtp-Source: ABdhPJyUTJreTDgP0C9OseilZ4NmT99vFUTYPcMXphbUrL9wNDsClw+KYh7/yJsMqqSZ7ZrQKj8DidkIMvcpRyd1WSY=
-X-Received: by 2002:a17:902:c94f:b0:151:3cd8:efe3 with SMTP id
- i15-20020a170902c94f00b001513cd8efe3mr18961096pla.117.1646140255853; Tue, 01
- Mar 2022 05:10:55 -0800 (PST)
+        bh=pyNbiqHEj/gKiNC++zu0j7isCRCwYOELWOEt14Enqvk=;
+        b=1Kt3fqd4dlENbJzYB9HFOlw3mm3vN/1ZCf4hUnvg45QAz4yZRIr/aDG9/X+WCl1ZyL
+         B3FRsU7QMU4/+LFO0D64+S1q0BZcEbinhpEEu++E5rKY3hC0q1ekrSHFuuhseXMkWdbj
+         Gca5q4fCuMiUCJIvesFCbMBgvogtwrRKwY6M+8nxgOuKQZ3wyuxa4OLtbbtVHXWj8++I
+         kbdl1t2WHuNBLi5QnVDWWR5xDxSNmKPR54/ITd8xQh3FnFikGvDO2PQIqwF+7m4qtqBa
+         Qiu/RUmzEEl7U4RvfjlCqdJORKflHZOB/CJ4tisjk+5RI7X8IIJidsEItspr2rCVPU95
+         lS/g==
+X-Gm-Message-State: AOAM530dUbMzmmNQUZdPICA1kqFAO2UoCnDpc2ag9vrxIiBIBoiCDPwb
+        Bsf55phEUBdzw/lywNBce7ve0HpqVUoA/qcyV6W5kg==
+X-Google-Smtp-Source: ABdhPJxLP+ArLx0U3JR5vN+Fv6Qjf/4hB/pOR0QUukcMDbUlw8BgtIZt+JlWyEn5LFZJzO3ztu/Usjbc3JKpyaFsU6I=
+X-Received: by 2002:a05:600c:35c4:b0:381:782e:9645 with SMTP id
+ r4-20020a05600c35c400b00381782e9645mr5734663wmq.63.1646140559875; Tue, 01 Mar
+ 2022 05:15:59 -0800 (PST)
 MIME-Version: 1.0
-References: <20220301060530.5870-1-jrdr.linux@gmail.com>
-In-Reply-To: <20220301060530.5870-1-jrdr.linux@gmail.com>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Tue, 1 Mar 2022 14:10:44 +0100
-Message-ID: <CAG3jFyugksy60Sgjg5U+E4ZGEH3mNpZmLJB_aZ=uncb7kg7zAA@mail.gmail.com>
-Subject: Re: [PATCH] media: camss: Replace hard coded value with parameter
-To:     Souptick Joarder <jrdr.linux@gmail.com>
-Cc:     todor.too@gmail.com, agross@kernel.org, bjorn.andersson@linaro.org,
-        mchehab@kernel.org, nathan@kernel.org, ndesaulniers@google.com,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-        kernel test robot <lkp@intel.com>
+References: <20220228133112.3987-1-quic_jinlmao@quicinc.com>
+ <861dd6e1-30dc-626e-3449-72d3b6822e7b@arm.com> <a63abe13-793e-323f-e214-1dd9826c8a9a@quicinc.com>
+In-Reply-To: <a63abe13-793e-323f-e214-1dd9826c8a9a@quicinc.com>
+From:   Mike Leach <mike.leach@linaro.org>
+Date:   Tue, 1 Mar 2022 13:15:48 +0000
+Message-ID: <CAJ9a7VjShWLeSh0gyna-AUEB+jXO7u8JGLTXm_henn_cJ+E6Zw@mail.gmail.com>
+Subject: Re: [PATCH] coresight: Defer probe when the child dev is not probed
+To:     Jinlong Mao <quic_jinlmao@quicinc.com>
+Cc:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Mao Jinlong <jinlmao@qti.qualcomm.com>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,38 +76,186 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 1 Mar 2022 at 07:05, Souptick Joarder <jrdr.linux@gmail.com> wrote:
+Hi,
+
+On Tue, 1 Mar 2022 at 11:42, Jinlong Mao <quic_jinlmao@quicinc.com> wrote:
 >
-> From: "Souptick Joarder (HPE)" <jrdr.linux@gmail.com>
+> On 2/28/2022 10:51 PM, Suzuki K Poulose wrote:
 >
-> Kernel test robot reported below warning ->
-> drivers/media/platform/qcom/camss/camss-csid-gen2.c:407:3:
-> warning: Value stored to 'val' is never read
-> [clang-analyzer-deadcode.DeadStores]
+> Hi Jinlong
 >
-> Replace hard coded value with val.
+> On 28/02/2022 13:31, Mao Jinlong wrote:
 >
-> Reported-by: kernel test robot <lkp@intel.com>
-> Signed-off-by: Souptick Joarder (HPE) <jrdr.linux@gmail.com>
+> From: Mao Jinlong <jinlmao@qti.qualcomm.com>
+>
+> It is possible that when device probe, its child device is not
+> probed. Then it will fail when add sysfs connection for the device.
+> Make device defer probe when the child device is not probed.
+>
+>
+> Please could you a bit a more specific on the exact issue ?
+> I don't see a problem with probe deferral right now, with
+> coresight/next.
+>
+> For e.g.,
+>
+> root@juno-server:~# lsmod
+> Module                  Size  Used by
+> coresight              73728  0
+> root@juno-server:~# ls /sys/bus/coresight/devices/
+> root@juno-server:~# modprobe coresight-etm4x
+> root@juno-server:~# lsmod
+> Module                  Size  Used by
+> coresight_etm4x        81920  0
+> coresight              73728  1 coresight_etm4x
+> root@juno-server:~# ls /sys/bus/coresight/devices/
+> etm0  etm1
+>
+> -- Note etm2-etm5 doesn't appear --
+>
+> root@juno-server:~# modprobe coresight-funnel
+> root@juno-server:~# lsmod
+> Module                  Size  Used by
+> coresight_funnel       20480  0
+> coresight_etm4x        81920  0
+> coresight              73728  2 coresight_etm4x,coresight_funnel
+> root@juno-server:~# ls /sys/bus/coresight/devices/
+> etm0  etm1
+>
+> -- Still don't appear ---
+>
+> root@juno-server:~# modprobe coresight-replicator
+> root@juno-server:~# ls /sys/bus/coresight/devices/
+> etm0  etm1
+> root@juno-server:~# modprobe coresight-tmc
+>
+> -- At this stage, the devices automatically get probed and appear --
+> root@juno-server:~# ls /sys/bus/coresight/devices/
+> etm0  etm1  etm2  etm3  etm4  etm5  funnel0  funnel1  funnel2  tmc_etf0  tmc_etr0
+>
+>
+> root@juno-server:~# lsmod
+> Module                  Size  Used by
+> coresight_tmc          40960  0
+> coresight_replicator    20480  0
+> coresight_funnel       20480  0
+> coresight_etm4x        81920  0
+> coresight              73728  4 coresight_tmc,coresight_etm4x,coresight_replicator,coresight_funnel
+>
+> So, my question is, what is this patch trying to solve ?
+>
+>
+> Cheers
+> Suzuki
+>
+> Hi Suzuki,
+>
+> This issue happens when race condition happens.
+> The condition is that the device and its child_device's probe happens at the same time.
+>
+> For example: device0 and its child device device1.
+> Both of them are calling coresight_register function. device0 is calling coresight_fixup_device_conns.
+> device1 is waiting for device0 to release the coresight_mutex. Because device1's csdev node is allocated,
+> coresight_make_links will be called for device0. Then in coresight_add_sysfs_link, has_conns_grp is true
+> for device0, but has_conns_grp is false for device1 as has_conns_grp is set to true in coresight_create_conns_sysfs_group .
+> The probe of device0 will fail for at this condition.
+>
+>
+> struct coresight_device *coresight_register(struct coresight_desc *desc)
+> {
+>    .........
+>     mutex_lock(&coresight_mutex);
+>
+>     ret = coresight_create_conns_sysfs_group(csdev);
+>     if (!ret)
+>         ret = coresight_fixup_device_conns(csdev);
+>     if (!ret)
+>         ret = coresight_fixup_orphan_conns(csdev);
+>     if (!ret && cti_assoc_ops && cti_assoc_ops->add)
+>         cti_assoc_ops->add(csdev);
+>
+>     mutex_unlock(&coresight_mutex);
+>
+> .........
+>
+> }
+>
+> static int coresight_fixup_device_conns(struct coresight_device *csdev)
+> {
+>    ..........
+>         conn->child_dev =
+>             coresight_find_csdev_by_fwnode(conn->child_fwnode);
+
+The issue appears to be a constraint hidden in the lower layers of the code.
+Would a better solution not be to alter the code here:
+
+if (conn->child_dev && conn->child_dev->has_conns_grp) {
+   ...
+} else {
+      csdev->orphan = true;
+}
+
+which would mean that the connection attempt would drop through to
+label the connection as an orphan, to be cleaned up by the child
+itself when it runs coresight_fixup_orphan_conns()
+
+Regards
+
+Mike
+
+>         if (conn->child_dev) {
+>             ret = coresight_make_links(csdev, conn,
+>
+>                            conn->child_dev);
+>
+> ..........
+>
+> }
+>
+>
+> int coresight_add_sysfs_link(struct coresight_sysfs_link *info)
+> {
+>    ................
+>     if (!info->orig->has_conns_grp || !info->target->has_conns_grp)
+>         return -EINVAL;
+>
+>
+>
+> The probe fail issue is reproduced with reboot stress test on our internal device.
+>
+> With the patch, the probe fail issue is not reproduced.
+>
+> Thanks
+>
+> Jinlong Mao
+>
+>
+>
+> Signed-off-by: Mao Jinlong <jinlmao@qti.qualcomm.com>
 > ---
->  drivers/media/platform/qcom/camss/camss-csid-gen2.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>   drivers/hwtracing/coresight/coresight-sysfs.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen2.c b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
-> index abbfbf448893..2031bde13a93 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid-gen2.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
-> @@ -405,7 +405,7 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
->                 writel_relaxed(val, csid->base + CSID_RDI_FRM_DROP_PERIOD(0));
+> diff --git a/drivers/hwtracing/coresight/coresight-sysfs.c b/drivers/hwtracing/coresight/coresight-sysfs.c
+> index 34d2a2d31d00..7df9eb59bf2c 100644
+> --- a/drivers/hwtracing/coresight/coresight-sysfs.c
+> +++ b/drivers/hwtracing/coresight/coresight-sysfs.c
+> @@ -73,8 +73,10 @@ int coresight_add_sysfs_link(struct coresight_sysfs_link *info)
+>       if (!info->orig || !info->target ||
+>           !info->orig_name || !info->target_name)
+>           return -EINVAL;
+> -    if (!info->orig->has_conns_grp || !info->target->has_conns_grp)
+> +    if (!info->orig->has_conns_grp)
+>           return -EINVAL;
+> +    if (!info->target->has_conns_grp)
+> +        return -EPROBE_DEFER;
+>         /* first link orig->target */
+>       ret = sysfs_add_link_to_group(&info->orig->dev.kobj,
 >
->                 val = 0;
-> -               writel_relaxed(0, csid->base + CSID_RDI_FRM_DROP_PATTERN(0));
-> +               writel_relaxed(val, csid->base + CSID_RDI_FRM_DROP_PATTERN(0));
->
->                 val = 1;
->                 writel_relaxed(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(0));
-> --
-> 2.25.1
 >
 
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
+
+-- 
+Mike Leach
+Principal Engineer, ARM Ltd.
+Manchester Design Centre. UK
