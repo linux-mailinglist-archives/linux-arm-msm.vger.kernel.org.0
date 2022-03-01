@@ -2,103 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC6F14C8474
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 07:58:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 979E44C84EC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 08:25:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232449AbiCAG70 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Mar 2022 01:59:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36884 "EHLO
+        id S230406AbiCAH0O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Mar 2022 02:26:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232355AbiCAG7Y (ORCPT
+        with ESMTP id S231129AbiCAH0L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Mar 2022 01:59:24 -0500
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4456D5BD32;
-        Mon, 28 Feb 2022 22:58:44 -0800 (PST)
-Received: by mail-pf1-x42e.google.com with SMTP id k1so2844305pfu.2;
-        Mon, 28 Feb 2022 22:58:44 -0800 (PST)
+        Tue, 1 Mar 2022 02:26:11 -0500
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2789965836
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 23:25:30 -0800 (PST)
+Received: by mail-pl1-x62a.google.com with SMTP id h17so7195471plc.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 23:25:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=/AOz6Dw1JtsymBiTGNnegbiJwv4+5x9HVJ++91SKk8g=;
-        b=Jdj9Yip5Qnv5RVJsT1rpYbhROmx9iK8d7CEEUOJNIxZjykLsiCNboYukCMhKDrTjIl
-         NhsDXheGuxNwRDhXHmbtlv0Kg/r5cOJPMg8WSHxAdMSEcDlQa3uCO0T8xxXZFsQ68kGk
-         RITs+SRLqbDH7VvR3y89heCEIevuG4QzT7aQPtYZK9tscwvI2xzugmQuu5w6kzxDb3QZ
-         aG0/EOnxSSFeHNB+pXbtuvF/B/xDI6kGvyAmxy0D/JHIZTXbFrG9VYR6P42J0JYMpalU
-         ftVujL5RAAF2sEdpV+xtXdBGc1A2yvrqY75A1E1PWhUMEHo46KDXTmLPUsLnUy4hiCoH
-         BwPg==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Fq9+hKXE2B25/q7SGHJTgmlpE5pNGMn67wmPQ/2AfFA=;
+        b=gw+AgpqERSMLyvVAkktbZBdBQAxCpln9+7y5E4lCT6UDIE8RSSZw3sHef0pgS+cDcP
+         0CSs/PdWEOtNhMq+K42nTRPmww08VKf9MHYaOwy7QRMoo5/yAZry4qWzXkJWuf86v9Fa
+         ZJPTuWFy5R4R0DZeqlZKsIAztbRIHQOgdOnTofkoNFQ7XQvrsW7xRPYnx5R72vMROM/B
+         oYE4pAxMVK1aCdg9OYq+zGOS9qXSQ429BqHYAbDf12OeRrwscs0AxHrzehBFOejwaDse
+         2xzfkpQf6u8PIIv5EYYaSi8iHkVBRzlwItd49jGo5CNE+HJEbiWgFC8J/HhCHU/T/kmo
+         XMOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/AOz6Dw1JtsymBiTGNnegbiJwv4+5x9HVJ++91SKk8g=;
-        b=n2RAnbKZ++7SRb5SH5Nrf6wZvVPez9ZnQG6E7ZgDzFKzEEuptnqNBGpWnIG42TaocE
-         0UiPZjQC6gnhth82QXdwCaN9+OvovfF2MZ88Op/dXO5CXVSgMF1duljvlui1wrZG68WF
-         jTz6pN/13TAVng1rHVQu+7iqmUCmRK49Ws4tHqEyt2uhvGaRLtfE+LvV4yv5zwluT8Nv
-         iOzAn+lyJK9Ba8KIgw+ln44C2D5upmhxsE5LqoGhDFkuZOQ7VtZhfXxBiUwxHpOcvxqh
-         Zs79JA7opE3NILTCji0OhMjslQ/G+E4c1zEG7bv3l2fibGxi7gclACLiEISVqYKo8j9L
-         0glg==
-X-Gm-Message-State: AOAM531tKcO5G1GMvFVK4O6CuIst7AUgCGGzT4THZLaiC2v0WqKyJhFK
-        p6psnKs/Jeyy+3TI80cvpS4=
-X-Google-Smtp-Source: ABdhPJwEgZ+AzZYKv8fA8bfXZUkohbocb9ZzAtZULVy3z5nCKcYryQqkLVLu5vagpeC1CMw5+wkJLA==
-X-Received: by 2002:a05:6a00:10c9:b0:4ce:146e:6edf with SMTP id d9-20020a056a0010c900b004ce146e6edfmr26035374pfu.6.1646117923787;
-        Mon, 28 Feb 2022 22:58:43 -0800 (PST)
-Received: from VICKYMQLIN-NB1.localdomain ([5.44.249.43])
-        by smtp.gmail.com with ESMTPSA id l2-20020a056a0016c200b004e10af156adsm16285292pfc.190.2022.02.28.22.58.40
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 28 Feb 2022 22:58:43 -0800 (PST)
-Date:   Tue, 1 Mar 2022 14:58:37 +0800
-From:   Miaoqian Lin <linmq006@gmail.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Luca Weiss <luca@z3ntu.xyz>,
-        Brian Masney <masneyb@onstation.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] soc: qcom: ocmem: Fix missing put_device() call in
- of_get_ocmem
-Message-ID: <20220301065837.GA106@VICKYMQLIN-NB1.localdomain>
-References: <20220107073126.2335-1-linmq006@gmail.com>
- <YfhfT0EC393GxSRd@builder.lan>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Fq9+hKXE2B25/q7SGHJTgmlpE5pNGMn67wmPQ/2AfFA=;
+        b=RGpTsvslOUCpxg0RPrL6+wrLhLT/VWlRCMZ35GfAT9zfwJO9YnyCzT0pugyCZ4Cydr
+         0LOnzDMkBHL9MyeQtwg0/wNn3jku6M7kTjxnTXJl3ZtRi9pnZeKuKRtAG6OQ0ZiQq+L4
+         drWG6vJiHM65FVlwS816mHtc7cXo5/DyjpAoeaOdX6gmVl2Tx6oyW1vaGSdI1696lCGR
+         qkTmmtJFbTVHk8kWj21FWr5C7Dwlo0D/aCOUrsZg9XiP6a8AHUukPc57JDCDhGh/SvFD
+         n/HrT5pMfsX1Pkr+5f/DeLkoTi1B9KREBix/+pUCFU5HhzkjXJeR5GKBZ+qvvRZ3XDa/
+         z9IA==
+X-Gm-Message-State: AOAM531SSvoMHtM+151O3OSoizm5GBjvUqP4KPst4hF+KPUkURsJZpse
+        Q68NY8Fgf5oA2pivC9GOUXSxqV9aaU1aFQ==
+X-Google-Smtp-Source: ABdhPJyQpoHq58XxxDiH1vNEtJGyB3ROg2E9nRNb6DbulnTpMJjY+JTpp9jWTnRHJzb8qLKPuHtgwQ==
+X-Received: by 2002:a17:90a:9306:b0:1bc:9256:5477 with SMTP id p6-20020a17090a930600b001bc92565477mr20937679pjo.170.1646119529474;
+        Mon, 28 Feb 2022 23:25:29 -0800 (PST)
+Received: from localhost.localdomain ([223.179.136.225])
+        by smtp.gmail.com with ESMTPSA id m6-20020a62f206000000b004e152bc0527sm15680445pfh.153.2022.02.28.23.25.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Feb 2022 23:25:29 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        lorenzo.pieralisi@arm.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, svarbanov@mm-sol.com,
+        bhelgaas@google.com, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org, sboyd@kernel.org, mturquette@baylibre.com,
+        linux-clk@vger.kernel.org
+Subject: [PATCH v2 0/7] Add PCIe support for SM8150 SoC
+Date:   Tue,  1 Mar 2022 12:55:04 +0530
+Message-Id: <20220301072511.117818-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YfhfT0EC393GxSRd@builder.lan>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi, Andersson:
+Changes since v1:
+-----------------
+- v1 can be found here: https://lore.kernel.org/linux-arm-msm/20220223192946.473172-1-bhupesh.sharma@linaro.org/T/
+- Collected ACKs on [PATCH 1/7], [PATCH 2/7] and [PATCH 4/7] from Rob
+  and Dmitry.
+- Broke down another separately sent out PATCH (see [1]), into a 3 patches (one each for emac, pci
+  and ufs gdsc defines) - one of which is carried as [PATCH 3/7]
+  in this series, which fixes a compilation error.
+  The rest of the gdsc defines have been sent out as separate patch(es).
+[1]. https://patchwork.kernel.org/project/netdevbpf/patch/20220126221725.710167-4-bhupesh.sharma@linaro.org/
+- Rob's bot reported a number of 'dtbs_check' errors with the v1 series,
+  which are been fixed with a separate series now (see [2]), to ease the
+  review of this series.
+[2]. https://lore.kernel.org/linux-arm-msm/20220228123019.382037-1-bhupesh.sharma@linaro.org/T/
 
-> Your patch solves the particular problem, so I'm applying it.
-> 
-> But it seems that we never release pdev in the case of successfully
-> return the ocmem object either... So there's more to improve here.
-> 
-Thanks for your time. Should I submit another patch to release pdev 
-in the regular path?
 
-> >  drivers/soc/qcom/ocmem.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
-> > index d2dacbbaafbd..97fd24c178f8 100644
-> > --- a/drivers/soc/qcom/ocmem.c
-> > +++ b/drivers/soc/qcom/ocmem.c
-> > @@ -206,6 +206,7 @@ struct ocmem *of_get_ocmem(struct device *dev)
-> >  	ocmem = platform_get_drvdata(pdev);
-> >  	if (!ocmem) {
-> >  		dev_err(dev, "Cannot get ocmem\n");
-> > +		put_device(&pdev->dev);
-> >  		return ERR_PTR(-ENODEV);
-> >  	}
-> >  	return ocmem;
-> > -- 
-> > 2.17.1
-> > 
+This series adds PCIe support for Qualcomm SM8150 SoC with relevant PHYs.
+There are 2 PCIe instances on this SoC each with different PHYs. The PCIe
+controller and PHYs are mostly compatible with the ones found on SM8250
+SoC, hence the old drivers are modified to add the support.
+
+This series has been tested on SA8155p ADP board with QCA6696 chipset connected
+onboard.
+
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Rob Herring <robh+dt@kernel.org>
+
+Bhupesh Sharma (7):
+  dt-bindings: pci: qcom: Document PCIe bindings for SM8150 SoC
+  dt-bindings: phy: qcom,qmp: Add SM8150 PCIe PHY bindings
+  clk: qcom: gcc: Add PCIE_0_GDSC and PCIE_1_GDSC for SM8150
+  phy: qcom-qmp: Add SM8150 PCIe QMP PHYs
+  PCI: qcom: Add SM8150 SoC support
+  arm64: dts: qcom: sm8150: Add pcie nodes for SM8150
+  arm64: dts: qcom: sa8155: Enable pcie nodes
+
+ .../devicetree/bindings/pci/qcom,pcie.txt     |   5 +-
+ .../devicetree/bindings/phy/qcom,qmp-phy.yaml |   4 +
+ arch/arm64/boot/dts/qcom/sa8155p-adp.dts      |  42 +++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          | 243 ++++++++++++++++++
+ drivers/pci/controller/dwc/pcie-qcom.c        |  16 ++
+ drivers/phy/qualcomm/phy-qcom-qmp.c           |  90 +++++++
+ include/dt-bindings/clock/qcom,gcc-sm8150.h   |   2 +
+ 7 files changed, 400 insertions(+), 2 deletions(-)
+
+-- 
+2.35.1
+
