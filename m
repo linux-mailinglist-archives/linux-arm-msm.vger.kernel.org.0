@@ -2,69 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 993694C83EB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 07:24:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9926F4C8439
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Mar 2022 07:41:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232589AbiCAGZV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Mar 2022 01:25:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41076 "EHLO
+        id S232680AbiCAGmQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Mar 2022 01:42:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232579AbiCAGZO (ORCPT
+        with ESMTP id S229726AbiCAGmP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Mar 2022 01:25:14 -0500
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7E9C6FA0A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 22:24:31 -0800 (PST)
-Received: by mail-pf1-x434.google.com with SMTP id d17so13330526pfl.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 22:24:31 -0800 (PST)
+        Tue, 1 Mar 2022 01:42:15 -0500
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE45F473BE
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 22:41:34 -0800 (PST)
+Received: by mail-pg1-x536.google.com with SMTP id o26so12976011pgb.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Feb 2022 22:41:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=mwTwmzuX0saKyxNlvchue0KLgxgf6JKD5r8htXPV4x4=;
-        b=YFXMQ4K+tzknxwt8VM77SCs5nP0q79KdL2VTYuk3woQwxvjLTsPpiYfePfDzAFrZAf
-         Xr3cpETvWWNmn1zf0O+vQ6Y50nD8Pu36HNuQTvhoN/CXFQzdMcOuTpmO7gmweTN5peps
-         i5lZzXbpxjcJCm6S0/Y46qftAd8Yt+DS8K/hWk1XdBgHGHvvBROYh2+gLVMwFbQjm9Vx
-         lXzBqSiP+EEHi8hz90JLSk4/RzANLe7+B9TMhWCSWj7KfB+RTjFprs807lzZkrepHSDq
-         O6yDvXV5SHh1RClAjiRr5yXj3sCLVax0wMIHY26KgUAiQpcam9ji4BOQR0Q6DZIVJ2qY
-         5aaw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=InAZmAMB2EBIfdWcEEf0JofPW20Wpd8LRNGnhF7kPbs=;
+        b=B7fb8aGFeDFXOEeCfZj/nNAct7zKzWJOyjVo12/VKnYysq2h4QYMFdKy983nKX/jUf
+         nTMdKvKRvOyyFdDVUqWlNBqQXAjbk1bonG3hX9MmLCJw2YhZFmQPVBkZbHmGICqH9kF2
+         m2H7XtV258bi6QKAP1JrtmgVIw6vE9NmA9jf4EIZTwpm+WFqzNVRmBbrpeJkQqn4eEIF
+         L36RST41sx/kdGJAupB626XeBpJ/nDuGufzo9RIhpcb8094D5c9zZ5eenEw55oD97p7m
+         gtgDIrfX68xfhxXkcZvv9sioK3KYvS0zaNr/htT2pLKcW4YHc5/JREVVH3+V6xymcfLs
+         hVCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=mwTwmzuX0saKyxNlvchue0KLgxgf6JKD5r8htXPV4x4=;
-        b=UbnK+wFBdWCQ9Y8Xg6WJBjSsiu3E3Tdg5aUY+WGF1kfbbIRUfMkOWt1BBvOCrf6lJg
-         wD+uzIWQ66LQR4ixby3hsxeVV+8yq2oX6ER8jibNsEFG5h52cNCV/YjgzLEwTZ8AH5qP
-         e0MddF7FdgbDJGi6I/6PFO9RAYsPM+HKvFovHdz4mUuKheavMMgQCVGSAr+mfkOR5ld7
-         WnSdtgpkD84om5og1PGaLmgeUYq0g8TpAsLL6L+ZasHlUIQG81B5+qS5UQBOSVowGm2W
-         ZhvVSnzvwkaxphe6JTCd9mprlHvapNEnjjtG1TXb/tMY4SbCiJyuxECEpg6axTGjAmj9
-         XVUw==
-X-Gm-Message-State: AOAM531pl/KlVU5/Hld4oJn2M7ke7x5EZMKR0/TPTRPzokWIdZ9biPrS
-        QWY3hkETtZ2UZl0AqCZLIr8Wbw==
-X-Google-Smtp-Source: ABdhPJzERd6h2f5ozXlUx/49OJyASL0EuWwpKA/ZNOiPzrjjRjjUIVtN7al2utfY9RN1fzB0d+KWMA==
-X-Received: by 2002:a63:c24:0:b0:375:9840:6a97 with SMTP id b36-20020a630c24000000b0037598406a97mr19045672pgl.77.1646115871117;
-        Mon, 28 Feb 2022 22:24:31 -0800 (PST)
-Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id q22-20020a056a00085600b004f397d1f3b5sm16461364pfk.171.2022.02.28.22.24.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Feb 2022 22:24:30 -0800 (PST)
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Marc Zyngier <maz@kernel.org>
-Cc:     Thomas Gleixner <tglx@linutronix.de>,
-        Maulik Shah <quic_mkshah@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH v7 2/2] irqchip: Add Qualcomm MPM controller driver
-Date:   Tue,  1 Mar 2022 14:24:14 +0800
-Message-Id: <20220301062414.2987591-3-shawn.guo@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220301062414.2987591-1-shawn.guo@linaro.org>
-References: <20220301062414.2987591-1-shawn.guo@linaro.org>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=InAZmAMB2EBIfdWcEEf0JofPW20Wpd8LRNGnhF7kPbs=;
+        b=GJMDCHK6yoT1JxKGwOLoIFE2X8NfXtRE/CQZjoNIK2jCQopg5/0D3D59nvs0TgrphE
+         zyN2oWZk7OCFj6rFeqrgH2sQFYKrSYSgi40/7FkH4+p31u7F1ECr45dAwqtaXmAFHexc
+         QM7aIyMrD7mPWkLlouAwfigI6Ly+ocCJ/BD5wuFm9n21ilRWwxYtd6/BzYZWi7fTaWkW
+         HhHU3PH9IFfPxUQ98uRnUQNp3WDYEbYyfqJ4EjqGzJe6J2jK5DTgL3KvUfdYzi3qw08I
+         1S9QuHgK8LmiwbQxnJlTiNtR/dVyR4Asm68JcwovFY5hg2oTwbisBW0Re2vMqiiOFBpR
+         nBEQ==
+X-Gm-Message-State: AOAM532KwGNWLOtXL4RdcQ1r9DkBvnaYwYcgYmfB5OUFloLbI+GAYSYk
+        dt4w/V6ao6Q2QY/WoHFU4+pM
+X-Google-Smtp-Source: ABdhPJxox4MM6hAazw3C783WMUxznpatQbH85mhnrFWWVTeSbnAMeTz+NyiBsQjriKxl8C+LEGxOYQ==
+X-Received: by 2002:a05:6a00:1494:b0:4f0:ece9:a01c with SMTP id v20-20020a056a00149400b004f0ece9a01cmr25416030pfu.58.1646116894276;
+        Mon, 28 Feb 2022 22:41:34 -0800 (PST)
+Received: from workstation ([117.207.25.80])
+        by smtp.gmail.com with ESMTPSA id h3-20020a056a00170300b004f104c635e4sm16308420pfc.99.2022.02.28.22.41.30
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 28 Feb 2022 22:41:33 -0800 (PST)
+Date:   Tue, 1 Mar 2022 12:11:28 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     mhi@lists.linux.dev, quic_hemantk@quicinc.com,
+        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
+        vinod.koul@linaro.org, bjorn.andersson@linaro.org,
+        dmitry.baryshkov@linaro.org, quic_vbadigan@quicinc.com,
+        quic_cang@quicinc.com, quic_skananth@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 17/27] bus: mhi: ep: Add support for processing MHI
+ endpoint interrupts
+Message-ID: <20220301064128.GD12451@workstation>
+References: <20220228124344.77359-1-manivannan.sadhasivam@linaro.org>
+ <20220228124344.77359-18-manivannan.sadhasivam@linaro.org>
+ <3c611baf-1be9-4bf2-86c9-30a3b935a86b@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3c611baf-1be9-4bf2-86c9-30a3b935a86b@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -75,523 +78,234 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm SoCs based on the RPM architecture have a MSM Power Manager (MPM)
-in always-on domain. In addition to managing resources during sleep, the
-hardware also has an interrupt controller that monitors the interrupts
-when the system is asleep, wakes up the APSS when one of these interrupts
-occur and replays it to GIC after it becomes operational.
+On Mon, Feb 28, 2022 at 10:45:15AM -0600, Alex Elder wrote:
+> On 2/28/22 6:43 AM, Manivannan Sadhasivam wrote:
+> > Add support for processing MHI endpoint interrupts such as control
+> > interrupt, command interrupt and channel interrupt from the host.
+> > 
+> > The interrupts will be generated in the endpoint device whenever host
+> > writes to the corresponding doorbell registers. The doorbell logic
+> > is handled inside the hardware internally.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+> One suggestion for future work, but otherwise this looks good.
+> 
+> Reviewed-by: Alex Elder <elder@linaro.org>
+> 
+> > ---
+> >   drivers/bus/mhi/ep/main.c | 123 +++++++++++++++++++++++++++++++++++++-
+> >   include/linux/mhi_ep.h    |   4 ++
+> >   2 files changed, 125 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+> > index 7a29543586d0..ce690b1aeace 100644
+> > --- a/drivers/bus/mhi/ep/main.c
+> > +++ b/drivers/bus/mhi/ep/main.c
+> > @@ -143,6 +143,112 @@ static void mhi_ep_state_worker(struct work_struct *work)
+> >   	}
+> >   }
+> > +static void mhi_ep_queue_channel_db(struct mhi_ep_cntrl *mhi_cntrl, unsigned long ch_int,
+> > +				    u32 ch_idx)
+> > +{
+> > +	struct mhi_ep_ring_item *item;
+> > +	struct mhi_ep_ring *ring;
+> > +	bool work = !!ch_int;
+> > +	LIST_HEAD(head);
+> > +	u32 i;
+> > +
+> > +	/* First add the ring items to a local list */
+> > +	for_each_set_bit(i, &ch_int, 32) {
+> > +		/* Channel index varies for each register: 0, 32, 64, 96 */
+> > +		u32 ch_id = ch_idx + i;
+> > +
+> > +		ring = &mhi_cntrl->mhi_chan[ch_id].ring;
+> > +		item = kzalloc(sizeof(*item), GFP_ATOMIC);
+> 
+> It looks like this will be used a lot, so I suggest you
+> consider creating a slab cache of ring items to allocate
+> from.  I haven't suggested that elsewhere, but it's
+> possible there are other frequently-allocated structures
+> that would warrant that.
+> 
 
-It adds an irqchip driver for this interrupt controller, and here are
-some notes about it.
+Sure.
 
-- For given SoC, a fixed number of MPM pins are supported, e.g. 96 pins
-  on QCM2290.  Each of these MPM pins can be either a MPM_GIC pin or
-  a MPM_GPIO pin. The mapping between MPM_GIC pin and GIC interrupt
-  is defined by SoC, as well as the mapping between MPM_GPIO pin and
-  GPIO number.  The former mapping is retrieved from device tree, while
-  the latter is defined in TLMM pinctrl driver.
+Thanks,
+Mani
 
-- qcom_mpm_enter_sleep() is called from power domain (PD) .power_off
-  hook to notify RPM that APSS is about to power collapse.  This
-  requires MPM PD be the parent PD of CPU cluster.
-
-- When SoC gets awake from sleep mode, the driver will receive an
-  interrupt from RPM, so that it can replay interrupt for particular
-  polarity.
-
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
----
- drivers/irqchip/Kconfig        |   8 +
- drivers/irqchip/Makefile       |   1 +
- drivers/irqchip/irq-qcom-mpm.c | 448 +++++++++++++++++++++++++++++++++
- 3 files changed, 457 insertions(+)
- create mode 100644 drivers/irqchip/irq-qcom-mpm.c
-
-diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
-index 7038957f4a77..680d2fcf2686 100644
---- a/drivers/irqchip/Kconfig
-+++ b/drivers/irqchip/Kconfig
-@@ -430,6 +430,14 @@ config QCOM_PDC
- 	  Power Domain Controller driver to manage and configure wakeup
- 	  IRQs for Qualcomm Technologies Inc (QTI) mobile chips.
- 
-+config QCOM_MPM
-+	tristate "QCOM MPM"
-+	depends on ARCH_QCOM
-+	select IRQ_DOMAIN_HIERARCHY
-+	help
-+	  MSM Power Manager driver to manage and configure wakeup
-+	  IRQs for Qualcomm Technologies Inc (QTI) mobile chips.
-+
- config CSKY_MPINTC
- 	bool
- 	depends on CSKY
-diff --git a/drivers/irqchip/Makefile b/drivers/irqchip/Makefile
-index c1f611cbfbf8..1f8990f812f1 100644
---- a/drivers/irqchip/Makefile
-+++ b/drivers/irqchip/Makefile
-@@ -94,6 +94,7 @@ obj-$(CONFIG_MESON_IRQ_GPIO)		+= irq-meson-gpio.o
- obj-$(CONFIG_GOLDFISH_PIC) 		+= irq-goldfish-pic.o
- obj-$(CONFIG_NDS32)			+= irq-ativic32.o
- obj-$(CONFIG_QCOM_PDC)			+= qcom-pdc.o
-+obj-$(CONFIG_QCOM_MPM)			+= irq-qcom-mpm.o
- obj-$(CONFIG_CSKY_MPINTC)		+= irq-csky-mpintc.o
- obj-$(CONFIG_CSKY_APB_INTC)		+= irq-csky-apb-intc.o
- obj-$(CONFIG_RISCV_INTC)		+= irq-riscv-intc.o
-diff --git a/drivers/irqchip/irq-qcom-mpm.c b/drivers/irqchip/irq-qcom-mpm.c
-new file mode 100644
-index 000000000000..f4409c169a3a
---- /dev/null
-+++ b/drivers/irqchip/irq-qcom-mpm.c
-@@ -0,0 +1,448 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2021, Linaro Limited
-+ * Copyright (c) 2010-2020, The Linux Foundation. All rights reserved.
-+ */
-+
-+#include <linux/delay.h>
-+#include <linux/err.h>
-+#include <linux/init.h>
-+#include <linux/interrupt.h>
-+#include <linux/io.h>
-+#include <linux/irqchip.h>
-+#include <linux/irqchip/arm-gic-v3.h>
-+#include <linux/irqdomain.h>
-+#include <linux/mailbox_client.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/of_device.h>
-+#include <linux/platform_device.h>
-+#include <linux/pm_domain.h>
-+#include <linux/slab.h>
-+#include <linux/soc/qcom/irq.h>
-+#include <linux/spinlock.h>
-+
-+/*
-+ * This is the driver for Qualcomm MPM (MSM Power Manager) interrupt controller,
-+ * which is commonly found on Qualcomm SoCs built on the RPM architecture.
-+ * Sitting in always-on domain, MPM monitors the wakeup interrupts when SoC is
-+ * asleep, and wakes up the AP when one of those interrupts occurs.  This driver
-+ * doesn't directly access physical MPM registers though.  Instead, the access
-+ * is bridged via a piece of internal memory (SRAM) that is accessible to both
-+ * AP and RPM.  This piece of memory is called 'vMPM' in the driver.
-+ *
-+ * When SoC is awake, the vMPM is owned by AP and the register setup by this
-+ * driver all happens on vMPM.  When AP is about to get power collapsed, the
-+ * driver sends a mailbox notification to RPM, which will take over the vMPM
-+ * ownership and dump vMPM into physical MPM registers.  On wakeup, AP is woken
-+ * up by a MPM pin/interrupt, and RPM will copy STATUS registers into vMPM.
-+ * Then AP start owning vMPM again.
-+ *
-+ * vMPM register map:
-+ *
-+ *    31                              0
-+ *    +--------------------------------+
-+ *    |            TIMER0              | 0x00
-+ *    +--------------------------------+
-+ *    |            TIMER1              | 0x04
-+ *    +--------------------------------+
-+ *    |            ENABLE0             | 0x08
-+ *    +--------------------------------+
-+ *    |              ...               | ...
-+ *    +--------------------------------+
-+ *    |            ENABLEn             |
-+ *    +--------------------------------+
-+ *    |          FALLING_EDGE0         |
-+ *    +--------------------------------+
-+ *    |              ...               |
-+ *    +--------------------------------+
-+ *    |            STATUSn             |
-+ *    +--------------------------------+
-+ *
-+ *    n = DIV_ROUND_UP(pin_cnt, 32)
-+ *
-+ */
-+
-+#define MPM_REG_ENABLE		0
-+#define MPM_REG_FALLING_EDGE	1
-+#define MPM_REG_RISING_EDGE	2
-+#define MPM_REG_POLARITY	3
-+#define MPM_REG_STATUS		4
-+
-+/* MPM pin map to GIC hwirq */
-+struct mpm_gic_map {
-+	int pin;
-+	irq_hw_number_t hwirq;
-+};
-+
-+struct qcom_mpm_priv {
-+	void __iomem *base;
-+	raw_spinlock_t lock;
-+	struct mbox_client mbox_client;
-+	struct mbox_chan *mbox_chan;
-+	struct mpm_gic_map *maps;
-+	unsigned int map_cnt;
-+	unsigned int reg_stride;
-+	struct irq_domain *domain;
-+	struct generic_pm_domain genpd;
-+};
-+
-+static u32 qcom_mpm_read(struct qcom_mpm_priv *priv, unsigned int reg,
-+			 unsigned int index)
-+{
-+	unsigned int offset = (reg * priv->reg_stride + index + 2) * 4;
-+
-+	return readl_relaxed(priv->base + offset);
-+}
-+
-+static void qcom_mpm_write(struct qcom_mpm_priv *priv, unsigned int reg,
-+			   unsigned int index, u32 val)
-+{
-+	unsigned int offset = (reg * priv->reg_stride + index + 2) * 4;
-+
-+	writel_relaxed(val, priv->base + offset);
-+
-+	/* Ensure the write is completed */
-+	wmb();
-+}
-+
-+static void qcom_mpm_enable_irq(struct irq_data *d, bool en)
-+{
-+	struct qcom_mpm_priv *priv = d->chip_data;
-+	int pin = d->hwirq;
-+	unsigned int index = pin / 32;
-+	unsigned int shift = pin % 32;
-+	unsigned long flags;
-+	u32 val;
-+
-+	raw_spin_lock_irqsave(&priv->lock, flags);
-+
-+	val = qcom_mpm_read(priv, MPM_REG_ENABLE, index);
-+	if (en)
-+		val |= BIT(shift);
-+	else
-+		val &= ~BIT(shift);
-+	qcom_mpm_write(priv, MPM_REG_ENABLE, index, val);
-+
-+	raw_spin_unlock_irqrestore(&priv->lock, flags);
-+}
-+
-+static void qcom_mpm_mask(struct irq_data *d)
-+{
-+	qcom_mpm_enable_irq(d, false);
-+
-+	if (d->parent_data)
-+		irq_chip_mask_parent(d);
-+}
-+
-+static void qcom_mpm_unmask(struct irq_data *d)
-+{
-+	qcom_mpm_enable_irq(d, true);
-+
-+	if (d->parent_data)
-+		irq_chip_unmask_parent(d);
-+}
-+
-+static void mpm_set_type(struct qcom_mpm_priv *priv, bool set, unsigned int reg,
-+			 unsigned int index, unsigned int shift)
-+{
-+	unsigned long flags;
-+	u32 val;
-+
-+	raw_spin_lock_irqsave(&priv->lock, flags);
-+
-+	val = qcom_mpm_read(priv, reg, index);
-+	if (set)
-+		val |= BIT(shift);
-+	else
-+		val &= ~BIT(shift);
-+	qcom_mpm_write(priv, reg, index, val);
-+
-+	raw_spin_unlock_irqrestore(&priv->lock, flags);
-+}
-+
-+static int qcom_mpm_set_type(struct irq_data *d, unsigned int type)
-+{
-+	struct qcom_mpm_priv *priv = d->chip_data;
-+	int pin = d->hwirq;
-+	unsigned int index = pin / 32;
-+	unsigned int shift = pin % 32;
-+
-+	switch (type & IRQ_TYPE_SENSE_MASK) {
-+	case IRQ_TYPE_EDGE_RISING:
-+		mpm_set_type(priv, !!(type & IRQ_TYPE_EDGE_RISING),
-+			     MPM_REG_RISING_EDGE, index, shift);
-+		break;
-+	case IRQ_TYPE_EDGE_FALLING:
-+		mpm_set_type(priv, !!(type & IRQ_TYPE_EDGE_FALLING),
-+			     MPM_REG_FALLING_EDGE, index, shift);
-+		break;
-+	case IRQ_TYPE_LEVEL_HIGH:
-+		mpm_set_type(priv, !!(type & IRQ_TYPE_LEVEL_HIGH),
-+			     MPM_REG_POLARITY, index, shift);
-+		break;
-+	}
-+
-+	if (!d->parent_data)
-+		return 0;
-+
-+	if (type & IRQ_TYPE_EDGE_BOTH)
-+		type = IRQ_TYPE_EDGE_RISING;
-+
-+	if (type & IRQ_TYPE_LEVEL_MASK)
-+		type = IRQ_TYPE_LEVEL_HIGH;
-+
-+	return irq_chip_set_type_parent(d, type);
-+}
-+
-+static struct irq_chip qcom_mpm_chip = {
-+	.name			= "mpm",
-+	.irq_eoi		= irq_chip_eoi_parent,
-+	.irq_mask		= qcom_mpm_mask,
-+	.irq_unmask		= qcom_mpm_unmask,
-+	.irq_retrigger		= irq_chip_retrigger_hierarchy,
-+	.irq_set_type		= qcom_mpm_set_type,
-+	.irq_set_affinity	= irq_chip_set_affinity_parent,
-+	.flags			= IRQCHIP_MASK_ON_SUSPEND |
-+				  IRQCHIP_SKIP_SET_WAKE,
-+};
-+
-+static struct mpm_gic_map *get_mpm_gic_map(struct qcom_mpm_priv *priv, int pin)
-+{
-+	struct mpm_gic_map *maps = priv->maps;
-+	int i;
-+
-+	for (i = 0; i < priv->map_cnt; i++) {
-+		if (maps[i].pin == pin)
-+			return &maps[i];
-+	}
-+
-+	return NULL;
-+}
-+
-+static int qcom_mpm_alloc(struct irq_domain *domain, unsigned int virq,
-+			  unsigned int nr_irqs, void *data)
-+{
-+	struct qcom_mpm_priv *priv = domain->host_data;
-+	struct irq_fwspec *fwspec = data;
-+	struct irq_fwspec parent_fwspec;
-+	struct mpm_gic_map *map;
-+	irq_hw_number_t hwirq;
-+	unsigned int type;
-+	int  ret;
-+
-+	ret = irq_domain_translate_twocell(domain, fwspec, &hwirq, &type);
-+	if (ret)
-+		return ret;
-+
-+	ret = irq_domain_set_hwirq_and_chip(domain, virq, hwirq,
-+					    &qcom_mpm_chip, priv);
-+	if (ret)
-+		return ret;
-+
-+	map = get_mpm_gic_map(priv, hwirq);
-+	if (map == NULL)
-+		return irq_domain_disconnect_hierarchy(domain->parent, virq);
-+
-+	if (type & IRQ_TYPE_EDGE_BOTH)
-+		type = IRQ_TYPE_EDGE_RISING;
-+
-+	if (type & IRQ_TYPE_LEVEL_MASK)
-+		type = IRQ_TYPE_LEVEL_HIGH;
-+
-+	parent_fwspec.fwnode = domain->parent->fwnode;
-+	parent_fwspec.param_count = 3;
-+	parent_fwspec.param[0] = 0;
-+	parent_fwspec.param[1] = map->hwirq;
-+	parent_fwspec.param[2] = type;
-+
-+	return irq_domain_alloc_irqs_parent(domain, virq, nr_irqs,
-+					    &parent_fwspec);
-+}
-+
-+static const struct irq_domain_ops qcom_mpm_ops = {
-+	.alloc		= qcom_mpm_alloc,
-+	.free		= irq_domain_free_irqs_common,
-+	.translate	= irq_domain_translate_twocell,
-+};
-+
-+/* Triggered by RPM when system resumes from deep sleep */
-+static irqreturn_t qcom_mpm_handler(int irq, void *dev_id)
-+{
-+	struct qcom_mpm_priv *priv = dev_id;
-+	unsigned long enable, pending;
-+	irqreturn_t ret = IRQ_NONE;
-+	unsigned long flags;
-+	int i, j;
-+
-+	for (i = 0; i < priv->reg_stride; i++) {
-+		raw_spin_lock_irqsave(&priv->lock, flags);
-+		enable = qcom_mpm_read(priv, MPM_REG_ENABLE, i);
-+		pending = qcom_mpm_read(priv, MPM_REG_STATUS, i);
-+		pending &= enable;
-+		raw_spin_unlock_irqrestore(&priv->lock, flags);
-+
-+		for_each_set_bit(j, &pending, 32) {
-+			unsigned int pin = 32 * i + j;
-+			struct irq_desc *desc = irq_resolve_mapping(priv->domain, pin);
-+			struct irq_data *d = &desc->irq_data;
-+
-+			if (!irqd_is_level_type(d))
-+				irq_set_irqchip_state(d->irq,
-+						IRQCHIP_STATE_PENDING, true);
-+			ret = IRQ_HANDLED;
-+		}
-+	}
-+
-+	return ret;
-+}
-+
-+static int qcom_mpm_enter_sleep(struct qcom_mpm_priv *priv)
-+{
-+	int i, ret;
-+
-+	for (i = 0; i < priv->reg_stride; i++)
-+		qcom_mpm_write(priv, MPM_REG_STATUS, i, 0);
-+
-+	/* Notify RPM to write vMPM into HW */
-+	ret = mbox_send_message(priv->mbox_chan, NULL);
-+	if (ret < 0)
-+		return ret;
-+
-+	return 0;
-+}
-+
-+static int mpm_pd_power_off(struct generic_pm_domain *genpd)
-+{
-+	struct qcom_mpm_priv *priv = container_of(genpd, struct qcom_mpm_priv,
-+						  genpd);
-+
-+	return qcom_mpm_enter_sleep(priv);
-+}
-+
-+static int qcom_mpm_init(struct device_node *np, struct device_node *parent)
-+{
-+	struct platform_device *pdev = of_find_device_by_node(np);
-+	struct device *dev = &pdev->dev;
-+	struct irq_domain *parent_domain;
-+	struct generic_pm_domain *genpd;
-+	struct qcom_mpm_priv *priv;
-+	unsigned int pin_cnt;
-+	int i, irq;
-+	int ret;
-+
-+	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
-+
-+	ret = of_property_read_u32(np, "qcom,mpm-pin-count", &pin_cnt);
-+	if (ret) {
-+		dev_err(dev, "failed to read qcom,mpm-pin-count: %d\n", ret);
-+		return ret;
-+	}
-+
-+	priv->reg_stride = DIV_ROUND_UP(pin_cnt, 32);
-+
-+	ret = of_property_count_u32_elems(np, "qcom,mpm-pin-map");
-+	if (ret < 0) {
-+		dev_err(dev, "failed to read qcom,mpm-pin-map: %d\n", ret);
-+		return ret;
-+	}
-+
-+	if (ret % 2) {
-+		dev_err(dev, "invalid qcom,mpm-pin-map\n");
-+		return -EINVAL;
-+	}
-+
-+	priv->map_cnt = ret / 2;
-+	priv->maps = devm_kcalloc(dev, priv->map_cnt, sizeof(*priv->maps),
-+				  GFP_KERNEL);
-+	if (!priv->maps)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < priv->map_cnt; i++) {
-+		of_property_read_u32_index(np, "qcom,mpm-pin-map", i * 2,
-+					   &priv->maps[i].pin);
-+		of_property_read_u32_index(np, "qcom,mpm-pin-map", i * 2 + 1,
-+					   (u32 *) &priv->maps[i].hwirq);
-+	}
-+
-+	raw_spin_lock_init(&priv->lock);
-+
-+	priv->base = devm_platform_ioremap_resource(pdev, 0);
-+	if (!priv->base)
-+		return PTR_ERR(priv->base);
-+
-+	irq = platform_get_irq(pdev, 0);
-+	if (irq < 0)
-+		return irq;
-+
-+	genpd = &priv->genpd;
-+	genpd->flags = GENPD_FLAG_IRQ_SAFE;
-+	genpd->power_off = mpm_pd_power_off;
-+
-+	genpd->name = devm_kasprintf(dev, GFP_KERNEL, "%s", dev_name(dev));
-+	if (!genpd->name)
-+		return -ENOMEM;
-+
-+	ret = pm_genpd_init(genpd, NULL, false);
-+	if (ret) {
-+		dev_err(dev, "failed to init genpd: %d\n", ret);
-+		return ret;
-+	}
-+
-+	ret = of_genpd_add_provider_simple(np, genpd);
-+	if (ret) {
-+		dev_err(dev, "failed to add genpd provider: %d\n", ret);
-+		goto remove_genpd;
-+	}
-+
-+	priv->mbox_client.dev = dev;
-+	priv->mbox_chan = mbox_request_channel(&priv->mbox_client, 0);
-+	if (IS_ERR(priv->mbox_chan)) {
-+		ret = PTR_ERR(priv->mbox_chan);
-+		dev_err(dev, "failed to acquire IPC channel: %d\n", ret);
-+		return ret;
-+	}
-+
-+	parent_domain = irq_find_host(parent);
-+	if (!parent_domain) {
-+		dev_err(dev, "failed to find MPM parent domain\n");
-+		ret = -ENXIO;
-+		goto free_mbox;
-+	}
-+
-+	priv->domain = irq_domain_create_hierarchy(parent_domain,
-+				IRQ_DOMAIN_FLAG_QCOM_MPM_WAKEUP, pin_cnt,
-+				of_node_to_fwnode(np), &qcom_mpm_ops, priv);
-+	if (!priv->domain) {
-+		dev_err(dev, "failed to create MPM domain\n");
-+		ret = -ENOMEM;
-+		goto free_mbox;
-+	}
-+
-+	irq_domain_update_bus_token(priv->domain, DOMAIN_BUS_WAKEUP);
-+
-+	ret = devm_request_irq(dev, irq, qcom_mpm_handler, IRQF_NO_SUSPEND,
-+			       "qcom_mpm", priv);
-+	if (ret) {
-+		dev_err(dev, "failed to request irq: %d\n", ret);
-+		goto remove_domain;
-+	}
-+
-+	return 0;
-+
-+remove_domain:
-+	irq_domain_remove(priv->domain);
-+free_mbox:
-+	mbox_free_channel(priv->mbox_chan);
-+remove_genpd:
-+	pm_genpd_remove(genpd);
-+	return ret;
-+}
-+
-+IRQCHIP_PLATFORM_DRIVER_BEGIN(qcom_mpm)
-+IRQCHIP_MATCH("qcom,mpm", qcom_mpm_init)
-+IRQCHIP_PLATFORM_DRIVER_END(qcom_mpm)
-+MODULE_DESCRIPTION("Qualcomm Technologies, Inc. MSM Power Manager");
-+MODULE_LICENSE("GPL v2");
--- 
-2.25.1
-
+> > +		if (!item)
+> > +			return;
+> > +
+> > +		item->ring = ring;
+> > +		list_add_tail(&item->node, &head);
+> > +	}
+> > +
+> > +	/* Now, splice the local list into ch_db_list and queue the work item */
+> > +	if (work) {
+> > +		spin_lock(&mhi_cntrl->list_lock);
+> > +		list_splice_tail_init(&head, &mhi_cntrl->ch_db_list);
+> > +		spin_unlock(&mhi_cntrl->list_lock);
+> > +	}
+> > +}
+> > +
+> > +/*
+> > + * Channel interrupt statuses are contained in 4 registers each of 32bit length.
+> > + * For checking all interrupts, we need to loop through each registers and then
+> > + * check for bits set.
+> > + */
+> > +static void mhi_ep_check_channel_interrupt(struct mhi_ep_cntrl *mhi_cntrl)
+> > +{
+> > +	u32 ch_int, ch_idx, i;
+> > +
+> > +	/* Bail out if there is no channel doorbell interrupt */
+> > +	if (!mhi_ep_mmio_read_chdb_status_interrupts(mhi_cntrl))
+> > +		return;
+> > +
+> > +	for (i = 0; i < MHI_MASK_ROWS_CH_EV_DB; i++) {
+> > +		ch_idx = i * MHI_MASK_CH_EV_LEN;
+> > +
+> > +		/* Only process channel interrupt if the mask is enabled */
+> > +		ch_int = mhi_cntrl->chdb[i].status & mhi_cntrl->chdb[i].mask;
+> > +		if (ch_int) {
+> > +			mhi_ep_queue_channel_db(mhi_cntrl, ch_int, ch_idx);
+> > +			mhi_ep_mmio_write(mhi_cntrl, MHI_CHDB_INT_CLEAR_n(i),
+> > +							mhi_cntrl->chdb[i].status);
+> > +		}
+> > +	}
+> > +}
+> > +
+> > +static void mhi_ep_process_ctrl_interrupt(struct mhi_ep_cntrl *mhi_cntrl,
+> > +					 enum mhi_state state)
+> > +{
+> > +	struct mhi_ep_state_transition *item;
+> > +
+> > +	item = kzalloc(sizeof(*item), GFP_ATOMIC);
+> > +	if (!item)
+> > +		return;
+> > +
+> > +	item->state = state;
+> > +	spin_lock(&mhi_cntrl->list_lock);
+> > +	list_add_tail(&item->node, &mhi_cntrl->st_transition_list);
+> > +	spin_unlock(&mhi_cntrl->list_lock);
+> > +
+> > +	queue_work(mhi_cntrl->wq, &mhi_cntrl->state_work);
+> > +}
+> > +
+> > +/*
+> > + * Interrupt handler that services interrupts raised by the host writing to
+> > + * MHICTRL and Command ring doorbell (CRDB) registers for state change and
+> > + * channel interrupts.
+> > + */
+> > +static irqreturn_t mhi_ep_irq(int irq, void *data)
+> > +{
+> > +	struct mhi_ep_cntrl *mhi_cntrl = data;
+> > +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> > +	enum mhi_state state;
+> > +	u32 int_value;
+> > +
+> > +	/* Acknowledge the ctrl interrupt */
+> > +	int_value = mhi_ep_mmio_read(mhi_cntrl, MHI_CTRL_INT_STATUS);
+> > +	mhi_ep_mmio_write(mhi_cntrl, MHI_CTRL_INT_CLEAR, int_value);
+> > +
+> > +	/* Check for ctrl interrupt */
+> > +	if (FIELD_GET(MHI_CTRL_INT_STATUS_MSK, int_value)) {
+> > +		dev_dbg(dev, "Processing ctrl interrupt\n");
+> > +		mhi_ep_process_ctrl_interrupt(mhi_cntrl, state);
+> > +	}
+> > +
+> > +	/* Check for command doorbell interrupt */
+> > +	if (FIELD_GET(MHI_CTRL_INT_STATUS_CRDB_MSK, int_value))
+> > +		dev_dbg(dev, "Processing command doorbell interrupt\n");
+> > +
+> > +	/* Check for channel interrupts */
+> > +	mhi_ep_check_channel_interrupt(mhi_cntrl);
+> > +
+> > +	return IRQ_HANDLED;
+> > +}
+> > +
+> >   static void mhi_ep_release_device(struct device *dev)
+> >   {
+> >   	struct mhi_ep_device *mhi_dev = to_mhi_ep_device(dev);
+> > @@ -339,7 +445,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+> >   	struct mhi_ep_device *mhi_dev;
+> >   	int ret;
+> > -	if (!mhi_cntrl || !mhi_cntrl->cntrl_dev || !mhi_cntrl->mmio)
+> > +	if (!mhi_cntrl || !mhi_cntrl->cntrl_dev || !mhi_cntrl->mmio || !mhi_cntrl->irq)
+> >   		return -EINVAL;
+> >   	ret = mhi_ep_chan_init(mhi_cntrl, config);
+> > @@ -361,6 +467,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+> >   	}
+> >   	INIT_LIST_HEAD(&mhi_cntrl->st_transition_list);
+> > +	INIT_LIST_HEAD(&mhi_cntrl->ch_db_list);
+> >   	spin_lock_init(&mhi_cntrl->state_lock);
+> >   	spin_lock_init(&mhi_cntrl->list_lock);
+> >   	mutex_init(&mhi_cntrl->event_lock);
+> > @@ -376,12 +483,20 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+> >   		goto err_destroy_wq;
+> >   	}
+> > +	irq_set_status_flags(mhi_cntrl->irq, IRQ_NOAUTOEN);
+> > +	ret = request_irq(mhi_cntrl->irq, mhi_ep_irq, IRQF_TRIGGER_HIGH,
+> > +			  "doorbell_irq", mhi_cntrl);
+> > +	if (ret) {
+> > +		dev_err(mhi_cntrl->cntrl_dev, "Failed to request Doorbell IRQ\n");
+> > +		goto err_ida_free;
+> > +	}
+> > +
+> >   	/* Allocate the controller device */
+> >   	mhi_dev = mhi_ep_alloc_device(mhi_cntrl, MHI_DEVICE_CONTROLLER);
+> >   	if (IS_ERR(mhi_dev)) {
+> >   		dev_err(mhi_cntrl->cntrl_dev, "Failed to allocate controller device\n");
+> >   		ret = PTR_ERR(mhi_dev);
+> > -		goto err_ida_free;
+> > +		goto err_free_irq;
+> >   	}
+> >   	dev_set_name(&mhi_dev->dev, "mhi_ep%u", mhi_cntrl->index);
+> > @@ -398,6 +513,8 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+> >   err_put_dev:
+> >   	put_device(&mhi_dev->dev);
+> > +err_free_irq:
+> > +	free_irq(mhi_cntrl->irq, mhi_cntrl);
+> >   err_ida_free:
+> >   	ida_free(&mhi_ep_cntrl_ida, mhi_cntrl->index);
+> >   err_destroy_wq:
+> > @@ -417,6 +534,8 @@ void mhi_ep_unregister_controller(struct mhi_ep_cntrl *mhi_cntrl)
+> >   	destroy_workqueue(mhi_cntrl->wq);
+> > +	free_irq(mhi_cntrl->irq, mhi_cntrl);
+> > +
+> >   	kfree(mhi_cntrl->mhi_cmd);
+> >   	kfree(mhi_cntrl->mhi_chan);
+> > diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
+> > index dc27a5de7d3c..43aa9b133db4 100644
+> > --- a/include/linux/mhi_ep.h
+> > +++ b/include/linux/mhi_ep.h
+> > @@ -70,6 +70,7 @@ struct mhi_ep_db_info {
+> >    * @list_lock: Lock for protecting state transition and channel doorbell lists
+> >    * @state_lock: Lock for protecting state transitions
+> >    * @st_transition_list: List of state transitions
+> > + * @ch_db_list: List of queued channel doorbells
+> >    * @wq: Dedicated workqueue for handling rings and state changes
+> >    * @state_work: State transition worker
+> >    * @raise_irq: CB function for raising IRQ to the host
+> > @@ -87,6 +88,7 @@ struct mhi_ep_db_info {
+> >    * @chdb_offset: Channel doorbell offset set by the host
+> >    * @erdb_offset: Event ring doorbell offset set by the host
+> >    * @index: MHI Endpoint controller index
+> > + * @irq: IRQ used by the endpoint controller
+> >    */
+> >   struct mhi_ep_cntrl {
+> >   	struct device *cntrl_dev;
+> > @@ -111,6 +113,7 @@ struct mhi_ep_cntrl {
+> >   	spinlock_t state_lock;
+> >   	struct list_head st_transition_list;
+> > +	struct list_head ch_db_list;
+> >   	struct workqueue_struct *wq;
+> >   	struct work_struct state_work;
+> > @@ -137,6 +140,7 @@ struct mhi_ep_cntrl {
+> >   	u32 chdb_offset;
+> >   	u32 erdb_offset;
+> >   	u32 index;
+> > +	int irq;
+> >   };
+> >   /**
+> 
