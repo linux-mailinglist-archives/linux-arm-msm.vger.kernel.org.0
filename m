@@ -2,115 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE9C64CAE3D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 20:06:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6608B4CAE73
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 20:16:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229622AbiCBTHS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Mar 2022 14:07:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47244 "EHLO
+        id S244937AbiCBTRZ convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Wed, 2 Mar 2022 14:17:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230433AbiCBTHR (ORCPT
+        with ESMTP id S243467AbiCBTRZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 14:07:17 -0500
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A668BF51A
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 11:06:34 -0800 (PST)
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com [209.85.208.69])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id BD5AE3F1E6
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 19:06:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1646247992;
-        bh=m6ojeTgtogrdSSitR1acR3iefkQ9OYzxbBDb1IxSxtI=;
-        h=Message-ID:Date:MIME-Version:Subject:To:References:Cc:From:
-         In-Reply-To:Content-Type;
-        b=jUn4AdpXL2MD0T5ourWhVWTfWKk2l2T6k46EtU4bRrdsoJbT/kebNlFnSYY6HAEa2
-         Id5eZgkyzXBrHIXbbpdR4aWL71zbBkvSkfEd2/zAGSjIcbuJ+Yn1ltn4p/z62Hta61
-         22XlJbZgzxKAD5whv1NgPvgjLrbchgkUiqMHlEdrDV8qb2m24F9HuVrRxF1tgCF+qA
-         +ysogATGlzeBppYRYLQXzeAtlDTQvRWhHFx3Ix46ksVoYPlQjFLexMEWE9+C8gT8V1
-         USRpQWuWG25s4FMOCS+qHdvPbOZWlq800RcBljyQtLc57kpkkT1z0eCV/wZK3v235I
-         Njo9G+28eFerw==
-Received: by mail-ed1-f69.google.com with SMTP id l24-20020a056402231800b00410f19a3103so1527691eda.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 11:06:32 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:cc:from:in-reply-to
-         :content-transfer-encoding;
-        bh=m6ojeTgtogrdSSitR1acR3iefkQ9OYzxbBDb1IxSxtI=;
-        b=ef0x9R5KioP/Ub1JnRXLvI5EayuPSabCPlhLncu1p0KDBRDdj8SU8h/h03e0U8SgUf
-         BQVM3uIWdKV3qsTrwBHUjFlPbU+UDNEqOnUDYhNj6gjgi9kDKqVMMw/KffKSa53+jNLl
-         G4oXhjqU+9SPQTQFfrN5uDeP8eXO7+RgRzqq6Qt48PY7aCk1Pa3BS1XHqZKKVOp9G3BS
-         ni4eDxW5JbBQ84noTfwFjsBmV2G7mtHJNSfMPXd2VliKt3BCKkORTcLcI1Ms9Ig+hbMG
-         GdgApruJc1lmwjqWsxWnP3moGUTDaccDGt9acEm0s/JroUxvogX86UZfoN0VAOX4RKf+
-         6fPw==
-X-Gm-Message-State: AOAM530qDe0vVG6lq7xUz3OwKscJMqbP9NKRPTdv99tUFEiG8ca9O5Cs
-        sKIVhq3qMrtrrgdRh1GQ2CfsX6tTrkOx9478N6ZT5fWWtd8D45dKenjTtMgOkazq3voTF0iYfNr
-        A6o4ws62ZBeU3hN9V1lYmp6Npha9Fy0dyJ7sAxXRIuNY=
-X-Received: by 2002:a17:906:6a0f:b0:6d7:1021:2bd2 with SMTP id qw15-20020a1709066a0f00b006d710212bd2mr6424425ejc.395.1646247992481;
-        Wed, 02 Mar 2022 11:06:32 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJxeQrZWG2Oxg6RE7q9wIPUX3Z/sjjW6CdMRyOa97Yz1CbhreGcjtKJUbps/xbBHdxqhb0/UQQ==
-X-Received: by 2002:a17:906:6a0f:b0:6d7:1021:2bd2 with SMTP id qw15-20020a1709066a0f00b006d710212bd2mr6424403ejc.395.1646247992278;
-        Wed, 02 Mar 2022 11:06:32 -0800 (PST)
-Received: from [192.168.0.137] (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
-        by smtp.gmail.com with ESMTPSA id cy1-20020a0564021c8100b003e359e4f54asm8827529edb.43.2022.03.02.11.06.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Mar 2022 11:06:31 -0800 (PST)
-Message-ID: <77fd3853-25b2-f9f7-6081-969ec54aa6a9@canonical.com>
-Date:   Wed, 2 Mar 2022 20:06:30 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH 2/4] arm64: dts: mt8183: align Google CROS EC PWM node
- name with dtschema
-Content-Language: en-US
-To:     Matthias Brugger <matthias.bgg@gmail.com>
-References: <20220214081916.162014-1-krzysztof.kozlowski@canonical.com>
- <20220214081916.162014-3-krzysztof.kozlowski@canonical.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Douglas Anderson <dianders@chromium.org>,
-        devicetree@vger.kernel.org, chrome-platform@lists.linux.dev,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
-        Lee Jones <lee.jones@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Guenter Roeck <groeck@chromium.org>,
-        =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
-        linux-mediatek@lists.infradead.org,
-        Benson Leung <bleung@chromium.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        linux-pwm@vger.kernel.org
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <20220214081916.162014-3-krzysztof.kozlowski@canonical.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Wed, 2 Mar 2022 14:17:25 -0500
+Received: from mail.holtmann.org (coyote.holtmann.net [212.227.132.17])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 56BD851317;
+        Wed,  2 Mar 2022 11:16:41 -0800 (PST)
+Received: from smtpclient.apple (p5b3d2910.dip0.t-ipconnect.de [91.61.41.16])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 39BE6CED10;
+        Wed,  2 Mar 2022 20:16:40 +0100 (CET)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.60.0.1.1\))
+Subject: Re: [PATCH] bluetooth: hci_event: don't print an error on vendor
+ events
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <20220302182352.441352-1-caleb.connolly@linaro.org>
+Date:   Wed, 2 Mar 2022 20:16:39 +0100
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        BlueZ <linux-bluetooth@vger.kernel.org>,
+        "open list:NETWORKING [GENERAL]" <netdev@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <0C35F358-3E66-457E-9080-DAE4EB10BF16@holtmann.org>
+References: <20220302182352.441352-1-caleb.connolly@linaro.org>
+To:     Caleb Connolly <caleb.connolly@linaro.org>
+X-Mailer: Apple Mail (2.3693.60.0.1.1)
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/02/2022 09:19, Krzysztof Kozlowski wrote:
-> dtschema expects PWM node name to be a generic "pwm".  This also matches
-> Devicetree specification requirements about generic node names.
+Hi Caleb,
+
+> Since commit 3e54c5890c87 ("Bluetooth: hci_event: Use of a function table to handle HCI events"),
+> some devices see errors being printed for vendor events, e.g.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> [   75.806141] Bluetooth: hci0: setting up wcn399x
+> [   75.948311] Bluetooth: hci0: unexpected event 0xff length: 14 > 0
+> [   75.955552] Bluetooth: hci0: QCA Product ID   :0x0000000a
+> [   75.961369] Bluetooth: hci0: QCA SOC Version  :0x40010214
+> [   75.967417] Bluetooth: hci0: QCA ROM Version  :0x00000201
+> [   75.973363] Bluetooth: hci0: QCA Patch Version:0x00000001
+> [   76.000289] Bluetooth: hci0: QCA controller version 0x02140201
+> [   76.006727] Bluetooth: hci0: QCA Downloading qca/crbtfw21.tlv
+> [   76.986850] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.013574] Bluetooth: hci0: QCA Downloading qca/oneplus6/crnv21.bin
+> [   77.024302] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.032681] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.040674] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.049251] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.057997] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.066320] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.075065] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.083073] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.091250] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.099417] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.110166] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.118672] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.127449] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.137190] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.146192] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.154242] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.163183] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.171202] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.179364] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.187259] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> [   77.198451] Bluetooth: hci0: QCA setup on UART is completed
+> 
+> Use the quick-return path in hci_event_func() to avoid printing this
+> message for vendor events, this reverts to the previous behaviour which
+> didn't print an error for vendor events.
+> 
+> Fixes: 3e54c5890c87 ("Bluetooth: hci_event: Use of a function table to handle HCI events")
+> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 > ---
->  arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
+> net/bluetooth/hci_event.c | 2 +-
+> 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Hi Matthias,
+patch has been applied to bluetooth-stable tree.
 
-Any comments on this patch?
+Regards
 
-Best regards,
-Krzysztof
+Marcel
+
