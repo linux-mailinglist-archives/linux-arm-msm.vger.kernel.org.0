@@ -2,103 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 14EEB4CAE87
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 20:20:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 259A24CAFBD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 21:31:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232452AbiCBTVk convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Wed, 2 Mar 2022 14:21:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57394 "EHLO
+        id S243383AbiCBUbm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Mar 2022 15:31:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229946AbiCBTVk (ORCPT
+        with ESMTP id S243400AbiCBUbl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 14:21:40 -0500
-Received: from mail.holtmann.org (coyote.holtmann.net [212.227.132.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 508F76D970;
-        Wed,  2 Mar 2022 11:20:56 -0800 (PST)
-Received: from smtpclient.apple (p5b3d2910.dip0.t-ipconnect.de [91.61.41.16])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 7696CCED12;
-        Wed,  2 Mar 2022 20:20:55 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.60.0.1.1\))
-Subject: Re: [PATCH v2] bluetooth: hci_event: don't print an error on vendor
- events
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <20220302183515.448334-1-caleb.connolly@linaro.org>
-Date:   Wed, 2 Mar 2022 20:20:55 +0100
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <21F7790B-8849-4131-AF09-4E622B1A9E9D@holtmann.org>
-References: <20220302183515.448334-1-caleb.connolly@linaro.org>
-To:     Caleb Connolly <caleb.connolly@linaro.org>
-X-Mailer: Apple Mail (2.3693.60.0.1.1)
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        Wed, 2 Mar 2022 15:31:41 -0500
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAB52CE916
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 12:30:57 -0800 (PST)
+Received: by mail-pj1-x1034.google.com with SMTP id cx5so2826846pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 12:30:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6sWy4/TaV/KEk/+p6c6dVcypbRzCQ7sFtzJvPWQsaOI=;
+        b=KkDF9fD1aWCQdGpFKtwwZbjnDIO8irQgmjEl86HZtZdrvvngBzTN4etG/0Ri6EF8W6
+         gMjaGwx6mPFE5tvqtCqNgypumEuw2QZAD1N1642E59+v5ByGHPhGH9lJ2zM90ouUK6cP
+         mk2zIxUhix+67Y2g2+1ne7sR8OZKJouX1rkVUKxSjKCsMdF82c3fkR6/9Zh7LfOzsQnX
+         DbNCC0SJOO7393Hbq8y+A1jATFLitQBiF6Qx6DQlGrEWo6fOf3wE2u/d4ao1OHl9bLR6
+         pQNuJIuZNbiUsmX5wNg4bIx7V17TyPm2TZ/aXgoUYSGzHg6dio+V6cOGs3i8dqWocvz/
+         VCxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=6sWy4/TaV/KEk/+p6c6dVcypbRzCQ7sFtzJvPWQsaOI=;
+        b=XFN6mwl6Ir7jn7knFHzIJoRpEYsghR5nm8aRtq5YQCj9GNL35sg7fx0mn86aJk6DOe
+         O8+SHJmGfi2U5X+Sg4KjjDj7vIo9MPy5jHU1lZ2hktXfTqdm2gsp819A1r0afV5FKQXd
+         nv5Bz2kVzZ9PGXILGdkZf26/Nxkx3ng0RyBnnm7hzRAMFzyaUE4hwTmp64bEa32BLmxI
+         GM6IHQmi+ufCeePKsjGdOg3+98atzTeA+4gUEttZdSn3FKL/zLsLBjsc8UFvCL6ijJh1
+         MYBkQ4d6O9fXVxv6IzIpGwOfgzY7eMCH2JUfEmQ/Qn7BqrII40F3Naa0S+l6wBMbW3ZZ
+         wvSg==
+X-Gm-Message-State: AOAM5320xPREfzJDowOy7705bIAScwHBz8Xu82/LTLD3Jyh3i3W7RIHY
+        qZFZCzX28X4VyfX2qrJYkJOLLGLNuZiW3A==
+X-Google-Smtp-Source: ABdhPJwTwrT5eJMRvTA9IudLJVLqPucmAFpRbgQ3mbKPzWCx3jJcKSGaUJR72m8GCOdOi3JHdtzcYw==
+X-Received: by 2002:a17:90a:d90b:b0:1bc:4ec7:d867 with SMTP id c11-20020a17090ad90b00b001bc4ec7d867mr1596549pjv.226.1646253056940;
+        Wed, 02 Mar 2022 12:30:56 -0800 (PST)
+Received: from localhost.localdomain ([182.64.85.91])
+        by smtp.gmail.com with ESMTPSA id b1-20020a17090aa58100b001bcb7bad374sm5963410pjq.17.2022.03.02.12.30.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Mar 2022 12:30:56 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        lorenzo.pieralisi@arm.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, svarbanov@mm-sol.com,
+        bhelgaas@google.com, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org, sboyd@kernel.org, mturquette@baylibre.com,
+        linux-clk@vger.kernel.org
+Subject: [PATCH v3 0/7] Add PCIe support for SM8150 SoC
+Date:   Thu,  3 Mar 2022 02:00:38 +0530
+Message-Id: <20220302203045.184500-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Caleb,
+Changes since v2:
+-----------------
+- v2 can be found here: https://lore.kernel.org/linux-arm-msm/20220301072511.117818-1-bhupesh.sharma@linaro.org/T/
+- Fixed review comments from Dmitry and Bjorn.
+- Modified [PATCH 3/7] from v1 to include gdsc driver structs and
+  support code for PCIe0 and PCIe1 (in addition to defines for the
+  same).
 
-> Since commit 3e54c5890c87 ("Bluetooth: hci_event: Use of a function table to handle HCI events"),
-> some devices see warnings being printed for vendor events, e.g.
-> 
-> [   75.806141] Bluetooth: hci0: setting up wcn399x
-> [   75.948311] Bluetooth: hci0: unexpected event 0xff length: 14 > 0
-> [   75.955552] Bluetooth: hci0: QCA Product ID   :0x0000000a
-> [   75.961369] Bluetooth: hci0: QCA SOC Version  :0x40010214
-> [   75.967417] Bluetooth: hci0: QCA ROM Version  :0x00000201
-> [   75.973363] Bluetooth: hci0: QCA Patch Version:0x00000001
-> [   76.000289] Bluetooth: hci0: QCA controller version 0x02140201
-> [   76.006727] Bluetooth: hci0: QCA Downloading qca/crbtfw21.tlv
-> [   76.986850] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.013574] Bluetooth: hci0: QCA Downloading qca/oneplus6/crnv21.bin
-> [   77.024302] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.032681] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.040674] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.049251] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.057997] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.066320] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.075065] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.083073] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.091250] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.099417] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.110166] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.118672] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.127449] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.137190] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.146192] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.154242] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.163183] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.171202] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.179364] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.187259] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
-> [   77.198451] Bluetooth: hci0: QCA setup on UART is completed
-> 
-> Avoid printing the event length warning for vendor events, this reverts
-> to the previous behaviour where such warnings weren't printed.
-> 
-> Fixes: 3e54c5890c87 ("Bluetooth: hci_event: Use of a function table to handle HCI events")
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-> ---
-> Changes since v1:
-> * Don't return early! Vendor events still get parsed despite the
->   warning. I should have looked a little more closely at that...
-> ---
-> net/bluetooth/hci_event.c | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
+Changes since v1:
+-----------------
+- v1 can be found here: https://lore.kernel.org/linux-arm-msm/20220223192946.473172-1-bhupesh.sharma@linaro.org/T/
+- Collected ACKs on [PATCH 1/7], [PATCH 2/7] and [PATCH 4/7] from Rob
+  and Dmitry.
+- Broke down another separately sent out PATCH (see [1]), into a 3 patches (one each for emac, pci
+  and ufs gdsc defines) - one of which is carried as [PATCH 3/7]
+  in this series, which fixes a compilation error.
+  The rest of the gdsc defines have been sent out as separate patch(es).
+[1]. https://patchwork.kernel.org/project/netdevbpf/patch/20220126221725.710167-4-bhupesh.sharma@linaro.org/
+- Rob's bot reported a number of 'dtbs_check' errors with the v1 series,
+  which are been fixed with a separate series now (see [2]), to ease the
+  review of this series.
+[2]. https://lore.kernel.org/linux-arm-msm/20220228123019.382037-1-bhupesh.sharma@linaro.org/T/
 
-patch has been applied to bluetooth-stable tree.
 
-Regards
+This series adds PCIe support for Qualcomm SM8150 SoC with relevant PHYs.
+There are 2 PCIe instances on this SoC each with different PHYs. The PCIe
+controller and PHYs are mostly compatible with the ones found on SM8250
+SoC, hence the old drivers are modified to add the support.
 
-Marcel
+This series has been tested on SA8155p ADP board with QCA6696 chipset connected
+onboard.
+
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Rob Herring <robh+dt@kernel.org>
+
+Bhupesh Sharma (7):
+  dt-bindings: pci: qcom: Document PCIe bindings for SM8150 SoC
+  dt-bindings: phy: qcom,qmp: Add SM8150 PCIe PHY bindings
+  clk: qcom: gcc: Add PCIe0 and PCIe1 GDSC for SM8150
+  phy: qcom-qmp: Add SM8150 PCIe QMP PHYs
+  PCI: qcom: Add SM8150 SoC support
+  arm64: dts: qcom: sm8150: Add PCIe nodes
+  arm64: dts: qcom: sa8155: Enable PCIe nodes
+
+ .../devicetree/bindings/pci/qcom,pcie.txt     |   5 +-
+ .../devicetree/bindings/phy/qcom,qmp-phy.yaml |   4 +
+ arch/arm64/boot/dts/qcom/sa8155p-adp.dts      |  42 +++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          | 243 ++++++++++++++++++
+ drivers/clk/qcom/gcc-sm8150.c                 |  20 ++
+ drivers/pci/controller/dwc/pcie-qcom.c        |   8 +
+ drivers/phy/qualcomm/phy-qcom-qmp.c           |  90 +++++++
+ include/dt-bindings/clock/qcom,gcc-sm8150.h   |   2 +
+ 8 files changed, 412 insertions(+), 2 deletions(-)
+
+-- 
+2.35.1
 
