@@ -2,155 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF86D4CAFFA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 21:35:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E60A94CB061
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 21:58:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235191AbiCBUgA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Mar 2022 15:36:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50376 "EHLO
+        id S242004AbiCBU7I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Mar 2022 15:59:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231263AbiCBUf7 (ORCPT
+        with ESMTP id S232801AbiCBU7I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 15:35:59 -0500
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80187A1BE0
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 12:35:14 -0800 (PST)
-Received: by mail-yb1-xb32.google.com with SMTP id x200so5830645ybe.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 12:35:14 -0800 (PST)
+        Wed, 2 Mar 2022 15:59:08 -0500
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 668D7D2050;
+        Wed,  2 Mar 2022 12:58:24 -0800 (PST)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-2dbfe58670cso33061237b3.3;
+        Wed, 02 Mar 2022 12:58:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=YN53eJBlO6LI/dYQM4OOvtFLJWL+MHGBWyX2JV/h26E=;
-        b=MjTUXz+h+5C2ABW2kp6n/wfpKph9zjugJLEft4fxu9vbSc/qQJeMNwIJnU98XfelTu
-         k1qblw8oM+RUAojZ2jWn93wCOGQGnMlLhIJ/qzWd5MhsuCo5TqzHEiVbj8mwAX/XfmT0
-         yCF47HYjnAx88lDOlIbswy1f56wcZJ43pdA8SfZLRP75YbiYO3PADUDS0PcrJ7HEryaa
-         9ncPo4FxKTbZkMVn03TdSlaYwavvZCqwHeb+TJjSGoYrvPIEzdqaCwwYvmlOZpKujx37
-         RhiuCCYJq+MIx9SIdVvE0hMf6QsRS69hhc5TK7gOpK9segF0z71CO1ipblYf5oiwwx8K
-         E1mQ==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=gUqcADQZPQvyqaonjnYhl1TaoPMyKV8P7rze27ZP3KI=;
+        b=N5hUOPiLewMUCD+5KaZBMFUn/haOQVDaN2+TFsgiefTgfSDB3L0BGarLhWkc3S3e6R
+         hSaSRV2kSmo2m2GWw0aJ07cybXs2J2cF2RvWIowhPhzEBmvVZ7p5g4YDUzytYOgV0bsu
+         aGafKhgfGfEdHlszoLI2vpItjmasBo6wNfuoRH968Z8To3WUqKyos+4fppD1hCZckv+8
+         d6BtmIXTWZdfrnXXjKMUmU/nCPIqL0OTGzLtMAEbLh7W6+RJShWDachnrSA1yRwB7cuP
+         g28TfoEa9XbBDn7BocwY6DlDEMKrHYBKXR4dJdjY+VQZYC7M0To0hft+yr7OKyAic7u9
+         flvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=YN53eJBlO6LI/dYQM4OOvtFLJWL+MHGBWyX2JV/h26E=;
-        b=Bbc7CcPUBY1Skrk1oPpfBLxfiwnZbwaLW0DKnJjH3Hl2HIlIciLgDNieH56iM5BuoV
-         dEe+qa+Pj+AzDsQGnjfeiiPfvze+oMjOVMvvhSwjtwHcpuI1ZPWM6jKM8jxLHnALr1ER
-         NTwF8lRhECHkLiyc72KOTPbJ7u6HKLlJIocE8VhBH1jV0Ipyfeqh6E/G+hQDSMct/8yq
-         Z4eMHzYvW++aIsGYAEtpZoSg4mx1FN+QDkiJr2dZ4IxpBFV6VZG/vxrAftITCFceHq/2
-         MwKbJ6ljGfqSmrSuBZYo7Bv0hyY/3UghhkrWZA9GZfoNOcxav1Q9lwanDTsbJfy1pt9y
-         GC1Q==
-X-Gm-Message-State: AOAM533WysIwGWkHo3J+cRx5hkQj652DkFIatslZZuPV0AiPF0jzQrtW
-        CXKrCp4kewWK7qNzKhYdE5zJB6bwA6QuB17/V6VlKw==
-X-Google-Smtp-Source: ABdhPJylK2gA9RiCUe9oMAiDiWQmGtVyD6BZsGXQHCmK4IyH7fWX0PSUF9GNfeuHUaRhi6m2osLhrJ+274RgJEcSS+U=
-X-Received: by 2002:a25:da91:0:b0:628:aa84:f69e with SMTP id
- n139-20020a25da91000000b00628aa84f69emr3474229ybf.603.1646253313554; Wed, 02
- Mar 2022 12:35:13 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gUqcADQZPQvyqaonjnYhl1TaoPMyKV8P7rze27ZP3KI=;
+        b=FceiW4m0uXcOdfQUIxnVgU2WUgQ3cTIBBXXvifDduLgTuQ/KCNmxKUT7Jd51RdHmSR
+         apNX2aWMSZUxmZyNaL2tdDh3vV1mPDIVBoiktpos+LYfd18bLlD58P/9iV36Hh78lHv6
+         EW69eV5gJb50uhwInXluJZixyXpSZ8Nx3fx1fytLtjn2eFv9B4kAjMDCW0oMdCZ7X+KA
+         srg6uXJhGh7eQUA71FUU5zasLSO3avXVFQePXoqyKZO5cvwhg/p5+DQLbEtbNVXN/l8q
+         Fn4xFbOHhrUD4dvMB+K52vGCki5EdGfjayAGvr6pjpXZJUw2CQQ9YTnxOsXq3wNyRTxK
+         uKmQ==
+X-Gm-Message-State: AOAM531pu54OjCCPzm9Yyb4oCR5/VLvjLVBQfyERnlYh6WiSLQk15cQu
+        i0LPoXF/8s2Tg2qhxvZdqv6k3W+3vbFcFcDOpEhGpob2vAk=
+X-Google-Smtp-Source: ABdhPJyhnP/LKgkQf+hwmnQFbFT/ZhPe40O2TgJ+0PIiJBYrw0Hr8AGUZNoc/OSbiGZUEN7gVRf9rsSVpJ0Uk7OiJ2M=
+X-Received: by 2002:a81:6357:0:b0:2d7:2af4:6e12 with SMTP id
+ x84-20020a816357000000b002d72af46e12mr31920195ywb.317.1646254703556; Wed, 02
+ Mar 2022 12:58:23 -0800 (PST)
 MIME-Version: 1.0
-From:   Naresh Kamboju <naresh.kamboju@linaro.org>
-Date:   Thu, 3 Mar 2022 02:05:02 +0530
-Message-ID: <CA+G9fYtRBNVJdrFYnrRC22CfXg5iVwbb+EWMqZGARO-DHagapQ@mail.gmail.com>
-Subject: [next] arm64: db410c: Internal error: Oops: 96000004 - msm_gpu_pm_suspend
-To:     dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        lkft-triage@lists.linaro.org,
-        Linux-Next Mailing List <linux-next@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Cc:     Rob Clark <robdclark@chromium.org>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Vinod Koul <vinod.koul@linaro.org>,
-        Anders Roxell <anders.roxell@linaro.org>,
-        Linux Kernel Functional Testing <lkft@linaro.org>
+References: <20220302183515.448334-1-caleb.connolly@linaro.org> <21F7790B-8849-4131-AF09-4E622B1A9E9D@holtmann.org>
+In-Reply-To: <21F7790B-8849-4131-AF09-4E622B1A9E9D@holtmann.org>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Wed, 2 Mar 2022 12:58:12 -0800
+Message-ID: <CABBYNZJPN6o-v2OpAXND0+UfwB3AQL2=r6CDQ0S8PktWZqijMw@mail.gmail.com>
+Subject: Re: [PATCH v2] bluetooth: hci_event: don't print an error on vendor events
+To:     Marcel Holtmann <marcel@holtmann.org>
+Cc:     Caleb Connolly <caleb.connolly@linaro.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
+        "open list:NETWORKING [GENERAL]" <netdev@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[Please ignore this email if it is already reported]
+Hi Marcel, Caleb,
 
-Linux next-20220302 running on Qcom db410c the following kernel crash
-reported [1].
+On Wed, Mar 2, 2022 at 11:20 AM Marcel Holtmann <marcel@holtmann.org> wrote:
+>
+> Hi Caleb,
+>
+> > Since commit 3e54c5890c87 ("Bluetooth: hci_event: Use of a function table to handle HCI events"),
+> > some devices see warnings being printed for vendor events, e.g.
+> >
+> > [   75.806141] Bluetooth: hci0: setting up wcn399x
+> > [   75.948311] Bluetooth: hci0: unexpected event 0xff length: 14 > 0
+> > [   75.955552] Bluetooth: hci0: QCA Product ID   :0x0000000a
+> > [   75.961369] Bluetooth: hci0: QCA SOC Version  :0x40010214
+> > [   75.967417] Bluetooth: hci0: QCA ROM Version  :0x00000201
+> > [   75.973363] Bluetooth: hci0: QCA Patch Version:0x00000001
+> > [   76.000289] Bluetooth: hci0: QCA controller version 0x02140201
+> > [   76.006727] Bluetooth: hci0: QCA Downloading qca/crbtfw21.tlv
+> > [   76.986850] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.013574] Bluetooth: hci0: QCA Downloading qca/oneplus6/crnv21.bin
+> > [   77.024302] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.032681] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.040674] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.049251] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.057997] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.066320] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.075065] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.083073] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.091250] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.099417] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.110166] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.118672] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.127449] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.137190] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.146192] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.154242] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.163183] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.171202] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.179364] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.187259] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
+> > [   77.198451] Bluetooth: hci0: QCA setup on UART is completed
+> >
+> > Avoid printing the event length warning for vendor events, this reverts
+> > to the previous behaviour where such warnings weren't printed.
+> >
+> > Fixes: 3e54c5890c87 ("Bluetooth: hci_event: Use of a function table to handle HCI events")
+> > Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> > ---
+> > Changes since v1:
+> > * Don't return early! Vendor events still get parsed despite the
+> >   warning. I should have looked a little more closely at that...
+> > ---
+> > net/bluetooth/hci_event.c | 2 +-
+> > 1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> patch has been applied to bluetooth-stable tree.
+>
+> Regards
+>
+> Marcel
 
-metadata:
-  git_ref: master
-  git_repo: https://gitlab.com/Linaro/lkft/mirrors/next/linux-next
-  git_sha: adaedcf826dccf01b69d9a1f1997c9446c6b2c54
-  git_describe: next-20220302
-  kernel-config: https://builds.tuxbuild.com/25pJv2XjzFav5peWxwfhaU3LFEN/config
+I believe a proper fix has already been pushed to bluetooth-next:
 
+https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git/commit/?id=314d8cd2787418c5ac6b02035c344644f47b292b
 
-Kernel crash:
+HCI_EV_VENDOR shall be assumed to be variable length and that also
+uses bt_dev_warn_ratelimited to avoid spamming the logs in case it
+still fails.
 
- Failed to start Entropy Daemon based on the HAVEGE algorithm
-[   12.104662] Unable to handle kernel NULL pointer dereference at
-virtual address 0000000000000010
-[   12.121151]   ESR = 0x96000004
-[   12.121211]   EC = 0x25: DABT (current EL), IL = 32 bits
-[   12.123137]   SET = 0, FnV = 0
-[   12.128687]   EA = 0, S1PTW = 0
-[   12.131464]   FSC = 0x04: level 0 translation fault
-[   12.134572] Data abort info:
-[   12.139457]   ISV = 0, ISS = 0x00000004
-[   12.142566]   CM = 0, WnR = 0
-[   12.146165] user pgtable: 4k pages, 48-bit VAs, pgdp=000000008235d000
-[   12.149360] [0000000000000010] pgd=0000000000000000, p4d=0000000000000000
-[   12.156339] Internal error: Oops: 96000004 [#1] PREEMPT SMP
-[   12.162370] Modules linked in: videobuf2_dma_contig adv7511(+)
-crct10dif_ce qcom_wcnss_pil cec qrtr qcom_q6v5_mss qcom_camss
-snd_soc_lpass_apq8016 qcom_pil_info snd_soc_lpass_cpu rtc_pm8xxx
-videobuf2_dma_sg qcom_spmi_vadc snd_soc_msm8916_analog qcom_q6v5
-snd_soc_msm8916_digital snd_soc_apq8016_sbc snd_soc_lpass_platform
-qcom_pon v4l2_fwnode snd_soc_qcom_common qcom_spmi_temp_alarm
-qcom_sysmon qcom_vadc_common venus_core msm qcom_common v4l2_async
-qcom_glink_smem qmi_helpers v4l2_mem2mem videobuf2_memops mdt_loader
-qnoc_msm8916 gpu_sched icc_smd_rpm display_connector drm_dp_helper
-videobuf2_v4l2 drm_kms_helper qcom_stats videobuf2_common qcom_rng
-i2c_qcom_cci rpmsg_char drm socinfo rmtfs_mem fuse
-[   12.207393] CPU: 0 PID: 66 Comm: kworker/0:4 Not tainted
-5.17.0-rc6-next-20220302 #1
-[   12.207407] Hardware name: Qualcomm Technologies, Inc. APQ 8016 SBC (DT)
-[   12.207415] Workqueue: pm pm_runtime_work
-[   12.243952] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[   12.247862] pc : hrtimer_active+0x14/0x80
-[   12.254628] lr : hrtimer_cancel+0x28/0x70
-[   12.258795] sp : ffff80000b423b70
-[   12.262786] x29: ffff80000b423b70 x28: 0000000000000000 x27: 0000000000000000
-[   12.266092] x26: ffff80000ad5d2e0 x25: 00000002d138d917 x24: ffff00000d8dbb80
-[   12.273210] x23: ffff00000326c010 x22: ffff00000f6b2020 x21: ffff00000f6b2000
-[   12.280328] x20: ffff00000f6b20f8 x19: ffff00000f6b2318 x18: 0000000000000000
-[   12.287447] x17: ffff800035bf3000 x16: ffff800008004000 x15: 0000000000004000
-[   12.294564] x14: 0000000000000000 x13: 0000000000000000 x12: ffff80000a8b7000
-[   12.301682] x11: 0000087facb61180 x10: 0000000000000bc0 x9 : ffff8000081d3a78
-[   12.308800] x8 : ffff000003c68000 x7 : 0000000000000018 x6 : 000000001483ced5
-[   12.315918] x5 : 00ffffffffffffff x4 : 0000000000000000 x3 : 0000000000000000
-[   12.323036] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff00000f6b2318
-[   12.330156] Call trace:
-[   12.337263]  hrtimer_active+0x14/0x80
-[   12.339524]  msm_devfreq_suspend+0x30/0x60 [msm]
-[   12.343348]  msm_gpu_pm_suspend+0x44/0x144 [msm]
-[   12.348035]  adreno_suspend+0x6c/0x174 [msm]
-[   12.352634]  pm_generic_runtime_suspend+0x38/0x50
-[   12.356885]  genpd_runtime_suspend+0xb4/0x314
-[   12.361487]  __rpm_callback+0x50/0x180
-[   12.365824]  rpm_callback+0x74/0x80
-[   12.369470]  rpm_suspend+0x110/0x634
-[   12.372856]  pm_runtime_work+0xd0/0xd4
-[   12.376676]  process_one_work+0x1dc/0x450
-[   12.380235]  worker_thread+0x154/0x450
-[   12.384314]  kthread+0x100/0x110
-[   12.387959]  ret_from_fork+0x10/0x20
-[   12.391351] Code: aa1e03e9 d503201f d503233f f9401802 (b9401041)
-[   12.394913] ---[ end trace 0000000000000000 ]---
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
---
-Linaro LKFT
-https://lkft.linaro.org
-[1] https://lkft.validation.linaro.org/scheduler/job/4643232#L2396
+-- 
+Luiz Augusto von Dentz
