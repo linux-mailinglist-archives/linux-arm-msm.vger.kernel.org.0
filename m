@@ -2,116 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5707E4CADD9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 19:47:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE9C64CAE3D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 20:06:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244720AbiCBSr7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Mar 2022 13:47:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58104 "EHLO
+        id S229622AbiCBTHS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Mar 2022 14:07:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244719AbiCBSr7 (ORCPT
+        with ESMTP id S230433AbiCBTHR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 13:47:59 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49343D5F7B;
-        Wed,  2 Mar 2022 10:47:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1646246835; x=1677782835;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=Ss1yJ8C2o2JNvk+SxQ1vw9WaY3rA4Jk7i+Ds45rTd/o=;
-  b=vasoUOvkxgulG9gUFaLhghwKxRHG/W5xD9QUfzETBROht1j7WVXxVCuT
-   Jxa6G+INgcdd1vh/m/phBnmTpgeVu1C9Ln7psc1X1jjjOgasG/I9AL8K6
-   ph+A1BpIR9nMdV7nEn2rdlCtOr/XpNGd+TrneA1UIyuZJngFR4jRuobR+
-   8=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 02 Mar 2022 10:47:15 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2022 10:47:14 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Wed, 2 Mar 2022 10:47:14 -0800
-Received: from hu-amelende-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Wed, 2 Mar 2022 10:47:13 -0800
-From:   Anjelique Melendez <quic_amelende@quicinc.com>
-To:     <dmitry.torokhov@gmail.com>
-CC:     <linux-input@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <collinsd@codeaurora.org>,
-        <bjorn.andersson@linaro.org>, <swboyd@chromium.org>,
-        <skakit@codeaurora.org>,
-        Anjelique Melendez <quic_amelende@quicinc.com>
-Subject: [RESEND PATCH v4 4/4] input: misc: pm8941-pwrkey: simulate missed key press events
-Date:   Wed, 2 Mar 2022 10:45:29 -0800
-Message-ID: <20220302184525.19781-5-quic_amelende@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220302184525.19781-1-quic_amelende@quicinc.com>
-References: <20220302184525.19781-1-quic_amelende@quicinc.com>
+        Wed, 2 Mar 2022 14:07:17 -0500
+Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A668BF51A
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 11:06:34 -0800 (PST)
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com [209.85.208.69])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id BD5AE3F1E6
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 19:06:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1646247992;
+        bh=m6ojeTgtogrdSSitR1acR3iefkQ9OYzxbBDb1IxSxtI=;
+        h=Message-ID:Date:MIME-Version:Subject:To:References:Cc:From:
+         In-Reply-To:Content-Type;
+        b=jUn4AdpXL2MD0T5ourWhVWTfWKk2l2T6k46EtU4bRrdsoJbT/kebNlFnSYY6HAEa2
+         Id5eZgkyzXBrHIXbbpdR4aWL71zbBkvSkfEd2/zAGSjIcbuJ+Yn1ltn4p/z62Hta61
+         22XlJbZgzxKAD5whv1NgPvgjLrbchgkUiqMHlEdrDV8qb2m24F9HuVrRxF1tgCF+qA
+         +ysogATGlzeBppYRYLQXzeAtlDTQvRWhHFx3Ix46ksVoYPlQjFLexMEWE9+C8gT8V1
+         USRpQWuWG25s4FMOCS+qHdvPbOZWlq800RcBljyQtLc57kpkkT1z0eCV/wZK3v235I
+         Njo9G+28eFerw==
+Received: by mail-ed1-f69.google.com with SMTP id l24-20020a056402231800b00410f19a3103so1527691eda.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 11:06:32 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:cc:from:in-reply-to
+         :content-transfer-encoding;
+        bh=m6ojeTgtogrdSSitR1acR3iefkQ9OYzxbBDb1IxSxtI=;
+        b=ef0x9R5KioP/Ub1JnRXLvI5EayuPSabCPlhLncu1p0KDBRDdj8SU8h/h03e0U8SgUf
+         BQVM3uIWdKV3qsTrwBHUjFlPbU+UDNEqOnUDYhNj6gjgi9kDKqVMMw/KffKSa53+jNLl
+         G4oXhjqU+9SPQTQFfrN5uDeP8eXO7+RgRzqq6Qt48PY7aCk1Pa3BS1XHqZKKVOp9G3BS
+         ni4eDxW5JbBQ84noTfwFjsBmV2G7mtHJNSfMPXd2VliKt3BCKkORTcLcI1Ms9Ig+hbMG
+         GdgApruJc1lmwjqWsxWnP3moGUTDaccDGt9acEm0s/JroUxvogX86UZfoN0VAOX4RKf+
+         6fPw==
+X-Gm-Message-State: AOAM530qDe0vVG6lq7xUz3OwKscJMqbP9NKRPTdv99tUFEiG8ca9O5Cs
+        sKIVhq3qMrtrrgdRh1GQ2CfsX6tTrkOx9478N6ZT5fWWtd8D45dKenjTtMgOkazq3voTF0iYfNr
+        A6o4ws62ZBeU3hN9V1lYmp6Npha9Fy0dyJ7sAxXRIuNY=
+X-Received: by 2002:a17:906:6a0f:b0:6d7:1021:2bd2 with SMTP id qw15-20020a1709066a0f00b006d710212bd2mr6424425ejc.395.1646247992481;
+        Wed, 02 Mar 2022 11:06:32 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJxeQrZWG2Oxg6RE7q9wIPUX3Z/sjjW6CdMRyOa97Yz1CbhreGcjtKJUbps/xbBHdxqhb0/UQQ==
+X-Received: by 2002:a17:906:6a0f:b0:6d7:1021:2bd2 with SMTP id qw15-20020a1709066a0f00b006d710212bd2mr6424403ejc.395.1646247992278;
+        Wed, 02 Mar 2022 11:06:32 -0800 (PST)
+Received: from [192.168.0.137] (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
+        by smtp.gmail.com with ESMTPSA id cy1-20020a0564021c8100b003e359e4f54asm8827529edb.43.2022.03.02.11.06.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Mar 2022 11:06:31 -0800 (PST)
+Message-ID: <77fd3853-25b2-f9f7-6081-969ec54aa6a9@canonical.com>
+Date:   Wed, 2 Mar 2022 20:06:30 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH 2/4] arm64: dts: mt8183: align Google CROS EC PWM node
+ name with dtschema
+Content-Language: en-US
+To:     Matthias Brugger <matthias.bgg@gmail.com>
+References: <20220214081916.162014-1-krzysztof.kozlowski@canonical.com>
+ <20220214081916.162014-3-krzysztof.kozlowski@canonical.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Douglas Anderson <dianders@chromium.org>,
+        devicetree@vger.kernel.org, chrome-platform@lists.linux.dev,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        Lee Jones <lee.jones@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
+        linux-mediatek@lists.infradead.org,
+        Benson Leung <bleung@chromium.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-pwm@vger.kernel.org
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20220214081916.162014-3-krzysztof.kozlowski@canonical.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: David Collins <collinsd@codeaurora.org>
+On 14/02/2022 09:19, Krzysztof Kozlowski wrote:
+> dtschema expects PWM node name to be a generic "pwm".  This also matches
+> Devicetree specification requirements about generic node names.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> ---
+>  arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
 
-The status of the keys connected to the KPDPWR_N and RESIN_N pins
-is identified by reading corresponding bits in the interrupt real
-time status register.  If the status has changed by the time that
-the interrupt is handled then a press event will be missed.
+Hi Matthias,
 
-Maintain a last known status variable to find unbalanced release
-events and simulate press events for each accordingly.
+Any comments on this patch?
 
-Signed-off-by: David Collins <collinsd@codeaurora.org>
-Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
----
- drivers/input/misc/pm8941-pwrkey.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/drivers/input/misc/pm8941-pwrkey.c b/drivers/input/misc/pm8941-pwrkey.c
-index 881943ab4d55..3519152759dd 100644
---- a/drivers/input/misc/pm8941-pwrkey.c
-+++ b/drivers/input/misc/pm8941-pwrkey.c
-@@ -76,6 +76,7 @@ struct pm8941_pwrkey {
- 	u32 code;
- 	u32 sw_debounce_time_us;
- 	ktime_t sw_debounce_end_time;
-+	bool last_status;
- 	const struct pm8941_data *data;
- };
- 
-@@ -162,6 +163,16 @@ static irqreturn_t pm8941_pwrkey_irq(int irq, void *_data)
- 		pwrkey->sw_debounce_end_time = ktime_add_us(ktime_get(),
- 						pwrkey->sw_debounce_time_us);
- 
-+	/*
-+	 * Simulate a press event in case a release event occurred without a
-+	 * corresponding press event.
-+	 */
-+	if (!pwrkey->last_status && !sts) {
-+		input_report_key(pwrkey->input, pwrkey->code, 1);
-+		input_sync(pwrkey->input);
-+	}
-+	pwrkey->last_status = sts;
-+
- 	input_report_key(pwrkey->input, pwrkey->code, sts);
- 	input_sync(pwrkey->input);
- 
--- 
-2.34.1
-
+Best regards,
+Krzysztof
