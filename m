@@ -2,171 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 042B64CAB87
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 18:25:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EC4D4CABA6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 18:28:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243817AbiCBR0S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Mar 2022 12:26:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56476 "EHLO
+        id S243837AbiCBR2q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Mar 2022 12:28:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243828AbiCBR0R (ORCPT
+        with ESMTP id S243853AbiCBR2l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 12:26:17 -0500
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 788D1CCC6E
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 09:25:31 -0800 (PST)
-Received: by mail-ot1-x330.google.com with SMTP id p12-20020a05683019cc00b005af1442c9e9so2225723otp.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 09:25:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=A7p+Sua3vWTnrJZHdXkQWaCDCi1ogBb2wcZTsYiqgV4=;
-        b=kSgjDYJtPfb9ROCmWxhJKur8Uaw3MOy+15dIiLp2BSKjF6NgN4VZPpOm11PH5Q2XrA
-         r7UqQ8AaC5RLrjGi485c5S8PablqMesWLFYHzsnpfcYXW5sH7ojPTvi/b4Wtn1+Lb4LI
-         u8Ki+p4BrjOZDvRVCNP8Yq6NvOGZ/t85CEOYWpgTSqxC7K326FpV9CyYlRyr7Dbr2eNx
-         FAVu6BaRigJcOwFcbBaJDzoIRdc8l5qu53ZMTrJiSXmNLtU9wGjUkOmDJ9OFe1KyB66C
-         FfM9f9NRMOu0nrjn4rjNuOs/xijBjaPfQMoRJ0OArmgDe2qhxEE2dOoW/gkO3qeFidbu
-         eyXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=A7p+Sua3vWTnrJZHdXkQWaCDCi1ogBb2wcZTsYiqgV4=;
-        b=wcshhpBSVW3Cy3rjhWhrg9uY6d9Zbq9nSwKAewOSTp+EGky6PWcSi9FEz2Zq3DClHM
-         61LAORioq+6Fr6Xhn/65HwmpA2RUn0m0LkKyfUODbZBdfc7VzvzqqQTt6g61uDuKwBYP
-         i1p1TmTwfQlWLMun/a30oP3Fq6ZeVj+QC+AvKQo+jXDJ7gXYAviGEBTWL7CRdfO0Wpg9
-         Y3di0RDy4QT6YsWvWMLYxOIynLdIj6GOXF33W8ad8vnaUe2PZ6ZlyUQ3OrpJk2FtLy36
-         4z6Npee8Gdv8UD8dqCjfbgVbtJXT1mSRrniwc9K019w7kGfEVqNUreGat9fW0t4wC9wt
-         pxTg==
-X-Gm-Message-State: AOAM531uW4A4k0ol/bErJixRO7a+ANNemmVWVPkN7W11eSQtOWkDiPLS
-        fcPK2S0mhjDQztXblYy1LkClIZucor66RRZgsiX9Bw==
-X-Google-Smtp-Source: ABdhPJwwxzHWuf8viqR1OdWBAi0a7r41AOauclraB7d347YvqjAztRTJua35obzbRfApLE3btcmqP+cYlOjzbV8E/Ns=
-X-Received: by 2002:a05:6830:314c:b0:5af:dc8a:d066 with SMTP id
- c12-20020a056830314c00b005afdc8ad066mr13881461ots.28.1646241930640; Wed, 02
- Mar 2022 09:25:30 -0800 (PST)
-MIME-Version: 1.0
-References: <20220302110508.69053-1-bhupesh.sharma@linaro.org>
- <20220302110508.69053-3-bhupesh.sharma@linaro.org> <CAA8EJprTiGfEnkPOeDPyobdRGkyzyC6=vHivfQ9zsk22JPjM3w@mail.gmail.com>
-In-Reply-To: <CAA8EJprTiGfEnkPOeDPyobdRGkyzyC6=vHivfQ9zsk22JPjM3w@mail.gmail.com>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Wed, 2 Mar 2022 22:55:19 +0530
-Message-ID: <CAH=2NtySLVEk_aLdftCS9DcfPS6egUxVAJTZnxjxLPQQnGb4aw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/5] clk: qcom: gcc: Add emac GDSC support for SM8150
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, sboyd@kernel.org, tdas@codeaurora.org,
-        mturquette@baylibre.com, linux-clk@vger.kernel.org,
-        robh+dt@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Wed, 2 Mar 2022 12:28:41 -0500
+Received: from so254-9.mailgun.net (so254-9.mailgun.net [198.61.254.9])
+        by lindbergh.monkeyblade.net (Postfix) with UTF8SMTPS id 5CD9F39B87
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 09:27:54 -0800 (PST)
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1646242076; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=Qa4oeOoMQCNOhiFhjfjB7NxSM+9SxKiZPhTh4vJHGJU=; b=V+jC7myDeSbuT7RVq2AHttmNCnbixSVgIs4VV80W+MTwlX2OvPnQT6AtLNrX2oFf4gwgKPR9
+ /47Syy0+1T1RyC53YX/0WKrYHNEX+W5d6V+2G6JboW6FsJ4/lo4QC+6yISEyDBpUB3R582hv
+ g3+G3jaHk42FfQ6Hh6H3MMhtDUs=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 621fa917e1c212bb9c1e992b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 02 Mar 2022 17:27:51
+ GMT
+Sender: quic_akhilpo=quicinc.com@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A23FCC4363F; Wed,  2 Mar 2022 17:27:50 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_BL,RCVD_IN_MSPIKE_H2,RCVD_IN_MSPIKE_ZBI,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
+Received: from hyd-lnxbld559.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8C826C4338F;
+        Wed,  2 Mar 2022 17:27:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 8C826C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=fail (p=none dis=none) header.from=quicinc.com
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=quicinc.com
+From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
+To:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Emma Anholt <emma@anholt.net>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Wang Qing <wangqing@vivo.com>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v1 00/10] Support for GMU coredump and some related improvements
+Date:   Wed,  2 Mar 2022 22:57:26 +0530
+Message-Id: <1646242056-2456-1-git-send-email-quic_akhilpo@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+Major enhancement in this series is the support for a minimal gmu coredump
+which can be captured inline instead of through our usual recover worker. It
+is helpful in the case of gmu errors during gpu wake-up/suspend path and
+helps to capture a snapshot of gmu before we do a suspend. I had to introduce
+a lock to synchronize the crashstate because the runtime-suspend can happen
+from an asynchronous RPM thread.
 
-On Wed, 2 Mar 2022 at 18:00, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Wed, 2 Mar 2022 at 14:05, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
-> >
-> > Add the EMAC GDSC defines and driver structures for SM8150.
-> >
-> > Cc: Stephen Boyd <sboyd@kernel.org>
-> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
-> >  drivers/clk/qcom/gcc-sm8150.c               | 34 +++++++++++++--------
-> >  include/dt-bindings/clock/qcom,gcc-sm8150.h |  1 +
-> >  2 files changed, 23 insertions(+), 12 deletions(-)
-> >
-> > diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
-> > index 245794485719..08ba29e3a835 100644
-> > --- a/drivers/clk/qcom/gcc-sm8150.c
-> > +++ b/drivers/clk/qcom/gcc-sm8150.c
-> > @@ -3448,22 +3448,31 @@ static struct clk_branch gcc_video_xo_clk = {
-> >         },
-> >  };
-> >
-> > +static struct gdsc emac_gdsc = {
-> > +       .gdscr = 0x6004,
-> > +       .pd = {
-> > +               .name = "emac_gdsc",
-> > +       },
-> > +       .pwrsts = PWRSTS_OFF_ON,
-> > +       .flags = POLL_CFG_GDSCR,
-> > +};
-> > +
-> >  static struct gdsc usb30_prim_gdsc = {
-> > -               .gdscr = 0xf004,
-> > -               .pd = {
-> > -                       .name = "usb30_prim_gdsc",
-> > -               },
-> > -               .pwrsts = PWRSTS_OFF_ON,
-> > -               .flags = POLL_CFG_GDSCR,
-> > +       .gdscr = 0xf004,
-> > +       .pd = {
-> > +               .name = "usb30_prim_gdsc",
-> > +       },
-> > +       .pwrsts = PWRSTS_OFF_ON,
-> > +       .flags = POLL_CFG_GDSCR,
->
-> Please move alignment changes to a separate patch
+Apart from this, there are some improvements to gracefully handle the
+gmu errors by propagating the error back to parent or by retrying. Also, a
+few patches to fix some trivial bugs in the related code.
 
-Right, Will fix it in v3.
 
-Regards,
-Bhupesh
+Akhil P Oommen (10):
+  drm/msm/a6xx: Add helper to check smmu is stalled
+  drm/msm/a6xx: Send NMI to gmu when it is hung
+  drm/msm/a6xx: Avoid gmu lock in pm ops
+  drm/msm/a6xx: Enhance debugging of gmu faults
+  drm/msm: Do recovery on hw_init failure
+  drm/msm/a6xx: Propagate OOB set error
+  drm/msm/adreno: Retry on gpu resume failure
+  drm/msm/a6xx: Remove clk votes on failure
+  drm/msm: Remove pm_runtime_get() from msm_job_run()
+  drm/msm/a6xx: Free gmu_debug crashstate bo
 
-> >  };
-> >
-> >  static struct gdsc usb30_sec_gdsc = {
-> > -               .gdscr = 0x10004,
-> > -               .pd = {
-> > -                       .name = "usb30_sec_gdsc",
-> > -               },
-> > -               .pwrsts = PWRSTS_OFF_ON,
-> > -               .flags = POLL_CFG_GDSCR,
-> > +       .gdscr = 0x10004,
-> > +       .pd = {
-> > +               .name = "usb30_sec_gdsc",
-> > +       },
-> > +       .pwrsts = PWRSTS_OFF_ON,
-> > +       .flags = POLL_CFG_GDSCR,
-> >  };
-> >
-> >  static struct clk_regmap *gcc_sm8150_clocks[] = {
-> > @@ -3714,6 +3723,7 @@ static const struct qcom_reset_map gcc_sm8150_resets[] = {
-> >  };
-> >
-> >  static struct gdsc *gcc_sm8150_gdscs[] = {
-> > +       [EMAC_GDSC] = &emac_gdsc,
-> >         [USB30_PRIM_GDSC] = &usb30_prim_gdsc,
-> >         [USB30_SEC_GDSC] = &usb30_sec_gdsc,
-> >  };
-> > diff --git a/include/dt-bindings/clock/qcom,gcc-sm8150.h b/include/dt-bindings/clock/qcom,gcc-sm8150.h
-> > index 3e1a91876610..40596b9ded06 100644
-> > --- a/include/dt-bindings/clock/qcom,gcc-sm8150.h
-> > +++ b/include/dt-bindings/clock/qcom,gcc-sm8150.h
-> > @@ -243,5 +243,6 @@
-> >  /* GCC GDSCRs */
-> >  #define USB30_PRIM_GDSC                     4
-> >  #define USB30_SEC_GDSC                                         5
-> > +#define EMAC_GDSC                                              6
-> >
-> >  #endif
-> > --
-> > 2.35.1
-> >
->
->
-> --
-> With best wishes
-> Dmitry
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c       | 89 +++++++++++++++++++++++------
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.h       |  1 +
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c       | 31 +++++++---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h       |  4 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 79 +++++++++++++++++++++----
+ drivers/gpu/drm/msm/adreno/adreno_device.c  | 10 +++-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c     | 10 +++-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h     |  2 +
+ drivers/gpu/drm/msm/msm_gpu.c               | 28 ++++++++-
+ drivers/gpu/drm/msm/msm_gpu.h               | 11 ++--
+ drivers/gpu/drm/msm/msm_ringbuffer.c        |  4 --
+ 11 files changed, 218 insertions(+), 51 deletions(-)
+
+-- 
+2.7.4
+
