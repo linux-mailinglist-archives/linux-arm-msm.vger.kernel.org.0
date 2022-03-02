@@ -2,67 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC5754CA514
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 13:44:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D6B774CA54F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 13:55:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241874AbiCBMon (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Mar 2022 07:44:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53794 "EHLO
+        id S241978AbiCBMzG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Mar 2022 07:55:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241871AbiCBMom (ORCPT
+        with ESMTP id S234165AbiCBMzF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 07:44:42 -0500
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDE4BC1CAD
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 04:43:58 -0800 (PST)
-Received: by mail-qt1-x833.google.com with SMTP id a1so1411117qta.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 04:43:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=RCQ1Hkosqigsur7jPtC2YOzm+InzZYgdKWMxBC1qOYw=;
-        b=FBXgzWMQWPOZtM6gc2/TE90LewcUir6ipXYQhYCpbdVXSFaC2wVUU/vFIZOZv9mLBP
-         0slZIBmx33g9PsibumRs0SfQCwQLnKKTmM706sJRj3Tt197DXiAWprVy5qRgapcwC6cN
-         z7hxAn7ZXThaH3dSg9FqoxNp3IWG1dKCCtDQWDK7dAeh/KJvucb8WXRlz6VF+fGRQSla
-         Z/55AH2ksORaHGH1aUQ8vJ0g8eaClEkk6AT9kxhQuYCiFd28lwvJEWutNflMlwivu8pu
-         X6A00103Xt6AfKZ4y0Nx8SKScIrMcGxSqN2ZmDP9Rg+paqSachRkLE9G2XQtWp3tbYEV
-         8GWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=RCQ1Hkosqigsur7jPtC2YOzm+InzZYgdKWMxBC1qOYw=;
-        b=f3QpjFVm//kTCZD+qSKwck1xOJ0d5q3CC7hKX9wF5L/0uKiFv+aB711IrlUJyFdQXK
-         XT35jspwQd62Jn51y4BrUMf23lExUBjfY8TNk+hHiAfsvrfSlOlRSVQq9Mv4AfYkOT3w
-         7EFBnqrc6o1xtiJwY+f8PduikXBNQ0UqHAx4gCxFhJ6A4xBhEJDawgduO7J/akvNdcrF
-         U+pqTlERzeqcMwp9O7+svA5K923xcPtsCWxKxQI8d4AitHpqJdZD0zQDLvpD6u+q+0GA
-         tPM+XlRWy3uc05ebroubHNX7FMm3+a1g02NAcsPmoupEYS8vDMGFYKb9ZahOIbIMWbr7
-         pMGQ==
-X-Gm-Message-State: AOAM531gNahu/zrqOpxkbwj0490crn+qfApYGJb5P9xDSD2GSncvolml
-        qoBhayKWKX+lVez1ChDnTW3FC/pafEKYpA3EfXFiILEtU14=
-X-Google-Smtp-Source: ABdhPJwMuxqRwOOLiFtj4FdM+AMZ8K59rjBxOZQQjcAmPJAFrQOD1S3+JJWqcwBfGHhLtMiYAlW2I/Cg5BBeB+b54Vg=
-X-Received: by 2002:a05:622a:1206:b0:2de:6fa4:41fb with SMTP id
- y6-20020a05622a120600b002de6fa441fbmr23365305qtx.295.1646225038036; Wed, 02
- Mar 2022 04:43:58 -0800 (PST)
-MIME-Version: 1.0
-References: <20220302013339.2354076-1-robh@kernel.org> <CAA8EJpowE0VfnA1QhU1LfXobFYjGPirWb52QW6HT5kCpcX0NBQ@mail.gmail.com>
- <20220302123518.3xprnrpp4nt7hmqs@SoMainline.org>
-In-Reply-To: <20220302123518.3xprnrpp4nt7hmqs@SoMainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 2 Mar 2022 15:43:46 +0300
-Message-ID: <CAA8EJpofXWsEQxacoW77hJ4a+=Si0qp10UmKWQQRhsbifZ2V1Q@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64/arm: dts: qcom: Drop bogus interrupt flags cell
- on MDSS nodes
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        Wed, 2 Mar 2022 07:55:05 -0500
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04FD0A4182;
+        Wed,  2 Mar 2022 04:54:20 -0800 (PST)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 773963F817;
+        Wed,  2 Mar 2022 13:54:18 +0100 (CET)
+Date:   Wed, 2 Mar 2022 13:54:17 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] dt-bindings: clock: add QCOM SM6125 display clock
+ bindings
+Message-ID: <20220302125417.iu52rvdxrmo25wwt@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220226200911.230030-1-marijn.suijten@somainline.org>
+ <20220226200911.230030-3-marijn.suijten@somainline.org>
+ <ea5d34c6-fe75-c096-d5b2-6a327c9d0ae5@canonical.com>
+ <62ebb074-b8de-0dc3-2bbc-e43dca9d2ced@linaro.org>
+ <05310308-b0ff-56a0-83ac-855b1b795936@canonical.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <05310308-b0ff-56a0-83ac-855b1b795936@canonical.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -71,211 +75,129 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 2 Mar 2022 at 15:35, Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
->
-> On 2022-03-02 04:53:56, Dmitry Baryshkov wrote:
-> > On Wed, 2 Mar 2022 at 04:33, Rob Herring <robh@kernel.org> wrote:
-> > >
-> > > The MDSS interrupt provider is a single cell, so specifying interrupt flags
-> > > on the consumers is incorrect.
-> > >
-> > > Signed-off-by: Rob Herring <robh@kernel.org>
-> >
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
->
-> Dmitry, it seems you sent a similar change - albeit split across one
-> patch per DTSI file and omitting arm qcom-msm8974 - inbetween v1 and v2
-> of this patch.  To me that only makes sense if every patch includes the
-> appropriate, individual `Fixes:` tag but the patches lack those too.
-> Which approach should be reviewed and applied going forward?
+On 2022-02-28 10:23:19, Krzysztof Kozlowski wrote:
+> On 27/02/2022 22:43, Dmitry Baryshkov wrote:
+> > On 27/02/2022 13:03, Krzysztof Kozlowski wrote:
+> >> On 26/02/2022 21:09, Marijn Suijten wrote:
+> >>> From: Martin Botka <martin.botka@somainline.org>
+> >>>
+> >>> Add device tree bindings for display clock controller for
+> >>> Qualcomm Technology Inc's SM6125 SoC.
+> >>>
+> >>> Signed-off-by: Martin Botka <martin.botka@somainline.org>
+> >>> ---
+> >>>   .../bindings/clock/qcom,dispcc-sm6125.yaml    | 87 +++++++++++++++++++
+> >>>   .../dt-bindings/clock/qcom,dispcc-sm6125.h    | 41 +++++++++
+> >>>   2 files changed, 128 insertions(+)
+> >>>   create mode 100644 Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
+> >>>   create mode 100644 include/dt-bindings/clock/qcom,dispcc-sm6125.h
+> >>>
+> >>> diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
+> >>> new file mode 100644
+> >>> index 000000000000..3465042d0d9f
+> >>> --- /dev/null
+> >>> +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
+> >>> @@ -0,0 +1,87 @@
+> >>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> >>> +%YAML 1.2
+> >>> +---
+> >>> +$id: http://devicetree.org/schemas/clock/qcom,dispcc-sm6125.yaml#
+> >>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> >>> +
+> >>> +title: Qualcomm Display Clock Controller Binding for SM6125
+> >>> +
+> >>> +maintainers:
+> >>> +  - Martin Botka <martin.botka@somainline.org>
+> >>> +
+> >>> +description: |
+> >>> +  Qualcomm display clock control module which supports the clocks and
+> >>> +  power domains on SM6125.
+> >>> +
+> >>> +  See also:
+> >>> +    dt-bindings/clock/qcom,dispcc-sm6125.h
+> >>> +
+> >>> +properties:
+> >>> +  compatible:
+> >>> +    enum:
+> >>> +      - qcom,sm6125-dispcc
+> >>> +
+> >>> +  clocks:
+> >>> +    items:
+> >>> +      - description: Board XO source
+> >>> +      - description: Byte clock from DSI PHY0
+> >>> +      - description: Pixel clock from DSI PHY0
+> >>> +      - description: Pixel clock from DSI PHY1
+> >>> +      - description: Link clock from DP PHY
+> >>> +      - description: VCO DIV clock from DP PHY
+> >>> +      - description: AHB config clock from GCC
+> >>> +
+> >>> +  clock-names:
+> >>> +    items:
+> >>> +      - const: bi_tcxo
+> >>> +      - const: dsi0_phy_pll_out_byteclk
+> >>> +      - const: dsi0_phy_pll_out_dsiclk
+> >>> +      - const: dsi1_phy_pll_out_dsiclk
+> >>> +      - const: dp_phy_pll_link_clk
+> >>> +      - const: dp_phy_pll_vco_div_clk
+> >>> +      - const: cfg_ahb_clk
+> >>> +
+> >>> +  '#clock-cells':
+> >>> +    const: 1
+> >>> +
+> >>> +  '#power-domain-cells':
+> >>> +    const: 1
+> >>> +
+> >>> +  reg:
+> >>> +    maxItems: 1
+> >>> +
+> >>> +required:
+> >>> +  - compatible
+> >>> +  - reg
+> >>> +  - clocks
+> >>> +  - clock-names
+> >>> +  - '#clock-cells'
+> >>> +  - '#power-domain-cells'
+> >>> +
+> >>> +additionalProperties: false
+> >>> +
+> >>> +examples:
+> >>> +  - |
+> >>> +    #include <dt-bindings/clock/qcom,rpmcc.h>
+> >>> +    #include <dt-bindings/clock/qcom,gcc-sm6125.h>
+> >>> +    clock-controller@5f00000 {
+> >>> +      compatible = "qcom,sm6125-dispcc";
+> >>> +      reg = <0x5f00000 0x20000>;
+> >>> +      clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
+> >>> +               <&dsi0_phy 0>,
+> >>> +               <&dsi0_phy 1>,
+> >>> +               <0>,
+> >>
+> >> This does not look like a valid phandle. This clock is required, isn't it?
 
-Probably it's up to Bjorn to decide. I can resend my series including
-the Fixes tags (and msm8974) if he thinks it's the better approach
+I remember it being used like this before, though upon closer inspection
+only qcom,gcc-msm8998.yaml uses it as example.
 
->
-> - Marijn
->
-> > > ---
-> > > v2:
-> > >  - Add a bunch of missed cases
-> > > ---
-> > >  arch/arm/boot/dts/qcom-msm8974.dtsi   | 4 ++--
-> > >  arch/arm64/boot/dts/qcom/msm8996.dtsi | 6 +++---
-> > >  arch/arm64/boot/dts/qcom/sdm630.dtsi  | 5 ++---
-> > >  arch/arm64/boot/dts/qcom/sdm660.dtsi  | 2 +-
-> > >  arch/arm64/boot/dts/qcom/sdm845.dtsi  | 6 +++---
-> > >  arch/arm64/boot/dts/qcom/sm8250.dtsi  | 6 +++---
-> > >  6 files changed, 14 insertions(+), 15 deletions(-)
-> > >
-> > > diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > > index 412d94736c35..3b9af5e24907 100644
-> > > --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > > +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > > @@ -1495,7 +1495,7 @@ mdp: mdp@fd900000 {
-> > >                                 reg-names = "mdp_phys";
-> > >
-> > >                                 interrupt-parent = <&mdss>;
-> > > -                               interrupts = <0 0>;
-> > > +                               interrupts = <0>;
-> > >
-> > >                                 clocks = <&mmcc MDSS_AHB_CLK>,
-> > >                                          <&mmcc MDSS_AXI_CLK>,
-> > > @@ -1530,7 +1530,7 @@ dsi0: dsi@fd922800 {
-> > >                                 reg-names = "dsi_ctrl";
-> > >
-> > >                                 interrupt-parent = <&mdss>;
-> > > -                               interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
-> > > +                               interrupts = <4>;
-> > >
-> > >                                 assigned-clocks = <&mmcc BYTE0_CLK_SRC>,
-> > >                                                   <&mmcc PCLK0_CLK_SRC>;
-> > > diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> > > index f0f81c23c16f..0597d865a4a6 100644
-> > > --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> > > @@ -788,7 +788,7 @@ mdp: mdp@901000 {
-> > >                                 reg-names = "mdp_phys";
-> > >
-> > >                                 interrupt-parent = <&mdss>;
-> > > -                               interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
-> > > +                               interrupts = <0>;
-> > >
-> > >                                 clocks = <&mmcc MDSS_AHB_CLK>,
-> > >                                          <&mmcc MDSS_AXI_CLK>,
-> > > @@ -834,7 +834,7 @@ dsi0: dsi@994000 {
-> > >                                 reg-names = "dsi_ctrl";
-> > >
-> > >                                 interrupt-parent = <&mdss>;
-> > > -                               interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
-> > > +                               interrupts = <4>;
-> > >
-> > >                                 clocks = <&mmcc MDSS_MDP_CLK>,
-> > >                                          <&mmcc MDSS_BYTE0_CLK>,
-> > > @@ -904,7 +904,7 @@ hdmi: hdmi-tx@9a0000 {
-> > >                                             "hdcp_physical";
-> > >
-> > >                                 interrupt-parent = <&mdss>;
-> > > -                               interrupts = <8 IRQ_TYPE_LEVEL_HIGH>;
-> > > +                               interrupts = <8>;
-> > >
-> > >                                 clocks = <&mmcc MDSS_MDP_CLK>,
-> > >                                          <&mmcc MDSS_AHB_CLK>,
-> > > diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-> > > index 240293592ef9..f646fb80924f 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-> > > @@ -1453,7 +1453,7 @@ mdp: mdp@c901000 {
-> > >                                 reg-names = "mdp_phys";
-> > >
-> > >                                 interrupt-parent = <&mdss>;
-> > > -                               interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
-> > > +                               interrupts = <0>;
-> > >
-> > >                                 assigned-clocks = <&mmcc MDSS_MDP_CLK>,
-> > >                                                   <&mmcc MDSS_VSYNC_CLK>;
-> > > @@ -1530,7 +1530,7 @@ dsi0: dsi@c994000 {
-> > >                                 power-domains = <&rpmpd SDM660_VDDCX>;
-> > >
-> > >                                 interrupt-parent = <&mdss>;
-> > > -                               interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
-> > > +                               interrupts = <4>;
-> > >
-> > >                                 assigned-clocks = <&mmcc BYTE0_CLK_SRC>,
-> > >                                                   <&mmcc PCLK0_CLK_SRC>;
-> > > @@ -2487,4 +2487,3 @@ timer {
-> > >                                  <GIC_PPI 0 0xf08>;
-> > >         };
-> > >  };
-> > > -
-> > > diff --git a/arch/arm64/boot/dts/qcom/sdm660.dtsi b/arch/arm64/boot/dts/qcom/sdm660.dtsi
-> > > index eccf6fde16b4..1d748c5305f4 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sdm660.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sdm660.dtsi
-> > > @@ -163,7 +163,7 @@ dsi1: dsi@c996000 {
-> > >                 power-domains = <&rpmpd SDM660_VDDCX>;
-> > >
-> > >                 interrupt-parent = <&mdss>;
-> > > -               interrupts = <5 IRQ_TYPE_LEVEL_HIGH>;
-> > > +               interrupts = <5>;
-> > >
-> > >                 assigned-clocks = <&mmcc BYTE1_CLK_SRC>,
-> > >                                         <&mmcc PCLK1_CLK_SRC>;
-> > > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > index 41f4e46e1f85..95e6a97c2170 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > @@ -4281,7 +4281,7 @@ mdss_mdp: mdp@ae01000 {
-> > >                                 power-domains = <&rpmhpd SDM845_CX>;
-> > >
-> > >                                 interrupt-parent = <&mdss>;
-> > > -                               interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
-> > > +                               interrupts = <0>;
-> > >
-> > >                                 ports {
-> > >                                         #address-cells = <1>;
-> > > @@ -4333,7 +4333,7 @@ dsi0: dsi@ae94000 {
-> > >                                 reg-names = "dsi_ctrl";
-> > >
-> > >                                 interrupt-parent = <&mdss>;
-> > > -                               interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
-> > > +                               interrupts = <4>;
-> > >
-> > >                                 clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
-> > >                                          <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
-> > > @@ -4405,7 +4405,7 @@ dsi1: dsi@ae96000 {
-> > >                                 reg-names = "dsi_ctrl";
-> > >
-> > >                                 interrupt-parent = <&mdss>;
-> > > -                               interrupts = <5 IRQ_TYPE_LEVEL_HIGH>;
-> > > +                               interrupts = <5>;
-> > >
-> > >                                 clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK>,
-> > >                                          <&dispcc DISP_CC_MDSS_BYTE1_INTF_CLK>,
-> > > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > > index fdaf303ba047..956848068871 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> > > @@ -3200,7 +3200,7 @@ mdss_mdp: mdp@ae01000 {
-> > >                                 power-domains = <&rpmhpd SM8250_MMCX>;
-> > >
-> > >                                 interrupt-parent = <&mdss>;
-> > > -                               interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
-> > > +                               interrupts = <0>;
-> > >
-> > >                                 ports {
-> > >                                         #address-cells = <1>;
-> > > @@ -3252,7 +3252,7 @@ dsi0: dsi@ae94000 {
-> > >                                 reg-names = "dsi_ctrl";
-> > >
-> > >                                 interrupt-parent = <&mdss>;
-> > > -                               interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
-> > > +                               interrupts = <4>;
-> > >
-> > >                                 clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
-> > >                                          <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
-> > > @@ -3325,7 +3325,7 @@ dsi1: dsi@ae96000 {
-> > >                                 reg-names = "dsi_ctrl";
-> > >
-> > >                                 interrupt-parent = <&mdss>;
-> > > -                               interrupts = <5 IRQ_TYPE_LEVEL_HIGH>;
-> > > +                               interrupts = <5>;
-> > >
-> > >                                 clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK>,
-> > >                                          <&dispcc DISP_CC_MDSS_BYTE1_INTF_CLK>,
-> > > --
-> > > 2.32.0
-> > >
-> >
-> >
-> > --
-> > With best wishes
-> > Dmitry
+The clock should be optional, in that case it is perhaps desired to omit
+it from clock-names instead, or pretend there's a `dsi1_phy 1`?
 
+> > 
+> > Not, it's not required for general dispcc support.
+> > dispcc uses DSI and DP PHY clocks to provide respective pixel/byte/etc 
+> > clocks. However if support for DP is not enabled, the dispcc can work 
+> > w/o DP phy clock. Thus we typically add 0 phandles as placeholders for 
 
+Is there any semantic difference between omitting the clock from DT (in
+clocks= /and/ clock-names=) or setting it to a 0 phandle?
 
--- 
-With best wishes
-Dmitry
+> > DSI/DP clock sources and populate them as support for respective 
+> > interfaces gets implemented.
+> > 
+> 
+> Then the clock is optional, isn't it? While not modeling it as optional?
+
+It looks like this should be modelled using minItems: then, and
+"optional" text/comment? Other clocks are optional as well, we don't
+have DSI 1 in downstream SM6125 DT sources and haven't added the DP PLL
+in our to-be-upstreamed mainline tree yet.
+
+- Marijn
