@@ -2,135 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1A004CA2AB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 12:01:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 57D954CA2B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 12:05:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241195AbiCBLCS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Mar 2022 06:02:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48664 "EHLO
+        id S238583AbiCBLGQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Mar 2022 06:06:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241179AbiCBLCM (ORCPT
+        with ESMTP id S236336AbiCBLGQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 06:02:12 -0500
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80C2F6E8D6
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 03:01:29 -0800 (PST)
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com [209.85.208.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 10DBF3F5FD
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 11:01:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1646218887;
-        bh=Si9sQ7yLz6JK6Nen6lACTBVX2ecHMiwS0ByLXYRxjJA=;
-        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-         In-Reply-To:Content-Type;
-        b=ScviJaWhD/3yOQIeSHsvpj36Xfdh3m7slID6wM9qxF6C2/LHde23DgcadYnPvkUL5
-         Lt6afhh5CMBfDzXLnVMPdHljE8aWb5731ZuIqkH51NBEDSIE3Th+hIej5FKtIhnFJn
-         liTS6b8RG/yS9Buvuvgm8zeXKuapmkkXOQDjYAr/lNjh+FIrHj3HHVgpbd29No7pnA
-         Qc8+4+TIs1kwjs8mvBMbkiXRTRmXZ/k+A2H76M+7HVKXwGLX2eSuP5XLtsjK5/Y49U
-         Bn831mSYaARf+Klbi97NDOqRQVf4W/Zb8pJywu/+EPwowVJdJfQlGQK/96Ck5tjE1b
-         ELpZDIehhW2ew==
-Received: by mail-ed1-f70.google.com with SMTP id y13-20020aa7c24d000000b00411925b7829so759561edo.22
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 03:01:27 -0800 (PST)
+        Wed, 2 Mar 2022 06:06:16 -0500
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED1AB4AE2E
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 03:05:30 -0800 (PST)
+Received: by mail-pf1-x42d.google.com with SMTP id t5so1637491pfg.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 03:05:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iM4tqoBNZnRDhHlhJv4qaUp41vM2/itvqk+JO0plpzU=;
+        b=eUCFUBtB8g0HcK0Dm6lzd43xTsjUZvZy+n8LQ7kZQiOs8hWrHoopwzWWggNY93Kth/
+         d+yg12rDsIzVf25SP9oTp5FxUy9c7NkqTmGgGLdn7tyqW/nDr780P+yvFBiU5EQousk4
+         8sF3aEpksyhIccyC3cM2mH4iDzP3NwL0I57CYqkOZCBILQKhuvZJVPOLGySLYvx/yXwh
+         I6elZu4Ycv6/m7nev9kSR83Qi7GDI/FnMQVrrxDTYB5k+y8RspG3E10tHtL55dXk1NuM
+         A8+SxU51PuLkX6Sw3L2WJ6uX0gpfMDEV2TZLS49hJbLwt/YRIWVY6txZDZQwPMwPUTSu
+         0amQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=Si9sQ7yLz6JK6Nen6lACTBVX2ecHMiwS0ByLXYRxjJA=;
-        b=2ch05u9PU3bSs6+CR6nhAVReLlUbeKDG2/+9x1LXcRe+mkeb3hVyHYdIu3E7Bppt68
-         j+u19IW7aB/M9xoEkP+yAHiGeb0MSQ0tJIdKxfq9Q7cBj6Y0pSV+RoNg44FIuAUPaNJm
-         Z0hPAtyzGNtVjuEbJPFwpmU9IxlZWEYKyGt5TGDmT0M22GorUrLX7DzDZqw2HkvTE3hU
-         iLcOqL4ls+jbkvB1baitpLm4aukZkxY1wg/w+egPTnbfIYzRsqa12bkKf7q7UwJWQWLG
-         3tYTGH0KNrALnXlQFPVbRcYO5HIUm8Ir7sEE6SOw+nxXBnly7GBETTSi1tTgnOXCi3ae
-         TkWw==
-X-Gm-Message-State: AOAM531PrcBeJYnVFmJgqTfeF68G8fV2tdaEBCEAc7+U8nTeBAb4TCnW
-        AscIehbED/bsgT26zUeGpDr9vnhCNFAl+jE9s8jHEE6zK1DUytNYLloAWBdnw4HjXaGGFMYQBeM
-        GV6J3xFX8HIr+kMzDmcVQp5lLv5IouXptKoQZqCw6Hko=
-X-Received: by 2002:a05:6402:369a:b0:413:81b5:7b64 with SMTP id ej26-20020a056402369a00b0041381b57b64mr22935771edb.163.1646218881643;
-        Wed, 02 Mar 2022 03:01:21 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJwaXIpVKlG8abGyix74I9rTqmFoJz7zygw3QnLROE8hwqkRWj9/wBCxZT5ACGsypW51MBpi7Q==
-X-Received: by 2002:a05:6402:369a:b0:413:81b5:7b64 with SMTP id ej26-20020a056402369a00b0041381b57b64mr22935729edb.163.1646218881424;
-        Wed, 02 Mar 2022 03:01:21 -0800 (PST)
-Received: from [192.168.0.136] (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
-        by smtp.gmail.com with ESMTPSA id et3-20020a170907294300b006d6534ef273sm5617821ejc.156.2022.03.02.03.01.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Mar 2022 03:01:20 -0800 (PST)
-Message-ID: <22099da9-fad0-a5fb-f45a-484635ca485f@canonical.com>
-Date:   Wed, 2 Mar 2022 12:01:19 +0100
+        bh=iM4tqoBNZnRDhHlhJv4qaUp41vM2/itvqk+JO0plpzU=;
+        b=nYnZ6HZomCt9ljEyUpfQS70Zz25CP8RqBbtnu36cuxR3mKv+7cQ7mrF2k/zzGpIOu4
+         9wPhXhS5gqO4aw0Wa7P72Y0ccEtCjQTV0fI3B3nRCUInJMliAEXEzCom6i9NiOnqJqQt
+         04BTMtxlFKDHOKZqx1OGAz4UzgeXbLhxY3RWkx4/WpBCtqNmSi9EJ0TaTCqxUn5n+Bxl
+         cnjHrtdOWKFnUsBWh4njy/hdcvzh00R7x1aRMqg9v8QzuyV0nQvv6GZK8NJmdmKl6ZcG
+         DaC5lyqCufPGfJIHzvWBZo+JYh3Utmg21hktHvYzOh63fVYNgMn4xtR6ICV89IJyg+TE
+         QNvA==
+X-Gm-Message-State: AOAM530IQedjN+8GNWQNQwteIXvACs6rheM4IoktGFdhDJ6w2FV/rj+U
+        59DnIdF2IwuGHxYGpQiwvkOeswQEA0k5Bg==
+X-Google-Smtp-Source: ABdhPJxeyMaemFdosUe7a1Nz/OmLGcqy/zp1HyS7opVeuNuR2PmDhFIdpuZN0hRH0U2QcVKyK817Qg==
+X-Received: by 2002:a63:2a45:0:b0:373:1850:d5b with SMTP id q66-20020a632a45000000b0037318500d5bmr24767273pgq.563.1646219130121;
+        Wed, 02 Mar 2022 03:05:30 -0800 (PST)
+Received: from localhost.localdomain ([171.50.175.145])
+        by smtp.gmail.com with ESMTPSA id hk1-20020a17090b224100b001b8cff17f89sm5049186pjb.12.2022.03.02.03.05.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Mar 2022 03:05:29 -0800 (PST)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        agross@kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, sboyd@kernel.org, tdas@codeaurora.org,
+        mturquette@baylibre.com, linux-clk@vger.kernel.org,
+        robh+dt@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: [PATCH v2 0/5] Add ethernet support for Qualcomm SA8155p-ADP board
+Date:   Wed,  2 Mar 2022 16:35:03 +0530
+Message-Id: <20220302110508.69053-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v3 06/11] s390: cio: Use driver_set_override() instead of
- open-coding
-Content-Language: en-US
-To:     Vineeth Vijayan <vneethv@linux.ibm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Stuart Yoder <stuyoder@gmail.com>,
-        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
-        Abel Vesa <abel.vesa@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        "K. Y. Srinivasan" <kys@microsoft.com>,
-        Haiyang Zhang <haiyangz@microsoft.com>,
-        Stephen Hemminger <sthemmin@microsoft.com>,
-        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Peter Oberparleiter <oberpar@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Andy Gross <agross@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        "Michael S. Tsirkin" <mst@redhat.com>,
-        Jason Wang <jasowang@redhat.com>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, NXP Linux Team <linux-imx@nxp.com>,
-        linux-arm-kernel@lists.infradead.org, linux-hyperv@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Rasmus Villemoes <linux@rasmusvillemoes.dk>
-References: <20220227135214.145599-1-krzysztof.kozlowski@canonical.com>
- <20220227135214.145599-7-krzysztof.kozlowski@canonical.com>
- <b2295eba-722a-67e2-baae-20dac9d72625@linux.ibm.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <b2295eba-722a-67e2-baae-20dac9d72625@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/03/2022 17:01, Vineeth Vijayan wrote:
-> 
-> On 2/27/22 14:52, Krzysztof Kozlowski wrote:
->> Use a helper for seting driver_override to reduce amount of duplicated
->> code. Make the driver_override field const char, because it is not
->> modified by the core and it matches other subsystems.
-> s/seting/setting/
-> 
-> Also could you please change the title to start with "s390/cio:"
-> instead of "s390 : cio"
-> 
+Changes since v1:
+-----------------
+- v1 can be seen here: https://lore.kernel.org/netdev/20220126221725.710167-1-bhupesh.sharma@linaro.org/t/
+- Fixed review comments from Bjorn - broke the v1 series into two
+  separate series - one each for 'net' tree and 'arm clock/dts' tree
+  - so as to ease review of the same from the respective maintainers.
+- This series is intended for the 'arm msm clock/dts' tree.
+- Other changes:
+  - Dropped [PATCH 7/8] from v1.
+  - Added more background on the emac gdsc issue, requiring it to be in
+    ALWAYS_ON state in [PATCH 5/5].
+  - Collected Ack from Rob for [PATCH 1/5].
+  - Broke down v1's [PATCH 3/8] into 3 separate patches (one each for emac,
+    pci and ufs gdsc defines) - one of which is carried as [PATCH 2/5]
+    in this series, which is used to enable emac GDSC.
 
-Sure, thanks for review!
+The SA8155p-ADP board supports on-board ethernet (Gibabit Interface),
+with support for both RGMII and RMII buses.
 
+This patchset adds the support for the same.
 
-Best regards,
-Krzysztof
+Note that this patchset is based on an earlier sent patchset
+for adding PDC controller support on SM8150 (see [1]).
+
+[1]. https://lore.kernel.org/linux-arm-msm/20220226184028.111566-1-bhupesh.sharma@linaro.org/T/
+
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Bhupesh Sharma (2):
+  clk: qcom: gcc: Add emac GDSC support for SM8150
+  clk: qcom: gcc-sm8150: Use ALWAYS_ON flag as a workaround for emac
+    gdsc
+
+Vinod Koul (3):
+  dt-bindings: net: qcom,ethqos: Document SM8150 SoC compatible
+  arm64: dts: qcom: sm8150: add ethernet node
+  arm64: dts: qcom: sa8155p-adp: Enable ethernet node
+
+ .../devicetree/bindings/net/qcom,ethqos.txt   |   4 +-
+ arch/arm64/boot/dts/qcom/sa8155p-adp.dts      | 144 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |  27 ++++
+ drivers/clk/qcom/gcc-sm8150.c                 |  40 +++--
+ include/dt-bindings/clock/qcom,gcc-sm8150.h   |   1 +
+ 5 files changed, 203 insertions(+), 13 deletions(-)
+
+-- 
+2.35.1
+
