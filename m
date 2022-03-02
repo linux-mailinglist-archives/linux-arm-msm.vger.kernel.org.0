@@ -2,68 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38DAC4CA2CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 12:06:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A80A64CA417
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 12:46:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241226AbiCBLGv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Mar 2022 06:06:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60400 "EHLO
+        id S241538AbiCBLrM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Mar 2022 06:47:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241246AbiCBLGm (ORCPT
+        with ESMTP id S241532AbiCBLrK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 06:06:42 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 755FD6E8C5
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 03:05:53 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id z2-20020a17090a6d0200b001bef22367dbso2120233pjj.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 03:05:53 -0800 (PST)
+        Wed, 2 Mar 2022 06:47:10 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBF17B7166
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 03:46:25 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id d23so2274432lfv.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 03:46:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=31oR/5R8uiOoYLaqojfd9sfVOvx41Qx3BFeK4/Ytd84=;
-        b=At4zU4shHEmJqgXsvdpIlpcNKb/1D5xR+vm2ACNKVXjaecQc51lvkgMGU7RJe7P4IQ
-         7TpGTETBaFOEaYnf5fMcZd5DeECI2tZr2PEsL9A0ljMbw8EFIppR2ogsrf2IqbAoJ/IO
-         RoKxXM24uFcdNc1ws28Nn0NkXW91PJd5FZMzZsT/1irCiBI8dXsQ2ShSu3ecKlAm58U/
-         y09E9p9MvKt1kvx1szrqD+oE4hxBnKzlGNeZaWmQivYHE1bx25EUPydjTveDKicysD6B
-         VEoCYh8I6/s4L7qtGVFgKey6R7lFIP2ZksRmyPuYQFdBPKCIONz+pQWGfhxWi4ttyJ6I
-         a65Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Lc6+sFLH4xgHpUfpAkTWrsxSemAv/j1QkEWdwDqUEeo=;
+        b=rWAUr8KkXUHG5RY6SBczeSb9azLIJEyGi92k21TcCreY01VxIChitbz3qG4MU9dZr0
+         bGEcYijFMW5qjwMcoONcN3mJa3wy5bXNgo6+967xaSTewvJmGldP2BAieMxji3BSpI6k
+         ba4/q4AXnWwmw0l245cxJwVmc1ChwG1Ijb7r6R+IFXHatiHjz4r/RMCZsdtpjpb+KMsw
+         nIL7Hl4MnIxNW0mDBYOM8OWmRT+c09kgKLXHqtwj5LagPsFKs/Au6Vot4xhv5avljpub
+         Uv3JmyjEOmzie2DSyTZf90vQfwN+XN4Rt8zj1iQbm9PUP/6WWrqBsjInfxTUVJWmKkSw
+         z8vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=31oR/5R8uiOoYLaqojfd9sfVOvx41Qx3BFeK4/Ytd84=;
-        b=Ct38bE4rL75nuEPf/XDvmNYUKfqqQXSq3HW0j/uo+XAPjoeQjeG6oT4EjHp5kx46dm
-         pf3GpQXb8Xtk8TrfuFVnP81hghApnoIh2rh3Q/3a/MOIsxJgg0A/SiCCujx983JVw7Gs
-         /ndhyNJzKbiYP4i8yu9KiHRQxZKgjQg/ls+jiw+D9gN8/Fr8W0am671P4s19qArtRdp3
-         KTrvNmX+DB7O+jWs3FHo6fECb7lGSdhvZLKQrrHFaPDlL9ejKF840yhgOdNd/5r+2t67
-         nztHUKj/sVcROkw4ywB1or31wuaOPQGkl7SdHvd7a8az4oM65K9GYkpcsZMm2TDHn79j
-         m4qw==
-X-Gm-Message-State: AOAM5307DSM0IxifBzHLaQDZBsvoZAtOeVfPs5TY0LHOGwHbK6grapT/
-        zGRcr7rol9V94ZK4e0vlE8ylSLo+6uZhNw==
-X-Google-Smtp-Source: ABdhPJxSbxvCb0rvr3EAZIz1KY6zF0rK1ThfoOP2vyrgJijNdBkpiwk/lGAKFU73doZnK2Z8RpsDGg==
-X-Received: by 2002:a17:90a:dc81:b0:1bd:2d28:4bf4 with SMTP id j1-20020a17090adc8100b001bd2d284bf4mr18701085pjv.206.1646219152594;
-        Wed, 02 Mar 2022 03:05:52 -0800 (PST)
-Received: from localhost.localdomain ([171.50.175.145])
-        by smtp.gmail.com with ESMTPSA id hk1-20020a17090b224100b001b8cff17f89sm5049186pjb.12.2022.03.02.03.05.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Mar 2022 03:05:52 -0800 (PST)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, sboyd@kernel.org, tdas@codeaurora.org,
-        mturquette@baylibre.com, linux-clk@vger.kernel.org,
-        robh+dt@kernel.org, Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: [PATCH v2 5/5] arm64: dts: qcom: sa8155p-adp: Enable ethernet node
-Date:   Wed,  2 Mar 2022 16:35:08 +0530
-Message-Id: <20220302110508.69053-6-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220302110508.69053-1-bhupesh.sharma@linaro.org>
-References: <20220302110508.69053-1-bhupesh.sharma@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Lc6+sFLH4xgHpUfpAkTWrsxSemAv/j1QkEWdwDqUEeo=;
+        b=EWDpVJaYbMOF2U4pwTtbESbqP6GIp1tR6vIKlZSd/S2kGiP1UoDTptqZ88jPWe6BjL
+         P8iCb41fzdJFMrk6uZ//oNCQicOYrRtTJe3qWVPcKrDBidVhNdNE47J+afiF6yjq7NUJ
+         FeawYB4HskAUmeFGVDh2nBS0RcEEZQhk7//jFE7PiZCLakWfqIzv01j0BUAQLdYk9s4C
+         FQOMLEQT8rFHqVOlrE90IsrvF3m7DdxfMhvUTQbxw88q8LSYQHzOdkJ4xfvUw/xWZAQe
+         Hn8wMgYV0TMmSb1zLUhBuht1r1iXRmWpzxXHIfV0eYXTG1LyBGN2QqSV+zACluPsy7Co
+         m9zA==
+X-Gm-Message-State: AOAM530CbEqwT8AZ0N4dbv7uEccJLYRv2viICsbyBBp7qDB7wAKe64kC
+        ampkgbLcDX2LP5kM3namQTIkeYJQe2DdnlV4hTKcg0351GyNOA==
+X-Google-Smtp-Source: ABdhPJw2DdnCG5o0Y7GjgeTud67zBTcDtQAwPjNtvYX1CcxMGtJbrcbmH7J7HcvSVfqcdfIJ8Ve49YJlO8jq7j6HCSU=
+X-Received: by 2002:a19:2d11:0:b0:445:65c7:5f1e with SMTP id
+ k17-20020a192d11000000b0044565c75f1emr18221775lfj.184.1646221584059; Wed, 02
+ Mar 2022 03:46:24 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1646117728-28085-1-git-send-email-quic_c_sbhanu@quicinc.com>
+In-Reply-To: <1646117728-28085-1-git-send-email-quic_c_sbhanu@quicinc.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Wed, 2 Mar 2022 12:45:47 +0100
+Message-ID: <CAPDyKFpmR35dZj5VGPdKOp58VanUL7it3buN9yAvF+ObiSb32A@mail.gmail.com>
+Subject: Re: [PATCH V1] mmc: sdhci-msm: Reset GCC_SDCC_BCR register for SDHC
+To:     Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+Cc:     adrian.hunter@intel.com, asutoshd@codeaurora.org,
+        stummala@codeaurora.org, sayalil@codeaurora.org,
+        cang@codeaurora.org, rampraka@codeaurora.org,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -74,186 +69,151 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Vinod Koul <vkoul@kernel.org>
+On Tue, 1 Mar 2022 at 07:55, Shaik Sajida Bhanu
+<quic_c_sbhanu@quicinc.com> wrote:
+>
+> Reset GCC_SDCC_BCR register before every fresh initilazation. This will
+> reset whole SDHC-msm controller, clears the previous power control
+> states and avoids, software reset timeout issues as below.
+>
+> [ 5.458061][ T262] mmc1: Reset 0x1 never completed.
+> [ 5.462454][ T262] mmc1: sdhci: ============ SDHCI REGISTER DUMP
+> ===========
+> [ 5.469065][ T262] mmc1: sdhci: Sys addr: 0x00000000 | Version:
+> 0x00007202
+> [ 5.475688][ T262] mmc1: sdhci: Blk size: 0x00000000 | Blk cnt:
+> 0x00000000
+> [ 5.482315][ T262] mmc1: sdhci: Argument: 0x00000000 | Trn mode:
+> 0x00000000
+> [ 5.488927][ T262] mmc1: sdhci: Present: 0x01f800f0 | Host ctl:
+> 0x00000000
+> [ 5.495539][ T262] mmc1: sdhci: Power: 0x00000000 | Blk gap: 0x00000000
+> [ 5.502162][ T262] mmc1: sdhci: Wake-up: 0x00000000 | Clock: 0x00000003
+> [ 5.508768][ T262] mmc1: sdhci: Timeout: 0x00000000 | Int stat:
+> 0x00000000
+> [ 5.515381][ T262] mmc1: sdhci: Int enab: 0x00000000 | Sig enab:
+> 0x00000000
+> [ 5.521996][ T262] mmc1: sdhci: ACmd stat: 0x00000000 | Slot int:
+> 0x00000000
+> [ 5.528607][ T262] mmc1: sdhci: Caps: 0x362dc8b2 | Caps_1: 0x0000808f
+> [ 5.535227][ T262] mmc1: sdhci: Cmd: 0x00000000 | Max curr: 0x00000000
+> [ 5.541841][ T262] mmc1: sdhci: Resp[0]: 0x00000000 | Resp[1]:
+> 0x00000000
+> [ 5.548454][ T262] mmc1: sdhci: Resp[2]: 0x00000000 | Resp[3]:
+> 0x00000000
+> [ 5.555079][ T262] mmc1: sdhci: Host ctl2: 0x00000000
+> [ 5.559651][ T262] mmc1: sdhci_msm: ----------- VENDOR REGISTER
+> DUMP-----------
+> [ 5.566621][ T262] mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg:
+> 0x6000642c |
+> DLL cfg2: 0x0020a000
+> [ 5.575465][ T262] mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl:
+> 0x00010800 | DDR cfg: 0x80040873
+> [ 5.584658][ T262] mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 :
+> 0xf88218a8 Vndr func3: 0x02626040
+>
+> Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
 
-Enable the etheret node, add the phy node and pinctrl for ethernet.
+If this is this a regression, then please try to add a fixes tag too.
 
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-[bhsharma: Correct ethernet/rgmii related pinmuxs, specify multi-queues and
- plug in the PHY interrupt for WOL]
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 144 +++++++++++++++++++++++
- 1 file changed, 144 insertions(+)
+I assume we should tag this for stable kernels?
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-index 8756c2b25c7e..474f688f14a2 100644
---- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-@@ -47,6 +47,65 @@ vreg_s4a_1p8: smps4 {
- 
- 		vin-supply = <&vreg_3p3>;
- 	};
-+
-+	mtl_rx_setup: rx-queues-config {
-+		snps,rx-queues-to-use = <4>;
-+		snps,rx-sched-sp;
-+
-+		queue0 {
-+			snps,dcb-algorithm;
-+			snps,map-to-dma-channel = <0x0>;
-+			snps,route-up;
-+			snps,priority = <0x1>;
-+		};
-+
-+		queue1 {
-+			snps,dcb-algorithm;
-+			snps,map-to-dma-channel = <0x1>;
-+			snps,route-ptp;
-+		};
-+
-+		queue2 {
-+			snps,avb-algorithm;
-+			snps,map-to-dma-channel = <0x2>;
-+			snps,route-avcp;
-+		};
-+
-+		queue3 {
-+			snps,avb-algorithm;
-+			snps,map-to-dma-channel = <0x3>;
-+			snps,priority = <0xC>;
-+		};
-+	};
-+
-+	mtl_tx_setup: tx-queues-config {
-+		snps,tx-queues-to-use = <4>;
-+		snps,tx-sched-wrr;
-+
-+		queue0 {
-+			snps,weight = <0x10>;
-+			snps,dcb-algorithm;
-+			snps,priority = <0x0>;
-+		};
-+
-+		queue1 {
-+			snps,weight = <0x11>;
-+			snps,dcb-algorithm;
-+			snps,priority = <0x1>;
-+		};
-+
-+		queue2 {
-+			snps,weight = <0x12>;
-+			snps,dcb-algorithm;
-+			snps,priority = <0x2>;
-+		};
-+
-+		queue3 {
-+			snps,weight = <0x13>;
-+			snps,dcb-algorithm;
-+			snps,priority = <0x3>;
-+		};
-+	};
- };
- 
- &apps_rsc {
-@@ -317,6 +376,42 @@ &remoteproc_cdsp {
- 	firmware-name = "qcom/sa8155p/cdsp.mdt";
- };
- 
-+&ethernet {
-+	status = "okay";
-+
-+	snps,reset-gpio = <&tlmm 79 GPIO_ACTIVE_LOW>;
-+	snps,reset-active-low;
-+	snps,reset-delays-us = <0 11000 70000>;
-+
-+	snps,ptp-ref-clk-rate = <250000000>;
-+	snps,ptp-req-clk-rate = <96000000>;
-+
-+	snps,mtl-rx-config = <&mtl_rx_setup>;
-+	snps,mtl-tx-config = <&mtl_tx_setup>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&ethernet_defaults>;
-+
-+	phy-handle = <&rgmii_phy>;
-+	phy-mode = "rgmii";
-+	mdio {
-+		#address-cells = <0x1>;
-+		#size-cells = <0x0>;
-+
-+		compatible = "snps,dwmac-mdio";
-+
-+		/* Micrel KSZ9031RNZ PHY */
-+		rgmii_phy: phy@7 {
-+			reg = <0x7>;
-+
-+			interrupt-parent = <&tlmm>;
-+			interrupts-extended = <&tlmm 124 IRQ_TYPE_EDGE_FALLING>; /* phy intr */
-+			device_type = "ethernet-phy";
-+			compatible = "ethernet-phy-ieee802.3-c22";
-+		};
-+	};
-+};
-+
- &uart2 {
- 	status = "okay";
- };
-@@ -407,4 +502,53 @@ mux {
- 			drive-strength = <2>;
- 		};
- 	};
-+
-+	ethernet_defaults: ethernet-defaults {
-+		mdc {
-+			pins = "gpio7";
-+			function = "rgmii";
-+			bias-pull-up;
-+		};
-+
-+		mdio {
-+			pins = "gpio59";
-+			function = "rgmii";
-+			bias-pull-up;
-+		};
-+
-+		rgmii-rx {
-+			pins = "gpio117", "gpio118", "gpio119", "gpio120", "gpio115", "gpio116";
-+			function = "rgmii";
-+			bias-disable;
-+			drive-strength = <2>;
-+		};
-+
-+		rgmii-tx {
-+			pins = "gpio122", "gpio4", "gpio5", "gpio6", "gpio114", "gpio121";
-+			function = "rgmii";
-+			bias-pull-up;
-+			drive-strength = <16>;
-+		};
-+
-+		phy-intr {
-+			pins = "gpio124";
-+			function = "emac_phy";
-+			bias-disable;
-+			drive-strength = <8>;
-+		};
-+
-+		pps {
-+			pins = "gpio81";
-+			function = "emac_pps";
-+			bias-disable;
-+			drive-strength = <8>;
-+		};
-+
-+		phy-reset {
-+			pins = "gpio79";
-+			function = "gpio";
-+			bias-pull-up;
-+			drive-strength = <16>;
-+		};
-+	};
- };
--- 
-2.35.1
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 48 ++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 48 insertions(+)
+>
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index 50c71e0..f10b3c7 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -17,6 +17,7 @@
+>  #include <linux/regulator/consumer.h>
+>  #include <linux/interconnect.h>
+>  #include <linux/pinctrl/consumer.h>
+> +#include <linux/reset.h>
+>
+>  #include "sdhci-pltfm.h"
+>  #include "cqhci.h"
+> @@ -284,6 +285,7 @@ struct sdhci_msm_host {
+>         bool uses_tassadar_dll;
+>         u32 dll_config;
+>         u32 ddr_config;
+> +       struct reset_control *core_reset;
+>         bool vqmmc_enabled;
+>  };
+>
+> @@ -2482,6 +2484,45 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
+>         of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
+>  }
+>
+> +static int sdhci_msm_gcc_reset(struct platform_device *pdev,
+> +              struct sdhci_host *host)
+> +{
+> +       struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> +       struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+> +       int ret = 0;
+> +
+> +       msm_host->core_reset = devm_reset_control_get(&pdev->dev, "core_reset");
+> +       if (IS_ERR(msm_host->core_reset)) {
+> +               ret = PTR_ERR(msm_host->core_reset);
+> +               dev_err(&pdev->dev, "core_reset unavailable (%d)\n", ret);
+> +               msm_host->core_reset = NULL;
 
+Looks like we should use devm_reset_control_get_optional_exclusive() instead.
+
+> +       }
+> +       if (msm_host->core_reset) {
+> +               ret = reset_control_assert(msm_host->core_reset);
+> +               if (ret) {
+> +                       dev_err(&pdev->dev, "core_reset assert failed (%d)\n",
+> +                                               ret);
+> +                       goto out;
+> +               }
+> +               /*
+> +                * The hardware requirement for delay between assert/deassert
+> +                * is at least 3-4 sleep clock (32.7KHz) cycles, which comes to
+> +                * ~125us (4/32768). To be on the safe side add 200us delay.
+> +                */
+> +               usleep_range(200, 210);
+
+Isn't this supposed to be taken care of by the reset driver?
+
+Or is this more an mmc controller specific thing? In that case, could
+this delay vary, depending on the variant of the controller?
+
+> +
+> +               ret = reset_control_deassert(msm_host->core_reset);
+> +               if (ret) {
+> +                       dev_err(&pdev->dev, "core_reset deassert failed (%d)\n",
+> +                                               ret);
+> +                       goto out;
+> +               }
+> +               usleep_range(200, 210);
+
+Ditto?
+
+> +       }
+> +
+> +out:
+> +       return ret;
+> +}
+>
+>  static int sdhci_msm_probe(struct platform_device *pdev)
+>  {
+> @@ -2529,6 +2570,13 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>
+>         msm_host->saved_tuning_phase = INVALID_TUNING_PHASE;
+>
+> +       ret = sdhci_msm_gcc_reset(pdev, host);
+> +       if (ret) {
+> +               dev_err(&pdev->dev, "core_reset assert/deassert failed (%d)\n",
+> +                                       ret);
+> +               goto pltfm_free;
+> +       }
+> +
+>         /* Setup SDCC bus voter clock. */
+>         msm_host->bus_clk = devm_clk_get(&pdev->dev, "bus");
+>         if (!IS_ERR(msm_host->bus_clk)) {
+
+Kind regards
+Uffe
