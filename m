@@ -2,100 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D4044CA57E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 14:04:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E4C3A4CA61D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 14:34:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242038AbiCBNE6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Mar 2022 08:04:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38642 "EHLO
+        id S242268AbiCBNfc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Mar 2022 08:35:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242028AbiCBNEz (ORCPT
+        with ESMTP id S242254AbiCBNfb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 08:04:55 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3DD9C249E;
-        Wed,  2 Mar 2022 05:04:12 -0800 (PST)
+        Wed, 2 Mar 2022 08:35:31 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5846EBDE76
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 05:34:48 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id ge19-20020a17090b0e1300b001bcca16e2e7so4806058pjb.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 05:34:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1646226253; x=1677762253;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references;
-  bh=SfwU9RRrwUbs8J2J4RuaSBSxyXtRxCmuowf1qerOqMc=;
-  b=UWwmBNn98/FPBH/6pTUvRJJPiX1MihnL7Xhmuhto87MexhlMHuZm5X+y
-   VDD1tpGkCnwvyeRcbjqRUFfLYVbmXiyqqV+C5TxJy08C0YlLMu1SNJzl7
-   QdGMK3Xy6roD8d9e27XaVA/TfDcLy4AlS5tIojNvrugWWBhn+NVORCrcx
-   I=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 02 Mar 2022 05:04:13 -0800
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 02 Mar 2022 05:04:11 -0800
-X-QCInternal: smtphost
-Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 02 Mar 2022 18:34:00 +0530
-Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
-        id 85F38587B; Wed,  2 Mar 2022 18:33:59 +0530 (IST)
-From:   Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
-To:     adrian.hunter@intel.com, quic_riteshh@quicinc.com,
-        asutoshd@quicinc.com, ulf.hansson@linaro.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-mmc@vger.kernel.org,
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=g/0CGihmreYP75AblhYq/wa365Fq2crJ7rthQ8/LRIw=;
+        b=OxqV9xSNxet4uLHNXQBA5/6d7VsKxxBep6AmpAfNc7LxzgNLGIKeAxhaibUDtb9JbO
+         NSqNAMW71d6Jr9CyMEN5iTigMSS+vQNGjZ87wuFokpzomaZRw4PfZyBaCmiNuKiUH5ya
+         p0RyJyCq6zY90YYy8rKZPdeYR7OSfRk5CYFPctWPHvW1qfS23Gd4rvhVW29dEgc7s/fI
+         eudBqHWF1y0MMsJq7tOhiBv1qL/R0U309xMXkgUFuR7dNvA6dGxuHm1HaY7u2mEJ6Cin
+         vRnzOS+sRNuR2VVQ3Rlq8nzm8arMkJK9wVc2jFHEc6cTU/5dh30jfmynhhVWsVguXu7X
+         9gYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=g/0CGihmreYP75AblhYq/wa365Fq2crJ7rthQ8/LRIw=;
+        b=mjv5ZfbkFaVmeYAzmHnmN2vEtI91HEELVmu2luG/c/bif2qrH9hlhi5/wxVxlAlZ3W
+         vSwV23tph5TU/Wk7nQ6znLj3d1AYRHS8iIKO0WkHcOdLks4sb3rO4SsouEehtGwiSyIC
+         HdjPPfI3BGa0oIwfbndoKh9gk3Q2r7JSSlygjxRT742Asea2SWAJyeQNRckCZvAdRf05
+         tUNaUWFirzdynN/USePV36PnOqeBDqbVCNdxCav9AoCH6mlcHRuWt98jy2abEXbtBHwA
+         HbrJAGSvMEMBYEVTj76svJunjDygKjT7rs2UuFSNzUG7uafEjWXq7732fbHRswKwtgeO
+         ttsw==
+X-Gm-Message-State: AOAM5329lnI7xWBNg840efgx+3aJRjm6Hcl/bc0xWXpNYlNgVBG7m1Vi
+        w6y8iv9vwelimG2QJ8/SOSG1Lg==
+X-Google-Smtp-Source: ABdhPJyE1iWx1lWKj+H36O4PN4ngiSgwvqXfNlf2EPfHuhvB6INluq6wAlHqbkUpYueyr3kBnTIugw==
+X-Received: by 2002:a17:90a:6542:b0:1bd:149f:1c29 with SMTP id f2-20020a17090a654200b001bd149f1c29mr22011228pjs.240.1646228087854;
+        Wed, 02 Mar 2022 05:34:47 -0800 (PST)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id d10-20020a63360a000000b0037947abe4bbsm2486157pga.34.2022.03.02.05.34.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Mar 2022 05:34:47 -0800 (PST)
+Date:   Wed, 2 Mar 2022 21:34:41 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Marc Zyngier <maz@kernel.org>
+Cc:     Thomas Gleixner <tglx@linutronix.de>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     quic_vbadigan@quicinc.com, quic_rampraka@quicinc.com,
-        quic_pragalla@quicinc.com, quic_sartgarg@quicinc.com,
-        quic_nitirawa@quicinc.com, quic_sayalil@quicinc.com,
-        Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>,
-        Liangliang Lu <quic_luliang@quicinc.com>,
-        "Bao D . Nguyen" <quic_nguyenb@quicinc.com>
-Subject: [PATCH V4 7/7] mmc: cqhci: Capture eMMC and SD card errors
-Date:   Wed,  2 Mar 2022 18:33:47 +0530
-Message-Id: <1646226227-32429-8-git-send-email-quic_c_sbhanu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1646226227-32429-1-git-send-email-quic_c_sbhanu@quicinc.com>
-References: <1646226227-32429-1-git-send-email-quic_c_sbhanu@quicinc.com>
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Subject: Re: [PATCH v7 2/2] irqchip: Add Qualcomm MPM controller driver
+Message-ID: <20220302133441.GM269879@dragon>
+References: <20220301062414.2987591-1-shawn.guo@linaro.org>
+ <20220301062414.2987591-3-shawn.guo@linaro.org>
+ <87ee3m2aed.wl-maz@kernel.org>
+ <20220302084028.GL269879@dragon>
+ <877d9c3b2u.wl-maz@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <877d9c3b2u.wl-maz@kernel.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add changes to capture eMMC and SD card errors.
-This is useful for debug and testing.
+On Wed, Mar 02, 2022 at 10:25:45AM +0000, Marc Zyngier wrote:
+> On Wed, 02 Mar 2022 08:40:28 +0000,
+> Shawn Guo <shawn.guo@linaro.org> wrote:
+> > 
+> > Hi Marc,
+> > 
+> > On Tue, Mar 01, 2022 at 11:13:30AM +0000, Marc Zyngier wrote:
+> > > Hi Shawn,
+> 
+> [...]
+> 
+> > > 
+> > > > +static int qcom_mpm_set_type(struct irq_data *d, unsigned int type)
+> > > > +{
+> > > > +	struct qcom_mpm_priv *priv = d->chip_data;
+> > > > +	int pin = d->hwirq;
+> > > > +	unsigned int index = pin / 32;
+> > > > +	unsigned int shift = pin % 32;
+> > > > +
+> > > > +	switch (type & IRQ_TYPE_SENSE_MASK) {
+> > > > +	case IRQ_TYPE_EDGE_RISING:
+> > > > +		mpm_set_type(priv, !!(type & IRQ_TYPE_EDGE_RISING),
+> > > > +			     MPM_REG_RISING_EDGE, index, shift);
+> > > > +		break;
+> > > > +	case IRQ_TYPE_EDGE_FALLING:
+> > > > +		mpm_set_type(priv, !!(type & IRQ_TYPE_EDGE_FALLING),
+> > > > +			     MPM_REG_FALLING_EDGE, index, shift);
+> > > > +		break;
+> > > > +	case IRQ_TYPE_LEVEL_HIGH:
+> > > > +		mpm_set_type(priv, !!(type & IRQ_TYPE_LEVEL_HIGH),
+> > > > +			     MPM_REG_POLARITY, index, shift);
+> > > > +		break;
+> > > > +	}
+> > > 
+> > > All these '!!(type & BLAH)' are totally superfluous, as they all expand
+> > > to 'true' by construction.
+> > 
+> > Yes, you are right!
+> > 
+> > > And this leads to a few questions:
+> > > 
+> > > - Shouldn't a rising interrupt clear the falling detection?
+> > > - Shouldn't a level-low clear the polarity?
+> > > - How do you handle IRQ_TYPE_EDGE_BOTH?
+> > > - How is MPM_REG_POLARITY evaluated for edge interrupts (resp the EDGE
+> > >   registers for level interrupts), as you never seem to be configuring
+> > >   a type here?
+> > 
+> > Honestly, qcom_mpm_set_type() was mostly taken from downstream without
+> > too much thinking.
 
-Signed-off-by: Liangliang Lu <quic_luliang@quicinc.com>
-Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
-Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
-Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
-Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
----
- drivers/mmc/host/cqhci-core.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+I have to take this statement back.  It seems that the current code has
+been diverted from the downstream in a wrong way.
 
-diff --git a/drivers/mmc/host/cqhci-core.c b/drivers/mmc/host/cqhci-core.c
-index b0d30c3..b3d7d6d 100644
---- a/drivers/mmc/host/cqhci-core.c
-+++ b/drivers/mmc/host/cqhci-core.c
-@@ -822,8 +822,15 @@ irqreturn_t cqhci_irq(struct mmc_host *mmc, u32 intmask, int cmd_error,
- 	pr_debug("%s: cqhci: IRQ status: 0x%08x\n", mmc_hostname(mmc), status);
- 
- 	if ((status & (CQHCI_IS_RED | CQHCI_IS_GCE | CQHCI_IS_ICCE)) ||
--	    cmd_error || data_error)
-+	    cmd_error || data_error) {
-+		if (status & CQHCI_IS_RED)
-+			mmc_debugfs_err_stats_inc(mmc, MMC_ERR_CMDQ_RED);
-+		if (status & CQHCI_IS_GCE)
-+			mmc_debugfs_err_stats_inc(mmc, MMC_ERR_CMDQ_GCE);
-+		if (status & CQHCI_IS_ICCE)
-+			mmc_debugfs_err_stats_inc(mmc, MMC_ERR_CMDQ_ICCE);
- 		cqhci_error_irq(mmc, status, cmd_error, data_error);
-+	}
- 
- 	if (status & CQHCI_IS_TCC) {
- 		/* read TCN and complete the request */
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+> > I trusted it as a "good" reference as I have no
+> > document to verify the code.  These questions are great and resulted the
+> > code changes are pretty sensible to me.
+> 
+> I don't think these changes are enough. For example, an interrupt
+> being switched from level to edge is likely to misbehave (how do you
+> distinguish the two?). If that's what the downstream driver does, then
+> it is terminally broken.
 
+Could you take a look at downstream code and see if it answers all your
+questions?
+
+It seems MPM_REG_POLARITY is only meant for level interrupts, since edge
+interrupts already have separate registers for rising and falling.
+
+I will fix my broken code by respecting the downstream logic.
+
+> As I asked before, we need some actual specs, or at least someone to
+> paraphrase it for us. There are a number of QC folks on Cc, and I
+> expect them to chime in and explain how MPM works here.
+> 
+> > 
+> > > - What initialises the MPM trigger types at boot time?
+> > 
+> > I dumped the vMPM region and it's all zeros.  My understanding is if
+> > vMPM needs any sort of initialization, it should be done by RPM firmware
+> > before APSS gets booting.
+> 
+> What about kexec? We can't rely on this memory region to always be
+> 0-initialised, nor do we know what that means.
+
+We are not relying on it being 0-initialised, but being initialised by
+RPM with initial physical MPM register values.
+
+Shawn
+
+[1] https://source.codeaurora.org/quic/la/kernel/msm-5.4/tree/drivers/irqchip/qcom-mpm.c/?h=LE.UM.6.2.4.r1#n187
