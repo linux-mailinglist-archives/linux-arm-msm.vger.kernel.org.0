@@ -2,81 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 130364C9C9A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 05:42:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B4704C9D86
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 06:37:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231712AbiCBEm6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Mar 2022 23:42:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32946 "EHLO
+        id S237240AbiCBFiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Mar 2022 00:38:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238175AbiCBEmz (ORCPT
+        with ESMTP id S239597AbiCBFiB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Mar 2022 23:42:55 -0500
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A6298E18B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Mar 2022 20:42:12 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id y24so576005ljh.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Mar 2022 20:42:12 -0800 (PST)
+        Wed, 2 Mar 2022 00:38:01 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4D85B1A94;
+        Tue,  1 Mar 2022 21:36:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=ARb9aZbZYQidMZDix9fUW3Av4Mah2x7ZZrBUNsk6at4=;
-        b=Ui0F+FwAxNQGCcr+MK8Tnq1KQ0qaMmHuzF6LZXTr3eztgnjoUXPYcMGt+AqlOmZTsD
-         1ISV7oisWR8C2GeMPmPqXCuUj660uH5dlRCxpcz1Wa70xPdFO25i07S14grHOUO/jg/y
-         J+rigqiZwwhTGOpv0VG03paDhLmFpnTKBDE7/G4rcsQEWDD7rq3/OyCYm9dOnkQsA+t1
-         9Oo0JK6/cOq183AjJxL+GAXbGDvCh63EibNA+5XE/a9clc7vt+YRzBexNKS98Dobncwv
-         qrK5dZkbB78Hs9sRyzugSLmBq5nGNvkE8p9IwtlWQ9IEPPwPsjD7XCvkpifm1B8Thp1W
-         m4DQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=ARb9aZbZYQidMZDix9fUW3Av4Mah2x7ZZrBUNsk6at4=;
-        b=M/jt8V6ooeLf+F1AKuTPpVPogrCnoHJR5RYHAtPjmf6pB2vLMCPZu96hLjb0mPKvtR
-         fMi7phVDtq7CRTduYfEvpLb0mxtvUH5tnjTqSyBnb+irqVmBszGRQCgCTyJBS45ORZ6v
-         jnEQ02HkMHJ+ZkU3uF04l+z+uGIQtNKVPeWQrDny4Hd1ORJlcFAAZFazswyVXmWdCR3j
-         5//nOj65BhZ2IGbvFA5rD5S7tfbTslE2Ipwf7Hs1x3dt0ebILRg56Z2EOYpVe4f0FmJ9
-         Ts6UILQ9IMaPaYFpbUt7glmq4NSTFgIpWjbljSqaV47eMGxaICngZDYYw7f8CzVIpBZt
-         xSqg==
-X-Gm-Message-State: AOAM53311ppNupJIlQUSzl+fSh6ZGpW1i7E46H8leF7f4J5D2a0RKGOX
-        FaKxFt6XQBywAMyIOP2Q6mXZWg==
-X-Google-Smtp-Source: ABdhPJzGqSVw9ionhPrDsFLgT7RWE3koUXv8w8EmA7YxIS9JBdPF35KMr2+UEyOsDQ5faKxMYNI/yg==
-X-Received: by 2002:a2e:b52f:0:b0:23e:2fe6:af10 with SMTP id z15-20020a2eb52f000000b0023e2fe6af10mr18517670ljm.46.1646196130359;
-        Tue, 01 Mar 2022 20:42:10 -0800 (PST)
-Received: from ?IPV6:2001:470:dd84:abc0:5258:5528:7624:3edd? ([2001:470:dd84:abc0:5258:5528:7624:3edd])
-        by smtp.gmail.com with ESMTPSA id k7-20020a0565123d8700b00443cec880e5sm1838432lfv.4.2022.03.01.20.42.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Mar 2022 20:42:09 -0800 (PST)
-Message-ID: <ea6d7b5b-04e5-9333-cb9e-34c230bf1cbc@linaro.org>
-Date:   Wed, 2 Mar 2022 07:42:08 +0300
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1646199412; x=1677735412;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=mRwvBAtok3xtIJz4XBlnJPoaxjUEKJHuRLmcYbLZajQ=;
+  b=zg6dgLuZJp5hvBollBi3m/S39MVeDob0WQtSO+GSU5XdpNrZmdx320YW
+   IhRxg+bt79qGDk6vTD2K6u5LymMNDE4kardDmDzd7IK01SYT/d6HwGIYM
+   hz4qun2dRhlTld5zZortE8jzWGtfkj971iiwEJ5X2HZHgwNC0jeAjk2jD
+   4=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 01 Mar 2022 21:36:52 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2022 21:36:52 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Tue, 1 Mar 2022 21:36:51 -0800
+Received: from [10.216.62.30] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Tue, 1 Mar 2022
+ 21:36:48 -0800
+Message-ID: <edee4305-77da-039b-1f07-bcdc5d462666@quicinc.com>
+Date:   Wed, 2 Mar 2022 11:06:45 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v2 2/2] drm/msm/dpu: Issue MDSS reset during
- initialization
-Content-Language: en-GB
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220302012931.4107196-1-bjorn.andersson@linaro.org>
- <20220302012931.4107196-2-bjorn.andersson@linaro.org>
- <CAA8EJppiNbJhrdFgJ0sESBM5m3oyazS-8dG8919xdZu50fZ8aQ@mail.gmail.com>
- <Yh7aAMZWJPjAeC1V@ripper>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <Yh7aAMZWJPjAeC1V@ripper>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Configure cts sleep pinctrl to
+ bias-disable for sc7280-idp
+Content-Language: en-CA
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <robh+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <msavaliy@qti.qualcomm.com>,
+        <mka@chromium.org>, <swboyd@chromium.org>, <dianders@chromium.org>
+References: <1644843828-20464-1-git-send-email-quic_vnivarth@quicinc.com>
+From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+In-Reply-To: <1644843828-20464-1-git-send-email-quic_vnivarth@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,195 +69,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/03/2022 05:44, Bjorn Andersson wrote:
-> On Tue 01 Mar 17:47 PST 2022, Dmitry Baryshkov wrote:
-> 
->> On Wed, 2 Mar 2022 at 04:27, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
->>>
->>> It's typical for the bootloader to bring up the display for showing a
->>> boot splash or efi framebuffer. But in some cases the kernel driver ends
->>> up only partially configuring (in particular) the DPU, which might
->>> result in e.g. that two different data paths attempts to push data to
->>> the interface - with resulting graphical artifacts.
->>>
->>> Naturally the end goal would be to inherit the bootloader's
->>> configuration and provide the user with a glitch free handover from the
->>> boot configuration to a running DPU.
->>>
->>> But as implementing seamless transition from the bootloader
->>> configuration to the running OS will be a considerable effort, start by
->>> simply resetting the entire MDSS to its power-on state, to avoid the
->>> partial configuration.
->>>
->>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->>> ---
->>>
->>> Changes since v1:
->>> - Rather than trying to deconfigure individual pieces of the DPU, reset the
->>>    entire block.
->>>
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c | 18 ++++++++++++++++++
->>>   drivers/gpu/drm/msm/msm_drv.c            |  4 ++++
->>>   drivers/gpu/drm/msm/msm_kms.h            |  1 +
->>>   3 files changed, 23 insertions(+)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
->>> index b10ca505f9ac..419eaaefe606 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
->>> @@ -7,6 +7,7 @@
->>>   #include <linux/irqchip.h>
->>>   #include <linux/irqdesc.h>
->>>   #include <linux/irqchip/chained_irq.h>
->>> +#include <linux/reset.h>
->>>   #include "dpu_kms.h"
->>>
->>>   #define to_dpu_mdss(x) container_of(x, struct dpu_mdss, base)
->>> @@ -31,6 +32,7 @@ struct dpu_mdss {
->>>          void __iomem *mmio;
->>>          struct clk_bulk_data *clocks;
->>>          size_t num_clocks;
->>> +       struct reset_control *reset;
->>>          struct dpu_irq_controller irq_controller;
->>>   };
->>>
->>> @@ -197,10 +199,18 @@ static void dpu_mdss_destroy(struct msm_mdss *mdss)
->>>          dpu_mdss->mmio = NULL;
->>>   }
->>>
->>> +static int dpu_mdss_reset(struct msm_mdss *mdss)
->>> +{
->>> +       struct dpu_mdss *dpu_mdss = to_dpu_mdss(mdss);
->>> +
->>> +       return reset_control_reset(dpu_mdss->reset);
->>> +}
->>> +
->>>   static const struct msm_mdss_funcs mdss_funcs = {
->>>          .enable = dpu_mdss_enable,
->>>          .disable = dpu_mdss_disable,
->>>          .destroy = dpu_mdss_destroy,
->>> +       .reset = dpu_mdss_reset,
->>>   };
->>>
->>>   int dpu_mdss_init(struct platform_device *pdev)
->>> @@ -227,6 +237,13 @@ int dpu_mdss_init(struct platform_device *pdev)
->>>          }
->>>          dpu_mdss->num_clocks = ret;
->>>
->>> +       dpu_mdss->reset = devm_reset_control_get_optional_exclusive(&pdev->dev, NULL);
->>> +       if (IS_ERR(dpu_mdss->reset)) {
->>> +               ret = PTR_ERR(dpu_mdss->reset);
->>> +               DPU_ERROR("failed to acquire mdss reset, ret=%d", ret);
->>> +               goto reset_parse_err;
->>> +       }
->>> +
->>>          dpu_mdss->base.dev = &pdev->dev;
->>>          dpu_mdss->base.funcs = &mdss_funcs;
->>>
->>> @@ -252,6 +269,7 @@ int dpu_mdss_init(struct platform_device *pdev)
->>>   irq_error:
->>>          _dpu_mdss_irq_domain_fini(dpu_mdss);
->>>   irq_domain_error:
->>> +reset_parse_err:
->>>   clk_parse_err:
->>>          if (dpu_mdss->mmio)
->>>                  devm_iounmap(&pdev->dev, dpu_mdss->mmio);
->>> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
->>> index 129fa841ac22..7595f83da3f1 100644
->>> --- a/drivers/gpu/drm/msm/msm_drv.c
->>> +++ b/drivers/gpu/drm/msm/msm_drv.c
->>> @@ -388,6 +388,10 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
->>>          if (ret)
->>>                  return ret;
->>>
->>> +       /* Issue a reset of the entire MDSS */
->>> +       if (priv->mdss && priv->mdss->funcs->reset)
->>> +               priv->mdss->funcs->reset(priv->mdss);
->>> +
->>
->> I think this is incorrect. In this way reset happens after all
->> subdevice are probed. They might have programmed some state of the
->> corresponding block. The clocks are already registered, so the clock
->> framework will be out of sync.
-> 
-> I went back and forth through the drivers and I believe at least the
-> idea is that we probe all the drivers, which will acquire some
-> resources.
-> 
-> Then in bind() we actually start to access the hardware (and acquire
-> more resources, for some reason).
++Google Reviewers
 
-DSI clock init happens in the dsi_clk_init(), called from 
-msm_dsi_host_inti(), dsi_init(), dsi_dev_probe(). But it's not the major 
-problem.
+Hello Reviewers,
 
-All the PHYs do not use component framework, be it the DSI PHY or HDMI 
-PHY. So at the time you call MDSS reset, the PHYs are already 
-initialized, the clocks are registered in the clock subsystem, etc.
-Performing a reset will put the hardware out of sync with the Linux kernel.
+We were wondering if you had a chance to review this patch and provide 
+any comments.
 
-So, if you'd like to perform a reset in the msm_drm_init(), we'd have to 
-modify DSI to perform some parts of init later. And to move PHYs to also 
-use the component framework. And I'm not sure if that won't break the 
-dispcc, the way it gets the DSI clocks.
+Thank you,
 
-> 
->> I think the reset should happen before calling of_platform_populate(),
->> so the device state is consistent with the driver.
->>
-> 
-> Perhaps I'm misunderstanding the component framework, but I was under
-> the impression that if any of the subcomponents fails to probe because
-> of lacking resources, this could be printed on the efifb before we reset
-> the hardware. Making errors slightly more user friendly.
-
-Yes, I understand why did you place the call in msm_drm_init().
-
-> 
-> I.e. in the timeframe between of_platform_populate() and
-> component_bind_all() below...
-> 
-> 
-> But if you believe I'm incorrect on the assumptions about the hardware
-> not being accessed before this point, I can move the reset before
-> of_platform_populate() - this is the last piece needed to have
-> functional eDP on sc8180x.
-> 
->> Also see the https://git.linaro.org/people/dmitry.baryshkov/kernel.git/log/?h=dpu-mdss-rework,
->> which reworks the mdss driver and mdss probing.
->>
-> 
-> There seems to be some room for reducing duplication between the two
-> drivers, so this seems reasonable.
-> 
-> Regards,
-> Bjorn
-> 
->>>          /* Bind all our sub-components: */
->>>          ret = component_bind_all(dev, ddev);
->>>          if (ret)
->>> diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
->>> index 2a4f0526cb98..716a34fca1cd 100644
->>> --- a/drivers/gpu/drm/msm/msm_kms.h
->>> +++ b/drivers/gpu/drm/msm/msm_kms.h
->>> @@ -205,6 +205,7 @@ struct msm_mdss_funcs {
->>>          int (*enable)(struct msm_mdss *mdss);
->>>          int (*disable)(struct msm_mdss *mdss);
->>>          void (*destroy)(struct msm_mdss *mdss);
->>> +       int (*reset)(struct msm_mdss *mdss);
->>>   };
->>>
->>>   struct msm_mdss {
->>> --
->>> 2.33.1
->>>
->>
->>
->> -- 
->> With best wishes
->> Dmitry
+Vijay/
 
 
--- 
-With best wishes
-Dmitry
+
+On 2/14/2022 6:33 PM, Vijaya Krishna Nivarthi wrote:
+> WLAN rail was leaking power during RBSC/sleep even after turning BT off.
+> Change sleep pinctrl configuration to handle same.
+>
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+> ---
+>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> index d623d71..de18319 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> @@ -516,10 +516,10 @@
+>   		pins = "gpio28";
+>   		function = "gpio";
+>   		/*
+> -		 * Configure a pull-down on CTS to match the pull of
+> -		 * the Bluetooth module.
+> +		 * Configure a disable on CTS to lower power usage
+> +		 * when BT is turned off.
+>   		 */
+> -		bias-pull-down;
+> +		bias-disable;
+>   	};
+>   
+>   	qup_uart7_sleep_rts: qup-uart7-sleep-rts {
