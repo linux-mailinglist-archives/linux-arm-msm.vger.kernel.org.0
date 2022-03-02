@@ -2,196 +2,236 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D72C94C9A60
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 02:27:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D266C4C9A74
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 02:33:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238895AbiCBB20 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Mar 2022 20:28:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51766 "EHLO
+        id S235759AbiCBBee (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Mar 2022 20:34:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236691AbiCBB2Y (ORCPT
+        with ESMTP id S234218AbiCBBed (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Mar 2022 20:28:24 -0500
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA6C93B016
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Mar 2022 17:27:40 -0800 (PST)
-Received: by mail-oi1-x235.google.com with SMTP id p15so454515oip.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Mar 2022 17:27:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Tv+YgwvAaGuJMMXzyf8UKPqJBKWn/rWVKPq429RSyAw=;
-        b=x3LtYqtKWT+YwkG6aAomkFJqE6JU/MeXuxpFJ2KtyAYFGYKoKOeI40r8rnf/ayswII
-         E47xrummwGUAXr1NOPjw4BOQY0pDjWlpO58zJuELtiacrBW/iJFYzzd9s1X5t5EM11q1
-         09kpz+lXNSepjtrEr3XjDD5D7usBJ7ZJOKN/ttIZC0AzyNoVFcM7YRhBWsB4dZOASqg5
-         T/bdPwwM3Nw8IhMqH9O7rYIvI4y02rvoj7RAZFy2pWkTf6rWbQRQvIs5ltlBMzMAYmcm
-         uX/hyel18lnuhsEddrvP0SUcJBP+3lZ/gAsd5DZtrCLGAaDhjlr9tUQ1U7TqWPd1LDjH
-         z1fA==
+        Tue, 1 Mar 2022 20:34:33 -0500
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AAE553B55;
+        Tue,  1 Mar 2022 17:33:51 -0800 (PST)
+Received: by mail-ot1-f45.google.com with SMTP id g6-20020a9d6486000000b005acf9a0b644so349052otl.12;
+        Tue, 01 Mar 2022 17:33:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Tv+YgwvAaGuJMMXzyf8UKPqJBKWn/rWVKPq429RSyAw=;
-        b=RYwToN4Xk0Q1dMstRyRo+qEyqfo4Y/eusHUFUUsJzV8L57kZzjgEMVK1/W919PXeUk
-         MhPB3/1y66fCu7JzkWKOzSxQWPn1X/Lu1yuOZOzJK/a8JxAeDGuLOdvPpwJFlhDDEKiO
-         YzVMXyGQBdmfsYPq6JgphyvXT6+q3JBErvFISgU23VIfj1lezkx88J3D17lSL3M4cbJu
-         ompgOhpT69+HVq41n8iwUslnG3w2e7abISGc3nZalDkwhn22CPbC7dX5GGm180b+XiHM
-         xNbe2bCf9/yMH+QKjDRE7sMTh+KLZofaaosEVvCFzB1SMOkGuMN39G6LUYqQO5RRV2Dd
-         sSUw==
-X-Gm-Message-State: AOAM533CY1yfgn3zjrlA4vyB/5ktgaOwXUKIxaygc3TZ7zBgJIycl6Nc
-        rEtzv+Wt2KWUBUFSykJqxAId5w==
-X-Google-Smtp-Source: ABdhPJw1w163ZojylGuWVadLsX0xJp3N7FA4hCgFYCgLBgnY+wNU4byJA3FAoTr+v9eYoM7s9CYlaQ==
-X-Received: by 2002:a05:6808:e89:b0:2cf:cad3:e427 with SMTP id k9-20020a0568080e8900b002cfcad3e427mr15963208oil.20.1646184460000;
-        Tue, 01 Mar 2022 17:27:40 -0800 (PST)
-Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id t9-20020a056871054900b000c53354f98esm6728948oal.13.2022.03.01.17.27.39
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=88xxT5vkW1FD5Lw+DjeY3rRe+OzWsSvDd95LTbfCqfw=;
+        b=GjkUATrPtGUZpS4Udxx35n4OZ1hV9rIMyYEycNTYpFPxMVOfFTi2eGWqJ5t60816+V
+         IzsVO+tjwx6GUSz4n2LPNt8JPF3kY+R6LO/vZke+m2RrUBb+p7VtKZY6Gw9Bybc5r6Zt
+         gdodx98ffw0ffbxKiUqLJvHU8IzSdsPTb1fvn7ywJ6qcpDZBsanBqRXpkIW/A+5hfOLt
+         MAfWqVVBRAc8Xx0lHSuxBKZ74Lb/cY6aqQsITrohe/df5X9HesW7L54tYFc3p3Vk11zj
+         ON/8+bKRQWhUa4f0fcrMRBIMV6nQn2M+cwdyxQtoHXjSGF0XrpFG3fZ/huFKh2oC4IGX
+         0PRw==
+X-Gm-Message-State: AOAM533rh9Wr3D1v0iftYq0oWXZT9hc6wM4A/M1fHhTWVIMm2xTxHGeo
+        SWiVza3t0+LDGWzJr6l9JlUysfT3IA==
+X-Google-Smtp-Source: ABdhPJxASzbqazLlVVSxOPjbvb6XUCjCoxGN0p8dOSbmV+NwTcHACaJNkJhLJK3Hut69Fx1CHhKRIQ==
+X-Received: by 2002:a05:6830:1b6f:b0:5af:d2f:eed9 with SMTP id d15-20020a0568301b6f00b005af0d2feed9mr14324518ote.331.1646184830209;
+        Tue, 01 Mar 2022 17:33:50 -0800 (PST)
+Received: from xps15.herring.priv (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.googlemail.com with ESMTPSA id hq12-20020a0568709b0c00b000d3d5d4def7sm6627504oab.29.2022.03.01.17.33.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Mar 2022 17:27:39 -0800 (PST)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        Tue, 01 Mar 2022 17:33:49 -0800 (PST)
+From:   Rob Herring <robh@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/2] drm/msm/dpu: Issue MDSS reset during initialization
-Date:   Tue,  1 Mar 2022 17:29:31 -0800
-Message-Id: <20220302012931.4107196-2-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20220302012931.4107196-1-bjorn.andersson@linaro.org>
-References: <20220302012931.4107196-1-bjorn.andersson@linaro.org>
+Subject: [PATCH v2] arm64/arm: dts: qcom: Drop bogus interrupt flags cell on MDSS nodes
+Date:   Tue,  1 Mar 2022 19:33:39 -0600
+Message-Id: <20220302013339.2354076-1-robh@kernel.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It's typical for the bootloader to bring up the display for showing a
-boot splash or efi framebuffer. But in some cases the kernel driver ends
-up only partially configuring (in particular) the DPU, which might
-result in e.g. that two different data paths attempts to push data to
-the interface - with resulting graphical artifacts.
+The MDSS interrupt provider is a single cell, so specifying interrupt flags
+on the consumers is incorrect.
 
-Naturally the end goal would be to inherit the bootloader's
-configuration and provide the user with a glitch free handover from the
-boot configuration to a running DPU.
-
-But as implementing seamless transition from the bootloader
-configuration to the running OS will be a considerable effort, start by
-simply resetting the entire MDSS to its power-on state, to avoid the
-partial configuration.
-
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Rob Herring <robh@kernel.org>
 ---
+v2:
+ - Add a bunch of missed cases
+---
+ arch/arm/boot/dts/qcom-msm8974.dtsi   | 4 ++--
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 6 +++---
+ arch/arm64/boot/dts/qcom/sdm630.dtsi  | 5 ++---
+ arch/arm64/boot/dts/qcom/sdm660.dtsi  | 2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi  | 6 +++---
+ arch/arm64/boot/dts/qcom/sm8250.dtsi  | 6 +++---
+ 6 files changed, 14 insertions(+), 15 deletions(-)
 
-Changes since v1:
-- Rather than trying to deconfigure individual pieces of the DPU, reset the
-  entire block.
-
- drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c | 18 ++++++++++++++++++
- drivers/gpu/drm/msm/msm_drv.c            |  4 ++++
- drivers/gpu/drm/msm/msm_kms.h            |  1 +
- 3 files changed, 23 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-index b10ca505f9ac..419eaaefe606 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-@@ -7,6 +7,7 @@
- #include <linux/irqchip.h>
- #include <linux/irqdesc.h>
- #include <linux/irqchip/chained_irq.h>
-+#include <linux/reset.h>
- #include "dpu_kms.h"
+diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+index 412d94736c35..3b9af5e24907 100644
+--- a/arch/arm/boot/dts/qcom-msm8974.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+@@ -1495,7 +1495,7 @@ mdp: mdp@fd900000 {
+ 				reg-names = "mdp_phys";
  
- #define to_dpu_mdss(x) container_of(x, struct dpu_mdss, base)
-@@ -31,6 +32,7 @@ struct dpu_mdss {
- 	void __iomem *mmio;
- 	struct clk_bulk_data *clocks;
- 	size_t num_clocks;
-+	struct reset_control *reset;
- 	struct dpu_irq_controller irq_controller;
+ 				interrupt-parent = <&mdss>;
+-				interrupts = <0 0>;
++				interrupts = <0>;
+ 
+ 				clocks = <&mmcc MDSS_AHB_CLK>,
+ 					 <&mmcc MDSS_AXI_CLK>,
+@@ -1530,7 +1530,7 @@ dsi0: dsi@fd922800 {
+ 				reg-names = "dsi_ctrl";
+ 
+ 				interrupt-parent = <&mdss>;
+-				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
++				interrupts = <4>;
+ 
+ 				assigned-clocks = <&mmcc BYTE0_CLK_SRC>,
+ 				                  <&mmcc PCLK0_CLK_SRC>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index f0f81c23c16f..0597d865a4a6 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -788,7 +788,7 @@ mdp: mdp@901000 {
+ 				reg-names = "mdp_phys";
+ 
+ 				interrupt-parent = <&mdss>;
+-				interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
++				interrupts = <0>;
+ 
+ 				clocks = <&mmcc MDSS_AHB_CLK>,
+ 					 <&mmcc MDSS_AXI_CLK>,
+@@ -834,7 +834,7 @@ dsi0: dsi@994000 {
+ 				reg-names = "dsi_ctrl";
+ 
+ 				interrupt-parent = <&mdss>;
+-				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
++				interrupts = <4>;
+ 
+ 				clocks = <&mmcc MDSS_MDP_CLK>,
+ 					 <&mmcc MDSS_BYTE0_CLK>,
+@@ -904,7 +904,7 @@ hdmi: hdmi-tx@9a0000 {
+ 					    "hdcp_physical";
+ 
+ 				interrupt-parent = <&mdss>;
+-				interrupts = <8 IRQ_TYPE_LEVEL_HIGH>;
++				interrupts = <8>;
+ 
+ 				clocks = <&mmcc MDSS_MDP_CLK>,
+ 					 <&mmcc MDSS_AHB_CLK>,
+diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+index 240293592ef9..f646fb80924f 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -1453,7 +1453,7 @@ mdp: mdp@c901000 {
+ 				reg-names = "mdp_phys";
+ 
+ 				interrupt-parent = <&mdss>;
+-				interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
++				interrupts = <0>;
+ 
+ 				assigned-clocks = <&mmcc MDSS_MDP_CLK>,
+ 						  <&mmcc MDSS_VSYNC_CLK>;
+@@ -1530,7 +1530,7 @@ dsi0: dsi@c994000 {
+ 				power-domains = <&rpmpd SDM660_VDDCX>;
+ 
+ 				interrupt-parent = <&mdss>;
+-				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
++				interrupts = <4>;
+ 
+ 				assigned-clocks = <&mmcc BYTE0_CLK_SRC>,
+ 						  <&mmcc PCLK0_CLK_SRC>;
+@@ -2487,4 +2487,3 @@ timer {
+ 				 <GIC_PPI 0 0xf08>;
+ 	};
  };
+-
+diff --git a/arch/arm64/boot/dts/qcom/sdm660.dtsi b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+index eccf6fde16b4..1d748c5305f4 100644
+--- a/arch/arm64/boot/dts/qcom/sdm660.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+@@ -163,7 +163,7 @@ dsi1: dsi@c996000 {
+ 		power-domains = <&rpmpd SDM660_VDDCX>;
  
-@@ -197,10 +199,18 @@ static void dpu_mdss_destroy(struct msm_mdss *mdss)
- 	dpu_mdss->mmio = NULL;
- }
+ 		interrupt-parent = <&mdss>;
+-		interrupts = <5 IRQ_TYPE_LEVEL_HIGH>;
++		interrupts = <5>;
  
-+static int dpu_mdss_reset(struct msm_mdss *mdss)
-+{
-+	struct dpu_mdss *dpu_mdss = to_dpu_mdss(mdss);
-+
-+	return reset_control_reset(dpu_mdss->reset);
-+}
-+
- static const struct msm_mdss_funcs mdss_funcs = {
- 	.enable	= dpu_mdss_enable,
- 	.disable = dpu_mdss_disable,
- 	.destroy = dpu_mdss_destroy,
-+	.reset = dpu_mdss_reset,
- };
+ 		assigned-clocks = <&mmcc BYTE1_CLK_SRC>,
+ 					<&mmcc PCLK1_CLK_SRC>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 41f4e46e1f85..95e6a97c2170 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -4281,7 +4281,7 @@ mdss_mdp: mdp@ae01000 {
+ 				power-domains = <&rpmhpd SDM845_CX>;
  
- int dpu_mdss_init(struct platform_device *pdev)
-@@ -227,6 +237,13 @@ int dpu_mdss_init(struct platform_device *pdev)
- 	}
- 	dpu_mdss->num_clocks = ret;
+ 				interrupt-parent = <&mdss>;
+-				interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
++				interrupts = <0>;
  
-+	dpu_mdss->reset = devm_reset_control_get_optional_exclusive(&pdev->dev, NULL);
-+	if (IS_ERR(dpu_mdss->reset)) {
-+		ret = PTR_ERR(dpu_mdss->reset);
-+		DPU_ERROR("failed to acquire mdss reset, ret=%d", ret);
-+		goto reset_parse_err;
-+	}
-+
- 	dpu_mdss->base.dev = &pdev->dev;
- 	dpu_mdss->base.funcs = &mdss_funcs;
+ 				ports {
+ 					#address-cells = <1>;
+@@ -4333,7 +4333,7 @@ dsi0: dsi@ae94000 {
+ 				reg-names = "dsi_ctrl";
  
-@@ -252,6 +269,7 @@ int dpu_mdss_init(struct platform_device *pdev)
- irq_error:
- 	_dpu_mdss_irq_domain_fini(dpu_mdss);
- irq_domain_error:
-+reset_parse_err:
- clk_parse_err:
- 	if (dpu_mdss->mmio)
- 		devm_iounmap(&pdev->dev, dpu_mdss->mmio);
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 129fa841ac22..7595f83da3f1 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -388,6 +388,10 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
- 	if (ret)
- 		return ret;
+ 				interrupt-parent = <&mdss>;
+-				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
++				interrupts = <4>;
  
-+	/* Issue a reset of the entire MDSS */
-+	if (priv->mdss && priv->mdss->funcs->reset)
-+		priv->mdss->funcs->reset(priv->mdss);
-+
- 	/* Bind all our sub-components: */
- 	ret = component_bind_all(dev, ddev);
- 	if (ret)
-diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-index 2a4f0526cb98..716a34fca1cd 100644
---- a/drivers/gpu/drm/msm/msm_kms.h
-+++ b/drivers/gpu/drm/msm/msm_kms.h
-@@ -205,6 +205,7 @@ struct msm_mdss_funcs {
- 	int (*enable)(struct msm_mdss *mdss);
- 	int (*disable)(struct msm_mdss *mdss);
- 	void (*destroy)(struct msm_mdss *mdss);
-+	int (*reset)(struct msm_mdss *mdss);
- };
+ 				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
+ 					 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
+@@ -4405,7 +4405,7 @@ dsi1: dsi@ae96000 {
+ 				reg-names = "dsi_ctrl";
  
- struct msm_mdss {
+ 				interrupt-parent = <&mdss>;
+-				interrupts = <5 IRQ_TYPE_LEVEL_HIGH>;
++				interrupts = <5>;
+ 
+ 				clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK>,
+ 					 <&dispcc DISP_CC_MDSS_BYTE1_INTF_CLK>,
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index fdaf303ba047..956848068871 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -3200,7 +3200,7 @@ mdss_mdp: mdp@ae01000 {
+ 				power-domains = <&rpmhpd SM8250_MMCX>;
+ 
+ 				interrupt-parent = <&mdss>;
+-				interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
++				interrupts = <0>;
+ 
+ 				ports {
+ 					#address-cells = <1>;
+@@ -3252,7 +3252,7 @@ dsi0: dsi@ae94000 {
+ 				reg-names = "dsi_ctrl";
+ 
+ 				interrupt-parent = <&mdss>;
+-				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
++				interrupts = <4>;
+ 
+ 				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
+ 					 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
+@@ -3325,7 +3325,7 @@ dsi1: dsi@ae96000 {
+ 				reg-names = "dsi_ctrl";
+ 
+ 				interrupt-parent = <&mdss>;
+-				interrupts = <5 IRQ_TYPE_LEVEL_HIGH>;
++				interrupts = <5>;
+ 
+ 				clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK>,
+ 					 <&dispcc DISP_CC_MDSS_BYTE1_INTF_CLK>,
 -- 
-2.33.1
+2.32.0
 
