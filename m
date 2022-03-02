@@ -2,110 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B4704C9D86
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 06:37:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EFC0E4C9E19
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 08:00:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237240AbiCBFiO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Mar 2022 00:38:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38942 "EHLO
+        id S235475AbiCBHBH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Mar 2022 02:01:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239597AbiCBFiB (ORCPT
+        with ESMTP id S235259AbiCBHBH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 00:38:01 -0500
+        Wed, 2 Mar 2022 02:01:07 -0500
 Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4D85B1A94;
-        Tue,  1 Mar 2022 21:36:52 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E5F3B0A75;
+        Tue,  1 Mar 2022 23:00:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1646199412; x=1677735412;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=mRwvBAtok3xtIJz4XBlnJPoaxjUEKJHuRLmcYbLZajQ=;
-  b=zg6dgLuZJp5hvBollBi3m/S39MVeDob0WQtSO+GSU5XdpNrZmdx320YW
-   IhRxg+bt79qGDk6vTD2K6u5LymMNDE4kardDmDzd7IK01SYT/d6HwGIYM
-   hz4qun2dRhlTld5zZortE8jzWGtfkj971iiwEJ5X2HZHgwNC0jeAjk2jD
-   4=;
+  t=1646204425; x=1677740425;
+  h=from:to:cc:subject:date:message-id;
+  bh=fa3lg/CU1qTGW0rcp7IFfw+6PTmtzJTHq9PyqCePgn8=;
+  b=Ov818R+Lf1VdD+G24VhrTQQr/jnlc9G1YoOLRiWIUCkfjgu1vYv4aMge
+   +oFTvD+wxPCF0fs3CbP+VavIGhAmvwsh+uSqmDGj2Kh7mjUOs164ywuKv
+   wxIf4zlHVCmaAItFatbW+lPHBi+ndXGbiOCJTYEF0SgHqR19D2oJJKqg/
+   U=;
 Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 01 Mar 2022 21:36:52 -0800
+  by alexa-out.qualcomm.com with ESMTP; 01 Mar 2022 23:00:24 -0800
 X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2022 21:36:52 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Tue, 1 Mar 2022 21:36:51 -0800
-Received: from [10.216.62.30] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Tue, 1 Mar 2022
- 21:36:48 -0800
-Message-ID: <edee4305-77da-039b-1f07-bcdc5d462666@quicinc.com>
-Date:   Wed, 2 Mar 2022 11:06:45 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Configure cts sleep pinctrl to
- bias-disable for sc7280-idp
-Content-Language: en-CA
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <robh+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <msavaliy@qti.qualcomm.com>,
-        <mka@chromium.org>, <swboyd@chromium.org>, <dianders@chromium.org>
-References: <1644843828-20464-1-git-send-email-quic_vnivarth@quicinc.com>
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-In-Reply-To: <1644843828-20464-1-git-send-email-quic_vnivarth@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 01 Mar 2022 23:00:22 -0800
+X-QCInternal: smtphost
+Received: from pmaliset-linux.qualcomm.com ([10.206.64.233])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 02 Mar 2022 12:30:06 +0530
+Received: by pmaliset-linux.qualcomm.com (Postfix, from userid 3848298)
+        id 7645B2077B; Wed,  2 Mar 2022 12:30:05 +0530 (IST)
+From:   Prasad Malisetty <quic_pmaliset@quicinc.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        lorenzo.pieralisi@arm.com, robh@kernel.org, kw@linux.com,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+        manivannan.sadhasivam@linaro.org, swboyd@chromium.org,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>
+Subject: [PATCH v1] dt-bindings: pci: qcom: Document PCIe bindings for SC7280
+Date:   Wed,  2 Mar 2022 12:30:02 +0530
+Message-Id: <1646204402-7608-1-git-send-email-quic_pmaliset@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+Google Reviewers
+Document the PCIe DT bindings for SC7280 SoC.The PCIe IP is similar
+to the one used on SM8250. Add the compatible for SC7280.
 
-Hello Reviewers,
+Signed-off-by: Prasad Malisetty <quic_pmaliset@quicinc.com>
+---
+ Documentation/devicetree/bindings/pci/qcom,pcie.txt | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-We were wondering if you had a chance to review this patch and provide 
-any comments.
+diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+index 0adb56d..8e36f83 100644
+--- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
++++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+@@ -12,6 +12,7 @@
+ 			- "qcom,pcie-ipq4019" for ipq4019
+ 			- "qcom,pcie-ipq8074" for ipq8074
+ 			- "qcom,pcie-qcs404" for qcs404
++			- "qcom,pcie-sc7280" for sc7280
+ 			- "qcom,pcie-sc8180x" for sc8180x
+ 			- "qcom,pcie-sdm845" for sdm845
+ 			- "qcom,pcie-sm8250" for sm8250
+@@ -147,6 +148,22 @@
+ 			- "slave_bus"	AXI Slave clock
+ 
+ - clock-names:
++	Usage: required for sc7280
++	Value type: <stringlist>
++	Definition: Should contain the following entries
++			- "aux"         Auxiliary clock
++			- "cfg"         Configuration clock
++			- "bus_master"  Master AXI clock
++			- "bus_slave"   Slave AXI clock
++			- "slave_q2a"   Slave Q2A clock
++			- "tbu"         PCIe TBU clock
++			- "ddrss_sf_tbu" PCIe SF TBU clock
++			- "pipe"        PIPE clock
++			- "pipe_mux"    PIPE MUX
++			- "phy_pipe"    PIPE output clock
++			- "ref"         REFERENCE clock
++
++- clock-names:
+ 	Usage: required for sdm845
+ 	Value type: <stringlist>
+ 	Definition: Should contain the following entries
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
-Thank you,
-
-Vijay/
-
-
-
-On 2/14/2022 6:33 PM, Vijaya Krishna Nivarthi wrote:
-> WLAN rail was leaking power during RBSC/sleep even after turning BT off.
-> Change sleep pinctrl configuration to handle same.
->
-> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-> ---
->   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> index d623d71..de18319 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> @@ -516,10 +516,10 @@
->   		pins = "gpio28";
->   		function = "gpio";
->   		/*
-> -		 * Configure a pull-down on CTS to match the pull of
-> -		 * the Bluetooth module.
-> +		 * Configure a disable on CTS to lower power usage
-> +		 * when BT is turned off.
->   		 */
-> -		bias-pull-down;
-> +		bias-disable;
->   	};
->   
->   	qup_uart7_sleep_rts: qup-uart7-sleep-rts {
