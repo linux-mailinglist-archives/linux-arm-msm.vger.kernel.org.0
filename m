@@ -2,202 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6B774CA54F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 13:55:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 77F714CA579
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 14:04:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241978AbiCBMzG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Mar 2022 07:55:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47352 "EHLO
+        id S241986AbiCBNEx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Mar 2022 08:04:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234165AbiCBMzF (ORCPT
+        with ESMTP id S239833AbiCBNEw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 07:55:05 -0500
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04FD0A4182;
-        Wed,  2 Mar 2022 04:54:20 -0800 (PST)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 773963F817;
-        Wed,  2 Mar 2022 13:54:18 +0100 (CET)
-Date:   Wed, 2 Mar 2022 13:54:17 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] dt-bindings: clock: add QCOM SM6125 display clock
- bindings
-Message-ID: <20220302125417.iu52rvdxrmo25wwt@SoMainline.org>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220226200911.230030-1-marijn.suijten@somainline.org>
- <20220226200911.230030-3-marijn.suijten@somainline.org>
- <ea5d34c6-fe75-c096-d5b2-6a327c9d0ae5@canonical.com>
- <62ebb074-b8de-0dc3-2bbc-e43dca9d2ced@linaro.org>
- <05310308-b0ff-56a0-83ac-855b1b795936@canonical.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <05310308-b0ff-56a0-83ac-855b1b795936@canonical.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Wed, 2 Mar 2022 08:04:52 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF66AC2483;
+        Wed,  2 Mar 2022 05:04:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1646226250; x=1677762250;
+  h=from:to:cc:subject:date:message-id;
+  bh=a4hQ2aAPW5IsY3w8Y0zEVgQ+Gmampycmr+DnS2bxoZw=;
+  b=mVqUDCQhKqbehTyosKVVDC0EV41Szv+pfrbxzf+5Yrm3s7ROI3mkKCSq
+   eiyoIGpdDPOVaGj65193oupSWKPbPvMFg8U5wK7tAaS1Zev+F69mx2Lt2
+   oKRc3ldaMn808akbbYuDEBEaiGPjWtvRwHMKmpEIRcoCFcBdZ2NFET5hn
+   U=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 02 Mar 2022 05:04:10 -0800
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 02 Mar 2022 05:04:08 -0800
+X-QCInternal: smtphost
+Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 02 Mar 2022 18:33:50 +0530
+Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
+        id 37F6C5850; Wed,  2 Mar 2022 18:33:49 +0530 (IST)
+From:   Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+To:     adrian.hunter@intel.com, quic_riteshh@quicinc.com,
+        asutoshd@quicinc.com, ulf.hansson@linaro.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-mmc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     quic_vbadigan@quicinc.com, quic_rampraka@quicinc.com,
+        quic_pragalla@quicinc.com, quic_sartgarg@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_sayalil@quicinc.com,
+        Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+Subject: [PATCH V4 0/7] mmc: add error statistics for eMMC and SD card
+Date:   Wed,  2 Mar 2022 18:33:40 +0530
+Message-Id: <1646226227-32429-1-git-send-email-quic_c_sbhanu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-02-28 10:23:19, Krzysztof Kozlowski wrote:
-> On 27/02/2022 22:43, Dmitry Baryshkov wrote:
-> > On 27/02/2022 13:03, Krzysztof Kozlowski wrote:
-> >> On 26/02/2022 21:09, Marijn Suijten wrote:
-> >>> From: Martin Botka <martin.botka@somainline.org>
-> >>>
-> >>> Add device tree bindings for display clock controller for
-> >>> Qualcomm Technology Inc's SM6125 SoC.
-> >>>
-> >>> Signed-off-by: Martin Botka <martin.botka@somainline.org>
-> >>> ---
-> >>>   .../bindings/clock/qcom,dispcc-sm6125.yaml    | 87 +++++++++++++++++++
-> >>>   .../dt-bindings/clock/qcom,dispcc-sm6125.h    | 41 +++++++++
-> >>>   2 files changed, 128 insertions(+)
-> >>>   create mode 100644 Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
-> >>>   create mode 100644 include/dt-bindings/clock/qcom,dispcc-sm6125.h
-> >>>
-> >>> diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
-> >>> new file mode 100644
-> >>> index 000000000000..3465042d0d9f
-> >>> --- /dev/null
-> >>> +++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
-> >>> @@ -0,0 +1,87 @@
-> >>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> >>> +%YAML 1.2
-> >>> +---
-> >>> +$id: http://devicetree.org/schemas/clock/qcom,dispcc-sm6125.yaml#
-> >>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >>> +
-> >>> +title: Qualcomm Display Clock Controller Binding for SM6125
-> >>> +
-> >>> +maintainers:
-> >>> +  - Martin Botka <martin.botka@somainline.org>
-> >>> +
-> >>> +description: |
-> >>> +  Qualcomm display clock control module which supports the clocks and
-> >>> +  power domains on SM6125.
-> >>> +
-> >>> +  See also:
-> >>> +    dt-bindings/clock/qcom,dispcc-sm6125.h
-> >>> +
-> >>> +properties:
-> >>> +  compatible:
-> >>> +    enum:
-> >>> +      - qcom,sm6125-dispcc
-> >>> +
-> >>> +  clocks:
-> >>> +    items:
-> >>> +      - description: Board XO source
-> >>> +      - description: Byte clock from DSI PHY0
-> >>> +      - description: Pixel clock from DSI PHY0
-> >>> +      - description: Pixel clock from DSI PHY1
-> >>> +      - description: Link clock from DP PHY
-> >>> +      - description: VCO DIV clock from DP PHY
-> >>> +      - description: AHB config clock from GCC
-> >>> +
-> >>> +  clock-names:
-> >>> +    items:
-> >>> +      - const: bi_tcxo
-> >>> +      - const: dsi0_phy_pll_out_byteclk
-> >>> +      - const: dsi0_phy_pll_out_dsiclk
-> >>> +      - const: dsi1_phy_pll_out_dsiclk
-> >>> +      - const: dp_phy_pll_link_clk
-> >>> +      - const: dp_phy_pll_vco_div_clk
-> >>> +      - const: cfg_ahb_clk
-> >>> +
-> >>> +  '#clock-cells':
-> >>> +    const: 1
-> >>> +
-> >>> +  '#power-domain-cells':
-> >>> +    const: 1
-> >>> +
-> >>> +  reg:
-> >>> +    maxItems: 1
-> >>> +
-> >>> +required:
-> >>> +  - compatible
-> >>> +  - reg
-> >>> +  - clocks
-> >>> +  - clock-names
-> >>> +  - '#clock-cells'
-> >>> +  - '#power-domain-cells'
-> >>> +
-> >>> +additionalProperties: false
-> >>> +
-> >>> +examples:
-> >>> +  - |
-> >>> +    #include <dt-bindings/clock/qcom,rpmcc.h>
-> >>> +    #include <dt-bindings/clock/qcom,gcc-sm6125.h>
-> >>> +    clock-controller@5f00000 {
-> >>> +      compatible = "qcom,sm6125-dispcc";
-> >>> +      reg = <0x5f00000 0x20000>;
-> >>> +      clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
-> >>> +               <&dsi0_phy 0>,
-> >>> +               <&dsi0_phy 1>,
-> >>> +               <0>,
-> >>
-> >> This does not look like a valid phandle. This clock is required, isn't it?
+Changes since V3:
+	-Dropped error stats feature flag as suggested by Adrain Hunter.
+	-Separated error state related changes in separate patches as
+	 suggested by Adrain Hunter.
+	  [PATCH V4 4/7] : error state debug fs
+	  [PATCH V4 5/7] : error state enable function
+	  [PATCH V4 6/7] : error state enable in error case
+	 Note: we are enabling error state before calling sdhci_dumpregs
+	 we couldn't add the err state in error stats array as err state
+	 is not error type.
+	-Corrected Signed-off-by order as suggested by Bjron Andersson.
+	-Moved error state enable code from sdhci_dumpregs to error
+	 conditions as suggested by Adrain Hunter.
 
-I remember it being used like this before, though upon closer inspection
-only qcom,gcc-msm8998.yaml uses it as example.
+Changes since V2:
+	-Removed userspace error stats clear debug fs entry as suggested
+	 by Adrain Hunter.
+	-Split patch into 4 patches
+	  [PATCH V3 1/4] : sdhci driver
+	  [PATCH V3 2/4] : debug fs entries
+	  [PATCH V3 3/4] : core driver
+	  [PATCH V3 4/4] : cqhci driver
+	-Used for loop to print error messages instead of using printf
+	 statements for all error messages as suggested by Adrain Hunter.
+	-Introduced one flag to enable error stats feature, if any other
+	 client wants to use this feature, they need to enable that flag.
+	-Moved reset command timeout error statement to card init flow
+	 as suggested by Adrain Hunter.
 
-The clock should be optional, in that case it is perhaps desired to omit
-it from clock-names instead, or pretend there's a `dsi1_phy 1`?
+Changes since V1:
+	-Removed sysfs entry for eMMC and SD card error statistics and added
 
-> > 
-> > Not, it's not required for general dispcc support.
-> > dispcc uses DSI and DP PHY clocks to provide respective pixel/byte/etc 
-> > clocks. However if support for DP is not enabled, the dispcc can work 
-> > w/o DP phy clock. Thus we typically add 0 phandles as placeholders for 
+Shaik Sajida Bhanu (7):
+  mmc: core: Capture eMMC and SD card errors
+  mmc: sdhci: Capture eMMC and SD card errors
+  mmc: debugfs: Add debug fs entry for mmc driver
+  mmc: debugfs: Add debug fs error state entry for mmc driver
+  mmc: core: Set error state for mmc driver
+  mmc: sdhci: Set error state for mmc driver
+  mmc: cqhci: Capture eMMC and SD card errors
 
-Is there any semantic difference between omitting the clock from DT (in
-clocks= /and/ clock-names=) or setting it to a 0 phandle?
+ drivers/mmc/core/core.c       |  6 ++++
+ drivers/mmc/core/debugfs.c    | 75 +++++++++++++++++++++++++++++++++++++++++++
+ drivers/mmc/host/cqhci-core.c |  9 +++++-
+ drivers/mmc/host/sdhci.c      | 74 +++++++++++++++++++++++++++++++++++-------
+ include/linux/mmc/host.h      | 29 +++++++++++++++++
+ 5 files changed, 180 insertions(+), 13 deletions(-)
 
-> > DSI/DP clock sources and populate them as support for respective 
-> > interfaces gets implemented.
-> > 
-> 
-> Then the clock is optional, isn't it? While not modeling it as optional?
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
-It looks like this should be modelled using minItems: then, and
-"optional" text/comment? Other clocks are optional as well, we don't
-have DSI 1 in downstream SM6125 DT sources and haven't added the DP PLL
-in our to-be-upstreamed mainline tree yet.
-
-- Marijn
