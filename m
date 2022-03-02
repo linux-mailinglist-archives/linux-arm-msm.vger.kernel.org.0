@@ -2,62 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E4344CACD8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 19:02:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C8AC4CACE4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 19:04:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244333AbiCBSDb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Mar 2022 13:03:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33996 "EHLO
+        id S233076AbiCBSE4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Mar 2022 13:04:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244393AbiCBSD3 (ORCPT
+        with ESMTP id S244283AbiCBSE4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 13:03:29 -0500
-Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 496339FE3;
-        Wed,  2 Mar 2022 10:02:45 -0800 (PST)
-Received: by mail-oo1-f46.google.com with SMTP id w3-20020a4ac183000000b0031d806bbd7eso2778812oop.13;
-        Wed, 02 Mar 2022 10:02:45 -0800 (PST)
+        Wed, 2 Mar 2022 13:04:56 -0500
+Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC4D2532DD;
+        Wed,  2 Mar 2022 10:04:11 -0800 (PST)
+Received: by mail-oo1-f53.google.com with SMTP id i6-20020a4ac506000000b0031c5ac6c078so2806247ooq.6;
+        Wed, 02 Mar 2022 10:04:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=VgE6mXj5k3v9QZZO5v/Knmz+OxYujVNrLAAks+xKJQ4=;
-        b=NhVnxH/QsUCbCCAm2DV+xb1HnYy1YGEG1a1qkvB0vleZgiEQmaha1Pfx7+vPS3ldR8
-         DSPcE017VYt36BGavcBpro/e+DAGXamHuIS4nJq/EglC1wDu7tENsB8L2FTpB54L1Tmf
-         ZoGgX7vKYCQa+TaWiYxCatTBpQsdX+LfbK/3Wmnz7jdJYDHshzaU1MuqW3npw/rOhyGK
-         DcSxlHlcmkfHfCP7dqoNvT372hyBEtUzS1EeEjRJ5Ak53TUmcwPGGMqnbAiipWLzdelb
-         MlN96e8C6zZa8IMzaXHRXXcObXdlasbcyqjjmH+QkqSkVst6cIw3k53j0QJ0n6mNTafv
-         LSPQ==
-X-Gm-Message-State: AOAM533SWiGWVmvr1awGpdwpWq2KYcg/eRdXgxkXzOsMXazpkE4Hoi1/
-        Ii8HWDrUL5uMqC8fCwaz8w==
-X-Google-Smtp-Source: ABdhPJyA0Rt6qcpNxU14kgn7YYDpWhkXrSU6jmXb3jSq8JPxYyTQ880stHIx2uKruejT3XtNaFV2jA==
-X-Received: by 2002:a05:6871:79b:b0:d3:4039:7e7c with SMTP id o27-20020a056871079b00b000d340397e7cmr814561oap.121.1646244164495;
-        Wed, 02 Mar 2022 10:02:44 -0800 (PST)
+        bh=NyCZbFNG5zXvLkeeXgNZuh7pG1t1jvI75UWVDVGd5RM=;
+        b=4TB6mlsx22GljFbMfm0Zbc9BUlVxagZ+Fw7zaLXG9X0E81tkZN26vRylqOjBki0NTS
+         ARowXatAP8YOGo//40JhOCm1OA0NYwMKMr+6BIxSkZbdzV7c+CzWiXDzMfAkx7vVXiqR
+         E58J3WVSiknwi3QM1CPT5ifpFgH+D0T1oLmDUSYGsLThwalYw1RwUUbk7i0ehOepsc/f
+         gZHw4D5dWUkmf2XniwKglT1sv0uOMCKwLGe2bzm1htVh26yxEF/puV2NlR+yb5WEJaxE
+         0d4Tv4v0cBuNjQUE+hf/X5BgjGiCPbiX/g+HRHE64We8n6ZjbLqi3u9TcxwNZw0JhTQG
+         4skw==
+X-Gm-Message-State: AOAM532hTA3+ecgxvDG7eEBcPYilshKaO7xTWQWo9VmEmi+Y2JmAn7V/
+        iSOuINR5q/HjBawf2tnrFA==
+X-Google-Smtp-Source: ABdhPJxRfEvne9Olzfj87R4/ZAFsMzyq/AgkwsOQIj7de/21zewdDmDo8cR0oklkbOky7y2+ovYPKg==
+X-Received: by 2002:a05:6870:f611:b0:d6:d3ad:75d0 with SMTP id ek17-20020a056870f61100b000d6d3ad75d0mr796616oab.101.1646244251160;
+        Wed, 02 Mar 2022 10:04:11 -0800 (PST)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id t82-20020a4a3e55000000b0031847b47aaasm8196143oot.26.2022.03.02.10.02.43
+        by smtp.gmail.com with ESMTPSA id gz3-20020a056870280300b000c2e2d0a326sm7449557oab.38.2022.03.02.10.04.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Mar 2022 10:02:43 -0800 (PST)
-Received: (nullmailer pid 3971499 invoked by uid 1000);
-        Wed, 02 Mar 2022 18:02:42 -0000
-Date:   Wed, 2 Mar 2022 12:02:42 -0600
+        Wed, 02 Mar 2022 10:04:10 -0800 (PST)
+Received: (nullmailer pid 3973831 invoked by uid 1000);
+        Wed, 02 Mar 2022 18:04:09 -0000
+Date:   Wed, 2 Mar 2022 12:04:09 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: display: msm: Add optional resets
-Message-ID: <Yh+xQg7ycLMHLMcS@robh.at.kernel.org>
-References: <20220302012931.4107196-1-bjorn.andersson@linaro.org>
+        devicetree@vger.kernel.org, Loic Poulain <loic.poulain@linaro.org>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        freedreno@lists.freedesktop.org
+Subject: Re: [RESEND PATCH] dt-bindings: display/msm: add missing brace in
+ dpu-qcm2290.yaml
+Message-ID: <Yh+xmSaLHc14ZNnV@robh.at.kernel.org>
+References: <20220302001410.2264039-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220302012931.4107196-1-bjorn.andersson@linaro.org>
+In-Reply-To: <20220302001410.2264039-1-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
@@ -69,21 +70,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 01, 2022 at 05:29:30PM -0800, Bjorn Andersson wrote:
-> Add an optional reference to the MDSS_CORE reset, which when specified
-> can be used by the implementation to reset the hardware blocks.
+On Wed, Mar 02, 2022 at 03:14:10AM +0300, Dmitry Baryshkov wrote:
+> Add missing brace in dpu-qcm2290.yaml. While we are at it, also fix
+> indentation for another brace, so it matches the corresponding line.
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Reported-by: Rob Herring <robh@kernel.org>
+> Cc: Loic Poulain <loic.poulain@linaro.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-> 
-> Changes since v1:
-> - New approach/patch
-> 
->  .../devicetree/bindings/display/msm/dpu-qcm2290.yaml          | 4 ++++
->  Documentation/devicetree/bindings/display/msm/dpu-sc7180.yaml | 4 ++++
->  Documentation/devicetree/bindings/display/msm/dpu-sc7280.yaml | 4 ++++
->  Documentation/devicetree/bindings/display/msm/dpu-sdm845.yaml | 4 ++++
->  4 files changed, 16 insertions(+)
+> Didn't include freedreno@ in the first email, so resending.
+> ---
+>  Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+
+Thanks for fixing.
 
 Acked-by: Rob Herring <robh@kernel.org>
-
