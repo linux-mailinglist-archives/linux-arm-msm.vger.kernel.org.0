@@ -2,65 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E6764C9AA9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 02:47:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 827934C9AC2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 02:54:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238659AbiCBBs2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 1 Mar 2022 20:48:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40892 "EHLO
+        id S229784AbiCBByy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 1 Mar 2022 20:54:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237273AbiCBBs1 (ORCPT
+        with ESMTP id S238868AbiCBByx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 1 Mar 2022 20:48:27 -0500
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0A9C17A9B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Mar 2022 17:47:44 -0800 (PST)
-Received: by mail-qk1-x730.google.com with SMTP id 185so188391qkh.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Mar 2022 17:47:44 -0800 (PST)
+        Tue, 1 Mar 2022 20:54:53 -0500
+Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 798405F4C0
+        for <linux-arm-msm@vger.kernel.org>; Tue,  1 Mar 2022 17:54:08 -0800 (PST)
+Received: by mail-qv1-xf32.google.com with SMTP id 8so454850qvf.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Mar 2022 17:54:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Mgf1HAXmo18JSbss+8HqPirEGYISw1T1YWytow0MUCs=;
-        b=LUX5mz/uFs1tXRIyjHFWvNomENb+XL1uTGGmGp/Sv0C6k7AU6+O+nZ+rrdxX/q7eay
-         yoSXrmjDlwwTx1wsjkJzkiLYjjYRCc9nuqfKyJP8LsiR6WEmdPP8+KjhPfJSs4UTJk0U
-         MOv9Z0S2VDibn98ytvyhkhI9BGvz28EloqmS+aOiYl0LYBsEF1ot8nHSriUKtIsCFGLW
-         1tljeoqleRlL+iNjA1iX6fuTt/t8hfnW03BQspKnkljtUFnOmRjEcUzzQxxWV/qw5wmF
-         qUS5bbz8u4Lyf4Tbx7pWT6qDrANRDkDsdJsqXXaIG6iT9yWHw87tJq+gWHPMB8P0bplS
-         YF/w==
+        bh=1ApDLIoJxNouLroL6EOm89WdHiQ9hXyQe3LURUVLH4M=;
+        b=ERE7lEbvP4lF5OxKzmO/B8AFmMepiaDYf58cafFT5dvPzfAyYBNYwhcJuL6s6mpiP0
+         V4+Q7w2tTh+1GBqQRWEDM7GgYa72AH8i/h+waFyVP4ZWWtLD57UExIitUc+yPZh7bxn7
+         zXL7Y/wPknx9BLU6sNZbdGg9EWsXuMRzaoSgVGbsbKJj0bsHnfHAj9gnLWN2Rr/MWyHI
+         h4O9M2e9DOQlxY064eGyfdoNDzgxevmND8czYu0F9+TVr3iP9jcOrBsT/Bd9XXh5CDok
+         p99ZrLJuf2W8UJvS4HDahfE6yLR3i0Jz8cSBPHyaJR+Q615HpAJn2Zk/yAX5SNXfOfej
+         SNiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Mgf1HAXmo18JSbss+8HqPirEGYISw1T1YWytow0MUCs=;
-        b=pPPog2TliUVR1iUaVZw6DsqeOVdJP8PldtAmonUsUWSkNgz6jJEPfld9PIO+X6qJ5i
-         PVizzBiY83BVyrImEwqSCfxyjpK1KciO/xq8WGodRBjJW/2t8iA1cumYzOhoJOkqG80u
-         PwucEIin+Vu73HOwmQ/XESkH6LOMuT7jPcw7QnUUmMfP/sQV3k8IONE6IKQnyljaaloe
-         OkGmF2hrogHe3liYQEoz69LaOYyfhIymZPJc807Fms48EBvycHk3Mb8Cu8B5rbcjIvYa
-         B1Q526ftaqUyheWADlbYmvmJ5z3mcxTfZCDqN3J2GBBxNZIATy28MKBMJAA9PvO0XauG
-         w4fQ==
-X-Gm-Message-State: AOAM530VaDlqVy93L8z/NiKrR/CxmvmZsSfRat+HFNTi3M8TXsCGPnUK
-        iIAKQNNc1/LTrQJYk12flt9Na7qokTXY/9XLCoqh2g==
-X-Google-Smtp-Source: ABdhPJzrU2fR07uEXITY9Nq9WB/Rf4BURiyOAXE3/3F5S7O6zXheS1LlqUyywuxrHbREKt0PcmAq73kOAe+5zjC2QGs=
-X-Received: by 2002:a05:620a:4307:b0:507:d5b1:f65e with SMTP id
- u7-20020a05620a430700b00507d5b1f65emr15266386qko.363.1646185663888; Tue, 01
- Mar 2022 17:47:43 -0800 (PST)
+        bh=1ApDLIoJxNouLroL6EOm89WdHiQ9hXyQe3LURUVLH4M=;
+        b=i8UZUgsQvMQlSBgdj9GaP9q6PyXZ95aZ2Yy4be3Ka6Q7lXM91s4SCXCvY5tsYWYZBx
+         XI5GDxFxm+bZf4InZgwdyxxzD2ijHZeEk3ylguxqv9DcUbCWudPtwLUcSNE05QjQYP6W
+         o5iK5wDWzX2JRCXdsUxizQV4EZCp1OtgKG1t/wWi0Q8cTyRUL1DP1qJlYs0KRc/sg2QH
+         IDBCsBvOap6Mi5XciEtO+w0prZq3EHd5Me04K19Ic3gqRXcFU4pNvLrvPk6Ny1EBA1Ha
+         B221aWEuLYZKj4WvH/ll9WRXBXLn+/L22P0vE+wdNFVL3Z8XUuoLxIK/qWhU9gKio4kZ
+         VeWg==
+X-Gm-Message-State: AOAM530mp4x3nioCrJ/I3Dv4y/xOhpcZVG9dVlrAyQYct7YX8pGcq6vI
+        AslUATs16V3+lJ1EMNo8y7fXhvKrDrVfMFVQ3RewqQ==
+X-Google-Smtp-Source: ABdhPJyqpAFWKzv4fWn1e6rGIJGNAhD1agtmglBNCf438GmtwSezcLQdNiKIFI8jKYaCHvtl+gUgULQu6oIzblSdzXk=
+X-Received: by 2002:a0c:d807:0:b0:42c:1ff7:7242 with SMTP id
+ h7-20020a0cd807000000b0042c1ff77242mr19364568qvj.119.1646186047536; Tue, 01
+ Mar 2022 17:54:07 -0800 (PST)
 MIME-Version: 1.0
-References: <20220302012931.4107196-1-bjorn.andersson@linaro.org> <20220302012931.4107196-2-bjorn.andersson@linaro.org>
-In-Reply-To: <20220302012931.4107196-2-bjorn.andersson@linaro.org>
+References: <20220302013339.2354076-1-robh@kernel.org>
+In-Reply-To: <20220302013339.2354076-1-robh@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 2 Mar 2022 04:47:32 +0300
-Message-ID: <CAA8EJppiNbJhrdFgJ0sESBM5m3oyazS-8dG8919xdZu50fZ8aQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] drm/msm/dpu: Issue MDSS reset during initialization
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+Date:   Wed, 2 Mar 2022 04:53:56 +0300
+Message-ID: <CAA8EJpowE0VfnA1QhU1LfXobFYjGPirWb52QW6HT5kCpcX0NBQ@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64/arm: dts: qcom: Drop bogus interrupt flags cell
+ on MDSS nodes
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -73,136 +71,184 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 2 Mar 2022 at 04:27, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+On Wed, 2 Mar 2022 at 04:33, Rob Herring <robh@kernel.org> wrote:
 >
-> It's typical for the bootloader to bring up the display for showing a
-> boot splash or efi framebuffer. But in some cases the kernel driver ends
-> up only partially configuring (in particular) the DPU, which might
-> result in e.g. that two different data paths attempts to push data to
-> the interface - with resulting graphical artifacts.
+> The MDSS interrupt provider is a single cell, so specifying interrupt flags
+> on the consumers is incorrect.
 >
-> Naturally the end goal would be to inherit the bootloader's
-> configuration and provide the user with a glitch free handover from the
-> boot configuration to a running DPU.
->
-> But as implementing seamless transition from the bootloader
-> configuration to the running OS will be a considerable effort, start by
-> simply resetting the entire MDSS to its power-on state, to avoid the
-> partial configuration.
->
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Rob Herring <robh@kernel.org>
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 > ---
+> v2:
+>  - Add a bunch of missed cases
+> ---
+>  arch/arm/boot/dts/qcom-msm8974.dtsi   | 4 ++--
+>  arch/arm64/boot/dts/qcom/msm8996.dtsi | 6 +++---
+>  arch/arm64/boot/dts/qcom/sdm630.dtsi  | 5 ++---
+>  arch/arm64/boot/dts/qcom/sdm660.dtsi  | 2 +-
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi  | 6 +++---
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi  | 6 +++---
+>  6 files changed, 14 insertions(+), 15 deletions(-)
 >
-> Changes since v1:
-> - Rather than trying to deconfigure individual pieces of the DPU, reset the
->   entire block.
+> diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+> index 412d94736c35..3b9af5e24907 100644
+> --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
+> +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+> @@ -1495,7 +1495,7 @@ mdp: mdp@fd900000 {
+>                                 reg-names = "mdp_phys";
 >
->  drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c | 18 ++++++++++++++++++
->  drivers/gpu/drm/msm/msm_drv.c            |  4 ++++
->  drivers/gpu/drm/msm/msm_kms.h            |  1 +
->  3 files changed, 23 insertions(+)
+>                                 interrupt-parent = <&mdss>;
+> -                               interrupts = <0 0>;
+> +                               interrupts = <0>;
 >
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-> index b10ca505f9ac..419eaaefe606 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-> @@ -7,6 +7,7 @@
->  #include <linux/irqchip.h>
->  #include <linux/irqdesc.h>
->  #include <linux/irqchip/chained_irq.h>
-> +#include <linux/reset.h>
->  #include "dpu_kms.h"
+>                                 clocks = <&mmcc MDSS_AHB_CLK>,
+>                                          <&mmcc MDSS_AXI_CLK>,
+> @@ -1530,7 +1530,7 @@ dsi0: dsi@fd922800 {
+>                                 reg-names = "dsi_ctrl";
 >
->  #define to_dpu_mdss(x) container_of(x, struct dpu_mdss, base)
-> @@ -31,6 +32,7 @@ struct dpu_mdss {
->         void __iomem *mmio;
->         struct clk_bulk_data *clocks;
->         size_t num_clocks;
-> +       struct reset_control *reset;
->         struct dpu_irq_controller irq_controller;
+>                                 interrupt-parent = <&mdss>;
+> -                               interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
+> +                               interrupts = <4>;
+>
+>                                 assigned-clocks = <&mmcc BYTE0_CLK_SRC>,
+>                                                   <&mmcc PCLK0_CLK_SRC>;
+> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> index f0f81c23c16f..0597d865a4a6 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> @@ -788,7 +788,7 @@ mdp: mdp@901000 {
+>                                 reg-names = "mdp_phys";
+>
+>                                 interrupt-parent = <&mdss>;
+> -                               interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
+> +                               interrupts = <0>;
+>
+>                                 clocks = <&mmcc MDSS_AHB_CLK>,
+>                                          <&mmcc MDSS_AXI_CLK>,
+> @@ -834,7 +834,7 @@ dsi0: dsi@994000 {
+>                                 reg-names = "dsi_ctrl";
+>
+>                                 interrupt-parent = <&mdss>;
+> -                               interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
+> +                               interrupts = <4>;
+>
+>                                 clocks = <&mmcc MDSS_MDP_CLK>,
+>                                          <&mmcc MDSS_BYTE0_CLK>,
+> @@ -904,7 +904,7 @@ hdmi: hdmi-tx@9a0000 {
+>                                             "hdcp_physical";
+>
+>                                 interrupt-parent = <&mdss>;
+> -                               interrupts = <8 IRQ_TYPE_LEVEL_HIGH>;
+> +                               interrupts = <8>;
+>
+>                                 clocks = <&mmcc MDSS_MDP_CLK>,
+>                                          <&mmcc MDSS_AHB_CLK>,
+> diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> index 240293592ef9..f646fb80924f 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> @@ -1453,7 +1453,7 @@ mdp: mdp@c901000 {
+>                                 reg-names = "mdp_phys";
+>
+>                                 interrupt-parent = <&mdss>;
+> -                               interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
+> +                               interrupts = <0>;
+>
+>                                 assigned-clocks = <&mmcc MDSS_MDP_CLK>,
+>                                                   <&mmcc MDSS_VSYNC_CLK>;
+> @@ -1530,7 +1530,7 @@ dsi0: dsi@c994000 {
+>                                 power-domains = <&rpmpd SDM660_VDDCX>;
+>
+>                                 interrupt-parent = <&mdss>;
+> -                               interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
+> +                               interrupts = <4>;
+>
+>                                 assigned-clocks = <&mmcc BYTE0_CLK_SRC>,
+>                                                   <&mmcc PCLK0_CLK_SRC>;
+> @@ -2487,4 +2487,3 @@ timer {
+>                                  <GIC_PPI 0 0xf08>;
+>         };
 >  };
+> -
+> diff --git a/arch/arm64/boot/dts/qcom/sdm660.dtsi b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+> index eccf6fde16b4..1d748c5305f4 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm660.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+> @@ -163,7 +163,7 @@ dsi1: dsi@c996000 {
+>                 power-domains = <&rpmpd SDM660_VDDCX>;
 >
-> @@ -197,10 +199,18 @@ static void dpu_mdss_destroy(struct msm_mdss *mdss)
->         dpu_mdss->mmio = NULL;
->  }
+>                 interrupt-parent = <&mdss>;
+> -               interrupts = <5 IRQ_TYPE_LEVEL_HIGH>;
+> +               interrupts = <5>;
 >
-> +static int dpu_mdss_reset(struct msm_mdss *mdss)
-> +{
-> +       struct dpu_mdss *dpu_mdss = to_dpu_mdss(mdss);
-> +
-> +       return reset_control_reset(dpu_mdss->reset);
-> +}
-> +
->  static const struct msm_mdss_funcs mdss_funcs = {
->         .enable = dpu_mdss_enable,
->         .disable = dpu_mdss_disable,
->         .destroy = dpu_mdss_destroy,
-> +       .reset = dpu_mdss_reset,
->  };
+>                 assigned-clocks = <&mmcc BYTE1_CLK_SRC>,
+>                                         <&mmcc PCLK1_CLK_SRC>;
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index 41f4e46e1f85..95e6a97c2170 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -4281,7 +4281,7 @@ mdss_mdp: mdp@ae01000 {
+>                                 power-domains = <&rpmhpd SDM845_CX>;
 >
->  int dpu_mdss_init(struct platform_device *pdev)
-> @@ -227,6 +237,13 @@ int dpu_mdss_init(struct platform_device *pdev)
->         }
->         dpu_mdss->num_clocks = ret;
+>                                 interrupt-parent = <&mdss>;
+> -                               interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
+> +                               interrupts = <0>;
 >
-> +       dpu_mdss->reset = devm_reset_control_get_optional_exclusive(&pdev->dev, NULL);
-> +       if (IS_ERR(dpu_mdss->reset)) {
-> +               ret = PTR_ERR(dpu_mdss->reset);
-> +               DPU_ERROR("failed to acquire mdss reset, ret=%d", ret);
-> +               goto reset_parse_err;
-> +       }
-> +
->         dpu_mdss->base.dev = &pdev->dev;
->         dpu_mdss->base.funcs = &mdss_funcs;
+>                                 ports {
+>                                         #address-cells = <1>;
+> @@ -4333,7 +4333,7 @@ dsi0: dsi@ae94000 {
+>                                 reg-names = "dsi_ctrl";
 >
-> @@ -252,6 +269,7 @@ int dpu_mdss_init(struct platform_device *pdev)
->  irq_error:
->         _dpu_mdss_irq_domain_fini(dpu_mdss);
->  irq_domain_error:
-> +reset_parse_err:
->  clk_parse_err:
->         if (dpu_mdss->mmio)
->                 devm_iounmap(&pdev->dev, dpu_mdss->mmio);
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index 129fa841ac22..7595f83da3f1 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -388,6 +388,10 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
->         if (ret)
->                 return ret;
+>                                 interrupt-parent = <&mdss>;
+> -                               interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
+> +                               interrupts = <4>;
 >
-> +       /* Issue a reset of the entire MDSS */
-> +       if (priv->mdss && priv->mdss->funcs->reset)
-> +               priv->mdss->funcs->reset(priv->mdss);
-> +
-
-I think this is incorrect. In this way reset happens after all
-subdevice are probed. They might have programmed some state of the
-corresponding block. The clocks are already registered, so the clock
-framework will be out of sync.
-I think the reset should happen before calling of_platform_populate(),
-so the device state is consistent with the driver.
-
-Also see the https://git.linaro.org/people/dmitry.baryshkov/kernel.git/log/?h=dpu-mdss-rework,
-which reworks the mdss driver and mdss probing.
-
->         /* Bind all our sub-components: */
->         ret = component_bind_all(dev, ddev);
->         if (ret)
-> diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-> index 2a4f0526cb98..716a34fca1cd 100644
-> --- a/drivers/gpu/drm/msm/msm_kms.h
-> +++ b/drivers/gpu/drm/msm/msm_kms.h
-> @@ -205,6 +205,7 @@ struct msm_mdss_funcs {
->         int (*enable)(struct msm_mdss *mdss);
->         int (*disable)(struct msm_mdss *mdss);
->         void (*destroy)(struct msm_mdss *mdss);
-> +       int (*reset)(struct msm_mdss *mdss);
->  };
+>                                 clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
+>                                          <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
+> @@ -4405,7 +4405,7 @@ dsi1: dsi@ae96000 {
+>                                 reg-names = "dsi_ctrl";
 >
->  struct msm_mdss {
+>                                 interrupt-parent = <&mdss>;
+> -                               interrupts = <5 IRQ_TYPE_LEVEL_HIGH>;
+> +                               interrupts = <5>;
+>
+>                                 clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK>,
+>                                          <&dispcc DISP_CC_MDSS_BYTE1_INTF_CLK>,
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> index fdaf303ba047..956848068871 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -3200,7 +3200,7 @@ mdss_mdp: mdp@ae01000 {
+>                                 power-domains = <&rpmhpd SM8250_MMCX>;
+>
+>                                 interrupt-parent = <&mdss>;
+> -                               interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
+> +                               interrupts = <0>;
+>
+>                                 ports {
+>                                         #address-cells = <1>;
+> @@ -3252,7 +3252,7 @@ dsi0: dsi@ae94000 {
+>                                 reg-names = "dsi_ctrl";
+>
+>                                 interrupt-parent = <&mdss>;
+> -                               interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
+> +                               interrupts = <4>;
+>
+>                                 clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
+>                                          <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
+> @@ -3325,7 +3325,7 @@ dsi1: dsi@ae96000 {
+>                                 reg-names = "dsi_ctrl";
+>
+>                                 interrupt-parent = <&mdss>;
+> -                               interrupts = <5 IRQ_TYPE_LEVEL_HIGH>;
+> +                               interrupts = <5>;
+>
+>                                 clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK>,
+>                                          <&dispcc DISP_CC_MDSS_BYTE1_INTF_CLK>,
 > --
-> 2.33.1
+> 2.32.0
 >
 
 
