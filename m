@@ -2,65 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2418E4CA4B2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 13:19:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5141A4CA4D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 13:30:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241752AbiCBMUH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Mar 2022 07:20:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57140 "EHLO
+        id S241760AbiCBMbU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Mar 2022 07:31:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235563AbiCBMUE (ORCPT
+        with ESMTP id S241254AbiCBMbT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 07:20:04 -0500
-Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B477C57158
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 04:19:20 -0800 (PST)
-Received: by mail-oo1-xc34.google.com with SMTP id r41-20020a4a966c000000b0031bf85a4124so1703430ooi.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 04:19:20 -0800 (PST)
+        Wed, 2 Mar 2022 07:31:19 -0500
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83E8360A8C
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 04:30:33 -0800 (PST)
+Received: by mail-qt1-x82a.google.com with SMTP id w1so1427338qtj.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 04:30:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=n2AHBorZms8YAGoG9GhF+kfihvE43wMRpP4hUA+7xto=;
-        b=r4fh2zx+7V9cjuHBtWdTH+AuC8ckxuv3eEjvJg2jgDKfSSAKj2ATaKGBVZMKjnkHqf
-         HgcJoT9GYZUogc7cmeUiNUy28YO1+8JNBTdXoqYeqPqWWDbfr+XTQwEW8uRyTW4u4m0i
-         p3yZH/6ARzIxhZ6KEnS00wlZFdLvd7EDxldDgKHDvbrux95w+RY1ZPlCWsrYS104b7P5
-         7Fz8jTM9orYw2DZEaNRdeH12F4eysoZRdsbU7FCWGzPqa84E0Ca8a2uuDEsjFDO/hqvK
-         FQlFtx6ntGzjq+KwsakdXWEQxMXIGbCfjIIK73MUVFBJ0WHSZGPe23km98T+SgmmmEP6
-         smwg==
+        bh=ZK7Z8l0uzHhCLdOEVA+CCXXbkpSYVOIEoN9UnQuldQY=;
+        b=MpxUDic94okaoHal13gk9BII8USunlqaMdkNSrB0QGQrijiXWYykhXCb+JIjhw6zkO
+         +o0YkuYstuzArZgnuqOhwmW6VAOn+AiYG2FGbL9AzRCMrquA4nt5jJUBJBNyDfeeyv5C
+         QsicRn/5wX4x/tCj3lRuT174ONe7Ah46O5DasSRrXG+fluCKZWcwemqx1/Ye+x9OKwLd
+         QqiGO2TSzkkURi79A5Ja1ktHq/4CMZE+EuFb2V/5QypBKw2gipTMm+afaAGL98awHXrI
+         9zfFFosn6/2314DXJ7ZQFhvejiyFPg2QoPrYCTVX5mvFNEHOempgmf4uujdgb9ljTMiy
+         iWJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=n2AHBorZms8YAGoG9GhF+kfihvE43wMRpP4hUA+7xto=;
-        b=IEKCW0A2RgYxnYkL0MEazdME4hcU/UnSEvzaJLKyp9Fr2pLFKiS0y61T7YrERIYVlS
-         qiIXl4HBaAySVjQdS/lFT6qRRqAD7ABRtDLSxyB8QCTAhCklmUofTpHJYevcRvRMt8+c
-         iLijf0ZlmbtGiAeEXMmevpJ0e/s8NEcLDyO+qu9QsLajYTnqtOz5yzvpFfUDd5wagFwx
-         tATlQF/4yy4g5pq8+VF8ESZbKtLH1fZ8ZPqZZL8Hcid/0bHRmbiXUijp4hET2cLtvYai
-         xhdmXgiLzO6Ges/y5p37w4XAnZo7P23FM7L8xwfG3GwzBqaHUZwdyzAbBL/9r5rzbusI
-         iEsQ==
-X-Gm-Message-State: AOAM533xmn6rrhWZTXGlswpmY3NW/U83lzXcqSZm5B3pap1vvm+d+KLz
-        WeJD3gOt1IDOdx6HKdCQtFNq0Gu+G4qafEn27vcm9Q==
-X-Google-Smtp-Source: ABdhPJzRsnGNx1fdPAqwBzv9n93Ob+rDaO5Q/Mm9UetP4uvFOGd1t9zNatKQ5mno6z4JPqg2SO/qtToGVI/930EUBFc=
-X-Received: by 2002:a05:6870:434f:b0:bf:9f2a:26f0 with SMTP id
- x15-20020a056870434f00b000bf9f2a26f0mr7372412oah.40.1646223560034; Wed, 02
- Mar 2022 04:19:20 -0800 (PST)
+        bh=ZK7Z8l0uzHhCLdOEVA+CCXXbkpSYVOIEoN9UnQuldQY=;
+        b=S9sVhLofOBSo05Ab1Ep3f1VLhZ1IDSzKQbjrlyeKWofwQTx7qVeZfO5LnxXaPbyQEi
+         Pu2hVfipVJtlKHzhKiw3u8+9xwQFNH29Tpx38vrig1ppPk7y176RrH6ZoJJA0hV/ICqM
+         H9Sko0uEKvQq0J7vLAQNDsBfzQNm2N+M2OI7MTE+U1ejlshXZZLgJu3lUymhpgZp9pN0
+         0ovUo/2RyfgzgQWJeO6ZLuT2gjUA1w1Fn8tBBFFLDhAARBOHRWCoCrPIeogmUgt4Vetr
+         RNH3jgeGD/o4N2ohI+y/Ps/E3QA8tqk5TjA9VrlafePN2LAz5stASvIeM3bsc8CnvbGA
+         fHYA==
+X-Gm-Message-State: AOAM531FFrRb18USviiBEBodhoxqoEh7r3ehbAitp4395W2q0u5P0g34
+        rT+1J/OYjgdQ4Ma939dFg5qYZ+LU42j4a011GLSNxA==
+X-Google-Smtp-Source: ABdhPJzqzgidzn/D62pa5oX+t3VEO1+8ysQGiMvWP4mSLU3vJCie+tJInrTXIxm/YFgfmEaFmPxvfoWbIHGXNnnU5RU=
+X-Received: by 2002:ac8:5713:0:b0:2de:4e16:5b25 with SMTP id
+ 19-20020ac85713000000b002de4e165b25mr23187953qtw.682.1646224232667; Wed, 02
+ Mar 2022 04:30:32 -0800 (PST)
 MIME-Version: 1.0
-References: <20220301072511.117818-1-bhupesh.sharma@linaro.org>
- <20220301072511.117818-6-bhupesh.sharma@linaro.org> <d51717a2-0a50-f2fb-0d2d-e233c6e75d4b@linaro.org>
-In-Reply-To: <d51717a2-0a50-f2fb-0d2d-e233c6e75d4b@linaro.org>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Wed, 2 Mar 2022 17:49:09 +0530
-Message-ID: <CAH=2NtwGzDCACt16YfMCys+qBF+peTCyJo+WTsEk5CfPUpE2sw@mail.gmail.com>
-Subject: Re: [PATCH v2 5/7] PCI: qcom: Add SM8150 SoC support
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, bhupesh.linux@gmail.com,
-        lorenzo.pieralisi@arm.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, svarbanov@mm-sol.com,
-        bhelgaas@google.com, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org, sboyd@kernel.org, mturquette@baylibre.com,
-        linux-clk@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
+References: <20220302110508.69053-1-bhupesh.sharma@linaro.org> <20220302110508.69053-3-bhupesh.sharma@linaro.org>
+In-Reply-To: <20220302110508.69053-3-bhupesh.sharma@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 2 Mar 2022 15:30:21 +0300
+Message-ID: <CAA8EJprTiGfEnkPOeDPyobdRGkyzyC6=vHivfQ9zsk22JPjM3w@mail.gmail.com>
+Subject: Re: [PATCH v2 2/5] clk: qcom: gcc: Add emac GDSC support for SM8150
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
+        agross@kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, sboyd@kernel.org, tdas@codeaurora.org,
+        mturquette@baylibre.com, linux-clk@vger.kernel.org,
+        robh+dt@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -72,76 +69,93 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
-
-On Tue, 1 Mar 2022 at 17:13, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
+On Wed, 2 Mar 2022 at 14:05, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
 >
-> On 01/03/2022 10:25, Bhupesh Sharma wrote:
-> > The PCIe IP (rev 1.5.0) on SM8150 SoC is similar to the one used on
-> > SM8250. Hence the support is added reusing the members of ops_2_7_0.
-> >
-> > Cc: Vinod Koul <vkoul@kernel.org>
-> > Cc: Rob Herring <robh+dt@kernel.org>
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
-> >   drivers/pci/controller/dwc/pcie-qcom.c | 16 ++++++++++++++++
-> >   1 file changed, 16 insertions(+)
-> >
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > index c19cd506ed3f..66fbc0234888 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > @@ -1487,6 +1487,17 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
-> >       .config_sid = qcom_pcie_config_sid_sm8250,
-> >   };
-> >
-> > +/* Qcom IP rev.: 1.5.0 */
-> > +static const struct qcom_pcie_ops ops_1_5_0 = {
-> > +     .get_resources = qcom_pcie_get_resources_2_7_0,
-> > +     .init = qcom_pcie_init_2_7_0,
-> > +     .deinit = qcom_pcie_deinit_2_7_0,
-> > +     .ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
-> > +     .post_init = qcom_pcie_post_init_2_7_0,
-> > +     .post_deinit = qcom_pcie_post_deinit_2_7_0,
-> > +     .config_sid = qcom_pcie_config_sid_sm8250,
-> > +};
-> > +
+> Add the EMAC GDSC defines and driver structures for SM8150.
 >
-> This duplicates the ops_1_9_0, doesn't it?
-> I'd suggest to reuse 1.9.0 structure and add a comment that it's also
-> used for 1.5.0.
-
-Ack. I will fix this in v3.
-
-Regards,
-Bhupesh
-
-> >   static const struct qcom_pcie_cfg apq8084_cfg = {
-> >       .ops = &ops_1_0_0,
-> >   };
-> > @@ -1511,6 +1522,10 @@ static const struct qcom_pcie_cfg sdm845_cfg = {
-> >       .ops = &ops_2_7_0,
-> >   };
-> >
-> > +static const struct qcom_pcie_cfg sm8150_cfg = {
-> > +     .ops = &ops_1_5_0,
-> > +};
-> > +
-> >   static const struct qcom_pcie_cfg sm8250_cfg = {
-> >       .ops = &ops_1_9_0,
-> >   };
-> > @@ -1626,6 +1641,7 @@ static const struct of_device_id qcom_pcie_match[] = {
-> >       { .compatible = "qcom,pcie-ipq4019", .data = &ipq4019_cfg },
-> >       { .compatible = "qcom,pcie-qcs404", .data = &ipq4019_cfg },
-> >       { .compatible = "qcom,pcie-sdm845", .data = &sdm845_cfg },
-> > +     { .compatible = "qcom,pcie-sm8150", .data = &sm8150_cfg },
-> >       { .compatible = "qcom,pcie-sm8250", .data = &sm8250_cfg },
-> >       { .compatible = "qcom,pcie-sc8180x", .data = &sm8250_cfg },
-> >       { .compatible = "qcom,pcie-sc7280", .data = &sc7280_cfg },
+> Cc: Stephen Boyd <sboyd@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>  drivers/clk/qcom/gcc-sm8150.c               | 34 +++++++++++++--------
+>  include/dt-bindings/clock/qcom,gcc-sm8150.h |  1 +
+>  2 files changed, 23 insertions(+), 12 deletions(-)
 >
+> diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
+> index 245794485719..08ba29e3a835 100644
+> --- a/drivers/clk/qcom/gcc-sm8150.c
+> +++ b/drivers/clk/qcom/gcc-sm8150.c
+> @@ -3448,22 +3448,31 @@ static struct clk_branch gcc_video_xo_clk = {
+>         },
+>  };
 >
+> +static struct gdsc emac_gdsc = {
+> +       .gdscr = 0x6004,
+> +       .pd = {
+> +               .name = "emac_gdsc",
+> +       },
+> +       .pwrsts = PWRSTS_OFF_ON,
+> +       .flags = POLL_CFG_GDSCR,
+> +};
+> +
+>  static struct gdsc usb30_prim_gdsc = {
+> -               .gdscr = 0xf004,
+> -               .pd = {
+> -                       .name = "usb30_prim_gdsc",
+> -               },
+> -               .pwrsts = PWRSTS_OFF_ON,
+> -               .flags = POLL_CFG_GDSCR,
+> +       .gdscr = 0xf004,
+> +       .pd = {
+> +               .name = "usb30_prim_gdsc",
+> +       },
+> +       .pwrsts = PWRSTS_OFF_ON,
+> +       .flags = POLL_CFG_GDSCR,
+
+Please move alignment changes to a separate patch
+
+>  };
+>
+>  static struct gdsc usb30_sec_gdsc = {
+> -               .gdscr = 0x10004,
+> -               .pd = {
+> -                       .name = "usb30_sec_gdsc",
+> -               },
+> -               .pwrsts = PWRSTS_OFF_ON,
+> -               .flags = POLL_CFG_GDSCR,
+> +       .gdscr = 0x10004,
+> +       .pd = {
+> +               .name = "usb30_sec_gdsc",
+> +       },
+> +       .pwrsts = PWRSTS_OFF_ON,
+> +       .flags = POLL_CFG_GDSCR,
+>  };
+>
+>  static struct clk_regmap *gcc_sm8150_clocks[] = {
+> @@ -3714,6 +3723,7 @@ static const struct qcom_reset_map gcc_sm8150_resets[] = {
+>  };
+>
+>  static struct gdsc *gcc_sm8150_gdscs[] = {
+> +       [EMAC_GDSC] = &emac_gdsc,
+>         [USB30_PRIM_GDSC] = &usb30_prim_gdsc,
+>         [USB30_SEC_GDSC] = &usb30_sec_gdsc,
+>  };
+> diff --git a/include/dt-bindings/clock/qcom,gcc-sm8150.h b/include/dt-bindings/clock/qcom,gcc-sm8150.h
+> index 3e1a91876610..40596b9ded06 100644
+> --- a/include/dt-bindings/clock/qcom,gcc-sm8150.h
+> +++ b/include/dt-bindings/clock/qcom,gcc-sm8150.h
+> @@ -243,5 +243,6 @@
+>  /* GCC GDSCRs */
+>  #define USB30_PRIM_GDSC                     4
+>  #define USB30_SEC_GDSC                                         5
+> +#define EMAC_GDSC                                              6
+>
+>  #endif
 > --
-> With best wishes
-> Dmitry
+> 2.35.1
+>
+
+
+-- 
+With best wishes
+Dmitry
