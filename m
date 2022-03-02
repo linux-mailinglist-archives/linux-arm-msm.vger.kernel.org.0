@@ -2,70 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCA084CB2A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 23:58:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D4FC4CB2E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 00:51:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229751AbiCBW7I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Mar 2022 17:59:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49556 "EHLO
+        id S229750AbiCBXse (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Mar 2022 18:48:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229615AbiCBW7H (ORCPT
+        with ESMTP id S229709AbiCBXsW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 17:59:07 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20D3B1405F3
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 14:58:12 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id b11so5314822lfb.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 14:58:12 -0800 (PST)
+        Wed, 2 Mar 2022 18:48:22 -0500
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A60A010CF0C;
+        Wed,  2 Mar 2022 15:47:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=I/L0yu6xWoay6PlawGPpd06J/A2WPkL2s2cqdaEK+Ks=;
-        b=b94OIzWbOWEGzrng+NGPHaIrx/8QeINkda6Ml263QN1J+oQbqRkOIt79judywV36nB
-         EBELVRi8yLkxbmFX9xDQBOzTD82Z8GHuMPr9QqAmkk/8aX4gGfrJMhf7vN/QEESU7Rja
-         5wGREPlwRjZtPgCOwYPgqYrpeFszqOv4ZyaMCnIwKmhVGQQJb7BWnoY/gYwyplXQ7cJ7
-         pDtSBof5k3cxKJQjQauif9RtTCMu7hwoSPUTNCH4yZsGSr4m0EQRl7un2VYmVI4Nj5zU
-         wB397Lrqu67l0iW2rxkW3I01a82yBW9G2DcU8LVMVAdxTf3Gs4KQUBGUjlefnJ5Q7eJB
-         INRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=I/L0yu6xWoay6PlawGPpd06J/A2WPkL2s2cqdaEK+Ks=;
-        b=tvFfsWQZrSWd3JYNCd342mkrklrEMdufbVleD60jYt1wObf8SBNnStCS3iKwdrRDUa
-         zm2pZYDJN9ECQIbEBeKk7eWf5Nz6c/XrrNdXUtZ1wpDlr3g4/MWrkEy0MJpnIun7jfq4
-         prGvSJtHoMvAdqw1uGTTwIj8gwJVsnddz6jWqPBk80jQJPfsj+CltVlEsEfwQKBBIrrv
-         bSbIVT2lyzTS//28uUZKYqkZndZ5mtSTZXnH3tsja43LkMwftfBro406ggU8k7JkamUU
-         RiCO5LJtQXj8eJFRYKn892Qg8ZA8Z9k6NPSB06RrLgxIcXI5PBu0ybaICNN0mvcOlcr+
-         U1IQ==
-X-Gm-Message-State: AOAM531aECJeRVbhrbhijWx1t1TCszuSIP0mdXCRE1wtXP5UfkUc864Q
-        N0Df2HjZUXj7VgLMY89cxTgqcz5KFT52nw==
-X-Google-Smtp-Source: ABdhPJwwvQR0vD9FZ299QAiPm1IxiWVuAajuPYm5A9TWGw/1UDW6EZnSZpLduvd6UfFyY/mSiEZLoA==
-X-Received: by 2002:a05:6512:ba6:b0:42a:84ee:d9d9 with SMTP id b38-20020a0565120ba600b0042a84eed9d9mr20848149lfv.353.1646261659976;
-        Wed, 02 Mar 2022 14:54:19 -0800 (PST)
-Received: from eriador.lan ([2001:470:dd84:abc0::8a5])
-        by smtp.gmail.com with ESMTPSA id x26-20020a05651c105a00b00246585ccd53sm54236ljm.75.2022.03.02.14.54.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Mar 2022 14:54:19 -0800 (PST)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1646264846; x=1677800846;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=KwJmzLMc/dS9fM65kAwlsOu7mLCuAExYDF3cN1aB5fM=;
+  b=uFYyYCLMS+HWnTe1OOp5JlMBkFIXEMPvzRM/igfYi7LxziGCduhhAHq8
+   5Bp2BdFlZtx3njofac6OkPZ0CEm6dzrx/lPLc6Z1jfNj+hTGtxMR5MpTP
+   gEtkKHUDbjvmIPR75O8WqScn8pSaCHrzJCwkNXCVxDTRLXeLg9KX8VJFm
+   w=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 02 Mar 2022 15:47:25 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2022 15:47:25 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Wed, 2 Mar 2022 15:47:24 -0800
+Received: from [10.110.107.103] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Wed, 2 Mar 2022
+ 15:47:24 -0800
+Message-ID: <2cd02c8b-9c1b-e87b-a90c-6e591b3a21a4@quicinc.com>
+Date:   Wed, 2 Mar 2022 15:47:23 -0800
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [PATCH v2 1/6] arm64: dts: qcom: msm8996: Drop flags for mdss
+ irqs
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Rob Herring <robh+dt@kernel.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: [PATCH v2 6/6] arm: dts: qcom-msm8974: Drop flags for mdss irqs
-Date:   Thu,  3 Mar 2022 01:54:11 +0300
-Message-Id: <20220302225411.2456001-6-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220302225411.2456001-1-dmitry.baryshkov@linaro.org>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>
 References: <20220302225411.2456001-1-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220302225411.2456001-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,38 +72,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The number of interrupt cells for the mdss interrupt controller is 1,
-meaning there should only be one cell for the interrupt number, not two.
-Drop the second cell containing (unused) irq flags.
 
-Fixes: 5a9fc531f6ec ("ARM: dts: msm8974: add display support")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm/boot/dts/qcom-msm8974.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-index 412d94736c35..3b9af5e24907 100644
---- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-@@ -1495,7 +1495,7 @@ mdp: mdp@fd900000 {
- 				reg-names = "mdp_phys";
- 
- 				interrupt-parent = <&mdss>;
--				interrupts = <0 0>;
-+				interrupts = <0>;
- 
- 				clocks = <&mmcc MDSS_AHB_CLK>,
- 					 <&mmcc MDSS_AXI_CLK>,
-@@ -1530,7 +1530,7 @@ dsi0: dsi@fd922800 {
- 				reg-names = "dsi_ctrl";
- 
- 				interrupt-parent = <&mdss>;
--				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts = <4>;
- 
- 				assigned-clocks = <&mmcc BYTE0_CLK_SRC>,
- 				                  <&mmcc PCLK0_CLK_SRC>;
--- 
-2.34.1
-
+On 3/2/2022 2:54 PM, Dmitry Baryshkov wrote:
+> The number of interrupt cells for the mdss interrupt controller is 1,
+> meaning there should only be one cell for the interrupt number, not two.
+> Drop the second cell containing (unused) irq flags.
+> 
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Fixes: 12d540375736 ("arm64: dts: qcom: msm8996: Add DSI0 nodes")
+> Fixes: 3a4547c1fc2f ("arm64: qcom: msm8996.dtsi: Add Display nodes")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>   arch/arm64/boot/dts/qcom/msm8996.dtsi | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> index f0f81c23c16f..0597d865a4a6 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> @@ -788,7 +788,7 @@ mdp: mdp@901000 {
+>   				reg-names = "mdp_phys";
+>   
+>   				interrupt-parent = <&mdss>;
+> -				interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
+> +				interrupts = <0>;
+>   
+>   				clocks = <&mmcc MDSS_AHB_CLK>,
+>   					 <&mmcc MDSS_AXI_CLK>,
+> @@ -834,7 +834,7 @@ dsi0: dsi@994000 {
+>   				reg-names = "dsi_ctrl";
+>   
+>   				interrupt-parent = <&mdss>;
+> -				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
+> +				interrupts = <4>;
+>   
+>   				clocks = <&mmcc MDSS_MDP_CLK>,
+>   					 <&mmcc MDSS_BYTE0_CLK>,
+> @@ -904,7 +904,7 @@ hdmi: hdmi-tx@9a0000 {
+>   					    "hdcp_physical";
+>   
+>   				interrupt-parent = <&mdss>;
+> -				interrupts = <8 IRQ_TYPE_LEVEL_HIGH>;
+> +				interrupts = <8>;
+>   
+>   				clocks = <&mmcc MDSS_MDP_CLK>,
+>   					 <&mmcc MDSS_AHB_CLK>,
