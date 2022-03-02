@@ -2,67 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E1314CA25C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 11:40:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5481A4CA25D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Mar 2022 11:40:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241075AbiCBKks (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Mar 2022 05:40:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59466 "EHLO
+        id S241070AbiCBKkt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Mar 2022 05:40:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235031AbiCBKkm (ORCPT
+        with ESMTP id S241068AbiCBKks (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 05:40:42 -0500
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2061BECE7
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 02:39:58 -0800 (PST)
-Received: by mail-pg1-x52d.google.com with SMTP id bc27so1286621pgb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 02:39:58 -0800 (PST)
+        Wed, 2 Mar 2022 05:40:48 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B747FBF506
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 02:40:02 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id mg21-20020a17090b371500b001bef9e4657cso1060093pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 02:40:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5hSSYyjIeCQj/Yk471H+t4be62lPbXH733Ozer3TJP4=;
-        b=JyG9DV8skFLWA/Riameo1pOnfP0U20+Dvh30cSsaSMOpc+vhdzlg5CjfLqN629EYdQ
-         tX3v6gfw8yy7ZQTErKAB7PtNlyeOaYSPB5hx0vSqLuNBhbQ+ut0olipDjzD3O6JgKWBO
-         5W4JiSd5xc4FTX/EyK9BGNwwOjXzzeKccQr7fZXSu8nlO+bqMCmZNX6QUHzkSCNmB63x
-         fyJcbuFogdBqTAAYWk1XzfB6rHQPpwnYjy3kX9AyFmwp/0hRgHZoLFWTOLevuz6CNhi0
-         d4wRBAN1gzG6/iJkMYYHGUFNsDy/Cxd0k5H09Z17+90EV93R3KXfEBIUnbGzKOlLFnGT
-         6fQA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=pq6jKLtGHQsUT6iafR8v8xBWK/Sf/g1/dX36fql3M4I=;
+        b=EVYKZ1nXdOBRMVBEuZ0vUSAHriHHBiRo7e2sw7KOvF3JmJh/+iRWyb0PnKDK/paOUa
+         +QbxooHCgR6BLMR+Qjf5y3owxxUpoKVqK7aev4IjD3vWYIaCBnE4/n1MPjUpqSrHBFca
+         2PoeBHGJ80zEnH15/eSbjdjsqc7kv2nle7Y4B6STd0/pY5/S+1aii+RjcxEURp6tHOrV
+         XgSnpetupAWNzGAAUuQD4/5+iVPS4Ry470EV75Y60sFn07HUv6ssKcK08wG/zBzxpFzQ
+         9gAnB0Bk7Ip+S5G6MB2qyx9Bp4L91yqr/YDuHBdY9yNCb39DNB4IpTvqr2BT3epWbGDR
+         Zztw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5hSSYyjIeCQj/Yk471H+t4be62lPbXH733Ozer3TJP4=;
-        b=T1icfNxdCKZmBgX5OWCgTDjbQMEvrkm3o00VbzuGvhWiZRx8hqq0pUl0MAvfqanLSS
-         KWdzpDPEGMKujUMz7K+C/Lz0MGEQSPWQXfim53woVBuhUUBJKaeialxCkRxuoPLSBGXB
-         HCHImlzyUjrGpe2tUXgnMZob6RPcbohzX5CIA4r4btNou3yUOVXSmsDaHDFiV1iUDcyD
-         nf1FZ5j5g4eUaeKXKST1EswZ00NdA+9JatSHLq9jBmwBhx9xyQuO53amKv5WKHQkZz9K
-         yOEF3+r6YJlJ+VcGSnREOZ1MlN8QB3raX4gu9sRDw2lbIdjWO7a3bd3S5BUtjT7Rpj22
-         Qo/w==
-X-Gm-Message-State: AOAM532ssc97TSULw0gfOeMfQfAgIWso7gQj/X8FS/FJkoGGRLAZ8dsB
-        3z1PolDRVP3vS9ZqLpzLZzKmEw==
-X-Google-Smtp-Source: ABdhPJzUgJ792DPF3EApiJ3GaQ2Zj69A9UDb+Cj0BKYL2QF0NZYAbbkDZrH7d7ME28LWmmtZzJdK0g==
-X-Received: by 2002:a05:6a00:1694:b0:4e1:5931:b040 with SMTP id k20-20020a056a00169400b004e15931b040mr31936664pfc.7.1646217598082;
-        Wed, 02 Mar 2022 02:39:58 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=pq6jKLtGHQsUT6iafR8v8xBWK/Sf/g1/dX36fql3M4I=;
+        b=eFOHl7WKF3hrT4HDgf4flHRY7ANZOoegsMEFiMzz9oUZMaH9W+bgRYMt/ozee5GCJP
+         zRav1kL53BIJC19RhjZd0IMORuPFpSWVvR8MUoyRYXZDAm46kFbSJVnTotvH003qtm5N
+         jKqM1UaK4lTu0sRBCycf/u3PjM+E573aXaqY15uKqiVZ2J5BO2EXS1+Zxsb82VnHMLwQ
+         a4gNxQ01CqHSOuP5fTbFg9GCDgquX7i33i73ft3qytk+7d0QpRfcEmfNtNv3+m5DeR/J
+         k5V05sefhOTEwGamRFfQPOzDBpf4n6TwRXnhAnW8j7/iAAHe3WDUVGbqufuhVxBiY3P0
+         Yryw==
+X-Gm-Message-State: AOAM531rjbTCTOkFeU6C3GpxtwxMQc7Ec2LrIWxXrcw9cRYAZ0eVRJko
+        jgpLdYEEzIqTrt+69REx+/UyKi+pbnCeRQ==
+X-Google-Smtp-Source: ABdhPJwQUPKAnnn9iLIXF/B8bDN6A7uOJd4C0X1jTMj3JNqZd4rykY8pvF/ArLHTfHAmPPXS+8ye0A==
+X-Received: by 2002:a17:902:e943:b0:14f:4a2b:203 with SMTP id b3-20020a170902e94300b0014f4a2b0203mr30121444pll.113.1646217602135;
+        Wed, 02 Mar 2022 02:40:02 -0800 (PST)
 Received: from localhost.localdomain ([171.50.175.145])
-        by smtp.gmail.com with ESMTPSA id m20-20020a634c54000000b003739af127c9sm15612308pgl.70.2022.03.02.02.39.54
+        by smtp.gmail.com with ESMTPSA id m20-20020a634c54000000b003739af127c9sm15612308pgl.70.2022.03.02.02.39.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Mar 2022 02:39:57 -0800 (PST)
+        Wed, 02 Mar 2022 02:40:01 -0800 (PST)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     netdev@vger.kernel.org
 Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
         vkoul@kernel.org, linux-kernel@vger.kernel.org,
         davem@davemloft.net, linux-arm-msm@vger.kernel.org,
         bjorn.andersson@linaro.org
-Subject: [PATCH v2 0/2 net-next] net: stmmac: Enable support for Qualcomm SA8155p-ADP board
-Date:   Wed,  2 Mar 2022 16:09:48 +0530
-Message-Id: <20220302103950.30356-1-bhupesh.sharma@linaro.org>
+Subject: [PATCH v2 1/2 net-next] net: stmmac: Add support for SM8150
+Date:   Wed,  2 Mar 2022 16:09:49 +0530
+Message-Id: <20220302103950.30356-2-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220302103950.30356-1-bhupesh.sharma@linaro.org>
+References: <20220302103950.30356-1-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,35 +72,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Changes since v1:
------------------
-- v1 can be seen here: https://lore.kernel.org/netdev/20220126221725.710167-1-bhupesh.sharma@linaro.org/t/
-- Fixed review comments from Bjorn - broke the v1 series into two
-  separate series - one each for 'net' tree and 'arm clock/dts' tree
-  - so as to ease review of the same from the respective maintainers.
-- This series is intended for the 'net' tree.
+From: Vinod Koul <vkoul@kernel.org>
 
-The SA8155p-ADP board supports on-board ethernet (Gibabit Interface),
-with support for both RGMII and RMII buses.
-
-This patchset adds the support for the same.
-
-Note that this patchset is based on an earlier sent patchset
-for adding PDC controller support on SM8150 (see [1]).
-
-[1]. https://lore.kernel.org/linux-arm-msm/20220226184028.111566-1-bhupesh.sharma@linaro.org/T/
+This adds compatible, POR config & driver data for ethernet controller
+found in SM8150 SoC.
 
 Cc: David S. Miller <davem@davemloft.net>
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+[bhsharma: Massage the commit log and other cosmetic changes]
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+ .../ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c   | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-Bjorn Andersson (1):
-  net: stmmac: dwmac-qcom-ethqos: Adjust rgmii loopback_en per platform
-
-Vinod Koul (1):
-  net: stmmac: Add support for SM8150
-
- .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 37 +++++++++++++++++--
- 1 file changed, 33 insertions(+), 4 deletions(-)
-
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+index 2ffa0a11eea5..8cdba9d521ec 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+@@ -183,6 +183,20 @@ static const struct ethqos_emac_driver_data emac_v2_3_0_data = {
+ 	.num_por = ARRAY_SIZE(emac_v2_3_0_por),
+ };
+ 
++static const struct ethqos_emac_por emac_v2_1_0_por[] = {
++	{ .offset = RGMII_IO_MACRO_CONFIG,	.value = 0x40C01343 },
++	{ .offset = SDCC_HC_REG_DLL_CONFIG,	.value = 0x2004642C },
++	{ .offset = SDCC_HC_REG_DDR_CONFIG,	.value = 0x00000000 },
++	{ .offset = SDCC_HC_REG_DLL_CONFIG2,	.value = 0x00200000 },
++	{ .offset = SDCC_USR_CTL,		.value = 0x00010800 },
++	{ .offset = RGMII_IO_MACRO_CONFIG2,	.value = 0x00002060 },
++};
++
++static const struct ethqos_emac_driver_data emac_v2_1_0_data = {
++	.por = emac_v2_1_0_por,
++	.num_por = ARRAY_SIZE(emac_v2_1_0_por),
++};
++
+ static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
+ {
+ 	unsigned int val;
+@@ -558,6 +572,7 @@ static int qcom_ethqos_remove(struct platform_device *pdev)
+ 
+ static const struct of_device_id qcom_ethqos_match[] = {
+ 	{ .compatible = "qcom,qcs404-ethqos", .data = &emac_v2_3_0_data},
++	{ .compatible = "qcom,sm8150-ethqos", .data = &emac_v2_1_0_data},
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, qcom_ethqos_match);
 -- 
 2.35.1
 
