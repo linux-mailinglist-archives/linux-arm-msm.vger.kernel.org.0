@@ -2,117 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 56AAA4CBDE7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 13:37:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B184D4CBE4D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 14:00:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233350AbiCCMi3 convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Thu, 3 Mar 2022 07:38:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49262 "EHLO
+        id S232815AbiCCNBC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Mar 2022 08:01:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231641AbiCCMi2 (ORCPT
+        with ESMTP id S232216AbiCCNBB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Mar 2022 07:38:28 -0500
-Received: from mail.holtmann.org (coyote.holtmann.net [212.227.132.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D71542559E;
-        Thu,  3 Mar 2022 04:37:39 -0800 (PST)
-Received: from smtpclient.apple (p5b3d2910.dip0.t-ipconnect.de [91.61.41.16])
-        by mail.holtmann.org (Postfix) with ESMTPSA id A504ECED23;
-        Thu,  3 Mar 2022 13:37:38 +0100 (CET)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.60.0.1.1\))
-Subject: Re: [PATCH v2] bluetooth: hci_event: don't print an error on vendor
- events
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <CABBYNZJPN6o-v2OpAXND0+UfwB3AQL2=r6CDQ0S8PktWZqijMw@mail.gmail.com>
-Date:   Thu, 3 Mar 2022 13:37:38 +0100
-Cc:     Caleb Connolly <caleb.connolly@linaro.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        "open list:NETWORKING [GENERAL]" <netdev@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <E6952D0A-FFF7-409E-8779-F82FC4DE9252@holtmann.org>
-References: <20220302183515.448334-1-caleb.connolly@linaro.org>
- <21F7790B-8849-4131-AF09-4E622B1A9E9D@holtmann.org>
- <CABBYNZJPN6o-v2OpAXND0+UfwB3AQL2=r6CDQ0S8PktWZqijMw@mail.gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-X-Mailer: Apple Mail (2.3693.60.0.1.1)
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        Thu, 3 Mar 2022 08:01:01 -0500
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C753C186405
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 05:00:14 -0800 (PST)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id AB1773F935;
+        Thu,  3 Mar 2022 14:00:11 +0100 (CET)
+Date:   Thu, 3 Mar 2022 14:00:10 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 2/6] arm64: dts: qcom: sdm630: Drop flags for mdss irqs
+Message-ID: <20220303130010.i3q522wntum63dcg@SoMainline.org>
+References: <20220302225411.2456001-1-dmitry.baryshkov@linaro.org>
+ <20220302225411.2456001-2-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220302225411.2456001-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Luiz,
-
->>> Since commit 3e54c5890c87 ("Bluetooth: hci_event: Use of a function table to handle HCI events"),
->>> some devices see warnings being printed for vendor events, e.g.
->>> 
->>> [   75.806141] Bluetooth: hci0: setting up wcn399x
->>> [   75.948311] Bluetooth: hci0: unexpected event 0xff length: 14 > 0
->>> [   75.955552] Bluetooth: hci0: QCA Product ID   :0x0000000a
->>> [   75.961369] Bluetooth: hci0: QCA SOC Version  :0x40010214
->>> [   75.967417] Bluetooth: hci0: QCA ROM Version  :0x00000201
->>> [   75.973363] Bluetooth: hci0: QCA Patch Version:0x00000001
->>> [   76.000289] Bluetooth: hci0: QCA controller version 0x02140201
->>> [   76.006727] Bluetooth: hci0: QCA Downloading qca/crbtfw21.tlv
->>> [   76.986850] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.013574] Bluetooth: hci0: QCA Downloading qca/oneplus6/crnv21.bin
->>> [   77.024302] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.032681] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.040674] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.049251] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.057997] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.066320] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.075065] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.083073] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.091250] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.099417] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.110166] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.118672] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.127449] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.137190] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.146192] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.154242] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.163183] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.171202] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.179364] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.187259] Bluetooth: hci0: unexpected event 0xff length: 3 > 0
->>> [   77.198451] Bluetooth: hci0: QCA setup on UART is completed
->>> 
->>> Avoid printing the event length warning for vendor events, this reverts
->>> to the previous behaviour where such warnings weren't printed.
->>> 
->>> Fixes: 3e54c5890c87 ("Bluetooth: hci_event: Use of a function table to handle HCI events")
->>> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
->>> ---
->>> Changes since v1:
->>> * Don't return early! Vendor events still get parsed despite the
->>>  warning. I should have looked a little more closely at that...
->>> ---
->>> net/bluetooth/hci_event.c | 2 +-
->>> 1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->> patch has been applied to bluetooth-stable tree.
->> 
-> I believe a proper fix has already been pushed to bluetooth-next:
+On 2022-03-03 01:54:07, Dmitry Baryshkov wrote:
+> The number of interrupt cells for the mdss interrupt controller is 1,
+> meaning there should only be one cell for the interrupt number, not two.
+> Drop the second cell containing (unused) irq flags.
 > 
-> https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git/commit/?id=314d8cd2787418c5ac6b02035c344644f47b292b
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Fixes: b52555d590d1 ("arm64: dts: qcom: sdm630: Add MDSS nodes")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Thanks for adding the Fixes: tag.
+
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+
+Nit: Robh also removed the trailing empty newline in his patch:
+https://lore.kernel.org/linux-arm-msm/20220302013339.2354076-1-robh@kernel.org/
+
+> ---
+>  arch/arm64/boot/dts/qcom/sdm630.dtsi | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> HCI_EV_VENDOR shall be assumed to be variable length and that also
-> uses bt_dev_warn_ratelimited to avoid spamming the logs in case it
-> still fails.
-
-ok, I reverted the patch and lets this go via net-next tree then. Stable can pick this up if it really becomes a larger problem.
-
-Regards
-
-Marcel
-
+> diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> index 240293592ef9..7f875bf9390a 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> @@ -1453,7 +1453,7 @@ mdp: mdp@c901000 {
+>  				reg-names = "mdp_phys";
+>  
+>  				interrupt-parent = <&mdss>;
+> -				interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
+> +				interrupts = <0>;
+>  
+>  				assigned-clocks = <&mmcc MDSS_MDP_CLK>,
+>  						  <&mmcc MDSS_VSYNC_CLK>;
+> @@ -1530,7 +1530,7 @@ dsi0: dsi@c994000 {
+>  				power-domains = <&rpmpd SDM660_VDDCX>;
+>  
+>  				interrupt-parent = <&mdss>;
+> -				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
+> +				interrupts = <4>;
+>  
+>  				assigned-clocks = <&mmcc BYTE0_CLK_SRC>,
+>  						  <&mmcc PCLK0_CLK_SRC>;
+> -- 
+> 2.34.1
+> 
