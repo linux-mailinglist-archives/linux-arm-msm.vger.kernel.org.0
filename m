@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 086794CC97B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 23:50:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 654AD4CC97E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 23:54:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233243AbiCCWvi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Mar 2022 17:51:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52372 "EHLO
+        id S235760AbiCCWzC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Mar 2022 17:55:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231808AbiCCWvh (ORCPT
+        with ESMTP id S231808AbiCCWzB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Mar 2022 17:51:37 -0500
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AFEA14EF72
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 14:50:50 -0800 (PST)
-Received: by mail-oi1-x230.google.com with SMTP id x193so6260141oix.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Mar 2022 14:50:50 -0800 (PST)
+        Thu, 3 Mar 2022 17:55:01 -0500
+Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7085AECB15
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 14:54:15 -0800 (PST)
+Received: by mail-oo1-xc33.google.com with SMTP id w3-20020a4ac183000000b0031d806bbd7eso7464240oop.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Mar 2022 14:54:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=KeDmke7qScTaAmmjjyQpyutbM2DWizHtambCdZkz9so=;
-        b=c7uNVxCrj7GWjWl8k15rd3NWuQMjPYmBmVx9kC/NvH/2mYFJpmqswTrYbwyAjtUVT0
-         XC+Ya9MELFv9OKGEGj4MaSGRxQiuhylUuua9ECXenWnE0XYmPgg2+6oimoL7ONr4mh+E
-         NhAyMHITEtLx0K0RbybO+ZHvp19uo/sYUII1Y=
+        bh=SWwr6PfQx9+FPyvTdo8KBfSMVcyO3fHRr3T3bQXm+ds=;
+        b=QBW+znNKKa/bk/d9EArBF7hxjYyQk4nEwGsuQPFy4XkOyGaGnr2MqkogedjMGH6P6x
+         IDtN+u+8Ykw/r3Mgxm1L+pc7zVn/aMdZjDLZ2isamgiU7xVKEAtCY7dXqnJkd5RQpCh+
+         8Y5Yl4c26VGBMMpyT8YAIzoZVEcGktlM9tX18=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=KeDmke7qScTaAmmjjyQpyutbM2DWizHtambCdZkz9so=;
-        b=nLV5Ur8hNH5hoDOEoa6HRMVtwMO8IRjdr68/hJVlCABCUKsSTB/MH2OSoOlMEQnneo
-         yP+pmiZWPOp1OehddTJb47IbQs+7OEUwYuCIFPmn1kC003C1L4ZKsFlI5cnP1qcSAD28
-         3UaXSxu0AkOjodNpfi/Yd3DN1/FSzjvB1tZnLM63BpIbuzIF0Yb4sxn2fBJ7WzOCa30x
-         cnNzogAASbz7XM3Wmo3WOIKWARjkTmvF1D9vt3uOyIqs3rYzlCNwv9IItK213O6zDmul
-         YM6crkuw0Jic0r0Gt2XSNYUS1B38Q/nLZDzH41Q4kUhgjNVptJOZBA912Uv/yqOrCwXi
-         VD7A==
-X-Gm-Message-State: AOAM532eekR01F74O8NUG0q/VuLeG4mR80lEp1uSiQCgnFWFmy3jVPba
-        IxZQkjoNYGyaa4fyHbgEBT3DE/uwpnhyJ2oVRtUtxw==
-X-Google-Smtp-Source: ABdhPJxA0gclpLTZ0n3tm36YIjXGwbHs5/bZqav5p1HszkHa+lfQd5VovmMf1U0kgnme3ZuS28Lh/1eE7rePS9rZovo=
-X-Received: by 2002:a05:6808:20a7:b0:2d4:d2f1:9edc with SMTP id
- s39-20020a05680820a700b002d4d2f19edcmr6732813oiw.64.1646347849504; Thu, 03
- Mar 2022 14:50:49 -0800 (PST)
+        bh=SWwr6PfQx9+FPyvTdo8KBfSMVcyO3fHRr3T3bQXm+ds=;
+        b=imjpMN5RW2PjPFQ7XcRiDo8XGhEAkjP30GRuSyRHYFq5BAA7W2jsrzw2aPIyDqVaS1
+         kOH5CTZk7u2P2HWfkNf7yboNRPAuGWihRJPYpFTrAneokZb0zJohhcRuqbzkI+hGayFd
+         Ds2ZTaFe6qLPII5sFDLIzEQF593YkbPHa1MNz2Hw/4C7iFLexnHziML+AS/cgrzjNKza
+         tL613iOW63PgU9PqMMCeE3+WQ+vgwAAp/fi4X9JTXtgMdyuI2pBFbUEoJquI92RRmqXz
+         O6APeSDYxMgZ3YduL7i8nvXyoKFyLK/xdQSVCVB4zmsfZ1leEfTcQzr8I1185S9yKVt5
+         Guww==
+X-Gm-Message-State: AOAM531ZFv0p2DFKy/LNHygFdaQaPu+5Q6JI+a6Z2MGS9OZcFnCdijdO
+        dVR9fklJnAQDrUu/v7PCpeJLvlmwkePdHSbt/xeUFQ==
+X-Google-Smtp-Source: ABdhPJx/6Rxm4cp68BFJJFqy3CAujhE6UWDHQU3lHjqBYT+eQ18QrGqQbyqLY4SwEdptGIgYFgUpSCqce2VueXCbcBs=
+X-Received: by 2002:a05:6870:14cf:b0:d9:a9ce:92a9 with SMTP id
+ l15-20020a05687014cf00b000d9a9ce92a9mr5886672oab.64.1646348054835; Thu, 03
+ Mar 2022 14:54:14 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 3 Mar 2022 14:50:49 -0800
+ HTTPREST; Thu, 3 Mar 2022 14:54:14 -0800
 MIME-Version: 1.0
-In-Reply-To: <20220119224005.3104578-2-dmitry.baryshkov@linaro.org>
-References: <20220119224005.3104578-1-dmitry.baryshkov@linaro.org> <20220119224005.3104578-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220119224005.3104578-3-dmitry.baryshkov@linaro.org>
+References: <20220119224005.3104578-1-dmitry.baryshkov@linaro.org> <20220119224005.3104578-3-dmitry.baryshkov@linaro.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Thu, 3 Mar 2022 14:50:49 -0800
-Message-ID: <CAE-0n526yEZzk8Yzje+HszN79MFPkovVFDKXPffMwL8sE9n_8w@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] drm/msm: unify MDSS drivers
+Date:   Thu, 3 Mar 2022 14:54:14 -0800
+Message-ID: <CAE-0n51MFCFedPR4H__ousJGsatRWJKJpoo8rHUmJ4qdea22pw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] drm/msm: remove extra indirection for msm_mdss
 To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -70,107 +70,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-01-19 14:40:02)
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-> similarity index 58%
-> rename from drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-> rename to drivers/gpu/drm/msm/msm_mdss.c
-> index 9f5cc7f9e9a9..f5429eb0ae52 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_mdss.c
-> +++ b/drivers/gpu/drm/msm/msm_mdss.c
-> @@ -188,22 +182,64 @@ static void dpu_mdss_destroy(struct msm_mdss *mdss)
+Quoting Dmitry Baryshkov (2022-01-19 14:40:03)
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index be06a62d7ccb..f18dfbb614f0 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -1211,19 +1212,32 @@ static int msm_pdev_probe(struct platform_device *pdev)
 >
->         pm_runtime_suspend(mdss->dev);
->         pm_runtime_disable(mdss->dev);
-> -       _dpu_mdss_irq_domain_fini(dpu_mdss);
-> +       irq_domain_remove(dpu_mdss->irq_controller.domain);
-> +       dpu_mdss->irq_controller.domain = NULL;
->         irq = platform_get_irq(pdev, 0);
->         irq_set_chained_handler_and_data(irq, NULL, NULL);
-> -
-> -       if (dpu_mdss->mmio)
-> -               devm_iounmap(&pdev->dev, dpu_mdss->mmio);
-> -       dpu_mdss->mmio = NULL;
+>         switch (get_mdp_ver(pdev)) {
+>         case KMS_MDP5:
+> -               ret = msm_mdss_init(pdev, true);
+> +               mdss = msm_mdss_init(pdev, true);
+> +               if (IS_ERR(mdss)) {
+> +                       ret = PTR_ERR(mdss);
+> +                       platform_set_drvdata(pdev, NULL);
+> +
+> +                       return ret;
+> +               } else {
+
+Drop else
+
+> +                       priv->mdss = mdss;
+> +                       pm_runtime_enable(&pdev->dev);
+> +               }
+>                 break;
+>         case KMS_DPU:
+> -               ret = msm_mdss_init(pdev, false);
+> +               mdss = msm_mdss_init(pdev, false);
+> +               if (IS_ERR(mdss)) {
+> +                       ret = PTR_ERR(mdss);
+> +                       platform_set_drvdata(pdev, NULL);
+> +
+> +                       return ret;
+> +               } else {
+> +                       priv->mdss = mdss;
+> +                       pm_runtime_enable(&pdev->dev);
+> +               }
+
+This is the same so why can't it be done below in the deleted if (ret)?
+
+>                 break;
+>         default:
+> -               ret = 0;
+>                 break;
+>         }
+> -       if (ret) {
+> -               platform_set_drvdata(pdev, NULL);
+> -               return ret;
+> -       }
+>
+>         if (get_mdp_ver(pdev)) {
+>                 ret = add_display_components(pdev, &match);
+> diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
+> index 2459ba479caf..0c341660941a 100644
+> --- a/drivers/gpu/drm/msm/msm_kms.h
+> +++ b/drivers/gpu/drm/msm/msm_kms.h
+> @@ -239,50 +228,44 @@ int mdp5_mdss_parse_clock(struct platform_device *pdev, struct clk_bulk_data **c
+>         return num_clocks;
 >  }
 >
->  static const struct msm_mdss_funcs mdss_funcs = {
-> -       .enable = dpu_mdss_enable,
-> -       .disable = dpu_mdss_disable,
-> -       .destroy = dpu_mdss_destroy,
-> +       .enable = msm_mdss_enable,
-> +       .disable = msm_mdss_disable,
-> +       .destroy = msm_mdss_destroy,
->  };
->
-> -int dpu_mdss_init(struct platform_device *pdev)
-> +/*
-> + * MDP5 MDSS uses at most three specified clocks.
-> + */
-> +#define MDP5_MDSS_NUM_CLOCKS 3
-> +int mdp5_mdss_parse_clock(struct platform_device *pdev, struct clk_bulk_data **clocks)
+> -int msm_mdss_init(struct platform_device *pdev, bool mdp5)
+> +struct msm_mdss *msm_mdss_init(struct platform_device *pdev, bool mdp5)
 
-static?
-
-> +{
-> +       struct clk_bulk_data *bulk;
-> +       struct clk *clk;
-> +       int num_clocks = 0;
-> +
-> +       if (!pdev)
-> +               return -EINVAL;
-> +
-> +       bulk = devm_kcalloc(&pdev->dev, MDP5_MDSS_NUM_CLOCKS, sizeof(struct clk_bulk_data), GFP_KERNEL);
-> +       if (!bulk)
-> +               return -ENOMEM;
-> +
-> +       /* We ignore all the errors except deferral: typically they mean that the clock is not provided in the dts. */
-> +       clk = msm_clk_get(pdev, "iface");
-> +       if (!IS_ERR(clk)) {
-> +               bulk[num_clocks].id = "iface";
-> +               bulk[num_clocks].clk = clk;
-> +               num_clocks++;
-> +       } else if (clk == ERR_PTR(-EPROBE_DEFER))
-> +               return -EPROBE_DEFER;
-> +
-> +       clk = msm_clk_get(pdev, "bus");
-> +       if (!IS_ERR(clk)) {
-> +               bulk[num_clocks].id = "bus";
-> +               bulk[num_clocks].clk = clk;
-> +               num_clocks++;
-> +       } else if (clk == ERR_PTR(-EPROBE_DEFER))
-> +               return -EPROBE_DEFER;
-> +
-> +       clk = msm_clk_get(pdev, "vsync");
-> +       if (!IS_ERR(clk)) {
-> +               bulk[num_clocks].id = "vsync";
-> +               bulk[num_clocks].clk = clk;
-> +               num_clocks++;
-> +       } else if (clk == ERR_PTR(-EPROBE_DEFER))
-> +               return -EPROBE_DEFER;
-> +
-> +       return num_clocks;
-> +}
-> +
-> +int msm_mdss_init(struct platform_device *pdev, bool mdp5)
-
-Maybe is_mdp5 so the if reads simpler.
-
->  {
->         struct msm_drm_private *priv = platform_get_drvdata(pdev);
->         struct dpu_mdss *dpu_mdss;
-> @@ -220,27 +256,28 @@ int dpu_mdss_init(struct platform_device *pdev)
->
->         DRM_DEBUG("mapped mdss address space @%pK\n", dpu_mdss->mmio);
->
-> -       ret = msm_parse_clock(pdev, &dpu_mdss->clocks);
-> +       if (mdp5)
-> +               ret = mdp5_mdss_parse_clock(pdev, &dpu_mdss->clocks);
-> +       else
-> +               ret = msm_parse_clock(pdev, &dpu_mdss->clocks);
->         if (ret < 0) {
-> -               DPU_ERROR("failed to parse clocks, ret=%d\n", ret);
-> -               goto clk_parse_err;
-> +               DRM_ERROR("failed to parse clocks, ret=%d\n", ret);
-> +               return ret;
->         }
->         dpu_mdss->num_clocks = ret;
+Ah I see it will quickly become not static. Still should have static
+first and remove it here.
