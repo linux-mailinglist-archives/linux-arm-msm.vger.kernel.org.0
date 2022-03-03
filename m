@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0B294CC889
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 23:06:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 71B064CC895
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 23:06:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236734AbiCCWHO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Mar 2022 17:07:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51564 "EHLO
+        id S236785AbiCCWHj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Mar 2022 17:07:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231629AbiCCWHN (ORCPT
+        with ESMTP id S236796AbiCCWHc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Mar 2022 17:07:13 -0500
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BA8C16FDEE
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 14:06:25 -0800 (PST)
-Received: by mail-ot1-x329.google.com with SMTP id k9-20020a056830242900b005ad25f8ebfdso5831706ots.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Mar 2022 14:06:25 -0800 (PST)
+        Thu, 3 Mar 2022 17:07:32 -0500
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76F8B172E76
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 14:06:41 -0800 (PST)
+Received: by mail-oi1-x234.google.com with SMTP id s5so6115776oic.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Mar 2022 14:06:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=a98NmfLmxPwElplSUG27m4JRPCjHA63Gw4sinoazLJY=;
-        b=GobSvDa3VrHxA7j14C3x/nMk7a8rt3B6ncIMZ/6ZB248iDm/WJ8X5MFgEZQdYEgc/N
-         xEMoAprLTjD4kd4E34oMF6mshpLM3QZk1bCU5aMsnZwUiBkujKZXg1ke4s8xeK505b/b
-         L9cgDH8QI5yBfTrxVVK3LKj0pudr64Mqiia80=
+        bh=r7kKCHWz3Rfv0TQHHwtEWE4mf+UhKdYlq+PNtd3O+F8=;
+        b=Z/JYd4+V376HcbtMkvRBhrUgb5bIqQI7F34q31nMVDyB5DKCMuF39gIVI7GHkLnK5z
+         xwecd6zPlWqMWR83kkWkOdDZRbFCWNM5KowBFcTzELnIZyrazGRjk+9YjZMMPeCzfSen
+         Dc4coFcuRY/XfS2qdlrDgBfiaAjeb+BrfQnDE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=a98NmfLmxPwElplSUG27m4JRPCjHA63Gw4sinoazLJY=;
-        b=b33GyioEp6vLmHteu2ETAs/XihUF5ViV/FmbXu9h8+7R8fRkSrbe44r0eZW1MZ4dJs
-         zouKGsdyUOqn4ZAAeW8cCwPDzjmGThuTVw2zKgsAnGRGA0G8+bL6K+FJWjrsXcu+LnGL
-         82E09+aprrSy3umYoxEKgdXN17FEy/JjWjReJXnkhkurOrDuGZYGirFxB7H6WePGNi87
-         wFaRdmD4CWvr3Lz2JL0DZX8O7L8SO57PIzR1LkrxHE0A5iE35LFt5p/NZad7FlF9IEoD
-         sSbutm6tJzjuaQrvLijg17q63WtiBEHf8RKIzGbewmvhLfhvJV2sy4tGG671/xZyk94a
-         d0KA==
-X-Gm-Message-State: AOAM53006kvt7zQ1xe71CZ4gXsBXnnB0krHuwAnuIa4zrMtQlKTndEoL
-        eqnapMhsWGH4rqLCjCY9VdWJ/mvBbpOF9w7j9HaFXQ==
-X-Google-Smtp-Source: ABdhPJyJUmY4cuZ/bYuBxPB7/aTUkrncJRnI7ZEDL9i6xSU71lycPvci4ZQssT9MWj/uBiKHGegkItt395XnRD+8J2U=
-X-Received: by 2002:a9d:7687:0:b0:59e:da8c:5d32 with SMTP id
- j7-20020a9d7687000000b0059eda8c5d32mr20656220otl.77.1646345184764; Thu, 03
- Mar 2022 14:06:24 -0800 (PST)
+        bh=r7kKCHWz3Rfv0TQHHwtEWE4mf+UhKdYlq+PNtd3O+F8=;
+        b=NmIMAdCZoi2GsA+tkdwubaVPVSFgyeEoPeV4sn3MpS0rIVYJC4BPtPFrfkNC2XQFg4
+         WrY4AKiuzWtsfSDF3V2B+hcdrOi2wb/XgJ5RcA4z1shxw0DV+xUNDboCPv1QN/4vYXqx
+         UEiWZHhcsTBUupX6GF8PXCFtSO24kFgzxuuG2AKR9ZUUvulvkY5VXCtKcmV7u96rWtYu
+         AbBcan1b4RzLchdA08dhLopc5yBhFnH6OU6ArmCdOtCRbzN+W0AhFM/qh60Qafd4KIdO
+         k5fP/fIOxmJpkE34IfzljQf39obp1h3DzZJHV8h66GWDEQbATXMam156BYEnQ+9ry8xh
+         IH+g==
+X-Gm-Message-State: AOAM531Q7ha/ZgcOoWH5CHHclca5uoOrPN/w6WYOzfk2TaTfxLpf+syB
+        Am4jXN8PiBY8R5Icwg+oFAxcTndXnPvyHGIPWoUesA==
+X-Google-Smtp-Source: ABdhPJyMZuWL+CCeZIqQWqg/RiahdrvQ8SCiVP/B4EwHgyJoeXa1tCMmS59sHA3zE1RwwWN0mnFkZj+JMSwmHPiUj3g=
+X-Received: by 2002:aca:3346:0:b0:2d9:91f9:a7f2 with SMTP id
+ z67-20020aca3346000000b002d991f9a7f2mr809414oiz.32.1646345200874; Thu, 03 Mar
+ 2022 14:06:40 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 3 Mar 2022 14:06:24 -0800
+ HTTPREST; Thu, 3 Mar 2022 14:06:40 -0800
 MIME-Version: 1.0
-In-Reply-To: <1646300401-9063-4-git-send-email-quic_vpolimer@quicinc.com>
-References: <1646300401-9063-1-git-send-email-quic_vpolimer@quicinc.com> <1646300401-9063-4-git-send-email-quic_vpolimer@quicinc.com>
+In-Reply-To: <1646300401-9063-5-git-send-email-quic_vpolimer@quicinc.com>
+References: <1646300401-9063-1-git-send-email-quic_vpolimer@quicinc.com> <1646300401-9063-5-git-send-email-quic_vpolimer@quicinc.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Thu, 3 Mar 2022 14:06:24 -0800
-Message-ID: <CAE-0n51mFD0JfxxEHOxj=mTFYV92Cc0JDzEY2fxKn6OKOwjq+g@mail.gmail.com>
-Subject: Re: [PATCH v4 3/4] arm64/dts/qcom/sdm845: remove assigned-clock-rate
+Date:   Thu, 3 Mar 2022 14:06:40 -0800
+Message-ID: <CAE-0n50sRHDaBdKADrqXMR1Dc7s=Stj_eY3Go=VPTTHRHtiUPQ@mail.gmail.com>
+Subject: Re: [PATCH v4 4/4] arm64/dts/qcom/sm8250: remove assigned-clock-rate
  property for mdp clk
 To:     Vinod Polimera <quic_vpolimer@quicinc.com>,
         devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
@@ -69,7 +69,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Vinod Polimera (2022-03-03 01:40:00)
+Quoting Vinod Polimera (2022-03-03 01:40:01)
 > Kernel clock driver assumes that initial rate is the
 > max rate for that clock and was not allowing it to scale
 > beyond the assigned clock value.
@@ -77,7 +77,7 @@ Quoting Vinod Polimera (2022-03-03 01:40:00)
 > Drop the assigned clock rate property and vote on the mdp clock as per
 > calculated value during the usecase.
 >
-> Fixes: 08c2a076d1("arm64: dts: qcom: sdm845: Add dpu to sdm845 dts file")
+> Fixes: 7c1dffd471("arm64: dts: qcom: sm8250.dtsi: add display system nodes")
 > Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
 > ---
 
