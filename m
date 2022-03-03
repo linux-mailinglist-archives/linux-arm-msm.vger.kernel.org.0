@@ -2,73 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A5D74CC925
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 23:36:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 875944CC936
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 23:38:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237006AbiCCWhK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Mar 2022 17:37:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38956 "EHLO
+        id S234509AbiCCWjD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Mar 2022 17:39:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236959AbiCCWhJ (ORCPT
+        with ESMTP id S233309AbiCCWjC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Mar 2022 17:37:09 -0500
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81416150416
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 14:36:18 -0800 (PST)
-Received: by mail-oi1-x230.google.com with SMTP id s5so6178413oic.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Mar 2022 14:36:18 -0800 (PST)
+        Thu, 3 Mar 2022 17:39:02 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D59C810C50D
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 14:38:15 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id w3so8468382edu.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Mar 2022 14:38:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=+IxH+v4af7VzrKdvTOvKB5ZMTKZ+t8ui6EDkfQqlJ0s=;
-        b=PJEWLzqqseHPPRxvwZuM6uOTCWfL7xJ4o5KBWyKiuf78oArICZi8oBY5JN41+D6+U4
-         1V9U45UN69k8kRFLyAd9as/9FWGo1nF+iiwSB/r4fL96T8nXvfeocBGPnibJfvM2El6W
-         4MoTqRyW2rvnGjSsyvxThTWme7V1vFH2sns3U=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ST9Fc76g6pvjQi4fhR+noZ4Seq3datbHBQS0X9jUxZ8=;
+        b=FrOz5ub3zWjEQK22ZLwg3u+vEvcmxk5pcWahe3+zoJFfvsvs0UQBjv/AElEkUlyAw9
+         EePN55pYYRl4RbnXJxniWi54yJRwLRFnUpNNgmipiWdmEHy76MIi5bA6dIIROOGw5+9j
+         DlrsvRRt7Ab5hlgGMIvKwZMS89rVmz14yqa6Y=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=+IxH+v4af7VzrKdvTOvKB5ZMTKZ+t8ui6EDkfQqlJ0s=;
-        b=ObuAv+nyyvOtTGzwzGnHJK/B2eBcCCa1wi7EHEAuyNQTA7hbJ4FRWTCm3VKTuG6g2N
-         xChqf5GMqlaghkQ390m43lQ0altyRqZ6Sarg9yADG4q5pmMoJkgU1bKALnicKUat2eB3
-         0FJ+zS29dcX8d5KSOSQ+hpAe51r0BCNhNMt69yOWTbkeKPUMuhnM3TlsLGz7eenFgRZ/
-         fH/TD4LuUX0OcY3PRLzDS6KQTopbXYutrnci3dKTJ3STTbnpINSFvoOdxn7gErDGKUuR
-         Is4tV+d7N8eCvctKMBzckdyhyX9v3q15YqG9h5vQcTHQCsCpmzFRXEcbhgdZu7GFcB8O
-         2jYA==
-X-Gm-Message-State: AOAM531aGpJtQ+yEJ6IGF7qYSmy8Vw2umm2R3+VFfDqxDv9HOfdTbRaQ
-        XWCD1Nbu5Tt6ooU4xC4IuFSu7b4LAsex9vqJTvX6Gg==
-X-Google-Smtp-Source: ABdhPJwzE9l5wF1WBh0ZzcfsjbubuW7clbOvgM6f0zoFQo0kH1jqpjN6+RqUObMiyusKhqmjRdcZskOhtJ9BSyNvUUE=
-X-Received: by 2002:aca:3346:0:b0:2d9:91f9:a7f2 with SMTP id
- z67-20020aca3346000000b002d991f9a7f2mr922767oiz.32.1646346977864; Thu, 03 Mar
- 2022 14:36:17 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 3 Mar 2022 14:36:17 -0800
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ST9Fc76g6pvjQi4fhR+noZ4Seq3datbHBQS0X9jUxZ8=;
+        b=51LaFOfSGZOhjxEss1YeuyTuCa5Jo5smAQ+su0ptPu6UGG69TNMmxoCvcVlssW78So
+         5UT8GI1buaOUbN0MCyPkllglK5az90xwXa61l4zi2F8HmhqwOc6eLqbyJ5EfEUfgd8aK
+         whosmn3eurDx2afZtE6WGvYbXRTzWCHIbzDwFXdQKm1bxlZQGrZLB4HxCDEfc5rU8xdN
+         AnhdGc7IH30Vsui6iX+d/W8aQ14TOKnG5a9LDqL6AELp2XWVMfTcSZz2pGu96cEZT0a0
+         mwSs7VHO5wpP9fkds2dOy7YAWtINOkbIzwYSrMq4YtRV/Mk/xsBHLhQosNk+BWR/GV7i
+         IKmQ==
+X-Gm-Message-State: AOAM532Y+JQwTF9ZAWkGyzCvPsyxckxPiUbzlQ3Tx02RLC0jQ7vbA9eX
+        XiFUoxLY1m67aEmsl7JuRKLMUuW5v7rBpQ==
+X-Google-Smtp-Source: ABdhPJyagDy6rd2r16hj48/+8wN9bRorO8je+RZM87pq0I/zQGXEBzK0qlCNl/5P+AKP3mXaBwsBYQ==
+X-Received: by 2002:aa7:c54b:0:b0:415:c714:7a1f with SMTP id s11-20020aa7c54b000000b00415c7147a1fmr8012019edr.385.1646347093926;
+        Thu, 03 Mar 2022 14:38:13 -0800 (PST)
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com. [209.85.128.49])
+        by smtp.gmail.com with ESMTPSA id qk8-20020a1709077f8800b006d6e920af3esm1129352ejc.87.2022.03.03.14.38.13
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Mar 2022 14:38:13 -0800 (PST)
+Received: by mail-wm1-f49.google.com with SMTP id 7-20020a05600c228700b00385fd860f49so3254300wmf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Mar 2022 14:38:13 -0800 (PST)
+X-Received: by 2002:a7b:c381:0:b0:37b:e01f:c1c0 with SMTP id
+ s1-20020a7bc381000000b0037be01fc1c0mr5453850wmj.98.1646347092922; Thu, 03 Mar
+ 2022 14:38:12 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAF6AEGuaYEC2rYxi1uU0S_Hkx-DbjT6wO4zz6sKSRON=eX10ng@mail.gmail.com>
-References: <20220303194758.710358-1-robdclark@gmail.com> <20220303194758.710358-4-robdclark@gmail.com>
- <CAE-0n532ZX=qXTBKSFyRYAmkqFN7oqKyPvJHBuVMmr2eHY+O4A@mail.gmail.com>
- <CAF6AEGstzPaLFf-9z9Gf+S4G8n6twxExLvKaqLZk9ML2tUWiLw@mail.gmail.com> <CAF6AEGuaYEC2rYxi1uU0S_Hkx-DbjT6wO4zz6sKSRON=eX10ng@mail.gmail.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 3 Mar 2022 14:36:17 -0800
-Message-ID: <CAE-0n52xXJG3kohetn3sDBmsBpMqL5zvS2yRzP+sPdq5+7vHgQ@mail.gmail.com>
-Subject: Re: [PATCH 3/4] drm/msm: Add SYSPROF param
-To:     Rob Clark <robdclark@gmail.com>
+References: <1646300401-9063-1-git-send-email-quic_vpolimer@quicinc.com> <1646300401-9063-2-git-send-email-quic_vpolimer@quicinc.com>
+In-Reply-To: <1646300401-9063-2-git-send-email-quic_vpolimer@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 3 Mar 2022 14:38:00 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=VHBn0H6Oz0F3vHrXZzSSo8y+QbLc-xn+CVVSQkommsHw@mail.gmail.com>
+Message-ID: <CAD=FV=VHBn0H6Oz0F3vHrXZzSSo8y+QbLc-xn+CVVSQkommsHw@mail.gmail.com>
+Subject: Re: [PATCH v4 1/4] arm64/dts/qcom/sc7280: remove assigned-clock-rate
+ property for mdp clk
+To:     Vinod Polimera <quic_vpolimer@quicinc.com>
 Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Emma Anholt <emma@anholt.net>,
-        Yangtao Li <tiny.windzz@gmail.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Stephen Boyd <swboyd@chromium.org>, quic_kalyant@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -80,38 +79,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rob Clark (2022-03-03 13:47:14)
-> On Thu, Mar 3, 2022 at 1:17 PM Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > On Thu, Mar 3, 2022 at 12:47 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> > >
-> > > Quoting Rob Clark (2022-03-03 11:46:47)
-> > > > +
-> > > > +       /* then apply new value: */
-> > >
-> > > It would be safer to swap this. Otherwise a set when the values are at
-> > > "1" would drop to "zero" here and potentially trigger some glitch,
-> > > whereas incrementing one more time and then dropping the previous state
-> > > would avoid that short blip.
-> > >
-> > > > +       switch (sysprof) {
-> > > > +       default:
-> > > > +               return -EINVAL;
-> > >
-> > > This will become more complicated though.
-> >
-> > Right, that is why I took the "unwind first and then re-apply"
-> > approach.. in practice I expect userspace to set the value before it
-> > starts sampling counter values, so I wasn't too concerned about this
-> > racing with a submit and clearing the counters.  (Plus any glitch if
-> > userspace did decide to change it dynamically would just be transient
-> > and not really a big deal.)
->
-> Actually I could just swap the two switch's.. the result would be that
-> an EINVAL would not change the state instead of dropping the state to
-> zero.  Maybe that is better anyways
->
+Hi,
 
-Yeah it isn't clear to me what should happen if the new state is
-invalid. Outright rejection is probably better than replacing the
-previous state with an invalid state.
+On Thu, Mar 3, 2022 at 1:40 AM Vinod Polimera <quic_vpolimer@quicinc.com> wrote:
+>
+> Kernel clock driver assumes that initial rate is the
+> max rate for that clock and was not allowing it to scale
+> beyond the assigned clock value.
+>
+> Drop the assigned clock rate property and vote on the mdp clock as per
+> calculated value during the usecase.
+
+I see the "Drop the assigned clock rate property" part, but where is
+the "and vote on the mdp clock" part? Did it already land or
+something? I definitely see that commit 5752c921d267 ("drm/msm/dpu:
+simplify clocks handling") changed a bunch of this but it looks like
+dpu_core_perf_init() still sets "max_core_clk_rate" to whatever the
+clock was at bootup. I assume you need to modify that function to call
+into the OPP layer to find the max frequency?
+
+
+> Changes in v2:
+> - Remove assigned-clock-rate property and set mdp clk during resume sequence.
+> - Add fixes tag.
+>
+> Changes in v3:
+> - Remove extra line after fixes tag.(Stephen Boyd)
+>
+> Fixes: 62fbdce91("arm64: dts: qcom: sc7280: add display dt nodes")
+
+Having a "Fixes" is good, but presumably you need a code change along
+with this, right? Otherwise if someone picks this back to stable then
+they'll end up breaking, right? We need to tag / note that _somehow_.
