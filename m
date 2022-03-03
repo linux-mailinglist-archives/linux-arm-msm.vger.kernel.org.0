@@ -2,74 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FB534CB5CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 05:02:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 536744CB6B0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 07:10:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229506AbiCCEDW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Mar 2022 23:03:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39816 "EHLO
+        id S229783AbiCCGKo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Mar 2022 01:10:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229529AbiCCEDW (ORCPT
+        with ESMTP id S229782AbiCCGKn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 23:03:22 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48D9C205F0
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 20:02:36 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id cx5so3615696pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 20:02:36 -0800 (PST)
+        Thu, 3 Mar 2022 01:10:43 -0500
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22D00164D34
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 22:09:58 -0800 (PST)
+Received: by mail-oi1-x22b.google.com with SMTP id i5so3923451oih.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 22:09:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=7sVtzpHpTJ/PnEOYIWifwgwlsyi1lazyvrfz9DJzlzs=;
-        b=nEOrmbb6wkMBn4pcKHcPlV7engy0FKb++ii1IkQLJrQd8aMos0rJAeKLByOJvOAETb
-         luAzROCtJyVwDCSFLvCjRnQoaoiAWVQqtOAkpsV5ENHX2+1TuRkPfT//DHEIbG63rcIU
-         RIj/qMZtnsFV5RjtqYCriBMCmh9IaX2jKAwlcqQJo14YIfjoL9f9n4G4Z2ayZwe7TEbQ
-         SS6nLZuVAsspvS4AEhK3nlcrG0Syo+XzJt/1I5vrYxOVnlCQBs0mAvk6NVvR447zoTmg
-         4mC0xjpW+I0M4fOjF86xxOQVvxWRAe7euipo5+dw7ataSl9YahH4FDKeM320HFRipNrU
-         8tgQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=F72bStix4IAs331NpnLfcvSkp3vRgdYM9D6jVxCO3QM=;
+        b=mSmOEmxrWvorEYk7gtgGW3K4iwExNWCdjz0ETKAOYeEVbyg/cDPlngL2s7hEPx4/2P
+         1Dt9/loXa7MYg3XY39YIedYAdXyh2s6Hk4RCByvFFECGsnrOjiVGJm746faqn75T/tCI
+         X8rLznuEa7mLlGd8AFgcWMzXYROccUbza3KAh4GXXEumgdBMSVHoGSMkl+kvg3mR0Ryh
+         iEo8o0H/db4NyunEi7Jz2O4SqoTcpOG9Q/ZOkIdFY5ZtxwJqwEffbHD+weHSDd9jLpyr
+         fps/FD6TN95wlMtVUiP7Xp+ghyc4DoM+drJSnhnp273OFM15OkQ1ydO4+BwAkJrpYO1R
+         h+Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=7sVtzpHpTJ/PnEOYIWifwgwlsyi1lazyvrfz9DJzlzs=;
-        b=O57r3+EqrhRugLVJMPTpLfYCpW9UoFVEdLwAON1PJvEUYdLzZvg/Eyxb2ZJz8jNg0M
-         TrT293HppJFSbQWjXqAvlYONERhzQMuXBFgJI5r20kHXsw0fWmD36Suo9upLT+l71sfh
-         k0T6jRaTz4I9jEwcKdG81yAAb4GrdflRuLWQ24I/svnvL6CLdnQVkC4G4fQqLLrIA6HN
-         6U3rHHeWCmkSofmkbargGU23yhwOAlz/bOaLW1+RwIXlde8VD1MEsI6ukYPHWurLLaM0
-         YmwuE7IX/vdt5jQPDBA5Mh6+nAc3moMvgeW6p4DkVgNqUmxGYVOUsrxsZ4rfY27fB+M1
-         Q1wA==
-X-Gm-Message-State: AOAM531T+5c8XOpXS6HVLdiiBBKb9+UT0CsQUsks6afnMJDTjVkBVEiz
-        FGT6e/LfVcUy+ScpU7g14xes2LWvX8SX9g==
-X-Google-Smtp-Source: ABdhPJwMj69xOeKGqcq5Er/dpcnjvBP/n2lHzwjWoTgCF0/7haEx+6VjJklz/ouLQ+nB1MtmyUPi9A==
-X-Received: by 2002:a17:902:f684:b0:151:93ab:3483 with SMTP id l4-20020a170902f68400b0015193ab3483mr8043486plg.4.1646280155720;
-        Wed, 02 Mar 2022 20:02:35 -0800 (PST)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id h3-20020a056a00170300b004f104c635e4sm704484pfc.99.2022.03.02.20.02.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Mar 2022 20:02:35 -0800 (PST)
-Date:   Thu, 3 Mar 2022 12:02:29 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Marc Zyngier <maz@kernel.org>
-Cc:     Thomas Gleixner <tglx@linutronix.de>,
-        Maulik Shah <quic_mkshah@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 2/2] irqchip: Add Qualcomm MPM controller driver
-Message-ID: <20220303040229.GN269879@dragon>
-References: <20220301062414.2987591-1-shawn.guo@linaro.org>
- <20220301062414.2987591-3-shawn.guo@linaro.org>
- <87ee3m2aed.wl-maz@kernel.org>
- <20220302084028.GL269879@dragon>
- <877d9c3b2u.wl-maz@kernel.org>
- <20220302133441.GM269879@dragon>
- <875yow31a0.wl-maz@kernel.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=F72bStix4IAs331NpnLfcvSkp3vRgdYM9D6jVxCO3QM=;
+        b=vPIfhheCTzELIhmqc3PD4r+1ZAROE0cowfGzLDNFJzFDsf7LHKQONsEHKmlObyLgag
+         MQuYqY6cFAzLoPAkeDxIjhSEgTV8AzSiQuHPFkRc9n0uFcOt61AkIpii0PD1cuf1b1oo
+         zlFOFoq2e/rlmes/u72bVmvu0hx16PI2pRgpQelcee3/a7VTVcbm0o+1XI0giDMqf+gH
+         aNeV1VfTZrddbZdXXLNnkEZlxeo/qdnp0hRc7Y9qTtTTwpHLXrLTuW0YuaA2KsPDnk85
+         rmhdQAg3UiDjCs0bv/qMEYqxruOL1A/jVW37oP4gU/Ror9gK8+sBTnepok7nRlIF83ZP
+         hsOQ==
+X-Gm-Message-State: AOAM530OWA2mwUQh/4MEPc3GMXr+edYqQ4sICDFK7bH0lZ2YCG3J+FPT
+        TIcK/sZnqM7YEVSp2Rxdf7aC5KmKn3vfanwGinqKag==
+X-Google-Smtp-Source: ABdhPJxP3AtADN5GNByKE/AGLTv6cQU/7GcPF7zfBmZLYqoxmlu3/BeupgEkWEqQsweRc3052c5+h2eBjUrfS2FL/lY=
+X-Received: by 2002:a54:4494:0:b0:2d7:652b:287 with SMTP id
+ v20-20020a544494000000b002d7652b0287mr3236523oiv.126.1646287797432; Wed, 02
+ Mar 2022 22:09:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <875yow31a0.wl-maz@kernel.org>
+References: <20220302203045.184500-1-bhupesh.sharma@linaro.org>
+ <20220302203045.184500-8-bhupesh.sharma@linaro.org> <CAA8EJpqEy+669gpDsy-zGp2NpDP-d7ZxNf7RVo=OQZdvGdZOvQ@mail.gmail.com>
+In-Reply-To: <CAA8EJpqEy+669gpDsy-zGp2NpDP-d7ZxNf7RVo=OQZdvGdZOvQ@mail.gmail.com>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Thu, 3 Mar 2022 11:39:46 +0530
+Message-ID: <CAH=2Ntz2=pgysEVSfSuGd12C-Am-qRZymaotCw-Lwp0_xaNcOg@mail.gmail.com>
+Subject: Re: [PATCH v3 7/7] arm64: dts: qcom: sa8155: Enable PCIe nodes
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, bhupesh.linux@gmail.com,
+        lorenzo.pieralisi@arm.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, svarbanov@mm-sol.com,
+        bhelgaas@google.com, linux-kernel@vger.kernel.org,
+        robh+dt@kernel.org, sboyd@kernel.org, mturquette@baylibre.com,
+        linux-clk@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -80,174 +72,100 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 02, 2022 at 01:57:27PM +0000, Marc Zyngier wrote:
-> On Wed, 02 Mar 2022 13:34:41 +0000,
-> Shawn Guo <shawn.guo@linaro.org> wrote:
-> > 
-> > On Wed, Mar 02, 2022 at 10:25:45AM +0000, Marc Zyngier wrote:
-> > > On Wed, 02 Mar 2022 08:40:28 +0000,
-> > > Shawn Guo <shawn.guo@linaro.org> wrote:
-> > > > 
-> > > > Hi Marc,
-> > > > 
-> > > > On Tue, Mar 01, 2022 at 11:13:30AM +0000, Marc Zyngier wrote:
-> > > > > Hi Shawn,
-> > > 
-> > > [...]
-> > > 
-> > > > > 
-> > > > > > +static int qcom_mpm_set_type(struct irq_data *d, unsigned int type)
-> > > > > > +{
-> > > > > > +	struct qcom_mpm_priv *priv = d->chip_data;
-> > > > > > +	int pin = d->hwirq;
-> > > > > > +	unsigned int index = pin / 32;
-> > > > > > +	unsigned int shift = pin % 32;
-> > > > > > +
-> > > > > > +	switch (type & IRQ_TYPE_SENSE_MASK) {
-> > > > > > +	case IRQ_TYPE_EDGE_RISING:
-> > > > > > +		mpm_set_type(priv, !!(type & IRQ_TYPE_EDGE_RISING),
-> > > > > > +			     MPM_REG_RISING_EDGE, index, shift);
-> > > > > > +		break;
-> > > > > > +	case IRQ_TYPE_EDGE_FALLING:
-> > > > > > +		mpm_set_type(priv, !!(type & IRQ_TYPE_EDGE_FALLING),
-> > > > > > +			     MPM_REG_FALLING_EDGE, index, shift);
-> > > > > > +		break;
-> > > > > > +	case IRQ_TYPE_LEVEL_HIGH:
-> > > > > > +		mpm_set_type(priv, !!(type & IRQ_TYPE_LEVEL_HIGH),
-> > > > > > +			     MPM_REG_POLARITY, index, shift);
-> > > > > > +		break;
-> > > > > > +	}
-> > > > > 
-> > > > > All these '!!(type & BLAH)' are totally superfluous, as they all expand
-> > > > > to 'true' by construction.
-> > > > 
-> > > > Yes, you are right!
-> > > > 
-> > > > > And this leads to a few questions:
-> > > > > 
-> > > > > - Shouldn't a rising interrupt clear the falling detection?
-> > > > > - Shouldn't a level-low clear the polarity?
-> > > > > - How do you handle IRQ_TYPE_EDGE_BOTH?
-> > > > > - How is MPM_REG_POLARITY evaluated for edge interrupts (resp the EDGE
-> > > > >   registers for level interrupts), as you never seem to be configuring
-> > > > >   a type here?
-> > > > 
-> > > > Honestly, qcom_mpm_set_type() was mostly taken from downstream without
-> > > > too much thinking.
-> > 
-> > I have to take this statement back.  It seems that the current code has
-> > been diverted from the downstream in a wrong way.
-> > 
-> > > > I trusted it as a "good" reference as I have no
-> > > > document to verify the code.  These questions are great and resulted the
-> > > > code changes are pretty sensible to me.
-> > > 
-> > > I don't think these changes are enough. For example, an interrupt
-> > > being switched from level to edge is likely to misbehave (how do you
-> > > distinguish the two?). If that's what the downstream driver does, then
-> > > it is terminally broken.
-> > 
-> > Could you take a look at downstream code and see if it answers all your
-> > questions?
-> 
-> This code actually makes me ask more questions. Why is it programming
-> 2 'pins' for each IRQ?
+Hi Dmitry,
 
-The mapping between MPM pin and GIC IRQ is not strictly 1-1.  There are
-some rare case that up to 2 MPM pins map to a single GIC IRQ, for
-example the last two in QC2290 'qcom,mpm-pin-map' below.
+On Thu, 3 Mar 2022 at 02:29, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Wed, 2 Mar 2022 at 23:31, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
+> >
+> > SA8155p ADP board supports the PCIe0 controller in the RC
+> > mode (only). So add the support for the same.
+> >
+> > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Cc: Vinod Koul <vkoul@kernel.org>
+> > Cc: Rob Herring <robh+dt@kernel.org>
+> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 42 ++++++++++++++++++++++++
+> >  1 file changed, 42 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+> > index 8756c2b25c7e..3f6b3ee404f5 100644
+> > --- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+> > @@ -387,9 +387,51 @@ &usb_2_qmpphy {
+> >         vdda-pll-supply = <&vdda_usb_ss_dp_core_1>;
+> >  };
+> >
+> > +&pcie0 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&pcie0_phy {
+> > +       status = "okay";
+> > +       vdda-phy-supply = <&vreg_l18c_0p88>;
+> > +       vdda-pll-supply = <&vreg_l8c_1p2>;
+> > +};
+> > +
+> > +&pcie1_phy {
+> > +       vdda-phy-supply = <&vreg_l18c_0p88>;
+> > +       vdda-pll-supply = <&vreg_l8c_1p2>;
+> > +};
+> > +
+> >  &tlmm {
+> >         gpio-reserved-ranges = <0 4>;
+> >
+> > +       bt_en_default: bt_en_default {
+> > +               mux {
+> > +                       pins = "gpio172";
+> > +                       function = "gpio";
+> > +               };
+> > +
+> > +               config {
+> > +                       pins = "gpio172";
+> > +                       drive-strength = <2>;
+> > +                       bias-pull-down;
+> > +               };
+> > +       };
+> > +
+> > +       wlan_en_default: wlan_en_default {
+> > +               mux {
+> > +                       pins = "gpio169";
+> > +                       function = "gpio";
+> > +               };
+> > +
+> > +               config {
+> > +                       pins = "gpio169";
+> > +                       drive-strength = <16>;
+> > +                       output-high;
+> > +                       bias-pull-up;
+> > +               };
+> > +       };
+> > +
+>
+> Not related to PCIe
 
-	qcom,mpm-pin-map = <2 275>,     /* tsens0_tsens_upper_lower_int */
-			   <5 296>,     /* lpass_irq_out_sdc */
-			   <12 422>,    /* b3_lfps_rxterm_irq */
-			   <24 79>,     /* bi_px_lpi_1_aoss_mx */
-			   <86 183>,    /* mpm_wake,spmi_m */
-			   <90 260>,    /* eud_p0_dpse_int_mx */
-			   <91 260>;    /* eud_p0_dmse_int_mx */
+Hmm.. I have no strong personal opinion on this, so let's see what
+Bjorn thinks about the same.
+My reasoning for keeping it here was to just capture that we have
+'bt_en' and 'wlan_en' related tlmm details here, so that when you send
+out the reworked QCAxxxx mfd series (see [1]) later, I can easily plug
+it in for SA8155p ADP dts as well with the 'bt' and 'wlan' constructs.
 
+[1]. https://lore.kernel.org/lkml/20210621223141.1638189-2-dmitry.baryshkov@linaro.org/T/
 
-The downstream uses a DT bindings that specifies GIC hwirq number in
-client device nodes.  In that case, d->hwirq in the driver is GIC IRQ
-number, and the driver will need to query mapping table, find out the
-possible 2 MPM pins, and set them up.
+Regards.
+Bhupesh
 
-The patches I'm posting here use a different bindings that specifies MPM
-pin instead in client device nodes.  Thus the driver can simply get the
-MPM pin from d->hwirq, so that the whole look-up procedure can be saved.
-
-> 
-> > 
-> > It seems MPM_REG_POLARITY is only meant for level interrupts, since edge
-> > interrupts already have separate registers for rising and falling.
-> 
-> Then level interrupts must clear both the edge registers at all times.
-
-The downstream logic already covers that, right?  The edge register bits
-will be cleared as long as 'flowtype' is not EDGE.
-
-static void msm_mpm_set_type(struct irq_data *d,
-                                        unsigned int flowtype, bool is_mpmgic)
-{   
-        int mpm_pin[MAX_MPM_PIN_PER_IRQ] = {-1, -1};
-        unsigned long flags;  
-        int i = 0;
-        unsigned int index, mask;      
-        unsigned int reg = 0; 
-    
-        msm_get_mpm_pin(d, mpm_pin, is_mpmgic);
-        for (i = 0; i < MAX_MPM_PIN_PER_IRQ; i++) {
-                if (mpm_pin[i] < 0)            
-                        return;                        
-    
-                index = mpm_pin[i]/32;         
-                mask = mpm_pin[i]%32;          
-    
-                spin_lock_irqsave(&mpm_lock, flags);
-                reg = MPM_REG_RISING_EDGE;     
-                if (flowtype & IRQ_TYPE_EDGE_RISING)
-                        msm_mpm_program_set_type(1, reg, index, mask);
-                else          
-                        msm_mpm_program_set_type(0, reg, index, mask);
-
-                reg = MPM_REG_FALLING_EDGE;    
-                if (flowtype & IRQ_TYPE_EDGE_FALLING)
-                        msm_mpm_program_set_type(1, reg, index, mask);
-                else          
-                        msm_mpm_program_set_type(0, reg, index, mask);
-    
-                reg = MPM_REG_POLARITY;        
-                if (flowtype & IRQ_TYPE_LEVEL_HIGH)
-                        msm_mpm_program_set_type(1, reg, index, mask);
-                else
-                        msm_mpm_program_set_type(0, reg, index, mask);
-                spin_unlock_irqrestore(&mpm_lock, flags);
-        }
-}
-
-> > I will fix my broken code by respecting the downstream logic.
-> > 
-> > > As I asked before, we need some actual specs, or at least someone to
-> > > paraphrase it for us. There are a number of QC folks on Cc, and I
-> > > expect them to chime in and explain how MPM works here.
-> > > 
-> > > > 
-> > > > > - What initialises the MPM trigger types at boot time?
-> > > > 
-> > > > I dumped the vMPM region and it's all zeros.  My understanding is if
-> > > > vMPM needs any sort of initialization, it should be done by RPM firmware
-> > > > before APSS gets booting.
-> > > 
-> > > What about kexec? We can't rely on this memory region to always be
-> > > 0-initialised, nor do we know what that means.
-> > 
-> > We are not relying on it being 0-initialised, but being initialised by
-> > RPM with initial physical MPM register values.
-> 
-> Whatever. It simply cannot be trusted. If you kexec another kernel,
-> you need to be able to restore a sane state at probe time. This isn't
-> optional.
-
-Right, I will add an explicit initialization on vMPM region at probe
-time.
-
-Shawn
+> >         usb2phy_ac_en1_default: usb2phy_ac_en1_default {
+> >                 mux {
+> >                         pins = "gpio113";
+> > --
+> > 2.35.1
+> >
+>
+>
+> --
+> With best wishes
+> Dmitry
