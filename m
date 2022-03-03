@@ -2,48 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A72F4CB487
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 02:57:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 004DB4CB493
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 02:57:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231482AbiCCBw4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Mar 2022 20:52:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45644 "EHLO
+        id S231531AbiCCB5F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Mar 2022 20:57:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231603AbiCCBw4 (ORCPT
+        with ESMTP id S231553AbiCCB5D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 20:52:56 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2F45113D;
-        Wed,  2 Mar 2022 17:52:11 -0800 (PST)
+        Wed, 2 Mar 2022 20:57:03 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91BCE33E13;
+        Wed,  2 Mar 2022 17:56:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1646272332; x=1677808332;
+  t=1646272578; x=1677808578;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=icOWcKXZ8RLcuFhBmkMKn2v/xS0KeI078BnGvm3HMPU=;
-  b=ONLY1Dr7j0Oaty1DwenBEHiIGXyj7/RIT2yIPXuT1vK+94TBv1oceJcv
-   RnNC2UuHGRzvHXp6TpykYsc567nZjQ1wRmt4e06Xiumlc5VvxtaOBDe04
-   5gBlqBRcONdxs0veXALzYLABzc0Aj+N6fbYoK/Li5Q9xc61fKT/zlRuYK
-   0=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 02 Mar 2022 17:52:11 -0800
+  bh=3bzSRY1al0oYlmM52NOwKtS+br8ieRk+tPabImmuEUM=;
+  b=IUllmM4Q7zHnq/KDRBRxxnlRhUBz/KKesZNU8NjsBLJbto3qbJBAAwcw
+   rF7cFm/fhx8XDHFyCkNr3azs4EYeImGZYGbHohHo8BHhJ21XNKj9X4UH/
+   0XO/ZeF5b+IwgU8tcQ/d0I7625cCr30l4+zfAm5KIC9Cgc2YHlnkVAkZ5
+   w=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 02 Mar 2022 17:56:18 -0800
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2022 17:52:10 -0800
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2022 17:56:17 -0800
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Wed, 2 Mar 2022 17:52:09 -0800
+ 15.2.986.15; Wed, 2 Mar 2022 17:56:16 -0800
 Received: from [10.216.42.174] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Wed, 2 Mar 2022
- 17:52:03 -0800
-Message-ID: <6a1a4129-00af-4db2-6bd5-974784646e50@quicinc.com>
-Date:   Thu, 3 Mar 2022 07:21:58 +0530
+ 17:56:09 -0800
+Message-ID: <7e9fceed-6b29-d6a6-2035-fdf3fc70a773@quicinc.com>
+Date:   Thu, 3 Mar 2022 07:26:06 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.1
-Subject: Re: [PATCH v6 1/3] soundwire: qcom: Add compatible name for v1.6.0
+Subject: Re: [PATCH v6 3/3] dt-bindings: soundwire: qcom: Add bindings for
+ audio CSR reset control property
 Content-Language: en-US
 To:     Vinod Koul <vkoul@kernel.org>
 CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
@@ -58,11 +59,11 @@ CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
         <pierre-louis.bossart@linux.intel.com>, <sanyog.r.kale@intel.com>,
         Venkata Prasad Potturu <quic_potturu@quicinc.com>
 References: <1646224982-3361-1-git-send-email-quic_srivasam@quicinc.com>
- <1646224982-3361-2-git-send-email-quic_srivasam@quicinc.com>
- <Yh+Qs6P3pm2mHDjJ@matsya>
+ <1646224982-3361-4-git-send-email-quic_srivasam@quicinc.com>
+ <Yh+RwQS1Cyeuq4Jf@matsya>
 From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 Organization: Qualcomm
-In-Reply-To: <Yh+Qs6P3pm2mHDjJ@matsya>
+In-Reply-To: <Yh+RwQS1Cyeuq4Jf@matsya>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -79,32 +80,46 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 3/2/2022 9:13 PM, Vinod Koul wrote:
-Thanks for Your time Vinod!!!
+On 3/2/2022 9:18 PM, Vinod Koul wrote:
+Thanks for your time Vinod!!!
 > On 02-03-22, 18:13, Srinivasa Rao Mandadapu wrote:
->> Update compatible string and master data information in soundwire driver
->> to support v1.6.0 in lpass sc7280 based platform.
-> Where is the documentation of this new compatible
-The compatible name already exists in 
-Documentation/devicetree/bindings/soundwire/qcom,sdw.txt
+>> Update description for audio CSR reset control property, which is
+>> required for latest chipsets to allow software enabling in CGCR HCLK register.
+> too many acronyms pls explain!
+Okay. Will expand and re post the patch.
+>
 >> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 >> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 >> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
 >> ---
->>   drivers/soundwire/qcom.c | 1 +
->>   1 file changed, 1 insertion(+)
+>>   Documentation/devicetree/bindings/soundwire/qcom,sdw.txt | 12 ++++++++++++
+>>   1 file changed, 12 insertions(+)
 >>
->> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
->> index 5481341..fc41210 100644
->> --- a/drivers/soundwire/qcom.c
->> +++ b/drivers/soundwire/qcom.c
->> @@ -1348,6 +1348,7 @@ static int qcom_swrm_remove(struct platform_device *pdev)
->>   static const struct of_device_id qcom_swrm_of_match[] = {
->>   	{ .compatible = "qcom,soundwire-v1.3.0", .data = &swrm_v1_3_data },
->>   	{ .compatible = "qcom,soundwire-v1.5.1", .data = &swrm_v1_5_data },
->> +	{ .compatible = "qcom,soundwire-v1.6.0", .data = &swrm_v1_5_data },
->>   	{/* sentinel */},
->>   };
+>> diff --git a/Documentation/devicetree/bindings/soundwire/qcom,sdw.txt b/Documentation/devicetree/bindings/soundwire/qcom,sdw.txt
+>> index b93a2b3..84c8f54 100644
+>> --- a/Documentation/devicetree/bindings/soundwire/qcom,sdw.txt
+>> +++ b/Documentation/devicetree/bindings/soundwire/qcom,sdw.txt
+>> @@ -150,6 +150,18 @@ board specific bus parameters.
+>>   		    or applicable for the respective data port.
+>>   		    More info in MIPI Alliance SoundWire 1.0 Specifications.
 >>   
+>> +- reset:
+>> +	Usage: optional
+>> +	Value type: <prop-encoded-array>
+>> +	Definition: Should specify the SoundWire audio CSR reset controller interface,
+>> +		    which is required for SoundWire version 1.6.0 and above.
+>> +
+>> +- reset-names:
+>> +	Usage: optional
+>> +	Value type: <stringlist>
+>> +	Definition: should be "swr_audio_cgcr" for SoundWire audio CSR reset
+>> +		    controller interface.
+>> +
+> We should add these in example as well...
+Okay. Will add in Example.
+>
+>>   Note:
+>>   	More Information on detail of encoding of these fields can be
+>>   found in MIPI Alliance SoundWire 1.0 Specifications.
 >> -- 
 >> 2.7.4
