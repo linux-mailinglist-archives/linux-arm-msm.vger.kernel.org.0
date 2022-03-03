@@ -2,65 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A3FD4CB375
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 01:35:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 89D7C4CB342
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 01:34:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229713AbiCBXy2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Mar 2022 18:54:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57356 "EHLO
+        id S229942AbiCCAEV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Mar 2022 19:04:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229696AbiCBXy1 (ORCPT
+        with ESMTP id S229956AbiCCAET (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 18:54:27 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED7D22C110;
-        Wed,  2 Mar 2022 15:53:42 -0800 (PST)
+        Wed, 2 Mar 2022 19:04:19 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49D5FB7DF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 16:03:31 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id r13so7166196ejd.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 16:03:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1646265223; x=1677801223;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=m3u25xMhZVEc/MJyWhaLe99ts/+HPtLY71qMZMMqvqg=;
-  b=yuu1+5wcSPJJ/jZ7MBS31PsQdvc3WQC+Vef+Bv1zVq7z96vwVhTHr8z+
-   mSADl1BCZceJqPAXkPRFBj7nlLmiuMhmmwLVe/jhzpV5fi0Fv1OWFvbdn
-   y+lonvfeAN25GTiSw5M9QrP9LPVxCAdBsZPyr7GScSb0+P60WHrm5neyQ
-   k=;
-Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 02 Mar 2022 15:53:42 -0800
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2022 15:53:42 -0800
-Received: from [10.110.8.146] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Wed, 2 Mar 2022
- 15:53:41 -0800
-Message-ID: <ce19852f-8a69-3c98-cf0f-f78e37616fa6@quicinc.com>
-Date:   Wed, 2 Mar 2022 15:53:41 -0800
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=712s7UNzasxlj0dwsyjRXVd8K8/HcJjmlNagNGk3tak=;
+        b=ED9WDqjaIvY/PNhXMFZcJHPNR7h/tTUuq7WLYZ1ylEvNffoEcxKxybLHrav42m9Cnn
+         RVEvb/IBLv+PhIPTpr690rtY8c24fbS5byCNqvx9Uwev3vYjz8sAMB11j/c+q3crVNAP
+         sIZB594RAxB9rrrDgiPoWjkncYFw0ihals3NI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=712s7UNzasxlj0dwsyjRXVd8K8/HcJjmlNagNGk3tak=;
+        b=Bscg62U+1WC9EaKZIMpqFrmfc35iueX666DjAMpUAgPglDb47/IYg/oHKt1kjJu7hY
+         M/GonRLguQmW3UKaJP4mfMDceV0cOtSFBcE5MVupPxYrJ+X/7udfjiXGvE0yB+iKYdN2
+         VVZqD8rt3v5VyWTark2ILuyzPso0OXtGEdwF1arEJqv6Rsp70i6stqXTeQQNVp6urrJw
+         TvbJUK4kEPI5cQnHWXrnU2OBM8e4G/E/99z3xa7wFEiIelGn54F6e1Uh56QGdQb2zT2/
+         apiM5LPu446vXYAp6wf/570hM1imUluq1fAjW7HSUiXOz3YjjVc8eIJmtIxsVX8ZyDFW
+         1Y2A==
+X-Gm-Message-State: AOAM533FUhOZnCqHAZay73KJOMcRTcJnqRQeYwfYV/GNNTpt4FGHb2pI
+        XnwIprGpFd3aKFHWE1rCtYXcMQnW8nFZ1Seu
+X-Google-Smtp-Source: ABdhPJwN+W/cY5ZwH75+VNBhXjveBxYQvXDO92n+/J/w7q5m4zLokWpDpGE7zbXhhBENklM76ilFLA==
+X-Received: by 2002:a17:907:35cc:b0:6d0:9f3b:a6b1 with SMTP id ap12-20020a17090735cc00b006d09f3ba6b1mr25327227ejc.586.1646265809681;
+        Wed, 02 Mar 2022 16:03:29 -0800 (PST)
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com. [209.85.128.53])
+        by smtp.gmail.com with ESMTPSA id q7-20020a170906540700b006d5eca5c9cfsm124272ejo.191.2022.03.02.16.03.28
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Mar 2022 16:03:28 -0800 (PST)
+Received: by mail-wm1-f53.google.com with SMTP id y5so2201951wmi.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 16:03:28 -0800 (PST)
+X-Received: by 2002:a05:600c:190d:b0:381:6ea1:8cc with SMTP id
+ j13-20020a05600c190d00b003816ea108ccmr1737073wmq.118.1646265807989; Wed, 02
+ Mar 2022 16:03:27 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [PATCH 02/11] dt-bindings: Add binding for gunyah hypervisor
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        "Andy Gross" <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>
-References: <20220223233729.1571114-1-quic_eberman@quicinc.com>
- <20220223233729.1571114-3-quic_eberman@quicinc.com>
- <Yhk1j7riufsOFUsg@robh.at.kernel.org>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <Yhk1j7riufsOFUsg@robh.at.kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <20220218183116.2261770-1-bjorn.andersson@linaro.org> <20220218183116.2261770-2-bjorn.andersson@linaro.org>
+In-Reply-To: <20220218183116.2261770-2-bjorn.andersson@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 2 Mar 2022 16:03:15 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=UOLcu5xycimDsYTO1spwf=CMRPUSU3o0qRRC+a+zuRTQ@mail.gmail.com>
+Message-ID: <CAD=FV=UOLcu5xycimDsYTO1spwf=CMRPUSU3o0qRRC+a+zuRTQ@mail.gmail.com>
+Subject: Re: [PATCH v13 2/2] leds: Add driver for Qualcomm LPG
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Pavel Machek <pavel@ucw.cz>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jonathan Corbet <corbet@lwn.net>, linux-leds@vger.kernel.org,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+        linux-pwm <linux-pwm@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Luca Weiss <luca@z3ntu.xyz>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,335 +83,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
-On 2/25/2022 12:01 PM, Rob Herring wrote:
-> On Wed, Feb 23, 2022 at 03:37:20PM -0800, Elliot Berman wrote:
->> When Linux is booted as a guest under the Gunyah hypervisor, Gunyah
->> applies a devicetree overlay describing the virtual platform
->> configuration of the guest VM, such as the message queue capability IDs
->> for communicating with the Resource Manager. Add the DT bindings that
->> Gunyah adheres for the hypervisor node and message queues.
->>
->> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
->> ---
->>   .../bindings/gunyah/message-queue.yml         | 100 ++++++++++++++
->>   .../bindings/gunyah/qcom,hypervisor.yml       | 122 ++++++++++++++++++
-> 
-> How did testing these files work? It didn't because .yml files are
-> ignored. Get 'make dt_binding_check' actually working and resubmit.
-> 
-I'll double check this, thanks!
+On Fri, Feb 18, 2022 at 10:29 AM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> +static void lpg_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
+> +                             struct pwm_state *state)
+> +{
+> +       struct lpg *lpg = container_of(chip, struct lpg, pwm);
+> +       struct lpg_channel *chan = &lpg->channels[pwm->hwpwm];
+> +       unsigned int pre_div;
+> +       unsigned int refclk;
+> +       unsigned int val;
+> +       unsigned int m;
+> +       u16 pwm_value;
+> +       int ret;
+> +
+> +       ret = regmap_read(lpg->map, chan->base + LPG_SIZE_CLK_REG, &val);
+> +       if (ret)
+> +               return;
+> +
+> +       refclk = lpg_clk_rates[(val & PWM_CLK_SELECT_MASK) - 1];
 
-> No, you don't get your own directory.
-> 
-Do you have a suggestion for an alternate directory? I'm not sure if 
-misc/ makes sense here?
+I don't know why I didn't notice it before (maybe I was accidentally
+not building with KASAN?), but in my recent boots I'm getting a KASAN
+error pointing at the line above.
 
-> In general, DT is for undiscoverable hardware that we are stuck with
-> because it was not made discoverable. As this is not h/w and you control
-> each side of the interface, make it discoverable and don't use DT for
-> your discovery mechanism.
-> 
-Gunyah follows a micro-kernel architecture. The EL2 hypervisor doesn't 
-keep the necessary context to share initial message queue information in 
-order to communicate with the resource manager VM, and it's considered 
-undiscoverable in this regard.
+Sure enough, the above looks a bit on the unsafe side. If (val & 0x3)
+is 0 then the "-1" will not be so wonderful. I put some printouts and,
+indeed, it's not so great.
 
-This feedback is good for the other properties, though. I'll improve the 
-discoverability for other properties and drop the bindings for them.
+[    7.201635] DOUG: val is 0x00000004
 
-In summary, I can remove all of the properties and subnodes from 
-/hypervisor node, except for /hypervisor/resource-manager-rpc. For that 
-node, I only need to keep a few fields (reg and interrupts) because that 
-information isn't discoverable.
+Amazingly my `refclk` ends up as 0 and I guess somehow this doesn't
+cause a divide by 0.
 
-> Incomplete review follows...
-> 
->>   MAINTAINERS                                   |   1 +
->>   3 files changed, 223 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/gunyah/message-queue.yml
->>   create mode 100644 Documentation/devicetree/bindings/gunyah/qcom,hypervisor.yml
->>
->> diff --git a/Documentation/devicetree/bindings/gunyah/message-queue.yml b/Documentation/devicetree/bindings/gunyah/message-queue.yml
->> new file mode 100644
->> index 000000000000..1a96d3de2a19
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/gunyah/message-queue.yml
->> @@ -0,0 +1,100 @@
->> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/gunyah/qcom,hypervisor.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Gunyah message queue
->> +
->> +maintainers:
->> +   - Murali Nalajala <quic_mnalajal@quicinc.com>
->> +   - Elliot Berman <quic_eberman@quicinc.com>
->> +
->> +properties:
->> +  compatible:
->> +    items:
->> +      - const: qcom,gunyah-message-queue
->> +      - const: qcom,gunyah-capability
-> 
-> I'm not following how capability is a fallback to message-queue.
-> 
 
-This node shares common properties with other Gunyah capabilities. Linux 
-drivers don't need to make use of this compatible, but Gunyah needs to 
-make it present for other operating systems. In that case, should I drop 
-"gunyah-capability" from the bindings?
-
->> +  peer:
->> +    description: VMID of the VM on the other end of message queue
->> +    $ref: /schemas/types.yaml#/definitions/uint32
->> +  allOf:
-> 
-> Check your indentation.
-> 
->> +    - if:
->> +        anyOf:
->> +          - properties:
->> +              qcom,is-sender: true
->> +          - properties:
->> +              qcom,is-full-duplex: true
->> +      then:
->> +        properties:
->> +          qcom,tx-message-size:
->> +            description: Maximum size in bytes of a message which can be sent by this queue
->> +            $ref: /schemas/types.yaml#/definitions/int32
->> +          qcom,tx-queue-depth:
->> +            description: Depth of transmit queue for messages sent by this queue
->> +            $ref: /schemas/types.yaml#/definitions/int32
->> +    - if:
->> +        anyOf:
->> +          - properties:
->> +              qcom,is-receiver: true
->> +          - properties:
->> +              qcom,is-full-duplex: true
->> +      then:
->> +        properties:
->> +          qcom,rx-message-size:
->> +            description: Maximum size in bytes of a message which can be received by this queue
->> +            $ref: /schemas/types.yaml#/definitions/int32
->> +          qcom,rx-queue-depth:
->> +            description: Depth of transmit queue for messages received by this queue
->> +            $ref: /schemas/types.yaml#/definitions/int32
->> +    - if:
->> +        anyOf:
->> +          - properties:
->> +              qcom,is-receiver: true
->> +          - properties:
->> +              qcom,is-sender: true
->> +      then:
->> +        properties:
->> +          reg:
->> +            description: Hypervisor capability ID of the message queue
->> +            $ref: /schemas/types.yaml#/definitions/uint32
->> +            minItems: 1
->> +            maxItems: 1
->> +          interrupts:
->> +            minItems: 1
->> +            maxItems: 1
->> +    - if:
->> +        properties:
->> +          qcom,is-full-duplex: true
->> +      then:
->> +        properties:
->> +          reg:
->> +            description:
->> +              Hypervisor capability IDs of the message queue
->> +              The first is tx side, the second is rx side
->> +            $ref: /schemas/types.yaml#/definitions/uint32
->> +            minItems: 2
->> +            maxItems: 2
->> +          interrupts:
->> +            description: The first is tx interrupt, second is rx interrupt
->> +            minItems: 2
->> +            maxItems: 2
->> +  required:
->> +    - compatible
->> +    - reg
->> +    - interrupts
->> +
->> +
->> +examples:
->> +  - |
->> +    display-msgq-pair@abbf0da3c3c965cc {
->> +      compatible = "qcom,gunyah-message-queue", "qcom,gunyah-capability";
->> +      interrupts = <GIC_SPI 3 IRQ_TYPE_EDGE_RISING>, /* TX full IRQ */
->> +                    <GIC_SPI 4 IRQ_TYPE_EDGE_RISING>; /* RX empty IRQ */
->> +      reg = <0x00000000 0x00000000>, <0x00000000 0x00000001>; /* TX, RX cap ids */
->> +      qcom,is-full-duplex;
->> +      qcom,tx-queue-depth = <8>;
->> +      qcom,tx-message-size = <0xf0>;
->> +      qcom,rx-queue-depth = <8>;
->> +      qcom,rx-message-size = <0xf0>;
->> +    };
->> \ No newline at end of file
-> 
-> Fix this.
-> 
->> diff --git a/Documentation/devicetree/bindings/gunyah/qcom,hypervisor.yml b/Documentation/devicetree/bindings/gunyah/qcom,hypervisor.yml
->> new file mode 100644
->> index 000000000000..f637d51c52f0
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/gunyah/qcom,hypervisor.yml
->> @@ -0,0 +1,122 @@
->> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/gunyah/qcom,hypervisor.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Hypervisor node to define virtual devices and other services provided by a Gunyah hypervisor
->> +       to this virtual machine.
->> +
->> +maintainers:
->> +   - Murali Nalajala <quic_mnalajal@quicinc.com>
->> +   - Elliot Berman <quic_eberman@quicinc.com>
->> +
->> +description: |+
->> +  On systems which support devicetree, Gunyah generates and overlays a deviceetree overlay which
->> +  describes the basic configuration of the hypervisor. Virtual machines use this information for
->> +  initial discovery that they are running as a Gunyah guest VM.
->> +  See also: https://github.com/quic/gunyah-resource-manager/blob/develop/src/vm_creation/dto_construct.c
->> +
->> +properties:
->> +  compatible:
->> +    oneOf:
->> +      - items:
->> +          - const: qcom,gunyah-hypervisor-1.0
->> +          - const: qcom,gunyah-hypervisor
->> +
->> +  "#address-cells":
->> +    description: Number of cells needed to represent 64-bit capability IDs.
->> +    const: 2
->> +  "#size-cells":
->> +    description: must be 0, because capability IDs are not memory address
->> +                  ranges and do not have a size.
->> +    const: 0
->> +
->> +  qcom,gunyah-vm:
->> +    type: object
->> +    description:
->> +      The VM Identification is a virtual node that conveys to the VM information
->> +      about this virtual machine in the context of the hypervisor-based system
->> +    properties:
->> +      compatible:
->> +        oneOf:
->> +          - items:
->> +            - const: qcom,gunyah-vm-id-1.0
->> +            - const: qcom,gunyah-vm-id
->> +      qcom,vendor:
->> +        $ref: /schemas/types.yaml#/definitions/string
->> +        description: Vendor of the Virtual Machine, e.g. Qualcomm
-> 
-> Doesn't the compatible say this already?
-> 
-
-We'll drop "qcom," vendor prefix.
-
->> +      qcom,vmid:
->> +        $ref: /schemas/types.yaml#/definitions/uint32
->> +        description: contains the VMID of this VM as a 32-bit value
->> +      qcom,owner-vmid:
->> +        $ref: /schemas/types.yaml#/definitions/uint32
->> +        description: Contains the hypervisor VMID of the VM's owner. The owner
->> +                     is the VM that allocated and created the VM. VMs directly
->> +                     managed by the resource manager, such as the primary VM do
->> +                     not have an owner.
->> +    required:
->> +      - compatible
->> +      - qcom,vmid
->> +      - qcom,owner-vmid
->> +
->> +patternProperties:
->> +  "^qcom,resource-manager-rpc(@.*)?":
-> 
-> We don't use vendor prefixes in node names. QCom really liked to though.
-> 
-
-We'll drop "qcom," vendor prefix.
-
->> +    type: object
->> +    description:
->> +      Resource Manager node which is required to communicate to Resource
->> +      Manager VM using Gunyah Message Queues.
->> +    allOf: "message-queue.yml#"
-> 
-> Not valid json-schema...
-> 
-Will double check this in next patch.
-
->> +
->> +    properties:
->> +      compatible:
->> +        oneOf:
->> +          items:
->> +            - const: qcom,resource-manager-1-0
->> +            - const: qcom,resource-manager
->> +      qcom,console-dev:
->> +        $ref: /schemas/types.yaml#/definitions/flag
->> +        description: if set, the resource-manger will accept console logs from the VM
->> +      qcom,free-irq-start:
->> +        $ref: /schemas/types.yaml#/definitions/uint32
->> +        description: Set on ARM systems which use a GIC. First VIRQ number which is free
->> +                     for virtual interrupt use.
->> +    required:
->> +      - qcom,is-full-duplex
->> +
->> +
->> +required:
->> +- compatible
->> +- "#address-cells"
->> +- "#size-cells"
->> +
->> +examples:
->> +  - |
->> +    hypervisor {
->> +        #address-cells = <2>;
->> +        #size-cells = <0>;
->> +        compatible = "qcom,gunyah-hypervisor-1.0", "qcom,gunyah-hypervisor", "simple-bus";
->> +        name = "hypervisor";
->> +
->> +        qcom,gunyah-vm {
->> +            compatible = "qcom,gunyah-vm-id-1.0", "qcom,gunyah-vm-id";
->> +            qcom,vendor = "Qualcomm Technologies, Inc.";
->> +            qcom,vmid = <45>;
->> +            qcom,owner-vmid = <3>;
->> +        };
->> +
->> +        qcom,resource-manager-rpc@0000000000000001 {
->> +            compatible = "qcom,resource-manager-1-0", "qcom,resource-manager",
->> +                          "qcom,gunyah-message-queue", "qcom,gunyah-capability";
->> +            interrupts = <GIC_SPI 3 IRQ_TYPE_EDGE_RISING>, /* TX full IRQ */
->> +                         <GIC_SPI 4 IRQ_TYPE_EDGE_RISING>; /* RX empty IRQ */
->> +            reg = <0x00000000 0x00000000>, <0x00000000 0x00000001>;
->> +                  /* TX, RX cap ids */
->> +            qcom,is-full-duplex;
->> +            qcom,free-irq-start = <0>;
->> +            qcom,tx-queue-depth = <8>;
->> +            qcom,tx-message-size = <0xf0>;
->> +            qcom,rx-queue-depth = <8>;
->> +            qcom,rx-message-size = <0xf0>;
->> +        };
->> +    };
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index bed175adc4c3..6a918f653eac 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -8400,6 +8400,7 @@ M:	Elliot Berman <quic_eberman@quicinc.com>
->>   M:	Murali Nalajala <quic_mnalajal@quicinc.com>
->>   L:	linux-arm-msm@vger.kernel.org
->>   S:	Maintained
->> +F:	Documentation/devicetree/bindings/gunyah/
->>   F:	Documentation/virt/gunyah/
->>   
->>   H8/300 ARCHITECTURE
->> -- 
->> 2.25.1
->>
->>
+-Doug
