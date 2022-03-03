@@ -2,69 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6936F4CC807
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 22:29:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A4534CC836
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 22:41:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231521AbiCCV3u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Mar 2022 16:29:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50208 "EHLO
+        id S236595AbiCCVl7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Mar 2022 16:41:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbiCCV3t (ORCPT
+        with ESMTP id S236588AbiCCVl6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Mar 2022 16:29:49 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ED78145E2D
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 13:29:04 -0800 (PST)
+        Thu, 3 Mar 2022 16:41:58 -0500
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 034BF583AD
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 13:41:12 -0800 (PST)
+Received: by mail-oo1-xc35.google.com with SMTP id w3-20020a4ac183000000b0031d806bbd7eso7281648oop.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Mar 2022 13:41:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1646342944; x=1677878944;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=Ckxo5KMFl5D59oj/82MB4tIlU7merfl+4EsTXJtn2dk=;
-  b=PAMd/qcQA45B1ldzLbFUwN3oDaltgxzYsLKy2LqWfTts9v07wImMHuGk
-   yTnohnqH9hlTU1f8SnP6mejrPHsGfh0O4cUpQF/qPtsW7CkTp1/jAXIIj
-   e+DoF2bUHqYkmZs6tqm/OgeHPEYtAb1BiLiyS/eD149nbGQM2gwDK1+kB
-   A=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 03 Mar 2022 13:29:03 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2022 13:29:03 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Thu, 3 Mar 2022 13:29:02 -0800
-Received: from [10.110.60.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Thu, 3 Mar 2022
- 13:29:02 -0800
-Message-ID: <5a66e759-260a-a742-cb71-a523f7711682@quicinc.com>
-Date:   Thu, 3 Mar 2022 13:29:01 -0800
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TtDQVLQ7nb5Bmd2MMrd+NyabJBjG4ePHT9sF5OIJ/t8=;
+        b=qo/i5i2K3xta5aEm817tE2oCay+rfJV+rjQTJyABc2sTIj69m4v7d3LLEVT5tj6/m5
+         DBqLOsFDX1c419do3v63Y5HHwNQc1gxK7UcozkG8PGGTnxSMpsCZTPdDdjyZVCk2f7gp
+         +SBZGIj637ve1djD/F8APngCkWqb9MuPfqVPKiDdSBiFDitsmtpTdcZsi7624LWakVSD
+         XRq7yz3S50mRk9LqZviPIMbHT+MnIINXIUm9kYr77pqQQ+LtkV48E3xZIN+CZvsfORkx
+         /ChBniO1TEbNdqdhgBYgAma7N1F3fGaiK/Xcqk/ZbPHelEZSaoyB2TLGTB55qeAgX8uu
+         4hbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TtDQVLQ7nb5Bmd2MMrd+NyabJBjG4ePHT9sF5OIJ/t8=;
+        b=p1vFysHsS34k/kewbLA+TrRf+vnkfBURYqXpGVMSLh5IVlxHU4BgkNiauY8cy0wpgd
+         uyKDbn+aaOYY8UNj481JDxGPdSk3qZiS22IHWsNno4lyyQ4Oh0m/lUooYJgVlkaNTarA
+         3FF6RSvwxLxt4a0APgSvDGxyYyiZT0JvphCDTxKMK3kS/93YWSONiGpfs5aAUz4VG4MW
+         66JxgPzmDcmB5cMkgBz8/5zlLkAqBBwPj/EodiQbTBsk5iQpk72c0XOUMIlqLkmt8NmB
+         JuwOhnmFQ524YCejcL1qLmUi3o5anPP4gEubyRGt6sfwBn5mxC+1svs+2LE0BcYlN/ce
+         Ofag==
+X-Gm-Message-State: AOAM532zKGYaXYY4Q4W9UUVTFJe4mQyA8/V9B5UTW2f3aQwWHsqyG7UH
+        ok5/0bxk6UEXtNRM4+EYWbSG4Q==
+X-Google-Smtp-Source: ABdhPJwcxGz4gjhhn2rFVtt5t92g8JnslTbsLNkoGF2bKWGqaAt9jKJPR5dqIlEJa7kXMGTomUYLKw==
+X-Received: by 2002:a4a:a801:0:b0:31d:3bf7:992b with SMTP id o1-20020a4aa801000000b0031d3bf7992bmr17098255oom.84.1646343670940;
+        Thu, 03 Mar 2022 13:41:10 -0800 (PST)
+Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id 42-20020a9d0d2d000000b005a3c7373d57sm1452955oti.52.2022.03.03.13.41.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Mar 2022 13:41:10 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Pavel Machek <pavel@ucw.cz>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-pwm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v14 1/2] dt-bindings: leds: Add Qualcomm Light Pulse Generator binding
+Date:   Thu,  3 Mar 2022 13:42:59 -0800
+Message-Id: <20220303214300.59468-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [PATCH 0/4] drm/msm/dpu: clearly document INTF_DP vs INTF_EDP
- difference
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20220222062246.242577-1-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220222062246.242577-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,56 +75,204 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This adds the binding document describing the three hardware blocks
+related to the Light Pulse Generator found in a wide range of Qualcomm
+PMICs.
 
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
+---
 
-On 2/21/2022 10:22 PM, Dmitry Baryshkov wrote:
-> Recent dicussion on the mailing list [1], [2] outlined a need to document
-> which intf type is used for DP and which one is used for eDP interfaces.
-> 
-> This series implements my proposal [3]:
-> 
-> - Keep INTF_EDP reserved for 8x74/8x84
-> - Use INTF_DP for all contemporary DP and eDP ports
-> - Documet this in dpu_hw_mdss.h
-> - Remove INTF_EDP usage in dpu1 driver.
-> 
-> Main reasons behind this proposal:
-> - It's not always possible to separate eDP and DP. For example INTF_5 on
->    sc7280 is connected to combo eDP/DP PHY.
-> - Using INTF_EDP would require us to split too many pieces, ending up
->    with a singnificant amount of code duplication...
-> - ... for nothing. From the DPU point of view there is no difference
->    between DP and eDP interfaces as found on current SoC generations.
-> 
-> [1]: https://lore.kernel.org/linux-arm-msm/0dac8ffa-89a6-d972-bdc1-3f7755c5169d@linaro.org/
-> [2]: https://lore.kernel.org/linux-arm-msm/be397e2e-05ab-5c18-8e2d-16c443f0a6d1@quicinc.com/
-> [3]: https://lore.kernel.org/linux-arm-msm/e2fab93e-82a6-4837-4ee5-ee1b16caa84d@linaro.org/
-> 
+Changes since v13:
+- None
 
-I have notified the team about the change and we have discussed the 
-potential implications of this with both upstream and downstream drivers 
-in mind. Overall, even though some members wanted to retain INTF_eDP for 
-clarity, some members were fine removing its usage.
+Changes since v12:
+- None
 
-Going with the majority and I have checked all the changes in this series,
+ .../bindings/leds/leds-qcom-lpg.yaml          | 173 ++++++++++++++++++
+ 1 file changed, 173 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
 
-Hence:
+diff --git a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+new file mode 100644
+index 000000000000..336bd8e10efd
+--- /dev/null
++++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+@@ -0,0 +1,173 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/leds/leds-qcom-lpg.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Light Pulse Generator
++
++maintainers:
++  - Bjorn Andersson <bjorn.andersson@linaro.org>
++
++description: >
++  The Qualcomm Light Pulse Generator consists of three different hardware blocks;
++  a ramp generator with lookup table, the light pulse generator and a three
++  channel current sink. These blocks are found in a wide range of Qualcomm PMICs.
++
++properties:
++  compatible:
++    enum:
++      - qcom,pm8150b-lpg
++      - qcom,pm8150l-lpg
++      - qcom,pm8916-pwm
++      - qcom,pm8941-lpg
++      - qcom,pm8994-lpg
++      - qcom,pmc8180c-lpg
++      - qcom,pmi8994-lpg
++      - qcom,pmi8998-lpg
++
++  "#pwm-cells":
++    const: 2
++
++  "#address-cells":
++    const: 1
++
++  "#size-cells":
++    const: 0
++
++  qcom,power-source:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description:
++      power-source used to drive the output, as defined in the datasheet.
++      Should be specified if the TRILED block is present
++    enum: [0, 1, 3]
++
++  qcom,dtest:
++    $ref: /schemas/types.yaml#/definitions/uint32-matrix
++    description: >
++      A list of integer pairs, where each pair represent the dtest line the
++      particular channel should be connected to and the flags denoting how the
++      value should be outputed, as defined in the datasheet. The number of
++      pairs should be the same as the number of channels.
++    items:
++      items:
++        - description: dtest line to attach
++        - description: flags for the attachment
++
++  multi-led:
++    type: object
++    $ref: leds-class-multicolor.yaml#
++    properties:
++      "#address-cells":
++        const: 1
++
++      "#size-cells":
++        const: 0
++
++    patternProperties:
++      "^led@[0-9a-f]$":
++        type: object
++        $ref: common.yaml#
++
++patternProperties:
++  "^led@[0-9a-f]$":
++    type: object
++    $ref: common.yaml#
++
++    properties:
++      reg: true
++
++    required:
++      - reg
++
++required:
++  - compatible
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/leds/common.h>
++
++    led-controller {
++      compatible = "qcom,pmi8994-lpg";
++
++      #address-cells = <1>;
++      #size-cells = <0>;
++
++      qcom,power-source = <1>;
++
++      qcom,dtest = <0 0>,
++                   <0 0>,
++                   <0 0>,
++                   <4 1>;
++
++      led@1 {
++        reg = <1>;
++        color = <LED_COLOR_ID_GREEN>;
++        function = LED_FUNCTION_INDICATOR;
++        function-enumerator = <1>;
++      };
++
++      led@2 {
++        reg = <2>;
++        color = <LED_COLOR_ID_GREEN>;
++        function = LED_FUNCTION_INDICATOR;
++        function-enumerator = <0>;
++        default-state = "on";
++      };
++
++      led@3 {
++        reg = <3>;
++        color = <LED_COLOR_ID_GREEN>;
++        function = LED_FUNCTION_INDICATOR;
++        function-enumerator = <2>;
++      };
++
++      led@4 {
++        reg = <4>;
++        color = <LED_COLOR_ID_GREEN>;
++        function = LED_FUNCTION_INDICATOR;
++        function-enumerator = <3>;
++      };
++    };
++  - |
++    #include <dt-bindings/leds/common.h>
++
++    led-controller {
++      compatible = "qcom,pmi8994-lpg";
++
++      #address-cells = <1>;
++      #size-cells = <0>;
++
++      qcom,power-source = <1>;
++
++      multi-led {
++        color = <LED_COLOR_ID_RGB>;
++        function = LED_FUNCTION_STATUS;
++
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        led@1 {
++          reg = <1>;
++          color = <LED_COLOR_ID_RED>;
++        };
++
++        led@2 {
++          reg = <2>;
++          color = <LED_COLOR_ID_GREEN>;
++        };
++
++        led@3 {
++          reg = <3>;
++          color = <LED_COLOR_ID_BLUE>;
++        };
++      };
++    };
++  - |
++    pwm-controller {
++      compatible = "qcom,pm8916-pwm";
++      #pwm-cells = <2>;
++    };
++...
+-- 
+2.33.1
 
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-
-For the entire series.
-
-
-
-> Dmitry Baryshkov (4):
->    drm/msm/dpu: document INTF_EDP/INTF_DP difference
->    drm/msm/dpu: drop INTF_TYPE_MAX symbol
->    drm/msm/dpu: drop obsolete INTF_EDP comment
->    drm/msm/dpu: drop INTF_EDP from interface type conditions
-> 
->   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   | 14 +-------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |  2 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |  9 ++++++++-
->   3 files changed, 10 insertions(+), 15 deletions(-)
-> 
