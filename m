@@ -2,64 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0F544CC913
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 23:34:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A5D74CC925
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 23:36:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233137AbiCCWeo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Mar 2022 17:34:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60402 "EHLO
+        id S237006AbiCCWhK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Mar 2022 17:37:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231748AbiCCWen (ORCPT
+        with ESMTP id S236959AbiCCWhJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Mar 2022 17:34:43 -0500
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E52313D921
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 14:33:57 -0800 (PST)
-Received: by mail-oi1-x235.google.com with SMTP id x193so6225975oix.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Mar 2022 14:33:57 -0800 (PST)
+        Thu, 3 Mar 2022 17:37:09 -0500
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81416150416
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 14:36:18 -0800 (PST)
+Received: by mail-oi1-x230.google.com with SMTP id s5so6178413oic.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Mar 2022 14:36:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=lF0Dtfm5tuXnG8vTMCkjXhHNJyKSmMyJEFbODIk9Ay8=;
-        b=hP54rWK9695Xv6Ax4gxz/Z0LyxkVeLS1cVuj+Db7e++0rVJLFrPRykRPG8sBya9xWB
-         QVDQc9kZGQ/hBdMAZZcyqteJ2EWRSG2oiUOkVL0f38FyPYqTqDFbIIgwvcY6TjCpfmyT
-         2Y3vLXbzh8+57i5lLQyGXbNpXCHzl1FVrx9oo=
+        bh=+IxH+v4af7VzrKdvTOvKB5ZMTKZ+t8ui6EDkfQqlJ0s=;
+        b=PJEWLzqqseHPPRxvwZuM6uOTCWfL7xJ4o5KBWyKiuf78oArICZi8oBY5JN41+D6+U4
+         1V9U45UN69k8kRFLyAd9as/9FWGo1nF+iiwSB/r4fL96T8nXvfeocBGPnibJfvM2El6W
+         4MoTqRyW2rvnGjSsyvxThTWme7V1vFH2sns3U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=lF0Dtfm5tuXnG8vTMCkjXhHNJyKSmMyJEFbODIk9Ay8=;
-        b=4LoPW7BFnTt2six9dkkeBhV+sZT4yUPXPT6Cai+rs7LwUW2u5T0/oW8rdVTmFQjyMm
-         xmckGtIlX9FkNdf5BkqzxN3ybhuF2Zo8lw5PicPbaNcwrz0H6T7kFJ02g7ZDo29b+dpb
-         o4nlrfGvAzHUhCfm4gMwq28PyUWVc7xp+23KxxnTX5oqxiQWus450vOQf2LNNNLj5ORR
-         wmVbYcESNL+wK03ABhwJ9/uujF+WqI7GJC2+uIKNU1EqG4CfKI4HnqjnhakuUYTwx/XQ
-         QzAJgXMwI7IrSSA1O/BY1RQRIoaUdXESFbg2x0UqR0w1tlErUZEaK0dyz/OPtVOgaV/9
-         lfdw==
-X-Gm-Message-State: AOAM532Huucda3LEQOrTViKfFUaCdN/2iQrI7xTh/IN0qe09DKu9IpEo
-        E1ZACulAaLWjo1KRKGK1AUibbGVD2sjJDHRsYHFoWw==
-X-Google-Smtp-Source: ABdhPJzgOEQ4DnlS7qHir2txR1YyHGHvpGpOujLYaX4vwlMWe2204uMruSrw8Lxh9lr5F/i7YbKW6Tr1Gwe+2d24nNM=
-X-Received: by 2002:a05:6808:20a7:b0:2d4:d2f1:9edc with SMTP id
- s39-20020a05680820a700b002d4d2f19edcmr6674548oiw.64.1646346836818; Thu, 03
- Mar 2022 14:33:56 -0800 (PST)
+        bh=+IxH+v4af7VzrKdvTOvKB5ZMTKZ+t8ui6EDkfQqlJ0s=;
+        b=ObuAv+nyyvOtTGzwzGnHJK/B2eBcCCa1wi7EHEAuyNQTA7hbJ4FRWTCm3VKTuG6g2N
+         xChqf5GMqlaghkQ390m43lQ0altyRqZ6Sarg9yADG4q5pmMoJkgU1bKALnicKUat2eB3
+         0FJ+zS29dcX8d5KSOSQ+hpAe51r0BCNhNMt69yOWTbkeKPUMuhnM3TlsLGz7eenFgRZ/
+         fH/TD4LuUX0OcY3PRLzDS6KQTopbXYutrnci3dKTJ3STTbnpINSFvoOdxn7gErDGKUuR
+         Is4tV+d7N8eCvctKMBzckdyhyX9v3q15YqG9h5vQcTHQCsCpmzFRXEcbhgdZu7GFcB8O
+         2jYA==
+X-Gm-Message-State: AOAM531aGpJtQ+yEJ6IGF7qYSmy8Vw2umm2R3+VFfDqxDv9HOfdTbRaQ
+        XWCD1Nbu5Tt6ooU4xC4IuFSu7b4LAsex9vqJTvX6Gg==
+X-Google-Smtp-Source: ABdhPJwzE9l5wF1WBh0ZzcfsjbubuW7clbOvgM6f0zoFQo0kH1jqpjN6+RqUObMiyusKhqmjRdcZskOhtJ9BSyNvUUE=
+X-Received: by 2002:aca:3346:0:b0:2d9:91f9:a7f2 with SMTP id
+ z67-20020aca3346000000b002d991f9a7f2mr922767oiz.32.1646346977864; Thu, 03 Mar
+ 2022 14:36:17 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 3 Mar 2022 14:33:56 -0800
+ HTTPREST; Thu, 3 Mar 2022 14:36:17 -0800
 MIME-Version: 1.0
-In-Reply-To: <20220217055529.499829-6-dmitry.baryshkov@linaro.org>
-References: <20220217055529.499829-1-dmitry.baryshkov@linaro.org> <20220217055529.499829-6-dmitry.baryshkov@linaro.org>
+In-Reply-To: <CAF6AEGuaYEC2rYxi1uU0S_Hkx-DbjT6wO4zz6sKSRON=eX10ng@mail.gmail.com>
+References: <20220303194758.710358-1-robdclark@gmail.com> <20220303194758.710358-4-robdclark@gmail.com>
+ <CAE-0n532ZX=qXTBKSFyRYAmkqFN7oqKyPvJHBuVMmr2eHY+O4A@mail.gmail.com>
+ <CAF6AEGstzPaLFf-9z9Gf+S4G8n6twxExLvKaqLZk9ML2tUWiLw@mail.gmail.com> <CAF6AEGuaYEC2rYxi1uU0S_Hkx-DbjT6wO4zz6sKSRON=eX10ng@mail.gmail.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Thu, 3 Mar 2022 14:33:56 -0800
-Message-ID: <CAE-0n53fxr=-jT2LvbNsyTMqT4B9t9q=OzzmdMSdf7U0QJLNuw@mail.gmail.com>
-Subject: Re: [PATCH v5 5/5] drm/msm/dp: rewrite dss_module_power to use bulk
- clock functions
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
+Date:   Thu, 3 Mar 2022 14:36:17 -0800
+Message-ID: <CAE-0n52xXJG3kohetn3sDBmsBpMqL5zvS2yRzP+sPdq5+7vHgQ@mail.gmail.com>
+Subject: Re: [PATCH 3/4] drm/msm: Add SYSPROF param
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Emma Anholt <emma@anholt.net>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -71,11 +80,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-02-16 21:55:29)
-> In order to simplify DP code, drop hand-coded loops over clock arrays,
-> replacing them with clk_bulk_* functions.
+Quoting Rob Clark (2022-03-03 13:47:14)
+> On Thu, Mar 3, 2022 at 1:17 PM Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > On Thu, Mar 3, 2022 at 12:47 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> > >
+> > > Quoting Rob Clark (2022-03-03 11:46:47)
+> > > > +
+> > > > +       /* then apply new value: */
+> > >
+> > > It would be safer to swap this. Otherwise a set when the values are at
+> > > "1" would drop to "zero" here and potentially trigger some glitch,
+> > > whereas incrementing one more time and then dropping the previous state
+> > > would avoid that short blip.
+> > >
+> > > > +       switch (sysprof) {
+> > > > +       default:
+> > > > +               return -EINVAL;
+> > >
+> > > This will become more complicated though.
+> >
+> > Right, that is why I took the "unwind first and then re-apply"
+> > approach.. in practice I expect userspace to set the value before it
+> > starts sampling counter values, so I wasn't too concerned about this
+> > racing with a submit and clearing the counters.  (Plus any glitch if
+> > userspace did decide to change it dynamically would just be transient
+> > and not really a big deal.)
 >
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+> Actually I could just swap the two switch's.. the result would be that
+> an EINVAL would not change the state instead of dropping the state to
+> zero.  Maybe that is better anyways
+>
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Yeah it isn't clear to me what should happen if the new state is
+invalid. Outright rejection is probably better than replacing the
+previous state with an invalid state.
