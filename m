@@ -2,88 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 373BA4CC755
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 21:51:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B4BDF4CC7A4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 22:11:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232915AbiCCUvL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Mar 2022 15:51:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44704 "EHLO
+        id S235752AbiCCVMC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Mar 2022 16:12:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233194AbiCCUvK (ORCPT
+        with ESMTP id S233713AbiCCVMB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Mar 2022 15:51:10 -0500
-Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2880E483B8
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 12:50:24 -0800 (PST)
-Received: by mail-oo1-xc2d.google.com with SMTP id n5-20020a4a9545000000b0031d45a442feso7165565ooi.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Mar 2022 12:50:24 -0800 (PST)
+        Thu, 3 Mar 2022 16:12:01 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 961021DA60;
+        Thu,  3 Mar 2022 13:11:15 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id i8so9698472wrr.8;
+        Thu, 03 Mar 2022 13:11:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=7M1ntwxDhuoK2u8Gxsg3fhUXZOBgwWtMW+WZSo9Nykc=;
-        b=Qo6r9Sefs9VivUXtTUaG7uOUjdb3DTgs39j4oB473K02P7i0qmM2PTBmzwa/2J9wtl
-         +lnS7XKbwbba1zZFOn16T+Awcq2DAjRJdwUGAqRo3tW3V9rtYMIk0J/AnWVgF488ZkuS
-         /hj/CY0sh3Neov5DH14Nvcg0wXQeAREzQAxKw=
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Jye9sG2e7guSL+XkxjuDpz9zKUvCzbczzcyn6VXMn/4=;
+        b=WlWvof+JqXVsRd9apJd50cF/PMSOpTDenWGWYpkbGhUy6cZ6X+vRNd2W+i9L+iTp+E
+         dyCTuqZyIWsWXYofbP8hbOVT9SXwbMaw9TmXRYMF5UJo7dQ375UBFZOvArtKjFJZ2MAR
+         izsGwbIdS1cHwzkXG7JLFXOHxaVMMcOZR8p8xAIsyZr7kkH/KrxXq25FOINQBWBzVuzF
+         4epJfzS59UBru4Y5+RSwDL3GHyM4aZEQogBF4aYqZutHknmX9ktrCxI0Hz5jkKObzE3x
+         JWz/mCoYrJ4LV3wX/bnDVvWcwAnwz9UNxhseROWWbmLl1K86M71tupRCidRVSI56zhm8
+         zVvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=7M1ntwxDhuoK2u8Gxsg3fhUXZOBgwWtMW+WZSo9Nykc=;
-        b=xqIcz/BBk7cCWzjyQsXEadSmLQWmDp9sKrxYc//Smq4mzHrPfBwLNs3tAIaH3zhtkh
-         cbHepYqyH95UdiBQpG4DtXzCvMATZjD5lNu+YmcwrmCukvEbm7Ejdo6LFEigfu2XJaN9
-         hoWqItdE3fM0sxHP8q5XHMc/hboIX2KDJoqFvBVZG8hoga0ANXlDv4oBhiYphvkgaTmu
-         qUgZDSyrHCS8Z5mR/bKkQ4SYgZ05koGvBjnsxFifRzWvARuhFyrmmwVRV61HNBEh50QE
-         ZM9gMbBaFPay6AxX5l01Gc33d6XPHnFsb64Zt70ezIaFuG88ya/hb7fK1Qk9OJA35f9B
-         0L7w==
-X-Gm-Message-State: AOAM530Lh0X2uiR9UWgAD/Jzi3Q1vHmLWpb4UcHsBagm8mnvwXJlhJTV
-        u+hleGpQCTqaunUK7P8xhQqqAIEjifhOVH9r/K+RLQ==
-X-Google-Smtp-Source: ABdhPJzttYJq5Py1Ilj9dLwY4Yo8XywmXbi4DfiXQeBjFcj1yLk2ntUEcLZ81/1WDLvzrjfQ7w4ejuwxBSnkR4APlWc=
-X-Received: by 2002:a05:6870:3c18:b0:d7:22ed:20b0 with SMTP id
- gk24-20020a0568703c1800b000d722ed20b0mr5474819oab.32.1646340623516; Thu, 03
- Mar 2022 12:50:23 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 3 Mar 2022 12:50:23 -0800
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Jye9sG2e7guSL+XkxjuDpz9zKUvCzbczzcyn6VXMn/4=;
+        b=CwCKsnWAFU4EON3gDOb2Wd6zWs7ze4N6VT805CmYy9691ef28psE8k5Xyd43YyV+n3
+         2wRGLfMn4ZMJhhpjSEMcrcrMieQdXvIdmu8C41ivwyoj4OmlojDMNEcybI9OlzJ8LT5w
+         mj5fWJK7EyJNQKjKh0Y8P8HZSifZKnP3iNUCDIKYOvU+JjgqTOZL9ZdqZWlu7KumdnAW
+         LsfoME+nN/pjYIzqUiaHKpgYNbHH4mE/W13TAKWhFcrkLexCQ7lpyP8K5/oPESZ4ah8B
+         65/YtRHNfTvqPBM0CCNfHxWDZWSo1EXf9h9yjK+hNo7CmPz4yF9tEFsuGinHK5es2PN5
+         6o+A==
+X-Gm-Message-State: AOAM533OdWolMerTnnXTJi8de3gRt3OqBI2ArfJ9UNT+rOzjS0JpPT2l
+        uVAUrf2ZfvDLbgewEUgfVQ4smhw/jyDcLGNLMUrdYrOJ
+X-Google-Smtp-Source: ABdhPJzB4WtMzRM3XDI9bRh4CZsC8i9GN2+hN6rMt+voo6lSphjjflunNJUvo59Cu6gcZebWOsNqC6X/LVLyKNI3MJ0=
+X-Received: by 2002:a5d:5382:0:b0:1f0:2f64:5a5a with SMTP id
+ d2-20020a5d5382000000b001f02f645a5amr6921862wrv.418.1646341874028; Thu, 03
+ Mar 2022 13:11:14 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <1646317851-14414-3-git-send-email-quic_srivasam@quicinc.com>
-References: <1646317851-14414-1-git-send-email-quic_srivasam@quicinc.com> <1646317851-14414-3-git-send-email-quic_srivasam@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 3 Mar 2022 12:50:23 -0800
-Message-ID: <CAE-0n53jA+O3-wCC5Bp4Ap2Cg9wdMz-AZUCgu3mhh3R5=QCV4Q@mail.gmail.com>
-Subject: Re: [RESEND v7 2/2] dt-bindings: soundwire: qcom: Add bindings for
- audio clock reset control property
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, alsa-devel@alsa-project.org,
-        bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
-        broonie@kernel.org, devicetree@vger.kernel.org,
-        judyhsiao@chromium.org, lgirdwood@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        perex@perex.cz, pierre-louis.bossart@linux.intel.com,
-        quic_plai@quicinc.com, robh+dt@kernel.org, rohitkr@codeaurora.org,
-        sanyog.r.kale@intel.com, srinivas.kandagatla@linaro.org,
-        tiwai@suse.com, vkoul@kernel.org, yung-chuan.liao@linux.intel.com
-Cc:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <20220303194758.710358-1-robdclark@gmail.com> <20220303194758.710358-2-robdclark@gmail.com>
+ <1a42ff3e-154a-b2b8-9c99-8d5fba9a38e5@quicinc.com>
+In-Reply-To: <1a42ff3e-154a-b2b8-9c99-8d5fba9a38e5@quicinc.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 3 Mar 2022 13:11:43 -0800
+Message-ID: <CAF6AEGvBzFKbPVe+6+kHVDdFFvxXeFCp-7Jx=61or96HdQby4g@mail.gmail.com>
+Subject: Re: [PATCH 1/4] drm/msm: Update generated headers
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2022-03-03 06:30:51)
-> Update description for audio clock reset control property, which is required
-> for latest chipsets, to allow rx, tx and wsa bus clock enabling in software
->  control mode by configuring dynamic clock gating control registers.
+On Thu, Mar 3, 2022 at 12:42 PM Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
 >
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> Acked-by: Rob Herring <robh@kernel.org>
-> ---
+> Hi Rob
+>
+> On 3/3/2022 11:46 AM, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > Update headers from mesa commit:
+> >
+> >    commit 7e63fa2bb13cf14b765ad06d046789ee1879b5ef
+> >    Author:     Rob Clark <robclark@freedesktop.org>
+> >    AuthorDate: Wed Mar 2 17:11:10 2022 -0800
+> >
+> >        freedreno/registers: Add a couple regs we need for kernel
+> >
+> >        Signed-off-by: Rob Clark <robdclark@chromium.org>
+> >        Part-of: <https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/15221>
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >   drivers/gpu/drm/msm/adreno/a2xx.xml.h         |  26 +-
+> >   drivers/gpu/drm/msm/adreno/a3xx.xml.h         |  30 +-
+> >   drivers/gpu/drm/msm/adreno/a4xx.xml.h         | 112 ++-
+> >   drivers/gpu/drm/msm/adreno/a5xx.xml.h         |  63 +-
+> >   drivers/gpu/drm/msm/adreno/a6xx.xml.h         | 674 +++++++++++-------
+> >   drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h     |  26 +-
+> >   .../gpu/drm/msm/adreno/adreno_common.xml.h    |  31 +-
+> >   drivers/gpu/drm/msm/adreno/adreno_pm4.xml.h   |  46 +-
+> >   drivers/gpu/drm/msm/disp/mdp4/mdp4.xml.h      |  37 +-
+> >   drivers/gpu/drm/msm/disp/mdp5/mdp5.xml.h      |  37 +-
+> >   drivers/gpu/drm/msm/disp/mdp_common.xml.h     |  37 +-
+> >   drivers/gpu/drm/msm/dsi/dsi.xml.h             |  37 +-
+> >   drivers/gpu/drm/msm/dsi/dsi_phy_10nm.xml.h    |  37 +-
+> >   drivers/gpu/drm/msm/dsi/dsi_phy_14nm.xml.h    |  37 +-
+> >   drivers/gpu/drm/msm/dsi/dsi_phy_20nm.xml.h    |  37 +-
+> >   drivers/gpu/drm/msm/dsi/dsi_phy_28nm.xml.h    |  37 +-
+> >   .../gpu/drm/msm/dsi/dsi_phy_28nm_8960.xml.h   |  37 +-
+> >   drivers/gpu/drm/msm/dsi/dsi_phy_5nm.xml.h     | 480 -------------
+> Why is the 5nm PHY removed? Am i missing something?
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Dmitry removed it in mesa, because it was identical to 7nm
+
+BR,
+-R
+
+>
+> Thanks
+>
+> Abhinav
