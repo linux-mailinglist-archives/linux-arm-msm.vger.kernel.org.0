@@ -2,67 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79BA14CB430
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 02:09:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 980674CB3FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 02:09:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230499AbiCCAuG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 2 Mar 2022 19:50:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50736 "EHLO
+        id S230515AbiCCAvM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 2 Mar 2022 19:51:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230495AbiCCAuG (ORCPT
+        with ESMTP id S230512AbiCCAvM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 2 Mar 2022 19:50:06 -0500
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 403F243AD1
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 16:49:21 -0800 (PST)
-Received: by mail-ot1-x335.google.com with SMTP id k22-20020a9d4b96000000b005ad5211bd5aso3215683otf.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 16:49:21 -0800 (PST)
+        Wed, 2 Mar 2022 19:51:12 -0500
+Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2532D606D7
+        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 16:50:28 -0800 (PST)
+Received: by mail-oo1-xc31.google.com with SMTP id h16-20020a4a6f10000000b00320507b9ccfso4043426ooc.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 16:50:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=Igbll9U9GWfPZyp0rAtKMmMZmYLrnV0QUhLztSvpRRk=;
-        b=GjYYsIrh0KJE5xo+zEqZPMzwq/h3GNSVLP2CdDdHzS+GmbblGgulOkI5ZfBTRbQdtr
-         TK66dFJ6lZqEsZ1VmKjxHAbIPjiWvoR4xfrXNBqiJ3fgZfK9X82mcJ0hrx82fpLHxlaF
-         EmxCAChhZRfwphKcGIFifkGvxG4+8UocnrXo8=
+        bh=/2EC8zNvMiYjPaYg70TgRdx3fCegP4HpnaEb1DNrlZA=;
+        b=OBFuGz0Ovh0fRb/PVgoG+6iRhtp4Lo5PnJTLPVBDsK3SbG51eTCV9I4bToYGWzzQwQ
+         uLhWFAuGVtEUu6Ssk8Uzo1ocqlJ05rCzZpWp6izZ5LzLEP1Ww01xvVoGmkOtrQ219h/u
+         wCjoAYhfJqyZV9e8VwkWp+RUhZkYyr03XT89c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=Igbll9U9GWfPZyp0rAtKMmMZmYLrnV0QUhLztSvpRRk=;
-        b=dAt8uDokDv5/mhsNEXRwOm8ERTQ+MJtnTJVTJyg/V9bm5Rwj/lPG3ipJqOUCxYh4mL
-         InXksEFUUOS8m6cRNxmCbkjsRKUfdAgBjNRgX8gZQpvtRN3dqVNPw7/Kuwl4vOZM6V37
-         CRX97STW16r4w6RV3gVOF1pGuqx8MR1be2FSEFwyFjpRNJDyob5Cy7rp+nQBptRJCBAK
-         vrKW3k5hgmvJnWqjqngJi9LQhzrRs5liDzI9dDSscZdD2ShkDl/dMpZmwlKuEz/FWn7L
-         fYjwh97ItFt/LKnyzmTN4YdeEKVUCyx6EeX8K8glrRWU2yN1YVcEuUDDbssoJRt6bks2
-         9GvQ==
-X-Gm-Message-State: AOAM530KnCRA9r8dXb6c6arbh2HXHnxNSs0OM+GtCwPswgFBjqDNlgFt
-        bvebN3LSEHgf1V0uvWqIFaG+9Dl9pNCAxZv2PvPSc1TRYl0=
-X-Google-Smtp-Source: ABdhPJyUg/1XxpzO/77bE/2CGH5L5NlscQSdfof7aYOTzS48oVqPHSp9Wvb6oc3eXpY5MoJNqvFzXTK05l0Ih1LBqiE=
-X-Received: by 2002:a9d:22e9:0:b0:5ac:1754:342c with SMTP id
- y96-20020a9d22e9000000b005ac1754342cmr17014519ota.159.1646268560456; Wed, 02
- Mar 2022 16:49:20 -0800 (PST)
+        bh=/2EC8zNvMiYjPaYg70TgRdx3fCegP4HpnaEb1DNrlZA=;
+        b=5PuDieSuW2Sh8nkXAdpXrv4xMQtnLE++6XGy3LRRkjwxBvhfOIaFNg/SiDp3nyFWXQ
+         5+3TRJndNJcXC1y2E/V2XjKENQ4gOBhS29fefYaCg21r6nmfvjk/UaKdRkMoytA3APoO
+         45fzJd45MQ46cSduCveRG2fg7EMcaKStUWnAv7PVIevwSREHQgPIDrmTQ8ipGc0qHUlR
+         xLnFNWkNSRTzLd0HKFwfcU6K21PWiJIeMhmKV7jYLFpn4x8IZ33c/ulOESNm+bLG4jyF
+         XQDkzkg2LkpRosuTppN/jC67PTrZAKgKfgwrtnUQtY8I6NpfOUjz23Q5e899dqtel3qZ
+         1Odw==
+X-Gm-Message-State: AOAM532sOl1EsmVJhGbWxtdEmsIIvOVh5gCcVWTRITjUhbghBxuRgg94
+        AEi6pMHPS08NEQDW+YPOlQzpk60xZpgUilSBj7cvyw==
+X-Google-Smtp-Source: ABdhPJymMjnJcBkJ90VOhI42XO7hU17YKFFFlRx1RXjtrukwo8gQVLyOc3QdIvx9eR+49WHllUiLCYVPLyMyMvHI2gg=
+X-Received: by 2002:a05:6870:14cf:b0:d9:a9ce:92a9 with SMTP id
+ l15-20020a05687014cf00b000d9a9ce92a9mr2104667oab.64.1646268627242; Wed, 02
+ Mar 2022 16:50:27 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 2 Mar 2022 16:49:19 -0800
+ HTTPREST; Wed, 2 Mar 2022 16:50:26 -0800
 MIME-Version: 1.0
-In-Reply-To: <1646204402-7608-1-git-send-email-quic_pmaliset@quicinc.com>
-References: <1646204402-7608-1-git-send-email-quic_pmaliset@quicinc.com>
+In-Reply-To: <20220302225411.2456001-6-dmitry.baryshkov@linaro.org>
+References: <20220302225411.2456001-1-dmitry.baryshkov@linaro.org> <20220302225411.2456001-6-dmitry.baryshkov@linaro.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Wed, 2 Mar 2022 16:49:19 -0800
-Message-ID: <CAE-0n51imr33FJMdURG9VSRSBJT+xFNMpW0HaFGkd2=PK+Z3sA@mail.gmail.com>
-Subject: Re: [PATCH v1] dt-bindings: pci: qcom: Document PCIe bindings for SC7280
-To:     Prasad Malisetty <quic_pmaliset@quicinc.com>, agross@kernel.org,
-        bhelgaas@google.com, bjorn.andersson@linaro.org, kw@linux.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pci@vger.kernel.org, lorenzo.pieralisi@arm.com,
-        robh@kernel.org
-Cc:     quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
-        manivannan.sadhasivam@linaro.org
+Date:   Wed, 2 Mar 2022 16:50:26 -0800
+Message-ID: <CAE-0n52WNiinbFSaKJKQ7sPwD6SNH_o9tyyw5ig-m0v8svsumg@mail.gmail.com>
+Subject: Re: [PATCH v2 6/6] arm: dts: qcom-msm8974: Drop flags for mdss irqs
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        freedreno@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,13 +71,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Prasad Malisetty (2022-03-01 23:00:02)
-> Document the PCIe DT bindings for SC7280 SoC.The PCIe IP is similar
-> to the one used on SM8250. Add the compatible for SC7280.
+Maybe the subject should say "mdp" because there isn't an "mdss" but
+this isn't a big deal.
+
+Quoting Dmitry Baryshkov (2022-03-02 14:54:11)
+> The number of interrupt cells for the mdss interrupt controller is 1,
+> meaning there should only be one cell for the interrupt number, not two.
+> Drop the second cell containing (unused) irq flags.
 >
-> Signed-off-by: Prasad Malisetty <quic_pmaliset@quicinc.com>
+> Fixes: 5a9fc531f6ec ("ARM: dts: msm8974: add display support")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
 
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-
-Can this be converted to yaml?
