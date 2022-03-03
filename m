@@ -2,225 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6260A4CB76F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 08:06:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 946354CB85A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 09:08:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230089AbiCCHHX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Mar 2022 02:07:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41866 "EHLO
+        id S231132AbiCCIJ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Mar 2022 03:09:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229989AbiCCHHW (ORCPT
+        with ESMTP id S230466AbiCCIJ1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Mar 2022 02:07:22 -0500
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86119D1096
-        for <linux-arm-msm@vger.kernel.org>; Wed,  2 Mar 2022 23:06:37 -0800 (PST)
-Received: by mail-qv1-xf2c.google.com with SMTP id e22so3440743qvf.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Mar 2022 23:06:37 -0800 (PST)
+        Thu, 3 Mar 2022 03:09:27 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3DA45FD2;
+        Thu,  3 Mar 2022 00:08:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8HcPSO5J8NY98uQ2bWJs7uIQP8jHLYwpTbsEfnFQ6Kc=;
-        b=gTke+FKomJbgtcblPcwsyJWe1O1L6dpL9xC4RB6BmIQnJe61/Dn8IPPfiaiEFr3pzf
-         cwte0nVrO20l0utome+glbq+FWdU8ecw/C9Y7YDd4Wkdq9iKIGbFinT2OC/yS8LFpBu9
-         7L/5SFrcap2IzLDmsBnp4TI+7PXWQM34ZWKhdG/ZPSdSyJLh/cGYduiAwJG8qtjSIPyk
-         Ur3JoeO5XqWfcJbtg6nqKuuahdnRmHZZPuPcPeQl/MYyuK66DakMDDQMVcvmxbPUOpL8
-         ToNc5/wke8v8P7RhoZym3z027YVlaIZIb+Rf3qNOZPX2zKW66lgI8mxh+SI1XK4NXyqZ
-         0qWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8HcPSO5J8NY98uQ2bWJs7uIQP8jHLYwpTbsEfnFQ6Kc=;
-        b=6uEhgrZVdlXbxTlAidA9NlRpolKa9wrhKMfUqe0zwxb+GEjwl6Rz0LxgCYj9iUWfop
-         A0ciIt7d+HMDxfymALYTm4tNkTamKgTOFO+V5EnJ2Fb/8/krgqmgd32fCYzCE0kWCSME
-         d72I2dBqJviwnpqI3zgwV8Xbw4xFXRit88docMDktSGUjPfUGBVKL93JHJaChHwFGZdy
-         LuucPNIrZexe3kv8bsD6FnMK0mapqyOBzOve6Qm4/NhX5ABRQXCRnU0OrtxWbkMUwbjP
-         zui46IyyhbNSB7LuSNsmqNy3+JfnvvjVG8DLN4sppI710vdNkUMOhQIkL3/k+aQ22L8I
-         yZ7Q==
-X-Gm-Message-State: AOAM533uOsuJwgUNgCOynPFWqwHwF/3R3iUMBsum+w6k7rBFvRNVttkl
-        pLuan+//h7jYsqo96SUYT56diGBT6BjHx1StmTbVAw==
-X-Google-Smtp-Source: ABdhPJxgEHrGjaehZwVCMpI1VHaONVhbr10R7pT9rBRPyCyU3TXHNAzER80GICpogrsLdSBT1uwAn0te9XkwhuBPnWU=
-X-Received: by 2002:ad4:5883:0:b0:432:b007:962b with SMTP id
- dz3-20020ad45883000000b00432b007962bmr22084284qvb.55.1646291196714; Wed, 02
- Mar 2022 23:06:36 -0800 (PST)
-MIME-Version: 1.0
-References: <20220219183310.557435-1-robdclark@gmail.com> <6f1225ea-d889-9cf8-3a3d-181e319bd453@linaro.org>
- <CAF6AEGut-75ri+U=B2eBtNeYQu5ECKPmk51b2_pCgu91uKy1ow@mail.gmail.com>
-In-Reply-To: <CAF6AEGut-75ri+U=B2eBtNeYQu5ECKPmk51b2_pCgu91uKy1ow@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 3 Mar 2022 10:06:25 +0300
-Message-ID: <CAA8EJpoAnPDefJ9rc6fjF+6oS5EVA7JCbZs7Ui7KDE+dfEbMEA@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/gpu: Fix crash on devices without devfreq support
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Linux Kernel Functional Testing <lkft@linaro.org>,
-        Anders Roxell <anders.roxell@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1646294923; x=1677830923;
+  h=from:to:cc:subject:date:message-id;
+  bh=+bYsDhgswS3zG/uB6uGZaEGIcMgyRUKoKz7L41FkkoU=;
+  b=eBd+JUU/IFx27mV61HRhVB1S1O1NYmYrWWhgP7RZHgaiUanCsPQrf5D+
+   qnqjkac1cXfKMEoxnl6vrfGBtVkMgnQwlwDKcO5+7nLW1+OBtgpcoH58Z
+   /F48J7OwkOvSahSFVTYQDZs91KSVGUn4jqCZah7lbil+P52GY1SQE46oC
+   g=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 03 Mar 2022 00:08:43 -0800
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 03 Mar 2022 00:08:41 -0800
+X-QCInternal: smtphost
+Received: from vpolimer-linux.qualcomm.com ([10.204.67.235])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 03 Mar 2022 13:38:29 +0530
+Received: by vpolimer-linux.qualcomm.com (Postfix, from userid 463814)
+        id 166B64E1B; Thu,  3 Mar 2022 13:38:28 +0530 (IST)
+From:   Vinod Polimera <quic_vpolimer@quicinc.com>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_kalyant@quicinc.com
+Subject: [PATCH v3 0/3] Update mdp clk to max supported value to support higher refresh rates
+Date:   Thu,  3 Mar 2022 13:38:21 +0530
+Message-Id: <1646294904-4753-1-git-send-email-quic_vpolimer@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 23 Feb 2022 at 18:46, Rob Clark <robdclark@gmail.com> wrote:
->
-> On Tue, Feb 22, 2022 at 7:11 PM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > On 19/02/2022 21:33, Rob Clark wrote:
-> > > From: Rob Clark <robdclark@chromium.org>
-> > >
-> > > Avoid going down devfreq paths on devices where devfreq is not
-> > > initialized.
-> > >
-> > > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> > > Reported-by: Anders Roxell <anders.roxell@linaro.org>
-> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > > ---
-> > >   drivers/gpu/drm/msm/msm_gpu_devfreq.c | 31 +++++++++++++++++++++------
-> > >   1 file changed, 25 insertions(+), 6 deletions(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> > > index 9bf319be11f6..26a3669a97b3 100644
-> > > --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> > > +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> > > @@ -83,12 +83,17 @@ static struct devfreq_dev_profile msm_devfreq_profile = {
-> > >   static void msm_devfreq_boost_work(struct kthread_work *work);
-> > >   static void msm_devfreq_idle_work(struct kthread_work *work);
-> > >
-> > > +static bool has_devfreq(struct msm_gpu *gpu)
-> > > +{
-> > > +     return !!gpu->funcs->gpu_busy;
-> >
-> > I see that devfreq init will be skipped if gpu_busy is NULL.
-> > Can we use gpu->devfreq instead of this condition?
->
-> We could, but then we couldn't also use the same has_devfreq() helper
-> in msm_devfreq_init().  I thought it was clearer to use the same
-> helper everywhere.
+*** BLURB HERE ***
 
-Well... It is not clear at first glance how gpu_busy is related to
-devfreq. On the other hand, if gpu->devfreq is NULL, it's obvious that
-devfreq is not initialized.
+Vinod Polimera (3):
+  arm64/dts/qcom/sc7280: remove assigned-clock-rate property for mdp clk
+  arm64/dts/qcom/sc7180: remove assigned-clock-rate property for mdp clk
+  arm64/dts/qcom/sdm845: remove assigned-clock-rate property for mdp clk
 
-I'd propose to use if (gpu->funcs->gpu_busy) to check if we can init
-devfreq and after that to check (gpu->devfreq) as a way to know
-whether the devfreq is available.
-
->
-> > I noticed that you have replaced some of gpu->devfreq checks with
-> > has_devreq() calls. Is there any difference?
->
-> It amounts to the same thing because if you don't have gpu_busy, then
-> devfreq is never initialized.  I just thought it clearer to use the
-> same check in all places.
-
-See my comment above.
-
->
-> BR,
-> -R
->
-> > > +}
-> > > +
-> > >   void msm_devfreq_init(struct msm_gpu *gpu)
-> > >   {
-> > >       struct msm_gpu_devfreq *df = &gpu->devfreq;
-> > >
-> > >       /* We need target support to do devfreq */
-> > > -     if (!gpu->funcs->gpu_busy)
-> > > +     if (!has_devfreq(gpu))
-> > >               return;
-> > >
-> > >       dev_pm_qos_add_request(&gpu->pdev->dev, &df->idle_freq,
-> > > @@ -149,6 +154,9 @@ void msm_devfreq_cleanup(struct msm_gpu *gpu)
-> > >   {
-> > >       struct msm_gpu_devfreq *df = &gpu->devfreq;
-> > >
-> > > +     if (!has_devfreq(gpu))
-> > > +             return;
-> > > +
-> > >       devfreq_cooling_unregister(gpu->cooling);
-> > >       dev_pm_qos_remove_request(&df->boost_freq);
-> > >       dev_pm_qos_remove_request(&df->idle_freq);
-> > > @@ -156,16 +164,24 @@ void msm_devfreq_cleanup(struct msm_gpu *gpu)
-> > >
-> > >   void msm_devfreq_resume(struct msm_gpu *gpu)
-> > >   {
-> > > -     gpu->devfreq.busy_cycles = 0;
-> > > -     gpu->devfreq.time = ktime_get();
-> > > +     struct msm_gpu_devfreq *df = &gpu->devfreq;
-> > >
-> > > -     devfreq_resume_device(gpu->devfreq.devfreq);
-> > > +     if (!has_devfreq(gpu))
-> > > +             return;
-> > > +
-> > > +     df->busy_cycles = 0;
-> > > +     df->time = ktime_get();
-> > > +
-> > > +     devfreq_resume_device(df->devfreq);
-> > >   }
-> > >
-> > >   void msm_devfreq_suspend(struct msm_gpu *gpu)
-> > >   {
-> > >       struct msm_gpu_devfreq *df = &gpu->devfreq;
-> > >
-> > > +     if (!has_devfreq(gpu))
-> > > +             return;
-> > > +
-> > >       devfreq_suspend_device(df->devfreq);
-> > >
-> > >       cancel_idle_work(df);
-> > > @@ -185,6 +201,9 @@ void msm_devfreq_boost(struct msm_gpu *gpu, unsigned factor)
-> > >       struct msm_gpu_devfreq *df = &gpu->devfreq;
-> > >       uint64_t freq;
-> > >
-> > > +     if (!has_devfreq(gpu))
-> > > +             return;
-> > > +
-> > >       freq = get_freq(gpu);
-> > >       freq *= factor;
-> > >
-> > > @@ -207,7 +226,7 @@ void msm_devfreq_active(struct msm_gpu *gpu)
-> > >       struct devfreq_dev_status status;
-> > >       unsigned int idle_time;
-> > >
-> > > -     if (!df->devfreq)
-> > > +     if (!has_devfreq(gpu))
-> > >               return;
-> > >
-> > >       /*
-> > > @@ -253,7 +272,7 @@ void msm_devfreq_idle(struct msm_gpu *gpu)
-> > >   {
-> > >       struct msm_gpu_devfreq *df = &gpu->devfreq;
-> > >
-> > > -     if (!df->devfreq)
-> > > +     if (!has_devfreq(gpu))
-> > >               return;
-> > >
-> > >       msm_hrtimer_queue_work(&df->idle_work, ms_to_ktime(1),
-> >
-> >
-> > --
-> > With best wishes
-> > Dmitry
-
-
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 9 ++-------
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 9 ++-------
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 9 ++-------
+ 3 files changed, 6 insertions(+), 21 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.7.4
+
