@@ -2,91 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 161424CBE68
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 14:04:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EF9F4CBEB1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 14:18:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233006AbiCCNEq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Mar 2022 08:04:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53762 "EHLO
+        id S233094AbiCCNTQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Mar 2022 08:19:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232648AbiCCNEq (ORCPT
+        with ESMTP id S230373AbiCCNTP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Mar 2022 08:04:46 -0500
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED2CB4EF70
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 05:04:00 -0800 (PST)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        Thu, 3 Mar 2022 08:19:15 -0500
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50727149B8B;
+        Thu,  3 Mar 2022 05:18:30 -0800 (PST)
+Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 39B8D3F94F;
-        Thu,  3 Mar 2022 14:03:59 +0100 (CET)
-Date:   Thu, 3 Mar 2022 14:03:57 +0100
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 4F3AD3F635;
+        Thu,  3 Mar 2022 14:18:28 +0100 (CET)
 From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 6/6] arm: dts: qcom-msm8974: Drop flags for mdss irqs
-Message-ID: <20220303130357.b2we5z42uds2nizs@SoMainline.org>
-References: <20220302225411.2456001-1-dmitry.baryshkov@linaro.org>
- <20220302225411.2456001-6-dmitry.baryshkov@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Vamsi Krishna Lanka <quic_vamslank@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v3 0/3] clk: qcom: Add display clock controller driver for SM6125
+Date:   Thu,  3 Mar 2022 14:18:09 +0100
+Message-Id: <20220303131812.302302-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220302225411.2456001-6-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-03-03 01:54:11, Dmitry Baryshkov wrote:
-> The number of interrupt cells for the mdss interrupt controller is 1,
-> meaning there should only be one cell for the interrupt number, not two.
-> Drop the second cell containing (unused) irq flags.
-> 
-> Fixes: 5a9fc531f6ec ("ARM: dts: msm8974: add display support")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Changes since v2:
+- dt-bindings: Use a sensible `&dsi1_phy 1` example clock for the
+  mandatory "dsi1_phy_pll_out_dsiclk", instead of a null phandle.
 
-Thanks for adding the Fixes: tag.
+v2: https://lore.kernel.org/phone-devel/20220226200911.230030-1-marijn.suijten@somainline.org/
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Changes since v1:
+- Documentation is dual-licensed;
+- Documentation example now uses zero-clock for dsi1_phy pixel clock;
+- SDX_GCC_65 is sorted in Kconfig/Makefile to easen adding this driver
+  in the correct alphabetic spot;
+- clk.h is replaced with clk-provider.h;
+- ahb, mdp and rot source clocks use rcg2_shared_ops instead of standard
+  ops;
+- Unnecessary line breaks are removed when remaining under 80 chars.
 
-> ---
->  arch/arm/boot/dts/qcom-msm8974.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> index 412d94736c35..3b9af5e24907 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-> +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> @@ -1495,7 +1495,7 @@ mdp: mdp@fd900000 {
->  				reg-names = "mdp_phys";
->  
->  				interrupt-parent = <&mdss>;
-> -				interrupts = <0 0>;
-> +				interrupts = <0>;
->  
->  				clocks = <&mmcc MDSS_AHB_CLK>,
->  					 <&mmcc MDSS_AXI_CLK>,
-> @@ -1530,7 +1530,7 @@ dsi0: dsi@fd922800 {
->  				reg-names = "dsi_ctrl";
->  
->  				interrupt-parent = <&mdss>;
-> -				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
-> +				interrupts = <4>;
->  
->  				assigned-clocks = <&mmcc BYTE0_CLK_SRC>,
->  				                  <&mmcc PCLK0_CLK_SRC>;
-> -- 
-> 2.34.1
-> 
+v1: https://lore.kernel.org/linux-arm-msm/20211130212137.25303-1-martin.botka@somainline.org/T/#u
+
+Marijn Suijten (1):
+  clk: qcom: Fix sorting of SDX_GCC_65 in Makefile and Kconfig
+
+Martin Botka (2):
+  dt-bindings: clock: add QCOM SM6125 display clock bindings
+  clk: qcom: Add display clock controller driver for SM6125
+
+ .../bindings/clock/qcom,dispcc-sm6125.yaml    |  87 +++
+ drivers/clk/qcom/Kconfig                      |  21 +-
+ drivers/clk/qcom/Makefile                     |   3 +-
+ drivers/clk/qcom/dispcc-sm6125.c              | 709 ++++++++++++++++++
+ .../dt-bindings/clock/qcom,dispcc-sm6125.h    |  41 +
+ 5 files changed, 854 insertions(+), 7 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
+ create mode 100644 drivers/clk/qcom/dispcc-sm6125.c
+ create mode 100644 include/dt-bindings/clock/qcom,dispcc-sm6125.h
+
+
+base-commit: e6ada6df471f847da3b09b357e246c62335bc0bb
+--
+2.35.1
+
