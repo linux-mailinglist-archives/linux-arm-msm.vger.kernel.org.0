@@ -2,154 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ADE3A4CC3AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 18:26:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F3754CC41B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 18:38:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235340AbiCCR1L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Mar 2022 12:27:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37608 "EHLO
+        id S231889AbiCCRjf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Mar 2022 12:39:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234452AbiCCR1J (ORCPT
+        with ESMTP id S230498AbiCCRje (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Mar 2022 12:27:09 -0500
-Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB6A219E033
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 09:26:22 -0800 (PST)
-Received: by mail-oo1-xc2c.google.com with SMTP id w3-20020a4ac183000000b0031d806bbd7eso6509056oop.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Mar 2022 09:26:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Hi+eKfkvL+1ELz8vCd2J8tALPiN2Yeq81v7WF2HdAvA=;
-        b=ST/Z+X1lhcPRR3gkR9suvwoVxqwduRsMYavBHcuzH6MEWvRTvI8XehW5GVLJKxx+FC
-         NE7DS70gcRfuBP+bWOto18cMXOIZPLk609iw8smuy/WxCEcWYm/+G+iCdIlMCCWpSINZ
-         +DfLXoHb7999QY5ssTrZRl7n0KNUX8O58zRTFoWlx3ttRtJXmbbewgi9suaOM+NiV36v
-         NmeOZAmFGzTuS00K7V5if14XLORNd3xksz9NN+wJMfw08Eh1bK23PFyL0ckhuwl0BCpJ
-         0VrqKXWYsDnU5ViWauFzYYUT0AyGj/KfqWwXDxN3Hn0HNlf+Zxf4qRSEUTD/zgtZ55wd
-         vatw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Hi+eKfkvL+1ELz8vCd2J8tALPiN2Yeq81v7WF2HdAvA=;
-        b=X8Pe80hwQkZAGeiERReWndq51hMJQ0UZl5rPocYrzUC1D+w0R44xjT4U5GMJTt49Js
-         H5psVH/HlWOa8cazq5iffyPp5TztdF2PV6crG4cOdHlokIHwzvUMnjfAh7FxeD8gxwYW
-         2LHS1K80tp3G++Dd8M6jWgeV6+tD1FFC50WCLDacInzJL6pNaS36MKQB2vVqPwfUIe6O
-         LIJtXkL1rbgiS2LawIi3xR8aCs5U3C1anQwf41JBukKLKMkmKohXxkFfK6KMQNxx0ptz
-         MHomDUNIq2PrmSE02eQ4XyFetTSAzPg6guEISTNu9MrdEcWuaXeCJECmGRuouZvo4FXC
-         gFCg==
-X-Gm-Message-State: AOAM532Bkdydk/KYxaM7ogpsnB30UkCH2FMfJDE7SnwS0SQxeXj6QUXd
-        Z9Rcsw4mlERS+wUHw/fnrcMt7A==
-X-Google-Smtp-Source: ABdhPJwv1sxGTZF0niRgbP0qtUDDm24paYlb1odjA9ejm9/YPSBr9Tb4EAnKGNswbr1L/KDB331RZA==
-X-Received: by 2002:a05:6870:a1a0:b0:d9:b198:4cfa with SMTP id a32-20020a056870a1a000b000d9b1984cfamr3722424oaf.159.1646328381877;
-        Thu, 03 Mar 2022 09:26:21 -0800 (PST)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id c26-20020a4ae25a000000b0031c268c5436sm1195619oot.16.2022.03.03.09.26.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Mar 2022 09:26:21 -0800 (PST)
-Date:   Thu, 3 Mar 2022 09:28:10 -0800
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Pavel Machek <pavel@ucw.cz>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>, linux-leds@vger.kernel.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Linux Doc Mailing List <linux-doc@vger.kernel.org>,
-        linux-pwm <linux-pwm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Luca Weiss <luca@z3ntu.xyz>
-Subject: Re: [PATCH v13 2/2] leds: Add driver for Qualcomm LPG
-Message-ID: <YiD6qrLC9B4A8sNz@ripper>
-References: <20220218183116.2261770-1-bjorn.andersson@linaro.org>
- <20220218183116.2261770-2-bjorn.andersson@linaro.org>
- <CAD=FV=UOLcu5xycimDsYTO1spwf=CMRPUSU3o0qRRC+a+zuRTQ@mail.gmail.com>
- <CAD=FV=We4Lv25h2XF6BsdYhMbYu4716LBuhAjH5N0s_HHt_Xcw@mail.gmail.com>
+        Thu, 3 Mar 2022 12:39:34 -0500
+Received: from mail-41104.protonmail.ch (mail-41104.protonmail.ch [185.70.41.104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2F15108BE6
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 09:38:46 -0800 (PST)
+Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits))
+        (No client certificate requested)
+        by mail-41104.protonmail.ch (Postfix) with ESMTPS id 4K8dWT13F1z4wxlg
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 17:38:45 +0000 (UTC)
+Authentication-Results: mail-41104.protonmail.ch;
+        dkim=pass (1024-bit key) header.d=connolly.tech header.i=@connolly.tech header.b="WCL25u9O"
+Date:   Thu, 03 Mar 2022 17:38:34 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
+        s=protonmail; t=1646329118;
+        bh=HrxBmH3YwEP0q1bvU2BH7PU9i4V1wS4AlJ9ZNN4rP2A=;
+        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
+         References:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+         Message-ID;
+        b=WCL25u9OGiRYNyxzc0Kq+syOvA6uqkZX4H7hWkbmd9/HOiZhyDjidei+/QSpi+vro
+         zDwgTsFc/AnMEYyN/hq8rAGSDuNpuZEQ/Atx5i0PzHX33CWO8ButXm87DS4qf1hvaW
+         p/v6nxa2aJSxRkH9Rv6mQxoNhVXQE0BgkYc8TG1I=
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+From:   Caleb Connolly <caleb@connolly.tech>
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Reply-To: Caleb Connolly <caleb@connolly.tech>
+Subject: Re: [PATCH 3/3] clk: qcom: smd: Add missing MSM8998 RPM clocks
+Message-ID: <f06677f3-57ab-42eb-d707-a2d59fcdc3f2@connolly.tech>
+In-Reply-To: <20220226214126.21209-3-konrad.dybcio@somainline.org>
+References: <20220226214126.21209-1-konrad.dybcio@somainline.org> <20220226214126.21209-3-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=We4Lv25h2XF6BsdYhMbYu4716LBuhAjH5N0s_HHt_Xcw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 03 Mar 08:41 PST 2022, Doug Anderson wrote:
+[tested on Pixel 2 XL]
+Tested-by: Caleb Connolly <caleb@connolly.tech>
 
-> Hi,
-> 
-> On Wed, Mar 2, 2022 at 4:03 PM Doug Anderson <dianders@chromium.org> wrote:
-> >
-> > Hi,
-> >
-> > On Fri, Feb 18, 2022 at 10:29 AM Bjorn Andersson
-> > <bjorn.andersson@linaro.org> wrote:
-> > >
-> > > +static void lpg_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
-> > > +                             struct pwm_state *state)
-> > > +{
-> > > +       struct lpg *lpg = container_of(chip, struct lpg, pwm);
-> > > +       struct lpg_channel *chan = &lpg->channels[pwm->hwpwm];
-> > > +       unsigned int pre_div;
-> > > +       unsigned int refclk;
-> > > +       unsigned int val;
-> > > +       unsigned int m;
-> > > +       u16 pwm_value;
-> > > +       int ret;
-> > > +
-> > > +       ret = regmap_read(lpg->map, chan->base + LPG_SIZE_CLK_REG, &val);
-> > > +       if (ret)
-> > > +               return;
-> > > +
-> > > +       refclk = lpg_clk_rates[(val & PWM_CLK_SELECT_MASK) - 1];
-> >
-> > I don't know why I didn't notice it before (maybe I was accidentally
-> > not building with KASAN?), but in my recent boots I'm getting a KASAN
-> > error pointing at the line above.
-> >
-> > Sure enough, the above looks a bit on the unsafe side. If (val & 0x3)
-> > is 0 then the "-1" will not be so wonderful. I put some printouts and,
-> > indeed, it's not so great.
-> >
-> > [    7.201635] DOUG: val is 0x00000004
-> >
-> > Amazingly my `refclk` ends up as 0 and I guess somehow this doesn't
-> > cause a divide by 0.
-> 
-> I dug a little more and found a document that talks about this
-> register. I guess the answer here is that at boot time on my device
-> the PWM is disabled and has never been enabled. That explains why, at
-> boot time, the "clk_select" is 0 AKA "no clock". So we do an invalid
-> memory access here and that's not so great, but it doesn't _truly_
-> cause any harm. All we need is something like this right before the
-> array dereference:
-> 
-> if ((val & PWM_CLK_SELECT_MASK) == 0)
->   return;
-> 
+On 26/02/2022 21:41, Konrad Dybcio wrote:
+> Add missing RPM-provided clocks on msm8998 and reorder the definitions
+> where needed.
+>
+> JAMI: fixed for a0384ecfe2aa ("clk: qcom: smd-rpm: De-duplicate identical=
+ entries")
+> JAMI: fixed for 36354c32bd76 ("clk: qcom: smd-rpm: Add .recalc_rate hook =
+for clk_smd_rpm_branch_ops")
+> Tested-by: Jami Kettunen <jami.kettunen@somainline.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> ---
+>   drivers/clk/qcom/clk-smd-rpm.c | 40 +++++++++++++++++++++++-----------
+>   1 file changed, 27 insertions(+), 13 deletions(-)
+>
+> diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rp=
+m.c
+> index 418f017e933f..afc6dc930011 100644
+> --- a/drivers/clk/qcom/clk-smd-rpm.c
+> +++ b/drivers/clk/qcom/clk-smd-rpm.c
+> @@ -816,15 +816,18 @@ static const struct rpm_smd_clk_desc rpm_clk_qcs404=
+ =3D {
+>   =09.num_clks =3D ARRAY_SIZE(qcs404_clks),
+>   };
+>
+> -DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(msm8998, ln_bb_clk3_pin, ln_bb_clk3=
+_a_pin,
+> -=09=09=09=09     3, 19200000);
+> +DEFINE_CLK_SMD_RPM_XO_BUFFER(msm8998, ln_bb_clk3, ln_bb_clk3_a, 3, 19200=
+000);
+> +DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(msm8998, ln_bb_clk3_pin, ln_bb_clk3=
+_a_pin, 3, 19200000);
+>   DEFINE_CLK_SMD_RPM(msm8998, aggre1_noc_clk, aggre1_noc_a_clk,
+>   =09=09   QCOM_SMD_RPM_AGGR_CLK, 1);
+>   DEFINE_CLK_SMD_RPM(msm8998, aggre2_noc_clk, aggre2_noc_a_clk,
+>   =09=09   QCOM_SMD_RPM_AGGR_CLK, 2);
+>   DEFINE_CLK_SMD_RPM_XO_BUFFER(msm8998, rf_clk3, rf_clk3_a, 6, 19200000);
+>   DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(msm8998, rf_clk3_pin, rf_clk3_a_pi=
+n, 6, 19200000);
+> +
+>   static struct clk_smd_rpm *msm8998_clks[] =3D {
+> +=09[RPM_SMD_XO_CLK_SRC] =3D &sdm660_bi_tcxo,
+> +=09[RPM_SMD_XO_A_CLK_SRC] =3D &sdm660_bi_tcxo_a,
+>   =09[RPM_SMD_BIMC_CLK] =3D &msm8916_bimc_clk,
+>   =09[RPM_SMD_BIMC_A_CLK] =3D &msm8916_bimc_a_clk,
+>   =09[RPM_SMD_PCNOC_CLK] =3D &msm8916_pcnoc_clk,
+> @@ -837,12 +840,22 @@ static struct clk_smd_rpm *msm8998_clks[] =3D {
+>   =09[RPM_SMD_CE1_A_CLK] =3D &msm8992_ce1_a_clk,
+>   =09[RPM_SMD_DIV_CLK1] =3D &msm8974_div_clk1,
+>   =09[RPM_SMD_DIV_A_CLK1] =3D &msm8974_div_a_clk1,
+> +=09[RPM_SMD_DIV_CLK2] =3D &msm8974_div_clk2,
+> +=09[RPM_SMD_DIV_A_CLK2] =3D &msm8974_div_a_clk2,
+> +=09[RPM_SMD_DIV_CLK3] =3D &msm8992_div_clk3,
+> +=09[RPM_SMD_DIV_A_CLK3] =3D &msm8992_div_clk3_a,
+>   =09[RPM_SMD_IPA_CLK] =3D &msm8976_ipa_clk,
+>   =09[RPM_SMD_IPA_A_CLK] =3D &msm8976_ipa_a_clk,
+>   =09[RPM_SMD_LN_BB_CLK1] =3D &msm8916_bb_clk1,
+>   =09[RPM_SMD_LN_BB_CLK1_A] =3D &msm8916_bb_clk1_a,
+>   =09[RPM_SMD_LN_BB_CLK2] =3D &msm8916_bb_clk2,
+>   =09[RPM_SMD_LN_BB_CLK2_A] =3D &msm8916_bb_clk2_a,
+> +=09[RPM_SMD_LN_BB_CLK3] =3D &msm8998_ln_bb_clk3,
+> +=09[RPM_SMD_LN_BB_CLK3_A] =3D &msm8998_ln_bb_clk3_a,
+> +=09[RPM_SMD_LN_BB_CLK1_PIN] =3D &msm8916_bb_clk1_pin,
+> +=09[RPM_SMD_LN_BB_CLK1_A_PIN] =3D &msm8916_bb_clk1_a_pin,
+> +=09[RPM_SMD_LN_BB_CLK2_PIN] =3D &msm8916_bb_clk2_pin,
+> +=09[RPM_SMD_LN_BB_CLK2_A_PIN] =3D &msm8916_bb_clk2_a_pin,
+>   =09[RPM_SMD_LN_BB_CLK3_PIN] =3D &msm8998_ln_bb_clk3_pin,
+>   =09[RPM_SMD_LN_BB_CLK3_A_PIN] =3D &msm8998_ln_bb_clk3_a_pin,
+>   =09[RPM_SMD_MMAXI_CLK] =3D &msm8996_mmssnoc_axi_rpm_clk,
+> @@ -855,10 +868,14 @@ static struct clk_smd_rpm *msm8998_clks[] =3D {
+>   =09[RPM_SMD_QDSS_A_CLK] =3D &msm8916_qdss_a_clk,
+>   =09[RPM_SMD_RF_CLK1] =3D &msm8916_rf_clk1,
+>   =09[RPM_SMD_RF_CLK1_A] =3D &msm8916_rf_clk1_a,
+> -=09[RPM_SMD_RF_CLK2_PIN] =3D &msm8916_rf_clk2_pin,
+> -=09[RPM_SMD_RF_CLK2_A_PIN] =3D &msm8916_rf_clk2_a_pin,
+> +=09[RPM_SMD_RF_CLK2] =3D &msm8916_rf_clk2,
+> +=09[RPM_SMD_RF_CLK2_A] =3D &msm8916_rf_clk2_a,
+>   =09[RPM_SMD_RF_CLK3] =3D &msm8998_rf_clk3,
+>   =09[RPM_SMD_RF_CLK3_A] =3D &msm8998_rf_clk3_a,
+> +=09[RPM_SMD_RF_CLK1_PIN] =3D &msm8916_rf_clk1_pin,
+> +=09[RPM_SMD_RF_CLK1_A_PIN] =3D &msm8916_rf_clk1_a_pin,
+> +=09[RPM_SMD_RF_CLK2_PIN] =3D &msm8916_rf_clk2_pin,
+> +=09[RPM_SMD_RF_CLK2_A_PIN] =3D &msm8916_rf_clk2_a_pin,
+>   =09[RPM_SMD_RF_CLK3_PIN] =3D &msm8998_rf_clk3_pin,
+>   =09[RPM_SMD_RF_CLK3_A_PIN] =3D &msm8998_rf_clk3_a_pin,
+>   };
+> @@ -868,9 +885,6 @@ static const struct rpm_smd_clk_desc rpm_clk_msm8998 =
+=3D {
+>   =09.num_clks =3D ARRAY_SIZE(msm8998_clks),
+>   };
+>
+> -DEFINE_CLK_SMD_RPM_XO_BUFFER(sdm660, ln_bb_clk3, ln_bb_clk3_a, 3, 192000=
+00);
+> -DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(sdm660, ln_bb_clk3_pin, ln_bb_clk3_=
+pin_a, 3, 19200000);
+> -
+>   static struct clk_smd_rpm *sdm660_clks[] =3D {
+>   =09[RPM_SMD_XO_CLK_SRC] =3D &sdm660_bi_tcxo,
+>   =09[RPM_SMD_XO_A_CLK_SRC] =3D &sdm660_bi_tcxo_a,
+> @@ -900,16 +914,16 @@ static struct clk_smd_rpm *sdm660_clks[] =3D {
+>   =09[RPM_SMD_LN_BB_A_CLK] =3D &msm8916_bb_clk1_a,
+>   =09[RPM_SMD_LN_BB_CLK2] =3D &msm8916_bb_clk2,
+>   =09[RPM_SMD_LN_BB_CLK2_A] =3D &msm8916_bb_clk2_a,
+> -=09[RPM_SMD_LN_BB_CLK3] =3D &sdm660_ln_bb_clk3,
+> -=09[RPM_SMD_LN_BB_CLK3_A] =3D &sdm660_ln_bb_clk3_a,
+> +=09[RPM_SMD_LN_BB_CLK3] =3D &msm8998_ln_bb_clk3,
+> +=09[RPM_SMD_LN_BB_CLK3_A] =3D &msm8998_ln_bb_clk3_a,
+>   =09[RPM_SMD_RF_CLK1_PIN] =3D &msm8916_rf_clk1_pin,
+>   =09[RPM_SMD_RF_CLK1_A_PIN] =3D &msm8916_rf_clk1_a_pin,
+>   =09[RPM_SMD_LN_BB_CLK1_PIN] =3D &msm8916_bb_clk1_pin,
+>   =09[RPM_SMD_LN_BB_CLK1_A_PIN] =3D &msm8916_bb_clk1_a_pin,
+>   =09[RPM_SMD_LN_BB_CLK2_PIN] =3D &msm8916_bb_clk2_pin,
+>   =09[RPM_SMD_LN_BB_CLK2_A_PIN] =3D &msm8916_bb_clk2_a_pin,
+> -=09[RPM_SMD_LN_BB_CLK3_PIN] =3D &sdm660_ln_bb_clk3_pin,
+> -=09[RPM_SMD_LN_BB_CLK3_A_PIN] =3D &sdm660_ln_bb_clk3_pin_a,
+> +=09[RPM_SMD_LN_BB_CLK3_PIN] =3D &msm8998_ln_bb_clk3_pin,
+> +=09[RPM_SMD_LN_BB_CLK3_A_PIN] =3D &msm8998_ln_bb_clk3_a_pin,
+>   };
+>
+>   static const struct rpm_smd_clk_desc rpm_clk_sdm660 =3D {
+> @@ -1011,8 +1025,8 @@ static struct clk_smd_rpm *sm6125_clks[] =3D {
+>   =09[RPM_SMD_LN_BB_CLK1_A] =3D &msm8916_bb_clk1_a,
+>   =09[RPM_SMD_LN_BB_CLK2] =3D &msm8916_bb_clk2,
+>   =09[RPM_SMD_LN_BB_CLK2_A] =3D &msm8916_bb_clk2_a,
+> -=09[RPM_SMD_LN_BB_CLK3] =3D &sdm660_ln_bb_clk3,
+> -=09[RPM_SMD_LN_BB_CLK3_A] =3D &sdm660_ln_bb_clk3_a,
+> +=09[RPM_SMD_LN_BB_CLK3] =3D &msm8998_ln_bb_clk3,
+> +=09[RPM_SMD_LN_BB_CLK3_A] =3D &msm8998_ln_bb_clk3_a,
+>   =09[RPM_SMD_QUP_CLK] =3D &sm6125_qup_clk,
+>   =09[RPM_SMD_QUP_A_CLK] =3D &sm6125_qup_a_clk,
+>   =09[RPM_SMD_MMRT_CLK] =3D &sm6125_mmrt_clk,
+> --
+> 2.35.1
+>
 
-Thanks for spotting and digging that up. I can confirm that the
-documentation has 0 as "no clock" and I think it would be nice if
-lpg_clk_rates[] reflected the possible hardware values. That way we can
-also get rid of the + 1 in lpg_apply_freq().
+--
+Kind Regards,
+Caleb
 
-I will fix this up, as well as fix up the indentation issue spotted by
-Uwe in the documentation and repost.
-
-Regards,
-Bjorn
-
-> I'm still pretty interested in seeing this patch series land and, if
-> it helps it land sooner, I wouldn't object to the above getting fixed
-> in a followup patch.
-> 
-> -Doug
