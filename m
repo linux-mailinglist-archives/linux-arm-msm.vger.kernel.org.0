@@ -2,258 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F08E4CB98C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 09:49:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC44D4CB997
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 09:50:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231630AbiCCIt6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Mar 2022 03:49:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57530 "EHLO
+        id S231395AbiCCIuj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Mar 2022 03:50:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231646AbiCCIt4 (ORCPT
+        with ESMTP id S230378AbiCCIui (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Mar 2022 03:49:56 -0500
-Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A89FE175867
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 00:49:09 -0800 (PST)
-Received: by mail-il1-x133.google.com with SMTP id y5so3451128ill.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Mar 2022 00:49:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=31oR/5R8uiOoYLaqojfd9sfVOvx41Qx3BFeK4/Ytd84=;
-        b=j5CDqRS3oxPTE35yyFrHx2Y6GB2DlGJtO1iBOz3pvlLX8PTZyPdSu/k/MLAFVdzMdM
-         WI9TdX0wk42+MOxOtu4a5Tz8h8cw0KwEDv4EKo5pIzBWME8qpuq6MbGHgKPpeNNbRE77
-         9TKifPjcQSQzE+W9OZUSdKgA6FFRCCsXKvU63O2nMiQw248a4c6xQDUeY0MMkBERCopw
-         BtfK7bSiJ9jtqkj6DcVbpFE22wS/gbrHcHuZUlUtZX2yo/8axZqS5aeV5waqSET/uOHQ
-         7Utib7uaAZUc2eCJhMiVrezn2YYr10VwkBY8JdWuAUpOb5CHIJea6BQ/t6bS6xrOfwWL
-         qNfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=31oR/5R8uiOoYLaqojfd9sfVOvx41Qx3BFeK4/Ytd84=;
-        b=HglY4EUm9P/9bUsq3xWWJP8uN0aUoB9cHJQy+g2QIE+lsOx9u8qdJDjRgNoDApZeZe
-         Ahl5jKiNFj8CFPQo260P+zJGQQAMNHMfS+UVUUDVa+uxbWC50hMEsQ6EQ5Jxmi/xaKCv
-         tGtCl/lr1t+ExaqHUKwXQ5BBsK1WuTywZUI1MqrQkb6/QRR2M1MOWEPL4mwIRrvKYVES
-         Bpy14DowEioQPxrFQ2IZWwKIqfB42cWA+tmqCRlxyar/EL7BhZML69XU5DPiYM8uCYqm
-         Bp+kvalvrH47ZUc2qAvf1bR7hbXrI5pnk/3POOGHzcSx5Jbg7T5qvy6vTsfDIFRg/rgG
-         IyJQ==
-X-Gm-Message-State: AOAM531iQy9UVLwUMGZnkcE0bxA5pG97jSDId64JrBdCHqK8kr2sVXf6
-        nrq3uD0+eR/X5CfnkjtG6HD6Dk51PDQ6lA==
-X-Google-Smtp-Source: ABdhPJwPOMyXQ3RYefx6bbUpZKR8O4u9lKzqY1zOzCWZGh6vbFl1jFWIQFFAAaSdqNoF7NR8nEpD4w==
-X-Received: by 2002:a05:6e02:15c8:b0:2bd:fdca:18a8 with SMTP id q8-20020a056e0215c800b002bdfdca18a8mr30638024ilu.320.1646297348867;
-        Thu, 03 Mar 2022 00:49:08 -0800 (PST)
-Received: from localhost.localdomain ([182.64.85.91])
-        by smtp.gmail.com with ESMTPSA id m9-20020a923f09000000b002c2a1a3a888sm1480704ila.50.2022.03.03.00.49.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Mar 2022 00:49:08 -0800 (PST)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, sboyd@kernel.org, tdas@codeaurora.org,
-        mturquette@baylibre.com, linux-clk@vger.kernel.org,
-        robh+dt@kernel.org, bjorn.andersson@linaro.org,
-        Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH v3 6/6] arm64: dts: qcom: sa8155p-adp: Enable ethernet node
-Date:   Thu,  3 Mar 2022 14:18:24 +0530
-Message-Id: <20220303084824.284946-7-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220303084824.284946-1-bhupesh.sharma@linaro.org>
-References: <20220303084824.284946-1-bhupesh.sharma@linaro.org>
+        Thu, 3 Mar 2022 03:50:38 -0500
+Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 914F4175871;
+        Thu,  3 Mar 2022 00:49:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
+        s=the; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:
+        Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=JraoEzfEu6BVdZPY22b9hr2HRvi9Lg4wAD5QnaTlQvQ=; b=Uzu5ikcdaD2LeKuz7YlSfqL2Rd
+        zHmlzoo/7Rp94sqmn55Y/prB0TYZe/9B8ocnsqcxOeflHQ8BQFcwYU9Gc8A17OfgljU5DWsREfzox
+        pGqr0j3osNbyhYjud8eLurnfnoAsSq8AuhFCMVsARC5/MCGJbMIFgkKVD3/YvaV0X7cukuL6khjr4
+        dCSs9kLBkqv3FYqdxHTWdgWYUzFyWA5ucAcuVCJeYbJEdGipec3/oEUetYU1CVBAaG6F9ZOxATauF
+        2yq9GIlMYgqieGSRGmOpttxgLxwTtZtU9DDm/9EPTz+H1jIU9cGhwPRK1+AvYnxH50KelgKX3eGWo
+        ofb6PtZA==;
+Received: from noodles by the.earth.li with local (Exim 4.94.2)
+        (envelope-from <noodles@earth.li>)
+        id 1nPh9U-00287t-A6; Thu, 03 Mar 2022 08:49:36 +0000
+Date:   Thu, 3 Mar 2022 08:49:36 +0000
+From:   Jonathan McDowell <noodles@earth.li>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 00/15] Multiple addition and improvement to ipq8064 gcc
+Message-ID: <YiCBIIA1FU1DbOso@earth.li>
+References: <20220226135235.10051-1-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220226135235.10051-1-ansuelsmth@gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Vinod Koul <vkoul@kernel.org>
+On Sat, Feb 26, 2022 at 02:52:20PM +0100, Ansuel Smith wrote:
+> This is an attempt in making the ipq8064 SoC actually usable. Currently
+> many feature are missing for this SoC and devs user off-the-tree patches
+> to make it work (example patch for missing clock, patch for cpufreq
+> driver, patch to add missing node in the dts)
+> 
+> I notice there was some work in modernizing the gcc driver for other
+> qcom target but this wasn't done for ipq806x. This does exactly this, we
+> drop any parent_names stuff and we switch to the parent_data way. We
+> also drop the pxo and cxo source clk from gcc driver and we refer to the
+> dts for it.
+> 
+> This also add all the missing feature for the nss cores and the
+> cryptoengine in them. It does also introduce the required flags to make
+> the RPM actually work and NOT reject any command. There was an attempt
+> in declaring these clock as core clock in the dts but this ends up in no
+> serial as the kernel makes these clock not accessible. We just want to
+> make the kernel NOT disable them if unused nothing more.
+> 
+> At the end we update the ipq8064 dtsi to add the pxo and cxo tag and
+> declare them in gcc and also fix a problem with tsens probe.
 
-Enable the etheret node, add the phy node and pinctrl for ethernet.
+FWIW, series tested on my RB3011. No regressions, tsens driver now
+correctly loads.
 
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-[bhsharma: Correct ethernet/rgmii related pinmuxs, specify multi-queues and
- plug in the PHY interrupt for WOL]
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 144 +++++++++++++++++++++++
- 1 file changed, 144 insertions(+)
+Tested-by: Jonathan McDowell <noodles@earth.li>
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-index 8756c2b25c7e..474f688f14a2 100644
---- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-@@ -47,6 +47,65 @@ vreg_s4a_1p8: smps4 {
- 
- 		vin-supply = <&vreg_3p3>;
- 	};
-+
-+	mtl_rx_setup: rx-queues-config {
-+		snps,rx-queues-to-use = <4>;
-+		snps,rx-sched-sp;
-+
-+		queue0 {
-+			snps,dcb-algorithm;
-+			snps,map-to-dma-channel = <0x0>;
-+			snps,route-up;
-+			snps,priority = <0x1>;
-+		};
-+
-+		queue1 {
-+			snps,dcb-algorithm;
-+			snps,map-to-dma-channel = <0x1>;
-+			snps,route-ptp;
-+		};
-+
-+		queue2 {
-+			snps,avb-algorithm;
-+			snps,map-to-dma-channel = <0x2>;
-+			snps,route-avcp;
-+		};
-+
-+		queue3 {
-+			snps,avb-algorithm;
-+			snps,map-to-dma-channel = <0x3>;
-+			snps,priority = <0xC>;
-+		};
-+	};
-+
-+	mtl_tx_setup: tx-queues-config {
-+		snps,tx-queues-to-use = <4>;
-+		snps,tx-sched-wrr;
-+
-+		queue0 {
-+			snps,weight = <0x10>;
-+			snps,dcb-algorithm;
-+			snps,priority = <0x0>;
-+		};
-+
-+		queue1 {
-+			snps,weight = <0x11>;
-+			snps,dcb-algorithm;
-+			snps,priority = <0x1>;
-+		};
-+
-+		queue2 {
-+			snps,weight = <0x12>;
-+			snps,dcb-algorithm;
-+			snps,priority = <0x2>;
-+		};
-+
-+		queue3 {
-+			snps,weight = <0x13>;
-+			snps,dcb-algorithm;
-+			snps,priority = <0x3>;
-+		};
-+	};
- };
- 
- &apps_rsc {
-@@ -317,6 +376,42 @@ &remoteproc_cdsp {
- 	firmware-name = "qcom/sa8155p/cdsp.mdt";
- };
- 
-+&ethernet {
-+	status = "okay";
-+
-+	snps,reset-gpio = <&tlmm 79 GPIO_ACTIVE_LOW>;
-+	snps,reset-active-low;
-+	snps,reset-delays-us = <0 11000 70000>;
-+
-+	snps,ptp-ref-clk-rate = <250000000>;
-+	snps,ptp-req-clk-rate = <96000000>;
-+
-+	snps,mtl-rx-config = <&mtl_rx_setup>;
-+	snps,mtl-tx-config = <&mtl_tx_setup>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&ethernet_defaults>;
-+
-+	phy-handle = <&rgmii_phy>;
-+	phy-mode = "rgmii";
-+	mdio {
-+		#address-cells = <0x1>;
-+		#size-cells = <0x0>;
-+
-+		compatible = "snps,dwmac-mdio";
-+
-+		/* Micrel KSZ9031RNZ PHY */
-+		rgmii_phy: phy@7 {
-+			reg = <0x7>;
-+
-+			interrupt-parent = <&tlmm>;
-+			interrupts-extended = <&tlmm 124 IRQ_TYPE_EDGE_FALLING>; /* phy intr */
-+			device_type = "ethernet-phy";
-+			compatible = "ethernet-phy-ieee802.3-c22";
-+		};
-+	};
-+};
-+
- &uart2 {
- 	status = "okay";
- };
-@@ -407,4 +502,53 @@ mux {
- 			drive-strength = <2>;
- 		};
- 	};
-+
-+	ethernet_defaults: ethernet-defaults {
-+		mdc {
-+			pins = "gpio7";
-+			function = "rgmii";
-+			bias-pull-up;
-+		};
-+
-+		mdio {
-+			pins = "gpio59";
-+			function = "rgmii";
-+			bias-pull-up;
-+		};
-+
-+		rgmii-rx {
-+			pins = "gpio117", "gpio118", "gpio119", "gpio120", "gpio115", "gpio116";
-+			function = "rgmii";
-+			bias-disable;
-+			drive-strength = <2>;
-+		};
-+
-+		rgmii-tx {
-+			pins = "gpio122", "gpio4", "gpio5", "gpio6", "gpio114", "gpio121";
-+			function = "rgmii";
-+			bias-pull-up;
-+			drive-strength = <16>;
-+		};
-+
-+		phy-intr {
-+			pins = "gpio124";
-+			function = "emac_phy";
-+			bias-disable;
-+			drive-strength = <8>;
-+		};
-+
-+		pps {
-+			pins = "gpio81";
-+			function = "emac_pps";
-+			bias-disable;
-+			drive-strength = <8>;
-+		};
-+
-+		phy-reset {
-+			pins = "gpio79";
-+			function = "gpio";
-+			bias-pull-up;
-+			drive-strength = <16>;
-+		};
-+	};
- };
+> v6:
+> - Add more info about the changed define
+> - Fixed wrong definition for pxo/cxo parent map
+> v5:
+> - Drop patch removing fixed clk
+> - Use name in parent_data to keep compatibility with old dtb
+> - Fix error in the documentation commits
+> - Keep old copyright for gcc documentation
+> - Fix an error with the rcg floor ops
+> - Set nss clk based on the device compatible
+> v4:
+> - Drop drivers in all the patches.
+> - Introduce floor ops for sdc
+> - gcc.yaml to gcc-other.yaml
+> - gcc-common.yaml to gcc.yaml
+> v3:
+> - Rework Documentation with Rob suggestions
+> v2:
+> - Fix error from Rob bot.
+> - Add additional commits to make qcom,gcc.yaml a template
+> - Squash parent_hws patch with the modernize patch
+> - Create gcc_pxo instead of using long define.
+> 
+> Ansuel Smith (15):
+>   dt-bindings: clock: split qcom,gcc.yaml to common and specific schema
+>   dt-bindings: clock: simplify qcom,gcc-apq8064 Documentation
+>   dt-bindings: clock: document qcom,gcc-ipq8064 binding
+>   clk: qcom: gcc-ipq806x: fix wrong naming for gcc_pxo_pll8_pll0
+>   clk: qcom: gcc-ipq806x: convert parent_names to parent_data
+>   clk: qcom: gcc-ipq806x: use ARRAY_SIZE for num_parents
+>   clk: qcom: gcc-ipq806x: add additional freq nss cores
+>   clk: qcom: gcc-ipq806x: add unusued flag for critical clock
+>   clk: qcom: clk-rcg: add clk_rcg_floor_ops ops
+>   clk: qcom: gcc-ipq806x: add additional freq for sdc table
+>   dt-bindings: clock: add ipq8064 ce5 clk define
+>   clk: qcom: gcc-ipq806x: add CryptoEngine clocks
+>   dt-bindings: reset: add ipq8064 ce5 resets
+>   clk: qcom: gcc-ipq806x: add CryptoEngine resets
+>   ARM: dts: qcom: add syscon and cxo/pxo clock to gcc node for ipq8064
+> 
+>  .../bindings/clock/qcom,gcc-apq8064.yaml      |  29 +-
+>  .../bindings/clock/qcom,gcc-ipq8064.yaml      |  76 ++
+>  .../bindings/clock/qcom,gcc-other.yaml        |  70 ++
+>  .../devicetree/bindings/clock/qcom,gcc.yaml   |  59 +-
+>  arch/arm/boot/dts/qcom-ipq8064.dtsi           |   8 +-
+>  drivers/clk/qcom/clk-rcg.c                    |  24 +
+>  drivers/clk/qcom/clk-rcg.h                    |   1 +
+>  drivers/clk/qcom/gcc-ipq806x.c                | 649 +++++++++++++-----
+>  include/dt-bindings/clock/qcom,gcc-ipq806x.h  |   5 +-
+>  include/dt-bindings/reset/qcom,gcc-ipq806x.h  |   5 +
+>  10 files changed, 685 insertions(+), 241 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-ipq8064.yaml
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+> 
+> -- 
+> 2.34.1
+
+J.
+
 -- 
-2.35.1
-
+Web [            Even the Evening Herald slags me off.             ]
+site: https:// [                                          ]      Made by
+www.earth.li/~noodles/  [                      ]         HuggieTag 0.0.24
