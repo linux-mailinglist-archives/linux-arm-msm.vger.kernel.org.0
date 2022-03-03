@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 92D7C4CB97D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 09:48:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B0D94CB97F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Mar 2022 09:48:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231592AbiCCIti (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Mar 2022 03:49:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56380 "EHLO
+        id S231607AbiCCItl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Mar 2022 03:49:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231611AbiCCItg (ORCPT
+        with ESMTP id S231597AbiCCItk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Mar 2022 03:49:36 -0500
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D19DA17584F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 00:48:48 -0800 (PST)
-Received: by mail-io1-xd33.google.com with SMTP id q8so4998876iod.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Mar 2022 00:48:48 -0800 (PST)
+        Thu, 3 Mar 2022 03:49:40 -0500
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33C401680B0
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 00:48:54 -0800 (PST)
+Received: by mail-io1-xd2c.google.com with SMTP id c14so4874508ioa.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Mar 2022 00:48:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=MSMHKR0pmUBVsu3Vu2wBxwFcKUCdAyp38lru1FeWzYE=;
-        b=mNlWeTevAfC6NBCmgAqO7gQgNy0HxOaeX7ypa+R+i8lHm7E6Qxfqktf+3G+1FmnWs+
-         FisZv0YRzClLKs3OT/u3rNZViWcMFBkMKWI5jYipSyNSWfdqYUF74IZG4zVqAeSXnN8E
-         p+lRi9exYQ3G7hoP3v5jvTdw2TbgtOJB85OfKvCNmp0mZzGsCEXzKYxeYRHU1t2Xf0cy
-         JtkSkUVrWrCaDKV+As6AGNtxH1O5nzkHvvcBRl2lN58ZMhJCTiA/VJGBfzBL9fgcDlGg
-         Lu6nzgydgwClyT4CoFKgG3XdNkgGIBu+gK8y3XyUAtZ/uTYH0QYxUGnwEpJlAt4aYlLG
-         y+DQ==
+        bh=482hD2qt/fBTqqMj7tAx9n2UG+YZouWq5uywKb+Ersw=;
+        b=M19HlaEWFMO5kHQfzFlCLzmDcVSL7CIc0WlpcCMOt9UgrGMCX4Lr0eNBQ5L6PyXgl8
+         IkHtVnjDicQhYvUbChvfUgrsu2QfAuhtnwGJLJc0TcXKu6eUe9oHglyI7PkxlnH6hUx3
+         aaFpSrogRbKBIobHDn5OTu8YJBTcwN5YZjjffLSb3yysxbLD0xoO47DF1HBW60GfOMty
+         AogDZ6dOstriarTzpKLv+3xBXF+8KhfiDOAgP+A5ocHrBQc1jjP+DfI1twjNWOb1oGWN
+         w2nScQ7ohoKGjjStfKCpFaJrPruocyH/u3DMg+sTExXCEQehx9VCQ7PPhBsig0RT2jSL
+         945A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=MSMHKR0pmUBVsu3Vu2wBxwFcKUCdAyp38lru1FeWzYE=;
-        b=0FjZX4vR1uEOFm0S/JmRd8nzFk6GLhtK2z9/ciiVaJUY6YjFUMlwx3LJPgkvT0S6Xr
-         Vbaf/4e4kQodjfu4EguIzSZZOljMk60nzrBDLYIAfdnxE0uB9M6s9brj6AHAeJ7HgsCz
-         j2UYOLQYXF/v27C3z7F7bOwwmVCRAeJuT9Tb4t6zi5nW46IRwysegFzIaUdGaorarA7f
-         j9x3stCgFnmGX5l4qEAVUIgCkCn/FEjZTOyL4/wCsplYhIWG6ZcjR5y8lsGbxIoZl9Lh
-         MEZZ6QdDrcCWih34o2kTye6Uq/EXedPtCJtU5L2UVpKqosnt223UzxToRhlfMSO0SXs8
-         afsQ==
-X-Gm-Message-State: AOAM532NZeAgJqlTT7qhKHEl0NoSSn3ezHpd0EtGSSZCpIPvE13n2OSn
-        FxdFZEFmpov4LcqMs05eBG64Rxs3n9KDOA==
-X-Google-Smtp-Source: ABdhPJxk4BEn7tYqG9TYEaBYdHLNzALSFZ3qp6vUvK8puPIYmfuW2OoY4zgtrIqQFLL42BG5MiF1Iw==
-X-Received: by 2002:a5e:881a:0:b0:640:d0a5:2bfe with SMTP id l26-20020a5e881a000000b00640d0a52bfemr25696913ioj.34.1646297327976;
-        Thu, 03 Mar 2022 00:48:47 -0800 (PST)
+        bh=482hD2qt/fBTqqMj7tAx9n2UG+YZouWq5uywKb+Ersw=;
+        b=C1UkOWUlr8KIrYwtKID+ShLC3l7EftKsueZpvwD7NaNhJR9SuDbxGxv9/L2VJ/fA9H
+         +rgS2RRhFhqV6pWV9btLMGPHNoWvoSheY/x7wEcCqi9karQCxywEjU6oI/7CZBw+o3xj
+         yrDLeJ9AyG8U69XgN5HhsWJT0H9RFWtijpZ3FxpRe2v5c5jlJTpxfjMy+YFNrVB19tCb
+         aTAV5b6udXUrkdQ+0Yfo6pUPJsT6wJaEQoFWNdoG/NWvJxpYbGaLR3Ig9PcCWIdAqBEt
+         pguGitdyjPlcUSqCBPbzCVoRLXkd3pFENwa4QcNLp8Br6vjs2xd5IyDuMJsqT6d3N0AE
+         ZLZw==
+X-Gm-Message-State: AOAM530iIaGJe2nAxtwGiLUz1dsocmEsN+4a5l8YHEAyl2RQM4BtNgY1
+        MXcMOgs/M7bxpkBufp3DSt9Yv9ZhoB14Pw==
+X-Google-Smtp-Source: ABdhPJyph0+r+OaL+USUMZ6pzp9tvhX9O/L6ChA22JMqK7rKFwLKaSCOe7ZVdIORk9Of7XkvPGd6sQ==
+X-Received: by 2002:a5e:d60d:0:b0:640:9e90:c1c4 with SMTP id w13-20020a5ed60d000000b006409e90c1c4mr26083357iom.0.1646297333361;
+        Thu, 03 Mar 2022 00:48:53 -0800 (PST)
 Received: from localhost.localdomain ([182.64.85.91])
-        by smtp.gmail.com with ESMTPSA id m9-20020a923f09000000b002c2a1a3a888sm1480704ila.50.2022.03.03.00.48.43
+        by smtp.gmail.com with ESMTPSA id m9-20020a923f09000000b002c2a1a3a888sm1480704ila.50.2022.03.03.00.48.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Mar 2022 00:48:47 -0800 (PST)
+        Thu, 03 Mar 2022 00:48:53 -0800 (PST)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
@@ -55,9 +55,9 @@ Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
         devicetree@vger.kernel.org, sboyd@kernel.org, tdas@codeaurora.org,
         mturquette@baylibre.com, linux-clk@vger.kernel.org,
         robh+dt@kernel.org, bjorn.andersson@linaro.org
-Subject: [PATCH v3 2/6] clk: qcom: gcc: sm8150: Fix some identation issues
-Date:   Thu,  3 Mar 2022 14:18:20 +0530
-Message-Id: <20220303084824.284946-3-bhupesh.sharma@linaro.org>
+Subject: [PATCH v3 3/6] clk: qcom: gcc: Add emac GDSC support for SM8150
+Date:   Thu,  3 Mar 2022 14:18:21 +0530
+Message-Id: <20220303084824.284946-4-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220303084824.284946-1-bhupesh.sharma@linaro.org>
 References: <20220303084824.284946-1-bhupesh.sharma@linaro.org>
@@ -73,53 +73,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix identation issues with usb30 gdsc structs in gcc-sm8150.
+Add the EMAC GDSC defines and driver structures for SM8150.
 
 Cc: Stephen Boyd <sboyd@kernel.org>
 Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- drivers/clk/qcom/gcc-sm8150.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/clk/qcom/gcc-sm8150.c               | 10 ++++++++++
+ include/dt-bindings/clock/qcom,gcc-sm8150.h |  1 +
+ 2 files changed, 11 insertions(+)
 
 diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
-index 245794485719..85a431ac417b 100644
+index 85a431ac417b..08ba29e3a835 100644
 --- a/drivers/clk/qcom/gcc-sm8150.c
 +++ b/drivers/clk/qcom/gcc-sm8150.c
-@@ -3449,21 +3449,21 @@ static struct clk_branch gcc_video_xo_clk = {
+@@ -3448,6 +3448,15 @@ static struct clk_branch gcc_video_xo_clk = {
+ 	},
  };
  
++static struct gdsc emac_gdsc = {
++	.gdscr = 0x6004,
++	.pd = {
++		.name = "emac_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++	.flags = POLL_CFG_GDSCR,
++};
++
  static struct gdsc usb30_prim_gdsc = {
--		.gdscr = 0xf004,
--		.pd = {
--			.name = "usb30_prim_gdsc",
--		},
--		.pwrsts = PWRSTS_OFF_ON,
--		.flags = POLL_CFG_GDSCR,
-+	.gdscr = 0xf004,
-+	.pd = {
-+		.name = "usb30_prim_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = POLL_CFG_GDSCR,
+ 	.gdscr = 0xf004,
+ 	.pd = {
+@@ -3714,6 +3723,7 @@ static const struct qcom_reset_map gcc_sm8150_resets[] = {
  };
  
- static struct gdsc usb30_sec_gdsc = {
--		.gdscr = 0x10004,
--		.pd = {
--			.name = "usb30_sec_gdsc",
--		},
--		.pwrsts = PWRSTS_OFF_ON,
--		.flags = POLL_CFG_GDSCR,
-+	.gdscr = 0x10004,
-+	.pd = {
-+		.name = "usb30_sec_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = POLL_CFG_GDSCR,
+ static struct gdsc *gcc_sm8150_gdscs[] = {
++	[EMAC_GDSC] = &emac_gdsc,
+ 	[USB30_PRIM_GDSC] = &usb30_prim_gdsc,
+ 	[USB30_SEC_GDSC] = &usb30_sec_gdsc,
  };
+diff --git a/include/dt-bindings/clock/qcom,gcc-sm8150.h b/include/dt-bindings/clock/qcom,gcc-sm8150.h
+index 3e1a91876610..40596b9ded06 100644
+--- a/include/dt-bindings/clock/qcom,gcc-sm8150.h
++++ b/include/dt-bindings/clock/qcom,gcc-sm8150.h
+@@ -243,5 +243,6 @@
+ /* GCC GDSCRs */
+ #define USB30_PRIM_GDSC                     4
+ #define USB30_SEC_GDSC						5
++#define EMAC_GDSC						6
  
- static struct clk_regmap *gcc_sm8150_clocks[] = {
+ #endif
 -- 
 2.35.1
 
