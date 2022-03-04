@@ -2,55 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1F804CCB29
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Mar 2022 02:07:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AC86F4CCB20
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Mar 2022 02:06:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230385AbiCDBI3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Mar 2022 20:08:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41300 "EHLO
+        id S232138AbiCDBH0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Mar 2022 20:07:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235576AbiCDBI1 (ORCPT
+        with ESMTP id S230272AbiCDBH0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Mar 2022 20:08:27 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6965F1EC4B;
-        Thu,  3 Mar 2022 17:07:40 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B9F0FB826D4;
-        Fri,  4 Mar 2022 01:07:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32781C004E1;
-        Fri,  4 Mar 2022 01:07:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1646356057;
-        bh=3mi7VxXpLHb5nSJP4Fl9rRCoWjt0fOGvcpAtnS+zlq0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SBRmJtsLeS4H3LTufeok6l2thSvNhjLSZ9Ew1WA/am/rFGLUWlyfeJFJCfV/YSLB6
-         bQItQUclIp2+767l2tLEmfu0IfMcm2da/qOzDpKWMETA/zYD8VGenf7iyV5mXaHtSv
-         yDw6WmWl4VtDwByvDVbG9DonEdEQ/ECVuns96yiQwSR1ATgrwr4wCmGMr5NW625aBE
-         XiT9HzQ3cKE8SS+kuHhi+xRhZ85yVaPMw1oJkhOK9l+cocyyqOMm/wA9KSONmhBEee
-         XPSNveb4J1euzOTOslg/FUhbm2GUsBe0N8LdHVe/q5n53c2ciGDQf+qngwkVABSnjz
-         SPVIgosHLj//A==
-Date:   Fri, 4 Mar 2022 01:07:35 +0000
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Bart Van Assche <bvanassche@acm.org>
-Cc:     linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        kernel-team@android.com,
-        Gaurav Kashyap <quic_gaurkash@quicinc.com>,
-        Israel Rukshin <israelr@nvidia.com>
-Subject: Re: [PATCH v5 1/3] block: add basic hardware-wrapped key support
-Message-ID: <YiFmV+WXY+mKsM83@gmail.com>
-References: <20220228070520.74082-1-ebiggers@kernel.org>
- <20220228070520.74082-2-ebiggers@kernel.org>
- <ac499ff9-eeb4-4f25-bb59-3f37477190ed@acm.org>
+        Thu, 3 Mar 2022 20:07:26 -0500
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68BA7179A35
+        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 17:06:39 -0800 (PST)
+Received: by mail-ot1-x329.google.com with SMTP id j8-20020a056830014800b005ad00ef6d5dso6176119otp.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Mar 2022 17:06:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=S5t4rbaYih60HQLQG00cH7GkHoQ2b0pMi3XAEtckmE8=;
+        b=pex35ksJ1RmL6raNCdLtvz2rZNpkKoewNNIB6VzZUOsWqRNYLQzy8uahH1EQ3gTUs6
+         3JEjp5Rv5UooZGIGDxl1XUNj5sdWwUXjShAyNm3a45yFgdUG7N3ifbgeCIewoj5plual
+         TngJrLkrP7rik5aa4GlA/Ypnx7cJ3MgmeMT1wEz/Qwb5CqagoJe2Ry4Wyq94ugz+UpOr
+         CDkV3Jb/U69QHXOAIkv68kYt2PM+cM7Mcka0A3zx0/b1CqKN5b8GhCU+/PQQxNk4GuIg
+         JuOLs54lWVog3R8yQ9vP+X8JYrdLQjZB37f3xZ/Rz4aLjUcTkw4cfk5H/uu8rZjAE7hY
+         fkOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=S5t4rbaYih60HQLQG00cH7GkHoQ2b0pMi3XAEtckmE8=;
+        b=T8usyCZVmy9l+TdlVJybVN/x9ApNP1Q/1FdholCufk4R7TEGjP+7CVz6LwNchAz+GX
+         pPGCm+bZML/Qhu2l+jM0jC6c7CekMfvqcgvXCa0kAo3oIMOM0I3hDSpLhg+92VlhgmNf
+         usqNLtB+uUpqGnJk3MbFrqVpIHO4iwYhqm7RZcRc0FXNtgAg+dMyU32jTtDPSLfDFDla
+         lSgVGmL4AzlPcIyxefiYo6nNBX7O4yfhAEoririaWWbz5b4pSEicUPqPIbUxqcRADIsx
+         /rjSoEHUeT1ymW4x+8cY3EddIlyrZBVEubeKcEeXjUN6Y+XLlot+Njm5y+Tix52GU0Jp
+         avIQ==
+X-Gm-Message-State: AOAM531GhxnHNQOl3JeEIZlEU75H1vkCqL4W0LYXWBR27h+E1QNLtJI8
+        mvwTosTO/qg6VTFX4vyGQC08qg==
+X-Google-Smtp-Source: ABdhPJytLNNdMMTPErv9vZo/RqVdSG9bZ+EjlBsEkVgN7+X2TRNTpYHgyz2ZTSewepBTpUOKWvZERA==
+X-Received: by 2002:a9d:734b:0:b0:5b1:ff8f:710 with SMTP id l11-20020a9d734b000000b005b1ff8f0710mr1027991otk.65.1646355998639;
+        Thu, 03 Mar 2022 17:06:38 -0800 (PST)
+Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id l14-20020a4ac60e000000b002e0e75dcb82sm1709080ooq.12.2022.03.03.17.06.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Mar 2022 17:06:38 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-usb@vger.kernel.org
+Subject: [PATCH v2 1/2] drm: Add HPD state to drm_connector_oob_hotplug_event()
+Date:   Thu,  3 Mar 2022 17:08:26 -0800
+Message-Id: <20220304010827.998080-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ac499ff9-eeb4-4f25-bb59-3f37477190ed@acm.org>
-X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -59,26 +83,179 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 03, 2022 at 04:53:56PM -0800, Bart Van Assche wrote:
-> On 2/27/22 23:05, Eric Biggers wrote:
-> > @@ -68,7 +71,10 @@ static int __init bio_crypt_ctx_init(void)
-> >   	/* Sanity check that no algorithm exceeds the defined limits. */
-> >   	for (i = 0; i < BLK_ENCRYPTION_MODE_MAX; i++) {
-> > -		BUG_ON(blk_crypto_modes[i].keysize > BLK_CRYPTO_MAX_KEY_SIZE);
-> > +		BUG_ON(blk_crypto_modes[i].keysize >
-> > +		       BLK_CRYPTO_MAX_STANDARD_KEY_SIZE);
-> > +		BUG_ON(blk_crypto_modes[i].security_strength >
-> > +		       blk_crypto_modes[i].keysize);
-> >   		BUG_ON(blk_crypto_modes[i].ivsize > BLK_CRYPTO_MAX_IV_SIZE);
-> >   	}
-> 
-> Does the following advice from Linus Torvalds apply to the above code:
-> "because there is NO EXCUSE to knowingly kill the kernel"? See also
-> https://lkml.org/lkml/2016/10/4/1.
+In some implementations, such as the Qualcomm platforms, the display
+driver has no way to query the current HPD state and as such it's
+impossible to distinguish between disconnect and attention events.
 
-These are boot time checks, so the advice doesn't apply.  If the code is buggy
-here, then kernels with CONFIG_BLK_INLINE_ENCRYPTION enabled won't boot.  I
-would prefer compile-time checks, of course, but that isn't possible here.  This
-is the next best thing.
+Add a parameter to drm_connector_oob_hotplug_event() to pass the HPD
+state.
 
-- Eric
+Also push the test for unchanged state in the displayport altmode driver
+into the i915 driver, to allow other drivers to act upon each update.
+
+Changes in v2:
+- Replace bool with drm_connector_hpd_state enum to represent "state" better
+- Track old hpd state per encoder in i915
+
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+ drivers/gpu/drm/drm_connector.c          |  6 ++++--
+ drivers/gpu/drm/i915/display/intel_dp.c  | 17 ++++++++++++++---
+ drivers/gpu/drm/i915/i915_drv.h          |  3 +++
+ drivers/usb/typec/altmodes/displayport.c | 10 +++-------
+ include/drm/drm_connector.h              | 11 +++++++++--
+ 5 files changed, 33 insertions(+), 14 deletions(-)
+
+diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
+index a50c82bc2b2f..a44f082ebd9d 100644
+--- a/drivers/gpu/drm/drm_connector.c
++++ b/drivers/gpu/drm/drm_connector.c
+@@ -2825,6 +2825,7 @@ struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode)
+ /**
+  * drm_connector_oob_hotplug_event - Report out-of-band hotplug event to connector
+  * @connector_fwnode: fwnode_handle to report the event on
++ * @hpd_state: hot plug detect logical state
+  *
+  * On some hardware a hotplug event notification may come from outside the display
+  * driver / device. An example of this is some USB Type-C setups where the hardware
+@@ -2834,7 +2835,8 @@ struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode)
+  * This function can be used to report these out-of-band events after obtaining
+  * a drm_connector reference through calling drm_connector_find_by_fwnode().
+  */
+-void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode)
++void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode,
++				     enum drm_connector_hpd_state hpd_state)
+ {
+ 	struct drm_connector *connector;
+ 
+@@ -2843,7 +2845,7 @@ void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode)
+ 		return;
+ 
+ 	if (connector->funcs->oob_hotplug_event)
+-		connector->funcs->oob_hotplug_event(connector);
++		connector->funcs->oob_hotplug_event(connector, hpd_state);
+ 
+ 	drm_connector_put(connector);
+ }
+diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
+index 1046e7fe310a..a3c9dbae5cee 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -4825,15 +4825,26 @@ static int intel_dp_connector_atomic_check(struct drm_connector *conn,
+ 	return intel_modeset_synced_crtcs(state, conn);
+ }
+ 
+-static void intel_dp_oob_hotplug_event(struct drm_connector *connector)
++static void intel_dp_oob_hotplug_event(struct drm_connector *connector,
++				       enum drm_connector_hpd_state hpd_state)
+ {
+ 	struct intel_encoder *encoder = intel_attached_encoder(to_intel_connector(connector));
+ 	struct drm_i915_private *i915 = to_i915(connector->dev);
++	bool hpd_high = hpd_state == DRM_CONNECTOR_HPD_HIGH;
++	unsigned int hpd_pin = encoder->hpd_pin;
++	bool need_work = false;
+ 
+ 	spin_lock_irq(&i915->irq_lock);
+-	i915->hotplug.event_bits |= BIT(encoder->hpd_pin);
++	if (hpd_high != test_bit(hpd_pin, &i915->hotplug.oob_hotplug_last_state)) {
++		i915->hotplug.event_bits |= BIT(hpd_pin);
++
++		__assign_bit(hpd_pin, &i915->hotplug.oob_hotplug_last_state, hpd_high);
++		need_work = true;
++	}
+ 	spin_unlock_irq(&i915->irq_lock);
+-	queue_delayed_work(system_wq, &i915->hotplug.hotplug_work, 0);
++
++	if (need_work)
++		queue_delayed_work(system_wq, &i915->hotplug.hotplug_work, 0);
+ }
+ 
+ static const struct drm_connector_funcs intel_dp_connector_funcs = {
+diff --git a/drivers/gpu/drm/i915/i915_drv.h b/drivers/gpu/drm/i915/i915_drv.h
+index 5cfe69b30841..80a4615a38e2 100644
+--- a/drivers/gpu/drm/i915/i915_drv.h
++++ b/drivers/gpu/drm/i915/i915_drv.h
+@@ -138,6 +138,9 @@ struct i915_hotplug {
+ 	/* Whether or not to count short HPD IRQs in HPD storms */
+ 	u8 hpd_short_storm_enabled;
+ 
++	/* Last state reported by oob_hotplug_event for each encoder */
++	unsigned long oob_hotplug_last_state;
++
+ 	/*
+ 	 * if we get a HPD irq from DP and a HPD irq from non-DP
+ 	 * the non-DP HPD could block the workqueue on a mode config
+diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
+index c1d8c23baa39..ea9cb1d71fd2 100644
+--- a/drivers/usb/typec/altmodes/displayport.c
++++ b/drivers/usb/typec/altmodes/displayport.c
+@@ -59,7 +59,6 @@ struct dp_altmode {
+ 	struct typec_displayport_data data;
+ 
+ 	enum dp_state state;
+-	bool hpd;
+ 
+ 	struct mutex lock; /* device lock */
+ 	struct work_struct work;
+@@ -143,10 +142,8 @@ static int dp_altmode_status_update(struct dp_altmode *dp)
+ 		if (!ret)
+ 			dp->state = DP_STATE_CONFIGURE;
+ 	} else {
+-		if (dp->hpd != hpd) {
+-			drm_connector_oob_hotplug_event(dp->connector_fwnode);
+-			dp->hpd = hpd;
+-		}
++		drm_connector_oob_hotplug_event(dp->connector_fwnode,
++						hpd ? DRM_CONNECTOR_HPD_HIGH : DRM_CONNECTOR_HPD_LOW);
+ 	}
+ 
+ 	return ret;
+@@ -573,8 +570,7 @@ void dp_altmode_remove(struct typec_altmode *alt)
+ 	cancel_work_sync(&dp->work);
+ 
+ 	if (dp->connector_fwnode) {
+-		if (dp->hpd)
+-			drm_connector_oob_hotplug_event(dp->connector_fwnode);
++		drm_connector_oob_hotplug_event(dp->connector_fwnode, DRM_CONNECTOR_HPD_LOW);
+ 
+ 		fwnode_handle_put(dp->connector_fwnode);
+ 	}
+diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
+index 64cf5f88c05b..bd2f305fa670 100644
+--- a/include/drm/drm_connector.h
++++ b/include/drm/drm_connector.h
+@@ -142,6 +142,11 @@ enum subpixel_order {
+ 
+ };
+ 
++enum drm_connector_hpd_state {
++	DRM_CONNECTOR_HPD_LOW,
++	DRM_CONNECTOR_HPD_HIGH
++};
++
+ /**
+  * struct drm_scrambling: sink's scrambling support.
+  */
+@@ -1141,7 +1146,8 @@ struct drm_connector_funcs {
+ 	 * This will get called when a hotplug-event for a drm-connector
+ 	 * has been received from a source outside the display driver / device.
+ 	 */
+-	void (*oob_hotplug_event)(struct drm_connector *connector);
++	void (*oob_hotplug_event)(struct drm_connector *connector,
++				  enum drm_connector_hpd_state hpd_state);
+ };
+ 
+ /**
+@@ -1742,7 +1748,8 @@ drm_connector_is_unregistered(struct drm_connector *connector)
+ 		DRM_CONNECTOR_UNREGISTERED;
+ }
+ 
+-void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode);
++void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode,
++				     enum drm_connector_hpd_state hpd_state);
+ const char *drm_get_connector_type_name(unsigned int connector_type);
+ const char *drm_get_connector_status_name(enum drm_connector_status status);
+ const char *drm_get_subpixel_order_name(enum subpixel_order order);
+-- 
+2.33.1
+
