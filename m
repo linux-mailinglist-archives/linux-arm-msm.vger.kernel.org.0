@@ -2,148 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB2BE4CCB12
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Mar 2022 01:59:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F13424CCAEF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Mar 2022 01:54:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237507AbiCDBAB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 3 Mar 2022 20:00:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47242 "EHLO
+        id S231932AbiCDAyr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 3 Mar 2022 19:54:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237523AbiCDA7k (ORCPT
+        with ESMTP id S229918AbiCDAyq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 3 Mar 2022 19:59:40 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D38E61405F3;
-        Thu,  3 Mar 2022 16:58:53 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id e13so6351786plh.3;
-        Thu, 03 Mar 2022 16:58:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=s4j6M/QS1mgW5MTxzHwE3g8Q8Q6w+oMyq63tCyKGxiU=;
-        b=DWC4DkI9wrUscASe9OTO/VybE2truTUQRwJVLU7Dr7Lk3zIGDp1ucqsHmEnuMtKhWG
-         k9jIOF+x7ZeehiBWYJe+et8X/l9bv2+vk/rYAw2YokDjRLUbPm9wTMwEYhz1glnVwL8u
-         eHLe41yXVJK6osaYY8sWxlvRDG+h6boLQwa0wIqmAS7sbiY4qR6XNEreJHO+FzbExMXm
-         ym9UIYoS8Hj6SIy3RrXBTxF0Lpd/Oqcs2wZy5ytdjzGwrojFuSgClxMsQieXTc+hnDO6
-         eHF4vUrqnwRZs8rDqTPUzE4+j9/6pf6jn6ahS5i8U78hccAvU6OnUOB+VGVQIUhG72DM
-         l8Kg==
+        Thu, 3 Mar 2022 19:54:46 -0500
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0699A13DE21;
+        Thu,  3 Mar 2022 16:54:00 -0800 (PST)
+Received: by mail-pf1-f170.google.com with SMTP id s11so6180638pfu.13;
+        Thu, 03 Mar 2022 16:54:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=s4j6M/QS1mgW5MTxzHwE3g8Q8Q6w+oMyq63tCyKGxiU=;
-        b=ngCTGKhFX+fXsXhpV6p96Wh+6Hq9XdKj6HvC83HMjAcJpE9yiidYXlr6h7UyFvcgJV
-         5+9N/CMOxgvL6gJoNAyujIbHH/gv8f0NAqKbsNqDGRtxA6U6uN5ms2uF1nXJ2qsucNom
-         aCTaTKhC9ore5FlB8LtSZ+FoA01A6ZMwt0VO2yZYEMt/ZJLx9Uz376rNoWyYjxqFizKd
-         oUKGHbhXmob/+60RYeRNdKatIQ5u3nMPXBmmSueqgkaEKX3P8FxZhZFXvJHxxr7jg45W
-         6WoMgVzsDoUzeyXKlztEOClShvTj92WNnIBaRwyU7Km/0SnL70VhRGRe1DJd0YTWS+3y
-         WlnA==
-X-Gm-Message-State: AOAM530ihf0QhJgt5Qot9rTwjndTS66n9/t0bO0ElXdJbnp6sVafaH0+
-        Cf/J1O76heduf9o7JbqKif/HWwcImso=
-X-Google-Smtp-Source: ABdhPJzA5bZTW91ErXFqEOX9J0gm0y6jMQksaO9v3kaCeVmebqi6yV6gwM7M+14FmNYid9bPqdN7eQ==
-X-Received: by 2002:a17:902:cec2:b0:151:b337:a699 with SMTP id d2-20020a170902cec200b00151b337a699mr3710872plg.59.1646355533288;
-        Thu, 03 Mar 2022 16:58:53 -0800 (PST)
-Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id ob13-20020a17090b390d00b001becfd7c6f3sm3246386pjb.27.2022.03.03.16.58.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Mar 2022 16:58:52 -0800 (PST)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 4/4] drm/msm/a6xx: Zap counters across context switch
-Date:   Thu,  3 Mar 2022 16:52:17 -0800
-Message-Id: <20220304005317.776110-5-robdclark@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220304005317.776110-1-robdclark@gmail.com>
-References: <20220304005317.776110-1-robdclark@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=YJwEZHpBOkrX91NRDhiBnL9TsivdhXedQE1MEXdFkGk=;
+        b=KLqrmsV0QMDFisEQB581pHpZA0EGa9UiO3CkbzHNOLMFnxj91kwkuw2WUOmut/cUHN
+         nsbxWH+4ijCJTsCaBks4mFTZsPmVVsrPGEbnSfFFiR7JcRGFrYFYOruemTxwDZnCH7fJ
+         zQtxl6g4+Rms0YodOQpQEXORNmg/g7Y1LWOGKH1+ZHo6mLNnNkzu2mxcCIBgZusZwVOx
+         o0iVQmtj+HW8pPuljIBUiM+rD1OoJhZpUalYj15k7VwZWmAYOdbaRO7Ry2viyIDvD0vt
+         VFB+SUc366GmdWzOLE4z897D9QcCR3/XeMJkQS8RIoQWuq76qlMsF5Od8Em1cvPuOK3z
+         0ksg==
+X-Gm-Message-State: AOAM530u1mkxOBZNGjel/zsl7R0We785t3M94/vqJ5SMjwrSlu+RgvFe
+        Py1zLpHO+BS4SzjtAysxZaw=
+X-Google-Smtp-Source: ABdhPJwrunTYNLwCSAFqvfBGbiuz/Fhz9cSPhSzz+gpBillc7qLhh3XO4rOBM76VfXVVCsK+o8PRkg==
+X-Received: by 2002:aa7:970e:0:b0:4f6:6c73:24c3 with SMTP id a14-20020aa7970e000000b004f66c7324c3mr6208291pfg.32.1646355239206;
+        Thu, 03 Mar 2022 16:53:59 -0800 (PST)
+Received: from ?IPV6:2601:647:4000:d7:feaa:14ff:fe9d:6dbd? ([2601:647:4000:d7:feaa:14ff:fe9d:6dbd])
+        by smtp.gmail.com with ESMTPSA id s2-20020a056a001c4200b004f41e1196fasm3699345pfw.17.2022.03.03.16.53.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Mar 2022 16:53:58 -0800 (PST)
+Message-ID: <ac499ff9-eeb4-4f25-bb59-3f37477190ed@acm.org>
+Date:   Thu, 3 Mar 2022 16:53:56 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH v5 1/3] block: add basic hardware-wrapped key support
+Content-Language: en-US
+To:     Eric Biggers <ebiggers@kernel.org>, linux-block@vger.kernel.org,
+        linux-fscrypt@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        kernel-team@android.com,
+        Gaurav Kashyap <quic_gaurkash@quicinc.com>,
+        Israel Rukshin <israelr@nvidia.com>
+References: <20220228070520.74082-1-ebiggers@kernel.org>
+ <20220228070520.74082-2-ebiggers@kernel.org>
+From:   Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20220228070520.74082-2-ebiggers@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On 2/27/22 23:05, Eric Biggers wrote:
+> -static u8 blank_key[BLK_CRYPTO_MAX_KEY_SIZE];
+> +static u8 blank_key[BLK_CRYPTO_MAX_STANDARD_KEY_SIZE];
+>   
+>   static void blk_crypto_fallback_evict_keyslot(unsigned int slot)
+>   {
+> @@ -539,7 +539,7 @@ static int blk_crypto_fallback_init(void)
+>   	if (blk_crypto_fallback_inited)
+>   		return 0;
+>   
+> -	prandom_bytes(blank_key, BLK_CRYPTO_MAX_KEY_SIZE);
+> +	prandom_bytes(blank_key, BLK_CRYPTO_MAX_STANDARD_KEY_SIZE);
 
-Any app controlled perfcntr collection (GL_AMD_performance_monitor, etc)
-does not require counters to maintain state across context switches.  So
-clear them if systemwide profiling is not active.
+Please use sizeof(blank_key) to make it easier for readers to verify that the 
+length argument is correct.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 29 +++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+> +int blk_crypto_derive_sw_secret(struct blk_crypto_profile *profile,
+> +				const u8 *wrapped_key,
+> +				unsigned int wrapped_key_size,
+> +				u8 sw_secret[BLK_CRYPTO_SW_SECRET_SIZE])
+> +{
+> +	int err = -EOPNOTSUPP;
+> +
+> +	if (profile &&
+> +	    (profile->key_types_supported & BLK_CRYPTO_KEY_TYPE_HW_WRAPPED) &&
+> +	    profile->ll_ops.derive_sw_secret) {
+> +		blk_crypto_hw_enter(profile);
+> +		err = profile->ll_ops.derive_sw_secret(profile, wrapped_key,
+> +						       wrapped_key_size,
+> +						       sw_secret);
+> +		blk_crypto_hw_exit(profile);
+> +	}
+> +	return err;
+> +}
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 237c2e7a7baa..02b47977b5c3 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -101,6 +101,7 @@ static void get_stats_counter(struct msm_ringbuffer *ring, u32 counter,
- static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
- 		struct msm_ringbuffer *ring, struct msm_file_private *ctx)
- {
-+	bool sysprof = refcount_read(&a6xx_gpu->base.base.sysprof_active) > 1;
- 	phys_addr_t ttbr;
- 	u32 asid;
- 	u64 memptr = rbmemptr(ring, ttbr0);
-@@ -111,6 +112,15 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
- 	if (msm_iommu_pagetable_params(ctx->aspace->mmu, &ttbr, &asid))
- 		return;
- 
-+	if (!sysprof) {
-+		/* Turn off protected mode to write to special registers */
-+		OUT_PKT7(ring, CP_SET_PROTECTED_MODE, 1);
-+		OUT_RING(ring, 0);
-+
-+		OUT_PKT4(ring, REG_A6XX_RBBM_PERFCTR_SRAM_INIT_CMD, 1);
-+		OUT_RING(ring, 1);
-+	}
-+
- 	/* Execute the table update */
- 	OUT_PKT7(ring, CP_SMMU_TABLE_UPDATE, 4);
- 	OUT_RING(ring, CP_SMMU_TABLE_UPDATE_0_TTBR0_LO(lower_32_bits(ttbr)));
-@@ -137,6 +147,25 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
- 
- 	OUT_PKT7(ring, CP_EVENT_WRITE, 1);
- 	OUT_RING(ring, 0x31);
-+
-+	if (!sysprof) {
-+		/*
-+		 * Wait for SRAM clear after the pgtable update, so the
-+		 * two can happen in parallel:
-+		 */
-+		OUT_PKT7(ring, CP_WAIT_REG_MEM, 6);
-+		OUT_RING(ring, CP_WAIT_REG_MEM_0_FUNCTION(WRITE_EQ));
-+		OUT_RING(ring, CP_WAIT_REG_MEM_1_POLL_ADDR_LO(
-+				REG_A6XX_RBBM_PERFCTR_SRAM_INIT_STATUS));
-+		OUT_RING(ring, CP_WAIT_REG_MEM_2_POLL_ADDR_HI(0));
-+		OUT_RING(ring, CP_WAIT_REG_MEM_3_REF(0x1));
-+		OUT_RING(ring, CP_WAIT_REG_MEM_4_MASK(0x1));
-+		OUT_RING(ring, CP_WAIT_REG_MEM_5_DELAY_LOOP_CYCLES(0));
-+
-+		/* Re-enable protected mode: */
-+		OUT_PKT7(ring, CP_SET_PROTECTED_MODE, 1);
-+		OUT_RING(ring, 1);
-+	}
- }
- 
- static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
--- 
-2.35.1
+Please use the common kernel style: return early if the preconditions have not 
+been met. That helps to keep the indentation level low.
 
+> @@ -68,7 +71,10 @@ static int __init bio_crypt_ctx_init(void)
+>   
+>   	/* Sanity check that no algorithm exceeds the defined limits. */
+>   	for (i = 0; i < BLK_ENCRYPTION_MODE_MAX; i++) {
+> -		BUG_ON(blk_crypto_modes[i].keysize > BLK_CRYPTO_MAX_KEY_SIZE);
+> +		BUG_ON(blk_crypto_modes[i].keysize >
+> +		       BLK_CRYPTO_MAX_STANDARD_KEY_SIZE);
+> +		BUG_ON(blk_crypto_modes[i].security_strength >
+> +		       blk_crypto_modes[i].keysize);
+>   		BUG_ON(blk_crypto_modes[i].ivsize > BLK_CRYPTO_MAX_IV_SIZE);
+>   	}
+
+Does the following advice from Linus Torvalds apply to the above code: "because 
+there is NO EXCUSE to knowingly kill the kernel"? See also 
+https://lkml.org/lkml/2016/10/4/1.
+
+Thanks,
+
+Bart.
