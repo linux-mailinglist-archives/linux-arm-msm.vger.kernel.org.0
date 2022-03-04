@@ -2,68 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B3A84CCF6D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Mar 2022 08:59:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B5AA34CCF70
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Mar 2022 08:59:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232087AbiCDH77 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Mar 2022 02:59:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41034 "EHLO
+        id S239032AbiCDIAM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Mar 2022 03:00:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239031AbiCDH76 (ORCPT
+        with ESMTP id S239030AbiCDIAK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Mar 2022 02:59:58 -0500
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52A421405F1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  3 Mar 2022 23:59:10 -0800 (PST)
-Received: by mail-qk1-x733.google.com with SMTP id f21so5856620qke.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Mar 2022 23:59:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hvu/peVgD6fJaER9RWxznT70/W3U9QttCqf/QNoHRDU=;
-        b=tTi/8bkntcVU6In/S1Pb/OP73F5xC2e/EjBVnV4h4GAuomqZ5xcM5uJeJ/C4++58Ci
-         bBdFyS5ex60SImaTHtJIigr3AEXyaTqwJo0bTaj636s4AvFEJfxWMvfI48NmXxsrDDct
-         i9BtADuo9Lf0wq+cIFRmkiY04O/Uhc2YZR/zyey0NBHyep3+dl3r/6PcvBZXp1juLjQn
-         /mQXuTqL3aAX5mpLU5gZKPMnLcXv5BuET/NC9JvU5hK9i/PG2IlZaHKJmE0siLitDxOf
-         0hu2LgldPy4SpUbsXi/mdPM6Cwwyz6/SYcqLjb4j/smxrezGToWkXU8dSSosl45EACpx
-         t4sQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hvu/peVgD6fJaER9RWxznT70/W3U9QttCqf/QNoHRDU=;
-        b=IvX3sLz4u1GxXk5ZLKJgsSg+DwjkMnCj07HIdBrqf6gV4Q2ew3RYs0b64f5zEJr7qk
-         NPcMjZ0ZsZgFDvNwU/NyThWFtvu5l85vt3RskUoxFGJzjUIfHcfKoeGHn3dFZeFqmmKK
-         rh56fJHYGXgUwt1f7R1mT3iEV+7roAFc9rtPrpolxS0DqvTBR2J5FxOPrevqs4hf+EFc
-         JoZipamtOqiBCU3QF6A1rqvcbwkZcdGZgYT8Z1+87rWxD4fELftxoGjf4MUnN1NH/iYU
-         TW3xENhDInhDcJ0TOqJJL+ximkvGOzJEdf8WQNhMgwpHhiWVUv+iUlM+UesFKJA8zq28
-         GSPQ==
-X-Gm-Message-State: AOAM533zJEdm7sVQzOf/oxZ0wy52a3H7Va0OoQe15rGNoEPlUhZ2FlcF
-        GzbAb8DBqBhTwG33IBdi7ou8kZLsfsJo2ChzZHe4nA==
-X-Google-Smtp-Source: ABdhPJxGpg//Qbn9sDTSA/IIrc+b7rNBDFwK+45t1tYmJLD5x9yvJUEuvKNe+/DlkgM6bbD29W3ZS2Jp3rXEzt506ic=
-X-Received: by 2002:a05:620a:1673:b0:62c:da57:aa32 with SMTP id
- d19-20020a05620a167300b0062cda57aa32mr1838413qko.203.1646380749414; Thu, 03
- Mar 2022 23:59:09 -0800 (PST)
-MIME-Version: 1.0
-References: <20220217055529.499829-1-dmitry.baryshkov@linaro.org>
- <20220217055529.499829-4-dmitry.baryshkov@linaro.org> <CAE-0n529mx1ke89iw8xXZEDcs0z84hA09B31cWeVQSTU9RAAYg@mail.gmail.com>
- <CAA8EJpq4fXHH6GEJO=m3Ckw0A2p7B_X0D3SiXi1xnJ=4VZOC=g@mail.gmail.com> <CAE-0n50h=REsyLsjNMaMaZtH7Dptowink7Tq0nzmBRYNas9OmQ@mail.gmail.com>
-In-Reply-To: <CAE-0n50h=REsyLsjNMaMaZtH7Dptowink7Tq0nzmBRYNas9OmQ@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 4 Mar 2022 10:58:58 +0300
-Message-ID: <CAA8EJppT9O+bDjfEZv9tWCWpeCDMDPTf+VV0a0HxDw2mXhiMtw@mail.gmail.com>
-Subject: Re: [PATCH v5 3/5] drm/msm/dp: set stream_pixel rate directly
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Fri, 4 Mar 2022 03:00:10 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13AB6149961;
+        Thu,  3 Mar 2022 23:59:22 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 114F2B827A1;
+        Fri,  4 Mar 2022 07:59:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969CBC340E9;
+        Fri,  4 Mar 2022 07:59:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1646380759;
+        bh=NZb/jyj/jkqA0t/E0dt1LZydRqSTZzkEbnbs7Uesp6s=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=cXIjvpATyWGIm/KCqM2kBndDnYceqLiPrwdSFhAvTItKb9Sxkfj24A09JR23uwUpM
+         ggKcW99vfTOH1UwIlkv+J9F2oQ+C4FAlsW1CloUIJhG8A/hQF/DexYwgz7UVdTKKZo
+         N2KFo/MeOgCnK4DDwehxxJOd01o4vT1LKfevyj/0oDz1Y55tBCqdkKN0yjS1HZkug8
+         LVzF7OHKZMhWyUFvaxK1i+UcYj+v95SkkTzPXb476jnifPgwN234w/8uvzOYVzKzRY
+         WILhkqzEzGf8VEMpp4FqSP6aK1IWCT7Zu/7MIjiuXuTEqXFU98N60dPqliYQqpT7j0
+         5KIfiCdKwI3Yg==
+Received: from ip-185-104-136-29.ptr.icomera.net ([185.104.136.29] helo=billy-the-mountain.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <maz@kernel.org>)
+        id 1nQ2qL-00C9Jo-5G; Fri, 04 Mar 2022 07:59:17 +0000
+Date:   Fri, 04 Mar 2022 07:59:15 +0000
+Message-ID: <87fsnytagc.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Thomas Gleixner <tglx@linutronix.de>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v7 2/2] irqchip: Add Qualcomm MPM controller driver
+In-Reply-To: <20220303040229.GN269879@dragon>
+References: <20220301062414.2987591-1-shawn.guo@linaro.org>
+        <20220301062414.2987591-3-shawn.guo@linaro.org>
+        <87ee3m2aed.wl-maz@kernel.org>
+        <20220302084028.GL269879@dragon>
+        <877d9c3b2u.wl-maz@kernel.org>
+        <20220302133441.GM269879@dragon>
+        <875yow31a0.wl-maz@kernel.org>
+        <20220303040229.GN269879@dragon>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.104.136.29
+X-SA-Exim-Rcpt-To: shawn.guo@linaro.org, tglx@linutronix.de, quic_mkshah@quicinc.com, bjorn.andersson@linaro.org, sudeep.holla@arm.com, robh+dt@kernel.org, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -72,120 +76,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 4 Mar 2022 at 07:31, Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Dmitry Baryshkov (2022-03-03 20:23:06)
-> > On Fri, 4 Mar 2022 at 01:32, Stephen Boyd <swboyd@chromium.org> wrote:
-> > >
-> > > Quoting Dmitry Baryshkov (2022-02-16 21:55:27)
-> > > > The only clock for which we set the rate is the "stream_pixel". Rather
-> > > > than storing the rate and then setting it by looping over all the
-> > > > clocks, set the clock rate directly.
-> > > >
-> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > [...]
-> > > > diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> > > > index 07f6bf7e1acb..8e6361dedd77 100644
-> > > > --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> > > > +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> > > > @@ -1315,7 +1315,7 @@ static void dp_ctrl_set_clock_rate(struct dp_ctrl_private *ctrl,
-> > > >         DRM_DEBUG_DP("setting rate=%lu on clk=%s\n", rate, name);
-> > > >
-> > > >         if (num)
-> > > > -               cfg->rate = rate;
-> > > > +               clk_set_rate(cfg->clk, rate);
-> > >
-> > > This looks bad. From what I can tell we set the rate of the pixel clk
-> > > after enabling the phy and configuring it. See the order of operations
-> > > in dp_ctrl_enable_mainlink_clocks() and note how dp_power_clk_enable()
-> > > is the one that eventually sets a rate through dp_power_clk_set_rate()
-> > >
-> > >         dp_ctrl_set_clock_rate(ctrl, DP_CTRL_PM, "ctrl_link",
-> > >                                         ctrl->link->link_params.rate * 1000);
-> > >
-> > >         phy_configure(phy, &dp_io->phy_opts);
-> > >         phy_power_on(phy);
-> > >
-> > >         ret = dp_power_clk_enable(ctrl->power, DP_CTRL_PM, true);
-> >
-> > This code has been changed in the previous patch.
-> >
-> > Let's get back a bit.
-> > Currently dp_ctrl_set_clock_rate() doesn't change the clock rate. It
-> > just stores the rate in the config so that later the sequence of
-> > dp_power_clk_enable() -> dp_power_clk_set_rate() ->
-> > [dp_power_clk_set_link_rate() -> dev_pm_opp_set_rate() or
-> > msm_dss_clk_set_rate() -> clk_set_rate()] will use that.
-> >
-> > There are only two users of dp_ctrl_set_clock_rate():
-> > - dp_ctrl_enable_mainlink_clocks(), which you have quoted above.
-> >   This case is handled in the patch 1 from this series. It makes
->
-> Patch 1 form this series says DP is unaffected. Huh?
->
-> > dp_ctrl_enable_mainlink_clocks() call dev_pm_opp_set_rate() directly
-> > without storing (!) the rate in the config, calling
-> > phy_configure()/phy_power_on() and then setting the opp via the
-> > sequence of calls specified above
+On Thu, 03 Mar 2022 04:02:29 +0000,
+Shawn Guo <shawn.guo@linaro.org> wrote:
+> 
+> On Wed, Mar 02, 2022 at 01:57:27PM +0000, Marc Zyngier wrote:
+> > This code actually makes me ask more questions. Why is it programming
+> > 2 'pins' for each IRQ?
+> 
+> The mapping between MPM pin and GIC IRQ is not strictly 1-1.  There are
+> some rare case that up to 2 MPM pins map to a single GIC IRQ, for
+> example the last two in QC2290 'qcom,mpm-pin-map' below.
+> 
+> 	qcom,mpm-pin-map = <2 275>,     /* tsens0_tsens_upper_lower_int */
+> 			   <5 296>,     /* lpass_irq_out_sdc */
+> 			   <12 422>,    /* b3_lfps_rxterm_irq */
+> 			   <24 79>,     /* bi_px_lpi_1_aoss_mx */
+> 			   <86 183>,    /* mpm_wake,spmi_m */
+> 			   <90 260>,    /* eud_p0_dpse_int_mx */
+> 			   <91 260>;    /* eud_p0_dmse_int_mx */
+> 
+> 
+> The downstream uses a DT bindings that specifies GIC hwirq number in
+> client device nodes.  In that case, d->hwirq in the driver is GIC IRQ
+> number, and the driver will need to query mapping table, find out the
+> possible 2 MPM pins, and set them up.
+> 
+> The patches I'm posting here use a different bindings that specifies MPM
+> pin instead in client device nodes.  Thus the driver can simply get the
+> MPM pin from d->hwirq, so that the whole look-up procedure can be saved.
 
-Note, this handles the "ctrl_link" clock.
+It still remains that there is no 1:1 mapping between input and
+output, which is the rule #1 to be able to use a hierarchical setup.
 
-> >
-> > - dp_ctrl_enable_stream_clocks(), which calls dp_power_clk_enable()
-> > immediately afterwards. This call would set the stream_pixel rate
-> > while enabling stream clocks. As far as I can see, the stream_pixel is
-> > the only stream clock. So this patch sets the clock rate without
-> > storing in the interim configuration data.
-> >
-> > Could you please clarify, what exactly looks bad to you?
-> >
-
-Note, this handles the "stream_pixel" clock.
+/me puzzled.
 
 >
-> I'm concerned about the order of operations changing between the
-> phy being powered on and the pixel clk frequency being set. From what I
-> recall the pixel clk rate operations depend on the phy frequency being
-> set (which is done through phy_configure?) so if we call clk_set_rate()
-> on the pixel clk before the phy is set then the clk frequency will be
-> calculated badly and probably be incorrect.
+> > 
+> > > 
+> > > It seems MPM_REG_POLARITY is only meant for level interrupts, since edge
+> > > interrupts already have separate registers for rising and falling.
+> > 
+> > Then level interrupts must clear both the edge registers at all times.
+> 
+> The downstream logic already covers that, right?  The edge register bits
+> will be cleared as long as 'flowtype' is not EDGE.
 
-But the order of operations is mostly unchanged. The only major change
-is that the opp point is now set before calling the
-phy_configure()/phy_power_on()
+I am talking about *your* code, not the Qualcomm stuff.
 
-For the pixel clock the driver has:
-static int dp_ctrl_enable_stream_clocks(struct dp_ctrl_private *ctrl)
-{
-        int ret = 0;
-
-        dp_ctrl_set_clock_rate(ctrl, DP_STREAM_PM, "stream_pixel",
-                                        ctrl->dp_ctrl.pixel_rate * 1000);
-
-        ret = dp_power_clk_enable(ctrl->power, DP_STREAM_PM, true);
-[skipped the error handling]
-}
-
-dp_power_clk_enable() doesn't have any special handlers for the the
-DP_STREAM_PM,
-so this code would be equivalent to the following pseudo code (given
-that there is only one stream clock):
-
-unsigned int rate = ctrl->dp_ctrl.pixel_rate * 1000;
-
-/* dp_ctrl_set_clock_rate() */
-cfg = find_clock_cfg("stream_pixel");
-cfg->rate = rate;
-
-/* dp_power_clk_enable() */
-clk = find_clock("stream_pixel")
-clk_set_rate(clk, cfg->rate);
-clk_prepare_enable(clk);
-
-The proposed patch does exactly this.
-
-Please correct me if I'm wrong.
+	M.
 
 -- 
-With best wishes
-Dmitry
+Without deviation from the norm, progress is not possible.
