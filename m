@@ -2,140 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E23C24CE019
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Mar 2022 23:11:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ACF04CE034
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Mar 2022 23:22:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229715AbiCDWMn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Mar 2022 17:12:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49774 "EHLO
+        id S229923AbiCDWXh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Mar 2022 17:23:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229713AbiCDWMn (ORCPT
+        with ESMTP id S229618AbiCDWXh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Mar 2022 17:12:43 -0500
-Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3720DE1B50
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Mar 2022 14:11:54 -0800 (PST)
-Received: by mail-qv1-xf35.google.com with SMTP id b12so7710710qvk.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Mar 2022 14:11:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ZpECLvSl44j2lTbE8E9msNQR2sv3DK1If11NairmYgY=;
-        b=n524EVp7JhvhjiQcC0KPccT6B+21Myz5C6rhKlQCvUxLApOJNTkNX2jvN9SMHSknEY
-         LGzgt12qV/i2gzMAP905UsfCWQ07SJmhiq4E5+E2ZsGGTcHyxYedDJGfxLtOO1tuNusU
-         9/BHgQHR+nZzWifNdwr5zou3iNTbPvdxrX1uNoF9+mVJ8KichXNR08Dque8S2SqohPwl
-         +vVSfv6g1sFI8mlv+xC8S2Z8gA5ftGncprUG8lUEb2NvJUyBC4jQzWmVOb7QGGIMo59y
-         kGzutbZjpvWlqKhasm1fSaP3uff2zRayC7jYR5OR7xv6QehkuSWogoMiiTe0U5teAdNN
-         ed+g==
+        Fri, 4 Mar 2022 17:23:37 -0500
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E4D3119F28;
+        Fri,  4 Mar 2022 14:22:48 -0800 (PST)
+Received: by mail-oo1-f51.google.com with SMTP id 6-20020a4a0906000000b0031d7eb98d31so11023812ooa.10;
+        Fri, 04 Mar 2022 14:22:48 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZpECLvSl44j2lTbE8E9msNQR2sv3DK1If11NairmYgY=;
-        b=Q7F/pmImAzHdo9s7zfeM8zQOy7fZFiuVEznQjGHxqMKXP6leSrjWdvkMwgWoDcwJCa
-         MqLX8ZTaceXPt+/GgHAOTRA79nVzeW2bYbIkk/f2G514m1N/MmodhwsMLomIvBn9XHKC
-         2gNTNVlbY+bYC5WdMvaJc9iuoqvWwXUB/fOojvYlgE+OTlH4DtR/rGYy8GZ8AmU+yy8L
-         FAXKcel+kdlwzx849x+NxKJ4BgkGSBi0D/To6T6kMvx1m40XsxciFvvHjywhsTeOdqM8
-         wqvCNp5zRjb3ZC4f4W1pjLeEYMzd98y+FbIaOVpAGKyY7AR20uXmmHVw7B4+YysR57sP
-         crlg==
-X-Gm-Message-State: AOAM532GmUGShowWJbOkohy+KsgUWS7g3u60T7eObplGlgh/3lScdCRo
-        R3F5A+I/hThebsoYHEebFoHlQKhu22lAEPWAT2l/OVOk3i8/8QyK
-X-Google-Smtp-Source: ABdhPJyBR7yFv773x72US6WY2rvvU2xrJkgFRl/bJYCCmFs9dSCw47WZHC433ew93Xki2xBOL9Vrsqz71qrpIPH/CKs=
-X-Received: by 2002:ad4:5769:0:b0:435:41db:9bca with SMTP id
- r9-20020ad45769000000b0043541db9bcamr451095qvx.73.1646431913351; Fri, 04 Mar
- 2022 14:11:53 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=FK6O8iZYd30gBa2H7oi4DqRG0FOU8lUzNheBx5but+U=;
+        b=34DDPIZm6A13OrvsLvs1Vpvdvsol7L8TBwB+z9w3vaQXTt+WXKEOw/jYBp7NZUKhXz
+         yOEHa785GzXTIxOHYOgnLqBy8eqBaQcr3hKZcvBeoZHwP2fjNgB0QlGVYTVRPNokb2I3
+         AtgQyeAKaA7nUTG39OrlNPtNbbumJVkAqvm5ybnt2HBG+anYCL1iIA2OfXORtOgHE1GO
+         24H8RYPKSnzvoqYuPD5x5f+tOd7mqUMcOS6JbR2ok57bz/qJDR2RdIW3LGI7Fk5Jyl3M
+         2U0QaWFab83eaMaxY6z5LDz4DpwxOD7duoL3nXciBuyvoZMVzhMqKQUfyAcHLBqf0NMC
+         RZsg==
+X-Gm-Message-State: AOAM533HuUuj5pQfxfamRggTDuS5X0mIcyZQ5xMkrOat4V768Bx8Lug1
+        WfEPb5dQnBExdu5iMegtwA==
+X-Google-Smtp-Source: ABdhPJw1skblzO/l37y1Ad9RMSdf/uLpokD28+b8ny8V7h1Wyw+1qpcXIpCmOYkOFGCjdu8+ICChTw==
+X-Received: by 2002:a4a:d415:0:b0:31c:3fc0:74ce with SMTP id n21-20020a4ad415000000b0031c3fc074cemr238974oos.47.1646432567688;
+        Fri, 04 Mar 2022 14:22:47 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id e13-20020a9d490d000000b005b029275a9csm2945058otf.58.2022.03.04.14.22.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Mar 2022 14:22:46 -0800 (PST)
+Received: (nullmailer pid 546919 invoked by uid 1000);
+        Fri, 04 Mar 2022 22:22:44 -0000
+Date:   Fri, 4 Mar 2022 16:22:44 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     pierre-louis.bossart@linux.intel.com, alsa-devel@alsa-project.org,
+        perex@perex.cz, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, judyhsiao@chromium.org,
+        linux-kernel@vger.kernel.org, vkoul@kernel.org,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>,
+        quic_plai@quicinc.com, sanyog.r.kale@intel.com, tiwai@suse.com,
+        broonie@kernel.org, rohitkr@codeaurora.org,
+        devicetree@vger.kernel.org, swboyd@chromium.org,
+        bgoswami@codeaurora.org, robh+dt@kernel.org,
+        yung-chuan.liao@linux.intel.com, agross@kernel.org,
+        lgirdwood@gmail.com, srinivas.kandagatla@linaro.org
+Subject: Re: [PATCH v7 2/2] dt-bindings: soundwire: qcom: Add bindings for
+ audio clock reset control property
+Message-ID: <YiKRNFONirytK+4X@robh.at.kernel.org>
+References: <1646316128-21082-1-git-send-email-quic_srivasam@quicinc.com>
+ <1646316128-21082-3-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-References: <1646300401-9063-1-git-send-email-quic_vpolimer@quicinc.com>
- <1646300401-9063-5-git-send-email-quic_vpolimer@quicinc.com>
- <CAA8EJpqkK8q7g8q56rfiOO22ykxgycJTpSJKHuhcqGk05nsVzA@mail.gmail.com>
- <CAE-0n53jGQcn=NThrrW92NL-cry8yrFErdSYTHHEHWW48b3xbg@mail.gmail.com>
- <CAA8EJpoEpn2RPByeDkaGPUX+OC7tvbEw4k78Gd+RKs02jpzG1w@mail.gmail.com> <CAD=FV=WZUSuNa0Ei_0ByjHRdsJ7smhD+uVghs28NzNGvGp0LwQ@mail.gmail.com>
-In-Reply-To: <CAD=FV=WZUSuNa0Ei_0ByjHRdsJ7smhD+uVghs28NzNGvGp0LwQ@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 5 Mar 2022 01:11:42 +0300
-Message-ID: <CAA8EJpq7XEy2C5=80HMHcy3wvB2CJetyQhcjQRcTtEafauy91g@mail.gmail.com>
-Subject: Re: [PATCH v4 4/4] arm64/dts/qcom/sm8250: remove assigned-clock-rate
- property for mdp clk
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>, quic_kalyant@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1646316128-21082-3-git-send-email-quic_srivasam@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 5 Mar 2022 at 00:49, Doug Anderson <dianders@chromium.org> wrote:
-> On Thu, Mar 3, 2022 at 4:16 PM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > On Fri, 4 Mar 2022 at 02:56, Stephen Boyd <swboyd@chromium.org> wrote:
-> > >
-> > > Quoting Dmitry Baryshkov (2022-03-03 15:50:50)
-> > > > On Thu, 3 Mar 2022 at 12:40, Vinod Polimera <quic_vpolimer@quicinc.com> wrote:
-> > > > >
-> > > > > Kernel clock driver assumes that initial rate is the
-> > > > > max rate for that clock and was not allowing it to scale
-> > > > > beyond the assigned clock value.
-> > > > >
-> > > > > Drop the assigned clock rate property and vote on the mdp clock as per
-> > > > > calculated value during the usecase.
-> > > > >
-> > > > > Fixes: 7c1dffd471("arm64: dts: qcom: sm8250.dtsi: add display system nodes")
-> > > >
-> > > > Please remove the Fixes tags from all commits. Otherwise the patches
-> > > > might be picked up into earlier kernels, which do not have a patch
-> > > > adding a vote on the MDP clock.
-> > >
-> > > What patch is that? The Fixes tag could point to that commit.
-> >
-> > Please correct me if I'm wrong.
-> > Currently the dtsi enforces bumping the MDP clock when the mdss device
-> > is being probed and when the dpu device is being probed.
-> > Later during the DPU lifetime the core_perf would change the clock's
-> > rate as it sees fit according to the CRTC requirements.
->
-> "Currently" means _before_ ${SUBJECT} patch lands, right? Since
-> ${SUBJECT} patch is removing the bump to max.
+On Thu, 03 Mar 2022 19:32:08 +0530, Srinivasa Rao Mandadapu wrote:
+> Update description for audio clock reset control property, which is required
+> for latest chipsets, to allow rx, tx and wsa bus clock enabling in software
+>  control mode by configuring dynamic clock gating control registers.
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/soundwire/qcom,sdw.txt | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+> 
 
-Yes. 'Before this patch'.
-
->
->
-> > However it would happen only when the during the
-> > dpu_crtc_atomic_flush(), before we call this function, the MDP clock
-> > is left in the undetermined state. The power rails controlled by the
-> > opp table are left in the undetermined state.
-> >
-> > I suppose that during the dpu_bind we should bump the clock to the max
-> > possible freq and let dpu_core_perf handle it afterwards.
->
-> Definitely feels like seeing the clock to something predictable during
-> the initial probe makes sense. If it's just for the initial probe then
-> setting it to max (based on the opp table) seems fine.
-
-Vinod, could you please implement it?
-
-> I think an
-> earlier version of this series set it to max every time we did runtime
-> resume. We'd have to have a good reason to do that.
-
-Yes, this is correct. Based on the comments I had the impression that
-there was a suggestion that the place for the calls was wrong. Most
-probably I was instead projecting my own thoughts.
-
--- 
-With best wishes
-Dmitry
+Acked-by: Rob Herring <robh@kernel.org>
