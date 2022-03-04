@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50B1F4CDE86
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Mar 2022 21:26:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DB554CDE19
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Mar 2022 21:25:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229566AbiCDUWA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Mar 2022 15:22:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50818 "EHLO
+        id S229620AbiCDUYe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Mar 2022 15:24:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbiCDUV7 (ORCPT
+        with ESMTP id S229563AbiCDUYd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Mar 2022 15:21:59 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A7F1177743;
-        Fri,  4 Mar 2022 12:21:09 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id gj15-20020a17090b108f00b001bef86c67c1so8811651pjb.3;
-        Fri, 04 Mar 2022 12:21:09 -0800 (PST)
+        Fri, 4 Mar 2022 15:24:33 -0500
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0840865D2C;
+        Fri,  4 Mar 2022 12:23:45 -0800 (PST)
+Received: by mail-pl1-x629.google.com with SMTP id e2so8731167pls.10;
+        Fri, 04 Mar 2022 12:23:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=C/syT7Y2eY46OVXh3uLQ0pEOp4t9Olrz81IvOtIGubc=;
-        b=pBy/DWvZZiL+PVlFab76MNRYthBkf+JTWT0dnBB/J3HJUFg4iD/+Yn5TktceeTcFIa
-         rUlXjyCodpdMxp/d9oixBNacs/pdnoxKNEjh6wBDPRAmT19PSBevFgAp3INjyiookgfh
-         MbpvsZW2XIzbwQLswzB2S973dM5KNgFodXbEwzDrWFasTU4PzgD8pK9G5Z698OtsiDVJ
-         ymhTaqmCBEFrplXlUYM/3WhinFrbzz3JsH/nEamX+L8+Qcc5IGaxh9MnEtYxGwEyKmf3
-         Axr6ltVJD8yozzNVIRtTbF1qohzE1uf0Jdi017er2CCS0uBVjYh1Z5YmyzTt4PU12YXg
-         qifQ==
+        bh=8wKHEFGcZJBFIGWvjsg6haK45B9roDuA9AnfN8zp1WU=;
+        b=ETWLRUK8yvHGuySP/W1rFb7Qb46SgJOyrSMqvh3x9ieihQRpFgCK7TpkX3tFbdj+1o
+         r9PoYh52D6yeG7ICY9uLrDEhgt7GrHAg02pctMcCBo11wOwPXW0b045ZxsxKFnkNnBLn
+         usz94gEodH/yeqCiJj4sFprFltydit0ZjqWxTFlfl/uHJdi+05I1jwzP6+U4MzBgNcCI
+         5/PSFD294Eq7S8naVXEmzsIR2++qyA/gZxh3VUiy3LTPhLiBkJ6wOzTE0LOVZsQ7xQ+f
+         aaoABdIE63QZuwxePV+qwgZsxbNr0B/m2X68QAD3B41/VVe5GD5HvTvnAmDAK6y61W/T
+         CDZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=C/syT7Y2eY46OVXh3uLQ0pEOp4t9Olrz81IvOtIGubc=;
-        b=j23ov2vC8sdfqcd1Zf4nUHxb7oAxSp45neKNKaCb2mHPpr1JeazakqgEEcDTPyVook
-         mF1fhf5bJRTrS9Ivjeh4pUV8/OPAEj5tku/xKZUHbIpuQem3OJneGgPLWMBvPy01Rt4E
-         KM+uA1FpYa5X4mizg+hmLjnvx8H5uSbQd58MKTf01+IdCkYrd1n6pEoXtHsj1VsQkN4O
-         Cwg6ChWB1gUjJ85p6zKalFL0r3TO0AUjoqph6rkl4X4Gn/EKkMvMkZsFSovXROYZeoCD
-         X0yAEik/H18PCVmEdX9kUMfdklTYPOpL/kcbdOhcRE1LDFYImC55nnNpt6aI7CUT2xTn
-         IofQ==
-X-Gm-Message-State: AOAM5317SXJ8JQU+3GpzsrC1yI56kru/dzA9wn2e9CpEbIaExccDO5/8
-        4ojh+vW/mCDg7nDQBvq17LU=
-X-Google-Smtp-Source: ABdhPJw0l7sG4pT7XOonU9d1+7+hi2g1s/G+O0WZFo9stDIm1EKxnhjv4E/nEpUN6639n1X7lB0o5Q==
-X-Received: by 2002:a17:903:1c3:b0:151:a54b:95f4 with SMTP id e3-20020a17090301c300b00151a54b95f4mr110414plh.10.1646425268705;
-        Fri, 04 Mar 2022 12:21:08 -0800 (PST)
+        bh=8wKHEFGcZJBFIGWvjsg6haK45B9roDuA9AnfN8zp1WU=;
+        b=49wTgiMqhNEhnFxUEKficUlrWOCIyQ6bjeaeLTb2RkPnjFeQ8o8rtaz3lrmvlvYUEM
+         7ucOW6cKV9H1GG5yC3OdngqTpw7nfMxpxpbluNPWEgnJyYndn2SaM7R6xVwVt3o7RlvQ
+         PLBPj3dlxj+L2qnrTWc7TFvK3HZD/01ACVdC80Wcwe6frXJBFpUjgFOmrbzAWP26F6ok
+         KDESXY/mO8q1g/rNXK6zObwJLcyV9L1ZWE5h1UavB4tCtXRlSuAQKMBxXyQbokYCmHHg
+         2kkm102E323jPhJlM8VzIjjLtSUKkfZ/gkovBX+U7NvRT9ibhKexzFqdIVrQi9vqsyB6
+         D58Q==
+X-Gm-Message-State: AOAM530LjMdNCMW64oPVj9RL94tCKLOE9gOxF6EZcPbz6Ql59WW2tGSd
+        0uBPFYo02HVGVQF1hdhgkEk=
+X-Google-Smtp-Source: ABdhPJyF5prUtDablbt4ZQd5sCQzEG+vhe0XmdWzoKh+68RJqCblDwYUbDyjr4r0BzAIUDZHG80yUg==
+X-Received: by 2002:a17:902:d505:b0:151:9e65:b844 with SMTP id b5-20020a170902d50500b001519e65b844mr165351plg.49.1646425424419;
+        Fri, 04 Mar 2022 12:23:44 -0800 (PST)
 Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id q15-20020a63504f000000b0037425262293sm5051165pgl.43.2022.03.04.12.21.06
+        by smtp.gmail.com with ESMTPSA id y8-20020a17090a390800b001bf37d6b433sm452572pjb.43.2022.03.04.12.23.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Mar 2022 12:21:07 -0800 (PST)
+        Fri, 04 Mar 2022 12:23:43 -0800 (PST)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
@@ -56,11 +56,14 @@ Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
         linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm: Fix dirtyfb refcounting
-Date:   Fri,  4 Mar 2022 12:21:45 -0800
-Message-Id: <20220304202146.845566-1-robdclark@gmail.com>
+Subject: [PATCH] drm/msm/a6xx: Fix missing ARRAY_SIZE() check
+Date:   Fri,  4 Mar 2022 12:24:04 -0800
+Message-Id: <20220304202406.846485-1-robdclark@gmail.com>
 X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -76,39 +79,24 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-refcount_t complains about 0->1 transitions, which isn't *quite* what we
-wanted.  So use dirtyfb==1 to mean that the fb is not connected to any
-output that requires dirtyfb flushing, so that we can keep the underflow
-and overflow checking.
-
-Fixes: 9e4dde28e9cd ("drm/msm: Avoid dirtyfb stalls on video mode displays (v2)")
+Fixes: f6d62d091cfd ("drm/msm/a6xx: add support for Adreno 660 GPU")
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
- drivers/gpu/drm/msm/msm_fb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_fb.c b/drivers/gpu/drm/msm/msm_fb.c
-index 96b379a08327..7137492fe78e 100644
---- a/drivers/gpu/drm/msm/msm_fb.c
-+++ b/drivers/gpu/drm/msm/msm_fb.c
-@@ -37,7 +37,7 @@ static int msm_framebuffer_dirtyfb(struct drm_framebuffer *fb,
- 	/* If this fb is not used on any display requiring pixel data to be
- 	 * flushed, then skip dirtyfb
- 	 */
--	if (refcount_read(&msm_fb->dirtyfb) == 0)
-+	if (refcount_read(&msm_fb->dirtyfb) == 1)
- 		return 0;
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 02b47977b5c3..6406d8c3411a 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -687,6 +687,7 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
  
- 	return drm_atomic_helper_dirtyfb(fb, file_priv, flags, color,
-@@ -221,6 +221,8 @@ static struct drm_framebuffer *msm_framebuffer_init(struct drm_device *dev,
- 		goto fail;
- 	}
+ 	BUILD_BUG_ON(ARRAY_SIZE(a6xx_protect) > 32);
+ 	BUILD_BUG_ON(ARRAY_SIZE(a650_protect) > 48);
++	BUILD_BUG_ON(ARRAY_SIZE(a660_protect) > 48);
  
-+	refcount_set(&msm_fb->dirtyfb, 1);
-+
- 	drm_dbg_state(dev, "create: FB ID: %d (%p)", fb->base.id, fb);
- 
- 	return fb;
+ 	if (adreno_is_a650(adreno_gpu)) {
+ 		regs = a650_protect;
 -- 
 2.35.1
 
