@@ -2,84 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 422AB4CE0C8
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Mar 2022 00:13:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 309224CE0CE
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Mar 2022 00:14:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229645AbiCDXNi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Mar 2022 18:13:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37674 "EHLO
+        id S229454AbiCDXPm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Mar 2022 18:15:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230035AbiCDXNc (ORCPT
+        with ESMTP id S229447AbiCDXPl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Mar 2022 18:13:32 -0500
-Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C275E0AF;
-        Fri,  4 Mar 2022 15:12:43 -0800 (PST)
-Received: by mail-oi1-f179.google.com with SMTP id l25so9368172oic.13;
-        Fri, 04 Mar 2022 15:12:43 -0800 (PST)
+        Fri, 4 Mar 2022 18:15:41 -0500
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61DD027B93D;
+        Fri,  4 Mar 2022 15:14:53 -0800 (PST)
+Received: by mail-oo1-f44.google.com with SMTP id y15-20020a4a650f000000b0031c19e9fe9dso11110089ooc.12;
+        Fri, 04 Mar 2022 15:14:53 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=KVWbDqpK6bOdzGo2h0qtWE+fgf4PwelKmZTMZdMDaZ0=;
-        b=fEdj2ho0HTfVmwb6ikxcEh9FQXfnI4SMJ+2iiPxAfCKBbPhMehzGxDP2V0nHK8hQsJ
-         wnb8M5KkvWVPZn8K+dcZqbfnwjA6pXT2L46MmLaT231svEw6OVjHd5xMtPyyB7mAbeL6
-         wMU915nOBRe74Miq209nrfBjOu3GDN8qt1jWro/aT1969D7EYzsImPMYlE37i7iYelHJ
-         qW5JzpZFA9bfLmuG4p5W91CbvkhoANTGq1Fsfhz4TRdY9jDnw1Hus2ocq7L6eBit5WZa
-         0W0IvmVzItMQHGhg/ItqNCQzqxfXt78es9zIGKTMPE/7zm9nAI6MSQCFI1f53gL3mTAZ
-         z3Kw==
-X-Gm-Message-State: AOAM530vZIlIuXIRsVY3xkeywT0dTSK4Qy5Pjs6PbCoF+v4vFprfVRLb
-        aQkWzf5j9RJ5IcvlADXKGvRhHcYYdA==
-X-Google-Smtp-Source: ABdhPJzBGD3S4vU8ZCKqlhfZLNdTutmb70tW40mVotqvoPSlg1sjO3pVV1WVraWzwiGw/TjOnMbAiw==
-X-Received: by 2002:a05:6808:2393:b0:2d9:a01a:487b with SMTP id bp19-20020a056808239300b002d9a01a487bmr994342oib.198.1646435562446;
-        Fri, 04 Mar 2022 15:12:42 -0800 (PST)
+        bh=iKcFl+4S6s4TdPDDYO57E1OBKj3zJj6b5nIPKkI9oL4=;
+        b=CS/MjtH5p6XBMtdzRs5QRwmp8iLRyDp00C7S9g9i9RVeGPmx4a88lxNcFi5xYWy9xz
+         e0EkmLgFJroj7zDthrzhMl1jJLzbVKbOg628QH9alEwvv2XL3rAKb7ubNIDDl5zODHNk
+         e4nmhoqQbOizJXbOyuQeyMV/Cu+WQobFZiAMfDD7h7JLnUOri43gMPtcpnepEQmvlOGJ
+         TjaCXQ+eqf+9stJ5l5QGwMO1Af25VBTcQ0FgaHgvMD5u9yX8q3qnRonCo00d0s7mA/sX
+         2Yx0uyN31u5etVjd6SzCru2yz869PjjcON5CAr6ODbKi/CcRD8iUbh4oG3dXdQVtMEFu
+         JZ/g==
+X-Gm-Message-State: AOAM533NhUsGgJICHi5MePJ7FtZSjRLQACBdKojVM8tLUtJxLW8SlGMI
+        guyHHlEq/fPlVhuu0NlE7Q==
+X-Google-Smtp-Source: ABdhPJzAOl0T5CUCv1n9rVwZ32AyxsHhSlrNUXPI13IMSAOM09u8I73pMrek+xwQqkTiBRDEERZh4Q==
+X-Received: by 2002:a05:6870:41cc:b0:d7:5e06:faec with SMTP id z12-20020a05687041cc00b000d75e06faecmr9255098oac.30.1646435692687;
+        Fri, 04 Mar 2022 15:14:52 -0800 (PST)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id l15-20020a0568302b0f00b005b0285d2434sm144236otv.40.2022.03.04.15.12.41
+        by smtp.gmail.com with ESMTPSA id t11-20020a4ae40b000000b0031cc933b418sm2792129oov.40.2022.03.04.15.14.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Mar 2022 15:12:41 -0800 (PST)
-Received: (nullmailer pid 638646 invoked by uid 1000);
-        Fri, 04 Mar 2022 23:12:40 -0000
-Date:   Fri, 4 Mar 2022 17:12:40 -0600
+        Fri, 04 Mar 2022 15:14:51 -0800 (PST)
+Received: (nullmailer pid 642676 invoked by uid 1000);
+        Fri, 04 Mar 2022 23:14:50 -0000
+Date:   Fri, 4 Mar 2022 17:14:50 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        Taniya Das <tdas@codeaurora.org>
-Subject: Re: [PATCH v6 02/15] dt-bindings: clock: simplify qcom,gcc-apq8064
- Documentation
-Message-ID: <YiKc6Ho9D1VLiOqB@robh.at.kernel.org>
-References: <20220226135235.10051-1-ansuelsmth@gmail.com>
- <20220226135235.10051-3-ansuelsmth@gmail.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 6/7] dt-bindings: mfd: qcom-spmi-pmic: add pm8450 entry
+Message-ID: <YiKdajh2+mX99Nww@robh.at.kernel.org>
+References: <20220226205035.1826360-1-dmitry.baryshkov@linaro.org>
+ <20220226205035.1826360-7-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220226135235.10051-3-ansuelsmth@gmail.com>
+In-Reply-To: <20220226205035.1826360-7-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 26 Feb 2022 14:52:22 +0100, Ansuel Smith wrote:
-> Simplify qcon,gcc-apq8064 Documentation by using qcom,gcc.yaml as a
-> template and remove the compatible from qcom,gcc.yaml
+On Sat, 26 Feb 2022 23:50:34 +0300, Dmitry Baryshkov wrote:
+> Add bindings for the PM8450 PMIC (qcom,pm8450).
 > 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  .../bindings/clock/qcom,gcc-apq8064.yaml      | 29 +++++--------------
->  .../bindings/clock/qcom,gcc-other.yaml        |  3 --
->  2 files changed, 7 insertions(+), 25 deletions(-)
+>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.txt | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Acked-by: Rob Herring <robh@kernel.org>
