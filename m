@@ -2,151 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 330CE4CCFE0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Mar 2022 09:24:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 51EB84CD7B6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Mar 2022 16:24:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233282AbiCDIYy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Mar 2022 03:24:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50720 "EHLO
+        id S237377AbiCDPZh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Mar 2022 10:25:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233287AbiCDIYx (ORCPT
+        with ESMTP id S229864AbiCDPZg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Mar 2022 03:24:53 -0500
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A28318BA5F;
-        Fri,  4 Mar 2022 00:24:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1646382245; x=1677918245;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=QnY+De45lh3dkdn8KOBNLbFmgPbGNeJtHbQNMrb6RTA=;
-  b=IJDB1dus+vTAGMkRK12hoQBcN7YWLoUrO8dqq3TUtQgAquR7pdyUU4Km
-   UTO2j6xsfqMuh1igH8eH0l1135Pfr0cLpCTseORKDMi4Q0kAWT2vNZGxB
-   LMDoXbltCcEK8/zcc5zo4JiMqr6TGNWlFnHPDw7mteKP01U3SkqpVIsfv
-   8=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 04 Mar 2022 00:24:05 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Mar 2022 00:24:04 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Fri, 4 Mar 2022 00:24:04 -0800
-Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Fri, 4 Mar 2022 00:24:03 -0800
-From:   Mao Jinlong <quic_jinlmao@quicinc.com>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>
-CC:     Mao Jinlong <quic_jinlmao@quicinc.com>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>
-Subject: [PATCH v2] coresight: core: Fix coresight device probe failure issue
-Date:   Fri, 4 Mar 2022 00:23:50 -0800
-Message-ID: <20220304082350.30069-1-quic_jinlmao@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        Fri, 4 Mar 2022 10:25:36 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 983DF1C4B1E;
+        Fri,  4 Mar 2022 07:24:48 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 318B8B829FA;
+        Fri,  4 Mar 2022 15:24:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB397C340E9;
+        Fri,  4 Mar 2022 15:24:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1646407485;
+        bh=Ugh1vrX5vQzasJmQI5hX7hdAPEuwOmRL+sYJJ6nVIrg=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=pp8TLvH/baKbl4BMBfu0G+pCaCAbcC5v1jqEuXOk9fwwlWOwP7GE2mIIBdFGZBqyy
+         as7i/yXY0WxscdIpvlhztFxmcjmkxPBCLLqHVWO/7LQ0Nwpnsqa/eLm3TUeEXHtGr1
+         FdF2HEpZD9Cd1NGtWG3w0kma1NGAhWRV5RHdXUBYW6e7J60T8OZSPHMuu5+Ponclop
+         KQUjQIlGRjZ/V/ISzCzVTz8iRoyB6XNVCXsfQP8Ylxm1EbuTgbqhxtafwBNOcVe0gi
+         NpLAXgWHkPdF2U+SyrGiwnue9+UzYPklmXLMFE72lAqdx/eUDimB6LMcnfxq30bRZo
+         xAVIpmMZTcvCg==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <maz@kernel.org>)
+        id 1nQ9nP-00CFyk-EZ; Fri, 04 Mar 2022 15:24:43 +0000
+Date:   Fri, 04 Mar 2022 15:24:43 +0000
+Message-ID: <87lexp211g.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Thomas Gleixner <tglx@linutronix.de>,
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v7 2/2] irqchip: Add Qualcomm MPM controller driver
+In-Reply-To: <20220304082342.GO269879@dragon>
+References: <20220301062414.2987591-1-shawn.guo@linaro.org>
+        <20220301062414.2987591-3-shawn.guo@linaro.org>
+        <87ee3m2aed.wl-maz@kernel.org>
+        <20220302084028.GL269879@dragon>
+        <877d9c3b2u.wl-maz@kernel.org>
+        <20220302133441.GM269879@dragon>
+        <875yow31a0.wl-maz@kernel.org>
+        <20220303040229.GN269879@dragon>
+        <87fsnytagc.wl-maz@kernel.org>
+        <20220304082342.GO269879@dragon>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: shawn.guo@linaro.org, tglx@linutronix.de, quic_mkshah@quicinc.com, bjorn.andersson@linaro.org, sudeep.holla@arm.com, robh+dt@kernel.org, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It is possibe that probe failure issue happens when the device
-and its child_device's probe happens at the same time.
-In coresight_make_links, has_conns_grp is true for parent, but
-has_conns_grp is false for child device as has_conns_grp is set
-to true in coresight_create_conns_sysfs_group. The probe of parent
-device will fail at this condition. Add has_conns_grp check for
-child device before make the links and make the process from
-device_register to connection_create be atomic to avoid this
-probe failure issue.
+On Fri, 04 Mar 2022 08:23:42 +0000,
+Shawn Guo <shawn.guo@linaro.org> wrote:
+> 
+> On Fri, Mar 04, 2022 at 07:59:15AM +0000, Marc Zyngier wrote:
+> > On Thu, 03 Mar 2022 04:02:29 +0000,
+> > Shawn Guo <shawn.guo@linaro.org> wrote:
+> > > 
+> > > On Wed, Mar 02, 2022 at 01:57:27PM +0000, Marc Zyngier wrote:
+> > > > This code actually makes me ask more questions. Why is it programming
+> > > > 2 'pins' for each IRQ?
+> > > 
+> > > The mapping between MPM pin and GIC IRQ is not strictly 1-1.  There are
+> > > some rare case that up to 2 MPM pins map to a single GIC IRQ, for
+> > > example the last two in QC2290 'qcom,mpm-pin-map' below.
+> > > 
+> > > 	qcom,mpm-pin-map = <2 275>,     /* tsens0_tsens_upper_lower_int */
+> > > 			   <5 296>,     /* lpass_irq_out_sdc */
+> > > 			   <12 422>,    /* b3_lfps_rxterm_irq */
+> > > 			   <24 79>,     /* bi_px_lpi_1_aoss_mx */
+> > > 			   <86 183>,    /* mpm_wake,spmi_m */
+> > > 			   <90 260>,    /* eud_p0_dpse_int_mx */
+> > > 			   <91 260>;    /* eud_p0_dmse_int_mx */
+> > > 
+> > > 
+> > > The downstream uses a DT bindings that specifies GIC hwirq number in
+> > > client device nodes.  In that case, d->hwirq in the driver is GIC IRQ
+> > > number, and the driver will need to query mapping table, find out the
+> > > possible 2 MPM pins, and set them up.
+> > > 
+> > > The patches I'm posting here use a different bindings that specifies MPM
+> > > pin instead in client device nodes.  Thus the driver can simply get the
+> > > MPM pin from d->hwirq, so that the whole look-up procedure can be saved.
+> > 
+> > It still remains that there is no 1:1 mapping between input and
+> > output, which is the rule #1 to be able to use a hierarchical setup.
+> 
+> For direction of MPM pin -> GIC interrupt, it's a 1:1 mapping, i.e. for
+> given MPM pin, there is only one GIC interrupt.  And that's the
+> mapping MPM driver relies on.  For GIC interrupt -> MPM pin, it's not
+> a strict 1:1 mapping.
 
-Suggested-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Suggested-by: Mike Leach <mike.leach@linaro.org>
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
----
- drivers/hwtracing/coresight/coresight-core.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+Then this isn't a 1:1 mapping *AT ALL*. The hierarchical setup
+mandates that the mapping is a bijective function, and that's exactly
+what 1:1 means. There is no such thing a 1:1 in a single
+direction. When you take an interrupt, all you see is the GIC
+interrupt. How do you know which of the *two* pins interrupted you? Oh
+wait, you *can't* know. You end-up never servicing one of the two
+interrupts (and I suspect this results in memory corruption if you
+tear a hierarchy down).
 
-diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
-index 88653d1c06a4..b3e3bc59c09b 100644
---- a/drivers/hwtracing/coresight/coresight-core.c
-+++ b/drivers/hwtracing/coresight/coresight-core.c
-@@ -1382,7 +1382,7 @@ static int coresight_fixup_device_conns(struct coresight_device *csdev)
- 			continue;
- 		conn->child_dev =
- 			coresight_find_csdev_by_fwnode(conn->child_fwnode);
--		if (conn->child_dev) {
-+		if (conn->child_dev && conn->child_dev->has_conns_grp) {
- 			ret = coresight_make_links(csdev, conn,
- 						   conn->child_dev);
- 			if (ret)
-@@ -1594,7 +1594,8 @@ struct coresight_device *coresight_register(struct coresight_desc *desc)
- 	refcnts = kcalloc(nr_refcnts, sizeof(*refcnts), GFP_KERNEL);
- 	if (!refcnts) {
- 		ret = -ENOMEM;
--		goto err_free_csdev;
-+		kfree(csdev);
-+		goto err_out;
- 	}
- 
- 	csdev->refcnt = refcnts;
-@@ -1619,8 +1620,10 @@ struct coresight_device *coresight_register(struct coresight_desc *desc)
- 	csdev->dev.fwnode = fwnode_handle_get(dev_fwnode(desc->dev));
- 	dev_set_name(&csdev->dev, "%s", desc->name);
- 
-+	mutex_lock(&coresight_mutex);
- 	ret = device_register(&csdev->dev);
- 	if (ret) {
-+		mutex_unlock(&coresight_mutex);
- 		put_device(&csdev->dev);
- 		/*
- 		 * All resources are free'd explicitly via
-@@ -1634,6 +1637,7 @@ struct coresight_device *coresight_register(struct coresight_desc *desc)
- 		ret = etm_perf_add_symlink_sink(csdev);
- 
- 		if (ret) {
-+			mutex_unlock(&coresight_mutex);
- 			device_unregister(&csdev->dev);
- 			/*
- 			 * As with the above, all resources are free'd
-@@ -1645,8 +1649,6 @@ struct coresight_device *coresight_register(struct coresight_desc *desc)
- 		}
- 	}
- 
--	mutex_lock(&coresight_mutex);
--
- 	ret = coresight_create_conns_sysfs_group(csdev);
- 	if (!ret)
- 		ret = coresight_fixup_device_conns(csdev);
-@@ -1663,8 +1665,6 @@ struct coresight_device *coresight_register(struct coresight_desc *desc)
- 
- 	return csdev;
- 
--err_free_csdev:
--	kfree(csdev);
- err_out:
- 	/* Cleanup the connection information */
- 	coresight_release_platform_data(NULL, desc->pdata);
+This HW deals with 2:1 mappings, i.e. it is a mux. So all the time
+spent on this driver is totally lost, because you have the wrong
+abstraction. And the QC driver is just as bad.
+
+	M.
+
 -- 
-2.17.1
-
+Without deviation from the norm, progress is not possible.
