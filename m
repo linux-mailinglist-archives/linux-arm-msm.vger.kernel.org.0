@@ -2,136 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 14ACC4CDE2A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Mar 2022 21:25:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 50B1F4CDE86
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Mar 2022 21:26:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231288AbiCDUOE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Mar 2022 15:14:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38594 "EHLO
+        id S229566AbiCDUWA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Mar 2022 15:22:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231829AbiCDUNX (ORCPT
+        with ESMTP id S229448AbiCDUV7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Mar 2022 15:13:23 -0500
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2976F47C5;
-        Fri,  4 Mar 2022 12:07:40 -0800 (PST)
+        Fri, 4 Mar 2022 15:21:59 -0500
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A7F1177743;
+        Fri,  4 Mar 2022 12:21:09 -0800 (PST)
+Received: by mail-pj1-x1034.google.com with SMTP id gj15-20020a17090b108f00b001bef86c67c1so8811651pjb.3;
+        Fri, 04 Mar 2022 12:21:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1646424461; x=1677960461;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=UBESVlzmGH+/Gac4srZ64vERJW8ASdnCOUV8oAcRbY0=;
-  b=vSKwuBTvHXdeFFmjYFqGZF8aRwFEl2pvrY6EotnX896WPDLV9MuMSlj8
-   +QCPFhVxx+rsCg5x516eS6SJ89PZw6xbBt9rDXQYYyzy7hbWK+0OWD65r
-   +yABhrvEkHT9sV98Z1w/pith17bBmoAfcDkmyUrhd33OdFokI0aNuNVug
-   g=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 04 Mar 2022 11:22:38 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Mar 2022 11:22:38 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Fri, 4 Mar 2022 11:22:37 -0800
-Received: from [10.216.41.112] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Fri, 4 Mar 2022
- 11:22:29 -0800
-Message-ID: <b1740f38-81f2-32d3-e900-30f6e2ad970b@quicinc.com>
-Date:   Sat, 5 Mar 2022 00:52:25 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH v1 07/10] drm/msm/adreno: Retry on gpu resume failure
-Content-Language: en-US
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>
-CC:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=C/syT7Y2eY46OVXh3uLQ0pEOp4t9Olrz81IvOtIGubc=;
+        b=pBy/DWvZZiL+PVlFab76MNRYthBkf+JTWT0dnBB/J3HJUFg4iD/+Yn5TktceeTcFIa
+         rUlXjyCodpdMxp/d9oixBNacs/pdnoxKNEjh6wBDPRAmT19PSBevFgAp3INjyiookgfh
+         MbpvsZW2XIzbwQLswzB2S973dM5KNgFodXbEwzDrWFasTU4PzgD8pK9G5Z698OtsiDVJ
+         ymhTaqmCBEFrplXlUYM/3WhinFrbzz3JsH/nEamX+L8+Qcc5IGaxh9MnEtYxGwEyKmf3
+         Axr6ltVJD8yozzNVIRtTbF1qohzE1uf0Jdi017er2CCS0uBVjYh1Z5YmyzTt4PU12YXg
+         qifQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=C/syT7Y2eY46OVXh3uLQ0pEOp4t9Olrz81IvOtIGubc=;
+        b=j23ov2vC8sdfqcd1Zf4nUHxb7oAxSp45neKNKaCb2mHPpr1JeazakqgEEcDTPyVook
+         mF1fhf5bJRTrS9Ivjeh4pUV8/OPAEj5tku/xKZUHbIpuQem3OJneGgPLWMBvPy01Rt4E
+         KM+uA1FpYa5X4mizg+hmLjnvx8H5uSbQd58MKTf01+IdCkYrd1n6pEoXtHsj1VsQkN4O
+         Cwg6ChWB1gUjJ85p6zKalFL0r3TO0AUjoqph6rkl4X4Gn/EKkMvMkZsFSovXROYZeoCD
+         X0yAEik/H18PCVmEdX9kUMfdklTYPOpL/kcbdOhcRE1LDFYImC55nnNpt6aI7CUT2xTn
+         IofQ==
+X-Gm-Message-State: AOAM5317SXJ8JQU+3GpzsrC1yI56kru/dzA9wn2e9CpEbIaExccDO5/8
+        4ojh+vW/mCDg7nDQBvq17LU=
+X-Google-Smtp-Source: ABdhPJw0l7sG4pT7XOonU9d1+7+hi2g1s/G+O0WZFo9stDIm1EKxnhjv4E/nEpUN6639n1X7lB0o5Q==
+X-Received: by 2002:a17:903:1c3:b0:151:a54b:95f4 with SMTP id e3-20020a17090301c300b00151a54b95f4mr110414plh.10.1646425268705;
+        Fri, 04 Mar 2022 12:21:08 -0800 (PST)
+Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
+        by smtp.gmail.com with ESMTPSA id q15-20020a63504f000000b0037425262293sm5051165pgl.43.2022.03.04.12.21.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Mar 2022 12:21:07 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         David Airlie <airlied@linux.ie>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Sean Paul <sean@poorly.run>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        <linux-kernel@vger.kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>
-References: <1646242056-2456-1-git-send-email-quic_akhilpo@quicinc.com>
- <20220302225551.v1.7.I55e39e28375b64455d1605f67453d5e91b0c2710@changeid>
- <373491a2-0fa5-0326-29cd-1650f86202d4@collabora.com>
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-In-Reply-To: <373491a2-0fa5-0326-29cd-1650f86202d4@collabora.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm: Fix dirtyfb refcounting
+Date:   Fri,  4 Mar 2022 12:21:45 -0800
+Message-Id: <20220304202146.845566-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/3/2022 2:51 PM, AngeloGioacchino Del Regno wrote:
-> Il 02/03/22 18:27, Akhil P Oommen ha scritto:
->> Retry infinitely on resume failure because there is nothing much we can
->> do if GPU is not ON. Also, this helps us to avoid checking for the
->> return value of pm_runtime_get() to see if GPU is ON.
->>
->> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
->> ---
->>
->>   drivers/gpu/drm/msm/adreno/adreno_device.c | 10 +++++++++-
->>   1 file changed, 9 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c 
->> b/drivers/gpu/drm/msm/adreno/adreno_device.c
->> index 89cfd84..abcc553 100644
->> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
->> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
->> @@ -603,8 +603,16 @@ static const struct of_device_id dt_match[] = {
->>   static int adreno_resume(struct device *dev)
->>   {
->>       struct msm_gpu *gpu = dev_to_gpu(dev);
->> +    int ret;
->> +
->> +    /* What hope do we have for the future if we can't turn ON gpu */
->
-> Hello Akhil,
->
-> the hope for the future would be to at least not lock up everything with
-> an infinite loop, so, please change this to have a limited amount of 
-> retries.
->
-> My guess would be that a maximum of 10 is already a lot of retries, but
-> feel free to choose an appropriate number.
+From: Rob Clark <robdclark@chromium.org>
 
-Thanks for the feedback, Angelo. I will revisit this.
+refcount_t complains about 0->1 transitions, which isn't *quite* what we
+wanted.  So use dirtyfb==1 to mean that the fb is not connected to any
+output that requires dirtyfb flushing, so that we can keep the underflow
+and overflow checking.
 
--Akhil.
->
-> Regards,
-> Angelo
->
->> +    while (true) {
->> +        ret = gpu->funcs->pm_resume(gpu);
->> +        if (!ret)
->> +            break;
->> +    }
->>   -    return gpu->funcs->pm_resume(gpu);
->> +    return 0;
->>   }
->>     static int active_submits(struct msm_gpu *gpu)
->
->
+Fixes: 9e4dde28e9cd ("drm/msm: Avoid dirtyfb stalls on video mode displays (v2)")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_fb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_fb.c b/drivers/gpu/drm/msm/msm_fb.c
+index 96b379a08327..7137492fe78e 100644
+--- a/drivers/gpu/drm/msm/msm_fb.c
++++ b/drivers/gpu/drm/msm/msm_fb.c
+@@ -37,7 +37,7 @@ static int msm_framebuffer_dirtyfb(struct drm_framebuffer *fb,
+ 	/* If this fb is not used on any display requiring pixel data to be
+ 	 * flushed, then skip dirtyfb
+ 	 */
+-	if (refcount_read(&msm_fb->dirtyfb) == 0)
++	if (refcount_read(&msm_fb->dirtyfb) == 1)
+ 		return 0;
+ 
+ 	return drm_atomic_helper_dirtyfb(fb, file_priv, flags, color,
+@@ -221,6 +221,8 @@ static struct drm_framebuffer *msm_framebuffer_init(struct drm_device *dev,
+ 		goto fail;
+ 	}
+ 
++	refcount_set(&msm_fb->dirtyfb, 1);
++
+ 	drm_dbg_state(dev, "create: FB ID: %d (%p)", fb->base.id, fb);
+ 
+ 	return fb;
+-- 
+2.35.1
 
