@@ -2,318 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D74B74CE002
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Mar 2022 22:59:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E23C24CE019
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Mar 2022 23:11:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229965AbiCDWAn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 4 Mar 2022 17:00:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57088 "EHLO
+        id S229715AbiCDWMn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 4 Mar 2022 17:12:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229535AbiCDWAm (ORCPT
+        with ESMTP id S229713AbiCDWMn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 4 Mar 2022 17:00:42 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6B5227C7A3
-        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Mar 2022 13:59:53 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id u10so12896547wra.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Mar 2022 13:59:53 -0800 (PST)
+        Fri, 4 Mar 2022 17:12:43 -0500
+Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3720DE1B50
+        for <linux-arm-msm@vger.kernel.org>; Fri,  4 Mar 2022 14:11:54 -0800 (PST)
+Received: by mail-qv1-xf35.google.com with SMTP id b12so7710710qvk.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Mar 2022 14:11:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=zflriaVvTYSYNPtodgEZPauntK24DoxfeXY16WMzGwY=;
-        b=dT2dZ1/wSnojkl8Zw7kPpqROaD5fcMvakXBwKd+zgCM2GyCPJIDlGTlXQ3dg99722p
-         1YUxagRguNJjLzu1khr3l2o1CpWmGwKKM1KL//TDAFJ6VFHkUbpfl4jz+ygSlC6xbdIQ
-         up8LzHT5kVGSHEmbANwdld66JyeWPKcRcpihLLtl+E2w4mUB8bwEA1lQFl16Xz9iBUMq
-         Kpjc1M25MfbHdR/vqCiOeWU34RM8PPFeWymDkxmHm6Srr9zCtKnyJ7PhZJfo1XruGy9F
-         bazCg/Li8pfCQzJFXJaav7G63r0UkP0vuUxRocNJRgt4r6O6ebpFvBx1nq2F4rICRw6B
-         0g0Q==
+        bh=ZpECLvSl44j2lTbE8E9msNQR2sv3DK1If11NairmYgY=;
+        b=n524EVp7JhvhjiQcC0KPccT6B+21Myz5C6rhKlQCvUxLApOJNTkNX2jvN9SMHSknEY
+         LGzgt12qV/i2gzMAP905UsfCWQ07SJmhiq4E5+E2ZsGGTcHyxYedDJGfxLtOO1tuNusU
+         9/BHgQHR+nZzWifNdwr5zou3iNTbPvdxrX1uNoF9+mVJ8KichXNR08Dque8S2SqohPwl
+         +vVSfv6g1sFI8mlv+xC8S2Z8gA5ftGncprUG8lUEb2NvJUyBC4jQzWmVOb7QGGIMo59y
+         kGzutbZjpvWlqKhasm1fSaP3uff2zRayC7jYR5OR7xv6QehkuSWogoMiiTe0U5teAdNN
+         ed+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=zflriaVvTYSYNPtodgEZPauntK24DoxfeXY16WMzGwY=;
-        b=iCGwwZhr2Xeb+70AW1oZ9J5sfXDgcavM9YALmgrnUcALPJuCTCoU2wwmGQFUhTphSj
-         K4k3NGSevRvdc2jZgvKPxtWWWwytxvXEwLTsUl0nwlkRgIuH48VTmTLlaPRO4SKfZlbb
-         1oDaV8TqfIYcTUUBH+NwbxrLphUcJIDLCtHf9syhT52fZvP9//XpdRgvVLvGz1Tki+fT
-         lq90LmULLPPMbwb8iMH5FXh+ikMmdhRYI5wHcn12W/3Q29QEQHX7enG83t1wi0AO49mQ
-         5vDx2/+rnph22Etm3Ews7BD12gGe1hTD0qEGH42Y1vUqXXxizUGX5EOux3UxRXYRIutn
-         mYgw==
-X-Gm-Message-State: AOAM530qb2s+2Fu8iUGPuOAqoMo0FfPatLHBTPxnt+1mnM16UY+agked
-        q6U+Ze7GH0jFH2oKb66iRhpgXGAZ2jxp3YHXn5g=
-X-Google-Smtp-Source: ABdhPJxIFk7qOzEgLwDOTejmW+SPaocE47aR3qrjcBKQXCwzUnFfnM8bSCXV/WRAr+SRoBIycLw9lOdTaiHTeLhXau8=
-X-Received: by 2002:a5d:4b85:0:b0:1f0:9661:9263 with SMTP id
- b5-20020a5d4b85000000b001f096619263mr508213wrt.574.1646431192439; Fri, 04 Mar
- 2022 13:59:52 -0800 (PST)
+        bh=ZpECLvSl44j2lTbE8E9msNQR2sv3DK1If11NairmYgY=;
+        b=Q7F/pmImAzHdo9s7zfeM8zQOy7fZFiuVEznQjGHxqMKXP6leSrjWdvkMwgWoDcwJCa
+         MqLX8ZTaceXPt+/GgHAOTRA79nVzeW2bYbIkk/f2G514m1N/MmodhwsMLomIvBn9XHKC
+         2gNTNVlbY+bYC5WdMvaJc9iuoqvWwXUB/fOojvYlgE+OTlH4DtR/rGYy8GZ8AmU+yy8L
+         FAXKcel+kdlwzx849x+NxKJ4BgkGSBi0D/To6T6kMvx1m40XsxciFvvHjywhsTeOdqM8
+         wqvCNp5zRjb3ZC4f4W1pjLeEYMzd98y+FbIaOVpAGKyY7AR20uXmmHVw7B4+YysR57sP
+         crlg==
+X-Gm-Message-State: AOAM532GmUGShowWJbOkohy+KsgUWS7g3u60T7eObplGlgh/3lScdCRo
+        R3F5A+I/hThebsoYHEebFoHlQKhu22lAEPWAT2l/OVOk3i8/8QyK
+X-Google-Smtp-Source: ABdhPJyBR7yFv773x72US6WY2rvvU2xrJkgFRl/bJYCCmFs9dSCw47WZHC433ew93Xki2xBOL9Vrsqz71qrpIPH/CKs=
+X-Received: by 2002:ad4:5769:0:b0:435:41db:9bca with SMTP id
+ r9-20020ad45769000000b0043541db9bcamr451095qvx.73.1646431913351; Fri, 04 Mar
+ 2022 14:11:53 -0800 (PST)
 MIME-Version: 1.0
-References: <20220304032106.2866043-1-dmitry.baryshkov@linaro.org> <20220304032106.2866043-6-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220304032106.2866043-6-dmitry.baryshkov@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 4 Mar 2022 14:00:22 -0800
-Message-ID: <CAF6AEGvrL_ztO3MJU5Ys3V-1xbaNzZpLjmTU+++QQr9+qQxyww@mail.gmail.com>
-Subject: Re: [PATCH v3 5/5] drm/msm: allow compile time selection of driver components
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+References: <1646300401-9063-1-git-send-email-quic_vpolimer@quicinc.com>
+ <1646300401-9063-5-git-send-email-quic_vpolimer@quicinc.com>
+ <CAA8EJpqkK8q7g8q56rfiOO22ykxgycJTpSJKHuhcqGk05nsVzA@mail.gmail.com>
+ <CAE-0n53jGQcn=NThrrW92NL-cry8yrFErdSYTHHEHWW48b3xbg@mail.gmail.com>
+ <CAA8EJpoEpn2RPByeDkaGPUX+OC7tvbEw4k78Gd+RKs02jpzG1w@mail.gmail.com> <CAD=FV=WZUSuNa0Ei_0ByjHRdsJ7smhD+uVghs28NzNGvGp0LwQ@mail.gmail.com>
+In-Reply-To: <CAD=FV=WZUSuNa0Ei_0ByjHRdsJ7smhD+uVghs28NzNGvGp0LwQ@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 5 Mar 2022 01:11:42 +0300
+Message-ID: <CAA8EJpq7XEy2C5=80HMHcy3wvB2CJetyQhcjQRcTtEafauy91g@mail.gmail.com>
+Subject: Re: [PATCH v4 4/4] arm64/dts/qcom/sm8250: remove assigned-clock-rate
+ property for mdp clk
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
         dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>, quic_kalyant@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 3, 2022 at 7:21 PM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
+On Sat, 5 Mar 2022 at 00:49, Doug Anderson <dianders@chromium.org> wrote:
+> On Thu, Mar 3, 2022 at 4:16 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > On Fri, 4 Mar 2022 at 02:56, Stephen Boyd <swboyd@chromium.org> wrote:
+> > >
+> > > Quoting Dmitry Baryshkov (2022-03-03 15:50:50)
+> > > > On Thu, 3 Mar 2022 at 12:40, Vinod Polimera <quic_vpolimer@quicinc.com> wrote:
+> > > > >
+> > > > > Kernel clock driver assumes that initial rate is the
+> > > > > max rate for that clock and was not allowing it to scale
+> > > > > beyond the assigned clock value.
+> > > > >
+> > > > > Drop the assigned clock rate property and vote on the mdp clock as per
+> > > > > calculated value during the usecase.
+> > > > >
+> > > > > Fixes: 7c1dffd471("arm64: dts: qcom: sm8250.dtsi: add display system nodes")
+> > > >
+> > > > Please remove the Fixes tags from all commits. Otherwise the patches
+> > > > might be picked up into earlier kernels, which do not have a patch
+> > > > adding a vote on the MDP clock.
+> > >
+> > > What patch is that? The Fixes tag could point to that commit.
+> >
+> > Please correct me if I'm wrong.
+> > Currently the dtsi enforces bumping the MDP clock when the mdss device
+> > is being probed and when the dpu device is being probed.
+> > Later during the DPU lifetime the core_perf would change the clock's
+> > rate as it sees fit according to the CRTC requirements.
 >
-> MSM DRM driver already allows one to compile out the DP or DSI support.
-> Add support for disabling other features like MDP4/MDP5/DPU drivers or
-> direct HDMI output support.
->
-> Suggested-by: Stephen Boyd <swboyd@chromium.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/gpu/drm/msm/Kconfig    | 50 ++++++++++++++++++++++++++++++++--
->  drivers/gpu/drm/msm/Makefile   | 18 ++++++++++--
->  drivers/gpu/drm/msm/msm_drv.h  | 33 ++++++++++++++++++++++
->  drivers/gpu/drm/msm/msm_mdss.c | 13 +++++++--
->  4 files changed, 106 insertions(+), 8 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
-> index 9b019598e042..3735fd41eb3b 100644
-> --- a/drivers/gpu/drm/msm/Kconfig
-> +++ b/drivers/gpu/drm/msm/Kconfig
-> @@ -46,12 +46,39 @@ config DRM_MSM_GPU_SUDO
->           Only use this if you are a driver developer.  This should *not*
->           be enabled for production kernels.  If unsure, say N.
->
-> -config DRM_MSM_HDMI_HDCP
-> -       bool "Enable HDMI HDCP support in MSM DRM driver"
-> +config DRM_MSM_MDSS
-> +       bool
-> +       depends on DRM_MSM
-> +       default n
-> +
-> +config DRM_MSM_MDP4
-> +       bool "Enable MDP4 support in MSM DRM driver"
->         depends on DRM_MSM
->         default y
->         help
-> -         Choose this option to enable HDCP state machine
-> +         Compile in support for the Mobile Display Processor v4 (MDP4) in
-> +         the MSM DRM driver. It is the older display controller found in
-> +         devices using APQ8064/MSM8960/MSM8x60 platforms.
-> +
-> +config DRM_MSM_MDP5
-> +       bool "Enable MDP5 support in MSM DRM driver"
-> +       depends on DRM_MSM
-> +       select DRM_MSM_MDSS
-> +       default y
-> +       help
-> +         Compile in support for the Mobile Display Processor v5 (MDP4) in
+> "Currently" means _before_ ${SUBJECT} patch lands, right? Since
+> ${SUBJECT} patch is removing the bump to max.
 
-drive-by nit: s/MDP4/MDP5/
+Yes. 'Before this patch'.
 
-BR,
--R
+>
+>
+> > However it would happen only when the during the
+> > dpu_crtc_atomic_flush(), before we call this function, the MDP clock
+> > is left in the undetermined state. The power rails controlled by the
+> > opp table are left in the undetermined state.
+> >
+> > I suppose that during the dpu_bind we should bump the clock to the max
+> > possible freq and let dpu_core_perf handle it afterwards.
+>
+> Definitely feels like seeing the clock to something predictable during
+> the initial probe makes sense. If it's just for the initial probe then
+> setting it to max (based on the opp table) seems fine.
 
-> +         the MSM DRM driver. It is the display controller found in devices
-> +         using e.g. APQ8016/MSM8916/APQ8096/MSM8996/MSM8974/SDM6x0 platforms.
-> +
-> +config DRM_MSM_DPU
-> +       bool "Enable DPU support in MSM DRM driver"
-> +       depends on DRM_MSM
-> +       select DRM_MSM_MDSS
-> +       default y
-> +       help
-> +         Compile in support for the Display Processing Unit in
-> +         the MSM DRM driver. It is the display controller found in devices
-> +         using e.g. SDM845 and newer platforms.
->
->  config DRM_MSM_DP
->         bool "Enable DisplayPort support in MSM DRM driver"
-> @@ -116,3 +143,20 @@ config DRM_MSM_DSI_7NM_PHY
->         help
->           Choose this option if DSI PHY on SM8150/SM8250/SC7280 is used on
->           the platform.
-> +
-> +config DRM_MSM_HDMI
-> +       bool "Enable HDMI support in MSM DRM driver"
-> +       depends on DRM_MSM
-> +       default y
-> +       help
-> +         Compile in support for the HDMI output MSM DRM driver. It can
-> +         be a primary or a secondary display on device. Note that this is used
-> +         only for the direct HDMI output. If the device outputs HDMI data
-> +         throught some kind of DSI-to-HDMI bridge, this option can be disabled.
-> +
-> +config DRM_MSM_HDMI_HDCP
-> +       bool "Enable HDMI HDCP support in MSM DRM driver"
-> +       depends on DRM_MSM && DRM_MSM_HDMI
-> +       default y
-> +       help
-> +         Choose this option to enable HDCP state machine
-> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
-> index e76927b42033..5fe9c20ab9ee 100644
-> --- a/drivers/gpu/drm/msm/Makefile
-> +++ b/drivers/gpu/drm/msm/Makefile
-> @@ -16,6 +16,8 @@ msm-y := \
->         adreno/a6xx_gpu.o \
->         adreno/a6xx_gmu.o \
->         adreno/a6xx_hfi.o \
-> +
-> +msm-$(CONFIG_DRM_MSM_HDMI) += \
->         hdmi/hdmi.o \
->         hdmi/hdmi_audio.o \
->         hdmi/hdmi_bridge.o \
-> @@ -27,8 +29,8 @@ msm-y := \
->         hdmi/hdmi_phy_8x60.o \
->         hdmi/hdmi_phy_8x74.o \
->         hdmi/hdmi_pll_8960.o \
-> -       disp/mdp_format.o \
-> -       disp/mdp_kms.o \
-> +
-> +msm-$(CONFIG_DRM_MSM_MDP4) += \
->         disp/mdp4/mdp4_crtc.o \
->         disp/mdp4/mdp4_dtv_encoder.o \
->         disp/mdp4/mdp4_lcdc_encoder.o \
-> @@ -37,6 +39,8 @@ msm-y := \
->         disp/mdp4/mdp4_irq.o \
->         disp/mdp4/mdp4_kms.o \
->         disp/mdp4/mdp4_plane.o \
-> +
-> +msm-$(CONFIG_DRM_MSM_MDP5) += \
->         disp/mdp5/mdp5_cfg.o \
->         disp/mdp5/mdp5_ctl.o \
->         disp/mdp5/mdp5_crtc.o \
-> @@ -47,6 +51,8 @@ msm-y := \
->         disp/mdp5/mdp5_mixer.o \
->         disp/mdp5/mdp5_plane.o \
->         disp/mdp5/mdp5_smp.o \
-> +
-> +msm-$(CONFIG_DRM_MSM_DPU) += \
->         disp/dpu1/dpu_core_perf.o \
->         disp/dpu1/dpu_crtc.o \
->         disp/dpu1/dpu_encoder.o \
-> @@ -69,6 +75,13 @@ msm-y := \
->         disp/dpu1/dpu_plane.o \
->         disp/dpu1/dpu_rm.o \
->         disp/dpu1/dpu_vbif.o \
-> +
-> +msm-$(CONFIG_DRM_MSM_MDSS) += \
-> +       msm_mdss.o \
-> +
-> +msm-y += \
-> +       disp/mdp_format.o \
-> +       disp/mdp_kms.o \
->         disp/msm_disp_snapshot.o \
->         disp/msm_disp_snapshot_util.o \
->         msm_atomic.o \
-> @@ -86,7 +99,6 @@ msm-y := \
->         msm_gpu_devfreq.o \
->         msm_io_utils.o \
->         msm_iommu.o \
-> -       msm_mdss.o \
->         msm_perf.o \
->         msm_rd.o \
->         msm_ringbuffer.o \
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index c1aaadfbea34..6bad7e7b479d 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -314,10 +314,20 @@ struct drm_fb_helper *msm_fbdev_init(struct drm_device *dev);
->  void msm_fbdev_free(struct drm_device *dev);
->
->  struct hdmi;
-> +#ifdef CONFIG_DRM_MSM_HDMI
->  int msm_hdmi_modeset_init(struct hdmi *hdmi, struct drm_device *dev,
->                 struct drm_encoder *encoder);
->  void __init msm_hdmi_register(void);
->  void __exit msm_hdmi_unregister(void);
-> +#else
-> +static inline int msm_hdmi_modeset_init(struct hdmi *hdmi, struct drm_device *dev,
-> +               struct drm_encoder *encoder)
-> +{
-> +       return -EINVAL;
-> +}
-> +static inline void __init msm_hdmi_register(void) {}
-> +static inline void __exit msm_hdmi_unregister(void) {}
-> +#endif
->
->  struct msm_dsi;
->  #ifdef CONFIG_DRM_MSM_DSI
-> @@ -432,14 +442,37 @@ static inline void msm_dp_debugfs_init(struct msm_dp *dp_display,
->
->  #endif
->
-> +#ifdef CONFIG_DRM_MSM_MDP4
->  void msm_mdp4_register(void);
->  void msm_mdp4_unregister(void);
-> +#else
-> +static inline void msm_mdp4_register(void) {}
-> +static inline void msm_mdp4_unregister(void) {}
-> +#endif
-> +
-> +#ifdef CONFIG_DRM_MSM_MDP5
->  void msm_mdp_register(void);
->  void msm_mdp_unregister(void);
-> +#else
-> +static inline void msm_mdp_register(void) {}
-> +static inline void msm_mdp_unregister(void) {}
-> +#endif
-> +
-> +#ifdef CONFIG_DRM_MSM_DPU
->  void msm_dpu_register(void);
->  void msm_dpu_unregister(void);
-> +#else
-> +static inline void msm_dpu_register(void) {}
-> +static inline void msm_dpu_unregister(void) {}
-> +#endif
-> +
-> +#ifdef CONFIG_DRM_MSM_MDSS
->  void msm_mdss_register(void);
->  void msm_mdss_unregister(void);
-> +#else
-> +static inline void msm_mdss_register(void) {}
-> +static inline void msm_mdss_unregister(void) {}
-> +#endif
->
->  #ifdef CONFIG_DEBUG_FS
->  void msm_framebuffer_describe(struct drm_framebuffer *fb, struct seq_file *m);
-> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-> index 4d25d8955301..66714b356762 100644
-> --- a/drivers/gpu/drm/msm/msm_mdss.c
-> +++ b/drivers/gpu/drm/msm/msm_mdss.c
-> @@ -303,8 +303,17 @@ static const struct dev_pm_ops mdss_pm_ops = {
->
->  static int find_mdp_node(struct device *dev, void *data)
->  {
-> -       return of_match_node(dpu_dt_match, dev->of_node) ||
-> -               of_match_node(mdp5_dt_match, dev->of_node);
-> +#ifdef CONFIG_DRM_MSM_DPU
-> +       if (of_match_node(dpu_dt_match, dev->of_node))
-> +               return true;
-> +#endif
-> +
-> +#ifdef CONFIG_DRM_MSM_MDP5
-> +       if (of_match_node(mdp5_dt_match, dev->of_node))
-> +               return true;
-> +#endif
-> +
-> +       return false;
->  }
->
->  static int mdss_probe(struct platform_device *pdev)
-> --
-> 2.34.1
->
+Vinod, could you please implement it?
+
+> I think an
+> earlier version of this series set it to max every time we did runtime
+> resume. We'd have to have a good reason to do that.
+
+Yes, this is correct. Based on the comments I had the impression that
+there was a suggestion that the place for the calls was wrong. Most
+probably I was instead projecting my own thoughts.
+
+-- 
+With best wishes
+Dmitry
