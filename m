@@ -2,74 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 209F74CE640
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Mar 2022 18:36:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F3CB74CE729
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Mar 2022 22:12:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232137AbiCERe0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Mar 2022 12:34:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59636 "EHLO
+        id S232332AbiCEVMx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Mar 2022 16:12:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230426AbiCEReZ (ORCPT
+        with ESMTP id S232334AbiCEVMx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Mar 2022 12:34:25 -0500
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D683C15137C;
-        Sat,  5 Mar 2022 09:33:35 -0800 (PST)
-Received: by mail-pg1-x52c.google.com with SMTP id 132so10112620pga.5;
-        Sat, 05 Mar 2022 09:33:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=12jc84zVACmPZitAQSCb3aE5VlqyZHrB+UXDuxQbIOc=;
-        b=OJKGYJts4lLE8sv13wBz+01+qJke1kaef4oTLqY+k4PRzNLU9gIOW/2YYRAMR5Is19
-         YWW/6bQLg21aOiZ2U9RzSZS0io6k2XgufBQU7fsgymUBtvEkOVJbio6mUTZOPHjZv5mk
-         yWnvftE8JsLQG1Vcu1UNu5e1PhWmQvmtCHzbc8nXGTmzj910ZIVMK1lkz5Jf0CQrlA0G
-         RQ6ie8vDIYEDONm2VGnBSrDHpKWhaq+tMz87ZVoQnQK0I9vEJnM6nT2jEyfUBedFw6z9
-         O1wea9/NgpRcO+0/QKorOYL5InhT1hFEWGF2Nnunn2xYpqH6xClZ9LyRpM17ALe1KNTk
-         5LlQ==
+        Sat, 5 Mar 2022 16:12:53 -0500
+Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6FC674863
+        for <linux-arm-msm@vger.kernel.org>; Sat,  5 Mar 2022 13:12:00 -0800 (PST)
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com [209.85.218.69])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 7DFFC3F613
+        for <linux-arm-msm@vger.kernel.org>; Sat,  5 Mar 2022 21:11:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1646514719;
+        bh=f9rg0FgBlrSDEqY2yi+3lyLjudJ4mNThDGgUXldVQBc=;
+        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+         In-Reply-To:Content-Type;
+        b=v/wzlMqNWMQAHsFokgtWwoCMfyaWlHPK8Q2afF9vYz5DZA1EKK1BbuaCGDciUCaCZ
+         dFqHtUhwoMxMHeDVu/53dFTWbPG5mbbequZsQNyLSQCO2NUa0jV+gKJ9xc25eM/NBc
+         KDFXzcWx5XQHypf/bYsWCMYyIYF+zcqBoqPCditJzS3zxsoC1RhpnPo7uPtTqJfCzs
+         db2hNUaqryGMPeKLfsd54B9v2Xj3eqiSN3bcqd68H7aO8U9s2X97JnpvTnN1wqKFgQ
+         ixbk0FzJLMeluxoENCiM36sfkWHxGtt87sH4XpTKuMXpZUv/aXn6Y2OsxRd2Z/ewTE
+         xrpiR+vV5JkXw==
+Received: by mail-ej1-f69.google.com with SMTP id lf15-20020a170906ae4f00b006da86a43346so4844737ejb.14
+        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Mar 2022 13:11:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=12jc84zVACmPZitAQSCb3aE5VlqyZHrB+UXDuxQbIOc=;
-        b=eoBi69u1O1aUG1Muo1YtiYKL4NHVpIQyDU3ORbUsIbf/pIPzMlUystYOBUP1IYPHcH
-         bf6QD8G1dJBudj8G38rS5hgfPsxaLjDtrFQyBQPCLZN6wfaabMcKt1Z5If7/5wqL4xMb
-         GByiHTr/sFFYl6XfLbvyYHFoA7/32P/qjxRHnCBG6wyVTetvzH7w7WtkW+6uIU1xpCnM
-         aRt9bgcmNJ7z8tkFxOF254OyZAgDpM/7ZgXITSaqISR816ZZWWsKf+J9LrJ2l/aMQtHq
-         R+5HwJMrX4yPPwpFX71CzpGL2oBtDuLdmofb6RWx1bMkjkPWTiudkg78PRXwUdvl1llX
-         oOVw==
-X-Gm-Message-State: AOAM531mxGKK4spvRHnh2IMCTtIF7ABOiFK5WxotIkMBlcsTsulEbtJM
-        2psMVP4Pm1Oh7y3bHxEu3Sg=
-X-Google-Smtp-Source: ABdhPJwUZoMD1qdQmW7sKJkY/P0Jf8kaI1M3DCVgtmJsxT5spI6VebPuV35teZIfIPfgdje/kVVyDw==
-X-Received: by 2002:a05:6a00:180d:b0:4f6:d697:7df9 with SMTP id y13-20020a056a00180d00b004f6d6977df9mr3302231pfa.71.1646501610505;
-        Sat, 05 Mar 2022 09:33:30 -0800 (PST)
-Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id l62-20020a633e41000000b0037fee1843dbsm2922838pga.25.2022.03.05.09.33.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Mar 2022 09:33:28 -0800 (PST)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/a6xx: Fix missing ARRAY_SIZE() check
-Date:   Sat,  5 Mar 2022 09:34:03 -0800
-Message-Id: <20220305173405.914989-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.35.1
+        bh=f9rg0FgBlrSDEqY2yi+3lyLjudJ4mNThDGgUXldVQBc=;
+        b=NbqAPAgOTQ3YJRRYJOtSfHupJw5s5owG+yMD5RSkq7tHFYexMt3b9x4PcNe24ZU+VI
+         806AP821qRSjMw3VFDbsW7NUE03d45rSQJZ5371sbYNrhmox2Z7VF2I9k+BzoyFsSMTQ
+         n1fNMIA60fwPxUnLTKdZWFdzIE2I17UM3DjGHUN9PqAykT9ZkYynnmg7dmgNiwA7rSTx
+         UyysLx490vaS2Z4BZTEkuj06Rav/UIHW+mPWVKIqYsjbi310eRjErfujuCDwA1tePhWC
+         Qj4EDfA5mku6upw60wHVZHg1HP6Tk7nUYADtAwAGfUXaN6yOYy4IcY4ptSdr5fiTh/l0
+         hIXw==
+X-Gm-Message-State: AOAM530curXRP1rx0e+RlaFGGonWOsiJM6B9al53OxBxCweDlCfjOEaw
+        tkt5wQ1g98Bvlw3G4wB8KPSnmiLJhW6+MgzDAW3NIq7yCeMGi3Rqy4RVA4udy6tnkHuLOGY4mAG
+        R6gsU+xA87jG8ooq89SdOgYQmJNM7jrllowd0dNhpIwM=
+X-Received: by 2002:a05:6402:d08:b0:412:a33e:24fe with SMTP id eb8-20020a0564020d0800b00412a33e24femr4259964edb.281.1646514719106;
+        Sat, 05 Mar 2022 13:11:59 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJw6EnzMhmk2unJ5RFjXOKVNXUa2owCkF9J5nLRQs3gFUUn+a8r+YO80rbTs6y2ECtGD+LHULg==
+X-Received: by 2002:a05:6402:d08:b0:412:a33e:24fe with SMTP id eb8-20020a0564020d0800b00412a33e24femr4259953edb.281.1646514718938;
+        Sat, 05 Mar 2022 13:11:58 -0800 (PST)
+Received: from [192.168.0.139] (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
+        by smtp.gmail.com with ESMTPSA id b6-20020a50e386000000b00410d64cb3e4sm4055506edm.75.2022.03.05.13.11.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 05 Mar 2022 13:11:58 -0800 (PST)
+Message-ID: <7266d4c0-8c5c-24e9-e573-f10ced0c1760@canonical.com>
+Date:   Sat, 5 Mar 2022 22:11:57 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH 1/4] dt-bindings: mailbox: Add compatible for the MSM8976
+Content-Language: en-US
+To:     Adam Skladowski <a39.skl@gmail.com>, phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220305164906.16853-1-a39.skl@gmail.com>
+ <20220305164906.16853-2-a39.skl@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20220305164906.16853-2-a39.skl@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,47 +89,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On 05/03/2022 17:49, Adam Skladowski wrote:
+> Add the mailbox compatible for the MSM8976 SoC.
 
-Fixes: f6d62d091cfd ("drm/msm/a6xx: add support for Adreno 660 GPU")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+Missing empty line. With this fixed:
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 02b47977b5c3..83c31b2ad865 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -683,19 +683,23 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
- {
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
- 	const u32 *regs = a6xx_protect;
--	unsigned i, count = ARRAY_SIZE(a6xx_protect), count_max = 32;
--
--	BUILD_BUG_ON(ARRAY_SIZE(a6xx_protect) > 32);
--	BUILD_BUG_ON(ARRAY_SIZE(a650_protect) > 48);
-+	unsigned i, count, count_max;
- 
- 	if (adreno_is_a650(adreno_gpu)) {
- 		regs = a650_protect;
- 		count = ARRAY_SIZE(a650_protect);
- 		count_max = 48;
-+		BUILD_BUG_ON(ARRAY_SIZE(a650_protect) > 48);
- 	} else if (adreno_is_a660_family(adreno_gpu)) {
- 		regs = a660_protect;
- 		count = ARRAY_SIZE(a660_protect);
- 		count_max = 48;
-+		BUILD_BUG_ON(ARRAY_SIZE(a660_protect) > 48);
-+	} else {
-+		regs = a6xx_protect;
-+		count = ARRAY_SIZE(a6xx_protect);
-+		count_max = 32;
-+		BUILD_BUG_ON(ARRAY_SIZE(a6xx_protect) > 32);
- 	}
- 
- 	/*
--- 
-2.35.1
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 
+P.S. Please avoid some unusual formatting/bold in commit title (*** of
+cover letter). The subject should be informative and simple.
+
+> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+> ---
+>  .../devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml       | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+> index 01e9d9155c836..3b5ba7ecc19d9 100644
+> --- a/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+> +++ b/Documentation/devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml
+> @@ -21,6 +21,7 @@ properties:
+>        - qcom,msm8916-apcs-kpss-global
+>        - qcom,msm8939-apcs-kpss-global
+>        - qcom,msm8953-apcs-kpss-global
+> +      - qcom,msm8976-apcs-kpss-global
+>        - qcom,msm8994-apcs-kpss-global
+>        - qcom,msm8996-apcs-hmss-global
+>        - qcom,msm8998-apcs-hmss-global
+
+
+Best regards,
+Krzysztof
