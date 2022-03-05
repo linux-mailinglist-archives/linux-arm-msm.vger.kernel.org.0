@@ -2,80 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E608D4CE3F3
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Mar 2022 10:24:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 34A9B4CE43C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Mar 2022 11:38:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229948AbiCEJZj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 5 Mar 2022 04:25:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41626 "EHLO
+        id S229630AbiCEKiz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 5 Mar 2022 05:38:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230104AbiCEJZi (ORCPT
+        with ESMTP id S231495AbiCEKiy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 5 Mar 2022 04:25:38 -0500
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 548C420054F
-        for <linux-arm-msm@vger.kernel.org>; Sat,  5 Mar 2022 01:24:48 -0800 (PST)
-Received: by mail-pl1-x632.google.com with SMTP id ay5so9824320plb.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Mar 2022 01:24:48 -0800 (PST)
+        Sat, 5 Mar 2022 05:38:54 -0500
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38EB8193C1
+        for <linux-arm-msm@vger.kernel.org>; Sat,  5 Mar 2022 02:38:04 -0800 (PST)
+Received: by mail-qk1-x733.google.com with SMTP id j78so8368147qke.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Mar 2022 02:38:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=mHyiLiIrRpFigcy5JiGI43jKPJbXrn3zCVVn65B5ie4=;
-        b=CFqmsvaxdRzeOiwnuUIJ3DytjNjXccEl+NbwiDmrxzpP/JhovMRXzR/WjjlbgvOckW
-         UKVlqyYDnQdf6ToZXe99zGakh6V3X9ExwQDZvanjQKYUt/z9ktKk1V70XFiYd5dc1GUD
-         jC9ys+d2gS7pYAI4aONvJItU63NhqmE8mNnria5CXcC13ubbt2G/rx/VXP24bpt1WV6h
-         HWz3cp0nfRfFOvND0Rbw8j3FcfVawUDZQlayDdaZ5iTDvEG80NvU43qUcFpINkUtYcZp
-         EVomgxahW3gRzbL2VT2BWjOz90YNTvnkjZ+VaJb18FDgDE5xF6E3c1WtVdGt6weLDPeF
-         E6zA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=lz9u63IzQ1ny8p1MWQPaj5qIKrAWncsqwglKvPt7b18=;
+        b=ureuxwwCPGYZzOPqWphv5EaO1kY1yEOA+OfcMXKh++Ta5PzP3Vqj41pK77KeSt1CKr
+         oHiDbgZS3JHbshLxXF+pEYWSLCyWKXK/3lNXWTjopaR9vPXmmPkmu1OeG56DQVBJKixm
+         r1cZRZJw0aXAtNVTrDkVjGhEATMpLEMgHw1s67JnIwIUkOTer5TKItbrALbdsagJRkso
+         1vze8yvTmfCCdTYPrB4FmzaUBlrchxOnMSc8i6PM4to8Avv9Su3Z1nVYOaYiJ32b+cLI
+         BpP5eGR4IFMfuig3q+aDiYLkT8Xi41yIKswVkI2IOnKqaxrgZyqMnvFpr7tWsXugSDJ6
+         ri2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=mHyiLiIrRpFigcy5JiGI43jKPJbXrn3zCVVn65B5ie4=;
-        b=Pc0CByn7Mvw2obEAInIpsM2ecaTKX9/Gggppcqb2YVlpFGYu6GukEiWHsDemqzCdtK
-         ipB6LvkaL2TVoGAqov7VsmE2COudJxw8k2c5SNWGy+cvwcTqluKAmWr4cGa8/R2Z6y6c
-         lNAMxdBIVExPk5ckuiOfpIXNyGev74NyehQpXmTsI/mD3ihEx0D4XmgwtOOJnFZOGz7O
-         6gD7m7opVo6/ICXkqHiNVnXIUdE+mjgylLOClyv0idsGfB3ukaSzSLwRcic0kcN+3WCn
-         CYDo3LJHpZ5E5CW7TS5ZEYkoaRFGyOETFzTgoX6BuEQoNIny4KZ5VDA7JnBkYbovjrFy
-         oCSA==
-X-Gm-Message-State: AOAM530CvD3hiFJqkGC9U46QOhgjeUIkab1L4kdFbmFteLDC/ny/znYp
-        jP1rbt6kHpVNh6GcluyOsFs0og==
-X-Google-Smtp-Source: ABdhPJyJiXUhe/a8Me8H7MP3LXIBW/eicZeW9IEeCMhfX1/t9Wil2TcPX6VFyXsdyWpWzd9LpNNLKQ==
-X-Received: by 2002:a17:902:9008:b0:14f:b1f9:5271 with SMTP id a8-20020a170902900800b0014fb1f95271mr2481434plp.86.1646472287857;
-        Sat, 05 Mar 2022 01:24:47 -0800 (PST)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id j2-20020a655582000000b00372b2b5467asm6684720pgs.10.2022.03.05.01.24.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Mar 2022 01:24:27 -0800 (PST)
-Date:   Sat, 5 Mar 2022 17:24:20 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Marc Zyngier <maz@kernel.org>
-Cc:     Thomas Gleixner <tglx@linutronix.de>,
-        Maulik Shah <quic_mkshah@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 2/2] irqchip: Add Qualcomm MPM controller driver
-Message-ID: <20220305092420.GP269879@dragon>
-References: <20220301062414.2987591-3-shawn.guo@linaro.org>
- <87ee3m2aed.wl-maz@kernel.org>
- <20220302084028.GL269879@dragon>
- <877d9c3b2u.wl-maz@kernel.org>
- <20220302133441.GM269879@dragon>
- <875yow31a0.wl-maz@kernel.org>
- <20220303040229.GN269879@dragon>
- <87fsnytagc.wl-maz@kernel.org>
- <20220304082342.GO269879@dragon>
- <87lexp211g.wl-maz@kernel.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=lz9u63IzQ1ny8p1MWQPaj5qIKrAWncsqwglKvPt7b18=;
+        b=TwgO7w26Ar0XsyXC1MuVzFGNm71rZU57hcdAVuY02bpG37tqdzcmoQRLmH/EGnAszF
+         rX4yII3Bijffic1lGa860f8r5L9RMNKilXMBYhAanhM1STbNz2DEUQQfGm7rcSqrOM7d
+         41sFgWpqStiAaer6FmT0nYrBKtTD7eH+F2bk54iLR7fTYuhi26Me5Rj9nmidXbA0BqSm
+         1hNeoEYyq2u/eg581iUaVE926rkCpnw+Ric90ODeJTTz825KPNsrc67NEsZCgivBmTL+
+         nWZwHhGT91McivcAL5h7Suo2OUWc1pZufFr0vAey9HFoNwnGkLgQA+mxGRaKeiUCsWtn
+         YEPg==
+X-Gm-Message-State: AOAM530xeSL6Lv+dRqFv+Gi45sfrflMaOMY9Cicnq3+Lbc2cP+6J2L/m
+        HL/VLC1AfonIH9otwJ49Tg+eTo5Pap1mN3u4olCOig==
+X-Google-Smtp-Source: ABdhPJwhxXcWrkTJz60CRz6vpb74RSpT9uPgyqmT08HWXkR+SLRk4QdjvtxL/93LY0auGa7N0SvwegppCk4zzWi/9Z4=
+X-Received: by 2002:a05:620a:1392:b0:60d:d76a:5073 with SMTP id
+ k18-20020a05620a139200b0060dd76a5073mr1620167qki.59.1646476683364; Sat, 05
+ Mar 2022 02:38:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87lexp211g.wl-maz@kernel.org>
+References: <20220304202406.846485-1-robdclark@gmail.com> <CAA8EJprik57F+t0KicoYaRm=oDOgcQHyHSBjJKbekBKjO_-=0A@mail.gmail.com>
+ <CAF6AEGtM+Jhye7ahW3uFg-8PFHH257-T7Qudo=XMU5-AU2LvcA@mail.gmail.com>
+In-Reply-To: <CAF6AEGtM+Jhye7ahW3uFg-8PFHH257-T7Qudo=XMU5-AU2LvcA@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 5 Mar 2022 13:37:52 +0300
+Message-ID: <CAA8EJpr3yDW=f4gc4d06KiETtNJkrLNaTcOx28UpS3toVOh6nw@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/a6xx: Fix missing ARRAY_SIZE() check
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,65 +77,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 04, 2022 at 03:24:43PM +0000, Marc Zyngier wrote:
-> On Fri, 04 Mar 2022 08:23:42 +0000,
-> Shawn Guo <shawn.guo@linaro.org> wrote:
-> > 
-> > On Fri, Mar 04, 2022 at 07:59:15AM +0000, Marc Zyngier wrote:
-> > > On Thu, 03 Mar 2022 04:02:29 +0000,
-> > > Shawn Guo <shawn.guo@linaro.org> wrote:
-> > > > 
-> > > > On Wed, Mar 02, 2022 at 01:57:27PM +0000, Marc Zyngier wrote:
-> > > > > This code actually makes me ask more questions. Why is it programming
-> > > > > 2 'pins' for each IRQ?
-> > > > 
-> > > > The mapping between MPM pin and GIC IRQ is not strictly 1-1.  There are
-> > > > some rare case that up to 2 MPM pins map to a single GIC IRQ, for
-> > > > example the last two in QC2290 'qcom,mpm-pin-map' below.
-> > > > 
-> > > > 	qcom,mpm-pin-map = <2 275>,     /* tsens0_tsens_upper_lower_int */
-> > > > 			   <5 296>,     /* lpass_irq_out_sdc */
-> > > > 			   <12 422>,    /* b3_lfps_rxterm_irq */
-> > > > 			   <24 79>,     /* bi_px_lpi_1_aoss_mx */
-> > > > 			   <86 183>,    /* mpm_wake,spmi_m */
-> > > > 			   <90 260>,    /* eud_p0_dpse_int_mx */
-> > > > 			   <91 260>;    /* eud_p0_dmse_int_mx */
-> > > > 
-> > > > 
-> > > > The downstream uses a DT bindings that specifies GIC hwirq number in
-> > > > client device nodes.  In that case, d->hwirq in the driver is GIC IRQ
-> > > > number, and the driver will need to query mapping table, find out the
-> > > > possible 2 MPM pins, and set them up.
-> > > > 
-> > > > The patches I'm posting here use a different bindings that specifies MPM
-> > > > pin instead in client device nodes.  Thus the driver can simply get the
-> > > > MPM pin from d->hwirq, so that the whole look-up procedure can be saved.
-> > > 
-> > > It still remains that there is no 1:1 mapping between input and
-> > > output, which is the rule #1 to be able to use a hierarchical setup.
-> > 
-> > For direction of MPM pin -> GIC interrupt, it's a 1:1 mapping, i.e. for
-> > given MPM pin, there is only one GIC interrupt.  And that's the
-> > mapping MPM driver relies on.  For GIC interrupt -> MPM pin, it's not
-> > a strict 1:1 mapping.
-> 
-> Then this isn't a 1:1 mapping *AT ALL*. The hierarchical setup
-> mandates that the mapping is a bijective function, and that's exactly
-> what 1:1 means. There is no such thing a 1:1 in a single
-> direction. When you take an interrupt, all you see is the GIC
-> interrupt. How do you know which of the *two* pins interrupted you? Oh
-> wait, you *can't* know. You end-up never servicing one of the two
-> interrupts
+On Sat, 5 Mar 2022 at 00:57, Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Fri, Mar 4, 2022 at 1:47 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > On Fri, 4 Mar 2022 at 23:23, Rob Clark <robdclark@gmail.com> wrote:
+> > >
+> > > From: Rob Clark <robdclark@chromium.org>
+> > >
+> > > Fixes: f6d62d091cfd ("drm/msm/a6xx: add support for Adreno 660 GPU")
+> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> >
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > However see the comment below.
+> >
+> > > ---
+> > >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 1 +
+> > >  1 file changed, 1 insertion(+)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > > index 02b47977b5c3..6406d8c3411a 100644
+> > > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > > @@ -687,6 +687,7 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
+> > >
+> > >         BUILD_BUG_ON(ARRAY_SIZE(a6xx_protect) > 32);
+> > >         BUILD_BUG_ON(ARRAY_SIZE(a650_protect) > 48);
+> > > +       BUILD_BUG_ON(ARRAY_SIZE(a660_protect) > 48);
+> >
+> > The magic number 32 and 48 are repeated through this code. I'd suggest
+> > to define them and use defined names.
+> > It can come up as a separate commit.
+> >
+>
+> Or perhaps instead:
 
-Yes, you are right!  But that might be a problem only in theory.  I
-checked all the Qualcomm platforms I know built on MPM, and found that
-the only 2:1 case is USB DP & DM sensing pins.  Since these two pins
-will be handled by USB driver with a single interrupt handler, it should
-not cause any problem in practice.  That said, the 2:1 mapping is just
-a special case specific to USB, and MPM driver can be implemented as if
-it's just a 1:1 mapping.
+IMO this is much better.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Shawn
+> ----
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 6406d8c3411a..58c371930fb4 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -683,20 +683,23 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
+>  {
+>         struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+>         const u32 *regs = a6xx_protect;
+> -       unsigned i, count = ARRAY_SIZE(a6xx_protect), count_max = 32;
+> -
+> -       BUILD_BUG_ON(ARRAY_SIZE(a6xx_protect) > 32);
+> -       BUILD_BUG_ON(ARRAY_SIZE(a650_protect) > 48);
+> -       BUILD_BUG_ON(ARRAY_SIZE(a660_protect) > 48);
+> +       unsigned i, count, count_max;
+>
+>         if (adreno_is_a650(adreno_gpu)) {
+>                 regs = a650_protect;
+>                 count = ARRAY_SIZE(a650_protect);
+>                 count_max = 48;
+> +               BUILD_BUG_ON(ARRAY_SIZE(a650_protect) > 48);
+>         } else if (adreno_is_a660_family(adreno_gpu)) {
+>                 regs = a660_protect;
+>                 count = ARRAY_SIZE(a660_protect);
+>                 count_max = 48;
+> +               BUILD_BUG_ON(ARRAY_SIZE(a660_protect) > 48);
+> +       } else {
+> +               regs = a6xx_protect;
+> +               count = ARRAY_SIZE(a6xx_protect);
+> +               count_max = 32;
+> +               BUILD_BUG_ON(ARRAY_SIZE(a6xx_protect) > 32);
+>         }
+>
+>         /*
+> ----
+>
+> that moves each of the two uses of constant together..  adding three
+> #defines each used only twice seems a bit silly, IMHO
+>
+> BR,
+> -R
 
-> (and I suspect this results in memory corruption if you
-> tear a hierarchy down).
+
+
+-- 
+With best wishes
+Dmitry
