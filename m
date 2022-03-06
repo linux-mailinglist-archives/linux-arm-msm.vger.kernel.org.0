@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6848D4CEAE0
+	by mail.lfdr.de (Postfix) with ESMTP id B39A34CEAE1
 	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Mar 2022 12:13:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233410AbiCFLOL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 6 Mar 2022 06:14:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50844 "EHLO
+        id S233424AbiCFLOO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 6 Mar 2022 06:14:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233434AbiCFLNn (ORCPT
+        with ESMTP id S233441AbiCFLNn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 6 Mar 2022 06:13:43 -0500
 Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4586010F3
-        for <linux-arm-msm@vger.kernel.org>; Sun,  6 Mar 2022 03:12:30 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71A0F28E32
+        for <linux-arm-msm@vger.kernel.org>; Sun,  6 Mar 2022 03:12:32 -0800 (PST)
 Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com [209.85.208.70])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 7DBB83F1B7
-        for <linux-arm-msm@vger.kernel.org>; Sun,  6 Mar 2022 11:12:07 +0000 (UTC)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 689CE3F633
+        for <linux-arm-msm@vger.kernel.org>; Sun,  6 Mar 2022 11:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1646565128;
-        bh=Vg8tRLsLvpBSAUpunNCltvlBq0IRIqfiwZSZWoN0aPY=;
+        s=20210705; t=1646565130;
+        bh=wgqfJLkBNpY/mAWjYm7cIkcCFLA2nEZfPDvOkx5plvo=;
         h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
          MIME-Version;
-        b=Os+LAHvHl2N0TVHKtneC1oASOxmSya6w1sGjGSbGT5o2RzwBIupA1wn4q4cpNM1D7
-         MLclbJilSJmJGmjEABStm1H8eTepsOTa0I66xYz8/nK7QiLoxvEZuBINJ6UZg48Xw6
-         5bRhMHmGOeCJv+0mQiXwXzdjy044qurk+qxJCVP0KYX6fMLRiUZP5Y5id/YFaeYm1I
-         HakgfOpMMbEMpjvEfX9mEg7oaZ2PjDPEG33zo0NMX7r5sn7/8LgOiC89j/ncuyO8CM
-         w3r0ksVnMgcsooSpjnlfpWb23SzsErec7v0ihbG+juyBh81+kcV9GwMrqezmWqAx31
-         uFrV/G8dBjEgg==
-Received: by mail-ed1-f70.google.com with SMTP id n11-20020aa7c68b000000b0041641550e11so377079edq.8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Mar 2022 03:12:07 -0800 (PST)
+        b=XpmvNknC22UxnjOPzKL23Xr3Fq6BWCDFxe2wMBCZXLnCUYLdm0A2kQUfpSbNxtV7y
+         TQfyBCmWe3u1Me/9q5JoVyVLJOrp1o5RUbnovr3oVnYKuCvuPpJ8ZICMmoUZSWMYwM
+         TdnwLiBtdjEeUHB9nVON9qb8pwwlT9wxZBtW2mXPPMI4WVGIKaEgtVHtEUSUe49Uff
+         /jgv7Ck14bO9iku4EGeca0FFLo7GYLsdNDL2QU0m6EaCqYl2tk+jRsVG89xZdFxCu+
+         gJbNY23aE09Qp38yzFwTdzAFP4Zwab6hfUmh61kHE4CDMzzFA57ECwwOdW8PILsciz
+         TCeYrXLa2B7Xw==
+Received: by mail-ed1-f70.google.com with SMTP id y26-20020a50ce1a000000b00415e9b35c81so4493573edi.9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Mar 2022 03:12:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Vg8tRLsLvpBSAUpunNCltvlBq0IRIqfiwZSZWoN0aPY=;
-        b=PecR6bqYju88kQdixSnIJlmF+PBbXmcVj+X5eq48KMbEIWQOiIwp6O1BFdgU9WXlCY
-         CHpSK7DEXA/PJnAgDr4oLzluya3edKa2AASDg62/xq9UyBnrS07ps8UYgmynx57Yv7WQ
-         mYsTQ4vsgFxLV84GjuY8nxCSsCaI4bxAOjnxoMy/XGNlK+/m7YyG1XMh0R1xukePwuU+
-         HhmdH9igHO1atAzGEZQW9PDLuCKpB0cXeML9inTyvMrP8pRg0Y54JtTFdBCAUuFqJ4UB
-         CpX7UKqaOSafeDSKlHrHExeMQQAd1839GC5JQ9TzXIf4nAJXznniaHMEzZpE37iM56jZ
-         G9oQ==
-X-Gm-Message-State: AOAM531ioCiPp4yi9huuayRR9T8H9Itp5zWTlrEtGXyjzUpAyfhDqoAC
-        8Bz1Ks1rnXa5LXT2EnCU12K3qYgWzh3M3jChmhgMJxH3T2t38fsx8OmoQ7Bn+KQ7GUfv+6DZr+K
-        2ZsMP1qWAPXymZA/AP3GmfU8REjY4FegDY1XxMzYmYAo=
-X-Received: by 2002:a17:906:974e:b0:6bb:4f90:a6ae with SMTP id o14-20020a170906974e00b006bb4f90a6aemr5639434ejy.452.1646565100147;
-        Sun, 06 Mar 2022 03:11:40 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJwg9GrLl2vImMKicyylrKdSYL2GcjHe67LtxvgKYKieQMgGqw6UjbbuYj5qEBZ/bq+RTQ8lpA==
-X-Received: by 2002:a17:906:974e:b0:6bb:4f90:a6ae with SMTP id o14-20020a170906974e00b006bb4f90a6aemr5639419ejy.452.1646565099880;
-        Sun, 06 Mar 2022 03:11:39 -0800 (PST)
+        bh=wgqfJLkBNpY/mAWjYm7cIkcCFLA2nEZfPDvOkx5plvo=;
+        b=k8jDPy3jA9XYmUhyQ9jEgG8MLn3KEBnzjtJ66B3tMRk5mFOzIoJiL0iLWhUDcEScUg
+         uhbgHIXJAS+wY+A5pX70o2WELSUm8MVcSG0c4HO2mTxepEgKU5XYocuvR2d0v3SJxXcI
+         EpfyhFIl4oGjx+Asfdsa1VmyhZjIZE5hj/ZG2yrdkQhZAKXlyMQU212sfp+QJ+r7tpzg
+         0kLoSKNVTRYBC5fLpowtqhiY+WfGUhlx9kX4mh0uzPPv/FkMjHVm9yYG7aJltQqx3z8Y
+         vWw3MrW9olpfAJNt9ZiYyRt8++RvdXAKWGv0gWm7Zga0KEv1s69TR6Zz+8CS6Cp429Eg
+         btkw==
+X-Gm-Message-State: AOAM532FeYzn1CmoO1T1e/NEe4oNN1s2bnb/LL9F63dxMcPs6qadAllu
+        R9yKBjyuKBL72K0ymPYtskvonYUTU+3Oso073+YlLGsPsuJvn/fk7cNDnj+gj2FsU2+NjvRzRSF
+        eyxv475jN4VJEdqG3zUN7RuyZOV6N3fjj/uIT7Or3ahM=
+X-Received: by 2002:a17:907:97c7:b0:6da:b3ba:6d9f with SMTP id js7-20020a17090797c700b006dab3ba6d9fmr5656081ejc.256.1646565101845;
+        Sun, 06 Mar 2022 03:11:41 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJzI/f9oe/d9Yo/mQsZljd3XsbvAm03QZ35EIUbF5Mn8Bm1LIQVAU9sQSoq11d5BH7Hd2xRHBA==
+X-Received: by 2002:a17:907:97c7:b0:6da:b3ba:6d9f with SMTP id js7-20020a17090797c700b006dab3ba6d9fmr5656059ejc.256.1646565101607;
+        Sun, 06 Mar 2022 03:11:41 -0800 (PST)
 Received: from localhost.localdomain (xdsl-188-155-181-108.adslplus.ch. [188.155.181.108])
-        by smtp.gmail.com with ESMTPSA id a9-20020a1709066d4900b006da888c3ef0sm3720444ejt.108.2022.03.06.03.11.38
+        by smtp.gmail.com with ESMTPSA id a9-20020a1709066d4900b006da888c3ef0sm3720444ejt.108.2022.03.06.03.11.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Mar 2022 03:11:39 -0800 (PST)
+        Sun, 06 Mar 2022 03:11:40 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 To:     Alim Akhtar <alim.akhtar@samsung.com>,
         Avri Altman <avri.altman@wdc.com>,
@@ -75,9 +75,9 @@ To:     Alim Akhtar <alim.akhtar@samsung.com>,
         linux-samsung-soc@vger.kernel.org,
         linux-mediatek@lists.infradead.org
 Cc:     Rob Herring <robh@kernel.org>
-Subject: [PATCH v3 06/12] dt-bindings: ufs: hisilicon,ufs: convert to dtschema
-Date:   Sun,  6 Mar 2022 12:11:19 +0100
-Message-Id: <20220306111125.116455-7-krzysztof.kozlowski@canonical.com>
+Subject: [PATCH v3 07/12] dt-bindings: ufs: mediatek,ufs: convert to dtschema
+Date:   Sun,  6 Mar 2022 12:11:20 +0100
+Message-Id: <20220306111125.116455-8-krzysztof.kozlowski@canonical.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220306111125.116455-1-krzysztof.kozlowski@canonical.com>
 References: <20220306111125.116455-1-krzysztof.kozlowski@canonical.com>
@@ -93,92 +93,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the HiSilicon Universal Flash Storage (UFS) Controller to DT
+Convert the Mediatek Universal Flash Storage (UFS) Controller to DT
 schema format.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 Reviewed-by: Rob Herring <robh@kernel.org>
 ---
- .../bindings/ufs/hisilicon,ufs.yaml           | 90 +++++++++++++++++++
- .../devicetree/bindings/ufs/ufs-hisi.txt      | 42 ---------
- 2 files changed, 90 insertions(+), 42 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/ufs/hisilicon,ufs.yaml
- delete mode 100644 Documentation/devicetree/bindings/ufs/ufs-hisi.txt
+ .../devicetree/bindings/ufs/mediatek,ufs.yaml | 67 +++++++++++++++++++
+ .../devicetree/bindings/ufs/ufs-mediatek.txt  | 45 -------------
+ 2 files changed, 67 insertions(+), 45 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml
+ delete mode 100644 Documentation/devicetree/bindings/ufs/ufs-mediatek.txt
 
-diff --git a/Documentation/devicetree/bindings/ufs/hisilicon,ufs.yaml b/Documentation/devicetree/bindings/ufs/hisilicon,ufs.yaml
+diff --git a/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml b/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml
 new file mode 100644
-index 000000000000..4432bfa0cbc7
+index 000000000000..32fd535a514a
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/ufs/hisilicon,ufs.yaml
-@@ -0,0 +1,90 @@
++++ b/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml
+@@ -0,0 +1,67 @@
 +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
 +%YAML 1.2
 +---
-+$id: http://devicetree.org/schemas/ufs/hisilicon,ufs.yaml#
++$id: http://devicetree.org/schemas/ufs/mediatek,ufs.yaml#
 +$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+title: HiSilicon Universal Flash Storage (UFS) Controller
++title: Mediatek Universal Flash Storage (UFS) Controller
 +
 +maintainers:
-+  - Li Wei <liwei213@huawei.com>
-+
-+# Select only our matches, not all jedec,ufs
-+select:
-+  properties:
-+    compatible:
-+      contains:
-+        enum:
-+          - hisilicon,hi3660-ufs
-+          - hisilicon,hi3670-ufs
-+  required:
-+    - compatible
++  - Stanley Chu <stanley.chu@mediatek.com>
 +
 +allOf:
 +  - $ref: ufs-common.yaml
 +
 +properties:
 +  compatible:
-+    oneOf:
-+      - items:
-+          - const: hisilicon,hi3660-ufs
-+          - const: jedec,ufs-1.1
-+      - items:
-+          - enum:
-+              - hisilicon,hi3670-ufs
-+          - const: jedec,ufs-2.1
++    enum:
++      - mediatek,mt8183-ufshci
++      - mediatek,mt8192-ufshci
 +
 +  clocks:
-+    minItems: 2
-+    maxItems: 2
++    maxItems: 1
 +
 +  clock-names:
 +    items:
-+      - const: ref_clk
-+      - const: phy_clk
++      - const: ufs
 +
-+  reg:
-+    items:
-+      - description: UFS register address space
-+      - description: UFS SYS CTRL register address space
-+
-+  resets:
++  phys:
 +    maxItems: 1
 +
-+  reset-names:
-+    items:
-+      - const: rst
++  reg:
++    maxItems: 1
++
++  vcc-supply: true
 +
 +required:
 +  - compatible
++  - clocks
++  - clock-names
++  - phys
 +  - reg
-+  - resets
-+  - reset-names
++  - vcc-supply
 +
 +unevaluatedProperties: false
 +
 +examples:
 +  - |
-+    #include <dt-bindings/clock/hi3670-clock.h>
++    #include <dt-bindings/clock/mt8183-clk.h>
 +    #include <dt-bindings/interrupt-controller/arm-gic.h>
 +
 +    soc {
@@ -186,68 +166,68 @@ index 000000000000..4432bfa0cbc7
 +        #size-cells = <2>;
 +
 +        ufs@ff3c0000 {
-+            compatible = "hisilicon,hi3670-ufs", "jedec,ufs-2.1";
-+            reg = <0x0 0xff3c0000 0x0 0x1000>,
-+                  <0x0 0xff3e0000 0x0 0x1000>;
-+            interrupt-parent = <&gic>;
-+            interrupts = <GIC_SPI 278 IRQ_TYPE_LEVEL_HIGH>;
-+            clocks = <&crg_ctrl HI3670_CLK_GATE_UFSIO_REF>,
-+                     <&crg_ctrl HI3670_CLK_GATE_UFS_SUBSYS>;
-+            clock-names = "ref_clk", "phy_clk";
-+            freq-table-hz = <0 0>,
-+                            <0 0>;
++            compatible = "mediatek,mt8183-ufshci";
++            reg = <0 0x11270000 0 0x2300>;
++            interrupts = <GIC_SPI 104 IRQ_TYPE_LEVEL_LOW>;
++            phys = <&ufsphy>;
 +
-+            resets = <&crg_rst 0x84 12>;
-+            reset-names = "rst";
++            clocks = <&infracfg_ao CLK_INFRA_UFS>;
++            clock-names = "ufs";
++            freq-table-hz = <0 0>;
++
++            vcc-supply = <&mt_pmic_vemc_ldo_reg>;
 +        };
 +    };
-diff --git a/Documentation/devicetree/bindings/ufs/ufs-hisi.txt b/Documentation/devicetree/bindings/ufs/ufs-hisi.txt
+diff --git a/Documentation/devicetree/bindings/ufs/ufs-mediatek.txt b/Documentation/devicetree/bindings/ufs/ufs-mediatek.txt
 deleted file mode 100644
-index 0b83df1a5418..000000000000
---- a/Documentation/devicetree/bindings/ufs/ufs-hisi.txt
+index 63a953b672d2..000000000000
+--- a/Documentation/devicetree/bindings/ufs/ufs-mediatek.txt
 +++ /dev/null
-@@ -1,42 +0,0 @@
--* Hisilicon Universal Flash Storage (UFS) Host Controller
+@@ -1,45 +0,0 @@
+-* Mediatek Universal Flash Storage (UFS) Host Controller
 -
 -UFS nodes are defined to describe on-chip UFS hardware macro.
 -Each UFS Host Controller should have its own node.
 -
--Required properties:
--- compatible        : compatible list, contains one of the following -
--					"hisilicon,hi3660-ufs", "jedec,ufs-1.1" for hisi ufs
--					host controller present on Hi3660 chipset.
--					"hisilicon,hi3670-ufs", "jedec,ufs-2.1" for hisi ufs
--					host controller present on Hi3670 chipset.
--- reg               : should contain UFS register address space & UFS SYS CTRL register address,
--- interrupts        : interrupt number
--- clocks	        : List of phandle and clock specifier pairs
--- clock-names       : List of clock input name strings sorted in the same
--					order as the clocks property. "ref_clk", "phy_clk" is optional
--- freq-table-hz     : Array of <min max> operating frequencies stored in the same
--                      order as the clocks property. If this property is not
--                      defined or a value in the array is "0" then it is assumed
--                      that the frequency is set by the parent clock or a
--                      fixed rate clock source.
--- resets            : describe reset node register
--- reset-names       : reset node register, the "rst" corresponds to reset the whole UFS IP.
+-To bind UFS PHY with UFS host controller, the controller node should
+-contain a phandle reference to UFS M-PHY node.
+-
+-Required properties for UFS nodes:
+-- compatible         : Compatible list, contains the following controller:
+-                       "mediatek,mt8183-ufshci" for MediaTek UFS host controller
+-                       present on MT8183 chipsets.
+-                       "mediatek,mt8192-ufshci" for MediaTek UFS host controller
+-                       present on MT8192 chipsets.
+-- reg                : Address and length of the UFS register set.
+-- phys               : phandle to m-phy.
+-- clocks             : List of phandle and clock specifier pairs.
+-- clock-names        : List of clock input name strings sorted in the same
+-                       order as the clocks property. "ufs" is mandatory.
+-                       "ufs": ufshci core control clock.
+-- freq-table-hz      : Array of <min max> operating frequencies stored in the same
+-                       order as the clocks property. If this property is not
+-                       defined or a value in the array is "0" then it is assumed
+-                       that the frequency is set by the parent clock or a
+-                       fixed rate clock source.
+-- vcc-supply         : phandle to VCC supply regulator node.
 -
 -Example:
 -
--	ufs: ufs@ff3b0000 {
--		compatible = "hisilicon,hi3660-ufs", "jedec,ufs-1.1";
--		/* 0: HCI standard */
--		/* 1: UFS SYS CTRL */
--		reg = <0x0 0xff3b0000 0x0 0x1000>,
--			<0x0 0xff3b1000 0x0 0x1000>;
--		interrupt-parent = <&gic>;
--		interrupts = <GIC_SPI 278 IRQ_TYPE_LEVEL_HIGH>;
--		clocks = <&crg_ctrl HI3660_CLK_GATE_UFSIO_REF>,
--			<&crg_ctrl HI3660_CLK_GATE_UFSPHY_CFG>;
--		clock-names = "ref_clk", "phy_clk";
--		freq-table-hz = <0 0>, <0 0>;
--		/* offset: 0x84; bit: 12  */
--		resets = <&crg_rst 0x84 12>;
--		reset-names = "rst";
+-	ufsphy: phy@11fa0000 {
+-		...
+-	};
+-
+-	ufshci@11270000 {
+-		compatible = "mediatek,mt8183-ufshci";
+-		reg = <0 0x11270000 0 0x2300>;
+-		interrupts = <GIC_SPI 104 IRQ_TYPE_LEVEL_LOW>;
+-		phys = <&ufsphy>;
+-
+-		clocks = <&infracfg_ao INFRACFG_AO_UFS_CG>;
+-		clock-names = "ufs";
+-		freq-table-hz = <0 0>;
+-
+-		vcc-supply = <&mt_pmic_vemc_ldo_reg>;
 -	};
 -- 
 2.32.0
