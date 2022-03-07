@@ -2,219 +2,228 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BE9D4D06B6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Mar 2022 19:40:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C4C74D0701
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Mar 2022 19:55:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241674AbiCGSlF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Mar 2022 13:41:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33474 "EHLO
+        id S238496AbiCGS41 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Mar 2022 13:56:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238835AbiCGSlE (ORCPT
+        with ESMTP id S230517AbiCGS40 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Mar 2022 13:41:04 -0500
-Received: from mailout2.samsung.com (mailout2.samsung.com [203.254.224.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D22374847
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Mar 2022 10:40:09 -0800 (PST)
-Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
-        by mailout2.samsung.com (KnoxPortal) with ESMTP id 20220307184007epoutp02d67a43e7fcde63f164d17f0c202809ba~aLUmOYRDf1166411664epoutp023
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Mar 2022 18:40:07 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20220307184007epoutp02d67a43e7fcde63f164d17f0c202809ba~aLUmOYRDf1166411664epoutp023
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1646678407;
-        bh=eiDqlXkyLxJk7tUavFB6NBVRulB8atwBogOljjBUCeI=;
-        h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-        b=kcmFqyEZA54asLw4qnDChdVqZpyesCNpmNLlS/xHvKGPW85ozW5rcE+tfjxnb1z9A
-         prj+oYY/QFIbzW+atb1MmzTYBGJ9w1cW8MERDDQkGGcWdyyLrXQsGida08ZvbvbmYv
-         ZU3aHon++MMr94JO31p0z68ivW/T0ejf4gdsAWq0=
-Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
-        epcas5p4.samsung.com (KnoxPortal) with ESMTP id
-        20220307184006epcas5p435cd41207507bc414337f86a13ef33ac~aLUlYqroB1486114861epcas5p4C;
-        Mon,  7 Mar 2022 18:40:06 +0000 (GMT)
-Received: from epsmges5p2new.samsung.com (unknown [182.195.38.174]) by
-        epsnrtp2.localdomain (Postfix) with ESMTP id 4KC6hK2Kycz4x9Pt; Mon,  7 Mar
-        2022 18:40:01 +0000 (GMT)
-Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
-        epsmges5p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        75.DD.46822.FCE46226; Tue,  8 Mar 2022 03:28:31 +0900 (KST)
-Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
-        epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
-        20220307184000epcas5p4e57a7bc3e82124d1018167e63c3960d0~aLUfI-jfF2748727487epcas5p43;
-        Mon,  7 Mar 2022 18:40:00 +0000 (GMT)
-Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20220307184000epsmtrp2f4368f8a7c713a60fdf675c9c3c5d4cc~aLUfIEoRQ1421214212epsmtrp2d;
-        Mon,  7 Mar 2022 18:40:00 +0000 (GMT)
-X-AuditID: b6c32a4a-dfbff7000000b6e6-a9-62264ecf32c0
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
-        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        96.17.03370.F7156226; Tue,  8 Mar 2022 03:39:59 +0900 (KST)
-Received: from alimakhtar03 (unknown [107.122.12.5]) by epsmtip1.samsung.com
-        (KnoxPortal) with ESMTPA id
-        20220307183957epsmtip1d83677fad9d10a49385889fb09c9081f~aLUck0svH1520315203epsmtip1U;
-        Mon,  7 Mar 2022 18:39:57 +0000 (GMT)
-From:   "Alim Akhtar" <alim.akhtar@samsung.com>
-To:     "'Krzysztof Kozlowski'" <krzysztof.kozlowski@canonical.com>,
-        "'Avri Altman'" <avri.altman@wdc.com>,
-        "'Rob Herring'" <robh+dt@kernel.org>,
-        "'Andy Gross'" <agross@kernel.org>,
-        "'Bjorn Andersson'" <bjorn.andersson@linaro.org>,
-        "'Wei Xu'" <xuwei5@hisilicon.com>,
-        "'Matthias Brugger'" <matthias.bgg@gmail.com>,
-        "'Jan Kotas'" <jank@cadence.com>, "'Li Wei'" <liwei213@huawei.com>,
-        "'Stanley Chu'" <stanley.chu@mediatek.com>,
-        "'Vignesh Raghavendra'" <vigneshr@ti.com>,
-        <linux-scsi@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>
-Cc:     "'Rob Herring'" <robh@kernel.org>
-In-Reply-To: <20220306111125.116455-3-krzysztof.kozlowski@canonical.com>
-Subject: RE: [PATCH v3 02/12] dt-bindings: ufs: samsung,exynos-ufs: use
- common bindings
-Date:   Tue, 8 Mar 2022 00:09:56 +0530
-Message-ID: <000501d83252$c0094650$401bd2f0$@samsung.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHMSLK+HcMgkjgstDaV74uAa2rDeQFlagdDAil/trGsr5wPEA==
-Content-Language: en-us
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrCJsWRmVeSWpSXmKPExsWy7bCmuu55P7Ukg2e3uCzOPf7NYvHy51U2
-        i9P737FYzD9yjtWi+3imxca3P5gsNj2+xmoxcf9ZdovLu+awWVxuvshoMeP8PiaL7us72Cz+
-        zjnCaNHUYmzRuvcIu8X/PTvYLZZuvclo8f/sB3aLJ0enMDsIe6zpfM3kMauhl81j56y77B6P
-        525k92g58pbVY9OqTjaPO9f2sHlsXlLv0XJyP4vH8RvbmTw+b5LzaD/QzRTAE5Vtk5GamJJa
-        pJCal5yfkpmXbqvkHRzvHG9qZmCoa2hpYa6kkJeYm2qr5OIToOuWmQP0opJCWWJOKVAoILG4
-        WEnfzqYov7QkVSEjv7jEVim1ICWnwKRArzgxt7g0L10vL7XEytDAwMgUqDAhO2PRxn1sBdNE
-        Km7NZ21g7BbsYuTkkBAwkbi4rY+pi5GLQ0hgN6PEr90X2CCcT4wSSx7eZ4FwPjNKHLj0jx2m
-        ZeeOecwgtpDALkaJL5OjIIpeMko8mPGBESTBJqArsWNxGxuILSJwkVXi3kl9EJtZQFVizp9f
-        YM2cAh4Sl85+B6sXFoiUOP1pMlg9i4CKxORVs1hAbF4BS4lVm/6wQ9iCEidnPmGBmCMvsf3t
-        HGaIgxQkfj5dxgqxy0liRdMiNogacYmXR4+wgxwnITCfU2LvmqOsEA0uEpvfHWKBsIUlXh3f
-        AvWZlMTnd3uBmjmA7GyJnl3GEOEaiaXzjkGV20scuDKHBaSEWUBTYv0uqLf4JHp/P2GC6OSV
-        6GgTgqhWlWh+dxWqU1piYnc31AEeEkcnr2aewKg4C8ljs5A8NgvJA7MQli1gZFnFKJlaUJyb
-        nlpsWmCUl1oOj+3k/NxNjODkr+W1g/Hhgw96hxiZOBgPMUpwMCuJ8N4/r5IkxJuSWFmVWpQf
-        X1Sak1p8iNEUGNoTmaVEk/OB+SevJN7QxNLAxMzMzMTS2MxQSZz3dPqGRCGB9MSS1OzU1ILU
-        Ipg+Jg5OqQamHQZ/2WeUf018EBpzwFrt/ZeqJa8OHHVfbP2Ae2Fmp/C0huP1RqkMsUEzFz4/
-        vs7gnt7UZU6LH9xQPJietO/tdkfmYr6F+oFOkpf67s07L3clKOxXbZOu/MSw2THHwxMSbzMs
-        XRzAEMbg9XWeCmtDBLtqQRqLX0nI06eLy3Wvf7wi8K7O0vvnA+/WQ4++LVouw/h4g9AUY40a
-        DYePa1Qyolr8XPhXdqZM2BPPf27zijsWe77Z9V8Oa1seX6UVGVW8Yh73K1VBg8d2X4v9TkQu
-        PbV5ysvStdM2zV+fZf74fIjb9/PcaiY1/gtKTh073DyN9zirCE/TjmknJz1tr9h0P93l7MaY
-        w8kscQe2Xo3yU2Ipzkg01GIuKk4EAC0hLGCHBAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrLIsWRmVeSWpSXmKPExsWy7bCSnG59oFqSwaltVhbnHv9msXj58yqb
-        xen971gs5h85x2rRfTzTYuPbH0wWmx5fY7WYuP8su8XlXXPYLC43X2S0mHF+H5NF9/UdbBZ/
-        5xxhtGhqMbZo3XuE3eL/nh3sFku33mS0+H/2A7vFk6NTmB2EPdZ0vmbymNXQy+axc9Zddo/H
-        czeye7QcecvqsWlVJ5vHnWt72Dw2L6n3aDm5n8Xj+I3tTB6fN8l5tB/oZgrgieKySUnNySxL
-        LdK3S+DKWLRxH1vBNJGKW/NZGxi7BbsYOTkkBEwkdu6Yx9zFyMUhJLCDUWL2ybWMEAlpiesb
-        J7BD2MISK/89B7OFBJ4zSpw7UwliswnoSuxY3MYG0iwi8JBVYuXVWSwgCWYBVYk5f35BTb3K
-        KPFm/0Kwbk4BD4lLZ7+DbRAWCJfY+XYNK4jNIqAiMXkVRDOvgKXEqk1/2CFsQYmTM58AxTmA
-        hupJtG1khJgvL7H97RxmiOMUJH4+XQY2RkTASWJF0yI2iBpxiZdHj7BPYBSehWTSLIRJs5BM
-        moWkYwEjyypGydSC4tz03GLDAqO81HK94sTc4tK8dL3k/NxNjOAUoKW1g3HPqg96hxiZOBgP
-        MUpwMCuJ8N4/r5IkxJuSWFmVWpQfX1Sak1p8iFGag0VJnPdC18l4IYH0xJLU7NTUgtQimCwT
-        B6dUA1PWJ5VXPpnbLvT1uzLtVz4Vdvu5jsen2xuCXQwYoiufPJhgXav59+FDrcOdL/WiZnKx
-        yWQtPSboWvvYTqnJSYNRfoIYk9BfzcfvNrQ3qlxdXzIxkpf9gMqvmpl8zGentGxgu1Ly4HBA
-        9c3ghadu9G2U+V8nxPzQSfjHlilbdzI9qHt11itm9s5zP9IENP7HGbf7nXK58CBLXkW08fzz
-        orTwibYXkt+Zb9tY8i3gTqb7eenF98MLu6vOGj7/z+X5e23SnqhzbipZR0O/tvI470//tWTV
-        w6Nljz6m8bW92ctif3zvi3Op+lsDP5s/CZv2a0dPyKqVByKCuLtZOU/HnzZksM7XqetvWHyn
-        75xPcKwSS3FGoqEWc1FxIgCA8KoHcAMAAA==
-X-CMS-MailID: 20220307184000epcas5p4e57a7bc3e82124d1018167e63c3960d0
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20220306111139epcas5p17c8aa66853ef371e7486aa64ea89b484
-References: <20220306111125.116455-1-krzysztof.kozlowski@canonical.com>
-        <CGME20220306111139epcas5p17c8aa66853ef371e7486aa64ea89b484@epcas5p1.samsung.com>
-        <20220306111125.116455-3-krzysztof.kozlowski@canonical.com>
-X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        Mon, 7 Mar 2022 13:56:26 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31C7491354;
+        Mon,  7 Mar 2022 10:55:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1646679331; x=1678215331;
+  h=from:to:cc:subject:date:message-id;
+  bh=TkJ7vVlFe3NJoDlij4wI9aVqzEmAv226UcUTPIW6LAk=;
+  b=XEz+ROND6Y201SLiV0Q5rXQNlacqYi0x4sDjLvvvERWFXVGnoGJ4mHcF
+   DdrrV3l8xn4XgW4e+DzqBmjwUu0H1mLQJMOOQgMfxO2NaA+LrkgahZqiV
+   XIPablwQXNq2Op6+7m3zG1xcPF7U10QqAiLC5AqJp8KDhLUCmqnnDZyIc
+   w=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 07 Mar 2022 10:55:31 -0800
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 07 Mar 2022 10:55:29 -0800
+X-QCInternal: smtphost
+Received: from pmaliset-linux.qualcomm.com ([10.206.64.233])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 08 Mar 2022 00:25:10 +0530
+Received: by pmaliset-linux.qualcomm.com (Postfix, from userid 3848298)
+        id 98BDF21422; Tue,  8 Mar 2022 00:25:08 +0530 (IST)
+From:   Prasad Malisetty <quic_pmaliset@quicinc.com>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        lorenzo.pieralisi@arm.com, robh@kernel.org, kw@linux.com,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        rajatja@google.com, refactormyself@gmail.com
+Cc:     quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+        manivannan.sadhasivam@linaro.org, swboyd@chromium.org,
+        Prasad Malisetty <quic_pmaliset@quicinc.com>
+Subject: [PATCH v4] PCI: qcom: Add system PM support
+Date:   Tue,  8 Mar 2022 00:25:06 +0530
+Message-Id: <1646679306-4768-1-git-send-email-quic_pmaliset@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add suspend_noirq and resume_noirq callbacks to handle
+system suspend and resume in dwc PCIe controller driver.
 
+When system suspends, send PME turnoff message to enter
+link into L2 state. Along with powerdown the PHY, disable
+pipe clock, switch gcc_pcie_1_pipe_clk_src to XO if mux is
+supported and disable the pcie clocks, regulators.
 
->-----Original Message-----
->From: Krzysztof Kozlowski [mailto:krzysztof.kozlowski@canonical.com]
->Sent: Sunday, March 6, 2022 4:41 PM
->To: Alim Akhtar <alim.akhtar@samsung.com>; Avri Altman
-><avri.altman@wdc.com>; Rob Herring <robh+dt@kernel.org>; Krzysztof
->Kozlowski <krzysztof.kozlowski@canonical.com>; Andy Gross
-><agross@kernel.org>; Bjorn Andersson <bjorn.andersson@linaro.org>; Wei
->Xu <xuwei5@hisilicon.com>; Matthias Brugger <matthias.bgg@gmail.com>;
->Jan Kotas <jank@cadence.com>; Li Wei <liwei213@huawei.com>; Stanley Chu
-><stanley.chu@mediatek.com>; Vignesh Raghavendra <vigneshr@ti.com>;
->linux-scsi@vger.kernel.org; devicetree@vger.kernel.org; linux-
->kernel@vger.kernel.org; linux-arm-msm@vger.kernel.org; linux-arm-
->kernel@lists.infradead.org; linux-samsung-soc@vger.kernel.org; linux-
->mediatek@lists.infradead.org
->Cc: Rob Herring <robh@kernel.org>
->Subject: [PATCH v3 02/12] dt-bindings: ufs: samsung,exynos-ufs: use common
->bindings
->
->Use common UFS bindings in Samsung Exynos UFS to cover generic/common
->properties in DTS.
->
->Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
->Reviewed-by: Rob Herring <robh@kernel.org>
->---
+When system resumes, PCIe link will be re-established and
+setup rc settings.
 
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
+Signed-off-by: Prasad Malisetty <quic_pmaliset@quicinc.com>
 
-> .../devicetree/bindings/ufs/samsung,exynos-ufs.yaml | 13 ++++---------
-> 1 file changed, 4 insertions(+), 9 deletions(-)
->
->diff --git a/Documentation/devicetree/bindings/ufs/samsung,exynos-
->ufs.yaml b/Documentation/devicetree/bindings/ufs/samsung,exynos-
->ufs.yaml
->index 95ac1c18334d..c949eb617313 100644
->--- a/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml
->+++ b/Documentation/devicetree/bindings/ufs/samsung,exynos-ufs.yaml
->@@ -11,12 +11,11 @@ maintainers:
->
-> description: |
->   Each Samsung UFS host controller instance should have its own node.
->-  This binding define Samsung specific binding other then what is used
->-  in the common ufshcd bindings
->-  [1] Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
->
->-properties:
->+allOf:
->+  - $ref: ufs-common.yaml
->
->+properties:
->   compatible:
->     enum:
->       - samsung,exynos7-ufs
->@@ -47,9 +46,6 @@ properties:
->       - const: core_clk
->       - const: sclk_unipro_main
->
->-  interrupts:
->-    maxItems: 1
->-
->   phys:
->     maxItems: 1
->
->@@ -67,13 +63,12 @@ properties:
-> required:
->   - compatible
->   - reg
->-  - interrupts
->   - phys
->   - phy-names
->   - clocks
->   - clock-names
->
->-additionalProperties: false
->+unevaluatedProperties: false
->
-> examples:
->   - |
->--
->2.32.0
+---
+Changes since v3:
+	- Replaced noirq hooks with normal suspend/resume hooks.
+	- Removed local variable and placed in function itself.
 
+Changes since v2:
+	- Removed unnecessary variable initializations and comments.
+	- Removed platform specific variables declarations.
+	- Added MACRO names for the BIT shiftings.
+
+Changes since v1:
+	- Removed unnecessary logs and modified log level suggested by Manivannan.
+	- Removed platform specific callbacks as PM support is generic.
+---
+ drivers/pci/controller/dwc/pcie-qcom.c | 97 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 97 insertions(+)
+
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 6ab9089..4d29c80 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -48,6 +48,7 @@
+ #define PCIE20_PARF_PHY_REFCLK			0x4C
+ #define PHY_REFCLK_SSP_EN			BIT(16)
+ #define PHY_REFCLK_USE_PAD			BIT(12)
++#define PHY_POWER_DOWN				0x1
+ 
+ #define PCIE20_PARF_DBI_BASE_ADDR		0x168
+ #define PCIE20_PARF_SLV_ADDR_SPACE_SIZE		0x16C
+@@ -62,6 +63,8 @@
+ 
+ #define PCIE20_ELBI_SYS_CTRL			0x04
+ #define PCIE20_ELBI_SYS_CTRL_LT_ENABLE		BIT(0)
++#define PCIE_PME_TURNOFF_MSG			BIT(4)
++#define PCIE_PM_LINKST_IN_L2			BIT(5)
+ 
+ #define PCIE20_AXI_MSTR_RESP_COMP_CTRL0		0x818
+ #define CFG_REMOTE_RD_REQ_BRIDGE_SIZE_2K	0x4
+@@ -73,6 +76,8 @@
+ 
+ #define PCIE20_PARF_Q2A_FLUSH			0x1AC
+ 
++#define PCIE20_PARF_PM_STTS			0x24
++
+ #define PCIE20_MISC_CONTROL_1_REG		0x8BC
+ #define DBI_RO_WR_EN				1
+ 
+@@ -1645,6 +1650,97 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
++static int qcom_pcie_send_pme_turnoff_msg(struct qcom_pcie *pcie)
++{
++	int ret;
++	u32 val, poll_val;
++	struct dw_pcie *pci = pcie->pci;
++	struct device *dev = pci->dev;
++
++	val = readl(pcie->elbi + PCIE20_ELBI_SYS_CTRL);
++	val |= PCIE_PME_TURNOFF_MSG;
++	writel(val, pcie->elbi + PCIE20_ELBI_SYS_CTRL);
++
++	ret = readl_poll_timeout((pcie->parf + PCIE20_PARF_PM_STTS), poll_val,
++			(poll_val & PCIE_PM_LINKST_IN_L2),
++			10000, 100000);
++	if (!ret)
++		dev_dbg(dev, "Device entered L23_Ready state\n");
++	else
++		dev_err(dev, "Device failed to enter L23_Ready. PM_STTS 0x%x\n",
++			readl_relaxed(pcie->parf + PCIE20_PARF_PM_STTS));
++
++	return ret;
++}
++
++static void qcom_pcie_host_disable(struct qcom_pcie *pcie)
++{
++	qcom_ep_reset_assert(pcie);
++
++	/* Put PHY into POWER DOWN state */
++	phy_power_off(pcie->phy);
++
++	writel(PHY_POWER_DOWN, pcie->parf + PCIE20_PARF_PHY_CTRL);
++
++	if (pcie->cfg->ops->post_deinit)
++		pcie->cfg->ops->post_deinit(pcie);
++
++	/* Disable PCIe clocks and regulators */
++	pcie->cfg->ops->deinit(pcie);
++}
++
++static int __maybe_unused qcom_pcie_pm_suspend(struct device *dev)
++{
++	int ret;
++	struct qcom_pcie *pcie = dev_get_drvdata(dev);
++	struct dw_pcie *pci = pcie->pci;
++
++	if (!dw_pcie_link_up(pci)) {
++		dev_dbg(dev, "Power has been turned off already\n");
++		return 0;
++	}
++
++	ret = qcom_pcie_send_pme_turnoff_msg(pcie);
++	if (ret)
++		return ret;
++
++	/* Power down the PHY, disable clock and regulators */
++	qcom_pcie_host_disable(pcie);
++
++	return 0;
++}
++
++/* Resume the PCIe link */
++static int __maybe_unused qcom_pcie_pm_resume(struct device *dev)
++{
++	int ret;
++	struct qcom_pcie *pcie = dev_get_drvdata(dev);
++	struct dw_pcie *pci = pcie->pci;
++	struct pcie_port *pp = &pci->pp;
++
++	ret = qcom_pcie_host_init(pp);
++	if (ret) {
++		dev_err(dev, "cannot initialize host\n");
++		return ret;
++	}
++
++	dw_pcie_setup_rc(pp);
++
++	qcom_pcie_start_link(pci);
++
++	ret = dw_pcie_wait_for_link(pci);
++	if (ret) {
++		dev_err(dev, "Link never came up, Resume failed\n");
++		return ret;
++	}
++
++	return 0;
++}
++
++static const struct dev_pm_ops qcom_pcie_pm_ops = {
++	SET_SYSTEM_SLEEP_PM_OPS(qcom_pcie_pm_suspend, qcom_pcie_pm_resume)
++};
++
+ static const struct of_device_id qcom_pcie_match[] = {
+ 	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
+ 	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
+@@ -1679,6 +1775,7 @@ static struct platform_driver qcom_pcie_driver = {
+ 	.probe = qcom_pcie_probe,
+ 	.driver = {
+ 		.name = "qcom-pcie",
++		.pm = &qcom_pcie_pm_ops,
+ 		.suppress_bind_attrs = true,
+ 		.of_match_table = qcom_pcie_match,
+ 	},
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
