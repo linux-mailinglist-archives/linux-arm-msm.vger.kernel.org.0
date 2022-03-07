@@ -2,53 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A13B84CF27E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Mar 2022 08:17:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B3E314CF3C4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Mar 2022 09:37:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235786AbiCGHSl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Mar 2022 02:18:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43544 "EHLO
+        id S232217AbiCGIiZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Mar 2022 03:38:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235784AbiCGHSk (ORCPT
+        with ESMTP id S232014AbiCGIiY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Mar 2022 02:18:40 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E692E5FFB;
-        Sun,  6 Mar 2022 23:17:46 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id F351C6006F;
-        Mon,  7 Mar 2022 07:17:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C3AEC340EF;
-        Mon,  7 Mar 2022 07:17:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1646637465;
-        bh=TkHkM64a9L8Z2y7tGG61/lkDEv6OkN2dyJrok5MXSIY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ReMT9ZScMy6S16biad+kyX70EkPfO5keb1jA05y/SLl7+zmMweTh64m7Kk12+F8d0
-         G/26iR/nAdkqySXi2a8cyfwYAGwNKg41ciZ2X1wP8WAwLGE/gRj2e7VeDcevDipoZ8
-         8eNEfrPWhBodwdnjtxpP6rqJr/9zqV31N6DEXQOsBsPz4FEDBQQdo8VDAglt8+Wyt8
-         rXMSu5+btoWv7YI7hjztUmVMF4QDX9/AvSF1z4kcmRWtYKqdHXA4iLR6o/EqJhy6wC
-         stRQQKpdydFWDMvlcMUgkm/grjLXBuJbVIISt58rgKTT3kFLbdOP/Lbt2EglOk0pwd
-         yMhr0M8o8nKFQ==
-Date:   Mon, 7 Mar 2022 12:47:39 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Yang Li <yang.lee@linux.alibaba.com>
-Cc:     hemantk@codeaurora.org, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Abaci Robot <abaci@linux.alibaba.com>
-Subject: Re: [PATCH -next] bus: mhi: ep: Fix an ignored error return from
- ida_alloc()
-Message-ID: <20220307071739.GM12451@workstation>
-References: <20220304001139.95082-1-yang.lee@linux.alibaba.com>
+        Mon, 7 Mar 2022 03:38:24 -0500
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE858B21
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Mar 2022 00:37:28 -0800 (PST)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-2db569555d6so154769427b3.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Mar 2022 00:37:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=E6x5yVDLBVFqVJQNZ+OEdQbw27fgZWH2Vrmnv9e+WIA=;
+        b=oNhgYRxfC5S7Flav03PFuf0rKKCE1fufuLFFan6hXVBjpSOfsSMnXBp4h2wik/njKd
+         91RQgRcuaWeCEIreQbS23aCelM6cQM927Z6zYvena3xPhX/EbcZYVf1pXWn/UHGguVqO
+         K2dcx/WFIciVIgUJg6j2gunB1QhflbZ9WWaz5mhcysoBCYf4XbjaXP2arDS86gyk6Whv
+         Fy0TdFWNL6/dvv3rSHgocQnjfmtxiXyjTLLdqb6oxObw0ZLXSd2iTALIhmrpIPhT4yhx
+         LPRRT2WhEJDGKz3oI1Udexe3bON05QXHXPqDUhbfXuQVslCHzamXeETBxry7RtIbIAS2
+         xMBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=E6x5yVDLBVFqVJQNZ+OEdQbw27fgZWH2Vrmnv9e+WIA=;
+        b=zh//l46hRtD3FBmq4uUgeyqKFvkcq37evFucCLZX5bA8sMqj7nkys8/w7a06h89epz
+         TKCzfsqreGMEEBeFDOPfqNwFLw+0iBx4qJSD31EIq9xkv5FKx+f2tvumRvVHWyr7n+P+
+         /xH4Qj+MfqWK84UhMxIGvHyDZ8syfHajLE208/OKtOfdWC1DHKAeHtBxyoLkngtUW4za
+         760R2shPFem5l1dxwU8SJDkKL6WQ65IZWb4GvXNqlmjKcScTHK2k2LAl5q4Z8BOTr1rx
+         0AtU8Ncywi3yppaofnKRIQbn2vQgPBjNbzcXWf+kDh757xDoK4ElYq4ews/OkGxxhoJZ
+         +4lQ==
+X-Gm-Message-State: AOAM533TOb6cwTPVNtBk/B7u8RfgbAuQ2KLV9j15xQNHkPZHmVyFNfX4
+        Re7ZuF6TNhDxx5F4fsq33/93E/kdYe7i8iarQbhpyw==
+X-Google-Smtp-Source: ABdhPJxkcnqrAUZ0/BuHe0V4d9rKIzD/3EzUc+kmn55bYHjaih5zVBAoZ44017nG3klZVXrKnoyRs3z6yh7rXxMOItE=
+X-Received: by 2002:a81:c45:0:b0:2dc:59c4:3555 with SMTP id
+ 66-20020a810c45000000b002dc59c43555mr7687451ywm.36.1646642247656; Mon, 07 Mar
+ 2022 00:37:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220304001139.95082-1-yang.lee@linux.alibaba.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+References: <20220219183310.557435-1-robdclark@gmail.com>
+In-Reply-To: <20220219183310.557435-1-robdclark@gmail.com>
+From:   Naresh Kamboju <naresh.kamboju@linaro.org>
+Date:   Mon, 7 Mar 2022 14:07:16 +0530
+Message-ID: <CA+G9fYv6dPUsPzbFLr9PxJoe4eRAUdQyD4xT4hh4-xw=n9r=Bw@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/gpu: Fix crash on devices without devfreq support
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        Linux Kernel Functional Testing <lkft@linaro.org>,
+        Anders Roxell <anders.roxell@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -57,52 +73,122 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 04, 2022 at 08:11:39AM +0800, Yang Li wrote:
-> The return from the call to ida_alloc() is int, it can be a negative
-> error code, however this is being assigned to an unsigned int variable
-> 'mhi_cntrl->index', so assign the value to 'ret' concurrently to solve
-> this problem without affecting other functions.
-> 
-> Eliminate the following coccicheck warning:
-> ./drivers/bus/mhi/ep/main.c:1422:5-21: WARNING: Unsigned expression
-> compared with zero: mhi_cntrl -> index < 0
-> 
-> Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-> Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
+Hi Rob,
 
-Thanks for the fix. Since the MHI EP series is under development, I've
-squashed this patch with the original patch that added the offending code.
+On Sun, 20 Feb 2022 at 00:02, Rob Clark <robdclark@gmail.com> wrote:
+>
+> From: Rob Clark <robdclark@chromium.org>
+>
+> Avoid going down devfreq paths on devices where devfreq is not
+> initialized.
+>
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> Reported-by: Anders Roxell <anders.roxell@linaro.org>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 
-I'll make a note about this in changelog.
+I have tested this patch and the reported kernel crash is fixed [1].
+
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
 > ---
->  drivers/bus/mhi/ep/main.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> index 3e98107f08c4..b27e90d97029 100644
-> --- a/drivers/bus/mhi/ep/main.c
-> +++ b/drivers/bus/mhi/ep/main.c
-> @@ -1418,11 +1418,9 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
->  	mhi_ep_mmio_set_env(mhi_cntrl, MHI_EE_AMSS);
->  
->  	/* Set controller index */
-> -	mhi_cntrl->index = ida_alloc(&mhi_ep_cntrl_ida, GFP_KERNEL);
-> -	if (mhi_cntrl->index < 0) {
-> -		ret = mhi_cntrl->index;
-> +	mhi_cntrl->index = ret = ida_alloc(&mhi_ep_cntrl_ida, GFP_KERNEL);
-> +	if (ret < 0)
->  		goto err_destroy_wq;
-> -	}
+>  drivers/gpu/drm/msm/msm_gpu_devfreq.c | 31 +++++++++++++++++++++------
+>  1 file changed, 25 insertions(+), 6 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> index 9bf319be11f6..26a3669a97b3 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> @@ -83,12 +83,17 @@ static struct devfreq_dev_profile msm_devfreq_profile = {
+>  static void msm_devfreq_boost_work(struct kthread_work *work);
+>  static void msm_devfreq_idle_work(struct kthread_work *work);
+>
+> +static bool has_devfreq(struct msm_gpu *gpu)
+> +{
+> +       return !!gpu->funcs->gpu_busy;
+> +}
+> +
+>  void msm_devfreq_init(struct msm_gpu *gpu)
+>  {
+>         struct msm_gpu_devfreq *df = &gpu->devfreq;
+>
+>         /* We need target support to do devfreq */
+> -       if (!gpu->funcs->gpu_busy)
+> +       if (!has_devfreq(gpu))
+>                 return;
+>
+>         dev_pm_qos_add_request(&gpu->pdev->dev, &df->idle_freq,
+> @@ -149,6 +154,9 @@ void msm_devfreq_cleanup(struct msm_gpu *gpu)
+>  {
+>         struct msm_gpu_devfreq *df = &gpu->devfreq;
+>
+> +       if (!has_devfreq(gpu))
+> +               return;
+> +
+>         devfreq_cooling_unregister(gpu->cooling);
+>         dev_pm_qos_remove_request(&df->boost_freq);
+>         dev_pm_qos_remove_request(&df->idle_freq);
+> @@ -156,16 +164,24 @@ void msm_devfreq_cleanup(struct msm_gpu *gpu)
+>
+>  void msm_devfreq_resume(struct msm_gpu *gpu)
+>  {
+> -       gpu->devfreq.busy_cycles = 0;
+> -       gpu->devfreq.time = ktime_get();
+> +       struct msm_gpu_devfreq *df = &gpu->devfreq;
+>
+> -       devfreq_resume_device(gpu->devfreq.devfreq);
+> +       if (!has_devfreq(gpu))
+> +               return;
+> +
+> +       df->busy_cycles = 0;
+> +       df->time = ktime_get();
+> +
+> +       devfreq_resume_device(df->devfreq);
+>  }
+>
+>  void msm_devfreq_suspend(struct msm_gpu *gpu)
+>  {
+>         struct msm_gpu_devfreq *df = &gpu->devfreq;
+>
+> +       if (!has_devfreq(gpu))
+> +               return;
+> +
+>         devfreq_suspend_device(df->devfreq);
+>
+>         cancel_idle_work(df);
+> @@ -185,6 +201,9 @@ void msm_devfreq_boost(struct msm_gpu *gpu, unsigned factor)
+>         struct msm_gpu_devfreq *df = &gpu->devfreq;
+>         uint64_t freq;
+>
+> +       if (!has_devfreq(gpu))
+> +               return;
+> +
+>         freq = get_freq(gpu);
+>         freq *= factor;
+>
+> @@ -207,7 +226,7 @@ void msm_devfreq_active(struct msm_gpu *gpu)
+>         struct devfreq_dev_status status;
+>         unsigned int idle_time;
+>
+> -       if (!df->devfreq)
+> +       if (!has_devfreq(gpu))
+>                 return;
+>
+>         /*
+> @@ -253,7 +272,7 @@ void msm_devfreq_idle(struct msm_gpu *gpu)
+>  {
+>         struct msm_gpu_devfreq *df = &gpu->devfreq;
+>
+> -       if (!df->devfreq)
+> +       if (!has_devfreq(gpu))
+>                 return;
+>
+>         msm_hrtimer_queue_work(&df->idle_work, ms_to_ktime(1),
+> --
+> 2.34.1
 
-I've just used "ret" for catching the ida_alloc() and assigned it to
-index after success.
 
-Thanks,
-Mani
->  
->  	irq_set_status_flags(mhi_cntrl->irq, IRQ_NOAUTOEN);
->  	ret = request_irq(mhi_cntrl->irq, mhi_ep_irq, IRQF_TRIGGER_HIGH,
-> -- 
-> 2.20.1.7.g153144c
-> 
+--
+Linaro LKFT
+https://lkft.linaro.org
+
+[1] https://lkft.validation.linaro.org/scheduler/job/4664600#L1894
