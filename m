@@ -2,193 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3E314CF3C4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Mar 2022 09:37:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F9E14CF459
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Mar 2022 10:11:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232217AbiCGIiZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Mar 2022 03:38:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33218 "EHLO
+        id S236254AbiCGJMD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Mar 2022 04:12:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232014AbiCGIiY (ORCPT
+        with ESMTP id S236258AbiCGJMC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Mar 2022 03:38:24 -0500
-Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE858B21
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Mar 2022 00:37:28 -0800 (PST)
-Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-2db569555d6so154769427b3.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Mar 2022 00:37:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=E6x5yVDLBVFqVJQNZ+OEdQbw27fgZWH2Vrmnv9e+WIA=;
-        b=oNhgYRxfC5S7Flav03PFuf0rKKCE1fufuLFFan6hXVBjpSOfsSMnXBp4h2wik/njKd
-         91RQgRcuaWeCEIreQbS23aCelM6cQM927Z6zYvena3xPhX/EbcZYVf1pXWn/UHGguVqO
-         K2dcx/WFIciVIgUJg6j2gunB1QhflbZ9WWaz5mhcysoBCYf4XbjaXP2arDS86gyk6Whv
-         Fy0TdFWNL6/dvv3rSHgocQnjfmtxiXyjTLLdqb6oxObw0ZLXSd2iTALIhmrpIPhT4yhx
-         LPRRT2WhEJDGKz3oI1Udexe3bON05QXHXPqDUhbfXuQVslCHzamXeETBxry7RtIbIAS2
-         xMBg==
+        Mon, 7 Mar 2022 04:12:02 -0500
+Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CB8265160
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Mar 2022 01:11:01 -0800 (PST)
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com [209.85.208.71])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id E145B3F610
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Mar 2022 09:10:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1646644257;
+        bh=5EuchempEFVBJsNObrSN9bZUlyRNhaE6rhfvz/HPvrQ=;
+        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+         In-Reply-To:Content-Type;
+        b=FCKHsAjxIiszKg7WiuKmX0m2xEQTunLuGzFVsxSItLLOz5wcQlCAAG/gOfS/aqZjQ
+         0tQOJWsWXMGf6nVXBfi0oM3gVC/U+uQ66AhiYcEnuVXaHeTGZSd1lfLnZjzv7p5Ph3
+         X7rulIn7YJ6V0G2ysDcIo+VTEh3McnhceMxbV4HhdPHBeEqiol7QMXTfwbZY/LTmJR
+         uUy/JymvQC1ALxlEmNXtGOkqe+ba0tkPDId+Oyf7bX52k6ct+iQPOzqh62UazcP0DN
+         RaAlJcViicM1sSfTyyvL1Q4sZyUazTWcjbA9A0fs0vHeLk/fcySINRoV2kdxXTJhcg
+         nIkOaFibL2DTQ==
+Received: by mail-ed1-f71.google.com with SMTP id l14-20020aa7cace000000b003f7f8e1cbbdso8217198edt.20
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Mar 2022 01:10:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=E6x5yVDLBVFqVJQNZ+OEdQbw27fgZWH2Vrmnv9e+WIA=;
-        b=zh//l46hRtD3FBmq4uUgeyqKFvkcq37evFucCLZX5bA8sMqj7nkys8/w7a06h89epz
-         TKCzfsqreGMEEBeFDOPfqNwFLw+0iBx4qJSD31EIq9xkv5FKx+f2tvumRvVHWyr7n+P+
-         /xH4Qj+MfqWK84UhMxIGvHyDZ8syfHajLE208/OKtOfdWC1DHKAeHtBxyoLkngtUW4za
-         760R2shPFem5l1dxwU8SJDkKL6WQ65IZWb4GvXNqlmjKcScTHK2k2LAl5q4Z8BOTr1rx
-         0AtU8Ncywi3yppaofnKRIQbn2vQgPBjNbzcXWf+kDh757xDoK4ElYq4ews/OkGxxhoJZ
-         +4lQ==
-X-Gm-Message-State: AOAM533TOb6cwTPVNtBk/B7u8RfgbAuQ2KLV9j15xQNHkPZHmVyFNfX4
-        Re7ZuF6TNhDxx5F4fsq33/93E/kdYe7i8iarQbhpyw==
-X-Google-Smtp-Source: ABdhPJxkcnqrAUZ0/BuHe0V4d9rKIzD/3EzUc+kmn55bYHjaih5zVBAoZ44017nG3klZVXrKnoyRs3z6yh7rXxMOItE=
-X-Received: by 2002:a81:c45:0:b0:2dc:59c4:3555 with SMTP id
- 66-20020a810c45000000b002dc59c43555mr7687451ywm.36.1646642247656; Mon, 07 Mar
- 2022 00:37:27 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=5EuchempEFVBJsNObrSN9bZUlyRNhaE6rhfvz/HPvrQ=;
+        b=JFG+cqYziPHdxBvMr1xA1hYEtVC0S2ib9m1C7ZJ96iacao3iOFGzk+KaBc90kMv5ok
+         MZOJwJi3COQBV+p4wz5sl4APfyki/6mvhIMrPTtf54igfZAFWK6FIrCgjEJam6iZhq7I
+         JY1LNJOTnQGumi2HZe6/0QoypqenY9oQB1ycNQrm8GMK2K2NFw9jFDzNud1BiLhAEZTZ
+         h15tBJDMXE+3HvyIrOUVolivlUO00GQJeF5RXH1OrUWBpkl0f1EJJKplSvh+rm4KOnus
+         B/pKUzpPhK/HFr5+LTeb+Wf+zZx0zqD2mUDbOOHBH8ORlE/gX9G8RrMR6J7evu5U1aNR
+         f46A==
+X-Gm-Message-State: AOAM5304kZRuSTXnu+o75wxj6YuKEQlditutFF0ot0/H+41wcghf5U0Z
+        mSEBeq7IVxIr3nyyKWHj4fDm2RxOzjmqS3uWjN9w29LRy149pAKPH+C18WW/qqE7T2S0TI+gq6/
+        BAibhciN0AYSi8pTsVw9sHFaZVeeTA0vbaSnlOTbFTo0=
+X-Received: by 2002:a17:906:aed4:b0:6da:aa56:c923 with SMTP id me20-20020a170906aed400b006daaa56c923mr8053755ejb.148.1646644257480;
+        Mon, 07 Mar 2022 01:10:57 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJwtBtJQDeExiXsvhuBndc2H+XAln/uM67ymh7Rq5QR/XjrVGGF3p74nHBCcZCCYoYOwudMCpA==
+X-Received: by 2002:a17:906:aed4:b0:6da:aa56:c923 with SMTP id me20-20020a170906aed400b006daaa56c923mr8053730ejb.148.1646644257300;
+        Mon, 07 Mar 2022 01:10:57 -0800 (PST)
+Received: from [192.168.0.141] (xdsl-188-155-174-239.adslplus.ch. [188.155.174.239])
+        by smtp.gmail.com with ESMTPSA id kv9-20020a17090778c900b006da693d5e91sm4442728ejc.122.2022.03.07.01.10.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Mar 2022 01:10:56 -0800 (PST)
+Message-ID: <02bd539c-f704-dbe5-4d58-fc62314025a7@canonical.com>
+Date:   Mon, 7 Mar 2022 10:10:55 +0100
 MIME-Version: 1.0
-References: <20220219183310.557435-1-robdclark@gmail.com>
-In-Reply-To: <20220219183310.557435-1-robdclark@gmail.com>
-From:   Naresh Kamboju <naresh.kamboju@linaro.org>
-Date:   Mon, 7 Mar 2022 14:07:16 +0530
-Message-ID: <CA+G9fYv6dPUsPzbFLr9PxJoe4eRAUdQyD4xT4hh4-xw=n9r=Bw@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/gpu: Fix crash on devices without devfreq support
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Linux Kernel Functional Testing <lkft@linaro.org>,
-        Anders Roxell <anders.roxell@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v3 03/12] dt-bindings: ufs: cdns,ufshc: convert to
+ dtschema
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
+Cc:     Matthias Brugger <matthias.bgg@gmail.com>,
+        Andy Gross <agross@kernel.org>, Jan Kotas <jank@cadence.com>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Wei Xu <xuwei5@hisilicon.com>, devicetree@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Li Wei <liwei213@huawei.com>, linux-kernel@vger.kernel.org,
+        Stanley Chu <stanley.chu@mediatek.com>
+References: <20220306111125.116455-1-krzysztof.kozlowski@canonical.com>
+ <20220306111125.116455-4-krzysztof.kozlowski@canonical.com>
+ <1646623480.209864.1496443.nullmailer@robh.at.kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+In-Reply-To: <1646623480.209864.1496443.nullmailer@robh.at.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+On 07/03/2022 04:24, Rob Herring wrote:
+> On Sun, 06 Mar 2022 12:11:16 +0100, Krzysztof Kozlowski wrote:
+>> Convert the Cadence Universal Flash Storage (UFS) Controlle to DT schema
+>> format.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+>> Reviewed-by: Rob Herring <robh@kernel.org>
+>> ---
+>>  .../devicetree/bindings/ufs/cdns,ufshc.txt    | 32 ---------
+>>  .../devicetree/bindings/ufs/cdns,ufshc.yaml   | 68 +++++++++++++++++++
+>>  .../devicetree/bindings/ufs/ti,j721e-ufs.yaml |  7 +-
+>>  3 files changed, 71 insertions(+), 36 deletions(-)
+>>  delete mode 100644 Documentation/devicetree/bindings/ufs/cdns,ufshc.txt
+>>  create mode 100644 Documentation/devicetree/bindings/ufs/cdns,ufshc.yaml
+>>
+> 
+> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> 
+> yamllint warnings/errors:
+> 
+> dtschema/dtc warnings/errors:
+> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/ufs/cdns,ufshc.example.dt.yaml: ufs@fd030000: freq-table-hz: 'anyOf' conditional failed, one must be fixed:
+> 	[[0, 0], [0, 0]] is too long
+> 	[0, 0] is too long
+> 	From schema: /usr/local/lib/python3.8/dist-packages/dtschema/schemas/property-units.yaml
+> 
 
-On Sun, 20 Feb 2022 at 00:02, Rob Clark <robdclark@gmail.com> wrote:
->
-> From: Rob Clark <robdclark@chromium.org>
->
-> Avoid going down devfreq paths on devices where devfreq is not
-> initialized.
->
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> Reported-by: Anders Roxell <anders.roxell@linaro.org>
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-
-I have tested this patch and the reported kernel crash is fixed [1].
-
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-> ---
->  drivers/gpu/drm/msm/msm_gpu_devfreq.c | 31 +++++++++++++++++++++------
->  1 file changed, 25 insertions(+), 6 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> index 9bf319be11f6..26a3669a97b3 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> @@ -83,12 +83,17 @@ static struct devfreq_dev_profile msm_devfreq_profile = {
->  static void msm_devfreq_boost_work(struct kthread_work *work);
->  static void msm_devfreq_idle_work(struct kthread_work *work);
->
-> +static bool has_devfreq(struct msm_gpu *gpu)
-> +{
-> +       return !!gpu->funcs->gpu_busy;
-> +}
-> +
->  void msm_devfreq_init(struct msm_gpu *gpu)
->  {
->         struct msm_gpu_devfreq *df = &gpu->devfreq;
->
->         /* We need target support to do devfreq */
-> -       if (!gpu->funcs->gpu_busy)
-> +       if (!has_devfreq(gpu))
->                 return;
->
->         dev_pm_qos_add_request(&gpu->pdev->dev, &df->idle_freq,
-> @@ -149,6 +154,9 @@ void msm_devfreq_cleanup(struct msm_gpu *gpu)
->  {
->         struct msm_gpu_devfreq *df = &gpu->devfreq;
->
-> +       if (!has_devfreq(gpu))
-> +               return;
-> +
->         devfreq_cooling_unregister(gpu->cooling);
->         dev_pm_qos_remove_request(&df->boost_freq);
->         dev_pm_qos_remove_request(&df->idle_freq);
-> @@ -156,16 +164,24 @@ void msm_devfreq_cleanup(struct msm_gpu *gpu)
->
->  void msm_devfreq_resume(struct msm_gpu *gpu)
->  {
-> -       gpu->devfreq.busy_cycles = 0;
-> -       gpu->devfreq.time = ktime_get();
-> +       struct msm_gpu_devfreq *df = &gpu->devfreq;
->
-> -       devfreq_resume_device(gpu->devfreq.devfreq);
-> +       if (!has_devfreq(gpu))
-> +               return;
-> +
-> +       df->busy_cycles = 0;
-> +       df->time = ktime_get();
-> +
-> +       devfreq_resume_device(df->devfreq);
->  }
->
->  void msm_devfreq_suspend(struct msm_gpu *gpu)
->  {
->         struct msm_gpu_devfreq *df = &gpu->devfreq;
->
-> +       if (!has_devfreq(gpu))
-> +               return;
-> +
->         devfreq_suspend_device(df->devfreq);
->
->         cancel_idle_work(df);
-> @@ -185,6 +201,9 @@ void msm_devfreq_boost(struct msm_gpu *gpu, unsigned factor)
->         struct msm_gpu_devfreq *df = &gpu->devfreq;
->         uint64_t freq;
->
-> +       if (!has_devfreq(gpu))
-> +               return;
-> +
->         freq = get_freq(gpu);
->         freq *= factor;
->
-> @@ -207,7 +226,7 @@ void msm_devfreq_active(struct msm_gpu *gpu)
->         struct devfreq_dev_status status;
->         unsigned int idle_time;
->
-> -       if (!df->devfreq)
-> +       if (!has_devfreq(gpu))
->                 return;
->
->         /*
-> @@ -253,7 +272,7 @@ void msm_devfreq_idle(struct msm_gpu *gpu)
->  {
->         struct msm_gpu_devfreq *df = &gpu->devfreq;
->
-> -       if (!df->devfreq)
-> +       if (!has_devfreq(gpu))
->                 return;
->
->         msm_hrtimer_queue_work(&df->idle_work, ms_to_ktime(1),
-> --
-> 2.34.1
+This will be fixed with my dtschema patch:
+https://github.com/devicetree-org/dt-schema/pull/69
 
 
---
-Linaro LKFT
-https://lkft.linaro.org
-
-[1] https://lkft.validation.linaro.org/scheduler/job/4664600#L1894
+Best regards,
+Krzysztof
