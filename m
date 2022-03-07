@@ -2,74 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E58A04D0271
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Mar 2022 16:07:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4790D4D027C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Mar 2022 16:09:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243629AbiCGPH7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Mar 2022 10:07:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60700 "EHLO
+        id S242498AbiCGPKU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Mar 2022 10:10:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243228AbiCGPH4 (ORCPT
+        with ESMTP id S236493AbiCGPKS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Mar 2022 10:07:56 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C63199026A;
-        Mon,  7 Mar 2022 07:07:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1646665622; x=1678201622;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=6AQwE+jmfCO74IkfUnD2IOLWGBmz47IqloHLSUaMxLU=;
-  b=cx+Yg+bTFB7ymWgycj+3m1rnnidfZhBXHGNocbvs3dlX7uTjhsEVZu7z
-   FoWpJnbk2eU3U2Ol4aORsuiu3nfkN1HiR48o7cyUHZ1zpHyyVPmTt6OB/
-   b5eMxEFnnKXfWwBqE8UazQ/hF+/arld5fHBS2No5fbk8N9kUTve+8/rI6
-   I=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 07 Mar 2022 07:07:02 -0800
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Mar 2022 07:07:01 -0800
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Mon, 7 Mar 2022 07:07:00 -0800
-Received: from [10.216.32.253] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Mon, 7 Mar 2022
- 07:06:53 -0800
-Message-ID: <d73734e8-7ab2-e1bb-540a-3d8252482982@quicinc.com>
-Date:   Mon, 7 Mar 2022 20:36:49 +0530
+        Mon, 7 Mar 2022 10:10:18 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 834FE4DF58;
+        Mon,  7 Mar 2022 07:09:23 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1F1D961224;
+        Mon,  7 Mar 2022 15:09:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6614EC340E9;
+        Mon,  7 Mar 2022 15:09:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1646665762;
+        bh=Py6F6pj5cnvncL/T9T4/xc5qexf5xVDcQfXArLLcVm4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=DK5yv1ZrizLihhuKE0R/q79w74Jywoiov4DIhk3ueYtmk+52qdsPmpIic2XD6lZpt
+         LlBv+cUWfcBmF1cLL9lB1l0ZM8fFIRYYoD3EQBZEGXb8sKfkdC+AaJup99RU6SEk+2
+         OPlPwsmxWjg4WmehDEVSsW5lgiJbDWBHb6hbb+qz6BR27TfeHdcMVqP1v6xqIUEcGl
+         uHBofUhqF9md4QSBeIg5yEHYSrVgw/Y67THY/k2BwZ07ggFoFM8klw/NPloBwZBnNI
+         wS1Cc0UR9+WS9Lhv8+/HIPua7WrwHTzFrKjgezW7GY698Q4flZR98i2ZCy75JHa6pn
+         vbUTJaKVjKJxQ==
+Date:   Mon, 7 Mar 2022 20:39:16 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Dan Carpenter <dan.carpenter@oracle.com>
+Cc:     Hemant Kumar <hemantk@codeaurora.org>,
+        Alex Elder <elder@linaro.org>, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: ep: Fix signedness bug in
+ mhi_ep_register_controller()
+Message-ID: <20220307150916.GO12451@workstation>
+References: <20220307142822.GC19660@kili>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Subject: Re: [PATCH 0/4] drm/msm: Clear perf counters across context switch
-Content-Language: en-US
-To:     Rob Clark <robdclark@gmail.com>, <dri-devel@lists.freedesktop.org>
-CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Emma Anholt <emma@anholt.net>,
-        Jonathan Marek <jonathan@marek.ca>,
-        open list <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Yangtao Li <tiny.windzz@gmail.com>
-References: <20220304005317.776110-1-robdclark@gmail.com>
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-In-Reply-To: <20220304005317.776110-1-robdclark@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220307142822.GC19660@kili>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,69 +57,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/4/2022 6:22 AM, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
->
-> Some clever folks figured out a way to use performance counters as a
-> side-channel[1].  But, other than the special case of using the perf
-> counters for system profiling, we can reset the counters across context
-> switches to protect against this.
->
-> This series introduces a SYSPROF param which a sufficiently privilaged
-> userspace (like Mesa's pps-producer, which already must run as root) to
-> opt-out, and makes the default behavior to reset counters on context
-> switches.
->
-> [1] https://dl.acm.org/doi/pdf/10.1145/3503222.3507757
->
-> Rob Clark (4):
->    drm/msm: Update generated headers
->    drm/msm: Add SET_PARAM ioctl
->    drm/msm: Add SYSPROF param (v2)
->    drm/msm/a6xx: Zap counters across context switch
->
->   drivers/gpu/drm/msm/adreno/a2xx.xml.h         |  26 +-
->   drivers/gpu/drm/msm/adreno/a2xx_gpu.c         |   1 +
->   drivers/gpu/drm/msm/adreno/a3xx.xml.h         |  30 +-
->   drivers/gpu/drm/msm/adreno/a3xx_gpu.c         |   1 +
->   drivers/gpu/drm/msm/adreno/a4xx.xml.h         | 112 ++-
->   drivers/gpu/drm/msm/adreno/a4xx_gpu.c         |   1 +
->   drivers/gpu/drm/msm/adreno/a5xx.xml.h         |  63 +-
->   drivers/gpu/drm/msm/adreno/a5xx_gpu.c         |   1 +
->   drivers/gpu/drm/msm/adreno/a6xx.xml.h         | 674 +++++++++++-------
->   drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h     |  26 +-
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.c         |  30 +
->   .../gpu/drm/msm/adreno/adreno_common.xml.h    |  31 +-
->   drivers/gpu/drm/msm/adreno/adreno_gpu.c       |  14 +
->   drivers/gpu/drm/msm/adreno/adreno_gpu.h       |   2 +
->   drivers/gpu/drm/msm/adreno/adreno_pm4.xml.h   |  46 +-
->   drivers/gpu/drm/msm/disp/mdp4/mdp4.xml.h      |  37 +-
->   drivers/gpu/drm/msm/disp/mdp5/mdp5.xml.h      |  37 +-
->   drivers/gpu/drm/msm/disp/mdp_common.xml.h     |  37 +-
->   drivers/gpu/drm/msm/dsi/dsi.xml.h             |  37 +-
->   drivers/gpu/drm/msm/dsi/dsi_phy_10nm.xml.h    |  37 +-
->   drivers/gpu/drm/msm/dsi/dsi_phy_14nm.xml.h    |  37 +-
->   drivers/gpu/drm/msm/dsi/dsi_phy_20nm.xml.h    |  37 +-
->   drivers/gpu/drm/msm/dsi/dsi_phy_28nm.xml.h    |  37 +-
->   .../gpu/drm/msm/dsi/dsi_phy_28nm_8960.xml.h   |  37 +-
->   drivers/gpu/drm/msm/dsi/dsi_phy_5nm.xml.h     | 480 -------------
->   drivers/gpu/drm/msm/dsi/dsi_phy_7nm.xml.h     |  43 +-
->   drivers/gpu/drm/msm/dsi/mmss_cc.xml.h         |  37 +-
->   drivers/gpu/drm/msm/dsi/sfpb.xml.h            |  37 +-
->   drivers/gpu/drm/msm/hdmi/hdmi.xml.h           |  37 +-
->   drivers/gpu/drm/msm/hdmi/qfprom.xml.h         |  37 +-
->   drivers/gpu/drm/msm/msm_drv.c                 |  28 +
->   drivers/gpu/drm/msm/msm_gpu.c                 |   2 +
->   drivers/gpu/drm/msm/msm_gpu.h                 |  29 +
->   drivers/gpu/drm/msm/msm_submitqueue.c         |  39 +
->   include/uapi/drm/msm_drm.h                    |  28 +-
->   35 files changed, 1058 insertions(+), 1130 deletions(-)
->   delete mode 100644 drivers/gpu/drm/msm/dsi/dsi_phy_5nm.xml.h
->
+On Mon, Mar 07, 2022 at 05:28:22PM +0300, Dan Carpenter wrote:
+> The "mhi_cntrl->index" variable is unsigned so the error handling will
+> not work.
+> 
+> Fixes: 10f0ab9c6787 ("bus: mhi: ep: Add support for registering MHI endpoint controllers")
+> Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
 
-For the whole series except " drm/msm: Update generated headers",
+Thanks for the fix! The fix was already added to mhi-next (squashed) as a
+response to the previous report.
 
-Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+https://lore.kernel.org/mhi/20220307071739.GM12451@workstation/T/#t
 
--Akhil.
+Thanks,
+Mani
 
+> ---
+>  drivers/bus/mhi/ep/main.c | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+> index 3e98107f08c4..879071b021d5 100644
+> --- a/drivers/bus/mhi/ep/main.c
+> +++ b/drivers/bus/mhi/ep/main.c
+> @@ -1418,11 +1418,10 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+>  	mhi_ep_mmio_set_env(mhi_cntrl, MHI_EE_AMSS);
+>  
+>  	/* Set controller index */
+> -	mhi_cntrl->index = ida_alloc(&mhi_ep_cntrl_ida, GFP_KERNEL);
+> -	if (mhi_cntrl->index < 0) {
+> -		ret = mhi_cntrl->index;
+> +	ret = ida_alloc(&mhi_ep_cntrl_ida, GFP_KERNEL);
+> +	if (ret < 0)
+>  		goto err_destroy_wq;
+> -	}
+> +	mhi_cntrl->index = ret;
+>  
+>  	irq_set_status_flags(mhi_cntrl->irq, IRQ_NOAUTOEN);
+>  	ret = request_irq(mhi_cntrl->irq, mhi_ep_irq, IRQF_TRIGGER_HIGH,
+> -- 
+> 2.20.1
+> 
