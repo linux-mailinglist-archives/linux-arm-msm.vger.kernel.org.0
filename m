@@ -2,70 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F154B4D0A46
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Mar 2022 22:49:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 313D54D0AC9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Mar 2022 23:14:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235558AbiCGVub (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 7 Mar 2022 16:50:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51252 "EHLO
+        id S239798AbiCGWPf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 7 Mar 2022 17:15:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235245AbiCGVu1 (ORCPT
+        with ESMTP id S239416AbiCGWPd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 7 Mar 2022 16:50:27 -0500
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A37075618
-        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Mar 2022 13:49:31 -0800 (PST)
-Received: by mail-oi1-x235.google.com with SMTP id q189so1145526oia.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Mar 2022 13:49:31 -0800 (PST)
+        Mon, 7 Mar 2022 17:15:33 -0500
+Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 278EC5B3CE
+        for <linux-arm-msm@vger.kernel.org>; Mon,  7 Mar 2022 14:14:38 -0800 (PST)
+Received: by mail-oo1-xc33.google.com with SMTP id s203-20020a4a3bd4000000b003191c2dcbe8so19656125oos.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Mar 2022 14:14:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=zfqWCmNF93ndPFXSv4QIBrq8EZ2SC7a6VA614x+TUnE=;
-        b=shDY97p7I1uyQabU6J+jzftvf6umzae1jHePFV0Lz2wgJ1UcnJjf4lrjVwe7Tf6N47
-         HZQ3CXxNbP1Cc/9mtwFLElmY1nGyj3fHV/LW3BmuMuzUHnUcj3p9s6jf2zGoB1uTBl3L
-         hIA6s7/5plQpZ8YRTImRnSoajfwE2UvR13I9BWZQD2DOzOZvsru5HPzt39mBLFWE4rfb
-         Hw99htBY29EHZpeOSxOXt/uIpxUrr6vjoi5qoPU7n5Kw0KAvpfvcJkstnfcGKviMAkch
-         /NN91mFWSYNGeH7gsfiAyinhRhADZdoVTApqL+/n04dmsPQaIwpOYSu7ze4hQBK3vLz2
-         BIDQ==
+        bh=MbPxVmdHpUGDmCidYr90Dm7MxXegKEnI6/p2aBfWx0w=;
+        b=w/7lkXaj5gaYpOAMn7otq9nTFpXuSDyWUxTDtClV/73U7wF4JIdm+ExAzDIaOCxgJe
+         w72+CMrStkI23vsG5fhFfuPACM+GFgG7ITFpjG41tiUbz9vkWf9AZ8zdr3rLou6Syq3v
+         0zgXCoILbYxRxfNusAoqU7qSPJEkYCXZza0aksYsgfgHjFwlpzi7MsqXZqMiUuITBkFt
+         FuLp/xVs2PNStHIb06p6y6OdBGTq+0kZkZ5tGqOUkHd78DqS+x8KSsKcIi8zkRfqAoit
+         IASEAbx5XHRZKZ46oY2MaYr2Hh6fdo2a54MQK+0c3FdxOQIY+9+dJkq8ZAO5cR1B17sh
+         2pAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=zfqWCmNF93ndPFXSv4QIBrq8EZ2SC7a6VA614x+TUnE=;
-        b=uoM9vlTruB7N+UzTT2D6yzFbWAf/lKhbdO7kXvRK+JuBam6P4CuB8UGi0tpSBnbbhE
-         uG+gD/qKyJ6CeFTnVIbvrrNLO70ZHeawcS+K7PTllecacqD/UTHuHRLEfSnM0DOHrJu/
-         W0IIeceNlOt6dgCfzPKoU+ZMs003/9bhJAMNMWNUggJwKUEC14D0HemjcP1GPC37j9nq
-         CIqvDBymZYOqIrgCBud2qWPoFBQ3Fu10vvBCZNg5B4G3jxQ6IjQSfBKStZwh5LCsy0oG
-         CsKOMZ5pXWZV8qTHczYyTUUfS8GnnDZDBCTJNBWfpFFea4OvVDi7tB8dR6heOia9EU9T
-         G1OQ==
-X-Gm-Message-State: AOAM5326RRs/iJzZQmQCUw/MmO9WEK7sHj0yDNcmqIfULeMNYbV2AWn5
-        axaxSq+iBNmWZnJfNXy/IwzmM5/89QBZmw==
-X-Google-Smtp-Source: ABdhPJxd4XqRZVCtcapXK8E337XSK8otMU7IlqgivuLS+CNCqBiAXZP42JPQLdB8WMVbrqq7bp4uJA==
-X-Received: by 2002:a05:6808:210b:b0:2d9:a6d3:b029 with SMTP id r11-20020a056808210b00b002d9a6d3b029mr680628oiw.182.1646689770944;
-        Mon, 07 Mar 2022 13:49:30 -0800 (PST)
+        bh=MbPxVmdHpUGDmCidYr90Dm7MxXegKEnI6/p2aBfWx0w=;
+        b=79LoYke7D7dzImCiBoYB1k4zRbfghplZQxeSvQyucevxAGTPdeyg9MDXBic7ta/Uag
+         iV6EfD9jmXzI1b4bfj5udqPHC2C1Wiw8nVgAkcDAgxu0Q7JkfZGh6+UHFG8NFgHQyLep
+         0zIOIxdwILjSF3SnB1RpSHjYENRWAD5wJEpFzbT0Xa2VeCESR3Cl36BB+qVW9CGL8I/P
+         /+AS+o6OnF0LxEZx4mU5/kBRnSmGC5S690y1IbSNS1l6ju6Goil0aNV7GmEmDWBhIIaP
+         Td9gIK7EkHwnvJCgUIsWRnzDfmzNI8pNlKgoQQq4r0LD2MSozqjWbQ5cMrSuq2WYmww6
+         uw9Q==
+X-Gm-Message-State: AOAM533yNdZb3AynZrcrV2UEVv3Z93UXF3foTcKKBVsImAzQ33XmihT9
+        unKSiA2KQR/aL5a6hZjWY+CgtaLYGxehsA==
+X-Google-Smtp-Source: ABdhPJykQ+Zehh0BYLxZmkq9fi3yT87+/TPM9Yh/iP5NhP/fs8kz8qeiO/3vGtVjDilPqoCCQ+cOtA==
+X-Received: by 2002:a05:6870:248a:b0:da:b3f:3256 with SMTP id s10-20020a056870248a00b000da0b3f3256mr643261oaq.262.1646691277513;
+        Mon, 07 Mar 2022 14:14:37 -0800 (PST)
 Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id z26-20020a9d62da000000b005b23f5488cdsm1089567otk.52.2022.03.07.13.49.30
+        by smtp.gmail.com with ESMTPSA id t7-20020a9d5907000000b005afa4058a4csm6993466oth.1.2022.03.07.14.14.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Mar 2022 13:49:30 -0800 (PST)
-Date:   Mon, 7 Mar 2022 13:51:14 -0800
+        Mon, 07 Mar 2022 14:14:36 -0800 (PST)
+Date:   Mon, 7 Mar 2022 14:16:21 -0800
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         "Rafael J. Wysocki" <rafael@kernel.org>,
         Viresh Kumar <viresh.kumar@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH 1/4] cpufreq: qcom-hw: drop affinity hint before freeing
- the IRQ
-Message-ID: <YiZ+UuionW6DsLQX@ripper>
+Subject: Re: [PATCH 3/4] cpufreq: qcom-hw: fix the opp entries refcounting
+Message-ID: <YiaENXyWr6t8L2Uz@ripper>
 References: <20220307153050.3392700-1-dmitry.baryshkov@linaro.org>
+ <20220307153050.3392700-3-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220307153050.3392700-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220307153050.3392700-3-dmitry.baryshkov@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,70 +75,98 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Mon 07 Mar 07:30 PST 2022, Dmitry Baryshkov wrote:
 
-> Drop affinity hint before freeing the throttling IRQ to fix the
-> following trace:
-
-Rather than relying on the reader of the git log having to read the
-free_irq() implementation to figure out what the problem is, this could
-simply state that one isn't allowed to free_irq() something with
-affinity set.
-
-Regards,
-Bjorn
-
+> The qcom_lmh_dcvs_notify() will get the dev_pm_opp instance for
+> throttling, but will not put it, ending up with leaking a reference
+> count and the following backtrace when putting the CPU offline.
 > 
-> [  185.114773] ------------[ cut here ]------------
-> [  185.119517] WARNING: CPU: 7 PID: 43 at kernel/irq/manage.c:1887 free_irq+0x3a4/0x3dc
-> [  185.127474] Modules linked in:
-> [  185.130618] CPU: 7 PID: 43 Comm: cpuhp/7 Tainted: G S      W         5.17.0-rc6-00386-g67382a5b705d-dirty #690
-> [  185.147125] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [  185.154269] pc : free_irq+0x3a4/0x3dc
-> [  185.158031] lr : free_irq+0x33c/0x3dc
-> [  185.161792] sp : ffff80000841bc90
-> [  185.165195] x29: ffff80000841bc90 x28: ffffa6edc5c3d000 x27: ffff6d93729e5908
-> [  185.172515] x26: 0000000000000000 x25: ffff6d910109fc00 x24: ffff6d91011490e0
-> [  185.179838] x23: ffff6d9101149218 x22: 0000000000000080 x21: 0000000000000000
-> [  185.187163] x20: ffff6d9101149000 x19: ffff6d910ab61500 x18: ffffffffffffffff
-> [  185.194487] x17: 2e35202020202020 x16: 2020202020202020 x15: ffff80008841b9a7
-> [  185.201805] x14: 00000000000003c9 x13: 0000000000000001 x12: 0000000000000040
-> [  185.209135] x11: ffff6d91005aab58 x10: ffff6d91005aab5a x9 : ffffc6a5ad1c5408
-> [  185.216455] x8 : ffff6d91005adb88 x7 : 0000000000000000 x6 : ffffc6a5ab5a91f4
-> [  185.223776] x5 : 0000000000000000 x4 : ffff6d91011490a8 x3 : ffffc6a5ad266108
-> [  185.231098] x2 : 0000000013033204 x1 : ffff6d9101149000 x0 : ffff6d910a9cc000
-> [  185.238421] Call trace:
-> [  185.240932]  free_irq+0x3a4/0x3dc
-> [  185.244334]  qcom_cpufreq_hw_cpu_exit+0x78/0xcc
-> [  185.248985]  cpufreq_offline.isra.0+0x228/0x270
-> [  185.253639]  cpuhp_cpufreq_offline+0x10/0x20
-> [  185.258027]  cpuhp_invoke_callback+0x16c/0x2b0
-> [  185.262592]  cpuhp_thread_fun+0x190/0x250
-> [  185.266710]  smpboot_thread_fn+0x12c/0x230
-> [  185.270914]  kthread+0xfc/0x100
-> [  185.274145]  ret_from_fork+0x10/0x20
-> [  185.277820] irq event stamp: 212
-> [  185.281136] hardirqs last  enabled at (211): [<ffffc6a5ac57973c>] _raw_spin_unlock_irqrestore+0x8c/0xa0
-> [  185.290775] hardirqs last disabled at (212): [<ffffc6a5ac572100>] __schedule+0x710/0xa10
-> [  185.299081] softirqs last  enabled at (0): [<ffffc6a5ab50f7b0>] copy_process+0x7d0/0x1a14
-> [  185.307475] softirqs last disabled at (0): [<0000000000000000>] 0x0
+
+Good catch, and nice to see this kind of testing of the driver!
+
+> Correctly put the reference count of the returned opp instance.
+> 
+> [   84.418025] ------------[ cut here ]------------
+> [   84.422770] WARNING: CPU: 7 PID: 43 at drivers/opp/core.c:1396 _opp_table_kref_release+0x188/0x190
+> [   84.431966] Modules linked in:
+> [   84.435106] CPU: 7 PID: 43 Comm: cpuhp/7 Tainted: G S                5.17.0-rc6-00388-g7cf3c0d89c44-dirty #721
+> [   84.451631] pstate: 82400005 (Nzcv daif +PAN -UAO +TCO -DIT -SSBS BTYPE=--)
+> [   84.458781] pc : _opp_table_kref_release+0x188/0x190
+> [   84.463878] lr : _opp_table_kref_release+0x78/0x190
+> [   84.468885] sp : ffff80000841bc70
+> [   84.472294] x29: ffff80000841bc70 x28: ffff6664afe3d000 x27: ffff1db6729e5908
+> [   84.479621] x26: 0000000000000000 x25: 0000000000000000 x24: ffff1db6729e58e0
+> [   84.486946] x23: ffff8000080a5000 x22: ffff1db40aad80e0 x21: ffff1db4002fec80
+> [   84.494277] x20: ffff1db40aad8000 x19: ffffb751c3186300 x18: ffffffffffffffff
+> [   84.501603] x17: 5300326563697665 x16: 645f676e696c6f6f x15: 00001186c1df5448
+> [   84.508928] x14: 00000000000002e9 x13: 0000000000000000 x12: 0000000000000000
+> [   84.516256] x11: ffffb751c3186368 x10: ffffb751c39a2a70 x9 : 0000000000000000
+> [   84.523585] x8 : ffff1db4008edf00 x7 : ffffb751c328c000 x6 : 0000000000000001
+> [   84.530916] x5 : 0000000000040000 x4 : 0000000000000001 x3 : ffff1db4008edf00
+> [   84.538247] x2 : 0000000000000000 x1 : ffff1db400aa6100 x0 : ffff1db40aad80d0
+> [   84.545579] Call trace:
+> [   84.548101]  _opp_table_kref_release+0x188/0x190
+> [   84.552842]  dev_pm_opp_remove_all_dynamic+0x8c/0xc0
+> [   84.557949]  qcom_cpufreq_hw_cpu_exit+0x30/0xdc
+> [   84.562608]  cpufreq_offline.isra.0+0x1b4/0x1d8
+> [   84.567270]  cpuhp_cpufreq_offline+0x10/0x6c
+> [   84.571663]  cpuhp_invoke_callback+0x16c/0x2b0
+> [   84.576231]  cpuhp_thread_fun+0x190/0x250
+> [   84.580353]  smpboot_thread_fn+0x12c/0x230
+> [   84.584568]  kthread+0xfc/0x100
+> [   84.587810]  ret_from_fork+0x10/0x20
+> [   84.591490] irq event stamp: 3482
+> [   84.594901] hardirqs last  enabled at (3481): [<ffffb751c13c3db0>] call_rcu+0x39c/0x50c
+> [   84.603119] hardirqs last disabled at (3482): [<ffffb751c236b518>] el1_dbg+0x24/0x8c
+> [   84.611074] softirqs last  enabled at (310): [<ffffb751c1290410>] _stext+0x410/0x588
+> [   84.619028] softirqs last disabled at (305): [<ffffb751c131bf68>] __irq_exit_rcu+0x158/0x174
+> [   84.627691] ---[ end trace 0000000000000000 ]---
 > 
 > Fixes: 275157b367f4 ("cpufreq: qcom-cpufreq-hw: Add dcvs interrupt support")
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/cpufreq/qcom-cpufreq-hw.c | 1 +
->  1 file changed, 1 insertion(+)
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
 > 
 > diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> index effbb680b453..740518d8ae16 100644
+> index 920c80d91c21..580520215ee7 100644
 > --- a/drivers/cpufreq/qcom-cpufreq-hw.c
 > +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> @@ -412,6 +412,7 @@ static void qcom_cpufreq_hw_lmh_exit(struct qcom_cpufreq_data *data)
->  	mutex_unlock(&data->throttle_lock);
+> @@ -309,12 +309,16 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
 >  
->  	cancel_delayed_work_sync(&data->throttle_work);
-> +	irq_set_affinity_hint(data->throttle_irq, NULL);
->  	free_irq(data->throttle_irq, data);
->  }
+>  	opp = dev_pm_opp_find_freq_floor(dev, &freq_hz);
+>  	if (IS_ERR(opp) && PTR_ERR(opp) == -ERANGE)
+> -		dev_pm_opp_find_freq_ceil(dev, &freq_hz);
+> +		opp = dev_pm_opp_find_freq_ceil(dev, &freq_hz);
 >  
+> -	throttled_freq = freq_hz / HZ_PER_KHZ;
+
+Maybe I'm missing something, but where did this division go after your
+change?
+
+> +	if (IS_ERR(opp)) {
+> +		dev_warn(dev, "Can't find the OPP for throttling: %pe!\n", opp);
+
+qcom_lmh_dcvs_notify() will be invoked repeatedly to poll the hardware
+for changing circumstances during thermal pressure. If for some reason
+dev_pm_opp_find_freq_ceil() is unable to find an opp it will probably
+continue to fail every 10ms.
+
+As such I think you should either omit the warning print, or possibly
+use dev_warn_once().
+
+Regards,
+Bjorn
+
+> +	} else {
+> +		/* Update thermal pressure (the boost frequencies are accepted) */
+> +		arch_update_thermal_pressure(policy->related_cpus, throttled_freq);
+>  
+> -	/* Update thermal pressure (the boost frequencies are accepted) */
+> -	arch_update_thermal_pressure(policy->related_cpus, throttled_freq);
+> +		dev_pm_opp_put(opp);
+> +	}
+>  
+>  	/*
+>  	 * In the unlikely case policy is unregistered do not enable
 > -- 
 > 2.34.1
 > 
