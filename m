@@ -2,68 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B4D44D21B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 20:36:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AE03E4D2228
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 21:05:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244195AbiCHThY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Mar 2022 14:37:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42222 "EHLO
+        id S1350124AbiCHUGj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Mar 2022 15:06:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235536AbiCHThX (ORCPT
+        with ESMTP id S1350117AbiCHUGi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Mar 2022 14:37:23 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E38854692;
-        Tue,  8 Mar 2022 11:36:26 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 30C07B81D04;
-        Tue,  8 Mar 2022 19:36:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BACADC340FB;
-        Tue,  8 Mar 2022 19:36:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1646768183;
-        bh=oD0VhZlZShLXXL0VtyiSN7OYDVRpJLyegMXQzT9D+UA=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=ey77ykuhs4E7ZaV6YzBUicdBDA4cjypVH7cJtFwZVB8NnFwIFeXthZTsJUnCLmie8
-         rka8c6JmvwWFY0lQKh+z1l+6QG/LA5l7xATgYgZrNMUEk8MvDsxTlQp/dRXH2jWxX7
-         wlqn5cXCoOOdOJ+Y6m2M5sWQXHnUQdCkp0VksnGEcvVWeM6/nGz8xJ775oJE4LMHYn
-         5UetBO5K5gJ3gxe481YktKxaNtsAInoOtcnYJ6tQGqBKROzi1EnIDVLcbNPrtqHhXC
-         IwDipKRXMrQM/Gg8Scp7WnZHe8ApjUwyFiHF78Vnn0HOlpliT8qrRE8oshhaCMLPnr
-         Wa6YiYmYUneRg==
-Received: by mail-ej1-f52.google.com with SMTP id qa43so84436ejc.12;
-        Tue, 08 Mar 2022 11:36:23 -0800 (PST)
-X-Gm-Message-State: AOAM5330fP2RVMFy6lfYqW3E4Jdoff5kVwIpNwM0mFTiy3GW214a7AfA
-        Z2FtoMSxPotz7SRXBV/mMV9a1Be6rT8PMCY8jA==
-X-Google-Smtp-Source: ABdhPJzZzoUPz4XaizE/zi66xXVmww6DX4HQPJpJ5wI1spp5ElEOP/8Wi4Qx2bFZCZ7dUrhMObCmG0cWDv+ss8lCgpw=
-X-Received: by 2002:a17:906:584:b0:6b0:8987:90af with SMTP id
- 4-20020a170906058400b006b0898790afmr15279019ejn.264.1646768181983; Tue, 08
- Mar 2022 11:36:21 -0800 (PST)
+        Tue, 8 Mar 2022 15:06:38 -0500
+Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D65A4A3F4
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Mar 2022 12:05:41 -0800 (PST)
+Received: by mail-oo1-xc2d.google.com with SMTP id 6-20020a4a0906000000b0031d7eb98d31so280077ooa.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Mar 2022 12:05:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=QX67c8/LWZdvLCoz7zI9uFhqDQjOSWv595jQDqaaHvw=;
+        b=AoYICMH8irjSWwtZb+Z4eLYjCkWJeNSak3Ym+tkyXo7JKkBgfi/ApgCW8h+4uiTLk4
+         9/ZBh92aXPInfCxmDlAWVb4MzPrC9fWhQAXR1EaTZrKwakYnK4HXEBRhrYs3Ep5zfB2E
+         sF7dLTDPwJru+Mre8SMqknSkzXsiym3TOgeUA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=QX67c8/LWZdvLCoz7zI9uFhqDQjOSWv595jQDqaaHvw=;
+        b=mp77dErnHemnarGjdJCAfWvDQNR6vgzFq2yZ0imoRGJLcDmzMQPwws8crSQ/MIaMOC
+         qI6VPILkhcnj3A99Q7+r+EGhqEWBg3zZQ/Ui4oxA5GuQbFGkmvLmk1JIgZhZx24Vvuvo
+         /4hdzlWDEnPyTR4YGuBPV0NCMCuTVzS1YbpIAn85viGmySso9D9PEHm2R6VnS8o61huA
+         eFQuZK5z1gmt0+kyMBpflVWagvL3y1vM2zpjZv9o3p0nnW6zi8zYQEm8AjUCA0XHt+u8
+         HMWzxUl9mvg1izxJ+orOWA+WzOplEWSYEC/pwTFamMuxPek14qY0/35T/2IngFrD0RsK
+         gReg==
+X-Gm-Message-State: AOAM530C4EQs3X6oEaZRI0xjUAz+dWHn7Pj69U8E3xaMjAfmX4RjK0lD
+        zFm2T4s7Gzcy3obWnXCCaecWcCJa/ZEiXWsX20G60Q==
+X-Google-Smtp-Source: ABdhPJxFRuIHirmuMcP8JQW2CiIQQrW1zixcggRe6oOvjNpt2ZWhCvmWo6ALkosrHI8M9jLM4bLDX5HuCCoQWjlEW1Q=
+X-Received: by 2002:a05:6870:d250:b0:da:b3f:3211 with SMTP id
+ h16-20020a056870d25000b000da0b3f3211mr3425601oac.193.1646769940572; Tue, 08
+ Mar 2022 12:05:40 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 8 Mar 2022 12:05:39 -0800
 MIME-Version: 1.0
-References: <20220302001410.2264039-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220302001410.2264039-1-dmitry.baryshkov@linaro.org>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Tue, 8 Mar 2022 13:36:10 -0600
-X-Gmail-Original-Message-ID: <CAL_Jsq+TwPpZSZa3Jq-qYg0kUpb2ord5bWKVAwqsdVP40RKFuQ@mail.gmail.com>
-Message-ID: <CAL_Jsq+TwPpZSZa3Jq-qYg0kUpb2ord5bWKVAwqsdVP40RKFuQ@mail.gmail.com>
-Subject: Re: [RESEND PATCH] dt-bindings: display/msm: add missing brace in dpu-qcm2290.yaml
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Loic Poulain <loic.poulain@linaro.org>
+In-Reply-To: <1646758500-3776-2-git-send-email-quic_vpolimer@quicinc.com>
+References: <1646758500-3776-1-git-send-email-quic_vpolimer@quicinc.com> <1646758500-3776-2-git-send-email-quic_vpolimer@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Tue, 8 Mar 2022 12:05:39 -0800
+Message-ID: <CAE-0n51bfqWs8yOiyQ-A_bEQ7CZSqavz8epcFEWYyZxxoRYFHg@mail.gmail.com>
+Subject: Re: [PATCH v5 1/5] arm64/dts/qcom/sc7280: remove assigned-clock-rate
+ property for mdp clk
+To:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, quic_kalyant@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -72,36 +69,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 1, 2022 at 6:14 PM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
+Quoting Vinod Polimera (2022-03-08 08:54:56)
+> Kernel clock driver assumes that initial rate is the
+> max rate for that clock and was not allowing it to scale
+> beyond the assigned clock value.
+
+How? I see ftbl_disp_cc_mdss_mdp_clk_src[] has multiple frequencies and
+clk_rcg2_shared_ops so it doesn't look like anything in the clk driver
+is preventing the frequency from changing beyond the assigned value.
+
 >
-> Add missing brace in dpu-qcm2290.yaml. While we are at it, also fix
-> indentation for another brace, so it matches the corresponding line.
+> Drop the assigned clock rate property and vote on the mdp clock as per
+> calculated value during the usecase.
 >
-> Reported-by: Rob Herring <robh@kernel.org>
-> Cc: Loic Poulain <loic.poulain@linaro.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Didn't include freedreno@ in the first email, so resending.
-> ---
->  Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+> Changes in v2:
+> - Remove assigned-clock-rate property and set mdp clk during resume sequence.
+> - Add fixes tag.
+>
+> Changes in v3:
+> - Remove extra line after fixes tag.(Stephen Boyd)
 
-Now that the example actually builds, we get just schema warnings:
+This changelog should be removed.
 
-/builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.example.dt.yaml:
-mdss@5e00000: compatible: ['qcom,qcm2290-mdss', 'qcom,mdss'] is too
-long
-From schema: /builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml
-/builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.example.dt.yaml:
-mdss@5e00000: 'mdp@5e01000' does not match any of the regexes:
-'^display-controller@[0-9a-f]+$', 'pinctrl-[0-9]+'
-From schema: /builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml
+>
+> Fixes: 62fbdce91("arm64: dts: qcom: sc7280: add display dt nodes")
 
+I thought folks were saying that this is bad to keep? I don't really
+mind either way, but I guess it's better to drop the fixes tag because
+this is largely a performance improvement?
 
-I would have assumed upon reporting errors with 'make
-dt_binding_check' that the fixes would be tested with 'make
-dt_binding_check'...
-
-Rob
+> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
