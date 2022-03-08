@@ -2,266 +2,232 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B42324D162B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 12:23:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A21244D16BB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 12:57:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346489AbiCHLXj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Mar 2022 06:23:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42346 "EHLO
+        id S245578AbiCHL6H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Mar 2022 06:58:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346315AbiCHLXi (ORCPT
+        with ESMTP id S1346639AbiCHL5w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Mar 2022 06:23:38 -0500
-X-Greylist: delayed 64 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 08 Mar 2022 03:22:37 PST
-Received: from ewsoutbound.kpnmail.nl (ewsoutbound.kpnmail.nl [195.121.94.183])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A6AFDFD7
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Mar 2022 03:22:34 -0800 (PST)
-X-KPN-MessageId: e10c826d-9ed1-11ec-a7c6-005056992ed3
-Received: from smtp.kpnmail.nl (unknown [10.31.155.7])
-        by ewsoutbound.so.kpn.org (Halon) with ESMTPS
-        id e10c826d-9ed1-11ec-a7c6-005056992ed3;
-        Tue, 08 Mar 2022 12:21:20 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=xs4all.nl; s=xs4all01;
-        h=content-type:from:to:subject:mime-version:date:message-id;
-        bh=5O1gq6RoYzJhbPCskuuK43RlVeh/6ysK+0OJ9zUzsCM=;
-        b=ijG2XRXR7oqkURWF9+19UNEbeVvAlb45GZACmhjLS1h2idgcl2l4cRLPbwVgqvZN+R/2dUR2ogls6
-         yMVejEe+0MlKnDnfkLUmia5HY3x+AqRT15J4yT2Mh+E5gMSPfLH13Ds4aA09anAfnDIibnBVM32oA9
-         R46B63YtGjI1ixZtqjzR3fQur937oVm0ClsSCf4IKhmUYVJkBnsE5PVnNVuQSwvn7wil651twSIIqd
-         ZuASLZgthw68chCTFadiF9R/UsEjV2onpnnemMhKyqiFUYfL/YaFoEuUzrFKw2DHp0d/gS7GkWQ2K6
-         BckDpeg2RtFvCpNHqD6F0VIhk/ex5jw==
-X-KPN-VerifiedSender: No
-X-CMASSUN: 33|t95GKBdoTOuCN8fW9siGSthcvjviBLQQBPqc6n4jGojpp+nld4xmCpd07CPbD7X
- UKl51F08iNSp1BvRcwcZeZQ==
-X-Originating-IP: 173.38.220.60
-Received: from [10.47.77.219] (unknown [173.38.220.60])
-        by smtp.xs4all.nl (Halon) with ESMTPSA
-        id e65a52ab-9ed1-11ec-b2a4-005056998788;
-        Tue, 08 Mar 2022 12:21:30 +0100 (CET)
-Message-ID: <24d47f44-98be-451a-14d7-7a2a2cc0de8b@xs4all.nl>
-Date:   Tue, 8 Mar 2022 12:21:29 +0100
+        Tue, 8 Mar 2022 06:57:52 -0500
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id CE13D3982C;
+        Tue,  8 Mar 2022 03:56:55 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 843AFD6E;
+        Tue,  8 Mar 2022 03:56:55 -0800 (PST)
+Received: from [10.57.22.11] (unknown [10.57.22.11])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 86A6F3FA5D;
+        Tue,  8 Mar 2022 03:56:53 -0800 (PST)
+Message-ID: <c77c93bb-f863-47c8-0ba0-3fc63530a9e1@arm.com>
+Date:   Tue, 8 Mar 2022 11:56:51 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v1 1/2] media: v4l2-ctrls: Add intra-refresh type control
-Content-Language: en-US
-To:     dikshita@codeaurora.org
-Cc:     Dikshita Agarwal <dikshita@qti.qualcomm.com>,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, ezequiel@collabora.com,
-        vgarodia@codeaurora.org, stanimir.varbanov@linaro.org,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>
-References: <1643019119-8309-1-git-send-email-dikshita@qti.qualcomm.com>
- <1643019119-8309-2-git-send-email-dikshita@qti.qualcomm.com>
- <20ace4b3-5002-4edb-642b-bbb1952f3591@xs4all.nl>
- <39d1418cec305e59d798242b34d62e90@codeaurora.org>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <39d1418cec305e59d798242b34d62e90@codeaurora.org>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.6.1
+Subject: Re: [PATCH v2] coresight: core: Fix coresight device probe failure
+ issue
+To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc:     coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>
+References: <20220304082350.30069-1-quic_jinlmao@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20220304082350.30069-1-quic_jinlmao@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dikshita,
+Hi Jinlong
 
-On 2/21/22 07:02, dikshita@codeaurora.org wrote:
-> On 2022-02-15 13:51, Hans Verkuil wrote:
->> Hi Dikshita,
->>
->> Some comments below:
->>
->> On 1/24/22 11:11, Dikshita Agarwal wrote:
->>> From: Dikshita Agarwal <quic_dikshita@quicinc.com>
->>>
->>> Add a control to set intra-refresh type.
->>>
->>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->>> ---
->>>  .../userspace-api/media/v4l/ext-ctrls-codec.rst    | 23 
->>> ++++++++++++++++++++++
->>>  drivers/media/v4l2-core/v4l2-ctrls-defs.c          |  9 +++++++++
->>>  include/uapi/linux/v4l2-controls.h                 |  5 +++++
->>>  3 files changed, 37 insertions(+)
->>>
->>> diff --git a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst 
->>> b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->>> index e141f0e..54b42e1 100644
->>> --- a/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->>> +++ b/Documentation/userspace-api/media/v4l/ext-ctrls-codec.rst
->>> @@ -1180,6 +1180,29 @@ enum v4l2_mpeg_video_h264_entropy_mode -
->>>      is set to non zero value.
->>>      Applicable to H264, H263 and MPEG4 encoder.
->>>
->>> +``V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_TYPE (enum)``
->>> +
->>> +enum v4l2_mpeg_video_intra_refresh_type -
->>> +    Sets the type of intra refresh. The period to refresh
->>> +    the whole frame is specified by 
->>> V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD.
->>> +    Note if the client sets this control to either 
->>> ``V4L2_MPEG_VIDEO_INTRA_REFRESH_RANDOM``
->>> +    or ``V4L2_MPEG_VIDEO_INTRA_REFRESH_CYCLIC`` the 
->>> ``V4L2_CID_MPEG_VIDEO_CYCLIC_INTRA_REFRESH_MB``
->>> +    control shall be ignored.
->>
->> Since this control has only two possible values, that would mean that,
->> if this control
->> is present, then REFRESH_MB is always ignored.
->>
->> It seems to me that you need a third option here that specifically
->> selects the REFRESH_MB
->> method.
->>
->> Also, this needs to be documented as well in REFRESH_MB (i.e. it is
->> ignored if this TYPE
->> control is present and is set to something other than REFRESH_MB).
->>
+On 04/03/2022 08:23, Mao Jinlong wrote:
+> It is possibe that probe failure issue happens when the device
+> and its child_device's probe happens at the same time.
+> In coresight_make_links, has_conns_grp is true for parent, but
+> has_conns_grp is false for child device as has_conns_grp is set
+> to true in coresight_create_conns_sysfs_group. The probe of parent
+> device will fail at this condition. Add has_conns_grp check for
+> child device before make the links and make the process from
+> device_register to connection_create be atomic to avoid this
+> probe failure issue.
 > 
-> Hi Hans,
+> Suggested-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+> Suggested-by: Mike Leach <mike.leach@linaro.org>
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> ---
+>   drivers/hwtracing/coresight/coresight-core.c | 12 ++++++------
+>   1 file changed, 6 insertions(+), 6 deletions(-)
 > 
-> I don't think we need to add that as the third option in this control.
-> 
-> So, there are two ways to set intra refresh to driver, it can be either 
-> MB based or Frame-based.
-> Currently, we have two v4l2 controls in place
-> 1. V4L2_CID_MPEG_VIDEO_CYCLIC_INTRA_REFRESH_MB -> this is MB based and 
-> only applicable for cyclic
-> 2. V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD -> this is frame based and 
-> has no type associated to it
->     and it is up to the driver to decide the type i.e Random or Cyclic.
-> 
-> with this new control V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_TYPE, we are 
-> introducing
-> a way for the client to set the type of intra refresh, either cyclic or 
-> random.
+> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
+> index 88653d1c06a4..b3e3bc59c09b 100644
+> --- a/drivers/hwtracing/coresight/coresight-core.c
+> +++ b/drivers/hwtracing/coresight/coresight-core.c
+> @@ -1382,7 +1382,7 @@ static int coresight_fixup_device_conns(struct coresight_device *csdev)
+>   			continue;
+>   		conn->child_dev =
+>   			coresight_find_csdev_by_fwnode(conn->child_fwnode);
+> -		if (conn->child_dev) {
+> +		if (conn->child_dev && conn->child_dev->has_conns_grp) {
+>   			ret = coresight_make_links(csdev, conn,
+>   						   conn->child_dev);
+>   			if (ret)
+> @@ -1594,7 +1594,8 @@ struct coresight_device *coresight_register(struct coresight_desc *desc)
+>   	refcnts = kcalloc(nr_refcnts, sizeof(*refcnts), GFP_KERNEL);
+>   	if (!refcnts) {
+>   		ret = -ENOMEM;
+> -		goto err_free_csdev;
+> +		kfree(csdev);
+> +		goto err_out;
+>   	}
+>   
+>   	csdev->refcnt = refcnts;
+> @@ -1619,8 +1620,10 @@ struct coresight_device *coresight_register(struct coresight_desc *desc)
+>   	csdev->dev.fwnode = fwnode_handle_get(dev_fwnode(desc->dev));
+>   	dev_set_name(&csdev->dev, "%s", desc->name);
+>   
+> +	mutex_lock(&coresight_mutex);
+>   	ret = device_register(&csdev->dev);
+>   	if (ret) {
+> +		mutex_unlock(&coresight_mutex);
+>   		put_device(&csdev->dev);
+>   		/*
+>   		 * All resources are free'd explicitly via
+> @@ -1634,6 +1637,7 @@ struct coresight_device *coresight_register(struct coresight_desc *desc)
+>   		ret = etm_perf_add_symlink_sink(csdev);
+>   
+>   		if (ret) {
+> +			mutex_unlock(&coresight_mutex);
+>   			device_unregister(&csdev->dev);
+>   			/*
+>   			 * As with the above, all resources are free'd
+> @@ -1645,8 +1649,6 @@ struct coresight_device *coresight_register(struct coresight_desc *desc)
+>   		}
+>   	}
+>   
+> -	mutex_lock(&coresight_mutex);
+> -
+>   	ret = coresight_create_conns_sysfs_group(csdev);
+>   	if (!ret)
+>   		ret = coresight_fixup_device_conns(csdev);
+> @@ -1663,8 +1665,6 @@ struct coresight_device *coresight_register(struct coresight_desc *desc)
+>   
+>   	return csdev;
+>   
+> -err_free_csdev:
+> -	kfree(csdev);
+>   err_out:
+>   	/* Cleanup the connection information */
+>   	coresight_release_platform_data(NULL, desc->pdata);
 
-Ah, right. But then it really is a naming issue that causes the confusion.
+Could we consolidate the unlock sequence to a single point with 
+something like this (untested):
 
-It would all be clear if you name this control V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE
-and the enums V4L2_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_RANDOM and
-V4L2_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_CYCLIC.
 
-Yes, I know, the names are quite long, but there are so many codec controls that
-being descriptive is more important than being concise.
+diff --git a/drivers/hwtracing/coresight/coresight-core.c 
+b/drivers/hwtracing/coresight/coresight-core.c
+index af00dca8d1ac..198ee140c6e6 100644
+--- a/drivers/hwtracing/coresight/coresight-core.c
++++ b/drivers/hwtracing/coresight/coresight-core.c
+@@ -1571,6 +1571,7 @@ struct coresight_device *coresight_register(struct 
+coresight_desc *desc)
+  	int nr_refcnts = 1;
+  	atomic_t *refcnts = NULL;
+  	struct coresight_device *csdev;
++	bool registered = false;
 
-With these new names it is clear that this type control only relates to the
-refresh period and not to the refresh MB.
+  	csdev = kzalloc(sizeof(*csdev), GFP_KERNEL);
+  	if (!csdev) {
+@@ -1591,7 +1592,8 @@ struct coresight_device *coresight_register(struct 
+coresight_desc *desc)
+  	refcnts = kcalloc(nr_refcnts, sizeof(*refcnts), GFP_KERNEL);
+  	if (!refcnts) {
+  		ret = -ENOMEM;
+-		goto err_free_csdev;
++		kfree(csdev);
++		goto err_out;
+  	}
 
-You should also document that if this type control is not present, then it is
-undefined what refresh period type is used (or something along those lines).
+  	csdev->refcnt = refcnts;
+@@ -1616,6 +1618,13 @@ struct coresight_device 
+*coresight_register(struct coresight_desc *desc)
+  	csdev->dev.fwnode = fwnode_handle_get(dev_fwnode(desc->dev));
+  	dev_set_name(&csdev->dev, "%s", desc->name);
 
-Regards,
++	/*
++	 * Make sure the device registration and the connection fixup
++	 * are synchronised, so that we don't see uninitialised devices
++	 * on the coresight bus while trying to resolve the connections.
++	 */
++	mutex_lock(&coresight_mutex);
++
+  	ret = device_register(&csdev->dev);
+  	if (ret) {
+  		put_device(&csdev->dev);
+@@ -1623,7 +1632,7 @@ struct coresight_device *coresight_register(struct 
+coresight_desc *desc)
+  		 * All resources are free'd explicitly via
+  		 * coresight_device_release(), triggered from put_device().
+  		 */
+-		goto err_out;
++		goto out_unlock;
+  	}
 
-	Hans
+  	if (csdev->type == CORESIGHT_DEV_TYPE_SINK ||
+@@ -1638,11 +1647,11 @@ struct coresight_device 
+*coresight_register(struct coresight_desc *desc)
+  			 * from put_device(), which is in turn called from
+  			 * function device_unregister().
+  			 */
+-			goto err_out;
++			goto out_unlock;
+  		}
+  	}
+-
+-	mutex_lock(&coresight_mutex);
++	/* Device is now registered */
++	registered = true;
 
-> 
-> Thanks,
-> Dikshita
-> 
->>> +    Applicable to H264, H263 and MPEG4 encoder. Possible values are:
->>> +
->>> +.. tabularcolumns:: |p{9.6cm}|p{7.9cm}|
->>> +
->>> +.. flat-table::
->>> +    :header-rows:  0
->>> +    :stub-columns: 0
->>> +
->>> +    * - ``V4L2_MPEG_VIDEO_INTRA_REFRESH_RANDOM``
->>
->> I think you should add _TYPE after REFRESH in these names to clearly 
->> specify
->> that this is setting the refresh *type*.
->>
->>> +      - The whole frame is completely refreshed randomly
->>> +      after the specified period.
->>> +    * - ``V4L2_MPEG_VIDEO_INTRA_REFRESH_CYCLIC``
->>> +      - The whole frame MBs are completely refreshed in cyclic order
->>> +      after the specified period.
->>> +
->>>  ``V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD (integer)``
->>>      Intra macroblock refresh period. This sets the period to refresh
->>>      the whole frame. In other words, this defines the number of 
->>> frames
->>> diff --git a/drivers/media/v4l2-core/v4l2-ctrls-defs.c 
->>> b/drivers/media/v4l2-core/v4l2-ctrls-defs.c
->>> index 54ca4e6..f13f587 100644
->>> --- a/drivers/media/v4l2-core/v4l2-ctrls-defs.c
->>> +++ b/drivers/media/v4l2-core/v4l2-ctrls-defs.c
->>> @@ -572,6 +572,11 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
->>>  		"VBV/CPB Limit",
->>>  		NULL,
->>>  	};
->>> +	static const char * const intra_refresh_type[] = {
->>> +		"Random",
->>> +		"Cyclic",
->>> +		NULL,
->>> +	};
->>>
->>>  	switch (id) {
->>>  	case V4L2_CID_MPEG_AUDIO_SAMPLING_FREQ:
->>> @@ -705,6 +710,8 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
->>>  		return hevc_start_code;
->>>  	case V4L2_CID_CAMERA_ORIENTATION:
->>>  		return camera_orientation;
->>> +	case V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_TYPE:
->>> +		return intra_refresh_type;
->>>  	default:
->>>  		return NULL;
->>>  	}
->>> @@ -834,6 +841,7 @@ const char *v4l2_ctrl_get_name(u32 id)
->>>  	case V4L2_CID_MPEG_VIDEO_DECODER_SLICE_INTERFACE:	return "Decoder 
->>> Slice Interface";
->>>  	case V4L2_CID_MPEG_VIDEO_DECODER_MPEG4_DEBLOCK_FILTER:	return "MPEG4 
->>> Loop Filter Enable";
->>>  	case V4L2_CID_MPEG_VIDEO_CYCLIC_INTRA_REFRESH_MB:	return "Number of 
->>> Intra Refresh MBs";
->>> +	case V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_TYPE:		return "Intra Refresh 
->>> Type";
->>>  	case V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD:		return "Intra 
->>> Refresh Period";
->>>  	case V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE:		return "Frame Level Rate 
->>> Control Enable";
->>>  	case V4L2_CID_MPEG_VIDEO_MB_RC_ENABLE:			return "H264 MB Level Rate 
->>> Control";
->>> @@ -1360,6 +1368,7 @@ void v4l2_ctrl_fill(u32 id, const char **name, 
->>> enum v4l2_ctrl_type *type,
->>>  	case V4L2_CID_STATELESS_H264_DECODE_MODE:
->>>  	case V4L2_CID_STATELESS_H264_START_CODE:
->>>  	case V4L2_CID_CAMERA_ORIENTATION:
->>> +	case V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_TYPE:
->>>  		*type = V4L2_CTRL_TYPE_MENU;
->>>  		break;
->>>  	case V4L2_CID_LINK_FREQ:
->>> diff --git a/include/uapi/linux/v4l2-controls.h 
->>> b/include/uapi/linux/v4l2-controls.h
->>> index c8e0f84..9650b71 100644
->>> --- a/include/uapi/linux/v4l2-controls.h
->>> +++ b/include/uapi/linux/v4l2-controls.h
->>> @@ -443,6 +443,11 @@ enum v4l2_mpeg_video_multi_slice_mode {
->>>  #define V4L2_CID_MPEG_VIDEO_USE_LTR_FRAMES		(V4L2_CID_CODEC_BASE+234)
->>>  #define 
->>> V4L2_CID_MPEG_VIDEO_DEC_CONCEAL_COLOR		(V4L2_CID_CODEC_BASE+235)
->>>  #define 
->>> V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD	(V4L2_CID_CODEC_BASE+236)
->>> +#define 
->>> V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_TYPE		(V4L2_CID_CODEC_BASE+237)
->>> +enum v4l2_mpeg_video_intra_refresh_type {
->>> +	V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_RANDOM	= 0,
->>> +	V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_CYCLIC	= 1,
->>> +};
->>>
->>>  /* CIDs for the MPEG-2 Part 2 (H.262) codec */
->>>  #define V4L2_CID_MPEG_VIDEO_MPEG2_LEVEL			(V4L2_CID_CODEC_BASE+270)
->>
->> Regards,
->>
->> 	Hans
+  	ret = coresight_create_conns_sysfs_group(csdev);
+  	if (!ret)
+@@ -1652,16 +1661,15 @@ struct coresight_device 
+*coresight_register(struct coresight_desc *desc)
+  	if (!ret && cti_assoc_ops && cti_assoc_ops->add)
+  		cti_assoc_ops->add(csdev);
 
++out_unlock:
+  	mutex_unlock(&coresight_mutex);
+-	if (ret) {
++	/* Success */
++	if (!ret)
++		return csdev;
++
++	/* Unregister the device if needed */
++	if (registered)
+  		coresight_unregister(csdev);
+-		return ERR_PTR(ret);
+-	}
+-
+-	return csdev;
+-
+-err_free_csdev:
+-	kfree(csdev);
+  err_out:
+  	/* Cleanup the connection information */
+  	coresight_release_platform_data(NULL, desc->pdata);
+-- 
+2.35.1
