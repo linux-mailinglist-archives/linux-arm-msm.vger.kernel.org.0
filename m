@@ -2,67 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A98DF4D236B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 22:38:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E58854D23D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 23:03:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350460AbiCHVjl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Mar 2022 16:39:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59100 "EHLO
+        id S241360AbiCHWCh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Mar 2022 17:02:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350410AbiCHVjk (ORCPT
+        with ESMTP id S240425AbiCHWCh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Mar 2022 16:39:40 -0500
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E461A4A3F0
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Mar 2022 13:38:42 -0800 (PST)
-Received: by mail-pf1-x435.google.com with SMTP id z15so505077pfe.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Mar 2022 13:38:42 -0800 (PST)
+        Tue, 8 Mar 2022 17:02:37 -0500
+Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A6A656C04
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Mar 2022 14:01:40 -0800 (PST)
+Received: by mail-oo1-xc2a.google.com with SMTP id r41-20020a4a966c000000b0031bf85a4124so739296ooi.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Mar 2022 14:01:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=lin5Y8pF3h0JfcTJYxJlWCUsz7xHO5MQVqx+KQ1pPe0=;
-        b=Nl2mwGfNB4uAEP7nSP27iHZ+vcTK2mnzgyu6mfHRIot/6jRLLZBRhAAIKM7SX7JOHg
-         xCWQ4z4H5EDT2fBS/wIshVb+VG6agnNKHe0B9zpnfgrltyl0/EGImhsM8UMIrWnRhHaY
-         FNWHuypztgPBv/5P/AgSXMHddz25JMLYdD7Tw=
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=2YFUAlso81ScTmRR6MjXI+H2SiMZKyHCV5A1VZcVILo=;
+        b=XQEB9sfnrdlqXMY19fUuLkAAPuieF5u5eViUfU/EfxsR/rP8iGg5DeI/rZy/9pYxfM
+         0cHHnmrV3J+uyKKoCAbVWiR75nMXC+Pq+vi/PC9AGY8ywxmqnk05xoxNgX3xRjfPayEz
+         FEJcmxGn3d8q/qiRWE9vc8cNYLNmvqVJrUh04=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=lin5Y8pF3h0JfcTJYxJlWCUsz7xHO5MQVqx+KQ1pPe0=;
-        b=QnlsRgzUXR5tGtNHu5TDPHVu3Lkp+hsgaZGlaZlTyB9Jh7eOYd2QTmWAG0QR57A5Vl
-         NsJXq80HhFLGnUostdLjbaL4AYvsij9mfq8HiKUzpMBgc5N0Rl9ZFU141rzBV04PltFa
-         /awu6pJ71jJzLNluvM7X9MbADE/Noiw2Jgn5AtUqUECNCdnlnwxunQYKdDwCledWkz7b
-         QITzkDmNU4seuUH60lP7L+UFO8z0EUPWqZVnS/xGbgAvYWIOvnWkxQYblwKjCTV7uluA
-         /TJ4HDsHQZtUf2p+N/LbcJbzV0XIzOCYUbLiSsMfylI89iYqn6vd10W2T8v1daNqlo5X
-         6ANQ==
-X-Gm-Message-State: AOAM531PwlGjEuKFaudsH08TN1u9QglOlysFDOC+r+2cvwU13nGmSpaB
-        kgFAFYUexbS1jLeFN27x24L/hA==
-X-Google-Smtp-Source: ABdhPJzrgLQf/DqUeQXsVR8B5HrfPYq3WyesRBpFzpPMlLrv7WRweCT0FnTFBhAHd3828TyujBP9kw==
-X-Received: by 2002:a63:191e:0:b0:37f:f33c:2d43 with SMTP id z30-20020a63191e000000b0037ff33c2d43mr15535537pgl.43.1646775522474;
-        Tue, 08 Mar 2022 13:38:42 -0800 (PST)
-Received: from localhost ([2620:15c:202:201:1278:2de3:d283:6ca])
-        by smtp.gmail.com with UTF8SMTPSA id w204-20020a627bd5000000b004f6f70163e8sm20901pfc.31.2022.03.08.13.38.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Mar 2022 13:38:42 -0800 (PST)
-Date:   Tue, 8 Mar 2022 13:38:40 -0800
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Delete herobrine-r0
-Message-ID: <YifM4KCXvaYLVc59@google.com>
-References: <20220308125044.1.I3e4a1a9c102d194698b68661e69efebafec8af1c@changeid>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=2YFUAlso81ScTmRR6MjXI+H2SiMZKyHCV5A1VZcVILo=;
+        b=PwssF2TRlK9DfjtyU0H3+OH13vMXpo+upSZmuNioxW8nqQD05l2GHryHIpznOqjvg/
+         D0WK/JpjIMlm9a3DCZ8kRa4sEZczyXVZs3RC6fhxiOie73xXqXhBlIWpagWSYPEsxkX4
+         K5rbPfEDtn3Gg1ucCgJKDNGGG02s6oFPse3kd17UjnmOXYMQGjrCWH7VYYK3ntxkM11U
+         blj87CMqFa7lQJ2ew5VutdAyIpLCyZPjA+6++tey/masjt8VO9/Y+Cc/d/oM/m/XLIoh
+         4NfhacTVJBAgtUdrHe2Rv6GuMHg+5/MuSBBuvVhImHFC9y6+LbkicjWKvdoDMBQU5kyn
+         b5oQ==
+X-Gm-Message-State: AOAM531LhWW0471b24/zxCbqr+0bRfS96i7h30/8q+DmT+UhmrEOcp/H
+        OWuM5HJYtTrCO/Fa0dhMJdGpFXR05x4Da7v4b4MiUg==
+X-Google-Smtp-Source: ABdhPJwLudmQfT9/iCX0/jKfcxRx5VYbHOx1N9bswSPv/wawtVfhbRhxFMl+K2HGKpJpROtcs5YNMC/0F/P7AtNoUaY=
+X-Received: by 2002:a05:6870:c0cb:b0:da:2bcc:aa09 with SMTP id
+ e11-20020a056870c0cb00b000da2bccaa09mr3736377oad.63.1646776899497; Tue, 08
+ Mar 2022 14:01:39 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 8 Mar 2022 14:01:39 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20220308125044.1.I3e4a1a9c102d194698b68661e69efebafec8af1c@changeid>
+In-Reply-To: <1646316128-21082-2-git-send-email-quic_srivasam@quicinc.com>
+References: <1646316128-21082-1-git-send-email-quic_srivasam@quicinc.com> <1646316128-21082-2-git-send-email-quic_srivasam@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Tue, 8 Mar 2022 14:01:38 -0800
+Message-ID: <CAE-0n51FqW1B9mS=W8hSGR6MdowFjJ0wRnzaqYK8+QBJLyzfxg@mail.gmail.com>
+Subject: Re: [PATCH v7 1/2] soundwire: qcom: Add compatible name for v1.6.0
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        agross@kernel.org, alsa-devel@alsa-project.org,
+        bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
+        broonie@kernel.org, devicetree@vger.kernel.org,
+        judyhsiao@chromium.org, lgirdwood@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        perex@perex.cz, pierre-louis.bossart@linux.intel.com,
+        quic_plai@quicinc.com, robh+dt@kernel.org, rohitkr@codeaurora.org,
+        sanyog.r.kale@intel.com, srinivas.kandagatla@linaro.org,
+        tiwai@suse.com, vkoul@kernel.org, yung-chuan.liao@linux.intel.com
+Cc:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,13 +74,13 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 08, 2022 at 12:52:35PM -0800, Douglas Anderson wrote:
-> As talked about in commit 61a6262f95e0 ("arm64: dts: qcom: sc7280:
-> Move herobrine-r0 to its own dts"), herobrine evolved pretty
-> significantly after -r0 and newer revisions are pretty
-> different. Nobody needs the old boards to keep working, so let's
-> delete to avoid the maintenance burden.
-> 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Quoting Srinivasa Rao Mandadapu (2022-03-03 06:02:07)
+> Update compatible string and master data information in soundwire driver
+> to support v1.6.0 in lpass sc7280 based platform.
+>
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> ---
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
