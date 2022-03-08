@@ -2,47 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 604464D13CF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 10:49:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 422E14D1434
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 11:06:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345480AbiCHJui (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Mar 2022 04:50:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58578 "EHLO
+        id S1345610AbiCHKHi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Mar 2022 05:07:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345484AbiCHJug (ORCPT
+        with ESMTP id S1345611AbiCHKHh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Mar 2022 04:50:36 -0500
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E50B7344E5;
-        Tue,  8 Mar 2022 01:49:39 -0800 (PST)
+        Tue, 8 Mar 2022 05:07:37 -0500
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A5D640907;
+        Tue,  8 Mar 2022 02:06:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1646732979; x=1678268979;
+  t=1646734001; x=1678270001;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=qS7NRU3y0mPGTQHX2B4ljPRVEixQqYfSMWZPORyjxOw=;
-  b=QsSCtZBlutyNoJuZAGP1SOYlnOZmJZ8j3XYRMVTHq/5+NeVh+YaYsZDA
-   HMKnvZtkBepxZ/aAEfkuBRB9lXf3BpEa2Jq9Q5455LmwFcmRPoYsnMfjK
-   w6cy9yIOhKSOqMyRBxdNvwNMiosDsiAkCL4SbIqx27SGorq6VATUm6oY5
-   fqvqoBb1kZgz9CKxR2QxJOkiFLbl257Ux/uggTKQCtVFw9Q4C8iit1BTb
-   AgXBsH3u7xKefJjLXfy/DV+ptOHGxLRDoTK1IamVbpN+y0h6Dh1W27j2L
-   IpbVnLVSdgtH3biXJNHhgfqhrRfFhpidvkMhBmiHbuzjUitxwQ8Qp4Ptl
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10279"; a="234597253"
+  bh=gQW1oAeon+57DU8wGcNd1CFDpjSEBBQeWTKSocyD9Ts=;
+  b=Sm6eyhpQJ4e0YrKm+FoPfTxdKWlI5cI4zIXP3d83QAWbN4lKOKs2wtoH
+   u1ALk4Pzk1wGTwGGb19nI3+UuZoSKkRktjZfraOx7WLYUwIIdgEf7yc0V
+   sZcbCDGUST4ur1g6Znln+R9JJcPigrOnvgCLHPMaRAgs/kothJD12SL4B
+   Ml0CW3F4nsUSh+3fFBjH99RxgPDEspPeF0BZ1/RCTE71tOdEh53fYkvgd
+   xz/VlzTgLLkSyw40mAF9VAxDqf129DOUJthMQEYNhZZPm1y59F9U9AwQa
+   h/PGnoAZv7AezD9cKfhVoY9BG/kGxogddutW5WutbliPW+dfkORjhVMf0
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10279"; a="254374481"
 X-IronPort-AV: E=Sophos;i="5.90,164,1643702400"; 
-   d="scan'208";a="234597253"
+   d="scan'208";a="254374481"
 Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Mar 2022 01:49:39 -0800
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Mar 2022 02:06:34 -0800
 X-IronPort-AV: E=Sophos;i="5.90,164,1643702400"; 
-   d="scan'208";a="553553451"
+   d="scan'208";a="553558552"
 Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.252.46.193])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Mar 2022 01:49:35 -0800
-Message-ID: <29a1a50c-bb65-25a4-b09e-7a869490231e@intel.com>
-Date:   Tue, 8 Mar 2022 11:49:30 +0200
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Mar 2022 02:06:30 -0800
+Message-ID: <01515ee6-b312-7f81-43f0-e72a0d290046@intel.com>
+Date:   Tue, 8 Mar 2022 12:06:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Firefox/91.0 Thunderbird/91.5.0
-Subject: Re: [PATCH V4 3/7] mmc: debugfs: Add debug fs entry for mmc driver
+Subject: Re: [PATCH V4 6/7] mmc: sdhci: Set error state for mmc driver
 Content-Language: en-US
 To:     Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>,
         asutoshd@quicinc.com, ulf.hansson@linaro.org, agross@kernel.org,
@@ -51,19 +51,21 @@ To:     Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>,
 Cc:     quic_vbadigan@quicinc.com, quic_rampraka@quicinc.com,
         quic_pragalla@quicinc.com, quic_sartgarg@quicinc.com,
         quic_nitirawa@quicinc.com, quic_sayalil@quicinc.com,
-        "Bao D . Nguyen" <quic_nguyenb@quicinc.com>
+        Sayali Lokhande <sayalil@codeaurora.org>,
+        "Bao D . Nguyen" <nguyenb@codeaurora.org>
 References: <1646226227-32429-1-git-send-email-quic_c_sbhanu@quicinc.com>
- <1646226227-32429-4-git-send-email-quic_c_sbhanu@quicinc.com>
+ <1646226227-32429-7-git-send-email-quic_c_sbhanu@quicinc.com>
 From:   Adrian Hunter <adrian.hunter@intel.com>
 Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
  Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-In-Reply-To: <1646226227-32429-4-git-send-email-quic_c_sbhanu@quicinc.com>
+In-Reply-To: <1646226227-32429-7-git-send-email-quic_c_sbhanu@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        RCVD_IN_DNSWL_MED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -71,98 +73,125 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 2.3.2022 15.03, Shaik Sajida Bhanu wrote:
-> Add debug fs entry to query eMMC and SD card errors statistics
+> Set error state if any errors observed in eMMC and SD card driver level.
 > 
-> Signed-off-by: Liangliang Lu <quic_luliang@quicinc.com>
-> Signed-off-by: Sayali Lokhande <quic_sayalil@quicinc.com>
-> Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+> Signed-off-by: Liangliang Lu <luliang@codeaurora.org>
+> Signed-off-by: Sayali Lokhande <sayalil@codeaurora.org>
+> Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
+> Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
 > Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
 > ---
->  drivers/mmc/core/debugfs.c | 60 ++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 60 insertions(+)
+>  drivers/mmc/host/sdhci.c | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
 > 
-> diff --git a/drivers/mmc/core/debugfs.c b/drivers/mmc/core/debugfs.c
-> index 3fdbc80..db0988c 100644
-> --- a/drivers/mmc/core/debugfs.c
-> +++ b/drivers/mmc/core/debugfs.c
-> @@ -223,6 +223,63 @@ static int mmc_clock_opt_set(void *data, u64 val)
->  DEFINE_DEBUGFS_ATTRIBUTE(mmc_clock_fops, mmc_clock_opt_get, mmc_clock_opt_set,
->  	"%llu\n");
+> diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
+> index 741fb06..4ba3797 100644
+> --- a/drivers/mmc/host/sdhci.c
+> +++ b/drivers/mmc/host/sdhci.c
+> @@ -224,6 +224,8 @@ void sdhci_reset(struct sdhci_host *host, u8 mask)
+>  		if (timedout) {
+>  			pr_err("%s: Reset 0x%x never completed.\n",
+>  				mmc_hostname(host->mmc), (int)mask);
+> +			if (host->mmc && !host->mmc->err_state)
+> +				mmc_debugfs_err_stats_enable(host->mmc);
+
+I really do not understand why this cannot be another err_stats entry
+such as MMC_ERR_DRIVER and then as below?
+
+			sdhci_err_stats_inc(host, DRIVER);
+
+
+>  			sdhci_dumpregs(host);
+>  			return;
+>  		}
+> @@ -1716,6 +1718,8 @@ static bool sdhci_send_command_retry(struct sdhci_host *host,
+>  		if (!timeout--) {
+>  			pr_err("%s: Controller never released inhibit bit(s).\n",
+>  			       mmc_hostname(host->mmc));
+> +			if (host->mmc && !host->mmc->err_state)
+> +				mmc_debugfs_err_stats_enable(host->mmc);
+>  			sdhci_dumpregs(host);
+>  			cmd->error = -EIO;
+>  			return false;
+> @@ -1965,6 +1969,8 @@ void sdhci_enable_clk(struct sdhci_host *host, u16 clk)
+>  		if (timedout) {
+>  			pr_err("%s: Internal clock never stabilised.\n",
+>  			       mmc_hostname(host->mmc));
+> +			if (host->mmc && !host->mmc->err_state)
+> +				mmc_debugfs_err_stats_enable(host->mmc);
+>  			sdhci_dumpregs(host);
+>  			return;
+>  		}
+> @@ -1987,6 +1993,8 @@ void sdhci_enable_clk(struct sdhci_host *host, u16 clk)
+>  			if (timedout) {
+>  				pr_err("%s: PLL clock never stabilised.\n",
+>  				       mmc_hostname(host->mmc));
+> +				if (host->mmc && !host->mmc->err_state)
+> +					mmc_debugfs_err_stats_enable(host->mmc);
+>  				sdhci_dumpregs(host);
+>  				return;
+>  			}
+> @@ -3162,6 +3170,8 @@ static void sdhci_timeout_timer(struct timer_list *t)
+>  		mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_REQ_TIMEOUT);
+>  		pr_err("%s: Timeout waiting for hardware cmd interrupt.\n",
+>  		       mmc_hostname(host->mmc));
+> +		if (host->mmc && !host->mmc->err_state)
+> +			mmc_debugfs_err_stats_enable(host->mmc);
+>  		sdhci_dumpregs(host);
 >  
-> +static int mmc_err_stats_show(struct seq_file *file, void *data)
-> +{
-> +	struct mmc_host *host = (struct mmc_host *)file->private;
-> +	const char *desc[MMC_ERR_MAX] = {
-> +		[MMC_ERR_CMD_TIMEOUT] = "Command Timeout Occurred",
-> +		[MMC_ERR_CMD_CRC] = "Command CRC Errors Occurred",
-> +		[MMC_ERR_DAT_TIMEOUT] = "Data Timeout Occurred",
-> +		[MMC_ERR_DAT_CRC] = "Data CRC Errors Occurred",
-> +		[MMC_ERR_AUTO_CMD] = "Auto-Cmd Error Occurred",
-> +		[MMC_ERR_ADMA] = "ADMA Error Occurred",
-> +		[MMC_ERR_TUNING] = "Tuning Error Occurred",
-> +		[MMC_ERR_CMDQ_RED] = "CMDQ RED Errors",
-> +		[MMC_ERR_CMDQ_GCE] = "CMDQ GCE Errors",
-> +		[MMC_ERR_CMDQ_ICCE] = "CMDQ ICCE Errors",
-> +		[MMC_ERR_REQ_TIMEOUT] = "Request Timedout",
-> +		[MMC_ERR_CMDQ_REQ_TIMEOUT] = "CMDQ Request Timedout",
-> +		[MMC_ERR_ICE_CFG] = "ICE Config Errors",
-> +	};
-> +	int i;
-> +
-> +	if (!host)
-> +		return -EINVAL;
-
-Do not need to check host here
-
-> +
-> +	for (i = 0; i < MMC_ERR_MAX; i++) {
-> +		if (desc[i])
-> +			seq_printf(file, "# %s:\t %d\n",
-> +					desc[i], host->err_stats[i]);
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int mmc_err_stats_open(struct inode *inode, struct file *file)
-> +{
-> +	return single_open(file, mmc_err_stats_show, inode->i_private);
-> +}
-> +
-> +static ssize_t mmc_err_stats_write(struct file *filp, const char __user *ubuf,
-> +				   size_t cnt, loff_t *ppos)
-> +{
-> +	struct mmc_host *host = filp->f_mapping->host->i_private;
-> +
-> +	if (!host)
-> +		return -EINVAL;
-
-Do not need to check host here
-
-> +
-> +	pr_debug("%s: Resetting MMC error statistics\n", __func__);
-> +	memset(host->err_stats, 0, sizeof(host->err_stats));
-> +
-> +	return cnt;
-> +}
-> +
-> +static const struct file_operations mmc_err_stats_fops = {
-> +	.open	= mmc_err_stats_open,
-> +	.read	= seq_read,
-> +	.write	= mmc_err_stats_write,
-> +};
-> +
->  void mmc_add_host_debugfs(struct mmc_host *host)
->  {
->  	struct dentry *root;
-> @@ -236,6 +293,9 @@ void mmc_add_host_debugfs(struct mmc_host *host)
->  	debugfs_create_file_unsafe("clock", S_IRUSR | S_IWUSR, root, host,
->  				   &mmc_clock_fops);
+>  		host->cmd->error = -ETIMEDOUT;
+> @@ -3185,6 +3195,8 @@ static void sdhci_timeout_data_timer(struct timer_list *t)
+>  		mmc_debugfs_err_stats_inc(host->mmc, MMC_ERR_REQ_TIMEOUT);
+>  		pr_err("%s: Timeout waiting for hardware interrupt.\n",
+>  		       mmc_hostname(host->mmc));
+> +		if (host->mmc && !host->mmc->err_state)
+> +			mmc_debugfs_err_stats_enable(host->mmc);
+>  		sdhci_dumpregs(host);
 >  
-> +	debugfs_create_file("err_stats", 0600, root, host,
-> +		&mmc_err_stats_fops);
-> +
->  #ifdef CONFIG_FAIL_MMC_REQUEST
->  	if (fail_request)
->  		setup_fault_attr(&fail_default_attr, fail_request);
+>  		if (host->data) {
+> @@ -3236,6 +3248,8 @@ static void sdhci_cmd_irq(struct sdhci_host *host, u32 intmask, u32 *intmask_p)
+>  			return;
+>  		pr_err("%s: Got command interrupt 0x%08x even though no command operation was in progress.\n",
+>  		       mmc_hostname(host->mmc), (unsigned)intmask);
+> +		if (host->mmc && !host->mmc->err_state)
+> +			mmc_debugfs_err_stats_enable(host->mmc);
+>  		sdhci_dumpregs(host);
+>  		return;
+>  	}
+> @@ -3289,6 +3303,8 @@ static void sdhci_adma_show_error(struct sdhci_host *host)
+>  	void *desc = host->adma_table;
+>  	dma_addr_t dma = host->adma_addr;
+>  
+> +	if (host->mmc && !host->mmc->err_state)
+> +		mmc_debugfs_err_stats_enable(host->mmc);
+>  	sdhci_dumpregs(host);
+>  
+>  	while (true) {
+> @@ -3378,6 +3394,8 @@ static void sdhci_data_irq(struct sdhci_host *host, u32 intmask)
+>  
+>  		pr_err("%s: Got data interrupt 0x%08x even though no data operation was in progress.\n",
+>  		       mmc_hostname(host->mmc), (unsigned)intmask);
+> +		if (host->mmc && !host->mmc->err_state)
+> +			mmc_debugfs_err_stats_enable(host->mmc);
+>  		sdhci_dumpregs(host);
+>  
+>  		return;
+> @@ -3599,6 +3617,8 @@ static irqreturn_t sdhci_irq(int irq, void *dev_id)
+>  	if (unexpected) {
+>  		pr_err("%s: Unexpected interrupt 0x%08x.\n",
+>  			   mmc_hostname(host->mmc), unexpected);
+> +		if (host->mmc && !host->mmc->err_state)
+> +			mmc_debugfs_err_stats_enable(host->mmc);
+>  		sdhci_dumpregs(host);
+>  	}
+>  
+> @@ -3962,6 +3982,8 @@ bool sdhci_cqe_irq(struct sdhci_host *host, u32 intmask, int *cmd_error,
+>  		sdhci_writel(host, intmask, SDHCI_INT_STATUS);
+>  		pr_err("%s: CQE: Unexpected interrupt 0x%08x.\n",
+>  		       mmc_hostname(host->mmc), intmask);
+> +		if (host->mmc && !host->mmc->err_state)
+> +			mmc_debugfs_err_stats_enable(host->mmc);
+>  		sdhci_dumpregs(host);
+>  	}
+>  
 
