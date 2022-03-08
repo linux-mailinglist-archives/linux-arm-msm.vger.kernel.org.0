@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C32D64D2283
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 21:25:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 661B04D2288
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 21:26:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345619AbiCHU0v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Mar 2022 15:26:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46206 "EHLO
+        id S1349931AbiCHU11 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Mar 2022 15:27:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242196AbiCHU0u (ORCPT
+        with ESMTP id S242196AbiCHU10 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Mar 2022 15:26:50 -0500
-Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A5FB50E1D
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Mar 2022 12:25:53 -0800 (PST)
-Received: by mail-oo1-xc36.google.com with SMTP id 6-20020a4a0906000000b0031d7eb98d31so342244ooa.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Mar 2022 12:25:53 -0800 (PST)
+        Tue, 8 Mar 2022 15:27:26 -0500
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4550E50E1D
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Mar 2022 12:26:29 -0800 (PST)
+Received: by mail-oi1-x230.google.com with SMTP id q189so467055oia.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Mar 2022 12:26:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=2UXmQ50P7tN4nCifSsYLR5v4PC0QeUfNpesrP6Nz2bo=;
-        b=UnBlg7FjIvKHdIM/8qFzs/2KBWiZLm7f9JvWz0IKkewxQ1/Zhr7+PheRLI05qkcc+3
-         pASI0vapPEsrO9tpxNGtZ5cuekPc76PMGnIKbr9LMSAWUE9pakBEXWOFHi6+roOSpuUa
-         QLT1GBBANS6oJ3m42NJnfwcF0Lc38etOsDvJY=
+        bh=8SYSMYpMF1JLUrGJB3nmVLCJBpd8wl7WznHJ+HFs9K4=;
+        b=koKeM8A9VVDPFv1jvcqwyWztjsWRaPM9RHLQWPbtyPj2BvTe7AJnmIlwxvcZ0OY/Hj
+         yY7V7M4fq6YS/XvNRBGaJeKEohKUlddhSPQYaJ5+CEvtxiGZ9LNaDSO1/eApKyGMOKmk
+         Xg2bU2rviiONnXHI+phTVUVWUXL7J6EZGY+WY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=2UXmQ50P7tN4nCifSsYLR5v4PC0QeUfNpesrP6Nz2bo=;
-        b=o1euIn4EC35NYvUo23Spn+IxrfsSu2W6SxQqRypnrUj5VSYW0o2fU9xT5RZokYIcnx
-         HW3q97EzDkMiEyvByqwutkwcyQuIfpVceQfEQNP3TbP21ldDOwDWwEz4jc/q+I/pwrUW
-         taLFnxL5kbmTk88soS9CDWv3jKPqvj2mH002F4C21ETM+z3qqXsieOoq1FeM+O9FSPSN
-         V+T8bF/sKMVy04WHghWjn0B3IsqdrD7scWBDO8n0C8xmQFybIPTRMlDa4hJPFzvfo0QK
-         ZBb3dFDjASIZuGoXGPQwpq/+qniX4uVsw5iOjzRbAHaNmTPlWmFKufWAlCzDOIaplPHS
-         hoUA==
-X-Gm-Message-State: AOAM531bDOLQpAfBZrAvBxMdf5KwYClv3lRwSG4Rsiw/m4wk7nRp3uSq
-        L6f/CiMQwpco0mfnRjPcL6JqljJtvlStH0kMm68m1A==
-X-Google-Smtp-Source: ABdhPJznHjaBW3HlsoRzKsRdv2O2Pu9HzfsfCXAIfzhdmW0Ezry2PXhAde/tG2cfzvENxhTq1veN8mnHh0KzqzzWoH0=
-X-Received: by 2002:a05:6870:d250:b0:da:b3f:3211 with SMTP id
- h16-20020a056870d25000b000da0b3f3211mr3469915oac.193.1646771152990; Tue, 08
- Mar 2022 12:25:52 -0800 (PST)
+        bh=8SYSMYpMF1JLUrGJB3nmVLCJBpd8wl7WznHJ+HFs9K4=;
+        b=ukyIL5+dMQkkWE/5h3u4edFVvuqz+ebeFr1MkoC5KjE6IjpsEU7uV8roI6xCKivrf3
+         myXDhtQ4Mm7it7a+nmi/sSGR6xl37Cy8sCAMzxb+FukA7JNUL2sMAT5MC6IgIDeTgQ1E
+         OuNwF1MCk8izt/ZKAXtv9RlRlFin+3J9QaqyGUSnm4CvbNCpvc7GpHrzrugQAByphglK
+         FsT+hWNlz+668r027k40dmT1HsvhtEpwGOiR4PMxdqM6Y2Y5aYFDccROlVv3rvPDhPzy
+         Ly/+tPa1EU7n+CCP3CJXzmrYxW/k0RYNyUHrK9wVdquTJkbOJHyB5xBfJjj0I5jCJqM3
+         T5QA==
+X-Gm-Message-State: AOAM530CVI+mr33a1x/PVovaGlbjW+ljQBB637NVhhHTryzyDZqsMUJH
+        Ejvs9IZxz2qI9ZB18LiHIL7ffPSHsv5tHhgW/zC7Ug==
+X-Google-Smtp-Source: ABdhPJxLhnbKfyfH6BsLllQaul5SJ9MYV0lbMZKb+ak0yvA5zeaYuVULnVx7opW3jo+sQRk8z4+n9XteWweQvTP69oo=
+X-Received: by 2002:a05:6808:1391:b0:2d9:a01a:4b9a with SMTP id
+ c17-20020a056808139100b002d9a01a4b9amr3785266oiw.193.1646771188650; Tue, 08
+ Mar 2022 12:26:28 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 8 Mar 2022 12:25:52 -0800
+ HTTPREST; Tue, 8 Mar 2022 12:26:28 -0800
 MIME-Version: 1.0
-In-Reply-To: <20220304032106.2866043-2-dmitry.baryshkov@linaro.org>
-References: <20220304032106.2866043-1-dmitry.baryshkov@linaro.org> <20220304032106.2866043-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220304032106.2866043-3-dmitry.baryshkov@linaro.org>
+References: <20220304032106.2866043-1-dmitry.baryshkov@linaro.org> <20220304032106.2866043-3-dmitry.baryshkov@linaro.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Tue, 8 Mar 2022 12:25:52 -0800
-Message-ID: <CAE-0n52wgr-EENZoNKTu5cAur5=f7spxu2EYFUkdKsFF_=q0hQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/5] drm/msm: unify MDSS drivers
+Date:   Tue, 8 Mar 2022 12:26:28 -0800
+Message-ID: <CAE-0n53X2QzWw5mDqsw-Z79WuK75874B9pZtw2vQoC5hJMXj_Q@mail.gmail.com>
+Subject: Re: [PATCH v3 2/5] drm/msm: remove extra indirection for msm_mdss
 To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -70,10 +70,10 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-03-03 19:21:02)
-> MDP5 and DPU1 both provide the driver handling the MDSS region, which
-> handles the irq domain and (incase of DPU1) adds some init for the UBWC
-> controller. Unify those two pieces of code into a common driver.
+Quoting Dmitry Baryshkov (2022-03-03 19:21:03)
+> Since now there is just one mdss subdriver, drop all the indirection,
+> make msm_mdss struct completely opaque (and defined inside msm_mdss.c)
+> and call mdss functions directly.
 >
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
