@@ -2,138 +2,236 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3775A4D186A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 13:55:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E50E14D1947
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 14:36:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241323AbiCHM41 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Mar 2022 07:56:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60416 "EHLO
+        id S245229AbiCHNhd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Mar 2022 08:37:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346760AbiCHM4Y (ORCPT
+        with ESMTP id S1347141AbiCHNhc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Mar 2022 07:56:24 -0500
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90C284757A;
-        Tue,  8 Mar 2022 04:55:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1646744127; x=1678280127;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=NYrXls5pr28/YqLnwHsHfZyvhY0KcSAOepllwzDc9VE=;
-  b=Sn5ROj6GppYD5aF0NnCCPmmA59/EyD1skTfsx+PAqMG+x6xQSrNpr4OJ
-   vPgk5agL/Sj54wdBPSm8rXf9VssVDmuKgjC7MqT2korH8ACy/t+HWFSwh
-   ctrncaeNQg6O70H2ejJ1qyh7n2Wad4Wvt9xFnH3hb5KdJTB0N2+ylqzrk
-   xyFENNwbKKNZnS5+wb9aYuMQtkEfFuGPosaouXJZyokjrBn7J43FkZqql
-   14SKo4FrIs9yvaJJXGD4TyeWfiFUZmsgSLcoRuVPkv3eNK1Ly1YSROayz
-   0/vAkMekJPeewcttNUZYcz4U6TDc9N579RPBXujyVyIO8cEmiUtqKmcQy
-   g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10279"; a="317904268"
-X-IronPort-AV: E=Sophos;i="5.90,164,1643702400"; 
-   d="scan'208";a="317904268"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Mar 2022 04:55:26 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,164,1643702400"; 
-   d="scan'208";a="610995763"
-Received: from lkp-server02.sh.intel.com (HELO 89b41b6ae01c) ([10.239.97.151])
-  by fmsmga004.fm.intel.com with ESMTP; 08 Mar 2022 04:55:22 -0800
-Received: from kbuild by 89b41b6ae01c with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1nRZN3-0001Ou-Qn; Tue, 08 Mar 2022 12:55:21 +0000
-Date:   Tue, 8 Mar 2022 20:54:44 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
-        Jonathan Marek <jonathan@marek.ca>,
-        David Airlie <airlied@linux.ie>, linux-kernel@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Wang Qing <wangqing@vivo.com>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Sean Paul <sean@poorly.run>, Dan Carpenter <error27@gmail.com>
-Subject: Re: [PATCH v1 02/10] drm/msm/a6xx: Send NMI to gmu when it is hung
-Message-ID: <202203082018.IcI00Nvs-lkp@intel.com>
-References: <20220302225551.v1.2.Icda301aa85f1e4367601fa9b830b3365d377e669@changeid>
+        Tue, 8 Mar 2022 08:37:32 -0500
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id CF6CF496A6;
+        Tue,  8 Mar 2022 05:36:34 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 83721139F;
+        Tue,  8 Mar 2022 05:36:34 -0800 (PST)
+Received: from [10.57.22.11] (unknown [10.57.22.11])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 62C083FA58;
+        Tue,  8 Mar 2022 05:36:32 -0800 (PST)
+Message-ID: <ea6219df-0a10-8e8d-4848-a28704a9f98e@arm.com>
+Date:   Tue, 8 Mar 2022 13:36:30 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220302225551.v1.2.Icda301aa85f1e4367601fa9b830b3365d377e669@changeid>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.6.1
+Subject: Re: [PATCH v2] coresight: core: Fix coresight device probe failure
+ issue
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc:     coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>
+References: <20220304082350.30069-1-quic_jinlmao@quicinc.com>
+ <c77c93bb-f863-47c8-0ba0-3fc63530a9e1@arm.com>
+In-Reply-To: <c77c93bb-f863-47c8-0ba0-3fc63530a9e1@arm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Akhil,
+On 08/03/2022 11:56, Suzuki K Poulose wrote:
+> Hi Jinlong
+> 
+> On 04/03/2022 08:23, Mao Jinlong wrote:
+>> It is possibe that probe failure issue happens when the device
+>> and its child_device's probe happens at the same time.
+>> In coresight_make_links, has_conns_grp is true for parent, but
+>> has_conns_grp is false for child device as has_conns_grp is set
+>> to true in coresight_create_conns_sysfs_group. The probe of parent
+>> device will fail at this condition. Add has_conns_grp check for
+>> child device before make the links and make the process from
+>> device_register to connection_create be atomic to avoid this
+>> probe failure issue.
+>>
+>> Suggested-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+>> Suggested-by: Mike Leach <mike.leach@linaro.org>
+>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>> ---
+>>   drivers/hwtracing/coresight/coresight-core.c | 12 ++++++------
+>>   1 file changed, 6 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/drivers/hwtracing/coresight/coresight-core.c 
+>> b/drivers/hwtracing/coresight/coresight-core.c
+>> index 88653d1c06a4..b3e3bc59c09b 100644
+>> --- a/drivers/hwtracing/coresight/coresight-core.c
+>> +++ b/drivers/hwtracing/coresight/coresight-core.c
+>> @@ -1382,7 +1382,7 @@ static int coresight_fixup_device_conns(struct 
+>> coresight_device *csdev)
+>>               continue;
+>>           conn->child_dev =
+>>               coresight_find_csdev_by_fwnode(conn->child_fwnode);
+>> -        if (conn->child_dev) {
+>> +        if (conn->child_dev && conn->child_dev->has_conns_grp) {
+>>               ret = coresight_make_links(csdev, conn,
+>>                              conn->child_dev);
+>>               if (ret)
+>> @@ -1594,7 +1594,8 @@ struct coresight_device 
+>> *coresight_register(struct coresight_desc *desc)
+>>       refcnts = kcalloc(nr_refcnts, sizeof(*refcnts), GFP_KERNEL);
+>>       if (!refcnts) {
+>>           ret = -ENOMEM;
+>> -        goto err_free_csdev;
+>> +        kfree(csdev);
+>> +        goto err_out;
+>>       }
+>>       csdev->refcnt = refcnts;
+>> @@ -1619,8 +1620,10 @@ struct coresight_device 
+>> *coresight_register(struct coresight_desc *desc)
+>>       csdev->dev.fwnode = fwnode_handle_get(dev_fwnode(desc->dev));
+>>       dev_set_name(&csdev->dev, "%s", desc->name);
+>> +    mutex_lock(&coresight_mutex);
+>>       ret = device_register(&csdev->dev);
+>>       if (ret) {
+>> +        mutex_unlock(&coresight_mutex);
+>>           put_device(&csdev->dev);
+>>           /*
+>>            * All resources are free'd explicitly via
+>> @@ -1634,6 +1637,7 @@ struct coresight_device 
+>> *coresight_register(struct coresight_desc *desc)
+>>           ret = etm_perf_add_symlink_sink(csdev);
+>>           if (ret) {
+>> +            mutex_unlock(&coresight_mutex);
+>>               device_unregister(&csdev->dev);
+>>               /*
+>>                * As with the above, all resources are free'd
+>> @@ -1645,8 +1649,6 @@ struct coresight_device 
+>> *coresight_register(struct coresight_desc *desc)
+>>           }
+>>       }
+>> -    mutex_lock(&coresight_mutex);
+>> -
+>>       ret = coresight_create_conns_sysfs_group(csdev);
+>>       if (!ret)
+>>           ret = coresight_fixup_device_conns(csdev);
+>> @@ -1663,8 +1665,6 @@ struct coresight_device 
+>> *coresight_register(struct coresight_desc *desc)
+>>       return csdev;
+>> -err_free_csdev:
+>> -    kfree(csdev);
+>>   err_out:
+>>       /* Cleanup the connection information */
+>>       coresight_release_platform_data(NULL, desc->pdata);
+> 
+> Could we consolidate the unlock sequence to a single point with 
+> something like this (untested):
+> 
+> 
+> diff --git a/drivers/hwtracing/coresight/coresight-core.c 
+> b/drivers/hwtracing/coresight/coresight-core.c
+> index af00dca8d1ac..198ee140c6e6 100644
+> --- a/drivers/hwtracing/coresight/coresight-core.c
+> +++ b/drivers/hwtracing/coresight/coresight-core.c
+> @@ -1571,6 +1571,7 @@ struct coresight_device *coresight_register(struct 
+> coresight_desc *desc)
+>       int nr_refcnts = 1;
+>       atomic_t *refcnts = NULL;
+>       struct coresight_device *csdev;
+> +    bool registered = false;
+> 
+>       csdev = kzalloc(sizeof(*csdev), GFP_KERNEL);
+>       if (!csdev) {
+> @@ -1591,7 +1592,8 @@ struct coresight_device *coresight_register(struct 
+> coresight_desc *desc)
+>       refcnts = kcalloc(nr_refcnts, sizeof(*refcnts), GFP_KERNEL);
+>       if (!refcnts) {
+>           ret = -ENOMEM;
+> -        goto err_free_csdev;
+> +        kfree(csdev);
+> +        goto err_out;
+>       }
+> 
+>       csdev->refcnt = refcnts;
+> @@ -1616,6 +1618,13 @@ struct coresight_device 
+> *coresight_register(struct coresight_desc *desc)
+>       csdev->dev.fwnode = fwnode_handle_get(dev_fwnode(desc->dev));
+>       dev_set_name(&csdev->dev, "%s", desc->name);
+> 
+> +    /*
+> +     * Make sure the device registration and the connection fixup
+> +     * are synchronised, so that we don't see uninitialised devices
+> +     * on the coresight bus while trying to resolve the connections.
+> +     */
+> +    mutex_lock(&coresight_mutex);
+> +
+>       ret = device_register(&csdev->dev);
+>       if (ret) {
+>           put_device(&csdev->dev);
+> @@ -1623,7 +1632,7 @@ struct coresight_device *coresight_register(struct 
+> coresight_desc *desc)
+>            * All resources are free'd explicitly via
+>            * coresight_device_release(), triggered from put_device().
+>            */
+> -        goto err_out;
+> +        goto out_unlock;
+>       }
+> 
+>       if (csdev->type == CORESIGHT_DEV_TYPE_SINK ||
+> @@ -1638,11 +1647,11 @@ struct coresight_device 
+> *coresight_register(struct coresight_desc *desc)
+>                * from put_device(), which is in turn called from
+>                * function device_unregister().
+>                */
+> -            goto err_out;
+> +            goto out_unlock;
+>           }
+>       }
+> -
+> -    mutex_lock(&coresight_mutex);
+> +    /* Device is now registered */
+> +    registered = true;
+> 
+>       ret = coresight_create_conns_sysfs_group(csdev);
+>       if (!ret)
+> @@ -1652,16 +1661,15 @@ struct coresight_device 
+> *coresight_register(struct coresight_desc *desc)
+>       if (!ret && cti_assoc_ops && cti_assoc_ops->add)
+>           cti_assoc_ops->add(csdev);
+> 
+> +out_unlock:
+>       mutex_unlock(&coresight_mutex);
+> -    if (ret) {
+> +    /* Success */
+> +    if (!ret)
+> +        return csdev;
+> +
+> +    /* Unregister the device if needed */
+> +    if (registered)
+>           coresight_unregister(csdev);
+> -        return ERR_PTR(ret);
+> -    }
 
-Thank you for the patch! Perhaps something to improve:
+Apologies, this should be preserved :
 
-[auto build test WARNING on drm/drm-next]
-[also build test WARNING on drm-intel/for-linux-next drm-tip/drm-tip drm-exynos/exynos-drm-next tegra-drm/drm/tegra/for-next v5.17-rc7 next-20220308]
-[cannot apply to airlied/drm-next]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+i.e,
+	if (registered) {
+		coresight_unregister(csdev);
+		return ERR_PTR(ret);
+	}
 
-url:    https://github.com/0day-ci/linux/commits/Akhil-P-Oommen/Support-for-GMU-coredump-and-some-related-improvements/20220303-013028
-base:   git://anongit.freedesktop.org/drm/drm drm-next
-config: riscv-randconfig-r042-20220307 (https://download.01.org/0day-ci/archive/20220308/202203082018.IcI00Nvs-lkp@intel.com/config)
-compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project d271fc04d5b97b12e6b797c6067d3c96a8d7470e)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install riscv cross compiling tool for clang build
-        # apt-get install binutils-riscv64-linux-gnu
-        # https://github.com/0day-ci/linux/commit/23953efc645803299a93f178e9a32f2ae97dae39
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Akhil-P-Oommen/Support-for-GMU-coredump-and-some-related-improvements/20220303-013028
-        git checkout 23953efc645803299a93f178e9a32f2ae97dae39
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=riscv SHELL=/bin/bash drivers/gpu/drm/msm/
-
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-
-All warnings (new ones prefixed by >>):
-
->> drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:967:6: warning: no previous prototype for function 'a6xx_get_gmu_state' [-Wmissing-prototypes]
-   void a6xx_get_gmu_state(struct msm_gpu *gpu, struct a6xx_gpu_state *a6xx_state)
-        ^
-   drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:967:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
-   void a6xx_get_gmu_state(struct msm_gpu *gpu, struct a6xx_gpu_state *a6xx_state)
-   ^
-   static 
-   1 warning generated.
-
-
-vim +/a6xx_get_gmu_state +967 drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-
-   966	
- > 967	void a6xx_get_gmu_state(struct msm_gpu *gpu, struct a6xx_gpu_state *a6xx_state)
-   968	{
-   969		struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-   970		struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
-   971		struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
-   972	
-   973		if (gmu->hung)
-   974			a6xx_gmu_send_nmi(gmu);
-   975	
-   976		a6xx_get_gmu_registers(gpu, a6xx_state);
-   977	}
-   978	
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+Thanks
+Suzuki
