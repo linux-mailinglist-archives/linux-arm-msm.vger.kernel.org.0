@@ -2,236 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E50E14D1947
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 14:36:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C2CB74D1A7C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 15:28:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245229AbiCHNhd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Mar 2022 08:37:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42150 "EHLO
+        id S231975AbiCHO3I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Mar 2022 09:29:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347141AbiCHNhc (ORCPT
+        with ESMTP id S234218AbiCHO3I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Mar 2022 08:37:32 -0500
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id CF6CF496A6;
-        Tue,  8 Mar 2022 05:36:34 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 83721139F;
-        Tue,  8 Mar 2022 05:36:34 -0800 (PST)
-Received: from [10.57.22.11] (unknown [10.57.22.11])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 62C083FA58;
-        Tue,  8 Mar 2022 05:36:32 -0800 (PST)
-Message-ID: <ea6219df-0a10-8e8d-4848-a28704a9f98e@arm.com>
-Date:   Tue, 8 Mar 2022 13:36:30 +0000
+        Tue, 8 Mar 2022 09:29:08 -0500
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90D669FF7
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Mar 2022 06:28:11 -0800 (PST)
+Received: by mail-wr1-x442.google.com with SMTP id h15so4480097wrc.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Mar 2022 06:28:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=+xCzDXKpurcBEhZ8+xr/1+qLsXYFBobYcsOzCn7TcBU=;
+        b=fBbWWzR3GpMS+93ciajoo029c8FgxPjBA+AUU6C4eRROwd54dlPOY/99NlODG1oTRW
+         W9hVeKUB97h0E3V1Idc3aD63NFEQ3QD/m89uHsN4n3lNmlLpV7Ar2pqEb/80+jtWGzKT
+         OMqvcXv52pVBe84+BcQQWTWCW9jxXjQ2f5fbTRoOHfcr0Onmm2zKZ7Vex0FSpLip+VRr
+         pvLLW4GqPC6CwzKy7DWD1vfdZb4ErSEs3L6vQEtGNPCTMzhomrGcMYPVf/qCM62Hi0vY
+         mkAIZ1bhRLM5YYNWZXCIgXmuYTq5iReg+8bAvr9Du1D5QJV+oynDa0ttcR2LDKDpg4QH
+         qjEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=+xCzDXKpurcBEhZ8+xr/1+qLsXYFBobYcsOzCn7TcBU=;
+        b=oq3d7jf9rrMkZp9VFkQ+qYN1EGWHnWuIxrjP12V8jYI4wsSDwd6evBc8eKK3VSqUgH
+         vKnhH2OOhKce40eLqvhbcaeslDTbyzA1hbebkQ9MviFqu3R8do6kZ3DTvJm34EL33Ui1
+         2rhna+YgrL1UlYXoFu5IO+1jjKmkXek7Fv4wzgBR5pDtpJFsxGbvEaz6cqnt8iLznltN
+         O+jqT8IrevpUhjL3Om9ioWnAu+yDEyEDlh5bDvOWQYRyK7meoXGnpxJOlv6bm1DvfIwv
+         3nuJ1dj5pwJmNGiO/iJ1v0+FxL+Jy/EYE5dcl5OwbFVo92QgR0E5k41DV8SBF2s0zM68
+         /POw==
+X-Gm-Message-State: AOAM532KjwvABQacOEMUk6BK5ceUZD246MqmTCYh3LnzHcxXrUNPFq7T
+        cUWmH9WtHFRwc8NIWprLjSZ6p2xo/ZiiAky7aHA=
+X-Google-Smtp-Source: ABdhPJwAGDE3POdz8NP8fTEvWR9Uo3X93XOXVBaBRCNvqtGpbm8UUalx8K7phMENQhXH3NVN6HIOw8mEt3FUJyqOw9M=
+X-Received: by 2002:adf:fbcf:0:b0:1ef:d5f2:23a5 with SMTP id
+ d15-20020adffbcf000000b001efd5f223a5mr12554349wrs.567.1646749689503; Tue, 08
+ Mar 2022 06:28:09 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.6.1
-Subject: Re: [PATCH v2] coresight: core: Fix coresight device probe failure
- issue
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc:     coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>
-References: <20220304082350.30069-1-quic_jinlmao@quicinc.com>
- <c77c93bb-f863-47c8-0ba0-3fc63530a9e1@arm.com>
-In-Reply-To: <c77c93bb-f863-47c8-0ba0-3fc63530a9e1@arm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Sender: abiodunboluwatife2017@gmail.com
+Received: by 2002:a05:600c:502c:0:0:0:0 with HTTP; Tue, 8 Mar 2022 06:28:08
+ -0800 (PST)
+From:   Lisa Williams <lw23675851@gmail.com>
+Date:   Tue, 8 Mar 2022 14:28:08 +0000
+X-Google-Sender-Auth: 2reQXOnF7Kh_ai6iDG3mosDekzg
+Message-ID: <CADqw2PLYKkkj=yN1Gh1Wocn0wPWBmnVQMe-NZx1QG81byc9vWg@mail.gmail.com>
+Subject: My name is Lisa Williams
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.5 required=5.0 tests=BAYES_05,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/03/2022 11:56, Suzuki K Poulose wrote:
-> Hi Jinlong
-> 
-> On 04/03/2022 08:23, Mao Jinlong wrote:
->> It is possibe that probe failure issue happens when the device
->> and its child_device's probe happens at the same time.
->> In coresight_make_links, has_conns_grp is true for parent, but
->> has_conns_grp is false for child device as has_conns_grp is set
->> to true in coresight_create_conns_sysfs_group. The probe of parent
->> device will fail at this condition. Add has_conns_grp check for
->> child device before make the links and make the process from
->> device_register to connection_create be atomic to avoid this
->> probe failure issue.
->>
->> Suggested-by: Suzuki K Poulose <suzuki.poulose@arm.com>
->> Suggested-by: Mike Leach <mike.leach@linaro.org>
->> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->> ---
->>   drivers/hwtracing/coresight/coresight-core.c | 12 ++++++------
->>   1 file changed, 6 insertions(+), 6 deletions(-)
->>
->> diff --git a/drivers/hwtracing/coresight/coresight-core.c 
->> b/drivers/hwtracing/coresight/coresight-core.c
->> index 88653d1c06a4..b3e3bc59c09b 100644
->> --- a/drivers/hwtracing/coresight/coresight-core.c
->> +++ b/drivers/hwtracing/coresight/coresight-core.c
->> @@ -1382,7 +1382,7 @@ static int coresight_fixup_device_conns(struct 
->> coresight_device *csdev)
->>               continue;
->>           conn->child_dev =
->>               coresight_find_csdev_by_fwnode(conn->child_fwnode);
->> -        if (conn->child_dev) {
->> +        if (conn->child_dev && conn->child_dev->has_conns_grp) {
->>               ret = coresight_make_links(csdev, conn,
->>                              conn->child_dev);
->>               if (ret)
->> @@ -1594,7 +1594,8 @@ struct coresight_device 
->> *coresight_register(struct coresight_desc *desc)
->>       refcnts = kcalloc(nr_refcnts, sizeof(*refcnts), GFP_KERNEL);
->>       if (!refcnts) {
->>           ret = -ENOMEM;
->> -        goto err_free_csdev;
->> +        kfree(csdev);
->> +        goto err_out;
->>       }
->>       csdev->refcnt = refcnts;
->> @@ -1619,8 +1620,10 @@ struct coresight_device 
->> *coresight_register(struct coresight_desc *desc)
->>       csdev->dev.fwnode = fwnode_handle_get(dev_fwnode(desc->dev));
->>       dev_set_name(&csdev->dev, "%s", desc->name);
->> +    mutex_lock(&coresight_mutex);
->>       ret = device_register(&csdev->dev);
->>       if (ret) {
->> +        mutex_unlock(&coresight_mutex);
->>           put_device(&csdev->dev);
->>           /*
->>            * All resources are free'd explicitly via
->> @@ -1634,6 +1637,7 @@ struct coresight_device 
->> *coresight_register(struct coresight_desc *desc)
->>           ret = etm_perf_add_symlink_sink(csdev);
->>           if (ret) {
->> +            mutex_unlock(&coresight_mutex);
->>               device_unregister(&csdev->dev);
->>               /*
->>                * As with the above, all resources are free'd
->> @@ -1645,8 +1649,6 @@ struct coresight_device 
->> *coresight_register(struct coresight_desc *desc)
->>           }
->>       }
->> -    mutex_lock(&coresight_mutex);
->> -
->>       ret = coresight_create_conns_sysfs_group(csdev);
->>       if (!ret)
->>           ret = coresight_fixup_device_conns(csdev);
->> @@ -1663,8 +1665,6 @@ struct coresight_device 
->> *coresight_register(struct coresight_desc *desc)
->>       return csdev;
->> -err_free_csdev:
->> -    kfree(csdev);
->>   err_out:
->>       /* Cleanup the connection information */
->>       coresight_release_platform_data(NULL, desc->pdata);
-> 
-> Could we consolidate the unlock sequence to a single point with 
-> something like this (untested):
-> 
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-core.c 
-> b/drivers/hwtracing/coresight/coresight-core.c
-> index af00dca8d1ac..198ee140c6e6 100644
-> --- a/drivers/hwtracing/coresight/coresight-core.c
-> +++ b/drivers/hwtracing/coresight/coresight-core.c
-> @@ -1571,6 +1571,7 @@ struct coresight_device *coresight_register(struct 
-> coresight_desc *desc)
->       int nr_refcnts = 1;
->       atomic_t *refcnts = NULL;
->       struct coresight_device *csdev;
-> +    bool registered = false;
-> 
->       csdev = kzalloc(sizeof(*csdev), GFP_KERNEL);
->       if (!csdev) {
-> @@ -1591,7 +1592,8 @@ struct coresight_device *coresight_register(struct 
-> coresight_desc *desc)
->       refcnts = kcalloc(nr_refcnts, sizeof(*refcnts), GFP_KERNEL);
->       if (!refcnts) {
->           ret = -ENOMEM;
-> -        goto err_free_csdev;
-> +        kfree(csdev);
-> +        goto err_out;
->       }
-> 
->       csdev->refcnt = refcnts;
-> @@ -1616,6 +1618,13 @@ struct coresight_device 
-> *coresight_register(struct coresight_desc *desc)
->       csdev->dev.fwnode = fwnode_handle_get(dev_fwnode(desc->dev));
->       dev_set_name(&csdev->dev, "%s", desc->name);
-> 
-> +    /*
-> +     * Make sure the device registration and the connection fixup
-> +     * are synchronised, so that we don't see uninitialised devices
-> +     * on the coresight bus while trying to resolve the connections.
-> +     */
-> +    mutex_lock(&coresight_mutex);
-> +
->       ret = device_register(&csdev->dev);
->       if (ret) {
->           put_device(&csdev->dev);
-> @@ -1623,7 +1632,7 @@ struct coresight_device *coresight_register(struct 
-> coresight_desc *desc)
->            * All resources are free'd explicitly via
->            * coresight_device_release(), triggered from put_device().
->            */
-> -        goto err_out;
-> +        goto out_unlock;
->       }
-> 
->       if (csdev->type == CORESIGHT_DEV_TYPE_SINK ||
-> @@ -1638,11 +1647,11 @@ struct coresight_device 
-> *coresight_register(struct coresight_desc *desc)
->                * from put_device(), which is in turn called from
->                * function device_unregister().
->                */
-> -            goto err_out;
-> +            goto out_unlock;
->           }
->       }
-> -
-> -    mutex_lock(&coresight_mutex);
-> +    /* Device is now registered */
-> +    registered = true;
-> 
->       ret = coresight_create_conns_sysfs_group(csdev);
->       if (!ret)
-> @@ -1652,16 +1661,15 @@ struct coresight_device 
-> *coresight_register(struct coresight_desc *desc)
->       if (!ret && cti_assoc_ops && cti_assoc_ops->add)
->           cti_assoc_ops->add(csdev);
-> 
-> +out_unlock:
->       mutex_unlock(&coresight_mutex);
-> -    if (ret) {
-> +    /* Success */
-> +    if (!ret)
-> +        return csdev;
-> +
-> +    /* Unregister the device if needed */
-> +    if (registered)
->           coresight_unregister(csdev);
-> -        return ERR_PTR(ret);
-> -    }
+Hi Dear,
 
-Apologies, this should be preserved :
+My name is Lisa  Williams, I am from the United States of America, Its
+my pleasure to contact you for new and special friendship, I will be
+glad to see your reply for us to know each other better.
 
-i.e,
-	if (registered) {
-		coresight_unregister(csdev);
-		return ERR_PTR(ret);
-	}
-
-Thanks
-Suzuki
+Yours
+Lisa
