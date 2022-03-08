@@ -2,101 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B0C5E4D20CF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 19:59:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B4D44D21B2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 20:36:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345302AbiCHTAp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Mar 2022 14:00:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38712 "EHLO
+        id S244195AbiCHThY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Mar 2022 14:37:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245656AbiCHTAo (ORCPT
+        with ESMTP id S235536AbiCHThX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Mar 2022 14:00:44 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C66FE0C4;
-        Tue,  8 Mar 2022 10:59:46 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id bg31-20020a05600c3c9f00b00381590dbb33so112823wmb.3;
-        Tue, 08 Mar 2022 10:59:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GlEBP0dYqZ3fyLNSyiw8KHK9YhpTqiBMFquOs6BvLfo=;
-        b=Xall2NrXYxCvpO+k2IRdt458PZkUo48IXE0jneqg59khrwXsl5iewYj2Eb8LIUrZZe
-         FVE/jff4cGANSH0wf4dLwbtFEn/gXsXiBA3+1rlgNdAffWUeAlYtw2waUrVIil6tk/VY
-         E3BmxeV8Bnufneps3gq9MfbZ90VZG1WMdr9fwdAo/oNUh5n8eeJjca1u2K4Jg5ZsosP5
-         o8hXDXJQpG8Xn0AtDpOvoj6/6lf9oSSGc8hgLTaOUlE2qDvGNTdPMc3gU1I4hMML7Kgl
-         1ZGunPmBieoXBd9wvRj5dhY1QJ/3eTqEg1ukLa4h1hwrFlo9oLpVhtsa4B2LbDqgevX+
-         0iAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GlEBP0dYqZ3fyLNSyiw8KHK9YhpTqiBMFquOs6BvLfo=;
-        b=PzNlEaUPoSfmjQN+mjqGUOQTmrEQcgLv8NCsNVf2BubkrAa7QQ676aYzL+EhXiqej7
-         bKJhHmg0U3ZRWqc2m/LB+rsg/WPR0vqjxeRcCPIYUyZDsYtv3z5s4pzcFtqVBwJOk6yp
-         D4pgjmn1RUq0sPhnoDROc2D8yxD2LJPj3f5qoAX+9hV7OoL/Gr3aJ5u59l5Glqgrg3bG
-         5QCA3iuTBEXFMV0O5itMpSSny8YRn5gubDmBz7Jt9LjZviFiD36u9H70N9Y1l6wvzjsL
-         6CyDeAs5G83oqXahJwMUNwEDjFGRjv3miRX0eOoZSTRoCon117ppOb7q90M5XvlUWelZ
-         sOIA==
-X-Gm-Message-State: AOAM532ASJFsCHVSWLBMaXjcCkvcevEWyMGccc1OHd/ZvDb75I4GuybF
-        W/8Bkp2BK52UfYZrTHk3EUrC5BINJSP0zGK1zVA=
-X-Google-Smtp-Source: ABdhPJxRLMgBSW3C5vVIU9Jzb/aKdPhWN3yZiBXjWHOvBgCS/dLX7GeDxuJWaQ/PI8AjZCkHayN5eHMLHehGkhRtfOg=
-X-Received: by 2002:a1c:f616:0:b0:37d:1e1c:f90a with SMTP id
- w22-20020a1cf616000000b0037d1e1cf90amr4597415wmc.148.1646765985128; Tue, 08
- Mar 2022 10:59:45 -0800 (PST)
+        Tue, 8 Mar 2022 14:37:23 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E38854692;
+        Tue,  8 Mar 2022 11:36:26 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 30C07B81D04;
+        Tue,  8 Mar 2022 19:36:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BACADC340FB;
+        Tue,  8 Mar 2022 19:36:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1646768183;
+        bh=oD0VhZlZShLXXL0VtyiSN7OYDVRpJLyegMXQzT9D+UA=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=ey77ykuhs4E7ZaV6YzBUicdBDA4cjypVH7cJtFwZVB8NnFwIFeXthZTsJUnCLmie8
+         rka8c6JmvwWFY0lQKh+z1l+6QG/LA5l7xATgYgZrNMUEk8MvDsxTlQp/dRXH2jWxX7
+         wlqn5cXCoOOdOJ+Y6m2M5sWQXHnUQdCkp0VksnGEcvVWeM6/nGz8xJ775oJE4LMHYn
+         5UetBO5K5gJ3gxe481YktKxaNtsAInoOtcnYJ6tQGqBKROzi1EnIDVLcbNPrtqHhXC
+         IwDipKRXMrQM/Gg8Scp7WnZHe8ApjUwyFiHF78Vnn0HOlpliT8qrRE8oshhaCMLPnr
+         Wa6YiYmYUneRg==
+Received: by mail-ej1-f52.google.com with SMTP id qa43so84436ejc.12;
+        Tue, 08 Mar 2022 11:36:23 -0800 (PST)
+X-Gm-Message-State: AOAM5330fP2RVMFy6lfYqW3E4Jdoff5kVwIpNwM0mFTiy3GW214a7AfA
+        Z2FtoMSxPotz7SRXBV/mMV9a1Be6rT8PMCY8jA==
+X-Google-Smtp-Source: ABdhPJzZzoUPz4XaizE/zi66xXVmww6DX4HQPJpJ5wI1spp5ElEOP/8Wi4Qx2bFZCZ7dUrhMObCmG0cWDv+ss8lCgpw=
+X-Received: by 2002:a17:906:584:b0:6b0:8987:90af with SMTP id
+ 4-20020a170906058400b006b0898790afmr15279019ejn.264.1646768181983; Tue, 08
+ Mar 2022 11:36:21 -0800 (PST)
 MIME-Version: 1.0
-References: <20220308184844.1121029-1-robdclark@gmail.com> <CAOMZO5Dkr7PqvgYpNp1fBR7P91T-x1ke2pRN6A6GWFJ7zBQo7g@mail.gmail.com>
-In-Reply-To: <CAOMZO5Dkr7PqvgYpNp1fBR7P91T-x1ke2pRN6A6GWFJ7zBQo7g@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 8 Mar 2022 11:00:14 -0800
-Message-ID: <CAF6AEGvfdyK2oNyLVrN5WJV0VV-EkvyD+EJ0rtGP7u7CA3kDXg@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/gpu: Fix crash on devices without devfreq support (v2)
-To:     Fabio Estevam <festevam@gmail.com>
-Cc:     DRI mailing list <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Anders Roxell <anders.roxell@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+References: <20220302001410.2264039-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220302001410.2264039-1-dmitry.baryshkov@linaro.org>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Tue, 8 Mar 2022 13:36:10 -0600
+X-Gmail-Original-Message-ID: <CAL_Jsq+TwPpZSZa3Jq-qYg0kUpb2ord5bWKVAwqsdVP40RKFuQ@mail.gmail.com>
+Message-ID: <CAL_Jsq+TwPpZSZa3Jq-qYg0kUpb2ord5bWKVAwqsdVP40RKFuQ@mail.gmail.com>
+Subject: Re: [RESEND PATCH] dt-bindings: display/msm: add missing brace in dpu-qcm2290.yaml
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>,
-        Linux Kernel Functional Testing <lkft@linaro.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Loic Poulain <loic.poulain@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 8, 2022 at 10:53 AM Fabio Estevam <festevam@gmail.com> wrote:
+On Tue, Mar 1, 2022 at 6:14 PM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
-> On Tue, Mar 8, 2022 at 3:48 PM Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > Avoid going down devfreq paths on devices where devfreq is not
-> > initialized.
-> >
-> > v2: Change has_devfreq() logic [Dmitry]
-> >
-> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> > Reported-by: Anders Roxell <anders.roxell@linaro.org>
-
-Fixes: 6aa89ae1fb04 ("drm/msm/gpu: Cancel idle/boost work on suspend")
-
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Add missing brace in dpu-qcm2290.yaml. While we are at it, also fix
+> indentation for another brace, so it matches the corresponding line.
 >
-> Does this need a Fixes tag?
+> Reported-by: Rob Herring <robh@kernel.org>
+> Cc: Loic Poulain <loic.poulain@linaro.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+> Didn't include freedreno@ in the first email, so resending.
+> ---
+>  Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 
-Yes, sorry, patchwork had picked up the fixes tag from previous
-version but I'd forgot to add it locally
+Now that the example actually builds, we get just schema warnings:
 
-BR,
--R
+/builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.example.dt.yaml:
+mdss@5e00000: compatible: ['qcom,qcm2290-mdss', 'qcom,mdss'] is too
+long
+From schema: /builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml
+/builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.example.dt.yaml:
+mdss@5e00000: 'mdp@5e01000' does not match any of the regexes:
+'^display-controller@[0-9a-f]+$', 'pinctrl-[0-9]+'
+From schema: /builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml
+
+
+I would have assumed upon reporting errors with 'make
+dt_binding_check' that the fixes would be tested with 'make
+dt_binding_check'...
+
+Rob
