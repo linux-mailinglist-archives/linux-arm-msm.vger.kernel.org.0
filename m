@@ -2,71 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A92A4D23D3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 23:03:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EFDAE4D23F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 23:11:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234298AbiCHWDY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Mar 2022 17:03:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35260 "EHLO
+        id S1350085AbiCHWKt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Mar 2022 17:10:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350540AbiCHWC6 (ORCPT
+        with ESMTP id S243867AbiCHWKs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Mar 2022 17:02:58 -0500
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8572257168
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Mar 2022 14:02:00 -0800 (PST)
-Received: by mail-oi1-x22d.google.com with SMTP id b188so700269oia.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Mar 2022 14:02:00 -0800 (PST)
+        Tue, 8 Mar 2022 17:10:48 -0500
+Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C10347AEA
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Mar 2022 14:09:50 -0800 (PST)
+Received: by mail-oo1-xc2d.google.com with SMTP id x26-20020a4a9b9a000000b003211029e80fso688879ooj.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Mar 2022 14:09:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=H7bJFP/SMFW15p3pLkm+L7vfC59HK/LKRG6ORsvtMls=;
-        b=i42+2Vc8KgRNR5vQOWKZQ8tq5xqvdZCWTi3cf710Q3s6ESxTVSUd3AKl1L77hB3slu
-         heJQVnz6Bq7oJpDDVzgV1E3IMlLVppConv7H3E4ugb5PYClNiUuTFkD32ZUcHv3UBAGw
-         uvl+qAE4GWMcPYCxEeU2WYWBJ5BuQf/TcluSg=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ddW2fY9LvB2Nj22VUxUaG3e+eaf3kPwjMZ+2+JZW1rk=;
+        b=jCjC5sYk1VByjCwp98OgD3SvDExuzN5oAfh50l2iAOJ31vqosIicjs5JxltaheGmlL
+         cFuMzPmcVLnTJAN4Z88hnIslH87qZuZFvvUd4Pa+js6EBTn+4yCmC7FQu91UgXJSXWCf
+         2UQ5M45pSII8FacN1wn8W9RkUHYjo41T8Z8PXAsQHWxA8LZo2TaZv1FHr7P33vtvG1vS
+         8wB1yI1LXolpdOfds9JPX/qfEkGU+DeNHpeOkePv/UkmGIWXTHOohmt+krKIrkhymPI+
+         cob0nKKmAUPVLnzzf/X0J9vukEJ0nI3JjZRqiIgWAjVRhaXkkVZmfGlyY6drpAzqb/LT
+         H12Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=H7bJFP/SMFW15p3pLkm+L7vfC59HK/LKRG6ORsvtMls=;
-        b=XjGd+c5EBKpWH0XmiscvqkZA0yXb9bN0EKoHStIat1DkJIwC0CabnQucxRs73mv8Jh
-         GirbxB13uyoCXggIfzYUokAbYIkjCndHVl0+6fCojCbhx4YlpQfS9k/QZpJ4ZdtPHtQv
-         13z1+Sn2/DF9KTXsKUBqckySQUZYBoXLE4eorwVZ3BxeOWPYvoObxpe3fv4jmUjrlPWJ
-         GzgVDVOv3mEPhBb2lk77L1ZREUugJ6P+i3dZ94rh7M26pFjriIvM2Yaps07qYUfLpF1+
-         8iLpDP6DAFlhwfvn1NN1PG99FVL3Kj8IOoS0gEwusJoHFlKk/oQwMTOIUghcvYVnJSSm
-         nbEg==
-X-Gm-Message-State: AOAM533L8tVOLhNTFXLZqtzqW4S9S6g+vI0ACMTWQc9LAJH2it7K8g0O
-        jzCN5RuM4eK0Kp6DruOSE9qSaaQVVso/XGpuS73ILA==
-X-Google-Smtp-Source: ABdhPJzV5rZOO86yLbriX4+ATjnhaQh8o6iRmze3RyGwf6WbMtRYo4wlAN0seA1257wNimyu0mhdx+fx6AdOlUF8ZzY=
-X-Received: by 2002:a05:6808:220d:b0:2d4:99cb:3849 with SMTP id
- bd13-20020a056808220d00b002d499cb3849mr4090715oib.63.1646776919910; Tue, 08
- Mar 2022 14:01:59 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 8 Mar 2022 14:01:59 -0800
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ddW2fY9LvB2Nj22VUxUaG3e+eaf3kPwjMZ+2+JZW1rk=;
+        b=RPlZVzMcoGK3EmWKYh9Tb42/xyPr53quXYExcOgaUtSRNrJflF/lrD3bUaxji/jl9v
+         jS521JUufCJJWw3EG+lG+AWFYxVuwrlFTXHi3M7ZxAfyQ0bOx5yTXL49Ma/h4U4fBjAJ
+         5u1qV/jxGZKZhlv+rmRSAgZmfr+vm19+rCKvWWMQPAxK8PBVLAWbqYeSLBzLwh0Go872
+         SzdjpwGbsp+rfuFEkt+wSlEfnS+ebABw5oq9YCrQBiqClyxUJAbQWE3E3ZSmLdelXd+s
+         HTjMpD8nKdKEaF/5YWvr97NAAjckyC6l4HlN35wAZ9m8d6FCZfTKrMVYB0tgpbxCkLdP
+         H7cA==
+X-Gm-Message-State: AOAM531v5x4MN2f6GT3/0mdzy0PPlw1ehYlxpl60Akn8z116msnYmvJ9
+        OLiMl6FZui30EtOkAZmWuXYU6w==
+X-Google-Smtp-Source: ABdhPJyQF+fUUCO1OmFokSVxMnTpHlK6L3MD61JBsleRWaGh1MaN6NU0T+NY74s9fC1L25JX8IBAWw==
+X-Received: by 2002:a05:6870:a102:b0:d9:bcaf:7181 with SMTP id m2-20020a056870a10200b000d9bcaf7181mr3697672oae.8.1646777389536;
+        Tue, 08 Mar 2022 14:09:49 -0800 (PST)
+Received: from ripper.. ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id bx10-20020a0568081b0a00b002d70da1ac54sm71107oib.19.2022.03.08.14.09.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Mar 2022 14:09:48 -0800 (PST)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: Add sc8280xp TLMM binding
+Date:   Tue,  8 Mar 2022 14:11:31 -0800
+Message-Id: <20220308221132.1423218-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-In-Reply-To: <1646316128-21082-3-git-send-email-quic_srivasam@quicinc.com>
-References: <1646316128-21082-1-git-send-email-quic_srivasam@quicinc.com> <1646316128-21082-3-git-send-email-quic_srivasam@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Tue, 8 Mar 2022 14:01:59 -0800
-Message-ID: <CAE-0n50tqb6+aNNRAVjHjkExZDYqbnJ+3zDnSOMgndxMVXZXzQ@mail.gmail.com>
-Subject: Re: [PATCH v7 2/2] dt-bindings: soundwire: qcom: Add bindings for
- audio clock reset control property
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, alsa-devel@alsa-project.org,
-        bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
-        broonie@kernel.org, devicetree@vger.kernel.org,
-        judyhsiao@chromium.org, lgirdwood@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        perex@perex.cz, pierre-louis.bossart@linux.intel.com,
-        quic_plai@quicinc.com, robh+dt@kernel.org, rohitkr@codeaurora.org,
-        sanyog.r.kale@intel.com, srinivas.kandagatla@linaro.org,
-        tiwai@suse.com, vkoul@kernel.org, yung-chuan.liao@linux.intel.com
-Cc:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,14 +70,179 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2022-03-03 06:02:08)
-> Update description for audio clock reset control property, which is required
-> for latest chipsets, to allow rx, tx and wsa bus clock enabling in software
->  control mode by configuring dynamic clock gating control registers.
->
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> ---
+The Qualcomm SC8280XP platform contains a single block of registers
+for the TLMM block. This provides pinconf and pinmux for 228 GPIOs, 2
+UFS_RESET pins and one SDC interface.
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+
+Changes since v1:
+- Dropped $ref: pinctrl.yaml
+- Dropped reg-names from required list
+- Fixed spelling mistake in example
+
+ .../pinctrl/qcom,sc8280xp-pinctrl.yaml        | 151 ++++++++++++++++++
+ 1 file changed, 151 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-pinctrl.yaml
+
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-pinctrl.yaml
+new file mode 100644
+index 000000000000..87a381c9a19d
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sc8280xp-pinctrl.yaml
+@@ -0,0 +1,151 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pinctrl/qcom,sc8280xp-pinctrl.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Technologies, Inc. SC8280XP TLMM block
++
++maintainers:
++  - Bjorn Andersson <bjorn.andersson@linaro.org>
++
++description: |
++  This binding describes the Top Level Mode Multiplexer block found in the
++  SC8280XP platform.
++
++allOf:
++  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
++
++properties:
++  compatible:
++    const: qcom,sc8280xp-tlmm
++
++  reg:
++    maxItems: 1
++
++  interrupts: true
++  interrupt-controller: true
++  '#interrupt-cells': true
++  gpio-controller: true
++  gpio-reserved-ranges: true
++  '#gpio-cells': true
++  gpio-ranges: true
++  wakeup-parent: true
++
++required:
++  - compatible
++  - reg
++
++additionalProperties: false
++
++patternProperties:
++  '-state$':
++    oneOf:
++      - $ref: "#/$defs/qcom-sc8280xp-tlmm-state"
++      - patternProperties:
++          ".*":
++            $ref: "#/$defs/qcom-sc8280xp-tlmm-state"
++
++'$defs':
++  qcom-sc8280xp-tlmm-state:
++    type: object
++    description:
++      Pinctrl node's client devices use subnodes for desired pin configuration.
++      Client device subnodes use below standard properties.
++    $ref: "qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state"
++
++    properties:
++      pins:
++        description:
++          List of gpio pins affected by the properties specified in this
++          subnode.
++        items:
++          oneOf:
++            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-1][0-9]|22[0-7])$"
++            - enum: [ sdc2_clk, sdc2_cmd, sdc2_data, ufs_reset, ufs1_reset ]
++        minItems: 1
++        maxItems: 16
++
++      function:
++        description:
++          Specify the alternative function to be configured for the specified
++          pins.
++
++        enum: [ atest_char, atest_usb, audio_ref, cam_mclk, cci_async, cci_i2c,
++                cci_timer0, cci_timer1, cci_timer2, cci_timer3, cci_timer4,
++                cci_timer5, cci_timer6, cci_timer7, cci_timer8, cci_timer9,
++                cmu_rng, cri_trng, cri_trng0, cri_trng1, dbg_out, ddr_bist,
++                ddr_pxi0, ddr_pxi1, ddr_pxi2, ddr_pxi3, ddr_pxi4, ddr_pxi5,
++                ddr_pxi6, ddr_pxi7, dp2_hot, dp3_hot, edp0_lcd, edp1_lcd,
++                edp2_lcd, edp3_lcd, edp_hot, emac0_dll, emac0_mcg0, emac0_mcg1,
++                emac0_mcg2, emac0_mcg3, emac0_phy, emac0_ptp, emac1_dll0,
++                emac1_dll1, emac1_mcg0, emac1_mcg1, emac1_mcg2, emac1_mcg3,
++                emac1_phy, emac1_ptp, gcc_gp1, gcc_gp2, gcc_gp3, gcc_gp4,
++                gcc_gp5, gpio, hs1_mi2s, hs2_mi2s, hs3_mi2s, ibi_i3c,
++                jitter_bist, lpass_slimbus, mdp0_vsync0, mdp0_vsync1,
++                mdp0_vsync2, mdp0_vsync3, mdp0_vsync4, mdp0_vsync5,
++                mdp0_vsync6, mdp0_vsync7, mdp0_vsync8, mdp1_vsync0,
++                mdp1_vsync1, mdp1_vsync2, mdp1_vsync3, mdp1_vsync4,
++                mdp1_vsync5, mdp1_vsync6, mdp1_vsync7, mdp1_vsync8, mdp_vsync,
++                mi2s0_data0, mi2s0_data1, mi2s0_sck, mi2s0_ws, mi2s1_data0,
++                mi2s1_data1, mi2s1_sck, mi2s1_ws, mi2s2_data0, mi2s2_data1,
++                mi2s2_sck, mi2s2_ws, mi2s_mclk1, mi2s_mclk2, pcie2a_clkreq,
++                pcie2b_clkreq, pcie3a_clkreq, pcie3b_clkreq, pcie4_clkreq,
++                phase_flag, pll_bist, pll_clk, prng_rosc0, prng_rosc1,
++                prng_rosc2, prng_rosc3, qdss_cti, qdss_gpio, qspi, qspi_clk,
++                qspi_cs, qup0, qup1, qup2, qup3, qup4, qup5, qup6, qup7, qup8,
++                qup9, qup10, qup11, qup12, qup13, qup14, qup15, qup16, qup17,
++                qup18, qup19, qup20, qup21, qup22, qup23, rgmii_0, rgmii_1,
++                sd_write, sdc40, sdc42, sdc43, sdc4_clk, sdc4_cmd, tb_trig,
++                tgu, tsense_pwm1, tsense_pwm2, tsense_pwm3, tsense_pwm4,
++                usb0_dp, usb0_phy, usb0_sbrx, usb0_sbtx, usb0_usb4, usb1_dp,
++                usb1_phy, usb1_sbrx, usb1_sbtx, usb1_usb4, usb2phy_ac,
++                vsense_trigger ]
++
++      bias-disable: true
++      bias-pull-down: true
++      bias-pull-up: true
++      drive-strength: true
++      input-enable: true
++      output-high: true
++      output-low: true
++
++    required:
++      - pins
++      - function
++
++    additionalProperties: false
++
++examples:
++  - |
++        #include <dt-bindings/interrupt-controller/arm-gic.h>
++        pinctrl@f100000 {
++                compatible = "qcom,sc8280xp-tlmm";
++                reg = <0x0f100000 0x300000>;
++                interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
++                gpio-controller;
++                #gpio-cells = <2>;
++                interrupt-controller;
++                #interrupt-cells = <2>;
++                gpio-ranges = <&tlmm 0 0 230>;
++
++                gpio-wo-subnode-state {
++                        pins = "gpio1";
++                        function = "gpio";
++                };
++
++                uart-w-subnodes-state {
++                        rx {
++                                pins = "gpio4";
++                                function = "qup14";
++                                bias-pull-up;
++                        };
++
++                        tx {
++                                pins = "gpio5";
++                                function = "qup14";
++                                bias-disable;
++                        };
++                };
++        };
++...
+-- 
+2.33.1
+
