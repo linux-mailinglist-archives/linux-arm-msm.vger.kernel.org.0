@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 661B04D2288
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 21:26:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D20434D229E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Mar 2022 21:31:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349931AbiCHU11 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Mar 2022 15:27:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46440 "EHLO
+        id S242939AbiCHUcJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Mar 2022 15:32:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242196AbiCHU10 (ORCPT
+        with ESMTP id S234922AbiCHUcI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Mar 2022 15:27:26 -0500
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4550E50E1D
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Mar 2022 12:26:29 -0800 (PST)
-Received: by mail-oi1-x230.google.com with SMTP id q189so467055oia.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Mar 2022 12:26:29 -0800 (PST)
+        Tue, 8 Mar 2022 15:32:08 -0500
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9889E50E1D
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Mar 2022 12:31:11 -0800 (PST)
+Received: by mail-oi1-x22f.google.com with SMTP id q189so481061oia.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Mar 2022 12:31:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=8SYSMYpMF1JLUrGJB3nmVLCJBpd8wl7WznHJ+HFs9K4=;
-        b=koKeM8A9VVDPFv1jvcqwyWztjsWRaPM9RHLQWPbtyPj2BvTe7AJnmIlwxvcZ0OY/Hj
-         yY7V7M4fq6YS/XvNRBGaJeKEohKUlddhSPQYaJ5+CEvtxiGZ9LNaDSO1/eApKyGMOKmk
-         Xg2bU2rviiONnXHI+phTVUVWUXL7J6EZGY+WY=
+        bh=ggKE+QQN96ACgccKsgFkOnubBkvwOfbXHtYWYxkQBiY=;
+        b=ChyVvEiI6i2Y5+AJDxTMK0DvaXspW10L04xc7T3dBzWFVLrvr/QoeFenREIvCdo6a6
+         9R7dWKbI7LjPm/hsNp7oZBDMlDQvVHw6DBtblOF/PkcJZIipiktXOCmSy3AcX323Ulwe
+         tVpUezHz9kUATYgbAc2FC4LycF9VnfQYUOreQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=8SYSMYpMF1JLUrGJB3nmVLCJBpd8wl7WznHJ+HFs9K4=;
-        b=ukyIL5+dMQkkWE/5h3u4edFVvuqz+ebeFr1MkoC5KjE6IjpsEU7uV8roI6xCKivrf3
-         myXDhtQ4Mm7it7a+nmi/sSGR6xl37Cy8sCAMzxb+FukA7JNUL2sMAT5MC6IgIDeTgQ1E
-         OuNwF1MCk8izt/ZKAXtv9RlRlFin+3J9QaqyGUSnm4CvbNCpvc7GpHrzrugQAByphglK
-         FsT+hWNlz+668r027k40dmT1HsvhtEpwGOiR4PMxdqM6Y2Y5aYFDccROlVv3rvPDhPzy
-         Ly/+tPa1EU7n+CCP3CJXzmrYxW/k0RYNyUHrK9wVdquTJkbOJHyB5xBfJjj0I5jCJqM3
-         T5QA==
-X-Gm-Message-State: AOAM530CVI+mr33a1x/PVovaGlbjW+ljQBB637NVhhHTryzyDZqsMUJH
-        Ejvs9IZxz2qI9ZB18LiHIL7ffPSHsv5tHhgW/zC7Ug==
-X-Google-Smtp-Source: ABdhPJxLhnbKfyfH6BsLllQaul5SJ9MYV0lbMZKb+ak0yvA5zeaYuVULnVx7opW3jo+sQRk8z4+n9XteWweQvTP69oo=
-X-Received: by 2002:a05:6808:1391:b0:2d9:a01a:4b9a with SMTP id
- c17-20020a056808139100b002d9a01a4b9amr3785266oiw.193.1646771188650; Tue, 08
- Mar 2022 12:26:28 -0800 (PST)
+        bh=ggKE+QQN96ACgccKsgFkOnubBkvwOfbXHtYWYxkQBiY=;
+        b=WyPmKwCvTOxG4OiuiYA9BYZVLHm6OmYSZ73MGWHCC1VgBSu8aw46sbvguf1jas7Myi
+         vLq/CbsPG1/zaSuyQ7yeMX3MDMqL3e2ddnQ0ym25XsALQYtsiqjEra6+QNztrZkMhs/s
+         TWIXw9DJpX+t089JCQwiTt4BzCewz7ygozmc6VrD6ntbyubuWeKnak8YuVH+GklTr3c3
+         3JLvuYM33JLPGNxETRWJvGKngDvVcn12v2BtZWcgTt5riIqLeIQMSUqT0LkPJ3qCGcRi
+         KmQePfTiBStxiwvNm+HRc8NHjEFxpZk/skS0g72dth9uXw5/LXi/n6QvhF9kskJPCgKY
+         RQ8A==
+X-Gm-Message-State: AOAM530PORJG3kk9xxm2UYOTifaZAeO5AX72EIkEt8qnhVovLSJf3RuJ
+        6ofhQluIWlpQIg8BpDBu7G/B18LjGLxbHkaovjYddg==
+X-Google-Smtp-Source: ABdhPJw4rTppu+6vf/ZU341j6fzv5vxD9Y57pMhosx4Tq2+tN5qUwZzja6HMzrdn+PktqJlByzAZ+pahasDpswzJwa0=
+X-Received: by 2002:a05:6808:220d:b0:2d4:99cb:3849 with SMTP id
+ bd13-20020a056808220d00b002d499cb3849mr3860939oib.63.1646771471006; Tue, 08
+ Mar 2022 12:31:11 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 8 Mar 2022 12:26:28 -0800
+ HTTPREST; Tue, 8 Mar 2022 12:31:10 -0800
 MIME-Version: 1.0
-In-Reply-To: <20220304032106.2866043-3-dmitry.baryshkov@linaro.org>
-References: <20220304032106.2866043-1-dmitry.baryshkov@linaro.org> <20220304032106.2866043-3-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220304032106.2866043-4-dmitry.baryshkov@linaro.org>
+References: <20220304032106.2866043-1-dmitry.baryshkov@linaro.org> <20220304032106.2866043-4-dmitry.baryshkov@linaro.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Tue, 8 Mar 2022 12:26:28 -0800
-Message-ID: <CAE-0n53X2QzWw5mDqsw-Z79WuK75874B9pZtw2vQoC5hJMXj_Q@mail.gmail.com>
-Subject: Re: [PATCH v3 2/5] drm/msm: remove extra indirection for msm_mdss
+Date:   Tue, 8 Mar 2022 12:31:10 -0800
+Message-ID: <CAE-0n509i4o2vWp_Ukms3Uswqpk73JiCN3_Q3DC8qSVbp4P8ZQ@mail.gmail.com>
+Subject: Re: [PATCH v3 3/5] drm/msm: split the main platform driver
 To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -70,12 +70,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-03-03 19:21:03)
-> Since now there is just one mdss subdriver, drop all the indirection,
-> make msm_mdss struct completely opaque (and defined inside msm_mdss.c)
-> and call mdss functions directly.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+Quoting Dmitry Baryshkov (2022-03-03 19:21:04)
+> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+> index 857eefbb8649..c89de88ed2d1 100644
+> --- a/drivers/gpu/drm/msm/msm_mdss.c
+> +++ b/drivers/gpu/drm/msm/msm_mdss.c
+> @@ -255,3 +258,170 @@ struct msm_mdss *msm_mdss_init(struct platform_device *pdev, bool is_mdp5)
+[...]
+> +
+> +static int mdss_probe(struct platform_device *pdev)
+> +{
+> +       struct msm_mdss *mdss;
+> +       struct msm_drm_private *priv;
+> +       int mdp_ver = get_mdp_ver(pdev);
+> +       struct device *mdp_dev;
+> +       struct device *dev = &pdev->dev;
+> +       int ret;
+> +
+> +       priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
+> +       if (!priv)
+> +               return -ENOMEM;
+> +
+> +       platform_set_drvdata(pdev, priv);
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Is this set here so that msm_mdss_init() can use it? Can we pass 'priv'
+as an argument to that function if so?
+
+> +
+> +       mdss = msm_mdss_init(pdev, mdp_ver == KMS_MDP5);
+> +       if (IS_ERR(mdss)) {
+> +               ret = PTR_ERR(mdss);
+> +               platform_set_drvdata(pdev, NULL);
+
+Is this platform_set_drvdata to NULL really necessary? It would be nice
+to skip it so the mental load of this probe is lower.
+
+> +
+> +               return ret;
+> +       }
+> +
