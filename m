@@ -2,111 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DAAA34D375A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Mar 2022 18:44:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 13A494D3919
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Mar 2022 19:45:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236280AbiCIRBe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Mar 2022 12:01:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41514 "EHLO
+        id S236744AbiCISpl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Mar 2022 13:45:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236926AbiCIRAu (ORCPT
+        with ESMTP id S230366AbiCISpk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 9 Mar 2022 12:00:50 -0500
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01EE91045B2
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Mar 2022 08:47:50 -0800 (PST)
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com [209.85.218.69])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 8CE7B3F7DF
-        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Mar 2022 16:47:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1646844456;
-        bh=t5qKAKCgLHNfxioPnEDa1ge5OiEhv8KjWelueqMtl/A=;
-        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-         In-Reply-To:Content-Type;
-        b=G7udQNwdlDinVLi4lSkcaXkUxmniovasE/ECkS5s8BfpVoHxOIbT57dx69hRPYPwL
-         eMgXM4coGsl5N5MnQX2Hrfct+epBo4F1GVKlpnw3fZdW/OkbE2j7Ca2q/whBpX9ckp
-         I6FkxHn/2LTjHcg9pkjliN2BCoxjVb3KFLKAdfEFHdn2SAIiLvkxfFR7jUvAC2vEWM
-         34kGfDSUYOzHngURxXmp7F/u7S9hMPa4FNwcG+FdAjz2BJyRDalTN7ee3sCv4CKWk2
-         JTsDhnXvp1GY2AEeRqLWaPTAVZIBh1qANPfAROeWmOSGDXpqL4hNXnso/gA0yxgtu9
-         rddIdiDrb1+sQ==
-Received: by mail-ej1-f69.google.com with SMTP id hx13-20020a170906846d00b006db02e1a307so1618351ejc.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Mar 2022 08:47:36 -0800 (PST)
+        Wed, 9 Mar 2022 13:45:40 -0500
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CFEE1A39D6
+        for <linux-arm-msm@vger.kernel.org>; Wed,  9 Mar 2022 10:44:41 -0800 (PST)
+Received: by mail-qk1-x734.google.com with SMTP id 1so1923659qke.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Mar 2022 10:44:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=1GYgab5H+rGUBq7zOJrmbkhSWBxCHw55vFYA5ItmMWs=;
+        b=CcsImuzcs2m9UWk2W++y2OAvIZ8LTsIqQoV0RAnXSz+4GipX7agpbelYtd8dDrCYdJ
+         COLNBkN2bXcs8cWWlVLA/ZtzH8AZd2WQBWAQAc0pNj+qlztj6wCn5mXJVLMX7AtrLAGB
+         S/a99NYGs6pJLpDHnjrWR/nXyBAfI1OeKk3IVIS+9E07nQG5mWB6NIWa4KBEhwNv++8+
+         PQI7+WbQJSOmiWBmW5I3ejSnld2ffAsfGzC7UwPX6BYaHZ/pF17MFdlNuYpX3jLR1dn8
+         fOz0RB7OgLlDanBknGBQD4kI+JoI6WBgAxeyw31MCvGRbkn6bv4cBU9Am3r4Zh3GSwcc
+         6ofQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=t5qKAKCgLHNfxioPnEDa1ge5OiEhv8KjWelueqMtl/A=;
-        b=pOQ4JMnfEcS9RnLCvUFp063ZSD66p0TF9zURdAR8EP/RQew0xrwNEEOyp9KCd4IKu+
-         gdhaQYdUwwOCyQy47tVvR6ceByW03I0p+e9ukQ0uHWH/2NQPgtyKJSo4+aIKSKJ8nhZ3
-         WMAijQKzzj9vZvp1o+QJRnq87I7W6XCtEw829JXkakCaFAvmNPRz/nzVXZEA5tUO/6Nm
-         tHhFVcP+/POyPopkM+W+rYUsOdzygEBEe3yxwG7tbDfAVdKjFUKDSs20nAGEGUXXSsa3
-         LK+aHHv1xsgnPatMcxRaE28D4rtHAcSlFfJ1gPd7Rq6YvEFGvMvozwsUSi0O1nDbV2GA
-         qVzQ==
-X-Gm-Message-State: AOAM532UsW4LnynhDDO+N9pEZmFnWfoeks2pob3OxqMwbwohM6Cj2Wel
-        OM144CAKeCJd47Kpw+ybZGs/Bof3xm6H56HDHYLeO8OaoouIjY7HobU4f72dDlChzro8gXeHoOl
-        rzeKpFMDS8jHmH/DsQZLT2XYCmWX0vAzAfm9Mr7ClniY=
-X-Received: by 2002:a05:6402:486:b0:413:bd00:4f3f with SMTP id k6-20020a056402048600b00413bd004f3fmr326532edv.103.1646844456277;
-        Wed, 09 Mar 2022 08:47:36 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJwsZlug/Jtbf8IyQ3h7CW4SbOa236xZgNhxscDPorwlpm36emowHe5wTeYyk+ubVgN2NAc0dw==
-X-Received: by 2002:a05:6402:486:b0:413:bd00:4f3f with SMTP id k6-20020a056402048600b00413bd004f3fmr326496edv.103.1646844456025;
-        Wed, 09 Mar 2022 08:47:36 -0800 (PST)
-Received: from [192.168.0.144] (xdsl-188-155-174-239.adslplus.ch. [188.155.174.239])
-        by smtp.gmail.com with ESMTPSA id o2-20020a50d802000000b00410d7f0c52csm1062084edj.8.2022.03.09.08.47.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Mar 2022 08:47:35 -0800 (PST)
-Message-ID: <ba4c44bd-81d7-afd4-3a4a-6a1c6fec6692@canonical.com>
-Date:   Wed, 9 Mar 2022 17:47:34 +0100
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1GYgab5H+rGUBq7zOJrmbkhSWBxCHw55vFYA5ItmMWs=;
+        b=oOvD9KVYT/Cq2KaWIfjmmKaaumX4fHTxZ2ljbCwAtVz2/5V1nua/3kxvJdOKla+uOv
+         MzHl1e+rfgP/w3RyXcUqjIQ3rN5gU7PWEdqgb7Oy1twfh6JoK7ntfT8UHRAGtp/mNgUy
+         GawksdA2e3MvPKtaAgmUsdUOsFfxm3heAo9lhzWD9GeLfUGCAeob5TwYk64MgCFSGTyT
+         IM2pS4t3CTvRrAQpys+jhsERiBA0NdcSU7qxUcDvj4Cg72I/smDcgktpSSrAusqqhNiV
+         ef01VL336FTAz3HE0x6GsET/KnwcYwddtT14uwV4rkB+5GT45cYNuyHU4swqw35tdHMh
+         O1og==
+X-Gm-Message-State: AOAM531h2OiGXywOA2kz5GjElNkAD7SWmCGKlP2rmwV4nTyCQd2RPP8p
+        R08hmfC6CGxJUGoQND6wfbIKuNZAEKcY/ISXQWGv7Q==
+X-Google-Smtp-Source: ABdhPJzJQ27D2ONBFWs4XmQ5BOewdKNB0qEHwGt6iF6UOCud70gKpUYd6lEfUwt8/jsgCou1OiY2+6B4wa0d29f7YYg=
+X-Received: by 2002:a05:620a:44d0:b0:67b:1331:484e with SMTP id
+ y16-20020a05620a44d000b0067b1331484emr744087qkp.30.1646851480400; Wed, 09 Mar
+ 2022 10:44:40 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v2 2/2] dt-bindings: cpufreq: cpufreq-qcom-hw: Convert to
- YAML bindings
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        rafael@kernel.org, viresh.kumar@linaro.org, robh+dt@kernel.org,
-        krzk+dt@kernel.org
-Cc:     bjorn.andersson@linaro.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        angelogioacchino.delregno@somainline.org,
-        Rob Herring <robh@kernel.org>
-References: <20220309151541.139511-1-manivannan.sadhasivam@linaro.org>
- <20220309151541.139511-3-manivannan.sadhasivam@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <20220309151541.139511-3-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+References: <20220307153050.3392700-1-dmitry.baryshkov@linaro.org> <YiZ+UuionW6DsLQX@ripper>
+In-Reply-To: <YiZ+UuionW6DsLQX@ripper>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 9 Mar 2022 21:44:29 +0300
+Message-ID: <CAA8EJprGWYD=7pUekMz=cuebmA4vKEjr4UJRMVWyXGE55PzDfQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] cpufreq: qcom-hw: drop affinity hint before freeing
+ the IRQ
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/03/2022 16:15, Manivannan Sadhasivam wrote:
-> Convert Qualcomm cpufreq devicetree binding to YAML.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  .../bindings/cpufreq/cpufreq-qcom-hw.txt      | 172 ---------------
->  .../bindings/cpufreq/cpufreq-qcom-hw.yaml     | 201 ++++++++++++++++++
->  2 files changed, 201 insertions(+), 172 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
->  create mode 100644 Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
-> 
+On Tue, 8 Mar 2022 at 00:49, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
+>
+> On Mon 07 Mar 07:30 PST 2022, Dmitry Baryshkov wrote:
+>
+> > Drop affinity hint before freeing the throttling IRQ to fix the
+> > following trace:
+>
+> Rather than relying on the reader of the git log having to read the
+> free_irq() implementation to figure out what the problem is, this could
+> simply state that one isn't allowed to free_irq() something with
+> affinity set.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Ack, will update the commit message in v2.
 
 
-Best regards,
-Krzysztof
+> Regards,
+> Bjorn
+>
+> >
+> > [  185.114773] ------------[ cut here ]------------
+> > [  185.119517] WARNING: CPU: 7 PID: 43 at kernel/irq/manage.c:1887 free_irq+0x3a4/0x3dc
+> > [  185.127474] Modules linked in:
+> > [  185.130618] CPU: 7 PID: 43 Comm: cpuhp/7 Tainted: G S      W         5.17.0-rc6-00386-g67382a5b705d-dirty #690
+> > [  185.147125] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> > [  185.154269] pc : free_irq+0x3a4/0x3dc
+> > [  185.158031] lr : free_irq+0x33c/0x3dc
+> > [  185.161792] sp : ffff80000841bc90
+> > [  185.165195] x29: ffff80000841bc90 x28: ffffa6edc5c3d000 x27: ffff6d93729e5908
+> > [  185.172515] x26: 0000000000000000 x25: ffff6d910109fc00 x24: ffff6d91011490e0
+> > [  185.179838] x23: ffff6d9101149218 x22: 0000000000000080 x21: 0000000000000000
+> > [  185.187163] x20: ffff6d9101149000 x19: ffff6d910ab61500 x18: ffffffffffffffff
+> > [  185.194487] x17: 2e35202020202020 x16: 2020202020202020 x15: ffff80008841b9a7
+> > [  185.201805] x14: 00000000000003c9 x13: 0000000000000001 x12: 0000000000000040
+> > [  185.209135] x11: ffff6d91005aab58 x10: ffff6d91005aab5a x9 : ffffc6a5ad1c5408
+> > [  185.216455] x8 : ffff6d91005adb88 x7 : 0000000000000000 x6 : ffffc6a5ab5a91f4
+> > [  185.223776] x5 : 0000000000000000 x4 : ffff6d91011490a8 x3 : ffffc6a5ad266108
+> > [  185.231098] x2 : 0000000013033204 x1 : ffff6d9101149000 x0 : ffff6d910a9cc000
+> > [  185.238421] Call trace:
+> > [  185.240932]  free_irq+0x3a4/0x3dc
+> > [  185.244334]  qcom_cpufreq_hw_cpu_exit+0x78/0xcc
+> > [  185.248985]  cpufreq_offline.isra.0+0x228/0x270
+> > [  185.253639]  cpuhp_cpufreq_offline+0x10/0x20
+> > [  185.258027]  cpuhp_invoke_callback+0x16c/0x2b0
+> > [  185.262592]  cpuhp_thread_fun+0x190/0x250
+> > [  185.266710]  smpboot_thread_fn+0x12c/0x230
+> > [  185.270914]  kthread+0xfc/0x100
+> > [  185.274145]  ret_from_fork+0x10/0x20
+> > [  185.277820] irq event stamp: 212
+> > [  185.281136] hardirqs last  enabled at (211): [<ffffc6a5ac57973c>] _raw_spin_unlock_irqrestore+0x8c/0xa0
+> > [  185.290775] hardirqs last disabled at (212): [<ffffc6a5ac572100>] __schedule+0x710/0xa10
+> > [  185.299081] softirqs last  enabled at (0): [<ffffc6a5ab50f7b0>] copy_process+0x7d0/0x1a14
+> > [  185.307475] softirqs last disabled at (0): [<0000000000000000>] 0x0
+> >
+> > Fixes: 275157b367f4 ("cpufreq: qcom-cpufreq-hw: Add dcvs interrupt support")
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/cpufreq/qcom-cpufreq-hw.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> > index effbb680b453..740518d8ae16 100644
+> > --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> > +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> > @@ -412,6 +412,7 @@ static void qcom_cpufreq_hw_lmh_exit(struct qcom_cpufreq_data *data)
+> >       mutex_unlock(&data->throttle_lock);
+> >
+> >       cancel_delayed_work_sync(&data->throttle_work);
+> > +     irq_set_affinity_hint(data->throttle_irq, NULL);
+> >       free_irq(data->throttle_irq, data);
+> >  }
+> >
+> > --
+> > 2.34.1
+> >
+
+
+
+-- 
+With best wishes
+Dmitry
