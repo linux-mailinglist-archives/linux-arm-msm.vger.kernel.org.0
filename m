@@ -2,146 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE2304D2662
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Mar 2022 05:05:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 734CA4D26EA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Mar 2022 05:06:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231219AbiCIBx4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Mar 2022 20:53:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35044 "EHLO
+        id S231312AbiCICB7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Mar 2022 21:01:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231231AbiCIBxy (ORCPT
+        with ESMTP id S231231AbiCICB5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Mar 2022 20:53:54 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B6E213EB8
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Mar 2022 17:52:57 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id i8so776768wrr.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Mar 2022 17:52:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=DRolm/pjPpwXjBsNzyPivKT1VP/HfTnUyLPT4KbhwIA=;
-        b=AYWf/940N7BjBvgT3kZA/MQ/JRplQXi8rJ5TX3RSp+GTFeiW+IgoduTSwyftX2fwUT
-         KBMPlBWm9bwuQTOPfheaFvUtQ1fg20q6hg+r2O8MdvNLC9UgNU+Jet2NZsMCpy2NmFp/
-         bSi8b7DA1SBi7DhKOIgGirEFAIKwTKiQCVs6vkTVXXP5PH5kxqcn0jSvsOeaQAlFm4aJ
-         a0M3KXSyD6CjOUxV7T53RqUlASLXM4e3WCgHZ4zQ1VpKBLjf4BnzpKY1SAVTKUzt9AHS
-         MTfCyqustZ00b03/sQlBAcmWPHQRCBOnqFmMRnAjYoPtuzhZmAWBEWWF5/8TQ0Ys7mOj
-         pqpQ==
+        Tue, 8 Mar 2022 21:01:57 -0500
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A12747484D;
+        Tue,  8 Mar 2022 18:00:59 -0800 (PST)
+Received: by mail-oi1-f175.google.com with SMTP id q189so1222441oia.9;
+        Tue, 08 Mar 2022 18:00:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=DRolm/pjPpwXjBsNzyPivKT1VP/HfTnUyLPT4KbhwIA=;
-        b=ier8Cre8MTE8npiH6w1K1QaIGhbVHp80X4MIDEWQySTeNSQi0hM8+eZSvhOQMst9sS
-         k7xNLhNGRD2aEy2FevmA3Iuhh/2Fa9jwPE8V1qYFQN7BedEjsY77sYUBupv2Mx6zz8VS
-         uiYYdlgDK2mI61muGUd8yr4cUvCG69QjHEf8hWA4x7+Luy3gTqABtN/J5Gt+/uNz7rBK
-         2zVy9rIYRyYouSN/sZztLNL1ByFmOnB5kanz5nPoeXtlbpjLzmYRh0IQ41YPtHWro24+
-         XYCX+bR9jEOU20ZIIPQ05a6vWgPNjqgH8MTG6/7Jj6SXh6ugvJTzw+zJmY99lDxXz9mp
-         tRNA==
-X-Gm-Message-State: AOAM530VA3Rs5Q9cJBXJ9aCEFOsYTNokrG/BV7DSrRV/pZ7qi3s0QCBY
-        ahq+4CfZvuVjTgVWbpr9QbPHHKFKCUQcjMKuuP1M2J8/2c8=
-X-Google-Smtp-Source: ABdhPJzCacRqXQsnY1FN9kqvExgwrcL2s/HF6jgcv+Uy5ST4+qG2xTodxDyNGg0883e3N8tHEcX3Jj3T/MVm3t3fmXY=
-X-Received: by 2002:adf:914f:0:b0:1ed:bb92:d0cc with SMTP id
- j73-20020adf914f000000b001edbb92d0ccmr14384019wrj.297.1646790775618; Tue, 08
- Mar 2022 17:52:55 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=mWEHy9bniNne88jJU8uXaag3F19iRbd78liIzCE7PTs=;
+        b=ddi9ispAXoGWt9SPQpJVk8H3SOBi4t1euf2iB68q2gk6vED9c/ql+wSH1lwAt5cxwa
+         sd7bpfB/Cp1rYqHqS9kMaRRNjaA1c4klatCuPl5wtZvJMraYGzIDW+KkfPtyZ1Gnlq8v
+         Gfe7KW8hvPvafVecVxDTJASlT6YvJl7TJIpJEQyV4ZLFSJ5e5eYbW2dAvbi27IyxbUli
+         cekVQ7GmnlsSzBkGHLrXwgg1rzFah3KIRQBCjIbDzSmZAJztjexE3mD5XhzBYDtcRjch
+         6DCUbawECJNz8LJUBY1AFdOEjE/Pcw0gfr5SVr8tLejtR9iIH8hYsqKg5t56RmjQxpNK
+         EcYg==
+X-Gm-Message-State: AOAM533ONdah7Ii15az6JnAjw2zUBXqYU9QOheiFSQxOZJvdiLqQPlad
+        Pm1vTVKmRhkjh+Eir/jqHA==
+X-Google-Smtp-Source: ABdhPJyP4NIvcuJfaHjGGoZ6i+F9U7s3CMH3FV08j2d4EMWj+LpBXTOaiaseboj4DN2mhj42qVnlzQ==
+X-Received: by 2002:a05:6808:1201:b0:2d9:a01a:48b8 with SMTP id a1-20020a056808120100b002d9a01a48b8mr4473119oil.259.1646791258942;
+        Tue, 08 Mar 2022 18:00:58 -0800 (PST)
+Received: from rob (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id v37-20020a056830092500b005b1f7daf40asm241123ott.75.2022.03.08.18.00.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Mar 2022 18:00:58 -0800 (PST)
+Received: (nullmailer pid 1765443 invoked by uid 1000);
+        Wed, 09 Mar 2022 02:00:56 -0000
+Date:   Tue, 8 Mar 2022 19:00:56 -0700
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Wei Xu <xuwei5@hisilicon.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Jan Kotas <jank@cadence.com>, Li Wei <liwei213@huawei.com>,
+        Stanley Chu <stanley.chu@mediatek.com>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-mediatek@lists.infradead.org
+Subject: Re: [PATCH v3 00/12] dt-bindings: ufs: add common platform bindings
+ + fixes
+Message-ID: <20220309020056.GA1764427@robh.at.kernel.org>
+References: <20220306111125.116455-1-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 8 Mar 2022 17:53:25 -0800
-Message-ID: <CAF6AEGvwHFHEd+9df-0aBOCfmw+ULvTS3f18sJuq_cvGKLDSjw@mail.gmail.com>
-Subject: [pull] drm/msm: drm-msm-next-2022-03-08 for 5.18
-To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220306111125.116455-1-krzysztof.kozlowski@canonical.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dave & Daniel,
+On Sun, Mar 06, 2022 at 12:11:13PM +0100, Krzysztof Kozlowski wrote:
+> Hi,
+> 
+> Not tested on hardware, so please kindly test.
+> Bindings maintainers might need checking - taken from git log.
+> 
+> Changes since v2
+> ================
+> 1. Do not deprecate freq-table-hz, but instead update dtschema to accept
+>    uint32-matrix. See:
+>    https://github.com/devicetree-org/dt-schema/pull/69
+> 2. Drop patches and changes related to freq-table-hz -> freq-table conversion.
+> 3. Add tags.
+> 4. Change maintainer of qcom,ufs.
+> 
+> Changes since v1
+> ================
+> 1. Make freq-table as matrix of tuples (Nishanth).
+> 2. New patches: convert all bindings and fix up DTS files.
+> 3. Several minor fixes in UFS bindings.
+> 
+> Dependencies
+> ============
+> None dependencies. The DTS patches can go independently via respective
+> maintainers. The dt-bindings patches could go via UFS tree.
+> 
+> Best regards,
+> Krzysztof
+> 
+> Krzysztof Kozlowski (12):
+>   dt-bindings: ufs: add common platform bindings
+>   dt-bindings: ufs: samsung,exynos-ufs: use common bindings
+>   dt-bindings: ufs: cdns,ufshc: convert to dtschema
+>   dt-bindings: ufs: drop unused/old ufs-qcom PHY bindings
+>   dt-bindings: ufs: qcom,ufs: convert to dtschema
+>   dt-bindings: ufs: hisilicon,ufs: convert to dtschema
+>   dt-bindings: ufs: mediatek,ufs: convert to dtschema
+>   dt-bindings: ufs: snps,tc-dwc-g210: convert to dtschema
 
-Follow-up pull req for v5.18 to pull in some important fixes.
+Patches 1-8 applied.
 
-The following changes since commit afab9d91d872819f98a792c32c302d9e3261f1a1:
+Rob
 
-  drm/msm/adreno: Expose speedbin to userspace (2022-02-25 13:29:57 -0800)
-
-are available in the Git repository at:
-
-  https://gitlab.freedesktop.org/drm/msm.git drm-msm-next-2022-03-08
-
-for you to fetch changes up to 05afd57f4d34602a652fdaf58e0a2756b3c20fd4:
-
-  drm/msm/gpu: Fix crash on devices without devfreq support (v2)
-(2022-03-08 13:55:23 -0800)
-
-----------------------------------------------------------------
-Dan Carpenter (1):
-      drm/msm/adreno: fix cast in adreno_get_param()
-
-Dmitry Baryshkov (1):
-      dt-bindings: display/msm: add missing brace in dpu-qcm2290.yaml
-
-Rob Clark (8):
-      drm/msm: Update generated headers
-      drm/msm: Add SET_PARAM ioctl
-      drm/msm: Add SYSPROF param (v2)
-      drm/msm/a6xx: Zap counters across context switch
-      drm/msm: Add MSM_SUBMIT_FENCE_SN_IN
-      drm/msm/a6xx: Fix missing ARRAY_SIZE() check
-      drm/msm: Fix dirtyfb refcounting
-      drm/msm/gpu: Fix crash on devices without devfreq support (v2)
-
-Rob Herring (1):
-      dt-bindings: display/msm: Drop bogus interrupt flags cell on MDSS nodes
-
- .../bindings/display/msm/dpu-msm8998.yaml          |   4 +-
- .../bindings/display/msm/dpu-qcm2290.yaml          |   5 +-
- drivers/gpu/drm/msm/adreno/a2xx.xml.h              |  26 +-
- drivers/gpu/drm/msm/adreno/a2xx_gpu.c              |   1 +
- drivers/gpu/drm/msm/adreno/a3xx.xml.h              |  30 +-
- drivers/gpu/drm/msm/adreno/a3xx_gpu.c              |   1 +
- drivers/gpu/drm/msm/adreno/a4xx.xml.h              | 112 +++-
- drivers/gpu/drm/msm/adreno/a4xx_gpu.c              |   1 +
- drivers/gpu/drm/msm/adreno/a5xx.xml.h              |  63 +-
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c              |   1 +
- drivers/gpu/drm/msm/adreno/a6xx.xml.h              | 674 +++++++++++++--------
- drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h          |  26 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |  42 +-
- drivers/gpu/drm/msm/adreno/adreno_common.xml.h     |  31 +-
- drivers/gpu/drm/msm/adreno/adreno_gpu.c            |  22 +-
- drivers/gpu/drm/msm/adreno/adreno_gpu.h            |   2 +
- drivers/gpu/drm/msm/adreno/adreno_pm4.xml.h        |  46 +-
- drivers/gpu/drm/msm/disp/mdp4/mdp4.xml.h           |  37 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5.xml.h           |  37 +-
- drivers/gpu/drm/msm/disp/mdp_common.xml.h          |  37 +-
- drivers/gpu/drm/msm/dsi/dsi.xml.h                  |  37 +-
- drivers/gpu/drm/msm/dsi/dsi_phy_10nm.xml.h         |  37 +-
- drivers/gpu/drm/msm/dsi/dsi_phy_14nm.xml.h         |  37 +-
- drivers/gpu/drm/msm/dsi/dsi_phy_20nm.xml.h         |  37 +-
- drivers/gpu/drm/msm/dsi/dsi_phy_28nm.xml.h         |  37 +-
- drivers/gpu/drm/msm/dsi/dsi_phy_28nm_8960.xml.h    |  37 +-
- drivers/gpu/drm/msm/dsi/dsi_phy_5nm.xml.h          | 480 ---------------
- drivers/gpu/drm/msm/dsi/dsi_phy_7nm.xml.h          |  43 +-
- drivers/gpu/drm/msm/dsi/mmss_cc.xml.h              |  37 +-
- drivers/gpu/drm/msm/dsi/sfpb.xml.h                 |  37 +-
- drivers/gpu/drm/msm/hdmi/hdmi.xml.h                |  37 +-
- drivers/gpu/drm/msm/hdmi/qfprom.xml.h              |  37 +-
- drivers/gpu/drm/msm/msm_drv.c                      |  31 +-
- drivers/gpu/drm/msm/msm_fb.c                       |   4 +-
- drivers/gpu/drm/msm/msm_gem_submit.c               |  42 +-
- drivers/gpu/drm/msm/msm_gpu.c                      |   2 +
- drivers/gpu/drm/msm/msm_gpu.h                      |  29 +
- drivers/gpu/drm/msm/msm_gpu_devfreq.c              |  30 +-
- drivers/gpu/drm/msm/msm_submitqueue.c              |  39 ++
- include/uapi/drm/msm_drm.h                         |  32 +-
- 40 files changed, 1144 insertions(+), 1156 deletions(-)
- delete mode 100644 drivers/gpu/drm/msm/dsi/dsi_phy_5nm.xml.h
+>   arm64: dts: hisilicon: align 'freq-table-hz' with dtschema in UFS
+>   arm64: dts: qcom: msm8996: drop unsupported UFS
+>     vddp-ref-clk-max-microamp
+>   arm64: dts: qcom: msm8996: correct UFS compatible
+>   arm64: dts: qcom: sm8350: drop duplicated ref_clk in UFS
+> 
+>  .../devicetree/bindings/ufs/cdns,ufshc.txt    |  32 ---
+>  .../devicetree/bindings/ufs/cdns,ufshc.yaml   |  68 +++++
+>  .../bindings/ufs/hisilicon,ufs.yaml           |  90 +++++++
+>  .../devicetree/bindings/ufs/mediatek,ufs.yaml |  67 +++++
+>  .../devicetree/bindings/ufs/qcom,ufs.yaml     | 242 ++++++++++++++++++
+>  .../bindings/ufs/samsung,exynos-ufs.yaml      |  13 +-
+>  .../bindings/ufs/snps,tc-dwc-g210.yaml        |  51 ++++
+>  .../bindings/ufs/tc-dwc-g210-pltfrm.txt       |  26 --
+>  .../devicetree/bindings/ufs/ti,j721e-ufs.yaml |   7 +-
+>  .../devicetree/bindings/ufs/ufs-common.yaml   |  82 ++++++
+>  .../devicetree/bindings/ufs/ufs-hisi.txt      |  42 ---
+>  .../devicetree/bindings/ufs/ufs-mediatek.txt  |  45 ----
+>  .../devicetree/bindings/ufs/ufs-qcom.txt      |  63 -----
+>  .../devicetree/bindings/ufs/ufshcd-pltfrm.txt |  90 -------
+>  MAINTAINERS                                   |   1 +
+>  arch/arm64/boot/dts/hisilicon/hi3660.dtsi     |   4 +-
+>  arch/arm64/boot/dts/hisilicon/hi3670.dtsi     |   4 +-
+>  .../boot/dts/qcom/msm8996-xiaomi-common.dtsi  |   1 -
+>  arch/arm64/boot/dts/qcom/msm8996.dtsi         |   3 +-
+>  arch/arm64/boot/dts/qcom/sm8350.dtsi          |   3 -
+>  20 files changed, 614 insertions(+), 320 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/ufs/cdns,ufshc.txt
+>  create mode 100644 Documentation/devicetree/bindings/ufs/cdns,ufshc.yaml
+>  create mode 100644 Documentation/devicetree/bindings/ufs/hisilicon,ufs.yaml
+>  create mode 100644 Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml
+>  create mode 100644 Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>  create mode 100644 Documentation/devicetree/bindings/ufs/snps,tc-dwc-g210.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/ufs/tc-dwc-g210-pltfrm.txt
+>  create mode 100644 Documentation/devicetree/bindings/ufs/ufs-common.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/ufs/ufs-hisi.txt
+>  delete mode 100644 Documentation/devicetree/bindings/ufs/ufs-mediatek.txt
+>  delete mode 100644 Documentation/devicetree/bindings/ufs/ufs-qcom.txt
+>  delete mode 100644 Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
+> 
+> -- 
+> 2.32.0
+> 
+> 
