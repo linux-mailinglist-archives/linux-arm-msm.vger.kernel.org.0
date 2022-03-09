@@ -2,50 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE1BF4D28BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Mar 2022 07:11:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7812B4D28B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Mar 2022 07:11:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229897AbiCIGLT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 9 Mar 2022 01:11:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36954 "EHLO
+        id S229898AbiCIGLU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 9 Mar 2022 01:11:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229861AbiCIGLS (ORCPT
+        with ESMTP id S229882AbiCIGLS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 9 Mar 2022 01:11:18 -0500
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1EAA10818B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Mar 2022 22:10:19 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 537FF1081A5
+        for <linux-arm-msm@vger.kernel.org>; Tue,  8 Mar 2022 22:10:20 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 53A6361919
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E630E6191C
         for <linux-arm-msm@vger.kernel.org>; Wed,  9 Mar 2022 06:10:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B5851C36AE2;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id DA3D6C36AEB;
         Wed,  9 Mar 2022 06:10:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1646806218;
-        bh=nt0LDdpIpNGnUk02sis/UqtgwtC8oeU2aUhEuNmTyUw=;
+        bh=iNaKSCgPnFsLrpcp4AgjlID6TL5OcBTt6QNQRVYapB4=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=o3XLQycFGyajkLy6zENQzdCaFln7bk+htlhor851dl4YoHJ9mapYDey1+m+M/5P4m
-         flnDvJZojMCzZ8qPEQTVd6UhuX2lo8b7XAz6AMySDP6GOzKXdz2+Es6j3A6Yq7Jt00
-         1QEfk+E6rIT7pF6EJEQkvsOywjNd7h9LjZLZCoeolVdFRwpgeN13nZN+fN4VKoBEmK
-         XrXhL907c6UwrLpdECrjsNGEnMVeA7svhrE+FZp6ve2O93v/oYdXOXSWPAK/kqG8ND
-         ivXIz1afx6XLT/FYwvn+seqgW2goBQyj0PAUgFy+pqMfC/cHvt3A7H5ZgPd9vJ/78N
-         cDSJdi3Ldu75A==
+        b=Dicy3lfe0IqZstll7eCqiKYGc0mSLY4hkGQfxcpcIl4HXoxQwjqKJIfAdmVhJCXdK
+         FVu7xdIrFI+3Gez1gt/22N6GL1PiiD4iiTSeUHqStUMlfBKZHlpEDEgxr66bij4cfO
+         71b11EBk5nsTLs7kiY8FTKLRO46N9wnYfLoQ4G9MtvfqpHt8AY0SRNkPEzBo7OQ4y5
+         BS9/BAiWkOHqmOnnvW+5ORmdMG+ypKIKqjwBCmG1/rqWk3Gkd2e2t0YEPci5eSCwps
+         6izIk2N3B/tKoV6RiMQS/whlbDweEsHh4KG2NowvwocgEa7f06yJ1x6bGLJ0PPnSho
+         JVRgm5SpIhZig==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 94CC2E73C2D;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C1C51E8DD5B;
         Wed,  9 Mar 2022 06:10:18 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [v3 1/2] clk: qcom: clk-rcg2: Update logic to calculate D value for
- RCG
+Subject: Re: [PATCH v3 0/6] Add ethernet support for Qualcomm SA8155p-ADP board
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <164680621860.4478.16616258277235999500.git-patchwork-notify@kernel.org>
+Message-Id: <164680621879.4478.16186213612647351702.git-patchwork-notify@kernel.org>
 Date:   Wed, 09 Mar 2022 06:10:18 +0000
-References: <20220227175536.3131-1-tdas@codeaurora.org>
-In-Reply-To: <20220227175536.3131-1-tdas@codeaurora.org>
-To:     Taniya Das <tdas@codeaurora.org>
+References: <20220303084824.284946-1-bhupesh.sharma@linaro.org>
+In-Reply-To: <20220303084824.284946-1-bhupesh.sharma@linaro.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org
 X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
@@ -62,21 +61,30 @@ Hello:
 This series was applied to qcom/linux.git (for-next)
 by Bjorn Andersson <bjorn.andersson@linaro.org>:
 
-On Sun, 27 Feb 2022 23:25:35 +0530 you wrote:
-> The display pixel clock has a requirement on certain newer platforms to
-> support M/N as (2/3) and the final D value calculated results in
-> underflow errors.
-> As the current implementation does not check for D value is within
-> the accepted range for a given M & N value. Update the logic to
-> calculate the final D value based on the range.
+On Thu,  3 Mar 2022 14:18:18 +0530 you wrote:
+> Changes since v2:
+> -----------------
+> - v2 can be seen here: https://lore.kernel.org/linux-arm-msm/20220302110508.69053-1-bhupesh.sharma@linaro.org/T
+> - Fixed review comments from Dmitry - created a new [PATCH 2/6]
+>   to fix some identation issues with sm8150 gcc driver.
+> 
+> Changes since v1:
 > 
 > [...]
 
 Here is the summary with links:
-  - [v3,1/2] clk: qcom: clk-rcg2: Update logic to calculate D value for RCG
-    https://git.kernel.org/qcom/c/3857b7b03eb5
-  - [v3,2/2] clk: qcom: clk-rcg2: Update the frac table for pixel clock
-    https://git.kernel.org/qcom/c/170961200c69
+  - [v3,1/6] dt-bindings: net: qcom,ethqos: Document SM8150 SoC compatible
+    (no matching commit)
+  - [v3,2/6] clk: qcom: gcc: sm8150: Fix some identation issues
+    https://git.kernel.org/qcom/c/429a1e464c52
+  - [v3,3/6] clk: qcom: gcc: Add emac GDSC support for SM8150
+    https://git.kernel.org/qcom/c/d8b180fb3dcf
+  - [v3,4/6] clk: qcom: gcc-sm8150: Use ALWAYS_ON flag as a workaround for emac gdsc
+    (no matching commit)
+  - [v3,5/6] arm64: dts: qcom: sm8150: add ethernet node
+    (no matching commit)
+  - [v3,6/6] arm64: dts: qcom: sa8155p-adp: Enable ethernet node
+    (no matching commit)
 
 You are awesome, thank you!
 -- 
