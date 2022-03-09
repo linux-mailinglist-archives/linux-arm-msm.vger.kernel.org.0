@@ -2,72 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 734CA4D26EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Mar 2022 05:06:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 720D34D273E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Mar 2022 05:07:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231312AbiCICB7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 8 Mar 2022 21:01:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55308 "EHLO
+        id S231535AbiCIC6R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 8 Mar 2022 21:58:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231231AbiCICB5 (ORCPT
+        with ESMTP id S231533AbiCIC6R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 8 Mar 2022 21:01:57 -0500
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A12747484D;
-        Tue,  8 Mar 2022 18:00:59 -0800 (PST)
-Received: by mail-oi1-f175.google.com with SMTP id q189so1222441oia.9;
-        Tue, 08 Mar 2022 18:00:59 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=mWEHy9bniNne88jJU8uXaag3F19iRbd78liIzCE7PTs=;
-        b=ddi9ispAXoGWt9SPQpJVk8H3SOBi4t1euf2iB68q2gk6vED9c/ql+wSH1lwAt5cxwa
-         sd7bpfB/Cp1rYqHqS9kMaRRNjaA1c4klatCuPl5wtZvJMraYGzIDW+KkfPtyZ1Gnlq8v
-         Gfe7KW8hvPvafVecVxDTJASlT6YvJl7TJIpJEQyV4ZLFSJ5e5eYbW2dAvbi27IyxbUli
-         cekVQ7GmnlsSzBkGHLrXwgg1rzFah3KIRQBCjIbDzSmZAJztjexE3mD5XhzBYDtcRjch
-         6DCUbawECJNz8LJUBY1AFdOEjE/Pcw0gfr5SVr8tLejtR9iIH8hYsqKg5t56RmjQxpNK
-         EcYg==
-X-Gm-Message-State: AOAM533ONdah7Ii15az6JnAjw2zUBXqYU9QOheiFSQxOZJvdiLqQPlad
-        Pm1vTVKmRhkjh+Eir/jqHA==
-X-Google-Smtp-Source: ABdhPJyP4NIvcuJfaHjGGoZ6i+F9U7s3CMH3FV08j2d4EMWj+LpBXTOaiaseboj4DN2mhj42qVnlzQ==
-X-Received: by 2002:a05:6808:1201:b0:2d9:a01a:48b8 with SMTP id a1-20020a056808120100b002d9a01a48b8mr4473119oil.259.1646791258942;
-        Tue, 08 Mar 2022 18:00:58 -0800 (PST)
-Received: from rob (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id v37-20020a056830092500b005b1f7daf40asm241123ott.75.2022.03.08.18.00.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Mar 2022 18:00:58 -0800 (PST)
-Received: (nullmailer pid 1765443 invoked by uid 1000);
-        Wed, 09 Mar 2022 02:00:56 -0000
-Date:   Tue, 8 Mar 2022 19:00:56 -0700
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Wei Xu <xuwei5@hisilicon.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Jan Kotas <jank@cadence.com>, Li Wei <liwei213@huawei.com>,
-        Stanley Chu <stanley.chu@mediatek.com>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH v3 00/12] dt-bindings: ufs: add common platform bindings
- + fixes
-Message-ID: <20220309020056.GA1764427@robh.at.kernel.org>
-References: <20220306111125.116455-1-krzysztof.kozlowski@canonical.com>
+        Tue, 8 Mar 2022 21:58:17 -0500
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35F23122226;
+        Tue,  8 Mar 2022 18:57:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1646794636; x=1678330636;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=/6orijhYB1/V+Qoz6qfONCjhMSnQhyh2RiYXK66WPPc=;
+  b=LHH5ySt5zoPQikci6eCc2m39RLCRjZt4efk7ZgtsvwiF9NIZkiR0wvBU
+   jzl10xyBwIZ5dIHe0s6aLoVCAcCr6MZs6th0je7ESF9V2tTuiT8d5TgSh
+   SWnGaX0Jrz1ctVpmG5r3uTXQF2Vmgt9g8LepAi+EupD2GapVgEhhVk87s
+   Y=;
+Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 08 Mar 2022 18:57:15 -0800
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Mar 2022 18:57:15 -0800
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Tue, 8 Mar 2022 18:57:15 -0800
+Received: from [10.239.133.9] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.15; Tue, 8 Mar 2022
+ 18:57:11 -0800
+Message-ID: <7db54684-2637-ba82-7146-c8a559337933@quicinc.com>
+Date:   Wed, 9 Mar 2022 10:57:08 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220306111125.116455-1-krzysztof.kozlowski@canonical.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [PATCH v2] coresight: core: Fix coresight device probe failure
+ issue
+Content-Language: en-US
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+CC:     <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        "Tingwei Zhang" <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>
+References: <20220304082350.30069-1-quic_jinlmao@quicinc.com>
+ <c77c93bb-f863-47c8-0ba0-3fc63530a9e1@arm.com>
+ <ea6219df-0a10-8e8d-4848-a28704a9f98e@arm.com>
+From:   Jinlong Mao <quic_jinlmao@quicinc.com>
+In-Reply-To: <ea6219df-0a10-8e8d-4848-a28704a9f98e@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,90 +78,191 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Mar 06, 2022 at 12:11:13PM +0100, Krzysztof Kozlowski wrote:
-> Hi,
-> 
-> Not tested on hardware, so please kindly test.
-> Bindings maintainers might need checking - taken from git log.
-> 
-> Changes since v2
-> ================
-> 1. Do not deprecate freq-table-hz, but instead update dtschema to accept
->    uint32-matrix. See:
->    https://github.com/devicetree-org/dt-schema/pull/69
-> 2. Drop patches and changes related to freq-table-hz -> freq-table conversion.
-> 3. Add tags.
-> 4. Change maintainer of qcom,ufs.
-> 
-> Changes since v1
-> ================
-> 1. Make freq-table as matrix of tuples (Nishanth).
-> 2. New patches: convert all bindings and fix up DTS files.
-> 3. Several minor fixes in UFS bindings.
-> 
-> Dependencies
-> ============
-> None dependencies. The DTS patches can go independently via respective
-> maintainers. The dt-bindings patches could go via UFS tree.
-> 
-> Best regards,
-> Krzysztof
-> 
-> Krzysztof Kozlowski (12):
->   dt-bindings: ufs: add common platform bindings
->   dt-bindings: ufs: samsung,exynos-ufs: use common bindings
->   dt-bindings: ufs: cdns,ufshc: convert to dtschema
->   dt-bindings: ufs: drop unused/old ufs-qcom PHY bindings
->   dt-bindings: ufs: qcom,ufs: convert to dtschema
->   dt-bindings: ufs: hisilicon,ufs: convert to dtschema
->   dt-bindings: ufs: mediatek,ufs: convert to dtschema
->   dt-bindings: ufs: snps,tc-dwc-g210: convert to dtschema
+Hi Suzuki,
 
-Patches 1-8 applied.
+On 3/8/2022 9:36 PM, Suzuki K Poulose wrote:
+> On 08/03/2022 11:56, Suzuki K Poulose wrote:
+>> Hi Jinlong
+>>
+>> On 04/03/2022 08:23, Mao Jinlong wrote:
+>>> It is possibe that probe failure issue happens when the device
+>>> and its child_device's probe happens at the same time.
+>>> In coresight_make_links, has_conns_grp is true for parent, but
+>>> has_conns_grp is false for child device as has_conns_grp is set
+>>> to true in coresight_create_conns_sysfs_group. The probe of parent
+>>> device will fail at this condition. Add has_conns_grp check for
+>>> child device before make the links and make the process from
+>>> device_register to connection_create be atomic to avoid this
+>>> probe failure issue.
+>>>
+>>> Suggested-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+>>> Suggested-by: Mike Leach <mike.leach@linaro.org>
+>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>>> ---
+>>>   drivers/hwtracing/coresight/coresight-core.c | 12 ++++++------
+>>>   1 file changed, 6 insertions(+), 6 deletions(-)
+>>>
+>>> diff --git a/drivers/hwtracing/coresight/coresight-core.c 
+>>> b/drivers/hwtracing/coresight/coresight-core.c
+>>> index 88653d1c06a4..b3e3bc59c09b 100644
+>>> --- a/drivers/hwtracing/coresight/coresight-core.c
+>>> +++ b/drivers/hwtracing/coresight/coresight-core.c
+>>> @@ -1382,7 +1382,7 @@ static int coresight_fixup_device_conns(struct 
+>>> coresight_device *csdev)
+>>>               continue;
+>>>           conn->child_dev =
+>>> coresight_find_csdev_by_fwnode(conn->child_fwnode);
+>>> -        if (conn->child_dev) {
+>>> +        if (conn->child_dev && conn->child_dev->has_conns_grp) {
+>>>               ret = coresight_make_links(csdev, conn,
+>>>                              conn->child_dev);
+>>>               if (ret)
+>>> @@ -1594,7 +1594,8 @@ struct coresight_device 
+>>> *coresight_register(struct coresight_desc *desc)
+>>>       refcnts = kcalloc(nr_refcnts, sizeof(*refcnts), GFP_KERNEL);
+>>>       if (!refcnts) {
+>>>           ret = -ENOMEM;
+>>> -        goto err_free_csdev;
+>>> +        kfree(csdev);
+>>> +        goto err_out;
+>>>       }
+>>>       csdev->refcnt = refcnts;
+>>> @@ -1619,8 +1620,10 @@ struct coresight_device 
+>>> *coresight_register(struct coresight_desc *desc)
+>>>       csdev->dev.fwnode = fwnode_handle_get(dev_fwnode(desc->dev));
+>>>       dev_set_name(&csdev->dev, "%s", desc->name);
+>>> +    mutex_lock(&coresight_mutex);
+>>>       ret = device_register(&csdev->dev);
+>>>       if (ret) {
+>>> +        mutex_unlock(&coresight_mutex);
+>>>           put_device(&csdev->dev);
+>>>           /*
+>>>            * All resources are free'd explicitly via
+>>> @@ -1634,6 +1637,7 @@ struct coresight_device 
+>>> *coresight_register(struct coresight_desc *desc)
+>>>           ret = etm_perf_add_symlink_sink(csdev);
+>>>           if (ret) {
+>>> +            mutex_unlock(&coresight_mutex);
+>>>               device_unregister(&csdev->dev);
+>>>               /*
+>>>                * As with the above, all resources are free'd
+>>> @@ -1645,8 +1649,6 @@ struct coresight_device 
+>>> *coresight_register(struct coresight_desc *desc)
+>>>           }
+>>>       }
+>>> -    mutex_lock(&coresight_mutex);
+>>> -
+>>>       ret = coresight_create_conns_sysfs_group(csdev);
+>>>       if (!ret)
+>>>           ret = coresight_fixup_device_conns(csdev);
+>>> @@ -1663,8 +1665,6 @@ struct coresight_device 
+>>> *coresight_register(struct coresight_desc *desc)
+>>>       return csdev;
+>>> -err_free_csdev:
+>>> -    kfree(csdev);
+>>>   err_out:
+>>>       /* Cleanup the connection information */
+>>>       coresight_release_platform_data(NULL, desc->pdata);
+>>
+>> Could we consolidate the unlock sequence to a single point with 
+>> something like this (untested):
+>>
+>>
+>> diff --git a/drivers/hwtracing/coresight/coresight-core.c 
+>> b/drivers/hwtracing/coresight/coresight-core.c
+>> index af00dca8d1ac..198ee140c6e6 100644
+>> --- a/drivers/hwtracing/coresight/coresight-core.c
+>> +++ b/drivers/hwtracing/coresight/coresight-core.c
+>> @@ -1571,6 +1571,7 @@ struct coresight_device 
+>> *coresight_register(struct coresight_desc *desc)
+>>       int nr_refcnts = 1;
+>>       atomic_t *refcnts = NULL;
+>>       struct coresight_device *csdev;
+>> +    bool registered = false;
+>>
+>>       csdev = kzalloc(sizeof(*csdev), GFP_KERNEL);
+>>       if (!csdev) {
+>> @@ -1591,7 +1592,8 @@ struct coresight_device 
+>> *coresight_register(struct coresight_desc *desc)
+>>       refcnts = kcalloc(nr_refcnts, sizeof(*refcnts), GFP_KERNEL);
+>>       if (!refcnts) {
+>>           ret = -ENOMEM;
+>> -        goto err_free_csdev;
+>> +        kfree(csdev);
+>> +        goto err_out;
+>>       }
+>>
+>>       csdev->refcnt = refcnts;
+>> @@ -1616,6 +1618,13 @@ struct coresight_device 
+>> *coresight_register(struct coresight_desc *desc)
+>>       csdev->dev.fwnode = fwnode_handle_get(dev_fwnode(desc->dev));
+>>       dev_set_name(&csdev->dev, "%s", desc->name);
+>>
+>> +    /*
+>> +     * Make sure the device registration and the connection fixup
+>> +     * are synchronised, so that we don't see uninitialised devices
+>> +     * on the coresight bus while trying to resolve the connections.
+>> +     */
+>> +    mutex_lock(&coresight_mutex);
+>> +
+>>       ret = device_register(&csdev->dev);
+>>       if (ret) {
+>>           put_device(&csdev->dev);
+>> @@ -1623,7 +1632,7 @@ struct coresight_device 
+>> *coresight_register(struct coresight_desc *desc)
+>>            * All resources are free'd explicitly via
+>>            * coresight_device_release(), triggered from put_device().
+>>            */
+>> -        goto err_out;
+>> +        goto out_unlock;
+>>       }
+>>
+>>       if (csdev->type == CORESIGHT_DEV_TYPE_SINK ||
+>> @@ -1638,11 +1647,11 @@ struct coresight_device 
+>> *coresight_register(struct coresight_desc *desc)
+>>                * from put_device(), which is in turn called from
+>>                * function device_unregister().
+>>                */
+>> -            goto err_out;
+>> +            goto out_unlock;
+>>           }
+>>       }
+>> -
+>> -    mutex_lock(&coresight_mutex);
+>> +    /* Device is now registered */
+>> +    registered = true;
+>>
+>>       ret = coresight_create_conns_sysfs_group(csdev);
+>>       if (!ret)
+>> @@ -1652,16 +1661,15 @@ struct coresight_device 
+>> *coresight_register(struct coresight_desc *desc)
+>>       if (!ret && cti_assoc_ops && cti_assoc_ops->add)
+>>           cti_assoc_ops->add(csdev);
+>>
+>> +out_unlock:
+>>       mutex_unlock(&coresight_mutex);
+>> -    if (ret) {
+>> +    /* Success */
+>> +    if (!ret)
+>> +        return csdev;
+>> +
+>> +    /* Unregister the device if needed */
+>> +    if (registered)
+>>           coresight_unregister(csdev);
+>> -        return ERR_PTR(ret);
+>> -    }
+>
+> Apologies, this should be preserved :
+>
+> i.e,
+>     if (registered) {
+>         coresight_unregister(csdev);
+>         return ERR_PTR(ret);
+>     }
+I will test with your changes and get back to you later.
 
-Rob
-
->   arm64: dts: hisilicon: align 'freq-table-hz' with dtschema in UFS
->   arm64: dts: qcom: msm8996: drop unsupported UFS
->     vddp-ref-clk-max-microamp
->   arm64: dts: qcom: msm8996: correct UFS compatible
->   arm64: dts: qcom: sm8350: drop duplicated ref_clk in UFS
-> 
->  .../devicetree/bindings/ufs/cdns,ufshc.txt    |  32 ---
->  .../devicetree/bindings/ufs/cdns,ufshc.yaml   |  68 +++++
->  .../bindings/ufs/hisilicon,ufs.yaml           |  90 +++++++
->  .../devicetree/bindings/ufs/mediatek,ufs.yaml |  67 +++++
->  .../devicetree/bindings/ufs/qcom,ufs.yaml     | 242 ++++++++++++++++++
->  .../bindings/ufs/samsung,exynos-ufs.yaml      |  13 +-
->  .../bindings/ufs/snps,tc-dwc-g210.yaml        |  51 ++++
->  .../bindings/ufs/tc-dwc-g210-pltfrm.txt       |  26 --
->  .../devicetree/bindings/ufs/ti,j721e-ufs.yaml |   7 +-
->  .../devicetree/bindings/ufs/ufs-common.yaml   |  82 ++++++
->  .../devicetree/bindings/ufs/ufs-hisi.txt      |  42 ---
->  .../devicetree/bindings/ufs/ufs-mediatek.txt  |  45 ----
->  .../devicetree/bindings/ufs/ufs-qcom.txt      |  63 -----
->  .../devicetree/bindings/ufs/ufshcd-pltfrm.txt |  90 -------
->  MAINTAINERS                                   |   1 +
->  arch/arm64/boot/dts/hisilicon/hi3660.dtsi     |   4 +-
->  arch/arm64/boot/dts/hisilicon/hi3670.dtsi     |   4 +-
->  .../boot/dts/qcom/msm8996-xiaomi-common.dtsi  |   1 -
->  arch/arm64/boot/dts/qcom/msm8996.dtsi         |   3 +-
->  arch/arm64/boot/dts/qcom/sm8350.dtsi          |   3 -
->  20 files changed, 614 insertions(+), 320 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/ufs/cdns,ufshc.txt
->  create mode 100644 Documentation/devicetree/bindings/ufs/cdns,ufshc.yaml
->  create mode 100644 Documentation/devicetree/bindings/ufs/hisilicon,ufs.yaml
->  create mode 100644 Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml
->  create mode 100644 Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
->  create mode 100644 Documentation/devicetree/bindings/ufs/snps,tc-dwc-g210.yaml
->  delete mode 100644 Documentation/devicetree/bindings/ufs/tc-dwc-g210-pltfrm.txt
->  create mode 100644 Documentation/devicetree/bindings/ufs/ufs-common.yaml
->  delete mode 100644 Documentation/devicetree/bindings/ufs/ufs-hisi.txt
->  delete mode 100644 Documentation/devicetree/bindings/ufs/ufs-mediatek.txt
->  delete mode 100644 Documentation/devicetree/bindings/ufs/ufs-qcom.txt
->  delete mode 100644 Documentation/devicetree/bindings/ufs/ufshcd-pltfrm.txt
-> 
-> -- 
-> 2.32.0
-> 
-> 
+Thanks
+Jinlong Mao
+>
+> Thanks
+> Suzuki
