@@ -2,70 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 286094D5410
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Mar 2022 23:00:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 27DEF4D5425
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Mar 2022 23:07:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240695AbiCJWA4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Mar 2022 17:00:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44360 "EHLO
+        id S235761AbiCJWIh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Mar 2022 17:08:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344208AbiCJWAy (ORCPT
+        with ESMTP id S231720AbiCJWIg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Mar 2022 17:00:54 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61F0C194A9C;
-        Thu, 10 Mar 2022 13:59:52 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id c192so4079563wma.4;
-        Thu, 10 Mar 2022 13:59:52 -0800 (PST)
+        Thu, 10 Mar 2022 17:08:36 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E283C3B01A;
+        Thu, 10 Mar 2022 14:07:32 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id d10so15113841eje.10;
+        Thu, 10 Mar 2022 14:07:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ATGsKfsEtSYY26wkV1+kYw4dYxXJQNfEMLPoJWHhAhM=;
-        b=l2ib4k03ezr3E+w+uSGlgSZaXyowvxEhVU+P6ySILubSAD8FmOhnXsPkzfP0JT0JQT
-         nCz7H55yKli6hwWPXrpKClt0qWQokGsHGBViNX3SDqVd9Sgj5L115cMM7IOSHauaHQbl
-         LEkjN/PDy2CKlM9IxPEWsp8LiG3MNg0d2M4R9C5/5zbJrbLMKFFjgayJTCXJD5izB8RX
-         LY7H8i49u9b9wzRTSUOeVI4EQ24/6LJGtvAqkJz5GzADkEeb0hcHGZWyXsXPxgZFpmD6
-         /ZMiJ9KwSON1RQJEwLmUKp7XAoxY67j++ehaQEr5YCkE8Nj/Utc4udnOOTYDMSef/Wsp
-         TR6Q==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=N+bQm7oSKXNbzL13c/MNl/tddfyzw2sHDv2mP5LKoHU=;
+        b=mSmh9CRF/SPistOhGnbTWogGzHmBWpRFtPespWHdrBJg+91FKLLTqaudEHxtNKrEV8
+         yUZ2VcqHfxSMkpwVwGcLoQNzY4kvljmW2CMxvHWD9s65sylpXFhiOihcK9TRyWmis7kO
+         2jFgjWZEn1S/8ZLJek4Ff7q9tJ0UKrgTMLKk1zP190LVLYSYlgZRDtNS+VrBBK4o3ozZ
+         yUSsyFsdhQj8aR+3qQMAdrtOXWWr8hssghFI+PUSY3PBaLkUrrGX9m7DgCe34SRrRZAu
+         ofYtBdclMpquqggxVU3qB6HPX/vcZnFV1pnr6Zrn6FlVtmue0c89oAT/76FiiYnbVMjJ
+         4JNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ATGsKfsEtSYY26wkV1+kYw4dYxXJQNfEMLPoJWHhAhM=;
-        b=ZzPXmuZA1ndpL/sGBDI+UuKEBmYT05YIangJUR4opXnZYoSGeQlklS5K0tehPpcmxx
-         bRaJWL5YAFJ9IubNswaQT4UlIsuckLbv27UUiT7pI3BnQnRa5c/pGUaD7L+zPsypYHCm
-         4i/LhY53aelLcjsKT3/3ZBdlmXqWzG6yriZVRmdn2nidolsA/qT2gx1ev5M82tjsob0f
-         GiPP2UhTJc1bPykPMOtsd1/jtsj9ih/GxlEkSFyRo3GtUPYif/bnlvuvdctMiTitFZ8w
-         eksOoGLNBAD/Y37vjNzmUR7GVyWxpsj93w2hmKw8j8PjFleiCBqQJyM2eCn0ArzTiH3H
-         i42w==
-X-Gm-Message-State: AOAM5315hy79IkLQw9qWmd/gQl7eQmgY7b5W7vt02KetXtyh4PqSLJtz
-        UBa8t00zvnLyktyGDH9cQTY=
-X-Google-Smtp-Source: ABdhPJyFmW0nbFLa/DkX7XyMVXKmus0uuq3D6mmfhOwRhVHwnKbgAncpyTTWuKNzBGM01KrULtLFdw==
-X-Received: by 2002:a05:600c:21d1:b0:381:4fed:159a with SMTP id x17-20020a05600c21d100b003814fed159amr5265987wmj.143.1646949590579;
-        Thu, 10 Mar 2022 13:59:50 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=N+bQm7oSKXNbzL13c/MNl/tddfyzw2sHDv2mP5LKoHU=;
+        b=pIPhJX8L1JhnrffZa8jQ/RTl5YHSJB/ySMqMzyl2idt5Vsh/aEwEdf6vG37i8OjvKZ
+         9lP4ABu7Y5fSPGriFifQpANcmNVs6KPq90P/lem36k9xxk9SIqOTq4M6fM7F9auXHQkB
+         usf+6v5X/MDW/70Ao9XjJqHs8gVF49vE36zEAxKCHzFbT+I72Q0qnZVmMEJGgFPUcp9T
+         ODO4dxksVIWHJq+XJk6aTXGp6EjJXs1tEwQBXaiNgnqP4U5tRq6ZM7DYKAeB1/snwY/2
+         3ETsgPA+TEB9L1gUbwdL82hlJAA+xjs+9v8NSStMjoWOdHFUE4COv62QElnCOsvxaHBx
+         bq4g==
+X-Gm-Message-State: AOAM53273EEOHK3NX7Wnb9A7amwR4ygA2rQTvrFpQO3EhpQ10K4XZ0n8
+        uwAEcOD9WrNIA0/1V9Ucl4taCSdTDZg=
+X-Google-Smtp-Source: ABdhPJzF2sw5rugahKzH8n8lxMVuWWePuxitJpHKpluAUzRIosjoOiXtxsDJ/gnSTmDFwmk2CHeaUQ==
+X-Received: by 2002:a17:907:761c:b0:6d6:e553:7bd1 with SMTP id jx28-20020a170907761c00b006d6e5537bd1mr6067525ejc.5.1646950051169;
+        Thu, 10 Mar 2022 14:07:31 -0800 (PST)
 Received: from Ansuel-xps.localdomain (93-42-71-246.ip85.fastwebnet.it. [93.42.71.246])
-        by smtp.gmail.com with ESMTPSA id o12-20020adfa10c000000b001efb97fae48sm5378277wro.80.2022.03.10.13.59.49
+        by smtp.googlemail.com with ESMTPSA id gb2-20020a170907960200b006dac65a914esm2207892ejc.125.2022.03.10.14.07.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Mar 2022 13:59:50 -0800 (PST)
-Date:   Thu, 10 Mar 2022 22:59:49 +0100
+        Thu, 10 Mar 2022 14:07:30 -0800 (PST)
 From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     kernel test robot <lkp@intel.com>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-        kbuild-all@lists.01.org, Jonathan McDowell <noodles@earth.li>
-Subject: Re: [PATCH v3 10/18] ARM: dts: qcom: add saw for l2 cache and
- kraitcc for ipq8064
-Message-ID: <Yip01cebik6drIbT@Ansuel-xps.localdomain>
-References: <20220309190152.7998-11-ansuelsmth@gmail.com>
- <202203101733.hkbTGp6Y-lkp@intel.com>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>
+Subject: [PATCH] firmware: qcom_scm: Add compatible for ipq806x
+Date:   Thu, 10 Mar 2022 23:07:23 +0100
+Message-Id: <20220310220723.3772-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <202203101733.hkbTGp6Y-lkp@intel.com>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -76,50 +69,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 10, 2022 at 05:46:31PM +0800, kernel test robot wrote:
-> Hi Ansuel,
-> 
-> Thank you for the patch! Yet something to improve:
-> 
-> [auto build test ERROR on robh/for-next]
-> [also build test ERROR on linux/master linus/master v5.17-rc7 next-20220309]
-> [If your patch is applied to the wrong git tree, kindly drop us a note.
-> And when submitting patch, we suggest to use '--base' as documented in
-> https://git-scm.com/docs/git-format-patch]
-> 
-> url:    https://github.com/0day-ci/linux/commits/Ansuel-Smith/Multiple-addition-to-ipq8064-dtsi/20220310-031750
-> base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-> config: arm-defconfig (https://download.01.org/0day-ci/archive/20220310/202203101733.hkbTGp6Y-lkp@intel.com/config)
-> compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project 276ca87382b8f16a65bddac700202924228982f6)
-> reproduce (this is a W=1 build):
->         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
->         chmod +x ~/bin/make.cross
->         # install arm cross compiling tool for clang build
->         # apt-get install binutils-arm-linux-gnueabi
->         # https://github.com/0day-ci/linux/commit/52c3b4af226c7a50772c40012b3789b5348e49b5
->         git remote add linux-review https://github.com/0day-ci/linux
->         git fetch --no-tags linux-review Ansuel-Smith/Multiple-addition-to-ipq8064-dtsi/20220310-031750
->         git checkout 52c3b4af226c7a50772c40012b3789b5348e49b5
->         # save the config file to linux build tree
->         mkdir build_dir
->         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash
-> 
-> If you fix the issue, kindly add following tag as appropriate
-> Reported-by: kernel test robot <lkp@intel.com>
-> 
-> All errors (new ones prefixed by >>):
-> 
-> >> ERROR: Input tree has errors, aborting (use -f to force output)
-> 
-> ---
-> 0-DAY CI Kernel Test Service, Intel Corporation
-> https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+Add compatible for ipq806x. Just like ipq4019, ipq806x doesn't require
+Core, Iface or Bus clock.
 
-Just as an info this error comes from the fact that we require
-pxo_board, introduced by another series already merged in linux-arm-msm.
+Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+---
+ drivers/firmware/qcom_scm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-I didn't find how to propose this series directly to the linux-arm-msm
-branch.
-
+diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+index 7db8066b19fd..7348c5894821 100644
+--- a/drivers/firmware/qcom_scm.c
++++ b/drivers/firmware/qcom_scm.c
+@@ -1338,6 +1338,7 @@ static const struct of_device_id qcom_scm_dt_match[] = {
+ 							     SCM_HAS_IFACE_CLK |
+ 							     SCM_HAS_BUS_CLK)
+ 	},
++	{ .compatible = "qcom,scm-ipq806x" },
+ 	{ .compatible = "qcom,scm-ipq4019" },
+ 	{ .compatible = "qcom,scm-mdm9607", .data = (void *)(SCM_HAS_CORE_CLK |
+ 							     SCM_HAS_IFACE_CLK |
 -- 
-	Ansuel
+2.34.1
+
