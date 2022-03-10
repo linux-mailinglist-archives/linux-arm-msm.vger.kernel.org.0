@@ -2,111 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B88914D5364
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Mar 2022 22:05:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 286094D5410
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Mar 2022 23:00:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343857AbiCJVF7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Mar 2022 16:05:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36008 "EHLO
+        id S240695AbiCJWA4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Mar 2022 17:00:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343814AbiCJVF7 (ORCPT
+        with ESMTP id S1344208AbiCJWAy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Mar 2022 16:05:59 -0500
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7946913FADC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Mar 2022 13:04:57 -0800 (PST)
-Received: by mail-pg1-x530.google.com with SMTP id q19so5739381pgm.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Mar 2022 13:04:57 -0800 (PST)
+        Thu, 10 Mar 2022 17:00:54 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61F0C194A9C;
+        Thu, 10 Mar 2022 13:59:52 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id c192so4079563wma.4;
+        Thu, 10 Mar 2022 13:59:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=obuJZgA+9h3Opi8fGV6bTwbs6NZXXhZ7phVpG6fqysw=;
-        b=nmuW8+Zw/Wnq9ASRMeWUjtleyefNkOnr5Xl9IcWParCYOXgIKxEstVkLvoSug3n7ts
-         D79JI/9OgoasVnoS4QPPqj4j8za7JS74qqmMYEs84F0XSxoYFMhjkggnJ/fscQpTl2Kd
-         6IjtX90d+wg9fU5ZEzMtuJXTKqlZ/YJjPdVFs=
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ATGsKfsEtSYY26wkV1+kYw4dYxXJQNfEMLPoJWHhAhM=;
+        b=l2ib4k03ezr3E+w+uSGlgSZaXyowvxEhVU+P6ySILubSAD8FmOhnXsPkzfP0JT0JQT
+         nCz7H55yKli6hwWPXrpKClt0qWQokGsHGBViNX3SDqVd9Sgj5L115cMM7IOSHauaHQbl
+         LEkjN/PDy2CKlM9IxPEWsp8LiG3MNg0d2M4R9C5/5zbJrbLMKFFjgayJTCXJD5izB8RX
+         LY7H8i49u9b9wzRTSUOeVI4EQ24/6LJGtvAqkJz5GzADkEeb0hcHGZWyXsXPxgZFpmD6
+         /ZMiJ9KwSON1RQJEwLmUKp7XAoxY67j++ehaQEr5YCkE8Nj/Utc4udnOOTYDMSef/Wsp
+         TR6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=obuJZgA+9h3Opi8fGV6bTwbs6NZXXhZ7phVpG6fqysw=;
-        b=1B587IPy2yvk2M6AjiVZ6GD45L3KtXSV7DrwYyYJYNGVlrPmQL0YKNpZ87fKpFLcqv
-         AeXIEXo6GGvN/KByAx6LG+UJ7c2Cjd1wo60HObrmy4Tv3NxlHCv7fFZ1rWmYKpXmOnap
-         pjH49ws1xqVN/AmGiNwXJ8gjdCz0FF5tTn1z6BNojMaRN09aZzjy45FPFTI1bIELPlOy
-         JRKaS8hK0a6tOswG6FKKwp851os+XZa+QBFupEfZLtsBu3aG2FLy4MNy8jp6a0aT/N1o
-         W16e5ZwULEA2XI/V0TR9gE/nkP/CNHGodN68ePYGwO7gaKC0KFT2NLao0PLFcgqmuxbh
-         MZEQ==
-X-Gm-Message-State: AOAM532/BLCYV3JjoxupeQY9rCvw+6Q9+YfWoo1wED4lSDKwVNSyCT8w
-        Il0PqSPIusJkHzWFHN4exkvd6A==
-X-Google-Smtp-Source: ABdhPJxjl6idbl313Fxh9KypXJMEBJWhLPUFn0GIjpVVjzV6fmTbq2x0qU3kJNA+tWIFJSJVQESrcA==
-X-Received: by 2002:a05:6a00:234f:b0:4f6:f0c0:ec68 with SMTP id j15-20020a056a00234f00b004f6f0c0ec68mr6801201pfj.14.1646946296960;
-        Thu, 10 Mar 2022 13:04:56 -0800 (PST)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:9116:709a:646d:1f5f])
-        by smtp.gmail.com with ESMTPSA id y21-20020a056a00191500b004f78813b2d6sm315898pfi.178.2022.03.10.13.04.56
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ATGsKfsEtSYY26wkV1+kYw4dYxXJQNfEMLPoJWHhAhM=;
+        b=ZzPXmuZA1ndpL/sGBDI+UuKEBmYT05YIangJUR4opXnZYoSGeQlklS5K0tehPpcmxx
+         bRaJWL5YAFJ9IubNswaQT4UlIsuckLbv27UUiT7pI3BnQnRa5c/pGUaD7L+zPsypYHCm
+         4i/LhY53aelLcjsKT3/3ZBdlmXqWzG6yriZVRmdn2nidolsA/qT2gx1ev5M82tjsob0f
+         GiPP2UhTJc1bPykPMOtsd1/jtsj9ih/GxlEkSFyRo3GtUPYif/bnlvuvdctMiTitFZ8w
+         eksOoGLNBAD/Y37vjNzmUR7GVyWxpsj93w2hmKw8j8PjFleiCBqQJyM2eCn0ArzTiH3H
+         i42w==
+X-Gm-Message-State: AOAM5315hy79IkLQw9qWmd/gQl7eQmgY7b5W7vt02KetXtyh4PqSLJtz
+        UBa8t00zvnLyktyGDH9cQTY=
+X-Google-Smtp-Source: ABdhPJyFmW0nbFLa/DkX7XyMVXKmus0uuq3D6mmfhOwRhVHwnKbgAncpyTTWuKNzBGM01KrULtLFdw==
+X-Received: by 2002:a05:600c:21d1:b0:381:4fed:159a with SMTP id x17-20020a05600c21d100b003814fed159amr5265987wmj.143.1646949590579;
+        Thu, 10 Mar 2022 13:59:50 -0800 (PST)
+Received: from Ansuel-xps.localdomain (93-42-71-246.ip85.fastwebnet.it. [93.42.71.246])
+        by smtp.gmail.com with ESMTPSA id o12-20020adfa10c000000b001efb97fae48sm5378277wro.80.2022.03.10.13.59.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Mar 2022 13:04:56 -0800 (PST)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sc7280-herobrine: Fix PCIe regulator glitch at bootup
-Date:   Thu, 10 Mar 2022 13:04:34 -0800
-Message-Id: <20220310130429.1.Id41fda1d7f5d9230bc45c1b85b06b0fb0ddd29af@changeid>
-X-Mailer: git-send-email 2.35.1.723.g4982287a31-goog
+        Thu, 10 Mar 2022 13:59:50 -0800 (PST)
+Date:   Thu, 10 Mar 2022 22:59:49 +0100
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     kernel test robot <lkp@intel.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+        kbuild-all@lists.01.org, Jonathan McDowell <noodles@earth.li>
+Subject: Re: [PATCH v3 10/18] ARM: dts: qcom: add saw for l2 cache and
+ kraitcc for ipq8064
+Message-ID: <Yip01cebik6drIbT@Ansuel-xps.localdomain>
+References: <20220309190152.7998-11-ansuelsmth@gmail.com>
+ <202203101733.hkbTGp6Y-lkp@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <202203101733.hkbTGp6Y-lkp@intel.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-While scoping signals, we found that the PCIe signals weren't
-compliant at bootup. Specifically, the bootloader was setting up PCIe
-and leaving it configured, then jumping to the kernel. The kernel was
-turning off the regulator while leaving the PCIe clock running, which
-was a violation.
+On Thu, Mar 10, 2022 at 05:46:31PM +0800, kernel test robot wrote:
+> Hi Ansuel,
+> 
+> Thank you for the patch! Yet something to improve:
+> 
+> [auto build test ERROR on robh/for-next]
+> [also build test ERROR on linux/master linus/master v5.17-rc7 next-20220309]
+> [If your patch is applied to the wrong git tree, kindly drop us a note.
+> And when submitting patch, we suggest to use '--base' as documented in
+> https://git-scm.com/docs/git-format-patch]
+> 
+> url:    https://github.com/0day-ci/linux/commits/Ansuel-Smith/Multiple-addition-to-ipq8064-dtsi/20220310-031750
+> base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+> config: arm-defconfig (https://download.01.org/0day-ci/archive/20220310/202203101733.hkbTGp6Y-lkp@intel.com/config)
+> compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project 276ca87382b8f16a65bddac700202924228982f6)
+> reproduce (this is a W=1 build):
+>         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+>         chmod +x ~/bin/make.cross
+>         # install arm cross compiling tool for clang build
+>         # apt-get install binutils-arm-linux-gnueabi
+>         # https://github.com/0day-ci/linux/commit/52c3b4af226c7a50772c40012b3789b5348e49b5
+>         git remote add linux-review https://github.com/0day-ci/linux
+>         git fetch --no-tags linux-review Ansuel-Smith/Multiple-addition-to-ipq8064-dtsi/20220310-031750
+>         git checkout 52c3b4af226c7a50772c40012b3789b5348e49b5
+>         # save the config file to linux build tree
+>         mkdir build_dir
+>         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash
+> 
+> If you fix the issue, kindly add following tag as appropriate
+> Reported-by: kernel test robot <lkp@intel.com>
+> 
+> All errors (new ones prefixed by >>):
+> 
+> >> ERROR: Input tree has errors, aborting (use -f to force output)
+> 
+> ---
+> 0-DAY CI Kernel Test Service, Intel Corporation
+> https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 
-In the regulator bindings (and the Linux kernel driver that uses
-them), there's currently no way to specify that a GPIO-controlled
-regulator should keep its state at bootup. You've got to pick either
-"on" or "off". Let's switch it so that the PCIe regulator defaults to
-"on" instead of "off". This should be a much safer way to go and
-avoids the timing violation. The regulator will still be turned off
-later if there are no users.
+Just as an info this error comes from the fact that we require
+pxo_board, introduced by another series already merged in linux-arm-msm.
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+I didn't find how to propose this series directly to the linux-arm-msm
+branch.
 
- arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-index dc17f2079695..042a4a59e3dc 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-@@ -178,6 +178,13 @@ pp3300_ssd: pp3300-ssd-regulator {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&ssd_en>;
- 
-+		/*
-+		 * The bootloaer may have left PCIe configured. Powering this
-+		 * off while the PCIe clocks are still running isn't great,
-+		 * so it's better to default to this regulator being on.
-+		 */
-+		regulator-boot-on;
-+
- 		vin-supply = <&pp3300_z1>;
- 	};
- 
 -- 
-2.35.1.723.g4982287a31-goog
-
+	Ansuel
