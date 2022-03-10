@@ -2,121 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FAD94D4AA8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Mar 2022 15:55:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 948FE4D4C67
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Mar 2022 16:02:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232542AbiCJOVS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Mar 2022 09:21:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40422 "EHLO
+        id S243203AbiCJOzm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Mar 2022 09:55:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244237AbiCJOTD (ORCPT
+        with ESMTP id S1347027AbiCJOu1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Mar 2022 09:19:03 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4CE816EAA5;
-        Thu, 10 Mar 2022 06:15:48 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D52D961C99;
-        Thu, 10 Mar 2022 14:15:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E1CC340E8;
-        Thu, 10 Mar 2022 14:15:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1646921702;
-        bh=yo5cNZOSv/J/WvklnDG16ry9Bw3elHchQ9q/vBCqvbQ=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=maGHS2m9LDj84cxFFYKfEByaP+07rvv+owPqT7QN/rWpqfNcEJIgelSZsi89z4YEO
-         eQ1qFs24G5TKKZ37vfsaWUuoahmWC2QwUDpYhUJOWTcA5ftlnYtglXuIm3C+NzvXVX
-         gBXYfhzm3t7ZnwmCGQflz+r+w3644ExZdU582Wf+q3jK8KdwigqrOzzNj+ZaARW29C
-         7hn4UDgR975l1tpTzDFBwdz4PbSL/O4tpE2aHK4RWiwc0aMs1RoAbAgXX3XjuS86s3
-         HePHW4K+4ISCDz6AYjeZei8oxFadEePkK2O4JH54dDvQ9xfKcmwPJoy+iQaWP2GBHv
-         67tYi9URG2iMw==
-Received: by mail-ed1-f51.google.com with SMTP id w4so7136387edc.7;
-        Thu, 10 Mar 2022 06:15:02 -0800 (PST)
-X-Gm-Message-State: AOAM533sFQ6Hbbpfbrv8YOLkfiPhbxZKL1SafpwCxR7e05ac5nwXrzTk
-        mQQIcSGNUYNUX0PJA3TAFi6msy0GoFfApICOQg==
-X-Google-Smtp-Source: ABdhPJxTKjB6jCuITpAJueLD1jR/nypmp0A/gmHHrMEnwEcpJdUe3bQ2Gx3VCz4Rpb6k9VX70aM1nvGlH0UAjjLTElI=
-X-Received: by 2002:a05:6402:5256:b0:416:97d1:a6a2 with SMTP id
- t22-20020a056402525600b0041697d1a6a2mr4571157edd.280.1646921700547; Thu, 10
- Mar 2022 06:15:00 -0800 (PST)
-MIME-Version: 1.0
-References: <20211224161334.31123-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20211224161334.31123-3-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <c5ea7235-8642-6a89-f4ce-bd0861b6e4aa@linaro.org> <CA+V-a8tkhERx+8zDae5aWkNQ9Oxd1AamRL=i4TDC2X8RGgAo0w@mail.gmail.com>
- <5e13c1ba-0bf5-e360-c350-e7a1a1402350@linaro.org>
-In-Reply-To: <5e13c1ba-0bf5-e360-c350-e7a1a1402350@linaro.org>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Thu, 10 Mar 2022 08:14:48 -0600
-X-Gmail-Original-Message-ID: <CAL_Jsq+CWKvkHMNhAa3o_rSLy_+AoHi6wkB3MRM8O3jJ5sG_Wg@mail.gmail.com>
-Message-ID: <CAL_Jsq+CWKvkHMNhAa3o_rSLy_+AoHi6wkB3MRM8O3jJ5sG_Wg@mail.gmail.com>
-Subject: Re: [PATCH] slimbus: qcom-ngd-ctrl: Use platform_get_irq() to get the interrupt
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     "Lad, Prabhakar" <prabhakar.csengg@gmail.com>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        alsa-devel <alsa-devel@alsa-project.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Thu, 10 Mar 2022 09:50:27 -0500
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACC4118CC74;
+        Thu, 10 Mar 2022 06:45:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1646923529; x=1678459529;
+  h=from:to:cc:subject:date:message-id;
+  bh=YF2MjvNRHP7HzoRLkPlFoND+9ZHy/RpbA3JxeI0ULBI=;
+  b=vC8fMdThiyEjzGOTdkI+nSTpv9bQyv2GoygVM6PPp4wVsjvhm2QeGWwm
+   Xp3ZF5blX4ziQ+ChCZfsZThe2/uU/HkovzuGXSHUCNgOzCxdYHiHCnwit
+   VC30Xtl/rBUFRojxpiQv1HodpdwiJe4Fx9GX+5J5xXW5c3b1ksTirO4jo
+   M=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 10 Mar 2022 06:45:27 -0800
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 10 Mar 2022 06:45:25 -0800
+X-QCInternal: smtphost
+Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 10 Mar 2022 20:15:06 +0530
+Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
+        id 3ED0F5913; Thu, 10 Mar 2022 20:15:05 +0530 (IST)
+From:   Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+To:     krzk+dt@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_asutoshd@quicinc.com,
+        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
+        quic_sartgarg@quicinc.com, quic_nitirawa@quicinc.com,
+        quic_sayalil@quicinc.com,
+        Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+Subject: [PATCH V2] arm64: dts: qcom: sc7280: Enable gcc HW reset
+Date:   Thu, 10 Mar 2022 20:15:03 +0530
+Message-Id: <1646923503-28847-1-git-send-email-quic_c_sbhanu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 10, 2022 at 4:42 AM Srinivas Kandagatla
-<srinivas.kandagatla@linaro.org> wrote:
->
->
->
-> On 10/03/2022 10:23, Lad, Prabhakar wrote:
-> > On Thu, Mar 10, 2022 at 10:16 AM Srinivas Kandagatla
-> > <srinivas.kandagatla@linaro.org> wrote:
-> >>
-> >>
-> >>
-> >> On 24/12/2021 16:13, Lad Prabhakar wrote:
-> >>> platform_get_resource(pdev, IORESOURCE_IRQ, ..) relies on static
-> >>> allocation of IRQ resources in DT core code, this causes an issue
-> >>
-> >> Are you saying that we should not be using platform_get_resource(pdev,
-> >> IORESOURCE_IRQ, ...) on drivers that support DT?
+Enable gcc HW reset for eMMC and SD card.
 
-We should be using platform_get_irq(). (period, on all platform drivers)
+Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+---
 
-> >>> when using hierarchical interrupt domains using "interrupts" property
-> >>> in the node as this bypasses the hierarchical setup and messes up the
-> >>> irq chaining.
-> >>
-> >> Should this not be fixed in the DT core itself?
-> >>
-> > Yes the plan is to fix in the DT core itself (refer [0]).
-> >
-> > [0] https://patchwork.kernel.org/project/linux-renesas-soc/patch/20211209001056.29774-1-prabhakar.mahadev-lad.rj@bp.renesas.com/
-> >
-> >>>
-> >>> In preparation for removal of static setup of IRQ resource from DT core
-> >>> code use platform_get_irq().
-> >>
-> >> I would prefer this patch to be part of the series that removes IRQ
-> >> resource handling from DT core.
-> >>
-> > Since there are too many users (which are in different subsystems)
-> > getting this all in single series would be a pain. As a result it is
-> > split up into individual subsystems.
-> Am happy for this to be included in that series,
-> TBH, this patch make more sense along with that series than by itself.
+Changes since V1:
+	- Updated commit message, subject and comments in dtsi file as
+	  suggested by Krzysztof Kozlowski.
+---
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-No it doesn't. This is no different than converting to devm_* variants
-or other cleanups to match current preferred styles.
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index c07765d..721abf5 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -881,6 +881,9 @@
+ 			mmc-hs400-1_8v;
+ 			mmc-hs400-enhanced-strobe;
+ 
++			/* Add gcc hw reset dt entry for eMMC */
++			resets = <&gcc GCC_SDCC1_BCR>;
++			reset-names = "core_reset";
+ 			sdhc1_opp_table: opp-table {
+ 				compatible = "operating-points-v2";
+ 
+@@ -2686,6 +2689,9 @@
+ 
+ 			qcom,dll-config = <0x0007642c>;
+ 
++			/* Add gcc hw reset dt entry for SD card */
++			resets = <&gcc GCC_SDCC2_BCR>;
++			reset-names = "core_reset";
+ 			sdhc2_opp_table: opp-table {
+ 				compatible = "operating-points-v2";
+ 
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
-Treewide cross subsystem clean-ups are a huge pain to merge. Why would
-you ask for that when it is clearly not necessary?
-
-Rob
