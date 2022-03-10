@@ -2,224 +2,270 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A79654D5544
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Mar 2022 00:25:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7644E4D558F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Mar 2022 00:38:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344325AbiCJX0P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Mar 2022 18:26:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55194 "EHLO
+        id S241459AbiCJXjq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Mar 2022 18:39:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244493AbiCJX0N (ORCPT
+        with ESMTP id S234999AbiCJXjp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Mar 2022 18:26:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A482D1965D5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Mar 2022 15:25:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1646954709;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=iigEMniBW4cDGKyN9CUUK0j40uMHVCfBaIIQTILpT74=;
-        b=f7uLGSnkryLQ1z1ybqA1KBCFpnhHoKgve5Kb6FhyCOTXsuG8pvBYWFDtMMlGpOy4U0d6v5
-        cnTAUzeSPQ529HMWezb31MzYpfi/Q9co3oNXjJTajO4ZauM2igYCvdYbbXXfiByt0NTYy/
-        8ReOwgt1slQuGbel0Ra7OzwBdLWpBtY=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-589-7H08ME64P4C-NnqLay1cDA-1; Thu, 10 Mar 2022 18:25:08 -0500
-X-MC-Unique: 7H08ME64P4C-NnqLay1cDA-1
-Received: by mail-qk1-f199.google.com with SMTP id 207-20020a3703d8000000b0067b14f0844dso4983466qkd.22
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Mar 2022 15:25:08 -0800 (PST)
+        Thu, 10 Mar 2022 18:39:45 -0500
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FB771390D1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Mar 2022 15:38:43 -0800 (PST)
+Received: by mail-oi1-x232.google.com with SMTP id i5so7682370oih.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Mar 2022 15:38:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=5YgWXh9EdVjh1W/rPJ6KNdL1nAingABW0Gom5HZqNug=;
+        b=nzuplA6UJr3OCptBVYac78FF2j0OKoFCo1m3M8XHawxP9y5CAnAkpZSl5R4BanCfpj
+         cVtxKKAkoyZpZ0ERLXpXG+awu/BNkt+SXsZwWqmeWVcoEh378F1IY2vJcrCoW39KbpCq
+         QbSFrjGl6ZvsLAvZWwCU9c/ul/bQ87UyPojUVqDpvy8R4ZX1FjeWPhbKCLA9w/eeY5DH
+         FX/MRVRygmrMyn4zzyf6IqTvQ/INPyRVDsfVTo0EaoN7wb07k09ozjFIuTTVlTNGF36J
+         TetMKkuHnBAlW58AzQgMWQFGOmVFjYEX/BWyasXE9DGnA5jnpUgPkTH/wD4w6L1N3jyV
+         A1bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=iigEMniBW4cDGKyN9CUUK0j40uMHVCfBaIIQTILpT74=;
-        b=DuAceiNwQd4+7+CV88lbrVX1TP4wik70vFrjGPaO8cRD3o64ENfK++m702hntJAV2E
-         jzTHqo4uxU9Q80ZX9VAvwjyFu0XpqPe8ErsHLYAgduJXLPFIAWolH0SoKNbZeceL7He4
-         51ZTLhopJM+U5xlzyO912zVu3V/aDsScMFekhlLlluiTV82VhzxARZw4/MLVp5qMpn+m
-         +6mOo6mV5npNvewNGIpsRofSuVUhDRyJlvOcwl5CRzGGa+iS7Rv6fiVFCv66ln6ddKl6
-         u1ONYZ9i2JzFSQMaEacRaR7MWAZZ6qsLacsT74IBLj8CNz4YZ9nIZOEsgKzxJ+HTThaC
-         neOg==
-X-Gm-Message-State: AOAM533/B2yJw/WzShJxLKlZzOmN4xDESh1ahlzc7oDCWh3do9IHi7vY
-        mW8aVE3za1rqATLyxb/qykxvol2LhrlqnQammEBNHOogenl2F4N2FTSTm0Po+akkW/WXNDXCOYd
-        +E5awCxDMGRBA43Gopytos8JdLA==
-X-Received: by 2002:ac8:7c51:0:b0:2e1:a3b3:a6b7 with SMTP id o17-20020ac87c51000000b002e1a3b3a6b7mr6162338qtv.405.1646954708044;
-        Thu, 10 Mar 2022 15:25:08 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJzZdYVt/hej+NP9MnBR8KLbsb88RCsWan4ZfQgvzscZnZrchdDUePzbeAIICc8SuT/WZdaawQ==
-X-Received: by 2002:ac8:7c51:0:b0:2e1:a3b3:a6b7 with SMTP id o17-20020ac87c51000000b002e1a3b3a6b7mr6162320qtv.405.1646954707747;
-        Thu, 10 Mar 2022 15:25:07 -0800 (PST)
-Received: from xps13.. (c-98-239-145-235.hsd1.wv.comcast.net. [98.239.145.235])
-        by smtp.gmail.com with ESMTPSA id x6-20020a376306000000b0067b32a8568esm2962230qkb.101.2022.03.10.15.25.07
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=5YgWXh9EdVjh1W/rPJ6KNdL1nAingABW0Gom5HZqNug=;
+        b=005FWF8BvEfFLekXyKTXEdz8TGs1H5xAFK7L95Xm63Zz270eH5WrSRt1OO6UKlgfji
+         83J9DwG9rC3A5Xi8bIyvMolcD0aPIu/69BTCxl3varXgrOQb9hn2So3sddtelU+kssD2
+         M+vNPxRwNLH/bupe8pLc1KaEDV6xzjsgBl8SfPR3K10ejCzHCtlPZy88MFHPMCqvVx0k
+         Tb9fUd+ZK5zs7B4x1jaJfQ66swE/kowFUJO2IO2voE80bW4qs8qPAvg9HbJlIn1+g8aG
+         2nAt6atjzEgtdgfw+9G+DgYrxJkvoQNiFj92tn5JUu65FnJmCHy2sI4P0MB7hZudDTqe
+         Fkqg==
+X-Gm-Message-State: AOAM532Utaa5LYasJE4jjTFxqicF3JGnFB8qouigjXB9R1V6FxunRoDT
+        ZXpr4zwJdh2e9SpGmxK0/fk+XA==
+X-Google-Smtp-Source: ABdhPJxFCzc3m1UVAdP/mnxcDEWfhBzlFRkLIgemb8qHz2BIn0jGQVTGa4uoiqPy2lCgMtiHWPPACA==
+X-Received: by 2002:a05:6808:2227:b0:2da:5a4f:95db with SMTP id bd39-20020a056808222700b002da5a4f95dbmr3991134oib.129.1646955522821;
+        Thu, 10 Mar 2022 15:38:42 -0800 (PST)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id ay44-20020a056808302c00b002d9d2b564absm3047905oib.43.2022.03.10.15.38.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Mar 2022 15:25:07 -0800 (PST)
-From:   Brian Masney <bmasney@redhat.com>
-To:     bjorn.andersson@linaro.org
-Cc:     herbert@gondor.apana.org.au, davem@davemloft.net,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] crypto: qcom-rng: ensure buffer for generate is completely filled
-Date:   Thu, 10 Mar 2022 18:24:59 -0500
-Message-Id: <20220310232459.749638-1-bmasney@redhat.com>
-X-Mailer: git-send-email 2.34.1
+        Thu, 10 Mar 2022 15:38:42 -0800 (PST)
+Date:   Thu, 10 Mar 2022 15:40:22 -0800
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+Cc:     adrian.hunter@intel.com, agross@kernel.org, ulf.hansson@linaro.org,
+        p.zabel@pengutronix.de, chris@printf.net, gdjakov@mm-sol.com,
+        linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_asutoshd@quicinc.com,
+        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
+        quic_sartgarg@quicinc.com, quic_nitirawa@quicinc.com,
+        quic_sayalil@quicinc.com
+Subject: Re: [PATCH V2] mmc: sdhci-msm: Reset GCC_SDCC_BCR register for SDHC
+Message-ID: <YiqMZouVVEtVNrlV@ripper>
+References: <1646926823-5362-1-git-send-email-quic_c_sbhanu@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1646926823-5362-1-git-send-email-quic_c_sbhanu@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The generate function in struct rng_alg expects that the destination
-buffer is completely filled if the function returns 0. qcom_rng_read()
-can run into a situation where the buffer is partially filled with
-randomness and the remaining part of the buffer is zeroed since
-qcom_rng_generate() doesn't check the return value. This issue can
-be reproduced by running the following from libkcapi:
+On Thu 10 Mar 07:40 PST 2022, Shaik Sajida Bhanu wrote:
 
-    kcapi-rng -b 9000000 > OUTFILE
+> Reset GCC_SDCC_BCR register before every fresh initilazation. This will
+> reset whole SDHC-msm controller, clears the previous power control
+> states and avoids, software reset timeout issues as below.
+> 
 
-The generated OUTFILE will have three huge sections that contain all
-zeros, and this is caused by the code where the test
-'val & PRNG_STATUS_DATA_AVAIL' fails.
+Nice, we've gotten reports about this from time to time.
 
-Let's fix this issue by ensuring that qcom_rng_read() always returns
-with a full buffer if the function returns success. Let's also have
-qcom_rng_generate() return the correct value.
+> [ 5.458061][ T262] mmc1: Reset 0x1 never completed.
+> [ 5.462454][ T262] mmc1: sdhci: ============ SDHCI REGISTER DUMP
+> ===========
+> [ 5.469065][ T262] mmc1: sdhci: Sys addr: 0x00000000 | Version:
+> 0x00007202
+> [ 5.475688][ T262] mmc1: sdhci: Blk size: 0x00000000 | Blk cnt:
+> 0x00000000
+> [ 5.482315][ T262] mmc1: sdhci: Argument: 0x00000000 | Trn mode:
+> 0x00000000
+> [ 5.488927][ T262] mmc1: sdhci: Present: 0x01f800f0 | Host ctl:
+> 0x00000000
+> [ 5.495539][ T262] mmc1: sdhci: Power: 0x00000000 | Blk gap: 0x00000000
+> [ 5.502162][ T262] mmc1: sdhci: Wake-up: 0x00000000 | Clock: 0x00000003
+> [ 5.508768][ T262] mmc1: sdhci: Timeout: 0x00000000 | Int stat:
+> 0x00000000
+> [ 5.515381][ T262] mmc1: sdhci: Int enab: 0x00000000 | Sig enab:
+> 0x00000000
+> [ 5.521996][ T262] mmc1: sdhci: ACmd stat: 0x00000000 | Slot int:
+> 0x00000000
+> [ 5.528607][ T262] mmc1: sdhci: Caps: 0x362dc8b2 | Caps_1: 0x0000808f
+> [ 5.535227][ T262] mmc1: sdhci: Cmd: 0x00000000 | Max curr: 0x00000000
+> [ 5.541841][ T262] mmc1: sdhci: Resp[0]: 0x00000000 | Resp[1]:
+> 0x00000000
+> [ 5.548454][ T262] mmc1: sdhci: Resp[2]: 0x00000000 | Resp[3]:
+> 0x00000000
+> [ 5.555079][ T262] mmc1: sdhci: Host ctl2: 0x00000000
+> [ 5.559651][ T262] mmc1: sdhci_msm: ----------- VENDOR REGISTER
+> DUMP-----------
+> [ 5.566621][ T262] mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg:
+> 0x6000642c |
+> DLL cfg2: 0x0020a000
+> [ 5.575465][ T262] mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl:
+> 0x00010800 | DDR cfg: 0x80040873
+> [ 5.584658][ T262] mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 :
+> 0xf88218a8 Vndr func3: 0x02626040
 
-Here's some statistics from the ent project
-(https://www.fourmilab.ch/random/) that shows information about the
-quality of the generated numbers:
+Please ignore the line length "limit" and leave these unwrapped.
 
-    $ ent -c qcom-random-before
-    Value Char Occurrences Fraction
-      0           606748   0.067416
-      1            33104   0.003678
-      2            33001   0.003667
-    ...
-    253   �        32883   0.003654
-    254   �        33035   0.003671
-    255   �        33239   0.003693
+> 
+> Fixes: 0eb0d9f4de34 ("mmc: sdhci-msm: Initial support for Qualcomm
+> chipsets")
 
-    Total:       9000000   1.000000
+This as well, and please drop the empty line between Fixes: and
+Signed-off-by:.
 
-    Entropy = 7.811590 bits per byte.
+> 
+> Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+> ---
+> 
+> Changes since V1:
+> 	- Added fixes tag as suggested by Ulf Hansson.
+> 	- Replaced devm_reset_control_get() with
+> 	  devm_reset_control_get_optional_exclusive() as suggested by
+> 	  Ulf Hansson.
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 48 ++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 48 insertions(+)
+> 
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index 50c71e0..cb33c9a 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -17,6 +17,7 @@
+>  #include <linux/regulator/consumer.h>
+>  #include <linux/interconnect.h>
+>  #include <linux/pinctrl/consumer.h>
+> +#include <linux/reset.h>
+>  
+>  #include "sdhci-pltfm.h"
+>  #include "cqhci.h"
+> @@ -284,6 +285,7 @@ struct sdhci_msm_host {
+>  	bool uses_tassadar_dll;
+>  	u32 dll_config;
+>  	u32 ddr_config;
+> +	struct reset_control *core_reset;
 
-    Optimum compression would reduce the size
-    of this 9000000 byte file by 2 percent.
+As you only reset the controller once, during probe, this can be a local
+variable in sdhci_msm_gcc_reset().
 
-    Chi square distribution for 9000000 samples is 9329962.81, and
-    randomly would exceed this value less than 0.01 percent of the
-    times.
+>  	bool vqmmc_enabled;
+>  };
+>  
+> @@ -2482,6 +2484,45 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
+>  	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
+>  }
+>  
+> +static int sdhci_msm_gcc_reset(struct platform_device *pdev,
 
-    Arithmetic mean value of data bytes is 119.3731 (127.5 = random).
-    Monte Carlo value for Pi is 3.197293333 (error 1.77 percent).
-    Serial correlation coefficient is 0.159130 (totally uncorrelated =
-    0.0).
+You don't need pdev here, take a struct deivce * in and pass &pdev->dev.
 
-Without this patch, the results of the chi-square test is 0.01%, and
-the numbers are certainly not random according to ent's project page.
-The results improve with this patch:
+> +	       struct sdhci_host *host)
+> +{
+> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+> +	int ret = 0;
+> +
+> +	msm_host->core_reset = devm_reset_control_get_optional_exclusive(&pdev->dev, "core_reset");
 
-    $ ent -c qcom-random-after
-    Value Char Occurrences Fraction
-      0            35432   0.003937
-      1            35127   0.003903
-      2            35424   0.003936
-    ...
-    253   �        35201   0.003911
-    254   �        34835   0.003871
-    255   �        35368   0.003930
+No need to hold onto that, so use the non-devm variant and free the
+reset at the end of the function.
 
-    Total:       9000000   1.000000
+> +	if (IS_ERR(msm_host->core_reset)) {
+> +		ret = PTR_ERR(msm_host->core_reset);
+> +		dev_err(&pdev->dev, "core_reset unavailable (%d)\n", ret);
+> +		msm_host->core_reset = NULL;
 
-    Entropy = 7.999979 bits per byte.
+return dev_err_probe(&pdev->dev, PTR_ERR(msm_host->core_reset), "unable to acquire core_reset\n");
 
-    Optimum compression would reduce the size
-    of this 9000000 byte file by 0 percent.
+> +	}
+> +	if (msm_host->core_reset) {
 
-    Chi square distribution for 9000000 samples is 258.77, and randomly
-    would exceed this value 42.24 percent of the times.
+If you flip this around as:
 
-    Arithmetic mean value of data bytes is 127.5006 (127.5 = random).
-    Monte Carlo value for Pi is 3.141277333 (error 0.01 percent).
-    Serial correlation coefficient is 0.000468 (totally uncorrelated =
-    0.0).
+	if (!msm_host->core_reset)
+		return 0;
 
-This change was tested on a Nexus 5 phone (msm8974 SoC).
+You don't need to zero-initialize ret, use goto and indent
+this block.
 
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Fixes: ceec5f5b5988 ("crypto: qcom-rng - Add Qcom prng driver")
-Cc: stable@vger.kernel.org # 4.19+
----
- drivers/crypto/qcom-rng.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+> +		ret = reset_control_assert(msm_host->core_reset);
+> +		if (ret) {
+> +			dev_err(&pdev->dev, "core_reset assert failed (%d)\n",
+> +						ret);
+> +			goto out;
 
-diff --git a/drivers/crypto/qcom-rng.c b/drivers/crypto/qcom-rng.c
-index 99ba8d51d102..11f30fd48c14 100644
---- a/drivers/crypto/qcom-rng.c
-+++ b/drivers/crypto/qcom-rng.c
-@@ -8,6 +8,7 @@
- #include <linux/clk.h>
- #include <linux/crypto.h>
- #include <linux/io.h>
-+#include <linux/iopoll.h>
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
-@@ -43,16 +44,19 @@ static int qcom_rng_read(struct qcom_rng *rng, u8 *data, unsigned int max)
- {
- 	unsigned int currsize = 0;
- 	u32 val;
-+	int ret;
- 
- 	/* read random data from hardware */
- 	do {
--		val = readl_relaxed(rng->base + PRNG_STATUS);
--		if (!(val & PRNG_STATUS_DATA_AVAIL))
--			break;
-+		ret = readl_poll_timeout(rng->base + PRNG_STATUS, val,
-+					 val & PRNG_STATUS_DATA_AVAIL,
-+					 200, 10000);
-+		if (ret)
-+			return ret;
- 
- 		val = readl_relaxed(rng->base + PRNG_DATA_OUT);
- 		if (!val)
--			break;
-+			return -EINVAL;
- 
- 		if ((max - currsize) >= WORD_SZ) {
- 			memcpy(data, &val, WORD_SZ);
-@@ -61,11 +65,10 @@ static int qcom_rng_read(struct qcom_rng *rng, u8 *data, unsigned int max)
- 		} else {
- 			/* copy only remaining bytes */
- 			memcpy(data, &val, max - currsize);
--			break;
- 		}
- 	} while (currsize < max);
- 
--	return currsize;
-+	return 0;
- }
- 
- static int qcom_rng_generate(struct crypto_rng *tfm,
-@@ -87,7 +90,7 @@ static int qcom_rng_generate(struct crypto_rng *tfm,
- 	mutex_unlock(&rng->lock);
- 	clk_disable_unprepare(rng->clk);
- 
--	return 0;
-+	return ret;
- }
- 
- static int qcom_rng_seed(struct crypto_rng *tfm, const u8 *seed,
--- 
-2.34.1
+return dev_err_probe();
 
+> +		}
+> +		/*
+> +		 * The hardware requirement for delay between assert/deassert
+> +		 * is at least 3-4 sleep clock (32.7KHz) cycles, which comes to
+> +		 * ~125us (4/32768). To be on the safe side add 200us delay.
+> +		 */
+> +		usleep_range(200, 210);
+> +
+> +		ret = reset_control_deassert(msm_host->core_reset);
+> +		if (ret) {
+> +			dev_err(&pdev->dev, "core_reset deassert failed (%d)\n",
+> +						ret);
+> +			goto out;
+
+return dev_err_probe()
+
+> +		}
+> +		usleep_range(200, 210);
+
+The comment above says that we need to hold reset for 125us, is this
+delay in here in error or should the comment above mention that this
+needs to be done after deasserting the reset as well?
+
+> +	}
+> +
+> +out:
+> +	return ret;
+
+With above, you can return 0 here.
+
+> +}
+>  
+>  static int sdhci_msm_probe(struct platform_device *pdev)
+>  {
+> @@ -2529,6 +2570,13 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>  
+>  	msm_host->saved_tuning_phase = INVALID_TUNING_PHASE;
+>  
+> +	ret = sdhci_msm_gcc_reset(pdev, host);
+> +	if (ret) {
+> +		dev_err(&pdev->dev, "core_reset assert/deassert failed (%d)\n",
+> +					ret);
+
+You just printed in sdhci_msm_gcc_reset(), no need to print again.
+
+Regards,
+Bjorn
+
+> +		goto pltfm_free;
+> +	}
+> +
+>  	/* Setup SDCC bus voter clock. */
+>  	msm_host->bus_clk = devm_clk_get(&pdev->dev, "bus");
+>  	if (!IS_ERR(msm_host->bus_clk)) {
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
