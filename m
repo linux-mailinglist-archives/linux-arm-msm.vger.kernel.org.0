@@ -2,75 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CA9C4D432F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Mar 2022 10:11:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E06C4D43B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Mar 2022 10:47:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234822AbiCJJMA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Mar 2022 04:12:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51358 "EHLO
+        id S240925AbiCJJsB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Mar 2022 04:48:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234205AbiCJJL7 (ORCPT
+        with ESMTP id S237664AbiCJJrx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Mar 2022 04:11:59 -0500
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 6FAD113776D;
-        Thu, 10 Mar 2022 01:10:59 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EFA1A1650;
-        Thu, 10 Mar 2022 01:10:58 -0800 (PST)
-Received: from [10.57.7.5] (unknown [10.57.7.5])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 07ABA3FA20;
-        Thu, 10 Mar 2022 01:10:56 -0800 (PST)
-Message-ID: <a1790ad9-b5e0-9a00-debc-fc8ef2c757cb@arm.com>
-Date:   Thu, 10 Mar 2022 09:10:55 +0000
+        Thu, 10 Mar 2022 04:47:53 -0500
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A92C13AA08;
+        Thu, 10 Mar 2022 01:46:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1646905613; x=1678441613;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=b3/fS2yHAqNHl1jboCRu52MjsVGWP5Iqz5RL18JPJbw=;
+  b=dV/ul8ePl3mPbMP4AUCHHtL98ECFK95d3xsrsBC5u2MC+4A8DGTcil/c
+   rn1V/HBHyqUl7/tLJzRfQZxZKieUB+o/NDQH4Owlvb4LO11gHr23Qi3gE
+   UDq96dWT2esoqvTVUHaMfgOesZYKp/eIEICNnR9YuYcM1vxZuR0OmBpDc
+   HSTGzUbHZqDolg45lIX/DjM+rXr9aLWaiHhI11VNtsUSkSIm5XsTiXbIw
+   wenDieCDJwFvrDcLqCE9IgjR+oBRW/mmkzNMaRTfMy3XFW9wCXhcgpLgp
+   1JeStvssveRXBkjNpJgU/1fyKKPddi73VKO78WSLvVBGCn8Ey0hf13nhc
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10281"; a="255153144"
+X-IronPort-AV: E=Sophos;i="5.90,170,1643702400"; 
+   d="scan'208";a="255153144"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Mar 2022 01:46:52 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,170,1643702400"; 
+   d="scan'208";a="781400231"
+Received: from lkp-server02.sh.intel.com (HELO 89b41b6ae01c) ([10.239.97.151])
+  by fmsmga006.fm.intel.com with ESMTP; 10 Mar 2022 01:46:49 -0800
+Received: from kbuild by 89b41b6ae01c with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1nSFNh-0004ks-66; Thu, 10 Mar 2022 09:46:49 +0000
+Date:   Thu, 10 Mar 2022 17:46:31 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
+        Ansuel Smith <ansuelsmth@gmail.com>,
+        Jonathan McDowell <noodles@earth.li>
+Subject: Re: [PATCH v3 10/18] ARM: dts: qcom: add saw for l2 cache and
+ kraitcc for ipq8064
+Message-ID: <202203101733.hkbTGp6Y-lkp@intel.com>
+References: <20220309190152.7998-11-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.6.1
-Subject: Re: [PATCH v3] coresight: core: Fix coresight device probe failure
- issue
-To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc:     coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>
-References: <20220309142206.15632-1-quic_jinlmao@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <20220309142206.15632-1-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220309190152.7998-11-ansuelsmth@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jinlong
+Hi Ansuel,
 
+Thank you for the patch! Yet something to improve:
 
-On 09/03/2022 14:22, Mao Jinlong wrote:
-> It is possibe that probe failure issue happens when the device
-> and its child_device's probe happens at the same time.
-> In coresight_make_links, has_conns_grp is true for parent, but
-> has_conns_grp is false for child device as has_conns_grp is set
-> to true in coresight_create_conns_sysfs_group. The probe of parent
-> device will fail at this condition. Add has_conns_grp check for
-> child device before make the links and make the process from
-> device_register to connection_create be atomic to avoid this
-> probe failure issue.
-> 
-> Suggested-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-> Suggested-by: Mike Leach <mike.leach@linaro.org>
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on linux/master linus/master v5.17-rc7 next-20220309]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-Thanks for the rework. The patch looks good to me.
+url:    https://github.com/0day-ci/linux/commits/Ansuel-Smith/Multiple-addition-to-ipq8064-dtsi/20220310-031750
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+config: arm-defconfig (https://download.01.org/0day-ci/archive/20220310/202203101733.hkbTGp6Y-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project 276ca87382b8f16a65bddac700202924228982f6)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install arm cross compiling tool for clang build
+        # apt-get install binutils-arm-linux-gnueabi
+        # https://github.com/0day-ci/linux/commit/52c3b4af226c7a50772c40012b3789b5348e49b5
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Ansuel-Smith/Multiple-addition-to-ipq8064-dtsi/20220310-031750
+        git checkout 52c3b4af226c7a50772c40012b3789b5348e49b5
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash
 
-Suzuki
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All errors (new ones prefixed by >>):
+
+>> ERROR: Input tree has errors, aborting (use -f to force output)
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
