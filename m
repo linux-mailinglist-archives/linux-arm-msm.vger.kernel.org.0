@@ -2,198 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BBBB64D4D72
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Mar 2022 16:43:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B88914D5364
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Mar 2022 22:05:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230224AbiCJPlw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Mar 2022 10:41:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43188 "EHLO
+        id S1343857AbiCJVF7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Mar 2022 16:05:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbiCJPlw (ORCPT
+        with ESMTP id S1343814AbiCJVF7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Mar 2022 10:41:52 -0500
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C69F1182DBA;
-        Thu, 10 Mar 2022 07:40:50 -0800 (PST)
+        Thu, 10 Mar 2022 16:05:59 -0500
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7946913FADC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Mar 2022 13:04:57 -0800 (PST)
+Received: by mail-pg1-x530.google.com with SMTP id q19so5739381pgm.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Mar 2022 13:04:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1646926851; x=1678462851;
-  h=from:to:cc:subject:date:message-id;
-  bh=xQcu9yhqtW0WP5gvn5tmDGzwGOh80CRgaFIQ4EfxX0s=;
-  b=J1fK8NkdijFJlsL+FyRqgEo/ut12eXTThcu8MEb+QS9cTavm/hA+LVG7
-   aamaTQXrMYeuX31b48QO3ujhVfTpvcbpk6HzCtBiKBO850NaTfYSCX8gF
-   8dQ9qyLP0ol0U2EU4NAUZp9BoVh/9FFvdrex/3x8vmA8Rm9E73x4eU/S9
-   c=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 10 Mar 2022 07:40:50 -0800
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 10 Mar 2022 07:40:49 -0800
-X-QCInternal: smtphost
-Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 10 Mar 2022 21:10:27 +0530
-Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
-        id 3364A58A2; Thu, 10 Mar 2022 21:10:26 +0530 (IST)
-From:   Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
-To:     adrian.hunter@intel.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, ulf.hansson@linaro.org,
-        p.zabel@pengutronix.de, chris@printf.net, gdjakov@mm-sol.com
-Cc:     linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_asutoshd@quicinc.com,
-        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
-        quic_sartgarg@quicinc.com, quic_nitirawa@quicinc.com,
-        quic_sayalil@quicinc.com,
-        Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
-Subject: [PATCH V2] mmc: sdhci-msm: Reset GCC_SDCC_BCR register for SDHC
-Date:   Thu, 10 Mar 2022 21:10:23 +0530
-Message-Id: <1646926823-5362-1-git-send-email-quic_c_sbhanu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=obuJZgA+9h3Opi8fGV6bTwbs6NZXXhZ7phVpG6fqysw=;
+        b=nmuW8+Zw/Wnq9ASRMeWUjtleyefNkOnr5Xl9IcWParCYOXgIKxEstVkLvoSug3n7ts
+         D79JI/9OgoasVnoS4QPPqj4j8za7JS74qqmMYEs84F0XSxoYFMhjkggnJ/fscQpTl2Kd
+         6IjtX90d+wg9fU5ZEzMtuJXTKqlZ/YJjPdVFs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=obuJZgA+9h3Opi8fGV6bTwbs6NZXXhZ7phVpG6fqysw=;
+        b=1B587IPy2yvk2M6AjiVZ6GD45L3KtXSV7DrwYyYJYNGVlrPmQL0YKNpZ87fKpFLcqv
+         AeXIEXo6GGvN/KByAx6LG+UJ7c2Cjd1wo60HObrmy4Tv3NxlHCv7fFZ1rWmYKpXmOnap
+         pjH49ws1xqVN/AmGiNwXJ8gjdCz0FF5tTn1z6BNojMaRN09aZzjy45FPFTI1bIELPlOy
+         JRKaS8hK0a6tOswG6FKKwp851os+XZa+QBFupEfZLtsBu3aG2FLy4MNy8jp6a0aT/N1o
+         W16e5ZwULEA2XI/V0TR9gE/nkP/CNHGodN68ePYGwO7gaKC0KFT2NLao0PLFcgqmuxbh
+         MZEQ==
+X-Gm-Message-State: AOAM532/BLCYV3JjoxupeQY9rCvw+6Q9+YfWoo1wED4lSDKwVNSyCT8w
+        Il0PqSPIusJkHzWFHN4exkvd6A==
+X-Google-Smtp-Source: ABdhPJxjl6idbl313Fxh9KypXJMEBJWhLPUFn0GIjpVVjzV6fmTbq2x0qU3kJNA+tWIFJSJVQESrcA==
+X-Received: by 2002:a05:6a00:234f:b0:4f6:f0c0:ec68 with SMTP id j15-20020a056a00234f00b004f6f0c0ec68mr6801201pfj.14.1646946296960;
+        Thu, 10 Mar 2022 13:04:56 -0800 (PST)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:9116:709a:646d:1f5f])
+        by smtp.gmail.com with ESMTPSA id y21-20020a056a00191500b004f78813b2d6sm315898pfi.178.2022.03.10.13.04.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Mar 2022 13:04:56 -0800 (PST)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sc7280-herobrine: Fix PCIe regulator glitch at bootup
+Date:   Thu, 10 Mar 2022 13:04:34 -0800
+Message-Id: <20220310130429.1.Id41fda1d7f5d9230bc45c1b85b06b0fb0ddd29af@changeid>
+X-Mailer: git-send-email 2.35.1.723.g4982287a31-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Reset GCC_SDCC_BCR register before every fresh initilazation. This will
-reset whole SDHC-msm controller, clears the previous power control
-states and avoids, software reset timeout issues as below.
+While scoping signals, we found that the PCIe signals weren't
+compliant at bootup. Specifically, the bootloader was setting up PCIe
+and leaving it configured, then jumping to the kernel. The kernel was
+turning off the regulator while leaving the PCIe clock running, which
+was a violation.
 
-[ 5.458061][ T262] mmc1: Reset 0x1 never completed.
-[ 5.462454][ T262] mmc1: sdhci: ============ SDHCI REGISTER DUMP
-===========
-[ 5.469065][ T262] mmc1: sdhci: Sys addr: 0x00000000 | Version:
-0x00007202
-[ 5.475688][ T262] mmc1: sdhci: Blk size: 0x00000000 | Blk cnt:
-0x00000000
-[ 5.482315][ T262] mmc1: sdhci: Argument: 0x00000000 | Trn mode:
-0x00000000
-[ 5.488927][ T262] mmc1: sdhci: Present: 0x01f800f0 | Host ctl:
-0x00000000
-[ 5.495539][ T262] mmc1: sdhci: Power: 0x00000000 | Blk gap: 0x00000000
-[ 5.502162][ T262] mmc1: sdhci: Wake-up: 0x00000000 | Clock: 0x00000003
-[ 5.508768][ T262] mmc1: sdhci: Timeout: 0x00000000 | Int stat:
-0x00000000
-[ 5.515381][ T262] mmc1: sdhci: Int enab: 0x00000000 | Sig enab:
-0x00000000
-[ 5.521996][ T262] mmc1: sdhci: ACmd stat: 0x00000000 | Slot int:
-0x00000000
-[ 5.528607][ T262] mmc1: sdhci: Caps: 0x362dc8b2 | Caps_1: 0x0000808f
-[ 5.535227][ T262] mmc1: sdhci: Cmd: 0x00000000 | Max curr: 0x00000000
-[ 5.541841][ T262] mmc1: sdhci: Resp[0]: 0x00000000 | Resp[1]:
-0x00000000
-[ 5.548454][ T262] mmc1: sdhci: Resp[2]: 0x00000000 | Resp[3]:
-0x00000000
-[ 5.555079][ T262] mmc1: sdhci: Host ctl2: 0x00000000
-[ 5.559651][ T262] mmc1: sdhci_msm: ----------- VENDOR REGISTER
-DUMP-----------
-[ 5.566621][ T262] mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg:
-0x6000642c |
-DLL cfg2: 0x0020a000
-[ 5.575465][ T262] mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl:
-0x00010800 | DDR cfg: 0x80040873
-[ 5.584658][ T262] mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 :
-0xf88218a8 Vndr func3: 0x02626040
+In the regulator bindings (and the Linux kernel driver that uses
+them), there's currently no way to specify that a GPIO-controlled
+regulator should keep its state at bootup. You've got to pick either
+"on" or "off". Let's switch it so that the PCIe regulator defaults to
+"on" instead of "off". This should be a much safer way to go and
+avoids the timing violation. The regulator will still be turned off
+later if there are no users.
 
-Fixes: 0eb0d9f4de34 ("mmc: sdhci-msm: Initial support for Qualcomm
-chipsets")
-
-Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
 
-Changes since V1:
-	- Added fixes tag as suggested by Ulf Hansson.
-	- Replaced devm_reset_control_get() with
-	  devm_reset_control_get_optional_exclusive() as suggested by
-	  Ulf Hansson.
----
- drivers/mmc/host/sdhci-msm.c | 48 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 50c71e0..cb33c9a 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -17,6 +17,7 @@
- #include <linux/regulator/consumer.h>
- #include <linux/interconnect.h>
- #include <linux/pinctrl/consumer.h>
-+#include <linux/reset.h>
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+index dc17f2079695..042a4a59e3dc 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+@@ -178,6 +178,13 @@ pp3300_ssd: pp3300-ssd-regulator {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&ssd_en>;
  
- #include "sdhci-pltfm.h"
- #include "cqhci.h"
-@@ -284,6 +285,7 @@ struct sdhci_msm_host {
- 	bool uses_tassadar_dll;
- 	u32 dll_config;
- 	u32 ddr_config;
-+	struct reset_control *core_reset;
- 	bool vqmmc_enabled;
- };
- 
-@@ -2482,6 +2484,45 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
- 	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
- }
- 
-+static int sdhci_msm_gcc_reset(struct platform_device *pdev,
-+	       struct sdhci_host *host)
-+{
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-+	int ret = 0;
-+
-+	msm_host->core_reset = devm_reset_control_get_optional_exclusive(&pdev->dev, "core_reset");
-+	if (IS_ERR(msm_host->core_reset)) {
-+		ret = PTR_ERR(msm_host->core_reset);
-+		dev_err(&pdev->dev, "core_reset unavailable (%d)\n", ret);
-+		msm_host->core_reset = NULL;
-+	}
-+	if (msm_host->core_reset) {
-+		ret = reset_control_assert(msm_host->core_reset);
-+		if (ret) {
-+			dev_err(&pdev->dev, "core_reset assert failed (%d)\n",
-+						ret);
-+			goto out;
-+		}
 +		/*
-+		 * The hardware requirement for delay between assert/deassert
-+		 * is at least 3-4 sleep clock (32.7KHz) cycles, which comes to
-+		 * ~125us (4/32768). To be on the safe side add 200us delay.
++		 * The bootloaer may have left PCIe configured. Powering this
++		 * off while the PCIe clocks are still running isn't great,
++		 * so it's better to default to this regulator being on.
 +		 */
-+		usleep_range(200, 210);
++		regulator-boot-on;
 +
-+		ret = reset_control_deassert(msm_host->core_reset);
-+		if (ret) {
-+			dev_err(&pdev->dev, "core_reset deassert failed (%d)\n",
-+						ret);
-+			goto out;
-+		}
-+		usleep_range(200, 210);
-+	}
-+
-+out:
-+	return ret;
-+}
+ 		vin-supply = <&pp3300_z1>;
+ 	};
  
- static int sdhci_msm_probe(struct platform_device *pdev)
- {
-@@ -2529,6 +2570,13 @@ static int sdhci_msm_probe(struct platform_device *pdev)
- 
- 	msm_host->saved_tuning_phase = INVALID_TUNING_PHASE;
- 
-+	ret = sdhci_msm_gcc_reset(pdev, host);
-+	if (ret) {
-+		dev_err(&pdev->dev, "core_reset assert/deassert failed (%d)\n",
-+					ret);
-+		goto pltfm_free;
-+	}
-+
- 	/* Setup SDCC bus voter clock. */
- 	msm_host->bus_clk = devm_clk_get(&pdev->dev, "bus");
- 	if (!IS_ERR(msm_host->bus_clk)) {
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+2.35.1.723.g4982287a31-goog
 
