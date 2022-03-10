@@ -2,65 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B54F4D547F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Mar 2022 23:19:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 749404D54A6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Mar 2022 23:35:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232689AbiCJWUl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Mar 2022 17:20:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56564 "EHLO
+        id S243840AbiCJWgA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Mar 2022 17:36:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232622AbiCJWUl (ORCPT
+        with ESMTP id S232159AbiCJWgA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Mar 2022 17:20:41 -0500
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 619875A5A9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Mar 2022 14:19:39 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id b28so231994lfc.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Mar 2022 14:19:39 -0800 (PST)
+        Thu, 10 Mar 2022 17:36:00 -0500
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A504EBD898
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Mar 2022 14:34:58 -0800 (PST)
+Received: by mail-pg1-x535.google.com with SMTP id 27so5887340pgk.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Mar 2022 14:34:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ltAEZbyZLVfVeVrk0Wt85llgsjn+pNs+1t+/8KbJndU=;
-        b=XnNrZ0UqLC58u+TifWhc5txCIpvFo4ANJoB8b59nUJBUoBu0czMi4jST3aZMWpehaD
-         7oxR53YLZclgvH4tHgPEz+0jWCwMaK1yOuBSkJJLIMuwDZKyKzXP3FEyV6JlGA3MMcXI
-         hy3CFi/Fc4byqyk5yOopO0y67FmsPpKs0gZriIS9Eh2hZz7J3mlxgH9iPnDoEdTrg9Au
-         lPvadla5Vpf/u1y7wqDCjLNAPpfM6RgsDPDszh+LODzWj2E2D7sIPgTWcFNEdTqknZ/s
-         F1UG/SlITzxrGx0mTrOui5Jsu+YmaRxX89SSsXOe/x/TyN+Qr9uAOtR3lVbROBA9mItz
-         mo8Q==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=dm3qB2w2lQ7IFy1ipeKnHCOmhqitdfZXH/ycCypXYJA=;
+        b=XbtHN78KIecFW+02Yyb63lZj4KZ2A9h4133DWVgegrpcThbSKDbzoYlFJPUlH5aMKW
+         AjdapHStDHVE0xYa01ndPaYUTm8iT6/QuKTi2DPbu5LWDW8PSuM67v9LSoIYV99kPOyv
+         t2m27yiE+DisfL7G6lcgeyzawilqE1zNRz0bI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ltAEZbyZLVfVeVrk0Wt85llgsjn+pNs+1t+/8KbJndU=;
-        b=edPz8saT4H7WLWrZohheEuDfQdG2eFEBhXbcLGqfCYGEx0pmFKiJW7Vm+syLq6up0B
-         cwqB/Z2RKOMiobyxESGkXtNDKNeWRQOWChv9cp58CCO3Fnfl6rJqAxrM/Rn1a+VPcFpB
-         eJTCFN7eIKAD71FKQwwETqoVfbOe44UoK+lO2t5amlY2RyMq9YBttgvtKQRQ/i6g9b2b
-         koewGMVTrx5uKikFBHDsFZ6DG5zMPWQbo/NWTTqN3724/r1WocLnw/qIxdY7eLg1aPTC
-         KvutjBDFmgWe4hKozIZ9+YcAJvdWm5pD9+Iq7TJoukpWG1WgaZJb3cZ1jsyypAH7/LI2
-         uTMw==
-X-Gm-Message-State: AOAM532s/JVbDDwtIeZPeE3FDGZnPKOmOHHv7PqTow0xkhIF7F6IqCUL
-        VOlrPeOGocLJR02wxwi0Qq4IMQ==
-X-Google-Smtp-Source: ABdhPJxVgE47WDGfVsj/7torO5HeN59Y32gauwo2qntSel9Tv4qolvpa7Vemyu7JKFVMOzgRpdYPgg==
-X-Received: by 2002:a19:8c54:0:b0:448:2271:57d3 with SMTP id i20-20020a198c54000000b00448227157d3mr4444610lfj.482.1646950777725;
-        Thu, 10 Mar 2022 14:19:37 -0800 (PST)
-Received: from localhost.localdomain (88-113-46-102.elisa-laajakaista.fi. [88.113.46.102])
-        by smtp.gmail.com with ESMTPSA id q15-20020a196e4f000000b004482f75404asm1204598lfk.237.2022.03.10.14.19.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Mar 2022 14:19:37 -0800 (PST)
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sm8450: fix interconnects property of UFS node
-Date:   Fri, 11 Mar 2022 00:19:34 +0200
-Message-Id: <20220310221934.1560729-1-vladimir.zapolskiy@linaro.org>
-X-Mailer: git-send-email 2.33.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=dm3qB2w2lQ7IFy1ipeKnHCOmhqitdfZXH/ycCypXYJA=;
+        b=LHK5KjkXeSjE2xSsYlGg/cGODUn+n8V9iUNfmwNTTLBcOMepnidIOCcVUoKt9K24Qf
+         WLE/sf23DxVyWGvLZG8Da8yo8U8Izcnu5XXkHNtmXqc+2PwPb5mZoenALKkuselv+QbM
+         4cXSJhIBl3TNytF7CW3UIaGNpaltJDQmWjjiCDE9lmu/ek9ki9pea/+u7resmGpCcCNf
+         JBg3Pao4SdoWjk5aEGROFaEnByIzVB6g0MNp3qm5eKq2ahJEKr2Ea+a4oWGDxUbcBW37
+         kvlQttZzrn6akhQUqmG6Eg/VLPAGSuxDcf1rUXOuipin6jroqmc4MMHqKAPzIfCR4lnN
+         FH9g==
+X-Gm-Message-State: AOAM530I5+nufs6kx8Xongn2x/Whlur47SfdXkkBwMrJNxP1BrN2Zrbf
+        d0OU+niG1RbcSJun67fp7RYdGw==
+X-Google-Smtp-Source: ABdhPJy1z6bn6NBQfuRdnkrdCb5mXCccJv1Spi5pKAOp4pz2vxeEh5T0s6tYVvmFaKZb0Eg8n9tp7g==
+X-Received: by 2002:a63:ad47:0:b0:373:4c14:35e2 with SMTP id y7-20020a63ad47000000b003734c1435e2mr5813069pgo.67.1646951698203;
+        Thu, 10 Mar 2022 14:34:58 -0800 (PST)
+Received: from localhost ([2620:15c:202:201:60f0:9f89:56be:75e9])
+        by smtp.gmail.com with UTF8SMTPSA id d11-20020a056a0010cb00b004e1b76b09c0sm7991122pfu.74.2022.03.10.14.34.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Mar 2022 14:34:57 -0800 (PST)
+Date:   Thu, 10 Mar 2022 14:34:56 -0800
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280-herobrine: Fix PCIe regulator
+ glitch at bootup
+Message-ID: <Yip9EE+gcyRcSydd@google.com>
+References: <20220310130429.1.Id41fda1d7f5d9230bc45c1b85b06b0fb0ddd29af@changeid>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220310130429.1.Id41fda1d7f5d9230bc45c1b85b06b0fb0ddd29af@changeid>
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -69,30 +71,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-All interconnect device tree nodes on sm8450 are 2-cells, however in
-UFS node they are handled as 1-cells, fix it.
+On Thu, Mar 10, 2022 at 01:04:34PM -0800, Douglas Anderson wrote:
+> While scoping signals, we found that the PCIe signals weren't
+> compliant at bootup. Specifically, the bootloader was setting up PCIe
+> and leaving it configured, then jumping to the kernel. The kernel was
+> turning off the regulator while leaving the PCIe clock running, which
+> was a violation.
+> 
+> In the regulator bindings (and the Linux kernel driver that uses
+> them), there's currently no way to specify that a GPIO-controlled
+> regulator should keep its state at bootup. You've got to pick either
+> "on" or "off". Let's switch it so that the PCIe regulator defaults to
+> "on" instead of "off". This should be a much safer way to go and
+> avoids the timing violation. The regulator will still be turned off
+> later if there are no users.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 
-Fixes: aa2d0bf04a3c ("arm64: dts: qcom: sm8450: add interconnect nodes")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 0cd5af8c03bd..bbd38b55e976 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -1376,8 +1376,8 @@ ufs_mem_hc: ufshc@1d84000 {
- 
- 			iommus = <&apps_smmu 0xe0 0x0>;
- 
--			interconnects = <&aggre1_noc MASTER_UFS_MEM &mc_virt SLAVE_EBI1>,
--					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_UFS_MEM_CFG>;
-+			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI1 0>,
-+					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
- 			interconnect-names = "ufs-ddr", "cpu-ufs";
- 			clock-names =
- 				"core_clk",
--- 
-2.33.0
-
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
