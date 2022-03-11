@@ -2,166 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DCB594D62FC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Mar 2022 15:10:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FB374D64E9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Mar 2022 16:49:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349267AbiCKOLN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Mar 2022 09:11:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55228 "EHLO
+        id S1348818AbiCKPug (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Mar 2022 10:50:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239350AbiCKOLE (ORCPT
+        with ESMTP id S1344588AbiCKPuf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Mar 2022 09:11:04 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 948211B308A;
-        Fri, 11 Mar 2022 06:09:48 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6C16861F02;
-        Fri, 11 Mar 2022 14:09:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC84C340ED;
-        Fri, 11 Mar 2022 14:09:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1647007778;
-        bh=0CL2/qApCnzCj9IzxwD5iw737g8Sy9uOx0U4nGkwXFE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=GBnlhlJcJ/HAEEPNLdvbr6Rd+QWZVzIQfNqRtTIL6wxdFpwVwgfpXlzDqY5S7KB4k
-         V7Dy+rml9Z8Hur5GsBNJNsgmFjVsXHMV0OjuA85QRKjxLvUoikx7xMRKt/S+4y9JZ9
-         ycwr/DJu0+NeuasA7VuImticuba8w9jyuYDtxWlk5gcdqoSDXMazXGN57RSnUbVZZ8
-         2hl3zVmNAEn62cQvCuaDHMn8e1lthShzTzUVy03lrITpeRuR9SzbrqGGqnVGv9gpY7
-         VcV+W8PaktyLtQDVWPUwsxfDndvzUjQdjmskIrDvr+LVT6bQHy6VzfCr1zYaD5/Pmr
-         a/9C5DBAjqnig==
-Received: from mchehab by mail.kernel.org with local (Exim 4.94.2)
-        (envelope-from <mchehab@kernel.org>)
-        id 1nSfxY-000lIn-Ga; Fri, 11 Mar 2022 15:09:36 +0100
-From:   Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
-        =?UTF-8?q?Niklas=20S=C3=B6derlund?= 
-        <niklas.soderlund+renesas@ragnatech.se>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Ming Qian <ming.qian@nxp.com>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-rockchip@lists.infradead.org,
-        linux-sunxi@lists.linux.dev
-Subject: [PATCH v2 38/38] drivers: media: platform: move some manufacturer entries
-Date:   Fri, 11 Mar 2022 15:07:51 +0100
-Message-Id: <b1803d005b2f671d238fc8579882a493c173d1ef.1647006877.git.mchehab@kernel.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <cover.1647006877.git.mchehab@kernel.org>
-References: <cover.1647006877.git.mchehab@kernel.org>
+        Fri, 11 Mar 2022 10:50:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9E8988BE2C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Mar 2022 07:49:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1647013770;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=D2pmc0xLyfbXJv4H5Su2IjuCtdgSulAIgXXCBsJ28QE=;
+        b=AU32QDGAaoHSpohv6znRds/qQDp94mzODdJBzkeU+293e1ND3CQcyhTbnEjajkBE2WiWqm
+        FE+DdP1SuKIsggtDYvZInJt/4eOmJ3ZBxYqTAMUtxAf3EwNFD7jcTVvMlW/TnIzGaKkvtW
+        vcoYUvjYRd+HEEoZZo2mGqc69TXMdyM=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-633-7W__IiacMG-DjtBvsh943w-1; Fri, 11 Mar 2022 10:49:29 -0500
+X-MC-Unique: 7W__IiacMG-DjtBvsh943w-1
+Received: by mail-qk1-f198.google.com with SMTP id bj2-20020a05620a190200b005084968bb24so6379476qkb.23
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Mar 2022 07:49:29 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=D2pmc0xLyfbXJv4H5Su2IjuCtdgSulAIgXXCBsJ28QE=;
+        b=hYAVpwvL8QfnHRD8nR2rDlfN6lPH/UJFGmBIUj0vVEQLb2eNEZOinhFSJbzXJ8PSvE
+         bmIqi1687ng22yIz8d7gBGlTv49jVgh6dP1OEDA1YM8wf88xlWfIj81o/ov6pBdRorXl
+         r18T9zCnG8PzVx4kVU6Vw7phkkihOfMh0GNlPAUn23dG0ZGe5d5OFwGGG7339z7GAW18
+         QiinmtEHFNXBgOO4Q0lurBE4QznEWgkQeV8ZgYEX+vYuWKsWqPR3Vth8ILqedKuI5olO
+         TBqpgaP8cHxacyT3XkuBJ2htFW7Qkvhq/XeUhXwl2DIowuonwTHGDTvGqu4SdDWOkGO3
+         sgjw==
+X-Gm-Message-State: AOAM532l0/iXijPGdW03ZOTPGdetrUJWuFWhrDrvIVZm0kcdIhqeBmSf
+        vNItyhb5S1vmnhLVP2BEkeb849LiOXuqUc9yjz0C4WzxYVl1pYi1dqii6KgWnfGvP3HhsHiyqLP
+        Zn2DMhpKqkF9ruuSokfECKlpwig==
+X-Received: by 2002:a05:622a:550:b0:2e0:7422:a1d5 with SMTP id m16-20020a05622a055000b002e07422a1d5mr8888175qtx.444.1647013769071;
+        Fri, 11 Mar 2022 07:49:29 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJycKl9MtiYetzeS9duFZfYrf1qfeHF2oqbyGQqrK2X38v2Q/P9G/k00aKlaQClsoPQJAlwqsA==
+X-Received: by 2002:a05:622a:550:b0:2e0:7422:a1d5 with SMTP id m16-20020a05622a055000b002e07422a1d5mr8888165qtx.444.1647013768866;
+        Fri, 11 Mar 2022 07:49:28 -0800 (PST)
+Received: from xps13.. (c-98-239-145-235.hsd1.wv.comcast.net. [98.239.145.235])
+        by smtp.gmail.com with ESMTPSA id z6-20020ae9c106000000b0067d3b9ef387sm3602719qki.28.2022.03.11.07.49.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Mar 2022 07:49:28 -0800 (PST)
+From:   Brian Masney <bmasney@redhat.com>
+To:     bjorn.andersson@linaro.org
+Cc:     mani@kernel.org, dianders@chromium.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 0/2] ARM: qcom_defconfig: add crypto and debugfs support
+Date:   Fri, 11 Mar 2022 10:49:17 -0500
+Message-Id: <20220311154919.1797920-1-bmasney@redhat.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As there are 4 manufacturer's directories with multiple sources
-(qcom, rockchip, sti and sunxi), move the sources from
-platform/Kconfig to their specific Konfig files.
+Here's two minor additions to the defconfig for the Qualcomm random
+number generator and debug fs.
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
----
+Note that the DTS for the Qualcomm prng is already present in the
+upstream tree for the msm8974.
 
-To avoid mailbombing on a large number of people, only mailing lists were C/C on the cover.
-See [PATCH v2 00/38] at: https://lore.kernel.org/all/cover.1647006877.git.mchehab@kernel.org/
+Brian Masney (2):
+  ARM: qcom_defconfig: enable options for Qualcomm random number
+    generator
+  ARM: qcom_defconfig: enable debug fs support
 
- drivers/media/platform/Kconfig          | 13 +++----------
- drivers/media/platform/qcom/Kconfig     |  3 +++
- drivers/media/platform/rockchip/Kconfig |  3 +++
- drivers/media/platform/sti/Kconfig      |  5 +++++
- drivers/media/platform/sunxi/Kconfig    |  2 ++
- 5 files changed, 16 insertions(+), 10 deletions(-)
- create mode 100644 drivers/media/platform/qcom/Kconfig
- create mode 100644 drivers/media/platform/rockchip/Kconfig
- create mode 100644 drivers/media/platform/sti/Kconfig
+ arch/arm/configs/qcom_defconfig | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/media/platform/Kconfig b/drivers/media/platform/Kconfig
-index 527e9f08008b..a3ad25c6a56c 100644
---- a/drivers/media/platform/Kconfig
-+++ b/drivers/media/platform/Kconfig
-@@ -85,23 +85,16 @@ source "drivers/media/platform/mtk-vpu/Kconfig"
- source "drivers/media/platform/nxp/Kconfig"
- source "drivers/media/platform/omap3isp/Kconfig"
- source "drivers/media/platform/omap/Kconfig"
--source "drivers/media/platform/qcom/camss/Kconfig"
--source "drivers/media/platform/qcom/venus/Kconfig"
-+source "drivers/media/platform/qcom/Kconfig"
- source "drivers/media/platform/renesas/Kconfig"
--source "drivers/media/platform/rockchip/rga/Kconfig"
--source "drivers/media/platform/rockchip/rkisp1/Kconfig"
-+source "drivers/media/platform/rockchip/Kconfig"
- source "drivers/media/platform/s3c-camif/Kconfig"
- source "drivers/media/platform/s5p-g2d/Kconfig"
- source "drivers/media/platform/s5p-jpeg/Kconfig"
- source "drivers/media/platform/s5p-mfc/Kconfig"
--source "drivers/media/platform/sti/bdisp/Kconfig"
--source "drivers/media/platform/sti/c8sectpfe/Kconfig"
--source "drivers/media/platform/sti/delta/Kconfig"
--source "drivers/media/platform/sti/hva/Kconfig"
-+source "drivers/media/platform/sti/Kconfig"
- source "drivers/media/platform/stm32/Kconfig"
- source "drivers/media/platform/sunxi/Kconfig"
--source "drivers/media/platform/sunxi/sun8i-di/Kconfig"
--source "drivers/media/platform/sunxi/sun8i-rotate/Kconfig"
- source "drivers/media/platform/tegra/vde/Kconfig"
- source "drivers/media/platform/ti-vpe/Kconfig"
- source "drivers/media/platform/via/Kconfig"
-diff --git a/drivers/media/platform/qcom/Kconfig b/drivers/media/platform/qcom/Kconfig
-new file mode 100644
-index 000000000000..aa2428f641d3
---- /dev/null
-+++ b/drivers/media/platform/qcom/Kconfig
-@@ -0,0 +1,3 @@
-+# SPDX-License-Identifier: GPL-2.0
-+source "drivers/media/platform/qcom/camss/Kconfig"
-+source "drivers/media/platform/qcom/venus/Kconfig"
-diff --git a/drivers/media/platform/rockchip/Kconfig b/drivers/media/platform/rockchip/Kconfig
-new file mode 100644
-index 000000000000..c7ba06388780
---- /dev/null
-+++ b/drivers/media/platform/rockchip/Kconfig
-@@ -0,0 +1,3 @@
-+# SPDX-License-Identifier: GPL-2.0
-+source "drivers/media/platform/rockchip/rga/Kconfig"
-+source "drivers/media/platform/rockchip/rkisp1/Kconfig"
-diff --git a/drivers/media/platform/sti/Kconfig b/drivers/media/platform/sti/Kconfig
-new file mode 100644
-index 000000000000..9fb5e78a92cf
---- /dev/null
-+++ b/drivers/media/platform/sti/Kconfig
-@@ -0,0 +1,5 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+source "drivers/media/platform/sti/bdisp/Kconfig"
-+source "drivers/media/platform/sti/c8sectpfe/Kconfig"
-+source "drivers/media/platform/sti/delta/Kconfig"
-+source "drivers/media/platform/sti/hva/Kconfig"
-diff --git a/drivers/media/platform/sunxi/Kconfig b/drivers/media/platform/sunxi/Kconfig
-index 7151cc249afa..a10032215b08 100644
---- a/drivers/media/platform/sunxi/Kconfig
-+++ b/drivers/media/platform/sunxi/Kconfig
-@@ -2,3 +2,5 @@
- 
- source "drivers/media/platform/sunxi/sun4i-csi/Kconfig"
- source "drivers/media/platform/sunxi/sun6i-csi/Kconfig"
-+source "drivers/media/platform/sunxi/sun8i-di/Kconfig"
-+source "drivers/media/platform/sunxi/sun8i-rotate/Kconfig"
 -- 
-2.35.1
+2.34.1
 
