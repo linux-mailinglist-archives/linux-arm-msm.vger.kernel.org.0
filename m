@@ -2,224 +2,276 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB64B4D6A24
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Mar 2022 00:26:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C2F4B4D6A7C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Mar 2022 00:26:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229875AbiCKXBO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Mar 2022 18:01:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54478 "EHLO
+        id S229828AbiCKXRD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Mar 2022 18:17:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229953AbiCKXBG (ORCPT
+        with ESMTP id S229946AbiCKXRC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Mar 2022 18:01:06 -0500
-Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 417F32A1655
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Mar 2022 14:53:20 -0800 (PST)
-Received: by mail-oo1-xc34.google.com with SMTP id w3-20020a4ac183000000b0031d806bbd7eso12181585oop.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Mar 2022 14:53:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Yr+EpRW9Z0TSAD7dSRiRBdvgDfolyIlRbve+K3pZ6CU=;
-        b=sK5PFeJEOg8sIlRshJg3bAbaGWntnn8gqRnEpXHzLfHthZOKB4sWkf08LgBv9JvheE
-         4FPriDMxTV4y5+5LJv1MKgZ72yFQIcEmy4ytltQG1KTFDCBj09wxJM70GinaBSMZgcWr
-         9Unmg5Xgha7ZQ5c9T45EQOiAJ46rWB9C2ttLVRP7tH+3tKimK8DeUCzC5w92PsewgvaR
-         oY5gUUeCAa7VIZaV7dvlpmYMpJyu9Ztxxu/MFnLV2/Jyh92BY5fzyNrihsJhVs7WsFPI
-         8AN5gWYOHo6K3G23HqFdBmoBgUkSIgbJe6y7nYdOqG2YYx3OSs8COh1Aay9x+rxIVBZp
-         0cAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Yr+EpRW9Z0TSAD7dSRiRBdvgDfolyIlRbve+K3pZ6CU=;
-        b=XloEJNxhFLC3ZbrhderBVoGNw3x5vgzIXUmRSKejrg4dyw+uKFk+cqKwzZG3o3V2kP
-         e/R4qjEsuTsLrASqBQ/P9kFqUADBgd/mf7Wpnp3e+Eqxc0JBNEUj52ddRBczj/IvotRO
-         Hj3nbfwpCG1NcGQTNe+FeAFjxWdxc9a7q0DSyqta5fko7rLgoX1z+2iVagPfqlDyNYQQ
-         RDHNKQ04b4wXfGWQkxXfbbxJrzug4mAoyhLHbkhzZLkGuZtTP7vSNpD85oCp9Fvv9TL+
-         LswIt2/Ui+N5SvGuruww7gvoy6GtZtz1x2tZGe/hOKcjeJdtPWTeuZo+9L47gov7lswb
-         EEiw==
-X-Gm-Message-State: AOAM531wW2CuGjCr+Nap1qxfBUY1vVvaJSrw5OpYVJzpLzppl+OB3kvX
-        WTDMaczAKdmQNm/MwyhkZVLP33xBJ8+sOA==
-X-Google-Smtp-Source: ABdhPJxry66IE5gf3DaRXf2Wzvoc+Z3uEVp+kLSeb4hIL6nULTEjW7sAoNaahJ0ohD+KTPWh4EBixA==
-X-Received: by 2002:a05:6808:148d:b0:2d9:9049:b0e8 with SMTP id e13-20020a056808148d00b002d99049b0e8mr7436984oiw.151.1647033102656;
-        Fri, 11 Mar 2022 13:11:42 -0800 (PST)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id b3-20020a056830310300b005c93d1cbb9fsm1172891ots.68.2022.03.11.13.11.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Mar 2022 13:11:42 -0800 (PST)
-Date:   Fri, 11 Mar 2022 15:11:40 -0600
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Deepak Kumar Singh <quic_deesin@quicinc.com>
-Cc:     swboyd@chromium.org, quic_clew@quicinc.com,
-        mathieu.poirier@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Ohad Ben-Cohen <ohad@wizery.com>
-Subject: Re: [PATCH V2 1/3] rpmsg: core: Add signal API support
-Message-ID: <Yiu7DPHDY3uwcnLK@builder.lan>
-References: <1642534993-6552-1-git-send-email-quic_deesin@quicinc.com>
- <1642534993-6552-2-git-send-email-quic_deesin@quicinc.com>
+        Fri, 11 Mar 2022 18:17:02 -0500
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7F85F70FD
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Mar 2022 15:15:56 -0800 (PST)
+Received: from [192.168.1.101] (abxi44.neoplus.adsl.tpnet.pl [83.9.2.44])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 3DE213F6AB;
+        Fri, 11 Mar 2022 22:22:52 +0100 (CET)
+Message-ID: <b428593e-a4db-984b-df7f-7cd14795d5e2@somainline.org>
+Date:   Fri, 11 Mar 2022 22:22:51 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1642534993-6552-2-git-send-email-quic_deesin@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH] mtd: nand: raw: qcom_nandc: Don't clear_bam_transaction
+ on READID
+Content-Language: en-US
+To:     Sricharan Ramabadhran <sricharan@codeaurora.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>, pragalla@codeaurora.org,
+        ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mdalam@codeaurora.org,
+        bbhatt@codeaurora.org, hemantk@codeaurora.org
+References: <20220113184427.2259509-1-konrad.dybcio@somainline.org>
+ <20220114082718.32a2fc83@xps13> <20220126111613.3ab0021e@xps13>
+ <20220126103316.GA212068@thinkpad> <20220126114200.4cc3c21b@xps13>
+ <fc80a6e7-bd44-3b3e-fca2-1316a76d65f5@codeaurora.org>
+ <a6fcc533-e7cd-7b55-4db0-cec80c07b46a@codeaurora.org>
+ <0a8d6550-aa19-0af1-abae-66bf34c91ea8@somainline.org>
+ <be779ed9-bd80-8f01-fe7f-d3c07d3d85aa@codeaurora.org>
+ <12cad24a-fa2f-9a82-cf43-241a0a6fe4f6@somainline.org>
+ <20220201145204.54646475@xps13>
+ <d79bf21d-5a90-0074-cef6-896f66e80d28@somainline.org>
+ <c63d5410-7f08-80fe-28ac-f4867038ff30@codeaurora.org>
+ <cc1302f4-9150-0145-421c-bf2b7a7bf258@codeaurora.org>
+ <6b839237-74f0-7270-2f33-f5c17e6b59de@somainline.org>
+ <2fb9d943-d6c8-06b1-08cc-b0c3a8256082@codeaurora.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <2fb9d943-d6c8-06b1-08cc-b0c3a8256082@codeaurora.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 18 Jan 13:43 CST 2022, Deepak Kumar Singh wrote:
 
-> Some transports like Glink support the state notifications between
-> clients using signals similar to serial protocol signals.
-> Local glink client drivers can send and receive signals to glink
-> clients running on remote processors.
+
+On 24.02.2022 08:33, Sricharan Ramabadhran wrote:
+> Hi Konrad,
 > 
-> Add APIs to support sending and receiving of signals by rpmsg clients.
+> On 2/8/2022 10:15 PM, Konrad Dybcio wrote:
+>>
+>> On 4.02.2022 18:17, Sricharan Ramabadhran wrote:
+>>> On 2/2/2022 12:54 PM, Sricharan Ramabadhran wrote:
+>>>> Hi Konrad/Miquel,
+>>>>
+>>>> On 2/1/2022 9:21 PM, Konrad Dybcio wrote:
+>>>>> On 01/02/2022 14:52, Miquel Raynal wrote:
+>>>>>> Hi Konrad,
+>>>>>>
+>>>>>> konrad.dybcio@somainline.org wrote on Mon, 31 Jan 2022 20:54:12 +0100:
+>>>>>>
+>>>>>>> On 31/01/2022 15:13, Sricharan Ramabadhran wrote:
+>>>>>>>> Hi Konrad,
+>>>>>>>>
+>>>>>>>> On 1/31/2022 3:39 PM, Konrad Dybcio wrote:
+>>>>>>>>> On 28/01/2022 18:50, Sricharan Ramabadhran wrote:
+>>>>>>>>>> Hi Konrad,
+>>>>>>>>>>
+>>>>>>>>>> On 1/28/2022 9:55 AM, Sricharan Ramabadhran wrote:
+>>>>>>>>>>> Hi Miquel,
+>>>>>>>>>>>
+>>>>>>>>>>> On 1/26/2022 4:12 PM, Miquel Raynal wrote:
+>>>>>>>>>>>> Hi Mani,
+>>>>>>>>>>>>
+>>>>>>>>>>>> mani@kernel.org wrote on Wed, 26 Jan 2022 16:03:16 +0530:
+>>>>>>>>>>>>> On Wed, Jan 26, 2022 at 11:16:13AM +0100, Miquel Raynal wrote:
+>>>>>>>>>>>>>> Hello,
+>>>>>>>>>>>>>>
+>>>>>>>>>>>>>> miquel.raynal@bootlin.com wrote on Fri, 14 Jan 2022 08:27:18 +0100:
+>>>>>>>>>>>>>>> Hi Konrad,
+>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>> konrad.dybcio@somainline.org wrote on Thu, 13 Jan 2022 19:44:26 >>>>>>>> +0100:
+>>>>>>>>>>>>>>>> While I have absolutely 0 idea why and how, running >>>>>>>>> clear_bam_transaction
+>>>>>>>>>>>>>>>> when READID is issued makes the DMA totally clog up and refuse >>>>>>>>> to function
+>>>>>>>>>>>>>>>> at all on mdm9607. In fact, it is so bad that all the data >>>>>>>>> gets garbled
+>>>>>>>>>>>>>>>> and after a short while in the nand probe flow, the CPU >>>>>>>>> decides that
+>>>>>>>>>>>>>>>> sepuku is the only option.
+>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>> Removing _READID from the if condition makes it work like a >>>>>>>>> charm, I can
+>>>>>>>>>>>>>>>> read data and mount partitions without a problem.
+>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+>>>>>>>>>>>>>>>> ---
+>>>>>>>>>>>>>>>> This is totally just an observation which took me an inhumane >>>>>>>>> amount of
+>>>>>>>>>>>>>>>> debug prints to find.. perhaps there's a better reason behind >>>>>>>>> this, but
+>>>>>>>>>>>>>>>> I can't seem to find any answers.. Therefore, this is a BIG RFC!
+>>>>>>>>>>>>>>> I'm adding two people from codeaurora who worked a lot on this >>>>>>>> driver.
+>>>>>>>>>>>>>>> Hopefully they will have an idea :)
+>>>>>>>>>>>>>> Sadre, I've spent a significant amount of time reviewing your >>>>>>> patches,
+>>>>>>>>>>>>>> now it's your turn to not take a month to answer to your peers
+>>>>>>>>>>>>>> proposals.
+>>>>>>>>>>>>>>
+>>>>>>>>>>>>>> Please help reviewing this patch.
+>>>>>>>>>>>>> Sorry. I was hoping that Qcom folks would chime in as I don't >>>>>> have any idea
+>>>>>>>>>>>>> about the mdm9607 platform. It could be that the mail server >>>>>> migration from
+>>>>>>>>>>>>> codeaurora to quicinc put a barrier here.
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> Let me ping them internally.
+>>>>>>>>>>>> Oh, ok, I didn't know. Thanks!
+>>>>>>>>>>>      Sorry Miquel, somehow we did not get this email in our inbox.
+>>>>>>>>>>>      Thanks to Mani for pinging us, we will test this up today and >>>> get back.
+>>>>>>>>>>         While we could not reproduce this issue on our ipq boards (do >>> not have a mdm9607 right now) and
+>>>>>>>>>>          issue does not look any obvious.
+>>>>>>>>>>         can you please give the debug logs that you did for the above >>> stage by stage ?
+>>>>>>>>> I won't have access to the board for about two weeks, sorry.
+>>>>>>>>>
+>>>>>>>>> When I get to it, I'll surely try to send you the logs, though there
+>>>>>>>>>
+>>>>>>>>> wasn't much more than just something jumping to who-knows-where
+>>>>>>>>>
+>>>>>>>>> after clear_bam_transaction was called, resulting in values >> associated with
+>>>>>>>>>
+>>>>>>>>> the NAND being all zeroed out in pr_err/_debug/etc.
+>>>>>>>>>
+>>>>>>>>       Ok sure. So was the READID command itself failing (or) the > subsequent one ?
+>>>>>>>>      We can check which parameter reset by the clear_bam_transaction is > causing the
+>>>>>>>>      failure.  Meanwhile, looping in Pradeep who has access to the > board, so in a better
+>>>>>>>>      position to debug.
+>>>>>>> I'm sorry I have so few details on hand, and no kernel tree (no access to that machine either, for now).
+>>>>>>>
+>>>>>>>
+>>>>>>> I will try to describe to the best of my abilities what I recall.
+>>>>>>>
+>>>>>>>
+>>>>>>> My methodology of making sure things don't go haywire was to print the oob size
+>>>>>>>
+>>>>>>> of our NAND basically every two lines of code (yes, i was very desperate at one point),
+>>>>>>>
+>>>>>>> as that was zeroed out when *the bug* happened,
+>>>>>> This does look like a pointer error at some point and some kernel data
+>>>>>> has been corrupted very badly by the driver.
+>>>>>>
+>>>>>>> leading to a kernel bug/panic/stall
+>>>>>>>
+>>>>>>> (can't recall what exactly it was, but it said something along the lines of "no support for
+>>>>>>>
+>>>>>>> oob size 0" and then it didn't fail graceully, leading to some bad jumps and ultimately
+>>>>>>>
+>>>>>>> a dead platform..)
+>>>>>>>
+>>>>>>>
+>>>>>>> after hours of digging, I found out that everything goes fine until clear_bam_transaction is called,
+>>>>>> Do you remember if this function was called for the first time when
+>>>>>> this happened?
+>>>>> I think so, if I recall correctly there are no more callers in this path, as readid is the first nand command executed in flash probe flow.
+>>>>>
+>>>>>
+>>>>>
+>>>>>>> after that gets executed every nand op starts reading all zeroes (for example in JEDEC ID check)
+>>>>>>>
+>>>>>>> so I added the changes from this patch, and things magically started working... My suspicion is
+>>>>>>>
+>>>>>>> that the underlying FIFO isn't fully drained (is it a FIFO on 9607? bah, i work on too many socs at once)
+>>>>>> I don't see it in the list of supported devices, what's the exact
+>>>>>> compatible used?
+>>>>> qcom,ipq4019-nand
+>>>>>
+>>>>>
+>>>>>
+>>>>>>> and this function only makes Linux think it is, without actually draining it, and the leftover
+>>>>>>>
+>>>>>>> commands get executed with some parts of them getting overwritten, resulting in the
+>>>>>>>
+>>>>>>> famous garbage in - garbage out situation, but that's only a guesstimate..
+>>>>>> I would bet for a non allocated bam-ish pointer that is reset to zero
+>>>>>> in the clear_bam_transaction() helper.
+>>>>>>
+>>>>>> Can you get your hands on the board again?
+>>>>> Sure, but as I mentioned previously, only in about 2 weeks, I can't really do any dev before then.. :(
+>>>>>
+>>>>>
+>>>>>
+>>>>>> It would be nice to check if the allocation always occurs before use,
+>>>>>> and if yes on how much bytes.
+>>>>>>
+>>>>>> If the pointer is not dangling, then perhaps something else smashes
+>>>>>> that pointer.
+>>>>>
+>>>>> Konrad
+>>>>>
+>>>>>>> Do note this somehow worked fine on 5.11 and then broke on 5.12/13. I went as far as replacing most
+>>>>>>>
+>>>>>>> of the kernel with the updated/downgraded parts via git checkout (i tried many combinations),
+>>>>>>>
+>>>>>>> to no avail.. I even tried different compilers and optimization levels, thinking it could have been
+>>>>>>>
+>>>>>>> a codegen issue, but no luck either.
+>>>>>>>
+>>>>>>>
+>>>>>>> I.. do understand this email is a total mess to read, as much as it was to write, but
+>>>>>>>
+>>>>>>> without access to my code and the machine itself I can't give you solid details, and
+>>>>>>>
+>>>>>>> the fact this situation is far from ordinary doesn't help either..
+>>>>>>>
+>>>>>>>
+>>>>>>> The latest (ancient, not quite pretty, but probably working if my memory is correct) version of my patches
+>>>>>>>
+>>>>>>> for the mdm9607 is available at [1], I will push the new revision after I get access to the workstation.
+>>>>>>>
+>>>>    + few more who have access to the board.
+>>>>
+>>>>     Going by the description, for kernel corruption, we can try out a KASAN build.
+>>>>     Since you have mentioned it worked till 5.11, you bisected the driver till 5.11 head and it worked ?
+>>>>
+>>>     Tried running a KASAN enabled image on IPQ board, but no luck. Nothing came out.
+>>>     Only if someone with the board can help here, we can proceed
+>>>
+>>>
+>>> Regards,
+>>>    Sricharan
+>>>
+>> I have the board with me again. Please tell me where do we start :)
 > 
-> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
-> ---
->  drivers/rpmsg/rpmsg_core.c     | 21 +++++++++++++++++++++
->  drivers/rpmsg/rpmsg_internal.h |  2 ++
->  include/linux/rpmsg.h          | 14 ++++++++++++++
->  3 files changed, 37 insertions(+)
+>  Sorry for the delayed response.
+[Looks at the calendar] What can I say... lots of things happened :)
+
+
 > 
-> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
-> index d3eb600..6712418 100644
-> --- a/drivers/rpmsg/rpmsg_core.c
-> +++ b/drivers/rpmsg/rpmsg_core.c
-> @@ -328,6 +328,24 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
->  
->  /**
-> + * rpmsg_set_flow_control() - sets/clears serial flow control signals
-> + * @ept:	the rpmsg endpoint
-> + * @enable:	enable or disable serial flow control
-> + *
-> + * Return: 0 on success and an appropriate error value on failure.
-> + */
-> +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable)
-
-This API looks nice and clean and deals with flow control.
-
-> +{
-> +	if (WARN_ON(!ept))
-> +		return -EINVAL;
-> +	if (!ept->ops->set_flow_control)
-> +		return -ENXIO;
-> +
-> +	return ept->ops->set_flow_control(ept, enable);
-> +}
-> +EXPORT_SYMBOL(rpmsg_set_flow_control);
-> +
-> +/**
->   * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
->   * @ept: the rpmsg endpoint
->   *
-> @@ -535,6 +553,9 @@ static int rpmsg_dev_probe(struct device *dev)
->  
->  		rpdev->ept = ept;
->  		rpdev->src = ept->addr;
-> +
-> +		if (rpdrv->signals)
-> +			ept->sig_cb = rpdrv->signals;
->  	}
->  
->  	err = rpdrv->probe(rpdev);
-> diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
-> index b1245d3..35c2197 100644
-> --- a/drivers/rpmsg/rpmsg_internal.h
-> +++ b/drivers/rpmsg/rpmsg_internal.h
-> @@ -53,6 +53,7 @@ struct rpmsg_device_ops {
->   * @trysendto:		see @rpmsg_trysendto(), optional
->   * @trysend_offchannel:	see @rpmsg_trysend_offchannel(), optional
->   * @poll:		see @rpmsg_poll(), optional
-> + * @set_flow_control:	see @rpmsg_set_flow_control(), optional
->   * @get_mtu:		see @rpmsg_get_mtu(), optional
->   *
->   * Indirection table for the operations that a rpmsg backend should implement.
-> @@ -73,6 +74,7 @@ struct rpmsg_endpoint_ops {
->  			     void *data, int len);
->  	__poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
->  			     poll_table *wait);
-> +	int (*set_flow_control)(struct rpmsg_endpoint *ept, bool enable);
->  	ssize_t (*get_mtu)(struct rpmsg_endpoint *ept);
->  };
->  
-> diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
-> index 02fa911..06d090c 100644
-> --- a/include/linux/rpmsg.h
-> +++ b/include/linux/rpmsg.h
-> @@ -62,12 +62,14 @@ struct rpmsg_device {
->  };
->  
->  typedef int (*rpmsg_rx_cb_t)(struct rpmsg_device *, void *, int, void *, u32);
-> +typedef int (*rpmsg_rx_sig_t)(struct rpmsg_device *, void *, u32);
-
-This callback however, is still using the original low level tty
-signals.
-
-Is there any reason why this can't be "rpmsg_flowcontrol_cb_t" and take
-a boolean, so we get a clean interface in both directions?
-
-Regards,
-Bjorn
-
->  
->  /**
->   * struct rpmsg_endpoint - binds a local rpmsg address to its user
->   * @rpdev: rpmsg channel device
->   * @refcount: when this drops to zero, the ept is deallocated
->   * @cb: rx callback handler
-> + * @sig_cb: rx serial signal handler
->   * @cb_lock: must be taken before accessing/changing @cb
->   * @addr: local rpmsg address
->   * @priv: private data for the driver's use
-> @@ -90,6 +92,7 @@ struct rpmsg_endpoint {
->  	struct rpmsg_device *rpdev;
->  	struct kref refcount;
->  	rpmsg_rx_cb_t cb;
-> +	rpmsg_rx_sig_t sig_cb;
->  	struct mutex cb_lock;
->  	u32 addr;
->  	void *priv;
-> @@ -111,6 +114,7 @@ struct rpmsg_driver {
->  	int (*probe)(struct rpmsg_device *dev);
->  	void (*remove)(struct rpmsg_device *dev);
->  	int (*callback)(struct rpmsg_device *, void *, int, void *, u32);
-> +	int (*signals)(struct rpmsg_device *rpdev, void *priv, u32);
->  };
->  
->  static inline u16 rpmsg16_to_cpu(struct rpmsg_device *rpdev, __rpmsg16 val)
-> @@ -188,6 +192,8 @@ __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
->  
->  ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept);
->  
-> +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable);
-> +
->  #else
->  
->  static inline int rpmsg_register_device(struct rpmsg_device *rpdev)
-> @@ -306,6 +312,14 @@ static inline ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
->  	return -ENXIO;
->  }
->  
-> +static inline int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable)
-> +{
-> +	/* This shouldn't be possible */
-> +	WARN_ON(1);
-> +
-> +	return -ENXIO;
-> +}
-> +
->  #endif /* IS_ENABLED(CONFIG_RPMSG) */
->  
->  /* use a macro to avoid include chaining to get THIS_MODULE */
-> -- 
-> 2.7.4
+>      As a first step, Can you enable KASAN and check if you get any warnings ?
 > 
+>      Then, can you check inside clear_bam_transaction, which parameter resetting specifically is causing the issue ?
+> 
+I have 3 logs for you:
+
+[1] is KASAN=y, with this patch
+[2] is KASAN=y, WITHOUT this patch (should die, but doesn't - does KASAN prevent it from doing something stupid?)
+[3] is KASAN=n, WITHOUT this patch (dies as expected)
+
+Looks like there's a lot happening..
+
+
+Konrad
+> 
+> Regards,
+>   Sricharan
+> 
+> 
+
+[1] https://paste.debian.net/1233873/
+[2] https://paste.debian.net/1233874/
+[3] https://paste.debian.net/1233878/
