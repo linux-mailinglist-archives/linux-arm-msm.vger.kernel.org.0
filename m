@@ -2,102 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 258B64D64EB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Mar 2022 16:49:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0293B4D660B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Mar 2022 17:24:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349432AbiCKPuh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Mar 2022 10:50:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54934 "EHLO
+        id S1349986AbiCKQZe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Mar 2022 11:25:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348660AbiCKPug (ORCPT
+        with ESMTP id S1349481AbiCKQZc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Mar 2022 10:50:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 4FBCA97287
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Mar 2022 07:49:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1647013772;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=qTfEf7yr9paJUlzwxSKVIzpRbR+ggiBcztvNLiAH+tY=;
-        b=Chdir7Llre8Lys4KPWjRsF6ur6tSx7G4HZ3+qsCOZlyqaZL1rFd4SDBsg8ABNy+LQVSYLR
-        Ri8YkgCSFYZEH9zn0J9he/kr3PXX4Edb6sdRrY/3eHwW4cKpX0DvEHetYPB7V248ukjiWI
-        bJ7BIZFmwKEGQXHBlWVhF2nbkd8KCiI=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-596-Z3me0w56M86HGyyLDNCRkQ-1; Fri, 11 Mar 2022 10:49:31 -0500
-X-MC-Unique: Z3me0w56M86HGyyLDNCRkQ-1
-Received: by mail-qt1-f199.google.com with SMTP id m12-20020ac807cc000000b002e05dbf21acso6752141qth.22
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Mar 2022 07:49:31 -0800 (PST)
+        Fri, 11 Mar 2022 11:25:32 -0500
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17773106C8A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Mar 2022 08:24:27 -0800 (PST)
+Received: by mail-il1-x129.google.com with SMTP id b5so6300239ilj.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Mar 2022 08:24:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TVv29Gu9R0lZt1E9Lqgvg+RLu73iRTIWopGteUyS5tk=;
+        b=lCofLKqu1VnbBCzaNpXV1knnGKNcPMluFAY18Sxq0Ca91tipY9CRbnwsMQkTdvik8F
+         SEOXnZRQxFAEERaWcST0h0s2XHvTs0kDaVF7br7uE7wlaR1SgaBnVMYVy1eVZhICq3d+
+         J4I3/GXLR4cGzJ35vLVuTEhDhSy06DjuoxSI3qjS0Kn0JoWRDAEznTb/KQUodcliR77J
+         6OqmsVAp8PJnJcvlKegxhcKKpPqO+KBXHYWpqgCmzQ8EKsO6M/sigADy85m0mea6f0b6
+         FM2iay5XDea5wMhPdMdntbPIeDwXmzAj3zIBFASvL/N2MEKawd4LO6UfhpQX8Akv5Gyx
+         uxBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=qTfEf7yr9paJUlzwxSKVIzpRbR+ggiBcztvNLiAH+tY=;
-        b=KiycdNSnQVE9CfsQhZIhsY7Q75DYkaXCR4n8ojrN5adD+W1RE2sy+DDBv89sc5MmsL
-         YzKJ70eWwFbVJZxyrPVvuSIezrdvGC4xOo2vlv+EKSbeOlrWbhcv8su2C4CW5mun251D
-         kMvbsqX3ITytw7wOr5uwGrb+Gwtj9BVPLRIrDYwpebFVEpPgeby20mCWSnlq3K6bzHCi
-         K4qh9W+KrujJIDy/0mRv2VrG6GBj2+Jmbnv1LHCCaJVPFuWt8JiyJ6/0R0rH2CplJHxB
-         EhHnDQTA1NNM9SunX07xFzbT6eslonOUQR6dRercn3u0t4aADoAVewkurioVTBB9s8KB
-         kt+Q==
-X-Gm-Message-State: AOAM5311+vPx1yt06cr0K/+OERTksKulFBrunbBp8ss6tlb4hTfkF1An
-        yQLV1pwYSVALYBhvdW7BdTu5xEGgRvwGArLghCWS9Ia36Il33NoJA9ep4YAHmb5EoYRDJcFRkHU
-        sU6BKo9j8kqdAHNKKb/nyLgDnHg==
-X-Received: by 2002:a05:6214:5290:b0:435:208a:5fd with SMTP id kj16-20020a056214529000b00435208a05fdmr8244514qvb.66.1647013770722;
-        Fri, 11 Mar 2022 07:49:30 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJzWg01x03AaRegxM1Hv5DU8L2U/TjmBjwQz2DtkoLyKiBE5QG0qlg6M5cwrZ/osbrpgVxDXBw==
-X-Received: by 2002:a05:6214:5290:b0:435:208a:5fd with SMTP id kj16-20020a056214529000b00435208a05fdmr8244493qvb.66.1647013770479;
-        Fri, 11 Mar 2022 07:49:30 -0800 (PST)
-Received: from xps13.. (c-98-239-145-235.hsd1.wv.comcast.net. [98.239.145.235])
-        by smtp.gmail.com with ESMTPSA id z6-20020ae9c106000000b0067d3b9ef387sm3602719qki.28.2022.03.11.07.49.29
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TVv29Gu9R0lZt1E9Lqgvg+RLu73iRTIWopGteUyS5tk=;
+        b=HAK5bu3SP8ocB2+Qhc8B55jilHKDy4bAWRJ6mW+nheyibCZli/7vnc4BdsvGJF4u/o
+         vkkRyoNBDMtSc3hEQQp3McwOtyBiR5u41SFjHxZQdqrq5OJFKwqHAvQxg1pTellQlgDG
+         JsaCZAuLRA1yzvhZmvn4rq6IMV1hF6lWGrKFDeznrDCdPUoPh3bXuwDXfemBqWePyASZ
+         Ji5E1Fg9abwllAgoSzDfUEv00z1rtr7owwy6nsdF/fGYdWQUk6tLJ0dhAwlIUx1cUhBE
+         ADY3+76iReg8rkD01QvPPNY1nuhJgWHDSRU/QwQl4/cxeog0S0WbvOyibMJAu0VZW+iD
+         UdfQ==
+X-Gm-Message-State: AOAM532dmRie+9IbPs4wCGrr+lzD0JM6qSZXxbc2WA8rp+ncc65vcGGA
+        JCAhkC8ADU5cWW8wEK5UX7CUGg==
+X-Google-Smtp-Source: ABdhPJybfXZ+7K9olLoE/9/fWtbz4ao9QwudLVncfyyzWjxs1/RsmnajOwMe6+J+Q0mRrXeyMUZQ9Q==
+X-Received: by 2002:a92:ce91:0:b0:2c6:272c:bb51 with SMTP id r17-20020a92ce91000000b002c6272cbb51mr8214045ilo.170.1647015867291;
+        Fri, 11 Mar 2022 08:24:27 -0800 (PST)
+Received: from presto.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.gmail.com with ESMTPSA id 4-20020a056e020ca400b002c6266f4876sm4477042ilg.84.2022.03.11.08.24.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Mar 2022 07:49:30 -0800 (PST)
-From:   Brian Masney <bmasney@redhat.com>
-To:     bjorn.andersson@linaro.org
-Cc:     mani@kernel.org, dianders@chromium.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH 2/2] ARM: qcom_defconfig: enable debug fs support
-Date:   Fri, 11 Mar 2022 10:49:19 -0500
-Message-Id: <20220311154919.1797920-3-bmasney@redhat.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220311154919.1797920-1-bmasney@redhat.com>
-References: <20220311154919.1797920-1-bmasney@redhat.com>
+        Fri, 11 Mar 2022 08:24:26 -0800 (PST)
+From:   Alex Elder <elder@linaro.org>
+To:     davem@davemloft.net, kuba@kernel.org
+Cc:     bjorn.andersson@linaro.org, mka@chromium.org, evgreen@chromium.org,
+        cpratapa@codeaurora.org, avuyyuru@codeaurora.org,
+        jponduru@codeaurora.org, subashab@codeaurora.org, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH net-next 1/1] net: ipa: use struct_size() for the interconnect array
+Date:   Fri, 11 Mar 2022 10:24:23 -0600
+Message-Id: <20220311162423.872645-1-elder@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable CONFIG_DEBUG_FS since this is useful to have around.
+In review for commit 8ee7ec4890e2b ("net: ipa: embed interconnect
+array in the power structure"), Jakub Kicinski suggested that a
+follow-up patch use struct_size() when computing the size of the
+IPA power structure, which ends with a flexible array member.
 
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Do that.
+
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Alex Elder <elder@linaro.org>
 ---
- arch/arm/configs/qcom_defconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ipa/ipa_power.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/configs/qcom_defconfig b/arch/arm/configs/qcom_defconfig
-index 50e28a74c361..5cd935ee148a 100644
---- a/arch/arm/configs/qcom_defconfig
-+++ b/arch/arm/configs/qcom_defconfig
-@@ -308,6 +308,7 @@ CONFIG_PRINTK_TIME=y
- CONFIG_DYNAMIC_DEBUG=y
- CONFIG_DEBUG_INFO=y
- CONFIG_MAGIC_SYSRQ=y
-+CONFIG_DEBUG_FS=y
- # CONFIG_SCHED_DEBUG is not set
- CONFIG_WATCHDOG=y
- CONFIG_QCOM_WDT=y
+diff --git a/drivers/net/ipa/ipa_power.c b/drivers/net/ipa/ipa_power.c
+index 16ece27d14d7e..db5ac7552286e 100644
+--- a/drivers/net/ipa/ipa_power.c
++++ b/drivers/net/ipa/ipa_power.c
+@@ -374,8 +374,8 @@ ipa_power_init(struct device *dev, const struct ipa_power_data *data)
+ 		goto err_clk_put;
+ 	}
+ 
+-	size = data->interconnect_count * sizeof(power->interconnect[0]);
+-	power = kzalloc(sizeof(*power) + size, GFP_KERNEL);
++	size = struct_size(power, interconnect, data->interconnect_count);
++	power = kzalloc(size, GFP_KERNEL);
+ 	if (!power) {
+ 		ret = -ENOMEM;
+ 		goto err_clk_put;
 -- 
-2.34.1
+2.32.0
 
