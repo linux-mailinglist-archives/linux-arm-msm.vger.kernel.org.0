@@ -2,126 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FFAC4D55A6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Mar 2022 00:46:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 58C8C4D591B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Mar 2022 04:32:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344240AbiCJXqr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Mar 2022 18:46:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44732 "EHLO
+        id S1346061AbiCKDcg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 10 Mar 2022 22:32:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344854AbiCJXqp (ORCPT
+        with ESMTP id S1346168AbiCKDca (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Mar 2022 18:46:45 -0500
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09B0819E03F;
-        Thu, 10 Mar 2022 15:45:43 -0800 (PST)
-Received: by mail-pf1-x436.google.com with SMTP id s8so6431524pfk.12;
-        Thu, 10 Mar 2022 15:45:43 -0800 (PST)
+        Thu, 10 Mar 2022 22:32:30 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DA4C1AAA6F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Mar 2022 19:31:07 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id e3so6903648pjm.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Mar 2022 19:31:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Sc+BLeBhOeunpwNV1naAxApoyho4RIVwZsup23KixGA=;
-        b=i/kCIR2M9+f6iR0IxrdfD6uzdUTkXYHeSmmSe0xEfqNmiGuvFwvEa9Rhc7SjtoyDRm
-         iSWmf2YUwJTqDGe5yr62zNAIiPpSnKRmbpMcjNLvMsY5+aM8+89n6AjSPTudJ35s0cJ/
-         cDBM6keO22ne0gjnhQGSRsVh3eyxL68tm3z7MsqZgKk9hEN2wBW+GYS5nQ81KHZBpB0U
-         C4Oq5c3OhQiC3wPgyLyYCR5OQ8I894o2dkYOtOIBXyh4UkGY+Ko+6mEPpwpaiHban9ou
-         FuN7FOqQk45kn4IvAWIWVJ7ZQs1Nstlv+EjKVvMQ2F7RPEnvRR0zDpw9qgXZPs/dM8Cw
-         Jx7A==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=PjEzHXhBQw4nuatCRH1QTW/Mg4fDvrKguLcxURaCjB0=;
+        b=NsXj1fBbaZ+OGfMXqGmARi8JawvRSOc/kXdAbRi8A2vjdxtPYquBVky+s3t1JYgc69
+         BjJqw6euLBCyQfXXeppjLrpV2neKMna6Y/cs+c9E4EaGpNbpAdrYJqgXHIx6bRSRvj6/
+         u1Us6HHV/0gaJvAR3iMoKlI/ViHg8pQE8PF0ilezZJ7iloRVJ09yBRX8cZ5isxhhEpdG
+         kkTbkio2cpT/8f7Rx/EplTZ4qkdTMCK3FbS0hkVIITxVR6DMlejNx4GaxsImKFyo+akg
+         3VrR9KtoRkcm+MjWBGDZvKTVwxZ19NEb2IEw6peH3I+nSZN3mN8WLq3VMeWT38N8joiA
+         881A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Sc+BLeBhOeunpwNV1naAxApoyho4RIVwZsup23KixGA=;
-        b=4cmVGO+nAFvQyL8eJHwg2DLyVBNztombRvxryklM8YPxM1cWZRPsd7/4mKI8l+KJYZ
-         l+sSYs3kG9P3xobH++4Rj/lbJc05DbCy1I/y140xT/Ffl94BQA60kusUghtCxBHZRzmT
-         zJ+UHj5ckB2C7P1qBfGof6pmBAOS0AVB2gfXt61S+o2/v8Yv5OENVqMA8HxFQTEXGlUQ
-         9RBTsudRRBOSxprCfUQqzHCyhHgmZLxhi2gwk4mfcMk6mMP2+/hJ17n3ny8/1WDphyOx
-         QIQcJe20ZcRlTw3xsRqbkDv9nBY3ggwxzM3ET0dyoQoNShD/cVrpQrC0CGU2JvWmaLuQ
-         3qqw==
-X-Gm-Message-State: AOAM533JbAKBwaSC4UtPoNQTNrZ9LkidgnZ9K9Q2uMKDv7oS6UPxVji9
-        Rj6Um1nhlgZqap60s4gZTxCct/M1b5E=
-X-Google-Smtp-Source: ABdhPJyrhezjAT6CU0w7i5q6gN4DLMtI4haYY25Kw92sxxE/XVe1+QHeusf/BWUEj++yK+OMlHBWTw==
-X-Received: by 2002:a63:89:0:b0:37c:54f9:25b6 with SMTP id 131-20020a630089000000b0037c54f925b6mr6190197pga.494.1646955942569;
-        Thu, 10 Mar 2022 15:45:42 -0800 (PST)
-Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id q14-20020a056a00150e00b004f741b5c071sm8767891pfu.86.2022.03.10.15.45.41
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=PjEzHXhBQw4nuatCRH1QTW/Mg4fDvrKguLcxURaCjB0=;
+        b=670HnAhQQGW6ezCX1985W0D/wijHXmZhnJlLHr+RNVEaNuje4glulgfpF4rvzQHqEd
+         HO9ftZd2uho6uJ+/WMtyZnSldHk6Cg6XIj0l846ZqI+LymiOxpk3qL9WLIr96+JPBzdb
+         3jTwL62kFuGFlCWBCitWzoFWy1gyVas6rBkIn73HAh/jy5PhWkA9KtLlUWjdLoZbyKkA
+         GikxIVumFEep29jvHICRfPwm19roBL7bkztf5icXwPc6Cu5zl20CRdTdJF2bG1nQJUS/
+         b/8o/ABgPI/8ZUB399ntoqDpcl1hN2cvpKZ9myiJD9WuV7gODwmWBT8gjDzlQ1Vft89/
+         wn0A==
+X-Gm-Message-State: AOAM533RkO63aeaY8oHm+CpB3+PBxtQwShFZG5tSiVjlRXYhx4Ua62Yx
+        /7ZEJAmPXQB3mLKP6CW1R77Dvw==
+X-Google-Smtp-Source: ABdhPJyIGPNOxQUuhY18oStH37LoB+iKWWQ+PAEg3o1jJBEmifnj84y5wRWsOvFdb/QlXely9NH2wg==
+X-Received: by 2002:a17:902:ea09:b0:151:f547:90a with SMTP id s9-20020a170902ea0900b00151f547090amr8384778plg.63.1646969463989;
+        Thu, 10 Mar 2022 19:31:03 -0800 (PST)
+Received: from localhost ([223.184.83.228])
+        by smtp.gmail.com with ESMTPSA id q12-20020a17090a178c00b001bd036e11fdsm11104982pja.42.2022.03.10.19.31.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Mar 2022 15:45:41 -0800 (PST)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 3/3] drm/msm/gpu: Remove mutex from wait_event condition
-Date:   Thu, 10 Mar 2022 15:46:06 -0800
-Message-Id: <20220310234611.424743-4-robdclark@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220310234611.424743-1-robdclark@gmail.com>
-References: <20220310234611.424743-1-robdclark@gmail.com>
+        Thu, 10 Mar 2022 19:31:03 -0800 (PST)
+Date:   Fri, 11 Mar 2022 09:01:01 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     rafael@kernel.org, robh+dt@kernel.org, krzk+dt@kernel.org,
+        bjorn.andersson@linaro.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        angelogioacchino.delregno@somainline.org
+Subject: Re: [PATCH v2 0/2] Convert Qcom CPUFREQ HW binding to YAML
+Message-ID: <20220311033101.p5n3a5ik5i4nzrc6@vireshk-i7>
+References: <20220309151541.139511-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220309151541.139511-1-manivannan.sadhasivam@linaro.org>
+User-Agent: NeoMutt/20180716-391-311a52
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On 09-03-22, 20:45, Manivannan Sadhasivam wrote:
+> Hi,
+> 
+> Patch 2/2 was submitted separately [1] but Rob's bot reported errors related to
+> the performance domain binding that used Qcom CPUFREQ as an example. But Qcom
+> CPUFREQ driver doesn't support the generic performance domains yet.
+> 
+> So I've added a patch 1/2 that fixes the warning by using MediaTek CPUFREQ as
+> the example and added both patches to this series.
+> 
+> Thanks,
+> Mani
+> 
+> [1] https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20211005044920.78544-1-manivannan.sadhasivam@linaro.org/
+> 
+> Changes in v2:
+> 
+> * Moved dvfs binding patch to 1/2 for avoiding DT Bot error.
+> * Added Krzysztof to "To" list.
 
-The mutex wasn't really protecting anything before.  Before the previous
-patch we could still be racing with the scheduler's kthread, as that is
-not necessarily frozen yet.  Now that we've parked the sched threads,
-the only race is with jobs retiring, and that is harmless, ie.
+Applied. Thanks.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/adreno_device.c | 11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 0440a98988fc..661dfa7681fb 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -607,15 +607,6 @@ static int adreno_runtime_resume(struct device *dev)
- 	return gpu->funcs->pm_resume(gpu);
- }
- 
--static int active_submits(struct msm_gpu *gpu)
--{
--	int active_submits;
--	mutex_lock(&gpu->active_lock);
--	active_submits = gpu->active_submits;
--	mutex_unlock(&gpu->active_lock);
--	return active_submits;
--}
--
- static int adreno_runtime_suspend(struct device *dev)
- {
- 	struct msm_gpu *gpu = dev_to_gpu(dev);
-@@ -669,7 +660,7 @@ static int adreno_system_suspend(struct device *dev)
- 	suspend_scheduler(gpu);
- 
- 	remaining = wait_event_timeout(gpu->retire_event,
--				       active_submits(gpu) == 0,
-+				       gpu->active_submits == 0,
- 				       msecs_to_jiffies(1000));
- 	if (remaining == 0) {
- 		dev_err(dev, "Timeout waiting for GPU to suspend\n");
 -- 
-2.35.1
-
+viresh
