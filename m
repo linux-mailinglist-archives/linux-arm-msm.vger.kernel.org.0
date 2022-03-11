@@ -2,51 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EBED04D5A20
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Mar 2022 05:56:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A20634D5A62
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Mar 2022 06:18:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238164AbiCKE5D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 10 Mar 2022 23:57:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33060 "EHLO
+        id S1344410AbiCKFTu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Mar 2022 00:19:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236467AbiCKE5C (ORCPT
+        with ESMTP id S1346387AbiCKFTt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 10 Mar 2022 23:57:02 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE1C1EF7B3;
-        Thu, 10 Mar 2022 20:56:00 -0800 (PST)
+        Fri, 11 Mar 2022 00:19:49 -0500
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E526A53B40;
+        Thu, 10 Mar 2022 21:18:46 -0800 (PST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 659D8B82A4E;
-        Fri, 11 Mar 2022 04:55:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA7EC340EC;
-        Fri, 11 Mar 2022 04:55:57 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 52591B82A78;
+        Fri, 11 Mar 2022 05:18:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7EA5C340EC;
+        Fri, 11 Mar 2022 05:18:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1646974558;
-        bh=lAGnjdaVIpu+qVHYqg+esd+iu/gEs7nkw3886AUCd7E=;
+        s=k20201202; t=1646975923;
+        bh=5iTm8AeQHWcspGp/ADW+jMjLy3o3qtcRvAvIkXEZzfg=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JMTanZJGUVYjqqgYgCUwnIoKc/WS3OsaRgQYP/avXI7+SeMpqr0UzDap0B7/+sXTI
-         d2dauTzf1OT8kcOgLmv2CT/OsMcoRa83ryouqrEDJo/A2pQYRpuy2NC+WelCPqagKy
-         t3QO1z4wV4F5TNXV4fiA5OBZPusDvMZsjnVsbT6xYIdA0bRAq0FCvoIYntplJP6XUv
-         KImxGUHIPiXv9sk4XQMX78S1N8Ikrao6VIxE0AVkKgBiTuCwfzacklDy4Fy2CeJlDh
-         vKQDO+NxAS0tYX0l8ve1ApYaHBbM3mslMaoWo8kU6+WsXpmFDJW51BYbwu73mN6qG/
-         T8OigDvtvyVVQ==
-Date:   Fri, 11 Mar 2022 10:25:54 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8450: fix interconnects property of
- UFS node
-Message-ID: <YirWWmm7twjNlTxU@matsya>
-References: <20220310221934.1560729-1-vladimir.zapolskiy@linaro.org>
+        b=hjo2jWAf5hpi3mLDP7pod3VhSowZ8b9tCqUFwFAGXsH4lLvV8Ji3hQdeQiLrfHvsS
+         zFQhCr2Bp+8DndACGpNH0eC5Nwc/puIVOxbOZMsJYnvDLuWbSDZQ6gJVVL6VKVYVJY
+         UIY/kg3zoYjxc/zzF8heQCT/2rv5Ir3lLOKPIl/OuaMml6Gy1o3jQWkk/7UsSRM5YK
+         ffGGyVJFju0VBTwmtWc7DJBTaYB9vvxsXLp48vOfYFFPPIDmvOWJNkYsy4oabsxCpu
+         /oxkfczBlfSN6h7Y68Lb82OapBKBnM+5iKH32wC9gcOd5/X5ueF08wBiilzvAWxOhz
+         xpvm1FfvWTU2A==
+Date:   Thu, 10 Mar 2022 21:18:42 -0800
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Bart Van Assche <bvanassche@acm.org>
+Cc:     linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        kernel-team@android.com,
+        Gaurav Kashyap <quic_gaurkash@quicinc.com>,
+        Israel Rukshin <israelr@nvidia.com>
+Subject: Re: [PATCH v5 3/3] fscrypt: add support for hardware-wrapped keys
+Message-ID: <YirbspMr5CAnlWAC@sol.localdomain>
+References: <20220228070520.74082-1-ebiggers@kernel.org>
+ <20220228070520.74082-4-ebiggers@kernel.org>
+ <c1da8aec-7bb9-dd88-7500-a09d29bbc1e4@acm.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220310221934.1560729-1-vladimir.zapolskiy@linaro.org>
+In-Reply-To: <c1da8aec-7bb9-dd88-7500-a09d29bbc1e4@acm.org>
 X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -57,36 +59,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11-03-22, 00:19, Vladimir Zapolskiy wrote:
-> All interconnect device tree nodes on sm8450 are 2-cells, however in
-> UFS node they are handled as 1-cells, fix it.
-
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
-
+On Thu, Mar 03, 2022 at 05:03:10PM -0800, Bart Van Assche wrote:
+> On 2/27/22 23:05, Eric Biggers wrote:
+> > diff --git a/include/uapi/linux/fscrypt.h b/include/uapi/linux/fscrypt.h
+> > index 9f4428be3e362..884c5bf526a05 100644
+> > --- a/include/uapi/linux/fscrypt.h
+> > +++ b/include/uapi/linux/fscrypt.h
+> > @@ -20,6 +20,7 @@
+> >   #define FSCRYPT_POLICY_FLAG_DIRECT_KEY		0x04
+> >   #define FSCRYPT_POLICY_FLAG_IV_INO_LBLK_64	0x08
+> >   #define FSCRYPT_POLICY_FLAG_IV_INO_LBLK_32	0x10
+> > +#define FSCRYPT_POLICY_FLAG_HW_WRAPPED_KEY	0x20
+> >   /* Encryption algorithms */
+> >   #define FSCRYPT_MODE_AES_256_XTS		1
+> > @@ -115,7 +116,7 @@ struct fscrypt_key_specifier {
+> >    */
+> >   struct fscrypt_provisioning_key_payload {
+> >   	__u32 type;
+> > -	__u32 __reserved;
+> > +	__u32 flags;
+> >   	__u8 raw[];
+> >   };
+> > @@ -124,7 +125,9 @@ struct fscrypt_add_key_arg {
+> >   	struct fscrypt_key_specifier key_spec;
+> >   	__u32 raw_size;
+> >   	__u32 key_id;
+> > -	__u32 __reserved[8];
+> > +#define FSCRYPT_ADD_KEY_FLAG_HW_WRAPPED			0x00000001
+> > +	__u32 flags;
+> > +	__u32 __reserved[7];
+> >   	__u8 raw[];
+> >   };
 > 
-> Fixes: aa2d0bf04a3c ("arm64: dts: qcom: sm8450: add interconnect nodes")
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8450.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> Is it allowed to use _Static_assert() in UAPI header files? There are
+> already some static_assert() checks under include/linux to verify the size
+> of certain data structures. gcc supports _Static_assert() since version 4.6.
+> That is older than the minimum required gcc version to build the kernel.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 0cd5af8c03bd..bbd38b55e976 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -1376,8 +1376,8 @@ ufs_mem_hc: ufshc@1d84000 {
->  
->  			iommus = <&apps_smmu 0xe0 0x0>;
->  
-> -			interconnects = <&aggre1_noc MASTER_UFS_MEM &mc_virt SLAVE_EBI1>,
-> -					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_UFS_MEM_CFG>;
-> +			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI1 0>,
-> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
->  			interconnect-names = "ufs-ddr", "cpu-ufs";
->  			clock-names =
->  				"core_clk",
-> -- 
-> 2.33.0
 
--- 
-~Vinod
+Are you requesting static assertions that verify that the size of each fscrypt
+UAPI struct is a certain value?  Kernel UAPIs generally don't bother with that
+sort of thing, but it does seem like a good idea.  I'll add them as a cleanup,
+but it's orthogonal to this patch series.
+
+To answer your direct question, I believe that _Static_assert generally can't be
+used in UAPI header files, as it's a C11 feature and UAPI headers are included
+by arbitrary userspace programs.  These assertions will need to be in
+kernel-only code, either in a kernel-only file such as include/linux/fscrypt.h,
+or in an #ifdef __KERNEL__ section of the UAPI header.  Also, the kernel already
+conventionally uses BUILD_BUG_ON() for static assertions.
+
+- Eric
