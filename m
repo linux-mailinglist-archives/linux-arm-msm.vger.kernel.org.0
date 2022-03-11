@@ -2,107 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CCA84D6108
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Mar 2022 12:54:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D65524D61FB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Mar 2022 14:03:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343886AbiCKLzH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 11 Mar 2022 06:55:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49446 "EHLO
+        id S239268AbiCKNEA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 11 Mar 2022 08:04:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230512AbiCKLzG (ORCPT
+        with ESMTP id S1345771AbiCKND7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 11 Mar 2022 06:55:06 -0500
-Received: from sipsolutions.net (s3.sipsolutions.net [IPv6:2a01:4f8:191:4433::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7667D4339D;
-        Fri, 11 Mar 2022 03:54:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=sipsolutions.net; s=mail; h=Content-Transfer-Encoding:MIME-Version:
-        Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
-        Resent-Cc:Resent-Message-ID; bh=QKQNUb8gG1815bo0+LJAzephXsrFMrZXGrmPtBwOo6c=;
-        t=1646999643; x=1648209243; b=alHnBgDIHy9y0RUCRwwm0He8FSk4xcPUW9/EkiSAih21DFM
-        8yjhuigiX6tbzgl3M08NcjD5KiTxv9w+CXmUJX/aSYqJ1AyInOYuNm4901RQFfmqFnR6CYZlwuEc3
-        Hj4/kj489RxcTwk35q/BGf44Di9sAq1qrrCZFCQeK90/PGycpLm0Ntu8xqZMeNuznVFTvihU6g9Xc
-        W3aRh+VZ+JOzxzwDMvOdb5ItDjw3PNVKrMwz596BzdCUE6CR2P2wZmHzQ7pNByEtQb1dOfGczHFbY
-        GK9v93vvNdHsHZ6ecXRO1xFbNvE1vE7ATVeZ47RQc+3yw57RdaLI55lmMyaftxkw==;
-Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-        (Exim 4.95)
-        (envelope-from <johannes@sipsolutions.net>)
-        id 1nSdqI-00BtPi-Dc;
-        Fri, 11 Mar 2022 12:53:58 +0100
-Message-ID: <564672530e489da8872bdf1d8cdee7ce071d6a19.camel@sipsolutions.net>
-Subject: Re: [PATCH] devcoredump: increase the device delete timeout to 10
- mins
-From:   Johannes Berg <johannes@sipsolutions.net>
-To:     Rob Clark <robdclark@gmail.com>,
-        David Laight <David.Laight@aculab.com>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Greg KH <gregkh@linuxfoundation.org>,
-        "rafael@kernel.org" <rafael@kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "swboyd@chromium.org" <swboyd@chromium.org>,
-        "khsieh@codeaurora.org" <khsieh@codeaurora.org>,
-        "nganji@codeaurora.org" <nganji@codeaurora.org>,
-        "seanpaul@chromium.org" <seanpaul@chromium.org>,
-        "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
-        "aravindh@codeaurora.org" <aravindh@codeaurora.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>
-Date:   Fri, 11 Mar 2022 12:53:57 +0100
-In-Reply-To: <CAF6AEGtNGJanJ9f2pkjst50yPSWGJPo5nDkcZZgq=BkRWMq4yg@mail.gmail.com>
-References: <1644349472-31077-1-git-send-email-quic_abhinavk@quicinc.com>
-         <YgZD8vPqB7ISpRpZ@kroah.com>
-         <654d620b-9e14-c47f-b48c-762dc0bd32a1@quicinc.com>
-         <Ygdb63FrorUsX/Hg@kroah.com>
-         <b9156bde-137c-2fac-19e0-b205ab4d6016@quicinc.com>
-         <7db7d01fcf5a3edce61161769c0e6eb1541237bf.camel@sipsolutions.net>
-         <2add9ba7-7bc8-bd1d-1963-61e8154b0e3c@quicinc.com>
-         <989efb15-cc5e-8f6d-c313-118f01498e33@quicinc.com>
-         <8fa2f879e33e4e42b76e21c6fbdcb023@AcuMS.aculab.com>
-         <CAF6AEGtNGJanJ9f2pkjst50yPSWGJPo5nDkcZZgq=BkRWMq4yg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.42.4 (3.42.4-1.fc35) 
+        Fri, 11 Mar 2022 08:03:59 -0500
+Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06CB3673D0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Mar 2022 05:02:54 -0800 (PST)
+Received: by mail-il1-x12f.google.com with SMTP id b14so5902311ilf.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Mar 2022 05:02:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=GjFRD/9lEJoDZd2iHKsangrWSMTO+5I2agn/qVuV8qs=;
+        b=mFwvW4rXhHFY/F7Hmapw3Rafdjg4wgiZVsST1HQiQHcQcDPio3iFZMTOVmwYR3+Vwp
+         2+mCtb+tkPhSmYWZtrYicfUyy9ZByxewSj5V6NgpjwcAYfjKAWOwCgXJodJq3ra4vYyx
+         S9LjsdPZ0RYrYFNFFZHh0xB2p38eSgzvv+PvWmyks5dMAmBHjTnG61TgtQ1D4AWKk0xb
+         9YibeoiGSu5KPoTGcmIC2MP+aw9+UakeJ3Pe2uWfMS3ZTnCGp4GS1jpmpFxsen1vGw7l
+         +XH2VbHgTkYcbkXAgQ1ni7Q8VI47/JiaHwO8SKCq4BAnZUg86stjL4918vAbkdET2UFU
+         oOLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=GjFRD/9lEJoDZd2iHKsangrWSMTO+5I2agn/qVuV8qs=;
+        b=gh5EMttYDQQ3QkhVRs98Lj7ZiUaVPOiJK6vpq9IY1Ur0I4YOHQYAV0rgXn4UHy7zZd
+         xcKYGCHxriJe+AM7sp+Fmtg3oET781eBqOrpOrMF3T8PWZdc7tJ6RE8MhD+D+4xw0XU+
+         wTV1sW1UMXU0QxNpVullSmm+j8GQfhswEf0D7KUvcWxJWM7wh8SYot6LiRqLuiDP4vlp
+         GZYs+iaIefUbF4PEb8BbJ3Lq+2+mS7Thxy6E6eO3/lSvw++oeJeXXWbgejo6HaIiAjw3
+         Jj3noImnoBSw1uI24e8kybk9L1JDnBsfah/ebnZZPDt99744dC2iORJNEORt7aAUoigD
+         EpSg==
+X-Gm-Message-State: AOAM533HB3Sh1e/ec69lVs47q/GxDbbEzS3ZmRXjpG78v77ktSkt/1AO
+        OMhEceD5QAN6rbAb3M5MoamObg==
+X-Google-Smtp-Source: ABdhPJxR9fs0AtdoSZ4y9wsmyyDoVP8I7fhsy0a9F0fDPMq6S4RGQRXFtLgHy4uQJiid5eIa0QtMCA==
+X-Received: by 2002:a05:6e02:1baf:b0:2c2:46eb:a074 with SMTP id n15-20020a056e021baf00b002c246eba074mr7234018ili.263.1647003773245;
+        Fri, 11 Mar 2022 05:02:53 -0800 (PST)
+Received: from [172.22.22.26] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id l14-20020a056e0205ce00b002c782f5e905sm81979ils.74.2022.03.11.05.02.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Mar 2022 05:02:52 -0800 (PST)
+Message-ID: <680f7662-7a7d-4e26-6fdf-e4d961895dcd@linaro.org>
+Date:   Fri, 11 Mar 2022 07:02:50 -0600
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH net-next v2 6/7] net: ipa: embed interconnect array in the
+ power structure
+Content-Language: en-US
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     davem@davemloft.net, djakov@kernel.org, bjorn.andersson@linaro.org,
+        mka@chromium.org, evgreen@chromium.org, cpratapa@codeaurora.org,
+        avuyyuru@codeaurora.org, jponduru@codeaurora.org,
+        subashab@codeaurora.org, elder@kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220309192037.667879-1-elder@linaro.org>
+ <20220309192037.667879-7-elder@linaro.org>
+ <20220310212523.633287d4@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <20220310212523.633287d4@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-malware-bazaar: not-scanned
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 2022-03-01 at 09:45 -0800, Rob Clark wrote:
-> On Mon, Feb 28, 2022 at 10:49 PM David Laight <David.Laight@aculab.com> wrote:
-> > 
-> > From: Abhinav Kumar
-> > > Sent: 28 February 2022 21:38
-> > ...
-> > > We also did some profiling around how much increasing the block size
-> > > helps and here is the data:
-> > > 
-> > > Block size    cost
-> > > 
-> > > 4KB           229s
-> > > 8KB            86s
-> > 
-> > You must have an O(n^2) operation in there - find it.
+On 3/10/22 11:25 PM, Jakub Kicinski wrote:
+> On Wed,  9 Mar 2022 13:20:36 -0600 Alex Elder wrote:
+>> -	power = kzalloc(sizeof(*power), GFP_KERNEL);
+>> +	size = data->interconnect_count * sizeof(power->interconnect[0]);
+>> +	power = kzalloc(sizeof(*power) + size, GFP_KERNEL);
 > 
-> The problem is how the devcoredump/sysfs interface works, which
-> results in "re-rendering" the output for each block.. it's fine for
-> moderate size sysfs files, but scales quite badly once you get into
-> couple MB size sysfs files.
-> 
-> It could be fixed by having some way to keep state across successive
-> read callbacks.
+> struct_size(), can be a follow up
 
-I'm not sure that's true? Perhaps for dev_coredumpm(), but only if you
-implemented read() badly.
+I can do that today; I'll look for other instances in the
+driver where this could be done as well.  Thanks.
 
-If you have e.g. dev_coredumpsg() or dev_coredumpv() that's just a
-simple read from the existing buffer.
-
-johannes
+					-Alex
