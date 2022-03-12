@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 29AEF4D6EF7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Mar 2022 14:29:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 217BE4D6F28
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Mar 2022 14:30:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231994AbiCLNat (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Mar 2022 08:30:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45010 "EHLO
+        id S231881AbiCLNbN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Mar 2022 08:31:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231917AbiCLNaq (ORCPT
+        with ESMTP id S231944AbiCLNar (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Mar 2022 08:30:46 -0500
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8503A8BF2B
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Mar 2022 05:29:32 -0800 (PST)
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com [209.85.218.70])
+        Sat, 12 Mar 2022 08:30:47 -0500
+Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1CA215F36E
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Mar 2022 05:29:34 -0800 (PST)
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com [209.85.208.200])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id E8C9B3F799
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Mar 2022 13:29:30 +0000 (UTC)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 9E7013F32D
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Mar 2022 13:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1647091770;
-        bh=Fv0wjNs2b5QtUq9euXNEr2b5kaqy1J/ffW8/38DamY4=;
+        s=20210705; t=1647091773;
+        bh=7mUFbCJbIndj6M7s/RjbSIBZAkFNvJ9seQGSdX0sCHc=;
         h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
          MIME-Version;
-        b=nv2trRGMOAgxxJisXqosJxzjeLkadm/AGkCpPcgcltwUDxtYzG5oRzFX69ex7R2wd
-         gvC6eGR3fnyD/xOuMshOqlcAZF2cvi7mWvzLO5/ZXnu4zB/Mp5gvK08IwhNdYmf/dA
-         CWncTpvY952fro5T+PN0BPhuTzQSksPQ5ZfFY8G4r9XJMhaEi0LW9qI1CKT55Vypzx
-         iirfBLqhw1wSAZ6hVskkcLzq/QhrtJD1SiYxn8nxzsB/HU0SKf9vtAYz50UFANQOdi
-         N8VAVVkoAcI6m2jd57mc/BOL+2YKHYXIu5glVv/npR6QEWQSqrVRj8YjS5VZFivxkN
-         bpJQUO745TyCQ==
-Received: by mail-ej1-f70.google.com with SMTP id m4-20020a170906160400b006be3f85906eso6330785ejd.23
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Mar 2022 05:29:30 -0800 (PST)
+        b=LideUy4HU692ieL3kT/cVKz2WzgKIPJ1pc5Jn8vKH0EStlrWxrYUBlPAYUdio5Rr7
+         CZE5DIvNIERInenYj3lcux63N3/s/WDX7K0Kx215heuKB5aTzSh9qpqeE93KBJ0MoG
+         pAKqh01ei02bx9fxaadkxTj7wl9ZDK8hvH61YcbnLXeAi5OhCjPaFLHKZWyGQPyVB+
+         vsPAogRXcOnYItzXTWdElC9BH9DJRj+JtvzsKL2PLGEWRp64uZeWYIFW2wM9FHE0ng
+         AlbZRyjks9puU8s1EXAWL+Qr4B5FKoxtp/2Zwwq/+Xrk0RXmoqXXVa8/ha2+hXr9m7
+         EObj433qCXSmg==
+Received: by mail-lj1-f200.google.com with SMTP id f21-20020a2e9515000000b00247e2f244easo4638380ljh.19
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Mar 2022 05:29:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Fv0wjNs2b5QtUq9euXNEr2b5kaqy1J/ffW8/38DamY4=;
-        b=Pj1XH/j+55hHsw09YPEvIHPPNKn7Oi2CFokprc0kEZtKbPYdq8QF4Xmd0MKZbBanec
-         hq9Ljj8kiXGeot5hnYSWNKOFZ4kwcydHErDeI+djMrUBcQJTE8ecsnKBZS3dLKKY6OYj
-         jRuxVYk19WzSAIOI8TY6uQnzW3sjr4gWYgcJ3xBnHBhmu3BdcChjKTF7vSgk4KXLITNM
-         X827PW7Ht8KWVGTPM9JCDi73MFprptaIDhvKtsKmhZNu9PiNhH4z8dnYDRRsBdFBUvBp
-         cwd43rUVtqT0SatZXpZVYJUAQbtTguk2qF8e2zjkyrLPMRp3zRWxcct2ums2OZhYhU3H
-         Mqjw==
-X-Gm-Message-State: AOAM530w+hghlqPaqRUSVQnu3THiyV4OKkMqiW/tkpRKdtNhKDIkc8Xk
-        ZQ2hmSmWyBGXpsVwtuTILOKtKyR/VuJg06wMI1ctgLdLnn1mvM4gUcR+U0v+mw+W+4fNqCezhaY
-        ts5e9N/3zgkCtakZSehtYHdxbYthY6wsW6Az7FQkct5M=
-X-Received: by 2002:a5d:458b:0:b0:1f1:f876:48e2 with SMTP id p11-20020a5d458b000000b001f1f87648e2mr10681285wrq.76.1647091760268;
-        Sat, 12 Mar 2022 05:29:20 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJyDBzysSy5dJPpClWLlHuYPvBegFX8iikOsVYCIkiLzfLC7xpzwCpZjF6/7zZtW5qI29WBIOg==
-X-Received: by 2002:a5d:458b:0:b0:1f1:f876:48e2 with SMTP id p11-20020a5d458b000000b001f1f87648e2mr10681251wrq.76.1647091760021;
-        Sat, 12 Mar 2022 05:29:20 -0800 (PST)
+        bh=7mUFbCJbIndj6M7s/RjbSIBZAkFNvJ9seQGSdX0sCHc=;
+        b=n30pEjRtf1Z9RmGE0XbVN0aLKjktD8ovsQQOtbdM01zIm99Q2IkpM1TFZQnJ1q5eh8
+         wwOqr8HRNIe5M1GQ/zX1w3OKDdf0mNZzPaBIjYlvDGbW1YK6jo9wJ2i8YOVUASnzrXMM
+         4p/1m9aSeWtxwzUMTjKnIDI+wgW+4zG9yOLVUgCt3QUrz7iIVWSK/5CSxtLZ+mhTEYFu
+         a+GpvrCzAUx4o7KBwjKbaEyjg9DowW+nr+s6ucmsFDMDAQTr3Ylb928f8ZDYhN+6Sfo0
+         3cGztpc+NrINpVfFK/n07QcGHZtZTEPTvGFURq4lQYX9zdO3yoZm7IUMa4F4BmjCfzsO
+         WdZg==
+X-Gm-Message-State: AOAM533aLOxOC1dc7ss9rEzQinI1+ayVbRq1mCLMmQ9JriOpMgfK1TEC
+        ulPmT8h3Gg+SWBvaDzzN0Y+GtpnlXq/5GYMn6rDrszftHC11q1COXVUeuQvOVNGKEUwRH10eTz9
+        qJFtNeTWwcsiA71YLwx6ToS7PDZC3lFAu5LGIdd7kFQk=
+X-Received: by 2002:a5d:5512:0:b0:1ef:5f08:29fb with SMTP id b18-20020a5d5512000000b001ef5f0829fbmr10682388wrv.653.1647091762092;
+        Sat, 12 Mar 2022 05:29:22 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJwL9N8cHHsfR6QUZ51LIW64l7WzEaKnb3KtvzXdONbhu6n0rj400RLdEGB8nEbZlW8twybECA==
+X-Received: by 2002:a5d:5512:0:b0:1ef:5f08:29fb with SMTP id b18-20020a5d5512000000b001ef5f0829fbmr10682372wrv.653.1647091761844;
+        Sat, 12 Mar 2022 05:29:21 -0800 (PST)
 Received: from localhost.localdomain (xdsl-188-155-174-239.adslplus.ch. [188.155.174.239])
-        by smtp.gmail.com with ESMTPSA id p22-20020a1c5456000000b00389e7e62800sm5751550wmi.8.2022.03.12.05.29.18
+        by smtp.gmail.com with ESMTPSA id p22-20020a1c5456000000b00389e7e62800sm5751550wmi.8.2022.03.12.05.29.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Mar 2022 05:29:19 -0800 (PST)
+        Sat, 12 Mar 2022 05:29:21 -0800 (PST)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         "Rafael J. Wysocki" <rafael@kernel.org>
@@ -92,11 +92,10 @@ Cc:     Stuart Yoder <stuyoder@gmail.com>,
         virtualization@lists.linux-foundation.org,
         Linus Torvalds <torvalds@linux-foundation.org>,
         Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Michael Kelley <mikelley@microsoft.com>
-Subject: [PATCH v4 04/11] hv: Use driver_set_override() instead of open-coding
-Date:   Sat, 12 Mar 2022 14:28:49 +0100
-Message-Id: <20220312132856.65163-5-krzysztof.kozlowski@canonical.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Subject: [PATCH v4 05/11] PCI: Use driver_set_override() instead of open-coding
+Date:   Sat, 12 Mar 2022 14:28:50 +0100
+Message-Id: <20220312132856.65163-6-krzysztof.kozlowski@canonical.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220312132856.65163-1-krzysztof.kozlowski@canonical.com>
 References: <20220312132856.65163-1-krzysztof.kozlowski@canonical.com>
@@ -117,20 +116,20 @@ Make the driver_override field const char, because it is not modified by
 the core and it matches other subsystems.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Reviewed-by: Michael Kelley <mikelley@microsoft.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
 ---
- drivers/hv/vmbus_drv.c | 28 ++++------------------------
- include/linux/hyperv.h |  6 +++++-
+ drivers/pci/pci-sysfs.c | 28 ++++------------------------
+ include/linux/pci.h     |  6 +++++-
  2 files changed, 9 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-index 60ee8b329f9e..66213ce5579d 100644
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -575,31 +575,11 @@ static ssize_t driver_override_store(struct device *dev,
+diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
+index 602f0fb0b007..5c42965c32c2 100644
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -567,31 +567,11 @@ static ssize_t driver_override_store(struct device *dev,
  				     const char *buf, size_t count)
  {
- 	struct hv_device *hv_dev = device_to_hv_device(dev);
+ 	struct pci_dev *pdev = to_pci_dev(dev);
 -	char *driver_override, *old, *cp;
 -
 -	/* We need to keep extra room for a newline */
@@ -146,40 +145,40 @@ index 60ee8b329f9e..66213ce5579d 100644
 -		*cp = '\0';
 -
 -	device_lock(dev);
--	old = hv_dev->driver_override;
+-	old = pdev->driver_override;
 -	if (strlen(driver_override)) {
--		hv_dev->driver_override = driver_override;
+-		pdev->driver_override = driver_override;
 -	} else {
 -		kfree(driver_override);
--		hv_dev->driver_override = NULL;
+-		pdev->driver_override = NULL;
 -	}
 -	device_unlock(dev);
 +	int ret;
  
 -	kfree(old);
-+	ret = driver_set_override(dev, &hv_dev->driver_override, buf, count);
++	ret = driver_set_override(dev, &pdev->driver_override, buf, count);
 +	if (ret)
 +		return ret;
  
  	return count;
  }
-diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
-index fe2e0179ed51..12e2336b23b7 100644
---- a/include/linux/hyperv.h
-+++ b/include/linux/hyperv.h
-@@ -1257,7 +1257,11 @@ struct hv_device {
- 	u16 device_id;
- 
- 	struct device device;
--	char *driver_override; /* Driver name to force a match */
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 60d423d8f0c4..415491fb85f4 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -516,7 +516,11 @@ struct pci_dev {
+ 	u16		acs_cap;	/* ACS Capability offset */
+ 	phys_addr_t	rom;		/* Physical address if not from BAR */
+ 	size_t		romlen;		/* Length if not from BAR */
+-	char		*driver_override; /* Driver name to force a match */
 +	/*
 +	 * Driver name to force a match.  Do not set directly, because core
 +	 * frees it.  Use driver_set_override() to set or clear it.
 +	 */
-+	const char *driver_override;
++	const char	*driver_override;
  
- 	struct vmbus_channel *channel;
- 	struct kset	     *channels_kset;
+ 	unsigned long	priv_flags;	/* Private flags for the PCI driver */
+ 
 -- 
 2.32.0
 
