@@ -2,57 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C04174D6D23
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Mar 2022 08:00:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB7894D6DE6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Mar 2022 11:07:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231150AbiCLHBX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 12 Mar 2022 02:01:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47926 "EHLO
+        id S231667AbiCLKI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 12 Mar 2022 05:08:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231148AbiCLHBS (ORCPT
+        with ESMTP id S231665AbiCLKI5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 12 Mar 2022 02:01:18 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F046626C2F3;
-        Fri, 11 Mar 2022 23:00:13 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id ACE33B82E11;
-        Sat, 12 Mar 2022 07:00:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 4A002C340F5;
-        Sat, 12 Mar 2022 07:00:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1647068411;
-        bh=WTXyElpzQ7cMxgUeslPKgtVFqAbfDhZ3YUjZhIkkBds=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Ycx6lGtvE5PON1N6KHvracSs68Ub5ux4xZqzYKhbtYNDMpDI+9BldU5wrJokuifE4
-         r4OexrnkH1BR+sLcq2+t2oZ5u++h5iKErNf0ve9oKuBVUEiI0ob4TBxGrOUvWUtITK
-         rgPAXhKBqinpk4WBm0VN1ax0k1nYSXspTTl3eHMzkjL7eXTxqm7FMDg7vjeR966Izm
-         Dt5VjSDWz6z30pK6S6Szcjziz0lbWa7GqGBPSDatGQteybZaW784Rh2S8oUNlM6Qk5
-         uKJgs6nmeLTOGLKJWLFNDwLaevEM+0TqiNARZF8GI3m+ZXbjqOqiYpFH1lAoR/hd4o
-         FbjblNm+VVJTQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 31A07E6D3DD;
-        Sat, 12 Mar 2022 07:00:11 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Sat, 12 Mar 2022 05:08:57 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB19421CD22
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Mar 2022 02:07:50 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id cx5so10307535pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Mar 2022 02:07:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=wYq6tWAwazSwtaOSCcn5XeDaBbEnnMxnnX4o0qHorPw=;
+        b=RCC9d6s+pci7YMgg1RymL3t5FOGxdAarGsaVkM6MrLdIwyseLC2zdbdGsrhGW/9iuo
+         G3CwNKKEJIjCQ9KBzfDA/IBq+kBwXN2hhmMNJ2hS0Q7v1CsSefgac0oH9GkzTJTWIOnD
+         SeUdJEvk4RF1eVT9RX6hkjA2g6gTyVTTHLJa0DFV6vQ6k8PG16p/MD+MG2MlR/nIQQtB
+         4NErqiNWRzjz7x9urQx2oYDfqL8ExJFrGwL78FE3eHieqvzArKK74AJVEnbSy8c0AbhE
+         k+/cxe6XiCh0/onW21fRpnKfTMEUs2gZ5MmcUN/zTHl58809kLMXKDLP/8bCvxBVEiIZ
+         q6EA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=wYq6tWAwazSwtaOSCcn5XeDaBbEnnMxnnX4o0qHorPw=;
+        b=lk+meVbOabxbPanDxNR+PqeSCnmlpzVu2BDKakHH8GfEI57tSuVkNIX3DPmc4i34Lc
+         qDdtAGSOIKgaRQRKYmh10/TeLafsewWnHoGHGGqkdnD9/agQBCxBSSwWBdijXhzyLj+B
+         vymT68u+gca0kwp4UthN7E1wBCPQ+b/B7ijXD6hCnHhvO2yy+E7bAM8uQCMl6duS17eI
+         0j1B4tyFALD25S5uC2hdBV6sUH4UfSHbBXz3NlucA9M1Tdp2OOJb2KubgNECoKz6lkpr
+         mM6/jhjO155pk6a8MXTFP29jiJP5OLyriC3ZomR2dB7XruPTr/NONcxSadGB69vLvQUe
+         JgTA==
+X-Gm-Message-State: AOAM533KwWvMrgMAp6u4p8254/lAcgDg3sz0Jgt4wdYyr+uQ4Dj6vOGd
+        2StXB7l4XJTkhtZnRc53z8xCRM8cZ71RUtfsGKP4WQ==
+X-Google-Smtp-Source: ABdhPJzOAX1230fxKXWYL8R8DcTPN06CepOoh5pbUwIhYFkflUGvGx81W4io38EXjfmESuDRPBX1c0dv/+QE0TRTLMY=
+X-Received: by 2002:a17:90b:124c:b0:1bc:369b:7db5 with SMTP id
+ gx12-20020a17090b124c00b001bc369b7db5mr26400342pjb.179.1647079670159; Sat, 12
+ Mar 2022 02:07:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next 1/1] net: ipa: use struct_size() for the interconnect
- array
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <164706841119.27256.3824188698589079166.git-patchwork-notify@kernel.org>
-Date:   Sat, 12 Mar 2022 07:00:11 +0000
-References: <20220311162423.872645-1-elder@linaro.org>
-In-Reply-To: <20220311162423.872645-1-elder@linaro.org>
-To:     Alex Elder <elder@linaro.org>
-Cc:     davem@davemloft.net, kuba@kernel.org, bjorn.andersson@linaro.org,
-        mka@chromium.org, evgreen@chromium.org, cpratapa@codeaurora.org,
-        avuyyuru@codeaurora.org, jponduru@codeaurora.org,
-        subashab@codeaurora.org, elder@kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-X-Spam-Status: No, score=-7.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+References: <cover.1647006877.git.mchehab@kernel.org> <8602f414ccdbf2ed803b013cdb7b9a97739d4921.1647006877.git.mchehab@kernel.org>
+In-Reply-To: <8602f414ccdbf2ed803b013cdb7b9a97739d4921.1647006877.git.mchehab@kernel.org>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Sat, 12 Mar 2022 11:07:39 +0100
+Message-ID: <CAG3jFyt8H=X0DTeu9AHu5meOZj2eXAzX+i1dBvPbNZHmHqTTCw@mail.gmail.com>
+Subject: Re: [PATCH v2 21/38] media: platform: camss: move config to its own file
+To:     Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc:     =?UTF-8?Q?Niklas_S=C3=B6derlund?= 
+        <niklas.soderlund+renesas@ragnatech.se>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Ming Qian <ming.qian@nxp.com>,
+        Todor Tomov <todor.too@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -61,28 +75,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
+On Fri, 11 Mar 2022 at 15:09, Mauro Carvalho Chehab <mchehab@kernel.org> wrote:
+>
+> In order to better organize the platform/Kconfig, place
+> camss-specific config stuff on a separate Kconfig file.
+>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+> ---
+>
+> To avoid mailbombing on a large number of people, only mailing lists were C/C on the cover.
+> See [PATCH v2 00/38] at: https://lore.kernel.org/all/cover.1647006877.git.mchehab@kernel.org/
+>
+>  drivers/media/platform/Kconfig            | 11 +----------
+>  drivers/media/platform/qcom/camss/Kconfig |  9 +++++++++
+>  2 files changed, 10 insertions(+), 10 deletions(-)
+>  create mode 100644 drivers/media/platform/qcom/camss/Kconfig
+>
+> diff --git a/drivers/media/platform/Kconfig b/drivers/media/platform/Kconfig
+> index f65eefa15dda..19ca01d2f841 100644
+> --- a/drivers/media/platform/Kconfig
+> +++ b/drivers/media/platform/Kconfig
+> @@ -61,6 +61,7 @@ source "drivers/media/platform/mtk-vcodec/Kconfig"
+>  source "drivers/media/platform/mtk-vpu/Kconfig"
+>  source "drivers/media/platform/omap3isp/Kconfig"
+>  source "drivers/media/platform/omap/Kconfig"
+> +source "drivers/media/platform/qcom/camss/Kconfig"
+>
+>  source "drivers/media/platform/aspeed/Kconfig"
+>
+> @@ -78,16 +79,6 @@ config VIDEO_MUX
+>
+>  source "drivers/media/platform/intel/Kconfig"
+>
+> -config VIDEO_QCOM_CAMSS
+> -       tristate "Qualcomm V4L2 Camera Subsystem driver"
+> -       depends on V4L_PLATFORM_DRIVERS
+> -       depends on VIDEO_V4L2
+> -       depends on (ARCH_QCOM && IOMMU_DMA) || COMPILE_TEST
+> -       select MEDIA_CONTROLLER
+> -       select VIDEO_V4L2_SUBDEV_API
+> -       select VIDEOBUF2_DMA_SG
+> -       select V4L2_FWNODE
+> -
+>  config VIDEO_S3C_CAMIF
+>         tristate "Samsung S3C24XX/S3C64XX SoC Camera Interface driver"
+>         depends on V4L_PLATFORM_DRIVERS
+> diff --git a/drivers/media/platform/qcom/camss/Kconfig b/drivers/media/platform/qcom/camss/Kconfig
+> new file mode 100644
+> index 000000000000..56be91578706
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/camss/Kconfig
+> @@ -0,0 +1,9 @@
+> +config VIDEO_QCOM_CAMSS
+> +       tristate "Qualcomm V4L2 Camera Subsystem driver"
+> +       depends on V4L_PLATFORM_DRIVERS
+> +       depends on VIDEO_V4L2
+> +       depends on (ARCH_QCOM && IOMMU_DMA) || COMPILE_TEST
+> +       select MEDIA_CONTROLLER
+> +       select VIDEO_V4L2_SUBDEV_API
+> +       select VIDEOBUF2_DMA_SG
+> +       select V4L2_FWNODE
+> --
+> 2.35.1
+>
 
-This patch was applied to netdev/net-next.git (master)
-by Jakub Kicinski <kuba@kernel.org>:
-
-On Fri, 11 Mar 2022 10:24:23 -0600 you wrote:
-> In review for commit 8ee7ec4890e2b ("net: ipa: embed interconnect
-> array in the power structure"), Jakub Kicinski suggested that a
-> follow-up patch use struct_size() when computing the size of the
-> IPA power structure, which ends with a flexible array member.
-> 
-> Do that.
-> 
-> [...]
-
-Here is the summary with links:
-  - [net-next,1/1] net: ipa: use struct_size() for the interconnect array
-    https://git.kernel.org/netdev/net-next/c/cb631a639819
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
