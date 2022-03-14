@@ -2,79 +2,213 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28CA24D840D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Mar 2022 13:21:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 756F14D8515
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Mar 2022 13:34:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241405AbiCNMWi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Mar 2022 08:22:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51386 "EHLO
+        id S238486AbiCNMfE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Mar 2022 08:35:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243885AbiCNMVV (ORCPT
+        with ESMTP id S245594AbiCNMdQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Mar 2022 08:21:21 -0400
-X-Greylist: delayed 1402 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 14 Mar 2022 05:17:35 PDT
-Received: from mail2-relais-roc.national.inria.fr (mail2-relais-roc.national.inria.fr [192.134.164.83])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB39E2652
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Mar 2022 05:17:35 -0700 (PDT)
+        Mon, 14 Mar 2022 08:33:16 -0400
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A13C279
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Mar 2022 05:32:06 -0700 (PDT)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-2e5757b57caso5081437b3.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Mar 2022 05:32:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=inria.fr; s=dc;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=hkSvYg+QhqgFZs/M00yfIFpfr0WP6sk4OF7YMdOXfzM=;
-  b=cAIVo/VSoFJ93ordGoT7KpoGY4itLt7GuKTgBDMzcvn0vvhHNiXO85XV
-   NKck4K9KZuU/STC8Z4bOBtD9EQ93cvGlW+vLZ+lyBlTaAv8HJznQqu8Zo
-   SXP2YNagNcNJMD4treHXZzuintqxmGcTq9yGWrB7/SCXoT5Tm/iEkZmXz
-   Q=;
-Authentication-Results: mail2-relais-roc.national.inria.fr; dkim=none (message not signed) header.i=none; spf=SoftFail smtp.mailfrom=Julia.Lawall@inria.fr; dmarc=fail (p=none dis=none) d=inria.fr
-X-IronPort-AV: E=Sophos;i="5.90,180,1643670000"; 
-   d="scan'208";a="25997348"
-Received: from i80.paris.inria.fr (HELO i80.paris.inria.fr.) ([128.93.90.48])
-  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2022 12:54:00 +0100
-From:   Julia Lawall <Julia.Lawall@inria.fr>
-To:     Andy Gross <agross@kernel.org>
-Cc:     kernel-janitors@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 15/30] clk: qcom: sm6125-gcc: fix typos in comments
-Date:   Mon, 14 Mar 2022 12:53:39 +0100
-Message-Id: <20220314115354.144023-16-Julia.Lawall@inria.fr>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20220314115354.144023-1-Julia.Lawall@inria.fr>
-References: <20220314115354.144023-1-Julia.Lawall@inria.fr>
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=SWYiVcad4lyN3MTMCVaEe/kHD8SmjlJLnSNDNu5hEV8=;
+        b=dx89DPmQPGELKQ9URRMTc+sGTgkEbGOiXMkgouXNqdU6gaEGEWf9ADvH/onhhTn9A0
+         i07Y+WDeSjXLEPXUwnNBLIzyoHrmbu+PIZZ56LGMx0d0FQ9XDJHHqdg5B425iKHO0uhY
+         GeVnLJBk8jVDLd84298P3HM89dWltpY/eLhQZkpS27sg45OBX42hMGTtXK8ehdreVn/P
+         jnIg+ChqnI+V8gxqyI8KZRxkMBzg/c6/lt79dm2zyzpe8FjryvOPjxeQhM723GIDLkDr
+         rhNtFsEBSDzig95iZNJVTyfMhKMlVfXY81af0BTKizXB5c2HxE0fmzOMBfUq1Hw/6N38
+         KXKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=SWYiVcad4lyN3MTMCVaEe/kHD8SmjlJLnSNDNu5hEV8=;
+        b=u3M6tyCrBHOD4zjulvDt9kEKbxpm1fxZDqk2eRedmuaK0DUVHphFAfTjjKN+FAY8dA
+         Ci/+gYoAjtColfIUvwY7id+GuM/5JYOIIZ8+S+PBJcZqcjXYcreiTcX6ttOYE1aT7IhJ
+         Jc+6pGFX+qWCXSAN2h2dq5SHUS7uI7wjW61+KLF2Mpgu3iU1GX6Ffoai7hG2g6Et+Bv+
+         2cpFkvnZC6Sj9XQIIfn9E0QlMBJoeFOD9KEMMVYdr3yOesTczHPKcwFNDa1uhzXFYh+l
+         JKfcQNj31aL2SH52QgAID8ZKLgk2T/iTwYG4uXMPpMTIr1NW/WJArZfg5e3kNTynpRRG
+         5i/g==
+X-Gm-Message-State: AOAM533rovDmQMCKC+Zr6xpwGHFfxXMMjAQa1vgDhR9xXEQjylBkPRaF
+        t6pt+xUaShmri7D5jCEMrwLeHvG4UbyiBN/hyqHdaA==
+X-Google-Smtp-Source: ABdhPJw9ptK7cXWIyB+pXX4gxaG81OIr8G6j/SFNJ1dr+spjkllZx+dgElnNqGpEHU1scqv+d/HKw9nNDEh76Lq5I60=
+X-Received: by 2002:a0d:d187:0:b0:2dc:5d83:217d with SMTP id
+ t129-20020a0dd187000000b002dc5d83217dmr18485669ywd.189.1647261125395; Mon, 14
+ Mar 2022 05:32:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+References: <20220219183310.557435-1-robdclark@gmail.com> <CA+G9fYv6dPUsPzbFLr9PxJoe4eRAUdQyD4xT4hh4-xw=n9r=Bw@mail.gmail.com>
+In-Reply-To: <CA+G9fYv6dPUsPzbFLr9PxJoe4eRAUdQyD4xT4hh4-xw=n9r=Bw@mail.gmail.com>
+From:   Naresh Kamboju <naresh.kamboju@linaro.org>
+Date:   Mon, 14 Mar 2022 18:01:53 +0530
+Message-ID: <CA+G9fYsipiN2-+g9CGmvf1WVQe22ehnkRuwa45D4rsTa6+Wk=w@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/gpu: Fix crash on devices without devfreq support
+To:     Rob Clark <robdclark@gmail.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        Linux Kernel Functional Testing <lkft@linaro.org>,
+        Anders Roxell <anders.roxell@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Various spelling mistakes in comments.
-Detected with the help of Coccinelle.
+Hi Rob and Linus,
 
-Signed-off-by: Julia Lawall <Julia.Lawall@inria.fr>
+On Mon, 7 Mar 2022 at 14:07, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+>
+> Hi Rob,
+>
+> On Sun, 20 Feb 2022 at 00:02, Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > Avoid going down devfreq paths on devices where devfreq is not
+> > initialized.
+> >
+> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> > Reported-by: Anders Roxell <anders.roxell@linaro.org>
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+>
+> I have tested this patch and the reported kernel crash is fixed [1].
+>
+> Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+>
+> > ---
+> >  drivers/gpu/drm/msm/msm_gpu_devfreq.c | 31 +++++++++++++++++++++------
+> >  1 file changed, 25 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> > index 9bf319be11f6..26a3669a97b3 100644
+> > --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> > +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> > @@ -83,12 +83,17 @@ static struct devfreq_dev_profile msm_devfreq_profile = {
+> >  static void msm_devfreq_boost_work(struct kthread_work *work);
+> >  static void msm_devfreq_idle_work(struct kthread_work *work);
+> >
+> > +static bool has_devfreq(struct msm_gpu *gpu)
+> > +{
+> > +       return !!gpu->funcs->gpu_busy;
+> > +}
+> > +
+> >  void msm_devfreq_init(struct msm_gpu *gpu)
+> >  {
+> >         struct msm_gpu_devfreq *df = &gpu->devfreq;
+> >
+> >         /* We need target support to do devfreq */
+> > -       if (!gpu->funcs->gpu_busy)
+> > +       if (!has_devfreq(gpu))
+> >                 return;
+> >
+> >         dev_pm_qos_add_request(&gpu->pdev->dev, &df->idle_freq,
+> > @@ -149,6 +154,9 @@ void msm_devfreq_cleanup(struct msm_gpu *gpu)
+> >  {
+> >         struct msm_gpu_devfreq *df = &gpu->devfreq;
+> >
+> > +       if (!has_devfreq(gpu))
+> > +               return;
+> > +
+> >         devfreq_cooling_unregister(gpu->cooling);
+> >         dev_pm_qos_remove_request(&df->boost_freq);
+> >         dev_pm_qos_remove_request(&df->idle_freq);
+> > @@ -156,16 +164,24 @@ void msm_devfreq_cleanup(struct msm_gpu *gpu)
+> >
+> >  void msm_devfreq_resume(struct msm_gpu *gpu)
+> >  {
+> > -       gpu->devfreq.busy_cycles = 0;
+> > -       gpu->devfreq.time = ktime_get();
+> > +       struct msm_gpu_devfreq *df = &gpu->devfreq;
+> >
+> > -       devfreq_resume_device(gpu->devfreq.devfreq);
+> > +       if (!has_devfreq(gpu))
+> > +               return;
+> > +
+> > +       df->busy_cycles = 0;
+> > +       df->time = ktime_get();
+> > +
+> > +       devfreq_resume_device(df->devfreq);
+> >  }
+> >
+> >  void msm_devfreq_suspend(struct msm_gpu *gpu)
+> >  {
+> >         struct msm_gpu_devfreq *df = &gpu->devfreq;
+> >
+> > +       if (!has_devfreq(gpu))
+> > +               return;
+> > +
+> >         devfreq_suspend_device(df->devfreq);
+> >
+> >         cancel_idle_work(df);
+> > @@ -185,6 +201,9 @@ void msm_devfreq_boost(struct msm_gpu *gpu, unsigned factor)
+> >         struct msm_gpu_devfreq *df = &gpu->devfreq;
+> >         uint64_t freq;
+> >
+> > +       if (!has_devfreq(gpu))
+> > +               return;
+> > +
+> >         freq = get_freq(gpu);
+> >         freq *= factor;
+> >
+> > @@ -207,7 +226,7 @@ void msm_devfreq_active(struct msm_gpu *gpu)
+> >         struct devfreq_dev_status status;
+> >         unsigned int idle_time;
+> >
+> > -       if (!df->devfreq)
+> > +       if (!has_devfreq(gpu))
+> >                 return;
+> >
+> >         /*
+> > @@ -253,7 +272,7 @@ void msm_devfreq_idle(struct msm_gpu *gpu)
+> >  {
+> >         struct msm_gpu_devfreq *df = &gpu->devfreq;
+> >
+> > -       if (!df->devfreq)
+> > +       if (!has_devfreq(gpu))
+> >                 return;
+> >
+> >         msm_hrtimer_queue_work(&df->idle_work, ms_to_ktime(1),
 
----
- drivers/clk/qcom/gcc-sm6125.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+FYI,
+This patch is missing on Linux 5.17-rc8 [1].
+kernel crash log on arm64 db410c device [2] and details [3].
 
-diff --git a/drivers/clk/qcom/gcc-sm6125.c b/drivers/clk/qcom/gcc-sm6125.c
-index 431b55bb0d2f..cf3af88d4021 100644
---- a/drivers/clk/qcom/gcc-sm6125.c
-+++ b/drivers/clk/qcom/gcc-sm6125.c
-@@ -4151,7 +4151,7 @@ static int gcc_sm6125_probe(struct platform_device *pdev)
- 
- 	/*
- 	 * Enable DUAL_EDGE mode for MCLK RCGs
--	 * This is requierd to enable MND divider mode
-+	 * This is required to enable MND divider mode
- 	 */
- 	regmap_update_bits(regmap, 0x51004, 0x3000, 0x2000);
- 	regmap_update_bits(regmap, 0x51020, 0x3000, 0x2000);
+metadata:
+  git_describe: v5.17-rc8
+  git_ref: master
+  git_repo: https://gitlab.com/Linaro/lkft/mirrors/torvalds/linux-mainline
+  git_sha: 09688c0166e76ce2fb85e86b9d99be8b0084cdf9
+  kernel-config: https://builds.tuxbuild.com/26LbbVLHqxjh5w5ZtjBMjGmh92P/config
+  build: https://builds.tuxbuild.com/26LbbVLHqxjh5w5ZtjBMjGmh92P
 
+- Naresh
+[1] https://lore.kernel.org/dri-devel/20220219183310.557435-1-robdclark@gmail.com/
+[2]  https://lkft.validation.linaro.org/scheduler/job/4714905#L2795
+[3] https://qa-reports.linaro.org/lkft/linux-mainline-master/build/v5.17-rc8/testrun/8446224/suite/linux-log-parser/test/check-kernel-oops-4714905/details/
+
+>
+> --
+> Linaro LKFT
+> https://lkft.linaro.org
+>
+> [1] https://lkft.validation.linaro.org/scheduler/job/4664600#L1894
