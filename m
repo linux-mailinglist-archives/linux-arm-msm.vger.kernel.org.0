@@ -2,60 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E9224D871A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Mar 2022 15:43:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ED2864D8722
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Mar 2022 15:43:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239990AbiCNOoI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Mar 2022 10:44:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47990 "EHLO
+        id S240052AbiCNOoM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Mar 2022 10:44:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238554AbiCNOoG (ORCPT
+        with ESMTP id S240020AbiCNOoK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Mar 2022 10:44:06 -0400
-Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB8FD2657;
-        Mon, 14 Mar 2022 07:42:56 -0700 (PDT)
-Received: by mail-io1-f42.google.com with SMTP id r2so18430576iod.9;
-        Mon, 14 Mar 2022 07:42:56 -0700 (PDT)
+        Mon, 14 Mar 2022 10:44:10 -0400
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8E342AE6;
+        Mon, 14 Mar 2022 07:42:59 -0700 (PDT)
+Received: by mail-io1-f51.google.com with SMTP id d62so18406840iog.13;
+        Mon, 14 Mar 2022 07:42:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
          :message-id;
-        bh=ZFm3098Qq38ZihocmoyjymWLRXt7L5rX0Wix1tDlZKI=;
-        b=7XCQEwPqbLm5tVah6hX9ZlYpSUfbq7s9t1GRlAWDlOfwQZxwH/yzmW6slLpGKUurL8
-         qou+/KHhapWzDM4MIHyzqGSE0x5S8tR4B/bOsAVDIbolpI/7/bj+lRGb0b8ZtYkXS1Zx
-         IY7MdBp4Srg+KIyT5EF21LR81ZlTf34u1xr8Fgg9OQIJGkPiCAYF0lNCMdKtwkdabGNa
-         c+4E1oK8nkJ1vehfZeYTm9oWDuqoTIJ/+Y1iZ/LHI3q3A/SAOTU1jMvLRSZ9XttD2pr9
-         EC++C/iZdgBs0Uq/zrhc7YwBli5+kkXiO+0ZmnUck8rqTPPk4thPRFxE1oLrPnUDQ/50
-         yVvA==
-X-Gm-Message-State: AOAM530/bxXQ4Sqy/ZUGxbVRnKQa0dNEobHsQlGhImkJBUEfVvoxblYX
-        wifZ93gP4PCeQU9vfPL6NL/S00Fb6w==
-X-Google-Smtp-Source: ABdhPJyQaBTGAIetjdRf6giyx6SU7LHoFADIdsRp3lXRCDkqAdzyIb0mzuwjvoX1KW3dUpVp8++XJA==
-X-Received: by 2002:a02:6910:0:b0:319:4f4c:eede with SMTP id e16-20020a026910000000b003194f4ceedemr20591642jac.301.1647268976134;
-        Mon, 14 Mar 2022 07:42:56 -0700 (PDT)
+        bh=AqFg7xrs3Geyfxo5Vr0DOQb5idtAj8J/XERgXrBpIrU=;
+        b=DXk7Ms8ncO3F0RgAwItJeuf6ojvyf4bbklDoNpSCZ+KhrG1+krrCCn7ZAUNLETNPEg
+         M00vQlzBVL/zoPI5F6NUrhMY4d0/p/DwAM/0GDlQhgwqTuZJDH7xWh4M3x9+10ONv19j
+         RZ3oHzKYamIlN3IfPYEXDuK+rAGSMhkYEL5n9Wcw0t4vNWJA0CgRGlH1soobbFgzNnf/
+         wEzP1AkJKDLvnpcbTJ0VUOzUh0jQ+XTHnn1mK4f3SXPKoL2V4z+95wHXHERy/YxryXp4
+         HjPdaJWAPDYRZzcaa8glPYl7zMsAvw9/aayvZGbrlImnIkiquwHqvaZUywpslyrTAl+5
+         raBw==
+X-Gm-Message-State: AOAM533Sv97P8M7B1IivRs2HaLPFp6JPsfKXNpX7vtj3rJ1pCwdHQySP
+        XogjGPaaV4We5Pd9vQdrkw==
+X-Google-Smtp-Source: ABdhPJwFTcp79lodU884hJVkoWne5DgyZnLhnKAbJFb9GtejUeLRtjVys1pJd7RPg/rUb1YbHKAp+Q==
+X-Received: by 2002:a05:6638:108:b0:319:99c7:5a69 with SMTP id x8-20020a056638010800b0031999c75a69mr21008718jao.297.1647268979081;
+        Mon, 14 Mar 2022 07:42:59 -0700 (PDT)
 Received: from robh.at.kernel.org ([64.188.179.253])
-        by smtp.gmail.com with ESMTPSA id a4-20020a5d9544000000b00640a6eb6e1esm8957167ios.53.2022.03.14.07.42.53
+        by smtp.gmail.com with ESMTPSA id a13-20020a056e02180d00b002c77c357fcfsm5500032ilv.76.2022.03.14.07.42.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Mar 2022 07:42:55 -0700 (PDT)
-Received: (nullmailer pid 12511 invoked by uid 1000);
+        Mon, 14 Mar 2022 07:42:58 -0700 (PDT)
+Received: (nullmailer pid 12513 invoked by uid 1000);
         Mon, 14 Mar 2022 14:42:49 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     linux-clk@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     linux-clk@vger.kernel.org,
         Michael Turquette <mturquette@baylibre.com>,
-        Prashant Gaikwad <pgaikwad@nvidia.com>,
-        devicetree@vger.kernel.org, linux-tegra@vger.kernel.org,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Peter De Schrijver <pdeschrijver@nvidia.com>
-In-Reply-To: <20220313190419.2207-17-ansuelsmth@gmail.com>
-References: <20220313190419.2207-1-ansuelsmth@gmail.com> <20220313190419.2207-17-ansuelsmth@gmail.com>
-Subject: Re: [PATCH 16/16] dt-bindings: arm: msm: Convert kpss driver Documentation to yaml
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+In-Reply-To: <20220314114211.1636574-2-vladimir.zapolskiy@linaro.org>
+References: <20220314114211.1636574-1-vladimir.zapolskiy@linaro.org> <20220314114211.1636574-2-vladimir.zapolskiy@linaro.org>
+Subject: Re: [PATCH v2 1/7] dt-bindings: clock: add QCOM SM8450 camera clock bindings
 Date:   Mon, 14 Mar 2022 08:42:49 -0600
-Message-Id: <1647268969.336967.12510.nullmailer@robh.at.kernel.org>
+Message-Id: <1647268969.345129.12512.nullmailer@robh.at.kernel.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
@@ -67,34 +64,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 13 Mar 2022 20:04:19 +0100, Ansuel Smith wrote:
-> Convert kpss-acc and kpss-gcc Documentation to yaml. Fix multiple
-> Documentation error and provide additional example for kpss-gcc-v2.
+On Mon, 14 Mar 2022 13:42:10 +0200, Vladimir Zapolskiy wrote:
+> The change adds device tree bindings for camera clock controller
+> found on SM8450 SoC.
 > 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 > ---
->  .../bindings/arm/msm/qcom,kpss-acc.txt        | 49 ----------
->  .../bindings/arm/msm/qcom,kpss-acc.yaml       | 97 +++++++++++++++++++
->  .../bindings/arm/msm/qcom,kpss-gcc.txt        | 44 ---------
->  .../bindings/arm/msm/qcom,kpss-gcc.yaml       | 62 ++++++++++++
->  4 files changed, 159 insertions(+), 93 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt
->  create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml
->  delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
->  create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
+> Changes from v1 to v2:
+> * updated qcom,camcc-sm8450.yaml according to review comments from Rob,
+> * changed qcom,camcc-sm8450.h license to dual one.
+> 
+>  .../bindings/clock/qcom,camcc-sm8450.yaml     |  89 ++++++++++
+>  include/dt-bindings/clock/qcom,camcc-sm8450.h | 159 ++++++++++++++++++
+>  2 files changed, 248 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,camcc-sm8450.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,camcc-sm8450.h
 > 
 
 My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
 on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
 yamllint warnings/errors:
-./Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml:62:4: [error] no new line character at the end of file (new-line-at-end-of-file)
 
 dtschema/dtc warnings/errors:
+Error: Documentation/devicetree/bindings/clock/qcom,camcc-sm8450.example.dts:30.34-35 syntax error
+FATAL ERROR: Unable to parse input tree
+make[1]: *** [scripts/Makefile.lib:378: Documentation/devicetree/bindings/clock/qcom,camcc-sm8450.example.dt.yaml] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1398: dt_binding_check] Error 2
 
 doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/patch/1604836
+See https://patchwork.ozlabs.org/patch/1605035
 
 This check can fail if there are any dependencies. The base for a patch
 series is generally the most recent rc1.
