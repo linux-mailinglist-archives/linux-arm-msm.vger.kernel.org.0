@@ -2,213 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 756F14D8515
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Mar 2022 13:34:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B675B4D8544
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Mar 2022 13:47:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238486AbiCNMfE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Mar 2022 08:35:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42964 "EHLO
+        id S234652AbiCNMs6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Mar 2022 08:48:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245594AbiCNMdQ (ORCPT
+        with ESMTP id S242119AbiCNMsY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Mar 2022 08:33:16 -0400
-Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A13C279
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Mar 2022 05:32:06 -0700 (PDT)
-Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-2e5757b57caso5081437b3.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Mar 2022 05:32:06 -0700 (PDT)
+        Mon, 14 Mar 2022 08:48:24 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EDFE34BAA;
+        Mon, 14 Mar 2022 05:43:24 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id p15so33619141ejc.7;
+        Mon, 14 Mar 2022 05:43:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SWYiVcad4lyN3MTMCVaEe/kHD8SmjlJLnSNDNu5hEV8=;
-        b=dx89DPmQPGELKQ9URRMTc+sGTgkEbGOiXMkgouXNqdU6gaEGEWf9ADvH/onhhTn9A0
-         i07Y+WDeSjXLEPXUwnNBLIzyoHrmbu+PIZZ56LGMx0d0FQ9XDJHHqdg5B425iKHO0uhY
-         GeVnLJBk8jVDLd84298P3HM89dWltpY/eLhQZkpS27sg45OBX42hMGTtXK8ehdreVn/P
-         jnIg+ChqnI+V8gxqyI8KZRxkMBzg/c6/lt79dm2zyzpe8FjryvOPjxeQhM723GIDLkDr
-         rhNtFsEBSDzig95iZNJVTyfMhKMlVfXY81af0BTKizXB5c2HxE0fmzOMBfUq1Hw/6N38
-         KXKQ==
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=2vlX4DbLKn7EsX9mBszyL4iwXvVb8LRGjvbGLc+VjE8=;
+        b=bvPF8LFBpKtsqY0RirALI6zI9T/YQGwB6H5GhL9/NksMVHupuHBMRHdrfWHdsilUVQ
+         BMV8PHtMBlai53snDNFFyTLhYbITIgnUPoBtL7LunC0mN9WilaVLL+bIsO3zepsudSqC
+         /iquj6bcH67AFDbfE2DpEzQKbna6NnpG5xMqREd2wg+8nOxpgIqiMtfNtjx/sVl3Fk23
+         mLJ66+WydlCGg+Rd/UkuQ9zg0wwY4E+XDhoxCzLPCLtJmgurctXsPqXVM8IVSNeb8IAY
+         CGqElBSo2vK/PrrSC1fSx8+i37XM9c7m6ZikFRzIEnCR5+Bltan35ZLPq44yCYBMLjRN
+         s8IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SWYiVcad4lyN3MTMCVaEe/kHD8SmjlJLnSNDNu5hEV8=;
-        b=u3M6tyCrBHOD4zjulvDt9kEKbxpm1fxZDqk2eRedmuaK0DUVHphFAfTjjKN+FAY8dA
-         Ci/+gYoAjtColfIUvwY7id+GuM/5JYOIIZ8+S+PBJcZqcjXYcreiTcX6ttOYE1aT7IhJ
-         Jc+6pGFX+qWCXSAN2h2dq5SHUS7uI7wjW61+KLF2Mpgu3iU1GX6Ffoai7hG2g6Et+Bv+
-         2cpFkvnZC6Sj9XQIIfn9E0QlMBJoeFOD9KEMMVYdr3yOesTczHPKcwFNDa1uhzXFYh+l
-         JKfcQNj31aL2SH52QgAID8ZKLgk2T/iTwYG4uXMPpMTIr1NW/WJArZfg5e3kNTynpRRG
-         5i/g==
-X-Gm-Message-State: AOAM533rovDmQMCKC+Zr6xpwGHFfxXMMjAQa1vgDhR9xXEQjylBkPRaF
-        t6pt+xUaShmri7D5jCEMrwLeHvG4UbyiBN/hyqHdaA==
-X-Google-Smtp-Source: ABdhPJw9ptK7cXWIyB+pXX4gxaG81OIr8G6j/SFNJ1dr+spjkllZx+dgElnNqGpEHU1scqv+d/HKw9nNDEh76Lq5I60=
-X-Received: by 2002:a0d:d187:0:b0:2dc:5d83:217d with SMTP id
- t129-20020a0dd187000000b002dc5d83217dmr18485669ywd.189.1647261125395; Mon, 14
- Mar 2022 05:32:05 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=2vlX4DbLKn7EsX9mBszyL4iwXvVb8LRGjvbGLc+VjE8=;
+        b=A6sTZojNAEXwWXkrWqpqFRWUoVSYR4QXFrKM00N/IqxH7EOgzo0AeVwubqfDq0ZR3P
+         5zQonEWjpdHeWYK7F7Vo2V15P5qCGI0s06Cf0BDG2uW/VJH8NlQPHWd83Nq4gsvYOaAq
+         hqPnOfRuJZB81Vd/KMee43PmMM5et5ygykTQM+2ED02JY7m5WGjOEgpeF+xGeE5eLIEb
+         FgfVDw1wlwiICBcq9ciZxLp9bUP5Gaimn2sHlVkSG1RqZ5ASfULZCqKn5Y95o+/YBMso
+         5/uFU+MxSvpFrO2xNvRAWg3J7tkyjfIGRw1B3Ffubr2mP87EdfkfamjF/pzwTXlXj/Bc
+         Xk7w==
+X-Gm-Message-State: AOAM532I2qditlbgwZjvY0a+efknETpqjLf8oKLw+ixnj2LLdDzDSWbA
+        Bc8aNI4IW8qtLm3Z4K12KjZn+1+/VDA=
+X-Google-Smtp-Source: ABdhPJzaXnhoIJ/WRBIn60QfuleJTsJl8I0mtZFsE5YKOPQ10wKMUDesQjiWdn+mX0Vk1ByCTAOl1A==
+X-Received: by 2002:a17:907:3f9e:b0:6da:842e:873e with SMTP id hr30-20020a1709073f9e00b006da842e873emr18566337ejc.383.1647261802390;
+        Mon, 14 Mar 2022 05:43:22 -0700 (PDT)
+Received: from Ansuel-xps.localdomain (93-42-71-246.ip85.fastwebnet.it. [93.42.71.246])
+        by smtp.gmail.com with ESMTPSA id ca21-20020aa7cd75000000b004188bc5712fsm1330334edb.73.2022.03.14.05.43.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Mar 2022 05:43:21 -0700 (PDT)
+Date:   Mon, 14 Mar 2022 13:43:20 +0100
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Peter De Schrijver <pdeschrijver@nvidia.com>,
+        Prashant Gaikwad <pgaikwad@nvidia.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-tegra@vger.kernel.org
+Subject: Re: [PATCH 12/16] clk: qcom: clk-krait: add 8064 errata workaround
+Message-ID: <Yi84aNrJ7p+3jy2A@Ansuel-xps.localdomain>
+References: <20220313190419.2207-1-ansuelsmth@gmail.com>
+ <20220313190419.2207-13-ansuelsmth@gmail.com>
+ <169795c1-607e-ee60-7ac7-538ed888bedf@linaro.org>
 MIME-Version: 1.0
-References: <20220219183310.557435-1-robdclark@gmail.com> <CA+G9fYv6dPUsPzbFLr9PxJoe4eRAUdQyD4xT4hh4-xw=n9r=Bw@mail.gmail.com>
-In-Reply-To: <CA+G9fYv6dPUsPzbFLr9PxJoe4eRAUdQyD4xT4hh4-xw=n9r=Bw@mail.gmail.com>
-From:   Naresh Kamboju <naresh.kamboju@linaro.org>
-Date:   Mon, 14 Mar 2022 18:01:53 +0530
-Message-ID: <CA+G9fYsipiN2-+g9CGmvf1WVQe22ehnkRuwa45D4rsTa6+Wk=w@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/gpu: Fix crash on devices without devfreq support
-To:     Rob Clark <robdclark@gmail.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Linux Kernel Functional Testing <lkft@linaro.org>,
-        Anders Roxell <anders.roxell@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <169795c1-607e-ee60-7ac7-538ed888bedf@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob and Linus,
+On Mon, Mar 14, 2022 at 11:20:21AM +0300, Dmitry Baryshkov wrote:
+> On 13/03/2022 22:04, Ansuel Smith wrote:
+> > Add 8064 errata workaround where the sec_src clock gating needs to be
+> 
+> Could you please be more specific whether the errata applies only to the
+> ipq8064 or to the apq8064 too? 8064 is not specific enough.
+>
 
-On Mon, 7 Mar 2022 at 14:07, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
->
-> Hi Rob,
->
-> On Sun, 20 Feb 2022 at 00:02, Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > Avoid going down devfreq paths on devices where devfreq is not
-> > initialized.
-> >
-> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> > Reported-by: Anders Roxell <anders.roxell@linaro.org>
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
->
-> I have tested this patch and the reported kernel crash is fixed [1].
->
-> Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
->
+That's a good question... Problem is that we really don't know the
+answer. This errata comes from qsdk on an old sourcecode. I assume this
+is specific to ipq8064 and apq8064 have different mux configuration.
+
+> > disabled during switching. To enable this set disable_sec_src_gating in
+> > the mux struct.
+> > 
+> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 > > ---
-> >  drivers/gpu/drm/msm/msm_gpu_devfreq.c | 31 +++++++++++++++++++++------
-> >  1 file changed, 25 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> > index 9bf319be11f6..26a3669a97b3 100644
-> > --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> > +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> > @@ -83,12 +83,17 @@ static struct devfreq_dev_profile msm_devfreq_profile = {
-> >  static void msm_devfreq_boost_work(struct kthread_work *work);
-> >  static void msm_devfreq_idle_work(struct kthread_work *work);
-> >
-> > +static bool has_devfreq(struct msm_gpu *gpu)
-> > +{
-> > +       return !!gpu->funcs->gpu_busy;
-> > +}
+> >   drivers/clk/qcom/clk-krait.c | 16 ++++++++++++++++
+> >   drivers/clk/qcom/clk-krait.h |  1 +
+> >   drivers/clk/qcom/krait-cc.c  |  1 +
+> >   3 files changed, 18 insertions(+)
+> > 
+> > diff --git a/drivers/clk/qcom/clk-krait.c b/drivers/clk/qcom/clk-krait.c
+> > index d8af281eba0e..82fe7031e1f4 100644
+> > --- a/drivers/clk/qcom/clk-krait.c
+> > +++ b/drivers/clk/qcom/clk-krait.c
+> > @@ -18,13 +18,23 @@
+> >   static DEFINE_SPINLOCK(krait_clock_reg_lock);
+> >   #define LPL_SHIFT	8
+> > +#define SECCLKAGD	BIT(4)
 > > +
-> >  void msm_devfreq_init(struct msm_gpu *gpu)
-> >  {
-> >         struct msm_gpu_devfreq *df = &gpu->devfreq;
-> >
-> >         /* We need target support to do devfreq */
-> > -       if (!gpu->funcs->gpu_busy)
-> > +       if (!has_devfreq(gpu))
-> >                 return;
-> >
-> >         dev_pm_qos_add_request(&gpu->pdev->dev, &df->idle_freq,
-> > @@ -149,6 +154,9 @@ void msm_devfreq_cleanup(struct msm_gpu *gpu)
-> >  {
-> >         struct msm_gpu_devfreq *df = &gpu->devfreq;
-> >
-> > +       if (!has_devfreq(gpu))
-> > +               return;
+> >   static void __krait_mux_set_sel(struct krait_mux_clk *mux, int sel)
+> >   {
+> >   	unsigned long flags;
+> >   	u32 regval;
+> >   	spin_lock_irqsave(&krait_clock_reg_lock, flags);
 > > +
-> >         devfreq_cooling_unregister(gpu->cooling);
-> >         dev_pm_qos_remove_request(&df->boost_freq);
-> >         dev_pm_qos_remove_request(&df->idle_freq);
-> > @@ -156,16 +164,24 @@ void msm_devfreq_cleanup(struct msm_gpu *gpu)
-> >
-> >  void msm_devfreq_resume(struct msm_gpu *gpu)
-> >  {
-> > -       gpu->devfreq.busy_cycles = 0;
-> > -       gpu->devfreq.time = ktime_get();
-> > +       struct msm_gpu_devfreq *df = &gpu->devfreq;
-> >
-> > -       devfreq_resume_device(gpu->devfreq.devfreq);
-> > +       if (!has_devfreq(gpu))
-> > +               return;
+> >   	regval = krait_get_l2_indirect_reg(mux->offset);
 > > +
-> > +       df->busy_cycles = 0;
-> > +       df->time = ktime_get();
+> > +	/* 8064 Errata: disable sec_src clock gating during switch. */
+> > +	if (mux->disable_sec_src_gating) {
+> > +		regval |= SECCLKAGD;
+> > +		krait_set_l2_indirect_reg(mux->offset, regval);
+> > +	}
 > > +
-> > +       devfreq_resume_device(df->devfreq);
-> >  }
-> >
-> >  void msm_devfreq_suspend(struct msm_gpu *gpu)
-> >  {
-> >         struct msm_gpu_devfreq *df = &gpu->devfreq;
-> >
-> > +       if (!has_devfreq(gpu))
-> > +               return;
+> >   	regval &= ~(mux->mask << mux->shift);
+> >   	regval |= (sel & mux->mask) << mux->shift;
+> >   	if (mux->lpl) {
+> > @@ -33,6 +43,12 @@ static void __krait_mux_set_sel(struct krait_mux_clk *mux, int sel)
+> >   	}
+> >   	krait_set_l2_indirect_reg(mux->offset, regval);
+> > +	/* 8064 Errata: re-enabled sec_src clock gating. */
+> 
+> And here too
+> 
+> > +	if (mux->disable_sec_src_gating) {
+> > +		regval &= ~SECCLKAGD;
+> > +		krait_set_l2_indirect_reg(mux->offset, regval);
+> > +	}
 > > +
-> >         devfreq_suspend_device(df->devfreq);
-> >
-> >         cancel_idle_work(df);
-> > @@ -185,6 +201,9 @@ void msm_devfreq_boost(struct msm_gpu *gpu, unsigned factor)
-> >         struct msm_gpu_devfreq *df = &gpu->devfreq;
-> >         uint64_t freq;
-> >
-> > +       if (!has_devfreq(gpu))
-> > +               return;
-> > +
-> >         freq = get_freq(gpu);
-> >         freq *= factor;
-> >
-> > @@ -207,7 +226,7 @@ void msm_devfreq_active(struct msm_gpu *gpu)
-> >         struct devfreq_dev_status status;
-> >         unsigned int idle_time;
-> >
-> > -       if (!df->devfreq)
-> > +       if (!has_devfreq(gpu))
-> >                 return;
-> >
-> >         /*
-> > @@ -253,7 +272,7 @@ void msm_devfreq_idle(struct msm_gpu *gpu)
-> >  {
-> >         struct msm_gpu_devfreq *df = &gpu->devfreq;
-> >
-> > -       if (!df->devfreq)
-> > +       if (!has_devfreq(gpu))
-> >                 return;
-> >
-> >         msm_hrtimer_queue_work(&df->idle_work, ms_to_ktime(1),
+> >   	/* Wait for switch to complete. */
+> >   	mb();
+> >   	udelay(1);
+> > diff --git a/drivers/clk/qcom/clk-krait.h b/drivers/clk/qcom/clk-krait.h
+> > index 9120bd2f5297..f930538c539e 100644
+> > --- a/drivers/clk/qcom/clk-krait.h
+> > +++ b/drivers/clk/qcom/clk-krait.h
+> > @@ -15,6 +15,7 @@ struct krait_mux_clk {
+> >   	u8		safe_sel;
+> >   	u8		old_index;
+> >   	bool		reparent;
+> > +	bool		disable_sec_src_gating;
+> >   	struct clk_hw	hw;
+> >   	struct notifier_block   clk_nb;
+> > diff --git a/drivers/clk/qcom/krait-cc.c b/drivers/clk/qcom/krait-cc.c
+> > index 1bdc89c097e6..533a770332be 100644
+> > --- a/drivers/clk/qcom/krait-cc.c
+> > +++ b/drivers/clk/qcom/krait-cc.c
+> > @@ -154,6 +154,7 @@ krait_add_sec_mux(struct device *dev, struct clk *qsb, int id,
+> >   	mux->shift = 2;
+> >   	mux->parent_map = sec_mux_map;
+> >   	mux->hw.init = &init;
+> > +	mux->disable_sec_src_gating = true;
+> >   	init.name = kasprintf(GFP_KERNEL, "krait%s_sec_mux", s);
+> >   	if (!init.name)
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
 
-FYI,
-This patch is missing on Linux 5.17-rc8 [1].
-kernel crash log on arm64 db410c device [2] and details [3].
-
-metadata:
-  git_describe: v5.17-rc8
-  git_ref: master
-  git_repo: https://gitlab.com/Linaro/lkft/mirrors/torvalds/linux-mainline
-  git_sha: 09688c0166e76ce2fb85e86b9d99be8b0084cdf9
-  kernel-config: https://builds.tuxbuild.com/26LbbVLHqxjh5w5ZtjBMjGmh92P/config
-  build: https://builds.tuxbuild.com/26LbbVLHqxjh5w5ZtjBMjGmh92P
-
-- Naresh
-[1] https://lore.kernel.org/dri-devel/20220219183310.557435-1-robdclark@gmail.com/
-[2]  https://lkft.validation.linaro.org/scheduler/job/4714905#L2795
-[3] https://qa-reports.linaro.org/lkft/linux-mainline-master/build/v5.17-rc8/testrun/8446224/suite/linux-log-parser/test/check-kernel-oops-4714905/details/
-
->
-> --
-> Linaro LKFT
-> https://lkft.linaro.org
->
-> [1] https://lkft.validation.linaro.org/scheduler/job/4664600#L1894
+-- 
+	Ansuel
