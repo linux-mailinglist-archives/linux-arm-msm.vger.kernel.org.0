@@ -2,39 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A9D64D7984
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Mar 2022 03:55:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C4B614D79A2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Mar 2022 04:30:09 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236015AbiCNC4L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 13 Mar 2022 22:56:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36454 "EHLO
+        id S236050AbiCNDbP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 13 Mar 2022 23:31:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230378AbiCNC4K (ORCPT
+        with ESMTP id S231607AbiCNDbO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 13 Mar 2022 22:56:10 -0400
-Received: from fornost.hmeau.com (helcar.hmeau.com [216.24.177.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F1A63DDE9;
-        Sun, 13 Mar 2022 19:55:01 -0700 (PDT)
-Received: from gwarestrin.arnor.me.apana.org.au ([192.168.103.7])
-        by fornost.hmeau.com with smtp (Exim 4.92 #5 (Debian))
-        id 1nTarG-0003F1-Bd; Mon, 14 Mar 2022 13:54:55 +1100
-Received: by gwarestrin.arnor.me.apana.org.au (sSMTP sendmail emulation); Mon, 14 Mar 2022 14:54:54 +1200
-Date:   Mon, 14 Mar 2022 14:54:54 +1200
-From:   Herbert Xu <herbert@gondor.apana.org.au>
-To:     Brian Masney <bmasney@redhat.com>
-Cc:     bjorn.andersson@linaro.org, davem@davemloft.net,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] crypto: qcom-rng: ensure buffer for generate is
- completely filled
-Message-ID: <Yi6ufj2a2FGDPcQb@gondor.apana.org.au>
-References: <20220310232459.749638-1-bmasney@redhat.com>
+        Sun, 13 Mar 2022 23:31:14 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD601245BE;
+        Sun, 13 Mar 2022 20:30:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1647228604; x=1678764604;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=cTigVYPVCkuHRdanPQILHhd3eQaHPFWGn2HDxmows44=;
+  b=KODfWs9QFlw8I5ttSp85pdWFiJ/J9vIhAiZ/xBQeLvdqMTrk8VyjyxNL
+   CHI6TkZMpZ10mMq+iq2Z/6QQKSmEMpsTlgmIcWpzIAKu2yKlbpuYMNdAB
+   paVjJ93Q+SGLXfxYb/dHmoHDlw9yJRJUvN0shh5+9RKCiyIbqr4rLZTWv
+   g=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 13 Mar 2022 20:30:03 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2022 20:30:03 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Sun, 13 Mar 2022 20:30:02 -0700
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Sun, 13 Mar 2022 20:29:56 -0700
+Date:   Mon, 14 Mar 2022 08:59:52 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+CC:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        "Vinod Koul" <vkoul@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-usb@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>, <quic_kriskura@quicinc.com>
+Subject: Re: [PATCH v2 1/3] dt-bindings: phy: qcom,usb-snps-femto-v2: Add phy
+ override params bindings
+Message-ID: <20220314032952.GA27561@hu-pkondeti-hyd.qualcomm.com>
+References: <1646288011-32242-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1646288011-32242-2-git-send-email-quic_c_sanm@quicinc.com>
+ <b793195b-1d3d-63b2-19d2-72ae2aec8c0f@canonical.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220310232459.749638-1-bmasney@redhat.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+In-Reply-To: <b793195b-1d3d-63b2-19d2-72ae2aec8c0f@canonical.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -43,94 +80,120 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 10, 2022 at 06:24:59PM -0500, Brian Masney wrote:
-> The generate function in struct rng_alg expects that the destination
-> buffer is completely filled if the function returns 0. qcom_rng_read()
-> can run into a situation where the buffer is partially filled with
-> randomness and the remaining part of the buffer is zeroed since
-> qcom_rng_generate() doesn't check the return value. This issue can
-> be reproduced by running the following from libkcapi:
-> 
->     kcapi-rng -b 9000000 > OUTFILE
-> 
-> The generated OUTFILE will have three huge sections that contain all
-> zeros, and this is caused by the code where the test
-> 'val & PRNG_STATUS_DATA_AVAIL' fails.
-> 
-> Let's fix this issue by ensuring that qcom_rng_read() always returns
-> with a full buffer if the function returns success. Let's also have
-> qcom_rng_generate() return the correct value.
-> 
-> Here's some statistics from the ent project
-> (https://www.fourmilab.ch/random/) that shows information about the
-> quality of the generated numbers:
-> 
->     $ ent -c qcom-random-before
->     Value Char Occurrences Fraction
->       0           606748   0.067416
->       1            33104   0.003678
->       2            33001   0.003667
->     ...
->     253   �        32883   0.003654
->     254   �        33035   0.003671
->     255   �        33239   0.003693
-> 
->     Total:       9000000   1.000000
-> 
->     Entropy = 7.811590 bits per byte.
-> 
->     Optimum compression would reduce the size
->     of this 9000000 byte file by 2 percent.
-> 
->     Chi square distribution for 9000000 samples is 9329962.81, and
->     randomly would exceed this value less than 0.01 percent of the
->     times.
-> 
->     Arithmetic mean value of data bytes is 119.3731 (127.5 = random).
->     Monte Carlo value for Pi is 3.197293333 (error 1.77 percent).
->     Serial correlation coefficient is 0.159130 (totally uncorrelated =
->     0.0).
-> 
-> Without this patch, the results of the chi-square test is 0.01%, and
-> the numbers are certainly not random according to ent's project page.
-> The results improve with this patch:
-> 
->     $ ent -c qcom-random-after
->     Value Char Occurrences Fraction
->       0            35432   0.003937
->       1            35127   0.003903
->       2            35424   0.003936
->     ...
->     253   �        35201   0.003911
->     254   �        34835   0.003871
->     255   �        35368   0.003930
-> 
->     Total:       9000000   1.000000
-> 
->     Entropy = 7.999979 bits per byte.
-> 
->     Optimum compression would reduce the size
->     of this 9000000 byte file by 0 percent.
-> 
->     Chi square distribution for 9000000 samples is 258.77, and randomly
->     would exceed this value 42.24 percent of the times.
-> 
->     Arithmetic mean value of data bytes is 127.5006 (127.5 = random).
->     Monte Carlo value for Pi is 3.141277333 (error 0.01 percent).
->     Serial correlation coefficient is 0.000468 (totally uncorrelated =
->     0.0).
-> 
-> This change was tested on a Nexus 5 phone (msm8974 SoC).
-> 
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
-> Fixes: ceec5f5b5988 ("crypto: qcom-rng - Add Qcom prng driver")
-> Cc: stable@vger.kernel.org # 4.19+
-> ---
->  drivers/crypto/qcom-rng.c | 17 ++++++++++-------
->  1 file changed, 10 insertions(+), 7 deletions(-)
+Hi Krzysztof,
 
-Patch applied.  Thanks.
--- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+On Thu, Mar 03, 2022 at 04:59:22PM +0100, Krzysztof Kozlowski wrote:
+> On 03/03/2022 07:13, Sandeep Maheswaram wrote:
+> > Add device tree bindings for SNPS phy tuning parameters.
+> > 
+> > Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> > ---
+> >  .../bindings/phy/qcom,usb-snps-femto-v2.yaml       | 125 +++++++++++++++++++++
+> >  1 file changed, 125 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
+> > index 0dfe691..227c097 100644
+> > --- a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
+> > +++ b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
+> > @@ -50,6 +50,131 @@ properties:
+> >    vdda33-supply:
+> >      description: phandle to the regulator 3.3V supply node.
+> >  
+> > +  qcom,hs-disconnect:
+> > +    $ref: /schemas/types.yaml#/definitions/uint32
+> > +    description:
+> > +      This adjusts the voltage level for the threshold used to
+> > +      detect a disconnect event at the host. Possible values are.
+> 
+> ':', instead of full stop.
+> 
+> > +      7 -> +21.56%
+> > +      6 -> +17.43%
+> > +      5 -> +13.32%
+> > +      4 -> +9.73%
+> > +      3 -> +6.3
+> > +      2 -> +3.17%
+> > +      1 -> 0, Design default%
+> 
+> Use "default:" instead. Here and in other places.
+> 
+> > +      0 -> -2.72%
+> 
+> In current form this should be an enum... but actually current form is
+> wrong. You should not store register values in DT. What if next version
+> of hardware has a different meaning of these values?
+> 
+> Instead, you should store here meaningful values, not register values.
+> 
+
+Thanks for the feedback.
+
+The values in % really makes the tuning easy. People look at the eye diagram
+and decided whether to increase/decrease the margin. The absolute values
+may not be that useful. All we need is an "adjustment" here. The databook
+it self does not give any absolute values.
+
+I agree to the "enum" suggestion which we have been following for the
+qusb2 driver already. 
+
+The values have not changed in the last 5 years for this hardware block, so
+defining enums for the % values would be really helpful. 
+
+> 
+> > +
+> > +  qcom,squelch-detector:
+> > +    $ref: /schemas/types.yaml#/definitions/uint32
+> > +    description:
+> > +      This adjusts the voltage level for the threshold used to
+> > +      detect valid high-speed data. Possible values are
+> > +      7-> -20.90%
+> > +      6-> -15.60%
+> > +      5-> -10.30%
+> > +      4-> -5.30%
+> > +      3-> 0, Design default%
+> > +      2-> +5.30%
+> > +      1-> +10.60%
+> > +      0-> +15.90%
+> > +
+> > +  qcom,hs-amplitude:
+> > +    $ref: /schemas/types.yaml#/definitions/uint32
+> > +    description:
+> > +      This adjusts the high-speed DC level voltage.
+> > +      Possible values are
+> > +      15-> +26.70%
+> > +      14-> +24.30%
+> > +      13-> +22.20%
+> > +      12-> +20.00%
+> > +      11-> +17.80%
+> > +      10-> +15.60%
+> > +      9-> +13.30%
+> > +      8-> +11.10%
+> > +      7-> +8.90%
+> > +      6-> +6.50%
+> > +      5-> +4.40%
+> > +      4-> +2.30%
+> > +      3-> 0, Design default%
+> > +      2-> -2.20%
+> > +      1-> -4.40%
+> > +      0-> -6.60%
+> > +
+> > +  qcom,pre-emphasis-duration:
+> > +    $ref: /schemas/types.yaml#/definitions/uint32
+> > +    description:
+> > +      This signal controls the duration for which the
+> > +      HS pre-emphasis current is sourced onto DP<#> or DM<#>.
+> > +      The HS Transmitter pre-emphasis duration is defined in terms of
+> > +      unit amounts. One unit of pre-emphasis duration is approximately
+> > +      650 ps and is defined as 1X pre-emphasis duration.
+> > +      Possible values are
+> > +      1-> 1x, short pre-emphasis current duration
+> > +      0-> 2x, long pre-emphasis current duration
+> 
+> I could understand encoding of percentages in way of register value, but
+> a boolean flag is too much.
+> 
+
+Agreed. This needs to be encoded in % as well (100% or 200%).
+
+Thanks,
+Pavan
