@@ -2,406 +2,736 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EAF9C4D8971
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Mar 2022 17:35:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 99DCC4D8AC9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Mar 2022 18:27:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243306AbiCNQgp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Mar 2022 12:36:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45036 "EHLO
+        id S243354AbiCNR2T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Mar 2022 13:28:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243270AbiCNQgm (ORCPT
+        with ESMTP id S243343AbiCNR2P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Mar 2022 12:36:42 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8080D20F72;
-        Mon, 14 Mar 2022 09:35:21 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 622A3614AE;
-        Mon, 14 Mar 2022 16:35:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08178C36B10;
-        Mon, 14 Mar 2022 16:35:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1647275710;
-        bh=8JpXjjyF24k0hF8LjOuHvMt2VTG3d3BfEFsLdEg6D6g=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=S3OS2Ebm9WtiiKclLtao7kn7ub+rGbGD5uH7aEl1BXP4NyWTFMby0rUEKJ5ZqY3nJ
-         Z0ZIJQE4TIjhobmt5LXe7oOe1OrJLAymsr/r0bwYKqZ8+r2Gyw8KxTfvCHKdIsflIQ
-         Zwn4W0I2knPabgs5XDzRXoCalyhMYFbyldjsY55NXSsEe+V1vZZ2MYdIW2j1vEuO8K
-         /YQZR53hADTKZsk2uI9SHnGK65TocUfv3gq2lZ9EE+2ELBAyR/t8+a+nLN0pG5rBKU
-         hmnpsbPk9oYBV068MZRXFPNElNoNfxvd2Q51IQREZ/1vMURyJoO4lWcHNTM3cZaAaY
-         EVY5rL/Ws11Og==
-Received: from mchehab by mail.kernel.org with local (Exim 4.94.2)
-        (envelope-from <mchehab@kernel.org>)
-        id 1nTnf1-001x4d-PI; Mon, 14 Mar 2022 17:35:07 +0100
-From:   Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Eddie James <eajames@linux.ibm.com>,
-        Eugen Hristev <eugen.hristev@microchip.com>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Hyun Kwon <hyun.kwon@xilinx.com>,
-        Jacopo Mondi <jacopo@jmondi.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Joel Stanley <joel@jms.id.au>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Michael Tretter <m.tretter@pengutronix.de>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Robert Foss <robert.foss@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com, openbmc@lists.ozlabs.org
-Subject: [PATCH v2 64/67] media: platform/*/Kconfig: make manufacturer menus more uniform
-Date:   Mon, 14 Mar 2022 17:34:59 +0100
-Message-Id: <4a598f62a03bd0e48f0be36cf32829291392cca8.1647274407.git.mchehab@kernel.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <cover.1647274406.git.mchehab@kernel.org>
-References: <cover.1647274406.git.mchehab@kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-8.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Mon, 14 Mar 2022 13:28:15 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 694533ED18;
+        Mon, 14 Mar 2022 10:27:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1647278825; x=1678814825;
+  h=from:to:cc:subject:date:message-id;
+  bh=yR+rzzS69/aH63uGMTTRTabR+tFjx1GWz/W6W/5SRpM=;
+  b=j0jZHfw76h7xGVT2A/4UBuc8wyQL373zXs2am79q5nHu/fpLtHV/Ux3g
+   1/yhqsWkWBRk9DkJ7FQoQ2Y+geB6oxOHwfih/CWHS+wXn0c2/sbBtey4+
+   uGpizQT+kjw75fTi6ciXzaxkqqv4X+RbKyXp6Mtv8Bip2acRwCXrIj2Aq
+   4=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 14 Mar 2022 10:27:04 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 14 Mar 2022 10:27:01 -0700
+X-QCInternal: smtphost
+Received: from vpolimer-linux.qualcomm.com ([10.204.67.235])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 14 Mar 2022 22:56:48 +0530
+Received: by vpolimer-linux.qualcomm.com (Postfix, from userid 463814)
+        id F27B04E3B; Mon, 14 Mar 2022 22:56:46 +0530 (IST)
+From:   Vinod Polimera <quic_vpolimer@quicinc.com>
+To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dmitry.baryshkov@linaro.org, dianders@chromium.org,
+        quic_kalyant@quicinc.com
+Subject: [PATCH v3] drm/msm/disp/dpu1: add inline rotation support for sc7280 target
+Date:   Mon, 14 Mar 2022 22:56:43 +0530
+Message-Id: <1647278803-24611-1-git-send-email-quic_vpolimer@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Do some adjustments at the per-vendor Kconfig, adding a comment at
-the beginning in order to identify the manufacturer, and adjust
-a few entries to make them look more uniform.
+- Some DPU versions support inline rot90. It is supported only for
+limited amount of UBWC formats.
+- There are two versions of inline rotators, v1 (present on sm8250 and
+sm7250) and v2 (sc7280). These versions differ in the list of supported
+formats and in the scaler possibilities.
 
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Changes in RFC:
+- Rebase changes to the latest code base.
+- Append rotation config variables with v2 and
+remove unused variables.(Dmitry)
+- Move pixel_ext setup separately from scaler3 config.(Dmitry)
+- Add 270 degree rotation to supported rotation list.(Dmitry)
+
+Changes in V2:
+- Remove unused macros and fix indentation.
+- Add check if 90 rotation is supported and
+add supported rotations to rot_cfg.
+
+Changes in V3:
+- Fix indentation.
+- Move rot_supported to sspp capabilities. (Dmitry)
+- Config pixel_ext based on src_h/src_w directly. (Dmitry)
+- Misc changes.
+
+Co-developed-by: Kalyan Thota <quic_kalyant@quicinc.com>
+Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
 ---
+ arch/arm64/configs/defconfig                   |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 218 +++++++++++++++----------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  18 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 119 +++++++++++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h      |   2 +
+ 5 files changed, 253 insertions(+), 108 deletions(-)
 
-To avoid mailbombing on a large number of people, only mailing lists were C/C on the cover.
-See [PATCH v2 00/67] at: https://lore.kernel.org/all/cover.1647274406.git.mchehab@kernel.org/
-
- drivers/media/platform/allegro-dvt/Kconfig |  3 +++
- drivers/media/platform/amlogic/Kconfig     |  3 +++
- drivers/media/platform/aspeed/Kconfig      |  3 +++
- drivers/media/platform/atmel/Kconfig       |  3 +++
- drivers/media/platform/cadence/Kconfig     | 13 +------------
- drivers/media/platform/chips-media/Kconfig |  3 +++
- drivers/media/platform/intel/Kconfig       |  3 +++
- drivers/media/platform/marvell/Kconfig     |  3 +++
- drivers/media/platform/mediatek/Kconfig    |  3 +++
- drivers/media/platform/nvidia/Kconfig      |  3 +++
- drivers/media/platform/nxp/Kconfig         | 22 +++++-----------------
- drivers/media/platform/qcom/Kconfig        |  2 ++
- drivers/media/platform/renesas/Kconfig     |  2 ++
- drivers/media/platform/rockchip/Kconfig    |  3 +++
- drivers/media/platform/samsung/Kconfig     |  3 +++
- drivers/media/platform/stm/Kconfig         |  2 ++
- drivers/media/platform/via/Kconfig         |  3 +++
- drivers/media/platform/xilinx/Kconfig      |  7 +++----
- 18 files changed, 51 insertions(+), 33 deletions(-)
-
-diff --git a/drivers/media/platform/allegro-dvt/Kconfig b/drivers/media/platform/allegro-dvt/Kconfig
-index dd528e9d0958..674d234be5de 100644
---- a/drivers/media/platform/allegro-dvt/Kconfig
-+++ b/drivers/media/platform/allegro-dvt/Kconfig
-@@ -1,4 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
-+
-+comment "Allegro DVT drivers"
-+
- config VIDEO_ALLEGRO_DVT
- 	tristate "Allegro DVT Video IP Core"
- 	depends on V4L_MEM2MEM_DRIVERS
-diff --git a/drivers/media/platform/amlogic/Kconfig b/drivers/media/platform/amlogic/Kconfig
-index c67e00df6202..c1376ec1fe23 100644
---- a/drivers/media/platform/amlogic/Kconfig
-+++ b/drivers/media/platform/amlogic/Kconfig
-@@ -1,2 +1,5 @@
- # SPDX-License-Identifier: GPL-2.0-only
-+
-+comment "Amlogic drivers"
-+
- source "drivers/media/platform/amlogic/meson-ge2d/Kconfig"
-diff --git a/drivers/media/platform/aspeed/Kconfig b/drivers/media/platform/aspeed/Kconfig
-index 5025e892844c..153e3e5381d5 100644
---- a/drivers/media/platform/aspeed/Kconfig
-+++ b/drivers/media/platform/aspeed/Kconfig
-@@ -1,4 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
-+
-+comment "Aspeed drivers"
-+
- config VIDEO_ASPEED
- 	tristate "Aspeed AST2400 and AST2500 Video Engine driver"
- 	depends on V4L_PLATFORM_DRIVERS
-diff --git a/drivers/media/platform/atmel/Kconfig b/drivers/media/platform/atmel/Kconfig
-index 5122290729ae..cef12629f4ef 100644
---- a/drivers/media/platform/atmel/Kconfig
-+++ b/drivers/media/platform/atmel/Kconfig
-@@ -1,4 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
-+
-+comment "Atmel drivers"
-+
- config VIDEO_ATMEL_ISC
- 	tristate "ATMEL Image Sensor Controller (ISC) support"
- 	depends on V4L_PLATFORM_DRIVERS
-diff --git a/drivers/media/platform/cadence/Kconfig b/drivers/media/platform/cadence/Kconfig
-index 79a7e9fb2575..3ae6f4e51eec 100644
---- a/drivers/media/platform/cadence/Kconfig
-+++ b/drivers/media/platform/cadence/Kconfig
-@@ -1,15 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0-only
--config VIDEO_CADENCE
--	bool "Cadence Video Devices"
--	depends on V4L_PLATFORM_DRIVERS
--	help
--	  If you have a media device designed by Cadence, say Y.
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 040420b..3bd91f7 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -696,7 +696,7 @@ CONFIG_VIDEO_RCAR_DRIF=m
+ CONFIG_VIDEO_IMX219=m
+ CONFIG_VIDEO_OV5640=m
+ CONFIG_VIDEO_OV5645=m
+-CONFIG_DRM=m
++CONFIG_DRM=y
+ CONFIG_DRM_I2C_NXP_TDA998X=m
+ CONFIG_DRM_MALI_DISPLAY=m
+ CONFIG_DRM_NOUVEAU=m
+@@ -721,7 +721,7 @@ CONFIG_DRM_SUN4I=m
+ CONFIG_DRM_SUN6I_DSI=m
+ CONFIG_DRM_SUN8I_DW_HDMI=m
+ CONFIG_DRM_SUN8I_MIXER=m
+-CONFIG_DRM_MSM=m
++CONFIG_DRM_MSM=y
+ CONFIG_DRM_TEGRA=m
+ CONFIG_DRM_PANEL_BOE_TV101WUM_NL6=m
+ CONFIG_DRM_PANEL_LVDS=m
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index a4fe77c..f591e63 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -35,6 +35,9 @@
+ 	BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_TS_PREFILL_REC1) |\
+ 	BIT(DPU_SSPP_CDP) | BIT(DPU_SSPP_EXCL_RECT))
  
--	  Note that this option doesn't include new drivers in the kernel:
--	  saying N will just cause Kconfig to skip all the questions about
--	  Cadence media devices.
++#define VIG_SC7280_MASK \
++	(VIG_SC7180_MASK | BIT(DPU_SSPP_INLINE_ROTATION))
++
+ #define DMA_SDM845_MASK \
+ 	(BIT(DPU_SSPP_SRC) | BIT(DPU_SSPP_QOS) | BIT(DPU_SSPP_QOS_8LVL) |\
+ 	BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_TS_PREFILL_REC1) |\
+@@ -203,6 +206,11 @@ static const uint32_t plane_formats_yuv[] = {
+ 	DRM_FORMAT_YVU420,
+ };
+ 
++static const u32 rotation_v2_formats[] = {
++	DRM_FORMAT_NV12,
++	/* TODO add formats after validation */
++};
++
+ /*************************************************************
+  * DPU sub blocks config
+  *************************************************************/
+@@ -642,8 +650,7 @@ static const struct dpu_ctl_cfg qcm2290_ctl[] = {
+  *************************************************************/
+ 
+ /* SSPP common configuration */
 -
--if VIDEO_CADENCE
-+comment "Cadence drivers"
+-#define _VIG_SBLK(num, sdma_pri, qseed_ver) \
++#define _VIG_SBLK(num, sdma_pri, qseed_ver, rot_cfg) \
+ 	{ \
+ 	.maxdwnscale = MAX_DOWNSCALE_RATIO, \
+ 	.maxupscale = MAX_UPSCALE_RATIO, \
+@@ -660,6 +667,7 @@ static const struct dpu_ctl_cfg qcm2290_ctl[] = {
+ 	.num_formats = ARRAY_SIZE(plane_formats_yuv), \
+ 	.virt_format_list = plane_formats, \
+ 	.virt_num_formats = ARRAY_SIZE(plane_formats), \
++	.rotation_cfg = rot_cfg, \
+ 	}
  
- config VIDEO_CADENCE_CSI2RX
- 	tristate "Cadence MIPI-CSI2 RX Controller"
-@@ -34,5 +25,3 @@ config VIDEO_CADENCE_CSI2TX
+ #define _DMA_SBLK(num, sdma_pri) \
+@@ -676,22 +684,28 @@ static const struct dpu_ctl_cfg qcm2290_ctl[] = {
+ 	}
  
- 	  To compile this driver as a module, choose M here: the module will be
- 	  called cdns-csi2tx.
+ static const struct dpu_sspp_sub_blks msm8998_vig_sblk_0 =
+-				_VIG_SBLK("0", 0, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK("0", 0, DPU_SSPP_SCALER_QSEED3, NULL);
+ static const struct dpu_sspp_sub_blks msm8998_vig_sblk_1 =
+-				_VIG_SBLK("1", 0, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK("1", 0, DPU_SSPP_SCALER_QSEED3, NULL);
+ static const struct dpu_sspp_sub_blks msm8998_vig_sblk_2 =
+-				_VIG_SBLK("2", 0, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK("2", 0, DPU_SSPP_SCALER_QSEED3, NULL);
+ static const struct dpu_sspp_sub_blks msm8998_vig_sblk_3 =
+-				_VIG_SBLK("3", 0, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK("3", 0, DPU_SSPP_SCALER_QSEED3, NULL);
++
++static const struct dpu_rotation_cfg dpu_rot_sc7280_cfg_v2 = {
++	.rot_maxheight = 1088,
++	.rot_num_formats = ARRAY_SIZE(rotation_v2_formats),
++	.rot_format_list = rotation_v2_formats,
++};
+ 
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_0 =
+-				_VIG_SBLK("0", 5, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK("0", 5, DPU_SSPP_SCALER_QSEED3, NULL);
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_1 =
+-				_VIG_SBLK("1", 6, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK("1", 6, DPU_SSPP_SCALER_QSEED3, NULL);
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_2 =
+-				_VIG_SBLK("2", 7, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK("2", 7, DPU_SSPP_SCALER_QSEED3, NULL);
+ static const struct dpu_sspp_sub_blks sdm845_vig_sblk_3 =
+-				_VIG_SBLK("3", 8, DPU_SSPP_SCALER_QSEED3);
++				_VIG_SBLK("3", 8, DPU_SSPP_SCALER_QSEED3, NULL);
+ 
+ static const struct dpu_sspp_sub_blks sdm845_dma_sblk_0 = _DMA_SBLK("8", 1);
+ static const struct dpu_sspp_sub_blks sdm845_dma_sblk_1 = _DMA_SBLK("9", 2);
+@@ -699,7 +713,7 @@ static const struct dpu_sspp_sub_blks sdm845_dma_sblk_2 = _DMA_SBLK("10", 3);
+ static const struct dpu_sspp_sub_blks sdm845_dma_sblk_3 = _DMA_SBLK("11", 4);
+ 
+ #define SSPP_BLK(_name, _id, _base, _features, \
+-		_sblk, _xinid, _type, _clkctrl) \
++		_sblk, _xinid, _type, _clkctrl, _rotsupported) \
+ 	{ \
+ 	.name = _name, .id = _id, \
+ 	.base = _base, .len = 0x1c8, \
+@@ -707,98 +721,134 @@ static const struct dpu_sspp_sub_blks sdm845_dma_sblk_3 = _DMA_SBLK("11", 4);
+ 	.sblk = &_sblk, \
+ 	.xin_id = _xinid, \
+ 	.type = _type, \
+-	.clk_ctrl = _clkctrl \
++	.clk_ctrl = _clkctrl, \
++	.rot_supported = _rotsupported \
+ 	}
+ 
+ static const struct dpu_sspp_cfg msm8998_sspp[] = {
+-	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_MSM8998_MASK,
+-		msm8998_vig_sblk_0, 0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+-	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, VIG_MSM8998_MASK,
+-		msm8998_vig_sblk_1, 4,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
+-	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, VIG_MSM8998_MASK,
+-		msm8998_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
+-	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, VIG_MSM8998_MASK,
+-		msm8998_vig_sblk_3, 12,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
+-	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_MSM8998_MASK,
+-		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+-	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_MSM8998_MASK,
+-		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+-	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_MSM8998_MASK,
+-		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0),
+-	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000,  DMA_CURSOR_MSM8998_MASK,
+-		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1),
++	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SDM845_MASK, sdm845_vig_sblk_0,
++		0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, VIG_SDM845_MASK, sdm845_vig_sblk_1,
++		4,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, VIG_SDM845_MASK, sdm845_vig_sblk_2,
++		8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, VIG_SDM845_MASK, sdm845_vig_sblk_3,
++		12,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK, sdm845_dma_sblk_0,
++		1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_SDM845_MASK, sdm845_dma_sblk_1,
++		5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK, sdm845_dma_sblk_2,
++		9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000,  DMA_CURSOR_SDM845_MASK, sdm845_dma_sblk_3,
++		13, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
+ };
+ 
+ static const struct dpu_sspp_cfg sdm845_sspp[] = {
+-	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SDM845_MASK,
+-		sdm845_vig_sblk_0, 0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+-	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, VIG_SDM845_MASK,
+-		sdm845_vig_sblk_1, 4,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
+-	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, VIG_SDM845_MASK,
+-		sdm845_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
+-	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, VIG_SDM845_MASK,
+-		sdm845_vig_sblk_3, 12,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
+-	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
+-		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+-	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_SDM845_MASK,
+-		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+-	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK,
+-		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0),
+-	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000,  DMA_CURSOR_SDM845_MASK,
+-		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1),
++	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SDM845_MASK, sdm845_vig_sblk_0,
++		0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, VIG_SDM845_MASK, sdm845_vig_sblk_1,
++		4,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, VIG_SDM845_MASK, sdm845_vig_sblk_2,
++		8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, VIG_SDM845_MASK, sdm845_vig_sblk_3,
++		12,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK, sdm845_dma_sblk_0,
++		1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_SDM845_MASK, sdm845_dma_sblk_1,
++		5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK, sdm845_dma_sblk_2,
++		9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000,  DMA_CURSOR_SDM845_MASK, sdm845_dma_sblk_3,
++		13, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
+ };
+ 
+ static const struct dpu_sspp_sub_blks sc7180_vig_sblk_0 =
+-				_VIG_SBLK("0", 4, DPU_SSPP_SCALER_QSEED4);
++				_VIG_SBLK("0", 4, DPU_SSPP_SCALER_QSEED4, NULL);
++
++static const struct dpu_sspp_sub_blks sc7280_vig_sblk_0 =
++				_VIG_SBLK("0", 4, DPU_SSPP_SCALER_QSEED4, &dpu_rot_sc7280_cfg_v2);
+ 
+ static const struct dpu_sspp_cfg sc7180_sspp[] = {
+-	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SC7180_MASK,
+-		sc7180_vig_sblk_0, 0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+-	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
+-		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+-	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_CURSOR_SDM845_MASK,
+-		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0),
+-	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK,
+-		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1),
++	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SC7180_MASK, sc7180_vig_sblk_0,
++		0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK, sdm845_dma_sblk_0,
++		1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_CURSOR_SDM845_MASK,	sdm845_dma_sblk_1,
++		5, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK, sdm845_dma_sblk_2,
++		9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
+ };
+ 
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_0 =
+-				_VIG_SBLK("0", 5, DPU_SSPP_SCALER_QSEED3LITE);
++				_VIG_SBLK("0", 5, DPU_SSPP_SCALER_QSEED3LITE, NULL);
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_1 =
+-				_VIG_SBLK("1", 6, DPU_SSPP_SCALER_QSEED3LITE);
++				_VIG_SBLK("1", 6, DPU_SSPP_SCALER_QSEED3LITE, NULL);
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_2 =
+-				_VIG_SBLK("2", 7, DPU_SSPP_SCALER_QSEED3LITE);
++				_VIG_SBLK("2", 7, DPU_SSPP_SCALER_QSEED3LITE, NULL);
+ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_3 =
+-				_VIG_SBLK("3", 8, DPU_SSPP_SCALER_QSEED3LITE);
++				_VIG_SBLK("3", 8, DPU_SSPP_SCALER_QSEED3LITE, NULL);
+ 
+ static const struct dpu_sspp_cfg sm8250_sspp[] = {
+-	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SM8250_MASK,
+-		sm8250_vig_sblk_0, 0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+-	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, VIG_SM8250_MASK,
+-		sm8250_vig_sblk_1, 4,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
+-	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, VIG_SM8250_MASK,
+-		sm8250_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
+-	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, VIG_SM8250_MASK,
+-		sm8250_vig_sblk_3, 12,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
+-	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
+-		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+-	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_SDM845_MASK,
+-		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+-	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK,
+-		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0),
+-	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000,  DMA_CURSOR_SDM845_MASK,
+-		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1),
++	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SM8250_MASK, sm8250_vig_sblk_0,
++		0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, VIG_SM8250_MASK, sm8250_vig_sblk_1,
++		4, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, VIG_SM8250_MASK, sm8250_vig_sblk_2,
++		8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, VIG_SM8250_MASK, sm8250_vig_sblk_3,
++		12,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK, sdm845_dma_sblk_0,
++		1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_SDM845_MASK, sdm845_dma_sblk_1,
++		5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK, sdm845_dma_sblk_2,
++		9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000,  DMA_CURSOR_SDM845_MASK, sdm845_dma_sblk_3,
++		13, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
+ };
+ 
+ static const struct dpu_sspp_cfg sc7280_sspp[] = {
+-	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SC7180_MASK,
+-		sc7180_vig_sblk_0, 0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+-	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
+-		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+-	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_CURSOR_SDM845_MASK,
+-		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0),
+-	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK,
+-		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1),
++	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SC7280_MASK, sc7280_vig_sblk_0,
++		0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0, DRM_MODE_ROTATE_MASK |
++		DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK, sdm845_dma_sblk_0,
++		1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_CURSOR_SDM845_MASK,	sdm845_dma_sblk_1,
++		5, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
++	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK, sdm845_dma_sblk_2,
++		9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
+ };
+ 
+ 
+@@ -820,9 +870,11 @@ static const struct dpu_sspp_sub_blks qcm2290_dma_sblk_0 = _DMA_SBLK("8", 1);
+ 
+ static const struct dpu_sspp_cfg qcm2290_sspp[] = {
+ 	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_QCM2290_MASK,
+-		 qcm2290_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
++		qcm2290_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
+ 	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
+-		 qcm2290_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
++		qcm2290_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0, DRM_MODE_ROTATE_0 |
++		DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_MASK),
+ };
+ 
+ /*************************************************************
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+index b85b24b..d009d83 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+@@ -112,6 +112,7 @@ enum {
+  * @DPU_SSPP_TS_PREFILL      Supports prefill with traffic shaper
+  * @DPU_SSPP_TS_PREFILL_REC1 Supports prefill with traffic shaper multirec
+  * @DPU_SSPP_CDP             Supports client driven prefetch
++ * @DPU_SSPP_INLINE_ROTATION Support inline rotation
+  * @DPU_SSPP_MAX             maximum value
+  */
+ enum {
+@@ -132,6 +133,7 @@ enum {
+ 	DPU_SSPP_TS_PREFILL,
+ 	DPU_SSPP_TS_PREFILL_REC1,
+ 	DPU_SSPP_CDP,
++	DPU_SSPP_INLINE_ROTATION,
+ 	DPU_SSPP_MAX
+ };
+ 
+@@ -315,6 +317,18 @@ struct dpu_qos_lut_tbl {
+ };
+ 
+ /**
++ * struct dpu_rotation_cfg - define inline rotation config
++ * @rot_maxheight: max pre rotated height allowed for rotation
++ * @rot_num_formats: number of elements in @rot_format_list
++ * @rot_format_list: list of supported rotator formats
++ */
++struct dpu_rotation_cfg {
++	u32 rot_maxheight;
++	size_t rot_num_formats;
++	const u32 *rot_format_list;
++};
++
++/**
+  * struct dpu_caps - define DPU capabilities
+  * @max_mixer_width    max layer mixer line width support.
+  * @max_mixer_blendstages max layer mixer blend stages or
+@@ -369,6 +383,7 @@ struct dpu_caps {
+  * @num_formats: Number of supported formats
+  * @virt_format_list: Pointer to list of supported formats for virtual planes
+  * @virt_num_formats: Number of supported formats for virtual planes
++ * @dpu_rotation_cfg: inline rotation configuration
+  */
+ struct dpu_sspp_sub_blks {
+ 	u32 creq_vblank;
+@@ -390,6 +405,7 @@ struct dpu_sspp_sub_blks {
+ 	u32 num_formats;
+ 	const u32 *virt_format_list;
+ 	u32 virt_num_formats;
++	const struct dpu_rotation_cfg *rotation_cfg;
+ };
+ 
+ /**
+@@ -492,6 +508,7 @@ struct dpu_ctl_cfg {
+  * @xin_id:            bus client identifier
+  * @clk_ctrl           clock control identifier
+  * @type               sspp type identifier
++ * @rot_supported      allowed rotations
+  */
+ struct dpu_sspp_cfg {
+ 	DPU_HW_BLK_INFO;
+@@ -499,6 +516,7 @@ struct dpu_sspp_cfg {
+ 	u32 xin_id;
+ 	enum dpu_clk_ctrl_type clk_ctrl;
+ 	u32 type;
++	u32 rot_supported;
+ };
+ 
+ /**
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 6565682..ab959b2 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -528,11 +528,19 @@ static void _dpu_plane_setup_scaler3(struct dpu_plane *pdpu,
+ 		struct dpu_plane_state *pstate,
+ 		uint32_t src_w, uint32_t src_h, uint32_t dst_w, uint32_t dst_h,
+ 		struct dpu_hw_scaler3_cfg *scale_cfg,
+-		struct dpu_hw_pixel_ext *pixel_ext,
+ 		const struct dpu_format *fmt,
+ 		uint32_t chroma_subsmpl_h, uint32_t chroma_subsmpl_v)
+ {
+ 	uint32_t i;
++	bool inline_rotation = pstate->rotation & DRM_MODE_ROTATE_90;
++
++	/*
++	 * For inline rotation cases, scaler config is post-rotation,
++	 * so swap the dimensions here. However, pixel extension will
++	 * need pre-rotation settings.
++	 */
++	if (inline_rotation)
++		swap(src_w, src_h);
+ 
+ 	scale_cfg->phase_step_x[DPU_SSPP_COMP_0] =
+ 		mult_frac((1 << PHASE_STEP_SHIFT), src_w, dst_w);
+@@ -571,11 +579,6 @@ static void _dpu_plane_setup_scaler3(struct dpu_plane *pdpu,
+ 			scale_cfg->preload_x[i] = DPU_QSEED3_DEFAULT_PRELOAD_H;
+ 			scale_cfg->preload_y[i] = DPU_QSEED3_DEFAULT_PRELOAD_V;
+ 		}
 -
--endif
-diff --git a/drivers/media/platform/chips-media/Kconfig b/drivers/media/platform/chips-media/Kconfig
-index ae495fd7b25a..adf466a05699 100644
---- a/drivers/media/platform/chips-media/Kconfig
-+++ b/drivers/media/platform/chips-media/Kconfig
-@@ -1,4 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
-+
-+comment "Chips&Media drivers"
-+
- config VIDEO_CODA
- 	tristate "Chips&Media Coda multi-standard codec IP"
- 	depends on V4L_MEM2MEM_DRIVERS
-diff --git a/drivers/media/platform/intel/Kconfig b/drivers/media/platform/intel/Kconfig
-index aeda421f7248..8a730d9bcf52 100644
---- a/drivers/media/platform/intel/Kconfig
-+++ b/drivers/media/platform/intel/Kconfig
-@@ -1,4 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
-+
-+comment "Intel drivers"
-+
- config VIDEO_PXA27x
- 	tristate "PXA27x Quick Capture Interface driver"
- 	depends on V4L_PLATFORM_DRIVERS
-diff --git a/drivers/media/platform/marvell/Kconfig b/drivers/media/platform/marvell/Kconfig
-index bfe655b2cedd..626e0673f12c 100644
---- a/drivers/media/platform/marvell/Kconfig
-+++ b/drivers/media/platform/marvell/Kconfig
-@@ -1,4 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
-+
-+comment "Marvell drivers"
-+
- config VIDEO_CAFE_CCIC
- 	tristate "Marvell 88ALP01 (Cafe) CMOS Camera Controller support"
- 	depends on V4L_PLATFORM_DRIVERS
-diff --git a/drivers/media/platform/mediatek/Kconfig b/drivers/media/platform/mediatek/Kconfig
-index 6d74839df3d6..aa79626088ec 100644
---- a/drivers/media/platform/mediatek/Kconfig
-+++ b/drivers/media/platform/mediatek/Kconfig
-@@ -1,4 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
-+
-+comment "Mediatek drivers"
-+
- source "drivers/media/platform/mediatek/mtk-jpeg/Kconfig"
- source "drivers/media/platform/mediatek/mtk-mdp/Kconfig"
- source "drivers/media/platform/mediatek/mtk-vcodec/Kconfig"
-diff --git a/drivers/media/platform/nvidia/Kconfig b/drivers/media/platform/nvidia/Kconfig
-index 1162e272b5f9..597402090680 100644
---- a/drivers/media/platform/nvidia/Kconfig
-+++ b/drivers/media/platform/nvidia/Kconfig
-@@ -1,2 +1,5 @@
- # SPDX-License-Identifier: GPL-2.0-only
-+
-+comment "NVidia drivers"
-+
- source "drivers/media/platform/nvidia/tegra-vde/Kconfig"
-diff --git a/drivers/media/platform/nxp/Kconfig b/drivers/media/platform/nxp/Kconfig
-index df52d32ebe50..44a0d7c38936 100644
---- a/drivers/media/platform/nxp/Kconfig
-+++ b/drivers/media/platform/nxp/Kconfig
-@@ -2,20 +2,10 @@
+-		pixel_ext->num_ext_pxls_top[i] =
+-			scale_cfg->src_height[i];
+-		pixel_ext->num_ext_pxls_left[i] =
+-			scale_cfg->src_width[i];
+ 	}
+ 	if (!(DPU_FORMAT_IS_YUV(fmt)) && (src_h == dst_h)
+ 		&& (src_w == dst_w))
+@@ -591,6 +594,24 @@ static void _dpu_plane_setup_scaler3(struct dpu_plane *pdpu,
+ 	scale_cfg->enable = 1;
+ }
  
- # V4L drivers
++static void _dpu_plane_setup_pixel_ext(struct dpu_hw_scaler3_cfg *scale_cfg,
++				struct dpu_hw_pixel_ext *pixel_ext,
++				uint32_t src_w, uint32_t src_h,
++				uint32_t chroma_subsmpl_h, uint32_t chroma_subsmpl_v)
++{
++	int i;
++
++	for (i = 0; i < DPU_MAX_PLANES; i++) {
++		if (i == DPU_SSPP_COMP_1_2 || i == DPU_SSPP_COMP_2) {
++			src_w /= chroma_subsmpl_h;
++			src_h /= chroma_subsmpl_v;
++		}
++
++		pixel_ext->num_ext_pxls_top[i] = src_h;
++		pixel_ext->num_ext_pxls_left[i] = src_w;
++	}
++}
++
+ static const struct dpu_csc_cfg dpu_csc_YUV2RGB_601L = {
+ 	{
+ 		/* S15.16 format */
+@@ -665,7 +686,12 @@ static void _dpu_plane_setup_scaler(struct dpu_plane *pdpu,
+ 			drm_rect_height(&pipe_cfg->src_rect),
+ 			drm_rect_width(&pipe_cfg->dst_rect),
+ 			drm_rect_height(&pipe_cfg->dst_rect),
+-			&scaler3_cfg, &pixel_ext, fmt,
++			&scaler3_cfg, fmt,
++			info->hsub, info->vsub);
++
++	/* configure pixel extension based on scalar config */
++	_dpu_plane_setup_pixel_ext(&scaler3_cfg, &pixel_ext,
++			drm_rect_width(&pipe_cfg->src_rect), drm_rect_height(&pipe_cfg->src_rect),
+ 			info->hsub, info->vsub);
  
--menuconfig VIDEO_IMX
--	bool "V4L2 capture drivers for NXP i.MX devices"
--	depends on V4L_PLATFORM_DRIVERS
--	depends on ARCH_MXC || COMPILE_TEST
--	depends on VIDEO_DEV && VIDEO_V4L2
--	help
--	  Say yes here to enable support for capture drivers on i.MX SoCs.
--	  Support for the single SoC features are selectable in the sub-menu
--	  options.
+ 	if (pdpu->pipe_hw->ops.setup_pe)
+@@ -956,6 +982,41 @@ static bool dpu_plane_validate_src(struct drm_rect *src,
+ 		drm_rect_equals(fb_rect, src);
+ }
+ 
++static int dpu_plane_check_inline_rotation(struct dpu_plane *pdpu,
++						const struct dpu_sspp_sub_blks *sblk,
++						struct drm_rect src, const struct dpu_format *fmt)
++{
++	bool found = false;
++	size_t i, num_formats;
++	const u32 *supported_formats;
++
++	if (drm_rect_width(&src) > sblk->rotation_cfg->rot_maxheight) {
++		DPU_DEBUG_PLANE(pdpu, "invalid height for inline rot:%d max:%d\n",
++				src.y2, sblk->rotation_cfg->rot_maxheight);
++		return -EINVAL;
++	}
++
++	supported_formats = sblk->rotation_cfg->rot_format_list;
++	num_formats = sblk->rotation_cfg->rot_num_formats;
++
++	for (i = 0; i < num_formats; i++) {
++		/* check for valid formats supported by inline rotation */
++		if (fmt->base.pixel_format == supported_formats[i] &&
++			DPU_FORMAT_IS_UBWC(fmt)) {
++			found = true;
++			break;
++		}
++	}
++
++	if (!found || !num_formats) {
++		DPU_DEBUG_PLANE(pdpu, "supported_format not found num: %zu\n",
++				num_formats);
++		return -EINVAL;
++	}
++
++	return 0;
++}
++
+ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 				  struct drm_atomic_state *state)
+ {
+@@ -968,15 +1029,18 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 	const struct dpu_format *fmt;
+ 	struct drm_rect src, dst, fb_rect = { 0 };
+ 	uint32_t min_src_size, max_linewidth;
++	unsigned int rotation = 0;
++	const struct dpu_sspp_cfg *pipe_hw_caps = pdpu->pipe_hw->cap;
++	const struct dpu_sspp_sub_blks *sblk = pdpu->pipe_hw->cap->sblk;
+ 
+ 	if (new_plane_state->crtc)
+ 		crtc_state = drm_atomic_get_new_crtc_state(state,
+ 							   new_plane_state->crtc);
+ 
+-	min_scale = FRAC_16_16(1, pdpu->pipe_hw->cap->sblk->maxupscale);
++	min_scale = FRAC_16_16(1, sblk->maxupscale);
+ 	ret = drm_atomic_helper_check_plane_state(new_plane_state, crtc_state,
+ 						  min_scale,
+-						  pdpu->pipe_hw->cap->sblk->maxdwnscale << 16,
++						  sblk->maxdwnscale << 16,
+ 						  true, true);
+ 	if (ret) {
+ 		DPU_DEBUG_PLANE(pdpu, "Check plane state failed (%d)\n", ret);
+@@ -1002,8 +1066,8 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 	min_src_size = DPU_FORMAT_IS_YUV(fmt) ? 2 : 1;
+ 
+ 	if (DPU_FORMAT_IS_YUV(fmt) &&
+-		(!(pdpu->pipe_hw->cap->features & DPU_SSPP_SCALER) ||
+-		 !(pdpu->pipe_hw->cap->features & DPU_SSPP_CSC_ANY))) {
++		(!(pipe_hw_caps->features & DPU_SSPP_SCALER) ||
++		 !(pipe_hw_caps->features & DPU_SSPP_CSC_ANY))) {
+ 		DPU_DEBUG_PLANE(pdpu,
+ 				"plane doesn't have scaler/csc for yuv\n");
+ 		return -EINVAL;
+@@ -1036,6 +1100,17 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 		return -E2BIG;
+ 	}
+ 
++	rotation = drm_rotation_simplify(new_plane_state->rotation,
++					pipe_hw_caps->rot_supported);
++
++	if ((pipe_hw_caps->features & BIT(DPU_SSPP_INLINE_ROTATION)) &&
++		rotation & DRM_MODE_ROTATE_90) {
++		ret = dpu_plane_check_inline_rotation(pdpu, sblk, src, fmt);
++		if (ret)
++			return ret;
++	}
++
++	pstate->rotation = rotation;
+ 	pstate->needs_qos_remap = drm_atomic_crtc_needs_modeset(crtc_state);
+ 
+ 	return 0;
+@@ -1151,21 +1226,18 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+ 				pstate->multirect_mode);
+ 
+ 	if (pdpu->pipe_hw->ops.setup_format) {
+-		unsigned int rotation;
 -
--if VIDEO_IMX
-+comment "NXP drivers"
++		unsigned int rotation = pstate->rotation;
+ 		src_flags = 0x0;
  
- config VIDEO_IMX_MIPI_CSIS
--	tristate "MIPI CSI-2 CSIS receiver found on i.MX7 and i.MX8 models"
-+	tristate "NXP MIPI CSI-2 CSIS receiver found on i.MX7 and i.MX8 models"
- 	select MEDIA_CONTROLLER
- 	select V4L2_FWNODE
- 	select VIDEO_V4L2_SUBDEV_API
-@@ -24,10 +14,8 @@ config VIDEO_IMX_MIPI_CSIS
- 	  Video4Linux2 sub-device driver for the MIPI CSI-2 CSIS receiver
- 	  v3.3/v3.6.3 found on some i.MX7 and i.MX8 SoCs.
- 
--endif # VIDEO_IMX
+-		rotation = drm_rotation_simplify(state->rotation,
+-						 DRM_MODE_ROTATE_0 |
+-						 DRM_MODE_REFLECT_X |
+-						 DRM_MODE_REFLECT_Y);
 -
- config VIDEO_VIU
--	tristate "Freescale/NXP VIU Video Driver"
-+	tristate "NXP VIU Video Driver"
- 	depends on V4L_PLATFORM_DRIVERS
- 	depends on VIDEO_V4L2 && (PPC_MPC512x || COMPILE_TEST) && I2C
- 	select VIDEOBUF_DMA_CONTIG
-@@ -42,7 +30,7 @@ config VIDEO_VIU
- # mem2mem drivers
+ 		if (rotation & DRM_MODE_REFLECT_X)
+ 			src_flags |= DPU_SSPP_FLIP_LR;
  
- config VIDEO_IMX_PXP
--	tristate "i.MX Pixel Pipeline (PXP)"
-+	tristate "NXP i.MX Pixel Pipeline (PXP)"
- 	depends on V4L_MEM2MEM_DRIVERS
- 	depends on VIDEO_DEV && VIDEO_V4L2 && (ARCH_MXC || COMPILE_TEST)
- 	select VIDEOBUF2_DMA_CONTIG
-@@ -52,7 +40,7 @@ config VIDEO_IMX_PXP
- 	  color space conversion, and rotation.
+ 		if (rotation & DRM_MODE_REFLECT_Y)
+ 			src_flags |= DPU_SSPP_FLIP_UD;
  
- config VIDEO_MX2_EMMAPRP
--	tristate "Freescale/NXP MX2 eMMa-PrP support"
-+	tristate "NXP MX2 eMMa-PrP support"
- 	depends on V4L_MEM2MEM_DRIVERS
- 	depends on VIDEO_DEV && VIDEO_V4L2
- 	depends on SOC_IMX27 || COMPILE_TEST
-diff --git a/drivers/media/platform/qcom/Kconfig b/drivers/media/platform/qcom/Kconfig
-index 9f6c91cc95ca..4a89587e932d 100644
---- a/drivers/media/platform/qcom/Kconfig
-+++ b/drivers/media/platform/qcom/Kconfig
-@@ -1,4 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0-only
++		if (rotation & DRM_MODE_ROTATE_90)
++			src_flags |= DPU_SSPP_ROT_90;
++
+ 		/* update format */
+ 		pdpu->pipe_hw->ops.setup_format(pdpu->pipe_hw, fmt, src_flags,
+ 				pstate->multirect_index);
+@@ -1463,6 +1535,8 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+ 	int zpos_max = DPU_ZPOS_MAX;
+ 	uint32_t num_formats;
+ 	int ret = -EINVAL;
++	unsigned int supported_rotations = DRM_MODE_ROTATE_0 |
++			DRM_MODE_ROTATE_180 | DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y;
  
-+comment "Qualcomm drivers"
-+
- source "drivers/media/platform/qcom/camss/Kconfig"
- source "drivers/media/platform/qcom/venus/Kconfig"
-diff --git a/drivers/media/platform/renesas/Kconfig b/drivers/media/platform/renesas/Kconfig
-index 3f35f1b5106d..2e3a66ea95bd 100644
---- a/drivers/media/platform/renesas/Kconfig
-+++ b/drivers/media/platform/renesas/Kconfig
-@@ -1,5 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
+ 	/* create and zero local structure */
+ 	pdpu = kzalloc(sizeof(*pdpu), GFP_KERNEL);
+@@ -1530,12 +1604,11 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+ 			BIT(DRM_MODE_BLEND_PREMULTI) |
+ 			BIT(DRM_MODE_BLEND_COVERAGE));
  
-+comment "Renesas drivers"
++	if (pdpu->pipe_hw->cap->features & BIT(DPU_SSPP_INLINE_ROTATION))
++		supported_rotations |= DRM_MODE_ROTATE_90 | DRM_MODE_ROTATE_270;
 +
- # V4L drivers
+ 	drm_plane_create_rotation_property(plane,
+-			DRM_MODE_ROTATE_0,
+-			DRM_MODE_ROTATE_0 |
+-			DRM_MODE_ROTATE_180 |
+-			DRM_MODE_REFLECT_X |
+-			DRM_MODE_REFLECT_Y);
++		    DRM_MODE_ROTATE_0, supported_rotations);
  
- config VIDEO_RCAR_ISP
-diff --git a/drivers/media/platform/rockchip/Kconfig b/drivers/media/platform/rockchip/Kconfig
-index 2f97c0e0268a..4351e3258d14 100644
---- a/drivers/media/platform/rockchip/Kconfig
-+++ b/drivers/media/platform/rockchip/Kconfig
-@@ -1,3 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0-only
-+
-+comment "Rockchip drivers"
-+
- source "drivers/media/platform/rockchip/rga/Kconfig"
- source "drivers/media/platform/rockchip/rkisp1/Kconfig"
-diff --git a/drivers/media/platform/samsung/Kconfig b/drivers/media/platform/samsung/Kconfig
-index 94f30c1bca9b..c187cefbec5a 100644
---- a/drivers/media/platform/samsung/Kconfig
-+++ b/drivers/media/platform/samsung/Kconfig
-@@ -1,4 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
-+
-+comment "Samsung drivers"
-+
- source "drivers/media/platform/samsung/exynos-gsc/Kconfig"
- source "drivers/media/platform/samsung/exynos4-is/Kconfig"
- source "drivers/media/platform/samsung/s3c-camif/Kconfig"
-diff --git a/drivers/media/platform/stm/Kconfig b/drivers/media/platform/stm/Kconfig
-index 27942626a630..58cbb6b888bf 100644
---- a/drivers/media/platform/stm/Kconfig
-+++ b/drivers/media/platform/stm/Kconfig
-@@ -1,4 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0-only
+ 	drm_plane_enable_fb_damage_clips(plane);
  
-+comment "STMicroelectronics drivers"
-+
- source "drivers/media/platform/stm/sti/Kconfig"
- source "drivers/media/platform/stm/stm32/Kconfig"
-diff --git a/drivers/media/platform/via/Kconfig b/drivers/media/platform/via/Kconfig
-index 1dcf789dce96..f4f4293cf25c 100644
---- a/drivers/media/platform/via/Kconfig
-+++ b/drivers/media/platform/via/Kconfig
-@@ -1,4 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
-+
-+comment "VIA drivers"
-+
- config VIDEO_VIA_CAMERA
- 	tristate "VIAFB camera controller support"
- 	depends on V4L_PLATFORM_DRIVERS
-diff --git a/drivers/media/platform/xilinx/Kconfig b/drivers/media/platform/xilinx/Kconfig
-index a9531d5efd50..47f1eeb5d669 100644
---- a/drivers/media/platform/xilinx/Kconfig
-+++ b/drivers/media/platform/xilinx/Kconfig
-@@ -1,5 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+index 50781e2..e146310 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+@@ -26,6 +26,7 @@
+  * @plane_fetch_bw: calculated BW per plane
+  * @plane_clk: calculated clk per plane
+  * @needs_dirtyfb: whether attached CRTC needs pixel data explicitly flushed
++ * @rotation: simplified drm rotation hint
+  */
+ struct dpu_plane_state {
+ 	struct drm_plane_state base;
+@@ -40,6 +41,7 @@ struct dpu_plane_state {
+ 	u64 plane_clk;
  
-+comment "Xilinx drivers"
-+
- config VIDEO_XILINX
- 	tristate "Xilinx Video IP (EXPERIMENTAL)"
- 	depends on V4L_PLATFORM_DRIVERS
-@@ -11,9 +13,8 @@ config VIDEO_XILINX
- 	help
- 	  Driver for Xilinx Video IP Pipelines
+ 	bool needs_dirtyfb;
++	unsigned int rotation;
+ };
  
--if VIDEO_XILINX
--
- config VIDEO_XILINX_CSI2RXSS
-+	depends on VIDEO_XILINX
- 	tristate "Xilinx CSI-2 Rx Subsystem"
- 	help
- 	  Driver for Xilinx MIPI CSI-2 Rx Subsystem. This is a V4L sub-device
-@@ -32,5 +33,3 @@ config VIDEO_XILINX_VTC
- 	depends on VIDEO_XILINX
- 	help
- 	   Driver for the Xilinx Video Timing Controller
--
--endif #VIDEO_XILINX
+ /**
 -- 
-2.35.1
+2.7.4
 
