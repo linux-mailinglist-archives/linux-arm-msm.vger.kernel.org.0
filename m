@@ -2,71 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95C504D8E28
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Mar 2022 21:30:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 394214D8EF2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Mar 2022 22:40:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245013AbiCNUbY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Mar 2022 16:31:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38660 "EHLO
+        id S244009AbiCNVli (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Mar 2022 17:41:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239124AbiCNUbX (ORCPT
+        with ESMTP id S237460AbiCNVlh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Mar 2022 16:31:23 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8449739812;
-        Mon, 14 Mar 2022 13:30:12 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E0BE9611E3;
-        Mon, 14 Mar 2022 20:30:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 395EAC340EE;
-        Mon, 14 Mar 2022 20:30:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1647289811;
-        bh=5slkzW/wYFCAJdfNlCFTBba0nZcr16X7BRShsWGs8e4=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=leggAOjDGLqu5Y16iRzmCapGpn9MgtEwT4CrU4eyl+t2E31oSfK39qKDLg3AehmbU
-         40wH8plobcUAZegoJFqfw9/xkqsBBPmZP9vZVSFOcI/Xp23ZGUf+pgmWTjQguJdafL
-         aR+7p6LxqiE9iThzqyS8jQ9G6EB+4tZZi+yCfGQiapJJIo9jcBYm9fR9I2LX08BkN2
-         bFDWmepy5ZVI6q23q7h6GXJ7SL0Svf5wH1oJCuTgacReCjqPgety1pGCFxOBEiOwa4
-         z9SA1gQwBNf2EwKLfJ+KdExejyFckwalTlOP/U5FXz63cZ94Vo7u6CrKogKN+nyC4B
-         +CVXdED/jOy7Q==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 0DC0AE6D3DE;
-        Mon, 14 Mar 2022 20:30:11 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Mon, 14 Mar 2022 17:41:37 -0400
+Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 930CF1ADA8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Mar 2022 14:40:26 -0700 (PDT)
+Received: by mail-oo1-xc32.google.com with SMTP id p10-20020a056820044a00b00320d7d4af22so4222964oou.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Mar 2022 14:40:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=CH4PnxS5OBdq/D6Vp76lpnMDoAzcsxnrc14ncEtoegU=;
+        b=xebXMdKQRsxXOA7mx5JtV5zjLWaAZEH3jQiH8bLmEct6J+cbDMWpl6BEFRd4oEwx7C
+         aNHPC/DfZCpmFfU5qnKNnH9lLrZF0XsLRJadbQpFW5uHwvK1DyvQ7Ng9Wbst8nLe1qsR
+         Ft6GfQv4BPrC35S2TRP1ZBPhmcGSWrRLMGDXZIAdoA59r7bRWYD/W+k+4zIg/fhSzMzq
+         /2zrpUqXcbxsW4RumT0k8RSdI/Ja2wI5dBCudbU4qTij+ePaky/5R+yCovnVJr6c33D+
+         cUQgZOdC7qOyeFKfbd74gFwiJOa59Kf3ihQjT//XQ8aIRBETqhBdm4lOg+iDeP32JHMs
+         3GGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=CH4PnxS5OBdq/D6Vp76lpnMDoAzcsxnrc14ncEtoegU=;
+        b=usCOG9Eti7mgmCCMtZ0ccVanS8R1yoAijdLEmhMcuRIvLnpUKFXFRWhoH4DqDQW3bV
+         ipXfGMrp85Eaj4GEd5VRihgDz3HNp8w1LMT+6eEkujJfBom79gIAGKKTPtLW0FTH7wEf
+         HlZ4LXK3j5nsLd7d3rxyTTA3E1T8C9ljzbl9dUqbjisz9l8tgG/S8HNp/6AEpI7V1Zg5
+         o57jqSeCjd6oBWbkqiKohJmpsFks37iT5TB8UqdKSIGVFDXiYV1BnjjwZNK0Q5B6DUf1
+         TbEUgO7aEwRHJ57kBDhz51mBb6inDwosgTVoaN2Gs4Kg3Wx3ykjGHekEnYqlQ9OMAeDZ
+         d5dA==
+X-Gm-Message-State: AOAM533vQJP0Cfi0iBE5ewGnAS7VE2hsRLMkU9L1CnQhGZdgAY/B1GW3
+        NzM1hIYXTYIUF2yQ4H82E4gX1w==
+X-Google-Smtp-Source: ABdhPJx9ShNGhKeS4XKWob97GViwdgXKmKriwSN7lAV2IHVCc/GNGiM8uDLrubhREgewA0JXe92OxQ==
+X-Received: by 2002:a05:6870:d685:b0:da:b3f:2b84 with SMTP id z5-20020a056870d68500b000da0b3f2b84mr402796oap.291.1647294025542;
+        Mon, 14 Mar 2022 14:40:25 -0700 (PDT)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id y8-20020a544d88000000b002d525da014bsm8244544oix.42.2022.03.14.14.40.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Mar 2022 14:40:24 -0700 (PDT)
+Date:   Mon, 14 Mar 2022 16:40:23 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Yogesh Lal <quic_ylal@quicinc.com>
+Cc:     quic_sibis@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] remoteproc: qcom: pas: Add elf64 support to coredump
+Message-ID: <Yi+2Rylfx6mOHHOK@builder.lan>
+References: <1647252013-7794-1-git-send-email-quic_ylal@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 00/30] fix typos in comments
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <164728981105.21494.10764025984714254687.git-patchwork-notify@kernel.org>
-Date:   Mon, 14 Mar 2022 20:30:11 +0000
-References: <20220314115354.144023-1-Julia.Lawall@inria.fr>
-In-Reply-To: <20220314115354.144023-1-Julia.Lawall@inria.fr>
-To:     Julia Lawall <julia.lawall@inria.fr>
-Cc:     linux-can@vger.kernel.org, kernel-janitors@vger.kernel.org,
-        linux-sunxi@lists.linux.dev, linux-spi@vger.kernel.org,
-        target-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mtd@lists.infradead.org, linux-usb@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-staging@lists.linux.dev,
-        platform-driver-x86@vger.kernel.org, netdev@vger.kernel.org,
-        linux-wireless@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-scsi@vger.kernel.org, Laurent.pinchart@ideasonboard.com,
-        jonas@kwiboo.se, jernej.skrabec@gmail.com,
-        linux-leds@vger.kernel.org, shayne.chen@mediatek.com,
-        sean.wang@mediatek.com, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-clk@vger.kernel.org, rafael@kernel.org,
-        linux-rdma@vger.kernel.org, borntraeger@linux.ibm.com,
-        svens@linux.ibm.com, linux-s390@vger.kernel.org,
-        matti.vaittinen@fi.rohmeurope.com, linux-power@fi.rohmeurope.com,
-        mark.rutland@arm.com, alexander.shishkin@linux.intel.com,
-        jolsa@kernel.org, namhyung@kernel.org,
-        linux-perf-users@vger.kernel.org
-X-Spam-Status: No, score=-8.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1647252013-7794-1-git-send-email-quic_ylal@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,66 +70,139 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
+On Mon 14 Mar 05:00 CDT 2022, Yogesh Lal wrote:
 
-This series was applied to netdev/net-next.git (master)
-by Jakub Kicinski <kuba@kernel.org>:
+> Add support to use elf64 coredumps to remote processors.
 
-On Mon, 14 Mar 2022 12:53:24 +0100 you wrote:
-> Various spelling mistakes in comments.
-> Detected with the help of Coccinelle.
+The commit message does not describe _this_ patch and it fails to
+explain _why_ sm8450 should have 64-bit coredumps.
+
+Please correct this.
+
+Thanks,
+Bjorn
+
 > 
+> Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
 > ---
+>  drivers/remoteproc/qcom_q6v5_pas.c | 67 ++++++++++++++++++++++++++++++++++++--
+>  1 file changed, 64 insertions(+), 3 deletions(-)
 > 
->  drivers/base/devres.c                               |    4 ++--
->  drivers/clk/qcom/gcc-sm6125.c                       |    2 +-
->  drivers/clk/ti/clkctrl.c                            |    2 +-
->  drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c              |    4 ++--
->  drivers/gpu/drm/amd/display/dc/bios/command_table.c |    6 +++---
->  drivers/gpu/drm/amd/pm/amdgpu_pm.c                  |    2 +-
->  drivers/gpu/drm/bridge/analogix/analogix_dp_core.c  |    4 ++--
->  drivers/gpu/drm/sti/sti_gdp.c                       |    2 +-
->  drivers/infiniband/hw/qib/qib_iba7220.c             |    4 ++--
->  drivers/leds/leds-pca963x.c                         |    2 +-
->  drivers/media/i2c/ov5695.c                          |    2 +-
->  drivers/mfd/rohm-bd9576.c                           |    2 +-
->  drivers/mtd/ubi/block.c                             |    2 +-
->  drivers/net/can/usb/ucan.c                          |    4 ++--
->  drivers/net/ethernet/packetengines/yellowfin.c      |    2 +-
->  drivers/net/wireless/ath/ath6kl/htc_mbox.c          |    2 +-
->  drivers/net/wireless/cisco/airo.c                   |    2 +-
->  drivers/net/wireless/mediatek/mt76/mt7915/init.c    |    2 +-
->  drivers/net/wireless/realtek/rtlwifi/rtl8821ae/dm.c |    6 +++---
->  drivers/platform/x86/uv_sysfs.c                     |    2 +-
->  drivers/s390/crypto/pkey_api.c                      |    2 +-
->  drivers/scsi/aic7xxx/aicasm/aicasm.c                |    2 +-
->  drivers/scsi/elx/libefc_sli/sli4.c                  |    2 +-
->  drivers/scsi/lpfc/lpfc_mbox.c                       |    2 +-
->  drivers/scsi/qla2xxx/qla_gs.c                       |    2 +-
->  drivers/spi/spi-sun4i.c                             |    2 +-
->  drivers/staging/rtl8723bs/core/rtw_mlme.c           |    2 +-
->  drivers/usb/gadget/udc/snps_udc_core.c              |    2 +-
->  fs/kernfs/file.c                                    |    2 +-
->  kernel/events/core.c                                |    2 +-
->  30 files changed, 39 insertions(+), 39 deletions(-)
-
-Here is the summary with links:
-  - [03/30] ath6kl: fix typos in comments
-    (no matching commit)
-  - [10/30] mt76: mt7915: fix typos in comments
-    (no matching commit)
-  - [12/30] drivers: net: packetengines: fix typos in comments
-    https://git.kernel.org/netdev/net-next/c/ebc0b8b5374e
-  - [19/30] rtlwifi: rtl8821ae: fix typos in comments
-    (no matching commit)
-  - [20/30] airo: fix typos in comments
-    (no matching commit)
-  - [27/30] can: ucan: fix typos in comments
-    (no matching commit)
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> index 1ae47cc..58c335e 100644
+> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> @@ -34,6 +34,7 @@ struct adsp_data {
+>  	const char *firmware_name;
+>  	int pas_id;
+>  	unsigned int minidump_id;
+> +	bool uses_elf64;
+>  	bool has_aggre2_clk;
+>  	bool auto_boot;
+>  
+> @@ -450,7 +451,11 @@ static int adsp_probe(struct platform_device *pdev)
+>  	}
+>  
+>  	rproc->auto_boot = desc->auto_boot;
+> -	rproc_coredump_set_elf_info(rproc, ELFCLASS32, EM_NONE);
+> +
+> +	if (desc->uses_elf64)
+> +		rproc_coredump_set_elf_info(rproc, ELFCLASS64, EM_NONE);
+> +	else
+> +		rproc_coredump_set_elf_info(rproc, ELFCLASS32, EM_NONE);
+>  
+>  	adsp = (struct qcom_adsp *)rproc->priv;
+>  	adsp->dev = &pdev->dev;
+> @@ -617,6 +622,24 @@ static const struct adsp_data sm8350_adsp_resource = {
+>  	.ssctl_id = 0x14,
+>  };
+>  
+> +static const struct adsp_data sm8450_adsp_resource = {
+> +	.crash_reason_smem = 423,
+> +	.firmware_name = "adsp.mdt",
+> +	.pas_id = 1,
+> +	.uses_elf64 = true,
+> +	.has_aggre2_clk = false,
+> +	.auto_boot = true,
+> +	.proxy_pd_names = (char*[]){
+> +		"lcx",
+> +		"lmx",
+> +		NULL
+> +	},
+> +	.load_state = "adsp",
+> +	.ssr_name = "lpass",
+> +	.sysmon_name = "adsp",
+> +	.ssctl_id = 0x14,
+> +};
+> +
+>  static const struct adsp_data msm8996_adsp_resource = {
+>  		.crash_reason_smem = 423,
+>  		.firmware_name = "adsp.mdt",
+> @@ -721,6 +744,24 @@ static const struct adsp_data sm8350_cdsp_resource = {
+>  	.ssctl_id = 0x17,
+>  };
+>  
+> +static const struct adsp_data sm8450_cdsp_resource = {
+> +	.crash_reason_smem = 601,
+> +	.firmware_name = "cdsp.mdt",
+> +	.pas_id = 18,
+> +	.uses_elf64 = true,
+> +	.has_aggre2_clk = false,
+> +	.auto_boot = true,
+> +	.proxy_pd_names = (char*[]){
+> +		"cx",
+> +		"mxc",
+> +		NULL
+> +	},
+> +	.load_state = "cdsp",
+> +	.ssr_name = "cdsp",
+> +	.sysmon_name = "cdsp",
+> +	.ssctl_id = 0x17,
+> +};
+> +
+>  static const struct adsp_data mpss_resource_init = {
+>  	.crash_reason_smem = 421,
+>  	.firmware_name = "modem.mdt",
+> @@ -755,6 +796,25 @@ static const struct adsp_data sc8180x_mpss_resource = {
+>  	.ssctl_id = 0x12,
+>  };
+>  
+> +static const struct adsp_data sm8450_mpss_resource = {
+> +	.crash_reason_smem = 421,
+> +	.firmware_name = "modem.mdt",
+> +	.pas_id = 4,
+> +	.minidump_id = 3,
+> +	.uses_elf64 = true,
+> +	.has_aggre2_clk = false,
+> +	.auto_boot = false,
+> +	.proxy_pd_names = (char*[]){
+> +		"cx",
+> +		"mss",
+> +		NULL
+> +	},
+> +	.load_state = "modem",
+> +	.ssr_name = "mpss",
+> +	.sysmon_name = "modem",
+> +	.ssctl_id = 0x12,
+> +};
+> +
+>  static const struct adsp_data slpi_resource_init = {
+>  		.crash_reason_smem = 424,
+>  		.firmware_name = "slpi.mdt",
+> @@ -879,10 +939,11 @@ static const struct of_device_id adsp_of_match[] = {
+>  	{ .compatible = "qcom,sm8350-cdsp-pas", .data = &sm8350_cdsp_resource},
+>  	{ .compatible = "qcom,sm8350-slpi-pas", .data = &sm8350_slpi_resource},
+>  	{ .compatible = "qcom,sm8350-mpss-pas", .data = &mpss_resource_init},
+> -	{ .compatible = "qcom,sm8450-adsp-pas", .data = &sm8350_adsp_resource},
+> -	{ .compatible = "qcom,sm8450-cdsp-pas", .data = &sm8350_cdsp_resource},
+> +	{ .compatible = "qcom,sm8450-adsp-pas", .data = &sm8450_adsp_resource},
+> +	{ .compatible = "qcom,sm8450-cdsp-pas", .data = &sm8450_cdsp_resource},
+>  	{ .compatible = "qcom,sm8450-slpi-pas", .data = &sm8350_slpi_resource},
+>  	{ .compatible = "qcom,sm8450-mpss-pas", .data = &mpss_resource_init},
+> +	{ .compatible = "qcom,sm8450-mpss-pas", .data = &sm8450_mpss_resource},
+>  	{ },
+>  };
+>  MODULE_DEVICE_TABLE(of, adsp_of_match);
+> -- 
+> 2.7.4
+> 
