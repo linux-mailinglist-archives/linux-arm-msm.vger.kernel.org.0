@@ -2,130 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD2E54D7D67
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Mar 2022 09:13:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CFCA44D7D8A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Mar 2022 09:24:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236900AbiCNIOf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Mar 2022 04:14:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32868 "EHLO
+        id S237676AbiCNIZX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Mar 2022 04:25:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229696AbiCNIOe (ORCPT
+        with ESMTP id S231159AbiCNIZW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Mar 2022 04:14:34 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8F2563DE;
-        Mon, 14 Mar 2022 01:13:24 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 805CF61240;
-        Mon, 14 Mar 2022 08:13:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B507C340F4;
-        Mon, 14 Mar 2022 08:13:22 +0000 (UTC)
-Message-ID: <f9fa2859-21ae-a8d1-fc62-15b0570e4a20@xs4all.nl>
-Date:   Mon, 14 Mar 2022 09:13:20 +0100
+        Mon, 14 Mar 2022 04:25:22 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E8C9E036;
+        Mon, 14 Mar 2022 01:24:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1647246252; x=1678782252;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=9M2dGLZHOzlDI1I7rEFcYQKVj/YSgpw5OURbl0Zah84=;
+  b=fWMaf1IYEMg89x9rtpKJT2danIbOs9bahaDYOpOJEzVTiMrsBZS3Of3i
+   CQ+6/VqJ31gSFIp1vyyuWFIPIu1REUF6q/LnLmsjyRqYQX4lFB3zfuYj7
+   uG7GpVfdfs4x4t+Y2eXeiiOkMXuz0woMAoZT+u7wQv62OHEDN6QhjpITa
+   w=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 14 Mar 2022 01:24:11 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2022 01:24:10 -0700
+Received: from nalasex01b.na.qualcomm.com (10.47.209.197) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Mon, 14 Mar 2022 01:24:10 -0700
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Mon, 14 Mar 2022 01:16:17 -0700
+Date:   Mon, 14 Mar 2022 13:46:13 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+CC:     Pavan Kondeti <quic_pkondeti@quicinc.com>,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Kishon Vijay Abraham I" <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-usb@vger.kernel.org>, <quic_ppratap@quicinc.com>,
+        <quic_kriskura@quicinc.com>
+Subject: Re: [PATCH v2 1/3] dt-bindings: phy: qcom,usb-snps-femto-v2: Add phy
+ override params bindings
+Message-ID: <20220314081613.GA28402@hu-pkondeti-hyd.qualcomm.com>
+References: <1646288011-32242-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1646288011-32242-2-git-send-email-quic_c_sanm@quicinc.com>
+ <b793195b-1d3d-63b2-19d2-72ae2aec8c0f@canonical.com>
+ <20220314032952.GA27561@hu-pkondeti-hyd.qualcomm.com>
+ <f1621a67-a0ff-f111-c4da-9401924e7f4a@canonical.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH v3 2/2] venus: venc: Add support for intra-refresh mode
-Content-Language: en-US
-To:     quic_dikshita@quicinc.com, linux-media@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, ezequiel@collabora.com,
-        stanimir.varbanov@linaro.org, quic_vgarodia@quicinc.com,
-        quic_majja@quicinc.com, quic_jdas@quicinc.com
-References: <1647244809-25340-1-git-send-email-quic_dikshita@quicinc.com>
- <1647244809-25340-3-git-send-email-quic_dikshita@quicinc.com>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <1647244809-25340-3-git-send-email-quic_dikshita@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,NICE_REPLY_A,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <f1621a67-a0ff-f111-c4da-9401924e7f4a@canonical.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Krzysztof,
 
-
-On 3/14/22 09:00, quic_dikshita@quicinc.com wrote:
-> From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+On Mon, Mar 14, 2022 at 08:39:57AM +0100, Krzysztof Kozlowski wrote:
+> On 14/03/2022 04:29, Pavan Kondeti wrote:
+> > Hi Krzysztof,
+> > 
+> > On Thu, Mar 03, 2022 at 04:59:22PM +0100, Krzysztof Kozlowski wrote:
+> >> On 03/03/2022 07:13, Sandeep Maheswaram wrote:
+> >>> Add device tree bindings for SNPS phy tuning parameters.
+> >>>
+> >>> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> >>> ---
+> >>>  .../bindings/phy/qcom,usb-snps-femto-v2.yaml       | 125 +++++++++++++++++++++
+> >>>  1 file changed, 125 insertions(+)
+> >>>
+> >>> diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
+> >>> index 0dfe691..227c097 100644
+> >>> --- a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
+> >>> +++ b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
+> >>> @@ -50,6 +50,131 @@ properties:
+> >>>    vdda33-supply:
+> >>>      description: phandle to the regulator 3.3V supply node.
+> >>>  
+> >>> +  qcom,hs-disconnect:
+> >>> +    $ref: /schemas/types.yaml#/definitions/uint32
+> >>> +    description:
+> >>> +      This adjusts the voltage level for the threshold used to
+> >>> +      detect a disconnect event at the host. Possible values are.
+> >>
+> >> ':', instead of full stop.
+> >>
+> >>> +      7 -> +21.56%
+> >>> +      6 -> +17.43%
+> >>> +      5 -> +13.32%
+> >>> +      4 -> +9.73%
+> >>> +      3 -> +6.3
+> >>> +      2 -> +3.17%
+> >>> +      1 -> 0, Design default%
+> >>
+> >> Use "default:" instead. Here and in other places.
+> >>
+> >>> +      0 -> -2.72%
+> >>
+> >> In current form this should be an enum... but actually current form is
+> >> wrong. You should not store register values in DT. What if next version
+> >> of hardware has a different meaning of these values?
+> >>
+> >> Instead, you should store here meaningful values, not register values.
+> >>
+> > 
+> > Thanks for the feedback.
+> > 
+> > The values in % really makes the tuning easy. People look at the eye diagram
+> > and decided whether to increase/decrease the margin. The absolute values
+> > may not be that useful. All we need is an "adjustment" here. The databook
+> > it self does not give any absolute values.
+> > 
+> > I agree to the "enum" suggestion which we have been following for the
+> > qusb2 driver already. 
+> > 
+> > The values have not changed in the last 5 years for this hardware block, so
+> > defining enums for the % values would be really helpful. 
 > 
-> Add support for intra-refresh type v4l2 control.
+> I did not say you cannot store here percentages. Quite opposite - store
+> here the percentages. Just do not store register value. No. Please read
+> my comment again - meaningful values are needed.
 > 
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> ---
->  drivers/media/platform/qcom/venus/core.h       | 1 +
->  drivers/media/platform/qcom/venus/venc.c       | 4 +++-
->  drivers/media/platform/qcom/venus/venc_ctrls.c | 8 ++++++++
->  3 files changed, 12 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index 7c3bac0..814ec3c 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -260,6 +260,7 @@ struct venc_controls {
->  
->  	u32 header_mode;
->  	bool aud_enable;
-> +	u32 intra_refresh_mode;
 
-To be consistent with the control name rename this field to intra_refresh_type.
+IIUC, you are asking us to come up with a meaningful values to encode the
+percentage values. However, all the % increments are not linear, so we can't
+come up with {min, max} scheme. Lets take an example of hostdisconnect
+threshold.
 
->  	u32 intra_refresh_period;
->  
->  	struct {
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index 84bafc3..3b38624 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -893,8 +893,10 @@ static int venc_set_properties(struct venus_inst *inst)
->  				mbs++;
->  			mbs /= ctr->intra_refresh_period;
->  
-> -			intra_refresh.mode = HFI_INTRA_REFRESH_RANDOM;
->  			intra_refresh.cir_mbs = mbs;
-> +			if (ctr->intra_refresh_mode ==
-> +			    V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_RANDOM)
-> +				intra_refresh.mode = HFI_INTRA_REFRESH_RANDOM;
->  		}
->  
->  		ptype = HFI_PROPERTY_PARAM_VENC_INTRA_REFRESH;
-> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> index 1ada42d..29dbe3b4 100644
-> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> @@ -316,6 +316,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
->  	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:
->  		ctr->mastering = *ctrl->p_new.p_hdr10_mastering;
->  		break;
-> +	case V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE:
-> +		ctr->intra_refresh_mode = ctrl->val;
-> +		break;
->  	case V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD:
->  		ctr->intra_refresh_period = ctrl->val;
->  		break;
-> @@ -582,6 +585,11 @@ int venc_ctrl_init(struct venus_inst *inst)
->  				   V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY,
->  				   v4l2_ctrl_ptr_create(NULL));
->  
-> +	v4l2_ctrl_new_std_menu(&inst->ctrl_handler, &venc_ctrl_ops,
-> +			       V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE,
-> +			       V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_RANDOM,
-> +			       0, V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_RANDOM);
+As per the data book,
 
-The range consists only of RANDOM, is that intended? Why add this control if
-there is no choice?
++      7 -> +21.56%
++      6 -> +17.43%
++      5 -> +13.32%
++      4 -> +9.73%
++      3 -> +6.3
++      2 -> +3.17%
++      1 -> 0, Design default%
++      0 -> -2.72%
 
-Regards,
+so how do we give meaningful values here? Does the below scheme make sense
+to you?
 
-	Hans
+#define QCOM_SNPS_FEMTO_HS_DISCONNECT_NEG_2P72	(-272)
+#define QCOM_SNPS_FEMTO_HS_DISCONNECT_DEFAULT	0
+#define QCOM_SNPS_FEMTO_HS_DISCONNECT_3P17	317
+#define QCOM_SNPS_FEMTO_HS_DISCONNECT_6P3	63
+..
+..
 
-> +
->  	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
->  			  V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD, 0,
->  			  ((4096 * 2304) >> 8), 1, 0);
+In the driver, we have a mapping (which can be per SoC if required in future)
+that takes these values and convert to the correct values for a given
+register.
+
+Thanks,
+Pavan
