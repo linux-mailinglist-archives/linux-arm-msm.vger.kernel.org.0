@@ -2,207 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 394214D8EF2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Mar 2022 22:40:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 185624D8F5C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Mar 2022 23:12:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244009AbiCNVli (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Mar 2022 17:41:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60356 "EHLO
+        id S245502AbiCNWNR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Mar 2022 18:13:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237460AbiCNVlh (ORCPT
+        with ESMTP id S242461AbiCNWNQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Mar 2022 17:41:37 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 930CF1ADA8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Mar 2022 14:40:26 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id p10-20020a056820044a00b00320d7d4af22so4222964oou.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Mar 2022 14:40:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=CH4PnxS5OBdq/D6Vp76lpnMDoAzcsxnrc14ncEtoegU=;
-        b=xebXMdKQRsxXOA7mx5JtV5zjLWaAZEH3jQiH8bLmEct6J+cbDMWpl6BEFRd4oEwx7C
-         aNHPC/DfZCpmFfU5qnKNnH9lLrZF0XsLRJadbQpFW5uHwvK1DyvQ7Ng9Wbst8nLe1qsR
-         Ft6GfQv4BPrC35S2TRP1ZBPhmcGSWrRLMGDXZIAdoA59r7bRWYD/W+k+4zIg/fhSzMzq
-         /2zrpUqXcbxsW4RumT0k8RSdI/Ja2wI5dBCudbU4qTij+ePaky/5R+yCovnVJr6c33D+
-         cUQgZOdC7qOyeFKfbd74gFwiJOa59Kf3ihQjT//XQ8aIRBETqhBdm4lOg+iDeP32JHMs
-         3GGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=CH4PnxS5OBdq/D6Vp76lpnMDoAzcsxnrc14ncEtoegU=;
-        b=usCOG9Eti7mgmCCMtZ0ccVanS8R1yoAijdLEmhMcuRIvLnpUKFXFRWhoH4DqDQW3bV
-         ipXfGMrp85Eaj4GEd5VRihgDz3HNp8w1LMT+6eEkujJfBom79gIAGKKTPtLW0FTH7wEf
-         HlZ4LXK3j5nsLd7d3rxyTTA3E1T8C9ljzbl9dUqbjisz9l8tgG/S8HNp/6AEpI7V1Zg5
-         o57jqSeCjd6oBWbkqiKohJmpsFks37iT5TB8UqdKSIGVFDXiYV1BnjjwZNK0Q5B6DUf1
-         TbEUgO7aEwRHJ57kBDhz51mBb6inDwosgTVoaN2Gs4Kg3Wx3ykjGHekEnYqlQ9OMAeDZ
-         d5dA==
-X-Gm-Message-State: AOAM533vQJP0Cfi0iBE5ewGnAS7VE2hsRLMkU9L1CnQhGZdgAY/B1GW3
-        NzM1hIYXTYIUF2yQ4H82E4gX1w==
-X-Google-Smtp-Source: ABdhPJx9ShNGhKeS4XKWob97GViwdgXKmKriwSN7lAV2IHVCc/GNGiM8uDLrubhREgewA0JXe92OxQ==
-X-Received: by 2002:a05:6870:d685:b0:da:b3f:2b84 with SMTP id z5-20020a056870d68500b000da0b3f2b84mr402796oap.291.1647294025542;
-        Mon, 14 Mar 2022 14:40:25 -0700 (PDT)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id y8-20020a544d88000000b002d525da014bsm8244544oix.42.2022.03.14.14.40.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Mar 2022 14:40:24 -0700 (PDT)
-Date:   Mon, 14 Mar 2022 16:40:23 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Yogesh Lal <quic_ylal@quicinc.com>
-Cc:     quic_sibis@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] remoteproc: qcom: pas: Add elf64 support to coredump
-Message-ID: <Yi+2Rylfx6mOHHOK@builder.lan>
-References: <1647252013-7794-1-git-send-email-quic_ylal@quicinc.com>
+        Mon, 14 Mar 2022 18:13:16 -0400
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 008D23C72D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Mar 2022 15:12:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1647295926; x=1678831926;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=TmF4FvJhy8r4L46VPu1Ph2AwpXhixIyOHXK6V+ZN30g=;
+  b=ctMmG9QpJDihurcd/VXfdsPESxxo4Qew2LYDIcLXOMgD44czDm3GPZSr
+   QhumwLrjvNoEJ3qGkQlYOZS6rwHQ7I2w4WRmMQh1wVBWMpv/snfGIK3Ik
+   KRWjhen0V0OZRGD/Yh1kQE8X0y0I3JQzr2CkJ7pnlgO09HJMSHFVczKLb
+   3Jib3F/A93xvF5m5ZW9Q/VYvOklCZ7dc6R/z9Z0mRLWGkBaEYGtrVMII2
+   mqsE1GPgWcA8CYfw5jJq64DyE66G43glbzKNHdOZNuTxZ/1msJJLgJoAv
+   el8oEjWxxJy8NdTsLGydrXp0qD5PecxjKWche2BqiLTiC41Xi4BKdssE+
+   Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10286"; a="319378231"
+X-IronPort-AV: E=Sophos;i="5.90,181,1643702400"; 
+   d="scan'208";a="319378231"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2022 15:11:55 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,181,1643702400"; 
+   d="scan'208";a="556641142"
+Received: from stinkpipe.fi.intel.com (HELO stinkbox) ([10.237.72.151])
+  by orsmga008.jf.intel.com with SMTP; 14 Mar 2022 15:11:44 -0700
+Received: by stinkbox (sSMTP sendmail emulation); Tue, 15 Mar 2022 00:11:43 +0200
+Date:   Tue, 15 Mar 2022 00:11:43 +0200
+From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     intel-gfx@lists.freedesktop.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Alain Volmat <alain.volmat@foss.st.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        amd-gfx@lists.freedesktop.org,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Aurabindo Pillai <aurabindo.pillai@amd.com>,
+        Chen Feng <puck.chen@hisilicon.com>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Emma Anholt <emma@anholt.net>, freedreno@lists.freedesktop.org,
+        Harry Wentland <harry.wentland@amd.com>,
+        Heiko =?iso-8859-1?Q?St=FCbner?= <heiko@sntech.de>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        John Stultz <john.stultz@linaro.org>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jyri Sarha <jyri.sarha@iki.fi>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Leo Li <sunpeng.li@amd.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        Maxime Ripard <mripard@kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Nikola Cornij <nikola.cornij@amd.com>,
+        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Rob Clark <robdclark@gmail.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Sandy Huang <hjc@rock-chips.com>, Sean Paul <sean@poorly.run>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>
+Subject: Re: [PATCH 00/22] drm: Review of mode copies
+Message-ID: <Yi+9n0eGn3rNKb4X@intel.com>
+References: <20220218100403.7028-1-ville.syrjala@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <1647252013-7794-1-git-send-email-quic_ylal@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220218100403.7028-1-ville.syrjala@linux.intel.com>
+X-Patchwork-Hint: comment
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 14 Mar 05:00 CDT 2022, Yogesh Lal wrote:
+On Fri, Feb 18, 2022 at 12:03:41PM +0200, Ville Syrjala wrote:
+>   drm: Add drm_mode_init()
+>   drm/bridge: Use drm_mode_copy()
+>   drm/imx: Use drm_mode_duplicate()
+>   drm/panel: Use drm_mode_duplicate()
+>   drm/vc4: Use drm_mode_copy()
+These have been pushed to drm-misc-next.
 
-> Add support to use elf64 coredumps to remote processors.
+>   drm/amdgpu: Remove pointless on stack mode copies
+>   drm/amdgpu: Use drm_mode_init() for on-stack modes
+>   drm/amdgpu: Use drm_mode_copy()
+amdgpu ones are reviewed, but I'll leave them for the
+AMD folks to push to whichever tree they prefer.
 
-The commit message does not describe _this_ patch and it fails to
-explain _why_ sm8450 should have 64-bit coredumps.
 
-Please correct this.
+The rest are still in need of review:
+>   drm/radeon: Use drm_mode_copy()
+>   drm/gma500: Use drm_mode_copy()
+>   drm/hisilicon: Use drm_mode_init() for on-stack modes
+>   drm/msm: Nuke weird on stack mode copy
+>   drm/msm: Use drm_mode_init() for on-stack modes
+>   drm/msm: Use drm_mode_copy()
+>   drm/mtk: Use drm_mode_init() for on-stack modes
+>   drm/rockchip: Use drm_mode_copy()
+>   drm/sti: Use drm_mode_copy()
+>   drm/tilcdc: Use drm_mode_copy()
+>   drm/i915: Use drm_mode_init() for on-stack modes
+>   drm/i915: Use drm_mode_copy()
+>   drm: Use drm_mode_init() for on-stack modes
+>   drm: Use drm_mode_copy()
 
-Thanks,
-Bjorn
-
-> 
-> Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
-> ---
->  drivers/remoteproc/qcom_q6v5_pas.c | 67 ++++++++++++++++++++++++++++++++++++--
->  1 file changed, 64 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-> index 1ae47cc..58c335e 100644
-> --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> @@ -34,6 +34,7 @@ struct adsp_data {
->  	const char *firmware_name;
->  	int pas_id;
->  	unsigned int minidump_id;
-> +	bool uses_elf64;
->  	bool has_aggre2_clk;
->  	bool auto_boot;
->  
-> @@ -450,7 +451,11 @@ static int adsp_probe(struct platform_device *pdev)
->  	}
->  
->  	rproc->auto_boot = desc->auto_boot;
-> -	rproc_coredump_set_elf_info(rproc, ELFCLASS32, EM_NONE);
-> +
-> +	if (desc->uses_elf64)
-> +		rproc_coredump_set_elf_info(rproc, ELFCLASS64, EM_NONE);
-> +	else
-> +		rproc_coredump_set_elf_info(rproc, ELFCLASS32, EM_NONE);
->  
->  	adsp = (struct qcom_adsp *)rproc->priv;
->  	adsp->dev = &pdev->dev;
-> @@ -617,6 +622,24 @@ static const struct adsp_data sm8350_adsp_resource = {
->  	.ssctl_id = 0x14,
->  };
->  
-> +static const struct adsp_data sm8450_adsp_resource = {
-> +	.crash_reason_smem = 423,
-> +	.firmware_name = "adsp.mdt",
-> +	.pas_id = 1,
-> +	.uses_elf64 = true,
-> +	.has_aggre2_clk = false,
-> +	.auto_boot = true,
-> +	.proxy_pd_names = (char*[]){
-> +		"lcx",
-> +		"lmx",
-> +		NULL
-> +	},
-> +	.load_state = "adsp",
-> +	.ssr_name = "lpass",
-> +	.sysmon_name = "adsp",
-> +	.ssctl_id = 0x14,
-> +};
-> +
->  static const struct adsp_data msm8996_adsp_resource = {
->  		.crash_reason_smem = 423,
->  		.firmware_name = "adsp.mdt",
-> @@ -721,6 +744,24 @@ static const struct adsp_data sm8350_cdsp_resource = {
->  	.ssctl_id = 0x17,
->  };
->  
-> +static const struct adsp_data sm8450_cdsp_resource = {
-> +	.crash_reason_smem = 601,
-> +	.firmware_name = "cdsp.mdt",
-> +	.pas_id = 18,
-> +	.uses_elf64 = true,
-> +	.has_aggre2_clk = false,
-> +	.auto_boot = true,
-> +	.proxy_pd_names = (char*[]){
-> +		"cx",
-> +		"mxc",
-> +		NULL
-> +	},
-> +	.load_state = "cdsp",
-> +	.ssr_name = "cdsp",
-> +	.sysmon_name = "cdsp",
-> +	.ssctl_id = 0x17,
-> +};
-> +
->  static const struct adsp_data mpss_resource_init = {
->  	.crash_reason_smem = 421,
->  	.firmware_name = "modem.mdt",
-> @@ -755,6 +796,25 @@ static const struct adsp_data sc8180x_mpss_resource = {
->  	.ssctl_id = 0x12,
->  };
->  
-> +static const struct adsp_data sm8450_mpss_resource = {
-> +	.crash_reason_smem = 421,
-> +	.firmware_name = "modem.mdt",
-> +	.pas_id = 4,
-> +	.minidump_id = 3,
-> +	.uses_elf64 = true,
-> +	.has_aggre2_clk = false,
-> +	.auto_boot = false,
-> +	.proxy_pd_names = (char*[]){
-> +		"cx",
-> +		"mss",
-> +		NULL
-> +	},
-> +	.load_state = "modem",
-> +	.ssr_name = "mpss",
-> +	.sysmon_name = "modem",
-> +	.ssctl_id = 0x12,
-> +};
-> +
->  static const struct adsp_data slpi_resource_init = {
->  		.crash_reason_smem = 424,
->  		.firmware_name = "slpi.mdt",
-> @@ -879,10 +939,11 @@ static const struct of_device_id adsp_of_match[] = {
->  	{ .compatible = "qcom,sm8350-cdsp-pas", .data = &sm8350_cdsp_resource},
->  	{ .compatible = "qcom,sm8350-slpi-pas", .data = &sm8350_slpi_resource},
->  	{ .compatible = "qcom,sm8350-mpss-pas", .data = &mpss_resource_init},
-> -	{ .compatible = "qcom,sm8450-adsp-pas", .data = &sm8350_adsp_resource},
-> -	{ .compatible = "qcom,sm8450-cdsp-pas", .data = &sm8350_cdsp_resource},
-> +	{ .compatible = "qcom,sm8450-adsp-pas", .data = &sm8450_adsp_resource},
-> +	{ .compatible = "qcom,sm8450-cdsp-pas", .data = &sm8450_cdsp_resource},
->  	{ .compatible = "qcom,sm8450-slpi-pas", .data = &sm8350_slpi_resource},
->  	{ .compatible = "qcom,sm8450-mpss-pas", .data = &mpss_resource_init},
-> +	{ .compatible = "qcom,sm8450-mpss-pas", .data = &sm8450_mpss_resource},
->  	{ },
->  };
->  MODULE_DEVICE_TABLE(of, adsp_of_match);
-> -- 
-> 2.7.4
-> 
+-- 
+Ville Syrjälä
+Intel
