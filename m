@@ -2,138 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD16B4D7FE2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Mar 2022 11:32:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 16C644D8012
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Mar 2022 11:41:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238409AbiCNKdO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 14 Mar 2022 06:33:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40090 "EHLO
+        id S238636AbiCNKmm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 14 Mar 2022 06:42:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231730AbiCNKdO (ORCPT
+        with ESMTP id S234173AbiCNKmk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 14 Mar 2022 06:33:14 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BDA843ACE;
-        Mon, 14 Mar 2022 03:32:04 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Mon, 14 Mar 2022 06:42:40 -0400
+Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D748B43EC6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Mar 2022 03:41:30 -0700 (PDT)
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com [209.85.208.71])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 50E6660FCD;
-        Mon, 14 Mar 2022 10:32:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14508C340E9;
-        Mon, 14 Mar 2022 10:31:59 +0000 (UTC)
-Message-ID: <1682f555-f7b8-8830-26ff-8d0c9007d323@xs4all.nl>
-Date:   Mon, 14 Mar 2022 11:31:58 +0100
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 9175A3F79C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Mar 2022 10:41:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1647254489;
+        bh=cR8L9DGP3yJSDi44x8gY1TGjdeDaEHMP44/lzSW8rUQ=;
+        h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+         In-Reply-To:Content-Type;
+        b=uZ1YNzHChHmCeH+THODOAPEsCaIwQg65eSDPPYJu4McYWuq9pumNDgtR2wYIVQVuv
+         DPDYLKURuGTvJTBPwPrbBQaoNKxezHUDyHTqrQaTItMXmgYe2surs3nryfu7KO8xx2
+         7I8aYTM52kGQOjrDfYswCL8R8oVQcsC1KqlJwJ2uVSURDAItNG0VU/L+Ox78/5kHXX
+         Dv7VVWdLh4GXZntNWj9L9SuNn89F+nHaWwkskyS8sNivhioMmQtFKTFvCL4jpAvkzV
+         uBi92J7/cpR/mvKx6L1DDTTBTbQ5IffRfysUHPrP7BGKuFVfiE0SuCGTqt2OXHO8aF
+         MwCqZfGfJcYkw==
+Received: by mail-ed1-f71.google.com with SMTP id l14-20020aa7cace000000b003f7f8e1cbbdso8442725edt.20
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Mar 2022 03:41:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=cR8L9DGP3yJSDi44x8gY1TGjdeDaEHMP44/lzSW8rUQ=;
+        b=33ecRv+rem0N/SNQidtjUAMlCocF2JcIbXsQScrRG49/ZlMG34pTr0/rrtpTe4OPQj
+         26BhDO/vpgZg9qe0Phz0Z/xvAiHuFXryd3IprhsIBJGR9HESlg6IRRf/Ux6BeOa4g5Tf
+         JGlAv/R75cNwid65GNXE0E/PbV/kUdmWvN84mTkyAaNnZKMU5OgwCPr4JzgkWW5qhIVw
+         RECkJhxUQi0ROCKhuo0gmH5D6zeY3DPAPJCXhMiCSOvKGqe9r/S60/D5Or5Wz1GtSNgr
+         oLmSTz0X2RA7uaOWieIHZ9tKh9/7EurXIFbhrijFdiVW0gU18SQjeE3gdveF31nrDcue
+         KYZg==
+X-Gm-Message-State: AOAM533fh5Ggr0Czl4Sgiyx90Q8NJOD4TV0LFql3o4zXDa14O6WxWomj
+        VbjOFnr/YZbkPeYpPAAWRtJwcij8LXiJS5MQhoMG2CVW0815AKp9/Ny/jXX3KE6lXaSEn4G7jW/
+        liDAes1fpxLsXbE6KKhToSvLzbFBeBmk4rkAsLQdDH4Q=
+X-Received: by 2002:a17:906:c116:b0:6d6:f8b3:cd47 with SMTP id do22-20020a170906c11600b006d6f8b3cd47mr18639530ejc.501.1647254489236;
+        Mon, 14 Mar 2022 03:41:29 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJxSOTbmSAF6uG3GM22YAt0E/KC7wWNF2wsOIEvYm9csbBjNR+5AfgsSfbdmR5FElce7jWg1qA==
+X-Received: by 2002:a17:906:c116:b0:6d6:f8b3:cd47 with SMTP id do22-20020a170906c11600b006d6f8b3cd47mr18639508ejc.501.1647254489015;
+        Mon, 14 Mar 2022 03:41:29 -0700 (PDT)
+Received: from [192.168.0.152] (xdsl-188-155-174-239.adslplus.ch. [188.155.174.239])
+        by smtp.googlemail.com with ESMTPSA id er12-20020a056402448c00b00413d03ac4a2sm7380218edb.69.2022.03.14.03.41.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Mar 2022 03:41:28 -0700 (PDT)
+Message-ID: <fadbc93f-8741-58c6-d0e5-dc740e0f0724@canonical.com>
+Date:   Mon, 14 Mar 2022 11:41:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH v4 2/2] venus: venc: Add support for intra-refresh mode
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v2 1/3] dt-bindings: phy: qcom,usb-snps-femto-v2: Add phy
+ override params bindings
 Content-Language: en-US
-To:     quic_dikshita@quicinc.com, linux-media@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, ezequiel@collabora.com,
-        stanimir.varbanov@linaro.org, quic_vgarodia@quicinc.com,
-        quic_majja@quicinc.com, quic_jdas@quicinc.com
-References: <1647252574-30451-1-git-send-email-quic_dikshita@quicinc.com>
- <1647252574-30451-3-git-send-email-quic_dikshita@quicinc.com>
-From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <1647252574-30451-3-git-send-email-quic_dikshita@quicinc.com>
+To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
+Cc:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-usb@vger.kernel.org, quic_ppratap@quicinc.com,
+        quic_kriskura@quicinc.com
+References: <1646288011-32242-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1646288011-32242-2-git-send-email-quic_c_sanm@quicinc.com>
+ <b793195b-1d3d-63b2-19d2-72ae2aec8c0f@canonical.com>
+ <20220314032952.GA27561@hu-pkondeti-hyd.qualcomm.com>
+ <f1621a67-a0ff-f111-c4da-9401924e7f4a@canonical.com>
+ <20220314081613.GA28402@hu-pkondeti-hyd.qualcomm.com>
+ <c88396f4-4cfe-d375-1dcd-b34a6496cb06@canonical.com>
+ <20220314094054.GB28402@hu-pkondeti-hyd.qualcomm.com>
+ <b45b3b7e-e1c0-79b6-81c0-53c70427dd10@canonical.com>
+ <20220314103045.GA31533@hu-pkondeti-hyd.qualcomm.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20220314103045.GA31533@hu-pkondeti-hyd.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,
-        HEADER_FROM_DIFFERENT_DOMAINS,NICE_REPLY_A,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 3/14/22 11:09, quic_dikshita@quicinc.com wrote:
-> From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+On 14/03/2022 11:30, Pavan Kondeti wrote:
+> Hi Krzysztof,
 > 
-> Add support for intra-refresh type v4l2 control.
+>>
+>> Ah, I did not get it. That's not the solution for this case. defines in
+>> dt-bindings are for constants which already can be in DT, e.g. IDs. Your
+>> register values should not be stored in DT.
+>>
+> These are again not register definitions. These are encodings that dT and
+> driver can use. These would be constants only, no?
+
+What do you mean it is not a register value? I don't have access to
+datasheet/manual but I can clearly see code:
+
++	if (or->hs_disconnect.override)
++		qcom_snps_hsphy_write_mask(hsphy->base,
++			USB2_PHY_USB_PHY_HS_PHY_OVERRIDE_X0,
++			HS_DISCONNECT_MASK,
++			or->hs_disconnect.value << HS_DISCONNECT_SHIFT);
+
+You read the value from DT (e.g. "3" which means 6.3% for hs-disconnect)
+and you write it to a register. Directly. 3 is a value for the hardware,
+meaningless outside of it. It has meaning only in this one hardware
+programming model. For humans it means nothing. For humans 6.3% means
+something.
+
+>>>
+>>>>
+>>>> What could be the meaningful value? Percentage could work. You have
+>>>> there a negative value, so I wonder what type of percentage is it? What
+>>>> is the formula?
+>>>
+>>> I just multiplied by 100 since device tree has no support for floating (as per
+>>> my knowledge). The negative value represents it lowers the disconnect
+>>> threshold by 2.72% of the default value. if it makes sense, we could also
+>>> start from 0 like below.
+>>
+>> ok
+>>
+>>>
+>>> #define QCOM_SNPS_FEMTO_HS_DISCONNECT_NEG_2P72_PCT 0
+>>> #define QCOM_SNPS_FEMTO_HS_DISCONNECT_DEFAULT	1
+>>> #define QCOM_SNPS_FEMTO_HS_DISCONNECT_3P17_PCT	2
+>>> #define QCOM_SNPS_FEMTO_HS_DISCONNECT_6P3_PCT	3
+>>>
+>>> The driver can have a table to map these bindings. This looks much better
+>>> than those x100 formula values.
+>>
+>> Again mention driver how he can map it. I mostly don't care about the
+>> driver. :)
+>>
+>> I think we are getting around the problem, so to emphasize again: do not
+>> store register values in the bindings/DT but its meaning, so in your
+>> case most likely percentages (or permille or ratio or some other value).
+>>
 > 
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> ---
->  drivers/media/platform/qcom/venus/core.h       |  1 +
->  drivers/media/platform/qcom/venus/venc.c       |  6 +++++-
->  drivers/media/platform/qcom/venus/venc_ctrls.c | 10 ++++++++++
->  3 files changed, 16 insertions(+), 1 deletion(-)
+> I am really confused on what is that you mean by not storing the registers
+> here. We are only giving enum values for specific percentages supported by
+> the PHY. 
+
+The enum consists of values used in hardware registers. Values having
+meaning only to this one particular hardware. Any other hardware will
+not understand them.
+
+IOW, you embed the hardware programming model in the DT. No.
+
+> if you see -2.72 corresponds to 0 value on 0:2 bits of a register.
+> I did not mention that in the device tree. we are giving constant values
+> (enums) for all the possible percentage values. The user can see the
+> dt-bindings file and pass the approriate value based on the compliance
+> results. What is the objection?
+
+You use some unrelated arguments. How does it matter what user can see
+or cannot see?
+
 > 
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index 7c3bac0..65c0f01 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -260,6 +260,7 @@ struct venc_controls {
->  
->  	u32 header_mode;
->  	bool aud_enable;
-> +	u32 intra_refresh_type;
->  	u32 intra_refresh_period;
->  
->  	struct {
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index 84bafc3..bff8caf 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -893,8 +893,12 @@ static int venc_set_properties(struct venus_inst *inst)
->  				mbs++;
->  			mbs /= ctr->intra_refresh_period;
->  
-> -			intra_refresh.mode = HFI_INTRA_REFRESH_RANDOM;
->  			intra_refresh.cir_mbs = mbs;
-> +			if (ctr->intra_refresh_type ==
-> +			    V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_CYCLIC)
-> +				intra_refresh.mode = HFI_INTRA_REFRESH_CYCLIC;
-> +			else
-> +				intra_refresh.mode = HFI_INTRA_REFRESH_RANDOM;
->  		}
->  
->  		ptype = HFI_PROPERTY_PARAM_VENC_INTRA_REFRESH;
-> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> index 1ada42d..51f5a572 100644
-> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> @@ -316,6 +316,9 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
->  	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:
->  		ctr->mastering = *ctrl->p_new.p_hdr10_mastering;
->  		break;
-> +	case V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE:
-> +		ctr->intra_refresh_type = ctrl->val;
-> +		break;
->  	case V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD:
->  		ctr->intra_refresh_period = ctrl->val;
->  		break;
-> @@ -582,6 +585,13 @@ int venc_ctrl_init(struct venus_inst *inst)
->  				   V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY,
->  				   v4l2_ctrl_ptr_create(NULL));
->  
-> +	v4l2_ctrl_new_std_menu(&inst->ctrl_handler, &venc_ctrl_ops,
-> +			       V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE,
-> +			       V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_CYCLIC,
-> +			       ~((1 << V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_RANDOM) |
-> +			       (1 << V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_CYCLIC)),
+> can you please give an example if you have something in mind? 
 
-Just set this to 0. All menu items in the range 0..max are used, so nothing
-needs to be skipped.
+I gave you an example - use percentages. Another example how it was done
+wrong is here:
+https://lore.kernel.org/linux-devicetree/c6607953-927e-4d85-21cb-72e01a121453@kernel.org/
 
-This argument should only be set to a non-0 value if one or more items in
-the range 0..max are to be skipped.
 
-After that change you can add my:
-
-Acked-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-
-Regards,
-
-	Hans
-
-> +			       V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_RANDOM);
-> +
->  	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
->  			  V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD, 0,
->  			  ((4096 * 2304) >> 8), 1, 0);
+Best regards,
+Krzysztof
