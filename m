@@ -2,188 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C2A44D9D06
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 15:11:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E7F84D9DE7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 15:42:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348875AbiCOOMV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Mar 2022 10:12:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55716 "EHLO
+        id S1349165AbiCOOnK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Mar 2022 10:43:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348854AbiCOOMU (ORCPT
+        with ESMTP id S242040AbiCOOnJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Mar 2022 10:12:20 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14AD1546AA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Mar 2022 07:11:08 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id h11so26666261ljb.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Mar 2022 07:11:07 -0700 (PDT)
+        Tue, 15 Mar 2022 10:43:09 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A72005575C;
+        Tue, 15 Mar 2022 07:41:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=B5J/aJLfwIlJFiO9Fm9A+DptsdVKj69BbXqtDgcTbh0=;
-        b=DnbEBaXdcq/FUu+zJE4TlRVgH900JAfWn3cUyLX+EpC6oAWigrhIJmrKTlvVvg/Thw
-         sDiuQYNx61dU5n+EzLMRNRmk2Z//FBpIIOKDlSC1yAFj7tcSjLIp8OehlkFYjMXDFDex
-         9X59veUpCRusGkjqqLRd7OMyA9MG1URDxZ4BKTBcTT+6zGKPvcqrsCUOMrnbQ07DwZiE
-         LXqtgtTuVwYXnlsuRT2lFonV+2vYKEs+7oFzGCLxWYZuHNMKXtAG0pxSm15FyWpWRuvz
-         rh8Yd6H1bknNLm4+jyhK7/zh0zar9H5m7yT25DRUDZjnil2hHQaXQsk2Xx9eMREH9FpM
-         gpWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=B5J/aJLfwIlJFiO9Fm9A+DptsdVKj69BbXqtDgcTbh0=;
-        b=wVpaJMrQAY0m6cXRFZiOep5RSLBfkk2UqoRAEZX9ZlswvdHMixSzcOnr4HFApCUiSJ
-         ++78if0rvztMau1eutgGp0TC7Uf8nQOHM/OywAnijYChcH1I+uiTPX0mWA+vwR8AjxOM
-         G983KJOcVTTl7Lfv0+H2XFlh9OK4jehLTiUw8R1MErQZ7fWIqU9slK1toIxDH4Oiadqf
-         drHWaGCoQoOnC+gDIT3BYETMdgfw6R76RrlS0onnGzJ5/mFYK/Nm/LP724Lu+LfSR0Af
-         nt65Xf15eNmELStHQkCHx+DG32XkaUQWxVDXLU2QA3ezPp6pXDiyyt39B7O9g3RhnlK7
-         TlRw==
-X-Gm-Message-State: AOAM533fNnTBgTB1LUhRnfY889zlonJQYs/PLaQlbhCihtxoAZgwelQO
-        3/bzP2p1OTvoKv7b32SpTZN9pg==
-X-Google-Smtp-Source: ABdhPJxPbWblQZTYsvwK2UfV+LUVc2YAAB++YPqAh17gS7uc6rSaVWP8XiO+sEhfeXTIG2rjW7RBSA==
-X-Received: by 2002:a05:651c:1047:b0:247:f205:2911 with SMTP id x7-20020a05651c104700b00247f2052911mr17745888ljm.284.1647353466319;
-        Tue, 15 Mar 2022 07:11:06 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id c27-20020a2ebf1b000000b00247eba13667sm4324079ljr.16.2022.03.15.07.11.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Mar 2022 07:11:05 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Danny Lin <danny@kdrag0n.dev>
-Subject: [PATCH] arm64: dts: qcom: sdm845: correct dynamic power coefficients
-Date:   Tue, 15 Mar 2022 17:11:04 +0300
-Message-Id: <20220315141104.730235-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1647355317; x=1678891317;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=MrQ1fvABcxNaAepb8WOlt+Sg8YuuQ7eRewo0sYq/MHY=;
+  b=CjWJVsrXpuf0/nWsMOAlPlLdelQ80bGCl30wsa4gaH2MmaqdHtxXU/kS
+   7SR5m8oMUz72wolBOLT+1cx7SQ3kPknPsDZRkYad9BbetJYyjBVkstZhm
+   DEFSJ9sC09eub4XhsJPXXaETf++12XaVq5Ms/znx5i3/GeQEU4dd6CKfv
+   Q=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 15 Mar 2022 07:41:57 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Mar 2022 07:41:57 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Tue, 15 Mar 2022 07:41:56 -0700
+Received: from hu-ylal-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 15 Mar 2022 07:41:54 -0700
+From:   Yogesh Lal <quic_ylal@quicinc.com>
+To:     <bjorn.andersson@linaro.org>, <quic_sibis@quicinc.com>
+CC:     <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Yogesh Lal <quic_ylal@quicinc.com>
+Subject: [PATCH V2] remoteproc: qcom: pas: Add elf64 support to coredump
+Date:   Tue, 15 Mar 2022 20:11:47 +0530
+Message-ID: <1647355307-7612-1-git-send-email-quic_ylal@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Following sm8150/sm8250 update sdm845 capacity-dmips-mhz and
-dynamic-power-coefficient based on the measurements [1], [2].
+This change adds elf64 coredump to the ADSP,CDSP and MPSS subsystems as
+they will be 64 bit from sm8450 onward.
 
-The energy model dynamic-power-coefficient values were calculated with
-    DPC = µW / MHz / V^2
-for each OPP, and averaged across all OPPs within each cluster for the
-final coefficient. Voltages were obtained from the qcom-cpufreq-hw
-driver that reads voltages from the OSM LUT programmed into the SoC.
-
-Normalized DMIPS/MHz capacity scale values for each CPU were calculated
-from CoreMarks/MHz (CoreMark iterations per second per MHz), which
-serves the same purpose. For each CPU, the final capacity-dmips-mhz
-value is the C/MHz value of its maximum frequency normalized to
-SCHED_CAPACITY_SCALE (1024) for the fastest CPU in the system.
-
-For more details on measurement process see the commit message for the
-commit 6aabed5526ee ("arm64: dts: qcom: sm8250: Add CPU capacities and
-energy model").
-
-[1] https://github.com/kdrag0n/freqbench
-[2] https://github.com/kdrag0n/freqbench/tree/master/results/sdm845/main
-
-Cc: Danny Lin <danny@kdrag0n.dev>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ Updating commit message and minor code change.
+ drivers/remoteproc/qcom_q6v5_pas.c | 68 +++++++++++++++++++++++++++++++++++---
+ 1 file changed, 64 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 41f4e46e1f85..f5932b49877d 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -200,8 +200,8 @@ CPU0: cpu@0 {
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
- 					   &LITTLE_CPU_SLEEP_1
- 					   &CLUSTER_SLEEP_0>;
--			capacity-dmips-mhz = <607>;
--			dynamic-power-coefficient = <100>;
-+			capacity-dmips-mhz = <611>;
-+			dynamic-power-coefficient = <290>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			operating-points-v2 = <&cpu0_opp_table>;
- 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
-@@ -225,8 +225,8 @@ CPU1: cpu@100 {
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
- 					   &LITTLE_CPU_SLEEP_1
- 					   &CLUSTER_SLEEP_0>;
--			capacity-dmips-mhz = <607>;
--			dynamic-power-coefficient = <100>;
-+			capacity-dmips-mhz = <611>;
-+			dynamic-power-coefficient = <290>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			operating-points-v2 = <&cpu0_opp_table>;
- 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
-@@ -247,8 +247,8 @@ CPU2: cpu@200 {
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
- 					   &LITTLE_CPU_SLEEP_1
- 					   &CLUSTER_SLEEP_0>;
--			capacity-dmips-mhz = <607>;
--			dynamic-power-coefficient = <100>;
-+			capacity-dmips-mhz = <611>;
-+			dynamic-power-coefficient = <290>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			operating-points-v2 = <&cpu0_opp_table>;
- 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
-@@ -269,8 +269,8 @@ CPU3: cpu@300 {
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
- 					   &LITTLE_CPU_SLEEP_1
- 					   &CLUSTER_SLEEP_0>;
--			capacity-dmips-mhz = <607>;
--			dynamic-power-coefficient = <100>;
-+			capacity-dmips-mhz = <611>;
-+			dynamic-power-coefficient = <290>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			operating-points-v2 = <&cpu0_opp_table>;
- 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
-@@ -292,7 +292,7 @@ CPU4: cpu@400 {
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0
- 					   &BIG_CPU_SLEEP_1
- 					   &CLUSTER_SLEEP_0>;
--			dynamic-power-coefficient = <396>;
-+			dynamic-power-coefficient = <442>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
- 			operating-points-v2 = <&cpu4_opp_table>;
- 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
-@@ -314,7 +314,7 @@ CPU5: cpu@500 {
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0
- 					   &BIG_CPU_SLEEP_1
- 					   &CLUSTER_SLEEP_0>;
--			dynamic-power-coefficient = <396>;
-+			dynamic-power-coefficient = <442>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
- 			operating-points-v2 = <&cpu4_opp_table>;
- 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
-@@ -336,7 +336,7 @@ CPU6: cpu@600 {
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0
- 					   &BIG_CPU_SLEEP_1
- 					   &CLUSTER_SLEEP_0>;
--			dynamic-power-coefficient = <396>;
-+			dynamic-power-coefficient = <442>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
- 			operating-points-v2 = <&cpu4_opp_table>;
- 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
-@@ -358,7 +358,7 @@ CPU7: cpu@700 {
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0
- 					   &BIG_CPU_SLEEP_1
- 					   &CLUSTER_SLEEP_0>;
--			dynamic-power-coefficient = <396>;
-+			dynamic-power-coefficient = <442>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
- 			operating-points-v2 = <&cpu4_opp_table>;
- 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 1ae47cc..445ee3f 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -34,6 +34,7 @@ struct adsp_data {
+ 	const char *firmware_name;
+ 	int pas_id;
+ 	unsigned int minidump_id;
++	bool uses_elf64;
+ 	bool has_aggre2_clk;
+ 	bool auto_boot;
+ 
+@@ -450,7 +451,11 @@ static int adsp_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	rproc->auto_boot = desc->auto_boot;
+-	rproc_coredump_set_elf_info(rproc, ELFCLASS32, EM_NONE);
++
++	if (desc->uses_elf64)
++		rproc_coredump_set_elf_info(rproc, ELFCLASS64, EM_NONE);
++	else
++		rproc_coredump_set_elf_info(rproc, ELFCLASS32, EM_NONE);
+ 
+ 	adsp = (struct qcom_adsp *)rproc->priv;
+ 	adsp->dev = &pdev->dev;
+@@ -617,6 +622,24 @@ static const struct adsp_data sm8350_adsp_resource = {
+ 	.ssctl_id = 0x14,
+ };
+ 
++static const struct adsp_data sm8450_adsp_resource = {
++	.crash_reason_smem = 423,
++	.firmware_name = "adsp.mdt",
++	.pas_id = 1,
++	.uses_elf64 = true,
++	.has_aggre2_clk = false,
++	.auto_boot = true,
++	.proxy_pd_names = (char*[]){
++		"lcx",
++		"lmx",
++		NULL
++	},
++	.load_state = "adsp",
++	.ssr_name = "lpass",
++	.sysmon_name = "adsp",
++	.ssctl_id = 0x14,
++};
++
+ static const struct adsp_data msm8996_adsp_resource = {
+ 		.crash_reason_smem = 423,
+ 		.firmware_name = "adsp.mdt",
+@@ -721,6 +744,24 @@ static const struct adsp_data sm8350_cdsp_resource = {
+ 	.ssctl_id = 0x17,
+ };
+ 
++static const struct adsp_data sm8450_cdsp_resource = {
++	.crash_reason_smem = 601,
++	.firmware_name = "cdsp.mdt",
++	.pas_id = 18,
++	.uses_elf64 = true,
++	.has_aggre2_clk = false,
++	.auto_boot = true,
++	.proxy_pd_names = (char*[]){
++		"cx",
++		"mxc",
++		NULL
++	},
++	.load_state = "cdsp",
++	.ssr_name = "cdsp",
++	.sysmon_name = "cdsp",
++	.ssctl_id = 0x17,
++};
++
+ static const struct adsp_data mpss_resource_init = {
+ 	.crash_reason_smem = 421,
+ 	.firmware_name = "modem.mdt",
+@@ -755,6 +796,25 @@ static const struct adsp_data sc8180x_mpss_resource = {
+ 	.ssctl_id = 0x12,
+ };
+ 
++static const struct adsp_data sm8450_mpss_resource = {
++	.crash_reason_smem = 421,
++	.firmware_name = "modem.mdt",
++	.pas_id = 4,
++	.minidump_id = 3,
++	.uses_elf64 = true,
++	.has_aggre2_clk = false,
++	.auto_boot = false,
++	.proxy_pd_names = (char*[]){
++		"cx",
++		"mss",
++		NULL
++	},
++	.load_state = "modem",
++	.ssr_name = "mpss",
++	.sysmon_name = "modem",
++	.ssctl_id = 0x12,
++};
++
+ static const struct adsp_data slpi_resource_init = {
+ 		.crash_reason_smem = 424,
+ 		.firmware_name = "slpi.mdt",
+@@ -879,10 +939,10 @@ static const struct of_device_id adsp_of_match[] = {
+ 	{ .compatible = "qcom,sm8350-cdsp-pas", .data = &sm8350_cdsp_resource},
+ 	{ .compatible = "qcom,sm8350-slpi-pas", .data = &sm8350_slpi_resource},
+ 	{ .compatible = "qcom,sm8350-mpss-pas", .data = &mpss_resource_init},
+-	{ .compatible = "qcom,sm8450-adsp-pas", .data = &sm8350_adsp_resource},
+-	{ .compatible = "qcom,sm8450-cdsp-pas", .data = &sm8350_cdsp_resource},
++	{ .compatible = "qcom,sm8450-adsp-pas", .data = &sm8450_adsp_resource},
++	{ .compatible = "qcom,sm8450-cdsp-pas", .data = &sm8450_cdsp_resource},
+ 	{ .compatible = "qcom,sm8450-slpi-pas", .data = &sm8350_slpi_resource},
+-	{ .compatible = "qcom,sm8450-mpss-pas", .data = &mpss_resource_init},
++	{ .compatible = "qcom,sm8450-mpss-pas", .data = &sm8450_mpss_resource},
+ 	{ },
+ };
+ MODULE_DEVICE_TABLE(of, adsp_of_match);
 -- 
-2.35.1
+2.7.4
 
