@@ -2,114 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1202C4DA3CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 21:14:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 910144DA40F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 21:37:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236582AbiCOUPv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Mar 2022 16:15:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60504 "EHLO
+        id S243134AbiCOUi1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Mar 2022 16:38:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234688AbiCOUPu (ORCPT
+        with ESMTP id S237765AbiCOUi0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Mar 2022 16:15:50 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C3CF5AA7A;
-        Tue, 15 Mar 2022 13:14:38 -0700 (PDT)
-Received: from g550jk.localnet (a246182.upc-a.chello.nl [62.163.246.182])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id AF31CCB556;
-        Tue, 15 Mar 2022 20:14:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1647375275; bh=invxskIdOgqfDDwWrwC5sBLhuscbs9Z9OfNld5S4mXY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=L2oeOX4C6bkNHEBFWrmsaM2MWMfl0hw6j0WEXU/4cTem9TJB/VvFX3esSLGbqLMVL
-         /DRvGBKccPcqoyQ1ywoB04lPUYRS1MaVXJtBSius4TJ81oCYncEcV9rjqpaWl4epA7
-         t4WYPkpyP+GXyty/f1eHTaV3vks5fDawj+qSJw6s=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 05/10] rpmsg: smd: allow opening rpm_requests even if already opened
-Date:   Tue, 15 Mar 2022 21:14:35 +0100
-Message-ID: <5558411.DvuYhMxLoT@g550jk>
-In-Reply-To: <2630587.mvXUDI8C0e@g550jk>
-References: <20220220201909.445468-1-luca@z3ntu.xyz> <20220220201909.445468-6-luca@z3ntu.xyz> <2630587.mvXUDI8C0e@g550jk>
+        Tue, 15 Mar 2022 16:38:26 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E71A4BFF7;
+        Tue, 15 Mar 2022 13:37:14 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D36F360B89;
+        Tue, 15 Mar 2022 20:37:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293D6C340FA;
+        Tue, 15 Mar 2022 20:37:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1647376633;
+        bh=/b4vCj+wePpz0Cx1dk2J9m5iFlRl2HG/Zlcl7lyh6mg=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=ZFfdMIygGk3snRixW7kHlZYa822LyySAzqVl5egAZeOAY41n95U2GgVU1oYmI/aAH
+         nGqbNx0gSK8CYSZfE11yP4RY4AxW/LEaCeE/iMoesZ8cMEZUDdnLwkHScLl/fDS2a6
+         +PhbEDppQ10BgJQnxvfwZyLknNfPPCAWb37oTYFXZKvD+Nv7YG5RFSRQBa/5j4dEIv
+         ZqVyoc4LhwkOjbRb/o0jJ8XoVkNjX/qf1nfnr3uqo7Yf8qfKy+uUUmteZgvq7XZRZx
+         OBnoXJr/7IWiZLON9VDuKmE1rpDAZAPTwQMKTa4A+vwGuKoycNHmcD3AkkxfP89dcS
+         iAh8TZcbxV3Lw==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
-        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <20220311041957.2611885-1-bjorn.andersson@linaro.org>
+References: <20220311041957.2611885-1-bjorn.andersson@linaro.org>
+Subject: Re: [GIT PULL] Qualcomm clock updates for v5.18
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Date:   Tue, 15 Mar 2022 13:37:11 -0700
+User-Agent: alot/0.10
+Message-Id: <20220315203713.293D6C340FA@smtp.kernel.org>
+X-Spam-Status: No, score=-8.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Montag, 14. M=E4rz 2022 20:08:20 CET Luca Weiss wrote:
-> Hi all,
+Quoting Bjorn Andersson (2022-03-10 20:19:57)
+> The following changes since commit e783362eb54cd99b2cac8b3a9aeac942e6f6ac=
+07:
 >=20
-> any feedback on this patch? It's needed for msm8953 to boot properly.
-
-I was informed that the patch has already been applied and is now also pres=
-ent=20
-in linux-next, so please disregard my last email.
-
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?
-id=3Da8f8cc6b39b7ee0dbaccbebd1268c9d3458ebf13
-
-Regards
-Luca
-
+>   Linux 5.17-rc1 (2022-01-23 10:12:53 +0200)
 >=20
-> Regards
-> Luca
+> are available in the Git repository at:
 >=20
-> On Sonntag, 20. Februar 2022 21:18:58 CET Luca Weiss wrote:
-> > On msm8953 the channel seems to be already opened when booting Linux but
-> > we still need to open it for communication with regulators etc.
-> >=20
-> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > ---
-> > Changes in v2:
-> > - rework original patch, don't drop condition completely but allow force
-> >=20
-> >   opening rpm_requests channel
-> > =20
-> >  drivers/rpmsg/qcom_smd.c | 7 ++++++-
-> >  1 file changed, 6 insertions(+), 1 deletion(-)
-> >=20
-> > diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-> > index 540e027f08c4..887e21ca51f2 100644
-> > --- a/drivers/rpmsg/qcom_smd.c
-> > +++ b/drivers/rpmsg/qcom_smd.c
-> > @@ -1288,9 +1288,14 @@ static void qcom_channel_state_worker(struct
-> > work_struct *work) if (channel->state !=3D SMD_CHANNEL_CLOSED)
-> >=20
-> >  			continue;
-> >=20
-> > +		/*
-> > +		 * Always open rpm_requests, even when already opened
+>   https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qco=
+m-clk-for-5.18
 >=20
-> which is
+> for you to fetch changes up to 6e87c8f074075e10c5352d3256879b4e6dd6cb81:
 >=20
-> > +		 * required on some SoCs like msm8953.
-> > +		 */
-> >=20
-> >  		remote_state =3D GET_RX_CHANNEL_INFO(channel, state);
-> >  		if (remote_state !=3D SMD_CHANNEL_OPENING &&
-> >=20
-> > -		    remote_state !=3D SMD_CHANNEL_OPENED)
-> > +		    remote_state !=3D SMD_CHANNEL_OPENED &&
-> > +		    strcmp(channel->name, "rpm_requests"))
-> >=20
-> >  			continue;
-> >  	=09
-> >  		if (channel->registered)
+>   clk: qcom: Add display clock controller driver for SM6125 (2022-03-09 0=
+8:53:30 -0600)
+>=20
+> ----------------------------------------------------------------
 
+Please Cc linux-clk on pull requests.
 
-
-
+Thanks. Pulled into clk-next
