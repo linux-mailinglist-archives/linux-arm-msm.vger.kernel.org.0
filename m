@@ -2,48 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 910144DA40F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 21:37:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D24434DA49F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 22:30:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243134AbiCOUi1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Mar 2022 16:38:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44242 "EHLO
+        id S1351964AbiCOVbv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Mar 2022 17:31:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237765AbiCOUi0 (ORCPT
+        with ESMTP id S1350379AbiCOVbq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Mar 2022 16:38:26 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E71A4BFF7;
-        Tue, 15 Mar 2022 13:37:14 -0700 (PDT)
+        Tue, 15 Mar 2022 17:31:46 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A14C15BE4B;
+        Tue, 15 Mar 2022 14:30:33 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D36F360B89;
-        Tue, 15 Mar 2022 20:37:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293D6C340FA;
-        Tue, 15 Mar 2022 20:37:13 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 19EA3B81892;
+        Tue, 15 Mar 2022 21:30:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E47C340F4;
+        Tue, 15 Mar 2022 21:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1647376633;
-        bh=/b4vCj+wePpz0Cx1dk2J9m5iFlRl2HG/Zlcl7lyh6mg=;
+        s=k20201202; t=1647379830;
+        bh=Z+w7qmmwtApw9A0X4lTrxH73AXRGI1t4uG6akIL9azM=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=ZFfdMIygGk3snRixW7kHlZYa822LyySAzqVl5egAZeOAY41n95U2GgVU1oYmI/aAH
-         nGqbNx0gSK8CYSZfE11yP4RY4AxW/LEaCeE/iMoesZ8cMEZUDdnLwkHScLl/fDS2a6
-         +PhbEDppQ10BgJQnxvfwZyLknNfPPCAWb37oTYFXZKvD+Nv7YG5RFSRQBa/5j4dEIv
-         ZqVyoc4LhwkOjbRb/o0jJ8XoVkNjX/qf1nfnr3uqo7Yf8qfKy+uUUmteZgvq7XZRZx
-         OBnoXJr/7IWiZLON9VDuKmE1rpDAZAPTwQMKTa4A+vwGuKoycNHmcD3AkkxfP89dcS
-         iAh8TZcbxV3Lw==
+        b=M4PwMSDorSTfdtY0s/1gMPAGwA76o8BVklHp8cUpOsLR/WrS9AYZ0xQbOt88TuQaH
+         EMQbSpPCoHfLXrEwj2M+QFhUoVpxT++T84P/S7tTMMZOvurhsiRzOWIGXE3vASsh+e
+         36FI6P9cehMnn4n2+l4rzhjFAqEy35TiQWb3azA3bsUcQzWn2u1GgsQhcX2nilHAfS
+         eF4egGjPLjkS4eVKhpZ2+lctYADUqew2oGAyw1mE8bswn940YdxDiTyWOZ3pAMwYVG
+         +7xrwSWWJ8yHK8a6zeB47BABudr8r8ppqzsH7d+muharC6MX2YyZZNiwVPyxJ/RmZN
+         4tKFqn7Jr7fVA==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220311041957.2611885-1-bjorn.andersson@linaro.org>
-References: <20220311041957.2611885-1-bjorn.andersson@linaro.org>
-Subject: Re: [GIT PULL] Qualcomm clock updates for v5.18
+In-Reply-To: <YjDV3n1Xq/EGWU1E@Ansuel-xps.localdomain>
+References: <20220313190419.2207-1-ansuelsmth@gmail.com> <20220313190419.2207-2-ansuelsmth@gmail.com> <20220315175520.32E1AC340EE@smtp.kernel.org> <YjDV3n1Xq/EGWU1E@Ansuel-xps.localdomain>
+Subject: Re: [PATCH 01/16] clk: permit to define a custom parent for clk_hw_get_parent_index
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Date:   Tue, 15 Mar 2022 13:37:11 -0700
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Peter De Schrijver <pdeschrijver@nvidia.com>,
+        Prashant Gaikwad <pgaikwad@nvidia.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-tegra@vger.kernel.org
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Date:   Tue, 15 Mar 2022 14:30:28 -0700
 User-Agent: alot/0.10
-Message-Id: <20220315203713.293D6C340FA@smtp.kernel.org>
+Message-Id: <20220315213030.C8E47C340F4@smtp.kernel.org>
 X-Spam-Status: No, score=-8.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -54,24 +64,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2022-03-10 20:19:57)
-> The following changes since commit e783362eb54cd99b2cac8b3a9aeac942e6f6ac=
-07:
+Quoting Ansuel Smith (2022-03-15 11:07:26)
+> On Tue, Mar 15, 2022 at 10:55:18AM -0700, Stephen Boyd wrote:
+> > Quoting Ansuel Smith (2022-03-13 12:04:04)
+> > >   */
+> > > -int clk_hw_get_parent_index(struct clk_hw *hw)
+> > > +int clk_hw_get_parent_index(struct clk_hw *hw, struct clk_hw *parent)
+> >=20
+> > Please introduce another API vs. tacking on an "output" argument to this
+> > API. That makes the patch less invasive. And it can also return a
+> > pointer instead of an integer in that case.
+> >
 >=20
->   Linux 5.17-rc1 (2022-01-23 10:12:53 +0200)
+> Any suggestion about the name? clk_hw_fetch_parent_index? That would be
+> a direct access of the internal clk_fetch_parent_index.
 >=20
-> are available in the Git repository at:
->=20
->   https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qco=
-m-clk-for-5.18
->=20
-> for you to fetch changes up to 6e87c8f074075e10c5352d3256879b4e6dd6cb81:
->=20
->   clk: qcom: Add display clock controller driver for SM6125 (2022-03-09 0=
-8:53:30 -0600)
->=20
-> ----------------------------------------------------------------
+> The name is already not that intuitive as is. The alternative is to make
+> it extra long, don't know if that's a problem...
+> Something like clk_hw_get_parent_index_by_parent? (that is even more
+> confusing)
 
-Please Cc linux-clk on pull requests.
-
-Thanks. Pulled into clk-next
+Haha that's a mouthful. clk_hw_get_index_of_parent()? I realize now that
+I misread the API because parent wasn't a const pointer. Please make
+parent argument const as well and return an int as before.
