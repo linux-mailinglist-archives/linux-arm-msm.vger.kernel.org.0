@@ -2,161 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C445B4D9C87
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 14:41:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C2A44D9D06
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 15:11:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242481AbiCONm6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Mar 2022 09:42:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45484 "EHLO
+        id S1348875AbiCOOMV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Mar 2022 10:12:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348856AbiCONm4 (ORCPT
+        with ESMTP id S1348854AbiCOOMU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Mar 2022 09:42:56 -0400
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E67F532C3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Mar 2022 06:41:43 -0700 (PDT)
-Received: by mail-io1-xd34.google.com with SMTP id q11so22181766iod.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Mar 2022 06:41:43 -0700 (PDT)
+        Tue, 15 Mar 2022 10:12:20 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14AD1546AA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Mar 2022 07:11:08 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id h11so26666261ljb.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Mar 2022 07:11:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sartura-hr.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3uaD53W4zQXTyZwVHH1JB2XZ73tQmzbVHSL//h1f2ug=;
-        b=7y/IZRcyoKi4gwO1g958k9ieziqGbrLKVzAHRAWXrHo0/OJcYDHqbQ9P1F9Rhcpfsf
-         aEYbQSp+6mk3Y4ysyrAgeefwxXmNxgejdRZRlZQgHGG2vjY42aT7fJBHzSb7/AuMAm9+
-         R5Gc0Qo8Gk27ARHeueVfHnQFdNfAgBH0ttUzSo4QaDqTxd4Ea+fBk0ZFo/Bjby5cIs+R
-         xDrVCYYY3G/BqnQRCPF8qc07stoKS7IsGvXr/vLJJ7bB8a5C+JDo7SjubRwKUO4dGXRc
-         sG4zB+xcb0O7AC+ght5GA3d9fXU17DaZmfGHLIZALwZsQF2UBmIcE5hX4QeMf7517PVf
-         nQiA==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=B5J/aJLfwIlJFiO9Fm9A+DptsdVKj69BbXqtDgcTbh0=;
+        b=DnbEBaXdcq/FUu+zJE4TlRVgH900JAfWn3cUyLX+EpC6oAWigrhIJmrKTlvVvg/Thw
+         sDiuQYNx61dU5n+EzLMRNRmk2Z//FBpIIOKDlSC1yAFj7tcSjLIp8OehlkFYjMXDFDex
+         9X59veUpCRusGkjqqLRd7OMyA9MG1URDxZ4BKTBcTT+6zGKPvcqrsCUOMrnbQ07DwZiE
+         LXqtgtTuVwYXnlsuRT2lFonV+2vYKEs+7oFzGCLxWYZuHNMKXtAG0pxSm15FyWpWRuvz
+         rh8Yd6H1bknNLm4+jyhK7/zh0zar9H5m7yT25DRUDZjnil2hHQaXQsk2Xx9eMREH9FpM
+         gpWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3uaD53W4zQXTyZwVHH1JB2XZ73tQmzbVHSL//h1f2ug=;
-        b=uT8ryBXena/zbPjulOaVFUUbbcOyFDJb16Ls7itAaKmGUaDTLpU79J20wyZXvndle4
-         KEed0YX+VMJlP/XvhfDxErlGMwNtVtPeUHdx36glbWRJ5q20rOe4dipe9wuoYZZF1aum
-         UhUeHw9FHQASozF9qxhdjFQ8q0tXkRg30fl0C//gJQjc/aDWMQkPMmxlzOIAJvrYCBGE
-         1S/4hC++4AmdvDKBdUh780WuGJSqRItUnj/6qO7D0d5K4BNlGFyLHGcRkoKZ0W5kgXms
-         wngM5ihhqb6vlVSKSO7tFHOQaWHeMj5hrZ9nR9ktnOlOaTUxngMTIweYlj45JXpTCX+4
-         K97g==
-X-Gm-Message-State: AOAM53253hX0V/U9TROh1HTzsgqHcU2kyzFJM5krMKu+tONJu0qnhYGd
-        EoLjnVMy3yXG59lMv+cLs1K7UB6pijb0Uq27unuRYQ==
-X-Google-Smtp-Source: ABdhPJxzTwGo7p/OwR+drVP9dHdKJu3Z/vyiS4EbXsb34lz1aTHyCGPZICs68xEpu1a1MgT/BHjEbO2Ud7p1knp2bPY=
-X-Received: by 2002:a05:6638:41a:b0:317:b934:681b with SMTP id
- q26-20020a056638041a00b00317b934681bmr24163896jap.317.1647351703321; Tue, 15
- Mar 2022 06:41:43 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1644234441.git.baruch@tkos.co.il> <20220211160645.GA448@lpieralisi>
- <CA+HBbNEham1bukiEv5Px2=fCnqnbBKWBy3xOKe89fioQWttoGg@mail.gmail.com> <874k3zbaxc.fsf@tarshish>
-In-Reply-To: <874k3zbaxc.fsf@tarshish>
-From:   Robert Marko <robert.marko@sartura.hr>
-Date:   Tue, 15 Mar 2022 14:41:32 +0100
-Message-ID: <CA+HBbNEgQoNZ2v5Wr-KjJ3+U_NPzhW2Tz9bn7pTAUTQ-_owudw@mail.gmail.com>
-Subject: Re: [PATCH v6 0/3] PCI: IPQ6018 platform support
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=B5J/aJLfwIlJFiO9Fm9A+DptsdVKj69BbXqtDgcTbh0=;
+        b=wVpaJMrQAY0m6cXRFZiOep5RSLBfkk2UqoRAEZX9ZlswvdHMixSzcOnr4HFApCUiSJ
+         ++78if0rvztMau1eutgGp0TC7Uf8nQOHM/OywAnijYChcH1I+uiTPX0mWA+vwR8AjxOM
+         G983KJOcVTTl7Lfv0+H2XFlh9OK4jehLTiUw8R1MErQZ7fWIqU9slK1toIxDH4Oiadqf
+         drHWaGCoQoOnC+gDIT3BYETMdgfw6R76RrlS0onnGzJ5/mFYK/Nm/LP724Lu+LfSR0Af
+         nt65Xf15eNmELStHQkCHx+DG32XkaUQWxVDXLU2QA3ezPp6pXDiyyt39B7O9g3RhnlK7
+         TlRw==
+X-Gm-Message-State: AOAM533fNnTBgTB1LUhRnfY889zlonJQYs/PLaQlbhCihtxoAZgwelQO
+        3/bzP2p1OTvoKv7b32SpTZN9pg==
+X-Google-Smtp-Source: ABdhPJxPbWblQZTYsvwK2UfV+LUVc2YAAB++YPqAh17gS7uc6rSaVWP8XiO+sEhfeXTIG2rjW7RBSA==
+X-Received: by 2002:a05:651c:1047:b0:247:f205:2911 with SMTP id x7-20020a05651c104700b00247f2052911mr17745888ljm.284.1647353466319;
+        Tue, 15 Mar 2022 07:11:06 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id c27-20020a2ebf1b000000b00247eba13667sm4324079ljr.16.2022.03.15.07.11.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Mar 2022 07:11:05 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        "Bryan O'Donoghue" <pure.logic@nexus-software.ie>,
-        linux-pci@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-tegra@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Danny Lin <danny@kdrag0n.dev>
+Subject: [PATCH] arm64: dts: qcom: sdm845: correct dynamic power coefficients
+Date:   Tue, 15 Mar 2022 17:11:04 +0300
+Message-Id: <20220315141104.730235-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 15, 2022 at 2:30 PM Baruch Siach <baruch@tkos.co.il> wrote:
->
-> Hi Robert,
->
-> On Tue, Mar 15 2022, Robert Marko wrote:
-> > On Fri, Feb 11, 2022 at 5:06 PM Lorenzo Pieralisi
-> > <lorenzo.pieralisi@arm.com> wrote:
-> >>
-> >> On Mon, Feb 07, 2022 at 04:51:23PM +0200, Baruch Siach wrote:
-> >> > This series adds support for the single PCIe lane on IPQ6018 SoCs. The code is
-> >> > ported from downstream Codeaurora v5.4 kernel. The main difference from
-> >> > downstream code is the split of PCIe registers configuration from .init to
-> >> > .post_init, since it requires phy_power_on().
-> >> >
-> >> > Tested on IPQ6010 based hardware.
-> [snip]
-> >> >
-> >> > Baruch Siach (2):
-> >> >   PCI: dwc: tegra: move GEN3_RELATED DBI register to common header
-> >> >   PCI: qcom: Define slot capabilities using PCI_EXP_SLTCAP_*
-> >> >
-> >> > Selvam Sathappan Periakaruppan (1):
-> >> >   PCI: qcom: Add IPQ60xx support
-> >> >
-> >> >  drivers/pci/controller/dwc/pcie-designware.h |   7 +
-> >> >  drivers/pci/controller/dwc/pcie-qcom.c       | 155 ++++++++++++++++++-
-> >> >  drivers/pci/controller/dwc/pcie-tegra194.c   |   6 -
-> >> >  3 files changed, 160 insertions(+), 8 deletions(-)
-> >>
-> >> Bjorn, Andy,
-> >>
-> >> Can you ACK please if this series is ready to be merged ?
-> >
-> > This would also help the IPQ8074 which has the same controller for the
-> > Gen3 port.
-> >
-> > I have been using this for OpenWrt for a while and it works.
->
-> Thanks for your test report.
->
-> It would be nice to have a formal Tested-by for the pcie-qcom.c
-> patch. It might help to push the patch forward.
+Following sm8150/sm8250 update sdm845 capacity-dmips-mhz and
+dynamic-power-coefficient based on the measurements [1], [2].
 
-Hi Baruch, I am not sure whether a Tested-by would be applicable here as its
-a different platform, that is why I left it out.
->
-> Can you also share the device-tree part? I'll add it to this series in
-> case it needs a respin.
-Currently, the IPQ8074 DTS regarding QMP PCI PHY-s and PCI controllers is
-incorrect, it was all based on v1 of the SoC which is not supported at all.
-Gen3 QMP PHY support is currently missing for IPQ8074 and I am working on
-upstreaming that and will fix up all of the PCI-related stuff in the
-DTS after that.
+The energy model dynamic-power-coefficient values were calculated with
+    DPC = µW / MHz / V^2
+for each OPP, and averaged across all OPPs within each cluster for the
+final coefficient. Voltages were obtained from the qcom-cpufreq-hw
+driver that reads voltages from the OSM LUT programmed into the SoC.
 
-So, I would prefer to keep those separate and let this series get
-merged, especially
-since the DTS part has already been merged.
+Normalized DMIPS/MHz capacity scale values for each CPU were calculated
+from CoreMarks/MHz (CoreMark iterations per second per MHz), which
+serves the same purpose. For each CPU, the final capacity-dmips-mhz
+value is the C/MHz value of its maximum frequency normalized to
+SCHED_CAPACITY_SCALE (1024) for the fastest CPU in the system.
 
-Regards,
-Robert
->
-> Thanks,
-> baruch
->
-> --
->                                                      ~. .~   Tk Open Systems
-> =}------------------------------------------------ooO--U--Ooo------------{=
->    - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
+For more details on measurement process see the commit message for the
+commit 6aabed5526ee ("arm64: dts: qcom: sm8250: Add CPU capacities and
+energy model").
 
+[1] https://github.com/kdrag0n/freqbench
+[2] https://github.com/kdrag0n/freqbench/tree/master/results/sdm845/main
 
+Cc: Danny Lin <danny@kdrag0n.dev>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 41f4e46e1f85..f5932b49877d 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -200,8 +200,8 @@ CPU0: cpu@0 {
+ 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+ 					   &LITTLE_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+-			capacity-dmips-mhz = <607>;
+-			dynamic-power-coefficient = <100>;
++			capacity-dmips-mhz = <611>;
++			dynamic-power-coefficient = <290>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+@@ -225,8 +225,8 @@ CPU1: cpu@100 {
+ 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+ 					   &LITTLE_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+-			capacity-dmips-mhz = <607>;
+-			dynamic-power-coefficient = <100>;
++			capacity-dmips-mhz = <611>;
++			dynamic-power-coefficient = <290>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+@@ -247,8 +247,8 @@ CPU2: cpu@200 {
+ 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+ 					   &LITTLE_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+-			capacity-dmips-mhz = <607>;
+-			dynamic-power-coefficient = <100>;
++			capacity-dmips-mhz = <611>;
++			dynamic-power-coefficient = <290>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+@@ -269,8 +269,8 @@ CPU3: cpu@300 {
+ 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+ 					   &LITTLE_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+-			capacity-dmips-mhz = <607>;
+-			dynamic-power-coefficient = <100>;
++			capacity-dmips-mhz = <611>;
++			dynamic-power-coefficient = <290>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+@@ -292,7 +292,7 @@ CPU4: cpu@400 {
+ 			cpu-idle-states = <&BIG_CPU_SLEEP_0
+ 					   &BIG_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+-			dynamic-power-coefficient = <396>;
++			dynamic-power-coefficient = <442>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+@@ -314,7 +314,7 @@ CPU5: cpu@500 {
+ 			cpu-idle-states = <&BIG_CPU_SLEEP_0
+ 					   &BIG_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+-			dynamic-power-coefficient = <396>;
++			dynamic-power-coefficient = <442>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+@@ -336,7 +336,7 @@ CPU6: cpu@600 {
+ 			cpu-idle-states = <&BIG_CPU_SLEEP_0
+ 					   &BIG_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+-			dynamic-power-coefficient = <396>;
++			dynamic-power-coefficient = <442>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+@@ -358,7 +358,7 @@ CPU7: cpu@700 {
+ 			cpu-idle-states = <&BIG_CPU_SLEEP_0
+ 					   &BIG_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+-			dynamic-power-coefficient = <396>;
++			dynamic-power-coefficient = <442>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
 -- 
-Robert Marko
-Staff Embedded Linux Engineer
-Sartura Ltd.
-Lendavska ulica 16a
-10000 Zagreb, Croatia
-Email: robert.marko@sartura.hr
-Web: www.sartura.hr
+2.35.1
+
