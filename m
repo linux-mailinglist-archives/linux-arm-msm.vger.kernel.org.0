@@ -2,42 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 427B54DA58D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 23:43:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4556D4DA595
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 23:45:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351005AbiCOWoz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Mar 2022 18:44:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41200 "EHLO
+        id S1352325AbiCOWqt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Mar 2022 18:46:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242472AbiCOWoy (ORCPT
+        with ESMTP id S1352303AbiCOWqs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Mar 2022 18:44:54 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F002FFD12;
-        Tue, 15 Mar 2022 15:43:41 -0700 (PDT)
+        Tue, 15 Mar 2022 18:46:48 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7796911A15;
+        Tue, 15 Mar 2022 15:45:36 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 1FF8FB818FA;
-        Tue, 15 Mar 2022 22:43:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB736C340E8;
-        Tue, 15 Mar 2022 22:43:38 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1560E61414;
+        Tue, 15 Mar 2022 22:45:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 730A1C340E8;
+        Tue, 15 Mar 2022 22:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1647384218;
-        bh=QcYqmC9EtcqrxIXAjr3U5b4uFH7SGAQ/mzDiG0FRn88=;
+        s=k20201202; t=1647384335;
+        bh=cYclWpMxswvt/yfS3sPBTJxa4eBcQg9zM+hFxSEdXSM=;
         h=In-Reply-To:References:Subject:From:To:Date:From;
-        b=pcS+qJ/NUP5uIYob7rCZmQgzM8idpH+biefZhodEeNpEP/LWGX2K469apAdR2FgbS
-         qJ9hDDiNFRcwC86APpuFR+zx1kxCd5iENiMwd/GgWEBeRb1RJCE6gbmDmDCjyjB6pV
-         daUsUvY8vjUNZKAAySKZT53TTJ7zDsQj6E664mfBKafOj76kbk7brY6qgJEbGyxXKh
-         sEdVKDIecb5RCpi3tKi2NsAwzKx+I9I9Jb0nmKsz/f37xeOo1ywlF6wMPBQVUpDtc+
-         QpWlCwYk+xSSKNSl0d2U43Ooq3two8n3HYOBP53AooJ3NTMgY/OqZ/9s/aCm0wqoOV
-         6BOTd9z19URkA==
+        b=jbfCZMD2H2ftEG9x8xLSn/CNBktQV5PDxEC7hGDay8N9wqCh+ApYymzz3TMWwuXJU
+         jrDLP7Ugrrd7Nk9vHf9PXKj/DP8++4WjEaywcB+U7CoHnw9t7q67w6YtIk5lDMdopW
+         HZEi2rMn+BgOIRGjBAiWqs7g9RLWYdBi1IqvdZmxEJR1h0YZDmC7vzneJb39ttkI/y
+         P/1dHohXtoQ5ZlyR99x0q1LxhpEnum23nwTfNnFZOseRyT/62B1YTUawqZi9dyeLjb
+         nBJ1MlJsD9ym8rGGj7wjFEGPXS4UXCFaYM172vBFje86b5X/F0pnV3sXrDEiKY3A37
+         FL0UN/Sodo97g==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220313190419.2207-8-ansuelsmth@gmail.com>
-References: <20220313190419.2207-1-ansuelsmth@gmail.com> <20220313190419.2207-8-ansuelsmth@gmail.com>
-Subject: Re: [PATCH 07/16] clk: qcom: clk-krait: add hw_parent check for div2_round_rate
+In-Reply-To: <20220313190419.2207-10-ansuelsmth@gmail.com>
+References: <20220313190419.2207-1-ansuelsmth@gmail.com> <20220313190419.2207-10-ansuelsmth@gmail.com>
+Subject: Re: [PATCH 09/16] clk: qcom: krait-cc: drop pr_info and register qsb only if needed
 From:   Stephen Boyd <sboyd@kernel.org>
 To:     Andy Gross <agross@kernel.org>,
         Ansuel Smith <ansuelsmth@gmail.com>,
@@ -51,9 +51,9 @@ To:     Andy Gross <agross@kernel.org>,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-tegra@vger.kernel.org
-Date:   Tue, 15 Mar 2022 15:43:36 -0700
+Date:   Tue, 15 Mar 2022 15:45:33 -0700
 User-Agent: alot/0.10
-Message-Id: <20220315224338.BB736C340E8@smtp.kernel.org>
+Message-Id: <20220315224535.730A1C340E8@smtp.kernel.org>
 X-Spam-Status: No, score=-8.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -64,37 +64,12 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Ansuel Smith (2022-03-13 12:04:10)
-> Check if hw_parent is present before calculating the round_rate to
-> prevent kernel panic.
->=20
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  drivers/clk/qcom/clk-krait.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->=20
-> diff --git a/drivers/clk/qcom/clk-krait.c b/drivers/clk/qcom/clk-krait.c
-> index e447fcc3806d..d8af281eba0e 100644
-> --- a/drivers/clk/qcom/clk-krait.c
-> +++ b/drivers/clk/qcom/clk-krait.c
-> @@ -80,7 +80,12 @@ EXPORT_SYMBOL_GPL(krait_mux_clk_ops);
->  static long krait_div2_round_rate(struct clk_hw *hw, unsigned long rate,
->                                   unsigned long *parent_rate)
->  {
-> -       *parent_rate =3D clk_hw_round_rate(clk_hw_get_parent(hw), rate * =
-2);
-> +       struct clk_hw *hw_parent =3D clk_hw_get_parent(hw);
-> +
-> +       if (!hw_parent)
-> +               return -1;
+Quoting Ansuel Smith (2022-03-13 12:04:12)
+> Drop pr_info and change them to dev_info.
 
-Use -EINVAL or some proper error code, not just -1
+Replace pr_info() with dev_info() to provide better diagnostics.
 
-> +
-> +       *parent_rate =3D clk_hw_round_rate(hw_parent, rate * 2);
->         return DIV_ROUND_UP(*parent_rate, 2);
->  }
-> =20
-> --=20
-> 2.34.1
->
+> Register qsb fixed clk only if it's not declared in DTS.
+> Also reorganize variable order.
+
+Please don't reorganize variable order.
