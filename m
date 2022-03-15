@@ -2,70 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DBFF44D9FB8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 17:15:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 61CEA4D9FC9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 17:19:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349870AbiCOQQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Mar 2022 12:16:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41100 "EHLO
+        id S1349971AbiCOQUM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Mar 2022 12:20:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240489AbiCOQQq (ORCPT
+        with ESMTP id S1349967AbiCOQUM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Mar 2022 12:16:46 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F27449921;
-        Tue, 15 Mar 2022 09:15:34 -0700 (PDT)
+        Tue, 15 Mar 2022 12:20:12 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CBD813DFA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Mar 2022 09:18:56 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id w2so13278180oie.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Mar 2022 09:18:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1647360934; x=1678896934;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=GV0TCfK4F7z4NNGahHA1Aii1fPduEtBUYoCf8fA5z8M=;
-  b=xvcpf/v/v8MHF5vJHbrzXq/Hq4PTzSBaN7b9+JytjQuCInXc2f61AaPF
-   pmBhyi/q0vH2jkeRVF9MCC6oGc71RkQoofrNMkbh/OsSUJ0FzvH3UlN61
-   43SQalJfwLXEffyHXYUqNarpek3QCWHSxn84ubDuqkb0deIBhUHf8yMXL
-   A=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 15 Mar 2022 09:15:34 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Mar 2022 09:15:33 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Tue, 15 Mar 2022 09:15:33 -0700
-Received: from [10.216.59.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 15 Mar
- 2022 09:15:29 -0700
-Message-ID: <0f75ebf7-b893-a1a0-1581-6ec29e0be8c6@quicinc.com>
-Date:   Tue, 15 Mar 2022 21:45:26 +0530
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Em5xMVZQLrR/NiGDTVcPyJrzArjc9v1y2RjbKDoAxeE=;
+        b=r/KHFxIQ9cNwkwMWJ3NuTgoaVO3mOgYvQuaisHpfb+9E3mGbiubIEz2IVbo+LFoLtS
+         op1qcF0AwXhIawa188FdjIDE26JCkFsJvex0bVM89bNv3ayaIjXwi7pTWODS0E7J0mda
+         2vwR43HJFUbRGC+HoEYnD1vRMUnyURRY1lUa04PAYjKuAv95jne7O8HeyDqvufZaoHcB
+         WlxlQdC3WKzhNH8aOsAoWfPge6/uEAHRgbPdB7C3lFwJ+XlodgG6KEWpl/UZJ4FDLBEI
+         mXdnmzJuBtLtiH2XvtXl/dIuib00ZJBPojHDsd7YjmhTEyhpb9O2MugMyXeAXpN4rxfS
+         4gBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Em5xMVZQLrR/NiGDTVcPyJrzArjc9v1y2RjbKDoAxeE=;
+        b=GzgQkTHhsZG1K/oW8no2ziG4FMOSXTfj4KHTuha+9GbtBAh5kesHH9fmM36vCAef59
+         UoyLvejTrbs1ZC1OV63tDaBJNp1C36fy4UMXBPGfbj92t0J1yBNinR4Fbr9AAhWZZu3l
+         S+pO9JAbXuVX1DTNtgM422qpkgNfbTwPVfaEgdU9L0Z5t9ko35OBQEwqr0q488DXq1S6
+         S55yDUQ02xzWzuHZTGDAoJzJpoldz/Y6obBWnTi2RYAHAk0sk9MfarjmmF1oRABsfuf4
+         J8NXkDAZ84zgbRtyij0oCm/2JTWxECEFU31GlUXlQEXUtbBfPwMOBb/9nYrAgSTbareN
+         xkCA==
+X-Gm-Message-State: AOAM531O+H7UYRZIKwJZ4qLsZZZhPdU4+25QUj2F45TTyYGN3Ly80NNO
+        T4wrd8AOTjrDuVbML4kGOIGlKg==
+X-Google-Smtp-Source: ABdhPJyhH0FJKDNG5YJgwlpKc0zXAThsoAg9TgnVRbKIaK5fAgXk6gNRuZtozK0JSwjPv6FTm8Frgg==
+X-Received: by 2002:aca:2110:0:b0:2ec:b1cf:2dda with SMTP id 16-20020aca2110000000b002ecb1cf2ddamr2105902oiz.143.1647361135489;
+        Tue, 15 Mar 2022 09:18:55 -0700 (PDT)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id 37-20020a9d0328000000b005b2265711fcsm9276523otv.16.2022.03.15.09.18.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Mar 2022 09:18:54 -0700 (PDT)
+Date:   Tue, 15 Mar 2022 11:18:53 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
+        agross@kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, maz@kernel.org,
+        quic_mkshah@quicinc.com, linux-gpio@vger.kernel.org,
+        linus.walleij@linaro.org, robh+dt@kernel.org,
+        Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sm8150: Add pdc interrupt
+ controller node
+Message-ID: <YjC8bfY2U1WyV8FY@builder.lan>
+References: <20220226184028.111566-1-bhupesh.sharma@linaro.org>
+ <20220226184028.111566-4-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sc7280: Add lpass cpu node
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <devicetree@vger.kernel.org>,
-        <dianders@chromium.org>, <judyhsiao@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <robh+dt@kernel.org>, <rohitkr@codeaurora.org>,
-        <srinivas.kandagatla@linaro.org>
-CC:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
-References: <1643887981-31011-1-git-send-email-quic_srivasam@quicinc.com>
- <1643887981-31011-3-git-send-email-quic_srivasam@quicinc.com>
- <CAE-0n53X-+gaspxgdVtnr8FW6S5VhXPJaAxLd+vikCnYf9aF6w@mail.gmail.com>
-From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Organization: Qualcomm
-In-Reply-To: <CAE-0n53X-+gaspxgdVtnr8FW6S5VhXPJaAxLd+vikCnYf9aF6w@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220226184028.111566-4-bhupesh.sharma@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,104 +76,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sat 26 Feb 12:40 CST 2022, Bhupesh Sharma wrote:
 
-On 3/1/2022 3:01 AM, Stephen Boyd wrote:
-Thanks for your time Stephen!!!
-> Quoting Srinivasa Rao Mandadapu (2022-02-03 03:33:00)
->> Add lpass cpu node for audio on sc7280 based platforms.
->>
->> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
->> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 28 +++++++++++++++
->>   arch/arm64/boot/dts/qcom/sc7280.dtsi     | 59 ++++++++++++++++++++++++++++++++
->>   2 files changed, 87 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> index 2806888..a76b2d1 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> @@ -691,3 +691,31 @@
->>   &vamacro {
->>          vdd-micb-supply = <&vreg_bob>;
->>   };
->> +
->> +&lpass_cpu {
->> +       status = "okay";
->> +
->> +       pinctrl-names = "default";
->> +       pinctrl-0 = <&sec_mi2s_active>;
-> Is it a reset gpio? If so, make it a reset-gpios property. I couldn't
-> find the definition.
+> Add pdc interrupt controller for sm8150.
+> 
+> Cc: Maulik Shah <quic_mkshah@quicinc.com>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Cc: Rob Herring <robh@kernel.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> index 6012322a5984..aaeacd379460 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -1626,6 +1626,16 @@ system-cache-controller@9200000 {
+>  			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
+>  		};
+>  
+> +		pdc: interrupt-controller@b220000 {
+> +			compatible = "qcom,sm8150-pdc", "qcom,pdc";
+> +			reg = <0 0x0b220000 0 0x400>;
+> +			qcom,pdc-ranges = <0 480 94>, <94 609 31>,
+> +					  <125 63 1>;
 
-It's not reset gpio. it's for I2S clk, data and ws. It is there in 
-previous patch set, which is not applied yet.
+When I look at the platform documentation I get the impression that this
+should be: <0 480 94>, <94 609 32>;
 
-We did splitting this node as per functionality. will change here 
-accordingly.
+Can you confirm that the last signal is correctly described?
 
->
->> +
->> +       mi2s-secondary@1 {
->> +               reg = <MI2S_SECONDARY>;
->> +               qcom,playback-sd-lines = <0>;
->> +       };
->> +
->> +       hdmi-primary@5 {
->> +               reg = <LPASS_DP_RX>;
->> +       };
->> +
->> +       wcd-rx@6 {
->> +               reg = <LPASS_CDC_DMA_RX0>;
->> +       };
->> +
->> +       wcd-tx@19 {
->> +               reg = <LPASS_CDC_DMA_TX3>;
->> +       };
->> +
->> +       va-tx@25 {
->> +               reg = <LPASS_CDC_DMA_VA_TX0>;
->> +       };
->> +};
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index 946eb01..c2da5ce 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -17,6 +17,7 @@
->>   #include <dt-bindings/reset/qcom,sdm845-aoss.h>
->>   #include <dt-bindings/reset/qcom,sdm845-pdc.h>
->>   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->> +#include <dt-bindings/sound/qcom,lpass.h>
->>   #include <dt-bindings/thermal/thermal.h>
->>
->>   / {
->> @@ -1847,6 +1848,64 @@
->>                          #size-cells = <0>;
->>                  };
->>
->> +               lpass_cpu: audio-subsystem@3260000 {
->> +                       compatible = "qcom,sc7280-lpass-cpu";
->> +                       reg = <0 0x3260000 0 0xC000>,
->> +                             <0 0x3280000 0 0x29000>,
->> +                             <0 0x3340000 0 0x29000>,
->> +                             <0 0x336C000 0 0x3000>,
->> +                             <0 0x3987000 0 0x68000>,
->> +                             <0 0x3B00000 0 0x29000>;
-> Lowercase hex. Pad out reg to 8 digits.
-Okay.
->
->> +                       reg-names = "lpass-rxtx-cdc-dma-lpm",
->> +                                   "lpass-rxtx-lpaif",
->> +                                   "lpass-va-lpaif",
->> +                                   "lpass-va-cdc-dma-lpm",
->> +                                   "lpass-hdmiif",
->> +                                   "lpass-lpaif";
-> That 'lpass' prefix looks very redundant.
-Okay. Currently driver and documentation has mentioned similarly. Will 
-take care from next time.
->
->> +
->> +                       iommus = <&apps_smmu 0x1820 0>,
->> +                                <&apps_smmu 0x1821 0>,
->> +                                <&apps_smmu 0x1832 0>;
+Regards,
+Bjorn
+
+> +			#interrupt-cells = <2>;
+> +			interrupt-parent = <&intc>;
+> +			interrupt-controller;
+> +		};
+> +
+>  		ufs_mem_hc: ufshc@1d84000 {
+>  			compatible = "qcom,sm8150-ufshc", "qcom,ufshc",
+>  				     "jedec,ufs-2.0";
+> -- 
+> 2.35.1
+> 
