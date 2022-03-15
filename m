@@ -2,71 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C9884D9FAA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 17:10:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DBFF44D9FB8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 17:15:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349928AbiCOQLS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Mar 2022 12:11:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57626 "EHLO
+        id S1349870AbiCOQQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Mar 2022 12:16:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349927AbiCOQLR (ORCPT
+        with ESMTP id S240489AbiCOQQq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Mar 2022 12:11:17 -0400
-Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21CEF48311
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Mar 2022 09:10:04 -0700 (PDT)
-Received: by mail-oo1-xc34.google.com with SMTP id x26-20020a4a9b9a000000b003211029e80fso24936746ooj.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Mar 2022 09:10:04 -0700 (PDT)
+        Tue, 15 Mar 2022 12:16:46 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F27449921;
+        Tue, 15 Mar 2022 09:15:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ByiqpVNJnghZS7rl/0H3t4qf3Wtk1swesADPIolOu9M=;
-        b=ZGTQdOg9Z/h6mt0XqVcLBdHhIkmMSDtC4nAuWcGG0/GFqH8uAsYKfpCkF2Wl/J/AR/
-         tgMnAsDaVA84ujU2RDL1mle5w4okLxmFtt6e/i3UTNUzR7AjVojFH+UzCiSOiI6b2+YF
-         IsNw/qCYBARMmXAk0fburEAFlbTnf/Zme4OamiHchenQDNlmXndfOGtzeZvWYuAyRv/t
-         MeBkPnciol0TtYx6MHjvmpwtds4L2UJVIzebdCUqklyMyrSCcM9xjN/Nki7o7JUcyKy8
-         0hTd44bxuAas9wq5cL7FIKYl6Y9zjn7HQwwux3nOZgrV5yrbDLAZFIII+bgs5LYcxapu
-         CRgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ByiqpVNJnghZS7rl/0H3t4qf3Wtk1swesADPIolOu9M=;
-        b=agmai6VvXTHa/92xh5LY+A1zztjJFq4udsw5ce0KMoygPivsk7FVT8FjJfkdTGTOtB
-         GQLuzkwad5go1jx+IdBTUeI++SUk2L7gKhCLMXIWaDKrX9Zn0gFPyfmwyvO8wJN2J/4D
-         L4iVS0J9XhMcibqEvmvl4GvDSBbmxr3/+EsufQFgOt6jdwGXjvES4pNVSPp9CjSSBjFw
-         AhhnQSlHrm5xTSFUbOyyQR4CNj8e5Pp/a21A082rth7tKSnrWwrQcE0GONNS1X0Fb1zY
-         4farQxX3hRroODnp3z4QPOQWeou/XNdPTO2GTgpvRA7XcG77IQyVD2574wNXo6HbWsl4
-         J4NA==
-X-Gm-Message-State: AOAM5330XwFNDB6hAoJ1/YgOw8o3v+EhMt7smboj74btAmyuI3MGuDWY
-        9s0LYny2gNQua+FvtHwY2oF9rw==
-X-Google-Smtp-Source: ABdhPJwxXKMs0s1H3GUn2dbrZggsynPLV3jiosRtrMTm4uRWhBES5MJOFMvFU8RmZ1V/GEYx9YPD/A==
-X-Received: by 2002:a05:6870:618a:b0:da:b3f:324b with SMTP id a10-20020a056870618a00b000da0b3f324bmr1878817oah.251.1647360603438;
-        Tue, 15 Mar 2022 09:10:03 -0700 (PDT)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id m13-20020a056870888d00b000d103280accsm8117995oam.16.2022.03.15.09.10.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Mar 2022 09:10:02 -0700 (PDT)
-Date:   Tue, 15 Mar 2022 11:10:01 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, bhupesh.linux@gmail.com,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, maz@kernel.org,
-        quic_mkshah@quicinc.com, linux-gpio@vger.kernel.org,
-        linus.walleij@linaro.org, robh+dt@kernel.org
-Subject: Re: [PATCH v2 2/4] pinctrl: qcom: sm8150: Specify PDC map
-Message-ID: <YjC6WZUAYtmxwoFL@builder.lan>
-References: <20220226184028.111566-1-bhupesh.sharma@linaro.org>
- <20220226184028.111566-3-bhupesh.sharma@linaro.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1647360934; x=1678896934;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=GV0TCfK4F7z4NNGahHA1Aii1fPduEtBUYoCf8fA5z8M=;
+  b=xvcpf/v/v8MHF5vJHbrzXq/Hq4PTzSBaN7b9+JytjQuCInXc2f61AaPF
+   pmBhyi/q0vH2jkeRVF9MCC6oGc71RkQoofrNMkbh/OsSUJ0FzvH3UlN61
+   43SQalJfwLXEffyHXYUqNarpek3QCWHSxn84ubDuqkb0deIBhUHf8yMXL
+   A=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 15 Mar 2022 09:15:34 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Mar 2022 09:15:33 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.15; Tue, 15 Mar 2022 09:15:33 -0700
+Received: from [10.216.59.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 15 Mar
+ 2022 09:15:29 -0700
+Message-ID: <0f75ebf7-b893-a1a0-1581-6ec29e0be8c6@quicinc.com>
+Date:   Tue, 15 Mar 2022 21:45:26 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220226184028.111566-3-bhupesh.sharma@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sc7280: Add lpass cpu node
+Content-Language: en-US
+To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
+        <bjorn.andersson@linaro.org>, <devicetree@vger.kernel.org>,
+        <dianders@chromium.org>, <judyhsiao@chromium.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <robh+dt@kernel.org>, <rohitkr@codeaurora.org>,
+        <srinivas.kandagatla@linaro.org>
+CC:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
+References: <1643887981-31011-1-git-send-email-quic_srivasam@quicinc.com>
+ <1643887981-31011-3-git-send-email-quic_srivasam@quicinc.com>
+ <CAE-0n53X-+gaspxgdVtnr8FW6S5VhXPJaAxLd+vikCnYf9aF6w@mail.gmail.com>
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Organization: Qualcomm
+In-Reply-To: <CAE-0n53X-+gaspxgdVtnr8FW6S5VhXPJaAxLd+vikCnYf9aF6w@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,65 +73,104 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 26 Feb 12:40 CST 2022, Bhupesh Sharma wrote:
 
-> Specify the PDC mapping for SM8150, so that gpio interrupts are
-> properly mapped to the wakeup IRQs of the PDC.
-> 
-> Cc: Maulik Shah <quic_mkshah@quicinc.com>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Linus Walleij <linus.walleij@linaro.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+On 3/1/2022 3:01 AM, Stephen Boyd wrote:
+Thanks for your time Stephen!!!
+> Quoting Srinivasa Rao Mandadapu (2022-02-03 03:33:00)
+>> Add lpass cpu node for audio on sc7280 based platforms.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+>> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 28 +++++++++++++++
+>>   arch/arm64/boot/dts/qcom/sc7280.dtsi     | 59 ++++++++++++++++++++++++++++++++
+>>   2 files changed, 87 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> index 2806888..a76b2d1 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> @@ -691,3 +691,31 @@
+>>   &vamacro {
+>>          vdd-micb-supply = <&vreg_bob>;
+>>   };
+>> +
+>> +&lpass_cpu {
+>> +       status = "okay";
+>> +
+>> +       pinctrl-names = "default";
+>> +       pinctrl-0 = <&sec_mi2s_active>;
+> Is it a reset gpio? If so, make it a reset-gpios property. I couldn't
+> find the definition.
 
-Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+It's not reset gpio. it's for I2S clk, data and ws. It is there in 
+previous patch set, which is not applied yet.
 
-Regards,
-Bjorn
+We did splitting this node as per functionality. will change here 
+accordingly.
 
-> ---
->  drivers/pinctrl/qcom/pinctrl-sm8150.c | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sm8150.c b/drivers/pinctrl/qcom/pinctrl-sm8150.c
-> index 7359bae68c69..1cc622694553 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sm8150.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sm8150.c
-> @@ -1500,6 +1500,25 @@ static const struct msm_pingroup sm8150_groups[] = {
->  	[178] = SDC_QDSD_PINGROUP(sdc2_data, 0xB2000, 9, 0),
->  };
->  
-> +static const struct msm_gpio_wakeirq_map sm8150_pdc_map[] = {
-> +	{ 3, 31 }, { 5, 32 }, { 8, 33 }, { 9, 34 }, { 10, 100 },
-> +	{ 12, 104 }, { 24, 37 }, { 26, 38 }, { 27, 41 }, { 28, 42 },
-> +	{ 30, 39 }, { 36, 43 }, { 37, 44 }, { 38, 30 }, { 39, 118 },
-> +	{ 39, 125 }, { 41, 47 }, { 42, 48 }, { 46, 50 }, { 47, 49 },
-> +	{ 48, 51 }, { 49, 53 }, { 50, 52 }, { 51, 116 }, { 51, 123 },
-> +	{ 53, 54 }, { 54, 55 }, { 55, 56 }, { 56, 57 }, { 58, 58 },
-> +	{ 60, 60 }, { 61, 61 }, { 68, 62 }, { 70, 63 }, { 76, 71 },
-> +	{ 77, 66 }, { 81, 64 }, { 83, 65 }, { 86, 67 }, { 87, 84 },
-> +	{ 88, 117 }, { 88, 124 }, { 90, 69 }, { 91, 70 }, { 93, 75 },
-> +	{ 95, 72 }, { 96, 73 }, { 97, 74 }, { 101, 40 }, { 103, 77 },
-> +	{ 104, 78 }, { 108, 79 }, { 112, 80 }, { 113, 81 }, { 114, 82 },
-> +	{ 117, 85 }, { 118, 101 }, { 119, 87 }, { 120, 88 }, { 121, 89 },
-> +	{ 122, 90 }, { 123, 91 }, { 124, 92 }, { 125, 93 }, { 129, 94 },
-> +	{ 132, 105 }, { 133, 83 }, { 134, 36 }, { 136, 97 }, { 142, 103 },
-> +	{ 144, 115 }, { 144, 122 }, { 147, 102 }, { 150, 107 },
-> +	{ 152, 108 }, { 153, 109 }
-> +};
-> +
->  static const struct msm_pinctrl_soc_data sm8150_pinctrl = {
->  	.pins = sm8150_pins,
->  	.npins = ARRAY_SIZE(sm8150_pins),
-> @@ -1510,6 +1529,9 @@ static const struct msm_pinctrl_soc_data sm8150_pinctrl = {
->  	.ngpios = 176,
->  	.tiles = sm8150_tiles,
->  	.ntiles = ARRAY_SIZE(sm8150_tiles),
-> +	.wakeirq_map = sm8150_pdc_map,
-> +	.nwakeirq_map = ARRAY_SIZE(sm8150_pdc_map),
-> +	.wakeirq_dual_edge_errata = true,
->  };
->  
->  static int sm8150_pinctrl_probe(struct platform_device *pdev)
-> -- 
-> 2.35.1
-> 
+>
+>> +
+>> +       mi2s-secondary@1 {
+>> +               reg = <MI2S_SECONDARY>;
+>> +               qcom,playback-sd-lines = <0>;
+>> +       };
+>> +
+>> +       hdmi-primary@5 {
+>> +               reg = <LPASS_DP_RX>;
+>> +       };
+>> +
+>> +       wcd-rx@6 {
+>> +               reg = <LPASS_CDC_DMA_RX0>;
+>> +       };
+>> +
+>> +       wcd-tx@19 {
+>> +               reg = <LPASS_CDC_DMA_TX3>;
+>> +       };
+>> +
+>> +       va-tx@25 {
+>> +               reg = <LPASS_CDC_DMA_VA_TX0>;
+>> +       };
+>> +};
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> index 946eb01..c2da5ce 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> @@ -17,6 +17,7 @@
+>>   #include <dt-bindings/reset/qcom,sdm845-aoss.h>
+>>   #include <dt-bindings/reset/qcom,sdm845-pdc.h>
+>>   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>> +#include <dt-bindings/sound/qcom,lpass.h>
+>>   #include <dt-bindings/thermal/thermal.h>
+>>
+>>   / {
+>> @@ -1847,6 +1848,64 @@
+>>                          #size-cells = <0>;
+>>                  };
+>>
+>> +               lpass_cpu: audio-subsystem@3260000 {
+>> +                       compatible = "qcom,sc7280-lpass-cpu";
+>> +                       reg = <0 0x3260000 0 0xC000>,
+>> +                             <0 0x3280000 0 0x29000>,
+>> +                             <0 0x3340000 0 0x29000>,
+>> +                             <0 0x336C000 0 0x3000>,
+>> +                             <0 0x3987000 0 0x68000>,
+>> +                             <0 0x3B00000 0 0x29000>;
+> Lowercase hex. Pad out reg to 8 digits.
+Okay.
+>
+>> +                       reg-names = "lpass-rxtx-cdc-dma-lpm",
+>> +                                   "lpass-rxtx-lpaif",
+>> +                                   "lpass-va-lpaif",
+>> +                                   "lpass-va-cdc-dma-lpm",
+>> +                                   "lpass-hdmiif",
+>> +                                   "lpass-lpaif";
+> That 'lpass' prefix looks very redundant.
+Okay. Currently driver and documentation has mentioned similarly. Will 
+take care from next time.
+>
+>> +
+>> +                       iommus = <&apps_smmu 0x1820 0>,
+>> +                                <&apps_smmu 0x1821 0>,
+>> +                                <&apps_smmu 0x1832 0>;
