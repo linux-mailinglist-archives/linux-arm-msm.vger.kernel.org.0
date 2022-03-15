@@ -2,75 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD6014DA09F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 17:57:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 755874DA1AF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 18:55:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350350AbiCOQ6h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Mar 2022 12:58:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43752 "EHLO
+        id S1345366AbiCOR4d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Mar 2022 13:56:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350346AbiCOQ6g (ORCPT
+        with ESMTP id S236713AbiCOR4d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Mar 2022 12:58:36 -0400
-Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22B7857481
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Mar 2022 09:57:24 -0700 (PDT)
-Received: by mail-oo1-xc31.google.com with SMTP id k13-20020a4a948d000000b003172f2f6bdfso25084682ooi.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Mar 2022 09:57:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=iwyi6l6mAU8+nYjyk/K7oCC0ixMS0VKyBpljmAjIxm0=;
-        b=EtQQA78G9e7DaQ2Bpd2WTtbGypI1MZf7hjLWoX4nrzjd6fi5v2IY5SGEBlkou+L24u
-         dKygIqkA9WrpD6R+7NPqxvFwCcj4UdOE7TTyRzItaiP0y6oT1apVV2M4KJp8KQpdetk3
-         hLBaaAXh5cOaCm/33y2DLPrD/fjJ/192e1fLW94ZLEKRXgjmLUqPpCLFdFZK4aVd0avP
-         YapIkT6wweXDRnGP3BijGy31W8uqrfbtJZYbqDhKU9pm4uArET+9mEJ9TBRC/4XbqyHo
-         LUIO9AhepMFLbJx3Aqwe3dWbIm88glVW0mi97CRZ6nudgs9fJtmkJPljBeA+j4HBncJ5
-         +FNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=iwyi6l6mAU8+nYjyk/K7oCC0ixMS0VKyBpljmAjIxm0=;
-        b=XO86380P4Vnlc7wkGK22rLyp8HuFlteClGx3TaqqBZr/ARvWnvA7P5xD9GumA+ljTF
-         bhiLAB1bhEaEpiKZ9OfdVbwgXWpuDN8IE0F71T0WLjbyD1YGoOzz3NZDUs+AoMjzffiy
-         V6N/LvU85VQJaX6cupTLIKlS0dpDnCxmvh+tnzeXTYE8TqkJGRZJyixjf5m++pBqub4U
-         wxiZiCzeFMIkIfF0MDiBFy+PD/NFgbkjlsEqy+wToSbBcblEYcbmDMOusAoV7O5Jwax0
-         XbE8SsuAGWYzvYkadaxuEKgCVY+Be2Gvp/PGYvKgmRVpByc5kceg4napSDuyfVy5UjXe
-         kkrw==
-X-Gm-Message-State: AOAM531owyATanZaBsYuNsQFjalXavV2nBk7neXR2ARiVaMl+fwL0pDX
-        sBlPTmOuKBuUtNkohXBUP8jnzw==
-X-Google-Smtp-Source: ABdhPJzzqNiHdVXVH0CXBoLP1udVE9MYmYPmQcCKBtA1PAprIUkgp+/UWSfjGSEtXdadUx3fdyEGxA==
-X-Received: by 2002:a05:6871:60e:b0:da:b3f:2b85 with SMTP id w14-20020a056871060e00b000da0b3f2b85mr2048202oan.292.1647363443260;
-        Tue, 15 Mar 2022 09:57:23 -0700 (PDT)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id l12-20020a056808020c00b002da28c240dfsm9665261oie.16.2022.03.15.09.57.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Mar 2022 09:57:22 -0700 (PDT)
-Date:   Tue, 15 Mar 2022 11:57:20 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
-        robh+dt@kernel.org, quic_plai@quicinc.com, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org, Linus Walleij <linus.walleij@linaro.org>,
-        linux-gpio@vger.kernel.org,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Subject: Re: [PATCH v11 7/7] pinctrl: qcom: Update clock voting as optional
-Message-ID: <YjDFcJOA8An58iTe@builder.lan>
-References: <1647359413-31662-1-git-send-email-quic_srivasam@quicinc.com>
- <1647359413-31662-8-git-send-email-quic_srivasam@quicinc.com>
+        Tue, 15 Mar 2022 13:56:33 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44D9A522C5;
+        Tue, 15 Mar 2022 10:55:21 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D7C8F61634;
+        Tue, 15 Mar 2022 17:55:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E1AC340EE;
+        Tue, 15 Mar 2022 17:55:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1647366920;
+        bh=DnJBRB69KPEnIPM6pi87Ym+S0PQ45uLanLNzMJWai8c=;
+        h=In-Reply-To:References:Subject:From:To:Date:From;
+        b=CIHKi2eDxeLTRpDkaifVYJP3UoodHCktIhnCjwUdmYcF+N50KnGjE2KdUfGQbabkY
+         e9UmgBf5/TErJtxiLrCwuyf3sBZxFhIDoJ/Gg4TrXW/JXcpB7soflew1EDG0+WNJ75
+         e2kIqZ7EiURge5ibuELBkb9TBAwM5jSz8Dqtv7aVMz/Mag8+cbcW3m3N1vi+o98TrZ
+         viLW4/VDukMZ+rjqCiH6IelYRlAzVqI+dQMoh1chXKwzGOTTc7VbJ0np+5SKcePbLh
+         TyAcBDVIq5hBEVW0vsRzbFIJyPyz8znuH4fxPWH9F347Bk3yITn66aTvorKWgNMoM8
+         rSS5L1K24Tyfw==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1647359413-31662-8-git-send-email-quic_srivasam@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20220313190419.2207-2-ansuelsmth@gmail.com>
+References: <20220313190419.2207-1-ansuelsmth@gmail.com> <20220313190419.2207-2-ansuelsmth@gmail.com>
+Subject: Re: [PATCH 01/16] clk: permit to define a custom parent for clk_hw_get_parent_index
+From:   Stephen Boyd <sboyd@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Ansuel Smith <ansuelsmth@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Peter De Schrijver <pdeschrijver@nvidia.com>,
+        Prashant Gaikwad <pgaikwad@nvidia.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-tegra@vger.kernel.org
+Date:   Tue, 15 Mar 2022 10:55:18 -0700
+User-Agent: alot/0.10
+Message-Id: <20220315175520.32E1AC340EE@smtp.kernel.org>
+X-Spam-Status: No, score=-8.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,99 +64,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 15 Mar 10:50 CDT 2022, Srinivasa Rao Mandadapu wrote:
-
-> Update bulk clock voting to optional voting as ADSP bypass platform doesn't
-> need macro and decodec clocks, as these macro and dcodec GDSC switches are
-> maintained as power domains and operated from lpass clock drivers.
-> 
-
-Sorry for missing your reply on my question on the previous version, I
-think this sounds reasonable.
-
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Quoting Ansuel Smith (2022-03-13 12:04:04)
+> Clk can have multiple parents. Some clk may require to get the cached
+> index of other parent that are not current associated with the clk.
+> Extend clk_hw_get_parent_index() with an optional parent to permit a
+> driver to get the cached index. If parent is NULL, the parent associated
+> with the provided hw clk is used.
+>=20
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
 > ---
->  drivers/pinctrl/qcom/pinctrl-lpass-lpi.c        | 12 +++++++++---
->  drivers/pinctrl/qcom/pinctrl-lpass-lpi.h        |  1 +
->  drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c |  1 +
->  3 files changed, 11 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-> index 0216ca1..3fc473a 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-> @@ -401,9 +401,15 @@ int lpi_pinctrl_probe(struct platform_device *pdev)
->  		return dev_err_probe(dev, PTR_ERR(pctrl->slew_base),
->  				     "Slew resource not provided\n");
->  
-> -	ret = devm_clk_bulk_get(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
-> -	if (ret)
-> -		return dev_err_probe(dev, ret, "Can't get clocks\n");
-> +	if (data->is_clk_optional) {
-> +		ret = devm_clk_bulk_get_optional(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
-> +		if (ret)
-> +			return dev_err_probe(dev, ret, "Can't get clocks\n");
+>  drivers/clk/clk.c                 | 14 +++++++++-----
+>  drivers/clk/tegra/clk-periph.c    |  2 +-
+>  drivers/clk/tegra/clk-sdmmc-mux.c |  2 +-
+>  drivers/clk/tegra/clk-super.c     |  4 ++--
+>  include/linux/clk-provider.h      |  2 +-
+>  5 files changed, 14 insertions(+), 10 deletions(-)
+>=20
+> diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+> index 8de6a22498e7..fe42f56bfbdf 100644
+> --- a/drivers/clk/clk.c
+> +++ b/drivers/clk/clk.c
+> @@ -1711,15 +1711,19 @@ static int clk_fetch_parent_index(struct clk_core=
+ *core,
+>  /**
+>   * clk_hw_get_parent_index - return the index of the parent clock
+>   * @hw: clk_hw associated with the clk being consumed
+> + * @parent: optional clk_hw of the parent to be fetched
+>   *
+> - * Fetches and returns the index of parent clock. Returns -EINVAL if the=
+ given
+> - * clock does not have a current parent.
+> + * Fetches and returns the index of parent clock. If parent is not
+> + * provided the parent of hw is used.
+> + * Returns -EINVAL if the given clock does not have a current parent.
+>   */
+> -int clk_hw_get_parent_index(struct clk_hw *hw)
+> +int clk_hw_get_parent_index(struct clk_hw *hw, struct clk_hw *parent)
 
-Dug into the clk_bulk_get() functions, and __clk_bulk_get() will print
-an error telling you which clock it failed to get. So I don't think your
-more generic error here doesn't add any value.
+Please introduce another API vs. tacking on an "output" argument to this
+API. That makes the patch less invasive. And it can also return a
+pointer instead of an integer in that case.
 
-Just return ret;
-
-> +	} else {
-> +		ret = devm_clk_bulk_get(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
-> +		if (ret)
-> +			return dev_err_probe(dev, ret, "Can't get clocks\n");
-> +	}
-
-Depending on your taste, you could do:
-
-	if (data->is_clk_optional)
-		ret = devm_clk_bulk_get_optional();
-	else
-		ret = devm_clk_bulk_get();
-
-	if (ret)
-		return ret;
-
->  
->  	ret = clk_bulk_prepare_enable(MAX_LPI_NUM_CLKS, pctrl->clks);
->  	if (ret)
-> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-> index afbac2a..3bcede6 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-> @@ -77,6 +77,7 @@ struct lpi_pinctrl_variant_data {
->  	int ngroups;
->  	const struct lpi_function *functions;
->  	int nfunctions;
-> +	int is_clk_optional;
-
-bool here please.
-
->  };
->  
->  int lpi_pinctrl_probe(struct platform_device *pdev);
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-> index d67ff25..304d8a2 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-> @@ -142,6 +142,7 @@ static const struct lpi_pinctrl_variant_data sc7280_lpi_data = {
->  	.ngroups = ARRAY_SIZE(sc7280_groups),
->  	.functions = sc7280_functions,
->  	.nfunctions = ARRAY_SIZE(sc7280_functions),
-> +	.is_clk_optional = 1,
-
-true
-
-Regards,
-Bjorn
-
->  };
->  
->  static const struct of_device_id lpi_pinctrl_of_match[] = {
-> -- 
-> 2.7.4
-> 
+>  {
+> -       struct clk_hw *parent =3D clk_hw_get_parent(hw);
+> +       /* With parent NULL get the current parent of hw */
+> +       if (!parent)
+> +               parent =3D clk_hw_get_parent(hw);
