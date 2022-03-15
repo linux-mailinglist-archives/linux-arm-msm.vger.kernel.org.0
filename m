@@ -2,75 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 492A24D97B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 10:35:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CABE4D9808
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 10:49:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346643AbiCOJgZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Mar 2022 05:36:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57082 "EHLO
+        id S1346781AbiCOJuI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Mar 2022 05:50:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346222AbiCOJgZ (ORCPT
+        with ESMTP id S236295AbiCOJuH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Mar 2022 05:36:25 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3A3A39B8A;
-        Tue, 15 Mar 2022 02:35:12 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1C57F60AF4;
-        Tue, 15 Mar 2022 09:35:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD33C340E8;
-        Tue, 15 Mar 2022 09:35:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1647336911;
-        bh=tc/AYlU5h+rIvqjL5oTMpd37Nh1Iiz2jAlGUG+y+Abg=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=q7bQgqkRSdMHOm+/K3QDJHpE1nyNo7Ji1VCcUgPEggRZTuigZa2fouitaaOdiUlPl
-         2e4i6K72aVpXtZjFaDGOuPsB68Aa4JU25BusLuar/XS7B741AUbovWEXrcSEoVZKj1
-         ztK4enbfxZpuW/7OwLkzPTLPMJU95Mkd9NquoysZkFt9Uh/ldbvfhZ4q2ldXsp/tRH
-         qdL/5ZTffFR49LTTg/IgkvEVWesLOVu7Za7Rm7uIdemcseM/GEg20+LP+ocLJCVx2D
-         nGLOEKN+AHB4leKMND21ADdNjwWM+pdeOpB9+sq3AJbAcguseZCfjS5ozc1t9tdh6B
-         ISqclEZpOq0uw==
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
-        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <maz@kernel.org>)
-        id 1nU3a8-00EbLe-Tm; Tue, 15 Mar 2022 09:35:09 +0000
+        Tue, 15 Mar 2022 05:50:07 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB8034ECD6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Mar 2022 02:48:55 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <p.zabel@pengutronix.de>)
+        id 1nU3nJ-0004sX-UN; Tue, 15 Mar 2022 10:48:45 +0100
+Received: from [2a0a:edc0:0:900:1d::4e] (helo=lupine)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <p.zabel@pengutronix.de>)
+        id 1nU3nI-000oTA-SH; Tue, 15 Mar 2022 10:48:43 +0100
+Received: from pza by lupine with local (Exim 4.94.2)
+        (envelope-from <p.zabel@pengutronix.de>)
+        id 1nU3nG-0002bJ-TX; Tue, 15 Mar 2022 10:48:42 +0100
+Message-ID: <daecd30e4798e7d1e4b74dfe37d67b74a6f3cde1.camel@pengutronix.de>
+Subject: Re: [PATCH V2] mmc: sdhci-msm: Reset GCC_SDCC_BCR register for SDHC
+From:   Philipp Zabel <p.zabel@pengutronix.de>
+To:     Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>,
+        adrian.hunter@intel.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, ulf.hansson@linaro.org,
+        chris@printf.net, gdjakov@mm-sol.com
+Cc:     linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_asutoshd@quicinc.com,
+        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
+        quic_sartgarg@quicinc.com, quic_nitirawa@quicinc.com,
+        quic_sayalil@quicinc.com
+Date:   Tue, 15 Mar 2022 10:48:42 +0100
+In-Reply-To: <1646926823-5362-1-git-send-email-quic_c_sbhanu@quicinc.com>
+References: <1646926823-5362-1-git-send-email-quic_c_sbhanu@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.38.3-1 
 MIME-Version: 1.0
-Date:   Tue, 15 Mar 2022 09:35:08 +0000
-From:   Marc Zyngier <maz@kernel.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, Bartosz Golaszewski <brgl@bgdev.pl>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Joey Gouly <joey.gouly@arm.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, kernel-team@android.com
-Subject: Re: [PATCH 0/5] gpiolib: Handle immutable irq_chip structures
-In-Reply-To: <CACRpkdbEDoPeu=TWmsJ_t-4+NtyiiSCXoj9rymspZt0nC+yrsQ@mail.gmail.com>
-References: <20220223154405.54912-1-maz@kernel.org>
- <CACRpkdbEDoPeu=TWmsJ_t-4+NtyiiSCXoj9rymspZt0nC+yrsQ@mail.gmail.com>
-User-Agent: Roundcube Webmail/1.4.13
-Message-ID: <e39c68c6c8c99fec796461cde33f78df@kernel.org>
-X-Sender: maz@kernel.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: linus.walleij@linaro.org, linux-kernel@vger.kernel.org, brgl@bgdev.pl, thierry.reding@gmail.com, joey.gouly@arm.com, jonathanh@nvidia.com, marcan@marcan.st, sven@svenpeter.dev, alyssa@rosenzweig.io, bjorn.andersson@linaro.org, agross@kernel.org, tglx@linutronix.de, linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
-X-Spam-Status: No, score=-8.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,49 +59,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-03-15 00:44, Linus Walleij wrote:
-> On Wed, Feb 23, 2022 at 4:44 PM Marc Zyngier <maz@kernel.org> wrote:
-> 
->> I recently realised that the gpiolib play ugly tricks on the
->> unsuspecting irq_chip structures by patching the callbacks.
-> 
-> Sorry about that...
+SGkgU2FqaWRhLAoKT24gRG8sIDIwMjItMDMtMTAgYXQgMjE6MTAgKzA1MzAsIFNoYWlrIFNhamlk
+YSBCaGFudSB3cm90ZToKWy4uLl0KPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9tbWMvaG9zdC9zZGhj
+aS1tc20uYyBiL2RyaXZlcnMvbW1jL2hvc3Qvc2RoY2ktCj4gbXNtLmMKPiBpbmRleCA1MGM3MWUw
+Li5jYjMzYzlhIDEwMDY0NAo+IC0tLSBhL2RyaXZlcnMvbW1jL2hvc3Qvc2RoY2ktbXNtLmMKPiAr
+KysgYi9kcml2ZXJzL21tYy9ob3N0L3NkaGNpLW1zbS5jClsuLi5dCj4gQEAgLTI0ODIsNiArMjQ4
+NCw0NSBAQCBzdGF0aWMgaW5saW5lIHZvaWQgc2RoY2lfbXNtX2dldF9vZl9wcm9wZXJ0eShzdHJ1
+Y3QgcGxhdGZvcm1fZGV2aWNlICpwZGV2LAo+IMKgwqDCoMKgwqDCoMKgwqBvZl9wcm9wZXJ0eV9y
+ZWFkX3UzMihub2RlLCAicWNvbSxkbGwtY29uZmlnIiwgJm1zbV9ob3N0LT5kbGxfY29uZmlnKTsK
+PiDCoH0KPiDCoAo+ICtzdGF0aWMgaW50IHNkaGNpX21zbV9nY2NfcmVzZXQoc3RydWN0IHBsYXRm
+b3JtX2RldmljZSAqcGRldiwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgc3RydWN0IHNk
+aGNpX2hvc3QgKmhvc3QpCj4gK3sKPiArwqDCoMKgwqDCoMKgwqBzdHJ1Y3Qgc2RoY2lfcGx0Zm1f
+aG9zdCAqcGx0Zm1faG9zdCA9IHNkaGNpX3ByaXYoaG9zdCk7Cj4gK8KgwqDCoMKgwqDCoMKgc3Ry
+dWN0IHNkaGNpX21zbV9ob3N0ICptc21faG9zdCA9IHNkaGNpX3BsdGZtX3ByaXYocGx0Zm1faG9z
+dCk7Cj4gK8KgwqDCoMKgwqDCoMKgaW50IHJldCA9IDA7Cj4gKwo+ICvCoMKgwqDCoMKgwqDCoG1z
+bV9ob3N0LT5jb3JlX3Jlc2V0ID0gZGV2bV9yZXNldF9jb250cm9sX2dldF9vcHRpb25hbF9leGNs
+dXNpdmUoJnBkZXYtPmRldiwgImNvcmVfcmVzZXQiKTsKCkkgdGhpbmsgdGhlICJfcmVzZXQiIHBh
+cnQgaW4gdGhlIG5hbWUgaXMgc3VwZXJmbHVvdXMgYW5kIHRoaXMgcmVzZXQKY29udHJvbCBzaG91
+bGQgYmUgY2FsbGVkICJjb3JlIi4gSXMgdGhpcyBkb2N1bWVudGVkIGluIHRoZSBzZGhjaS1tc20K
+ZGV2aWNlIHRyZWUgYmluZGluZyBkb2N1bWVudD8KCj4gK8KgwqDCoMKgwqDCoMKgaWYgKElTX0VS
+Uihtc21faG9zdC0+Y29yZV9yZXNldCkpIHsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgcmV0ID0gUFRSX0VSUihtc21faG9zdC0+Y29yZV9yZXNldCk7Cj4gK8KgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoGRldl9lcnIoJnBkZXYtPmRldiwgImNvcmVfcmVzZXQgdW5hdmFpbGFi
+bGUgKCVkKVxuIiwgcmV0KTsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgbXNtX2hv
+c3QtPmNvcmVfcmVzZXQgPSBOVUxMOwoKQXMgQmpvcm4gcG9pbnRlZCBvdXQsIHRoaXMgZXJyb3Ig
+c2hvdWxkIGJlIHJldHVybmVkLgpyZXNldF9jb250cm9sX2dldF9vcHRpb25hbCByZXR1cm5zIE5V
+TEwgaWYgdGhlIG9wdGlvbmFsIHJlc2V0IGNvbnRyb2wKaXMgbm90IHNwZWNpZmllZCBpbiB0aGUg
+ZGV2aWNlIHRyZWUsIHNvIHdlIG9ubHkgbGFuZCBoZXJlIGlmIHRoZXJlJ3MgYQpyZWFsIGVycm9y
+LgoKWy4uLl0KPiBAQCAtMjUyOSw2ICsyNTcwLDEzIEBAIHN0YXRpYyBpbnQgc2RoY2lfbXNtX3By
+b2JlKHN0cnVjdAo+IHBsYXRmb3JtX2RldmljZSAqcGRldikKPiDCoAo+IMKgwqDCoMKgwqDCoMKg
+wqBtc21faG9zdC0+c2F2ZWRfdHVuaW5nX3BoYXNlID0gSU5WQUxJRF9UVU5JTkdfUEhBU0U7Cj4g
+wqAKPiArwqDCoMKgwqDCoMKgwqByZXQgPSBzZGhjaV9tc21fZ2NjX3Jlc2V0KHBkZXYsIGhvc3Qp
+Owo+ICvCoMKgwqDCoMKgwqDCoGlmIChyZXQpIHsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgZGV2X2VycigmcGRldi0+ZGV2LCAiY29yZV9yZXNldCBhc3NlcnQvZGVhc3NlcnQgZmFp
+bGVkICglZClcbiIsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHJldCk7Cj4gK8KgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoGdvdG8gcGx0Zm1fZnJlZTsKPiArwqDCoMKgwqDCoMKgwqB9Cj4g
+Kwo+IMKgwqDCoMKgwqDCoMKgwqAvKiBTZXR1cCBTRENDIGJ1cyB2b3RlciBjbG9jay4gKi8KPiDC
+oMKgwqDCoMKgwqDCoMKgbXNtX2hvc3QtPmJ1c19jbGsgPSBkZXZtX2Nsa19nZXQoJnBkZXYtPmRl
+diwgImJ1cyIpOwo+IMKgwqDCoMKgwqDCoMKgwqBpZiAoIUlTX0VSUihtc21faG9zdC0+YnVzX2Ns
+aykpIHsKCkkgbm90aWNlIHRoYXQgdGhpcyBkcml2ZXIgcmVxdWVzdHMgcmVzb3VyY2VzIHN1Y2gg
+YXMgY2xvY2tzIGFuZCByZXNldHMKYW5kIHRoZW4gaW1tZWRpYXRlbHkgdXNlcyB0aGVtLCBvbmUg
+Ynkgb25lLiBJdCB3b3VsZCBiZSBiZXR0ZXIgdG8KcmVxdWVzdCBhbGwgcmVzb3VyY2VzIGZpcnN0
+LCBhbmQgb25seSB0aGVuIHN0YXJ0IGludGVyYWN0aW5nIHdpdGggdGhlCmhhcmR3YXJlLiBUaGlz
+IGlzIG5vdCBhbiBpc3N1ZSB0aGF0IGNhbiBiZSBmaXhlZCBpbiB0aGlzIHBhdGNoLAphbHRob3Vn
+aCBtYXliZSBpdCBjb3VsZCBiZSBwcmVwYXJlZCBmb3IgaXQgYnkgc2VwYXJhdGluZyB0aGUKcmVz
+ZXRfY29udHJvbF9nZXQgZnJvbSB0aGUgX2Fzc2VydC9kZWFzc2VydC4KCnJlZ2FyZHMKUGhpbGlw
+cAo=
 
-No worries. It probably did seem like a good idea at the
-time, and I have the benefit of hindsight here...
-
-> 
->> My current approach is to add a new irq_chip flag (IRQCHIP_IMMUTABLE)
->> which does what it says on the tin: don't you dare writing there.
->> Gpiolib is further updated not to install its own callbacks, and it
->> becomes the responsibility of the driver to call into the gpiolib when
->> required. This is similar to what we do for other subsystems such as
->> PCI-MSI.
-> 
-> OK if there is a precedent it is usually wise to follow.
-> 
->> I'd welcome comments on the approach. If deemed acceptable, there are
->> another 300+ drivers to update! Not to mention the documentation. I
->> appreciate that this is a lot of potential changes, but the current
->> situation is messy.
-> 
-> I'm happy with this approach as long as the 300+ drivers get fixed
-> and the old way of doing it gets deleted.
-
-Of course. Note that it will take some time before it actually happens.
-My current plan is to stick in a pr_warn() each time a driver
-following the old scheme gets registered, as a nudge for people to
-update their driver if they care about it.
-
-Regarding documentation, are you OK with me simply replacing the
-current code samples with the new approach? It will at least avoid
-giving people the wrong idea. I also want to write a brief migration
-guide that people willing to bump up their patch count can follow.
-
-I'll repost something once -rc1 is out.
-
-Thanks,
-
-         M.
--- 
-Jazz is not dead. It just smells funny...
