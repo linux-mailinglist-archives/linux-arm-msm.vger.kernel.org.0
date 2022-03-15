@@ -2,111 +2,227 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 755874DA1AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 18:55:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 346C64DA1D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 19:02:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345366AbiCOR4d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Mar 2022 13:56:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60376 "EHLO
+        id S1350869AbiCOSCY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Mar 2022 14:02:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236713AbiCOR4d (ORCPT
+        with ESMTP id S243063AbiCOSCY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Mar 2022 13:56:33 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44D9A522C5;
-        Tue, 15 Mar 2022 10:55:21 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D7C8F61634;
-        Tue, 15 Mar 2022 17:55:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E1AC340EE;
-        Tue, 15 Mar 2022 17:55:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1647366920;
-        bh=DnJBRB69KPEnIPM6pi87Ym+S0PQ45uLanLNzMJWai8c=;
-        h=In-Reply-To:References:Subject:From:To:Date:From;
-        b=CIHKi2eDxeLTRpDkaifVYJP3UoodHCktIhnCjwUdmYcF+N50KnGjE2KdUfGQbabkY
-         e9UmgBf5/TErJtxiLrCwuyf3sBZxFhIDoJ/Gg4TrXW/JXcpB7soflew1EDG0+WNJ75
-         e2kIqZ7EiURge5ibuELBkb9TBAwM5jSz8Dqtv7aVMz/Mag8+cbcW3m3N1vi+o98TrZ
-         viLW4/VDukMZ+rjqCiH6IelYRlAzVqI+dQMoh1chXKwzGOTTc7VbJ0np+5SKcePbLh
-         TyAcBDVIq5hBEVW0vsRzbFIJyPyz8znuH4fxPWH9F347Bk3yITn66aTvorKWgNMoM8
-         rSS5L1K24Tyfw==
-Content-Type: text/plain; charset="utf-8"
+        Tue, 15 Mar 2022 14:02:24 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A329D58E6E;
+        Tue, 15 Mar 2022 11:01:11 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id h13so25237638ede.5;
+        Tue, 15 Mar 2022 11:01:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9egEby/kGDQx/H2AywacJdMEq9UWb27T57iBP6MKY/M=;
+        b=X459zaz8rBpHmz1eWRM/nXKPoCcWwgv93mgo1kUIqKJmmrFSVbFmtlBkSyc7oZbqEA
+         9iE/wpN2ldzWFyDARevE8q4aWwftUcTWrj/hZGCp5c/nWOErfTWiotj502O2E3wRub8x
+         fAvwgbWwEpPPMZKlHleAIZ5b3NuCDHQaUCu3o6zMz3Pk9oBOWUhxp7FqU8z4OYlvff33
+         vjwTCIZda48THwgM2za8HjIs/dPh3/+wx8u7uUvYGGau/xbCmqh8QSdYU72RKq3dM+TV
+         7s/9EfIhX6BorS0N3xa1MT7AdVO4JDq0rPwvec+a1/gkrmCnUuEgVF5WsgvwobwSbCSf
+         ZFuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9egEby/kGDQx/H2AywacJdMEq9UWb27T57iBP6MKY/M=;
+        b=XzfM2y1/piwXOHyvUJCRTcLMyV5F25NwyAJ3OpzE3GPeEYCL6U9QtqD23JMPJV0Dlm
+         7Cd9roX0kyKTR3QEyPNBz7P1CTQQdguanEMw4FSfhmX7UWjfUgLeQiCFa+zIQZPXBRbP
+         fVruSaKpdK9Nj2pQUqrEVlgMh/AZYNyEU8/ABFX10M8ukj2vAlNcIGthtma/HVPMpqFG
+         eqHaWFywtWxx7W7kKn/3gr//Ca7cgl6MKQVOIjdnR0sT7WwYJmwA+p+LxEmrnryMr8zr
+         3zGqTbm/cgWVzJypTcsv1YoAaYPodndYKENU1w65gMnmadBR4NPRWrr/poSTTz9kAVwH
+         +/lQ==
+X-Gm-Message-State: AOAM530LkyqLKpknuIcsqFSJWgP9d+kI2fTmX20AJM3dDQJS36PD0aSm
+        M3ETKmWVYbHCuaFa4FQN0K7Dpq3rsDCIzIWhgY0=
+X-Google-Smtp-Source: ABdhPJz09b9Fm75ixFJtzUGUkS6dUid3EAUCrWF+jfN6zd2zyejpSwybW8/2BkPFf2PjWP6mgqXTNKVgn2eTNF92NTk=
+X-Received: by 2002:a05:6402:3589:b0:416:7de7:cdde with SMTP id
+ y9-20020a056402358900b004167de7cddemr26440456edc.218.1647367269998; Tue, 15
+ Mar 2022 11:01:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20220313190419.2207-2-ansuelsmth@gmail.com>
-References: <20220313190419.2207-1-ansuelsmth@gmail.com> <20220313190419.2207-2-ansuelsmth@gmail.com>
-Subject: Re: [PATCH 01/16] clk: permit to define a custom parent for clk_hw_get_parent_index
-From:   Stephen Boyd <sboyd@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Ansuel Smith <ansuelsmth@gmail.com>,
+References: <20220312132856.65163-1-krzysztof.kozlowski@canonical.com> <20220312132856.65163-2-krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20220312132856.65163-2-krzysztof.kozlowski@canonical.com>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Tue, 15 Mar 2022 19:59:56 +0200
+Message-ID: <CAHp75Vd6yu0OA6wYvPVs8J1wRDPyb6tCYXOjp9poweJd0sfPcw@mail.gmail.com>
+Subject: Re: [PATCH v4 01/11] driver: platform: Add helper for safer setting
+ of driver_override
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Stuart Yoder <stuyoder@gmail.com>,
+        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+        Abel Vesa <abel.vesa@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        "K. Y. Srinivasan" <kys@microsoft.com>,
+        Haiyang Zhang <haiyangz@microsoft.com>,
+        Stephen Hemminger <sthemmin@microsoft.com>,
+        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Peter De Schrijver <pdeschrijver@nvidia.com>,
-        Prashant Gaikwad <pgaikwad@nvidia.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-tegra@vger.kernel.org
-Date:   Tue, 15 Mar 2022 10:55:18 -0700
-User-Agent: alot/0.10
-Message-Id: <20220315175520.32E1AC340EE@smtp.kernel.org>
-X-Spam-Status: No, score=-8.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Vineeth Vijayan <vneethv@linux.ibm.com>,
+        Peter Oberparleiter <oberpar@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Andy Gross <agross@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        "Michael S. Tsirkin" <mst@redhat.com>,
+        Jason Wang <jasowang@redhat.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
+        Linux on Hyper-V List <linux-hyperv@vger.kernel.org>,
+        linux-pci <linux-pci@vger.kernel.org>,
+        linux-remoteproc@vger.kernel.org, linux-s390@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        ALSA Development Mailing List <alsa-devel@alsa-project.org>,
+        linux-spi <linux-spi@vger.kernel.org>,
+        virtualization@lists.linux-foundation.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Ansuel Smith (2022-03-13 12:04:04)
-> Clk can have multiple parents. Some clk may require to get the cached
-> index of other parent that are not current associated with the clk.
-> Extend clk_hw_get_parent_index() with an optional parent to permit a
-> driver to get the cached index. If parent is NULL, the parent associated
-> with the provided hw clk is used.
->=20
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  drivers/clk/clk.c                 | 14 +++++++++-----
->  drivers/clk/tegra/clk-periph.c    |  2 +-
->  drivers/clk/tegra/clk-sdmmc-mux.c |  2 +-
->  drivers/clk/tegra/clk-super.c     |  4 ++--
->  include/linux/clk-provider.h      |  2 +-
->  5 files changed, 14 insertions(+), 10 deletions(-)
->=20
-> diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-> index 8de6a22498e7..fe42f56bfbdf 100644
-> --- a/drivers/clk/clk.c
-> +++ b/drivers/clk/clk.c
-> @@ -1711,15 +1711,19 @@ static int clk_fetch_parent_index(struct clk_core=
- *core,
->  /**
->   * clk_hw_get_parent_index - return the index of the parent clock
->   * @hw: clk_hw associated with the clk being consumed
-> + * @parent: optional clk_hw of the parent to be fetched
->   *
-> - * Fetches and returns the index of parent clock. Returns -EINVAL if the=
- given
-> - * clock does not have a current parent.
-> + * Fetches and returns the index of parent clock. If parent is not
-> + * provided the parent of hw is used.
-> + * Returns -EINVAL if the given clock does not have a current parent.
->   */
-> -int clk_hw_get_parent_index(struct clk_hw *hw)
-> +int clk_hw_get_parent_index(struct clk_hw *hw, struct clk_hw *parent)
+On Sat, Mar 12, 2022 at 5:16 PM Krzysztof Kozlowski
+<krzysztof.kozlowski@canonical.com> wrote:
+>
+> Several core drivers and buses expect that driver_override is a
+> dynamically allocated memory thus later they can kfree() it.
+>
+> However such assumption is not documented, there were in the past and
+> there are already users setting it to a string literal. This leads to
+> kfree() of static memory during device release (e.g. in error paths or
+> during unbind):
+>
+>     kernel BUG at ../mm/slub.c:3960!
+>     Internal error: Oops - BUG: 0 [#1] PREEMPT SMP ARM
+>     ...
+>     (kfree) from [<c058da50>] (platform_device_release+0x88/0xb4)
+>     (platform_device_release) from [<c0585be0>] (device_release+0x2c/0x90)
+>     (device_release) from [<c0a69050>] (kobject_put+0xec/0x20c)
+>     (kobject_put) from [<c0f2f120>] (exynos5_clk_probe+0x154/0x18c)
+>     (exynos5_clk_probe) from [<c058de70>] (platform_drv_probe+0x6c/0xa4)
+>     (platform_drv_probe) from [<c058b7ac>] (really_probe+0x280/0x414)
+>     (really_probe) from [<c058baf4>] (driver_probe_device+0x78/0x1c4)
+>     (driver_probe_device) from [<c0589854>] (bus_for_each_drv+0x74/0xb8)
+>     (bus_for_each_drv) from [<c058b48c>] (__device_attach+0xd4/0x16c)
+>     (__device_attach) from [<c058a638>] (bus_probe_device+0x88/0x90)
+>     (bus_probe_device) from [<c05871fc>] (device_add+0x3dc/0x62c)
+>     (device_add) from [<c075ff10>] (of_platform_device_create_pdata+0x94/0xbc)
+>     (of_platform_device_create_pdata) from [<c07600ec>] (of_platform_bus_create+0x1a8/0x4fc)
+>     (of_platform_bus_create) from [<c0760150>] (of_platform_bus_create+0x20c/0x4fc)
+>     (of_platform_bus_create) from [<c07605f0>] (of_platform_populate+0x84/0x118)
+>     (of_platform_populate) from [<c0f3c964>] (of_platform_default_populate_init+0xa0/0xb8)
+>     (of_platform_default_populate_init) from [<c01031f8>] (do_one_initcall+0x8c/0x404)
 
-Please introduce another API vs. tacking on an "output" argument to this
-API. That makes the patch less invasive. And it can also return a
-pointer instead of an integer in that case.
+>     (do_one_initcall) from [<c0f012c0>] (kernel_init_freeable+0x3d0/0x4d8)
+>     (kernel_init_freeable) from [<c0a7def0>] (kernel_init+0x8/0x114)
+>     (kernel_init) from [<c01010b4>] (ret_from_fork+0x14/0x20)
 
->  {
-> -       struct clk_hw *parent =3D clk_hw_get_parent(hw);
-> +       /* With parent NULL get the current parent of hw */
-> +       if (!parent)
-> +               parent =3D clk_hw_get_parent(hw);
+I believe you may remove these three.
+
+> Provide a helper which clearly documents the usage of driver_override.
+> This will allow later to reuse the helper and reduce amount of
+
+the amount
+
+> duplicated code.
+
+> Convert the platform driver to use new helper and make the
+
+a new
+
+> driver_override field const char (it is not modified by the core).
+
+...
+
+> +/**
+> + * driver_set_override() - Helper to set or clear driver override.
+> + * @dev: Device to change
+> + * @override: Address of string to change (e.g. &device->driver_override);
+> + *            The contents will be freed and hold newly allocated override.
+> + * @s: NUL terminated string, new driver name to force a match, pass empty
+
+NUL-terminated? (44 vs 115 occurrences)
+
+> + *     string to clear it
+> + * @len: length of @s
+> + *
+> + * Helper to set or clear driver override in a device, intended for the cases
+> + * when the driver_override field is allocated by driver/bus code.
+> + *
+> + * Returns: 0 on success or a negative error code on failure.
+> + */
+> +int driver_set_override(struct device *dev, const char **override,
+> +                       const char *s, size_t len)
+> +{
+> +       const char *new, *old;
+> +       char *cp;
+> +
+> +       if (!dev || !override || !s)
+> +               return -EINVAL;
+> +
+> +       /*
+> +        * The stored value will be used in sysfs show callback (sysfs_emit()),
+> +        * which has a length limit of PAGE_SIZE and adds a trailing newline.
+> +        * Thus we can store one character less to avoid truncation during sysfs
+> +        * show.
+> +        */
+> +       if (len >= (PAGE_SIZE - 1))
+> +               return -EINVAL;
+> +
+> +       new = kstrndup(s, len, GFP_KERNEL);
+> +       if (!new)
+> +               return -ENOMEM;
+> +
+> +       cp = strchr(new, '\n');
+> +       if (cp)
+> +               *cp = '\0';
+
+AFAIU you may reduce memory footprint by
+
+cp = strnchr(new, len, '\n');
+if (cp)
+  len = s - cp;
+
+new = kstrndup(...);
+
+> +       device_lock(dev);
+> +       old = *override;
+> +       if (cp != new) {
+> +               *override = new;
+> +       } else {
+> +               kfree(new);
+> +               *override = NULL;
+> +       }
+> +       device_unlock(dev);
+> +
+> +       kfree(old);
+> +
+> +       return 0;
+> +}
+
+-- 
+With Best Regards,
+Andy Shevchenko
