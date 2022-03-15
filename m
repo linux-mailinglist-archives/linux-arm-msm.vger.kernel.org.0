@@ -2,110 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30D4D4D9C71
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 14:41:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C445B4D9C87
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 14:41:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348759AbiCONmS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Mar 2022 09:42:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44524 "EHLO
+        id S242481AbiCONm6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Mar 2022 09:42:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348757AbiCONmS (ORCPT
+        with ESMTP id S1348856AbiCONm4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Mar 2022 09:42:18 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45DA152E66;
-        Tue, 15 Mar 2022 06:41:05 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id AD8FFB81677;
-        Tue, 15 Mar 2022 13:41:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07A13C340E8;
-        Tue, 15 Mar 2022 13:40:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1647351662;
-        bh=gvl9SFrDd+2JfY4XpOU21w5Fgp3RnrxgO3xzRNMW3ig=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=FpIzPAInqwcWVe7lVXyZMo10uysAvQH5/+0FSS06nOQud/sjKtVu2eXUrgVVwDtnS
-         K9saXWWZ1hCdhU07mL3gP1lbyLMM5ncodj0hAGG1sCe8guzPWwUCxCvCMd4UnYk0ij
-         MiKnX5ElR8cklFLsknUpJxfH63KChYC/OCTeoHADKe2d7sJJxnj+KlqJSXMWCfA0RW
-         7IMl8VYJBtsy0LvBdpwYawlVvfm1y/uovTsdBOXZktA8NvrkBJg6F9XHpbVdi97yvv
-         ktn0TMEJDT+qVku5scquwwLC4arp4ujY52Gxd5XtzcUD53EHdZUC9sEswg4SOYFru/
-         p422dM8tR7ngQ==
-From:   Mark Brown <broonie@kernel.org>
-To:     Julia Lawall <Julia.Lawall@inria.fr>, linux-can@vger.kernel.org
-Cc:     netdev@vger.kernel.org, Jiri Olsa <jolsa@kernel.org>,
-        Shayne Chen <shayne.chen@mediatek.com>,
-        linux-media@vger.kernel.org,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        linux-perf-users@vger.kernel.org, linux-mtd@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        Sean Wang <sean.wang@mediatek.com>,
-        linux-arm-msm@vger.kernel.org, Mark Rutland <mark.rutland@arm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        platform-driver-x86@vger.kernel.org,
-        kernel-janitors@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        target-devel@vger.kernel.org, linux-rdma@vger.kernel.org,
-        linux-staging@lists.linux.dev, linux-s390@vger.kernel.org,
-        Jonas Karlman <jonas@kwiboo.se>, linux-sunxi@lists.linux.dev,
-        linux-kernel@vger.kernel.org, linux-power@fi.rohmeurope.com,
-        linux-omap@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-leds@vger.kernel.org, linux-spi@vger.kernel.org,
-        amd-gfx@lists.freedesktop.org, linux-clk@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-scsi@vger.kernel.org,
-        Namhyung Kim <namhyung@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        linux-wireless@vger.kernel.org
-In-Reply-To: <20220314115354.144023-1-Julia.Lawall@inria.fr>
-References: <20220314115354.144023-1-Julia.Lawall@inria.fr>
-Subject: Re: (subset) [PATCH 00/30] fix typos in comments
-Message-Id: <164735165474.3687547.1964402001196947729.b4-ty@kernel.org>
-Date:   Tue, 15 Mar 2022 13:40:54 +0000
+        Tue, 15 Mar 2022 09:42:56 -0400
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E67F532C3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Mar 2022 06:41:43 -0700 (PDT)
+Received: by mail-io1-xd34.google.com with SMTP id q11so22181766iod.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Mar 2022 06:41:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sartura-hr.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3uaD53W4zQXTyZwVHH1JB2XZ73tQmzbVHSL//h1f2ug=;
+        b=7y/IZRcyoKi4gwO1g958k9ieziqGbrLKVzAHRAWXrHo0/OJcYDHqbQ9P1F9Rhcpfsf
+         aEYbQSp+6mk3Y4ysyrAgeefwxXmNxgejdRZRlZQgHGG2vjY42aT7fJBHzSb7/AuMAm9+
+         R5Gc0Qo8Gk27ARHeueVfHnQFdNfAgBH0ttUzSo4QaDqTxd4Ea+fBk0ZFo/Bjby5cIs+R
+         xDrVCYYY3G/BqnQRCPF8qc07stoKS7IsGvXr/vLJJ7bB8a5C+JDo7SjubRwKUO4dGXRc
+         sG4zB+xcb0O7AC+ght5GA3d9fXU17DaZmfGHLIZALwZsQF2UBmIcE5hX4QeMf7517PVf
+         nQiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3uaD53W4zQXTyZwVHH1JB2XZ73tQmzbVHSL//h1f2ug=;
+        b=uT8ryBXena/zbPjulOaVFUUbbcOyFDJb16Ls7itAaKmGUaDTLpU79J20wyZXvndle4
+         KEed0YX+VMJlP/XvhfDxErlGMwNtVtPeUHdx36glbWRJ5q20rOe4dipe9wuoYZZF1aum
+         UhUeHw9FHQASozF9qxhdjFQ8q0tXkRg30fl0C//gJQjc/aDWMQkPMmxlzOIAJvrYCBGE
+         1S/4hC++4AmdvDKBdUh780WuGJSqRItUnj/6qO7D0d5K4BNlGFyLHGcRkoKZ0W5kgXms
+         wngM5ihhqb6vlVSKSO7tFHOQaWHeMj5hrZ9nR9ktnOlOaTUxngMTIweYlj45JXpTCX+4
+         K97g==
+X-Gm-Message-State: AOAM53253hX0V/U9TROh1HTzsgqHcU2kyzFJM5krMKu+tONJu0qnhYGd
+        EoLjnVMy3yXG59lMv+cLs1K7UB6pijb0Uq27unuRYQ==
+X-Google-Smtp-Source: ABdhPJxzTwGo7p/OwR+drVP9dHdKJu3Z/vyiS4EbXsb34lz1aTHyCGPZICs68xEpu1a1MgT/BHjEbO2Ud7p1knp2bPY=
+X-Received: by 2002:a05:6638:41a:b0:317:b934:681b with SMTP id
+ q26-20020a056638041a00b00317b934681bmr24163896jap.317.1647351703321; Tue, 15
+ Mar 2022 06:41:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+References: <cover.1644234441.git.baruch@tkos.co.il> <20220211160645.GA448@lpieralisi>
+ <CA+HBbNEham1bukiEv5Px2=fCnqnbBKWBy3xOKe89fioQWttoGg@mail.gmail.com> <874k3zbaxc.fsf@tarshish>
+In-Reply-To: <874k3zbaxc.fsf@tarshish>
+From:   Robert Marko <robert.marko@sartura.hr>
+Date:   Tue, 15 Mar 2022 14:41:32 +0100
+Message-ID: <CA+HBbNEgQoNZ2v5Wr-KjJ3+U_NPzhW2Tz9bn7pTAUTQ-_owudw@mail.gmail.com>
+Subject: Re: [PATCH v6 0/3] PCI: IPQ6018 platform support
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        "Bryan O'Donoghue" <pure.logic@nexus-software.ie>,
+        linux-pci@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-tegra@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 14 Mar 2022 12:53:24 +0100, Julia Lawall wrote:
-> Various spelling mistakes in comments.
-> Detected with the help of Coccinelle.
-> 
+On Tue, Mar 15, 2022 at 2:30 PM Baruch Siach <baruch@tkos.co.il> wrote:
+>
+> Hi Robert,
+>
+> On Tue, Mar 15 2022, Robert Marko wrote:
+> > On Fri, Feb 11, 2022 at 5:06 PM Lorenzo Pieralisi
+> > <lorenzo.pieralisi@arm.com> wrote:
+> >>
+> >> On Mon, Feb 07, 2022 at 04:51:23PM +0200, Baruch Siach wrote:
+> >> > This series adds support for the single PCIe lane on IPQ6018 SoCs. The code is
+> >> > ported from downstream Codeaurora v5.4 kernel. The main difference from
+> >> > downstream code is the split of PCIe registers configuration from .init to
+> >> > .post_init, since it requires phy_power_on().
+> >> >
+> >> > Tested on IPQ6010 based hardware.
+> [snip]
+> >> >
+> >> > Baruch Siach (2):
+> >> >   PCI: dwc: tegra: move GEN3_RELATED DBI register to common header
+> >> >   PCI: qcom: Define slot capabilities using PCI_EXP_SLTCAP_*
+> >> >
+> >> > Selvam Sathappan Periakaruppan (1):
+> >> >   PCI: qcom: Add IPQ60xx support
+> >> >
+> >> >  drivers/pci/controller/dwc/pcie-designware.h |   7 +
+> >> >  drivers/pci/controller/dwc/pcie-qcom.c       | 155 ++++++++++++++++++-
+> >> >  drivers/pci/controller/dwc/pcie-tegra194.c   |   6 -
+> >> >  3 files changed, 160 insertions(+), 8 deletions(-)
+> >>
+> >> Bjorn, Andy,
+> >>
+> >> Can you ACK please if this series is ready to be merged ?
+> >
+> > This would also help the IPQ8074 which has the same controller for the
+> > Gen3 port.
+> >
+> > I have been using this for OpenWrt for a while and it works.
+>
+> Thanks for your test report.
+>
+> It would be nice to have a formal Tested-by for the pcie-qcom.c
+> patch. It might help to push the patch forward.
 
-Applied to
+Hi Baruch, I am not sure whether a Tested-by would be applicable here as its
+a different platform, that is why I left it out.
+>
+> Can you also share the device-tree part? I'll add it to this series in
+> case it needs a respin.
+Currently, the IPQ8074 DTS regarding QMP PCI PHY-s and PCI controllers is
+incorrect, it was all based on v1 of the SoC which is not supported at all.
+Gen3 QMP PHY support is currently missing for IPQ8074 and I am working on
+upstreaming that and will fix up all of the PCI-related stuff in the
+DTS after that.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+So, I would prefer to keep those separate and let this series get
+merged, especially
+since the DTS part has already been merged.
 
-Thanks!
+Regards,
+Robert
+>
+> Thanks,
+> baruch
+>
+> --
+>                                                      ~. .~   Tk Open Systems
+> =}------------------------------------------------ooO--U--Ooo------------{=
+>    - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
 
-[21/30] spi: sun4i: fix typos in comments
-        commit: 2002c13243d595e211c0dad6b8e2e87f906f474b
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+-- 
+Robert Marko
+Staff Embedded Linux Engineer
+Sartura Ltd.
+Lendavska ulica 16a
+10000 Zagreb, Croatia
+Email: robert.marko@sartura.hr
+Web: www.sartura.hr
