@@ -2,76 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E268B4D96C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 09:53:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E91AA4D9729
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Mar 2022 10:08:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238315AbiCOIyR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 15 Mar 2022 04:54:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43266 "EHLO
+        id S1346379AbiCOJJh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 15 Mar 2022 05:09:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242340AbiCOIyQ (ORCPT
+        with ESMTP id S1346376AbiCOJJf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 15 Mar 2022 04:54:16 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AA8B2701;
-        Tue, 15 Mar 2022 01:53:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1647334385; x=1678870385;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=hFmat0lmKJuvGjhTkHmi7yYiJqs/NBeQLcu+ammmDLU=;
-  b=BjxTrttxNs3AFyOvsbjkLiOvzY3Ao3VdH53pSiA4QDh2MmPaRzms2YyS
-   GO0Db6H5Yo65WzReBVi21wE0EN09bdCfWYzqBVLTqKGz7DlyXJ/Y4Uub4
-   Z+oAWhHjWUH3//W1T/Zyqpw2hs+A551u1Zw9c1HcPPyyLq4/oyFL3sSaO
-   k=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 15 Mar 2022 01:53:05 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Mar 2022 01:53:04 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.15; Tue, 15 Mar 2022 01:53:04 -0700
-Received: from [10.253.9.165] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 15 Mar
- 2022 01:53:01 -0700
-Message-ID: <0ef5aa68-fc1c-6f0b-a1cb-46c5548952db@quicinc.com>
-Date:   Tue, 15 Mar 2022 16:52:58 +0800
+        Tue, 15 Mar 2022 05:09:35 -0400
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E268213F47;
+        Tue, 15 Mar 2022 02:08:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1647335302; x=1678871302;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=BOGkV1R9jATnmy60k4Z2w/p9Ncg9ruX8vcR8NretwAE=;
+  b=hMTy10pEa7Fye0HKvuAqLsGr2cqpZZZ9kEPAZib+erD11gZzUyJ9TNsy
+   fpTchjXXMlqy9Bc3Virq1+s0CexVd2aFeG4wDK+lYmu6krNOGGto08e8k
+   S+6rBFQcYb79MeQ+nJalcSrERWWyapxp/Y71wsklzkwVBhlxI33SlRZla
+   D9z25QQn8BTcliQ+WMpzDyTx7wympg8sqP4xs/qVocMjUkxfQ/EUXROsp
+   Vsr8yrwQSXvczs/w5JGsiUrTVTWi2kS6ucTm70d/tqLb33S4iYoZVamGX
+   +i9DjwQ4yifPE3nzkToNLmqrg4LNGnB/8Jdbv+iY7pM+QYMn3JiaDVGpp
+   Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10286"; a="316973356"
+X-IronPort-AV: E=Sophos;i="5.90,182,1643702400"; 
+   d="scan'208";a="316973356"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Mar 2022 02:08:22 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,182,1643702400"; 
+   d="scan'208";a="634518597"
+Received: from lkp-server02.sh.intel.com (HELO 89b41b6ae01c) ([10.239.97.151])
+  by FMSMGA003.fm.intel.com with ESMTP; 15 Mar 2022 02:08:19 -0700
+Received: from kbuild by 89b41b6ae01c with local (Exim 4.92)
+        (envelope-from <lkp@intel.com>)
+        id 1nU3AA-000AmE-Hz; Tue, 15 Mar 2022 09:08:18 +0000
+Date:   Tue, 15 Mar 2022 17:07:50 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dmitry.baryshkov@linaro.org, dianders@chromium.org,
+        quic_kalyant@quicinc.com
+Subject: Re: [PATCH v4] drm/msm/disp/dpu1: add inline rotation support for
+ sc7280 target
+Message-ID: <202203151751.ov7gCUZI-lkp@intel.com>
+References: <1647319394-11426-1-git-send-email-quic_vpolimer@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.0
-Subject: Re: [PATCH v3] coresight: core: Fix coresight device probe failure
- issue
-Content-Language: en-US
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>
-CC:     <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        "Tingwei Zhang" <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>
-References: <20220309142206.15632-1-quic_jinlmao@quicinc.com>
- <a1790ad9-b5e0-9a00-debc-fc8ef2c757cb@arm.com>
- <9cbb2e86-640f-4b5d-22ff-00c63a1b9743@quicinc.com>
- <99845680-c2a5-2538-a57c-6fbf395faa8b@arm.com>
-From:   Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <99845680-c2a5-2538-a57c-6fbf395faa8b@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1647319394-11426-1-git-send-email-quic_vpolimer@quicinc.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,50 +70,105 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Vinod,
 
-On 3/15/2022 4:42 PM, Suzuki K Poulose wrote:
-> On 15/03/2022 08:36, Jinlong Mao wrote:
->> On 3/10/2022 5:10 PM, Suzuki K Poulose wrote:
->>> Hi Jinlong
->>>
->>>
->>> On 09/03/2022 14:22, Mao Jinlong wrote:
->>>> It is possibe that probe failure issue happens when the device
->>>> and its child_device's probe happens at the same time.
->>>> In coresight_make_links, has_conns_grp is true for parent, but
->>>> has_conns_grp is false for child device as has_conns_grp is set
->>>> to true in coresight_create_conns_sysfs_group. The probe of parent
->>>> device will fail at this condition. Add has_conns_grp check for
->>>> child device before make the links and make the process from
->>>> device_register to connection_create be atomic to avoid this
->>>> probe failure issue.
->>>>
->>>> Suggested-by: Suzuki K Poulose <suzuki.poulose@arm.com>
->>>> Suggested-by: Mike Leach <mike.leach@linaro.org>
->>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->>>
->>> Thanks for the rework. The patch looks good to me.
->>>
->>> Suzuki
->> Thanks Suzuki.
->>
->> Hi Mathieu & Mike,
->>
->> Could you please help to review and provide your comments for the 
->> PATCH V3 ?
->
-> Thats what I just said above. The patch looks good to me, I can queue
-> this in the next cycle.
+Thank you for the patch! Perhaps something to improve:
 
-Thanks Suzuki.
+[auto build test WARNING on drm/drm-next]
+[also build test WARNING on drm-intel/for-linux-next drm-tip/drm-tip drm-exynos/exynos-drm-next next-20220310]
+[cannot apply to tegra-drm/drm/tegra/for-next airlied/drm-next v5.17-rc8]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-Best Regards
-Jinlong Mao
->
-> Kind regards
-> Suzuki
->
->>
->> Thanks
->> Jinlong Mao
->
+url:    https://github.com/0day-ci/linux/commits/Vinod-Polimera/drm-msm-disp-dpu1-add-inline-rotation-support-for-sc7280-target/20220315-124423
+base:   git://anongit.freedesktop.org/drm/drm drm-next
+config: arm64-buildonly-randconfig-r002-20220313 (https://download.01.org/0day-ci/archive/20220315/202203151751.ov7gCUZI-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project a6b2f50fb47da3baeee10b1906da6e30ac5d26ec)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install arm64 cross compiling tool for clang build
+        # apt-get install binutils-aarch64-linux-gnu
+        # https://github.com/0day-ci/linux/commit/1582b1f4a0b79f64b61b217ea6c3bb0591da0fab
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Vinod-Polimera/drm-msm-disp-dpu1-add-inline-rotation-support-for-sc7280-target/20220315-124423
+        git checkout 1582b1f4a0b79f64b61b217ea6c3bb0591da0fab
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash drivers/gpu/drm/msm/
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c:686:39: warning: unused variable 'msm8998_vig_sblk_0' [-Wunused-const-variable]
+   static const struct dpu_sspp_sub_blks msm8998_vig_sblk_0 =
+                                         ^
+>> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c:688:39: warning: unused variable 'msm8998_vig_sblk_1' [-Wunused-const-variable]
+   static const struct dpu_sspp_sub_blks msm8998_vig_sblk_1 =
+                                         ^
+>> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c:690:39: warning: unused variable 'msm8998_vig_sblk_2' [-Wunused-const-variable]
+   static const struct dpu_sspp_sub_blks msm8998_vig_sblk_2 =
+                                         ^
+>> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c:692:39: warning: unused variable 'msm8998_vig_sblk_3' [-Wunused-const-variable]
+   static const struct dpu_sspp_sub_blks msm8998_vig_sblk_3 =
+                                         ^
+   4 warnings generated.
+
+
+vim +/msm8998_vig_sblk_0 +686 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+
+5334087ee7438fa Loic Poulain               2022-02-14  647  
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  648  /*************************************************************
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  649   * SSPP sub blocks config
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  650   *************************************************************/
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  651  
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  652  /* SSPP common configuration */
+1582b1f4a0b79f6 Vinod Polimera             2022-03-15  653  #define _VIG_SBLK(num, sdma_pri, qseed_ver, rot_cfg) \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  654  	{ \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  655  	.maxdwnscale = MAX_DOWNSCALE_RATIO, \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  656  	.maxupscale = MAX_UPSCALE_RATIO, \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  657  	.smart_dma_priority = sdma_pri, \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  658  	.src_blk = {.name = STRCAT("sspp_src_", num), \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  659  		.id = DPU_SSPP_SRC, .base = 0x00, .len = 0x150,}, \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  660  	.scaler_blk = {.name = STRCAT("sspp_scaler", num), \
+b75ab05a34792fc Shubhashree Dhar           2019-11-27  661  		.id = qseed_ver, \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  662  		.base = 0xa00, .len = 0xa0,}, \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  663  	.csc_blk = {.name = STRCAT("sspp_csc", num), \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  664  		.id = DPU_SSPP_CSC_10BIT, \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  665  		.base = 0x1a00, .len = 0x100,}, \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  666  	.format_list = plane_formats_yuv, \
+e6b63a7bb6cd9cd Fritz Koenig               2018-12-11  667  	.num_formats = ARRAY_SIZE(plane_formats_yuv), \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  668  	.virt_format_list = plane_formats, \
+e6b63a7bb6cd9cd Fritz Koenig               2018-12-11  669  	.virt_num_formats = ARRAY_SIZE(plane_formats), \
+1582b1f4a0b79f6 Vinod Polimera             2022-03-15  670  	.rotation_cfg = rot_cfg, \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  671  	}
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  672  
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  673  #define _DMA_SBLK(num, sdma_pri) \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  674  	{ \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  675  	.maxdwnscale = SSPP_UNITY_SCALE, \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  676  	.maxupscale = SSPP_UNITY_SCALE, \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  677  	.smart_dma_priority = sdma_pri, \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  678  	.src_blk = {.name = STRCAT("sspp_src_", num), \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  679  		.id = DPU_SSPP_SRC, .base = 0x00, .len = 0x150,}, \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  680  	.format_list = plane_formats, \
+e6b63a7bb6cd9cd Fritz Koenig               2018-12-11  681  	.num_formats = ARRAY_SIZE(plane_formats), \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  682  	.virt_format_list = plane_formats, \
+e6b63a7bb6cd9cd Fritz Koenig               2018-12-11  683  	.virt_num_formats = ARRAY_SIZE(plane_formats), \
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  684  	}
+25fdd5933e4c0f5 Jeykumar Sankaran          2018-06-27  685  
+94391a14fc27383 AngeloGioacchino Del Regno 2022-01-13 @686  static const struct dpu_sspp_sub_blks msm8998_vig_sblk_0 =
+1582b1f4a0b79f6 Vinod Polimera             2022-03-15  687  				_VIG_SBLK("0", 0, DPU_SSPP_SCALER_QSEED3, NULL);
+94391a14fc27383 AngeloGioacchino Del Regno 2022-01-13 @688  static const struct dpu_sspp_sub_blks msm8998_vig_sblk_1 =
+1582b1f4a0b79f6 Vinod Polimera             2022-03-15  689  				_VIG_SBLK("1", 0, DPU_SSPP_SCALER_QSEED3, NULL);
+94391a14fc27383 AngeloGioacchino Del Regno 2022-01-13 @690  static const struct dpu_sspp_sub_blks msm8998_vig_sblk_2 =
+1582b1f4a0b79f6 Vinod Polimera             2022-03-15  691  				_VIG_SBLK("2", 0, DPU_SSPP_SCALER_QSEED3, NULL);
+94391a14fc27383 AngeloGioacchino Del Regno 2022-01-13 @692  static const struct dpu_sspp_sub_blks msm8998_vig_sblk_3 =
+1582b1f4a0b79f6 Vinod Polimera             2022-03-15  693  				_VIG_SBLK("3", 0, DPU_SSPP_SCALER_QSEED3, NULL);
+1582b1f4a0b79f6 Vinod Polimera             2022-03-15  694  
+
+---
+0-DAY CI Kernel Test Service
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
