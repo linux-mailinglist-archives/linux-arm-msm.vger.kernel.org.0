@@ -2,353 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7ABF4DABDC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Mar 2022 08:31:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B35B4DAD04
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Mar 2022 09:57:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235256AbiCPHcg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Mar 2022 03:32:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57498 "EHLO
+        id S1354747AbiCPI6W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Mar 2022 04:58:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244228AbiCPHcb (ORCPT
+        with ESMTP id S1354719AbiCPI6P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Mar 2022 03:32:31 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4217333EBC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Mar 2022 00:31:17 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id bt26so2315576lfb.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Mar 2022 00:31:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=GmTHvqCrS386fDIWw57GkKXCMyG7EzbNQjkEyeWGQTY=;
-        b=Zf1ZXcQkYKUd50ZZ/3Oa7G+DAZjXsF6t/wu3QUh3ydSDNnkj/ASz5BgOzCMgvSfwin
-         JuP0o2BH/HLWidXF2Xfur2/N8Bfc1JNKybUUb96IEfDcbRlHIBono4yhrHxoiOMg12tF
-         0UZqlN5ys1YoDWUmSrykMdVRTwaAOMsPa9nyZGHSnK1zqMcI4sQfADDhth0RiHm3BZK5
-         jgFJ/OHLlqyILkLeYDyUVCjSJg+wXOrBxMtkSO5PF8KmX4wnMAwiuFTd0fEGvaye9or7
-         AlnSikWwkvixuIJULD3hFrLWeDYsc2hMbnn2GGNYXNffQSeONc1f6XjKkuTt0JcRyq12
-         hG0w==
+        Wed, 16 Mar 2022 04:58:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id E595D65169
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Mar 2022 01:57:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1647421021;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=0Bc153qdO6aJS+V+8boSatM96Pn9LsInVn8PpJNJpKY=;
+        b=V60Ao4Zw1OA7tAOzdGW44leJ0jkElJhSPole8p+6UPMribGjSmwXawi+d7wL2Q1uaj/FON
+        k2CwETmF1FBe7qqQ65ImSpIasQTWKeABDsfs/Z/Z9ZDbgpp3vQdsjJ7ohAKIiOP5I7+x9l
+        Ax1/tYInHk81E+ISM4zKnhPSG9WCdaE=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-20-tLNwxN1PO8KosA3umiEOag-1; Wed, 16 Mar 2022 04:56:59 -0400
+X-MC-Unique: tLNwxN1PO8KosA3umiEOag-1
+Received: by mail-wr1-f71.google.com with SMTP id a16-20020adff7d0000000b001f0473a6b25so333931wrq.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Mar 2022 01:56:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=GmTHvqCrS386fDIWw57GkKXCMyG7EzbNQjkEyeWGQTY=;
-        b=4grYfnOx5gsSjnPqTZ+CVGo/WM9lSpdbMOiWe8kUGA4JH+3DXVq/R4O02i5tm+KZb6
-         2bbw7aAjR+oqRqR/bIWfdg0CMaE5q8yIotFqXLgQfCvo+72NxixIGWGa0TO7a7rKNC/n
-         kKOMGgjjbt/cnE2uv6nQ2xQPgfb/4filAu2OagY+v3WFNKy8CdsxFfQ4WPcP4QBA3cpo
-         GSryvEPWJ+QRSDkxB9sJGlzC8V4JOucjShnfhd0fXQhd+uuCHGUW6yhc7CPHD67/hmnA
-         BrEpjw5xAw24xIDHvdeC6gkLDEtmFhBJEhXKTOMsYi/5fy3rrXIQSXzdsRwJvAwmbBfO
-         v8Xg==
-X-Gm-Message-State: AOAM530fW4CCHelooytZ7vLQ7FfWELyUlA2QOYVF7a5uTsNFYWUCjrR1
-        pV6T6QJHrp76l5H9H3v4ENxPqQ==
-X-Google-Smtp-Source: ABdhPJy50liVPG58YrDePATkasEUSCwDPauyy+d8JhcNsI3eUvJ7bHues4snnUYv938XofY8MQ99mA==
-X-Received: by 2002:a05:6512:2249:b0:448:38e7:c4d9 with SMTP id i9-20020a056512224900b0044838e7c4d9mr18703081lfu.540.1647415875451;
-        Wed, 16 Mar 2022 00:31:15 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id f26-20020ac251ba000000b004484764f56bsm107223lfk.150.2022.03.16.00.31.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Mar 2022 00:31:14 -0700 (PDT)
-Message-ID: <4d3a3fe9-43bb-e796-c5a5-a8e1bdcd4805@linaro.org>
-Date:   Wed, 16 Mar 2022 10:31:14 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v3 5/5] drm/msm: allow compile time selection of driver
- components
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=0Bc153qdO6aJS+V+8boSatM96Pn9LsInVn8PpJNJpKY=;
+        b=mEJb9R3OYXfurEnqb1I97Bveo2AQVaqy1SNhGWFQ3PbdLzonYTGIBcTirrk+FH0+6S
+         sd1MP05jcyZRq8sSxw3d4THSqrr5mT/o/bmXqm5yhU8CLvf6fHoieu6zhVwSd9hBBW4i
+         l+0iq93VDbWUmY2eCj6g7ICogsCHQBzZSeT2wKhbXd9s08TCgC10r0f+GlHfP46fAi7I
+         wCE3REZoIEJWz0kD4Xn09/9CHObY1uAitrIA/CJpaj+R8uJbWMrgfev3cLIuPYf4LAAC
+         WLmMLIbQnYppcvqcr3XjOHTiCaYL/0Vf88GOPlpI6pvau7MfFwuzgl33ixInuiWooLzN
+         +hqw==
+X-Gm-Message-State: AOAM530ZK0fE827s5BMwc6MGBuvgqmnuoF+Yuf0T6Bfd8WEcjX3dViZh
+        2fkLJKOB7GblQP9tx6KiQE/wvmEI6Y8pwWqHIzYb8CVSKZBRV/Aio6Ti+KgpnnI2if8QRP5cEIe
+        MOT58FA/IiT3PhORxxwrZA0qpZw==
+X-Received: by 2002:a5d:4d4b:0:b0:1f1:d99e:1122 with SMTP id a11-20020a5d4d4b000000b001f1d99e1122mr23570224wru.604.1647421018441;
+        Wed, 16 Mar 2022 01:56:58 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJxxg+HdKFc+OlgI5Uf6j74GkTyT+tlDfMeOChHK9/5Na0k8DDsBUyiZqTzroGOmIKGPRSv82g==
+X-Received: by 2002:a5d:4d4b:0:b0:1f1:d99e:1122 with SMTP id a11-20020a5d4d4b000000b001f1d99e1122mr23570190wru.604.1647421018228;
+        Wed, 16 Mar 2022 01:56:58 -0700 (PDT)
+Received: from redhat.com ([2.53.2.35])
+        by smtp.gmail.com with ESMTPSA id p1-20020a5d59a1000000b00203d83b0ae4sm1136056wrr.109.2022.03.16.01.56.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Mar 2022 01:56:57 -0700 (PDT)
+Date:   Wed, 16 Mar 2022 04:56:48 -0400
+From:   "Michael S. Tsirkin" <mst@redhat.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Stuart Yoder <stuyoder@gmail.com>,
+        Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+        Abel Vesa <abel.vesa@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        "K. Y. Srinivasan" <kys@microsoft.com>,
+        Haiyang Zhang <haiyangz@microsoft.com>,
+        Stephen Hemminger <sthemmin@microsoft.com>,
+        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-References: <20220304032106.2866043-1-dmitry.baryshkov@linaro.org>
- <20220304032106.2866043-6-dmitry.baryshkov@linaro.org>
- <237c6a57-26c7-bbb9-da51-b098233c390e@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <237c6a57-26c7-bbb9-da51-b098233c390e@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Vineeth Vijayan <vneethv@linux.ibm.com>,
+        Peter Oberparleiter <oberpar@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Andy Gross <agross@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Jason Wang <jasowang@redhat.com>, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, NXP Linux Team <linux-imx@nxp.com>,
+        linux-arm-kernel@lists.infradead.org, linux-hyperv@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Subject: Re: [PATCH v4 08/11] vdpa: Use helper for safer setting of
+ driver_override
+Message-ID: <20220316045633-mutt-send-email-mst@kernel.org>
+References: <20220312132856.65163-1-krzysztof.kozlowski@canonical.com>
+ <20220312132856.65163-9-krzysztof.kozlowski@canonical.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220312132856.65163-9-krzysztof.kozlowski@canonical.com>
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/03/2022 03:28, Abhinav Kumar wrote:
+On Sat, Mar 12, 2022 at 02:28:53PM +0100, Krzysztof Kozlowski wrote:
+> Use a helper to set driver_override to reduce amount of duplicated code.
 > 
-> 
-> On 3/3/2022 7:21 PM, Dmitry Baryshkov wrote:
->> MSM DRM driver already allows one to compile out the DP or DSI support.
->> Add support for disabling other features like MDP4/MDP5/DPU drivers or
->> direct HDMI output support.
->>
->> Suggested-by: Stephen Boyd <swboyd@chromium.org>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/gpu/drm/msm/Kconfig    | 50 ++++++++++++++++++++++++++++++++--
->>   drivers/gpu/drm/msm/Makefile   | 18 ++++++++++--
->>   drivers/gpu/drm/msm/msm_drv.h  | 33 ++++++++++++++++++++++
->>   drivers/gpu/drm/msm/msm_mdss.c | 13 +++++++--
->>   4 files changed, 106 insertions(+), 8 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
->> index 9b019598e042..3735fd41eb3b 100644
->> --- a/drivers/gpu/drm/msm/Kconfig
->> +++ b/drivers/gpu/drm/msm/Kconfig
->> @@ -46,12 +46,39 @@ config DRM_MSM_GPU_SUDO
->>         Only use this if you are a driver developer.  This should *not*
->>         be enabled for production kernels.  If unsure, say N.
->> -config DRM_MSM_HDMI_HDCP
->> -    bool "Enable HDMI HDCP support in MSM DRM driver"
->> +config DRM_MSM_MDSS
->> +    bool
->> +    depends on DRM_MSM
->> +    default n
-> shouldnt DRM_MSM_MDSS be defaulted to y?
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 
-No, it will be selected either by MDP5 or by DPU1. It is not used if 
-DRM_MSM is compiled with just MDP4 or headless support in mind.
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
 
-> 
-> Another question is the compilation validation of the combinations of 
-> these.
-> 
-> So we need to try:
-> 
-> 1) DRM_MSM_MDSS + DRM_MSM_MDP4
-> 2) DRM_MSM_MDSS + DRM_MSM_MDP5
-> 3) DRM_MSM_MDSS + DRM_MSM_DPU
-> 
-> Earlier since all of them were compiled together any inter-dependencies 
-> will not show up. Now since we are separating it out, just wanted to 
-> make sure each of the combos compile?
+feel free to merge with the rest of the patchset.
 
-I think you meant:
-- headless
-- MDP4
-- MDP5
-- DPU1
-- MDP4 + MDP5
-- MDP4 + DPU1
-- MDP5 + DPU1
-- all three drivers
-
+> ---
+>  drivers/vdpa/vdpa.c  | 29 ++++-------------------------
+>  include/linux/vdpa.h |  4 +++-
+>  2 files changed, 7 insertions(+), 26 deletions(-)
 > 
->> +
->> +config DRM_MSM_MDP4
->> +    bool "Enable MDP4 support in MSM DRM driver"
->>       depends on DRM_MSM
->>       default y
->>       help
->> -      Choose this option to enable HDCP state machine
->> +      Compile in support for the Mobile Display Processor v4 (MDP4) in
->> +      the MSM DRM driver. It is the older display controller found in
->> +      devices using APQ8064/MSM8960/MSM8x60 platforms.
->> +
->> +config DRM_MSM_MDP5
->> +    bool "Enable MDP5 support in MSM DRM driver"
->> +    depends on DRM_MSM
->> +    select DRM_MSM_MDSS
->> +    default y
->> +    help
->> +      Compile in support for the Mobile Display Processor v5 (MDP4) in
->> +      the MSM DRM driver. It is the display controller found in devices
->> +      using e.g. APQ8016/MSM8916/APQ8096/MSM8996/MSM8974/SDM6x0 
->> platforms.
->> +
->> +config DRM_MSM_DPU
->> +    bool "Enable DPU support in MSM DRM driver"
->> +    depends on DRM_MSM
->> +    select DRM_MSM_MDSS
->> +    default y
->> +    help
->> +      Compile in support for the Display Processing Unit in
->> +      the MSM DRM driver. It is the display controller found in devices
->> +      using e.g. SDM845 and newer platforms.
->>   config DRM_MSM_DP
->>       bool "Enable DisplayPort support in MSM DRM driver"
->> @@ -116,3 +143,20 @@ config DRM_MSM_DSI_7NM_PHY
->>       help
->>         Choose this option if DSI PHY on SM8150/SM8250/SC7280 is used on
->>         the platform.
->> +
->> +config DRM_MSM_HDMI
->> +    bool "Enable HDMI support in MSM DRM driver"
->> +    depends on DRM_MSM
->> +    default y
->> +    help
->> +      Compile in support for the HDMI output MSM DRM driver. It can
->> +      be a primary or a secondary display on device. Note that this 
->> is used
->> +      only for the direct HDMI output. If the device outputs HDMI data
->> +      throught some kind of DSI-to-HDMI bridge, this option can be 
->> disabled.
->> +
->> +config DRM_MSM_HDMI_HDCP
->> +    bool "Enable HDMI HDCP support in MSM DRM driver"
->> +    depends on DRM_MSM && DRM_MSM_HDMI
->> +    default y
->> +    help
->> +      Choose this option to enable HDCP state machine
->> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
->> index e76927b42033..5fe9c20ab9ee 100644
->> --- a/drivers/gpu/drm/msm/Makefile
->> +++ b/drivers/gpu/drm/msm/Makefile
->> @@ -16,6 +16,8 @@ msm-y := \
->>       adreno/a6xx_gpu.o \
->>       adreno/a6xx_gmu.o \
->>       adreno/a6xx_hfi.o \
->> +
->> +msm-$(CONFIG_DRM_MSM_HDMI) += \
->>       hdmi/hdmi.o \
->>       hdmi/hdmi_audio.o \
->>       hdmi/hdmi_bridge.o \
->> @@ -27,8 +29,8 @@ msm-y := \
->>       hdmi/hdmi_phy_8x60.o \
->>       hdmi/hdmi_phy_8x74.o \
->>       hdmi/hdmi_pll_8960.o \
->> -    disp/mdp_format.o \
->> -    disp/mdp_kms.o \
->> +
->> +msm-$(CONFIG_DRM_MSM_MDP4) += \
->>       disp/mdp4/mdp4_crtc.o \
->>       disp/mdp4/mdp4_dtv_encoder.o \
->>       disp/mdp4/mdp4_lcdc_encoder.o \
->> @@ -37,6 +39,8 @@ msm-y := \
->>       disp/mdp4/mdp4_irq.o \
->>       disp/mdp4/mdp4_kms.o \
->>       disp/mdp4/mdp4_plane.o \
->> +
->> +msm-$(CONFIG_DRM_MSM_MDP5) += \
->>       disp/mdp5/mdp5_cfg.o \
->>       disp/mdp5/mdp5_ctl.o \
->>       disp/mdp5/mdp5_crtc.o \
->> @@ -47,6 +51,8 @@ msm-y := \
->>       disp/mdp5/mdp5_mixer.o \
->>       disp/mdp5/mdp5_plane.o \
->>       disp/mdp5/mdp5_smp.o \
->> +
->> +msm-$(CONFIG_DRM_MSM_DPU) += \
->>       disp/dpu1/dpu_core_perf.o \
->>       disp/dpu1/dpu_crtc.o \
->>       disp/dpu1/dpu_encoder.o \
->> @@ -69,6 +75,13 @@ msm-y := \
->>       disp/dpu1/dpu_plane.o \
->>       disp/dpu1/dpu_rm.o \
->>       disp/dpu1/dpu_vbif.o \
->> +
->> +msm-$(CONFIG_DRM_MSM_MDSS) += \
->> +    msm_mdss.o \
->> +
->> +msm-y += \
->> +    disp/mdp_format.o \
->> +    disp/mdp_kms.o \
->>       disp/msm_disp_snapshot.o \
->>       disp/msm_disp_snapshot_util.o \
->>       msm_atomic.o \
->> @@ -86,7 +99,6 @@ msm-y := \
->>       msm_gpu_devfreq.o \
->>       msm_io_utils.o \
->>       msm_iommu.o \
->> -    msm_mdss.o \
->>       msm_perf.o \
->>       msm_rd.o \
->>       msm_ringbuffer.o \
->> diff --git a/drivers/gpu/drm/msm/msm_drv.h 
->> b/drivers/gpu/drm/msm/msm_drv.h
->> index c1aaadfbea34..6bad7e7b479d 100644
->> --- a/drivers/gpu/drm/msm/msm_drv.h
->> +++ b/drivers/gpu/drm/msm/msm_drv.h
->> @@ -314,10 +314,20 @@ struct drm_fb_helper *msm_fbdev_init(struct 
->> drm_device *dev);
->>   void msm_fbdev_free(struct drm_device *dev);
->>   struct hdmi;
->> +#ifdef CONFIG_DRM_MSM_HDMI
->>   int msm_hdmi_modeset_init(struct hdmi *hdmi, struct drm_device *dev,
->>           struct drm_encoder *encoder);
->>   void __init msm_hdmi_register(void);
->>   void __exit msm_hdmi_unregister(void);
->> +#else
->> +static inline int msm_hdmi_modeset_init(struct hdmi *hdmi, struct 
->> drm_device *dev,
->> +        struct drm_encoder *encoder)
->> +{
->> +    return -EINVAL;
->> +}
->> +static inline void __init msm_hdmi_register(void) {}
->> +static inline void __exit msm_hdmi_unregister(void) {}
->> +#endif
->>   struct msm_dsi;
->>   #ifdef CONFIG_DRM_MSM_DSI
->> @@ -432,14 +442,37 @@ static inline void msm_dp_debugfs_init(struct 
->> msm_dp *dp_display,
->>   #endif
->> +#ifdef CONFIG_DRM_MSM_MDP4
->>   void msm_mdp4_register(void);
->>   void msm_mdp4_unregister(void);
->> +#else
->> +static inline void msm_mdp4_register(void) {}
->> +static inline void msm_mdp4_unregister(void) {}
->> +#endif
->> +
->> +#ifdef CONFIG_DRM_MSM_MDP5
->>   void msm_mdp_register(void);
->>   void msm_mdp_unregister(void);
->> +#else
->> +static inline void msm_mdp_register(void) {}
->> +static inline void msm_mdp_unregister(void) {}
->> +#endif
->> +
->> +#ifdef CONFIG_DRM_MSM_DPU
->>   void msm_dpu_register(void);
->>   void msm_dpu_unregister(void);
->> +#else
->> +static inline void msm_dpu_register(void) {}
->> +static inline void msm_dpu_unregister(void) {}
->> +#endif
->> +
->> +#ifdef CONFIG_DRM_MSM_MDSS
->>   void msm_mdss_register(void);
->>   void msm_mdss_unregister(void);
->> +#else
->> +static inline void msm_mdss_register(void) {}
->> +static inline void msm_mdss_unregister(void) {}
->> +#endif
->>   #ifdef CONFIG_DEBUG_FS
->>   void msm_framebuffer_describe(struct drm_framebuffer *fb, struct 
->> seq_file *m);
->> diff --git a/drivers/gpu/drm/msm/msm_mdss.c 
->> b/drivers/gpu/drm/msm/msm_mdss.c
->> index 4d25d8955301..66714b356762 100644
->> --- a/drivers/gpu/drm/msm/msm_mdss.c
->> +++ b/drivers/gpu/drm/msm/msm_mdss.c
->> @@ -303,8 +303,17 @@ static const struct dev_pm_ops mdss_pm_ops = {
->>   static int find_mdp_node(struct device *dev, void *data)
->>   {
->> -    return of_match_node(dpu_dt_match, dev->of_node) ||
->> -        of_match_node(mdp5_dt_match, dev->of_node);
->> +#ifdef CONFIG_DRM_MSM_DPU
->> +    if (of_match_node(dpu_dt_match, dev->of_node))
->> +        return true;
->> +#endif
->> +
->> +#ifdef CONFIG_DRM_MSM_MDP5
->> +    if (of_match_node(mdp5_dt_match, dev->of_node))
->> +        return true;
->> +#endif
->> +
->> +    return false;
->>   }
->>   static int mdss_probe(struct platform_device *pdev)
+> diff --git a/drivers/vdpa/vdpa.c b/drivers/vdpa/vdpa.c
+> index 1ea525433a5c..2dabed1df35c 100644
+> --- a/drivers/vdpa/vdpa.c
+> +++ b/drivers/vdpa/vdpa.c
+> @@ -77,32 +77,11 @@ static ssize_t driver_override_store(struct device *dev,
+>  				     const char *buf, size_t count)
+>  {
+>  	struct vdpa_device *vdev = dev_to_vdpa(dev);
+> -	const char *driver_override, *old;
+> -	char *cp;
+> +	int ret;
+>  
+> -	/* We need to keep extra room for a newline */
+> -	if (count >= (PAGE_SIZE - 1))
+> -		return -EINVAL;
+> -
+> -	driver_override = kstrndup(buf, count, GFP_KERNEL);
+> -	if (!driver_override)
+> -		return -ENOMEM;
+> -
+> -	cp = strchr(driver_override, '\n');
+> -	if (cp)
+> -		*cp = '\0';
+> -
+> -	device_lock(dev);
+> -	old = vdev->driver_override;
+> -	if (strlen(driver_override)) {
+> -		vdev->driver_override = driver_override;
+> -	} else {
+> -		kfree(driver_override);
+> -		vdev->driver_override = NULL;
+> -	}
+> -	device_unlock(dev);
+> -
+> -	kfree(old);
+> +	ret = driver_set_override(dev, &vdev->driver_override, buf, count);
+> +	if (ret)
+> +		return ret;
+>  
+>  	return count;
+>  }
+> diff --git a/include/linux/vdpa.h b/include/linux/vdpa.h
+> index 721089bb4c84..37117404660e 100644
+> --- a/include/linux/vdpa.h
+> +++ b/include/linux/vdpa.h
+> @@ -64,7 +64,9 @@ struct vdpa_mgmt_dev;
+>   * struct vdpa_device - representation of a vDPA device
+>   * @dev: underlying device
+>   * @dma_dev: the actual device that is performing DMA
+> - * @driver_override: driver name to force a match
+> + * @driver_override: driver name to force a match; do not set directly,
+> + *                   because core frees it; use driver_set_override() to
+> + *                   set or clear it.
+>   * @config: the configuration ops for this device.
+>   * @cf_mutex: Protects get and set access to configuration layout.
+>   * @index: device index
+> -- 
+> 2.32.0
 
-
--- 
-With best wishes
-Dmitry
