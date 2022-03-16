@@ -2,217 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 24C0B4DB470
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Mar 2022 16:10:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E6FF74DB52A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Mar 2022 16:47:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242687AbiCPPKv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Mar 2022 11:10:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46416 "EHLO
+        id S1357328AbiCPPsO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Mar 2022 11:48:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356988AbiCPPKr (ORCPT
+        with ESMTP id S230089AbiCPPsN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Mar 2022 11:10:47 -0400
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8261673CE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Mar 2022 08:09:14 -0700 (PDT)
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com [209.85.128.71])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 321C13F1A1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Mar 2022 15:09:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1647443352;
-        bh=pKuO1Pnb8DTWNu323Li1Km8nI1auNgT3IB1hncz5HlI=;
-        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-         MIME-Version;
-        b=A0EkkrDR72/YXRAWUwOtHyYoWef+gNYnMA3OnpBluCmYaOnilBdaGWQbJiwBrbePo
-         lpRx697Vd9IPSe/DxeKrgV3LDmMY+n3t9HdYuv4Xq0rs7gmWP5r8a8O8ldg89x+8fe
-         TjJtWt4tg96/9eSGIkVvJjAuicTxAyHpei8RNn7O4c5Mndn2DPJDcwFy0BZV+RqAoq
-         FCNkZn8foBJgnSuI1ocHJfbyV1IL0xco43rOIjAGihMoYVeoQi0DLhdbJDbXcSOkYO
-         hP6SbZyWjWF+vj05XbbrOUTuwJLFkx0FIhhH4LKrPO3RKya06oP8bByBrCdEwdrhMQ
-         tPXj6laToSjDA==
-Received: by mail-wm1-f71.google.com with SMTP id 12-20020a05600c24cc00b0038c6caa95f7so1131398wmu.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Mar 2022 08:09:12 -0700 (PDT)
+        Wed, 16 Mar 2022 11:48:13 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06BC66D1BA;
+        Wed, 16 Mar 2022 08:46:59 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id a8so5068243ejc.8;
+        Wed, 16 Mar 2022 08:46:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=f3ts7NrETiD/n+vGF+vAT89sY+x2BlKtnOMPf3PZf04=;
+        b=Lkv9c8HyZ6iRngQe1gj3rOwvUiOqcf11dtCXHUzAo430dtSDwHvHNs73TVoH3YS0EI
+         8w9dXdJzXDyU6d9rI+E19PoW/DaPwiqFAAp7P1JDGN9ZQ4sMe4KHGPn/JL+0RDSNQP5b
+         DAEn2FiUzfv6OQpa8T7/GPntezVHuP6TPzbAqpE9xydvP+P3f3LlyBA4hYYPQ7vcSMyK
+         KOQcog8dO8ZeouHQDnuu9hE4XAb4lZ/pqxIUX1f2bpcH9EwMyi1SpLh70mPoVXl+/4Kt
+         BXqz0jqaT1yXASDhiHXQaaRw7hn7TqmZ7ttmuZML+vpdPvN3IIalWLAInye23B5fqvbA
+         c6Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=pKuO1Pnb8DTWNu323Li1Km8nI1auNgT3IB1hncz5HlI=;
-        b=red6RKaf+hpyPGUvTv9xiFg+OsYOjBjAfRvsG1c8ThSeNIzTdEZg7jHDbpIOOhYFt4
-         SoSC63jdcT6r2suXzp7YO5bYRtbNbP+Iv5UwodFfeIOx4s4c0NoRsOO3G3vXsJtdP3xG
-         GTy9jaYKK/XvCXtR7Y13xs8BMt39K/xp18Lj77PAbv4PjdWLLUIjEBN065n29PxUWDOg
-         dVVIWdPT2WFyIa+xOAAljjtRioyt8SxbEZGR6rcaHif8w5QLvvsDob+H8D438tSRHbii
-         MHSei7/m5lZy5wLiXn5EPaIpBScBMxJQz2dhBMY20UT1m00zIHcGlDT8j5PFLl/anzWg
-         6oAw==
-X-Gm-Message-State: AOAM531ZT0LjUztnEFPa8CQb5Vw8asmb5e3oYZTVWMDlRHKrW4oak61/
-        a2O7yCuNVYMeGVYTgMOkkA9J7nfJSg3TwAnwoDt0KtnhMEmct+spHyQnDMgpNMNT8GHP1h/02we
-        DKSjdWGszlVOCQryK7RrTAdakDbJMfjaie62kJy8USVg=
-X-Received: by 2002:a05:600c:3508:b0:38b:cc1f:a99b with SMTP id h8-20020a05600c350800b0038bcc1fa99bmr6311339wmq.197.1647443348139;
-        Wed, 16 Mar 2022 08:09:08 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJwvsOYZ+nBmu9loCTPKjgh/9mwESfnIbe8Inxn1yryPkv1+wBIJxw3Cp/IL2PJnd3eHgVih9w==
-X-Received: by 2002:a05:600c:3508:b0:38b:cc1f:a99b with SMTP id h8-20020a05600c350800b0038bcc1fa99bmr6311319wmq.197.1647443347937;
-        Wed, 16 Mar 2022 08:09:07 -0700 (PDT)
-Received: from localhost.localdomain (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id u18-20020adfdd52000000b001f04e9f215fsm1895105wrm.53.2022.03.16.08.09.04
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=f3ts7NrETiD/n+vGF+vAT89sY+x2BlKtnOMPf3PZf04=;
+        b=hRTXUEERQ8O5wWns6ekfFO1Yy/jdRBrCItp74NxSBRIygEdDFloySWwyL8tUv0j98s
+         yy1U1PPskjFIU8XbEeBopWhGrQB3OT+XGJ2Wq6/O5vObCNS/F/DRvIEczZC94PGk0/PV
+         Or0pz5EBb/AK0iciD/ZJRGAQJnp9qmG0tJ7fX6DoyGMA4IUiXo0dvWPCGtP0yaI9EBoL
+         lVm5s78/6glzCuvKF09DWeGu+zCyMM38kXVhlAve5SqlpEMLg5zgZD3JdOOBT7V4wEhA
+         fFq7HMq6dEhyQKhWC/2dmeIFa8sX5yYSp1uylIl0r9XvWFspOwV78HH4N73TM8DmaTgP
+         FD4Q==
+X-Gm-Message-State: AOAM533SzPFYWa1GRuPzI/+dFjBix1qst8EnSzlYqj6kGOfHtg5exhuN
+        TRRH5Wp8wj6RP2uVMXDzxq6JdKqMk1U=
+X-Google-Smtp-Source: ABdhPJwTDo0b3UgbE88SkpZ3LeHwHJ4IP8X1wdvjwxvXjhF64Gmi2f42UFZQA6PavRIQ4AtL/D4JDg==
+X-Received: by 2002:a17:906:1e4c:b0:6cf:7429:cfea with SMTP id i12-20020a1709061e4c00b006cf7429cfeamr556994ejj.158.1647445617173;
+        Wed, 16 Mar 2022 08:46:57 -0700 (PDT)
+Received: from Ansuel-xps.localdomain (93-42-69-170.ip85.fastwebnet.it. [93.42.69.170])
+        by smtp.gmail.com with ESMTPSA id sb31-20020a1709076d9f00b006ceb969822esm1042752ejc.76.2022.03.16.08.46.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Mar 2022 08:09:05 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Stuart Yoder <stuyoder@gmail.com>,
-        "K. Y. Srinivasan" <kys@microsoft.com>,
-        Haiyang Zhang <haiyangz@microsoft.com>,
-        Stephen Hemminger <sthemmin@microsoft.com>,
-        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
+        Wed, 16 Mar 2022 08:46:56 -0700 (PDT)
+Date:   Wed, 16 Mar 2022 16:46:54 +0100
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Vineeth Vijayan <vneethv@linux.ibm.com>,
-        Peter Oberparleiter <oberpar@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, NXP Linux Team <linux-imx@nxp.com>,
-        linux-arm-kernel@lists.infradead.org, linux-hyperv@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-s390@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-spi@vger.kernel.org,
-        virtualization@lists.linux-foundation.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        stable@vger.kernel.org
-Subject: [PATCH v5 11/11] rpmsg: Fix kfree() of static memory on setting driver_override
-Date:   Wed, 16 Mar 2022 16:08:03 +0100
-Message-Id: <20220316150803.421897-5-krzysztof.kozlowski@canonical.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20220316150533.421349-1-krzysztof.kozlowski@canonical.com>
-References: <20220316150533.421349-1-krzysztof.kozlowski@canonical.com>
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Peter De Schrijver <pdeschrijver@nvidia.com>,
+        Prashant Gaikwad <pgaikwad@nvidia.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-tegra@vger.kernel.org
+Subject: Re: [PATCH 12/16] clk: qcom: clk-krait: add 8064 errata workaround
+Message-ID: <YjIGbs+Pz2EK9riB@Ansuel-xps.localdomain>
+References: <20220313190419.2207-1-ansuelsmth@gmail.com>
+ <20220313190419.2207-13-ansuelsmth@gmail.com>
+ <169795c1-607e-ee60-7ac7-538ed888bedf@linaro.org>
+ <Yi84aNrJ7p+3jy2A@Ansuel-xps.localdomain>
+ <20220315213431.DB6C4C340EE@smtp.kernel.org>
+ <YjEJjB/Hwj/1Ncum@Ansuel-xps.localdomain>
+ <20220315224115.EA1F9C340E8@smtp.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220315224115.EA1F9C340E8@smtp.kernel.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The driver_override field from platform driver should not be initialized
-from static memory (string literal) because the core later kfree() it,
-for example when driver_override is set via sysfs.
+On Tue, Mar 15, 2022 at 03:41:14PM -0700, Stephen Boyd wrote:
+> Quoting Ansuel Smith (2022-03-15 14:47:56)
+> > On Tue, Mar 15, 2022 at 02:34:30PM -0700, Stephen Boyd wrote:
+> > > Quoting Ansuel Smith (2022-03-14 05:43:20)
+> > > > On Mon, Mar 14, 2022 at 11:20:21AM +0300, Dmitry Baryshkov wrote:
+> > > > > On 13/03/2022 22:04, Ansuel Smith wrote:
+> > > > > > Add 8064 errata workaround where the sec_src clock gating needs to be
+> > > > > 
+> > > > > Could you please be more specific whether the errata applies only to the
+> > > > > ipq8064 or to the apq8064 too? 8064 is not specific enough.
+> > > > >
+> > > > 
+> > > > That's a good question... Problem is that we really don't know the
+> > > > answer. This errata comes from qsdk on an old sourcecode. I assume this
+> > > > is specific to ipq8064 and apq8064 have different mux configuration.
+> > > > 
+> > > 
+> > > I think it was some glitch that happened when the automatic clk gating
+> > > was enabled during a switch. The automatic clk gating didn't know that
+> > > software was running and switching the input so it killed the CPU and
+> > > stopped the clk. That lead to hangs and super badness. I assume it was
+> > > applicable to apq8064 as well because ipq8064 is basically apq8064 with
+> > > the multimedia subsystem replaced by the networking subsystem. Also I
+> > > wouldn't remember all these details because I worked on apq8064 but not
+> > > so much on ipq8064 :)
+> > 
+> > Honest question. Do you remember other glitch present on the platform?
+> > We are trying to bisect an instability problem and we still needs to
+> > find the reason. We really can't understand if it's just a power
+> > delivery problem or a scaling problem from muxes or other things.
+> > 
+> > The current problem is that after some time the device kernel panics
+> > with a number of strange reason like invalid kernel paging and other
+> > strange (or the device just freze and reboots, not even a crash log)
+> > Many kernel panics reports the crash near the mux switch (like random
+> > error right before the mux switch) So I suspect there is a problem
+> > there. But due to the fact that is very random we have NO exact way to
+> > repro it. I manage sometime, while playing with the code, to repo
+> > similar kernel crash but still i'm not sure of the real cause.
+> > 
+> > I know it's OT but do you have any idea about it? If you remember
+> > anything about it?
+> > (To scale the freq i'm using a dedicated cpufreq driver that works this
+> > way:
+> > - We first scale the cache to the max freq across all core, we set the
+> >   voltage
+> > - We scale the cpu to the correct target.
+> > This is all done under a lock. Do you see anything wrong in this logic?
+> 
+> I honestly don't remember much anymore about this. It's been a decade.
+> Scaling the cache used to be an independent clk and operation vs. the
+> CPU. Basically the clk domain and power domain for the cache was
+> separate from the CPU. There's also the fuse stuff that means you have
+> to read the fuse to know what OPP table to use. Otherwise you may be
+> overclocking the CPU or undervolting it. It may also be that cpuidle
+> can't happen during a frequency transition. Otherwise the clk gating
+> will be reenabled when the cpu startup code reinitializes all the cpu
+> registers? I'd have to look through some old vendor kernels to see if
+> anything jogs my memory.
+> 
+> > To mee these random crash looks to be really related to something wrong
+> > with the mux or with the cache set to a wrong state)
+> > 
+> > Thx for any suggestion about this.
+> > (also I will update this commit and mention both apq and ipq in the
+> > comments)
 
-Use dedicated helper to set driver_override properly.
+Hi, i'm checking the spm qcom idle driver and something doesn't look
+right to me... Aside from the different sequence used for boot cpu and
+the abset l2 sequence, it looks like to me that WFI is enabled anyway
+(even if it's not defined in the DTS or set disabled) and on top of that
+it looks like we overwrite the WFI logic but we actually set to
+enter power collapse (spc). Why?
 
-Fixes: 950a7388f02b ("rpmsg: Turn name service into a stand alone driver")
-Fixes: c0cdc19f84a4 ("rpmsg: Driver for user space endpoint interface")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/rpmsg/rpmsg_core.c     |  3 ++-
- drivers/rpmsg/rpmsg_internal.h | 11 +++++++++--
- drivers/rpmsg/rpmsg_ns.c       | 14 ++++++++++++--
- include/linux/rpmsg.h          |  6 ++++--
- 4 files changed, 27 insertions(+), 7 deletions(-)
+Also I think we are missing the assembly code to enter wfi on krait cpu.
+Am I totally confused or there are some problems in the code that nobody
+notice?
 
-diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
-index 79368a957d89..95fc283f6af7 100644
---- a/drivers/rpmsg/rpmsg_core.c
-+++ b/drivers/rpmsg/rpmsg_core.c
-@@ -400,7 +400,8 @@ field##_store(struct device *dev, struct device_attribute *attr,	\
- 	      const char *buf, size_t sz)				\
- {									\
- 	struct rpmsg_device *rpdev = to_rpmsg_device(dev);		\
--	char *new, *old;						\
-+	const char *old;						\
-+	char *new;							\
- 									\
- 	new = kstrndup(buf, sz, GFP_KERNEL);				\
- 	if (!new)							\
-diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
-index d4b23fd019a8..dd1f4ed616b6 100644
---- a/drivers/rpmsg/rpmsg_internal.h
-+++ b/drivers/rpmsg/rpmsg_internal.h
-@@ -95,9 +95,16 @@ int rpmsg_release_channel(struct rpmsg_device *rpdev,
- static inline int rpmsg_ctrldev_register_device(struct rpmsg_device *rpdev)
- {
- 	strcpy(rpdev->id.name, "rpmsg_ctrl");
--	rpdev->driver_override = "rpmsg_ctrl";
-+	ret = driver_set_override(&rpdev->dev, &rpdev->driver_override,
-+				  "rpmsg_ctrl", strlen("rpmsg_ctrl"));
-+	if (ret)
-+		return ret;
- 
--	return rpmsg_register_device(rpdev);
-+	ret = rpmsg_register_device(rpdev);
-+	if (ret)
-+		kfree(rpdev->driver_override);
-+
-+	return ret;
- }
- 
- #endif
-diff --git a/drivers/rpmsg/rpmsg_ns.c b/drivers/rpmsg/rpmsg_ns.c
-index 762ff1ae279f..95a51543f5ad 100644
---- a/drivers/rpmsg/rpmsg_ns.c
-+++ b/drivers/rpmsg/rpmsg_ns.c
-@@ -20,12 +20,22 @@
-  */
- int rpmsg_ns_register_device(struct rpmsg_device *rpdev)
- {
-+	int ret;
-+
- 	strcpy(rpdev->id.name, "rpmsg_ns");
--	rpdev->driver_override = "rpmsg_ns";
-+	ret = driver_set_override(&rpdev->dev, &rpdev->driver_override,
-+				  "rpmsg_ns", strlen("rpmsg_ns"));
-+	if (ret)
-+		return ret;
-+
- 	rpdev->src = RPMSG_NS_ADDR;
- 	rpdev->dst = RPMSG_NS_ADDR;
- 
--	return rpmsg_register_device(rpdev);
-+	ret = rpmsg_register_device(rpdev);
-+	if (ret)
-+		kfree(rpdev->driver_override);
-+
-+	return ret;
- }
- EXPORT_SYMBOL(rpmsg_ns_register_device);
- 
-diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
-index 02fa9116cd60..20c8cd1cde21 100644
---- a/include/linux/rpmsg.h
-+++ b/include/linux/rpmsg.h
-@@ -41,7 +41,9 @@ struct rpmsg_channel_info {
-  * rpmsg_device - device that belong to the rpmsg bus
-  * @dev: the device struct
-  * @id: device id (used to match between rpmsg drivers and devices)
-- * @driver_override: driver name to force a match
-+ * @driver_override: driver name to force a match; do not set directly,
-+ *                   because core frees it; use driver_set_override() to
-+ *                   set or clear it.
-  * @src: local address
-  * @dst: destination address
-  * @ept: the rpmsg endpoint of this channel
-@@ -51,7 +53,7 @@ struct rpmsg_channel_info {
- struct rpmsg_device {
- 	struct device dev;
- 	struct rpmsg_device_id id;
--	char *driver_override;
-+	const char *driver_override;
- 	u32 src;
- 	u32 dst;
- 	struct rpmsg_endpoint *ept;
 -- 
-2.32.0
-
+	Ansuel
