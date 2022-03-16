@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 344BB4DB267
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Mar 2022 15:16:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 788E34DB296
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Mar 2022 15:17:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356196AbiCPORA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Mar 2022 10:17:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38462 "EHLO
+        id S1356603AbiCPOSV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Mar 2022 10:18:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356472AbiCPOQo (ORCPT
+        with ESMTP id S1356560AbiCPOSO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Mar 2022 10:16:44 -0400
+        Wed, 16 Mar 2022 10:18:14 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3101B6352C;
-        Wed, 16 Mar 2022 07:15:29 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4461068F9C;
+        Wed, 16 Mar 2022 07:16:45 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8DECA6113D;
-        Wed, 16 Mar 2022 14:15:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46D3C340F4;
-        Wed, 16 Mar 2022 14:15:24 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CDF7561320;
+        Wed, 16 Mar 2022 14:16:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C52C340E9;
+        Wed, 16 Mar 2022 14:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1647440129;
-        bh=oECYDvIRBL9OMBSMeOmUsaD9PwaLEVCsd4jApkaaWug=;
+        s=k20201202; t=1647440204;
+        bh=ELbDzZfXH9ZECfPFd++clsp1UZWSr25KTNjhJvscR3Y=;
         h=From:To:Cc:Subject:Date:From;
-        b=fFr5icXnePXgaOR76sQYjwRikIKrHoFJ+i1BFrxHAAKQPeusq+UQy5Voc8Lx0UVoJ
-         LkJ5ZMGhcmLvAf0w4NRnuA3mBXuP1aK/LW+iubrcuW8YJ4jJq5tqfAgQVcAfqST5eD
-         lOrm/WXaIMOrY8caXMLLhMG+OvX4eBh2Fvm/9JdhSnwGushFwa3UdfRN6MZC9WbxXy
-         9vhc64iBw0Phy1K/CR2NhkcSRgzn+ApFAB2ah3+LKp+8/sBtsOckWIm98blUo7y8rF
-         q/GkZDOGMCrpPwhQIP2BHCNv9235SxU8o8ps8Ib1isO40YzSLIZ+6zwfqo/0M/iq8V
-         B1Q//Wbwi59NQ==
+        b=DyzYMEcRCcyMlJfB/zOJj169tjgAaT73FYDbLS6HW2PK69Ygl8Y7vfoNxYwSygOy1
+         2bAI9ouGZ+wnruRcrx3SliNOe7WPpSSI1hiJQsVc6qqYJ1JTezPGJdjzLMFExSfE2I
+         /dXyD7U8EROsx4EmtWMeUhmxlSNKehEBPPMWMKn4ckzyN8cBO6z2OsUSfw7OgDi6hO
+         ShYo2So4Pweb1RdFigznsk5i5gGdqshuOnJG+piy4SrkCZRl7OlXdxuVqofAlLYJNr
+         0Fu7hIsz3FG2kkErqeO72DQhPc9YXLO11Gh8e8naZAXKcGZ0Ueq+Zg/h5/d2acu14I
+         F7VGXWTLueaLA==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Steev Klimaszewski <steev@kali.org>,
@@ -39,9 +39,9 @@ Cc:     Steev Klimaszewski <steev@kali.org>,
         Sasha Levin <sashal@kernel.org>, agross@kernel.org,
         robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 01/13] arm64: dts: qcom: c630: disable crypto due to serror
-Date:   Wed, 16 Mar 2022 10:15:01 -0400
-Message-Id: <20220316141513.247965-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 01/12] arm64: dts: qcom: c630: disable crypto due to serror
+Date:   Wed, 16 Mar 2022 10:16:25 -0400
+Message-Id: <20220316141636.248324-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 X-stable: review
@@ -75,10 +75,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 5 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-index 617a634ac905..d6a9dbe59a1d 100644
+index e080c317b5e3..08d0e67751ed 100644
 --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
 +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-@@ -793,3 +793,8 @@ &wifi {
+@@ -618,3 +618,8 @@ &wifi {
  
  	qcom,snoc-host-cap-8bit-quirk;
  };
