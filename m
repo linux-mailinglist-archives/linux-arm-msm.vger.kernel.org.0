@@ -2,233 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21EE24DB9EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Mar 2022 22:10:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E1F8C4DBA27
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Mar 2022 22:31:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355799AbiCPVLx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Mar 2022 17:11:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34920 "EHLO
+        id S1347267AbiCPVdB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Mar 2022 17:33:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358124AbiCPVLs (ORCPT
+        with ESMTP id S1358201AbiCPVcn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Mar 2022 17:11:48 -0400
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CFA966AF7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Mar 2022 14:10:31 -0700 (PDT)
-Received: by mail-pl1-x631.google.com with SMTP id q13so2790645plk.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Mar 2022 14:10:31 -0700 (PDT)
+        Wed, 16 Mar 2022 17:32:43 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D32E286FA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Mar 2022 14:31:22 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id e4-20020a056902034400b00633691534d5so2956320ybs.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Mar 2022 14:31:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=squareup.com; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=iRv99gRR+dDFqt3eRpswNmiSreBZ631Owy00tW6yZcU=;
-        b=c37P/rYSqo6TcipSclHSiCTCd0xxWgz89Nf4rmIGY9y9jjel7xO28Lmh9gP6nJlR0C
-         LX5ks4TT5WXNA3tYH4d2s8i/VdLCtak+f0FgUZmmbZbGLTd/WUV0Q+6D+AlTnhth42Fj
-         pMdDo4lnir731OXifK8eqYIBmm9smt3/PbitM=
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=DuIs8YDVZ+FUMK/eJrsH1Ol6kQ1ErHXTTPKm8dwtCDY=;
+        b=qFM55vPPyVaTFZa6kKJVrPMllDMUjRNpqwlMmOmDcPlqGqlZnRgFm90OQ/CO08cIMI
+         ozQ/bQaFkgY6tBLchUOHwG5cpuV7XQUp3DlFqSxMoJeo9HYsXFotdyInje2ISR96cYQN
+         LM45pBenpgqvAz7wiBXGrQYNTwXSy3N/8foxmJA9QcViS2Q9E6oQbYNGbEyzrl3kPKe5
+         Vdth5nPe7IUQq+DLP6KJoLdgGYAdZGyuoOQivb0qDhbjrTGKvlrUlVSe4MOpDj6YjYSZ
+         sglDm0vtSzTiuyLqNmx0vUupCP0818ajsmD+wSomc8LH3tydX+mZ9Y7CoJJyg/Og5Y/P
+         i6PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=iRv99gRR+dDFqt3eRpswNmiSreBZ631Owy00tW6yZcU=;
-        b=raBLmSQHYrVg/5B1ZCJOqhV5+hp5+wZ1JKHiqpr4FZ3kaOlpwtUYQgzOnwW3qURJ3b
-         tFXGkGQ8kOxSXBLIZ4HiJDprkDZxPqrGRS3y3NMY5Ewv3iigSeE2QwPH/Q1DQH2s/M9Y
-         6WmMMlfeAiXWbi6PGr+SgJjEMH2UaYJD+TDrvuCqLta9lnRIawx3ZjCsttZNelfWZcC1
-         1M0hQcKRQK5MJvncTGCsHKVGEukgr8uAyCG+AcAVRaG7DG7yGJCbaG+L/lYTN3Fy0crb
-         2RWyxg9ppEqIxtJWfLjd4sHKJiiN8n26WUvtntcLZcut/Um5XKffQtwb59ETc8pxAaNU
-         t6Vw==
-X-Gm-Message-State: AOAM531OHeC1tgd7gGdE31wtn5OAJxsBsVgoYycY2rv2CySj/csPrbpJ
-        IhO0P++3duWfsrRUq5DEn0L9ag==
-X-Google-Smtp-Source: ABdhPJyhIbq2BD3mzyRKhiWn/+GC/52p+XjCj0nGHchwnpXbu+hGsVhnES70nSuyfEp5Tl3by9Q81g==
-X-Received: by 2002:a17:90a:6003:b0:1c6:64a9:2155 with SMTP id y3-20020a17090a600300b001c664a92155mr1740666pji.30.1647465030726;
-        Wed, 16 Mar 2022 14:10:30 -0700 (PDT)
-Received: from localhost ([135.84.132.250])
-        by smtp.gmail.com with ESMTPSA id f21-20020a056a00239500b004f7a6d338c3sm4386234pfc.41.2022.03.16.14.10.29
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 Mar 2022 14:10:30 -0700 (PDT)
-From:   Benjamin Li <benl@squareup.com>
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zac Crosby <zac@squareup.com>, Benjamin Li <benl@squareup.com>,
-        Andy Gross <agross@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] drivers: thermal: tsens: implement change_mode to disable sensor IRQs
-Date:   Wed, 16 Mar 2022 14:09:45 -0700
-Message-Id: <20220316210946.6935-3-benl@squareup.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20220316210946.6935-1-benl@squareup.com>
-References: <20220316210946.6935-1-benl@squareup.com>
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=DuIs8YDVZ+FUMK/eJrsH1Ol6kQ1ErHXTTPKm8dwtCDY=;
+        b=5RohKZlYGrvZd8ku/P8zHGeDV15hYEwoo/bkgIaF+WqdTtthhqFxzv7oTlf5yBFNds
+         urZvkYwme4mSXFlrknfSu0O3fXjrOqEoLElYi0r3KhQtJnpNT5JASlHjZGFLeRp8D9NB
+         ozTcxfPvF7QOGZmibXfja1FrolRIO4qq+K7W9osoCLAMszEdkluKXj4qn4tlQYymvVzR
+         T/SrUzrVKRQ2FFsQvQxaHCZW+ofzltvw5ahAtDPtZDEBAVpWZv3Rfs4xWwyn921pS8jp
+         44pF7Eckx4tqmF6d2L2ThVkmtaobfmHA6P//pjmAef6cHeYjcRzrKIMEhCDaBqf9gDZs
+         0yqQ==
+X-Gm-Message-State: AOAM5300UeqrXkup32LdEUmpHP8MojrQt7k2CN8sQqk4+iuTn7y1kmfF
+        B2BExWFSjUd64a/ahLNn29VVOjxG
+X-Google-Smtp-Source: ABdhPJxlpI62VPESYGOV1YEH34zeiz353mKPg634ySFjExFhciP8pMKE9Jokvx3Dw4zKp9xShXZvESy+gQ==
+X-Received: from fawn.svl.corp.google.com ([2620:15c:2cd:202:7dae:6503:2272:5cd1])
+ (user=morbo job=sendgmr) by 2002:a0d:d50f:0:b0:2e5:bada:3948 with SMTP id
+ x15-20020a0dd50f000000b002e5bada3948mr939764ywd.314.1647466281406; Wed, 16
+ Mar 2022 14:31:21 -0700 (PDT)
+Date:   Wed, 16 Mar 2022 14:31:18 -0700
+Message-Id: <20220316213118.2352683-1-morbo@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.35.1.723.g4982287a31-goog
+Subject: [PATCH] soc: qcom: smem: use correct format characters
+From:   Bill Wendling <morbo@google.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        llvm@lists.linux.dev
+Cc:     Bill Wendling <morbo@google.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-9.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Implement change_mode() to disable sensor IRQs when a sensor is disabled.
+When compiling with -Wformat, clang emits the following warnings:
 
-Note that this commit does not touch:
-- The tsens device's CPU IRQ, which is global across all sensors on a tsens
-  device.
-- Power/clock of the sensor. Future work is needed in the tsens_ops
-  interface to support single-sensor disable + handle quirks (the only
-  implementation of tsens_ops->enable and disable only supports individual
-  enable/disable on some sensors, and others must be enabled/disabled as a
-  block).
+drivers/soc/qcom/smem.c:847:41: warning: format specifies type 'unsigned
+short' but the argument has type 'unsigned int' [-Wformat]
+                        dev_err(smem->dev, "bad host %hu\n", remote_host);
+                                                     ~~~     ^~~~~~~~~~~
+                                                     %u
+./include/linux/dev_printk.h:144:65: note: expanded from macro 'dev_err'
+        dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
+                                                               ~~~     ^~~~~~~~~~~
+./include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
+                _p_func(dev, fmt, ##__VA_ARGS__);                       \
+                             ~~~    ^~~~~~~~~~~
+drivers/soc/qcom/smem.c:852:47: warning: format specifies type 'unsigned
+short' but the argument has type 'unsigned int' [-Wformat]
+                        dev_err(smem->dev, "duplicate host %hu\n", remote_host);
+                                                           ~~~     ^~~~~~~~~~~
+                                                           %u
+./include/linux/dev_printk.h:144:65: note: expanded from macro 'dev_err'
+        dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
+                                                               ~~~     ^~~~~~~~~~~
+./include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
+                _p_func(dev, fmt, ##__VA_ARGS__);                       \
+                             ~~~    ^~~~~~~~~~~
 
-'echo disabled > .../thermal_zoneX/mode' will disable the thermal core's
-polling mechanism to check for threshold trips. However, tsens supports
-an interrupt mechanism to receive notification of trips, implemented in
-commit 634e11d5b450 ("drivers: thermal: tsens: Add interrupt support").
-This is used sometimes to run performance test cases.
+The types of these arguments are unconditionally defined, so this patch
+updates the format character to the correct ones for ints and unsigned
+ints.
 
-Currently the thermal zone mode that's set by userspace does not control
-threshold trip events from IRQs. Let's fix this to restore the abilty to
-disable thermal throttling at runtime.
-
-====================
-
-Tested on MSM8939 running 5.17. This platform has 8 cores; the first four
-thermal zones control cpu0-3 and the last zone is for the other four CPUs
-together.
-
-  for f in /sys/class/thermal/thermal_zone*; do
-    echo "disabled" > $f/mode
-    echo $f | paste - $f/type $f/mode
-  done
-
-/sys/class/thermal/thermal_zone0        cpu0-thermal    disabled
-/sys/class/thermal/thermal_zone1        cpu1-thermal    disabled
-/sys/class/thermal/thermal_zone2        cpu2-thermal    disabled
-/sys/class/thermal/thermal_zone3        cpu3-thermal    disabled
-/sys/class/thermal/thermal_zone4        cpu4567-thermal disabled
-
-With mitigation thresholds at 75 degC and load running, we can now cruise
-past temp=75000 without CPU throttling kicking in.
-
-  watch -n 1 "grep '' /sys/class/thermal/*/temp
-      /sys/class/thermal/*/cur_state
-      /sys/bus/cpu/devices/cpu*/cpufreq/cpuinfo_cur_freq"
-
-/sys/class/thermal/thermal_zone0/temp:82000
-/sys/class/thermal/thermal_zone1/temp:84000
-/sys/class/thermal/thermal_zone2/temp:87000
-/sys/class/thermal/thermal_zone3/temp:84000
-/sys/class/thermal/thermal_zone4/temp:84000
-/sys/class/thermal/cooling_device0/cur_state:0
-/sys/class/thermal/cooling_device1/cur_state:0
-/sys/bus/cpu/devices/cpu0/cpufreq/cpuinfo_cur_freq:1113600
-/sys/bus/cpu/devices/cpu1/cpufreq/cpuinfo_cur_freq:1113600
-/sys/bus/cpu/devices/cpu2/cpufreq/cpuinfo_cur_freq:1113600
-/sys/bus/cpu/devices/cpu3/cpufreq/cpuinfo_cur_freq:1113600
-/sys/bus/cpu/devices/cpu4/cpufreq/cpuinfo_cur_freq:800000
-/sys/bus/cpu/devices/cpu5/cpufreq/cpuinfo_cur_freq:800000
-/sys/bus/cpu/devices/cpu6/cpufreq/cpuinfo_cur_freq:800000
-/sys/bus/cpu/devices/cpu7/cpufreq/cpuinfo_cur_freq:800000
-
-Reported-by: Zac Crosby <zac@squareup.com>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Benjamin Li <benl@squareup.com>
+Link: ClangBuiltLinux/linux#378
+Signed-off-by: Bill Wendling <morbo@google.com>
 ---
- drivers/thermal/qcom/tsens.c | 43 ++++++++++++++++++++++++++++++++++--
- drivers/thermal/qcom/tsens.h |  4 ++++
- 2 files changed, 45 insertions(+), 2 deletions(-)
+ drivers/soc/qcom/smem.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index 99a8d9f3e03c..d5263436f959 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -564,8 +564,12 @@ static int tsens_set_trips(void *_sensor, int low, int high)
- 	/* Write the new thresholds and clear the status */
- 	regmap_field_write(priv->rf[LOW_THRESH_0 + hw_id], low_val);
- 	regmap_field_write(priv->rf[UP_THRESH_0 + hw_id], high_val);
--	tsens_set_interrupt(priv, hw_id, LOWER, true);
--	tsens_set_interrupt(priv, hw_id, UPPER, true);
-+	s->trips_configured = true;
-+
-+	if (s->enable_irqs) {
-+		tsens_set_interrupt(priv, hw_id, LOWER, true);
-+		tsens_set_interrupt(priv, hw_id, UPPER, true);
-+	}
+diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+index e2057d8f1eff..a98b5f395d15 100644
+--- a/drivers/soc/qcom/smem.c
++++ b/drivers/soc/qcom/smem.c
+@@ -844,12 +844,12 @@ qcom_smem_enumerate_partitions(struct qcom_smem *smem, u16 local_host)
+ 			continue;
  
- 	spin_unlock_irqrestore(&priv->ul_lock, flags);
+ 		if (remote_host >= SMEM_HOST_COUNT) {
+-			dev_err(smem->dev, "bad host %hu\n", remote_host);
++			dev_err(smem->dev, "bad host %u\n", remote_host);
+ 			return -EINVAL;
+ 		}
  
-@@ -575,6 +579,40 @@ static int tsens_set_trips(void *_sensor, int low, int high)
- 	return 0;
- }
- 
-+static int tsens_change_mode(void *_sensor, enum thermal_device_mode mode)
-+{
-+	struct tsens_sensor *s = _sensor;
-+	struct tsens_priv *priv = s->priv;
-+	u32 hw_id = s->hw_id;
-+	bool enable = (mode == THERMAL_DEVICE_ENABLED);
-+	unsigned long flags;
-+
-+	if (tsens_version(priv) < VER_0_1) {
-+		/* Pre v0.1 IP had a single register for each type of interrupt
-+		 * and threshold, so we can't support individual enable/disable.
-+		 */
-+		hw_id = 0;
-+		enable = true;
-+	}
-+
-+	spin_lock_irqsave(&priv->ul_lock, flags);
-+
-+	/* During sensor registration, thermal core calls change_mode(ENABLED)
-+	 * before it calls set_trips(low, high). To avoid enabling threshold
-+	 * interrupts before thresholds are configured, let's let set_trips do
-+	 * the first enable.
-+	 */
-+	if (s->trips_configured) {
-+		tsens_set_interrupt(priv, hw_id, LOWER, enable);
-+		tsens_set_interrupt(priv, hw_id, UPPER, enable);
-+	}
-+	s->enable_irqs = enable;
-+
-+	spin_unlock_irqrestore(&priv->ul_lock, flags);
-+
-+	return 0;
-+}
-+
- static int tsens_enable_irq(struct tsens_priv *priv)
- {
- 	int ret;
-@@ -1002,6 +1040,7 @@ static const struct thermal_zone_of_device_ops tsens_of_ops = {
- 	.get_temp = tsens_get_temp,
- 	.get_trend = tsens_get_trend,
- 	.set_trips = tsens_set_trips,
-+	.change_mode = tsens_change_mode,
- };
- 
- static int tsens_register_irq(struct tsens_priv *priv, char *irqname,
-diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-index 1471a2c00f15..1a835d7688e0 100644
---- a/drivers/thermal/qcom/tsens.h
-+++ b/drivers/thermal/qcom/tsens.h
-@@ -45,6 +45,8 @@ enum tsens_irq_type {
-  * @offset: offset of temperature adjustment curve
-  * @hw_id: HW ID can be used in case of platform-specific IDs
-  * @slope: slope of temperature adjustment curve
-+ * @trips_configured: whether this sensor's upper/lower thresholds are set
-+ * @enable_irqs: whether this sensor's threshold IRQs should be enabled
-  * @status: 8960-specific variable to track 8960 and 8660 status register offset
-  */
- struct tsens_sensor {
-@@ -53,6 +55,8 @@ struct tsens_sensor {
- 	int				offset;
- 	unsigned int			hw_id;
- 	int				slope;
-+	bool				trips_configured;
-+	bool				enable_irqs;
- 	u32				status;
- };
+ 		if (smem->partitions[remote_host]) {
+-			dev_err(smem->dev, "duplicate host %hu\n", remote_host);
++			dev_err(smem->dev, "duplicate host %u\n", remote_host);
+ 			return -EINVAL;
+ 		}
  
 -- 
-2.17.1
+2.35.1.723.g4982287a31-goog
 
