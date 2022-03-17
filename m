@@ -2,67 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C80414DBC08
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Mar 2022 02:06:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CFA94DBC15
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Mar 2022 02:10:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353424AbiCQBIA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Mar 2022 21:08:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56002 "EHLO
+        id S1348150AbiCQBL3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Mar 2022 21:11:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347377AbiCQBH7 (ORCPT
+        with ESMTP id S242548AbiCQBL2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Mar 2022 21:07:59 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 830C61C102
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Mar 2022 18:06:44 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id n15so3221813plh.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Mar 2022 18:06:44 -0700 (PDT)
+        Wed, 16 Mar 2022 21:11:28 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E33E91D301
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Mar 2022 18:10:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=JvLDVbDDgbp0yNCGRRURLsKBk/XllLTzcyEp1TF0KUo=;
-        b=PRkbCtsXHTB57k+4a4eBSqG/fVFlU0qGBWCrJ0/MhTEHIqVuE5K8MPEmI/PjxK/zFV
-         sGNJW44o6VQz8zhaQ7yOrVVb7LbvHWOdaZEKg3hFFUpnyayUm8f2O5CZBLSvN0Q5rafR
-         VR90mvph3Atwbf+BShZ9hblUpBnw98VJA3tb4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=JvLDVbDDgbp0yNCGRRURLsKBk/XllLTzcyEp1TF0KUo=;
-        b=6q4DC+vxZHLCxEj868xwJztVpk2SOCS3Ydvw0QgTHEDCPAPfj+B2bad8xH2QgwLgSH
-         H6Fxqfsan4vwn1QLN3AYu7d7zXWSSX6JVb5J46KHEsOVei+FTNq85RMF8R5p9S/KkvP0
-         SR5xUaXbpUDyDxD2SW8MG8/g1z8HHRFIyVK5TQlIppl+n90OoosydG/rwgSOicDp4b6M
-         9h/7O6RTBOfKD0r20QCyx8k+9yp3YiqC+x/U7K0GZCCMDzMU8SfNtR4wwAlRMIcMObN+
-         CvB53tmjdoTOFfl+MlkATBJ6CkXNcm4C056pyPxaeQv/DxY5SsUtp9Jej/sN4pUvBC3q
-         zrHg==
-X-Gm-Message-State: AOAM532Ni6/Ea/JFIujUiP4Qlz2b2zPrAGAhuDhsieGjKPsoKy3bnEeM
-        1+Na/8m1w43ieNyA6AEVxWY1rQ==
-X-Google-Smtp-Source: ABdhPJy+en968FQATdRXl3SZ6Q+LOtWTG56qirSD/XRFWyWoeul7smFZUJMjLCzcV7qvAaSU6jwyMQ==
-X-Received: by 2002:a17:902:b597:b0:151:e24e:a61e with SMTP id a23-20020a170902b59700b00151e24ea61emr2615241pls.66.1647479204063;
-        Wed, 16 Mar 2022 18:06:44 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:dec5:e3f8:cbd7:f5a7])
-        by smtp.gmail.com with ESMTPSA id s14-20020a056a0008ce00b004f66dcd4f1csm5093923pfu.32.2022.03.16.18.06.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Mar 2022 18:06:43 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Alexandru M Stan <amstan@chromium.org>
-Subject: [PATCH 2/2] arm64: dts: qcom: Fully describe fingerprint node on Herobrine
-Date:   Wed, 16 Mar 2022 18:06:40 -0700
-Message-Id: <20220317010640.2498502-3-swboyd@chromium.org>
-X-Mailer: git-send-email 2.35.1.723.g4982287a31-goog
-In-Reply-To: <20220317010640.2498502-1-swboyd@chromium.org>
-References: <20220317010640.2498502-1-swboyd@chromium.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1647479413; x=1679015413;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=llS1dWwKdU+67FjJtk/PY8ppQiZAxV8LEJy+YpMh008=;
+  b=X5IWnD3Hklo6JbkfmjDDXjhyN+J2w/AM0giTArCqP1g/t+SF8NEap6z1
+   Ej32/+Xuk3Th4XI2O++kP82BjNeJqDXlj/o/hnaIcC7Q0AsFuTAv4rKu/
+   qStSqjX9XuBUAfyWEAjfR6EmU9VCroST7RyCNiwThAmAZ8i38ZM4TIjtS
+   k=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 16 Mar 2022 18:10:13 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Mar 2022 18:10:12 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 16 Mar 2022 18:10:11 -0700
+Received: from [10.110.116.22] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 16 Mar
+ 2022 18:10:11 -0700
+Message-ID: <9476aa45-1d41-20ed-7f2f-79719f246b50@quicinc.com>
+Date:   Wed, 16 Mar 2022 18:10:10 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH 00/25] drm/msm/dpu: wide planes support
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20220209172520.3719906-1-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20220209172520.3719906-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,44 +71,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update the fingerprint node on Herobrine to match the fingerprint DT
-binding. This will allow us to drive the reset and boot gpios from the
-driver when it is re-attached after flashing. We'll also be able to boot
-the fingerprint processor if the BIOS isn't doing it for us.
+Hi Dmitry
 
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Cc: Alexandru M Stan <amstan@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
+I have reviewed the series , some patches completely , some of them 
+especially the plane to sspp mapping is something i still need to check.
 
-Depends on https://lore.kernel.org/r/20220317005814.2496302-1-swboyd@chromium.org
+But I had one question on the design.
 
- arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+I thought we were going to have a boot param to control whether driver 
+will internally use both rectangles for the layer so that in the future 
+if compositors can do this splitting, we can use that instead of driver 
+doing it ( keep boot param disabled ? ).
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-index 984a7faf0888..282dda78ba3f 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-@@ -396,13 +396,16 @@ ap_spi_fp: &spi9 {
- 	cs-gpios = <&tlmm 39 GPIO_ACTIVE_LOW>;
- 
- 	cros_ec_fp: ec@0 {
--		compatible = "google,cros-ec-spi";
-+		compatible = "google,cros-ec-fp";
- 		reg = <0>;
- 		interrupt-parent = <&tlmm>;
- 		interrupts = <61 IRQ_TYPE_LEVEL_LOW>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&fp_to_ap_irq_l>, <&fp_rst_l>, <&fpmcu_boot0>;
-+		boot0-gpios = <&tlmm 68 GPIO_ACTIVE_HIGH>;
-+		reset-gpios = <&tlmm 78 GPIO_ACTIVE_LOW>;
- 		spi-max-frequency = <3000000>;
-+		vdd-supply = <&pp3300_fp_mcu>;
- 	};
- };
- 
--- 
-https://chromeos.dev
+Thanks
 
+Abhinav
+
+On 2/9/2022 9:24 AM, Dmitry Baryshkov wrote:
+> It took me a way longer to finish than I expected. And more patches that
+> I initially hoped. This patchset brings in multirect usage to support
+> using two SSPP rectangles for a single plane. Virtual planes support is
+> omitted from this pull request, it will come later.
+> 
+> Dmitry Baryshkov (25):
+>    drm/msm/dpu: rip out master planes support
+>    drm/msm/dpu: do not limit the zpos property
+>    drm/msm/dpu: add support for SSPP allocation to RM
+>    drm/msm/dpu: move SSPP debugfs creation to dpu_kms.c
+>    drm/msm/dpu: move pipe_hw to dpu_plane_state
+>    drm/msm/dpu: inline dpu_plane_get_ctl_flush
+>    drm/msm/dpu: drop dpu_plane_pipe function
+>    drm/msm/dpu: get rid of cached flush_mask
+>    drm/msm/dpu: dpu_crtc_blend_setup: split mixer and ctl logic
+>    drm/msm/dpu: introduce struct dpu_sw_pipe
+>    drm/msm/dpu: use dpu_sw_pipe for dpu_hw_sspp callbacks
+>    drm/msm/dpu: inline _dpu_plane_set_scanout
+>    drm/msm/dpu: pass dpu_format to _dpu_hw_sspp_setup_scaler3()
+>    drm/msm/dpu: move stride programming to
+>      dpu_hw_sspp_setup_sourceaddress
+>    drm/msm/dpu: remove dpu_hw_fmt_layout from struct dpu_hw_pipe_cfg
+>    drm/msm/dpu: drop EAGAIN check from dpu_format_populate_layout
+>    drm/msm/dpu: drop src_split and multirect check from
+>      dpu_crtc_atomic_check
+>    drm/msm/dpu: move the rest of plane checks to dpu_plane_atomic_check()
+>    drm/msm/dpu: don't use unsupported blend stages
+>    drm/msm/dpu: add dpu_hw_pipe_cfg to dpu_plane_state
+>    drm/msm/dpu: simplify dpu_plane_validate_src()
+>    drm/msm/dpu: rewrite plane's QoS-related functions to take dpu_sw_pipe
+>      and dpu_format
+>    drm/msm/dpu: rework dpu_plane_atomic_check() and
+>      dpu_plane_sspp_atomic_update()
+>    drm/msm/dpu: populate SmartDMA features in hw catalog
+>    drm/msm/dpu: add support for wide planes
+> 
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      | 355 +++-----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h      |   1 -
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c   |   4 -
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  10 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c    |  78 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h    |  35 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   | 136 +--
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   |  88 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  21 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |   1 +
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     | 813 +++++++++---------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h     |  42 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        |  81 ++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h        |   6 +
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h     |  19 +-
+>   15 files changed, 827 insertions(+), 863 deletions(-)
+> 
