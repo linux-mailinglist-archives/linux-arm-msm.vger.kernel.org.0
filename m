@@ -2,68 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13D664DD049
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Mar 2022 22:37:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 641BD4DD06C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Mar 2022 22:54:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230381AbiCQVjJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Mar 2022 17:39:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36708 "EHLO
+        id S230418AbiCQVze (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Mar 2022 17:55:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230374AbiCQVjI (ORCPT
+        with ESMTP id S230410AbiCQVzc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Mar 2022 17:39:08 -0400
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 195DC1B2C46
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 14:37:50 -0700 (PDT)
-Received: by mail-oi1-x236.google.com with SMTP id j83so7025644oih.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 14:37:50 -0700 (PDT)
+        Thu, 17 Mar 2022 17:55:32 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16B192DF17A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 14:54:08 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id q19so3669419pgm.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 14:54:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=mYahFg1u8AWNshIkG0ACNOEuY23IE74jTRUAFlXlZgs=;
-        b=LzAlpuAIvhSFB57UMk4TIVaAFjG+yZiFO7gvk21cjYrKKivdM394ahnLTPM1TB1S8x
-         V4Rek+owRzgElF1h34+BD/zJItn/bmK9nvLvYkifZusOqMQOwrDCfSKepPe+k4Wgq1sf
-         6FamhJegmjo6xbuGqtZsF4IhIuI+2CtxU1p1Q=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=U/LvItknh53CxFi5s43m1BITINaV3dzVzB1JmiKhyeU=;
+        b=i7quoyj9+8Ga/YvC/ikmfXL7u00TKab01U5O50rRyrsXTFZC1biWumfXT2IiaOtpQq
+         EMFtkJn9aRqPFryG93Gu4sOSU6IpN3idVIVpO0Scl78MugbfBfaLYVPhqF9U0bMisbUN
+         Vvs9LexurlE1WDe1CqoRj59fZim4N02gXqdOo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=mYahFg1u8AWNshIkG0ACNOEuY23IE74jTRUAFlXlZgs=;
-        b=yQoiaWnad4dGgvEekxcilun5+HlpVV2PbWPPE31wqR966PiMYzp3FPGeC5W1MUuU7P
-         a784jEgs0Vh5dnrkE/EMxBbC/cXivVYhb/IXL1X54yLEy1XzHPwFVWNFTUpeVlCqzHwr
-         gVYXNNbDOXEGsJhS9obInAWjnZvKcN9z1OoyaPW7dogCRFG2K+ZRwyTWd1JwMFZg7lKY
-         uWQ9Ow7qgypg68StcEBaz0kjPSwSKIDrnStSXiXJ/4PMTWuqp0BoYRMl0cA8Ij7BHsd2
-         kzSb0lbqrOdxFQLjGwzn/EUJnbvSVzxJQXb67er5Wo2uDMsL69FA8UNPjEPAlMSqmvcA
-         IMUw==
-X-Gm-Message-State: AOAM531jGAf0LQY74zryP9CYS7a4AVsvpP3sSJst61+qHrDpUj2BDEBt
-        vB97FXX8gPMTC+UHNPAcT4pNzuEo4RUuMCRSnKCxVw==
-X-Google-Smtp-Source: ABdhPJyGHg7pzS0hejsylQTRq/KbshJeBY747RjvdABUqcwVlbZBxy0liBFxJXm6e5w3U9vj0KJv+6WpvTei0kthD/8=
-X-Received: by 2002:aca:a9c8:0:b0:2da:45b6:b796 with SMTP id
- s191-20020acaa9c8000000b002da45b6b796mr2860328oie.193.1647553069283; Thu, 17
- Mar 2022 14:37:49 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 17 Mar 2022 17:37:48 -0400
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=U/LvItknh53CxFi5s43m1BITINaV3dzVzB1JmiKhyeU=;
+        b=S43VIzd2FeXUK15dbERAYIL/u64rzxOdmCP0AGFj9oU14B0TiTKNHoVcNV7VIAR9b/
+         /FteWOg/yLDmKJDhkwZOpe/9oAMlET9ibQXhiosji8AvXxlQh1DgXfYp2toi1r+Pm4XI
+         kSo84zh7/E/1GHhaVe9B/eWYo2TCo/M1s21ABx4jniKy0m+vBneUk0glAExYVHsTikFe
+         8nhm71Eab19KuWExUQC36yMlBFsDpg47s2mL4dKSQVzP3kIYUgi1t246sVIk8BfQjzvO
+         3yLBwpOgt6T913MiAJ5Yfu9sAGuxxb7QeZgy2j6SfvrdK637OAqQRNxom5I7FHA9I1kn
+         UHBA==
+X-Gm-Message-State: AOAM5310S7rawrEGgpzVhAYx/KzRGflZHGfS1Ic+6pce0eE6Z+6OjXm2
+        WH9zvR0NZ6S/I7R8MndJIuSwIA==
+X-Google-Smtp-Source: ABdhPJz7jH7YhJ8QcD4+0ua6BdX673lW4VxJRG0z3n9F+Vy4K5/a5kZkfWIxXXFtDpz0NgA1Z1ah7A==
+X-Received: by 2002:a65:678e:0:b0:382:1a7e:3d5c with SMTP id e14-20020a65678e000000b003821a7e3d5cmr2741346pgr.333.1647554047584;
+        Thu, 17 Mar 2022 14:54:07 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:ae74:932d:af6a:6079])
+        by smtp.gmail.com with UTF8SMTPSA id lp4-20020a17090b4a8400b001bedba2df04sm6835893pjb.30.2022.03.17.14.54.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Mar 2022 14:54:07 -0700 (PDT)
+Date:   Thu, 17 Mar 2022 14:54:05 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Alexandru M Stan <amstan@chromium.org>
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7280-herobrine: Drop outputs on
+ fpmcu pins
+Message-ID: <YjOt/aVJTLh4wqGo@google.com>
+References: <20220317010640.2498502-1-swboyd@chromium.org>
+ <20220317010640.2498502-2-swboyd@chromium.org>
 MIME-Version: 1.0
-In-Reply-To: <1647452154-16361-6-git-send-email-quic_sbillaka@quicinc.com>
-References: <1647452154-16361-1-git-send-email-quic_sbillaka@quicinc.com> <1647452154-16361-6-git-send-email-quic_sbillaka@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 17 Mar 2022 17:37:48 -0400
-Message-ID: <CAE-0n50dmA0ETgNvaBGs+XmGu+r=6RbfbmnHqXAFqUBGjVGDvg@mail.gmail.com>
-Subject: Re: [PATCH v5 5/9] drm/msm/dp: Add eDP support via aux_bus
-To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     robdclark@gmail.com, seanpaul@chromium.org,
-        quic_kalyant@quicinc.com, quic_abhinavk@quicinc.com,
-        dianders@chromium.org, quic_khsieh@quicinc.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org, krzk+dt@kernel.org,
-        sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
-        thierry.reding@gmail.com, sam@ravnborg.org,
-        dmitry.baryshkov@linaro.org, quic_vproddut@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220317010640.2498502-2-swboyd@chromium.org>
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -74,194 +72,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sankeerth Billakanti (2022-03-16 10:35:50)
->         This patch adds support for generic eDP sink through aux_bus.
+On Wed, Mar 16, 2022 at 06:06:39PM -0700, Stephen Boyd wrote:
+> Having these pins with outputs is good on a fresh boot because it puts
+> the boot and reset pins in a known "good" state. Unfortunately, that
+> conflicts with the fingerprint firmware flashing code. The firmware
+> flashing process binds and unbinds the cros-ec and spidev drivers and
+> that reapplies the pin output values after the flashing code has
+> overridden the gpio values. This causes a problem because we try to put
+> the device into bootloader mode, bind the spidev driver and that
+> inadvertently puts it right back into normal boot mode, breaking the
+> flashing process.
+> 
+> Fix this by removing the outputs. We'll introduce a binding for
+> fingerprint cros-ec specifically to set the gpios properly via gpio APIs
+> during cros-ec driver probe instead.
+> 
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Cc: Matthias Kaehlcke <mka@chromium.org>
+> Cc: Alexandru M Stan <amstan@chromium.org>
+> Fixes: 116f7cc43d28 ("arm64: dts: qcom: sc7280: Add herobrine-r1")
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-Please unindent commit text paragraphs. This isn't a book.
-
-> The eDP/DP controller driver should support aux transactions originating
-> from the panel-edp driver and hence should be initialized and ready.
->
->         The panel bridge supporting the panel should be ready before
-> the bridge connector is initialized. The generic panel probe needs the
-> controller resources to be enabled to support aux tractions originating
-
-s/tractions/transactions/
-
-> from it. So, the host_init and phy_init are moved to execute before the
-> panel probe.
->
->         The host_init has to return early if the core is already
-> initialized so that the regulator and clock votes for the controller
-> resources are balanced.
->
->         EV_HPD_INIT_SETUP needs to execute immediately to enable the
-> interrupts for the aux transactions from panel-edp to get the modes
-> supported.
-
-There are a lot of things going on in this patch. Can it be split up?
-
->
-> Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 65 +++++++++++++++++++++++++++++++++++--
->  drivers/gpu/drm/msm/dp/dp_drm.c     | 10 +++---
->  drivers/gpu/drm/msm/dp/dp_parser.c  | 21 +-----------
->  drivers/gpu/drm/msm/dp/dp_parser.h  |  1 +
->  4 files changed, 70 insertions(+), 27 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 382b3aa..688bbed 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -10,6 +10,7 @@
->  #include <linux/component.h>
->  #include <linux/of_irq.h>
->  #include <linux/delay.h>
-> +#include <drm/drm_dp_aux_bus.h>
->
->  #include "msm_drv.h"
->  #include "msm_kms.h"
-> @@ -265,8 +266,6 @@ static int dp_display_bind(struct device *dev, struct device *master,
->                 goto end;
->         }
->
-> -       dp->dp_display.next_bridge = dp->parser->next_bridge;
-> -
->         dp->aux->drm_dev = drm;
->         rc = dp_aux_register(dp->aux);
->         if (rc) {
-> @@ -421,6 +420,11 @@ static void dp_display_host_init(struct dp_display_private *dp)
->                 dp->dp_display.connector_type, dp->core_initialized,
->                 dp->phy_initialized);
->
-> +       if (dp->core_initialized) {
-> +               DRM_DEBUG_DP("DP core already initialized\n");
-> +               return;
-> +       }
-> +
->         dp_power_init(dp->power, false);
->         dp_ctrl_reset_irq_ctrl(dp->ctrl, true);
->         dp_aux_init(dp->aux);
-> @@ -433,6 +437,11 @@ static void dp_display_host_deinit(struct dp_display_private *dp)
->                 dp->dp_display.connector_type, dp->core_initialized,
->                 dp->phy_initialized);
->
-> +       if (!dp->core_initialized) {
-> +               DRM_DEBUG_DP("DP core not initialized\n");
-> +               return;
-> +       }
-> +
->         dp_ctrl_reset_irq_ctrl(dp->ctrl, false);
->         dp_aux_deinit(dp->aux);
->         dp_power_deinit(dp->power);
-> @@ -1502,7 +1511,7 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
->
->         dp_hpd_event_setup(dp);
->
-> -       dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
-> +       dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 0);
->  }
->
->  void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
-> @@ -1524,6 +1533,52 @@ void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
->         }
->  }
->
-> +static int dp_display_get_next_bridge(struct msm_dp *dp)
-> +{
-> +       int rc = 0;
-
-Drop initialization.
-
-> +       struct dp_display_private *dp_priv;
-> +       struct device_node *aux_bus;
-> +       struct device *dev;
-> +
-> +       dp_priv = container_of(dp, struct dp_display_private, dp_display);
-> +       dev = &dp_priv->pdev->dev;
-> +       aux_bus = of_get_child_by_name(dev->of_node, "aux-bus");
-> +
-> +       if (aux_bus) {
-> +               dp_display_host_init(dp_priv);
-> +               dp_catalog_ctrl_hpd_config(dp_priv->catalog);
-> +               enable_irq(dp_priv->irq);
-> +               dp_display_host_phy_init(dp_priv);
-> +
-> +               devm_of_dp_aux_populate_ep_devices(dp_priv->aux);
-> +
-> +               disable_irq(dp_priv->irq);
-
-Why do we disable irq?
-
-> +       }
-
-The aux_bus node leaked.
-
-> +
-> +       /*
-> +        * External bridges are mandatory for eDP interfaces: one has to
-> +        * provide at least an eDP panel (which gets wrapped into panel-bridge).
-> +        *
-> +        * For DisplayPort interfaces external bridges are optional, so
-> +        * silently ignore an error if one is not present (-ENODEV).
-> +        */
-> +       rc = dp_parser_find_next_bridge(dp_priv->parser);
-> +       if (rc == -ENODEV) {
-> +               if (dp->connector_type == DRM_MODE_CONNECTOR_eDP) {
-> +                       DRM_ERROR("eDP: next bridge is not present\n");
-> +                       return rc;
-> +               }
-> +       } else if (rc) {
-> +               if (rc != -EPROBE_DEFER)
-> +                       DRM_ERROR("DP: error parsing next bridge: %d\n", rc);
-> +               return rc;
-> +       }
-> +
-> +       dp->next_bridge = dp_priv->parser->next_bridge;
-> +
-> +       return 0;
-> +}
-> +
->  int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
->                         struct drm_encoder *encoder)
->  {
-> @@ -1547,6 +1602,10 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
->
->         dp_display->encoder = encoder;
->
-> +       ret = dp_display_get_next_bridge(dp_display);
-
-Didn't we just move bridge attachment out of modeset? Why is it being
-done here?
-
-> +       if (ret)
-> +               return ret;
-> +
->         dp_display->bridge = dp_bridge_init(dp_display, dev, encoder);
->         if (IS_ERR(dp_display->bridge)) {
->                 ret = PTR_ERR(dp_display->bridge);
-> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
-> index 7ce1aca..5254bd6 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
-> @@ -114,10 +114,12 @@ struct drm_bridge *dp_bridge_init(struct msm_dp *dp_display, struct drm_device *
->         bridge->funcs = &dp_bridge_ops;
->         bridge->type = dp_display->connector_type;
->
-> -       bridge->ops =
-> -               DRM_BRIDGE_OP_DETECT |
-> -               DRM_BRIDGE_OP_HPD |
-> -               DRM_BRIDGE_OP_MODES;
-> +       if (bridge->type == DRM_MODE_CONNECTOR_DisplayPort) {
-
-Why can't eDP have bridge ops that are the same?
-
-> +               bridge->ops =
-> +                       DRM_BRIDGE_OP_DETECT |
-> +                       DRM_BRIDGE_OP_HPD |
-> +                       DRM_BRIDGE_OP_MODES;
-> +       }
->
->         rc = drm_bridge_attach(encoder, bridge, NULL, DRM_BRIDGE_ATTACH_NO_CONNECTOR);
->         if (rc) {
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
