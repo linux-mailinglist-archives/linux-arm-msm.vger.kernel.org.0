@@ -2,77 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F0594DCC16
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Mar 2022 18:09:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 32F364DCC74
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Mar 2022 18:29:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236767AbiCQRKU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Mar 2022 13:10:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46478 "EHLO
+        id S236875AbiCQRav (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Mar 2022 13:30:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236784AbiCQRKU (ORCPT
+        with ESMTP id S236010AbiCQRav (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Mar 2022 13:10:20 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C663D0A89
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 10:09:03 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id pv16so12204459ejb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 10:09:03 -0700 (PDT)
+        Thu, 17 Mar 2022 13:30:51 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8933C214FA5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 10:29:33 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id b19so8305119wrh.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 10:29:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qnkSvmM2RLTDcYPOq9eNhcQfzzwiY4NpXIDwpU3VaFI=;
-        b=Sornkk7buwSd+gYZlnieoa57pLOfbYNReimDpIoQUCqc2gwZHaDs9iAVjq005u12w5
-         J8p8dTXstxDAcKqyEA9kqn9FuC5a6+YzzOsPOnvi0BFf2FXuYm8M/hDJwg0wSy5Cetx9
-         sihyGtiVhTTPr1nqqxsNkcq8b5m17V2XJG5VI=
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=8bKHLTXLh3Prk0x7Kjt1KuDZoyhkHjZ+7FeBGH5Uapo=;
+        b=KGxafnM3qSYdU4CWYMi0SB6NNYPDBifAXbe2jqJL/qXULaaQ+MT9nrXnwx6FBn4e7X
+         ESQY1KvTvkAnL8cj9hWkHb5PKlmdM5BFnaP4dgIUu6pD7+G1hEyRdZZZs8US0zhnKmEi
+         fSiqWxuJQV5wCsL6OUaXZbDvIXAVamf91ff6U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qnkSvmM2RLTDcYPOq9eNhcQfzzwiY4NpXIDwpU3VaFI=;
-        b=SpLf8cpNCIQbmvGuCNgXeekusw/G6kLbQBrB/v4gcEefr/mbMwlj/GSYChWDP9if3n
-         5gXUKtrg06r0MVd5vxcczq0CwUBuGDtPzFR9KUCupdNeN2PnysCL+y0Y8cVaJK3Ipq2b
-         xkSJBJ061n3YcXT82Vyserj3HAEjLC+6+V3nN7+bbo0qqqEUwJfOryu20a8IzX1QvE8R
-         1xNrrGnhXmjQWTCOb9vOU8CXBva34WPemU/WsVDiHOZ4p7EUvFwJXApsEhNFG9gHqv+J
-         tA5zv1hFrZx9Wz7muUOgqGYk2JolrqJK4JCNW0e+PZ58DvPUrRpv19MGnPyBvEfAQnZZ
-         SRBw==
-X-Gm-Message-State: AOAM530sO27o99sbU9J3hrRNDGR8L6dfETIo9oo2d989m81y7n+blZ1l
-        7758t4SOC575UzzJ2k0s7TGiv1GmrhlvMJcv
-X-Google-Smtp-Source: ABdhPJwCjKTLn4Vc4Sd4I1nJUPUAIGKmVa/tA75ZcQiggj3o5EKBNu2Dk/g5E110/OE47/Su0dsz+A==
-X-Received: by 2002:a17:906:d204:b0:6d6:df17:835e with SMTP id w4-20020a170906d20400b006d6df17835emr5326586ejz.20.1647536941396;
-        Thu, 17 Mar 2022 10:09:01 -0700 (PDT)
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com. [209.85.221.50])
-        by smtp.gmail.com with ESMTPSA id z21-20020a1709063a1500b006da6436819dsm2597645eje.173.2022.03.17.10.09.00
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Mar 2022 10:09:00 -0700 (PDT)
-Received: by mail-wr1-f50.google.com with SMTP id x15so8225323wru.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 10:09:00 -0700 (PDT)
-X-Received: by 2002:a5d:53c6:0:b0:203:ee27:12ff with SMTP id
- a6-20020a5d53c6000000b00203ee2712ffmr2577669wrw.422.1647536940103; Thu, 17
- Mar 2022 10:09:00 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220316172814.v1.1.I2deda8f2cd6adfbb525a97d8fee008a8477b7b0e@changeid>
- <20220316172814.v1.4.I37bdb77fdd06fb4143056366d7ec35b929528002@changeid>
-In-Reply-To: <20220316172814.v1.4.I37bdb77fdd06fb4143056366d7ec35b929528002@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 17 Mar 2022 10:08:45 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UiRSHgX-TAy5vsCJ0k6bLWJO9oOd4CVHJ+8vnM_5pMOw@mail.gmail.com>
-Message-ID: <CAD=FV=UiRSHgX-TAy5vsCJ0k6bLWJO9oOd4CVHJ+8vnM_5pMOw@mail.gmail.com>
-Subject: Re: [PATCH v1 4/4] arm64: dts: qcom: sc7280: Add CRD rev5
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to;
+        bh=8bKHLTXLh3Prk0x7Kjt1KuDZoyhkHjZ+7FeBGH5Uapo=;
+        b=XqJw92rVnLfkJzcPziXpx7PQlHtlf4i/Sqhps1ITdJyXzRbsR2pYfVEPfmlw5jFaEk
+         uLbu10mGr2AmyPIGvJ/LCHLQqr43oqxAaF/6KzgXyjP2Gfc6gu3z+4tMUFLTHx1Kgyyu
+         eM2f9DwRsXGCSMDl/tvyIgl1DuPuwokOAJ0nuDYMYB/uFyegJ29xftD//Pbr641X/egs
+         tj1I57Cj4MiSufiUa3IJmBLGBp+fEaztbXDmO1U2oSgBgir7XO7F2XFWy738hFmRoLlM
+         qa9O5ZG417qqEnqMRitAMPNdQ0y73IVldjRDxc1DEdm2FHdYJg8YCy7G+lZPoXgWWHus
+         w8Tw==
+X-Gm-Message-State: AOAM533u7JCfNx87xuXYi2Kj2mR3dcsmQYSE96hdjrwVPIJ6/k8R3eks
+        4YQ4o7SWO4DwG+oaiqzT500HjAlGXFSOnri5
+X-Google-Smtp-Source: ABdhPJzoRAo3np0fazhW9XxJ7KsRXfdgnZ3L0q1YWfSdtT6Ap0qveKDccvepjyTYUjg/8j2AHQh5Hg==
+X-Received: by 2002:a5d:528b:0:b0:203:d928:834c with SMTP id c11-20020a5d528b000000b00203d928834cmr5178984wrv.500.1647538172004;
+        Thu, 17 Mar 2022 10:29:32 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id c11-20020a05600c0a4b00b0037c91e085ddsm9709824wmq.40.2022.03.17.10.29.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Mar 2022 10:29:31 -0700 (PDT)
+Date:   Thu, 17 Mar 2022 18:29:29 +0100
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        David Airlie <airlied@linux.ie>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Sean Paul <sean@poorly.run>,
+        open list <linux-kernel@vger.kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Subject: Re: [PATCH 2/3] drm/msm/gpu: Park scheduler threads for system
+ suspend
+Message-ID: <YjNv+csmFyjNYc5b@phenom.ffwll.local>
+Mail-Followup-To: Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+        Rob Clark <robdclark@gmail.com>, Rob Clark <robdclark@chromium.org>,
+        Jonathan Marek <jonathan@marek.ca>, David Airlie <airlied@linux.ie>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sean Paul <sean@poorly.run>,
+        open list <linux-kernel@vger.kernel.org>,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+References: <20220310234611.424743-1-robdclark@gmail.com>
+ <20220310234611.424743-3-robdclark@gmail.com>
+ <YjMGac4Hnjmg1wE8@phenom.ffwll.local>
+ <3945551d-47d2-1974-f637-1dbc61e14702@amd.com>
+ <CAF6AEGv36V8bLoDn5O1SW3iTUtzd3O1XeuT5gJxyLMxd1E-o3Q@mail.gmail.com>
+ <865abcff-9f52-dca4-df38-b11189c739ff@amd.com>
+ <CAF6AEGuoBeYoMTR6-KM9xGZ05XSSnSJWMDciawczi7qtiLN9Vw@mail.gmail.com>
+ <915537e2-ac5b-ab0e-3697-2b16a9ec8f91@amd.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <915537e2-ac5b-ab0e-3697-2b16a9ec8f91@amd.com>
+X-Operating-System: Linux phenom 5.10.0-8-amd64 
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,20 +105,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Thu, Mar 17, 2022 at 05:44:57PM +0100, Christian König wrote:
+> Am 17.03.22 um 17:18 schrieb Rob Clark:
+> > On Thu, Mar 17, 2022 at 9:04 AM Christian König
+> > <christian.koenig@amd.com> wrote:
+> > > Am 17.03.22 um 16:10 schrieb Rob Clark:
+> > > > [SNIP]
+> > > > userspace frozen != kthread frozen .. that is what this patch is
+> > > > trying to address, so we aren't racing between shutting down the hw
+> > > > and the scheduler shoveling more jobs at us.
+> > > Well exactly that's the problem. The scheduler is supposed to shoveling
+> > > more jobs at us until it is empty.
+> > > 
+> > > Thinking more about it we will then keep some dma_fence instance
+> > > unsignaled and that is and extremely bad idea since it can lead to
+> > > deadlocks during suspend.
+> > Hmm, perhaps that is true if you need to migrate things out of vram?
+> > It is at least not a problem when vram is not involved.
+> 
+> No, it's much wider than that.
+> 
+> See what can happen is that the memory management shrinkers want to wait for
+> a dma_fence during suspend.
+> 
+> And if you stop the scheduler they will just wait forever.
+> 
+> What you need to do instead is to drain the scheduler, e.g. call
+> drm_sched_entity_flush() with a proper timeout for each entity you have
+> created.
 
-On Wed, Mar 16, 2022 at 5:28 PM Matthias Kaehlcke <mka@chromium.org> wrote:
->
-> Add support for Qualcomm's SC7280 CRD rev5 (aka CRD 3.0/3.1).
->
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
->
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../boot/dts/qcom/sc7280-herobrine-crd.dts    | 313 ++++++++++++++++++
->  2 files changed, 314 insertions(+)
+Yeah I think properly flushing the scheduler and stopping it and cutting
+all drivers over to that sounds like the right approach. Generally suspend
+shouldn't be such a critical path that this will hurt us, all the other io
+queues get flushed too afaik.
 
-Since I already pre-reviewed this patch before it was posted, I have
-no comments. ;-)
+Resume is the thing that needs to go real fast.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+So a patch set to move all drivers that open code the kthread_park to the
+right scheduler function sounds like the right idea here to me.
+-Daniel
+
+> 
+> Regards,
+> Christian.
+> 
+> > 
+> > > So this patch here is an absolute clear NAK from my side. If amdgpu is
+> > > doing something similar that is a severe bug and needs to be addressed
+> > > somehow.
+> > I think amdgpu's use of kthread_park is not related to suspend, but
+> > didn't look too closely.
+> > 
+> > And perhaps the solution for this problem is more complex in the case
+> > of amdgpu, I'm not super familiar with the constraints there.  But I
+> > think it is a fine solution for integrated GPUs.
+> > 
+> > BR,
+> > -R
+> > 
+> > > Regards,
+> > > Christian.
+> > > 
+> > > > BR,
+> > > > -R
+> > > > 
+> 
+
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
