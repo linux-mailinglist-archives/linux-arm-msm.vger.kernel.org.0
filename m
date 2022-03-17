@@ -2,55 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 932D54DBAFF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Mar 2022 00:25:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B88E4DBBB1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Mar 2022 01:28:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234515AbiCPX0t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 16 Mar 2022 19:26:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34006 "EHLO
+        id S1350024AbiCQA3q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 16 Mar 2022 20:29:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345175AbiCPX0s (ORCPT
+        with ESMTP id S1349978AbiCQA3o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 16 Mar 2022 19:26:48 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3CA4BC1A;
-        Wed, 16 Mar 2022 16:25:33 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4F21E61559;
-        Wed, 16 Mar 2022 23:25:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D105C340EC;
-        Wed, 16 Mar 2022 23:25:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1647473132;
-        bh=9S9n5W4BUCXrhfkoeret8wNFTGcAtJSuqNJJXyYDFh0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=UCscvEHF5ZTfH4kctmXafnLXkuK9nLupUKMANZpudUof4kxqmHl84MCSZbo2LZWF/
-         VruUdT2QYyD4aXLc5XQvTRiKWPX0Agj8VD8K1tbo55aNGnPg3GUndZbJY/MMsyKl2v
-         tscLuPlVjaT3+jCbMzsHQQbuxnXa95dofucHlKha6KXwbW6UEol2MORjMso7ABGxl4
-         pygS1UVyWyDj6fblBAqMjVOoBKuPbCLC31jWDEIVLK6ujEMyb30i/ycS6voqw6k8Gy
-         r4oa1pzUUFWQGIdmu1cd6MKi5baS9WzowO2N5rB4WSgIBhGKszWfNaqbwPtAWJXD3a
-         s65OkRtucMXwQ==
-Date:   Wed, 16 Mar 2022 16:25:25 -0700
-From:   Nathan Chancellor <nathan@kernel.org>
-To:     Trilok Soni <quic_tsoni@quicinc.com>
-Cc:     Bill Wendling <morbo@google.com>, Andy Gross <agross@kernel.org>,
+        Wed, 16 Mar 2022 20:29:44 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68E131C932
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Mar 2022 17:28:27 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id m22so3589712pja.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Mar 2022 17:28:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=s7sITGOccSSxXbU5IqO/h2LY98v91UmNuWsJwF4ndG0=;
+        b=WDLX8RusToDhguFb9R+rCWHeuiQ9xj1U0FmX3/jNDcQHvip5vREM6uhQ0SlzUIIT2j
+         Ph2NU9QMfsX+77WZ2mKP8w46ikhcXVC7eVnPTkNSJ+82v4hh+/sAEertJqaOCgn6qI4U
+         oIuPVUAvZacjdffC/1xVdem7LqSICRDZe+ltE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=s7sITGOccSSxXbU5IqO/h2LY98v91UmNuWsJwF4ndG0=;
+        b=UAHw6TzCDQojJBDKqFjB0teEmsystlsJrXKeYuJTbNH5+mZ44k+HFdOCD3a4+Jwh0v
+         ULZnlgHPWxRUZsBI6kC6u0nBFL83+NiNRtGGwD7TJjcdscNWFJGqZiohg2rPf+CHv4qw
+         dilXiooPTHR33DPTdoaIJ+LV57Vk7lHywxYJA8OzGkGjC0jY2JAbQabGLH+nSTxHJh9h
+         F7ZUbYBc+Irf1WnG2Uk2MQcNQBgBvIPwQ7t17mny69cZUrqYifAMHSiMC6D94giLJI3N
+         wx1m5++kzDPbkxHinv7rUaTQYSYo2uVSMcIGu890oIu2KlmEw1h9dJQoEetwcKe4AhJ4
+         ehMg==
+X-Gm-Message-State: AOAM530UA9STgCJsHBYwBv8vXexa7p5bVr31QY5RPn5kPty7DErZsqcN
+        9LU+W9FMAFs5ySI/gcttfMthZg==
+X-Google-Smtp-Source: ABdhPJxoDEonzZLvxbRJfDVLNOwBp6GF5KVNLA9ru3wOYbA5CpXQ2CMarPevTUmhXDQpypumPPymGA==
+X-Received: by 2002:a17:903:32c3:b0:152:c1b:e840 with SMTP id i3-20020a17090332c300b001520c1be840mr2494389plr.40.1647476906946;
+        Wed, 16 Mar 2022 17:28:26 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:3314:2f99:65d0:5a73])
+        by smtp.gmail.com with UTF8SMTPSA id x16-20020a637c10000000b00380b351aaacsm3396764pgc.16.2022.03.16.17.28.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Mar 2022 17:28:26 -0700 (PDT)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, devicetree@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        llvm@lists.linux.dev
-Subject: Re: [PATCH] soc: qcom: smem: use correct format characters
-Message-ID: <YjJx5Q0OUDRzIowG@thelio-3990X>
-References: <20220316213118.2352683-1-morbo@google.com>
- <15ebcddf-a84d-7293-f672-0e8ec47537e8@quicinc.com>
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH v1 1/4] arm64: dts: qcom: sc7280: Rename crd to crd-r3
+Date:   Wed, 16 Mar 2022 17:28:17 -0700
+Message-Id: <20220316172814.v1.1.I2deda8f2cd6adfbb525a97d8fee008a8477b7b0e@changeid>
+X-Mailer: git-send-email 2.35.1.723.g4982287a31-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <15ebcddf-a84d-7293-f672-0e8ec47537e8@quicinc.com>
-X-Spam-Status: No, score=-8.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -58,18 +69,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 16, 2022 at 04:17:06PM -0700, Trilok Soni wrote:
-> On 3/16/2022 2:31 PM, Bill Wendling wrote:
-> > When compiling with -Wformat, clang emits the following warnings:
-> > 
-> 
-> I thought we have -Wno-format by default enabled for arm64, isn't it?
+There are multiple revisions of CRD boards. The current sc7280-crd.dts
+describes revision 3 and 4 (aka CRD 1.0 and 2.0). Support for a newer
+version will be added by another patch. Add the revision number to
+distinguish it from the versionn. Also add the revision numbers to
+the compatible string.
 
-Yes, -Wformat is turned off for clang in the default kernel build on all
-architectures (see scripts/Makefile.extrawarn). However, it can easily
-be enabled with W=1 and we should eventually get this turned on for
-clang like gcc so that developers who only use clang can catch instances
-of it.
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+---
 
-Cheers,
-Nathan
+ arch/arm64/boot/dts/qcom/Makefile                             | 2 +-
+ .../arm64/boot/dts/qcom/{sc7280-crd.dts => sc7280-crd-r3.dts} | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+ rename arch/arm64/boot/dts/qcom/{sc7280-crd.dts => sc7280-crd-r3.dts} (91%)
+
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index f9e6343acd03..38d41b1d70ad 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -87,7 +87,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-herobrine-r0.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-herobrine-herobrine-r1.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-idp2.dtb
+-dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-crd.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sc7280-crd-r3.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-ganges-kirin.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-discovery.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-pioneer.dtb
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+similarity index 91%
+rename from arch/arm64/boot/dts/qcom/sc7280-crd.dts
+rename to arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+index e2efbdde53a3..7a028b9248c3 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
++++ b/arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts
+@@ -11,8 +11,8 @@
+ #include "sc7280-idp-ec-h1.dtsi"
+ 
+ / {
+-	model = "Qualcomm Technologies, Inc. sc7280 CRD platform";
+-	compatible = "qcom,sc7280-crd", "google,hoglin", "qcom,sc7280";
++	model = "Qualcomm Technologies, Inc. sc7280 CRD platform (rev3 - 4)";
++	compatible = "qcom,sc7280-crd", "google,hoglin-rev3", "google,hoglin-rev4", "qcom,sc7280";
+ 
+ 	aliases {
+ 		serial0 = &uart5;
+-- 
+2.35.1.723.g4982287a31-goog
+
