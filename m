@@ -2,72 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B38514DC97F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Mar 2022 16:03:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 86B544DC99F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Mar 2022 16:10:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235487AbiCQPEh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Mar 2022 11:04:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60040 "EHLO
+        id S233885AbiCQPLb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Mar 2022 11:11:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231290AbiCQPEg (ORCPT
+        with ESMTP id S233269AbiCQPLb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Mar 2022 11:04:36 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA67F17E37;
-        Thu, 17 Mar 2022 08:03:19 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 123-20020a1c1981000000b0038b3616a71aso3310766wmz.4;
-        Thu, 17 Mar 2022 08:03:19 -0700 (PDT)
+        Thu, 17 Mar 2022 11:11:31 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38D5D204C95;
+        Thu, 17 Mar 2022 08:10:14 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id u10so7775062wra.9;
+        Thu, 17 Mar 2022 08:10:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6D/2aZGnY6875EFh+ETsZseL6iAzu/82ojLJG78YCws=;
-        b=FTTHOCemfWozPSr8gX8l5dWg1G/wnR7w2M6aOlxOwFgx6ps3obsAt8FtZSZ/YEKj4D
-         6sOYVo5l9+eEdsUYJWPMLtD1U86OlzUjqd9voYmMfMoy8cpXTqH/Hdbd97r/buY4+Pqg
-         nqsFWh0EVXsKhl61ux49MECgqplDEskANCCtOz9vC2NuUO8l6aDJ8sPfk1k4qBrasi9M
-         Fct7+mU8Fwa6wkPWn8of8GzWRHf9oJQ5sYizPBtiUVKLuL7WC+DLCn4yXv71Jk/xAQBC
-         MpMNcy9A5q0CWDufuBZvstp/HV/xY9VapxU+kP+7OpVLMrgzN2Q5YlVeMhQKnLUD1oM1
-         nnBQ==
+         :cc:content-transfer-encoding;
+        bh=xd1I1jaOVhvAcR6vHw7kkzUfWncYai5tD7e0XVSca6g=;
+        b=Ek55yHKFJhKiBY0RJxOjQb8P//I2US4VCkgJqkC2M4HuBchLBe//aAGH1H1lHQ+BTH
+         C5qv7sw3uS026m4EdLToha6mj6PIfyRoKvI4IVYTbSYPw3rlXCzwZAfro53E121CE59H
+         1MaJpf+VjTZO/IEo7BSIaqfeXjiju8Upldpq1nCr5gQkdGX0+WuoQHDopI01EwM5G3Oe
+         JAo2op1qd30PRQgAGe7u2tmwTl0siSFPM0y0izAm+gwOkXO7YiFK2K3b4dXDjcHP3RV4
+         3A+9oyCI00EVBE+dDq2AYK4N/QLr0DQ9zSW4lNfc5TUOo5gUD5KBts8HFdkay2p98tZ1
+         8IRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6D/2aZGnY6875EFh+ETsZseL6iAzu/82ojLJG78YCws=;
-        b=chqKapgIvTlHn846NFhic4SZCrhqG4aP4tz8i6SqhwV8cgUKieu4IKWCW9XMPgQ7lt
-         sudQ5Z0EVO/p51wgQjEmZJ5/SbeXTMKdKwfOrGta3zEpnw7GbMLAv/1vfsrYW/q2vx/1
-         2gyBKTmYW7I3OjKU4PftQtdo6qolM36Gh47mJ3ZQf0Q58jIbFNwMQmSt7dttqRkLYakd
-         uGfZHgQ/BNZAnyR5Ajpaf8JdGeZcw/B3prZk0Zhxdk3bFIEQuDu4fE06DUoEWnkN4iTN
-         L4df2nUouV4YVWJrFnijVHNkEtyq1qkvZSl+boVkM25g8/UJ+KdGHaqe+NoLqgYpfzHB
-         xtlg==
-X-Gm-Message-State: AOAM5318sSaaTK1FXby4fKWJdtzkUNy6OZoWe7x501+QZi65Ccz0Bf3p
-        mVHsiiD7EPYOv5/qr8IKDGh1GyH5g6FNTiliqElRXC1U
-X-Google-Smtp-Source: ABdhPJydCT/vtakfbrKWR+jM9qGo9W4JZv3KtibLEtGonA920Vs0jF6DIVS1wTmv1X1WByZ46++UqLd5CDENDqqK+cA=
-X-Received: by 2002:a05:600c:22c4:b0:38c:70f5:25a9 with SMTP id
- 4-20020a05600c22c400b0038c70f525a9mr4309084wmg.119.1647529398246; Thu, 17 Mar
- 2022 08:03:18 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=xd1I1jaOVhvAcR6vHw7kkzUfWncYai5tD7e0XVSca6g=;
+        b=YpOcGq8P6K9VVAcB/Q8MJaJZtB9N7pohM5Zn+oWWByaB1g9PxY2y9ajkrsHlMbxicx
+         CJg5/yRoFV76nvZoatbzr5xmPMWQEFdUkq9WsJj/iJUXwo3ZX9PULEjJT74yAugq/OoK
+         rdSN5bjVAAvNmhF8GhiPHY6CF/69T8nFGiT+GJFPe6ERx1u7Zq2YuEHJL1BrmODO01ux
+         Y0gX6b67J8lOQR/M2hxJeltmVQp8qy0TuG2FsGwYSs/IkixqFWiXYdvmHVKYhJtTZ2dN
+         E64sH2s4mMFslocRLC6UMdvQSBQ3yF4Y2homid1/dpkDwOdN5K5/ivXwdETF7dW3fP6u
+         TSFA==
+X-Gm-Message-State: AOAM531+/wMJ8l0FCTsx75QRaCeqowFcD5Ic0s+20RIMXWwPn4SkTj1p
+        3xtAsojSHkdaiiX6+W5gfaB4ch8mGWMlQlPog1I=
+X-Google-Smtp-Source: ABdhPJx/+OGZy/GONTI2VpT4DsS4zAwTerZUy7fUgcFu8OS87j3P2i+ZFRW+iMdtfays2J6Gyr627uCkQ5RJvaZ6fQo=
+X-Received: by 2002:adf:dd4d:0:b0:203:f178:b78b with SMTP id
+ u13-20020adfdd4d000000b00203f178b78bmr1048798wrm.93.1647529812714; Thu, 17
+ Mar 2022 08:10:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220317002950.193449-1-robdclark@gmail.com> <20220317002950.193449-4-robdclark@gmail.com>
- <20220317082121.GH1841@kadam>
-In-Reply-To: <20220317082121.GH1841@kadam>
+References: <20220310234611.424743-1-robdclark@gmail.com> <20220310234611.424743-3-robdclark@gmail.com>
+ <YjMGac4Hnjmg1wE8@phenom.ffwll.local> <3945551d-47d2-1974-f637-1dbc61e14702@amd.com>
+In-Reply-To: <3945551d-47d2-1974-f637-1dbc61e14702@amd.com>
 From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 17 Mar 2022 08:03:59 -0700
-Message-ID: <CAF6AEGsnXz05fCnYAvFk+Hp-2z7N1kdVS0kYKn7+ejohLp8H7w@mail.gmail.com>
-Subject: Re: [PATCH 3/3] drm/msm: Add a way to override processes comm/cmdline
-To:     Dan Carpenter <dan.carpenter@oracle.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+Date:   Thu, 17 Mar 2022 08:10:52 -0700
+Message-ID: <CAF6AEGv36V8bLoDn5O1SW3iTUtzd3O1XeuT5gJxyLMxd1E-o3Q@mail.gmail.com>
+Subject: Re: [PATCH 2/3] drm/msm/gpu: Park scheduler threads for system suspend
+To:     =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+Cc:     Andrey Grodzovsky <andrey.grodzovsky@amd.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
         freedreno <freedreno@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
         Rob Clark <robdclark@chromium.org>,
         Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
         Akhil P Oommen <quic_akhilpo@quicinc.com>,
         Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Emma Anholt <emma@anholt.net>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
         open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -78,88 +81,175 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 17, 2022 at 1:21 AM Dan Carpenter <dan.carpenter@oracle.com> wrote:
+On Thu, Mar 17, 2022 at 3:06 AM Christian K=C3=B6nig
+<christian.koenig@amd.com> wrote:
 >
-> On Wed, Mar 16, 2022 at 05:29:45PM -0700, Rob Clark wrote:
-> >       switch (param) {
-> > +     case MSM_PARAM_COMM:
-> > +     case MSM_PARAM_CMDLINE: {
-> > +             char *str, **paramp;
-> > +
-> > +             str = kmalloc(len + 1, GFP_KERNEL);
+> Am 17.03.22 um 10:59 schrieb Daniel Vetter:
+> > On Thu, Mar 10, 2022 at 03:46:05PM -0800, Rob Clark wrote:
+> >> From: Rob Clark <robdclark@chromium.org>
+> >>
+> >> In the system suspend path, we don't want to be racing with the
+> >> scheduler kthreads pushing additional queued up jobs to the hw
+> >> queue (ringbuffer).  So park them first.  While we are at it,
+> >> move the wait for active jobs to complete into the new system-
+> >> suspend path.
+> >>
+> >> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> >> ---
+> >>   drivers/gpu/drm/msm/adreno/adreno_device.c | 68 ++++++++++++++++++++=
+--
+> >>   1 file changed, 64 insertions(+), 4 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/=
+drm/msm/adreno/adreno_device.c
+> >> index 8859834b51b8..0440a98988fc 100644
+> >> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> >> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> >> @@ -619,22 +619,82 @@ static int active_submits(struct msm_gpu *gpu)
+> >>   static int adreno_runtime_suspend(struct device *dev)
+> >>   {
+> >>      struct msm_gpu *gpu =3D dev_to_gpu(dev);
+> >> -    int remaining;
+> >> +
+> >> +    /*
+> >> +     * We should be holding a runpm ref, which will prevent
+> >> +     * runtime suspend.  In the system suspend path, we've
+> >> +     * already waited for active jobs to complete.
+> >> +     */
+> >> +    WARN_ON_ONCE(gpu->active_submits);
+> >> +
+> >> +    return gpu->funcs->pm_suspend(gpu);
+> >> +}
+> >> +
+> >> +static void suspend_scheduler(struct msm_gpu *gpu)
+> >> +{
+> >> +    int i;
+> >> +
+> >> +    /*
+> >> +     * Shut down the scheduler before we force suspend, so that
+> >> +     * suspend isn't racing with scheduler kthread feeding us
+> >> +     * more work.
+> >> +     *
+> >> +     * Note, we just want to park the thread, and let any jobs
+> >> +     * that are already on the hw queue complete normally, as
+> >> +     * opposed to the drm_sched_stop() path used for handling
+> >> +     * faulting/timed-out jobs.  We can't really cancel any jobs
+> >> +     * already on the hw queue without racing with the GPU.
+> >> +     */
+> >> +    for (i =3D 0; i < gpu->nr_rings; i++) {
+> >> +            struct drm_gpu_scheduler *sched =3D &gpu->rb[i]->sched;
+> >> +            kthread_park(sched->thread);
+> > Shouldn't we have some proper interfaces for this?
 >
-> if (!str)
->         return -ENOMEM;
->
-> > +             if (copy_from_user(str, u64_to_user_ptr(value), len)) {
-> > +                     kfree(str);
-> > +                     return -EFAULT;
-> > +             }
-> > +
-> > +             /* Ensure string is null terminated: */
-> > +             str[len] = '\0';
-> > +
-> > +             if (param == MSM_PARAM_COMM) {
-> > +                     paramp = &ctx->comm;
-> > +             } else {
-> > +                     paramp = &ctx->cmdline;
-> > +             }
-> > +
-> > +             kfree(*paramp);
-> > +             *paramp = str;
-> > +
-> > +             return 0;
-> > +     }
-> >       case MSM_PARAM_SYSPROF:
-> >               if (!capable(CAP_SYS_ADMIN))
-> >                       return -EPERM;
-> > diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> > index 4ec62b601adc..68f3f8ade76d 100644
-> > --- a/drivers/gpu/drm/msm/msm_gpu.c
-> > +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> > @@ -364,14 +364,21 @@ static void retire_submits(struct msm_gpu *gpu);
-> >
-> >  static void get_comm_cmdline(struct msm_gem_submit *submit, char **comm, char **cmd)
-> >  {
-> > +     struct msm_file_private *ctx = submit->queue->ctx;
-> >       struct task_struct *task;
-> >
-> > +     *comm = kstrdup(ctx->comm, GFP_KERNEL);
-> > +     *cmd  = kstrdup(ctx->cmdline, GFP_KERNEL);
-> > +
-> >       task = get_pid_task(submit->pid, PIDTYPE_PID);
-> >       if (!task)
-> >               return;
-> >
-> > -     *comm = kstrdup(task->comm, GFP_KERNEL);
-> > -     *cmd = kstrdup_quotable_cmdline(task, GFP_KERNEL);
-> > +     if (!*comm)
-> > +             *comm = kstrdup(task->comm, GFP_KERNEL);
->
-> What?
->
-> If the first allocation failed, then this one is going to fail as well.
-> Just return -ENOMEM.  Or maybe this is meant to be checking for an empty
-> string?
+> If I'm not completely mistaken we already should have one, yes.
 
-fwiw, if ctx->comm is NULL, the kstrdup() will return NULL, so this
-isn't intended to deal with OoM, but the case that comm and/or cmdline
-is not overridden.
+drm_sched_stop() was my first thought, but it carries extra baggage.
+Really I *just* want to park the kthread.
+
+Note that amdgpu does (for afaict different reasons) park the kthread
+directly as well.
+
+> > Also I'm kinda wondering how other drivers do this, feels like we shoul=
+d have a standard
+> > way.
+
+As far as other drivers, it seems like they largely ignore it.  I
+suspect other drivers also have problems in this area.
+
+Fwiw, I have a piglit test to try to exercise this path if you want to
+try it on other drivers.. might need some futzing around to make sure
+enough work is queued up that there is some on hw ring and some queued
+up in the scheduler when you try to suspend.
+
+https://gitlab.freedesktop.org/mesa/piglit/-/merge_requests/643
+
+> >
+> > Finally not flushing out all in-flight requests sounds a bit like a bad
+> > idea for system suspend/resume since that's also the hibernation path, =
+and
+> > that would mean your shrinker/page reclaim stops working. At least in f=
+ull
+> > generality. Which ain't good for hibernation.
+>
+> Completely agree, that looks like an incorrect workaround to me.
+>
+> During suspend all userspace applications should be frozen and all f
+> their hardware activity flushed out and waited for completion.
+>
+> I do remember that our internal guys came up with pretty much the same
+> idea and it sounded broken to me back then as well.
+
+userspace frozen !=3D kthread frozen .. that is what this patch is
+trying to address, so we aren't racing between shutting down the hw
+and the scheduler shoveling more jobs at us.
 
 BR,
 -R
 
->
-> > +
-> > +     if (!*cmd)
-> > +             *cmd = kstrdup_quotable_cmdline(task, GFP_KERNEL);
->
-> Same.
+> Regards,
+> Christian.
 >
 > >
-> >       put_task_struct(task);
-> >  }
->
-> regards,
-> dan carpenter
+> > Adding Christian and Andrey.
+> > -Daniel
+> >
+> >> +    }
+> >> +}
+> >> +
+> >> +static void resume_scheduler(struct msm_gpu *gpu)
+> >> +{
+> >> +    int i;
+> >> +
+> >> +    for (i =3D 0; i < gpu->nr_rings; i++) {
+> >> +            struct drm_gpu_scheduler *sched =3D &gpu->rb[i]->sched;
+> >> +            kthread_unpark(sched->thread);
+> >> +    }
+> >> +}
+> >> +
+> >> +static int adreno_system_suspend(struct device *dev)
+> >> +{
+> >> +    struct msm_gpu *gpu =3D dev_to_gpu(dev);
+> >> +    int remaining, ret;
+> >> +
+> >> +    suspend_scheduler(gpu);
+> >>
+> >>      remaining =3D wait_event_timeout(gpu->retire_event,
+> >>                                     active_submits(gpu) =3D=3D 0,
+> >>                                     msecs_to_jiffies(1000));
+> >>      if (remaining =3D=3D 0) {
+> >>              dev_err(dev, "Timeout waiting for GPU to suspend\n");
+> >> -            return -EBUSY;
+> >> +            ret =3D -EBUSY;
+> >> +            goto out;
+> >>      }
+> >>
+> >> -    return gpu->funcs->pm_suspend(gpu);
+> >> +    ret =3D pm_runtime_force_suspend(dev);
+> >> +out:
+> >> +    if (ret)
+> >> +            resume_scheduler(gpu);
+> >> +
+> >> +    return ret;
+> >>   }
+> >> +
+> >> +static int adreno_system_resume(struct device *dev)
+> >> +{
+> >> +    resume_scheduler(dev_to_gpu(dev));
+> >> +    return pm_runtime_force_resume(dev);
+> >> +}
+> >> +
+> >>   #endif
+> >>
+> >>   static const struct dev_pm_ops adreno_pm_ops =3D {
+> >> -    SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend, pm_runtime_forc=
+e_resume)
+> >> +    SET_SYSTEM_SLEEP_PM_OPS(adreno_system_suspend, adreno_system_resu=
+me)
+> >>      SET_RUNTIME_PM_OPS(adreno_runtime_suspend, adreno_runtime_resume,=
+ NULL)
+> >>   };
+> >>
+> >> --
+> >> 2.35.1
+> >>
 >
