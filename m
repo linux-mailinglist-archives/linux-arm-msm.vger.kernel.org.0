@@ -2,141 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 719574DCBA2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Mar 2022 17:45:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 331C54DCBB3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Mar 2022 17:51:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236148AbiCQQqZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Mar 2022 12:46:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42482 "EHLO
+        id S234572AbiCQQw3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Mar 2022 12:52:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234572AbiCQQqY (ORCPT
+        with ESMTP id S232196AbiCQQw2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Mar 2022 12:46:24 -0400
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2057.outbound.protection.outlook.com [40.107.244.57])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B814C1817BB;
-        Thu, 17 Mar 2022 09:45:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=gDEBx6stqSqcN2FBFfEwwLinMz3XiWveaFQxGaF/tBEn7/4qeP9aPuz6bEyQNLcso4ewNBjw9vz7JTh5xmep1VrGvO20cbtm/zEWRFbFrWmiy8PkzVIW4oGHqNUptevKubIvURKLyRtJcioK1+/G3lRcuVoKxAAejMxLsk9Ibu9ogGLhhaKO8H9aa8spvInCeDyJR6MSVoFlznR816voGBVOjQkk8/x1NhbCm88pMNXUmYCSg2UeNFkOxFd1Ai9PHT6WZx/PYUYMi4Cv5IYtujG8coWZ03nchVLGQIWvDE/Aa5ooUH+rTUO/BsyFgyoVkHBn9LKFrUF/X092fX6WwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3nmcPUWwUrmMuVWrEX+kmp9aIiHuNs0vZz0RfM36qeQ=;
- b=j/B0/4J6b5LLkEGPhXtM364U9Jfgteo0M+gssA7ZIBk0N916vjcZMY4M9aO5BlfDtTbIGnEXubpUhBkeKvyKScI3laKUB3copKtaF1LRg9SzceewYvbwyje0Di89mdT0AgEEiVCR70NhrS6adBOnhf25uDwZs2r3zVyIkXZENihT+XM8smjw3lkdlFrAKpC5hFRiHiJsFDO3yFNEIa5r1aV64DKs96EZXTGmnYsPxpWE9DR87aAOwp60sbijBTwu0sw3SqatBmf86ppygKBZ3jqI1ivvD9ve9iYc5n7P8EJp5pQM0JV0DChO4Pe4Z2/GhaeHoKeHkU4v3PGHSNNtDw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3nmcPUWwUrmMuVWrEX+kmp9aIiHuNs0vZz0RfM36qeQ=;
- b=etuZuG5mQo1Z/dqyFCOIvMe0Zn0r5zqS8UN1ISOBPpf59akas9MURFceZcbLGBNke9EfjqDVj1c9Ixk3WpLi7o79ARcsdEvyeDg+5DVwpTOLliFoFz4/QHg1CcqeK/6uLIvpZHJS9GwLbCUStd2DfPS9LRc+hmLpeWix6vIp3Bw=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from BN8PR12MB3587.namprd12.prod.outlook.com (2603:10b6:408:43::13)
- by BL1PR12MB5969.namprd12.prod.outlook.com (2603:10b6:208:398::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5081.15; Thu, 17 Mar
- 2022 16:45:05 +0000
-Received: from BN8PR12MB3587.namprd12.prod.outlook.com
- ([fe80::404f:1fc8:9f4c:f185]) by BN8PR12MB3587.namprd12.prod.outlook.com
- ([fe80::404f:1fc8:9f4c:f185%6]) with mapi id 15.20.5081.015; Thu, 17 Mar 2022
- 16:45:05 +0000
-Message-ID: <915537e2-ac5b-ab0e-3697-2b16a9ec8f91@amd.com>
-Date:   Thu, 17 Mar 2022 17:44:57 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH 2/3] drm/msm/gpu: Park scheduler threads for system
- suspend
-Content-Language: en-US
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Andrey Grodzovsky <andrey.grodzovsky@amd.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Thu, 17 Mar 2022 12:52:28 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9BEC20A959;
+        Thu, 17 Mar 2022 09:51:08 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id kx13-20020a17090b228d00b001c6715c9847so3736292pjb.1;
+        Thu, 17 Mar 2022 09:51:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1fhGdDZ+4+A9O0kCAE2qwkKzIiiq6BxVXVjKbXoOSjc=;
+        b=ac9lDNWQnaCjB8ARNToKqWJDqJP5c28Oek7OnIM8tObf04cglsVkYnXBmiuN9c3Vv5
+         2NYJaoYf5XGUKw3PSYK+DyxInZZKD+1OAcKuFi5M5X8gN4eXpwEBM/lXs/2jp4AB3HtV
+         Op8GJqf+gOusx4Twv2NDLrsanY7dvJieFhLKej2mwDe8ynGiPDWcxYkH8fIoFoeHSzDD
+         S3QJ4T2e0YrbaBaapqQuGQ2R+jZ3nxjWphDWla4JwCtJCimnu3watw7KvWCSxfPq8yw1
+         pN1Efdd8hY6wHe2SlJHqkKgy1i+D5xu9uPDhn10kskC5Oix83cLBVBFyURLBiUmXw8kg
+         OJPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1fhGdDZ+4+A9O0kCAE2qwkKzIiiq6BxVXVjKbXoOSjc=;
+        b=YPuKVmZm5Af6Gmzn53K5gggdKEK7JA4qWxu1GBI4p40WRCsWWoW+wLAT+NtJZnummY
+         jz2yNQ58jn9ycy01iDjWnfLtY9SSoMU08X7zbiar5CHp4LmqVNNLYRzVJYEm5c4MuFq+
+         a2GC0se8dBU5N6DOCg5El5PnJVqK9cTNqmS7cfWos2HR5TysoRJINF1AUqbT4AG9hXEr
+         xrfGyeLRQYojqzO8H9iCdXDZG6Yt7XWOOZRDVBGuTMgNW0uZ8IvoVJr41/fopiQto4Pq
+         bJuLSlt/d7QVhBY9c6MvUyYtu/QZN6bG8N1dNW9D+Vh2t6T6+fyyB8e8l7/NR79k934L
+         PZzg==
+X-Gm-Message-State: AOAM530HXYH9uR7qmaduymxiMEPIwn9gfV9eRhvMZd629U0hJ0CBAgbT
+        gB43C//P3/5SpS/W9yFMA74=
+X-Google-Smtp-Source: ABdhPJwOV8GUTP9XpL07YdxSy7tQQ35mfNlI37jPr60/Ls8AYizX9BfbQrjuvdQDSL4LF/zStG7h0w==
+X-Received: by 2002:a17:90b:1d8d:b0:1c4:ba77:3e29 with SMTP id pf13-20020a17090b1d8d00b001c4ba773e29mr6509256pjb.206.1647535868296;
+        Thu, 17 Mar 2022 09:51:08 -0700 (PDT)
+Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
+        by smtp.gmail.com with ESMTPSA id d19-20020a056a00199300b004f7b7bb0733sm7071888pfl.60.2022.03.17.09.51.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Mar 2022 09:51:07 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Dan Carpenter <dan.carpenter@oracle.com>,
         Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
         Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20220310234611.424743-1-robdclark@gmail.com>
- <20220310234611.424743-3-robdclark@gmail.com>
- <YjMGac4Hnjmg1wE8@phenom.ffwll.local>
- <3945551d-47d2-1974-f637-1dbc61e14702@amd.com>
- <CAF6AEGv36V8bLoDn5O1SW3iTUtzd3O1XeuT5gJxyLMxd1E-o3Q@mail.gmail.com>
- <865abcff-9f52-dca4-df38-b11189c739ff@amd.com>
- <CAF6AEGuoBeYoMTR6-KM9xGZ05XSSnSJWMDciawczi7qtiLN9Vw@mail.gmail.com>
-From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
-In-Reply-To: <CAF6AEGuoBeYoMTR6-KM9xGZ05XSSnSJWMDciawczi7qtiLN9Vw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: AS8PR04CA0025.eurprd04.prod.outlook.com
- (2603:10a6:20b:310::30) To BN8PR12MB3587.namprd12.prod.outlook.com
- (2603:10b6:408:43::13)
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Emma Anholt <emma@anholt.net>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        linux-kernel@vger.kernel.org (open list),
+        Vladimir Lypak <vladimir.lypak@gmail.com>
+Subject: [PATCH v2 0/3] drm/msm: Add comm/cmdline override
+Date:   Thu, 17 Mar 2022 09:51:37 -0700
+Message-Id: <20220317165144.222101-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 633c378c-9145-43b9-88a4-08da08357d23
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5969:EE_
-X-Microsoft-Antispam-PRVS: <BL1PR12MB596954F0D8F0BFFFBC8FC6BE83129@BL1PR12MB5969.namprd12.prod.outlook.com>
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 6vBQlNSUwXksJlYEcPb2Rgzz0dU+MvbV7m6EcDWJh6Ls+/v6XUDUPG1mvz2ELazCgGF1DEInnLUHkMQPaYxfrK7h0RYS7c2Vp9TzarR6DNBynxcCVF4yU2S3cuWjsFj8T1DKEvJfQyFcBVU4EvfDIb6dZRcjM5NIqOvc/GQISRtZHUWPWDxnCdLm21Hom/TWfJSXjr14nBZ+WeGSUpNNh6Ib18u4vvU/wJk9B80bq7FsZyoXH46kJyOEmuKgEcOcsOOXnQb5zVBFLw56UJJokXAlRQIwygyrQbyCRSET6OxDz/cHVOjTRIfLR+sz8Ihs1DrR7KggSLTwQFUgVoMhW+b5PJCpxWRJT7wcQ54IU8JNQWOsQo2jK2o/KYL4drAGsZsQoaupdn4AsX8pP6wlCLmxBSYGdKE0J5pWYQQrgu4twOvqfFiBZgRUAy8UUfTjZqOK1n2iA/8TuxjWlJAZZFpRftyK4YCKLc7WPF9GbdVmtD1EMz/cOhAeRoojeTBXAk/QspGwPmBhckK86eVupi1y+gGkPyjaxcCjqelZe2/jXy4KtfN0v1kDSp09U4b/K5XsHBpyrD/kl4pk9ZH3Uy9MTk8N2jboCi+mvz+00p4dTsvTfL0ooF/RdN/XK7wA4QqT9Qbdmtyegj9Kt4LsC5sxo9WaJdaEHkIlPa6MDK+Ai08FSicq0Kt445R01rl97h6RimCVp7dA5bbEQzhvWXdSftZF7BLW3+6Bll3Gr4EOawuOfAOdPCLyHs5ogel9
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3587.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(2906002)(86362001)(31696002)(38100700002)(6916009)(316002)(53546011)(6506007)(6512007)(6666004)(2616005)(186003)(4326008)(6486002)(508600001)(54906003)(66574015)(5660300002)(8676002)(8936002)(15650500001)(66476007)(7416002)(66946007)(66556008)(83380400001)(31686004)(36756003)(43740500002)(45980500001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SUZTMzQ4NDhtRVREUmNSVmVCUVVza2o5UWVVeW1vQmhXdE9jQnpNV05wYVph?=
- =?utf-8?B?ejQvNSs3RkJtR0NmUitQb0ZYWitjQ0FFNlFQVFhOemVCQ1RzVm01QUJxWnlm?=
- =?utf-8?B?UkhsYy92RjNwY29DNmRjR2RpOHdkalhyWCsxeGlabnJ3dEZxWlV4M0dZNGhh?=
- =?utf-8?B?Z29ITTVwYmtLNkN3NE1QL2J6OC8vR09XN0I2cmlPOXZlVFp5SzUzeTZsZkhm?=
- =?utf-8?B?SGNQcmQ0QW5Bd0ZxMHo0L2xUeHJRRnJmTzRWTEFOUHE3a2wrSUZTdHVxL3Ax?=
- =?utf-8?B?OFFtWTd1MEJ2OFIvNDdtb3N5MkVRNEk5UXljSXJIQU1VV3dCMVF6THZXMGt2?=
- =?utf-8?B?RU54VHBYUzZxNUdEZkJqNkk2UkZOdjR2K01Na0FJQW9hWUpzVThLZE5wSCtW?=
- =?utf-8?B?VVNiSXJNS2V4ZklaNHQ0MHZ6RlhJZDZQS1U2Z09BT3BmTnZGaC9kNyt4d3k2?=
- =?utf-8?B?NFFHTEhKRnlEV3hZb0V4dWRpNCs3djVYcmlGSzNubm5QN0hJK01Lc3RZZkFs?=
- =?utf-8?B?T0VHYU9YOWZXL3FFT3hYZ1RiK0dSVGRXclVZcWc0RWV5eG1RblkyeTJCWVoy?=
- =?utf-8?B?bmxZc3RjWnlhUFF0SlQ3bms2YVpPcVVRUkRJcFZuMHZ3VklESjdJV3F5U1hk?=
- =?utf-8?B?em1pWmNnaHFINnc3anBzL3p3YU1CU2IrMURpTklMSzRZckt4SC94SXpzdUcr?=
- =?utf-8?B?ZGlvRlorakQrbGw1cUpOSWZhMWp6RmRHNXpLbFhEQUlWVXVkWVJFdjZiSFhT?=
- =?utf-8?B?NlV5aXdrVjRLWWNHOTdETTdKWjAyMVFiUnc2R0J1aEJCZUpzTFBqNTN2Wklk?=
- =?utf-8?B?YUxLRGtRRlV0S1FDeVVlaTB6WWpiNDJYeFJOVld5V0U4WXZuM2ZRR1I1cTA2?=
- =?utf-8?B?TjNCZXNrVHljZDRHM1VOUDNsVnMzVUFINzhwT0VPQUNVYXJhajllMmhRZlRq?=
- =?utf-8?B?UzZlR2xmbjVVWlJoenhFNERRcUlVSVZIZkY3ajBxYWpIZ1o5UXZCaUxMaDhZ?=
- =?utf-8?B?ZlorMC8veVNkUHlIamNYSVJDM095eVFKODhMb3dNZTNZUnJDbE9PUnJmb0Z4?=
- =?utf-8?B?aldzSVJwYUFZbDNOYStoV3NrTjRyRjRMc1lKVjV1blZQVWdmOVhLQ040cVpz?=
- =?utf-8?B?NXB1T0Z1T215aDFJeUo5VnZIRjZvaW1CNldId0hlY2JwR1NZY0RjL05wODJu?=
- =?utf-8?B?ZkNaaG1pcVB3aWxVV200cVpQb2p4bGlLaVVmYU1oTGg5VTF1Z1BYa25NbEpw?=
- =?utf-8?B?OFY4OTMvd05mVDdXWHlaUDZ3TjZ2OUsrTG41L1pQTEhoZjdaLzZGTFlhUGVt?=
- =?utf-8?B?eC9PSzVsazhraXEvaGFvRnp4bGxNSXIxZXQxUDlRZzhxQldSVWdaTjE1bW96?=
- =?utf-8?B?N09wY3lpS3VqVEMxOWdKQW11OHdLVVFKMWNpT0hSRFZic3BUdUhUa1JvUlRD?=
- =?utf-8?B?alNDMkZHLzBvRmFqUjJJWDhMN1FIeWI2djVMVkxRZERMeHY2RllVbnlMTU40?=
- =?utf-8?B?OEhYSjlhLzBiMTkvMDJIV3kzbnB1Z3ZpdkpkMTRPR3hCbHF3VU1zVTZ2c3h1?=
- =?utf-8?B?SVNtRmxGZEIyVXdsTUwwUGZNSGsyUXoyUC9OZytETlZaWFNlK2hNa1ZMRkVh?=
- =?utf-8?B?d214enM0QUNPSWZtbEIxOSsyUkRoUVZ4MWlJRlBhMVBoSXM1cm8wOWc0NCs1?=
- =?utf-8?B?b2dMN08zWUlxM0FRVEtTSjJLTjRpSWVkLy9sekQvZTRlY1pScTFjMzdFRGRD?=
- =?utf-8?B?L2dXSXMxOVpsc0U2dXdYdUwyeGFOVDNBcUVrRGtKSTBtVHp1MzRncEhZL1E5?=
- =?utf-8?B?Skx0dU5tazdTWHh6VGNYR25XanJnbHZOL3dMeXhQVjhhUXBNSWwvNGk0dmVi?=
- =?utf-8?B?MC9uSkh4WmVSc1JjNlJJeHhsVzE0WlVBWll2V3FYN3RvVmFPMzZ3YThaREps?=
- =?utf-8?B?UWJGODNOTGNtdTJlRzZ3TUkyYXh4WDBTY2Nlc2g0R0Y3VXo1Nit2MGxDVnRw?=
- =?utf-8?B?MlRjRXZEeWJ6MlVCeXNiQTJRYnd3WU9ZeVV3aUlneHl4UitKMFVGdkJzVlU4?=
- =?utf-8?Q?Fxi9c2?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 633c378c-9145-43b9-88a4-08da08357d23
-X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3587.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Mar 2022 16:45:05.3834
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: +iac8RW+dFk+RDiRpBz4MkAKSmv+OIHGywVruxoH0W00SIV1kl9/CaSi9mNdEXg/
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5969
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -144,55 +78,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 17.03.22 um 17:18 schrieb Rob Clark:
-> On Thu, Mar 17, 2022 at 9:04 AM Christian König
-> <christian.koenig@amd.com> wrote:
->> Am 17.03.22 um 16:10 schrieb Rob Clark:
->>> [SNIP]
->>> userspace frozen != kthread frozen .. that is what this patch is
->>> trying to address, so we aren't racing between shutting down the hw
->>> and the scheduler shoveling more jobs at us.
->> Well exactly that's the problem. The scheduler is supposed to shoveling
->> more jobs at us until it is empty.
->>
->> Thinking more about it we will then keep some dma_fence instance
->> unsignaled and that is and extremely bad idea since it can lead to
->> deadlocks during suspend.
-> Hmm, perhaps that is true if you need to migrate things out of vram?
-> It is at least not a problem when vram is not involved.
+From: Rob Clark <robdclark@chromium.org>
 
-No, it's much wider than that.
+Add a way to override comm/cmdline per-drm_file.  This is useful for
+VM scenarios where the host process is just a proxy for the actual
+guest process.
 
-See what can happen is that the memory management shrinkers want to wait 
-for a dma_fence during suspend.
+Rob Clark (3):
+  drm/msm: Add support for pointer params
+  drm/msm: Split out helper to get comm/cmdline
+  drm/msm: Add a way to override processes comm/cmdline
 
-And if you stop the scheduler they will just wait forever.
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 49 ++++++++++++++++++++++++-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h |  4 +-
+ drivers/gpu/drm/msm/msm_drv.c           |  8 ++--
+ drivers/gpu/drm/msm/msm_gpu.c           | 40 ++++++++++++--------
+ drivers/gpu/drm/msm/msm_gpu.h           | 10 ++++-
+ drivers/gpu/drm/msm/msm_rd.c            |  5 ++-
+ drivers/gpu/drm/msm/msm_submitqueue.c   |  2 +
+ include/uapi/drm/msm_drm.h              |  4 ++
+ 8 files changed, 94 insertions(+), 28 deletions(-)
 
-What you need to do instead is to drain the scheduler, e.g. call 
-drm_sched_entity_flush() with a proper timeout for each entity you have 
-created.
-
-Regards,
-Christian.
-
->
->> So this patch here is an absolute clear NAK from my side. If amdgpu is
->> doing something similar that is a severe bug and needs to be addressed
->> somehow.
-> I think amdgpu's use of kthread_park is not related to suspend, but
-> didn't look too closely.
->
-> And perhaps the solution for this problem is more complex in the case
-> of amdgpu, I'm not super familiar with the constraints there.  But I
-> think it is a fine solution for integrated GPUs.
->
-> BR,
-> -R
->
->> Regards,
->> Christian.
->>
->>> BR,
->>> -R
->>>
+-- 
+2.35.1
 
