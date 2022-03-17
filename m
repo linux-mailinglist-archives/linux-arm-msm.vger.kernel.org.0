@@ -2,65 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D70E4DCC10
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Mar 2022 18:08:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AEEA34DCC13
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Mar 2022 18:09:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236776AbiCQRKM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Mar 2022 13:10:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45642 "EHLO
+        id S236774AbiCQRKO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Mar 2022 13:10:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236767AbiCQRKL (ORCPT
+        with ESMTP id S236789AbiCQRKN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Mar 2022 13:10:11 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DD01C6EC3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 10:08:52 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id qx21so12031023ejb.13
+        Thu, 17 Mar 2022 13:10:13 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6595BC749A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 10:08:53 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id p15so12103537ejc.7
         for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 10:08:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=29J3WNDJWG+0dPTcDT5HM1sZZoS3aj5OjFfUpwYnn9I=;
-        b=lHIWpPHfEecJ2nKBKKKowWuaUA/jOW0RqB/VtVUwveFqAJLISEhF8orq4qPkY9ZDGd
-         dLu7MaZd6loBSNr8djqu0QERIhHvgQMsc2K1zr9G3/otkVzGqJKqnf5/9Ttol7fY5b3z
-         aO5tEe1TaUYT+uQSICj7yrn89uyGgps0qb+v8=
+        bh=0OHVo8Si2pL/zqDM1+3LTosz3MYUp1y06ZbKHncIh7c=;
+        b=a0p7sOuJHUCPeqilA5c5MzDViifY4iom9isQHjU3ezymzgQG5C9StJUJVIiuag8CKp
+         AJ0fSl22UWrwgX5R0lBv+xF8/tZGLhtzPg1oX5QwBUJ0V3wJdtdCUka2rkjc6rHyS4/m
+         ZPBRP+dx32GvswL/pbG0tIYQbsHVNcMoO60zs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=29J3WNDJWG+0dPTcDT5HM1sZZoS3aj5OjFfUpwYnn9I=;
-        b=hmbOpMzZzzAI8yB/h1nKhUKg/Bwtwt93NFl2o3bCSRiFoksjMed32A95Dy8OHNl2X+
-         mpne9bvNqe6d7H/k7wxqSP8ltdHCQUb3K2HTFCVyQ+2kxO9b3uWnxxhWtIc1vyGaKWkD
-         IjYVQCHnwYPrO408msH1OQgq1r3tw8dqU8rbYk3UrNkPf5LGrVqcJixHhLoocyrHppgo
-         uWOyaGsN1e6jxrH2agbWZgVZvJRIR3J2qn8mi+CsQLuLFQvJEWDJYEkl/NR+Fr5ZrQPi
-         oI790IZSKEvwh3+IC/Ee27LMt3Jwq1+ElWXWeJkYFTnld7WNaEEhGZsiPDSWtTPw8Hxk
-         dRdg==
-X-Gm-Message-State: AOAM533aOfTG3FX8lc1vXs+tWFF2f59CPfhbWhyHdQQ20FXZHvPyOhPm
-        FXn6ZNtFJkvE3masoZhb1jwE6TT0GIyvidms
-X-Google-Smtp-Source: ABdhPJwPTp7T7gc884jnFcvDpR1PQSj5YqFgI633sZGPAcW1aowyFz2r+YmI0QjVu9R6sEdhWvwvBA==
-X-Received: by 2002:a17:907:3f13:b0:6db:cf49:8871 with SMTP id hq19-20020a1709073f1300b006dbcf498871mr5361375ejc.766.1647536925480;
-        Thu, 17 Mar 2022 10:08:45 -0700 (PDT)
+        bh=0OHVo8Si2pL/zqDM1+3LTosz3MYUp1y06ZbKHncIh7c=;
+        b=nHrYBVaqZUvVLNbNAn4aGD7GqBeG768IgtTqkQ3LyPm+0hHEvda+l+bT8FAbaRrVEp
+         0T/QQS6tABtmmphKT0JuDfXG3oN8KFRcOsHnrBzby/e4vIp6eZR4miqp+MgdUZL62VhH
+         AmgK6Q5paKNh505nP4oaCavajnIQox5GGPFyzokhhBntfiz5qZ58yVNFabV5W0yGt5D3
+         3OYF5ZH7oi+Z0wnxDnmFq4snIX75eW3TSBfqYW8/p7d99l5nPqoZsJS2ZUMcNTFKhFdQ
+         bvJxZShgUdJEnx19I28Gk/dxiO5AbKE7R1ff5IOuHVp3p5rdSvAdyBxXtkXF6DBWYCrK
+         ZFZA==
+X-Gm-Message-State: AOAM532gNNR9iUc/Mc2NCn5kZSWFxejLEeZEogZ/mmsK/4DPOL+Ybzrm
+        2G+itr6LgApucsZwhwRJX+Fj/xBINPAqpzYk
+X-Google-Smtp-Source: ABdhPJwYF6cIuZS8xtgcPYgQAn+JD5AIV0SYhCeL8vVR9apn3ehgk9L6QsJCty4687BkLMRItUvygw==
+X-Received: by 2002:a17:906:5cb:b0:6cf:954:d84d with SMTP id t11-20020a17090605cb00b006cf0954d84dmr5537457ejt.560.1647536931336;
+        Thu, 17 Mar 2022 10:08:51 -0700 (PDT)
 Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com. [209.85.221.44])
-        by smtp.gmail.com with ESMTPSA id w6-20020a170906d20600b006ca00cb99e0sm2678689ejz.34.2022.03.17.10.08.43
+        by smtp.gmail.com with ESMTPSA id m13-20020a17090672cd00b006df86017b61sm2066641ejl.105.2022.03.17.10.08.49
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Mar 2022 10:08:44 -0700 (PDT)
-Received: by mail-wr1-f44.google.com with SMTP id r6so8273686wrr.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 10:08:43 -0700 (PDT)
-X-Received: by 2002:a5d:6f04:0:b0:203:ed96:8212 with SMTP id
- ay4-20020a5d6f04000000b00203ed968212mr2550648wrb.679.1647536922913; Thu, 17
- Mar 2022 10:08:42 -0700 (PDT)
+        Thu, 17 Mar 2022 10:08:49 -0700 (PDT)
+Received: by mail-wr1-f44.google.com with SMTP id p9so8218405wra.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 10:08:49 -0700 (PDT)
+X-Received: by 2002:a5d:5257:0:b0:1f0:1822:69ad with SMTP id
+ k23-20020a5d5257000000b001f0182269admr4935612wrc.342.1647536929122; Thu, 17
+ Mar 2022 10:08:49 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220316172814.v1.1.I2deda8f2cd6adfbb525a97d8fee008a8477b7b0e@changeid>
- <20220316172814.v1.2.Ib0fbb7e5218201c81a2d064ff13c9bc1b0863212@changeid>
-In-Reply-To: <20220316172814.v1.2.Ib0fbb7e5218201c81a2d064ff13c9bc1b0863212@changeid>
+ <20220316172814.v1.3.Iad21bd53f3ac14956b8dbbf3825fc7ab29abdf97@changeid>
+In-Reply-To: <20220316172814.v1.3.Iad21bd53f3ac14956b8dbbf3825fc7ab29abdf97@changeid>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 17 Mar 2022 10:08:28 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XxuQkWNkCRhFRDQ_7cuyCu0tf5cdHaFKsi3a7L8XNtgA@mail.gmail.com>
-Message-ID: <CAD=FV=XxuQkWNkCRhFRDQ_7cuyCu0tf5cdHaFKsi3a7L8XNtgA@mail.gmail.com>
-Subject: Re: [PATCH v1 2/4] arm64: dts: qcom: sc7280: Add 'piglin' to the
- crd-r3 compatible strings
+Date:   Thu, 17 Mar 2022 10:08:36 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=X37bA9mrzzvhgtFNN1VdCyHtWe2o57t2_DON6O0fprKQ@mail.gmail.com>
+Message-ID: <CAD=FV=X37bA9mrzzvhgtFNN1VdCyHtWe2o57t2_DON6O0fprKQ@mail.gmail.com>
+Subject: Re: [PATCH v1 3/4] arm64: dts: qcom: sc7280: herobrine: disable some
+ regulators by default
 To:     Matthias Kaehlcke <mka@chromium.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -85,19 +85,18 @@ Hi,
 
 On Wed, Mar 16, 2022 at 5:28 PM Matthias Kaehlcke <mka@chromium.org> wrote:
 >
-> With newer bootloader versions the crd-r3 (aka CRD 1.0 and 2.0) is
-> identified as a 'piglin' board (like the IDP2 board), instead of 'hoglin'
-> Add the compatible strings 'google,piglin-rev{3,4}'. The hoglin entries
-> are kept to make sure the board keeps booting with older bootloader
-> versions.
+> Not all herobrine boards have a world facing camera or a fingerprint
+> sensor, disable the regulators that feed these devices by default and
+> only enable them for the boards that use them.
 >
-> The compatible string 'google,piglin' (without revision information) is
-> still used by the IDP2 board, which is not expected to evolve further.
+> Similarly the audio configuration can vary between boards, not all
+> boards have the regulator pp3300_codec, disable it by default.
 >
 > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
 > ---
 >
->  arch/arm64/boot/dts/qcom/sc7280-crd-r3.dts | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+>  .../qcom/sc7280-herobrine-herobrine-r1.dts    | 30 +++++++++++++++++++
+>  .../arm64/boot/dts/qcom/sc7280-herobrine.dtsi |  6 ++++
+>  2 files changed, 36 insertions(+)
 
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
