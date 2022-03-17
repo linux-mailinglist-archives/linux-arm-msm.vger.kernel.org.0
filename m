@@ -2,162 +2,226 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D4864DC090
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Mar 2022 08:59:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 521BB4DC0E7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Mar 2022 09:22:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229484AbiCQIAo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Mar 2022 04:00:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56736 "EHLO
+        id S230093AbiCQIX0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Mar 2022 04:23:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbiCQIAn (ORCPT
+        with ESMTP id S229700AbiCQIXZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Mar 2022 04:00:43 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E28D13E3B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 00:59:27 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id bn33so6171323ljb.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 00:59:27 -0700 (PDT)
+        Thu, 17 Mar 2022 04:23:25 -0400
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF46B1C64A3;
+        Thu, 17 Mar 2022 01:22:07 -0700 (PDT)
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+        by mx0b-00069f02.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 22H3XW03006895;
+        Thu, 17 Mar 2022 08:21:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=corp-2021-07-09;
+ bh=wkoXgq4FgmplemcLAbi1y6MUK8J6fjNwq3PSOh3vrVo=;
+ b=SCntx/FAzVwlJnTg10xp/SXFBUU4pX4Nqq5PfEAT5rRAc7uoEIDuP1BRXERIwdic57jD
+ BYeAktfmAgwrMDngtfKUGI6OQeU8EKxb41bG+K9hsDpyDdsBB0LyWemn86FoACBNbALU
+ zFipgAA6+JdbOnRnJd7lkLdjY9+8ryUcUCPLKQuq2L/lKGgvTa2fI94gc4LsnlI1LVF9
+ h7pL0KaHn9h24MS8vy3E9fAj/gTryDW4SZKr+ZJXCORQyLP8Lo5ZIxfTy4WVi0YTFQok
+ x2iRLwhEbCmpEAjmLMPNXrPx8ThHmte/K7tf+DRAxCRamsOYiJuboBtqaWHPhuQaUVKh tg== 
+Received: from aserp3030.oracle.com ([141.146.126.71])
+        by mx0b-00069f02.pphosted.com with ESMTP id 3et52q0j48-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Thu, 17 Mar 2022 08:21:53 +0000
+Received: from pps.filterd (aserp3030.oracle.com [127.0.0.1])
+        by aserp3030.oracle.com (8.16.1.2/8.16.1.2) with SMTP id 22H8GrD3195093;
+        Thu, 17 Mar 2022 08:21:52 GMT
+Received: from nam10-mw2-obe.outbound.protection.outlook.com (mail-mw2nam10lp2109.outbound.protection.outlook.com [104.47.55.109])
+        by aserp3030.oracle.com with ESMTP id 3et64u1c0u-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Thu, 17 Mar 2022 08:21:51 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=G2hihkimXf/A6NI6/GF1mv0H/29tgAnDGD6Q/kbQARMZJuXF8utv/Vf2MGw+LgCkpExRLFziyI106J05p+pKgegbTK4eGlYBWmpCVWFLDDewKI32Hya3j4EezbYLMupRaHtfHN5D2BzH6wJyvgLOGYtTCbpEjXH32fPyG4iNM4vU93QEe6XXex5DIzfc6mV294m/R3FgopgUjZ4lblIBG2WwlErSj26HsdpJrO8O9Caa32DnS3IBotQrvXadRH3Rhh8ncsvbxFgar5jrnONWBrnjgDAm2AmtbvD8LVxVj5qCBr7OaCfplxqGDEH/0f/1u9SN1xRO6MWDkhQtq4eB4Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wkoXgq4FgmplemcLAbi1y6MUK8J6fjNwq3PSOh3vrVo=;
+ b=VD8e6s06F0Ak40hOGmiIshfmXyiS0mwob62y/fQAiE064gTyNbybB/dgePPN/HQkXpWoHDSNmINN9Da5Ff8uloioGkyDNJiyQwAHLAeXztKYQr5m3pE4aSuML2rq8kdFVzLcVGnpXWjgqUD3Q8LdeNWvz/wSTtgn25Sx1lgKxw23A1y9estZ7detpKh30Fwz8gnEMIYz4YOo/PpQcCAI9fyMZdWxiFJSHowdM1+t8EWvKahGR7b2bk2N2lJF70BCWXLowBwAk9Qz+5Xla1eYbpd97XhZCGuyIckt5GW2Z1MiQfToePu6zvmOJDiLjKrn2cRd1eJxPR1BBZqDLpNbRw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=OtyZ97/DtC02CCXZi3B8H4fv744GdMX0wPf5ZhQfoGw=;
-        b=ASh8N6BgDUXCvOh8AN4wyKRfTFW04iW4U3OSVJMOEUjJyMPGFkI98g8j16AoI9M9nM
-         iWfLeoT+I/vslJgVGwuMOKyY8oiq6AV/IHaU5/4icJoflilxJCVkcXB4Ky8+3BbS4xYq
-         HOiGv9ms03QVgqReZnxp7I6SyY5gwkbUh2QH6UOzposPYUO2ZnHj101WiPexFm2g3H89
-         nujY8Usz1R6ZJVeAXeTizg7qYjfI759cl2EJNVSO5hTK0HMKBemjH1R/LLwYlYKSYnC8
-         +NJGh16yw+pLaiEf+jOp1VGAdN9bAVlIrPtgwb36AUdMy6F/gDzwUVaeYCCFFXt0Jx9b
-         1r5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=OtyZ97/DtC02CCXZi3B8H4fv744GdMX0wPf5ZhQfoGw=;
-        b=3D8dcfb1lgDxBaqBbFJlxODRtGe8D8WoUn66B/ZO9tyU16J5AaU9XykDv8MIfRrgdl
-         PyIYk5eKxkVsuxQyonAsGTLT0jrCvF5wvUdh12o6OC46oWaopBef5o3ofGmU8s+NmQtv
-         UtC4wN7JQ4iGjOGHwbbDGAE/omDSVE10ex6mDEjJWeSQFIo6+NDrOjRLkCXy1p/acuRJ
-         CtwslAe/BuNqfZOLxzu7YAbPZcK6p7SSJBMVefrthPdyj4NE3CQG8X/QBJ43Gppn8M45
-         SsJxavFKjQo80G8mtO+3KwXJbt0AeHj4PkvcmD662jgijqwCDiGvg7l3GLcNjVSKta9X
-         Brjg==
-X-Gm-Message-State: AOAM5302+bZMrX/8Xz7joehwibTX4ZwdSvoxLylyrE3RNpt8ShW0Kn/o
-        2lqvIM/FlP2p8PhAGRNYNJy4ew==
-X-Google-Smtp-Source: ABdhPJxzuw0bC2ZnoSNV4sgesLiyJsLwE3cTtundL6ls6xWzn00PawGeLjUIj45+0jjam83e0Jd6GA==
-X-Received: by 2002:a2e:6e0d:0:b0:248:cd0:e154 with SMTP id j13-20020a2e6e0d000000b002480cd0e154mr2127040ljc.342.1647503965443;
-        Thu, 17 Mar 2022 00:59:25 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u12-20020a056512128c00b00446499f855dsm381195lfs.78.2022.03.17.00.59.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Mar 2022 00:59:24 -0700 (PDT)
-Message-ID: <e5aeab49-ab9d-682e-52e5-614a6aeba6de@linaro.org>
-Date:   Thu, 17 Mar 2022 10:59:24 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 00/25] drm/msm/dpu: wide planes support
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=wkoXgq4FgmplemcLAbi1y6MUK8J6fjNwq3PSOh3vrVo=;
+ b=glGe5+/DbK3vgu5t1qArvUvS8oYdHS2NV9VuLwhdPGoJNmL5JA8+zIO5fBAa09IFlFWpPWazIMYyKxR5xGiMqbfVCe9uGTW0LOLXVTOmEgnDSS+z3vG/XqdRLdnPmrAPUyp/xItuY3VgBtncdnP0klsWXTP7kJZnXekUbKojXT0=
+Received: from MWHPR1001MB2365.namprd10.prod.outlook.com
+ (2603:10b6:301:2d::28) by SJ0PR10MB4606.namprd10.prod.outlook.com
+ (2603:10b6:a03:2da::12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5081.15; Thu, 17 Mar
+ 2022 08:21:50 +0000
+Received: from MWHPR1001MB2365.namprd10.prod.outlook.com
+ ([fe80::2c3d:92b5:42b3:c1c5]) by MWHPR1001MB2365.namprd10.prod.outlook.com
+ ([fe80::2c3d:92b5:42b3:c1c5%4]) with mapi id 15.20.5081.017; Thu, 17 Mar 2022
+ 08:21:49 +0000
+Date:   Thu, 17 Mar 2022 11:21:21 +0300
+From:   Dan Carpenter <dan.carpenter@oracle.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-References: <20220209172520.3719906-1-dmitry.baryshkov@linaro.org>
- <9476aa45-1d41-20ed-7f2f-79719f246b50@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <9476aa45-1d41-20ed-7f2f-79719f246b50@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Emma Anholt <emma@anholt.net>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 3/3] drm/msm: Add a way to override processes comm/cmdline
+Message-ID: <20220317082121.GH1841@kadam>
+References: <20220317002950.193449-1-robdclark@gmail.com>
+ <20220317002950.193449-4-robdclark@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220317002950.193449-4-robdclark@gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-ClientProxiedBy: JNAP275CA0062.ZAFP275.PROD.OUTLOOK.COM (2603:1086:0:4f::17)
+ To MWHPR1001MB2365.namprd10.prod.outlook.com (2603:10b6:301:2d::28)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: b1a345d3-5a85-45c8-07e9-08da07ef2f37
+X-MS-TrafficTypeDiagnostic: SJ0PR10MB4606:EE_
+X-Microsoft-Antispam-PRVS: <SJ0PR10MB46066CE122CEA1C2BA253A218E129@SJ0PR10MB4606.namprd10.prod.outlook.com>
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: fscGJE4+61Ng9QUACXrnroDMdE2i5gbkcrzlrqVTBeV5jbjyYrKzKsTk45JwAt2c/TzsTyRs+HI77HtNvM8kxa5GHEMafySSjzOl+eNtSlNOHKCTKH33bSnGtmBNH0iBt4kmp6sKztIVEq+wcBhfGbrlvW8D7zFa5vwuHwiq2OSQltKCWmtVls8bFeVneinYbznlPJpIgE4ml6pX+0BwIj4qw7x3AoR3olfcwfOWgIqPPIoS2FRvYR5RHXLnbEKGXudljWlFQxYUk5K00qRC0p6ltCkiRsoUzEMkS7Jqc92eQBad3wM53LolBSZFaIjiRCEExv+MVWQb2cWFNKBme5sTni3z/w25SshcV6AzLfYGvPjHTZSRtjwZeuBzKKxToVpVVmVLslFq07p9Y353RA+kKuqp5CozUZ1BEbpK+303/EBPNHBuUi+MpxYML7dfPyzYkVL4CzwWNVHG5/jy3bsqGlaSu0KQhzTM1+oj0MlJt/4OL/1TuB5Trw+JlwQaMjRRQ0ZOdKSc/hIQq4SgRaRfZZcGLuKDfeQHBFhf4g3HdaTBv0qzMEEATrLkpztcSQ/ihV9hoSknjd7dA+i/06seOBEfro4VcSdB/6Qd8zYyp44V7TCG+3YT9eAM5bIlwTDWid+8cXRg24ma91b9UpLAtpoeQoxqhSqet/tWpppglp/hPTC2Y6mNy2kaGznxDwV8O24uH1NSTLN5t02KBGhsZXbDMFQlyLKpu3jrK2g=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MWHPR1001MB2365.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(7916004)(366004)(5660300002)(83380400001)(33716001)(44832011)(7416002)(2906002)(316002)(54906003)(6916009)(4326008)(8676002)(66476007)(66556008)(508600001)(66946007)(9686003)(186003)(6512007)(86362001)(6486002)(6666004)(38100700002)(38350700002)(6506007)(52116002)(33656002)(1076003)(26005)(8936002)(43043002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?t88ieubEVsywZNOgR51Fny20QwH2RbZcuMqIzktqJBqWdyTLIC2PBbBfQ+ps?=
+ =?us-ascii?Q?88r+xaTfQyNa7/wxnhS/+aTa9fXVvyXzun2CAubF/U4cQgTXClJqj51udBUj?=
+ =?us-ascii?Q?AK5mzmhiEQJH20t1W2f7Vii5EsAoi+MaB1gGd8nysKiEN+IfR+w/i9NaajIJ?=
+ =?us-ascii?Q?iMBgviZOw0T7Yk2VMi0fZABINtVaPX60F0+CEs2GtnIO4PWWDOc9FC+ETJcB?=
+ =?us-ascii?Q?gqsH+kpyg9B0wmVctMbETe5xPsP+kMX0nJr+p17cfJOexnP2nyswpWQBE9sq?=
+ =?us-ascii?Q?3m4kJ92DEpvXZhkt3bE8VuK3O5CnnwDTXEYU8GdEnvoy6mIFvGa9J2Ypb5cw?=
+ =?us-ascii?Q?2vGtz8vhC66Con8Y6bpntrXBzds+/PxazI66J5NRfsVS244FYcOmdKHSbWAf?=
+ =?us-ascii?Q?F6fVDmq1UtvgGK807PU026zs369WDD5mj05dn7Gw0Q+6eVJJ7xpBM3BChnO+?=
+ =?us-ascii?Q?V3Hn1QXC25eWb8U4P9/2ut82eyG/P6v1PHJx1DZaSLTYNkwORbpMREJiwE/C?=
+ =?us-ascii?Q?keTwI1vK85u6b7igj0F+lh7mBRnsNJVcRICzq6VD5zc6zCk/Yi7k9aOMz4vL?=
+ =?us-ascii?Q?h5K0O8nqlO4Uz3T1fpqq43wtcUOndxIb55DgxAhlWoKDBPwzB7ncwVEjEKjr?=
+ =?us-ascii?Q?8lgTxP6onfIsja+tmS9uOpFJV+M9Gr+EyUAv7unqiV9F+lELW+0Z2Zqf0683?=
+ =?us-ascii?Q?Q5sFmq1I9KC7toz38jM68tWvPt5PJZ0OBYv81IXThoZ4ffujJ4SVCZmillNk?=
+ =?us-ascii?Q?USWL+ueychJhC7iwUQEqaf0XBVzdA9tGirw6WlTqbhFl87UgixoQJI4rVLBk?=
+ =?us-ascii?Q?z7gz9N4I8cicoaXWxQjPTl9Pg2wN0Czfas2uCzIZ+rDfyKcysAe98UP4Kf9j?=
+ =?us-ascii?Q?lwMJ/8Yj4mAU+0vYkMBthL1GOA0QvSEsAmaAHL+AnZW6qhX9LuUBSFy4W4M/?=
+ =?us-ascii?Q?ieizGOs6MkX1OXdoauaYC2eYIT7iYs8ocF8i5y3S7ofeoBaceB8sD99zS61G?=
+ =?us-ascii?Q?lOrChAorhRVUQHi+ak7BGTrsdh37YCbKPU5/vn0tHAWMI4Du86m8MVGHBojw?=
+ =?us-ascii?Q?eOzToUn6uSat1RxykLSgIjJTJf+7OOFBVk6Et6OousGhzeRH4CpGSc2upXnB?=
+ =?us-ascii?Q?w3yDsPLai+p4aIwbIv1efQr7sKBbD8d4SIBDMvmoYdmHo5TQJrBoluaXiqIb?=
+ =?us-ascii?Q?k262xJU2MuoGRMqAyBgRbxQmFyuUjYYxmfa/7h8yvASzekvE8U3Q0LYvKv8r?=
+ =?us-ascii?Q?C+e9z3lcbECbnn9XDBMQfVWRX7EDBysY/y6ViCOZHUIxDFJw+CXHTLa9L5JJ?=
+ =?us-ascii?Q?2lfBA5lWIihMuVMJqpHdI7+IMe80znVC6LokD7fNYT23TKJsG8I4T/ezGnXi?=
+ =?us-ascii?Q?o8XSEVQ6xlYT6JjmDWYVnAfis4qfZyuJGeH3/5M4wWRp1rzbWap4Y6oCiGf2?=
+ =?us-ascii?Q?NceAlgQaSEXpWRL8LaTdCodM5JuOruzVT8xqVWJg94WseCtzLUllWw=3D=3D?=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b1a345d3-5a85-45c8-07e9-08da07ef2f37
+X-MS-Exchange-CrossTenant-AuthSource: MWHPR1001MB2365.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Mar 2022 08:21:49.8310
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: zSpO6nKSR4pBsXjljHsD0BIF3+NS2wHe6UNPvtObUS7phPlgxcFrOT22X8WHBmXsNSd5/LIsa2z/S+Vf5Y6mip5Pjcieqpngc9PW4GGlxMM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR10MB4606
+X-Proofpoint-Virus-Version: vendor=nai engine=6300 definitions=10288 signatures=693715
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 bulkscore=0 phishscore=0
+ suspectscore=0 mlxscore=0 adultscore=0 spamscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2202240000
+ definitions=main-2203170048
+X-Proofpoint-GUID: nkV2Y2rcSmoHSPtoya4wq9GFaj2EqKDD
+X-Proofpoint-ORIG-GUID: nkV2Y2rcSmoHSPtoya4wq9GFaj2EqKDD
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/03/2022 04:10, Abhinav Kumar wrote:
-> Hi Dmitry
-> 
-> I have reviewed the series , some patches completely , some of them 
-> especially the plane to sspp mapping is something i still need to check.
-> 
-> But I had one question on the design.
-> 
-> I thought we were going to have a boot param to control whether driver 
-> will internally use both rectangles for the layer so that in the future 
-> if compositors can do this splitting, we can use that instead of driver 
-> doing it ( keep boot param disabled ? ).
+On Wed, Mar 16, 2022 at 05:29:45PM -0700, Rob Clark wrote:
+>  	switch (param) {
+> +	case MSM_PARAM_COMM:
+> +	case MSM_PARAM_CMDLINE: {
+> +		char *str, **paramp;
+> +
+> +		str = kmalloc(len + 1, GFP_KERNEL);
 
-No need to for this patch series. If your composer allocates smaller 
-planes, then the driver won't do a thing. For the proper multirect there 
-will be a boot param (at least initially) and then you can work on the 
-custom properties, etc.
+if (!str)
+	return -ENOMEM;
 
-> 
-> Thanks
-> 
-> Abhinav
-> 
-> On 2/9/2022 9:24 AM, Dmitry Baryshkov wrote:
->> It took me a way longer to finish than I expected. And more patches that
->> I initially hoped. This patchset brings in multirect usage to support
->> using two SSPP rectangles for a single plane. Virtual planes support is
->> omitted from this pull request, it will come later.
->>
->> Dmitry Baryshkov (25):
->>    drm/msm/dpu: rip out master planes support
->>    drm/msm/dpu: do not limit the zpos property
->>    drm/msm/dpu: add support for SSPP allocation to RM
->>    drm/msm/dpu: move SSPP debugfs creation to dpu_kms.c
->>    drm/msm/dpu: move pipe_hw to dpu_plane_state
->>    drm/msm/dpu: inline dpu_plane_get_ctl_flush
->>    drm/msm/dpu: drop dpu_plane_pipe function
->>    drm/msm/dpu: get rid of cached flush_mask
->>    drm/msm/dpu: dpu_crtc_blend_setup: split mixer and ctl logic
->>    drm/msm/dpu: introduce struct dpu_sw_pipe
->>    drm/msm/dpu: use dpu_sw_pipe for dpu_hw_sspp callbacks
->>    drm/msm/dpu: inline _dpu_plane_set_scanout
->>    drm/msm/dpu: pass dpu_format to _dpu_hw_sspp_setup_scaler3()
->>    drm/msm/dpu: move stride programming to
->>      dpu_hw_sspp_setup_sourceaddress
->>    drm/msm/dpu: remove dpu_hw_fmt_layout from struct dpu_hw_pipe_cfg
->>    drm/msm/dpu: drop EAGAIN check from dpu_format_populate_layout
->>    drm/msm/dpu: drop src_split and multirect check from
->>      dpu_crtc_atomic_check
->>    drm/msm/dpu: move the rest of plane checks to dpu_plane_atomic_check()
->>    drm/msm/dpu: don't use unsupported blend stages
->>    drm/msm/dpu: add dpu_hw_pipe_cfg to dpu_plane_state
->>    drm/msm/dpu: simplify dpu_plane_validate_src()
->>    drm/msm/dpu: rewrite plane's QoS-related functions to take dpu_sw_pipe
->>      and dpu_format
->>    drm/msm/dpu: rework dpu_plane_atomic_check() and
->>      dpu_plane_sspp_atomic_update()
->>    drm/msm/dpu: populate SmartDMA features in hw catalog
->>    drm/msm/dpu: add support for wide planes
->>
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      | 355 +++-----
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h      |   1 -
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c   |   4 -
->>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  10 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c    |  78 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h    |  35 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   | 136 +--
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   |  88 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  21 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |   1 +
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     | 813 +++++++++---------
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h     |  42 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        |  81 ++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h        |   6 +
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h     |  19 +-
->>   15 files changed, 827 insertions(+), 863 deletions(-)
->>
+> +		if (copy_from_user(str, u64_to_user_ptr(value), len)) {
+> +			kfree(str);
+> +			return -EFAULT;
+> +		}
+> +
+> +		/* Ensure string is null terminated: */
+> +		str[len] = '\0';
+> +
+> +		if (param == MSM_PARAM_COMM) {
+> +			paramp = &ctx->comm;
+> +		} else {
+> +			paramp = &ctx->cmdline;
+> +		}
+> +
+> +		kfree(*paramp);
+> +		*paramp = str;
+> +
+> +		return 0;
+> +	}
+>  	case MSM_PARAM_SYSPROF:
+>  		if (!capable(CAP_SYS_ADMIN))
+>  			return -EPERM;
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> index 4ec62b601adc..68f3f8ade76d 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -364,14 +364,21 @@ static void retire_submits(struct msm_gpu *gpu);
+>  
+>  static void get_comm_cmdline(struct msm_gem_submit *submit, char **comm, char **cmd)
+>  {
+> +	struct msm_file_private *ctx = submit->queue->ctx;
+>  	struct task_struct *task;
+>  
+> +	*comm = kstrdup(ctx->comm, GFP_KERNEL);
+> +	*cmd  = kstrdup(ctx->cmdline, GFP_KERNEL);
+> +
+>  	task = get_pid_task(submit->pid, PIDTYPE_PID);
+>  	if (!task)
+>  		return;
+>  
+> -	*comm = kstrdup(task->comm, GFP_KERNEL);
+> -	*cmd = kstrdup_quotable_cmdline(task, GFP_KERNEL);
+> +	if (!*comm)
+> +		*comm = kstrdup(task->comm, GFP_KERNEL);
 
+What?
 
--- 
-With best wishes
-Dmitry
+If the first allocation failed, then this one is going to fail as well.
+Just return -ENOMEM.  Or maybe this is meant to be checking for an empty
+string?
+
+> +
+> +	if (!*cmd)
+> +		*cmd = kstrdup_quotable_cmdline(task, GFP_KERNEL);
+
+Same.
+
+>  
+>  	put_task_struct(task);
+>  }
+
+regards,
+dan carpenter
+
