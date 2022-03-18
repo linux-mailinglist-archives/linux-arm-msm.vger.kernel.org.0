@@ -2,104 +2,219 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CEC564DE308
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Mar 2022 21:58:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB4EA4DE318
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Mar 2022 21:59:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240938AbiCRU70 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Mar 2022 16:59:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57568 "EHLO
+        id S240979AbiCRVAc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Mar 2022 17:00:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240945AbiCRU7Y (ORCPT
+        with ESMTP id S240966AbiCRVA3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Mar 2022 16:59:24 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 355CD1AD96;
-        Fri, 18 Mar 2022 13:58:02 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A944660EEB;
-        Fri, 18 Mar 2022 20:58:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C18C340E8;
-        Fri, 18 Mar 2022 20:57:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1647637081;
-        bh=3tZLC4OI4DmCNMJnIOo7RYTAi7LWN2qliV+IISVObGI=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=LGPaCodP8eS/7klwaU8q0zEpjY3D6qASKNddY0k53Fyi4Gg4tbqZ/blZgzLUpyGIX
-         CwSf3M3qU5kWxh3Kkw4ca1kZBPXA9mnE2oUsnUBlU/YDrWmSMZMOhP9o7425bLgDzD
-         melUxHZuxnujObAWSmMTQxD7FDLYAew3fjDEFrzfaBTMC0hZmcFB6TBHo+BoIJezjP
-         90KoSdfybx45J4mbhFvuhgcUzfTRlSZtaBf9t4hO1TeVV9InVynuswec84kPEVlCvi
-         zZ8LTkqYaW1e1LdblqeRFwqO3YlQxMMAq70GL5JayVgNa6UXgmjsWSe5ClN0kNFWB+
-         uq+W6RRir0nmQ==
-From:   Mark Brown <broonie@kernel.org>
-To:     collinsd@codeaurora.org, lgirdwood@gmail.com,
-        linus.walleij@linaro.org, agross@kernel.org, robh+dt@kernel.org,
-        rnayak@codeaurora.org, bjorn.andersson@linaro.org,
-        Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org
-In-Reply-To: <1647410837-22537-1-git-send-email-quic_rohiagar@quicinc.com>
-References: <1647410837-22537-1-git-send-email-quic_rohiagar@quicinc.com>
-Subject: Re: (subset) [PATCH 0/6] Add Power Domains and Regulators in SDX65
-Message-Id: <164763707833.2336544.6847647511365676482.b4-ty@kernel.org>
-Date:   Fri, 18 Mar 2022 20:57:58 +0000
+        Fri, 18 Mar 2022 17:00:29 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF3BF1B3F66
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Mar 2022 13:59:09 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id r2so10643994iod.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Mar 2022 13:59:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=oNAPpR+5qx5bHO8wJ1SIgWig3LUKuwuqLo641jvFAak=;
+        b=R3B03hXdzmRL4FMHavxss76+tb9Q0Hy78NbdGoHIgmWRsuIfciGr2JWywHMf/Kpkhf
+         QniqntLtfhiE8E3Wo0oxTFcS1KWerJtG5tNgnrk3j2xUiX43wMMg+/mjp1wKd5A4aRIu
+         ErIGjgvdava6sQlmLmDCO8Qr2P9RfzXvczFjE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=oNAPpR+5qx5bHO8wJ1SIgWig3LUKuwuqLo641jvFAak=;
+        b=bMBoeDTTIKIacBo9YXsI04O95lHhVStQEsxRkECvMPCoID2oyZmFyoQrF8kNfkeqp5
+         IlNLFCaMc+sAQTsbDXQF+p0s8lmoUIr230dx2UhdORLCFWus4fPotP/bednL6ddRpDGB
+         NhXUQ/zN7SQaCdudgLAV85X54GnPInxqTwIsfGW8eFVJHwzPsQscmDvwP8EoY1MxvKxm
+         XyfAgQq6MihjSaGga7U7qHgQJEPDq3EY+iRRE3M0kp+8aw8GBl13zYhjEsN8+vfZ29fq
+         nYfFZPSqGtcWEPQxtZqsaL1CoKnsz/ilptuc0Ye3YtcnOFWCuI+3k3x2vn98xGTyuzVk
+         ectw==
+X-Gm-Message-State: AOAM530aC2+DSjiUXDbKNRhMRxrD7vtxLXskHf0kGcAtYewGSYn51uH7
+        moH0tNtMymX21TsitNIvfsYSCg==
+X-Google-Smtp-Source: ABdhPJw+g6qtXnLujFKVRv55AGvVhZcbGPndogV4eznqetPdpLwXYueCN6beIFsP8OoV/l235xaSaw==
+X-Received: by 2002:a5d:9542:0:b0:648:f92b:7bc6 with SMTP id a2-20020a5d9542000000b00648f92b7bc6mr5223132ios.73.1647637149068;
+        Fri, 18 Mar 2022 13:59:09 -0700 (PDT)
+Received: from [192.168.1.128] ([71.205.29.0])
+        by smtp.gmail.com with ESMTPSA id d14-20020a056602328e00b006494aa126c2sm3528385ioz.11.2022.03.18.13.59.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Mar 2022 13:59:08 -0700 (PDT)
+Subject: Re: [PATCH 64/64] media: Kconfig: cleanup VIDEO_DEV dependencies
+To:     Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc:     Fabio Estevam <festevam@gmail.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Giulio Benetti <giulio.benetti@benettiengineering.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Hans Verkuil <hverkuil@xs4all.nl>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Heungjun Kim <riverful.kim@samsung.com>,
+        Houlong Wei <houlong.wei@mediatek.com>,
+        Hugues Fruchet <hugues.fruchet@foss.st.com>,
+        Hyun Kwon <hyun.kwon@xilinx.com>,
+        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+        Jacob Chen <jacob-chen@iotwrt.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Jean-Christophe Trotin <jean-christophe.trotin@foss.st.com>,
+        Jeff LaBundy <jeff@labundy.com>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Joe Hung <joe_hung@ilitek.com>, Joel Stanley <joel@jms.id.au>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Kieran Bingham <kieran.bingham@ideasonboard.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Marek Vasut <marex@denx.de>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Martina Krasteva <martinax.krasteva@intel.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Michael Grzeschik <m.grzeschik@pengutronix.de>,
+        Michael Tretter <m.tretter@pengutronix.de>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Mike Isely <isely@pobox.com>, Ming Qian <ming.qian@nxp.com>,
+        Minghsiu Tsai <minghsiu.tsai@mediatek.com>,
+        Mirela Rabulea <mirela.rabulea@nxp.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Olivier Lorin <o.lorin@laposte.net>,
+        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+        Pavel Machek <pavel@ucw.cz>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Ray Jui <rjui@broadcom.com>,
+        Rick Chang <rick.chang@mediatek.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Sakari Ailus <sakari.ailus@linux.intel.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Scott Branden <sbranden@broadcom.com>,
+        Sean Young <sean@mess.org>, Shawn Guo <shawnguo@kernel.org>,
+        Shawn Tu <shawnx.tu@intel.com>,
+        Shijie Qin <shijie.qin@nxp.com>,
+        Sowjanya Komatineni <skomatineni@nvidia.com>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Steve Longerbeam <slongerbeam@gmail.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Takashi Iwai <tiwai@suse.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tianshu Qiu <tian.shu.qiu@intel.com>,
+        Tiffany Lin <tiffany.lin@mediatek.com>,
+        Todor Tomov <todor.too@gmail.com>,
+        Vincent Knecht <vincent.knecht@mailoo.org>,
+        Yong Deng <yong.deng@magewell.com>,
+        Yong Zhi <yong.zhi@intel.com>, Zhou Peng <eagle.zhou@nxp.com>,
+        alsa-devel@alsa-project.org, bcm-kernel-feedback-list@broadcom.com,
+        linux-amlogic@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-rpi-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, linux-staging@lists.linux.dev,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        linux-usb@vger.kernel.org, mjpeg-users@lists.sourceforge.net,
+        openbmc@lists.ozlabs.org, Shuah Khan <skhan@linuxfoundation.org>
+References: <cover.1647242578.git.mchehab@kernel.org>
+ <decd26e90adc5c16470e4f738810f22fe6478b27.1647242579.git.mchehab@kernel.org>
+From:   Shuah Khan <skhan@linuxfoundation.org>
+Message-ID: <9e02d88a-3344-8d91-c652-72cb989506de@linuxfoundation.org>
+Date:   Fri, 18 Mar 2022 14:59:05 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-8.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <decd26e90adc5c16470e4f738810f22fe6478b27.1647242579.git.mchehab@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 16 Mar 2022 11:37:11 +0530, Rohit Agarwal wrote:
-> This series adds driver and dt-bindings related changes
-> in SDX65 to add power domains and regulators.
+On 3/14/22 1:55 AM, Mauro Carvalho Chehab wrote:
+> media Kconfig has two entries associated to V4L API:
+> VIDEO_DEV and VIDEO_V4L2.
 > 
-> Thanks,
-> Rohit.
+> On Kernel 2.6.x, there were two V4L APIs, each one with its own flag.
+> VIDEO_DEV were meant to:
+> 	1) enable Video4Linux and make its Kconfig options to appear;
+> 	2) it makes the Kernel build the V4L core.
 > 
-> Rohit Agarwal (6):
->   regulator: dt-bindings: Add PMX65 compatibles
->   regulator: qcom-rpmh: Add support for SDX65
->   dt-bindings: power: Add rpm power domain bindings for SDX65
->   soc: qcom: rpmhpd: Add SDX65 power domains
->   dt-bindings: pinctrl: qcom-pmic-gpio: Add pmx65 support
->   pinctrl: qcom-pmic-gpio: Add support for pmx65
+> while VIDEO_V4L2 where used to distinguish between drivers that
+> implement the newer API and drivers that implemented the former one.
 > 
-> [...]
+> With time, such meaning changed, specially after the removal of
+> all V4L version 1 drivers.
+> 
+> At the current implementation, VIDEO_DEV only does (1): it enables
+> the media options related to V4L, that now has:
+> 
+> 	menu "Video4Linux options"
+> 		visible if VIDEO_DEV
+> 
+> 	source "drivers/media/v4l2-core/Kconfig"
+> 	endmenu
+> 
+> but it doesn't affect anymore the V4L core drivers.
+> 
+> The rationale is that the V4L2 core has a "soft" dependency
+> at the I2C bus, and now requires to select a number of other
+> Kconfig options:
+> 
+> 	config VIDEO_V4L2
+> 		tristate
+> 		depends on (I2C || I2C=n) && VIDEO_DEV
+> 		select RATIONAL
+> 		select VIDEOBUF2_V4L2 if VIDEOBUF2_CORE
+> 		default (I2C || I2C=n) && VIDEO_DEV
+> 
+> In the past, merging them would be tricky, but it seems that it is now
+> possible to merge those symbols, in order to simplify V4L dependencies.
+> 
+> Let's keep VIDEO_DEV, as this one is used on some make *defconfig
+> configurations.
+> 
+> Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+> ---
+> 
 
-Applied to
+>   drivers/media/test-drivers/vicodec/Kconfig    |   2 +-
+>   drivers/media/test-drivers/vimc/Kconfig       |   2 +-
+>   drivers/media/test-drivers/vivid/Kconfig      |   2 +-
+>
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+For vimc change: (trimmed the recipient list to send response)
 
-Thanks!
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
 
-[1/6] regulator: dt-bindings: Add PMX65 compatibles
-      commit: e34855b99696433a26d86179552553c6c6fa69b8
-[2/6] regulator: qcom-rpmh: Add support for SDX65
-      commit: 5999f85ddeb436b4007878f251a30ccc8b9c638b
+thanks,
+-- Shuah
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
