@@ -2,97 +2,289 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E6FCA4DD9F7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Mar 2022 13:50:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B5844DDBBC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Mar 2022 15:34:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236403AbiCRMv4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Mar 2022 08:51:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37998 "EHLO
+        id S237336AbiCROf6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Mar 2022 10:35:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230008AbiCRMvz (ORCPT
+        with ESMTP id S233244AbiCROf5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Mar 2022 08:51:55 -0400
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA5481ED063;
-        Fri, 18 Mar 2022 05:50:36 -0700 (PDT)
-Received: by mail-lf1-f47.google.com with SMTP id w27so13947724lfa.5;
-        Fri, 18 Mar 2022 05:50:36 -0700 (PDT)
+        Fri, 18 Mar 2022 10:35:57 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D5BF1945E7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Mar 2022 07:34:37 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id o3-20020a17090a3d4300b001c6bc749227so1061072pjf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Mar 2022 07:34:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=An29DlOhwyywWM/0aNvAUk8ND1vXD1la3RvLhYP8lEQ=;
+        b=UVb5VWQS5BSfYyR2Prb8yeaH36dZnLfCYyT+KtIS2wpMhv3oFxfjmRgyzXq2ZaDakG
+         PBFk757tKQnvNgN0H1TQEpkxcqP2rmFegKXLB+g0ToEwhv2mFlGIn+EZmE9cD2njB8s7
+         s9RF3K+yE+rabFL/pc/IAUggeGEa86oN3m16lh/u/hX4lNlap+h5vIEHsgKlNf+p6GK0
+         221PF4Pt/1rOccpYVkCjvjkzbAAop/6zV1KZOGxzeJya/IJhOnWU3NiWpI/RvGC2Vz6q
+         GPyF8wz1aaifCohB49+1rPgj04/9ymFt8LhVIkQdAmude92xN3ljzboGAMUxxdlAnAcF
+         YU8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=OJu/+DhwQ4TG5+tIH51Zo9ItsMV5oal9aAoPrsbEoi8=;
-        b=ivXnSLtpOGaIMauHdRM7eGDHaDKj4RnX9Y5YODQ/G2BpToJJ/iSCriA4Z73IjGOUFW
-         CkaTD2E7qVV6Ws4S3b1s5UIoYQdp3D88wgpeUuoSQHSeby/wn3rX8mB5wnKlluOFL/Iy
-         vQOECIiWHAGdNJVmiWaFxXaURFd4Mkfu6Sg4RRCH1n/RUlh47A4Gc+M8z3gCsRIBBr2B
-         fPMEcMNv1504zycsJa/kRtGAIqU/9GSoVI2N9kILL8W+lQLkgh/3xe0LPCscU4QQCQNl
-         lxnCC0ohEio6ttxL4LpB+uC4b/K3EGaD66qQoSbiyZyB7UT+DJ4mARz2LQgymBrnrOE8
-         zelQ==
-X-Gm-Message-State: AOAM533etmiwV4+u5ehRl8XNCzQ05+3NpZGaIFAdZpFm2miXeLRwcNFy
-        CzzbQAZ7L2dyYuefQLXvl68=
-X-Google-Smtp-Source: ABdhPJyBkRrx7Z0uNMyc5zszBSpP9QRiZv8MKDpJewRS/0i0lodNGcX5PhVl8kjtJW8JfRMm+lnuWg==
-X-Received: by 2002:a05:6512:3981:b0:448:40e5:cf90 with SMTP id j1-20020a056512398100b0044840e5cf90mr5632455lfu.656.1647607834839;
-        Fri, 18 Mar 2022 05:50:34 -0700 (PDT)
-Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.googlemail.com with ESMTPSA id v21-20020a2e2f15000000b002456e6cdab2sm944860ljv.93.2022.03.18.05.50.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Mar 2022 05:50:34 -0700 (PDT)
-Message-ID: <cd976ef0-767b-8cf0-8635-28aeaa6542a3@kernel.org>
-Date:   Fri, 18 Mar 2022 13:50:31 +0100
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=An29DlOhwyywWM/0aNvAUk8ND1vXD1la3RvLhYP8lEQ=;
+        b=UoE1UfWG2x+tfiFVtUz88oX2aNw7ziGju9Udqromjt9jPzX5767TASyAhLRpsca8uZ
+         nYfXVJgCYndsoRnoqAAko8KOnpdN/5QHU/bsTKJ+Q957hBr0fHqDfEtgVpU4hMHHx84u
+         yhi3cUaN9gVaHO3D53iw5acVotXOIWYsFeaeNrhpHFxWC0Dzimf8bDJZi4GoudwwYHRK
+         8R/cu7hp9SRA8cmkiQXUrwpuPzC4IsuO/eu1AfLrcfRgp3n95Xiz6VLehYUTQDx8YEFL
+         9RbutjUwV2Q1KE9A6IUMZee4fa1LMkBjP0qe7d3X1dhy2XC6BVElhheRvVUYq2ErFvEy
+         Y8Pg==
+X-Gm-Message-State: AOAM5333pgVEpAixiek+l6PzkTy90MKHiuDUVDNKA75MqMAo6bqPPc2H
+        XfKxceySwKeUC0opq/JnTGN+
+X-Google-Smtp-Source: ABdhPJzfxVLDqnthtDOksvI+hE2Tf0NlsqP5P+fJ3tV3tm7eSkq/8uDtWyFCI7zL5buvoDRqjA0Ypg==
+X-Received: by 2002:a17:90b:4b8d:b0:1bf:1301:2514 with SMTP id lr13-20020a17090b4b8d00b001bf13012514mr11485632pjb.19.1647614077029;
+        Fri, 18 Mar 2022 07:34:37 -0700 (PDT)
+Received: from thinkpad ([117.217.178.61])
+        by smtp.gmail.com with ESMTPSA id a24-20020a637f18000000b003821e17819csm2956095pgd.61.2022.03.18.07.34.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Mar 2022 07:34:36 -0700 (PDT)
+Date:   Fri, 18 Mar 2022 20:04:30 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Prasad Malisetty <quic_pmaliset@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        lorenzo.pieralisi@arm.com, robh@kernel.org, kw@linux.com,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        rajatja@google.com, refactormyself@gmail.com,
+        quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+        swboyd@chromium.org
+Subject: Re: [PATCH v4] PCI: qcom: Add system PM support
+Message-ID: <20220318143430.GA4922@thinkpad>
+References: <1646679306-4768-1-git-send-email-quic_pmaliset@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH V3 1/2] dt-bindings: mmc: sdhci-msm: Add gcc resets
- strings
-Content-Language: en-US
-To:     Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>,
-        ulf.hansson@linaro.org, robh+dt@kernel.org, krzk+dt@kernel.org,
-        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org
-Cc:     quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
-        quic_sartgarg@quicinc.com, quic_nitirawa@quicinc.com,
-        quic_sayalil@quicinc.com
-References: <1647532165-6302-1-git-send-email-quic_c_sbhanu@quicinc.com>
- <1647532165-6302-2-git-send-email-quic_c_sbhanu@quicinc.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <1647532165-6302-2-git-send-email-quic_c_sbhanu@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1646679306-4768-1-git-send-email-quic_pmaliset@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/03/2022 16:49, Shaik Sajida Bhanu wrote:
-> Add gcc hardware reset supported strings for qcom-sdhci controller.
+On Tue, Mar 08, 2022 at 12:25:06AM +0530, Prasad Malisetty wrote:
+> Add suspend_noirq and resume_noirq callbacks to handle
+> system suspend and resume in dwc PCIe controller driver.
 > 
-> Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+> When system suspends, send PME turnoff message to enter
+> link into L2 state. Along with powerdown the PHY, disable
+> pipe clock, switch gcc_pcie_1_pipe_clk_src to XO if mux is
+> supported and disable the pcie clocks, regulators.
+> 
+> When system resumes, PCIe link will be re-established and
+> setup rc settings.
+> 
+> Signed-off-by: Prasad Malisetty <quic_pmaliset@quicinc.com>
+> 
 > ---
->  Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 4 ++++
->  1 file changed, 4 insertions(+)
+> Changes since v3:
+> 	- Replaced noirq hooks with normal suspend/resume hooks.
+> 	- Removed local variable and placed in function itself.
 > 
-> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> index 6216ed7..f180111 100644
-> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-> @@ -62,6 +62,10 @@ Required properties:
->  - qcom,dll-config: Chipset and Platform specific value. Use this field to
->  	specify the DLL_CONFIG register value as per Hardware Programming Guide.
+> Changes since v2:
+> 	- Removed unnecessary variable initializations and comments.
+> 	- Removed platform specific variables declarations.
+> 	- Added MACRO names for the BIT shiftings.
+> 
+> Changes since v1:
+> 	- Removed unnecessary logs and modified log level suggested by Manivannan.
+> 	- Removed platform specific callbacks as PM support is generic.
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 97 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 97 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 6ab9089..4d29c80 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -48,6 +48,7 @@
+>  #define PCIE20_PARF_PHY_REFCLK			0x4C
+>  #define PHY_REFCLK_SSP_EN			BIT(16)
+>  #define PHY_REFCLK_USE_PAD			BIT(12)
+> +#define PHY_POWER_DOWN				0x1
+
+BIT(0)
+
 >  
-> +- resets: Phandle and reset specifier for the device's reset.
-> +- reset-names: List of reset signal name strings sorted in the same order as
-> +	       the resets property.
+>  #define PCIE20_PARF_DBI_BASE_ADDR		0x168
+>  #define PCIE20_PARF_SLV_ADDR_SPACE_SIZE		0x16C
+> @@ -62,6 +63,8 @@
+>  
+>  #define PCIE20_ELBI_SYS_CTRL			0x04
+>  #define PCIE20_ELBI_SYS_CTRL_LT_ENABLE		BIT(0)
+> +#define PCIE_PME_TURNOFF_MSG			BIT(4)
+> +#define PCIE_PM_LINKST_IN_L2			BIT(5)
+>  
+>  #define PCIE20_AXI_MSTR_RESP_COMP_CTRL0		0x818
+>  #define CFG_REMOTE_RD_REQ_BRIDGE_SIZE_2K	0x4
+> @@ -73,6 +76,8 @@
+>  
+>  #define PCIE20_PARF_Q2A_FLUSH			0x1AC
+>  
+> +#define PCIE20_PARF_PM_STTS			0x24
+> +
+>  #define PCIE20_MISC_CONTROL_1_REG		0x8BC
+>  #define DBI_RO_WR_EN				1
+>  
+> @@ -1645,6 +1650,97 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  	return ret;
+>  }
+>  
+> +static int qcom_pcie_send_pme_turnoff_msg(struct qcom_pcie *pcie)
+> +{
+> +	int ret;
+> +	u32 val, poll_val;
+> +	struct dw_pcie *pci = pcie->pci;
+> +	struct device *dev = pci->dev;
+> +
+> +	val = readl(pcie->elbi + PCIE20_ELBI_SYS_CTRL);
+> +	val |= PCIE_PME_TURNOFF_MSG;
+> +	writel(val, pcie->elbi + PCIE20_ELBI_SYS_CTRL);
+> +
+> +	ret = readl_poll_timeout((pcie->parf + PCIE20_PARF_PM_STTS), poll_val,
+> +			(poll_val & PCIE_PM_LINKST_IN_L2),
+> +			10000, 100000);
+> +	if (!ret)
+> +		dev_dbg(dev, "Device entered L23_Ready state\n");
+> +	else
+> +		dev_err(dev, "Device failed to enter L23_Ready. PM_STTS 0x%x\n",
+> +			readl_relaxed(pcie->parf + PCIE20_PARF_PM_STTS));
+> +
+> +	return ret;
+> +}
+> +
+> +static void qcom_pcie_host_disable(struct qcom_pcie *pcie)
+> +{
+> +	qcom_ep_reset_assert(pcie);
+> +
 
-Please list the actual names used in reset-names.
+In the modem usecase, the endpoint uses the LINK_DOWN event for freeing up the
+resources. If PERST# gets asserted before turing off the PHY, the LINK_DOWN
+event will be missed in the endpoint. And moreover, modem cannot free up the
+resources in PERST# handler as it is a hard IRQ handler and the cleanup action
+might sleep. The deferring also doesn't work because, once PERST# event get's
+handled, the host will turn off the refclk and the access to DBI region will
+not be allowed.
+
+For this reason, I'd prefer to move this PERST# assertion to the end of the
+funtion.
+
+> +	/* Put PHY into POWER DOWN state */
+> +	phy_power_off(pcie->phy);
+> +
+> +	writel(PHY_POWER_DOWN, pcie->parf + PCIE20_PARF_PHY_CTRL);
+> +
+> +	if (pcie->cfg->ops->post_deinit)
+> +		pcie->cfg->ops->post_deinit(pcie);
+> +
+> +	/* Disable PCIe clocks and regulators */
+> +	pcie->cfg->ops->deinit(pcie);
+
+It is also required to add a 100ms delay here as PERST# reaches quickly before
+LINK_DOWN.
 
 
-Best regards,
-Krzysztof
+	/*
+	 * Allow the LINK_DOWN event to reach the endpoint before PERST# assert.
+	 * This is required for resource cleanup in the endpoint for modem usecase.
+	 */
+	usleep_range(50000, 100000);
+	qcom_ep_reset_assert(pcie);
+
+> +}
+> +
+> +static int __maybe_unused qcom_pcie_pm_suspend(struct device *dev)
+> +{
+> +	int ret;
+> +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
+> +	struct dw_pcie *pci = pcie->pci;
+> +
+> +	if (!dw_pcie_link_up(pci)) {
+> +		dev_dbg(dev, "Power has been turned off already\n");
+
+I think this debug message doesn't add any value, so just skip it.
+
+> +		return 0;
+> +	}
+> +
+> +	ret = qcom_pcie_send_pme_turnoff_msg(pcie);
+> +	if (ret)
+> +		return ret;
+> +
+> +	/* Power down the PHY, disable clock and regulators */
+
+You are also asserting PERST#.
+
+> +	qcom_pcie_host_disable(pcie);
+> +
+> +	return 0;
+> +}
+> +
+> +/* Resume the PCIe link */
+> +static int __maybe_unused qcom_pcie_pm_resume(struct device *dev)
+> +{
+> +	int ret;
+> +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
+> +	struct dw_pcie *pci = pcie->pci;
+> +	struct pcie_port *pp = &pci->pp;
+> +
+> +	ret = qcom_pcie_host_init(pp);
+> +	if (ret) {
+> +		dev_err(dev, "cannot initialize host\n");
+> +		return ret;
+> +	}
+> +
+> +	dw_pcie_setup_rc(pp);
+> +
+> +	qcom_pcie_start_link(pci);
+> +
+> +	ret = dw_pcie_wait_for_link(pci);
+> +	if (ret) {
+> +		dev_err(dev, "Link never came up, Resume failed\n");
+
+dw_pcie_wait_for_link() itself prints the error in failure case. So just return
+directly.
+
+	return dw_pcie_wait_for_link(pci);
+
+Thanks,
+Mani
+
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct dev_pm_ops qcom_pcie_pm_ops = {
+> +	SET_SYSTEM_SLEEP_PM_OPS(qcom_pcie_pm_suspend, qcom_pcie_pm_resume)
+> +};
+> +
+>  static const struct of_device_id qcom_pcie_match[] = {
+>  	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
+>  	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
+> @@ -1679,6 +1775,7 @@ static struct platform_driver qcom_pcie_driver = {
+>  	.probe = qcom_pcie_probe,
+>  	.driver = {
+>  		.name = "qcom-pcie",
+> +		.pm = &qcom_pcie_pm_ops,
+>  		.suppress_bind_attrs = true,
+>  		.of_match_table = qcom_pcie_match,
+>  	},
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
