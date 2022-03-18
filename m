@@ -2,74 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 44B474DE302
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Mar 2022 21:56:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CEC564DE308
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Mar 2022 21:58:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240901AbiCRU5c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Mar 2022 16:57:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56040 "EHLO
+        id S240938AbiCRU70 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Mar 2022 16:59:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238642AbiCRU5b (ORCPT
+        with ESMTP id S240945AbiCRU7Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Mar 2022 16:57:31 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3940751584
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Mar 2022 13:56:12 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id bi12so19308682ejb.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Mar 2022 13:56:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/rAQQW1B2/1DyUzPxS8vb3OPiqjwadCCTd1IWWZw2tI=;
-        b=OoLPZrP0cbAWUR/aj2BfIlZVMNODxp9hHDXKclh06yw2MlBURO8slzW222w0tbYDrU
-         Tiy/8C9cAsC2J7BlgMhz2yZmK3gbNc3JDqFLf/4R9d5X+9Mu5KmACRxYOWHCY1k8UFMM
-         c7FeDMmh53vjjoFIcT4wwbXBL1y0RnulbXo5Y=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/rAQQW1B2/1DyUzPxS8vb3OPiqjwadCCTd1IWWZw2tI=;
-        b=GQNAqX2Qe4hqRiHAu86R8hoAycABKzh7pdSo8ekyixQcOSwffUC1r6LECNApsoX+Cc
-         OfQUoxbwoDkFNprnWwrxL/QMaNEz1E6J3eC9cSRdZcsWQBGqXv8KKrDgTGmyvp+nAAbs
-         Xaj6v48jv+mQBK8unCHFvxpe01Uc9oJ6IDA6RZ+U0lg2PDQdkXV5rf8xuECwXn5q8qFD
-         6x8BUxEiJbKwiHJBtxeVq3NZH/zh8gqoHiBjC1J4tPHyIP/ZUkD+55PbC7PL11Y/DoaF
-         e8dxfsJXFxebkLA6JGPQ8rGbr0pK8t5uIt7qjOIG5D1CS3TJtrkZd4bRqh9PMqMeb3GA
-         d3CA==
-X-Gm-Message-State: AOAM532mX4BZJcswTzgnqs2XOMF0ZkH0s5GdXE8J+tLpBcrD3Qyely3h
-        l3LBOKArZM7oh89Px8P9Am6AwUkSHOImTAer3R4=
-X-Google-Smtp-Source: ABdhPJxfZgKamgztmQVx6DMX1K/Tt4IC812RWpZsVW7YJrH5bEOvF+VYRHpiZuBWPgg6HVYG0qM/5w==
-X-Received: by 2002:a17:906:c151:b0:6db:2b7f:302f with SMTP id dp17-20020a170906c15100b006db2b7f302fmr10700207ejc.4.1647636970348;
-        Fri, 18 Mar 2022 13:56:10 -0700 (PDT)
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com. [209.85.221.51])
-        by smtp.gmail.com with ESMTPSA id h20-20020a1709060f5400b006d6d54b9203sm4065795ejj.38.2022.03.18.13.56.09
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Mar 2022 13:56:09 -0700 (PDT)
-Received: by mail-wr1-f51.google.com with SMTP id b19so13184686wrh.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Mar 2022 13:56:09 -0700 (PDT)
-X-Received: by 2002:a5d:6f04:0:b0:203:ed96:8212 with SMTP id
- ay4-20020a5d6f04000000b00203ed968212mr6883263wrb.679.1647636968955; Fri, 18
- Mar 2022 13:56:08 -0700 (PDT)
+        Fri, 18 Mar 2022 16:59:24 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 355CD1AD96;
+        Fri, 18 Mar 2022 13:58:02 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A944660EEB;
+        Fri, 18 Mar 2022 20:58:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C18C340E8;
+        Fri, 18 Mar 2022 20:57:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1647637081;
+        bh=3tZLC4OI4DmCNMJnIOo7RYTAi7LWN2qliV+IISVObGI=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=LGPaCodP8eS/7klwaU8q0zEpjY3D6qASKNddY0k53Fyi4Gg4tbqZ/blZgzLUpyGIX
+         CwSf3M3qU5kWxh3Kkw4ca1kZBPXA9mnE2oUsnUBlU/YDrWmSMZMOhP9o7425bLgDzD
+         melUxHZuxnujObAWSmMTQxD7FDLYAew3fjDEFrzfaBTMC0hZmcFB6TBHo+BoIJezjP
+         90KoSdfybx45J4mbhFvuhgcUzfTRlSZtaBf9t4hO1TeVV9InVynuswec84kPEVlCvi
+         zZ8LTkqYaW1e1LdblqeRFwqO3YlQxMMAq70GL5JayVgNa6UXgmjsWSe5ClN0kNFWB+
+         uq+W6RRir0nmQ==
+From:   Mark Brown <broonie@kernel.org>
+To:     collinsd@codeaurora.org, lgirdwood@gmail.com,
+        linus.walleij@linaro.org, agross@kernel.org, robh+dt@kernel.org,
+        rnayak@codeaurora.org, bjorn.andersson@linaro.org,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-arm-msm@vger.kernel.org
+In-Reply-To: <1647410837-22537-1-git-send-email-quic_rohiagar@quicinc.com>
+References: <1647410837-22537-1-git-send-email-quic_rohiagar@quicinc.com>
+Subject: Re: (subset) [PATCH 0/6] Add Power Domains and Regulators in SDX65
+Message-Id: <164763707833.2336544.6847647511365676482.b4-ty@kernel.org>
+Date:   Fri, 18 Mar 2022 20:57:58 +0000
 MIME-Version: 1.0
-References: <20220317010640.2498502-1-swboyd@chromium.org> <20220317010640.2498502-3-swboyd@chromium.org>
-In-Reply-To: <20220317010640.2498502-3-swboyd@chromium.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 18 Mar 2022 13:55:56 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WNqCdPpKdV4gHL4Y9aDpwGW+OE3AcxKrx-OXNfQSLFBQ@mail.gmail.com>
-Message-ID: <CAD=FV=WNqCdPpKdV4gHL4Y9aDpwGW+OE3AcxKrx-OXNfQSLFBQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: Fully describe fingerprint node on Herobrine
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Alexandru M Stan <amstan@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-8.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,67 +57,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Wed, 16 Mar 2022 11:37:11 +0530, Rohit Agarwal wrote:
+> This series adds driver and dt-bindings related changes
+> in SDX65 to add power domains and regulators.
+> 
+> Thanks,
+> Rohit.
+> 
+> Rohit Agarwal (6):
+>   regulator: dt-bindings: Add PMX65 compatibles
+>   regulator: qcom-rpmh: Add support for SDX65
+>   dt-bindings: power: Add rpm power domain bindings for SDX65
+>   soc: qcom: rpmhpd: Add SDX65 power domains
+>   dt-bindings: pinctrl: qcom-pmic-gpio: Add pmx65 support
+>   pinctrl: qcom-pmic-gpio: Add support for pmx65
+> 
+> [...]
 
-On Wed, Mar 16, 2022 at 6:06 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Update the fingerprint node on Herobrine to match the fingerprint DT
-> binding. This will allow us to drive the reset and boot gpios from the
-> driver when it is re-attached after flashing. We'll also be able to boot
-> the fingerprint processor if the BIOS isn't doing it for us.
->
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Cc: Alexandru M Stan <amstan@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->
-> Depends on https://lore.kernel.org/r/20220317005814.2496302-1-swboyd@chromium.org
->
->  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> index 984a7faf0888..282dda78ba3f 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> @@ -396,13 +396,16 @@ ap_spi_fp: &spi9 {
->         cs-gpios = <&tlmm 39 GPIO_ACTIVE_LOW>;
->
->         cros_ec_fp: ec@0 {
-> -               compatible = "google,cros-ec-spi";
-> +               compatible = "google,cros-ec-fp";
->                 reg = <0>;
->                 interrupt-parent = <&tlmm>;
->                 interrupts = <61 IRQ_TYPE_LEVEL_LOW>;
->                 pinctrl-names = "default";
->                 pinctrl-0 = <&fp_to_ap_irq_l>, <&fp_rst_l>, <&fpmcu_boot0>;
-> +               boot0-gpios = <&tlmm 68 GPIO_ACTIVE_HIGH>;
-> +               reset-gpios = <&tlmm 78 GPIO_ACTIVE_LOW>;
->                 spi-max-frequency = <3000000>;
-> +               vdd-supply = <&pp3300_fp_mcu>;
+Applied to
 
-IMO we shouldn't specify vdd-supply here when it's a bogus regulator
-(doesn't actually control the relevant GPIO). Having device trees like
-this will make it hard to transition to the kernel controlling this
-GPIO in the future because the cros-ec-fp driver won't know whether
-it's controlling the GPIO or not. So my vote would be either:
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-1. Go whole hog and have the kernel in charge of the regulator,
-exposing regulator control to the userspace updater through some sort
-of GPIO
+Thanks!
 
-- or -
+[1/6] regulator: dt-bindings: Add PMX65 compatibles
+      commit: e34855b99696433a26d86179552553c6c6fa69b8
+[2/6] regulator: qcom-rpmh: Add support for SDX65
+      commit: 5999f85ddeb436b4007878f251a30ccc8b9c638b
 
-2. Make the "vdd-supply" optional and don't specify it until we're
-ready to go whole hog.
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
-Also note: looking back at the note about the fingerprint regulator,
-there's something I wonder if we tried. Did we try to have the
-userspace "updater" try unbinding the fingerprint regulator so it
-could get control of the GPIO? Then the regulator could normally have
-control of it but if userspace wanted control it would unbind the
-regulator driver.
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
--Doug
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
