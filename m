@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64CF84DD1CC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Mar 2022 01:14:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 063724DD1CE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Mar 2022 01:14:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230496AbiCRAOX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Mar 2022 20:14:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52542 "EHLO
+        id S231126AbiCRAOm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Mar 2022 20:14:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230503AbiCRAOV (ORCPT
+        with ESMTP id S231133AbiCRAOl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Mar 2022 20:14:21 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ED6415DAAB
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 17:13:02 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id u23so4412522ejt.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 17:13:02 -0700 (PDT)
+        Thu, 17 Mar 2022 20:14:41 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 753C919BE4F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 17:13:23 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id w12so11645029lfr.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 17:13:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=ivABL/zW17W3xsGsFU4NNFD2vIhj9kJM89ziwsXeP4A=;
-        b=I6jh5qUUAfPbuFRo6X1vzR4jyxk+Jwj+tM+hcWGcNJ80NKQdHD3dt4WyBUnPLaQ43u
-         fY4hRGaRDpfdxsttq4ka6QQ3hsN/FLOiF/BWyTy1eAv5/n1k20hVkDNHY/wy2ucHyIUT
-         LyPuzoXHOq8/3MYayGZMQIPpAv4JbHhGQwbek=
+        bh=d1Z8nI+f/X46wuhlEeKlYiI7DuyLSgelQdOIPC94sVc=;
+        b=dq9FFRkofEvY/IQ16q22b9/GAC3XOlX/hWO2uBaym9wfsa21t2RqyXXsmcT4+ouP96
+         sP5cckwa32YJttSDlHHjJtcORahNzuY8gpmwhPkulTeNBPqbWSAOutMIuIyMEvN2fd/q
+         cw6DsfvWgKS9sZLyHWDTyO4TD4lLr/+JK5JXY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=ivABL/zW17W3xsGsFU4NNFD2vIhj9kJM89ziwsXeP4A=;
-        b=Wakj/Fyl6KB0egVAvAU7eCTLJ8783EgR0F7QXzKEWA5fShNvJrk3Gj4P8Z0t3WoV83
-         iv2vLWoTohomiP7xf3rGaKDGjN1CL1HebErlhXBQpUn0UzrfGSwBP/7rKiKxCPKO6KY3
-         4MHbe7hHRUnFdrecO8McdNS8dL+crS0IYdCrHIHxBPxEqOhPmPyHPEMGueKiv6Z/LpDU
-         ODorgOJb0lCyjiumj6ghzC8RIqL8x4mn8HV4MRCO8KJuSQ/uEH6IqKYqLn2qfOsFUP+N
-         Q10fzy0hDrFAHA+XiVmY6dvQQNXdoFMeWGRlej3JT5qWGrdLkICOElCF7n+LmN1mKhZU
-         YTow==
-X-Gm-Message-State: AOAM533ijVDiLZ+vdxS7cK3kj7PUpmkfx38sWCcB4zpxWqnHrrREuq56
-        XhVHFP/3ZkPRbPBwc5M7/ftumsSXwKVAywcpROw=
-X-Google-Smtp-Source: ABdhPJwvNOQvJMDROgDs9iz7rLck4Fity08/C37KvhKFv/z5nv/snmtGpWds202Pfh9ayGb9yRrIWA==
-X-Received: by 2002:a17:907:3f9b:b0:6da:6f2b:4b1c with SMTP id hr27-20020a1709073f9b00b006da6f2b4b1cmr6506076ejc.765.1647562380623;
-        Thu, 17 Mar 2022 17:13:00 -0700 (PDT)
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com. [209.85.128.54])
-        by smtp.gmail.com with ESMTPSA id e9-20020a170906c00900b006d4a45869basm2972301ejz.199.2022.03.17.17.12.59
+        bh=d1Z8nI+f/X46wuhlEeKlYiI7DuyLSgelQdOIPC94sVc=;
+        b=aBxsA2x8kMGnlSJvIj5we5ihd6BR3k3skvwXxmTOtkbwWvRFprzpPwecp5xLPOjtW8
+         RSA/NW0hJjUXbJQYJ1hgIuQEW30bdMVv3FxfRApO9cHeJ5jUZhQRq6Z8V/uwNW5jyEun
+         twu8bYr/zOeKSmdeMP5s1wMnzdA7TH4+TfrI5QjX5B9AYdud97vV6K/660ohvNZI7/YL
+         BP5QqAzPmKAJAU7JrP63+109p05QHaJr/CcfnYtA8IG1KUGIHXerQ8SlUt6Kj/r/MbEh
+         e8VOktlw2twmhKUYtzsas3CojpYieNz5XiEBM+2cdU3Hd5+UFYQg7xmv13UMtxaVOXpG
+         nwew==
+X-Gm-Message-State: AOAM531Jxgg5OqGmI9UmkASfzYg/bsuW1eA+Oh+/YgTnAR9AymINAS9G
+        tnlBm7R/Q274vr45q0nc83hTprK3/Z02TYUEkJQ=
+X-Google-Smtp-Source: ABdhPJwwvh/hgpOOqyxSerQYeqlUTIazLX3wzis5FVnURt3nvWauqFCZyWmIrDBdrfIWpXp8YyQl+g==
+X-Received: by 2002:a17:907:1c8c:b0:6d8:795b:b458 with SMTP id nb12-20020a1709071c8c00b006d8795bb458mr6569543ejc.706.1647562390734;
+        Thu, 17 Mar 2022 17:13:10 -0700 (PDT)
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com. [209.85.221.54])
+        by smtp.gmail.com with ESMTPSA id ec21-20020a170906b6d500b006d170a3444csm2968287ejb.164.2022.03.17.17.13.09
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Mar 2022 17:13:00 -0700 (PDT)
-Received: by mail-wm1-f54.google.com with SMTP id p184-20020a1c29c1000000b0037f76d8b484so4025253wmp.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 17:12:59 -0700 (PDT)
-X-Received: by 2002:a05:600c:3c8a:b0:389:cf43:eaf6 with SMTP id
- bg10-20020a05600c3c8a00b00389cf43eaf6mr5932331wmb.199.1647562379575; Thu, 17
- Mar 2022 17:12:59 -0700 (PDT)
+        Thu, 17 Mar 2022 17:13:09 -0700 (PDT)
+Received: by mail-wr1-f54.google.com with SMTP id r10so9665434wrp.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 17:13:09 -0700 (PDT)
+X-Received: by 2002:a5d:53c6:0:b0:203:ee27:12ff with SMTP id
+ a6-20020a5d53c6000000b00203ee2712ffmr3723782wrw.422.1647562388738; Thu, 17
+ Mar 2022 17:13:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <1647269217-14064-1-git-send-email-quic_vpolimer@quicinc.com> <1647269217-14064-5-git-send-email-quic_vpolimer@quicinc.com>
-In-Reply-To: <1647269217-14064-5-git-send-email-quic_vpolimer@quicinc.com>
+References: <1647269217-14064-1-git-send-email-quic_vpolimer@quicinc.com> <1647269217-14064-6-git-send-email-quic_vpolimer@quicinc.com>
+In-Reply-To: <1647269217-14064-6-git-send-email-quic_vpolimer@quicinc.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 17 Mar 2022 17:12:46 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VQV-2LTmVEPuJJYUhTpBT15A1fKAsRbZgpni8rGNNFsw@mail.gmail.com>
-Message-ID: <CAD=FV=VQV-2LTmVEPuJJYUhTpBT15A1fKAsRbZgpni8rGNNFsw@mail.gmail.com>
-Subject: Re: [PATCH v6 4/5] arm64: dts: qcom: sdm845: remove
+Date:   Thu, 17 Mar 2022 17:12:54 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U6VfmGMYk6PeJa6y6P1-FsbKVjzD4tVGxnqMdEVY9n8Q@mail.gmail.com>
+Message-ID: <CAD=FV=U6VfmGMYk6PeJa6y6P1-FsbKVjzD4tVGxnqMdEVY9n8Q@mail.gmail.com>
+Subject: Re: [PATCH v6 5/5] arm64: dts: qcom: sm8250: remove
  assigned-clock-rate property for mdp clk
 To:     Vinod Polimera <quic_vpolimer@quicinc.com>
 Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
@@ -72,7 +72,7 @@ Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -94,7 +94,7 @@ On Mon, Mar 14, 2022 at 7:47 AM Vinod Polimera
 > Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
 > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->  arch/arm64/boot/dts/qcom/sdm845.dtsi | 9 ++-------
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi | 9 ++-------
 >  1 file changed, 2 insertions(+), 7 deletions(-)
 
 Similar comments to patch #2 about the commit message, but otherwise:
