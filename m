@@ -2,219 +2,312 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB4EA4DE318
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Mar 2022 21:59:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DBFF64DE3CD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Mar 2022 22:59:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240979AbiCRVAc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Mar 2022 17:00:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33850 "EHLO
+        id S239714AbiCRWAe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Mar 2022 18:00:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240966AbiCRVA3 (ORCPT
+        with ESMTP id S234693AbiCRWAd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Mar 2022 17:00:29 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF3BF1B3F66
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Mar 2022 13:59:09 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id r2so10643994iod.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Mar 2022 13:59:09 -0700 (PDT)
+        Fri, 18 Mar 2022 18:00:33 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8EA3F70DD
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Mar 2022 14:59:12 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id o10so730941ejd.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Mar 2022 14:59:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=oNAPpR+5qx5bHO8wJ1SIgWig3LUKuwuqLo641jvFAak=;
-        b=R3B03hXdzmRL4FMHavxss76+tb9Q0Hy78NbdGoHIgmWRsuIfciGr2JWywHMf/Kpkhf
-         QniqntLtfhiE8E3Wo0oxTFcS1KWerJtG5tNgnrk3j2xUiX43wMMg+/mjp1wKd5A4aRIu
-         ErIGjgvdava6sQlmLmDCO8Qr2P9RfzXvczFjE=
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nZ+Qd2I3q/p2XGXq/Yxj9W7hoeC6AUT40y63snQyKHs=;
+        b=ZfJPEh4fkbO376ESnnE3WZyND+Cx3bDFfiJz4yylIK5LuqgAZNfQh/hqfaUtEb0l/m
+         7Im83EsCAa97Oly8690SRQkKrnl7MkhvICo3wfjtg5VBPzVBnm9/1hj6WwhsGQ9xYrCr
+         BQi8c8QIvAVHcDwh9v61SiQON6Ho1SnpDNogw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=oNAPpR+5qx5bHO8wJ1SIgWig3LUKuwuqLo641jvFAak=;
-        b=bMBoeDTTIKIacBo9YXsI04O95lHhVStQEsxRkECvMPCoID2oyZmFyoQrF8kNfkeqp5
-         IlNLFCaMc+sAQTsbDXQF+p0s8lmoUIr230dx2UhdORLCFWus4fPotP/bednL6ddRpDGB
-         NhXUQ/zN7SQaCdudgLAV85X54GnPInxqTwIsfGW8eFVJHwzPsQscmDvwP8EoY1MxvKxm
-         XyfAgQq6MihjSaGga7U7qHgQJEPDq3EY+iRRE3M0kp+8aw8GBl13zYhjEsN8+vfZ29fq
-         nYfFZPSqGtcWEPQxtZqsaL1CoKnsz/ilptuc0Ye3YtcnOFWCuI+3k3x2vn98xGTyuzVk
-         ectw==
-X-Gm-Message-State: AOAM530aC2+DSjiUXDbKNRhMRxrD7vtxLXskHf0kGcAtYewGSYn51uH7
-        moH0tNtMymX21TsitNIvfsYSCg==
-X-Google-Smtp-Source: ABdhPJw+g6qtXnLujFKVRv55AGvVhZcbGPndogV4eznqetPdpLwXYueCN6beIFsP8OoV/l235xaSaw==
-X-Received: by 2002:a5d:9542:0:b0:648:f92b:7bc6 with SMTP id a2-20020a5d9542000000b00648f92b7bc6mr5223132ios.73.1647637149068;
-        Fri, 18 Mar 2022 13:59:09 -0700 (PDT)
-Received: from [192.168.1.128] ([71.205.29.0])
-        by smtp.gmail.com with ESMTPSA id d14-20020a056602328e00b006494aa126c2sm3528385ioz.11.2022.03.18.13.59.05
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=nZ+Qd2I3q/p2XGXq/Yxj9W7hoeC6AUT40y63snQyKHs=;
+        b=MMyJ1IymlBlZbFfwKCEB/p6N7wuizJAAbiIWvlaC3wMoQw2dxRK8m9BUwIXbwLzwzA
+         qAt+dIuUqtQvpE1SwHCgCCEO2RSHPx9oklAWuzqdCp2wHy6gSeGjlRLmXDrFZkvFoAXJ
+         nJ+kzJaRtsK/0rb7lEhUxJ6hMjbvCke0p1Wz1Ynlc/wQ6qDM7v4zfmkWbrWuxhkBIN6x
+         ZJQ3wyaCVPb+yTL3hiIEF3yB07MjI/Y4932kqkjytxSdp8gMBOQ1cTrhWuEs1UHTe1TD
+         BNQXZH6A1bju5gCHLfzP3Jq8hcyRmVmkJsIJV3OtEGWRBg1dOGMoh7A+nRCI3VewxH9U
+         VN5Q==
+X-Gm-Message-State: AOAM530C+EUTKyRYQELDI3/Uwra5GnKXt8WC1ge7RaFa+5XKtvwF/5V4
+        BelKhojDD+p5z7M5VgXaG1r3oi+ttJiWWxwKq20=
+X-Google-Smtp-Source: ABdhPJwNd0h1t4/P9ERC+aepPDlDNHOELPfryvcRip7z7d1wUuR21Asuu7Lo+oX0jkwG3LJzF9pgLw==
+X-Received: by 2002:a17:907:97c9:b0:6db:ab53:1fdf with SMTP id js9-20020a17090797c900b006dbab531fdfmr11099472ejc.406.1647640750866;
+        Fri, 18 Mar 2022 14:59:10 -0700 (PDT)
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com. [209.85.221.52])
+        by smtp.gmail.com with ESMTPSA id fx3-20020a170906b74300b006daecedee44sm4105391ejb.220.2022.03.18.14.59.09
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Mar 2022 13:59:08 -0700 (PDT)
-Subject: Re: [PATCH 64/64] media: Kconfig: cleanup VIDEO_DEV dependencies
-To:     Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     Fabio Estevam <festevam@gmail.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Giulio Benetti <giulio.benetti@benettiengineering.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Hans Verkuil <hverkuil@xs4all.nl>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Heungjun Kim <riverful.kim@samsung.com>,
-        Houlong Wei <houlong.wei@mediatek.com>,
-        Hugues Fruchet <hugues.fruchet@foss.st.com>,
-        Hyun Kwon <hyun.kwon@xilinx.com>,
-        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-        Jacob Chen <jacob-chen@iotwrt.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Jean-Christophe Trotin <jean-christophe.trotin@foss.st.com>,
-        Jeff LaBundy <jeff@labundy.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Joe Hung <joe_hung@ilitek.com>, Joel Stanley <joel@jms.id.au>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Kieran Bingham <kieran.bingham@ideasonboard.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Marek Vasut <marex@denx.de>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Martina Krasteva <martinax.krasteva@intel.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Michael Grzeschik <m.grzeschik@pengutronix.de>,
-        Michael Tretter <m.tretter@pengutronix.de>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Mike Isely <isely@pobox.com>, Ming Qian <ming.qian@nxp.com>,
-        Minghsiu Tsai <minghsiu.tsai@mediatek.com>,
-        Mirela Rabulea <mirela.rabulea@nxp.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Nicolas Saenz Julienne <nsaenz@kernel.org>,
-        Olivier Lorin <o.lorin@laposte.net>,
-        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-        Pavel Machek <pavel@ucw.cz>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        Ray Jui <rjui@broadcom.com>,
-        Rick Chang <rick.chang@mediatek.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Sakari Ailus <sakari.ailus@linux.intel.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Scott Branden <sbranden@broadcom.com>,
-        Sean Young <sean@mess.org>, Shawn Guo <shawnguo@kernel.org>,
-        Shawn Tu <shawnx.tu@intel.com>,
-        Shijie Qin <shijie.qin@nxp.com>,
-        Sowjanya Komatineni <skomatineni@nvidia.com>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Steve Longerbeam <slongerbeam@gmail.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        Takashi Iwai <tiwai@suse.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Tianshu Qiu <tian.shu.qiu@intel.com>,
-        Tiffany Lin <tiffany.lin@mediatek.com>,
-        Todor Tomov <todor.too@gmail.com>,
-        Vincent Knecht <vincent.knecht@mailoo.org>,
-        Yong Deng <yong.deng@magewell.com>,
-        Yong Zhi <yong.zhi@intel.com>, Zhou Peng <eagle.zhou@nxp.com>,
-        alsa-devel@alsa-project.org, bcm-kernel-feedback-list@broadcom.com,
-        linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
-        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-rpi-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, linux-staging@lists.linux.dev,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        linux-usb@vger.kernel.org, mjpeg-users@lists.sourceforge.net,
-        openbmc@lists.ozlabs.org, Shuah Khan <skhan@linuxfoundation.org>
-References: <cover.1647242578.git.mchehab@kernel.org>
- <decd26e90adc5c16470e4f738810f22fe6478b27.1647242579.git.mchehab@kernel.org>
-From:   Shuah Khan <skhan@linuxfoundation.org>
-Message-ID: <9e02d88a-3344-8d91-c652-72cb989506de@linuxfoundation.org>
-Date:   Fri, 18 Mar 2022 14:59:05 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        Fri, 18 Mar 2022 14:59:10 -0700 (PDT)
+Received: by mail-wr1-f52.google.com with SMTP id d7so13390618wrb.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Mar 2022 14:59:09 -0700 (PDT)
+X-Received: by 2002:a5d:4491:0:b0:203:f63a:e89b with SMTP id
+ j17-20020a5d4491000000b00203f63ae89bmr4159173wrq.342.1647640749326; Fri, 18
+ Mar 2022 14:59:09 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <decd26e90adc5c16470e4f738810f22fe6478b27.1647242579.git.mchehab@kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <1647452154-16361-1-git-send-email-quic_sbillaka@quicinc.com>
+ <1647452154-16361-7-git-send-email-quic_sbillaka@quicinc.com>
+ <CAE-0n520pQKM7mFSE_00ER+F9RKUPrN+y4U8fmsxi7FoFMyOrA@mail.gmail.com>
+ <CAD=FV=UWF8K9JPJXFSGMRK-HmCi+2jM3aN6Uy7hyDSu1_azF+w@mail.gmail.com> <CAE-0n53U=bqPTGtPx2Ho5axtO6EL6WtOtmFisxSufC6OZERV1Q@mail.gmail.com>
+In-Reply-To: <CAE-0n53U=bqPTGtPx2Ho5axtO6EL6WtOtmFisxSufC6OZERV1Q@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 18 Mar 2022 14:58:55 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WaK8VFC-BvsFpnUv3mW4svGggQTw1hh+zRCEhGvbgYMQ@mail.gmail.com>
+Message-ID: <CAD=FV=WaK8VFC-BvsFpnUv3mW4svGggQTw1hh+zRCEhGvbgYMQ@mail.gmail.com>
+Subject: Re: [PATCH v5 6/9] drm/msm/dp: wait for hpd high before any sink interaction
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        quic_kalyant <quic_kalyant@quicinc.com>,
+        quic_abhinavk@quicinc.com, quic_khsieh@quicinc.com,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, krzk+dt@kernel.org,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        quic_vproddut@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/14/22 1:55 AM, Mauro Carvalho Chehab wrote:
-> media Kconfig has two entries associated to V4L API:
-> VIDEO_DEV and VIDEO_V4L2.
-> 
-> On Kernel 2.6.x, there were two V4L APIs, each one with its own flag.
-> VIDEO_DEV were meant to:
-> 	1) enable Video4Linux and make its Kconfig options to appear;
-> 	2) it makes the Kernel build the V4L core.
-> 
-> while VIDEO_V4L2 where used to distinguish between drivers that
-> implement the newer API and drivers that implemented the former one.
-> 
-> With time, such meaning changed, specially after the removal of
-> all V4L version 1 drivers.
-> 
-> At the current implementation, VIDEO_DEV only does (1): it enables
-> the media options related to V4L, that now has:
-> 
-> 	menu "Video4Linux options"
-> 		visible if VIDEO_DEV
-> 
-> 	source "drivers/media/v4l2-core/Kconfig"
-> 	endmenu
-> 
-> but it doesn't affect anymore the V4L core drivers.
-> 
-> The rationale is that the V4L2 core has a "soft" dependency
-> at the I2C bus, and now requires to select a number of other
-> Kconfig options:
-> 
-> 	config VIDEO_V4L2
-> 		tristate
-> 		depends on (I2C || I2C=n) && VIDEO_DEV
-> 		select RATIONAL
-> 		select VIDEOBUF2_V4L2 if VIDEOBUF2_CORE
-> 		default (I2C || I2C=n) && VIDEO_DEV
-> 
-> In the past, merging them would be tricky, but it seems that it is now
-> possible to merge those symbols, in order to simplify V4L dependencies.
-> 
-> Let's keep VIDEO_DEV, as this one is used on some make *defconfig
-> configurations.
-> 
-> Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-> ---
-> 
+Hi,
 
->   drivers/media/test-drivers/vicodec/Kconfig    |   2 +-
->   drivers/media/test-drivers/vimc/Kconfig       |   2 +-
->   drivers/media/test-drivers/vivid/Kconfig      |   2 +-
+On Fri, Mar 18, 2022 at 1:17 PM Stephen Boyd <swboyd@chromium.org> wrote:
 >
+> > > > +       ret = dp_catalog_aux_wait_for_hpd_connect_state(aux->catalog);
+> > >
+> > > Why are we making aux transactions when hpd isn't asserted? Can we only
+> > > register the aux device once we know that state is "connected"? I'm
+> > > concerned that we're going to be possibly polling the connected bit up
+> > > to some amount of time (0x0003FFFF usecs?) for each aux transfer when
+> > > that doesn't make any sense to keep checking. We should be able to check
+> > > it once, register aux, and then when disconnect happens we can
+> > > unregister aux.
+> >
+> > This is for eDP and, unless someone wants to redesign it again, is
+> > just how it works.
+> >
+> > Specifically:
+> >
+> > 1. On eDP you _always_ report "connected". This is because when an eDP
+> > panel is turned off (but still there) you actually have no way to
+> > detect it--you just have to assume it's there. And thus you _always_
+> > register the AUX bus.
+>
+> Is reporting "connected" the same as HPD being asserted in the case of
+> eDP? I can understand wanting to report "connected", because as you say,
+> the panel is always connected; there aren't dongles or cables involved.
 
-For vimc change: (trimmed the recipient list to send response)
+No. What I mean by connected is that when DRM asks "hey, do you have a
+panel" connected then for eDP we always say "yes" regardless of any
+hardware state.
 
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-
-thanks,
--- Shuah
-
+HPD is a _huge_ misnomer for eDP and IMO the name causes lots of
+confusion. It's not "hot plug detect". You don't hot plug eDP. It's
+really "panel ready / panel IRQ"
 
 
+> But the state of the HPD pin is changing at runtime, and eDP supports
+> irq_hpd pulses from what I recall, for "link management".
+>
+> I think this device requires the status bit in the hardware to say it is
+> "connected" before aux transactions are guaranteed to work. Presumably
+> the HPD pin could go be asserted at the SoC's pad and there could be
+> some time still where the hardware status bit hasn't flipped over to
+> "connected" yet and thus aux transactions are going to fail. Can qcom
+> confirm this?
+>
+> >
+> > 2. When we are asked to read the EDID that happens _before_ the normal
+> > prepare/enable steps. The way that this should work is that the
+> > request travels down to the panel. The panel turns itself on (waiting
+> > for any hardcoded delays it knows about) and then initiates an AUX
+> > transaction. The AUX transaction is in charge of waiting for HPD.
+>
+> Are we talking about generic_edp_panel_probe()? Why doesn't that poll
+> hpd gpio like panel_edp_prepare_once() does?
+
+There's no HPD GPIO in this case, right?
+
+In the trogdor case we ended up not using the HPD that was part of the
+ti-sn65dsi86 controller because it was fairly useless (it debounced
+for far too long), so we ended up hooking it up as a GPIO and I guess
+gave up on getting the extra notifications from the panel. Maybe a
+good thing, in hindsight, that we didn't do PSR because that might
+have been a pain.
+
+In any case, originally I had the GPIO being handled by the
+ti-sn65dsi86 controller driver and that seemed like it made sense to
+me (after all, the ti-sn65dsi86 driver would have to handle HPD if
+this went to the dedicated HPD pin) but got told "no, put it in the
+panel" by both you and Laurent [1].
+
+[1] https://lore.kernel.org/r/20200415203256.GP4758@pendragon.ideasonboard.com/
+
+
+> Are there any links to
+> discussions about this I can read?
+
+I'm not sure if there's any more than the conversation I pointed at
+above where we talked about hpd-gpios. Atop that, I believe I just
+realized that this was the only way it could work without re-designing
+again.
+
+To some extent the status quo is documented in commit a64ad9c3e4a5
+("drm/panel-edp: Fix "prepare_to_enable" if panel doesn't handle
+HPD"). I wrote that commit when I thought about how HPD would need to
+be handled if it was a dedicated pin on the controller and the panel
+didn't have knowledge about it.
+
+
+> Pushing hpd state checking into aux
+> transactions looks like the wrong direction. Also, as I said up above I
+> am concerned that even checking the GPIO won't work and we need some way
+> to ask the bridge if HPD is asserted or not and then fallback to the
+> GPIO method if the display phy/controller doesn't have support to check
+> HPD internally. Something on top of DRM_BRIDGE_OP_HPD?
+
+If we could somehow get the HPD status from the bridge in the panel
+driver it definitely would be convenient. It does feel like that's an
+improvement that could be done later, though. We've already landed a
+few instances of doing what's done here, like for parade-ps8640 and
+analogix_dp. I suspect designing a new mechanism might not be the most
+trivial.
+
+I haven't actually tried it, but I suspect that to get something like
+what you're talking about we'd have to get the rest of drm to know
+that for eDP ports that it should assume something is connected
+_regardless_ of what the "detect" / "HPD" options say. Then we'd have
+to extend the edp-panel code to be able to be able to query the next
+bridge in the chain if a GPIO wasn't provided.
+
+
+> > For the DP case this should not cause any significant overhead, right?
+> > HPD should always be asserted so this is basically just one extra IO
+> > read confirming that HPD is asserted which should be almost nothing...
+> > You're just about to do a whole bunch of IO reads/writes in order to
+> > program the AUX transaction anyway.
+>
+> In the DP case the dongle/cable can be disconnected in the middle of aux
+> transactions. If that happens we could be waiting a while in this
+> transfer function to timeout looking for the status bit. The driver
+> already gets an "unplug" irq when the cable is disconnected though so it
+> would be better to figure out a way to stop the aux transactions quickly
+> when that happens without having to read the hardware and poll the bit
+> that we already know is doomed to timeout. I think apple dongles throw
+> this logic for a loop though because the HDMI cable can be disconnected
+> from the dongle and then we don't see an "unplug" irq, just the number
+> of sinks becomes 0. Maybe there's an irq_hpd event, not sure.
+
+Ah, interesting. Having a DP cable unplugged in the middle of an aux
+transaction does seem like it could be a problem. What if we just wait
+in the case our bridge.type is "DRM_MODE_CONNECTOR_eDP"? That should
+be easy, right?
+
+
+> > > > +       if (ret) {
+> > > > +               DRM_DEBUG_DP("DP sink not ready for aux transactions\n");
+> > > > +               goto exit;
+> > > > +       }
+> > > > +
+> > > >         dp_aux_update_offset_and_segment(aux, msg);
+> > > >         dp_aux_transfer_helper(aux, msg, true);
+> > > >
+> > > > diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> > > > index fac815f..2c3b0f7 100644
+> > > > --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
+> > > > +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> > > > @@ -242,6 +242,29 @@ void dp_catalog_aux_update_cfg(struct dp_catalog *dp_catalog)
+> > > >         phy_calibrate(phy);
+> > > >  }
+> > > >
+> > > > +int dp_catalog_aux_wait_for_hpd_connect_state(struct dp_catalog *dp_catalog)
+> > > > +{
+> > > > +       u32 state, hpd_en, timeout;
+> > > > +       struct dp_catalog_private *catalog = container_of(dp_catalog,
+> > > > +                               struct dp_catalog_private, dp_catalog);
+> > > > +
+> > > > +       hpd_en = dp_read_aux(catalog, REG_DP_DP_HPD_CTRL) &
+> > > > +                                       DP_DP_HPD_CTRL_HPD_EN;
+> > >
+> > > Use two lines
+> > >
+> > >         hpd_en = dp_read_aux();
+> > >         hpd_en &= DP_DP_HPD_CTRL_HPD_EN;
+> > >
+> > > > +
+> > > > +       /* no-hpd case */
+> > > > +       if (!hpd_en)
+> > > > +               return 0;
+> >
+> > I guess reading from hardware is fine, but I would have expected the
+> > driver to simply know whether HPD is used or not. Don't need to read
+> > it from hardware, do we? It's not like it's changing from minute to
+> > minute--this is something known at probe time.
+>
+> Are you saying that HPD is always asserted?
+
+I don't think this is looking for HPD assertion, is it? This is
+looking for whether the HPD interrupt is enabled, isn't it? This is to
+support the case of eDP panels where we didn't hook the HPD line up,
+right? It should be known at probe time whether we've hooked HPD up or
+not. ...or am I misreading?
+
+
+> That doesn't sound right.
+> My understanding is that HPD will be asserted after the panel is powered
+> up. Before that HPD is deasserted. Similarly, when we power down the
+> panel, HPD will be deasserted. I guess DRM wants to assume that an eDP
+> panel is always connected? That sounds like it might be OK as long as
+> userspace doesn't use "connected" to know that it's OK to do things like
+> read/write aux or push pixels to the panel when HPD is deasserted.
+
+IMO having userspace reading / writing aux directly and expecting it
+to work is a terrible idea anyway. It's _maybe_ sorta OK in the DP
+case, but it's really not good in the eDP case. To me it's sorta like
+expecting things to be amazing and foolproof when you go behind the
+kernel's back and write to an i2c device using `i2cset -f`. Sure, it
+might work, but it can also confuse the heck out of things. It also
+turns out to be a huge problem when you get to PSR because userspace
+will get errors if it tries to write to the AUX channel and the panel
+is in PSR mode. This came up in the context of Brian's analogix dp
+patches [1]. The right answer, in my mind, is to treat userspace
+accessing the AUX channel directly as more of a debug feature, at
+least for eDP panels.
+
+In terms of userspace pushing pixels to the panel, I don't think
+that's quite the same, is it? Generally userspace is in charge of
+whether the eDP panel is powered on or powered off, isn't it?
+
+So generally I think that for eDP a panel is always "connected" in all
+senses of the word. It might not be "powered" at some given point of
+time, but it's always connected.
+
+[1] https://lore.kernel.org/r/CAD=FV=VYe1rLKANQ8eom7g8x1v6_s_OYnX819Ax4m7O3UwDHmg@mail.gmail.com/
+
+
+-Doug
