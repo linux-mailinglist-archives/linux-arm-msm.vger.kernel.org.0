@@ -2,77 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 722F34DD11C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Mar 2022 00:21:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EEBBA4DD194
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Mar 2022 01:04:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229653AbiCQXXA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Mar 2022 19:23:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45160 "EHLO
+        id S230183AbiCRAFh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 17 Mar 2022 20:05:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229642AbiCQXW7 (ORCPT
+        with ESMTP id S229954AbiCRAFg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Mar 2022 19:22:59 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C36B5200367
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 16:21:41 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id g17so11557104lfh.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 16:21:41 -0700 (PDT)
+        Thu, 17 Mar 2022 20:05:36 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 801D4267FA8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 17:04:19 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id b24so8432029edu.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 17:04:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=0TlJeFaiz7dJRdwgygJHKKabVfjrr5QSbdY+xLrVeFE=;
-        b=M2b6bug+iyFITuX3nsblKgcZzTCq5kvXT4o/6vw2bo1+t1mgQ+0tljKqzILqQV9KQC
-         LprP3pV7fp/gwzLmpNSfU2FgCzaFUIdQtda0CazI2Yl/dXcIRVHSGQf1P5nQGlUQ1A2o
-         +TRVVhXxvjJqCJQ3qjyvxgUhIogoSTNAHCii3o8W5NjnQmzB7XtTr80hHrl6Gqe2gwdr
-         3Dyn0N/Ko/K6DwBDC1rZPRr9AswwTXzzwr/wKgmwLL9bc/X6PLGvuszD81GsdzLbRubR
-         5SuwqxlgFcJlvYQxVcTLv/j62g/KPaIUwgrH2QPsC9FO67yo9av9xkDe9PZ6ozQ5zyuP
-         eXPg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0UsWfL2d3buCfR66QbOAjKWSr57IypHJxBiVAhmGi4M=;
+        b=EFcmlZxQVZdmxurMBWghVQOI5rZtJ0CxcvzDKkyvCNRIWyFwEOG91za76YnKwGchla
+         Xi1Ive9X2CNoEOSbIUFvrIcLnuG6Q+OgBvCxMMKcrkX44zbHB52V5RMw7092LSlqV/aZ
+         uYlseCKaHPm8mppiKMXEDwWCFGJNFOGF5bHgo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=0TlJeFaiz7dJRdwgygJHKKabVfjrr5QSbdY+xLrVeFE=;
-        b=uPW8OcSXdC0ENIYk7oP5ClLZAI3w4nDZ2szQhcpbZWivbAwQLYiiN1CdQFaFsHnBJI
-         91qP6KkgY7/RR+uJBwZCpW92Zx1P4CM8wXDDMQCGnOZUng0AdVIvGY1K3QbRLRcYf93j
-         cYhSWSU+mlN7WY5e2/faXlMBuQ6GfyykDNhrWrKCbHAnD5Ttc4JLBKNxKQGWv+pJZdy1
-         XYOWjB6+wGsqrqxP+pya6C7eDV5M/7dqAbNKDrlWOrtkyaualVruXcW0mMlSBLH5Ue73
-         2IQz2ozYfX/i7PgfcteEO0ofD1Ztz3BZHvitfiYwbPDMVzpGy/CqUXQ9kCSM/SGzopvQ
-         9u+w==
-X-Gm-Message-State: AOAM532gmzcmd5G4VScw3dCFjgsK+d8hON8j86WCVp0GIdYKOiiKlkqg
-        q2SPEgCJhQTYnemoPDKOgUrtVorw3I0okw==
-X-Google-Smtp-Source: ABdhPJydboPr2sH911862k1BuLse4EgcM8Y/5v7lTKBsfbN0O6OUdKMDW7vb6VT+lo0zI+MwdwIzsQ==
-X-Received: by 2002:a05:6512:a88:b0:445:ce77:33d1 with SMTP id m8-20020a0565120a8800b00445ce7733d1mr4083544lfu.389.1647559299955;
-        Thu, 17 Mar 2022 16:21:39 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id 22-20020a05651c00d600b002496f5a7390sm41052ljr.89.2022.03.17.16.21.39
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0UsWfL2d3buCfR66QbOAjKWSr57IypHJxBiVAhmGi4M=;
+        b=HVPLwVkHTLaJxROBR3RIpxaV5ANdOPDmeOp1UPSeiC4E+wjtvBA7a+3QbWYR3lROAT
+         WdcyAs6WmLt0VVPZGvKpnQyaHpJN59R6t1vbCK/XjylmiVky1BZJEbkRCyx6SWCsjwxc
+         6gX2kJMnANlRutMvyQHRCCCZE+Vyg7pHB0gDL8BkB7aVylVETijqg+f4wpp3Xt4W/ig5
+         MHQhzflSJvU8b7kbsW6wh2pX6AtQep6jFL+R0/xosOtNIrYKtwMGQ3/ddq2ME1vL0kyT
+         9cDF4oebRquHPd+CeKX/U50QoO4Z7KP8SLGFV5Bfnpb75a/Kk6OQasE8MPubNDLydONr
+         I2ig==
+X-Gm-Message-State: AOAM531EjmSffL8vse0WMT+73tCM3p7ynhTap9HciYClOniVapviB565
+        1SmONhi59voIeYUP+aaqVPqyziQ4+vPxeA==
+X-Google-Smtp-Source: ABdhPJwwldMBmDQqQgtncEAmZv9xB5FkR17FBQyGGEBWn2h8RmNieB4KqN70hYyNXvDY34rsq95r8Q==
+X-Received: by 2002:a50:9d47:0:b0:40f:9d3d:97b6 with SMTP id j7-20020a509d47000000b0040f9d3d97b6mr6932840edk.392.1647561858123;
+        Thu, 17 Mar 2022 17:04:18 -0700 (PDT)
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com. [209.85.221.54])
+        by smtp.gmail.com with ESMTPSA id hg11-20020a1709072ccb00b006cee4fb36c7sm3035459ejc.64.2022.03.17.17.04.17
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Mar 2022 16:21:39 -0700 (PDT)
-Message-ID: <0c477bfa-96de-17a1-69a6-25dc68e130f1@linaro.org>
-Date:   Fri, 18 Mar 2022 02:21:38 +0300
+        Thu, 17 Mar 2022 17:04:17 -0700 (PDT)
+Received: by mail-wr1-f54.google.com with SMTP id h23so9006435wrb.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 17:04:17 -0700 (PDT)
+X-Received: by 2002:a5d:53c6:0:b0:203:ee27:12ff with SMTP id
+ a6-20020a5d53c6000000b00203ee2712ffmr3705265wrw.422.1647561857230; Thu, 17
+ Mar 2022 17:04:17 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v2 2/4] cpufreq: qcom-hw: fix the race between LMH worker
- and cpuhp
-Content-Language: en-GB
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+References: <1647452154-16361-1-git-send-email-quic_sbillaka@quicinc.com> <1647452154-16361-5-git-send-email-quic_sbillaka@quicinc.com>
+In-Reply-To: <1647452154-16361-5-git-send-email-quic_sbillaka@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 17 Mar 2022 17:04:03 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XUfQoYO-=BPvH4o3EWReCVckfCThYxf==T2Ff_C8TrQQ@mail.gmail.com>
+Message-ID: <CAD=FV=XUfQoYO-=BPvH4o3EWReCVckfCThYxf==T2Ff_C8TrQQ@mail.gmail.com>
+Subject: Re: [PATCH v5 4/9] drm/panel-edp: add LQ140M1JW46 edp panel entry
+To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        quic_kalyant <quic_kalyant@quicinc.com>,
+        quic_abhinavk@quicinc.com, quic_khsieh@quicinc.com,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        Thara Gopinath <thara.gopinath@gmail.com>
-References: <20220309223938.3819715-1-dmitry.baryshkov@linaro.org>
- <20220309223938.3819715-3-dmitry.baryshkov@linaro.org>
- <83344ef3-3b37-26d0-80a9-576d5e2f5098@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <83344ef3-3b37-26d0-80a9-576d5e2f5098@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Rob Herring <robh+dt@kernel.org>, krzk+dt@kernel.org,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        quic_vproddut@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,153 +90,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/03/2022 02:10, Vladimir Zapolskiy wrote:
-> Hi Dmitry,
-> 
-> On 3/10/22 12:39 AM, Dmitry Baryshkov wrote:
->> qcom_lmh_dcvs_poll() can be running when the cpu is being put offline.
->> This results in the following warnings and an oops. The driver would
->> disable the worker, but it happens closer to the end of
->> cpufreq_offline(). Change the locking in the qcom_lmh_dcvs_poll(), so
->> that the worker can not run in parallel with cpufreq_offline() call.
->>
->> [   55.650435] (NULL device *): dev_pm_opp_find_freq_floor: Invalid 
->> argument freq=00000000709ccbf9
->> [   55.659420] (NULL device *): Can't find the OPP for throttling: 
->> -EINVAL!
->> [   55.666329] Unable to handle kernel paging request at virtual 
->> address ffffadfba4bb6d81
->> [   55.674491] Mem abort info:
->> [   55.677363]   ESR = 0x96000004
->> [   55.680527]   EC = 0x25: DABT (current EL), IL = 32 bits
->> [   55.686001]   SET = 0, FnV = 0
->> [   55.689164]   EA = 0, S1PTW = 0
->> [   55.692418]   FSC = 0x04: level 0 translation fault
->> [   55.697449] Data abort info:
->> [   55.700426]   ISV = 0, ISS = 0x00000004
->> [   55.704383]   CM = 0, WnR = 0
->> [   55.707455] swapper pgtable: 4k pages, 48-bit VAs, 
->> pgdp=00000000a98e9000
->> [   55.714354] [ffffadfba4bb6d81] pgd=0000000000000000, 
->> p4d=0000000000000000
->> [   55.721388] Internal error: Oops: 96000004 [#1] SMP
->> [   55.726397] Modules linked in:
->> [   55.729542] CPU: 7 PID: 162 Comm: kworker/7:1H Tainted: G S      
->> W         5.17.0-rc6-00100-g04890a1d9672 #724
->> [   55.746066] Workqueue: events_highpri qcom_lmh_dcvs_poll
->> [   55.751527] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS 
->> BTYPE=--)
->> [   55.758669] pc : cpufreq_cpu_get_raw+0x20/0x44
->> [   55.763233] lr : qcom_cpufreq_hw_get+0x10/0x64
->> [   55.767799] sp : ffff800009983d10
->> [   55.771207] x29: ffff800009983d10 x28: ffffaa13a4f2b000 x27: 
->> ffff7b31329f9305
->> [   55.778530] x26: ffffaa13a4f30af8 x25: ffffaa13a4f4e4c8 x24: 
->> ffff7b2ec2eda000
->> [   55.785851] x23: ffffffffffffffea x22: ffff7b2ec2e9fc18 x21: 
->> ffff7b2ec2e9fc00
->> [   55.793170] x20: 0000000000000100 x19: ffff7b2ec2e9fcc0 x18: 
->> ffffffffffffffff
->> [   55.800490] x17: 726620746e656d75 x16: 6772612064696c61 x15: 
->> ffff8000899839c7
->> [   55.807812] x14: 0000000000000000 x13: 0000000000000000 x12: 
->> 0000000000000000
->> [   55.815140] x11: ffff7b2ec2e9fc80 x10: ffffaa13a59a1a70 x9 : 
->> 0000000000000000
->> [   55.822468] x8 : ffff7b2eca6917c0 x7 : ffffaa13a528b000 x6 : 
->> 0000000000000001
->> [   55.829788] x5 : 0000000000040000 x4 : 000000000000024f x3 : 
->> 0000000000000000
->> [   55.837116] x2 : 0000000000000100 x1 : ffffaa13a4bb6d80 x0 : 
->> 000003e800000001
->> [   55.844439] Call trace:
->> [   55.846951]  cpufreq_cpu_get_raw+0x20/0x44
->> [   55.851155]  qcom_lmh_dcvs_poll+0x104/0x160
->> [   55.855452]  process_one_work+0x288/0x69c
->> [   55.859574]  worker_thread+0x74/0x470
->> [   55.863336]  kthread+0xfc/0x100
->> [   55.866568]  ret_from_fork+0x10/0x20
->> [   55.870246] Code: b00065c1 91360021 d503233f f8625800 (f8616800)
->> [   55.876501] ---[ end trace 0000000000000000 ]---
->>
->> Fixes: 275157b367f4 ("cpufreq: qcom-cpufreq-hw: Add dcvs interrupt 
->> support")
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/cpufreq/qcom-cpufreq-hw.c | 24 +++++++++++++++++++++---
->>   1 file changed, 21 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c 
->> b/drivers/cpufreq/qcom-cpufreq-hw.c
->> index 44d46e52baea..7c1bb002e1c3 100644
->> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
->> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
->> @@ -296,6 +296,23 @@ static void qcom_lmh_dcvs_notify(struct 
->> qcom_cpufreq_data *data)
->>       struct dev_pm_opp *opp;
->>       unsigned int freq;
->> +    /*
->> +     * Synchronize against CPU going offline.
->> +     * cpufreq_offline() will get the write lock on policy->rwsem.
->> +     */
->> +retry:
->> +    if (unlikely(!down_read_trylock(&policy->rwsem))) {
->> +        mutex_lock(&data->throttle_lock);
->> +        if (data->cancel_throttle) {
->> +            mutex_unlock(&data->throttle_lock);
->> +            return;
->> +        }
->> +
->> +        mutex_unlock(&data->throttle_lock);
->> +
->> +        schedule();
->> +        goto retry;
->> +    }
-> 
-> do you see an option here to base the logic on policy->cpus mask value 
-> instead of
-> the semaphore lock status? I believe it should be possible, and, if so, 
-> likely
-> it would be preferable.
+Hi,
 
-I used semaphore to remove a race with cpufreq_offline() code.
-Using policy->cpus seems like a hack.
+On Wed, Mar 16, 2022 at 10:37 AM Sankeerth Billakanti
+<quic_sbillaka@quicinc.com> wrote:
+>
+> Add panel identification entry for the sharp LQ140M1JW46 eDP panel
+> with power sequencing delay information.
+>
+> Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+> ---
+>  drivers/gpu/drm/panel/panel-edp.c | 1 +
+>  1 file changed, 1 insertion(+)
 
-> 
->>       /*
->>        * Get the h/w throttled frequency, normalize it using the
->>        * registered opp table and use it to calculate thermal pressure.
->> @@ -314,9 +331,10 @@ static void qcom_lmh_dcvs_notify(struct 
->> qcom_cpufreq_data *data)
->>       /*
->>        * In the unlikely case policy is unregistered do not enable
->> -     * polling or h/w interrupt
->> +     * polling or h/w interrupt.
->> +     * If we are here, we have the policy->rwsem read lock,
->> +     * cancel_throttle can be toggled only with the write lock.
->>        */
->> -    mutex_lock(&data->throttle_lock);
->>       if (data->cancel_throttle)
->>           goto out;
->> @@ -331,7 +349,7 @@ static void qcom_lmh_dcvs_notify(struct 
->> qcom_cpufreq_data *data)
->>                    msecs_to_jiffies(10));
->>   out:
->> -    mutex_unlock(&data->throttle_lock);
->> +    up_read(&policy->rwsem);
->>   }
->>   static void qcom_lmh_dcvs_poll(struct work_struct *work)
->>
-> 
-> FWIW I can add my:
-> 
-> Tested-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> 
-> -- 
-> Best wishes,
-> Vladimir
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
+This is trivial and going through a different tree than everything
+else, so I'm just pushing it to drm-misc-next (which is setup to land
+things without regard to the merge window) without sitting on it.
 
--- 
-With best wishes
-Dmitry
+You can leave it out of future spins of this series.
+
+9f493fd71d4b drm/panel-edp: add LQ140M1JW46 edp panel entry
