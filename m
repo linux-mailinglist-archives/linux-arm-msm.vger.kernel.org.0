@@ -2,76 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B44E4DD99D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Mar 2022 13:19:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E6FCA4DD9F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Mar 2022 13:50:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236202AbiCRMUT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Mar 2022 08:20:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35210 "EHLO
+        id S236403AbiCRMv4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Mar 2022 08:51:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236183AbiCRMUS (ORCPT
+        with ESMTP id S230008AbiCRMvz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Mar 2022 08:20:18 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48AAE1EC601;
-        Fri, 18 Mar 2022 05:19:00 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B5533618B3;
-        Fri, 18 Mar 2022 12:18:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87544C340E8;
-        Fri, 18 Mar 2022 12:18:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1647605939;
-        bh=H8pxo4tsDjKXFt3tUygCmfSFmNQBhKEe3tgt/Zdkk0I=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=S/Vh8yy5XhXcR8vvsLdF8f+/uNV7unzY/E0QW82g+2nzWCS1TmusJKrPfL829z6Oo
-         Ty6hvy2SGTEXnjy6u7vOI/VcdOY6B3wzY1cWpM4sZemoeFNnHf4bF4AfeIIPrvXq76
-         TWmzxkFbPGn4hFFhs/PW/yzD902vrnI5uaru/CfM=
-Date:   Fri, 18 Mar 2022 13:01:41 +0100
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Pawel Laszczak <pawell@cadence.com>,
-        Peter Chen <peter.chen@kernel.org>,
-        Roger Quadros <rogerq@kernel.org>,
-        Aswath Govindraju <a-govindraju@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com
-Subject: Re: [PATCH v2 3/3] usb: dwc: host: add xhci_plat_priv quirk
- XHCI_SKIP_PHY_INIT
-Message-ID: <YjR0pXtB5pfnqHu1@kroah.com>
-References: <1646130507-26796-1-git-send-email-quic_c_sanm@quicinc.com>
- <1646130507-26796-4-git-send-email-quic_c_sanm@quicinc.com>
+        Fri, 18 Mar 2022 08:51:55 -0400
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA5481ED063;
+        Fri, 18 Mar 2022 05:50:36 -0700 (PDT)
+Received: by mail-lf1-f47.google.com with SMTP id w27so13947724lfa.5;
+        Fri, 18 Mar 2022 05:50:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=OJu/+DhwQ4TG5+tIH51Zo9ItsMV5oal9aAoPrsbEoi8=;
+        b=ivXnSLtpOGaIMauHdRM7eGDHaDKj4RnX9Y5YODQ/G2BpToJJ/iSCriA4Z73IjGOUFW
+         CkaTD2E7qVV6Ws4S3b1s5UIoYQdp3D88wgpeUuoSQHSeby/wn3rX8mB5wnKlluOFL/Iy
+         vQOECIiWHAGdNJVmiWaFxXaURFd4Mkfu6Sg4RRCH1n/RUlh47A4Gc+M8z3gCsRIBBr2B
+         fPMEcMNv1504zycsJa/kRtGAIqU/9GSoVI2N9kILL8W+lQLkgh/3xe0LPCscU4QQCQNl
+         lxnCC0ohEio6ttxL4LpB+uC4b/K3EGaD66qQoSbiyZyB7UT+DJ4mARz2LQgymBrnrOE8
+         zelQ==
+X-Gm-Message-State: AOAM533etmiwV4+u5ehRl8XNCzQ05+3NpZGaIFAdZpFm2miXeLRwcNFy
+        CzzbQAZ7L2dyYuefQLXvl68=
+X-Google-Smtp-Source: ABdhPJyBkRrx7Z0uNMyc5zszBSpP9QRiZv8MKDpJewRS/0i0lodNGcX5PhVl8kjtJW8JfRMm+lnuWg==
+X-Received: by 2002:a05:6512:3981:b0:448:40e5:cf90 with SMTP id j1-20020a056512398100b0044840e5cf90mr5632455lfu.656.1647607834839;
+        Fri, 18 Mar 2022 05:50:34 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.googlemail.com with ESMTPSA id v21-20020a2e2f15000000b002456e6cdab2sm944860ljv.93.2022.03.18.05.50.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Mar 2022 05:50:34 -0700 (PDT)
+Message-ID: <cd976ef0-767b-8cf0-8635-28aeaa6542a3@kernel.org>
+Date:   Fri, 18 Mar 2022 13:50:31 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1646130507-26796-4-git-send-email-quic_c_sanm@quicinc.com>
-X-Spam-Status: No, score=-8.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH V3 1/2] dt-bindings: mmc: sdhci-msm: Add gcc resets
+ strings
+Content-Language: en-US
+To:     Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>,
+        ulf.hansson@linaro.org, robh+dt@kernel.org, krzk+dt@kernel.org,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org
+Cc:     quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
+        quic_sartgarg@quicinc.com, quic_nitirawa@quicinc.com,
+        quic_sayalil@quicinc.com
+References: <1647532165-6302-1-git-send-email-quic_c_sbhanu@quicinc.com>
+ <1647532165-6302-2-git-send-email-quic_c_sbhanu@quicinc.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <1647532165-6302-2-git-send-email-quic_c_sbhanu@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 01, 2022 at 03:58:27PM +0530, Sandeep Maheswaram wrote:
-> dwc3 manages PHY by own DRD driver, so skip the management by
-> HCD core.
-> During runtime suspend phy was not getting suspend because
-> runtime_usage value is 2.
+On 17/03/2022 16:49, Shaik Sajida Bhanu wrote:
+> Add gcc hardware reset supported strings for qcom-sdhci controller.
+> 
+> Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+> index 6216ed7..f180111 100644
+> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+> @@ -62,6 +62,10 @@ Required properties:
+>  - qcom,dll-config: Chipset and Platform specific value. Use this field to
+>  	specify the DLL_CONFIG register value as per Hardware Programming Guide.
+>  
+> +- resets: Phandle and reset specifier for the device's reset.
+> +- reset-names: List of reset signal name strings sorted in the same order as
+> +	       the resets property.
 
-I do not understand this last sentence, sorry.  Try rewriting this a bit
-to explain what is going on here.
+Please list the actual names used in reset-names.
 
-thanks,
 
-greg k-h
+Best regards,
+Krzysztof
