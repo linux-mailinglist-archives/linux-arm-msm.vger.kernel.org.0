@@ -2,161 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E78B44DD25B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Mar 2022 02:19:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 451BA4DD529
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Mar 2022 08:19:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231449AbiCRBUb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 17 Mar 2022 21:20:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57510 "EHLO
+        id S232988AbiCRHUk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Mar 2022 03:20:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231441AbiCRBUa (ORCPT
+        with ESMTP id S229650AbiCRHUk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 17 Mar 2022 21:20:30 -0400
-Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C46FA2571A5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 18:19:12 -0700 (PDT)
-Received: by mail-oo1-xc29.google.com with SMTP id q1-20020a4a7d41000000b003211b63eb7bso8584591ooe.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Mar 2022 18:19:12 -0700 (PDT)
+        Fri, 18 Mar 2022 03:20:40 -0400
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EDFD2B8827;
+        Fri, 18 Mar 2022 00:19:22 -0700 (PDT)
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+        by mx0b-00069f02.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 22I35DnG022983;
+        Fri, 18 Mar 2022 07:19:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=corp-2021-07-09;
+ bh=B9zVUBF9HZX/gVochmv6zsgzjtdhSG0fg0nkeeCJAls=;
+ b=NBUQD09sSbVgHGYdWAYRILB3DPip7OB6x6UhS79smpODBJFf0ryNs/Q/y8jHS1P15tn3
+ DI7R+/o85+cyq8Pq3kUBxC4JbkqSuWGdYtXVU5D/wqTS5NkBbtUyDzLWVwD3rxG8iQcx
+ kGcWBG/zPhn3iUNcdOk5xsIbMxZeQAdZuxERWF6sutwWKREQ9j6WXBsvcOVIKEL0vCNn
+ 91QEpUMOMSSMTaJ7jQk5RXPmGgSPgECKBOABCIQmjC4q8SRFMJmPlQVGT+05VvGxkPeO
+ BxhSiEVQvNPzvrsp+zwokosaZaO3f6nzxTviJKQID3PeYxER7IBdJRKqz+ZZMWZYrAFG 1g== 
+Received: from userp3030.oracle.com (userp3030.oracle.com [156.151.31.80] (may be forged))
+        by mx0b-00069f02.pphosted.com with ESMTP id 3et5fubfr8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Fri, 18 Mar 2022 07:19:13 +0000
+Received: from pps.filterd (userp3030.oracle.com [127.0.0.1])
+        by userp3030.oracle.com (8.16.1.2/8.16.1.2) with SMTP id 22I7JCtu007199;
+        Fri, 18 Mar 2022 07:19:12 GMT
+Received: from nam10-mw2-obe.outbound.protection.outlook.com (mail-mw2nam10lp2102.outbound.protection.outlook.com [104.47.55.102])
+        by userp3030.oracle.com with ESMTP id 3et65q4v1h-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Fri, 18 Mar 2022 07:19:12 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=DNTMewYtI/7O1qgz7wrFIWN66Wa7MA1q9pBExRoyY27qeWks1X5cILncU0MB4jZNlGKwV4K8wNlzYQt2L+vBtviC7tKH8h0mAJLZXkrIsbH0IKiIt1QqsHHkvP6q7bRs+4xSaQ87iweGehrfAo0XedwMKqzsfFDSHRlNK9/HhZl0UI+o7Ou+aHfviwd30h4AtqALGE0LzyUwo1xw7Kw15SdnNVjLDzX/I5iF4FZ2v/pS1Ksa9qf/OHckVjJ450pGJCPPN9Z/ZfprX2nn4P1aIKBbQbXqqVLDKYOqrvVntbIAAvw4wtk5tvAOXHqoQ00PGbRz1cG+1mAouLdKbksWUA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=B9zVUBF9HZX/gVochmv6zsgzjtdhSG0fg0nkeeCJAls=;
+ b=BhHvDDcIUp/IECAx7KLggrun600ll3ATOG6bCDdNB3lp01fFyh20VpNam2ySw4zks4JQBsmzrs8qvUHIdrciRfzOYc5PaAOtNOF2sNH57EYljDZz4SyxBWN77Bykd+wu1USRtz1ocbq9MicI/SCDM0T5u4Rwk/c7P8sdyj6Yf0f2CTcLwLhaky98K7dq1LvgOBMY2h6T3ROJ90qGn9lnpmmIDsdSf67hyXPbn7i9FvabIQ9bO8mYNPMrIsqrp6D6m4qkDkR32lOpGl/E6AET4xEZgBEus2MbFI6Zk1X3iBGIRpRRLMo7m4EoCDlrKTGqqJNR38bMawADoXn3sXMd5A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=+aYzTZ6WAo0uIN7qC1lsIM5UM8Nxh5c84eblIjBJ+PM=;
-        b=bczh01O2CC33q/AG/o/43ApRFfd4e4j4VIYqbiyofSkyxVYoVTD72mbz+fAEyCLzHq
-         m2lluHFRqW7J8jBQtlhr/uZLfMrDBfaCzvna1yDwP0na6W0Er4h5YktOVc/ZA0kUX4jb
-         dZw33YXaHXP1fRAAMtYpG7BdH1AUcCMlm3F7c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=+aYzTZ6WAo0uIN7qC1lsIM5UM8Nxh5c84eblIjBJ+PM=;
-        b=o+Ai7DknqIF7jPKqnk5IXbf6fkGbkWGiWBs0AlrOVAuAAFxZ1qZjHQh+SWPmX8FZ9x
-         DshKQCI8QAno8/zbAZzRXixJCKgA/efmruhzs/qNpCwvnggf7363KWleTzqvxJ5Mad3n
-         XNyqjWzWhVtliC58o9biwjTTfuVC7fGJUSjI4h8ODWL6pnNIQPuDDngB6dN06xiFYYUF
-         1hb0zDu7pqThsIgEGWorDfdaLysdjedaGZb3ruSi1WD9mXhDffJZqhoU75L+lGVi5BHz
-         iqMXHV6BF9tsScmGpLpi3KMyyouxkOcER80+SPdZFLaqglS9RR7adnfmEMRz7gmEarmR
-         ZxyQ==
-X-Gm-Message-State: AOAM531QtTcfcsifrMnbsLIFWvEkPpI7IMFv8x9Mtwsm/2xltPxkP2EU
-        4mf66WmBYY7LHbuNZQ3GoHyuiApZCAW47NZqIsAKzA==
-X-Google-Smtp-Source: ABdhPJyev93lfQNXewX0cW1jpZhZZGFfBD8h+TbrQQYUluQ1UzvRN2/C0vA6X7mwIWKcUwX+Buif4Dm0wIsWNJtenrc=
-X-Received: by 2002:a05:6870:b69c:b0:dd:b74b:4099 with SMTP id
- cy28-20020a056870b69c00b000ddb74b4099mr2384205oab.193.1647566352072; Thu, 17
- Mar 2022 18:19:12 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 17 Mar 2022 21:19:11 -0400
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=B9zVUBF9HZX/gVochmv6zsgzjtdhSG0fg0nkeeCJAls=;
+ b=B0sECfWfyosDY1j4Z66ECvtqGfOsQCwl5yv/8czTfmDgfEGgoLSSUs3VXY3z5DwxJbEKJC9cHweuLdUmZgf9mnyAPvuI0e3Cn5C+BQvX37IP3TknqU+5L6dHUdPNJx64ueXk+vvYqlwDgSMQM+9THMqDN9Q/fVmBTP8zy6MZqpk=
+Received: from MWHPR1001MB2365.namprd10.prod.outlook.com
+ (2603:10b6:301:2d::28) by SN6PR10MB2557.namprd10.prod.outlook.com
+ (2603:10b6:805:3f::22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5081.17; Fri, 18 Mar
+ 2022 07:19:09 +0000
+Received: from MWHPR1001MB2365.namprd10.prod.outlook.com
+ ([fe80::2c3d:92b5:42b3:c1c5]) by MWHPR1001MB2365.namprd10.prod.outlook.com
+ ([fe80::2c3d:92b5:42b3:c1c5%4]) with mapi id 15.20.5081.017; Fri, 18 Mar 2022
+ 07:19:09 +0000
+Date:   Fri, 18 Mar 2022 10:18:43 +0300
+From:   Dan Carpenter <dan.carpenter@oracle.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Emma Anholt <emma@anholt.net>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 3/3] drm/msm: Add a way to override processes comm/cmdline
+Message-ID: <20220318071843.GF336@kadam>
+References: <20220317002950.193449-1-robdclark@gmail.com>
+ <20220317002950.193449-4-robdclark@gmail.com>
+ <20220317082121.GH1841@kadam>
+ <CAF6AEGsnXz05fCnYAvFk+Hp-2z7N1kdVS0kYKn7+ejohLp8H7w@mail.gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGsnXz05fCnYAvFk+Hp-2z7N1kdVS0kYKn7+ejohLp8H7w@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-ClientProxiedBy: MR1P264CA0035.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:501:2f::22) To MWHPR1001MB2365.namprd10.prod.outlook.com
+ (2603:10b6:301:2d::28)
 MIME-Version: 1.0
-In-Reply-To: <1647452154-16361-7-git-send-email-quic_sbillaka@quicinc.com>
-References: <1647452154-16361-1-git-send-email-quic_sbillaka@quicinc.com> <1647452154-16361-7-git-send-email-quic_sbillaka@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 17 Mar 2022 21:19:11 -0400
-Message-ID: <CAE-0n520pQKM7mFSE_00ER+F9RKUPrN+y4U8fmsxi7FoFMyOrA@mail.gmail.com>
-Subject: Re: [PATCH v5 6/9] drm/msm/dp: wait for hpd high before any sink interaction
-To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     robdclark@gmail.com, seanpaul@chromium.org,
-        quic_kalyant@quicinc.com, quic_abhinavk@quicinc.com,
-        dianders@chromium.org, quic_khsieh@quicinc.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org, krzk+dt@kernel.org,
-        sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
-        thierry.reding@gmail.com, sam@ravnborg.org,
-        dmitry.baryshkov@linaro.org, quic_vproddut@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 68640327-62f0-462f-bf6a-08da08af981b
+X-MS-TrafficTypeDiagnostic: SN6PR10MB2557:EE_
+X-Microsoft-Antispam-PRVS: <SN6PR10MB2557ADF55B532F2E6ED2FBFF8E139@SN6PR10MB2557.namprd10.prod.outlook.com>
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 4sX1fCcExOqdjvqlj4KLAagZA5D9dmONrD4ZJncCAGITwXmI988x6wdmvMvB5NBozXY3xHLpvgYhQzVXjUL72reQLeDqf6RlhAdAjvu0ONWQgPltYYHSTZqTTtZdlZxxkTgpXGuaxlR0Z48dnB6jLA+MGnn7VGIxlUoL002sbuupdMyCmAgE+SRg+CZ2x3pWAGTyFNrCtb6WuthqvZ8LlszZ+JYOfHmGmzx/THYGAbaQuGYQjC9WiWCchogu4776v0E0tPDjFa7j40vttVo0NU/mppur2DAb2zkr1HiiY/aAwrgSI5WaBGGiNHOPHnvR5FMPuKyRC44EFGf3O29aLnQ6bSPUMqzUNctLOtzh6YrVNoBoE2dHI83jRLSmzbuDq+7b6KKM9XIkvXXOHl0Rf3N9MZPNS4YkVbCYbVZp3E+xkpdxHgt311H2MNz8N2FP9XqeR39SWuSXmErfcgeMu7d3EqQF3ofU0Sv9lXgPpL0oWrnLuoCb4gw3ZE4UgfgjLXrP7HMSvmvj7IYo/5+YiroBpe93lUN5C9DnEbfd1RCi7r636IlBQDu5ejh7OLUEM0LLvvGf8oSWg2lZBoR898Ye8SdE5+0rDa9cJtvMABQ2ePoqVWjGLJZyaeAPSwgqBZfHyACO5pJVCfetduMnUjL+MHkOlDStQa+/e3LcB9iXT2Z8K05nJJJa5t598hgXZC2v1qOu+YrlAS+It53jMN7SuoyqdOfEDI8xwM1OG6w=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MWHPR1001MB2365.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(7916004)(366004)(66556008)(8676002)(4326008)(66476007)(38350700002)(66946007)(38100700002)(86362001)(508600001)(6512007)(9686003)(6486002)(52116002)(26005)(186003)(6506007)(54906003)(6666004)(33656002)(5660300002)(8936002)(7416002)(6916009)(83380400001)(33716001)(1076003)(2906002)(44832011)(316002)(43043002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Mk6Vy05RP063Nbucax8Hspnf8xZd9ZE1+6pGudyMqA8dPjXMHjVNU96B+wU1?=
+ =?us-ascii?Q?YthOWOut8FNWsvgpedb+CZknUlcTR0KrxYl2KWeJo+Px4Ru+GoqOEUrIOyYS?=
+ =?us-ascii?Q?6MIo5wxlzpVIiwYyWKXGz9213QL/XeK97M31mLaaSKG0Ki7bNDhKztiNGxpL?=
+ =?us-ascii?Q?vrHjKtS075ljY9vs2HMgXuIixpzUR7UPAM1sB+WQbX8cdSDHcl2DeaRWoHyW?=
+ =?us-ascii?Q?T1qGuiGzeank3IHcMCDqGiP3XoBYowr+w4+G80tQvYvkleHFZlIpSGYMX7Hw?=
+ =?us-ascii?Q?PCPXUCOozOtFOBgSnwEXlloOrWHnnz7AEJ7ubhj1xri43Q7UgfghAuullOtr?=
+ =?us-ascii?Q?T21yq8grZYMEn7/Pl+ThCqziwlgRzEbUb1ysQwG0XP3Zwd5dmot2qCToFHlE?=
+ =?us-ascii?Q?GOdehNEXrseZmZ0iny+jw1/USzboI9/dgLQnW6w9syKIn6P1MZcU5zNsXwiX?=
+ =?us-ascii?Q?qpZNWJjih9tskXrjmo+FETZ5NT6+PdddLT2k6KgXTB799LUP59eczFy/soEG?=
+ =?us-ascii?Q?kH7JHkRnAtXUJOeA5TRvErcJUNQuOYPeJW8dqjo1Z/RDFvfprWfXK7bMioLA?=
+ =?us-ascii?Q?73hDLtGrjKCf5gzGimIruUPITwJImVIgt0WuApfXh0+BlVJb5QnDykOuspnR?=
+ =?us-ascii?Q?cCYuP4Oda52fWYFJGBKOvOeCf6FvGljhHPT5BGZppJ++cbfKN0tDJfJxlmWC?=
+ =?us-ascii?Q?8x+hTIrQ8JJZGQN/FRxDyNPQ5edyDyvHe1pYAxa4YSsTYlnnLWc/sbqmvgOQ?=
+ =?us-ascii?Q?eg1R0/m7cHi2+tSMWb7TLODINienfbyYn3ZQVE/UDWOk+2x//nE1yck0iGXI?=
+ =?us-ascii?Q?giN/aYpUdroD3UlmVUyC37QcKmlB5UYK5BunjxBNjY9zUho6EUfvx+xRvgFW?=
+ =?us-ascii?Q?UqyiDvLWh0CcxFyVkF0W2J4s521IrvcI2deaAMgr9vMsfk2YKpX6qG9nis4z?=
+ =?us-ascii?Q?Gy89baNWzADUr1B5MAtRa7hEoe2dTQ/b6M/5VrpeELf+tcTHf5jWgVM3jaOQ?=
+ =?us-ascii?Q?BO1kRp1UDhDvZcE7sEjSBABAQFDvAglHPQKEuyXx0/oEyTWAQXsdmyuPBdl0?=
+ =?us-ascii?Q?hm2gXfnu6G+c8xPX7Qgej+V6smjl7pkeEFAgmSCBxrybe0x/gKinTVJ3Hr1e?=
+ =?us-ascii?Q?BNUR97dF9mQMmKjrRGr4balzv0+gxQclIrnMVsweI0acsvn0kE0OXi5D9kFU?=
+ =?us-ascii?Q?O0/+RJfQfSSRhKy5g7wmKZu4GmQuKyYAtbTeCa9baMSbqBv2TesR4bXwbVoT?=
+ =?us-ascii?Q?YStRseXYeS7kT1Cy9n8B0UOqXJNCe8DEgTEgOyXTdjdTrEFuyRCZ1A3TBwQk?=
+ =?us-ascii?Q?cYyLyq0Dsbkr0hN1ZIAQxFksbyaqVH/D1bbUMozkA2M+gfBaMtqpwtCO60l5?=
+ =?us-ascii?Q?pVgIdW+/AMG8+nJKQHO+xs3FOE+sbVwKVNgvLWItFvoJ6y69m/CoiDjF+00N?=
+ =?us-ascii?Q?YulsoAqyEmF9c+XFj32bhDbqCbZ/elhlBS3Ugvb/hvn7oSIWLM3GMQ=3D=3D?=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 68640327-62f0-462f-bf6a-08da08af981b
+X-MS-Exchange-CrossTenant-AuthSource: MWHPR1001MB2365.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Mar 2022 07:19:09.3725
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 7FJRo9pAcr/qdlboTgv7Xo5ovFTsd+1h1rSt9EKpF0JnOT9bZcR9S8lE62jSwk4Srupm98lK9oaJWUysZrXpuQ4gj6x847NGjeqDE9g09u0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR10MB2557
+X-Proofpoint-Virus-Version: vendor=nai engine=6300 definitions=10289 signatures=693715
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 phishscore=0
+ suspectscore=0 adultscore=0 spamscore=0 bulkscore=0 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2202240000 definitions=main-2203180038
+X-Proofpoint-GUID: _tEbzoVsXhZ0NUFX8taug9UPdUHd0jav
+X-Proofpoint-ORIG-GUID: _tEbzoVsXhZ0NUFX8taug9UPdUHd0jav
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sankeerth Billakanti (2022-03-16 10:35:51)
->         The source device should ensure the sink is ready before
-> proceeding to read the sink capability or performing any aux transactions.
-> The sink will indicate its readiness by asserting the HPD line.
->
->         The eDP sink requires power from the source and its HPD line will
-> be asserted only after the panel is powered on. The panel power will be
-> enabled from the panel-edp driver.
->
->         The controller driver needs to wait for the hpd line to be asserted
-> by the sink.
->
-> Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_aux.c     |  6 ++++++
->  drivers/gpu/drm/msm/dp/dp_catalog.c | 23 +++++++++++++++++++++++
->  drivers/gpu/drm/msm/dp/dp_catalog.h |  1 +
->  drivers/gpu/drm/msm/dp/dp_reg.h     |  7 ++++++-
->  4 files changed, 36 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_aux.c b/drivers/gpu/drm/msm/dp/dp_aux.c
-> index 6d36f63..2ddc303 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_aux.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-> @@ -337,6 +337,12 @@ static ssize_t dp_aux_transfer(struct drm_dp_aux *dp_aux,
->                 goto exit;
->         }
->
-> +       ret = dp_catalog_aux_wait_for_hpd_connect_state(aux->catalog);
+On Thu, Mar 17, 2022 at 08:03:59AM -0700, Rob Clark wrote:
+> > > diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> > > index 4ec62b601adc..68f3f8ade76d 100644
+> > > --- a/drivers/gpu/drm/msm/msm_gpu.c
+> > > +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> > > @@ -364,14 +364,21 @@ static void retire_submits(struct msm_gpu *gpu);
+> > >
+> > >  static void get_comm_cmdline(struct msm_gem_submit *submit, char **comm, char **cmd)
+> > >  {
+> > > +     struct msm_file_private *ctx = submit->queue->ctx;
+> > >       struct task_struct *task;
+> > >
+> > > +     *comm = kstrdup(ctx->comm, GFP_KERNEL);
+> > > +     *cmd  = kstrdup(ctx->cmdline, GFP_KERNEL);
+> > > +
+> > >       task = get_pid_task(submit->pid, PIDTYPE_PID);
+> > >       if (!task)
+> > >               return;
+> > >
+> > > -     *comm = kstrdup(task->comm, GFP_KERNEL);
+> > > -     *cmd = kstrdup_quotable_cmdline(task, GFP_KERNEL);
+> > > +     if (!*comm)
+> > > +             *comm = kstrdup(task->comm, GFP_KERNEL);
+> >
+> > What?
+> >
+> > If the first allocation failed, then this one is going to fail as well.
+> > Just return -ENOMEM.  Or maybe this is meant to be checking for an empty
+> > string?
+> 
+> fwiw, if ctx->comm is NULL, the kstrdup() will return NULL, so this
+> isn't intended to deal with OoM, but the case that comm and/or cmdline
+> is not overridden.
 
-Why are we making aux transactions when hpd isn't asserted? Can we only
-register the aux device once we know that state is "connected"? I'm
-concerned that we're going to be possibly polling the connected bit up
-to some amount of time (0x0003FFFF usecs?) for each aux transfer when
-that doesn't make any sense to keep checking. We should be able to check
-it once, register aux, and then when disconnect happens we can
-unregister aux.
+Ah, I should have thought about that.  Thanks!
 
-> +       if (ret) {
-> +               DRM_DEBUG_DP("DP sink not ready for aux transactions\n");
-> +               goto exit;
-> +       }
-> +
->         dp_aux_update_offset_and_segment(aux, msg);
->         dp_aux_transfer_helper(aux, msg, true);
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> index fac815f..2c3b0f7 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> @@ -242,6 +242,29 @@ void dp_catalog_aux_update_cfg(struct dp_catalog *dp_catalog)
->         phy_calibrate(phy);
->  }
->
-> +int dp_catalog_aux_wait_for_hpd_connect_state(struct dp_catalog *dp_catalog)
-> +{
-> +       u32 state, hpd_en, timeout;
-> +       struct dp_catalog_private *catalog = container_of(dp_catalog,
-> +                               struct dp_catalog_private, dp_catalog);
-> +
-> +       hpd_en = dp_read_aux(catalog, REG_DP_DP_HPD_CTRL) &
-> +                                       DP_DP_HPD_CTRL_HPD_EN;
+regards,
+dan carpenter
 
-Use two lines
-
-	hpd_en = dp_read_aux();
-	hpd_en &= DP_DP_HPD_CTRL_HPD_EN;
-
-> +
-> +       /* no-hpd case */
-> +       if (!hpd_en)
-> +               return 0;
-> +
-> +       /* Poll for HPD connected status */
-> +       timeout = dp_read_aux(catalog, REG_DP_DP_HPD_EVENT_TIME_0) &
-> +                                       DP_HPD_CONNECT_TIME_MASK;
-> +
-> +       return readl_poll_timeout(catalog->io->dp_controller.aux.base +
-> +                               REG_DP_DP_HPD_INT_STATUS,
-> +                               state, state & DP_DP_HPD_STATE_STATUS_CONNECTED,
-> +                               2000, timeout);
-> +}
-> +
->  static void dump_regs(void __iomem *base, int len)
->  {
->         int i;
