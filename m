@@ -2,69 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA7D44DDE11
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Mar 2022 17:11:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F18554DDEC8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Mar 2022 17:23:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235023AbiCRQMB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 18 Mar 2022 12:12:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54796 "EHLO
+        id S238990AbiCRQYX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 18 Mar 2022 12:24:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238643AbiCRQKP (ORCPT
+        with ESMTP id S239025AbiCRQX4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 18 Mar 2022 12:10:15 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC90A2BF3;
-        Fri, 18 Mar 2022 09:08:47 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id qx21so17855195ejb.13;
-        Fri, 18 Mar 2022 09:08:47 -0700 (PDT)
+        Fri, 18 Mar 2022 12:23:56 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C8C8F9A2;
+        Fri, 18 Mar 2022 09:20:02 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id u10so12377263wra.9;
+        Fri, 18 Mar 2022 09:20:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=GsYDL/OyQ4CKGuUspknG5Sq0zM6BGuA8VP+jOV/hNlQ=;
-        b=ebXb9I72pym+b2ARd9uIcThbuFCa2zTTvq6DwWnh2cn7k4g7ka0sLgJwVfb0WcgITv
-         Dxmksz2ER2pRqV4EOwJ6QkoMW4Tlx9uS5oJ53HLlJSaJWyIrnGevCK/wE2fHqmd9jPrH
-         Yt+xHCFUIoA1ijN1KZv+G1Ys9wa2JMoNyNF1lc9OtMYcPfwZSA6zmFj3q/B4YfCW4llw
-         IdhSgKBI/91+xjErPzes71c1cbAtk90DK+eHDvPF7RWXw4E8omJGsn7PyEXAOKHd+OdX
-         dkzjUDiWgKHrG3SCYnXroXjtJ7E2mobSEvP1xyNWnDoDfR5ZVYb8S1QD89orG5+Cslqd
-         Tz/A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=u0HCPymtXblIB+cZc09PIw1aKsO6ejAhOpetsA4QzYg=;
+        b=HsS8bf4hFr1h53r1GWW5J7P80c2rigF1ZXd1iqF5XPOsMXq6p4ok6Sn2H3x7cUexPv
+         YABq8nJvMpMu/YHEMd143F6Qp5fA4nP7ubMhCEOPXswql4pg7XkYAMKHiv7rl+pDoZWx
+         H0bO0FDj3TAj6uKTbqplAHlMjsd1f+IEw2ZN38QxEypKSTFEkQEJ53OjC6bu5nL7r56L
+         Q1pPMFjEB8OhRlo6aBuSvQ2ffSBXMm5ZskqqZUxpIbkn/hYc62OjFPO0+xXgPsEu/sf8
+         Jbf18oIGb/IAdnQdYoeDEK01G6VXumHILoRrEZuQIhV6NkpZvGur8FIbJwWyBxMxx94s
+         MNlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=GsYDL/OyQ4CKGuUspknG5Sq0zM6BGuA8VP+jOV/hNlQ=;
-        b=kmcKl1NiEtI6G8i7YdQozTbeEoc0dsm2iOmSb1jEWuNElLrqTgxUmu0QdcL6GJ3Dn0
-         wy2xvvDUsxmOrKqbsFLof4Yz/+2a6eljrckAJNz6haYKq+3ZJ4d8LXIDe9C3Ei14nlMk
-         ZHhrRxNPPqRrOwybXTWF7u1plV2tI8Q5yD0Mya+HC4HiJhrnvZ7Bx9KcdpQLNd9sQ1F5
-         QehA/i7xahb9LjBxTQhoAe8Bok6TmwQCSm2Bl+GqqfDElmxHZjNgR1LSCq6QZmN3aodW
-         rm6FYYds+SAWmrlzdzjs5qt0VCMJv/DcujFYcedy7L69nRNYfR9rv/ONSB8z1yx8E9Z/
-         cx+w==
-X-Gm-Message-State: AOAM533MBIO5Sd3dbnwOA/W1zNII0HzQxwKVWAWdOW9ivGNkrDGc8huh
-        KWOFRpZzI5WH2yb8IsJSewc=
-X-Google-Smtp-Source: ABdhPJxbAgDpTcZCM/28nsz/se8K3HvJP5o7yyvu3PWKlT9r7h1VJe0eG27GmsHqhYQlIj99DMk2LQ==
-X-Received: by 2002:a17:906:57c1:b0:6d6:da73:e9c0 with SMTP id u1-20020a17090657c100b006d6da73e9c0mr9800874ejr.45.1647619725920;
-        Fri, 18 Mar 2022 09:08:45 -0700 (PDT)
-Received: from Ansuel-xps.localdomain (93-42-69-170.ip85.fastwebnet.it. [93.42.69.170])
-        by smtp.googlemail.com with ESMTPSA id e9-20020a170906c00900b006d4a45869basm3754118ejz.199.2022.03.18.09.08.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Mar 2022 09:08:45 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Ansuel Smith <ansuelsmth@gmail.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: [PATCH v2 16/16] dt-bindings: arm: msm: Convert kpss driver Documentation to yaml
-Date:   Fri, 18 Mar 2022 17:08:27 +0100
-Message-Id: <20220318160827.8860-17-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220318160827.8860-1-ansuelsmth@gmail.com>
-References: <20220318160827.8860-1-ansuelsmth@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=u0HCPymtXblIB+cZc09PIw1aKsO6ejAhOpetsA4QzYg=;
+        b=rYwVa/WYKSJwD3jxLNKPbY+Jf92HjCz7L2VlavW7g3/J6Ts2IRwWJ0VnSTEMV5JSjF
+         KBtYnkHJT1lh69GSqPhjGYF45JEPSB+Np1Sq7LfqclzySRiNqNWwP3a9sGlmxW33KgaW
+         3Ozc7zTapmPoc2Wu/afV/t+bwy4BS1YKIOAXmdq+vLsKeONKlGpS0Fu23dUKtnIhZfzP
+         R0QF7eyKQ3P+kxjK0u+8+qBL2Dr5L8c+KNaxEjdP2bkQVIaYF61lBmU/tCkqxyF68nEB
+         coaDQmi9MaGH5AlBMH0jFATkHW1/sleLwdbK4kIuRktwrE14qYs9B22ywtsHRFEArWCX
+         pT9A==
+X-Gm-Message-State: AOAM533R/E36koBVCIdNymdpmziqQ+HXDLKMjPwwqzFsTuhJgb2IBWvn
+        9v7/9/ke1aHRkjrM+88QzDRWK/ohzQM35zgRpek=
+X-Google-Smtp-Source: ABdhPJxNnjhQkWgGh3BiZCURGeabRTHOG3URIEu48sVr5c+bgDz9d6ZlaTpPV7k9bDjxcXo9LX1ybNqvt19BuaGSvdU=
+X-Received: by 2002:adf:914f:0:b0:1ed:bb92:d0cc with SMTP id
+ j73-20020adf914f000000b001edbb92d0ccmr8615326wrj.297.1647620398559; Fri, 18
+ Mar 2022 09:19:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220310234611.424743-1-robdclark@gmail.com> <20220310234611.424743-3-robdclark@gmail.com>
+ <YjMGac4Hnjmg1wE8@phenom.ffwll.local> <3945551d-47d2-1974-f637-1dbc61e14702@amd.com>
+ <CAF6AEGv36V8bLoDn5O1SW3iTUtzd3O1XeuT5gJxyLMxd1E-o3Q@mail.gmail.com>
+ <865abcff-9f52-dca4-df38-b11189c739ff@amd.com> <CAF6AEGuoBeYoMTR6-KM9xGZ05XSSnSJWMDciawczi7qtiLN9Vw@mail.gmail.com>
+ <915537e2-ac5b-ab0e-3697-2b16a9ec8f91@amd.com> <CAF6AEGsyFAOPmHqT7YX1wsukP4-gYAstCukr89r9w28V0YSCUw@mail.gmail.com>
+ <3a475e5a-1090-e2f4-779c-6915fc8524b1@amd.com> <CAF6AEGtPrSdj=7AP1_puR+OgmL-qro0mWZDNngtaVPxpaCM76A@mail.gmail.com>
+ <1c847474-8ee1-cc7e-3d4d-261a4e92fb2d@amd.com> <CAF6AEGuw45gi4f+mVs7cVyjCHY9O4N1O8OfuGHv-wAkzP3UpMA@mail.gmail.com>
+ <dd7d3f20-8288-3a7c-a368-a08282746ff1@amd.com>
+In-Reply-To: <dd7d3f20-8288-3a7c-a368-a08282746ff1@amd.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 18 Mar 2022 09:20:37 -0700
+Message-ID: <CAF6AEGvp+f4=EjQ9tWwcEafBEOAy6nCd8bOTqLXopiFhjx_Y_w@mail.gmail.com>
+Subject: Re: [PATCH 2/3] drm/msm/gpu: Park scheduler threads for system suspend
+To:     Andrey Grodzovsky <andrey.grodzovsky@amd.com>
+Cc:     =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        "Alexander.Deucher@amd.com" <Alexander.Deucher@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -75,298 +88,163 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert kpss-acc and kpss-gcc Documentation to yaml. Fix multiple
-Documentation error and provide additional example for kpss-gcc-v2.
+On Fri, Mar 18, 2022 at 9:04 AM Andrey Grodzovsky
+<andrey.grodzovsky@amd.com> wrote:
+>
+>
+> On 2022-03-17 16:35, Rob Clark wrote:
+> > On Thu, Mar 17, 2022 at 12:50 PM Andrey Grodzovsky
+> > <andrey.grodzovsky@amd.com> wrote:
+> >>
+> >> On 2022-03-17 14:25, Rob Clark wrote:
+> >>> On Thu, Mar 17, 2022 at 11:10 AM Andrey Grodzovsky
+> >>> <andrey.grodzovsky@amd.com> wrote:
+> >>>> On 2022-03-17 13:35, Rob Clark wrote:
+> >>>>> On Thu, Mar 17, 2022 at 9:45 AM Christian K=C3=B6nig
+> >>>>> <christian.koenig@amd.com> wrote:
+> >>>>>> Am 17.03.22 um 17:18 schrieb Rob Clark:
+> >>>>>>> On Thu, Mar 17, 2022 at 9:04 AM Christian K=C3=B6nig
+> >>>>>>> <christian.koenig@amd.com> wrote:
+> >>>>>>>> Am 17.03.22 um 16:10 schrieb Rob Clark:
+> >>>>>>>>> [SNIP]
+> >>>>>>>>> userspace frozen !=3D kthread frozen .. that is what this patch=
+ is
+> >>>>>>>>> trying to address, so we aren't racing between shutting down th=
+e hw
+> >>>>>>>>> and the scheduler shoveling more jobs at us.
+> >>>>>>>> Well exactly that's the problem. The scheduler is supposed to sh=
+oveling
+> >>>>>>>> more jobs at us until it is empty.
+> >>>>>>>>
+> >>>>>>>> Thinking more about it we will then keep some dma_fence instance
+> >>>>>>>> unsignaled and that is and extremely bad idea since it can lead =
+to
+> >>>>>>>> deadlocks during suspend.
+> >>>>>>> Hmm, perhaps that is true if you need to migrate things out of vr=
+am?
+> >>>>>>> It is at least not a problem when vram is not involved.
+> >>>>>> No, it's much wider than that.
+> >>>>>>
+> >>>>>> See what can happen is that the memory management shrinkers want t=
+o wait
+> >>>>>> for a dma_fence during suspend.
+> >>>>> we don't wait on fences in shrinker, only purging or evicting thing=
+s
+> >>>>> that are already ready.  Actually, waiting on fences in shrinker pa=
+th
+> >>>>> sounds like a pretty bad idea.
+> >>>>>
+> >>>>>> And if you stop the scheduler they will just wait forever.
+> >>>>>>
+> >>>>>> What you need to do instead is to drain the scheduler, e.g. call
+> >>>>>> drm_sched_entity_flush() with a proper timeout for each entity you=
+ have
+> >>>>>> created.
+> >>>>> yeah, it would work to drain the scheduler.. I guess that might be =
+the
+> >>>>> more portable approach as far as generic solution for suspend.
+> >>>>>
+> >>>>> BR,
+> >>>>> -R
+> >>>> I am not sure how this drains the scheduler ? Suppose we done the
+> >>>> waiting in drm_sched_entity_flush,
+> >>>> what prevents someone to push right away another job into the same
+> >>>> entity's queue  right after that ?
+> >>>> Shouldn't we first disable further pushing of jobs into entity befor=
+e we
+> >>>> wait for  sched->job_scheduled ?
+> >>>>
+> >>> In the system suspend path, userspace processes will have already bee=
+n
+> >>> frozen, so there should be no way to push more jobs to the scheduler,
+> >>> unless they are pushed from the kernel itself.
+> >>> amdgpu_device_suspend
+> >>
+> >> It was my suspicion but I wasn't sure about it.
+> >>
+> >>
+> >>> We don't do that in
+> >>> drm/msm, but maybe you need to to move things btwn vram and system
+> >>> memory?
+> >>
+> >> Exactly, that was my main concern - if we use this method we have to u=
+se
+> >> it in a point in
+> >> suspend sequence when all the in kernel job submissions activity alrea=
+dy
+> >> suspended
+> >>
+> >>> But even in that case, if the # of jobs you push is bounded I
+> >>> guess that is ok?
+> >> Submissions to scheduler entities are using unbounded queue, the bound=
+ed
+> >> part is when
+> >> you extract next job from entity to submit to HW ring and it rejects i=
+f
+> >> submission limit reached (drm_sched_ready)
+> >>
+> >> In general - It looks to me at least that what we what we want her is
+> >> more of a drain operation then flush (i.e.
+> >> we first want to disable any further job submission to entity's queue
+> >> and then flush all in flight ones). As example
+> >> for this i was looking at  flush_workqueue vs. drain_workqueue
+> > Would it be possible for amdgpu to, in the system suspend task,
+> >
+> > 1) first queue up all the jobs needed to migrate bos out of vram, and
+> > whatever other housekeeping jobs are needed
+> > 2) then drain gpu scheduler's queues
+> > 3) and then finally wait for jobs executing on GPU to complete
+>
+>
+> We already do most of it in amdgpu_device_suspend,
+> amdgpu_device_ip_suspend_phase1
+> followed by amdgpu_device_evict_resources followed by
+> amdgpu_fence_driver_hw_fini is
+> exactly steps 1 + 3. What we are missing is step 2). For this step I
+> suggest adding a function
+> called drm_sched_entity_drain which basically sets entity->stopped =3D
+> true and then calls drm_sched_entity_flush.
+> This will both reject any new insertions into entity's job queue and
+> will flush all pending job submissions to HW from that entity.
+> One point is we need to make make drm_sched_entity_push_job return value
+> so the caller knows about job enqueue
+> rejection.
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- .../bindings/arm/msm/qcom,kpss-acc.txt        | 49 ----------
- .../bindings/arm/msm/qcom,kpss-acc.yaml       | 97 +++++++++++++++++++
- .../bindings/arm/msm/qcom,kpss-gcc.txt        | 44 ---------
- .../bindings/arm/msm/qcom,kpss-gcc.yaml       | 63 ++++++++++++
- 4 files changed, 160 insertions(+), 93 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt
- create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml
- delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
- create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
+Hmm, seems like job enqueue that is rejected because we are in the
+process of suspending should be more of a WARN_ON() sort of thing?
+Not sure if there is something sensible to do for the caller at that
+point?
 
-diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt
-deleted file mode 100644
-index 7f696362a4a1..000000000000
---- a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt
-+++ /dev/null
-@@ -1,49 +0,0 @@
--Krait Processor Sub-system (KPSS) Application Clock Controller (ACC)
--
--The KPSS ACC provides clock, power domain, and reset control to a Krait CPU.
--There is one ACC register region per CPU within the KPSS remapped region as
--well as an alias register region that remaps accesses to the ACC associated
--with the CPU accessing the region.
--
--PROPERTIES
--
--- compatible:
--	Usage: required
--	Value type: <string>
--	Definition: should be one of:
--			"qcom,kpss-acc-v1"
--			"qcom,kpss-acc-v2"
--
--- reg:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: the first element specifies the base address and size of
--		    the register region. An optional second element specifies
--		    the base address and size of the alias register region.
--
--- clocks:
--        Usage: required
--        Value type: <prop-encoded-array>
--        Definition: reference to the pll parents.
--
--- clock-names:
--        Usage: required
--        Value type: <stringlist>
--        Definition: must be "pll8_vote", "pxo".
--
--- clock-output-names:
--	Usage: optional
--	Value type: <string>
--	Definition: Name of the output clock. Typically acpuX_aux where X is a
--		    CPU number starting at 0.
--
--Example:
--
--	clock-controller@2088000 {
--		compatible = "qcom,kpss-acc-v2";
--		reg = <0x02088000 0x1000>,
--		      <0x02008000 0x1000>;
--		clocks = <&gcc PLL8_VOTE>, <&gcc PXO_SRC>;
--		clock-names = "pll8_vote", "pxo";
--		clock-output-names = "acpu0_aux";
--	};
-diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml
-new file mode 100644
-index 000000000000..6e8ef4f85eab
---- /dev/null
-+++ b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml
-@@ -0,0 +1,97 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/arm/msm/qcom,kpss-acc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Krait Processor Sub-system (KPSS) Application Clock Controller (ACC)
-+
-+maintainers:
-+  - Ansuel Smith <ansuelsmth@gmail.com>
-+
-+description: |
-+  The KPSS ACC provides clock, power domain, and reset control to a Krait CPU.
-+  There is one ACC register region per CPU within the KPSS remapped region as
-+  well as an alias register region that remaps accesses to the ACC associated
-+  with the CPU accessing the region.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,kpss-acc-v1
-+      - qcom,kpss-acc-v2
-+
-+  reg:
-+    items:
-+      - description: Base address and size of the register region
-+      - description: Optional base address and size of the alias register region
-+
-+  clocks:
-+    items:
-+      - description: phandle to pll8_vote
-+      - description: phandle to pxo_board
-+
-+  clock-names:
-+    items:
-+      - const: pll8_vote
-+      - const: pxo
-+
-+  clock-output-names:
-+    description: Name of the aux clock. Krait can have at most 4 cpu.
-+    enum:
-+      - acpu0_aux
-+      - acpu1_aux
-+      - acpu2_aux
-+      - acpu3_aux
-+
-+  '#clock-cells':
-+    const: 0
-+
-+required:
-+  - compatible
-+  - reg
-+
-+allOf:
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: qcom,kpss-acc-v1
-+      then:
-+        required:
-+          - clocks
-+          - clock-names
-+          - clock-output-names
-+          - '#clock-cells'
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
-+
-+    clock-controller@2088000 {
-+      compatible = "qcom,kpss-acc-v1";
-+      reg = <0x02088000 0x1000>, <0x02008000 0x1000>;
-+      clocks = <&gcc PLL8_VOTE>, <&pxo_board>;
-+      clock-names = "pll8_vote", "pxo";
-+      clock-output-names = "acpu0_aux";
-+      #clock-cells = <0>;
-+    };
-+
-+    clock-controller@2098000 {
-+      compatible = "qcom,kpss-acc-v1";
-+      reg = <0x02098000 0x1000>, <0x02008000 0x1000>;
-+      clock-output-names = "acpu1_aux";
-+      clocks = <&gcc PLL8_VOTE>, <&pxo_board>;
-+      clock-names = "pll8_vote", "pxo";
-+      #clock-cells = <0>;
-+    };
-+
-+  - |
-+    clock-controller@f9088000 {
-+      compatible = "qcom,kpss-acc-v2";
-+      reg = <0xf9088000 0x1000>,
-+            <0xf9008000 0x1000>;
-+    };
-+...
-diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
-deleted file mode 100644
-index e628758950e1..000000000000
---- a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
-+++ /dev/null
-@@ -1,44 +0,0 @@
--Krait Processor Sub-system (KPSS) Global Clock Controller (GCC)
--
--PROPERTIES
--
--- compatible:
--	Usage: required
--	Value type: <string>
--	Definition: should be one of the following. The generic compatible
--			"qcom,kpss-gcc" should also be included.
--			"qcom,kpss-gcc-ipq8064", "qcom,kpss-gcc"
--			"qcom,kpss-gcc-apq8064", "qcom,kpss-gcc"
--			"qcom,kpss-gcc-msm8974", "qcom,kpss-gcc"
--			"qcom,kpss-gcc-msm8960", "qcom,kpss-gcc"
--
--- reg:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: base address and size of the register region
--
--- clocks:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: reference to the pll parents.
--
--- clock-names:
--	Usage: required
--	Value type: <stringlist>
--	Definition: must be "pll8_vote", "pxo".
--
--- clock-output-names:
--	Usage: required
--	Value type: <string>
--	Definition: Name of the output clock. Typically acpu_l2_aux indicating
--		    an L2 cache auxiliary clock.
--
--Example:
--
--	l2cc: clock-controller@2011000 {
--		compatible = "qcom,kpss-gcc-ipq8064", "qcom,kpss-gcc";
--		reg = <0x2011000 0x1000>;
--		clocks = <&gcc PLL8_VOTE>, <&gcc PXO_SRC>;
--		clock-names = "pll8_vote", "pxo";
--		clock-output-names = "acpu_l2_aux";
--	};
-diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
-new file mode 100644
-index 000000000000..578e2eccb7db
---- /dev/null
-+++ b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
-@@ -0,0 +1,63 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/arm/msm/qcom,kpss-gcc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Krait Processor Sub-system (KPSS) Global Clock Controller (GCC)
-+
-+maintainers:
-+  - Ansuel Smith <ansuelsmth@gmail.com>
-+
-+description: |
-+  Krait Processor Sub-system (KPSS) Global Clock Controller (GCC). Used
-+  to control L2 mux (in the current implementation).
-+
-+properties:
-+  compatible:
-+    const: qcom,kpss-gcc
-+
-+  reg:
-+    items:
-+      - description: Base address and size of the register region
-+
-+  clocks:
-+    items:
-+      - description: phandle to pll8_vote
-+      - description: phandle to pxo_board
-+
-+  clock-names:
-+    items:
-+      - const: pll8_vote
-+      - const: pxo
-+
-+  clock-output-names:
-+    const: acpu_l2_aux
-+
-+  '#clock-cells':
-+    const: 0
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - clock-names
-+  - clock-output-names
-+  - '#clock-cells'
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
-+
-+    clock-controller@2011000 {
-+      compatible = "qcom,kpss-gcc";
-+      reg = <0x2011000 0x1000>;
-+      clocks = <&gcc PLL8_VOTE>, <&pxo_board>;
-+      clock-names = "pll8_vote", "pxo";
-+      clock-output-names = "acpu_l2_aux";
-+      #clock-cells = <0>;
-+    };
-+...
-+
--- 
-2.34.1
+>
+> What about runtime suspend ? I guess same issue with scheduler racing
+> against HW susppend is relevant there ?
 
+Runtime suspend should be ok, as long as the driver holds a runpm
+reference whenever the hw needs to be awake.  The problem with system
+suspend (at least if you are using pm_runtime_force_suspend() or doing
+something equivalent) is that it bypasses the runpm reference.
+(Which, IMO, seems like a bad design..)
+
+> Also, could you point to a particular buggy scenario where the race
+> between SW shceduler and suspend is causing a problem ?
+
+I wrote a piglit test[1] to try to trigger this scenario.. it isn't
+really that easy to hit
+
+BR,
+-R
+
+[1] https://gitlab.freedesktop.org/mesa/piglit/-/merge_requests/643
+
+> Andrey
+>
+>
+> >
+> > BR,
+> > -R
+> >
+> >> Andrey
+> >>
+> >>
+> >>> BR,
+> >>> -R
