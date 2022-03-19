@@ -2,104 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EE5B4DE668
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Mar 2022 07:25:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 52C6C4DE7A4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Mar 2022 12:38:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242265AbiCSG00 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 19 Mar 2022 02:26:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53500 "EHLO
+        id S231818AbiCSLjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 19 Mar 2022 07:39:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242252AbiCSG0Z (ORCPT
+        with ESMTP id S242818AbiCSLju (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 19 Mar 2022 02:26:25 -0400
-Received: from smtp.smtpout.orange.fr (smtp05.smtpout.orange.fr [80.12.242.127])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FBDB3917A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Mar 2022 23:25:03 -0700 (PDT)
-Received: from [192.168.1.18] ([90.126.236.122])
-        by smtp.orange.fr with ESMTPA
-        id VSWInb6MLvjW4VSWJnTyuB; Sat, 19 Mar 2022 07:25:01 +0100
-X-ME-Helo: [192.168.1.18]
-X-ME-Auth: YWZlNiIxYWMyZDliZWIzOTcwYTEyYzlhMmU3ZiQ1M2U2MzfzZDfyZTMxZTBkMTYyNDBjNDJlZmQ3ZQ==
-X-ME-Date: Sat, 19 Mar 2022 07:25:01 +0100
-X-ME-IP: 90.126.236.122
-Message-ID: <08b7604d-f528-ecb7-a8b2-7c9c36518143@wanadoo.fr>
-Date:   Sat, 19 Mar 2022 07:24:58 +0100
+        Sat, 19 Mar 2022 07:39:50 -0400
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [85.215.255.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 111E89BBBA
+        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Mar 2022 04:38:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1647689900;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=LUPpJL4caDcGsF8P6jMOa7sqd6B01qkMcy8m39HchoM=;
+    b=R3+VUoApr3oMqq0AxbpYRFI7eO1jxfQwWeLuM+IDpdSb6h+mYkKdjAmRd/6r6d+Y2o
+    F/Pvrw7SYMRxabzCeW1DL+tRAVO3UO71wbOEzIbghQF3hlgSajNM9k2pg0zOLbVXslEb
+    itnMzqI4RZchzddHtYlb2Gk/uPYJsqJt5lxqwSkcz70TP+avZS+GViHr4I6dzalIky+S
+    tEjBPxNUJB6VbLJdZ3tGcO5X3LKlmGqOWMElYcNzFNIBAXg8A3B6qzoUlzgQKjpNQxpT
+    brDdy/k6DwM2vtaQbDujf/4lQ38QSheu3cJSfJpXtv1cXPDrRbYTfjYWJZFeXzkdtQZy
+    +N+Q==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u267FZF9PwpcNKLUrK85/aY="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.41.1 AUTH)
+    with ESMTPSA id 0aea5dy2JBcJDO7
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Sat, 19 Mar 2022 12:38:19 +0100 (CET)
+Date:   Sat, 19 Mar 2022 12:38:13 +0100
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Yang Yingliang <yangyingliang@huawei.com>
+Cc:     linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, davem@davemloft.net
+Subject: Re: [PATCH -next] net: wwan: qcom_bam_dmux: fix wrong pointer passed
+ to IS_ERR()
+Message-ID: <YjXApWvAnGUeTpPt@gerhold.net>
+References: <20220319032450.3288224-1-yangyingliang@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v2] dmaengine: qcom_hidma: Remove useless DMA-32 fallback
- configuration
-Content-Language: en-US
-To:     Sinan Kaya <okaya@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org
-References: <4deb32b0c7838da66608022c584326eb01d0da03.1642232106.git.christophe.jaillet@wanadoo.fr>
- <ee43d68f-000c-6513-38f2-877b9018ab22@kernel.org>
-From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-In-Reply-To: <ee43d68f-000c-6513-38f2-877b9018ab22@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220319032450.3288224-1-yangyingliang@huawei.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le 22/01/2022 à 19:05, Sinan Kaya a écrit :
-> On 1/15/2022 2:35 AM, Christophe JAILLET wrote:
->> As stated in [1], dma_set_mask() with a 64-bit mask never fails if
->> dev->dma_mask is non-NULL.
->> So, if it fails, the 32 bits case will also fail for the same reason.
->>
->> Simplify code and remove some dead code accordingly.
->>
->> [1]: 
->> https://lore.kernel.org/linux-kernel/YL3vSPK5DXTNvgdx@infradead.org/#t
->>
+On Sat, Mar 19, 2022 at 11:24:50AM +0800, Yang Yingliang wrote:
+> It should check dmux->tx after calling dma_request_chan().
 > 
-> Can we please document this?
+> Fixes: 21a0ffd9b38c ("net: wwan: Add Qualcomm BAM-DMUX WWAN network driver")
+> Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 
-Hi, the patch has been applied, but [1] is sometimes given as an 
-explanation link.
+Good catch, thanks!
 
-CJ
+Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
 
+I'm a bit confused by the -next suffix in the subject though,
+this should probably go into "net" (not "net-next") since it is a fix.
 
-[1]: 
-https://lists.linuxfoundation.org/pipermail/iommu/2019-February/033674.html
-
+> ---
+>  drivers/net/wwan/qcom_bam_dmux.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Usual practice was to try allocating 64 bit DMA if possible and fallback
-> to 32 bits.
+> diff --git a/drivers/net/wwan/qcom_bam_dmux.c b/drivers/net/wwan/qcom_bam_dmux.c
+> index 5dfa2eba6014..17d46f4d2913 100644
+> --- a/drivers/net/wwan/qcom_bam_dmux.c
+> +++ b/drivers/net/wwan/qcom_bam_dmux.c
+> @@ -755,7 +755,7 @@ static int __maybe_unused bam_dmux_runtime_resume(struct device *dev)
+>  		return 0;
+>  
+>  	dmux->tx = dma_request_chan(dev, "tx");
+> -	if (IS_ERR(dmux->rx)) {
+> +	if (IS_ERR(dmux->tx)) {
+>  		dev_err(dev, "Failed to request TX DMA channel: %pe\n", dmux->tx);
+>  		dmux->tx = NULL;
+>  		bam_dmux_runtime_suspend(dev);
+> -- 
+> 2.25.1
 > 
->> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
->> ---
->> v2: have the subject and updated driver match
->> ---
->>   drivers/dma/qcom/hidma.c | 4 +---
->>   1 file changed, 1 insertion(+), 3 deletions(-)
->>
->> diff --git a/drivers/dma/qcom/hidma.c b/drivers/dma/qcom/hidma.c
->> index 65d054bb11aa..51587cf8196b 100644
->> --- a/drivers/dma/qcom/hidma.c
->> +++ b/drivers/dma/qcom/hidma.c
->> @@ -838,9 +838,7 @@ static int hidma_probe(struct platform_device *pdev)
->>       rc = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
->>       if (rc) {
->>           dev_warn(&pdev->dev, "unable to set coherent mask to 64");
->> -        rc = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
->> -        if (rc)
->> -            goto dmafree;
->> +        goto dmafree;
->>       }
->>       dmadev->lldev = hidma_ll_init(dmadev->ddev.dev,
-> 
-> 
-
