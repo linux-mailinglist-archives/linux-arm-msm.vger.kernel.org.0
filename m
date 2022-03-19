@@ -2,22 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B2024DE9BC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Mar 2022 18:47:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 673514DE9BE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Mar 2022 18:47:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243632AbiCSRs1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 19 Mar 2022 13:48:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35396 "EHLO
+        id S243716AbiCSRs3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 19 Mar 2022 13:48:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243680AbiCSRsZ (ORCPT
+        with ESMTP id S243702AbiCSRs1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 19 Mar 2022 13:48:25 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53C642467D2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Mar 2022 10:47:04 -0700 (PDT)
+        Sat, 19 Mar 2022 13:48:27 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A72F92467CE
+        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Mar 2022 10:47:06 -0700 (PDT)
 Received: from localhost.localdomain (abxi119.neoplus.adsl.tpnet.pl [83.9.2.119])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 77AB53ED8B;
-        Sat, 19 Mar 2022 18:47:00 +0100 (CET)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 3F3C03F655;
+        Sat, 19 Mar 2022 18:47:02 +0100 (CET)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
@@ -29,9 +29,9 @@ Cc:     martin.botka@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 03/15] arm64: dts: qcom: msm8992-libra: Temporarily restrict CPU count to 1
-Date:   Sat, 19 Mar 2022 18:46:33 +0100
-Message-Id: <20220319174645.340379-4-konrad.dybcio@somainline.org>
+Subject: [PATCH 04/15] arm64: dts: qcom: msm8992-libra: Remove superfluous status = "okay"
+Date:   Sat, 19 Mar 2022 18:46:34 +0100
+Message-Id: <20220319174645.340379-5-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220319174645.340379-1-konrad.dybcio@somainline.org>
 References: <20220319174645.340379-1-konrad.dybcio@somainline.org>
@@ -46,29 +46,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The phone seems to randomly crash when more than 1 CPU is enabled, which
-is probably related to lack of some driver.
-
-Restrict the device to only use a single core until this is solved.
+The framebuffer is already enabled by default.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-index 6371719aacc5..7a6ed8b017d1 100644
+index 7a6ed8b017d1..e638fc489539 100644
 --- a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
 +++ b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-@@ -23,7 +23,7 @@ / {
+@@ -30,7 +30,6 @@ chosen {
+ 		ranges;
  
- 	/* This enables graphical output via bootloader-enabled display */
- 	chosen {
--		bootargs = "earlycon=tty0 console=tty0";
-+		bootargs = "earlycon=tty0 console=tty0 maxcpus=1";
- 
- 		#address-cells = <2>;
- 		#size-cells = <2>;
+ 		framebuffer0: framebuffer@3404000 {
+-			status= "okay";
+ 			compatible = "simple-framebuffer";
+ 			reg = <0 0x3404000 0 (1080 * 1920 * 3)>;
+ 			width = <1080>;
 -- 
 2.35.1
 
