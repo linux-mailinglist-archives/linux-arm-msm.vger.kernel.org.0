@@ -2,22 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D560B4DE8FA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Mar 2022 16:18:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 613664DE9BA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Mar 2022 18:47:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242401AbiCSPTV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 19 Mar 2022 11:19:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39528 "EHLO
+        id S243687AbiCSRsZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 19 Mar 2022 13:48:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241592AbiCSPTU (ORCPT
+        with ESMTP id S241816AbiCSRsY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 19 Mar 2022 11:19:20 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F0EAB6F;
-        Sat, 19 Mar 2022 08:17:55 -0700 (PDT)
+        Sat, 19 Mar 2022 13:48:24 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65DB42CC97;
+        Sat, 19 Mar 2022 10:47:00 -0700 (PDT)
 Received: from localhost.localdomain (abxi119.neoplus.adsl.tpnet.pl [83.9.2.119])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id C569E3EED0;
-        Sat, 19 Mar 2022 16:17:50 +0100 (CET)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id D95463F3EF;
+        Sat, 19 Mar 2022 18:46:56 +0100 (CET)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
@@ -30,13 +30,15 @@ Cc:     martin.botka@somainline.org,
         Petr Vorel <petr.vorel@gmail.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: msm8994: Fix sleep clock name
-Date:   Sat, 19 Mar 2022 16:17:45 +0100
-Message-Id: <20220319151745.79727-1-konrad.dybcio@somainline.org>
+Subject: [PATCH 01/15] arm64: dts: qcom: msm8994: Fix sleep clock name
+Date:   Sat, 19 Mar 2022 18:46:31 +0100
+Message-Id: <20220319174645.340379-2-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220319174645.340379-1-konrad.dybcio@somainline.org>
+References: <20220319174645.340379-1-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
