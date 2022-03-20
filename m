@@ -2,441 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B7AED4E1C12
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Mar 2022 15:47:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AB8664E1C90
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Mar 2022 17:28:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244261AbiCTOs4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 20 Mar 2022 10:48:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47106 "EHLO
+        id S244670AbiCTQ3i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 20 Mar 2022 12:29:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238877AbiCTOs4 (ORCPT
+        with ESMTP id S235658AbiCTQ3h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 20 Mar 2022 10:48:56 -0400
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3A4C8BF11;
-        Sun, 20 Mar 2022 07:47:31 -0700 (PDT)
-Received: by mail-ed1-f54.google.com with SMTP id t1so15308506edc.3;
-        Sun, 20 Mar 2022 07:47:31 -0700 (PDT)
+        Sun, 20 Mar 2022 12:29:37 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7151B344DC;
+        Sun, 20 Mar 2022 09:28:12 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id v130-20020a1cac88000000b00389d0a5c511so9112998wme.5;
+        Sun, 20 Mar 2022 09:28:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KcOijGi5og4ld2tvnsTePSNTR92XBpj3TQ2NlwE7kBU=;
+        b=mGTn9mZmezpJmG0UBF31vGiOajqAuzDPLPA6zisTAVAbeaCnW0aqhG0R091L5HURZv
+         5UXkCxK34eZ+5P66lbJBuX/yzfD2nHD+rujXEUidmknXPryaFp0INVsOjVN5ztNaxESD
+         Rz81RsrG/UlJ5qTFats5GtgTwVS/oJgwUB4xrKWla47FH4f7dzeCwSiv27BGTxVQfpXa
+         GMfahz2fC2SwmYe51ILTheLQ1NUfkemAG+zXDGULO3hZRSKgkSQBbPjO1fKkJ1Fe8CR+
+         4dvtVmfOT25aasIjFVQ1/H+pI8eYlS935zBOcfD1VL1UyzeH7Bt6IjdPvA+or3TSfbfB
+         UicQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:from
-         :subject:content-language:to:cc:references:in-reply-to
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=uejOS6QLMjmUowzupThvyDhrrSMU4zNF1nSVHZ+xCUA=;
-        b=DNr9+gJkf+pAiptcTqATo7pbMchuB28sFFfaUX+6sDOUrHqc7vxTC6nAFSHB45wPim
-         uzvbUoFCDlJVi1d6UwnXQzR4gfdO2hbwF84qDtG5UBmKrTqoBcoj3mmSwL3btR8ni/Un
-         f19QeICLvoEa+IaOnahpT0ZQn1udX442VaveTh6iWdc604TJTMxYhuDNerD2HnGrcOQ7
-         Rx+Tk0xkNth+NkbLz+UlMqbCTbIhqXAEPB11eKNMkKl3BY77Y9l6grYQJ3NonWGCgvLr
-         QjygkGwSG6LZJWgrdOYhqS+3lLUz87TEWyRqv3IxY2j1N6BaHAel6H/CBM9KEq38KQDh
-         7qPg==
-X-Gm-Message-State: AOAM53043gBA4KFvE1VfwrMko8TPQpf+6Nt7tYt4k3jLK9eYY9EkKzdC
-        Rt8bnuC+qZkS5Gtzm1UBb9J5Q+9Vjqo=
-X-Google-Smtp-Source: ABdhPJxZj2xyJeSCvP0JCmAUEZBA3vK91nQohCbqtqn/Vo33xsUJfdEPtxzDD8Sw/p4IJW2f/l4lIA==
-X-Received: by 2002:aa7:c30f:0:b0:419:2af:4845 with SMTP id l15-20020aa7c30f000000b0041902af4845mr14935974edq.296.1647787649828;
-        Sun, 20 Mar 2022 07:47:29 -0700 (PDT)
-Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.googlemail.com with ESMTPSA id j22-20020a50ed16000000b00419366b2146sm602048eds.43.2022.03.20.07.47.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 20 Mar 2022 07:47:29 -0700 (PDT)
-Message-ID: <ae9a0e80-d9a5-320f-f1d5-9666633a6a87@kernel.org>
-Date:   Sun, 20 Mar 2022 15:47:27 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: [PATCH v2 16/16] dt-bindings: arm: msm: Convert kpss driver
- Documentation to yaml
-Content-Language: en-US
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
+        bh=KcOijGi5og4ld2tvnsTePSNTR92XBpj3TQ2NlwE7kBU=;
+        b=NiySuYzkHBmTTs9rUykBfzP+59OmutW9/wh0v1NB6vHehu42SQQJ8/dvLOx3X287kU
+         BTzAjeUD80PPHRNL16kWIdpIW8TyPOYGrWtSd6HZ3DE9MP9XhVzVFE5pI93SzQUqx0zd
+         zLTDRbP8tq8zrcLALQI7jYeQZ7H3XUZ44Z/zTQxZeHWgc9vj0iEtn+VtAgk+uaXlsqB5
+         Ptd+c3hKsEmvkeT9tHORhj2sgExqiOprw1gZrWi+c0X1GHQVvAr2p0KeQGjRc78Ntw3g
+         1iwtymYw+YyyXU0Ve84f6TXLnVbJUwe+lRcynNlHankObLSa1hRzZEH+tTMnMKIDaoSc
+         O7vA==
+X-Gm-Message-State: AOAM532ZbaAF5h1b60+EB32vp/apcD2jDtF99tdGtu7rMcAyOC7JPutV
+        IHBLmd3osfOQvt2snU7dTC0=
+X-Google-Smtp-Source: ABdhPJz3tifzxDAWJ1uNsnjFJEcL933i0CUw51N/qATmVkMutDHoNGHno7FLG2vHZ13hcfwNgDjkAg==
+X-Received: by 2002:a7b:c381:0:b0:37b:e01f:c1c0 with SMTP id s1-20020a7bc381000000b0037be01fc1c0mr24568393wmj.98.1647793690646;
+        Sun, 20 Mar 2022 09:28:10 -0700 (PDT)
+Received: from Ansuel-xps.localdomain (93-42-69-170.ip85.fastwebnet.it. [93.42.69.170])
+        by smtp.googlemail.com with ESMTPSA id y6-20020a05600015c600b00203fa70b4ebsm6760085wry.53.2022.03.20.09.28.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 20 Mar 2022 09:28:10 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-References: <20220318160827.8860-1-ansuelsmth@gmail.com>
- <20220318160827.8860-17-ansuelsmth@gmail.com>
- <45e4f763-d991-0939-3735-bfea05c48143@kernel.org>
- <YjbvpN5S77cyyN/U@Ansuel-xps.localdomain>
-In-Reply-To: <YjbvpN5S77cyyN/U@Ansuel-xps.localdomain>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+        Stephen Boyd <sboyd@kernel.org>,
+        Ansuel Smith <ansuelsmth@gmail.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: [PATCH v3 00/18] Modernize rest of the krait drivers
+Date:   Sun, 20 Mar 2022 12:34:12 +0100
+Message-Id: <20220320113430.26076-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.5 required=5.0 tests=BAYES_00,DATE_IN_PAST_03_06,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/03/2022 10:11, Ansuel Smith wrote:
-> On Sun, Mar 20, 2022 at 01:05:51PM +0100, Krzysztof Kozlowski wrote:
->> On 18/03/2022 17:08, Ansuel Smith wrote:
->>> Convert kpss-acc and kpss-gcc Documentation to yaml. Fix multiple
->>> Documentation error and provide additional example for kpss-gcc-v2.
->>>
->>> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
->>> ---
->>>  .../bindings/arm/msm/qcom,kpss-acc.txt        | 49 ----------
->>>  .../bindings/arm/msm/qcom,kpss-acc.yaml       | 97 +++++++++++++++++++
->>>  .../bindings/arm/msm/qcom,kpss-gcc.txt        | 44 ---------
->>>  .../bindings/arm/msm/qcom,kpss-gcc.yaml       | 63 ++++++++++++
->>>  4 files changed, 160 insertions(+), 93 deletions(-)
->>>  delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt
->>>  create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml
->>>  delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
->>>  create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
->>>
->>> diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt
->>> deleted file mode 100644
->>> index 7f696362a4a1..000000000000
->>> --- a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt
->>> +++ /dev/null
->>> @@ -1,49 +0,0 @@
->>> -Krait Processor Sub-system (KPSS) Application Clock Controller (ACC)
->>> -
->>> -The KPSS ACC provides clock, power domain, and reset control to a Krait CPU.
->>> -There is one ACC register region per CPU within the KPSS remapped region as
->>> -well as an alias register region that remaps accesses to the ACC associated
->>> -with the CPU accessing the region.
->>> -
->>> -PROPERTIES
->>> -
->>> -- compatible:
->>> -	Usage: required
->>> -	Value type: <string>
->>> -	Definition: should be one of:
->>> -			"qcom,kpss-acc-v1"
->>> -			"qcom,kpss-acc-v2"
->>> -
->>> -- reg:
->>> -	Usage: required
->>> -	Value type: <prop-encoded-array>
->>> -	Definition: the first element specifies the base address and size of
->>> -		    the register region. An optional second element specifies
->>> -		    the base address and size of the alias register region.
->>> -
->>> -- clocks:
->>> -        Usage: required
->>> -        Value type: <prop-encoded-array>
->>> -        Definition: reference to the pll parents.
->>> -
->>> -- clock-names:
->>> -        Usage: required
->>> -        Value type: <stringlist>
->>> -        Definition: must be "pll8_vote", "pxo".
->>> -
->>> -- clock-output-names:
->>> -	Usage: optional
->>> -	Value type: <string>
->>> -	Definition: Name of the output clock. Typically acpuX_aux where X is a
->>> -		    CPU number starting at 0.
->>> -
->>> -Example:
->>> -
->>> -	clock-controller@2088000 {
->>> -		compatible = "qcom,kpss-acc-v2";
->>> -		reg = <0x02088000 0x1000>,
->>> -		      <0x02008000 0x1000>;
->>> -		clocks = <&gcc PLL8_VOTE>, <&gcc PXO_SRC>;
->>> -		clock-names = "pll8_vote", "pxo";
->>> -		clock-output-names = "acpu0_aux";
->>> -	};
->>> diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml
->>> new file mode 100644
->>> index 000000000000..6e8ef4f85eab
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml
->>> @@ -0,0 +1,97 @@
->>> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/arm/msm/qcom,kpss-acc.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Krait Processor Sub-system (KPSS) Application Clock Controller (ACC)
->>> +
->>> +maintainers:
->>> +  - Ansuel Smith <ansuelsmth@gmail.com>
->>> +
->>> +description: |
->>> +  The KPSS ACC provides clock, power domain, and reset control to a Krait CPU.
->>> +  There is one ACC register region per CPU within the KPSS remapped region as
->>> +  well as an alias register region that remaps accesses to the ACC associated
->>> +  with the CPU accessing the region.
->>> +
->>> +properties:
->>> +  compatible:
->>> +    enum:
->>> +      - qcom,kpss-acc-v1
->>> +      - qcom,kpss-acc-v2
->>> +
->>> +  reg:
->>> +    items:
->>> +      - description: Base address and size of the register region
->>> +      - description: Optional base address and size of the alias register region
->>> +
->>> +  clocks:
->>> +    items:
->>> +      - description: phandle to pll8_vote
->>> +      - description: phandle to pxo_board
->>> +
->>> +  clock-names:
->>> +    items:
->>> +      - const: pll8_vote
->>> +      - const: pxo
->>> +
->>> +  clock-output-names:
->>> +    description: Name of the aux clock. Krait can have at most 4 cpu.
->>> +    enum:
->>> +      - acpu0_aux
->>> +      - acpu1_aux
->>> +      - acpu2_aux
->>> +      - acpu3_aux
->>> +
->>> +  '#clock-cells':
->>> +    const: 0
->>> +
->>> +required:
->>> +  - compatible
->>> +  - reg
->>> +
->>> +allOf:
->>> +  - if:
->>> +      properties:
->>> +        compatible:
->>> +          contains:
->>
->> This is not obvious from the original bindings. Why are these required
->> only on v1? Whatr about v2? Are they allowed on v2? Why at least
->> clock-cells are not required on v2?
->>
-> 
-> The original Documentation was a joke. I should have also write it in
-> the cover letter. v2 doesn't export clocks and just expose the kpss
-> regs. Doesn't provide any mux / clocks. It's really an entirely
-> different implementation. Aka the Documentation was wrong from the
-> start.
+This is a follow-up to the ipq806x gcc modernize series. Manu cleanup
+changes and also some discoveries of wrong definition notice only with
+all these conversions.
 
-OK, thanks for explanation. Please mention it in the commit msg.
+The first patch is an improvement of the clk_hw_get_parent_index. The
+original idea of clk_hw_get_parent_index was to give a way to access the
+parent index but for some reason the final version limited it to the
+current index. We change it to give the current parent if is not
+provided and to give the requested parent if provided. Any user of this
+function is updated to follow the new implementation.
 
-> 
->> The previous bindings make them required which you change here. Your
->> commit does not explain this.
->>
->> Please explicitly explain in commit msg all changes to the bindings
->> which are necessary for conversion.
->>
->>> +            const: qcom,kpss-acc-v1
->>> +      then:
->>> +        required:
->>> +          - clocks
->>> +          - clock-names
->>> +          - clock-output-names
->>> +          - '#clock-cells'
->>> +
->>> +additionalProperties: false
->>> +
->>> +examples:
->>> +  - |
->>> +    #include <dt-bindings/clock/qcom,gcc-ipq806x.h>
->>> +
->>> +    clock-controller@2088000 {
->>> +      compatible = "qcom,kpss-acc-v1";
->>> +      reg = <0x02088000 0x1000>, <0x02008000 0x1000>;
->>> +      clocks = <&gcc PLL8_VOTE>, <&pxo_board>;
->>> +      clock-names = "pll8_vote", "pxo";
->>> +      clock-output-names = "acpu0_aux";
->>> +      #clock-cells = <0>;
->>> +    };
->>> +
->>> +    clock-controller@2098000 {
->>> +      compatible = "qcom,kpss-acc-v1";
->>> +      reg = <0x02098000 0x1000>, <0x02008000 0x1000>;
->>> +      clock-output-names = "acpu1_aux";
->>> +      clocks = <&gcc PLL8_VOTE>, <&pxo_board>;
->>> +      clock-names = "pll8_vote", "pxo";
->>> +      #clock-cells = <0>;
->>
->> It's the same example as above, no differences. Remove it.
->>
-> 
-> Mhh this is a direct example on how the kpss-acc are defined for ipq806x
-> with a configuration with 2 cpu. Tell me if I should really remove it or
-> not.
+The patch 2 and 3 are some additional fixes for gcc.
+The first one is a fix that register the pxo and cxo fixed clock only if
+they are not defined in DTS.
+The patch 3 require some explaination. In short is a big HACK to prevent
+kernel panic with this series.
 
-Yeah, but all properties are exactly the same, there is no difference
-here, so this as an example does not bring additional information.
+The kpss-xcc driver is a mess.
+The Documentation declare that the clocks should be provided but for some
+reason it was never followed.
+In fact in the ipq8064 DTSI only the clocks for l2cc are declared but
+for cpu0 and cpu1 the clocks are not defined.
+The kpss-xcc driver use parent_names so the clks are ignored and never
+used so till now it wasn't a problem (ignoring the fact that they
+doesn't follow documentation at all)
+On top of that, the l2cc node declare the pxo clock in a really strange
+way. It's declared using the PXO_SRC gcc clock that is never defined in
+the gcc ipq8064 clock table. (the correct way was to declare a fixed
+clock in dts and reference that)
+To prevent any kind of problem we use the patch 3 and provide the clk
+for PXO_SRC in the gcc clock table. We manually provide the clk after
+gcc probe.
 
-> 
->>> +    };
->>> +
->>> +  - |
->>> +    clock-controller@f9088000 {
->>> +      compatible = "qcom,kpss-acc-v2";
->>> +      reg = <0xf9088000 0x1000>,
->>> +            <0xf9008000 0x1000>;
->>
->> You now changed the example. This looks wrong.
->>
-> 
-> Again the example was wrong from the start. There isn't ANY kpss v2 that
-> exports clock and the driver that expose the aux clocks have just the
-> compatible for v1. (that is correct)
+Patch 4 is just a minor cleanup where we use the poll macro
 
-OK, please also mention it in commit msg.
+Patch 5 is the actually kpss-xcc conversion to parent data
 
-> 
->>> +    };
->>> +...
->>> diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
->>> deleted file mode 100644
->>> index e628758950e1..000000000000
->>> --- a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
->>> +++ /dev/null
->>> @@ -1,44 +0,0 @@
->>> -Krait Processor Sub-system (KPSS) Global Clock Controller (GCC)
->>> -
->>> -PROPERTIES
->>> -
->>> -- compatible:
->>> -	Usage: required
->>> -	Value type: <string>
->>> -	Definition: should be one of the following. The generic compatible
->>> -			"qcom,kpss-gcc" should also be included.
->>> -			"qcom,kpss-gcc-ipq8064", "qcom,kpss-gcc"
->>> -			"qcom,kpss-gcc-apq8064", "qcom,kpss-gcc"
->>> -			"qcom,kpss-gcc-msm8974", "qcom,kpss-gcc"
->>> -			"qcom,kpss-gcc-msm8960", "qcom,kpss-gcc"
->>> -
->>> -- reg:
->>> -	Usage: required
->>> -	Value type: <prop-encoded-array>
->>> -	Definition: base address and size of the register region
->>> -
->>> -- clocks:
->>> -	Usage: required
->>> -	Value type: <prop-encoded-array>
->>> -	Definition: reference to the pll parents.
->>> -
->>> -- clock-names:
->>> -	Usage: required
->>> -	Value type: <stringlist>
->>> -	Definition: must be "pll8_vote", "pxo".
->>> -
->>> -- clock-output-names:
->>> -	Usage: required
->>> -	Value type: <string>
->>> -	Definition: Name of the output clock. Typically acpu_l2_aux indicating
->>> -		    an L2 cache auxiliary clock.
->>> -
->>> -Example:
->>> -
->>> -	l2cc: clock-controller@2011000 {
->>> -		compatible = "qcom,kpss-gcc-ipq8064", "qcom,kpss-gcc";
->>> -		reg = <0x2011000 0x1000>;
->>> -		clocks = <&gcc PLL8_VOTE>, <&gcc PXO_SRC>;
->>> -		clock-names = "pll8_vote", "pxo";
->>> -		clock-output-names = "acpu_l2_aux";
->>> -	};
->>> diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
->>> new file mode 100644
->>> index 000000000000..578e2eccb7db
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
->>> @@ -0,0 +1,63 @@
->>> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/arm/msm/qcom,kpss-gcc.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Krait Processor Sub-system (KPSS) Global Clock Controller (GCC)
->>> +
->>> +maintainers:
->>> +  - Ansuel Smith <ansuelsmth@gmail.com>
->>> +
->>> +description: |
->>> +  Krait Processor Sub-system (KPSS) Global Clock Controller (GCC). Used
->>> +  to control L2 mux (in the current implementation).
->>> +
->>> +properties:
->>> +  compatible:
->>> +    const: qcom,kpss-gcc
->>
->> This is wrong conversion. You removed quite a lot.
->>
-> 
-> The driver doesn't have any support for it and we have no user for
-> kpss-gcc. Again another Documentation that was pushed for the sake of it
-> with no real user/no sense at all. Tell me if I should keep random
-> compatible anyway. Should't be better to fix them for good and make devs
-> add a specific compatible when the driver actually add support for them?
+Patch 6-7 should be a fixup of a real conver case
 
-We talk here mostly about bindings, not driver, so the driver's
-implementation matters less. IOW, driver does not have to implement all
-compatibles from bindings. Bindings can be used in other projects,
-outside of mainline kernel, so the compatibles actually might be useful.
+Patch 8 converts the krait-cc to parent_data
+Patch 9 give some love to the code with some minor fixup
+Patch 10 drop the hardcoded safe sel and use the new
+clk_hw_get_parent_index to get the safe parent index.
+(also I discovered that the parent order was wrong)
 
-These compatibles might be reasonable even if not implemented in the
-driver, without real user.
+Patch 11 is an additional fixup to force the reset of the muxes even
+more.
 
-More important question is whether these compatibles make sense. That
-part I don't exactly now. You used term "random compatible", so are they
-really random? To me they look like specific implementation of GCC, so
-they look reasonable, but I know nothing about Qualcomm Krait and GCC.
+Patch 12-13 are some additiona taken from the qsdk that were missing in
+the upstream driver
 
-> 
->> Please split this commit into two separate conversions (acc and gcc).
->>
-> 
-> Will do.
-> 
->>> +
->>> +  reg:
->>> +    items:
->>> +      - description: Base address and size of the register region
->>
->> Just maxItems:1. No need for items and description - it's obvious.
->>
-> 
-> Ok.
-> 
->>> +
->>> +  clocks:
->>> +    items:
->>> +      - description: phandle to pll8_vote
->>> +      - description: phandle to pxo_board
->>> +
->>> +  clock-names:
->>> +    items:
->>> +      - const: pll8_vote
->>> +      - const: pxo
->>> +
->>> +  clock-output-names:
->>> +    const: acpu_l2_aux
->>> +
->>
->>
->> Best regards,
->> Krzysztof
-> 
-> I hope I don't look rude with my response. The Documentation for this
-> stuff is really old and was pushed randomly. Guess how fun it was to
-> discover that NONE of them were actually right and we have this from
-> ages broken. Will for sure improve the commit description.
-> 
-> Also considering how brake they are should I really do a direct
-> conversion and then fix them? Instead of dropping them for good and
-> reimplement them the correct way directly?
+Patch 14 converts krait-cc to yaml
 
-It depends. If the bindings are really wrong, usually we combine the
-changes necessary for conversion in one commit. Tweaking compatibles to
-real life or adding new compatibles - maybe better in a separate commit.
+Patch 15 add to krait-cc Documentation the L2 clocks
 
-Best regards,
-Krzysztof
+Patch 16 finally adds all this stuff to the ipq8064 dtsi (and fix the
+stupid PXO_SRC phandle)
+
+Patch 17 converts the kpss-acc driver to yaml and fix some Documentation
+error
+
+Patch 18 convets the kpss-gcc driver to yaml
+
+I tested this series on a ipq8064 SoC by running a cache benchmark test
+to make sure the changes are correct and we don't silently cause
+regressions. Also I compared the output of the clk_summary every time
+and we finally have a sane output where the mux are correctly placed in
+the correct parent. (till now we had the cpu aux clock all over the
+place, probably never cause problems but who knows.)
+
+v3:
+- Split Documentation files for kpss and krait-cc
+v2:
+- introduce new API instead of fixing the existing one
+- do not reorganize variables in krait-cc
+- fix some comments error and improve it
+- return better error for patch 7
+- fix missing new line on patch 16
+
+Ansuel Smith (18):
+  clk: introduce clk_hw_get_index_of_parent new API
+  clk: qcom: gcc-ipq806x: skip pxo/cxo fixed clk if already present
+  clk: qcom: gcc-ipq806x: add PXO_SRC in clk table
+  clk: qcom: clk-hfpll: use poll_timeout macro
+  clk: qcom: kpss-xcc: convert to parent data API
+  clk: qcom: clk-krait: unlock spin after mux completion
+  clk: qcom: clk-krait: add hw_parent check for div2_round_rate
+  clk: qcom: krait-cc: convert to parent_data API
+  clk: qcom: krait-cc: drop pr_info and register qsb only if needed
+  clk: qcom: krait-cc: drop hardcoded safe_sel
+  clk: qcom: krait-cc: force sec_mux to QSB
+  clk: qcom: clk-krait: add apq/ipq8064 errata workaround
+  clk: qcom: clk-krait: add enable disable ops
+  dt-bindings: clock: Convert qcom,krait-cc to yaml
+  dt-bindings: clock: Add L2 clocks to qcom,krait-cc Documentation
+  ARM: dts: qcom: qcom-ipq8064: add missing krait-cc compatible and
+    clocks
+  dt-bindings: arm: msm: Convert kpss-acc driver Documentation to yaml
+  dt-bindings: arm: msm: Convert kpss-gcc driver Documentation to yaml
+
+ .../bindings/arm/msm/qcom,kpss-acc.txt        |  49 -----
+ .../bindings/arm/msm/qcom,kpss-acc.yaml       |  88 +++++++++
+ .../bindings/arm/msm/qcom,kpss-gcc.txt        |  44 -----
+ .../bindings/arm/msm/qcom,kpss-gcc.yaml       |  68 +++++++
+ .../bindings/clock/qcom,krait-cc.txt          |  34 ----
+ .../bindings/clock/qcom,krait-cc.yaml         |  63 ++++++
+ arch/arm/boot/dts/qcom-ipq8064.dtsi           |  20 +-
+ drivers/clk/clk.c                             |  14 ++
+ drivers/clk/qcom/clk-hfpll.c                  |  13 +-
+ drivers/clk/qcom/clk-krait.c                  |  44 ++++-
+ drivers/clk/qcom/clk-krait.h                  |   1 +
+ drivers/clk/qcom/gcc-ipq806x.c                |  27 ++-
+ drivers/clk/qcom/kpss-xcc.c                   |  25 +--
+ drivers/clk/qcom/krait-cc.c                   | 186 ++++++++++--------
+ include/linux/clk-provider.h                  |   1 +
+ 15 files changed, 441 insertions(+), 236 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt
+ create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml
+ delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
+ create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
+ delete mode 100644 Documentation/devicetree/bindings/clock/qcom,krait-cc.txt
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,krait-cc.yaml
+
+-- 
+2.34.1
+
