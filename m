@@ -2,112 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A85CB4E31C8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 21:30:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 83FF84E327F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 22:57:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352255AbiCUUbo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Mar 2022 16:31:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38240 "EHLO
+        id S229590AbiCUV5r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Mar 2022 17:57:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232223AbiCUUbn (ORCPT
+        with ESMTP id S229522AbiCUV5q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Mar 2022 16:31:43 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4501F7CB05
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 13:30:17 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id b188so17493782oia.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 13:30:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=SVEe7hUZOZ574KT711GyJJUr8pqUU3sbXrrP/FH6lUQ=;
-        b=HgN8E2bzL5A2bOlDz55Mv25/tt/RKwL9jSNjt40u/m04w3/7P+7g9c1HkyBvlAeQfV
-         2dhF+CnMi7h+Hj27pLjB7vrt+MzJ33fr0SD0TfhrIdKlbvJbV3XL81l38mZBlmlSDQYN
-         U405VmvwgH/ui0st6tSGtygKgfRSLlo87paTk=
+        Mon, 21 Mar 2022 17:57:46 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 571783DBBE0;
+        Mon, 21 Mar 2022 14:52:37 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id o64so17696888oib.7;
+        Mon, 21 Mar 2022 14:52:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=SVEe7hUZOZ574KT711GyJJUr8pqUU3sbXrrP/FH6lUQ=;
-        b=GjefIE2BFJvtxXVPKSZ+Espj9ViOrj8yfElE1kobQsRqugg0ZZKteJRggHym4I6Nwe
-         HLmwgslFe4bDi60InMNbeSneHm6j5k1LHDw2pCvGsePw+fX/oQEDp8DeUtcXz3sPZ1dj
-         E3CwZUoIUqiwPExt7v74mydeN90ZA+smD5Evx/9uQus0QGh6o/x718DmWtA8Sz3FfyLX
-         CRCrOcnLIOazW9bJdzfHmK5nOLXYoMX1D6LkSIX3jL394bkDL3U++4TabmbbLMcSgttx
-         +ATaEU+j0M7bcRiIH5Mj0bj9GUxR/HYinATJw5Y7qoEZr+fQD0o+P+Df2t0zFUtS8mpt
-         LcoQ==
-X-Gm-Message-State: AOAM532Tsy9EsMgPDGJa+SdgLK1wWWb5zVT2amr0UFPRDe72ZDLSVHWm
-        pCb0ZRfN41Cjry9JjpY825O8NA3DGbFENMBFKyQ4ttvt+zs=
-X-Google-Smtp-Source: ABdhPJy+w/ls2aSZCJrRsAdMrUWPb6dkwdIyuIvulQVig3ErIeGd57xFdDTojd0oyBT5QVRYIJdm9YWYMeqLFjZcwKg=
-X-Received: by 2002:aca:a9c8:0:b0:2da:45b6:b796 with SMTP id
- s191-20020acaa9c8000000b002da45b6b796mr428878oie.193.1647894616632; Mon, 21
- Mar 2022 13:30:16 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 21 Mar 2022 21:30:16 +0100
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=d+9QdUNzXb5pmLvt2FMBpD/un8EwCgivlwcq3BPgDKo=;
+        b=RnEoMjswvMf7No6ztoAqjQIP5DHSXZFPMv4uQpSTy1HaragPfyrJ+hLyhRiyFJ7HZO
+         jlwFjqMWv1oGS8HJPrnZKYHAxAJUn/6nCZaGt9Jpogk8T6vsvZZA6tRRS8VQ9N1hx3jP
+         8ncHa7XpPl30No304N6PT1cUFoNWqHsHm1GsCNHx7jMeOOVllK3TRtUnKSl6FR5gexGa
+         3r2+GciQhKW7OfgPDjk+XBrTHnnN1HaWHWwbcWuV7j2wTvYCu9fccZibitpEsYEl1Tel
+         jy/ULD5BPAuntxUL+bodz5Jl/TsWEmU9htY6IIE/j5ZrDhZ36qgleE3MHaMNklAGQ14Y
+         Vmsw==
+X-Gm-Message-State: AOAM533qcPuEQ2+PiaSr69ZlG7ZVBVHLP47b/lhyBV9Ob4D09rVirux0
+        AkMVeRzKGH0D895lff+U6A==
+X-Google-Smtp-Source: ABdhPJwwkIJLLXC6SDoKJ/5qk6FVBsTjioiC2WdygGpaGTYJC+hAJyGx9eyECCh80HYH74LiKhdVbw==
+X-Received: by 2002:aca:2b0d:0:b0:2d9:dc99:38a2 with SMTP id i13-20020aca2b0d000000b002d9dc9938a2mr587534oik.198.1647899205635;
+        Mon, 21 Mar 2022 14:46:45 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id a30-20020a4ad1de000000b00320fccd02cfsm7405810oos.5.2022.03.21.14.46.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Mar 2022 14:46:44 -0700 (PDT)
+Received: (nullmailer pid 594751 invoked by uid 1000);
+        Mon, 21 Mar 2022 21:46:43 -0000
+Date:   Mon, 21 Mar 2022 16:46:43 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-phy@lists.infradead.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Kishon Vijay Abraham I <kishon@ti.com>
+Subject: Re: [PATCH v2 2/6] dt-bindings: phy: qcom,qmp: Add SM6350 UFS PHY
+ bindings
+Message-ID: <YjjyQzGGPEgsKDwJ@robh.at.kernel.org>
+References: <20220321133318.99406-1-luca.weiss@fairphone.com>
+ <20220321133318.99406-3-luca.weiss@fairphone.com>
 MIME-Version: 1.0
-In-Reply-To: <1647863959-3289-3-git-send-email-quic_srivasam@quicinc.com>
-References: <1647863959-3289-1-git-send-email-quic_srivasam@quicinc.com> <1647863959-3289-3-git-send-email-quic_srivasam@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Mon, 21 Mar 2022 21:30:16 +0100
-Message-ID: <CAE-0n5131FQaejVVHKwW9ZnoGM+uy6+jjJZMkh5Pa82=r5ojuQ@mail.gmail.com>
-Subject: Re: [PATCH v5 2/3] arm64: dts: qcom: sc7280: Add pinmux for I2S
- speaker and Headset
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, dianders@chromium.org,
-        judyhsiao@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org
-Cc:     Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220321133318.99406-3-luca.weiss@fairphone.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2022-03-21 04:59:18)
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> index 688fa95..4a7b18a 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> @@ -462,7 +462,28 @@
->         drive-strength = <10>;
->  };
->
-> +&sec_mi2s_data0 {
-> +       drive-strength = <6>;
-> +       bias-disable;
-> +};
-> +
-> +&sec_mi2s_sclk {
-> +       drive-strength = <6>;
-> +       bias-disable;
-> +};
-> +
-> +&sec_mi2s_ws {
-> +       drive-strength = <6>;
-> +};
-> +
->  &tlmm {
-> +       amp_en: amp-en {
-> +               pins = "gpio63";
-> +               function = "gpio";
+On Mon, 21 Mar 2022 14:33:14 +0100, Luca Weiss wrote:
+> Document the compatible string for the UFS PHY found in SM6350.
+> 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+> Changes in v2:
+> - add second hunk for clock validation
+> 
+>  Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
 
-I'm pretty sure 'function = "gpio"' isn't needed. When a gpio is
-requested with gpio functions it gets muxed to gpio function
-automatically. See commit 1de7ddb3a15c ("pinctrl: msm: Mux out gpio
-function with gpio_request()").
-
-> +               bias-pull-down;
-> +               drive-strength = <2>;
-> +       };
-> +
->         bt_en: bt-en {
->                 pins = "gpio85";
->                 function = "gpio";
+Acked-by: Rob Herring <robh@kernel.org>
