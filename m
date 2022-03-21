@@ -2,156 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 392794E2ABA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 15:29:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E2AC4E2BBC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 16:17:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346014AbiCUOak (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Mar 2022 10:30:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59586 "EHLO
+        id S1349917AbiCUPTO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Mar 2022 11:19:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349292AbiCUO1y (ORCPT
+        with ESMTP id S1349901AbiCUPTN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Mar 2022 10:27:54 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52A2B393
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 07:21:59 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id w4so18010645edc.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 07:21:59 -0700 (PDT)
+        Mon, 21 Mar 2022 11:19:13 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D2FD10EC5A;
+        Mon, 21 Mar 2022 08:17:47 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id j18so11530822wrd.6;
+        Mon, 21 Mar 2022 08:17:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=mime-version:content-transfer-encoding:date:message-id:cc:subject
-         :from:to:references:in-reply-to;
-        bh=wqQ731hjmzYwePMzj+DNt4zNoUy/RV/H/tR/xZClBEc=;
-        b=a7Rj6AcABHT78i9TWBgkQWPokagDU0jBGQ8LsSbBRRv/OI/4rMl/1lju5JlyvS+tKB
-         IuOqDYxcyotfBCrs3bvIdzLsazH1bv1ZEmVlUQGa01tFitcvq362wqqPjcwvMHU7Adyr
-         LKkIWbPU5R+35AO/6VOvWccjhxctlXSXVTUvF9VuG2KG6LZQSYI9F5O6OHG7RmNdiQsC
-         bUXm1f5BMaOcPQIoXlbmwPYJhJEIUd8GGJfSKJ0o7MumrzXVWEi6/qIwGoJ7Pq6eiTMO
-         Eppsl4kulnTjm3XxgvwUK4oVT+R3wYUCPwo0/7uQkZWeF7evkxcElK0yCJUwT40bNalq
-         gn9Q==
+        d=gmail.com; s=20210112;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=e4IGptxZ1Fj/rxyhFk27+MlJU6AA0j30gb7cbqQiOOM=;
+        b=KDmvf+e2FwkPan7KAyChyliuW0KQGte9n8i7sep3stYwfVwbtyK0PQz5QjNdmJbrJ4
+         iTPH6ZI8Z+FJETI38oejOoMuxMjaHH919KdWteOiyolzOSqGv2e65AdHsBDKSxw5+64i
+         wMOHaZQEA2pEBy2BeI32OIXOkl0vu8OcX3llUPPQ0qqYT1ri2Ilc7NHN2NbC9f6xFlX9
+         AxPlI8jjfelQrI/eKlWxDXlnjvZEb1RZtjr/O1xOALL71YJsFimtMfCgpPg5OZWC62Jc
+         cE7DYi1ehg4KbC30cnWyYHQBMUMA2mGiGDY2omYtnIWaVJKOnL+c5s8tvNdC7bWZC+ts
+         QEpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:content-transfer-encoding:date
-         :message-id:cc:subject:from:to:references:in-reply-to;
-        bh=wqQ731hjmzYwePMzj+DNt4zNoUy/RV/H/tR/xZClBEc=;
-        b=ap26AaM4gaBKwydgFC1ZZRkKp00NjUYeX+FQp8HMoMWNIuMXOd34HeJ1qPUJpU7EKG
-         nE1fkjhp6RP3QNV8Ar5lQmzAXTdH9EYAJgvqWOrdqf2UN8Gjfv2f++2oVtRPX0SsqznF
-         2UgiLaxMURrqc5ho3udzCeHHmQgC0dUZMJyPgfhVghDcP3sYQxsBIb2R9cFg9ds5mh6L
-         nM/p9JDOYNbJ5NxA1ZMUbiZPaGb/gbXQyvqYOrwTSOZTq8sbLJQXzTppFDHQbM26TItO
-         V9dXxpXGO6TfzfNmkTJIhZHnSvngrQNFpqnGML58QA0P740ssjgaN7zeszJsNtR65hsU
-         U+sg==
-X-Gm-Message-State: AOAM532b9UVcQvlsMclfC9oTWw7hIew6gEmmoQHjGKhLJ8s+L8AX2R9U
-        R4pHCJgEreffz1iwdT/x0VekoQ==
-X-Google-Smtp-Source: ABdhPJyJQVu0Cr0w5giMNOtom9UMGLM/PCPym5H/QrHqy+QJ5fE7S8CUPrlQk3ekr9KXq9nUVZImUA==
-X-Received: by 2002:a05:6402:d2:b0:413:2e50:d6fd with SMTP id i18-20020a05640200d200b004132e50d6fdmr23158510edu.171.1647872517856;
-        Mon, 21 Mar 2022 07:21:57 -0700 (PDT)
-Received: from localhost (a246182.upc-a.chello.nl. [62.163.246.182])
-        by smtp.gmail.com with ESMTPSA id bn14-20020a170906c0ce00b006c5ef0494besm6945946ejb.86.2022.03.21.07.21.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Mar 2022 07:21:57 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Mon, 21 Mar 2022 15:21:56 +0100
-Message-Id: <CIPM1ZGMNRPK.36O4MO2RGWRV8@otso>
-Cc:     <linux-arm-msm@vger.kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, "Andy Gross" <agross@kernel.org>,
-        "Linus Walleij" <linus.walleij@linaro.org>,
-        "AngeloGioacchino Del Regno" 
-        <angelogioacchino.delregno@somainline.org>,
-        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
-        <linux-gpio@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 4/6] pinctrl: qcom: sm6350: fix order of UFS & SDC
- pins
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Bjorn Andersson" <bjorn.andersson@linaro.org>
-References: <20220321133318.99406-1-luca.weiss@fairphone.com>
- <20220321133318.99406-5-luca.weiss@fairphone.com>
- <YjiIZBbPN7pAUl1q@builder.lan>
-In-Reply-To: <YjiIZBbPN7pAUl1q@builder.lan>
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=e4IGptxZ1Fj/rxyhFk27+MlJU6AA0j30gb7cbqQiOOM=;
+        b=N2FoeI07i12Y+bCYjkzvLULk+/wMa9efn82K4K0RyoTdazLU5OncxcwyjbV+3T2A1L
+         bCCt6rscxXspSkR4omRVEZSGOhZgurmRXeAmHH6mEEQ9zRX0JLzg7lbLI7HbMyl+TPeZ
+         n+0aFsOXvJOihvumtx8TZAQflsFrzbio46jGT+YsJ9Iv+ksrXzaikHpUtEK4QMntlJsv
+         hcNVQcfxTzrtNfbYRn/u7LQ/znbPLwj7Ys0mSS7irGfOHltlhdyHgcP4tqtxEqB2fV/o
+         y8ga1dt2DT7vN7pAGMwWs5mWNG0j3lIvfuKuIrhPklceG5i67aaL6ZBCVZUEmYvMmRAU
+         b6oQ==
+X-Gm-Message-State: AOAM530GJgHDE0YiaF4A1YCxWJR1ytdhvlZJQc+Zu8tdEFpIuGoSGMuN
+        pbvQu/xfVOWKbQngDGI/GZk=
+X-Google-Smtp-Source: ABdhPJwSeo6aGBz94AOUGz2JbiJtLjN4kug7S+US6ukMc9vkj31tevhFjpKEP4sgMraSUMJWzvSsFA==
+X-Received: by 2002:a05:6000:1e1e:b0:204:203:73ba with SMTP id bj30-20020a0560001e1e00b00204020373bamr8505290wrb.445.1647875865467;
+        Mon, 21 Mar 2022 08:17:45 -0700 (PDT)
+Received: from Ansuel-xps.localdomain (93-42-69-170.ip85.fastwebnet.it. [93.42.69.170])
+        by smtp.googlemail.com with ESMTPSA id 10-20020a5d47aa000000b00204012e4373sm7239729wrb.101.2022.03.21.08.17.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Mar 2022 08:17:44 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Ansuel Smith <ansuelsmth@gmail.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: [PATCH v4 00/18] Modernize rest of the krait drivers
+Date:   Mon, 21 Mar 2022 15:48:07 +0100
+Message-Id: <20220321144825.11736-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+This is a follow-up to the ipq806x gcc modernize series. Manu cleanup
+changes and also some discoveries of wrong definition notice only with
+all these conversions.
 
-On Mon Mar 21, 2022 at 3:15 PM CET, Bjorn Andersson wrote:
-> On Mon 21 Mar 08:33 CDT 2022, Luca Weiss wrote:
->
-> > In other places the SDC and UFS pins have been swapped but this was
-> > missed in the PINCTRL_PIN definitions. Fix that.
-> >=20
-> > Fixes: 7d74b55afd27 ("pinctrl: qcom: Add SM6350 pinctrl driver")
-> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->
-> Your proposed change looks good, but when I look at 7d74b55afd27 it
-> already has these entries in the correct order.
->
-> Can you please confirm that this is still applicable. Or help me see
-> what I am missing.
+The first patch is an improvement of the clk_hw_get_parent_index. The
+original idea of clk_hw_get_parent_index was to give a way to access the
+parent index but for some reason the final version limited it to the
+current index. We change it to give the current parent if is not
+provided and to give the requested parent if provided. Any user of this
+function is updated to follow the new implementation.
 
-There are 3 times where number and description should match.
-For this UFS pin on sm6350 only 2/3 match.
-2x the number is 156, 1x it's 163
+The patch 2 and 3 are some additional fixes for gcc.
+The first one is a fix that register the pxo and cxo fixed clock only if
+they are not defined in DTS.
+The patch 3 require some explaination. In short is a big HACK to prevent
+kernel panic with this series.
 
-$ grep -i ufs_reset drivers/pinctrl/qcom/pinctrl-sm6350.c
-        PINCTRL_PIN(163, "UFS_RESET"),
-static const unsigned int ufs_reset_pins[] =3D { 156 };
-        [156] =3D UFS_RESET(ufs_reset, 0xae000),
+The kpss-xcc driver is a mess.
+The Documentation declare that the clocks should be provided but for some
+reason it was never followed.
+In fact in the ipq8064 DTSI only the clocks for l2cc are declared but
+for cpu0 and cpu1 the clocks are not defined.
+The kpss-xcc driver use parent_names so the clks are ignored and never
+used so till now it wasn't a problem (ignoring the fact that they
+doesn't follow documentation at all)
+On top of that, the l2cc node declare the pxo clock in a really strange
+way. It's declared using the PXO_SRC gcc clock that is never defined in
+the gcc ipq8064 clock table. (the correct way was to declare a fixed
+clock in dts and reference that)
+To prevent any kind of problem we use the patch 3 and provide the clk
+for PXO_SRC in the gcc clock table. We manually provide the clk after
+gcc probe.
 
-Does that help?
+Patch 4 is just a minor cleanup where we use the poll macro
 
-Regards
-Luca
+Patch 5 is the actually kpss-xcc conversion to parent data
 
+Patch 6-7 should be a fixup of a real conver case
 
->
-> Regards,
-> Bjorn
->
-> > ---
-> > Changes in v2:
-> > - nothing
-> >=20
-> >  drivers/pinctrl/qcom/pinctrl-sm6350.c | 16 ++++++++--------
-> >  1 file changed, 8 insertions(+), 8 deletions(-)
-> >=20
-> > diff --git a/drivers/pinctrl/qcom/pinctrl-sm6350.c b/drivers/pinctrl/qc=
-om/pinctrl-sm6350.c
-> > index 4d37b817b232..a91a86628f2f 100644
-> > --- a/drivers/pinctrl/qcom/pinctrl-sm6350.c
-> > +++ b/drivers/pinctrl/qcom/pinctrl-sm6350.c
-> > @@ -264,14 +264,14 @@ static const struct pinctrl_pin_desc sm6350_pins[=
-] =3D {
-> >  	PINCTRL_PIN(153, "GPIO_153"),
-> >  	PINCTRL_PIN(154, "GPIO_154"),
-> >  	PINCTRL_PIN(155, "GPIO_155"),
-> > -	PINCTRL_PIN(156, "SDC1_RCLK"),
-> > -	PINCTRL_PIN(157, "SDC1_CLK"),
-> > -	PINCTRL_PIN(158, "SDC1_CMD"),
-> > -	PINCTRL_PIN(159, "SDC1_DATA"),
-> > -	PINCTRL_PIN(160, "SDC2_CLK"),
-> > -	PINCTRL_PIN(161, "SDC2_CMD"),
-> > -	PINCTRL_PIN(162, "SDC2_DATA"),
-> > -	PINCTRL_PIN(163, "UFS_RESET"),
-> > +	PINCTRL_PIN(156, "UFS_RESET"),
-> > +	PINCTRL_PIN(157, "SDC1_RCLK"),
-> > +	PINCTRL_PIN(158, "SDC1_CLK"),
-> > +	PINCTRL_PIN(159, "SDC1_CMD"),
-> > +	PINCTRL_PIN(160, "SDC1_DATA"),
-> > +	PINCTRL_PIN(161, "SDC2_CLK"),
-> > +	PINCTRL_PIN(162, "SDC2_CMD"),
-> > +	PINCTRL_PIN(163, "SDC2_DATA"),
-> >  };
-> > =20
-> >  #define DECLARE_MSM_GPIO_PINS(pin) \
-> > --=20
-> > 2.35.1
-> >=20
+Patch 8 converts the krait-cc to parent_data
+Patch 9 give some love to the code with some minor fixup
+Patch 10 drop the hardcoded safe sel and use the new
+clk_hw_get_parent_index to get the safe parent index.
+(also I discovered that the parent order was wrong)
+
+Patch 11 is an additional fixup to force the reset of the muxes even
+more.
+
+Patch 12-13 are some additiona taken from the qsdk that were missing in
+the upstream driver
+
+Patch 14 converts krait-cc to yaml
+
+Patch 15 add to krait-cc Documentation the L2 clocks
+
+Patch 16 finally adds all this stuff to the ipq8064 dtsi (and fix the
+stupid PXO_SRC phandle)
+
+Patch 17 converts the kpss-acc driver to yaml and fix some Documentation
+error
+
+Patch 18 convets the kpss-gcc driver to yaml
+
+I tested this series on a ipq8064 SoC by running a cache benchmark test
+to make sure the changes are correct and we don't silently cause
+regressions. Also I compared the output of the clk_summary every time
+and we finally have a sane output where the mux are correctly placed in
+the correct parent. (till now we had the cpu aux clock all over the
+place, probably never cause problems but who knows.)
+
+v4:
+- Fix more dt-bindings bog errors
+v3:
+- Split Documentation files for kpss and krait-cc
+v2:
+- introduce new API instead of fixing the existing one
+- do not reorganize variables in krait-cc
+- fix some comments error and improve it
+- return better error for patch 7
+- fix missing new line on patch 16
+
+Ansuel Smith (18):
+  clk: introduce clk_hw_get_index_of_parent new API
+  clk: qcom: gcc-ipq806x: skip pxo/cxo fixed clk if already present
+  clk: qcom: gcc-ipq806x: add PXO_SRC in clk table
+  clk: qcom: clk-hfpll: use poll_timeout macro
+  clk: qcom: kpss-xcc: convert to parent data API
+  clk: qcom: clk-krait: unlock spin after mux completion
+  clk: qcom: clk-krait: add hw_parent check for div2_round_rate
+  clk: qcom: krait-cc: convert to parent_data API
+  clk: qcom: krait-cc: drop pr_info and register qsb only if needed
+  clk: qcom: krait-cc: drop hardcoded safe_sel
+  clk: qcom: krait-cc: force sec_mux to QSB
+  clk: qcom: clk-krait: add apq/ipq8064 errata workaround
+  clk: qcom: clk-krait: add enable disable ops
+  dt-bindings: clock: Convert qcom,krait-cc to yaml
+  dt-bindings: clock: Add L2 clocks to qcom,krait-cc Documentation
+  ARM: dts: qcom: qcom-ipq8064: add missing krait-cc compatible and
+    clocks
+  dt-bindings: arm: msm: Convert kpss-acc driver Documentation to yaml
+  dt-bindings: arm: msm: Convert kpss-gcc driver Documentation to yaml
+
+ .../bindings/arm/msm/qcom,kpss-acc.txt        |  49 -----
+ .../bindings/arm/msm/qcom,kpss-acc.yaml       |  88 +++++++++
+ .../bindings/arm/msm/qcom,kpss-gcc.txt        |  44 -----
+ .../bindings/arm/msm/qcom,kpss-gcc.yaml       |  68 +++++++
+ .../bindings/clock/qcom,krait-cc.txt          |  34 ----
+ .../bindings/clock/qcom,krait-cc.yaml         |  63 ++++++
+ arch/arm/boot/dts/qcom-ipq8064.dtsi           |  20 +-
+ drivers/clk/clk.c                             |  14 ++
+ drivers/clk/qcom/clk-hfpll.c                  |  13 +-
+ drivers/clk/qcom/clk-krait.c                  |  44 ++++-
+ drivers/clk/qcom/clk-krait.h                  |   1 +
+ drivers/clk/qcom/gcc-ipq806x.c                |  27 ++-
+ drivers/clk/qcom/kpss-xcc.c                   |  25 +--
+ drivers/clk/qcom/krait-cc.c                   | 186 ++++++++++--------
+ include/linux/clk-provider.h                  |   1 +
+ 15 files changed, 441 insertions(+), 236 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt
+ create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml
+ delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
+ create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
+ delete mode 100644 Documentation/devicetree/bindings/clock/qcom,krait-cc.txt
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,krait-cc.yaml
+
+-- 
+2.34.1
 
