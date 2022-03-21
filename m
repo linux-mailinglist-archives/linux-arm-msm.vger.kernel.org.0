@@ -2,57 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BC034E2C0C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 16:22:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 576074E2C21
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 16:24:40 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350182AbiCUPVc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Mar 2022 11:21:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41010 "EHLO
+        id S1350148AbiCUP0A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Mar 2022 11:26:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350143AbiCUPV0 (ORCPT
+        with ESMTP id S1350147AbiCUPZ7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Mar 2022 11:21:26 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B743A4616F;
-        Mon, 21 Mar 2022 08:19:06 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3CF3060F7F;
-        Mon, 21 Mar 2022 15:19:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B188DC340E8;
-        Mon, 21 Mar 2022 15:19:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1647875945;
-        bh=Mpf9l4QtYNeu7tz12esx3WrDN3+PTig3fwTFp3UV+Uo=;
-        h=From:To:Cc:Subject:Date:From;
-        b=C2mV8/Qd4eCvgZvmf75OYoJTK1w/EbyEQjLsMsbmLdPsmMcigLfnDo+H9CqFIOx9Y
-         z1I9VfjxCJawAwVDEBKivzN1q/667cH+nXwWWVaUimI0CMp7RYKVUgzcHNGZXMYhX6
-         xHVD/8yPxDqNpLpcU1B3WtB6HYYNOv3/hvWT6/9qHSVQNxOFPj5qU0bqg5CisN9tzM
-         7qUsACTVmgVHwZ44iKTEhIOgUAeiY2ElUrTgQouXlnY6lIwrpPRc0A5GRFbIfWlxtg
-         iOcmbFUIZWm1aMMGMMQHU7h2lahlXS0lptFhd9FLiMtqhevdwzZLqkzumliavQ8wVW
-         5Gc7dIXJZZkBg==
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Brian Masney <bmasney@redhat.com>
-Subject: [PATCH v2] ufs: qcom: drop custom Android boot parameters
-Date:   Mon, 21 Mar 2022 16:18:53 +0100
-Message-Id: <20220321151853.24138-1-krzk@kernel.org>
-X-Mailer: git-send-email 2.32.0
+        Mon, 21 Mar 2022 11:25:59 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95DAFC3375
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 08:24:33 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id 12so16518630oix.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 08:24:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=8vnMa7QJYto3rUp2CNI3IroLa5v/hp5jnq+SU6YeAQo=;
+        b=oBP78Y9N08jETzPolQznEBXq3Uxd/XEb+yye2TG3+vbyfT33AK6uFhZBpLcMNe16q+
+         GglCnu2CKG73eZYghuFy0so04d+mdzcjU4Kv7QkEYidzH2H96h1AqO0/PuZcGuO9JgCG
+         MVd1c1MtN3Iv0PTPLiV04LcCTyMka/zZ5EpJiiYj3z5I1gjmK12qqV2XMduawUMO1aD5
+         E9gGv/7O75vqxHKpn8fCSuzHGwi4kEL6wFPLCo9m8Qmd1HbJNPvFV2qZVJhc+F3HvV/W
+         JSHonH18vIa6TjPsEEedwXC0LWVYt7ujBKv2NH3EiZmk3zXqoxznTth8WWXqk5IVrOCU
+         NQnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=8vnMa7QJYto3rUp2CNI3IroLa5v/hp5jnq+SU6YeAQo=;
+        b=C9QoqRxYnDthDCgY39XexblCepHNSuCOJnCsUPX1GuqxuNsL6eSMOzzHJUOSAgnoGk
+         841ppDY3q+wENBvAgCM6QPe5mMgDsUNoDdgbx/fRJZTOJxpJ9xIqA/+sH/MLfrIRqMfu
+         Z3vb/8sHC6czX34g+JIVDaO2+4w8Xpz11duTCiqLyYnJUdMW1As0vEEgWpTjNr6EhoD5
+         neSyBBC9ex0viLJnLABrCGQFmJfXsJVUtxdbIZpTK65fLwolGlwERzlOww3dJFPFrlTz
+         XOsoHqD+CHVM5XS61M8WigO0XGOnV3tKg9QiGn/KUeLQImmCGsI5MHeLk3aavWI2ZLsn
+         Un/w==
+X-Gm-Message-State: AOAM531/vfbz+eJanDV/pMHuh3EqJmiEBCJMCqBolhJq1hDzcyMGa7hA
+        SmDYdSWa07aStKIjB+3rQ4b6uA==
+X-Google-Smtp-Source: ABdhPJxC6uT/rBzoCI8ifUy4cm0zSLKXkk2t+HK66PziQB2HByEqlpYQCCLQuHduP3ICCzWspKkvIA==
+X-Received: by 2002:a05:6808:3db:b0:2ec:cfe1:dfa0 with SMTP id o27-20020a05680803db00b002eccfe1dfa0mr13048421oie.127.1647876272900;
+        Mon, 21 Mar 2022 08:24:32 -0700 (PDT)
+Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
+        by smtp.gmail.com with ESMTPSA id v8-20020a05683018c800b005cb39fc3e15sm5544170ote.13.2022.03.21.08.24.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Mar 2022 08:24:31 -0700 (PDT)
+Date:   Mon, 21 Mar 2022 10:24:30 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bill Wendling <morbo@google.com>
+Cc:     Nathan Chancellor <nathan@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        linux-arm-msm@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+        llvm@lists.linux.dev
+Subject: Re: [PATCH] soc: qcom: smem: use correct format characters
+Message-ID: <YjiYrj5euvidRKHM@builder.lan>
+References: <20220316213118.2352683-1-morbo@google.com>
+ <YjTJRqlFOsXz7Ss7@dev-arch.thelio-3990X>
+ <CAGG=3QUXDj1Bp1kDY2F0dqw=6f8iRqE4nRDyticUrWx-nTb-=A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGG=3QUXDj1Bp1kDY2F0dqw=6f8iRqE4nRDyticUrWx-nTb-=A@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -61,66 +75,97 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The QCOM UFS driver requires an androidboot.bootdevice command line
-argument matching the UFS device name.  If the name is different, it
-refuses to probe.  This androidboot.bootdevice is provided by
-stock/vendor (from an Android-based device) bootloader.
+On Fri 18 Mar 13:27 CDT 2022, Bill Wendling wrote:
 
-This does not make sense from Linux point of view.  Driver should be
-able to boot regardless of bootloader.  Driver should not depend on some
-Android custom environment data.
+> On Fri, Mar 18, 2022 at 11:02 AM Nathan Chancellor <nathan@kernel.org> wrote:
+> >
+> > On Wed, Mar 16, 2022 at 02:31:18PM -0700, Bill Wendling wrote:
+> > > When compiling with -Wformat, clang emits the following warnings:
+> > >
+> > > drivers/soc/qcom/smem.c:847:41: warning: format specifies type 'unsigned
+> > > short' but the argument has type 'unsigned int' [-Wformat]
+> > >                         dev_err(smem->dev, "bad host %hu\n", remote_host);
+> > >                                                      ~~~     ^~~~~~~~~~~
+> > >                                                      %u
+> > > ./include/linux/dev_printk.h:144:65: note: expanded from macro 'dev_err'
+> > >         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
+> > >                                                                ~~~     ^~~~~~~~~~~
+> > > ./include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
+> > >                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
+> > >                              ~~~    ^~~~~~~~~~~
+> > > drivers/soc/qcom/smem.c:852:47: warning: format specifies type 'unsigned
+> > > short' but the argument has type 'unsigned int' [-Wformat]
+> > >                         dev_err(smem->dev, "duplicate host %hu\n", remote_host);
+> > >                                                            ~~~     ^~~~~~~~~~~
+> > >                                                            %u
+> > > ./include/linux/dev_printk.h:144:65: note: expanded from macro 'dev_err'
+> > >         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
+> > >                                                                ~~~     ^~~~~~~~~~~
+> > > ./include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
+> > >                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
+> > >                              ~~~    ^~~~~~~~~~~
+> > >
+> > > The types of these arguments are unconditionally defined, so this patch
+> > > updates the format character to the correct ones for ints and unsigned
+> > > ints.
+> >
+> > Right. Alternatively, remote_host could be turned into a u16 to match
+> > host0 and host1, as those are the only values that will ever be assigned
+> > to it, which should have been done in commit 13a920ae7898 ("soc: qcom:
+> > smem: a few last cleanups") to avoid introducing this warning in the
+> > first place.
+> >
+> I'll be happy to redo the patch if the maintainers wish. :-)
+> 
 
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-Tested-by: Amit Pundir <amit.pundir@linaro.org>
-Tested-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Forgive me, but I think that not mixing the unsigned int and u16 would
+look better. So if you're willing to respin this to change the type of
+remote_host, I'd be happy to merge that.
 
----
+Thanks,
+Bjorn
 
-Changes since v1
-1. Fix commit msg typo (Alim).
-2. Add tags.
-
-See also:
-https://lore.kernel.org/linux-devicetree/f61abc2b-3ce8-7b1f-3d28-8a4a03ec58eb@kernel.org/T/#u
----
- drivers/scsi/ufs/ufs-qcom.c | 15 ---------------
- 1 file changed, 15 deletions(-)
-
-diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index 0d2e950d0865..586c0e567ff9 100644
---- a/drivers/scsi/ufs/ufs-qcom.c
-+++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -957,18 +957,6 @@ static const struct reset_control_ops ufs_qcom_reset_ops = {
- 	.deassert = ufs_qcom_reset_deassert,
- };
- 
--#define	ANDROID_BOOT_DEV_MAX	30
--static char android_boot_dev[ANDROID_BOOT_DEV_MAX];
--
--#ifndef MODULE
--static int __init get_android_boot_dev(char *str)
--{
--	strlcpy(android_boot_dev, str, ANDROID_BOOT_DEV_MAX);
--	return 1;
--}
--__setup("androidboot.bootdevice=", get_android_boot_dev);
--#endif
--
- /**
-  * ufs_qcom_init - bind phy with controller
-  * @hba: host controller instance
-@@ -988,9 +976,6 @@ static int ufs_qcom_init(struct ufs_hba *hba)
- 	struct resource *res;
- 	struct ufs_clk_info *clki;
- 
--	if (strlen(android_boot_dev) && strcmp(android_boot_dev, dev_name(dev)))
--		return -ENODEV;
--
- 	host = devm_kzalloc(dev, sizeof(*host), GFP_KERNEL);
- 	if (!host) {
- 		err = -ENOMEM;
--- 
-2.32.0
-
+> > Probably does not matter though, unless the maintainers feel that is a
+> > better fix.
+> >
+> > > Link: ClangBuiltLinux/linux#378
+> >
+> > Link: https://github.com/ClangBuiltLinux/linux/issues/378
+> >
+> > as discussed on other patches :)
+> >
+> Thanks! Copy-and-paste strikes again...
+> 
+> -bw
+> 
+> > > Signed-off-by: Bill Wendling <morbo@google.com>
+> >
+> > Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+> >
+> > > ---
+> > >  drivers/soc/qcom/smem.c | 4 ++--
+> > >  1 file changed, 2 insertions(+), 2 deletions(-)
+> > >
+> > > diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+> > > index e2057d8f1eff..a98b5f395d15 100644
+> > > --- a/drivers/soc/qcom/smem.c
+> > > +++ b/drivers/soc/qcom/smem.c
+> > > @@ -844,12 +844,12 @@ qcom_smem_enumerate_partitions(struct qcom_smem *smem, u16 local_host)
+> > >                       continue;
+> > >
+> > >               if (remote_host >= SMEM_HOST_COUNT) {
+> > > -                     dev_err(smem->dev, "bad host %hu\n", remote_host);
+> > > +                     dev_err(smem->dev, "bad host %u\n", remote_host);
+> > >                       return -EINVAL;
+> > >               }
+> > >
+> > >               if (smem->partitions[remote_host]) {
+> > > -                     dev_err(smem->dev, "duplicate host %hu\n", remote_host);
+> > > +                     dev_err(smem->dev, "duplicate host %u\n", remote_host);
+> > >                       return -EINVAL;
+> > >               }
+> > >
+> > > --
+> > > 2.35.1.723.g4982287a31-goog
+> > >
+> > >
