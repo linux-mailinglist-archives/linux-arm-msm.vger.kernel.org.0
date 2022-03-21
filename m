@@ -2,99 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EAD6A4E27B1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 14:35:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 718404E27E5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 14:41:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347972AbiCUNhA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Mar 2022 09:37:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59900 "EHLO
+        id S1348026AbiCUNmb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Mar 2022 09:42:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347981AbiCUNgo (ORCPT
+        with ESMTP id S1348004AbiCUNm1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Mar 2022 09:36:44 -0400
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 150A24578D;
-        Mon, 21 Mar 2022 06:35:18 -0700 (PDT)
-Received: by mail-oi1-f176.google.com with SMTP id s207so16173705oie.11;
-        Mon, 21 Mar 2022 06:35:18 -0700 (PDT)
+        Mon, 21 Mar 2022 09:42:27 -0400
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A10A74630;
+        Mon, 21 Mar 2022 06:41:02 -0700 (PDT)
+Received: by mail-wr1-f48.google.com with SMTP id q8so9386164wrc.0;
+        Mon, 21 Mar 2022 06:41:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=S2GuADLnX7EW41noVu93sHqs9Lbgazi9/yDQcIAi5Wc=;
-        b=y1jDAZwMYKPkZuMJYL0bHxrZTG1u3Ed/FQU0EANSRrWwYGqJXqj2YaI+ms1+JZD9ta
-         s0cqgRrtREFask2bFpi86MUZcZ9bXufXkpjGNzlWPm7AINqdHFYfWrl142wb4h3mDAOZ
-         WweeY2f6ijkZy54VPkb9k2H4KE1UbzsD3bs84XcLBmw14A9bOtoSe8G+oWJYLxuVmKsx
-         iPv80yLuzNK7kWNI9ynsU7+gvsJBjaG9r6ld5dnfNwBd6DfCYcCVCjEa+AtNEV2ZEEV9
-         2lRElvwrA23BpO+vxJ2pBA3/POg8w7EDN4YnHyYV+evipfErwDdoVqXi+2NCCfvZySw0
-         7b9w==
-X-Gm-Message-State: AOAM533IXxWF8k54AT4RPTp5zMQhZnHzqxwgWZ78+cv2coavpNBRVrq6
-        EqKQUK1Cw+XcmWZQecY/zA==
-X-Google-Smtp-Source: ABdhPJxEA74G16aYEqeW41u74KbLaxDoBd85+ca8QMYz0TXyuzP2MUVWIRB/erpgsYlB7cwckcSjOQ==
-X-Received: by 2002:a05:6808:2112:b0:2da:58c4:ec54 with SMTP id r18-20020a056808211200b002da58c4ec54mr13866628oiw.32.1647869717400;
-        Mon, 21 Mar 2022 06:35:17 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id 37-20020a9d0ea8000000b005cb439f7a8csm4737237otj.62.2022.03.21.06.35.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Mar 2022 06:35:16 -0700 (PDT)
-Received: (nullmailer pid 4125322 invoked by uid 1000);
-        Mon, 21 Mar 2022 13:35:11 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=9vMt+hX5zS+6WtuXH1LjsjcqPrroHsDgeG/H9EBbOj0=;
+        b=VW/c6Hh40d3QPB+ixM5WfemxoZK7q1oyz2WLdIy/3LCR88cFmN+9WFjgtEk5OH9A6b
+         H7IQGh2LFBYdzlC0qP5MDg/0fJqEeX3RK3ap3jZB8sorcHXUeSpe0Qtp4iGgoVm+bB3Z
+         CgPzFb2vQQq4W3sZCgmddgGNgQZosVtQss2uzQCvvIpo+FOH+UcMlXDxi6a3TJQkjzob
+         EAlYsBJFzOnOsV4aBg0tUHLLRCOPa9JnBFzJIqFmCx3NDnLJP3nwRFr49GMR2MADHFfG
+         g40bs0Nfb+SugonRR3aDOi4B19wlSWKQPJt3ylHDpw+Rlmu1BVMqL/a58AtRrY3k/CYE
+         QdpA==
+X-Gm-Message-State: AOAM532w5As2mIq2fFvKMt3AcfBU48/crtnEfV1UB+dGir8WsNRmZcDy
+        kwdIkfnNAmAC45SQDy+sXlM=
+X-Google-Smtp-Source: ABdhPJxTBRXSwZa5Hgbdytx3UhsHjpCQShJv0x20dGfBhjxWjqfKvLc85bU5Nw7kbDtVsAU0SKnPPw==
+X-Received: by 2002:a5d:52ca:0:b0:203:db2f:2a47 with SMTP id r10-20020a5d52ca000000b00203db2f2a47mr18658989wrv.580.1647870060324;
+        Mon, 21 Mar 2022 06:41:00 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.googlemail.com with ESMTPSA id n23-20020a05600c3b9700b0038b7c4c0803sm17157114wms.30.2022.03.21.06.40.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Mar 2022 06:40:59 -0700 (PDT)
+Message-ID: <221c38f0-4eb2-18d4-ef18-ec35437d1163@kernel.org>
+Date:   Mon, 21 Mar 2022 14:40:58 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v2 1/6] scsi: ufs: dt-bindings: Add SM6350 compatible
+ string
+Content-Language: en-US
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20220320113430.26076-19-ansuelsmth@gmail.com>
-References: <20220320113430.26076-1-ansuelsmth@gmail.com> <20220320113430.26076-19-ansuelsmth@gmail.com>
-Subject: Re: [PATCH v3 18/18] dt-bindings: arm: msm: Convert kpss-gcc driver Documentation to yaml
-Date:   Mon, 21 Mar 2022 08:35:11 -0500
-Message-Id: <1647869711.869921.4125321.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220321133318.99406-1-luca.weiss@fairphone.com>
+ <20220321133318.99406-2-luca.weiss@fairphone.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <20220321133318.99406-2-luca.weiss@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 20 Mar 2022 12:34:30 +0100, Ansuel Smith wrote:
-> Convert kpss-gcc driver Documentation to yaml.
+On 21/03/2022 14:33, Luca Weiss wrote:
+> Document the compatible for the UFS found on SM6350.
 > 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->  .../bindings/arm/msm/qcom,kpss-gcc.txt        | 44 ------------
->  .../bindings/arm/msm/qcom,kpss-gcc.yaml       | 68 +++++++++++++++++++
->  2 files changed, 68 insertions(+), 44 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
->  create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
+> Changes in v2:
+> - add second hunk for clock validation
+> 
+>  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml:20:9: [warning] wrong indentation: expected 10 but found 8 (indentation)
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-dtschema/dtc warnings/errors:
 
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/1607459
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+Best regards,
+Krzysztof
