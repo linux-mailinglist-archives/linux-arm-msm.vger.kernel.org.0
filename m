@@ -2,61 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 222784E2362
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 10:34:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A5464E252D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 12:22:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243061AbiCUJfo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Mar 2022 05:35:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48960 "EHLO
+        id S243316AbiCULYN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Mar 2022 07:24:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239083AbiCUJfo (ORCPT
+        with ESMTP id S1346720AbiCULYM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Mar 2022 05:35:44 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A17EC5D1A3;
-        Mon, 21 Mar 2022 02:34:19 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4480B61257;
-        Mon, 21 Mar 2022 09:34:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD68C340E8;
-        Mon, 21 Mar 2022 09:34:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1647855258;
-        bh=KAy+HX7RT4vropER51g7vnunFx9E0IYtS6S7s/kOnVo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=az+y/cewf7KdP2kFF8wkWZlGQo6+2T0eMChPcWVGvVoP+lO8Yj59G2Yd/icvGqv39
-         aF55PvwTgY4UbH4mLJ/RQZwnFdT1tjW5COWkzOn+M6kOmTwVGZVRMToe5McDTInUCb
-         tVUEmR4Tt5g3BnBbyT1VpGTdCW1U4bLfuETqjQSI=
-Date:   Mon, 21 Mar 2022 10:34:16 +0100
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     "Sandeep Maheswaram (Temp)" <quic_c_sanm@quicinc.com>
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Pawel Laszczak <pawell@cadence.com>,
-        Peter Chen <peter.chen@kernel.org>,
-        Roger Quadros <rogerq@kernel.org>,
-        Aswath Govindraju <a-govindraju@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com
-Subject: Re: [PATCH v2 2/3] usb: xhci: Remove unwanted header inclusion
-Message-ID: <YjhGmJYbATchV+Zs@kroah.com>
-References: <1646130507-26796-1-git-send-email-quic_c_sanm@quicinc.com>
- <1646130507-26796-3-git-send-email-quic_c_sanm@quicinc.com>
- <YjR0gNPdeI5FTBGs@kroah.com>
- <adb12afc-4591-4a96-9988-e0d6a2ceb060@quicinc.com>
+        Mon, 21 Mar 2022 07:24:12 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A42B28BF21
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 04:22:47 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id m67so27409843ybm.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 04:22:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=59/+29AfugXrFjzNAA/AleHnJFc3FQCIzeHJaozhbYs=;
+        b=m8XwpHjKU/W+0aeE0aPhwzwKwy85wfRo4sPTe4jYG6ugw9k55IP7wQxyjtUlrsYH6L
+         vFwf5X7rYpPMGoZFzSGwYJXPJUhhU4vS3KxGFE7zo6tMzsRA0EDCmqOJ38RjXh4aZTQi
+         B6Cxjhpbq0VX/zpyHtpaFWgO6Sb/XqE970Af3s89fgoDUWPk9HvLdPDyKwn3SBEkMOrd
+         5A0fFiNLHfesAR1aGGivG9Z8mI5iYsgSF/z6NoXTm1gsSQ5Nszw1za0F3pfafe21R8tA
+         VUU2+JfQYqGDFCwJZe+ClHoqpUO/YzBcw3+pl0UxJO3btWaKLVma4kA4NAyWFtk/9qnM
+         DxIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=59/+29AfugXrFjzNAA/AleHnJFc3FQCIzeHJaozhbYs=;
+        b=VLXIIfyyxPQM/5zJ+UDvdB1d4RYVFl4fzWXtgCknPCfLJ34DBDQHsaBwfeccNdZnnC
+         gv4Mpttq2QhX9p+rn5rOIOpfMS0O8ISwDa1PnY+/2ESy1w+TvYj7JU8N3TDNng7X1cFO
+         rnC7Ig6aJm0GieFNyCde1pQZgxeK6dbmTJg2jgCsA7WlJtrvX2p8U3+IJJlxJtQuXxS7
+         X9j9J8FsSK6O5NKj/crvJg7GZ97XCUZOEzvih3ddIKBJA+8Z6aaIedQj81/pdb0056sD
+         Yx2+tSV9j+J2ixk56aaL8WBKSwawSoojsZWoqugdpyr8y1436c08oml4X2MT9tkdk8n7
+         eBUQ==
+X-Gm-Message-State: AOAM533C3T3ZYDCIrqQNN728+iw9dTE6d2qqmYIh6CjkGXSR5//m0zgN
+        zdwXb6L7TFvzImOmr92Cqn4GJhoB6IH/O2UaBiDYfA==
+X-Google-Smtp-Source: ABdhPJzWhuELzmeHPG56Ha7BZy3OBGHZOV0q502yNMMRvCHzJ3G4EqBNQBJ2L5I4VLWlR1XUtgBEqVKLi8rTJQxjiwA=
+X-Received: by 2002:a5b:848:0:b0:633:716f:1fb0 with SMTP id
+ v8-20020a5b0848000000b00633716f1fb0mr19901896ybq.522.1647861766807; Mon, 21
+ Mar 2022 04:22:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <adb12afc-4591-4a96-9988-e0d6a2ceb060@quicinc.com>
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <20220320110616.18355-1-krzk@kernel.org>
+In-Reply-To: <20220320110616.18355-1-krzk@kernel.org>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Mon, 21 Mar 2022 16:52:10 +0530
+Message-ID: <CAMi1Hd0T6bBdOCe4o_-RSaHdmG3oT9KtqDpHOiQpGQxmoBVa0w@mail.gmail.com>
+Subject: Re: [RFT] ufs: qcom: drop custom Android boot parameters
+To:     Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,63 +72,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 21, 2022 at 02:47:08PM +0530, Sandeep Maheswaram (Temp) wrote:
-> Hi Greg,
-> 
-> On 3/18/2022 5:31 PM, Greg Kroah-Hartman wrote:
-> > On Tue, Mar 01, 2022 at 03:58:26PM +0530, Sandeep Maheswaram wrote:
-> > > Remove the header file and forward declare struct usb_hcd.
-> > Why?
-> 
-> This was done to address below comment in previous version
-> 
-> https://patchwork.kernel.org/project/linux-arm-msm/patch/1644949454-814-2-git-send-email-quic_c_sanm@quicinc.com/#24739885
+On Sun, 20 Mar 2022 at 16:36, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>
+> The QCOM UFS driver requires an androidboot.bootdevice command line
+> argument matching the UFS device name.  If the name is different, it
+> refuses to probe.  Thise androidboot.bootdevice is provided by
+> stock/vendor (from an Android-based device) bootloader.
+>
+> This does not make sense from Linux point of view.  Driver should be
+> able to boot regardless of bootloader.  Driver should not depend on some
+> Android custom environment data.
+>
 
-Then EXPLAIN THAT in the changelog text.  Don't make us guess.
+No obvious regression on QCOM devboards DB845c (sdm845) and RB5
+(sm8250), and Xiaomi Pocophone F1 (sdm845) running AOSP.
 
-Please read the kernel documentation for how to write a good changelog
-text.  This single sentance does not follow the guidelines at all.
+Tested-by: Amit Pundir <amit.pundir@linaro.org>
 
-> 
-> 
-> > 
-> > > Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> > > ---
-> > >   include/linux/usb/xhci-plat.h | 3 ++-
-> > >   1 file changed, 2 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/include/linux/usb/xhci-plat.h b/include/linux/usb/xhci-plat.h
-> > > index 906e907..576e400 100644
-> > > --- a/include/linux/usb/xhci-plat.h
-> > > +++ b/include/linux/usb/xhci-plat.h
-> > > @@ -9,7 +9,8 @@
-> > >   #define _XHCI_PLAT_H
-> > >   #include <linux/types.h>
-> > > -#include <linux/usb/hcd.h>
-> > > +
-> > > +struct usb_hcd;
-> > >   struct xhci_plat_priv {
-> > >   	const char *firmware_name;
-> > > -- 
-> > > 2.7.4
-> > > 
-> > Where did this come from?  Is this fixing a build breakage from a
-> > previous patch?  If not, why is this needed?
-> > 
-> > confused,
-> > 
-> > greg k-h
-> 
-> There wasn't any build breakage.
-> 
-> This was done to address below comment in previous version
-> 
-> https://patchwork.kernel.org/project/linux-arm-msm/patch/1644949454-814-2-git-send-email-quic_c_sanm@quicinc.com/#24739885
-
-Again, how were we supposed to know any of this?
-
-Please read the documentation again for how to do this properly.
-
-thanks,
-
-greg k-h
+> Cc: Luca Weiss <luca.weiss@fairphone.com>
+> Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+>
+> ---
+>
+> Not tested, please kindly provide tests.
+>
+> See also:
+> https://lore.kernel.org/linux-devicetree/f61abc2b-3ce8-7b1f-3d28-8a4a03ec58eb@kernel.org/T/#u
+> ---
+>  drivers/scsi/ufs/ufs-qcom.c | 15 ---------------
+>  1 file changed, 15 deletions(-)
+>
+> diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
+> index 0d2e950d0865..586c0e567ff9 100644
+> --- a/drivers/scsi/ufs/ufs-qcom.c
+> +++ b/drivers/scsi/ufs/ufs-qcom.c
+> @@ -957,18 +957,6 @@ static const struct reset_control_ops ufs_qcom_reset_ops = {
+>         .deassert = ufs_qcom_reset_deassert,
+>  };
+>
+> -#define        ANDROID_BOOT_DEV_MAX    30
+> -static char android_boot_dev[ANDROID_BOOT_DEV_MAX];
+> -
+> -#ifndef MODULE
+> -static int __init get_android_boot_dev(char *str)
+> -{
+> -       strlcpy(android_boot_dev, str, ANDROID_BOOT_DEV_MAX);
+> -       return 1;
+> -}
+> -__setup("androidboot.bootdevice=", get_android_boot_dev);
+> -#endif
+> -
+>  /**
+>   * ufs_qcom_init - bind phy with controller
+>   * @hba: host controller instance
+> @@ -988,9 +976,6 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+>         struct resource *res;
+>         struct ufs_clk_info *clki;
+>
+> -       if (strlen(android_boot_dev) && strcmp(android_boot_dev, dev_name(dev)))
+> -               return -ENODEV;
+> -
+>         host = devm_kzalloc(dev, sizeof(*host), GFP_KERNEL);
+>         if (!host) {
+>                 err = -ENOMEM;
+> --
+> 2.32.0
+>
