@@ -2,66 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFF3B4E3426
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 00:22:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB1F54E345E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 00:33:04 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231526AbiCUXXo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Mar 2022 19:23:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54302 "EHLO
+        id S232714AbiCUXbZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Mar 2022 19:31:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232970AbiCUXXL (ORCPT
+        with ESMTP id S232628AbiCUXbZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Mar 2022 19:23:11 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A1F53AEC33
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 16:16:15 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id l4-20020a17090a49c400b001c6840df4a3so668941pjm.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 16:16:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jprZ5dlZvfVcHO5mE9ZsoLRmOINsWsg3Aq0+MlbJMbQ=;
-        b=m3w0Z62CifEheFBP2aKif3vYzDSKk5kP4WmMFHWxicEhav1Zh1vUUcSqxMBflIqAWh
-         13aAwdlYmvIgg9CRJATzDQJ+W51aQ+jfkK32jf7LTv6OZPp6Qs2ftu9cAAlYBepUB5Zf
-         z37VcVrlpoe+qPR8Pbnx11ENZuL1iSdgBJQk4=
+        Mon, 21 Mar 2022 19:31:25 -0400
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95495357B60;
+        Mon, 21 Mar 2022 16:29:53 -0700 (PDT)
+Received: by mail-oi1-f180.google.com with SMTP id s207so17879646oie.11;
+        Mon, 21 Mar 2022 16:29:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jprZ5dlZvfVcHO5mE9ZsoLRmOINsWsg3Aq0+MlbJMbQ=;
-        b=A2IVAFELNdBlHlla4bjDAuFuSDD6weem7N3vAu7JMZogA5g2ZxWaffV58SSi+MUAUJ
-         uwXZbNii058V+UjPpmkfxUL2BvsBMxutqg3dCPVbFvpRMpJR5gGy0/ghBaB7Fyo9q/FS
-         mKHX0y6ouUU/q3kbl2qbgYGcC9yjhTU9GynmcKZAAZ7SqKdQYs+fnSRvYf67FTMI35PW
-         5enJgnVSxCdmxOJ6ueNIoGcmjWyoKQGxsA98LuFCAaVI9p/DyVaCHfhXoXx4iZXp6Ru3
-         +rBmfWf76zLiJhTNvwPDweFO/yzYmdmJ86GuzMBj3PozV92WhlmN/eLPSs6JbZn3WwYw
-         RzEQ==
-X-Gm-Message-State: AOAM5312roid8OcRKhSPCsHJXk3q7thaXi+mf8xQvfqYUJRYnUlo1FLB
-        VEQGj070uHsnprgKOdsCXpqcOQ==
-X-Google-Smtp-Source: ABdhPJy4o7zoUol63NLz6MOIzB5l3YwODgUiOck2+yxumSjiJkNDqtAnqeZi3MluXTRKMbqZP7s30w==
-X-Received: by 2002:a17:902:ef46:b0:153:81f7:7fc2 with SMTP id e6-20020a170902ef4600b0015381f77fc2mr15499305plx.26.1647904574600;
-        Mon, 21 Mar 2022 16:16:14 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:69b1:6a1d:ea0e:4fc9])
-        by smtp.gmail.com with ESMTPSA id oo17-20020a17090b1c9100b001bf0ccc59c2sm481412pjb.16.2022.03.21.16.16.13
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=d3dOmL4Lu1fRiJ594ANhJlR56D28l0ED00gYien2ND8=;
+        b=grchtgxu3OGNNqxdqQI1hHRIEvrOrF1lTefUt8qQsXWsjQFe+Z8Nk3GsrKmmXWKiSq
+         ms2v/TdHCQnx0W0qzjOkaZ1sJLuqswcgW9awmNXg4M5LCo+Cu+2u6Xs6SrdoUzbBB0JR
+         w2MzvYr2mypAhlR9Ik/BiVQEAM2rq61anUK0M95TVzIckQcPfnl8CvF8eEv8RDjK9IoD
+         hvEdf/ZgZKg9+MS/Z4ZF3uXhdqUDpP/4syuHN2LmEsVin7zninmQzAfSQB8Ide77QXqc
+         smlUA2JiQVgENbMtOPoi9BSZgiQOB8CEQsJOq6wMEDGjWxW8SaXZ/C3zXwU3zWPF88sb
+         5h0A==
+X-Gm-Message-State: AOAM533WYMmla3QTD5gGbgJ4teGnVd9oaveESixrSiJuEBHd7cM/fWRc
+        q1zE5mSmkYfGgdAFPIbTBQ==
+X-Google-Smtp-Source: ABdhPJwmXMgPhnzMv1j3RzkiRGU/aCFAw8rg4efntETm5W+agBydMWcOHUXiHPK8mFuJfm6cNcXT2w==
+X-Received: by 2002:a05:6808:8c4:b0:2da:575e:3402 with SMTP id k4-20020a05680808c400b002da575e3402mr771261oij.8.1647905392875;
+        Mon, 21 Mar 2022 16:29:52 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id w4-20020a4adec4000000b0032109de628esm7380250oou.6.2022.03.21.16.29.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Mar 2022 16:16:14 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] soc: qcom: socinfo: add SC7280 entry to soc_id array
-Date:   Mon, 21 Mar 2022 16:15:55 -0700
-Message-Id: <20220321161546.1.Ifc4270fbe9bad536f08a47696e00cca5a0714abd@changeid>
-X-Mailer: git-send-email 2.35.1.894.gb6a874cedc-goog
+        Mon, 21 Mar 2022 16:29:52 -0700 (PDT)
+Received: (nullmailer pid 745601 invoked by uid 1000);
+        Mon, 21 Mar 2022 23:29:51 -0000
+Date:   Mon, 21 Mar 2022 18:29:51 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Fenglin Wu <quic_fenglinw@quicinc.com>
+Cc:     devicetree@vger.kernel.org, collinsd@codeaurora.org,
+        subbaram@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        sboyd@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
+        maz@kernel.org, Andy Gross <agross@kernel.org>,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        tglx@linutronix.de
+Subject: Re: [PATCH v6 08/10] dt-bindings: spmi: spmi-pmic-arb: make
+ interrupt properties as optional
+Message-ID: <YjkKb+o7KNJL4UOQ@robh.at.kernel.org>
+References: <1647497535-32151-1-git-send-email-quic_fenglinw@quicinc.com>
+ <1647497535-32151-9-git-send-email-quic_fenglinw@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1647497535-32151-9-git-send-email-quic_fenglinw@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,26 +68,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add an entry for SC7280 SoC.
+On Thu, 17 Mar 2022 14:12:13 +0800, Fenglin Wu wrote:
+> From: David Collins <collinsd@codeaurora.org>
+> 
+> Make all interrupt related properties as optional instead of
+> required.  Some boards do not required PMIC IRQ support and it
+> isn't needed to handle SPMI bus transactions, so specify it as
+> optional.
+> 
+> Signed-off-by: David Collins <collinsd@codeaurora.org>
+> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb.yaml | 3 ---
+>  1 file changed, 3 deletions(-)
+> 
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-
- drivers/soc/qcom/socinfo.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index 8b38d134720a..dbdbad5db3e5 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -330,6 +330,7 @@ static const struct soc_id soc_id[] = {
- 	{ 459, "SM7225" },
- 	{ 460, "SA8540P" },
- 	{ 480, "SM8450" },
-+	{ 487, "SC7280" },
- };
- 
- static const char *socinfo_machine(struct device *dev, unsigned int id)
--- 
-2.35.1.894.gb6a874cedc-goog
-
+Acked-by: Rob Herring <robh@kernel.org>
