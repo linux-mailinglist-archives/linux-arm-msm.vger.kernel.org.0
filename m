@@ -2,169 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B4B34E2DCB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 17:22:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 718B74E2F3C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 18:40:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350225AbiCUQXh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Mar 2022 12:23:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59466 "EHLO
+        id S237003AbiCURlj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Mar 2022 13:41:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351097AbiCUQXG (ORCPT
+        with ESMTP id S1349805AbiCURlh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Mar 2022 12:23:06 -0400
-Received: from esa.hc3962-90.iphmx.com (esa.hc3962-90.iphmx.com [216.71.142.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 316ADABF55;
-        Mon, 21 Mar 2022 09:21:41 -0700 (PDT)
+        Mon, 21 Mar 2022 13:41:37 -0400
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A91860CC4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 10:40:11 -0700 (PDT)
+Received: by mail-qk1-x730.google.com with SMTP id 1so12234318qke.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 10:40:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=qti.qualcomm.com; i=@qti.qualcomm.com; q=dns/txt;
-  s=qccesdkim1; t=1647879701; x=1648484501;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=DQljcbJhRnMX/NnxrAp+hABj2GlYAfRVVTrS7+aby0U=;
-  b=kHq8y9kw5zeottQVV8irKo5djhOfgSRGwyCX2lkpaTsB+/E6gE+XAsk3
-   KtcSwm2hGarqzdsbLdq/YmvSo+fCXSkAOlJ7EaQSJyQHMrSlEHNUX7DUG
-   95lKsK2u7LbxjNCgEwHJDXjyfBIflI7nzFBX1wk5asqkG2ObfJnIebxi0
-   0=;
-Received: from mail-co1nam11lp2175.outbound.protection.outlook.com (HELO NAM11-CO1-obe.outbound.protection.outlook.com) ([104.47.56.175])
-  by ob1.hc3962-90.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Mar 2022 16:21:38 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=jnUBNb31pvBxSDSTBy2Y8ylc2It4ssWmR7cQaiduBRo4RHGEWIkgMkEBNEa2d830H9yi6bGYKThfsnRSl+1fKbFyj+iJv7wqi1O5O/sxq5PWuCnkbmHJBrpCZeRT0ulpmWyqP7lnoDZoNlTfQIwzo0j+L6Q0KYbxPeNO/lBCtoU31bp8q0He30YR7eCSQZ8G/yWhreOac4vVBpGN7U8eKpk7lPUeBvkyPTfKAm6bfZ6JJk56PIqZ8gMheuDr+J3hZonJdLLbLNCOPzT1vc5KDe8TYEHRKv7UWZinAqkaWl+nsAt6EtNLyGUQlxquLV6/+ZYeUlnaxK7GnWyYWDPp9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DQljcbJhRnMX/NnxrAp+hABj2GlYAfRVVTrS7+aby0U=;
- b=jv9lBAYKXfSwTzKWf+tRZtv+2cYLnMNK3XzE5lXqBR7c73sPQPlfXUiRy4NO6AmQbAkEHyi7JmfpfNEJ4KLLQpZ1Fca7lrtxJDGS2plWLoozoDuqyPI66iIh4I75+L7AMn/DIW1i9dvetg5jO3Ie+KIXjFChOvYLT4C2Lz4ajoIbCFTh/HzM4kk19VxuSlkxSuha+R+DLkmb9zy499UNfdlmbJ2DdSeLLwRVGrnEaGfjFbLLJ7zZhcdYJXOY9Mw6WoyQG0pCTUmfJ1DqytRFMUz/60fQtPhVSdu2ogMucwyA3uziW3w5wbbAwrOCIsSK8wRvIG72sQpyl3bQHbrp4Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=qti.qualcomm.com; dmarc=pass action=none
- header.from=qti.qualcomm.com; dkim=pass header.d=qti.qualcomm.com; arc=none
-Received: from BN0PR02MB8173.namprd02.prod.outlook.com (2603:10b6:408:163::15)
- by SN6PR02MB4415.namprd02.prod.outlook.com (2603:10b6:805:a7::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5081.15; Mon, 21 Mar
- 2022 16:21:36 +0000
-Received: from BN0PR02MB8173.namprd02.prod.outlook.com
- ([fe80::8135:e90b:883:4853]) by BN0PR02MB8173.namprd02.prod.outlook.com
- ([fe80::8135:e90b:883:4853%5]) with mapi id 15.20.5081.023; Mon, 21 Mar 2022
- 16:21:36 +0000
-From:   Vinod Polimera <vpolimer@qti.qualcomm.com>
-To:     Stephen Boyd <swboyd@chromium.org>,
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6W2sIVaPd1wN+ZQSZ4o9j1nJ91W2fIHQV8YHK4mslGI=;
+        b=othMTu8DE+iag13P8/3A86+7Cc/DHfdnjpWo/byQ5ZUfFCsKml6d/b3+j7enHM3E4T
+         p+KQDmhtptyFrPuooWSYmYPJhZWIkHdGt+4vDWYH8iYYuao36WWrhVCMkScMLZUcTZup
+         pbxMXwiUoDBFmduoGs8/S8k0tsoBfeYNIRC0GZYKyyNpLf6jW7ygE9Q4oqBC51xdfcFk
+         7ttNl5wra931kZmVavvxQVP/9NCHWg77ijwCiHKLw+zmH2XDabD4PX37zubDr18d1FXu
+         LkskplWtgjBIz3OnXb1aT9cH4qssg21daGzI4dNto8OQ0PN0SvwCPVBwRyAb6Xlo3qN2
+         FbyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6W2sIVaPd1wN+ZQSZ4o9j1nJ91W2fIHQV8YHK4mslGI=;
+        b=L5ZKSnXPzL/mjBpv1XjoL+qJhVSs3aJ2wuN9YslaODIq649WnECkJLn0ua45Ko1DrS
+         mf1Vbw9XPkGOjz/CmuggaIaWRDd6cZqcIp+GJt2IGgVSPWY8MZTZRLlwj+NQ25trKC5i
+         N0ZaZRmV41ygZKHyQwoyxO2dfW0CW2CbCpD429wMg5bCnK3GKWs1mZ5t39E7byP9H8eg
+         1WIeALap8Ece6mJaOCKNa8500n/Q0LLgP9il8mbuRY+qe3Q0mgXcb3sy8ZY4A9BTd84v
+         +AXy4isX1Q/4ntyrPHAUmwLZgepvefE+qsFEttZ2OK3DCmeU45YBBYoLosvXUzyMT8mS
+         X52g==
+X-Gm-Message-State: AOAM531mlwbYXbfywB2MbO59wCsBnmTZ1fZEkdES2DSmQa6IAUKdP/Ja
+        sPvdy84uuo5Y9opEqRrRQaEtC3Vo+zXYsGQIdwGDhA==
+X-Google-Smtp-Source: ABdhPJzAfOtHcF9CqanODzAbHAfQeaYZMAZcZ9hv0xTWt4ZcE9sSN4BkC8am1z8h+EdgxGiCPhpJswcEmaek2cu2UjE=
+X-Received: by 2002:a05:620a:2453:b0:67d:9539:495c with SMTP id
+ h19-20020a05620a245300b0067d9539495cmr13674139qkn.30.1647884410564; Mon, 21
+ Mar 2022 10:40:10 -0700 (PDT)
+MIME-Version: 1.0
+References: <1647269217-14064-1-git-send-email-quic_vpolimer@quicinc.com>
+ <1647269217-14064-2-git-send-email-quic_vpolimer@quicinc.com>
+ <CAE-0n51vfoOK_6B0yAvws32MtLQ1SvBPoQPHBFE14TLzZFUZaw@mail.gmail.com> <BN0PR02MB8173BBD2C02F5DFBEBE94E40E4169@BN0PR02MB8173.namprd02.prod.outlook.com>
+In-Reply-To: <BN0PR02MB8173BBD2C02F5DFBEBE94E40E4169@BN0PR02MB8173.namprd02.prod.outlook.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 21 Mar 2022 20:39:59 +0300
+Message-ID: <CAA8EJpribc722wN2jR5sQEkX6FiaE_SdBk8B5HPamCXZWhEd7A@mail.gmail.com>
+Subject: Re: [PATCH v6 1/5] drm/msm/disp/dpu1: set mdp clk to the maximum
+ frequency in opp table during probe
+To:     Vinod Polimera <vpolimer@qti.qualcomm.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
         quic_vpolimer <quic_vpolimer@quicinc.com>,
         "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
         "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
         "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-CC:     "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
         "robdclark@gmail.com" <robdclark@gmail.com>,
-        "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
         "dianders@chromium.org" <dianders@chromium.org>,
         quic_kalyant <quic_kalyant@quicinc.com>
-Subject: RE: [PATCH v6 1/5] drm/msm/disp/dpu1: set mdp clk to the maximum
- frequency in opp table during probe
-Thread-Topic: [PATCH v6 1/5] drm/msm/disp/dpu1: set mdp clk to the maximum
- frequency in opp table during probe
-Thread-Index: AQHYN7JpyaIUkUBnYkOtfqwew+UyfazEF5wAgAX3NtA=
-Date:   Mon, 21 Mar 2022 16:21:35 +0000
-Message-ID: <BN0PR02MB8173BBD2C02F5DFBEBE94E40E4169@BN0PR02MB8173.namprd02.prod.outlook.com>
-References: <1647269217-14064-1-git-send-email-quic_vpolimer@quicinc.com>
- <1647269217-14064-2-git-send-email-quic_vpolimer@quicinc.com>
- <CAE-0n51vfoOK_6B0yAvws32MtLQ1SvBPoQPHBFE14TLzZFUZaw@mail.gmail.com>
-In-Reply-To: <CAE-0n51vfoOK_6B0yAvws32MtLQ1SvBPoQPHBFE14TLzZFUZaw@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=qti.qualcomm.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: b73241c4-5651-4355-f15f-08da0b56dedf
-x-ms-traffictypediagnostic: SN6PR02MB4415:EE_
-x-ld-processed: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d,ExtAddr
-x-microsoft-antispam-prvs: <SN6PR02MB4415AA0AACF80A61A6AE80B3E4169@SN6PR02MB4415.namprd02.prod.outlook.com>
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 6Vld2Lk5llwVeeqhCdZfrjKX+hllqGIs9wvHIJjLJFaeUaTLdCzWHKz8KCPG44ZiGzYkptkfCTtWLD9GGc2HNnpAl82SPEmBt/WKC5ue7BTm0Vpm+7DYiUlnvE/0t+vLRMgAYTwn5QWDJFRdtGGCslal4PiPLXL3hcHr9ON/ioUpr0h252ZM2RTEbwhpXAuonYvfDqxpxI99xdcCAuTKHyhY5Sko7I/1uIh9nrtrtVVbZA0iFjXaaFo9Jgx4uVIPOV9IyPKCnE9SSQVnX64F8Q5xC8MHPBfrq9OfJ36tOzNIYqHUTaI/TAhWwEJRdXCtYaWRxSSFG7veYta8nq2xb+DfBMDuMFJzpNYVgGPSM/HYw+BNoAdu8uKzRE0jpeoehHDoZ8+Fi2C6kA7N1ihjGghBiBIRJstkW3P9aGYuJEuNDu0MNP80UdKzfQYywgsfx5hbDaxEdc5ly3HMIVYi72iSDhiw9G1c3IgDKl3pb/Jihqu5zWnw0yhHvz0PYRRhkvJg+afCSw9u/PlvtrtRLN4kNFITNhtEvX8joHJyOgwwuad/C54Omnd0i1BgCuDWK+PJaIFrfNJmEZtXjwgS+SDvwbXnmKV7silNyaNussBg/n8dQwT8o0237eywwLPjYilEVdrGzHpg/+That9nvMTJfpZ35qsu+QUCbpVa04ilmn0VEsHCuNVAnqjw3ND7p5W0kEJS9ymbeERDHHTbrQ==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN0PR02MB8173.namprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(508600001)(83380400001)(9686003)(53546011)(4326008)(64756008)(66946007)(66556008)(66476007)(66446008)(8676002)(76116006)(26005)(110136005)(54906003)(186003)(86362001)(55016003)(38100700002)(52536014)(8936002)(122000001)(71200400001)(38070700005)(33656002)(6506007)(7696005)(2906002)(5660300002)(316002)(107886003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?SllUSlRLTk8rMURkaVBJazI4ME16ekhwQlhJNnAvSzNETUk2K0hZVytXUHFE?=
- =?utf-8?B?NmtVUHF3K3o4U2ZNMVFSQ2U5aFFPaTI4Q3dpbW5iWW5JQ25EVlVjcmtZa0di?=
- =?utf-8?B?Wm16Z3AxdTJFaVZ6dHk5dWROelRuMFJyM2lxN1hTdkJZeTdBS1YzM1ZldXV4?=
- =?utf-8?B?WFUzY0JmOVBTZFJiT1NkQmUvcnBTa0NOcG1OWGpnQ3hvUkJQZ2xyTlhiM3Zr?=
- =?utf-8?B?cytidDFSMnZyNmFCdjRUeEZiazRQOVZTWHFPbUUwQUlXMkNxVVBoRExEcjZJ?=
- =?utf-8?B?WHlHdTE0V1Z2VFVxcVhJNURGNTFwL0p1Zncxby9pcytHdVkyVkhObDcrSTdh?=
- =?utf-8?B?VnVjYk94VHpwL1NOWG5KUVJ1MGVicnBQc0pYRnVlSWFJRnRUbmx1SU1jVHhs?=
- =?utf-8?B?aCtlcklOYWd5TFBzT1NqazBPUzg1NTh2aWNSbkJzeXcwUitvY3B1T0NEWTRX?=
- =?utf-8?B?cS84TEJPSUk0VElJSVY0Y0tWL21oYWFNUk5LMmlobGdQZUtKMWNTQVkzTWFG?=
- =?utf-8?B?MCttdE1LYzU5dU5QQzA1aUN2bjVrN1RmYktHOGpGbjFuMXVYa25JVUJpY0Yw?=
- =?utf-8?B?c0ZDS2tyNDhVUmR0Z2RQZGdsUDhmWEFzalh2akhXVlZCSDExV0xrRnhWTDBB?=
- =?utf-8?B?ZWlRbTdnVnpiU2l4K09QbjJXZFZ3ZDF0WUlKRVpZbFRnVElvOUNtY3JjWkIr?=
- =?utf-8?B?ZExHZEpHblExTXNCa0FSSmx0b1RnUnMvQnBSSGxzY2t0SFdPQTdWQ3NKc3Ey?=
- =?utf-8?B?S3dkbDFvY0Rhc1ZGZFZlbm53UzJydWozTStHOUpMemZnQ2ZSVGk5SGlnOGc5?=
- =?utf-8?B?OFJpMWhhMmdySG05eThuTE83dERkNlVScmRZWjBQVCtmVVhSRjNETVRGM3Zk?=
- =?utf-8?B?ZUFQT3prai9lcTdkTTJ6YnNiQ3d0L3RmT2sxcDNXWFR5V1JYVGtkMjlObmM5?=
- =?utf-8?B?clVDUlJzR3dtNVQ2dTdUdnJSN05haSswMlFEUVFDdW1JYi9KMWttZTZWNmJ1?=
- =?utf-8?B?bzRDd0liME1yL0lHYWJOVGNuejZ6NVRPTWlrWWF1emN0OGRDYXdhQWNtanQz?=
- =?utf-8?B?UGdWZ2xRVWp1V0RqNDZVbkVyL2grb2N2MEFCUmRJT2sxamcveUQwZmRza3VS?=
- =?utf-8?B?NWJraGltVmc3VVBsZk1ScTNtWFRNc0dML25TVzdncDlEcUdQZTBOQXMxVnNO?=
- =?utf-8?B?b2FUZ2hnNng2MERXVlVWK2xsMVo0VmFsdHRCYWNUZkZ2OXZNVXRNejN5SEcr?=
- =?utf-8?B?YTBUSW5lYWRKMURvajZqOFNQK1hEWHcrbmJMcDcwUzNUeHJsamVaS2M4Q1p2?=
- =?utf-8?B?UWpURkJOczZ6N09RWlg4RVBrZ1B6c2M0cmJLUkRabElSeXduZjY4R3Q5b3hU?=
- =?utf-8?B?WDdJeUN3MVZncWxISklaYUFPLzhXeWMzbS8wc0EySHJ0cFlxdkt2WU81cWx0?=
- =?utf-8?B?aHI5OFZyb1EyQ0UxUEw4NnhCTlFkMEt1QUs3ZG9UVEdZMWlHbFJRaWd6M1FC?=
- =?utf-8?B?QnkwaDE0V1duTXRVT1hCN0RDY0dQaEgxc1pocGVabHg1dTdINy9SdlUrUWx0?=
- =?utf-8?B?aTJqWGhsYkFJUlRBWTFtWTlFVTJRT29iZVlMU1BxTTBxbVRyQ2tEYzJNZGRD?=
- =?utf-8?B?Sm5LbUt4bnFnMjI5TFd0OERyd3lGQkFSSUFlM0N3Rit6NEtXMThwazdTRmNr?=
- =?utf-8?B?bjBocmVjQ0xxdUVvNy96VGxlMHo4VVRhQ2N1aVFnYVhTN3o1d2xUNm84UFNu?=
- =?utf-8?B?RjJOWTlJRzNHckowazNKSFJlTEdYZjVZYmRaanpWbEtvekdVZkc0b3hpZldm?=
- =?utf-8?B?eE56REVjdUtGOVJYSUc3NkUrOHpENWp0Qyt4b0VFdUJEMjVtblU4elV2dngz?=
- =?utf-8?B?cGdHM1RPc1B3Nm9UVXV2azNSb3JQb0EzNnBmRGVWdXJMTXJWQ1QzUHJiUVZ6?=
- =?utf-8?Q?JP416N3K+ep0XIdIS832YetXlqaU8wzF?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-OriginatorOrg: qti.qualcomm.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN0PR02MB8173.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b73241c4-5651-4355-f15f-08da0b56dedf
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Mar 2022 16:21:35.9564
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: iavX5ws6SILA3VehhZOCNS/AXrcSdn4BiqYoyoH7TBknzKMVKTwnHOkflB5AxQQrdxghAAA4phS58XuyBG2EhG3nqSqprkDv1HKeZhiMhkk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR02MB4415
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogU3RlcGhlbiBCb3lkIDxz
-d2JveWRAY2hyb21pdW0ub3JnPg0KPiBTZW50OiBGcmlkYXksIE1hcmNoIDE4LCAyMDIyIDI6NDEg
-QU0NCj4gVG86IHF1aWNfdnBvbGltZXIgPHF1aWNfdnBvbGltZXJAcXVpY2luYy5jb20+Ow0KPiBk
-ZXZpY2V0cmVlQHZnZXIua2VybmVsLm9yZzsgZHJpLWRldmVsQGxpc3RzLmZyZWVkZXNrdG9wLm9y
-ZzsNCj4gZnJlZWRyZW5vQGxpc3RzLmZyZWVkZXNrdG9wLm9yZzsgbGludXgtYXJtLW1zbUB2Z2Vy
-Lmtlcm5lbC5vcmcNCj4gQ2M6IGxpbnV4LWtlcm5lbEB2Z2VyLmtlcm5lbC5vcmc7IHJvYmRjbGFy
-a0BnbWFpbC5jb207DQo+IGRtaXRyeS5iYXJ5c2hrb3ZAbGluYXJvLm9yZzsgZGlhbmRlcnNAY2hy
-b21pdW0ub3JnOyBxdWljX2thbHlhbnQNCj4gPHF1aWNfa2FseWFudEBxdWljaW5jLmNvbT4NCj4g
-U3ViamVjdDogUmU6IFtQQVRDSCB2NiAxLzVdIGRybS9tc20vZGlzcC9kcHUxOiBzZXQgbWRwIGNs
-ayB0byB0aGUNCj4gbWF4aW11bSBmcmVxdWVuY3kgaW4gb3BwIHRhYmxlIGR1cmluZyBwcm9iZQ0K
-PiANCj4gV0FSTklORzogVGhpcyBlbWFpbCBvcmlnaW5hdGVkIGZyb20gb3V0c2lkZSBvZiBRdWFs
-Y29tbS4gUGxlYXNlIGJlIHdhcnkNCj4gb2YgYW55IGxpbmtzIG9yIGF0dGFjaG1lbnRzLCBhbmQg
-ZG8gbm90IGVuYWJsZSBtYWNyb3MuDQo+IA0KPiBRdW90aW5nIFZpbm9kIFBvbGltZXJhICgyMDIy
-LTAzLTE0IDA3OjQ2OjUzKQ0KPiA+IHVzZSBtYXggY2xvY2sgZHVyaW5nIHByb2JlL2JpbmQgc2Vx
-dWVuY2UgZnJvbSB0aGUgb3BwIHRhYmxlLg0KPiA+IFRoZSBjbG9jayB3aWxsIGJlIHNjYWxlZCBk
-b3duIHdoZW4gZnJhbWV3b3JrIHNlbmRzIGFuIHVwZGF0ZS4NCj4gDQo+IENhcGl0YWxpemUgJ3Vz
-ZScuDQo+IA0KPiBXaHkgaXMgaXQgaW1wb3J0YW50IHRvIHVzZSBtYXggZnJlcXVlbmN5IGR1cmlu
-ZyBwcm9iZS9iaW5kPyBEb2VzIG5vdA0KPiBzZXR0aW5nIHRoZSBjbGsgcmF0ZSBkdXJpbmcgcHJv
-YmUgbWVhbiB0aGF0IHdlJ2xsIG5ldmVyIHVzZSB0aGUgbWF4DQo+IHJhdGU/IERvZXMgaXQgc3Bl
-ZWQgdGhpbmdzIHVwIGR1cmluZyBwcm9iZT8NCg0KV2UgbmVlZCB0byB2b3RlIG1kcCBjbG9jayBk
-dXJpbmcgcHJvYmUvYmluZCBzbyB0aGF0IHJhaWxzIGFyZSBub3Qgc2V0IGF0IHVuZGV0ZXJtaW5l
-ZCBzdGF0ZSBhcyBwb2ludGVkIG91dCBieSBEbWl0cnkuDQpTaW5jZSB3ZSBkb250IGtub3cgd2hh
-dCB3aWxsIGJlIHRoZSByYXRlIHNldCBpbiBib290IGxvYWRlciwgaXQgd291bGQgYmUgaWRlYWwg
-dG8gdm90ZSBhdCBtYXggZnJlcXVlbmN5LiANClRoZXJlIGNvdWxkIGJlIGEgZmlybXdhcmUgZGlz
-cGxheSBwcm9ncmFtbWVkIGluIGJvb3Rsb2FkZXIgYW5kIHdlIHdhbnQgdG8gdHJhbnNpdGlvbiBp
-dCB0byBrZXJuZWwgd2l0aG91dCB1bmRlcmZsb3dpbmcuDQoNClRoYW5rcywNClZpbm9kIFAuDQo=
+On Mon, 21 Mar 2022 at 19:21, Vinod Polimera <vpolimer@qti.qualcomm.com> wrote:
+>
+>
+>
+> > -----Original Message-----
+> > From: Stephen Boyd <swboyd@chromium.org>
+> > Sent: Friday, March 18, 2022 2:41 AM
+> > To: quic_vpolimer <quic_vpolimer@quicinc.com>;
+> > devicetree@vger.kernel.org; dri-devel@lists.freedesktop.org;
+> > freedreno@lists.freedesktop.org; linux-arm-msm@vger.kernel.org
+> > Cc: linux-kernel@vger.kernel.org; robdclark@gmail.com;
+> > dmitry.baryshkov@linaro.org; dianders@chromium.org; quic_kalyant
+> > <quic_kalyant@quicinc.com>
+> > Subject: Re: [PATCH v6 1/5] drm/msm/disp/dpu1: set mdp clk to the
+> > maximum frequency in opp table during probe
+> >
+> > WARNING: This email originated from outside of Qualcomm. Please be wary
+> > of any links or attachments, and do not enable macros.
+> >
+> > Quoting Vinod Polimera (2022-03-14 07:46:53)
+> > > use max clock during probe/bind sequence from the opp table.
+> > > The clock will be scaled down when framework sends an update.
+> >
+> > Capitalize 'use'.
+> >
+> > Why is it important to use max frequency during probe/bind? Does not
+> > setting the clk rate during probe mean that we'll never use the max
+> > rate? Does it speed things up during probe?
+>
+> We need to vote mdp clock during probe/bind so that rails are not set at undetermined state as pointed out by Dmitry.
+> Since we dont know what will be the rate set in boot loader, it would be ideal to vote at max frequency.
+> There could be a firmware display programmed in bootloader and we want to transition it to kernel without underflowing.
+
+This should be expressed in the commit message.
+
+
+-- 
+With best wishes
+Dmitry
