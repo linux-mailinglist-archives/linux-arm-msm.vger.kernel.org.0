@@ -2,170 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 576074E2C21
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 16:24:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4AD3C4E2C51
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 16:31:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350148AbiCUP0A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Mar 2022 11:26:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35676 "EHLO
+        id S1350267AbiCUPcq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Mar 2022 11:32:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350147AbiCUPZ7 (ORCPT
+        with ESMTP id S241939AbiCUPcp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Mar 2022 11:25:59 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95DAFC3375
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 08:24:33 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id 12so16518630oix.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 08:24:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=8vnMa7QJYto3rUp2CNI3IroLa5v/hp5jnq+SU6YeAQo=;
-        b=oBP78Y9N08jETzPolQznEBXq3Uxd/XEb+yye2TG3+vbyfT33AK6uFhZBpLcMNe16q+
-         GglCnu2CKG73eZYghuFy0so04d+mdzcjU4Kv7QkEYidzH2H96h1AqO0/PuZcGuO9JgCG
-         MVd1c1MtN3Iv0PTPLiV04LcCTyMka/zZ5EpJiiYj3z5I1gjmK12qqV2XMduawUMO1aD5
-         E9gGv/7O75vqxHKpn8fCSuzHGwi4kEL6wFPLCo9m8Qmd1HbJNPvFV2qZVJhc+F3HvV/W
-         JSHonH18vIa6TjPsEEedwXC0LWVYt7ujBKv2NH3EiZmk3zXqoxznTth8WWXqk5IVrOCU
-         NQnQ==
+        Mon, 21 Mar 2022 11:32:45 -0400
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F04C5169798;
+        Mon, 21 Mar 2022 08:31:19 -0700 (PDT)
+Received: by mail-wm1-f46.google.com with SMTP id q20so8786567wmq.1;
+        Mon, 21 Mar 2022 08:31:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=8vnMa7QJYto3rUp2CNI3IroLa5v/hp5jnq+SU6YeAQo=;
-        b=C9QoqRxYnDthDCgY39XexblCepHNSuCOJnCsUPX1GuqxuNsL6eSMOzzHJUOSAgnoGk
-         841ppDY3q+wENBvAgCM6QPe5mMgDsUNoDdgbx/fRJZTOJxpJ9xIqA/+sH/MLfrIRqMfu
-         Z3vb/8sHC6czX34g+JIVDaO2+4w8Xpz11duTCiqLyYnJUdMW1As0vEEgWpTjNr6EhoD5
-         neSyBBC9ex0viLJnLABrCGQFmJfXsJVUtxdbIZpTK65fLwolGlwERzlOww3dJFPFrlTz
-         XOsoHqD+CHVM5XS61M8WigO0XGOnV3tKg9QiGn/KUeLQImmCGsI5MHeLk3aavWI2ZLsn
-         Un/w==
-X-Gm-Message-State: AOAM531/vfbz+eJanDV/pMHuh3EqJmiEBCJMCqBolhJq1hDzcyMGa7hA
-        SmDYdSWa07aStKIjB+3rQ4b6uA==
-X-Google-Smtp-Source: ABdhPJxC6uT/rBzoCI8ifUy4cm0zSLKXkk2t+HK66PziQB2HByEqlpYQCCLQuHduP3ICCzWspKkvIA==
-X-Received: by 2002:a05:6808:3db:b0:2ec:cfe1:dfa0 with SMTP id o27-20020a05680803db00b002eccfe1dfa0mr13048421oie.127.1647876272900;
-        Mon, 21 Mar 2022 08:24:32 -0700 (PDT)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id v8-20020a05683018c800b005cb39fc3e15sm5544170ote.13.2022.03.21.08.24.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Mar 2022 08:24:31 -0700 (PDT)
-Date:   Mon, 21 Mar 2022 10:24:30 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bill Wendling <morbo@google.com>
-Cc:     Nathan Chancellor <nathan@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        linux-arm-msm@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
-        llvm@lists.linux.dev
-Subject: Re: [PATCH] soc: qcom: smem: use correct format characters
-Message-ID: <YjiYrj5euvidRKHM@builder.lan>
-References: <20220316213118.2352683-1-morbo@google.com>
- <YjTJRqlFOsXz7Ss7@dev-arch.thelio-3990X>
- <CAGG=3QUXDj1Bp1kDY2F0dqw=6f8iRqE4nRDyticUrWx-nTb-=A@mail.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=/5/C1gYgp4VfvcuFi8LRcN8/3RmQ7G2v7pTXWSD0gyk=;
+        b=ikU2jUK8bO2Y8uvXIouxrNntLlS3zOteRo7pzh6zSJRj+Ehe9WRh/zqCub/FMm6ZFE
+         8+An2O5WYwx3ZZZuaUzvuwgHA+AHZSnlyUihi/ubWUBemyi6cgTxgkdSAprvoBE0n4UM
+         lF7orA/1anN4N2UpAjsL6Tqbb8u5r5J4IfutZzY4642oTcq/SQK1K/H82+C1ohgdtwnC
+         JTOnvkNnkkq5xjE3IZ4/U20tLcCK29y7NARKK/EQO63LANKYmQcmFOFFN4JOE4r3LWS8
+         YnzOiDlISRizVea3inz3abGIS5JeJFVCrtw+ZukGGWE5swmzIIYq5d2PueRiK8Dp+hy6
+         DTMA==
+X-Gm-Message-State: AOAM530i74lfKoB8ZztmbTWKiowtw+9vhMnjvvLHMoj+34QDKOLm+6WC
+        yKPN83MC2Zr0UG49p7itY1E=
+X-Google-Smtp-Source: ABdhPJwVJp0KtpTuBf4c2VyunnMuFCDqiKloKbAIJMgm6G95zkywhdBK4Zy0uSs2jpqDnjxCqCmmuw==
+X-Received: by 2002:a05:600c:1d9f:b0:389:a1c4:f400 with SMTP id p31-20020a05600c1d9f00b00389a1c4f400mr27473867wms.171.1647876678403;
+        Mon, 21 Mar 2022 08:31:18 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.googlemail.com with ESMTPSA id h188-20020a1c21c5000000b0038c6c37efc3sm14255712wmh.12.2022.03.21.08.31.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Mar 2022 08:31:17 -0700 (PDT)
+Message-ID: <24ba0e3e-b6ba-8434-059a-8bda197a74e3@kernel.org>
+Date:   Mon, 21 Mar 2022 16:31:16 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGG=3QUXDj1Bp1kDY2F0dqw=6f8iRqE4nRDyticUrWx-nTb-=A@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v4 14/18] dt-bindings: clock: Convert qcom,krait-cc to
+ yaml
+Content-Language: en-US
+To:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+References: <20220321144825.11736-1-ansuelsmth@gmail.com>
+ <20220321144825.11736-15-ansuelsmth@gmail.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <20220321144825.11736-15-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 18 Mar 13:27 CDT 2022, Bill Wendling wrote:
-
-> On Fri, Mar 18, 2022 at 11:02 AM Nathan Chancellor <nathan@kernel.org> wrote:
-> >
-> > On Wed, Mar 16, 2022 at 02:31:18PM -0700, Bill Wendling wrote:
-> > > When compiling with -Wformat, clang emits the following warnings:
-> > >
-> > > drivers/soc/qcom/smem.c:847:41: warning: format specifies type 'unsigned
-> > > short' but the argument has type 'unsigned int' [-Wformat]
-> > >                         dev_err(smem->dev, "bad host %hu\n", remote_host);
-> > >                                                      ~~~     ^~~~~~~~~~~
-> > >                                                      %u
-> > > ./include/linux/dev_printk.h:144:65: note: expanded from macro 'dev_err'
-> > >         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
-> > >                                                                ~~~     ^~~~~~~~~~~
-> > > ./include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
-> > >                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
-> > >                              ~~~    ^~~~~~~~~~~
-> > > drivers/soc/qcom/smem.c:852:47: warning: format specifies type 'unsigned
-> > > short' but the argument has type 'unsigned int' [-Wformat]
-> > >                         dev_err(smem->dev, "duplicate host %hu\n", remote_host);
-> > >                                                            ~~~     ^~~~~~~~~~~
-> > >                                                            %u
-> > > ./include/linux/dev_printk.h:144:65: note: expanded from macro 'dev_err'
-> > >         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
-> > >                                                                ~~~     ^~~~~~~~~~~
-> > > ./include/linux/dev_printk.h:110:23: note: expanded from macro 'dev_printk_index_wrap'
-> > >                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
-> > >                              ~~~    ^~~~~~~~~~~
-> > >
-> > > The types of these arguments are unconditionally defined, so this patch
-> > > updates the format character to the correct ones for ints and unsigned
-> > > ints.
-> >
-> > Right. Alternatively, remote_host could be turned into a u16 to match
-> > host0 and host1, as those are the only values that will ever be assigned
-> > to it, which should have been done in commit 13a920ae7898 ("soc: qcom:
-> > smem: a few last cleanups") to avoid introducing this warning in the
-> > first place.
-> >
-> I'll be happy to redo the patch if the maintainers wish. :-)
+On 21/03/2022 15:48, Ansuel Smith wrote:
+> Convert qcom,krait-cc to yaml Documentation.
+> 
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> ---
+>  .../bindings/clock/qcom,krait-cc.txt          | 34 -----------
+>  .../bindings/clock/qcom,krait-cc.yaml         | 59 +++++++++++++++++++
+>  2 files changed, 59 insertions(+), 34 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/clock/qcom,krait-cc.txt
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,krait-cc.yaml
 > 
 
-Forgive me, but I think that not mixing the unsigned int and u16 would
-look better. So if you're willing to respin this to change the type of
-remote_host, I'd be happy to merge that.
 
-Thanks,
-Bjorn
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-> > Probably does not matter though, unless the maintainers feel that is a
-> > better fix.
-> >
-> > > Link: ClangBuiltLinux/linux#378
-> >
-> > Link: https://github.com/ClangBuiltLinux/linux/issues/378
-> >
-> > as discussed on other patches :)
-> >
-> Thanks! Copy-and-paste strikes again...
-> 
-> -bw
-> 
-> > > Signed-off-by: Bill Wendling <morbo@google.com>
-> >
-> > Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-> >
-> > > ---
-> > >  drivers/soc/qcom/smem.c | 4 ++--
-> > >  1 file changed, 2 insertions(+), 2 deletions(-)
-> > >
-> > > diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
-> > > index e2057d8f1eff..a98b5f395d15 100644
-> > > --- a/drivers/soc/qcom/smem.c
-> > > +++ b/drivers/soc/qcom/smem.c
-> > > @@ -844,12 +844,12 @@ qcom_smem_enumerate_partitions(struct qcom_smem *smem, u16 local_host)
-> > >                       continue;
-> > >
-> > >               if (remote_host >= SMEM_HOST_COUNT) {
-> > > -                     dev_err(smem->dev, "bad host %hu\n", remote_host);
-> > > +                     dev_err(smem->dev, "bad host %u\n", remote_host);
-> > >                       return -EINVAL;
-> > >               }
-> > >
-> > >               if (smem->partitions[remote_host]) {
-> > > -                     dev_err(smem->dev, "duplicate host %hu\n", remote_host);
-> > > +                     dev_err(smem->dev, "duplicate host %u\n", remote_host);
-> > >                       return -EINVAL;
-> > >               }
-> > >
-> > > --
-> > > 2.35.1.723.g4982287a31-goog
-> > >
-> > >
+
+Best regards,
+Krzysztof
