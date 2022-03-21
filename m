@@ -2,76 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DC084E2094
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 07:22:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7701C4E2149
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 08:24:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241971AbiCUGXW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Mar 2022 02:23:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42490 "EHLO
+        id S1344911AbiCUHZY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Mar 2022 03:25:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238029AbiCUGXV (ORCPT
+        with ESMTP id S1344931AbiCUHZS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Mar 2022 02:23:21 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3397B6E5F;
-        Sun, 20 Mar 2022 23:21:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1647843716; x=1679379716;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=+rkB4KEmfi5Lh7xQbC1EST+XQiej4N3zvxLPT5tm5cQ=;
-  b=w+TogDmd2V/9F3+onYGuyyHd7lSbbv+r5rTnsWX6RtbNRrws1A0e0uKo
-   MQM4uHV6X+13wmrQ5jTUdIQzaZIra6tdXEaCw1xA1kqFp1riMIcfzH0EL
-   ijOLJgEFKgOPSv3TKUdm1r5xQoTVEWY/nq1kquLBRHCrJXEvdEsuNK7pP
-   M=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 20 Mar 2022 23:21:56 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2022 23:21:55 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Sun, 20 Mar 2022 23:21:55 -0700
-Received: from [10.216.8.69] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Sun, 20 Mar
- 2022 23:21:50 -0700
-Subject: Re: [PATCH v2 0/3] Refactor xhci quirks and plat private data
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Mathias Nyman <mathias.nyman@intel.com>
-CC:     Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        "Doug Anderson" <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Pawel Laszczak <pawell@cadence.com>,
-        Peter Chen <peter.chen@kernel.org>,
-        Roger Quadros <rogerq@kernel.org>,
-        Aswath Govindraju <a-govindraju@ti.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>
-References: <1646130507-26796-1-git-send-email-quic_c_sanm@quicinc.com>
- <ddc86a4f-8d1c-c02c-5600-4fa851568557@quicinc.com>
- <YjR0Ne3BDxxMfrxt@kroah.com>
-From:   "Sandeep Maheswaram (Temp)" <quic_c_sanm@quicinc.com>
-Message-ID: <b38ddfcc-68c3-d99f-816b-8b9f788aa88a@quicinc.com>
-Date:   Mon, 21 Mar 2022 11:51:41 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.2.1
+        Mon, 21 Mar 2022 03:25:18 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AC215469C
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 00:23:50 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1nWCND-0006et-Tt; Mon, 21 Mar 2022 08:22:39 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1nWCMp-0021t4-Og; Mon, 21 Mar 2022 08:22:16 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1nWCMp-00AcZn-OA; Mon, 21 Mar 2022 08:22:15 +0100
+Date:   Mon, 21 Mar 2022 08:22:15 +0100
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     Jonathan Cameron <jic23@kernel.org>
+Cc:     Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        David Airlie <airlied@linux.ie>,
+        Alexandru Ardelean <aardelean@deviqon.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Tomislav Denis <tomislav.denis@avl.com>,
+        =?utf-8?B?QW5kcsOp?= Gustavo Nakagomi Lopez <andregnl@usp.br>,
+        Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        linux-i2c@vger.kernel.org,
+        Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
+        Oleksij Rempel <linux@rempel-privat.de>,
+        Lee Jones <lee.jones@linaro.org>, linux-clk@vger.kernel.org,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        linux-rtc@vger.kernel.org, Lars-Peter Clausen <lars@metafoo.de>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Russell King <linux@armlinux.org.uk>,
+        linux-pwm@vger.kernel.org,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        linux-iio@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+        Keguang Zhang <keguang.zhang@gmail.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Guenter Roeck <linux@roeck-us.net>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jean Delvare <jdelvare@suse.com>,
+        Michal Simek <michal.simek@xilinx.com>, kernel@pengutronix.de,
+        Michael Hennerich <Michael.Hennerich@analog.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        Anand Ashok Dumbre <anand.ashok.dumbre@xilinx.com>,
+        Vladimir Zapolskiy <vz@mleia.com>, linux-gpio@vger.kernel.org,
+        Mark Brown <broonie@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        Fabio Estevam <festevam@gmail.com>,
+        Matt Mackall <mpm@selenic.com>,
+        linux-amlogic@lists.infradead.org,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Lars Povlsen <lars.povlsen@microchip.com>,
+        linux-hwmon@vger.kernel.org,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        linux-watchdog@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        UNGLinuxDriver@microchip.com, Vinod Koul <vkoul@kernel.org>,
+        Cai Huoqing <caihuoqing@baidu.com>,
+        linux-crypto@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+        dmaengine@vger.kernel.org,
+        Amireddy Mallikarjuna reddy 
+        <mallikarjunax.reddy@linux.intel.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Steen Hegelund <Steen.Hegelund@microchip.com>
+Subject: Re: [PATCH v8 02/16] clk: Provide new devm_clk helpers for prepared
+ and enabled clocks
+Message-ID: <20220321072215.5lffm7qtpvg5ofk4@pengutronix.de>
+References: <20220314141643.22184-1-u.kleine-koenig@pengutronix.de>
+ <20220314141643.22184-3-u.kleine-koenig@pengutronix.de>
+ <20220319182936.06d75742@jic23-huawei>
 MIME-Version: 1.0
-In-Reply-To: <YjR0Ne3BDxxMfrxt@kroah.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="oterd73bfcoy35ck"
+Content-Disposition: inline
+In-Reply-To: <20220319182936.06d75742@jic23-huawei>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,47 +116,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mathias,
 
-On 3/18/2022 5:29 PM, Greg Kroah-Hartman wrote:
-> On Thu, Mar 17, 2022 at 11:17:17AM +0530, Sandeep Maheswaram (Temp) wrote:
->> Hi Greg,
->>
->> On 3/1/2022 3:58 PM, Sandeep Maheswaram wrote:
->>> changes in v2:
->>> Added a PATCH 2/3 to remove unwanted header inclusion.
->>> Fixed minor nitpicks in PATCH 3/3.
->>>
->>> Pavankumar Kondeti (1):
->>>     usb: xhci: refactor quirks and plat private data
->>>
->>> Sandeep Maheswaram (2):
->>>     usb: xhci: Remove unwanted header inclusion
->>>     usb: dwc: host: add xhci_plat_priv quirk XHCI_SKIP_PHY_INIT
->>>
->>>    drivers/usb/cdns3/host.c        |  2 +-
->>>    drivers/usb/dwc3/host.c         | 13 ++++++++
->>>    drivers/usb/host/xhci-plat.c    |  3 +-
->>>    drivers/usb/host/xhci-plat.h    | 24 ---------------
->>>    drivers/usb/host/xhci-rcar.c    |  3 +-
->>>    drivers/usb/host/xhci.h         | 60 ++++--------------------------------
->>>    include/linux/usb/xhci-plat.h   | 24 +++++++++++++++
->>>    include/linux/usb/xhci-quirks.h | 67 +++++++++++++++++++++++++++++++++++++++++
->>>    8 files changed, 115 insertions(+), 81 deletions(-)
->>>    delete mode 100644 drivers/usb/host/xhci-plat.h
->>>    create mode 100644 include/linux/usb/xhci-plat.h
->>>    create mode 100644 include/linux/usb/xhci-quirks.h
->> Please let me know your opinion about this patch series.
-> I need the xhci maintainer to review it...
->
-> thanks,
->
-> greg k-h
+--oterd73bfcoy35ck
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Sat, Mar 19, 2022 at 06:29:36PM +0000, Jonathan Cameron wrote:
+> On Mon, 14 Mar 2022 15:16:29 +0100
+> Uwe Kleine-K=F6nig         <u.kleine-koenig@pengutronix.de> wrote:
+>=20
+> > When a driver keeps a clock prepared (or enabled) during the whole
+> > lifetime of the driver, these helpers allow to simplify the drivers.
+> >=20
+> > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > Reviewed-by: Alexandru Ardelean <aardelean@deviqon.com>
+> > Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+>=20
+> One trivial thing below.
+>=20
+> > ---
+> >  drivers/clk/clk-devres.c | 31 ++++++++++++++
+> >  include/linux/clk.h      | 90 +++++++++++++++++++++++++++++++++++++++-
+> >  2 files changed, 120 insertions(+), 1 deletion(-)
+> >=20
+> > diff --git a/drivers/clk/clk-devres.c b/drivers/clk/clk-devres.c
+> > index fb7761888b30..4707fe718f0b 100644
+> > --- a/drivers/clk/clk-devres.c
+> > +++ b/drivers/clk/clk-devres.c
+> > @@ -67,12 +67,43 @@ struct clk *devm_clk_get(struct device *dev, const =
+char *id)
+> >  }
+> >  EXPORT_SYMBOL(devm_clk_get);
+> > =20
+> > +struct clk *devm_clk_get_prepared(struct device *dev, const char *id)
+> > +{
+> > +	return __devm_clk_get(dev, id, clk_get, clk_prepare, clk_unprepare);
+>=20
+> Nitpick but this spacing before } in functions is rather unusual and not
+> in keeping with the existing code in this file.
+>=20
+> > +
+> > +}
 
-Can you please review this patch series.
+ack, I fixed that in my tree, so this will be part of an v9. I won't
+send it just for this change, though. I fixed three further functions
+that had a similar empty line, too.
 
-Regards
+Thanks for looking
+Uwe
 
-Sandeep
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
 
+--oterd73bfcoy35ck
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmI4J6MACgkQwfwUeK3K
+7Ak5sAf/aG3oVD1FgzqJLWD3uSmF0uX0/3lky1l56go3LpRjDym8tlGglXT4z7Hl
+Z3q8YXru6LSihHT/n6V4EUdpV6f49dxPfrr9hu9OFU+UY0Cd7NgisKr+0Wi61dbS
+d8IVGHwcCPqBZanHdAEjhle7d7WdWhfukR1oLljd8B2XM6qP2jQgjFWzrSJfZ+hd
+qd6k9TcfIHjy8n8xBtyIYSvYZbywqfa+wJeU54fe4fp4NNPVTmxGtzHFNDipSZGL
+uF+yg7qDqSezst7wO3dNeblEvpVZfG9TZAXvGMCZQLn9x4b35iSmZtLVPN+HZZM4
+WBr/EA6mCSOr4iHXCKfNr4UegGV4/w==
+=gON5
+-----END PGP SIGNATURE-----
+
+--oterd73bfcoy35ck--
