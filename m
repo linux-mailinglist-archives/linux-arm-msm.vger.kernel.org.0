@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4AD3C4E2C51
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 16:31:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 969644E2C5C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 16:33:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350267AbiCUPcq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Mar 2022 11:32:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33084 "EHLO
+        id S239397AbiCUPeg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Mar 2022 11:34:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241939AbiCUPcp (ORCPT
+        with ESMTP id S1344805AbiCUPed (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Mar 2022 11:32:45 -0400
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F04C5169798;
-        Mon, 21 Mar 2022 08:31:19 -0700 (PDT)
-Received: by mail-wm1-f46.google.com with SMTP id q20so8786567wmq.1;
-        Mon, 21 Mar 2022 08:31:19 -0700 (PDT)
+        Mon, 21 Mar 2022 11:34:33 -0400
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EB31634E;
+        Mon, 21 Mar 2022 08:33:05 -0700 (PDT)
+Received: by mail-wr1-f52.google.com with SMTP id h23so20609133wrb.8;
+        Mon, 21 Mar 2022 08:33:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=/5/C1gYgp4VfvcuFi8LRcN8/3RmQ7G2v7pTXWSD0gyk=;
-        b=ikU2jUK8bO2Y8uvXIouxrNntLlS3zOteRo7pzh6zSJRj+Ehe9WRh/zqCub/FMm6ZFE
-         8+An2O5WYwx3ZZZuaUzvuwgHA+AHZSnlyUihi/ubWUBemyi6cgTxgkdSAprvoBE0n4UM
-         lF7orA/1anN4N2UpAjsL6Tqbb8u5r5J4IfutZzY4642oTcq/SQK1K/H82+C1ohgdtwnC
-         JTOnvkNnkkq5xjE3IZ4/U20tLcCK29y7NARKK/EQO63LANKYmQcmFOFFN4JOE4r3LWS8
-         YnzOiDlISRizVea3inz3abGIS5JeJFVCrtw+ZukGGWE5swmzIIYq5d2PueRiK8Dp+hy6
-         DTMA==
-X-Gm-Message-State: AOAM530i74lfKoB8ZztmbTWKiowtw+9vhMnjvvLHMoj+34QDKOLm+6WC
-        yKPN83MC2Zr0UG49p7itY1E=
-X-Google-Smtp-Source: ABdhPJwVJp0KtpTuBf4c2VyunnMuFCDqiKloKbAIJMgm6G95zkywhdBK4Zy0uSs2jpqDnjxCqCmmuw==
-X-Received: by 2002:a05:600c:1d9f:b0:389:a1c4:f400 with SMTP id p31-20020a05600c1d9f00b00389a1c4f400mr27473867wms.171.1647876678403;
-        Mon, 21 Mar 2022 08:31:18 -0700 (PDT)
+        bh=3LRliTmfLlH3oKVFP57IUFaZfYEaxuZudtlO6I7qIIs=;
+        b=tSshbf46XCiFT/cS9MYxBW/VSFzYcnshB9vln1gUGNJfBlshI4ppzJn8Xvz8HbeMwt
+         V+qpZkDApL9k0rkF5tcXVOmBwU5y1Ks5pFbJn8do2OcvRfKW1mQDlI+lt7YdiHR3y5VJ
+         i8M8n1LW2xZ2J2tnilFWudYUd+x3mm81k4B46uUQdXypOo51XWT6SoJHrukUdwRLKWBi
+         mSfapkagaeuSBT2Cut134wju1SwaPS5gi74Xjw+RtNh4CZf++nakTINu5Y8UvburOELu
+         Ufu+YnectCsuMgeqJBj99UcwWL/GxckTk78WSe55Jgqh5FD1eQa5LvBZkbEy83p5vfJE
+         KJ1g==
+X-Gm-Message-State: AOAM531P9rt5TLOMMpNC/VMjrrfRjMxvaIlO370DGk4rHCidN3JidjE3
+        kkx8Lg0hW5FgA6mkUmnsgNA=
+X-Google-Smtp-Source: ABdhPJyoMJgUZCvV0Y0flDAyJ4coI02yk9wt3cl8Asvux4XUXpEuGTL0bFFEZcGPxGZh3Sj1ux4c7g==
+X-Received: by 2002:adf:e18d:0:b0:204:981:9f73 with SMTP id az13-20020adfe18d000000b0020409819f73mr6510342wrb.99.1647876783791;
+        Mon, 21 Mar 2022 08:33:03 -0700 (PDT)
 Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.googlemail.com with ESMTPSA id h188-20020a1c21c5000000b0038c6c37efc3sm14255712wmh.12.2022.03.21.08.31.17
+        by smtp.googlemail.com with ESMTPSA id d14-20020a056000186e00b0020405198faasm6736607wri.52.2022.03.21.08.33.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Mar 2022 08:31:17 -0700 (PDT)
-Message-ID: <24ba0e3e-b6ba-8434-059a-8bda197a74e3@kernel.org>
-Date:   Mon, 21 Mar 2022 16:31:16 +0100
+        Mon, 21 Mar 2022 08:33:03 -0700 (PDT)
+Message-ID: <3ee94d1d-4e16-a744-c217-c4bc69ad96b4@kernel.org>
+Date:   Mon, 21 Mar 2022 16:33:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.0
-Subject: Re: [PATCH v4 14/18] dt-bindings: clock: Convert qcom,krait-cc to
- yaml
+Subject: Re: [PATCH v4 15/18] dt-bindings: clock: Add L2 clocks to
+ qcom,krait-cc Documentation
 Content-Language: en-US
 To:     Ansuel Smith <ansuelsmth@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
@@ -55,9 +55,9 @@ To:     Ansuel Smith <ansuelsmth@gmail.com>,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org
 References: <20220321144825.11736-1-ansuelsmth@gmail.com>
- <20220321144825.11736-15-ansuelsmth@gmail.com>
+ <20220321144825.11736-16-ansuelsmth@gmail.com>
 From:   Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <20220321144825.11736-15-ansuelsmth@gmail.com>
+In-Reply-To: <20220321144825.11736-16-ansuelsmth@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
@@ -72,16 +72,20 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 21/03/2022 15:48, Ansuel Smith wrote:
-> Convert qcom,krait-cc to yaml Documentation.
+> Krait-cc qcom driver provide also L2 clocks and require the acpu_l2_aux
+> and the hfpll_l2 clock to be provided. Add these missing clocks to the
+> Documentation.
 > 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  .../bindings/clock/qcom,krait-cc.txt          | 34 -----------
->  .../bindings/clock/qcom,krait-cc.yaml         | 59 +++++++++++++++++++
->  2 files changed, 59 insertions(+), 34 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/clock/qcom,krait-cc.txt
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,krait-cc.yaml
-> 
+
+Thanks. It would be also nice to see here short sentence about expected
+impact, e.g. there are no in-tree DTSes which would be affected, no out
+of tree known users etc.
+
+Because basically with this requirement you change the ABI, so you might
+break some users.
+
+I will leave it to platform maintainers to decide whether it is accepted
+or not.
 
 
 Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
