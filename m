@@ -2,85 +2,449 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 113BB4E334E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 23:56:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C73D4E337F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Mar 2022 23:56:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230008AbiCUWv1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Mar 2022 18:51:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52576 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230290AbiCUWvU (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S230295AbiCUWvU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 21 Mar 2022 18:51:20 -0400
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1715B3AE9F8;
-        Mon, 21 Mar 2022 15:31:03 -0700 (PDT)
-Received: by mail-oi1-f180.google.com with SMTP id s207so17760675oie.11;
-        Mon, 21 Mar 2022 15:31:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=qpBy8/OYx70t80yV9nniAHD9sFfG+3EO5lhZ6lcjTZM=;
-        b=T6eN2WCIAJYewai1GpzDKtUHOLkcPDA4NIdVjSWTiYnIxGPe4tg5ghNGeHobI/BVty
-         uaVfqIJ47dkfYZMd1EA7A8re143qlE2U4BZ+J1Mc4ppo48/J8JwVy+1Em/DBXZoj9qQj
-         IsKa5LwrKhg90Qg18tFCc6hrwPLE64ak3xN0ADQhj/wiliG5y25lB/0K5/O7x2cVh9A1
-         L9S4Pdq6mEYz0YE6ZGTqgIIpFQSDC4qrIP+bcEfQy1aAP3XLod0V9BGtoqqYsGB9qfmA
-         qCpjGjU4wvNbaWu921jd7ghMgMsqAO4Tq/e7y0mCmvFJ6+NnXQlMilVYZfUOgETS0dbW
-         9oiQ==
-X-Gm-Message-State: AOAM531OalwQTUrJKavfwcwyCpsbX68tmKa5igQrRy6JHVgVXQmffSOb
-        iipwDxXAJh6EsPcqm+NX18+Q5fWGWw==
-X-Google-Smtp-Source: ABdhPJx6TvCku6XWqq2RvsKNU9ONO8JkWRgLdjkvQQTVTOgGpV/EfV8t05/k3kfG37toxwZtiHYa/Q==
-X-Received: by 2002:a05:6870:e40e:b0:dd:c65c:ab6 with SMTP id n14-20020a056870e40e00b000ddc65c0ab6mr455755oag.79.1647899482382;
-        Mon, 21 Mar 2022 14:51:22 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id x25-20020a056830409900b005af164235b4sm7703648ott.2.2022.03.21.14.51.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Mar 2022 14:51:21 -0700 (PDT)
-Received: (nullmailer pid 601083 invoked by uid 1000);
-        Mon, 21 Mar 2022 21:51:20 -0000
-Date:   Mon, 21 Mar 2022 16:51:20 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH v5 14/18] dt-bindings: clock: Convert qcom,krait-cc to
- yaml
-Message-ID: <YjjzWAu8p7i2RANW@robh.at.kernel.org>
-References: <20220321153855.12082-1-ansuelsmth@gmail.com>
- <20220321153855.12082-15-ansuelsmth@gmail.com>
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52436 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229798AbiCUWvK (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 21 Mar 2022 18:51:10 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9323D3AE9CB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 15:30:56 -0700 (PDT)
+Received: from [10.1.250.9] (riviera.nat.ds.pw.edu.pl [194.29.137.1])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 61AEF3F769;
+        Mon, 21 Mar 2022 23:20:39 +0100 (CET)
+Message-ID: <ce61ffe7-ed7f-2437-91d4-3584f9e6d691@somainline.org>
+Date:   Mon, 21 Mar 2022 23:20:37 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220321153855.12082-15-ansuelsmth@gmail.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.7.0
+Subject: Re: [RFC DNM PATCH] i2c: busses: qcom-cci: Add support for passing
+ data in DT
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Robert Foss <robert.foss@linaro.org>,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220319200549.530387-1-konrad.dybcio@somainline.org>
+ <YjiWzqK2hAopr9HB@builder.lan>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <YjiWzqK2hAopr9HB@builder.lan>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 21 Mar 2022 16:38:51 +0100, Ansuel Smith wrote:
-> Convert qcom,krait-cc to yaml Documentation.
-> 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
-> ---
->  .../bindings/clock/qcom,krait-cc.txt          | 34 -----------
->  .../bindings/clock/qcom,krait-cc.yaml         | 59 +++++++++++++++++++
->  2 files changed, 59 insertions(+), 34 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/clock/qcom,krait-cc.txt
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,krait-cc.yaml
-> 
 
-Acked-by: Rob Herring <robh@kernel.org>
+On 21/03/2022 16:16, Bjorn Andersson wrote:
+> On Sat 19 Mar 15:05 CDT 2022, Konrad Dybcio wrote:
+>
+> +devicestree@vger.kernel.org
+>
+>> Some vendors, such as SONY, fine-tune CCI parameters to better suit their
+>> specific combinations of devices and camera sensors, mostly in order to save a
+>> tiny bit more power. Add support for specifying all the CCI parameters in DT to
+>> avoid adding millions of structs in the driver itself.
+>>
+>> ---
+>> This is a ridiculously blatant RFC and PoC just to start the discussion.
+>> (thus it's missing the S-o-b on purpose)
+>>
+>> My point is that our favourite (cough cough) phone vendor likes to
+>> fine-tune every bit of the hardware and they are probably not alone
+>> doing this. Moving the properties into the DT would allow for more
+>> flexibility with the configuration, instead of having to add a separate
+>> set of structs for each one.
+>>
+>> If it were to make it in any form, it would probably be much saner
+>> to represent each mode as an individual subnode in the dt, specifying
+>> its parameters over there (which would incidentally also allow for
+>> adding more/less modes if need be), something like this:
+>>
+>> cci@0badbeef {
+>> 	/* compatible and stuff */
+>>
+>> 	mode-standard {
+>> 		parameter-1 = <1>;
+>> 	};
+>>
+>> 	mode-fast {
+>> 		parameter-1 = <1>;
+>> 	};
+>>
+>> 	mode-supercustomlightspeed {
+>> 		parameter-1 = <1>;
+>> 		parameter-2 = <1337>;
+>> 	};
+> We put clock-frequency in the i2c bus node today, doesn't this serve the
+> same purpose, but with more details? Why would one want to specify the
+> timing details for each mode and then select one?
+
+As far as I understand, imaging sensors can choose different modes under 
+different bandwidth requirements, in order to save power where possible 
+and consume the full bandwidth where necessary. The parameters can be 
+changed to better suit the individual board designs.
+
+
+> Perhaps I'm
+> missing some detail here?
+>
+>
+> Are these timing details specified per bus in the CCI, or are the
+> settings shared between the two buses of the controller?
+
+The details are shared between both buses, as is the case in the current 
+state of the driver and downstream.
+
+
+By the way, I got word that at least Lumias also have some tweaks done 
+to these values.
+
+
+Konrad
+
+
+>
+> Regards,
+> Bjorn
+>
+>> };
+>>
+>> What are your thoughts about this, and do you think the form shown above
+>> (and probably not the one in the patch) would be fitting, or is there a
+>> better approach to this?
+>>
+>>   drivers/i2c/busses/i2c-qcom-cci.c | 274 ++++++++++++++++++++++++++++++
+>>   1 file changed, 274 insertions(+)
+>>
+>> diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+>> index 07c11e2a446d..6754b5d11c52 100644
+>> --- a/drivers/i2c/busses/i2c-qcom-cci.c
+>> +++ b/drivers/i2c/busses/i2c-qcom-cci.c
+>> @@ -117,6 +117,7 @@ struct cci_master {
+>>   };
+>>   
+>>   struct cci_data {
+>> +	bool read_params_from_dt;
+>>   	unsigned int num_masters;
+>>   	struct i2c_adapter_quirks quirks;
+>>   	u16 queue_size[NUM_QUEUES];
+>> @@ -520,11 +521,20 @@ static const struct dev_pm_ops qcom_cci_pm = {
+>>   	SET_RUNTIME_PM_OPS(cci_suspend_runtime, cci_resume_runtime, NULL)
+>>   };
+>>   
+>> +static struct cci_data cci_dt_data = {
+>> +	.read_params_from_dt = true,
+>> +	.quirks = {},
+>> +	.params[I2C_MODE_STANDARD] = {},
+>> +	.params[I2C_MODE_FAST] = {},
+>> +	.params[I2C_MODE_FAST_PLUS] = {},
+>> +};
+>> +
+>>   static int cci_probe(struct platform_device *pdev)
+>>   {
+>>   	struct device *dev = &pdev->dev;
+>>   	unsigned long cci_clk_rate = 0;
+>>   	struct device_node *child;
+>> +	struct cci_data *dt_data;
+>>   	struct resource *r;
+>>   	struct cci *cci;
+>>   	int ret, i;
+>> @@ -540,6 +550,267 @@ static int cci_probe(struct platform_device *pdev)
+>>   	if (!cci->data)
+>>   		return -ENOENT;
+>>   
+>> +	if (cci->data->read_params_from_dt) {
+>> +		dt_data = &cci_dt_data;
+>> +
+>> +		/* CCI params */
+>> +		ret = of_property_read_u32(dev->of_node, "num-masters", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading num-masters from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->num_masters = val;
+>> +
+>> +		ret = of_property_read_u16_array(dev->of_node, "queue-size", dt_data->queue_size,
+>> +			(size_t)&dt_data->num_masters);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading queue-size from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +
+>> +		if (ARRAY_SIZE(dt_data->queue_size) != dt_data->num_masters) {
+>> +			dev_err(dev, "num-masters doesn't match the number of queue-size elements!");
+>> +			return -EINVAL;
+>> +		}
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "max-write-len", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading max-write-len from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->quirks.max_write_len = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "max-read-len", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading max-read-len from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->quirks.max_read_len = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "cci-clk-rate", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading cci-clk-rate from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->cci_clk_rate = (unsigned long)val;
+>> +
+>> +		/* STANDARD mode params */
+>> +		ret = of_property_read_u32(dev->of_node, "thigh-standard", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading thigh-standard from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_STANDARD].thigh = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "tlow-standard", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading tlow-standard from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_STANDARD].tlow = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "tsu-sto-standard", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading tsu-sto-standard from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_STANDARD].tsu_sto = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "tsu-sta-standard", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading tsu-sta-standard from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_STANDARD].tsu_sta = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "thd-dat-standard", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading thd-dat-standard from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_STANDARD].thd_dat = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "thd-sta-standard", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading thd-sta-standard from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_STANDARD].thd_sta = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "tbuf-standard", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading tbuf-standard from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_STANDARD].tbuf = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "scl-stretch-en-standard", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading scl-stretch-en-standard from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_STANDARD].scl_stretch_en = (u8)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "trdhld-standard", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading trdhld-standard from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_STANDARD].trdhld = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "tsp-standard", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading tsp-standard from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_STANDARD].tsp = (u16)val;
+>> +
+>> +		/* FAST mode params */
+>> +		ret = of_property_read_u32(dev->of_node, "thigh-fast", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading thigh-fast from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST].thigh = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "tlow-fast", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading tlow-fast from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST].tlow = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "tsu-sto-fast", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading tsu-sto-fast from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST].tsu_sto = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "tsu-sta-fast", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading tsu-sta-fast from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST].tsu_sta = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "thd-dat-fast", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading thd-dat-fast from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST].thd_dat = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "thd-sta-fast", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading thd-sta-fast from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST].thd_sta = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "tbuf-fast", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading tbuf-fast from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST].tbuf = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "scl-stretch-en-fast", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading scl-stretch-en-fast from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST].scl_stretch_en = (u8)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "trdhld-fast", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading trdhld-fast from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST].trdhld = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "tsp-fast", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading tsp-fast from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST].tsp = (u16)val;
+>> +
+>> +		/* FAST_PLUS mode params */
+>> +		ret = of_property_read_u32(dev->of_node, "thigh-fast-plus", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading thigh-fast-plus from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST_PLUS].thigh = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "tlow-fast-plus", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading tlow-fast-plus from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST_PLUS].tlow = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "tsu-sto-fast-plus", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading tsu-sto-fast-plus from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST_PLUS].tsu_sto = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "tsu-sta-fast-plus", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading tsu-sta-fast-plus from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST_PLUS].tsu_sta = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "thd-dat-fast-plus", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading thd-dat-fast-plus from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST_PLUS].thd_dat = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "thd-sta-fast-plus", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading thd-sta-fast-plus from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST_PLUS].thd_sta = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "tbuf-fast-plus", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading tbuf-fast-plus from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST_PLUS].tbuf = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "scl-stretch-en-fast-plus", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading scl-stretch-en-fast-plus from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST_PLUS].scl_stretch_en = (u8)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "trdhld-fast-plus", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading trdhld-fast-plus from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST_PLUS].trdhld = (u16)val;
+>> +
+>> +		ret = of_property_read_u32(dev->of_node, "tsp-fast-plus", &val);
+>> +		if (ret) {
+>> +			dev_err(dev, "Error reading tsp-fast-plus from DT, ret = %d", ret);
+>> +			return ret;
+>> +		}
+>> +		dt_data->params[I2C_MODE_FAST_PLUS].tsp = (u16)val;
+>> +
+>> +		/* Let's ship it! */
+>> +		cci->data = dt_data;
+>> +	}
+>> +
+>>   	for_each_available_child_of_node(dev->of_node, child) {
+>>   		u32 idx;
+>>   
+>> @@ -818,6 +1089,9 @@ static const struct cci_data cci_msm8994_data = {
+>>   };
+>>   
+>>   static const struct of_device_id cci_dt_match[] = {
+>> +	{ .compatible = "qcom,cci", .data = &cci_dt_data },
+>> +
+>> +	/* Legacy compatibles for older DTs */
+>>   	{ .compatible = "qcom,msm8916-cci", .data = &cci_v1_data},
+>>   	{ .compatible = "qcom,msm8994-cci", .data = &cci_msm8994_data},
+>>   	{ .compatible = "qcom,msm8996-cci", .data = &cci_v2_data},
+>> -- 
+>> 2.35.1
+>>
