@@ -2,107 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C5B834E3A41
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 09:10:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CD254E3AA3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 09:32:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230016AbiCVILU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Mar 2022 04:11:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56334 "EHLO
+        id S231191AbiCVIdV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Mar 2022 04:33:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229574AbiCVILQ (ORCPT
+        with ESMTP id S231175AbiCVIdU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Mar 2022 04:11:16 -0400
+        Tue, 22 Mar 2022 04:33:20 -0400
 Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 998249FD4;
-        Tue, 22 Mar 2022 01:09:47 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FF0462A1D;
+        Tue, 22 Mar 2022 01:31:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1647936588; x=1679472588;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=2llnKuEBORghekHbMacPXqVHp+OZKNMd38Z8tDZ1r0s=;
-  b=nx8YVAERfbWWkAZ1WqspbLWZwjaTR7TfoifRHjHXKa13BtS8HXufPiNu
-   YG1pP8gJdMXxKfgiDJemIm1eU35UWiib2UtsmSC3LsJFt4CHRsbcSGzv8
-   JScIomhbEwouN9X7xDmzoU+pT1EdMO9Nd1yPASVhvzh2DR6kLE6jRm0Ne
-   A=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 22 Mar 2022 01:09:47 -0700
+  t=1647937914; x=1679473914;
+  h=from:to:cc:subject:date:message-id;
+  bh=dhrHqCr8JpnzGj5k2QqDNMs8JfQ6cFepyudJYMAsdpk=;
+  b=StMV+Mci0nQ6kAZViwtm7esBZGM5jDL6Mn8jcNlziC/suh275RmaNB7E
+   Tu4Z0IG5iyAyH2WlqwuQafT0pkte3p3J3ORnEiaV0Np4d5t6iom74qL7M
+   Ep3MVteztEZ1mrAEzfjAgTlImKbZEVxp8MdesvfPAFeAp49bhy2dZZxh1
+   I=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 22 Mar 2022 01:31:54 -0700
 X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2022 01:09:46 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 22 Mar 2022 01:09:46 -0700
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 22 Mar 2022 01:09:41 -0700
-Date:   Tue, 22 Mar 2022 13:39:37 +0530
-From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
-To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        "Matthias Kaehlcke" <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_kriskura@quicinc.com>
-Subject: Re: [PATCH v11 1/5] usb: dwc3: core: Add HS phy mode variable and
- phy poweroff flag
-Message-ID: <20220322080937.GI23316@hu-pkondeti-hyd.qualcomm.com>
-References: <1647932876-23249-1-git-send-email-quic_c_sanm@quicinc.com>
- <1647932876-23249-2-git-send-email-quic_c_sanm@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1647932876-23249-2-git-send-email-quic_c_sanm@quicinc.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 22 Mar 2022 01:31:36 -0700
+X-QCInternal: smtphost
+Received: from hyd-lablnx377.qualcomm.com ([10.204.178.226])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 22 Mar 2022 14:01:18 +0530
+Received: by hyd-lablnx377.qualcomm.com (Postfix, from userid 4035820)
+        id 55842216FA; Tue, 22 Mar 2022 14:01:17 +0530 (IST)
+From:   Sai Teja Aluvala <quic_saluvala@quicinc.com>
+To:     agross@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, marcel@holtmann.org,
+        johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-bluetooth@vger.kernel.org,
+        quic_hemantg@quicinc.com, quic_bgodavar@quicinc.com,
+        quic_rjliao@quicinc.com, mcchou@chromium.org,
+        Sai Teja Aluvala <quic_saluvala@quicinc.com>
+Subject: [RESEND v3] arm64: dts: qcom: sc7280: Add IO regulator handler in SC7280 CRD platforms
+Date:   Tue, 22 Mar 2022 14:01:04 +0530
+Message-Id: <1647937864-25661-1-git-send-email-quic_saluvala@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Sandeep,
+Add IO regulator handler in SC7280 CRD based platforms.
+As IO regulator varies in different SC7280 platforms
+updating this handler in individual platform bluetooth node.
 
-On Tue, Mar 22, 2022 at 12:37:52PM +0530, Sandeep Maheswaram wrote:
-> Add variables in dwc3 structure to check HS phy mode which is
-> used to configure interrupts and phy poweroff flag to check
-> the phy status during system resume.
-> 
-> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> ---
->  drivers/usb/dwc3/core.h | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-> index 5c9d467..f11a60c 100644
-> --- a/drivers/usb/dwc3/core.h
-> +++ b/drivers/usb/dwc3/core.h
-> @@ -1154,6 +1154,9 @@ struct dwc3 {
->  
->  	bool			phys_ready;
->  
-> +	unsigned int            hs_phy_mode;
-> +	bool			phy_power_off;
-> +
->  	struct ulpi		*ulpi;
->  	bool			ulpi_ready;
->  
-Why adding members in a separate patch? This needs to be squashed with
-2/5 patch in the series where these members are used in taking host
-mode PM decisions. Please fix this.
+Signed-off-by: Sai Teja Aluvala <quic_saluvala@quicinc.com>
+---
+v3: Updated commit text to reflect the change
+v2: updated reviewer comments.
+v1: intial patch
+---
+---
+ arch/arm64/boot/dts/qcom/sc7280-crd.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Thanks,
-Pavan
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+index cd2755c..53ea3b4 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
++++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+@@ -23,6 +23,10 @@
+ 	};
+ };
+ 
++&bluetooth {
++	vddio-supply = <&vreg_l18b_1p8>;
++};
++
+ ap_tp_i2c: &i2c0 {
+ 	status = "okay";
+ 	clock-frequency = <400000>;
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc.
+
