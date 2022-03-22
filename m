@@ -2,170 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E61EA4E35BA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 01:52:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 750514E35D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 01:58:21 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234473AbiCVAtR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Mar 2022 20:49:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55996 "EHLO
+        id S234583AbiCVA6E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Mar 2022 20:58:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234460AbiCVAtQ (ORCPT
+        with ESMTP id S234503AbiCVA5y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Mar 2022 20:49:16 -0400
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A31C627B0F;
-        Mon, 21 Mar 2022 17:47:49 -0700 (PDT)
+        Mon, 21 Mar 2022 20:57:54 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEB0B3B28D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 17:56:27 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id z9-20020a05683020c900b005b22bf41872so11585989otq.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 17:56:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1647910069; x=1679446069;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=4Hfyz22PouTDUj0o7xhLSgeFJEeNsb/nS9a947rwT5E=;
-  b=VM/GUYKLe933AvBzEX3attDYoWB2YwBfgojvdzsDvEUk+zOS13jR6lCI
-   TdcYT54eFkWQiJxbvgEGi9EDW5m6/EkpTdKG4XnoLtHNxoMh7QUOZS6lk
-   jF4FBUzfzWHBVxtJJbKpVNsk+pVZ2g+pR/5qVtVBZ/G7tKmO+F0sMURIy
-   8=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 21 Mar 2022 17:47:48 -0700
-X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Mar 2022 17:47:49 -0700
-Received: from collinsd-linux.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Mon, 21 Mar 2022 17:47:48 -0700
-From:   David Collins <quic_collinsd@quicinc.com>
-To:     Mark Brown <broonie@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Sudeep Holla <sudeep.holla@arm.com>
-CC:     David Collins <quic_collinsd@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
-Subject: [PATCH v2 2/2] regulator: scmi: add support for registering SCMI regulators by name
-Date:   Mon, 21 Mar 2022 17:47:20 -0700
-Message-ID: <822eefd3ad25daf2da66c9257e2a69e93d9df5a4.1647909090.git.quic_collinsd@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <cover.1647909090.git.quic_collinsd@quicinc.com>
-References: <cover.1647909090.git.quic_collinsd@quicinc.com>
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=vHRjvPtgb9IHetN+vUEA77OxoeMKGMiBCKYOyIGVohI=;
+        b=IjHJF5PMmAj7LfEm03fjvPDvBXlAUuwaXBqUP03ddPmJcmUUoBFzmTLGbhIJMrDqbe
+         oUg/OenAw36c95uegEZo518oPNbJQUtmRQUZ01aAkd8LWcIbt90gXmpV5JXNLcx6Z/5C
+         n6betOcE88SPr+J3GsiSPMo1rw+PVs9l0SIsI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=vHRjvPtgb9IHetN+vUEA77OxoeMKGMiBCKYOyIGVohI=;
+        b=evc6CSjdrtlY29orf/4y4qKeSNuCO/gxwT6cCJxQqDhLcnRV57U2ICXQgQZsltum/z
+         AaEpckThoZavKYQiF6RVbS9tIVprlG8rIu/tXWjNm6/6iBC7/mWHc/T7VLjHk2xHDrnX
+         ofF+KKMl7IutN3gGIr/ZaPW9KX/0iyXXcCDLq8hlzwWdy3odAgSJY8U9cr6bMr4FzNuB
+         jRqTPnhplSjEbjOwd0A85avFZ7PbHoCcvvRdE7aZjUOUn8B1C8Hzt55+9KRl4eRK1xsa
+         /90H7efvwPJvwzNJ7/IzTuNQGWXt/UBi6sFxyOV98DuilKFblsCPbUQTc0zaj25S6qEx
+         8I1g==
+X-Gm-Message-State: AOAM530BpxALhrpMssyRG5eL5RQ1yEPkJbiw/ZJc2KBdj8kuwHjKlIe8
+        GRCSKsUkxE44qCSOKuoKQTddJGyOIL1nH4025GkhmA==
+X-Google-Smtp-Source: ABdhPJxk/fuFNPAUltwZKzz37MDph4y4/NYbVKyFjV1ThFVvRyLs53JJhnLi8P2uueF0mEImRY5PdOJJbwbRkepmhUg=
+X-Received: by 2002:a9d:b85:0:b0:5cb:3eeb:d188 with SMTP id
+ 5-20020a9d0b85000000b005cb3eebd188mr7614017oth.77.1647910586937; Mon, 21 Mar
+ 2022 17:56:26 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 22 Mar 2022 01:56:26 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20220321161546.1.Ifc4270fbe9bad536f08a47696e00cca5a0714abd@changeid>
+References: <20220321161546.1.Ifc4270fbe9bad536f08a47696e00cca5a0714abd@changeid>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Tue, 22 Mar 2022 01:56:26 +0100
+Message-ID: <CAE-0n53RyGP53zySwTZaFJ+OKp9zJahBg76ZmKsaQ=fsddgu5w@mail.gmail.com>
+Subject: Re: [PATCH] soc: qcom: socinfo: add SC7280 entry to soc_id array
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support to register SCMI regulator subnodes based on an SCMI
-Voltage Domain name specified via the "arm,scmi-domain-name" device
-tree property.  In doing so, make the "reg" property optional with
-the constraint that at least one of "reg" or "arm,scmi-domain-name"
-must be specified.  If both are specified, then both must match the
-Voltage Domain data exposed by the SCMI platform.
+Quoting Douglas Anderson (2022-03-21 16:15:55)
+> Add an entry for SC7280 SoC.
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 
-Name based SCMI regulator registration helps ensure that an SCMI
-agent doesn't need to be aware of the numbering scheme used for
-Voltage Domains by the SCMI platform.  It also ensures that the
-correct Voltage Domain is selected for a given physical regulator.
-This cannot be guaranteed with numeric Voltage Domain IDs alone.
-
-Signed-off-by: David Collins <quic_collinsd@quicinc.com>
----
- drivers/regulator/scmi-regulator.c | 58 ++++++++++++++++++++++++++++--
- 1 file changed, 55 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/regulator/scmi-regulator.c b/drivers/regulator/scmi-regulator.c
-index 1f02f60ad136..15f9167b96ab 100644
---- a/drivers/regulator/scmi-regulator.c
-+++ b/drivers/regulator/scmi-regulator.c
-@@ -31,6 +31,7 @@
- #include <linux/regulator/of_regulator.h>
- #include <linux/scmi_protocol.h>
- #include <linux/slab.h>
-+#include <linux/string.h>
- #include <linux/types.h>
- 
- static const struct scmi_voltage_proto_ops *voltage_ops;
-@@ -252,16 +253,67 @@ static int scmi_regulator_common_init(struct scmi_regulator *sreg)
- 	return 0;
- }
- 
-+static int scmi_regulator_map_name(struct scmi_protocol_handle *ph,
-+				   struct scmi_regulator_info *rinfo,
-+				   const char *name)
-+{
-+	const struct scmi_voltage_info *vinfo;
-+	int i;
-+
-+	for (i = 0; i < rinfo->num_doms; i++) {
-+		vinfo = voltage_ops->info_get(ph, i);
-+		if (!vinfo)
-+			continue;
-+		if (!strncmp(vinfo->name, name, sizeof(vinfo->name)))
-+			return i;
-+	}
-+
-+	return -ENODEV;
-+}
-+
- static int process_scmi_regulator_of_node(struct scmi_device *sdev,
- 					  struct scmi_protocol_handle *ph,
- 					  struct device_node *np,
- 					  struct scmi_regulator_info *rinfo)
- {
- 	u32 dom, ret;
-+	int name_dom;
-+	const char *name;
- 
--	ret = of_property_read_u32(np, "reg", &dom);
--	if (ret)
--		return ret;
-+	dom = rinfo->num_doms;
-+	if (of_find_property(np, "reg", NULL)) {
-+		ret = of_property_read_u32(np, "reg", &dom);
-+		if (ret)
-+			return ret;
-+
-+		if (dom >= rinfo->num_doms)
-+			return -ENODEV;
-+	}
-+
-+	if (of_find_property(np, "arm,scmi-domain-name", NULL)) {
-+		ret = of_property_read_string(np, "arm,scmi-domain-name",
-+					      &name);
-+		if (ret)
-+			return ret;
-+
-+		name_dom = scmi_regulator_map_name(ph, rinfo, name);
-+		if (name_dom < 0) {
-+			dev_err(&sdev->dev,
-+				"No SCMI Voltage Domain found named %s. Skipping: %s\n",
-+				name, np->full_name);
-+			return name_dom;
-+		}
-+
-+		if (dom >= rinfo->num_doms)
-+			dom = name_dom;
-+
-+		if (name_dom != dom) {
-+			dev_err(&sdev->dev,
-+				"SCMI Voltage Domain %s ID mismatch, %u (DT) != %d (firmware). Skipping: %s\n",
-+				name, dom, name_dom, np->full_name);
-+			return -EINVAL;
-+		}
-+	}
- 
- 	if (dom >= rinfo->num_doms)
- 		return -ENODEV;
--- 
-2.17.1
-
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
