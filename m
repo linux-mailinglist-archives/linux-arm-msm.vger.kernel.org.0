@@ -2,77 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 750514E35D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 01:58:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E01B4E35F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 02:27:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234583AbiCVA6E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 21 Mar 2022 20:58:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34620 "EHLO
+        id S234578AbiCVB1A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 21 Mar 2022 21:27:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234503AbiCVA5y (ORCPT
+        with ESMTP id S234503AbiCVB07 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 21 Mar 2022 20:57:54 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEB0B3B28D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 17:56:27 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id z9-20020a05683020c900b005b22bf41872so11585989otq.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Mar 2022 17:56:27 -0700 (PDT)
+        Mon, 21 Mar 2022 21:26:59 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC624E0EC;
+        Mon, 21 Mar 2022 18:25:33 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id g19so16938067pfc.9;
+        Mon, 21 Mar 2022 18:25:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=vHRjvPtgb9IHetN+vUEA77OxoeMKGMiBCKYOyIGVohI=;
-        b=IjHJF5PMmAj7LfEm03fjvPDvBXlAUuwaXBqUP03ddPmJcmUUoBFzmTLGbhIJMrDqbe
-         oUg/OenAw36c95uegEZo518oPNbJQUtmRQUZ01aAkd8LWcIbt90gXmpV5JXNLcx6Z/5C
-         n6betOcE88SPr+J3GsiSPMo1rw+PVs9l0SIsI=
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=svKeoLbw/Rh/+w0dWnKtX9ir9NmoZ2RCvIsO83FTo+k=;
+        b=ii6ygNdxXF2YuMjx62GY/8lyC742aCoMJuNxD7GB602IPDTF3bwhqy5sRIcpp/gf9R
+         aRfk/igL0j3xPZf8vUlPeERF5MoHg3sel33OehBQY2TArO+cMC7d54kL0Ih/Y2Go/Pd8
+         9vAuGi2Qw97uN4xE9yuNwBgG2/ArTRa+H/ZdkdZZ4yesBiqNsLhu6rNyE5JKYYul3aZD
+         lw6aUWZvf8mX/DBioT0JE3QkcxFDtba1kAWLtyzXxcPvD138JcruxZfpw9fiYa+OyR3+
+         KgKj6aFyK5J00kYFuvBxGVNqgq6BJFafs2+PCFxYzez+se3EKCaDhHIjxhfsNmKw8eht
+         X7yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=vHRjvPtgb9IHetN+vUEA77OxoeMKGMiBCKYOyIGVohI=;
-        b=evc6CSjdrtlY29orf/4y4qKeSNuCO/gxwT6cCJxQqDhLcnRV57U2ICXQgQZsltum/z
-         AaEpckThoZavKYQiF6RVbS9tIVprlG8rIu/tXWjNm6/6iBC7/mWHc/T7VLjHk2xHDrnX
-         ofF+KKMl7IutN3gGIr/ZaPW9KX/0iyXXcCDLq8hlzwWdy3odAgSJY8U9cr6bMr4FzNuB
-         jRqTPnhplSjEbjOwd0A85avFZ7PbHoCcvvRdE7aZjUOUn8B1C8Hzt55+9KRl4eRK1xsa
-         /90H7efvwPJvwzNJ7/IzTuNQGWXt/UBi6sFxyOV98DuilKFblsCPbUQTc0zaj25S6qEx
-         8I1g==
-X-Gm-Message-State: AOAM530BpxALhrpMssyRG5eL5RQ1yEPkJbiw/ZJc2KBdj8kuwHjKlIe8
-        GRCSKsUkxE44qCSOKuoKQTddJGyOIL1nH4025GkhmA==
-X-Google-Smtp-Source: ABdhPJxk/fuFNPAUltwZKzz37MDph4y4/NYbVKyFjV1ThFVvRyLs53JJhnLi8P2uueF0mEImRY5PdOJJbwbRkepmhUg=
-X-Received: by 2002:a9d:b85:0:b0:5cb:3eeb:d188 with SMTP id
- 5-20020a9d0b85000000b005cb3eebd188mr7614017oth.77.1647910586937; Mon, 21 Mar
- 2022 17:56:26 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 22 Mar 2022 01:56:26 +0100
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=svKeoLbw/Rh/+w0dWnKtX9ir9NmoZ2RCvIsO83FTo+k=;
+        b=3rQYlNiHRV3vFyjILr1R7g6mHAOV59jq2w835SFYjGGHVNB2gWwiuGxgqzhUqBtU6r
+         JCcFlJvr6070vj78KwKSYdMrxTuxoWx5aLl3Bn08R1ZTRYwg3JLgtgAWo3GX1ai1WsF1
+         eqdi06XIgySo5IG59VCUlTZj5As0ZkORI+d198xQMn7IdLqZP/cF//sjqVZ1mfzskxqE
+         YsXt4+YgY8RO3MCd7cSfnnvx8OemAcJDLJnwphAGvHgV0C2ZueUhkYiznfDOikmq6L2T
+         6V9PpoDawoMduojfSmCt8oiUBPvUhD19c2zDfsDpB7LwGWmNmSOwbSMEfTdYLRi5w3X5
+         y57w==
+X-Gm-Message-State: AOAM530ypz/eoyUFIdJkUFmXh5llqvgez/f9GSYr6kzQ1asTGMYd/iht
+        yVUIA+qBnk6CnLEU0jIFc9PJhnIOXcMX26Bw
+X-Google-Smtp-Source: ABdhPJx89klCKoXhRGT7afcgmBcOslDABbniHk+l6vDRIv723MOLQCCNT26OWRB++AlmY1gihMWOVw==
+X-Received: by 2002:a05:6a00:2484:b0:4fa:997e:3290 with SMTP id c4-20020a056a00248400b004fa997e3290mr9036621pfv.37.1647912333030;
+        Mon, 21 Mar 2022 18:25:33 -0700 (PDT)
+Received: from localhost.localdomain (60-250-49-31.hinet-ip.hinet.net. [60.250.49.31])
+        by smtp.gmail.com with ESMTPSA id z16-20020a637e10000000b00382b21c6b0bsm1230539pgc.51.2022.03.21.18.25.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Mar 2022 18:25:32 -0700 (PDT)
+From:   Ivy Jian <ivyjian417@gmail.com>
+To:     LKML <linux-kernel@vger.kernel.org>
+Cc:     dianders@chromium.org, Ivy Jian <ivyjian417@gmail.com>,
+        Pan Sheng-Liang <sheng-liang.pan@quanta.corp-partner.google.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: switch panel compatible to "edp-panel" for limozeen
+Date:   Tue, 22 Mar 2022 09:25:26 +0800
+Message-Id: <20220322092524.1.Ied05fc4b996737e3481861c6ab130a706f288412@changeid>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <20220321161546.1.Ifc4270fbe9bad536f08a47696e00cca5a0714abd@changeid>
-References: <20220321161546.1.Ifc4270fbe9bad536f08a47696e00cca5a0714abd@changeid>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Tue, 22 Mar 2022 01:56:26 +0100
-Message-ID: <CAE-0n53RyGP53zySwTZaFJ+OKp9zJahBg76ZmKsaQ=fsddgu5w@mail.gmail.com>
-Subject: Re: [PATCH] soc: qcom: socinfo: add SC7280 entry to soc_id array
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>
-Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2022-03-21 16:15:55)
-> Add an entry for SC7280 SoC.
->
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
+some panel can't light up with new board with ps8640, switch compatible
+panel define to make it workable.
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Pan Sheng-Liang <sheng-liang.pan@quanta.corp-partner.google.com>
+Signed-off-by: Ivy Jian <ivyjian417@gmail.com>
+---
+
+ .../boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts     | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts
+index 4e35aec6a1e5..c44ed54af690 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts
+@@ -20,7 +20,7 @@ / {
+ /delete-node/&ap_ts;
+ 
+ &panel {
+-	compatible = "innolux,n116bca-ea1", "innolux,n116bge";
++	compatible = "edp-panel";
+ };
+ 
+ &sdhc_2 {
+-- 
+2.25.1
+
