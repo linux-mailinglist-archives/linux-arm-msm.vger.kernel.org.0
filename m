@@ -2,166 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F37A4E39B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 08:34:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE91D4E39C3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 08:44:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237559AbiCVHdw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Mar 2022 03:33:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40828 "EHLO
+        id S229994AbiCVHpI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Mar 2022 03:45:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237562AbiCVHdw (ORCPT
+        with ESMTP id S231258AbiCVHoa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Mar 2022 03:33:52 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F3E41D0E8;
-        Tue, 22 Mar 2022 00:32:24 -0700 (PDT)
+        Tue, 22 Mar 2022 03:44:30 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 992C16E7A2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Mar 2022 00:37:23 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id y142so32080519ybe.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Mar 2022 00:37:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1647934344; x=1679470344;
-  h=from:to:cc:subject:date:message-id;
-  bh=bRNWpg+p75m8VUEO5mpqu7xiwCamh4vnnXXnJwBus9U=;
-  b=dfR/CcLrcklrZ8h9CY/+dRIK7pxUbrZOGNwias5EPXzRMJCWu8Ha/5y7
-   b1Cxvm+LwtYCmynSPCEE7YZGrEOAZcTgtjfmnH2eDkCvsRQX5Ocm7sRDC
-   U2O3QkQneMqrH98gTsgXRPZoV1YhKc/iJY6SsB7F5TXJuPFa5EOvTg/JK
-   w=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 22 Mar 2022 00:32:24 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 22 Mar 2022 00:32:23 -0700
-X-QCInternal: smtphost
-Received: from hu-vnivarth-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.111.166])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 22 Mar 2022 13:02:10 +0530
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
-        id 8E2A944A2; Tue, 22 Mar 2022 13:02:09 +0530 (+0530)
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        gregkh@linuxfoundation.org, jirislaby@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     quic_msavaliy@quicinc.com, quic_dkammath@quicinc.com,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Subject: [PATCH] drivers/tty/serial/qcom-geni-serial: Remove uart frequency table. Instead, find suitable frequency with call to clk_round_rate.
-Date:   Tue, 22 Mar 2022 13:01:55 +0530
-Message-Id: <1647934315-5189-1-git-send-email-quic_vnivarth@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        d=linaro.org; s=google;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=Mb+xIEW59K1ZB7JeQIqggKVm6yQ70+u2EGq5PySJ9L0=;
+        b=zXlZqTgqZoDxNOA0MJjXq4WWfpvRgUImx6SnOY8s6b9gF4bb1S2E5uuxbw7/TJ2u3M
+         pcDxMyhlO4n8gUfJfzZecrWiJQDoSlFXQzxiteXgVjAxGXT3tQNAPuGX4beq3lymspW/
+         VMlqR2s+arUpSskLZjspfndI8csXkNkkEr0NZ2mDFVJslYftWcMLGZbNrF6AUdfasNQY
+         8o419MNY++AHlgjr00dD+ildrgPnnxCS2VVHuDFaqp2EkSAMM+rA3A8zqOe1S+JkLnQR
+         JxpwAKetqFDwDrddy+OTZCSiZIsoW0wlQIIgTQUPn6HS5iFpAW6OcuKZM+uYgn42EMEV
+         B61Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=Mb+xIEW59K1ZB7JeQIqggKVm6yQ70+u2EGq5PySJ9L0=;
+        b=u/Qz0ekigbrXi04Z/CvZp9Qj19tTcUuvjiPIPmMwqjVN5ltItvCQeXGF9cPXfFvZL4
+         9EDFdUAnYpftLSBofYoH9kZYXGSn6EZa94gtpEYZym3h8XoYcdPBKE4PhINZrgf5n5w/
+         Zn3z/8SfKTlsEg64B4rc+TPb8xr0Ew85+uV19NA1W+1voIRdN+89WlOTXA7bWieWxMO3
+         ToumssPrzmj9cEIA8PC+ba7YzGjbT3EpF4KcyeM3XsEHBQA+5dSrkWsgqCOxcuXuGBoo
+         b71pj8XAG3box4jkSC5ymAdZddt47zOUlEwC4rceAD9LOBPsIrRHil/v1i8yLvuPfaO/
+         w8nw==
+X-Gm-Message-State: AOAM530nQcrYz74fQ1+gWVXzaXLkrl/baVO2bwC0gXnTnSnNBeJBkfM1
+        wb9U24G4nKoXLqQBM8HgUDPp7Hd/AY8QCn7YAyi7EQ==
+X-Google-Smtp-Source: ABdhPJxluSKeXS66jhWemtnQAJQY0JcIr5zVe3IkwMjQoQOUhcV8E/b9uGRg4t9T9qgGJTOa3zVDCNKEhHg3jStcF4M=
+X-Received: by 2002:a25:a0c5:0:b0:633:63da:5ead with SMTP id
+ i5-20020a25a0c5000000b0063363da5eadmr26371770ybm.412.1647934642439; Tue, 22
+ Mar 2022 00:37:22 -0700 (PDT)
+MIME-Version: 1.0
+From:   Naresh Kamboju <naresh.kamboju@linaro.org>
+Date:   Tue, 22 Mar 2022 13:07:11 +0530
+Message-ID: <CA+G9fYv6_mytUwaa9bgQTuMUhrGfkg-yFKC0u_Ujh7sRTtgNfw@mail.gmail.com>
+Subject: WARNING: possible recursive locking detected - lock(&irq_desc_lock_class);
+To:     open list <linux-kernel@vger.kernel.org>,
+        rcu <rcu@vger.kernel.org>, linux-remoteproc@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Netdev <netdev@vger.kernel.org>, lkft-triage@lists.linaro.org
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Paul E. McKenney" <paulmck@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Vinod Koul <vinod.koul@linaro.org>,
+        Nicolas Dechesne <nicolas.dechesne@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[Why]
-This change is part of resolving feedback for an earlier
-patch. The UART frequency table is to be replaced with a
-call to clk_round_rate so it would work regardless of
-what the clk driver supports for the particular SoC.
+While booting linux mainline kernel v5.17.0 on arm64 dragonboard 845c
+the following kernel deadlock warning was noticed.
 
-[How]
-Try to find a frequency and divider that exactly matches
-the required rate. If not found, return the closest
-possible frequency and set divider to 1.
+This build config is generated by kselftest-merge configs.
 
-Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
----
- drivers/tty/serial/qcom_geni_serial.c | 57 ++++++++++++++++++++---------------
- 1 file changed, 33 insertions(+), 24 deletions(-)
+[   11.472323] qcom_q6v5_pas remoteproc-adsp: supply cx not found,
+using dummy regulator
+[   11.482690] qcom_q6v5_pas remoteproc-adsp: supply px not found,
+using dummy regulator
+[   11.643728] qcom,slim-ngd-ctrl 171c0000.slim: Adding to iommu group 1
+[   11.647956] NET: Registered PF_QIPCRTR protocol family
+[   11.655652] failed to send lookup registration: -19
+[   11.679730] remoteproc remoteproc0: remoteproc-adsp is available
+[   11.688073] remoteproc remoteproc0: Direct firmware load for
+qcom/sdm845/adsp.mbn failed with error -2
+[   11.698131] remoteproc remoteproc0: powering up remoteproc-adsp
+[   11.704730] remoteproc remoteproc0: Direct firmware load for
+qcom/sdm845/adsp.mbn failed with error -2
+[   11.714571] remoteproc remoteproc0: request_firmware failed: -2
+[   11.753156] cpu cpu0: EM: created perf domain
+[   11.773034]
+[   11.774570] ============================================
+[   11.779933] WARNING: possible recursive locking detected
+[   11.785303] 5.17.0 #1 Not tainted
+[   11.788662] --------------------------------------------
+[   11.794029] kworker/u16:2/80 is trying to acquire lock:
+[   11.798293] qcom_q6v5_pas remoteproc-cdsp: supply cx not found,
+using dummy regulator
+[   11.799312] ffff7e0cc11b28f8 (&irq_desc_lock_class){-.-.}-{2:2},
+at: __irq_get_desc_lock+0x64/0xa4
+[   11.816285]
+[   11.816285] but task is already holding lock:
+[   11.822173] ffff7e0cc0fd38f8 (&irq_desc_lock_class){-.-.}-{2:2},
+at: __irq_get_desc_lock+0x64/0xa4
+[   11.823425] qcom_q6v5_pas remoteproc-cdsp: supply px not found,
+using dummy regulator
+[   11.831231]
+[   11.831231] other info that might help us debug this:
+[   11.831234]  Possible unsafe locking scenario:
+[   11.831234]
+[   11.831236]        CPU0
+[   11.831238]        ----
+[   11.831240]   lock(&irq_desc_lock_class);
+[   11.831245]   lock(&irq_desc_lock_class);
+[   11.831251]
+[   11.831251]  *** DEADLOCK ***
+[   11.831251]
+[   11.831253]  May be due to missing lock nesting notation
+[   11.831253]
+[   11.831255] 6 locks held by kworker/u16:2/80:
+[   11.831259]  #0: ffff7e0cc0018d38
+((wq_completion)events_unbound){+.+.}-{0:0}, at:
+process_one_work+0x1e8/0x6f4
+[   11.862787] cfg80211: Loading compiled-in X.509 certificates for
+regulatory database
+[   11.864788]  #1: ffff800008673dd0
+(deferred_probe_work){+.+.}-{0:0}, at: process_one_work+0x1e8/0x6f4
+[   11.864808]  #2: ffff7e0cc12bf188 (&dev->mutex
+[   11.882336] cfg80211: Loaded X.509 cert 'sforshee: 00b28ddf47aef9cea7'
+[   11.892239] ){....}-{3:3}, at: __device_attach+0x44/0x1c0
+[   11.892255]  #3: ffffb99e189d0870 (cpu_hotplug_lock){++++}-{0:0},
+at: cpus_read_lock+0x1c/0x30
+[   11.892276]  #4:
+[   11.900398] platform regulatory.0: Direct firmware load for
+regulatory.db failed with error -2
+[   11.909407] ffff7e0cc0f98918 (subsys mutex#8){+.+.}-{3:3}, at:
+subsys_interface_register+0x64/0x150
+[   11.909429]  #5: ffff7e0cc0fd38f8
+(&irq_desc_lock_class){-.-.}-{2:2}, at: __irq_get_desc_lock+0x64/0xa4
+[   11.913956] cfg80211: failed to load regulatory.db
+[   11.920518]
+[   11.920518] stack backtrace:
+[   11.920523] CPU: 4 PID: 80 Comm: kworker/u16:2 Not tainted 5.17.0 #1
+[   11.920530] Hardware name: Thundercomm Dragonboard 845c (DT)
+[   11.920535] Workqueue: events_unbound deferred_probe_work_func
+[   11.957146] remoteproc remoteproc1: remoteproc-cdsp is available
+[   11.963917]
+[   11.963921] Call trace:
+[   11.963924]  dump_backtrace+0xf8/0x130
+[   11.963933]  show_stack+0x24/0x80
+[   11.963937]  dump_stack_lvl+0x8c/0xb8
+[   11.963948]  dump_stack+0x18/0x34
+[   11.985142] remoteproc remoteproc1: Direct firmware load for
+qcom/sdm845/cdsp.mbn failed with error -2
+[   11.985323]  __lock_acquire+0xbc8/0x20cc
+[   11.991270] remoteproc remoteproc1: powering up remoteproc-cdsp
+[   11.997292]  lock_acquire.part.0+0xe0/0x230
+[   11.997301]  lock_acquire+0x68/0x84
+[   11.997309]  _raw_spin_lock_irqsave+0x88/0x150
+[   11.997317]  __irq_get_desc_lock+0x64/0xa4
+[   11.997324]  enable_irq+0x40/0xb0
+[   11.998891] remoteproc remoteproc1: Direct firmware load for
+qcom/sdm845/cdsp.mbn failed with error -2
+[   12.001316]  lmh_enable_interrupt+0x38/0x44 [lmh]
+[   12.001329]  irq_enable+0x4c/0xa0
+[   12.001337]  __irq_startup+0x80/0xb0
+[   12.005282] remoteproc remoteproc1: request_firmware failed: -2
+[   12.008487]  irq_startup+0x84/0x174
+[   12.008495]  __enable_irq+0x7c/0x90
+[   12.008501]  enable_irq+0x54/0xb0
+[   12.008508]  qcom_cpufreq_ready+0x2c/0x3c
+[   12.096152]  cpufreq_online+0x5a8/0xa60
+[   12.096160]  cpufreq_add_dev+0xc8/0xe0
+[   12.096167]  subsys_interface_register+0x138/0x150
+[   12.096176]  cpufreq_register_driver+0x180/0x300
+ OK   Started udev Coldplug all Devices.[   12.113357]
+qcom_cpufreq_hw_driver_probe+0xe0/0x150
+[   12.123101]  platform_probe+0x74/0xf0
+[   12.126994]  really_probe+0x1c4/0x440
+[   12.130706]  __driver_probe_device+0x11c/0x190
+[   12.135201]  driver_probe_device+0x48/0x104
+[   12.139429]  __device_attach_driver+0xa4/0x140
+[   12.143927]  bus_for_each_drv+0x84/0xe0
+[   12.147810]  __device_attach+0xe4/0x1c0
+[   12.151695]  device_initial_probe+0x20/0x30
+[   12.155934]  bus_probe_device+0xac/0xb4
+[   12.159817]  deferred_probe_work_func+0xc8/0x120
+[   12.164486]  process_one_work+0x280/0x6f4
+[   12.168540]  worker_thread+0x80/0x450
+[   12.172256]  kthread+0x10c/0x120
+[   12.172264]  ret_from_fork+0x10/0x20
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index aedc388..5226673 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -149,12 +149,6 @@ static unsigned int qcom_geni_serial_tx_empty(struct uart_port *port);
- static void qcom_geni_serial_stop_rx(struct uart_port *uport);
- static void qcom_geni_serial_handle_rx(struct uart_port *uport, bool drop);
- 
--static const unsigned long root_freq[] = {7372800, 14745600, 19200000, 29491200,
--					32000000, 48000000, 51200000, 64000000,
--					80000000, 96000000, 100000000,
--					102400000, 112000000, 120000000,
--					128000000};
--
- #define to_dev_port(ptr, member) \
- 		container_of(ptr, struct qcom_geni_serial_port, member)
- 
-@@ -946,32 +940,46 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
- 	return 0;
- }
- 
--static unsigned long get_clk_cfg(unsigned long clk_freq)
--{
--	int i;
--
--	for (i = 0; i < ARRAY_SIZE(root_freq); i++) {
--		if (!(root_freq[i] % clk_freq))
--			return root_freq[i];
--	}
--	return 0;
--}
--
--static unsigned long get_clk_div_rate(unsigned int baud,
-+static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
- 			unsigned int sampling_rate, unsigned int *clk_div)
- {
- 	unsigned long ser_clk;
- 	unsigned long desired_clk;
-+	unsigned long freq, prev, freq_first;
-+
-+	if (!clk) {
-+		pr_err("%s: Invalid clock handle\n", __func__);
-+		return 0;
-+	}
- 
- 	desired_clk = baud * sampling_rate;
--	ser_clk = get_clk_cfg(desired_clk);
--	if (!ser_clk) {
--		pr_err("%s: Can't find matching DFS entry for baud %d\n",
--								__func__, baud);
--		return ser_clk;
-+	if (!desired_clk) {
-+		pr_err("%s: Invalid frequency\n", __func__);
-+		return 0;
- 	}
- 
-+	freq_first = 0;
-+	prev = desired_clk;
-+	freq = desired_clk - 1;
-+	do {
-+		if (freq != (desired_clk - 1))
-+			prev = freq;
-+
-+		freq = clk_round_rate(clk, (freq + 1));
-+
-+		if (!freq_first)
-+			freq_first = freq;
-+	} while ((freq % desired_clk) && (freq > 0) && (freq != prev));
-+
-+	if (!(freq % desired_clk))
-+		ser_clk = freq;
-+	else
-+		ser_clk = freq_first;
-+
- 	*clk_div = ser_clk / desired_clk;
-+	if ((ser_clk) && (!(*clk_div)))
-+		*clk_div = 1;
-+
- 	return ser_clk;
- }
- 
-@@ -1003,7 +1011,8 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
- 	if (ver >= QUP_SE_VERSION_2_5)
- 		sampling_rate /= 2;
- 
--	clk_rate = get_clk_div_rate(baud, sampling_rate, &clk_div);
-+	clk_rate = get_clk_div_rate((port->se).clk, baud,
-+		sampling_rate, &clk_div);
- 	if (!clk_rate)
- 		goto out_restart_rx;
- 
--- 
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
+metadata:
+  git_ref: master
+  git_repo: https://gitlab.com/Linaro/lkft/mirrors/torvalds/linux-mainline
+  git_sha: f443e374ae131c168a065ea1748feac6b2e76613
+  git_describe: v5.17
+  kernel_version: 5.17.0
+  kernel-config: https://builds.tuxbuild.com/26fPPSbBmMfOqElIN3NGgvUWHeW/config
+
+
+--
+Linaro LKFT
+https://lkft.linaro.org
+[1] https://lkft.validation.linaro.org/scheduler/job/4754457#L3342
