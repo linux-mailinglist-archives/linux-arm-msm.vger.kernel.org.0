@@ -2,54 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 787EA4E4662
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 19:59:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AC5B4E46DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 20:44:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230031AbiCVTBF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Mar 2022 15:01:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58424 "EHLO
+        id S231853AbiCVTqH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Mar 2022 15:46:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229903AbiCVTBE (ORCPT
+        with ESMTP id S231863AbiCVTqF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Mar 2022 15:01:04 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC3B08E190
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Mar 2022 11:59:35 -0700 (PDT)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 2628C3F838;
-        Tue, 22 Mar 2022 19:59:33 +0100 (CET)
-Date:   Tue, 22 Mar 2022 19:59:25 +0100
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-kernel@vger.kernel.org,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Subject: Re: [Freedreno] [PATCH v3 12/13] drm/msm/dsi: Add support for DSC
- configuration
-Message-ID: <20220322185925.nszstmi5silgefd5@SoMainline.org>
-References: <20211116062256.2417186-1-vkoul@kernel.org>
- <20211116062256.2417186-13-vkoul@kernel.org>
- <20211211000315.pavmcc7cc73ilb6l@SoMainline.org>
- <Yg4t/G3tgcmkswHg@matsya>
- <20220217151142.sbp6wslxbxeohsgf@SoMainline.org>
- <YjoEgpAZAwM8hWEa@matsya>
+        Tue, 22 Mar 2022 15:46:05 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 442CE6250
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Mar 2022 12:44:37 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id e4so17542742oif.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Mar 2022 12:44:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=CAzB2bxWOL1HZEUAkxbUyi+0BLpsE35+TdYIg2Gczsk=;
+        b=LHh2V3u23YaTHVt7ryJ00QpQj2lolnfFeBCDwmVG+Yzvjjm3IUpNCXVFU0LqnQ63fc
+         vRvdkp8BAeEO4KbsPzzrmG1Jo1TwVcSxbI6G2mbH1qkwW8Tmlh/CepuHDWVqFag8m/t4
+         NLRK/xriGvkEwu0bqDWz1HRzvGHgv/D6dcVQs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=CAzB2bxWOL1HZEUAkxbUyi+0BLpsE35+TdYIg2Gczsk=;
+        b=s+CPoD6/pmUEkLKmmHWoBmHZsMI2XmYNC9G16/wuEOAvudYRz93hW0/yKEgm5WaWHj
+         PzL4rDH0KlKQ8JR3wEo0X54/L3wxai62ff2nPhV4M5ELPdxrXUjN7C6hbQRBdovcI9uL
+         EBPZgx+ckNSkuSTZy+rFpvhHoo4ws4S2JSrHzYTofCDd79QKsi5xOihy7B4+ZE+DgwaD
+         20eSJmi25gv1qsFmwq68cA4lRg3J8SIbu7qXxHY7baISr9UTwRm1kvkY/PfdO68STKPn
+         mIAsrTS6maQSDwoxRwA0GzDZSeirG6+HlEqxa66vBbn+8oklkaQHC6k55CPhHHqKVbaD
+         ixkQ==
+X-Gm-Message-State: AOAM53339S4HvlV5abQoJ5BBqL1vwxFIdyNOR74mDj7wrtJ6y6H7Ul5l
+        JAQmZ8P2/EmNaWZxTf1W5S72fZvl56ozSrlpyjAxWw==
+X-Google-Smtp-Source: ABdhPJx648kRoeFIg6qr1MoqlzkLUrFEo36LwaPxWmkijK9tGCkGuyzZbaWIpDuSFZ252ApxbfxaUNN3/mLT4KNpQeg=
+X-Received: by 2002:aca:bd41:0:b0:2ec:ff42:814f with SMTP id
+ n62-20020acabd41000000b002ecff42814fmr3002721oif.63.1647978276526; Tue, 22
+ Mar 2022 12:44:36 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 22 Mar 2022 20:44:35 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YjoEgpAZAwM8hWEa@matsya>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <1647934315-5189-1-git-send-email-quic_vnivarth@quicinc.com>
+References: <1647934315-5189-1-git-send-email-quic_vnivarth@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Tue, 22 Mar 2022 20:44:35 +0100
+Message-ID: <CAE-0n53x2ayF3c9bf7qDm-HEHb9TVivFtrgN9XukAR1L=UP1+A@mail.gmail.com>
+Subject: Re: [PATCH] drivers/tty/serial/qcom-geni-serial: Remove uart
+ frequency table. Instead, find suitable frequency with call to clk_round_rate.
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        gregkh@linuxfoundation.org, jirislaby@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-serial@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, quic_dkammath@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -58,100 +70,172 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2022-03-22 22:46:50, Vinod Koul wrote:
-> On 17-02-22, 16:11, Marijn Suijten wrote:
-> > Hi Vinod,
-> > 
-> > Thanks for taking time to go through this review, please find some
-> > clarifications below.
-> > 
-> > On 2022-02-17 16:44:04, Vinod Koul wrote:
-> > > Hi Marijn,
-> > > 
-> > > On 11-12-21, 01:03, Marijn Suijten wrote:
-> > > 
-> > > > > +static int dsi_dsc_update_pic_dim(struct msm_display_dsc_config *dsc,
-> > > > > +				  int pic_width, int pic_height)
-> > > > 
-> > > > This function - adopted from downstream - does not seem to perform a
-> > > > whole lot, especially without the modulo checks against the slice size.
-> > > > Perhaps it can be inlined?
-> > > 
-> > > Most of the code here is :)
-> > > 
-> > > This was split from downstream code to check and update dimension. We
-> > > can inline this, or should we leave that to compiler. I am not a very
-> > > big fan of inlining...
-> > 
-> > It doesn't seem beneficial to code readability to have this function,
-> > which is only called just once and also has the same struct members read
-> > in a `DBG()` directly, abstracted away to a function.  Not really
-> > concerned about generated code/performance FWIW.
-> > 
-> > Also note that the caller isn't checking the `-EINVAL` result...
-> 
-> I have made this void inline.
+Quoting Vijaya Krishna Nivarthi (2022-03-22 00:31:55)
+> [Why]
+> This change is part of resolving feedback for an earlier
+> patch. The UART frequency table is to be replaced with a
 
-Perhaps there is a misunderstanding here: with inlining I am referring
-to the process of transplanting the _function body_ to the only
-call-site, not adding the `inline` keyword nor changing this to `void`.
+The first sentence is useless. Just say what you're doing and why you're
+doing it.
 
-The checks that make this function return `-EINVAL` seem valid, so the
-caller should check it instead of removing the return?
+Replace the UART frequency table 'root_freq[]' with logic around
+clk_round_rate() so that SoC details like the available clk frequencies
+can change and this driver still works. This reduces tight coupling
+between this UART driver and the SoC clk driver because we no longer
+have to update the 'root_freq[]' array for new SoCs. Instead the driver
+determines the available frequencies at runtime.
 
-> > > > 
-> > > > > +{
-> > > > > +	if (!dsc || !pic_width || !pic_height) {
-> > > > > +		pr_err("DSI: invalid input: pic_width: %d pic_height: %d\n", pic_width, pic_height);
-> > > > > +		return -EINVAL;
-> > > > > +	}
-> > > > > +
-> > > > > +	dsc->drm->pic_width = pic_width;
-> > > > > +	dsc->drm->pic_height = pic_height;
-> > > > > +
-> > > > > +	return 0;
-> > > > > +}
-> > > > > +
-> > > > >  static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
-> > > > >  {
-> > > > >  	struct drm_display_mode *mode = msm_host->mode;
-> > > > > @@ -940,7 +954,68 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
-> > > > >  		hdisplay /= 2;
-> > > > >  	}
-> > > > >  
-> > > > > +	if (msm_host->dsc) {
-> > > > > +		struct msm_display_dsc_config *dsc = msm_host->dsc;
-> > > > > +
-> > > > > +		/* update dsc params with timing params */
-> > > > > +		dsi_dsc_update_pic_dim(dsc, mode->hdisplay, mode->vdisplay);
-> > 
-> > That is, the result code here should be checked (or function inlined).
-> 
-> This function return void, so no point in checking
+> call to clk_round_rate so it would work regardless of
+> what the clk driver supports for the particular SoC.
+>
+> [How]
+> Try to find a frequency and divider that exactly matches
+> the required rate. If not found, return the closest
+> possible frequency and set divider to 1.
+>
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+> ---
+>  drivers/tty/serial/qcom_geni_serial.c | 57 ++++++++++++++++++++---------------
+>  1 file changed, 33 insertions(+), 24 deletions(-)
+>
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> index aedc388..5226673 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -149,12 +149,6 @@ static unsigned int qcom_geni_serial_tx_empty(struct uart_port *port);
+>  static void qcom_geni_serial_stop_rx(struct uart_port *uport);
+>  static void qcom_geni_serial_handle_rx(struct uart_port *uport, bool drop);
+>
+> -static const unsigned long root_freq[] = {7372800, 14745600, 19200000, 29491200,
+> -                                       32000000, 48000000, 51200000, 64000000,
+> -                                       80000000, 96000000, 100000000,
+> -                                       102400000, 112000000, 120000000,
+> -                                       128000000};
+> -
+>  #define to_dev_port(ptr, member) \
+>                 container_of(ptr, struct qcom_geni_serial_port, member)
+>
+> @@ -946,32 +940,46 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
+>         return 0;
+>  }
+>
+> -static unsigned long get_clk_cfg(unsigned long clk_freq)
+> -{
+> -       int i;
+> -
+> -       for (i = 0; i < ARRAY_SIZE(root_freq); i++) {
+> -               if (!(root_freq[i] % clk_freq))
+> -                       return root_freq[i];
+> -       }
+> -       return 0;
+> -}
+> -
+> -static unsigned long get_clk_div_rate(unsigned int baud,
+> +static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
+>                         unsigned int sampling_rate, unsigned int *clk_div)
+>  {
+>         unsigned long ser_clk;
+>         unsigned long desired_clk;
+> +       unsigned long freq, prev, freq_first;
+> +
+> +       if (!clk) {
 
-It isn't returning `void` in the current patch series that my email is
-reviewing, hence explicitly mentioning here that it may have been
-overlooked.
+Please remove this nonsense check. When is clk going to be NULL?
 
-Please only convert this to `void` if you are sure that the clause that
-originally made `dsi_dsc_update_pic_dim()` return `-EINVAL` on invalid
-input is unreachable (if, for example, you moved this check to another
-location, say here in `dsi_timing_setup`).
+> +               pr_err("%s: Invalid clock handle\n", __func__);
+> +               return 0;
+> +       }
+>
+>         desired_clk = baud * sampling_rate;
+> -       ser_clk = get_clk_cfg(desired_clk);
+> -       if (!ser_clk) {
+> -               pr_err("%s: Can't find matching DFS entry for baud %d\n",
+> -                                                               __func__, baud);
+> -               return ser_clk;
+> +       if (!desired_clk) {
+> +               pr_err("%s: Invalid frequency\n", __func__);
+> +               return 0;
+>         }
+>
+> +       freq_first = 0;
+> +       prev = desired_clk;
+> +       freq = desired_clk - 1;
+> +       do {
+> +               if (freq != (desired_clk - 1))
 
-Alas, it's pretty tricky to reason and pose assumptions about code that
-I cannot see; we should probably continue this discussion in the next
-patch revision depending on how it looks :)
+Does this ever happen after the first loop? Why not assign prev to freq
+before entering?
 
-> > [..]
-> > Thanks.  I forgot to mention: there seem to be a lot of similarities
-> > between the video and commandmode computations, can those possibly be
-> > factored out of the if-else to save on duplication and accidental
-> > mismatches like these?
-> 
-> Thanks, this was a good suggestion and am happy to report that I have
-> incorporated this and indeed code looks better
+> +                       prev = freq;
+> +
+> +               freq = clk_round_rate(clk, (freq + 1));
 
-Thank you for applying this and the other comments, glad to hear the
-code is shaping up and looking forward to the next revision!
+Remove useless parenthesis.
 
-- Marijn
+> +
+> +               if (!freq_first)
+> +                       freq_first = freq;
+> +       } while ((freq % desired_clk) && (freq > 0) && (freq != prev));
+
+Remove useless parenthesis.
+	
+In general, take a look at clk_divider_bestdiv() for how to handle this.
+This device only has so many possible divider values so it's better to
+loop through clk_round_rate() taking into account the possible divider
+values instead of adding 1 to the frequency returned from
+clk_round_rate(). According to the defines
+
+#define CLK_DIV_MSK                     GENMASK(15, 4)
+#define CLK_DIV_SHFT                    4
+
+it has 4095 divider values (I guess a divider of 0 is the same as
+divider of 1?). We should be able to multiply the desired rate by the
+divider and see if it matches the frequency of the 'ser_clk'. If it
+doesn't we can calculate the actual frequency that we can achieve and
+then do our own rounding here to figure out if it is acceptable. I guess
+it needs to be exactly divisible, so if the clk_round_rate() doesn't
+come back with the same frequency we wanted we keep trying bigger
+numbers with bigger dividers. The important thing is that we don't
+exceed the possible divider values by returning from this function
+with an invalid divider.
+
+I was thinking it may be easier to implement this divider as a clk in
+the clk tree but that looks complicated. Largely that's because the
+'ser_clk' is set with dev_pm_opp_set_rate() and that would be the parent
+of this new divider clk. If OPP core could figure out that the parent
+clk is changing and that's the one with the voltage requirements it
+would work to call dev_pm_opp_set_rate() on the new divider clk (maybe
+call it baud_clk). This logic doesn't exist today though so implementing
+it here in this driver is OK with me for now.
+
+> +
+> +       if (!(freq % desired_clk))
+
+Flip these conditions to remove one more set of parenthesis.
+
+> +               ser_clk = freq;
+> +       else
+> +               ser_clk = freq_first;
+> +
+>         *clk_div = ser_clk / desired_clk;
+> +       if ((ser_clk) && (!(*clk_div)))
+
+Remove useless parenthesis.
+
+> +               *clk_div = 1;
+> +
+>         return ser_clk;
+>  }
+>
+> @@ -1003,7 +1011,8 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
+>         if (ver >= QUP_SE_VERSION_2_5)
+>                 sampling_rate /= 2;
+>
+> -       clk_rate = get_clk_div_rate(baud, sampling_rate, &clk_div);
+> +       clk_rate = get_clk_div_rate((port->se).clk, baud,
+
+Remove useless parenthesis.
+
+> +               sampling_rate, &clk_div);
+>         if (!clk_rate)
+>                 goto out_restart_rx;
