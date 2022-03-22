@@ -2,77 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 645DB4E3FE0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 14:54:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 382064E4358
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 16:52:02 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235913AbiCVNzz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Mar 2022 09:55:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51050 "EHLO
+        id S233077AbiCVPx1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Mar 2022 11:53:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234675AbiCVNzy (ORCPT
+        with ESMTP id S235730AbiCVPx1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Mar 2022 09:55:54 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5B2B186F4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Mar 2022 06:54:21 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id k25so20180885iok.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Mar 2022 06:54:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=A2DscZc3AEntEFvhf0cmEbjgQhmN19fYz2yomg4IX2A=;
-        b=f5lj3SZg+5/T+XDU05uwNy/6FgMMhmfX4FPfg2pB9UQi/PLqUC8vVR8zps2GDhRoyF
-         D3yy67ScBm/PKtLI24Fs6de+W4AlWNYub8bnniTEebRzROb9FxZV3YrmGPlWkWt2dr4v
-         6nOr+GqcEfaADKVbBLftjdARjMxxyv1Efcymo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=A2DscZc3AEntEFvhf0cmEbjgQhmN19fYz2yomg4IX2A=;
-        b=kmABpP0vUF47KzH3/kwC4ccDJs5JlBMddr2uk3sF0sKgBzGv+W78+r97ER8USKowzc
-         CRDReB62xoi4f5BfwB7v+yR71bw/2pimfMKWKltiibheERXrh4gr/BYpBB+qy+0O9a+f
-         Gzq3v/ey/ELtTLd1qJvpoANihJDM+rpSSXIWWxr3eRIUCL5IGnKRfdMy6QsL39Y2aH/4
-         j3/3/XFInq1cCrDqsRTLyhgjQAjGPQ+AfkdG6g7Slff/RbMwuQ0zvh8SgK/m1F/bAtNW
-         9aSNLhZmqHSWZZPB9vXusTMLRp9wC7Nw04pXqtBj3Kfd3tglhwj73rqV1FQ+/6YU5hYP
-         ARYQ==
-X-Gm-Message-State: AOAM530m/wgiZ9PUPDsSTG/piVyyxoG7gsPt0A9zccx263PoGcNcn/i8
-        7fENRO1h2/kiVOQkGwMATKmoGYmMnVpg3qIq
-X-Google-Smtp-Source: ABdhPJzTJwyl7sCx15UauQx2qaDJA6aR3VNsONYl8FF5jGR/jc9Ax36FfK/nR1suTabi/AVKt/HcNA==
-X-Received: by 2002:a05:6602:3415:b0:648:b4f6:6e4d with SMTP id n21-20020a056602341500b00648b4f66e4dmr12426079ioz.98.1647957260798;
-        Tue, 22 Mar 2022 06:54:20 -0700 (PDT)
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com. [209.85.166.50])
-        by smtp.gmail.com with ESMTPSA id f5-20020a5d8785000000b00604cdf69dc8sm9498920ion.13.2022.03.22.06.54.19
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Mar 2022 06:54:19 -0700 (PDT)
-Received: by mail-io1-f50.google.com with SMTP id r2so20242684iod.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Mar 2022 06:54:19 -0700 (PDT)
-X-Received: by 2002:a5d:9e02:0:b0:645:d25c:30bd with SMTP id
- h2-20020a5d9e02000000b00645d25c30bdmr12441220ioh.208.1647957258853; Tue, 22
- Mar 2022 06:54:18 -0700 (PDT)
+        Tue, 22 Mar 2022 11:53:27 -0400
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69BF489CFD;
+        Tue, 22 Mar 2022 08:51:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1647964319; x=1679500319;
+  h=to:cc:references:from:subject:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=9ttX9cZdVk3gMLlMA8zvmvOJ+iMJUZrKKbcKF7FJWwM=;
+  b=WUe56AswEZUfydv1gfwAfD8UxOvIz1XjZA+VYyKdiVeVCotp/HJXJPH6
+   SPu3E8nwBZVHCSqkKgctd7J6nemigN+1Q9FyMGoyhgytzYuZ1Yk9y8Imj
+   RzNDFKRIpK7knTB8xxK9VfFOXYZeshzOKA+4DcQ9lwAePJ5Mpg1jKzUOW
+   P8rkVYm6Flv7uRs5ngdpr27q7dL0iAgMdaWBHld6yhW661zwZE9003/8G
+   wxJT1TR9PIxOw23muVSE52yOY49Gp4Yv1sgPPey2Gn3c24ANXRx2YDP+m
+   5Pms4p7gLHxPURix8bXn9FESM700XFyFvhabrbuOpdu0Tu+HU8FSzsjW1
+   Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10294"; a="255418969"
+X-IronPort-AV: E=Sophos;i="5.90,201,1643702400"; 
+   d="scan'208";a="255418969"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2022 08:51:58 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,201,1643702400"; 
+   d="scan'208";a="649039098"
+Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
+  by orsmga004.jf.intel.com with ESMTP; 22 Mar 2022 08:51:54 -0700
+To:     "Sandeep Maheswaram (Temp)" <quic_c_sanm@quicinc.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mathias Nyman <mathias.nyman@intel.com>
+Cc:     Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Pawel Laszczak <pawell@cadence.com>,
+        Peter Chen <peter.chen@kernel.org>,
+        Roger Quadros <rogerq@kernel.org>,
+        Aswath Govindraju <a-govindraju@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com
+References: <1646130507-26796-1-git-send-email-quic_c_sanm@quicinc.com>
+ <ddc86a4f-8d1c-c02c-5600-4fa851568557@quicinc.com>
+ <YjR0Ne3BDxxMfrxt@kroah.com>
+ <b38ddfcc-68c3-d99f-816b-8b9f788aa88a@quicinc.com>
+From:   Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: Re: [PATCH v2 0/3] Refactor xhci quirks and plat private data
+Message-ID: <29ba84fb-1db2-1d84-cf9e-191e9bcbf739@linux.intel.com>
+Date:   Tue, 22 Mar 2022 17:53:42 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Firefox/78.0 Thunderbird/78.14.0
 MIME-Version: 1.0
-References: <20220322092524.1.Ied05fc4b996737e3481861c6ab130a706f288412@changeid>
-In-Reply-To: <20220322092524.1.Ied05fc4b996737e3481861c6ab130a706f288412@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 22 Mar 2022 06:54:06 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Xe_6s8PV=rqwu0BFyfTij-VSVJ6wRpv-VN9XvdFx4A+A@mail.gmail.com>
-Message-ID: <CAD=FV=Xe_6s8PV=rqwu0BFyfTij-VSVJ6wRpv-VN9XvdFx4A+A@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: switch panel compatible to "edp-panel"
- for limozeen
-To:     Ivy Jian <ivyjian417@gmail.com>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Pan Sheng-Liang <sheng-liang.pan@quanta.corp-partner.google.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <b38ddfcc-68c3-d99f-816b-8b9f788aa88a@quicinc.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,18 +77,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 21.3.2022 8.21, Sandeep Maheswaram (Temp) wrote:
+> Hi Mathias,
+> 
+> On 3/18/2022 5:29 PM, Greg Kroah-Hartman wrote:
+>> On Thu, Mar 17, 2022 at 11:17:17AM +0530, Sandeep Maheswaram (Temp) wrote:
+>>> Hi Greg,
+>>>
+>>> On 3/1/2022 3:58 PM, Sandeep Maheswaram wrote:
+>>>> changes in v2:
+>>>> Added a PATCH 2/3 to remove unwanted header inclusion.
+>>>> Fixed minor nitpicks in PATCH 3/3.
+>>>>
+>>>> Pavankumar Kondeti (1):
+>>>>     usb: xhci: refactor quirks and plat private data
+>>>>
+>>>> Sandeep Maheswaram (2):
+>>>>     usb: xhci: Remove unwanted header inclusion
+>>>>     usb: dwc: host: add xhci_plat_priv quirk XHCI_SKIP_PHY_INIT
+>>>>
+>>>>    drivers/usb/cdns3/host.c        |  2 +-
+>>>>    drivers/usb/dwc3/host.c         | 13 ++++++++
+>>>>    drivers/usb/host/xhci-plat.c    |  3 +-
+>>>>    drivers/usb/host/xhci-plat.h    | 24 ---------------
+>>>>    drivers/usb/host/xhci-rcar.c    |  3 +-
+>>>>    drivers/usb/host/xhci.h         | 60 ++++--------------------------------
+>>>>    include/linux/usb/xhci-plat.h   | 24 +++++++++++++++
+>>>>    include/linux/usb/xhci-quirks.h | 67 +++++++++++++++++++++++++++++++++++++++++
+>>>>    8 files changed, 115 insertions(+), 81 deletions(-)
+>>>>    delete mode 100644 drivers/usb/host/xhci-plat.h
+>>>>    create mode 100644 include/linux/usb/xhci-plat.h
+>>>>    create mode 100644 include/linux/usb/xhci-quirks.h
+>>> Please let me know your opinion about this patch series.
+>> I need the xhci maintainer to review it...
+>>
+>> thanks,
+>>
+>> greg k-h
+> 
+> 
+> Can you please review this patch series.
+> 
 
-On Mon, Mar 21, 2022 at 6:25 PM Ivy Jian <ivyjian417@gmail.com> wrote:
->
-> some panel can't light up with new board with ps8640, switch compatible
-> panel define to make it workable.
->
-> Signed-off-by: Pan Sheng-Liang <sheng-liang.pan@quanta.corp-partner.google.com>
-> Signed-off-by: Ivy Jian <ivyjian417@gmail.com>
-> ---
->
->  .../boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dts     | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+I don't have a better solution than this.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+So neither devicetree or ACPI entries exists for the xHC part of this dwc3 controller?
+
+A pure platform device is created, and it matches and binds to xhci-plat driver by "xhci-hcd" name.
+I guess we have no way to identify this dwc3 xhci controller in xhci-plat.c, and set quirks there,
+like all those devicetree xhci devices that we set quirks based on .compatibility. 
+
+Thanks
+Mathias
+
