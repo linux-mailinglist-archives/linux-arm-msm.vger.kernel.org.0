@@ -2,131 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 382064E4358
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 16:52:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C0CD4E4411
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 17:19:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233077AbiCVPx1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Mar 2022 11:53:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51460 "EHLO
+        id S236468AbiCVQU5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Mar 2022 12:20:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235730AbiCVPx1 (ORCPT
+        with ESMTP id S236352AbiCVQU4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Mar 2022 11:53:27 -0400
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69BF489CFD;
-        Tue, 22 Mar 2022 08:51:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1647964319; x=1679500319;
-  h=to:cc:references:from:subject:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=9ttX9cZdVk3gMLlMA8zvmvOJ+iMJUZrKKbcKF7FJWwM=;
-  b=WUe56AswEZUfydv1gfwAfD8UxOvIz1XjZA+VYyKdiVeVCotp/HJXJPH6
-   SPu3E8nwBZVHCSqkKgctd7J6nemigN+1Q9FyMGoyhgytzYuZ1Yk9y8Imj
-   RzNDFKRIpK7knTB8xxK9VfFOXYZeshzOKA+4DcQ9lwAePJ5Mpg1jKzUOW
-   P8rkVYm6Flv7uRs5ngdpr27q7dL0iAgMdaWBHld6yhW661zwZE9003/8G
-   wxJT1TR9PIxOw23muVSE52yOY49Gp4Yv1sgPPey2Gn3c24ANXRx2YDP+m
-   5Pms4p7gLHxPURix8bXn9FESM700XFyFvhabrbuOpdu0Tu+HU8FSzsjW1
-   Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10294"; a="255418969"
-X-IronPort-AV: E=Sophos;i="5.90,201,1643702400"; 
-   d="scan'208";a="255418969"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2022 08:51:58 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,201,1643702400"; 
-   d="scan'208";a="649039098"
-Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
-  by orsmga004.jf.intel.com with ESMTP; 22 Mar 2022 08:51:54 -0700
-To:     "Sandeep Maheswaram (Temp)" <quic_c_sanm@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Mathias Nyman <mathias.nyman@intel.com>
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Pawel Laszczak <pawell@cadence.com>,
-        Peter Chen <peter.chen@kernel.org>,
-        Roger Quadros <rogerq@kernel.org>,
-        Aswath Govindraju <a-govindraju@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com
-References: <1646130507-26796-1-git-send-email-quic_c_sanm@quicinc.com>
- <ddc86a4f-8d1c-c02c-5600-4fa851568557@quicinc.com>
- <YjR0Ne3BDxxMfrxt@kroah.com>
- <b38ddfcc-68c3-d99f-816b-8b9f788aa88a@quicinc.com>
-From:   Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: Re: [PATCH v2 0/3] Refactor xhci quirks and plat private data
-Message-ID: <29ba84fb-1db2-1d84-cf9e-191e9bcbf739@linux.intel.com>
-Date:   Tue, 22 Mar 2022 17:53:42 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Firefox/78.0 Thunderbird/78.14.0
+        Tue, 22 Mar 2022 12:20:56 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C55C411A28;
+        Tue, 22 Mar 2022 09:19:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1647965966; x=1679501966;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=U7HtkD8e2y1BOHA9zy3SPJmEKe96PjQ8/7rxSr5oFsI=;
+  b=dS3vIWW1rB5aytj1fgPR4CeR5G5L+MIMt0c4m/gwp7CaoamTuL82aNqX
+   71CU4218QZguGlG39Zt2s8pUzc4mjyrpkNH1yU6vuqRSXV+LvFPX1EUoY
+   PnJr3cJ2h/9tGZvCKG1VuOHKO6eIZPpeClGWnwhDp6ycxpzrYcaEbyetj
+   c=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 22 Mar 2022 09:19:25 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2022 09:19:24 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 22 Mar 2022 09:19:24 -0700
+Received: from hu-srivasam-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 22 Mar 2022 09:19:18 -0700
+From:   Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <robh+dt@kernel.org>,
+        <quic_plai@quicinc.com>, <bgoswami@codeaurora.org>,
+        <perex@perex.cz>, <tiwai@suse.com>,
+        <srinivas.kandagatla@linaro.org>, <rohitkr@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <swboyd@chromium.org>, <judyhsiao@chromium.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+        "Venkata Prasad Potturu" <quic_potturu@quicinc.com>
+Subject: [PATCH] ASoC: codecs: Fix error handling in power domain init and exit handlers
+Date:   Tue, 22 Mar 2022 21:48:57 +0530
+Message-ID: <1647965937-32203-1-git-send-email-quic_srivasam@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-In-Reply-To: <b38ddfcc-68c3-d99f-816b-8b9f788aa88a@quicinc.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21.3.2022 8.21, Sandeep Maheswaram (Temp) wrote:
-> Hi Mathias,
-> 
-> On 3/18/2022 5:29 PM, Greg Kroah-Hartman wrote:
->> On Thu, Mar 17, 2022 at 11:17:17AM +0530, Sandeep Maheswaram (Temp) wrote:
->>> Hi Greg,
->>>
->>> On 3/1/2022 3:58 PM, Sandeep Maheswaram wrote:
->>>> changes in v2:
->>>> Added a PATCH 2/3 to remove unwanted header inclusion.
->>>> Fixed minor nitpicks in PATCH 3/3.
->>>>
->>>> Pavankumar Kondeti (1):
->>>>     usb: xhci: refactor quirks and plat private data
->>>>
->>>> Sandeep Maheswaram (2):
->>>>     usb: xhci: Remove unwanted header inclusion
->>>>     usb: dwc: host: add xhci_plat_priv quirk XHCI_SKIP_PHY_INIT
->>>>
->>>>    drivers/usb/cdns3/host.c        |  2 +-
->>>>    drivers/usb/dwc3/host.c         | 13 ++++++++
->>>>    drivers/usb/host/xhci-plat.c    |  3 +-
->>>>    drivers/usb/host/xhci-plat.h    | 24 ---------------
->>>>    drivers/usb/host/xhci-rcar.c    |  3 +-
->>>>    drivers/usb/host/xhci.h         | 60 ++++--------------------------------
->>>>    include/linux/usb/xhci-plat.h   | 24 +++++++++++++++
->>>>    include/linux/usb/xhci-quirks.h | 67 +++++++++++++++++++++++++++++++++++++++++
->>>>    8 files changed, 115 insertions(+), 81 deletions(-)
->>>>    delete mode 100644 drivers/usb/host/xhci-plat.h
->>>>    create mode 100644 include/linux/usb/xhci-plat.h
->>>>    create mode 100644 include/linux/usb/xhci-quirks.h
->>> Please let me know your opinion about this patch series.
->> I need the xhci maintainer to review it...
->>
->> thanks,
->>
->> greg k-h
-> 
-> 
-> Can you please review this patch series.
-> 
+Update error handling in power domain init and exit handlers, as existing handling
+may cause issues in device remove function.
+Use appropriate pm core api for power domain get and sync to avoid redundant code.
 
-I don't have a better solution than this.
+Fixes: 9e3d83c52844 ("ASoC: codecs: Add power domains support in digital macro codecs")
 
-So neither devicetree or ACPI entries exists for the xHC part of this dwc3 controller?
+Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+---
+ sound/soc/codecs/lpass-macro-common.c | 35 +++++++++++++++++++----------------
+ 1 file changed, 19 insertions(+), 16 deletions(-)
 
-A pure platform device is created, and it matches and binds to xhci-plat driver by "xhci-hcd" name.
-I guess we have no way to identify this dwc3 xhci controller in xhci-plat.c, and set quirks there,
-like all those devicetree xhci devices that we set quirks based on .compatibility. 
-
-Thanks
-Mathias
+diff --git a/sound/soc/codecs/lpass-macro-common.c b/sound/soc/codecs/lpass-macro-common.c
+index 6cede75..3c661fd 100644
+--- a/sound/soc/codecs/lpass-macro-common.c
++++ b/sound/soc/codecs/lpass-macro-common.c
+@@ -24,42 +24,45 @@ struct lpass_macro *lpass_macro_pds_init(struct device *dev)
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	l_pds->macro_pd = dev_pm_domain_attach_by_name(dev, "macro");
+-	if (IS_ERR_OR_NULL(l_pds->macro_pd))
+-		return NULL;
+-
+-	ret = pm_runtime_get_sync(l_pds->macro_pd);
+-	if (ret < 0) {
+-		pm_runtime_put_noidle(l_pds->macro_pd);
++	if (IS_ERR_OR_NULL(l_pds->macro_pd)) {
++		ret = PTR_ERR(l_pds->macro_pd);
+ 		goto macro_err;
+ 	}
+ 
++	ret = pm_runtime_resume_and_get(l_pds->macro_pd);
++	if (ret < 0)
++		goto macro_sync_err;
++
+ 	l_pds->dcodec_pd = dev_pm_domain_attach_by_name(dev, "dcodec");
+-	if (IS_ERR_OR_NULL(l_pds->dcodec_pd))
++	if (IS_ERR_OR_NULL(l_pds->dcodec_pd)) {
++		ret = PTR_ERR(l_pds->dcodec_pd);
+ 		goto dcodec_err;
++	}
+ 
+-	ret = pm_runtime_get_sync(l_pds->dcodec_pd);
+-	if (ret < 0) {
+-		pm_runtime_put_noidle(l_pds->dcodec_pd);
++	ret = pm_runtime_resume_and_get(l_pds->dcodec_pd);
++	if (ret < 0)
+ 		goto dcodec_sync_err;
+-	}
+ 	return l_pds;
+ 
+ dcodec_sync_err:
+ 	dev_pm_domain_detach(l_pds->dcodec_pd, false);
+ dcodec_err:
+ 	pm_runtime_put(l_pds->macro_pd);
+-macro_err:
++macro_sync_err:
+ 	dev_pm_domain_detach(l_pds->macro_pd, false);
++macro_err:
+ 	return ERR_PTR(ret);
+ }
+ EXPORT_SYMBOL_GPL(lpass_macro_pds_init);
+ 
+ void lpass_macro_pds_exit(struct lpass_macro *pds)
+ {
+-	pm_runtime_put(pds->macro_pd);
+-	dev_pm_domain_detach(pds->macro_pd, false);
+-	pm_runtime_put(pds->dcodec_pd);
+-	dev_pm_domain_detach(pds->dcodec_pd, false);
++	if (pds) {
++		pm_runtime_put(pds->macro_pd);
++		dev_pm_domain_detach(pds->macro_pd, false);
++		pm_runtime_put(pds->dcodec_pd);
++		dev_pm_domain_detach(pds->dcodec_pd, false);
++	}
+ }
+ EXPORT_SYMBOL_GPL(lpass_macro_pds_exit);
+ 
+-- 
+2.7.4
 
