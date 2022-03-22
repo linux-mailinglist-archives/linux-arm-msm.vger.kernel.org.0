@@ -2,97 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7E6B4E3C37
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 11:11:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A1FFF4E3DBE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 12:40:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232782AbiCVKNJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Mar 2022 06:13:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39338 "EHLO
+        id S234304AbiCVLmW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Mar 2022 07:42:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232901AbiCVKNG (ORCPT
+        with ESMTP id S233062AbiCVLmV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Mar 2022 06:13:06 -0400
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D97D3237CC;
-        Tue, 22 Mar 2022 03:11:38 -0700 (PDT)
-Received: by mail-wm1-f50.google.com with SMTP id bg31-20020a05600c3c9f00b00381590dbb33so1091005wmb.3;
-        Tue, 22 Mar 2022 03:11:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=Wfhu1CSV3zn98iQVKtYyekWe4LUUvowP2lTHlaYZsg4=;
-        b=7wEnSyWQ2L3CO8I0z0BL/9OehhtuD5IcdqkkmIGFGdRMndYe2rpJVRJmjsZMiTRtHO
-         ovU8FVkynP+8mQiEFrxgoSOSzmlvynFXHS5ljkQr5ndvkEv3iUd347NkjtO07poSPx6y
-         4gBEfzE7IfVh1g7RttY/XUG24WkbFU7efIsizmJx4v+laAzQBHDSSW1RbZgOov1jvUF0
-         6J6cy43/U8pMV973E4tNaWAgq7RvjedYC2wWda4aRZeK3ESjYAKHxC+mq1V3GjfG/aVn
-         UfzaOkl/j7ytixZ9lmKNncepg3JGKA/oTgKAI2OiyFYBNzpbJmV1DyUV9KgSRAzzfVzS
-         0TpQ==
-X-Gm-Message-State: AOAM530LcH346sIdO88axgxjYzZX8+NQxtWPgjOQYp5VABjdXsHs0gIR
-        UwBvAiISs0jVjfex7NDW5yo=
-X-Google-Smtp-Source: ABdhPJw2eSKQ40kfHH4/obdrsq52+J1jn/jywYsqAYGLcQtmvdukg4qua1/zAOEj2uu5oWGwR02ivQ==
-X-Received: by 2002:a05:600c:1909:b0:389:ee24:caf6 with SMTP id j9-20020a05600c190900b00389ee24caf6mr3157959wmq.158.1647943897408;
-        Tue, 22 Mar 2022 03:11:37 -0700 (PDT)
-Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.googlemail.com with ESMTPSA id v14-20020a7bcb4e000000b0034492fa24c6sm1533196wmj.34.2022.03.22.03.11.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Mar 2022 03:11:36 -0700 (PDT)
-Message-ID: <7f44490d-1b5a-cdf7-280c-d37ec2765450@kernel.org>
-Date:   Tue, 22 Mar 2022 11:11:35 +0100
+        Tue, 22 Mar 2022 07:42:21 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id BC89F5BE68;
+        Tue, 22 Mar 2022 04:40:54 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 842BC1596;
+        Tue, 22 Mar 2022 04:40:54 -0700 (PDT)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 20FF83F66F;
+        Tue, 22 Mar 2022 04:40:53 -0700 (PDT)
+Date:   Tue, 22 Mar 2022 11:40:50 +0000
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     David Collins <quic_collinsd@quicinc.com>
+Cc:     Rob Herring <robh+dt@kernel.org>, Mark Brown <broonie@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        devicetree@vger.kernel.org, Sudeep Holla <sudeep.holla@arm.com>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>
+Subject: Re: [PATCH v2 0/2] regulator: scmi: add support for registering SCMI
+ regulators by name
+Message-ID: <Yjm1wpcMZsZJJCuy@bogus>
+References: <cover.1647909090.git.quic_collinsd@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v6 16/18] dt-bindings: arm: msm: Convert kpss-acc driver
- Documentation to yaml
-Content-Language: en-US
-To:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-References: <20220321231548.14276-1-ansuelsmth@gmail.com>
- <20220321231548.14276-17-ansuelsmth@gmail.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <20220321231548.14276-17-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1647909090.git.quic_collinsd@quicinc.com>
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/03/2022 00:15, Ansuel Smith wrote:
-> Convert kpss-acc driver Documentation to yaml.
-> The original Documentation was wrong all along. Fix it while we are
-> converting it.
-> The example was wrong as kpss-acc-v2 should only expose the regs but we
-> don't have any driver that expose additional clocks. The kpss-acc driver
-> is only specific to v1. For this exact reason, limit all the additional
-> bindings (clocks, clock-names, clock-output-names and #clock-cells) to
-> v1 and also flag that these bindings should NOT be used for v2.
-> 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> ---
->  .../bindings/arm/msm/qcom,kpss-acc.txt        | 49 ----------
->  .../bindings/arm/msm/qcom,kpss-acc.yaml       | 94 +++++++++++++++++++
->  2 files changed, 94 insertions(+), 49 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.txt
->  create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-acc.yaml
-> 
+On Mon, Mar 21, 2022 at 05:47:18PM -0700, David Collins wrote:
+> Add support to register SCMI regulator subnodes based on an SCMI
+> Voltage Domain name specified via the "arm,scmi-domain-name" device
+> tree property.  In doing so, make the "reg" property optional with
+> the constraint that at least one of "reg" or "arm,scmi-domain-name"
+> must be specified.  If both are specified, then both must match the
+> Voltage Domain data exposed by the SCMI platform.
+>
 
+Since the SCMI specification allows discovery of names based on the
+numbering scheme, we haven't added support for the name explicitly.
+However, I have heard/received couple of such feedback to provide
+name based access in private so far. So good to have this discussion
+in public.
 
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+> Name based SCMI regulator registration helps ensure that an SCMI
+> agent doesn't need to be aware of the numbering scheme used for
+> Voltage Domains by the SCMI platform.
 
+While I understand the regulator framework has a good support for name
+based approach you prefer, I see other frameworks like clock rely on
+numbering scheme and I see quite a few qualcomm platforms upstream use
+the number scheme for clocks. So why is that a problem with regulator ?
 
-Best regards,
-Krzysztof
+Another main issue I have is what if the firmware and DT end up with a
+mismatch say with a firmware upgrade or a DT update ? Basically out of sync
+between DT and the SCMI firmware. I see this as duplication of source of
+information and is always cause for the trouble. I don't want to end up with
+the quirks to deal with (totally unnecessary) issues this may create in long
+run.
+
+> It also ensures that the
+> correct Voltage Domain is selected for a given physical regulator.
+
+How is that done magically if I give wrong regulator name ? Sorry the way
+it is presented sounds like adding name fixes something that numerical
+ID alone will always break.
+
+> This cannot be guaranteed with numeric Voltage Domain IDs alone.
+>
+
+If the IDs are correct like the names, it is guaranteed. I see this
+ID vs name is more for some maintenance convenience because somewhere
+something else needs to changes or moved away from existing way of
+maintenance.
+
+That said, if others believe, this is useful, I am happy to consider
+esp. if there are more *real* reasons for doing this.
+
+Please add clock and other subsystem maintainers who also have numbering
+scheme as main mechanism in the upstream so that we get feedback from them
+too.
+
+-- 
+Regards,
+Sudeep
