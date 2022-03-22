@@ -2,212 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95C4A4E45D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 19:15:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 787EA4E4662
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 19:59:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237302AbiCVSRF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Mar 2022 14:17:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47866 "EHLO
+        id S230031AbiCVTBF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Mar 2022 15:01:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232524AbiCVSRF (ORCPT
+        with ESMTP id S229903AbiCVTBE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Mar 2022 14:17:05 -0400
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2307020186;
-        Tue, 22 Mar 2022 11:15:37 -0700 (PDT)
-Received: by mail-ed1-f51.google.com with SMTP id w4so22684786edc.7;
-        Tue, 22 Mar 2022 11:15:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:from
-         :subject:content-language:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=9c+q5A+g63Va4Id/tmRlrr68w+A/h9s1XNixEI8cdPY=;
-        b=MZbbZEzDhqYnzreHZWQHLgQFRRKXCrimZZJ2PVoXf6sZGFi88PAoUvENr0F3uuFFaH
-         BkDnVFYJmrWBE72nAhcFl87Q3BiNONwK3e1YjPiRO10fYOa6YGQbYuqNlV8y5V0uUV0V
-         pIjA1iG9EtHdTP/Yn+eAWGa2cvbpOgZN9MHZW7oZJhdX4agmtNNWUCIMAS53OZb6WWBw
-         8Af/qNNinP+OMwCHqIPlx2EVGbN/JcBa7YtqGa/Erg4O0CEV6cWtTRrta2vO7kzgDtrs
-         QserO+vJ7S85En9VA42Dq84u7tzuQXbJkrkp8GlB+NccDFD2Ycy2Bn1VY8S1nDpsJ7os
-         Tx9w==
-X-Gm-Message-State: AOAM530y44U8T1x39KSnJ8m/B9ie1oRaVl9PKuS6ySXrdi5S3ufiJ2PE
-        zviAgJbVDqb+adRUPfbNgXE=
-X-Google-Smtp-Source: ABdhPJwkbOwQf7TAo9l37B0npu7WSJxyJ0dZLWCi2/outcxSGf3TiBsI3b27baCUKxtDm+/pazgL5A==
-X-Received: by 2002:aa7:c881:0:b0:419:1a3d:4437 with SMTP id p1-20020aa7c881000000b004191a3d4437mr20895274eds.378.1647972935477;
-        Tue, 22 Mar 2022 11:15:35 -0700 (PDT)
-Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.googlemail.com with ESMTPSA id u9-20020a170906124900b006ce88a505a1sm9069026eja.179.2022.03.22.11.15.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Mar 2022 11:15:34 -0700 (PDT)
-Message-ID: <30ec2e32-aa72-bfd5-9513-172b396d9424@kernel.org>
-Date:   Tue, 22 Mar 2022 19:15:33 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: [PATCH v4 18/18] dt-bindings: arm: msm: Convert kpss-gcc driver
- Documentation to yaml
-Content-Language: en-US
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
+        Tue, 22 Mar 2022 15:01:04 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC3B08E190
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Mar 2022 11:59:35 -0700 (PDT)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 2628C3F838;
+        Tue, 22 Mar 2022 19:59:33 +0100 (CET)
+Date:   Tue, 22 Mar 2022 19:59:25 +0100
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-kernel@vger.kernel.org,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-References: <20220321144825.11736-1-ansuelsmth@gmail.com>
- <20220321144825.11736-19-ansuelsmth@gmail.com>
- <a7837388-e36f-9e55-4107-9f7f85571f3b@kernel.org>
- <YjiWY9wxGMtUAcjY@Ansuel-xps.localdomain>
-In-Reply-To: <YjiWY9wxGMtUAcjY@Ansuel-xps.localdomain>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+        Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Subject: Re: [Freedreno] [PATCH v3 12/13] drm/msm/dsi: Add support for DSC
+ configuration
+Message-ID: <20220322185925.nszstmi5silgefd5@SoMainline.org>
+References: <20211116062256.2417186-1-vkoul@kernel.org>
+ <20211116062256.2417186-13-vkoul@kernel.org>
+ <20211211000315.pavmcc7cc73ilb6l@SoMainline.org>
+ <Yg4t/G3tgcmkswHg@matsya>
+ <20220217151142.sbp6wslxbxeohsgf@SoMainline.org>
+ <YjoEgpAZAwM8hWEa@matsya>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YjoEgpAZAwM8hWEa@matsya>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/03/2022 16:14, Ansuel Smith wrote:
-> On Mon, Mar 21, 2022 at 04:41:37PM +0100, Krzysztof Kozlowski wrote:
->> On 21/03/2022 15:48, Ansuel Smith wrote:
->>> Convert kpss-gcc driver Documentation to yaml.
->>>
->>> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
->>> ---
->>>  .../bindings/arm/msm/qcom,kpss-gcc.txt        | 44 ------------
->>>  .../bindings/arm/msm/qcom,kpss-gcc.yaml       | 68 +++++++++++++++++++
->>>  2 files changed, 68 insertions(+), 44 deletions(-)
->>>  delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
->>>  create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
->>>
->>> diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
->>> deleted file mode 100644
->>> index e628758950e1..000000000000
->>> --- a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.txt
->>> +++ /dev/null
->>> @@ -1,44 +0,0 @@
->>> -Krait Processor Sub-system (KPSS) Global Clock Controller (GCC)
->>> -
->>> -PROPERTIES
->>> -
->>> -- compatible:
->>> -	Usage: required
->>> -	Value type: <string>
->>> -	Definition: should be one of the following. The generic compatible
->>> -			"qcom,kpss-gcc" should also be included.
->>> -			"qcom,kpss-gcc-ipq8064", "qcom,kpss-gcc"
->>> -			"qcom,kpss-gcc-apq8064", "qcom,kpss-gcc"
->>> -			"qcom,kpss-gcc-msm8974", "qcom,kpss-gcc"
->>> -			"qcom,kpss-gcc-msm8960", "qcom,kpss-gcc"
->>> -
->>> -- reg:
->>> -	Usage: required
->>> -	Value type: <prop-encoded-array>
->>> -	Definition: base address and size of the register region
->>> -
->>> -- clocks:
->>> -	Usage: required
->>> -	Value type: <prop-encoded-array>
->>> -	Definition: reference to the pll parents.
->>> -
->>> -- clock-names:
->>> -	Usage: required
->>> -	Value type: <stringlist>
->>> -	Definition: must be "pll8_vote", "pxo".
->>> -
->>> -- clock-output-names:
->>> -	Usage: required
->>> -	Value type: <string>
->>> -	Definition: Name of the output clock. Typically acpu_l2_aux indicating
->>> -		    an L2 cache auxiliary clock.
->>> -
->>> -Example:
->>> -
->>> -	l2cc: clock-controller@2011000 {
->>> -		compatible = "qcom,kpss-gcc-ipq8064", "qcom,kpss-gcc";
->>> -		reg = <0x2011000 0x1000>;
->>> -		clocks = <&gcc PLL8_VOTE>, <&gcc PXO_SRC>;
->>> -		clock-names = "pll8_vote", "pxo";
->>> -		clock-output-names = "acpu_l2_aux";
->>> -	};
->>> diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
->>> new file mode 100644
->>> index 000000000000..20ee182eb16f
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/arm/msm/qcom,kpss-gcc.yaml
->>> @@ -0,0 +1,68 @@
->>> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/arm/msm/qcom,kpss-gcc.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Krait Processor Sub-system (KPSS) Global Clock Controller (GCC)
->>> +
->>> +maintainers:
->>> +  - Ansuel Smith <ansuelsmth@gmail.com>
->>> +
->>> +description: |
->>> +  Krait Processor Sub-system (KPSS) Global Clock Controller (GCC). Used
->>> +  to control L2 mux (in the current implementation).
->>> +
->>> +properties:
->>> +  compatible:
->>> +    items:
->>> +      - enum:
->>> +          - qcom,kpss-gcc-ipq8064
->>> +          - qcom,kpss-gcc-apq8064
->>> +          - qcom,kpss-gcc-msm8974
->>> +          - qcom,kpss-gcc-msm8960
->>> +      - const: qcom,kpss-gcc
->>> +
->>> +  reg:
->>> +    maxItems: 1
->>> +
->>> +  clocks:
->>> +    items:
->>> +      - description: phandle to pll8_vote
->>> +      - description: phandle to pxo_board
->>> +
->>> +  clock-names:
->>> +    items:
->>> +      - const: pll8_vote
->>> +      - const: pxo
->>> +
->>> +  clock-output-names:
->>> +    const: acpu_l2_aux
->>> +
->>> +  '#clock-cells':
->>> +    const: 0
->>> +
->>> +required:
->>> +  - compatible
->>> +  - reg
->>> +  - clocks
->>> +  - clock-names
->>> +  - clock-output-names
->>> +  - '#clock-cells'
->>
->> You add here a new required property, so this is not a pure conversion.
->> Please explain in the commit msg why are you doing this. I asked about
->> this in your previous patchset.
->>
->> Best regards,
->> Krzysztof
+On 2022-03-22 22:46:50, Vinod Koul wrote:
+> On 17-02-22, 16:11, Marijn Suijten wrote:
+> > Hi Vinod,
+> > 
+> > Thanks for taking time to go through this review, please find some
+> > clarifications below.
+> > 
+> > On 2022-02-17 16:44:04, Vinod Koul wrote:
+> > > Hi Marijn,
+> > > 
+> > > On 11-12-21, 01:03, Marijn Suijten wrote:
+> > > 
+> > > > > +static int dsi_dsc_update_pic_dim(struct msm_display_dsc_config *dsc,
+> > > > > +				  int pic_width, int pic_height)
+> > > > 
+> > > > This function - adopted from downstream - does not seem to perform a
+> > > > whole lot, especially without the modulo checks against the slice size.
+> > > > Perhaps it can be inlined?
+> > > 
+> > > Most of the code here is :)
+> > > 
+> > > This was split from downstream code to check and update dimension. We
+> > > can inline this, or should we leave that to compiler. I am not a very
+> > > big fan of inlining...
+> > 
+> > It doesn't seem beneficial to code readability to have this function,
+> > which is only called just once and also has the same struct members read
+> > in a `DBG()` directly, abstracted away to a function.  Not really
+> > concerned about generated code/performance FWIW.
+> > 
+> > Also note that the caller isn't checking the `-EINVAL` result...
 > 
-> Sorry I probably missed it. Just to make sure you are referring to
-> #clock-cells?
-> Since this expose a clock, clock-cells is required. Should I put this in
-> a different commit? 
+> I have made this void inline.
 
-Yeah, clock-cells. It's enough to mention it in commit msg.
+Perhaps there is a misunderstanding here: with inlining I am referring
+to the process of transplanting the _function body_ to the only
+call-site, not adding the `inline` keyword nor changing this to `void`.
 
+The checks that make this function return `-EINVAL` seem valid, so the
+caller should check it instead of removing the return?
 
-Best regards,
-Krzysztof
+> > > > 
+> > > > > +{
+> > > > > +	if (!dsc || !pic_width || !pic_height) {
+> > > > > +		pr_err("DSI: invalid input: pic_width: %d pic_height: %d\n", pic_width, pic_height);
+> > > > > +		return -EINVAL;
+> > > > > +	}
+> > > > > +
+> > > > > +	dsc->drm->pic_width = pic_width;
+> > > > > +	dsc->drm->pic_height = pic_height;
+> > > > > +
+> > > > > +	return 0;
+> > > > > +}
+> > > > > +
+> > > > >  static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+> > > > >  {
+> > > > >  	struct drm_display_mode *mode = msm_host->mode;
+> > > > > @@ -940,7 +954,68 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+> > > > >  		hdisplay /= 2;
+> > > > >  	}
+> > > > >  
+> > > > > +	if (msm_host->dsc) {
+> > > > > +		struct msm_display_dsc_config *dsc = msm_host->dsc;
+> > > > > +
+> > > > > +		/* update dsc params with timing params */
+> > > > > +		dsi_dsc_update_pic_dim(dsc, mode->hdisplay, mode->vdisplay);
+> > 
+> > That is, the result code here should be checked (or function inlined).
+> 
+> This function return void, so no point in checking
+
+It isn't returning `void` in the current patch series that my email is
+reviewing, hence explicitly mentioning here that it may have been
+overlooked.
+
+Please only convert this to `void` if you are sure that the clause that
+originally made `dsi_dsc_update_pic_dim()` return `-EINVAL` on invalid
+input is unreachable (if, for example, you moved this check to another
+location, say here in `dsi_timing_setup`).
+
+Alas, it's pretty tricky to reason and pose assumptions about code that
+I cannot see; we should probably continue this discussion in the next
+patch revision depending on how it looks :)
+
+> > [..]
+> > Thanks.  I forgot to mention: there seem to be a lot of similarities
+> > between the video and commandmode computations, can those possibly be
+> > factored out of the if-else to save on duplication and accidental
+> > mismatches like these?
+> 
+> Thanks, this was a good suggestion and am happy to report that I have
+> incorporated this and indeed code looks better
+
+Thank you for applying this and the other comments, glad to hear the
+code is shaping up and looking forward to the next revision!
+
+- Marijn
