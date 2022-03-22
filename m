@@ -2,55 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 41E5E4E3B2A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 09:50:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C711D4E3B9A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 10:18:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231848AbiCVIvj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Mar 2022 04:51:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33522 "EHLO
+        id S232441AbiCVJUO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Mar 2022 05:20:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231875AbiCVIvi (ORCPT
+        with ESMTP id S231328AbiCVJUN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Mar 2022 04:51:38 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DA8F7807F;
-        Tue, 22 Mar 2022 01:50:10 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6685761630;
-        Tue, 22 Mar 2022 08:50:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id CC2B4C340F2;
-        Tue, 22 Mar 2022 08:50:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1647939009;
-        bh=YNySE8elfCgiCbbbMGaPZXw25+0rPhhVNbTJBkCN7Cw=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=KYLkMkZkOwg5E6r09wnSSv6o0o7mFIjdlze2QE8dxBEz3i7sVmxjW6eQZDtkvCQUZ
-         QA7zQrvjsul2BC3Yr4Hf+hQ1d+0viH659Rmo1Hb2yFUd0POhSAVMWSWbXjpnriHDwZ
-         WyudYUw+hB1zLpMGzma0u6p8b+iOdahp6KBG83MVH3Vu9xRhASkQ8jo99RkLZTAJ9B
-         GtktRqq1fVtvXkgmZgHBDGyy2poUKMuK2/3WGGQaCg9HH1FJ21Mwrw9htBTb9pdCCH
-         j7Mxg3y0FzEVAKX9ihIaiUcpZQaSst+oZ4eV4T6GNSXaVrD6Y/bP5H1al388oaxMea
-         s9KGyK1LreIbA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B3705EAC096;
-        Tue, 22 Mar 2022 08:50:09 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Tue, 22 Mar 2022 05:20:13 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D89211164;
+        Tue, 22 Mar 2022 02:18:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1647940724; x=1679476724;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=Rly8mZJAFHEF+4EMimHKbhSMe6go9DJs07iIKO9zYS8=;
+  b=D4cELLvNzg7DUnWmDG1afPqz+myOpjW5fZZEirKWmSxfg7NT447yTy57
+   uhznJD2InsO0TSlRwKGlcnD3SXn1PXlENyOXSappnCJgZSs5+Tq5lkq63
+   YR1P8d+AVy+/ZZHZdJHGXxiYqpDHLPJweWzbPSU9J+vjR+fIbd6mNzK5y
+   c=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 22 Mar 2022 02:18:42 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2022 02:18:41 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 22 Mar 2022 02:18:41 -0700
+Received: from [10.216.35.109] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 22 Mar
+ 2022 02:18:36 -0700
+Subject: Re: [PATCH v11 5/5] usb: dwc3: qcom: Keep power domain on to retain
+ controller status
+To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
+CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        "Matthias Kaehlcke" <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_ppratap@quicinc.com>
+References: <1647932876-23249-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1647932876-23249-6-git-send-email-quic_c_sanm@quicinc.com>
+ <20220322083738.GM23316@hu-pkondeti-hyd.qualcomm.com>
+From:   "Sandeep Maheswaram (Temp)" <quic_c_sanm@quicinc.com>
+Message-ID: <982fdf9c-58a9-9a67-15e9-ff47b6ff1c93@quicinc.com>
+Date:   Tue, 22 Mar 2022 14:48:32 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.2.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH -next] net: wwan: qcom_bam_dmux: fix wrong pointer passed to
- IS_ERR()
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <164793900973.17764.2911446319631283761.git-patchwork-notify@kernel.org>
-Date:   Tue, 22 Mar 2022 08:50:09 +0000
-References: <20220319032450.3288224-1-yangyingliang@huawei.com>
-In-Reply-To: <20220319032450.3288224-1-yangyingliang@huawei.com>
-To:     Yang Yingliang <yangyingliang@huawei.com>
-Cc:     linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, davem@davemloft.net,
-        stephan@gerhold.net
-X-Spam-Status: No, score=-7.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <20220322083738.GM23316@hu-pkondeti-hyd.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -59,27 +76,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
+Hi Pavan,
 
-This patch was applied to netdev/net.git (master)
-by Paolo Abeni <pabeni@redhat.com>:
-
-On Sat, 19 Mar 2022 11:24:50 +0800 you wrote:
-> It should check dmux->tx after calling dma_request_chan().
-> 
-> Fixes: 21a0ffd9b38c ("net: wwan: Add Qualcomm BAM-DMUX WWAN network driver")
-> Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-> ---
->  drivers/net/wwan/qcom_bam_dmux.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-
-Here is the summary with links:
-  - [-next] net: wwan: qcom_bam_dmux: fix wrong pointer passed to IS_ERR()
-    https://git.kernel.org/netdev/net/c/6b3c74550224
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+On 3/22/2022 2:07 PM, Pavan Kondeti wrote:
+> Hi Sandeep,
+>
+> On Tue, Mar 22, 2022 at 12:37:56PM +0530, Sandeep Maheswaram wrote:
+>> Keep the power domain on in order to retail controller status and
+>> to support wakeup from devices.
+>>
+> %s/retail/retain
+>
+> retain the controller status so that remote wakeup / device connect /
+> device disconnect events can be detected during suspend.
+Will correct in next version.
+>
+>> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+>> ---
+>>   drivers/usb/dwc3/dwc3-qcom.c | 6 ++++++
+>>   1 file changed, 6 insertions(+)
+>>
+>> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+>> index 9804a19..35087cf 100644
+>> --- a/drivers/usb/dwc3/dwc3-qcom.c
+>> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+>> @@ -17,6 +17,7 @@
+>>   #include <linux/of_platform.h>
+>>   #include <linux/platform_device.h>
+>>   #include <linux/phy/phy.h>
+>> +#include <linux/pm_domain.h>
+>>   #include <linux/usb/of.h>
+>>   #include <linux/reset.h>
+>>   #include <linux/iopoll.h>
+>> @@ -724,6 +725,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+>>   	struct resource		*res, *parent_res = NULL;
+>>   	int			ret, i;
+>>   	bool			ignore_pipe_clk;
+>> +	struct generic_pm_domain *genpd;
+>>   
+>>   	qcom = devm_kzalloc(&pdev->dev, sizeof(*qcom), GFP_KERNEL);
+>>   	if (!qcom)
+>> @@ -732,6 +734,8 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+>>   	platform_set_drvdata(pdev, qcom);
+>>   	qcom->dev = &pdev->dev;
+>>   
+>> +	genpd = pd_to_genpd(qcom->dev->pm_domain);
+>> +
+>>   	if (has_acpi_companion(dev)) {
+>>   		qcom->acpi_pdata = acpi_device_get_match_data(dev);
+>>   		if (!qcom->acpi_pdata) {
+>> @@ -839,6 +843,8 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+>>   	if (ret)
+>>   		goto interconnect_exit;
+>>   
+>> +	genpd->flags |= GENPD_FLAG_ALWAYS_ON;
+>> +
+>>   	device_init_wakeup(&pdev->dev, 1);
+>>   	qcom->is_suspended = false;
+>>   	pm_runtime_set_active(dev);
+>> -- 
+>> 2.7.4
+>>
+> Thanks,
+> Pavan
