@@ -2,66 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AC5B4E46DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Mar 2022 20:44:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C00F4E4A5C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 02:12:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231853AbiCVTqH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Mar 2022 15:46:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45694 "EHLO
+        id S231250AbiCWBOF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Mar 2022 21:14:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231863AbiCVTqF (ORCPT
+        with ESMTP id S229872AbiCWBOE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Mar 2022 15:46:05 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 442CE6250
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Mar 2022 12:44:37 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id e4so17542742oif.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Mar 2022 12:44:37 -0700 (PDT)
+        Tue, 22 Mar 2022 21:14:04 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB47B5BD1E;
+        Tue, 22 Mar 2022 18:12:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=CAzB2bxWOL1HZEUAkxbUyi+0BLpsE35+TdYIg2Gczsk=;
-        b=LHh2V3u23YaTHVt7ryJ00QpQj2lolnfFeBCDwmVG+Yzvjjm3IUpNCXVFU0LqnQ63fc
-         vRvdkp8BAeEO4KbsPzzrmG1Jo1TwVcSxbI6G2mbH1qkwW8Tmlh/CepuHDWVqFag8m/t4
-         NLRK/xriGvkEwu0bqDWz1HRzvGHgv/D6dcVQs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=CAzB2bxWOL1HZEUAkxbUyi+0BLpsE35+TdYIg2Gczsk=;
-        b=s+CPoD6/pmUEkLKmmHWoBmHZsMI2XmYNC9G16/wuEOAvudYRz93hW0/yKEgm5WaWHj
-         PzL4rDH0KlKQ8JR3wEo0X54/L3wxai62ff2nPhV4M5ELPdxrXUjN7C6hbQRBdovcI9uL
-         EBPZgx+ckNSkuSTZy+rFpvhHoo4ws4S2JSrHzYTofCDd79QKsi5xOihy7B4+ZE+DgwaD
-         20eSJmi25gv1qsFmwq68cA4lRg3J8SIbu7qXxHY7baISr9UTwRm1kvkY/PfdO68STKPn
-         mIAsrTS6maQSDwoxRwA0GzDZSeirG6+HlEqxa66vBbn+8oklkaQHC6k55CPhHHqKVbaD
-         ixkQ==
-X-Gm-Message-State: AOAM53339S4HvlV5abQoJ5BBqL1vwxFIdyNOR74mDj7wrtJ6y6H7Ul5l
-        JAQmZ8P2/EmNaWZxTf1W5S72fZvl56ozSrlpyjAxWw==
-X-Google-Smtp-Source: ABdhPJx648kRoeFIg6qr1MoqlzkLUrFEo36LwaPxWmkijK9tGCkGuyzZbaWIpDuSFZ252ApxbfxaUNN3/mLT4KNpQeg=
-X-Received: by 2002:aca:bd41:0:b0:2ec:ff42:814f with SMTP id
- n62-20020acabd41000000b002ecff42814fmr3002721oif.63.1647978276526; Tue, 22
- Mar 2022 12:44:36 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 22 Mar 2022 20:44:35 +0100
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1647997955; x=1679533955;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=vH7XINcncMSOnzEOcEwKUd+K0fo7VZPLqvqSmYr4Oys=;
+  b=mN/FScv95jnEaU+bo6rUHwXHICIaqkpDTY4qgELADZjxjRQp0tNGyLL8
+   ZeE8SVel5BJ+IpGMQR8uAMeyX+L/1+ErTVDl0bsUA+4q7AzJi/G66rqYQ
+   ga6qz6P481E6f1VfamVinkwSx5TdEfEgd2uZFpN0n6e3gshtlATzOZW9l
+   E=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 22 Mar 2022 18:12:35 -0700
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2022 18:12:34 -0700
+Received: from [10.46.160.247] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 22 Mar
+ 2022 18:12:34 -0700
+Subject: Re: [PATCH v2 0/2] regulator: scmi: add support for registering SCMI
+ regulators by name
+To:     Sudeep Holla <sudeep.holla@arm.com>
+CC:     Rob Herring <robh+dt@kernel.org>, Mark Brown <broonie@kernel.org>,
+        "Liam Girdwood" <lgirdwood@gmail.com>,
+        <devicetree@vger.kernel.org>,
+        "Cristian Marussi" <cristian.marussi@arm.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        "Subbaraman Narayanamurthy" <quic_subbaram@quicinc.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Mike Tipton <quic_mdtipton@quicinc.com>
+References: <cover.1647909090.git.quic_collinsd@quicinc.com>
+ <Yjm1wpcMZsZJJCuy@bogus>
+From:   David Collins <quic_collinsd@quicinc.com>
+Message-ID: <eb03037b-e7c2-ea23-0bdb-27924ed54fa7@quicinc.com>
+Date:   Tue, 22 Mar 2022 18:12:33 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <1647934315-5189-1-git-send-email-quic_vnivarth@quicinc.com>
-References: <1647934315-5189-1-git-send-email-quic_vnivarth@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Tue, 22 Mar 2022 20:44:35 +0100
-Message-ID: <CAE-0n53x2ayF3c9bf7qDm-HEHb9TVivFtrgN9XukAR1L=UP1+A@mail.gmail.com>
-Subject: Re: [PATCH] drivers/tty/serial/qcom-geni-serial: Remove uart
- frequency table. Instead, find suitable frequency with call to clk_round_rate.
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        gregkh@linuxfoundation.org, jirislaby@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-serial@vger.kernel.org
-Cc:     quic_msavaliy@quicinc.com, quic_dkammath@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <Yjm1wpcMZsZJJCuy@bogus>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -70,172 +71,111 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Vijaya Krishna Nivarthi (2022-03-22 00:31:55)
-> [Why]
-> This change is part of resolving feedback for an earlier
-> patch. The UART frequency table is to be replaced with a
+On 3/22/22 4:40 AM, Sudeep Holla wrote:
+> On Mon, Mar 21, 2022 at 05:47:18PM -0700, David Collins wrote:
+>> Name based SCMI regulator registration helps ensure that an SCMI
+>> agent doesn't need to be aware of the numbering scheme used for
+>> Voltage Domains by the SCMI platform.
+> 
+> While I understand the regulator framework has a good support for name
+> based approach youasdf prefer, I see other frameworks like clock rely on
+> numbering scheme and I see quite a few qualcomm platforms upstream use
+> the number scheme for clocks. So why is that a problem with regulator ?
 
-The first sentence is useless. Just say what you're doing and why you're
-doing it.
+I assume that the clocks you are referring to in upstream targets are
+explicitly managed as opposed to mediated by SCMI.  In that case,
+consumer devices in device tree reference particular clocks using a
+tuple consisting of <&phandle_of_clock_controller clock_id>.  The
+clock_id value is in a numbering space that is unique to each clock
+controller.  The ID numbers are #define'd in header files shared by DT
+and the clock drivers.  As far as I know, no Qualcomm targets utilize
+SCMI clocks (either as a platform or agent).
 
-Replace the UART frequency table 'root_freq[]' with logic around
-clk_round_rate() so that SoC details like the available clk frequencies
-can change and this driver still works. This reduces tight coupling
-between this UART driver and the SoC clk driver because we no longer
-have to update the 'root_freq[]' array for new SoCs. Instead the driver
-determines the available frequencies at runtime.
+Supporting clocks in Linux using SCMI has its own set of challenges.
+One is that the there can only be one clk-scmi device on the agent side
+(associated with the platform) and thus all of the clocks it exposes
+must be in the same numbering space.  In the case where the platform is
+another Linux instance, this presents a mismatch as each of its many
+clock controllers has its own numbering space.
 
-> call to clk_round_rate so it would work regardless of
-> what the clk driver supports for the particular SoC.
->
-> [How]
-> Try to find a frequency and divider that exactly matches
-> the required rate. If not found, return the closest
-> possible frequency and set divider to 1.
->
-> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-> ---
->  drivers/tty/serial/qcom_geni_serial.c | 57 ++++++++++++++++++++---------------
->  1 file changed, 33 insertions(+), 24 deletions(-)
->
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index aedc388..5226673 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -149,12 +149,6 @@ static unsigned int qcom_geni_serial_tx_empty(struct uart_port *port);
->  static void qcom_geni_serial_stop_rx(struct uart_port *uport);
->  static void qcom_geni_serial_handle_rx(struct uart_port *uport, bool drop);
->
-> -static const unsigned long root_freq[] = {7372800, 14745600, 19200000, 29491200,
-> -                                       32000000, 48000000, 51200000, 64000000,
-> -                                       80000000, 96000000, 100000000,
-> -                                       102400000, 112000000, 120000000,
-> -                                       128000000};
-> -
->  #define to_dev_port(ptr, member) \
->                 container_of(ptr, struct qcom_geni_serial_port, member)
->
-> @@ -946,32 +940,46 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
->         return 0;
->  }
->
-> -static unsigned long get_clk_cfg(unsigned long clk_freq)
-> -{
-> -       int i;
-> -
-> -       for (i = 0; i < ARRAY_SIZE(root_freq); i++) {
-> -               if (!(root_freq[i] % clk_freq))
-> -                       return root_freq[i];
-> -       }
-> -       return 0;
-> -}
-> -
-> -static unsigned long get_clk_div_rate(unsigned int baud,
-> +static unsigned long get_clk_div_rate(struct clk *clk, unsigned int baud,
->                         unsigned int sampling_rate, unsigned int *clk_div)
->  {
->         unsigned long ser_clk;
->         unsigned long desired_clk;
-> +       unsigned long freq, prev, freq_first;
-> +
-> +       if (!clk) {
+Another problem is that, as with regulators, ID numbers could
+unknowingly get out of sync between the platform and the agent.  Using
+clock domain names for referencing fixes both issues.  This can be
+accomplished by defining wrapper clock controller devices on the agent
+which define all of the clocks and specify their parent by name (which
+matches a clock exposed by the clk-scmi driver).
 
-Please remove this nonsense check. When is clk going to be NULL?
+> Another main issue I have is what if the firmware and DT end up with a
+> mismatch say with a firmware upgrade or a DT update ? Basically out of sync
+> between DT and the SCMI firmware. I see this as duplication of source of
+> information and is always cause for the trouble. I don't want to end up with
+> the quirks to deal with (totally unnecessary) issues this may create in long
+> run.
 
-> +               pr_err("%s: Invalid clock handle\n", __func__);
-> +               return 0;
-> +       }
->
->         desired_clk = baud * sampling_rate;
-> -       ser_clk = get_clk_cfg(desired_clk);
-> -       if (!ser_clk) {
-> -               pr_err("%s: Can't find matching DFS entry for baud %d\n",
-> -                                                               __func__, baud);
-> -               return ser_clk;
-> +       if (!desired_clk) {
-> +               pr_err("%s: Invalid frequency\n", __func__);
-> +               return 0;
->         }
->
-> +       freq_first = 0;
-> +       prev = desired_clk;
-> +       freq = desired_clk - 1;
-> +       do {
-> +               if (freq != (desired_clk - 1))
+This patch series is specifically intended to address the issue of
+firmware (SCMI platform) configurations getting out of sync with DT
+(SCMI agent) configurations where the mapping of regulators to ID
+numbers isn't correctly matched.
 
-Does this ever happen after the first loop? Why not assign prev to freq
-before entering?
+This change allows the existing 'reg' ID number based identification of
+scmi-regulator subnodes to continue without issue.  Systems don't need
+to use the proposed 'arm,scmi-domain-name' property if they'd prefer to
+stay with 'reg' instead.  Also, both can be specified for added
+assurance if desired.
 
-> +                       prev = freq;
-> +
-> +               freq = clk_round_rate(clk, (freq + 1));
+>> It also ensures that the
+>> correct Voltage Domain is selected for a given physical regulator.
+> 
+> How is that done magically if I give wrong regulator name ? Sorry the way
+> it is presented sounds like adding name fixes something that numerical
+> ID alone will always break.
 
-Remove useless parenthesis.
+If an scmi-regulator subnode on the SCMI agent side specifies an
+'arm,scmi-domain-name' property value which does not match the name of
+any voltage domain exposed by the SCMI platform, then that regulator
+will not be registered at runtime.  The only way an scmi-regulator
+subnode gets registered as a Linux regulator device is if there is a
+positive name match.
 
-> +
-> +               if (!freq_first)
-> +                       freq_first = freq;
-> +       } while ((freq % desired_clk) && (freq > 0) && (freq != prev));
+The name string for a regulator has an explicit meaning that clearly
+maps it to a particular physical regulator without the need for any
+additional context.  In a non-trivial system composed of multiple PMICs
+each with multiple regulators of different types, there is no single
+numbering system that intuitively and unambiguously captures the mapping
+of an ID number to a physical regulator.  Such ID numbers have no
+explicit meaning in the context of physical regulator identification.
+Therefore, some other information is required to map the ID numbers to
+physical regulators (e.g. #define constants in a header file).  This
+mapping must then somehow be shared across domains (i.e. by the platform
+and agent) and always change in lock-step.
 
-Remove useless parenthesis.
-	
-In general, take a look at clk_divider_bestdiv() for how to handle this.
-This device only has so many possible divider values so it's better to
-loop through clk_round_rate() taking into account the possible divider
-values instead of adding 1 to the frequency returned from
-clk_round_rate(). According to the defines
+>> This cannot be guaranteed with numeric Voltage Domain IDs alone.
+>>
+> 
+> If the IDs are correct like the names, it is guaranteed. I see this
+> ID vs name is more for some maintenance convenience because somewhere
+> something else needs to changes or moved away from existing way of
+> maintenance.
 
-#define CLK_DIV_MSK                     GENMASK(15, 4)
-#define CLK_DIV_SHFT                    4
+How do you quantify an ID number to physical regulator mapping as
+"correct"?  What happens if the mapping must be changed on the SCMI
+platform side (e.g. a PMIC was added or removed, or the order that
+regulators are listed in needs to change)?  If the SCMI agent is blindly
+identifying regulators solely by ID number, then it has no idea that
+anything has changed on the platform side.  If instead the agent is
+using names for identification of SCMI voltage domains then reordering
+IDs or adding new regulators has no impact.  Removing regulators from
+the platform side would correctly lead to the regulator not registering
+on the agent side.
 
-it has 4095 divider values (I guess a divider of 0 is the same as
-divider of 1?). We should be able to multiply the desired rate by the
-divider and see if it matches the frequency of the 'ser_clk'. If it
-doesn't we can calculate the actual frequency that we can achieve and
-then do our own rounding here to figure out if it is acceptable. I guess
-it needs to be exactly divisible, so if the clk_round_rate() doesn't
-come back with the same frequency we wanted we keep trying bigger
-numbers with bigger dividers. The important thing is that we don't
-exceed the possible divider values by returning from this function
-with an invalid divider.
+> That said, if others believe, this is useful, I am happy to consider
+> esp. if there are more *real* reasons for doing this.
+> 
+> Please add clock and other subsystem maintainers who also have numbering
+> scheme as main mechanism in the upstream so that we get feedback from them
+> too.
 
-I was thinking it may be easier to implement this divider as a clk in
-the clk tree but that looks complicated. Largely that's because the
-'ser_clk' is set with dev_pm_opp_set_rate() and that would be the parent
-of this new divider clk. If OPP core could figure out that the parent
-clk is changing and that's the one with the voltage requirements it
-would work to call dev_pm_opp_set_rate() on the new divider clk (maybe
-call it baud_clk). This logic doesn't exist today though so implementing
-it here in this driver is OK with me for now.
+Done.
 
-> +
-> +       if (!(freq % desired_clk))
-
-Flip these conditions to remove one more set of parenthesis.
-
-> +               ser_clk = freq;
-> +       else
-> +               ser_clk = freq_first;
-> +
->         *clk_div = ser_clk / desired_clk;
-> +       if ((ser_clk) && (!(*clk_div)))
-
-Remove useless parenthesis.
-
-> +               *clk_div = 1;
-> +
->         return ser_clk;
->  }
->
-> @@ -1003,7 +1011,8 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
->         if (ver >= QUP_SE_VERSION_2_5)
->                 sampling_rate /= 2;
->
-> -       clk_rate = get_clk_div_rate(baud, sampling_rate, &clk_div);
-> +       clk_rate = get_clk_div_rate((port->se).clk, baud,
-
-Remove useless parenthesis.
-
-> +               sampling_rate, &clk_div);
->         if (!clk_rate)
->                 goto out_restart_rx;
+Thanks,
+David
