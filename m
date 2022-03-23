@@ -2,178 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B7C84E54EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 16:11:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 76D074E5532
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 16:27:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244902AbiCWPMi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Mar 2022 11:12:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44622 "EHLO
+        id S239791AbiCWP3E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Mar 2022 11:29:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234324AbiCWPMh (ORCPT
+        with ESMTP id S238427AbiCWP3E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Mar 2022 11:12:37 -0400
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2E00E03D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Mar 2022 08:11:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1648048267; x=1679584267;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=Ak6vruZ0s0jfULNjhGFGclYiId7Hr9OSzLl3ubjhZxA=;
-  b=O/Awj4JjyZwoShj4xmR5MQhfm1s06MJeysP6GS65nFQVtAPr8vwP1ZRq
-   KwlVrOpdfxuZoapkv4DfYzGBGRioZzFjz5oANt7JKZz5wyt8KR1awnbTd
-   dhh7Uekm/x2+jflAUBv/njBNRAg1SfBqlrwFBYNT2ropvwQx9oGtPbD4h
-   B8PdXH9uHJDeIMQmWhjgieZC5elGciP19gwEBlX9U55P3QG+6H8RfGek/
-   nbqcrUSMpvkgcNAfbxlwmFoiPg4AzBbCLLL4LHGYwQbJ+WDscimrWNRgS
-   shpVuBNTyOAq2gfQIyhcbDi2GUZ/TMH/2f1ZZaLqLlI0q0Q/l4KxTbnGM
-   w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10295"; a="344565620"
-X-IronPort-AV: E=Sophos;i="5.90,204,1643702400"; 
-   d="scan'208";a="344565620"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Mar 2022 08:11:07 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,204,1643702400"; 
-   d="scan'208";a="692975118"
-Received: from stinkpipe.fi.intel.com (HELO stinkbox) ([10.237.72.61])
-  by fmsmga001.fm.intel.com with SMTP; 23 Mar 2022 08:10:57 -0700
-Received: by stinkbox (sSMTP sendmail emulation); Wed, 23 Mar 2022 17:10:56 +0200
-Date:   Wed, 23 Mar 2022 17:10:56 +0200
-From:   Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Alex Deucher <alexdeucher@gmail.com>,
-        Maling list - DRI developers 
-        <dri-devel@lists.freedesktop.org>,
-        Heiko =?iso-8859-1?Q?St=FCbner?= <heiko@sntech.de>,
-        Emma Anholt <emma@anholt.net>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-        amd-gfx list <amd-gfx@lists.freedesktop.org>,
-        linux-rockchip@lists.infradead.org,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        Aurabindo Pillai <aurabindo.pillai@amd.com>,
-        Chen Feng <puck.chen@hisilicon.com>,
-        Alain Volmat <alain.volmat@foss.st.com>,
-        Harry Wentland <harry.wentland@amd.com>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Jonas Karlman <jonas@kwiboo.se>, Leo Li <sunpeng.li@amd.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Nikola Cornij <nikola.cornij@amd.com>,
-        John Stultz <john.stultz@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Jyri Sarha <jyri.sarha@iki.fi>,
-        Sandy Huang <hjc@rock-chips.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Tian Tao <tiantao6@hisilicon.com>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-Subject: Re: [PATCH 00/22] drm: Review of mode copies
-Message-ID: <Yjs4gIBuftRyLElE@intel.com>
-References: <20220218100403.7028-1-ville.syrjala@linux.intel.com>
- <Yi+9n0eGn3rNKb4X@intel.com>
- <CADnq5_NS07TPBWSnETRhjzqtX_oUuCu86ewurFT3MJO=PcLAuQ@mail.gmail.com>
- <Yjj+RSVBWk6UO2C7@intel.com>
- <e9937a37-70c8-cc6f-15f2-1dbbb7f1bfba@linaro.org>
+        Wed, 23 Mar 2022 11:29:04 -0400
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAB436E57C;
+        Wed, 23 Mar 2022 08:27:32 -0700 (PDT)
+Received: by mail-oi1-f178.google.com with SMTP id e4so1986180oif.2;
+        Wed, 23 Mar 2022 08:27:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=OiYCf95OWnPHrVVcTil3o0lRfEOuLqIN4kvzsdZ2vik=;
+        b=TnJeNwpLWNzEJeN4I9gJGnkiQQe7d6xrKAtG9CCTK8ArlTY5Rosou4jVSS9XQ5wEl8
+         2skd+VK1l++zZ+y5emIzxi6UdXCejIY07uOtIzMYyFHuJnJJ/HpGx2rqRHr2uEzOrNiU
+         eD5TUpnLTpLGzt/S4iAMtfbhBcJFCrOtltm8UUywp26i/wB67N+hcDB6E7GdlgTQIFji
+         9MIzXyTUUvZlEnRjc47jdgE+YNooUlkdBp6V72w4kYmWpt/pTSHIp18SuVJar/xbHJ40
+         xr9r1Z+scrV7ahwBQVHFp0oa3IecOfYX/Q1W1GbrcYuJA0NtqULyo/dafr5YXtl4p0ec
+         KYlg==
+X-Gm-Message-State: AOAM5304G8XD5BvCTEFkUpPLw8maWIx9iFWRcwNhF840KY10xbw/AIOM
+        4ZqZ4YAp3IEgWceEQFblsSERl1XYSA==
+X-Google-Smtp-Source: ABdhPJybrZv5UTpvpd5w0OCO/sjEIBA8GtcwyYtDEnIypXsi04z3xMY5BwbDKYJSvJpxjrYZ7eJPzQ==
+X-Received: by 2002:a05:6808:2189:b0:2da:b59:3acb with SMTP id be9-20020a056808218900b002da0b593acbmr4953810oib.112.1648049252195;
+        Wed, 23 Mar 2022 08:27:32 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id b188-20020aca34c5000000b002da579c994dsm60536oia.31.2022.03.23.08.27.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Mar 2022 08:27:30 -0700 (PDT)
+Received: (nullmailer pid 4133173 invoked by uid 1000);
+        Wed, 23 Mar 2022 15:27:29 -0000
+Date:   Wed, 23 Mar 2022 10:27:29 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCH v6 15/18] dt-bindings: clock: Add L2 clocks to
+ qcom,krait-cc Documentation
+Message-ID: <Yjs8YdAbytYhhnb4@robh.at.kernel.org>
+References: <20220321231548.14276-1-ansuelsmth@gmail.com>
+ <20220321231548.14276-16-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <e9937a37-70c8-cc6f-15f2-1dbbb7f1bfba@linaro.org>
-X-Patchwork-Hint: comment
-X-Spam-Status: No, score=-5.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20220321231548.14276-16-ansuelsmth@gmail.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 23, 2022 at 01:39:44PM +0300, Dmitry Baryshkov wrote:
-> On 22/03/2022 01:37, Ville Syrjälä wrote:
-> > On Tue, Mar 15, 2022 at 02:52:38PM -0400, Alex Deucher wrote:
-> >> On Mon, Mar 14, 2022 at 6:12 PM Ville Syrjälä
-> >> <ville.syrjala@linux.intel.com> wrote:
-> >>>
-> >>> On Fri, Feb 18, 2022 at 12:03:41PM +0200, Ville Syrjala wrote:
-> >>>>    drm: Add drm_mode_init()
-> >>>>    drm/bridge: Use drm_mode_copy()
-> >>>>    drm/imx: Use drm_mode_duplicate()
-> >>>>    drm/panel: Use drm_mode_duplicate()
-> >>>>    drm/vc4: Use drm_mode_copy()
-> >>> These have been pushed to drm-misc-next.
-> >>>
-> >>>>    drm/amdgpu: Remove pointless on stack mode copies
-> >>>>    drm/amdgpu: Use drm_mode_init() for on-stack modes
-> >>>>    drm/amdgpu: Use drm_mode_copy()
-> >>> amdgpu ones are reviewed, but I'll leave them for the
-> >>> AMD folks to push to whichever tree they prefer.
-> >>
-> >> I pulled patches 2, 4, 5 into my tree.
-> > 
-> > Thanks.
-> > 
-> >> For 3, I'm happy to have it
-> >> land via drm-misc with the rest of the mode_init changes if you'd
-> >> prefer.
-> > 
-> > Either way works for me. I don't yet have reviews yet for
-> > the other drivers, so I'll proably hold off for a bit more
-> > at least. And the i915 patch I'll be merging via drm-intel.
-> > 
-> >>>>    drm/radeon: Use drm_mode_copy()
-> >>>>    drm/gma500: Use drm_mode_copy()
-> >>>>    drm/tilcdc: Use drm_mode_copy()
-> >>>>    drm/i915: Use drm_mode_copy()
-> > 
-> > Those are now all in.
-> > 
-> > Which leaves us with these stragglers:
-> >>>>    drm/hisilicon: Use drm_mode_init() for on-stack modes
+On Tue, 22 Mar 2022 00:15:45 +0100, Ansuel Smith wrote:
+> Krait-cc qcom driver provide also L2 clocks and require the acpu_l2_aux
+> and the hfpll_l2 clock to be provided. Add these missing clocks to the
+> Documentation. The driver keep support for both old (it did already used
+> these clocks and we keep the same naming scheme) and this new
+> implementation and should prevent any regression by this fixup.
 > 
-> >>>>    drm/msm: Nuke weird on stack mode copy
-> >>>>    drm/msm: Use drm_mode_init() for on-stack modes
-> >>>>    drm/msm: Use drm_mode_copy()
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+> ---
+>  .../devicetree/bindings/clock/qcom,krait-cc.yaml       | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
 > 
-> These three patches went beneath my radar for some reason.
-> 
-> I have just sent a replacement for the first patch ([1]). Other two 
-> patches can be pulled in msm/msm-next (or msm/msm-fixes) during the next 
-> development cycle if that works for you.
 
-That'll do fine for me. Thanks.
-
-> 
-> [1] https://patchwork.freedesktop.org/series/101682/
-> 
-> >>>>    drm/mtk: Use drm_mode_init() for on-stack modes
-> >>>>    drm/rockchip: Use drm_mode_copy()
-> >>>>    drm/sti: Use drm_mode_copy()
-> >>>>    drm: Use drm_mode_init() for on-stack modes
-> >>>>    drm: Use drm_mode_copy()
-> > 
-> 
-> 
-> -- 
-> With best wishes
-> Dmitry
-
--- 
-Ville Syrjälä
-Intel
+Reviewed-by: Rob Herring <robh@kernel.org>
