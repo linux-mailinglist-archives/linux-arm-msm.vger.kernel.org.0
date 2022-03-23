@@ -2,111 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 180084E59D7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 21:31:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 937864E59F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 21:37:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243236AbiCWUcf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Mar 2022 16:32:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54524 "EHLO
+        id S240592AbiCWUiu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Mar 2022 16:38:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344575AbiCWUce (ORCPT
+        with ESMTP id S240098AbiCWUit (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Mar 2022 16:32:34 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03DE48C7E3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Mar 2022 13:31:05 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id q11so2652696pln.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Mar 2022 13:31:04 -0700 (PDT)
+        Wed, 23 Mar 2022 16:38:49 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 755EF2A2;
+        Wed, 23 Mar 2022 13:37:19 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id w25so3258010edi.11;
+        Wed, 23 Mar 2022 13:37:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=8oFqq3OAhLNYPmEUiRfaWEgxs162u2Kk2WATsf8DjFk=;
-        b=yfFgEujSkMrvB7YkpTzShQMqW9DQ8ZztfhEKHxVi83cgbvHnbrolIbRgTLR7KMxOfn
-         9YV5bkeeTjzlAr2Qq6Y1Z5i4ADZUugUDosI9tIbgZlfiak/gLoXdW8SGrMhYNZ9ifN7h
-         MxGmlJYpAjzH3fe/rnxaw5+lGlfL1oBzGijj99NLf66z1NHaQkDzvW7WZn2+qzZ7WAhw
-         FmTnj/l5KQrB2WA5dwr3qv27AEUYV+Ai0Vd7qlehDx5dJrY8n3fp3c6esRVWM2GW9uYM
-         g8zaGc6EQqLj/7T1fvJ08zTjASFOt9Jgwbvpj5Zgu6B1JgkXZ3xIzOgoh//wgzxSCysh
-         YSSw==
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=m+xd1tDwGKjGGm1zRlDPZw7g8jsg6c2oSOsHqvT059o=;
+        b=ogb23Z8o0r/ojubfh+pyigrMuy6eys5nZmQvx5floY4wNh05nWnIkD8uqS5hfZnhzh
+         SL43Mrma5nRnEzoQDsKutyWjTdmtYq3brVNebVBpbdYMtrJDwIaOVYNnkJFiYHtB/Bwt
+         5KIclFGoYdtuicHtIqzBm+x+zkM8ENocbNhwnBaLQ6cOEYe9YBedEXmlJSfpVEmwEhGx
+         Z9I9qzUa79xjd86uX3V3/vRhHkGO0SjKW0KokMDt3Xp+lh5bU2HkCmdfh34qGkMtvSB3
+         UjZ0zww6IAFfcQugTEabS886lfbKvvhpa3nx6O3eTZJRoWNMvZLJmeP1+GdQvO7ip92s
+         LiAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=8oFqq3OAhLNYPmEUiRfaWEgxs162u2Kk2WATsf8DjFk=;
-        b=bVgX0KZo2EGdc9q0bf8zIA5kZoaAkesMRjG2oHKaJA8xJpiWLqT2LLK72UmEgt2ycK
-         aMCemsdIFqLOzI50l0Buhm7ezVLYm1mUBrVTjHt1tejSiYMMUFCR4YYXpfP/LJRmFfNB
-         180B9wZ4whX+IMYgk2abw78LeugkYb3vRs4Q/dn0Z6IXcZMVkNusNPNsL7sTop7EmpXG
-         mkOFi9BznEEAHqToxeNEzle1SnlTZrgGPMY2krU3sjqVhJSsimcZsGj7BfIUIvw9wS9t
-         ayF4UuciCwcANlGOoBepX4nfzwNDn4FaU651sNZLRBsD7pA1eCKznG3oN5gr8xvov/y0
-         WqHA==
-X-Gm-Message-State: AOAM5332rOHElRrzWd+msc3KuknC/SGsA/Z+QNDTKfzTSGc3UrhN1ece
-        FmrQiy54mifPlCOJq2gNeo8+bTQ7V17xQA==
-X-Google-Smtp-Source: ABdhPJz4bqT4rTQKROWpsRfJ8/z0g4TFpQqPDv/8rW47kC7Hm9iL/Mo81XGivORNIzOkprgJCskZOw==
-X-Received: by 2002:a17:902:7405:b0:154:68e6:9bdb with SMTP id g5-20020a170902740500b0015468e69bdbmr1879887pll.15.1648067464295;
-        Wed, 23 Mar 2022 13:31:04 -0700 (PDT)
-Received: from localhost.localdomain ([223.233.78.42])
-        by smtp.gmail.com with ESMTPSA id n3-20020a056a0007c300b004fa3e9f59cdsm718476pfu.39.2022.03.23.13.31.00
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
+         :references:mime-version:content-disposition:in-reply-to;
+        bh=m+xd1tDwGKjGGm1zRlDPZw7g8jsg6c2oSOsHqvT059o=;
+        b=X/Roy/xXY4/7BLEDQgyhzCETJ12DOLN9iEvS+A73qGHImFS9ep08OYI4slaM8Aqes2
+         Ary1amzOemr31ZOZxL5bYNLuKKUPEiY8xHTqc/ZhObzLdGonEPmsvOahVAOvGxMzn/cy
+         pJ8L4y1W8nGMM3IQXu0pqZzi1YabLzC97eFstBffG7zC9OkIev3YTQF/r+6A4dTjFD9H
+         hK1NKmffeZqVZcEGgaEY2wlX8YBQ4KvsSm5y2z04eLCcImFqp7Bq+R9C5gK+SW5GwmCV
+         wRLPNLk3gI7M3IBpNNQKeaOkLoKTzpzwjE0lAg7439j41xljVuNP6KhkS3YLHjZvDymD
+         u8qA==
+X-Gm-Message-State: AOAM532DaNk9raKyqHaQFuzKQZ4Snrq2j+iYETJ/UDqnPJrxoS4R2MPT
+        S5SxpBGn3hvU8KKVPF+2wD6wvpD/dmTbhQ==
+X-Google-Smtp-Source: ABdhPJw4LDxBQy/6K4rrDRgH6/barx60YfE+K+Lrj0R3Vp9IsIRY+wfsg0LYJ6oLeBYbFCvC5pIyQg==
+X-Received: by 2002:aa7:cf0d:0:b0:419:362:7ebf with SMTP id a13-20020aa7cf0d000000b0041903627ebfmr2507685edy.225.1648067837909;
+        Wed, 23 Mar 2022 13:37:17 -0700 (PDT)
+Received: from pevik (gw1.ms-free.net. [185.243.124.10])
+        by smtp.gmail.com with ESMTPSA id b3-20020aa7d483000000b00419209d4c85sm422261edr.66.2022.03.23.13.37.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Mar 2022 13:31:03 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh+dt@kernel.org,
-        bjorn.andersson@linaro.org, Rob Herring <robh@kernel.org>
-Subject: [PATCH v4 1/1] arm64: dts: qcom: sm8150: Add ufs power-domain entries
-Date:   Thu, 24 Mar 2022 02:00:52 +0530
-Message-Id: <20220323203052.1124683-1-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.35.1
+        Wed, 23 Mar 2022 13:37:17 -0700 (PDT)
+Date:   Wed, 23 Mar 2022 21:37:13 +0100
+From:   Petr Vorel <petr.vorel@gmail.com>
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bastian =?iso-8859-2?Q?K=F6cher?= <mail@kchr.de>,
+        Jeremy McNicoll <jeremymc@redhat.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: gcc-msm8994: Fix gpll4 width
+Message-ID: <YjuE+cgGXCLihPIa@pevik>
+Reply-To: Petr Vorel <petr.vorel@gmail.com>
+References: <20220319174940.341137-1-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220319174940.341137-1-konrad.dybcio@somainline.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add power-domain entries for UFS phy node in sm8150 dts.
+Hi Konrad,
 
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Rob Herring <robh@kernel.org>
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
-Changes since v3:
-----------------
-- v3 can be found here: https://lore.kernel.org/linux-arm-msm/20220303082140.240745-1-bhupesh.sharma@linaro.org/
-- Dropped [PATCH 1/2] from v3, which is already in linux-next now.
-- Addressed Dmitry's and Bjorn's review comments.
-- This patch is rebase on linux-next.
+Reviewed-by: Petr Vorel <petr.vorel@gmail.com>
 
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 6012322a5984..eed601e70229 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -1637,6 +1637,7 @@ ufs_mem_hc: ufshc@1d84000 {
- 			phy-names = "ufsphy";
- 			lanes-per-direction = <2>;
- 			#reset-cells = <1>;
-+
- 			resets = <&gcc GCC_UFS_PHY_BCR>;
- 			reset-names = "rst";
- 
-@@ -1687,6 +1688,8 @@ ufs_mem_phy: phy@1d87000 {
- 			clocks = <&gcc GCC_UFS_MEM_CLKREF_CLK>,
- 				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
- 
-+			power-domains = <&gcc UFS_PHY_GDSC>;
-+			power-domain-names = "ufs_phy_gdsc";
- 			resets = <&ufs_mem_hc 0>;
- 			reset-names = "ufsphy";
- 			status = "disabled";
--- 
-2.35.1
+> The gpll4 postdiv is actually a div4, so make sure that Linux is aware of
+> this.
 
+> This fixes the following error messages:
+
+> [    0.804491] mmc1: Card appears overclocked; req 200000000 Hz, actual 343999999 Hz
+> [    0.805057] mmc1: Card appears overclocked; req 400000000 Hz, actual 687999999 Hz
+yes, this works on my patchset [1] even without these workarounds (I'll submit
+v5 without it)
+
++	assigned-clocks = <&gcc GPLL4_EARLY>;
++	assigned-clock-rates = <384000000>;
+
+Tested-by: Petr Vorel <petr.vorel@gmail.com>
+
+Kind regards,
+Petr
+
+[1] https://lore.kernel.org/linux-arm-msm/20220218203710.895-1-petr.vorel@gmail.com/
+
+> Fixes: aec89f78cf01 ("clk: qcom: Add support for msm8994 global clock controller")
+
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> ---
+> Cc: Petr Vorel <petr.vorel@gmail.com>
+
+>  drivers/clk/qcom/gcc-msm8994.c | 1 +
+>  1 file changed, 1 insertion(+)
+
+> diff --git a/drivers/clk/qcom/gcc-msm8994.c b/drivers/clk/qcom/gcc-msm8994.c
+> index f09499999eb3..6b702cdacbf2 100644
+> --- a/drivers/clk/qcom/gcc-msm8994.c
+> +++ b/drivers/clk/qcom/gcc-msm8994.c
+> @@ -77,6 +77,7 @@ static struct clk_alpha_pll gpll4_early = {
+
+>  static struct clk_alpha_pll_postdiv gpll4 = {
+>  	.offset = 0x1dc0,
+> +	.width = 4,
+>  	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
+>  	.clkr.hw.init = &(struct clk_init_data){
+>  		.name = "gpll4",
