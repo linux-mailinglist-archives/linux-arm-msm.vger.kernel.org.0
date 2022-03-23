@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B1F14E5A7B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 22:12:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C04FC4E5A9C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 22:25:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240936AbiCWVNr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Mar 2022 17:13:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50952 "EHLO
+        id S241089AbiCWV0r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Mar 2022 17:26:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240625AbiCWVNr (ORCPT
+        with ESMTP id S241085AbiCWV0q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Mar 2022 17:13:47 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B79638797;
-        Wed, 23 Mar 2022 14:12:17 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id g20so3364027edw.6;
-        Wed, 23 Mar 2022 14:12:17 -0700 (PDT)
+        Wed, 23 Mar 2022 17:26:46 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CDE113CCC;
+        Wed, 23 Mar 2022 14:25:16 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id pv16so5512236ejb.0;
+        Wed, 23 Mar 2022 14:25:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
          :content-disposition:in-reply-to;
-        bh=X2+OcNrbzDp5B4Ve0adV2puYvqZ6ezMUh9fPKK/Tp1w=;
-        b=LD9/G5VmePzcUqAWYbnmsVNgSgzMV5SgftIdlZyyEJcZRmjm0pXfqi3JOxpHh3VhjP
-         8S/3AIFtiND+nN+j+yXGY9qOpaXHvTCn4z6jsp59skJBthyAr5vYVwoXSyZEST2MeRRo
-         RhSolSH0wPzG0F3NDU0JC8IEdiv0X10qUeA0Cgn5F2Fbifl3aFnpEZOIyOVCnEkv6puX
-         hY8AjFvyYI9xERaLIZwK8t2eU0leTjiILn0nR9Go+2ZvM/SP3LR3jmfCl2j11AJ7ZhWu
-         F1K968YFRkNpVRPWqnCvjwDRv7PMXyrvZIgVA1rns+6wmwayzqiIrFzSb53auqNHr/UN
-         qLDg==
+        bh=vysV2YUxUhlwVd6KhPoL0mZSMTmNq5rE3h8xE9VrJx8=;
+        b=PtPwjommumuKRrAvDNWWBgum++vMOpb0uWE806D+fInZ45L5E/NJ9NyFzFl2g2MRWp
+         NTUwDXLUNCmW9F9V1lLFtHtdGzUxc/Aq6/j4pJSIYNzRUiEGUZnrX6zZEwFDN4bimt88
+         FR9Lssy5lLk0/a1O4jgG4MTg81Q5gnxXNnQJVnUe8Zdpbm0XHwURNoPp4pY4Lo32K1kM
+         FPz4sr1TxjtV4lRX+yj5S8WnV8JN4CJQJ6DuVHzcM5WDtMikxSxTMlfFUBtHFJU7+XV/
+         bRcP42q+GfMms+7ZmvTkae3LSHRSblz8Qd2FSZh5ZN7qfpqg3H8SbiKx8myY9Sgvm4hP
+         baWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
          :references:mime-version:content-disposition:in-reply-to;
-        bh=X2+OcNrbzDp5B4Ve0adV2puYvqZ6ezMUh9fPKK/Tp1w=;
-        b=p5niDT3ced8H0qZRFTnUMzrnvB7e4Rcr8du0LnzdJAeWMGyZQH3/ncgpzey0+klMeP
-         hCtLd70Ky0pt1v5J2DfI82N4UWFerLthTXq/NNJKigRJCWTK+pz8l8L9bNPolA6DSegp
-         lxFhqDqHdmH204Z/szzf42lftQpiYZqTC/r4zdbCacn6v1U2oaQEiID4oyKJOnX43oKE
-         CONTfwyQ+qW4q5nbwCM5NgWyO5JxvQSSowj7RDPX67x07t3m6NrMsez2ASBMJQo1rMNk
-         dtAjAijNPtPTYx/lAZJlcHhSSC183phcVcoRBxY6RturDb/+ZDlANglgJcs0pjtcdxpl
-         EaKw==
-X-Gm-Message-State: AOAM533XfSSXxiKbmGGDISTwxbzea9cHeN2G9hI+nXksufxQfJ/BIb5c
-        r6FllrxfWp6qKk+4kea4x5kyHgMQzvVJkQ==
-X-Google-Smtp-Source: ABdhPJyCPP6sx07lgRLKmsVw1l60qOOeDEgj6/C4mFFS/Fh6wDZpDxuoqsBvpdgmxt6vbIewieUL0g==
-X-Received: by 2002:a05:6402:438d:b0:419:4550:d52b with SMTP id o13-20020a056402438d00b004194550d52bmr2674112edc.83.1648069935712;
-        Wed, 23 Mar 2022 14:12:15 -0700 (PDT)
+        bh=vysV2YUxUhlwVd6KhPoL0mZSMTmNq5rE3h8xE9VrJx8=;
+        b=WkOKKjbgaPusCt+DimFWTlj85j6BbXwULMx6zjosWtqeinOiK7kpEyaKgxuodinU9Q
+         GtU1pXa556a91uIwjRbFqLDVlE2DlFodAaxPPCAINsj/jPwS6VG0DB7AkasEQ8XR+2l3
+         SJZ2oDjcLwJOu9ara9LJJQoAaDeBIp8/3G+VaKPkNYl63RFKZddB2twcnYsuSbcu8C8P
+         NzkcB8XTV4h6wzcnxaxPsHCHo0ZEdgr0izirWLx0+T2m8qty6DAo6cjdAIA3SBCfCqhq
+         qmzg4363wY7bjV7dFRsK2SgqWRG5g5FRG2864nSwo8lyyv8olVNS3t8qD5NYevUkBb3D
+         E4eQ==
+X-Gm-Message-State: AOAM531UZJVJiVR/FWV+G+Lij1K/SxT3l/Fg068i6gIddt2wZc6iM8Sa
+        nSzKs4IkDj/kJPIvOirjGDSv0zCi7wM/Gw==
+X-Google-Smtp-Source: ABdhPJwgfyQqYCEPw63TtPi+2J3FKbcZmNiqLGPwcV4bZp0KThU5s1y2CY7v1zeV7VqpCCsJaRIQtA==
+X-Received: by 2002:a17:906:dc8f:b0:6e0:5ce7:d80e with SMTP id cs15-20020a170906dc8f00b006e05ce7d80emr2228061ejc.435.1648070714984;
+        Wed, 23 Mar 2022 14:25:14 -0700 (PDT)
 Received: from pevik (gw1.ms-free.net. [185.243.124.10])
-        by smtp.gmail.com with ESMTPSA id e26-20020a50ec9a000000b004193fe50151sm450563edr.9.2022.03.23.14.12.14
+        by smtp.gmail.com with ESMTPSA id d23-20020aa7d5d7000000b00418f7b2f1dbsm466065eds.71.2022.03.23.14.25.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Mar 2022 14:12:15 -0700 (PDT)
-Date:   Wed, 23 Mar 2022 22:12:12 +0100
+        Wed, 23 Mar 2022 14:25:14 -0700 (PDT)
+Date:   Wed, 23 Mar 2022 22:25:11 +0100
 From:   Petr Vorel <petr.vorel@gmail.com>
 To:     Konrad Dybcio <konrad.dybcio@somainline.org>
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
@@ -59,16 +59,15 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 06/15] arm64: dts: qcom: msm8992: Use the correct GCC
- compatible
-Message-ID: <YjuNLIv0frA6WMSE@pevik>
+Subject: Re: [PATCH 15/15] arm64: dts: qcom: msm8994: Add mmc aliases
+Message-ID: <YjuQNx/zEfq5/9JR@pevik>
 Reply-To: Petr Vorel <petr.vorel@gmail.com>
 References: <20220319174645.340379-1-konrad.dybcio@somainline.org>
- <20220319174645.340379-7-konrad.dybcio@somainline.org>
+ <20220319174645.340379-16-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220319174645.340379-7-konrad.dybcio@somainline.org>
+In-Reply-To: <20220319174645.340379-16-konrad.dybcio@somainline.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -82,6 +81,11 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 Hi Konrad, all,
 
 Reviewed-by: Petr Vorel <petr.vorel@gmail.com>
+
+BTW Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+and real code for other SoCs uses sdhc_1 and sdhc_2.
+
+I suppose sdhc[12] (without underscore is the preferred variant.
 
 Kind regards,
 Petr
