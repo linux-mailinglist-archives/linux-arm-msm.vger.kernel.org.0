@@ -2,94 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A33E04E5A2D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 21:50:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A54444E5A4D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 22:02:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344801AbiCWUwX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Mar 2022 16:52:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53108 "EHLO
+        id S240829AbiCWVEG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Mar 2022 17:04:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240768AbiCWUwW (ORCPT
+        with ESMTP id S238959AbiCWVEF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Mar 2022 16:52:22 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02933710C6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Mar 2022 13:50:49 -0700 (PDT)
+        Wed, 23 Mar 2022 17:04:05 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E26F7580FA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Mar 2022 14:02:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1648068650; x=1679604650;
+  t=1648069355; x=1679605355;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=Le8vCkALSx2+L8taW7J6S8H+GoppDn/GSqrf/tx19rg=;
-  b=X+G4KiNGpsm7LYgTAj9SRlCx6D+fAOmmIq6qN7rDgzT7O6I5KOt0Qpts
-   WXNb/5KTwx/iXf5StngSb5LBYW9Lhudtio2MNhI1LB40g2tAblV84fm4r
-   Hj5/kIG0tc8RU+ey6FgqgyFlYyquKLbv8U2saB0EnT0oLvl+qTTn4Nl/F
-   I=;
+  bh=wYy+UKVRUiZUUpyNwqERacFeo/23Mh9A/vuoVECNjdc=;
+  b=TvD9pcSexWRhRUpplhq/BCKV128vJA6OFzefH+fR34dPs0sVIKgpSn4J
+   TrmLbNgSZko8bQkTEApbAvRhT13/RudA8GC2fUM+5yE6YkBjomT9zxnsZ
+   ZN/DTbA5GDOWonqv2HRsY/sXg5Di7xn/BpwiJBnT1zDQ8yDtcJCv8ACgx
+   Y=;
 Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 23 Mar 2022 13:50:49 -0700
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 23 Mar 2022 14:02:35 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Mar 2022 13:50:48 -0700
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Mar 2022 14:02:35 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 23 Mar 2022 13:50:48 -0700
-Received: from [10.110.52.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ 15.2.986.22; Wed, 23 Mar 2022 14:02:34 -0700
+Received: from [10.110.28.235] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 23 Mar
- 2022 13:50:46 -0700
-Message-ID: <c9899a30-df55-06b1-c99d-66ccc9fa3edf@quicinc.com>
-Date:   Wed, 23 Mar 2022 13:50:46 -0700
+ 2022 14:02:33 -0700
+Message-ID: <b19ea2c3-9283-3dd0-98d0-d00d59dacacc@quicinc.com>
+Date:   Wed, 23 Mar 2022 14:02:33 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 00/22] drm: Review of mode copies
+ Thunderbird/91.7.0
+Subject: Re: [PATCH 1/3] drm/msm/dp: drop dp_mode argument from
+ dp_panel_get_modes()
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        "Alex Deucher" <alexdeucher@gmail.com>
-CC:     Emma Anholt <emma@anholt.net>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        Maling list - DRI developers 
-        <dri-devel@lists.freedesktop.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-        amd-gfx list <amd-gfx@lists.freedesktop.org>,
-        <linux-rockchip@lists.infradead.org>,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        Aurabindo Pillai <aurabindo.pillai@amd.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Alain Volmat <alain.volmat@foss.st.com>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        "Jonas Karlman" <jonas@kwiboo.se>, Leo Li <sunpeng.li@amd.com>,
-        Chen Feng <puck.chen@hisilicon.com>,
-        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        Nikola Cornij <nikola.cornij@amd.com>,
-        Sean Paul <sean@poorly.run>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sandy Huang <hjc@rock-chips.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Tian Tao <tiantao6@hisilicon.com>,
-        Jyri Sarha <jyri.sarha@iki.fi>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-References: <20220218100403.7028-1-ville.syrjala@linux.intel.com>
- <Yi+9n0eGn3rNKb4X@intel.com>
- <CADnq5_NS07TPBWSnETRhjzqtX_oUuCu86ewurFT3MJO=PcLAuQ@mail.gmail.com>
- <Yjj+RSVBWk6UO2C7@intel.com>
- <e9937a37-70c8-cc6f-15f2-1dbbb7f1bfba@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <e9937a37-70c8-cc6f-15f2-1dbbb7f1bfba@linaro.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Sankeerth Billakanti" <quic_sbillaka@quicinc.com>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>,
+        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
+References: <20220323103546.1772673-1-dmitry.baryshkov@linaro.org>
+ <20220323103546.1772673-2-dmitry.baryshkov@linaro.org>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <20220323103546.1772673-2-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
@@ -102,76 +77,55 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 3/23/2022 3:39 AM, Dmitry Baryshkov wrote:
-> On 22/03/2022 01:37, Ville Syrjälä wrote:
->> On Tue, Mar 15, 2022 at 02:52:38PM -0400, Alex Deucher wrote:
->>> On Mon, Mar 14, 2022 at 6:12 PM Ville Syrjälä
->>> <ville.syrjala@linux.intel.com> wrote:
->>>>
->>>> On Fri, Feb 18, 2022 at 12:03:41PM +0200, Ville Syrjala wrote:
->>>>>    drm: Add drm_mode_init()
->>>>>    drm/bridge: Use drm_mode_copy()
->>>>>    drm/imx: Use drm_mode_duplicate()
->>>>>    drm/panel: Use drm_mode_duplicate()
->>>>>    drm/vc4: Use drm_mode_copy()
->>>> These have been pushed to drm-misc-next.
->>>>
->>>>>    drm/amdgpu: Remove pointless on stack mode copies
->>>>>    drm/amdgpu: Use drm_mode_init() for on-stack modes
->>>>>    drm/amdgpu: Use drm_mode_copy()
->>>> amdgpu ones are reviewed, but I'll leave them for the
->>>> AMD folks to push to whichever tree they prefer.
->>>
->>> I pulled patches 2, 4, 5 into my tree.
->>
->> Thanks.
->>
->>> For 3, I'm happy to have it
->>> land via drm-misc with the rest of the mode_init changes if you'd
->>> prefer.
->>
->> Either way works for me. I don't yet have reviews yet for
->> the other drivers, so I'll proably hold off for a bit more
->> at least. And the i915 patch I'll be merging via drm-intel.
->>
->>>>>    drm/radeon: Use drm_mode_copy()
->>>>>    drm/gma500: Use drm_mode_copy()
->>>>>    drm/tilcdc: Use drm_mode_copy()
->>>>>    drm/i915: Use drm_mode_copy()
->>
->> Those are now all in.
->>
->> Which leaves us with these stragglers:
->>>>>    drm/hisilicon: Use drm_mode_init() for on-stack modes
-> 
->>>>>    drm/msm: Nuke weird on stack mode copy
->>>>>    drm/msm: Use drm_mode_init() for on-stack modes
->>>>>    drm/msm: Use drm_mode_copy()
-> 
-> These three patches went beneath my radar for some reason.
-> 
-> I have just sent a replacement for the first patch ([1]). Other two 
-> patches can be pulled in msm/msm-next (or msm/msm-fixes) during the next 
-> development cycle if that works for you.
-> 
-> [1] https://patchwork.freedesktop.org/series/101682/
-
-Agree with this approach.
-
-We can replace the first patch with 
-https://patchwork.freedesktop.org/series/101682/.
-
-Thanks
-
-Abhinav
-
-> 
->>>>>    drm/mtk: Use drm_mode_init() for on-stack modes
->>>>>    drm/rockchip: Use drm_mode_copy()
->>>>>    drm/sti: Use drm_mode_copy()
->>>>>    drm: Use drm_mode_init() for on-stack modes
->>>>>    drm: Use drm_mode_copy()
->>
-> 
-> 
+On 3/23/2022 3:35 AM, Dmitry Baryshkov wrote:
+> Since the commit ab205927592b ("drm/msm/dp: remove mode hard-coding in
+> case of DP CTS") the function dp_panel_get_modes() doesn't use (or fill)
+> the dp_mode argument. Drop it completely.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>   drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
+>   drivers/gpu/drm/msm/dp/dp_panel.c   | 2 +-
+>   drivers/gpu/drm/msm/dp/dp_panel.h   | 2 +-
+>   3 files changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 178b774a5fbd..3dd790083cf7 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1013,7 +1013,7 @@ int dp_display_get_modes(struct msm_dp *dp,
+>   	dp_display = container_of(dp, struct dp_display_private, dp_display);
+>   
+>   	ret = dp_panel_get_modes(dp_display->panel,
+> -		dp->connector, dp_mode);
+> +		dp->connector);
+>   	if (dp_mode->drm_mode.clock)
+>   		dp->max_pclk_khz = dp_mode->drm_mode.clock;
+>   	return ret;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+> index f1418722c549..8d7662028f30 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+> @@ -259,7 +259,7 @@ u32 dp_panel_get_mode_bpp(struct dp_panel *dp_panel,
+>   }
+>   
+>   int dp_panel_get_modes(struct dp_panel *dp_panel,
+> -	struct drm_connector *connector, struct dp_display_mode *mode)
+> +	struct drm_connector *connector)
+>   {
+>   	if (!dp_panel) {
+>   		DRM_ERROR("invalid input\n");
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+> index 9023e5bb4b8b..9fa6e524832c 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+> @@ -64,7 +64,7 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
+>   u32 dp_panel_get_mode_bpp(struct dp_panel *dp_panel, u32 mode_max_bpp,
+>   			u32 mode_pclk_khz);
+>   int dp_panel_get_modes(struct dp_panel *dp_panel,
+> -		struct drm_connector *connector, struct dp_display_mode *mode);
+> +		struct drm_connector *connector);
+>   void dp_panel_handle_sink_request(struct dp_panel *dp_panel);
+>   void dp_panel_tpg_config(struct dp_panel *dp_panel, bool enable);
+>   
