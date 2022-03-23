@@ -2,66 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B10B4E5351
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 14:39:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 024334E53A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 14:55:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244338AbiCWNlE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Mar 2022 09:41:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48836 "EHLO
+        id S236714AbiCWN5R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Mar 2022 09:57:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236734AbiCWNlE (ORCPT
+        with ESMTP id S234058AbiCWN5Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Mar 2022 09:41:04 -0400
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87F33710C1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Mar 2022 06:39:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1648042774; x=1679578774;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=b67L/NnWXK6zdMJnGoBPKI8l38ipkirGLoJ+NGWOHGo=;
-  b=k44EIrCTG1AJVx6VBUNbxB5+zjiyWzYN8g5jOKMxqrnZhSej6U4ZbPfM
-   GS7/7Dks3CgW0agXVKqFxK5kqivfiLYBnskAnczh1eoNNbSpRcr1SVvLD
-   uHKFyGOU4iUoX1ZoGeMgYM6WGwg8ausLqeRhH2kZweCQYCIcZm/SmDpgm
-   e3HUAwX1aqiRqjY1mUEIdxtgSUKpqAuZXK2GtVKLTkw27XfDuIhEOSKrl
-   +1BCfKTDoS7Ej1lVwoP0EjAbtW2LkOhtJIbkGNPZqX7yf5Y6WfT0Qgh7b
-   BpRmauU1+8byzBbciZGBpjH6vH/nEK/TMTmkR26HuHHzevWgWvtdV/JkX
-   w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10294"; a="258063774"
-X-IronPort-AV: E=Sophos;i="5.90,204,1643702400"; 
-   d="scan'208";a="258063774"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Mar 2022 06:39:33 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,204,1643702400"; 
-   d="scan'208";a="515780269"
-Received: from lkp-server02.sh.intel.com (HELO 89b41b6ae01c) ([10.239.97.151])
-  by orsmga002.jf.intel.com with ESMTP; 23 Mar 2022 06:39:30 -0700
-Received: from kbuild by 89b41b6ae01c with local (Exim 4.92)
-        (envelope-from <lkp@intel.com>)
-        id 1nX1D0-000K5o-4u; Wed, 23 Mar 2022 13:39:30 +0000
-Date:   Wed, 23 Mar 2022 21:39:00 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     kbuild-all@lists.01.org, David Airlie <airlied@linux.ie>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v3 3/6] drm/msm: split the main platform driver
-Message-ID: <202203232120.4EJF1VFq-lkp@intel.com>
-References: <20220323092538.1757880-4-dmitry.baryshkov@linaro.org>
+        Wed, 23 Mar 2022 09:57:16 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACAF57484E;
+        Wed, 23 Mar 2022 06:55:46 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 5572BB81F53;
+        Wed, 23 Mar 2022 13:55:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1923AC340F6;
+        Wed, 23 Mar 2022 13:55:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1648043744;
+        bh=P8NTZuF0QXODpURRwvFC6LW0z8AssRvgJlAdwMonpCg=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=oy29/wl2bpoI1wsHjVLiihwZqX1tUiGJhKfhp1QXkiNGvJw91j+dYsNT7hRqe0WU3
+         gQ8emufN69eeenFbET/C7/nGr0irezv0LbcKoPZqcysYpr1jZ8CO8z44blAmwIQ2a+
+         UxOYVlWfZDXl4gAbYDHMZaSX33OIN0KmBxGYUmQTu2/a4Sd+35vDDgbL+CEV+lcVbt
+         VJgDiV9dxjUzjV4E1bWBSSGoVF6JZhK1e/OB5bUJk36TCzRlqsSI/uHEOzhiD1naOh
+         Ej4kfgJdgKjg8Hdl4hNT09SERYuCgROQGeMqHECIRxoq7hO9IWZLOuzFwcfqPN3uyI
+         MsPnJY/MnFeIA==
+Received: by mail-ed1-f53.google.com with SMTP id b24so1908134edu.10;
+        Wed, 23 Mar 2022 06:55:43 -0700 (PDT)
+X-Gm-Message-State: AOAM531XIrD+tRbEmtxDzHQhVWmk3YEQ6kUZhuelXmhdhRxKY+O3LNTs
+        nocK6qcbB66TnQbHyFwSbbpk25aXlF3fSBKhdg==
+X-Google-Smtp-Source: ABdhPJyl3S/nnGcuk0QekFB6PwTDpTG4muoEfDkHxTUjbPfg2atZC9hLqjSf0xf6Kd1lpsl0pXjp+7cobGg9ogJfxVM=
+X-Received: by 2002:aa7:da99:0:b0:419:17be:ceb4 with SMTP id
+ q25-20020aa7da99000000b0041917beceb4mr145746eds.303.1648043742316; Wed, 23
+ Mar 2022 06:55:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220323092538.1757880-4-dmitry.baryshkov@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <20220224164831.21475-1-ansuelsmth@gmail.com> <20220224164831.21475-2-ansuelsmth@gmail.com>
+In-Reply-To: <20220224164831.21475-2-ansuelsmth@gmail.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Wed, 23 Mar 2022 08:55:30 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqLduGK=CyAcgahswFfeA43vh+QPgRgcL4+=piOwWwvJRQ@mail.gmail.com>
+Message-ID: <CAL_JsqLduGK=CyAcgahswFfeA43vh+QPgRgcL4+=piOwWwvJRQ@mail.gmail.com>
+Subject: Re: [PATCH v5 01/15] dt-bindings: clock: split qcom,gcc.yaml to
+ common and specific schema
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,73 +71,98 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+On Thu, Feb 24, 2022 at 10:48 AM Ansuel Smith <ansuelsmth@gmail.com> wrote:
+>
+> Split qcom,gcc.yaml to common and specific schema to use it as a
+> template for schema that needs to use the gcc bindings and require
+> to add additional bindings.
+>
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> ---
+>  .../bindings/clock/qcom,gcc-other.yaml        | 76 +++++++++++++++++++
 
-Thank you for the patch! Yet something to improve:
+This now throws errors in linux-next:
 
-[auto build test ERROR on drm/drm-next]
-[cannot apply to v5.17 next-20220323]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/jsonschema/validators.py",
+line 816, in resolve_from_url
+    document = self.resolve_remote(url)
+  File "/usr/local/lib/python3.8/dist-packages/jsonschema/validators.py",
+line 923, in resolve_remote
+    result = json.loads(url.read().decode("utf-8"))
+  File "/usr/lib/python3.8/json/__init__.py", line 357, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python3.8/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python3.8/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+During handling of the above exception, another exception occurred:
+Traceback (most recent call last):
+  File "/usr/local/bin/dt-doc-validate", line 70, in <module>
+    ret = check_doc(f)
+  File "/usr/local/bin/dt-doc-validate", line 36, in check_doc
+    for error in
+sorted(dtschema.DTValidator.iter_schema_errors(testtree), key=lambda
+e: e.linecol):
+  File "/usr/local/lib/python3.8/dist-packages/dtschema/lib.py", line
+1016, in iter_schema_errors
+    meta_schema = cls.resolver.resolve_from_url(schema['$schema'])
+  File "/usr/local/lib/python3.8/dist-packages/jsonschema/validators.py",
+line 818, in resolve_from_url
+    raise exceptions.RefResolutionError(exc)
+jsonschema.exceptions.RefResolutionError: Expecting value: line 1
+column 1 (char 0)
+./Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml:
+mapping values are not allowed in this context
+  in "<unicode string>", line 17, column 11
 
-url:    https://github.com/0day-ci/linux/commits/Dmitry-Baryshkov/drm-msm-rework-MDSS-drivers/20220323-172654
-base:   git://anongit.freedesktop.org/drm/drm drm-next
-config: nios2-randconfig-p002-20220323 (https://download.01.org/0day-ci/archive/20220323/202203232120.4EJF1VFq-lkp@intel.com/config)
-compiler: nios2-linux-gcc (GCC) 11.2.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/0day-ci/linux/commit/5484d7bfa709bbe2cd2cbb3b9959190d7a025c16
-        git remote add linux-review https://github.com/0day-ci/linux
-        git fetch --no-tags linux-review Dmitry-Baryshkov/drm-msm-rework-MDSS-drivers/20220323-172654
-        git checkout 5484d7bfa709bbe2cd2cbb3b9959190d7a025c16
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=nios2 SHELL=/bin/bash drivers/gpu/drm/msm/
+>  .../devicetree/bindings/clock/qcom,gcc.yaml   | 59 +-------------
+>  2 files changed, 80 insertions(+), 55 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+>
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+> new file mode 100644
+> index 000000000000..4e5903bcd70d
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+> @@ -0,0 +1,76 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,gcc-other.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Global Clock & Reset Controller Binding
+> +
+> +maintainers:
+> +  - Stephen Boyd <sboyd@kernel.org>
+> +  - Taniya Das <tdas@codeaurora.org>
+> +
+> +description:
+> +  Qualcomm global clock control module which supports the clocks, resets and
+> +  power domains.
+> +
+> +  See also:
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+I think the problem is here. You need a '|' after 'description' to
+preserve formatting and ignore what looks like a mapping.
 
-All errors (new ones prefixed by >>):
-
-   In file included from include/linux/device/driver.h:21,
-                    from include/linux/device.h:32,
-                    from include/linux/acpi.h:15,
-                    from include/linux/irqchip.h:14,
-                    from drivers/gpu/drm/msm/msm_mdss.c:8:
->> drivers/gpu/drm/msm/msm_mdss.c:403:25: error: 'dt_match' undeclared here (not in a function); did you mean 'dr_match_t'?
-     403 | MODULE_DEVICE_TABLE(of, dt_match);
-         |                         ^~~~~~~~
-   include/linux/module.h:244:15: note: in definition of macro 'MODULE_DEVICE_TABLE'
-     244 | extern typeof(name) __mod_##type##__##name##_device_table               \
-         |               ^~~~
->> include/linux/module.h:244:21: error: '__mod_of__dt_match_device_table' aliased to undefined symbol 'dt_match'
-     244 | extern typeof(name) __mod_##type##__##name##_device_table               \
-         |                     ^~~~~~
-   drivers/gpu/drm/msm/msm_mdss.c:403:1: note: in expansion of macro 'MODULE_DEVICE_TABLE'
-     403 | MODULE_DEVICE_TABLE(of, dt_match);
-         | ^~~~~~~~~~~~~~~~~~~
-
-
-vim +403 drivers/gpu/drm/msm/msm_mdss.c
-
-   390	
-   391	static const struct of_device_id mdss_dt_match[] = {
-   392		{ .compatible = "qcom,mdss", .data = (void *)KMS_MDP5 },
-   393		{ .compatible = "qcom,msm8998-mdss", .data = (void *)KMS_DPU },
-   394		{ .compatible = "qcom,qcm2290-mdss", .data = (void *)KMS_DPU },
-   395		{ .compatible = "qcom,sdm845-mdss", .data = (void *)KMS_DPU },
-   396		{ .compatible = "qcom,sc7180-mdss", .data = (void *)KMS_DPU },
-   397		{ .compatible = "qcom,sc7280-mdss", .data = (void *)KMS_DPU },
-   398		{ .compatible = "qcom,sc8180x-mdss", .data = (void *)KMS_DPU },
-   399		{ .compatible = "qcom,sm8150-mdss", .data = (void *)KMS_DPU },
-   400		{ .compatible = "qcom,sm8250-mdss", .data = (void *)KMS_DPU },
-   401		{}
-   402	};
- > 403	MODULE_DEVICE_TABLE(of, dt_match);
-   404	
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+> +  - dt-bindings/clock/qcom,gcc-apq8084.h
+> +  - dt-bindings/reset/qcom,gcc-apq8084.h
+> +  - dt-bindings/clock/qcom,gcc-ipq4019.h
+> +  - dt-bindings/clock/qcom,gcc-ipq6018.h
+> +  - dt-bindings/reset/qcom,gcc-ipq6018.h
+> +  - dt-bindings/clock/qcom,gcc-ipq806x.h (qcom,gcc-ipq8064)
+> +  - dt-bindings/reset/qcom,gcc-ipq806x.h (qcom,gcc-ipq8064)
+> +  - dt-bindings/clock/qcom,gcc-msm8939.h
+> +  - dt-bindings/clock/qcom,gcc-msm8953.h
+> +  - dt-bindings/reset/qcom,gcc-msm8939.h
+> +  - dt-bindings/clock/qcom,gcc-msm8660.h
+> +  - dt-bindings/reset/qcom,gcc-msm8660.h
+> +  - dt-bindings/clock/qcom,gcc-msm8974.h (qcom,gcc-msm8226 and qcom,gcc-msm8974)
+> +  - dt-bindings/reset/qcom,gcc-msm8974.h (qcom,gcc-msm8226 and qcom,gcc-msm8974)
+> +  - dt-bindings/clock/qcom,gcc-mdm9607.h
+> +  - dt-bindings/clock/qcom,gcc-mdm9615.h
+> +  - dt-bindings/reset/qcom,gcc-mdm9615.h
+> +  - dt-bindings/clock/qcom,gcc-sdm660.h  (qcom,gcc-sdm630 and qcom,gcc-sdm660)
