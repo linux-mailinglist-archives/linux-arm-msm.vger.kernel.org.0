@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84C384E5A5A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 22:07:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B1F14E5A7B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 22:12:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234168AbiCWVIc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Mar 2022 17:08:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37622 "EHLO
+        id S240936AbiCWVNr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Mar 2022 17:13:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231975AbiCWVIc (ORCPT
+        with ESMTP id S240625AbiCWVNr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Mar 2022 17:08:32 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1152571EC9;
-        Wed, 23 Mar 2022 14:07:02 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id z92so3324735ede.13;
-        Wed, 23 Mar 2022 14:07:01 -0700 (PDT)
+        Wed, 23 Mar 2022 17:13:47 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B79638797;
+        Wed, 23 Mar 2022 14:12:17 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id g20so3364027edw.6;
+        Wed, 23 Mar 2022 14:12:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
          :content-disposition:in-reply-to;
-        bh=LMob1D1i/R5KcK87hci+jzzEC4MjJYbt0t47d5hUovY=;
-        b=cQ5Rn8RP7D8ngoNZu2dFD/oZPt4P7BynwfQeptMD2aRY5pL1OoGxdVWqza1pXJtVQ4
-         rY/X/C14pA/drwoh1QDrx/CT8b/5cafJ7Xepvj/zxd1mph2n4LW2eBLaleDfcT07+cy+
-         WjBcHZSvjd6rCnIzelsXdJd6BG87LFEJ9/bv9rPsDZ3uwcXV0wbwKGpoyXFtVgAMRhzs
-         MNcXty9r8FntZHvteS696YBi0bbDGiKW95SQBxAixwojNbsdGksOjMkgIGeWcdxnJ73m
-         Trv9IZxSWgFTbTCb1jtj1BV+HHyKtR8DfyFAmdT7y6NfL+aAi524rl347gpDwVptb+7F
-         Yzyg==
+        bh=X2+OcNrbzDp5B4Ve0adV2puYvqZ6ezMUh9fPKK/Tp1w=;
+        b=LD9/G5VmePzcUqAWYbnmsVNgSgzMV5SgftIdlZyyEJcZRmjm0pXfqi3JOxpHh3VhjP
+         8S/3AIFtiND+nN+j+yXGY9qOpaXHvTCn4z6jsp59skJBthyAr5vYVwoXSyZEST2MeRRo
+         RhSolSH0wPzG0F3NDU0JC8IEdiv0X10qUeA0Cgn5F2Fbifl3aFnpEZOIyOVCnEkv6puX
+         hY8AjFvyYI9xERaLIZwK8t2eU0leTjiILn0nR9Go+2ZvM/SP3LR3jmfCl2j11AJ7ZhWu
+         F1K968YFRkNpVRPWqnCvjwDRv7PMXyrvZIgVA1rns+6wmwayzqiIrFzSb53auqNHr/UN
+         qLDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
          :references:mime-version:content-disposition:in-reply-to;
-        bh=LMob1D1i/R5KcK87hci+jzzEC4MjJYbt0t47d5hUovY=;
-        b=b3act5+uIXOyocE5IQsdqsoiv6WCEt3ualTUoMeU+m1/s08HPfo0BPcs0Nbt87pbJs
-         GB00avaaw03Mv6rMi6p5HPC4B1hRdUuWBieA+ynJbb/KikfSmnGjpWvOCCROpOnV1/mR
-         9+5C7Uq8ReGYSxYGfn/Teow3hUett9yurO4cFicJTf7+RV+CWgXRvREOadTXShCX8LVs
-         1zVpsC0kHEx9RqA/0fsjo1cX1oFJeCyxHy1fedwANJmwc1R67Hvd9DGMgu+kCoE0s275
-         kcjYKqwo/+7t+QR+nBSPgwy3lPtMStpRWeJBkdVK2P8UWNeCpZDsLccVC8rVnQs4zPxs
-         2+mw==
-X-Gm-Message-State: AOAM533dTwcisRp7ua4oQHNTr3HZC8pAbIjCvS/w3yqC6y4wpqwp3Za3
-        Z0C+b8gguMNox4PTkt70wRTCsXNBNMxyvA==
-X-Google-Smtp-Source: ABdhPJwwpGcC22tUk/vFU08UDFRGXnFfeqL0QOtqdwUlIomdkvOYkwsmmgqV3qAkjGeSZLeGH7bKOA==
-X-Received: by 2002:a05:6402:1e92:b0:419:76:21a6 with SMTP id f18-20020a0564021e9200b00419007621a6mr2644728edf.128.1648069620537;
-        Wed, 23 Mar 2022 14:07:00 -0700 (PDT)
+        bh=X2+OcNrbzDp5B4Ve0adV2puYvqZ6ezMUh9fPKK/Tp1w=;
+        b=p5niDT3ced8H0qZRFTnUMzrnvB7e4Rcr8du0LnzdJAeWMGyZQH3/ncgpzey0+klMeP
+         hCtLd70Ky0pt1v5J2DfI82N4UWFerLthTXq/NNJKigRJCWTK+pz8l8L9bNPolA6DSegp
+         lxFhqDqHdmH204Z/szzf42lftQpiYZqTC/r4zdbCacn6v1U2oaQEiID4oyKJOnX43oKE
+         CONTfwyQ+qW4q5nbwCM5NgWyO5JxvQSSowj7RDPX67x07t3m6NrMsez2ASBMJQo1rMNk
+         dtAjAijNPtPTYx/lAZJlcHhSSC183phcVcoRBxY6RturDb/+ZDlANglgJcs0pjtcdxpl
+         EaKw==
+X-Gm-Message-State: AOAM533XfSSXxiKbmGGDISTwxbzea9cHeN2G9hI+nXksufxQfJ/BIb5c
+        r6FllrxfWp6qKk+4kea4x5kyHgMQzvVJkQ==
+X-Google-Smtp-Source: ABdhPJyCPP6sx07lgRLKmsVw1l60qOOeDEgj6/C4mFFS/Fh6wDZpDxuoqsBvpdgmxt6vbIewieUL0g==
+X-Received: by 2002:a05:6402:438d:b0:419:4550:d52b with SMTP id o13-20020a056402438d00b004194550d52bmr2674112edc.83.1648069935712;
+        Wed, 23 Mar 2022 14:12:15 -0700 (PDT)
 Received: from pevik (gw1.ms-free.net. [185.243.124.10])
-        by smtp.gmail.com with ESMTPSA id b15-20020a50cccf000000b0040f74c6abedsm442301edj.77.2022.03.23.14.06.59
+        by smtp.gmail.com with ESMTPSA id e26-20020a50ec9a000000b004193fe50151sm450563edr.9.2022.03.23.14.12.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Mar 2022 14:07:00 -0700 (PDT)
-Date:   Wed, 23 Mar 2022 22:06:57 +0100
+        Wed, 23 Mar 2022 14:12:15 -0700 (PDT)
+Date:   Wed, 23 Mar 2022 22:12:12 +0100
 From:   Petr Vorel <petr.vorel@gmail.com>
 To:     Konrad Dybcio <konrad.dybcio@somainline.org>
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
@@ -59,15 +59,16 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 01/15] arm64: dts: qcom: msm8994: Fix sleep clock name
-Message-ID: <YjuL8UKROE5pnUj1@pevik>
+Subject: Re: [PATCH 06/15] arm64: dts: qcom: msm8992: Use the correct GCC
+ compatible
+Message-ID: <YjuNLIv0frA6WMSE@pevik>
 Reply-To: Petr Vorel <petr.vorel@gmail.com>
 References: <20220319174645.340379-1-konrad.dybcio@somainline.org>
- <20220319174645.340379-2-konrad.dybcio@somainline.org>
+ <20220319174645.340379-7-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220319174645.340379-2-konrad.dybcio@somainline.org>
+In-Reply-To: <20220319174645.340379-7-konrad.dybcio@somainline.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -80,24 +81,7 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi Konrad, all,
 
-> The sleep clock name expected by GCC is actually "sleep" and not
-> "sleep_clk". Fix the clock-names value for it to make sure it is
-> provided.
-
-> Fixes: 9204da57cd65 ("arm64: dts: qcom: msm8994: Provide missing "xo_board" and "sleep_clk" to GCC")
-Thanks for fixing it, now I see it in
-Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.yaml
-
-Reviewed-by: Petr Vorel <petr.vorel@gmail.com>
-
-I also tested it with "clk: qcom: gcc-msm8994: Fix gpll4 width" [1]
-and "[PATCH v5 1/1] arm64: dts: qcom: msm8994-huawei-angler: Add sdhc1 definition" [2]
-and it works as expected.
-
 Reviewed-by: Petr Vorel <petr.vorel@gmail.com>
 
 Kind regards,
 Petr
-
-[1] https://lore.kernel.org/linux-arm-msm/20220319174940.341137-1-konrad.dybcio@somainline.org/
-[2] https://lore.kernel.org/linux-arm-msm/20220323204840.22832-1-petr.vorel@gmail.com/
