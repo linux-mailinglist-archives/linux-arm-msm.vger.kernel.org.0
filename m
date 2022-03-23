@@ -2,90 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C04FC4E5A9C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 22:25:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DC1924E5C39
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 01:12:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241089AbiCWV0r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Mar 2022 17:26:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54864 "EHLO
+        id S1346745AbiCXAOJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Mar 2022 20:14:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241085AbiCWV0q (ORCPT
+        with ESMTP id S229569AbiCXAOI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Mar 2022 17:26:46 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CDE113CCC;
-        Wed, 23 Mar 2022 14:25:16 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id pv16so5512236ejb.0;
-        Wed, 23 Mar 2022 14:25:16 -0700 (PDT)
+        Wed, 23 Mar 2022 20:14:08 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F10AFE73;
+        Wed, 23 Mar 2022 17:12:37 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id a1so4367068wrh.10;
+        Wed, 23 Mar 2022 17:12:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=vysV2YUxUhlwVd6KhPoL0mZSMTmNq5rE3h8xE9VrJx8=;
-        b=PtPwjommumuKRrAvDNWWBgum++vMOpb0uWE806D+fInZ45L5E/NJ9NyFzFl2g2MRWp
-         NTUwDXLUNCmW9F9V1lLFtHtdGzUxc/Aq6/j4pJSIYNzRUiEGUZnrX6zZEwFDN4bimt88
-         FR9Lssy5lLk0/a1O4jgG4MTg81Q5gnxXNnQJVnUe8Zdpbm0XHwURNoPp4pY4Lo32K1kM
-         FPz4sr1TxjtV4lRX+yj5S8WnV8JN4CJQJ6DuVHzcM5WDtMikxSxTMlfFUBtHFJU7+XV/
-         bRcP42q+GfMms+7ZmvTkae3LSHRSblz8Qd2FSZh5ZN7qfpqg3H8SbiKx8myY9Sgvm4hP
-         baWQ==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/J+7k67HIa20DrfFo2NZzVdI2EGmtq275w1giXcVqMg=;
+        b=aX7p1KgXTAPQI9KVgmJz86DFHJvwHj/22QzWJxFYKV+H5EEDKfPyv9MsDGu9ulX0Al
+         khcAN99RaFvggO1wOv/K/I27zC1DPjZXxkSrMmIIPzPyCfsG+F76aPa+Pp5fBFBYobUt
+         mu0bcqmW9kE55KNDY+lWK5X9UEWxkrG6Ijb6t1D0feSrFYlCj683uyYARj7lsQWS0BC0
+         f4Z/AhoO5mRAZFLEwK1KDVb5bfACaEV/AyUALHU0WSmpPvzZhNc5Qi3DCY8+byocF8dz
+         YKQkkUTvJXV1+mEFY0CafLsRRkCi6Qi0j+nwUgAQb/vSuWw5DohLenFZhXFG25yU1thI
+         MYQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=vysV2YUxUhlwVd6KhPoL0mZSMTmNq5rE3h8xE9VrJx8=;
-        b=WkOKKjbgaPusCt+DimFWTlj85j6BbXwULMx6zjosWtqeinOiK7kpEyaKgxuodinU9Q
-         GtU1pXa556a91uIwjRbFqLDVlE2DlFodAaxPPCAINsj/jPwS6VG0DB7AkasEQ8XR+2l3
-         SJZ2oDjcLwJOu9ara9LJJQoAaDeBIp8/3G+VaKPkNYl63RFKZddB2twcnYsuSbcu8C8P
-         NzkcB8XTV4h6wzcnxaxPsHCHo0ZEdgr0izirWLx0+T2m8qty6DAo6cjdAIA3SBCfCqhq
-         qmzg4363wY7bjV7dFRsK2SgqWRG5g5FRG2864nSwo8lyyv8olVNS3t8qD5NYevUkBb3D
-         E4eQ==
-X-Gm-Message-State: AOAM531UZJVJiVR/FWV+G+Lij1K/SxT3l/Fg068i6gIddt2wZc6iM8Sa
-        nSzKs4IkDj/kJPIvOirjGDSv0zCi7wM/Gw==
-X-Google-Smtp-Source: ABdhPJwgfyQqYCEPw63TtPi+2J3FKbcZmNiqLGPwcV4bZp0KThU5s1y2CY7v1zeV7VqpCCsJaRIQtA==
-X-Received: by 2002:a17:906:dc8f:b0:6e0:5ce7:d80e with SMTP id cs15-20020a170906dc8f00b006e05ce7d80emr2228061ejc.435.1648070714984;
-        Wed, 23 Mar 2022 14:25:14 -0700 (PDT)
-Received: from pevik (gw1.ms-free.net. [185.243.124.10])
-        by smtp.gmail.com with ESMTPSA id d23-20020aa7d5d7000000b00418f7b2f1dbsm466065eds.71.2022.03.23.14.25.13
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/J+7k67HIa20DrfFo2NZzVdI2EGmtq275w1giXcVqMg=;
+        b=gMoeDjwbp0nZTl7U/fpugZALrJrsFTQWDnGw0av51chZ0NYxt0xME/ZKaeTOPpv/At
+         gvoKFTxKeS6PHVvZyRHwmp1HmkbTlFFKcXmJqN3q5i1ZWy+YKUSJmNLM7FsMomqpWup6
+         XgdGx519kiFmpAVjFMsungKHhuax6BbGqPTP0Bp8dxuePVJ1SSl4ia3359EbDAl5uBoL
+         lfdu94AUuBfFDa1FRzUjKGZV10q3Li+k5jD86LA8+3EFb9OEGhZEcBUzToV7K09HzJZs
+         4CesZmgqQT0iBFY+glG+VC3KN3Qd1EZI77Fvmwe8Xlr9OhMcE1TQzM+X5Gm7tyL/ubW3
+         0Wow==
+X-Gm-Message-State: AOAM532OHqaamg859hfA1/A/RmqIHdQJe31y/NfiormjebvC//aYjhO1
+        d4FzyZu4lr3ISTYbEv/UigNQSPCYGvc=
+X-Google-Smtp-Source: ABdhPJxSxAzqMRccmd40N0pwlBUxRZGY1074kjwxy9DJTuBtXtj9TRvIROv1gUaKQI7JxeQrcDP8Vw==
+X-Received: by 2002:adf:f28d:0:b0:203:f161:55ac with SMTP id k13-20020adff28d000000b00203f16155acmr2252918wro.209.1648080756298;
+        Wed, 23 Mar 2022 17:12:36 -0700 (PDT)
+Received: from Ansuel-xps.localdomain (93-42-69-170.ip85.fastwebnet.it. [93.42.69.170])
+        by smtp.googlemail.com with ESMTPSA id bg18-20020a05600c3c9200b0037c2ef07493sm1058665wmb.3.2022.03.23.17.12.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Mar 2022 14:25:14 -0700 (PDT)
-Date:   Wed, 23 Mar 2022 22:25:11 +0100
-From:   Petr Vorel <petr.vorel@gmail.com>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>,
+        Wed, 23 Mar 2022 17:12:35 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 15/15] arm64: dts: qcom: msm8994: Add mmc aliases
-Message-ID: <YjuQNx/zEfq5/9JR@pevik>
-Reply-To: Petr Vorel <petr.vorel@gmail.com>
-References: <20220319174645.340379-1-konrad.dybcio@somainline.org>
- <20220319174645.340379-16-konrad.dybcio@somainline.org>
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Ansuel Smith <ansuelsmth@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: clock: fix dt_binding_check error for qcom,gcc-other.yaml
+Date:   Wed, 23 Mar 2022 20:42:48 +0100
+Message-Id: <20220323194248.26970-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220319174645.340379-16-konrad.dybcio@somainline.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.5 required=5.0 tests=BAYES_00,DATE_IN_PAST_03_06,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad, all,
+qcom,gcc-other Documentation lacks a '|' for the description. This cause
+dt_binding_check to incorrectly parse "See also:" as a new value.
+Add the missing '|' to correctly parse the description.
 
-Reviewed-by: Petr Vorel <petr.vorel@gmail.com>
+Fixes: a03965ed1310 ("dt-bindings: clock: split qcom,gcc.yaml to common and specific schema")
+Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+---
+ Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-BTW Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-and real code for other SoCs uses sdhc_1 and sdhc_2.
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+index 4dc0274dbd6b..6c45e0f85494 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
+@@ -10,7 +10,7 @@ maintainers:
+   - Stephen Boyd <sboyd@kernel.org>
+   - Taniya Das <tdas@codeaurora.org>
+ 
+-description:
++description: |
+   Qualcomm global clock control module which supports the clocks, resets and
+   power domains.
+ 
+-- 
+2.34.1
 
-I suppose sdhc[12] (without underscore is the preferred variant.
-
-Kind regards,
-Petr
