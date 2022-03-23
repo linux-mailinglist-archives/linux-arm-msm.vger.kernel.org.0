@@ -2,153 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D7E704E501F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 11:12:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 80F934E5033
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 11:18:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243447AbiCWKOT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Mar 2022 06:14:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53362 "EHLO
+        id S243469AbiCWKTp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Mar 2022 06:19:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230102AbiCWKOS (ORCPT
+        with ESMTP id S243477AbiCWKTn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Mar 2022 06:14:18 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0504D76674
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Mar 2022 03:12:49 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id q5so1128355ljb.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Mar 2022 03:12:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=A8hD1/tFFB4rgwz87Q4K65j6MtDksDJ6SuyPOc0I8WI=;
-        b=voGSg26fPYddMSZ76hiQWACMZW+nmFMTLjq+ORhoRrUNqN4WkRY/Dc49Ffnpf9YLF1
-         ANIf+d2EPF2h1txEALTPZwxLUNhk4hHzwGHOQYh8pcZRcNL0syjVrWy+sApdrrHjdEuI
-         n/lWxunH8v2mvRKBxPiQ8mh59NYqU8VBkzSN1H/F5IGc85upCYNCNoxe743UkMZLut+H
-         oPkdnA3rNkvKSI8yK6iEcBNzrLLuXdB+er83dBQCTEiVUkwW8c1dlJ6OYLfhiZRSHGMh
-         Gg4xqH5/7K1aM28hZP1Tuna1Epfe2eN9c4DskLza+7vz92y0o7BDApVHPUEpvxWYd5rT
-         vNPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=A8hD1/tFFB4rgwz87Q4K65j6MtDksDJ6SuyPOc0I8WI=;
-        b=rCN6ynyB03mRVC6cmS3KVZ50lDyRTctgvcubgpVhPV2eP2nlMRhufD/xEjOOonnSB8
-         M2CDY+Uf2+K1W4G1WgxrYbHbkv8aCGD53zbvyHSPTpy8hDisaLMHQ/Y9TNEtkD168gFx
-         3gdyrS3c+n/CO1dSF+Jni97BkOnqkHC4JJFUTQLzfTfvEcs8fRH7c46vx8G+WtTYkBuF
-         NW96kFsG381dLHLHS6GygZyALABFKts3VhvuIOf64VGHEs+21Kn1xKu/asZRnk9cKqbJ
-         aRxk9VBTF5C24KfVudOcPHHi/mCn1mEZWpifiPGsB8QbFKkb7kDNtX3L6h3bs3PIOh0n
-         4d8Q==
-X-Gm-Message-State: AOAM533gg5PKvbgyOW6WBh9aaDQWqTud/eXW4t7Q1ThKcE4UtkDm1IWZ
-        Jhs8GAzPBF6Ye0sh7fqkDxbYJA==
-X-Google-Smtp-Source: ABdhPJwpcO0qcr4Yl6r71Htzu887GjSBGMS7k4TepkH3iSwqlMC0gokbq3Qmjt5IFN01sRKjHDvhaA==
-X-Received: by 2002:a05:651c:50b:b0:249:8cac:11ff with SMTP id o11-20020a05651c050b00b002498cac11ffmr7564050ljp.484.1648030367399;
-        Wed, 23 Mar 2022 03:12:47 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id q17-20020a05651232b100b0044a211622aesm1302537lfe.282.2022.03.23.03.12.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Mar 2022 03:12:47 -0700 (PDT)
-Message-ID: <3b874b88-837b-bf72-0888-9464396a6ab7@linaro.org>
-Date:   Wed, 23 Mar 2022 13:12:46 +0300
+        Wed, 23 Mar 2022 06:19:43 -0400
+Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 736022AE9;
+        Wed, 23 Mar 2022 03:18:09 -0700 (PDT)
+Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.16.1.2/8.16.1.2) with ESMTP id 22N9Wdiv000571;
+        Wed, 23 Mar 2022 11:18:02 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=selector1;
+ bh=cscpJKP+YTpsfI2Xqs/WsEvpgV755qDqbGsryfxbRHE=;
+ b=KU5LShSdGc20mPYFyN/qzFqFyIXdiEv8TE1cx0/TX3cYJGwZ4LH3o3jSE1I4y8WKEmMy
+ y8JxSTH8VHPTBTKA0JHJkq55TaVuwWTNtiy0jnxlH/9sM5+XTB7hy6YazSahXa9NTRb4
+ ZkrBsrcP6k53yv4f/F3ttxW0N/Vv9GnEjwNmJx8tDWgviKVg5n0R69sgrsCYbET0v0bX
+ E+uVCceStHRleh49wQqoWJaE8Ju+ML54cbvhD4IckkhvGrpD2tEnO4a/qHRA11MmU/c+
+ CuOGxK2aFKQKyVWv41mGDE5tzSzlwG6kWGpL4/uAspFyJ3FdrdYoihtLMmm4isLOOU6s kA== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3ew6xkhup7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 23 Mar 2022 11:18:02 +0100
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 1C079100034;
+        Wed, 23 Mar 2022 11:17:59 +0100 (CET)
+Received: from Webmail-eu.st.com (sfhdag2node2.st.com [10.75.127.5])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 13F5A221793;
+        Wed, 23 Mar 2022 11:17:59 +0100 (CET)
+Received: from [10.201.20.246] (10.75.127.45) by SFHDAG2NODE2.st.com
+ (10.75.127.5) with Microsoft SMTP Server (TLS) id 15.0.1497.26; Wed, 23 Mar
+ 2022 11:17:58 +0100
+Message-ID: <5cde9477-d73c-03c4-4dc0-c63fa0f8c8d9@foss.st.com>
+Date:   Wed, 23 Mar 2022 11:17:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 12/22] drm/msm: Use drm_mode_copy()
-Content-Language: en-GB
-To:     Ville Syrjala <ville.syrjala@linux.intel.com>,
-        dri-devel@lists.freedesktop.org
-Cc:     intel-gfx@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20220218100403.7028-1-ville.syrjala@linux.intel.com>
- <20220218100403.7028-13-ville.syrjala@linux.intel.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220218100403.7028-13-ville.syrjala@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+ Thunderbird/91.5.0
+Subject: Re: [PATCH V2 0/3] rpmsg and glink signaling API support
+Content-Language: en-US
+To:     Deepak Kumar Singh <quic_deesin@quicinc.com>,
+        <bjorn.andersson@linaro.org>, <swboyd@chromium.org>,
+        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>
+References: <1642534993-6552-1-git-send-email-quic_deesin@quicinc.com>
+From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+In-Reply-To: <1642534993-6552-1-git-send-email-quic_deesin@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.75.127.45]
+X-ClientProxiedBy: SFHDAG2NODE2.st.com (10.75.127.5) To SFHDAG2NODE2.st.com
+ (10.75.127.5)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.850,Hydra:6.0.425,FMLib:17.11.64.514
+ definitions=2022-03-23_05,2022-03-22_01,2022-02-23_01
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/02/2022 13:03, Ville Syrjala wrote:
-> From: Ville Syrjälä <ville.syrjala@linux.intel.com>
-> 
-> struct drm_display_mode embeds a list head, so overwriting
-> the full struct with another one will corrupt the list
-> (if the destination mode is on a list). Use drm_mode_copy()
-> instead which explicitly preserves the list head of
-> the destination mode.
-> 
-> Even if we know the destination mode is not on any list
-> using drm_mode_copy() seems decent as it sets a good
-> example. Bad examples of not using it might eventually
-> get copied into code where preserving the list head
-> actually matters.
-> 
-> Obviously one case not covered here is when the mode
-> itself is embedded in a larger structure and the whole
-> structure is copied. But if we are careful when copying
-> into modes embedded in structures I think we can be a
-> little more reassured that bogus list heads haven't been
-> propagated in.
-> 
-> @is_mode_copy@
-> @@
-> drm_mode_copy(...)
-> {
-> ...
-> }
-> 
-> @depends on !is_mode_copy@
-> struct drm_display_mode *mode;
-> expression E, S;
-> @@
-> (
-> - *mode = E
-> + drm_mode_copy(mode, &E)
-> |
-> - memcpy(mode, E, S)
-> + drm_mode_copy(mode, E)
-> )
-> 
-> @depends on !is_mode_copy@
-> struct drm_display_mode mode;
-> expression E;
-> @@
-> (
-> - mode = E
-> + drm_mode_copy(&mode, &E)
-> |
-> - memcpy(&mode, E, S)
-> + drm_mode_copy(&mode, E)
-> )
-> 
-> @@
-> struct drm_display_mode *mode;
-> @@
-> - &*mode
-> + mode
-> 
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Sean Paul <sean@poorly.run>
-> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: freedreno@lists.freedesktop.org
-> Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Hi all,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On 1/18/22 20:43, Deepak Kumar Singh wrote:
+> [Change from V1]
+> Fixed most of the review comments in V1.
 
-> ---
+This implementation works for the glink transport,
+But how to manage such flow control for other transport
+layer?
+From my POV it is important that it is also usable for
+by transport backends which doe not have such signaling.
+The idea here is not to implement in other backends yet, but
+at least to determine how it could be handled to avoid that
+tomorrow this has to be reworked. 
 
+More than that I wonder if the flow control could also be used
+to solve the RPmsg protocol issue related to the channel
+announcement [1][2]
 
--- 
-With best wishes
-Dmitry
+[1] https://github.com/OpenAMP/open-amp/pull/160
+[2] https://lore.kernel.org/lkml/20220316153001.662422-1-arnaud.pouliquen@foss.st.com/
+
+Thanks,
+Arnaud
+
+> 
+> Deepak Kumar Singh (3):
+>   rpmsg: core: Add signal API support
+>   rpmsg: glink: Add support to handle signals command
+>   rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
+> 
+>  drivers/rpmsg/qcom_glink_native.c | 77 +++++++++++++++++++++++++++++++++++++++
+>  drivers/rpmsg/rpmsg_char.c        | 47 ++++++++++++++++++++++--
+>  drivers/rpmsg/rpmsg_core.c        | 21 +++++++++++
+>  drivers/rpmsg/rpmsg_internal.h    |  2 +
+>  include/linux/rpmsg.h             | 14 +++++++
+>  5 files changed, 157 insertions(+), 4 deletions(-)
+> 
