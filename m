@@ -2,180 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C00F4E4A5C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 02:12:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 505B44E4B3A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 04:08:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231250AbiCWBOF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 22 Mar 2022 21:14:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40800 "EHLO
+        id S232070AbiCWDJb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 22 Mar 2022 23:09:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229872AbiCWBOE (ORCPT
+        with ESMTP id S231250AbiCWDJ3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 22 Mar 2022 21:14:04 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB47B5BD1E;
-        Tue, 22 Mar 2022 18:12:35 -0700 (PDT)
+        Tue, 22 Mar 2022 23:09:29 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00DC3BE15;
+        Tue, 22 Mar 2022 20:07:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1647997955; x=1679533955;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=vH7XINcncMSOnzEOcEwKUd+K0fo7VZPLqvqSmYr4Oys=;
-  b=mN/FScv95jnEaU+bo6rUHwXHICIaqkpDTY4qgELADZjxjRQp0tNGyLL8
-   ZeE8SVel5BJ+IpGMQR8uAMeyX+L/1+ErTVDl0bsUA+4q7AzJi/G66rqYQ
-   ga6qz6P481E6f1VfamVinkwSx5TdEfEgd2uZFpN0n6e3gshtlATzOZW9l
-   E=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 22 Mar 2022 18:12:35 -0700
+  t=1648004880; x=1679540880;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=EF/JQuQvjXcqaoJAFGbUy4VuBPt0HhFRN25fJmoeJlk=;
+  b=ME6+DSaAh/SFqD9UbBXJLD0Vl7gOfpOWeslWTTRVgsgC+nnQdj9Scr/3
+   q1yaV7XKOTo07v+P6EqRa7uJo4XXqJ5AcBSNLyLYJf78xMlOJKBBlpYL8
+   XWgsmTR+TIVhtlwIX42YYLbEyzGbLPQYAdlJx5DwTfCPOJl7DKW3/YRNS
+   o=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 22 Mar 2022 20:07:59 -0700
 X-QCInternal: smtphost
-Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2022 18:12:34 -0700
-Received: from [10.46.160.247] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 22 Mar
- 2022 18:12:34 -0700
-Subject: Re: [PATCH v2 0/2] regulator: scmi: add support for registering SCMI
- regulators by name
-To:     Sudeep Holla <sudeep.holla@arm.com>
-CC:     Rob Herring <robh+dt@kernel.org>, Mark Brown <broonie@kernel.org>,
-        "Liam Girdwood" <lgirdwood@gmail.com>,
-        <devicetree@vger.kernel.org>,
-        "Cristian Marussi" <cristian.marussi@arm.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        "Subbaraman Narayanamurthy" <quic_subbaram@quicinc.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Mike Tipton <quic_mdtipton@quicinc.com>
-References: <cover.1647909090.git.quic_collinsd@quicinc.com>
- <Yjm1wpcMZsZJJCuy@bogus>
-From:   David Collins <quic_collinsd@quicinc.com>
-Message-ID: <eb03037b-e7c2-ea23-0bdb-27924ed54fa7@quicinc.com>
-Date:   Tue, 22 Mar 2022 18:12:33 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2022 20:07:58 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 22 Mar 2022 20:07:58 -0700
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 22 Mar 2022 20:07:52 -0700
+Date:   Wed, 23 Mar 2022 08:37:49 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Mathias Nyman <mathias.nyman@linux.intel.com>
+CC:     "Sandeep Maheswaram (Temp)" <quic_c_sanm@quicinc.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        "Doug Anderson" <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        "Pawel Laszczak" <pawell@cadence.com>,
+        Peter Chen <peter.chen@kernel.org>,
+        "Roger Quadros" <rogerq@kernel.org>,
+        Aswath Govindraju <a-govindraju@ti.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>
+Subject: Re: [PATCH v2 0/3] Refactor xhci quirks and plat private data
+Message-ID: <20220323030749.GO23316@hu-pkondeti-hyd.qualcomm.com>
+References: <1646130507-26796-1-git-send-email-quic_c_sanm@quicinc.com>
+ <ddc86a4f-8d1c-c02c-5600-4fa851568557@quicinc.com>
+ <YjR0Ne3BDxxMfrxt@kroah.com>
+ <b38ddfcc-68c3-d99f-816b-8b9f788aa88a@quicinc.com>
+ <29ba84fb-1db2-1d84-cf9e-191e9bcbf739@linux.intel.com>
 MIME-Version: 1.0
-In-Reply-To: <Yjm1wpcMZsZJJCuy@bogus>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <29ba84fb-1db2-1d84-cf9e-191e9bcbf739@linux.intel.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/22/22 4:40 AM, Sudeep Holla wrote:
-> On Mon, Mar 21, 2022 at 05:47:18PM -0700, David Collins wrote:
->> Name based SCMI regulator registration helps ensure that an SCMI
->> agent doesn't need to be aware of the numbering scheme used for
->> Voltage Domains by the SCMI platform.
+Hi Mathias,
+
+On Tue, Mar 22, 2022 at 05:53:42PM +0200, Mathias Nyman wrote:
+> On 21.3.2022 8.21, Sandeep Maheswaram (Temp) wrote:
+> > Hi Mathias,
+> > 
+> > On 3/18/2022 5:29 PM, Greg Kroah-Hartman wrote:
+> >> On Thu, Mar 17, 2022 at 11:17:17AM +0530, Sandeep Maheswaram (Temp) wrote:
+> >>> Hi Greg,
+> >>>
+> >>> On 3/1/2022 3:58 PM, Sandeep Maheswaram wrote:
+> >>>> changes in v2:
+> >>>> Added a PATCH 2/3 to remove unwanted header inclusion.
+> >>>> Fixed minor nitpicks in PATCH 3/3.
+> >>>>
+> >>>> Pavankumar Kondeti (1):
+> >>>>     usb: xhci: refactor quirks and plat private data
+> >>>>
+> >>>> Sandeep Maheswaram (2):
+> >>>>     usb: xhci: Remove unwanted header inclusion
+> >>>>     usb: dwc: host: add xhci_plat_priv quirk XHCI_SKIP_PHY_INIT
+> >>>>
+> >>>>    drivers/usb/cdns3/host.c        |  2 +-
+> >>>>    drivers/usb/dwc3/host.c         | 13 ++++++++
+> >>>>    drivers/usb/host/xhci-plat.c    |  3 +-
+> >>>>    drivers/usb/host/xhci-plat.h    | 24 ---------------
+> >>>>    drivers/usb/host/xhci-rcar.c    |  3 +-
+> >>>>    drivers/usb/host/xhci.h         | 60 ++++--------------------------------
+> >>>>    include/linux/usb/xhci-plat.h   | 24 +++++++++++++++
+> >>>>    include/linux/usb/xhci-quirks.h | 67 +++++++++++++++++++++++++++++++++++++++++
+> >>>>    8 files changed, 115 insertions(+), 81 deletions(-)
+> >>>>    delete mode 100644 drivers/usb/host/xhci-plat.h
+> >>>>    create mode 100644 include/linux/usb/xhci-plat.h
+> >>>>    create mode 100644 include/linux/usb/xhci-quirks.h
+> >>> Please let me know your opinion about this patch series.
+> >> I need the xhci maintainer to review it...
+> >>
+> >> thanks,
+> >>
+> >> greg k-h
+> > 
+> > 
+> > Can you please review this patch series.
+> > 
 > 
-> While I understand the regulator framework has a good support for name
-> based approach youasdf prefer, I see other frameworks like clock rely on
-> numbering scheme and I see quite a few qualcomm platforms upstream use
-> the number scheme for clocks. So why is that a problem with regulator ?
-
-I assume that the clocks you are referring to in upstream targets are
-explicitly managed as opposed to mediated by SCMI.  In that case,
-consumer devices in device tree reference particular clocks using a
-tuple consisting of <&phandle_of_clock_controller clock_id>.  The
-clock_id value is in a numbering space that is unique to each clock
-controller.  The ID numbers are #define'd in header files shared by DT
-and the clock drivers.  As far as I know, no Qualcomm targets utilize
-SCMI clocks (either as a platform or agent).
-
-Supporting clocks in Linux using SCMI has its own set of challenges.
-One is that the there can only be one clk-scmi device on the agent side
-(associated with the platform) and thus all of the clocks it exposes
-must be in the same numbering space.  In the case where the platform is
-another Linux instance, this presents a mismatch as each of its many
-clock controllers has its own numbering space.
-
-Another problem is that, as with regulators, ID numbers could
-unknowingly get out of sync between the platform and the agent.  Using
-clock domain names for referencing fixes both issues.  This can be
-accomplished by defining wrapper clock controller devices on the agent
-which define all of the clocks and specify their parent by name (which
-matches a clock exposed by the clk-scmi driver).
-
-> Another main issue I have is what if the firmware and DT end up with a
-> mismatch say with a firmware upgrade or a DT update ? Basically out of sync
-> between DT and the SCMI firmware. I see this as duplication of source of
-> information and is always cause for the trouble. I don't want to end up with
-> the quirks to deal with (totally unnecessary) issues this may create in long
-> run.
-
-This patch series is specifically intended to address the issue of
-firmware (SCMI platform) configurations getting out of sync with DT
-(SCMI agent) configurations where the mapping of regulators to ID
-numbers isn't correctly matched.
-
-This change allows the existing 'reg' ID number based identification of
-scmi-regulator subnodes to continue without issue.  Systems don't need
-to use the proposed 'arm,scmi-domain-name' property if they'd prefer to
-stay with 'reg' instead.  Also, both can be specified for added
-assurance if desired.
-
->> It also ensures that the
->> correct Voltage Domain is selected for a given physical regulator.
+> I don't have a better solution than this.
 > 
-> How is that done magically if I give wrong regulator name ? Sorry the way
-> it is presented sounds like adding name fixes something that numerical
-> ID alone will always break.
-
-If an scmi-regulator subnode on the SCMI agent side specifies an
-'arm,scmi-domain-name' property value which does not match the name of
-any voltage domain exposed by the SCMI platform, then that regulator
-will not be registered at runtime.  The only way an scmi-regulator
-subnode gets registered as a Linux regulator device is if there is a
-positive name match.
-
-The name string for a regulator has an explicit meaning that clearly
-maps it to a particular physical regulator without the need for any
-additional context.  In a non-trivial system composed of multiple PMICs
-each with multiple regulators of different types, there is no single
-numbering system that intuitively and unambiguously captures the mapping
-of an ID number to a physical regulator.  Such ID numbers have no
-explicit meaning in the context of physical regulator identification.
-Therefore, some other information is required to map the ID numbers to
-physical regulators (e.g. #define constants in a header file).  This
-mapping must then somehow be shared across domains (i.e. by the platform
-and agent) and always change in lock-step.
-
->> This cannot be guaranteed with numeric Voltage Domain IDs alone.
->>
+> So neither devicetree or ACPI entries exists for the xHC part of this dwc3 controller?
 > 
-> If the IDs are correct like the names, it is guaranteed. I see this
-> ID vs name is more for some maintenance convenience because somewhere
-> something else needs to changes or moved away from existing way of
-> maintenance.
-
-How do you quantify an ID number to physical regulator mapping as
-"correct"?  What happens if the mapping must be changed on the SCMI
-platform side (e.g. a PMIC was added or removed, or the order that
-regulators are listed in needs to change)?  If the SCMI agent is blindly
-identifying regulators solely by ID number, then it has no idea that
-anything has changed on the platform side.  If instead the agent is
-using names for identification of SCMI voltage domains then reordering
-IDs or adding new regulators has no impact.  Removing regulators from
-the platform side would correctly lead to the regulator not registering
-on the agent side.
-
-> That said, if others believe, this is useful, I am happy to consider
-> esp. if there are more *real* reasons for doing this.
+> A pure platform device is created, and it matches and binds to xhci-plat driver by "xhci-hcd" name.
+> I guess we have no way to identify this dwc3 xhci controller in xhci-plat.c, and set quirks there,
+> like all those devicetree xhci devices that we set quirks based on .compatibility. 
 > 
-> Please add clock and other subsystem maintainers who also have numbering
-> scheme as main mechanism in the upstream so that we get feedback from them
-> too.
-
-Done.
+Thanks for the review. Yes, xhci-plat platform device is created by the DWC3
+driver for the controllers that needs to be operated in the host.
 
 Thanks,
-David
+Pavan
