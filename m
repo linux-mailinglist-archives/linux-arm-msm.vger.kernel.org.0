@@ -2,69 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2F4B4E53E2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 15:02:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DB5D4E5424
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Mar 2022 15:20:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244619AbiCWOEJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Mar 2022 10:04:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59560 "EHLO
+        id S244705AbiCWOV2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 23 Mar 2022 10:21:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244629AbiCWOEF (ORCPT
+        with ESMTP id S237528AbiCWOV1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Mar 2022 10:04:05 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE3E17EA23;
-        Wed, 23 Mar 2022 07:02:34 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4CE42616CA;
-        Wed, 23 Mar 2022 14:02:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26DCC340E9;
-        Wed, 23 Mar 2022 14:02:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648044153;
-        bh=JxYjL1a/RqmPUfkRn2b3Bnz8DtavbdauzsNtNCTAyYA=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=oieN1aCzKvsVfn12YfFRhONaJvev2wuG5HlGd48E/hkTVcyxN5y4by+9isp6uB0qa
-         sU3XvLHPErb8dH3TQrsNCPpruV8PjYxtyAbt9olbXZ8oIoYW/rf/e3qvuP302tyfiT
-         MCwg7dTNW0kcum4698cWuAtfSJxWUh0F4fcZ8H+OYjGwyg7kz30NgFvfhHea+Tb9v5
-         kUUP9r9rcSaCgpMbOnaFsA4/RQgYda/xERiZHXioLj476QSc+no9l93wDFvXjxdgAi
-         AkSvfY64eQbYNk/Y11SszxuRpk7WtL/NrM+nMyJcb51oERc4JuRhG2bVMkXx2w0e/4
-         yufXW/tfwlJxg==
-Received: by mail-ej1-f50.google.com with SMTP id o10so3076315ejd.1;
-        Wed, 23 Mar 2022 07:02:33 -0700 (PDT)
-X-Gm-Message-State: AOAM532KESkBXdubdWibucwVD2CGwBDs2eQq6b9Ro4n8wQ4fmi0VmTaT
-        4UbZxdJUgVGFiDwftZcvwZjNCR/cjhEzov4ueQ==
-X-Google-Smtp-Source: ABdhPJx2TFWrM7icRG1WmcNLDv99GAOvmhqZlzEVH4q/kNWKTlIGOLxQ9V863+3ejraj2Zqd64uKHsl0Oob/a0vBacY=
-X-Received: by 2002:a17:906:d204:b0:6d6:df17:835e with SMTP id
- w4-20020a170906d20400b006d6df17835emr119400ejz.20.1648044145846; Wed, 23 Mar
- 2022 07:02:25 -0700 (PDT)
+        Wed, 23 Mar 2022 10:21:27 -0400
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32E937CDC4;
+        Wed, 23 Mar 2022 07:19:58 -0700 (PDT)
+Received: by mail-ej1-f41.google.com with SMTP id d10so3118011eje.10;
+        Wed, 23 Mar 2022 07:19:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:from
+         :subject:content-language:to:cc:references:in-reply-to
+         :content-transfer-encoding;
+        bh=LCtVktgE+tM1dwB6vvs9xAHGeA+uCrA5P8a3RwuF97c=;
+        b=Jr9QgDWM3710HQkVcJXK1tKtYWZIXXVIfdGSajSBNV43nKq2oaUtckQFJW4UzfaMOm
+         a+JAU6jmR3rcQ8YvFDbddte/Z0Bu+2M5jiRrD9T7IsPRfwsLAgCkUW5QcLYs0ZW+4NkQ
+         tuquJ0v+5eb9STV38Nan7uZj7td3gqM/6SOJzvUZq+/dG/teByf9WOiKQYiaIVznGaQ1
+         v4VoNJNEQL2CTtHuFiwvUWCsAUuxLKaa0gVToLMvrtDdobJveWtVilkLG5xRiGrLPYMJ
+         6xIB0HL0yrqEQM2fuSplWBVj/tdJRsIKS33xR6usLsIFceYsw6Lj0e1DuOKOz1A4xQ/b
+         Ss9w==
+X-Gm-Message-State: AOAM532pfBFlwHHOZy6ozypUUJIyW/i4q6CratebLYW9256HkDyOdusd
+        VlB+C8JP0mQ7O5HnylDjs5ct2lC6QJc7TA==
+X-Google-Smtp-Source: ABdhPJy6qkIrAOliQ88WXgP2REqzU/lsvhMnM1TlyKzJ/52Top/TQDHtwKvBnMjc/PumEPXeyMjfdA==
+X-Received: by 2002:a17:907:a422:b0:6e0:238c:4f44 with SMTP id sg34-20020a170907a42200b006e0238c4f44mr152721ejc.257.1648045196681;
+        Wed, 23 Mar 2022 07:19:56 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.googlemail.com with ESMTPSA id e10-20020a170906748a00b006dfaff31e88sm4639ejl.125.2022.03.23.07.19.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Mar 2022 07:19:56 -0700 (PDT)
+Message-ID: <1d3e9846-f092-09c6-e4ef-7a52d61613f1@kernel.org>
+Date:   Wed, 23 Mar 2022 15:19:54 +0100
 MIME-Version: 1.0
-References: <20220302001410.2264039-1-dmitry.baryshkov@linaro.org> <CAL_Jsq+TwPpZSZa3Jq-qYg0kUpb2ord5bWKVAwqsdVP40RKFuQ@mail.gmail.com>
-In-Reply-To: <CAL_Jsq+TwPpZSZa3Jq-qYg0kUpb2ord5bWKVAwqsdVP40RKFuQ@mail.gmail.com>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Wed, 23 Mar 2022 09:02:13 -0500
-X-Gmail-Original-Message-ID: <CAL_Jsq+dQDBoWST6+HfhsQjT4=Gks2F72S7iPyHzapp2eEdwfA@mail.gmail.com>
-Message-ID: <CAL_Jsq+dQDBoWST6+HfhsQjT4=Gks2F72S7iPyHzapp2eEdwfA@mail.gmail.com>
-Subject: Re: [RESEND PATCH] dt-bindings: display/msm: add missing brace in dpu-qcm2290.yaml
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Loic Poulain <loic.poulain@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v6 17/18] dt-bindings: arm: msm: Convert kpss-gcc driver
+ Documentation to yaml
+Content-Language: en-US
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+References: <20220321231548.14276-1-ansuelsmth@gmail.com>
+ <20220321231548.14276-18-ansuelsmth@gmail.com>
+ <e832516d-277d-6a0b-4588-b32a085185c8@kernel.org>
+ <YjnOdYMS+P85pqvF@Ansuel-xps.localdomain>
+ <f13fdc4b-8f45-b09f-5d58-8d2a565e2c18@kernel.org>
+ <Yjr+nHBFqNqMV+v0@Ansuel-xps.localdomain>
+In-Reply-To: <Yjr+nHBFqNqMV+v0@Ansuel-xps.localdomain>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,40 +75,82 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 8, 2022 at 1:36 PM Rob Herring <robh+dt@kernel.org> wrote:
->
-> On Tue, Mar 1, 2022 at 6:14 PM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > Add missing brace in dpu-qcm2290.yaml. While we are at it, also fix
-> > indentation for another brace, so it matches the corresponding line.
-> >
-> > Reported-by: Rob Herring <robh@kernel.org>
-> > Cc: Loic Poulain <loic.poulain@linaro.org>
-> > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> > Didn't include freedreno@ in the first email, so resending.
-> > ---
-> >  Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> Now that the example actually builds, we get just schema warnings:
->
-> /builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.example.dt.yaml:
-> mdss@5e00000: compatible: ['qcom,qcm2290-mdss', 'qcom,mdss'] is too
-> long
-> From schema: /builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml
-> /builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.example.dt.yaml:
-> mdss@5e00000: 'mdp@5e01000' does not match any of the regexes:
-> '^display-controller@[0-9a-f]+$', 'pinctrl-[0-9]+'
-> From schema: /builds/robherring/linux-dt/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml
->
->
-> I would have assumed upon reporting errors with 'make
-> dt_binding_check' that the fixes would be tested with 'make
-> dt_binding_check'...
+On 23/03/2022 12:03, Ansuel Smith wrote:
+>>>
+>>> If you notice the changes across the different patch, it's very minimal
+>>> and 99% of it has not changed. Nothing silent just me addressing warning
+>>> from the bot. About the trust issue...
+>>> Is it really a syscon addition that bad? Again the original
+>>> Documentation was just bad so why should we care to have a 100% 1:1
+>>> conversion if it should have been not accepted in the first place.
+>>
+>> Does not have to be 100% but deviations should be either expected or
+>> explained. Bindings are used also outside of Linux kernel.
+>>
+>>> The addition of this new syscon is because in the current dtsi it's
+>>> there and I assume it's there as this is a global accessor and probably
+>>> other driver would access the same regs (so it's also a syscon)
+>>
+>> If these are assumptions, then they need to be checked. If these were
+>> new bindings, we would discuss/check the need of syscon. Now we do not
+>> question existing properties, because they were accepted. But syscon
+>> compatible was not accepted, so putting it here requires our acknowledgment.
+>>
+> 
+> About this I have a question. If the dts already have some binding and
+> the Documentation doesn't have them. Should the dts have priority or the
+> Documentation?
 
-Still failing. Please send a fix ASAP.
+Depends, usually yes, if the DTS is being actually used. There might be
+some exceptions, though. The priority is for the ones which are correct.
 
-Rob
+Judging by current DTS, the syscon is indeed used in DTS and documented
+in bindings. It might be deprecated, because one binding is saying that
+mailboxes can be used instead.
+
+Here your call to add syscon looks correct. Just please document it in
+commit msg, why it has to be added (there are real users of it: Qualcomm
+RPM).
+
+> In the case where we can't prove that syscon is needed (for example), can
+> we remove it from dts (and accept to have inconsistency while the dts
+> changes are merged) or we should add the extra binding to the
+> Documentation putting some comments about it and discussing the
+> inclusion? 
+> 
+>> The bindings are probably pure junk, so this is not merely a conversion
+>> how you wrote in commit msg. This is rework of the bindings. Don't hide
+>> rework under "conversion". Conversion is TXT->YAML without any changes...
+>>
+> 
+> Ok, thanks for the clarification. I still think should be handled with
+> conversion + additional commit to add the missing part so I have to fix
+> my wrong commits.
+> 
+>> I asked about this before and the only part you added to commit msg was
+>> "clock-cells". And now I see syscon - so isn't it a bit surprising?
+>>
+> 
+> You are right... I will just do the 1:1 conversion and put all these
+> addition to a separate commit to make them clear.
+> 
+>>>
+>>> I understand the complain about putting too much revision... But NAK
+>>> this cause I'm trying to fix all this mess just because more and more
+>>> problems are coming up and I'm trying to fix them. It's a bit sad.
+>>
+>> Why you cannot test your changes and fix them all before sending sixth
+>> version? Why the bot has to test your code, not you?
+>>
+> 
+> I'm aksed Rob if there is a quicker way to test single Documenation and
+> dts but it's my fault anyway.
+
+make -j8 dt_binding_check DT_SCHEMA_FILES="qcom-kpss"
+
+make defconfig (or allyesconfig etc)
+make -j8 dtbs_check DT_SCHEMA_FILES="qcom-kpss"
+
+
+Best regards,
+Krzysztof
