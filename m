@@ -2,212 +2,211 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 175C84E6640
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 16:45:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC7134E668F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 16:59:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351237AbiCXPqk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Mar 2022 11:46:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58118 "EHLO
+        id S1351535AbiCXQAc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Mar 2022 12:00:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344411AbiCXPqk (ORCPT
+        with ESMTP id S242615AbiCXQA0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Mar 2022 11:46:40 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3D8D2A72D;
-        Thu, 24 Mar 2022 08:45:07 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 67866B82407;
-        Thu, 24 Mar 2022 15:45:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E38CC340ED;
-        Thu, 24 Mar 2022 15:45:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648136705;
-        bh=W0ujt+uG7tz/cIu1lu+5YA1hm5s0h2ZhoEP/N2GqCNM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=TQh+1RpC7VntD7RlSC5lAgWlzPhTHIAkGED39r+s/JdbooGd8ji13vIJB03pDmxkh
-         Fd8GqQz/ZfGHH6K+fds7hOrn3/PMlTlJQPrPhhPLypqP+RjZK6nxfOgICOC1it3YZw
-         uZ2mrkFT9b3HQpYSyAM1X72krcAWAg9HFmxgKexrJW+eS5ICZ3LlxREsM5ErvDIZBv
-         9FdqXZX7JOgBdihel1e/F9rWyOx0Sr1YF02M36e3u7bBe4eoBrdmGpoXluAcqVH0R/
-         8Z/9Tna+AxpxzMG53tnDFBBxs0nW6n4PLrAUzcw4ptpiOPAdaZZIWKHjwiSd9l5YHh
-         B4Qhic+fWJoXw==
-Date:   Thu, 24 Mar 2022 21:15:00 +0530
-From:   Vinod Koul <vkoul@kernel.org>
+        Thu, 24 Mar 2022 12:00:26 -0400
+Received: from mail-oa1-x2b.google.com (mail-oa1-x2b.google.com [IPv6:2001:4860:4864:20::2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 380A647062
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 08:58:42 -0700 (PDT)
+Received: by mail-oa1-x2b.google.com with SMTP id 586e51a60fabf-dd9d3e7901so5325954fac.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 08:58:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=4YDBWcE8Hd/Vcn/wMjmVWKutSRjqZuZu46ShhnWpSDE=;
+        b=Hpgtnjvcc56t+esUg4+L/65ZTw07qsE+GNTmbuW1MVIA9TcW8kzADH+xSb/VcOUDVo
+         ebULinkLixZmGm7k1eRkk/UdBQ7DhUug+rCWuxgBYQGiG2ELs9SLSL2QHjN3OYM4WtTN
+         AWVJhK+PaadM15NoQCxEPklmR7UG8JScriw3jzRZY7Z4ZYrqG5LKukF9qhfVlqHezdai
+         a/TJcgvZnzMH/kN04ZL5etHe9Z+4kuUWM8mNptY1fAqAGG/0YYR6vf6rJdscjaznXglD
+         K9G3nYbVVl7dJQWwBh2yyOxybttI93vkIQMcNSgpSkuHS1R2FFlSjWiFl9o+UN3MBE3i
+         Wtzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=4YDBWcE8Hd/Vcn/wMjmVWKutSRjqZuZu46ShhnWpSDE=;
+        b=lCuNiGThUs4wM0V5a8lHQk6VRSVcC7A8GsRAW8bRn4GWljVG3HOFmsylrYVpQjTfwL
+         bjLUHVFzL7zBIJmWcCA4Z1ZHSmtDRhkakyK7Pz7ZY1HYy/Yb9ChwiJirUgxwczO7c9wh
+         9m2uCbdzIaW2e9HZPquTMwqZ/+7jM5F05LCgWoxnErT2munb6ZaqvICHQzP5jXm0YVT6
+         FAtSskG6TXcL/91D8+2GknKMPMjTPN7Gm9vDLilQNi4iRpkXhayekOmWSy1AM/7iL2bQ
+         fSocVhFHOIhRiay18HWuIyvpu+57JfSmn1GQNK9FyzavEDWkMm1zxiuxSibRkTeHcrMZ
+         vcgA==
+X-Gm-Message-State: AOAM5304zAeJ0JOtFcHK9VNL5CjBOHqwcH9p3RpWsqdHxlVV/DAjSllY
+        hziw7+wiJJpL9v0hXjWk7Lpz5hfEFRN3Ig==
+X-Google-Smtp-Source: ABdhPJzxuKxzPrvw0bZqTmhJRcKcynuKadJWKYwWiHGj3XTxQerMvWQJ2w4FmMYiXZRursDM4p4uhQ==
+X-Received: by 2002:a05:6870:6494:b0:de:20d8:f8e5 with SMTP id cz20-20020a056870649400b000de20d8f8e5mr2679447oab.34.1648137521566;
+        Thu, 24 Mar 2022 08:58:41 -0700 (PDT)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id s82-20020acadb55000000b002d9ce64bea0sm1547652oig.48.2022.03.24.08.58.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Mar 2022 08:58:40 -0700 (PDT)
+Date:   Thu, 24 Mar 2022 09:00:03 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [REPOST PATCH v4 13/13] drm/msm/dsi: Add support for DSC
- configuration
-Message-ID: <YjyR/LrBeXeVd2J3@matsya>
-References: <20220210103423.271016-1-vkoul@kernel.org>
- <20220210103423.271016-14-vkoul@kernel.org>
- <977340f4-1a5d-a103-4669-ab0168df8cd6@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        Thara Gopinath <thara.gopinath@gmail.com>
+Subject: Re: [PATCH v2 2/4] cpufreq: qcom-hw: fix the race between LMH worker
+ and cpuhp
+Message-ID: <YjyVgx08RiFDYwT5@ripper>
+References: <20220309223938.3819715-1-dmitry.baryshkov@linaro.org>
+ <20220309223938.3819715-3-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <977340f4-1a5d-a103-4669-ab0168df8cd6@linaro.org>
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20220309223938.3819715-3-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21-02-22, 05:11, Dmitry Baryshkov wrote:
-> On 10/02/2022 13:34, Vinod Koul wrote:
-> > When DSC is enabled, we need to configure DSI registers accordingly and
-> > configure the respective stream compression registers.
-> > 
-> > Add support to calculate the register setting based on DSC params and
-> > timing information and configure these registers.
-> > 
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > ---
-> >   drivers/gpu/drm/msm/dsi/dsi.xml.h  |  10 +++
-> >   drivers/gpu/drm/msm/dsi/dsi_host.c | 109 ++++++++++++++++++++++++++++-
-> >   2 files changed, 118 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/dsi/dsi.xml.h b/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> > index 49b551ad1bff..c1c85df58c4b 100644
-> > --- a/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> > +++ b/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> > @@ -706,4 +706,14 @@ static inline uint32_t DSI_VERSION_MAJOR(uint32_t val)
-> >   #define REG_DSI_CPHY_MODE_CTRL					0x000002d4
-> > +#define REG_DSI_VIDEO_COMPRESSION_MODE_CTRL			0x0000029c
-> > +
-> > +#define REG_DSI_VIDEO_COMPRESSION_MODE_CTRL2			0x000002a0
-> > +
-> > +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL			0x000002a4
-> > +
-> > +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2			0x000002a8
-> > +
-> > +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL3			0x000002ac
-> > +
-> >   #endif /* DSI_XML */
-> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > index 438c80750682..3d8d5a1daaa3 100644
-> > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > @@ -908,6 +908,20 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
-> >   		dsi_write(msm_host, REG_DSI_CPHY_MODE_CTRL, BIT(0));
-> >   }
-> > +static int dsi_dsc_update_pic_dim(struct msm_display_dsc_config *dsc,
-> > +				  int pic_width, int pic_height)
-> > +{
-> > +	if (!dsc || !pic_width || !pic_height) {
-> > +		pr_err("DSI: invalid input: pic_width: %d pic_height: %d\n", pic_width, pic_height);
-> > +		return -EINVAL;
-> > +	}
-> > +
-> > +	dsc->drm->pic_width = pic_width;
-> > +	dsc->drm->pic_height = pic_height;
-> > +
-> > +	return 0;
-> > +}
-> > +
-> >   static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
-> >   {
-> >   	struct drm_display_mode *mode = msm_host->mode;
-> > @@ -940,7 +954,68 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
-> >   		hdisplay /= 2;
-> >   	}
-> > +	if (msm_host->dsc) {
-> > +		struct msm_display_dsc_config *dsc = msm_host->dsc;
-> > +
-> > +		/* update dsc params with timing params */
-> > +		dsi_dsc_update_pic_dim(dsc, mode->hdisplay, mode->vdisplay);
-> > +		DBG("Mode Width- %d x Height %d\n", dsc->drm->pic_width, dsc->drm->pic_height);
-> > +
-> > +		/* we do the calculations for dsc parameters here so that
-> > +		 * panel can use these parameters
-> > +		 */
-> > +		dsi_populate_dsc_params(dsc);
-> > +
-> > +		/* Divide the display by 3 but keep back/font porch and
-> > +		 * pulse width same
-> > +		 */
-> > +		h_total -= hdisplay;
-> > +		hdisplay /= 3;
-> > +		h_total += hdisplay;
-> > +		ha_end = ha_start + hdisplay;
-> > +	}
-> > +
-> >   	if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
-> > +		if (msm_host->dsc) {
-> > +			struct msm_display_dsc_config *dsc = msm_host->dsc;
-> > +			u32 reg, intf_width, slice_per_intf;
-> > +			u32 total_bytes_per_intf;
-> > +
-> > +			/* first calculate dsc parameters and then program
-> > +			 * compress mode registers
-> > +			 */
-> > +			intf_width = hdisplay;
-> > +			slice_per_intf = DIV_ROUND_UP(intf_width, dsc->drm->slice_width);
-> > +
-> > +			dsc->drm->slice_count = 1;
-> > +			dsc->bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width * 8, 8);
-> > +			total_bytes_per_intf = dsc->bytes_in_slice * slice_per_intf;
-> > +
-> > +			dsc->eol_byte_num = total_bytes_per_intf % 3;
-> > +			dsc->pclk_per_line =  DIV_ROUND_UP(total_bytes_per_intf, 3);
-> > +			dsc->bytes_per_pkt = dsc->bytes_in_slice * dsc->drm->slice_count;
-> > +			dsc->pkt_per_line = slice_per_intf / dsc->drm->slice_count;
-> > +
-> > +			reg = dsc->bytes_per_pkt << 16;
-> > +			reg |= (0x0b << 8);    /* dtype of compressed image */
-> > +
-> > +			/* pkt_per_line:
-> > +			 * 0 == 1 pkt
-> > +			 * 1 == 2 pkt
-> > +			 * 2 == 4 pkt
-> > +			 * 3 pkt is not supported
-> > +			 * above translates to ffs() - 1
-> > +			 */
-> > +			reg |= (ffs(dsc->pkt_per_line) - 1) << 6;
-> > +
-> > +			dsc->eol_byte_num = total_bytes_per_intf % 3;
-> > +			reg |= dsc->eol_byte_num << 4;
-> > +			reg |= 1;
-> > +
-> > +			dsi_write(msm_host,
-> > +				  REG_DSI_VIDEO_COMPRESSION_MODE_CTRL, reg);
-> > +		}
-> > +
-> >   		dsi_write(msm_host, REG_DSI_ACTIVE_H,
-> >   			DSI_ACTIVE_H_START(ha_start) |
-> >   			DSI_ACTIVE_H_END(ha_end));
-> > @@ -959,8 +1034,40 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
-> >   			DSI_ACTIVE_VSYNC_VPOS_START(vs_start) |
-> >   			DSI_ACTIVE_VSYNC_VPOS_END(vs_end));
-> >   	} else {		/* command mode */
-> > +		if (msm_host->dsc) {
-> > +			struct msm_display_dsc_config *dsc = msm_host->dsc;
-> > +			u32 reg, reg_ctrl, reg_ctrl2;
-> > +			u32 slice_per_intf, bytes_in_slice, total_bytes_per_intf;
-> > +
-> > +			reg_ctrl = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL);
-> > +			reg_ctrl2 = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2);
-> > +
-> > +			slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->drm->slice_width);
-> > +			bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width *
-> > +						      dsc->drm->bits_per_pixel, 8);
-> > +			dsc->drm->slice_chunk_size = bytes_in_slice;
-> > +			total_bytes_per_intf = dsc->bytes_in_slice * slice_per_intf;
+On Wed 09 Mar 14:39 PST 2022, Dmitry Baryshkov wrote:
+
+> qcom_lmh_dcvs_poll() can be running when the cpu is being put offline.
+> This results in the following warnings and an oops. The driver would
+> disable the worker, but it happens closer to the end of
+> cpufreq_offline(). Change the locking in the qcom_lmh_dcvs_poll(), so
+> that the worker can not run in parallel with cpufreq_offline() call.
 > 
-> Should we use dsc->bytes_in_slice or just bytes_in_slice here?
+> [   55.650435] (NULL device *): dev_pm_opp_find_freq_floor: Invalid argument freq=00000000709ccbf9
+> [   55.659420] (NULL device *): Can't find the OPP for throttling: -EINVAL!
+> [   55.666329] Unable to handle kernel paging request at virtual address ffffadfba4bb6d81
+> [   55.674491] Mem abort info:
+> [   55.677363]   ESR = 0x96000004
+> [   55.680527]   EC = 0x25: DABT (current EL), IL = 32 bits
+> [   55.686001]   SET = 0, FnV = 0
+> [   55.689164]   EA = 0, S1PTW = 0
+> [   55.692418]   FSC = 0x04: level 0 translation fault
+> [   55.697449] Data abort info:
+> [   55.700426]   ISV = 0, ISS = 0x00000004
+> [   55.704383]   CM = 0, WnR = 0
+> [   55.707455] swapper pgtable: 4k pages, 48-bit VAs, pgdp=00000000a98e9000
+> [   55.714354] [ffffadfba4bb6d81] pgd=0000000000000000, p4d=0000000000000000
+> [   55.721388] Internal error: Oops: 96000004 [#1] SMP
+> [   55.726397] Modules linked in:
+> [   55.729542] CPU: 7 PID: 162 Comm: kworker/7:1H Tainted: G S      W         5.17.0-rc6-00100-g04890a1d9672 #724
+> [   55.746066] Workqueue: events_highpri qcom_lmh_dcvs_poll
+> [   55.751527] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> [   55.758669] pc : cpufreq_cpu_get_raw+0x20/0x44
+> [   55.763233] lr : qcom_cpufreq_hw_get+0x10/0x64
+> [   55.767799] sp : ffff800009983d10
+> [   55.771207] x29: ffff800009983d10 x28: ffffaa13a4f2b000 x27: ffff7b31329f9305
+> [   55.778530] x26: ffffaa13a4f30af8 x25: ffffaa13a4f4e4c8 x24: ffff7b2ec2eda000
+> [   55.785851] x23: ffffffffffffffea x22: ffff7b2ec2e9fc18 x21: ffff7b2ec2e9fc00
+> [   55.793170] x20: 0000000000000100 x19: ffff7b2ec2e9fcc0 x18: ffffffffffffffff
+> [   55.800490] x17: 726620746e656d75 x16: 6772612064696c61 x15: ffff8000899839c7
+> [   55.807812] x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+> [   55.815140] x11: ffff7b2ec2e9fc80 x10: ffffaa13a59a1a70 x9 : 0000000000000000
+> [   55.822468] x8 : ffff7b2eca6917c0 x7 : ffffaa13a528b000 x6 : 0000000000000001
+> [   55.829788] x5 : 0000000000040000 x4 : 000000000000024f x3 : 0000000000000000
+> [   55.837116] x2 : 0000000000000100 x1 : ffffaa13a4bb6d80 x0 : 000003e800000001
+> [   55.844439] Call trace:
+> [   55.846951]  cpufreq_cpu_get_raw+0x20/0x44
 
-This should be dsc->bytes_in_slice, fixed up now. Thanks for pointing
+While I don't have the line numbers, I presume this would be cause by
+policy->cpus being empty and:
 
--- 
-~Vinod
+   int cpu = cpumask_first(policy->cpus);
+
+returning >= nr_cpu_ids, which means that the get_cpu_device(cpu); on
+the next line will return NULL and then we keep playing opp on that
+NULL?
+
+
+Seems like this would be exactly the same mistake as I did wrt
+policy->cpus vs policy->related_cpus and we don't actually need the
+specific CPU, we just need a cpu device in the frequency domain.
+
+As such we should actually do cpumaks_first(policy->related_cpus)
+instead.
+
+> [   55.851155]  qcom_lmh_dcvs_poll+0x104/0x160
+> [   55.855452]  process_one_work+0x288/0x69c
+> [   55.859574]  worker_thread+0x74/0x470
+> [   55.863336]  kthread+0xfc/0x100
+> [   55.866568]  ret_from_fork+0x10/0x20
+> [   55.870246] Code: b00065c1 91360021 d503233f f8625800 (f8616800)
+> [   55.876501] ---[ end trace 0000000000000000 ]---
+> 
+> Fixes: 275157b367f4 ("cpufreq: qcom-cpufreq-hw: Add dcvs interrupt support")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/cpufreq/qcom-cpufreq-hw.c | 24 +++++++++++++++++++++---
+>  1 file changed, 21 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+> index 44d46e52baea..7c1bb002e1c3 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+> @@ -296,6 +296,23 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
+>  	struct dev_pm_opp *opp;
+>  	unsigned int freq;
+>  
+> +	/*
+> +	 * Synchronize against CPU going offline.
+> +	 * cpufreq_offline() will get the write lock on policy->rwsem.
+> +	 */
+> +retry:
+> +	if (unlikely(!down_read_trylock(&policy->rwsem))) {
+> +		mutex_lock(&data->throttle_lock);
+> +		if (data->cancel_throttle) {
+> +			mutex_unlock(&data->throttle_lock);
+> +			return;
+> +		}
+> +
+> +		mutex_unlock(&data->throttle_lock);
+> +
+> +		schedule();
+> +		goto retry;
+> +	}
+
+And doing that instead would remove the need for doing this crazy
+locking between the cpufreq core and qcom driver.
+
+Above change would be trivial and -rc material.
+
+Regards,
+Bjorn
+
+>  	/*
+>  	 * Get the h/w throttled frequency, normalize it using the
+>  	 * registered opp table and use it to calculate thermal pressure.
+> @@ -314,9 +331,10 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
+>  
+>  	/*
+>  	 * In the unlikely case policy is unregistered do not enable
+> -	 * polling or h/w interrupt
+> +	 * polling or h/w interrupt.
+> +	 * If we are here, we have the policy->rwsem read lock,
+> +	 * cancel_throttle can be toggled only with the write lock.
+>  	 */
+> -	mutex_lock(&data->throttle_lock);
+>  	if (data->cancel_throttle)
+>  		goto out;
+>  
+> @@ -331,7 +349,7 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
+>  				 msecs_to_jiffies(10));
+>  
+>  out:
+> -	mutex_unlock(&data->throttle_lock);
+> +	up_read(&policy->rwsem);
+>  }
+>  
+>  static void qcom_lmh_dcvs_poll(struct work_struct *work)
+> -- 
+> 2.34.1
+> 
