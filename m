@@ -2,71 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA40E4E66A4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 17:07:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 816094E66F3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 17:24:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236762AbiCXQI3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Mar 2022 12:08:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58018 "EHLO
+        id S1351665AbiCXQ01 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Mar 2022 12:26:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351556AbiCXQI2 (ORCPT
+        with ESMTP id S1347656AbiCXQ01 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Mar 2022 12:08:28 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 309B969CC4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 09:06:51 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id v75so5355034oie.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 09:06:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ndopoaQxbjUpH+KO21aa7+zGRJVnKw1Lny6N5VHvt1w=;
-        b=d1qf+hBkFVQGwQVw4Kn92O/e1UaYfQtaekGJ9BIdAsugoXAwvYGifna8Vov8BFDIR3
-         JZMmLzaQzH9kjEwvYGxrRoy83kwkyQhlrQ6ylw1KY3nQ/Bu1nyKATLsIT3W40g2xC/Wd
-         uqoCh25FfVFvtfkQ5XIgBkP/uUvCnOjtP49NzHyhiKF5GNIcWPfL72o0qmdS8XaiMTVv
-         yOBaiNhvJUxnnpit5+b8car22XupljXINPsfwUbh2BV0fHbUnc1scqzdW0SIrrNFNnFw
-         M3AcEk6xnXQo8+ZWy7wKv87gA9QVzNycQEvSCiaE0n2k++orLLMGjm10AEpl+fBtTEti
-         vhCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ndopoaQxbjUpH+KO21aa7+zGRJVnKw1Lny6N5VHvt1w=;
-        b=Qbm2vt0KEIhqslAzMCSWpaznUTY0pHJl40LnMoNVtZUdFJ8zIbeAqHE+ufetVMLEBS
-         Ti5s9bU88WCE1+3/kBJ9hB0WkTacaPCRKYsGiBXxopFc9aablRSWlYK8RMED67PMihww
-         tr3Ne8wvksCzbZKG/j6StrM54nMru2MfVeTYYituv8Nj0X11NMnLYsi6yYChTkg0w1Gc
-         +yA3aCliSoGCPGet6t4SK99pWEaxNFnEoWLqYq/ZMvFCumFU7ZS+/cv3oLJFg5c7LCZy
-         62hxRYWUtULhyi3vZ8jSaQevOkdFVnKfeOnpDAaO3w0qbAbwuvNtHLfDOpxzc84Gl5HF
-         tiCg==
-X-Gm-Message-State: AOAM530WLS8Idmrz+QIIybFczXi1pZIHcGfVORuFMmwLg+E4edSAaD/7
-        /FZg3RhfryoetGE3kskdfc3iXQ==
-X-Google-Smtp-Source: ABdhPJytPuzv/6r6jstRqMjvrBI3761nE2S1zA1MHV3c2CSju6k+6dsid7r1sgRJT0prDNof5ShKJg==
-X-Received: by 2002:a54:4408:0:b0:2ec:b7d0:11e9 with SMTP id k8-20020a544408000000b002ecb7d011e9mr3005722oiw.91.1648138010157;
-        Thu, 24 Mar 2022 09:06:50 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id 12-20020a05687012cc00b000de97cc1beesm517226oam.43.2022.03.24.09.06.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 09:06:49 -0700 (PDT)
-Date:   Thu, 24 Mar 2022 09:08:10 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        Thara Gopinath <thara.gopinath@gmail.com>
-Subject: Re: [PATCH v2 4/4] cpufreq: qcom-hw: provide online/offline
- operations
-Message-ID: <YjyXatXzL8GDrcw0@ripper>
-References: <20220309223938.3819715-1-dmitry.baryshkov@linaro.org>
- <20220309223938.3819715-5-dmitry.baryshkov@linaro.org>
+        Thu, 24 Mar 2022 12:26:27 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77CBF6C974;
+        Thu, 24 Mar 2022 09:24:55 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0D9C66187F;
+        Thu, 24 Mar 2022 16:24:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D80C340EC;
+        Thu, 24 Mar 2022 16:24:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1648139094;
+        bh=z0SKDKFfLXgUlaEweN3w20sozNkj9PoC13UdkCxFdwo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=R5CiytF7K28XTl+QYrKnUKx8xPaqAdeKr/pOrLvZqjXaSfUjSlummA2mDlVLb/1kU
+         ss9g+9wYHpT9GUXhMkgQ93Y9oGdUXn117X5AXWlBgzDECVEV0MbezFnVT/4OvQ+LrZ
+         vuYGAvlJrvxvVlABtIeQn09HUWGeR4H4xeIRoLnWul2hpCUUva5FvYxzeF76LTJwSP
+         MdS+LK1B3kGU/L39H8wHcfTTEO82bYO3syshdHL/HiJr/ouOVtSxFvUUJ5D8wf+fp1
+         /RCe4jxepKwgrD8nQpkodRwmxOzzRqyLnGAonmL2VRB+Dkj2hkCfhEJ5uOImEH30Kl
+         WP97O+iKdXFKw==
+Date:   Thu, 24 Mar 2022 21:54:47 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [REPOST PATCH v4 06/13] drm/msm/disp/dpu1: Add DSC support in
+ hw_ctl
+Message-ID: <YjybTx1b978ecVcF@matsya>
+References: <20220210103423.271016-1-vkoul@kernel.org>
+ <20220210103423.271016-7-vkoul@kernel.org>
+ <20220217222024.mf4cmgtpvvg3bftm@SoMainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220309223938.3819715-5-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <20220217222024.mf4cmgtpvvg3bftm@SoMainline.org>
+X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,125 +64,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 09 Mar 14:39 PST 2022, Dmitry Baryshkov wrote:
-
-> Provide lightweight online and offline operations. This saves us from
-> parsing all the resources each time the CPU is put online.
+On 17-02-22, 23:20, Marijn Suijten wrote:
+> On 2022-02-10 16:04:16, Vinod Koul wrote:
+> > Later gens of hardware have DSC bits moved to hw_ctl, so configure these
+> > bits so that DSC would work there as well
+> > 
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 11 ++++++++++-
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h |  2 ++
+> >  2 files changed, 12 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> > index 02da9ecf71f1..49659165cea8 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> > @@ -25,6 +25,8 @@
+> >  #define   CTL_MERGE_3D_ACTIVE           0x0E4
+> >  #define   CTL_INTF_ACTIVE               0x0F4
+> >  #define   CTL_MERGE_3D_FLUSH            0x100
+> > +#define   CTL_DSC_ACTIVE                0x0E8
+> > +#define   CTL_DSC_FLUSH                0x104
+> >  #define   CTL_INTF_FLUSH                0x110
+> >  #define   CTL_INTF_MASTER               0x134
+> >  #define   CTL_FETCH_PIPE_ACTIVE         0x0FC
+> > @@ -34,6 +36,7 @@
+> >  
+> >  #define DPU_REG_RESET_TIMEOUT_US        2000
+> >  #define  MERGE_3D_IDX   23
+> > +#define  DSC_IDX        22
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> This define does not seem used in any of these patches.  Is that
+> intended?
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+This should used in the below case you pointed, updated now
 
-I think the other 3 patches are -rc material, this seems like v5.19.
-
-Regards,
-Bjorn
-
-> ---
->  drivers/cpufreq/qcom-cpufreq-hw.c | 39 +++++++++++++++++++++++++------
->  1 file changed, 32 insertions(+), 7 deletions(-)
+> >  static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> > index 806c171e5df2..9847c9c46d6f 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> > @@ -40,6 +40,7 @@ struct dpu_hw_stage_cfg {
+> >   * @merge_3d:              3d merge block used
+> >   * @intf_mode_sel:         Interface mode, cmd / vid
+> >   * @stream_sel:            Stream selection for multi-stream interfaces
+> > + * @dsc:                   DSC BIT masks
 > 
-> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> index fe638e141003..d38b1552ec13 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> @@ -403,11 +403,12 @@ static const struct of_device_id qcom_cpufreq_hw_match[] = {
->  };
->  MODULE_DEVICE_TABLE(of, qcom_cpufreq_hw_match);
->  
-> +static int qcom_cpufreq_hw_lmh_online(struct cpufreq_policy *policy);
-> +
->  static int qcom_cpufreq_hw_lmh_init(struct cpufreq_policy *policy, int index)
->  {
->  	struct qcom_cpufreq_data *data = policy->driver_data;
->  	struct platform_device *pdev = cpufreq_get_driver_data();
-> -	int ret;
->  
->  	/*
->  	 * Look for LMh interrupt. If no interrupt line is specified /
-> @@ -419,12 +420,21 @@ static int qcom_cpufreq_hw_lmh_init(struct cpufreq_policy *policy, int index)
->  	if (data->throttle_irq < 0)
->  		return data->throttle_irq;
->  
-> -	data->cancel_throttle = false;
-> -	data->policy = policy;
-> -
->  	mutex_init(&data->throttle_lock);
->  	INIT_DEFERRABLE_WORK(&data->throttle_work, qcom_lmh_dcvs_poll);
->  
-> +	return qcom_cpufreq_hw_lmh_online(policy);
-> +}
-> +
-> +static int qcom_cpufreq_hw_lmh_online(struct cpufreq_policy *policy)
-> +{
-> +	struct qcom_cpufreq_data *data = policy->driver_data;
-> +	struct platform_device *pdev = cpufreq_get_driver_data();
-> +	int ret;
-> +
-> +	data->cancel_throttle = false;
-> +	data->policy = policy;
-> +
->  	snprintf(data->irq_name, sizeof(data->irq_name), "dcvsh-irq-%u", policy->cpu);
->  	ret = request_threaded_irq(data->throttle_irq, NULL, qcom_lmh_dcvs_handle_irq,
->  				   IRQF_ONESHOT | IRQF_NO_AUTOEN, data->irq_name, data);
-> @@ -441,10 +451,12 @@ static int qcom_cpufreq_hw_lmh_init(struct cpufreq_policy *policy, int index)
->  	return 0;
->  }
->  
-> -static void qcom_cpufreq_hw_lmh_exit(struct qcom_cpufreq_data *data)
-> +static int qcom_cpufreq_hw_lmh_offline(struct cpufreq_policy *policy)
->  {
-> +	struct qcom_cpufreq_data *data = policy->driver_data;
-> +
->  	if (data->throttle_irq <= 0)
-> -		return;
-> +		return 0;
->  
->  	mutex_lock(&data->throttle_lock);
->  	data->cancel_throttle = true;
-> @@ -453,6 +465,8 @@ static void qcom_cpufreq_hw_lmh_exit(struct qcom_cpufreq_data *data)
->  	cancel_delayed_work_sync(&data->throttle_work);
->  	irq_set_affinity_hint(data->throttle_irq, NULL);
->  	free_irq(data->throttle_irq, data);
-> +
-> +	return 0;
->  }
->  
->  static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
-> @@ -567,6 +581,16 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
->  	return ret;
->  }
->  
-> +static int qcom_cpufreq_hw_cpu_online(struct cpufreq_policy *policy)
-> +{
-> +	return qcom_cpufreq_hw_lmh_online(policy);
-> +}
-> +
-> +static int qcom_cpufreq_hw_cpu_offline(struct cpufreq_policy *policy)
-> +{
-> +	return qcom_cpufreq_hw_lmh_offline(policy);
-> +}
-> +
->  static int qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
->  {
->  	struct device *cpu_dev = get_cpu_device(policy->cpu);
-> @@ -576,7 +600,6 @@ static int qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
->  
->  	dev_pm_opp_remove_all_dynamic(cpu_dev);
->  	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
-> -	qcom_cpufreq_hw_lmh_exit(data);
->  	kfree(policy->freq_table);
->  	kfree(data);
->  	iounmap(base);
-> @@ -608,6 +631,8 @@ static struct cpufreq_driver cpufreq_qcom_hw_driver = {
->  	.get		= qcom_cpufreq_hw_get,
->  	.init		= qcom_cpufreq_hw_cpu_init,
->  	.exit		= qcom_cpufreq_hw_cpu_exit,
-> +	.online		= qcom_cpufreq_hw_cpu_online,
-> +	.offline	= qcom_cpufreq_hw_cpu_offline,
->  	.register_em	= cpufreq_register_em_with_opp,
->  	.fast_switch    = qcom_cpufreq_hw_fast_switch,
->  	.name		= "qcom-cpufreq-hw",
-> -- 
-> 2.34.1
-> 
+> Bit masks of what?  Enabled DSCs?  A more verbose doc-comment is desired
+> here, matching the rest of the fields :) - something like "DSC block(s)
+> used" similar to merge_3d?  Or copy the docs from `dsc_mask`, which is
+> the value that is written into this field.
+
+Updated
+
+-- 
+~Vinod
