@@ -2,78 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 078B74E6A9D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 23:24:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC2C04E6AAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 23:31:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355345AbiCXWZa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Mar 2022 18:25:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42610 "EHLO
+        id S1355391AbiCXWcE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Mar 2022 18:32:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355333AbiCXWZ3 (ORCPT
+        with ESMTP id S1355386AbiCXWcE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Mar 2022 18:25:29 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 056AE2AE30
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 15:23:57 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id bg10so11968926ejb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 15:23:56 -0700 (PDT)
+        Thu, 24 Mar 2022 18:32:04 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40E01BA321
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 15:30:31 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-2e5827a76f4so66101617b3.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 15:30:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=a6MBbcTTX+22LzDQ6ECr2bIqiwia88/SS+r4U6tgNmU=;
-        b=CvOL71164K8S1OKOR/5ZUvKVejQ6sOY5QjWJX0UL0Zhx3WKZh2jNAzhPX6Z3RbeiCK
-         1CtOryJHYEtEZFtFzE7ANmMwsbBx35uLSeqzmt/+/QfSGiwGCvj/y7z8eTzi3tIooWQN
-         IZI/EFul54Q9URG80JKdNUuBowY2MUYYRAkrU=
+        bh=Nx70n0suL1GDpxFS4bYKUTt/7IVPxxVYBu7tsC4lV4U=;
+        b=wV1PHTJJBE46LfidocVooxEy6bX7qvq2914zt2Oyz0DEkO1P2b9T4RBK2uyUlfHMXi
+         8L4h61xtgy+nf1Sp5SjH+p+8xOdkyIscKNzC5c+ta5w2ZHwPHdqOR0m4HDH3kZXyKUd+
+         4nVVH+VWPcaO2hF/59Kup2doG3cbGYIsSNIDHELH+X3HMxlxEBK6tWEYjh3cu7KJsdFz
+         8a/veQ9Qdlc7QnvgFXa+xmf3DPpx81MEUB3oDQM46z75GtJbBjRqGYYo8c4Jh72kwjjj
+         qwwd+T0/mXVeNFlmfSMkAwTE6NWBqBCe6huzIpYFivT8APWWXtVemglzRRTu2lcqtEft
+         r1hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=a6MBbcTTX+22LzDQ6ECr2bIqiwia88/SS+r4U6tgNmU=;
-        b=w3oJCOMcl7ggl2uLc+EODy8kmpKYcaR78ubGLrpTvrkweqk9a3UxPNQsJoeJPLuhra
-         h6cztYobkOtaXKzenOzu1ZsFYdkBKsgpHyLIZE1ZocPN0dYjukkPJijum+Kbh2C+71Q7
-         /nS1O4xZfvqbw0f2fhuSpkZ103D3HQ9cT9s/S/jrJmKHH8/FqVpZR3QbYFWc3dfKWxqK
-         PFTtDttP5zpJTGXWcWathsw58slNSj/LGnTfG5lwJxaou5A4eUTdV3vN5OGmcGbGsbF+
-         eyHuaQj5rw5R0CJWOyBjVcJVpeQpXMrtcJx+6nCdluy2ZFvdwgUGPOSSL+xJ9UOBZFAA
-         gFZw==
-X-Gm-Message-State: AOAM532WlfBUpWsIqkPCtyi/uoJwDIDoSCKGfVSvPdQSZsr/SbPLoCz1
-        t/KwqzqOFX1nnJieu7o50a+g28KWSZQImb/x
-X-Google-Smtp-Source: ABdhPJyEIOuelgWqiwImxAfKo1wcR57SCIsXHZfa4wEJFH/iTpK5CZozDXZzdgs1NRbfEazSIpsVeQ==
-X-Received: by 2002:a17:907:d04:b0:6db:56be:ef8 with SMTP id gn4-20020a1709070d0400b006db56be0ef8mr8667653ejc.188.1648160634762;
-        Thu, 24 Mar 2022 15:23:54 -0700 (PDT)
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com. [209.85.221.43])
-        by smtp.gmail.com with ESMTPSA id u3-20020a17090657c300b006d01de78926sm1650421ejr.22.2022.03.24.15.23.53
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Mar 2022 15:23:53 -0700 (PDT)
-Received: by mail-wr1-f43.google.com with SMTP id w4so8484724wrg.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 15:23:53 -0700 (PDT)
-X-Received: by 2002:a5d:4491:0:b0:203:f63a:e89b with SMTP id
- j17-20020a5d4491000000b00203f63ae89bmr6363442wrq.342.1648160632993; Thu, 24
- Mar 2022 15:23:52 -0700 (PDT)
+        bh=Nx70n0suL1GDpxFS4bYKUTt/7IVPxxVYBu7tsC4lV4U=;
+        b=igxH0i1NfJvQIYu2RBInU1sU4duVPXAIs5v8IX9VeGvkRADRGPfWgvvnJOfHhC1mWj
+         wrcyVrDrMY2FBtpkDgLih2l1Jz7UihoZbzSYw0+1epmaDC1p7QIK7PWfM0UtGjsbSKPU
+         biAK0MNTx0JeXl0+Ty/na+f5e9X/thggKzIbWauokx0VyzwG1YKn3K7eyiI2RHC8066y
+         BRgh7Hi6/YLsvAKzl4oaeEj6tw9QmiFCWox/oJKboUr6dIfubM60SxVbpkAhTNA5ad+g
+         szrRnaDlA2Duudsot6iH9GwOGVMsgQCo6Ycsbvcv6ZPGUzpfDw2m7efBwH9PKxtqxJML
+         ieWg==
+X-Gm-Message-State: AOAM533QAiBMMdOkciQE3d/X4tZfR1q3IN7AoxOWXDrDDYKm0xGumYjg
+        y0XsLwhFZ0uzy4Vcw3tbEEdE6uarSGkuTwAKTp2/5Q==
+X-Google-Smtp-Source: ABdhPJyX/ehlHwq02rrgBUmaGF0K2xU+m3rjYaoGRrmp/Pny8sEiCtj0Bb3Mr1HrmXMEl0nAG2wa9t/q+Y8pZcewrXk=
+X-Received: by 2002:a81:5706:0:b0:2e5:c451:b257 with SMTP id
+ l6-20020a815706000000b002e5c451b257mr7678607ywb.126.1648161030506; Thu, 24
+ Mar 2022 15:30:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220324101242.v1.1.Iebdb5af0db7d3d6364cb229a27cd7c668f1063ae@changeid>
- <CAD=FV=XchtJx3ZsL4Bxj29b_-43E8p2fiJ5SBQSzbW8wp+gNfg@mail.gmail.com> <YjzsqyEhxOLwJzUL@google.com>
-In-Reply-To: <YjzsqyEhxOLwJzUL@google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 24 Mar 2022 15:23:40 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=W45wydNfUc1vAx228_yQrE6uzyucBhT6sc5_iqktva=A@mail.gmail.com>
-Message-ID: <CAD=FV=W45wydNfUc1vAx228_yQrE6uzyucBhT6sc5_iqktva=A@mail.gmail.com>
-Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Add device tree for
- herobrine villager
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
+References: <20220223154405.54912-1-maz@kernel.org> <CACRpkdbEDoPeu=TWmsJ_t-4+NtyiiSCXoj9rymspZt0nC+yrsQ@mail.gmail.com>
+ <e39c68c6c8c99fec796461cde33f78df@kernel.org>
+In-Reply-To: <e39c68c6c8c99fec796461cde33f78df@kernel.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Thu, 24 Mar 2022 23:30:19 +0100
+Message-ID: <CACRpkdZJch7SmMNGhfJ9hpNP+=yy4ZE_8wuATsaqdHQdaMhbAQ@mail.gmail.com>
+Subject: Re: [PATCH 0/5] gpiolib: Handle immutable irq_chip structures
+To:     Marc Zyngier <maz@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, Bartosz Golaszewski <brgl@bgdev.pl>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Joey Gouly <joey.gouly@arm.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>
+        Andy Gross <agross@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, kernel-team@android.com
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,50 +78,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Tue, Mar 15, 2022 at 10:35 AM Marc Zyngier <maz@kernel.org> wrote:
 
-On Thu, Mar 24, 2022 at 3:12 PM Matthias Kaehlcke <mka@chromium.org> wrote:
+> > I'm happy with this approach as long as the 300+ drivers get fixed
+> > and the old way of doing it gets deleted.
 >
-> On Thu, Mar 24, 2022 at 12:59:51PM -0700, Doug Anderson wrote:
-> > Hi,
-> >
-> > On Thu, Mar 24, 2022 at 10:13 AM Matthias Kaehlcke <mka@chromium.org> wrote:
-> > >
-> > > Add a basic device tree for the herobrine villager board.
-> > >
-> > > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> > > ---
-> > >
-> > >  arch/arm64/boot/dts/qcom/Makefile             |   1 +
-> > >  .../dts/qcom/sc7280-herobrine-villager-r0.dts | 274 ++++++++++++++++++
-> > >  2 files changed, 275 insertions(+)
-> >
-> > Question: how does this interact with the patch:
-> >
-> > https://lore.kernel.org/r/20220316172814.v1.3.Iad21bd53f3ac14956b8dbbf3825fc7ab29abdf97@changeid/
-> >
-> > Specifically, if that patch lands first don't you need to add a patch
-> > to turn on "pp3300_codec" ?
->
-> Right, I missed that. I'll add it in the next version, thanks!
+> Of course. Note that it will take some time before it actually happens.
+> My current plan is to stick in a pr_warn() each time a driver
+> following the old scheme gets registered, as a nudge for people to
+> update their driver if they care about it.
 
-Great! Make sure to list that other patch as a dependency somewhere
-too to help Bjorn when he's able to apply. ;-)
+Fair enough, we have a bunch of those WIP churn tasks in
+GPIO anyways.
 
+What about adding a blurb to:
+drivers/gpio/TODO
+so we have it on the radar?
 
-> > I was also looking at whether we should be enabling the wf_cam
-> > regulators for villager. I believe that answer is "no",
->
-> I agree to keep them disabled.
->
-> > but _also_ I believe that we should be _disabling_ the uf_cam
-> > regulators for villager, right?
->
-> it is not clear yo me which regulator you have in mind for the UF cam,
-> could you clarify?
+> Regarding documentation, are you OK with me simply replacing the
+> current code samples with the new approach? It will at least avoid
+> giving people the wrong idea. I also want to write a brief migration
+> guide that people willing to bump up their patch count can follow.
 
-I was thinking of the ones next to the rainbows and unicorns in the
-device tree. Oh wait, those were just in my imagination. Please
-disregard.
+Yup
 
--Doug
+> I'll repost something once -rc1 is out.
+
+Sounds good!
+
+Yours,
+Linus Walleij
