@@ -2,58 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 816094E66F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 17:24:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B96AC4E6775
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 18:06:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351665AbiCXQ01 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Mar 2022 12:26:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51432 "EHLO
+        id S1352086AbiCXRI3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Mar 2022 13:08:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347656AbiCXQ01 (ORCPT
+        with ESMTP id S1346584AbiCXRI2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Mar 2022 12:26:27 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77CBF6C974;
-        Thu, 24 Mar 2022 09:24:55 -0700 (PDT)
+        Thu, 24 Mar 2022 13:08:28 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C31FAB18A8;
+        Thu, 24 Mar 2022 10:06:56 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0D9C66187F;
-        Thu, 24 Mar 2022 16:24:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D80C340EC;
-        Thu, 24 Mar 2022 16:24:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648139094;
-        bh=z0SKDKFfLXgUlaEweN3w20sozNkj9PoC13UdkCxFdwo=;
+        by ams.source.kernel.org (Postfix) with ESMTPS id 5A612B824D1;
+        Thu, 24 Mar 2022 17:06:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AEC6C340ED;
+        Thu, 24 Mar 2022 17:06:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1648141614;
+        bh=ZDw+3izesL2vgyZeSm6CI/oUxoTlv6vJLD9ct8D7oYM=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=R5CiytF7K28XTl+QYrKnUKx8xPaqAdeKr/pOrLvZqjXaSfUjSlummA2mDlVLb/1kU
-         ss9g+9wYHpT9GUXhMkgQ93Y9oGdUXn117X5AXWlBgzDECVEV0MbezFnVT/4OvQ+LrZ
-         vuYGAvlJrvxvVlABtIeQn09HUWGeR4H4xeIRoLnWul2hpCUUva5FvYxzeF76LTJwSP
-         MdS+LK1B3kGU/L39H8wHcfTTEO82bYO3syshdHL/HiJr/ouOVtSxFvUUJ5D8wf+fp1
-         /RCe4jxepKwgrD8nQpkodRwmxOzzRqyLnGAonmL2VRB+Dkj2hkCfhEJ5uOImEH30Kl
-         WP97O+iKdXFKw==
-Date:   Thu, 24 Mar 2022 21:54:47 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [REPOST PATCH v4 06/13] drm/msm/disp/dpu1: Add DSC support in
- hw_ctl
-Message-ID: <YjybTx1b978ecVcF@matsya>
-References: <20220210103423.271016-1-vkoul@kernel.org>
- <20220210103423.271016-7-vkoul@kernel.org>
- <20220217222024.mf4cmgtpvvg3bftm@SoMainline.org>
+        b=N2PotNKeoYZJjB9A6IF7QsqbM4/seux9QfK7sD07Q8N7amZ/y4wk1DNkt4aQdB1E9
+         Nouod4FXw44GWk5W0RjJFGFGeYhfUzGDefN9YGnB0eAQZwCYleg9qIjljuQZL9tcJ6
+         RThfsvE1pI9lXOPHQv/bRiWAjXPk7y+FEp2R5pY0=
+Date:   Thu, 24 Mar 2022 18:06:50 +0100
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Jinlong Mao <quic_jinlmao@quicinc.com>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>, coresight@lists.linaro.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 01/10] Use IDR to maintain all the enabled sources'
+ paths.
+Message-ID: <YjylKhBslN+5sKRx@kroah.com>
+References: <20220324121734.21531-1-quic_jinlmao@quicinc.com>
+ <20220324121734.21531-2-quic_jinlmao@quicinc.com>
+ <YjxjXnXAXVXfZqr/@kroah.com>
+ <e78ff137-fc5e-ff00-0e57-91304288d860@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20220217222024.mf4cmgtpvvg3bftm@SoMainline.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e78ff137-fc5e-ff00-0e57-91304288d860@quicinc.com>
 X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -64,59 +66,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17-02-22, 23:20, Marijn Suijten wrote:
-> On 2022-02-10 16:04:16, Vinod Koul wrote:
-> > Later gens of hardware have DSC bits moved to hw_ctl, so configure these
-> > bits so that DSC would work there as well
-> > 
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > ---
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 11 ++++++++++-
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h |  2 ++
-> >  2 files changed, 12 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> > index 02da9ecf71f1..49659165cea8 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> > @@ -25,6 +25,8 @@
-> >  #define   CTL_MERGE_3D_ACTIVE           0x0E4
-> >  #define   CTL_INTF_ACTIVE               0x0F4
-> >  #define   CTL_MERGE_3D_FLUSH            0x100
-> > +#define   CTL_DSC_ACTIVE                0x0E8
-> > +#define   CTL_DSC_FLUSH                0x104
-> >  #define   CTL_INTF_FLUSH                0x110
-> >  #define   CTL_INTF_MASTER               0x134
-> >  #define   CTL_FETCH_PIPE_ACTIVE         0x0FC
-> > @@ -34,6 +36,7 @@
-> >  
-> >  #define DPU_REG_RESET_TIMEOUT_US        2000
-> >  #define  MERGE_3D_IDX   23
-> > +#define  DSC_IDX        22
+On Thu, Mar 24, 2022 at 10:23:19PM +0800, Jinlong Mao wrote:
+> Hi Greg,
 > 
-> This define does not seem used in any of these patches.  Is that
-> intended?
-
-This should used in the below case you pointed, updated now
-
-> >  static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> > index 806c171e5df2..9847c9c46d6f 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> > @@ -40,6 +40,7 @@ struct dpu_hw_stage_cfg {
-> >   * @merge_3d:              3d merge block used
-> >   * @intf_mode_sel:         Interface mode, cmd / vid
-> >   * @stream_sel:            Stream selection for multi-stream interfaces
-> > + * @dsc:                   DSC BIT masks
+> Thanks for your review.
 > 
-> Bit masks of what?  Enabled DSCs?  A more verbose doc-comment is desired
-> here, matching the rest of the fields :) - something like "DSC block(s)
-> used" similar to merge_3d?  Or copy the docs from `dsc_mask`, which is
-> the value that is written into this field.
+> On 3/24/2022 8:26 PM, Greg Kroah-Hartman wrote:
+> > On Thu, Mar 24, 2022 at 08:17:25PM +0800, Mao Jinlong wrote:
+> > > Use hash length of the source's device name to map to the pointer
+> > > of the enabled path. Using IDR will be more efficient than using
+> > > the list. And there could be other sources except STM and CPU etms
+> > > in the new HWs. It is better to maintain all the paths together.
+> > > 
+> > > Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> > > ---
+> > >   drivers/hwtracing/coresight/coresight-core.c | 75 +++++++-------------
+> > >   1 file changed, 26 insertions(+), 49 deletions(-)
+> > Your subject line is odd.  Please put back the driver subsystem in the
+> > subject line so that it makes more sense.
+> I will update the subject in next version.
+> > 
+> > And how have you measured "more efficient"?
+> 
+> Using IDR would be better than doing a sequential search as there will be
+> much more device  in future.
 
-Updated
+How many "more"?  Where does the trade off of speed for complexity help?
+How much faster is this really?  You can't claim performance
+improvements without any proof :)
 
--- 
-~Vinod
+thanks,
+
+greg k-h
