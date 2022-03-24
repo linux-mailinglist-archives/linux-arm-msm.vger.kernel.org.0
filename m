@@ -2,70 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E1AA4E63F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 14:16:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D75F74E64E6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 15:17:49 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239527AbiCXNSV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Mar 2022 09:18:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39058 "EHLO
+        id S1348871AbiCXOTT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Mar 2022 10:19:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231977AbiCXNSU (ORCPT
+        with ESMTP id S236272AbiCXOTS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Mar 2022 09:18:20 -0400
-Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01C2F5D5D9;
-        Thu, 24 Mar 2022 06:16:49 -0700 (PDT)
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-ddfa38f1c1so4855504fac.11;
-        Thu, 24 Mar 2022 06:16:48 -0700 (PDT)
+        Thu, 24 Mar 2022 10:19:18 -0400
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C0AF237F1;
+        Thu, 24 Mar 2022 07:17:47 -0700 (PDT)
+Received: by mail-ej1-f53.google.com with SMTP id j15so9431168eje.9;
+        Thu, 24 Mar 2022 07:17:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=L4yFfoTfZccYE7Di0YlYjA+29UIzoRBEMm0qGrq7xq0=;
-        b=pyWonZjOu8h2d1LF/imDL6nNHN71qqyZobbj2ihOkPo6OUo09bC2jk8Rr95oxvzyOO
-         n0nOFeGacSWCNPg/Pd8nFqsPW3c3lN5hErE3iMf41+ReawQStFqYoE/SJ6fHuPLAIm7E
-         Qlk6W2djiL6/N/7k+KTsuip3aGJYiW4PBxE6R51FvkxMyimGU0aoQ39/kUyYqbiazh3x
-         5NuLRq1szjfkDgovIsMm6bdmFD82gtl3xs8/Fh02INhGDM420FJbIMGrBvb+aKTmyh73
-         5tlKFcYLRmG4dCNU+ZgNk02+f3lw3e/d28yRApMcKkAwYUp3btfwlqJLlkvEPKmvcRJv
-         A8tQ==
-X-Gm-Message-State: AOAM53033C2yGb7TFTOyRcQbj4DmyPLtMXt5lv5xNKvpFekUBd8BWzXR
-        JyI/5+8cs1bntyQ9qTbfDQ==
-X-Google-Smtp-Source: ABdhPJyWCV888rnqVqehNYjSRgPdI4EiYHkWQq19im/ieDnEq2LtJ//jkVdiM9VQ0b2qos+XqrXknw==
-X-Received: by 2002:a05:6871:811:b0:dd:b8ea:6bb1 with SMTP id q17-20020a056871081100b000ddb8ea6bb1mr6479846oap.43.1648127808262;
-        Thu, 24 Mar 2022 06:16:48 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id t10-20020a056830224a00b005cd9db03fabsm1296706otd.78.2022.03.24.06.16.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 06:16:47 -0700 (PDT)
-Received: (nullmailer pid 1905192 invoked by uid 1000);
-        Thu, 24 Mar 2022 13:16:46 -0000
-Date:   Thu, 24 Mar 2022 08:16:46 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 01/15] dt-bindings: clock: split qcom,gcc.yaml to
- common and specific schema
-Message-ID: <YjxvPik3jaQHXIzt@robh.at.kernel.org>
-References: <20220224164831.21475-1-ansuelsmth@gmail.com>
- <20220224164831.21475-2-ansuelsmth@gmail.com>
- <CAL_JsqLduGK=CyAcgahswFfeA43vh+QPgRgcL4+=piOwWwvJRQ@mail.gmail.com>
- <Yjt5QxZ4+kdwTtUH@Ansuel-xps.localdomain>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=uAr2LmhOnG9njQ3xLzX6xb3TsAHcFF9ng+jWbhHfouU=;
+        b=1td0jCJ5mrYX8rEKJVqtLwHUKlRnIOrgsNh5muhAF0NMDn8PVzf6PdgdplUz+FkdNm
+         Hcn21cKQ5VFbHcbXmYUY0F5pDqBb0VwTtyH9ZwhWn2V25WJVOu4hp/Zb6Qs2VOkr2z5q
+         bWgPuFnXyOfbpVT1BuJVWjmE7bLPqukkrT9ckHRAkCHQYN549/kAJuOJTrRyqYIz3aJX
+         FP7QQgRy63/wFvEzMSqWImZD+dZfYcGruvzPIjf4AWTwWrYtjjoPIxe+yC4qXIngPKIa
+         N8guMS8Z+r1Rif/1c6JDs0wtchlD/+ZIjvqXdyBE7H+PfdHO2JTQfqQjw5sUq5UrKETN
+         j0Jg==
+X-Gm-Message-State: AOAM532dH7knR/I1Y9nkOR+JRzWxu7W49HGAgo2dj9FcaXhEyLCOolZT
+        eVNKK6qcgJFOZbZFeShjt2g=
+X-Google-Smtp-Source: ABdhPJxxIzTIDlCaGLEv2LtBqkMu53tRhx3kR6Bbq/H21Vu7dtcvHnJzVijXpA0abZ88DVONT+kmTQ==
+X-Received: by 2002:a17:907:6d2a:b0:6df:e513:5410 with SMTP id sa42-20020a1709076d2a00b006dfe5135410mr5920079ejc.544.1648131465364;
+        Thu, 24 Mar 2022 07:17:45 -0700 (PDT)
+Received: from [192.168.0.157] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.googlemail.com with ESMTPSA id ks20-20020a170906f85400b006e091a0cf8bsm254970ejb.16.2022.03.24.07.17.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Mar 2022 07:17:44 -0700 (PDT)
+Message-ID: <6616ccbe-2836-25f6-97e9-c4b25a0bab62@kernel.org>
+Date:   Thu, 24 Mar 2022 15:17:43 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Yjt5QxZ4+kdwTtUH@Ansuel-xps.localdomain>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH] dt-bindings: display/msm: another fix for the dpu-qcm2290
+ example
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, Rob Herring <robh@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>
+References: <20220324115536.2090818-1-dmitry.baryshkov@linaro.org>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <20220324115536.2090818-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,94 +74,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 23, 2022 at 08:47:15PM +0100, Ansuel Smith wrote:
-> On Wed, Mar 23, 2022 at 08:55:30AM -0500, Rob Herring wrote:
-> > On Thu, Feb 24, 2022 at 10:48 AM Ansuel Smith <ansuelsmth@gmail.com> wrote:
-> > >
-> > > Split qcom,gcc.yaml to common and specific schema to use it as a
-> > > template for schema that needs to use the gcc bindings and require
-> > > to add additional bindings.
-> > >
-> > > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > > ---
-> > >  .../bindings/clock/qcom,gcc-other.yaml        | 76 +++++++++++++++++++
-> > 
-> > This now throws errors in linux-next:
-> > 
-> > Traceback (most recent call last):
-> >   File "/usr/local/lib/python3.8/dist-packages/jsonschema/validators.py",
-> > line 816, in resolve_from_url
-> >     document = self.resolve_remote(url)
-> >   File "/usr/local/lib/python3.8/dist-packages/jsonschema/validators.py",
-> > line 923, in resolve_remote
-> >     result = json.loads(url.read().decode("utf-8"))
-> >   File "/usr/lib/python3.8/json/__init__.py", line 357, in loads
-> >     return _default_decoder.decode(s)
-> >   File "/usr/lib/python3.8/json/decoder.py", line 337, in decode
-> >     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-> >   File "/usr/lib/python3.8/json/decoder.py", line 355, in raw_decode
-> >     raise JSONDecodeError("Expecting value", s, err.value) from None
-> > json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
-> > During handling of the above exception, another exception occurred:
-> > Traceback (most recent call last):
-> >   File "/usr/local/bin/dt-doc-validate", line 70, in <module>
-> >     ret = check_doc(f)
-> >   File "/usr/local/bin/dt-doc-validate", line 36, in check_doc
-> >     for error in
-> > sorted(dtschema.DTValidator.iter_schema_errors(testtree), key=lambda
-> > e: e.linecol):
-> >   File "/usr/local/lib/python3.8/dist-packages/dtschema/lib.py", line
-> > 1016, in iter_schema_errors
-> >     meta_schema = cls.resolver.resolve_from_url(schema['$schema'])
-> >   File "/usr/local/lib/python3.8/dist-packages/jsonschema/validators.py",
-> > line 818, in resolve_from_url
-> >     raise exceptions.RefResolutionError(exc)
-> > jsonschema.exceptions.RefResolutionError: Expecting value: line 1
-> > column 1 (char 0)
-> > ./Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml:
-> > mapping values are not allowed in this context
-> >   in "<unicode string>", line 17, column 11
-> > 
-> > >  .../devicetree/bindings/clock/qcom,gcc.yaml   | 59 +-------------
-> > >  2 files changed, 80 insertions(+), 55 deletions(-)
-> > >  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
-> > >
-> > > diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
-> > > new file mode 100644
-> > > index 000000000000..4e5903bcd70d
-> > > --- /dev/null
-> > > +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
-> > > @@ -0,0 +1,76 @@
-> > > +# SPDX-License-Identifier: GPL-2.0-only
-> > > +%YAML 1.2
-> > > +---
-> > > +$id: http://devicetree.org/schemas/clock/qcom,gcc-other.yaml#
-> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > > +
-> > > +title: Qualcomm Global Clock & Reset Controller Binding
-> > > +
-> > > +maintainers:
-> > > +  - Stephen Boyd <sboyd@kernel.org>
-> > > +  - Taniya Das <tdas@codeaurora.org>
-> > > +
-> > > +description:
-> > > +  Qualcomm global clock control module which supports the clocks, resets and
-> > > +  power domains.
-> > > +
-> > > +  See also:
-> > 
-> > I think the problem is here. You need a '|' after 'description' to
-> > preserve formatting and ignore what looks like a mapping.
-> >
+On 24/03/2022 12:55, Dmitry Baryshkov wrote:
+> Make dpu-qcm2290 example really follow the defined schema:
+> - Drop qcom,mdss compatible. It's only used for MDP5 devices.
+> - Change display controller name to display-controller as specified in
+>   the yaml
 > 
-> Yes, I just sent a patch to fix this.
-> Out of curiosity, any idea why this wasn't flagged by an old run of
-> dt_binding_check? I totally remember running dt_binding_check on these
-> Documentation and I had no problem. There was a bug in the old version
-> and it does now correctly find these kind of errors?
+> Reported-by: Rob Herring <robh@kernel.org>
+> Cc: Loic Poulain <loic.poulain@linaro.org>
+> Fixes: 164f69d9d45a ("dt-bindings: msm: disp: add yaml schemas for QCM2290 DPU bindings")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../devicetree/bindings/display/msm/dpu-qcm2290.yaml          | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml b/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml
+> index d31483a78eab..6fb7e321f011 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dpu-qcm2290.yaml
+> @@ -160,7 +160,7 @@ examples:
+>      mdss: mdss@5e00000 {
+>          #address-cells = <1>;
+>          #size-cells = <1>;
+> -        compatible = "qcom,qcm2290-mdss", "qcom,mdss";
+> +        compatible = "qcom,qcm2290-mdss";
 
-Not sure exactly, but I don't think there was any change. v3 didn't 
-have the issue and the bot checks didn't run on v4 or later. Probably 
-because it couldn't apply them.
+That's quite unfortunate choice of compatibles. I would assume qcom,mdss
+is a generic fallback compatible but it is used in different way - as a
+specific compatible for MDP v5. The bindings here are for a newer
+device, right?
 
-Rob
+It's already in the bindings, so not much could be fixed now...
+
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+
+
+Best regards,
+Krzysztof
