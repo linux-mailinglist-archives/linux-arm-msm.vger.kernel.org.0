@@ -2,95 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 304184E6575
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 15:39:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D8264E6589
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 15:42:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351115AbiCXOlP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Mar 2022 10:41:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33650 "EHLO
+        id S243132AbiCXOoM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Mar 2022 10:44:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347017AbiCXOlP (ORCPT
+        with ESMTP id S239735AbiCXOoK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Mar 2022 10:41:15 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C36B5A590
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 07:39:42 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id p26-20020a05600c1d9a00b0038ccbff1951so1493917wms.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 07:39:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20210112.gappssmtp.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=yuX9u5ic7NYyoUUkYeHSUuK8umCvOBjLstYMGoYWvr4=;
-        b=g1sB5B/7wd0ibbAj2gulvKlRbRrGzUE4BmMu8K/X/ZjDNtCjj7RTKgucDZbzsoeeXn
-         ZWdsC4WxBD/YLiebuvaV1XiJS/g+3CkEFeVmUJ/eqeBx438WjD7L/0Veitv63ixKdu38
-         d3LMYGex9GnO7eccdvJDhv3J/3UvYSZf+f92jJb0QXca7vGDyPdcFQv1YKUG/FFqtqbC
-         xkViGbC1Jp3xUhaQfnbGI96e2Q2OX/Q3+69AWvV1QNwCaHHnmxfdYJEaJEnTAvX1K7oT
-         +YhzhTrOuUInXL0fRAmlSG+SBOr1KHzMuSQSedq7qlE2cPrhjOe2n2uTVa4cjNX7YtSu
-         3JXQ==
+        Thu, 24 Mar 2022 10:44:10 -0400
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDA25AA029;
+        Thu, 24 Mar 2022 07:42:38 -0700 (PDT)
+Received: by mail-wr1-f52.google.com with SMTP id u16so6957611wru.4;
+        Thu, 24 Mar 2022 07:42:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=yuX9u5ic7NYyoUUkYeHSUuK8umCvOBjLstYMGoYWvr4=;
-        b=8LQ/QAbN38ozAZka6A4U318zPAH/QoX2beF6inMrsDcbZDkdFr7BaU0Tl8Bz4iHp41
-         x6g41iHHMXMM8Zstuy+C+OI308V4CbpbB/4sFiv5GaPtltsJJgbmbnlIYufOYB9WEo5m
-         xm52yI/XHyyXNUDdl5cUOm6CRxNoAacHTKAeUmhX8X0MOVwL7/tVkCfmzq4xjNbpSGkk
-         vcOP7gRNgAWF2U9hmMC9g49HQJGTkwW0t8hFfjdo1keVtWk3mSDnl11n1eVOQ7NG9gWo
-         Lsil1ahAQcqF0QCYO8Hw1pXXekDjaNr5wzGYvDeTI2OsfTDbE3z8a7TbP00EmqHOK54g
-         jXJg==
-X-Gm-Message-State: AOAM532+2Y3IqS/N7JogU+VGDDaUBw+ygaWZBl9yYdkyhRiES7lpbtrq
-        JaoEIes9djJtEAk5KILt+jVAcg==
-X-Google-Smtp-Source: ABdhPJwwutAFQH46sr/Eifshdz0kv/5F3hT4G3rOQl2zfBYrq9a7wGb9kXNA8/sONUK2ruMxMETdAA==
-X-Received: by 2002:a1c:7313:0:b0:38c:8690:1f30 with SMTP id d19-20020a1c7313000000b0038c86901f30mr14890199wmb.188.1648132780856;
-        Thu, 24 Mar 2022 07:39:40 -0700 (PDT)
-Received: from localhost.localdomain (laubervilliers-658-1-213-31.w90-63.abo.wanadoo.fr. [90.63.244.31])
-        by smtp.googlemail.com with ESMTPSA id a1-20020a056000188100b002041a652dfdsm3075745wri.25.2022.03.24.07.39.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 07:39:40 -0700 (PDT)
-From:   Corentin Labbe <clabbe@baylibre.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, krzk+dt@kernel.org,
+        bh=PQMoVevKF2FScu3g6ZPhWCjF/L215or2YeKuSEJ/X+Q=;
+        b=GfT4+Y3nsf/49O2bV/NzAGWg32R4wG4IaufphIOecOX3QK4hoeU3etMrXx4IOK0EWS
+         s3zjHzuWJS4xBZ1DxiXgge0hJBVFf6GivwhxDEmxpiKC3yMeiFmTnNy19CsWBZ2YiNKj
+         1tc7bHRV8C5rBNLXIDl+mw0qxvL8Syx+LMgZwOAJCU61w3z4ZTi5hDo0k6sJt0xfsCoU
+         dxn0KPyOaIZ4f6wjXZXS61tF8PTrzaFZ52IAb88JUfHOIxlw438E9m9fblYk/KXyO3Nd
+         JPCs7aDLF8Ez0lfgKgiRXbIky7WbNhYHFOfMIci376+7hd/O6W4iyHwVJIuGyrnCKN7Z
+         OPCA==
+X-Gm-Message-State: AOAM530E3kDqu0IQ+Aum5RT0YIejoIf5f/xS0rrxiURAVdFEAN5zt29O
+        +LuXduklll2CWz24PUVC8iU=
+X-Google-Smtp-Source: ABdhPJwgBGfPjUkgJ2azkYYT03xYB3rKxjLU69OYrP8YG6qnZcrqB/DIBhJKV40R82oZKNaLmkLdaA==
+X-Received: by 2002:a05:6000:178c:b0:204:648:b4c4 with SMTP id e12-20020a056000178c00b002040648b4c4mr4919136wrg.219.1648132957406;
+        Thu, 24 Mar 2022 07:42:37 -0700 (PDT)
+Received: from [192.168.0.157] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.googlemail.com with ESMTPSA id n8-20020a5d5988000000b00203d5f1f3e4sm2952039wri.105.2022.03.24.07.42.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Mar 2022 07:42:36 -0700 (PDT)
+Message-ID: <bce3b04f-d0f2-62e4-e983-9c7ea74f7309@kernel.org>
+Date:   Thu, 24 Mar 2022 15:42:35 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH] dt-bindings: clock: qcom: prevent interpret of See also:
+ as keyword
+Content-Language: en-US
+To:     Corentin Labbe <clabbe@baylibre.com>, agross@kernel.org,
+        bjorn.andersson@linaro.org, krzk+dt@kernel.org,
         mturquette@baylibre.com, robh+dt@kernel.org, sboyd@kernel.org
 Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Corentin Labbe <clabbe@baylibre.com>
-Subject: [PATCH] dt-bindings: clock: qcom: prevent interpret of See also: as keyword
-Date:   Thu, 24 Mar 2022 14:39:35 +0000
-Message-Id: <20220324143935.1117426-1-clabbe@baylibre.com>
-X-Mailer: git-send-email 2.25.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220324143935.1117426-1-clabbe@baylibre.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <20220324143935.1117426-1-clabbe@baylibre.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The "See also:" in description generates a DT check error since it is
-interpreted as a field. Setting description as formatted description fix
-that.
+On 24/03/2022 15:39, Corentin Labbe wrote:
+> The "See also:" in description generates a DT check error since it is
+> interpreted as a field. Setting description as formatted description fix
+> that.
+> 
+> Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
+> ---
 
-Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
----
- Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Already sent:
+https://lore.kernel.org/linux-devicetree/b15567c7-98e9-2d01-d1a5-7675136c625d@kernel.org/T/#t
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
-index 4dc0274dbd6b..6c45e0f85494 100644
---- a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
-@@ -10,7 +10,7 @@ maintainers:
-   - Stephen Boyd <sboyd@kernel.org>
-   - Taniya Das <tdas@codeaurora.org>
- 
--description:
-+description: |
-   Qualcomm global clock control module which supports the clocks, resets and
-   power domains.
- 
--- 
-2.34.1
 
+Best regards,
+Krzysztof
