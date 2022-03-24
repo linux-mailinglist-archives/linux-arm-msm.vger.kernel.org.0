@@ -2,129 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB9E44E5F4D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 08:26:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B4C874E608B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 09:44:23 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240789AbiCXH01 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Mar 2022 03:26:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36856 "EHLO
+        id S239632AbiCXIpw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Mar 2022 04:45:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234921AbiCXH01 (ORCPT
+        with ESMTP id S233551AbiCXIpv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Mar 2022 03:26:27 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D187A986F5;
-        Thu, 24 Mar 2022 00:24:55 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id t1so4550528edc.3;
-        Thu, 24 Mar 2022 00:24:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=UusJwPTvawwqw4B13062bzCvDRIa/PfzdX6rZ/h/ofQ=;
-        b=BB/x7LbNUE8nHL64NA5MPWmuQTYC0FQt/zHFjd1px6EmZeQg9A8d9798/hSq21tR0h
-         nkXZuo1YJcGC0N7KHdSZ0rH5Av6kBrOL1EDEeQVTBIhOisgr80e83O7jx3wqJDg8j0SU
-         KautTEldNJTsFB/BzKiQW4Yx+WF3FypcXGApTqWh7JT6FCrRDin6k3ufHwa6U/Jxobsw
-         8RzBVUqbGcJeqXQOLh+SjRMQupj9Y2AwEmNisvQwStZ+kzCQ+PVYIPp9uAiRPX00QQ0Z
-         sY4Wbpf4tpCUBsaYF/sGB/xEBhBKE+1RmwTVwQeprQB0V69KvA4FXpc9Zg1kP3pQs7RT
-         oNWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=UusJwPTvawwqw4B13062bzCvDRIa/PfzdX6rZ/h/ofQ=;
-        b=XZz1owOAClExae8lG4LiOq6XL/7DDvbVrNpjWfpmDzsscSpa3yHq7B865922qraodw
-         ySxFRHmcUnblkkZFv71ESBglvAXFRbAtKPK5YT+obHbFbN7TkQkJobLZrFAEGxo2yPuJ
-         DkTJw6wUDf1bX2i4xhjtKsx9BEF9DqKaSUY+OMOqtFyWBVjhlLqVfW+sHk1RfXhg7Bb1
-         Q6No3NzGvQe50vycJiQvVvtn7m7moQqbjNEma2GVSXF0ysUY9Qql8ddKq/CToPUk+PDn
-         4CkQ1hQH2+Kc9qPxtYgoLB+OBBn5aRGD+2r8NFa6EqAaOaaGqbMei+gCO2L7kWvP3rho
-         sxAg==
-X-Gm-Message-State: AOAM531LN2mvmsPKtJV7AAOOlbJaT0rx0F3s78fohIpWU+AyhfadvlJ1
-        dm1Uzv3XprheCQKVt8vkN/o=
-X-Google-Smtp-Source: ABdhPJwtG3kiR6DehJZXY4TNL89bSww86qN8khEh2LznICWoqF4hkhvsQAkiKwIR1EqiDKaIKIxIsA==
-X-Received: by 2002:a50:cfc4:0:b0:413:b19d:d9c0 with SMTP id i4-20020a50cfc4000000b00413b19dd9c0mr5077856edk.384.1648106694346;
-        Thu, 24 Mar 2022 00:24:54 -0700 (PDT)
-Received: from localhost.localdomain (i130160.upc-i.chello.nl. [62.195.130.160])
-        by smtp.googlemail.com with ESMTPSA id ep16-20020a1709069b5000b006daa26de2fbsm759578ejc.153.2022.03.24.00.24.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Mar 2022 00:24:54 -0700 (PDT)
-From:   Jakob Koschel <jakobkoschel@gmail.com>
-To:     Andy Gross <agross@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Mike Rapoport <rppt@kernel.org>,
-        "Brian Johannesmeyer" <bjohannesmeyer@gmail.com>,
-        Cristiano Giuffrida <c.giuffrida@vu.nl>,
-        "Bos, H.J." <h.j.bos@vu.nl>, Jakob Koschel <jakobkoschel@gmail.com>
-Subject: [PATCH] soc: qcom: pdr: replace usage of found with dedicated list iterator variable
-Date:   Thu, 24 Mar 2022 08:24:35 +0100
-Message-Id: <20220324072435.63070-1-jakobkoschel@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        Thu, 24 Mar 2022 04:45:51 -0400
+Received: from out162-62-57-252.mail.qq.com (out162-62-57-252.mail.qq.com [162.62.57.252])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DC5D9BBAD
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 01:44:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+        s=s201512; t=1648111455;
+        bh=PdI9M8lLoPowcX452EcX6k9LkvHzZyFe5xCg2aOT5z4=;
+        h=From:To:Cc:Subject:Date;
+        b=vg4xWK4NIb8sElDz95wg3zwA1oddwX8lr3X0UWir/6LLomtj6fRMMlTvgO074Fe5o
+         H5hESXV1gGv9LcFF+mK8g/WJ+UL50wuoiLyqqeRXsGn70hocaUrL6xA2FA5UkytCqX
+         64GgzcCUbNIwTLnoKOYV9PIySj7TwyfywMOTffi8=
+Received: from localhost.localdomain ([218.197.153.188])
+        by newxmesmtplogicsvrszc6.qq.com (NewEsmtp) with SMTP
+        id 9378DC37; Thu, 24 Mar 2022 16:36:55 +0800
+X-QQ-mid: xmsmtpt1648111015tha0g0i7j
+Message-ID: <tencent_F71D40EE9851737338A6289EC3A3942EFE09@qq.com>
+X-QQ-XMAILINFO: MR/iVh5QLeieiszZ2O+QJKzXzwRb+Wv/lEVxDjwkYxMewJHYJdFQoHsoWu9iam
+         ajhSQ1Eh+e59SwWAJQNIolA9hH/lQO4f1IuiJrqh01QGQQ8ynx0vMZGFAxTrWV/nL4TZ50nEHhCA
+         PfT6P9/3oSVTf0oUQNZhJhUqNJubqPtVBrsJxit3KUIEdtGymqR2GqkLJrTUzGoAP64J8TY8yV9p
+         9T0ViPj0BviZ2jvNNEeO4NHAnnxVRGooB5Smg4EQfAXjHZ+U7NXD9DeDsulbB2O3WsjEMUwmbUX/
+         ADBjSHLTH7MBY41RUYPX9dQAZ2Nf+IQGfr4sqwcHe+VpytsaAIb0l8FZdedLnu7owihH7/bB0v9w
+         v3e1RXil9eAuCmyr3rNX5QpjaiLmjhYRpbRUNFtpKlT2xwQQxsCDC/myDcvfbciwVlDxBk0aXiIQ
+         6QghgDCatQm7ZwMb0INN9vCio1kfph/qKCCfq+BUMpXVtNXVwrPK680hWRBfVJCqkw7acP3mMia3
+         Bz+5wCSRUSHuDffpafV3/gPepA0ROFJef9Gsx7s+nxaKpeyIQFRfV0LFUVVYToudcy+3otN+loGR
+         TV2OGBWjWfMWM+f8XV5kH6wAGlVxKwqe1uFxN+gqf1S6P+yl890qVRqvI7FjqqQVN/fbXiMgnYpA
+         dL+SUIo8JEJqMcDJYmMpiSylhXfa94+qdeFiHGHkpsTgSA1PD9TvU5C9e+4MnNBOolUOFy1IgNT6
+         qToKziTVG5vtvfM+IMUbXgPDclAYlMtEC9omhpL+vIOMcjZpQnTE2X8QzS/JTU4yt4gJSPLOaaIG
+         zfCgezFDJ2hrNk3bmb9cBHRKhm+JXn48gMqMCAUX9W7Ns4xzoJFz+KnndZsd0gAL886EkEk6H95v
+         L5nGvh0HYjfeqSczSXqrYSc2ynJYrR+aWjFCZIHMGI4x4PVR9+kQHOwcZuktExV5xkpTnsxCMYqi
+         hfz6C6jwuNs/O3Y468qg==
+From:   xkernel.wang@foxmail.com
+To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Xiaoke Wang <xkernel.wang@foxmail.com>
+Subject: [PATCH] drm/msm/mdp5: check the return of kzalloc()
+Date:   Thu, 24 Mar 2022 16:36:44 +0800
+X-OQ-MSGID: <20220324083644.2666-1-xkernel.wang@foxmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=0.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        HELO_DYNAMIC_IPADDR,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H4,
+        RCVD_IN_MSPIKE_WL,RDNS_DYNAMIC,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To move the list iterator variable into the list_for_each_entry_*()
-macro in the future it should be avoided to use the list iterator
-variable after the loop body.
+From: Xiaoke Wang <xkernel.wang@foxmail.com>
 
-To *never* use the list iterator variable after the loop it was
-concluded to use a separate iterator variable instead of a
-found boolean [1].
+kzalloc() is a memory allocation function which can return NULL when
+some internal memory errors happen. So it is better to check it to
+prevent potential wrong memory access.
 
-This removes the need to use a found variable and simply checking if
-the variable was set, can determine if the break/goto was hit.
-
-Link: https://lore.kernel.org/all/CAHk-=wgRr_D8CB-D9Kg-c=EHreAsk5SqXPwr9Y7k9sA6cWXJ6w@mail.gmail.com/
-Signed-off-by: Jakob Koschel <jakobkoschel@gmail.com>
+Signed-off-by: Xiaoke Wang <xkernel.wang@foxmail.com>
 ---
- drivers/soc/qcom/pdr_interface.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/soc/qcom/pdr_interface.c b/drivers/soc/qcom/pdr_interface.c
-index fc580a3c4336..0034af927b48 100644
---- a/drivers/soc/qcom/pdr_interface.c
-+++ b/drivers/soc/qcom/pdr_interface.c
-@@ -304,24 +304,23 @@ static void pdr_indication_cb(struct qmi_handle *qmi,
- 					      notifier_hdl);
- 	const struct servreg_state_updated_ind *ind_msg = data;
- 	struct pdr_list_node *ind;
--	struct pdr_service *pds;
--	bool found = false;
-+	struct pdr_service *pds = NULL, *iter;
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+index c6b69af..5f914cc 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+@@ -90,15 +90,18 @@ static void mdp5_plane_reset(struct drm_plane *plane)
+ 		__drm_atomic_helper_plane_destroy_state(plane->state);
  
- 	if (!ind_msg || !ind_msg->service_path[0] ||
- 	    strlen(ind_msg->service_path) > SERVREG_NAME_LENGTH)
- 		return;
+ 	kfree(to_mdp5_plane_state(plane->state));
+-	mdp5_state = kzalloc(sizeof(*mdp5_state), GFP_KERNEL);
++	plane->state = NULL;
  
- 	mutex_lock(&pdr->list_lock);
--	list_for_each_entry(pds, &pdr->lookups, node) {
--		if (strcmp(pds->service_path, ind_msg->service_path))
-+	list_for_each_entry(iter, &pdr->lookups, node) {
-+		if (strcmp(iter->service_path, ind_msg->service_path))
- 			continue;
+-	if (plane->type == DRM_PLANE_TYPE_PRIMARY)
+-		mdp5_state->base.zpos = STAGE_BASE;
+-	else
+-		mdp5_state->base.zpos = STAGE0 + drm_plane_index(plane);
+-	mdp5_state->base.normalized_zpos = mdp5_state->base.zpos;
++	mdp5_state = kzalloc(sizeof(*mdp5_state), GFP_KERNEL);
++	if (mdp5_state) {
++		if (plane->type == DRM_PLANE_TYPE_PRIMARY)
++			mdp5_state->base.zpos = STAGE_BASE;
++		else
++			mdp5_state->base.zpos = STAGE0 + drm_plane_index(plane);
++		mdp5_state->base.normalized_zpos = mdp5_state->base.zpos;
  
--		found = true;
-+		pds = iter;
- 		break;
- 	}
- 	mutex_unlock(&pdr->list_lock);
+-	__drm_atomic_helper_plane_reset(plane, &mdp5_state->base);
++		__drm_atomic_helper_plane_reset(plane, &mdp5_state->base);
++	}
+ }
  
--	if (!found)
-+	if (!pds)
- 		return;
- 
- 	pr_info("PDR: Indication received from %s, state: 0x%x, trans-id: %d\n",
-
-base-commit: f443e374ae131c168a065ea1748feac6b2e76613
+ static struct drm_plane_state *
 -- 
-2.25.1
-
