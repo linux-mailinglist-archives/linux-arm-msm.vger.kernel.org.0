@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C38F74E67B4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 18:23:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 38AFB4E6828
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 18:56:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240571AbiCXRYr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Mar 2022 13:24:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59718 "EHLO
+        id S1343825AbiCXR55 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Mar 2022 13:57:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352237AbiCXRYq (ORCPT
+        with ESMTP id S231939AbiCXR54 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Mar 2022 13:24:46 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B84F71CB20;
-        Thu, 24 Mar 2022 10:23:13 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 7406FB82335;
-        Thu, 24 Mar 2022 17:23:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7135C340EC;
-        Thu, 24 Mar 2022 17:23:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648142591;
-        bh=Ii6N9yX0cfvtlWGYsRFUlxpmnU5DBEOXCXBEVeUK1m4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=dkUjRBS0vQTUg1Sz1AEMShGyKGTmbunTXyYN4gS3PEI7v7chIhQlEh4j9L7nEnwBW
-         EKYR8C3DHrHaONiYk/yFDenQDWCxLA6w24pOc5ybAZyPHJ3cnvNa0IYihNl7omVObg
-         8cNRIAidGUVpmu9Qbws+svgUr0wbTc9JhBF6cI0PdxAGBm1gk+tBjOKZ4EFAqxKHhB
-         Yj0QTkVK4AFTmN9JueLDEmjI44hjfzbBEEJ2aMip1SWLzb6XfWlfaHVh5jQAo2UI9x
-         Tzvhc1zpzZeJTEnKATnOiybc7/c9hI5aenkYyFKvCcuHGylL5/fJHHQFhne2tJgG/l
-         iW+VnVEFeutLQ==
-Date:   Thu, 24 Mar 2022 17:23:05 +0000
-From:   Mark Brown <broonie@kernel.org>
-To:     David Collins <quic_collinsd@quicinc.com>
-Cc:     Sudeep Holla <sudeep.holla@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        devicetree@vger.kernel.org,
-        Cristian Marussi <cristian.marussi@arm.com>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Mike Tipton <quic_mdtipton@quicinc.com>
-Subject: Re: [PATCH v2 0/2] regulator: scmi: add support for registering SCMI
- regulators by name
-Message-ID: <Yjyo+Xk0txZs4T/Z@sirena.org.uk>
-References: <cover.1647909090.git.quic_collinsd@quicinc.com>
- <Yjm1wpcMZsZJJCuy@bogus>
- <eb03037b-e7c2-ea23-0bdb-27924ed54fa7@quicinc.com>
+        Thu, 24 Mar 2022 13:57:56 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D50959A5C;
+        Thu, 24 Mar 2022 10:56:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1648144584; x=1679680584;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=3WjmSUx8RaM4/QVWsCIY83coBlhfFkLNK0Bb6r9AgAQ=;
+  b=T/kbSGfdzOl10jQLAB3g5Pqe4qnCzpNgoj44vJOKFxAPCSm0woF+MAlQ
+   FXeXbhxBZnwkKYJiA1JRSgcAIf/1XcW7NivgkvzKb//M4ZRgMVsoRKHeX
+   wUCmZXdk4BTuuXjyyCV5dDj8lO9iuzweaL7v3QBhAx+0hDYxPGsCugUS6
+   8=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 24 Mar 2022 10:56:24 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Mar 2022 10:56:24 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Thu, 24 Mar 2022 10:56:23 -0700
+Received: from [10.110.52.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Thu, 24 Mar
+ 2022 10:56:22 -0700
+Message-ID: <0f017516-58f4-f26e-d598-4be9311e2e27@quicinc.com>
+Date:   Thu, 24 Mar 2022 10:56:22 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="81Z0hAsjzpiu2TPf"
-Content-Disposition: inline
-In-Reply-To: <eb03037b-e7c2-ea23-0bdb-27924ed54fa7@quicinc.com>
-X-Cookie: Orders subject to approval.
-X-Spam-Status: No, score=-8.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH] drm/msm/disp: check the return value of kzalloc()
+Content-Language: en-US
+To:     <xkernel.wang@foxmail.com>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <airlied@linux.ie>, <daniel@ffwll.ch>
+CC:     <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>
+References: <tencent_B3E19486FF39415098B572B7397C2936C309@qq.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <tencent_B3E19486FF39415098B572B7397C2936C309@qq.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -68,52 +68,30 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---81Z0hAsjzpiu2TPf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-On Tue, Mar 22, 2022 at 06:12:33PM -0700, David Collins wrote:
-
-> Another problem is that, as with regulators, ID numbers could
-> unknowingly get out of sync between the platform and the agent.  Using
-> clock domain names for referencing fixes both issues.  This can be
-
-This is just saying that the hard coded IDs that the firmware and kernel
-use to communicate can get out of sync which is true no matter if those
-IDs are strings or if they're numerical, either way it's an ABI which
-can be broken.
-
-> > If the IDs are correct like the names, it is guaranteed. I see this
-> > ID vs name is more for some maintenance convenience because somewhere
-> > something else needs to changes or moved away from existing way of
-> > maintenance.
-
-> How do you quantify an ID number to physical regulator mapping as
-> "correct"?  What happens if the mapping must be changed on the SCMI
-> platform side (e.g. a PMIC was added or removed, or the order that
-> regulators are listed in needs to change)?  If the SCMI agent is blindly
-
-The whole point with the numbers being an ABI is that things must never
-be renumbered, just as if names are used the names can't be changed.  If
-the numbering is changing that just sounds like bugs on the platform
-side.  There's an implicit assumption in what you've written above that
-implementation details of the firmware should affect the IDs presented
-through SCMI which simply shouldn't be true, and indeed if the firmware
-can assign fixed strings it can just as well assign fixed numbers.
-
---81Z0hAsjzpiu2TPf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmI8qPgACgkQJNaLcl1U
-h9ADUgf9F+Vf4g7qBC+8QlTTVuL2G2gfodUp02z5tMeeey6bl+LR16pl2v9gT7hB
-p2CJjMjVg8NZYrrhb7BwEoibIRppAy02Ehy+FRZNXpLUNtrZjskye0LqYJW2nVnv
-r/XEam7moUDXHEhQWOGz8pY8PTTE66kMytsL4tWpK6ERwyHonh7kEuLRdY5s0JLT
-haW0CXliardrk2R8uh3+Zk40wyq2NW+AcGrBarTE9EaJVVjg2WcPWgAnCeBXgQxw
-fJ01Gyz3VeWZdk0XGD3+b8DejXOsi5ltsGRDbzZd6cusY76qGUL+XzyQMJLnYwzX
-J/ksIIO1L4uR2q+DYs9zCnueo1ahmQ==
-=u7Hy
------END PGP SIGNATURE-----
-
---81Z0hAsjzpiu2TPf--
+On 3/24/2022 2:15 AM, xkernel.wang@foxmail.com wrote:
+> From: Xiaoke Wang <xkernel.wang@foxmail.com>
+> 
+> kzalloc() is a memory allocation function which can return NULL when
+> some internal memory errors happen. So it is better to check it to
+> prevent potential wrong memory access.
+> 
+> Signed-off-by: Xiaoke Wang <xkernel.wang@foxmail.com>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+> index cabe151..369e57f 100644
+> --- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+> +++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+> @@ -169,6 +169,8 @@ void msm_disp_snapshot_add_block(struct msm_disp_state *disp_state, u32 len,
+>   	va_list va;
+>   
+>   	new_blk = kzalloc(sizeof(struct msm_disp_state_block), GFP_KERNEL);
+> +	if (!new_blk)
+> +		return;
+>   
+>   	va_start(va, fmt);
+>   
