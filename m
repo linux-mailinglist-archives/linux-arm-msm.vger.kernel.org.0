@@ -2,188 +2,216 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 506D64E5C40
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 01:16:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 880BC4E5DDC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 05:55:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229569AbiCXASM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 23 Mar 2022 20:18:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38268 "EHLO
+        id S242140AbiCXE44 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Mar 2022 00:56:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346965AbiCXASK (ORCPT
+        with ESMTP id S233821AbiCXE4z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 23 Mar 2022 20:18:10 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9157B271;
-        Wed, 23 Mar 2022 17:16:39 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id h23so4373575wrb.8;
-        Wed, 23 Mar 2022 17:16:39 -0700 (PDT)
+        Thu, 24 Mar 2022 00:56:55 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CA07FD21;
+        Wed, 23 Mar 2022 21:55:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=natHNZDL8CZ9WaP9Cr9II4XN3FO23Y20ExCvAU3XTrg=;
-        b=q6SZ6TLiAU/ytjxnIlO9T8oYxvX4bJsfMshpdVHqelZJik8DV/ooiEyu93XnF2JZdk
-         Ao6mtjzEN7IfgFcCxVQOnoSORuBCw43MdVX/KOF3HBFOUz3QZ4Ewhv2R+ZL99qO+iJtg
-         XM5fFgPUgPHbAQboYWdws6/B75Mt4Em9d6twn29DMX6quTraIxA/ppgpUFxPOGL2t62g
-         PMcpvVi+JzVx80fwVCJkVIVFwBDEINDl9XSHe2gg/EIlIM2dDSSRFIpYKlyf21XraC9P
-         1WOY3OTF5g3mtXURPOj3avazd7B/dd8r9j0TJ67XrizV/prLlxD37q3RGb3o83bHJRc4
-         TD9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=natHNZDL8CZ9WaP9Cr9II4XN3FO23Y20ExCvAU3XTrg=;
-        b=oatvXZrsuM9unq740PLLBSBH+Fq9KJKt71EKl5Yc7ztQOA1avlu8k2MuTr96pge0v4
-         HY1yppuXLuOTP6YUIzZg5/TiJ76VTQTEiN4rVyeic0TRuN1go8rzb8xQpURWJqIJ4I1E
-         vmZiisNIfdzxOrwL4Gxp1br07kMJgFjXqR3fYaT89+HFobZq15z0dwkmrjMZG4k4Bwb5
-         X9mSDj5kaHWrE1lm71WfXB/E2KgAaSzrwPwAI+/UZo1/dWzOyNkwlVPqApvT9Hb7wrt4
-         WNsP8bTB+g3/qPp5/bC0IFEVTGKyb4MLHDYB9ay+EiblseVMryaXrnkJcyDjyuhN/yMl
-         ulCA==
-X-Gm-Message-State: AOAM530Pjq5qpNiyELnm/UZOJ7OaClWS3MX/R0FUbQgiT8ojosgn2IJw
-        UriCb3ForiLAHMJgGWWldsc=
-X-Google-Smtp-Source: ABdhPJwjviwdFIZ4cE6Bb9jEfkwK8jjjTkyZR43ngrQFxViPtlKP2325Wc/JM2NSJsSfaIRmHkTrlA==
-X-Received: by 2002:a5d:618c:0:b0:204:2f:2c1a with SMTP id j12-20020a5d618c000000b00204002f2c1amr2139009wru.709.1648080998003;
-        Wed, 23 Mar 2022 17:16:38 -0700 (PDT)
-Received: from Ansuel-xps.localdomain (93-42-69-170.ip85.fastwebnet.it. [93.42.69.170])
-        by smtp.gmail.com with ESMTPSA id j16-20020a05600c191000b0038c9249ffdesm1212660wmq.9.2022.03.23.17.16.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Mar 2022 17:16:37 -0700 (PDT)
-Date:   Wed, 23 Mar 2022 20:47:15 +0100
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Rob Herring <robh+dt@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 01/15] dt-bindings: clock: split qcom,gcc.yaml to
- common and specific schema
-Message-ID: <Yjt5QxZ4+kdwTtUH@Ansuel-xps.localdomain>
-References: <20220224164831.21475-1-ansuelsmth@gmail.com>
- <20220224164831.21475-2-ansuelsmth@gmail.com>
- <CAL_JsqLduGK=CyAcgahswFfeA43vh+QPgRgcL4+=piOwWwvJRQ@mail.gmail.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1648097721; x=1679633721;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=HsM4topUPdLLaQRM/+4vnOL6cCsC8JcAY/YX+Px3se8=;
+  b=T35o3LbddzF/WvyYlefFWpSLI3Vrt9EsMgpBiWWmbWBc1YwIPc/QCyGE
+   unKZ10xoxqY4jdT7BgwHvHsDqBtVYFUyeDpxEB/9Vo58qu1QHC9On+OhT
+   2LtKQNELKDZwC+MKw68fI812IA/hu///DULTPfx0flIRf1/zxIhXER0k7
+   w=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 23 Mar 2022 21:55:21 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Mar 2022 21:55:20 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 23 Mar 2022 21:55:04 -0700
+Received: from [10.216.7.170] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 23 Mar
+ 2022 21:54:59 -0700
+Subject: Re: [PATCH v11 2/5] usb: dwc3: core: Host wake up support from system
+ suspend
+To:     Matthias Kaehlcke <mka@chromium.org>
+CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>
+References: <1647932876-23249-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1647932876-23249-3-git-send-email-quic_c_sanm@quicinc.com>
+ <YjthzwUldu2+31Pm@google.com>
+From:   "Sandeep Maheswaram (Temp)" <quic_c_sanm@quicinc.com>
+Message-ID: <b044f873-c20a-c666-0bd3-8d67c3337b03@quicinc.com>
+Date:   Thu, 24 Mar 2022 10:24:55 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAL_JsqLduGK=CyAcgahswFfeA43vh+QPgRgcL4+=piOwWwvJRQ@mail.gmail.com>
-X-Spam-Status: No, score=-0.5 required=5.0 tests=BAYES_00,DATE_IN_PAST_03_06,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <YjthzwUldu2+31Pm@google.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 23, 2022 at 08:55:30AM -0500, Rob Herring wrote:
-> On Thu, Feb 24, 2022 at 10:48 AM Ansuel Smith <ansuelsmth@gmail.com> wrote:
-> >
-> > Split qcom,gcc.yaml to common and specific schema to use it as a
-> > template for schema that needs to use the gcc bindings and require
-> > to add additional bindings.
-> >
-> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > ---
-> >  .../bindings/clock/qcom,gcc-other.yaml        | 76 +++++++++++++++++++
-> 
-> This now throws errors in linux-next:
-> 
-> Traceback (most recent call last):
->   File "/usr/local/lib/python3.8/dist-packages/jsonschema/validators.py",
-> line 816, in resolve_from_url
->     document = self.resolve_remote(url)
->   File "/usr/local/lib/python3.8/dist-packages/jsonschema/validators.py",
-> line 923, in resolve_remote
->     result = json.loads(url.read().decode("utf-8"))
->   File "/usr/lib/python3.8/json/__init__.py", line 357, in loads
->     return _default_decoder.decode(s)
->   File "/usr/lib/python3.8/json/decoder.py", line 337, in decode
->     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
->   File "/usr/lib/python3.8/json/decoder.py", line 355, in raw_decode
->     raise JSONDecodeError("Expecting value", s, err.value) from None
-> json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
-> During handling of the above exception, another exception occurred:
-> Traceback (most recent call last):
->   File "/usr/local/bin/dt-doc-validate", line 70, in <module>
->     ret = check_doc(f)
->   File "/usr/local/bin/dt-doc-validate", line 36, in check_doc
->     for error in
-> sorted(dtschema.DTValidator.iter_schema_errors(testtree), key=lambda
-> e: e.linecol):
->   File "/usr/local/lib/python3.8/dist-packages/dtschema/lib.py", line
-> 1016, in iter_schema_errors
->     meta_schema = cls.resolver.resolve_from_url(schema['$schema'])
->   File "/usr/local/lib/python3.8/dist-packages/jsonschema/validators.py",
-> line 818, in resolve_from_url
->     raise exceptions.RefResolutionError(exc)
-> jsonschema.exceptions.RefResolutionError: Expecting value: line 1
-> column 1 (char 0)
-> ./Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml:
-> mapping values are not allowed in this context
->   in "<unicode string>", line 17, column 11
-> 
-> >  .../devicetree/bindings/clock/qcom,gcc.yaml   | 59 +-------------
-> >  2 files changed, 80 insertions(+), 55 deletions(-)
-> >  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
-> >
-> > diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
-> > new file mode 100644
-> > index 000000000000..4e5903bcd70d
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-other.yaml
-> > @@ -0,0 +1,76 @@
-> > +# SPDX-License-Identifier: GPL-2.0-only
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/clock/qcom,gcc-other.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm Global Clock & Reset Controller Binding
-> > +
-> > +maintainers:
-> > +  - Stephen Boyd <sboyd@kernel.org>
-> > +  - Taniya Das <tdas@codeaurora.org>
-> > +
-> > +description:
-> > +  Qualcomm global clock control module which supports the clocks, resets and
-> > +  power domains.
-> > +
-> > +  See also:
-> 
-> I think the problem is here. You need a '|' after 'description' to
-> preserve formatting and ignore what looks like a mapping.
+
+On 3/23/2022 11:37 PM, Matthias Kaehlcke wrote:
+> On Tue, Mar 22, 2022 at 12:37:53PM +0530, Sandeep Maheswaram wrote:
+>> During suspend read the status of all port and make sure the PHYs
+>> are in the correct mode based on current speed.
+>> Phy interrupt masks are set based on this mode. Keep track of the mode
+>> of the HS PHY to be able to configure wakeup properly.
+>>
+>> Also check during suspend if any wakeup capable devices are
+>> connected to the controller (directly or through hubs), if there
+>> are none set a flag to indicate that the PHY is powered
+>> down during suspend.
+>>
+>> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+>> ---
+>>   drivers/usb/dwc3/core.c | 54 ++++++++++++++++++++++++++++++++++++++++---------
+>>   1 file changed, 45 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+>> index 1170b80..232a734 100644
+>> --- a/drivers/usb/dwc3/core.c
+>> +++ b/drivers/usb/dwc3/core.c
+>> @@ -32,12 +32,14 @@
+>>   #include <linux/usb/gadget.h>
+>>   #include <linux/usb/of.h>
+>>   #include <linux/usb/otg.h>
+>> +#include <linux/usb/hcd.h>
+>>   
+>>   #include "core.h"
+>>   #include "gadget.h"
+>>   #include "io.h"
+>>   
+>>   #include "debug.h"
+>> +#include "../host/xhci.h"
+>>   
+>>   #define DWC3_DEFAULT_AUTOSUSPEND_DELAY	5000 /* ms */
+>>   
+>> @@ -1861,10 +1863,36 @@ static int dwc3_core_init_for_resume(struct dwc3 *dwc)
+>>   	return ret;
+>>   }
+>>   
+>> +static void dwc3_set_phy_speed_mode(struct dwc3 *dwc)
+>> +{
+>> +
+>> +	int i, num_ports;
+>> +	u32 reg;
+>> +	struct usb_hcd	*hcd = platform_get_drvdata(dwc->xhci);
+>> +	struct xhci_hcd	*xhci_hcd = hcd_to_xhci(hcd);
+>> +
+>> +	dwc->hs_phy_mode = 0;
+>> +
+>> +	reg = readl(&xhci_hcd->cap_regs->hcs_params1);
+>> +
+>> +	num_ports = HCS_MAX_PORTS(reg);
+>> +	for (i = 0; i < num_ports; i++) {
+>> +		reg = readl(&xhci_hcd->op_regs->port_status_base + i * 0x04);
+> s/0x04/NUM_PORT_REGS/
+Okay. Will update in next version.
 >
+>> +		if (reg & PORT_PE) {
+>> +			if (DEV_HIGHSPEED(reg) || DEV_FULLSPEED(reg))
+>> +				dwc->hs_phy_mode |= PHY_MODE_USB_HOST_HS;
+>> +			else if (DEV_LOWSPEED(reg))
+>> +				dwc->hs_phy_mode |= PHY_MODE_USB_HOST_LS;
+>> +		}
+>> +	}
+>> +	phy_set_mode(dwc->usb2_generic_phy, dwc->hs_phy_mode);
+>> +}
+>> +
+>>   static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+>>   {
+>>   	unsigned long	flags;
+>>   	u32 reg;
+>> +	struct usb_hcd  *hcd = platform_get_drvdata(dwc->xhci);
+>>   
+>>   	switch (dwc->current_dr_role) {
+>>   	case DWC3_GCTL_PRTCAP_DEVICE:
+>> @@ -1877,10 +1905,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+>>   		dwc3_core_exit(dwc);
+>>   		break;
+>>   	case DWC3_GCTL_PRTCAP_HOST:
+>> -		if (!PMSG_IS_AUTO(msg)) {
+>> -			dwc3_core_exit(dwc);
+>> -			break;
+>> -		}
+>> +		dwc3_set_phy_speed_mode(dwc);
+>>   
+>>   		/* Let controller to suspend HSPHY before PHY driver suspends */
+>>   		if (dwc->dis_u2_susphy_quirk ||
+>> @@ -1896,6 +1921,16 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+>>   
+>>   		phy_pm_runtime_put_sync(dwc->usb2_generic_phy);
+>>   		phy_pm_runtime_put_sync(dwc->usb3_generic_phy);
+>> +
+>> +		if (!PMSG_IS_AUTO(msg)) {
+>> +			if (device_may_wakeup(&dwc->xhci->dev) &&
+> Does the xHCI actually provide the correct information? I think Brian brought
+> up earlier that xhci-plat always marks the xHCI as wakeup capable, regardless
+> of whether the specific implementation actually supports wakeup. So a dwc3
+> without wakeup support would keep the PHY and the dwc3 active during suspend
+> if wakeup capable devices are connected (unless the admin disabled wakeup),
+> even though wakeup it doesn't support wakeup.
+>
+> Using the wakeup capability/policy of the xHCI to make decisions in the dwc3
+> driver might still be the best we can do with the weird driver split over 3
+> drivers for dwc3. Maybe the dwc3 could pass the actual capability to wake up
+> to the xHCI through a property_entry? Then again, it's actually the 'glue'
+> driver (dwc3-qcom) who knows about the actual wakeup capability, and not the
+> dwc3 core/host ...
+Will check if we can do something regarding this.
+>
+>> +			    usb_wakeup_enabled_descendants(hcd->self.root_hub)) {
+>> +				dwc->phy_power_off = false;
+>> +			} else {
+>> +				dwc->phy_power_off = true;
+>> +				dwc3_core_exit(dwc);
+>> +			}
+>> +		}
+>>   		break;
+>>   	case DWC3_GCTL_PRTCAP_OTG:
+>>   		/* do nothing during runtime_suspend */
+>> @@ -1939,11 +1974,12 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
+>>   		break;
+>>   	case DWC3_GCTL_PRTCAP_HOST:
+>>   		if (!PMSG_IS_AUTO(msg)) {
+>> -			ret = dwc3_core_init_for_resume(dwc);
+>> -			if (ret)
+>> -				return ret;
+>> -			dwc3_set_prtcap(dwc, DWC3_GCTL_PRTCAP_HOST);
+>> -			break;
+>> +			if (dwc->phy_power_off) {
+> nit: you could merge this with the outer if condition:
+>
+>       	       	if (!PMSG_IS_AUTO(msg) && dwc->phy_power_off) {
+>
+> it's also fine to leave as is.
 
-Yes, I just sent a patch to fix this.
-Out of curiosity, any idea why this wasn't flagged by an old run of
-dt_binding_check? I totally remember running dt_binding_check on these
-Documentation and I had no problem. There was a bug in the old version
-and it does now correctly find these kind of errors?
+Okay. Will update in next version.
 
-> > +  - dt-bindings/clock/qcom,gcc-apq8084.h
-> > +  - dt-bindings/reset/qcom,gcc-apq8084.h
-> > +  - dt-bindings/clock/qcom,gcc-ipq4019.h
-> > +  - dt-bindings/clock/qcom,gcc-ipq6018.h
-> > +  - dt-bindings/reset/qcom,gcc-ipq6018.h
-> > +  - dt-bindings/clock/qcom,gcc-ipq806x.h (qcom,gcc-ipq8064)
-> > +  - dt-bindings/reset/qcom,gcc-ipq806x.h (qcom,gcc-ipq8064)
-> > +  - dt-bindings/clock/qcom,gcc-msm8939.h
-> > +  - dt-bindings/clock/qcom,gcc-msm8953.h
-> > +  - dt-bindings/reset/qcom,gcc-msm8939.h
-> > +  - dt-bindings/clock/qcom,gcc-msm8660.h
-> > +  - dt-bindings/reset/qcom,gcc-msm8660.h
-> > +  - dt-bindings/clock/qcom,gcc-msm8974.h (qcom,gcc-msm8226 and qcom,gcc-msm8974)
-> > +  - dt-bindings/reset/qcom,gcc-msm8974.h (qcom,gcc-msm8226 and qcom,gcc-msm8974)
-> > +  - dt-bindings/clock/qcom,gcc-mdm9607.h
-> > +  - dt-bindings/clock/qcom,gcc-mdm9615.h
-> > +  - dt-bindings/reset/qcom,gcc-mdm9615.h
-> > +  - dt-bindings/clock/qcom,gcc-sdm660.h  (qcom,gcc-sdm630 and qcom,gcc-sdm660)
-
--- 
-	Ansuel
