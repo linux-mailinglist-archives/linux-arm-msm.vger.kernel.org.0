@@ -2,67 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EEE3A4E6AB8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 23:33:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EAD8A4E6AB6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 23:33:57 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355402AbiCXWdd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Mar 2022 18:33:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34714 "EHLO
+        id S1355421AbiCXWfM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Mar 2022 18:35:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244280AbiCXWda (ORCPT
+        with ESMTP id S1355413AbiCXWfG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Mar 2022 18:33:30 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D915EBA33A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 15:31:57 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id j2so11052708ybu.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 15:31:57 -0700 (PDT)
+        Thu, 24 Mar 2022 18:35:06 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0326BA324
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 15:33:33 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id q19so4964693pgm.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 15:33:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=unhdPMLIAUACVz2ta5YZx0FTmwWyjrB4gDaU+iEB1D0=;
-        b=hTxSAKsIg82thRj0mm7BUZlMO/6avdMpZ4WQZLkmubMUZsQmzFQD4lf+Ue3YZ3ipGg
-         kaDNjK90NoVMsiE8EIwqEzt/UnmDCb+cv/eCMAYOeeQdhaXpvkWMCpfeZZrMyVivbx9o
-         VD9S256lHvqxsLAxAKSWnc8mKXOR9GX3fzn5bzT2Ov5omnwHkN9dlm6EGAHjLvz+B6db
-         Vcna5veV5wPbWfjqmYEKb2gOEZeZfoPlYKcZstebnzbNkUNQSRLSrFQeodD12Q+3oDnd
-         IZVAPqvB718vY1HW1kyALmOqR8kfQJm1Mpu8blPawVV/ZLGbrwdl2criTUpSdVhbBPzc
-         yExg==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=P2pYm8aApoPFKoF55U544w3PRwb5diq93TVUhqMH0Vc=;
+        b=kSpmI1qM7012KHpYseWnAyAG85NCt2KnqBnW35QcMho5vpZuWUXxh+tCWR6hS0eU1t
+         OqCZ8Oo9hMLDhddl5WadGmEul2dE9Zb6ol27nfoAYw3llyrixs0WImY/zDopMz2Slx4P
+         jGM/QDa39fGSXgKWeHN5TgwyNRLDxBcmx4wJM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=unhdPMLIAUACVz2ta5YZx0FTmwWyjrB4gDaU+iEB1D0=;
-        b=3QNKX5QdH7ZGyX5Z4lz9SsFtC4z/yEvNohDiEnhYVWIFNuEqUU0uvxiZ2epco+H9/y
-         pVRHTn5r/XsK8VVCtbfa0riWoDlnWKQj7gTev/4fD6ldTeFbkl3P9abI4GGtZog64GSe
-         ymK4b3lyLTmb7s7BfVLWvhn7w4IR/XzS9ymOkAizXXSm4z8gw2vPsUGR1JIr8aq+iG9v
-         kOsMVjBA2hD0AmQ2Rc+M2iO6gZR6kRv2Ce0gtkY1R0HQNldh37baIMcoYvFZsbnzqNtl
-         L7LyKEYzqueWdWYeZVgWhUolNY7Y2PzPWU3TgGFX4kfQ6lEMQRKVjzXjRfuhyc8lM2KX
-         LceA==
-X-Gm-Message-State: AOAM530Cr/pYqvs8GFuw4kL0LHD/UJywL35JTKLoSMbSUBwTgihmmVXp
-        ZX913/cw8HpZPVe7wyKhfOPIrciVZ9AJdxJoK+yuGQ==
-X-Google-Smtp-Source: ABdhPJxs4t3J1ZErfS66y2YUQTZDig4sOog2fYt/B4CvIl2Z0L955zjdE1XtxSV7OohXD8tfBdoEtvvGGYDr1YIrbyE=
-X-Received: by 2002:a5b:dc5:0:b0:624:f16d:7069 with SMTP id
- t5-20020a5b0dc5000000b00624f16d7069mr6922497ybr.295.1648161116855; Thu, 24
- Mar 2022 15:31:56 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=P2pYm8aApoPFKoF55U544w3PRwb5diq93TVUhqMH0Vc=;
+        b=ocJWe20OAOkrMo9wj6GGHOw+1gZPsp9xcheHgnXXOc06F5LPRv6U2P7nvqpnLQ/nH+
+         2LqhjLu0I2+lSkktPQCeF+fPEoX4hNlXHyXLVGQlEtxY/TkR6FQAcZRK0VONCfKUYEFk
+         AYTrgLmIY1p9IbEphRQ3SNk5Z/logEQ/u1Uj2HHgwvsyZHXRMNy1mLMUvkARj9wUC2on
+         N6ZNw/yX/+99giwphtrjStGJ8VVdby6UcmdsIPYe6g73r8QfjGsxNpuxmm/FQ/H6+l4S
+         XZSxHdR41yJ7NMFRLdO/ExGjbHGl0jvhGBMDorFfeb/7Y7EON+abp0SJVsvBkaUU4j6u
+         gM6w==
+X-Gm-Message-State: AOAM530YwdKg+g9QrYKPyETUtGsjuLTcwclmIeLo+EQ+/s66is6H7Y/1
+        LF2te0P+D2W9cfSGzhnv14XwOg==
+X-Google-Smtp-Source: ABdhPJzbPuTn6vHPZUxavIevej+kAH7usj2aL3PJJ2lnr1WYu5P+ggAeQMuA19KBeSL18Ib/kqnFyA==
+X-Received: by 2002:a63:d916:0:b0:385:fe06:a1db with SMTP id r22-20020a63d916000000b00385fe06a1dbmr5563124pgg.446.1648161213361;
+        Thu, 24 Mar 2022 15:33:33 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:8832:9ce1:9692:fe4])
+        by smtp.gmail.com with ESMTPSA id bw17-20020a056a00409100b004fadad3b93esm4403297pfb.142.2022.03.24.15.33.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Mar 2022 15:33:33 -0700 (PDT)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Subject: [PATCH] arm64: dts: qcom: sc7280: Fix sar1_irq_odl node name
+Date:   Thu, 24 Mar 2022 15:33:31 -0700
+Message-Id: <20220324223331.876199-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.35.1.1021.g381101b075-goog
 MIME-Version: 1.0
-References: <20220315091106.613153-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220315091106.613153-1-dmitry.baryshkov@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 24 Mar 2022 23:31:45 +0100
-Message-ID: <CACRpkdbJVe1AhOfGNYQcnsNV9gQWXEui1iv09-KT4Yd1JocFzw@mail.gmail.com>
-Subject: Re: [PATCH v2] pinctrl: qcom-pmic-gpio: Add support for pm8450
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,14 +67,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 15, 2022 at 10:11 AM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
+This node should be named sar1-irq-odl, not sar0-irq-odl. Otherwise
+we'll overwrite the settings for sar0 with what is intended for sar1,
+leading to probe failures for sar1 that are quite confusing.
 
-> PM8450 provides 4 GPIOs. Add a compatible entry for this GPIO block.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 116f7cc43d28 ("arm64: dts: qcom: sc7280: Add herobrine-r1")
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Patch applied.
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+index 7c22f0b062be..4d91909af325 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+@@ -741,7 +741,7 @@ sar0_irq_odl: sar0-irq-odl {
+ 		bias-pull-up;
+ 	};
+ 
+-	sar1_irq_odl: sar0-irq-odl {
++	sar1_irq_odl: sar1-irq-odl {
+ 		pins = "gpio140";
+ 		function = "gpio";
+ 		bias-pull-up;
 
-Yours,
-Linus Walleij
+base-commit: 116f7cc43d28ccd621ff1fecc9526c65dde28dcd
+-- 
+https://chromeos.dev
+
