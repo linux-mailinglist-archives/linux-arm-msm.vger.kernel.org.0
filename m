@@ -2,89 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4568C4E69B0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 21:12:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D09044E6A04
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Mar 2022 21:53:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346425AbiCXUNk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Mar 2022 16:13:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44054 "EHLO
+        id S237336AbiCXUyU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Mar 2022 16:54:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239738AbiCXUNk (ORCPT
+        with ESMTP id S1355935AbiCXUxt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Mar 2022 16:13:40 -0400
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF22EAD137
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 13:12:07 -0700 (PDT)
-Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-de2cb87f6aso6036524fac.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 13:12:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=fm33v815cGyvRnZSik/3qfh/le6zz0KlP6K6B+y0Ujw=;
-        b=j7BsnOzcEainxu4qHj53ZoSIQjjCWDVI5dpkX6Y3H7F6bGoLg+zwQ1mH1J+hSY+eBC
-         fUnpuDvR1s6e0lQ1cGONY7o0FhHRrOtx65byEMhBahgjGMhkzlr4QtW3ds3UgP7X1ZUC
-         bGMQzgtuDRbwkG8eX+c81M6n5aYkFSU2zHGkc=
+        Thu, 24 Mar 2022 16:53:49 -0400
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A20903DA7E;
+        Thu, 24 Mar 2022 13:52:17 -0700 (PDT)
+Received: by mail-ot1-f47.google.com with SMTP id i11-20020a9d4a8b000000b005cda3b9754aso4144040otf.12;
+        Thu, 24 Mar 2022 13:52:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=fm33v815cGyvRnZSik/3qfh/le6zz0KlP6K6B+y0Ujw=;
-        b=2SMzjQSxh+ilYWZmfhFruldyOt9Ia5INClqtmhODhrghJYhEmzUtbJe9giJb46b678
-         ATUHW2joTohUnNm+NsjbULoVrCb9HEpO8sM8assizP+0v2kjHO9NZmCcmhDOOboPRBsx
-         dwhYS5bEZjBbnC8sbTDwIQ+hSSR8zmCygQ9pmUn+7WWREKvnFiokao6oAA6a+tpT0NbO
-         YH9LCDzroMqO6xY2jyozTFEtOVNptW7T97W5BQNpwwAtnH37PAVLdtGnOqfrnknWqYxV
-         aeXRFsYh7R2I7VxoURigQWTo300Ykv4OLaNGzk8Iuien58NyBTZjS58H0P0rtvuWxADc
-         6ZWw==
-X-Gm-Message-State: AOAM533VFs4c7TpizGro59BAPaSrJTC7HEeQ4/oB1S6uu25b5P9Le9oK
-        XSPNxlokLhTSmSL01HtJpPr9SIZq/SXE0M1RhWRoXA==
-X-Google-Smtp-Source: ABdhPJzKBovD/XnQBM2VJdM2UICBfRNvK7J2MglCmPB4nXDGNIsSoqA1flcavm/5l9LdPtrW0MWyu1WgO4fQQ3UEHWo=
-X-Received: by 2002:a05:6870:b69c:b0:dd:b74b:4099 with SMTP id
- cy28-20020a056870b69c00b000ddb74b4099mr3107374oab.193.1648152727293; Thu, 24
- Mar 2022 13:12:07 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 24 Mar 2022 15:12:06 -0500
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=/QLDLUATu/B8KBKI55+l5jEhcVbVbLC4t+4Lo997I00=;
+        b=MlBBMOHIwE5WwdmDBTna/Fq8uas9VzSGTHwBF1Op95D5rNgmRHR27Na3ak/JBmBbGQ
+         vr7RzXgy49lBs5KWLqmS8TtUQ2mRHVZJ5oaQWNnswyA5AQGqX9yA616OvCfk4gQ7yJ8/
+         Xj/4Kb6hPXBy28ge0LmCc5V50Q8IifesHjrjMU4DogKBmo/r5B/jFscBepSjYC6YNeIB
+         LkqqVXqmXKLXYIq4MffW5xrKRXgeTLLOOIQx7hAZDneGBj9JEhMnfJQ9/BgHN5S+Dfgz
+         PDc6g5906uipRBC79KLufVqTyto7aHUlbrqYqrQZK2ADmgbZPnR1QUfxqLMkUsuDxkb5
+         ow+w==
+X-Gm-Message-State: AOAM530kuK8ZkNCoPTj528mI7f67kDTEgqGSgDmsFxXjGqfM96a+IWoL
+        obCodq90BC9nLecaBrNgWI0I/3PIvQ==
+X-Google-Smtp-Source: ABdhPJyFYhwTUm0TKaf6Pqx5DO+afqZXoNMWQT+r4f5yxTAUoTRetq4GNXbRCl2dY1di+ow83NKRAA==
+X-Received: by 2002:a9d:7f95:0:b0:5cd:b19f:2c3a with SMTP id t21-20020a9d7f95000000b005cdb19f2c3amr2403965otp.272.1648155136961;
+        Thu, 24 Mar 2022 13:52:16 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id g105-20020a9d12f2000000b005c961f9e119sm1793184otg.35.2022.03.24.13.52.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Mar 2022 13:52:16 -0700 (PDT)
+Received: (nullmailer pid 2553596 invoked by uid 1000);
+        Thu, 24 Mar 2022 20:52:15 -0000
+Date:   Thu, 24 Mar 2022 15:52:15 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, bhupesh.linux@gmail.com,
+        lorenzo.pieralisi@arm.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, svarbanov@mm-sol.com,
+        bhelgaas@google.com, linux-kernel@vger.kernel.org,
+        sboyd@kernel.org, mturquette@baylibre.com,
+        linux-clk@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v3 5/7] PCI: qcom: Add SM8150 SoC support
+Message-ID: <YjzZ/zfhSDlFzP7G@robh.at.kernel.org>
+References: <20220302203045.184500-1-bhupesh.sharma@linaro.org>
+ <20220302203045.184500-6-bhupesh.sharma@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <20220324115536.2090818-1-dmitry.baryshkov@linaro.org>
-References: <20220324115536.2090818-1-dmitry.baryshkov@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 24 Mar 2022 15:12:06 -0500
-Message-ID: <CAE-0n519RudiM+BG722M_BKqb=9Qt1rPFH5eYE1=9Lut6H7o4A@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: display/msm: another fix for the dpu-qcm2290 example
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>, Sean Paul <sean@poorly.run>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Rob Herring <robh@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220302203045.184500-6-bhupesh.sharma@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-03-24 04:55:36)
-> Make dpu-qcm2290 example really follow the defined schema:
-> - Drop qcom,mdss compatible. It's only used for MDP5 devices.
-> - Change display controller name to display-controller as specified in
->   the yaml
->
-> Reported-by: Rob Herring <robh@kernel.org>
-> Cc: Loic Poulain <loic.poulain@linaro.org>
-> Fixes: 164f69d9d45a ("dt-bindings: msm: disp: add yaml schemas for QCM2290 DPU bindings")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Thu, Mar 03, 2022 at 02:00:43AM +0530, Bhupesh Sharma wrote:
+> The PCIe IP (rev 1.5.0) on SM8150 SoC is similar to the one used on
+> SM8250. Hence the support is added reusing the members of ops_1_9_0.
+> 
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 > ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
