@@ -2,72 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B60D44E6F33
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Mar 2022 08:58:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AFE2D4E7009
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Mar 2022 10:34:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240422AbiCYIA0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Mar 2022 04:00:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40840 "EHLO
+        id S1357422AbiCYJgY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Mar 2022 05:36:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229826AbiCYIAZ (ORCPT
+        with ESMTP id S1344774AbiCYJgX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Mar 2022 04:00:25 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EC4C3DA63
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 00:58:50 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id o10so13783738ejd.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 00:58:50 -0700 (PDT)
+        Fri, 25 Mar 2022 05:36:23 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B320694A3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 02:34:49 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id t25so12365739lfg.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 02:34:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=mime-version:content-transfer-encoding:date:message-id:cc:subject
-         :from:to:references:in-reply-to;
-        bh=YNqe6IKQwYU1SXQAtrDZx7Ab2V139yZrlAAi/SFO/aQ=;
-        b=uONsPRuQB+JMPTjrrZXDNX9+tYvAwUVXzuxU7B7b6xzGdgQffKhED+1WkANhvZu/3R
-         ECVyrCWklcku038ZFfN2E+UYkMZP1NfzPToi/rt4EvREaeMbJlG3OLfQ0ee45eySZLVM
-         teGum288u8sFE7jVV1rZP1qZvahMEitALpxe6ZVr5018nLhCEHWYAoUqyD29FZSc3z+U
-         ssUC53eeGpYye/VY3P90BZoBjajHxl6jDRjF1FCC0r3J26XJL7oxiiro4JB31TRfPdh+
-         J9+w8S922rIcyzuR2lfBSIJVc6FTp0P+Buet5AZWt9j+5t8nRh7STWRNpYSgmbXUD0gP
-         lZvA==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=3XqQVa7Xf+Mh5WS5zci1tUo0VzoceV5erDl2gShhJ3A=;
+        b=lJqOOM3gFzNyYQTALRMFjYo8qlotvRftKjQvSP8YFhV3r8wjOmkoDDB1NNajO7MKNT
+         6kUivfiwEiJA8yxj4J98txHseLl+xQtKwo2l9dSsgib9voDr16+/PPnEwwUg15GUchKA
+         vM69cj4ZhVDqZMBxfm5jgzRIP3ZaC6Pu9DvWmAuUpfusLE0C0ucNPKjOdfIF8UHvX9Xv
+         0+g8zpQDV8dNguMW+oAA8Z8o52W1Xg00u9lL38Ct6blbqfkdLXAdxsLxhq3ZgonME1uW
+         bKKfLLLfLlo+/uYXrXZ0cJO4TwjBwQT0D0u6JcL0JwG7dg4hW0KjlSJYMAtbuU5NzxAU
+         JOqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:content-transfer-encoding:date
-         :message-id:cc:subject:from:to:references:in-reply-to;
-        bh=YNqe6IKQwYU1SXQAtrDZx7Ab2V139yZrlAAi/SFO/aQ=;
-        b=bW11uzIVvbdYVYMQnO7/PPMfzNgxHZmT9EHTXwr5WZ9wJPNNS8cchHQPeAOIxxLiRE
-         llWZzIVECfqoGoT8X6QE8mzyH6Oo8oq7QFqm8zBqNFjzhPC/xF543nT0yFj+jYUsprg8
-         R22SaPb9EiiBG59U+yxOrnWdhEfnlTpsi9YD6S0LfdBNkfgHQRF3OkzY+YW2Cw1k8WI/
-         SvhPkHjww7pRsm6iMb3RwO1TGE0xPqEpXxJi6VIYcRDQi9Fqx1CbOc9qMzO0WRemZC/M
-         7jElKlpaz2l9cgH8vSY7ADhBmrnDcRQCROJ6KOMCVzfnv0jAfspJCplynxpcDAl8J72m
-         XYmw==
-X-Gm-Message-State: AOAM53362VBWGrmgkbN4Oc2YdwXqB9sG3LlulCFyfFpYqs3yzK5BKAwz
-        hRAQtnIFzYvOhF/VFf/PHicxfw==
-X-Google-Smtp-Source: ABdhPJyGmgoyqTfWdSJLcXAdfk5XkWpJmQ/J5c9pZ+zK1/fBk0F9kLpL3O6/Xqrkn+9QLuwVPVL5IA==
-X-Received: by 2002:a17:906:3ec9:b0:6bb:2eb9:84f with SMTP id d9-20020a1709063ec900b006bb2eb9084fmr9968528ejj.86.1648195128732;
-        Fri, 25 Mar 2022 00:58:48 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a21-20020a170906275500b006d10c07fabesm2007178ejd.201.2022.03.25.00.58.47
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=3XqQVa7Xf+Mh5WS5zci1tUo0VzoceV5erDl2gShhJ3A=;
+        b=C2ogARUDgoE1RAwGTldfh7CNFHGSL6+m2O9jIZh8/e9OIdlM5aQKdw6J/7owMi6wti
+         MDk/BuwRrKNJsnPe2lJCojRAxYRpLKQsFca2AkH5orrtQXRZbEE98zEqA2qRK1r8LkSK
+         PbcocGoftaWRU+jLC1aU3suTIqA//COZbXqw5gnyT8YDNYByZ/9HM9zkE8hCvCG3/DKb
+         +x4NwLMhknNocPuqrfjak5ntqyaTEfflNDLm/VfXbf+T7RQrbR3x8sLMrE6zPJwqc83y
+         CMALb1zkuAN/r9NvJ7GuhpfPxgUQavhgM8rZNh5gNQmsg4pHC5At82md3XhQhaa8yfew
+         upKg==
+X-Gm-Message-State: AOAM533tH1MR+fatAMTbl7WojCrjw/tTzxB8AMyXxHVUHoIoUJHEslpV
+        zMElpR9/+RsOPeuXZV+IkXsWQw==
+X-Google-Smtp-Source: ABdhPJyIBmtG4IiWkb5WcsIhShr/3qwzMAB998rTzdDGHOrlCtlPiY5bmNBPcaPkaFH1TTwXzyf5Ew==
+X-Received: by 2002:ac2:5485:0:b0:448:bc39:8d30 with SMTP id t5-20020ac25485000000b00448bc398d30mr7386290lfk.462.1648200887342;
+        Fri, 25 Mar 2022 02:34:47 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id c20-20020a196554000000b0044a1181c527sm638069lfj.9.2022.03.25.02.34.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Mar 2022 00:58:48 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Fri, 25 Mar 2022 08:58:47 +0100
-Message-Id: <CISSESOMBR2Y.2L4TX1ZPPPIT8@otso>
-Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
-        "Stanimir Varbanov" <stanimir.varbanov@linaro.org>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
-        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
-        <linux-media@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/2] media: venus: hfi: Add error message for timeout
- error
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Luca Weiss" <luca.weiss@fairphone.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20220114110226.130380-1-luca.weiss@fairphone.com>
-In-Reply-To: <20220114110226.130380-1-luca.weiss@fairphone.com>
+        Fri, 25 Mar 2022 02:34:46 -0700 (PDT)
+Message-ID: <a02d0a60-e5f5-1b1d-b3d4-31233ca40bad@linaro.org>
+Date:   Fri, 25 Mar 2022 12:34:45 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v3 6/6] drm/msm: make mdp5/dpu devices master components
+Content-Language: en-GB
+To:     Stephen Boyd <swboyd@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20220323092538.1757880-1-dmitry.baryshkov@linaro.org>
+ <20220323092538.1757880-7-dmitry.baryshkov@linaro.org>
+ <CAE-0n51VvGu5w9dSUKUt4GywYbSpOaqxfWypB7ObJZg1pM5BAQ@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <CAE-0n51VvGu5w9dSUKUt4GywYbSpOaqxfWypB7ObJZg1pM5BAQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,41 +80,218 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi everyone,
+On 25/03/2022 00:37, Stephen Boyd wrote:
+> Quoting Dmitry Baryshkov (2022-03-23 02:25:38)
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> index 38627ccf3068..ab8a35e09bc9 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> @@ -381,8 +381,8 @@ static int dpu_kms_parse_data_bus_icc_path(struct dpu_kms *dpu_kms)
+>>          struct icc_path *path1;
+>>          struct drm_device *dev = dpu_kms->dev;
+>>
+>> -       path0 = of_icc_get(dev->dev, "mdp0-mem");
+>> -       path1 = of_icc_get(dev->dev, "mdp1-mem");
+>> +       path0 = of_icc_get(dev->dev->parent, "mdp0-mem");
+> 
+> dev->dev->parent is long
+> 
+>> +       path1 = of_icc_get(dev->dev->parent, "mdp1-mem");
+>>
+>>          if (IS_ERR_OR_NULL(path0))
+>>                  return PTR_ERR_OR_ZERO(path0);
+>> @@ -837,6 +837,9 @@ static void dpu_kms_destroy(struct msm_kms *kms)
+>>          _dpu_kms_hw_destroy(dpu_kms);
+>>
+>>          msm_kms_destroy(&dpu_kms->base);
+>> +
+>> +       if (dpu_kms->rpm_enabled)
+>> +               pm_runtime_disable(&dpu_kms->pdev->dev);
+>>   }
+>>
+>>   static irqreturn_t dpu_irq(struct msm_kms *kms)
+>> @@ -978,7 +981,7 @@ static int _dpu_kms_mmu_init(struct dpu_kms *dpu_kms)
+>>          if (!domain)
+>>                  return 0;
+>>
+>> -       mmu = msm_iommu_new(dpu_kms->dev->dev, domain);
+>> +       mmu = msm_iommu_new(dpu_kms->dev->dev->parent, domain);
+> 
+> And dpu_kms->dev->dev->parent is longer. Can we get some local variable
+> or something that is more descriptive? I guess it is an 'mdss_dev'?
 
-any feedback on this patch and the following one?
+Yes, I'll fix these two usages.
 
-Regards
-Luca
+> 
+>>          if (IS_ERR(mmu)) {
+>>                  iommu_domain_free(domain);
+>>                  return PTR_ERR(mmu);
+>> @@ -1172,40 +1175,15 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+>>          return rc;
+>>   }
+>>
+>> -static int dpu_kms_init(struct drm_device *dev)
+>> -{
+>> -       struct msm_drm_private *priv;
+>> -       struct dpu_kms *dpu_kms;
+>> -       int irq;
+>> -
+>> -       if (!dev) {
+>> -               DPU_ERROR("drm device node invalid\n");
+>> -               return -EINVAL;
+>> -       }
+>> -
+>> -       priv = dev->dev_private;
+>> -       dpu_kms = to_dpu_kms(priv->kms);
+>> -
+>> -       irq = irq_of_parse_and_map(dpu_kms->pdev->dev.of_node, 0);
+>> -       if (irq < 0) {
+>> -               DPU_ERROR("failed to get irq: %d\n", irq);
+>> -               return irq;
+>> -       }
+>> -       dpu_kms->base.irq = irq;
+>> -
+>> -       return 0;
+>> -}
+>> -
+>> -static int dpu_bind(struct device *dev, struct device *master, void *data)
+>> +static int dpu_kms_init(struct drm_device *ddev)
+>>   {
+>> -       struct msm_drm_private *priv = dev_get_drvdata(master);
+>> +       struct msm_drm_private *priv = ddev->dev_private;
+>> +       struct device *dev = ddev->dev;
+>>          struct platform_device *pdev = to_platform_device(dev);
+>> -       struct drm_device *ddev = priv->dev;
+>>          struct dpu_kms *dpu_kms;
+>> +       int irq;
+>>          int ret = 0;
+>>
+>> -       priv->kms_init = dpu_kms_init;
+>> -
+>>          dpu_kms = devm_kzalloc(&pdev->dev, sizeof(*dpu_kms), GFP_KERNEL);
+>>          if (!dpu_kms)
+>>                  return -ENOMEM;
+>> @@ -1227,8 +1205,6 @@ static int dpu_bind(struct device *dev, struct device *master, void *data)
+>>          }
+>>          dpu_kms->num_clocks = ret;
+>>
+>> -       platform_set_drvdata(pdev, dpu_kms);
+>> -
+>>          ret = msm_kms_init(&dpu_kms->base, &kms_funcs);
+>>          if (ret) {
+>>                  DPU_ERROR("failed to init kms, ret=%d\n", ret);
+>> @@ -1242,31 +1218,25 @@ static int dpu_bind(struct device *dev, struct device *master, void *data)
+>>
+>>          priv->kms = &dpu_kms->base;
+>>
+>> -       return ret;
+>> -}
+>> -
+>> -static void dpu_unbind(struct device *dev, struct device *master, void *data)
+>> -{
+>> -       struct platform_device *pdev = to_platform_device(dev);
+>> -       struct dpu_kms *dpu_kms = platform_get_drvdata(pdev);
+>> +       irq = irq_of_parse_and_map(dpu_kms->pdev->dev.of_node, 0);
+> 
+> Why doesn't platform_get_irq() work? This is code movement but I'm
+> trying to understand why OF APIs are required.
 
-On Fri Jan 14, 2022 at 12:02 PM CET, Luca Weiss wrote:
-> This error can appear with wrong configuration and is difficult to find
-> as it just returns -ETIMEDOUT with no further message.
->
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  drivers/media/platform/qcom/venus/hfi_venus.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/medi=
-a/platform/qcom/venus/hfi_venus.c
-> index 3a75a27632fb..9a34662fea38 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-> @@ -1583,8 +1583,10 @@ static int venus_suspend_3xx(struct venus_core *co=
-re)
->  	 */
->  	ret =3D readx_poll_timeout(venus_cpu_and_video_core_idle, hdev, val, va=
-l,
->  				 1500, 100 * 1500);
-> -	if (ret)
-> +	if (ret) {
-> +		dev_err(dev, "wait for cpu and video core idle fail (%d)\n", ret);
->  		return ret;
-> +	}
-> =20
->  	ret =3D venus_prepare_power_collapse(hdev, false);
->  	if (ret) {
-> --=20
-> 2.34.1
+Good question, I'll take a look separately (in a followup patch).
 
+> 
+>> +       if (irq < 0) {
+>> +               DPU_ERROR("failed to get irq: %d\n", irq);
+>> +               return irq;
+>> +       }
+>> +       dpu_kms->base.irq = irq;
+>>
+>> -       if (dpu_kms->rpm_enabled)
+>> -               pm_runtime_disable(&pdev->dev);
+>> +       return 0;
+>>   }
+>>
+>> diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
+>> index 1f571372e928..ab25fff271f9 100644
+>> --- a/drivers/gpu/drm/msm/msm_kms.h
+>> +++ b/drivers/gpu/drm/msm/msm_kms.h
+>> @@ -194,9 +194,6 @@ static inline void msm_kms_destroy(struct msm_kms *kms)
+>>                  msm_atomic_destroy_pending_timer(&kms->pending_timers[i]);
+>>   }
+>>
+>> -extern const struct of_device_id dpu_dt_match[];
+>> -extern const struct of_device_id mdp5_dt_match[];
+>> -
+>>   #define for_each_crtc_mask(dev, crtc, crtc_mask) \
+>>          drm_for_each_crtc(crtc, dev) \
+>>                  for_each_if (drm_crtc_mask(crtc) & (crtc_mask))
+>> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+>> index 7451105cbf01..9ecae833037d 100644
+>> --- a/drivers/gpu/drm/msm/msm_mdss.c
+>> +++ b/drivers/gpu/drm/msm/msm_mdss.c
+>> @@ -329,14 +310,7 @@ static int mdss_probe(struct platform_device *pdev)
+>>          if (IS_ERR(mdss))
+>>                  return PTR_ERR(mdss);
+>>
+>> -       priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
+>> -       if (!priv) {
+>> -               ret = -ENOMEM;
+>> -               goto fail;
+>> -       }
+>> -
+>> -       priv->mdss = mdss;
+>> -       platform_set_drvdata(pdev, priv);
+>> +       platform_set_drvdata(pdev, mdss);
+>>
+>>          /*
+>>           * MDP5/DPU based devices don't have a flat hierarchy. There is a top
+>> @@ -350,39 +324,18 @@ static int mdss_probe(struct platform_device *pdev)
+>>                  goto fail;
+> 
+> Can the goto fail be removed? And replaced with
+
+Ack, I'll do this.
+
+> 
+> 	if (ret)
+> 		msm_mdss_destroy(mdss)
+> 
+> 	return ret;
+> 
+>>          }
+>>
+>> -       mdp_dev = device_find_child(dev, NULL, find_mdp_node);
+>> -       if (!mdp_dev) {
+>> -               DRM_DEV_ERROR(dev, "failed to find MDSS MDP node\n");
+>> -               of_platform_depopulate(dev);
+>> -               ret = -ENODEV;
+>> -               goto fail;
+>> -       }
+>> -
+>> -       /*
+>> -        * on MDP5 based platforms, the MDSS platform device is the component
+>> -        * that adds MDP5 and other display interface components to
+>> -        * itself.
+>> -        */
+>> -       ret = msm_drv_probe(dev, mdp_dev);
+>> -       put_device(mdp_dev);
+>> -       if (ret)
+>> -               goto fail;
+>> -
+> 
+> I see a lot of removal of 'goto fail'.
+> 
+>>          return 0;
+>>
+>>   fail:
+>> -       of_platform_depopulate(dev);
+>> -       msm_mdss_destroy(priv->mdss);
+>> +       msm_mdss_destroy(mdss);
+>>
+>>          return ret;
+>>   }
+>>
+
+
+-- 
+With best wishes
+Dmitry
