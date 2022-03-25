@@ -2,79 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 658BE4E6C36
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Mar 2022 02:47:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C0F2F4E6C67
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Mar 2022 03:12:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357592AbiCYBrj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 24 Mar 2022 21:47:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40284 "EHLO
+        id S244611AbiCYCMY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 24 Mar 2022 22:12:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357693AbiCYBrc (ORCPT
+        with ESMTP id S1353106AbiCYCMN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 24 Mar 2022 21:47:32 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BE3537012
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 18:45:57 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id e4so6785128oif.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 24 Mar 2022 18:45:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=87syg5cqR3yLkq66KVMLox503xNIYaCuiAAmDxKHkEE=;
-        b=EnCDpsIzebcOAG+z9D3OIIUMh21+PT1K71a9q+uY3pJu4Yvv9kYbWbGbnQMeqnRo3G
-         fO1IW4T8eSxZC3+IR0e/XUBOcR7yckMsSFJE0/6ngZ8sYcyaSlt9Tw1WlpnhX80eqwzS
-         oiJ3o6OZZK/vkVit7EeUo64a5b4FquISxLr4I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=87syg5cqR3yLkq66KVMLox503xNIYaCuiAAmDxKHkEE=;
-        b=DPq10kNwjHBykaidfcspGf72Cv3c6WV9u4BWWUKMOBGdGHMN75OTUITpLo5sZIDzcb
-         /X9gMHMBNhuxESYbYXFV9mIUiCD1gxrOU0GIjEIig7libN8aYJRot4IoXCNpCt+kogXx
-         4PPiT4mx342Z4ebWzYW9N57NrUqaHAaCFBGxJTCIIktRBLEe2POmOz8dRvb3xbpDeq82
-         AUTHVCJ54K8ooivtZRzZn78YQ3EO86Gwuk6CzKNg56ERop+AilUUZMmgrMgXE0G2I2yl
-         QZlcicM9Xbfq5dXKfqzM6D/TezBbv3s3IQlpK84Gn6gm0/aARmO4za+08kVyldNsMjOw
-         ltEg==
-X-Gm-Message-State: AOAM533GkyZBI1sZg8ntg9J4ID3oTqcuMEHyFrt7WXgA5LhXYRP7LNn8
-        flTfML01gKEGnO4YtxO2eV30hnF1YPjBFTGd3TkUKA==
-X-Google-Smtp-Source: ABdhPJxGkk+jAlWe8yL/2J4MKfnO1ITZrJWDFkQJKnykWmEkhU1KAyMR7ZrNWYXsgjjpUquwglv2mrxLIJtibgrIqPM=
-X-Received: by 2002:aca:a9c8:0:b0:2da:45b6:b796 with SMTP id
- s191-20020acaa9c8000000b002da45b6b796mr3843348oie.193.1648172756157; Thu, 24
- Mar 2022 18:45:56 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 24 Mar 2022 20:45:55 -0500
+        Thu, 24 Mar 2022 22:12:13 -0400
+Received: from out203-205-251-80.mail.qq.com (out203-205-251-80.mail.qq.com [203.205.251.80])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6B94A995C;
+        Thu, 24 Mar 2022 19:09:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+        s=s201512; t=1648174141;
+        bh=qFJ1QKKq9b1Aw/+2U+A/f4XMNjTre/xqecawonGmicU=;
+        h=From:To:Cc:Subject:Date;
+        b=c4eJk01iY7sxKK5+q9z5Wb8vUpugjzSujVMUFUpn2cm39Q+090n0pehB94FOVIlnE
+         xtxUuIcpO/DEKB2yiWkMYtH/mLCo304dMCICUtrl0Zsmp2qmadYFFjjeLbbaPIjJXU
+         ejp1uiu801+OwKMi/6tbrpMkzfI3LH5rnFKJJrb4=
+Received: from localhost.localdomain ([43.227.136.188])
+        by newxmesmtplogicsvrsza7.qq.com (NewEsmtp) with SMTP
+        id 2390880F; Fri, 25 Mar 2022 10:08:57 +0800
+X-QQ-mid: xmsmtpt1648174137ts0bx8q70
+Message-ID: <tencent_6A5CCC9FB9221C4A1414E1534A3DFFC62008@qq.com>
+X-QQ-XMAILINFO: NkHKfw09D6j8lE/Tdyw2QdmN7BJTJJjH0Xf57GpNlk+aLRpaqo9Tnc8vn9EBQE
+         uvvSIu0IG7AIMyM9syJpW+UFUsF0XzpelbwexNj+dRaQz1b+wEbZLcV33BnfV3ZFaYdb4SAN6BA7
+         DHVnEuGP7p/4MKiGIY03JT6ORxftcQPmsq97w0UR/2dhN3yosWyqvCW200Tv8YgLgABBZ8ziYr1S
+         Wq/q0ILL9wyolxRXjgkKNRjifi5xYFD5ZksOFU5m89G6/hT12dA5F8y4IcFRzJ3qiWXlEtvZvPL7
+         EVp6sSa1Qz1kz5CQ0Qrc954Nb9JGHJwRJzzJiih2Ez/5rRiQ5Aovou33zGKiACdln7iUKbGnRMcs
+         vafYTT7VRn9cWMVhSy0qDJ/sekeKDfZ05TrkTUBWOhIIPe5WtmX/UAthmVPgXhSvH/2tkRHpitB9
+         Eu5273yxRzQV8l73jZ6UVkB0roovZqrfwCgESGaxRrJzX6qCiZIe+YAtnTf+/epRg4ggoWgVt67U
+         /N/vZRWgJcnikZUaA7vbWqOyTpspDruICg7QqYKn2uUFWacjcjNFSrmGYDnXgdSHwQd+7qDofgHv
+         rtq5SiFsctWlsIz/3qhQcVZ9qr+L5urfyY2MbiMzp6PO2aQlEzJX1yWr0FHzvKoJsSI05NJegCHV
+         4GK5jq8UwNr+Op+55VIup7WnfkLnW8DPmqQ13yvGZS/EUHUt8QOk/sgOCyyvHDw5t6DDQeZywoOW
+         n+tmWbesNhLRv+7HiW2GENUQHOgsE0JWXw3JBJzWF1HWShUTXP3kBPsWS90Xxr0KnKtu1DMAby+d
+         cFZ0sCjF099qShf5pJWNN7/u4fQPNXAfd9Efw7Lj3Vb8KEeFV387Afij9QnDyL7Yky8oSWAc9sE+
+         FaubL/NuDy+bzfGv4mvkkxb8Gr5w77SVzxLU3c6x4wRcmUXQqiuYPEiWZB1a3NFNS1zZHCt5WZ
+From:   xkernel.wang@foxmail.com
+To:     agross@kernel.org, bjorn.andersson@linaro.org, joro@8bytes.org,
+        will@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-kernel@vger.kernel.org,
+        Xiaoke Wang <xkernel.wang@foxmail.com>
+Subject: [PATCH] iommu/msm: add a check for the return of kzalloc()
+Date:   Fri, 25 Mar 2022 10:08:01 +0800
+X-OQ-MSGID: <20220325020801.3301-1-xkernel.wang@foxmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20220324160222.v2.1.Iebdb5af0db7d3d6364cb229a27cd7c668f1063ae@changeid>
-References: <20220324160222.v2.1.Iebdb5af0db7d3d6364cb229a27cd7c668f1063ae@changeid>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 24 Mar 2022 20:45:55 -0500
-Message-ID: <CAE-0n52XzXDk2oJSN2G=GiWe+8QCizEp7rb3e=E9+FLagh5ZnQ@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Add device tree for
- herobrine villager
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=0.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        HELO_DYNAMIC_IPADDR,RCVD_IN_DNSWL_NONE,RDNS_DYNAMIC,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Matthias Kaehlcke (2022-03-24 16:02:28)
-> Add a basic device tree for the herobrine villager board.
->
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> ---
+From: Xiaoke Wang <xkernel.wang@foxmail.com>
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+kzalloc() is a memory allocation function which can return NULL when
+some internal memory errors happen. So it is better to check it to
+prevent potential wrong memory access.
+
+Signed-off-by: Xiaoke Wang <xkernel.wang@foxmail.com>
+---
+ drivers/iommu/msm_iommu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
+index 3a38352..697ad63 100644
+--- a/drivers/iommu/msm_iommu.c
++++ b/drivers/iommu/msm_iommu.c
+@@ -597,6 +597,10 @@ static void insert_iommu_master(struct device *dev,
+ 
+ 	if (list_empty(&(*iommu)->ctx_list)) {
+ 		master = kzalloc(sizeof(*master), GFP_ATOMIC);
++		if (!master) {
++			dev_err(dev, "Failed to allocate iommu_master\n");
++			return;
++		}
+ 		master->of_node = dev->of_node;
+ 		list_add(&master->list, &(*iommu)->ctx_list);
+ 		dev_iommu_priv_set(dev, master);
+-- 
