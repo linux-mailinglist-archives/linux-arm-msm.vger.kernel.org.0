@@ -2,68 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F11EC4E7837
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Mar 2022 16:44:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D4FE4E7848
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Mar 2022 16:44:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350288AbiCYPpc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Mar 2022 11:45:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48428 "EHLO
+        id S1356228AbiCYPqO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Mar 2022 11:46:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377960AbiCYPoS (ORCPT
+        with ESMTP id S1356404AbiCYPpr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Mar 2022 11:44:18 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB1DA55BF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 08:42:43 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id z9-20020a05683020c900b005b22bf41872so5731626otq.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 08:42:43 -0700 (PDT)
+        Fri, 25 Mar 2022 11:45:47 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 497F638BE6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 08:44:07 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id q129so8559411oif.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 08:44:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=y+mMvimQyRReQzRmfPyQugpTb6KG//ze5sefX1RwzhQ=;
-        b=KEOJLdQ4cdEZxgsF3zBF9Ye2G1hZitw7712GCu1+psLG5lYYcqVhFc3hVFweWwrEjY
-         oTyog9ZPYy6+sCLYPHGjl5LLTwwUIerWjM1jmd/9HknBXGXgjbD+KSVyGL+15zqKKIzQ
-         pGQNjZGXzEDOM9g2mdBcqdMsb7hHunZ9kdYBg=
+        bh=NTzdvac9E0u5O5EPdTfHeL5fU+o6Dn+5DnAx+2wLf6o=;
+        b=g+lsR8A0mCNGF0M7c8zVcfz9bk7XjWwfiPgATYcttSfsfYKhPqNI90t5V2pWyy3K/1
+         zAiD6PcZ12g+jb0DsJg0Yhamr+ZkPZRB3Ez1pjct4VJUeGobr3ShTQNlbb3YFYps5UdP
+         YOiYo/iYBVpj1inq4H0Yqn1/nC7z8g//qULAg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=y+mMvimQyRReQzRmfPyQugpTb6KG//ze5sefX1RwzhQ=;
-        b=Lq5Qom7JxSTvNZcnKTaOnmFOYw59jjDGvMSZO7G6wQPdt+e3jRbXrNc1qCyHSAIUhY
-         WwMMM20D/fGb6r5KZq3rLM1CHveK//TVlTQw5WqKx7OhhFeYY2dqgnyCpb9DT4tuHA59
-         W9V5q1rnE9u4+40H3VM8hu139xraSkkTi7L02PSvjOHuDACZneRRRsMKwunbJbW+/sNu
-         rhoAziuPw0rBGEUQkpMksfAyB6ndnDtPXNI+kY+68UO+ct7WV6H7xAD//ecwgiX0w3Fn
-         iC91jR7/e3aF3e3nmFqnAFZe1671APsc++VeEg2rNjhQ91SICY1Imf4GpIPfBA9u75vH
-         9E4g==
-X-Gm-Message-State: AOAM532vhBen5t0MBoRvRjJI/sia7gt84VG+UTqafvsI5uwYYg9xF6ON
-        8HdXx+XqA6C+8eOjXvygxKXQZw3r6YxtoBxqhjRq1Q==
-X-Google-Smtp-Source: ABdhPJwJ5Gq+nN3wnkjwmbTENOeA32A+fUspgT2HrNlzuSrTrJWLFo0Sp9DqVPbF7c9Pm2B0FHJmuD0002UbyLd9osA=
-X-Received: by 2002:a05:6830:61b:b0:5cc:e44:7dc3 with SMTP id
- w27-20020a056830061b00b005cc0e447dc3mr4431819oti.159.1648222963153; Fri, 25
- Mar 2022 08:42:43 -0700 (PDT)
+        bh=NTzdvac9E0u5O5EPdTfHeL5fU+o6Dn+5DnAx+2wLf6o=;
+        b=NcqGyvJFOfkO3F2MvXyToOOMNQXj2b/qohlgS2Ymd+YuN7/eSxULoj115B0G/DEEA/
+         6xcFA0wCtcrH9rFUJJxUfe0RwoAtkFc6ysrJlsqMqPBpf1NjSMyaZ41/CeFWJo8FWsCG
+         g4oOUP/6HCDnpMTIw0mGk4rT1J9Jr86y1FwHi6tgwWsl97Dm57JmZc7Sc1+AQeqv9GMt
+         Aetucg6+tdhEFv0DMtgYmiKYnzddMU8sjHom8gMOsevv3/HwKayt0/G9Cki+B3SsDEPK
+         L0QCkf8ucBia0YQcZTNi9FKSidu/t3WUuihIvGEDQKBEMYqOuX9kZGPXewa/fU8VkHir
+         SUJw==
+X-Gm-Message-State: AOAM531wTUvbQMSsyWoyR1w5cbisPtbpM2oFhQtZ/tgDQT7Cf5ik2zRg
+        829HICVJ6IZPGKXcNsP23LeSEIMFztZ5bawL3UUOAA==
+X-Google-Smtp-Source: ABdhPJzl30pBr3/fWa4oAQpF/qcn7kXpetXINFM32PJnH9fEu6pMQU5faHK/sBE2DSjy0V8/NLr5FZhyK+g1+pShkp4=
+X-Received: by 2002:aca:a9c8:0:b0:2da:45b6:b796 with SMTP id
+ s191-20020acaa9c8000000b002da45b6b796mr5189697oie.193.1648223046578; Fri, 25
+ Mar 2022 08:44:06 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 25 Mar 2022 10:42:42 -0500
+ HTTPREST; Fri, 25 Mar 2022 10:44:06 -0500
 MIME-Version: 1.0
-In-Reply-To: <20220325081100.1.I9f06fec63b978699fe62591fec9e5ac31bb3a69d@changeid>
-References: <20220325081100.1.I9f06fec63b978699fe62591fec9e5ac31bb3a69d@changeid>
+In-Reply-To: <20220325121736.2162912-7-dmitry.baryshkov@linaro.org>
+References: <20220325121736.2162912-1-dmitry.baryshkov@linaro.org> <20220325121736.2162912-7-dmitry.baryshkov@linaro.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Fri, 25 Mar 2022 10:42:42 -0500
-Message-ID: <CAE-0n50hUGbH7_khhbsg3fbX_MCK0gEoStk-3xoUzje_a1=KQQ@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280-herobrine: Audio codec wants
- 1.8V, not 1.62V
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>
-Cc:     Matthias Kaehlcke <mka@chromium.org>,
-        Judy Hsiao <judyhsiao@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Fri, 25 Mar 2022 10:44:06 -0500
+Message-ID: <CAE-0n514UcsaTkv=P7KvvQYo_ohDsAAozjnjbQKeFY-z4EQVXQ@mail.gmail.com>
+Subject: Re: [PATCH v4 6/6] drm/msm: make mdp5/dpu devices master components
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,39 +70,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2022-03-25 08:11:05)
-> The L2C rail on herobrine boards is intended to go to the audio
-> codec. Let's override the 1.62V specified in the qcard.dtsi file to be
-> 1.8V.
+Quoting Dmitry Baryshkov (2022-03-25 05:17:36)
+> The msm_mdss serves several roles at this moment. It provides IRQ domain
+> used by MDP5 and DPU drivers but it also serves as a component master
+> for both those usecases. MDP4 (which does not have separate MDSS device)
+> is the component master on it's own.
+> Remove this assymmetry and make both MDP5 and DPU component masters too.
+> This removes a need to care about drm/components from msm_mdss driver,
+> removes an mdss pointer from struct msm_drm_private and simplifies the
+> interface between mdp5/dpu and msm_drv.
 >
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
 
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-
->
->  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> index dc17f2079695..c2075f3e7c4b 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> @@ -339,6 +339,16 @@ keyboard_backlight: keyboard-backlight {
->  ts_avdd:      &pp3300_left_in_mlb {};
->  vreg_edp_3p3: &pp3300_left_in_mlb {};
->
-> +/* Regulator overrides from Qcard */
-
-This one isn't in ALL CAPS? :)
-
-> +
-> +/*
-> + * Herobrine boards only use l2c to power an external audio codec (like
-> + * alc5682) and we want that to be at 1.8V, not at some slightly lower voltage.
-> + */
-> +&vreg_l2c_1p8 {
-> +       regulator-min-microvolt = <1800000>;
-> +};
-> +
->  /* ADDITIONS TO NODES DEFINED IN PARENT DEVICE TREE FILES */
