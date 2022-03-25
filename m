@@ -2,90 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0798F4E6ED1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Mar 2022 08:25:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B60D44E6F33
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Mar 2022 08:58:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240431AbiCYH1Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Mar 2022 03:27:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42164 "EHLO
+        id S240422AbiCYIA0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Mar 2022 04:00:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232528AbiCYH1Q (ORCPT
+        with ESMTP id S229826AbiCYIAZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Mar 2022 03:27:16 -0400
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3A9CBD8B7;
-        Fri, 25 Mar 2022 00:25:42 -0700 (PDT)
-Received: by mail-ej1-f43.google.com with SMTP id dr20so13604059ejc.6;
-        Fri, 25 Mar 2022 00:25:42 -0700 (PDT)
+        Fri, 25 Mar 2022 04:00:25 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EC4C3DA63
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 00:58:50 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id o10so13783738ejd.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 00:58:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair;
+        h=mime-version:content-transfer-encoding:date:message-id:cc:subject
+         :from:to:references:in-reply-to;
+        bh=YNqe6IKQwYU1SXQAtrDZx7Ab2V139yZrlAAi/SFO/aQ=;
+        b=uONsPRuQB+JMPTjrrZXDNX9+tYvAwUVXzuxU7B7b6xzGdgQffKhED+1WkANhvZu/3R
+         ECVyrCWklcku038ZFfN2E+UYkMZP1NfzPToi/rt4EvREaeMbJlG3OLfQ0ee45eySZLVM
+         teGum288u8sFE7jVV1rZP1qZvahMEitALpxe6ZVr5018nLhCEHWYAoUqyD29FZSc3z+U
+         ssUC53eeGpYye/VY3P90BZoBjajHxl6jDRjF1FCC0r3J26XJL7oxiiro4JB31TRfPdh+
+         J9+w8S922rIcyzuR2lfBSIJVc6FTp0P+Buet5AZWt9j+5t8nRh7STWRNpYSgmbXUD0gP
+         lZvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=PGD5QqaGJRv1esnTF6Tb03pd+mwDyDYap4xXF2trhtU=;
-        b=4uHzH7TJ4O5h2gVSOl+g+ZAaZW7BL6UB5b01MQed+ezJYXnE7bw7rNEkBvijH3PK+X
-         3e4j+OXDK8jhE1Y/txdyYP7lSwun19TVbTlT4XzXud444Rd7P+4zhZyWsT/R1bU2vyi1
-         D3yZ1Jil45GeHzaT1U6kZKKTwFT1SFEu+mHl8Cv+oi82R0jBRZo2EPFSUJUiVQdFPrjP
-         fWlggijqk+eIam8f4dXbjT9IYNaMcF7LCYpQkRRyJPyXCryFKv/vasCEE2JtpVKNERGC
-         541X0hEEnIA0C2vbVnbIbuqwXkTZM3uj91siOKXeuFnkhtyoc02WlpfxpAXfqrp9nVMt
-         kmxQ==
-X-Gm-Message-State: AOAM531e5vGyuJ35G1WGxEOoPVBsMR/xZGOyepG5nmFzaMfLBD22Mk0n
-        BYdMP3jT4PbP1ATiTqMKens=
-X-Google-Smtp-Source: ABdhPJxc+c0/rm44/n4LJplb86pnVU2nq6rmC9C5azx3YO+GWv/j7x1WVmHxMjH7HZ/yrjNGyUaxLw==
-X-Received: by 2002:a17:906:9f28:b0:6df:f811:5286 with SMTP id fy40-20020a1709069f2800b006dff8115286mr9617360ejc.745.1648193141250;
-        Fri, 25 Mar 2022 00:25:41 -0700 (PDT)
-Received: from [192.168.0.158] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.googlemail.com with ESMTPSA id ky5-20020a170907778500b006d1b2dd8d4csm2027917ejc.99.2022.03.25.00.25.40
+        h=x-gm-message-state:mime-version:content-transfer-encoding:date
+         :message-id:cc:subject:from:to:references:in-reply-to;
+        bh=YNqe6IKQwYU1SXQAtrDZx7Ab2V139yZrlAAi/SFO/aQ=;
+        b=bW11uzIVvbdYVYMQnO7/PPMfzNgxHZmT9EHTXwr5WZ9wJPNNS8cchHQPeAOIxxLiRE
+         llWZzIVECfqoGoT8X6QE8mzyH6Oo8oq7QFqm8zBqNFjzhPC/xF543nT0yFj+jYUsprg8
+         R22SaPb9EiiBG59U+yxOrnWdhEfnlTpsi9YD6S0LfdBNkfgHQRF3OkzY+YW2Cw1k8WI/
+         SvhPkHjww7pRsm6iMb3RwO1TGE0xPqEpXxJi6VIYcRDQi9Fqx1CbOc9qMzO0WRemZC/M
+         7jElKlpaz2l9cgH8vSY7ADhBmrnDcRQCROJ6KOMCVzfnv0jAfspJCplynxpcDAl8J72m
+         XYmw==
+X-Gm-Message-State: AOAM53362VBWGrmgkbN4Oc2YdwXqB9sG3LlulCFyfFpYqs3yzK5BKAwz
+        hRAQtnIFzYvOhF/VFf/PHicxfw==
+X-Google-Smtp-Source: ABdhPJyGmgoyqTfWdSJLcXAdfk5XkWpJmQ/J5c9pZ+zK1/fBk0F9kLpL3O6/Xqrkn+9QLuwVPVL5IA==
+X-Received: by 2002:a17:906:3ec9:b0:6bb:2eb9:84f with SMTP id d9-20020a1709063ec900b006bb2eb9084fmr9968528ejj.86.1648195128732;
+        Fri, 25 Mar 2022 00:58:48 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a21-20020a170906275500b006d10c07fabesm2007178ejd.201.2022.03.25.00.58.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Mar 2022 00:25:40 -0700 (PDT)
-Message-ID: <2e16716b-b3d8-5730-f10c-f0be9526d5c4@kernel.org>
-Date:   Fri, 25 Mar 2022 08:25:39 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH] dt-bindings: clock: fix dt_binding_check error for
- qcom,gcc-other.yaml
-Content-Language: en-US
-To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        Ansuel Smith <ansuelsmth@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220323194248.26970-1-ansuelsmth@gmail.com>
- <20220325004910.E0246C340EC@smtp.kernel.org>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <20220325004910.E0246C340EC@smtp.kernel.org>
+        Fri, 25 Mar 2022 00:58:48 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+Date:   Fri, 25 Mar 2022 08:58:47 +0100
+Message-Id: <CISSESOMBR2Y.2L4TX1ZPPPIT8@otso>
+Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
+        "Stanimir Varbanov" <stanimir.varbanov@linaro.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+        <linux-media@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/2] media: venus: hfi: Add error message for timeout
+ error
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Luca Weiss" <luca.weiss@fairphone.com>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20220114110226.130380-1-luca.weiss@fairphone.com>
+In-Reply-To: <20220114110226.130380-1-luca.weiss@fairphone.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/03/2022 01:49, Stephen Boyd wrote:
-> Quoting Ansuel Smith (2022-03-23 12:42:48)
->> qcom,gcc-other Documentation lacks a '|' for the description. This cause
->> dt_binding_check to incorrectly parse "See also:" as a new value.
->> Add the missing '|' to correctly parse the description.
->>
->> Fixes: a03965ed1310 ("dt-bindings: clock: split qcom,gcc.yaml to common and specific schema")
->> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
->> ---
+Hi everyone,
 
-Just to clarify:
-This should go with fixed commit (a03965ed1310), so maybe for this merge
-window (I don't know the plans for a03965ed1310).
+any feedback on this patch and the following one?
 
+Regards
+Luca
 
-Best regards,
-Krzysztof
+On Fri Jan 14, 2022 at 12:02 PM CET, Luca Weiss wrote:
+> This error can appear with wrong configuration and is difficult to find
+> as it just returns -ETIMEDOUT with no further message.
+>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>  drivers/media/platform/qcom/venus/hfi_venus.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/medi=
+a/platform/qcom/venus/hfi_venus.c
+> index 3a75a27632fb..9a34662fea38 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+> @@ -1583,8 +1583,10 @@ static int venus_suspend_3xx(struct venus_core *co=
+re)
+>  	 */
+>  	ret =3D readx_poll_timeout(venus_cpu_and_video_core_idle, hdev, val, va=
+l,
+>  				 1500, 100 * 1500);
+> -	if (ret)
+> +	if (ret) {
+> +		dev_err(dev, "wait for cpu and video core idle fail (%d)\n", ret);
+>  		return ret;
+> +	}
+> =20
+>  	ret =3D venus_prepare_power_collapse(hdev, false);
+>  	if (ret) {
+> --=20
+> 2.34.1
+
