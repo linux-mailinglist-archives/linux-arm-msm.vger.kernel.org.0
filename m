@@ -2,56 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB9C74E7C09
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Mar 2022 01:21:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F6904E7E01
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Mar 2022 01:23:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229541AbiCYT1v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Mar 2022 15:27:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58008 "EHLO
+        id S229457AbiCYTZw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Mar 2022 15:25:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbiCYT1Y (ORCPT
+        with ESMTP id S229486AbiCYTZu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:27:24 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29FD81E6EBF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 12:01:00 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id t11so15632347ybi.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 12:01:00 -0700 (PDT)
+        Fri, 25 Mar 2022 15:25:50 -0400
+Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 077203E06E8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 11:57:47 -0700 (PDT)
+Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-de3ca1efbaso8978111fac.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 11:57:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=pf88tpS11ppiNWSTVMzPek22eA+nbbXRk6ZktmUAOeg=;
-        b=cAjr+obn0D59Rm4C2G8ZencaVITkxhwDnMSiEWsaXLckF6yM3adrw5dbPRZK6u96F3
-         DLI7Ulyim206iMap4rxTYPIlmK981wpxwB5MjovYFcq3gmPxfLS9TMWEA6gWyY2fACHQ
-         oKC2lrqX/6pMT8INjBAGA91ynMHE7hp6ZGLUQ=
+        bh=xroX1x4vfWAmQcD+WNgrxfLEz2UKk5daAF8OyyDV8E8=;
+        b=LJQQCAmCZbfr9l5xxCdJzKz9F2magsaYfevnAZwZb6BtU/lljkhMhmUruElbPWYRSR
+         UuwlW2K9uhj32EZUX+jrinNLGbg1tBPVN9RDjfXYvASNzVt9uw82q3EKkfMw06N70Ev+
+         xS+sjEFeKchM9iGxTV5hgnfiOpi+elsMNkFWw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=pf88tpS11ppiNWSTVMzPek22eA+nbbXRk6ZktmUAOeg=;
-        b=Cqio/KshB3iDuXrsvu670X+yr9hEhuTl0iscu9/xENYke0sDr6S1/iMp8xd91I2Ziu
-         GA9MrbuyVfYSHsdyCfZxzbNTCUS1dr4MLj1x5QwfQ0itbMm/c1uJZkZidjEBTGVQcNpT
-         firflDALGA2OaAZVJedAxKFBraXvEIYcxx98hLoKq9iU8tp4k9658hEtOxsK3evACgEN
-         uypYh/WaES9bDCXE6yD8jyT5GL5lrPnTedPt/YckRiq3NjnaIRE1zTss2+JcYiQvIkNS
-         iR/MdTdfZ3aEzsz8mpuMYLNfR5fK6DqWWvW5UfS4TrCmRscs8a9gVB9yfnkS0JpdDMtI
-         zKew==
-X-Gm-Message-State: AOAM531QQAzQdGKo99WcnbrE8dSVvVwFswi9cB0DsMXjfNX5mB18innp
-        gifZZGxU6lUCCZctzSADHTLuAc73muzh2VwfWLu+XyN/I78=
-X-Google-Smtp-Source: ABdhPJwQ0+3fOgwXbl9kN3tNs5HjMHNRzLggFSoBe0MHfMz28g7bQQnaO+jHlXDdRMvP21RMDBa3JzcaBhwj/2Dla3I=
-X-Received: by 2002:a05:6830:61b:b0:5cc:e44:7dc3 with SMTP id
- w27-20020a056830061b00b005cc0e447dc3mr4774019oti.159.1648230509494; Fri, 25
- Mar 2022 10:48:29 -0700 (PDT)
+        bh=xroX1x4vfWAmQcD+WNgrxfLEz2UKk5daAF8OyyDV8E8=;
+        b=gr6fkU+X5T9Ibt5Wm2mbDcHrV/zBhQhHGhNpffs0OJ4V6ydpc/4Ywmw9qc29epCCc2
+         6vg0qGMzvRniKqmS4az7Hnk+N66/xAXSn8xjySOur/Q6NhiOEIOiwwc4aw1ugbCrUIXB
+         N+vuIK56VWWEjrYihUXua01iQKQW05l8045EUcwgBvSpF4Et9gX2XQeuml2HJV9Wh+BK
+         I437XuzbNPlnQhf03bSnBWmbWV8klcairzTxQUZMbcvde/OOanScb9om3ZQC5gmZQpSv
+         qW6nEDNlCjqbl3dfEvt/SPvlIp3J6d2WPsiijRKFt9RHfXCyyo5hWmRByqtBej1g+Eqn
+         jecg==
+X-Gm-Message-State: AOAM530SjpAEtVDMJfdxN5aFA5tIg7HM96S/tbGtCj33I9Tgz1VL2H+1
+        QXMVZAAn3wz7yV6is6Hqt8jFvjp6uRcB8QBXLqMVkwnKJnE=
+X-Google-Smtp-Source: ABdhPJxFnDvR+8O0qWhbA9VKyiH4QLwRIWZOGlc8HRnYIjqHnb6Nw0UGNH22srX4kIJMdYZuAU+YRhSRuizdqD+7dKY=
+X-Received: by 2002:aca:bd41:0:b0:2ec:ff42:814f with SMTP id
+ n62-20020acabd41000000b002ecff42814fmr6007460oif.63.1648231322654; Fri, 25
+ Mar 2022 11:02:02 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 25 Mar 2022 12:48:29 -0500
+ HTTPREST; Fri, 25 Mar 2022 13:02:02 -0500
 MIME-Version: 1.0
-In-Reply-To: <1648209491-30165-8-git-send-email-quic_c_skakit@quicinc.com>
-References: <1648209491-30165-1-git-send-email-quic_c_skakit@quicinc.com> <1648209491-30165-8-git-send-email-quic_c_skakit@quicinc.com>
+In-Reply-To: <1648209491-30165-2-git-send-email-quic_c_skakit@quicinc.com>
+References: <1648209491-30165-1-git-send-email-quic_c_skakit@quicinc.com> <1648209491-30165-2-git-send-email-quic_c_skakit@quicinc.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Fri, 25 Mar 2022 12:48:29 -0500
-Message-ID: <CAE-0n511eQTnJHqt0B=uiiSjigy-RHZ52YuYz4kfEpX1x6CMfw@mail.gmail.com>
-Subject: Re: [PATCH V8 7/7] arm64: dts: qcom: sc7280: Add pm8008 support for sc7280-idp
+Date:   Fri, 25 Mar 2022 13:02:02 -0500
+Message-ID: <CAE-0n523f-aAUkj1SUscNgw_Gh=mP8JfXV4u_hNeFhqtfr_Fgg@mail.gmail.com>
+Subject: Re: [PATCH V8 1/7] dt-bindings: mfd: pm8008: Modify the compatible as
+ per driver
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Satya Priya <quic_c_skakit@quicinc.com>
@@ -64,62 +65,122 @@ Cc:     Lee Jones <lee.jones@linaro.org>,
         quic_subbaram@quicinc.com, quic_jprakash@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Satya Priya (2022-03-25 04:58:11)
-> Add pm8008_infra and pm8008_regulators support for sc7280 idp.
+Quoting Satya Priya (2022-03-25 04:58:05)
+> Modify the compatible string as per the pm8008 mfd driver.
+> Add reset-gpios property and make interrupts and interrupt-cells
+> as optional properties, they are not strictly required and may
+> cause yaml compilation errors when not added in the DT files.
+
+Does it have an interrupt controller inside? If so, the properties
+should be present even if the driver isn't using them.
+
+>
+> Also, change the node name in example to match with the
+> pm8008_infra DT node.
 >
 > Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
 > ---
+> Changes in V5:
+>  - Remove compatible for regulators node.
+>  - Move supply nodes of the regulators to chip level.
+>
 > Changes in V6:
 >  - No changes.
 >
 > Changes in V7:
->  - No Changes.
+>  - Removed the intermediate regulators node and added ldos
+>    directly under mfd node.
 >
 > Changes in V8:
->  - Add an extra phandle "pm8008_bus" and then include pm8008 dtsi files inside it.
->  - Remove output-high from pm8008_active node.
+>  - Change the compatible as per driver, remove interrupts from required
+>    properties, add reset-gpios and move regulators to separate binding.
 >
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 70 ++++++++++++++++++++++++++++++++
->  1 file changed, 70 insertions(+)
+>  Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml | 15 ++++++++++-----
+>  1 file changed, 10 insertions(+), 5 deletions(-)
 >
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> index ecbf2b8..0843e92 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> @@ -263,6 +263,67 @@
->         };
->  };
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+> index ec3138c..12431ea 100644
+> --- a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+> @@ -16,7 +16,7 @@ description: |
 >
-> +pm8008_bus: &i2c1 {
-> +       #address-cells = <1>;
-> +       #size-cells = <0>;
+>  properties:
+>    compatible:
+> -    const: qcom,pm8008
+> +    const: qcom,pm8008-infra
 
-These two properties should already be in the i2c1 node. Can you remove
-them?
+Why is the compatible being replaced with -infra postfix?
 
-> +       status = "okay";
-> +};
+>
+>    reg:
+>      description:
+> @@ -44,6 +44,10 @@ properties:
+>    "#size-cells":
+>      const: 0
+>
+> +  reset-gpios:
+> +    description: |
+> +      Specifies the GPIO to be toggled to bring pm8008 chip out of reset.
+
+Remove description. Add maxItems: 1
+
 > +
-> +&pm8008_bus {
-> +       #include "pm8008-infra.dtsi"
-> +       #include "pm8008-regulators.dtsi"
-> +};
+>  patternProperties:
+>    "^gpio@[0-9a-f]+$":
+>      type: object
+> @@ -88,10 +92,8 @@ patternProperties:
+>  required:
+>    - compatible
+>    - reg
+> -  - interrupts
+>    - "#address-cells"
+>    - "#size-cells"
+> -  - "#interrupt-cells"
 
-I was thinking more of like
+Should reset-gpios be required? I'd expect this patch to be adding
+reset-gpios and making it required and that's about it. Given that
+there isn't a DT using this compatible upstream so far it looks like we
+don't need to do anything like worry about backwards compatibility.
 
-	&pm8008_bus: &i2c1 {
-		status = "okay";
-	};
+>
+>  additionalProperties: false
+>
+> @@ -99,11 +101,12 @@ examples:
+>    - |
+>      #include <dt-bindings/mfd/qcom-pm8008.h>
+>      #include <dt-bindings/interrupt-controller/irq.h>
+> +    #include <dt-bindings/gpio/gpio.h>
+>      qupv3_se13_i2c {
+>        #address-cells = <1>;
+>        #size-cells = <0>;
+> -      pm8008i@8 {
+> -        compatible = "qcom,pm8008";
+> +      pm8008_infra: pmic@8 {
 
-	#include "pm8008.dtsi"
+Remove unused phandle.
 
-and then the nodes below.
+> +        compatible = "qcom,pm8008-infra";
+>          reg = <0x8>;
+>          #address-cells = <1>;
+>          #size-cells = <0>;
+> @@ -113,6 +116,8 @@ examples:
+>          interrupt-parent = <&tlmm>;
+>          interrupts = <32 IRQ_TYPE_EDGE_RISING>;
+>
+> +        reset-gpios = <&pm8350c_gpios 4 GPIO_ACTIVE_HIGH>;
+> +
+>          pm8008_gpios: gpio@c000 {
+>            compatible = "qcom,pm8008-gpio", "qcom,spmi-gpio";
+>            reg = <0xc000>;
+> --
+> 2.7.4
+>
