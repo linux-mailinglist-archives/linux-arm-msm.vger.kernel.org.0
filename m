@@ -2,76 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D1A04E7541
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Mar 2022 15:43:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ABA254E7685
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Mar 2022 16:14:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358398AbiCYOpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Mar 2022 10:45:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33808 "EHLO
+        id S1359755AbiCYPP3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Mar 2022 11:15:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355311AbiCYOpM (ORCPT
+        with ESMTP id S1377372AbiCYPOP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Mar 2022 10:45:12 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E11CC54187
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 07:43:36 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id yy13so15839978ejb.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 07:43:36 -0700 (PDT)
+        Fri, 25 Mar 2022 11:14:15 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D577065167
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 08:11:50 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id y10so3336154pfa.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 08:11:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QdaepbbRGWYsyaL2QkmSp7WtYYHThf/iqjZK0d+zPJ8=;
-        b=dm/pO7aCRa1CzlKVqD1bJ4Ls9HUp9fNlvHw4n7CxSpTF7W9hnwFyoz95R0sfBwDHb2
-         nAiu29CamPcQ9qjyahRRfHuzw+Hv1a35ANlR1cNzxRtsdrS2BULx5xJ6pkQhcm+9GrA+
-         BSwDnimM+mRblUqWKImuZnAJxdpMBCGEQhCIc=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AA0RIphE1PJLLtUanm5oTog2K49TCs//CGuoWg4e8Hs=;
+        b=hzanffi7zrkFiMc7YDN8omOPXMSW+M0ZOEfvqWuXPxCrcNdflUTtNYfzG6eR5hMpsr
+         CWFF/nfWfOH0KtxqtX+80udGtxAKFMABFLKwqvI+U1QD2fFIYpTf3QyyKOQ8SSJilGmI
+         0x/CLU0IR8aNmQdf2uzRTG/1wjrnmeaeG7eBg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QdaepbbRGWYsyaL2QkmSp7WtYYHThf/iqjZK0d+zPJ8=;
-        b=04XfB/VWqadsW2fAF+1O1DwPYfltWgHmIc0kHq8DsuHqtGpXA1JxSKzD+kYM/QB40l
-         2uP/U67Cs0+lkvSOCX5AfgJ6NRibo1h29BcGRrf3LXKYPrxrhlmRKq4GiXotBWlL+/a0
-         62EqVBvxASRvdr8jonO+mszPYqs6dYpUIGgG1Lu2ThF7DWktXeW3Hz7pWAqoYE4DCh69
-         Lb5nByaARvTPsAxZjWoXdYvzRKINYzX7HvWw1Ft+SAW8fEA4b6QJR5x/iwdVVjOWTohn
-         afTs4+0eSfGb/f9D8JGBwSsmLIdmioKtbHqtdT1qqcArXKi5CPkTHwct47Y+1YazchjU
-         kmcw==
-X-Gm-Message-State: AOAM530Esaw3L6H5GjrW3+wuWxcZLmaPaUme5b0a+0awQA7nP374U0lO
-        G3ijqQYdLXEolEc2+5scUBvxBgGlHfXDQdf/M2o=
-X-Google-Smtp-Source: ABdhPJxPGALKANHYSCoTpgux7z1UVnsdccwpRx6nm8sCIW2z75q6YqduRGeUg55z1Gpld+Jlip0Uyw==
-X-Received: by 2002:a17:907:86a3:b0:6da:870c:af44 with SMTP id qa35-20020a17090786a300b006da870caf44mr11700581ejc.445.1648219415032;
-        Fri, 25 Mar 2022 07:43:35 -0700 (PDT)
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com. [209.85.221.54])
-        by smtp.gmail.com with ESMTPSA id f5-20020a1709067f8500b006da68bfdfc7sm2427393ejr.12.2022.03.25.07.43.33
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Mar 2022 07:43:33 -0700 (PDT)
-Received: by mail-wr1-f54.google.com with SMTP id w4so11148243wrg.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 07:43:33 -0700 (PDT)
-X-Received: by 2002:a5d:4491:0:b0:203:f63a:e89b with SMTP id
- j17-20020a5d4491000000b00203f63ae89bmr9410635wrq.342.1648219413124; Fri, 25
- Mar 2022 07:43:33 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AA0RIphE1PJLLtUanm5oTog2K49TCs//CGuoWg4e8Hs=;
+        b=Uw3jyQJYTErvvJeU7wnweFYV/d1xUhgo28dhucowUCqcv4tqsfaFzl0eux0h0d+YXg
+         1PXvcQxEEk6dY9Sb4qNFT30OqW8ZS1yHSyB8xRAgf548/qdyG1g6WEwDz/WfD0BX8xpj
+         L4IXewUeYQSU3z0P9mMYsJnHO6979YplqP83EOAdOMcUa1poL3SY4md+uxyBdCJJqJ+e
+         kZya9WPYdcVQXIIPh8ozh+mUk4K8js4rBzSbAhh5hJW5KMrF2SvYpvQW91Tb53DgsQRF
+         vmTgHLJi7eKPDdbH1rmSMQUjY48XjmWCvT3MrxcIZ0fIgpOBvYBzFGEc3zxBMtunMXEo
+         kScQ==
+X-Gm-Message-State: AOAM532Ol1CFYIwVCeQ1gUZbrTOmrojU4hKeShGO44+Chd2s1rloA6jp
+        kCF2ik6aLihm3iXW+ti36XSW93KtQd2Z7X7GrbM=
+X-Google-Smtp-Source: ABdhPJz3TexA8bi1jVv6urswawRRrftx4duACSg9G5izC8NbIevfzzjsI+39mHC+vogvBFcZz2ffvg==
+X-Received: by 2002:a05:6a00:9a7:b0:4fa:ebe8:a4b3 with SMTP id u39-20020a056a0009a700b004faebe8a4b3mr9621244pfg.11.1648221110411;
+        Fri, 25 Mar 2022 08:11:50 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:c95f:cacc:f8c:e361])
+        by smtp.gmail.com with ESMTPSA id o15-20020a17090a168f00b001bf66741097sm6399479pja.16.2022.03.25.08.11.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Mar 2022 08:11:49 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sc7280-herobrine: Audio codec wants 1.8V, not 1.62V
+Date:   Fri, 25 Mar 2022 08:11:05 -0700
+Message-Id: <20220325081100.1.I9f06fec63b978699fe62591fec9e5ac31bb3a69d@changeid>
+X-Mailer: git-send-email 2.35.1.1021.g381101b075-goog
 MIME-Version: 1.0
-References: <1648217145-725-1-git-send-email-quic_vnivarth@quicinc.com>
-In-Reply-To: <1648217145-725-1-git-send-email-quic_vnivarth@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 25 Mar 2022 07:43:20 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X2mF45Fsi+2eSRPfUKa9LCmYSkv8E586aGxPTxC0JsWw@mail.gmail.com>
-Message-ID: <CAD=FV=X2mF45Fsi+2eSRPfUKa9LCmYSkv8E586aGxPTxC0JsWw@mail.gmail.com>
-Subject: Re: [PATCH V2] arm64: dts: qcom: sc7280-idp: Configure cts sleep
- pinctrl to bias-bus-hold
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        quic_msavaliy@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,47 +70,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+The L2C rail on herobrine boards is intended to go to the audio
+codec. Let's override the 1.62V specified in the qcard.dtsi file to be
+1.8V.
 
-On Fri, Mar 25, 2022 at 7:06 AM Vijaya Krishna Nivarthi
-<quic_vnivarth@quicinc.com> wrote:
->
-> WLAN rail was leaking power during RBSC/sleep even after turning BT off.
-> Change sleep pinctrl configuration to handle same.
->
-> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-> ---
-> v2: used bias-bus-hold as per review comments
-> v1: intial patch used bias-disable
-> ---
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-No objections from me now. ...but we should probably be changing _all_
-of them? ...and by "all" I mean _both_ the sleep and wake state of the
-pins and this config across all the devices. In the very least all the
-sc7280 ones, but maybe even the sc7180 ones.
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-$ git grep "Configure a pull-down on CTS" -- arch/arm64/boot/dts
-arch/arm64/boot/dts/qcom/sc7180-idp.dts:                 * Configure a
-pull-down on CTS to match the pull of
-arch/arm64/boot/dts/qcom/sc7180-idp.dts:                         *
-Configure a pull-down on CTS to match the pull of
-arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi:            * Configure a
-pull-down on CTS to match the pull of
-arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi:                    *
-Configure a pull-down on CTS to match the pull of
-arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dts:      *
-Configure a pull-down on CTS to match the pull of
-arch/arm64/boot/dts/qcom/sc7280-herobrine-herobrine-r0.dts:
-  * Configure a pull-down on CTS to match the pull of
-arch/arm64/boot/dts/qcom/sc7280-idp.dtsi:        * Configure a
-pull-down on CTS to match the pull of
-arch/arm64/boot/dts/qcom/sc7280-idp.dtsi:                * Configure a
-pull-down on CTS to match the pull of
-arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi:     /* Configure a
-pull-down on CTS to match the pull of the Bluetooth module. */
-arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi:              * Configure a
-pull-down on CTS to match the pull of
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+index dc17f2079695..c2075f3e7c4b 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+@@ -339,6 +339,16 @@ keyboard_backlight: keyboard-backlight {
+ ts_avdd:      &pp3300_left_in_mlb {};
+ vreg_edp_3p3: &pp3300_left_in_mlb {};
+ 
++/* Regulator overrides from Qcard */
++
++/*
++ * Herobrine boards only use l2c to power an external audio codec (like
++ * alc5682) and we want that to be at 1.8V, not at some slightly lower voltage.
++ */
++&vreg_l2c_1p8 {
++	regulator-min-microvolt = <1800000>;
++};
++
+ /* ADDITIONS TO NODES DEFINED IN PARENT DEVICE TREE FILES */
+ 
+ ap_i2c_tpm: &i2c14 {
+-- 
+2.35.1.1021.g381101b075-goog
 
--Doug
