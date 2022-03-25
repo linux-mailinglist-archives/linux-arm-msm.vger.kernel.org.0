@@ -2,57 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E8674E7B48
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Mar 2022 01:20:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EB9C74E7C09
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Mar 2022 01:21:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231975AbiCYUE3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Mar 2022 16:04:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60144 "EHLO
+        id S229541AbiCYT1v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Mar 2022 15:27:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231991AbiCYUCq (ORCPT
+        with ESMTP id S229510AbiCYT1Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Mar 2022 16:02:46 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF7D722E975
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 12:53:36 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id t21so4409724oie.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 12:53:36 -0700 (PDT)
+        Fri, 25 Mar 2022 15:27:24 -0400
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29FD81E6EBF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 12:01:00 -0700 (PDT)
+Received: by mail-yb1-xb2c.google.com with SMTP id t11so15632347ybi.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 12:01:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=0hR6detCmXtBfWRoT9BJ6sxe7MY2tS62yTtZv+WfRSk=;
-        b=Seytbq0ydpKuf4R/CyPUY/RawpIlqEaJ4Z0EZqfX6FmGs61zB80vlRBAsUDj1kurSS
-         kWxzjhd1LDWsx5tyTheiAPEzLqnhJHL+zL1NLYXJuC5XBF3HBRYm7mseDe7dao7SPQG7
-         jav5tOdvRThgw1uB1iC1x91aXdcyrIWWjnb9E=
+        bh=pf88tpS11ppiNWSTVMzPek22eA+nbbXRk6ZktmUAOeg=;
+        b=cAjr+obn0D59Rm4C2G8ZencaVITkxhwDnMSiEWsaXLckF6yM3adrw5dbPRZK6u96F3
+         DLI7Ulyim206iMap4rxTYPIlmK981wpxwB5MjovYFcq3gmPxfLS9TMWEA6gWyY2fACHQ
+         oKC2lrqX/6pMT8INjBAGA91ynMHE7hp6ZGLUQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=0hR6detCmXtBfWRoT9BJ6sxe7MY2tS62yTtZv+WfRSk=;
-        b=Wf8JGVCvTnRh9yaDSNwpkqINwQCJLgS4R2DJqqm7e2e3hdPXFZAcg/nc581y/Z0V2k
-         8vieIanWFOMTB2xa3t0nSX5kMi5vPuGqkZtlNXVQIOYzX4RHPEAcJDLVyvw5nTVjLibc
-         vaVK9PVMwiiCVYs9jXyy89CtOttd0sNBb4WDEi9OdoHRXKnRA/uEKh5uvJTTDkFk4bWl
-         +RjLQ4aJ/D10fPhmP2g14JN0ByZpIyPL7Z6OEKz8VtxFtf1gF9+zGH0BjZg3jk8dBLZ+
-         QLNBfaw5ogunSg4/B/Kka4QuyWOHawKayz63uE+HEYYBi9HKSwOA2LRbdxWyj6sDezml
-         Pviw==
-X-Gm-Message-State: AOAM533nKf/jK0gb8oicIQiThseaGq4lzHrzA2dNCwd8qmBpkH8OFYTH
-        xWruS9pV0aj4JJys8c7kSZmhGPnk9+pssPkTlWKjxjKur4k=
-X-Google-Smtp-Source: ABdhPJwbK62nqj0K16SlmWCuvK8uzSLq7hC1YqLJsKiKUskGxk5vQgX1QjEjgxJTRooFAFH89FdqEOTUmOxG2mp0o10=
-X-Received: by 2002:aca:bd41:0:b0:2ec:ff42:814f with SMTP id
- n62-20020acabd41000000b002ecff42814fmr5947337oif.63.1648230185963; Fri, 25
- Mar 2022 10:43:05 -0700 (PDT)
+        bh=pf88tpS11ppiNWSTVMzPek22eA+nbbXRk6ZktmUAOeg=;
+        b=Cqio/KshB3iDuXrsvu670X+yr9hEhuTl0iscu9/xENYke0sDr6S1/iMp8xd91I2Ziu
+         GA9MrbuyVfYSHsdyCfZxzbNTCUS1dr4MLj1x5QwfQ0itbMm/c1uJZkZidjEBTGVQcNpT
+         firflDALGA2OaAZVJedAxKFBraXvEIYcxx98hLoKq9iU8tp4k9658hEtOxsK3evACgEN
+         uypYh/WaES9bDCXE6yD8jyT5GL5lrPnTedPt/YckRiq3NjnaIRE1zTss2+JcYiQvIkNS
+         iR/MdTdfZ3aEzsz8mpuMYLNfR5fK6DqWWvW5UfS4TrCmRscs8a9gVB9yfnkS0JpdDMtI
+         zKew==
+X-Gm-Message-State: AOAM531QQAzQdGKo99WcnbrE8dSVvVwFswi9cB0DsMXjfNX5mB18innp
+        gifZZGxU6lUCCZctzSADHTLuAc73muzh2VwfWLu+XyN/I78=
+X-Google-Smtp-Source: ABdhPJwQ0+3fOgwXbl9kN3tNs5HjMHNRzLggFSoBe0MHfMz28g7bQQnaO+jHlXDdRMvP21RMDBa3JzcaBhwj/2Dla3I=
+X-Received: by 2002:a05:6830:61b:b0:5cc:e44:7dc3 with SMTP id
+ w27-20020a056830061b00b005cc0e447dc3mr4774019oti.159.1648230509494; Fri, 25
+ Mar 2022 10:48:29 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 25 Mar 2022 12:43:05 -0500
+ HTTPREST; Fri, 25 Mar 2022 12:48:29 -0500
 MIME-Version: 1.0
-In-Reply-To: <1648209491-30165-7-git-send-email-quic_c_skakit@quicinc.com>
-References: <1648209491-30165-1-git-send-email-quic_c_skakit@quicinc.com> <1648209491-30165-7-git-send-email-quic_c_skakit@quicinc.com>
+In-Reply-To: <1648209491-30165-8-git-send-email-quic_c_skakit@quicinc.com>
+References: <1648209491-30165-1-git-send-email-quic_c_skakit@quicinc.com> <1648209491-30165-8-git-send-email-quic_c_skakit@quicinc.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Fri, 25 Mar 2022 12:43:05 -0500
-Message-ID: <CAE-0n50ApgiYbxHbU072s5-QLAmEppjDH9brKbfHja7hiue4xA@mail.gmail.com>
-Subject: Re: [PATCH V8 6/7] arm64: dts: qcom: pm8008-regulators: Add base dts
- file for pm8008 regulators
+Date:   Fri, 25 Mar 2022 12:48:29 -0500
+Message-ID: <CAE-0n511eQTnJHqt0B=uiiSjigy-RHZ52YuYz4kfEpX1x6CMfw@mail.gmail.com>
+Subject: Re: [PATCH V8 7/7] arm64: dts: qcom: sc7280: Add pm8008 support for sc7280-idp
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Satya Priya <quic_c_skakit@quicinc.com>
@@ -74,15 +73,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Satya Priya (2022-03-25 04:58:10)
-> Add base DTS file for pm8008 regulators with 7 ldo nodes.
+Quoting Satya Priya (2022-03-25 04:58:11)
+> Add pm8008_infra and pm8008_regulators support for sc7280 idp.
 >
 > Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
 > ---
+> Changes in V6:
+>  - No changes.
+>
+> Changes in V7:
+>  - No Changes.
+>
 > Changes in V8:
->  - Previously added pm8008 dtsi file is split into 2 files, one for infra
->    and other for regulators.
+>  - Add an extra phandle "pm8008_bus" and then include pm8008 dtsi files inside it.
+>  - Remove output-high from pm8008_active node.
+>
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 70 ++++++++++++++++++++++++++++++++
+>  1 file changed, 70 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> index ecbf2b8..0843e92 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> @@ -263,6 +263,67 @@
+>         };
+>  };
+>
+> +pm8008_bus: &i2c1 {
+> +       #address-cells = <1>;
+> +       #size-cells = <0>;
 
-Does pm8008 come in one package that gets soldered down on the board? If
-so, this should be one file instead of two, i.e. pm8008.dtsi. We don't
-make a -regulators dtsi file for other pmics.
+These two properties should already be in the i2c1 node. Can you remove
+them?
+
+> +       status = "okay";
+> +};
+> +
+> +&pm8008_bus {
+> +       #include "pm8008-infra.dtsi"
+> +       #include "pm8008-regulators.dtsi"
+> +};
+
+I was thinking more of like
+
+	&pm8008_bus: &i2c1 {
+		status = "okay";
+	};
+
+	#include "pm8008.dtsi"
+
+and then the nodes below.
