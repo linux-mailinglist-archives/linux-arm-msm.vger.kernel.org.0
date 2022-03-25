@@ -2,70 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E24C34E7D7C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Mar 2022 01:22:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B85CF4E7C7E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Mar 2022 01:21:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230041AbiCYTbs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Mar 2022 15:31:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51124 "EHLO
+        id S229865AbiCYT20 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Mar 2022 15:28:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229918AbiCYTbe (ORCPT
+        with ESMTP id S229706AbiCYT2F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:31:34 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 985C22CD2F5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 12:06:30 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id v75so9196890oie.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 12:06:30 -0700 (PDT)
+        Fri, 25 Mar 2022 15:28:05 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB4801E8CDB
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 12:01:31 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id q5so11478121ljb.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 12:01:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=lxCDnuzvI/dDOwtYF1oqphLQYyj16qlSkfozPWjfyEs=;
-        b=IVtFFTm3opL1SvfintDvcx2agZk19yMVZYzgsJj2Nw6d+IpllQ8w6KPYzYe6/OSGwG
-         XTUV6+5obZzj5GrVSCLM0sAj+SfjXi6QXi+osfdiMa4s2tW2hO4Icf0QndreQK/6ftuR
-         HonuN+aKjB2KlBq6n60YrIZdOO82yXB0iWFwY=
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=V+mqdl/8yeQYl/IuysCLzhmn9y/CpmqU+8Go5SfPM1w=;
+        b=xIWQ/+DTLejUwomBZ0gLI3Na0Yst9Q5CF47xgJzx4QyFvzcSJ80q1ptsiEho7rbcf0
+         /sdy4W66Z4Z0xunh+lMqJObMWzwj1O100nCROYZTsPeF1p5JEwZOWUO0ZqNutqWfJDiu
+         YG0tAvndqF1zSLveQC2i3jsd+NZvUbJCE5/usAzkQ73VwMpqQVPyyrb5s54UxA5MDucP
+         /tqYPRnaivPNrXoUcl7zD7Ronm7hjQKtqCKIRL6gpNOb6+engVawD0oUkXvgBA4026ao
+         d9huTAptGjD+/ybRzBgP5TC4lAruiiILOMumnLDrC3E0ukHz0SdAmyKYrm7l6yOQtPdl
+         uSNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=lxCDnuzvI/dDOwtYF1oqphLQYyj16qlSkfozPWjfyEs=;
-        b=ViZbnEpkfH+9pPnHfmHjFUEbf2vZVgCNTrO2g4pkCyzcqokaXigIMgQtTvp3grm5vP
-         DbblQ+WvxGYF0jC9hcXYmlS6TVrgohDAZ+w2x8lo7vqexMk0ccQajH6tRWiPmu+TqGcy
-         JnH9H5D1OrcWe4PZzHhikYKWkX55seDMF7pfSN4Ei72JrDDqDp708ctnNKXhJM41cen7
-         dASrw6eqye9DXFdqSYh61m/NDUTPNJ2Zz1akflOXI8XejX0KmboBE/HybNul2yaGAYfX
-         ZXLXpW7HXP1+ci/PyvYqEAeGUtmsBX6k6NmnHRDuf1NBoJUnTFIYOTJrE2wCDvzW3pfH
-         1Nzw==
-X-Gm-Message-State: AOAM533Bcg5UpxrKH6H4dIu62Oh4cae+pA0v+4+1X4tOeT/GOIGN+Yc/
-        US0ESvtOnoL6quclfs+sTjn81GDySmxwd36oz9qIWwJ4gNw=
-X-Google-Smtp-Source: ABdhPJz8JscmF7Q6aPXFTxS1Lm1vUzWWkKJ+skiG2uD+xzMzId2eANsm+pO6DweUUkxpGaGwXRpkrXq18QFkNFmegPc=
-X-Received: by 2002:aca:a9c8:0:b0:2da:45b6:b796 with SMTP id
- s191-20020acaa9c8000000b002da45b6b796mr5627914oie.193.1648231743322; Fri, 25
- Mar 2022 11:09:03 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 25 Mar 2022 13:09:02 -0500
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=V+mqdl/8yeQYl/IuysCLzhmn9y/CpmqU+8Go5SfPM1w=;
+        b=nodE0bERtJWk+G8szira7nfsP5OnlSVfyly0tu2hg9ufUu4c24uFDgA+sL5eNohMkl
+         Kk5MhfkMeEa/fWAw8y95T+pX3imsnErMxySyBAqT5KYxexATk6X/h8mLciKnFId4Pm6M
+         F3398mldpGoJMAgb0Ongqiklw8PkE8i9g0oxxGRLXaksqtW6ztwcRRO0/aE97SrGx1Ke
+         CxhL/Ni80vR43fhkhPcRjOsxzmFg5ZE60kPCLIWGc6Elr0/YH/W8wYGo68lQbgZF3zAc
+         W+i9cuCmDlik+DA9FCa8/+auQWp0TnbOsvd6J3+gwTqYgW7u+ymTXqAhzs2ljsZJQUIP
+         NtyA==
+X-Gm-Message-State: AOAM531nTXsQh2bsLK/04ZWIeKZphE4GLgRlRMOsG/yWvLlp6zrun6NO
+        +MX8BSuMfsGBuzRXdhBUCWeQ0kr/224aqQ==
+X-Google-Smtp-Source: ABdhPJy4+0fo8WFN/jfJd8qX8ZRY8Ouo8jbMZ/1RHx1QyBjtR7ao7I4CHYfeYCcfYjaiQF/lzscWXA==
+X-Received: by 2002:ac2:5ff2:0:b0:448:7f69:889d with SMTP id s18-20020ac25ff2000000b004487f69889dmr8780218lfg.202.1648234352533;
+        Fri, 25 Mar 2022 11:52:32 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id r9-20020ac25f89000000b0044a1008c5d7sm790323lfe.234.2022.03.25.11.52.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Mar 2022 11:52:31 -0700 (PDT)
+Message-ID: <d7966059-c003-d49a-a5ce-bff1e0604b58@linaro.org>
+Date:   Fri, 25 Mar 2022 21:52:31 +0300
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=WhhVBys4k7nZJ-SHB4y2Jf7JL9eeGUdBTqYG+c3m8-kA@mail.gmail.com>
-References: <20220325081100.1.I9f06fec63b978699fe62591fec9e5ac31bb3a69d@changeid>
- <CAE-0n50hUGbH7_khhbsg3fbX_MCK0gEoStk-3xoUzje_a1=KQQ@mail.gmail.com> <CAD=FV=WhhVBys4k7nZJ-SHB4y2Jf7JL9eeGUdBTqYG+c3m8-kA@mail.gmail.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Fri, 25 Mar 2022 13:09:02 -0500
-Message-ID: <CAE-0n52x6Hsb-jktp1asQROsQo5Cnz+jsBGRru-pNhSnj7ipTg@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280-herobrine: Audio codec wants
- 1.8V, not 1.62V
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Judy Hsiao <judyhsiao@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2 2/4] cpufreq: qcom-hw: fix the race between LMH worker
+ and cpuhp
+Content-Language: en-GB
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        Thara Gopinath <thara.gopinath@gmail.com>
+References: <20220309223938.3819715-1-dmitry.baryshkov@linaro.org>
+ <20220309223938.3819715-3-dmitry.baryshkov@linaro.org>
+ <YjyVgx08RiFDYwT5@ripper>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <YjyVgx08RiFDYwT5@ripper>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,24 +80,150 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Doug Anderson (2022-03-25 08:47:24)
->
-> Yeah, I guess it sorta felt like it was a sub-part of the previous
-> section since it was also adjusting Qcard regulators, but you're right
-> that it's not actually a board-local name. What about if I change the
-> section heading for "BOARD-LOCAL NAMES FOR REGULATORS THAT CONNECT TO
-> QCARD" to:
->
-> /*
->  * ADJUSTMENTS TO QCARD REGULATORS
->  *
->  * Mostly this is just board-local names for regulators that come from
->  * Qcard, but this also has some minor regulator overrides.
->  *
->  * Names are only listed here if regulators go somewhere other than a
->  * testpoint.
->  */
->
-> I'll wait a few days and then send a v2 if that sounds OK.
+On 24/03/2022 19:00, Bjorn Andersson wrote:
+> On Wed 09 Mar 14:39 PST 2022, Dmitry Baryshkov wrote:
+> 
+>> qcom_lmh_dcvs_poll() can be running when the cpu is being put offline.
+>> This results in the following warnings and an oops. The driver would
+>> disable the worker, but it happens closer to the end of
+>> cpufreq_offline(). Change the locking in the qcom_lmh_dcvs_poll(), so
+>> that the worker can not run in parallel with cpufreq_offline() call.
+>>
+>> [   55.650435] (NULL device *): dev_pm_opp_find_freq_floor: Invalid argument freq=00000000709ccbf9
+>> [   55.659420] (NULL device *): Can't find the OPP for throttling: -EINVAL!
+>> [   55.666329] Unable to handle kernel paging request at virtual address ffffadfba4bb6d81
+>> [   55.674491] Mem abort info:
+>> [   55.677363]   ESR = 0x96000004
+>> [   55.680527]   EC = 0x25: DABT (current EL), IL = 32 bits
+>> [   55.686001]   SET = 0, FnV = 0
+>> [   55.689164]   EA = 0, S1PTW = 0
+>> [   55.692418]   FSC = 0x04: level 0 translation fault
+>> [   55.697449] Data abort info:
+>> [   55.700426]   ISV = 0, ISS = 0x00000004
+>> [   55.704383]   CM = 0, WnR = 0
+>> [   55.707455] swapper pgtable: 4k pages, 48-bit VAs, pgdp=00000000a98e9000
+>> [   55.714354] [ffffadfba4bb6d81] pgd=0000000000000000, p4d=0000000000000000
+>> [   55.721388] Internal error: Oops: 96000004 [#1] SMP
+>> [   55.726397] Modules linked in:
+>> [   55.729542] CPU: 7 PID: 162 Comm: kworker/7:1H Tainted: G S      W         5.17.0-rc6-00100-g04890a1d9672 #724
+>> [   55.746066] Workqueue: events_highpri qcom_lmh_dcvs_poll
+>> [   55.751527] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+>> [   55.758669] pc : cpufreq_cpu_get_raw+0x20/0x44
+>> [   55.763233] lr : qcom_cpufreq_hw_get+0x10/0x64
+>> [   55.767799] sp : ffff800009983d10
+>> [   55.771207] x29: ffff800009983d10 x28: ffffaa13a4f2b000 x27: ffff7b31329f9305
+>> [   55.778530] x26: ffffaa13a4f30af8 x25: ffffaa13a4f4e4c8 x24: ffff7b2ec2eda000
+>> [   55.785851] x23: ffffffffffffffea x22: ffff7b2ec2e9fc18 x21: ffff7b2ec2e9fc00
+>> [   55.793170] x20: 0000000000000100 x19: ffff7b2ec2e9fcc0 x18: ffffffffffffffff
+>> [   55.800490] x17: 726620746e656d75 x16: 6772612064696c61 x15: ffff8000899839c7
+>> [   55.807812] x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+>> [   55.815140] x11: ffff7b2ec2e9fc80 x10: ffffaa13a59a1a70 x9 : 0000000000000000
+>> [   55.822468] x8 : ffff7b2eca6917c0 x7 : ffffaa13a528b000 x6 : 0000000000000001
+>> [   55.829788] x5 : 0000000000040000 x4 : 000000000000024f x3 : 0000000000000000
+>> [   55.837116] x2 : 0000000000000100 x1 : ffffaa13a4bb6d80 x0 : 000003e800000001
+>> [   55.844439] Call trace:
+>> [   55.846951]  cpufreq_cpu_get_raw+0x20/0x44
+> 
+> While I don't have the line numbers, I presume this would be cause by
+> policy->cpus being empty and:
+> 
+>     int cpu = cpumask_first(policy->cpus);
+> 
+> returning >= nr_cpu_ids, which means that the get_cpu_device(cpu); on
+> the next line will return NULL and then we keep playing opp on that
+> NULL?
+> 
+> 
+> Seems like this would be exactly the same mistake as I did wrt
+> policy->cpus vs policy->related_cpus and we don't actually need the
+> specific CPU, we just need a cpu device in the frequency domain.
+> 
+> As such we should actually do cpumaks_first(policy->related_cpus)
+> instead.
+> 
+>> [   55.851155]  qcom_lmh_dcvs_poll+0x104/0x160
+>> [   55.855452]  process_one_work+0x288/0x69c
+>> [   55.859574]  worker_thread+0x74/0x470
+>> [   55.863336]  kthread+0xfc/0x100
+>> [   55.866568]  ret_from_fork+0x10/0x20
+>> [   55.870246] Code: b00065c1 91360021 d503233f f8625800 (f8616800)
+>> [   55.876501] ---[ end trace 0000000000000000 ]---
+>>
+>> Fixes: 275157b367f4 ("cpufreq: qcom-cpufreq-hw: Add dcvs interrupt support")
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/cpufreq/qcom-cpufreq-hw.c | 24 +++++++++++++++++++++---
+>>   1 file changed, 21 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+>> index 44d46e52baea..7c1bb002e1c3 100644
+>> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+>> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+>> @@ -296,6 +296,23 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
+>>   	struct dev_pm_opp *opp;
+>>   	unsigned int freq;
+>>   
+>> +	/*
+>> +	 * Synchronize against CPU going offline.
+>> +	 * cpufreq_offline() will get the write lock on policy->rwsem.
+>> +	 */
+>> +retry:
+>> +	if (unlikely(!down_read_trylock(&policy->rwsem))) {
+>> +		mutex_lock(&data->throttle_lock);
+>> +		if (data->cancel_throttle) {
+>> +			mutex_unlock(&data->throttle_lock);
+>> +			return;
+>> +		}
+>> +
+>> +		mutex_unlock(&data->throttle_lock);
+>> +
+>> +		schedule();
+>> +		goto retry;
+>> +	}
+> 
+> And doing that instead would remove the need for doing this crazy
+> locking between the cpufreq core and qcom driver.
 
-Sounds good to me.
+I didn't like the idea that the notifier is running in parallel with the 
+cpufreq code modifying the policy. We can check if that's an issue 
+separately.
+
+> 
+> Above change would be trivial and -rc material.
+> 
+> Regards,
+> Bjorn
+> 
+>>   	/*
+>>   	 * Get the h/w throttled frequency, normalize it using the
+>>   	 * registered opp table and use it to calculate thermal pressure.
+>> @@ -314,9 +331,10 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
+>>   
+>>   	/*
+>>   	 * In the unlikely case policy is unregistered do not enable
+>> -	 * polling or h/w interrupt
+>> +	 * polling or h/w interrupt.
+>> +	 * If we are here, we have the policy->rwsem read lock,
+>> +	 * cancel_throttle can be toggled only with the write lock.
+>>   	 */
+>> -	mutex_lock(&data->throttle_lock);
+>>   	if (data->cancel_throttle)
+>>   		goto out;
+>>   
+>> @@ -331,7 +349,7 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
+>>   				 msecs_to_jiffies(10));
+>>   
+>>   out:
+>> -	mutex_unlock(&data->throttle_lock);
+>> +	up_read(&policy->rwsem);
+>>   }
+>>   
+>>   static void qcom_lmh_dcvs_poll(struct work_struct *work)
+>> -- 
+>> 2.34.1
+>>
+
+
+-- 
+With best wishes
+Dmitry
