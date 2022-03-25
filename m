@@ -2,60 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E761D4E7CC1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Mar 2022 01:22:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F0CCA4E7C7A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Mar 2022 01:21:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233412AbiCYVSt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Mar 2022 17:18:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52812 "EHLO
+        id S233417AbiCYVXI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Mar 2022 17:23:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233575AbiCYVSU (ORCPT
+        with ESMTP id S233414AbiCYVXH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Mar 2022 17:18:20 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17E6F43482
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 14:16:43 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id e5so9477582pls.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 14:16:42 -0700 (PDT)
+        Fri, 25 Mar 2022 17:23:07 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55C6615AAE6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 14:21:32 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id o10so17769512ejd.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 14:21:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qd2A4gk9xK3tLH00ck1BN3xfWfC5TA/QpCG6NwPucEQ=;
-        b=O1s8d3XHPhekNzgBEmXvGepqjFetseGB144M4AgcKgcYAUGRE7zBo9ixCKqDgedRwg
-         3rkrFv2MDg/7DN9lljYdn5rCElSaNoI+7Ig4AZnC12vkQdVqBEPgBiGlOwiw/pnPntnS
-         0+Sb+PLTOltwq483DCIFmP3MN3N7byMEyE7f8=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=sP4tT+y1Nyf2HgPARYD3SdiY0hWEX6wWyyCR4CgxXww=;
+        b=O9IxCB0OBfJyAtquU8TmcdLzHhY1UHZ5SXDNc92sA5+18unsjh45n3YfSphgmmTTHS
+         iR2eiVQfqj3IeM6+vxePvlDTcO1kymWAuNNNEV1C3PwG8eoIL7tmPM3GkOtQtd9e6DN8
+         tsRQsINeLLgCuOqWci0bp2vvAgXQARjHe9y10=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qd2A4gk9xK3tLH00ck1BN3xfWfC5TA/QpCG6NwPucEQ=;
-        b=aHncmqpLvW4Du94C3Ygrm87v55+cKoHG5oJ3YyWH+aWMSLjDLd47D4Rj3NNJFLkMje
-         c+91XCVym0f8WVDZBMKEn//bbcyixGe8n7lBVfPhco22hfghnlH4YYkx/4PmCfBcgyRi
-         T3PTYhjAeBFgo2YnU+kKHG/IsjJngBwwS5QVhEBQqQLLbP/j4w1OVfozNqAH1EuC7Hxu
-         n6w6L6MJKt87XOunEahJcINiYATUbOVBwQb0Q+QTsYzEObeYJwbwscHkGaInCY771MwK
-         AX8cc1xDlaVIZcULwtAZ3ysfmg9p4slW6QvutUWORbPX2XZoAF/YNiuOsXUngmeafY9t
-         IQsQ==
-X-Gm-Message-State: AOAM530a1NfwscRBa5n9lUC1hSBq3Z7LClOMMjxSH5U+Cakga031sycV
-        0uC+GvSbE1LabbKS1/5oTQ7n0A==
-X-Google-Smtp-Source: ABdhPJxp+Q2lEHiTSqcfeG0Ag2zKcaferXjcM8frFkQ1yQYCEQMyY1+Bhg5/6mkZV22bXypAf/2eqQ==
-X-Received: by 2002:a17:902:a585:b0:14d:58ef:65 with SMTP id az5-20020a170902a58500b0014d58ef0065mr13660731plb.139.1648243002382;
-        Fri, 25 Mar 2022 14:16:42 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:5662:afcf:5e0a:c3a5])
-        by smtp.gmail.com with ESMTPSA id l27-20020a63701b000000b0038233e59422sm6043022pgc.84.2022.03.25.14.16.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 14:16:41 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH] arm64: dts: qcom: sc7180-trogdor: Simply SAR sensor enabling
-Date:   Fri, 25 Mar 2022 14:16:40 -0700
-Message-Id: <20220325211640.54228-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.35.1.1021.g381101b075-goog
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=sP4tT+y1Nyf2HgPARYD3SdiY0hWEX6wWyyCR4CgxXww=;
+        b=a0nNoWCqy+Be2mUQo6KUsC+lGSQO24WDv1x8BCvqIwj1X++RwOBdzs0eNrwZ42CLo1
+         kYBa1AbCKe46GrgOTIY9+lH+0id3aObfoK2/OFMHD4hqLPlx4bcrh+e0NjMZdA+VH7LR
+         Zp1Rys/u1zQAGhi1P6mf8tIeLYIPn2pMq/KZouFrMOi+mkVcK9G6kSe4YqNrB07B05i0
+         04qz6vXPQ9dSIxkaPOfDGfjBHpkDqQsYfFoA3x78I2EBMDVGAGfHP1wWe6wHmPjFtPxA
+         PY/ibkGdaB4HiprnoZGB8SISdxHJOsJvjfOot+cAuiYb+Rgn5RwAeBOUKT+aXb52pIub
+         cWEw==
+X-Gm-Message-State: AOAM53309LS+xddm5TWHKnlMAONWnkPC7qFYDSXKq5m0ItMfowfUq4Ke
+        iNc/rh6n9G8w1V3BUQ2SX0gjSu/sCMrvYC5lPaE=
+X-Google-Smtp-Source: ABdhPJzAx4igEPOLVUXtDm0ljFwwZEjJuDOOY1/ThIRTdP4LhWDiuYs5qN4/8hjLaE05CM1j17eXqA==
+X-Received: by 2002:a17:906:c145:b0:6da:aaaf:770c with SMTP id dp5-20020a170906c14500b006daaaaf770cmr13902287ejc.504.1648243290624;
+        Fri, 25 Mar 2022 14:21:30 -0700 (PDT)
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com. [209.85.128.44])
+        by smtp.gmail.com with ESMTPSA id by4-20020a0564021b0400b00418fc410299sm3261468edb.62.2022.03.25.14.21.29
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Mar 2022 14:21:29 -0700 (PDT)
+Received: by mail-wm1-f44.google.com with SMTP id v2-20020a7bcb42000000b0037b9d960079so9722606wmj.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 14:21:29 -0700 (PDT)
+X-Received: by 2002:a05:600c:4f10:b0:38c:ae36:d305 with SMTP id
+ l16-20020a05600c4f1000b0038cae36d305mr21593082wmq.34.1648243289239; Fri, 25
+ Mar 2022 14:21:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220325211640.54228-1-swboyd@chromium.org>
+In-Reply-To: <20220325211640.54228-1-swboyd@chromium.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 25 Mar 2022 14:21:16 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WL+u5sQLiU4chNMnbxM2n7hgo+fWhHpK=BLOpFtSOW0Q@mail.gmail.com>
+Message-ID: <CAD=FV=WL+u5sQLiU4chNMnbxM2n7hgo+fWhHpK=BLOpFtSOW0Q@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180-trogdor: Simply SAR sensor enabling
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -66,81 +75,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SAR node, ap_sar_sensor, needs to be enabled in addition to the i2c
-bus it resides on. Let's simplify this by leaving the sensor node
-enabled by default while leaving the i2c bus disabled by default. On
-boards that use the sensor, we already enable the i2c bus so we can
-simply remove the extra bit that enables the sar sensor node. This saves
-some lines but is otherwise a non-functional change.
+Hi,
 
-Cc: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts | 4 ----
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts | 4 ----
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts | 4 ----
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi             | 1 -
- 4 files changed, 13 deletions(-)
+On Fri, Mar 25, 2022 at 2:16 PM Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> The SAR node, ap_sar_sensor, needs to be enabled in addition to the i2c
+> bus it resides on. Let's simplify this by leaving the sensor node
+> enabled by default while leaving the i2c bus disabled by default. On
+> boards that use the sensor, we already enable the i2c bus so we can
+> simply remove the extra bit that enables the sar sensor node. This saves
+> some lines but is otherwise a non-functional change.
+>
+> Cc: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts | 4 ----
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts | 4 ----
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts | 4 ----
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi             | 1 -
+>  4 files changed, 13 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts
-index e16ba7b01f25..eb20157f6af9 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts
-@@ -13,10 +13,6 @@ / {
- 	compatible = "google,lazor-rev1-sku0", "google,lazor-rev2-sku0", "qcom,sc7180";
- };
- 
--&ap_sar_sensor {
--	status = "okay";
--};
--
- &ap_sar_sensor_i2c {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
-index c5c9feff41b8..8913592b2d82 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
-@@ -20,10 +20,6 @@ / {
- 		"qcom,sc7180";
- };
- 
--&ap_sar_sensor {
--	status = "okay";
--};
--
- &ap_sar_sensor_i2c {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
-index 344b57c035d0..8107f3d932eb 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
-@@ -17,10 +17,6 @@ / {
- 	compatible = "google,lazor-sku0", "qcom,sc7180";
- };
- 
--&ap_sar_sensor {
--	status = "okay";
--};
--
- &ap_sar_sensor_i2c {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 732e1181af48..b0efb354458c 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -722,7 +722,6 @@ ap_sar_sensor: proximity@28 {
- 		vdd-supply = <&pp3300_a>;
- 		svdd-supply = <&pp1800_prox>;
- 
--		status = "disabled";
- 		label = "proximity-wifi";
- 	};
- };
+Makes sense to me and even saves a byte or two.
 
-base-commit: 52deda9551a01879b3562e7b41748e85c591f14c
--- 
-https://chromeos.dev
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
+-Doug
