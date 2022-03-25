@@ -2,67 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BFA34E7B35
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Mar 2022 01:20:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 799724E7D2D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Mar 2022 01:22:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233809AbiCYWXY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Mar 2022 18:23:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37734 "EHLO
+        id S229667AbiCYXpX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Mar 2022 19:45:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233802AbiCYWXU (ORCPT
+        with ESMTP id S229446AbiCYXpX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Mar 2022 18:23:20 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B5E51A774A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 15:21:45 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id c2so7500443pga.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 15:21:45 -0700 (PDT)
+        Fri, 25 Mar 2022 19:45:23 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C7DCEE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 16:43:46 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id o13so7629927pgc.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 16:43:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=v91blLz8wNwh0dLvtLpa8fJvSTejqJw9Y0LtRUMFiP8=;
-        b=m7ImBBTPlMOEmnAIbp1aHzsL6z987ZMQXMfwRqwyhiCOh3sw0FwnLiCrCf4fCY2Ed7
-         2796sPOaghgEfwmq38VI00BNOSrsMlky4yCGJmOtYTG6KK04oGuSSIUbJTPtKvm3M9hq
-         vrovnQwisek0WNHgVKPUdzhMI44PPDyW2ZS63aAt0fZDbTF1IkMJecntL1OHPQxK2U2Y
-         8/QXE1H8a47ldbU0GA16XanUNlSdhNjdtFexmOuKQhqv78PcJvWZEpojBZS8qRgKkFcd
-         F2XfpLTuD64szeqRvRxyj5xqN1Gfq0dDOaRgcNU6Z4WhIyVOARG2WmDSkfqU+sXFKMD+
-         U4bA==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NjmE0PbFYFwWsKdcKDF/bNsV7kfL0yBtHChWwZZV2Nk=;
+        b=dhVDiHy3cwzTU6EjTh2wHXrFp0f8La0Hlxx+1p0r179QsSFa8KVV/LXnf+8LnUD+cs
+         ehIKJvFujRCsjw73ryJQAX41ewUFVELwvHzXKCpuoKQWXroZS9Rb6t3QQ8xBsmU1AGGh
+         xE+iI0xyGF3EX3dUWyVAQie47EkrOZEVE1T4w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=v91blLz8wNwh0dLvtLpa8fJvSTejqJw9Y0LtRUMFiP8=;
-        b=an/zpSlVvbBP7QOWUJ1/LU2Ky8Ud2z+oXZAERG1TN9nMaG4NlHO0krw73GuqPEvFcJ
-         5TVrx03u5fq4W1YXBNW/Nz4tWvXLps5qIlRL17unL6h8i5G8COPsyz87P5zxDPI4EbXr
-         IGQBIwTKuwzojJ8FOm4oNx3V5S+8/RSA7Su6RrVekufYF1WebRh1fvEL7EQ8doO50PK7
-         yO/mDeAuH517MjAdUIwSe2KQsN1r/BPtFRyNq59WjoLjE7aW8sqHA6+CUAk7WGnj7vq8
-         5cnGb+loZ4KuS8kBzQTuSScJWoZw5kyruraqubY7oyJMtdDFImwQEPYGpvAOM9nbiG98
-         QTYg==
-X-Gm-Message-State: AOAM533UnJqsx/g+qrEuI6jSo+HN4xarDPjWmVeax8V1ilZiDak2JZGf
-        4p0z/9cNu7PyjnW5RuPcy7qWtg==
-X-Google-Smtp-Source: ABdhPJy1DOkN3z3dEZ5hdjHML6seq7I5W6l0sQPXsizRWJsO4ml9TQYjzZ+NkQkLOpI4lfXWXi6hVA==
-X-Received: by 2002:a62:6403:0:b0:4fa:c74c:83c5 with SMTP id y3-20020a626403000000b004fac74c83c5mr12089783pfb.30.1648246904786;
-        Fri, 25 Mar 2022 15:21:44 -0700 (PDT)
-Received: from localhost.localdomain ([223.233.78.42])
-        by smtp.gmail.com with ESMTPSA id x16-20020a637c10000000b00380b351aaacsm6006490pgc.16.2022.03.25.15.21.41
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NjmE0PbFYFwWsKdcKDF/bNsV7kfL0yBtHChWwZZV2Nk=;
+        b=7L7X4LQUvgPBobBJAxE8tcFte083Kh13YT2qgxg22BPRNzJfae27V6t5JFbheQvlZ5
+         3owsF+2Xieca3uQZUS328fRkZfnlDcJF5EHbLD4TMqtfzCqaDUdTBy3Su/S0uxod488/
+         IfQVqtikc6XElFXcLI1zOFW1vgi4sXwzGeeaKSwMc/ixGy2F+znx6DOe2X3Np/gm/1M9
+         9up3VMD7B7Brm6CJlTjXDhzevmzcsCBlE1gA1yKzv6YW5DkJ6fKvyTXRnitTzh3ZEijc
+         V1NsMI54P8NBl89fBDoyN9th/mtbwM5yfhrYLcp/FkSgu+RDQvEQT5eMvkBX8zQT6AFb
+         jH7A==
+X-Gm-Message-State: AOAM531izDVBkvuPGgcqlYhE8flfzTR87h7OTfIdqw3KtYHsyeSEI4p+
+        4zkXxjBKYN+nOGuigN5KjLqAmg==
+X-Google-Smtp-Source: ABdhPJyJWNcZYXWBiuyLykebWFydaiBJILXDLPfP7ZK5bmsAj6FnDcCpFLely8OGk2KReS0kGJOMuQ==
+X-Received: by 2002:a65:41c3:0:b0:363:5711:e234 with SMTP id b3-20020a6541c3000000b003635711e234mr1494243pgq.386.1648251825790;
+        Fri, 25 Mar 2022 16:43:45 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:5662:afcf:5e0a:c3a5])
+        by smtp.gmail.com with ESMTPSA id b17-20020a056a000a9100b004e1b7cdb8fdsm8684525pfl.70.2022.03.25.16.43.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 15:21:44 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-phy@lists.infradead.org
-Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        vkoul@kernel.org, bjorn.andersson@linaro.org
-Subject: [PATCH v4 2/2] phy: qcom-qmp: Add SM8150 PCIe QMP PHYs
-Date:   Sat, 26 Mar 2022 03:51:30 +0530
-Message-Id: <20220325222130.1783242-3-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220325222130.1783242-1-bhupesh.sharma@linaro.org>
-References: <20220325222130.1783242-1-bhupesh.sharma@linaro.org>
+        Fri, 25 Mar 2022 16:43:45 -0700 (PDT)
+From:   Stephen Boyd <swboyd@chromium.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Joseph Barrera <joebar@google.com>,
+        Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH 0/2] arm64: dts: qcom: sc7180-trogdor: Simplify!
+Date:   Fri, 25 Mar 2022 16:43:41 -0700
+Message-Id: <20220325234344.199841-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.35.1.1021.g381101b075-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -71,134 +67,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SM8150 has multiple (different) PHY versions:
-QMP GEN3x1 PHY - 1 lane
-QMP GEN3x2 PHY - 2 lanes
+Here's a couple patches to simplify sc7180-trogdor dtsi files further.
 
-Add support for these with relevant init sequence.
+Stephen Boyd (2):
+  arm64: dts: qcom: sc7180-trogdor: Simplify trackpad enabling
+  arm64: dts: qcom: sc7180-trogdor: Simplify spi0/spi6 labeling
 
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp.c | 90 +++++++++++++++++++++++++++++
- 1 file changed, 90 insertions(+)
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi   | 9 ---------
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 7 -------
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi    | 7 ++++---
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi          | 6 +++---
+ 4 files changed, 7 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index b144ae1f729a..8e928b9619b6 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -3294,6 +3294,11 @@ static const char * const sdm845_pciephy_clk_l[] = {
- 	"aux", "cfg_ahb", "ref", "refgen",
- };
- 
-+/* the pcie phy on sm8150 doesn't have a ref clock */
-+static const char * const sm8150_pciephy_clk_l[] = {
-+	"aux", "cfg_ahb", "refgen",
-+};
-+
- static const char * const qmp_v4_phy_clk_l[] = {
- 	"aux", "ref_clk_src", "ref", "com_aux",
- };
-@@ -3583,6 +3588,85 @@ static const struct qmp_phy_cfg sdm845_qhp_pciephy_cfg = {
- 	.pwrdn_delay_max	= 1005,		/* us */
- };
- 
-+static const struct qmp_phy_cfg sm8150_qmp_gen3x1_pciephy_cfg = {
-+	.type = PHY_TYPE_PCIE,
-+	.nlanes = 1,
-+
-+	.serdes_tbl		= sm8250_qmp_pcie_serdes_tbl,
-+	.serdes_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_serdes_tbl),
-+	.serdes_tbl_sec		= sm8250_qmp_gen3x1_pcie_serdes_tbl,
-+	.serdes_tbl_num_sec	= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_serdes_tbl),
-+	.tx_tbl			= sm8250_qmp_pcie_tx_tbl,
-+	.tx_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_tx_tbl),
-+	.rx_tbl			= sm8250_qmp_pcie_rx_tbl,
-+	.rx_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_rx_tbl),
-+	.rx_tbl_sec		= sm8250_qmp_gen3x1_pcie_rx_tbl,
-+	.rx_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_rx_tbl),
-+	.pcs_tbl		= sm8250_qmp_pcie_pcs_tbl,
-+	.pcs_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_pcs_tbl),
-+	.pcs_tbl_sec		= sm8250_qmp_gen3x1_pcie_pcs_tbl,
-+	.pcs_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_pcs_tbl),
-+	.pcs_misc_tbl		= sm8250_qmp_pcie_pcs_misc_tbl,
-+	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8250_qmp_pcie_pcs_misc_tbl),
-+	.pcs_misc_tbl_sec		= sm8250_qmp_gen3x1_pcie_pcs_misc_tbl,
-+	.pcs_misc_tbl_num_sec	= ARRAY_SIZE(sm8250_qmp_gen3x1_pcie_pcs_misc_tbl),
-+	.clk_list		= sm8150_pciephy_clk_l,
-+	.num_clks		= ARRAY_SIZE(sm8150_pciephy_clk_l),
-+	.reset_list		= sdm845_pciephy_reset_l,
-+	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
-+	.vreg_list		= qmp_phy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-+	.regs			= sm8250_pcie_regs_layout,
-+
-+	.start_ctrl		= PCS_START | SERDES_START,
-+	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-+	.phy_status		= PHYSTATUS,
-+
-+	.has_pwrdn_delay	= true,
-+	.pwrdn_delay_min	= 995,		/* us */
-+	.pwrdn_delay_max	= 1005,		/* us */
-+};
-+
-+static const struct qmp_phy_cfg sm8150_qmp_gen3x2_pciephy_cfg = {
-+	.type = PHY_TYPE_PCIE,
-+	.nlanes = 2,
-+
-+	.serdes_tbl		= sm8250_qmp_pcie_serdes_tbl,
-+	.serdes_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_serdes_tbl),
-+	.tx_tbl			= sm8250_qmp_pcie_tx_tbl,
-+	.tx_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_tx_tbl),
-+	.tx_tbl_sec		= sm8250_qmp_gen3x2_pcie_tx_tbl,
-+	.tx_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_tx_tbl),
-+	.rx_tbl			= sm8250_qmp_pcie_rx_tbl,
-+	.rx_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_rx_tbl),
-+	.rx_tbl_sec		= sm8250_qmp_gen3x2_pcie_rx_tbl,
-+	.rx_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_rx_tbl),
-+	.pcs_tbl		= sm8250_qmp_pcie_pcs_tbl,
-+	.pcs_tbl_num		= ARRAY_SIZE(sm8250_qmp_pcie_pcs_tbl),
-+	.pcs_tbl_sec		= sm8250_qmp_gen3x2_pcie_pcs_tbl,
-+	.pcs_tbl_num_sec		= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_pcs_tbl),
-+	.pcs_misc_tbl		= sm8250_qmp_pcie_pcs_misc_tbl,
-+	.pcs_misc_tbl_num	= ARRAY_SIZE(sm8250_qmp_pcie_pcs_misc_tbl),
-+	.pcs_misc_tbl_sec		= sm8250_qmp_gen3x2_pcie_pcs_misc_tbl,
-+	.pcs_misc_tbl_num_sec	= ARRAY_SIZE(sm8250_qmp_gen3x2_pcie_pcs_misc_tbl),
-+	.clk_list		= sm8150_pciephy_clk_l,
-+	.num_clks		= ARRAY_SIZE(sm8150_pciephy_clk_l),
-+	.reset_list		= sdm845_pciephy_reset_l,
-+	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
-+	.vreg_list		= qmp_phy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-+	.regs			= sm8250_pcie_regs_layout,
-+
-+	.start_ctrl		= PCS_START | SERDES_START,
-+	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-+	.phy_status		= PHYSTATUS,
-+
-+	.is_dual_lane_phy	= true,
-+	.has_pwrdn_delay	= true,
-+	.pwrdn_delay_min	= 995,		/* us */
-+	.pwrdn_delay_max	= 1005,		/* us */
-+};
-+
- static const struct qmp_phy_cfg sm8250_qmp_gen3x1_pciephy_cfg = {
- 	.type = PHY_TYPE_PCIE,
- 	.nlanes = 1,
-@@ -6007,6 +6091,12 @@ static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
- 	}, {
- 		.compatible = "qcom,sm6115-qmp-ufs-phy",
- 		.data = &sm6115_ufsphy_cfg,
-+	}, {
-+		.compatible = "qcom,sm8150-qmp-gen3x1-pcie-phy",
-+		.data = &sm8150_qmp_gen3x1_pciephy_cfg,
-+	}, {
-+		.compatible = "qcom,sm8150-qmp-gen3x2-pcie-phy",
-+		.data = &sm8150_qmp_gen3x2_pciephy_cfg,
- 	}, {
- 		.compatible = "qcom,sm8150-qmp-ufs-phy",
- 		.data = &sm8150_ufsphy_cfg,
+Cc: Joseph Barrera <joebar@google.com>
+Cc: Douglas Anderson <dianders@chromium.org>
+
+base-commit: 52deda9551a01879b3562e7b41748e85c591f14c
 -- 
-2.35.1
+https://chromeos.dev
 
