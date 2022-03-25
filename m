@@ -2,72 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D4084E710B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Mar 2022 11:19:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 566E24E7161
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 25 Mar 2022 11:36:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358787AbiCYKUn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Mar 2022 06:20:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58604 "EHLO
+        id S1353310AbiCYKhL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Mar 2022 06:37:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358790AbiCYKUl (ORCPT
+        with ESMTP id S244163AbiCYKhK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Mar 2022 06:20:41 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A9466929B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 03:19:06 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id qx21so14334570ejb.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 03:19:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=N3M5+W9DcdgmrBKDbJ8aNEq3s5AYa8mqWvuLTG/ixbM=;
-        b=mlOaQtqOgRmjRRGO6ru4cXrlGZhVBnvRi9eLSJaKk/kwzbDYqI3CVcPQQaJaUaL0gW
-         sJdtJFluugcdLK68KP1tu/L3OyqigjCvpCv+1/tT4lM5xyYHcwpP6qBWr9PTBvNnfyk8
-         ObS3P7CBWsERMCKSlh6qziPCqTAhiy6wr1ZAWYZStMjm6LTu7jnMbFhuyr44/awFRvhW
-         RIWeGTRiLbr4jj1PS3f4TdpkD6PQgBfyrOZBUhUbzlty2vYewIkkHirar+mAGhbhUFMM
-         aunLqMpcTU6fojBYLjEitSUIkevAlDgLBQTNJPL1C1mw44wwveqyGvpqqlbnhxpQ3WEA
-         dj6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=N3M5+W9DcdgmrBKDbJ8aNEq3s5AYa8mqWvuLTG/ixbM=;
-        b=hblfSgaBNDkbzqhJH9wNKxPj2FTLazebAR36FXdyA1cohRlAtByZ8hEIWyAULnE3ZC
-         OEAC7ZLM6JJ+LiBFyGAj/qOQVcLY/A8cv68lA3juvrPfuV6s/HcUJ++rVJ5AnKqqEzS6
-         felv7RbX8IyRP2yyk86Xm5TkTxUK0V0hqwpta/JZ/gRusCF7Xfyp9HfOYxtwAXFanwh5
-         qjcOEhKzkTjXr5oEgaF430uoWpHP9yLZJLz0Ep6d0BYASwfz+g9iN4gFOfgOyP1Gdv/6
-         tAY+fRISnbLzZ6yvtVQv8kVH4k8O5AZRlaQ504aEyh8fmaD27/Fw581s7tSgeUvNZeBz
-         l7vQ==
-X-Gm-Message-State: AOAM532Tm0oTOcXUhfK3jJvgevTTiazE82f6iCVqikvMdLRdnaY1K36i
-        SuyxfS+I/qavAlS/JAwoei7KowpMjFPwQQ==
-X-Google-Smtp-Source: ABdhPJzgWy3eAWlPSntRajmZX9Q2zPVQlb7AWXXrMuh1LqWYrdIyn9OR31F+kMW/7kfxfGQ5HtqRRA==
-X-Received: by 2002:a17:907:869f:b0:6da:888b:4258 with SMTP id qa31-20020a170907869f00b006da888b4258mr10872450ejc.720.1648203544495;
-        Fri, 25 Mar 2022 03:19:04 -0700 (PDT)
-Received: from localhost.localdomain (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id hr13-20020a1709073f8d00b006dff3a69572sm2122695ejc.5.2022.03.25.03.19.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Mar 2022 03:19:03 -0700 (PDT)
-From:   Luca Weiss <luca.weiss@fairphone.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Fri, 25 Mar 2022 06:37:10 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 87CBBB6D33;
+        Fri, 25 Mar 2022 03:35:36 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 382B2D6E;
+        Fri, 25 Mar 2022 03:35:36 -0700 (PDT)
+Received: from e120937-lin (unknown [172.31.20.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AA3ED3F73D;
+        Fri, 25 Mar 2022 03:35:34 -0700 (PDT)
+Date:   Fri, 25 Mar 2022 10:35:28 +0000
+From:   Cristian Marussi <cristian.marussi@arm.com>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     David Collins <quic_collinsd@quicinc.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: sm7225-fairphone-fp4: Enable wifi
-Date:   Fri, 25 Mar 2022 11:18:41 +0100
-Message-Id: <20220325101841.172304-2-luca.weiss@fairphone.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220325101841.172304-1-luca.weiss@fairphone.com>
-References: <20220325101841.172304-1-luca.weiss@fairphone.com>
+        Liam Girdwood <lgirdwood@gmail.com>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Subbaraman Narayanamurthy <quic_subbaram@quicinc.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Mike Tipton <quic_mdtipton@quicinc.com>
+Subject: Re: [PATCH v2 0/2] regulator: scmi: add support for registering SCMI
+ regulators by name
+Message-ID: <Yj2a8OqLxmLYpOGT@e120937-lin>
+References: <cover.1647909090.git.quic_collinsd@quicinc.com>
+ <Yjm1wpcMZsZJJCuy@bogus>
+ <eb03037b-e7c2-ea23-0bdb-27924ed54fa7@quicinc.com>
+ <Yjyo+Xk0txZs4T/Z@sirena.org.uk>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yjyo+Xk0txZs4T/Z@sirena.org.uk>
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,31 +53,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Configure regulators used by the wifi hardware and enable it.
+On Thu, Mar 24, 2022 at 05:23:05PM +0000, Mark Brown wrote:
+> On Tue, Mar 22, 2022 at 06:12:33PM -0700, David Collins wrote:
+> 
+> > Another problem is that, as with regulators, ID numbers could
+> > unknowingly get out of sync between the platform and the agent.  Using
+> > clock domain names for referencing fixes both issues.  This can be
+> 
+> This is just saying that the hard coded IDs that the firmware and kernel
+> use to communicate can get out of sync which is true no matter if those
+> IDs are strings or if they're numerical, either way it's an ABI which
+> can be broken.
+> 
+> > > If the IDs are correct like the names, it is guaranteed. I see this
+> > > ID vs name is more for some maintenance convenience because somewhere
+> > > something else needs to changes or moved away from existing way of
+> > > maintenance.
+> 
+> > How do you quantify an ID number to physical regulator mapping as
+> > "correct"?  What happens if the mapping must be changed on the SCMI
+> > platform side (e.g. a PMIC was added or removed, or the order that
+> > regulators are listed in needs to change)?  If the SCMI agent is blindly
+> 
+> The whole point with the numbers being an ABI is that things must never
+> be renumbered, just as if names are used the names can't be changed.  If
+> the numbering is changing that just sounds like bugs on the platform
+> side.  There's an implicit assumption in what you've written above that
+> implementation details of the firmware should affect the IDs presented
+> through SCMI which simply shouldn't be true, and indeed if the firmware
+> can assign fixed strings it can just as well assign fixed numbers.
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Could not agree more with Mark here...I think all the problem boils down
+really to reduce maintenance burdain on the backend SCMI server as Sudeep
+hinted previusly in this thread, which I am not saying is not a valid
+concern, but maybe this is not the best way to address it.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-index 1bb719ef6a02..ea7f2a31399b 100644
---- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-+++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-@@ -404,3 +404,13 @@ &usb_1_qmpphy {
- 	vdda-phy-supply = <&vreg_l22a>;
- 	vdda-pll-supply = <&vreg_l16a>;
- };
-+
-+&wifi {
-+	status = "okay";
-+
-+	vdd-0.8-cx-mx-supply = <&vreg_l4a>;
-+	vdd-1.8-xo-supply = <&vreg_l7a>;
-+	vdd-1.3-rfa-supply = <&vreg_l2e>;
-+	vdd-3.3-ch0-supply = <&vreg_l10e>;
-+	vdd-3.3-ch1-supply = <&vreg_l11e>;
-+};
--- 
-2.35.1
+My understanding, correct me if I'm wrong, is that the scenario here is one
+of a backend SCMI server fw that indeed potentially manages a greater number
+of resources (regulators,clocks...etc) than the ones effectively assigned to
+a single OSPM agent (real or virtual), so that you have, say, 100 resources
+and you are going to assign a different set of, say, 10 resources (maybe
+overlapping) to each different OSPM SCMI agent running in a guest: as a
+consequence you want to avoid to remap on the backend at build or
+run-time this different set of 10 resources into the 0-9 set, but instead
+serve these 10 different resources IDentified as they are in the backend
+(say Guest1: 0-9 G2:05-14 G3:1,2,20,24-30) and then match by name in
+the guest so that, say, "regulator_MAIN" is the well known regulator
+for all Guests but really it could be ID 0 or 05 or 20 in the real
+physical backend depending on which OSPM is askng (and similar kind of
+issues in a non virtualized platform which instead has to share the same
+FW between different versions of the HW)
 
+Is my understanding correct ?
+
+Beside these concerns expressed by Sudeep and Mark, talking specifically
+about the series, I see that in V2 you introduce a common binding with
+a very general 'scmi-domain-name' to be used in the above scenario with
+regulators, but then you also talk about the possible need to employ this
+scheme with other resources (clocks), so I was wondering, if this is the
+case and if this can fly despite the above concerns,  if it was not better
+to address this in a more general way at the SCMI core level, introducing
+some sort of common method to be able to query a resource by name from
+any SCMI driver no matter which protocol is used (perf/voltage/clock),
+like as an example:
+
+ void *.get_resource_by_node(struct scmi_protocol_handle *ph,
+ 			     struct device_node *np);
+
+used in scmi-regulators to retrieve a voltage domain info by number OR
+name transparently as:
+
+    vinfo = handle->get_resource_by_node(ph, np)
+
+so that all the logic you added in scmi-regulator to search DT and map
+resources can be buried in the core SCMI and shared between all drivers
+that can optionally use it.
+
+...this will require a bit of more work in the SCMI core on my side of
+course :D ...
+
+Thanks,
+Cristian
