@@ -2,57 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F6904E7E01
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Mar 2022 01:23:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 389814E7D79
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Mar 2022 01:22:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229457AbiCYTZw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 25 Mar 2022 15:25:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56606 "EHLO
+        id S229544AbiCYT3M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 25 Mar 2022 15:29:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbiCYTZu (ORCPT
+        with ESMTP id S229637AbiCYT24 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 25 Mar 2022 15:25:50 -0400
-Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 077203E06E8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 11:57:47 -0700 (PDT)
-Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-de3ca1efbaso8978111fac.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 11:57:46 -0700 (PDT)
+        Fri, 25 Mar 2022 15:28:56 -0400
+Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BD751ED077
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 12:02:45 -0700 (PDT)
+Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-d6e29fb3d7so9012799fac.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 25 Mar 2022 12:02:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=xroX1x4vfWAmQcD+WNgrxfLEz2UKk5daAF8OyyDV8E8=;
-        b=LJQQCAmCZbfr9l5xxCdJzKz9F2magsaYfevnAZwZb6BtU/lljkhMhmUruElbPWYRSR
-         UuwlW2K9uhj32EZUX+jrinNLGbg1tBPVN9RDjfXYvASNzVt9uw82q3EKkfMw06N70Ev+
-         xS+sjEFeKchM9iGxTV5hgnfiOpi+elsMNkFWw=
+        bh=eoT9yhQ39z80e3desr+nAYOd9xebaM0lxHgFNWM9EFM=;
+        b=oQceHy2H3GJcBV+uCAA/iJuYyDBNgfuKq+avqcjMAgP9U51wlBJvFywimj1MQMJ/gR
+         sTI0O3Kt6AcaA+ZVBJm/MGjExG/EA9hWngNV0wJbuRYr6hcMilVTdWaCA3XvLWzBlpMo
+         cOg5S8yjVbV4QVFP5QHiiY/A7H48LZLctT43M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=xroX1x4vfWAmQcD+WNgrxfLEz2UKk5daAF8OyyDV8E8=;
-        b=gr6fkU+X5T9Ibt5Wm2mbDcHrV/zBhQhHGhNpffs0OJ4V6ydpc/4Ywmw9qc29epCCc2
-         6vg0qGMzvRniKqmS4az7Hnk+N66/xAXSn8xjySOur/Q6NhiOEIOiwwc4aw1ugbCrUIXB
-         N+vuIK56VWWEjrYihUXua01iQKQW05l8045EUcwgBvSpF4Et9gX2XQeuml2HJV9Wh+BK
-         I437XuzbNPlnQhf03bSnBWmbWV8klcairzTxQUZMbcvde/OOanScb9om3ZQC5gmZQpSv
-         qW6nEDNlCjqbl3dfEvt/SPvlIp3J6d2WPsiijRKFt9RHfXCyyo5hWmRByqtBej1g+Eqn
-         jecg==
-X-Gm-Message-State: AOAM530SjpAEtVDMJfdxN5aFA5tIg7HM96S/tbGtCj33I9Tgz1VL2H+1
-        QXMVZAAn3wz7yV6is6Hqt8jFvjp6uRcB8QBXLqMVkwnKJnE=
-X-Google-Smtp-Source: ABdhPJxFnDvR+8O0qWhbA9VKyiH4QLwRIWZOGlc8HRnYIjqHnb6Nw0UGNH22srX4kIJMdYZuAU+YRhSRuizdqD+7dKY=
+        bh=eoT9yhQ39z80e3desr+nAYOd9xebaM0lxHgFNWM9EFM=;
+        b=wy+rxJ13+6pQ/qPSfcQtj1ARRV5KnAzQj9PwTw2rzJdCt8FLTuHaQGr0j5ojXieKum
+         XL/a0f3lG+qQWOs/n9Y+4YbTzFuj7ntEfH2JurH/NKhLojZOrE0A33dJx3nfwtNdDEUV
+         mE8iPFvHoa1tDPtgK9JRZW2X5MewxNJ3UpzDvIIu5HfxegFhdBJJAPgLhnRXp9k/CsKZ
+         HCn/bBU+S/fNdmbYbH2IxgKBjedUHpKLjhKXvPy2KTvGlR4l6nyp65BUbsq0r1h3svpA
+         BNUkHl5gHAOFl3RrLyIu8c9uFIn72mhizhMd1j05+v4KbpKETtNZOA6xCZZQPHUyTPLq
+         Ourw==
+X-Gm-Message-State: AOAM533yMj9xMUp0yfdTplsldbNzO8FInwIjhOyrcdiUNd4UZunRrhlz
+        RdduF6wEa6ahM3Ex9slmR9ABLrgnqT4aLVh+kmR0iaoLV0c=
+X-Google-Smtp-Source: ABdhPJygezRHYIps4EzQ86hC/YMeXvTAECMZBpECdy1LrwbCwWKOiPrZf2+YfZ3O4yAyBqczHuf1ylmdoDFq0fjI1Bo=
 X-Received: by 2002:aca:bd41:0:b0:2ec:ff42:814f with SMTP id
- n62-20020acabd41000000b002ecff42814fmr6007460oif.63.1648231322654; Fri, 25
- Mar 2022 11:02:02 -0700 (PDT)
+ n62-20020acabd41000000b002ecff42814fmr6027332oif.63.1648231683374; Fri, 25
+ Mar 2022 11:08:03 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 25 Mar 2022 13:02:02 -0500
+ HTTPREST; Fri, 25 Mar 2022 13:08:02 -0500
 MIME-Version: 1.0
-In-Reply-To: <1648209491-30165-2-git-send-email-quic_c_skakit@quicinc.com>
-References: <1648209491-30165-1-git-send-email-quic_c_skakit@quicinc.com> <1648209491-30165-2-git-send-email-quic_c_skakit@quicinc.com>
+In-Reply-To: <1648209491-30165-3-git-send-email-quic_c_skakit@quicinc.com>
+References: <1648209491-30165-1-git-send-email-quic_c_skakit@quicinc.com> <1648209491-30165-3-git-send-email-quic_c_skakit@quicinc.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Fri, 25 Mar 2022 13:02:02 -0500
-Message-ID: <CAE-0n523f-aAUkj1SUscNgw_Gh=mP8JfXV4u_hNeFhqtfr_Fgg@mail.gmail.com>
-Subject: Re: [PATCH V8 1/7] dt-bindings: mfd: pm8008: Modify the compatible as
- per driver
+Date:   Fri, 25 Mar 2022 13:08:02 -0500
+Message-ID: <CAE-0n53Zk1rXu5U6vEppZ=B8cJ0chmt+-aY03=W4mQedQq5Omg@mail.gmail.com>
+Subject: Re: [PATCH V8 2/7] dt-bindings: mfd: pm8008: Add pm8008 regulator bindings
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Satya Priya <quic_c_skakit@quicinc.com>
@@ -74,113 +73,120 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Satya Priya (2022-03-25 04:58:05)
-> Modify the compatible string as per the pm8008 mfd driver.
-> Add reset-gpios property and make interrupts and interrupt-cells
-> as optional properties, they are not strictly required and may
-> cause yaml compilation errors when not added in the DT files.
-
-Does it have an interrupt controller inside? If so, the properties
-should be present even if the driver isn't using them.
-
->
-> Also, change the node name in example to match with the
-> pm8008_infra DT node.
+Quoting Satya Priya (2022-03-25 04:58:06)
+> Add bindings for pm8008 regulators device.
 >
 > Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
 > ---
-> Changes in V5:
->  - Remove compatible for regulators node.
->  - Move supply nodes of the regulators to chip level.
->
-> Changes in V6:
->  - No changes.
->
-> Changes in V7:
->  - Removed the intermediate regulators node and added ldos
->    directly under mfd node.
->
 > Changes in V8:
->  - Change the compatible as per driver, remove interrupts from required
->    properties, add reset-gpios and move regulators to separate binding.
+>  - This is split from pm8008.yaml binding.
 >
->  Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml | 15 ++++++++++-----
->  1 file changed, 10 insertions(+), 5 deletions(-)
+>  .../bindings/mfd/qcom,pm8008-regulators.yaml       | 87 ++++++++++++++++++++++
+>  1 file changed, 87 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/mfd/qcom,pm8008-regulators.yaml
 >
-> diff --git a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
-> index ec3138c..12431ea 100644
-> --- a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
-> +++ b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
-> @@ -16,7 +16,7 @@ description: |
->
->  properties:
->    compatible:
-> -    const: qcom,pm8008
-> +    const: qcom,pm8008-infra
+> diff --git a/Documentation/devicetree/bindings/mfd/qcom,pm8008-regulators.yaml b/Documentation/devicetree/bindings/mfd/qcom,pm8008-regulators.yaml
+> new file mode 100644
+> index 0000000..139fbf9
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/mfd/qcom,pm8008-regulators.yaml
+> @@ -0,0 +1,87 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/mfd/qcom,pm8008-regulators.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. PM8008 Regulator bindings
+> +
+> +maintainers:
+> +  - Satya Priya <quic_c_skakit@quicinc.com>
+> +
+> +description: |
+> +  Qualcomm Technologies, Inc. PM8008 is an I2C controlled PMIC
+> +  containing 7 LDO regulators. This binding specifies the PM8008
+> +  regulator peripherals of PM8008 device.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,pm8008-regulators
+> +
+> +  reg:
+> +    description:
+> +      I2C slave address.
 
-Why is the compatible being replaced with -infra postfix?
-
->
->    reg:
->      description:
-> @@ -44,6 +44,10 @@ properties:
->    "#size-cells":
->      const: 0
->
-> +  reset-gpios:
-> +    description: |
-> +      Specifies the GPIO to be toggled to bring pm8008 chip out of reset.
-
-Remove description. Add maxItems: 1
+Drop description? We know what it is.
 
 > +
->  patternProperties:
->    "^gpio@[0-9a-f]+$":
->      type: object
-> @@ -88,10 +92,8 @@ patternProperties:
->  required:
->    - compatible
->    - reg
-> -  - interrupts
->    - "#address-cells"
->    - "#size-cells"
-> -  - "#interrupt-cells"
-
-Should reset-gpios be required? I'd expect this patch to be adding
-reset-gpios and making it required and that's about it. Given that
-there isn't a DT using this compatible upstream so far it looks like we
-don't need to do anything like worry about backwards compatibility.
-
->
->  additionalProperties: false
->
-> @@ -99,11 +101,12 @@ examples:
->    - |
->      #include <dt-bindings/mfd/qcom-pm8008.h>
->      #include <dt-bindings/interrupt-controller/irq.h>
-> +    #include <dt-bindings/gpio/gpio.h>
->      qupv3_se13_i2c {
->        #address-cells = <1>;
->        #size-cells = <0>;
-> -      pm8008i@8 {
-> -        compatible = "qcom,pm8008";
-> +      pm8008_infra: pmic@8 {
-
-Remove unused phandle.
-
-> +        compatible = "qcom,pm8008-infra";
->          reg = <0x8>;
->          #address-cells = <1>;
->          #size-cells = <0>;
-> @@ -113,6 +116,8 @@ examples:
->          interrupt-parent = <&tlmm>;
->          interrupts = <32 IRQ_TYPE_EDGE_RISING>;
->
-> +        reset-gpios = <&pm8350c_gpios 4 GPIO_ACTIVE_HIGH>;
+> +    maxItems: 1
 > +
->          pm8008_gpios: gpio@c000 {
->            compatible = "qcom,pm8008-gpio", "qcom,spmi-gpio";
->            reg = <0xc000>;
+> +  "#address-cells":
+> +    const: 0
+> +
+> +  "#size-cells":
+> +    const: 0
+> +
+> +  vdd_l1_l2-supply:
+> +    description: Input supply phandle of ldo1 and ldo2 regulators.
+> +
+> +  vdd_l3_l4-supply:
+> +    description: Input supply phandle of ldo3 and ldo4 regulators.
+> +
+> +  vdd_l5-supply:
+> +    description: Input supply phandle of ldo5 regulator.
+> +
+> +  vdd_l6-supply:
+> +    description: Input supply phandle of ldo6 regulator.
+> +
+> +  vdd_l7-supply:
+> +    description: Input supply phandle of ldo7 regulator.
+> +
+> +patternProperties:
+> +  "^ldo[1-7]$":
+> +    type: object
+> +    $ref: "../regulator/regulator.yaml#"
+> +    description: PM8008 regulator peripherals of PM8008 regulator device
+> +
+> +required:
+> +  - compatible
+> +  - "#address-cells"
+> +  - "#size-cells"
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/mfd/qcom-pm8008.h>
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +    qupv3_se13_i2c {
+
+i2c
+
+> +      #address-cells = <1>;
+> +      #size-cells = <0>;
+> +      pm8008_regulators: pmic@9 {
+
+Drop phandle please.
+
+> +        compatible = "qcom,pm8008-regulators";
+> +        reg = <0x9>;
+> +        #address-cells = <0>;
+> +        #size-cells = <0>;
+> +
+> +        vdd_l1_l2-supply = <&vreg_s8b_1p2>;
+> +        vdd_l3_l4-supply = <&vreg_s1b_1p8>;
+> +        vdd_l5-supply = <&vreg_bob>;
+> +        vdd_l6-supply = <&vreg_bob>;
+> +        vdd_l7-supply = <&vreg_bob>;
+> +
+> +        pm8008_l1: ldo1 {
+> +          regulator-name = "pm8008_l1";
+> +          regulator-min-microvolt = <950000>;
+> +          regulator-max-microvolt = <1300000>;
+> +        };
+> +      };
+> +    };
+> +...
 > --
 > 2.7.4
 >
