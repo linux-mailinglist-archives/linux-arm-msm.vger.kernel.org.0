@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B6904E8624
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Mar 2022 07:57:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BDD24E8643
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Mar 2022 08:22:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235320AbiC0F7S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Mar 2022 01:59:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43060 "EHLO
+        id S233147AbiC0GYB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Mar 2022 02:24:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232607AbiC0F7S (ORCPT
+        with ESMTP id S229485AbiC0GYA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Mar 2022 01:59:18 -0400
+        Sun, 27 Mar 2022 02:24:00 -0400
 Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A30666246;
-        Sat, 26 Mar 2022 22:57:40 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id gp15-20020a17090adf0f00b001c7cd11b0b3so6982763pjb.3;
-        Sat, 26 Mar 2022 22:57:40 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 179F211A32;
+        Sat, 26 Mar 2022 23:22:10 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id l4-20020a17090a49c400b001c6840df4a3so12547167pjm.0;
+        Sat, 26 Mar 2022 23:22:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id;
-        bh=WsZxcVF6gelyqFkjIt1JdX7eFg0WjDR//rw4D2Z8gs8=;
-        b=X9pbSvV37GL7ppqA/+UhWpyPUA1nuOuj0i7OpnQOjapUN4BAgu9E/nGV3QOsEaFxPq
-         T5mjmUnu41uY9M2IZzx0/D3qHtwyl+eovZ3Xky6XojSfYHcJPiEZMnn20n6my8XVaphS
-         yiTo7Q5GDQBLxq141NupWXLFyPQ0K578QZdEEB5ZtdLZWnAa/lgE04gYiwBS4Vz47jZD
-         Bm0Vnh/R9CTNwF71gKRTzbOOK2moyubUs1ZWRiiGI/ObPyGrKo4bXNmEm0FcrXkYg1Tz
-         UaRPYzonKv2jyRaIrt69u1zGRvXXtWQMRvnhGmAitCw+AlO4CnI/GnNV46UtPzRkSc5b
-         O4aQ==
+        bh=2+k5zw4UeWTVGq+IrF5mnTMmU6zOsHiGi1YYw7GIJjs=;
+        b=jtiaQYzS6/owMqLM9XhSR0EDPTLY0V6y0R0MvHJfJuX5aySk3D55CIxg3Q1IHC66ds
+         Lwpm0Vr7lM0OEdVSGGOnO2MgJJygBdnHdNrWPlHPFfrkdLaClqu5udmllAOt93HYp3GT
+         Lu4lYrRMUeOUlBQ3bUzXFI/Q/lOzlx1wjCtdBaFlUNmZQGSlcCnyvL+bIsxRn3+qKCzf
+         bxr+oFG9NqJpPuuFHtshlxI8SW1mDc2FiFyTh2lgtV1xfp5LVZRJ9EYXTSuewQwoIZqN
+         tD98iDOsB5lqIR4iOMWXAFuxratBI5y6dtzzlTDjMTq+NLq1KiPDrGAEGvZCgpbYOAsW
+         3Xcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=WsZxcVF6gelyqFkjIt1JdX7eFg0WjDR//rw4D2Z8gs8=;
-        b=N5FjmcdP4kcMaEOUdqzrCC+Nudj9RTfgXMCf40wREkYv7cFJo2Gk/TXLJPCiJRqZ7H
-         z2fW2RxbhDsX0lZ2zzwV/6mV9n7dtnE6C5VUp5SU0K50S/SEsmsjbQS2eSBzU2933+Co
-         JL+lk84kZ7n2NOuqa/pzQ/MW8Z5DS9psYDaHE0+U229vbJlTCyD0YzWp4tW4C2nEnovL
-         D0OTjeW8/N3SMLLjqVoBD7bxexDj0B0DwDVcL0nl8vNtqlJi9HJ9HLr9l3BRkuGJpxwl
-         oto6gPwSGpZmP32b7uVpS0cLJlI9GoLJec1JNtYTSw1OlYLEV9lb/f2vp9Tpg6Sa6YV+
-         AGtQ==
-X-Gm-Message-State: AOAM531HDT1gfw3JDW122XP58xumnc9RLojdtPkFB6gfcPHnDqRNBlpu
-        0BCaccZS+B8/TRLX6RMDLyI=
-X-Google-Smtp-Source: ABdhPJy21/36o8RbcYc3P0F87LTTzcgjypp4Vfim45j/4/DCLn5D8RIIkLxvz5WSuSLW6fnYmICcIQ==
-X-Received: by 2002:a17:902:a3c1:b0:14f:dc65:ff6c with SMTP id q1-20020a170902a3c100b0014fdc65ff6cmr19902576plb.13.1648360660215;
-        Sat, 26 Mar 2022 22:57:40 -0700 (PDT)
+        bh=2+k5zw4UeWTVGq+IrF5mnTMmU6zOsHiGi1YYw7GIJjs=;
+        b=Wal3m0r/LoHIkXh296qtl+n+Om9ggi6kVmF5EDPkiP6R9xGT1TefyyiniQVVTvNxj4
+         Tss798PMcZrjzJF74eOl7DttOPbHOquGNtwRTaXXNd8LkkbA4AsApPHWgyaPf1lylQQ4
+         OYB4nB0bgEaUD2nC9WiKfTUEU0b9+aSOfPtiKnzIqfVFydcO8DEI9C5zBwx5UCNWcaZ+
+         BUN4WwT1v5NZpS63fjjPr23Elqsgij8p3O1fYisF1Bty6Ndl6kvRnIf79Pa2ZFnpZclz
+         NVaNjAulpmFy2h4x5j0XQNucF5ekOKnIHqNF6zhLoRuKHMEzmq4CWEhAAkzWmEya26f4
+         eI0Q==
+X-Gm-Message-State: AOAM531LP4a2t7lTNxN30kUFuSXfWR+YFQQytbhFtBWYgsUWJDVDL35W
+        7v5NuSITBZiAtIToxQAv0Vs=
+X-Google-Smtp-Source: ABdhPJzoTM4gwf2vVMJZXghIBHYF29uo2xq+ONuoPnlNNlrVzY6hswAF87YdMbStydxT6SdQ6fhnGQ==
+X-Received: by 2002:a17:902:6944:b0:153:9866:7fea with SMTP id k4-20020a170902694400b0015398667feamr20505669plt.6.1648362129633;
+        Sat, 26 Mar 2022 23:22:09 -0700 (PDT)
 Received: from localhost.localdomain ([115.220.243.108])
-        by smtp.googlemail.com with ESMTPSA id x2-20020a63aa42000000b0038265eb2495sm9308525pgo.88.2022.03.26.22.57.36
+        by smtp.googlemail.com with ESMTPSA id ij17-20020a17090af81100b001c67c964d93sm15879005pjb.2.2022.03.26.23.22.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Mar 2022 22:57:39 -0700 (PDT)
+        Sat, 26 Mar 2022 23:22:09 -0700 (PDT)
 From:   Xiaomeng Tong <xiam0nd.tong@gmail.com>
-To:     agross@kernel.org
-Cc:     bjorn.andersson@linaro.org, will@kernel.org, mark.rutland@arm.com,
-        nleeder@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+To:     srinivas.kandagatla@linaro.org
+Cc:     amahesh@qti.qualcomm.com, arnd@arndb.de,
+        gregkh@linuxfoundation.org, jorge.ramirez-ortiz@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Xiaomeng Tong <xiam0nd.tong@gmail.com>, stable@vger.kernel.org
-Subject: [PATCH] perf: qcom_l2_pmu: fix an incorrect NULL check on list iterator
-Date:   Sun, 27 Mar 2022 13:57:33 +0800
-Message-Id: <20220327055733.4070-1-xiam0nd.tong@gmail.com>
+Subject: [PATCH] misc: fastrpc: fix an incorrect NULL check on list iterator
+Date:   Sun, 27 Mar 2022 14:22:02 +0800
+Message-Id: <20220327062202.5720-1-xiam0nd.tong@gmail.com>
 X-Mailer: git-send-email 2.17.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
@@ -67,48 +67,51 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 The bug is here:
-	return cluster;
+	if (!buf) {
 
-The list iterator value 'cluster' will *always* be set and non-NULL
+The list iterator value 'buf' will *always* be set and non-NULL
 by list_for_each_entry(), so it is incorrect to assume that the
-iterator value will be NULL if the list is empty or no element
-is found.
+iterator value will be NULL if the list is empty (in this case, the
+check 'if (!buf) {' will always be false and never exit expectly).
 
-To fix the bug, return 'cluster' when found, otherwise return NULL.
+To fix the bug, use a new variable 'iter' as the list iterator,
+while use the original variable 'buf' as a dedicated pointer to
+point to the found element.
 
 Cc: stable@vger.kernel.org
-Fixes: 21bdbb7102ede ("perf: add qcom l2 cache perf events driver")
+Fixes: 2419e55e532de ("misc: fastrpc: add mmap/unmap support")
 Signed-off-by: Xiaomeng Tong <xiam0nd.tong@gmail.com>
 ---
- drivers/perf/qcom_l2_pmu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/misc/fastrpc.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/perf/qcom_l2_pmu.c b/drivers/perf/qcom_l2_pmu.c
-index 7640491aab12..30234c261b05 100644
---- a/drivers/perf/qcom_l2_pmu.c
-+++ b/drivers/perf/qcom_l2_pmu.c
-@@ -736,7 +736,7 @@ static struct cluster_pmu *l2_cache_associate_cpu_with_cluster(
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index aa1682b94a23..45aaf54a7560 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1353,17 +1353,18 @@ static int fastrpc_req_munmap_impl(struct fastrpc_user *fl,
+ 				   struct fastrpc_req_munmap *req)
  {
- 	u64 mpidr;
- 	int cpu_cluster_id;
--	struct cluster_pmu *cluster = NULL;
-+	struct cluster_pmu *cluster;
+ 	struct fastrpc_invoke_args args[1] = { [0] = { 0 } };
+-	struct fastrpc_buf *buf, *b;
++	struct fastrpc_buf *buf = NULL, *iter, *b;
+ 	struct fastrpc_munmap_req_msg req_msg;
+ 	struct device *dev = fl->sctx->dev;
+ 	int err;
+ 	u32 sc;
  
- 	/*
- 	 * This assumes that the cluster_id is in MPIDR[aff1] for
-@@ -758,10 +758,10 @@ static struct cluster_pmu *l2_cache_associate_cpu_with_cluster(
- 			 cluster->cluster_id);
- 		cpumask_set_cpu(cpu, &cluster->cluster_cpus);
- 		*per_cpu_ptr(l2cache_pmu->pmu_cluster, cpu) = cluster;
--		break;
-+		return cluster;
+ 	spin_lock(&fl->lock);
+-	list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
+-		if ((buf->raddr == req->vaddrout) && (buf->size == req->size))
++	list_for_each_entry_safe(iter, b, &fl->mmaps, node) {
++		if ((iter->raddr == req->vaddrout) && (iter->size == req->size)) {
++			buf = iter;
+ 			break;
+-		buf = NULL;
++		}
  	}
+ 	spin_unlock(&fl->lock);
  
--	return cluster;
-+	return NULL;
- }
- 
- static int l2cache_pmu_online_cpu(unsigned int cpu, struct hlist_node *node)
 -- 
 2.17.1
 
