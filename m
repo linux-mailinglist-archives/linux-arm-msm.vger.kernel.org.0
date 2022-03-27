@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79FE44E85FB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Mar 2022 07:36:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B6904E8624
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Mar 2022 07:57:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235161AbiC0Fhq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Mar 2022 01:37:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47710 "EHLO
+        id S235320AbiC0F7S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Mar 2022 01:59:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235162AbiC0Fhn (ORCPT
+        with ESMTP id S232607AbiC0F7S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Mar 2022 01:37:43 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A4FC192B2;
-        Sat, 26 Mar 2022 22:36:05 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id m22so11165167pja.0;
-        Sat, 26 Mar 2022 22:36:05 -0700 (PDT)
+        Sun, 27 Mar 2022 01:59:18 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A30666246;
+        Sat, 26 Mar 2022 22:57:40 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id gp15-20020a17090adf0f00b001c7cd11b0b3so6982763pjb.3;
+        Sat, 26 Mar 2022 22:57:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id;
-        bh=BXdefmByfbS7iadyHNuWA+1dWRCSn9oFrWGYl5Fm5mk=;
-        b=WD/emqxoTCqSinxwNm9zYC0BhVut37NKvVjalaC3AKb8//RwbBJ0HSEAfuKaQ4TRfn
-         6kwLAZMOADsCvtCO24agk+3gzGKGTzkJYK5VEESmUvDd0AwLk8MOqqqbGIxQADK8aLnO
-         cnQOeYl0dNZheOli0EHPxR4XCURTaCEwk+DA6AttIClrfhjRFRZ7eNgaXmT3Q5TRifxb
-         oWKTyZ27SYlho/bS0fQMj4jMBTHcATU1sYK+99WO7WA4uv1bNod4RcYqMHfWk7DyqCSQ
-         Qc0paAN62/Th0TsFECWtb5Pb6fzEURwe3BBOKcRwTf5utyKHkZHcplpnGv6lEJDDO1pv
-         w6fQ==
+        bh=WsZxcVF6gelyqFkjIt1JdX7eFg0WjDR//rw4D2Z8gs8=;
+        b=X9pbSvV37GL7ppqA/+UhWpyPUA1nuOuj0i7OpnQOjapUN4BAgu9E/nGV3QOsEaFxPq
+         T5mjmUnu41uY9M2IZzx0/D3qHtwyl+eovZ3Xky6XojSfYHcJPiEZMnn20n6my8XVaphS
+         yiTo7Q5GDQBLxq141NupWXLFyPQ0K578QZdEEB5ZtdLZWnAa/lgE04gYiwBS4Vz47jZD
+         Bm0Vnh/R9CTNwF71gKRTzbOOK2moyubUs1ZWRiiGI/ObPyGrKo4bXNmEm0FcrXkYg1Tz
+         UaRPYzonKv2jyRaIrt69u1zGRvXXtWQMRvnhGmAitCw+AlO4CnI/GnNV46UtPzRkSc5b
+         O4aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=BXdefmByfbS7iadyHNuWA+1dWRCSn9oFrWGYl5Fm5mk=;
-        b=P2eXbLVIvLcgAalByEPWZnhoFnawXEylRhe0z2noWo4yOrPMGVu/01L3yPcaOqb+XS
-         n1SqcmkSAHLPl9Di1+aIIDsMxqBuNfVuvh1Sarl1pqYXVlMdOMU1DeK+mxaMRIFifULX
-         gt1sPM4rXcN2ti00p6wvuJaN7S1/q9nAcj73OcVtrtaThuR1x+IJ29O4ZsBYkHSpWBTG
-         tfnC6uzoeN1/Cj6ELeBQKQcCG2H+YalibJHjbZouce4LZS0EiVACijYE9dSjoMY+DNHT
-         KpUE1pTYMb05txIn5dF5uviULgt8ecsTXcXyz2UEunX4St20W0lj5XTYCeXe3HN9KwMk
-         C9xQ==
-X-Gm-Message-State: AOAM530WUB8PQlyswbBb2seSfIdsw0tOnQ2s74swFdUd2RJl8q9uLost
-        yBEg3vfa5tQFcP66qnj6zes=
-X-Google-Smtp-Source: ABdhPJzLDpKQkrWzztdlJpJD0lzsWQyEl0Qpi9c3Hry9x9AKCEmmWC14C7eZiUH7Vhej5pAm1C+3YQ==
-X-Received: by 2002:a17:90a:4217:b0:1c7:c203:b4f3 with SMTP id o23-20020a17090a421700b001c7c203b4f3mr18995680pjg.177.1648359364587;
-        Sat, 26 Mar 2022 22:36:04 -0700 (PDT)
+        bh=WsZxcVF6gelyqFkjIt1JdX7eFg0WjDR//rw4D2Z8gs8=;
+        b=N5FjmcdP4kcMaEOUdqzrCC+Nudj9RTfgXMCf40wREkYv7cFJo2Gk/TXLJPCiJRqZ7H
+         z2fW2RxbhDsX0lZ2zzwV/6mV9n7dtnE6C5VUp5SU0K50S/SEsmsjbQS2eSBzU2933+Co
+         JL+lk84kZ7n2NOuqa/pzQ/MW8Z5DS9psYDaHE0+U229vbJlTCyD0YzWp4tW4C2nEnovL
+         D0OTjeW8/N3SMLLjqVoBD7bxexDj0B0DwDVcL0nl8vNtqlJi9HJ9HLr9l3BRkuGJpxwl
+         oto6gPwSGpZmP32b7uVpS0cLJlI9GoLJec1JNtYTSw1OlYLEV9lb/f2vp9Tpg6Sa6YV+
+         AGtQ==
+X-Gm-Message-State: AOAM531HDT1gfw3JDW122XP58xumnc9RLojdtPkFB6gfcPHnDqRNBlpu
+        0BCaccZS+B8/TRLX6RMDLyI=
+X-Google-Smtp-Source: ABdhPJy21/36o8RbcYc3P0F87LTTzcgjypp4Vfim45j/4/DCLn5D8RIIkLxvz5WSuSLW6fnYmICcIQ==
+X-Received: by 2002:a17:902:a3c1:b0:14f:dc65:ff6c with SMTP id q1-20020a170902a3c100b0014fdc65ff6cmr19902576plb.13.1648360660215;
+        Sat, 26 Mar 2022 22:57:40 -0700 (PDT)
 Received: from localhost.localdomain ([115.220.243.108])
-        by smtp.googlemail.com with ESMTPSA id u10-20020a63b54a000000b00380ea901cd2sm9296275pgo.6.2022.03.26.22.36.01
+        by smtp.googlemail.com with ESMTPSA id x2-20020a63aa42000000b0038265eb2495sm9308525pgo.88.2022.03.26.22.57.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Mar 2022 22:36:04 -0700 (PDT)
+        Sat, 26 Mar 2022 22:57:39 -0700 (PDT)
 From:   Xiaomeng Tong <xiam0nd.tong@gmail.com>
 To:     agross@kernel.org
-Cc:     bjorn.andersson@linaro.org, joro@8bytes.org, will@kernel.org,
-        sricharan@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+Cc:     bjorn.andersson@linaro.org, will@kernel.org, mark.rutland@arm.com,
+        nleeder@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         Xiaomeng Tong <xiam0nd.tong@gmail.com>, stable@vger.kernel.org
-Subject: [PATCH] iommu: fix an incorrect NULL check on list iterator
-Date:   Sun, 27 Mar 2022 13:35:58 +0800
-Message-Id: <20220327053558.2821-1-xiam0nd.tong@gmail.com>
+Subject: [PATCH] perf: qcom_l2_pmu: fix an incorrect NULL check on list iterator
+Date:   Sun, 27 Mar 2022 13:57:33 +0800
+Message-Id: <20220327055733.4070-1-xiam0nd.tong@gmail.com>
 X-Mailer: git-send-email 2.17.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
@@ -67,57 +67,48 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 The bug is here:
-	if (!iommu || iommu->dev->of_node != spec->np) {
+	return cluster;
 
-The list iterator value 'iommu' will *always* be set and non-NULL by
-list_for_each_entry(), so it is incorrect to assume that the iterator
-value will be NULL if the list is empty or no element is found (in fact,
-it will point to a invalid structure object containing HEAD).
+The list iterator value 'cluster' will *always* be set and non-NULL
+by list_for_each_entry(), so it is incorrect to assume that the
+iterator value will be NULL if the list is empty or no element
+is found.
 
-To fix the bug, run insert_iommu_master(dev, &iommu, spec); unlock and
-return 0 when found, otherwise unlock and return -ENODEV.
+To fix the bug, return 'cluster' when found, otherwise return NULL.
 
 Cc: stable@vger.kernel.org
-Fixes: f78ebca8ff3d6 ("iommu/msm: Add support for generic master bindings")
+Fixes: 21bdbb7102ede ("perf: add qcom l2 cache perf events driver")
 Signed-off-by: Xiaomeng Tong <xiam0nd.tong@gmail.com>
 ---
- drivers/iommu/msm_iommu.c | 18 ++++++------------
- 1 file changed, 6 insertions(+), 12 deletions(-)
+ drivers/perf/qcom_l2_pmu.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
-index 3a38352b603f..1dbb8b0695ec 100644
---- a/drivers/iommu/msm_iommu.c
-+++ b/drivers/iommu/msm_iommu.c
-@@ -617,23 +617,17 @@ static int qcom_iommu_of_xlate(struct device *dev,
+diff --git a/drivers/perf/qcom_l2_pmu.c b/drivers/perf/qcom_l2_pmu.c
+index 7640491aab12..30234c261b05 100644
+--- a/drivers/perf/qcom_l2_pmu.c
++++ b/drivers/perf/qcom_l2_pmu.c
+@@ -736,7 +736,7 @@ static struct cluster_pmu *l2_cache_associate_cpu_with_cluster(
  {
- 	struct msm_iommu_dev *iommu;
- 	unsigned long flags;
--	int ret = 0;
+ 	u64 mpidr;
+ 	int cpu_cluster_id;
+-	struct cluster_pmu *cluster = NULL;
++	struct cluster_pmu *cluster;
  
- 	spin_lock_irqsave(&msm_iommu_lock, flags);
- 	list_for_each_entry(iommu, &qcom_iommu_devices, dev_node)
--		if (iommu->dev->of_node == spec->np)
--			break;
--
--	if (!iommu || iommu->dev->of_node != spec->np) {
--		ret = -ENODEV;
--		goto fail;
--	}
--
--	insert_iommu_master(dev, &iommu, spec);
--fail:
-+		if (iommu->dev->of_node == spec->np) {
-+			insert_iommu_master(dev, &iommu, spec);
-+			spin_unlock_irqrestore(&msm_iommu_lock, flags);
-+			return 0;
-+		}
- 	spin_unlock_irqrestore(&msm_iommu_lock, flags);
+ 	/*
+ 	 * This assumes that the cluster_id is in MPIDR[aff1] for
+@@ -758,10 +758,10 @@ static struct cluster_pmu *l2_cache_associate_cpu_with_cluster(
+ 			 cluster->cluster_id);
+ 		cpumask_set_cpu(cpu, &cluster->cluster_cpus);
+ 		*per_cpu_ptr(l2cache_pmu->pmu_cluster, cpu) = cluster;
+-		break;
++		return cluster;
+ 	}
  
--	return ret;
-+	return -ENODEV;
+-	return cluster;
++	return NULL;
  }
  
- irqreturn_t msm_iommu_fault_handler(int irq, void *dev_id)
+ static int l2cache_pmu_online_cpu(unsigned int cpu, struct hlist_node *node)
 -- 
 2.17.1
 
