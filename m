@@ -2,78 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 364E64E89FC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Mar 2022 22:26:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F1FD4E8A02
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Mar 2022 22:27:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232495AbiC0U2c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 27 Mar 2022 16:28:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52650 "EHLO
+        id S236196AbiC0U2i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Mar 2022 16:28:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232230AbiC0U2b (ORCPT
+        with ESMTP id S235145AbiC0U2h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 27 Mar 2022 16:28:31 -0400
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0329633E3A
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Mar 2022 13:26:51 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id v2so10803401qtc.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Mar 2022 13:26:51 -0700 (PDT)
+        Sun, 27 Mar 2022 16:28:37 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E52033E8A
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Mar 2022 13:26:57 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id j21so10841951qta.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 27 Mar 2022 13:26:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=marek-ca.20210112.gappssmtp.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=j8UVxZLedNpHTbRo7IKHmaBenq+x1GF8T/vpr9/COFw=;
-        b=5Xj7QIclTvrgSeXF+IP/WwaPT8yZo0PxRfFAqiZqBjcDNtnjxD0mek5rMxQ0apA6Ul
-         bafTXYVSqEDNG8kf1iYuAnOUjXb5qi2oCFDcQE/5uYNK3bZkTgoe0DBepeCXES+YaFHy
-         uUSODGqLQGtJQtv5VugwkPgpPVJ7vryhokzOW0Afh5lkxrKh1Fk1xd1uMpw2hyQsccHV
-         eJjs0ODSNWhsUCnemc7fZSNqvkCppoEijTCKRkwvwUGlle+EBscLvzxCwIDwQdd1VU4r
-         LrHixLpHdso5hm3MW7ETrDT5zUdsZDTsY3q8DSKWsqAUZsobp3QQEeZ78PpeI3s2YU5G
-         2c9Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=62kxbYjOC1Pdkwa5wMmdd0cCG7qP5qnu3ZqUiccwe3s=;
+        b=I4aBTTyRTAaQtbpu3CS7l6DyrNP/QDmYqsRB8mfAv60faqVosTuBA1upMbJW6HkIFR
+         Dm5BDU2Mt5jjrtSGH5UlYB6xEBkLChnrFaCcbUEnbLdNeUh1EK0YtnfTRqRPubZS3zwk
+         mZWH7wUVW68Ibp56kJHs93vIOGwxa8Q+60MvuyQfWGp/GyAk2WYOkvoLvSJ0Yawo6+gQ
+         fYgZIi2ThISR0qY9CyKM+P4sFEzDtXHRRJjUtSHn6eGJ+lu4Xd3EzVfbJ8QnWUWVfDlV
+         fnmQQ89SmLmJKGEtYJwdUYXLI2RFJEDSPe20yHqD6D84crtbeW2G+mLf/6HRSE/XHktk
+         4P3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=j8UVxZLedNpHTbRo7IKHmaBenq+x1GF8T/vpr9/COFw=;
-        b=3q9CflS++l8VLL7GInoyZSU2gW9yoRrAPf1EnBPZInVFz/lYoYEckv6Rkn6oIum/eA
-         L8M93m68V2eZxYTqWbG26+A9KUQsEgNJOgPKZ9QKJwliHW+SqSe6eGmapkaKmpBBxHM8
-         4VVqlCZ7mcTbgwM4+CrXsrHGaBzbzfDCoElVqZas6zTD0DebfTg9D7QWZrMmgkJQDpzI
-         tNgQhLej8PzUImp9l/3/7qvS6HzU/q+pN827+kLvQZOUxU5aQsnWLKY+Zt8/rCxGhbWe
-         FKi6JpnQuX2BE/dTExzssr9GHyDpM0MnW7l9TRTmVlW8aijE/6hj8XEk0/Np3UIpRbRb
-         nnJg==
-X-Gm-Message-State: AOAM530Qtdh+N322ktqPRYsa8RT8nzDNDLkUo6r8rvcP3dVT/Z46HA4Z
-        cKA8meWZ+QzR8XMfWDcvV+qBIA==
-X-Google-Smtp-Source: ABdhPJwjikefcEW6EE3MzZqkcTWwsp93SdKPjKGmaMKv4cGZBM3L1ZE4fkjaC0trhlqVgv+ImjZTsQ==
-X-Received: by 2002:ac8:5e10:0:b0:2e1:cdc7:a73 with SMTP id h16-20020ac85e10000000b002e1cdc70a73mr19139444qtx.72.1648412811092;
-        Sun, 27 Mar 2022 13:26:51 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=62kxbYjOC1Pdkwa5wMmdd0cCG7qP5qnu3ZqUiccwe3s=;
+        b=nE/SVYiaTp6pXGfqXlozm76waSJ+Ylb+Ef3VNPlm7NMSKCg5i3+CZQT+bO+M65lfnT
+         sbqAXVS8JZO5NcbLgXlwBRVLGCcATA2K5a1fHznLqP6Ded2EdBBwxhdBqw8L9rOfNgaY
+         VVqM1Ucz9R56OZE/mP+X7J+hDp4SeD/EnP8oTjQ30MTB9bgKW2EpuAALCxTWBeVUfeuw
+         MjQraNwCj11NjkF5nRCMjbhke2+NL7OTBbO9FdCwQ65nKIqaK76Oljt63STNvdaCyafe
+         W8eptfsdjE6VQm4KhoIyt3zjW4CVudXGOVp5PcvrNzvzojkMjI3ocFb7g1nD7unDnMsD
+         Fxtw==
+X-Gm-Message-State: AOAM530nzh4r2vjloYc7WV2o/z8itF5lIP9AhfnmzWVYgvjETAb+9ASW
+        sRAtwR3DqOQq/1plH/sAZc9ppA==
+X-Google-Smtp-Source: ABdhPJymGP+Mt3YGnp132pzn5uj/TtJMZRnQG1AYdly2XyTwO8FzqRoyNP23Ypr628vkqlXl/FFP4A==
+X-Received: by 2002:ac8:5b86:0:b0:2e2:72c:9e06 with SMTP id a6-20020ac85b86000000b002e2072c9e06mr18354799qta.113.1648412816673;
+        Sun, 27 Mar 2022 13:26:56 -0700 (PDT)
 Received: from localhost.localdomain (modemcable134.222-177-173.mc.videotron.ca. [173.177.222.134])
-        by smtp.gmail.com with ESMTPSA id g9-20020a05620a108900b0067b13036bd5sm6720386qkk.52.2022.03.27.13.26.49
+        by smtp.gmail.com with ESMTPSA id g9-20020a05620a108900b0067b13036bd5sm6720386qkk.52.2022.03.27.13.26.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Mar 2022 13:26:50 -0700 (PDT)
+        Sun, 27 Mar 2022 13:26:56 -0700 (PDT)
 From:   Jonathan Marek <jonathan@marek.ca>
 To:     freedreno@lists.freedesktop.org
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        Dan Carpenter <dan.carpenter@oracle.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         David Airlie <airlied@linux.ie>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), Emma Anholt <emma@anholt.net>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        linux-kernel@vger.kernel.org (open list),
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Emma Anholt <emma@anholt.net>,
         Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Yangtao Li <tiny.windzz@gmail.com>
-Subject: [PATCH 0/4] drm/msm/adreno: add support for a730
-Date:   Sun, 27 Mar 2022 16:25:53 -0400
-Message-Id: <20220327202643.4053-1-jonathan@marek.ca>
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 1/4] drm/msm/adreno: move a6xx CP_PROTECT macros to common code
+Date:   Sun, 27 Mar 2022 16:25:54 -0400
+Message-Id: <20220327202643.4053-2-jonathan@marek.ca>
 X-Mailer: git-send-email 2.26.1
+In-Reply-To: <20220327202643.4053-1-jonathan@marek.ca>
+References: <20220327202643.4053-1-jonathan@marek.ca>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,42 +80,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Based on a6xx_gpu.c, stripped down and updated for a7xx based on the
-downstream driver. Implements the minimum to be able to submit commands to
-the GPU and use it for userspace driver development. Notably this doesn't
-implement support for the GMU (this means that the clock driver needs to
-support the GPU core clock and turning on the GX rail, which is normally
-offloaded to the GMU).
+These will be used by a7xx, so move them to common code. A6XX_ prefix is
+kept because the generic ADRENO_ is already in use.
 
-Register updates: https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/15602
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h   | 17 -----------------
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h |  6 ++++++
+ 2 files changed, 6 insertions(+), 17 deletions(-)
 
-Jonathan Marek (4):
-  drm/msm/adreno: move a6xx CP_PROTECT macros to common code
-  drm/msm/adreno: use a single register offset for
-    gpu_read64/gpu_write64
-  drm/msm/adreno: update headers
-  drm/msm/adreno: add support for a730
-
- drivers/gpu/drm/msm/Makefile                |   1 +
- drivers/gpu/drm/msm/adreno/a4xx_gpu.c       |   3 +-
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c       |  27 +-
- drivers/gpu/drm/msm/adreno/a5xx_preempt.c   |   4 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c       |  25 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h       |  17 -
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |   3 +-
- drivers/gpu/drm/msm/adreno/a7xx.xml.h       | 666 +++++++++++++++++
- drivers/gpu/drm/msm/adreno/a7xx_gpu.c       | 777 ++++++++++++++++++++
- drivers/gpu/drm/msm/adreno/a7xx_gpu.h       |  26 +
- drivers/gpu/drm/msm/adreno/adreno_device.c  |  12 +
- drivers/gpu/drm/msm/adreno/adreno_gpu.h     |   9 +-
- drivers/gpu/drm/msm/adreno/adreno_pm4.xml.h |  45 +-
- drivers/gpu/drm/msm/msm_gpu.h               |  12 +-
- drivers/gpu/drm/msm/msm_ringbuffer.h        |   1 +
- 15 files changed, 1550 insertions(+), 78 deletions(-)
- create mode 100644 drivers/gpu/drm/msm/adreno/a7xx.xml.h
- create mode 100644 drivers/gpu/drm/msm/adreno/a7xx_gpu.c
- create mode 100644 drivers/gpu/drm/msm/adreno/a7xx_gpu.h
-
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+index 86e0a7c3fe6df..d117c1589f2af 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+@@ -36,23 +36,6 @@ struct a6xx_gpu {
+ 
+ #define to_a6xx_gpu(x) container_of(x, struct a6xx_gpu, base)
+ 
+-/*
+- * Given a register and a count, return a value to program into
+- * REG_CP_PROTECT_REG(n) - this will block both reads and writes for _len
+- * registers starting at _reg.
+- */
+-#define A6XX_PROTECT_NORDWR(_reg, _len) \
+-	((1 << 31) | \
+-	(((_len) & 0x3FFF) << 18) | ((_reg) & 0x3FFFF))
+-
+-/*
+- * Same as above, but allow reads over the range. For areas of mixed use (such
+- * as performance counters) this allows us to protect a much larger range with a
+- * single register
+- */
+-#define A6XX_PROTECT_RDONLY(_reg, _len) \
+-	((((_len) & 0x3FFF) << 18) | ((_reg) & 0x3FFFF))
+-
+ static inline bool a6xx_has_gbif(struct adreno_gpu *gpu)
+ {
+ 	if(adreno_is_a630(gpu))
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+index 0490c5fbb7803..55c5433a4ea18 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+@@ -416,6 +416,10 @@ static inline uint32_t get_wptr(struct msm_ringbuffer *ring)
+ 	((1 << 30) | (1 << 29) | \
+ 	((ilog2((_len)) & 0x1F) << 24) | (((_reg) << 2) & 0xFFFFF))
+ 
++#define A6XX_PROTECT_NORDWR(_reg, _len) \
++	((1 << 31) | \
++	(((_len) & 0x3FFF) << 18) | ((_reg) & 0x3FFFF))
++
+ /*
+  * Same as above, but allow reads over the range. For areas of mixed use (such
+  * as performance counters) this allows us to protect a much larger range with a
+@@ -425,6 +429,8 @@ static inline uint32_t get_wptr(struct msm_ringbuffer *ring)
+ 	((1 << 29) \
+ 	((ilog2((_len)) & 0x1F) << 24) | (((_reg) << 2) & 0xFFFFF))
+ 
++#define A6XX_PROTECT_RDONLY(_reg, _len) \
++	((((_len) & 0x3FFF) << 18) | ((_reg) & 0x3FFFF))
+ 
+ #define gpu_poll_timeout(gpu, addr, val, cond, interval, timeout) \
+ 	readl_poll_timeout((gpu)->mmio + ((addr) << 2), val, cond, \
 -- 
 2.26.1
 
