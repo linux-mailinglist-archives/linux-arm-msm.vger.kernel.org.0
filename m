@@ -2,68 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 207404E8464
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 26 Mar 2022 22:21:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 79FE44E85FB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 27 Mar 2022 07:36:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234586AbiCZVXT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 26 Mar 2022 17:23:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54882 "EHLO
+        id S235161AbiC0Fhq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 27 Mar 2022 01:37:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230002AbiCZVXS (ORCPT
+        with ESMTP id S235162AbiC0Fhn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 26 Mar 2022 17:23:18 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D3AD9BADE;
-        Sat, 26 Mar 2022 14:21:41 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id gp15-20020a17090adf0f00b001c7cd11b0b3so6410227pjb.3;
-        Sat, 26 Mar 2022 14:21:41 -0700 (PDT)
+        Sun, 27 Mar 2022 01:37:43 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A4FC192B2;
+        Sat, 26 Mar 2022 22:36:05 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id m22so11165167pja.0;
+        Sat, 26 Mar 2022 22:36:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=TyBK01jrf008SVfLFXsPXvWmiecmsTzyMmbOyqtInlc=;
-        b=B+Rs+UWSLybpeZxAWtBcyyOMx+iqm7JPyXuSA6lt+6RQT7a8CHeOWPxYl1myiqbrVi
-         OgBRl04RQZrCkJ2I9UB8/T9oyew6SOxURlztEhUtW9t4K9BOrO62JLVsU4k5ZLTLH3qo
-         b1TJj/v/RODWbP8A5lk+gQU513XV+lRGNTDS5+9jeMJC3PJ7niyh0ccAkYctI9S38UtA
-         WVXBujilYAy0ivwZLTbxuQoGxn8UqHd3ldHx2AP9JifyXE+1lQFWDqA8HaaZuXCzBwiX
-         4tVAxPVZ2qsYwt4rd6IjiLYiJPF7vrwrySuARZqwnNAb0c/1yCWM/OLsptR2AjWcyeHI
-         jYAQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=BXdefmByfbS7iadyHNuWA+1dWRCSn9oFrWGYl5Fm5mk=;
+        b=WD/emqxoTCqSinxwNm9zYC0BhVut37NKvVjalaC3AKb8//RwbBJ0HSEAfuKaQ4TRfn
+         6kwLAZMOADsCvtCO24agk+3gzGKGTzkJYK5VEESmUvDd0AwLk8MOqqqbGIxQADK8aLnO
+         cnQOeYl0dNZheOli0EHPxR4XCURTaCEwk+DA6AttIClrfhjRFRZ7eNgaXmT3Q5TRifxb
+         oWKTyZ27SYlho/bS0fQMj4jMBTHcATU1sYK+99WO7WA4uv1bNod4RcYqMHfWk7DyqCSQ
+         Qc0paAN62/Th0TsFECWtb5Pb6fzEURwe3BBOKcRwTf5utyKHkZHcplpnGv6lEJDDO1pv
+         w6fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=TyBK01jrf008SVfLFXsPXvWmiecmsTzyMmbOyqtInlc=;
-        b=mQEgydLWre/SAM9Q1mPgiAiDwecCYYKBMDc4tMZWCNxkButu3oReNdDHqCIgoWst/Z
-         dzm2ffI2Cp54ecOYVTWFGA9LKpVPfnbveq/Be1Qg6NZBs/jiWtyYhZEHKpyd5Q0k7M8j
-         fSbI9sCsIMb8rHpOkh2XzvHLdQkZ0xmcm4T91RPRaZzxmXRm7rboNRMzTKGsUMr77f4N
-         7ddjYteqROZK3Z1eFpeltB13RJUknybViq8e54oa8BNrcpeXs/C4tZ/tEg0nsAXUqD/s
-         cytZUnt1e68Eu6yVqTYz9FeGIHg5Ihy8T6iNZ7wJpOvF4sYZZhNYL/HffDUKXzwM5kui
-         E2IA==
-X-Gm-Message-State: AOAM533QDZ9uLTi6+6Yi5ZaJT9khxXIdTXtHOuHEsvg4c6weGTt3ukiF
-        MR58fNrmY524mYqGwCpUAE3TD4CbtI0ueQ==
-X-Google-Smtp-Source: ABdhPJxASVZuRWBucF6JwS8GEH1In6Rw/XlhRogRmB8w2a5HB4Y+oEEdOfDA3E7L8hV16/fuivgCoQ==
-X-Received: by 2002:a17:90b:4c49:b0:1c7:d6c1:bb0f with SMTP id np9-20020a17090b4c4900b001c7d6c1bb0fmr14322401pjb.230.1648329700957;
-        Sat, 26 Mar 2022 14:21:40 -0700 (PDT)
-Received: from localhost.localdomain ([122.161.51.18])
-        by smtp.gmail.com with ESMTPSA id d5-20020a056a0024c500b004fae56b2921sm10669697pfv.167.2022.03.26.14.21.37
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=BXdefmByfbS7iadyHNuWA+1dWRCSn9oFrWGYl5Fm5mk=;
+        b=P2eXbLVIvLcgAalByEPWZnhoFnawXEylRhe0z2noWo4yOrPMGVu/01L3yPcaOqb+XS
+         n1SqcmkSAHLPl9Di1+aIIDsMxqBuNfVuvh1Sarl1pqYXVlMdOMU1DeK+mxaMRIFifULX
+         gt1sPM4rXcN2ti00p6wvuJaN7S1/q9nAcj73OcVtrtaThuR1x+IJ29O4ZsBYkHSpWBTG
+         tfnC6uzoeN1/Cj6ELeBQKQcCG2H+YalibJHjbZouce4LZS0EiVACijYE9dSjoMY+DNHT
+         KpUE1pTYMb05txIn5dF5uviULgt8ecsTXcXyz2UEunX4St20W0lj5XTYCeXe3HN9KwMk
+         C9xQ==
+X-Gm-Message-State: AOAM530WUB8PQlyswbBb2seSfIdsw0tOnQ2s74swFdUd2RJl8q9uLost
+        yBEg3vfa5tQFcP66qnj6zes=
+X-Google-Smtp-Source: ABdhPJzLDpKQkrWzztdlJpJD0lzsWQyEl0Qpi9c3Hry9x9AKCEmmWC14C7eZiUH7Vhej5pAm1C+3YQ==
+X-Received: by 2002:a17:90a:4217:b0:1c7:c203:b4f3 with SMTP id o23-20020a17090a421700b001c7c203b4f3mr18995680pjg.177.1648359364587;
+        Sat, 26 Mar 2022 22:36:04 -0700 (PDT)
+Received: from localhost.localdomain ([115.220.243.108])
+        by smtp.googlemail.com with ESMTPSA id u10-20020a63b54a000000b00380ea901cd2sm9296275pgo.6.2022.03.26.22.36.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Mar 2022 14:21:40 -0700 (PDT)
-From:   Kuldeep Singh <singh.kuldeep87k@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Mukesh Savaliya <msavaliy@codeaurora.org>,
-        Akash Asthana <akashast@codeaurora.org>
-Cc:     Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] dt-bindings: spi: qcom-qspi: Add minItems to interconnect-names
-Date:   Sun, 27 Mar 2022 02:51:34 +0530
-Message-Id: <20220326212134.45759-1-singh.kuldeep87k@gmail.com>
-X-Mailer: git-send-email 2.25.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Sat, 26 Mar 2022 22:36:04 -0700 (PDT)
+From:   Xiaomeng Tong <xiam0nd.tong@gmail.com>
+To:     agross@kernel.org
+Cc:     bjorn.andersson@linaro.org, joro@8bytes.org, will@kernel.org,
+        sricharan@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        Xiaomeng Tong <xiam0nd.tong@gmail.com>, stable@vger.kernel.org
+Subject: [PATCH] iommu: fix an incorrect NULL check on list iterator
+Date:   Sun, 27 Mar 2022 13:35:58 +0800
+Message-Id: <20220327053558.2821-1-xiam0nd.tong@gmail.com>
+X-Mailer: git-send-email 2.17.1
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -74,35 +66,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm QSPI DT spec says interconnects has minimum length 1 and
-maximum length 2. Same configuration will be applicable for
-interconnect-names. Schema currently depicts interconnects length
-correctly but not interconnect-names. It can have a single entry, which
-is a valid case yet to be incorporated in the current configuration. The
-schema tries to look for 2 names and fail for DTs with a single entry.
-Thus, add minItems property to interconnect-names to fix it.
+The bug is here:
+	if (!iommu || iommu->dev->of_node != spec->np) {
 
-With the change applied, below interconnect-names values are possible:
-['qspi-config'], ['qspi-config', 'qspi-memory']
+The list iterator value 'iommu' will *always* be set and non-NULL by
+list_for_each_entry(), so it is incorrect to assume that the iterator
+value will be NULL if the list is empty or no element is found (in fact,
+it will point to a invalid structure object containing HEAD).
 
-Fixes: 8f9c291558ea ("dt-bindings: spi: Add interconnect binding for QSPI")
-Signed-off-by: Kuldeep Singh <singh.kuldeep87k@gmail.com>
+To fix the bug, run insert_iommu_master(dev, &iommu, spec); unlock and
+return 0 when found, otherwise unlock and return -ENODEV.
+
+Cc: stable@vger.kernel.org
+Fixes: f78ebca8ff3d6 ("iommu/msm: Add support for generic master bindings")
+Signed-off-by: Xiaomeng Tong <xiam0nd.tong@gmail.com>
 ---
- Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/msm_iommu.c | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml b/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
-index 055524fe8327..116f3746c1e6 100644
---- a/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
-+++ b/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
-@@ -49,6 +49,7 @@ properties:
-     maxItems: 2
+diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
+index 3a38352b603f..1dbb8b0695ec 100644
+--- a/drivers/iommu/msm_iommu.c
++++ b/drivers/iommu/msm_iommu.c
+@@ -617,23 +617,17 @@ static int qcom_iommu_of_xlate(struct device *dev,
+ {
+ 	struct msm_iommu_dev *iommu;
+ 	unsigned long flags;
+-	int ret = 0;
  
-   interconnect-names:
-+    minItems: 1
-     items:
-       - const: qspi-config
-       - const: qspi-memory
+ 	spin_lock_irqsave(&msm_iommu_lock, flags);
+ 	list_for_each_entry(iommu, &qcom_iommu_devices, dev_node)
+-		if (iommu->dev->of_node == spec->np)
+-			break;
+-
+-	if (!iommu || iommu->dev->of_node != spec->np) {
+-		ret = -ENODEV;
+-		goto fail;
+-	}
+-
+-	insert_iommu_master(dev, &iommu, spec);
+-fail:
++		if (iommu->dev->of_node == spec->np) {
++			insert_iommu_master(dev, &iommu, spec);
++			spin_unlock_irqrestore(&msm_iommu_lock, flags);
++			return 0;
++		}
+ 	spin_unlock_irqrestore(&msm_iommu_lock, flags);
+ 
+-	return ret;
++	return -ENODEV;
+ }
+ 
+ irqreturn_t msm_iommu_fault_handler(int irq, void *dev_id)
 -- 
-2.25.1
+2.17.1
 
