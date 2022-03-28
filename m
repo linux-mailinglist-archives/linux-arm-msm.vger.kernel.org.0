@@ -2,143 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DB484E94FD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Mar 2022 13:38:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F2234E95EA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Mar 2022 13:57:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241498AbiC1Ljn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Mar 2022 07:39:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57838 "EHLO
+        id S236020AbiC1L7C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Mar 2022 07:59:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243677AbiC1Lgq (ORCPT
+        with ESMTP id S241981AbiC1L5l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Mar 2022 07:36:46 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68AFD1B7B7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Mar 2022 04:28:42 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id p10so18270871lfa.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Mar 2022 04:28:42 -0700 (PDT)
+        Mon, 28 Mar 2022 07:57:41 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B6FE3BFB7;
+        Mon, 28 Mar 2022 04:54:09 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id pv16so28178492ejb.0;
+        Mon, 28 Mar 2022 04:54:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=alkm6GAWo2f9KK0udr6YqOnxDL3wRG7VC8zZzqw/UA0=;
-        b=C5qKK5COQt2vcAc0rnvS5bZFeoWGxCzJAq7CaTUZ2pzdsH66opPE+nHoCq8cSuKk4F
-         cnYHLhyt/luVE7n5FBubfWOQVCYwhoO2SpUFGEPbAzUcVcqCdVYa/JGRgd2etiYjwlSd
-         kS6+BUfHW2j6DTKPUCR4RskPRlnXwtm1PuX1Rgwgjr1kuDgnywxhYgepzCJ1KzTVHT8D
-         FGLgefVnDRdH+XuuyKryvaFCQllHXBdtha86k9bBW24aqXmKSTcTUqCDOnxsYFKYYlbZ
-         cFLP7QfVe8bnYfLWd2g5RPr/114apDHHBuzBeZbd8SkLWvOxVEzrtlU1Zghmm0TgRxn+
-         gdOA==
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=LKPrfvGWNCgTg4TyAaxCLaMtN2+t2qHlTsa1uVOq8pM=;
+        b=kw5U/JCmxslxZizV2jLlmOBcIGssYEKq78XpVjnkGPlQXwgkdWAeFftd0yoAS+p3Es
+         6bwRaMEB8Zw0+KWXTqe5xSm+v3FtPxgM1RwYnyrFhzLni/EoCXXr2a4ZaW4d9wU25zbe
+         eoniOgU5G4dswNrq9JJELqXGcHi7pVp1q2vyKzlG9qqT6TMzxJDxKEKbi/+Gm1DeYjXV
+         3UGggeaDhqV9rH/7fzTDT4rvoqsZCz8BOdcAeH6/X0BclpVxtXas1+/6ml1BvWFhOWRe
+         yfEvE0l/ifZkZqpd8ktCUvFEOWyKT3gPWwBAnqgNkhDVlu40OBzAA6dNTFKzBXUmZGp/
+         emUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=alkm6GAWo2f9KK0udr6YqOnxDL3wRG7VC8zZzqw/UA0=;
-        b=55AqFi0wXaMvByBafHipgrfm/oYccJZN7dpqSvCTfY022NzXDsorJHtv5rKdxzqy2J
-         RBfApRH2A4wXk7b7n7KQbUqWvoeXyBab3sEoFsDRqgeq9hWcaVULnMpVnV9gborwqohr
-         Ic7QArq7aWJF0GEuehgbRtZoXEN+JbOR7aPqciT64G58IfD+zgz9foFPwLmTsbYKFxr6
-         zc9mk8jDzyqGXrqw7zkoUhHriWWLMl6KsKv3YTTFkS4TyGqKPhpYQefoy2miV4h7Fwvd
-         FQkZYrHJIeWp5LTZHBQEE+Bp7HkjKUg6v0hNGXTDT1jN2UCjakdRy/opBUeTG7S4pYab
-         V6hA==
-X-Gm-Message-State: AOAM533SlVbPhLNDWr20ooP5/xGahSrMndvJj/lJV8TKVHPDNIINhlxO
-        kWY6L5ZZtKVrJMHy1kZj7IHPy8GJ3u8NjZIX
-X-Google-Smtp-Source: ABdhPJzCbBGvm5ABKxgC0QMItHLeB7ll+t5pmGeZX5KAly8LAdVOG6WyvFpK9/KbNMKu93Cdw3kiIg==
-X-Received: by 2002:a05:6512:689:b0:44a:3b4c:8bf3 with SMTP id t9-20020a056512068900b0044a3b4c8bf3mr19052511lfe.378.1648466920750;
-        Mon, 28 Mar 2022 04:28:40 -0700 (PDT)
-Received: from localhost.localdomain (88-113-46-102.elisa-laajakaista.fi. [88.113.46.102])
-        by smtp.gmail.com with ESMTPSA id l4-20020a2e9084000000b00244cb29e3e4sm1700373ljg.133.2022.03.28.04.28.40
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=LKPrfvGWNCgTg4TyAaxCLaMtN2+t2qHlTsa1uVOq8pM=;
+        b=uUywCf9YyZbOwvyUvDZ7Szr9s/y4DhXh5zIhilzhrxBPLAhPOcOPfOoNcHqKboOmkX
+         Obx3sj6dvfGfXt4hdBaw6WJXE7/WLUUevYhh8FgLcFlVku5IzAtG6lE+kCuZqmEnn4Nk
+         Hj4U4ODPuz4R/jOhkfR4vEBIkKCyxVm7EHo6U6cdpMf4BElZ97g2onSlsE/eFmEVi+fH
+         L4KIkdaWBLzhcIyzvvF/59b3+1+2KXzHPha7+wwfE1XZI/yxTWQWRIiYEfCPSXQi2VQd
+         7xfSsvoGU4FM6/r7zFQ702ejA7P6Hu31w4P45wtRZMvrdqPGvZ/xAD3Ff6YnZdzfPNv1
+         MqjQ==
+X-Gm-Message-State: AOAM5303vFj94L75aftP2vJxNFJM3O62fhTxP2hNQsRlXXS02tUjOzXM
+        xO8K4qr5s6VaxprFC5+zQ4A=
+X-Google-Smtp-Source: ABdhPJxnuIkGxnuYGLZsxAfTPmW5TkGf54BmupZ2me5Tuu+k4VyUkun2Hg1gMwbCB0fty6ZgA/O4mQ==
+X-Received: by 2002:a17:907:3f18:b0:6e0:df2d:c76a with SMTP id hq24-20020a1709073f1800b006e0df2dc76amr12117312ejc.55.1648468447864;
+        Mon, 28 Mar 2022 04:54:07 -0700 (PDT)
+Received: from Ansuel-xps.localdomain (93-42-69-170.ip85.fastwebnet.it. [93.42.69.170])
+        by smtp.gmail.com with ESMTPSA id hs12-20020a1709073e8c00b006dfdfdac005sm5850462ejc.174.2022.03.28.04.54.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Mar 2022 04:28:40 -0700 (PDT)
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To:     Viresh Kumar <viresh.kumar@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: [PATCH 2/2] cpufreq: qcom-cpufreq-hw: Fix throttle frequency value on EPSS platforms
-Date:   Mon, 28 Mar 2022 14:28:36 +0300
-Message-Id: <20220328112836.2464486-3-vladimir.zapolskiy@linaro.org>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20220328112836.2464486-1-vladimir.zapolskiy@linaro.org>
-References: <20220328112836.2464486-1-vladimir.zapolskiy@linaro.org>
+        Mon, 28 Mar 2022 04:54:07 -0700 (PDT)
+Date:   Mon, 28 Mar 2022 13:54:07 +0200
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Matthias Brugger <matthias.bgg@gmail.com>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-omap@vger.kernel.org,
+        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
+        linux-aspeed@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org,
+        chrome-platform@lists.linux.dev, linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
+        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
+        linux-oxnas@groups.io, linux-arm-msm@vger.kernel.org,
+        linux-unisoc@lists.infradead.org,
+        linux-rockchip@lists.infradead.org,
+        linux-realtek-soc@lists.infradead.org
+Subject: Re: [RFC PATCH 1/1] ARM/arm64: categorize dts in arm dir and fix
+ dependency in arm64
+Message-ID: <YkGh36h03EfUd3/q@Ansuel-xps.localdomain>
+References: <20220328000915.15041-1-ansuelsmth@gmail.com>
+ <20220328000915.15041-2-ansuelsmth@gmail.com>
+ <c5eeca79-38b6-eb9f-1d78-1685aa1cca6c@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c5eeca79-38b6-eb9f-1d78-1685aa1cca6c@gmail.com>
+X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,SUSPICIOUS_RECIPS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On QCOM platforms with EPSS flavour of cpufreq IP a throttled frequency is
-obtained from another register REG_DOMAIN_STATE, thus the helper function
-qcom_lmh_get_throttle_freq() should be modified accordingly, as for now
-it returns gibberish since .reg_current_vote is unset for EPSS hardware.
+On Mon, Mar 28, 2022 at 12:47:46PM +0200, Matthias Brugger wrote:
+> 
+> 
+> On 28/03/2022 02:09, Ansuel Smith wrote:
+> > - Categorize every dts in arm directory in subdirectory
+> > - Fix Makefile to address for the arm subdirectory
+> > - Fix any arm64 dependency
+> > 
+> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> > ---
+> [...]
+> >   arch/arm/boot/dts/mediatek/Makefile           |   14 +
+> >   .../boot/dts/{ => mediatek}/mt2701-evb.dts    |    0
+> >   .../boot/dts/{ => mediatek}/mt2701-pinfunc.h  |    0
+> >   arch/arm/boot/dts/{ => mediatek}/mt2701.dtsi  |    0
+> >   arch/arm/boot/dts/{ => mediatek}/mt6323.dtsi  |    0
+> >   .../boot/dts/{ => mediatek}/mt6580-evbp1.dts  |    0
+> >   arch/arm/boot/dts/{ => mediatek}/mt6580.dtsi  |    0
+> >   .../mt6582-prestigio-pmt5008-3g.dts           |    0
+> >   arch/arm/boot/dts/{ => mediatek}/mt6582.dtsi  |    0
+> >   .../dts/{ => mediatek}/mt6589-aquaris5.dts    |    0
+> >   .../{ => mediatek}/mt6589-fairphone-fp1.dts   |    0
+> >   arch/arm/boot/dts/{ => mediatek}/mt6589.dtsi  |    0
+> >   .../boot/dts/{ => mediatek}/mt6592-evb.dts    |    0
+> >   arch/arm/boot/dts/{ => mediatek}/mt6592.dtsi  |    0
+> >   arch/arm/boot/dts/{ => mediatek}/mt7623.dtsi  |    0
+> >   .../dts/{ => mediatek}/mt7623a-rfb-emmc.dts   |    0
+> >   .../dts/{ => mediatek}/mt7623a-rfb-nand.dts   |    0
+> >   arch/arm/boot/dts/{ => mediatek}/mt7623a.dtsi |    0
+> >   .../mt7623n-bananapi-bpi-r2.dts               |    0
+> >   .../dts/{ => mediatek}/mt7623n-rfb-emmc.dts   |    0
+> >   arch/arm/boot/dts/{ => mediatek}/mt7623n.dtsi |    0
+> >   .../boot/dts/{ => mediatek}/mt7629-rfb.dts    |    0
+> >   arch/arm/boot/dts/{ => mediatek}/mt7629.dtsi  |    0
+> >   .../boot/dts/{ => mediatek}/mt8127-moose.dts  |    0
+> >   arch/arm/boot/dts/{ => mediatek}/mt8127.dtsi  |    0
+> >   .../boot/dts/{ => mediatek}/mt8135-evbp1.dts  |    0
+> >   arch/arm/boot/dts/{ => mediatek}/mt8135.dtsi  |    0
+> 
+> Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+> 
+> Would it be possible to also script a fix for the MAINTAINERS file?
+> 
+> $ git grep "arch\/arm\/boot\/dts" MAINTAINERS |wc -l
+> 
+> 101
+> 
+> 
+> Regards,
+> Matthias
 
-Fixes: 275157b367f4 ("cpufreq: qcom-cpufreq-hw: Add dcvs interrupt support")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
----
- drivers/cpufreq/qcom-cpufreq-hw.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+Totally forgot about the MAINTAINERS file! Yes will add to the script a
+check to fix also that.
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index 53954e5086e0..3156d79ef39e 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -30,6 +30,7 @@
- 
- struct qcom_cpufreq_soc_data {
- 	u32 reg_enable;
-+	u32 reg_domain_state;
- 	u32 reg_dcvs_ctrl;
- 	u32 reg_freq_lut;
- 	u32 reg_volt_lut;
-@@ -283,11 +284,16 @@ static void qcom_get_related_cpus(int index, struct cpumask *m)
- 	}
- }
- 
--static unsigned int qcom_lmh_get_throttle_freq(struct qcom_cpufreq_data *data)
-+static unsigned long qcom_lmh_get_throttle_freq(struct qcom_cpufreq_data *data)
- {
--	unsigned int val = readl_relaxed(data->base + data->soc_data->reg_current_vote);
-+	unsigned int lval;
- 
--	return (val & 0x3FF) * 19200;
-+	if (data->soc_data->reg_current_vote)
-+		lval = readl_relaxed(data->base + data->soc_data->reg_current_vote) & 0x3ff;
-+	else
-+		lval = readl_relaxed(data->base + data->soc_data->reg_domain_state) & 0xff;
-+
-+	return lval * xo_rate;
- }
- 
- static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
-@@ -297,14 +303,12 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
- 	struct device *dev = get_cpu_device(cpu);
- 	unsigned long freq_hz, throttled_freq;
- 	struct dev_pm_opp *opp;
--	unsigned int freq;
- 
- 	/*
- 	 * Get the h/w throttled frequency, normalize it using the
- 	 * registered opp table and use it to calculate thermal pressure.
- 	 */
--	freq = qcom_lmh_get_throttle_freq(data);
--	freq_hz = freq * HZ_PER_KHZ;
-+	freq_hz = qcom_lmh_get_throttle_freq(data);
- 
- 	opp = dev_pm_opp_find_freq_floor(dev, &freq_hz);
- 	if (IS_ERR(opp) && PTR_ERR(opp) == -ERANGE)
-@@ -371,6 +375,7 @@ static const struct qcom_cpufreq_soc_data qcom_soc_data = {
- 
- static const struct qcom_cpufreq_soc_data epss_soc_data = {
- 	.reg_enable = 0x0,
-+	.reg_domain_state = 0x20,
- 	.reg_dcvs_ctrl = 0xb0,
- 	.reg_freq_lut = 0x100,
- 	.reg_volt_lut = 0x200,
 -- 
-2.33.0
-
+	Ansuel
