@@ -2,128 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC1B34E9C9A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Mar 2022 18:44:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F01604E9CF2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Mar 2022 19:01:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242149AbiC1Qpr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Mar 2022 12:45:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43836 "EHLO
+        id S243834AbiC1RBr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Mar 2022 13:01:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237488AbiC1Qpr (ORCPT
+        with ESMTP id S234838AbiC1RBq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Mar 2022 12:45:47 -0400
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 198EF205CB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Mar 2022 09:44:05 -0700 (PDT)
-Received: by mail-qv1-xf2c.google.com with SMTP id kd21so9361577qvb.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Mar 2022 09:44:05 -0700 (PDT)
+        Mon, 28 Mar 2022 13:01:46 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8D6460DA8;
+        Mon, 28 Mar 2022 10:00:04 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id j18so21282689wrd.6;
+        Mon, 28 Mar 2022 10:00:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ZFIdehZrTxdj/RvUPXGwNiJz0CBRPSutTAor/H+cLso=;
-        b=HY7BqZqay1vHlPzQoQMjzcnyQyiXyRjGp+TAREShAf3pydiqV7DKYRaYQoqT77XomN
-         95E7RQUXQwKi69JGzrCjskWWNF3VvTACp2QapXR/gcLtFij4dmvrqC42wjHDRht+Dxwb
-         qrIJkT4BC1sa/5QqCEZkCH+19SGG/vuhKj0p/2nrtMZgOoINM+J0EN7chOuZyCcc4kGp
-         BLWLjETKDhQZZGTerzv3Gytz8FVyy1LGew3BsoJfUBA122woOjL/N4+SDb/dJnBMc26y
-         6gtJ4loim8gQik4TgrcYztnMPkWzZvgrTAlLASvqNfzpk87vgb//cv2hRAzehoBw8tDz
-         8ISA==
+        d=gmail.com; s=20210112;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=ZEVHtJO6G677L0G9fCsEHBPzXupfvRbVBLDDcKGMsYU=;
+        b=GgFcrGvHeEH9/JlDBJIxdBIaTQg6F3si2q5JnsELpGexfHNINgrEkleEGhZEppLibP
+         BhiiFQMGXwqq50116/Bkk6wogeLJprQ+5bKwzXN+kMaU0pIxxzAAeTfaSVj+EzjxARRe
+         hTZw6+nbuV56dKTaTp0Xqrs5tkC9fEPLbWVzpk9AnrvYhcHTm8e/sCtFI7zmov2sabX9
+         ONkVSc+3F+g2yiueHefAvigIqxij9CEOWQW1aR/CHIiA6ThvCKgZoQpTjGWT39Br2UPV
+         bAMyeKsdacEE4OMzznwTEGpf5Tmu4LaVw2jJGEYt4g19MVPeiUSaDKSsK++gHzHxsCaF
+         8Y5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZFIdehZrTxdj/RvUPXGwNiJz0CBRPSutTAor/H+cLso=;
-        b=WnoReoln4ObGzdPNr/sqFcEjqrsZdq6kkc0hPlSwStXCtftJpVrOA7eSkJ8E5FcOUR
-         tX0sKrMG399kJ7YlzmJ3vJi4hoszi5QZhzusam/ThX6A9/XkAhYpkI/3TK7bDeeSPao5
-         CDxBbTYiLBzLUo2ka9SL0LGjxYLt2Q9ZvGd/jZ4ITm95LCp0hPMgC3xtF5qlMhYriKC8
-         SoE0toMMyNCQRZ+tZdfWm5jrZr0nji6tC8Wpyjr7846prjyLc0Y/RboMKtJNC46ETDZ0
-         kxldzTgY0tAfWtowt3UxQaTRDHSaipjn8ZjXIFfGzAZikjdLPiaFiNkH/TtDJqrXcbuy
-         NTXA==
-X-Gm-Message-State: AOAM532mBJB0/8HhifzElIn8FYA9cMt+e+dj8jgzMvm8Hc+O1t5crSjz
-        O6TVMBwRV6erq15JKnWs83UfkV8S6JSjb9j0fyqe7Q==
-X-Google-Smtp-Source: ABdhPJzliM5etgMj0wPTZaXVmyqbng42nS8uHRrcWTfKZ4sLgNctWWdu5gzWqP4wan4eEECcgE1dx/vzA6PVuddrJ4s=
-X-Received: by 2002:a0c:b2cb:0:b0:435:cb61:322e with SMTP id
- d11-20020a0cb2cb000000b00435cb61322emr21682847qvf.122.1648485844212; Mon, 28
- Mar 2022 09:44:04 -0700 (PDT)
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=ZEVHtJO6G677L0G9fCsEHBPzXupfvRbVBLDDcKGMsYU=;
+        b=7YXqBeEzFpSstGusFqp57NzZJyd+Qxx0GjMa8CShWBYItLcfIQuJcBS50MaUjLNDGY
+         zzXjAD1xOO2x60eXHEFj6RZYWsssqONx5ftwrMUnoYAqpJU6ts+9t0Cm/46HTodvmKPy
+         CB1QCRO08o1atJaJl1J8ZvR1OWlbFB+m0yTjGGkiWWSQ43x/UY7fecvSpNQS+AVivQEn
+         4yx89lnIsO/VNPe6EY7/lYh66+t89lMxpzFaQgRvVWbYZOVp51kWi56hTsACENc26Sot
+         buiEUqt9wCW45/J21b1O/BMX/9hosS4QLbEPiHnjakccG6B0YSB0fCPEh7nBfiL2QdDm
+         1AOg==
+X-Gm-Message-State: AOAM5314t4FN5Jqa9KExZIRN7144+BF7T9qlx7Aedk+AlDgaib3Qacci
+        2ENrYlDrwuldNzDc9mYVQIo=
+X-Google-Smtp-Source: ABdhPJxzjh9QUSY5wPmlsFXZZNn50r8F3dt/NEaF/KDOVSxLctYdcEXRjycF7pXgfgOk2gK6TCDYyQ==
+X-Received: by 2002:adf:e2cc:0:b0:203:e8ba:c709 with SMTP id d12-20020adfe2cc000000b00203e8bac709mr24899786wrj.713.1648486803349;
+        Mon, 28 Mar 2022 10:00:03 -0700 (PDT)
+Received: from trex (95.red-81-38-138.dynamicip.rima-tde.net. [81.38.138.95])
+        by smtp.gmail.com with ESMTPSA id r12-20020a5d6c6c000000b00203ec2b1255sm16241799wrz.60.2022.03.28.10.00.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Mar 2022 10:00:02 -0700 (PDT)
+From:   "Jorge Ramirez-Ortiz, Gmail" <jorge.ramirez.ortiz@gmail.com>
+X-Google-Original-From: "Jorge Ramirez-Ortiz, Gmail" <JorgeRamirez-Ortiz>
+Date:   Mon, 28 Mar 2022 19:00:01 +0200
+To:     Xiaomeng Tong <xiam0nd.tong@gmail.com>
+Cc:     srinivas.kandagatla@linaro.org, amahesh@qti.qualcomm.com,
+        arnd@arndb.de, gregkh@linuxfoundation.org,
+        jorge.ramirez-ortiz@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH] misc: fastrpc: fix an incorrect NULL check on list
+ iterator
+Message-ID: <20220328170001.GA3040725@trex>
+References: <20220327062202.5720-1-xiam0nd.tong@gmail.com>
 MIME-Version: 1.0
-References: <20220328152923.90623-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220328152923.90623-1-krzysztof.kozlowski@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 28 Mar 2022 19:43:53 +0300
-Message-ID: <CAA8EJprWoxWwk5EWEfWdLquPR+2=u6V0-v1-+wHMHOk8HiEyNw@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: display: msm: dsi: remove address/size cells
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220327062202.5720-1-xiam0nd.tong@gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 28 Mar 2022 at 18:30, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> The DSI node is not a bus and the children do not have unit addresses.
->
-> Reported-by: Vinod Koul <vkoul@kernel.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On 27/03/22, Xiaomeng Tong wrote:
+> The bug is here:
+> 	if (!buf) {
+> 
+> The list iterator value 'buf' will *always* be set and non-NULL
+> by list_for_each_entry(), so it is incorrect to assume that the
+> iterator value will be NULL if the list is empty (in this case, the
+> check 'if (!buf) {' will always be false and never exit expectly).
 
-NAK.
-DSI panels are children of the DSI device tree node with the reg = <0>; address.
-This is the convention used by other platforms too (see e.g.
-arch/arm64/boot/dts/freescale/imx8mq-evk.dts).
+yes.
 
-With the DSI split link it is possible to attach two panels to a
-single DSI host, so addresses are necessary.
+> 
+> To fix the bug, use a new variable 'iter' as the list iterator,
+> while use the original variable 'buf' as a dedicated pointer to
+> point to the found element.
 
+LGTM
+
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: 2419e55e532de ("misc: fastrpc: add mmap/unmap support")
+> Signed-off-by: Xiaomeng Tong <xiam0nd.tong@gmail.com>
 > ---
->  .../bindings/display/msm/dsi-controller-main.yaml          | 7 -------
->  1 file changed, 7 deletions(-)
->
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> index 7095ec3c890d..57f238f72326 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> @@ -51,10 +51,6 @@ properties:
->    phy-names:
->      const: dsi
->
-> -  "#address-cells": true
-> -
-> -  "#size-cells": true
-> -
->    syscon-sfpb:
->      description: A phandle to mmss_sfpb syscon node (only for DSIv2).
->      $ref: "/schemas/types.yaml#/definitions/phandle"
-> @@ -154,9 +150,6 @@ examples:
->             reg = <0x0ae94000 0x400>;
->             reg-names = "dsi_ctrl";
->
-> -           #address-cells = <1>;
-> -           #size-cells = <0>;
-> -
->             interrupt-parent = <&mdss>;
->             interrupts = <4>;
->
-> --
-> 2.32.0
->
+>  drivers/misc/fastrpc.c | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index aa1682b94a23..45aaf54a7560 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -1353,17 +1353,18 @@ static int fastrpc_req_munmap_impl(struct fastrpc_user *fl,
+>  				   struct fastrpc_req_munmap *req)
+>  {
+>  	struct fastrpc_invoke_args args[1] = { [0] = { 0 } };
+> -	struct fastrpc_buf *buf, *b;
+> +	struct fastrpc_buf *buf = NULL, *iter, *b;
+>  	struct fastrpc_munmap_req_msg req_msg;
+>  	struct device *dev = fl->sctx->dev;
+>  	int err;
+>  	u32 sc;
+>  
+>  	spin_lock(&fl->lock);
+> -	list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
+> -		if ((buf->raddr == req->vaddrout) && (buf->size == req->size))
+> +	list_for_each_entry_safe(iter, b, &fl->mmaps, node) {
+> +		if ((iter->raddr == req->vaddrout) && (iter->size == req->size)) {
+> +			buf = iter;
+>  			break;
+> -		buf = NULL;
+> +		}
+>  	}
+>  	spin_unlock(&fl->lock);
+>  
+> -- 
+> 2.17.1
+> 
 
-
--- 
-With best wishes
-Dmitry
