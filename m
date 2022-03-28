@@ -2,107 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 59FDF4E9FB0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Mar 2022 21:20:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6578B4EA3D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Mar 2022 01:44:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244604AbiC1TV5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Mar 2022 15:21:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54300 "EHLO
+        id S231153AbiC1Xnd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Mar 2022 19:43:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244720AbiC1TVz (ORCPT
+        with ESMTP id S231133AbiC1Xnc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Mar 2022 15:21:55 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A9595DE4E;
-        Mon, 28 Mar 2022 12:20:14 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id b13so11762221pfv.0;
-        Mon, 28 Mar 2022 12:20:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GJEJWucPHfNfh0owOSh1kHfEuPNtGB0oLcBX/58o8qM=;
-        b=JP/IsseErt3A3GaLZ07OVojIgAwMlkKQXJbU0k6teFguY4PSuv5O56wntHbS7cQX8M
-         ygcQ6cP8WIS0Oe2g9kgoYbVhd8a6t3rkAW349ZzBJVb/5xDkScINNk6VtNUf4fFLXf7l
-         MOKxSppY//7Wm1FNURCk/MdfjSzRBSxBZkg7bZT8DxtUeOp1w8uP/24JIM16Bn1fw7bh
-         8sLIsZi+o3DMg0VPJZwvau0LqCUve5dgtRttgqoVqmmpzUdQv0+o+C9eszP9egtXRt9X
-         UH6I5aTsqmQ4QwCY0uw/FSHFWrv2FpMv6+o+sUda7CtYZp7bITnlqF1nE+ypDgwRqjof
-         nexQ==
+        Mon, 28 Mar 2022 19:43:32 -0400
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B51E674EC;
+        Mon, 28 Mar 2022 16:41:51 -0700 (PDT)
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-df088cb155so3628577fac.1;
+        Mon, 28 Mar 2022 16:41:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GJEJWucPHfNfh0owOSh1kHfEuPNtGB0oLcBX/58o8qM=;
-        b=mj+VxfjPN6MKQgobI8EM6U1wj+BhrVTvRxnWrkwE0nt8w4OwaHM4z9I6IitusGDmMg
-         W3GzgfRwIY7gbn+LofPfKzObY6/BdR7EsldqP5exGwqRbJqdVPTWeb6rrPTpuSuwXPKM
-         iDYtHEJ+9QoP6i7S67WXE728IMyhROzjakclx8sqoxh23dA74qAVB9HmawAsKSO4JVk2
-         KEb6XijqAXRUykw8YZHDTATnyoHqJPVQlfz/YHGpX+7S4FxY5H6jLchAunJxfzYxi57H
-         dPqDfheWB4aHu+aDNkQjn7x/KYvz5gG4kzL5oXYq1QcO4q5eyXq9lnZ5PXQtiDTFj9Nw
-         KC/Q==
-X-Gm-Message-State: AOAM533WPk0Lhlyt5KaEm9GsI/DeMUXO4HVsaoEh2JlvKHL6Z8WM8ikS
-        wyLG6/jOEXrHFCBlF8ytZljMrPAzk/U=
-X-Google-Smtp-Source: ABdhPJwR9Pf/sSAf0tS1ztVneZEH22dR8Gn749LLOhJ7HmycSZ5LiQpEf7U7uAqx2SXRA97/1JMA+Q==
-X-Received: by 2002:a65:56cb:0:b0:378:82ed:d74 with SMTP id w11-20020a6556cb000000b0037882ed0d74mr11408905pgs.491.1648495213750;
-        Mon, 28 Mar 2022 12:20:13 -0700 (PDT)
-Received: from localhost.localdomain ([122.161.51.18])
-        by smtp.gmail.com with ESMTPSA id nn7-20020a17090b38c700b001c9ba103530sm265339pjb.48.2022.03.28.12.20.09
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=om1jfT7LQJ2WzF+mEa728pkjUE9UGG3QEmScj7yu6ek=;
+        b=ULDliSoczKuAQnYGovbDRJFRvh982dCuyS/4kB0IgpIVf4zVrUbXkg07K34BE94+Ro
+         jk5C9zt/2BHNwCn2JP+wVT9K/VIVBYU0Sj59lKwy2KIvN0XgqhnJviQLa/UO66/Qcvuk
+         ZPGeRP3KxoJXFQ8d2IpOs7mYdJujptBx1LNNNS5prhpf275jDJ3oyawSPTGdYADjyjd6
+         yMtsh2fLhxDnFmeESPcVSL1drCLpHOD2YjRwEwCCk5LJCQT3Qw5Ef18dnBNneyFICXXV
+         WvWh8aTLDVnY6NwYIGL8A31RcBXO4yC5PqW2uogl4ZUxlQ3+/tKERznueEISm+45HWNy
+         0iGA==
+X-Gm-Message-State: AOAM531LiK0ma1wguja+l2CCMojJ4amq2LjGOGybisvU8LDoAQpF808R
+        LrCDX5R7Zlq7Nwnay1ajeA==
+X-Google-Smtp-Source: ABdhPJxxw28YeT3ErL7L4AzgYSaPY2Q0JhMy6FMrwttt9IujI4sYXM+BzjBftKWTI/9cca7otPVZOg==
+X-Received: by 2002:a05:6870:1085:b0:d2:7d2c:f5c0 with SMTP id 5-20020a056870108500b000d27d2cf5c0mr809650oaq.42.1648510910682;
+        Mon, 28 Mar 2022 16:41:50 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id ep36-20020a056870a9a400b000de98fe4869sm6741639oab.35.2022.03.28.16.41.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Mar 2022 12:20:13 -0700 (PDT)
-From:   Kuldeep Singh <singh.kuldeep87k@gmail.com>
-To:     Krzysztof Kozlowski <krzk@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Mukesh Savaliya <msavaliy@codeaurora.org>,
-        Akash Asthana <akashast@codeaurora.org>
-Cc:     Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2] dt-bindings: spi: qcom-qspi: Add minItems to interconnect-names
-Date:   Tue, 29 Mar 2022 00:50:06 +0530
-Message-Id: <20220328192006.18523-1-singh.kuldeep87k@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        Mon, 28 Mar 2022 16:41:50 -0700 (PDT)
+Received: (nullmailer pid 3267936 invoked by uid 1000);
+        Mon, 28 Mar 2022 23:41:49 -0000
+Date:   Mon, 28 Mar 2022 18:41:49 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        robh+dt@kernel.org, rohitkr@codeaurora.org,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>,
+        broonie@kernel.org, dianders@chromium.org, swboyd@chromium.org,
+        judyhsiao@chromium.org, agross@kernel.org,
+        krzysztof.kozlowski@canonical.com, linux-arm-msm@vger.kernel.org,
+        srinivas.kandagatla@linaro.org, linux-kernel@vger.kernel.org,
+        bjorn.andersson@linaro.org
+Subject: Re: [PATCH 1/3] ASoC: qcom: dt-bindings: Update bindings for clocks
+ in lpass digital codes
+Message-ID: <YkJHvXziueHY1iwz@robh.at.kernel.org>
+References: <1647852981-27895-1-git-send-email-quic_srivasam@quicinc.com>
+ <1647852981-27895-2-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1647852981-27895-2-git-send-email-quic_srivasam@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add minItems constraint to interconnect-names as well. The schema
-currently tries to match 2 names and fail for DTs with single entry.
+On Mon, 21 Mar 2022 14:26:19 +0530, Srinivasa Rao Mandadapu wrote:
+> Update dt-bindings for clocks as per ADSP bypass solutions, in which macro
+> dcodec GDSCs are enabled using power domains in lpass digital codec drivers.
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> ---
+>  .../devicetree/bindings/sound/qcom,lpass-rx-macro.yaml  | 17 +++++++++++------
+>  .../devicetree/bindings/sound/qcom,lpass-tx-macro.yaml  | 17 +++++++++++------
+>  .../devicetree/bindings/sound/qcom,lpass-va-macro.yaml  | 11 +++++++----
+>  3 files changed, 29 insertions(+), 16 deletions(-)
+> 
 
-With the change applied, below interconnect-names values are possible:
-['qspi-config'], ['qspi-config', 'qspi-memory']
-
-Fixes: 8f9c291558ea ("dt-bindings: spi: Add interconnect binding for QSPI")
-Signed-off-by: Kuldeep Singh <singh.kuldeep87k@gmail.com>
----
-v2:
-- Reword commit description
-
- Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml b/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
-index 055524fe8327..116f3746c1e6 100644
---- a/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
-+++ b/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
-@@ -49,6 +49,7 @@ properties:
-     maxItems: 2
- 
-   interconnect-names:
-+    minItems: 1
-     items:
-       - const: qspi-config
-       - const: qspi-memory
--- 
-2.25.1
-
+Reviewed-by: Rob Herring <robh@kernel.org>
