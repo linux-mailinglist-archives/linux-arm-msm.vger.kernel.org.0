@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AEE414E93B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Mar 2022 13:23:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C2DC4E93BD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Mar 2022 13:23:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241015AbiC1LYo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Mar 2022 07:24:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57848 "EHLO
+        id S241043AbiC1LYq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Mar 2022 07:24:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240735AbiC1LVm (ORCPT
+        with ESMTP id S241439AbiC1LXu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Mar 2022 07:21:42 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F02805577E;
-        Mon, 28 Mar 2022 04:19:21 -0700 (PDT)
+        Mon, 28 Mar 2022 07:23:50 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF3865A08B;
+        Mon, 28 Mar 2022 04:20:55 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 84BF7B81055;
-        Mon, 28 Mar 2022 11:19:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40321C340EC;
-        Mon, 28 Mar 2022 11:19:18 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 7B315B8105C;
+        Mon, 28 Mar 2022 11:20:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F75C340F3;
+        Mon, 28 Mar 2022 11:20:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648466359;
+        s=k20201202; t=1648466452;
         bh=5KA/8ySZ2n1/KKSMcoJazR7rOJ6n1FuR1d09mg0Xu70=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=X3jIC5T5MVdF3jZDet2E9VZh57u7JFLTy5pxJV6Feta1uMAENny/NUmao+JeO6HDu
-         TOSsF2YIJtqq+lXY0nscorrDOxcCslwvjPBKRAdcTzp4EQ0S9HijITOCs5VVvqVtTK
-         7vObAk3UPNwBc5medKJk2ksOovd8prPkdyV1Uu+Lj5Jc8T11UDkmssocH88uaxIOV8
-         sc9wC0l73bEJUSaA8/Yqw13KyWCqli05pZkl9LhjuCcs32zU/viD4JdV5TR8pQQZh0
-         EhzLbii62tHy92wlOoNXTdmj3YTppv+zYTkj41tTmAsqL8WUbTOWTfB32PYtfmYAVN
-         7aMtb8/xEQxlA==
+        b=LxDc8KC6USpf9c4Sy058F9PEOWi3+ZldtFcIBSNfluZWgwHjYOcPIMypoKYrAENjD
+         a0UA3arJj7nifkAG+TqajT0tZTjPMTOUYc4dkqhyqQ9bn21/dQUSgX1wgi7kyrnYr5
+         SdZ4PPtvXZaSA5oeZLYkJXr+Wk5zS/aAF8yfplW+RVb4pJ0D5Kfs0sHXu7oy7zvS8N
+         DvdIbB2iHiFjVSrlhzXpHQjjOWUc4YjRKxyYMnIq9Iua+0JPe/DcXzC8P+sk/MGn//
+         FCTOnRyXylzI6TmtkM9gDvzADIaCMhrgIjv3Sw3PT/MIsPRjmsTAeRjzla7uLpboy8
+         knMtg0f4io69A==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Marc Zyngier <maz@kernel.org>,
@@ -39,12 +39,12 @@ Cc:     Marc Zyngier <maz@kernel.org>,
         Sasha Levin <sashal@kernel.org>, agross@kernel.org,
         bjorn.andersson@linaro.org, tglx@linutronix.de,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.17 25/43] irqchip/qcom-pdc: Fix broken locking
-Date:   Mon, 28 Mar 2022 07:18:09 -0400
-Message-Id: <20220328111828.1554086-25-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.16 20/35] irqchip/qcom-pdc: Fix broken locking
+Date:   Mon, 28 Mar 2022 07:19:56 -0400
+Message-Id: <20220328112011.1555169-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220328111828.1554086-1-sashal@kernel.org>
-References: <20220328111828.1554086-1-sashal@kernel.org>
+In-Reply-To: <20220328112011.1555169-1-sashal@kernel.org>
+References: <20220328112011.1555169-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
