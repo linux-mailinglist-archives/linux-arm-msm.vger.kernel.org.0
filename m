@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDF0A4E940C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Mar 2022 13:24:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 836484E9484
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Mar 2022 13:28:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241108AbiC1L0I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Mar 2022 07:26:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46262 "EHLO
+        id S241175AbiC1LaX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Mar 2022 07:30:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241114AbiC1LZR (ORCPT
+        with ESMTP id S241168AbiC1L3H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Mar 2022 07:25:17 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41D2FB6A;
-        Mon, 28 Mar 2022 04:23:23 -0700 (PDT)
+        Mon, 28 Mar 2022 07:29:07 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2AEB554A9;
+        Mon, 28 Mar 2022 04:24:02 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id B6C1AB8105D;
-        Mon, 28 Mar 2022 11:23:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B38C340F3;
-        Mon, 28 Mar 2022 11:23:19 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C7445611B7;
+        Mon, 28 Mar 2022 11:24:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ADB0C340F3;
+        Mon, 28 Mar 2022 11:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648466600;
-        bh=vYsMLDYVMr0DTK/i9DNXbMo0fVtarin0N+Axfv9aNdA=;
+        s=k20201202; t=1648466640;
+        bh=HAjsokNLpm1BGeHXA8hl2TeS4FY5QiuvnC9KI1mxvmM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=KdUPEPFZdVv+U+PVvBB2AJSMgEBBTygvsa7rWGflIVkhdTjgmlsKzRasCbdNtpXQ+
-         p9foYM2gFy10v48PC7xwVTX33LD8Rf6yW82pmCtHXWXTntwmS8HL5M6uFAbUIsMM3T
-         1JSM3LiosMZce+KEisskaxLR2p5qtw2qJyvQq5bzBHY/xPDwy4XMr72Y/z6SZgOg+7
-         gv3LoxnPzdfBKbgbEkTvoK91mm+KnuN2OcYk4IbL3n/xALRcUFI+mzbistlQ9hzFXd
-         Gmbr61OTGGBrkPdPWBV/8SQ70RSkmaJqYrBbyXHt4iTcsd2vsdZZVR10j7pX1HviDU
-         hVpDPHD4mR/XA==
+        b=KXenh1764i9pDYi+egaVWbefepaux1fsNbmymGIWXLOTgBFVlbRH8DrSZ3kVgwtiG
+         bQbLbFoB8MBJ5AmBH0fuwPWHq6u6RPShbFGdJzdrg4Yu8NHUDDvP5DXz1UnmNwU5e1
+         EPw2SmNl+3qrO0m5yZQyqwtaRXSIlKHY4QbFy4JnkyxIDKzPAporBhqL754MgD3CUx
+         kA4X0oweO6wA7iEpcx8/M718TDrwliORAvQJUypy6INT7BL1m4TXU0VzketHgITi+u
+         /mK6sD27N6BVrXg0rV3e5C9IG+6cz6tn2d6ZHG85S6wcxFGZRXdkIjDw+BGhXicgpH
+         0VH3PKcT8myJQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Marc Zyngier <maz@kernel.org>,
@@ -39,12 +39,12 @@ Cc:     Marc Zyngier <maz@kernel.org>,
         Sasha Levin <sashal@kernel.org>, agross@kernel.org,
         bjorn.andersson@linaro.org, tglx@linutronix.de,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 10/21] irqchip/qcom-pdc: Fix broken locking
-Date:   Mon, 28 Mar 2022 07:22:43 -0400
-Message-Id: <20220328112254.1556286-10-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 08/16] irqchip/qcom-pdc: Fix broken locking
+Date:   Mon, 28 Mar 2022 07:23:37 -0400
+Message-Id: <20220328112345.1556601-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220328112254.1556286-1-sashal@kernel.org>
-References: <20220328112254.1556286-1-sashal@kernel.org>
+In-Reply-To: <20220328112345.1556601-1-sashal@kernel.org>
+References: <20220328112345.1556601-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -83,10 +83,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
-index 5dc63c20b67e..fc747b7f4983 100644
+index faa7d61b9d6c..239a889df608 100644
 --- a/drivers/irqchip/qcom-pdc.c
 +++ b/drivers/irqchip/qcom-pdc.c
-@@ -74,17 +74,18 @@ static int qcom_pdc_gic_set_irqchip_state(struct irq_data *d,
+@@ -50,17 +50,18 @@ static u32 pdc_reg_read(int reg, u32 i)
  static void pdc_enable_intr(struct irq_data *d, bool on)
  {
  	int pin_out = d->hwirq;
@@ -106,7 +106,7 @@ index 5dc63c20b67e..fc747b7f4983 100644
 +	raw_spin_unlock_irqrestore(&pdc_lock, flags);
  }
  
- static void qcom_pdc_gic_disable(struct irq_data *d)
+ static void qcom_pdc_gic_mask(struct irq_data *d)
 -- 
 2.34.1
 
