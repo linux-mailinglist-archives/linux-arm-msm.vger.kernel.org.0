@@ -2,53 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A8344E99A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Mar 2022 16:31:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD5F24E99E1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 28 Mar 2022 16:39:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243887AbiC1OdL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Mar 2022 10:33:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36356 "EHLO
+        id S243958AbiC1OlI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Mar 2022 10:41:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243962AbiC1Ocw (ORCPT
+        with ESMTP id S243922AbiC1OlH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Mar 2022 10:32:52 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 617264507E;
-        Mon, 28 Mar 2022 07:31:05 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 3B78AB81128;
-        Mon, 28 Mar 2022 14:31:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE9DC34100;
-        Mon, 28 Mar 2022 14:31:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648477862;
-        bh=//n+xEkhJPFZ3pDSmeYVZ+8oCvxqPp7Y/VAsuX6T7Uw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=H1QnMx4ho6mODSnFYKL4rdh0Z9lLg2WPpQ+dXzqM+VPJss6yBBqxHwAGf0GQK74d4
-         gKj+uUO01acCOVk2+STqTKHbDY7bzzSwQuHiA93NwVuBDphlJCGXT/2nF+3umimHUU
-         yMoVm8pyW621YGWBUo/1yPm14Zu+hJmii3UktotUfXUdbR+JMDnIjDTyfXf32ZYRSe
-         tSm1VStef2FEWeYu6hkvlHhhel6g06em0+n2oOkjyAsu1oLoTdaH67wPpfSP2G4T3q
-         fXPRpqlexzQhQDtZQgA1uezkya8F4g7p8MX4vtuXFf0sbDeECBj3NG7IudSKhcBi5T
-         lR7PCJ+o5UNlw==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 6/6] arm64: dts: qcom: sm8250: remove address cells from dsi nodes
-Date:   Mon, 28 Mar 2022 20:00:35 +0530
-Message-Id: <20220328143035.519909-7-vkoul@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220328143035.519909-1-vkoul@kernel.org>
-References: <20220328143035.519909-1-vkoul@kernel.org>
+        Mon, 28 Mar 2022 10:41:07 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A098010DE;
+        Mon, 28 Mar 2022 07:39:26 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 64A03D6E;
+        Mon, 28 Mar 2022 07:39:26 -0700 (PDT)
+Received: from lpieralisi (unknown [10.57.8.36])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C22083F73B;
+        Mon, 28 Mar 2022 07:39:24 -0700 (PDT)
+Date:   Mon, 28 Mar 2022 15:39:25 +0100
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     bjorn.andersson@linaro.org, bhelgaas@google.com,
+        svarbanov@mm-sol.com, robh@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] PCI: qcom: Add support for handling MSIs from 8 endpoints
+Message-ID: <YkHInU1dE7BtB0tX@lpieralisi>
+References: <20211214101319.25258-1-manivannan.sadhasivam@linaro.org>
+ <20220223100145.GA26873@lpieralisi>
+ <20220328142012.GB17663@thinkpad>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220328142012.GB17663@thinkpad>
+X-Spam-Status: No, score=-6.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -57,47 +45,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The child of dsi nodes do not have unit address, this causes warnings:
+On Mon, Mar 28, 2022 at 07:50:12PM +0530, Manivannan Sadhasivam wrote:
+> On Wed, Feb 23, 2022 at 10:01:45AM +0000, Lorenzo Pieralisi wrote:
+> > On Tue, Dec 14, 2021 at 03:43:19PM +0530, Manivannan Sadhasivam wrote:
+> > > The DWC controller used in the Qcom Platforms are capable of addressing the
+> > > MSIs generated from 8 different endpoints each with 32 vectors (256 in
+> > > total). Currently the driver is using the default value of addressing the
+> > > MSIs from 1 endpoint only. Extend it by passing the MAX_MSI_IRQS to the
+> > > num_vectors field of pcie_port structure.
+> > > 
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > ---
+> > >  drivers/pci/controller/dwc/pcie-qcom.c | 1 +
+> > >  1 file changed, 1 insertion(+)
+> > 
+> > Need an ACK from qcom maintainers.
+> > 
+> 
+> Looks like this patch was not applied eventhough the Acks were received.
+> Please let me know if I need to resubmit it for next cycle.
 
-arch/arm64/boot/dts/qcom/sm8250.dtsi:3249.22-3301.6:
-	Warning (avoid_unnecessary_addr_size): /soc@0/mdss@ae00000/dsi@ae94000:
-	unnecessary #address-cells/#size-cells without "ranges" or child "reg" property
+Sorry. I will merge it for the next cycle, nothing to do if it rebases
+cleanly, otherwise I will ping you.
 
-arch/arm64/boot/dts/qcom/sm8250.dtsi:3322.22-3374.6:
-	Warning (avoid_unnecessary_addr_size): /soc@0/mdss@ae00000/dsi@ae96000:
-	unnecessary #address-cells/#size-cells without "ranges" or child "reg" property
+Thanks,
+Lorenzo
 
-So remove #address-cells/#size-cells for dsi nodes.
-
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 6 ------
- 1 file changed, 6 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index fb94b342f2d1..a76089ebf9ca 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -3275,9 +3275,6 @@ dsi0: dsi@ae94000 {
- 
- 				status = "disabled";
- 
--				#address-cells = <1>;
--				#size-cells = <0>;
--
- 				ports {
- 					#address-cells = <1>;
- 					#size-cells = <0>;
-@@ -3348,9 +3345,6 @@ dsi1: dsi@ae96000 {
- 
- 				status = "disabled";
- 
--				#address-cells = <1>;
--				#size-cells = <0>;
--
- 				ports {
- 					#address-cells = <1>;
- 					#size-cells = <0>;
--- 
-2.34.1
-
+> 
+> Thanks,
+> Mani
+> 
+> > Thanks,
+> > Lorenzo
+> > 
+> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > index 1c3d1116bb60..8a4c08d815a5 100644
+> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > @@ -1550,6 +1550,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+> > >  	pci->dev = dev;
+> > >  	pci->ops = &dw_pcie_ops;
+> > >  	pp = &pci->pp;
+> > > +	pp->num_vectors = MAX_MSI_IRQS;
+> > >  
+> > >  	pcie->pci = pci;
+> > >  
+> > > -- 
+> > > 2.25.1
+> > > 
