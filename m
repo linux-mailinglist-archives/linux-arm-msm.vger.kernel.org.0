@@ -2,167 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 998384EAF5F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Mar 2022 16:37:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 619284EB113
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Mar 2022 17:52:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234191AbiC2Oix (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Mar 2022 10:38:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57334 "EHLO
+        id S239041AbiC2PyR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Mar 2022 11:54:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237975AbiC2Oiw (ORCPT
+        with ESMTP id S238845AbiC2PyQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Mar 2022 10:38:52 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96A1614A6DE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Mar 2022 07:37:08 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id yy13so35611321ejb.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Mar 2022 07:37:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=EcuRjEXPtepaNw67w45p1dvod6pvQZQGq0SXmPy4MNM=;
-        b=LN3ysnetZQLcHg9zh5VkpeCR5hv0qVm90OFT6sMlmHkcc0GNBDYZgWZ33mcs81Jucv
-         ANcDd2CpVBdtKihImZNmBIKegZEm6pTFHkLHCQNPjduL7vcbkvvRGM6oFlHhh42/EIH+
-         zflvjmlE5dxoQAZOtZPdlBvGmEPeFlsxFH87vMgbFgZduhk/xFFLUYkD9VoeVfibAeO9
-         2c489J/YOw2H5iBgPQv+kHXbOxlBPlhzPUggTKmbm331Rp1BRLBOojM2loQGea3ae0Wt
-         PbXWVa76Q5vjNOrZ08rM4qASeDpnqmzA/dOYDGO2cTLF5CRxjDJ4LCImqhPkoxxP2qrQ
-         Ixsw==
+        Tue, 29 Mar 2022 11:54:16 -0400
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43CEF22C8C2;
+        Tue, 29 Mar 2022 08:52:33 -0700 (PDT)
+Received: by mail-ot1-f54.google.com with SMTP id k25-20020a056830151900b005b25d8588dbso13028326otp.4;
+        Tue, 29 Mar 2022 08:52:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=EcuRjEXPtepaNw67w45p1dvod6pvQZQGq0SXmPy4MNM=;
-        b=gQiAl+q2NSxsIS1Ci79Fo+7OhCJbc6rAFBEZjVFEkd6IANkgdQalh1vVEYK7SJJbUH
-         SL0lLuN1rZSXrk64RE9bvA+RZlMRwl0IpkeHn/DwN+IaE8p6U/c8icw/jYFa/W3GMKWo
-         M040DUt9Iw7Adj529C+EHu8MzBiRVupRiFvTyo1+kGoIu6fYzTuoftYaGN8GtYc1FZOq
-         t+WXsBUiYUt4uCapJJoB6HKtELW6pKEGkjCK1IzTec4vGHI5Owoddb3+Z4YfPiOwz9rP
-         0BwN04fSTvNM3B85/fjakgVaJtntJx2Hco75+2Xx5mDrApB8p72aiEAy8rGKD9BBjtMB
-         +vtg==
-X-Gm-Message-State: AOAM530T14+d3yiA9EZCP7/h3uTvisAcj8yg8rOip8LI5z2qnA0CM3QD
-        S7JL+xhjTXXprEn6zyKqewgdqYa9ilhQKcirw0c6jw==
-X-Google-Smtp-Source: ABdhPJzndU+hlAGsMBBHh3Q+ShVaQhl5rWLyscG/0jqOREe5OuXAZESfMX1K8aSunzXjtjrjXAK8MjbwH73ALpccOCM=
-X-Received: by 2002:a17:906:7307:b0:6da:92db:c78f with SMTP id
- di7-20020a170906730700b006da92dbc78fmr34999509ejc.35.1648564626968; Tue, 29
- Mar 2022 07:37:06 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=53EmT+0Iq+omqog9hMr5TTHzAfJsIFc7d5dRnXaOt/M=;
+        b=bQCYhcqHZiYofvN3bGLNEHdT+KCxqODKi2B0KxWgSr8IEntcla+T/YLOMXgZ5cIp+B
+         axJkPqYxHweWspaR19k1iEmNetpgG7BznONpH/lZ30zn5jx9mGhvInuHVdgWfafrkvNB
+         h5v0O8eiO5R+MyHTzjQBmax57MLyXXbhabG2upDphiqTMQ5jA+NxlkLrKjIGC+74tqbB
+         DQ9I9D9oBHfC4amNQaWkYABHpyxksOyOTFAli144OWi61tRXcG8ICIM9/38LersN/Wau
+         xz6jYqrMN8Afx42yGZCS4TIdw255b04bQ3Z0B1QMdzkMlpUf2XaK1gZDPw1sm7yQXejP
+         qhuw==
+X-Gm-Message-State: AOAM532CsLyzPrWAVz5RswYyXAbf00ZXTIiI9MW8LAwGyzIv1Lpv5aTN
+        YgrCByg8tDmC9pJyn2EZnOo/Nl3NGw==
+X-Google-Smtp-Source: ABdhPJxC5Hfm9CPFftdhNmRBujVYhVRHBBUN06bjxcKnKO/caVZGn/GJf5+6eZLXAAmSoxm06F8jyA==
+X-Received: by 2002:a9d:1991:0:b0:5cd:b2a1:5c50 with SMTP id k17-20020a9d1991000000b005cdb2a15c50mr1389734otk.217.1648569152513;
+        Tue, 29 Mar 2022 08:52:32 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id w7-20020a9d6387000000b005b2265711fcsm7520205otk.16.2022.03.29.08.52.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Mar 2022 08:52:31 -0700 (PDT)
+Received: (nullmailer pid 753124 invoked by uid 1000);
+        Tue, 29 Mar 2022 15:52:30 -0000
+Date:   Tue, 29 Mar 2022 10:52:30 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] dt-bindings: display: msm: dsi: remove address/size cells
+Message-ID: <YkMrPnRbsl3FBig8@robh.at.kernel.org>
+References: <20220328152923.90623-1-krzysztof.kozlowski@linaro.org>
+ <CAA8EJprWoxWwk5EWEfWdLquPR+2=u6V0-v1-+wHMHOk8HiEyNw@mail.gmail.com>
+ <YkHtY9absUjmqmW7@matsya>
+ <12b0056b-8032-452b-f325-6f36037b5a80@linaro.org>
+ <CAL_Jsq+6rx0UU6ryH+z_8KLQqKKuhTCnh=Oft2F03bcze+EV0Q@mail.gmail.com>
+ <YkKmPSesQfS6RLCD@matsya>
 MIME-Version: 1.0
-References: <20220324121734.21531-1-quic_jinlmao@quicinc.com>
- <20220324121734.21531-2-quic_jinlmao@quicinc.com> <YjxjXnXAXVXfZqr/@kroah.com>
- <e78ff137-fc5e-ff00-0e57-91304288d860@quicinc.com> <7d571b9d-2066-8217-5485-da0e6ace65eb@arm.com>
- <8698dc76-613e-a00d-340b-220c752d9449@quicinc.com>
-In-Reply-To: <8698dc76-613e-a00d-340b-220c752d9449@quicinc.com>
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-Date:   Tue, 29 Mar 2022 08:36:55 -0600
-Message-ID: <CANLsYkwZxqYMtx-v=OZoZAYshFHW2s_7isUq1UgUV18pVvSB8w@mail.gmail.com>
-Subject: Re: [PATCH v4 01/10] Use IDR to maintain all the enabled sources' paths.
-To:     Jinlong Mao <quic_jinlmao@quicinc.com>
-Cc:     Suzuki K Poulose <Suzuki.Poulose@arm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>, coresight@lists.linaro.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YkKmPSesQfS6RLCD@matsya>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 29 Mar 2022 at 07:56, Jinlong Mao <quic_jinlmao@quicinc.com> wrote:
->
-> Hi Suzuki,
->
-> On 3/28/2022 4:33 PM, Suzuki K Poulose wrote:
-> > On 24/03/2022 14:23, Jinlong Mao wrote:
-> >> Hi Greg,
-> >>
-> >> Thanks for your review.
-> >>
-> >> On 3/24/2022 8:26 PM, Greg Kroah-Hartman wrote:
-> >>> On Thu, Mar 24, 2022 at 08:17:25PM +0800, Mao Jinlong wrote:
-> >>>> Use hash length of the source's device name to map to the pointer
-> >>>> of the enabled path. Using IDR will be more efficient than using
-> >>>> the list. And there could be other sources except STM and CPU etms
-> >>>> in the new HWs. It is better to maintain all the paths together.
-> >>>>
-> >>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> >>>> ---
-> >>>>   drivers/hwtracing/coresight/coresight-core.c | 75
-> >>>> +++++++-------------
-> >>>>   1 file changed, 26 insertions(+), 49 deletions(-)
-> >>> Your subject line is odd.  Please put back the driver subsystem in th=
-e
-> >>> subject line so that it makes more sense.
-> >> I will update the subject in next version.
-> >>>
-> >>> And how have you measured "more efficient"?
-> >>
-> >> Using IDR would be better than doing a sequential search as there
-> >> will be much more device  in future.
-> >
-> > Where do we use sequential search now ? For non-CPU bound sources, yes
-> > we may need something. But CPU case is straight forward, and could be
-> > retained as it is. i.e., per-cpu list of paths.
-> >
-> We use list to store the paths for both ETM and non-CPU bound sources in
-> patch below.
->
-> =E2=80=9C[PATCH 01/10] coresight: add support to enable more coresight pa=
-ths=E2=80=9D
->
-> According to Mathieu's comments, IDR is used now.  So i added "Using IDR
-> will be more efficient than using
-> the list" this message in my commit message. I think we need to use one
-> mechanism to store ETM and
-> non-CPU bound sources.
->
->
-> Mathieu's comments:
->
-> So many TPDM and many ETMs...  That is definitely a reason to do better t=
-han a
-> sequential search.
->
-> If an IDR (or some other kind of mechanism) is used then we can use that =
-to
-> store paths associated with ETMs as well.  That way everything works the =
-same
-> way and access time is constant for any kind of source.
+On Tue, Mar 29, 2022 at 12:01:52PM +0530, Vinod Koul wrote:
+> On 28-03-22, 13:21, Rob Herring wrote:
+> > On Mon, Mar 28, 2022 at 12:18 PM Krzysztof Kozlowski
+> > <krzysztof.kozlowski@linaro.org> wrote:
+> > >
+> > > On 28/03/2022 19:16, Vinod Koul wrote:
+> > > > On 28-03-22, 19:43, Dmitry Baryshkov wrote:
+> > > >> On Mon, 28 Mar 2022 at 18:30, Krzysztof Kozlowski
+> > > >> <krzysztof.kozlowski@linaro.org> wrote:
+> > > >>>
+> > > >>> The DSI node is not a bus and the children do not have unit addresses.
+> > > >>>
+> > > >>> Reported-by: Vinod Koul <vkoul@kernel.org>
+> > > >>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > > >>
+> > > >> NAK.
+> > > >> DSI panels are children of the DSI device tree node with the reg = <0>; address.
+> > > >> This is the convention used by other platforms too (see e.g.
+> > > >> arch/arm64/boot/dts/freescale/imx8mq-evk.dts).
+> > > >
+> > > > So we should add reg = 0, i will update my dtsi fix
+> > > >
+> > >
+> > > To "ports" node? No. The reg=0 is for children of the bus, so the
+> > > panels. How to combine both without warnings - ports and panel@0 - I
+> > > don't know yet...
+> > 
+> > I don't think that should case a warning. Or at least it's one we turn off.
+> 
+> Well in this case I think we might need a fix:
+> Here is the example quoted in the binding. We have ports{} and then the
+> two port@0 and port@1 underneath.
 
-As per my last sentence above, the goal of  my comment was to simplify
-things so that we don't have two different ways of managing sources.
-But if that ends up causing more trouble than benefit then it should
-be avoided.
+It's the #address-cells/#size-cells under 'ports' that applies to 'port' 
+nodes. As 'ports' has no address (reg) itself, it doesn't need 
+#address-cells/#size-cells in its parent node.
 
->
-> Thanks
->
-> Jinlong Mao
->
-> > Cheers
-> > Suzuki
-> >
-> >
-> >>
-> >>>
-> >>> thanks,
-> >>>
-> >>> greg k-h
-> >>
-> >> Thanks
-> >>
-> >> Jinlong Mao
-> >>
-> >
+> 
+> So it should be okay to drop #address-cells/#size-cells from dsi node
+> but keep in ports node...
+
+Yes.
+
+> Thoughts...?
+
+But I thought a panel@0 node was being added? If so then you need to add 
+them back.
+
+Rob
