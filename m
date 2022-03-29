@@ -2,192 +2,220 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 039774EAE70
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Mar 2022 15:27:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ADF7A4EAD17
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Mar 2022 14:25:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237249AbiC2N3c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Mar 2022 09:29:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43398 "EHLO
+        id S236276AbiC2M1b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Mar 2022 08:27:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236241AbiC2N3b (ORCPT
+        with ESMTP id S232550AbiC2M1a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Mar 2022 09:29:31 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABF851FAA02;
-        Tue, 29 Mar 2022 06:27:47 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id r64so10307023wmr.4;
-        Tue, 29 Mar 2022 06:27:47 -0700 (PDT)
+        Tue, 29 Mar 2022 08:27:30 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB9834D9C1;
+        Tue, 29 Mar 2022 05:25:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=G7wKFxgcRTyIz5IG5tUGfB7pPXreJmvY/K1sYJIVl3I=;
-        b=I00DfUbeycyG0Dw8STKxnaghIk9ou0vzsESvQVIMlrT8eVhJ76sub43aulNKFPwOcL
-         UxrZOHCljyEJ/HaDNgCUIWBpBVJkWgK72ksZvBA9QY9H26c0L2pomM05DJyeVdODJT1L
-         ZDfmiULPqoY2YzMsRX9s3BZ6fZr0wWScSEvGAiN9EQhsRv4ZtMXuYOhzvXy24lUBQ6bK
-         U212hp2O1hlrhP4Lp/BXhgcuubNm0q3C4fqZCCg6NFMcEZcjVMCujqezRMtTGXjKH7oa
-         0ZByXf7N6pXKbL6bthUbJE+CpVy+hujtl+uEEi1+0UgZK+4eW7VFAsNQ9iZNA1q+EUqB
-         EltA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=G7wKFxgcRTyIz5IG5tUGfB7pPXreJmvY/K1sYJIVl3I=;
-        b=ci3zHiAebBy1wPfbrr/kpTqx3K2h0o8aQB0VVGYl15zWUPsUOZLpMXJwBAS40cU+um
-         MnEPd77zbNFQlbgxrPdKJ36Am8YKVEIKGi/1PZEc7ZR24JexuFmhs7I8b7AA2D8vO1NC
-         +41GeEv5rd85at3Tyr0IKVYmUoM0PdLK3bPv7GkP2csJpKQTHF5iU4I0zP4Fwvec9BLr
-         RmSh0lJenvjjzSPIr5iI420FqhqZAQ+R8GDLjq+0Vvbq5mh9Qwn4ZjAScIFjv8EGcpYK
-         p/mfFXlMvUu1lfaQH9iGtY4KBejrfWW+LUEQGsu7nE2mAhxVoAJHLfJNmucFA5QU+vUM
-         Uvcg==
-X-Gm-Message-State: AOAM5301UfoDLv+TbhW6fQMYLZPfJq+5PeLCtuUBFwRuDp6u8EKjOSyJ
-        ZEcefdOOc0wWo1i68YDuLOA=
-X-Google-Smtp-Source: ABdhPJxIZSXxt+SSJ4Wc109LDmTnDkbhvm93ISr03t8O0S/WPjtqWVCeq9qxFzIweZuojWFD/xazLQ==
-X-Received: by 2002:a05:600c:4f82:b0:38c:9185:1ecd with SMTP id n2-20020a05600c4f8200b0038c91851ecdmr6880980wmq.130.1648560465761;
-        Tue, 29 Mar 2022 06:27:45 -0700 (PDT)
-Received: from Ansuel-xps.localdomain (93-42-66-93.ip85.fastwebnet.it. [93.42.66.93])
-        by smtp.gmail.com with ESMTPSA id 11-20020a05600c26cb00b0037ff53511f2sm2193197wmv.31.2022.03.29.06.27.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Mar 2022 06:27:44 -0700 (PDT)
-Date:   Tue, 29 Mar 2022 06:56:02 +0200
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-omap@vger.kernel.org,
-        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
-        linux-aspeed@lists.ozlabs.org,
-        linux-rpi-kernel@lists.infradead.org,
-        chrome-platform@lists.linux.dev, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
-        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
-        linux-oxnas@groups.io, linux-arm-msm@vger.kernel.org,
-        linux-unisoc@lists.infradead.org,
-        linux-rockchip@lists.infradead.org,
-        linux-realtek-soc@lists.infradead.org,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>
-Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
-Message-ID: <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain>
-References: <20220328000915.15041-1-ansuelsmth@gmail.com>
- <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1648556747; x=1680092747;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=WVHkWJgk24fHhQG2ByXpzHy7k84pUFobXcMicFqNaFQ=;
+  b=im9zYr9JrquBb/544c3KVZplUnAJsHX+lk0tzQX9e2NvwdEnwIQI3fC9
+   u9PY1FwUo1hWCwdEg3MnyriCgK1IwmseQi3uf5kVEJR8zRWh11LwGvMyP
+   MKo0bLmmZy5Ck6pRp8bhIvzb9vhZ482hFJnSQHfpG0nuPpI4boicUXJ/c
+   w=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 29 Mar 2022 05:25:47 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Mar 2022 05:25:46 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 29 Mar 2022 05:25:46 -0700
+Received: from [10.216.50.108] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 29 Mar
+ 2022 05:25:41 -0700
+Message-ID: <33334ab5-1dff-b637-17c1-2a92f209b6d6@quicinc.com>
+Date:   Tue, 29 Mar 2022 17:55:36 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DATE_IN_PAST_06_12,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        WEIRD_QUOTING autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH V2 3/3] rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
+Content-Language: en-US
+To:     Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>,
+        <bjorn.andersson@linaro.org>, <swboyd@chromium.org>,
+        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>
+References: <1642534993-6552-1-git-send-email-quic_deesin@quicinc.com>
+ <1642534993-6552-4-git-send-email-quic_deesin@quicinc.com>
+ <e04ac97e-51bf-7470-5265-ce55119e1ba9@foss.st.com>
+From:   Deepak Kumar Singh <quic_deesin@quicinc.com>
+In-Reply-To: <e04ac97e-51bf-7470-5265-ce55119e1ba9@foss.st.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 29, 2022 at 03:20:18PM +0200, Krzysztof Kozlowski wrote:
-> On 28/03/2022 02:09, Ansuel Smith wrote:
-> > Hi,
-> > as the title say, the intention of this ""series"" is to finally categorize
-> > the ARM dts directory in subdirectory for each oem.
-> > 
-> > The main reason for this is that it became unpractical to handle 2600
-> > dts files and try to even understand/edit/check the situation for a
-> > specific target.
-> > 
-> > In arm64 we already have this kind of separation and I honestly think
-> > that this was never proposed for ARM due to the fact that there are
-> > 2600+ files to sort and the fact that it will be a mess to merge this
-> > entirely but IMHO with a little bit of effort we can finally solve this
-> > problem and have a well organized directory just like arm64.
-> > 
-> > Some prerequisite on how this work was done:
-> > - This comes entirely from a python script created by me for the task.
-> >   linked here [1]
-> > - I had to manually categorize all the different arch in the makefile
-> >   based on the oem. I searched every arch on the internet trying to
-> >   understand the correct oem. I hope they are correct but I would love
-> >   some comments about them.
-> > - This current ""series"" is all squashed in one big commit to better
-> >   receive comments for this. The final version ideally would have all
-> >   changes in separate commits. The script can already do this, it's just
-> >   commented.
-> > 
-> > Here is a list of some discoveries while doing all the sorting.
-> > These are totally additional reason why we need this.
-> > 
-> > While creating the script I discovered some funny things:
-> > - We have orphan dts! There are dts that are never compiled and are
-> >   there just for reference. We would never have noticed this without this
-> >   change and probably nobody noticed it. They are currently all listed
-> >   in the python script.
-> > - We have dtsi shared across different oem. My current solution for them
-> >   is: NOT SORT THEM and leave them in the generic directory and create a
-> >   link in each oem dts that points to these dtsi. This is to try in
-> >   every way possible to skip any additional changes to the dts.
-> >   Current dtsi that suffers from this are only 3. (listed in the script)
-> > - arm64 dts and dtsi reference ARM dts. Obviously this change would cause
-> >   broken include for these special dtsi. The script creates a dependency
-> >   table of the entire arm64 directory and fix every broken dependency
-> >   (hoping they all use a sane include logic... regex is used to parse
-> >   all the different dependency)
-> > 
-> > So in short the script does the following steps:
-> > 1. Enumerate all the action to do... (dts to move, scan dependency for
-> >    the dts...)
-> > 2. Generate the arm64 dependency
-> > 3. Creates the Makefile
-> > 4. Generate the Makefiles for the current oem
-> > 5. Move all the related dts and dtsi for the current oem
-> > 6. Check broken dependency and fix them by editing the dts and writing
-> >    the correct include (or fix any symbolic link)
-> > 
-> > This is an output that describes all the things done by the script [2]
-> > 
-> > I really hope I didn't commit any logic mistake in the script but most
-> > of the work should be done.
-> > 
-> 
-> +Cc Arnd and Olof,
-> 
-> Ansuel,
-> Thanks for you patch. Please cc the SoC maintainers in such submissions.
-> It seems that you got some quite nice discussion, but still the core
-> folks are not Cced, so no one would be able to take your patch...
+
+On 3/23/2022 7:08 PM, Arnaud POULIQUEN wrote:
 >
+> On 1/18/22 20:43, Deepak Kumar Singh wrote:
+>> Add TICOMGET and TIOCMSET ioctl support for rpmsg char device nodes
+>> to get/set the low level transport signals.
+>>
+>> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
+>> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+>> ---
+>>   drivers/rpmsg/rpmsg_char.c | 47 ++++++++++++++++++++++++++++++++++++++++++----
+>>   1 file changed, 43 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
+>> index b5907b8..c03a118 100644
+>> --- a/drivers/rpmsg/rpmsg_char.c
+>> +++ b/drivers/rpmsg/rpmsg_char.c
+>> @@ -19,6 +19,7 @@
+>>   #include <linux/rpmsg.h>
+>>   #include <linux/skbuff.h>
+>>   #include <linux/slab.h>
+>> +#include <linux/termios.h>
+>>   #include <linux/uaccess.h>
+>>   #include <uapi/linux/rpmsg.h>
+>>   
+>> @@ -74,6 +75,9 @@ struct rpmsg_eptdev {
+>>   	spinlock_t queue_lock;
+>>   	struct sk_buff_head queue;
+>>   	wait_queue_head_t readq;
+>> +
+>> +	u32 rsigs;
+>> +	bool sig_pending;
+>>   };
+>>   
+>>   static int rpmsg_eptdev_destroy(struct device *dev, void *data)
+>> @@ -112,7 +116,18 @@ static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
+>>   	skb_queue_tail(&eptdev->queue, skb);
+>>   	spin_unlock(&eptdev->queue_lock);
+>>   
+>> -	/* wake up any blocking processes, waiting for new data */
+>> +	wake_up_interruptible(&eptdev->readq);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int rpmsg_sigs_cb(struct rpmsg_device *rpdev, void *priv, u32 sigs)
+>> +{
+>> +	struct rpmsg_eptdev *eptdev = priv;
+>> +
+>> +	eptdev->rsigs = sigs;
+>> +	eptdev->sig_pending = true;
+>> +
+>>   	wake_up_interruptible(&eptdev->readq);
+> Regarding the Glink code, the callback is used to be informed that the remote
+> is ready to send (DSR) and to receive (CTS or DSR)
+> So I suppose that the transmission should also be conditioned by the sig_pending
 
-I had some problem with gmail and sending mail too much users. I put Rob
-and You and all the various list to try to workaround the "gmail spam
-protection"
+I think client need to get signal value before starting transmission, so 
+that it knows that
 
-> I am pretty sure we were discussing such split idea in the past and it
-> did not get traction, but I cannot recall the exact discussion.
-> 
+it good to transmit data. Also it is not be enforced for every client. 
+Some clients may not require
 
-I think the main issue here is how to handle bot and how problematic is
-to merge this. As written in the cover letter the final version of this
-should be a big series of 50+ patch with every commit specific to each
-oem. In theory we should be able to merge the different oem separately
-and try to at least start the categorization. 
-Another idea I got to at least have a "migration path" is to convert
-every dts in the dts/ directory to a symbolic link that target the dts
-in the correct oem. But I assume that would fix only part of the problem
-and git am will still be problematic.
+to use signalling/flow control.
 
-> To me the idea is good but will cause huge `git am` conflicts.
-> Cherry-picks, backports and merges should nicely detect path renames,
-> but git am (and b4 am) I think cannot.
-> 
+>
+> That said tell me if I'm wrong but look to me that what is implemented here is the
+>   hardware flow control already managed by the TTY interface. What about using the
+> TTY interface in this case?
 
-I know but we should really consider this kind of change. The current
-state of the dts/ directory is embarassing and keeping it that way cause
-only more problems and makes this even more difficult.
-Hope we find a solution and fix this for good!
+Correct. But some clients are using rpmsg char driver directly and don't 
+go through tty interface.
 
-> Best regards,
-> Krzysztof
+So we are incorporating tty like interface here(flow control).
 
--- 
-	Ansuel
+> And What about using the "software flow control" instead? [1]
+>
+> [1] https://en.wikipedia.org/wiki/Software_flow_control
+>
+>>   
+>>   	return 0;
+>> @@ -137,6 +152,7 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
+>>   		return -EINVAL;
+>>   	}
+>>   
+>> +	ept->sig_cb = rpmsg_sigs_cb;
+>>   	eptdev->ept = ept;
+>>   	filp->private_data = eptdev;
+>>   
+>> @@ -155,6 +171,7 @@ static int rpmsg_eptdev_release(struct inode *inode, struct file *filp)
+>>   		eptdev->ept = NULL;
+>>   	}
+>>   	mutex_unlock(&eptdev->ept_lock);
+>> +	eptdev->sig_pending = false;
+>>   
+>>   	/* Discard all SKBs */
+>>   	skb_queue_purge(&eptdev->queue);
+>> @@ -265,6 +282,9 @@ static __poll_t rpmsg_eptdev_poll(struct file *filp, poll_table *wait)
+>>   	if (!skb_queue_empty(&eptdev->queue))
+>>   		mask |= EPOLLIN | EPOLLRDNORM;
+>>   
+>> +	if (eptdev->sig_pending)
+>> +		mask |= EPOLLPRI;
+>> +
+>>   	mask |= rpmsg_poll(eptdev->ept, filp, wait);
+>>   
+>>   	return mask;
+>> @@ -274,11 +294,30 @@ static long rpmsg_eptdev_ioctl(struct file *fp, unsigned int cmd,
+>>   			       unsigned long arg)
+>>   {
+>>   	struct rpmsg_eptdev *eptdev = fp->private_data;
+>> +	bool set;
+>> +	u32 val;
+>> +	int ret;
+>>   
+>> -	if (cmd != RPMSG_DESTROY_EPT_IOCTL)
+>> -		return -EINVAL;
+>> +	switch (cmd) {
+>> +	case TIOCMGET:
+>> +		eptdev->sig_pending = false;
+>> +		ret = put_user(eptdev->rsigs, (int __user *)arg);
+>> +		break;
+>> +	case TIOCMSET:
+>> +		ret = get_user(val, (int __user *)arg);
+>> +		if (ret)
+>> +			break;
+>> +		set = (val & TIOCM_DTR) ? true : false;
+>> +		ret = rpmsg_set_flow_control(eptdev->ept, set);
+>> +		break;
+> Could this directly be handled by the driver on open close?
+> If application wants to suspend the link it could just close de /dev/rpmsgX.
+All clients may not require setting flow control.
+>   
+> Regards,
+> Arnaud
+>
+>> +	case RPMSG_DESTROY_EPT_IOCTL:
+>> +		ret = rpmsg_eptdev_destroy(&eptdev->dev, NULL);
+>> +		break;
+>> +	default:
+>> +		ret = -EINVAL;
+>> +	}
+>>   
+>> -	return rpmsg_eptdev_destroy(&eptdev->dev, NULL);
+>> +	return ret;
+>>   }
+>>   
+>>   static const struct file_operations rpmsg_eptdev_fops = {
