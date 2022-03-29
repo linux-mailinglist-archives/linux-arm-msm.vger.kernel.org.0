@@ -2,110 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 78DDC4EAAD8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Mar 2022 11:56:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F0FE4EAB02
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Mar 2022 12:06:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234544AbiC2J5h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Mar 2022 05:57:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35432 "EHLO
+        id S234965AbiC2KIZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Mar 2022 06:08:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232467AbiC2J5g (ORCPT
+        with ESMTP id S232312AbiC2KIY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Mar 2022 05:57:36 -0400
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDF3E9E9E9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Mar 2022 02:55:53 -0700 (PDT)
-Received: by mail-yb1-xb2a.google.com with SMTP id v35so30624420ybi.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Mar 2022 02:55:53 -0700 (PDT)
+        Tue, 29 Mar 2022 06:08:24 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C0C2127589;
+        Tue, 29 Mar 2022 03:06:42 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id bi13-20020a05600c3d8d00b0038c2c33d8f3so949563wmb.4;
+        Tue, 29 Mar 2022 03:06:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=seLvwV9K1rKjqDKzTYYrfJvgdmbON2mz+sCwvBatE6U=;
-        b=N2aQhTcckK8j0kgax8UOJaSl9vIq+bCtr+YCmBa/K04DpCBxZF+aorgGmjF4YpYchh
-         4+rumO+5Ikdk9UxTJ7NxHs37P90FMKMrXFN2m9tr3G3mfRM7DQT6bVaBHoK/Dg/i9u2e
-         rI88kjDBxcJ3zzBz/0wTBCXCTu03qQi+Vvy66QR+yTjCrNk8sGCkDDrN9QBxeiCMjHBc
-         nKdSF84dR0ME3QmNLzs5jvmL4Ux3JxPCXCztz9SKIxeqzdQjCa4deVYqMDJm87PJ3IDC
-         Lnnf5ZPUVrVOVgGnrTUndoUfUccnJy8aOM1MX+5UBzfwQX/RzLOOrGc+q/w5vNfYMgwK
-         9z9Q==
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=gJYdJOur1iY6XbbeGXFj0ECGEHoJkzCeSnRWw+1akAE=;
+        b=g1SGsbd/jLtCfDq6yzASjQLg1D1Di4TRzjMb5UiIfrE9WiDmnp4ps8sIblZUNtYLhl
+         BEYp/E3cwcQ3Zx0+p3QoptHL3A/ppqsLefEG80tXSSwr+mpdP4i1AcDwb/671KD/V7Or
+         SrBc47ULMLUb19cniOzsSHJIDLc2hutPluz+X07qok/90+UjDzhv6DSHFkWqgCReRafg
+         8hQGGxrcX5P2AlRlhAUeG7o275fLN5UY/luSiQ/PippZc5scePfD88DWfB5YY4mbajP2
+         /wEv07hBPdodolgvcwPf/ryO4mcjf2pm6CqHleQKRp4LwbU9hZS+Lg1pg+jJITwfzWUK
+         5rMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=seLvwV9K1rKjqDKzTYYrfJvgdmbON2mz+sCwvBatE6U=;
-        b=1vezEFLyxhJtow7ZP9s7WGkS6PM89FttDreYgwFThhM7710pbGvrDDndJ0RcdAQlNE
-         tyY7cV7Iw+OMwhklf2GIyvfSGyFfgmfaRjgrE9K/tSmMmnX429js7IyRWfN2/8noYG7m
-         M0ClzCzRJte7KyZFcfy8TtgkbfvUYv6NpfLuGjd9WcCJgysv4vCutKRNL+oRgvCgBl1D
-         wgQYQo+uhh6xJPm9urefCv9hVMLw+RAlAPbr3xSkWCZJLR8a/fTKkvqoSinugwfr4lba
-         +hxEnrDFK/WtLGiSEgZ1W2Van2t9jxuMKn3bkZ4EMkVyGrc4wNvg6V+Od7yRI0Ob5QSY
-         EPlQ==
-X-Gm-Message-State: AOAM533Ixs6yO+QJW4s7lh2kqcgKb5ggSrUf/E88FdjGuz36HEUxrnNv
-        IF3S8yaydlUSs73dMaY9zw0+Cl3/hDpVyiWxZWKa7jKD9Yl4PURS
-X-Google-Smtp-Source: ABdhPJw3M7ngRhmwpCEwH06Bjj18TCkgEw8hISsF7Db3BTNyk7X5KvpCHeJxG5P1CohWFi4CUFMvMyOMN51uhjQj35I=
-X-Received: by 2002:a5b:848:0:b0:633:716f:1fb0 with SMTP id
- v8-20020a5b0848000000b00633716f1fb0mr25313155ybq.522.1648547753072; Tue, 29
- Mar 2022 02:55:53 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=gJYdJOur1iY6XbbeGXFj0ECGEHoJkzCeSnRWw+1akAE=;
+        b=tJUfPXpB3D2Xr+ifPFHavkeZNEPQfTtJn/OUXgNNdDNK7IJJvF28uxxd3HaUo5EoVl
+         DU3BecZu54cfnnrUnz4gbwCDeYy475OG/I5eEv1ayFd8Mx/EX4N966VkSRN6OYQ3qMZL
+         huOOgIHooNwpXcdJO3lzCWKt6VjlC675C9CDeICyDrvWVZfFonlA16xSs7Gd40B6sVTo
+         OL7W0l+nS77jrGDwSJ6U7XlgmaeVhBHZssjRicRpVvjCMTCnrYv6JkjBdU+ld5L4QBYN
+         WF4KkMsSnfX0T3+GHWOxQabWecMGtPSvmCXWLaMfGf/wNx5cgnsBkMgl9g+8Q2TfX6tp
+         CI3A==
+X-Gm-Message-State: AOAM533VsGwlnV6P5hUppzwI4BcK6mAItODsRNu2yon+FtI4iBdCf5Kb
+        /TM+8NycYzU1/kB4h6W7Tgk=
+X-Google-Smtp-Source: ABdhPJw/yl37bo84CH0/pwnTrqSkLHICdBHbZfyNAKleJ5pkLbBWcMtajlzC2TVgbnU7tHyn6wt30Q==
+X-Received: by 2002:a05:600c:a47:b0:37c:965:2b6f with SMTP id c7-20020a05600c0a4700b0037c09652b6fmr5636166wmq.31.1648548400811;
+        Tue, 29 Mar 2022 03:06:40 -0700 (PDT)
+Received: from [192.168.1.145] ([207.188.167.132])
+        by smtp.gmail.com with ESMTPSA id a11-20020a5d456b000000b0020406ce0e06sm14201716wrc.94.2022.03.29.03.06.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Mar 2022 03:06:39 -0700 (PDT)
+Message-ID: <6dafde7d-17c6-bd25-dbe8-7f7acf80fd91@gmail.com>
+Date:   Tue, 29 Mar 2022 12:06:38 +0200
 MIME-Version: 1.0
-References: <1641749107-31979-1-git-send-email-quic_mkshah@quicinc.com> <164369277345.3095904.10944386444643776011.b4-ty@linaro.org>
-In-Reply-To: <164369277345.3095904.10944386444643776011.b4-ty@linaro.org>
-From:   Amit Pundir <amit.pundir@linaro.org>
-Date:   Tue, 29 Mar 2022 15:25:16 +0530
-Message-ID: <CAMi1Hd2Sngya_2m2odkjq4fdV8OiiXsFMEX1bb807cWMC7H-sg@mail.gmail.com>
-Subject: Re: (subset) [PATCH 00/10] Add APSS RSC to Cluster power domain
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     ulf.hansson@linaro.org, Maulik Shah <quic_mkshah@quicinc.com>,
-        quic_rjendra@quicinc.com, daniel.lezcano@linaro.org,
-        quic_lsrao@quicinc.com, rafael@kernel.org,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
+Content-Language: en-US
+To:     Tony Lindgren <tony@atomide.com>,
+        Geert Uytterhoeven <geert@linux-m68k.org>
+Cc:     Daniel Palmer <daniel@0x0f.com>,
+        Ansuel Smith <ansuelsmth@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-actions@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        "open list:TI ETHERNET SWITCH DRIVER (CPSW)" 
+        <linux-omap@vger.kernel.org>,
+        "open list:ARM/Amlogic Meson..." <linux-amlogic@lists.infradead.org>,
+        linux-arm-kernel@axis.com, linux-aspeed@lists.ozlabs.org,
+        linux-rpi-kernel <linux-rpi-kernel@lists.infradead.org>,
+        chrome-platform@lists.linux.dev,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
+        openbmc@lists.ozlabs.org,
+        linux-tegra <linux-tegra@vger.kernel.org>, linux-oxnas@groups.io,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-unisoc@lists.infradead.org,
+        "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>,
+        linux-realtek-soc@lists.infradead.org
+References: <20220328000915.15041-1-ansuelsmth@gmail.com>
+ <CAFr9PXkgrRe-=E=GhNnZ4w1x_FMb97-_RmX6ND1vEd74_TbZSw@mail.gmail.com>
+ <YkK691VG6ON/6Ysn@atomide.com>
+ <CAMuHMdXDDNTgBdJTa8+H1H5v1gAarp07xxWu_E1JL8mXS8HPMg@mail.gmail.com>
+ <YkLXTWdZ3zASxr4H@atomide.com>
+From:   Matthias Brugger <matthias.bgg@gmail.com>
+In-Reply-To: <YkLXTWdZ3zASxr4H@atomide.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 1 Feb 2022 at 10:52, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
->
-> On Sun, 9 Jan 2022 22:54:57 +0530, Maulik Shah wrote:
-> > This series patches 1 to 4 adds/corrects the cpuidle states/
-> > apps_rsc TCS configuration to make it same as downstream kernel.
-> >
-> > The patches 5, 6 and 7 adds apps_rsc device to cluster power domain such
-> > that when cluster is going to power down the cluster pre off notification
-> > will program the 'sleep' and 'wake' votes in SLEEP TCS and WAKE TCSes.
-> >
-> > [...]
->
-> Applied, thanks!
->
-> [01/10] arm64: dts: qcom: sm8150: Correct TCS configuration for apps rsc
->         commit: 17ac8af678b6da6a8f1df7da8ebf2c5198741827
-> [02/10] arm64: dts: qcom: sm8250: Add cpuidle states
->         commit: 32bc936d732171d48c9c8f96c4fa25ac3ed7e1c7
 
-Hi, These patches landed upstream and I see a boot regression on RB5
-with this sm8250 patch:
 
-[    T1] vreg_l11c_3p3: failed to enable: -ETIMEDOUT
-[    T1] qcom-rpmh-regulator 18200000.rsc:pm8150l-rpmh-regulators:
-ldo11: devm_regulator_register() failed, ret=-110
-[    T1] qcom-rpmh-regulator: probe of
-18200000.rsc:pm8150l-rpmh-regulators failed with error -110
+On 29/03/2022 11:54, Tony Lindgren wrote:
+> * Geert Uytterhoeven <geert@linux-m68k.org> [220329 09:02]:
+>> On Tue, Mar 29, 2022 at 10:03 AM Tony Lindgren <tony@atomide.com> wrote:
+>>> For example, I have a pile of pending omap clock clean-up dts patches
+>>> posted and tested waiting for v5.19-rc1 to apply. I'd rather not start
+>>> redoing or fixing up the patches with sed :)
+>>
+>> Git merge/rebase/cherry-pick should handle renames fine?
+> 
+> Possibly.. Not sure I'd count on that based on my earlier experiences
+> though :)
+> 
 
-Doesn't regress everytime but It is fairly reproducible. RB5 fails to
-boot on every alternate reboot or so. But the device boots everytime
-if I revert this patch.
+Yes. If this could be split up in per silicon-vendor patches, the maintainer 
+could take them. Although it might be a pain to soc maintainers to resolve small 
+conflicts when merging that branches.
 
-> [03/10] arm64: dts: qcom: sm8350: Correct TCS configuration for apps rsc
->         commit: a131255e4ad1ef8d4873ecba21561ba272b2547a
-> [04/10] arm64: dts: qcom: sm8450: Update cpuidle states parameters
->         commit: 6574702b0d394d2acc9ff808c4a79df8b9999173
->
-> Best regards,
-> --
-> Bjorn Andersson <bjorn.andersson@linaro.org>
+Just my 5 cents.
+
+Matthias
