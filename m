@@ -2,64 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84F9D4EA7DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Mar 2022 08:32:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B9964EA80D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Mar 2022 08:43:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232190AbiC2Gdn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Mar 2022 02:33:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58496 "EHLO
+        id S229966AbiC2GpL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Mar 2022 02:45:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230358AbiC2Gdm (ORCPT
+        with ESMTP id S233126AbiC2GpL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Mar 2022 02:33:42 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB608199E02;
-        Mon, 28 Mar 2022 23:31:59 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 8947EB815AA;
-        Tue, 29 Mar 2022 06:31:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FD40C2BBE4;
-        Tue, 29 Mar 2022 06:31:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648535517;
-        bh=qQdEegtTay97bdLFpDoQhHXRXAb8Gb7e6nlf1kKCkVk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=XC8bQVeQEmhTJk/J+uyEhRZ4t4eJ4J5h0wqWTevizVDXWn0WM/OeI65K9IhfoPNoN
-         W/xSTBLECpgkuX85RagScxcKu0QM6GQU305VIkG0DXsxm1UBzhrlI1J8KzgUOg7X+r
-         WWX8Iq+sQjENxQt7jEzFKg9HhjAmk3lIVnPZbAlqdsx51JU4hhrUyCWmwqTHUbqQVx
-         Ab7nb8ByDqBxvdE5F+Sv1BABrZjJ+BJOADiCxhioMsJehaF6xraVtQ85f7XJKCUh50
-         LuXe+ALG9iGEORdqEf87r0r0dj1U8oEd8sX5JoOPp7pf1iNTsgJ9clgzrBcZ2A7rnb
-         WUr0CD89snmVw==
-Date:   Tue, 29 Mar 2022 12:01:52 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Rob Herring <robh+dt@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] dt-bindings: display: msm: dsi: remove address/size cells
-Message-ID: <YkKmPSesQfS6RLCD@matsya>
-References: <20220328152923.90623-1-krzysztof.kozlowski@linaro.org>
- <CAA8EJprWoxWwk5EWEfWdLquPR+2=u6V0-v1-+wHMHOk8HiEyNw@mail.gmail.com>
- <YkHtY9absUjmqmW7@matsya>
- <12b0056b-8032-452b-f325-6f36037b5a80@linaro.org>
- <CAL_Jsq+6rx0UU6ryH+z_8KLQqKKuhTCnh=Oft2F03bcze+EV0Q@mail.gmail.com>
+        Tue, 29 Mar 2022 02:45:11 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5A9C181153
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Mar 2022 23:43:28 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id m30so23339446wrb.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 28 Mar 2022 23:43:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=pjFu1KHHHZg3EFH3pYqauqsY8wqWnzkiAMxgYO7hP2M=;
+        b=egPJZmiRt2FsaY/Q03MAAADsSUhvuq+fjdJvorxuPi5JM8DJMC5MplYDQnH5a75iTm
+         jZX1yUoZbAB14OSBSbuHnTYAABMhwPqtKvLzOHm8XF46LYZNqgpAhWjFYuhMuD6EcZbH
+         yoyE+/8HRN6/r6bFHsCy6Qq66w/fFFWjI0RKIPjeA/9a0T502aQipzuVfhgw5YJ8GW4A
+         CaMz66lLk54EJqcrPv6OIOF5wlU6xg7AThj7E5HNzCHLBLS2E46HZxBnzeT+xIaywbYE
+         jQSTklqLVvpftFMf4EdOoBXC194Ab9/VX+GcfUUOPCOGsOp2XDlCE62VDVPhcgj4MtTp
+         wfWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=pjFu1KHHHZg3EFH3pYqauqsY8wqWnzkiAMxgYO7hP2M=;
+        b=jZSkiY2JIUGFJD5FAYfyJ8v7H8GLBroYstbMzE+ygbfSTATMec40gZ/cDF48LtX+Gy
+         iOoMUwGNZ8PBmKvsMfBOHAdfxHLkfjV+sA2+ggy/gt6ogFLn2aBP+8TcLNBMJpTXx46B
+         f064yxYXNBBQVpLQHF/g7bkpS/m8Hi/3dgDuTKohxsR++OULHRIclRBeKxx7uPRgb1fH
+         DDx0P/pkXOeFDVHHN0FBRhNpKQPl3ieocSxzEG1oduL3HiD0V+HwL8h8BmbZTDyyAkCn
+         x6IUWMEdfhWYKy3u3T1EpMdAh9ETRaQXT67XZNgKun0w9IvXzBE6HQc8YUk8A1LEBqm4
+         tSFw==
+X-Gm-Message-State: AOAM5315WhPdKb6TK5l1qITdST3l+5doh2ih18+M+OlUOVigdtFQxwpS
+        nIRbeRYPTGfOC8Hd355hcPosgUhdebpghszP
+X-Google-Smtp-Source: ABdhPJw66hrsLltXJ+iRsNUelzTZUOMfDnpfHI3blTJvAaHTIoIpQrxFQd31Cx1UlZ4DNqq40fqHQQ==
+X-Received: by 2002:a05:6000:1cc:b0:203:fdbf:e576 with SMTP id t12-20020a05600001cc00b00203fdbfe576mr29206949wrx.147.1648536207497;
+        Mon, 28 Mar 2022 23:43:27 -0700 (PDT)
+Received: from [192.168.0.162] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.gmail.com with ESMTPSA id u8-20020a5d4348000000b00203dbfa4ff2sm13970713wrr.34.2022.03.28.23.43.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Mar 2022 23:43:27 -0700 (PDT)
+Message-ID: <f54ce165-5c6c-6a80-58dc-2cfdfb01b800@linaro.org>
+Date:   Tue, 29 Mar 2022 08:43:26 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAL_Jsq+6rx0UU6ryH+z_8KLQqKKuhTCnh=Oft2F03bcze+EV0Q@mail.gmail.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v2] dt-bindings: spi: qcom-qspi: Add minItems to
+ interconnect-names
+Content-Language: en-US
+To:     Kuldeep Singh <singh.kuldeep87k@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Mukesh Savaliya <msavaliy@codeaurora.org>,
+        Akash Asthana <akashast@codeaurora.org>
+Cc:     Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20220328192006.18523-1-singh.kuldeep87k@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220328192006.18523-1-singh.kuldeep87k@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -68,100 +83,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28-03-22, 13:21, Rob Herring wrote:
-> On Mon, Mar 28, 2022 at 12:18 PM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
-> >
-> > On 28/03/2022 19:16, Vinod Koul wrote:
-> > > On 28-03-22, 19:43, Dmitry Baryshkov wrote:
-> > >> On Mon, 28 Mar 2022 at 18:30, Krzysztof Kozlowski
-> > >> <krzysztof.kozlowski@linaro.org> wrote:
-> > >>>
-> > >>> The DSI node is not a bus and the children do not have unit addresses.
-> > >>>
-> > >>> Reported-by: Vinod Koul <vkoul@kernel.org>
-> > >>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > >>
-> > >> NAK.
-> > >> DSI panels are children of the DSI device tree node with the reg = <0>; address.
-> > >> This is the convention used by other platforms too (see e.g.
-> > >> arch/arm64/boot/dts/freescale/imx8mq-evk.dts).
-> > >
-> > > So we should add reg = 0, i will update my dtsi fix
-> > >
-> >
-> > To "ports" node? No. The reg=0 is for children of the bus, so the
-> > panels. How to combine both without warnings - ports and panel@0 - I
-> > don't know yet...
+On 28/03/2022 21:20, Kuldeep Singh wrote:
+> Add minItems constraint to interconnect-names as well. The schema
+> currently tries to match 2 names and fail for DTs with single entry.
 > 
-> I don't think that should case a warning. Or at least it's one we turn off.
-
-Well in this case I think we might need a fix:
-Here is the example quoted in the binding. We have ports{} and then the
-two port@0 and port@1 underneath.
-
-So it should be okay to drop #address-cells/#size-cells from dsi node
-but keep in ports node...
-
-Thoughts...?
-
-
-     dsi@ae94000 {
-           compatible = "qcom,mdss-dsi-ctrl";
-           reg = <0x0ae94000 0x400>;
-           reg-names = "dsi_ctrl";
-
-           #address-cells = <1>;
-           #size-cells = <0>;
-
-           interrupt-parent = <&mdss>;
-           interrupts = <4>;
-
-           clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
-                    <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
-                    <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
-                    <&dispcc DISP_CC_MDSS_ESC0_CLK>,
-                    <&dispcc DISP_CC_MDSS_AHB_CLK>,
-                    <&dispcc DISP_CC_MDSS_AXI_CLK>;
-           clock-names = "byte",
-                         "byte_intf",
-                         "pixel",
-                         "core",
-                         "iface",
-                         "bus";
-
-           phys = <&dsi0_phy>;
-           phy-names = "dsi";
-
-           assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>, <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
-           assigned-clock-parents = <&dsi_phy 0>, <&dsi_phy 1>;
-
-           power-domains = <&rpmhpd SC7180_CX>;
-           operating-points-v2 = <&dsi_opp_table>;
-
-           ports {
-                  #address-cells = <1>;
-                  #size-cells = <0>;
-
-                  port@0 {
-                          reg = <0>;
-                          dsi0_in: endpoint {
-                                   remote-endpoint = <&dpu_intf1_out>;
-                          };
-                  };
-
-                  port@1 {
-                          reg = <1>;
-                          dsi0_out: endpoint {
-                                   remote-endpoint = <&sn65dsi86_in>;
-                                   data-lanes = <0 1 2 3>;
-                          };
-                  };
-           };
-     };
-
+> With the change applied, below interconnect-names values are possible:
+> ['qspi-config'], ['qspi-config', 'qspi-memory']
 > 
-> Rob
+> Fixes: 8f9c291558ea ("dt-bindings: spi: Add interconnect binding for QSPI")
+> Signed-off-by: Kuldeep Singh <singh.kuldeep87k@gmail.com>
+> ---
+> v2:
+> - Reword commit description
+> 
 
--- 
-~Vinod
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+
+Best regards,
+Krzysztof
