@@ -2,85 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 80EE64EA3D3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Mar 2022 01:44:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F70C4EA429
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Mar 2022 02:33:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231133AbiC1XoV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 28 Mar 2022 19:44:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34152 "EHLO
+        id S231349AbiC2AZr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 28 Mar 2022 20:25:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231131AbiC1XoU (ORCPT
+        with ESMTP id S231346AbiC2AZq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 28 Mar 2022 19:44:20 -0400
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E5B515FC8;
-        Mon, 28 Mar 2022 16:42:39 -0700 (PDT)
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-df02f7e2c9so4522981fac.10;
-        Mon, 28 Mar 2022 16:42:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/bMD5XJK9ZeZ9JMXaFrOnemeInZdC+WRoQ/+0h/V9wY=;
-        b=NkHW4PgdiouECeJTgoy7OWQAoJ0sRIKyUWxMpVu0ckQMNHrQSNyrRVt2rXBRadlGrk
-         hDTecDWSKppBt7/DNMKfFon/MYc0I6oMFwXbWm06uPdeInnNWLBJNxqoxrV39VozHR4n
-         KVnm0e3riJFUgdvOmupN0ziGtInJn4vqSXfzvPeUV2OCbkSIT08lS1kpUdzOuti7lz+7
-         aH6+zUkgzf23vtfpqaGPAGrSVvMVqmgMdglRX0C8KdpErwzeUi4Hmnm2WE5hK4hxg2oN
-         pmEYRp6BrcRESJVzO3o15iG0C6TW58gD84jra56PxCk1DybZTRAjy+fPXj3rRbx1pLmi
-         sy3w==
-X-Gm-Message-State: AOAM533Yr0VEDUXAJCtTMq3RNACwRQcHFwD1CD7oPu/cgF7nLCphxAJ1
-        5lA9Yl4yp/XPO/FLbZOUCg==
-X-Google-Smtp-Source: ABdhPJzw+lAN1qKaN0d03io7vTQ2/YLq7E4IIiFYE2pFuJh6CZ1aVJn0WUpuqZjVOxM8u1TOPM2Mig==
-X-Received: by 2002:a05:6871:694:b0:dd:a43e:fca4 with SMTP id l20-20020a056871069400b000dda43efca4mr842188oao.77.1648510958312;
-        Mon, 28 Mar 2022 16:42:38 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id y143-20020aca4b95000000b002d9b530a96esm7922037oia.44.2022.03.28.16.42.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Mar 2022 16:42:38 -0700 (PDT)
-Received: (nullmailer pid 3269333 invoked by uid 1000);
-        Mon, 28 Mar 2022 23:42:37 -0000
-Date:   Mon, 28 Mar 2022 18:42:37 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org,
-        krzysztof.kozlowski@canonical.com, agross@kernel.org,
-        swboyd@chromium.org, broonie@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org,
-        dianders@chromium.org,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, judyhsiao@chromium.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 2/3] ASoC: dt-bindings: wcd938x: Add mic bias supply
- property
-Message-ID: <YkJH7eRooyZ6aulW@robh.at.kernel.org>
-References: <1647852981-27895-1-git-send-email-quic_srivasam@quicinc.com>
- <1647852981-27895-3-git-send-email-quic_srivasam@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1647852981-27895-3-git-send-email-quic_srivasam@quicinc.com>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        Mon, 28 Mar 2022 20:25:46 -0400
+Received: from new3-smtp.messagingengine.com (new3-smtp.messagingengine.com [66.111.4.229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82CBB2EC;
+        Mon, 28 Mar 2022 17:24:04 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailnew.nyi.internal (Postfix) with ESMTP id AA157580367;
+        Mon, 28 Mar 2022 20:24:01 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute5.internal (MEProxy); Mon, 28 Mar 2022 20:24:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
+        :cc:content-transfer-encoding:content-type:date:date:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to; s=fm3; bh=YVcOcYXKVU4PEK
+        ENIKD3lZlfbqMF8OkXUPWQPtT0ZzA=; b=GV8iKIgkifB/LyajStlhIzzaA2PqSU
+        rEPGZBnWRziuDMlxEaU3fjhl0DHmyiueo1E3rsDwPrq1dyaythjr8LeJ4NZ3kmFH
+        v7J0UO7b64vG5VRtrXZ/OicN/3vDmtLy+M6As/zf5/EYH2TO2OF+YIkppderpdcN
+        ocuY8KYW/dUFglcgTgXnC/6f5bvCH2TNkniwuNDGczxXDBDNnP2nHRX3u9u0y3Go
+        2HHhDpJUS8OMLXTkUmRtrROlDXASYpEdp57tTxY7G7Ci6RHcafVgGiKZGpjbHNDZ
+        //P9ySL7tvarTkKke+QN7H1PCcvhD3CsMcxHphO+TJq7W+71Q2wgIxYw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm3; bh=YVcOcYXKVU4PEKENIKD3lZlfbqMF8OkXUPWQPtT0Z
+        zA=; b=MfUF/QO1w2kk8LobJGDnDjGmGT9HUgvaIsBRcZJH4NP16C60y/NJslTt7
+        orhhkgHh49rbOiH30mg+9nD++QY3WWgzSB2sDT9Qr4nBx6DPKrUBtQOsEMz/dHsj
+        tnZTX8+5b3lvOKKTTCyQClpi0fsj22EquswXftZXPkMfoj2QCv1jAapgIQLAxfMF
+        S0z3hjnx7eO2S93c8UZottn5LmdiG0YcFFuK5zB8/ar7yCvc0Jy0dFV5KjDfSzzb
+        3LrydgytiTwdKd8S3tKaPDcolfNGWpjEyPMA80KKZ8LEsNOU94avhhnY8yVPYBI+
+        z15/ibq45vK+JxVduu76w45M0nzjQ==
+X-ME-Sender: <xms:oFFCYs9K0yagZswp7rFBq_h4vFfHgzOKyc_TzBu90N89g92vvi8M3A>
+    <xme:oFFCYkvw9h1jnh95ii6UH3c9xPcsfcQHqQiMHfK2AbFZHDfMquci3iY3KqTCG7jHE
+    woyrhqOfmB1RNSngg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudehkedgfedvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvffutgfgsehtqhertderreejnecuhfhrohhmpedftehn
+    ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtf
+    frrghtthgvrhhnpedvgeekheegfedvhfethefhudetteegueeggfeiieegueehkedugedt
+    kefglefgheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:oVFCYiAKjCQA5Zb05U61crJ5MlOJCJLgZQqyWNA7a6PSqL49ds9rcQ>
+    <xmx:oVFCYsd7HLs87jVXkH1pk4ddv_005tSApo64HS9hBsjced9RxeZQlg>
+    <xmx:oVFCYhNCDSxTTbHGsk6l4iYUYPZLYU9gbpl7DI-t2s9QTshCOjdDqA>
+    <xmx:oVFCYjVxoE5j7ipqETgwLEOiheaMjFzqbcptYMrhCgrHpWjYJYVlwQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id E057EF6043F; Mon, 28 Mar 2022 20:24:00 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-4911-g925b585eab-fm-20220323.003-g925b585e
+Mime-Version: 1.0
+Message-Id: <d5e6c96b-5882-4602-93cb-b08a65bfa37e@www.fastmail.com>
+In-Reply-To: <D9AFAC3C-46CA-4C40-8559-FD6934411CAB@goldelico.com>
+References: <20220328000915.15041-1-ansuelsmth@gmail.com>
+ <YkG2RPrtPaBNXb7a@latitude>
+ <D9AFAC3C-46CA-4C40-8559-FD6934411CAB@goldelico.com>
+Date:   Tue, 29 Mar 2022 10:53:40 +1030
+From:   "Andrew Jeffery" <andrew@aj.id.au>
+To:     "H. Nikolaus Schaller" <hns@goldelico.com>,
+        =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+        "Ansuel Smith" <ansuelsmth@gmail.com>
+Cc:     "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        "OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        linux-actions@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        Linux-OMAP <linux-omap@vger.kernel.org>,
+        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
+        linux-aspeed@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org,
+        chrome-platform@lists.linux.dev, linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
+        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
+        linux-oxnas@groups.io, linux-arm-msm@vger.kernel.org,
+        linux-unisoc@lists.infradead.org,
+        linux-rockchip@lists.infradead.org,
+        linux-realtek-soc@lists.infradead.org
+Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 21 Mar 2022 14:26:20 +0530, Srinivasa Rao Mandadapu wrote:
-> Add vdd mic bias supply, which is required to provide bias
-> for wcd938x codec.
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/sound/qcom,wcd938x.yaml | 3 +++
->  1 file changed, 3 insertions(+)
-> 
 
-Acked-by: Rob Herring <robh@kernel.org>
+
+On Tue, 29 Mar 2022, at 00:20, H. Nikolaus Schaller wrote:
+>> Am 28.03.2022 um 15:21 schrieb Jonathan Neusch=C3=A4fer <j.neuschaefe=
+r@gmx.net>:
+>>=20
+>> Or maybe bcm instead of broadcom. Not sure which is preferred by
+>> Broadcom people.
+>
+> Maybe it should always follow the list of vendor prefixes as we are=20
+> talking about DTS?
+
++1 (if we're actually going to do this). That would neuter most the=20
+mistakes and discussion and can be extracted from the dts files=20
+themselves.
+
+Andrew
