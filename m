@@ -2,152 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 322464EAE45
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Mar 2022 15:20:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3386D4EAEB5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Mar 2022 15:48:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237201AbiC2NWN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Mar 2022 09:22:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44166 "EHLO
+        id S234479AbiC2Ntu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Mar 2022 09:49:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234222AbiC2NWN (ORCPT
+        with ESMTP id S231233AbiC2Ntu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Mar 2022 09:22:13 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 594E913FAF;
-        Tue, 29 Mar 2022 06:20:30 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E7CFE61556;
-        Tue, 29 Mar 2022 13:20:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079B3C2BBE4;
-        Tue, 29 Mar 2022 13:20:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648560029;
-        bh=vcBGlG+sqaPt0UpTdoZ2lc9iEFALH1pzWeKYoBtVGc0=;
-        h=Date:Subject:To:References:Cc:From:In-Reply-To:From;
-        b=Lf6UdkMwpGMKF/bCzH0duecbGSrWXhu70CtFUq2mNv7IsC6370BCiPtfWXaI+yKF/
-         UQxjxo/5ELIHPpruCIzbUN34wBvgy5Fc7eS22PnhD5aL+YcFYfFaN/O+tr+ZmUM+S5
-         A/HxyRRfNmBU9vHwyfdDK7puvv8H+mPmsnx7QORDs2EqLL+mvW+oCz1joHCa6v9S30
-         zZSq7JcFWt8iEt24hFmi80tnq5vNy7tr3oSE2yE/htc0EfUX3gZEr+PbO1Xh/RhzQv
-         IsUb015h84Gz6Om/nGHx49iikUSPAbDyLFfT+LjbZl0E6DwqI3AOYIbHwd8W8xbJcf
-         NtJzDPqA8j7Dw==
-Message-ID: <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
-Date:   Tue, 29 Mar 2022 15:20:18 +0200
+        Tue, 29 Mar 2022 09:49:50 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E86317B8B3;
+        Tue, 29 Mar 2022 06:48:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1648561686; x=1680097686;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=G3O4xklk20yOcU6Q2jl6Oe/Zbim2TxkIAg6MIEKJXN0=;
+  b=DYJLfht3vhrKXFQl21LlTZwPqh0AGJSbPm+M1FFkWJEKN7fz7TM2BASZ
+   1cw7s1NFG3ryfZcsGKursPb++2CkyKXhoJkgvOqkEfWNrTX0pPaHjlshe
+   G2tfeVaTlfHSedVSF/5641xicAtJBHzJGDa0OsbgCIgt2EnCqe1OezEMG
+   c=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 29 Mar 2022 06:48:05 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Mar 2022 06:48:05 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 29 Mar 2022 06:47:24 -0700
+Received: from [10.253.79.253] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 29 Mar
+ 2022 06:47:21 -0700
+Message-ID: <7c0bed05-a071-82f3-3162-64b88bbe7dc2@quicinc.com>
+Date:   Tue, 29 Mar 2022 21:47:18 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v4 01/10] Use IDR to maintain all the enabled sources'
+ paths.
 Content-Language: en-US
-To:     Ansuel Smith <ansuelsmth@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-omap@vger.kernel.org,
-        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
-        linux-aspeed@lists.ozlabs.org,
-        linux-rpi-kernel@lists.infradead.org,
-        chrome-platform@lists.linux.dev, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
-        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
-        linux-oxnas@groups.io, linux-arm-msm@vger.kernel.org,
-        linux-unisoc@lists.infradead.org,
-        linux-rockchip@lists.infradead.org,
-        linux-realtek-soc@lists.infradead.org
-References: <20220328000915.15041-1-ansuelsmth@gmail.com>
-Cc:     Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <20220328000915.15041-1-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        WEIRD_QUOTING autolearn=ham autolearn_force=no version=3.4.6
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20220324121734.21531-1-quic_jinlmao@quicinc.com>
+ <20220324121734.21531-2-quic_jinlmao@quicinc.com>
+ <YjxjXnXAXVXfZqr/@kroah.com>
+ <e78ff137-fc5e-ff00-0e57-91304288d860@quicinc.com>
+ <YjylKhBslN+5sKRx@kroah.com>
+From:   Jinlong Mao <quic_jinlmao@quicinc.com>
+In-Reply-To: <YjylKhBslN+5sKRx@kroah.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/03/2022 02:09, Ansuel Smith wrote:
-> Hi,
-> as the title say, the intention of this ""series"" is to finally categorize
-> the ARM dts directory in subdirectory for each oem.
-> 
-> The main reason for this is that it became unpractical to handle 2600
-> dts files and try to even understand/edit/check the situation for a
-> specific target.
-> 
-> In arm64 we already have this kind of separation and I honestly think
-> that this was never proposed for ARM due to the fact that there are
-> 2600+ files to sort and the fact that it will be a mess to merge this
-> entirely but IMHO with a little bit of effort we can finally solve this
-> problem and have a well organized directory just like arm64.
-> 
-> Some prerequisite on how this work was done:
-> - This comes entirely from a python script created by me for the task.
->   linked here [1]
-> - I had to manually categorize all the different arch in the makefile
->   based on the oem. I searched every arch on the internet trying to
->   understand the correct oem. I hope they are correct but I would love
->   some comments about them.
-> - This current ""series"" is all squashed in one big commit to better
->   receive comments for this. The final version ideally would have all
->   changes in separate commits. The script can already do this, it's just
->   commented.
-> 
-> Here is a list of some discoveries while doing all the sorting.
-> These are totally additional reason why we need this.
-> 
-> While creating the script I discovered some funny things:
-> - We have orphan dts! There are dts that are never compiled and are
->   there just for reference. We would never have noticed this without this
->   change and probably nobody noticed it. They are currently all listed
->   in the python script.
-> - We have dtsi shared across different oem. My current solution for them
->   is: NOT SORT THEM and leave them in the generic directory and create a
->   link in each oem dts that points to these dtsi. This is to try in
->   every way possible to skip any additional changes to the dts.
->   Current dtsi that suffers from this are only 3. (listed in the script)
-> - arm64 dts and dtsi reference ARM dts. Obviously this change would cause
->   broken include for these special dtsi. The script creates a dependency
->   table of the entire arm64 directory and fix every broken dependency
->   (hoping they all use a sane include logic... regex is used to parse
->   all the different dependency)
-> 
-> So in short the script does the following steps:
-> 1. Enumerate all the action to do... (dts to move, scan dependency for
->    the dts...)
-> 2. Generate the arm64 dependency
-> 3. Creates the Makefile
-> 4. Generate the Makefiles for the current oem
-> 5. Move all the related dts and dtsi for the current oem
-> 6. Check broken dependency and fix them by editing the dts and writing
->    the correct include (or fix any symbolic link)
-> 
-> This is an output that describes all the things done by the script [2]
-> 
-> I really hope I didn't commit any logic mistake in the script but most
-> of the work should be done.
-> 
+Hi Greg,
 
-+Cc Arnd and Olof,
+On 3/25/2022 1:06 AM, Greg Kroah-Hartman wrote:
+> On Thu, Mar 24, 2022 at 10:23:19PM +0800, Jinlong Mao wrote:
+>> Hi Greg,
+>>
+>> Thanks for your review.
+>>
+>> On 3/24/2022 8:26 PM, Greg Kroah-Hartman wrote:
+>>> On Thu, Mar 24, 2022 at 08:17:25PM +0800, Mao Jinlong wrote:
+>>>> Use hash length of the source's device name to map to the pointer
+>>>> of the enabled path. Using IDR will be more efficient than using
+>>>> the list. And there could be other sources except STM and CPU etms
+>>>> in the new HWs. It is better to maintain all the paths together.
+>>>>
+>>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>>>> ---
+>>>>    drivers/hwtracing/coresight/coresight-core.c | 75 +++++++-------------
+>>>>    1 file changed, 26 insertions(+), 49 deletions(-)
+>>> Your subject line is odd.  Please put back the driver subsystem in the
+>>> subject line so that it makes more sense.
+>> I will update the subject in next version.
+>>> And how have you measured "more efficient"?
+>> Using IDR would be better than doing a sequential search as there will be
+>> much more device  in future.
+> How many "more"?  Where does the trade off of speed for complexity help?
+> How much faster is this really?  You can't claim performance
+> improvements without any proof :)
+There is about 40 trace sources in our internal device. I believe there 
+will be more cpu cores, then
+there will be more etm sources. IDR here is used to store the path of 
+both etm
+sources and other sources which aren't associated with CPU.  Use IDR is 
+not more complicated
+than using list. It will also save the time of searching the path when 
+coresight_disable.
+I tested in internal device. The test case is that enable all the 
+sources, disable the source one
+by one to check the search time.
 
-Ansuel,
-Thanks for you patch. Please cc the SoC maintainers in such submissions.
-It seems that you got some quite nice discussion, but still the core
-folks are not Cced, so no one would be able to take your patch...
+Use list to store paths:
 
-I am pretty sure we were discussing such split idea in the past and it
-did not get traction, but I cannot recall the exact discussion.
+               sh-7687    [005] ....   342.113099: __coresight_disable: 
+====search path start==== source_0
+               sh-7687    [005] ....   342.113127: __coresight_disable: 
+====search path end==== source_0
+               sh-7693    [005] ....   342.542216: __coresight_disable: 
+====search path start==== source_1
+               sh-7693    [005] ....   342.542244: __coresight_disable: 
+====search path end==== source_1
+               sh-7699    [005] ....   342.929083: __coresight_disable: 
+====search path start==== source_2
+               sh-7699    [005] ....   342.929106: __coresight_disable: 
+====search path end==== source_2
+               sh-7711    [005] ....   343.760688: __coresight_disable: 
+====search path start==== source_3
+               sh-7711    [005] ....   343.760713: __coresight_disable: 
+====search path end==== source_3
+               sh-7717    [005] ....   344.172353: __coresight_disable: 
+====search path start==== source_4
+               sh-7717    [005] ....   344.172381: __coresight_disable: 
+====search path end==== source_4
 
-To me the idea is good but will cause huge `git am` conflicts.
-Cherry-picks, backports and merges should nicely detect path renames,
-but git am (and b4 am) I think cannot.
 
-Best regards,
-Krzysztof
+Use IDR to store paths:
+
+              sh-7156    [006] ....    223.294228: __coresight_disable: 
+====search path start==== source_0
+               sh-7156    [006] ....   223.294237: __coresight_disable: 
+====search path end==== source_0
+               sh-7162    [006] ....   223.690153: __coresight_disable: 
+====search path start==== source_1
+               sh-7162    [006] ....   223.690163: __coresight_disable: 
+====search path end==== source_1
+               sh-7168    [006] ....   224.110670: __coresight_disable: 
+====search path start==== source_2
+               sh-7168    [006] ....   224.110679: __coresight_disable: 
+====search path end==== source_2
+            <...>-7180    [006] ....   224.929315: __coresight_disable: 
+====search path start==== source_3
+            <...>-7180    [006] ....   224.929324: __coresight_disable: 
+====search path end==== source_3
+            <...>-7186    [006] ....   225.343617: __coresight_disable: 
+====search path start==== source_4
+            <...>-7186    [006] ....   225.343626: __coresight_disable: 
+====search path end==== source_4
+
+ From the log, Searching the path from the IDR takes about 9us for each 
+source.
+Searching the path from the list takes about 23 ~ 28us for the source. 
+Use IDR saves much time.
+
+Thanks
+
+Jinlong Mao
+>
+> thanks,
+>
+> greg k-h
