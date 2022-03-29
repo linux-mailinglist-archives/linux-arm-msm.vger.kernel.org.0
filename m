@@ -2,68 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89A114EB3AB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Mar 2022 20:46:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D88584EB3D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Mar 2022 21:05:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239131AbiC2Srm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Mar 2022 14:47:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51318 "EHLO
+        id S240379AbiC2TGw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Mar 2022 15:06:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240672AbiC2Srl (ORCPT
+        with ESMTP id S233995AbiC2TGv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Mar 2022 14:47:41 -0400
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC712996B2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Mar 2022 11:45:57 -0700 (PDT)
-Received: by mail-oo1-xc35.google.com with SMTP id i8-20020a4a6f48000000b00324ada4b9d9so3227672oof.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Mar 2022 11:45:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:rubject:from:user-agent:date
-         :message-id:subject:to:cc;
-        bh=UwSlcldOxyZRO1MzDqS4vkDmvSWdf2ZglslWTy2RMao=;
-        b=LQdX8Pj1uKYFSjrfi8XmkrbgDYCpuEWJY2NJSntC/mDPqnwW1Cywvy+Uzc9vE13KXH
-         enQQrMLPvG5vcI3W/23hWZjfj5nUuElKEOx/qttjFu/vCRN5ZHsC1sz5bozJaYuF8yCB
-         vKkmPm6dcKaXNQ0sirOP4QpJXhNA8opP6kudc=
+        Tue, 29 Mar 2022 15:06:51 -0400
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D19EC122220;
+        Tue, 29 Mar 2022 12:05:03 -0700 (PDT)
+Received: by mail-oi1-f175.google.com with SMTP id t21so15100518oie.11;
+        Tue, 29 Mar 2022 12:05:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:rubject:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=UwSlcldOxyZRO1MzDqS4vkDmvSWdf2ZglslWTy2RMao=;
-        b=Sg0DYxjpeZc4oJSVpUFCQqS12Ih+nzA4jhSzbg1hbeu6SB1uAsF89K7cSstpvjgTnp
-         a4ThowiiPsebfAXoymqqvz4gpadXPFMXP3HyS6ce4exHf+M0ijEi7/8mFEeiQcDiRB35
-         SQqmoqUYYlVNroC4vnKq4PvmxAt22lVFKm/L7u7SJwLZCj4lhygyhSz5cc1urqagSUM/
-         jANXdGAkRgkbxqVLtDfag5l8FyxuNcEAn8828qvhW1tJXCBXU4eJkW8+lGjqfCITe3l7
-         h+H0rSZVIG2GTtj6o2NnfQYgsq7u5LSIjRb8fFcM6umrbQujDrGfGSIumVPydg8nOp+D
-         6vZA==
-X-Gm-Message-State: AOAM5316PtswnpHwJ14uMlrIKqmlvgphUs8dOLariSIhzOq0jUeTirOg
-        mpkULdA0GjHlOTKD8oYpMFrz+umrI7KJEySyBPv1Xg==
-X-Google-Smtp-Source: ABdhPJyp72b5rDcmu/+a6g3PLUOI0TLaNt/1tMn2krnsCiqt/I4ljeBmBxOMeBdj+cUluUZ1rDXi6LEX7K5eOaAmqls=
-X-Received: by 2002:a05:6820:555:b0:324:b7c5:d7b2 with SMTP id
- n21-20020a056820055500b00324b7c5d7b2mr1564948ooj.1.1648579556793; Tue, 29 Mar
- 2022 11:45:56 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 29 Mar 2022 20:45:56 +0200
-MIME-Version: 1.0
-In-Reply-To: <CAD=FV=Wk86sd1m0DU0gYrA2PASArdLnKnf_M8EAeSxzpLt_f8A@mail.gmail.com>
-References: <20220325234344.199841-1-swboyd@chromium.org> <20220325234344.199841-3-swboyd@chromium.org>
- <CAD=FV=Wk86sd1m0DU0gYrA2PASArdLnKnf_M8EAeSxzpLt_f8A@mail.gmail.com>
-rubject: Re: [PATCH 2/2] arm64: dts: qcom: sc7180-trogdor: Simplify spi0/spi6 labeling
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Tue, 29 Mar 2022 20:45:56 +0200
-Message-ID: <CAE-0n524bn+=sj2hhCD5AjMWuVe=tp_JMHXruDUbEk-uft7RNQ@mail.gmail.com>
-Subject: 
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=v1oONrnLlRXGbMfvDqdmlw1VwUihrZs/319cP9C0i2s=;
+        b=BkA3LuaMXzDy/sr5tI7+WCpdUZZ4vhuyOVKljUb+1yZUEUgs7Z8mALScWnzpWiVeIg
+         Y65qYAPnPh8Djt8vIdv/JErPVKlKuKkGOcLBanu/kEyKbrShldTc0SpDS8DP1mZiexeE
+         mXxIVW5C11gf5bwBWJv1klfLklju1ZmUR6D6okm7UbOByp4YPrqyUkssTaxVqvQhevXI
+         Gu9nW5A08Y3VtJuH6phxkXqdbqTUV1Bbe76AOImekvwMkAFQUbSjCQnhl7PGxxpNk+z/
+         bq4f1zVqGHP8nvlSKqWkrvRv3dXYPG5iZOxb6nomGEwEfrot19ypxtro+fPW32cLyNUD
+         XelA==
+X-Gm-Message-State: AOAM532gkNzeJn2rdaYAapwuxmmwuu8NBvJseqawYkeBE6dh2LIRqU+9
+        MrMelbUjSmGZgrDwn65AGBOAjW0uDA==
+X-Google-Smtp-Source: ABdhPJyXRr4zxXyWQ9FG9aYqpt0gXmHwOT5iuYgCBFk9X2WBHWElBXyZOF2Hf/klYpci/snl1JFIbw==
+X-Received: by 2002:a05:6808:1804:b0:2f7:69ab:a06f with SMTP id bh4-20020a056808180400b002f769aba06fmr325060oib.41.1648580702835;
+        Tue, 29 Mar 2022 12:05:02 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id 21-20020a056870121500b000ddb064e097sm8459972oan.31.2022.03.29.12.05.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Mar 2022 12:05:01 -0700 (PDT)
+Received: (nullmailer pid 1067576 invoked by uid 1000);
+        Tue, 29 Mar 2022 19:05:00 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Mark Brown <broonie@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-kernel@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Joseph Barrera <joebar@google.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        linux-spi@vger.kernel.org
+In-Reply-To: <20220329112717.252647-1-krzysztof.kozlowski@linaro.org>
+References: <20220329112717.252647-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 1/2] spi: dt-bindings: qcom,spi-geni-qcom: convert to dtschema
+Date:   Tue, 29 Mar 2022 14:05:00 -0500
+Message-Id: <1648580700.635474.1067575.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,80 +64,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Doug Anderson (2022-03-28 09:05:05)
-> Hi,
->
-> On Fri, Mar 25, 2022 at 4:43 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > We had to do this spi0/spi6 flip-flop on trogdor-r0 because the spi
-> > buses got swizzled between r0 and r1. The swizzle stopped after r1, but
-> > we kept this around to support either hardware possibility and to keep
-> > trogdor-r0 working.
-> >
-> > trogdor-r0 isn't supported upstream, so this swizzle is not doing
-> > anything besides making a pattern that others try to copy for the EC and
-> > H1 nodes. Let's remove it and simplify the dts files.
-> >
-> > Cc: Joseph Barrera <joebar@google.com>
-> > Cc: Douglas Anderson <dianders@chromium.org>
-> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi   | 5 -----
-> >  arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 3 ---
-> >  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi    | 3 ---
-> >  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi          | 5 +++--
-> >  4 files changed, 3 insertions(+), 13 deletions(-)
->
-> What about pompom?
-> What about trogdor-r1?
->
->
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-> > index 75df5d1633b2..fe2369c29aad 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-> > @@ -5,9 +5,6 @@
-> >   * Copyright 2020 Google LLC.
-> >   */
-> >
-> > -ap_ec_spi: &spi6 {};
-> > -ap_h1_spi: &spi0 {};
-> > -
-> >  #include "sc7180-trogdor.dtsi"
-> >
-> >  &ap_sar_sensor {
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> > index 3bf40b6abcba..3123665f6c3c 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> > @@ -11,6 +11,7 @@
-> >  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> >  #include <dt-bindings/sound/sc7180-lpass.h>
-> >
-> > +#include "sc7180.dtsi"
->
-> If we're going to move the "sc7180.dtsi" to trogdor then we should
-> move it for everyone, right? Right now you're _only_ removing it from
-> coachz. I think that means that for every other board the
-> "sc7180.dtsi" file is included more than once. These aren't like C
-> header files where there's a convention to have header guards.
+On Tue, 29 Mar 2022 13:27:16 +0200, Krzysztof Kozlowski wrote:
+> Convert the GENI based Qualcomm Universal Peripheral (QUP) Serial
+> Peripheral Interface (SPI) bindings to DT Schema.
+> 
+> The original bindings in TXT were not complete, so add during conversion
+> properties already used in DTS and/or in the driver: reg-names, dmas,
+> interconnects, operating points and power-domains.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../bindings/spi/qcom,spi-geni-qcom.txt       |  39 ------
+>  .../bindings/spi/qcom,spi-geni-qcom.yaml      | 131 ++++++++++++++++++
+>  2 files changed, 131 insertions(+), 39 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.txt
+>  create mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
+> 
 
-Yes that was the intention. I didn't notice that there were so many
-other includes of sc7180.dtsi though.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
->
-> I _think_ that could actually cause problems too, right? So if you
-> include it once and then you override a status to "okay" and then you
-> included it again it might get changed back to "disabled" ?
->
-> The easiest solution would be to just leave the sc7180.dtsi include
-> where it was. If you want to try to do better, I _think_ (but haven't
-> tried) that you can change all of the existing includes of
-> "sc7180.dtsi" to be includes of "sc7180-trogdor.dtsi" and then remove
-> the existing includes of "sc7180-trogdor.dtsi". IIRC the reason that
-> the sc7180.dtsi include is scattered everywhere is that we needed the
-> i2c bus before we could define the parade / ti bridge but then we
-> needed the parade / ti bridge before we included the board specific
-> bits so we could define the panel.
+yamllint warnings/errors:
 
-Yeah let me try that.
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.example.dt.yaml:0:0: /example-0/spi@880000/tpm@0: failed to match any schema with compatible: ['google,cr50']
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/1610589
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
