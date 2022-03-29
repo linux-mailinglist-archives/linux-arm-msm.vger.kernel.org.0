@@ -2,211 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45CB24EB576
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 29 Mar 2022 23:52:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 548BE4EB5FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 00:30:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235373AbiC2VyE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 29 Mar 2022 17:54:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44450 "EHLO
+        id S237306AbiC2Wb4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 29 Mar 2022 18:31:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235058AbiC2VyD (ORCPT
+        with ESMTP id S234446AbiC2Wbz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 29 Mar 2022 17:54:03 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58A3348310
-        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Mar 2022 14:52:19 -0700 (PDT)
+        Tue, 29 Mar 2022 18:31:55 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71F457EA25
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Mar 2022 15:30:11 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id b19so26757016wrh.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Mar 2022 15:30:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1648590739; x=1680126739;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=El0MMeQTJ3DJE1s43/QriaOmcFIxh1mXiWAdapyszPg=;
-  b=eOeS6UALISAyd7KlPdCFBvANcDp913614r8Pn+pOPOY45vT5bOvFq0nC
-   6zcLO4Kvb3mH7CEk1JnhDY8BbzGlX4ARijGeeGIFLzf1iO00MJOjJDXng
-   lofdRJjDDWDHVFwxkKdjbYHoA5wyv/QSXRS2SmoIF8C7Z0uZ4TBEHLQju
-   A=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 29 Mar 2022 14:52:19 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Mar 2022 14:52:17 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 29 Mar 2022 14:52:17 -0700
-Received: from [10.110.122.15] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 29 Mar
- 2022 14:52:16 -0700
-Message-ID: <4d39e113-37ec-3889-1726-25e9d26bdbd7@quicinc.com>
-Date:   Tue, 29 Mar 2022 14:52:15 -0700
+        d=gmail.com; s=20210112;
+        h=message-id:mime-version:content-transfer-encoding
+         :content-description:subject:to:from:date:reply-to;
+        bh=+v//v9bV1cKxYYqp6E5HrJfuFydY/JXcjMGnmfr7lM0=;
+        b=gt069rYNJR0FCCxMRCLerqY/0V+bE/apBhEawc/77mhQiGB8X4NjibLORyJmeP3ptc
+         WILFz0t/duNU3QjEhXB4Tzc0m6ZDnsO/b4gCX7Yv7sxN3lfooKfhO9oJUySm9NhvsXbX
+         ntEZjtNO1rdWyvGmT0I2JVNCYhpm1K9vgkR6uj579yuO66QOIgT4gcgKN3/OM3GEqP0Z
+         FFXUWfQNz2tvcNSdtpMzU5SihTuprXmod/Hn/mhzBKKoo8nZ7Ou++WCY91nG7TZ7wzzQ
+         7y9wA5MjV8wJMBOSJhQ6/x9AyB5RCkjcOOIWVAzx+0uEjNvtVaoYLQrtuXxQxnzGWMcc
+         Y3og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:mime-version
+         :content-transfer-encoding:content-description:subject:to:from:date
+         :reply-to;
+        bh=+v//v9bV1cKxYYqp6E5HrJfuFydY/JXcjMGnmfr7lM0=;
+        b=47OFO3+qYy4suNmqSMqoM8MLm2Po+mY+0lD+1npXXqW7F2ffn2jdkz6UOAPmiTAeDn
+         vothYYL5RT4cfYvFl7OHO3xpqheBshXQeADRIPeyngSz7fMM4LYZVkTlI5oKX+VfJCBT
+         ayadwYF08N3eAAQjXXoLecSiWMUVnDCXQdlaQV9Zz0vCchZ4xELVbA9Do0ISLaqcO9s0
+         chaT3QjVp6nqDjvACfsdaB/470lEB4/zGU91udz1+ByUmrKvwJyCa0WvOe2wngQtGXpI
+         5U6nZ7cDrc4OWTD0KNjVmi0tVmvVV3JHCpcPs15KHBo0hckS4XOXEEivjyOknwGlDtux
+         lTqw==
+X-Gm-Message-State: AOAM531nGjNTYPHKLjdgs4QenIjfb2rocs0RCHHjgtZuNMlQVdgFQivl
+        /zQfTPSaNxSUnsVkZHDCgtg=
+X-Google-Smtp-Source: ABdhPJwCJCSD3c8Pd+I3F0PbZtYQbcejnaMQq+8VDqmTDjbavzZbcEWTegTMSb6ylRTnkAyW2nAmHw==
+X-Received: by 2002:adf:f24d:0:b0:203:ee8a:2160 with SMTP id b13-20020adff24d000000b00203ee8a2160mr33147049wrp.497.1648593010065;
+        Tue, 29 Mar 2022 15:30:10 -0700 (PDT)
+Received: from [172.20.10.4] ([102.91.4.187])
+        by smtp.gmail.com with ESMTPSA id p16-20020a5d48d0000000b00205cf199abcsm2851970wrs.46.2022.03.29.15.30.05
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Tue, 29 Mar 2022 15:30:09 -0700 (PDT)
+Message-ID: <62438871.1c69fb81.a7286.bce7@mx.google.com>
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 3/3] drm/msm/dpu: drop VBIF indices
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20220217034502.464312-1-dmitry.baryshkov@linaro.org>
- <20220217034502.464312-3-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20220217034502.464312-3-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Gefeliciteerd, er is geld aan je gedoneerd
+To:     Recipients <adeboyejofolashade55@gmail.com>
+From:   adeboyejofolashade55@gmail.com
+Date:   Tue, 29 Mar 2022 23:30:00 +0100
+Reply-To: mike.weirsky.foundation003@gmail.com
+X-Spam-Status: No, score=2.4 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        LOTS_OF_MONEY,MONEY_FREEMAIL_REPTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,T_US_DOLLARS_3 autolearn=no
         autolearn_force=no version=3.4.6
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Beste begunstigde,
 
+ Je hebt een liefdadigheidsdonatie van ($ 10.000.000,00) van Mr. Mike Weirs=
+ky, een winnaar van een powerball-jackpotloterij van $ 273 miljoen.  Ik don=
+eer aan 5 willekeurige personen als je deze e-mail ontvangt, dan is je e-ma=
+il geselecteerd na een spin-ball. Ik heb vrijwillig besloten om het bedrag =
+van $ 10 miljoen USD aan jou te doneren als een van de geselecteerde 5, om =
+mijn winst te verifi=EBren
+ =
 
-On 2/16/2022 7:45 PM, Dmitry Baryshkov wrote:
-> We do not expect to have other VBIFs. Drop VBIF_n indices and always use
-> VBIF_RT and VBIF_NRT.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  4 +--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |  6 ++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c      | 36 ++++++++++++-------
->   3 files changed, 28 insertions(+), 18 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index aa4d20762ccb..dbb853042aa0 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -1115,7 +1115,7 @@ static const struct dpu_vbif_dynamic_ot_cfg msm8998_ot_rdwr_cfg[] = {
->   
->   static const struct dpu_vbif_cfg msm8998_vbif[] = {
->   	{
-> -	.name = "vbif_0", .id = VBIF_0,
-> +	.name = "vbif_rt", .id = VBIF_RT,
->   	.base = 0, .len = 0x1040,
->   	.default_ot_rd_limit = 32,
->   	.default_ot_wr_limit = 32,
-> @@ -1144,7 +1144,7 @@ static const struct dpu_vbif_cfg msm8998_vbif[] = {
->   
->   static const struct dpu_vbif_cfg sdm845_vbif[] = {
->   	{
-> -	.name = "vbif_0", .id = VBIF_0,
-> +	.name = "vbif_rt", .id = VBIF_RT,
->   	.base = 0, .len = 0x1040,
->   	.features = BIT(DPU_VBIF_QOS_REMAP),
->   	.xin_halt_timeout = 0x4000,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> index bb9ceadeb0bb..598c201ae50d 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> @@ -254,11 +254,9 @@ enum dpu_wd_timer {
->   };
->   
->   enum dpu_vbif {
-> -	VBIF_0,
-> -	VBIF_1,
-> +	VBIF_RT,
-> +	VBIF_NRT,
->   	VBIF_MAX,
-> -	VBIF_RT = VBIF_0,
-> -	VBIF_NRT = VBIF_1
->   };
->   
->   /**
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
-> index cbbf77b17fc3..c011d4ab6acc 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_vbif.c
-> @@ -19,6 +19,18 @@ static struct dpu_hw_vbif *dpu_get_vbif(struct dpu_kms *dpu_kms, enum dpu_vbif v
->   	return NULL;
->   }
->   
-> +static const char *dpu_vbif_name(enum dpu_vbif idx)
-> +{
-> +	switch (idx) {
-> +	case VBIF_RT:
-> +		return "VBIF_RT";
-> +	case VBIF_NRT:
-> +		return "VBIF_NRT";
-> +	default:
-> +		return "??";
-> +	}
-> +}
-> +
->   /**
->    * _dpu_vbif_wait_for_xin_halt - wait for the xin to halt
->    * @vbif:	Pointer to hardware vbif driver
-> @@ -50,12 +62,12 @@ static int _dpu_vbif_wait_for_xin_halt(struct dpu_hw_vbif *vbif, u32 xin_id)
->   
->   	if (!status) {
->   		rc = -ETIMEDOUT;
-> -		DPU_ERROR("VBIF %d client %d not halting. TIMEDOUT.\n",
-> -				vbif->idx - VBIF_0, xin_id);
-> +		DPU_ERROR("%s client %d not halting. TIMEDOUT.\n",
-> +				dpu_vbif_name(vbif->idx), xin_id);
->   	} else {
->   		rc = 0;
-> -		DRM_DEBUG_ATOMIC("VBIF %d client %d is halted\n",
-> -				vbif->idx - VBIF_0, xin_id);
-> +		DRM_DEBUG_ATOMIC("%s client %d is halted\n",
-> +				dpu_vbif_name(vbif->idx), xin_id);
->   	}
->   
->   	return rc;
-> @@ -95,8 +107,8 @@ static void _dpu_vbif_apply_dynamic_ot_limit(struct dpu_hw_vbif *vbif,
->   		}
->   	}
->   
-> -	DRM_DEBUG_ATOMIC("vbif:%d xin:%d w:%d h:%d fps:%d pps:%llu ot:%u\n",
-> -			vbif->idx - VBIF_0, params->xin_id,
-> +	DRM_DEBUG_ATOMIC("%s xin:%d w:%d h:%d fps:%d pps:%llu ot:%u\n",
-> +			dpu_vbif_name(vbif->idx), params->xin_id,
->   			params->width, params->height, params->frame_rate,
->   			pps, *ot_lim);
->   }
-> @@ -141,8 +153,8 @@ static u32 _dpu_vbif_get_ot_limit(struct dpu_hw_vbif *vbif,
->   	}
->   
->   exit:
-> -	DRM_DEBUG_ATOMIC("vbif:%d xin:%d ot_lim:%d\n",
-> -			vbif->idx - VBIF_0, params->xin_id, ot_lim);
-> +	DRM_DEBUG_ATOMIC("%s xin:%d ot_lim:%d\n",
-> +			dpu_vbif_name(vbif->idx), params->xin_id, ot_lim);
->   	return ot_lim;
->   }
->   
-> @@ -242,8 +254,8 @@ void dpu_vbif_set_qos_remap(struct dpu_kms *dpu_kms,
->   	forced_on = mdp->ops.setup_clk_force_ctrl(mdp, params->clk_ctrl, true);
->   
->   	for (i = 0; i < qos_tbl->npriority_lvl; i++) {
-> -		DRM_DEBUG_ATOMIC("vbif:%d xin:%d lvl:%d/%d\n",
-> -				params->vbif_idx, params->xin_id, i,
-> +		DRM_DEBUG_ATOMIC("%s xin:%d lvl:%d/%d\n",
-> +				dpu_vbif_name(params->vbif_idx), params->xin_id, i,
->   				qos_tbl->priority_lvl[i]);
->   		vbif->ops.set_qos_remap(vbif, params->xin_id, i,
->   				qos_tbl->priority_lvl[i]);
-> @@ -263,8 +275,8 @@ void dpu_vbif_clear_errors(struct dpu_kms *dpu_kms)
->   		if (vbif && vbif->ops.clear_errors) {
->   			vbif->ops.clear_errors(vbif, &pnd, &src);
->   			if (pnd || src) {
-> -				DRM_DEBUG_KMS("VBIF %d: pnd 0x%X, src 0x%X\n",
-> -					      vbif->idx - VBIF_0, pnd, src);
-> +				DRM_DEBUG_KMS("%s: pnd 0x%X, src 0x%X\n",
-> +					      dpu_vbif_name(vbif->idx), pnd, src);
->   			}
->   		}
->   	}
+  Vriendelijk antwoord op: mike.weirsky.foundation003@gmail.com
+ Voor uw claim.
