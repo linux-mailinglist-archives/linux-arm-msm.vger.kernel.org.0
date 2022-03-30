@@ -2,117 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 567064ECD22
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 21:19:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EF894ECD4B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 21:32:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239855AbiC3TVD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Mar 2022 15:21:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34024 "EHLO
+        id S1346468AbiC3Tds (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Mar 2022 15:33:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350734AbiC3TUj (ORCPT
+        with ESMTP id S1350282AbiC3Tds (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Mar 2022 15:20:39 -0400
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 092BD6155;
-        Wed, 30 Mar 2022 12:18:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1648667917; x=1680203917;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=EPfZR4tpHhDfDi4POeZPO4ixXNKSTXTaIqowE3v9tOc=;
-  b=kJImin4yGV09651/vKLixpmnJPZS7mLRO/XYOAu/zEeCKypqb4CcHUzx
-   NfZVeGsIguQ5+YmA/2sG9fARnz7/5HDqpjs1YjYkZ9LncTIUyfKFsyy+p
-   IK0F8icoAQfkDQ88rhBpa/LPGxe6ts8qQMqsFI/ge0hpGCZl0XU+PPvkB
-   P/UMNZHP81IxwQ2HWP155BSb1nqwrBQ9pMX7hgYm4DRO2pu0LR6obdl89
-   zMsRjPjiNsoySwdPX5C0UtFgRDDkYirb9YKMumYCNpNlLduqUhXBY/IPi
-   /OH6XvYcuVb/8H+LAudH8rY8GeIr0Oavj6X2NqisA+rKdwOalzd03AaIX
-   g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10302"; a="259339426"
-X-IronPort-AV: E=Sophos;i="5.90,223,1643702400"; 
-   d="scan'208";a="259339426"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Mar 2022 12:18:35 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,223,1643702400"; 
-   d="scan'208";a="586115481"
-Received: from lkp-server02.sh.intel.com (HELO 56431612eabd) ([10.239.97.151])
-  by orsmga001.jf.intel.com with ESMTP; 30 Mar 2022 12:18:33 -0700
-Received: from kbuild by 56431612eabd with local (Exim 4.95)
-        (envelope-from <lkp@intel.com>)
-        id 1nZdpw-0000Oa-MM;
-        Wed, 30 Mar 2022 19:18:32 +0000
-Date:   Thu, 31 Mar 2022 03:17:29 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>,
-        agross@kernel.org
-Cc:     kbuild-all@lists.01.org,
-        Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>,
+        Wed, 30 Mar 2022 15:33:48 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1539A31907;
+        Wed, 30 Mar 2022 12:32:02 -0700 (PDT)
+Received: from g550jk.localnet (a246182.upc-a.chello.nl [62.163.246.182])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 61CE3CB4E4;
+        Wed, 30 Mar 2022 19:32:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1648668720; bh=3DNVwDtsuq84RLI2K9SxbW0zu52l4bles7Y6Cf+v0m0=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=paHlFmHyJGZCBHVducC4U0j5/v4wjZzR61VJ7wvflsD+M8R8M52P1jONty71dxzsx
+         1UcHeBwl84mKCDmtGC2S3QMrg1a0P3oJMds2C6wmhAboz46tXJ1/UNqIEDcZmyZkHE
+         2BAXBDMQ8CZFuqwd1iqRihmhVlTEotap1FGeUNwI=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     Jack Matthews <jm5112356@gmail.com>
+Cc:     jm5112356@gmail.com, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
-Message-ID: <202203310354.EE0k3ev8-lkp@intel.com>
-References: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
+Subject: Re: [PATCH v2] ARM: dts: qcom: pm8226: add node for RTC
+Date:   Wed, 30 Mar 2022 21:31:59 +0200
+Message-ID: <6933014.lOV4Wx5bFT@g550jk>
+In-Reply-To: <20220209165742.652890-1-jm5112356@gmail.com>
+References: <20220209052929.651881-1-jm5112356@gmail.com> <20220209165742.652890-1-jm5112356@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        PDS_OTHER_BAD_TLD,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mars,
+On Mittwoch, 9. Februar 2022 17:57:41 CEST Jack Matthews wrote:
+> Add a node for PM8226's real time clock.
+> 
+> Signed-off-by: Jack Matthews <jm5112356@gmail.com>
 
-Thank you for the patch! Yet something to improve:
+Reviewed-by: Luca Weiss <luca@z3ntu.xyz>
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on v5.17 next-20220330]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
+Also on lg-lenok at least "allow-set-time;" seems to allow writing to the RTC. 
+As I'm quite unsure of the reasoning of it normally being read-only and the 
+implementation details behind what might restrict this I don't think we can 
+safely add this to all pm8226.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Mars-Chen/CHROMIUM-arm64-dts-qcom-Add-sc7180-gelarshie/20220330-171139
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-config: arm64-randconfig-r012-20220330 (https://download.01.org/0day-ci/archive/20220331/202203310354.EE0k3ev8-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 11.2.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/18677c7abfdfc9a72daa7cfc3011314b098b361a
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Mars-Chen/CHROMIUM-arm64-dts-qcom-Add-sc7180-gelarshie/20220330-171139
-        git checkout 18677c7abfdfc9a72daa7cfc3011314b098b361a
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=arm64 SHELL=/bin/bash
+Regards
+Luca
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+> ---
+>  arch/arm/boot/dts/qcom-pm8226.dtsi | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-pm8226.dtsi
+> b/arch/arm/boot/dts/qcom-pm8226.dtsi index 872724490a5d..8ee628ce88a9
+> 100644
+> --- a/arch/arm/boot/dts/qcom-pm8226.dtsi
+> +++ b/arch/arm/boot/dts/qcom-pm8226.dtsi
+> @@ -73,6 +73,13 @@ adc-chan@f {
+>  			};
+>  		};
+> 
+> +		rtc@6000 {
+> +			compatible = "qcom,pm8941-rtc";
+> +			reg = <0x6000>, <0x6100>;
+> +			reg-names = "rtc", "alarm";
+> +			interrupts = <0x0 0x61 0x1 
+IRQ_TYPE_EDGE_RISING>;
+> +		};
+> +
+>  		pm8226_mpps: mpps@a000 {
+>  			compatible = "qcom,pm8226-mpp", "qcom,spmi-
+mpp";
+>  			reg = <0xa000>;
 
-All errors (new ones prefixed by >>):
-
-   In file included from arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts:10:
->> arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie.dtsi:9:10: fatal error: sc7180-trogdor-mipi-camera.dtsi: No such file or directory
-       9 | #include "sc7180-trogdor-mipi-camera.dtsi"
-         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   compilation terminated.
 
 
-vim +9 arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie.dtsi
 
-   > 9	#include "sc7180-trogdor-mipi-camera.dtsi"
-    10	
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
