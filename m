@@ -2,145 +2,237 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 069414EBB0C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 08:47:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D7EB94EBB1A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 08:49:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243153AbiC3Grl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Mar 2022 02:47:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51254 "EHLO
+        id S243406AbiC3Gui (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Mar 2022 02:50:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243192AbiC3Grf (ORCPT
+        with ESMTP id S243410AbiC3Gue (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Mar 2022 02:47:35 -0400
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10olkn2089.outbound.protection.outlook.com [40.92.40.89])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CC5189CD5;
-        Tue, 29 Mar 2022 23:45:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=RD59DRN007MWQh9wkdFfMfPHXkMzk84b60GkgqXnaUH2cwdbI9JKYspU+s/jo7HRnwh85W1eBKc8gwmuowfZYhY6x6jV5PFBYXzfbtuNlyxPltFYdB/oQLIDwzCpSinuZ4cwhvyK1DdgsAF93TTkhZUxc7TWjnQTBlK7zBH3XZuPlV4d8n6QoOE8QNtcFe3CGekHsKCtaO0mz/CKW/YZudOOwJhS3WFdsVRUKkcSknFgdOgQn3+qZysqZKv0WUfWRWoemZ5RjXQspxeWRbev3jnC5aPlIZxhUilaC6cxdzDe+8jkJTGCIUtRianxRzUnYVVdyLwK8fk2idZrctzcnQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gnqaHFspNzaDFXPCxywoCKrChn1FvnhBn5gXssIRgY8=;
- b=kX5GBH2Sh0axhsZQ8Pema7SLLIllutHgvpqQ5x7tbx2HTBX/ggqSJGIjvKaf0cLqUQCx+hc2MhKQbzJVwwvhALGtRqwB7RuJgozyCdYgdDOrESuK2+iZ7LbP5SnlscWCFuAFc/Gw84IlIKryC/vuyMFyaAl3wX+Em+GCf9OCpQ111liPBU1AryVICDw5Un84lUQjEiE+La50a20mPKeX0O1XRdRmil2Coy/A0tlhyh+NhQucVzMsEEm7Y8dNwtJxIoFXqzhkWnw5NxTf7cP1N155ff3hF4yvDMoR8PXQZxA3I4fbecAkm0bSRNVnFmHH4LAYbjj1hHGJUucPh2rTKg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-Received: from BY5PR02MB7009.namprd02.prod.outlook.com (2603:10b6:a03:236::13)
- by SJ0PR02MB8686.namprd02.prod.outlook.com (2603:10b6:a03:3f2::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5123.16; Wed, 30 Mar
- 2022 06:45:47 +0000
-Received: from BY5PR02MB7009.namprd02.prod.outlook.com
- ([fe80::413f:bae6:4e5e:5ae6]) by BY5PR02MB7009.namprd02.prod.outlook.com
- ([fe80::413f:bae6:4e5e:5ae6%6]) with mapi id 15.20.5123.018; Wed, 30 Mar 2022
- 06:45:47 +0000
-From:   Joel Selvaraj <jo@jsfamily.in>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Amit Pundir <amit.pundir@linaro.org>,
-        Joel Selvaraj <jo@jsfamily.in>
-Subject: [PATCH 4/4] arm64: dts: qcom: sdm845-xiaomi-beryllium: enable second wifi channel
-Date:   Wed, 30 Mar 2022 12:15:05 +0530
-Message-ID: <BY5PR02MB7009E2566F9000F338432761D91F9@BY5PR02MB7009.namprd02.prod.outlook.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220330064505.243799-1-jo@jsfamily.in>
-References: <20220330064505.243799-1-jo@jsfamily.in>
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-TMN:  [uWXReaxZUe5vhAMLYgC53dgU9yWicVp0iXkyKYhFIbOsUJmQLcOJ3OkwAiRAwiIl]
-X-ClientProxiedBy: BMXPR01CA0088.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:b00:54::28) To BY5PR02MB7009.namprd02.prod.outlook.com
- (2603:10b6:a03:236::13)
-X-Microsoft-Original-Message-ID: <20220330064505.243799-5-jo@jsfamily.in>
+        Wed, 30 Mar 2022 02:50:34 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AFDC8CDB4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Mar 2022 23:48:41 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id bg10so39499790ejb.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 29 Mar 2022 23:48:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=3frxpVZce2nBNt3706nuqBBrB6UAiD1if/n7un9zI7M=;
+        b=IOIoLxtEStyNGXLaiPfpEGSgWEir/G/yMzS+kf3oMtYR5oGZW5yVwfvF5XMcm1JKqT
+         VJrCXVD/iAAL6ZhFZJAHX2nq3npHPXucf760QqLSc2kQenm8tlTXihEtrIGarg43AL/g
+         0NEt/rdRPA5ywhHixqgEbmT4jokRdzjiR52LatBKrqQnptQekajqPIDv15Jj9zlO2MwG
+         +Q0hNFP8na+2lKnctrMnfyKDy25DWKV8M/l6lJ7Vb1IPSNTyR9fY7TLcskxYG19xnRhv
+         64Y2DiC6PpSoeXL/YYcmRxFec204JgOki162qzMJuHQzCxpqf9HS2tzOkXr59Nf2aM7l
+         3+9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=3frxpVZce2nBNt3706nuqBBrB6UAiD1if/n7un9zI7M=;
+        b=DoliKMZcXMUcXthc91eZ10muc7OpNHS13eiHfRYnZlAlAUIsJdIj3dM+dsFU8deLTh
+         zSVARe9OsFH/bYxCtF6NAHNCsKtn47fBzHRu5gED5ZyV9ZkDOUvfhbTdsq/3caWYokFr
+         aPFjGCOwpnr1Ar6gfrDDEFK/osPfcDgkO0SBwte6HoEwRWKYdbtYQIrn61SaK9cnUNA7
+         nxuSM/Ffb1oHMDn9d0g+xkJNghfzo7U0u1a7xBcWBwk4trId2/3yOQjcATJYpTlwCApa
+         nL+A63agmUrm3vt18YWGh4+KhYDEPxifNm5RGGn/RLik2nbKM3hcwvZzJ6uyqDqetCH4
+         8RoQ==
+X-Gm-Message-State: AOAM533A07beVb3DfqernZXCsg+/D/OZSS9mfaMfjbupVP02JBQT84Wd
+        AXyeaAP4tBTQPTgp2/9gU+FD2Q==
+X-Google-Smtp-Source: ABdhPJye35/TV3C3GPqx2/usMTOpf2+2acjTfiN817foc/PVZIxXA5JCiKGDLF4JGGBqeDlJa/ZG/w==
+X-Received: by 2002:a17:907:1b27:b0:6d9:ceb6:7967 with SMTP id mp39-20020a1709071b2700b006d9ceb67967mr40017117ejc.186.1648622919623;
+        Tue, 29 Mar 2022 23:48:39 -0700 (PDT)
+Received: from [192.168.0.162] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.gmail.com with ESMTPSA id a5-20020aa7cf05000000b0041919e52a38sm9248731edy.46.2022.03.29.23.48.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Mar 2022 23:48:39 -0700 (PDT)
+Message-ID: <ac686e08-008f-be08-db5e-b6d4d08df315@linaro.org>
+Date:   Wed, 30 Mar 2022 08:48:38 +0200
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 561398b8-1f69-496e-8e30-08da1218ebf3
-X-MS-TrafficTypeDiagnostic: SJ0PR02MB8686:EE_
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: JV9U4tEfrgL8wjoKqEBxjyqr9xNxpCMJp2igM8LORfwCRc52JdCRmPwtdXxCYPQIo1aEETkIPp3Fubs7CDcgPkaMI7GCXOPKoVgRC4Q9znihO+D8yIdGD1MgEhL7Vg34SIZ7obb5bqUxFqhXanj9sa9n+oI+NYA3F74QuJ6+VE6d7IJMwIu3sWxEanvu9SULZQBJ9z4AWTe2xniKKfj4UxTPD7qCSakYo/2tgseFXWIkyziHuEeK7dOk56NyJthy5RPGMN51BUoRB293iI7vDDvVSEPlBdNOX6z4Omb+CiH0dWTvkMBUAa58mVcp/5x38fFtOduWiJYPORf+cj3D+mCg0aBvF7Mk7UHcekIWWri4qIXM7iVgsqys4hEAU7wQnRNlAG6ay6ZQFEoThyQf1D9DqEz4mwKa3h6ayIG9MRYPPLBxh5Dajw9UUvHzdBpciFEb+lhfFIA7QkN+GhYf84luNL62z+rOgCLtQqLwjKcuV0HhEKIg3Dq042bO74ANqHSHt9+RYNP9QJkWuh5xaVKOsDqfW/hkovOoKb98V3UZJkJ257RAtzcp+VlcM/9swV01UGp+3cH03NGayEeq6g==
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?tcut6qiLSgqcTarjsw1TP9C7iWoUPdQ5jQpVLl0WTlhNpVxN6zCUdLE5P6uC?=
- =?us-ascii?Q?zoOCeNEf7MXfMIBXp4gxENFFiWExhoraTnw2dLcu1SlfVuMjb1iPoBU7CSfA?=
- =?us-ascii?Q?hbhv4WIoRutrdKav5ICD477AFEPcWJA3EbNprnBeFYWW9lR4LvKzioE1YcUI?=
- =?us-ascii?Q?Mg2A40aCm8tA5GaDMLOvXyKXKP9ih5OmM/hK4DwQeGA7B8n10YvTIB3e2bpb?=
- =?us-ascii?Q?wc7kELMIiyU2X2P9UA06ILaDKCZi1Y6oTZm2rB64Z/zQl2uSKkOTU0P2pqmz?=
- =?us-ascii?Q?H50F5UBiZY+VdU/yCPHd3VvPAK/sSBZfsMO6obovw2B2bhZoFZ4V7LKUGVko?=
- =?us-ascii?Q?N5BZ2NxDfv6w0dbT9hlcwZX3aDJNJIqGhF8/X40PFZxg1T44DbIIQfCoFmId?=
- =?us-ascii?Q?FTB87BvXGGxotiL94KyRF4pN3tYrIAav42xHmcIashY7Hi54ezQepshs22e6?=
- =?us-ascii?Q?U4N4ly9v0ebXyx1Re8UBHLCq8ugW1B8bAzWlrCTd6pPC67OkctJ+jvdT1i1+?=
- =?us-ascii?Q?K6nmDB7Hd6r7brHGno5+7CFol3reeZyj2jLQ9HjhnTQnmWKMyLx/Ufhxedkt?=
- =?us-ascii?Q?Ev94UwfbenuVU/hV16++JXC5EtgHfMGSYAM9zbuerPlFZPMPAeKuj6SOxv98?=
- =?us-ascii?Q?2khYZdgF8umr9/vvnwLY26lH8q2dmo91jWPS+rdC2qc7mQv6ZpZ5EImo+dt8?=
- =?us-ascii?Q?i577zrBB1fY5cD80XPA7529nrv/Hip5CociMOs1Z+m48/bCRYQ55Vv3f1ook?=
- =?us-ascii?Q?GGoOy1bHQYx8uqICdi4onpQk9ZJ0we81ce7mqVehb4TN44lR0+823neGfnp6?=
- =?us-ascii?Q?9IdDb9LcvijlgifgqRUOX+hohfiWK5VM5iJ82PI9SbxsTm18IdyJmVRoW61Q?=
- =?us-ascii?Q?img/KSkEtuoJVllRgja04BFswMZhPuVXKyysAjn9dsFUSlzlAoFtxYAad21X?=
- =?us-ascii?Q?oGbDqHPLjQeRDOBQSyqKYw40HGmp76FDzEFtikMr4mNH6A+zlHxouEsh5M6k?=
- =?us-ascii?Q?CR/b2RZ8Mg53JKZIS8i4RObciY18CyCtZxh6AiFqln9wds2R7ZUT778oR6nQ?=
- =?us-ascii?Q?qKiN3ivedlsFVn4YSwn9FM/G3vU15j/+dFOav/qV3dUfzMe2e4MuA1eDhpYd?=
- =?us-ascii?Q?uQilXWUieUiL6yoWCHw937zHfCnF38WwzYGVY/0+8KWaLCOA6gn5CqG1ppR5?=
- =?us-ascii?Q?Dozm1gq0St2WdQdk/EzspK5f0MxWl5i9fyNVkKyLjEPe6JjOMEuumxxX+8qI?=
- =?us-ascii?Q?VivtkTkbQIDCyUBvikn0TD4K8kZqjwyRpzHD5rAkHWW8pupkqPXaasdGzQqL?=
- =?us-ascii?Q?nAIkMXVaO7ocB1TjyZqUky4SUtSDhlD/r/kQCCQddiQfrN0u4AYIzqadtbb5?=
- =?us-ascii?Q?ejoZ54neE30DX84NCTWUd70Se7nZPijQ4uQD1Ytg/MSM8iFy18dERAwbUVU1?=
- =?us-ascii?Q?RI7f55mnIxGO9+/obr+Cw6T8UwptO3XxoU6SBmR641ArXkeZrzTUZg=3D=3D?=
-X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-99c3d.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 561398b8-1f69-496e-8e30-08da1218ebf3
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR02MB7009.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Mar 2022 06:45:47.7686
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR02MB8686
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH 1/2] spi: dt-bindings: qcom,spi-geni-qcom: convert to
+ dtschema
+Content-Language: en-US
+To:     Kuldeep Singh <singh.kuldeep87k@gmail.com>
+Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20220329112717.252647-1-krzysztof.kozlowski@linaro.org>
+ <20220330062313.GA51331@9a2d8922b8f1>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220330062313.GA51331@9a2d8922b8f1>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Like the c630, the Poco F1 is also capable of using both antenna
-channels for 2.4 and 5ghz wifi, however unlike the c630 only the first
-channel is used for bluetooth. Similar to Oneplus 6.
+On 30/03/2022 08:23, Kuldeep Singh wrote:
+> On Tue, Mar 29, 2022 at 01:27:16PM +0200, Krzysztof Kozlowski wrote:
+>> Convert the GENI based Qualcomm Universal Peripheral (QUP) Serial
+>> Peripheral Interface (SPI) bindings to DT Schema.
+>>
+>> The original bindings in TXT were not complete, so add during conversion
+>> properties already used in DTS and/or in the driver: reg-names, dmas,
+>> interconnects, operating points and power-domains.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  .../bindings/spi/qcom,spi-geni-qcom.txt       |  39 ------
+>>  .../bindings/spi/qcom,spi-geni-qcom.yaml      | 131 ++++++++++++++++++
+>>  2 files changed, 131 insertions(+), 39 deletions(-)
+>>  delete mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.txt
+>>  create mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.txt b/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.txt
+>> deleted file mode 100644
+>> index c8c1e913f4e7..000000000000
+>> --- a/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.txt
+>> +++ /dev/null
+>> @@ -1,39 +0,0 @@
+>> -GENI based Qualcomm Universal Peripheral (QUP) Serial Peripheral Interface (SPI)
+>> -
+>> -The QUP v3 core is a GENI based AHB slave that provides a common data path
+>> -(an output FIFO and an input FIFO) for serial peripheral interface (SPI)
+>> -mini-core.
+>> -
+>> -SPI in master mode supports up to 50MHz, up to four chip selects, programmable
+>> -data path from 4 bits to 32 bits and numerous protocol variants.
+>> -
+>> -Required properties:
+>> -- compatible:		Must contain "qcom,geni-spi".
+>> -- reg:			Must contain SPI register location and length.
+>> -- interrupts:		Must contain SPI controller interrupts.
+>> -- clock-names:		Must contain "se".
+>> -- clocks:		Serial engine core clock needed by the device.
+>> -- #address-cells:	Must be <1> to define a chip select address on
+>> -			the SPI bus.
+>> -- #size-cells:		Must be <0>.
+>> -
+>> -SPI Controller nodes must be child of GENI based Qualcomm Universal
+>> -Peripharal. Please refer GENI based QUP wrapper controller node bindings
+>> -described in Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml.
+>> -
+>> -SPI slave nodes must be children of the SPI master node and conform to SPI bus
+>> -binding as described in Documentation/devicetree/bindings/spi/spi-bus.txt.
+>> -
+>> -Example:
+>> -	spi0: spi@a84000 {
+>> -		compatible = "qcom,geni-spi";
+>> -		reg = <0xa84000 0x4000>;
+>> -		interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
+>> -		clock-names = "se";
+>> -		clocks = <&clock_gcc GCC_QUPV3_WRAP0_S0_CLK>;
+>> -		pinctrl-names = "default", "sleep";
+>> -		pinctrl-0 = <&qup_1_spi_2_active>;
+>> -		pinctrl-1 = <&qup_1_spi_2_sleep>;
+>> -		#address-cells = <1>;
+>> -		#size-cells = <0>;
+>> -	};
+>> diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml b/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
+>> new file mode 100644
+>> index 000000000000..a85ff02ba1db
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
+>> @@ -0,0 +1,131 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/spi/qcom,spi-geni-qcom.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: GENI based Qualcomm Universal Peripheral (QUP) Serial Peripheral Interface (SPI)
+>> +
+>> +maintainers:
+>> +  - Andy Gross <agross@kernel.org>
+>> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+>> +  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> +
+>> +description:
+>> +  The QUP v3 core is a GENI based AHB slave that provides a common data path
+>> +  (an output FIFO and an input FIFO) for serial peripheral interface (SPI)
+>> +  mini-core.
+>> +
+>> +  SPI in master mode supports up to 50MHz, up to four chip selects,
+>> +  programmable data path from 4 bits to 32 bits and numerous protocol variants.
+>> +
+>> +  SPI Controller nodes must be child of GENI based Qualcomm Universal
+>> +  Peripharal. Please refer GENI based QUP wrapper controller node bindings
+>> +  described in Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml.
+>> +
+>> +allOf:
+>> +  - $ref: /spi/spi-controller.yaml#
+> 
+> Rob sometime back sent an update on how to refer absolute paths.
+> Please see below:
+> https://lore.kernel.org/linux-spi/20220325215652.525383-1-robh@kernel.org/
 
-Signed-off-by: Joel Selvaraj <jo@jsfamily.in>
----
- arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 7 +++++++
- 1 file changed, 7 insertions(+)
+Yes, this is wrong. I copied other existing schema without checking. :(
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-index f97900e7797b..798fc72578a7 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
-@@ -185,6 +185,12 @@ vreg_l21a_2p95: ldo21 {
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-+		vreg_l23a_3p3: ldo23 {
-+			regulator-min-microvolt = <3300000>;
-+			regulator-max-microvolt = <3312000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
- 		vreg_l24a_3p075: ldo24 {
- 			regulator-min-microvolt = <3088000>;
- 			regulator-max-microvolt = <3088000>;
-@@ -547,6 +553,7 @@ &wifi {
- 	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
- 	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
- 	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
-+	vdd-3.3-ch1-supply = <&vreg_l23a_3p3>;
- };
- 
- /* PINCTRL - additions to nodes defined in sdm845.dtsi */
--- 
-2.35.1
+> 
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,geni-spi
+>> +
+>> +  clocks:
+>> +    maxItems: 1
+>> +
+>> +  clock-names:
+>> +    const: se
+>> +
+>> +  dmas:
+>> +    maxItems: 2
+>> +
+>> +  dma-names:
+>> +    items:
+>> +      - const: tx
+>> +      - const: rx
+>> +
+>> +  interconnects:
+>> +    minItems: 2
+> 
+> We can skip minItems here.
+> As minimim value defaults to maximum if not defined.
 
+True.
+
+> 
+>> +    maxItems: 2
+>> +
+>> +  interconnect-names:
+>> +    items:
+>> +      - const: qup-core
+>> +      - const: qup-config
+> 
+> Some properties like clocks, dmas, dma-names, interconnect etc. are
+> defined as common child properties of geni based qup.
+> Please see Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
+> 
+> Shouldn't we skip these entities here? as spi reference will anyway be
+> used in geni-se.yaml.
+
+We could have them there, just like we could store all of this schema
+there. Having something half-here-half-there will not work, because this
+schema won't validate.
+
+Therefore all of child properties from qcom,geni-se.yaml should be
+rather moved to child schema (which is included directly in my patch #2).
+
+
+Best regards,
+Krzysztof
