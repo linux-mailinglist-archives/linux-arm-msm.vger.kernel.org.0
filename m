@@ -2,201 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C75D74ECAB2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 19:32:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CAD844ECAF2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 19:45:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231231AbiC3Rdu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Mar 2022 13:33:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53116 "EHLO
+        id S231572AbiC3Rrg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Mar 2022 13:47:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349441AbiC3Rd3 (ORCPT
+        with ESMTP id S229651AbiC3Rrg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Mar 2022 13:33:29 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47F974C400;
-        Wed, 30 Mar 2022 10:31:42 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id h23so30301646wrb.8;
-        Wed, 30 Mar 2022 10:31:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MzOHSa1wGev7C61xNe7AlpnL6176z6/FaTx3bV4mjuY=;
-        b=VpSVi2g7tol4ZEtmFAbrEKl2ClldYYPOqDfvuzHFwzN1r2GBUOmp+X5qC2sTOGTv+q
-         VasI8bOaDB17Wj5zf6L3Vi7yNqMM+GuCL205yQjNT6GPsOlj6+OlpQwqpEvjuRUsNZfE
-         C/azEpBsaT8HORk1sROgRQ8Th4grMWoEvzorWWrPiI6ky8S1auDWu6UaZz9+3BJNOaa2
-         yIrpyzcehU9u17ygGvZ6BJqsxzCVWFm8+RxbW29xvfyBYaZdDrZR3pEfnJXPGdQA3bYd
-         eXnmrSEzBgpFA3JOZZEKy205JvU1lvDbhL30Ri3r8WDUcg6vb5+6MrByecZVrsy7dMNX
-         549g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MzOHSa1wGev7C61xNe7AlpnL6176z6/FaTx3bV4mjuY=;
-        b=X+I3Wx6tOZs9MexdqhRaiq/7xMEyjvrl9HPcc8R7vU95G/MQ2fiTbA0eiSOPMwCFIb
-         OclIAe4P0oWrmds0NzJINCvwKsdcMm2d0Gsa6hrZLETHCjaMm7N/a3j9ss7luoBV0KDy
-         sd9GuRKyMCIx7i1wklb+aZWY9RILQ5PN4GzMRmJjZt7++bfVTA/iV+hGTP8I2gmARe9T
-         SOMetij1IRgMlnFfFWOgFT/JUUMR1+pP4818NDBQFBVEU8wNC0xf/rkeAtNHgj042H4F
-         oDwLnJ3D3w+ULxDhmXbLFBE87qufiFizoVWNH85XF60tfGus93XlDoN45CLdPBn2+9pF
-         YE9g==
-X-Gm-Message-State: AOAM533McLqTishdK/wlN8q8YG8822QQKRKxuNT8s9uwUa+YtCC4HzjP
-        Mv/pZzNQT3g26o0q0aewnRqw40bej9jJb5ZrpX4=
-X-Google-Smtp-Source: ABdhPJxzLtFOHA8j1KP7060UxbMN89W0F5SOw0/ZWrSMMqfII6hCIzYI4qnQ5sVFdKPvpVEKavi+htl4y4KW0PBzBc0=
-X-Received: by 2002:adf:dd4d:0:b0:203:f178:b78b with SMTP id
- u13-20020adfdd4d000000b00203f178b78bmr622734wrm.93.1648661500674; Wed, 30 Mar
- 2022 10:31:40 -0700 (PDT)
+        Wed, 30 Mar 2022 13:47:36 -0400
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD2DB11987E;
+        Wed, 30 Mar 2022 10:45:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1648662349; x=1680198349;
+  h=to:cc:references:from:subject:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=bhBu1QbtdGHCC2qA88WxU1+lM89JHNS2xL8ubX9vaIE=;
+  b=KA/fjs/cHLcdsW63A2zlYO8k4nWzdUApAGBaQoD9ySGOi3xwccZ8MVhR
+   uRIP/I7qgyEz8lkcdhPRBhdQqsw2gw/f+E4dVQp+M9tl5RPJY6PgZte/c
+   7Nb5Qt8deI0QMBzo7evesl0K4XEtWjIYkUUeK1+Rx2lfnVq6+CHKybpSz
+   0Qi0CPa4t786l9EHhtSrsDraS82jaUn1aY7WYQgpG5MaAw+PLAOfhoNzR
+   RsXvo2/6VleUDx+C9lDZyo8VNcJUl32lPiFhZ+RJvOFYRBXeN2kuhyvJ7
+   JkFkWkgDm4Wbp+LE+0Zvnc3MA8XWNbXRowT+aSPEQL2I9GOeUL6y/Wu24
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10302"; a="239534457"
+X-IronPort-AV: E=Sophos;i="5.90,223,1643702400"; 
+   d="scan'208";a="239534457"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Mar 2022 10:45:49 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,223,1643702400"; 
+   d="scan'208";a="653974778"
+Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
+  by orsmga004.jf.intel.com with ESMTP; 30 Mar 2022 10:45:44 -0700
+To:     "Sandeep Maheswaram (Temp)" <quic_c_sanm@quicinc.com>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Peter Chen <peter.chen@kernel.org>,
+        Pawel Laszczak <pawell@cadence.com>,
+        Roger Quadros <rogerq@kernel.org>,
+        Aswath Govindraju <a-govindraju@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com
+References: <1648103831-12347-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1648103831-12347-4-git-send-email-quic_c_sanm@quicinc.com>
+ <YjxjxplpOpDC2JLs@kuha.fi.intel.com>
+ <4c2a28ad-b866-1b65-e73a-4eda0596cea2@linux.intel.com>
+ <Yj2nPa6/Y01P5aCY@kuha.fi.intel.com>
+ <4619c75c-cd34-82f2-56e1-a8bcb6d97177@linux.intel.com>
+ <Yj3h4p/kmZTvMz0O@kuha.fi.intel.com>
+ <fae54b27-9ae2-ecfc-69ae-40e5f5e1afbe@quicinc.com>
+From:   Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: Re: [PATCH v3 3/3] usb: dwc: host: add xhci_plat_priv quirk
+ XHCI_SKIP_PHY_INIT
+Message-ID: <bd694ef9-be57-79f1-e95e-5501c396be25@linux.intel.com>
+Date:   Wed, 30 Mar 2022 20:47:34 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Firefox/78.0 Thunderbird/78.14.0
 MIME-Version: 1.0
-References: <20220329230105.601666-1-robdclark@gmail.com> <20220329230105.601666-4-robdclark@gmail.com>
- <CAA8EJpqAaW0Q-QeQObonUqAhdWaw8mPPvChmboH88ttTx+2XGg@mail.gmail.com>
-In-Reply-To: <CAA8EJpqAaW0Q-QeQObonUqAhdWaw8mPPvChmboH88ttTx+2XGg@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 30 Mar 2022 10:32:32 -0700
-Message-ID: <CAF6AEGtkpF5MLza0LY_AJsC4vu1nAzXZ5xv4Eusz+Bpp6GFXRA@mail.gmail.com>
-Subject: Re: [PATCH 3/9] drm/msm/gem: Split out inuse helper
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <fae54b27-9ae2-ecfc-69ae-40e5f5e1afbe@quicinc.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 30, 2022 at 4:32 AM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Wed, 30 Mar 2022 at 02:00, Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > Prep for a following patch.  While we are at it, convert a few remaining
-> > WARN_ON()s to GEM_WARN_ON().
->
-> Well... GEM_WARN_ON doesn't really look like a 'while we are at it'.
-> It might be better to split it into a separate commit.
+On 29.3.2022 12.18, Sandeep Maheswaram (Temp) wrote:
+> Hi Mathias,Heikki
+> 
+> On 3/25/2022 9:08 PM, Heikki Krogerus wrote:
+>> On Fri, Mar 25, 2022 at 04:33:27PM +0200, Mathias Nyman wrote:
+>>> On 25.3.2022 13.27, Heikki Krogerus wrote:
+>>>> On Fri, Mar 25, 2022 at 12:36:22AM +0200, Mathias Nyman wrote:
+>>>>> On 24.3.2022 14.27, Heikki Krogerus wrote:
+>>>>>> On Thu, Mar 24, 2022 at 12:07:11PM +0530, Sandeep Maheswaram wrote:
+>>>>>>> Currently the phy init is done from dwc3 and also xhci which makes the
+>>>>>>> runtime_usage value 2 for the phy which causes issue during runtime
+>>>>>>> suspend. When we run the below command the runtime_status still shows
+>>>>>>> active.
+>>>>>>> echo auto > /sys/bus/platform/devices/88e3000.phy/power/control
+>>>>>>>
+>>>>>>> dwc3 manages PHY by own DRD driver, so skip the management by
+>>>>>>> HCD core by setting this quirk.
+>>>>>>>
+>>>>>>> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+>>>>>>> ---
+>>>>>>>   drivers/usb/dwc3/host.c | 13 +++++++++++++
+>>>>>>>   1 file changed, 13 insertions(+)
+>>>>>>>
+>>>>>>> diff --git a/drivers/usb/dwc3/host.c b/drivers/usb/dwc3/host.c
+>>>>>>> index eda8719..d4fcf06 100644
+>>>>>>> --- a/drivers/usb/dwc3/host.c
+>>>>>>> +++ b/drivers/usb/dwc3/host.c
+>>>>>>> @@ -13,6 +13,12 @@
+>>>>>>>   #include <linux/platform_device.h>
+>>>>>>>     #include "core.h"
+>>>>>>> +#include <linux/usb/xhci-plat.h>
+>>>>>>> +#include <linux/usb/xhci-quirks.h>
+>>>>>>> +
+>>>>>>> +static const struct xhci_plat_priv xhci_plat_dwc3_xhci = {
+>>>>>>> +    .quirks = XHCI_SKIP_PHY_INIT,
+>>>>>>> +};
+>>>>>>>     static void dwc3_host_fill_xhci_irq_res(struct dwc3 *dwc,
+>>>>>>>                       int irq, char *name)
+>>>>>>> @@ -122,6 +128,13 @@ int dwc3_host_init(struct dwc3 *dwc)
+>>>>>>>           }
+>>>>>>>       }
+>>>>>>>   +    ret = platform_device_add_data(xhci, &xhci_plat_dwc3_xhci,
+>>>>>>> +            sizeof(xhci_plat_dwc3_xhci));
+>>>>>>> +    if (ret) {
+>>>>>>> +        dev_err(dwc->dev, "failed to add data to xHCI\n");
+>>>>>>> +        goto err;
+>>>>>>> +    }
+>>>>>>> +
+>>>>>>>       ret = platform_device_add(xhci);
+>>>>>>>       if (ret) {
+>>>>>>>           dev_err(dwc->dev, "failed to register xHCI device\n");
+>>>>>> I think you should just use device property:
+>>>>>>
+>>>>> This was suggested in an earlier series, but was rejected as it also added
+>>>>> the property as a device tree parameter.
+>>>>>
+>>>>> I think adding more device properties can be messy in the long run, especially if we
+>>>>> need to add them for many of the existing xhci quirks.
+>>>>> We also end up with a mix where some device properties are listed as device tree
+>>>>> parameters, and some not.
+>>>>>
+>>>>> Defining xhci quirks and platform data structure in headers shared with dwc3 and cdns3
+>>>>> allow those drivers to easily set any existing xhci quirk, or other possible optional
+>>>>> callbacks.
+>>>>>
+>>>>> cdns3 driver is already doing this, but it includes the full xhci.h header.
+>>>>> This series cleans up that a bit so cdns3 will only include xhci quirk bits and
+>>>>> platform data structure.
+>>>>>
+>>>>> On the downside we add a couple xhci related header files to include/linux/usb/
+>>>>> Let me know if you see any other issues I missed with this approach.
+>>>> The problem here is that these drivers are now coupled together, and
+>>>> that should not be taken lightly. We have a dependency hell in our
+>>>> hands with a lot of drivers, and the culprit is always platform data.
+>>>>
+>>>> Build-in device properties may be messy, but I would still say they
+>>>> are less messy than those quirk flags - you got to admit, they are a
+>>>> mess. The benefit from build-in properties is in any case the fact
+>>>> that they remove the need to couple these drivers together.
+>>> Agree, quirk bits are messy. Any suggestion that would work with
+>>> PCI xHCI devices, devicetree, and "pure" platform devices?
+>> I think xHCI driver should always be able to rely on being able to
+>> read this kind of information from the fwnode. If there is no actual
+>> firmware node (DT or ACPI), or if it's missing some information, the
+>> glue driver needs to populate software node for the xHCI.
+>>
+>> Right now I just want to avoid having to pass the quirks using
+>> platform data from drivers such as drivers/usb/cdns3/host.c and
+>> drivers/usb/dwc3/host.c to xHCI.
+>>
+>> One way we could do that is by defining compatibility ID for both of
+>> them that we provide using a single device property (like I guess DT
+>> does). Then based on that compatibility ID, xhci-plat.c can set the
+>> actual "static" quirk flags. That we could already do easily. How
+>> would that sound to you?
 
-it was a bit lazy.. I'll split it out
+Sounds good. 
 
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >  drivers/gpu/drm/msm/msm_gem.c     |  2 +-
-> >  drivers/gpu/drm/msm/msm_gem.h     |  1 +
-> >  drivers/gpu/drm/msm/msm_gem_vma.c | 15 ++++++++++-----
-> >  3 files changed, 12 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-> > index a4f61972667b..f96d1dc72021 100644
-> > --- a/drivers/gpu/drm/msm/msm_gem.c
-> > +++ b/drivers/gpu/drm/msm/msm_gem.c
-> > @@ -938,7 +938,7 @@ void msm_gem_describe(struct drm_gem_object *obj, struct seq_file *m,
-> >                                 name, comm ? ":" : "", comm ? comm : "",
-> >                                 vma->aspace, vma->iova,
-> >                                 vma->mapped ? "mapped" : "unmapped",
-> > -                               vma->inuse);
-> > +                               msm_gem_vma_inuse(vma));
-> >                         kfree(comm);
-> >                 }
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-> > index 947ff7d9b471..1b7f0f0b88bf 100644
-> > --- a/drivers/gpu/drm/msm/msm_gem.h
-> > +++ b/drivers/gpu/drm/msm/msm_gem.h
-> > @@ -61,6 +61,7 @@ struct msm_gem_vma {
-> >  int msm_gem_init_vma(struct msm_gem_address_space *aspace,
-> >                 struct msm_gem_vma *vma, int npages,
-> >                 u64 range_start, u64 range_end);
-> > +bool msm_gem_vma_inuse(struct msm_gem_vma *vma);
-> >  void msm_gem_purge_vma(struct msm_gem_address_space *aspace,
-> >                 struct msm_gem_vma *vma);
-> >  void msm_gem_unmap_vma(struct msm_gem_address_space *aspace,
-> > diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
-> > index f914ddbaea89..dc2ae097805e 100644
-> > --- a/drivers/gpu/drm/msm/msm_gem_vma.c
-> > +++ b/drivers/gpu/drm/msm/msm_gem_vma.c
-> > @@ -37,6 +37,11 @@ msm_gem_address_space_get(struct msm_gem_address_space *aspace)
-> >         return aspace;
-> >  }
-> >
-> > +bool msm_gem_vma_inuse(struct msm_gem_vma *vma)
-> > +{
-> > +       return !!vma->inuse;
-> > +}
->
-> It almost  asks to be a static inline. The patch 04 makes it complex,
-> so it's probably not that important.
+> 
+> This was my previous patch where I was using device tree property. Should we go ahead with this approach?
+> 
+> https://patchwork.kernel.org/project/linux-arm-msm/cover/1636353710-25582-1-git-send-email-quic_c_sanm@quicinc.com/
+> 
+> Any further changes to this ?
 
-yeah, that is the reason I didn't make it static inline
+By dropping the DT part of that series we get a similar built-in device property
+solution as Heikki initially suggested.
 
-BR,
--R
+How about adding the compatibility ID device property that was just suggested?
+Then matching the Id in xhci-plat.c against a static table containing Ids and
+xhci_plat_priv structures, with the needed quirks for dwc3.
 
-> > +
-> >  /* Actually unmap memory for the vma */
-> >  void msm_gem_purge_vma(struct msm_gem_address_space *aspace,
-> >                 struct msm_gem_vma *vma)
-> > @@ -44,7 +49,7 @@ void msm_gem_purge_vma(struct msm_gem_address_space *aspace,
-> >         unsigned size = vma->node.size << PAGE_SHIFT;
-> >
-> >         /* Print a message if we try to purge a vma in use */
-> > -       if (WARN_ON(vma->inuse > 0))
-> > +       if (GEM_WARN_ON(msm_gem_vma_inuse(vma)))
-> >                 return;
-> >
-> >         /* Don't do anything if the memory isn't mapped */
-> > @@ -61,7 +66,7 @@ void msm_gem_purge_vma(struct msm_gem_address_space *aspace,
-> >  void msm_gem_unmap_vma(struct msm_gem_address_space *aspace,
-> >                 struct msm_gem_vma *vma)
-> >  {
-> > -       if (!WARN_ON(!vma->iova))
-> > +       if (!GEM_WARN_ON(!vma->iova))
-> >                 vma->inuse--;
-> >  }
-> >
-> > @@ -73,7 +78,7 @@ msm_gem_map_vma(struct msm_gem_address_space *aspace,
-> >         unsigned size = npages << PAGE_SHIFT;
-> >         int ret = 0;
-> >
-> > -       if (WARN_ON(!vma->iova))
-> > +       if (GEM_WARN_ON(!vma->iova))
-> >                 return -EINVAL;
-> >
-> >         /* Increase the usage counter */
-> > @@ -100,7 +105,7 @@ msm_gem_map_vma(struct msm_gem_address_space *aspace,
-> >  void msm_gem_close_vma(struct msm_gem_address_space *aspace,
-> >                 struct msm_gem_vma *vma)
-> >  {
-> > -       if (WARN_ON(vma->inuse > 0 || vma->mapped))
-> > +       if (GEM_WARN_ON(msm_gem_vma_inuse(vma) || vma->mapped))
-> >                 return;
-> >
-> >         spin_lock(&aspace->lock);
-> > @@ -120,7 +125,7 @@ int msm_gem_init_vma(struct msm_gem_address_space *aspace,
-> >  {
-> >         int ret;
-> >
-> > -       if (WARN_ON(vma->iova))
-> > +       if (GEM_WARN_ON(vma->iova))
-> >                 return -EBUSY;
-> >
-> >         spin_lock(&aspace->lock);
-> > --
-> > 2.35.1
-> >
->
->
-> --
-> With best wishes
-> Dmitry
+Thanks
+-Mathias
