@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A7964EC156
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 13:56:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9DF04EC2A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 14:00:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344784AbiC3L4c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Mar 2022 07:56:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57828 "EHLO
+        id S1344265AbiC3MAc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Mar 2022 08:00:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345949AbiC3LzP (ORCPT
+        with ESMTP id S1344211AbiC3Lzl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Mar 2022 07:55:15 -0400
+        Wed, 30 Mar 2022 07:55:41 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9740658F;
-        Wed, 30 Mar 2022 04:53:13 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 280B32CCB9;
+        Wed, 30 Mar 2022 04:53:47 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 81F6A6160D;
-        Wed, 30 Mar 2022 11:53:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F08C3410F;
-        Wed, 30 Mar 2022 11:53:11 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B8DBD616E0;
+        Wed, 30 Mar 2022 11:53:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929A0C3410F;
+        Wed, 30 Mar 2022 11:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648641192;
+        s=k20201202; t=1648641226;
         bh=5DhYdPpy5hGpue8wLGlBJX3nNYuxCqm2NqDqAHyvBQI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=i3b8GHi+4jfCH36GLs7UI2fSS2hSbMjKS4agrcprp9XapSFSVP3g82AwIGk22XJkN
-         GiX/kjieNqSdaG0GqyD3uChYE48gthVApAEp6rQyXlv5acXph1UTzvkzHm+yj0jpi2
-         EArKDmjqO2icdtAj5GMIkfOhDA/z4qdtqOC8+oeOrVT1IAV4/a0TCrzi6R14OiYVOm
-         R5pJI4pi6lwrRftYrCUoKTN0b7AkzjUSf1lZtteBdONwgDAZmEQ1TNDPO2cuG1Ulxs
-         5BQTMql8sMZRgRJICYdU+4zde42mB+18eYbkZFKWUB1uMpkLgB9sw2rby9UtNhE4QT
-         qJV0oTplheaeg==
+        b=bw6OxbEsq2XHUtfEbexXnv/Tjbl3TR31QQjf4/I3mLKVUexh28rooQdsx4gS8+tgX
+         9ll5rRGk+I3Y/xYo7xhyaik+QfrdiN25lgliJe+EUrzXOjM/sYziw320kwqxlqT16w
+         UnaeqaHFWwYj/dOTgtnnfyW6U2xoVZ1p+/KcACJiXhqOdytoz53BZbGyZIyOFih4ox
+         366rIr8uEKNHDPrI9JkBDKQrwmgV+ax1qAaHP4koqnF3X7L+s/5G+RrQDSisirufGU
+         hZAISoIKy9Yi/yx1tnxS/m2TP9M5etQPoo1hAL8T6BzIcqb1IjUcQXqc12i5HeywzS
+         trQ3KuRbfa2Xw==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     David Heidelberg <david@ixit.cz>,
@@ -42,12 +42,12 @@ Cc:     David Heidelberg <david@ixit.cz>,
         linux@armlinux.org.uk, linux-arm-msm@vger.kernel.org,
         linux-soc@vger.kernel.org, devicetree@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 4.19 05/22] ARM: dts: qcom: fix gic_irq_domain_translate warnings for msm8960
-Date:   Wed, 30 Mar 2022 07:52:46 -0400
-Message-Id: <20220330115303.1672616-5-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 05/20] ARM: dts: qcom: fix gic_irq_domain_translate warnings for msm8960
+Date:   Wed, 30 Mar 2022 07:53:21 -0400
+Message-Id: <20220330115336.1672930-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220330115303.1672616-1-sashal@kernel.org>
-References: <20220330115303.1672616-1-sashal@kernel.org>
+In-Reply-To: <20220330115336.1672930-1-sashal@kernel.org>
+References: <20220330115336.1672930-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
