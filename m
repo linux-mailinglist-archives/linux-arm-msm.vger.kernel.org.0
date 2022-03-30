@@ -2,240 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3D2D4EBFA7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 13:14:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BF534EBFC2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 13:27:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343541AbiC3LQA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Mar 2022 07:16:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45038 "EHLO
+        id S1343622AbiC3L3a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Mar 2022 07:29:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343553AbiC3LQA (ORCPT
+        with ESMTP id S1343618AbiC3L31 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Mar 2022 07:16:00 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 925CEDF9B;
-        Wed, 30 Mar 2022 04:14:14 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id e5so20168020pls.4;
-        Wed, 30 Mar 2022 04:14:14 -0700 (PDT)
+        Wed, 30 Mar 2022 07:29:27 -0400
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D3DE15AAE7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Mar 2022 04:27:43 -0700 (PDT)
+Received: by mail-qv1-xf2e.google.com with SMTP id ke15so16552373qvb.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Mar 2022 04:27:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=22f31UDp1UVUDsv1k+0Goozxl/zCGPew/x8b337ojQ8=;
-        b=WtrcA8KpykmVc1ZfjqTAm039LeHU6t1MJtcNLTmBtxRraS4GqqA+jKbtFZxeI3y/8r
-         jxu4D8/kcBJ6UOEJhQ7u9IF6VmT3eS/ANozDoeW6n3UBp111S4CA86Co+hrIDFWFa+D4
-         3iWY5RuVZlqNdkq13ji8X+ZBj6INjuU3ErZuQP8Emn0wZh9IfCbuA6sT25FGR+2mm2zF
-         62G7HU536GdLhpcXFGuIirh0kjzXSC02A6H6CHlLlMn7Yq1iDjOQ3FE56ih73EIYmfee
-         eoNFT6p7+fBed7ZtxTc1WTJ3m95vTrJO0hMFUcLdjaaBSEC/NuCWmgWDooPWH4hfNuwn
-         LF0A==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=y/SsoG+PpKWZDfvPklFn/XSUiKVJSokW9Px0KF4dxFU=;
+        b=TV8CO7mCsyY6rTwKULNk8AfGXiRuAD4fGxo59BLPKmCtSfDXZvxW+xYeEpyDsglta9
+         VDZnSq8YJ6vq0bYLyG+g2ssJhSCd3a2TnzT3pNGfVekmcxdCqB2NEd89yuYfax/LVui2
+         Adc1or8+g5aoNaVN9drL6wS0ov4T2gSddo4xlKagieGhP3WmFuBWv6PRrXJovbfh85q/
+         C0HiIbZ13bM+1ya302EspQp/kTo3KNkATsar+r/gTtohvx+Oe7tBp1Tq+gd+whdrgqR4
+         BHS8PR2/zSPrc6uir7hjx+KqchfemvvnGYQ1iI0zhxU9vGpVH2jFrsKPvokr1Hmq3suT
+         P+Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=22f31UDp1UVUDsv1k+0Goozxl/zCGPew/x8b337ojQ8=;
-        b=ucX8sw9d93xWi3qkhbykRSrJ5K6W1ZUTh473QZlY/WTs+m8RnyE/+Jr6pB6N1OmE62
-         mEGaUD5ZjTg0DntrqpRqLhq+9vVd1lp5Jnzele2C/+aVN6guhrKvTrAvI5zML/0pknL+
-         TKR7zM21+CEYQvuMoEXOEz+IhBRgwmH9r8wQEUJQSYx+tzyRciBCrXr8oUEr0YUuez8Z
-         u4QBfDczReSDKCg+MMCAC8pQZYCxFfy+RgFU9f4q7LJni+D21MPYvVQ20dISiV40S/T6
-         KmZ9vVJD3Offqh17AKqsX3nrq6862PTDsNQFZyBDBuQuDuNzZGo1jOfjPDfiNk6Z8jHG
-         JItA==
-X-Gm-Message-State: AOAM532fL1W4Zt9/YYk58aBflQEanrI6qAjsebtd+3jThIx/50RAA7AR
-        dcx7wdVG//gUwzrzO7Uk+pO4sNCkIrw=
-X-Google-Smtp-Source: ABdhPJwD3DndapDHCHa1GaQhheLH9WN1jpG5fTtJg0rhgywC7GKmLUW6dESK+fpmBVKykC7HYIgkVA==
-X-Received: by 2002:a17:902:c949:b0:154:5215:1db1 with SMTP id i9-20020a170902c94900b0015452151db1mr34742584pla.163.1648638853697;
-        Wed, 30 Mar 2022 04:14:13 -0700 (PDT)
-Received: from 9a2d8922b8f1 ([122.161.51.18])
-        by smtp.gmail.com with ESMTPSA id ip1-20020a17090b314100b001c7b10fe359sm6498048pjb.5.2022.03.30.04.14.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Mar 2022 04:14:13 -0700 (PDT)
-Date:   Wed, 30 Mar 2022 16:44:07 +0530
-From:   Kuldeep Singh <singh.kuldeep87k@gmail.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/2] spi: dt-bindings: qcom,spi-geni-qcom: convert to
- dtschema
-Message-ID: <20220330111407.GA51399@9a2d8922b8f1>
-References: <20220329112717.252647-1-krzysztof.kozlowski@linaro.org>
- <20220330062313.GA51331@9a2d8922b8f1>
- <ac686e08-008f-be08-db5e-b6d4d08df315@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=y/SsoG+PpKWZDfvPklFn/XSUiKVJSokW9Px0KF4dxFU=;
+        b=LdY2jDfD2i0MJ6mp+AoGqj/MXIQhNjUCaStU5iCZJZMVJSmxjq6TW26MPPWDHeqxAW
+         wK8RAaJS+jnI7yjRhiPTMSrOsa9G3V/hFXni0cObnA781zVjlx0cQdos9HuMvshfXtkO
+         EAbKcxBQKcnr9m/S3sX12h+h4JqiGsTIcFy8Lr1W8jKOHd1Si08jGp6VYlPn8lq8WRoF
+         4E0a3oVLKEl/Ojs1RS7G9IpWz7b/X5cnbO+hjtpwm8ncPNwvgZIU4apQV5s7RvlYhMxr
+         zC6vkRAOTaNgGhJdF3I8CgJVAIuLlb2zjXIAcPDeq0lXsSwgs3dltGNQpU3WEselkWI9
+         Y5Rw==
+X-Gm-Message-State: AOAM531m4Mq3evGAU8qJ05GFNEdlrbCNKhF2T1GKkHNfjZd5dreJO0+Z
+        4mTPGgLG4B85sIDfVO1X9+s8xsqEYKo9QjIKdreqoVgwRC69rg==
+X-Google-Smtp-Source: ABdhPJzTEEZV6fvobIkqTMfmaHzhQtUGKCaL+0AzoovinKm6qsrtL+/TFRCKNZBGyqYJ8Lv2uyCxtK2GjxqQhWDJ+qQ=
+X-Received: by 2002:a05:6214:27ec:b0:443:9153:23d0 with SMTP id
+ jt12-20020a05621427ec00b00443915323d0mr720525qvb.122.1648639662175; Wed, 30
+ Mar 2022 04:27:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ac686e08-008f-be08-db5e-b6d4d08df315@linaro.org>
+References: <20220329230105.601666-1-robdclark@gmail.com> <20220329230105.601666-6-robdclark@gmail.com>
+In-Reply-To: <20220329230105.601666-6-robdclark@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 30 Mar 2022 14:27:31 +0300
+Message-ID: <CAA8EJprKZip_3W6OJZoFs2Zewtp4hqWyADfqG8ZPXcD8FCgXbQ@mail.gmail.com>
+Subject: Re: [PATCH 5/9] drm/msm: Drop msm_gem_iova()
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 30, 2022 at 08:48:38AM +0200, Krzysztof Kozlowski wrote:
-> On 30/03/2022 08:23, Kuldeep Singh wrote:
-> > On Tue, Mar 29, 2022 at 01:27:16PM +0200, Krzysztof Kozlowski wrote:
-> >> Convert the GENI based Qualcomm Universal Peripheral (QUP) Serial
-> >> Peripheral Interface (SPI) bindings to DT Schema.
-> >>
-> >> The original bindings in TXT were not complete, so add during conversion
-> >> properties already used in DTS and/or in the driver: reg-names, dmas,
-> >> interconnects, operating points and power-domains.
-> >>
-> >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >> ---
-> >>  .../bindings/spi/qcom,spi-geni-qcom.txt       |  39 ------
-> >>  .../bindings/spi/qcom,spi-geni-qcom.yaml      | 131 ++++++++++++++++++
-> >>  2 files changed, 131 insertions(+), 39 deletions(-)
-> >>  delete mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.txt
-> >>  create mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.txt b/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.txt
-> >> deleted file mode 100644
-> >> index c8c1e913f4e7..000000000000
-> >> --- a/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.txt
-> >> +++ /dev/null
-> >> @@ -1,39 +0,0 @@
-> >> -GENI based Qualcomm Universal Peripheral (QUP) Serial Peripheral Interface (SPI)
-> >> -
-> >> -The QUP v3 core is a GENI based AHB slave that provides a common data path
-> >> -(an output FIFO and an input FIFO) for serial peripheral interface (SPI)
-> >> -mini-core.
-> >> -
-> >> -SPI in master mode supports up to 50MHz, up to four chip selects, programmable
-> >> -data path from 4 bits to 32 bits and numerous protocol variants.
-> >> -
-> >> -Required properties:
-> >> -- compatible:		Must contain "qcom,geni-spi".
-> >> -- reg:			Must contain SPI register location and length.
-> >> -- interrupts:		Must contain SPI controller interrupts.
-> >> -- clock-names:		Must contain "se".
-> >> -- clocks:		Serial engine core clock needed by the device.
-> >> -- #address-cells:	Must be <1> to define a chip select address on
-> >> -			the SPI bus.
-> >> -- #size-cells:		Must be <0>.
-> >> -
-> >> -SPI Controller nodes must be child of GENI based Qualcomm Universal
-> >> -Peripharal. Please refer GENI based QUP wrapper controller node bindings
-> >> -described in Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml.
-> >> -
-> >> -SPI slave nodes must be children of the SPI master node and conform to SPI bus
-> >> -binding as described in Documentation/devicetree/bindings/spi/spi-bus.txt.
-> >> -
-> >> -Example:
-> >> -	spi0: spi@a84000 {
-> >> -		compatible = "qcom,geni-spi";
-> >> -		reg = <0xa84000 0x4000>;
-> >> -		interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
-> >> -		clock-names = "se";
-> >> -		clocks = <&clock_gcc GCC_QUPV3_WRAP0_S0_CLK>;
-> >> -		pinctrl-names = "default", "sleep";
-> >> -		pinctrl-0 = <&qup_1_spi_2_active>;
-> >> -		pinctrl-1 = <&qup_1_spi_2_sleep>;
-> >> -		#address-cells = <1>;
-> >> -		#size-cells = <0>;
-> >> -	};
-> >> diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml b/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
-> >> new file mode 100644
-> >> index 000000000000..a85ff02ba1db
-> >> --- /dev/null
-> >> +++ b/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
-> >> @@ -0,0 +1,131 @@
-> >> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> >> +%YAML 1.2
-> >> +---
-> >> +$id: http://devicetree.org/schemas/spi/qcom,spi-geni-qcom.yaml#
-> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >> +
-> >> +title: GENI based Qualcomm Universal Peripheral (QUP) Serial Peripheral Interface (SPI)
-> >> +
-> >> +maintainers:
-> >> +  - Andy Gross <agross@kernel.org>
-> >> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> >> +  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >> +
-> >> +description:
-> >> +  The QUP v3 core is a GENI based AHB slave that provides a common data path
-> >> +  (an output FIFO and an input FIFO) for serial peripheral interface (SPI)
-> >> +  mini-core.
-> >> +
-> >> +  SPI in master mode supports up to 50MHz, up to four chip selects,
-> >> +  programmable data path from 4 bits to 32 bits and numerous protocol variants.
-> >> +
-> >> +  SPI Controller nodes must be child of GENI based Qualcomm Universal
-> >> +  Peripharal. Please refer GENI based QUP wrapper controller node bindings
-> >> +  described in Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml.
-> >> +
-> >> +allOf:
-> >> +  - $ref: /spi/spi-controller.yaml#
-> > 
-> > Rob sometime back sent an update on how to refer absolute paths.
-> > Please see below:
-> > https://lore.kernel.org/linux-spi/20220325215652.525383-1-robh@kernel.org/
-> 
-> Yes, this is wrong. I copied other existing schema without checking. :(
+On Wed, 30 Mar 2022 at 02:00, Rob Clark <robdclark@gmail.com> wrote:
+>
+> From: Rob Clark <robdclark@chromium.org>
+>
+> There was only a single user, which could just as easily stash the iova
+> when pinning.
+>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 
-No issues.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> 
-> > 
-> >> +
-> >> +properties:
-> >> +  compatible:
-> >> +    const: qcom,geni-spi
-> >> +
-> >> +  clocks:
-> >> +    maxItems: 1
-> >> +
-> >> +  clock-names:
-> >> +    const: se
-> >> +
-> >> +  dmas:
-> >> +    maxItems: 2
-> >> +
-> >> +  dma-names:
-> >> +    items:
-> >> +      - const: tx
-> >> +      - const: rx
-> >> +
-> >> +  interconnects:
-> >> +    minItems: 2
-> > 
-> > We can skip minItems here.
-> > As minimim value defaults to maximum if not defined.
-> 
-> True.
-> 
-> > 
-> >> +    maxItems: 2
-> >> +
-> >> +  interconnect-names:
-> >> +    items:
-> >> +      - const: qup-core
-> >> +      - const: qup-config
-> > 
-> > Some properties like clocks, dmas, dma-names, interconnect etc. are
-> > defined as common child properties of geni based qup.
-> > Please see Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-> > 
-> > Shouldn't we skip these entities here? as spi reference will anyway be
-> > used in geni-se.yaml.
-> 
-> We could have them there, just like we could store all of this schema
-> there. Having something half-here-half-there will not work, because this
-> schema won't validate.
-> 
-> Therefore all of child properties from qcom,geni-se.yaml should be
-> rather moved to child schema (which is included directly in my patch #2).
+> ---
+>  drivers/gpu/drm/msm/msm_fb.c  | 16 ++++++++++------
+>  drivers/gpu/drm/msm/msm_gem.c | 16 ----------------
+>  drivers/gpu/drm/msm/msm_gem.h |  2 --
+>  3 files changed, 10 insertions(+), 24 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/msm_fb.c b/drivers/gpu/drm/msm/msm_fb.c
+> index 7137492fe78e..d4eef66e29dc 100644
+> --- a/drivers/gpu/drm/msm/msm_fb.c
+> +++ b/drivers/gpu/drm/msm/msm_fb.c
+> @@ -21,6 +21,9 @@ struct msm_framebuffer {
+>
+>         /* Count of # of attached planes which need dirtyfb: */
+>         refcount_t dirtyfb;
+> +
+> +       /* Framebuffer per-plane address, if pinned, else zero: */
+> +       uint64_t iova[DRM_FORMAT_MAX_PLANES];
+>  };
+>  #define to_msm_framebuffer(x) container_of(x, struct msm_framebuffer, base)
+>
+> @@ -76,14 +79,14 @@ int msm_framebuffer_prepare(struct drm_framebuffer *fb,
+>  {
+>         struct msm_framebuffer *msm_fb = to_msm_framebuffer(fb);
+>         int ret, i, n = fb->format->num_planes;
+> -       uint64_t iova;
+>
+>         if (needs_dirtyfb)
+>                 refcount_inc(&msm_fb->dirtyfb);
+>
+>         for (i = 0; i < n; i++) {
+> -               ret = msm_gem_get_and_pin_iova(fb->obj[i], aspace, &iova);
+> -               drm_dbg_state(fb->dev, "FB[%u]: iova[%d]: %08llx (%d)", fb->base.id, i, iova, ret);
+> +               ret = msm_gem_get_and_pin_iova(fb->obj[i], aspace, &msm_fb->iova[i]);
+> +               drm_dbg_state(fb->dev, "FB[%u]: iova[%d]: %08llx (%d)",
+> +                             fb->base.id, i, msm_fb->iova[i], ret);
+>                 if (ret)
+>                         return ret;
+>         }
+> @@ -103,14 +106,15 @@ void msm_framebuffer_cleanup(struct drm_framebuffer *fb,
+>
+>         for (i = 0; i < n; i++)
+>                 msm_gem_unpin_iova(fb->obj[i], aspace);
+> +
+> +       memset(msm_fb->iova, 0, sizeof(msm_fb->iova));
+>  }
+>
+>  uint32_t msm_framebuffer_iova(struct drm_framebuffer *fb,
+>                 struct msm_gem_address_space *aspace, int plane)
+>  {
+> -       if (!fb->obj[plane])
+> -               return 0;
+> -       return msm_gem_iova(fb->obj[plane], aspace) + fb->offsets[plane];
+> +       struct msm_framebuffer *msm_fb = to_msm_framebuffer(fb);
+> +       return msm_fb->iova[plane];
+>  }
+>
+>  struct drm_gem_object *msm_framebuffer_bo(struct drm_framebuffer *fb, int plane)
+> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+> index f4b68bb28a4d..deafae6feaa8 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.c
+> +++ b/drivers/gpu/drm/msm/msm_gem.c
+> @@ -509,22 +509,6 @@ int msm_gem_get_iova(struct drm_gem_object *obj,
+>         return ret;
+>  }
+>
+> -/* get iova without taking a reference, used in places where you have
+> - * already done a 'msm_gem_get_and_pin_iova' or 'msm_gem_get_iova'
+> - */
+> -uint64_t msm_gem_iova(struct drm_gem_object *obj,
+> -               struct msm_gem_address_space *aspace)
+> -{
+> -       struct msm_gem_vma *vma;
+> -
+> -       msm_gem_lock(obj);
+> -       vma = lookup_vma(obj, aspace);
+> -       msm_gem_unlock(obj);
+> -       GEM_WARN_ON(!vma);
+> -
+> -       return vma ? vma->iova : 0;
+> -}
+> -
+>  /*
+>   * Locked variant of msm_gem_unpin_iova()
+>   */
+> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+> index 090c3b1a6d9a..772de010a669 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.h
+> +++ b/drivers/gpu/drm/msm/msm_gem.h
+> @@ -142,8 +142,6 @@ int msm_gem_get_and_pin_iova_locked(struct drm_gem_object *obj,
+>                 struct msm_gem_address_space *aspace, uint64_t *iova);
+>  int msm_gem_get_and_pin_iova(struct drm_gem_object *obj,
+>                 struct msm_gem_address_space *aspace, uint64_t *iova);
+> -uint64_t msm_gem_iova(struct drm_gem_object *obj,
+> -               struct msm_gem_address_space *aspace);
+>  void msm_gem_unpin_iova_locked(struct drm_gem_object *obj,
+>                 struct msm_gem_address_space *aspace);
+>  void msm_gem_unpin_iova(struct drm_gem_object *obj,
+> --
+> 2.35.1
+>
 
-Sure, this looks good.
-Probably we can remove common properties from geni-se.yaml once all
-child nodes have their respective schemas.
 
--Kuldeep
+-- 
+With best wishes
+Dmitry
