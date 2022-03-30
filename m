@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 198AB4EC187
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 13:57:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A7964EC156
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 13:56:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344524AbiC3L40 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Mar 2022 07:56:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57646 "EHLO
+        id S1344784AbiC3L4c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Mar 2022 07:56:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345917AbiC3LzM (ORCPT
+        with ESMTP id S1345949AbiC3LzP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Mar 2022 07:55:12 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF4C327B63B;
-        Wed, 30 Mar 2022 04:52:38 -0700 (PDT)
+        Wed, 30 Mar 2022 07:55:15 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9740658F;
+        Wed, 30 Mar 2022 04:53:13 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 688F5B81C29;
-        Wed, 30 Mar 2022 11:52:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8489FC340F2;
-        Wed, 30 Mar 2022 11:52:34 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 81F6A6160D;
+        Wed, 30 Mar 2022 11:53:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F08C3410F;
+        Wed, 30 Mar 2022 11:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648641156;
-        bh=Ck8pZ+K+09uZKTFJGDmrbOSck6azoaLvPiYT7H8ouDI=;
+        s=k20201202; t=1648641192;
+        bh=5DhYdPpy5hGpue8wLGlBJX3nNYuxCqm2NqDqAHyvBQI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=p4ptKBonNKJ/qlMquWZe71fMMND03WAliKSjEwAlbwkFVFjdqY49RO8V9JemLOqKE
-         rI6T7Ue3BMWeqtlXJGtB8hbIyDRZKfPuH7PK3KPeRbLgODXhycdJRbBVbGbmjDwHXt
-         lJuwyCLkWSyTBWX9Hk+X1Xi/tvwkwEgWrcUqwnkj8D/BFCuJyrmcGscHZhibeS9cnh
-         fzQgTfG1XbswNoE1Cf+mEKOpDFLhTMnq1LAcdAI05uTfTHjX1TAP5gEQ6vwkHXpYZX
-         cs3yxOSyz15kGpIIXvhtUDfR4aAsjQWbkksuFRlD7ftB/COrvMBY46l25ZX1gaJzcT
-         CcxedKgxyQhDw==
+        b=i3b8GHi+4jfCH36GLs7UI2fSS2hSbMjKS4agrcprp9XapSFSVP3g82AwIGk22XJkN
+         GiX/kjieNqSdaG0GqyD3uChYE48gthVApAEp6rQyXlv5acXph1UTzvkzHm+yj0jpi2
+         EArKDmjqO2icdtAj5GMIkfOhDA/z4qdtqOC8+oeOrVT1IAV4/a0TCrzi6R14OiYVOm
+         R5pJI4pi6lwrRftYrCUoKTN0b7AkzjUSf1lZtteBdONwgDAZmEQ1TNDPO2cuG1Ulxs
+         5BQTMql8sMZRgRJICYdU+4zde42mB+18eYbkZFKWUB1uMpkLgB9sw2rby9UtNhE4QT
+         qJV0oTplheaeg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     David Heidelberg <david@ixit.cz>,
@@ -42,12 +42,12 @@ Cc:     David Heidelberg <david@ixit.cz>,
         linux@armlinux.org.uk, linux-arm-msm@vger.kernel.org,
         linux-soc@vger.kernel.org, devicetree@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 5.4 06/25] ARM: dts: qcom: fix gic_irq_domain_translate warnings for msm8960
-Date:   Wed, 30 Mar 2022 07:52:06 -0400
-Message-Id: <20220330115225.1672278-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 05/22] ARM: dts: qcom: fix gic_irq_domain_translate warnings for msm8960
+Date:   Wed, 30 Mar 2022 07:52:46 -0400
+Message-Id: <20220330115303.1672616-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220330115225.1672278-1-sashal@kernel.org>
-References: <20220330115225.1672278-1-sashal@kernel.org>
+In-Reply-To: <20220330115303.1672616-1-sashal@kernel.org>
+References: <20220330115303.1672616-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -82,10 +82,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/arch/arm/boot/dts/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom-msm8960.dtsi
-index f2aeaccdc1ad..15ff0e8fd0d3 100644
+index 1733d8f40ab1..b256fda0f5ea 100644
 --- a/arch/arm/boot/dts/qcom-msm8960.dtsi
 +++ b/arch/arm/boot/dts/qcom-msm8960.dtsi
-@@ -145,7 +145,9 @@
+@@ -140,7 +140,9 @@
  			reg		= <0x108000 0x1000>;
  			qcom,ipc	= <&l2cc 0x8 2>;
  
@@ -96,7 +96,7 @@ index f2aeaccdc1ad..15ff0e8fd0d3 100644
  			interrupt-names	= "ack", "err", "wakeup";
  
  			regulators {
-@@ -191,7 +193,7 @@
+@@ -186,7 +188,7 @@
  				compatible = "qcom,msm-uartdm-v1.3", "qcom,msm-uartdm";
  				reg = <0x16440000 0x1000>,
  				      <0x16400000 0x1000>;
@@ -105,7 +105,7 @@ index f2aeaccdc1ad..15ff0e8fd0d3 100644
  				clocks = <&gcc GSBI5_UART_CLK>, <&gcc GSBI5_H_CLK>;
  				clock-names = "core", "iface";
  				status = "disabled";
-@@ -317,7 +319,7 @@
+@@ -312,7 +314,7 @@
  				#address-cells = <1>;
  				#size-cells = <0>;
  				reg = <0x16080000 0x1000>;
