@@ -2,167 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 19F704EB920
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 05:59:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30E584EB927
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 06:03:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229483AbiC3EBk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Mar 2022 00:01:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51950 "EHLO
+        id S231453AbiC3EFd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Mar 2022 00:05:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbiC3EBj (ORCPT
+        with ESMTP id S229462AbiC3EFb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Mar 2022 00:01:39 -0400
-Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F60FAD131;
-        Tue, 29 Mar 2022 20:59:55 -0700 (PDT)
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
-        by mx0b-00069f02.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 22U3537T011976;
-        Wed, 30 Mar 2022 03:59:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
- from : message-id : references : date : in-reply-to : content-type :
- mime-version; s=corp-2021-07-09;
- bh=AxvP/LAWTOzuWkXPfu2nvQQZ0vZY9GPL3wuSsajPsFw=;
- b=Hy52zx0TcvnLm0vXuBxZ9K9nZOlhmoecysnyBP07ED6hPPLB3Wsm/ihg5RJ/EgDFVi3t
- viB75NE7KhkvGvDhwCZ7zfmpFrB3mQEhhuTwVuy9gtSc5dqLg6W75H3vMMAR0QUqSACf
- 7qt8Tcp/IyCoI1v6R5zAqzgQideKSPBo2e//hnegPYFzdb4Uc65jc3FhpKs4GbfFIw6w
- m1BaHEwfmF39qzRURiSnX3qLauC0xwmtyaM9H9aTG1k8XhdaDvHo1gXJBnmGAC81UPYR
- TVNwoZcVupnkSlWYJ9appMGtAFXfrdANYQkKtR389OrxPH+dURwAwUyDRjn0ZnvFv2Tn tw== 
-Received: from aserp3020.oracle.com (aserp3020.oracle.com [141.146.126.70])
-        by mx0b-00069f02.pphosted.com with ESMTP id 3f1sm2gb8x-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 30 Mar 2022 03:59:45 +0000
-Received: from pps.filterd (aserp3020.oracle.com [127.0.0.1])
-        by aserp3020.oracle.com (8.16.1.2/8.16.1.2) with SMTP id 22U3p72Y143356;
-        Wed, 30 Mar 2022 03:59:44 GMT
-Received: from nam10-dm6-obe.outbound.protection.outlook.com (mail-dm6nam10lp2105.outbound.protection.outlook.com [104.47.58.105])
-        by aserp3020.oracle.com with ESMTP id 3f1tmyndrq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 30 Mar 2022 03:59:44 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=flMaWpz18BZLn4mTeI8pgh16Zf13v4AML6l/qiaLUmjEhg2AcIXu0jwlxv8rmYSGCAZGgorrroBaaXjHkF2qvXDN6F/azy2p1rasoiSzNieoXIZSz4cgtT/Stn9IJFJsCOJSJliTs2ySPsXM5FqdZqE8giMJaJwwTyH9NXUjuuyl2vn729UmiLnbhP7C3A3C8RxUahtsGskeKxmdelb6pGlsdni5NJFpAv8viz0UL8J7nc17Qoo5eK36phCyq1IEChDAZJi1Iom5XFNn5gNLa2ElYflFuesQSMiK1bl16JYpoE1TWdYKBxRMybMGQEnzZDDpzN3WBOlLRxe82Wqlwg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AxvP/LAWTOzuWkXPfu2nvQQZ0vZY9GPL3wuSsajPsFw=;
- b=Cu9qjdMGxxDxUz+Uw7BSyDjAby0jxNEEABW7pLbGqRFq9AWa5N3rSyUvvjAdhapZT6V7COApJAqaBjpsRJJ8amfpx3KEDDYfFewst8t8XL+5zKfis8sQxpLL9AnWj34InB3sSlxe/ITneAMZ9P07YOW7/X8dKrxmiiIz0A4rDsl7V/xV8Zxm2DuXNlLA4bRLPSPCGSd8y6AsI47thlN54vfHqWeKw7WijS87XhtzlFbeasNJCoWCek3H9kQcibTwE9YCa+HPVQ4BHb5N88wUKY8lmdgY1mdR+1WAIe/qSKaR1VQbcXS6C3ctp0+gXaJNzeghoMZJ07AvF7h8AQMYKg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+        Wed, 30 Mar 2022 00:05:31 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AB32EA765;
+        Tue, 29 Mar 2022 21:03:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AxvP/LAWTOzuWkXPfu2nvQQZ0vZY9GPL3wuSsajPsFw=;
- b=FioFE0EQyq6Lfb6L9GdFasVw5CxmGc40KsvYeoAW1boWHPM76YqQJMQIw4idiw+m1EqSTDrdVfZy64dza/6wj9X/ekFs/PZ146ns9Pqfmg4rjh5xcGzb4Ht2dKj+xXzOL4nVo/ygD4epVd1wfU8g4nhi6+7Bjk/qYG23g1lmU2o=
-Received: from PH0PR10MB4759.namprd10.prod.outlook.com (2603:10b6:510:3d::12)
- by CO1PR10MB5505.namprd10.prod.outlook.com (2603:10b6:303:160::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5123.16; Wed, 30 Mar
- 2022 03:59:42 +0000
-Received: from PH0PR10MB4759.namprd10.prod.outlook.com
- ([fe80::48e3:d153:6df4:fbed]) by PH0PR10MB4759.namprd10.prod.outlook.com
- ([fe80::48e3:d153:6df4:fbed%4]) with mapi id 15.20.5102.023; Wed, 30 Mar 2022
- 03:59:42 +0000
-To:     Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1648613024; x=1680149024;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=vadEC+trwPTFlk33Do/EYDLu46dxriKX977pa9Dtt+k=;
+  b=AUiQmUjEdCFf2WiIdDVCB44FO/9AkaDi3iWfELtPBD0sBxTIXWLwHoK/
+   diKbmwXFMN7TwbAjr3EUKCA/lz1NJ2uxwZmcaA5zI69TEx2wmJobl+c8A
+   /Aam+5J6VrZ6xFlM9u3MpjGY7afrz1hK96JNCRrfMe6CG0wv9ArBKf6P5
+   U=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 29 Mar 2022 21:03:43 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Mar 2022 21:03:27 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 29 Mar 2022 21:03:27 -0700
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 29 Mar 2022 21:03:22 -0700
+Date:   Wed, 30 Mar 2022 09:33:18 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     "Sandeep Maheswaram (Temp)" <quic_c_sanm@quicinc.com>
+CC:     Matthias Kaehlcke <mka@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Amit Pundir <amit.pundir@linaro.org>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Brian Masney <bmasney@redhat.com>
-Subject: Re: [PATCH v2] ufs: qcom: drop custom Android boot parameters
-From:   "Martin K. Petersen" <martin.petersen@oracle.com>
-Organization: Oracle Corporation
-Message-ID: <yq1h77gt7j0.fsf@ca-mkp.ca.oracle.com>
-References: <20220321151853.24138-1-krzk@kernel.org>
-Date:   Tue, 29 Mar 2022 23:59:41 -0400
-In-Reply-To: <20220321151853.24138-1-krzk@kernel.org> (Krzysztof Kozlowski's
-        message of "Mon, 21 Mar 2022 16:18:53 +0100")
-Content-Type: text/plain
-X-ClientProxiedBy: SN1PR12CA0086.namprd12.prod.outlook.com
- (2603:10b6:802:21::21) To PH0PR10MB4759.namprd10.prod.outlook.com
- (2603:10b6:510:3d::12)
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>
+Subject: Re: [PATCH v11 2/5] usb: dwc3: core: Host wake up support from
+ system suspend
+Message-ID: <20220330040318.GB29680@hu-pkondeti-hyd.qualcomm.com>
+References: <1647932876-23249-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1647932876-23249-3-git-send-email-quic_c_sanm@quicinc.com>
+ <YjthzwUldu2+31Pm@google.com>
+ <b044f873-c20a-c666-0bd3-8d67c3337b03@quicinc.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: c9e9ca2b-7ad3-48ae-0158-08da1201b88f
-X-MS-TrafficTypeDiagnostic: CO1PR10MB5505:EE_
-X-Microsoft-Antispam-PRVS: <CO1PR10MB5505976014A3EAB3868425978E1F9@CO1PR10MB5505.namprd10.prod.outlook.com>
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: yMPIo+22VF2MlojlME2oOiYOED80jtRp6ezne/84rCGprQi1P9c/7iUZ70zsNrn6pSLt/+J6EfKpfjSqhRqKuo5o8evG/qS49+IxfWAEOdux0C4yL9bH/F6Yt/n6LpsJWBlA/f646/AjeOGMrj46K7ntZFIs8KQiWM+60EYWbug4mgvKyxdvCe8PFUhtojZapQFqc5AqsI0fPeW4k+ry7VX6UTq26HLJHygNN1muMQ0ueDxGH7tvffIi4pj712bHx1dL3pzHadVb++dZih3hK7bGmrusZ69MpoNZKUcPv/CNRH37K7qWiQRDOqL0HrdAPpoNxCFhKDv9z6LjNryfeDKhvQso8OJnJzay/XvyPTEYmta9H0y/Qzgj22pQQj/NA6CwLlXQEYDbWabO0fKGuESFVtRbmQtbvwnZ2QvbYDLZxxoukJj1AujMoledUMpARIpBovXplWsgPesDb55DCi+pcsPQ+17WVLq9EL6CrhRVxANnMbxsGqOMWwEdxNW/MaeHGxCi+ttiFJoPpgKBRfXhmP+OdqGyZYWe0ymE/bRk2lokMjx7zfBc2zi1vhi+Rwm7aL7eZHLZ2YmSxQaQV3Z5GrA9/EaO7baKUXXK8p5A26w4zSfVXdQvWEHGbp5BqfEDKmCdj37a3xgY3Yc5slfnU1c3hMQ6/3Gs1ymdPNBIacG+u/1ZM3W3jzhL8Qxz3e0oMKAGv2cTXW4iE02fcQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR10MB4759.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(366004)(186003)(26005)(4744005)(2906002)(8936002)(6512007)(6506007)(86362001)(6486002)(7416002)(508600001)(52116002)(5660300002)(36916002)(38350700002)(38100700002)(4326008)(8676002)(6916009)(66476007)(54906003)(316002)(66946007)(66556008);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?4tywzwOPkrvi0/uFLoqJPRfIjxwn8CZbtnJUSuaKEZ3m8JAkGC5jy3gN6ixp?=
- =?us-ascii?Q?u4V5JQyplEvAk1sCo2c0P04U7inxnnxLlU3SshuZlELHWECyUHCyNSH/jdyS?=
- =?us-ascii?Q?/gYU0wNHMmEi7Q+QvPiU16i1a7smldjUuUBXA4WxjfGfb+7lvimZVZNJxYoW?=
- =?us-ascii?Q?XkkGK/LJVhPVuSA46xT+9hwsjLp/JWhEhCAVzFUktIctpvA8V01aDDR0w0cf?=
- =?us-ascii?Q?YlJ9JBzmDkKUvgQBwlU5+EaAiOXV0nHzG423rzuROnMbky1RA0D+sy94SyYu?=
- =?us-ascii?Q?zFL3FyneIcufXOPSoyywHLiyX1ORmXcnK/co41MWvf3/Nf0scJixbEXzHN4w?=
- =?us-ascii?Q?gpPLqGDxWFOtNTTQW+1f+ar6G0q+5Q+puz2SjcRRg7a0mvV7DKqIp0LrrAaK?=
- =?us-ascii?Q?1VKXVTJjppVykZsMRbbm89leWO2H4O5O2ebj06NjyEkL3TcyITpr2E6V5WCt?=
- =?us-ascii?Q?z+f9vDkoCz6QWtforR48o1AudwpyxfM/npGNUuljAJFzuSwHA1vkLysk//bd?=
- =?us-ascii?Q?5FGmMKA193q3M0LWeFJnosCgYfqo9t1bJ+lIXXzjvCPWXLlnGqDYNuq8Zg9R?=
- =?us-ascii?Q?7IunjyumYGiAuCiJhuMrZ6UbK5QUe2OBwvHXvj6giUnDhCvcVyGBkrBQrW/9?=
- =?us-ascii?Q?hqP/36NP1/0Sh5vw2/nkiCPtNu9hX/rLYPba0UUGnNs8eYtko7KLT1amtcuA?=
- =?us-ascii?Q?UpN44atxK2NmKyCPxXKkKviYugnr9l1/7f9PGeu3P9bRPGv/JXXHvGDFHdx+?=
- =?us-ascii?Q?+zUk/a3cu6sHM5gsj121tTO85lnFUb9zIS/tas7iur4rb8KtJ2a2awEQvA4J?=
- =?us-ascii?Q?0E8MGvf82idInDyEYku3VB3JKl9FTBa6dx103mxNJm8QuWIZb05LBh2TFN6Z?=
- =?us-ascii?Q?ZPaZL80NNFveS96TMdLk+l6WIwEllGI31FL7avq80jVdq4otD4oK07bQq9ZF?=
- =?us-ascii?Q?O1oklhGDAg9EuMohoRLdopdTRfJu8HgyHd4raaVmH7x5O6GqKxevTC7BtrSO?=
- =?us-ascii?Q?hf22rH7Thm7rGCTJaQ6LVofpNEpTBMeK5JNUbKnuIDsRuqkXEgXRNdqI840i?=
- =?us-ascii?Q?bNZV70VQPNv5f5lU7aS4IEgb7fPbOn9/uHaWnlh1NYhPjeHHzgJ6DyAV4ZNY?=
- =?us-ascii?Q?ep/Seezm0R8Cy0ouUQp0kfEZMggDDAByrjaZCmkgBiTmwWRorhQfNBvUgdIt?=
- =?us-ascii?Q?ghXvMAGK4eKOj5py+4z2VDn4elt/TSqnr0y/o7S5k3/WMB7FSmbWjghSR5nL?=
- =?us-ascii?Q?3vz/4OXQIjLLuuzrbh7FcOb+ORVxs1nwYl9uRyBAayzY606LInoHYfYANpb0?=
- =?us-ascii?Q?EnnwXYx3avGTKqGq1dffLrQDKPzDA9+UHzWUpBkQDUhbFa+n0XQlvXQXKTv3?=
- =?us-ascii?Q?b4ooW+/PJ6F582RTe1VAtN85PPleo0hEP2OhmlVbQ5eeLVLOfHdRVDdpriQs?=
- =?us-ascii?Q?z445F2vW9LDiyjsTbuxO2Xxd1Gk9Jpc3vTbi+g+bTOl5A0RQGpyGFFlPNROb?=
- =?us-ascii?Q?rPSf9wniVQIfLDP5MBH3MLEVjaAI2E/D6V4u70sCQHxocPwo05wlALOSY2rO?=
- =?us-ascii?Q?pcPQdcYZGbNb8CtlQRFIa45tcD8A+8GglxTyqSqWK3ond9EjNUcDoQ7KvkEU?=
- =?us-ascii?Q?dH6RsucYXjISrxf8EIDDBmtLuZbjre6HYVzLJoIL6quzh0vd7t95j1F1hUyb?=
- =?us-ascii?Q?HqmTtrL/wE6k8CSbb20whriEbpnsSVKZFroMcl3dyNlA/7qAU4Q2kRbWGqo9?=
- =?us-ascii?Q?nAjWVIZznIWt/Sv/Ij2X1SaTA2VsF2I=3D?=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c9e9ca2b-7ad3-48ae-0158-08da1201b88f
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB4759.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Mar 2022 03:59:42.8399
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: lP6lw1SrT9JfWN2MzF8TBmyg8ChosM6m6Ls0tlkd6j9HbES4fdzU1JUKVopTVptx7Rt2CyqD3xwf76+1PeJNxlscEhb/AC/0K7B6a6rrcaA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR10MB5505
-X-Proofpoint-Virus-Version: vendor=nai engine=6300 definitions=10301 signatures=695566
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 malwarescore=0 spamscore=0
- phishscore=0 adultscore=0 mlxlogscore=888 suspectscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2202240000
- definitions=main-2203300017
-X-Proofpoint-ORIG-GUID: RfXOHhXDqRVmMsj1MgTX1BaUaOdux7eK
-X-Proofpoint-GUID: RfXOHhXDqRVmMsj1MgTX1BaUaOdux7eK
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <b044f873-c20a-c666-0bd3-8d67c3337b03@quicinc.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Sandeep/Matthias,
 
-Krzysztof,
+On Thu, Mar 24, 2022 at 10:24:55AM +0530, Sandeep Maheswaram (Temp) wrote:
+> 
+> On 3/23/2022 11:37 PM, Matthias Kaehlcke wrote:
+> >On Tue, Mar 22, 2022 at 12:37:53PM +0530, Sandeep Maheswaram wrote:
+> >>During suspend read the status of all port and make sure the PHYs
+> >>are in the correct mode based on current speed.
+> >>Phy interrupt masks are set based on this mode. Keep track of the mode
+> >>of the HS PHY to be able to configure wakeup properly.
+> >>
+> >>Also check during suspend if any wakeup capable devices are
+> >>connected to the controller (directly or through hubs), if there
+> >>are none set a flag to indicate that the PHY is powered
+> >>down during suspend.
+> >>
+> >>Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> >>---
+> >>  drivers/usb/dwc3/core.c | 54 ++++++++++++++++++++++++++++++++++++++++---------
+> >>  1 file changed, 45 insertions(+), 9 deletions(-)
+> >>
+> >>diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> >>index 1170b80..232a734 100644
+> >>--- a/drivers/usb/dwc3/core.c
+> >>+++ b/drivers/usb/dwc3/core.c
+> >>@@ -32,12 +32,14 @@
+> >>  #include <linux/usb/gadget.h>
+> >>  #include <linux/usb/of.h>
+> >>  #include <linux/usb/otg.h>
+> >>+#include <linux/usb/hcd.h>
+> >>  #include "core.h"
+> >>  #include "gadget.h"
+> >>  #include "io.h"
+> >>  #include "debug.h"
+> >>+#include "../host/xhci.h"
+> >>  #define DWC3_DEFAULT_AUTOSUSPEND_DELAY	5000 /* ms */
+> >>@@ -1861,10 +1863,36 @@ static int dwc3_core_init_for_resume(struct dwc3 *dwc)
+> >>  	return ret;
+> >>  }
+> >>+static void dwc3_set_phy_speed_mode(struct dwc3 *dwc)
+> >>+{
+> >>+
+> >>+	int i, num_ports;
+> >>+	u32 reg;
+> >>+	struct usb_hcd	*hcd = platform_get_drvdata(dwc->xhci);
+> >>+	struct xhci_hcd	*xhci_hcd = hcd_to_xhci(hcd);
+> >>+
+> >>+	dwc->hs_phy_mode = 0;
+> >>+
+> >>+	reg = readl(&xhci_hcd->cap_regs->hcs_params1);
+> >>+
+> >>+	num_ports = HCS_MAX_PORTS(reg);
+> >>+	for (i = 0; i < num_ports; i++) {
+> >>+		reg = readl(&xhci_hcd->op_regs->port_status_base + i * 0x04);
+> >s/0x04/NUM_PORT_REGS/
+> Okay. Will update in next version.
+> >
+> >>+		if (reg & PORT_PE) {
+> >>+			if (DEV_HIGHSPEED(reg) || DEV_FULLSPEED(reg))
+> >>+				dwc->hs_phy_mode |= PHY_MODE_USB_HOST_HS;
+> >>+			else if (DEV_LOWSPEED(reg))
+> >>+				dwc->hs_phy_mode |= PHY_MODE_USB_HOST_LS;
+> >>+		}
+> >>+	}
+> >>+	phy_set_mode(dwc->usb2_generic_phy, dwc->hs_phy_mode);
+> >>+}
+> >>+
+> >>  static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+> >>  {
+> >>  	unsigned long	flags;
+> >>  	u32 reg;
+> >>+	struct usb_hcd  *hcd = platform_get_drvdata(dwc->xhci);
+> >>  	switch (dwc->current_dr_role) {
+> >>  	case DWC3_GCTL_PRTCAP_DEVICE:
+> >>@@ -1877,10 +1905,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+> >>  		dwc3_core_exit(dwc);
+> >>  		break;
+> >>  	case DWC3_GCTL_PRTCAP_HOST:
+> >>-		if (!PMSG_IS_AUTO(msg)) {
+> >>-			dwc3_core_exit(dwc);
+> >>-			break;
+> >>-		}
+> >>+		dwc3_set_phy_speed_mode(dwc);
+> >>  		/* Let controller to suspend HSPHY before PHY driver suspends */
+> >>  		if (dwc->dis_u2_susphy_quirk ||
+> >>@@ -1896,6 +1921,16 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+> >>  		phy_pm_runtime_put_sync(dwc->usb2_generic_phy);
+> >>  		phy_pm_runtime_put_sync(dwc->usb3_generic_phy);
+> >>+
+> >>+		if (!PMSG_IS_AUTO(msg)) {
+> >>+			if (device_may_wakeup(&dwc->xhci->dev) &&
+> >Does the xHCI actually provide the correct information? I think Brian brought
+> >up earlier that xhci-plat always marks the xHCI as wakeup capable, regardless
+> >of whether the specific implementation actually supports wakeup. So a dwc3
+> >without wakeup support would keep the PHY and the dwc3 active during suspend
+> >if wakeup capable devices are connected (unless the admin disabled wakeup),
+> >even though wakeup it doesn't support wakeup.
+> >
+> >Using the wakeup capability/policy of the xHCI to make decisions in the dwc3
+> >driver might still be the best we can do with the weird driver split over 3
+> >drivers for dwc3. Maybe the dwc3 could pass the actual capability to wake up
+> >to the xHCI through a property_entry? Then again, it's actually the 'glue'
+> >driver (dwc3-qcom) who knows about the actual wakeup capability, and not the
+> >dwc3 core/host ...
+> Will check if we can do something regarding this.
 
-> The QCOM UFS driver requires an androidboot.bootdevice command line
-> argument matching the UFS device name.  If the name is different, it
-> refuses to probe.  This androidboot.bootdevice is provided by
-> stock/vendor (from an Android-based device) bootloader.
+Can we introduce a device tree param to xhci-plat to specify if the underlying
+device is wakeup capable or not. Based on this xhci-plat can call
+device_set_wakeup_capable() with correct argument.
 
-Applied to 5.18/scsi-staging, thanks!
+One immediate problem is that current code unconditionally calls
+device_set_wakeup_capable(&pdev->dev, true). So we may break existing use
+cases also.
 
--- 
-Martin K. Petersen	Oracle Linux Engineering
+Given that xHC assumes that the undelying device is wakeup capable but dwc3
+tearing the stack during PM suspend does not make any sense. can we atleast
+create a device tree param for dwc3 not to do this? 
+
+Thanks,
+Pavan
