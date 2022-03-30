@@ -2,76 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E6C1F4ECA7C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 19:23:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67FEA4ECA7E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 19:24:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243588AbiC3RZZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Mar 2022 13:25:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49130 "EHLO
+        id S1348604AbiC3RZ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Mar 2022 13:25:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233119AbiC3RZZ (ORCPT
+        with ESMTP id S230410AbiC3RZ4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Mar 2022 13:25:25 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0E594EF74
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Mar 2022 10:23:38 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id bg10so42914296ejb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Mar 2022 10:23:38 -0700 (PDT)
+        Wed, 30 Mar 2022 13:25:56 -0400
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84022AE5F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Mar 2022 10:24:10 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id l129so9571760pga.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Mar 2022 10:24:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=lFGRlwHO8DZZibuZB12Q3q0KJ9J4i7SsANciQNupGSc=;
-        b=qmDLecCd01e+sSrDveD/6uh4obbOZ4dCAVLoJPSmmzz1LZ4bMUzbjb/H0fSGt/yfjL
-         1VumrCZfzucXBtjQrS8+rOivK9x2vrGvoDO28RhS6trZxm+d6NYA97D5AenMLKoq65BH
-         WEDmJO4plKw1PxvDGtZ73sPL2MTfFg731CdmQ2OS53pVU0JFi50ZgSPWtmfeOo1Qs6Kr
-         bTEY4kyqtimxCysSqa4IxEXp8gaoJkaxgiXLrp34xr51BM634KcH3gteMqMVOXVw8hSn
-         3Ekb6b2cWVgdHN7tC7/JWmCNsnlFVBN7MuhglKRKOErbzRuTFni8GxTrQ4kBDd+hPNqe
-         qSvg==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=czlQvbkyhcIvLLP/kerBjk96Vh15ed44dz1d5B6c270=;
+        b=ahzFnfI0hphDf3O+AHBufiZX0BHt092Wy224ems0w1nT2GF3hbO09GHnM1aXPSQXa8
+         izSZm98/ey3wEGM4yhGNnOI151Iuceg/i6mHiC2cmoo0pcG+MbRpahKjFvXtnsefeupP
+         emsBemXIOKGLevHkR5TK5/wOqklZvueumjohw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=lFGRlwHO8DZZibuZB12Q3q0KJ9J4i7SsANciQNupGSc=;
-        b=V54KnNncMgnRRfzmZVkiebSs0GcxClJ8dhKBXiyLXG9LtnnIhFnbCfF8fknn4DWz6C
-         Odsbf8NTTs4vHqSdce8SMU998WHvKRg7N2XscvajbcOkz6thJqyLWOKF9Ig6DnOn7aWy
-         H3pdJH2dWUSnIVOcznlBWuF1NoLx2AOXxNIgfvPvgSCxh68CcChXBK9qmh7xhzrHnTbo
-         kqz3RkeuvaYrdawx8Imi7q1JZeNnqjA22FXFke4fdVsNLBMfwoBvUx9XeQmfJxDaVc29
-         caQFgUQhTX6Bh0bdbjBmY5M/Cih7sSgdz1zVoqM3q2OjTgNtTdAw1Bcj8wB32thwwDJ/
-         HcNQ==
-X-Gm-Message-State: AOAM533y0Z1ov5Nviwyj1tzvvrHYPQDRIi4Pylty4VcAy5OziZJkx6IF
-        kFa9dMVzGvkUSsqCWQkGtqAV3w==
-X-Google-Smtp-Source: ABdhPJxCRbp7lwdnmnW1b25GlQ1PLn901nDGWQR9xhR3YvHUEp60iNCTaurivkdMULoHearFSxrG8A==
-X-Received: by 2002:a17:906:58ce:b0:6da:b548:1bbb with SMTP id e14-20020a17090658ce00b006dab5481bbbmr685412ejs.14.1648661017311;
-        Wed, 30 Mar 2022 10:23:37 -0700 (PDT)
-Received: from [192.168.0.164] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id g23-20020a17090670d700b006ccfd4163f7sm8117582ejk.206.2022.03.30.10.23.36
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=czlQvbkyhcIvLLP/kerBjk96Vh15ed44dz1d5B6c270=;
+        b=I7ZpDxh8shzpS8GtCd+nISSvrt/78a07jYrnWutqam3iC8qo8nHkfJn8TuorOPPYbT
+         +UN/hQ0r+a+uavtKAahzcSKLL77GX+43cT/eeSKDwYri+0jqFV7gsxl2UpbAWwmbrpul
+         WHXUt1BJR6WGzt9g4t8PLK1RYFnht9FTo35DAFS+HXHQj+otVfGs7p7Bn9HDCPbSe83c
+         Slsp7hjPqERAaTT/9slX+nNV5LdilItaavq3K1i0GoXNkusCOwKIaj1OAeGiCq7HXhnl
+         f1ozFLuih8C3W8MJOOoIXXsPUzvE7jAInSQYckX+nA16LoFf0E9s5M79K2u1bfMjzcTl
+         QT9A==
+X-Gm-Message-State: AOAM532amDCeaCeOxq4awtgMahs8451J9MwaPEnCFore/x+6xabmuQeC
+        QD+K96RFFYsHB+wm9uPV/VNhFg==
+X-Google-Smtp-Source: ABdhPJy1cMvbpr6Uu0vAt3g+S0FU168G58nrHSfPAT9H/HOzwsO0LQU4+C4+f6gSMeQOuU/fa0VijA==
+X-Received: by 2002:a05:6a00:885:b0:4f4:17d8:be31 with SMTP id q5-20020a056a00088500b004f417d8be31mr438686pfj.57.1648661050000;
+        Wed, 30 Mar 2022 10:24:10 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:d50d:daac:acf3:cda6])
+        by smtp.gmail.com with UTF8SMTPSA id q20-20020a056a00151400b004fb31b073cesm17568038pfu.109.2022.03.30.10.24.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Mar 2022 10:23:36 -0700 (PDT)
-Message-ID: <e1763b04-567e-8287-83bf-4d05b0193a5b@linaro.org>
-Date:   Wed, 30 Mar 2022 19:23:35 +0200
+        Wed, 30 Mar 2022 10:24:09 -0700 (PDT)
+Date:   Wed, 30 Mar 2022 10:24:07 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Judy Hsiao <judyhsiao@chromium.org>
+Cc:     broonie@kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@codeaurora.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, dianders@chromium.org,
+        cychiang@google.com, yuhsuan@chromium.org, judyhsiao@google.com,
+        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org
+Subject: Re: [v1] ASoC: qcom: Add driver support for ALC5682I-VS.
+Message-ID: <YkSSNypRYqM4PtFB@google.com>
+References: <20220330084519.3863856-1-judyhsiao@chromium.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
-Content-Language: en-US
-To:     Matthias Kaehlcke <mka@chromium.org>,
-        Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>
-Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
- <YkSQY5NSYcov21Ig@google.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <YkSQY5NSYcov21Ig@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220330084519.3863856-1-judyhsiao@chromium.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,87 +74,107 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/03/2022 19:16, Matthias Kaehlcke wrote:
-> On Wed, Mar 30, 2022 at 05:09:46PM +0800, Mars Chen wrote:
-> 
->> Subject: CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
-> 
-> No CHROMIUM tag for upstream posts.
-> 
->> Initial attempt at Gelarshie device tree.
-> 
-> This is not very useful. If you don't want to reveal much information
-> about an unreleased device you could say something generic like
-> "Add device tree for Gelarshie, a trogdor variant".
-> 
->> BUG=b:225756600
->> TEST=emerge-strongbad chromeos-kernel-5_4
-> 
-> drop these
-> 
->> Signed-off-by: Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>
->> Reported-by: kernel test robot <lkp@intel.com>
->> ---
->>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->>  .../dts/qcom/sc7180-trogdor-gelarshie-r0.dts  |  15 +
->>  .../dts/qcom/sc7180-trogdor-gelarshie.dtsi    | 304 ++++++++++++++++++
->>  3 files changed, 320 insertions(+)
->>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts
->>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie.dtsi
->>
->> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->> index f9e6343acd03..cf8f88b065c3 100644
->> --- a/arch/arm64/boot/dts/qcom/Makefile
->> +++ b/arch/arm64/boot/dts/qcom/Makefile
->> @@ -57,6 +57,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1-lte.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r3.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r3-lte.dtb
->> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-gelarshie-r0.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r2.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r3.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r4.dtb
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts
->> new file mode 100644
->> index 000000000000..027d6d563a5f
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts
->> @@ -0,0 +1,15 @@
->> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
->> +/*
->> + * Google Gelarshie board device tree source
->> + *
->> + * Copyright 2022 Google LLC.
->> + */
->> +
->> +/dts-v1/;
->> +
->> +#include "sc7180-trogdor-gelarshie.dtsi"
->> +
->> +/ {
->> +	model = "Google Gelarshie (rev0+)";
->> +	compatible = "google,gelarshie", "qcom,sc7180";
->> +};
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie.dtsi
->> new file mode 100644
->> index 000000000000..842f6cac6c27
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie.dtsi
->> @@ -0,0 +1,304 @@
->> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
->> +/*
->> + * Google Gelarshie board device tree source
->> + *
->> + * Copyright 2022 Google LLC.
->> + */
->> +
->> +#include "sc7180.dtsi"
->> +#include "sc7180-trogdor-mipi-camera.dtsi"
-> 
-> drop the mipi camera include, it is not upstream
+On Wed, Mar 30, 2022 at 04:45:19PM +0800, Judy Hsiao wrote:
+> Subject: ASoC: qcom: Add driver support for ALC5682I-VS.
 
-The file should not build in such form, so probably it was not tested on
-mainline kernel... :-(
+nit: drop period from the subject
 
-Best regards,
-Krzysztof
+> Add Machine driver support for ALC5682I-VS codec.
+> 
+> Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
+> ---
+>  sound/soc/qcom/Kconfig  |   2 +
+>  sound/soc/qcom/sc7280.c | 104 ++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 106 insertions(+)
+> 
+> diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
+> index 28d0dfb4033c..750653404ba3 100644
+> --- a/sound/soc/qcom/Kconfig
+> +++ b/sound/soc/qcom/Kconfig
+> @@ -197,6 +197,8 @@ config SND_SOC_SC7280
+>  	select SND_SOC_LPASS_MACRO_COMMON
+>  	imply SND_SOC_LPASS_RX_MACRO
+>  	imply SND_SOC_LPASS_TX_MACRO
+> +	select SND_SOC_RT5682_I2C
+> +	select SND_SOC_RT5682S
+>  	help
+>  	  Add support for audio on Qualcomm Technologies Inc.
+>  	  SC7280 SoC-based systems.
+> diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
+> index bd0bf9c8cb28..a3e6f61e92cb 100644
+> --- a/sound/soc/qcom/sc7280.c
+> +++ b/sound/soc/qcom/sc7280.c
+> @@ -12,14 +12,20 @@
+>  #include <sound/jack.h>
+>  #include <sound/pcm.h>
+>  #include <sound/soc.h>
+> +#include <sound/rt5682s.h>
+>  #include <linux/soundwire/sdw.h>
+>  
+> +#include "../codecs/rt5682.h"
+> +#include "../codecs/rt5682s.h"
+>  #include "common.h"
+>  #include "lpass.h"
+>  
+> +#define DEFAULT_MCLK_RATE              19200000
+> +#define RT5682_PLL1_FREQ (48000 * 512)
+>  struct sc7280_snd_data {
+>  	struct snd_soc_card card;
+>  	struct sdw_stream_runtime *sruntime[LPASS_MAX_PORTS];
+> +	u32 pri_mi2s_clk_count;
+>  	struct snd_soc_jack hs_jack;
+>  	struct snd_soc_jack hdmi_jack;
+>  	bool jack_setup;
+> @@ -69,6 +75,7 @@ static int sc7280_headset_init(struct snd_soc_pcm_runtime *rtd)
+>  		pdata->jack_setup = true;
+>  	}
+>  	switch (cpu_dai->id) {
+> +	case MI2S_PRIMARY:
+>  	case LPASS_CDC_DMA_RX0:
+>  	case LPASS_CDC_DMA_TX3:
+>  		for_each_rtd_codec_dais(rtd, i, codec_dai) {
+> @@ -110,11 +117,49 @@ static int sc7280_hdmi_init(struct snd_soc_pcm_runtime *rtd)
+>  	return snd_soc_component_set_jack(component, &pdata->hdmi_jack, NULL);
+>  }
+>  
+> +static int sc7280_rt5682_init(struct snd_soc_pcm_runtime *rtd)
+> +{
+> +	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
+> +	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
+> +	struct snd_soc_card *card = rtd->card;
+> +	struct sc7280_snd_data *data = snd_soc_card_get_drvdata(card);
+> +	int ret;
+> +
+> +	if (++data->pri_mi2s_clk_count == 1) {
+> +		snd_soc_dai_set_sysclk(cpu_dai,
+> +			LPASS_MCLK0,
+> +			DEFAULT_MCLK_RATE,
+> +			SNDRV_PCM_STREAM_PLAYBACK);
+> +	}
+> +	snd_soc_dai_set_fmt(codec_dai,
+> +				SND_SOC_DAIFMT_CBS_CFS |
+> +				SND_SOC_DAIFMT_NB_NF |
+> +				SND_SOC_DAIFMT_I2S);
+> +
+> +	ret = snd_soc_dai_set_pll(codec_dai, RT5682S_PLL1, RT5682S_PLL_S_BCLK1,
+> +					1536000, RT5682_PLL1_FREQ);
+> +	if (ret) {
+> +		dev_err(rtd->dev, "can't set codec pll: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	ret = snd_soc_dai_set_sysclk(codec_dai, RT5682S_SCLK_S_PLL1,
+> +					RT5682_PLL1_FREQ,
+> +					SND_SOC_CLOCK_IN);
+> +
+> +	if (ret)
+> +		dev_err(rtd->dev, "snd_soc_dai_set_sysclk err = %d\n",
+> +			ret);
+
+With the current code the function would return 0, I imagine that's not
+intended.
+
+> +
+> +	return 0;
+> +}
+> +
