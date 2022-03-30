@@ -2,76 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AEFF4EC9EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 18:47:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 139DA4ECA6B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 19:16:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349001AbiC3QsZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Mar 2022 12:48:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47154 "EHLO
+        id S1349202AbiC3RSJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Mar 2022 13:18:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347781AbiC3QsY (ORCPT
+        with ESMTP id S241545AbiC3RSI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Mar 2022 12:48:24 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13C43278C77
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Mar 2022 09:46:39 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id c15-20020a17090a8d0f00b001c9c81d9648so600323pjo.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Mar 2022 09:46:39 -0700 (PDT)
+        Wed, 30 Mar 2022 13:18:08 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01AF46CA53
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Mar 2022 10:16:22 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id y16so8570005pju.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Mar 2022 10:16:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=EnWYpE15wn4tHabToNlwearQYD9ML88/dHm8ND724Nk=;
-        b=LCDVU2bnZZTXTj6e1Hx64WIsifz8r9mSGCV3nPy8XLNSmqYQzU04G45xZbymBGwPGJ
-         Tyz/c6PWuJWLWk8XKW41dEaG4K25sHiGsPe9XkEr33avb6fMMDnDgU1xvCXjViEEtBkR
-         M7vmIlqCnM3fDGD+mNwQ0SA4S1oDZ36iclOb4=
+        bh=cp6lFLTphQ3Deq4H0+a0uRQ+P8BapY6dZKm1M1RzBpk=;
+        b=BF7YAqQUmzdmP/sXeEGABfOEXWbxtX6tKcEXAZjjmEWZFTkJIBPIitHJTcjm7l5nFC
+         6XqNYe9QdQ1+w4ebzz9Usy1Xg3NCAsdpCKZDyvQpqrIToxGHADAzyFtdDv0mLAptTylA
+         pud92Bg7hiZMLJVI0rCd29OivOvHVr+a13gKg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=EnWYpE15wn4tHabToNlwearQYD9ML88/dHm8ND724Nk=;
-        b=5cczn8KTeI2IS+OoLCj1s58cvPDppKvbrQCFyJUTnZDR8xHPq9VkqdyWcRn0w6hyNE
-         na5oTUofKP/41SsDqc7JLsNvbYCDYiPwB7IYciTlnF7GBoqehv4q/UAnTNscest9KwEw
-         WWuFTSiOlSq9GCynCdivLOqbSH2kZNeHagxa0thffusLYiyS+zqS600UyyR62WC2VyYj
-         kWUNi6xORwkGtL2y345+nQbmU/uWA5cV31pAAc33aa1gGuaJR7GZhgO28sRss8RmrQ70
-         9DuLSoOh+nSt2unzrHLSRxWSeE8QvJtCxiVlALSjyAjhtDuyByiB8jAIkU0rW88p2JdH
-         XV3A==
-X-Gm-Message-State: AOAM531Eahu/cqp6/LsTWDhzn7TKPLXzaHV6ZodpPhwAGK0JzqGU1Jcp
-        ICI9OTbMltBn7hpqaHBtQKu1khnQq+h5iw==
-X-Google-Smtp-Source: ABdhPJzQTLPZjbs55hr4hQ48KFQY2KhWkCZYWZQ7GvDmsmT7J7EnTMEsnqkkf8qkeLsjyeqTtAVlTQ==
-X-Received: by 2002:a17:90a:8d85:b0:1b8:a215:e3e4 with SMTP id d5-20020a17090a8d8500b001b8a215e3e4mr401440pjo.175.1648658798421;
-        Wed, 30 Mar 2022 09:46:38 -0700 (PDT)
+        bh=cp6lFLTphQ3Deq4H0+a0uRQ+P8BapY6dZKm1M1RzBpk=;
+        b=oie2qjllocLvc4F8lGVzzyZISj60KZS3gnRD4nguNgVMyMCVEIdnltm/CjKhyu4Hnz
+         4kHLpKalEpvm5XE9h8SYmwvts3/d1IgFIl1QNEb7n3/D9/clkO6aGwj7LYDcl5FTA2Aq
+         CFzfNs7VID55lPBl18o+G6o45yV3uC2gHXeKU7dJZ5xjU4xUaZYVZqsib/SasbXWJDXu
+         eRjUsmC+JSavAfx/bEKmPNjMdc0GroFWWDRWTvn+XqaR577rDCa/FOPPQzJ0075iqHhC
+         dG/i+W5EWFEUIZywlOsxjC2H0ARJcj1vTni4m5mPxYT157fWizEJw08X+g86Fd3mfmnB
+         Ei+w==
+X-Gm-Message-State: AOAM530ahtsskzgnJ3jmAHs3laSJhjycGW0PULnMY6uJuFbwWV64CRcF
+        Jlu+5z5ZiAAK7LZRZk0xs1XP+g==
+X-Google-Smtp-Source: ABdhPJxqKrJtMh6jDf1VRoyl3BE9nogtzaH0F2a5nx8LdUyh6+nNVTBmTTzf1r+/xO5gfOIAOQdkBg==
+X-Received: by 2002:a17:903:248:b0:155:e8c6:8770 with SMTP id j8-20020a170903024800b00155e8c68770mr23714396plh.129.1648660581408;
+        Wed, 30 Mar 2022 10:16:21 -0700 (PDT)
 Received: from localhost ([2620:15c:202:201:d50d:daac:acf3:cda6])
-        by smtp.gmail.com with UTF8SMTPSA id 13-20020aa7920d000000b004fa94f26b48sm23290447pfo.118.2022.03.30.09.46.37
+        by smtp.gmail.com with UTF8SMTPSA id s3-20020a056a00194300b004f6da3a1a3bsm24881569pfk.8.2022.03.30.10.16.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Mar 2022 09:46:37 -0700 (PDT)
-Date:   Wed, 30 Mar 2022 09:46:36 -0700
+        Wed, 30 Mar 2022 10:16:20 -0700 (PDT)
+Date:   Wed, 30 Mar 2022 10:16:19 -0700
 From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
-Cc:     "Sandeep Maheswaram (Temp)" <quic_c_sanm@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com
-Subject: Re: [PATCH v11 2/5] usb: dwc3: core: Host wake up support from
- system suspend
-Message-ID: <YkSJbLRL1QbINedE@google.com>
-References: <1647932876-23249-1-git-send-email-quic_c_sanm@quicinc.com>
- <1647932876-23249-3-git-send-email-quic_c_sanm@quicinc.com>
- <YjthzwUldu2+31Pm@google.com>
- <b044f873-c20a-c666-0bd3-8d67c3337b03@quicinc.com>
- <20220330040318.GB29680@hu-pkondeti-hyd.qualcomm.com>
+To:     Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>
+Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
+Message-ID: <YkSQY5NSYcov21Ig@google.com>
+References: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220330040318.GB29680@hu-pkondeti-hyd.qualcomm.com>
+In-Reply-To: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,129 +70,214 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 30, 2022 at 09:33:18AM +0530, Pavan Kondeti wrote:
-> Hi Sandeep/Matthias,
+On Wed, Mar 30, 2022 at 05:09:46PM +0800, Mars Chen wrote:
+
+> Subject: CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
+
+No CHROMIUM tag for upstream posts.
+
+> Initial attempt at Gelarshie device tree.
+
+This is not very useful. If you don't want to reveal much information
+about an unreleased device you could say something generic like
+"Add device tree for Gelarshie, a trogdor variant".
+
+> BUG=b:225756600
+> TEST=emerge-strongbad chromeos-kernel-5_4
+
+drop these
+
+> Signed-off-by: Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>
+> Reported-by: kernel test robot <lkp@intel.com>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  .../dts/qcom/sc7180-trogdor-gelarshie-r0.dts  |  15 +
+>  .../dts/qcom/sc7180-trogdor-gelarshie.dtsi    | 304 ++++++++++++++++++
+>  3 files changed, 320 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie.dtsi
 > 
-> On Thu, Mar 24, 2022 at 10:24:55AM +0530, Sandeep Maheswaram (Temp) wrote:
-> > 
-> > On 3/23/2022 11:37 PM, Matthias Kaehlcke wrote:
-> > >On Tue, Mar 22, 2022 at 12:37:53PM +0530, Sandeep Maheswaram wrote:
-> > >>During suspend read the status of all port and make sure the PHYs
-> > >>are in the correct mode based on current speed.
-> > >>Phy interrupt masks are set based on this mode. Keep track of the mode
-> > >>of the HS PHY to be able to configure wakeup properly.
-> > >>
-> > >>Also check during suspend if any wakeup capable devices are
-> > >>connected to the controller (directly or through hubs), if there
-> > >>are none set a flag to indicate that the PHY is powered
-> > >>down during suspend.
-> > >>
-> > >>Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> > >>---
-> > >>  drivers/usb/dwc3/core.c | 54 ++++++++++++++++++++++++++++++++++++++++---------
-> > >>  1 file changed, 45 insertions(+), 9 deletions(-)
-> > >>
-> > >>diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-> > >>index 1170b80..232a734 100644
-> > >>--- a/drivers/usb/dwc3/core.c
-> > >>+++ b/drivers/usb/dwc3/core.c
-> > >>@@ -32,12 +32,14 @@
-> > >>  #include <linux/usb/gadget.h>
-> > >>  #include <linux/usb/of.h>
-> > >>  #include <linux/usb/otg.h>
-> > >>+#include <linux/usb/hcd.h>
-> > >>  #include "core.h"
-> > >>  #include "gadget.h"
-> > >>  #include "io.h"
-> > >>  #include "debug.h"
-> > >>+#include "../host/xhci.h"
-> > >>  #define DWC3_DEFAULT_AUTOSUSPEND_DELAY	5000 /* ms */
-> > >>@@ -1861,10 +1863,36 @@ static int dwc3_core_init_for_resume(struct dwc3 *dwc)
-> > >>  	return ret;
-> > >>  }
-> > >>+static void dwc3_set_phy_speed_mode(struct dwc3 *dwc)
-> > >>+{
-> > >>+
-> > >>+	int i, num_ports;
-> > >>+	u32 reg;
-> > >>+	struct usb_hcd	*hcd = platform_get_drvdata(dwc->xhci);
-> > >>+	struct xhci_hcd	*xhci_hcd = hcd_to_xhci(hcd);
-> > >>+
-> > >>+	dwc->hs_phy_mode = 0;
-> > >>+
-> > >>+	reg = readl(&xhci_hcd->cap_regs->hcs_params1);
-> > >>+
-> > >>+	num_ports = HCS_MAX_PORTS(reg);
-> > >>+	for (i = 0; i < num_ports; i++) {
-> > >>+		reg = readl(&xhci_hcd->op_regs->port_status_base + i * 0x04);
-> > >s/0x04/NUM_PORT_REGS/
-> > Okay. Will update in next version.
-> > >
-> > >>+		if (reg & PORT_PE) {
-> > >>+			if (DEV_HIGHSPEED(reg) || DEV_FULLSPEED(reg))
-> > >>+				dwc->hs_phy_mode |= PHY_MODE_USB_HOST_HS;
-> > >>+			else if (DEV_LOWSPEED(reg))
-> > >>+				dwc->hs_phy_mode |= PHY_MODE_USB_HOST_LS;
-> > >>+		}
-> > >>+	}
-> > >>+	phy_set_mode(dwc->usb2_generic_phy, dwc->hs_phy_mode);
-> > >>+}
-> > >>+
-> > >>  static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
-> > >>  {
-> > >>  	unsigned long	flags;
-> > >>  	u32 reg;
-> > >>+	struct usb_hcd  *hcd = platform_get_drvdata(dwc->xhci);
-> > >>  	switch (dwc->current_dr_role) {
-> > >>  	case DWC3_GCTL_PRTCAP_DEVICE:
-> > >>@@ -1877,10 +1905,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
-> > >>  		dwc3_core_exit(dwc);
-> > >>  		break;
-> > >>  	case DWC3_GCTL_PRTCAP_HOST:
-> > >>-		if (!PMSG_IS_AUTO(msg)) {
-> > >>-			dwc3_core_exit(dwc);
-> > >>-			break;
-> > >>-		}
-> > >>+		dwc3_set_phy_speed_mode(dwc);
-> > >>  		/* Let controller to suspend HSPHY before PHY driver suspends */
-> > >>  		if (dwc->dis_u2_susphy_quirk ||
-> > >>@@ -1896,6 +1921,16 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
-> > >>  		phy_pm_runtime_put_sync(dwc->usb2_generic_phy);
-> > >>  		phy_pm_runtime_put_sync(dwc->usb3_generic_phy);
-> > >>+
-> > >>+		if (!PMSG_IS_AUTO(msg)) {
-> > >>+			if (device_may_wakeup(&dwc->xhci->dev) &&
-> > >Does the xHCI actually provide the correct information? I think Brian brought
-> > >up earlier that xhci-plat always marks the xHCI as wakeup capable, regardless
-> > >of whether the specific implementation actually supports wakeup. So a dwc3
-> > >without wakeup support would keep the PHY and the dwc3 active during suspend
-> > >if wakeup capable devices are connected (unless the admin disabled wakeup),
-> > >even though wakeup it doesn't support wakeup.
-> > >
-> > >Using the wakeup capability/policy of the xHCI to make decisions in the dwc3
-> > >driver might still be the best we can do with the weird driver split over 3
-> > >drivers for dwc3. Maybe the dwc3 could pass the actual capability to wake up
-> > >to the xHCI through a property_entry? Then again, it's actually the 'glue'
-> > >driver (dwc3-qcom) who knows about the actual wakeup capability, and not the
-> > >dwc3 core/host ...
-> > Will check if we can do something regarding this.
-> 
-> Can we introduce a device tree param to xhci-plat to specify if the underlying
-> device is wakeup capable or not. Based on this xhci-plat can call
-> device_set_wakeup_capable() with correct argument.
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index f9e6343acd03..cf8f88b065c3 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -57,6 +57,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1-lte.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r3.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r3-lte.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-gelarshie-r0.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r3.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r4.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts
+> new file mode 100644
+> index 000000000000..027d6d563a5f
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts
+> @@ -0,0 +1,15 @@
+> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> +/*
+> + * Google Gelarshie board device tree source
+> + *
+> + * Copyright 2022 Google LLC.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sc7180-trogdor-gelarshie.dtsi"
+> +
+> +/ {
+> +	model = "Google Gelarshie (rev0+)";
+> +	compatible = "google,gelarshie", "qcom,sc7180";
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie.dtsi
+> new file mode 100644
+> index 000000000000..842f6cac6c27
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie.dtsi
+> @@ -0,0 +1,304 @@
+> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> +/*
+> + * Google Gelarshie board device tree source
+> + *
+> + * Copyright 2022 Google LLC.
+> + */
+> +
+> +#include "sc7180.dtsi"
+> +#include "sc7180-trogdor-mipi-camera.dtsi"
 
-This also came to my mind, the existing 'wakeup-source' property could be an
-option, I share your concern about breaking existing use cases though ...
+drop the mipi camera include, it is not upstream
 
-> One immediate problem is that current code unconditionally calls
-> device_set_wakeup_capable(&pdev->dev, true). So we may break existing use
-> cases also.
+> +
+> +ap_ec_spi: &spi6 {};
+> +ap_h1_spi: &spi0 {};
+> +
+> +#include "sc7180-trogdor.dtsi"
+> +#include "sc7180-trogdor-ti-sn65dsi86.dtsi"
+> +
+> +/* Deleted nodes from trogdor.dtsi */
+> +
+> +/delete-node/ &alc5682;
+> +/delete-node/ &pp3300_codec;
+> +
+> +/ {
+> +	/* BOARD-SPECIFIC TOP LEVEL NODES */
+> +
+> +	adau7002: audio-codec-1 {
+> +		compatible = "adi,adau7002";
+> +		IOVDD-supply = <&pp1800_l15a>;
+> +		wakeup-delay-ms = <80>;
+> +		#sound-dai-cells = <0>;
+> +	};
+> +};
+> +
+> +&backlight {
+> +	pwms = <&cros_ec_pwm 0>;
+> +};
+> +
+> +&camcc {
+> +	status = "okay";
+> +};
+> +
+> +&cros_ec {
+> +	cros_ec_proximity: proximity {
+> +		compatible = "google,cros-ec-mkbp-proximity";
+> +		label = "proximity-wifi";
+> +	};
+> +};
+> +
+> +ap_ts_pen_1v8: &i2c4 {
+> +	status = "okay";
+> +	clock-frequency = <400000>;
+> +
+> +	ap_ts: touchscreen@5d {
+> +		compatible = "goodix,gt7375p";
+> +		reg = <0x5d>;
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&ts_int_l>, <&ts_reset_l>;
+> +
+> +		interrupt-parent = <&tlmm>;
+> +		interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
+> +
+> +		reset-gpios = <&tlmm 8 GPIO_ACTIVE_LOW>;
+> +
+> +		vdd-supply = <&pp3300_ts>;
+> +	};
+> +};
+> +
+> +&i2c7 {
+> +	status = "disabled";
+> +};
+> +
+> +&i2c9 {
+> +	status = "disabled";
+> +};
+> +
+> +&mdp {
+> +	chromium-enable-overlays;
+> +};
 
-> Given that xHC assumes that the undelying device is wakeup capable but dwc3
-> tearing the stack during PM suspend does not make any sense. can we atleast
-> create a device tree param for dwc3 not to do this?
+I can't find documentation for 'chromium-enable-overlays', what is this
+supposed to do?
 
-I'm not sure I fully understand what you have in mind. Are you thinking about
-a parameter/property to indicate whether wakeup should be enabled for the dwc3?
-'wakeup_source' could serve that purpose, it is also used by xhci-mtk.c and
-mtu3_host.c.
+> +
+> +&panel {
+> +	compatible = "edp-panel";
+> +};
+> +
+> +&pm6150_adc {
+> +	skin-temp-thermistor@4e {
+> +		reg = <ADC5_AMUX_THM2_100K_PU>;
+> +		qcom,ratiometric;
+> +		qcom,hw-settle-time = <200>;
+> +	};
+> +};
+> +
+> +&pm6150_adc_tm {
+> +	status = "okay";
+> +
+> +	skin-temp-thermistor@1 {
+> +		reg = <1>;
+> +		io-channels = <&pm6150_adc ADC5_AMUX_THM2_100K_PU>;
+> +		qcom,ratiometric;
+> +		qcom,hw-settle-time-us = <200>;
+> +	};
+> +};
+
+The thermistor is currently unused, drop it and add it later when you
+add the corresponding thermal zone.
+
+> +
+> +&pp1800_uf_cam {
+> +	status = "okay";
+> +};
+> +
+> +&pp1800_wf_cam {
+> +	status = "okay";
+> +};
+> +
+> +&pp2800_uf_cam {
+> +	status = "okay";
+> +};
+> +
+> +&pp2800_wf_cam {
+> +	status = "okay";
+> +};
+> +
+> +&pp3300_dx_edp {
+> +	gpio = <&tlmm 67 GPIO_ACTIVE_HIGH>;
+> +};
+> +
+> +&sdhc_2 {
+> +	status = "okay";
+> +};
+> +
+> +&sn65dsi86_out {
+> +	data-lanes = <0 1 2 3>;
+> +};
+> +
+> +&sound {
+> +	compatible = "google,sc7180-coachz";
+
+Is 'sc7180-coachz' intended because the config is the same as for
+coachz or should this be 'sc7180-gelarshie'?
