@@ -2,44 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AEBB54EBEE4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 12:36:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF4374EBF13
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 12:44:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245466AbiC3Kik (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Mar 2022 06:38:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46430 "EHLO
+        id S245529AbiC3Kp5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Mar 2022 06:45:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245444AbiC3Kij (ORCPT
+        with ESMTP id S245524AbiC3Kp5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Mar 2022 06:38:39 -0400
+        Wed, 30 Mar 2022 06:45:57 -0400
 Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0756C2C127;
-        Wed, 30 Mar 2022 03:36:53 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3A576562;
+        Wed, 30 Mar 2022 03:44:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1648636614; x=1680172614;
+  t=1648637050; x=1680173050;
   h=subject:to:cc:references:from:message-id:date:
    mime-version:in-reply-to:content-transfer-encoding;
-  bh=AXCYTWaniDbWfm4aIh5x4nUzNPwz+GK53Urwx7FShis=;
-  b=FxT15oesqYwPPfV3vfjlOsDDsKmRO4G4fwWcE4cClIvMySYKzopNcmi3
-   TQGxNmQQk4ql14MpZd9wcknWqpXjTE5oeu7p/+1aCE6eZhf+eBnWsyI0N
-   SBPat+HhCRk6Jimod0E9oivKks0bOCwM7o8uTInhjkAf8Kt1h5F7N/IKD
-   U=;
+  bh=1ALKljcPIWRTbJOCCZdSlHSchaW8/tgIbdkkM8LZY/g=;
+  b=oImNDtfOXKBBXBj2uBQxpRW8hp4pmpmR5Uqrjb4b2EPspoVPnTJ7SADQ
+   qjryFws/ZTZIZEn3nH0My0DESJtak2nf9Gdtdsu/utQfPQkemYCBzhRqI
+   1FVdoqrx1bYkAYLbBY0PSk/xR2Xg/gesp2ve4/MifD4D9PIL881FKGpO2
+   M=;
 Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 30 Mar 2022 03:36:53 -0700
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 30 Mar 2022 03:44:10 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Mar 2022 03:36:53 -0700
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Mar 2022 03:44:10 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 30 Mar 2022 03:36:52 -0700
+ 15.2.986.22; Wed, 30 Mar 2022 03:44:10 -0700
 Received: from [10.216.27.32] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 30 Mar
- 2022 03:36:48 -0700
-Subject: Re: [PATCH V8 6/7] arm64: dts: qcom: pm8008-regulators: Add base dts
- file for pm8008 regulators
+ 2022 03:44:04 -0700
+Subject: Re: [PATCH V8 7/7] arm64: dts: qcom: sc7280: Add pm8008 support for
+ sc7280-idp
 To:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>
@@ -51,17 +51,17 @@ CC:     Lee Jones <lee.jones@linaro.org>,
         <linux-kernel@vger.kernel.org>, <quic_collinsd@quicinc.com>,
         <quic_subbaram@quicinc.com>, <quic_jprakash@quicinc.com>
 References: <1648209491-30165-1-git-send-email-quic_c_skakit@quicinc.com>
- <1648209491-30165-7-git-send-email-quic_c_skakit@quicinc.com>
- <CAE-0n50ApgiYbxHbU072s5-QLAmEppjDH9brKbfHja7hiue4xA@mail.gmail.com>
+ <1648209491-30165-8-git-send-email-quic_c_skakit@quicinc.com>
+ <CAE-0n511eQTnJHqt0B=uiiSjigy-RHZ52YuYz4kfEpX1x6CMfw@mail.gmail.com>
 From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
-Message-ID: <812d47d1-fd81-b635-67d6-58bdb0dbe79b@quicinc.com>
-Date:   Wed, 30 Mar 2022 16:06:44 +0530
+Message-ID: <094d8faa-c42b-be1b-cf92-04232d618a3e@quicinc.com>
+Date:   Wed, 30 Mar 2022 16:14:01 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n50ApgiYbxHbU072s5-QLAmEppjDH9brKbfHja7hiue4xA@mail.gmail.com>
+In-Reply-To: <CAE-0n511eQTnJHqt0B=uiiSjigy-RHZ52YuYz4kfEpX1x6CMfw@mail.gmail.com>
 Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
@@ -77,21 +77,74 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 3/25/2022 11:13 PM, Stephen Boyd wrote:
-> Quoting Satya Priya (2022-03-25 04:58:10)
->> Add base DTS file for pm8008 regulators with 7 ldo nodes.
+On 3/25/2022 11:18 PM, Stephen Boyd wrote:
+> Quoting Satya Priya (2022-03-25 04:58:11)
+>> Add pm8008_infra and pm8008_regulators support for sc7280 idp.
 >>
 >> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
 >> ---
+>> Changes in V6:
+>>   - No changes.
+>>
+>> Changes in V7:
+>>   - No Changes.
+>>
 >> Changes in V8:
->>   - Previously added pm8008 dtsi file is split into 2 files, one for infra
->>     and other for regulators.
-> Does pm8008 come in one package that gets soldered down on the board? If
-> so, this should be one file instead of two, i.e. pm8008.dtsi. We don't
-> make a -regulators dtsi file for other pmics.
+>>   - Add an extra phandle "pm8008_bus" and then include pm8008 dtsi files inside it.
+>>   - Remove output-high from pm8008_active node.
+>>
+>>   arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 70 ++++++++++++++++++++++++++++++++
+>>   1 file changed, 70 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> index ecbf2b8..0843e92 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> @@ -263,6 +263,67 @@
+>>          };
+>>   };
+>>
+>> +pm8008_bus: &i2c1 {
+>> +       #address-cells = <1>;
+>> +       #size-cells = <0>;
+> These two properties should already be in the i2c1 node. Can you remove
+> them?
 
 
-Yes, pm8008 is a single chip.
+Okay.
 
-You're right I should add only one pm8008.dtsi (including regulators)
+
+>> +       status = "okay";
+>> +};
+>> +
+>> +&pm8008_bus {
+>> +       #include "pm8008-infra.dtsi"
+>> +       #include "pm8008-regulators.dtsi"
+>> +};
+> I was thinking more of like
+>
+> 	&pm8008_bus: &i2c1 {
+> 		status = "okay";
+> 	};
+>
+> 	#include "pm8008.dtsi"
+>
+> and then the nodes below.
+
+
+You mean
+
+pm8008_bus: &i2c1 {
+
+         status = "okay";
+
+};
+
+&pm8008_bus {
+
+     #include "pm8008.dtsi"
+
+};
+
+and remaining nodes, right?
 
