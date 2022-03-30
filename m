@@ -2,131 +2,201 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7FAEC4ECA97
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 19:26:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C75D74ECAB2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 19:32:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349257AbiC3R1e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Mar 2022 13:27:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55784 "EHLO
+        id S231231AbiC3Rdu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Mar 2022 13:33:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346580AbiC3R1e (ORCPT
+        with ESMTP id S1349441AbiC3Rd3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Mar 2022 13:27:34 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E8426372
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Mar 2022 10:25:48 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id p15so42900123ejc.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Mar 2022 10:25:48 -0700 (PDT)
+        Wed, 30 Mar 2022 13:33:29 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47F974C400;
+        Wed, 30 Mar 2022 10:31:42 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id h23so30301646wrb.8;
+        Wed, 30 Mar 2022 10:31:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=ywoW9d6iS1v9MqKMZLThlxZsRS/iSgOcBYL7HQFMb8w=;
-        b=jXk62kaOb+JZKYyIu6K42PmmJIIdGtCx+R5cntWsvzNPATuN2iTuNHYp+Xv7eu8rNX
-         zBBxcwEHW0KJvJ7FAmBCuXDPXBqUjHOU3EmkZnB28JQeKhKvKCNOH7AUFonVtWgn/lFm
-         fRxBZMOPOE6IZsyQUWIz4nbh009mA9u6qOr2tmDHTx0txHOrL6wSdUtWD3J+R3sxt8mG
-         fz1ht2TrYkbcCEsipaWGd3Wq05pEU1oyYUXJY88dSOGG7m7PZtT8nR8L2ytl0TxFGgbu
-         qV0D5kIFVBokjp1U0w9N9N5gl1MdXm56QVlcjOhihrbLa/12jg0up/Ck+XN/5CN5uP1n
-         Qh2g==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MzOHSa1wGev7C61xNe7AlpnL6176z6/FaTx3bV4mjuY=;
+        b=VpSVi2g7tol4ZEtmFAbrEKl2ClldYYPOqDfvuzHFwzN1r2GBUOmp+X5qC2sTOGTv+q
+         VasI8bOaDB17Wj5zf6L3Vi7yNqMM+GuCL205yQjNT6GPsOlj6+OlpQwqpEvjuRUsNZfE
+         C/azEpBsaT8HORk1sROgRQ8Th4grMWoEvzorWWrPiI6ky8S1auDWu6UaZz9+3BJNOaa2
+         yIrpyzcehU9u17ygGvZ6BJqsxzCVWFm8+RxbW29xvfyBYaZdDrZR3pEfnJXPGdQA3bYd
+         eXnmrSEzBgpFA3JOZZEKy205JvU1lvDbhL30Ri3r8WDUcg6vb5+6MrByecZVrsy7dMNX
+         549g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=ywoW9d6iS1v9MqKMZLThlxZsRS/iSgOcBYL7HQFMb8w=;
-        b=ZmTQi4/fZVpF/EAsU+aFYqh+yXGNt+eeGagi+9gg6omwV19nSKU0dMrmB3c+7GdWPS
-         zzG2rRyRVD0clqhdUU7iyU6+O8GZxa1OWmz+A1VJpe7xf6R46kqWWJKF1lSgBGxH0gPu
-         1UiBia/oH4PoekwoKYPfoKqzfd7dUr+CgrjGgtKu4rDCrB+koYmh01mCsnUSqHvTBk9T
-         xYf8XcBWguNxv8f6gDrytA3RKxCUW/ehBQI85pLQWbG7g+uGsMkIeF31GGKi/baBLxem
-         AywUEf1YlIlmZ6Q5Zzoviv4aVKG7zOy2UzIEvxw0U2h9/AW1TbojQjkUcUKs2Bc2R+C4
-         AWvg==
-X-Gm-Message-State: AOAM531m+lAKeCAQpx8NFVgVzghvW7hsdGW3p4YyfwT8Er05y+/2OKRm
-        ErJ8SBgLiUP0Gl6mJ7lXcRvgfw==
-X-Google-Smtp-Source: ABdhPJxxOU49iYcKjfDnjlgu3KVv7WLRtGVL9RCQkhzwLgkyAXnZHHhNugRy23T450DuqxkqRAXkmw==
-X-Received: by 2002:a17:907:1ca3:b0:6e0:5a9:37a1 with SMTP id nb35-20020a1709071ca300b006e005a937a1mr598108ejc.651.1648661146942;
-        Wed, 30 Mar 2022 10:25:46 -0700 (PDT)
-Received: from [192.168.0.164] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id ds5-20020a170907724500b006df8f39dadesm8343734ejc.218.2022.03.30.10.25.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Mar 2022 10:25:46 -0700 (PDT)
-Message-ID: <a0eb6bf9-256a-29b1-2211-496df710f531@linaro.org>
-Date:   Wed, 30 Mar 2022 19:25:45 +0200
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MzOHSa1wGev7C61xNe7AlpnL6176z6/FaTx3bV4mjuY=;
+        b=X+I3Wx6tOZs9MexdqhRaiq/7xMEyjvrl9HPcc8R7vU95G/MQ2fiTbA0eiSOPMwCFIb
+         OclIAe4P0oWrmds0NzJINCvwKsdcMm2d0Gsa6hrZLETHCjaMm7N/a3j9ss7luoBV0KDy
+         sd9GuRKyMCIx7i1wklb+aZWY9RILQ5PN4GzMRmJjZt7++bfVTA/iV+hGTP8I2gmARe9T
+         SOMetij1IRgMlnFfFWOgFT/JUUMR1+pP4818NDBQFBVEU8wNC0xf/rkeAtNHgj042H4F
+         oDwLnJ3D3w+ULxDhmXbLFBE87qufiFizoVWNH85XF60tfGus93XlDoN45CLdPBn2+9pF
+         YE9g==
+X-Gm-Message-State: AOAM533McLqTishdK/wlN8q8YG8822QQKRKxuNT8s9uwUa+YtCC4HzjP
+        Mv/pZzNQT3g26o0q0aewnRqw40bej9jJb5ZrpX4=
+X-Google-Smtp-Source: ABdhPJxzLtFOHA8j1KP7060UxbMN89W0F5SOw0/ZWrSMMqfII6hCIzYI4qnQ5sVFdKPvpVEKavi+htl4y4KW0PBzBc0=
+X-Received: by 2002:adf:dd4d:0:b0:203:f178:b78b with SMTP id
+ u13-20020adfdd4d000000b00203f178b78bmr622734wrm.93.1648661500674; Wed, 30 Mar
+ 2022 10:31:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] CHROMIUM: arm64: dts: qcom: Add sc7180-gelarshie
-Content-Language: en-US
-To:     Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>,
-        agross@kernel.org
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220330090947.9100-1-chenxiangrui@huaqin.corp-partner.google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20220329230105.601666-1-robdclark@gmail.com> <20220329230105.601666-4-robdclark@gmail.com>
+ <CAA8EJpqAaW0Q-QeQObonUqAhdWaw8mPPvChmboH88ttTx+2XGg@mail.gmail.com>
+In-Reply-To: <CAA8EJpqAaW0Q-QeQObonUqAhdWaw8mPPvChmboH88ttTx+2XGg@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 30 Mar 2022 10:32:32 -0700
+Message-ID: <CAF6AEGtkpF5MLza0LY_AJsC4vu1nAzXZ5xv4Eusz+Bpp6GFXRA@mail.gmail.com>
+Subject: Re: [PATCH 3/9] drm/msm/gem: Split out inuse helper
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/03/2022 11:09, Mars Chen wrote:
-> Initial attempt at Gelarshie device tree.
-> 
-> BUG=b:225756600
-> TEST=emerge-strongbad chromeos-kernel-5_4
-> 
-> Signed-off-by: Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../dts/qcom/sc7180-trogdor-gelarshie-r0.dts  |  15 +
->  .../dts/qcom/sc7180-trogdor-gelarshie.dtsi    | 304 ++++++++++++++++++
->  3 files changed, 320 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index f9e6343acd03..cf8f88b065c3 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -57,6 +57,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1-lte.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r3.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r3-lte.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-gelarshie-r0.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r3.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-homestar-r4.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts
-> new file mode 100644
-> index 000000000000..027d6d563a5f
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-gelarshie-r0.dts
-> @@ -0,0 +1,15 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-> +/*
-> + * Google Gelarshie board device tree source
-> + *
-> + * Copyright 2022 Google LLC.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sc7180-trogdor-gelarshie.dtsi"
-> +
-> +/ {
-> +	model = "Google Gelarshie (rev0+)";
-> +	compatible = "google,gelarshie", "qcom,sc7180";
+On Wed, Mar 30, 2022 at 4:32 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Wed, 30 Mar 2022 at 02:00, Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > Prep for a following patch.  While we are at it, convert a few remaining
+> > WARN_ON()s to GEM_WARN_ON().
+>
+> Well... GEM_WARN_ON doesn't really look like a 'while we are at it'.
+> It might be better to split it into a separate commit.
 
-Missing bindings. Please document the compatible.
+it was a bit lazy.. I'll split it out
 
-Best regards,
-Krzysztof
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >  drivers/gpu/drm/msm/msm_gem.c     |  2 +-
+> >  drivers/gpu/drm/msm/msm_gem.h     |  1 +
+> >  drivers/gpu/drm/msm/msm_gem_vma.c | 15 ++++++++++-----
+> >  3 files changed, 12 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+> > index a4f61972667b..f96d1dc72021 100644
+> > --- a/drivers/gpu/drm/msm/msm_gem.c
+> > +++ b/drivers/gpu/drm/msm/msm_gem.c
+> > @@ -938,7 +938,7 @@ void msm_gem_describe(struct drm_gem_object *obj, struct seq_file *m,
+> >                                 name, comm ? ":" : "", comm ? comm : "",
+> >                                 vma->aspace, vma->iova,
+> >                                 vma->mapped ? "mapped" : "unmapped",
+> > -                               vma->inuse);
+> > +                               msm_gem_vma_inuse(vma));
+> >                         kfree(comm);
+> >                 }
+> >
+> > diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+> > index 947ff7d9b471..1b7f0f0b88bf 100644
+> > --- a/drivers/gpu/drm/msm/msm_gem.h
+> > +++ b/drivers/gpu/drm/msm/msm_gem.h
+> > @@ -61,6 +61,7 @@ struct msm_gem_vma {
+> >  int msm_gem_init_vma(struct msm_gem_address_space *aspace,
+> >                 struct msm_gem_vma *vma, int npages,
+> >                 u64 range_start, u64 range_end);
+> > +bool msm_gem_vma_inuse(struct msm_gem_vma *vma);
+> >  void msm_gem_purge_vma(struct msm_gem_address_space *aspace,
+> >                 struct msm_gem_vma *vma);
+> >  void msm_gem_unmap_vma(struct msm_gem_address_space *aspace,
+> > diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
+> > index f914ddbaea89..dc2ae097805e 100644
+> > --- a/drivers/gpu/drm/msm/msm_gem_vma.c
+> > +++ b/drivers/gpu/drm/msm/msm_gem_vma.c
+> > @@ -37,6 +37,11 @@ msm_gem_address_space_get(struct msm_gem_address_space *aspace)
+> >         return aspace;
+> >  }
+> >
+> > +bool msm_gem_vma_inuse(struct msm_gem_vma *vma)
+> > +{
+> > +       return !!vma->inuse;
+> > +}
+>
+> It almost  asks to be a static inline. The patch 04 makes it complex,
+> so it's probably not that important.
+
+yeah, that is the reason I didn't make it static inline
+
+BR,
+-R
+
+> > +
+> >  /* Actually unmap memory for the vma */
+> >  void msm_gem_purge_vma(struct msm_gem_address_space *aspace,
+> >                 struct msm_gem_vma *vma)
+> > @@ -44,7 +49,7 @@ void msm_gem_purge_vma(struct msm_gem_address_space *aspace,
+> >         unsigned size = vma->node.size << PAGE_SHIFT;
+> >
+> >         /* Print a message if we try to purge a vma in use */
+> > -       if (WARN_ON(vma->inuse > 0))
+> > +       if (GEM_WARN_ON(msm_gem_vma_inuse(vma)))
+> >                 return;
+> >
+> >         /* Don't do anything if the memory isn't mapped */
+> > @@ -61,7 +66,7 @@ void msm_gem_purge_vma(struct msm_gem_address_space *aspace,
+> >  void msm_gem_unmap_vma(struct msm_gem_address_space *aspace,
+> >                 struct msm_gem_vma *vma)
+> >  {
+> > -       if (!WARN_ON(!vma->iova))
+> > +       if (!GEM_WARN_ON(!vma->iova))
+> >                 vma->inuse--;
+> >  }
+> >
+> > @@ -73,7 +78,7 @@ msm_gem_map_vma(struct msm_gem_address_space *aspace,
+> >         unsigned size = npages << PAGE_SHIFT;
+> >         int ret = 0;
+> >
+> > -       if (WARN_ON(!vma->iova))
+> > +       if (GEM_WARN_ON(!vma->iova))
+> >                 return -EINVAL;
+> >
+> >         /* Increase the usage counter */
+> > @@ -100,7 +105,7 @@ msm_gem_map_vma(struct msm_gem_address_space *aspace,
+> >  void msm_gem_close_vma(struct msm_gem_address_space *aspace,
+> >                 struct msm_gem_vma *vma)
+> >  {
+> > -       if (WARN_ON(vma->inuse > 0 || vma->mapped))
+> > +       if (GEM_WARN_ON(msm_gem_vma_inuse(vma) || vma->mapped))
+> >                 return;
+> >
+> >         spin_lock(&aspace->lock);
+> > @@ -120,7 +125,7 @@ int msm_gem_init_vma(struct msm_gem_address_space *aspace,
+> >  {
+> >         int ret;
+> >
+> > -       if (WARN_ON(vma->iova))
+> > +       if (GEM_WARN_ON(vma->iova))
+> >                 return -EBUSY;
+> >
+> >         spin_lock(&aspace->lock);
+> > --
+> > 2.35.1
+> >
+>
+>
+> --
+> With best wishes
+> Dmitry
