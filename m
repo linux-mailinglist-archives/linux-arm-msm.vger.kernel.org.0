@@ -2,58 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CC214EC261
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 13:59:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 968524EC504
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 14:56:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344554AbiC3L7Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Mar 2022 07:59:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38382 "EHLO
+        id S240761AbiC3M56 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Mar 2022 08:57:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344625AbiC3L4V (ORCPT
+        with ESMTP id S1345602AbiC3M54 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Mar 2022 07:56:21 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E00E92FE5F;
-        Wed, 30 Mar 2022 04:54:17 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BC6B061701;
-        Wed, 30 Mar 2022 11:54:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75DD7C36AEA;
-        Wed, 30 Mar 2022 11:54:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648641257;
-        bh=dIgepHg2u5QCwwLh7ZLHSryTO5H5pf0+HHyZ6n09e5I=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=mdfNtI8H30jBeWMCGC4gkGsHxyEfrV39WROUi3FAFRXteqpZ/UtrsDO4XnNIW59kk
-         iRidHrsXknqDzRbyFzgmHZf1RdK7Fs6AfDzAXvC1mvyx+4DOYHxVT5iaRURuO4YDfK
-         VpPCwsohIH4TiLZjeDi0TIb67oBzyZijeCw978QbUlaDogfjY4qPzY1R312ZLlh4IM
-         2qwf6KzCP9u1khAnnVDkmnilnwwH6BozIIQJ1PODrFTBei/hgmgUgIhiWu/nEjfTEV
-         1h0jIpiSty8r9bHqoCCKE7C28qJOoXzGJmVJJpoMffcyTArBZqaq/+zIlB4VMp+ZVu
-         Erqw/Gxj2s2wA==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     David Heidelberg <david@ixit.cz>,
-        LogicalErzor <logicalerzor@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, andy.gross@linaro.org,
-        david.brown@linaro.org, robh+dt@kernel.org, mark.rutland@arm.com,
-        linux@armlinux.org.uk, linux-arm-msm@vger.kernel.org,
-        linux-soc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 4.9 05/17] ARM: dts: qcom: fix gic_irq_domain_translate warnings for msm8960
-Date:   Wed, 30 Mar 2022 07:53:54 -0400
-Message-Id: <20220330115407.1673214-5-sashal@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220330115407.1673214-1-sashal@kernel.org>
-References: <20220330115407.1673214-1-sashal@kernel.org>
+        Wed, 30 Mar 2022 08:57:56 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50C291D08EB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Mar 2022 05:56:10 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id bt26so35632994lfb.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 30 Mar 2022 05:56:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language
+         :from:to:cc:references:in-reply-to:content-transfer-encoding;
+        bh=G5HJzN7yLosBTkE6FblfJhF8/NxTEia64Q4IDEWiIUY=;
+        b=QwfPAD+9wwtOxMGPx3FuoweZ9OmsOzbFFUoPPM4R81ypDZdDHjAVZqBfEQ/MCcEXFm
+         qzgZmn3q75tuixnjAwl1C3n/Hm+NRs9wji7+rfoqk2G1/jZzbzponHpetWW0XMSWqQtD
+         mj69FKBVmfKntzvJR1RLQ0hsY/LPdRTQFcAvagy5SGOSiRp2+n0hVibQ0f9t5aMApovc
+         oXIDttUEWfkxn7n4V8xv8fgqVq9awCBnj8cTNVDr05iJx7ZoxuOS3dylB+XTeP7zqEqi
+         l1pGxDRwcw6kZYZdIU0XQx8TXO9IIX8nlCEgrn0mVVb623ZPuptOiOBYFospCC2u4ANS
+         ifdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:from:to:cc:references:in-reply-to
+         :content-transfer-encoding;
+        bh=G5HJzN7yLosBTkE6FblfJhF8/NxTEia64Q4IDEWiIUY=;
+        b=37DqYbXE+pPUEcUCsCJCrelZRhVFx21QIquJBUAHlwE4W+1EvpsWhO3z42TDZQdBtk
+         mniyQtLYxS41fMvp3xIZawXBlPUdAqGLCYgvrrrDCdT76q76mhyaEmsVtgRJUvxpIawm
+         U5svU2qt57naICCBkff19cBrTkf73ScVCG/aFd2qGrBOsBZ8v7EXTR2Cw8t6BgX74Sdm
+         1hUhZNPdKQy6A18R/XzffP2ub7Qn75Dh1yNCZKzOkttta0der+WAN/NPVxYNyc+yoPEM
+         Jg7hXbNPHpIfdulZAsSKAtOwsqbkzN5lo9VLJNGcmKgScYYrw+pthMTff6dreHTtXLPL
+         CJBQ==
+X-Gm-Message-State: AOAM533+R9Q3Y2AshP4ImWKeGETnvkEaSpO4IuRzE7Am46hBFJnt215b
+        PkMmIRyHRATauNeYi68uw65b+Q==
+X-Google-Smtp-Source: ABdhPJz0ETGvRlDBDOivkyi/5XpRFV5fGpwgEKcaUN5wmAZnanZInTJpmaYJHQCoxwseyYPRJLLpFg==
+X-Received: by 2002:a05:6512:118b:b0:438:b7ad:11a2 with SMTP id g11-20020a056512118b00b00438b7ad11a2mr6656755lfr.295.1648644968195;
+        Wed, 30 Mar 2022 05:56:08 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id h6-20020a2e5306000000b00247e893075asm2367302ljb.37.2022.03.30.05.56.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Mar 2022 05:56:07 -0700 (PDT)
+Message-ID: <edfff61f-02a0-7962-a72c-97ef5f14ba76@linaro.org>
+Date:   Wed, 30 Mar 2022 15:56:06 +0300
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v1 0/5] PCI: qcom: rework pipe_clk/pipe_clk_src handling
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Prasad Malisetty <quic_pmaliset@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-pci@vger.kernel.org
+References: <20220323085010.1753493-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20220323085010.1753493-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -62,58 +82,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: David Heidelberg <david@ixit.cz>
+On 23/03/2022 11:50, Dmitry Baryshkov wrote:
+> PCIe pipe clk (and some other clocks) must be parked to the "safe"
+> source (bi_tcxo) when corresponding GDSC is turned off and on again.
+> Currently this is handcoded in the PCIe driver by reparenting the
+> gcc_pipe_N_clk_src clock.
+> 
+> Instead of doing it manually, follow the approach used by
+> clk_rcg2_shared_ops and implement this parking in the enable() and
+> disable() clock operations for respective pipe clocks.
 
-[ Upstream commit 6f7e221e7a5cfc3299616543fce42b36e631497b ]
+Prasad, can we please get your comments on this patchset?
+Since you have submitted original patchset for sc7280, it looks like you 
+should be interested in testing that this patchset doesn't break your 
+devices.
 
-IRQ types blindly copied from very similar APQ8064.
+> 
+> Changes since RFC:
+>   - Rework clk-regmap-mux fields. Specify safe parent as P_* value rather
+>     than specifying the register value directly
+>   - Expand commit message to the first patch to specially mention that
+>     it is required only on newer generations of Qualcomm chipsets.
+> 
+> Dmitry Baryshkov (5):
+>    clk: qcom: regmap-mux: add pipe clk implementation
+>    clk: qcom: gcc-sm8450: use new clk_regmap_mux_safe_ops for PCIe pipe
+>      clocks
+>    clk: qcom: gcc-sc7280: use new clk_regmap_mux_safe_ops for PCIe pipe
+>      clocks
+>    PCI: qcom: Remove unnecessary pipe_clk handling
+>    PCI: qcom: Drop manual pipe_clk_src handling
+> 
+>   drivers/clk/qcom/clk-regmap-mux.c      | 78 +++++++++++++++++++++++
+>   drivers/clk/qcom/clk-regmap-mux.h      |  3 +
+>   drivers/clk/qcom/gcc-sc7280.c          |  6 +-
+>   drivers/clk/qcom/gcc-sm8450.c          |  6 +-
+>   drivers/pci/controller/dwc/pcie-qcom.c | 87 +-------------------------
+>   5 files changed, 92 insertions(+), 88 deletions(-)
+> 
 
-Fixes warnings as:
-WARNING: CPU: 0 PID: 1 at drivers/irqchip/irq-gic.c:1080 gic_irq_domain_translate+0x118/0x120
-...
 
-Tested-by: LogicalErzor <logicalerzor@gmail.com> # boot-tested on Samsung S3
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/20220108174229.60384-1-david@ixit.cz
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- arch/arm/boot/dts/qcom-msm8960.dtsi | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/arch/arm/boot/dts/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom-msm8960.dtsi
-index 288f56e0ccf5..819d0f085f8c 100644
---- a/arch/arm/boot/dts/qcom-msm8960.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8960.dtsi
-@@ -139,7 +139,9 @@
- 			reg		= <0x108000 0x1000>;
- 			qcom,ipc	= <&l2cc 0x8 2>;
- 
--			interrupts	= <0 19 0>, <0 21 0>, <0 22 0>;
-+			interrupts	= <GIC_SPI 19 IRQ_TYPE_EDGE_RISING>,
-+					  <GIC_SPI 21 IRQ_TYPE_EDGE_RISING>,
-+					  <GIC_SPI 22 IRQ_TYPE_EDGE_RISING>;
- 			interrupt-names	= "ack", "err", "wakeup";
- 
- 			regulators {
-@@ -185,7 +187,7 @@
- 				compatible = "qcom,msm-uartdm-v1.3", "qcom,msm-uartdm";
- 				reg = <0x16440000 0x1000>,
- 				      <0x16400000 0x1000>;
--				interrupts = <0 154 0x0>;
-+				interrupts = <GIC_SPI 154 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&gcc GSBI5_UART_CLK>, <&gcc GSBI5_H_CLK>;
- 				clock-names = "core", "iface";
- 				status = "disabled";
-@@ -311,7 +313,7 @@
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 				reg = <0x16080000 0x1000>;
--				interrupts = <0 147 0>;
-+				interrupts = <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>;
- 				spi-max-frequency = <24000000>;
- 				cs-gpios = <&msmgpio 8 0>;
- 
 -- 
-2.34.1
-
+With best wishes
+Dmitry
