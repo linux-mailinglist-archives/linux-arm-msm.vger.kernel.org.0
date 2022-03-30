@@ -2,198 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CAD844ECAF2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 19:45:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3293B4ECB13
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 30 Mar 2022 19:51:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231572AbiC3Rrg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 30 Mar 2022 13:47:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54076 "EHLO
+        id S1349515AbiC3Rxe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 30 Mar 2022 13:53:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229651AbiC3Rrg (ORCPT
+        with ESMTP id S1349521AbiC3Rxa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 30 Mar 2022 13:47:36 -0400
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD2DB11987E;
-        Wed, 30 Mar 2022 10:45:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1648662349; x=1680198349;
-  h=to:cc:references:from:subject:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=bhBu1QbtdGHCC2qA88WxU1+lM89JHNS2xL8ubX9vaIE=;
-  b=KA/fjs/cHLcdsW63A2zlYO8k4nWzdUApAGBaQoD9ySGOi3xwccZ8MVhR
-   uRIP/I7qgyEz8lkcdhPRBhdQqsw2gw/f+E4dVQp+M9tl5RPJY6PgZte/c
-   7Nb5Qt8deI0QMBzo7evesl0K4XEtWjIYkUUeK1+Rx2lfnVq6+CHKybpSz
-   0Qi0CPa4t786l9EHhtSrsDraS82jaUn1aY7WYQgpG5MaAw+PLAOfhoNzR
-   RsXvo2/6VleUDx+C9lDZyo8VNcJUl32lPiFhZ+RJvOFYRBXeN2kuhyvJ7
-   JkFkWkgDm4Wbp+LE+0Zvnc3MA8XWNbXRowT+aSPEQL2I9GOeUL6y/Wu24
-   g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10302"; a="239534457"
-X-IronPort-AV: E=Sophos;i="5.90,223,1643702400"; 
-   d="scan'208";a="239534457"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Mar 2022 10:45:49 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,223,1643702400"; 
-   d="scan'208";a="653974778"
-Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
-  by orsmga004.jf.intel.com with ESMTP; 30 Mar 2022 10:45:44 -0700
-To:     "Sandeep Maheswaram (Temp)" <quic_c_sanm@quicinc.com>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Peter Chen <peter.chen@kernel.org>,
-        Pawel Laszczak <pawell@cadence.com>,
-        Roger Quadros <rogerq@kernel.org>,
-        Aswath Govindraju <a-govindraju@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com
-References: <1648103831-12347-1-git-send-email-quic_c_sanm@quicinc.com>
- <1648103831-12347-4-git-send-email-quic_c_sanm@quicinc.com>
- <YjxjxplpOpDC2JLs@kuha.fi.intel.com>
- <4c2a28ad-b866-1b65-e73a-4eda0596cea2@linux.intel.com>
- <Yj2nPa6/Y01P5aCY@kuha.fi.intel.com>
- <4619c75c-cd34-82f2-56e1-a8bcb6d97177@linux.intel.com>
- <Yj3h4p/kmZTvMz0O@kuha.fi.intel.com>
- <fae54b27-9ae2-ecfc-69ae-40e5f5e1afbe@quicinc.com>
-From:   Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: Re: [PATCH v3 3/3] usb: dwc: host: add xhci_plat_priv quirk
- XHCI_SKIP_PHY_INIT
-Message-ID: <bd694ef9-be57-79f1-e95e-5501c396be25@linux.intel.com>
-Date:   Wed, 30 Mar 2022 20:47:34 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Firefox/78.0 Thunderbird/78.14.0
+        Wed, 30 Mar 2022 13:53:30 -0400
+Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B57910AE;
+        Wed, 30 Mar 2022 10:51:35 -0700 (PDT)
+Date:   Wed, 30 Mar 2022 17:51:25 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
+        s=protonmail; t=1648662692;
+        bh=e/RQ1SaRAskObP1MAJEptYfekeXaggHmvx1g8cmarms=;
+        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
+         References:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+         Message-ID;
+        b=hNeT12lIcVXiSBrE2bhJi/Hp5/3CGsuA75yJ1KsxEDRjSGdFoc48yjyPT2QOyIsjW
+         c58a4XH4WRuhKFiTb/NR2ULZH59UaxExiN16Nz6om8MET/PSMQzqf3HMuSCSZ/F8DL
+         e/HpCgIWBvI+yUNwxMrSHfIbtJEoQ1I+gOW3m+Ns=
+To:     Joel Selvaraj <jo@jsfamily.in>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+From:   Caleb Connolly <caleb@connolly.tech>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Amit Pundir <amit.pundir@linaro.org>
+Reply-To: Caleb Connolly <caleb@connolly.tech>
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: sdm845-xiaomi-beryllium: change firmware path and use mbn format
+Message-ID: <ca8ff74d-0781-1bc8-0f2d-29f5b2154c7f@connolly.tech>
+In-Reply-To: <BY5PR02MB700966DEE6F6044EBEB5B892D91F9@BY5PR02MB7009.namprd02.prod.outlook.com>
+References: <20220330064505.243799-1-jo@jsfamily.in> <BY5PR02MB700966DEE6F6044EBEB5B892D91F9@BY5PR02MB7009.namprd02.prod.outlook.com>
 MIME-Version: 1.0
-In-Reply-To: <fae54b27-9ae2-ecfc-69ae-40e5f5e1afbe@quicinc.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H5,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29.3.2022 12.18, Sandeep Maheswaram (Temp) wrote:
-> Hi Mathias,Heikki
-> 
-> On 3/25/2022 9:08 PM, Heikki Krogerus wrote:
->> On Fri, Mar 25, 2022 at 04:33:27PM +0200, Mathias Nyman wrote:
->>> On 25.3.2022 13.27, Heikki Krogerus wrote:
->>>> On Fri, Mar 25, 2022 at 12:36:22AM +0200, Mathias Nyman wrote:
->>>>> On 24.3.2022 14.27, Heikki Krogerus wrote:
->>>>>> On Thu, Mar 24, 2022 at 12:07:11PM +0530, Sandeep Maheswaram wrote:
->>>>>>> Currently the phy init is done from dwc3 and also xhci which makes the
->>>>>>> runtime_usage value 2 for the phy which causes issue during runtime
->>>>>>> suspend. When we run the below command the runtime_status still shows
->>>>>>> active.
->>>>>>> echo auto > /sys/bus/platform/devices/88e3000.phy/power/control
->>>>>>>
->>>>>>> dwc3 manages PHY by own DRD driver, so skip the management by
->>>>>>> HCD core by setting this quirk.
->>>>>>>
->>>>>>> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
->>>>>>> ---
->>>>>>>   drivers/usb/dwc3/host.c | 13 +++++++++++++
->>>>>>>   1 file changed, 13 insertions(+)
->>>>>>>
->>>>>>> diff --git a/drivers/usb/dwc3/host.c b/drivers/usb/dwc3/host.c
->>>>>>> index eda8719..d4fcf06 100644
->>>>>>> --- a/drivers/usb/dwc3/host.c
->>>>>>> +++ b/drivers/usb/dwc3/host.c
->>>>>>> @@ -13,6 +13,12 @@
->>>>>>>   #include <linux/platform_device.h>
->>>>>>>     #include "core.h"
->>>>>>> +#include <linux/usb/xhci-plat.h>
->>>>>>> +#include <linux/usb/xhci-quirks.h>
->>>>>>> +
->>>>>>> +static const struct xhci_plat_priv xhci_plat_dwc3_xhci = {
->>>>>>> +    .quirks = XHCI_SKIP_PHY_INIT,
->>>>>>> +};
->>>>>>>     static void dwc3_host_fill_xhci_irq_res(struct dwc3 *dwc,
->>>>>>>                       int irq, char *name)
->>>>>>> @@ -122,6 +128,13 @@ int dwc3_host_init(struct dwc3 *dwc)
->>>>>>>           }
->>>>>>>       }
->>>>>>>   +    ret = platform_device_add_data(xhci, &xhci_plat_dwc3_xhci,
->>>>>>> +            sizeof(xhci_plat_dwc3_xhci));
->>>>>>> +    if (ret) {
->>>>>>> +        dev_err(dwc->dev, "failed to add data to xHCI\n");
->>>>>>> +        goto err;
->>>>>>> +    }
->>>>>>> +
->>>>>>>       ret = platform_device_add(xhci);
->>>>>>>       if (ret) {
->>>>>>>           dev_err(dwc->dev, "failed to register xHCI device\n");
->>>>>> I think you should just use device property:
->>>>>>
->>>>> This was suggested in an earlier series, but was rejected as it also added
->>>>> the property as a device tree parameter.
->>>>>
->>>>> I think adding more device properties can be messy in the long run, especially if we
->>>>> need to add them for many of the existing xhci quirks.
->>>>> We also end up with a mix where some device properties are listed as device tree
->>>>> parameters, and some not.
->>>>>
->>>>> Defining xhci quirks and platform data structure in headers shared with dwc3 and cdns3
->>>>> allow those drivers to easily set any existing xhci quirk, or other possible optional
->>>>> callbacks.
->>>>>
->>>>> cdns3 driver is already doing this, but it includes the full xhci.h header.
->>>>> This series cleans up that a bit so cdns3 will only include xhci quirk bits and
->>>>> platform data structure.
->>>>>
->>>>> On the downside we add a couple xhci related header files to include/linux/usb/
->>>>> Let me know if you see any other issues I missed with this approach.
->>>> The problem here is that these drivers are now coupled together, and
->>>> that should not be taken lightly. We have a dependency hell in our
->>>> hands with a lot of drivers, and the culprit is always platform data.
->>>>
->>>> Build-in device properties may be messy, but I would still say they
->>>> are less messy than those quirk flags - you got to admit, they are a
->>>> mess. The benefit from build-in properties is in any case the fact
->>>> that they remove the need to couple these drivers together.
->>> Agree, quirk bits are messy. Any suggestion that would work with
->>> PCI xHCI devices, devicetree, and "pure" platform devices?
->> I think xHCI driver should always be able to rely on being able to
->> read this kind of information from the fwnode. If there is no actual
->> firmware node (DT or ACPI), or if it's missing some information, the
->> glue driver needs to populate software node for the xHCI.
->>
->> Right now I just want to avoid having to pass the quirks using
->> platform data from drivers such as drivers/usb/cdns3/host.c and
->> drivers/usb/dwc3/host.c to xHCI.
->>
->> One way we could do that is by defining compatibility ID for both of
->> them that we provide using a single device property (like I guess DT
->> does). Then based on that compatibility ID, xhci-plat.c can set the
->> actual "static" quirk flags. That we could already do easily. How
->> would that sound to you?
 
-Sounds good. 
 
-> 
-> This was my previous patch where I was using device tree property. Should we go ahead with this approach?
-> 
-> https://patchwork.kernel.org/project/linux-arm-msm/cover/1636353710-25582-1-git-send-email-quic_c_sanm@quicinc.com/
-> 
-> Any further changes to this ?
+On 30/03/2022 07:45, Joel Selvaraj wrote:
+> The "qcom/sdm845/" path conflicts with db845c's firmware that are
+> present in the linux-firmware package. Xiaomi uses their own signed
+> firmware for Poco F1 and can't use the db845c's firmware. So let's
+> use "qcom/sdm845/beryllium/" to distinguish Poco F1's firmware files.
+>
+> For easier handling and packaging, the mdt+bXX files are squashed
+> using Bjorn Andersson's pil-squasher tool from this link:
+> https://github.com/andersson/pil-squasher
+Reviewed-by: Caleb Connolly <caleb@connolly.tech>
+>
+> Signed-off-by: Joel Selvaraj <jo@jsfamily.in>
+> ---
+>   arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/=
+arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+> index 367389526b41..27ba9ad1ad02 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+> @@ -121,7 +121,7 @@ vreg_s4a_1p8: vreg-s4a-1p8 {
+>
+>   &adsp_pas {
+>   =09status =3D "okay";
+> -=09firmware-name =3D "qcom/sdm845/adsp.mdt";
+> +=09firmware-name =3D "qcom/sdm845/beryllium/adsp.mbn";
+>   };
+>
+>   &apps_rsc {
+> @@ -208,7 +208,7 @@ vreg_l26a_1p2: ldo26 {
+>
+>   &cdsp_pas {
+>   =09status =3D "okay";
+> -=09firmware-name =3D "qcom/sdm845/cdsp.mdt";
+> +=09firmware-name =3D "qcom/sdm845/beryllium/cdsp.mbn";
+>   };
+>
+>   &dsi0 {
+> @@ -262,7 +262,7 @@ &gpu {
+>
+>   =09zap-shader {
+>   =09=09memory-region =3D <&gpu_mem>;
+> -=09=09firmware-name =3D "qcom/sdm845/a630_zap.mbn";
+> +=09=09firmware-name =3D "qcom/sdm845/beryllium/a630_zap.mbn";
+>   =09};
+>   };
+>
+> @@ -289,7 +289,7 @@ &mdss {
+>
+>   &mss_pil {
+>   =09status =3D "okay";
+> -=09firmware-name =3D "qcom/sdm845/mba.mbn", "qcom/sdm845/modem.mdt";
+> +=09firmware-name =3D "qcom/sdm845/beryllium/mba.mbn", "qcom/sdm845/beryl=
+lium/modem.mbn";
+>   };
+>
+>   &pm8998_gpio {
+> --
+> 2.35.1
+>
 
-By dropping the DT part of that series we get a similar built-in device property
-solution as Heikki initially suggested.
+--
+Kind Regards,
+Caleb
 
-How about adding the compatibility ID device property that was just suggested?
-Then matching the Id in xhci-plat.c against a static table containing Ids and
-xhci_plat_priv structures, with the needed quirks for dwc3.
-
-Thanks
--Mathias
