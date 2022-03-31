@@ -2,77 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 737464ED712
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Mar 2022 11:35:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0862C4ED799
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Mar 2022 12:10:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234144AbiCaJg7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Mar 2022 05:36:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40636 "EHLO
+        id S234517AbiCaKMX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Mar 2022 06:12:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234129AbiCaJg6 (ORCPT
+        with ESMTP id S234512AbiCaKMW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Mar 2022 05:36:58 -0400
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03841A9940
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 02:35:10 -0700 (PDT)
-Received: by mail-qt1-x834.google.com with SMTP id i4so20917857qti.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 02:35:09 -0700 (PDT)
+        Thu, 31 Mar 2022 06:12:22 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D25B1EECC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 03:10:34 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id w7so40594363lfd.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 03:10:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lsN5p6Zbb92CWY0fCQlSnWVHSmMIpn5JDGM4v10NtKE=;
-        b=ZunWdYGe8+BLAfVsPhIKSdgfp/G02w2RPLviviav8MFDJAF80hz+gYJdoOGSo34tqv
-         +GOt1h6oPls11MbrXMWncQOXZmfdT+lhqoeeAdjHnzcDo7Y+ls+43qjcKa4FnDUZBr8g
-         sfb8w/YhyQ+I+txxTbyARU1xScgG75osTxNrQd/eW37hUwLOqmWqtNTAMgYkd6Ktg+8v
-         SISvG4vs6TaDZYpzkTU2u3b1ge4YO9UUK1QU+l3rIQdKqsBt2Cv/PAH7mIcmQDs8WgY7
-         CqOd27nG1iOkKCVqS+VcVciIKPjF7ot65oGt3h7/40D3BucYPbivC79Gb3PETsi4mdBl
-         9MPg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=DkPFTvrQEeskfvBTqfSOajTcre8fVDqFYzIN3B6dTsI=;
+        b=KItC8IMn5rncXU6DjNFWlsw2ttC3GaaAEUbxCnBOR7T/9Tfj6lRHHFcT2drBRA225/
+         dk71o9m/4VllMnJRSsHw7LpJ9ASmXszD3qY5Zz+5TfhYdsRg38C3XtGxx2w1jGsQWBY8
+         ih5uzDcudKl79At3nt5SsfB64kDTfNMDqHWXP07DhGCY1vsGKCPn+LukasFPljTlUHJI
+         fP10i7MwzuQBxdQAzpmwtCsOshjAuwnIOjprbAKbJ1Yy6ciMxquv4ewcAaNOedjPDwYA
+         nOxsNYnOLJ6pOXJnjlR2ncJeheVQ923O6vmgq2BTKrYI1rCvcolTwFfgDgtF5Fn0MUui
+         Bdyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lsN5p6Zbb92CWY0fCQlSnWVHSmMIpn5JDGM4v10NtKE=;
-        b=JD/Ane5PAz21ud+h0jC+r6x04io8/bQnavnvdyyDA0C+QmUwkA1PfRQ3h+iFQMjcE0
-         lBOFnB0Mcld6NJFzHVWMjpQxoG17MCi20SyNOwc8Vg4MYBKGXO1zwbvLTX4lbI+LCAZW
-         yKGkbrCpnv/5ld8TC9sIWzQL2H+uQObRFLhmvb7LmfD3C9iHkf6l4jiPYKH/TPsL7Ybh
-         sWVED/jIG8NnnTgu14C4l2RODe/hUF9r9nNrq7mMX2ehVsOT8PqZ0Vh1GVwq+NWZzeLF
-         PgsD+FcwVDFxXlwFry6W6mN4A5f1p11hluaiqtXhWwrwIrbtIXnBlosyiqtep8NVvCPU
-         rHGQ==
-X-Gm-Message-State: AOAM533STTH877vKT5DF79r837faSgtpH+tF0Fxp7BctAU3aSZyCvwlt
-        P9QdK15tLFz93DBrKYBTCJu7Y1xiOXNzw+tMKzuN9Q==
-X-Google-Smtp-Source: ABdhPJzGd4rqpbpprVxRT58SQ0mWkivwbwlishXbW/R3KM5sUWLDKwn+nH2fugALpTWwKgteKCnQM+TuY1AtSd9ZY20=
-X-Received: by 2002:ac8:5702:0:b0:2e1:ec8a:917a with SMTP id
- 2-20020ac85702000000b002e1ec8a917amr3318464qtw.682.1648719309154; Thu, 31 Mar
- 2022 02:35:09 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=DkPFTvrQEeskfvBTqfSOajTcre8fVDqFYzIN3B6dTsI=;
+        b=W5BT+9YuFF11BoVCeutsdwYTzsNSZpTri6FxiNKxEehxCVeahR7HJd20DKyaP3BXv2
+         z0VUJIQw7wuSj9b9QLCd+Ue7xdnYwOYesHNXBL2948ZQcdOW3YtySVhUhmEVgfaRTkfB
+         L8FV0rLk1KIGM9qozdmrpNqy/15/rAtvSiO3W7t04gYMQVfYaG6T3GlMgFFdefghjaFX
+         FCAsCMemmlWkcUUl6zssE0/AKaSuWxypJepLfvHml1Q2jQSk5QR8k51W0Ju2OM3hoyBc
+         VBmm9zPJadGO+AbqibvhegJ+fET4eEC2WInfRUadToeODOl9EmcUrxFMNi8VGkPPmPqZ
+         xQvQ==
+X-Gm-Message-State: AOAM532WiBjB4+5pL/FD8FL42DPY2WDggk25TA8gcnSsSFOTNF3kcOnr
+        311HWao4ku3ou40g0WzI54Cn4Q==
+X-Google-Smtp-Source: ABdhPJwtAJyMy0EoY+rrG6bKX7082NXgD8paVU/49U2dxYES7x6TI8M54x7s0LTqdnwet5PnHMXT9w==
+X-Received: by 2002:ac2:485b:0:b0:44a:23d5:d4bd with SMTP id 27-20020ac2485b000000b0044a23d5d4bdmr10216994lfy.214.1648721428984;
+        Thu, 31 Mar 2022 03:10:28 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id a26-20020a19fc1a000000b0044ab4920887sm805769lfi.57.2022.03.31.03.10.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 31 Mar 2022 03:10:28 -0700 (PDT)
+Message-ID: <d9ac1cee-d4fc-09ae-b2df-82ae2ecd57fb@linaro.org>
+Date:   Thu, 31 Mar 2022 13:10:27 +0300
 MIME-Version: 1.0
-References: <20220328152923.90623-1-krzysztof.kozlowski@linaro.org>
- <CAA8EJprWoxWwk5EWEfWdLquPR+2=u6V0-v1-+wHMHOk8HiEyNw@mail.gmail.com>
- <YkHtY9absUjmqmW7@matsya> <12b0056b-8032-452b-f325-6f36037b5a80@linaro.org>
- <CAL_Jsq+6rx0UU6ryH+z_8KLQqKKuhTCnh=Oft2F03bcze+EV0Q@mail.gmail.com>
- <YkKmPSesQfS6RLCD@matsya> <YkMrPnRbsl3FBig8@robh.at.kernel.org> <YkVEsqiRamfTmNi0@matsya>
-In-Reply-To: <YkVEsqiRamfTmNi0@matsya>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v6 4/8] drm/msm/dp: avoid handling masked interrupts
+Content-Language: en-GB
+To:     "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>
+Cc:     "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "robdclark@gmail.com" <robdclark@gmail.com>,
+        "seanpaul@chromium.org" <seanpaul@chromium.org>,
+        "swboyd@chromium.org" <swboyd@chromium.org>,
+        quic_kalyant <quic_kalyant@quicinc.com>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
+        "dianders@chromium.org" <dianders@chromium.org>,
+        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "sean@poorly.run" <sean@poorly.run>,
+        "airlied@linux.ie" <airlied@linux.ie>,
+        "daniel@ffwll.ch" <daniel@ffwll.ch>,
+        quic_vproddut <quic_vproddut@quicinc.com>,
+        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>
+References: <1648656179-10347-1-git-send-email-quic_sbillaka@quicinc.com>
+ <1648656179-10347-5-git-send-email-quic_sbillaka@quicinc.com>
+ <CAA8EJprMvik_6xmGt2oZGpDG9FoMtC_ojuw+oTjPLTck4Hu3WA@mail.gmail.com>
+ <MW4PR02MB7186669BA1B19FA4F184B558E1E19@MW4PR02MB7186.namprd02.prod.outlook.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 31 Mar 2022 12:34:58 +0300
-Message-ID: <CAA8EJpqTqB10JkmK4GfbO6uP4wAUtqPzY+N4f+=Lt6Vy3a+g4Q@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: display: msm: dsi: remove address/size cells
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <MW4PR02MB7186669BA1B19FA4F184B558E1E19@MW4PR02MB7186.namprd02.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,108 +93,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 31 Mar 2022 at 09:05, Vinod Koul <vkoul@kernel.org> wrote:
->
-> On 29-03-22, 10:52, Rob Herring wrote:
-> > On Tue, Mar 29, 2022 at 12:01:52PM +0530, Vinod Koul wrote:
-> > > On 28-03-22, 13:21, Rob Herring wrote:
-> > > > On Mon, Mar 28, 2022 at 12:18 PM Krzysztof Kozlowski
-> > > > <krzysztof.kozlowski@linaro.org> wrote:
-> > > > >
-> > > > > On 28/03/2022 19:16, Vinod Koul wrote:
-> > > > > > On 28-03-22, 19:43, Dmitry Baryshkov wrote:
-> > > > > >> On Mon, 28 Mar 2022 at 18:30, Krzysztof Kozlowski
-> > > > > >> <krzysztof.kozlowski@linaro.org> wrote:
-> > > > > >>>
-> > > > > >>> The DSI node is not a bus and the children do not have unit addresses.
-> > > > > >>>
-> > > > > >>> Reported-by: Vinod Koul <vkoul@kernel.org>
-> > > > > >>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > > > > >>
-> > > > > >> NAK.
-> > > > > >> DSI panels are children of the DSI device tree node with the reg = <0>; address.
-> > > > > >> This is the convention used by other platforms too (see e.g.
-> > > > > >> arch/arm64/boot/dts/freescale/imx8mq-evk.dts).
-> > > > > >
-> > > > > > So we should add reg = 0, i will update my dtsi fix
-> > > > > >
-> > > > >
-> > > > > To "ports" node? No. The reg=0 is for children of the bus, so the
-> > > > > panels. How to combine both without warnings - ports and panel@0 - I
-> > > > > don't know yet...
-> > > >
-> > > > I don't think that should case a warning. Or at least it's one we turn off.
-> > >
-> > > Well in this case I think we might need a fix:
-> > > Here is the example quoted in the binding. We have ports{} and then the
-> > > two port@0 and port@1 underneath.
-> >
-> > It's the #address-cells/#size-cells under 'ports' that applies to 'port'
-> > nodes. As 'ports' has no address (reg) itself, it doesn't need
-> > #address-cells/#size-cells in its parent node.
-> >
-> > >
-> > > So it should be okay to drop #address-cells/#size-cells from dsi node
-> > > but keep in ports node...
-> >
-> > Yes.
-> >
-> > > Thoughts...?
-> >
-> > But I thought a panel@0 node was being added? If so then you need to add
-> > them back.
->
-> I guess we should make this optional, keep it when adding panel@0 node
-> and skip for rest where not applicable..? Dmitry is that fine with you?
+On 31/03/2022 08:53, Sankeerth Billakanti (QUIC) wrote:
+> Hi Dmitry,
+> 
+>> On Wed, 30 Mar 2022 at 19:03, Sankeerth Billakanti
+>> <quic_sbillaka@quicinc.com> wrote:
+>>>
+>>> The interrupt register will still reflect the connect and disconnect
+>>> interrupt status without generating an actual HW interrupt.
+>>> The controller driver should not handle those masked interrupts.
+>>>
+>>> Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+>>> ---
+>>>   drivers/gpu/drm/msm/dp/dp_catalog.c | 5 +++--
+>>>   1 file changed, 3 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c
+>>> b/drivers/gpu/drm/msm/dp/dp_catalog.c
+>>> index 3c16f95..1809ce2 100644
+>>> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
+>>> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+>>> @@ -608,13 +608,14 @@ u32 dp_catalog_hpd_get_intr_status(struct
+>>> dp_catalog *dp_catalog)  {
+>>>          struct dp_catalog_private *catalog = container_of(dp_catalog,
+>>>                                  struct dp_catalog_private, dp_catalog);
+>>> -       int isr = 0;
+>>> +       int isr, mask;
+>>>
+>>>          isr = dp_read_aux(catalog, REG_DP_DP_HPD_INT_STATUS);
+>>>          dp_write_aux(catalog, REG_DP_DP_HPD_INT_ACK,
+>>>                                   (isr & DP_DP_HPD_INT_MASK));
+>>> +       mask = dp_read_aux(catalog, REG_DP_DP_HPD_INT_MASK);
+>>>
+>>> -       return isr;
+>>> +       return isr & (DP_DP_HPD_STATE_STATUS_MASK | mask);
+>>
+>> I suspect that the logic is inverted here. Shouldn't it be:
+>>
+>> return isr & DP_DP_HPD_STATE_STATUS_MASK & mask;
+>>
+>> ?
+>>
+>   
+> The value of DP_DP_HPD_STATE_STATUS_MASK is 0xE0000000 and the value of the read
+> interrupt mask variable could be is 0xF.
+> 
+> The mask value is indicated via the register, REG_DP_DP_HPD_INT_MASK, bits 3:0.
+> The HPD status is indicated via a different read-only register REG_DP_DP_HPD_INT_STATUS, bits 31:29.
 
-This sounds like a workaround. When a panel node is added together
-with the '#address-cells' / '#size-cells' properties, we will get
-warnings for the 'ports' node.
-I'd prefer to leave things to pinpoint that the problem is generic
-rather than being specific to several device trees with the DSI panel
-nodes.
-How do other platforms solve the issue?
+I see. Maybe the following expression would be better?
 
-In fact we can try shifting to the following dts schema:
+return isr & (mask & ~DP_DP_HPD_INT_MASK);
 
-dsi@ae940000 {
-   compatible = "qcom,mdss-dsi-ctrl";
+> 
+> isr & DP_DP_HPD_STATE_STATUS_MASK & mask, will return 0 always.
+> 
+>>>   }
+>>>
+>>>   int dp_catalog_ctrl_get_interrupt(struct dp_catalog *dp_catalog)
+>>> --
+>>> 2.7.4
+>>>
+>>
+>>
+>> --
+>> With best wishes
+>> Dmitry
+> 
+> Thank you,
+> Sankeerth
 
-   ports {
-      #adress-cells = <1>;
-      #size-cells = <0>;
-      port@0 {
-         reg = <0>;
-         dsi0_in: endpoint {};
-      };
-      port@1 {
-         reg = <1>;
-         dsi0_out: endpoint {
-               remote-endpoint = <&panel_in>;
-         };
-      };
-
-   /* dsi-bus is a generic part */
-   dsi-bus {
-      #adress-cells = <1>;
-      #size-cells = <0>;
-      /* panel@0 goes to the board file */
-      panel@0 {
-          compatible = "vendor,some-panel";
-          ports {
-             #adress-cells = <1>;
-             #size-cells = <0>;
-             port@0 {
-               reg = <0>;
-                panel_in: endpoint {
-                   remote-endpoint = <&dsi0_out>;
-                };
-             };
-        };
-   };
-};
-
-WDYT?
 
 -- 
 With best wishes
