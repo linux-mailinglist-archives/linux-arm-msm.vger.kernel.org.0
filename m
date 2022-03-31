@@ -2,75 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58F394EE442
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Apr 2022 00:38:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 472DA4EE4C3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Apr 2022 01:29:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242600AbiCaWkY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Mar 2022 18:40:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36070 "EHLO
+        id S237196AbiCaXbG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Mar 2022 19:31:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242610AbiCaWkW (ORCPT
+        with ESMTP id S229576AbiCaXbF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Mar 2022 18:40:22 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F768424AA
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 15:38:32 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id yy13so2270828ejb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 15:38:32 -0700 (PDT)
+        Thu, 31 Mar 2022 19:31:05 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 986C514DFE4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 16:29:17 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id m3so1806399lfj.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 16:29:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=VEVhs+wSSHcRMi62FXJ3N57y6NGI41fOZn0GcgnwBog=;
-        b=WX8moALAHGO88vRTq8427h4yfvw27upsPE0oT9uAljiPzvrxhNe/UtkDlxOrVBzFIY
-         7OEeVj9OeTHXJOD8AmInD/2PT5BjD7Tj1R6+8gD5ZlFey2OvG7KaklaTlLHfvkkpZQE7
-         nLqjeIjpYrZtRE3XpKN8iF98NmGw1ChWCDkPYUGM0S5W0Yxaga+qWEyYNIQZZywXfdsv
-         F66EBdDuX2ZUba6+K2w6h4my4HZDpGXv8YJe7Rc59rB4xV6HBB5N39g/wi0eSS37l2JT
-         8DCMcaAhfjMgkbHLrCk7rdEGxoYgrnmI4DAfkckIBAPdxbRZ+4GpXrBaiAzqGD/Jx56q
-         k8HA==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=i0Y8uJxAPTn+lPcbjKZMDigfiYGLfvVvyFJ8YmiOb0U=;
+        b=ZTUl4ukv0e2NXaBF5xnMO9o+oFVlY2n2XoA0kUxOx6skIG9dTSaA7oECXPy4k5G/qR
+         MtnM41dTUEMY98MWV1Q7y85uveZ3vNyBVCBdKuiNa70cypt1qBwokiaB5piPWsRGwfMf
+         lQ3VnxZKPPbfZxfyG6Kj11Hei7OeO9IuoWwMA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=VEVhs+wSSHcRMi62FXJ3N57y6NGI41fOZn0GcgnwBog=;
-        b=dBiC4HfvXig7W0SDeyT1VKsf01OJtFsPCoHhyxq9PBbv4WH7rbVfEcIKdn8P5bztTY
-         gg4Uu6fpEKHcu3IQJsIbnXwgcgZdUkyuoGiInECqh1KaFQtImePmPDaB+IbE63ww0Ceq
-         66jxFMw9k59tH4SKQcp2GIflRFqPfPcR1Rq7XfhmykcglaSdQMvEpm6jATVkBEEm/GGw
-         DdcNQNJgRWFP6ERDHFOSmu6rgL9R63Qg4memuOQ0PUByn1Y7z1Z6fKD3IAZkSjfPqgcv
-         q5k2Z1pdF30+N7TUx7KvujAOX167VYpDKlN8bOlV17JRImxTU/z0IoGCsMi846NBBgqu
-         K7+Q==
-X-Gm-Message-State: AOAM530acdzjk6/vlFQdYQ9qgTnRpt5EvWG6KE9nL8sMspu4eFVz0Kyq
-        VjUI4oJkz/a0UqanlF3k4MxftY9jiH0bpHTXKyc=
-X-Google-Smtp-Source: ABdhPJy9ZUmsXZY9eXbYH6O3Zdg1lbquD9JQsfdQXPMhlw5mXrAOiGwlhwctSdZcYdP1F75/cKxKz0DXRoDbLSKx/a4=
-X-Received: by 2002:a17:906:99c4:b0:6df:f7c9:27f9 with SMTP id
- s4-20020a17090699c400b006dff7c927f9mr6765444ejn.465.1648766310204; Thu, 31
- Mar 2022 15:38:30 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=i0Y8uJxAPTn+lPcbjKZMDigfiYGLfvVvyFJ8YmiOb0U=;
+        b=KZcW+DJMm1QWthgnzsnBsqBCOLI5dSxQ6XUPgPZ1sos7kE2Kn8eIY9BEQikV32Iptm
+         vMtNyG/Shv3xSlE82XtWro5wyRgHqYsx42JtJBC5x7qaEfW+TZIHfU5Psf/kdXY5odRv
+         OZsYFfQkiG2wd5wEo6GVyM5ZnsZC1Is87w0v14sxZwSw7nHpk706Y3WBs+w0qS+SMJxe
+         MD2PUmFzgDCZcaQgr3ETm44SCRzO7rvAB9CuR8V2gqREO5nzMIvrUNopi6lA+cYLodiO
+         Da7nQtC/bLP0KuvttEaWCWdL4rzArX2lxV9kKAJ03OfwTA93i/iZbzU7eB0T2X+HlS9E
+         tkbw==
+X-Gm-Message-State: AOAM530ZvM/voBz5U1/6JTyWFY/9G6Q1N5aeLxgkqrP3aYqm9eiUeb9d
+        oKzUoC25YX8p2tWKDvKucxUzP+nFvlBzkBFP5Zg=
+X-Google-Smtp-Source: ABdhPJwkmV+pFN0tdvWG44i+6WBbNJMIhW1APFm7yIGr28EqCNlQMWIqXjsA9+TE1u31QHiy4dXPGA==
+X-Received: by 2002:a05:6512:1153:b0:44a:3b47:4f88 with SMTP id m19-20020a056512115300b0044a3b474f88mr11808460lfg.447.1648769355561;
+        Thu, 31 Mar 2022 16:29:15 -0700 (PDT)
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com. [209.85.208.171])
+        by smtp.gmail.com with ESMTPSA id x23-20020a19e017000000b0044a4820f882sm70444lfg.84.2022.03.31.16.29.15
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 31 Mar 2022 16:29:15 -0700 (PDT)
+Received: by mail-lj1-f171.google.com with SMTP id v12so1784112ljd.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 16:29:15 -0700 (PDT)
+X-Received: by 2002:a5d:4491:0:b0:203:f63a:e89b with SMTP id
+ j17-20020a5d4491000000b00203f63ae89bmr5615220wrq.342.1648768934136; Thu, 31
+ Mar 2022 16:22:14 -0700 (PDT)
 MIME-Version: 1.0
-Sender: midonicolas84@gmail.com
-Received: by 2002:a55:a6c9:0:b0:149:1a3e:e214 with HTTP; Thu, 31 Mar 2022
- 15:38:29 -0700 (PDT)
-From:   Tomani David <davidtomani24@gmail.com>
-Date:   Thu, 31 Mar 2022 22:38:29 +0000
-X-Google-Sender-Auth: jnNO4fjDZFNa67AeTjQPHrQ8I_8
-Message-ID: <CAE_PYmrAFnYSbc55LEH-aB9+aQJ0auMPAtGrp_GpTrgXPOvXmQ@mail.gmail.com>
-Subject: I have a message for you
-To:     undisclosed-recipients:;
+References: <1648656179-10347-1-git-send-email-quic_sbillaka@quicinc.com> <1648656179-10347-2-git-send-email-quic_sbillaka@quicinc.com>
+In-Reply-To: <1648656179-10347-2-git-send-email-quic_sbillaka@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 31 Mar 2022 16:22:00 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=X+QvjwoT2zGP82KW4kD0oMUY6ZgCizSikNX_Uj8dNDqA@mail.gmail.com>
+Message-ID: <CAD=FV=X+QvjwoT2zGP82KW4kD0oMUY6ZgCizSikNX_Uj8dNDqA@mail.gmail.com>
+Subject: Re: [PATCH v6 1/8] drm/msm/dp: Add eDP support via aux_bus
+To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        quic_kalyant <quic_kalyant@quicinc.com>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
+        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        quic_vproddut <quic_vproddut@quicinc.com>,
+        quic_aravindh@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.5 required=5.0 tests=BAYES_05,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dear Good Friend,
+Hi,
+
+On Wed, Mar 30, 2022 at 9:03 AM Sankeerth Billakanti
+<quic_sbillaka@quicinc.com> wrote:
+>
+> @@ -1547,6 +1593,10 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+>
+>         dp_display->encoder = encoder;
+>
+> +       ret = dp_display_get_next_bridge(dp_display);
+> +       if (ret)
+> +               return ret;
+
+It feels weird to me that this is in a function called "modeset_init",
+though I certainly don't know the structure of the MSM display code
+well enough to fully comment. My expectation would have been that
+devm_of_dp_aux_populate_ep_devices() would have been called from your
+probe routine and then you would have returned -EPROBE_DEFER from your
+probe if you were unable to find the panel afterwards.
+
+Huh, but I guess you _are_ getting called (indirectly) from
+dpu_kms_hw_init() and I can't imagine AUX transfers working before
+that function is called, so maybe I should just accept that it's
+complicated and let those who understand this driver better confirm
+that it's OK. ;-)
 
 
-I hope that you are still using this email address? because I have a
-confidential message for you.
+> @@ -140,5 +140,6 @@ struct dp_parser {
+>   * can be parsed using this module.
+>   */
+>  struct dp_parser *dp_parser_get(struct platform_device *pdev);
+> +int dp_parser_find_next_bridge(struct dp_parser *parser);
 
-
-Regards,
-Mr. David
+Everything else in this file is described w/ kerneldoc. Shouldn't your
+function also have a kerneldoc comment?
