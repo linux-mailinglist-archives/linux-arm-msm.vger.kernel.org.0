@@ -2,234 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 707334ED84D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Mar 2022 13:17:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01A074EDDF1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Mar 2022 17:51:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235005AbiCaLSs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Mar 2022 07:18:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55556 "EHLO
+        id S233900AbiCaPxe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Mar 2022 11:53:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233641AbiCaLSr (ORCPT
+        with ESMTP id S233019AbiCaPxe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Mar 2022 07:18:47 -0400
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A093205BD4;
-        Thu, 31 Mar 2022 04:17:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1648725420; x=1680261420;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=pjCtimjt0fYKXCjngBoxtDwovUxjoMR1xDl1UMLmYmA=;
-  b=Hoj7jVyww/ALBn6MHGJ2fda05M4ruRXDUs5zyZOc9IWdeGGTxMbQ9hBj
-   r+4CiODAx93kFvE/fQ/QHImq5ROjAgMdZSDILHQyf9LetSiMGo/grdp4N
-   egyKXgnG+aQzOy5onej66DB0gqZ/9Zr3kqDA6nXK2STlpDRi4sBnw1ep0
-   VYE7GP8qiVZPaxYUJQR0X5nZQgcQLbMNhqQbZL7y9Z4BVBjhROHxPB52D
-   hKGjAN13xx/V3ExM0GRWZG8um1CpUpLiBGTA96inQGIF5MDyBGjPWV5ai
-   fl2FVMoIXyOCqwjEK434S/a0MfEO+8WFWlLe11bpEp8bq1rCp42ozMpdQ
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10302"; a="259778552"
-X-IronPort-AV: E=Sophos;i="5.90,225,1643702400"; 
-   d="scan'208";a="259778552"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Mar 2022 04:16:59 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,225,1643702400"; 
-   d="scan'208";a="695451250"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by fmsmga001.fm.intel.com with SMTP; 31 Mar 2022 04:16:54 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Thu, 31 Mar 2022 14:16:53 +0300
-Date:   Thu, 31 Mar 2022 14:16:53 +0300
-From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To:     Mathias Nyman <mathias.nyman@linux.intel.com>,
-        Pavan Kondeti <quic_pkondeti@quicinc.com>
-Cc:     "Sandeep Maheswaram (Temp)" <quic_c_sanm@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Peter Chen <peter.chen@kernel.org>,
-        Pawel Laszczak <pawell@cadence.com>,
-        Roger Quadros <rogerq@kernel.org>,
-        Aswath Govindraju <a-govindraju@ti.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com
-Subject: Re: [PATCH v3 3/3] usb: dwc: host: add xhci_plat_priv quirk
- XHCI_SKIP_PHY_INIT
-Message-ID: <YkWNpTLjh2weX9Mk@kuha.fi.intel.com>
-References: <1648103831-12347-1-git-send-email-quic_c_sanm@quicinc.com>
- <1648103831-12347-4-git-send-email-quic_c_sanm@quicinc.com>
- <YjxjxplpOpDC2JLs@kuha.fi.intel.com>
- <4c2a28ad-b866-1b65-e73a-4eda0596cea2@linux.intel.com>
- <Yj2nPa6/Y01P5aCY@kuha.fi.intel.com>
- <4619c75c-cd34-82f2-56e1-a8bcb6d97177@linux.intel.com>
- <Yj3h4p/kmZTvMz0O@kuha.fi.intel.com>
- <fae54b27-9ae2-ecfc-69ae-40e5f5e1afbe@quicinc.com>
- <bd694ef9-be57-79f1-e95e-5501c396be25@linux.intel.com>
+        Thu, 31 Mar 2022 11:53:34 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 649B7606F4;
+        Thu, 31 Mar 2022 08:51:46 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E324560C35;
+        Thu, 31 Mar 2022 15:51:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53C6AC34111;
+        Thu, 31 Mar 2022 15:51:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1648741905;
+        bh=k9Ttwe47dSKB//4XyhIsQOi+168C1hhlSrXlQ8RS5Qc=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=XsUXwi1IjUUN7j7u1Sp3CxErD4DzJAqg0jgz4skj1CR320YstT+0KB3Chzlk9I1Y+
+         /vlM+RTDgly9Q9QJ5ZCp3JpilOqC7oX8ltxA8QafU91Vt47feMV80dxYHYdo3PZKqn
+         TTlHO2nlB1gV3C2iMg+7tS7rznDLl0Zm6uAaSTlKkpwQV6mtQbUHWbL3JZrXXpjqie
+         kILZeYH9I1J7gFoYYiGPYqLUKvmcOrWTpoQ8DEcc0wwm7DS5Z6aIJE0Jh3E7iHg+H9
+         dCR2SeLuvs1+yca1ZRKXp7mxOEc6sRx+FkbVpgDPuVVlmaOMo5Xj9W9Hao9ap1keJ6
+         i2GNzDRUUwuMA==
+Received: by mail-il1-f169.google.com with SMTP id t15so52099ilq.12;
+        Thu, 31 Mar 2022 08:51:45 -0700 (PDT)
+X-Gm-Message-State: AOAM532mp7hf6bQvSjpQ1rNhs8QAClmhcrZfrGI3gCs1xPPfrkgGOCsy
+        c3Tkw4QG8VoVVV35glY/eVFli6yLoFPodAxTqw==
+X-Google-Smtp-Source: ABdhPJwfhuDLSTUugNUrq3UCbhD/GyXM9vgEU4DBm47fXU5hBu6gsJGmx+1IQd9N12SFQjndRYNBevb+f+MIHqebLD0=
+X-Received: by 2002:a05:6e02:1c2b:b0:2c9:b42e:981b with SMTP id
+ m11-20020a056e021c2b00b002c9b42e981bmr10724018ilh.37.1648741904453; Thu, 31
+ Mar 2022 08:51:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <bd694ef9-be57-79f1-e95e-5501c396be25@linux.intel.com>
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20220328152923.90623-1-krzysztof.kozlowski@linaro.org>
+ <CAA8EJprWoxWwk5EWEfWdLquPR+2=u6V0-v1-+wHMHOk8HiEyNw@mail.gmail.com>
+ <YkHtY9absUjmqmW7@matsya> <12b0056b-8032-452b-f325-6f36037b5a80@linaro.org>
+ <CAL_Jsq+6rx0UU6ryH+z_8KLQqKKuhTCnh=Oft2F03bcze+EV0Q@mail.gmail.com>
+ <YkKmPSesQfS6RLCD@matsya> <YkMrPnRbsl3FBig8@robh.at.kernel.org>
+ <YkVEsqiRamfTmNi0@matsya> <CAA8EJpqTqB10JkmK4GfbO6uP4wAUtqPzY+N4f+=Lt6Vy3a+g4Q@mail.gmail.com>
+In-Reply-To: <CAA8EJpqTqB10JkmK4GfbO6uP4wAUtqPzY+N4f+=Lt6Vy3a+g4Q@mail.gmail.com>
+From:   Rob Herring <robh@kernel.org>
+Date:   Thu, 31 Mar 2022 10:51:33 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqLsCEf7R89HEYzU2i9o3AFaSk-TeDV-sWQkULxnvr+8cw@mail.gmail.com>
+Message-ID: <CAL_JsqLsCEf7R89HEYzU2i9o3AFaSk-TeDV-sWQkULxnvr+8cw@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: display: msm: dsi: remove address/size cells
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 30, 2022 at 08:47:34PM +0300, Mathias Nyman wrote:
-> On 29.3.2022 12.18, Sandeep Maheswaram (Temp) wrote:
-> > Hi Mathias,Heikki
-> > 
-> > On 3/25/2022 9:08 PM, Heikki Krogerus wrote:
-> >> On Fri, Mar 25, 2022 at 04:33:27PM +0200, Mathias Nyman wrote:
-> >>> On 25.3.2022 13.27, Heikki Krogerus wrote:
-> >>>> On Fri, Mar 25, 2022 at 12:36:22AM +0200, Mathias Nyman wrote:
-> >>>>> On 24.3.2022 14.27, Heikki Krogerus wrote:
-> >>>>>> On Thu, Mar 24, 2022 at 12:07:11PM +0530, Sandeep Maheswaram wrote:
-> >>>>>>> Currently the phy init is done from dwc3 and also xhci which makes the
-> >>>>>>> runtime_usage value 2 for the phy which causes issue during runtime
-> >>>>>>> suspend. When we run the below command the runtime_status still shows
-> >>>>>>> active.
-> >>>>>>> echo auto > /sys/bus/platform/devices/88e3000.phy/power/control
-> >>>>>>>
-> >>>>>>> dwc3 manages PHY by own DRD driver, so skip the management by
-> >>>>>>> HCD core by setting this quirk.
-> >>>>>>>
-> >>>>>>> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-> >>>>>>> ---
-> >>>>>>>   drivers/usb/dwc3/host.c | 13 +++++++++++++
-> >>>>>>>   1 file changed, 13 insertions(+)
-> >>>>>>>
-> >>>>>>> diff --git a/drivers/usb/dwc3/host.c b/drivers/usb/dwc3/host.c
-> >>>>>>> index eda8719..d4fcf06 100644
-> >>>>>>> --- a/drivers/usb/dwc3/host.c
-> >>>>>>> +++ b/drivers/usb/dwc3/host.c
-> >>>>>>> @@ -13,6 +13,12 @@
-> >>>>>>>   #include <linux/platform_device.h>
-> >>>>>>>     #include "core.h"
-> >>>>>>> +#include <linux/usb/xhci-plat.h>
-> >>>>>>> +#include <linux/usb/xhci-quirks.h>
-> >>>>>>> +
-> >>>>>>> +static const struct xhci_plat_priv xhci_plat_dwc3_xhci = {
-> >>>>>>> +    .quirks = XHCI_SKIP_PHY_INIT,
-> >>>>>>> +};
-> >>>>>>>     static void dwc3_host_fill_xhci_irq_res(struct dwc3 *dwc,
-> >>>>>>>                       int irq, char *name)
-> >>>>>>> @@ -122,6 +128,13 @@ int dwc3_host_init(struct dwc3 *dwc)
-> >>>>>>>           }
-> >>>>>>>       }
-> >>>>>>>   +    ret = platform_device_add_data(xhci, &xhci_plat_dwc3_xhci,
-> >>>>>>> +            sizeof(xhci_plat_dwc3_xhci));
-> >>>>>>> +    if (ret) {
-> >>>>>>> +        dev_err(dwc->dev, "failed to add data to xHCI\n");
-> >>>>>>> +        goto err;
-> >>>>>>> +    }
-> >>>>>>> +
-> >>>>>>>       ret = platform_device_add(xhci);
-> >>>>>>>       if (ret) {
-> >>>>>>>           dev_err(dwc->dev, "failed to register xHCI device\n");
-> >>>>>> I think you should just use device property:
-> >>>>>>
-> >>>>> This was suggested in an earlier series, but was rejected as it also added
-> >>>>> the property as a device tree parameter.
-> >>>>>
-> >>>>> I think adding more device properties can be messy in the long run, especially if we
-> >>>>> need to add them for many of the existing xhci quirks.
-> >>>>> We also end up with a mix where some device properties are listed as device tree
-> >>>>> parameters, and some not.
-> >>>>>
-> >>>>> Defining xhci quirks and platform data structure in headers shared with dwc3 and cdns3
-> >>>>> allow those drivers to easily set any existing xhci quirk, or other possible optional
-> >>>>> callbacks.
-> >>>>>
-> >>>>> cdns3 driver is already doing this, but it includes the full xhci.h header.
-> >>>>> This series cleans up that a bit so cdns3 will only include xhci quirk bits and
-> >>>>> platform data structure.
-> >>>>>
-> >>>>> On the downside we add a couple xhci related header files to include/linux/usb/
-> >>>>> Let me know if you see any other issues I missed with this approach.
-> >>>> The problem here is that these drivers are now coupled together, and
-> >>>> that should not be taken lightly. We have a dependency hell in our
-> >>>> hands with a lot of drivers, and the culprit is always platform data.
-> >>>>
-> >>>> Build-in device properties may be messy, but I would still say they
-> >>>> are less messy than those quirk flags - you got to admit, they are a
-> >>>> mess. The benefit from build-in properties is in any case the fact
-> >>>> that they remove the need to couple these drivers together.
-> >>> Agree, quirk bits are messy. Any suggestion that would work with
-> >>> PCI xHCI devices, devicetree, and "pure" platform devices?
-> >> I think xHCI driver should always be able to rely on being able to
-> >> read this kind of information from the fwnode. If there is no actual
-> >> firmware node (DT or ACPI), or if it's missing some information, the
-> >> glue driver needs to populate software node for the xHCI.
-> >>
-> >> Right now I just want to avoid having to pass the quirks using
-> >> platform data from drivers such as drivers/usb/cdns3/host.c and
-> >> drivers/usb/dwc3/host.c to xHCI.
-> >>
-> >> One way we could do that is by defining compatibility ID for both of
-> >> them that we provide using a single device property (like I guess DT
-> >> does). Then based on that compatibility ID, xhci-plat.c can set the
-> >> actual "static" quirk flags. That we could already do easily. How
-> >> would that sound to you?
-> 
-> Sounds good. 
-> 
-> > 
-> > This was my previous patch where I was using device tree property. Should we go ahead with this approach?
-> > 
-> > https://patchwork.kernel.org/project/linux-arm-msm/cover/1636353710-25582-1-git-send-email-quic_c_sanm@quicinc.com/
-> > 
-> > Any further changes to this ?
-> 
-> By dropping the DT part of that series we get a similar built-in device property
-> solution as Heikki initially suggested.
-> 
-> How about adding the compatibility ID device property that was just suggested?
-> Then matching the Id in xhci-plat.c against a static table containing Ids and
-> xhci_plat_priv structures, with the needed quirks for dwc3.
+On Thu, Mar 31, 2022 at 4:35 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Thu, 31 Mar 2022 at 09:05, Vinod Koul <vkoul@kernel.org> wrote:
+> >
+> > On 29-03-22, 10:52, Rob Herring wrote:
+> > > On Tue, Mar 29, 2022 at 12:01:52PM +0530, Vinod Koul wrote:
+> > > > On 28-03-22, 13:21, Rob Herring wrote:
+> > > > > On Mon, Mar 28, 2022 at 12:18 PM Krzysztof Kozlowski
+> > > > > <krzysztof.kozlowski@linaro.org> wrote:
+> > > > > >
+> > > > > > On 28/03/2022 19:16, Vinod Koul wrote:
+> > > > > > > On 28-03-22, 19:43, Dmitry Baryshkov wrote:
+> > > > > > >> On Mon, 28 Mar 2022 at 18:30, Krzysztof Kozlowski
+> > > > > > >> <krzysztof.kozlowski@linaro.org> wrote:
+> > > > > > >>>
+> > > > > > >>> The DSI node is not a bus and the children do not have unit addresses.
+> > > > > > >>>
+> > > > > > >>> Reported-by: Vinod Koul <vkoul@kernel.org>
+> > > > > > >>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > > > > > >>
+> > > > > > >> NAK.
+> > > > > > >> DSI panels are children of the DSI device tree node with the reg = <0>; address.
+> > > > > > >> This is the convention used by other platforms too (see e.g.
+> > > > > > >> arch/arm64/boot/dts/freescale/imx8mq-evk.dts).
+> > > > > > >
+> > > > > > > So we should add reg = 0, i will update my dtsi fix
+> > > > > > >
+> > > > > >
+> > > > > > To "ports" node? No. The reg=0 is for children of the bus, so the
+> > > > > > panels. How to combine both without warnings - ports and panel@0 - I
+> > > > > > don't know yet...
+> > > > >
+> > > > > I don't think that should case a warning. Or at least it's one we turn off.
+> > > >
+> > > > Well in this case I think we might need a fix:
+> > > > Here is the example quoted in the binding. We have ports{} and then the
+> > > > two port@0 and port@1 underneath.
+> > >
+> > > It's the #address-cells/#size-cells under 'ports' that applies to 'port'
+> > > nodes. As 'ports' has no address (reg) itself, it doesn't need
+> > > #address-cells/#size-cells in its parent node.
+> > >
+> > > >
+> > > > So it should be okay to drop #address-cells/#size-cells from dsi node
+> > > > but keep in ports node...
+> > >
+> > > Yes.
+> > >
+> > > > Thoughts...?
+> > >
+> > > But I thought a panel@0 node was being added? If so then you need to add
+> > > them back.
+> >
+> > I guess we should make this optional, keep it when adding panel@0 node
+> > and skip for rest where not applicable..? Dmitry is that fine with you?
+>
+> This sounds like a workaround. When a panel node is added together
+> with the '#address-cells' / '#size-cells' properties, we will get
+> warnings for the 'ports' node.
 
-There was a comment from Pavan. Is it still possible to get this
-detail from DT?
-I guess that would still be ideal, right?
+What warning exactly? Is that with W=1?
 
-I have another question. Can't we now just assume that if the sysdev
-is the parent (or grandparent), then the phy initialization should
-always be skipped? In that case we could just do something like this:
+Some warnings are more "don't do this on new designs" rather than
+never allowed and need to fix current bindings/dts. As such, these
+warnings will probably never be enabled by default.
 
-diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
-index 649ffd861b44e..1018b33488046 100644
---- a/drivers/usb/host/xhci-plat.c
-+++ b/drivers/usb/host/xhci-plat.c
-@@ -212,8 +212,12 @@ static int xhci_plat_probe(struct platform_device *pdev)
- #endif
-        }
- 
--       if (!sysdev)
-+       if (sysdev) {
-+               if (sysdev != &pdev->dev)
-+                       hcd->skip_phy_initialization = 1;
-+       } else {
-                sysdev = &pdev->dev;
-+       }
- 
-        if (WARN_ON(!sysdev->dma_mask))
-                /* Platform did not initialize dma_mask */
-
-
-I did not go through all the drivers that carefully, so I may have
-missed something, but it looks like the only drivers that can have the
-sysdev as the parent or grandparent are cdns3 and dwc3.
-
-thanks,
-
--- 
-heikki
+Rob
