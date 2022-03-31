@@ -2,66 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 172FD4ED5FE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Mar 2022 10:42:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 737464ED712
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Mar 2022 11:35:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232590AbiCaIoL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Mar 2022 04:44:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33898 "EHLO
+        id S234144AbiCaJg7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Mar 2022 05:36:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233171AbiCaIoH (ORCPT
+        with ESMTP id S234129AbiCaJg6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Mar 2022 04:44:07 -0400
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D76691F6F1E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 01:42:20 -0700 (PDT)
-Received: by mail-pg1-x534.google.com with SMTP id c11so19463689pgu.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 01:42:20 -0700 (PDT)
+        Thu, 31 Mar 2022 05:36:58 -0400
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03841A9940
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 02:35:10 -0700 (PDT)
+Received: by mail-qt1-x834.google.com with SMTP id i4so20917857qti.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 02:35:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+aE0R/lXzUk7zJvgpIyzEUdhyujK4IRdtbXraXjKl9I=;
-        b=HMufMd7WglXhhQDkzZqZSsbrM8TtvGCB12JFrqP5twSXwGUkhtIKf+k/aYbDOeaMFV
-         QHIbapPo4NUF4FinUA9ZT6Zy3zgwPG8lfhpnUXAbYTrgbfcRbwhn6xICSqawV5AoRsni
-         onul6KFeELklCIfTk1Csw/424VV80AoozQ++0=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=lsN5p6Zbb92CWY0fCQlSnWVHSmMIpn5JDGM4v10NtKE=;
+        b=ZunWdYGe8+BLAfVsPhIKSdgfp/G02w2RPLviviav8MFDJAF80hz+gYJdoOGSo34tqv
+         +GOt1h6oPls11MbrXMWncQOXZmfdT+lhqoeeAdjHnzcDo7Y+ls+43qjcKa4FnDUZBr8g
+         sfb8w/YhyQ+I+txxTbyARU1xScgG75osTxNrQd/eW37hUwLOqmWqtNTAMgYkd6Ktg+8v
+         SISvG4vs6TaDZYpzkTU2u3b1ge4YO9UUK1QU+l3rIQdKqsBt2Cv/PAH7mIcmQDs8WgY7
+         CqOd27nG1iOkKCVqS+VcVciIKPjF7ot65oGt3h7/40D3BucYPbivC79Gb3PETsi4mdBl
+         9MPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+aE0R/lXzUk7zJvgpIyzEUdhyujK4IRdtbXraXjKl9I=;
-        b=BmkIIQ3gXmZNxXQeLU78MhDl2NAFJuz+ypAo934CXFOpQXl0eDLqKG28PaH+uinTZI
-         E3ZkXa+U5wqZ1gAPfn+N0C8XgCX2WhyTT3A3AeYvM2d6Ydipr1B+2AdbxUTyA1H9y4Ob
-         S38dNAzZsJn9h6TEyfFKVyd2SpsHnWjTCVm5RhCq1QVoZh4VKn1Jq1pfKQ7XrN0S0Qq/
-         5HbUocAaLlVxxdKl68C2/q72k8OS5SyeI+yZ2GlFI+Nj71vC0POP1wXN4eXPqDmlC86X
-         xOPt2oZhm4xMfSpskUpep/dTO2xvj8RIT47IIaoHMtJ6L882OgyPfhZoWEA6uQ5h2NXC
-         KOOw==
-X-Gm-Message-State: AOAM530aLfmEYrhb99CH5leTxQMsoPFbGOyvJDU/gqDRapOsKgKXuBVI
-        HZxakKIxTay+NcR3RgfoGh75zg==
-X-Google-Smtp-Source: ABdhPJx6Za03E8aFKWtkYONZbUyj98eqWhvJ/dpPQnts7b30RCF+bR9M/JuZBv+LK0MkVotICxRyOA==
-X-Received: by 2002:a65:6202:0:b0:382:1fbd:5bb3 with SMTP id d2-20020a656202000000b003821fbd5bb3mr10098402pgv.194.1648716140367;
-        Thu, 31 Mar 2022 01:42:20 -0700 (PDT)
-Received: from judyhsiao-p920.tpe.corp.google.com ([2401:fa00:1:17:88f1:170c:cc:666f])
-        by smtp.gmail.com with ESMTPSA id q28-20020a656a9c000000b00372f7ecfcecsm4783036pgu.37.2022.03.31.01.42.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Mar 2022 01:42:19 -0700 (PDT)
-From:   Judy Hsiao <judyhsiao@chromium.org>
-To:     broonie@kernel.org
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, dianders@chromium.org,
-        cychiang@google.com, yuhsuan@chromium.org, judyhsiao@google.com,
-        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, Judy Hsiao <judyhsiao@chromium.org>
-Subject: [v2] ASoC: qcom: Add driver support for ALC5682I-VS
-Date:   Thu, 31 Mar 2022 16:42:01 +0800
-Message-Id: <20220331084201.62815-1-judyhsiao@chromium.org>
-X-Mailer: git-send-email 2.35.1.1021.g381101b075-goog
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=lsN5p6Zbb92CWY0fCQlSnWVHSmMIpn5JDGM4v10NtKE=;
+        b=JD/Ane5PAz21ud+h0jC+r6x04io8/bQnavnvdyyDA0C+QmUwkA1PfRQ3h+iFQMjcE0
+         lBOFnB0Mcld6NJFzHVWMjpQxoG17MCi20SyNOwc8Vg4MYBKGXO1zwbvLTX4lbI+LCAZW
+         yKGkbrCpnv/5ld8TC9sIWzQL2H+uQObRFLhmvb7LmfD3C9iHkf6l4jiPYKH/TPsL7Ybh
+         sWVED/jIG8NnnTgu14C4l2RODe/hUF9r9nNrq7mMX2ehVsOT8PqZ0Vh1GVwq+NWZzeLF
+         PgsD+FcwVDFxXlwFry6W6mN4A5f1p11hluaiqtXhWwrwIrbtIXnBlosyiqtep8NVvCPU
+         rHGQ==
+X-Gm-Message-State: AOAM533STTH877vKT5DF79r837faSgtpH+tF0Fxp7BctAU3aSZyCvwlt
+        P9QdK15tLFz93DBrKYBTCJu7Y1xiOXNzw+tMKzuN9Q==
+X-Google-Smtp-Source: ABdhPJzGd4rqpbpprVxRT58SQ0mWkivwbwlishXbW/R3KM5sUWLDKwn+nH2fugALpTWwKgteKCnQM+TuY1AtSd9ZY20=
+X-Received: by 2002:ac8:5702:0:b0:2e1:ec8a:917a with SMTP id
+ 2-20020ac85702000000b002e1ec8a917amr3318464qtw.682.1648719309154; Thu, 31 Mar
+ 2022 02:35:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+References: <20220328152923.90623-1-krzysztof.kozlowski@linaro.org>
+ <CAA8EJprWoxWwk5EWEfWdLquPR+2=u6V0-v1-+wHMHOk8HiEyNw@mail.gmail.com>
+ <YkHtY9absUjmqmW7@matsya> <12b0056b-8032-452b-f325-6f36037b5a80@linaro.org>
+ <CAL_Jsq+6rx0UU6ryH+z_8KLQqKKuhTCnh=Oft2F03bcze+EV0Q@mail.gmail.com>
+ <YkKmPSesQfS6RLCD@matsya> <YkMrPnRbsl3FBig8@robh.at.kernel.org> <YkVEsqiRamfTmNi0@matsya>
+In-Reply-To: <YkVEsqiRamfTmNi0@matsya>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 31 Mar 2022 12:34:58 +0300
+Message-ID: <CAA8EJpqTqB10JkmK4GfbO6uP4wAUtqPzY+N4f+=Lt6Vy3a+g4Q@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: display: msm: dsi: remove address/size cells
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -70,197 +80,109 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add Machine driver support for ALC5682I-VS codec.
+On Thu, 31 Mar 2022 at 09:05, Vinod Koul <vkoul@kernel.org> wrote:
+>
+> On 29-03-22, 10:52, Rob Herring wrote:
+> > On Tue, Mar 29, 2022 at 12:01:52PM +0530, Vinod Koul wrote:
+> > > On 28-03-22, 13:21, Rob Herring wrote:
+> > > > On Mon, Mar 28, 2022 at 12:18 PM Krzysztof Kozlowski
+> > > > <krzysztof.kozlowski@linaro.org> wrote:
+> > > > >
+> > > > > On 28/03/2022 19:16, Vinod Koul wrote:
+> > > > > > On 28-03-22, 19:43, Dmitry Baryshkov wrote:
+> > > > > >> On Mon, 28 Mar 2022 at 18:30, Krzysztof Kozlowski
+> > > > > >> <krzysztof.kozlowski@linaro.org> wrote:
+> > > > > >>>
+> > > > > >>> The DSI node is not a bus and the children do not have unit addresses.
+> > > > > >>>
+> > > > > >>> Reported-by: Vinod Koul <vkoul@kernel.org>
+> > > > > >>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > > > > >>
+> > > > > >> NAK.
+> > > > > >> DSI panels are children of the DSI device tree node with the reg = <0>; address.
+> > > > > >> This is the convention used by other platforms too (see e.g.
+> > > > > >> arch/arm64/boot/dts/freescale/imx8mq-evk.dts).
+> > > > > >
+> > > > > > So we should add reg = 0, i will update my dtsi fix
+> > > > > >
+> > > > >
+> > > > > To "ports" node? No. The reg=0 is for children of the bus, so the
+> > > > > panels. How to combine both without warnings - ports and panel@0 - I
+> > > > > don't know yet...
+> > > >
+> > > > I don't think that should case a warning. Or at least it's one we turn off.
+> > >
+> > > Well in this case I think we might need a fix:
+> > > Here is the example quoted in the binding. We have ports{} and then the
+> > > two port@0 and port@1 underneath.
+> >
+> > It's the #address-cells/#size-cells under 'ports' that applies to 'port'
+> > nodes. As 'ports' has no address (reg) itself, it doesn't need
+> > #address-cells/#size-cells in its parent node.
+> >
+> > >
+> > > So it should be okay to drop #address-cells/#size-cells from dsi node
+> > > but keep in ports node...
+> >
+> > Yes.
+> >
+> > > Thoughts...?
+> >
+> > But I thought a panel@0 node was being added? If so then you need to add
+> > them back.
+>
+> I guess we should make this optional, keep it when adding panel@0 node
+> and skip for rest where not applicable..? Dmitry is that fine with you?
 
-Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
----
+This sounds like a workaround. When a panel node is added together
+with the '#address-cells' / '#size-cells' properties, we will get
+warnings for the 'ports' node.
+I'd prefer to leave things to pinpoint that the problem is generic
+rather than being specific to several device trees with the DSI panel
+nodes.
+How do other platforms solve the issue?
 
-Changes from v1[1]:
- - Fix nits and use SND_SOC_DAIFMT_CBC_CFS.
- - Fix return value when snd_soc_dai_set_sysclk failed.
+In fact we can try shifting to the following dts schema:
 
-[1]: https://patchwork.kernel.org/project/alsa-devel/patch/20220330084519.3863856-1-judyhsiao@chromium.org/
+dsi@ae940000 {
+   compatible = "qcom,mdss-dsi-ctrl";
 
- sound/soc/qcom/Kconfig  |   2 +
- sound/soc/qcom/sc7280.c | 107 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 109 insertions(+)
+   ports {
+      #adress-cells = <1>;
+      #size-cells = <0>;
+      port@0 {
+         reg = <0>;
+         dsi0_in: endpoint {};
+      };
+      port@1 {
+         reg = <1>;
+         dsi0_out: endpoint {
+               remote-endpoint = <&panel_in>;
+         };
+      };
 
-diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
-index 28d0dfb4033c..750653404ba3 100644
---- a/sound/soc/qcom/Kconfig
-+++ b/sound/soc/qcom/Kconfig
-@@ -197,6 +197,8 @@ config SND_SOC_SC7280
- 	select SND_SOC_LPASS_MACRO_COMMON
- 	imply SND_SOC_LPASS_RX_MACRO
- 	imply SND_SOC_LPASS_TX_MACRO
-+	select SND_SOC_RT5682_I2C
-+	select SND_SOC_RT5682S
- 	help
- 	  Add support for audio on Qualcomm Technologies Inc.
- 	  SC7280 SoC-based systems.
-diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
-index bd0bf9c8cb28..8c0bbae490dd 100644
---- a/sound/soc/qcom/sc7280.c
-+++ b/sound/soc/qcom/sc7280.c
-@@ -12,14 +12,21 @@
- #include <sound/jack.h>
- #include <sound/pcm.h>
- #include <sound/soc.h>
-+#include <sound/rt5682s.h>
- #include <linux/soundwire/sdw.h>
- 
-+#include "../codecs/rt5682.h"
-+#include "../codecs/rt5682s.h"
- #include "common.h"
- #include "lpass.h"
- 
-+#define DEFAULT_MCLK_RATE              19200000
-+#define RT5682_PLL1_FREQ (48000 * 512)
-+
- struct sc7280_snd_data {
- 	struct snd_soc_card card;
- 	struct sdw_stream_runtime *sruntime[LPASS_MAX_PORTS];
-+	u32 pri_mi2s_clk_count;
- 	struct snd_soc_jack hs_jack;
- 	struct snd_soc_jack hdmi_jack;
- 	bool jack_setup;
-@@ -69,6 +76,7 @@ static int sc7280_headset_init(struct snd_soc_pcm_runtime *rtd)
- 		pdata->jack_setup = true;
- 	}
- 	switch (cpu_dai->id) {
-+	case MI2S_PRIMARY:
- 	case LPASS_CDC_DMA_RX0:
- 	case LPASS_CDC_DMA_TX3:
- 		for_each_rtd_codec_dais(rtd, i, codec_dai) {
-@@ -110,11 +118,51 @@ static int sc7280_hdmi_init(struct snd_soc_pcm_runtime *rtd)
- 	return snd_soc_component_set_jack(component, &pdata->hdmi_jack, NULL);
- }
- 
-+static int sc7280_rt5682_init(struct snd_soc_pcm_runtime *rtd)
-+{
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
-+	struct snd_soc_card *card = rtd->card;
-+	struct sc7280_snd_data *data = snd_soc_card_get_drvdata(card);
-+	int ret;
-+
-+	if (++data->pri_mi2s_clk_count == 1) {
-+		snd_soc_dai_set_sysclk(cpu_dai,
-+			LPASS_MCLK0,
-+			DEFAULT_MCLK_RATE,
-+			SNDRV_PCM_STREAM_PLAYBACK);
-+	}
-+	snd_soc_dai_set_fmt(codec_dai,
-+				SND_SOC_DAIFMT_CBC_CFC |
-+				SND_SOC_DAIFMT_NB_NF |
-+				SND_SOC_DAIFMT_I2S);
-+
-+	ret = snd_soc_dai_set_pll(codec_dai, RT5682S_PLL1, RT5682S_PLL_S_BCLK1,
-+					1536000, RT5682_PLL1_FREQ);
-+	if (ret) {
-+		dev_err(rtd->dev, "can't set codec pll: %d\n", ret);
-+		return ret;
-+	}
-+
-+	ret = snd_soc_dai_set_sysclk(codec_dai, RT5682S_SCLK_S_PLL1,
-+					RT5682_PLL1_FREQ,
-+					SND_SOC_CLOCK_IN);
-+
-+	if (ret) {
-+		dev_err(rtd->dev, "snd_soc_dai_set_sysclk err = %d\n",
-+			ret);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
- static int sc7280_init(struct snd_soc_pcm_runtime *rtd)
- {
- 	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
- 
- 	switch (cpu_dai->id) {
-+	case MI2S_PRIMARY:
- 	case LPASS_CDC_DMA_TX3:
- 		return sc7280_headset_init(rtd);
- 	case LPASS_CDC_DMA_RX0:
-@@ -227,10 +275,66 @@ static int sc7280_snd_hw_free(struct snd_pcm_substream *substream)
- 	return 0;
- }
- 
-+static void sc7280_snd_shutdown(struct snd_pcm_substream *substream)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct snd_soc_card *card = rtd->card;
-+	struct sc7280_snd_data *data = snd_soc_card_get_drvdata(card);
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+
-+	switch (cpu_dai->id) {
-+	case MI2S_PRIMARY:
-+		if (--data->pri_mi2s_clk_count == 0) {
-+			snd_soc_dai_set_sysclk(cpu_dai,
-+					       LPASS_MCLK0,
-+					       0,
-+					       SNDRV_PCM_STREAM_PLAYBACK);
-+		}
-+		break;
-+	case MI2S_SECONDARY:
-+		break;
-+	case LPASS_DP_RX:
-+		break;
-+	default:
-+		dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__,
-+			cpu_dai->id);
-+		break;
-+	}
-+}
-+
-+static int sc7280_snd_startup(struct snd_pcm_substream *substream)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-+	int ret = 0;
-+
-+	switch (cpu_dai->id) {
-+	case MI2S_PRIMARY:
-+		ret = sc7280_rt5682_init(rtd);
-+		break;
-+	case MI2S_SECONDARY:
-+		break;
-+	case LPASS_DP_RX:
-+		break;
-+	default:
-+		dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__,
-+			cpu_dai->id);
-+		return -EINVAL;
-+	}
-+	return ret;
-+}
-+
- static const struct snd_soc_ops sc7280_ops = {
-+	.startup = sc7280_snd_startup,
- 	.hw_params = sc7280_snd_hw_params,
- 	.hw_free = sc7280_snd_hw_free,
- 	.prepare = sc7280_snd_prepare,
-+	.shutdown = sc7280_snd_shutdown,
-+};
-+
-+static const struct snd_soc_dapm_widget sc7280_snd_widgets[] = {
-+	SND_SOC_DAPM_HP("Headphone Jack", NULL),
-+	SND_SOC_DAPM_MIC("Headset Mic", NULL),
- };
- 
- static int sc7280_snd_platform_probe(struct platform_device *pdev)
-@@ -252,6 +356,9 @@ static int sc7280_snd_platform_probe(struct platform_device *pdev)
- 	card->driver_name = "SC7280";
- 	card->dev = dev;
- 
-+	card->dapm_widgets = sc7280_snd_widgets;
-+	card->num_dapm_widgets = ARRAY_SIZE(sc7280_snd_widgets);
-+
- 	ret = qcom_snd_parse_of(card);
- 	if (ret)
- 		return ret;
+   /* dsi-bus is a generic part */
+   dsi-bus {
+      #adress-cells = <1>;
+      #size-cells = <0>;
+      /* panel@0 goes to the board file */
+      panel@0 {
+          compatible = "vendor,some-panel";
+          ports {
+             #adress-cells = <1>;
+             #size-cells = <0>;
+             port@0 {
+               reg = <0>;
+                panel_in: endpoint {
+                   remote-endpoint = <&dsi0_out>;
+                };
+             };
+        };
+   };
+};
+
+WDYT?
+
 -- 
-2.35.1.1021.g381101b075-goog
-
+With best wishes
+Dmitry
