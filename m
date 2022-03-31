@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A9DD84EDDF8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Mar 2022 17:53:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AAF04EDDFB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Mar 2022 17:54:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239323AbiCaPzW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Mar 2022 11:55:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60260 "EHLO
+        id S239357AbiCaP4U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Mar 2022 11:56:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239295AbiCaPzU (ORCPT
+        with ESMTP id S239280AbiCaP4T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Mar 2022 11:55:20 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3112D1D30C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 08:53:30 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id b15so28693510edn.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 08:53:30 -0700 (PDT)
+        Thu, 31 Mar 2022 11:56:19 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82DFB75C01
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 08:54:31 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id b24so28648637edu.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 08:54:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=XfqnpxEBLu1gt/dV+MpD3O2O3QJUWpLD1wEVvGzFG+k=;
-        b=ZYT8C/9Sf2/mU8nHDNHlcSA5Xv5Crgz93bGknHOlYsuRBRvkcRhPSA0TdbXxnxlHtC
-         6Ueqia9muU32k0nbRZcS0lyxhVUsU7lDyU/mlU+1DTdyf8YSKCJ3zDxgYjiZTPEJZv7h
-         1KEPonjd/Bai1bU4g5AiWvl4nHhBN9R7qZXYmYZoYBUKoxNYQzOscReUvEz7j4AxIPrI
-         bUCK0ha9rOVYqMewOI/s1Pn9GlDFWkalWNcG123mJSilbyKEezdpXX42by1IhRQP3ojf
-         ogG/18GIgKw277U9iH4Ivz32ykY16uf3pMvHjqMxiSWW3y+k1mOJZOOEB88e+vaIV/qc
-         bwZg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=mKGTMgRm2/BrDh+pWLzL6um9KANlYMhjAWBOG3cfNDc=;
+        b=Z90CYObqR/ron7da1LrGo68CbsFdNGFaZ045Vt+RshuDHZKFXToiERNwkhS4Dk6ad/
+         r+VZWpiwu5JfE/FlB85wab9vA5w7khhSsSd9aa0ix35prt6CHFqvt+rTFzGe4fMhiiVV
+         UuRzDS0ublUgDSU94nBckN1w55njFHZ1yaN8cldV//mm5sxalqFU0hocfaa6jxs5qY0v
+         WyS5+pv7d3B/KOnmA4g10S4PjzsffcVI/bfEc0RG7Agi0derIiSIaOeni/u4CW0tEtVZ
+         JVlaVU6jMlOHxO49JpNq+LdbyscTvYJigzDgAadWLAM/CK/kQnePy3jUflQdGHoMeXGo
+         0+JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=XfqnpxEBLu1gt/dV+MpD3O2O3QJUWpLD1wEVvGzFG+k=;
-        b=l3AyADdoNMKxFbzU9VWaMc5jw7zOUyg9cqQnNEc2eM6tUSTVNNhU5Ih2lKbnPeg+ZL
-         ovcEhdFTnZMrFg/pHr77xP9GOmjoI1mmiKij59MTinzRqa+l1oD0ArR+4vO4ea1nri/d
-         6+y1mm+TLBX6YyVAl+xnWECWQsK4MClGIesILwh+iAqqj2ZNMbYxLXc/JLRtDAulDHpE
-         Fk8cuZzCgxN+aY0ES3ChHnZVmTfOIepb/bK+bdsQB1go9kjTia5VAQpH3eijN3Z7rhSS
-         p44G2aCYK5+Al4EN52T7ijk5J/5xWH7Rxzb782d5xPS4srizCKvMgiodGT5/atRJT1CC
-         tgxw==
-X-Gm-Message-State: AOAM5337yQHGFll9bDtsBQJNaX4DlTLhwSpNFe1kni8NREIxdtWaEX8W
-        7xnTPiYEcFnKmj9upMC6ep5yOA==
-X-Google-Smtp-Source: ABdhPJz78zD5NmLuCynbTIQIfUn3lkSnR/YHoY9TISYRgxpFTIMDeF9dNJV6AF94dMfTO/oNAX41MQ==
-X-Received: by 2002:a05:6402:5243:b0:419:4ce2:cb5c with SMTP id t3-20020a056402524300b004194ce2cb5cmr17315679edd.151.1648742008767;
-        Thu, 31 Mar 2022 08:53:28 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=mKGTMgRm2/BrDh+pWLzL6um9KANlYMhjAWBOG3cfNDc=;
+        b=hbxJUpV6M+d8y7jBf/3oBB1iuGhik8H7juDDSPGBi/+3WwUuBGpCdgubPrI2Faiauk
+         mAVHB2J+18jfLVSM8KaPlMAyL2QJy2JofiX0lJaRQtipPeUbEpFhhzdQfiExOd/UY+X5
+         4PMq4U2EjCOWa/9oiYgs4llzNV+u638fTApQRf2d6nfymn8Rkc1A+ApwPHuuguNeHahv
+         T74i5/ZZiwjjsmJ+1GVXOMBY6Nu1ZsaNuF7iARHk1sK3Imz5fyVDKEYNPKdeD8HKRHrI
+         ku4+uZTJguRKiLLMx9oqMMJNou4j8uXWrEOBY7tIyDCDpBlXJ+PAhP8NfvNXcIe3d2HE
+         Px0A==
+X-Gm-Message-State: AOAM533if/+wJkIgNTcltABHVi9mM7CLUsXxKIGgKE0yS4R+d4rb8sB6
+        ftPFHCB53bgYLpzaVgCkNY7JjA==
+X-Google-Smtp-Source: ABdhPJz3nQJEzi+6rjuA0u0ISdfLGdjcDtwWkW56c3AL5SqQPY6brlNLgc2FeNLVl9JxHDsI8XBzIw==
+X-Received: by 2002:a05:6402:278d:b0:419:3794:de39 with SMTP id b13-20020a056402278d00b004193794de39mr17056857ede.137.1648742070009;
+        Thu, 31 Mar 2022 08:54:30 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id z6-20020a056402274600b004194fc1b7casm11658583edd.48.2022.03.31.08.53.27
+        by smtp.gmail.com with ESMTPSA id g10-20020a056402090a00b004196250baeasm11584077edz.95.2022.03.31.08.54.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Mar 2022 08:53:28 -0700 (PDT)
+        Thu, 31 Mar 2022 08:54:29 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -56,12 +56,14 @@ To:     Andy Gross <agross@kernel.org>,
         Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-spi@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Kuldeep Singh <singh.kuldeep87k@gmail.com>
-Subject: [PATCH v2 0/4] spi: dt-bindings: qcom: convert qcom,spi-qup to DT schema
-Date:   Thu, 31 Mar 2022 17:53:16 +0200
-Message-Id: <20220331155320.714754-1-krzysztof.kozlowski@linaro.org>
+Cc:     Kuldeep Singh <singh.kuldeep87k@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 1/4] ARM: dts: qcom: ipq4019: align dmas in SPI with DT schema
+Date:   Thu, 31 Mar 2022 17:54:22 +0200
+Message-Id: <20220331155425.714946-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20220331155320.714754-1-krzysztof.kozlowski@linaro.org>
+References: <20220331155320.714754-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -74,39 +76,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+The DT schema expects dma channels in tx-rx order.  No functional
+change.
 
-Changes since v1
-================
-1. Fix path in com/qcom,gsbi.txt.
-2. Merge clock-names in example, correct $ref path (Kuldeep).
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm/boot/dts/qcom-ipq4019.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Merging
-=======
-The DTS patches are independent and silence warnings pointed
-out by schema.
-
-Best regards,
-Krzysztof
-
-Cc: Kuldeep Singh <singh.kuldeep87k@gmail.com>
-
-Krzysztof Kozlowski (4):
-  ARM: dts: qcom: ipq4019: align dmas in SPI with DT schema
-  arm64: dts: qcom: msm8916: align dmas in SPI with DT schema
-  arm64: dts: qcom: qcs404: align clocks in SPI with DT schema
-  spi: dt-bindings: qcom,spi-qup: convert to dtschema
-
- .../bindings/soc/qcom/qcom,gsbi.txt           |   2 +-
- .../devicetree/bindings/spi/qcom,spi-qup.txt  | 103 ------------------
- .../devicetree/bindings/spi/qcom,spi-qup.yaml |  81 ++++++++++++++
- arch/arm/boot/dts/qcom-ipq4019.dtsi           |   8 +-
- arch/arm64/boot/dts/qcom/msm8916.dtsi         |  24 ++--
- arch/arm64/boot/dts/qcom/qcs404.dtsi          |  36 +++---
- 6 files changed, 116 insertions(+), 138 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-qup.txt
- create mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-qup.yaml
-
+diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+index a9d0566a3190..dc8260684aee 100644
+--- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
++++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+@@ -253,8 +253,8 @@ blsp1_spi1: spi@78b5000 { /* BLSP1 QUP1 */
+ 			clock-names = "core", "iface";
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+-			dmas = <&blsp_dma 5>, <&blsp_dma 4>;
+-			dma-names = "rx", "tx";
++			dmas = <&blsp_dma 4>, <&blsp_dma 5>;
++			dma-names = "tx", "rx";
+ 			status = "disabled";
+ 		};
+ 
+@@ -267,8 +267,8 @@ blsp1_spi2: spi@78b6000 { /* BLSP1 QUP2 */
+ 			clock-names = "core", "iface";
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+-			dmas = <&blsp_dma 7>, <&blsp_dma 6>;
+-			dma-names = "rx", "tx";
++			dmas = <&blsp_dma 6>, <&blsp_dma 7>;
++			dma-names = "tx", "rx";
+ 			status = "disabled";
+ 		};
+ 
 -- 
 2.32.0
 
