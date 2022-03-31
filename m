@@ -2,125 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB3EB4ED3B4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Mar 2022 08:05:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6A7E4ED458
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Mar 2022 09:03:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230291AbiCaGHd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Mar 2022 02:07:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39764 "EHLO
+        id S231388AbiCaHFO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Mar 2022 03:05:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230033AbiCaGHc (ORCPT
+        with ESMTP id S231640AbiCaHFO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Mar 2022 02:07:32 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E81E81DC9A0;
-        Wed, 30 Mar 2022 23:05:45 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 99D63B81EA0;
-        Thu, 31 Mar 2022 06:05:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2AFDC340ED;
-        Thu, 31 Mar 2022 06:05:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648706743;
-        bh=QQKn+Kv4FLipNOaxDBLqAUQ//ylLu2B/5Kt8RPNpRr4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fbInko8+mnPe6uxn0w7FVcGvtXjG+NE7LfwKIopJqKNt8OPhQaDArQMOt0qc8ge/t
-         SLJoRK0tMmLrcbeSgGx6LtbRXc8qtzM/Be2+YkRBVmStrHi/VT2RMl8o14WGcwx1J1
-         zIDZcTJU56GTnvNNDIk5SSzqqRj2OoHAvFlc+Ikjj0lNDPH349iGDORgJ2OWtMJ6Xp
-         P4kxh8gOv+wANKWvGjqEzWIMsPOvxgiIapuvkjPBGGBJhdwDPwJpTiPXotmDdOjYKa
-         QG96BQbQl0Ih7K5swrwEPWAXi7Kv402R/xuxng8j/zVMCxB4oigcKrQP4ENgLueBlf
-         IUWluFcNjF4HQ==
-Date:   Thu, 31 Mar 2022 11:35:38 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] dt-bindings: display: msm: dsi: remove address/size cells
-Message-ID: <YkVEsqiRamfTmNi0@matsya>
-References: <20220328152923.90623-1-krzysztof.kozlowski@linaro.org>
- <CAA8EJprWoxWwk5EWEfWdLquPR+2=u6V0-v1-+wHMHOk8HiEyNw@mail.gmail.com>
- <YkHtY9absUjmqmW7@matsya>
- <12b0056b-8032-452b-f325-6f36037b5a80@linaro.org>
- <CAL_Jsq+6rx0UU6ryH+z_8KLQqKKuhTCnh=Oft2F03bcze+EV0Q@mail.gmail.com>
- <YkKmPSesQfS6RLCD@matsya>
- <YkMrPnRbsl3FBig8@robh.at.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YkMrPnRbsl3FBig8@robh.at.kernel.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Thu, 31 Mar 2022 03:05:14 -0400
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F774191422;
+        Thu, 31 Mar 2022 00:03:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1648710207; x=1680246207;
+  h=from:to:cc:subject:date:message-id;
+  bh=sCoqz6QKAilKORklG/iHwiNVmje57nIoCYnJdb8vI34=;
+  b=QQj7jknlBWuwQSvoF/hIdTm3wPycyjIKND6BW42Y0z2fjxPXRusduf77
+   Iid3c6Ypc7S1QoRKn6cDzO1+yI9Hv++Gxv6IXHEoOW7/CVLAvyBHiYTHv
+   ruMxwM/8ShTl6ZQn4/TOn6IntvcuqqPpoa+0+lryb5hEjFstbTAc5o67g
+   o=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 31 Mar 2022 00:03:27 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 31 Mar 2022 00:03:26 -0700
+X-QCInternal: smtphost
+Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 31 Mar 2022 12:33:05 +0530
+Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
+        id 3CF73521B; Thu, 31 Mar 2022 12:33:04 +0530 (IST)
+From:   Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+To:     adrian.hunter@intel.com, ulf.hansson@linaro.org, robh+dt@kernel.org
+Cc:     quic_asutoshd@quicinc.com, quic_rampraka@quicinc.com,
+        quic_pragalla@quicinc.com, quic_sartgarg@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_sayalil@quicinc.com,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        krzysztof.kozlowski@canonical.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+Subject: [PATCH V3] mmc: sdhci-msm: Reset GCC_SDCC_BCR register for SDHC
+Date:   Thu, 31 Mar 2022 12:33:02 +0530
+Message-Id: <1648710182-31899-1-git-send-email-quic_c_sbhanu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29-03-22, 10:52, Rob Herring wrote:
-> On Tue, Mar 29, 2022 at 12:01:52PM +0530, Vinod Koul wrote:
-> > On 28-03-22, 13:21, Rob Herring wrote:
-> > > On Mon, Mar 28, 2022 at 12:18 PM Krzysztof Kozlowski
-> > > <krzysztof.kozlowski@linaro.org> wrote:
-> > > >
-> > > > On 28/03/2022 19:16, Vinod Koul wrote:
-> > > > > On 28-03-22, 19:43, Dmitry Baryshkov wrote:
-> > > > >> On Mon, 28 Mar 2022 at 18:30, Krzysztof Kozlowski
-> > > > >> <krzysztof.kozlowski@linaro.org> wrote:
-> > > > >>>
-> > > > >>> The DSI node is not a bus and the children do not have unit addresses.
-> > > > >>>
-> > > > >>> Reported-by: Vinod Koul <vkoul@kernel.org>
-> > > > >>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > > > >>
-> > > > >> NAK.
-> > > > >> DSI panels are children of the DSI device tree node with the reg = <0>; address.
-> > > > >> This is the convention used by other platforms too (see e.g.
-> > > > >> arch/arm64/boot/dts/freescale/imx8mq-evk.dts).
-> > > > >
-> > > > > So we should add reg = 0, i will update my dtsi fix
-> > > > >
-> > > >
-> > > > To "ports" node? No. The reg=0 is for children of the bus, so the
-> > > > panels. How to combine both without warnings - ports and panel@0 - I
-> > > > don't know yet...
-> > > 
-> > > I don't think that should case a warning. Or at least it's one we turn off.
-> > 
-> > Well in this case I think we might need a fix:
-> > Here is the example quoted in the binding. We have ports{} and then the
-> > two port@0 and port@1 underneath.
-> 
-> It's the #address-cells/#size-cells under 'ports' that applies to 'port' 
-> nodes. As 'ports' has no address (reg) itself, it doesn't need 
-> #address-cells/#size-cells in its parent node.
-> 
-> > 
-> > So it should be okay to drop #address-cells/#size-cells from dsi node
-> > but keep in ports node...
-> 
-> Yes.
-> 
-> > Thoughts...?
-> 
-> But I thought a panel@0 node was being added? If so then you need to add 
-> them back.
+Reset GCC_SDCC_BCR register before every fresh initilazation. This will
+reset whole SDHC-msm controller, clears the previous power control
+states and avoids, software reset timeout issues as below.
 
-I guess we should make this optional, keep it when adding panel@0 node
-and skip for rest where not applicable..? Dmitry is that fine with you?
+[ 5.458061][ T262] mmc1: Reset 0x1 never completed.
+[ 5.462454][ T262] mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
+[ 5.469065][ T262] mmc1: sdhci: Sys addr: 0x00000000 | Version: 0x00007202
+[ 5.475688][ T262] mmc1: sdhci: Blk size: 0x00000000 | Blk cnt: 0x00000000
+[ 5.482315][ T262] mmc1: sdhci: Argument: 0x00000000 | Trn mode: 0x00000000
+[ 5.488927][ T262] mmc1: sdhci: Present: 0x01f800f0 | Host ctl: 0x00000000
+[ 5.495539][ T262] mmc1: sdhci: Power: 0x00000000 | Blk gap: 0x00000000
+[ 5.502162][ T262] mmc1: sdhci: Wake-up: 0x00000000 | Clock: 0x00000003
+[ 5.508768][ T262] mmc1: sdhci: Timeout: 0x00000000 | Int stat: 0x00000000
+[ 5.515381][ T262] mmc1: sdhci: Int enab: 0x00000000 | Sig enab: 0x00000000
+[ 5.521996][ T262] mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+[ 5.528607][ T262] mmc1: sdhci: Caps: 0x362dc8b2 | Caps_1: 0x0000808f
+[ 5.535227][ T262] mmc1: sdhci: Cmd: 0x00000000 | Max curr: 0x00000000
+[ 5.541841][ T262] mmc1: sdhci: Resp[0]: 0x00000000 | Resp[1]: 0x00000000
+[ 5.548454][ T262] mmc1: sdhci: Resp[2]: 0x00000000 | Resp[3]: 0x00000000
+[ 5.555079][ T262] mmc1: sdhci: Host ctl2: 0x00000000
+[ 5.559651][ T262] mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP-----------
+[ 5.566621][ T262] mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg: 0x6000642c | DLL cfg2: 0x0020a000
+[ 5.575465][ T262] mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl: 0x00010800 | DDR cfg: 0x80040873
+[ 5.584658][ T262] mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88218a8 Vndr func3: 0x02626040
 
+Fixes: 0eb0d9f4de34 ("mmc: sdhci-msm: Initial support for Qualcomm chipsets")
+Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+---
+
+Changes since V2:
+	- Dropped new line after fixes tag as suggested by Bjorn
+	  Andersson.
+	- Passed device structure instead of passing platform_device
+	  structure as a argument for sdhci_msm_gcc_reset() as suggested
+	  by Bjorn Andersson.
+	- Replaced dev_err() with dev_err_probe() as suggested by Bjorn
+	  Andersson.
+Changes since V1:
+	- Added fixes tag as suggested by Ulf Hansson.
+	- Replaced devm_reset_control_get() with
+	  devm_reset_control_get_optional_exclusive() as suggested by
+	  Ulf Hansson.
+---
+ drivers/mmc/host/sdhci-msm.c | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
+
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index 50c71e0..e15e789 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -17,6 +17,7 @@
+ #include <linux/regulator/consumer.h>
+ #include <linux/interconnect.h>
+ #include <linux/pinctrl/consumer.h>
++#include <linux/reset.h>
+ 
+ #include "sdhci-pltfm.h"
+ #include "cqhci.h"
+@@ -284,6 +285,7 @@ struct sdhci_msm_host {
+ 	bool uses_tassadar_dll;
+ 	u32 dll_config;
+ 	u32 ddr_config;
++	struct reset_control *core_reset;
+ 	bool vqmmc_enabled;
+ };
+ 
+@@ -2482,6 +2484,39 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
+ 	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
+ }
+ 
++static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
++{
++	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
++	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
++	int ret = 0;
++
++	msm_host->core_reset = devm_reset_control_get_optional_exclusive(dev, "core_reset");
++	if (IS_ERR(msm_host->core_reset))
++		return dev_err_probe(dev, PTR_ERR(msm_host->core_reset),
++				"unable to acquire core_reset\n");
++
++	if (!msm_host->core_reset)
++		return 0;
++
++	ret = reset_control_assert(msm_host->core_reset);
++	if (ret)
++		return dev_err_probe(dev, ret, "core_reset assert failed\n");
++
++	/*
++	 * The hardware requirement for delay between assert/deassert
++	 * is at least 3-4 sleep clock (32.7KHz) cycles, which comes to
++	 * ~125us (4/32768). To be on the safe side add 200us delay.
++	 */
++	usleep_range(200, 210);
++
++	ret = reset_control_deassert(msm_host->core_reset);
++	if (ret)
++		return dev_err_probe(dev, ret, "core_reset deassert failed\n");
++
++	usleep_range(200, 210);
++
++	return 0;
++}
+ 
+ static int sdhci_msm_probe(struct platform_device *pdev)
+ {
+@@ -2529,6 +2564,10 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+ 
+ 	msm_host->saved_tuning_phase = INVALID_TUNING_PHASE;
+ 
++	ret = sdhci_msm_gcc_reset(&pdev->dev, host);
++	if (ret)
++		goto pltfm_free;
++
+ 	/* Setup SDCC bus voter clock. */
+ 	msm_host->bus_clk = devm_clk_get(&pdev->dev, "bus");
+ 	if (!IS_ERR(msm_host->bus_clk)) {
 -- 
-~Vinod
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
