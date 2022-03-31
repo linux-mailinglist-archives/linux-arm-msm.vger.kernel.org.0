@@ -2,67 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AA204EE07B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Mar 2022 20:32:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D42264EE0C2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Mar 2022 20:39:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234557AbiCaSeI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Mar 2022 14:34:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46184 "EHLO
+        id S235356AbiCaSlf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Mar 2022 14:41:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234548AbiCaSeH (ORCPT
+        with ESMTP id S232316AbiCaSld (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Mar 2022 14:34:07 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD06C1C16FD
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 11:32:16 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id d15-20020a9d72cf000000b005cda54187c3so495010otk.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 11:32:16 -0700 (PDT)
+        Thu, 31 Mar 2022 14:41:33 -0400
+Received: from mail-oa1-x31.google.com (mail-oa1-x31.google.com [IPv6:2001:4860:4864:20::31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E15625FA2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 11:39:45 -0700 (PDT)
+Received: by mail-oa1-x31.google.com with SMTP id 586e51a60fabf-dacc470e03so204538fac.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 11:39:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=t6GsqwNN9llZCnAliYpOilY5j9SHoFYzbGwsekdtfa4=;
-        b=XYn4Prc7x7Wi0lnnkWc4y98ocH9lAtL/28wpaZwgzRg4BI4YGIrPG7wIlzCXxjqyNY
-         k3WGyiFN5UA9k1BmqJPJLUv8BPxVmuTpjSs+RZr3/VELAJ6Z6AcMrALui7s73PJjngT0
-         0y44DKaVWVk5krVho5gepvYG6wgoCz+z/ME1/b3Pi1pM8kf8KmeCWA/xgS7X7sQz9TG+
-         JchT0nwF9cTscAFn1bZrG2xYXqKQ/y3gDUMA3vye2BDSsLUtTbo4y7JA9/jSESu4ZJL9
-         WS+V0bHPEa0qyul0WFwqAuU9CmAsXcfM0HTzQXpDOhQUN1RSwFQSbeYfxQLz6o+Q19DY
-         +ZcA==
+        bh=e9jkAgjwsi1IJSGTXHmKAcaACDiJsAOI5quMymW0VDc=;
+        b=mMD97fQDv0+2FvvZYf5+fdkYUQipERsAb3C2YcKnLOOEQ/PsJUTDDX5i376ABpBGWC
+         8TpaoyFX9P3UccJmlhrrqlSG+ka+WkQfRZFsFNnxBtpTwOpjT/x3Lzt9HADfuPpu7OS7
+         QU+9iTOz1sDnXxGrb0mS9cmpSLomtfZalfKPVbntBxVwZkTTnhqBYisXjdlU7goWLDkM
+         laUKXVA0VLRefOHvgcNMqbM2Shr1AH7O2d7elvTBpQ9ZmSUzDNCbzRS3cbBLKLE+kBsK
+         I6c/dZZlvp6SopotuACCLG3keVMeHJOquxTiNQjJRKkGlYfxw8wYJcbmi+rjvkUxeo7i
+         AXJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=t6GsqwNN9llZCnAliYpOilY5j9SHoFYzbGwsekdtfa4=;
-        b=pyNfSlxGiwFI4KbhB56wbuZb3sd59NkzNPMxw/wanF0pseTwqUfIJ8GglSljgZMZpG
-         ItbJMkzE/iQEzqDGedaMKhtuPazlQq7FpwAjP0u5Qrv0B9jMZ23qfJQM4z5bPZ3Oc4Qn
-         EwA19lSQkH6g8trcVVE7tb/1VV+iGdKp4WqMtsZ9DS3cOPUyYMUjYfT08Tn7f4jXPxp5
-         X9rvhrgd6FeQ0ibfUkMdCPxMUVMgh5W6uLjB36CGjc+WzB70hsxI6DgJanXFALhQmOUX
-         En8+x1YGN6uT79CRHkgsAeMiiXq8kNfuK0y+w9eCaxs0Xd3BH56T24h6Lbew+oQfI314
-         HNzQ==
-X-Gm-Message-State: AOAM532Y6S8cmB9tjgwBBSdwH9OA0K76oXt4hy7qg2Zy63E0NJdTHduU
-        0YUfuUIXHvwpAiBGx4goEpRLbQ==
-X-Google-Smtp-Source: ABdhPJz26GMP6kACUt//jU5Az91bnlmsy5wYYd312LDn8aDW6jY3j9fs4jPdZV2Yqp9tCIl7SyygEQ==
-X-Received: by 2002:a9d:6409:0:b0:5ad:2055:9bdc with SMTP id h9-20020a9d6409000000b005ad20559bdcmr6171517otl.93.1648751536168;
-        Thu, 31 Mar 2022 11:32:16 -0700 (PDT)
+        bh=e9jkAgjwsi1IJSGTXHmKAcaACDiJsAOI5quMymW0VDc=;
+        b=LnbW7mktyKZts9fGIeI8cVHttp5tIC0kVcEYUB4/ylxvCTi8Qy4Gk4rn2VR6tBHHRm
+         4WnTWdJojJWxxjN+maM8FvWHzzCnytwvvL3z4aNoaqh/E2awYvGNZshvAUnlTr4mkYsc
+         WO5RgzzVrjl08qE/4sJrKeYm8uee8er/1k0J6K5Uwz3plrxIGOgtonuQWVdXx5dQHP4n
+         Gr2iM512z30JvJGCMcvmhTBcAMk4LvAPScPP+avNLZDuTAdu7vtYffXGzXJD8W84oDvV
+         S4vgvnc6lGCmxibyGC3PRR3Lj17bJLpJylmDb3AGKKuX16I2f8/2F7JuZuL6BLyOFTaf
+         DN3Q==
+X-Gm-Message-State: AOAM5330w3JsA4nVPthJvxT+gwBSv6Qja7Z8Qpy67KpuCobnSq+0Dt7t
+        /eB0n/qppkchPi0Wgthm0ySWcA==
+X-Google-Smtp-Source: ABdhPJw/a/7CrFLyGEY0Z/DS0/Ws4lqIc4WJ3cyuGTmJnxDrq9I4ThBrzgRb24j8nj+NdhQfCvPQBw==
+X-Received: by 2002:a05:6870:d0ce:b0:de:79e2:7ec7 with SMTP id k14-20020a056870d0ce00b000de79e27ec7mr3185850oaa.245.1648751985239;
+        Thu, 31 Mar 2022 11:39:45 -0700 (PDT)
 Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id s125-20020acaa983000000b002ecdbaf98fesm64878oie.34.2022.03.31.11.32.14
+        by smtp.gmail.com with ESMTPSA id e7-20020a9d2a87000000b005af548abe73sm175078otb.4.2022.03.31.11.39.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Mar 2022 11:32:15 -0700 (PDT)
-Date:   Thu, 31 Mar 2022 11:34:45 -0700
+        Thu, 31 Mar 2022 11:39:44 -0700 (PDT)
+Date:   Thu, 31 Mar 2022 11:42:14 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        Thara Gopinath <thara.gopinath@gmail.com>
-Subject: Re: [PATCH v4 0/4] cpufreq: qcom-hw: Fixes for cpu hotplug support
-Message-ID: <YkX0RQ7Re7J/iG+d@ripper>
-References: <20220326155153.7377-1-dmitry.baryshkov@linaro.org>
+To:     Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+Cc:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
+        robh+dt@kernel.org, quic_asutoshd@quicinc.com,
+        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
+        quic_sartgarg@quicinc.com, quic_nitirawa@quicinc.com,
+        quic_sayalil@quicinc.com, agross@kernel.org,
+        krzysztof.kozlowski@canonical.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V3] mmc: sdhci-msm: Reset GCC_SDCC_BCR register for SDHC
+Message-ID: <YkX2BrTjgexrIHtR@ripper>
+References: <1648710182-31899-1-git-send-email-quic_c_sbhanu@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220326155153.7377-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <1648710182-31899-1-git-send-email-quic_c_sbhanu@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -73,51 +75,151 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 26 Mar 08:51 PDT 2022, Dmitry Baryshkov wrote:
+On Thu 31 Mar 00:03 PDT 2022, Shaik Sajida Bhanu wrote:
 
-> This patchseries aims at fixing and improving CPU hotplug support on
-> Qualcomm platforms. First three patches are the fixes for the LMH
-> support in the cpufreq driver. The last patch adds support for
-> lightweight offline() and online() callbacks which are used instead of
-> exit() and init() each time the CPU is put offline or back online.
+> Reset GCC_SDCC_BCR register before every fresh initilazation. This will
+> reset whole SDHC-msm controller, clears the previous power control
+> states and avoids, software reset timeout issues as below.
 > 
-> Patches 1-3 being pure simple fixes can be applied during the -rc
-> stage, while patch 4 is targeting next development cycle
+> [ 5.458061][ T262] mmc1: Reset 0x1 never completed.
+> [ 5.462454][ T262] mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
+> [ 5.469065][ T262] mmc1: sdhci: Sys addr: 0x00000000 | Version: 0x00007202
+> [ 5.475688][ T262] mmc1: sdhci: Blk size: 0x00000000 | Blk cnt: 0x00000000
+> [ 5.482315][ T262] mmc1: sdhci: Argument: 0x00000000 | Trn mode: 0x00000000
+> [ 5.488927][ T262] mmc1: sdhci: Present: 0x01f800f0 | Host ctl: 0x00000000
+> [ 5.495539][ T262] mmc1: sdhci: Power: 0x00000000 | Blk gap: 0x00000000
+> [ 5.502162][ T262] mmc1: sdhci: Wake-up: 0x00000000 | Clock: 0x00000003
+> [ 5.508768][ T262] mmc1: sdhci: Timeout: 0x00000000 | Int stat: 0x00000000
+> [ 5.515381][ T262] mmc1: sdhci: Int enab: 0x00000000 | Sig enab: 0x00000000
+> [ 5.521996][ T262] mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+> [ 5.528607][ T262] mmc1: sdhci: Caps: 0x362dc8b2 | Caps_1: 0x0000808f
+> [ 5.535227][ T262] mmc1: sdhci: Cmd: 0x00000000 | Max curr: 0x00000000
+> [ 5.541841][ T262] mmc1: sdhci: Resp[0]: 0x00000000 | Resp[1]: 0x00000000
+> [ 5.548454][ T262] mmc1: sdhci: Resp[2]: 0x00000000 | Resp[3]: 0x00000000
+> [ 5.555079][ T262] mmc1: sdhci: Host ctl2: 0x00000000
+> [ 5.559651][ T262] mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP-----------
+> [ 5.566621][ T262] mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg: 0x6000642c | DLL cfg2: 0x0020a000
+> [ 5.575465][ T262] mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl: 0x00010800 | DDR cfg: 0x80040873
+> [ 5.584658][ T262] mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88218a8 Vndr func3: 0x02626040
 > 
+> Fixes: 0eb0d9f4de34 ("mmc: sdhci-msm: Initial support for Qualcomm chipsets")
+> Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+> ---
+> 
+> Changes since V2:
+> 	- Dropped new line after fixes tag as suggested by Bjorn
+> 	  Andersson.
+> 	- Passed device structure instead of passing platform_device
+> 	  structure as a argument for sdhci_msm_gcc_reset() as suggested
+> 	  by Bjorn Andersson.
+> 	- Replaced dev_err() with dev_err_probe() as suggested by Bjorn
+> 	  Andersson.
 
-Viresh, please consider picking up patch 1-3 for v5.18-rc.
+Thanks, looks much better. Still some things I would like to see
+improved below.
 
-Thanks,
+> Changes since V1:
+> 	- Added fixes tag as suggested by Ulf Hansson.
+> 	- Replaced devm_reset_control_get() with
+> 	  devm_reset_control_get_optional_exclusive() as suggested by
+> 	  Ulf Hansson.
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 39 +++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 39 insertions(+)
+> 
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index 50c71e0..e15e789 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -17,6 +17,7 @@
+>  #include <linux/regulator/consumer.h>
+>  #include <linux/interconnect.h>
+>  #include <linux/pinctrl/consumer.h>
+> +#include <linux/reset.h>
+>  
+>  #include "sdhci-pltfm.h"
+>  #include "cqhci.h"
+> @@ -284,6 +285,7 @@ struct sdhci_msm_host {
+>  	bool uses_tassadar_dll;
+>  	u32 dll_config;
+>  	u32 ddr_config;
+> +	struct reset_control *core_reset;
+>  	bool vqmmc_enabled;
+>  };
+>  
+> @@ -2482,6 +2484,39 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
+>  	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
+>  }
+>  
+> +static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
+> +{
+> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+> +	int ret = 0;
+
+First use of this variable is an assignment, so no need to initialize it
+here.
+
+> +
+> +	msm_host->core_reset = devm_reset_control_get_optional_exclusive(dev, "core_reset");
+
+reset-names will only be used to identify resets and hence there's no
+reason to include "_reset" in the identifier.
+
+If this is the only reset for the controller, there's actually no reason
+for identifying it, you can omit reset-names from the binding and just
+pass NULL here (to get the first resets = <>).
+
+> +	if (IS_ERR(msm_host->core_reset))
+> +		return dev_err_probe(dev, PTR_ERR(msm_host->core_reset),
+> +				"unable to acquire core_reset\n");
+> +
+> +	if (!msm_host->core_reset)
+> +		return 0;
+> +
+> +	ret = reset_control_assert(msm_host->core_reset);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "core_reset assert failed\n");
+> +
+> +	/*
+> +	 * The hardware requirement for delay between assert/deassert
+> +	 * is at least 3-4 sleep clock (32.7KHz) cycles, which comes to
+> +	 * ~125us (4/32768). To be on the safe side add 200us delay.
+> +	 */
+> +	usleep_range(200, 210);
+> +
+> +	ret = reset_control_deassert(msm_host->core_reset);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "core_reset deassert failed\n");
+> +
+> +	usleep_range(200, 210);
+> +
+
+sdhci_msm_gcc_reset() is only called once during probe(), so there's no
+reason to carry the reset_control pointer in struct sdhci_msm_host. Make
+it a local variable and use reset_control_get_optional_exclusive() and
+reset_control_put() the reset here before returning.
+
+Regards,
 Bjorn
 
-> Changes since v3:
-> - Readd throttled_freq calculation disappearing from the third patch.
-> 
-> Changes since v2:
-> - Point Fixes tag from the first patch to the correct commit
-> - Replace huge patch 2 with one-liner thanks to being able to use
->   policy->related_cpus instead of policy->cpus
-> 
-> Changes since v1:
-> - Update commit message for the first patch to describe why dropping
->   affinity hint is required (before calling free_irq()),
-> - Fixed commit message for the second patch to include messages
->   generated using the mainline kernel w/o additional patches,
-> - Changed third patch to use dev_warn_ratelimited(),
-> - Reworked last patch to move request_irq/free_irq to online()/offline()
->   to make sure that the IRQ isn't left enabled after the CPU has been
->   put offline.
-> 
-> 
-> Dmitry Baryshkov (4):
->   cpufreq: qcom-hw: drop affinity hint before freeing the IRQ
->   cpufreq: qcom-hw: fix the race between LMH worker and cpuhp
->   cpufreq: qcom-hw: fix the opp entries refcounting
->   cpufreq: qcom-hw: provide online/offline operations
-> 
->  drivers/cpufreq/qcom-cpufreq-hw.c | 45 ++++++++++++++++++++++++++-----
->  1 file changed, 38 insertions(+), 7 deletions(-)
-> 
+> +	return 0;
+> +}
+>  
+>  static int sdhci_msm_probe(struct platform_device *pdev)
+>  {
+> @@ -2529,6 +2564,10 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>  
+>  	msm_host->saved_tuning_phase = INVALID_TUNING_PHASE;
+>  
+> +	ret = sdhci_msm_gcc_reset(&pdev->dev, host);
+> +	if (ret)
+> +		goto pltfm_free;
+> +
+>  	/* Setup SDCC bus voter clock. */
+>  	msm_host->bus_clk = devm_clk_get(&pdev->dev, "bus");
+>  	if (!IS_ERR(msm_host->bus_clk)) {
 > -- 
-> 2.35.1
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+> of Code Aurora Forum, hosted by The Linux Foundation
 > 
