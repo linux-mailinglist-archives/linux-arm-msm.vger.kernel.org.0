@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 23FEC4EE4B7
+	by mail.lfdr.de (Postfix) with ESMTP id 6FF2C4EE4B8
 	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Apr 2022 01:25:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243066AbiCaXZc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Mar 2022 19:25:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54012 "EHLO
+        id S235180AbiCaXZj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Mar 2022 19:25:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243080AbiCaXZ1 (ORCPT
+        with ESMTP id S243157AbiCaXZc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Mar 2022 19:25:27 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C9254506D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 16:23:21 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id r13so2397708ejd.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 16:23:21 -0700 (PDT)
+        Thu, 31 Mar 2022 19:25:32 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 455ED57161
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 16:23:39 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id lr4so2326624ejb.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 16:23:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=7juVurgjLt3GvUzI9U9c+xp5sahJ/Uk+aOlgugxy0EM=;
-        b=RtJix/BsoQj0ELH2OMFl7dwsORWQLL0UBqSXWJr5KoYLICZZbVFRb/zdCkHwWWysN5
-         3b5vtLz0FaF+JGho0PKGYaYoz18U0Fy53xtgtIwoMITco5McP4KTTF/FQkbhfbr91SR4
-         pxJraAJYBLjynqhNcmQ0n9QTPBRiLktURUGCg=
+        bh=LLB/4ErH2KmNX4icsPtz8gcVd91Ba8xsooM5WCEu/To=;
+        b=nO2IsBJyBf/P3KA7s8QuuGM6xFZSrWZovU/MfhkXj0KUNNuFJ3JGAq+Rs/3rX52qsY
+         7P5N2AMJME5FGhl9OxAp3JLusS1z1TEB+mUKXGDbBLppxe902V/8Zo5Zc7k50FYB1oxq
+         GxXAOnEIWO1JRgUrPmufk1e5oNiZETTlMRBzM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=7juVurgjLt3GvUzI9U9c+xp5sahJ/Uk+aOlgugxy0EM=;
-        b=No4RTuLpw8DIVTtc/mkHKf0GmkcWZPkWyPJ+a7jNaYXigRX5X4TjKNw3rQb85C9IWN
-         5Zyjoeo7rdgon0xPeEJsb1MBHx1ib6ZRL+/P4aJn1B1bEJNIs2MchNQhqfTKFJgfKS5C
-         o3v9E2IcVBsK0ocQy5aIrsMQMvGTI9wQZfmlh5DnqDK57UmpP6BOEWZliAT/bXtSk7Lf
-         OYDxq5gMMTg1oKqqfrdpRnJTVi7eYiedV46rg+chSdceQieaFu8fqftBGSrbH9ElRxJL
-         jP4QZiDug6OpJ/Hy5SVCHCFmOYsrO0jKAfAQQng6s1UJePMR5b3fC3eJVQszvFpGf7uf
-         sTVA==
-X-Gm-Message-State: AOAM531secQEmMiL+LKa72M9/n0k1xeUbQER5NfKUkXIse1ojJ5cs+PL
-        WFE/7C/pNIBfMqHcC1rAh+mhOUqEQfGUx3/v
-X-Google-Smtp-Source: ABdhPJwFQ6l6XVhuZYRgQwcbVIloKKinANS+W9BgUfO26rNMldjOTgcyvck5ny4+rW6uWh6l6BMQUw==
-X-Received: by 2002:a17:906:c104:b0:6e4:a223:1af9 with SMTP id do4-20020a170906c10400b006e4a2231af9mr6744840ejc.441.1648768999902;
-        Thu, 31 Mar 2022 16:23:19 -0700 (PDT)
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com. [209.85.221.52])
-        by smtp.gmail.com with ESMTPSA id v17-20020a170906339100b006e11af84acasm312394eja.128.2022.03.31.16.23.18
+        bh=LLB/4ErH2KmNX4icsPtz8gcVd91Ba8xsooM5WCEu/To=;
+        b=lu8+ZeUs7Rl7DIzupeyXlxnVoAm8eoPkt2BXGksQ+ZNEqkbteFC0v9+/hXJtOqKVzL
+         Nc0np/FvIEUFEANuzDHuGpaXDHAHrbeKSo2TuvINgjLZxlpIJwfxoIADPbwJgNm0UHLy
+         FT3KDOV+Ftp58vuWsGZ6LbS604FG9YzDJzi5qJZgqxKUW1BDa78BbSM86F+3eoq42PCp
+         IC6O3k9qpizCLb7wgx7rCeqhjnkssLQuV0pzjyyWDlbTParNO+fOfefxkzGqGbn3wm8Y
+         8poUr5jkrG7ezcxgGcFm3LZD06ehXGcEPIO2R57ALQ6k69nuiA7J8Nrx6YGzX/rvSYtJ
+         r7fw==
+X-Gm-Message-State: AOAM530YOehY/vSdHDK74Pgge0BvUx6b/i4QF6HPN5GrQXd1BLH0eRo+
+        rlkU5GFdn9N7mXkRlviCk44ciNnH88bCM1Rd
+X-Google-Smtp-Source: ABdhPJynSRRBNVyotMHHrZVgBT6sO7XqR9P9sIQVSvSY6GwWxzUzIkMoXRkUVIk4jZWUDO3IYa75iA==
+X-Received: by 2002:a17:906:478b:b0:6db:8b6e:d5de with SMTP id cw11-20020a170906478b00b006db8b6ed5demr7204743ejc.161.1648769018021;
+        Thu, 31 Mar 2022 16:23:38 -0700 (PDT)
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com. [209.85.128.46])
+        by smtp.gmail.com with ESMTPSA id a18-20020a170906671200b006e05929e66csm323726ejp.20.2022.03.31.16.23.36
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Mar 2022 16:23:19 -0700 (PDT)
-Received: by mail-wr1-f52.google.com with SMTP id c7so1908519wrd.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 16:23:18 -0700 (PDT)
-X-Received: by 2002:adf:e7cd:0:b0:204:ba2:b106 with SMTP id
- e13-20020adfe7cd000000b002040ba2b106mr5551021wrn.679.1648768998053; Thu, 31
- Mar 2022 16:23:18 -0700 (PDT)
+        Thu, 31 Mar 2022 16:23:37 -0700 (PDT)
+Received: by mail-wm1-f46.google.com with SMTP id p189so689812wmp.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 16:23:36 -0700 (PDT)
+X-Received: by 2002:a1c:7518:0:b0:37c:7eb:f255 with SMTP id
+ o24-20020a1c7518000000b0037c07ebf255mr6394707wmc.29.1648769016448; Thu, 31
+ Mar 2022 16:23:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <1648656179-10347-1-git-send-email-quic_sbillaka@quicinc.com> <1648656179-10347-6-git-send-email-quic_sbillaka@quicinc.com>
-In-Reply-To: <1648656179-10347-6-git-send-email-quic_sbillaka@quicinc.com>
+References: <1648656179-10347-1-git-send-email-quic_sbillaka@quicinc.com> <1648656179-10347-7-git-send-email-quic_sbillaka@quicinc.com>
+In-Reply-To: <1648656179-10347-7-git-send-email-quic_sbillaka@quicinc.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 31 Mar 2022 16:23:05 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Wn-XypjRcw-D0VtBHZbuTz=RHiMq6RCHCa=CWmZM42nQ@mail.gmail.com>
-Message-ID: <CAD=FV=Wn-XypjRcw-D0VtBHZbuTz=RHiMq6RCHCa=CWmZM42nQ@mail.gmail.com>
-Subject: Re: [PATCH v6 5/8] drm/msm/dp: prevent multiple votes for dp resources
+Date:   Thu, 31 Mar 2022 16:23:23 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UX9Mg71EKvgNp_wNG5q7_ugBgVPbcFWFX5XBG+cQCi8Q@mail.gmail.com>
+Message-ID: <CAD=FV=UX9Mg71EKvgNp_wNG5q7_ugBgVPbcFWFX5XBG+cQCi8Q@mail.gmail.com>
+Subject: Re: [PATCH v6 6/8] drm/msm/dp: remove unnecessary delay during boot
 To:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>
 Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
@@ -93,26 +93,10 @@ Hi,
 On Wed, Mar 30, 2022 at 9:04 AM Sankeerth Billakanti
 <quic_sbillaka@quicinc.com> wrote:
 >
-> The aux_bus support with the dp_display driver will enable the dp
-> resources during msm_dp_modeset_init. The host_init has to return early
-> if the core is already initialized to prevent putting an additional vote
-> for the dp controller resources.
->
-> Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+> Remove the unnecessary delay in executing the EV_HPD_INIT_SETUP event.
 
-I'm not a huge fan of this but I'll leave it up to Dmitry. In general
-it feels like there should be _a_ place that enables these resources.
-Checks like this make it feel like we just scattershot enabling
-resources in a bunch of random places instead of coming up with the
-design for enabling them in the right place.
-
-In any case, if we do end up landing this patch, it sure feels like it
-needs to move earlier in the patch series, right? This patch shouldn't
-hurt even without the other patches in the series but if you apply the
-earlier patches in the series without this one then you'll have a bug,
-right? That means this needs to come earlier.
+Tell me more and put it in the commit message! Why did it used to be
+necessary and why is it no longer necessary? Inquiring minds want to
+know.
 
 -Doug
