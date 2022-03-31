@@ -2,224 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D42264EE0C2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Mar 2022 20:39:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 08BCF4EE119
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 31 Mar 2022 20:52:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235356AbiCaSlf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Mar 2022 14:41:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44954 "EHLO
+        id S237233AbiCaSyD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 31 Mar 2022 14:54:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232316AbiCaSld (ORCPT
+        with ESMTP id S232565AbiCaSyD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Mar 2022 14:41:33 -0400
-Received: from mail-oa1-x31.google.com (mail-oa1-x31.google.com [IPv6:2001:4860:4864:20::31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E15625FA2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 11:39:45 -0700 (PDT)
-Received: by mail-oa1-x31.google.com with SMTP id 586e51a60fabf-dacc470e03so204538fac.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 11:39:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=e9jkAgjwsi1IJSGTXHmKAcaACDiJsAOI5quMymW0VDc=;
-        b=mMD97fQDv0+2FvvZYf5+fdkYUQipERsAb3C2YcKnLOOEQ/PsJUTDDX5i376ABpBGWC
-         8TpaoyFX9P3UccJmlhrrqlSG+ka+WkQfRZFsFNnxBtpTwOpjT/x3Lzt9HADfuPpu7OS7
-         QU+9iTOz1sDnXxGrb0mS9cmpSLomtfZalfKPVbntBxVwZkTTnhqBYisXjdlU7goWLDkM
-         laUKXVA0VLRefOHvgcNMqbM2Shr1AH7O2d7elvTBpQ9ZmSUzDNCbzRS3cbBLKLE+kBsK
-         I6c/dZZlvp6SopotuACCLG3keVMeHJOquxTiNQjJRKkGlYfxw8wYJcbmi+rjvkUxeo7i
-         AXJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=e9jkAgjwsi1IJSGTXHmKAcaACDiJsAOI5quMymW0VDc=;
-        b=LnbW7mktyKZts9fGIeI8cVHttp5tIC0kVcEYUB4/ylxvCTi8Qy4Gk4rn2VR6tBHHRm
-         4WnTWdJojJWxxjN+maM8FvWHzzCnytwvvL3z4aNoaqh/E2awYvGNZshvAUnlTr4mkYsc
-         WO5RgzzVrjl08qE/4sJrKeYm8uee8er/1k0J6K5Uwz3plrxIGOgtonuQWVdXx5dQHP4n
-         Gr2iM512z30JvJGCMcvmhTBcAMk4LvAPScPP+avNLZDuTAdu7vtYffXGzXJD8W84oDvV
-         S4vgvnc6lGCmxibyGC3PRR3Lj17bJLpJylmDb3AGKKuX16I2f8/2F7JuZuL6BLyOFTaf
-         DN3Q==
-X-Gm-Message-State: AOAM5330w3JsA4nVPthJvxT+gwBSv6Qja7Z8Qpy67KpuCobnSq+0Dt7t
-        /eB0n/qppkchPi0Wgthm0ySWcA==
-X-Google-Smtp-Source: ABdhPJw/a/7CrFLyGEY0Z/DS0/Ws4lqIc4WJ3cyuGTmJnxDrq9I4ThBrzgRb24j8nj+NdhQfCvPQBw==
-X-Received: by 2002:a05:6870:d0ce:b0:de:79e2:7ec7 with SMTP id k14-20020a056870d0ce00b000de79e27ec7mr3185850oaa.245.1648751985239;
-        Thu, 31 Mar 2022 11:39:45 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id e7-20020a9d2a87000000b005af548abe73sm175078otb.4.2022.03.31.11.39.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Mar 2022 11:39:44 -0700 (PDT)
-Date:   Thu, 31 Mar 2022 11:42:14 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
-Cc:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
-        robh+dt@kernel.org, quic_asutoshd@quicinc.com,
-        quic_rampraka@quicinc.com, quic_pragalla@quicinc.com,
-        quic_sartgarg@quicinc.com, quic_nitirawa@quicinc.com,
-        quic_sayalil@quicinc.com, agross@kernel.org,
-        krzysztof.kozlowski@canonical.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V3] mmc: sdhci-msm: Reset GCC_SDCC_BCR register for SDHC
-Message-ID: <YkX2BrTjgexrIHtR@ripper>
-References: <1648710182-31899-1-git-send-email-quic_c_sbhanu@quicinc.com>
+        Thu, 31 Mar 2022 14:54:03 -0400
+Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e3e3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6F262359CE;
+        Thu, 31 Mar 2022 11:52:15 -0700 (PDT)
+Received: from [IPV6:2a00:5f00:102:0:10b3:10ff:fe5d:4ec1] (unknown [IPv6:2a00:5f00:102:0:10b3:10ff:fe5d:4ec1])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: dmitry.osipenko)
+        by bhuna.collabora.co.uk (Postfix) with ESMTPSA id 4B8CC1F4719E;
+        Thu, 31 Mar 2022 19:52:13 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1648752734;
+        bh=1nzjRJKSDNw5frt2ht+YhItbTXwcHk/uCRNjL8F43hM=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=PqfmC6xL7dv8jE4iIS4Al2w5q42FhGZYYGgz7VD/YBKwg+b90CS1+Z7jQpa+nsiTX
+         AEl9CRFoUyPBL49cyzB9UpOW6jRzjwWdpTUeF92Ypnskd/v7zqpnvwjJBfzkfEvuXe
+         ljto5r88MAbvRuAExad+mwbXei96hufSR9XSDCa+zobLc/MZz7quIpLEpQI/lFFFIn
+         YxUDTaBBh4lRTCQv8YE/a635tmtppQ37jE9gfxS7WJtNLINLVXBYiMGAc9AotE6HlT
+         TnrSnr7CPvTkBE1mnYMk63LewQB3O+2N0CPj7jYOcDrPUV8xc/3gKXEdIcJtfGqmLw
+         heZMXpP/TGQYA==
+Message-ID: <ad97096f-cc90-4f20-0f73-f33e9b275f1a@collabora.com>
+Date:   Thu, 31 Mar 2022 21:52:11 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1648710182-31899-1-git-send-email-quic_c_sbhanu@quicinc.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2 10/10] drm/msm: Add a way for userspace to allocate GPU
+ iova
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Emma Anholt <emma@anholt.net>,
+        Dan Carpenter <dan.carpenter@oracle.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20220330204804.660819-1-robdclark@gmail.com>
+ <20220330204804.660819-11-robdclark@gmail.com>
+From:   Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <20220330204804.660819-11-robdclark@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 31 Mar 00:03 PDT 2022, Shaik Sajida Bhanu wrote:
-
-> Reset GCC_SDCC_BCR register before every fresh initilazation. This will
-> reset whole SDHC-msm controller, clears the previous power control
-> states and avoids, software reset timeout issues as below.
-> 
-> [ 5.458061][ T262] mmc1: Reset 0x1 never completed.
-> [ 5.462454][ T262] mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
-> [ 5.469065][ T262] mmc1: sdhci: Sys addr: 0x00000000 | Version: 0x00007202
-> [ 5.475688][ T262] mmc1: sdhci: Blk size: 0x00000000 | Blk cnt: 0x00000000
-> [ 5.482315][ T262] mmc1: sdhci: Argument: 0x00000000 | Trn mode: 0x00000000
-> [ 5.488927][ T262] mmc1: sdhci: Present: 0x01f800f0 | Host ctl: 0x00000000
-> [ 5.495539][ T262] mmc1: sdhci: Power: 0x00000000 | Blk gap: 0x00000000
-> [ 5.502162][ T262] mmc1: sdhci: Wake-up: 0x00000000 | Clock: 0x00000003
-> [ 5.508768][ T262] mmc1: sdhci: Timeout: 0x00000000 | Int stat: 0x00000000
-> [ 5.515381][ T262] mmc1: sdhci: Int enab: 0x00000000 | Sig enab: 0x00000000
-> [ 5.521996][ T262] mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
-> [ 5.528607][ T262] mmc1: sdhci: Caps: 0x362dc8b2 | Caps_1: 0x0000808f
-> [ 5.535227][ T262] mmc1: sdhci: Cmd: 0x00000000 | Max curr: 0x00000000
-> [ 5.541841][ T262] mmc1: sdhci: Resp[0]: 0x00000000 | Resp[1]: 0x00000000
-> [ 5.548454][ T262] mmc1: sdhci: Resp[2]: 0x00000000 | Resp[3]: 0x00000000
-> [ 5.555079][ T262] mmc1: sdhci: Host ctl2: 0x00000000
-> [ 5.559651][ T262] mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP-----------
-> [ 5.566621][ T262] mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg: 0x6000642c | DLL cfg2: 0x0020a000
-> [ 5.575465][ T262] mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl: 0x00010800 | DDR cfg: 0x80040873
-> [ 5.584658][ T262] mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88218a8 Vndr func3: 0x02626040
-> 
-> Fixes: 0eb0d9f4de34 ("mmc: sdhci-msm: Initial support for Qualcomm chipsets")
-> Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
-> ---
-> 
-> Changes since V2:
-> 	- Dropped new line after fixes tag as suggested by Bjorn
-> 	  Andersson.
-> 	- Passed device structure instead of passing platform_device
-> 	  structure as a argument for sdhci_msm_gcc_reset() as suggested
-> 	  by Bjorn Andersson.
-> 	- Replaced dev_err() with dev_err_probe() as suggested by Bjorn
-> 	  Andersson.
-
-Thanks, looks much better. Still some things I would like to see
-improved below.
-
-> Changes since V1:
-> 	- Added fixes tag as suggested by Ulf Hansson.
-> 	- Replaced devm_reset_control_get() with
-> 	  devm_reset_control_get_optional_exclusive() as suggested by
-> 	  Ulf Hansson.
-> ---
->  drivers/mmc/host/sdhci-msm.c | 39 +++++++++++++++++++++++++++++++++++++++
->  1 file changed, 39 insertions(+)
-> 
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 50c71e0..e15e789 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -17,6 +17,7 @@
->  #include <linux/regulator/consumer.h>
->  #include <linux/interconnect.h>
->  #include <linux/pinctrl/consumer.h>
-> +#include <linux/reset.h>
->  
->  #include "sdhci-pltfm.h"
->  #include "cqhci.h"
-> @@ -284,6 +285,7 @@ struct sdhci_msm_host {
->  	bool uses_tassadar_dll;
->  	u32 dll_config;
->  	u32 ddr_config;
-> +	struct reset_control *core_reset;
->  	bool vqmmc_enabled;
->  };
->  
-> @@ -2482,6 +2484,39 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
->  	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
->  }
->  
-> +static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
+...
+> +/*
+> + * Get the requested iova but don't pin it.  Fails if the requested iova is
+> + * not available.  Doesn't need a put because iovas are currently valid for
+> + * the life of the object.
+> + *
+> + * Setting an iova of zero will clear the vma.
+> + */
+> +int msm_gem_set_iova(struct drm_gem_object *obj,
+> +		     struct msm_gem_address_space *aspace, uint64_t iova)
 > +{
-> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
 > +	int ret = 0;
 
-First use of this variable is an assignment, so no need to initialize it
-here.
+nit: No need to initialize the ret
 
-> +
-> +	msm_host->core_reset = devm_reset_control_get_optional_exclusive(dev, "core_reset");
+> +	msm_gem_lock(obj);
+> +	if (!iova) {
+> +		ret = clear_iova(obj, aspace);
+> +	} else {
+> +		struct msm_gem_vma *vma;
+> +		vma = get_vma_locked(obj, aspace, iova, iova + obj->size);
+> +		if (IS_ERR(vma)) {
+> +			ret = PTR_ERR(vma);
+> +		} else if (GEM_WARN_ON(vma->iova != iova)) {
+> +			clear_iova(obj, aspace);
+> +			ret = -ENOSPC;
 
-reset-names will only be used to identify resets and hence there's no
-reason to include "_reset" in the identifier.
+The (vma->iova != iova) means that vma is already set, but to a
+different address. Is -ENOSPC really appropriate here? -EBUSY or -EINVAL
+looks more natural to me.
 
-If this is the only reset for the controller, there's actually no reason
-for identifying it, you can omit reset-names from the binding and just
-pass NULL here (to get the first resets = <>).
-
-> +	if (IS_ERR(msm_host->core_reset))
-> +		return dev_err_probe(dev, PTR_ERR(msm_host->core_reset),
-> +				"unable to acquire core_reset\n");
+> +		}
+> +	}
+> +	msm_gem_unlock(obj);
 > +
-> +	if (!msm_host->core_reset)
-> +		return 0;
-> +
-> +	ret = reset_control_assert(msm_host->core_reset);
-> +	if (ret)
-> +		return dev_err_probe(dev, ret, "core_reset assert failed\n");
-> +
-> +	/*
-> +	 * The hardware requirement for delay between assert/deassert
-> +	 * is at least 3-4 sleep clock (32.7KHz) cycles, which comes to
-> +	 * ~125us (4/32768). To be on the safe side add 200us delay.
-> +	 */
-> +	usleep_range(200, 210);
-> +
-> +	ret = reset_control_deassert(msm_host->core_reset);
-> +	if (ret)
-> +		return dev_err_probe(dev, ret, "core_reset deassert failed\n");
-> +
-> +	usleep_range(200, 210);
-> +
-
-sdhci_msm_gcc_reset() is only called once during probe(), so there's no
-reason to carry the reset_control pointer in struct sdhci_msm_host. Make
-it a local variable and use reset_control_get_optional_exclusive() and
-reset_control_put() the reset here before returning.
-
-Regards,
-Bjorn
-
-> +	return 0;
+> +	return ret;
 > +}
->  
->  static int sdhci_msm_probe(struct platform_device *pdev)
->  {
-> @@ -2529,6 +2564,10 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->  
->  	msm_host->saved_tuning_phase = INVALID_TUNING_PHASE;
->  
-> +	ret = sdhci_msm_gcc_reset(&pdev->dev, host);
-> +	if (ret)
-> +		goto pltfm_free;
 > +
->  	/* Setup SDCC bus voter clock. */
->  	msm_host->bus_clk = devm_clk_get(&pdev->dev, "bus");
->  	if (!IS_ERR(msm_host->bus_clk)) {
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-> of Code Aurora Forum, hosted by The Linux Foundation
-> 
+>  /*
+>   * Unpin a iova by updating the reference counts. The memory isn't actually
+>   * purged until something else (shrinker, mm_notifier, destroy, etc) decides
+> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+> index 38d66e1248b1..efa2e5c19f1e 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.h
+> +++ b/drivers/gpu/drm/msm/msm_gem.h
+> @@ -38,6 +38,12 @@ struct msm_gem_address_space {
+>  
+>  	/* @faults: the number of GPU hangs associated with this address space */
+>  	int faults;
+> +
+> +	/** @va_start: lowest possible address to allocate */
+> +	uint64_t va_start;
+> +
+> +	/** @va_size: the size of the address space (in bytes) */
+> +	uint64_t va_size;
+>  };
+>  
+>  struct msm_gem_address_space *
+> @@ -144,6 +150,8 @@ struct msm_gem_vma *msm_gem_get_vma_locked(struct drm_gem_object *obj,
+>  					   struct msm_gem_address_space *aspace);
+>  int msm_gem_get_iova(struct drm_gem_object *obj,
+>  		struct msm_gem_address_space *aspace, uint64_t *iova);
+> +int msm_gem_set_iova(struct drm_gem_object *obj,
+> +		struct msm_gem_address_space *aspace, uint64_t iova);
+>  int msm_gem_get_and_pin_iova_range(struct drm_gem_object *obj,
+>  		struct msm_gem_address_space *aspace, uint64_t *iova,
+>  		u64 range_start, u64 range_end);
+nit: There is an odd mix of uint64_t and u64 (and alike) in the MSM code
+:) The uint64_t variant shouldn't be used by kernel code in general and
+checkpatch should want about it.
