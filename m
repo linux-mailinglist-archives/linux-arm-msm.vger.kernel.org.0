@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C2E44EF75C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Apr 2022 18:03:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 777D74EF75A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Apr 2022 18:03:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245360AbiDAP4l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Apr 2022 11:56:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36044 "EHLO
+        id S244518AbiDAP4i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Apr 2022 11:56:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350029AbiDAPQ7 (ORCPT
+        with ESMTP id S1344057AbiDAPRL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Apr 2022 11:16:59 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B5295749C
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Apr 2022 07:58:29 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id p12-20020a05600c430c00b0038cbdf52227so1634122wme.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Apr 2022 07:58:29 -0700 (PDT)
+        Fri, 1 Apr 2022 11:17:11 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73FC25AA60
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Apr 2022 07:58:30 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id bi13-20020a05600c3d8d00b0038c2c33d8f3so3665594wmb.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Apr 2022 07:58:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yqbLlrGI5hQozEiXWqvYHfniIQNP30Oy/0VrdHfx3iM=;
-        b=V6jnvv6r9YfrqJxCPQR1XE4lXQoRmZhPDn4dIIIzVBExn/Frnd7K88FyQ3Azz/4YCe
-         pb5ofMYAupzvIsopvutp/5h8LqWvqPHviJGWrqON/KjZwQmjwY58XoYOLeIxJMd1daXd
-         igXzQKXqdMtUL5UCNndmU7iBMC2SnoJdqy//ej5rcFNMasoLMR598HrXFn3iMJVjb5fU
-         +76H9dZ62+a6XeB2CAVqEmKGjMiFbpgFyhg9dzu3FM5ETYFde6rBqPxj5/Z5TCFleIqI
-         xeHbP/8+XCwa/zzfdo2rc4NsHQw62BC0VFBMESrd65qg1ichA7hFg7AnStI/h0dbf8El
-         Lg/w==
+        bh=K8iJL2q3As3zzwdz8529fEEZQXinzEbA6iVffO5JCw4=;
+        b=gAw9uKXxBpP0+l/FsExGrFZKGlfbBOnEzDF2KtQgPGeonCt5ot3PcKIvm+oUPMtT8n
+         y5ZqXPaqAarqpi8xfYYLJvu5tzPW9wT70R3am9D7xFITmMFwt4vsYIVqX/n8dhCnsH85
+         Ai6a5VeuNV4ZTtZBlcot20j4htC0DD/R4/mPB19BrA5i1HyplNnU9mSSOc0QsDhZ44x4
+         aZfaQ07vN4E/mgE4B1qqbokUKXCPJpaI0z7l5Y7d4Z9vF2GgZScHNyfiIVXhDS4W1IOu
+         mowELakVMDfvVYVilPSjq6nwCjV6Zv1fbAqINaNJAy8z4f/Gw2HMoMgFBEYqlSiY/QWc
+         Go5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yqbLlrGI5hQozEiXWqvYHfniIQNP30Oy/0VrdHfx3iM=;
-        b=Dcbd9pPkLR9C3NtIGpeWmwsyUc1ZTt7ks1sCd76ytTwoHHA5pvsy+GX8S/in6Zbimy
-         AOVzyDuzB9DB1INgsdKzgDkVKhh68LsqLVxjEGCBbdXTEceykoWo7w7jo/LzX4Se8ix/
-         u8f/yb4ajeM3qF7b3O0qWX4YlTfko2wtUQJOV/Acl+NvNLDHmxTjoN+bnnlnBGdl2JLX
-         ocP55fSY+KQ3ZjbpvHM6t/TLCAaPVkEdJ/fSTAuN6Eer0Ct/+Ss8+QRThVU93siy831w
-         c5Mf8qvumLXjJnLk41/DsUie2ZP6KVrmDmygJ6uNF9sxCS6IdOhVX1MsAfhLSW0e/JNS
-         RN9w==
-X-Gm-Message-State: AOAM530REVdd8aekxubluWJvbNyiw6lc9ocP2YhaS+61FHc7hiRyEg/T
-        aKzhnrVLOTVzK0O3s0EW3XgZTQ==
-X-Google-Smtp-Source: ABdhPJxoCjSfUmJbbPFgP2qiKOG3R/tDXS/3ENLP1/9vqNzDjL9anir03X+Nj40T0FEdFVBXe1N2dA==
-X-Received: by 2002:a1c:f418:0:b0:38e:579a:da73 with SMTP id z24-20020a1cf418000000b0038e579ada73mr2955585wma.197.1648825107790;
-        Fri, 01 Apr 2022 07:58:27 -0700 (PDT)
+        bh=K8iJL2q3As3zzwdz8529fEEZQXinzEbA6iVffO5JCw4=;
+        b=FFfVFRoiezEhErvwbghAe8faYnmChp8IM9r9z/Ey+0PXjka+mxhkkYfXt0itudQjXc
+         PhauZa11sgQ+ZqFDMNI/MlUzSvTtlaG7W3kcX5ohXsoHNYYNgc2JrQve3vAEl1y0l8dJ
+         odRtZNzJ1a1hKSNCOAcyziwgNiwEl/nLtEX8CF8EPhCaRODLiSLM0rNKpu3yLcGQA10s
+         IVD9buXqiVdpiCB4/nPOJ421Cf0q3/LpWoZChxOzo8vwBOWSA2J0iUxfNIx6gmP1lfDC
+         JX6cHCZYudhYoVyIsu3naC/0zRl8qSUojrF608FhNJiwzWi3QTApYAEWnZBj7Dlb1TFj
+         5Dpg==
+X-Gm-Message-State: AOAM533c83SRFFgoKTZbUv7x9BquUa20/3sjkaDptVp9dCEj5yCrNPXY
+        ZtvVqM6Yh+VsmUVrW+HV/lmnHw==
+X-Google-Smtp-Source: ABdhPJzRdJIaIzMFeeJvk97VMkntf14Z4PyRXAxrDx3BRlFhHFG2iJWpnqp97DFOyl9gYTo2sakUJA==
+X-Received: by 2002:a1c:7308:0:b0:38c:7b63:e385 with SMTP id d8-20020a1c7308000000b0038c7b63e385mr9094276wmb.116.1648825108956;
+        Fri, 01 Apr 2022 07:58:28 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id j8-20020a05600c404800b0038cc9c7670bsm8530722wmm.3.2022.04.01.07.58.26
+        by smtp.gmail.com with ESMTPSA id j8-20020a05600c404800b0038cc9c7670bsm8530722wmm.3.2022.04.01.07.58.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Apr 2022 07:58:27 -0700 (PDT)
+        Fri, 01 Apr 2022 07:58:28 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -67,9 +67,9 @@ To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-scsi@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [RFC PATCH 2/4] dt-bindings: ufs: common: allow OPP table
-Date:   Fri,  1 Apr 2022 16:58:18 +0200
-Message-Id: <20220401145820.1003826-3-krzysztof.kozlowski@linaro.org>
+Subject: [RFC PATCH 3/4] arm64: dts: qcom: sdm845: control RPMHPD performance states with UFS
+Date:   Fri,  1 Apr 2022 16:58:19 +0200
+Message-Id: <20220401145820.1003826-4-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220401145820.1003826-1-krzysztof.kozlowski@linaro.org>
 References: <20220401145820.1003826-1-krzysztof.kozlowski@linaro.org>
@@ -85,38 +85,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Except scaling UFS and bus clocks, it's necessary to scale also the
-voltages of regulators or power domain performance state levels.  Adding
-Operating Performance Points table allows to adjust power domain
-performance state, depending on the UFS clock speed.
+UFS, when scaling gears, should choose appropriate performance state of
+RPMHPD power domain controller.  Since UFS belongs to UFS_PHY_GDSC power
+domain, add necessary parent power domain to GCC.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- Documentation/devicetree/bindings/ufs/ufs-common.yaml | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/ufs/ufs-common.yaml b/Documentation/devicetree/bindings/ufs/ufs-common.yaml
-index 47a4e9e1a775..ce767bfbf05a 100644
---- a/Documentation/devicetree/bindings/ufs/ufs-common.yaml
-+++ b/Documentation/devicetree/bindings/ufs/ufs-common.yaml
-@@ -26,6 +26,9 @@ properties:
-       array is "0" then it is assumed that the frequency is set by the parent
-       clock or a fixed rate clock source.
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index b31bf62e8680..c999b41c2605 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -1078,6 +1078,7 @@ gcc: clock-controller@100000 {
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
+ 			#power-domain-cells = <1>;
++			power-domains = <&rpmhpd SDM845_CX>;
+ 		};
  
-+  operating-points-v2: true
-+  opp-table: true
+ 		qfprom@784000 {
+@@ -2336,8 +2337,22 @@ ufs_mem_hc: ufshc@1d84000 {
+ 				<0 0>,
+ 				<0 0>,
+ 				<0 300000000>;
+-
++			operating-points-v2 = <&ufs_opp_table>;
+ 			status = "disabled";
 +
-   interrupts:
-     maxItems: 1
++			ufs_opp_table: opp-table {
++				compatible = "operating-points-v2";
++
++				opp-50000000 {
++					opp-hz = /bits/ 64 <50000000>;
++					required-opps = <&rpmhpd_opp_svs>;
++				};
++
++				opp-200000000 {
++					opp-hz = /bits/ 64 <200000000>;
++					required-opps = <&rpmhpd_opp_nom>;
++				};
++			};
+ 		};
  
-@@ -75,6 +78,7 @@ properties:
- 
- dependencies:
-   freq-table-hz: [ 'clocks' ]
-+  operating-points-v2: [ 'freq-table-hz' ]
- 
- required:
-   - interrupts
+ 		ufs_mem_phy: phy@1d87000 {
 -- 
 2.32.0
 
