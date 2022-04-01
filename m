@@ -2,73 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89E184EFA1C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Apr 2022 20:48:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 552604EFA38
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Apr 2022 20:58:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348721AbiDASuH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Apr 2022 14:50:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35284 "EHLO
+        id S1346950AbiDATAJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Apr 2022 15:00:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235174AbiDASuG (ORCPT
+        with ESMTP id S241935AbiDATAJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Apr 2022 14:50:06 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCEDC220B30
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Apr 2022 11:48:16 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id t21so3666011oie.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Apr 2022 11:48:16 -0700 (PDT)
+        Fri, 1 Apr 2022 15:00:09 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DF74212CD4
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Apr 2022 11:58:17 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id t25so6554512lfg.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Apr 2022 11:58:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=D9fxps+Ewc6UANsIutZd0wuOMYK+iuzQT7EbeWRMeUQ=;
-        b=X0Y+wDvLjYzdPycS2xcK3xyquS/nSm8FFz4SNtheTeLLhWUQbT4tpNhTzwHlQA1Ml1
-         kaDwoXUElWpe1nM4Dv4ZTCscEz/t9WFLfqQWwyV2um+pxmIqUgEIEv8oY+osc6jAjqgc
-         0HcnQRw5UDzHwiPbArFgO/cMHH6+aMrT1IGpQ=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=C7Pg5Bb43dO+6XkCWLTdXQMkcgskXoxnKxWFqcza6uM=;
+        b=cBBAJIzoFhf8PsPu/TWSzpMe0SXxc2svn7fVQHdDZ0+cFQbF9/PHNgYCbC/+kNk6m2
+         zKQSuLmYVn5iUsDaJJOgI0gbPcJ9hfSvSBqQT4VFeVX907cEwsTSYtlbSogp/uEFUQlm
+         wWKor7gd/VkpzkT8+oojmadWrne26pTAHoYQTno2nNoO/s5nGqTPDs7su9O5lGd5y2Ad
+         z2sS9saYqkfNNrawu0rVzw6QQh89Zc11PUZ93eagZ3ZMg8Wevvata/uGgcRGWa7qeWaj
+         KACBqcrvnQybUBgKz+sRAwPzrtKnRw8YBx2oGD+uUYuutCngTxnHQLYvaSP8d3zzXxOB
+         9C6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=D9fxps+Ewc6UANsIutZd0wuOMYK+iuzQT7EbeWRMeUQ=;
-        b=ljvO4vQlgIrKpS0XiKdCrOiGpmvqjD2TaMyb2XmO02e+6N67DGnmyoUoSugujQT1ZT
-         wvQE8iW6anYgVS99m1OqayLvPYhDnxkfK0bFJ1TPYyA8AYN4EHLfCcZRn8iZyhK5M6rC
-         1BnclKKiuLqj1xmtddkUfWh7my5llhoPN9CCpa4VMl/VZ3iMWbSu1WL/f4vwfe9shouM
-         bnOkbi3n6OxetNw/y4SzWYzBR8/17tRRfKWmt1QwAQzWCdJRl0hpdnWLpo8rLLqacaAI
-         tqlN8F93Pti6AyjP8MoLFhWN0qCyZnmql2XIwzuRKS2I9bUBMgUz0CGE0MJoAB9ImAuy
-         scwQ==
-X-Gm-Message-State: AOAM531OfbgrK2IqYQ0gJTVy9wdQKzHOEbvn6i25d+OUOttSD/qMZ0ul
-        A9dFavuSP/sWy9J5MYebZKE7F7pN2Ll45HpwgUWs07pPtp0=
-X-Google-Smtp-Source: ABdhPJz1TQRc5Yb6vyKTkezkbj85ZwfeXqoZaXKRnSn4CcsOsS2zY8ZrRcoyLi5/lOZh2VukBMnldkdiQH4XSVzbjFI=
-X-Received: by 2002:aca:a9c8:0:b0:2da:45b6:b796 with SMTP id
- s191-20020acaa9c8000000b002da45b6b796mr5109437oie.193.1648838896186; Fri, 01
- Apr 2022 11:48:16 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 1 Apr 2022 13:48:15 -0500
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=C7Pg5Bb43dO+6XkCWLTdXQMkcgskXoxnKxWFqcza6uM=;
+        b=0X4m34M47445kRZdmtrOXanAzfbclVrFEbTCKvtiwjleeh1VmPM0mvNMHhfsPUfIWP
+         56pvDhFtCNudi115Yoh8C2k54/KXJKIWEN7VMmY5+URim9VSNZBAvjqdewfqUVL2o8/q
+         Kr2Ya2VOky5wJ2QJgUIXIgR7ihbJTadpbEXWz/q8lOCIRMSvvU6xZfGMKW8KPtn6BXE8
+         9wW7toJd2GfTqIcBMNv4UwLccr83i7yDj5WdrVJtDvieRWi/TyAO2oVdP6pEh7ZTu4eO
+         5NB3F2iHG0mAU8Fu5IKJR0LUgc7oFkqkiklXccM6WVCHKosDbRQilOp/Y/nSMV338qeG
+         6j5w==
+X-Gm-Message-State: AOAM530f9up0tV7jVZmeUKGhJzID1a2ydij4xAxTa4c9nXlS1cyPrLEK
+        eqftAFJA6TKeQAB8Xe7FBm6kcWMr9oy7vg==
+X-Google-Smtp-Source: ABdhPJxEpuIFUUb3g1NU3KkMkxpmoiKzIzRiNOFJ7xSv0tlpzIh67cEPhoXxGkiWMPf6G8+z8/95Hg==
+X-Received: by 2002:a05:6512:6ce:b0:44a:6f6d:1327 with SMTP id u14-20020a05651206ce00b0044a6f6d1327mr14912422lff.204.1648839495768;
+        Fri, 01 Apr 2022 11:58:15 -0700 (PDT)
+Received: from umbar.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id p21-20020a056512139500b00447c9b87945sm318373lfa.172.2022.04.01.11.58.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Apr 2022 11:58:15 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: sm8250: don't enable rx/tx macro by default
+Date:   Fri,  1 Apr 2022 21:58:14 +0300
+Message-Id: <20220401185814.519653-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-In-Reply-To: <3b4dcf83-bb13-2159-d7c1-f0aadfc53566@quicinc.com>
-References: <1648209491-30165-1-git-send-email-quic_c_skakit@quicinc.com>
- <1648209491-30165-8-git-send-email-quic_c_skakit@quicinc.com>
- <CAE-0n511eQTnJHqt0B=uiiSjigy-RHZ52YuYz4kfEpX1x6CMfw@mail.gmail.com>
- <094d8faa-c42b-be1b-cf92-04232d618a3e@quicinc.com> <CAE-0n52CVuc_kQbpwEnHEEODS8jPt52v6P=gAdVxqenPu4ehkw@mail.gmail.com>
- <3b4dcf83-bb13-2159-d7c1-f0aadfc53566@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Fri, 1 Apr 2022 13:48:15 -0500
-Message-ID: <CAE-0n5282FJ01We_mRfN69mYJk4NKwjAZvnTG9RVOyt__6xVfg@mail.gmail.com>
-Subject: Re: [PATCH V8 7/7] arm64: dts: qcom: sc7280: Add pm8008 support for sc7280-idp
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Satya Priya Kakitapalli <quic_c_skakit@quicinc.com>
-Cc:     Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Das Srinagesh <gurus@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_collinsd@quicinc.com,
-        quic_subbaram@quicinc.com, quic_jprakash@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,15 +69,99 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Satya Priya Kakitapalli (Temp) (2022-04-01 03:48:46)
->
-> On 4/1/2022 2:48 AM, Stephen Boyd wrote:
->
->
-> >         &pm8008_bus: &i2c1 {
->
->
-> but this still needs to be "pm8008_bus: &i2c {" right.. no '&' before
-> pm8008_bus.
+Enabling rxmacro and txmacro nodes by defaults makes Qualcomm RB5 to
+crash and reboot while probing audio devices. Disable these device tree
+nodes by default and enabled them only when necessary (for the
+SM8250-MTP board).
 
-Correct. Thanks for spotting my typo.
+Fixes: 24f52ef0c4bf ("arm64: dts: qcom: sm8250: Add nodes for tx and rx macros with soundwire masters")
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8250-mtp.dts | 12 ++++++++++++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi    |  4 ++++
+ 2 files changed, 16 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+index fb99cc2827c7..7ab3627cc347 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/sm8250-mtp.dts
+@@ -622,6 +622,10 @@ &qupv3_id_2 {
+ 	status = "okay";
+ };
+ 
++&rxmacro {
++	status = "okay";
++};
++
+ &slpi {
+ 	status = "okay";
+ 	firmware-name = "qcom/sm8250/slpi.mbn";
+@@ -773,6 +777,8 @@ right_spkr: wsa8810-left@0,4{
+ };
+ 
+ &swr1 {
++	status = "okay";
++
+ 	wcd_rx: wcd9380-rx@0,4 {
+ 		compatible = "sdw20217010d00";
+ 		reg = <0 4>;
+@@ -781,6 +787,8 @@ wcd_rx: wcd9380-rx@0,4 {
+ };
+ 
+ &swr2 {
++	status = "okay";
++
+ 	wcd_tx: wcd9380-tx@0,3 {
+ 		compatible = "sdw20217010d00";
+ 		reg = <0 3>;
+@@ -819,6 +827,10 @@ config {
+ 	};
+ };
+ 
++&txmacro {
++	status = "okay";
++};
++
+ &uart12 {
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 5617a46e5ccd..b433b27b2311 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -2150,6 +2150,7 @@ rxmacro: rxmacro@3200000 {
+ 			pinctrl-0 = <&rx_swr_active>;
+ 			compatible = "qcom,sm8250-lpass-rx-macro";
+ 			reg = <0 0x3200000 0 0x1000>;
++			status = "disabled";
+ 
+ 			clocks = <&q6afecc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+ 				<&q6afecc LPASS_CLK_ID_TX_CORE_NPL_MCLK  LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+@@ -2168,6 +2169,7 @@ rxmacro: rxmacro@3200000 {
+ 		swr1: soundwire-controller@3210000 {
+ 			reg = <0 0x3210000 0 0x2000>;
+ 			compatible = "qcom,soundwire-v1.5.1";
++			status = "disabled";
+ 			interrupts = <GIC_SPI 298 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&rxmacro>;
+ 			clock-names = "iface";
+@@ -2195,6 +2197,7 @@ txmacro: txmacro@3220000 {
+ 			pinctrl-0 = <&tx_swr_active>;
+ 			compatible = "qcom,sm8250-lpass-tx-macro";
+ 			reg = <0 0x3220000 0 0x1000>;
++			status = "disabled";
+ 
+ 			clocks = <&q6afecc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+ 				 <&q6afecc LPASS_CLK_ID_TX_CORE_NPL_MCLK  LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+@@ -2218,6 +2221,7 @@ swr2: soundwire-controller@3230000 {
+ 			compatible = "qcom,soundwire-v1.5.1";
+ 			interrupts-extended = <&intc GIC_SPI 297 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "core";
++			status = "disabled";
+ 
+ 			clocks = <&txmacro>;
+ 			clock-names = "iface";
+-- 
+2.30.2
+
