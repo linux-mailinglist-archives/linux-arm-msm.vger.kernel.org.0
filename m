@@ -2,71 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BDF564EFAAC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Apr 2022 22:00:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A3BC4EFABE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Apr 2022 22:10:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346609AbiDAUCV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Apr 2022 16:02:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41050 "EHLO
+        id S1351459AbiDAUMd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Apr 2022 16:12:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344680AbiDAUCV (ORCPT
+        with ESMTP id S236230AbiDAUMd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Apr 2022 16:02:21 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ECB62AEC;
-        Fri,  1 Apr 2022 13:00:31 -0700 (PDT)
+        Fri, 1 Apr 2022 16:12:33 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 384EE21405F
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Apr 2022 13:10:42 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id pv16so8235944ejb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Apr 2022 13:10:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1648843231; x=1680379231;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=AHjGeo02Ca2ePy2WHzeNWo/c2lQyqMCENzgeyKbJpAk=;
-  b=wx5w0vmtdXX3+mQue0f+gmR37y01cxCbjf7V8A0PJDiFh3W1pXLWd+UI
-   Nupsd4zoJGEqjYiQw6CVYPDTKvqitKURyvML5AuczjjFIJXpLK9nHAL/L
-   q2jVjTnXrGc8zUAOTbfxjM3WL2BSemLJxLG80pOKVLu8YyAgWy9G0MmZN
-   o=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 01 Apr 2022 13:00:31 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Apr 2022 13:00:30 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Fri, 1 Apr 2022 13:00:29 -0700
-Received: from [10.110.60.126] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 1 Apr 2022
- 13:00:28 -0700
-Message-ID: <ccd8e82d-6121-3d2a-6a63-4fc7c0896881@quicinc.com>
-Date:   Fri, 1 Apr 2022 13:00:27 -0700
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8wZcoxvb7+ZLDwTeQD+hjkDPjIR0SXEiE7FVLTNvQVs=;
+        b=kwcW1jSZpHJRPWS/q+/yKLIdOKu51YsIhJPEvx1hTh5CdP/24vFnQsoDX8t8I/EA18
+         0K+y6UsHPLzZX/3YtNRDuOXZM5YVeuOMU1lQkQZSYnrPxjSNtLxMn8S13PELEM4xtziw
+         jvzgO03Cz/57QPZ2s8+QnbcP64x6KwF++6xaYQXLcPdaJtC5Z6e6N/l5gJyU8qWgHbjM
+         TqSIZwRCiYcMSgoy8lxIhrKZOvadUtXMKKIEsmk70ndyNFTi1UgAOlWMgosjFCup3GeM
+         po2tjV0YBicGElRbmBLGIcqe2jwx7Xpf1TKDoop5tKZqXow8ff8TC5OprbiL6NUhBcnB
+         EYgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8wZcoxvb7+ZLDwTeQD+hjkDPjIR0SXEiE7FVLTNvQVs=;
+        b=BJStyobJwTybfISFk5tN8ckmmg9yMsIA9sSLJ6kZq6cH/G8MLVRPjSXxn6BNeYoe3t
+         Mj1dCAXKpFLPoOhEsd3icwvDEwfULeBxC/KzeELQYqXqDsT1eW5TySqbkM7zYwAP7LUy
+         YcLd2xIGDADchVELi9XJaNAVDjevxVg8BFyRoyn/3bYoPmYoVeg3sdA24TlOBkxz/LMG
+         f0CPZ5AROHDLzCEAiZA34G5L8vu0u+VJ8YuFS1ptM6HG86gQgGqs+2iewD+h0zGsjPjB
+         pMuuH2zy9SjSpC3t5nXzSjyi7fA91YUFbnMwFmzPTGVOeoNy6UCSRL9soOwdhOELoBDc
+         4tSQ==
+X-Gm-Message-State: AOAM532nKBVwbf3qnrdku7gRfjqFs3jtTOpVFZfIPQwhin5wcwIL4J/E
+        vf5EnJVTZBzThEsgfTsGBG/8Fw==
+X-Google-Smtp-Source: ABdhPJx3248xj2ECjEpo2EmyEJ3T727gIATeSKJ1kASZj0fkpUuIOY0E9ezVEbTrCsYZ9ha9IPpCvg==
+X-Received: by 2002:a17:907:a0c8:b0:6e0:da87:fde9 with SMTP id hw8-20020a170907a0c800b006e0da87fde9mr1329911ejc.90.1648843840760;
+        Fri, 01 Apr 2022 13:10:40 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.gmail.com with ESMTPSA id bx5-20020a0564020b4500b00418fca53406sm1509041edb.27.2022.04.01.13.10.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Apr 2022 13:10:40 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 00/10] qcom: convert to dtschema qcom,smd and qcom,rpmcc
+Date:   Fri,  1 Apr 2022 22:10:25 +0200
+Message-Id: <20220401201035.189106-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v12 4/4] drm/msm/dp: enable widebus feature for display
- port
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <airlied@linux.ie>, <bjorn.andersson@linaro.org>,
-        <daniel@ffwll.ch>, <dmitry.baryshkov@linaro.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <vkoul@kernel.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1645824192-29670-1-git-send-email-quic_khsieh@quicinc.com>
- <1645824192-29670-5-git-send-email-quic_khsieh@quicinc.com>
- <CAE-0n53s11KHrj-rzRkjV4q775XCoxzZCLK-HRCt=H1++DR-YQ@mail.gmail.com>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <CAE-0n53s11KHrj-rzRkjV4q775XCoxzZCLK-HRCt=H1++DR-YQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,56 +79,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen,
+Hi,
 
+Convert to DT schema clock/qcom,rpmcc and soc/qcom,smd. The SoC and clock
+schema patches are independent, although Rob's bot might complain about
+compatible without schema, so maybe let's take them via one tree?
 
-Would you please to help land this serial of 4 patch into msm-next?
+The DTS patches are independent fixes/cleanups for issues pointed out by this
+schema and can be taken independently.  Not tested, although no impact on
+functionality is expected.
 
-Thanks,
+Best regards,
+Krzysztof
 
-On 2/25/2022 2:17 PM, Stephen Boyd wrote:
-> Quoting Kuogee Hsieh (2022-02-25 13:23:12)
->> Widebus feature will transmit two pixel data per pixel clock to interface.
->> This feature now is required to be enabled to easy migrant to higher
->> resolution applications in future. However since some legacy chipsets
->> does not support this feature, this feature is enabled by setting
->> wide_bus_en flag to true within msm_dp_desc struct.
->>
->> changes in v2:
->> -- remove compression related code from timing
->> -- remove op_info from  struct msm_drm_private
->> -- remove unnecessary wide_bus_en variables
->> -- pass wide_bus_en into timing configuration by struct msm_dp
->>
->> Changes in v3:
->> -- split patch into 3 patches
->> -- enable widebus feature base on chip hardware revision
->>
->> Changes in v5:
->> -- DP_INTF_CONFIG_DATABUS_WIDEN
->>
->> Changes in v6:
->> -- static inline bool msm_dp_wide_bus_enable() in msm_drv.h
->>
->> Changes in v7:
->> -- add Tested-by
->>
->> Changes in v9:
->> -- add wide_bus_en to msm_dp_desc
->>
->> Changes in v10:
->> -- add wide_bus_en boolean to dp_catalog struc to avoid passing it as parameter
->>
->> Changes in v11:
->> -- add const to dp_catalog_hw_revision()
->> -- add const to msm_dp_wide_bus_available()
->>
->> Changes in v12:
->> -- dp_catalog_hw_revision(const struct dp_catalog *dp_catalog)
->> -- msm_dp_wide_bus_available(const struct msm_dp *dp_display)
->>
->> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->> Reported-by: kernel test robot <lkp@intel.com>
->> Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->> ---
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Krzysztof Kozlowski (10):
+  arm64: dts: qcom: msm8953: do not use underscore in node name
+  arm64: dts: qcom: msm8994: remove SMD qcom,local-pid property
+  arm64: dts: qcom: add RPM clock controller fallback compatible
+  ARM: dts: qcom: msm8974-lge-nexus5: move gpio-keys out of soc
+  ARM: dts: qcom: msm8974-samsung-klte: move gpio-keys out of soc
+  ARM: dts: qcom: msm8974: override nodes by label
+  ARM: dts: qcom: do not use underscore in node name
+  dt-bindings: soc: qcom,smd: convert to dtschema
+  dt-bindings: clock: qcom,rpmcc: convert to dtschema
+  dt-bindings: clock: qcom,rpmcc: add clocks property
+
+ .../devicetree/bindings/clock/qcom,rpmcc.txt  |   63 -
+ .../devicetree/bindings/clock/qcom,rpmcc.yaml |   75 ++
+ .../regulator/qcom,smd-rpm-regulator.yaml     |    2 +-
+ .../bindings/remoteproc/qcom,q6v5.txt         |    2 +-
+ .../bindings/remoteproc/qcom,wcnss-pil.txt    |    2 +-
+ .../bindings/soc/qcom/qcom,smd-rpm.yaml       |    8 +-
+ .../devicetree/bindings/soc/qcom/qcom,smd.txt |   98 --
+ .../bindings/soc/qcom/qcom,smd.yaml           |  137 ++
+ arch/arm/boot/dts/qcom-apq8064.dtsi           |    8 +-
+ .../arm/boot/dts/qcom-apq8074-dragonboard.dts |  614 +++++----
+ arch/arm/boot/dts/qcom-apq8084.dtsi           |    2 +-
+ .../boot/dts/qcom-msm8974-fairphone-fp2.dts   |  581 +++++----
+ .../qcom-msm8974-lge-nexus5-hammerhead.dts    | 1105 ++++++++--------
+ .../boot/dts/qcom-msm8974-samsung-klte.dts    | 1127 ++++++++---------
+ .../dts/qcom-msm8974-sony-xperia-amami.dts    |  569 ++++-----
+ .../dts/qcom-msm8974-sony-xperia-castor.dts   |  908 +++++++------
+ .../dts/qcom-msm8974-sony-xperia-honami.dts   |  636 +++++-----
+ arch/arm/boot/dts/qcom-msm8974.dtsi           |   16 +-
+ arch/arm64/boot/dts/qcom/msm8916.dtsi         |    2 +-
+ arch/arm64/boot/dts/qcom/msm8953.dtsi         |    4 +-
+ arch/arm64/boot/dts/qcom/msm8992.dtsi         |    2 +-
+ arch/arm64/boot/dts/qcom/msm8994.dtsi         |    3 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |    2 +-
+ arch/arm64/boot/dts/qcom/qcs404.dtsi          |    2 +-
+ 24 files changed, 3000 insertions(+), 2968 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
+ delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smd.txt
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smd.yaml
+
+-- 
+2.32.0
+
