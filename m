@@ -2,63 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 278274EEB20
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Apr 2022 12:17:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 139634EEBCE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Apr 2022 12:49:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245217AbiDAKTN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Apr 2022 06:19:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34568 "EHLO
+        id S1345214AbiDAKuu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Apr 2022 06:50:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245224AbiDAKTM (ORCPT
+        with ESMTP id S1345212AbiDAKut (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Apr 2022 06:19:12 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5D4D26E020;
-        Fri,  1 Apr 2022 03:17:23 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 5F3F8B8236C;
-        Fri,  1 Apr 2022 10:17:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08401C340F2;
-        Fri,  1 Apr 2022 10:17:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648808241;
-        bh=GW8BDi6tbXlVrKtuB3fhHINCWtB01NTu50/7fvNfu2E=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=TV7jtu2az6XikrXdSq6m2AbpIhjqORl3CC/pWS2ocXqw9YinIxOXQtl1T9uhHgxpP
-         0V+XKETEvJbmPDpuPwQbXuKEd3/ccfAjd/bi8OJ1/6mlnvQNsE19QVxFB7c/w7VV/1
-         oXaAKCSDbjbklbNWln65vsbq1tnqHyDiAk57miKXUyij9/qeHw+zjTueeyu1kgihYV
-         ahdRAxOefP5qeYlQNrlsI59lZL5Vjh3Gvm9N+3/G4yrZrc3FQPNAt1+ubf//YeWhOv
-         dAq4v+hGpxadARjUSTNbhX2o8Vm0ZhN8Aq3c1uRiEkrGxeihiGKrC8JCunStMFNGMK
-         9UFugeoJ4mpmg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1naELI-0004Sv-JP; Fri, 01 Apr 2022 12:17:20 +0200
-Date:   Fri, 1 Apr 2022 12:17:20 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Fri, 1 Apr 2022 06:50:49 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70FE911A0C;
+        Fri,  1 Apr 2022 03:48:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1648810139; x=1680346139;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=qwuvo8H5lFxF+LKvcIYg9u8Ja3zfM1aZ7xaB65MQwrw=;
+  b=MTvT9Ejznd3buA8o1IRaBmtOVkcjJC4gAq0rdIBDfvAUuyMhXuIVtMC3
+   Xen6ugRAr1pC3BSme+ttOWsQLhFwme95suIEUrPX7cZNoqcEswV+ncuEY
+   4UxJa3mrgvpvSeMadq4nyBaupx4vd98wTPpx3cVa3K8nSqfm6ayYMZjlA
+   4=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 01 Apr 2022 03:48:58 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Apr 2022 03:48:56 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Fri, 1 Apr 2022 03:48:55 -0700
+Received: from [10.216.22.244] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Fri, 1 Apr 2022
+ 03:48:50 -0700
+Subject: Re: [PATCH V8 7/7] arm64: dts: qcom: sc7280: Add pm8008 support for
+ sc7280-idp
+To:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Prasad Malisetty <quic_pmaliset@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-pci@vger.kernel.org
-Subject: Re: [PATCH v1 4/5] PCI: qcom: Remove unnecessary pipe_clk handling
-Message-ID: <YkbRMPBblbccWeTw@hovoldconsulting.com>
-References: <20220323085010.1753493-1-dmitry.baryshkov@linaro.org>
- <20220323085010.1753493-5-dmitry.baryshkov@linaro.org>
+        Rob Herring <robh+dt@kernel.org>
+CC:     Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Das Srinagesh <gurus@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_collinsd@quicinc.com>,
+        <quic_subbaram@quicinc.com>, <quic_jprakash@quicinc.com>
+References: <1648209491-30165-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1648209491-30165-8-git-send-email-quic_c_skakit@quicinc.com>
+ <CAE-0n511eQTnJHqt0B=uiiSjigy-RHZ52YuYz4kfEpX1x6CMfw@mail.gmail.com>
+ <094d8faa-c42b-be1b-cf92-04232d618a3e@quicinc.com>
+ <CAE-0n52CVuc_kQbpwEnHEEODS8jPt52v6P=gAdVxqenPu4ehkw@mail.gmail.com>
+From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
+Message-ID: <3b4dcf83-bb13-2159-d7c1-f0aadfc53566@quicinc.com>
+Date:   Fri, 1 Apr 2022 16:18:46 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220323085010.1753493-5-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <CAE-0n52CVuc_kQbpwEnHEEODS8jPt52v6P=gAdVxqenPu4ehkw@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -67,77 +78,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 23, 2022 at 11:50:09AM +0300, Dmitry Baryshkov wrote:
-> QMP PHY driver already does clk_prepare_enable()/_disable() pipe_clk.
-> Remove extra calls to enable/disable this clock from the PCIe driver, so
-> that the PHY driver can manage the clock on its own.
-> 
-> Fixes: aa9c0df98c29 ("PCI: qcom: Switch pcie_1_pipe_clk_src after PHY init in SC7280")
-> Cc: Prasad Malisetty <quic_pmaliset@quicinc.com>
 
-Looks like you're blaming the wrong author and commit, but a Fixes tag
-probably isn't warranted at all here.
+On 4/1/2022 2:48 AM, Stephen Boyd wrote:
+> Quoting Satya Priya Kakitapalli (Temp) (2022-03-30 03:44:01)
+>> On 3/25/2022 11:18 PM, Stephen Boyd wrote:
+>>>        #include "pm8008.dtsi"
+>>>
+>>> and then the nodes below.
+>>
+>> You mean
+>>
+>> pm8008_bus: &i2c1 {
+>>
+>>           status = "okay";
+>>
+>> };
+>>
+>> &pm8008_bus {
+>>
+>>       #include "pm8008.dtsi"
+>>
+>> };
+>>
+>> and remaining nodes, right?
+>>
+> No. I meant what I wrote.
+>
 
-The first commit to introduce pipe clock handling to this driver was
+Okay thank you for elaborating,
 
-	d0491fc39bdd ("PCI: qcom: Add support for MSM8996 PCIe controller")
 
-back in 2016.
+>         &pm8008_bus: &i2c1 {
 
-This was followed up in 2019 with
 
-	ed8cc3b1fc84 ("PCI: qcom: Add support for SDM845 PCIe controller")
+but this still needs to be "pm8008_bus: &i2c {" right.. no '&' before 
+pm8008_bus.
 
-which also introduced a clock imbalance by enabling the pipe clock both
-in init() and post_init() but only disabling in post_deinit().
 
-Note that this commit also started enabling the pipe clock before
-powering up the PHY (i.e. the call in init()) which looks like another
-bug.
-
-This bit should be fixed separately and you can just drop the Fixes tag
-from this patch. I've sent a fix here:
-
-	https://lore.kernel.org/r/20220401101325.16983-1-johan+linaro@kernel.org
-
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 50 ++------------------------
->  1 file changed, 3 insertions(+), 47 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-
->  static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
-> @@ -1238,12 +1211,6 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
->  		goto err_disable_clocks;
->  	}
->  
-> -	ret = clk_prepare_enable(res->pipe_clk);
-> -	if (ret) {
-> -		dev_err(dev, "cannot prepare/enable pipe clock\n");
-> -		goto err_disable_clocks;
-> -	}
-> -
-
-Here's the imbalance.
-
->  	/* Wait for reset to complete, required on SM8450 */
->  	usleep_range(1000, 1500);
->  
-> @@ -1298,14 +1265,7 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
->  	if (pcie->cfg->pipe_clk_need_muxing)
->  		clk_set_parent(res->pipe_clk_src, res->phy_pipe_clk);
->  
-> -	return clk_prepare_enable(res->pipe_clk);
-> -}
-> -
-> -static void qcom_pcie_post_deinit_2_7_0(struct qcom_pcie *pcie)
-> -{
-> -	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-> -
-> -	clk_disable_unprepare(res->pipe_clk);
-> +	return 0;
->  }
-
-Johan
+>                 status = "okay";
+>         };
+>
+>         #include "pm8008.dtsi"
+>
+> and then the pm8008.dtsi file would have
+>
+> 	&pm8008_bus {
+> 		pm8008: pmic@8 {
+> 			compatible = "qcom,pm8008";
+> 			...
+> 		};
+>
+> 		pm8008_regulators: regulators@9 {
+> 			compatible = "qcom,pm8008-regulators";
+> 			...
+> 		};
+> 	};
+>
+> and then this patch would modify those nodes with phandles.
