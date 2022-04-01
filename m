@@ -2,58 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 782C54EFCF2
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Apr 2022 01:04:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A6B84EFCFF
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Apr 2022 01:11:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351032AbiDAXFy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Apr 2022 19:05:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54754 "EHLO
+        id S1345698AbiDAXNB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Apr 2022 19:13:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231869AbiDAXFx (ORCPT
+        with ESMTP id S235504AbiDAXNA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Apr 2022 19:05:53 -0400
-Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [46.235.227.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7F2417337E;
-        Fri,  1 Apr 2022 16:04:01 -0700 (PDT)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: sre)
-        with ESMTPSA id 4D6D21F47E32
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1648854239;
-        bh=Zf4/W8ZkSiud0d32XUvUEMHUjsk++IGQrm8gV1GEolk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=NZKLEOOlx4hJsK/bJUWnbWB9ipw5XTL7NS4BldrvaDTaiwrOzuNz6CXXqYGbs0dUZ
-         mAn0tiWUqA/nPPuimbR+qB7Zcdwiu62oVpH1y0ewXQME4TPr3bBwbErdhgV9/EWMfH
-         W8+YhbCuG/x78UaVUgCWHt8+628CW5Ar8xThDFTnRiHqofpGwk2pPwtX9snvvvm7RK
-         nJs1Bj8nLplirk81vcKRQuHbprwM4VIgensHvb4qLQoI2Rgu0sYu8y70k5s/h6SHDX
-         NSs6mHnWfGSe62hCwfXFKwRNozb8SEuW5wLCNAl8R7U9326o/KGQFF73z8zGcgHy7Q
-         b5bqClftr8oZg==
-Received: by mercury (Postfix, from userid 1000)
-        id AAF2C1060582; Sat,  2 Apr 2022 01:03:56 +0200 (CEST)
-Date:   Sat, 2 Apr 2022 01:03:56 +0200
-From:   Sebastian Reichel <sebastian.reichel@collabora.com>
-To:     Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Amit Pundir <amit.pundir@linaro.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Subject: Re: [PATCH 6/6] dt-bindings: power: supply: qcom,smb2: add bindings
- for smb2 driver
-Message-ID: <20220401230356.w7obr3nxl6673mig@mercury.elektranox.org>
-References: <20220401202643.877609-1-caleb.connolly@linaro.org>
- <20220401202643.877609-7-caleb.connolly@linaro.org>
+        Fri, 1 Apr 2022 19:13:00 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A1571AE231
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Apr 2022 16:11:09 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id e16so7437187lfc.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Apr 2022 16:11:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aBelTolXdBHgrs8x4WhdW94lmNOFNROJVduSORgOB7o=;
+        b=cSJO5Y0WHrvicOzagTdzW8mxEYjtLoEonod/QPZAJ1+rnNH7WrPhfIyLEsUz1LTn1U
+         HMYu15v74gwcy/bppNWOwlyIbkowizviinW4I7zNp2IYoAcdxCxiuQhw4tHQ/tJn1Jab
+         9vJysKhMOmHn8o54gaTBFtnWb1HuCILeL7NgmD3AM1pcAWMkvCz88wFcIc0nhXylhgH/
+         gLfqvMJ6bVTAsHmw1hUIDrF46Gd0efzHu0HrTc85YrIvJk4qBlEty8gg3zQJyF7HhLpq
+         8iZCB57UBD4kYrYVVw6xplOJw+M6QEPzIbquGrLocHK40680EXYR7S49ScyVbGZUNTYN
+         tDtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aBelTolXdBHgrs8x4WhdW94lmNOFNROJVduSORgOB7o=;
+        b=DnbzTz6lil8al9zhDWoqTY0DUIeSyXH8kzM63XP+euErWdQlALvQ/g4vnMXt8INbAY
+         10CyY/igAbpShjwug8kG8LtrnzW+A/ksVKtWhwC1mRnlEjyi3YS8L6MA4zhUOl1MJRNg
+         RInQXJMCMhJpMLFtiBRQINLyJIadPkD7mgkezGbLTNAaXOvfRihQe08aTW0F7V2JBb9D
+         8GnZD1WXa9Y3/3x9xE4QGALGwwYtQ4Qt+j3TR4Rz56AmPf6nots7smONaOAlJsdiXU/F
+         fj8HTx06oYxO03dfgW+57rpfG7V1l+N2B2eNEIsJ/+cbSWmv+W4dnVAXCxCNwlZVJmAp
+         vpeA==
+X-Gm-Message-State: AOAM5337vsuMSc4AgwramhZqoeOM7a59Oe3UTq3F6vXngFkY/mqFFQCf
+        d6KoKlVgOeDciAXA7zjnhuyUdg==
+X-Google-Smtp-Source: ABdhPJyP1ntsUFhZ7UVRnsIPgItCfAmAVAJQ1H5AqQQMbem7zgObeIf3ZPKJlaJJdwrfnNaEdQ112g==
+X-Received: by 2002:a05:6512:1306:b0:448:5689:2be0 with SMTP id x6-20020a056512130600b0044856892be0mr15309047lfu.57.1648854667651;
+        Fri, 01 Apr 2022 16:11:07 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id x23-20020a19e017000000b0044a4820f882sm367413lfg.84.2022.04.01.16.11.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Apr 2022 16:11:06 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Dan Carpenter <dan.carpenter@oracle.com>
+Subject: [PATCH] drm/msm/dsi: fix error checks and return values for DSI xmit functions
+Date:   Sat,  2 Apr 2022 02:11:04 +0300
+Message-Id: <20220401231104.967193-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ug4hpksr7eokrzoi"
-Content-Disposition: inline
-In-Reply-To: <20220401202643.877609-7-caleb.connolly@linaro.org>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,UNPARSEABLE_RELAY autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,127 +73,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+As noticed by Dan ([1] an the followup thread) there are multiple issues
+with the return values for MSM DSI command transmission callback. In
+the error case it can easily return a positive value when it should
+have returned a proper error code.
 
---ug4hpksr7eokrzoi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This commits attempts to fix these issues both in TX and in RX paths.
 
-Hi,
+[1]: https://lore.kernel.org/linux-arm-msm/20211001123617.GH2283@kili/
 
-On Fri, Apr 01, 2022 at 09:26:43PM +0100, Caleb Connolly wrote:
-> Add devicetree bindings for the Qualcomm PMI8998/PM660 SMB2 charger
-> drivers.
->=20
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-> ---
->  .../bindings/power/supply/qcom,smb2.yaml      | 68 +++++++++++++++++++
->  1 file changed, 68 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/power/supply/qcom,s=
-mb2.yaml
->=20
-> diff --git a/Documentation/devicetree/bindings/power/supply/qcom,smb2.yam=
-l b/Documentation/devicetree/bindings/power/supply/qcom,smb2.yaml
-> new file mode 100644
-> index 000000000000..1bea1fef78b8
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/power/supply/qcom,smb2.yaml
-> @@ -0,0 +1,68 @@
-> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/power/supply/qcom,smb2.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm PMI8998/PM660 Switch-Mode Battery Charger "2"
-> +
-> +maintainers:
-> +  - Caleb Connolly <caleb.connolly@linaro.org>
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,pmi8998-smb2
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    items:
-> +      - description: usb plugin
-> +
-> +  interrupt-names:
-> +    items:
-> +      - const: usb-plugin
-> +
-> +  io-channels:
-> +    items:
-> +      - description: USB in current in uA
-> +      - description: USB in voltage in uV
-> +
-> +  io-channel-names:
-> +    items:
-> +      - const: usbin_i
-> +      - const: usbin_v
+Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-Is there a good reason to use usbin_ instead of usb_in_?
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index d51e70fab93d..8925f60fd9ec 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1341,10 +1341,10 @@ static int dsi_cmds2buf_tx(struct msm_dsi_host *msm_host,
+ 			dsi_get_bpp(msm_host->format) / 8;
+ 
+ 	len = dsi_cmd_dma_add(msm_host, msg);
+-	if (!len) {
++	if (len < 0) {
+ 		pr_err("%s: failed to add cmd type = 0x%x\n",
+ 			__func__,  msg->type);
+-		return -EINVAL;
++		return len;
+ 	}
+ 
+ 	/* for video mode, do not send cmds more than
+@@ -1363,10 +1363,14 @@ static int dsi_cmds2buf_tx(struct msm_dsi_host *msm_host,
+ 	}
+ 
+ 	ret = dsi_cmd_dma_tx(msm_host, len);
+-	if (ret < len) {
+-		pr_err("%s: cmd dma tx failed, type=0x%x, data0=0x%x, len=%d\n",
+-			__func__, msg->type, (*(u8 *)(msg->tx_buf)), len);
+-		return -ECOMM;
++	if (ret < 0) {
++		pr_err("%s: cmd dma tx failed, type=0x%x, data0=0x%x, len=%d, ret=%d\n",
++			__func__, msg->type, (*(u8 *)(msg->tx_buf)), len, ret);
++		return ret;
++	} else if (ret < len) {
++		pr_err("%s: cmd dma tx failed, type=0x%x, data0=0x%x, ret=%d len=%d\n",
++			__func__, msg->type, (*(u8 *)(msg->tx_buf)), ret, len);
++		return -EIO;
+ 	}
+ 
+ 	return len;
+@@ -2092,9 +2096,12 @@ int msm_dsi_host_cmd_rx(struct mipi_dsi_host *host,
+ 		}
+ 
+ 		ret = dsi_cmds2buf_tx(msm_host, msg);
+-		if (ret < msg->tx_len) {
++		if (ret < 0) {
+ 			pr_err("%s: Read cmd Tx failed, %d\n", __func__, ret);
+ 			return ret;
++		} else if (ret < msg->tx_len) {
++			pr_err("%s: Read cmd Tx failed, too short: %d\n", __func__, ret);
++			return -ECOMM;
+ 		}
+ 
+ 		/*
+-- 
+2.35.1
 
--- Sebastian
-
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - interrupt-names
-> +  - io-channels
-> +  - io-channel-names
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +    pmic {
-> +      #address-cells =3D <1>;
-> +      #size-cells =3D <0>;
-> +      #interrupt-cells =3D <4>;
-> +
-> +      smb2@1000 {
-> +        compatible =3D "qcom,pmi8998-smb2";
-> +        reg =3D <0x1000>;
-> +
-> +        interrupts =3D <0x2 0x13 0x4 IRQ_TYPE_EDGE_BOTH>;
-> +        interrupt-names =3D "usb-plugin";
-> +
-> +        io-channels =3D <&pmi8998_rradc 3>,
-> +                      <&pmi8998_rradc 4>;
-> +        io-channel-names =3D "usbin_i",
-> +                           "usbin_v";
-> +      };
-> +    };
-> --=20
-> 2.35.1
->=20
-
---ug4hpksr7eokrzoi
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmJHhNUACgkQ2O7X88g7
-+prg8w/9GK7RzA2mPafvhUeYbyRQBj+1grwrYt5QBCUw9MSYJFAxoeViL4xgF5KX
-aVG7hbymkgL2XiPo9J2AvY6DMkXfJTgvHeLS8uTZCRLd1NeXUL/M6LGoDz3w4f1U
-rv9oI9pz7QMnK5DThAKqxlaV7BALW/2KUnNgK3Cfi7Qm0updbfN3Pq2fh4yiCM2t
-7Nveg5d2Uf6IhTxVRANyKcNKJuwbdTFzFASIj88H8JPxbH9Wb7eL77D031pu1szp
-oj72j8mW9lU18Ovm3Cft0zOzRe9Uk2X4BmTEGhsJZrnN6SbsBHpmH9dVg0yXcHWp
-Q81iVNrFWG7ROsM6YcU5F0w/Unx1UkJtpqRCeKd+ZzoZcxABuRBT2tAV9CmBCMY6
-bw/0s+UWN6bck4ji3gYbu/7MTOyjwxw+FoTCLe/MMRX4WY0N3hVyMZnDNdaWrXUo
-jlsi9r6q7iMemBaelThQdHUX9FHBndj2IMo4kCdn4RRoCkWTYMfAnTzrqmJ3kJo6
-+iTLK1wQLf13IUaLT8DTou4swFgAKaBdyyT4YsTQ4zVpQXCDLvor7NjBsV/bgjeK
-LQZyRWm+xVKWa7HfY9D/nSGBnM62gvIiFAOzGgS42VXCW3x8GyqnVH3oLFCkDUs5
-sydsVOkIc8ENWYgrH/kMC9LlltzdRd5fgtlVc2Hth7ylUofr15o=
-=66Jf
------END PGP SIGNATURE-----
-
---ug4hpksr7eokrzoi--
