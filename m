@@ -2,71 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B22D14EE620
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Apr 2022 04:40:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E15E74EE899
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Apr 2022 08:43:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240548AbiDAClk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 31 Mar 2022 22:41:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43954 "EHLO
+        id S245657AbiDAGow (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Apr 2022 02:44:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235206AbiDAClj (ORCPT
+        with ESMTP id S1344617AbiDAGok (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 31 Mar 2022 22:41:39 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C460259A78
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 19:39:50 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id o13so1281135pgc.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 19:39:50 -0700 (PDT)
+        Fri, 1 Apr 2022 02:44:40 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BCAADEA2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 23:42:48 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id h7so3145654lfl.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 31 Mar 2022 23:42:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=vUeYd4HcrETg1TwuyK0qAbQ35psGmjFp+yiimtCZEBE=;
-        b=ANuro/FzZzKuRWQm2CzkW7xFIaeDiIjiAKxY6M3DOS0TYc9wQdle/4haDAQINMVkHd
-         8EeNwWlY3pcBa6zuHLH2BblUhNpX+wKXRIPMT0aqI371Cyllc4MEg+8Cnhf3w16AbS42
-         Z2r6NvmhaB3yMlyYZkS8+W6HiBgFduR+xoftdnxHcqKClFZ6v3yCyPynRjtAVGAqplBv
-         O33gzBws9OPyFIKFLIpSB8xjIwOH6SlKTs5288TRP+VxYVW0im+3X2Pea1c5kIm5hc9U
-         Cs39J06gU+ybWpv4IVT7DOwCY2lpATNLoVcbftdpKKsrBCNUDb8pelVu0LcV7WirVIgH
-         iIyg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=AT43KlTmSMUYUPB4960PYkQfxgIcSiLD8GFROuSjwE0=;
+        b=nVsZdk/Y11tzUBrC6arb/AK6bg1nrd8OsKuWnJmx/1xFlMGzuo8VzdAibfJZel5rAM
+         epmSUpr+OuxOSBtZEDILtxakEpVzkBc5VibfULtt+OXpBBONQcOUBa+AYrB6VqxwROGV
+         RQDLnvfy46Nk4dT5OB4tIMfI9TqIjr2jFsmlSiHs+dtvDOR81Sba3IMCeZzZ8XWc6GeG
+         9LJRwL7kIHi2G0GrAhAeduu3bsxpbw0l2AxHh3/6VS5qoIgifZUt6qzXeMxmYQBUPPy8
+         BhcY/xk/d4htIMg55iKOmV+6tDU8GGznfe5xUJhjK4z5aqf2bX0J4ED50Ueg75L7J38k
+         96Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=vUeYd4HcrETg1TwuyK0qAbQ35psGmjFp+yiimtCZEBE=;
-        b=qHZKOBJjBsGQEj/MHraB9LIcfdzEtkK3CDdMWosEPlMnGFdfvlg+G1N96dl8IInfVB
-         xEgMIsiWjr25zpnf2JjKoHiOpyNPoQ2657R1rRBSFvr95XSN87vBz5VKbhqzD2p01RaZ
-         d+3wWqVscdDfo46z11IxWcoPdpdjzPtQkRVAgwoYM7Is9+YlFvM/om0eojuiLE36lZGD
-         uvbKthGosc5VoKxfMpP2ARCjDgaLoLrd3PqIO55lOFcsjJh9jnFyKViERLFOhI+Uwgat
-         3ixWMS2oB31T7rRxwMELS7mfhGlSGgN53fPF4yNhvQtBIGcOn/kugzCb18TKPANLaN0/
-         SIhw==
-X-Gm-Message-State: AOAM5326mQfgksYIlihsVyxHdb4rgwCXYJMRu45NY2S3Dc5RrkY7aqN3
-        vtvmfRStGoPxhy3RsxlX91uHAw==
-X-Google-Smtp-Source: ABdhPJyNrdWKaxy8d6ns+EB0QJDxf3uEjW9kh7Kwnqz0JcrB2c5oN2d9nl3svSkGqMykRtr8tl93pQ==
-X-Received: by 2002:a63:4147:0:b0:382:9ac9:b12b with SMTP id o68-20020a634147000000b003829ac9b12bmr13444364pga.277.1648780790266;
-        Thu, 31 Mar 2022 19:39:50 -0700 (PDT)
-Received: from localhost ([223.184.83.228])
-        by smtp.gmail.com with ESMTPSA id c4-20020a056a00248400b004faad8c81bcsm840583pfv.127.2022.03.31.19.39.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Mar 2022 19:39:49 -0700 (PDT)
-Date:   Fri, 1 Apr 2022 08:09:48 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        Thara Gopinath <thara.gopinath@gmail.com>
-Subject: Re: [PATCH v4 0/4] cpufreq: qcom-hw: Fixes for cpu hotplug support
-Message-ID: <20220401023948.44hawxwapsnsjgil@vireshk-i7>
-References: <20220326155153.7377-1-dmitry.baryshkov@linaro.org>
- <YkX0RQ7Re7J/iG+d@ripper>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=AT43KlTmSMUYUPB4960PYkQfxgIcSiLD8GFROuSjwE0=;
+        b=xFsm3rMeHgCrjM+ngMHOIn6Oo1Ytz76o/z/sosOah4jVcH38SwFp0Wa5dwf6glh3/3
+         wc8uzigqueZM3b99ymGDILGTH1JihbxnQTGSZSDu+dN9h3G5sVJHiEMNLYfui5LpPe8C
+         HruCiFJCIJT7HgNAoVxoiZ6Xpwur5mlpDoRLhEcnmKSQFMOn43Hnh2vNnCo02yI2zs/1
+         6HKLnPywb+hcJQIsiaSYts+rA+5gvnpiCmmgLsPkLo7WxMVnmm1k0N5NWpeZT8RcvIAX
+         egAGBLEVb3HYgj8emJv8ZMpNMsD4SxcUocBIcPzIJmvZaCBfoN+x4fdo2MUwcUcgvWgt
+         fLFg==
+X-Gm-Message-State: AOAM531pwJ2xPP6q+fhPkrolL4iQqkp0NLmppdWdXE5qsX53cunllEk0
+        wdbsSr91sfsTi3w8KDH49nTceA==
+X-Google-Smtp-Source: ABdhPJxGrIScS+Hf3znm5KgNNtFTLmY1IPLCS3INnxFEDnWk9A3SUw+tTqCo9RvXoGIYU9EWdofjHQ==
+X-Received: by 2002:a05:6512:22cc:b0:44a:1097:b5 with SMTP id g12-20020a05651222cc00b0044a109700b5mr12932161lfu.659.1648795351568;
+        Thu, 31 Mar 2022 23:42:31 -0700 (PDT)
+Received: from [192.168.1.102] (88-113-46-102.elisa-laajakaista.fi. [88.113.46.102])
+        by smtp.gmail.com with ESMTPSA id e14-20020a19500e000000b0044a16931c7csm147562lfb.97.2022.03.31.23.42.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 31 Mar 2022 23:42:31 -0700 (PDT)
+Message-ID: <1869255f-919d-c1cd-2018-476071620ddf@linaro.org>
+Date:   Fri, 1 Apr 2022 09:42:18 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YkX0RQ7Re7J/iG+d@ripper>
-User-Agent: NeoMutt/20180716-391-311a52
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH 1/2] cpufreq: qcom-cpufreq-hw: Clear dcvs interrupts
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
+References: <20220328112836.2464486-1-vladimir.zapolskiy@linaro.org>
+ <20220328112836.2464486-2-vladimir.zapolskiy@linaro.org>
+ <YkXzFLqPHybqAXJ0@ripper>
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <YkXzFLqPHybqAXJ0@ripper>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,22 +78,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31-03-22, 11:34, Bjorn Andersson wrote:
-> On Sat 26 Mar 08:51 PDT 2022, Dmitry Baryshkov wrote:
-> 
-> > This patchseries aims at fixing and improving CPU hotplug support on
-> > Qualcomm platforms. First three patches are the fixes for the LMH
-> > support in the cpufreq driver. The last patch adds support for
-> > lightweight offline() and online() callbacks which are used instead of
-> > exit() and init() each time the CPU is put offline or back online.
-> > 
-> > Patches 1-3 being pure simple fixes can be applied during the -rc
-> > stage, while patch 4 is targeting next development cycle
-> > 
-> 
-> Viresh, please consider picking up patch 1-3 for v5.18-rc.
+Hi Bjorn,
 
-Applied. Thanks.
+On 3/31/22 21:29, Bjorn Andersson wrote:
+> On Mon 28 Mar 04:28 PDT 2022, Vladimir Zapolskiy wrote:
+> 
+>> It's noted that dcvs interrupts are not self-clearing, thus an interrupt
+>> handler runs constantly, which leads to a severe regression in runtime.
+>> To fix the problem an explicit write to clear interrupt register is
+>> required.
+>>
+>> Fixes: 275157b367f4 ("cpufreq: qcom-cpufreq-hw: Add dcvs interrupt support")
+>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>> ---
+>>   drivers/cpufreq/qcom-cpufreq-hw.c | 7 +++++++
+>>   1 file changed, 7 insertions(+)
+>>
+>> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+>> index f9d593ff4718..53954e5086e0 100644
+>> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+>> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+>> @@ -24,6 +24,8 @@
+>>   #define CLK_HW_DIV			2
+>>   #define LUT_TURBO_IND			1
+>>   
+>> +#define GT_IRQ_STATUS			BIT(2)
+>> +
+>>   #define HZ_PER_KHZ			1000
+>>   
+>>   struct qcom_cpufreq_soc_data {
+>> @@ -31,6 +33,7 @@ struct qcom_cpufreq_soc_data {
+>>   	u32 reg_dcvs_ctrl;
+>>   	u32 reg_freq_lut;
+>>   	u32 reg_volt_lut;
+>> +	u32 reg_intr_clr;
+>>   	u32 reg_current_vote;
+>>   	u32 reg_perf_state;
+>>   	u8 lut_row_size;
+>> @@ -350,6 +353,9 @@ static irqreturn_t qcom_lmh_dcvs_handle_irq(int irq, void *data)
+>>   	disable_irq_nosync(c_data->throttle_irq);
+>>   	schedule_delayed_work(&c_data->throttle_work, 0);
+>>   
+> 
+> This should only be done if reg_intr_clr != 0 (as it is for OSM).
 
--- 
-viresh
+thank you for review, but I believe here the status shall be read out from
+another register INTR_STATUS rather than INTR_CLR, the bitfield is the same.
+
+> Other than that, I think looks good.
+> 
+> Regards,
+> Bjorn
+> 
+>> +	writel_relaxed(GT_IRQ_STATUS,
+>> +		       c_data->base + c_data->soc_data->reg_intr_clr);
+>> +
+>>   	return IRQ_HANDLED;
+>>   }
+>>   
+>> @@ -368,6 +374,7 @@ static const struct qcom_cpufreq_soc_data epss_soc_data = {
+>>   	.reg_dcvs_ctrl = 0xb0,
+>>   	.reg_freq_lut = 0x100,
+>>   	.reg_volt_lut = 0x200,
+>> +	.reg_intr_clr = 0x308,
+>>   	.reg_perf_state = 0x320,
+>>   	.lut_row_size = 4,
+>>   };
+>> -- 
+>> 2.33.0
+>>
+
+--
+Best wishes,
+Vladimir
