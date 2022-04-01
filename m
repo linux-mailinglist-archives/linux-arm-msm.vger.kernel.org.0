@@ -2,58 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 357124EF3B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Apr 2022 17:27:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97B0A4EF75D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Apr 2022 18:03:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239816AbiDAPF6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Apr 2022 11:05:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60664 "EHLO
+        id S244203AbiDAP4n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Apr 2022 11:56:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352036AbiDAOtt (ORCPT
+        with ESMTP id S1349914AbiDAPQk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Apr 2022 10:49:49 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EDE52B04F2;
-        Fri,  1 Apr 2022 07:40:53 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 7D234B824FD;
-        Fri,  1 Apr 2022 14:40:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8C0C2BBE4;
-        Fri,  1 Apr 2022 14:40:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1648824006;
-        bh=284TnvbaXGlYGB8egfJjTlAB5liChDdlV0p235OHsg4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=SwGrxCDApdkW7Vs8wy/pri+9WnrfCsADAVXmetXa3PTZZ/D8ZiQ0Bp/DnpMbKqdzM
-         U2eUBNxKyaphalqDxPBrunyaDaPLH0hnoHnYymlLtT/cGOUKeu7my0t8fMQYDDae6V
-         GqLqFqxI/fOdXT4a2jG0AGCi0hHq0GEXY5d4eKa8sgEflFJM8CS3Mg0Es0VGLol/qB
-         y1r4dc6eBBPwxFeScUvaS0dOX2/aemoEgDWDlIDgwYgXLvxjzk/1zYFiTkTGCuFztu
-         7C5gQJxyxsNNUcLcJD1mtxj3iPC6z0iLscwpso6jiBQ0M66B57O0LZzruEC3JotPNN
-         5YIUq1Xu5v+bg==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Daniel Thompson <daniel.thompson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, robdclark@gmail.com,
-        sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
-        quic_abhinavk@quicinc.com, swboyd@chromium.org,
-        bjorn.andersson@linaro.org, jonathan@marek.ca,
-        quic_jesszhan@quicinc.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.15 47/98] drm/msm/dsi: Remove spurious IRQF_ONESHOT flag
-Date:   Fri,  1 Apr 2022 10:36:51 -0400
-Message-Id: <20220401143742.1952163-47-sashal@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220401143742.1952163-1-sashal@kernel.org>
-References: <20220401143742.1952163-1-sashal@kernel.org>
+        Fri, 1 Apr 2022 11:16:40 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAADF11C14
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Apr 2022 07:58:26 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id a1so4616230wrh.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Apr 2022 07:58:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=76a94LQu3rPoYffS/gDEHiTMZGGkCXPKcYRhl1KmpQU=;
+        b=FZ/ZDpkCU0djVj4XyAI7m5UPpa4SlwCKTGlM1Rj9RUWz//rOC9j/LUQYzDk1Gjw4Q0
+         AsbiLQA4Rdmj2qeJkpB70YhhXnTQByZqqayYpCmkxiFCeisjQVVps+92F9430mN7UlMh
+         xtPfJJba20MTPN9enY664ka9wxQ7asaIFKkPUplOdGBGcaY7/TxvF1GPxKW2fTaarqAW
+         +vsxCOnExuctwCF6g/FahFnG7PMBgdqiYknLTWy+HnDAQ6nKZp9UqbEfrJ2NNTxpzSzd
+         DEfo7hOfxl+nOIaXdn3s2mK2aVS6rlfcn07LWUAToobReKpKTZ1xwC5BZ7Qkd2ugAeZs
+         51Ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=76a94LQu3rPoYffS/gDEHiTMZGGkCXPKcYRhl1KmpQU=;
+        b=YKxSegpidSK0lARf3UOHKn/UuaBqKgquMUKb8Mji2Q2RmUUNyDPizcILJth+TfrbBZ
+         DNKi+Vcat5hRu+gPXyv3cdDB48dD8u+xRjQNUTygwJ72+lBq4MTRyrpBq3Bk9tX3IZhz
+         ixRJdvdfVD4/QDe6mQ1dEt0mFtjt0dubvFFuWIG9Btt2CwOQjOu2dhvJ0nHAwrKj/lIi
+         BPAogL8tgZFBziUjzRr5CzNe3ns6iyyyJC2IUNmE1M0LbQ2QBSJmTkgbllt/fc/ixqT8
+         vYdrwaNihtIEZp3/5ezdOd9CUAezi5zvSgZxalCezbfgfYx/bwcwdc6NRQw+HKfwm+PC
+         8/SQ==
+X-Gm-Message-State: AOAM531nbafzZASG72JOorO9nuYO1mBGqEX+0IHO8wtZdaGjRhl6qZbP
+        lWn/j3qE4Qu/rUasc6XGxmGYUDBALG4knWu4
+X-Google-Smtp-Source: ABdhPJxi8Y6f6lrLshYHx+nvxgkTyKctJN8K3nHCREVNRv1HkEkJFWZspLSclpT12ofkeOYjbKJ8qQ==
+X-Received: by 2002:adf:fb48:0:b0:203:f986:874a with SMTP id c8-20020adffb48000000b00203f986874amr8067141wrs.614.1648825105436;
+        Fri, 01 Apr 2022 07:58:25 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.gmail.com with ESMTPSA id j8-20020a05600c404800b0038cc9c7670bsm8530722wmm.3.2022.04.01.07.58.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Apr 2022 07:58:25 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [RFC PATCH 0/4] ufs: set power domain performance state when scaling gears
+Date:   Fri,  1 Apr 2022 16:58:16 +0200
+Message-Id: <20220401145820.1003826-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -62,47 +83,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Daniel Thompson <daniel.thompson@linaro.org>
+Hi,
 
-[ Upstream commit 24b176d8827d167ac3b379317f60c0985f6e95aa ]
+This is a proof-of-concept/RFC for changing the performance state
+of power rails when scaling gears.
 
-Quoting the header comments, IRQF_ONESHOT is "Used by threaded interrupts
-which need to keep the irq line disabled until the threaded handler has
-been run.". When applied to an interrupt that doesn't request a threaded
-irq then IRQF_ONESHOT has a lesser known (undocumented?) side effect,
-which it to disable the forced threading of irqs (and for "normal" kernels
-it is a nop). In this case I can find no evidence that suppressing forced
-threading is intentional. Had it been intentional then a driver must adopt
-the raw_spinlock API in order to avoid deadlocks on PREEMPT_RT kernels
-(and avoid calling any kernel API that uses regular spinlocks).
+So far I added it as a parallel method to scaling clocks, thus
+freq-table-hz stays in DTS, however OPP table should be probably
+replace freq-table-hz entirely.
 
-Fix this by removing the spurious additional flag.
+Best regards,
+Krzysztof
 
-This change is required for my Snapdragon 7cx Gen2 tablet to boot-to-GUI
-with PREEMPT_RT enabled.
+Krzysztof Kozlowski (4):
+  dt-bindings: clock: qcom,gcc-sdm845: add parent power domain
+  dt-bindings: ufs: common: allow OPP table
+  arm64: dts: qcom: sdm845: control RPMHPD performance states with UFS
+  ufs: set power domain performance state when scaling gears
 
-Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20220201174734.196718-2-daniel.thompson@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../bindings/clock/qcom,gcc-sdm845.yaml       |  3 ++
+ .../devicetree/bindings/ufs/ufs-common.yaml   |  4 ++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          | 17 +++++++-
+ drivers/scsi/ufs/ufshcd-pltfrm.c              |  6 +++
+ drivers/scsi/ufs/ufshcd.c                     | 42 +++++++++++++++----
+ drivers/scsi/ufs/ufshcd.h                     |  3 ++
+ 6 files changed, 65 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index dc85974c7897..eea679a52e86 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1909,7 +1909,7 @@ int msm_dsi_host_init(struct msm_dsi *msm_dsi)
- 
- 	/* do not autoenable, will be enabled later */
- 	ret = devm_request_irq(&pdev->dev, msm_host->irq, dsi_host_irq,
--			IRQF_TRIGGER_HIGH | IRQF_ONESHOT | IRQF_NO_AUTOEN,
-+			IRQF_TRIGGER_HIGH | IRQF_NO_AUTOEN,
- 			"dsi_isr", msm_host);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "failed to request IRQ%u: %d\n",
 -- 
-2.34.1
+2.32.0
 
