@@ -2,73 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00C174EF926
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Apr 2022 19:47:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 89E184EFA1C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Apr 2022 20:48:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345141AbiDARtQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Apr 2022 13:49:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59046 "EHLO
+        id S1348721AbiDASuH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Apr 2022 14:50:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351177AbiDARs4 (ORCPT
+        with ESMTP id S235174AbiDASuG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Apr 2022 13:48:56 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EAC022EE5A
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Apr 2022 10:47:06 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id u3so5295506wrg.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Apr 2022 10:47:06 -0700 (PDT)
+        Fri, 1 Apr 2022 14:50:06 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCEDC220B30
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Apr 2022 11:48:16 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id t21so3666011oie.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Apr 2022 11:48:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=efz6kQHlKSDKuo0UJzo1gGazPM6P/T8R4LJSdPrvKJs=;
-        b=n7ATkdGp7ME3W7umtrkKxdU2MECDroSb4NlocHystdlRv5nOZyIaGgB8yQYAGAbHh6
-         7x4LJYTGw8n61emmuUEIZrje/aAMkfxzgoiy0FYky++oHGHpaBNfsJkKVw74Xn1LY9fT
-         x6usEKYbrmyjeubM5Yw4nZ+7bxtsTCjoOfOQPsrY1kXiel4e8IhdXzfTEb6VsiRmPZHg
-         ajTwgjuPbkZncXCpBY97sDi23JbcGYmRMwGwTrlO7x4aOyrKi3HTUFLdfbksbhfWHYvd
-         bwonzzRv3O4gJoNVl4QbJac0CjjgY1qiVZDGOdwQUYBN8Sy+Qip7T49wA6hnpjbX8MRr
-         cpVQ==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=D9fxps+Ewc6UANsIutZd0wuOMYK+iuzQT7EbeWRMeUQ=;
+        b=X0Y+wDvLjYzdPycS2xcK3xyquS/nSm8FFz4SNtheTeLLhWUQbT4tpNhTzwHlQA1Ml1
+         kaDwoXUElWpe1nM4Dv4ZTCscEz/t9WFLfqQWwyV2um+pxmIqUgEIEv8oY+osc6jAjqgc
+         0HcnQRw5UDzHwiPbArFgO/cMHH6+aMrT1IGpQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=efz6kQHlKSDKuo0UJzo1gGazPM6P/T8R4LJSdPrvKJs=;
-        b=EV2sXzMlDT01VcqNQbAChSVjYOi+IaX2AUpSE5QBE25gTRwpJcpyYvAKgGHtwX4qyP
-         8/xXBxXQEPx/N3EBfey8/AvyT66VtB4ka+WvuqwqvzWlxx16FhsPMFH0TNWGMlfnGPKC
-         swTGd2z04pCZsh3cWeGZYdeE+dfQuhjYhMoZkPLsvccCuwqma7IQh+AZqo84i3X241Hr
-         Vs7DvURD3bec1ePesAsukd+nFDJNor0SLAlRnoLH7z7+WzVaHo2lpn/Rvz6/lxw825wa
-         u5JKKvZ1HxCpDNb7kN6kbho1zgIU8DM4mvkfLJYJ/olNsDrCeN0BWaQSwH4JA+1eZAsF
-         SNLQ==
-X-Gm-Message-State: AOAM532/nkiAWnYvdim9QYxQn6rLgStG6VsX1IXMLUJX+jh8UlV9Ft6E
-        v0rCnwAfFpnKjGIEajxNHb/qXA==
-X-Google-Smtp-Source: ABdhPJzQS49mhQ/58uhTnHcYWbrUqN+CyydIJtnWl9USCFiQdLlIwLc3SH0snLXOldWSdeDoyQPM5w==
-X-Received: by 2002:adf:fb0b:0:b0:205:dfbd:8601 with SMTP id c11-20020adffb0b000000b00205dfbd8601mr8150339wrr.527.1648835224884;
-        Fri, 01 Apr 2022 10:47:04 -0700 (PDT)
-Received: from [192.168.0.170] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id v18-20020adfc5d2000000b0020589b76704sm2779448wrg.70.2022.04.01.10.47.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Apr 2022 10:47:04 -0700 (PDT)
-Message-ID: <5b0b3301-d92b-3eae-fb91-9b6388103f8c@linaro.org>
-Date:   Fri, 1 Apr 2022 19:47:03 +0200
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=D9fxps+Ewc6UANsIutZd0wuOMYK+iuzQT7EbeWRMeUQ=;
+        b=ljvO4vQlgIrKpS0XiKdCrOiGpmvqjD2TaMyb2XmO02e+6N67DGnmyoUoSugujQT1ZT
+         wvQE8iW6anYgVS99m1OqayLvPYhDnxkfK0bFJ1TPYyA8AYN4EHLfCcZRn8iZyhK5M6rC
+         1BnclKKiuLqj1xmtddkUfWh7my5llhoPN9CCpa4VMl/VZ3iMWbSu1WL/f4vwfe9shouM
+         bnOkbi3n6OxetNw/y4SzWYzBR8/17tRRfKWmt1QwAQzWCdJRl0hpdnWLpo8rLLqacaAI
+         tqlN8F93Pti6AyjP8MoLFhWN0qCyZnmql2XIwzuRKS2I9bUBMgUz0CGE0MJoAB9ImAuy
+         scwQ==
+X-Gm-Message-State: AOAM531OfbgrK2IqYQ0gJTVy9wdQKzHOEbvn6i25d+OUOttSD/qMZ0ul
+        A9dFavuSP/sWy9J5MYebZKE7F7pN2Ll45HpwgUWs07pPtp0=
+X-Google-Smtp-Source: ABdhPJz1TQRc5Yb6vyKTkezkbj85ZwfeXqoZaXKRnSn4CcsOsS2zY8ZrRcoyLi5/lOZh2VukBMnldkdiQH4XSVzbjFI=
+X-Received: by 2002:aca:a9c8:0:b0:2da:45b6:b796 with SMTP id
+ s191-20020acaa9c8000000b002da45b6b796mr5109437oie.193.1648838896186; Fri, 01
+ Apr 2022 11:48:16 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 1 Apr 2022 13:48:15 -0500
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] dt-bindings: soc: qcom,smp2p: convert to dtschema
-Content-Language: en-US
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+In-Reply-To: <3b4dcf83-bb13-2159-d7c1-f0aadfc53566@quicinc.com>
+References: <1648209491-30165-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1648209491-30165-8-git-send-email-quic_c_skakit@quicinc.com>
+ <CAE-0n511eQTnJHqt0B=uiiSjigy-RHZ52YuYz4kfEpX1x6CMfw@mail.gmail.com>
+ <094d8faa-c42b-be1b-cf92-04232d618a3e@quicinc.com> <CAE-0n52CVuc_kQbpwEnHEEODS8jPt52v6P=gAdVxqenPu4ehkw@mail.gmail.com>
+ <3b4dcf83-bb13-2159-d7c1-f0aadfc53566@quicinc.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Fri, 1 Apr 2022 13:48:15 -0500
+Message-ID: <CAE-0n5282FJ01We_mRfN69mYJk4NKwjAZvnTG9RVOyt__6xVfg@mail.gmail.com>
+Subject: Re: [PATCH V8 7/7] arm64: dts: qcom: sc7280: Add pm8008 support for sc7280-idp
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Satya Priya Kakitapalli <quic_c_skakit@quicinc.com>
+Cc:     Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Das Srinagesh <gurus@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20220401171035.1096670-1-krzysztof.kozlowski@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220401171035.1096670-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        linux-kernel@vger.kernel.org, quic_collinsd@quicinc.com,
+        quic_subbaram@quicinc.com, quic_jprakash@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,194 +77,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/04/2022 19:10, Krzysztof Kozlowski wrote:
-> Convert the Qualcomm Shared Memory Point 2 Point bindings to DT Schema.
-> 
-> Changes against original bindings: enforce only specific names of child
-> nodes, instead of any names.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../bindings/soc/qcom/qcom,smp2p.txt          | 110 -------------
->  .../bindings/soc/qcom/qcom,smp2p.yaml         | 145 ++++++++++++++++++
->  2 files changed, 145 insertions(+), 110 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.txt
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.txt b/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.txt
-> deleted file mode 100644
-> index 49e1d72d3648..000000000000
-> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.txt
-> +++ /dev/null
-> @@ -1,110 +0,0 @@
-> -Qualcomm Shared Memory Point 2 Point binding
-> -
-> -The Shared Memory Point to Point (SMP2P) protocol facilitates communication of
-> -a single 32-bit value between two processors.  Each value has a single writer
-> -(the local side) and a single reader (the remote side).  Values are uniquely
-> -identified in the system by the directed edge (local processor ID to remote
-> -processor ID) and a string identifier.
-> -
-> -- compatible:
-> -	Usage: required
-> -	Value type: <string>
-> -	Definition: must be one of:
-> -		    "qcom,smp2p"
-> -
-> -- interrupts:
-> -	Usage: required
-> -	Value type: <prop-encoded-array>
-> -	Definition: one entry specifying the smp2p notification interrupt
-> -
-> -- mboxes:
-> -	Usage: required
-> -	Value type: <prop-encoded-array>
-> -	Definition: reference to the associated doorbell in APCS, as described
-> -		    in mailbox/mailbox.txt
-> -
-> -- qcom,ipc:
-> -	Usage: required, unless mboxes is specified
-> -	Value type: <prop-encoded-array>
-> -	Definition: three entries specifying the outgoing ipc bit used for
-> -		    signaling the remote end of the smp2p edge:
-> -		    - phandle to a syscon node representing the apcs registers
-> -		    - u32 representing offset to the register within the syscon
-> -		    - u32 representing the ipc bit within the register
-> -
-> -- qcom,smem:
-> -	Usage: required
-> -	Value type: <u32 array>
-> -	Definition: two identifiers of the inbound and outbound smem items used
-> -		    for this edge
-> -
-> -- qcom,local-pid:
-> -	Usage: required
-> -	Value type: <u32>
-> -	Definition: specifies the identifier of the local endpoint of this edge
-> -
-> -- qcom,remote-pid:
-> -	Usage: required
-> -	Value type: <u32>
-> -	Definition: specifies the identifier of the remote endpoint of this edge
-> -
-> -= SUBNODES
-> -Each SMP2P pair contain a set of inbound and outbound entries, these are
-> -described in subnodes of the smp2p device node. The node names are not
-> -important.
-> -
-> -- qcom,entry-name:
-> -	Usage: required
-> -	Value type: <string>
-> -	Definition: specifies the name of this entry, for inbound entries this
-> -		    will be used to match against the remotely allocated entry
-> -		    and for outbound entries this name is used for allocating
-> -		    entries
-> -
-> -- interrupt-controller:
-> -	Usage: required for incoming entries
-> -	Value type: <empty>
-> -	Definition: marks the entry as inbound; the node should be specified
-> -		    as a two cell interrupt-controller as defined in
-> -		    "../interrupt-controller/interrupts.txt"
-> -		    If not specified this node will denote the outgoing entry
-> -
-> -- #interrupt-cells:
-> -	Usage: required for incoming entries
-> -	Value type: <u32>
-> -	Definition: must be 2 - denoting the bit in the entry and IRQ flags
-> -
-> -- #qcom,smem-state-cells:
-> -	Usage: required for outgoing entries
-> -	Value type: <u32>
-> -	Definition: must be 1 - denoting the bit in the entry
-> -
-> -= EXAMPLE
-> -The following example shows the SMP2P setup with the wireless processor,
-> -defined from the 8974 apps processor's point-of-view. It encompasses one
-> -inbound and one outbound entry:
-> -
-> -wcnss-smp2p {
-> -	compatible = "qcom,smp2p";
-> -	qcom,smem = <431>, <451>;
-> -
-> -	interrupts = <0 143 1>;
-> -
-> -	qcom,ipc = <&apcs 8 18>;
-> -
-> -	qcom,local-pid = <0>;
-> -	qcom,remote-pid = <4>;
-> -
-> -	wcnss_smp2p_out: master-kernel {
-> -		qcom,entry-name = "master-kernel";
-> -
-> -		#qcom,smem-state-cells = <1>;
-> -	};
-> -
-> -	wcnss_smp2p_in: slave-kernel {
-> -		qcom,entry-name = "slave-kernel";
-> -
-> -		interrupt-controller;
-> -		#interrupt-cells = <2>;
-> -	};
-> -};
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-> new file mode 100644
-> index 000000000000..8c362ce3c05b
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-> @@ -0,0 +1,145 @@
-> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/soc/qcom/qcom,smp2p.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Shared Memory Point 2 Point
-> +
-> +maintainers:
-> +  - Andy Gross <agross@kernel.org>
-> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
-> +  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> +
-> +description:
-> +  The Shared Memory Point to Point (SMP2P) protocol facilitates communication
-> +  of a single 32-bit value between two processors.  Each value has a single
-> +  writer (the local side) and a single reader (the remote side).  Values are
-> +  uniquely identified in the system by the directed edge (local processor ID to
-> +  remote processor ID) and a string identifier.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,smp2p
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  mboxes:
-> +    maxItems: 1
-> +    description:
-> +      Reference to the mailbox representing the outgoing doorbell in APCS for
-> +      this client.
-> +
-> +  qcom,ipc:
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> +    items:
-> +      - items:
-> +          - description: phandle to a syscon node representing the apcs registers
-> +          - description: u32 representing offset to the register within the syscon
-> +          - description: u32 representing the ipc bit within the register
-> +    description:
-> +      Three entries specifying the outgoing ipc bit used for signaling the
-> +      remote end of the smp2p edge.
-> +
-> +  qcom,local-pid:
-> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+Quoting Satya Priya Kakitapalli (Temp) (2022-04-01 03:48:46)
+>
+> On 4/1/2022 2:48 AM, Stephen Boyd wrote:
+>
+>
+> >         &pm8008_bus: &i2c1 {
+>
+>
+> but this still needs to be "pm8008_bus: &i2c {" right.. no '&' before
+> pm8008_bus.
 
-While converting the next schema (SMD) I found here a mistake. This is
-not an array, but one number.
-
-I'll send a v2.
-
-
-Best regards,
-Krzysztof
+Correct. Thanks for spotting my typo.
