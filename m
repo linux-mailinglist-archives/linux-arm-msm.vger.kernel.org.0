@@ -2,88 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4654E4F00BB
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Apr 2022 12:38:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 984BC4F0178
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Apr 2022 14:30:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231858AbiDBKjn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Apr 2022 06:39:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52600 "EHLO
+        id S242383AbiDBMbz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Apr 2022 08:31:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229630AbiDBKjm (ORCPT
+        with ESMTP id S245045AbiDBMby (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Apr 2022 06:39:42 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFD441AFE9B
-        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Apr 2022 03:37:47 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id p15so9035099lfk.8
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Apr 2022 03:37:47 -0700 (PDT)
+        Sat, 2 Apr 2022 08:31:54 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12DE74F9EE
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Apr 2022 05:30:02 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id q19so814196wrc.6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Apr 2022 05:30:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Jx8e761MNPFyJ2/BAtkY0nyoED7Z8+xj5f0GT++V4DU=;
-        b=CM5tAEao5vQ2577zZq46eGT5uUdK6gdVlWEARVuyxYeNLnYiT8lvo5OCG2ZcKhDGfb
-         wy6RzILMGSWya1H7UCQr8Y4fjgCHbD+N0bIgO8rFWOwSygD60R87YX12LQBKXes0rNPR
-         FQOBFpPb/5zrL2nQxvW2rumRZWeKgIx/p9Ila06gACmYl8sawMjF2PLwS8QtgZb8I5qx
-         QyOD88AioP5g/0oCKIYAfuqniXGLgVHDyp5CkITXTV/3iv2MJ1nPjOiTehzvNKJJvomc
-         Oa3oNbA/WgWKKW3dNoiI/IVu3xfKKUao07GPXs4EzJA+/sVfrm6CUbZRq58SKFwbCDRs
-         CVjQ==
+        bh=WHHY6/AA+RV5B6HQp/JMxKSATkAk8e0U+XPm3mIVbG4=;
+        b=w0+Pu5NJu0h1cXv19IbjAmNV5ldGQMzlT1e5o18hrVpSP81bd/f43dGd4yCkcjnXFj
+         R2qlaT8dm6+KGQHjMYI04hf69HstNdN/nB7hBe9L6nw7imHMUmYH62EuePSEGeotSAyo
+         TMYbT9Rl0CP6maAEFQJhy0+zlZZYuue+n0MScmtkGpgZXbQ/jCVFOhunGuUpuXOT7DY6
+         ++1yAu+IKf8/nhs+mI8cEXHjLfuxqOLTiQVnSp14MrHUZJctA7D9dx7v01OJSVxKR5YV
+         Jjw5XaIx4iuyqjwSE8ny0tXsCnqRScAYHTaFNURSwCIo602rpbOAl+bStzbU7xV3EaaW
+         /9iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=Jx8e761MNPFyJ2/BAtkY0nyoED7Z8+xj5f0GT++V4DU=;
-        b=GvEadfZa0x0/hQXejaeQKZ8oebKeQiawSExuuMzFdXQA6QP8lwt61VecFYSmPkEdAb
-         m1Igz1aVvBkzVB1yd4X8waXKtqAz1RNEHjmUA3opwWSNhWSWWwrZcR8fHbsGIHi7StAG
-         AbXiSd0h2Eb3Z3bI5UHs4ldYu60Wx/R0GjU0jP5yAPUr9EKTF500LauspcyJMsxcknFG
-         b1V4R6zHoQebs4hadJEatZRTpOX/lcvZN18oi8R/b5z6sHMQWBARu1wcYuMmO9yySJ9Z
-         7c35eAk/eK8mefi9iNF56PrcJIUqD+nIup/pUmC5e9BuCyw+BuHlhk9d4+/5ljRvud3w
-         7SzA==
-X-Gm-Message-State: AOAM533UznKuDJaKQJKONmX2RcyIpHDNWvVNKIgAUzgEZFNg3D4xqzaf
-        VOgJewKB6RF/G/FQ7rtwzR2QE8bP015Npw==
-X-Google-Smtp-Source: ABdhPJwCW+uY9rOuoWmKzwTgEAQFjN4YRpp4A7QPyITSlGphPJj0f1ExJfTaWODEaAXo0GmLCCHjuw==
-X-Received: by 2002:a05:6512:3c90:b0:44a:dc25:ab44 with SMTP id h16-20020a0565123c9000b0044adc25ab44mr4502073lfv.407.1648895865799;
-        Sat, 02 Apr 2022 03:37:45 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id i16-20020a056512319000b0044ae52c6365sm264006lfe.88.2022.04.02.03.37.44
+        bh=WHHY6/AA+RV5B6HQp/JMxKSATkAk8e0U+XPm3mIVbG4=;
+        b=24bSvzSLwjgGkCPpfCIAFpPC5nub8bys/2hOCdk7nf7/wkDo/cYMf2ZFQ/W59qQgD0
+         UTR2LMVQEuibOmwHP3XzvrpUYv8/TT9BxLwdWLmNDznbBkhpMAjEAC+s1IKVTLuDaGbX
+         +NZprf5NtPI7vuJukaY8QT9KMKAa2lGINN6gIzqGJHIjfOGrepEHVA/UbyO3jPz1krUQ
+         7UDz/s/2MJdmxC4WKcmm0OGcGblPg0Kxm7Mwh5lwSQh3QtbTc43qZ8YERZjiNNtq9+SD
+         8znS454xNx2jkHtsxSLDLT9nAWP0udn/amTvEGpY3V2/2uMsKtAj4nHCJtb30pmQmAh9
+         A4iQ==
+X-Gm-Message-State: AOAM533LQ6M6PE1c9B3BcXGTtuYrEgUqHrXqPCCe0E64DOaXwQP4zzCq
+        dl6mpxBTqASlpttzWeIhe+blZA==
+X-Google-Smtp-Source: ABdhPJwdpU3ivl1IB9fl4GewiNTFa7+yJoV0fEBquDI28ZJajPWiHd7NxgeG3sRDbNbcE2+dDMylew==
+X-Received: by 2002:a5d:47a7:0:b0:203:d1b4:8f6 with SMTP id 7-20020a5d47a7000000b00203d1b408f6mr11192742wrb.36.1648902600596;
+        Sat, 02 Apr 2022 05:30:00 -0700 (PDT)
+Received: from [192.168.0.171] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.gmail.com with ESMTPSA id r4-20020a1c2b04000000b0038a0e15ee13sm12705690wmr.8.2022.04.02.05.29.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 02 Apr 2022 03:37:45 -0700 (PDT)
-Message-ID: <392b933f-760c-3c81-1040-c514045df3da@linaro.org>
-Date:   Sat, 2 Apr 2022 13:37:44 +0300
+        Sat, 02 Apr 2022 05:30:00 -0700 (PDT)
+Message-ID: <b27db209-d146-e104-6f0c-b0d860e9cc8c@linaro.org>
+Date:   Sat, 2 Apr 2022 14:29:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
-Subject: Re: [PATCH v6 1/8] drm/msm/dp: Add eDP support via aux_bus
-Content-Language: en-GB
-To:     Doug Anderson <dianders@chromium.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        quic_kalyant <quic_kalyant@quicinc.com>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        quic_vproddut <quic_vproddut@quicinc.com>,
-        quic_aravindh@quicinc.com
-References: <1648656179-10347-1-git-send-email-quic_sbillaka@quicinc.com>
- <1648656179-10347-2-git-send-email-quic_sbillaka@quicinc.com>
- <CAD=FV=X+QvjwoT2zGP82KW4kD0oMUY6ZgCizSikNX_Uj8dNDqA@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAD=FV=X+QvjwoT2zGP82KW4kD0oMUY6ZgCizSikNX_Uj8dNDqA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 1/5] dt-bindings: i2c: Add Qualcomm Geni based QUP i2c
+ bindings
+Content-Language: en-US
+To:     Kuldeep Singh <singh.kuldeep87k@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org
+References: <20220402051206.6115-1-singh.kuldeep87k@gmail.com>
+ <20220402051206.6115-2-singh.kuldeep87k@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220402051206.6115-2-singh.kuldeep87k@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,64 +80,88 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/04/2022 02:22, Doug Anderson wrote:
-> Hi,
+On 02/04/2022 07:12, Kuldeep Singh wrote:
+> GENI(generic interface) based Qualcomm Universal Peripheral controller
+> can support multiple serial interfaces like spi,uart and i2c.
 > 
-> On Wed, Mar 30, 2022 at 9:03 AM Sankeerth Billakanti
-> <quic_sbillaka@quicinc.com> wrote:
->>
->> @@ -1547,6 +1593,10 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
->>
->>          dp_display->encoder = encoder;
->>
->> +       ret = dp_display_get_next_bridge(dp_display);
->> +       if (ret)
->> +               return ret;
+> Unlike other i2c controllers, QUP i2c bindings are present in parent
+> schema. Move it out from parent to an individual binding and let parent
+> refer to child schema later on.
 > 
-> It feels weird to me that this is in a function called "modeset_init",
-> though I certainly don't know the structure of the MSM display code
-> well enough to fully comment.
-
-It's called modeset_init() as it initializes KMS objects used by DP 
-driver. We have similar functions for dsi and hdmi
-
-> My expectation would have been that
-> devm_of_dp_aux_populate_ep_devices() would have been called from your
-> probe routine and then you would have returned -EPROBE_DEFER from your
-> probe if you were unable to find the panel afterwards.
-
-I don't think it's possible to call it from probe() since 
-drm_dp_aux_register() is called only from dp_display_bind().
-The PHY also isn't initialized at that moment, so we can not probe AUX 
-devices.
-
-The overall semantics of the AUX bus is not clear to me.
-Typically the bus is populated (and probed) when devices are accessible. 
-But for the display related buses this might not be the case.
-For example for the DSI bus we clearly define that DSI transfer are not 
-possible before the corresponding bridge's (or panel's) enable call.
-
-Maybe the same approach should be adopted for the AUX bus. This would 
-allow us to populate the AUX bus before hardware access is actually 
-possible, thus creating all the DRM bridges before the hardware is 
-actually up and running.
-
-> Huh, but I guess you _are_ getting called (indirectly) from
-> dpu_kms_hw_init() and I can't imagine AUX transfers working before
-> that function is called, so maybe I should just accept that it's
-> complicated and let those who understand this driver better confirm
-> that it's OK. ;-)
+> Please note, current schema isn't complete as it misses out few
+> properties and thus, add these missing properties along the process.
 > 
+> Signed-off-by: Kuldeep Singh <singh.kuldeep87k@gmail.com>
+> ---
+>  .../bindings/i2c/qcom,i2c-geni-qcom.yaml      | 110 ++++++++++++++++++
+>  1 file changed, 110 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
 > 
->> @@ -140,5 +140,6 @@ struct dp_parser {
->>    * can be parsed using this module.
->>    */
->>   struct dp_parser *dp_parser_get(struct platform_device *pdev);
->> +int dp_parser_find_next_bridge(struct dp_parser *parser);
-> 
-> Everything else in this file is described w/ kerneldoc. Shouldn't your
-> function also have a kerneldoc comment?
+> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+> new file mode 100644
+> index 000000000000..01a02e680ea3
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+> @@ -0,0 +1,110 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/i2c/qcom,i2c-geni-qcom.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +
+> +title: Qualcomm Geni based QUP I2C Controller
+> +
+> +maintainers:
+> +  - Andy Gross <agross@kernel.org>
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +
+> +allOf:
+> +  - $ref: /schemas/i2c/i2c-controller.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,geni-i2c
 
--- 
-With best wishes
-Dmitry
+Just const, no enum. There are no other flavors of this (unless you
+think there are?).
+
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  clock-names:
+> +    const: se
+> +
+> +  clock-frequency:
+> +    description: Desired I2C bus clock frequency in Hz
+> +    default: 100000
+> +
+> +  interconnects:
+> +    maxItems: 3
+> +
+> +  interconnect-names:
+> +    items:
+> +      - const: qup-core
+> +      - const: qup-config
+> +      - const: qup-memory
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  required-opps:
+> +    maxItems: 1
+
+I have doubts this is correct property. Usually it is part of the
+opp-table. I see sc7180 needs this, but I think it is a mistake. Do you
+know how it is supposed to work?
+
+
+Best regards,
+Krzysztof
