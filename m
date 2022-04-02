@@ -2,120 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 960CD4F02D7
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Apr 2022 15:46:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FD314F03E7
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Apr 2022 16:22:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241009AbiDBNsr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Apr 2022 09:48:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39308 "EHLO
+        id S238873AbiDBOYQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Apr 2022 10:24:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229818AbiDBNsr (ORCPT
+        with ESMTP id S236168AbiDBOYP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Apr 2022 09:48:47 -0400
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A01B15D3B5;
-        Sat,  2 Apr 2022 06:46:53 -0700 (PDT)
-Received: by mail-ot1-f46.google.com with SMTP id n19-20020a9d7113000000b005cd9cff76c3so4042719otj.1;
-        Sat, 02 Apr 2022 06:46:53 -0700 (PDT)
+        Sat, 2 Apr 2022 10:24:15 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7511C13CA03
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Apr 2022 07:22:23 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id b24so6034310edu.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Apr 2022 07:22:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=AMgcOOw5r9mv38XuA+c8CRwaFDTkeUsZRRq+V0PdcsY=;
+        b=ndRjC0RhMOJGBf5NZc9mOkR/bHebZ8B8V39sgXEZvBTOMKfN380968Na2TPAfrha+l
+         ZI9WodBoHES0w0Bp3iahPcQvrSvLGyEdKN9nzlOXYAno8LFwZbSXtL+Lc/tAJqOwEg1l
+         c+zclPub3nlJoZhvRhuCtyRf+bRdwySxsoovuLIJFRXx6ZDcMEoTBdzqNo267URsQr5J
+         7Sf8LB6qW65GLnhp6kQmzqluNbDqQxS41UCAI/nSNGTt8Wgzg19qt+gXBvZEupBKpxYx
+         IhHDskUw5bYaqEZWs8fz0XJt1vP+kkRC7pCQCmYequPos6I4Ouk9G9NfRueZhZHJ7Lq8
+         sFtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=HYiZb3WrZ7CUV91tcHRmrgto4b3G284hWI6pzO7rQDE=;
-        b=wQSB4J6OUa0VVRS/UNiHQI1bogfYEqF7BdWV7xQmZyKBA370B69Y7ZR6uMnyT4ldO7
-         86rkahdDU3mLat0W5O1Y8qRrkoXve2VDu1UU7uldtQPpBbIrrMDMkswj9NybimXcLxsI
-         eLUcgq9ROM0iVc2FvNDhkD5LYwE7R93PV8V/KMb5mxJDgFZHTrRzG/GXn0X+vJZqejpW
-         RWkmewmook18xdtM48btThwulFBx30kfGiUXigiMDi22Xu1+6IW6j7mu+Wn9vFL+pmUa
-         xD9cmsHhdT8PYLc+k8+86RdPFqiu9bNnGxZ7L2CA2onio4uvXXfEjQA8LcbE+jzfMsC7
-         E/ow==
-X-Gm-Message-State: AOAM533mhJEArCiddFU85LXXSBRwoI8wflxc8ZJTlAhpk/bIjrVKWP9U
-        2A0/WczgVhDyMOs2PtarbB87avHdfg==
-X-Google-Smtp-Source: ABdhPJyLrYk/9AnSO+95mMbuL74a0TK/kgxxJaJ3MXMZa/yl/BWUGYF5cAh3jDSgGq9lskMa8xPJ8w==
-X-Received: by 2002:a05:6830:2684:b0:5cd:bb2f:a5bf with SMTP id l4-20020a056830268400b005cdbb2fa5bfmr8837891otu.383.1648907212737;
-        Sat, 02 Apr 2022 06:46:52 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id c12-20020a9d75cc000000b005b24b061940sm2357258otl.33.2022.04.02.06.46.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Apr 2022 06:46:52 -0700 (PDT)
-Received: (nullmailer pid 903499 invoked by uid 1000);
-        Sat, 02 Apr 2022 13:46:51 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=AMgcOOw5r9mv38XuA+c8CRwaFDTkeUsZRRq+V0PdcsY=;
+        b=qNInG3Qfr8jVX2pP7cKfCzvOBCgvV7D+BnPyr5Q47yFk91N6YH5PtoKO6lTZ26XmBi
+         X+gzMZUt++TG1KCykImc0GjfcvlxnES11kQeG/Fc0SQJc7gVHftFyn/cI/optnHSwFKP
+         kghyGOqVpJOmZr9bta8mYX/a7gc+2pV74F8rQlGc1H96rgDFGZHuwcSquf5fat98x+4d
+         llU+WWaCS7TafSToamtGiQXO1tOIrAPWiwPHDw7krSCZkEqPTtN8lqXRAEJ4QMB+srYj
+         /Nm83EDRzTyI/VcKN/uKTP/N13njk5pMcdUPxj0V3ACw4/g5ToDEvXUdg35hd19OOeBa
+         DnUw==
+X-Gm-Message-State: AOAM533xGmiBTTpLqu7c5W3MffIm2hzn28p9Gqoqq4p1PJDdt5DOmp0N
+        nGOr9XNOooeH/YoByo0kYWrYVg==
+X-Google-Smtp-Source: ABdhPJyO41m5nOt35fQMdoxrpqwQOe/Hbl42lUbDUic9chKbI6pE3cOvTVsoxLEMtoeouWLa4B+qbw==
+X-Received: by 2002:aa7:d517:0:b0:419:16c0:f313 with SMTP id y23-20020aa7d517000000b0041916c0f313mr25542499edq.379.1648909342042;
+        Sat, 02 Apr 2022 07:22:22 -0700 (PDT)
+Received: from [192.168.0.171] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.gmail.com with ESMTPSA id h30-20020a056402095e00b00412b81dd96esm2461485edz.29.2022.04.02.07.22.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 02 Apr 2022 07:22:21 -0700 (PDT)
+Message-ID: <f737fd47-e557-45af-035b-af29a88e22e6@linaro.org>
+Date:   Sat, 2 Apr 2022 16:22:20 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH 6/6] dt-bindings: power: supply: qcom,smb2: add bindings
+ for smb2 driver
+Content-Language: en-US
+To:     Caleb Connolly <caleb.connolly@linaro.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>
-In-Reply-To: <20220401171035.1096670-1-krzysztof.kozlowski@linaro.org>
-References: <20220401171035.1096670-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH] dt-bindings: soc: qcom,smp2p: convert to dtschema
-Date:   Sat, 02 Apr 2022 08:46:51 -0500
-Message-Id: <1648907211.818465.903498.nullmailer@robh.at.kernel.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     Amit Pundir <amit.pundir@linaro.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>
+References: <20220401202643.877609-1-caleb.connolly@linaro.org>
+ <20220401202643.877609-7-caleb.connolly@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220401202643.877609-7-caleb.connolly@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 01 Apr 2022 19:10:35 +0200, Krzysztof Kozlowski wrote:
-> Convert the Qualcomm Shared Memory Point 2 Point bindings to DT Schema.
+On 01/04/2022 22:26, Caleb Connolly wrote:
+> Add devicetree bindings for the Qualcomm PMI8998/PM660 SMB2 charger
+> drivers.
 > 
-> Changes against original bindings: enforce only specific names of child
-> nodes, instead of any names.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 > ---
->  .../bindings/soc/qcom/qcom,smp2p.txt          | 110 -------------
->  .../bindings/soc/qcom/qcom,smp2p.yaml         | 145 ++++++++++++++++++
->  2 files changed, 145 insertions(+), 110 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.txt
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
+>  .../bindings/power/supply/qcom,smb2.yaml      | 68 +++++++++++++++++++
+>  1 file changed, 68 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/power/supply/qcom,smb2.yaml
 > 
+> diff --git a/Documentation/devicetree/bindings/power/supply/qcom,smb2.yaml b/Documentation/devicetree/bindings/power/supply/qcom,smb2.yaml
+> new file mode 100644
+> index 000000000000..1bea1fef78b8
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/power/supply/qcom,smb2.yaml
+> @@ -0,0 +1,68 @@
+> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/power/supply/qcom,smb2.yaml#
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Hi,
 
-yamllint warnings/errors:
+Are you sure "smb2" is a real Qualcomm versioning? IOW, is there going
+to be smb3 in the future? If not, better to just name the file according
+to model, so like compatible and like other existing schemas from Qualcomm.
 
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/net/qcom,ipa.example.dt.yaml: smp2p-mpss: 'qcom,local-pid' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/net/qcom,ipa.example.dt.yaml: smp2p-mpss: 'qcom,remote-pid' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/net/qcom,ipa.example.dt.yaml: smp2p-mpss: 'qcom,smem' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/net/qcom,ipa.example.dt.yaml: smp2p-mpss: 'oneOf' conditional failed, one must be fixed:
-	'mboxes' is a required property
-	'qcom,ipc' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/net/qcom,ipa.example.dt.yaml: smp2p-mpss: 'oneOf' conditional failed, one must be fixed:
-	'interrupts' is a required property
-	'interrupts-extended' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/mailbox/qcom-ipcc.example.dt.yaml: smp2p-modem: 'qcom,local-pid' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/mailbox/qcom-ipcc.example.dt.yaml: smp2p-modem: 'qcom,remote-pid' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/mailbox/qcom-ipcc.example.dt.yaml: smp2p-modem: 'qcom,smem' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm PMI8998/PM660 Switch-Mode Battery Charger "2"
+> +
+> +maintainers:
+> +  - Caleb Connolly <caleb.connolly@linaro.org>
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,pmi8998-smb2
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    items:
+> +      - description: usb plugin
 
-doc reference errors (make refcheckdocs):
+Just maxItems:1 (description is obvious and matches names).
 
-See https://patchwork.ozlabs.org/patch/
+> +
+> +  interrupt-names:
+> +    items:
+> +      - const: usb-plugin
+> +
+> +  io-channels:
+> +    items:
+> +      - description: USB in current in uA
+> +      - description: USB in voltage in uV
+> +
+> +  io-channel-names:
+> +    items:
+> +      - const: usbin_i
+> +      - const: usbin_v
+> +
 
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
+What about monitored-battery? How do you configure the battery
+characteristics?
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - interrupt-names
+> +  - io-channels
+> +  - io-channel-names
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +    pmic {
+> +      #address-cells = <1>;
+> +      #size-cells = <0>;
+> +      #interrupt-cells = <4>;
+> +
+> +      smb2@1000 {
 
-pip3 install dtschema --upgrade
+Generic node name please, so "charger".
 
-Please check and re-submit.
 
+
+Best regards,
+Krzysztof
