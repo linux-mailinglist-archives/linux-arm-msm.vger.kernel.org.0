@@ -2,87 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB4CC4EFFFB
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Apr 2022 11:11:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CFAF4F0029
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Apr 2022 11:39:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352788AbiDBJLc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Apr 2022 05:11:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57850 "EHLO
+        id S239783AbiDBJlX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Apr 2022 05:41:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239643AbiDBJLb (ORCPT
+        with ESMTP id S239794AbiDBJlV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Apr 2022 05:11:31 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AF3B532E1
-        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Apr 2022 02:09:40 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id qh7so403692ejb.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Apr 2022 02:09:40 -0700 (PDT)
+        Sat, 2 Apr 2022 05:41:21 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A1461427FC
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Apr 2022 02:39:30 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id f6-20020a1c3806000000b0038e4a0fc5easo2764431wma.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Apr 2022 02:39:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=kd0NXB1Zpr99nwzhwykwjlZXPnel4cWxpQfKUpkCMHk=;
-        b=IPrXv9vJtuIqqczOLMSmbtbpxKLQMRqoHRQqRTjVRFt4XO+cn+jGv3A0ddYp/tq7gY
-         Zg7teYhVeEfjJ8csVKtGys1Y6/lrBvrxsdVaGEio7GpsGA26NvKIok57F6Ww8nbIHQye
-         rXmxl63yx1oW+DKpT22urlehfD/nbAMpo9LvOn1G6icNPf2NIzuPi1KPPEaHk5bXYQ2L
-         yfj9ZgvUPumDQ7S7kDptsISup59+tDCEC99Hw/VHbN6fEhZp+NoZ6CIxy1fjYa9XekPR
-         serYvl4TidGxyJu9quyVUhjNX3aQyNJjetX9Z2KkDWVzjwvoeVb0n+VdPnbOPkm+mK4A
-         0aQQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aXj7BO+bBl0pqBjxQeNENw+58YReTBBaL4hobpryihU=;
+        b=vet3rbn/NG8QVw+yDszbyDWKY5L90KbtP9S0HjYYSY8QDBQ2EgIozScdmHkMB8JmfI
+         9JIiUpaE+NwLgmYolUdfJisSKANyb/qwg2Sq3P9NnTZxMnNLq9IO/K2zVgSkwIYsh+eW
+         rBuHQZdLU8mVvgc2sJDjN4n7+hp6Pe1m6JwGFUFSLnXRxcbTlUCOeUB8AVNB3FcgL728
+         MF6AycKkgJGiZYRYHceFjwk8HRzstF5lWwNbqsJM8fE4PteMNbNIrZ2ozchaXmxgQIW6
+         bWvaMBfB2sceHNAHaHux9nMl9bZFEMm04dCBb31tJph9jPZU4TVRmy4wxykfzLzpNkfh
+         tyJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=kd0NXB1Zpr99nwzhwykwjlZXPnel4cWxpQfKUpkCMHk=;
-        b=KBS5NFBjs2jAgQQgaAFUvXhWzYDrthW7JusgeKOdikE+0CZJQ6fzi+F/+h9QK1kowQ
-         tELA+2+z/OW1p+m1Wicdb6cECSyLMmj//NSjmIZJcn3Ih/wwfkLpEbVwMjO2R2ZPrTVn
-         qsP2ff7FxI330pLPa7TF0yi/iF/PAo/FAAx9+H1qZtMBskst1C6HfGOSHgFhNnTrJdq+
-         +zGxrYdpMrHT09QZMg6buI0JWh+KfHYXzWbOuqdZhfckXT//yNu2IfjDBW6yHCN30D9E
-         Hu79iu1vdcCQRM13+sjaJOQlr82DlYnZm6vYJJrXboo47dxTeeMXSa0fASm7qMaancRJ
-         CKKg==
-X-Gm-Message-State: AOAM530PWJ6fom6euTIndMPporgXovX4e3mP29Pr93K848MHaxUJf/X6
-        nSTI4YuM1k0PZgv6cMBFBWPMqQ==
-X-Google-Smtp-Source: ABdhPJwqleeVWzZcqz6QlP7/awNnzIZNAP/RE/+/3JTo9Oc/kx/lPCi9SIvYHyQ5AoA0h5pDpTMV4w==
-X-Received: by 2002:a17:907:3e16:b0:6df:b4f0:5cc2 with SMTP id hp22-20020a1709073e1600b006dfb4f05cc2mr3180696ejc.285.1648890579004;
-        Sat, 02 Apr 2022 02:09:39 -0700 (PDT)
-Received: from [192.168.0.170] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id o12-20020a50c90c000000b0041907e62024sm2192677edh.85.2022.04.02.02.09.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 02 Apr 2022 02:09:38 -0700 (PDT)
-Message-ID: <c93bdf12-bf53-9277-0394-5eaeea081183@linaro.org>
-Date:   Sat, 2 Apr 2022 11:09:37 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [RFC PATCH 1/4] dt-bindings: clock: qcom,gcc-sdm845: add parent
- power domain
-Content-Language: en-US
-To:     Stephen Boyd <sboyd@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Bean Huo <beanhuo@micron.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Taniya Das <tdas@codeaurora.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org
-References: <20220401145820.1003826-1-krzysztof.kozlowski@linaro.org>
- <20220401145820.1003826-2-krzysztof.kozlowski@linaro.org>
- <20220401232451.1B7A9C340F3@smtp.kernel.org>
+        bh=aXj7BO+bBl0pqBjxQeNENw+58YReTBBaL4hobpryihU=;
+        b=sYfjuFgiBDJnNNcJwiEGET2yoC8dNLhvpwgacOKby3aVmiCLp8nhH6X146XsdvEkka
+         sOFMd2SG9DBCT8eIKanJedRTsdaIngN/Xrt7d2LMZteIqk+pjK+OlBpUlUtxw95XkM4y
+         kfd+EsixHo8B1KzQkXK5A6hlY9DHlRFSTlg+R4pGVVtsMZhEqCyDRZciBEp+yUszTDl0
+         TMkgNP6TnKnMWjPGW15NJ/n2CLSu55jdVLTPM5jrQelYbqnloFHi4g0YYwnExd8F10GY
+         wKAZp1zQFAxx/i6RHYVaMCmkzmh1InbeLDL+VzolCUA54807QK5B+h741PZPewSN/1Wg
+         4UOQ==
+X-Gm-Message-State: AOAM532Rj5YfnUoIaiDtmGR5uWMa3Ieh1xsoqCAbdnWJ+e2ZBbrky3JX
+        FkTh4bWK/ADJmM2UGdfDvQIJfw==
+X-Google-Smtp-Source: ABdhPJx9Mu6P0y0Lvm9ZJupxsF1r0ICkLoSYcvm03bfXv+UG9HlYaDhP47N9pxGhwPLH5v6BWwXLRQ==
+X-Received: by 2002:a05:600c:3d8d:b0:38c:6f6e:e61a with SMTP id bi13-20020a05600c3d8d00b0038c6f6ee61amr11875820wmb.101.1648892368692;
+        Sat, 02 Apr 2022 02:39:28 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.gmail.com with ESMTPSA id y6-20020a05600015c600b00203fa70b4ebsm5265713wry.53.2022.04.02.02.39.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Apr 2022 02:39:28 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220401232451.1B7A9C340F3@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/3] ARM: dts: qcom: rename WCNSS child name to bluetooth
+Date:   Sat,  2 Apr 2022 11:39:17 +0200
+Message-Id: <20220402093919.50084-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.32.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,30 +72,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/04/2022 01:24, Stephen Boyd wrote:
-> Quoting Krzysztof Kozlowski (2022-04-01 07:58:17)
->> Allow Qualcomm GCC to register its parent power domain (e.g. RPMHPD) to
->> properly pass performance state from children.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>  Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml | 3 +++
->>  1 file changed, 3 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
->> index d902f137ab17..5fe1b2c42d5a 100644
->> --- a/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
->> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
->> @@ -43,6 +43,9 @@ properties:
->>    '#reset-cells':
->>      const: 1
->>  
->> +  powert-domains:
-> 
-> s/powert/power/
+The "bluetooth" is more popular and more descriptive than "bt", for a
+Bluetooth device.  The WCNSS DT schema will expect such naming.
 
-Thanks. This actually points to the fact I did not test this bindings
-change :(
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm/boot/dts/qcom-apq8064.dtsi | 2 +-
+ arch/arm/boot/dts/qcom-msm8974.dtsi | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Best regards,
-Krzysztof
+diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
+index 33a4d3441959..6eaa996272e5 100644
+--- a/arch/arm/boot/dts/qcom-apq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
+@@ -1548,7 +1548,7 @@ wcnss {
+ 
+ 					qcom,mmio = <&riva>;
+ 
+-					bt {
++					bluetooth {
+ 						compatible = "qcom,wcnss-bt";
+ 					};
+ 
+diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+index 2035be2fb8c4..0799dd4bfa2d 100644
+--- a/arch/arm/boot/dts/qcom-msm8974.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+@@ -930,7 +930,7 @@ wcnss {
+ 
+ 					qcom,mmio = <&pronto>;
+ 
+-					bt {
++					bluetooth {
+ 						compatible = "qcom,wcnss-bt";
+ 					};
+ 
+-- 
+2.32.0
+
