@@ -2,133 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 596C44EFEDD
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Apr 2022 07:13:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB4CC4EFFFB
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Apr 2022 11:11:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353747AbiDBFO3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Apr 2022 01:14:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55610 "EHLO
+        id S1352788AbiDBJLc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Apr 2022 05:11:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353750AbiDBFO2 (ORCPT
+        with ESMTP id S239643AbiDBJLb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Apr 2022 01:14:28 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A04A51905A6;
-        Fri,  1 Apr 2022 22:12:31 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id b15so4383831pfm.5;
-        Fri, 01 Apr 2022 22:12:31 -0700 (PDT)
+        Sat, 2 Apr 2022 05:11:31 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AF3B532E1
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Apr 2022 02:09:40 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id qh7so403692ejb.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Apr 2022 02:09:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Cmh3zBP9GsKXvL2pssHcTFPMISefgaLSJBLP3U0JXlQ=;
-        b=AoGYQZWG6wsdCVOGtMdF4xUeIPkQaO857bhsv+DdFDv8TAsgBuHcDnvGew1xll6gK5
-         klJwu4dxZcGZ7eQSROPJwcC+8p/a0sqnuL/fSoeZlIV8du8NOll29oVviZ5FmzNj9tAG
-         8WQ/UvBMM1sCbftS2oaY69leQOfS16+Svvf5SnXI+UXw/gghgbTjmpkAYV0jUWJnL3cR
-         cOzZC7kV2VXbDsMP7i7iv5CkTEPVIiRXxHFIkX9Gy1EA+q2eZo/Go6JdkMG6AkcjH7iv
-         Ap54wA3Gg4lQLaA/6whUmOcBY0gyIpB33Mv6MdA2MFXdGUp4/TnrSEdnZWeBPHHa/SzD
-         A3NA==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=kd0NXB1Zpr99nwzhwykwjlZXPnel4cWxpQfKUpkCMHk=;
+        b=IPrXv9vJtuIqqczOLMSmbtbpxKLQMRqoHRQqRTjVRFt4XO+cn+jGv3A0ddYp/tq7gY
+         Zg7teYhVeEfjJ8csVKtGys1Y6/lrBvrxsdVaGEio7GpsGA26NvKIok57F6Ww8nbIHQye
+         rXmxl63yx1oW+DKpT22urlehfD/nbAMpo9LvOn1G6icNPf2NIzuPi1KPPEaHk5bXYQ2L
+         yfj9ZgvUPumDQ7S7kDptsISup59+tDCEC99Hw/VHbN6fEhZp+NoZ6CIxy1fjYa9XekPR
+         serYvl4TidGxyJu9quyVUhjNX3aQyNJjetX9Z2KkDWVzjwvoeVb0n+VdPnbOPkm+mK4A
+         0aQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Cmh3zBP9GsKXvL2pssHcTFPMISefgaLSJBLP3U0JXlQ=;
-        b=JgqX5ULQJobdNwWgNvi06wiEJKvE3psANHdb94SnEONiudUqyeUl9EBdHXC1iVRegl
-         WC0y9S99DduH+yWFASVbi6ghqdCEkLpqX3eGzM40QLrId5DZEcBNRTvxIs5pJ0l87UzF
-         KeydrTuISVIpStJgMRHPRElm/jgfQa4aByw99t9AeHyKu82fYJeDhB+JUepYYyctgOrJ
-         USGJ3+ub0v20xHUhRJ3G268udT88zfCwlzzymSX+fJrWr0+qSYXAIxbiCQ7dGF2AAVXV
-         cynJ7Wl7kUCYJrrND2yWVHfpWf4P+Rw10OXLEPa2yoQRRdJMMSWoTYJVl10Bw7yPJ1Yv
-         BXaA==
-X-Gm-Message-State: AOAM530sDHZObovdvO8gfJB0QogCmCca22UblahJv8vfnkJZddTW7MyS
-        QGMulKoPkSrzuFsuSomGaVY=
-X-Google-Smtp-Source: ABdhPJzMIkQ8AIMYzYpn8QBnw3j8ONlhGOQgm+9wuTzXUlfUzp8VRj+3yZ9t8Ii9kLYIji7gvaHrPA==
-X-Received: by 2002:a63:1758:0:b0:381:effc:b48f with SMTP id 24-20020a631758000000b00381effcb48fmr17861363pgx.124.1648876351130;
-        Fri, 01 Apr 2022 22:12:31 -0700 (PDT)
-Received: from localhost.localdomain ([122.161.51.18])
-        by smtp.gmail.com with ESMTPSA id u10-20020a63b54a000000b00380ea901cd2sm3834721pgo.6.2022.04.01.22.12.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Apr 2022 22:12:30 -0700 (PDT)
-From:   Kuldeep Singh <singh.kuldeep87k@gmail.com>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mukesh Savaliya <msavaliy@codeaurora.org>,
-        Akash Asthana <akashast@codeaurora.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH 5/5] dt-bindings: qcom: geni-se: Remove common controller properties
-Date:   Sat,  2 Apr 2022 10:42:06 +0530
-Message-Id: <20220402051206.6115-6-singh.kuldeep87k@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220402051206.6115-1-singh.kuldeep87k@gmail.com>
-References: <20220402051206.6115-1-singh.kuldeep87k@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=kd0NXB1Zpr99nwzhwykwjlZXPnel4cWxpQfKUpkCMHk=;
+        b=KBS5NFBjs2jAgQQgaAFUvXhWzYDrthW7JusgeKOdikE+0CZJQ6fzi+F/+h9QK1kowQ
+         tELA+2+z/OW1p+m1Wicdb6cECSyLMmj//NSjmIZJcn3Ih/wwfkLpEbVwMjO2R2ZPrTVn
+         qsP2ff7FxI330pLPa7TF0yi/iF/PAo/FAAx9+H1qZtMBskst1C6HfGOSHgFhNnTrJdq+
+         +zGxrYdpMrHT09QZMg6buI0JWh+KfHYXzWbOuqdZhfckXT//yNu2IfjDBW6yHCN30D9E
+         Hu79iu1vdcCQRM13+sjaJOQlr82DlYnZm6vYJJrXboo47dxTeeMXSa0fASm7qMaancRJ
+         CKKg==
+X-Gm-Message-State: AOAM530PWJ6fom6euTIndMPporgXovX4e3mP29Pr93K848MHaxUJf/X6
+        nSTI4YuM1k0PZgv6cMBFBWPMqQ==
+X-Google-Smtp-Source: ABdhPJwqleeVWzZcqz6QlP7/awNnzIZNAP/RE/+/3JTo9Oc/kx/lPCi9SIvYHyQ5AoA0h5pDpTMV4w==
+X-Received: by 2002:a17:907:3e16:b0:6df:b4f0:5cc2 with SMTP id hp22-20020a1709073e1600b006dfb4f05cc2mr3180696ejc.285.1648890579004;
+        Sat, 02 Apr 2022 02:09:39 -0700 (PDT)
+Received: from [192.168.0.170] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.gmail.com with ESMTPSA id o12-20020a50c90c000000b0041907e62024sm2192677edh.85.2022.04.02.02.09.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 02 Apr 2022 02:09:38 -0700 (PDT)
+Message-ID: <c93bdf12-bf53-9277-0394-5eaeea081183@linaro.org>
+Date:   Sat, 2 Apr 2022 11:09:37 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: *
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [RFC PATCH 1/4] dt-bindings: clock: qcom,gcc-sdm845: add parent
+ power domain
+Content-Language: en-US
+To:     Stephen Boyd <sboyd@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Bean Huo <beanhuo@micron.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Taniya Das <tdas@codeaurora.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org
+References: <20220401145820.1003826-1-krzysztof.kozlowski@linaro.org>
+ <20220401145820.1003826-2-krzysztof.kozlowski@linaro.org>
+ <20220401232451.1B7A9C340F3@smtp.kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220401232451.1B7A9C340F3@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now that Geni serial engine controllers(spi, i2c and uart) have their
-own individual bindings, it's time to remove all common properties of
-the controllers from parent schema.
+On 02/04/2022 01:24, Stephen Boyd wrote:
+> Quoting Krzysztof Kozlowski (2022-04-01 07:58:17)
+>> Allow Qualcomm GCC to register its parent power domain (e.g. RPMHPD) to
+>> properly pass performance state from children.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml | 3 +++
+>>  1 file changed, 3 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
+>> index d902f137ab17..5fe1b2c42d5a 100644
+>> --- a/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sdm845.yaml
+>> @@ -43,6 +43,9 @@ properties:
+>>    '#reset-cells':
+>>      const: 1
+>>  
+>> +  powert-domains:
+> 
+> s/powert/power/
 
-Signed-off-by: Kuldeep Singh <singh.kuldeep87k@gmail.com>
----
- .../bindings/soc/qcom/qcom,geni-se.yaml       | 33 -------------------
- 1 file changed, 33 deletions(-)
+Thanks. This actually points to the fact I did not test this bindings
+change :(
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-index 9f72c676b22c..c8e1a4a87ba8 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml
-@@ -64,39 +64,6 @@ required:
-   - ranges
- 
- patternProperties:
--  "^.*@[0-9a-f]+$":
--    type: object
--    description: Common properties for GENI Serial Engine based I2C, SPI and
--                 UART controller.
--
--    properties:
--      reg:
--        description: GENI Serial Engine register address and length.
--        maxItems: 1
--
--      clock-names:
--        const: se
--
--      clocks:
--        description: Serial engine core clock needed by the device.
--        maxItems: 1
--
--      interconnects:
--        minItems: 2
--        maxItems: 3
--
--      interconnect-names:
--        minItems: 2
--        items:
--          - const: qup-core
--          - const: qup-config
--          - const: qup-memory
--
--    required:
--      - reg
--      - clock-names
--      - clocks
--
-   "spi@[0-9a-f]+$":
-     type: object
-     description: GENI serial engine based SPI controller. SPI in master mode
--- 
-2.25.1
-
+Best regards,
+Krzysztof
