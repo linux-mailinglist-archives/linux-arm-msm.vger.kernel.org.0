@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CEB054F05D0
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Apr 2022 21:29:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04EBF4F05D2
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Apr 2022 21:29:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231599AbiDBTa6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Apr 2022 15:30:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47554 "EHLO
+        id S245330AbiDBTa7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Apr 2022 15:30:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245261AbiDBTa5 (ORCPT
+        with ESMTP id S244313AbiDBTa6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Apr 2022 15:30:57 -0400
+        Sat, 2 Apr 2022 15:30:58 -0400
 Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F6D117AB0
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5256186DE
         for <linux-arm-msm@vger.kernel.org>; Sat,  2 Apr 2022 12:29:05 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id u16so8730677wru.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Apr 2022 12:29:04 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id q19so1781545wrc.6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Apr 2022 12:29:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jrL/DeeTGKDUmIO0s0ktdBOJGDCSZ62AedFscY9wS70=;
-        b=GSOVLA24K5u4gRiAJRRwlqQb5vfiM459ZzPdHPmLHzzSHAZrsiKa2QEiG+JNUagQ0c
-         UFbx2EkakeIznFH4jIn9Ou2Y64AzfbTgFTZ2rVJlOiW5+XycQSLRayqIb1x/wiWFuPA8
-         kW4ICAjre61QezGxCKQdIw6BA96uaa2hH3XjYkQ3z1qmXYEo9iZ/8bWNpWfyYGl0ZIeo
-         qutA/P8qBUyTBPXjGBQvwe+W+3RR0n+EhLfc6jF1PdNBqOGE2xOkvy3ltUOFgbmEWiuC
-         xnejCkeMkFgOrr87el1dovfaIw8wK8YCP1QjZmgA0lRWiwe8PZXmcpyEA/tSMNSuIOS7
-         JvCg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=1J4jbOIufB5Yu2O6S/NKhQdNITgZ9Yz7dpb+Le20jPo=;
+        b=T4v3d12rJQlw3CFQpT1kLsgXeAj9++lOhg9qxTIEayPA/Fyt92B5NhITcKkZ0Gi5J0
+         2OQW/nL1DLakKyzGvdVs2FCEkJ7u4PFr5Ezc7lBBYz7XqjF344Z4nrx9X58OFqzifK43
+         aAwVPLJUtyyGMip3cblWV+X2kzvpl29o4BL6U/27+UfWfHQKZMH7AvBxFMnuH+p2JEYJ
+         IZEbn3rIBXTe8Qh7eP/VGyWDC7E/PrfR1909NQpLHWuozQZATMKeZNMmVnEAikLeVZcR
+         SJNh3MTLMHgblQD4qBvFxDkqu+n5GmOe5q9WCbEd+x8kOutGEBs4W5wpfPaV6VceDndn
+         f5ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jrL/DeeTGKDUmIO0s0ktdBOJGDCSZ62AedFscY9wS70=;
-        b=SNLCzW3brX/zzxEWsw8dOt2Qmnp8IWW+ZO4IRmYPJ+9wauYM12akywGx8kDaGoZECT
-         iMAFgmeLD2X3/9EVxlaR8Cm1EHZfm/B8p7cTJ4gNwChI54DBK2T0ACpsnxDiZYpwa6Bz
-         CbAJutzNMzaYXh0V5K0/Bv8me4NmY5Y0Hj+g/s26kVfsd3eVfL2PC9fiRzkc/8eKBIIs
-         0Z/YZRvh8yV1EWq4uckAlOPR3Ly+s7JaZ0cisoNJukbXdIlGCalGZwnbkmrT2/tk2ALj
-         +r+/hl1FL/5FqkOder1KxAcq3UpT5/YDGUPMgJgyqYHUmZL0zc8tZYZYGHpj0pepJgsJ
-         Go3g==
-X-Gm-Message-State: AOAM5309gN+12KdrpXQIt5fubkqGSIulg0UsC7TGwHY0YORqXbkxrEYH
-        3pVWlI+4o5hNO/pp1TBGExw/ig==
-X-Google-Smtp-Source: ABdhPJwbL7AEpfTk3KuxN7pH4dRlvuCi5PU8hKd7ri96GJegxHG5exdihR/jcc/tRXnITrrcUlfOiw==
-X-Received: by 2002:a5d:5848:0:b0:203:fef3:888b with SMTP id i8-20020a5d5848000000b00203fef3888bmr11796295wrf.611.1648927743677;
-        Sat, 02 Apr 2022 12:29:03 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=1J4jbOIufB5Yu2O6S/NKhQdNITgZ9Yz7dpb+Le20jPo=;
+        b=L9KoZJYHN1016GhhIxbwuXEvxu1MgmFWSPhF6G/wnt0ql0GnMH+bBF50yq/XWQ91i7
+         rh1hLpy2vovudtpUD+uaDEfSIg4YDBgYUJCckL6T6RUFkAfb3WDXolZQQX1eipOWyXgp
+         yWazZDbZony175x6IswRAarADCHN9zBpryuqiLM/D07kpzxDEEYwSfqA/BFCKCl2sV0u
+         RjBfC/p+pwSLFLEhZngJpqv87daj+xWhID99Z2ygLEYk4wlUUAv3LVjwP4ejUg2q/ksF
+         ahvjtGehmvgGoust7Py3VUgBppTPuNZ1VLodRVsBMcvOnbvhlLqj3O4pAdCOrJCsXC85
+         HaBg==
+X-Gm-Message-State: AOAM533+JM50q3v9OMqCulVa0ZQOY5t4zqnfneXHyVnNtTzdVPm4w7xo
+        cyyvPdm8wqLLs0WwimfDF00ULA==
+X-Google-Smtp-Source: ABdhPJz97ibe4mL5V709J4FxeTP0QTsMPLW98CWBdTf+a0Ssiv4SXm6T3yHRtbiaJcdYa/4CYkWjeA==
+X-Received: by 2002:a5d:47a1:0:b0:204:9a7:22cd with SMTP id 1-20020a5d47a1000000b0020409a722cdmr12008587wrb.186.1648927744568;
+        Sat, 02 Apr 2022 12:29:04 -0700 (PDT)
 Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id y11-20020a056000168b00b002041af9a73fsm5770629wrd.84.2022.04.02.12.29.02
+        by smtp.gmail.com with ESMTPSA id y11-20020a056000168b00b002041af9a73fsm5770629wrd.84.2022.04.02.12.29.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Apr 2022 12:29:03 -0700 (PDT)
+        Sat, 02 Apr 2022 12:29:04 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -56,10 +56,12 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 1/2] arm64: dts: qcom: msm8994: override nodes by label
-Date:   Sat,  2 Apr 2022 21:28:58 +0200
-Message-Id: <20220402192859.154977-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 2/2] arm64: dts: qcom: msm8996: override nodes by label
+Date:   Sat,  2 Apr 2022 21:28:59 +0200
+Message-Id: <20220402192859.154977-2-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20220402192859.154977-1-krzysztof.kozlowski@linaro.org>
+References: <20220402192859.154977-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,35 +85,29 @@ easier to read.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- .../dts/qcom/msm8994-huawei-angler-rev-101.dts     | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996-mtp.dts | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-index 0e3dd48f0dbf..c1fb9a7d6fa4 100644
---- a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-@@ -27,15 +27,13 @@ aliases {
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-mtp.dts b/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
+index 6a1699a96c99..596ad4c896f5 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
+@@ -18,12 +18,10 @@ aliases {
  	chosen {
- 		stdout-path = "serial0:115200n8";
+ 		stdout-path = "serial0";
  	};
 +};
  
 -	soc {
--		serial@f991e000 {
+-		serial@75b0000 {
 -			status = "okay";
--			pinctrl-names = "default", "sleep";
--			pinctrl-0 = <&blsp1_uart2_default>;
--			pinctrl-1 = <&blsp1_uart2_sleep>;
 -		};
 -	};
-+&blsp1_uart2 {
++&blsp2_uart2 {
 +	status = "okay";
-+	pinctrl-names = "default", "sleep";
-+	pinctrl-0 = <&blsp1_uart2_default>;
-+	pinctrl-1 = <&blsp1_uart2_sleep>;
  };
  
- &tlmm {
+ &hdmi {
 -- 
 2.32.0
 
