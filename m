@@ -2,60 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FD314F03E7
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Apr 2022 16:22:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D004A4F0437
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Apr 2022 16:44:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238873AbiDBOYQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Apr 2022 10:24:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41886 "EHLO
+        id S1356733AbiDBOmY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Apr 2022 10:42:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236168AbiDBOYP (ORCPT
+        with ESMTP id S1356719AbiDBOmW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Apr 2022 10:24:15 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7511C13CA03
-        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Apr 2022 07:22:23 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id b24so6034310edu.10
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Apr 2022 07:22:23 -0700 (PDT)
+        Sat, 2 Apr 2022 10:42:22 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 590641EAE1
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Apr 2022 07:40:29 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id r10so368310eda.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Apr 2022 07:40:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=AMgcOOw5r9mv38XuA+c8CRwaFDTkeUsZRRq+V0PdcsY=;
-        b=ndRjC0RhMOJGBf5NZc9mOkR/bHebZ8B8V39sgXEZvBTOMKfN380968Na2TPAfrha+l
-         ZI9WodBoHES0w0Bp3iahPcQvrSvLGyEdKN9nzlOXYAno8LFwZbSXtL+Lc/tAJqOwEg1l
-         c+zclPub3nlJoZhvRhuCtyRf+bRdwySxsoovuLIJFRXx6ZDcMEoTBdzqNo267URsQr5J
-         7Sf8LB6qW65GLnhp6kQmzqluNbDqQxS41UCAI/nSNGTt8Wgzg19qt+gXBvZEupBKpxYx
-         IhHDskUw5bYaqEZWs8fz0XJt1vP+kkRC7pCQCmYequPos6I4Ouk9G9NfRueZhZHJ7Lq8
-         sFtw==
+        bh=XNA7JZlHCOkUJgQubK0e6uaBuAfi7LHL/HwfQfGUJqY=;
+        b=MZKmHtRdE/d/kZs2anM8GJZvVNaaX3G1SPUeftLFK9gW+DWkbyNRK6ulfS3D4T1yT8
+         AhUorGjiS6roW4BOK9VkNnU/stRAID6EO28ez4dPDkQ2Dr1woOuFtCzaMtNHoJzn894w
+         zqcvg2Oh9Z+tHf2qPo8qalIjZ7PQB3BXywkpLtDKLh7ffhsFu8mdqhn3sV1CivRjDJeV
+         i7O4/HXkdyuvpqjVogaVaWKD7y3tJnm7XaNGHRQG/JdzzYoXUp2wpXVMK1OJHIwBnNkQ
+         Y05V2/KmHuIWqREZL0sKDrw9VIL/vNDtgBWVxSkfIOYBpy7P+MKrjGaZeoZHPFvEXgGV
+         ylZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=AMgcOOw5r9mv38XuA+c8CRwaFDTkeUsZRRq+V0PdcsY=;
-        b=qNInG3Qfr8jVX2pP7cKfCzvOBCgvV7D+BnPyr5Q47yFk91N6YH5PtoKO6lTZ26XmBi
-         X+gzMZUt++TG1KCykImc0GjfcvlxnES11kQeG/Fc0SQJc7gVHftFyn/cI/optnHSwFKP
-         kghyGOqVpJOmZr9bta8mYX/a7gc+2pV74F8rQlGc1H96rgDFGZHuwcSquf5fat98x+4d
-         llU+WWaCS7TafSToamtGiQXO1tOIrAPWiwPHDw7krSCZkEqPTtN8lqXRAEJ4QMB+srYj
-         /Nm83EDRzTyI/VcKN/uKTP/N13njk5pMcdUPxj0V3ACw4/g5ToDEvXUdg35hd19OOeBa
-         DnUw==
-X-Gm-Message-State: AOAM533xGmiBTTpLqu7c5W3MffIm2hzn28p9Gqoqq4p1PJDdt5DOmp0N
-        nGOr9XNOooeH/YoByo0kYWrYVg==
-X-Google-Smtp-Source: ABdhPJyO41m5nOt35fQMdoxrpqwQOe/Hbl42lUbDUic9chKbI6pE3cOvTVsoxLEMtoeouWLa4B+qbw==
-X-Received: by 2002:aa7:d517:0:b0:419:16c0:f313 with SMTP id y23-20020aa7d517000000b0041916c0f313mr25542499edq.379.1648909342042;
-        Sat, 02 Apr 2022 07:22:22 -0700 (PDT)
+        bh=XNA7JZlHCOkUJgQubK0e6uaBuAfi7LHL/HwfQfGUJqY=;
+        b=l7K7Ggh+7xjqaGumKDunJfoD3f02W3641vouHkNxNANl4SRuHwvcFZq6cFkd3wQ/Fp
+         ZgFafBewJ/P7AsmHPdXTgCNPViiLv0SI0iOqp6DbJ6kqrgtFeRIIGynd6AE0tiRF+4CU
+         uzOaW9F/gxf8iVbJDMKBfqJ+Dq9HcwqDXSt3NdZYZzozZcfwawt2qKx1VHuyRSsMsOtb
+         UtDZylfRWIpQjpz/MCdL+SVR3UXSL8s/oRpO2wdUYtdGcqUOEGNcavRN+Kbgz7L1X5dT
+         kOj6zc4hT0c98jzE+QkLcjI5XMBm4yFkxn5IOrgwzcN8v61LSoibEQ/mzQXFKIJ3lMQz
+         8UFA==
+X-Gm-Message-State: AOAM532/DvTuM4FgF6LGnU240+N0tMwQ5ACAe7F0MVHthxcC06dxoorV
+        trBUtq5QpTxoEhm0arM9CSTchQ==
+X-Google-Smtp-Source: ABdhPJwfB7bogzwm+XNxHgXGVvJMn3iHK2ZRqopei35YEBOlAIMBCKMkBPEF833A1qJMt/T+ntpH8w==
+X-Received: by 2002:aa7:d6d8:0:b0:419:886:dede with SMTP id x24-20020aa7d6d8000000b004190886dedemr25491467edr.258.1648910427904;
+        Sat, 02 Apr 2022 07:40:27 -0700 (PDT)
 Received: from [192.168.0.171] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
-        by smtp.gmail.com with ESMTPSA id h30-20020a056402095e00b00412b81dd96esm2461485edz.29.2022.04.02.07.22.21
+        by smtp.gmail.com with ESMTPSA id rh26-20020a17090720fa00b006e0da7ef847sm2176812ejb.13.2022.04.02.07.40.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 02 Apr 2022 07:22:21 -0700 (PDT)
-Message-ID: <f737fd47-e557-45af-035b-af29a88e22e6@linaro.org>
-Date:   Sat, 2 Apr 2022 16:22:20 +0200
+        Sat, 02 Apr 2022 07:40:27 -0700 (PDT)
+Message-ID: <ba93d501-56db-143c-164a-333ae573d9f0@linaro.org>
+Date:   Sat, 2 Apr 2022 16:40:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
-Subject: Re: [PATCH 6/6] dt-bindings: power: supply: qcom,smb2: add bindings
- for smb2 driver
+Subject: Re: [PATCH 2/6] arm64: dts: qcom: pmi8998: add smb2 node
 Content-Language: en-US
 To:     Caleb Connolly <caleb.connolly@linaro.org>,
         Sebastian Reichel <sre@kernel.org>,
@@ -68,9 +67,9 @@ To:     Caleb Connolly <caleb.connolly@linaro.org>,
 Cc:     Amit Pundir <amit.pundir@linaro.org>,
         Sumit Semwal <sumit.semwal@linaro.org>
 References: <20220401202643.877609-1-caleb.connolly@linaro.org>
- <20220401202643.877609-7-caleb.connolly@linaro.org>
+ <20220401202643.877609-3-caleb.connolly@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220401202643.877609-7-caleb.connolly@linaro.org>
+In-Reply-To: <20220401202643.877609-3-caleb.connolly@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,95 +83,28 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 01/04/2022 22:26, Caleb Connolly wrote:
-> Add devicetree bindings for the Qualcomm PMI8998/PM660 SMB2 charger
-> drivers.
+> Add a node for the smb2 charger hardware found on the pmi8998.
 > 
 > Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 > ---
->  .../bindings/power/supply/qcom,smb2.yaml      | 68 +++++++++++++++++++
->  1 file changed, 68 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/power/supply/qcom,smb2.yaml
+>  arch/arm64/boot/dts/qcom/pmi8998.dtsi | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/power/supply/qcom,smb2.yaml b/Documentation/devicetree/bindings/power/supply/qcom,smb2.yaml
-> new file mode 100644
-> index 000000000000..1bea1fef78b8
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/power/supply/qcom,smb2.yaml
-> @@ -0,0 +1,68 @@
-> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/power/supply/qcom,smb2.yaml#
+> diff --git a/arch/arm64/boot/dts/qcom/pmi8998.dtsi b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+> index da10668c361d..b98dad166a0b 100644
+> --- a/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+> @@ -9,6 +9,21 @@ pmi8998_lsid0: pmic@2 {
+>  		#address-cells = <1>;
+>  		#size-cells = <0>;
+>  
+> +		pmi8998_smb2: smb2@1000 {
 
-Hi,
+Generic node name please, so "charger". Have in mind that PMIC
+(parent's) schema might require it.
 
-Are you sure "smb2" is a real Qualcomm versioning? IOW, is there going
-to be smb3 in the future? If not, better to just name the file according
-to model, so like compatible and like other existing schemas from Qualcomm.
-
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm PMI8998/PM660 Switch-Mode Battery Charger "2"
-> +
-> +maintainers:
-> +  - Caleb Connolly <caleb.connolly@linaro.org>
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,pmi8998-smb2
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    items:
-> +      - description: usb plugin
-
-Just maxItems:1 (description is obvious and matches names).
-
-> +
-> +  interrupt-names:
-> +    items:
-> +      - const: usb-plugin
-> +
-> +  io-channels:
-> +    items:
-> +      - description: USB in current in uA
-> +      - description: USB in voltage in uV
-> +
-> +  io-channel-names:
-> +    items:
-> +      - const: usbin_i
-> +      - const: usbin_v
-> +
-
-What about monitored-battery? How do you configure the battery
-characteristics?
-
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - interrupt-names
-> +  - io-channels
-> +  - io-channel-names
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +    pmic {
-> +      #address-cells = <1>;
-> +      #size-cells = <0>;
-> +      #interrupt-cells = <4>;
-> +
-> +      smb2@1000 {
-
-Generic node name please, so "charger".
-
-
+If it exists (I did not check), it should reference also your charger's
+schema.
 
 Best regards,
 Krzysztof
