@@ -2,72 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EDA674F05C2
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Apr 2022 21:24:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CF8F4F05CA
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Apr 2022 21:28:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229772AbiDBT0a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Apr 2022 15:26:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34668 "EHLO
+        id S244135AbiDBTai (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Apr 2022 15:30:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229525AbiDBT03 (ORCPT
+        with ESMTP id S245174AbiDBTae (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Apr 2022 15:26:29 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDECD630B;
-        Sat,  2 Apr 2022 12:24:37 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id l4-20020a17090a49c400b001c6840df4a3so5458971pjm.0;
-        Sat, 02 Apr 2022 12:24:37 -0700 (PDT)
+        Sat, 2 Apr 2022 15:30:34 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D21411C32;
+        Sat,  2 Apr 2022 12:28:41 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id q19so4986959pgm.6;
+        Sat, 02 Apr 2022 12:28:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ZnjVaHo269IMr+SUq74LCC3uGMfBdmt7GCaF3QmVvCE=;
-        b=GHB/uJM+vJX+vvTn2qUCwpTkk8vOGsPT8Tr1nh95oL/VKpjppciF6MJw6Trp8vhRhi
-         0wH+6gBwKmTNBeHyLUSVxfLeA9Fz/GnxzlarmEYJ8FRoyFSttJy/goe//b5Es8xwYWy7
-         H3cMxhPpWJpIqbCQ+3WKGhUQg4qyqPFmldOLWzP/zb/vo4vwNEnlZcTUFpiTO49O0O1B
-         MwoTC5jz2HAXrCUC55opvn69sS/maMNPibpyKA+cWnNzvQgLRX5ByqEBKf72XcE/YAwL
-         CcacsTg1DGNsJfna/O2OrWeaj4mZctbDKj4xjIUkEer3V+NKhBFlSjI9FfdepTknKYqg
-         1pcw==
+        bh=NYmWHxsbszuddO/9ZgyitqdZJ9wKMExVzrKSZn+zI80=;
+        b=EbMO+erhE+EXhVgg6zPVds4yiSEJBdIfpx9B5sdM71XUv5xOxR0/TThv/ILXxRXHKT
+         9MJ6w862H55cADAfzZC1MOTf1ebq21PIGb7Huh23Qpw8dPEW5pW7gNPH5jy0wyb12MQ9
+         uAXO0jNf1vssASThYFaJV/tkXh1OBTEzmzgM7yEd4uya2Wr2OqvkhVSWn00GEwKbDZoY
+         RjNBGoyLdNueku3VFemvquAjlqZb94vghF9OtbpOunNyaPLx97XKGFPBhF/BXz8fLDaX
+         fwGFoJXIB9lOPmy9HuCuRyPxufWQdWRJZWXuQFAFfX3/JyN11TLeZWwbWXSxU1mVMxiO
+         cEUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ZnjVaHo269IMr+SUq74LCC3uGMfBdmt7GCaF3QmVvCE=;
-        b=m+z1ookDyrougdqM2l1hTuHewOjchbmXvEikcd/1czjhGDE4nnb9JG79IW81bSJHI8
-         mew3p7lgDHPDsPvevK+Fz2lMctJpc301amXe4uasdrLndQU24lc215wXsIulq51l0p7W
-         gn+sqgJlNh1rNnIkJRGfHuFX2XwaTebmJ0qcj2yD/mFS3o2kR4UDQ+lgYhVGsMDJ8H6w
-         9Ox5jWEWvQchoRuQfqQyLMxzFW39Lh/L2/bSYCyLTEI5sLmHRYyYwavKxvFJ7dYjWDQa
-         Yr1ApIZPbQVREGnUGCcQVO0fXSn9cWXyK9ERorG41KnkgjvpwOAJxTfnGN8bTIGqjIdT
-         OiOg==
-X-Gm-Message-State: AOAM531IyuB5s1aHFaR7IFKn3vVyLCla9xtNCpLCjQvMylY+mihM1LLq
-        5Fv1WpnqUP1PzuDcVO8evlk=
-X-Google-Smtp-Source: ABdhPJyC4Q480HCFcbIyNWI1F3oGALRY+TSJBGuxxw98j5g+bj4mFyZLE42zQgrlhwu4zxU2ToWdjg==
-X-Received: by 2002:a17:90a:de83:b0:1c7:3d7b:7a5d with SMTP id n3-20020a17090ade8300b001c73d7b7a5dmr18067420pjv.242.1648927477342;
-        Sat, 02 Apr 2022 12:24:37 -0700 (PDT)
+        bh=NYmWHxsbszuddO/9ZgyitqdZJ9wKMExVzrKSZn+zI80=;
+        b=z9Xnn3VU42gjRC24CJmgxBn/eKWMx74f4kygn0stY44qdKytM7/0qpXyeo7dAAMAtQ
+         OQlc/MLnY9y9p8iK0DMZ0jRpob9CtimxItAHn1d30wDeOqhcwPnODwFXkpPGjYgSsjin
+         1977G43T44CN0Ne2wEmsCrxUA3+HxHW4/0uvOwd/h5VRw5JHDLgf/PlNHITFOJB15CoX
+         agwFxRnkJk0HGWeI7P5+iAnqxlqVWFyDek4Ckyp07TcPk/XQzE8lK2tamDd7VuhW7FDP
+         QW+9Wyci3CzGAirk1xEgvMzMRcCv+Dk1tU5t4U4BSqmLx95yHkqICs1tsWZU+LO2tkq5
+         dodg==
+X-Gm-Message-State: AOAM530+0zLA3N9gWLG2vfBnHvFmEvbOAbjsuD0q27ij5/1HbMTpnaPM
+        msEpvItCZCHxmqX57kCOaHE=
+X-Google-Smtp-Source: ABdhPJyg1jzGolvWVgn42aPVnRf6dhTQqPE8ZoXM3QCtPfCaT3mCffgKqVnBqEMZal/tBxK42Fh1ow==
+X-Received: by 2002:a63:d13:0:b0:381:f043:c627 with SMTP id c19-20020a630d13000000b00381f043c627mr20166647pgl.168.1648927720859;
+        Sat, 02 Apr 2022 12:28:40 -0700 (PDT)
 Received: from 9a2d8922b8f1 ([122.161.51.18])
-        by smtp.gmail.com with ESMTPSA id d23-20020a17090a02d700b001bf6ef9daafsm5832785pjd.38.2022.04.02.12.24.33
+        by smtp.gmail.com with ESMTPSA id a24-20020a637f18000000b003821e17819csm5796449pgd.61.2022.04.02.12.28.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Apr 2022 12:24:37 -0700 (PDT)
-Date:   Sun, 3 Apr 2022 00:54:30 +0530
+        Sat, 02 Apr 2022 12:28:40 -0700 (PDT)
+Date:   Sun, 3 Apr 2022 00:58:34 +0530
 From:   Kuldeep Singh <singh.kuldeep87k@gmail.com>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mukesh Savaliya <msavaliy@codeaurora.org>,
+        Akash Asthana <akashast@codeaurora.org>,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-serial@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 3/5] dt-bindings: serial: Update Qualcomm geni based QUP
- uart bindings
-Message-ID: <20220402192430.GA35664@9a2d8922b8f1>
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 4/5] dt-bindings: qcom: geni-se: Update uart schema
+ reference
+Message-ID: <20220402192834.GB35664@9a2d8922b8f1>
 References: <20220402051206.6115-1-singh.kuldeep87k@gmail.com>
- <20220402051206.6115-4-singh.kuldeep87k@gmail.com>
- <523c6f46-54eb-22f0-221c-981879b8311e@linaro.org>
+ <20220402051206.6115-5-singh.kuldeep87k@gmail.com>
+ <78f475c2-c6ed-7f3a-22ec-f5f290cfd107@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <523c6f46-54eb-22f0-221c-981879b8311e@linaro.org>
+In-Reply-To: <78f475c2-c6ed-7f3a-22ec-f5f290cfd107@linaro.org>
 X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,
@@ -79,27 +80,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Apr 02, 2022 at 05:37:57PM +0200, Krzysztof Kozlowski wrote:
+On Sat, Apr 02, 2022 at 05:39:18PM +0200, Krzysztof Kozlowski wrote:
 > On 02/04/2022 07:12, Kuldeep Singh wrote:
-> > Similar to i2c controller, move geni based QUP uart controller bindings
+> > We now have geni based QUP uart controller binding in place as
 > 
-> s/i2c/I2C/
 > s/uart/UART/
 > 
-> > out from parent schema to an individual binding and let parent refer to
-> > child schema later on. Uart bindings also stand incomplete right now
+> Similar to your previous commit - this could be one, max two sentences...
 > 
-> s/Uart/UART/
+> > dt-bindings/serial/qcom,serial-geni-qcom.yaml similar to other
+> > controllers, update reference in parent schema and while at it, also
+> > remove properties defined for the controller from commown wrapper.
 > 
-> > similar to i2c, complete it along this process.
+> s/commown/common/
 > 
-> s/i2c/I2C/
-> 
+> > 
+> > Signed-off-by: Kuldeep Singh <singh.kuldeep87k@gmail.com>
+> > ---
+> >  .../bindings/soc/qcom/qcom,geni-se.yaml        | 18 +-----------------
+> >  1 file changed, 1 insertion(+), 17 deletions(-)
+> > 
 > 
 > 
 > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Great thanks!
-Will update accordingly.
+Thanks, will update.
 
 -Kuldeep
