@@ -2,68 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D7BFC4F0C52
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Apr 2022 21:39:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D634D4F0C54
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Apr 2022 21:40:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234929AbiDCTlM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 3 Apr 2022 15:41:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47272 "EHLO
+        id S1352730AbiDCTmU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 3 Apr 2022 15:42:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376345AbiDCTlK (ORCPT
+        with ESMTP id S1376349AbiDCTmT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 3 Apr 2022 15:41:10 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 360A425C6D
-        for <linux-arm-msm@vger.kernel.org>; Sun,  3 Apr 2022 12:39:16 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id p10so13577250lfa.12
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Apr 2022 12:39:16 -0700 (PDT)
+        Sun, 3 Apr 2022 15:42:19 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 859DA27B3C
+        for <linux-arm-msm@vger.kernel.org>; Sun,  3 Apr 2022 12:40:23 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 17so10386632ljw.8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Apr 2022 12:40:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7VM8CbThF6Gfm096iREz5PHHwbZVCkkG37DDfJjxp9Y=;
-        b=Z8unI6Go29aAgORJ25vbR338yeGnLq2xyoSnTiWTNMSEqsNPevoigCjBJDa/u/NvMW
-         q+xA8SIgqdhJq81bdsfgyY9WGl9v4u4KE2XUjzBY8pXoFOq585vIfGzLmVNNaNG0bts8
-         oFy4bdL1EK4QGJTA8ofrlNUW6ZfpoxEILMGyeky2RWywETtBWJB+e1do/r1Pjy1JOcFp
-         5GpIWTDuLgElRaioZ4rkt4wNyUjew1oSeC80dgGyYvshIzTomezHdvHqcT/GTDFSJ9GB
-         FWgV+/9fBlVfreVlgurzGjskP4+uiqdW9UrKfbIG+5/CagRsq5Gnz2qPZuzmuN6YjJHl
-         rbJQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=HtO1Op4EULGuNh03X4DV2PvRHFpqexefkL4qM7EQ8hs=;
+        b=Vva63TToIflctX178TlzjoBSwvG9ymyH8fkUFzsJbWemLSthhs3fmUiyct2jJXfuul
+         cBWrmGUChH7mrrtvKlbT+UvTMA1kr4EGroRz89d9ZgRjBKqjhw8b6Pjx9Drm+2KP3ffr
+         qCaQcnpudkB1x6f/TsesEIgup+s8tupM0OkNckNeY94nH0LSyoG4CwZboW/Hdt25PAcJ
+         sQFqduKzh+wRrNkQBH2bKey2AY958WP2O9dI5/Wdtz/wZ0MDwOZqcOy8Lz7GFJgKEqMC
+         KQo46IBKc9PhJAb+EVBtnQVsPyqsfla9tpQgL26rsToQlejCjGBroM2zOCQ3JxObDDsq
+         /ggw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7VM8CbThF6Gfm096iREz5PHHwbZVCkkG37DDfJjxp9Y=;
-        b=hO8T+vn1T1ZVCs74c20RHh3LT606N2EIQEIwGI2l97Ah2zyuoxI9O3OgnyAbp2MV7Q
-         3WZe/Egeyj44D3m86DSzy3Jdnqtm9Kzyjvha/o7XUvRAPIFZiziLG47Cfd92+C475Plp
-         OplU7P/PD/zT3DMv6IY2Xwoj/kW0fx/wDEV01sDk3hmjMNxoxqlxmsvDCj9OTqxlr4Us
-         wSvt9zRG/QMKfi+85QrjOXVveiwO6G8Er+T9JDlAXa1nIoLS75RRc1GfEolp2+erFLzs
-         bqN7ZEuFujhEHDy6NeeeUtj2I9Hx+nMdBXjvR1sQseS25dL+wRHBUS8BgdGUsivL2UPz
-         D0+Q==
-X-Gm-Message-State: AOAM532sqJuRoM0v5ghopNzqJ2VnVgav12j5E6GwU3d3a+31fqzpFCV/
-        KeJo1zqkTlg+PRbudYLBdfbUpg==
-X-Google-Smtp-Source: ABdhPJzF9ne/fsGprG3xyDHdGBQprPEnRdvQWJA6/H7pOXY7Zj9IOsf024C3OUKVz9TAMQcGWKoWzw==
-X-Received: by 2002:a05:6512:1685:b0:44a:36e5:aa23 with SMTP id bu5-20020a056512168500b0044a36e5aa23mr20148504lfb.403.1649014754490;
-        Sun, 03 Apr 2022 12:39:14 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id y37-20020a0565123f2500b0044a1e1c6b37sm900903lfa.53.2022.04.03.12.39.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Apr 2022 12:39:13 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: [PATCH 2/2] arm64: dts: qcom: apq8096-db820c: enable MSS node
-Date:   Sun,  3 Apr 2022 22:39:11 +0300
-Message-Id: <20220403193911.1393920-3-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220403193911.1393920-1-dmitry.baryshkov@linaro.org>
-References: <20220403193911.1393920-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=HtO1Op4EULGuNh03X4DV2PvRHFpqexefkL4qM7EQ8hs=;
+        b=s9jlXdiXgbHNds3fwdo9zeUD3k8ATnFalShO9JSn7/4kOGvkwJItyre3Dh9yG14kat
+         THLEB7ad9Vcxb6fwlBTloamCkUstQ/zxYIHHLOh4sXiuvhTFuhkSE4NcQ9zzLWElzlDX
+         oN7RSrgaPjiD6oln5lkP6c2+X6G9sGxezNi4zy0u16nqg8DU3n3EuUFDzRg5omnRnLB6
+         HLLgQqVnoCEqCK8G/KljeEt6O4tgxYBd+46QcNuryVN/VqSYvoj9lKM1SFQ35wU34bQq
+         Ix+ysJa+Ox8zlEyZuMMp11oTAhGaMcSndUQcwqRazI1s9RgOu0Fj5ayRt73Bkiip9Qdg
+         J5oQ==
+X-Gm-Message-State: AOAM5328ST5cItM8C9hpAKd/mVjKPfx0YKjx2F3ZTVTlHaU40cV+DJ7o
+        Wh55tVGmVbdlwo53a+dJxrxXpMYTIKSyeEjoOsY=
+X-Google-Smtp-Source: ABdhPJw7jctSDj8NStIfPObweDUKTSouSVeuWxido0zNdu27djMaTmXtm8LsIEAvN6zkHp/iSjViQA==
+X-Received: by 2002:a2e:3615:0:b0:24a:fc28:f0b3 with SMTP id d21-20020a2e3615000000b0024afc28f0b3mr10332615lja.4.1649014821787;
+        Sun, 03 Apr 2022 12:40:21 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id z16-20020a2e9650000000b0024af767c536sm860592ljh.19.2022.04.03.12.40.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 03 Apr 2022 12:40:21 -0700 (PDT)
+Message-ID: <19015645-86ce-5a7e-e2a7-d4af01417b74@linaro.org>
+Date:   Sun, 3 Apr 2022 22:40:20 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2 1/5] arm64: dts: qcom: msm8996: Revamp reserved memory
+Content-Language: en-GB
+To:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Raffaele Tranquillini <raffaele.tranquillini@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20210926190555.278589-1-y.oudjana@protonmail.com>
+ <20210926190555.278589-2-y.oudjana@protonmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20210926190555.278589-2-y.oudjana@protonmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,31 +85,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-APQ8096 provides a 'modem' with reduced functionality, mainly targeting
-location services. Enable corresponding device tree node.
+On 26/09/2021 22:06, Yassine Oudjana wrote:
+> Fix a total overlap between zap_shader_region and slpi_region, and rename
+> all regions to match the naming convention in other Qualcomm SoC device trees.
+> 
+> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/apq8096-db820c.dts | 6 ++++++
- 1 file changed, 6 insertions(+)
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> #db820c
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-index f623db8451f1..56e54ce4d10e 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-@@ -258,6 +258,12 @@ &mmcc {
- 	vdd-gfx-supply = <&vdd_gfx>;
- };
- 
-+&mss_pil {
-+	status = "okay";
-+	pll-supply = <&vreg_l12a_1p8>;
-+	firmware-name = "qcom/apq8096/mba.mbn", "qcom/apq8096/modem.mbn";
-+};
-+
- &pm8994_resin {
- 	status = "okay";
- 	linux,code = <KEY_VOLUMEDOWN>;
 -- 
-2.35.1
-
+With best wishes
+Dmitry
