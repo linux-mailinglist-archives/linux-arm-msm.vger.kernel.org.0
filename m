@@ -2,129 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28A124F09FA
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Apr 2022 15:33:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 915734F0A23
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Apr 2022 16:20:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358878AbiDCNdY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 3 Apr 2022 09:33:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45844 "EHLO
+        id S1349448AbiDCOWd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 3 Apr 2022 10:22:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243404AbiDCNdX (ORCPT
+        with ESMTP id S236161AbiDCOWd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 3 Apr 2022 09:33:23 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 148A033E37;
-        Sun,  3 Apr 2022 06:31:30 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id x14so3125532pjf.2;
-        Sun, 03 Apr 2022 06:31:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=iYOSYhZyZIBQLp1UBX/AcUZuU6Qi+woR07oj0XKgFQw=;
-        b=K1mjKxx51Aa/MI1Xhljs2Pkx6j5hZi/6WPP6vp50KwApqAZqv81zZzV9X1I183uUgY
-         b9hvxSCPR4XqZl4yBVwNszIxyyucibQ0dUUWHWh3y8A0nZGBSsNww5MBkmfc3HWS60IK
-         k8SFTXLJUZOGy9SRt+dD18CBHtAZCPMOZ1Yu60nbSshOBwJQkqOTCAZDjRBEfkfSbB6y
-         LNCxY6RojeTu918Ju5KCnUjULXHLk+sTBZE0vnJbegIahl0szjONhc2oV49hADyifVAn
-         X081llrh6vtR8xNBzqtSkiudHvuK9LQ5TzK0M0hHfsVWF8xJawxCa63Q0YXNO9PyALQS
-         Rdcw==
+        Sun, 3 Apr 2022 10:22:33 -0400
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AF93396A1;
+        Sun,  3 Apr 2022 07:20:38 -0700 (PDT)
+Received: by mail-ot1-f44.google.com with SMTP id n19-20020a9d7113000000b005cd9cff76c3so5577360otj.1;
+        Sun, 03 Apr 2022 07:20:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=iYOSYhZyZIBQLp1UBX/AcUZuU6Qi+woR07oj0XKgFQw=;
-        b=Jql18lnQSG9s87BmLRa9oUeG9mkcakxF/59F0dyKu8SVaPaR6+BTIVb5F6KbxqDIL4
-         kvVVB0fBlAHHUsD29A0wuL/EPeiUVO1Ai2zCEgE+S4cvfMsiLU7hyjkGHI1EdJsFm8ZO
-         aNRogcSlZGr1FdDUf8SF6fMi6WhsMfscrI40msSVX3q2nYEyTzP6H7eE7aHS+FTvTEx5
-         VMDYoFQ2A5//IiwkN3BJ9ePUVbrfE288B86h/8K894bk7oJ47u9n2TIzgjHjHohKzjBt
-         7PsMghKACu1XeEVTyQ3FqEI3PPuE5ZK4n0kINMaBDfVt31LAoELN/sj5RTIPkz8Qfnhq
-         Ey0g==
-X-Gm-Message-State: AOAM5302T5suTZUUc6yZDnw4SL7BwUlW0hYl6DzcFLV3XwSMknMYgYRy
-        oBrg71tbdAYx4xj3sr3VYl/gk6dy75cYVw==
-X-Google-Smtp-Source: ABdhPJzIQXZ9mVJBo6x8vbubXfMxe7SwZ1F27TTy+x2h5l84R7Nu3cCmwCfmNdl/uEFWKnRTWHgleQ==
-X-Received: by 2002:a17:902:6b0a:b0:154:6527:8ddf with SMTP id o10-20020a1709026b0a00b0015465278ddfmr19120740plk.154.1648992689487;
-        Sun, 03 Apr 2022 06:31:29 -0700 (PDT)
-Received: from 9a2d8922b8f1 ([122.161.51.18])
-        by smtp.gmail.com with ESMTPSA id bv8-20020a056a00414800b004fafb37f293sm8351692pfb.209.2022.04.03.06.31.25
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=IhdvutP6+1VN96Sw+l5rljGDZzsDxpR3h7q1f/N7UZo=;
+        b=ifeO/0nr8m0s/2shOX7IKX9aVXd9LriBiEeK8vAvxvajBL2YfxBGMPaGG9TnLH++Lh
+         a3eSo1M+FpOfH52OT5Xhg4Hq5TK/De3JoUwl2UVFClqwSae3y7twKwFwy7BQ9uTJLFPq
+         PeS7RvKArYT6euY3wovGMLfXtXMP+DjxDXZ3ukIo2iIuCInJnYSMDUzs4UXEXe9/lTky
+         ZIqsUL3n36OB/qAqNLGnCKFLJes0+w8bubK32p28pHCWdoAfmPC/jWy4KK7aO7LPNLOP
+         K+dwfR3ExaMVLQ63JWw5pnMtM2MvLzmyLflRuXqfr38aO8fk9MPvv5URaVpX2aVDIzVD
+         k1FA==
+X-Gm-Message-State: AOAM531sLtIZHVpY1R9J+C1hVPBL8XvfYVwBUBSMLWMVxOCY+EAOLdZu
+        VTns3u/sgGr9nRotFVhZ/w==
+X-Google-Smtp-Source: ABdhPJwL6nKTkad4e13KB87xfRjBKcTmMkYqLyj+VlysWvRbdX14GGrw5+09grM+gkgg3WSF68Touw==
+X-Received: by 2002:a05:6830:34a1:b0:5c4:3dca:b666 with SMTP id c33-20020a05683034a100b005c43dcab666mr10640719otu.328.1648995637852;
+        Sun, 03 Apr 2022 07:20:37 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id 190-20020a4a0dc7000000b003244ae0bbd5sm3032383oob.7.2022.04.03.07.20.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Apr 2022 06:31:29 -0700 (PDT)
-Date:   Sun, 3 Apr 2022 19:01:22 +0530
-From:   Kuldeep Singh <singh.kuldeep87k@gmail.com>
+        Sun, 03 Apr 2022 07:20:37 -0700 (PDT)
+Received: (nullmailer pid 3013370 invoked by uid 1000);
+        Sun, 03 Apr 2022 14:20:36 -0000
+From:   Rob Herring <robh@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Caleb Connolly <caleb.connolly@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+Cc:     Mark Brown <broonie@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Amit Pundir <amit.pundir@linaro.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Subject: Re: [PATCH 6/6] dt-bindings: power: supply: qcom,smb2: add bindings
- for smb2 driver
-Message-ID: <20220403133122.GA49428@9a2d8922b8f1>
-References: <20220401202643.877609-1-caleb.connolly@linaro.org>
- <20220401202643.877609-7-caleb.connolly@linaro.org>
- <20220403071426.GA49153@9a2d8922b8f1>
- <798f0244-95dd-cf2d-7bc5-02c72c7fa327@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <798f0244-95dd-cf2d-7bc5-02c72c7fa327@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        linux-spi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Kuldeep Singh <singh.kuldeep87k@gmail.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-serial@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org
+In-Reply-To: <20220402184011.132465-8-krzysztof.kozlowski@linaro.org>
+References: <20220402184011.132465-1-krzysztof.kozlowski@linaro.org> <20220402184011.132465-8-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v3 7/9] dt-bindings: serial: qcom,msm-uartdm: convert to dtschema
+Date:   Sun, 03 Apr 2022 09:20:36 -0500
+Message-Id: <1648995636.595500.3013369.nullmailer@robh.at.kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Apr 03, 2022 at 09:56:25AM +0200, Krzysztof Kozlowski wrote:
-> On 03/04/2022 09:14, Kuldeep Singh wrote:
-> > On Fri, Apr 01, 2022 at 09:26:43PM +0100, Caleb Connolly wrote:
-> >> Add devicetree bindings for the Qualcomm PMI8998/PM660 SMB2 charger
-> >> drivers.
-> >>
+On Sat, 02 Apr 2022 20:40:09 +0200, Krzysztof Kozlowski wrote:
+> Convert the Qualcomm MSM Serial UARTDM bindings to DT Schema.
 > 
-> (...)
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../bindings/serial/qcom,msm-uartdm.txt       |  81 -------------
+>  .../bindings/serial/qcom,msm-uartdm.yaml      | 112 ++++++++++++++++++
+>  2 files changed, 112 insertions(+), 81 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/serial/qcom,msm-uartdm.txt
+>  create mode 100644 Documentation/devicetree/bindings/serial/qcom,msm-uartdm.yaml
 > 
-> > 
-> >> +    pmic {
-> >> +      #address-cells = <1>;
-> >> +      #size-cells = <0>;
-> >> +      #interrupt-cells = <4>;
-> >> +
-> >> +      smb2@1000 {
-> >> +        compatible = "qcom,pmi8998-smb2";
-> >> +        reg = <0x1000>;
-> >> +
-> >> +        interrupts = <0x2 0x13 0x4 IRQ_TYPE_EDGE_BOTH>;
-> >> +        interrupt-names = "usb-plugin";
-> >> +
-> > 
-> > In-between new lines may not be required.
-> > And DTs use tabs instead of 2 spaces, we can follow that here also.
-> 
-> The DT examples in bindings use spaces. Either two (like YAML) or four
-> (for easier reading).
 
-ok, since example snippet is taken from DT that's why I said four
-spaces(tab) as it will be closest to actual env.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-> 
-> > 
-> >> +        io-channels = <&pmi8998_rradc 3>,
-> >> +                      <&pmi8998_rradc 4>;
-> >> +        io-channel-names = "usbin_i",
-> >> +                           "usbin_v";
-> > 
-> > Channel-names can be written in one line.
-> 
-> They match the format of io-channels, so this is quite readable.
+yamllint warnings/errors:
 
-io-channels doesn't exceed max characters in line(i.e 75) even after
-being clubbed. Won't be better if kept in one line?
-This might be personal perspective but I thought it's worth mentioning.
+dtschema/dtc warnings/errors:
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/serial/qcom,msm-uartdm.example.dt.yaml: serial@f991e000: dma-names:0: 'tx' was expected
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/serial/qcom,msm-uartdm.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/serial/qcom,msm-uartdm.example.dt.yaml: serial@f991e000: dma-names:1: 'rx' was expected
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/serial/qcom,msm-uartdm.yaml
+
+doc reference errors (make refcheckdocs):
+Warning: Documentation/devicetree/bindings/soc/qcom/qcom,gsbi.txt references a file that doesn't exist: Documentation/devicetree/bindings/spi/qcom,spi-qup.txt
+Warning: Documentation/devicetree/bindings/soc/qcom/qcom,gsbi.txt references a file that doesn't exist: Documentation/devicetree/bindings/serial/qcom,msm-uartdm.txt
+Documentation/devicetree/bindings/soc/qcom/qcom,gsbi.txt: Documentation/devicetree/bindings/spi/qcom,spi-qup.txt
+Documentation/devicetree/bindings/soc/qcom/qcom,gsbi.txt: Documentation/devicetree/bindings/serial/qcom,msm-uartdm.txt
+
+See https://patchwork.ozlabs.org/patch/
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
