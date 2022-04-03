@@ -2,74 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 78E5F4F0C65
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Apr 2022 21:47:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EE1F4F0C94
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Apr 2022 23:13:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345390AbiDCTto (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 3 Apr 2022 15:49:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35854 "EHLO
+        id S232624AbiDCVP3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 3 Apr 2022 17:15:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239271AbiDCTtn (ORCPT
+        with ESMTP id S229637AbiDCVP2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 3 Apr 2022 15:49:43 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9923F3617E
-        for <linux-arm-msm@vger.kernel.org>; Sun,  3 Apr 2022 12:47:48 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id bx37so6691611ljb.4
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Apr 2022 12:47:48 -0700 (PDT)
+        Sun, 3 Apr 2022 17:15:28 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01935DE92
+        for <linux-arm-msm@vger.kernel.org>; Sun,  3 Apr 2022 14:13:32 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id b21so4276516ljf.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Apr 2022 14:13:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=3BLlZN/iz8XPjy6oSw05iCfy8dDSlEO8RF0mBJgJOmo=;
-        b=UrKHFPa6a+5vvyVP03+tJngoSaAF9vmhpzlFgb8xhYEsT+EH/Y6XwXpltrlMBRbKEG
-         NhFr0RC5qKZoEEUMmKTYVeEl6cUcsNSRwvASXAhpfHmCCuqRctrMBcRwvMslvj/kGz8Y
-         OYaR8hT5w0tTpNJpOgyGI7IDnDsjXVTbrSrkCULep3MuGZxNZHc6NO+9wbFSlPFqLjpO
-         kOznuh/BpskIJTlLQuZiKQYfCBieBTfkWweMZZGKRc6bHSbgqMv6d57XKFgGqLFbMBZJ
-         IcRaRUg2vTLp1wb8UbguXFcuMqaQryNKAV7ZFoe28oCt2wQU1LMiVy9juqdf5o+PD54S
-         EEQA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LMPaPyy8X1OwWohD/hMg5RjGIJzh0j06aGMAa/tRO58=;
+        b=xtCHaXEL3B7JtJmiOfgw/5K797OjvdWN4RDGY74bocZC1BIXK0aIeTJvVIW98LFV3E
+         yk66NlhuzHmUBuQoAVK9AhTThKlDQaar9bkkYyykR7lxLCWsYsibthKYNOaYv5Ax2Gfv
+         E3gLzo0R6c/35nQvxJKwob1nI4tdB8ElFueAW38+E4etYTL1DHtKVM+FNvbY3T0StdbU
+         bGiESxS0immLPMoUNofLfrc7kjRPXXCJSsn+mNCj/WfZYhL8cmUhN4OxhX/MaR7rJuvG
+         zylN+OB1pBWVcAfJRm8YhCttACXZG6RZ2FYquodJBKzs8y6X4q5ejwv0X1XTtbMJtoXr
+         qY/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=3BLlZN/iz8XPjy6oSw05iCfy8dDSlEO8RF0mBJgJOmo=;
-        b=48sF1XSofd/4tdigZSjCAJNQf6qXEStwuFxrQYrALkP3x3gEpiciMBNQl8mP1xmKrY
-         bOgP/CVm4UA9X1oj0gV9DvsFqp+fIJiGw+sA6RhJdw8+ZvR+HEshodO7NQtWhEUtfI9r
-         /RnWYY9CyujBDucU05CnxBSkIRe8urKkkoT4qcEgJM6G/XQfVV5Izme6PdMzalXpxgND
-         2kVmyqKAOsvBvEBg4aLAIqC/7uVOl2XKq2OdpKjBfobhbUc9sd3dpkznjpMT8EPqpj68
-         ak4l1XGBhzUlwz1VVnWADF2QGULrPnMuBdJy9YKIiaP3B23ZLzII67wqpNMczdbiiOLG
-         o7NA==
-X-Gm-Message-State: AOAM532JZLqmHFbEChPjBFkCskv85qltUHIpyz0+EpAcczhPvg9rC39u
-        rVoE1dtx/DnlP2lNTcU6gBEzgg==
-X-Google-Smtp-Source: ABdhPJz5IdaW3ib4Y0utH6Y7dfWTWGrXH0DvP3n+LIOxFESERzrYLzPSG+LZGBiWPuKNMRFhGJokyA==
-X-Received: by 2002:a2e:b741:0:b0:249:5eb5:341f with SMTP id k1-20020a2eb741000000b002495eb5341fmr20118233ljo.424.1649015266640;
-        Sun, 03 Apr 2022 12:47:46 -0700 (PDT)
-Received: from [192.168.0.103] ([217.71.236.77])
-        by smtp.gmail.com with ESMTPSA id b24-20020a196458000000b0044ab702b6acsm903597lfj.238.2022.04.03.12.47.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 03 Apr 2022 12:47:46 -0700 (PDT)
-Message-ID: <879a93aa-0b81-cb7c-3e4b-8e7da3ffed13@linaro.org>
-Date:   Sun, 3 Apr 2022 22:46:48 +0300
+        bh=LMPaPyy8X1OwWohD/hMg5RjGIJzh0j06aGMAa/tRO58=;
+        b=fb4y0NgUFZUBq7r9NcnflZpzeXQr1pI6neH9belmzLl5i1HHkj7L1IjkgFuSYpoGPV
+         s9ZJGuFT7h/7xu44h+uVzx1VjsdLafTtaXwgjtbCiRc2o73KlhxKHOBEQzxl9pHHXCVc
+         tXoEZ0S15cItruTl8A7kyEacx1Del2znpdFDyNtbExl784pQmycP6Dqk9IT0yQj5IjBr
+         IUPZfbwbWw8XgeOL2Lm+UpOxBEvaOoggPCCN22uUFiDjMbG2eNdOQ+9VExlAbTIZdANw
+         PQFupITLcfKRJpMI6ZeqyNvaONdyfTeQNe6ZHfI8eu9QMGSw538A2zg6i1T7y4x+dCd+
+         +z+g==
+X-Gm-Message-State: AOAM532BCHAIMUt3PeaqC03dWZ3muddiaG+adMWVpoKys4ow0QutWpHV
+        jIvgaFRHzJbFRLTAFYER2oKLzQ==
+X-Google-Smtp-Source: ABdhPJwoXD+8n28HUyZcUcnPakmo7z1m2dDv8Ak6BfD2fTj86msxhYmizVvchSvR3vBL8TQShPQZ9g==
+X-Received: by 2002:a05:651c:1501:b0:249:8d28:5659 with SMTP id e1-20020a05651c150100b002498d285659mr20206317ljf.138.1649020411244;
+        Sun, 03 Apr 2022 14:13:31 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id v21-20020a2e2f15000000b002456e6cdab2sm866255ljv.93.2022.04.03.14.13.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 03 Apr 2022 14:13:30 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Will Deacon <will@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: [PATCH] arm64: defconfig: enable wcd9335 codec as module
+Date:   Mon,  4 Apr 2022 00:13:29 +0300
+Message-Id: <20220403211329.1410725-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v2 1/2] cpufreq: qcom-cpufreq-hw: Clear dcvs interrupts
-Content-Language: en-US
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-References: <20220401071424.2869057-1-vladimir.zapolskiy@linaro.org>
- <20220401071424.2869057-2-vladimir.zapolskiy@linaro.org>
- <Ykd7kwxwTxFjiNT0@ripper>
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <Ykd7kwxwTxFjiNT0@ripper>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,129 +70,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+Enable CONFIG_SND_SOC_WCD9335 to built as module. This enable audio
+codec used on the Qualcomm Dragonboard820c device.
 
-On 4/2/22 01:24, Bjorn Andersson wrote:
-> On Fri 01 Apr 00:14 PDT 2022, Vladimir Zapolskiy wrote:
-> 
->> It's noted that dcvs interrupts are not self-clearing, thus an interrupt
->> handler runs constantly, which leads to a severe regression in runtime.
->> To fix the problem an explicit write to clear interrupt register is
->> required.
->>
->> Fixes: 275157b367f4 ("cpufreq: qcom-cpufreq-hw: Add dcvs interrupt support")
->> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->> ---
->> Changes from v1 to v2:
->> * added a check for pending interrupt status before its handling,
->>    thanks to Bjorn for review
->>
->>   drivers/cpufreq/qcom-cpufreq-hw.c | 14 ++++++++++++++
->>   1 file changed, 14 insertions(+)
->>
->> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
->> index f9d593ff4718..e17413a6f120 100644
->> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
->> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
->> @@ -24,6 +24,8 @@
->>   #define CLK_HW_DIV			2
->>   #define LUT_TURBO_IND			1
->>   
->> +#define GT_IRQ_STATUS			BIT(2)
->> +
->>   #define HZ_PER_KHZ			1000
->>   
->>   struct qcom_cpufreq_soc_data {
->> @@ -31,6 +33,8 @@ struct qcom_cpufreq_soc_data {
->>   	u32 reg_dcvs_ctrl;
->>   	u32 reg_freq_lut;
->>   	u32 reg_volt_lut;
->> +	u32 reg_intr_clr;
->> +	u32 reg_intr_status;
->>   	u32 reg_current_vote;
->>   	u32 reg_perf_state;
->>   	u8 lut_row_size;
->> @@ -345,11 +349,19 @@ static void qcom_lmh_dcvs_poll(struct work_struct *work)
->>   static irqreturn_t qcom_lmh_dcvs_handle_irq(int irq, void *data)
->>   {
->>   	struct qcom_cpufreq_data *c_data = data;
->> +	u32 val;
->> +
->> +	val = readl_relaxed(c_data->base + c_data->soc_data->reg_intr_status);
-> 
-> Seems reasonable to read the INTR_STATUS register and bail early if
-> there's no interrupt.
-> 
->> +	if (!(val & GT_IRQ_STATUS))
->> +		return IRQ_HANDLED;
-> 
-> But if we in the interrupt handler realize that there's no interrupt
-> pending for us, shouldn't we return IRQ_NONE?
-> 
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ arch/arm64/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-To my knowledge returning IRQ_NONE assumes that right the same interrupt should
-be still handled, either by another interrupt handler or by the original handler
-again.
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index a6564664676d..554080f02963 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -823,6 +823,7 @@ CONFIG_SND_SOC_SIMPLE_AMPLIFIER=m
+ CONFIG_SND_SOC_SIMPLE_MUX=m
+ CONFIG_SND_SOC_TAS571X=m
+ CONFIG_SND_SOC_TLV320AIC32X4_I2C=m
++CONFIG_SND_SOC_WCD9335=m
+ CONFIG_SND_SOC_WCD934X=m
+ CONFIG_SND_SOC_WM8904=m
+ CONFIG_SND_SOC_WM8960=m
+-- 
+2.35.1
 
-I believe here there is no difference in the sense above, since the interrupt is
-not shared, it might happen that the check is always void and it should get its
-justification, and definitely it's safe to omit the check/return here and just
-make another poll/irq enable round, so, as the simplest working fix v1 of the
-change without this check should be sufficient.
-
->>   
->>   	/* Disable interrupt and enable polling */
->>   	disable_irq_nosync(c_data->throttle_irq);
->>   	schedule_delayed_work(&c_data->throttle_work, 0);
->>   
->> +	writel_relaxed(GT_IRQ_STATUS,
->> +		       c_data->base + c_data->soc_data->reg_intr_clr);
-> 
-> And in OSM (i.e. not epss_soc_data), both reg_intr_status and
-> reg_intr_clr will be 0, so we end up reading and writing the wrong
-> register.
-> 
-> You need to do:
-> 	if (c_data->soc_data->reg_intr_clr)
-> 		writel_relaxed(..., reg_intr_clr);
-> 
-
-My understanding is that non-EPSS platforms do not specify a DCVS interrupt
-under cpufreq-hw IP, if so, the interrupt handler is not registered and thus
-the check for non-zero reg_intr_clr or other interrupt related registers is
-not needed, please correct me.
-
-> But according to the downstream driver, this is supposed to be done in
-> the polling function, right before you do enable_irq().
-
-The fact about downstream driver is true, however I believe functionally
-there is no significant difference between clearing the interrupt status
-after disabling the interrupt as above or right before enabling the interrupt
-as in OSM.
-
-The code above is simpler and arranged in the most relevant place, to my
-understanding is slightly more correct, which is also proven by the testing.
-
---
-Best wishes,
-Vladimir
-
-> Regards,
-> Bjorn
-> 
->> +
->>   	return IRQ_HANDLED;
->>   }
->>   
->> @@ -368,6 +380,8 @@ static const struct qcom_cpufreq_soc_data epss_soc_data = {
->>   	.reg_dcvs_ctrl = 0xb0,
->>   	.reg_freq_lut = 0x100,
->>   	.reg_volt_lut = 0x200,
->> +	.reg_intr_clr = 0x308,
->> +	.reg_intr_status = 0x30c,
->>   	.reg_perf_state = 0x320,
->>   	.lut_row_size = 4,
->>   };
->> -- 
->> 2.33.0
->>
