@@ -2,172 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B2FA4F1E36
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Apr 2022 00:24:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA7264F1E3D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Apr 2022 00:24:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355070AbiDDVyN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Apr 2022 17:54:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57188 "EHLO
+        id S232747AbiDDVyZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Apr 2022 17:54:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382729AbiDDVb4 (ORCPT
+        with ESMTP id S1386607AbiDDVjB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Apr 2022 17:31:56 -0400
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE53A15A18
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Apr 2022 14:15:28 -0700 (PDT)
-Received: by mail-qv1-xf29.google.com with SMTP id kl29so8540261qvb.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Apr 2022 14:15:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=McouKnSmKFWKF2SpoB2peGm/9//rXoQgWM99Hh1/NkM=;
-        b=M++cEUJlbCPGoHHxmMxvBelMxqgIBsOO1jFQ1hxhkxPZWCi9yjs3IOyz3DUBfIHTby
-         hMf7DehfSJgg5MS33J2RzV6Za5Fx8CpIeYOhknWnvbkUyNPUbjCU1EClkx377aee23Ed
-         /y2xV0M0VEAKcVJVW4ThuGCUzAzjmK5dWYPIeEid3dAv9np5b1dmU0a7JCY1I2torFM1
-         M6nthhJ5f/2xyZRhP6slKdYv7VnlT0ixAW+jcKuz4py1y6qx+s1NzcMzRyRThP0QKRKk
-         szde6JHOfXwsnWGShpS3m4bdH2QYtwUy0mKBrdcCSwrjhSMVy+rkK12oEdm0q6uHT0XH
-         Y84A==
+        Mon, 4 Apr 2022 17:39:01 -0400
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1378836B4B;
+        Mon,  4 Apr 2022 14:30:14 -0700 (PDT)
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-deb9295679so12305934fac.6;
+        Mon, 04 Apr 2022 14:30:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=McouKnSmKFWKF2SpoB2peGm/9//rXoQgWM99Hh1/NkM=;
-        b=CsgihG+rsyHz44ZyhXhKR4bp7JU9zZd+risLN9X79oyuYrgxLk3TXgIWRcHMSSqZtD
-         NHHvpEDLIVSOKPuP3aY/XFWqZ3BLRilejNJNAa6aYvFL1oriAQNba6VHNPnirk0tVExl
-         pZXQWCVNbb2wn+9AUY8P1FTq5q0HvX8B6Iq94k+EvQWyo46wHqgYUmMtZGhoglZJVNxD
-         G6kCgQ1c+c6oNLZv5jc2OBCFgxBjNOiiDDyFvzA953jM90/ZGUY2ypHLGB+oOKdFnCZW
-         CNQhyupYT2ZumQv0KFrx9QYfwRyO97k2PPEEaOJLypHEhYSSo1ahlRPj4dBWZkjwGFb+
-         +Hbw==
-X-Gm-Message-State: AOAM532MeIzT3zmvc3hXpS3BaocuM9bLjYKlWfQcmLbeK63XXLbiC+aG
-        e12UX0bE6UvZfiZCNR24zWbQvRkk5qq1PgaAc5/Dpg==
-X-Google-Smtp-Source: ABdhPJyqLSrz27bQaT6seA8R1kJrL/P/oL9NsM1rXGrEtJEpPWrptpkqYtU5VF/Yo5B/E+1043jo5A794bfO5ijjnMc=
-X-Received: by 2002:ad4:53a4:0:b0:430:1d8c:18ea with SMTP id
- j4-20020ad453a4000000b004301d8c18eamr99107qvv.115.1649106927946; Mon, 04 Apr
- 2022 14:15:27 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=qO84CfyeG8iQGLXkEG50rgeD59wqZwaLgIBh/t/ojMg=;
+        b=HsmJIsf61LqqCsikAYhyggZusCW9413QaQsJybN0D5n2szIq4UAcUtH4gplqM7Uu1P
+         59vAP+nI5RlE8fmgKNy43gzbgEFB2c5F2U4ozRRLJV2J+W4gYTSooGxz3mrRI0ya8gPE
+         oanIChNbMno+8+ixxh7Tk3qQPFhuEZqU3l6UqXnJJukKyTD1B/Vf7NtUDiyPQLcFVAV0
+         97aoRC49qCQUJc4HQqDe3GygpXtMZ4mqzNOE5TBVHdEvX5ix37vPjos0EntxncnL+vMF
+         MnMpqYNGAHox8UXkHiHytuicNxRKXbNwLwvpH6Xe0OJf9HBXMzmcay4PH2B9T+adC6qH
+         1oBQ==
+X-Gm-Message-State: AOAM531GxnWuRbas+HsHf7U4+QVVaysAcu5B6d968SND06edoUNGNqsA
+        C4D1JqeQC7FYRtIX5+nobKpNHaOC3w==
+X-Google-Smtp-Source: ABdhPJz7wTyN+ISEFmrLxVwpC8vLauUt6p+w3JsBQDP0IZwbVZUQL9Jq3oj+UEBZux7/f3TlPP5uqQ==
+X-Received: by 2002:a05:6870:8327:b0:d7:8685:5129 with SMTP id p39-20020a056870832700b000d786855129mr92203oae.75.1649107761930;
+        Mon, 04 Apr 2022 14:29:21 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id fz16-20020a056870ed9000b000dde87bcdfdsm4587637oab.53.2022.04.04.14.29.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Apr 2022 14:29:21 -0700 (PDT)
+Received: (nullmailer pid 2016194 invoked by uid 1000);
+        Mon, 04 Apr 2022 21:29:20 -0000
+Date:   Mon, 4 Apr 2022 16:29:20 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-serial@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Kuldeep Singh <singh.kuldeep87k@gmail.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Mark Brown <broonie@kernel.org>
+Subject: Re: [PATCH v3 6/9] spi: dt-bindings: qcom,spi-qup: convert to
+ dtschema
+Message-ID: <YktjMPY6/DCrJ9mv@robh.at.kernel.org>
+References: <20220402184011.132465-1-krzysztof.kozlowski@linaro.org>
+ <20220402184011.132465-7-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-References: <1648656179-10347-1-git-send-email-quic_sbillaka@quicinc.com>
- <1648656179-10347-8-git-send-email-quic_sbillaka@quicinc.com>
- <CAD=FV=V92j=yEoaM4REO6ws=AXpBjM6zWwBtZ8SbPiFd2cu3yw@mail.gmail.com> <MW4PR02MB7186DD14809500D97C3ABDBBE1E59@MW4PR02MB7186.namprd02.prod.outlook.com>
-In-Reply-To: <MW4PR02MB7186DD14809500D97C3ABDBBE1E59@MW4PR02MB7186.namprd02.prod.outlook.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 5 Apr 2022 00:15:16 +0300
-Message-ID: <CAA8EJppB8s=myUG+swLF5vQU+b+mGSjrNsn1-=1cgO9rKXC7Xw@mail.gmail.com>
-Subject: Re: [PATCH v6 7/8] drm/msm/dp: Support edp/dp without hpd
-To:     "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        quic_kalyant <quic_kalyant@quicinc.com>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        quic_vproddut <quic_vproddut@quicinc.com>,
-        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220402184011.132465-7-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 4 Apr 2022 at 21:32, Sankeerth Billakanti (QUIC)
-<quic_sbillaka@quicinc.com> wrote:
->
-> Hi Doug,
->
-> > On Wed, Mar 30, 2022 at 9:04 AM Sankeerth Billakanti
-> > <quic_sbillaka@quicinc.com> wrote:
-> > >
-> > > Some eDP sinks or platform boards will not support hpd.
-> > > This patch adds support for those cases.
-> >
-> > You could say more, like:
-> >
-> > If we're not using HPD then _both_ the panel node and the eDP controller
-> > node will have "no-hpd". This tells the eDP panel code to hardcode the
-> > maximum possible delay for a panel to power up and tells the eDP driver that
-> > it should continue to do transfers even if HPD isn't asserted.
-> >
->
-> Okay. I will add it
->
-> >
-> > > Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-> > > ---
-> > >  drivers/gpu/drm/msm/dp/dp_catalog.c | 15 ++++++++++++---
-> > >  1 file changed, 12 insertions(+), 3 deletions(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c
-> > > b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> > > index 1809ce2..8f1fc71 100644
-> > > --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-> > > +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> > > @@ -244,10 +244,17 @@ void dp_catalog_aux_update_cfg(struct
-> > dp_catalog
-> > > *dp_catalog)
-> > >
-> > >  int dp_catalog_aux_wait_for_hpd_connect_state(struct dp_catalog
-> > > *dp_catalog)  {
-> > > -       u32 state;
-> > > +       u32 state, hpd_en;
-> > >         struct dp_catalog_private *catalog = container_of(dp_catalog,
-> > >                                 struct dp_catalog_private,
-> > > dp_catalog);
-> > >
-> > > +       hpd_en = dp_read_aux(catalog, REG_DP_DP_HPD_CTRL);
-> > > +       hpd_en &= DP_DP_HPD_CTRL_HPD_EN;
-> > > +
-> > > +       /* no-hpd case */
-> > > +       if (!hpd_en)
-> > > +               return 0;
-> > > +
-> > >         /* poll for hpd connected status every 2ms and timeout after 500ms */
-> > >         return readl_poll_timeout(catalog->io->dp_controller.aux.base +
-> > >                                 REG_DP_DP_HPD_INT_STATUS, @@ -586,8
-> > > +593,10 @@ void dp_catalog_ctrl_hpd_config(struct dp_catalog
-> > *dp_catalog)
-> > >         reftimer |= DP_DP_HPD_REFTIMER_ENABLE;
-> > >         dp_write_aux(catalog, REG_DP_DP_HPD_REFTIMER, reftimer);
-> > >
-> > > -       /* Enable HPD */
-> > > -       dp_write_aux(catalog, REG_DP_DP_HPD_CTRL,
-> > DP_DP_HPD_CTRL_HPD_EN);
-> > > +       /* Enable HPD if supported*/
-> > > +       if (!of_property_read_bool(catalog->dev->of_node, "no-hpd"))
-> >
-> > I don't think this is a particularly lightweight operation. It's literally iterating
-> > through all of our device tree properties and doing string compares on them.
-> > ...but this function is called somewhat often, isn't it? It feels like the kind of
-> > thing that should happen at probe time and be stored in a boolean.
-> >
-> > ...and then you can use that same boolean in
-> > dp_catalog_aux_wait_for_hpd_connect_state() rather than reading the
-> > register value, right?
-> >
-> It is called twice for DP. Once while booting through a thread scheduled from kms_obj_init
-> and when resuming from PM suspend.
->
-> With aux_bus addition, this function will be called thrice for eDP. Once during bootup with
-> aux_bus, then from scheduled event from kms_obj_init and pm resume like DP.
->
-> I will check if we can use a no-hpd Boolean flag instead.
+On Sat, 02 Apr 2022 20:40:08 +0200, Krzysztof Kozlowski wrote:
+> Convert the Qualcomm Universal Peripheral (QUP) Serial Peripheral
+> Interface (SPI) bindings to DT Schema.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Acked-by: Kuldeep Singh <singh.kuldeep87k@gmail.com>
+> ---
+>  .../devicetree/bindings/spi/qcom,spi-qup.txt  | 103 ------------------
+>  .../devicetree/bindings/spi/qcom,spi-qup.yaml |  81 ++++++++++++++
+>  2 files changed, 81 insertions(+), 103 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-qup.txt
+>  create mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-qup.yaml
+> 
 
-As the driver has a separate dp_parser code, it might be a good fit to
-parse the DT once and then to use boolean flag afterwards.
-
--- 
-With best wishes
-Dmitry
+Reviewed-by: Rob Herring <robh@kernel.org>
