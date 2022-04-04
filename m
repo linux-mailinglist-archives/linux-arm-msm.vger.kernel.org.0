@@ -2,68 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B06214F1C47
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Apr 2022 23:28:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E3704F1C67
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Apr 2022 23:28:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380689AbiDDV0S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Apr 2022 17:26:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37268 "EHLO
+        id S1380328AbiDDV0I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Apr 2022 17:26:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379093AbiDDQeU (ORCPT
+        with ESMTP id S1379128AbiDDQgw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Apr 2022 12:34:20 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 678A4381A7
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Apr 2022 09:32:23 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id p8so9461555pfh.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Apr 2022 09:32:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=2bL0zVy+T84o1RMeqMcnjFfLYjA+GUYGgoiquYSSAHY=;
-        b=QRTuRBVdMggNkZKDKiVvRCfbxLmN/4Scvw/NVPF7mRZ6Ng7eYBz4lEM8ZpODjayuz6
-         fHIj9gn+tCSfkLNwzzluQHLAI2YPvxvzhKEE9MRM0emAM5N+T/84llSb51wruVmWrtvS
-         XEfdi++KzE+e3iOjOVtFEcKg7tUbFt9GjJOMQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=2bL0zVy+T84o1RMeqMcnjFfLYjA+GUYGgoiquYSSAHY=;
-        b=xDNLw4hi8J1YppPnpLfOy2VjAhgkPxmUjo9HaYQQ25e+1g1cXsktkWUm1uMHogWRIX
-         NR/vZHympWCV0kv87PYdx142w5/iXegIAJoiZxDKNj3rEwV7BKRhqXPzRgG5HGWV34rs
-         mMoEY7E94oR/UTDMVMY57P8wUw+Taw+3XgnFJqKdnhywp7rrP3C4FdvggjL4smOrK5o+
-         a10aC9FOXaCIZ5nse4hB02nIWW8VVB3yagqngC/M5mdCE37WKz7RLJBTDh0jm0MR8nMj
-         EO/P1FABbYVjhRW5TaOY75nv8idgkzqxDaC5LWpj3iaH0aiqxDUJM6wQ06C14OxygRov
-         O89w==
-X-Gm-Message-State: AOAM530bYsCX1rHsDt8QQx0mM20VDMV2+wPTo54VcpXJzDwU6ZvLMTLt
-        Xx+Nl6+6X56mnqCn2Ee8JgRhZw==
-X-Google-Smtp-Source: ABdhPJwKOuEHl+BnsbgNxrNKz+t2civ6hhXWxr7p+FhUpmTI1La4qStQ4P50t0JSRmOGG8TiOxxaqA==
-X-Received: by 2002:a05:6a00:10c7:b0:4fd:9ee6:4130 with SMTP id d7-20020a056a0010c700b004fd9ee64130mr375022pfu.84.1649089942793;
-        Mon, 04 Apr 2022 09:32:22 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:1ebc:cb71:2a38:38db])
-        by smtp.gmail.com with UTF8SMTPSA id s20-20020aa78d54000000b004fac74c83b3sm12466884pfe.186.2022.04.04.09.32.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Apr 2022 09:32:22 -0700 (PDT)
-Date:   Mon, 4 Apr 2022 09:32:19 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        gregkh@linuxfoundation.org, jirislaby@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_msavaliy@quicinc.com,
-        dianders@chromium.org
-Subject: Re: [PATCH] drivers/tty/serial/qcom-geni-serial: Do stop_rx in
- suspend path for console if console_suspend is disabled
-Message-ID: <Yksdk+YTxXRDWBbj@google.com>
-References: <1648491444-17137-1-git-send-email-quic_vnivarth@quicinc.com>
+        Mon, 4 Apr 2022 12:36:52 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 202F5E094;
+        Mon,  4 Apr 2022 09:34:56 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id D1B44B81857;
+        Mon,  4 Apr 2022 16:34:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1511BC2BBE4;
+        Mon,  4 Apr 2022 16:34:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1649090093;
+        bh=zqvOSmf2B4i7qQFd0n2rGukukRvs9ru4yZtTb76jHoI=;
+        h=From:To:Cc:Subject:Date:From;
+        b=hReHbtTflgJZIbYkTQEkjyNYvGIZ8KF43WVTn2tVSSGPlFCGWjKv7PJlcgTeH4YSl
+         ApzgeM01lmLP231mGhP2IpEW435F5drPWxxBtFi4bwddn1ls7+mWyH6uzxQFB0dRwY
+         vjfLnhetjbOPaD096+1xU11pw4SbuCJQDnLgMNHC6GHzAdmy9JW/KIrmVjX4LQR8WW
+         tqFyGjEwWprjGqRkChONGOo2XId9hyHdtK/Eybyr5smmMW2FGKg2OBOvl3PzcLaGEO
+         idqHSU66Hu7TdX7HrLhmzwrkZ9nOAKUCdb0LK8nHl84mr021FlSM7pwDNqHv8gM8Mj
+         wpMKKbB9gZk8w==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v6 00/14] drm/msm: Add Display Stream Compression Support
+Date:   Mon,  4 Apr 2022 22:04:22 +0530
+Message-Id: <20220404163436.956875-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1648491444-17137-1-git-send-email-quic_vnivarth@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,97 +59,121 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 28, 2022 at 11:47:24PM +0530, Vijaya Krishna Nivarthi wrote:
-> [Why]
-> For the case of console_suspend disabled, if back to back suspend/resume
-> test is executed, at the end of test, sometimes console would appear to
-> be frozen not responding to input. This would happen because, for
-> console_suspend disabled, suspend/resume routines only turn resources
-> off/on but don't do a port close/open.
-> As a result, during resume, some rx transactions come in before system is
-> ready, malfunction of rx happens in turn resulting in console appearing
-> to be stuck.
-> 
-> [How]
+Display Stream Compression (DSC) compresses the display stream in host which
+is later decoded by panel. This series enables this for Qualcomm msm driver.
+This was tested on Google Pixel3 phone which use LGE SW43408 panel.
+ 
+The changes include DSC data and hardware block enabling for DPU1 then
+support in encoder. We also add support in DSI and introduce required
+topology changes.
+ 
+In order for panel to set the DSC parameters we add dsc in drm_panel and
+pass the dsc configuration from the panel driver
 
-Please drop the [Why] / [How] 'tags'
+Complete changes which enable this for Pixel3 along with panel driver (not
+part of this series) and DT changes can be found at:
+git.linaro.org/people/vinod.koul/kernel.git pixel/dsc_v6
+ 
+Comments welcome!
 
-> Do a stop_rx in suspend sequence to prevent this. start_rx is already
-> present in resume sequence as part of call to set_termios which does a
-> stop_rx/start_rx.
-> Additionally other changes have been made at same place
-> a) replace the hardcoded flags with macros
-> b) perform voting before calling resume_port in resume sequence
-> c) consequently, swap the order in suspend sequence
+Changes since v5:
+ - rebase on msm-next
+ - use generated header patch from mesa for dsc registers
+ - use generated header macros for dsc register calculation
+ - remove msm dsc struct (Dmitry)
 
-This patch is short, but IMO it still does too many things at once which
-aren't all directly related. At the very least the change from hardcoded
-flags to macros should be in a separate patch. If the ICC voting order
-isn't direcly related with the console_suspend issue then I'd also suggest
-to split it out into its own patch.
+Changes since v4:
+ - Use new apprach based on Abhinav suggestion for dsc with 3d-merge
+ - Make common function for dsc timing caln and call that from video and cmd
+   mode
+ - update description for patch "Pass DSC params to drm_panel"
+ - update couple of typos as pointed by Marijn
+ - drop dpu_encoder_dsc_pclk_param_calc() as that was duplicating the caln
+   done in dsi timing
+ - Update copyright to 2022 to new files
+ - Update Abhinav's email to new quic one
 
-> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-> ---
->  drivers/tty/serial/qcom_geni_serial.c | 17 +++++++++++------
->  1 file changed, 11 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index aedc388..37d064f 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -19,6 +19,7 @@
->  #include <linux/slab.h>
->  #include <linux/tty.h>
->  #include <linux/tty_flip.h>
-> +#include <dt-bindings/interconnect/qcom,icc.h>
->  
->  /* UART specific GENI registers */
->  #define SE_UART_LOOPBACK_CFG		0x22c
-> @@ -1477,34 +1478,38 @@ static int qcom_geni_serial_remove(struct platform_device *pdev)
->  
->  static int __maybe_unused qcom_geni_serial_sys_suspend(struct device *dev)
->  {
-> +	int ret;
->  	struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
->  	struct uart_port *uport = &port->uport;
->  	struct qcom_geni_private_data *private_data = uport->private_data;
->  
-> +	/* do a stop_rx here, start_rx is handled in uart_resume_port by call to setermios */
-> +	if (!console_suspend_enabled && uart_console(uport))
-> +		uport->ops->stop_rx(uport);
-> +
->  	/*
->  	 * This is done so we can hit the lowest possible state in suspend
->  	 * even with no_console_suspend
->  	 */
-> +	ret = uart_suspend_port(private_data->drv, uport);
->  	if (uart_console(uport)) {
-> -		geni_icc_set_tag(&port->se, 0x3);
-> +		geni_icc_set_tag(&port->se, QCOM_ICC_TAG_ACTIVE_ONLY);
->  		geni_icc_set_bw(&port->se);
->  	}
-> -	return uart_suspend_port(private_data->drv, uport);
-> +	return ret;
->  }
->  
->  static int __maybe_unused qcom_geni_serial_sys_resume(struct device *dev)
->  {
-> -	int ret;
->  	struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
->  	struct uart_port *uport = &port->uport;
->  	struct qcom_geni_private_data *private_data = uport->private_data;
->  
-> -	ret = uart_resume_port(private_data->drv, uport);
->  	if (uart_console(uport)) {
-> -		geni_icc_set_tag(&port->se, 0x7);
-> +		geni_icc_set_tag(&port->se, QCOM_ICC_TAG_ALWAYS);
->  		geni_icc_set_bw(&port->se);
->  	}
-> -	return ret;
-> +	return uart_resume_port(private_data->drv, uport);
->  }
->  
->  static const struct dev_pm_ops qcom_geni_serial_pm_ops = {
-> -- 
-> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
-> 
+Changes since v3:
+ - Merge changes from Dmitry to have dsc per encoder instance
+ - add warning for dsc and mode3d enabled together
+ - set dsc in dpu_encoder_phys_vid as well
+ - remove dsc hardcoded mask
+ - use devm_kzalloc for memory allocation for dsc
+
+Changes since v2:
+ - Fix comments by Dimitry except the dsc being global.
+ - Move RM patch later for dependency on topology now
+ - Add patch for mode valid callback for dsi_mgr
+ - Add missing structure documentation patch
+ - Fix errors in mode_3d changes
+ - Rebase on v5.16-rc1 and test
+
+Changes since v1:
+ - Fix various issues spotted by kbuildbot
+ - Rebase to v5.15-rc3
+ - Remove unused fields and duplicate defines
+ - Enable DSC blocks only when DSC is enabled
+ - remove sdm845 feature mask, use 0
+ - Check for DSC in hw_ctl
+
+Changes since RFC:
+ - Drop the DT binding patch as we derive the configuration from panel
+ - Drop the drm api patch as we no longer need it (use pps drm api)
+ - Fix comments raised by Dimitry
+ - Add dsc parameters calculation from downstream
+
+*** SUBJECT HERE ***
+
+*** BLURB HERE ***
+
+Dmitry Baryshkov (1):
+  drm/msm/dpu: don't use merge_3d if DSC merge topology is used
+
+Vinod Koul (13):
+  drm/msm/dsi: add support for dsc data
+  drm/msm/dsi: Pass DSC params to drm_panel
+  drm/msm/disp/dpu1: Add support for DSC
+  drm/msm/disp/dpu1: Add support for DSC in pingpong block
+  drm/msm/disp/dpu1: Add DSC for SDM845 to hw_catalog
+  drm/msm/disp/dpu1: Add DSC support in hw_ctl
+  drm/msm/disp/dpu1: Add support for DSC in encoder
+  drm/msm: Add missing num_dspp field documentation
+  drm/msm/disp/dpu1: Add support for DSC in topology
+  drm/msm/disp/dpu1: Add DSC support in RM
+  drm/msm/dsi: add mode valid callback for dsi_mgr
+  drm/msm: Update generated headers
+  drm/msm/dsi: Add support for DSC configuration
+
+ drivers/gpu/drm/msm/Makefile                  |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 157 +++++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h   |   8 +
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  12 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  20 ++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  13 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c    |  11 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h    |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c    | 215 ++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h    |  80 +++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |  13 +
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   |  32 ++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   |  14 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        |  56 ++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h        |   1 +
+ drivers/gpu/drm/msm/dsi/dsi.c                 |   5 +
+ drivers/gpu/drm/msm/dsi/dsi.h                 |   3 +
+ drivers/gpu/drm/msm/dsi/dsi.xml.h             |  80 +++++
+ drivers/gpu/drm/msm/dsi/dsi_host.c            | 276 +++++++++++++++++-
+ drivers/gpu/drm/msm/dsi/dsi_manager.c         |  12 +
+ drivers/gpu/drm/msm/msm_drv.h                 |  15 +
+ include/drm/drm_panel.h                       |   7 +
+ 24 files changed, 1032 insertions(+), 4 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
+
+
+base-commit: 05241de1f69eb7f56b0a5e0bec96a7752fad1b2f
+-- 
+2.34.1
+
