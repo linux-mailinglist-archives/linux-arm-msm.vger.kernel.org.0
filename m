@@ -2,51 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0793D4F1009
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Apr 2022 09:36:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F85C4F1057
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Apr 2022 09:55:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377691AbiDDHgJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Apr 2022 03:36:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43420 "EHLO
+        id S1376674AbiDDH4T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Apr 2022 03:56:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237797AbiDDHgI (ORCPT
+        with ESMTP id S233822AbiDDH4S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Apr 2022 03:36:08 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 933571083
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Apr 2022 00:34:12 -0700 (PDT)
+        Mon, 4 Apr 2022 03:56:18 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FE873B036;
+        Mon,  4 Apr 2022 00:54:22 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2C5AE61230
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Apr 2022 07:34:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46162C2BBE4;
-        Mon,  4 Apr 2022 07:34:10 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 06C0CB80EF3;
+        Mon,  4 Apr 2022 07:54:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D907C2BBE4;
+        Mon,  4 Apr 2022 07:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649057651;
-        bh=DRB0++tqTDhskFcVzUSEtFyWL4XUeJhJrBjub9UnpQM=;
-        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-        b=CsD8S3Ha7CZzn6E89v05GGRBveeSgaFlTj2OohTRtIIAtJHeXA5ecD4cWV8/RQeVY
-         B2A0YAvjXxMSDNuWA3WIIaW4lCxgzLk+ReMP+rPTC9N6iJrVhWp/0eEqSDx1M3kd0Z
-         QX8QhZsArVdAs7A0mRf3sBnpT4uiIOBHuULQEX3pjvtd0c4yvsKYTCu+Q3dADhD2Ef
-         WBLavPR3+r9SLYS8tNQX7bEGzFE4gWef22JbzIGkEinCHeahgLY5bbMoTSrtCEpkgY
-         JelLnbSJ/P2CbFujZ1qtpkqSyYDOxzAqEVQjFIS05wGvk7V8FiSlEfFHoUj/VtYqID
-         f7+OcGQwq2Dyw==
-From:   Kalle Valo <kvalo@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+        s=k20201202; t=1649058859;
+        bh=9I488zZRdf3y8rptDyd/PdxuRxtgedkj52VGVooM250=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=S9j/dkoXZMhh+kn9Knt376p0j0yjA8DlWi4KDYxli3V4RkdnrCkp5HU4ZK1TFY6D1
+         kq3h3OL+E2Fiv/ZQ55Gqo3KwxqaeBwAr6gqcYCsm8w0yj3V/UlJqm2P+sPMIoldG9V
+         YwLrcLJUbX6inRsAPSRyE0ULEYzc4TwGgEpp81JvCOhoWoUCf/rONSlb8H0gFgHOWo
+         GETHS3hLs1NAT6rQBoTh4VIhOjjqJCQ0YPOmM/07YiqfCE+e+k0APMVQwYJ8jlLdzZ
+         wIUjn/6hQ90JkftU2Hl/+QqBiXG9udGAM23/p0VzUmFCxcE8CXhWENdxrA9thHdOdA
+         LmmkT3niV8n9A==
+Date:   Mon, 4 Apr 2022 08:54:14 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, ath10k@lists.infradead.org
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845-db845c: add wifi variant property
-References: <20220403105711.1173161-1-dmitry.baryshkov@linaro.org>
-        <87r16ds4ge.fsf@kernel.org>
-Date:   Mon, 04 Apr 2022 10:34:04 +0300
-In-Reply-To: <87r16ds4ge.fsf@kernel.org> (Kalle Valo's message of "Mon, 04 Apr
-        2022 10:17:05 +0300")
-Message-ID: <87mth1s3o3.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
+        Kuldeep Singh <singh.kuldeep87k@gmail.com>
+Subject: Re: [PATCH v2 4/4] spi: dt-bindings: qcom,spi-qup: convert to
+ dtschema
+Message-ID: <YkqkJgLd4LdxF883@sirena.org.uk>
+References: <20220331155320.714754-1-krzysztof.kozlowski@linaro.org>
+ <20220331155425.714946-4-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="NbkpDTQWQL5ps1uY"
+Content-Disposition: inline
+In-Reply-To: <20220331155425.714946-4-krzysztof.kozlowski@linaro.org>
+X-Cookie: Custer committed Siouxicide.
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -57,51 +63,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Kalle Valo <kvalo@kernel.org> writes:
 
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
->
->> Dragonboard845c doesn't have board-specific board-id programmed, it uses
->> generic 0xff. Thus add the property with the 'variant' of the
->> calibration data.
->>
->> Note: the driver will check for the calibration data for the following
->> IDs, so older board-2.bin files that were distributed as a part of
->> Linaro releases will continue to work.
->>
->> - 'bus=snoc,qmi-board-id=ff,qmi-chip-id=30214,variant=Thundercomm_DB845C'
->> - 'bus=snoc,qmi-board-id=ff,qmi-chip-id=30214'
->> - 'bus=snoc,qmi-board-id=ff'
->>
->> For the reference, the board is identified by the driver in the
->> following way:
->>
->> ath10k_snoc 18800000.wifi: qmi chip_id 0x30214 chip_family 0x4001 board_id 0xff soc_id 0x40030001
->> ath10k_snoc 18800000.wifi: qmi fw_version 0x2009856b fw_build_timestamp 2018-07-19 12:28 fw_build_id QC_IMAGE_VERSION_STRING=WLAN.HL.2.0-01387-QCAHLSWMTPLZ-1
->>
->> Fixes: 3f72e2d3e682 ("arm64: dts: qcom: Add Dragonboard 845c")
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 1 +
->>  1 file changed, 1 insertion(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
->> index 13f80a0b6faa..f49de3913dd5 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
->> @@ -1047,6 +1047,7 @@ &wifi {
->>  	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
->>  
->>  	qcom,snoc-host-cap-8bit-quirk;
->> +	qcom,ath10k-calibration-variant = "Thundercomm_DB845C";
->
-> I don't think I have documented it anywhere, but to keep things simple I
-> would prefer to have the variant all lower case.
+--NbkpDTQWQL5ps1uY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-But, after thinking more, I guess that's water under the bridge now. So
-please ignore my comment.
+On Thu, Mar 31, 2022 at 05:54:25PM +0200, Krzysztof Kozlowski wrote:
+> Convert the Qualcomm Universal Peripheral (QUP) Serial Peripheral
+> Interface (SPI) bindings to DT Schema.
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+This doesn't apply against current code, please check and resend.
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+--NbkpDTQWQL5ps1uY
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmJKpCUACgkQJNaLcl1U
+h9D/1Qf+OY9LAMKRVjV65ar+QH6KqiiS3zqvywaKuAHc4osZLy2zoSTe33UK900A
+OV2VpZPbMRmCNpfa5T5vjaLJh2pQUCrH4r/9YDGu9aD8+Y6v4Ip71oaCtu4moLpU
+frJsF1IkJrfMi0iwChCm4/QluTj2TI9eE4gHkCo5agFzGxF2Pxl6mxFKAoazZACB
+yn/i4tUC+am6XnNUo3QDnn2hidC3L8ddR4ZXA22IhGB404uqSerI1DOCHOosV8GS
+sIheYKgmZF5XHDNck3jZVvoLAfzZThAtQuDC93gB9uVwRAji1Y27ivg3S59f93dP
+ZBPK0mlAZYrs8KfYANsOKwlB23li0g==
+=tKYI
+-----END PGP SIGNATURE-----
+
+--NbkpDTQWQL5ps1uY--
