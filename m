@@ -2,70 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DEE04F0F68
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Apr 2022 08:32:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 439444F0F7E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Apr 2022 08:40:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377468AbiDDGeC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Apr 2022 02:34:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35992 "EHLO
+        id S1377513AbiDDGmU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Apr 2022 02:42:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351199AbiDDGeC (ORCPT
+        with ESMTP id S241129AbiDDGmU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Apr 2022 02:34:02 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F37AD31518
-        for <linux-arm-msm@vger.kernel.org>; Sun,  3 Apr 2022 23:32:06 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id w7so8025406pfu.11
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Apr 2022 23:32:06 -0700 (PDT)
+        Mon, 4 Apr 2022 02:42:20 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCEBF2B251
+        for <linux-arm-msm@vger.kernel.org>; Sun,  3 Apr 2022 23:40:23 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id qh7so7754994ejb.11
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Apr 2022 23:40:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=trCjLQ34/8K4vS3Gt3GYWJs9bJFpowByYX2NTsK/Ir4=;
-        b=M4uqlSVrofPluiMngt4qfcktYblCdgZ5P4PjAbSZU9m1N5IqPKpqTP/6Q8HwBFiyne
-         fE6GAjXGFbAz6fjpeiHyCyt31E5wtCFmvrIp3dS0lKNtCvql5slW95UZmswc6UuV0z8X
-         5SRh9OFb5aWTK9W54Z/zI6nVloyO5syqkDym0w6BDMvkMtQ3c/YVYACKNBoowSDxlsa8
-         2AzbSphJW+uC8gR3RQW05roBGyP2oS7BTN9jSbd6mielWAgrL3zbm5jCOK2JRsk/SJs3
-         ww8fWQ7qkYcI++QnAJwLvMfeUDlP12mCiTcjvvnAFKtrvmhin1U9yyMR8+FAOAoQBoo5
-         xG8g==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8gCgi9p6TQq4anxDc6yg6qvIn2LRBKe/bblZh/HGFbI=;
+        b=D3wXcsYlnjTOFVZAZ55nRd97pR9b05nmrThFjbi/X+vRgaCEOgRUfOSYCQ/64n7ery
+         xyXa+ZAxEX9u29ExhayG/++ZyLvlGDitznAuSsSZ0+PUC061DP7Elrw8YPW0HoIen2ZH
+         ZehLlWOUgAqK+DDGnvje7RFhyh1WcguupVArAohM2LzTX1SQV5xE5N3XzGya7km/P76T
+         IyESDXJsFeKcEJ96r0yhpJTJgdHtvF0XhfgUIRX/2UeeFIrhDaqQV4L0RGEAS3K6qWTo
+         7YnE6O/d3rAIR6lbsp76Ri3y0RNSdpw9VJqiCJLxN9jXGq/FJnZzqHmeZRXHWnamGDuy
+         Pxyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=trCjLQ34/8K4vS3Gt3GYWJs9bJFpowByYX2NTsK/Ir4=;
-        b=im+L6OjKM7/aOI64/pHIJVbTEU6P/fgu5mYNv+ehA/8GQlsTGggYC7X1ECINnpGyDf
-         fbHfp7SCFP8eaGhkYjChHRC8SHSejq5eOizBaHhzswF7cJOaKGJMYRmQ0KbG/h9pW1Pm
-         oDbOWOOidMJeK4JIGMvqkrMSnpIUdSM5J5r4bAidZdayIqn/Tz5G2go48Eq9EaeF+cjX
-         rZp3HYHlZRkWgM07upmPMzU4epjfeVPgPkVxDnsjom1Juxsn7YKAcY8dhLk8aNwkUKZ/
-         m0UfPef2dexcJz3JYuIV2gziu4JA0E23D/m+GAufAY3w48F9zp6VguK0DJz/SfFCiO/o
-         R37g==
-X-Gm-Message-State: AOAM530yjmpYwGain7om2BaYyA8kCQbbS/SQIylbXEUZkgWYFs8bPLhP
-        xLz9BbfvB23IYRyPK5/bvnSB/g==
-X-Google-Smtp-Source: ABdhPJxLwONeIQOcIW/pFFL1GoOhjWw+M56cxi0uGtg5P0gM0sw3YjOtfWa9vGHtX9WN5h4DS6rYtQ==
-X-Received: by 2002:a63:6f85:0:b0:398:3e74:bdd8 with SMTP id k127-20020a636f85000000b003983e74bdd8mr24733958pgc.423.1649053926318;
-        Sun, 03 Apr 2022 23:32:06 -0700 (PDT)
-Received: from localhost ([223.184.83.228])
-        by smtp.gmail.com with ESMTPSA id v63-20020a638942000000b00398dde2120bsm8934451pgd.5.2022.04.03.23.32.05
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8gCgi9p6TQq4anxDc6yg6qvIn2LRBKe/bblZh/HGFbI=;
+        b=2uSZvY3gWosfE+lpCtE6Gamg6LNHhIJqe2zFeUWwuVvxKl6j/9yrM1UuH+lcLjwKg0
+         5bQFXy08yfaeuL8zQVpS78gRO9N5Qfx6v5HGocpcFIrgOsjdKwaqKSO1UzvtmPqzyXBp
+         PaUGwsdNYfhs/bd2CJOCn6Wk9sfmJ09o+8qdkGLU+3PdckQLTgKZrqoSmkesNHENTjJR
+         b2AMhqw4TqAsJ7ZxHVn+tys4syEdQhbQfnS9sQrTS723KFqPOcLu6QTxTHi4hV2z+Vxw
+         Uj0hK5OGR2H0ghg3vnSIyMv01ZqxnvgqWvLssUg52OKbcb/4Yj0RhSTYT8vztNiOL39a
+         3duQ==
+X-Gm-Message-State: AOAM533j/Gf35WCcq3qL4+rD/h/74gC0jkNHxLNuT+hg9up+ZIuKOnhd
+        trRe6T56cPjnMjcZhA65kiKPFA==
+X-Google-Smtp-Source: ABdhPJxx4XA9m4Y0ezx+xMbqpjNDdZ4/b0rLJQGyTSRnV7VNL8h3tZTlWBj7fdxRpU/0WLK5BggX8g==
+X-Received: by 2002:a17:906:2f97:b0:6ce:3ef6:94be with SMTP id w23-20020a1709062f9700b006ce3ef694bemr9704339eji.136.1649054422386;
+        Sun, 03 Apr 2022 23:40:22 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.gmail.com with ESMTPSA id i14-20020a50cfce000000b0041cbaba8743sm2676515edk.56.2022.04.03.23.40.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Apr 2022 23:32:05 -0700 (PDT)
-Date:   Mon, 4 Apr 2022 12:02:04 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] cpufreq: qcom-cpufreq-hw: Fix throttle frequency
- value on EPSS platforms
-Message-ID: <20220404063204.43zfnky5khr7h5qs@vireshk-i7>
-References: <20220401071424.2869057-1-vladimir.zapolskiy@linaro.org>
- <20220401071424.2869057-3-vladimir.zapolskiy@linaro.org>
- <Ykd8FUgLhGb0x7VI@ripper>
+        Sun, 03 Apr 2022 23:40:21 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-spi@vger.kernel.org
+Cc:     Kuldeep Singh <singh.kuldeep87k@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 1/2] spi: dt-bindings: qcom,spi-geni-qcom: convert to dtschema
+Date:   Mon,  4 Apr 2022 08:40:16 +0200
+Message-Id: <20220404064017.68634-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Ykd8FUgLhGb0x7VI@ripper>
-User-Agent: NeoMutt/20180716-391-311a52
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -76,28 +74,198 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01-04-22, 15:26, Bjorn Andersson wrote:
-> On Fri 01 Apr 00:14 PDT 2022, Vladimir Zapolskiy wrote:
-> 
-> > On QCOM platforms with EPSS flavour of cpufreq IP a throttled frequency is
-> > obtained from another register REG_DOMAIN_STATE, thus the helper function
-> > qcom_lmh_get_throttle_freq() should be modified accordingly, as for now
-> > it returns gibberish since .reg_current_vote is unset for EPSS hardware.
-> > 
-> > To exclude a hardcoded magic number 19200 it is replaced by "xo" clock rate
-> > in KHz.
-> > 
-> > Fixes: 275157b367f4 ("cpufreq: qcom-cpufreq-hw: Add dcvs interrupt support")
-> > Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> 
-> This could have been picked up by the maintainer already in the previous
-> version, if it wasn't the second patch in the series. Please send it
-> separately, or as the first patch of the two, so we can ask Viresh to
-> pick it up (just in case we don't reach an agreement of your next
-> version of the other patch).
+Convert the GENI based Qualcomm Universal Peripheral (QUP) Serial
+Peripheral Interface (SPI) bindings to DT Schema.
 
-I have applied 2/2 now. I hope it doesn't break anything.
+The original bindings in TXT were not complete, so add during conversion
+properties already used in DTS and/or in the driver: dmas,
+interconnects, operating points and power-domains.
 
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+---
+
+Changes since v2:
+1. Drop reg-names.
+
+Changes since v1:
+1. Correct $ref path and remove interconnect minItems (Kuldeep).
+2. Remove child tpm device from example.
+3. Pad reg hex addresses with 00.
+---
+ .../bindings/spi/qcom,spi-geni-qcom.txt       |  39 ------
+ .../bindings/spi/qcom,spi-geni-qcom.yaml      | 116 ++++++++++++++++++
+ 2 files changed, 116 insertions(+), 39 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.txt
+ create mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
+
+diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.txt b/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.txt
+deleted file mode 100644
+index c8c1e913f4e7..000000000000
+--- a/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.txt
++++ /dev/null
+@@ -1,39 +0,0 @@
+-GENI based Qualcomm Universal Peripheral (QUP) Serial Peripheral Interface (SPI)
+-
+-The QUP v3 core is a GENI based AHB slave that provides a common data path
+-(an output FIFO and an input FIFO) for serial peripheral interface (SPI)
+-mini-core.
+-
+-SPI in master mode supports up to 50MHz, up to four chip selects, programmable
+-data path from 4 bits to 32 bits and numerous protocol variants.
+-
+-Required properties:
+-- compatible:		Must contain "qcom,geni-spi".
+-- reg:			Must contain SPI register location and length.
+-- interrupts:		Must contain SPI controller interrupts.
+-- clock-names:		Must contain "se".
+-- clocks:		Serial engine core clock needed by the device.
+-- #address-cells:	Must be <1> to define a chip select address on
+-			the SPI bus.
+-- #size-cells:		Must be <0>.
+-
+-SPI Controller nodes must be child of GENI based Qualcomm Universal
+-Peripharal. Please refer GENI based QUP wrapper controller node bindings
+-described in Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml.
+-
+-SPI slave nodes must be children of the SPI master node and conform to SPI bus
+-binding as described in Documentation/devicetree/bindings/spi/spi-bus.txt.
+-
+-Example:
+-	spi0: spi@a84000 {
+-		compatible = "qcom,geni-spi";
+-		reg = <0xa84000 0x4000>;
+-		interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
+-		clock-names = "se";
+-		clocks = <&clock_gcc GCC_QUPV3_WRAP0_S0_CLK>;
+-		pinctrl-names = "default", "sleep";
+-		pinctrl-0 = <&qup_1_spi_2_active>;
+-		pinctrl-1 = <&qup_1_spi_2_sleep>;
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-	};
+diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml b/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
+new file mode 100644
+index 000000000000..e2c7b934c50d
+--- /dev/null
++++ b/Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
+@@ -0,0 +1,116 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/spi/qcom,spi-geni-qcom.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: GENI based Qualcomm Universal Peripheral (QUP) Serial Peripheral Interface (SPI)
++
++maintainers:
++  - Andy Gross <agross@kernel.org>
++  - Bjorn Andersson <bjorn.andersson@linaro.org>
++  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
++
++description:
++  The QUP v3 core is a GENI based AHB slave that provides a common data path
++  (an output FIFO and an input FIFO) for serial peripheral interface (SPI)
++  mini-core.
++
++  SPI in master mode supports up to 50MHz, up to four chip selects,
++  programmable data path from 4 bits to 32 bits and numerous protocol variants.
++
++  SPI Controller nodes must be child of GENI based Qualcomm Universal
++  Peripharal. Please refer GENI based QUP wrapper controller node bindings
++  described in Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml.
++
++allOf:
++  - $ref: /schemas/spi/spi-controller.yaml#
++
++properties:
++  compatible:
++    const: qcom,geni-spi
++
++  clocks:
++    maxItems: 1
++
++  clock-names:
++    const: se
++
++  dmas:
++    maxItems: 2
++
++  dma-names:
++    items:
++      - const: tx
++      - const: rx
++
++  interconnects:
++    maxItems: 2
++
++  interconnect-names:
++    items:
++      - const: qup-core
++      - const: qup-config
++
++  interrupts:
++    maxItems: 1
++
++  operating-points-v2: true
++
++  power-domains:
++    maxItems: 1
++
++  reg:
++    maxItems: 1
++
++required:
++  - compatible
++  - clocks
++  - clock-names
++  - interrupts
++  - reg
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,gcc-sc7180.h>
++    #include <dt-bindings/interconnect/qcom,sc7180.h>
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/power/qcom-rpmpd.h>
++
++    spi@880000 {
++        compatible = "qcom,geni-spi";
++        reg = <0x00880000 0x4000>;
++        clock-names = "se";
++        clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
++        pinctrl-names = "default";
++        pinctrl-0 = <&qup_spi0_default>;
++        interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
++        #address-cells = <1>;
++        #size-cells = <0>;
++        power-domains = <&rpmhpd SC7180_CX>;
++        operating-points-v2 = <&qup_opp_table>;
++        interconnects = <&qup_virt MASTER_QUP_CORE_0 0 &qup_virt SLAVE_QUP_CORE_0 0>,
++                        <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_0 0>;
++        interconnect-names = "qup-core", "qup-config";
++    };
++
++  - |
++    #include <dt-bindings/dma/qcom-gpi.h>
++
++    spi@884000 {
++        compatible = "qcom,geni-spi";
++        reg = <0x00884000 0x4000>;
++        clock-names = "se";
++        clocks = <&gcc GCC_QUPV3_WRAP0_S1_CLK>;
++        dmas = <&gpi_dma0 0 1 QCOM_GPI_SPI>,
++               <&gpi_dma0 1 1 QCOM_GPI_SPI>;
++        dma-names = "tx", "rx";
++        pinctrl-names = "default";
++        pinctrl-0 = <&qup_spi1_default>;
++        interrupts = <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>;
++        spi-max-frequency = <50000000>;
++        #address-cells = <1>;
++        #size-cells = <0>;
++    };
 -- 
-viresh
+2.32.0
+
