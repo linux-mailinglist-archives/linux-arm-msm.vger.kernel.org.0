@@ -2,184 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF37E4F12E0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Apr 2022 12:15:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 921264F14F0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Apr 2022 14:34:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351640AbiDDKRZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Apr 2022 06:17:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35896 "EHLO
+        id S236450AbiDDMg0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Apr 2022 08:36:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243260AbiDDKRY (ORCPT
+        with ESMTP id S1346003AbiDDMgZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Apr 2022 06:17:24 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30D532F38A;
-        Mon,  4 Apr 2022 03:15:28 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id w18so4175901edi.13;
-        Mon, 04 Apr 2022 03:15:28 -0700 (PDT)
+        Mon, 4 Apr 2022 08:36:25 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CB20275D2
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Apr 2022 05:34:29 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id b21so6362554ljf.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Apr 2022 05:34:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=s/rlqtfSH/+OKtlWbKj/8X8QmPBtgrwTTfh5H/AMmr8=;
-        b=M6UB/xq5U2lez0akpMy5cdYkLpWp5TY7avZOr9EOmD3mOmC7LnKWizhrsWVbS9OYXV
-         WxZR1L3Zip6LzxkB/OPBaxvuvHRQ+I4ccmh7WVg7layXLF9PfwqQYZ+jlB6EvWgmb6tq
-         0lZWCE3uc7LImkbQu2mlfWDe2OdVL/M2gk8b/f83Msuz2BzcI+DWU/n4c03LXmBik2KW
-         KbNMC8korkh/nF0C0QAzLDf4TOGpyF8a6IoEG8l74xBIia5wiIab+cBhjD/6K3P9R06b
-         EK2dkk2s3pESu8s3Lp5ePedMQzZPflgxpC1RgXqt3TXscJmh/VeMBZJdhbyeZhLuCe4J
-         VwFg==
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=ymmdaZ9ag/KbyUT2AA2pYd23UzF6p1u5S+K3tUsMVzc=;
+        b=IzaE0n0FaQpM5p9P9AfnkThA9e4CxrrbmRBeB4s2BiBSCXG1rcC8ge9NQehY6R9cnw
+         rBABhfokCBbogkHAFF8zGEQKPrfEjcS2bWrHfMNHE94BUTjJZax09Dh8xhdiBQbhDPBS
+         ULby4QmBePv0aHAxCt+4S2Q7PgK8bg6lyI/RgrdX5a3k16FaVDaqA87eDUOxmukKiTMX
+         sNnnagVfZOzOhNvuN8CRsExU3u31laJASLKOuFbBtF2UjL+9iEZV+NN070MF+y8J+Edk
+         EdielVhWytWZldnHTS/bRT66q7gxSCdA7o2UliRV2/wSG83yIRMcl2+IoyVcfn8QYj0Q
+         DsKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=s/rlqtfSH/+OKtlWbKj/8X8QmPBtgrwTTfh5H/AMmr8=;
-        b=kiRMLuFauMnZZ01SYxJ9sfWlLOwmSagcfxoeWjN5ZuDR+SXbbsRmp/TYxTXxOkVIn5
-         Iqhrq8yPTGr+c2dINM2OCjxzfw2xv2EqP0qcIvgiQbXB6CFhupchg7qJS+X0SFW0zi0h
-         10z9rSVGKRM9PyU3/WzwV9S1SorXyBZk8owEoeBF5BvRSX1912zRUBp6h+W2B9/APwbd
-         D1VBLhGr5Lmpbys4MmvMixIj6/oTkawSZx47oYwBvU0AZnh+RMVs6q3g7ZTZ8tokMIJK
-         hXhlcVtD46KCz33aG8ELnbIxXeAfJDYCvDprSuF631kzWu5eMu3BoFQGf+rak9l67Sv2
-         LsgA==
-X-Gm-Message-State: AOAM532mDF0NxFmVYKAjRun0f+rN1TnS8jOMGtuOqGm86aGKsg3CL7QC
-        fBKuXcMCzsvwMkB1Y5qiH18eomqf3gUkvgfkSAFiJObyoq8=
-X-Google-Smtp-Source: ABdhPJxh9T+A1Yt+ILwhaxqoZIRZw7XK7bOr8aWn5QI6DqXoAfRnxar+91mJpxHWbEEB8aKP53yR05gviFAyUrKxBls=
-X-Received: by 2002:a05:6402:b19:b0:41c:d713:5cba with SMTP id
- bm25-20020a0564020b1900b0041cd7135cbamr2668518edb.270.1649067326747; Mon, 04
- Apr 2022 03:15:26 -0700 (PDT)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ymmdaZ9ag/KbyUT2AA2pYd23UzF6p1u5S+K3tUsMVzc=;
+        b=ywgc7eKuMCXJHZc19nht1biqzZoeTBcKpKdNuGBjPPDShVfKY2YQdo00Z3VYbSGDCj
+         xK1eSeIk3K5Fn0JIONApUWzw3owWgi+aH5fPx15tl2O+6JDCCIgA847qdQ2BYRI4yHuS
+         58sie7udYi1EVe/iBJ3lkGRU2q1rMgF1zqBlDXlglg4Sg4dV0UoYIowrA+HsnHjM1xkk
+         KqFbzRMlspVu5EnI5cEOMm8pHv21f3H68gbCzhXbM4oBMIWNc9456+ngN48Gl6sOBFN8
+         Kh0v6o6fH2wrFppM5FGqvj1pB+jQqaGB9hp01EYR8qWfUMWClZTrZfOl2eAf9AB5jeW0
+         iVyg==
+X-Gm-Message-State: AOAM530IiqHXkMlDWrmV8XHc/WdaKeT5ZmOR9askiKrFH/NC6WNg70y1
+        k0oEnqu3dvXpbaYz7g2BvFxU6RNW/FEDfQ==
+X-Google-Smtp-Source: ABdhPJyy7QFvQqfT20vdzM6US3LYJIxObR57gm9VJM2knlpLs4Yl8qA3YBA/p46TAjBW6DZ9zvW0wA==
+X-Received: by 2002:a2e:874b:0:b0:24b:41f:c2fe with SMTP id q11-20020a2e874b000000b0024b041fc2femr9352350ljj.302.1649075667257;
+        Mon, 04 Apr 2022 05:34:27 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id f26-20020a056512323a00b0044a6d058d37sm1121984lfe.262.2022.04.04.05.34.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Apr 2022 05:34:26 -0700 (PDT)
+Message-ID: <3c7b7b39-8886-9221-3f2a-a4b26c62c405@linaro.org>
+Date:   Mon, 4 Apr 2022 15:34:25 +0300
 MIME-Version: 1.0
-References: <20220403183758.192236-1-krzysztof.kozlowski@linaro.org>
- <20220403183758.192236-2-krzysztof.kozlowski@linaro.org> <CAHp75Vczm9f9Bx_w4nW31cnBgwEzPiN-Eqn-7DKZuB+Hew0F=Q@mail.gmail.com>
- <2976f4f9-4fda-c04f-45cf-351518f88ec0@linaro.org>
-In-Reply-To: <2976f4f9-4fda-c04f-45cf-351518f88ec0@linaro.org>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Mon, 4 Apr 2022 13:14:22 +0300
-Message-ID: <CAHp75Vd-=-unRzQPtpfOs80dN=pDSsBaj=10nwOmmyWE8OqDPg@mail.gmail.com>
-Subject: Re: [PATCH v6 01/12] driver: platform: Add helper for safer setting
- of driver_override
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2 1/2] cpufreq: qcom-cpufreq-hw: Clear dcvs interrupts
+Content-Language: en-GB
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
         "Rafael J. Wysocki" <rafael@kernel.org>,
-        Stuart Yoder <stuyoder@gmail.com>,
-        "K. Y. Srinivasan" <kys@microsoft.com>,
-        Haiyang Zhang <haiyangz@microsoft.com>,
-        Stephen Hemminger <sthemmin@microsoft.com>,
-        Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Vineeth Vijayan <vneethv@linux.ibm.com>,
-        Peter Oberparleiter <oberpar@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Andy Gross <agross@kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
-        Linux on Hyper-V List <linux-hyperv@vger.kernel.org>,
-        linux-pci <linux-pci@vger.kernel.org>,
-        linux-remoteproc@vger.kernel.org, linux-s390@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        ALSA Development Mailing List <alsa-devel@alsa-project.org>,
-        linux-spi <linux-spi@vger.kernel.org>,
-        virtualization@lists.linux-foundation.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
+References: <20220401071424.2869057-1-vladimir.zapolskiy@linaro.org>
+ <20220401071424.2869057-2-vladimir.zapolskiy@linaro.org>
+ <Ykd7kwxwTxFjiNT0@ripper>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <Ykd7kwxwTxFjiNT0@ripper>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 4, 2022 at 12:34 PM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
-> On 04/04/2022 11:16, Andy Shevchenko wrote:
-> > On Sun, Apr 3, 2022 at 9:38 PM Krzysztof Kozlowski
-> > <krzysztof.kozlowski@linaro.org> wrote:
+On 02/04/2022 01:24, Bjorn Andersson wrote:
+> On Fri 01 Apr 00:14 PDT 2022, Vladimir Zapolskiy wrote:
+> 
+>> It's noted that dcvs interrupts are not self-clearing, thus an interrupt
+>> handler runs constantly, which leads to a severe regression in runtime.
+>> To fix the problem an explicit write to clear interrupt register is
+>> required.
+>>
+>> Fixes: 275157b367f4 ("cpufreq: qcom-cpufreq-hw: Add dcvs interrupt support")
+>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>> ---
+>> Changes from v1 to v2:
+>> * added a check for pending interrupt status before its handling,
+>>    thanks to Bjorn for review
+>>
+>>   drivers/cpufreq/qcom-cpufreq-hw.c | 14 ++++++++++++++
+>>   1 file changed, 14 insertions(+)
+>>
+>> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+>> index f9d593ff4718..e17413a6f120 100644
+>> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+>> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+>> @@ -24,6 +24,8 @@
+>>   #define CLK_HW_DIV			2
+>>   #define LUT_TURBO_IND			1
+>>   
+>> +#define GT_IRQ_STATUS			BIT(2)
+>> +
+>>   #define HZ_PER_KHZ			1000
+>>   
+>>   struct qcom_cpufreq_soc_data {
+>> @@ -31,6 +33,8 @@ struct qcom_cpufreq_soc_data {
+>>   	u32 reg_dcvs_ctrl;
+>>   	u32 reg_freq_lut;
+>>   	u32 reg_volt_lut;
+>> +	u32 reg_intr_clr;
+>> +	u32 reg_intr_status;
+>>   	u32 reg_current_vote;
+>>   	u32 reg_perf_state;
+>>   	u8 lut_row_size;
+>> @@ -345,11 +349,19 @@ static void qcom_lmh_dcvs_poll(struct work_struct *work)
+>>   static irqreturn_t qcom_lmh_dcvs_handle_irq(int irq, void *data)
+>>   {
+>>   	struct qcom_cpufreq_data *c_data = data;
+>> +	u32 val;
+>> +
 
-...
+Following the discussion below (regarding reg_int_clr), the driver 
+should also check that soc_data->reg_intr_status is not 0.
 
-> >> +int driver_set_override(struct device *dev, const char **override,
-> >> +                       const char *s, size_t len)
-> >> +{
-> >> +       const char *new, *old;
-> >> +       char *cp;
-> >
-> >> +       if (!override || !s)
-> >> +               return -EINVAL;
-> >
-> > Still not sure if we should distinguish (s == NULL && len == 0) from
-> > (s != NULL && len == 0).
-> > Supplying the latter seems confusing (yes, I see that in the old code). Perhaps
-> > !s test, in case you want to leave it, should be also commented.
->
-> The old semantics were focused on sysfs usage, so clearing is by passing
-> an empty string. In the case of sysfs empty string is actually "\n". I
-> intend to keep the semantics also for the in-kernel usage and in such
-> case empty string can be also "".
->
-> If I understand your comment correctly, you propose to change it to NULL
-> for in-kernel usage, but that would change the semantics.
+>> +	val = readl_relaxed(c_data->base + c_data->soc_data->reg_intr_status);
+> 
+> Seems reasonable to read the INTR_STATUS register and bail early if
+> there's no interrupt.
+> 
+>> +	if (!(val & GT_IRQ_STATUS))
+>> +		return IRQ_HANDLED;
+> 
+> But if we in the interrupt handler realize that there's no interrupt
+> pending for us, shouldn't we return IRQ_NONE?
 
-Yes. It's also possible to have a wrapper for sysfs use.
+Initially I wanted to agree with Vladimir. However after giving a 
+thought, returning IRQ_HANDLED here can hide other status bits being set 
+(e.g. on the other platforms using EPSS). If we return IRQ_NONE here, 
+we'll get the "IRQ: nobody cared" message and will know that some bits 
+from status are unhandled.
 
-> > Another approach is to split above to two checks and move !s after !len.
->
-> I don't follow why... The !override and !s are invalid uses. !len is a
-> valid user for internal callers, just like "\n" is for sysfs.
+However, a separate thing. We discussed this with Vladimir. I agree with 
+him that this chunk is not directly related to the fix for the issue.
+I'd suggest to split this patch into two patches:
 
-I understand but always supplying s maybe an overhead for in-kernel usages.
+- writel_relaxed to clear the interrupt (which can be picked up into the 
+-rc branch and into stable kernels)
 
-In any case, it's not critical right now, just a remark that it can be modified.
+- a check for the GT_IRQ_STATUS which is not strictly necessary, so it 
+can come through the plain -next process.
 
-> >> +       /*
-> >> +        * The stored value will be used in sysfs show callback (sysfs_emit()),
-> >> +        * which has a length limit of PAGE_SIZE and adds a trailing newline.
-> >> +        * Thus we can store one character less to avoid truncation during sysfs
-> >> +        * show.
-> >> +        */
-> >> +       if (len >= (PAGE_SIZE - 1))
-> >> +               return -EINVAL;
-> >
-> > Perhaps explain the case in the comment here?
->
-> You mean the case we discuss here (to clear override with "")? Sure.
+> 
+>>   
+>>   	/* Disable interrupt and enable polling */
+>>   	disable_irq_nosync(c_data->throttle_irq);
+>>   	schedule_delayed_work(&c_data->throttle_work, 0);
+>>   
+>> +	writel_relaxed(GT_IRQ_STATUS,
+>> +		       c_data->base + c_data->soc_data->reg_intr_clr);
+> 
+> And in OSM (i.e. not epss_soc_data), both reg_intr_status and
+> reg_intr_clr will be 0, so we end up reading and writing the wrong
+> register.
+> 
+> You need to do:
+> 	if (c_data->soc_data->reg_intr_clr)
+> 		writel_relaxed(..., reg_intr_clr);
 
-Yep. Before the below check.
+I'd second this. Despite this chunk being called from the path in which 
+reg_int_clr is always set, I'd still prefer to have a check. I do not 
+like the idea of writing to an optional register without an explicit 
+check (or without a comment that this function should be used only when 
+reg_int_clr/reg_intr_status are defined).
 
-> >> +       if (!len) {
-> >> +               device_lock(dev);
-> >> +               old = *override;
-> >> +               *override = NULL;
-> >
-> >> +               device_unlock(dev);
-> >> +               goto out_free;
-> >
-> > You may deduplicate this one, by
-> >
-> >                goto out_unlock_free;
-> >
-> > But I understand your intention to keep lock-unlock in one place, so
-> > perhaps dropping that label would be even better in this case and
-> > keeping it
->
-> Yes, exactly.
->
-> >        kfree(old);
-> >        return 0;
-> >
-> > here instead of goto.
->
-> Slightly more code, but indeed maybe easier to follow. I'll do like this.
+> 
+> But according to the downstream driver, this is supposed to be done in
+> the polling function, right before you do enable_irq().
+> 
+> Regards,
+> Bjorn
+> 
+>> +
+>>   	return IRQ_HANDLED;
+>>   }
+>>   
+>> @@ -368,6 +380,8 @@ static const struct qcom_cpufreq_soc_data epss_soc_data = {
+>>   	.reg_dcvs_ctrl = 0xb0,
+>>   	.reg_freq_lut = 0x100,
+>>   	.reg_volt_lut = 0x200,
+>> +	.reg_intr_clr = 0x308,
+>> +	.reg_intr_status = 0x30c,
+>>   	.reg_perf_state = 0x320,
+>>   	.lut_row_size = 4,
+>>   };
+>> -- 
+>> 2.33.0
+>>
 
 
 -- 
-With Best Regards,
-Andy Shevchenko
+With best wishes
+Dmitry
