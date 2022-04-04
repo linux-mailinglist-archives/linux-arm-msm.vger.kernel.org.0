@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C93064F1C21
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Apr 2022 23:27:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C8D04F1C51
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Apr 2022 23:28:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245209AbiDDVZO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Apr 2022 17:25:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45022 "EHLO
+        id S1381368AbiDDV03 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Apr 2022 17:26:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379143AbiDDQha (ORCPT
+        with ESMTP id S1379144AbiDDQhe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Apr 2022 12:37:30 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8561E094;
-        Mon,  4 Apr 2022 09:35:33 -0700 (PDT)
+        Mon, 4 Apr 2022 12:37:34 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E210DE094;
+        Mon,  4 Apr 2022 09:35:37 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 5450AB8185C;
-        Mon,  4 Apr 2022 16:35:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E25DC34110;
-        Mon,  4 Apr 2022 16:35:27 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 90681B81857;
+        Mon,  4 Apr 2022 16:35:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 952ACC34114;
+        Mon,  4 Apr 2022 16:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649090131;
-        bh=jY1ehkq5K86uPGP2fbD9b7UNiEgcBssb2Z6xVzhvgOc=;
+        s=k20201202; t=1649090135;
+        bh=n3Wkk5bm16a05lN7V/okcIiS7mgAL2qB7YWgC48E5A4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=c1KYp8ZqC9rHDWhrCuqapYynxk3RnSSvlNdipQ6aXQD08ljSkDKG0/7vibzlWpvxe
-         I7AIeVNbErEvAp+HuVpENr8HAoyrv+dTTkexR9ekCmuaJS9A/jwSBTKISJq+SzSqYD
-         yKpfpNOQCzqzkBX44ihK8QoazHscsXc5Wug0aaPOi35bo76Voqqks4XduPvsw+GFkX
-         xP14agr0oyI7F0KxuwFiUWaitg1xpLaTjtmOBWMhdVV/P6hIz89k3Ju+gyyi26CT1M
-         AC9bbm+Yg+sZFpUSzSdHFYhBOJL6nDdLcBBS2UTnS4lN6T56750t4RJ5uhjDKUWYKy
-         MlfV1AsCRKcAw==
+        b=GQa8RgE/Wpy5P1VNso6g/dWmEeVxk0r29TV+jZ0mxz3wEb0OBhQeJOr2GKs8vdKjg
+         H8tpMF9KgbUNjIZNQIW8uPXBAd5lJY8v/sy+y2X47qBOn2DFWcm26QLt0pLxbTBR5i
+         x5BpEGfwaAWrEII+aiJ6chPNg7GKbM9NnnbssBcZGqMtkaFNYMJ/vhdJZF7GjFDYoo
+         T7mjc6eHKj54Aq09FN1cYAgF0J5hY+dF685OcMX40/fZ7siePYIL73fpblc/0VYTJ+
+         V1Y/W3YRVmRdztqLdcFWQI4lTUZ0ghqFeltdGAvqeGDw6diUs4S2l9CkJ7jDkh/EPz
+         XqopggPDVqW8A==
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Rob Clark <robdclark@gmail.com>
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -43,9 +43,9 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v6 09/14] drm/msm: Add missing num_dspp field documentation
-Date:   Mon,  4 Apr 2022 22:04:31 +0530
-Message-Id: <20220404163436.956875-10-vkoul@kernel.org>
+Subject: [PATCH v6 10/14] drm/msm/disp/dpu1: Add support for DSC in topology
+Date:   Mon,  4 Apr 2022 22:04:32 +0530
+Message-Id: <20220404163436.956875-11-vkoul@kernel.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220404163436.956875-1-vkoul@kernel.org>
 References: <20220404163436.956875-1-vkoul@kernel.org>
@@ -61,27 +61,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Somehow documentation for num_dspp was missed, so add that
+For DSC to work we typically need a 2,2,1 configuration. This should
+suffice for resolutions up to 4k. For more resolutions like 8k this won't
+work.
 
+Also, it is better to use 2 LMs and DSC instances as half width results
+in lesser power consumption as compared to single LM, DSC at full width.
+
+The panel has been tested only with 2,2,1 configuration, so for
+now we blindly create 2,2,1 topology when DSC is enabled
+
+Co-developed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_drv.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 13 +++++++++++++
+ drivers/gpu/drm/msm/msm_drv.h               |  2 ++
+ 2 files changed, 15 insertions(+)
 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 95d1588f3bb6..51f24ba68375 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -567,8 +567,21 @@ static struct msm_display_topology dpu_encoder_get_topology(
+ 	topology.num_enc = 0;
+ 	topology.num_intf = intf_count;
+ 
++	if (dpu_enc->dsc) {
++		/* In case of Display Stream Compression (DSC), we would use
++		 * 2 encoders, 2 layer mixers and 1 interface
++		 * this is power optimal and can drive up to (including) 4k
++		 * screens
++		 */
++		topology.num_enc = 2;
++		topology.num_dsc = 2;
++		topology.num_intf = 1;
++		topology.num_lm = 2;
++	}
++
+ 	return topology;
+ }
++
+ static int dpu_encoder_virt_atomic_check(
+ 		struct drm_encoder *drm_enc,
+ 		struct drm_crtc_state *crtc_state,
 diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index 2a3280df7b12..bf2ccff97562 100644
+index bf2ccff97562..0ace9b0549a4 100644
 --- a/drivers/gpu/drm/msm/msm_drv.h
 +++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -102,6 +102,7 @@ enum msm_event_wait {
-  * @num_lm:       number of layer mixers used
+@@ -103,12 +103,14 @@ enum msm_event_wait {
   * @num_enc:      number of compression encoder blocks used
   * @num_intf:     number of interfaces the panel is mounted on
-+ * @num_dspp:     number of dspp blocks used
+  * @num_dspp:     number of dspp blocks used
++ * @num_dsc:      number of Display Stream Compression (DSC) blocks used
   */
  struct msm_display_topology {
  	u32 num_lm;
+ 	u32 num_enc;
+ 	u32 num_intf;
+ 	u32 num_dspp;
++	u32 num_dsc;
+ };
+ 
+ /* Commit/Event thread specific structure */
 -- 
 2.34.1
 
