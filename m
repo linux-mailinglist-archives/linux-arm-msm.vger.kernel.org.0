@@ -2,94 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C7D9E4F1FC2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Apr 2022 01:03:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 888724F1FDA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Apr 2022 01:06:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242454AbiDDXFj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Apr 2022 19:05:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45192 "EHLO
+        id S233430AbiDDXIP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Apr 2022 19:08:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241388AbiDDXFe (ORCPT
+        with ESMTP id S241437AbiDDXF7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Apr 2022 19:05:34 -0400
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B1376EB0F;
-        Mon,  4 Apr 2022 15:27:49 -0700 (PDT)
-Received: by mail-oi1-f182.google.com with SMTP id k10so11621780oia.0;
-        Mon, 04 Apr 2022 15:27:49 -0700 (PDT)
+        Mon, 4 Apr 2022 19:05:59 -0400
+Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C8DC2F3A6;
+        Mon,  4 Apr 2022 15:29:19 -0700 (PDT)
+Received: by mail-oo1-f48.google.com with SMTP id i8-20020a4a6f48000000b00324ada4b9d9so1979529oof.11;
+        Mon, 04 Apr 2022 15:29:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=21RYx1siUXFRLcSMfYzZjQ6/E/QTCX038TIQLde76lI=;
-        b=7d5l8+rrTgeuOPwvzBZ5TVDccqB/y5/2pR8xe4Yl3dc39EBQTQxXvd14T95JRya3kQ
-         pgPqbz5ew54u01E8PM6AICug5z1vSyDAZoeXS/juKKaiYrL9XOLlv5+mKNdWjX4V2Fxd
-         l+vHMw94EdbkKu9pCWGdyz6EH6iU3WRTS6lcQStVpW6qiHs79Kx4ebd4g4+TBftkwEBD
-         4DrpXuuEHmwM+R28+sUQ0Ay/YsRQVgBf6gewZtdgn2UWd+9dDNLbMXl4ZhLx2kgERPsl
-         wWxDtyKqhdxllr74svRe8uxGA51T2r6DRmkTiTH1vgi/w5MB/EnaquxJ/Hmh12BzZQea
-         rEWA==
-X-Gm-Message-State: AOAM53077qKhIIAWuYXKwbEpidC6LyB5uDL8GmX7FX0zH0eLSevRv3Xg
-        WpkGLXKNzwkAG/mNegmYXw==
-X-Google-Smtp-Source: ABdhPJyWF91xQnODnm0DqGriBHyrjc+a5lRFRjRBgVc75n8XH2jeXM4ob5qMfO6szxo4J8zdWEKH2g==
-X-Received: by 2002:aca:f10:0:b0:2ef:9dd9:79fb with SMTP id 16-20020aca0f10000000b002ef9dd979fbmr229194oip.282.1649111268742;
-        Mon, 04 Apr 2022 15:27:48 -0700 (PDT)
+        bh=Hcqcr6DsY0jbNBseNOXuHsSGPGJX3FdjWyZUvr4jyj4=;
+        b=xZLC0cOsq/ya9rxJjOW7pKMehnUk5ZWPXSws1CpyScHwCQO4OMhinpNaEoWSnot/54
+         c0qQaWm2Y65xYxJsPnEIh1/0h6Wh6FuEvMCpP9snPSQ/LAPC903ZD2VcDcHufgGwXjDq
+         ARjntrV1vEakD6bT1P60ZgN3L5aylMlzMuGk7NqU9JqLmk34tThFY3DzuBKgQr3cHe6J
+         dOasLdgv6gdGu8MmxV9jos4xPy63boO5AXOk8CVurj8ZGfckUXH4hZXRnAYwp3O/78Hr
+         e6p6QDn+rOMIS8UFN90oo6K1Ck9SBNGIcQuffoPbLVrYKW5CSu3reBaXwY+wsAtvtLhS
+         Y/Bw==
+X-Gm-Message-State: AOAM532BN1MxMGgGDRDIb2MukhmNcPC7D2jm0b1UvWl30tL+6pQZrTiY
+        Lp67bF2uMQzHSNr9WMsKHmSrtIm8dQ==
+X-Google-Smtp-Source: ABdhPJw5IVcpdqsjnK+gPbZ7XDuhJYkMMuqN3iKMDxzwQ355XSVgAMlF3aGZHs/wS4VSzeKSUdLXjg==
+X-Received: by 2002:a4a:d747:0:b0:320:d7c2:4357 with SMTP id h7-20020a4ad747000000b00320d7c24357mr141931oot.92.1649111358353;
+        Mon, 04 Apr 2022 15:29:18 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id 11-20020a05687013cb00b000dd9b5dd71csm4731995oat.56.2022.04.04.15.27.47
+        by smtp.gmail.com with ESMTPSA id m24-20020a9d73d8000000b005c942e2281dsm5025927otk.76.2022.04.04.15.29.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Apr 2022 15:27:48 -0700 (PDT)
-Received: (nullmailer pid 2113248 invoked by uid 1000);
-        Mon, 04 Apr 2022 22:27:47 -0000
-Date:   Mon, 4 Apr 2022 17:27:47 -0500
+        Mon, 04 Apr 2022 15:29:17 -0700 (PDT)
+Received: (nullmailer pid 2115788 invoked by uid 1000);
+        Mon, 04 Apr 2022 22:29:16 -0000
+Date:   Mon, 4 Apr 2022 17:29:16 -0500
 From:   Rob Herring <robh@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Mark Brown <broonie@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, linux-clk@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        Stephen Boyd <sboyd@kernel.org>,
+Cc:     linux-kernel@vger.kernel.org, Mark Brown <broonie@kernel.org>,
         linux-remoteproc@vger.kernel.org,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>
-Subject: Re: [PATCH 08/10] dt-bindings: soc: qcom,smd: convert to dtschema
-Message-ID: <Yktw42ujYEJQH2l9@robh.at.kernel.org>
+        Michael Turquette <mturquette@baylibre.com>,
+        Andy Gross <agross@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        linux-clk@vger.kernel.org,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Kathiravan T <kathirav@codeaurora.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [PATCH 09/10] dt-bindings: clock: qcom,rpmcc: convert to dtschema
+Message-ID: <YktxPB6e2O8HC6nI@robh.at.kernel.org>
 References: <20220401201035.189106-1-krzysztof.kozlowski@linaro.org>
- <20220401201035.189106-9-krzysztof.kozlowski@linaro.org>
+ <20220401201035.189106-10-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220401201035.189106-9-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220401201035.189106-10-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 01 Apr 2022 22:10:33 +0200, Krzysztof Kozlowski wrote:
-> Convert the Qualcomm Shared Memory Driver bindings to DT Schema.
-> 
-> Changes against original bindings: enforce only specific names of child
-> nodes, instead of any names.
+On Fri, 01 Apr 2022 22:10:34 +0200, Krzysztof Kozlowski wrote:
+> Convert the Qualcomm RPM Clock Controller bindings to DT schema and
+> include it in parent's schema (SMD RPM).
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  .../regulator/qcom,smd-rpm-regulator.yaml     |   2 +-
->  .../bindings/remoteproc/qcom,q6v5.txt         |   2 +-
->  .../bindings/remoteproc/qcom,wcnss-pil.txt    |   2 +-
->  .../bindings/soc/qcom/qcom,smd-rpm.yaml       |   4 +-
->  .../devicetree/bindings/soc/qcom/qcom,smd.txt |  98 -------------
->  .../bindings/soc/qcom/qcom,smd.yaml           | 137 ++++++++++++++++++
->  6 files changed, 142 insertions(+), 103 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smd.txt
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,smd.yaml
+>  .../devicetree/bindings/clock/qcom,rpmcc.txt  | 63 -----------------
+>  .../devicetree/bindings/clock/qcom,rpmcc.yaml | 69 +++++++++++++++++++
+>  .../bindings/soc/qcom/qcom,smd-rpm.yaml       |  4 ++
+>  3 files changed, 73 insertions(+), 63 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
 > 
 
 Reviewed-by: Rob Herring <robh@kernel.org>
