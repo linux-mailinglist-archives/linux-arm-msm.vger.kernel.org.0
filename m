@@ -2,129 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 519DB4F1602
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Apr 2022 15:36:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5ACC64F1690
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Apr 2022 15:53:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353469AbiDDNio (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Apr 2022 09:38:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52544 "EHLO
+        id S1346000AbiDDNy7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Apr 2022 09:54:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353941AbiDDNin (ORCPT
+        with ESMTP id S1346907AbiDDNy6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Apr 2022 09:38:43 -0400
-Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33BDB3DA7B
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Apr 2022 06:36:47 -0700 (PDT)
-Received: by mail-il1-x12a.google.com with SMTP id y16so6864799ilc.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Apr 2022 06:36:47 -0700 (PDT)
+        Mon, 4 Apr 2022 09:54:58 -0400
+Received: from esa.hc3962-90.iphmx.com (esa.hc3962-90.iphmx.com [216.71.140.77])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA52C3EAA9;
+        Mon,  4 Apr 2022 06:53:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ieee.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=v7AXDrNkV0E+GuzQu0vkT521m8L2g3R8JZyBRpFSWSw=;
-        b=UGi9dsHRnoLPuvzo1S1EvzOOZUHvSHzXBsnw16StvvXGSTaLht7DkGhbmNgritgWoy
-         3S+vdPPYNI+CbTwzNjbbeE7Hw32snvtBgdJ3quDnbJxCb0KtnPvvUi8IKemKBU7+NTcn
-         YDKZMZsFTdUZ44CkNQLumu4g37ihuSwyQIWPc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=v7AXDrNkV0E+GuzQu0vkT521m8L2g3R8JZyBRpFSWSw=;
-        b=xpxf4iWq1+/Dq7/A9aFJw3OU5MFK8Q2GlwwNtVKOHJBEqF1cxD4bdxEoW2WtYHzv57
-         RfOKtwqKq+1WSMx3iCDm57umJVAlTMkzjQFFu7dYwB0wDG6AbR43n9fxVdOCyvWTMlDg
-         954qSMcxvGojZ3dFO5EsiKpKWv3QsAZI9PqCz83gmrDlQkE3SVWrRSJA0M/DCj9tczO+
-         eBoYwVQGPT/VE49tymICKQVAMI+/p/yV/j6SUpQtqZ/ulbuEd7GHvZnx/MrqLBYVGTjn
-         Jb1mBErbLwyXtc0wzOFhvmV5wiByY6Rk5LHAV/FMkoaMRhLqOLGm1cG5bcaOrwf9rhsG
-         lDig==
-X-Gm-Message-State: AOAM533iu37SPk/cBCatGLH+BqJgVQN7R3OB6+6gjNlZDCV+R+24M3m2
-        4iHkALP91+SoclWtbTtZd2kVsQ==
-X-Google-Smtp-Source: ABdhPJxKWPVlUvcgfx4SvYr7vos8yA4v2Mi7qUIHb9E64q6XZsCGDyBE3n+kdaQg4cAx6UmNyhWkjw==
-X-Received: by 2002:a05:6e02:178d:b0:2ca:1ad2:c471 with SMTP id y13-20020a056e02178d00b002ca1ad2c471mr5284025ilu.311.1649079406491;
-        Mon, 04 Apr 2022 06:36:46 -0700 (PDT)
-Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id x8-20020a92d648000000b002ca2dc1a74esm3188537ilp.58.2022.04.04.06.36.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Apr 2022 06:36:46 -0700 (PDT)
-Message-ID: <10d4f538-249d-f78c-b90f-298c9727d58d@ieee.org>
-Date:   Mon, 4 Apr 2022 08:36:44 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH 2/2] dt-bindings: net: qcom,ipa: finish the qcom,smp2p
- example
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qccesdkim1;
+  t=1649080381; x=1649685181;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=Vz8IdrLj6QHDVZN5ulfC4WUZrcSPMiOGYBxN6XxsnOk=;
+  b=Y+89ZxooBjI4G0lwH4w/z0cCz2La+sVLKnK9Jb7ID0aGDlpb9PoiUFSp
+   jcU11aHovxOLEJS8jiQKpRgLAvmeWGOrV8ldXeARYyZ9Ur9MZm0B3lquf
+   TtemfPhmnszLzW+QS47IWvmx3mMXTz0AHQAjHR89JDuXt15zjTbUM+lKW
+   c=;
+Received: from mail-mw2nam12lp2048.outbound.protection.outlook.com (HELO NAM12-MW2-obe.outbound.protection.outlook.com) ([104.47.66.48])
+  by ob1.hc3962-90.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Apr 2022 13:53:00 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=P1TobAoJ2opOUxlumH0xbUGPyOWLSWfhJLDHGqAxOB3JGkeSZaA8Wxx8vnmmFVUC1y49PrJ7MHrDP6NOmHl3A1UCNZ0fe7Av7k4yZ/uB/7WNj7l6lsMrZJA0d962Eya0/YynJR/xi5rscYVTa1t5DXg34ij97G5ZBY5W3F8Sk8tU20j3Px83TmYPt6rVKXNHFjZtyJdFTiLwiWpa9BJFnIxQCAMSVsDME99Byidc74j9RVmfuniTwQrUof0D3KjRkXzsL3J4DNFJ77Nr+VUknnR2qOqUEueCi2V51O6veDWEn9dBGHbUc94fV+5+YnSndmBChoGVNTLAKMQvGnDFqw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Vz8IdrLj6QHDVZN5ulfC4WUZrcSPMiOGYBxN6XxsnOk=;
+ b=jgsbR8TIqePDtAkZe/q8bWYTT7TRuf4PMyLCUDroty2JIgaefuaX89YO7QAdzohVpJAvRFHX6H9O/W+HyFKjes+9rMVF7KwZQ6QIL+S86dlvLpQ6VlSdGvJ1Wre3GbrF6HLArIkMK4X95owyYcBLQqpS7HAypYaREYx9UUxQKjKg2QbRAA1X/nviMswbFFxEKeFnrKbImjSLCutGs00Mxtuw9ryFqFYcLSHCV7pAt8hbLU625X/q9cAH3qkI0nHSK+ibGq2J2ex89c4FTiVQGgovAV+70ohR30Kv8f0SgDAIorCza6D8kTknrpA4lppFekAUI8vC8Gerj+hTt9qq/Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=quicinc.com; dmarc=pass action=none header.from=quicinc.com;
+ dkim=pass header.d=quicinc.com; arc=none
+Received: from MW4PR02MB7186.namprd02.prod.outlook.com (2603:10b6:303:73::6)
+ by CO6PR02MB7682.namprd02.prod.outlook.com (2603:10b6:303:aa::24) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5123.31; Mon, 4 Apr
+ 2022 13:52:55 +0000
+Received: from MW4PR02MB7186.namprd02.prod.outlook.com
+ ([fe80::9485:c59c:6877:f492]) by MW4PR02MB7186.namprd02.prod.outlook.com
+ ([fe80::9485:c59c:6877:f492%6]) with mapi id 15.20.5123.031; Mon, 4 Apr 2022
+ 13:52:55 +0000
+From:   "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>
+To:     Doug Anderson <dianders@chromium.org>,
+        "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>
+CC:     dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        quic_kalyant <quic_kalyant@quicinc.com>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
+        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
+        quic_vproddut <quic_vproddut@quicinc.com>,
+        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>
+Subject: RE: [PATCH v6 6/8] drm/msm/dp: remove unnecessary delay during boot
+Thread-Topic: [PATCH v6 6/8] drm/msm/dp: remove unnecessary delay during boot
+Thread-Index: AQHYRE/OalQb15tWkU6TQa4mr1tu5azaJAGAgAWp7UA=
+Date:   Mon, 4 Apr 2022 13:52:55 +0000
+Message-ID: <MW4PR02MB718631182DC72076DC794C1DE1E59@MW4PR02MB7186.namprd02.prod.outlook.com>
+References: <1648656179-10347-1-git-send-email-quic_sbillaka@quicinc.com>
+ <1648656179-10347-7-git-send-email-quic_sbillaka@quicinc.com>
+ <CAD=FV=UX9Mg71EKvgNp_wNG5q7_ugBgVPbcFWFX5XBG+cQCi8Q@mail.gmail.com>
+In-Reply-To: <CAD=FV=UX9Mg71EKvgNp_wNG5q7_ugBgVPbcFWFX5XBG+cQCi8Q@mail.gmail.com>
+Accept-Language: en-US
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, Alex Elder <elder@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, netdev@vger.kernel.org
-Cc:     Rob Herring <robh@kernel.org>
-References: <20220402155551.16509-1-krzysztof.kozlowski@linaro.org>
- <20220402155551.16509-2-krzysztof.kozlowski@linaro.org>
-From:   Alex Elder <elder@ieee.org>
-In-Reply-To: <20220402155551.16509-2-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=quicinc.com;
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 1793c005-6201-461a-0261-08da16426b9e
+x-ms-traffictypediagnostic: CO6PR02MB7682:EE_
+x-ld-processed: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d,ExtAddr
+x-microsoft-antispam-prvs: <CO6PR02MB768240B97049CDC3516AABBA9DE59@CO6PR02MB7682.namprd02.prod.outlook.com>
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: iJa0lxl8tK75H8A6GULGZCUvMMYMckv7T0bCuDah+taXLsk/V6KxBd/7Sa9phYQP6hd1XsZQcNjpiDOcUpzPHDfgyL4j10kj/preQFoae0MQ2o8L9DCLgarOPgWLicDQtmsUTIHUH4hRFULmUCKu+JpYhsf1LCvqUZ1ClU7P59wSmu2byZW2OJITHTqdriDtQI4vxpGyNZEnEvEAVApkoI/Lbg1BU4uIRXo3TlFcvq/pBlO0CpL1VI90Ns4GK1StwzQElLjLyCZCjIG/I7v4ueVPxXSb6OIkXA2ne4bYe2o1gI0oKDHBFOvTnTT/bBlD+C8OxxB4VRDRi5YOel9gWPdrC87PXNMB5DEnuT9psev2rIiDnjdXhXx1z6sjlPwAthCMokCxSWV9WsH30Um3DxNSoKyoWOtq9hwsetOF3SYfHGVAnbSffS4EPv1MY8/+PITrJr/hJ5DXbTqqb+LZCQ8K8uI+krNmE4u1kO6iOgIRHJNu2aopfB93aQKIJgBDnp8MxHR/gZ8p+LXoS3thZ+uYRFoWCoHa1qs9yarht5UNTDQ7tkJH+1dbVnxvXz0TBMNtsq4DRZqzX2hTbiJbrWXzMXtipSrSDJAUWkbHXJJcpZUGyVbWtyME3jJbboeV+Bm/42sFaFjNzXGhnaciyjVSz0wS68kf/mzd0N32F9dugQuZsKVLJNxR7YGEgAwc7hAyAaIkbeYFtC1yekoMVS7oqZBRqNs58+03QozTuL/ZUkHFkERNjZgT319XiBdgR5s0tEo66Szso44zIlZ3Hm8crA+Hlbrbhjx5nrHSQqQ=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW4PR02MB7186.namprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(8676002)(4326008)(86362001)(76116006)(66556008)(66446008)(66946007)(38070700005)(2906002)(38100700002)(5660300002)(122000001)(7416002)(8936002)(66476007)(52536014)(64756008)(83380400001)(53546011)(54906003)(107886003)(6506007)(7696005)(26005)(186003)(316002)(9686003)(110136005)(966005)(508600001)(71200400001)(55016003)(33656002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Z0FXZ2tkYjdRUmxUUTJiVEpkY2QrZjlyYlBYMEVpV1pmZEZsNUE0RmdVd2VY?=
+ =?utf-8?B?MTRwU1lRLzFLeEVWbWJhdHhGcThWbDVDOGkxVjQ0RURBTko0RWYyd3Uva2oy?=
+ =?utf-8?B?ZXJWcTUyOEVpR1Exdzc5VTNBMzVMcW1NRDljRHBkT0NVbHdneFlCKzdLYnV2?=
+ =?utf-8?B?VzdTbXhFeS9JVTVDM0Q0R0VXM3JHSEhka0ppbFFsK0xQRnhCc3dXOVBvbUpk?=
+ =?utf-8?B?cDNUQWxiZVd3RlNrUkVtNDV0UzBnM1BiSDNWK3BHc1NvNmRlVmtTS0NST09D?=
+ =?utf-8?B?WldRaGE0YmN2eCs5UFRhcG9LdXZjcTlGMEx2akxFM2NYMU5HSXBSK2oxREVh?=
+ =?utf-8?B?VFZVZFpTL3A5U0c3NmJpSTJyblFCbWxTZTUvcmxOZWw0TmNFTStSOE40Zm5p?=
+ =?utf-8?B?UkZZRnJqV3ZXeGRyMkFmbkZsY3owUFcwMU5LSHdrSjJHQVdvb21aU29QN3Jm?=
+ =?utf-8?B?dFdkLzlzQTdaQjdXT1ZqdmdCOFNUU3VUcy81WlJTSG02RXNjTThxRG02SU1G?=
+ =?utf-8?B?ZGxLQnYwa2hPaWN2cmxXc1M4ZlMrUkdSQ0Iva204Q1E0eWJpQndiTGFDUjhN?=
+ =?utf-8?B?Z1gwNFFkR3RDNTJNaGhDLzBDaVdYK01aaFBGSSt2MzcxTVV6WG04RDBnYWNi?=
+ =?utf-8?B?T1Z5SldpVm90TlRmME5ZN2dsSE1sRjBycHJaVG9namhkd0Z1Tks2ajVrSllB?=
+ =?utf-8?B?LzJTSy8wS01ONE93K2VJam4xc25TbzZZMDM2YmZJUHl5bTEzMXkyMDBlc05q?=
+ =?utf-8?B?dlNJUlV1a0l0NGtOMHJtcmNpZ0didUVhTXdwdG85VVJzUGNJOTFOSjVwTERM?=
+ =?utf-8?B?VkZRRkxMNnBGYzRRcEJHcTZha2l0eEVLL2ZSdk9QbVBJQkNsWHlGbDdDRUZH?=
+ =?utf-8?B?Z29DOVV0bXArOTFvMzNvR29NdkllRDBSdjIxTUVOaExGNW9jSWswVUJXTkhU?=
+ =?utf-8?B?Rm5WelVtQnNxZDY5cFM4dVRuY1BTQ2lYN1RSandQdHF2TXhHOTZjdHc1V2RJ?=
+ =?utf-8?B?aGpVQmpBc2daeEtRNGoyM1JtazMzWXJRRFRrS1MrVXh1ZGp6WFJBUTlwQ3RK?=
+ =?utf-8?B?QjVPYWpISmRSa3pOU1lJNEppdjMvOEhnYm51NmFUN1JSQlZGRzBRU1J2Tkg5?=
+ =?utf-8?B?VmVlMU5TcHh2ZFc2RmVWMjhTSmtBQk9zbmZ1WVVxTU9Kc3ZwTzc2a1RzekdK?=
+ =?utf-8?B?alhIWGdNTVdWcnRIbEV3K2FMZTkvZ0tjV3YyaHFkZFdqeEYzS1dPTVd1WW9B?=
+ =?utf-8?B?YXhnTmx3bVkyajE4QUJzUWlKNlJ0TGI5dzdzT3NTQzA3cnphZ0hzR3VYcTc0?=
+ =?utf-8?B?dy93WXQvUFc4OUxXR3ZWdm9GcW9qeCtiVXR5aDdWWlgvUFJQNGdLSitrZFlo?=
+ =?utf-8?B?VFJhcGIrSWpCSzRzZlhQempSWFBuVHV3RjVTVTdLUFJBREdBQkVWWTlqTG0w?=
+ =?utf-8?B?MUcwUzFQVGZVQS9vYkdObWdaL1dKbjZrS1pwUmZOeXpsdDVJdlhXYkZyU0xB?=
+ =?utf-8?B?Kzc5V3NzRDhsd05lZWM5MnJNSVY4OElhbE5TbmJyU2xuUm5VRkp0Z3AvQTd4?=
+ =?utf-8?B?UXMvRUFmYWVJdENjb3l3S2dBQUZ1bzRiZ2Z1bEJDZ0k2MnNvSFF4NUpCWkUy?=
+ =?utf-8?B?Z1V3OWxEa0g4MUZyaW1NZ3VZUjJyOFUxMnFrSXdjcDMreWQyaFNrZlV1aGNP?=
+ =?utf-8?B?cnh1Ky9ab0NwTzB1TUlkYzZwZUJYWTBpYTlsVVFmOGtoN1lzd1ZPWDRadHhh?=
+ =?utf-8?B?VVB6cW91enpKa1pTSnZUQTVRa1lDSDIzam94K0o2OWw4cDUwSGdPQWlhOEpQ?=
+ =?utf-8?B?ampQdlQyaTVjNTlFTTVMSUdHZ3NNWkI1cVRtWndRbzRjWG1KS2hBNGswUm0w?=
+ =?utf-8?B?ZStFUU41RHpNVG5aQ05XVyt3TWJRbUJ4a1hsR0JYZ3A0T1NIUm5qUE9WWGpl?=
+ =?utf-8?B?RDA5WUpUNU41cjk5QWNzeFNOM2hzQkE4bWd6d2VJaEE3WU9jbUZva2NQRlVw?=
+ =?utf-8?B?V3BUTjgwc2l5ZzVac3pXTkRJbS9tQzVqaVZKbXIxMzllZzdSb0hYN3ZEMGd1?=
+ =?utf-8?B?eEhZeUREbml0MzlVWXFaWTlSdnkrN1dCN0ZkMlMyQmJ2dml0bWRSN1FGMWVT?=
+ =?utf-8?B?MjNKcGxENGllbGtRR3V4MExIcW1iYm5QaWJiWHhSSVRxYU9wTk9YQmhBMFpw?=
+ =?utf-8?B?NlVVb3NhMVhia2U0ZnNqVVkwTmdCS21sSDRtVGFDd1BuOWZjOFBQOEVGNjZj?=
+ =?utf-8?B?bWpkZjhycWRLaURYQi8yZnlHRGh3NkYrc1lXQlRnUkJNTmxrU2oxNkdtTzA0?=
+ =?utf-8?B?eHFJQUVhaXNGcm9VV1RVZVJkR3BmOTdRWTZQek1xRmlGd2dFZERQZz09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: quicinc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: MW4PR02MB7186.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1793c005-6201-461a-0261-08da16426b9e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Apr 2022 13:52:55.3641
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 7ujIatp/f0sKtB+1JF+4lD6aSMnUWj41Hx3k0VVFXTa0lDQeaKa4JxuHrx4RKQQSAstKYLPUSEKWDRkFJVXOn76ANqiuZmefYT3THot+zhc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR02MB7682
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/2/22 10:55 AM, Krzysztof Kozlowski wrote:
-> The example using qcom,smp2p should have all necessary properties, to
-> avoid DT schema validation warnings.
-
-Looks good to me.  The particular values don't match any
-reality, but that doesn't matter for getting the syntactic
-parse to pass without error or warning.
-
-Thanks.
-
-Reviewed-by: Alex Elder <elder@linaro.org>
-
-> 
-> Reported-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->   Documentation/devicetree/bindings/net/qcom,ipa.yaml | 7 +++++++
->   1 file changed, 7 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-> index 58ecc62adfaa..dd4bb2e74880 100644
-> --- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-> +++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-> @@ -182,6 +182,12 @@ examples:
->   
->           smp2p-mpss {
->                   compatible = "qcom,smp2p";
-> +                interrupts = <GIC_SPI 576 IRQ_TYPE_EDGE_RISING>;
-> +                mboxes = <&apss_shared 6>;
-> +                qcom,smem = <94>, <432>;
-> +                qcom,local-pid = <0>;
-> +                qcom,remote-pid = <5>;
-> +
->                   ipa_smp2p_out: ipa-ap-to-modem {
->                           qcom,entry-name = "ipa";
->                           #qcom,smem-state-cells = <1>;
-> @@ -193,6 +199,7 @@ examples:
->                           #interrupt-cells = <2>;
->                   };
->           };
-> +
->           ipa@1e40000 {
->                   compatible = "qcom,sdm845-ipa";
->   
-
+SGkgRG91ZywNCg0KPiBPbiBXZWQsIE1hciAzMCwgMjAyMiBhdCA5OjA0IEFNIFNhbmtlZXJ0aCBC
+aWxsYWthbnRpDQo+IDxxdWljX3NiaWxsYWthQHF1aWNpbmMuY29tPiB3cm90ZToNCj4gPg0KPiA+
+IFJlbW92ZSB0aGUgdW5uZWNlc3NhcnkgZGVsYXkgaW4gZXhlY3V0aW5nIHRoZSBFVl9IUERfSU5J
+VF9TRVRVUA0KPiBldmVudC4NCj4gDQo+IFRlbGwgbWUgbW9yZSBhbmQgcHV0IGl0IGluIHRoZSBj
+b21taXQgbWVzc2FnZSEgV2h5IGRpZCBpdCB1c2VkIHRvIGJlDQo+IG5lY2Vzc2FyeSBhbmQgd2h5
+IGlzIGl0IG5vIGxvbmdlciBuZWNlc3Nhcnk/IElucXVpcmluZyBtaW5kcyB3YW50IHRvIGtub3cu
+DQo+DQoNCk9rYXkuIEkgd2lsbCBhZGQgcHJvcGVyIGRlc2NyaXB0aW9uLiBUaGUgRFAgcGh5IGlz
+IHNoYXJlZCB3aXRoIHVzYiBhbmQgZXhlY3V0aW5nIHRoZQ0KZHAgcGh5X2luaXQgYmVmb3JlIHRo
+ZSB1c2IgcGh5X2luaXQgd2FzIGNhdXNpbmcgdXNiIGRldmljZXMgdG8gbm90IGZ1bmN0aW9uLg0K
+DQpFYXJsaWVyLCBlbmFibGluZyBwaHlfaW5pdCB3YXMgZG9uZSB3aGVuIHRoZSBFVl9IUERfSU5J
+VF9TRVRVUCBldmVudCB3YXMgZXhlY3V0ZWQuDQpTbywgd2UgaGFkIHNjaGVkdWxlZCBpdCB0byBl
+eGVjdXRlIGFmdGVyIDEwIHNlY29uZCB0byBsZXQgdGhlIHVzYiBkcml2ZXIgY29tcGxldGUgdGhl
+IHBoeV9pbml0IGZpcnN0Lg0KDQpLdW9nZWUgbWFkZSB0aGUgYmVsb3cgY2hhbmdlIHRvIG1vdmUg
+dGhlIERQIHBoeV9pbml0IHRvIGV4ZWN1dGUgYWZ0ZXIgdGhlIERQIGlzIGNvbm5lY3RlZA0KaHR0
+cHM6Ly9wYXRjaHdvcmsua2VybmVsLm9yZy9wcm9qZWN0L2xpbnV4LWFybS1tc20vcGF0Y2gvMTY0
+MjUzMTY0OC04NDQ4LTItZ2l0LXNlbmQtZW1haWwtcXVpY19raHNpZWhAcXVpY2luYy5jb20vDQoN
+ClNvLCB0aGVyZSBpcyBubyBuZWVkIGZvciB0aGUgRFAgZHJpdmVyIHRvIHdhaXQgMTAgc2Vjb25k
+cyBmb3IgdGhlIHBoeSBpbml0aWFsaXphdGlvbiBhbnltb3JlLg0KDQplRFAgUEhZIGlzIG5vdCBz
+aGFyZWQgd2l0aCB1c2IuIFNvLCBpdCBjYW4gYmUgcHJvZ3JhbW1lZCBhbnl0aW1lLCBoZW5jZSBu
+b3QgbmVlZGluZyBhbnkgZGVsYXkuDQoNCj4gLURvdWcNCg0KVGhhbmsgeW91LA0KU2Fua2VlcnRo
+DQo=
