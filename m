@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6B4E4F1D99
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Apr 2022 23:41:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B2FA4F1E36
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Apr 2022 00:24:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379178AbiDDVZr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Apr 2022 17:25:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54940 "EHLO
+        id S1355070AbiDDVyN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Apr 2022 17:54:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380723AbiDDVPM (ORCPT
+        with ESMTP id S1382729AbiDDVb4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Apr 2022 17:15:12 -0400
-Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2B1C2F3B4
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Apr 2022 14:13:15 -0700 (PDT)
-Received: by mail-qv1-xf2d.google.com with SMTP id kd21so8525351qvb.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Apr 2022 14:13:15 -0700 (PDT)
+        Mon, 4 Apr 2022 17:31:56 -0400
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE53A15A18
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Apr 2022 14:15:28 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id kl29so8540261qvb.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Apr 2022 14:15:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=u+Jl9J4Gm7LRQGPX5xoLGqpAHPcvyGzQPr6d5j6QMTw=;
-        b=TSVbunOXvXaI2j2cflfId/dz86MOvQN6HmifvKQzyMoyxFrWDUVNTxEyuubl+ejr4R
-         zA9m49+KVYvUsOMAta6F+9tdVJZ/vKCkbS8xyhpV0n/uVXtOO/UsV4qYC3Kr/oOI7Xr5
-         3wfySfQxeOD/O4I7pReuqjLOKIvlS+Ml8h7zo8aYZA80gVZzBSUl5WyfC9CR7sCGpM6u
-         He2I+Fl9jeEQbU7mNZemR/K1VxoCzZUDn9O1zI27hzFdksqd1in94CCmiOnmrqNGd/8W
-         X9E9lNYcqdYSrMDM/PfEkmMqPgEkIYuusTAJ8Gl4KN3ZhvfYFhmQYNC7JqIDuVW3qbB1
-         XfSA==
+        bh=McouKnSmKFWKF2SpoB2peGm/9//rXoQgWM99Hh1/NkM=;
+        b=M++cEUJlbCPGoHHxmMxvBelMxqgIBsOO1jFQ1hxhkxPZWCi9yjs3IOyz3DUBfIHTby
+         hMf7DehfSJgg5MS33J2RzV6Za5Fx8CpIeYOhknWnvbkUyNPUbjCU1EClkx377aee23Ed
+         /y2xV0M0VEAKcVJVW4ThuGCUzAzjmK5dWYPIeEid3dAv9np5b1dmU0a7JCY1I2torFM1
+         M6nthhJ5f/2xyZRhP6slKdYv7VnlT0ixAW+jcKuz4py1y6qx+s1NzcMzRyRThP0QKRKk
+         szde6JHOfXwsnWGShpS3m4bdH2QYtwUy0mKBrdcCSwrjhSMVy+rkK12oEdm0q6uHT0XH
+         Y84A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=u+Jl9J4Gm7LRQGPX5xoLGqpAHPcvyGzQPr6d5j6QMTw=;
-        b=vVeWj/rMpMQNdnPN1RQ2IWoAa48IUtaWMPQfuMfh9J4L9RevaTXfWxHMT7tJhq4KrK
-         CK0E9hJ9TM4VqxR0hN2GR8Y2S5uHzCChcN9EKUbn5s67zjnD6O+2+n7NoESktFwL4E21
-         hLNnO9IzZ1FBbakg1LL6uZSzmfWu5uHaVYfsVKjk2GY8mHFGHcBuQrWeSFgBZeAf1+EM
-         A+NsAvPbXZH3y5nOiSZ0n6Q/dlUI8uxAGesmmVPPa9dPGK6iVkT7E7C4M5tfCH0MSV5N
-         lQzFMxUP9QrhTXjL3SxZiI+/Qw5kjO+zv3jOh7Q/yf5G3DJKLzwv1vvhPX3UNy835/Dj
-         YbRA==
-X-Gm-Message-State: AOAM531Omto7/oKRfZh9uC7X67VyUyno6pdtbuRqs6cMLA8AQ0KtHBcT
-        Ida9F/cI/Xf3b/NhTEgq+m/m2b9x/o9NiHEkoXvf/w==
-X-Google-Smtp-Source: ABdhPJwxrjD9HfPuwGXMP4Ljy/6xQzhveU0JXd34jHXZBeF11vt01nwh3cDZ3iNbPGbLP6JSVzGT4riqsvKmCJkH474=
-X-Received: by 2002:a05:6214:20e4:b0:441:7bed:5ccd with SMTP id
- 4-20020a05621420e400b004417bed5ccdmr1456463qvk.119.1649106794685; Mon, 04 Apr
- 2022 14:13:14 -0700 (PDT)
+        bh=McouKnSmKFWKF2SpoB2peGm/9//rXoQgWM99Hh1/NkM=;
+        b=CsgihG+rsyHz44ZyhXhKR4bp7JU9zZd+risLN9X79oyuYrgxLk3TXgIWRcHMSSqZtD
+         NHHvpEDLIVSOKPuP3aY/XFWqZ3BLRilejNJNAa6aYvFL1oriAQNba6VHNPnirk0tVExl
+         pZXQWCVNbb2wn+9AUY8P1FTq5q0HvX8B6Iq94k+EvQWyo46wHqgYUmMtZGhoglZJVNxD
+         G6kCgQ1c+c6oNLZv5jc2OBCFgxBjNOiiDDyFvzA953jM90/ZGUY2ypHLGB+oOKdFnCZW
+         CNQhyupYT2ZumQv0KFrx9QYfwRyO97k2PPEEaOJLypHEhYSSo1ahlRPj4dBWZkjwGFb+
+         +Hbw==
+X-Gm-Message-State: AOAM532MeIzT3zmvc3hXpS3BaocuM9bLjYKlWfQcmLbeK63XXLbiC+aG
+        e12UX0bE6UvZfiZCNR24zWbQvRkk5qq1PgaAc5/Dpg==
+X-Google-Smtp-Source: ABdhPJyqLSrz27bQaT6seA8R1kJrL/P/oL9NsM1rXGrEtJEpPWrptpkqYtU5VF/Yo5B/E+1043jo5A794bfO5ijjnMc=
+X-Received: by 2002:ad4:53a4:0:b0:430:1d8c:18ea with SMTP id
+ j4-20020ad453a4000000b004301d8c18eamr99107qvv.115.1649106927946; Mon, 04 Apr
+ 2022 14:15:27 -0700 (PDT)
 MIME-Version: 1.0
 References: <1648656179-10347-1-git-send-email-quic_sbillaka@quicinc.com>
- <1648656179-10347-7-git-send-email-quic_sbillaka@quicinc.com>
- <CAD=FV=UX9Mg71EKvgNp_wNG5q7_ugBgVPbcFWFX5XBG+cQCi8Q@mail.gmail.com> <MW4PR02MB718631182DC72076DC794C1DE1E59@MW4PR02MB7186.namprd02.prod.outlook.com>
-In-Reply-To: <MW4PR02MB718631182DC72076DC794C1DE1E59@MW4PR02MB7186.namprd02.prod.outlook.com>
+ <1648656179-10347-8-git-send-email-quic_sbillaka@quicinc.com>
+ <CAD=FV=V92j=yEoaM4REO6ws=AXpBjM6zWwBtZ8SbPiFd2cu3yw@mail.gmail.com> <MW4PR02MB7186DD14809500D97C3ABDBBE1E59@MW4PR02MB7186.namprd02.prod.outlook.com>
+In-Reply-To: <MW4PR02MB7186DD14809500D97C3ABDBBE1E59@MW4PR02MB7186.namprd02.prod.outlook.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 5 Apr 2022 00:13:03 +0300
-Message-ID: <CAA8EJpqOzn4xh1N9GhEbH6YY5uHPdeqhiDnSNMM+ZQ3GdaWFrA@mail.gmail.com>
-Subject: Re: [PATCH v6 6/8] drm/msm/dp: remove unnecessary delay during boot
+Date:   Tue, 5 Apr 2022 00:15:16 +0300
+Message-ID: <CAA8EJppB8s=myUG+swLF5vQU+b+mGSjrNsn1-=1cgO9rKXC7Xw@mail.gmail.com>
+Subject: Re: [PATCH v6 7/8] drm/msm/dp: Support edp/dp without hpd
 To:     "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>
 Cc:     Doug Anderson <dianders@chromium.org>,
         dri-devel <dri-devel@lists.freedesktop.org>,
@@ -83,7 +83,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 4 Apr 2022 at 16:53, Sankeerth Billakanti (QUIC)
+On Mon, 4 Apr 2022 at 21:32, Sankeerth Billakanti (QUIC)
 <quic_sbillaka@quicinc.com> wrote:
 >
 > Hi Doug,
@@ -91,30 +91,82 @@ On Mon, 4 Apr 2022 at 16:53, Sankeerth Billakanti (QUIC)
 > > On Wed, Mar 30, 2022 at 9:04 AM Sankeerth Billakanti
 > > <quic_sbillaka@quicinc.com> wrote:
 > > >
-> > > Remove the unnecessary delay in executing the EV_HPD_INIT_SETUP
-> > event.
+> > > Some eDP sinks or platform boards will not support hpd.
+> > > This patch adds support for those cases.
 > >
-> > Tell me more and put it in the commit message! Why did it used to be
-> > necessary and why is it no longer necessary? Inquiring minds want to know.
+> > You could say more, like:
+> >
+> > If we're not using HPD then _both_ the panel node and the eDP controller
+> > node will have "no-hpd". This tells the eDP panel code to hardcode the
+> > maximum possible delay for a panel to power up and tells the eDP driver that
+> > it should continue to do transfers even if HPD isn't asserted.
 > >
 >
-> Okay. I will add proper description. The DP phy is shared with usb and executing the
-> dp phy_init before the usb phy_init was causing usb devices to not function.
-
-I always wondered, how does this work for the 4-lane DP dongles, where
-there is no USB mode/lanes?
-
-> Earlier, enabling phy_init was done when the EV_HPD_INIT_SETUP event was executed.
-> So, we had scheduled it to execute after 10 second to let the usb driver complete the phy_init first.
+> Okay. I will add it
 >
-> Kuogee made the below change to move the DP phy_init to execute after the DP is connected
-> https://patchwork.kernel.org/project/linux-arm-msm/patch/1642531648-8448-2-git-send-email-quic_khsieh@quicinc.com/
+> >
+> > > Signed-off-by: Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+> > > ---
+> > >  drivers/gpu/drm/msm/dp/dp_catalog.c | 15 ++++++++++++---
+> > >  1 file changed, 12 insertions(+), 3 deletions(-)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c
+> > > b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> > > index 1809ce2..8f1fc71 100644
+> > > --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
+> > > +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+> > > @@ -244,10 +244,17 @@ void dp_catalog_aux_update_cfg(struct
+> > dp_catalog
+> > > *dp_catalog)
+> > >
+> > >  int dp_catalog_aux_wait_for_hpd_connect_state(struct dp_catalog
+> > > *dp_catalog)  {
+> > > -       u32 state;
+> > > +       u32 state, hpd_en;
+> > >         struct dp_catalog_private *catalog = container_of(dp_catalog,
+> > >                                 struct dp_catalog_private,
+> > > dp_catalog);
+> > >
+> > > +       hpd_en = dp_read_aux(catalog, REG_DP_DP_HPD_CTRL);
+> > > +       hpd_en &= DP_DP_HPD_CTRL_HPD_EN;
+> > > +
+> > > +       /* no-hpd case */
+> > > +       if (!hpd_en)
+> > > +               return 0;
+> > > +
+> > >         /* poll for hpd connected status every 2ms and timeout after 500ms */
+> > >         return readl_poll_timeout(catalog->io->dp_controller.aux.base +
+> > >                                 REG_DP_DP_HPD_INT_STATUS, @@ -586,8
+> > > +593,10 @@ void dp_catalog_ctrl_hpd_config(struct dp_catalog
+> > *dp_catalog)
+> > >         reftimer |= DP_DP_HPD_REFTIMER_ENABLE;
+> > >         dp_write_aux(catalog, REG_DP_DP_HPD_REFTIMER, reftimer);
+> > >
+> > > -       /* Enable HPD */
+> > > -       dp_write_aux(catalog, REG_DP_DP_HPD_CTRL,
+> > DP_DP_HPD_CTRL_HPD_EN);
+> > > +       /* Enable HPD if supported*/
+> > > +       if (!of_property_read_bool(catalog->dev->of_node, "no-hpd"))
+> >
+> > I don't think this is a particularly lightweight operation. It's literally iterating
+> > through all of our device tree properties and doing string compares on them.
+> > ...but this function is called somewhat often, isn't it? It feels like the kind of
+> > thing that should happen at probe time and be stored in a boolean.
+> >
+> > ...and then you can use that same boolean in
+> > dp_catalog_aux_wait_for_hpd_connect_state() rather than reading the
+> > register value, right?
+> >
+> It is called twice for DP. Once while booting through a thread scheduled from kms_obj_init
+> and when resuming from PM suspend.
 >
-> So, there is no need for the DP driver to wait 10 seconds for the phy initialization anymore.
+> With aux_bus addition, this function will be called thrice for eDP. Once during bootup with
+> aux_bus, then from scheduled event from kms_obj_init and pm resume like DP.
 >
-> eDP PHY is not shared with usb. So, it can be programmed anytime, hence not needing any delay.
+> I will check if we can use a no-hpd Boolean flag instead.
 
-
+As the driver has a separate dp_parser code, it might be a good fit to
+parse the DT once and then to use boolean flag afterwards.
 
 -- 
 With best wishes
