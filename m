@@ -2,72 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D69D4F1683
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Apr 2022 15:51:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B06214F1C47
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Apr 2022 23:28:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377303AbiDDNxo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Apr 2022 09:53:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57224 "EHLO
+        id S1380689AbiDDV0S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Apr 2022 17:26:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359496AbiDDNwt (ORCPT
+        with ESMTP id S1379093AbiDDQeU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Apr 2022 09:52:49 -0400
-Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2D412A71E
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Apr 2022 06:50:52 -0700 (PDT)
-Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-d6ca46da48so10660265fac.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Apr 2022 06:50:52 -0700 (PDT)
+        Mon, 4 Apr 2022 12:34:20 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 678A4381A7
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Apr 2022 09:32:23 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id p8so9461555pfh.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Apr 2022 09:32:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=UJ7ifLL/vt7TzqWMHfr/T5EroEWr8e059AicCh65jwE=;
-        b=XdBxqwZ6hlXamq+EWOsWwZc2zeRgoCwCqOUQwsgb5NTwPspoxxb1w0Onbn4/IwsWXN
-         oBhYY2EniOXswlpd6EFCV4DGAHPIQoHZ4DR9HBGivSxgA1BXhRRqli935/RvYWgb2xGu
-         wKKnsPEUP/7Be2RBiFDzI2nwvmjM4sKPcBRZVZE/WeAQnxANwpd002AeQ5K8cbw+HO8t
-         YP+jzRVuWISNKa0QLHasAEGOQSW1OHcw16BCf77kPpieQPPywEnX0F5Ea/fD/sdno8B3
-         0sQ6zqlIs0nnhgLJgZtSec5Ze8eEOxP/sIVmHUuseH9VJYI5LkYMD2Aq/496qBPfXQm5
-         gzDQ==
+        bh=2bL0zVy+T84o1RMeqMcnjFfLYjA+GUYGgoiquYSSAHY=;
+        b=QRTuRBVdMggNkZKDKiVvRCfbxLmN/4Scvw/NVPF7mRZ6Ng7eYBz4lEM8ZpODjayuz6
+         fHIj9gn+tCSfkLNwzzluQHLAI2YPvxvzhKEE9MRM0emAM5N+T/84llSb51wruVmWrtvS
+         XEfdi++KzE+e3iOjOVtFEcKg7tUbFt9GjJOMQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=UJ7ifLL/vt7TzqWMHfr/T5EroEWr8e059AicCh65jwE=;
-        b=NrqiUoyPm7d+2aKtQ3Cx+Sbh9rWNdbpHveWpXsyy5c5BluY02IkvpSvFedmeKJaKEY
-         0DGNATeR9MolrM2HJlH6NzOJCDGh6reoiohgomL6vXq871CKjHwyxTVS21wfxHBtIcqR
-         JCR6G7buTYPgkmDQdoMAiDnjWQ551QC3eqaS/5youvnDdBAR/UYRq5NRym9vIJtRCpn5
-         sewiy4cOpiSHJoYgLB8Cdr+eJw5P+n+brQqp+Vp6Atymp427NDthR2XG3J8zshbwin1K
-         cIpXBoJQsEyFyK9YLTeHCdp3stnP+O69IjGRidYtughNokAQF3FPRE3ZacVGJYJHLkV1
-         9D2g==
-X-Gm-Message-State: AOAM531nDtaYE8ZJTtTDtA3ENIGW8+J47UztItJ3vMBWSGeFyL50mry7
-        rzR3IQJ/UWTJgeYEuIjQk3TOjA==
-X-Google-Smtp-Source: ABdhPJz20MpJx7LSy5moQ816FyGIBvEreDKN4HMKOHtNCOu/4APRQAt0B1hh6o4oY3S/Sn+csHU31g==
-X-Received: by 2002:a05:6870:3113:b0:d3:473b:3f1d with SMTP id v19-20020a056870311300b000d3473b3f1dmr3732oaa.116.1649080251783;
-        Mon, 04 Apr 2022 06:50:51 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id 14-20020a056870134e00b000ddaf3927b1sm4218569oac.32.2022.04.04.06.50.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Apr 2022 06:50:51 -0700 (PDT)
-Date:   Mon, 4 Apr 2022 06:53:16 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Andy Gross <agross@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Wilczy??ski <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH v2] PCI: qcom: Fix pipe clock imbalance
-Message-ID: <Ykr4TOYYh4X8o02E@ripper>
-References: <20220401133351.10113-1-johan+linaro@kernel.org>
+        bh=2bL0zVy+T84o1RMeqMcnjFfLYjA+GUYGgoiquYSSAHY=;
+        b=xDNLw4hi8J1YppPnpLfOy2VjAhgkPxmUjo9HaYQQ25e+1g1cXsktkWUm1uMHogWRIX
+         NR/vZHympWCV0kv87PYdx142w5/iXegIAJoiZxDKNj3rEwV7BKRhqXPzRgG5HGWV34rs
+         mMoEY7E94oR/UTDMVMY57P8wUw+Taw+3XgnFJqKdnhywp7rrP3C4FdvggjL4smOrK5o+
+         a10aC9FOXaCIZ5nse4hB02nIWW8VVB3yagqngC/M5mdCE37WKz7RLJBTDh0jm0MR8nMj
+         EO/P1FABbYVjhRW5TaOY75nv8idgkzqxDaC5LWpj3iaH0aiqxDUJM6wQ06C14OxygRov
+         O89w==
+X-Gm-Message-State: AOAM530bYsCX1rHsDt8QQx0mM20VDMV2+wPTo54VcpXJzDwU6ZvLMTLt
+        Xx+Nl6+6X56mnqCn2Ee8JgRhZw==
+X-Google-Smtp-Source: ABdhPJwKOuEHl+BnsbgNxrNKz+t2civ6hhXWxr7p+FhUpmTI1La4qStQ4P50t0JSRmOGG8TiOxxaqA==
+X-Received: by 2002:a05:6a00:10c7:b0:4fd:9ee6:4130 with SMTP id d7-20020a056a0010c700b004fd9ee64130mr375022pfu.84.1649089942793;
+        Mon, 04 Apr 2022 09:32:22 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:1ebc:cb71:2a38:38db])
+        by smtp.gmail.com with UTF8SMTPSA id s20-20020aa78d54000000b004fac74c83b3sm12466884pfe.186.2022.04.04.09.32.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Apr 2022 09:32:22 -0700 (PDT)
+Date:   Mon, 4 Apr 2022 09:32:19 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        gregkh@linuxfoundation.org, jirislaby@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_msavaliy@quicinc.com,
+        dianders@chromium.org
+Subject: Re: [PATCH] drivers/tty/serial/qcom-geni-serial: Do stop_rx in
+ suspend path for console if console_suspend is disabled
+Message-ID: <Yksdk+YTxXRDWBbj@google.com>
+References: <1648491444-17137-1-git-send-email-quic_vnivarth@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220401133351.10113-1-johan+linaro@kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <1648491444-17137-1-git-send-email-quic_vnivarth@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,50 +71,97 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 01 Apr 06:33 PDT 2022, Johan Hovold wrote:
-
-> Commit ed8cc3b1fc84 ("PCI: qcom: Add support for SDM845 PCIe
-> controller") introduced a clock imbalance by enabling the pipe clock
-> both in init() and in post_init() but only disabling in post_deinit().
+On Mon, Mar 28, 2022 at 11:47:24PM +0530, Vijaya Krishna Nivarthi wrote:
+> [Why]
+> For the case of console_suspend disabled, if back to back suspend/resume
+> test is executed, at the end of test, sometimes console would appear to
+> be frozen not responding to input. This would happen because, for
+> console_suspend disabled, suspend/resume routines only turn resources
+> off/on but don't do a port close/open.
+> As a result, during resume, some rx transactions come in before system is
+> ready, malfunction of rx happens in turn resulting in console appearing
+> to be stuck.
 > 
-> Note that the pipe clock was also never disabled in the init() error
-> paths and that enabling the clock before powering up the PHY looks
-> questionable.
-> 
-> Fixes: ed8cc3b1fc84 ("PCI: qcom: Add support for SDM845 PCIe controller")
-> Cc: stable@vger.kernel.org      # 5.6
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> [How]
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Please drop the [Why] / [How] 'tags'
 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Do a stop_rx in suspend sequence to prevent this. start_rx is already
+> present in resume sequence as part of call to set_termios which does a
+> stop_rx/start_rx.
+> Additionally other changes have been made at same place
+> a) replace the hardcoded flags with macros
+> b) perform voting before calling resume_port in resume sequence
+> c) consequently, swap the order in suspend sequence
+
+This patch is short, but IMO it still does too many things at once which
+aren't all directly related. At the very least the change from hardcoded
+flags to macros should be in a separate patch. If the ICC voting order
+isn't direcly related with the console_suspend issue then I'd also suggest
+to split it out into its own patch.
+
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
 > ---
+>  drivers/tty/serial/qcom_geni_serial.c | 17 +++++++++++------
+>  1 file changed, 11 insertions(+), 6 deletions(-)
 > 
-> Changes in v2
->  - Capitalise "Fix" in subject line according to PCI subsystem
->    convention
-> 
-> 
->  drivers/pci/controller/dwc/pcie-qcom.c | 6 ------
->  1 file changed, 6 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index b79d98e5e228..20a0e6533a1c 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1238,12 +1238,6 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
->  		goto err_disable_clocks;
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> index aedc388..37d064f 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -19,6 +19,7 @@
+>  #include <linux/slab.h>
+>  #include <linux/tty.h>
+>  #include <linux/tty_flip.h>
+> +#include <dt-bindings/interconnect/qcom,icc.h>
+>  
+>  /* UART specific GENI registers */
+>  #define SE_UART_LOOPBACK_CFG		0x22c
+> @@ -1477,34 +1478,38 @@ static int qcom_geni_serial_remove(struct platform_device *pdev)
+>  
+>  static int __maybe_unused qcom_geni_serial_sys_suspend(struct device *dev)
+>  {
+> +	int ret;
+>  	struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
+>  	struct uart_port *uport = &port->uport;
+>  	struct qcom_geni_private_data *private_data = uport->private_data;
+>  
+> +	/* do a stop_rx here, start_rx is handled in uart_resume_port by call to setermios */
+> +	if (!console_suspend_enabled && uart_console(uport))
+> +		uport->ops->stop_rx(uport);
+> +
+>  	/*
+>  	 * This is done so we can hit the lowest possible state in suspend
+>  	 * even with no_console_suspend
+>  	 */
+> +	ret = uart_suspend_port(private_data->drv, uport);
+>  	if (uart_console(uport)) {
+> -		geni_icc_set_tag(&port->se, 0x3);
+> +		geni_icc_set_tag(&port->se, QCOM_ICC_TAG_ACTIVE_ONLY);
+>  		geni_icc_set_bw(&port->se);
 >  	}
+> -	return uart_suspend_port(private_data->drv, uport);
+> +	return ret;
+>  }
 >  
-> -	ret = clk_prepare_enable(res->pipe_clk);
-> -	if (ret) {
-> -		dev_err(dev, "cannot prepare/enable pipe clock\n");
-> -		goto err_disable_clocks;
-> -	}
-> -
->  	/* Wait for reset to complete, required on SM8450 */
->  	usleep_range(1000, 1500);
+>  static int __maybe_unused qcom_geni_serial_sys_resume(struct device *dev)
+>  {
+> -	int ret;
+>  	struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
+>  	struct uart_port *uport = &port->uport;
+>  	struct qcom_geni_private_data *private_data = uport->private_data;
 >  
+> -	ret = uart_resume_port(private_data->drv, uport);
+>  	if (uart_console(uport)) {
+> -		geni_icc_set_tag(&port->se, 0x7);
+> +		geni_icc_set_tag(&port->se, QCOM_ICC_TAG_ALWAYS);
+>  		geni_icc_set_bw(&port->se);
+>  	}
+> -	return ret;
+> +	return uart_resume_port(private_data->drv, uport);
+>  }
+>  
+>  static const struct dev_pm_ops qcom_geni_serial_pm_ops = {
 > -- 
-> 2.35.1
+> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
 > 
