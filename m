@@ -2,206 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F2654F1BFA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Apr 2022 23:26:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E6274F1C41
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Apr 2022 23:27:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344397AbiDDVZH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Apr 2022 17:25:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35094 "EHLO
+        id S1380383AbiDDV0L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Apr 2022 17:26:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379924AbiDDSW5 (ORCPT
+        with ESMTP id S1379981AbiDDScE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Apr 2022 14:22:57 -0400
-Received: from esa.hc3962-90.iphmx.com (esa.hc3962-90.iphmx.com [216.71.142.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DF4F22B20;
-        Mon,  4 Apr 2022 11:21:00 -0700 (PDT)
+        Mon, 4 Apr 2022 14:32:04 -0400
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF9E5255B5;
+        Mon,  4 Apr 2022 11:30:07 -0700 (PDT)
+Received: by mail-pg1-x52a.google.com with SMTP id r66so218148pgr.3;
+        Mon, 04 Apr 2022 11:30:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qccesdkim1;
-  t=1649096460; x=1649701260;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=2rSf07q1+Y7StBoZO97LX+BorFPKkmB/osGTe5z4Y4U=;
-  b=tRxfBe16+fKrnBAPsOhW6esp/AasuaFrvKGFiEN1czemtb96eD9l+2zt
-   SgUachMW9koDSXeJ2c4cp0Mwu7jgGZug5JVp02uuNnWnvZul+NyzYJHk1
-   l/k0w2KSvzEzOFdv1ZU7ueG6/xOQBR2DuIyOVugqMeZyYGEI7vNi/i8P1
-   8=;
-Received: from mail-dm6nam11lp2169.outbound.protection.outlook.com (HELO NAM11-DM6-obe.outbound.protection.outlook.com) ([104.47.57.169])
-  by ob1.hc3962-90.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Apr 2022 18:20:58 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=joX2BVdDNM1dxKETA9z/7eENnBRnZnxYw6heyXG7V5EAg9V3UF9aMfhlReNoiECRLDcDOWPnFCemIKwK6+T12Gm0TCHmHp10AudivVsPPFQFigyuoAp68qk+kk7Pajy0Vi7ycb7Minj6TG+pCqGHoa2/8KewPNGpuHaSDVFEeZ41sXk4vHOSoVJcB42TBqn3Qs854an7qqJZ0g3FD9V9h8oKPPzCkU1VzfJAmMF21iDm/t1MqR7hNwhT7anlZQ8Q9GogMZPIqlevwlySk+ciCZXRkZKneoXMfp8YNiL8ywVQSOM0s6rUKG897OvDysqjR5c1B1W6snvIQK6Wb0aQKA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2rSf07q1+Y7StBoZO97LX+BorFPKkmB/osGTe5z4Y4U=;
- b=M3f3qN8jAab0NRM1PkKMQ/1snD/dOhTaozuI+gRWRv+L3c312ZUKJOw9VpPF9MX5dfc8WuS6z8d7/tlAu+uW3MSgGyt91Cg5p31wLJ22YpdFIBc7JqQ7HsAeTG45vLG5/CE+rQHtMCM9DEJf/ZHO68KXZ5AFHIXGpMgT8OBa3g09OBXEaxQPK7nLYygSgLjCBgPaDP/eoicKlODdMi4B0B6KpZ8LtHtmIlfCyfHsibPzIdIzIXiwMiQrf3pUXn+Y26H405oeHra6AJWtjcqNYDz401VHcHFa2ZCRX/oqZ1X31BybE+MVSdtqWNO/GjcnqqJztalkXnB9Lj1iKgX6tg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=quicinc.com; dmarc=pass action=none header.from=quicinc.com;
- dkim=pass header.d=quicinc.com; arc=none
-Received: from MW4PR02MB7186.namprd02.prod.outlook.com (2603:10b6:303:73::6)
- by SN6PR02MB5663.namprd02.prod.outlook.com (2603:10b6:805:ea::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5123.31; Mon, 4 Apr
- 2022 18:20:55 +0000
-Received: from MW4PR02MB7186.namprd02.prod.outlook.com
- ([fe80::9485:c59c:6877:f492]) by MW4PR02MB7186.namprd02.prod.outlook.com
- ([fe80::9485:c59c:6877:f492%6]) with mapi id 15.20.5123.031; Mon, 4 Apr 2022
- 18:20:55 +0000
-From:   "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>
-To:     Doug Anderson <dianders@chromium.org>,
-        "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>
-CC:     "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "robdclark@gmail.com" <robdclark@gmail.com>,
-        "seanpaul@chromium.org" <seanpaul@chromium.org>,
-        "swboyd@chromium.org" <swboyd@chromium.org>,
-        quic_kalyant <quic_kalyant@quicinc.com>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "sean@poorly.run" <sean@poorly.run>,
-        "airlied@linux.ie" <airlied@linux.ie>,
-        "daniel@ffwll.ch" <daniel@ffwll.ch>,
-        quic_vproddut <quic_vproddut@quicinc.com>,
-        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>
-Subject: RE: [PATCH v6 8/8] drm/msm/dp: Handle eDP mode_valid differently from
- dp
-Thread-Topic: [PATCH v6 8/8] drm/msm/dp: Handle eDP mode_valid differently
- from dp
-Thread-Index: AQHYRE/UsJWR5XLNukW2wMYYKa9U06zYfJ8AgACEi0CAASMMgIAF9JqA
-Date:   Mon, 4 Apr 2022 18:20:55 +0000
-Message-ID: <MW4PR02MB71865B8E17F3D194B05013EDE1E59@MW4PR02MB7186.namprd02.prod.outlook.com>
-References: <1648656179-10347-1-git-send-email-quic_sbillaka@quicinc.com>
- <1648656179-10347-9-git-send-email-quic_sbillaka@quicinc.com>
- <CAA8EJprvE31ex3fCQHZ-=x+EWHK4UZ0qqHRh+rH4dk5TPhmVyw@mail.gmail.com>
- <MW4PR02MB71867220A90FCFED295830D0E1E19@MW4PR02MB7186.namprd02.prod.outlook.com>
- <CAD=FV=VK0D_GzYBv+u+o6-ks-UAsw97__0mWsSn9OycX72LJFg@mail.gmail.com>
-In-Reply-To: <CAD=FV=VK0D_GzYBv+u+o6-ks-UAsw97__0mWsSn9OycX72LJFg@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=quicinc.com;
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 0d5e2d26-17f6-4a4a-68ce-08da1667dbea
-x-ms-traffictypediagnostic: SN6PR02MB5663:EE_
-x-ld-processed: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d,ExtAddr
-x-microsoft-antispam-prvs: <SN6PR02MB566394374A164FF24054F3169DE59@SN6PR02MB5663.namprd02.prod.outlook.com>
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: ORABxUnvWlAnmXP+oZ+p7Ko3vK5SUNtyrRvwPQ1aX3r7YkBEuNrmh7378TO4/bWy0PACHyKRrXau9+ZGMDJ8Yq1ebsI9ovWyTIiNAbhS1WMgVhCK5s8Nu0+1/D5m5+16cGZsiWuODcuoFMzZiLZt3JapPS6X0GUFeDLnx3Ciqroe7HQHS2oLCz22NcGj94e0iBcccy/2ZoqoYz/CfxeX6gecxE7xmh+OOkl9PQnRIHs+qWjKW7/Ud5NqOLoFGZ+9sHcrGz0VasBYVTupIcopjkWUgSCy+Rdl8/BmshsWgAAbgaqAB6vdjb++2vkOVVv0HWbaaUuuISWbYdOWVWZO5HWZCJpCunuCvCAHf4++mBzxnXEV2SbJ31b545YfzyOY5Lr9XCsCbemeOnUD2/puZzmOPfKAAi9wCzPOD0WKNjQcsxUV7Am0KqD1WMtjWxcWu1nHkiKNKtu/j78726ZiNE6bkGNDO392DX1mu+eDAD6eBa1Jo8zRK+MBziHct4En/jb1NT8M0q7lv5MZq4QFQ1TwajwCXbWz77JjGfTv5w/VRhL9iun3jDou0BElVJaUBkqXmRXa98fZ6xg8lUP2x973w2gN8KrYhwW4VQEG7HjjIdGUZzKm3dobjRm/AkxACP6zF2Va2SZMKrus554IfAoiwgaJ7DNi8uQ9rH/SmTWScpwUv/qOQgeWj/hlLbKVK0luGo7urIgT6SajBqFbpw==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW4PR02MB7186.namprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(38100700002)(7416002)(110136005)(5660300002)(107886003)(508600001)(122000001)(966005)(6506007)(7696005)(53546011)(2906002)(54906003)(38070700005)(9686003)(316002)(33656002)(76116006)(66476007)(64756008)(8676002)(66556008)(66446008)(66946007)(86362001)(4326008)(186003)(71200400001)(83380400001)(26005)(52536014)(55016003)(8936002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?SHVZaDhpRVoralFkVURkb2wwV1hLOEllcys4SUp4cFlWNUlVdlNWTVBLbGZo?=
- =?utf-8?B?VmFBVklrK3BQbEF2L0JjTW9KZEVGZnBXQXNoaFFIbHMwb3RVOVpyTWZZUHhh?=
- =?utf-8?B?R213OTlzdmxuWElld2FOakdQOTdYSElzWHBaa1NiMmJ5d3N0cjJzMDZYSHJM?=
- =?utf-8?B?TWNXejBmT281UVpsdVRsU2ZxQnRWQTM1ZmxPemdrbXhyV2dIMGlCSmwrTnlV?=
- =?utf-8?B?ZXVwaXJsVmN5V3BQbk8wQUU3N053RnpQWk44M0ZDY3RpcUVLbWtOYmI3NDJN?=
- =?utf-8?B?VTBtZ25SQ01GTDdkU2dJZUNGL0wzbEJVOVNWWkZFRFpna3pRSE9ueWZEZnRN?=
- =?utf-8?B?UzJYZDZQSE14TUF5RGQ4Wm9wZmVuc1VIbDQ4YndINGU1cERQM0FCS2J2MnVJ?=
- =?utf-8?B?eHlCNklDVFdRekpnbnlLWGxDZUpUZFV5QU5Hb2sxZTR4VG5EOGVHZUFtaDR5?=
- =?utf-8?B?QllaYnNJaDlJam1sQzBnRFNmZWdpTFFaZHVVNE9NVHhCZ200Z0J6MDB5bHhu?=
- =?utf-8?B?VEI4UDIvRnFscFhTSFFla2pvZ3lidTdzdXB5ZXRpc0lheVVieUZseitpcWNi?=
- =?utf-8?B?V1hIVG56dDRaM2poZ05ucEo0TlNZSVFUVUErY1FKaVFYSzl3dGxxTkN2K0Iz?=
- =?utf-8?B?Ny8yb2hFUUVkVWVvc1BONnBCUU9nTEliMzNTTVo4ZGxwYzQ5b2o1NTRHVHRS?=
- =?utf-8?B?Uk82c3NZUzJXYkJtTjg3dFRHNXpxVm5VTUViaENSZWtLbW0wQk1JbHBYeXAz?=
- =?utf-8?B?aUZodXlTZUt6UkRmRUZ5RnowelI4MDByVTRNdk5NWHY4MGtKeDZmaWhFY1Bz?=
- =?utf-8?B?d1FJRDFMalBMSi9QY2NGdjdtcXlVandBYkMzZWVuMStEQW9OWC9leXNCYXlS?=
- =?utf-8?B?dDlBN1dlVGZEUjdmUGtmZVdQemJ3OWxobGF5R0JuNDRpQTJlV3hsYUxJOTdQ?=
- =?utf-8?B?K0FOeWx6ZktteWkweHo3eGwxVTRkenNjYmpWN0ZQM2tWOExiSzBCNnVYWnRV?=
- =?utf-8?B?Y0Y1TFMzb0ZpMFFqNFRVcnZNLzdUV0xQUjZRZ3lWMThsYnN1Rnc0c2tGZ25t?=
- =?utf-8?B?K0duTEQ3VEMybGRZRVBiUElyakxtZFdUUERUNEFSd1hmRG4rbUVodWdhYTRq?=
- =?utf-8?B?VkcyamlZOHprL0xFMllSdm1JcEpVeW8zazh1bGpLK3ZuemRENDI1ODI4MHZl?=
- =?utf-8?B?WHc1TzkvWDNaanJsTjl5RnJ4TzF4ZzlsQTlrc3ZPS2prTmxOaDFHRHRHMit3?=
- =?utf-8?B?MGV3OFl4cFhPcUYzZDBKdXBpb3U3c3ZGc3Q2SmdOZ3BjL1NxaFV2WTZtY09G?=
- =?utf-8?B?WUZmVHYxR1RzQVpWTk1TZXVCM1JXaHpnWUF1L1MvUlh5MW1MdVAzdi9wQnVC?=
- =?utf-8?B?N00xUVBSV1FHOUYxUmp6bFUydytLcG1oajBnd2h3ekN4YVZ3WTdIMC9jUzVL?=
- =?utf-8?B?QVJKVGw4THJNNTF6MVRkUGkzc0tobzNTNmJKYWVTZGN4bUVYOVpYU3QxQlUw?=
- =?utf-8?B?MUZJeEpqOGUyU1B3bUM1VUx2YUI0L2pzckcrNitSTE9IRVdkcTNiRWNyTTRx?=
- =?utf-8?B?QlE1OUN5VXpsQ1RxL2tzeW5oam8vWHhuQUw5R0Y0MVh5YnRHaE9lcXBHbmcy?=
- =?utf-8?B?dGVwSFdVZnhUMTVkeXpySlg3R2JvNG1yR0YyT2pqUVN4U3g5cW5DNkE3K20v?=
- =?utf-8?B?Q01PS1lROWVaMVZTeE1aM01KbWloOHJOMjEyY0dBVXlhZkFtbkVGMzNXOUZL?=
- =?utf-8?B?UG81LzJDUVhVejMxT3hRcEh4WnFTb0NscENIRWlKeVJEM1YxR29xYU5nTGRY?=
- =?utf-8?B?aVorblJ5dXFONUp3aXZ4bTg2SzBLMUFud1V5RjlTM0FscU52TVBNT0NkTlVP?=
- =?utf-8?B?d3YvSHFvdGtiWWFzV3I3a0REQ2dwZkhUb1ZSdlhMZWZiYWtOUHNBQTFGdlp4?=
- =?utf-8?B?eXhNL0orVHE3MytmaVZXTTNhMXora1J2MndaYnB5YUhBZDRWckxVczQzbFI5?=
- =?utf-8?B?YVdMVzNRM2VyQXJSbzFIK2lSL2EzNFp4d3hMbnYzaVdObDlCODJMMmthWW4y?=
- =?utf-8?B?OUNxNUlRMk5ab1ZMWmFqaXoxR2lBelR5WUNvMjhEOGpFN3NpdHFXdmRROHE2?=
- =?utf-8?B?UElxWEM5UEx2dU9ETFhPL1gwcXE3RHNqdDlSNTBXcmZVK3lGR1UxcHAwVnRI?=
- =?utf-8?B?aTZHZjJkTmFQVzA1WDFzM0t1WEZrUXljd2VYak9IYU83Q2dFRnNWcjB2NUg5?=
- =?utf-8?B?YXMyVjNSVU5TQktMUm5FbHJNTDVPNzF5SWhndFZNcUFGZkxsMmxvSGNuMFBV?=
- =?utf-8?B?SjdWK0lGQjJlaGdnd1JHTWVzQXlreis1R0d1RVRrM1ovNmpWbjhndz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=urMa/+8sUVuJZ09fHlKhlvouX/0Bx6mJ/aPV5M7nHpA=;
+        b=CwXiWYL4WVHs83y/rIg3mMyE/Na8xTwQ3BQAUEZilzE8s++8dcmEl7GfOZH+Z+rxk3
+         Vh2jmcdiqDjtk/5MMerHmeBIhcZZQQEm4wffOdCHSNw52tI8j8hFgS9t/wJ9pZBQWnxV
+         dV5E+2wGA9Wj6KUsRiBxK3xc5i7j1AmAANDUlILXZRDR4CAe/D/zlejgCpKGsZfJjZXm
+         RnGzX7gRjVVP9QL/uqGafQE8KsL7IMuytb17NWG2TVripMc1MUcZdpceslZbbGxdxRMT
+         TPfv4VoECAZD1UeObpIrYRC7+pC6b/N9/fx0tgUcWtutqFsa2t8cNlL//6Th97bs5m5R
+         m0Tg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=urMa/+8sUVuJZ09fHlKhlvouX/0Bx6mJ/aPV5M7nHpA=;
+        b=74tRhXneNAeO0TqHgwTtdqjgpRRyDAXDqSRKpaWlvq2X72nFSn4Zx3eRnrGR+kd71q
+         hO2BCsd5k+hpwPTPqGX6v5oqRFthRmZmiZR/IvY69fot8ub7+4glWGmT7ps8Wwb5QFqx
+         i3S8NwmPEZtZ6N5bPCxp5yfFmwhOySGVEaT+mjUcZSwc1Nz+nDqdAtFrm3Q8gQE260K9
+         MdMMNLU6D78lwSl+ytih77xqTueAfSus3GhNufdFj2oWt//zr2vM8cWRFdxAONkQjgzA
+         cuBnUWSy79a//YoZo1QSeSDw9e0gkKsrxXPzgAahZx93yHfFxMpsvFBZeLFBPIY3BGQd
+         BQrg==
+X-Gm-Message-State: AOAM533fTLaIaljzVmasOambdXup7xIZRg2Aqci7pucEMwaJTkA+rhv9
+        lPJyxd9kTvDEQlHFfJAhujM=
+X-Google-Smtp-Source: ABdhPJyexofxEeNsyOJDnUtFE9S/Yrdks28SgrDutO8qxrncoJ/sbErZKTkfBxo5sxM5K00tS8B67A==
+X-Received: by 2002:a63:2cc8:0:b0:398:36ed:c12e with SMTP id s191-20020a632cc8000000b0039836edc12emr1013655pgs.290.1649097007297;
+        Mon, 04 Apr 2022 11:30:07 -0700 (PDT)
+Received: from localhost.localdomain ([122.161.51.18])
+        by smtp.gmail.com with ESMTPSA id kk11-20020a17090b4a0b00b001c73933d803sm162656pjb.10.2022.04.04.11.30.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Apr 2022 11:30:07 -0700 (PDT)
+From:   Kuldeep Singh <singh.kuldeep87k@gmail.com>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Kuldeep Singh <singh.kuldeep87k@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org
+Subject: [PATCH v2 1/4] dt-bindings: I2C: Add Qualcomm Geni based QUP I2C bindings
+Date:   Mon,  4 Apr 2022 23:59:34 +0530
+Message-Id: <20220404182938.29492-2-singh.kuldeep87k@gmail.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20220404182938.29492-1-singh.kuldeep87k@gmail.com>
+References: <20220404182938.29492-1-singh.kuldeep87k@gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: quicinc.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MW4PR02MB7186.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0d5e2d26-17f6-4a4a-68ce-08da1667dbea
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Apr 2022 18:20:55.1486
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: U2CeeBOw4KZDhPZfT8sLR3JaFP+cEwl4rtLL3AASa/LfdOmmtBR/RCXma5obiejuvkIsX1IcnFVMAWCTGVKtlu2ws0zaqmHuzzy/Fbvjt0k=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR02MB5663
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SGkgRG91ZywNCg0KPiBPbiBXZWQsIE1hciAzMCwgMjAyMiBhdCAxMTowMiBQTSBTYW5rZWVydGgg
-QmlsbGFrYW50aSAoUVVJQykNCj4gPHF1aWNfc2JpbGxha2FAcXVpY2luYy5jb20+IHdyb3RlOg0K
-PiA+DQo+ID4gSGkgRG1pdHJ5LA0KPiA+DQo+ID4gPiBPbiBXZWQsIDMwIE1hciAyMDIyIGF0IDE5
-OjA0LCBTYW5rZWVydGggQmlsbGFrYW50aQ0KPiA+ID4gPHF1aWNfc2JpbGxha2FAcXVpY2luYy5j
-b20+IHdyb3RlOg0KPiA+ID4gPg0KPiA+ID4gPiBUaGUgcGFuZWwtZWRwIGRyaXZlciBtb2RlcyBu
-ZWVkcyB0byBiZSB2YWxpZGF0ZWQgZGlmZmVyZW50bHkgZnJvbQ0KPiA+ID4gPiBEUCBiZWNhdXNl
-IHRoZSBsaW5rIGNhcGFiaWxpdGllcyBhcmUgbm90IGF2YWlsYWJsZSBmb3IgRURQIGJ5IHRoYXQg
-dGltZS4NCj4gPiA+ID4NCj4gPiA+ID4gU2lnbmVkLW9mZi1ieTogU2Fua2VlcnRoIEJpbGxha2Fu
-dGkgPHF1aWNfc2JpbGxha2FAcXVpY2luYy5jb20+DQo+ID4gPg0KPiA+ID4gVGhpcyBzaG91bGQg
-bm90IGJlIG5lY2Vzc2FyeSBhZnRlcg0KPiA+ID4NCj4gaHR0cHM6Ly9wYXRjaHdvcmsuZnJlZWRl
-c2t0b3Aub3JnL3BhdGNoLzQ3OTI2MS8/c2VyaWVzPTEwMTY4MiZyZXY9MS4NCj4gPiA+IENvdWxk
-IHlvdSBwbGVhc2UgY2hlY2s/DQo+ID4gPg0KPiA+DQo+ID4gVGhlIGNoZWNrIGZvciBEUF9NQVhf
-UElYRUxfQ0xLX0tIWiBpcyBub3QgbmVjZXNzYXJ5IGFueW1vcmUgYnV0IHdlDQo+ID4gbmVlZCB0
-byByZXR1cm4gZWFybHkgZm9yIGVEUCBiZWNhdXNlIHVubGlrZSBEUCwgZURQIGNvbnRleHQgd2ls
-bCBub3QNCj4gPiBoYXZlIHRoZSBpbmZvcm1hdGlvbiBhYm91dCB0aGUgbnVtYmVyIG9mIGxhbmVz
-IGFuZCBsaW5rIGNsb2NrLg0KPiA+DQo+ID4gU28sIEkgd2lsbCBtb2RpZnkgdGhlIHBhdGNoIHRv
-IHJldHVybiBhZnRlciB0aGUgRFBfTUFYX1BJWEVMX0NMS19LSFoNCj4gY2hlY2sgaWYgaXNfZURQ
-IGlzIHNldC4NCj4gDQo+IEkgaGF2ZW4ndCB3YWxrZWQgdGhyb3VnaCBhbGwgdGhlIHJlbGV2YW50
-IGNvZGUgYnV0IHNvbWV0aGluZyB5b3Ugc2FpZCBhYm92ZQ0KPiBzb3VuZHMgc3RyYW5nZS4gWW91
-IHNheSB0aGF0IGZvciBlRFAgd2UgZG9uJ3QgaGF2ZSBpbmZvIGFib3V0IHRoZSBudW1iZXINCj4g
-b2YgbGFuZXM/IFdlIF9zaG91bGRfLg0KPiANCj4gSXQncyBjZXJ0YWlubHkgcG9zc2libGUgdG8g
-aGF2ZSBhIHBhbmVsIHRoYXQgc3VwcG9ydHMgX2VpdGhlcl8gMSBvciAyIGxhbmVzIGJ1dA0KPiB0
-aGVuIG9ubHkgcGh5c2ljYWxseSBjb25uZWN0IDEgbGFuZSB0byBpdC4gLi4ub3IgeW91IGNvdWxk
-IGhhdmUgYSBwYW5lbCB0aGF0DQo+IHN1cHBvcnRzIDIgb3IgNCBsYW5lcyBhbmQgeW91IG9ubHkg
-Y29ubmVjdCAxIGxhbmUuDQo+IFNlZSwgZm9yIGluc3RhbmNlLCB0aV9zbl9icmlkZ2VfcGFyc2Vf
-bGFuZXMuIFRoZXJlIHdlIGFzc3VtZSA0IGxhbmVzIGJ1dCBpZg0KPiBhICJkYXRhLWxhbmVzIiBw
-cm9wZXJ0eSBpcyBwcmVzZW50IHRoZW4gd2UgY2FuIHVzZSB0aGF0IHRvIGtub3cgdGhhdCBmZXdl
-cg0KPiBsYW5lcyBhcmUgcGh5c2ljYWxseSBjb25uZWN0ZWQuDQo+IA0KPiBJdCdzIGFsc28gcG9z
-c2libGUgdG8gY29ubmVjdCBtb3JlIGxhbmVzIHRvIGEgcGFuZWwgdGhhbiBpdCBzdXBwb3J0cy4N
-Cj4gWW91IGNvdWxkIGNvbm5lY3QgMiBsYW5lcyB0byBpdCBidXQgdGhlbiBpdCBvbmx5IHN1cHBv
-cnRzIDEuIFRoaXMgY2FzZSBuZWVkcyB0bw0KPiBiZSBoYW5kbGVkIGFzIHdlbGwuLi4NCj4NCg0K
-SSB3YXMgcmVmZXJyaW5nIHRvIHRoZSBjaGVja3Mgd2UgZG8gZm9yIERQIGluIGRwX2JyaWRnZV9t
-b2RlX3ZhbGlkLiBXZSBjaGVjayBpZiB0aGUNCkxpbmsgYmFuZHdpZHRoIGNhbiBzdXBwb3J0IHRo
-ZSBwaXhlbCBiYW5kd2lkdGguIEZvciBhbiBleHRlcm5hbCBEUCBjb25uZWN0aW9uLCB0aGUNCklu
-aXRpYWwgRFBDRC9FRElEIHJlYWQgYWZ0ZXIgY2FibGUgY29ubmVjdGlvbiB3aWxsIHJldHVybiB0
-aGUgc2luayBjYXBhYmlsaXRpZXMgbGlrZSBsaW5rDQpyYXRlLCBsYW5lIGNvdW50IGFuZCBicHAg
-aW5mb3JtYXRpb24gdGhhdCBhcmUgdXNlZCB0byB3ZSBmaWx0ZXIgb3V0IHRoZSB1bnN1cHBvcnRl
-ZA0KbW9kZXMgZnJvbSB0aGUgbGlzdCBvZiBtb2RlcyBmcm9tIEVESUQuDQoNCkZvciBlRFAgY2Fz
-ZSwgdGhlIGRwIGRyaXZlciBwZXJmb3JtcyB0aGUgZmlyc3QgZHBjZCByZWFkIGR1cmluZyBicmlk
-Z2VfZW5hYmxlLiBUaGUNCmRwX2JyaWRnZV9tb2RlX3ZhbGlkIGZ1bmN0aW9uIGlzIGV4ZWN1dGVk
-IGJlZm9yZSBicmlkZ2VfZW5hYmxlIGFuZCBoZW5jZSBkb2VzDQpub3QgaGF2ZSB0aGUgZnVsbCBs
-aW5rIG9yIHRoZSBzaW5rIGNhcGFiaWxpdGllcyBpbmZvcm1hdGlvbiBsaWtlIGV4dGVybmFsIERQ
-IGNvbm5lY3Rpb24sDQpieSB0aGVuLg0KDQpTbywgd2UgbmVlZCB0byBwcm9jZWVkIHdpdGggdGhl
-IHJlcG9ydGVkIG1vZGUgZm9yIGVEUC4NCg0KPiANCj4gLURvdWcNCg==
+GENI(generic interface) based Qualcomm Universal Peripheral controller
+can support multiple serial interfaces like SPI,UART and I2C.
+
+Unlike other I2C controllers, QUP I2C bindings are present in parent
+schema. Move it out from parent to an individual binding and let parent
+refer to child schema later on.
+
+Please note, current schema isn't complete as it misses out few
+properties and thus, add these missing properties along the process.
+
+Signed-off-by: Kuldeep Singh <singh.kuldeep87k@gmail.com>
+---
+v2:
+- Change compatible from enum to const
+- Drop clock-frequency description
+- Sort nodes
+---
+ .../bindings/i2c/qcom,i2c-geni-qcom.yaml      | 100 ++++++++++++++++++
+ 1 file changed, 100 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+
+diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+new file mode 100644
+index 000000000000..0e7ed00562e2
+--- /dev/null
++++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+@@ -0,0 +1,100 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: "http://devicetree.org/schemas/i2c/qcom,i2c-geni-qcom.yaml#"
++$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++
++title: Qualcomm Geni based QUP I2C Controller
++
++maintainers:
++  - Andy Gross <agross@kernel.org>
++  - Bjorn Andersson <bjorn.andersson@linaro.org>
++
++allOf:
++  - $ref: /schemas/i2c/i2c-controller.yaml#
++
++properties:
++  compatible:
++    const: qcom,geni-i2c
++
++  clocks:
++    maxItems: 1
++
++  clock-names:
++    const: se
++
++  clock-frequency:
++    default: 100000
++
++  dmas:
++    maxItems: 2
++
++  dma-names:
++    items:
++      - const: tx
++      - const: rx
++
++  interconnects:
++    maxItems: 3
++
++  interconnect-names:
++    items:
++      - const: qup-core
++      - const: qup-config
++      - const: qup-memory
++
++  interrupts:
++    maxItems: 1
++
++  pinctrl-0: true
++  pinctrl-1: true
++
++  pinctrl-names:
++    minItems: 1
++    items:
++      - const: default
++      - const: sleep
++
++  power-domains:
++    maxItems: 1
++
++  reg:
++    maxItems: 1
++
++  required-opps:
++    maxItems: 1
++
++required:
++  - compatible
++  - interrupts
++  - clocks
++  - clock-names
++  - reg
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/clock/qcom,gcc-sc7180.h>
++    #include <dt-bindings/interconnect/qcom,sc7180.h>
++    #include <dt-bindings/power/qcom-rpmpd.h>
++
++    i2c@88000 {
++        compatible = "qcom,geni-i2c";
++        reg = <0x00880000 0x4000>;
++        clock-names = "se";
++        clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
++        pinctrl-names = "default";
++        pinctrl-0 = <&qup_i2c0_default>;
++        interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
++        #address-cells = <1>;
++        #size-cells = <0>;
++        interconnects = <&qup_virt MASTER_QUP_CORE_0 0 &qup_virt SLAVE_QUP_CORE_0 0>,
++                        <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_0 0>,
++                        <&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
++        interconnect-names = "qup-core", "qup-config", "qup-memory";
++        power-domains = <&rpmhpd SC7180_CX>;
++        required-opps = <&rpmhpd_opp_low_svs>;
++    };
++...
+-- 
+2.25.1
+
