@@ -2,67 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 125F04F4BBC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:06:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 624884F4BAC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:06:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241879AbiDEXEr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Apr 2022 19:04:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59722 "EHLO
+        id S232600AbiDEXEH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Apr 2022 19:04:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1443781AbiDEPkR (ORCPT
+        with ESMTP id S1443709AbiDEPkL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Apr 2022 11:40:17 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E9067EB28
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 06:59:37 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id i11so10948037plg.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 06:59:37 -0700 (PDT)
+        Tue, 5 Apr 2022 11:40:11 -0400
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 745F3185000
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 06:58:18 -0700 (PDT)
+Received: by mail-qt1-x82a.google.com with SMTP id o15so9714245qtv.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 06:58:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=4shTZ7PU5hramHKN4NECwmFPWcXFMMpb2aPfmy33HgE=;
-        b=DBngnlgrKnnIqGtxBXRFwa2pOrKGDqz9XBeZwnXfWodXDNrPRvHiHSWuHtqsN/GBPL
-         rNnfcI9ueN7+p+IdLJQBho+rOUKDL6qDsSkuyO/OrtGqfiAAmpR/AoRTORibwOwTby+V
-         MxIbbh2TQon5UytrGUKWxaRlszy5VCndkvq+c2F4CRZeE0PVOPS5SUo5aTJaQL1KnLcr
-         xycx5Y6xGIDoqKSXWkCY2YF/O67J7VFHLV9EsLroc/0jMpFhMG/Tk2djb9xP2frOgPiu
-         QhIHoUk8NvQ9u31nq/QcZj6fpvateKRackzCZ9EAVzT7JQs8rtvrnUcsB8kP/QxUf7eM
-         Rmig==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4Zo1koAQLSqT+JlliAq41n9EK+T7UuDXU3++Yy/OL90=;
+        b=pYOq3UGJ9TuIXdMMMK/F/k3jSEPQuAMk+I1l80ZkCtTU38iwbrbYh/MmB6ZwhRGL46
+         7ZF/j58tDSvOPdcKV47hG6AbEPYz91zXGhTpCa2J8xpZ/juYLcNWpAKAlTfFhqDYI/ng
+         tfCpikouSwxh9W4Q3CBrXgepftQ89pHlQ9VH8GnTvWJPjfI855qfNk2HAo0md0SjLMNO
+         yZoymPDDM/IIOizehI3PWyG0QjrKc19XUDE3yPjkc28DIFrfEi1r30qlb6T1aqd/oQTM
+         +PBLdeYs8i7R6+WZSzhPaHlAA9oAZx5z4by2ZDiCwd/V1jv7s89BtY1K3X9IGRu/XK6+
+         3rfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=4shTZ7PU5hramHKN4NECwmFPWcXFMMpb2aPfmy33HgE=;
-        b=mKDq4lWNoqt7psS7fnVB07kVnJk2WwCwW6E03x2RoAYD78WQ/EoFYeGASPqMT5yO1/
-         ws+FMyVdnhqNxR8nLJ+1xEzOoKiGCEIA7buPt/d/0LnJ5ica0MzLgmwChPCQRg/33aWF
-         JvTeHvTueAORSAvPyVkGOqtfPi5GTP6E2IqbsT1wiehp+SO8UEUYt1sVDkVe+IJYclXV
-         tHvxJPPuraNaHf9oNJk2Z6W8dmntDrV9VySCcqS1szVQtXzxpfyfO43SMisC5Q26cYBX
-         s5uGyVXalXK6fVVgDc7CcDjxk0qd1lDD3X5FVMh20bXuSLMWBy1JJefSVMEYzYoYR+Bm
-         h9wQ==
-X-Gm-Message-State: AOAM533LEF0n6UfGE5gnAvT0Znz4hIOH+Kp2uRI/XFPhsdAUjWiO+wnc
-        325qSJriE4cL24iO9BNmrIn9
-X-Google-Smtp-Source: ABdhPJzw7quCHFDDc4DPZq4sEUm4pWI0FejBk2vFIMRckx5DZbeqgonEYwGkd2Ezr2v8MX1AcwT2mA==
-X-Received: by 2002:a17:90b:1994:b0:1ca:9b45:405e with SMTP id mv20-20020a17090b199400b001ca9b45405emr4238607pjb.22.1649167176659;
-        Tue, 05 Apr 2022 06:59:36 -0700 (PDT)
-Received: from localhost.localdomain ([59.92.98.98])
-        by smtp.gmail.com with ESMTPSA id u14-20020a056a00124e00b004fab8f3245fsm16785402pfi.149.2022.04.05.06.59.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Apr 2022 06:59:36 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     gregkh@linuxfoundation.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        elder@linaro.org, mhi@lists.linux.dev, quic_hemantk@quicinc.com,
-        quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
-        bjorn.andersson@linaro.org, dmitry.baryshkov@linaro.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 18/18] bus: mhi: ep: Add uevent support for module autoloading
-Date:   Tue,  5 Apr 2022 19:27:54 +0530
-Message-Id: <20220405135754.6622-19-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220405135754.6622-1-manivannan.sadhasivam@linaro.org>
-References: <20220405135754.6622-1-manivannan.sadhasivam@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4Zo1koAQLSqT+JlliAq41n9EK+T7UuDXU3++Yy/OL90=;
+        b=zMmHUt8e9JKlvPkBjbzOMqkP1halBNpgeVQquGvshjHAhN7KP/uFqzuL8nz8BnlpRn
+         iFQwR2U8XL8h/MbOcc9I806ogBguU/9VdHEIFG/YJWEugjmYCp5bA047sXla1fkTJ23C
+         y2iKNapKO6USF9jKm5MV56KshRY+6vg1nHfFIjw+sMYZEhsYTnrq77+KA5RLbqqF0qSt
+         TgsZGYcoD1G+mkMQJ7JMoZI7Y73Ar3MAvZTdxHkdgdoSOHR96mbzwnYIKDQj8OPcwZuK
+         rbQ2U6LnmIEwndivnSVlduDimWmhkos7X6+YBd1tRzdngJhy+aknu5Dffd1rJZy4zi3f
+         qLQw==
+X-Gm-Message-State: AOAM532U92jKBsKpM8kjbRcUwf3fgxk3rBvsD6ExXuBa0rSqULUT+dh2
+        vTS/ezEHYqlgnOvgcI1ggHysEwkUdMlTKNnXPjxbBQ==
+X-Google-Smtp-Source: ABdhPJz/N9m3G+9VZYfO3dFBtZYE5Y4RILMfHESwLIPYnr2rLZvWX9Vt+wYFpiNptzVDvlPI4eFmvvGPXv4BsWAZL2E=
+X-Received: by 2002:ac8:7dd1:0:b0:2e0:6fe1:189b with SMTP id
+ c17-20020ac87dd1000000b002e06fe1189bmr3138136qte.629.1649167097585; Tue, 05
+ Apr 2022 06:58:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220404163436.956875-1-vkoul@kernel.org> <20220404163436.956875-15-vkoul@kernel.org>
+In-Reply-To: <20220404163436.956875-15-vkoul@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 5 Apr 2022 16:58:06 +0300
+Message-ID: <CAA8EJpr5CwJ1_aKQ3Crqbjy8-=igazdWvN4VeZtp0fT85nXE6w@mail.gmail.com>
+Subject: Re: [PATCH v6 14/14] drm/msm/dsi: Add support for DSC configuration
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -73,89 +72,154 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add uevent support to MHI endpoint bus so that the client drivers can be
-autoloaded by udev when the MHI endpoint devices gets created. The client
-drivers are expected to provide MODULE_DEVICE_TABLE with the MHI id_table
-struct so that the alias can be exported.
+On Mon, 4 Apr 2022 at 19:35, Vinod Koul <vkoul@kernel.org> wrote:
+>
+> When DSC is enabled, we need to configure DSI registers accordingly and
+> configure the respective stream compression registers.
+>
+> Add support to calculate the register setting based on DSC params and
+> timing information and configure these registers.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-The MHI endpoint reused the mhi_device_id structure of the MHI bus.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Reviewed-by: Alex Elder <elder@linaro.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/bus/mhi/ep/main.c       |  9 +++++++++
- include/linux/mod_devicetable.h |  2 ++
- scripts/mod/file2alias.c        | 10 ++++++++++
- 3 files changed, 21 insertions(+)
 
-diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index bae5f40ec15e..40109a79017a 100644
---- a/drivers/bus/mhi/ep/main.c
-+++ b/drivers/bus/mhi/ep/main.c
-@@ -1536,6 +1536,14 @@ void mhi_ep_driver_unregister(struct mhi_ep_driver *mhi_drv)
- }
- EXPORT_SYMBOL_GPL(mhi_ep_driver_unregister);
- 
-+static int mhi_ep_uevent(struct device *dev, struct kobj_uevent_env *env)
-+{
-+	struct mhi_ep_device *mhi_dev = to_mhi_ep_device(dev);
-+
-+	return add_uevent_var(env, "MODALIAS=" MHI_EP_DEVICE_MODALIAS_FMT,
-+					mhi_dev->name);
-+}
-+
- static int mhi_ep_match(struct device *dev, struct device_driver *drv)
- {
- 	struct mhi_ep_device *mhi_dev = to_mhi_ep_device(dev);
-@@ -1562,6 +1570,7 @@ struct bus_type mhi_ep_bus_type = {
- 	.name = "mhi_ep",
- 	.dev_name = "mhi_ep",
- 	.match = mhi_ep_match,
-+	.uevent = mhi_ep_uevent,
- };
- 
- static int __init mhi_ep_init(void)
-diff --git a/include/linux/mod_devicetable.h b/include/linux/mod_devicetable.h
-index 5da5d990ff58..549590e9c644 100644
---- a/include/linux/mod_devicetable.h
-+++ b/include/linux/mod_devicetable.h
-@@ -835,6 +835,8 @@ struct wmi_device_id {
- #define MHI_DEVICE_MODALIAS_FMT "mhi:%s"
- #define MHI_NAME_SIZE 32
- 
-+#define MHI_EP_DEVICE_MODALIAS_FMT "mhi_ep:%s"
-+
- /**
-  * struct mhi_device_id - MHI device identification
-  * @chan: MHI channel name
-diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
-index 5258247d78ac..d9d6a31446ea 100644
---- a/scripts/mod/file2alias.c
-+++ b/scripts/mod/file2alias.c
-@@ -1391,6 +1391,15 @@ static int do_mhi_entry(const char *filename, void *symval, char *alias)
- 	return 1;
- }
- 
-+/* Looks like: mhi_ep:S */
-+static int do_mhi_ep_entry(const char *filename, void *symval, char *alias)
-+{
-+	DEF_FIELD_ADDR(symval, mhi_device_id, chan);
-+	sprintf(alias, MHI_EP_DEVICE_MODALIAS_FMT, *chan);
-+
-+	return 1;
-+}
-+
- /* Looks like: ishtp:{guid} */
- static int do_ishtp_entry(const char *filename, void *symval, char *alias)
- {
-@@ -1519,6 +1528,7 @@ static const struct devtable devtable[] = {
- 	{"tee", SIZE_tee_client_device_id, do_tee_entry},
- 	{"wmi", SIZE_wmi_device_id, do_wmi_entry},
- 	{"mhi", SIZE_mhi_device_id, do_mhi_entry},
-+	{"mhi_ep", SIZE_mhi_device_id, do_mhi_ep_entry},
- 	{"auxiliary", SIZE_auxiliary_device_id, do_auxiliary_entry},
- 	{"ssam", SIZE_ssam_device_id, do_ssam_entry},
- 	{"dfl", SIZE_dfl_device_id, do_dfl_entry},
+> ---
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 98 +++++++++++++++++++++++++++++-
+>  1 file changed, 97 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index eb0be34add45..f3ed6c40b9e1 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -912,6 +912,65 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
+>                 dsi_write(msm_host, REG_DSI_CPHY_MODE_CTRL, BIT(0));
+>  }
+>
+> +static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mode, u32 hdisplay)
+> +{
+> +       struct msm_display_dsc_config *dsc = msm_host->dsc;
+> +       u32 reg, intf_width, reg_ctrl, reg_ctrl2;
+> +       u32 slice_per_intf, total_bytes_per_intf;
+> +       u32 pkt_per_line;
+> +       u32 bytes_in_slice;
+> +       u32 eol_byte_num;
+> +
+> +       /* first calculate dsc parameters and then program
+> +        * compress mode registers
+> +        */
+> +       intf_width = hdisplay;
+> +       slice_per_intf = DIV_ROUND_UP(intf_width, dsc->drm->slice_width);
+> +
+> +       /* If slice_per_pkt is greater than slice_per_intf
+> +        * then default to 1. This can happen during partial
+> +        * update.
+> +        */
+> +       if (slice_per_intf > dsc->drm->slice_count)
+> +               dsc->drm->slice_count = 1;
+> +
+> +       slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->drm->slice_width);
+> +       bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width * dsc->drm->bits_per_pixel, 8);
+> +
+> +       dsc->drm->slice_chunk_size = bytes_in_slice;
+> +
+> +       total_bytes_per_intf = bytes_in_slice * slice_per_intf;
+> +
+> +       eol_byte_num = total_bytes_per_intf % 3;
+> +       pkt_per_line = slice_per_intf / dsc->drm->slice_count;
+> +
+> +       if (is_cmd_mode) /* packet data type */
+> +               reg = DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE(MIPI_DSI_DCS_LONG_WRITE);
+> +       else
+> +               reg = DSI_VIDEO_COMPRESSION_MODE_CTRL_DATATYPE(MIPI_DSI_COMPRESSED_PIXEL_STREAM);
+> +
+> +       /* DSI_VIDEO_COMPRESSION_MODE & DSI_COMMAND_COMPRESSION_MODE
+> +        * registers have similar offsets, so for below common code use
+> +        * DSI_VIDEO_COMPRESSION_MODE_XXXX for setting bits
+> +        */
+> +       reg |= DSI_VIDEO_COMPRESSION_MODE_CTRL_PKT_PER_LINE(pkt_per_line >> 1);
+> +       reg |= DSI_VIDEO_COMPRESSION_MODE_CTRL_EOL_BYTE_NUM(eol_byte_num);
+> +       reg |= DSI_VIDEO_COMPRESSION_MODE_CTRL_EN;
+> +
+> +       if (is_cmd_mode) {
+> +               reg_ctrl = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL);
+> +               reg_ctrl2 = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2);
+> +
+> +               reg_ctrl |= reg;
+> +               reg_ctrl2 |= DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM0_SLICE_WIDTH(bytes_in_slice);
+> +
+> +               dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL, reg);
+> +               dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2, reg_ctrl2);
+> +       } else {
+> +               dsi_write(msm_host, REG_DSI_VIDEO_COMPRESSION_MODE_CTRL, reg);
+> +       }
+> +}
+> +
+>  static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>  {
+>         struct drm_display_mode *mode = msm_host->mode;
+> @@ -944,7 +1003,38 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>                 hdisplay /= 2;
+>         }
+>
+> +       if (msm_host->dsc) {
+> +               struct msm_display_dsc_config *dsc = msm_host->dsc;
+> +
+> +               /* update dsc params with timing params */
+> +               if (!dsc || !mode->hdisplay || !mode->vdisplay) {
+> +                       pr_err("DSI: invalid input: pic_width: %d pic_height: %d\n",
+> +                              mode->hdisplay, mode->vdisplay);
+> +                       return;
+> +               }
+> +
+> +               dsc->drm->pic_width = mode->hdisplay;
+> +               dsc->drm->pic_height = mode->vdisplay;
+> +               DBG("Mode %dx%d\n", dsc->drm->pic_width, dsc->drm->pic_height);
+> +
+> +               /* we do the calculations for dsc parameters here so that
+> +                * panel can use these parameters
+> +                */
+> +               dsi_populate_dsc_params(dsc);
+> +
+> +               /* Divide the display by 3 but keep back/font porch and
+> +                * pulse width same
+> +                */
+> +               h_total -= hdisplay;
+> +               hdisplay /= 3;
+> +               h_total += hdisplay;
+> +               ha_end = ha_start + hdisplay;
+> +       }
+> +
+>         if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
+> +               if (msm_host->dsc)
+> +                       dsi_update_dsc_timing(msm_host, false, mode->hdisplay);
+> +
+>                 dsi_write(msm_host, REG_DSI_ACTIVE_H,
+>                         DSI_ACTIVE_H_START(ha_start) |
+>                         DSI_ACTIVE_H_END(ha_end));
+> @@ -963,8 +1053,14 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>                         DSI_ACTIVE_VSYNC_VPOS_START(vs_start) |
+>                         DSI_ACTIVE_VSYNC_VPOS_END(vs_end));
+>         } else {                /* command mode */
+> +               if (msm_host->dsc)
+> +                       dsi_update_dsc_timing(msm_host, true, mode->hdisplay);
+> +
+>                 /* image data and 1 byte write_memory_start cmd */
+> -               wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
+> +               if (!msm_host->dsc)
+> +                       wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
+> +               else
+> +                       wc = mode->hdisplay / 2 + 1;
+>
+>                 dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL,
+>                         DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
+> --
+> 2.34.1
+>
+
+
 -- 
-2.25.1
-
+With best wishes
+Dmitry
