@@ -2,275 +2,248 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 668D14F4BEA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:10:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3E594F4BDE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:10:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1457677AbiDEXHS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Apr 2022 19:07:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39938 "EHLO
+        id S1451924AbiDEXGl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Apr 2022 19:06:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1573209AbiDESTT (ORCPT
+        with ESMTP id S1573257AbiDESge (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Apr 2022 14:19:19 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EC7CEF087;
-        Tue,  5 Apr 2022 11:17:19 -0700 (PDT)
+        Tue, 5 Apr 2022 14:36:34 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6378167E3
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 11:34:35 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id c2so109509pga.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 11:34:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649182639; x=1680718639;
-  h=from:to:cc:subject:date:message-id:mime-version;
-  bh=bwqwyzqwG2MNZKE8hl5seyqxC+Y62bblO4gxfvbXvAY=;
-  b=c0yBI+SGBSPZ+KLRNvlpTjPT3mRAO2yJuOtYt9AYWbkBANAcBnw3b7ZF
-   jSuX9aTIEB51bizB41sh1Rykjyq5EUYdaBFqbGZJnfdjtNRnZP5zgmuEx
-   tjFkqEo4wyFzw6qKjQ4syDMeTh63b6bb/1GvdgO2FYyQAuU3wuiV6wEft
-   w=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 05 Apr 2022 11:17:19 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Apr 2022 11:17:19 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 5 Apr 2022 11:17:18 -0700
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 5 Apr 2022 11:17:17 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@linux.ie>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <bjorn.andersson@linaro.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_aravindh@quicinc.com>,
-        <quic_khsieh@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH] drm/msm/dp: enhance both connect and disconnect pending_timeout handle
-Date:   Tue, 5 Apr 2022 11:17:07 -0700
-Message-ID: <1649182627-8068-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=CcBRvO3glCTW0WLbKxNzGURMrlkb9J3NaXvMMMJyrmc=;
+        b=aFSoyA8dd03rcj3YyGwfpMaDjmQNGBX29pWyWAZta+HXAr/Y8yo08gTYhR0xzCaruu
+         1p7wTR7etOE2cqA0e7ioKWger2ZJF8owh06oCGfvkv6T1hlncNTWK7qJ+lSKoDX2Sgq3
+         HR3buweA2jraaSEEeqMrie6e8FbGKZDSz4uoU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=CcBRvO3glCTW0WLbKxNzGURMrlkb9J3NaXvMMMJyrmc=;
+        b=WtMwcgcZ+X2xbQuLLrGUx1r9mDZn976B6TSm2FGRm8RJXitO7WQtf5j0tg5zRJ4A5z
+         hXxXaNxy1L1+A1LG9x9u5Z1G4YdbDMx1Imsz1rWSB9U7LopfQ5dpIn2Zlb6SuWE6sgts
+         BsjDyuz3RwHjipy5Y5FHHrk+oGrXIRFjAlvf9Br1shLCceAIXKWrriP+qdKVtxKTTmRp
+         EDEZyPvgwo/j+bxXtHi0UTN4X/1Y2WyxCgT6qbF7hAJMK8UK3r2IFICm7oyyroA5fMer
+         tu6bwXsMJm9hSAQIZiN7JRxr8rjenufl7m+XqDMDuEJifv3LkVBlPTit53ElIIpQshHW
+         ragA==
+X-Gm-Message-State: AOAM530/cXr1NETTpFAmgvhDeZp06mgSIoXPmCfkdEQwS++kaqXswMCu
+        a5aWYa9X2RfBNsR7JOqoIa9BBtOXK1JhBg==
+X-Google-Smtp-Source: ABdhPJygXazaknynH0bc3LR80rQXYuGGM5q446njdOVQa6+040MuPBH2Q/LAZxB3GheL2fLuUhTmmg==
+X-Received: by 2002:a63:8f59:0:b0:399:1f0e:5653 with SMTP id r25-20020a638f59000000b003991f0e5653mr3902367pgn.288.1649183675435;
+        Tue, 05 Apr 2022 11:34:35 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:6b63:d403:e31b:da39])
+        by smtp.gmail.com with UTF8SMTPSA id o14-20020a056a0015ce00b004fab49cd65csm16258953pfu.205.2022.04.05.11.34.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Apr 2022 11:34:34 -0700 (PDT)
+Date:   Tue, 5 Apr 2022 11:34:33 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_rohitkr@quicinc.com,
+        srinivas.kandagatla@linaro.org, dianders@chromium.org,
+        swboyd@chromium.org, judyhsiao@chromium.org,
+        Venkata Prasad Potturu <quic_potturu@quicinc.com>
+Subject: Re: [PATCH v6 1/2] arm64: dts: qcom: sc7280: Add pinmux for I2S
+ speaker and Headset
+Message-ID: <YkyLuemETXD97Jv1@google.com>
+References: <1649157167-29106-1-git-send-email-quic_srivasam@quicinc.com>
+ <1649157167-29106-2-git-send-email-quic_srivasam@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1649157167-29106-2-git-send-email-quic_srivasam@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-HPD plugin handle is responsible for setting up main link and depend on
-user space frame work to start video stream. Similarly, HPD unplugged
-handle is responsible for tearing down main link and depend on user space
-frame work to stop video stream. Connect_pending_timeout and disconnect_
-pending_timeout are fired after 5 seconds timer expired to tear down main
-link and video stream and restore DP driver state into known default
-DISCONNECTED state in the case of frame work does not response uevent
-original from DP driver so that DP driver can recover gracefully.
+On Tue, Apr 05, 2022 at 04:42:46PM +0530, Srinivasa Rao Mandadapu wrote:
+> Add AMP enable node and pinmux for primary and secondary I2S
+> for SC7280 based platforms.
+> 
+> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 34 +++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi       | 20 +++++++++++++
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi           | 41 ++++++++++++++++++++++++++
+>  3 files changed, 95 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> index dc17f20..de646d9 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> @@ -530,6 +530,26 @@ ap_ec_spi: &spi10 {
+>  	drive-strength = <2>;
+>  };
+>  
+> +&pri_mi2s_data0 {
+> +	drive-strength = <6>;
 
-The original connect_pending_timeout and disconnect_pending_timeout were
-not implemented correctly. This patch enhance both timeout functions to
-tear down main link and video stream correctly once timer is fired.
+Isn't this pin used as an input (HP_DIN)? Is specifying the drive strength
+really needed?
 
-Fixes: 8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
+> +};
+> +
+> +&pri_mi2s_data1 {
+> +	drive-strength = <6>;
+> +};
+> +
+> +&pri_mi2s_mclk {
+> +	drive-strength = <6>;
+> +};
+> +
+> +&pri_mi2s_sclk {
+> +	drive-strength = <6>;
+> +};
+> +
+> +&pri_mi2s_ws {
+> +	drive-strength = <6>;
+> +};
+> +
+>  &qspi_cs0 {
+>  	bias-disable;
+>  	drive-strength = <8>;
+> @@ -610,6 +630,20 @@ ap_ec_spi: &spi10 {
+>  	drive-strength = <10>;
+>  };
+>  
+> +&sec_mi2s_data0 {
+> +	drive-strength = <6>;
+> +	bias-disable;
+> +};
+> +
+> +&sec_mi2s_sclk {
+> +	drive-strength = <6>;
+> +	bias-disable;
+> +};
+> +
+> +&sec_mi2s_ws {
+> +	drive-strength = <6>;
+> +};
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/dp/dp_ctrl.c    | 34 ++++++++++++++++++++++++--
- drivers/gpu/drm/msm/dp/dp_ctrl.h    |  1 +
- drivers/gpu/drm/msm/dp/dp_display.c | 48 +++++++++++++++++++++++++++----------
- 3 files changed, 68 insertions(+), 15 deletions(-)
+Actually there are several sound configs for herobrine boards. For now I
+think it's ok to specify the config for herobrine -rev1 (as this patch
+does) and we can sort out later how to best support the different configs.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index dcd0126..3f4cf6d 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1910,7 +1910,7 @@ int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl)
- 	return ret;
- }
- 
--int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
-+int dp_ctrl_off_link(struct dp_ctrl *dp_ctrl)
- {
- 	struct dp_ctrl_private *ctrl;
- 	struct dp_io *dp_io;
-@@ -1926,7 +1926,37 @@ int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
- 
- 	dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
- 
--	dp_catalog_ctrl_reset(ctrl->catalog);
-+	ret = dp_power_clk_enable(ctrl->power, DP_CTRL_PM, false);
-+	if (ret) {
-+		DRM_ERROR("Failed to disable link clocks. ret=%d\n", ret);
-+	}
-+
-+	DRM_DEBUG_DP("Before, phy=%x init_count=%d power_on=%d\n",
-+		(u32)(uintptr_t)phy, phy->init_count, phy->power_count);
-+
-+	phy_power_off(phy);
-+
-+	DRM_DEBUG_DP("After, phy=%x init_count=%d power_on=%d\n",
-+		(u32)(uintptr_t)phy, phy->init_count, phy->power_count);
-+
-+	return ret;
-+}
-+
-+int dp_ctrl_off(struct dp_ctrl *dp_ctrl)
-+{
-+	struct dp_ctrl_private *ctrl;
-+	struct dp_io *dp_io;
-+	struct phy *phy;
-+	int ret = 0;
-+
-+	if (!dp_ctrl)
-+		return -EINVAL;
-+
-+	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
-+	dp_io = &ctrl->parser->io;
-+	phy = dp_io->phy;
-+
-+	dp_catalog_ctrl_mainlink_ctrl(ctrl->catalog, false);
- 
- 	ret = dp_power_clk_enable(ctrl->power, DP_STREAM_PM, false);
- 	if (ret)
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-index 2433edb..ffafe17 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-@@ -22,6 +22,7 @@ struct dp_ctrl {
- int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off_link_stream(struct dp_ctrl *dp_ctrl);
-+int dp_ctrl_off_link(struct dp_ctrl *dp_ctrl);
- int dp_ctrl_off(struct dp_ctrl *dp_ctrl);
- void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl);
- void dp_ctrl_isr(struct dp_ctrl *dp_ctrl);
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 178b774..56bf7c5 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -593,10 +593,16 @@ static int dp_connect_pending_timeout(struct dp_display_private *dp, u32 data)
- 
- 	mutex_lock(&dp->event_mutex);
- 
-+	/*
-+	 * main link had been setup but video is not ready yet
-+	 * only tear down main link
-+	 */
- 	state = dp->hpd_state;
- 	if (state == ST_CONNECT_PENDING) {
--		dp->hpd_state = ST_CONNECTED;
- 		DRM_DEBUG_DP("type=%d\n", dp->dp_display.connector_type);
-+		dp_ctrl_off_link(dp->ctrl);
-+		dp_display_host_phy_exit(dp);
-+		dp->hpd_state = ST_DISCONNECTED;
- 	}
- 
- 	mutex_unlock(&dp->event_mutex);
-@@ -645,6 +651,7 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 		if (dp->link->sink_count == 0) {
- 			dp_display_host_phy_exit(dp);
- 		}
-+		dp_display_usbpd_disconnect_cb(&dp->pdev->dev);
- 		mutex_unlock(&dp->event_mutex);
- 		return 0;
- 	}
-@@ -661,19 +668,19 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 		return 0;
- 	}
- 
--	dp->hpd_state = ST_DISCONNECT_PENDING;
--
- 	/* disable HPD plug interrupts */
- 	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, false);
- 
--	/*
--	 * We don't need separate work for disconnect as
--	 * connect/attention interrupts are disabled
--	 */
- 	dp_display_usbpd_disconnect_cb(&dp->pdev->dev);
- 
--	/* start sentinel checking in case of missing uevent */
--	dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
-+	if (state == ST_DISPLAY_OFF) {
-+		dp->hpd_state = ST_DISCONNECTED;
-+
-+	} else {
-+		/* start sentinel checking in case of missing uevent */
-+		dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
-+		dp->hpd_state = ST_DISCONNECT_PENDING;
-+	}
- 
- 	/* signal the disconnect event early to ensure proper teardown */
- 	dp_display_handle_plugged_change(&dp->dp_display, false);
-@@ -695,10 +702,16 @@ static int dp_disconnect_pending_timeout(struct dp_display_private *dp, u32 data
- 
- 	mutex_lock(&dp->event_mutex);
- 
-+	/*
-+	 * main link had been set up and video is ready
-+	 * tear down main link, video stream and phy
-+	 */
- 	state =  dp->hpd_state;
- 	if (state == ST_DISCONNECT_PENDING) {
--		dp->hpd_state = ST_DISCONNECTED;
- 		DRM_DEBUG_DP("type=%d\n", dp->dp_display.connector_type);
-+		dp_ctrl_off(dp->ctrl);
-+		dp_display_host_phy_exit(dp);
-+		dp->hpd_state = ST_DISCONNECTED;
- 	}
- 
- 	mutex_unlock(&dp->event_mutex);
-@@ -1571,6 +1584,12 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
- 
- 	mutex_lock(&dp_display->event_mutex);
- 
-+	state =  dp_display->hpd_state;
-+	if (state == ST_DISCONNECTED) {
-+		mutex_unlock(&dp_display->event_mutex);
-+		return rc;
-+	}
-+
- 	/* stop sentinel checking */
- 	dp_del_event(dp_display, EV_CONNECT_PENDING_TIMEOUT);
- 
-@@ -1588,8 +1607,6 @@ int msm_dp_display_enable(struct msm_dp *dp, struct drm_encoder *encoder)
- 		return rc;
- 	}
- 
--	state =  dp_display->hpd_state;
--
- 	if (state == ST_DISPLAY_OFF)
- 		dp_display_host_phy_init(dp_display);
- 
-@@ -1638,13 +1655,18 @@ int msm_dp_display_disable(struct msm_dp *dp, struct drm_encoder *encoder)
- 	/* stop sentinel checking */
- 	dp_del_event(dp_display, EV_DISCONNECT_PENDING_TIMEOUT);
- 
-+	state =  dp_display->hpd_state;
-+	if (state == ST_DISCONNECTED || state == ST_DISPLAY_OFF) {
-+		mutex_unlock(&dp_display->event_mutex);
-+		return rc;
-+	}
-+
- 	dp_display_disable(dp_display, 0);
- 
- 	rc = dp_display_unprepare(dp);
- 	if (rc)
- 		DRM_ERROR("DP display unprepare failed, rc=%d\n", rc);
- 
--	state =  dp_display->hpd_state;
- 	if (state == ST_DISCONNECT_PENDING) {
- 		/* completed disconnection */
- 		dp_display->hpd_state = ST_DISCONNECTED;
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+>  /* PINCTRL - board-specific pinctrl */
+>  
+>  &pm7325_gpios {
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> index ecbf2b8..2afbbe3 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> @@ -462,7 +462,27 @@
+>  	drive-strength = <10>;
+>  };
+>  
+> +&sec_mi2s_data0 {
+> +	drive-strength = <6>;
+> +	bias-disable;
+> +};
+> +
+> +&sec_mi2s_sclk {
+> +	drive-strength = <6>;
+> +	bias-disable;
+> +};
+> +
+> +&sec_mi2s_ws {
+> +	drive-strength = <6>;
+> +};
+> +
+>  &tlmm {
+> +	amp_en: amp-en {
+> +		pins = "gpio63";
+> +		bias-pull-down;
+> +		drive-strength = <2>;
+> +	};
 
+nit: all the other pins are i2s related, it might make sense to add amp_en
+in a separate patch.
+
+> +
+>  	bt_en: bt-en {
+>  		pins = "gpio85";
+>  		function = "gpio";
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index f0b64be..8d8cec5 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -3527,6 +3527,31 @@
+>  				function = "pcie1_clkreqn";
+>  			};
+>  
+> +			pri_mi2s_data0: pri-mi2s-data0 {
+> +				pins = "gpio98";
+> +				function = "mi2s0_data0";
+> +			};
+> +
+> +			pri_mi2s_data1: pri-mi2s-data1 {
+> +				pins = "gpio99";
+> +				function = "mi2s0_data1";
+> +			};
+> +
+> +			pri_mi2s_mclk: pri-mi2s-mclk {
+> +				pins = "gpio96";
+> +				function = "pri_mi2s";
+> +			};
+> +
+> +			pri_mi2s_sclk: pri-mi2s-sclk {
+> +				pins = "gpio97";
+> +				function = "mi2s0_sck";
+> +			};
+> +
+> +			pri_mi2s_ws: pri-mi2s-ws {
+> +				pins = "gpio100";
+> +				function = "mi2s0_ws";
+> +			};
+> +
+>  			qspi_clk: qspi-clk {
+>  				pins = "gpio14";
+>  				function = "qspi_clk";
+> @@ -4261,6 +4286,22 @@
+>  				drive-strength = <2>;
+>  				bias-bus-hold;
+>  			};
+> +
+> +			sec_mi2s_data0: sec-mi2s-data0 {
+> +				pins = "gpio107";
+> +				function = "mi2s1_data0";
+> +			};
+> +
+> +			sec_mi2s_sclk: sec-mi2s-sclk {
+> +				pins = "gpio106";
+> +				function = "mi2s1_sck";
+> +			};
+> +
+> +			sec_mi2s_ws: sec-mi2s-ws {
+> +				pins = "gpio108";
+> +				function = "mi2s1_ws";
+> +			};
+
+Is there a particular reason for the pri/sec nomenclature? The datasheet and
+schematics call the pin mi2sN_xyz, it seems it would be clearer to follow
+that naming. Primary/secondary seems to imply a 'master/slave' topology, but
+these are independent controllers IIUC. The datasheet refers to pin 96 as
+PRI_MI2S_MCLK and pin 105 SEC_MI2S_MCLK, I guess the naming was derived from
+that.
+
+My suggestion would be to follow the naming in the datasheet/schematic, i.e.
+mi2sN_data0, mi2sN_data1, pri/sec_mi2s_mclk, mi2sN_sck, mi2sN_ws.
