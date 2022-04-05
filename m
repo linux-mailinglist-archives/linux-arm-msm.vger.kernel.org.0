@@ -2,421 +2,242 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 69C694F4C0E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:11:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40B374F5524
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 07:35:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1575577AbiDEXIR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Apr 2022 19:08:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39570 "EHLO
+        id S232654AbiDFFcC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Apr 2022 01:32:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1573663AbiDEWwl (ORCPT
+        with ESMTP id S1838569AbiDFAzU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Apr 2022 18:52:41 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9962F21807
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 14:35:34 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id a16-20020a17090a6d9000b001c7d6c1bb13so751928pjk.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 14:35:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=3T1DLNs454DRQUzm0Ou8rT4NITlZJwcCtRIhth0zBLg=;
-        b=dZmHadTOGH2sWttG/8o6yry7YYYDnFAlF3s85cSg04QUfWBiZwEu+ZFKK7bHAq2Nzw
-         0h401ttv6zohsw5jB+Tc2UGfvz6jvfT3KGOZAD5FEm4TMsV6B4icl5lM+1ruDwJY5mqK
-         rJIa8Bc8z5PKxidv6RtFMbTaAU6b5gKanaV/4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=3T1DLNs454DRQUzm0Ou8rT4NITlZJwcCtRIhth0zBLg=;
-        b=oaEz5MME+G2fEpzFSg8CGXxog3QjqSFPOUvpS14Qt4Y2ujmgL25dxd25UvM9ntFYdS
-         mV9uvqd2fhjJ9JAeFcoD7Uq/Onh+85XQniFJL/KRolgh66PRuF+O7ZJB/1MdEDzl5f/9
-         +NhsxEREQ9DcKP9czLIZnHokBQqa91YkJJ60Y1Ov7gJsiTphxNQUAdZHcQAyoBJQL51q
-         W5+K1GfIYJbxc2MSjcqmflKeqcgLHBg2wRsqMpwfxx+iyOXgEGt2sOm+OHDimdKPs4VF
-         qbpc9LdelhxHNV3GwrGzSnRAfSTcP1NZkf9kxXiM2cUC0LCMtO1nSxR4VanQ2e1cBtBe
-         1H3w==
-X-Gm-Message-State: AOAM530LD3s3nV79HwTPIOwXHKhh3f746dMOxIXZPYHAbnH8CwHFH4r7
-        9m1kaH/bK4Ezx/NuTlS31v4dDg==
-X-Google-Smtp-Source: ABdhPJwvvmi6H06TfLDbKyMUjMOm74H9NrRlFsP8UZHH4zfLrtGFK8t0xDeYGGV6tyKLic3OjN+08w==
-X-Received: by 2002:a17:90b:4c44:b0:1c7:109c:b419 with SMTP id np4-20020a17090b4c4400b001c7109cb419mr6324577pjb.113.1649194534059;
-        Tue, 05 Apr 2022 14:35:34 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:6b63:d403:e31b:da39])
-        by smtp.gmail.com with UTF8SMTPSA id g12-20020a056a001a0c00b004e1307b249csm16964755pfv.69.2022.04.05.14.35.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Apr 2022 14:35:33 -0700 (PDT)
-Date:   Tue, 5 Apr 2022 14:35:31 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rohitkr@quicinc.com,
-        srinivas.kandagatla@linaro.org, dianders@chromium.org,
-        swboyd@chromium.org, judyhsiao@chromium.org,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Subject: Re: [PATCH v6 1/3] arm64: dts: qcom: sc7280: Add nodes for va tx and
- rx macros and external codecs
-Message-ID: <Yky2Iwt+tvxvu4/S@google.com>
-References: <1649157220-29304-1-git-send-email-quic_srivasam@quicinc.com>
- <1649157220-29304-2-git-send-email-quic_srivasam@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        Tue, 5 Apr 2022 20:55:20 -0400
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2072.outbound.protection.outlook.com [40.107.94.72])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8EAA19FF40;
+        Tue,  5 Apr 2022 15:57:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=VkZ/4pBB5toWP6OeiU+1jwhJmWLMu1tH0B2xQFXb3zcBytlqLv8TxA6JuFZZb2ugYgnq3JU3XsHikuEVUcG/zRo8ufYIx/HBH/4OCgGZ5Fy4lmVzNTcsCAedjUVNh0N7/b3YWlTgrPUuoLmOyK56beHAU2cMdRIpJDmjlGQJeW1sbo7PJNSGMEDeHJ57mqOgWEBT6tmBVYzzz8fAmM5RP7tCz8zdUhsD0B7pkl1CNomkMdPY6g2ew7XXCjjrnL9V87QBnS9CkTT4DhVEcmmvNm+xuORk7Y7bxhrvvUeJ1LzFTrFn13RDcSNw5+VDhz9W3K59WZe3Q5+h5fCLebw8xg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HvnP56WZfmDZ8OOtSptEBTdkllR7kIl0OZ4FSadH0c8=;
+ b=CZgreFZa11Ne8+7/I4B6mpb39ZkaX3xHEQMrYpsRsdoAvhJxZ+dFQX2ToQvREAOdyVyQ9TkVgY0yKeF5giNu77+V5mja0Uye00LcS+fJyykKXvtKXXG0kwuFPI7ywrb1Uxh3pHRb17qIk8sm60fuWMMN02ZOT6i416teIQn3HAhHtN6q8C08ZFHS6JDOHAjaPy8gKGYTq88rZgqywGwrElWQ8Qk6ThxEgpX4iKDskdtb99HLNESCzjoYBX+cw5z2OWES8ny0Q7JFNd2lUgTnDKlV6Th1Tlc4vYwZVzoWxPPb5BZpu1gMF+0qDp881F/BAMZpaFiOeTLotMW1LndNBQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HvnP56WZfmDZ8OOtSptEBTdkllR7kIl0OZ4FSadH0c8=;
+ b=S0ceSEyLSP52sUjwpBtOq6OsZ7Fyxn+eVKkONs5q0lfWjdgjjPZMQduVv5sy3Y6BwySj9xZ1oHxWL0Q/UqVe+FqSvCmZFmmHJ0cydbPZV0cwUfhQuKOrtc9V88mXL9mSvYHco1e+N8+2uRna5WSPTLCNRR4f/54A56QRrgyBNOxYPI8SWEfDUWPQijWp7JL00x0kxh85BfNrhYTjjPYevA+3T01Os0lERkVvflz3vCOHWPSJ5HQCHSw7iIU/Xk8eIMEI4UjeN3ffbeFEIzsKwhKe29c1c998dGQlVzI6pUTmfaRBBUgrFpMYUMf1nn/qdYp9fCxUgHn4rjOZiCXgGA==
+Received: from CO6PR12MB5427.namprd12.prod.outlook.com (2603:10b6:5:358::13)
+ by MW4PR12MB5666.namprd12.prod.outlook.com (2603:10b6:303:188::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5123.30; Tue, 5 Apr
+ 2022 22:57:42 +0000
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from MN2PR12MB4192.namprd12.prod.outlook.com (2603:10b6:208:1d5::15)
+ by CO6PR12MB5427.namprd12.prod.outlook.com (2603:10b6:5:358::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5123.31; Tue, 5 Apr
+ 2022 22:57:42 +0000
+Received: from MN2PR12MB4192.namprd12.prod.outlook.com
+ ([fe80::cdfb:f88e:410b:9374]) by MN2PR12MB4192.namprd12.prod.outlook.com
+ ([fe80::cdfb:f88e:410b:9374%5]) with mapi id 15.20.5123.031; Tue, 5 Apr 2022
+ 22:57:41 +0000
+Date:   Tue, 5 Apr 2022 19:57:39 -0300
+From:   Jason Gunthorpe <jgg@nvidia.com>
+To:     Alex Williamson <alex.williamson@redhat.com>,
+        "Tian, Kevin" <kevin.tian@intel.com>,
+        Lu Baolu <baolu.lu@linux.intel.com>
+Cc:     Christian Benvenuti <benve@cisco.com>,
+        Cornelia Huck <cohuck@redhat.com>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        iommu@lists.linux-foundation.org, Jason Wang <jasowang@redhat.com>,
+        Joerg Roedel <joro@8bytes.org>, kvm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-rdma@vger.kernel.org,
+        linux-s390@vger.kernel.org,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        "Michael S. Tsirkin" <mst@redhat.com>,
+        Nelson Escobar <neescoba@cisco.com>, netdev@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+        virtualization@lists.linux-foundation.org,
+        Will Deacon <will@kernel.org>, Christoph Hellwig <hch@lst.de>
+Subject: Re: [PATCH 3/5] iommu: Introduce the domain op
+ enforce_cache_coherency()
+Message-ID: <20220405225739.GW2120790@nvidia.com>
+References: <0-v1-ef02c60ddb76+12ca2-intel_no_snoop_jgg@nvidia.com>
+ <3-v1-ef02c60ddb76+12ca2-intel_no_snoop_jgg@nvidia.com>
+ <20220405135036.4812c51e.alex.williamson@redhat.com>
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1649157220-29304-2-git-send-email-quic_srivasam@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20220405135036.4812c51e.alex.williamson@redhat.com>
+X-ClientProxiedBy: MN2PR11CA0013.namprd11.prod.outlook.com
+ (2603:10b6:208:23b::18) To MN2PR12MB4192.namprd12.prod.outlook.com
+ (2603:10b6:208:1d5::15)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 1a7aae92-6df2-4873-52f6-08da1757aff6
+X-MS-TrafficTypeDiagnostic: CO6PR12MB5427:EE_|MW4PR12MB5666:EE_
+X-Microsoft-Antispam-PRVS: <CO6PR12MB54271D0E7FB6366155518102C2E49@CO6PR12MB5427.namprd12.prod.outlook.com>
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: +ix8JeI2N/Ndb9xmCk3NfY6f/gI6n9SLRVP3lEMwBQzmdGRJe4uriGAJDqGrdSiz1wxFSQarPBxlq8wjoUhftyiBGdvxvqwOYEDj81yx2GF9C6qcwt8v3ZP/ypuVEkgcIV/4AcEKb5tgQPL+voL4/Yzm3bQcs6IMv8/Z7bPy2Kbs9Q1PK8RCERgKr/WxPCEj2dXrdjXwtEg7opTT/FxXt9h4yPWoDtf7ygmOzNlwjVFNdA4PzBIRBEjaSdNgzwryVlcVonulYuxSYv5w2FWHz3TZxkf2Ybpav0km5iHwgy2ryS8xE91EJHBRvRLXnTAqhUXriSgaQF7UaUwpWmtDhBhJYVQprO8/qolLR0ekgdHxpyLyKVdFAm+qqfdmyswrVPF0iBz+2zAulZQfPIpWQcr6muo4YOHliYUKiF92tF33igB0odKpneDSvKyPTBwaNVCM/k4vkkbVM8Q5vLu8wgaQ8v9UbQZxarItslWfzL0Dv3pg5FeDNuWgOu8Q3d+npous4c7BUcSrLw/2TUP8rlUOhjhuFUeUM/qiVEhznTYPlOn1PLPJdc1bbB8f7VL44nt2ssQeEPfNwvSY7W1GZiG+FqzsYvrd0CJo4pluy5DtKKZ2KtOQInRTfRiyfSyyLX8j/DjHGcv4cj1RY9dApA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR12MB5427.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(5660300002)(2616005)(7416002)(8936002)(6486002)(1076003)(186003)(26005)(508600001)(6512007)(33656002)(6506007)(2906002)(38100700002)(83380400001)(66946007)(8676002)(86362001)(110136005)(4326008)(54906003)(316002)(66556008)(66476007)(36756003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?SBlTyarK3A5tNgPtSxiL4psvEoca/eFzwR2umuyfy+OxlUoW8kJ+yPz5yDy9?=
+ =?us-ascii?Q?+4Z9P/nZWKpiOj63iThFK8GPDQxn9uoekE/dks+WQskHugk/m0ygZfx+PL2G?=
+ =?us-ascii?Q?Vw6cJbILbHJEgY6Kz03rX403FR9ffiHulaJO5HADwYZYxjKIY3ZM//GZMxyU?=
+ =?us-ascii?Q?bRrx1cZMRd5KKzdG9NEwi5w9PotryYxvY8kFZScrlKmiYqjTc4RfdpsSEHuO?=
+ =?us-ascii?Q?oXELM7S7HoJQ1UaiVNny0gnhUL1kJHDMOunSbPL9YyGVaRpK9MuUxYw7umnU?=
+ =?us-ascii?Q?ZpmQHGi3IxNgurXqcg62Bj0h4xdPJHQXPjh+lhDv+ErxO++/srxVeqzG7379?=
+ =?us-ascii?Q?NuROx5rZAvIAxT9QKcsSYwncUWm8sUizC8+FFdoOq4Si5N0k/d/9zIZafEY7?=
+ =?us-ascii?Q?BetKQsJ0ywG0zfGIxz8kFiG9PXb3RQ+mqxSifptDQDFYzFtO14c6ZgTAsPxt?=
+ =?us-ascii?Q?TsFNY4E2wC1fyIeaVRIYA0Aiy9BU6jhdP3K6XpFuxKfvpoeH9Es9qx+NTNCq?=
+ =?us-ascii?Q?GuyIAzzk5jWk0EbaxuoOZUbwE7TI2I6AIE62qi49S9KtzeVyejtFlb1xq2qt?=
+ =?us-ascii?Q?wS3T0+2Z7jQopa/dGHRKAIB6zx7WPiO+LoAKGkEe93Q3sriPJ4knQi1qPnxX?=
+ =?us-ascii?Q?bsXwAxv09TZczC5u6aDdiF1zB9yYB6ilC9npRATG7cfKO2BSS5dnHaTX6u+G?=
+ =?us-ascii?Q?huosj9vDr/1puibqcFfPEGi323DxGAtR7JwEymA0tLhc5liw1kszP1bgR5Iz?=
+ =?us-ascii?Q?ba89BDsudJSNUEgcWBqWM5r54tVG9fFjbsfyOYoBViYzMSiqpPVjhcXo4Jj2?=
+ =?us-ascii?Q?7S5LU+VvdNgBtkVYvpIotIWzSl+WkTr/8Zdpu0gnZjEuW5BuAi71moyGToj4?=
+ =?us-ascii?Q?hPp5S6vEtkGBsq8FQ26wsrD3BSjc/nuAhh+r8j9RI6jqukYSihQ9uz+u2ibL?=
+ =?us-ascii?Q?e7vYLUAHuhal6LexDCBJnyLKRZg8tpJgixl6FvjKkRWZT1ugnKbNWBq0y4oV?=
+ =?us-ascii?Q?0phWsdqVPAkxCrmPji7Dcvr6AjsNoOufSjFmhq0tzwjwb5aJfi9vvKmSE43z?=
+ =?us-ascii?Q?Rjolum0jOwiPTmTTsTtny3xt2zURjsow7F3KLOpmz97Tjc4BIPeLCkXUoA14?=
+ =?us-ascii?Q?AKdoKuKGeA+Ni0eXRA+9mzspXM2zgI35HL4ZhC47AOud4Nu3VHV2FGxaOmf3?=
+ =?us-ascii?Q?6b97kz5pj/hgH8Dk8kF4H0SU6eI6aj5GawltfcjDcr0wTs4a9FJ/LQJdD3le?=
+ =?us-ascii?Q?Np1e78emQI2O270Lw6EqbHdEc1HEFd8zbYakEgj/TTOjXwXwmwqbdVw6Zv+t?=
+ =?us-ascii?Q?sfSZZwX8CSSuco1vr6GYCFxtfsHJ+DmkbE+akD4uQoXzyjnZhtADkv0Ocove?=
+ =?us-ascii?Q?mWWbHNv5uif0lUg3x55194lyjnmgExt45zES2JFhUDSi5f6Vm0DloMxYZzxl?=
+ =?us-ascii?Q?RLW2kRogIxx1wdIBGNgsKIuWvJBgT5p5CULlHmsbyOoz0uvKng17+Dc8NJou?=
+ =?us-ascii?Q?A6CDhXkS+1GO0hOjK5XmShh/PB7mvklrDNVIt0ej/qD9el0VWOjGlh+3Kv+v?=
+ =?us-ascii?Q?PXCKFt9vQAIJL6sMy3BE9XEFXi7MqY8fY5r3daKJLsebLjsnKiq2KXTmeMvD?=
+ =?us-ascii?Q?rd1/8Ji78QKjBoAY6ILDs9s4GtDlNPOizMgy9t7LpMqzRwQPVoTKSKiY2mYp?=
+ =?us-ascii?Q?82hfODiHSBWxlf5q3ZYTv8h/4y0wTwsxtAdhz/u2rDFHE+9kmmk/tEhvZRML?=
+ =?us-ascii?Q?UqCIxqWHeg=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1a7aae92-6df2-4873-52f6-08da1757aff6
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB4192.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Apr 2022 22:57:41.0126
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: xxkYDUqfh83dJ3YBNn6EGEO1+fZcMjCY7DNnzmFxWgBSiLVnz8T+kprVf1zkj8Am
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB5666
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 05, 2022 at 04:43:38PM +0530, Srinivasa Rao Mandadapu wrote:
-> SC7280 has VA, TX and RX macros with SoundWire Controllers to attach with
-> codecs like WCD938x, max98360a using soundwire masters and i2s bus.
-> Add these nodes for sc7280 based platforms audio use case.
-> Add tlmm gpio property in wcd938x node for switching CTIA/OMTP Headset.
+On Tue, Apr 05, 2022 at 01:50:36PM -0600, Alex Williamson wrote:
+> >  
+> > +static bool intel_iommu_enforce_cache_coherency(struct iommu_domain *domain)
+> > +{
+> > +	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
+> > +
+> > +	if (!dmar_domain->iommu_snooping)
+> > +		return false;
+> > +	dmar_domain->enforce_no_snoop = true;
+> > +	return true;
+> > +}
 > 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> ---
+> Don't we have issues if we try to set DMA_PTE_SNP on DMARs that don't
+> support it, ie. reserved register bit set in pte faults?  
 
-A change log would be helpful for reviewers
+The way the Intel driver is setup that is not possible. Currently it
+does:
 
->  arch/arm64/boot/dts/qcom/sc7280-crd.dts        |   6 ++
->  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi |   8 ++
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi       |  88 ++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sc7280.dtsi           | 121 +++++++++++++++++++++++++
->  4 files changed, 223 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-crd.dts b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> index e2efbdd..224a82d 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-crd.dts
+ static bool intel_iommu_capable(enum iommu_cap cap)
+ {
+	if (cap == IOMMU_CAP_CACHE_COHERENCY)
+		return domain_update_iommu_snooping(NULL);
 
-You might want to consider splitting this patch into one that
-adds the SoC specific bits and one for each board. It's cleaner
-and might allow to land the SoC specific bits even when the board
-specific part is still under discussion. It also might make the
-life easier for folks who want to pick the SoC specific parts,
-but aren't interested in the board bits (e.g. because they want
-to support a different board). Just a thought, the split is not
-strictly necessary.
+Which is a global property unrelated to any device.
 
-> @@ -84,6 +84,12 @@ ap_ts_pen_1v8: &i2c13 {
->  	pins = "gpio51";
->  };
->  
-> +&wcd938x {
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&us_euro_select>;
-> +	us-euro-gpios = <&tlmm 81 GPIO_ACTIVE_HIGH>;
-> +};
-> +
->  &tlmm {
->  	tp_int_odl: tp-int-odl {
->  		pins = "gpio7";
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> index de646d9..c6a04c3 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
-> @@ -20,6 +20,14 @@
->  #include "sc7280-chrome-common.dtsi"
->  
->  / {
-> +	max98360a: audio-codec-0 {
-> +		compatible = "maxim,max98360a";
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&amp_en>;
-> +		sdmode-gpios = <&tlmm 63 GPIO_ACTIVE_HIGH>;
-> +		#sound-dai-cells = <0>;
-> +	};
-> +
+Thus either all devices and all domains support iommu_snooping, or
+none do.
 
-This node shouldn't be at top but with the other device nodes, in
-alphabetical order, i.e. before 'pwmleds'.
+It is unclear because for some reason the driver recalculates this
+almost constant value on every device attach..
 
->  	chosen {
->  		stdout-path = "serial0:115200n8";
->  	};
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> index f912a89..83c76b2 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> @@ -20,6 +20,41 @@
->  		serial1 = &uart7;
->  	};
->  
-> +	max98360a: audio-codec-0 {
-> +		compatible = "maxim,max98360a";
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&amp_en>;
-> +		sdmode-gpios = <&tlmm 63 GPIO_ACTIVE_HIGH>;
-> +		#sound-dai-cells = <0>;
-> +	};
-> +
-> +	wcd938x: audio-codec-1 {
-> +		compatible = "qcom,wcd9380-codec";
-> +		#sound-dai-cells = <1>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&wcd938x_reset_active>, <&wcd938x_reset_sleep>;
-> +		reset-gpios = <&tlmm 83 GPIO_ACTIVE_HIGH>;
-> +
-> +		qcom,rx-device = <&wcd_rx>;
-> +		qcom,tx-device = <&wcd_tx>;
-> +
-> +		vdd-rxtx-supply = <&vreg_l18b_1p8>;
-> +		vdd-io-supply = <&vreg_l18b_1p8>;
-> +		vdd-buck-supply = <&vreg_l17b_1p8>;
-> +		vdd-mic-bias-supply = <&vreg_bob>;
-> +
-> +		qcom,micbias1-microvolt = <1800000>;
-> +		qcom,micbias2-microvolt = <1800000>;
-> +		qcom,micbias3-microvolt = <1800000>;
-> +		qcom,micbias4-microvolt = <1800000>;
-> +
-> +		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000
-> +							  500000 500000 500000>;
-> +		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
-> +		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
-> +	};
-> +
->  	gpio-keys {
->  		compatible = "gpio-keys";
->  		label = "gpio-keys";
-> @@ -373,6 +408,19 @@
->  	status = "okay";
->  };
->  
-> +&rxmacro {
-> +	status = "okay";
-> +};
-> +
-> +&txmacro {
-> +	status = "okay";
-> +};
-> +
-> +&vamacro {
-> +	status = "okay";
-> +	vdd-micb-supply = <&vreg_bob>;
-> +};
-> +
->  &sdhc_1 {
->  	status = "okay";
->  
-> @@ -574,6 +622,24 @@
->  	drive-strength = <6>;
->  };
->  
-> +&swr0 {
-> +	wcd_rx: codec@0,4 {
-> +		compatible = "sdw20217010d00";
-> +		reg = <0 4>;
-> +		#sound-dai-cells = <1>;
-> +		qcom,rx-port-mapping = <1 2 3 4 5>;
-> +	};
-> +};
-> +
-> +&swr1 {
-> +	wcd_tx: codec@0,3 {
-> +		compatible = "sdw20217010d00";
-> +		reg = <0 3>;
-> +		#sound-dai-cells = <1>;
-> +		qcom,tx-port-mapping = <1 2 3 4>;
-> +	};
-> +};
-> +
->  &tlmm {
->  	amp_en: amp-en {
->  		pins = "gpio63";
-> @@ -663,5 +729,27 @@
->  		function = "gpio";
->  		bias-pull-down;
->  	};
-> +
-> +	us_euro_select: us-euro-select {
+> There's also a disconnect, maybe just in the naming or documentation,
+> but if I call enforce_cache_coherency for a domain, that seems like the
+> domain should retain those semantics regardless of how it's
+> modified,
 
-nit: in the schematic this is called 'us_euro_hs_sel'. IMO it's preferable
-to use the name from the schematic rather than inventing a new one, unless
-there's a good reason for it.
+Right, this is how I would expect it to work.
 
-> +		pins = "gpio81";
-> +		function = "gpio";
-> +		bias-pull-down;
-> +		drive-strength = <2>;
-> +	};
-> +
-> +	wcd938x_reset_active: wcd938x-reset-active {
+> ie. "enforced".  For example, if I tried to perform the above operation,
+> I should get a failure attaching the device that brings in the less
+> capable DMAR because the domain has been set to enforce this
+> feature.
 
-same as above: the schematic calls this pin 'wcd_reset_n'
+We don't have any code causing a failure like this because no driver
+needs it.
 
-drop the -active suffix
+> Maybe this should be something like set_no_snoop_squashing with the
+> above semantics, it needs to be re-applied whenever the domain:device
+> composition changes?  Thanks,
 
-> +		pins = "gpio83";
-> +		function = "gpio";
-> +		drive-strength = <16>;
+If we get a real driver that needs non-uniformity here we can revisit
+what to do. There are a couple of good options depending on exactly
+what the HW behavior is.
 
-A value of 16 seems pretty high. Is it really needed?
+Is it more clear if I fold in the below? It helps show that the
+decision to use DMA_PTE_SNP is a global choice based on
+domain_update_iommu_snooping():
 
-> +		output-high;
-> +	};
-> +
-> +	wcd938x_reset_sleep: wcd938x-reset-sleep {
-> +		pins = "gpio83";
-> +		function = "gpio";
-> +		drive-strength = <16>;
-
-see above
-
-> +		bias-disable;
-> +		output-low;
-> +	};
->  };
->  
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index db74fc3..78ec84c 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -822,6 +822,127 @@
->  			#power-domain-cells = <1>;
->  		};
->  
-> +		rxmacro: codec@3200000 {
-
-These node are not at the correct position. They should be sorted by
-address and hence be inserted between 'lpasscc@3000000' and
-'interconnect@3c40000'.
-
-> +			compatible = "qcom,sc7280-lpass-rx-macro";
-> +			reg = <0 0x03200000 0 0x1000>;
-> +
-> +			status = "disabled";
-> +			pinctrl-names = "default";
-> +			pinctrl-0 = <&rx_swr_active>;
-> +
-> +			clocks = <&lpass_aon LPASS_AON_CC_TX_MCLK_CLK>,
-> +				 <&lpass_aon LPASS_AON_CC_TX_MCLK_2X_CLK>,
-> +				 <&vamacro>;
-> +			clock-names = "mclk", "npl", "fsgen";
-> +
-> +			power-domains = <&lpass_hm LPASS_CORE_CC_LPASS_CORE_HM_GDSC>,
-> +					<&lpass_aon LPASS_AON_CC_LPASS_AUDIO_HM_GDSC>;
-> +			power-domain-names ="macro", "dcodec";
-> +
-> +			#clock-cells = <0>;
-> +			#sound-dai-cells = <1>;
-> +		};
-> +
-> +		txmacro: codec@3220000 {
-> +			compatible = "qcom,sc7280-lpass-tx-macro";
-> +			reg = <0 0x03220000 0 0x1000>;
-> +
-> +			status = "disabled";
-> +			pinctrl-names = "default";
-> +			pinctrl-0 = <&tx_swr_active>;
-> +
-> +			clocks = <&lpass_aon LPASS_AON_CC_TX_MCLK_CLK>,
-> +				 <&lpass_aon LPASS_AON_CC_TX_MCLK_2X_CLK>,
-> +				 <&vamacro>;
-> +			clock-names = "mclk", "npl", "fsgen";
-> +
-> +			power-domains = <&lpass_hm LPASS_CORE_CC_LPASS_CORE_HM_GDSC>,
-> +					<&lpass_aon LPASS_AON_CC_LPASS_AUDIO_HM_GDSC>;
-> +			power-domain-names ="macro", "dcodec";
-> +
-> +			#clock-cells = <0>;
-> +			#sound-dai-cells = <1>;
-> +		};
-> +
-> +		vamacro: codec@3370000 {
-> +			compatible = "qcom,sc7280-lpass-va-macro";
-> +			reg = <0 0x03370000 0 0x1000>;
-> +
-> +			status = "disabled";
-> +			pinctrl-0 = <&dmic01_active>;
-> +			pinctrl-names = "default";
-> +
-> +			clocks = <&lpass_aon LPASS_AON_CC_TX_MCLK_CLK>;
-> +			clock-names = "mclk";
-> +
-> +			power-domains = <&lpass_hm LPASS_CORE_CC_LPASS_CORE_HM_GDSC>,
-> +					<&lpass_aon LPASS_AON_CC_LPASS_AUDIO_HM_GDSC>;
-> +			power-domain-names ="macro", "dcodec";
-> +
-> +			#clock-cells = <0>;
-> +			#sound-dai-cells = <1>;
-> +		};
-> +
-> +		swr0: soundwire@3210000 {
-> +			compatible = "qcom,soundwire-v1.6.0";
-> +			reg = <0 0x03210000 0 0x2000>;
-> +
-> +			interrupts = <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>;
-> +			clocks = <&rxmacro>;
-> +			clock-names = "iface";
-> +
-> +			qcom,din-ports = <0>;
-> +			qcom,dout-ports = <5>;
-> +
-> +			resets = <&lpass_audiocc LPASS_AUDIO_SWR_RX_CGCR>;
-> +			reset-names = "swr_audio_cgcr";
-> +
-> +			qcom,ports-word-length =	/bits/ 8 <0x01 0x07 0x04 0xff 0xff>;
-> +			qcom,ports-sinterval-low =	/bits/ 8 <0x03 0x3f 0x1f 0x03 0x03>;
-> +			qcom,ports-offset1 =		/bits/ 8 <0x00 0x00 0x0b 0x01 0x01>;
-> +			qcom,ports-offset2 =		/bits/ 8 <0x00 0x00 0x0b 0x00 0x00>;
-> +			qcom,ports-lane-control =	/bits/ 8 <0x01 0x00 0x00 0x00 0x00>;
-> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0x00 0x01 0xff 0xff>;
-> +			qcom,ports-hstart =		/bits/ 8 <0xff 0x03 0xff 0xff 0xff>;
-> +			qcom,ports-hstop =		/bits/ 8 <0xff 0x06 0xff 0xff 0xff>;
-> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff 0x00>;
-> +
-> +			#sound-dai-cells = <1>;
-> +			#address-cells = <2>;
-> +			#size-cells = <0>;
-> +		};
-> +
-> +		swr1: soundwire@3230000 {
-> +			compatible = "qcom,soundwire-v1.6.0";
-> +			reg = <0 0x03230000 0 0x2000>;
-> +
-> +			interrupts-extended = <&intc GIC_SPI 496 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&pdc 130 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "swr_master_irq", "swr_wake_irq";
-> +			clocks = <&txmacro>;
-> +			clock-names = "iface";
-> +
-> +			qcom,din-ports = <3>;
-> +			qcom,dout-ports = <0>;
-> +
-> +			resets = <&lpass_audiocc LPASS_AUDIO_SWR_TX_CGCR>;
-> +			reset-names = "swr_audio_cgcr";
-> +
-> +			qcom,ports-sinterval-low =	/bits/ 8 <0x01 0x03 0x03>;
-> +			qcom,ports-offset1 =		/bits/ 8 <0x01 0x00 0x02>;
-> +			qcom,ports-offset2 =		/bits/ 8 <0x00 0x00 0x00>;
-> +			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff>;
-> +			qcom,ports-hstop =		/bits/ 8 <0xff 0xff 0xff>;
-> +			qcom,ports-word-length =	/bits/ 8 <0xff 0x0 0xff>;
-
-s/0x0/0x00/
-
-> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0xff 0xff>;
-> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff>;
-> +			qcom,ports-lane-control =	/bits/ 8 <0x00 0x01 0x00>;
-> +			qcom,port-offset = <1>;
-> +
-> +			#sound-dai-cells = <1>;
-> +			#address-cells = <2>;
-> +			#size-cells = <0>;
-> +		};
-
-add empty line
-
->  		ipcc: mailbox@408000 {
->  			compatible = "qcom,sc7280-ipcc", "qcom,ipcc";
->  			reg = <0 0x00408000 0 0x1000>;
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index e5062461ab0640..fc789a9d955645 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -641,7 +641,6 @@ static unsigned long domain_super_pgsize_bitmap(struct dmar_domain *domain)
+ static void domain_update_iommu_cap(struct dmar_domain *domain)
+ {
+ 	domain_update_iommu_coherency(domain);
+-	domain->iommu_snooping = domain_update_iommu_snooping(NULL);
+ 	domain->iommu_superpage = domain_update_iommu_superpage(domain, NULL);
+ 
+ 	/*
+@@ -4283,7 +4282,6 @@ static int md_domain_init(struct dmar_domain *domain, int guest_width)
+ 	domain->agaw = width_to_agaw(adjust_width);
+ 
+ 	domain->iommu_coherency = false;
+-	domain->iommu_snooping = false;
+ 	domain->iommu_superpage = 0;
+ 	domain->max_addr = 0;
+ 
+@@ -4549,7 +4547,7 @@ static bool intel_iommu_enforce_cache_coherency(struct iommu_domain *domain)
+ {
+ 	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
+ 
+-	if (!dmar_domain->iommu_snooping)
++	if (!domain_update_iommu_snooping(NULL))
+ 		return false;
+ 	dmar_domain->enforce_no_snoop = true;
+ 	return true;
+diff --git a/include/linux/intel-iommu.h b/include/linux/intel-iommu.h
+index 1f930c0c225d94..bc39f633efdf03 100644
+--- a/include/linux/intel-iommu.h
++++ b/include/linux/intel-iommu.h
+@@ -539,7 +539,6 @@ struct dmar_domain {
+ 
+ 	u8 has_iotlb_device: 1;
+ 	u8 iommu_coherency: 1;		/* indicate coherency of iommu access */
+-	u8 iommu_snooping: 1;		/* indicate snooping control feature */
+ 	u8 enforce_no_snoop : 1;        /* Create IOPTEs with snoop control */
+ 
+ 	struct list_head devices;	/* all devices' list */
