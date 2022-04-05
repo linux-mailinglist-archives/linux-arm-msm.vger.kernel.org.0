@@ -2,94 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D03174F35AD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Apr 2022 15:52:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D14F4F35B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Apr 2022 15:53:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232746AbiDEKyA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Apr 2022 06:54:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39370 "EHLO
+        id S233351AbiDEKyL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Apr 2022 06:54:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347136AbiDEJqC (ORCPT
+        with ESMTP id S238926AbiDEKcZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Apr 2022 05:46:02 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B483DCE26;
-        Tue,  5 Apr 2022 02:32:30 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EF9C361368;
-        Tue,  5 Apr 2022 09:32:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42851C385A2;
-        Tue,  5 Apr 2022 09:32:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649151149;
-        bh=LMWjnRihmAkYJ4VE026+EhIuf0h/R47oaYeDgl0V7PM=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=YFSU+3oYLQYgTZ0hlJ0IlSF1Ou+RUMIgREyudOvmFbgFptcZI6uUNOyQpx7QOtVXM
-         VId6j+7j0Knrvvi+/1P5/FnhR5m69iy1fwCmFHBxwkVnj2x5oH7yV3EREKgdXcAJlx
-         ZXGrZ8g3OBO+7sH1hvV0T3Tv2Xn6IfCMpnU/PrPVRBzUtrJwtjH9S+tQ21D6QSaSRb
-         lY7GwdZgYaDBRg7b5IiACltkwJCdgeJQIPwc6k5PaNBfEzj4ZvgNa4Jn01N6SX6cU0
-         QMf8Wzw/lB3A6TOyc4mmWGxMYelT7/T9DQ5ShXW7Nwsjhk9+FveJFdXdFxJiDeKxiz
-         blXpxRCQ0yBkw==
-From:   Mark Brown <broonie@kernel.org>
-To:     agross@kernel.org, krzk+dt@kernel.org, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org, singh.kuldeep87k@gmail.com, krzk@kernel.org
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        robh@kernel.org, linux-spi@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-In-Reply-To: <20220328192006.18523-1-singh.kuldeep87k@gmail.com>
-References: <20220328192006.18523-1-singh.kuldeep87k@gmail.com>
-Subject: Re: [PATCH v2] dt-bindings: spi: qcom-qspi: Add minItems to interconnect-names
-Message-Id: <164915114699.276894.10846659082729207410.b4-ty@kernel.org>
-Date:   Tue, 05 Apr 2022 10:32:26 +0100
+        Tue, 5 Apr 2022 06:32:25 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 453B42252F;
+        Tue,  5 Apr 2022 03:18:31 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2B709D6E;
+        Tue,  5 Apr 2022 03:18:31 -0700 (PDT)
+Received: from [10.57.41.19] (unknown [10.57.41.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 971AA3F5A1;
+        Tue,  5 Apr 2022 03:18:28 -0700 (PDT)
+Message-ID: <00bcebba-4955-cbbd-e7f4-e344f9b932a0@arm.com>
+Date:   Tue, 5 Apr 2022 11:18:23 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] drm/msm: use orig_nents to iterate over scatterlist with
+ per-process tables
+Content-Language: en-GB
+To:     Jonathan Marek <jonathan@marek.ca>, freedreno@lists.freedesktop.org
+Cc:     David Airlie <airlied@linux.ie>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>, dpiliaiev@igalia.com,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20220328125505.31605-1-jonathan@marek.ca>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <20220328125505.31605-1-jonathan@marek.ca>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-7.5 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 29 Mar 2022 00:50:06 +0530, Kuldeep Singh wrote:
-> Add minItems constraint to interconnect-names as well. The schema
-> currently tries to match 2 names and fail for DTs with single entry.
+On 2022-03-28 13:55, Jonathan Marek wrote:
+> This matches the implementation of iommu_map_sgtable() used for the
+> non-per-process page tables path.
 > 
-> With the change applied, below interconnect-names values are possible:
-> ['qspi-config'], ['qspi-config', 'qspi-memory']
+> This works around the dma_map_sgtable() call (used to invalidate cache)
+> overwriting sgt->nents with 1 (which is probably a separate issue).
+
+FWIW that's expected behaviour. The sgtable APIs use nents to keep track 
+of the number of DMA segments, while orig_nents represents the physical 
+segments. IIUC you're not actually using the DMA mapping, just relying 
+on its side-effects, so it's still the physical segments that you care 
+about for your private IOMMU mapping here.
+
+> Fixes: b145c6e65eb0 ("drm/msm: Add support to create a local pagetable")
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> ---
+>   drivers/gpu/drm/msm/msm_iommu.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> 
-> [...]
+> diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
+> index bcaddbba564df..22935ef26a3a1 100644
+> --- a/drivers/gpu/drm/msm/msm_iommu.c
+> +++ b/drivers/gpu/drm/msm/msm_iommu.c
+> @@ -58,7 +58,7 @@ static int msm_iommu_pagetable_map(struct msm_mmu *mmu, u64 iova,
+>   	u64 addr = iova;
+>   	unsigned int i;
+>   
+> -	for_each_sg(sgt->sgl, sg, sgt->nents, i) {
+> +	for_each_sg(sgt->sgl, sg, sgt->orig_nents, i) {
 
-Applied to
+Even better would be to use for_each_sgtable_sg(), which exists 
+primarily for the sake of avoiding this exact confusion.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+Robin.
 
-Thanks!
-
-[1/1] dt-bindings: spi: qcom-qspi: Add minItems to interconnect-names
-      commit: e23d86c49a9c78e8dbe3abff20b30812b26ab427
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+>   		size_t size = sg->length;
+>   		phys_addr_t phys = sg_phys(sg);
+>   
