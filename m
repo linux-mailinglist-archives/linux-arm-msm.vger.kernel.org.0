@@ -2,73 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 687744F4BB5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:06:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F56F4F4BE4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:10:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234443AbiDEXEY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Apr 2022 19:04:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37260 "EHLO
+        id S1454608AbiDEXG7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Apr 2022 19:06:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1457355AbiDEQDH (ORCPT
+        with ESMTP id S1457547AbiDEQKH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Apr 2022 12:03:07 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C14C7E7D
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 08:38:32 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 17so17673037lji.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 08:38:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=PBLQk8hXfjmXS76rmeqn/RipwnPJvYH2YMxW0PEqxC4=;
-        b=TeHDurG6UaxsNVfmwW17uakggl5LxYM2U0uvT6hKwWN/uNYuzryYQPqjmOxwZglEGX
-         KFiA6HvBQfnYx+J6OyZX6zC7gKUln6wiL2hbBLC3VHILdBCtNY+rrnR0EzaLDyYmxx5k
-         gGF6dehhjllPbMNA8LuRMHL7+bnz8trsaBHD3JeBMqecWHeeKkD2l0MNZeYYpakBD2ns
-         GOvqK26IXMOXl31m/oDTzPCe/C5Hivmle5xBALzc/JQDqBxsdtUFKFD/PUkF4HpTrli+
-         3e3tcxWkG94C6TcQxn3Y+MY/zZRefd1UfCTTCz7bNMGByMr6Yfojr1I1Xn2I1X/mIGJu
-         rNeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=PBLQk8hXfjmXS76rmeqn/RipwnPJvYH2YMxW0PEqxC4=;
-        b=ZDUrl09YoeL+QU2WnMY0A4vVgFSQx5fvkXNE1oRgLkXKyUhYep4AEQ/oARfckcf2gm
-         FEz8bs16d8l+6kUiQnQ3eerMbO1LsHCoXdb0VfFQf8ppu/hrrCD3vgEknlP4EqWzrIEp
-         JZzyKljnJF9w85PrDlEKmBZKnXUxwKj6UTApSwWJSDe9Ts2zG8SSLzJqFWp7wNILOWEO
-         tjzJLk3NjKcK+tzFrux51/sHNxDMPblKjkiyfDfgPzCle4T0HPkff8HfzlTiBgNrfGFE
-         EviI7LaOo/01GVhmEw6XEJr2/p7V5e9F+uUm5//B4Hkg48JFxyD6bVgB4MUQZ8MLXtLR
-         lM3w==
-X-Gm-Message-State: AOAM531l9NiHFXeSro19OX8ZwcTZa/K2Ak5vzJhBR0FXpIKSxTPJdaQs
-        lvyKbcf8t6o2OjT9d7Tn134Sog==
-X-Google-Smtp-Source: ABdhPJz5K8NFf3iPn5H2T3ZVcCqTbSxBRJrRMFzr+tNg5bVe2r3tzlZQPt7ms9y8TGMBs3rj2d558Q==
-X-Received: by 2002:a05:651c:552:b0:24b:d9f:cef8 with SMTP id q18-20020a05651c055200b0024b0d9fcef8mr2672140ljp.117.1649173111074;
-        Tue, 05 Apr 2022 08:38:31 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id o19-20020a2e9b53000000b0024b15034f50sm794458ljj.3.2022.04.05.08.38.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Apr 2022 08:38:30 -0700 (PDT)
-Message-ID: <dbe6d9c5-f717-785f-e65d-baa1328cea2b@linaro.org>
-Date:   Tue, 5 Apr 2022 18:38:29 +0300
+        Tue, 5 Apr 2022 12:10:07 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9F6025CD;
+        Tue,  5 Apr 2022 09:08:04 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 4A1B0B81B13;
+        Tue,  5 Apr 2022 16:08:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9524EC385A0;
+        Tue,  5 Apr 2022 16:08:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1649174881;
+        bh=AoQfSTw72a5g3VVtNzddJxgTV8CHG8MijsAxNddLzcM=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=Rvy2MyaS/ZPWOuRNjBC+N85V1Wd9YOS+7DkIESmc76SW7ds7bScLypq4XmbROFeFV
+         Vt0Kf7sBAH7ncizQ+q+wMrJEE4IGtZpMl7cDoStPiigR+qwKiRs9D9wJ0u9tAF0zRd
+         S755OJbnfXqP2UCubJlvAGKCKmCCiJ+DVrhFHejYnVl0Ej+uaVfUwZ/L8XhgycgKyO
+         EpRB5HzyFqO6SDVDvDleSt6EOGt24w908Wkh2kBH6OfgZyCIhRvd04A/iwEH4LxVNn
+         8Nkbz4cLxpKqOdQKnCN0tiRQHnwBgmsByBnIolMol/U5hXodx06K2wGpP8CiZ2fQbd
+         rzXojXTMhQ/Tw==
+Date:   Tue, 5 Apr 2022 11:08:00 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Prasad Malisetty <quic_pmaliset@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        lorenzo.pieralisi@arm.com, robh@kernel.org, kw@linux.com,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        rajatja@google.com, refactormyself@gmail.com,
+        quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+        manivannan.sadhasivam@linaro.org, swboyd@chromium.org
+Subject: Re: [PATCH v2] [RFC PATCH] PCI: Update LTR threshold based on LTRME
+ bit
+Message-ID: <20220405160800.GA69953@bhelgaas>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] arm64: dts: qcom: sm8450: fix interconnects property of
- UFS node
-Content-Language: en-GB
-To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20220310221934.1560729-1-vladimir.zapolskiy@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20220310221934.1560729-1-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1646679549-12494-1-git-send-email-quic_pmaliset@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -77,38 +59,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/03/2022 01:19, Vladimir Zapolskiy wrote:
-> All interconnect device tree nodes on sm8450 are 2-cells, however in
-> UFS node they are handled as 1-cells, fix it.
+On Tue, Mar 08, 2022 at 12:29:09AM +0530, Prasad Malisetty wrote:
+> Update LTR threshold scale and value based on LTRME (Latency
+> Tolenrance Reporting Mechanism) from device capabilities.
+
+s/Tolenrance/Tolerance/
+
+I'm not familiar with "LTRME" and it doesn't appear in the PCI spec.
+Please use the PCIe terminology whenever possible.
+
+> In ASPM driver, LTR threshold scale and value is updating
+> based on tcommon_mode and t_poweron values. In kioxia NVMe,
+> L1.2 is failing due to LTR threshold scale and value is
+> greater values than max snoop/non snoop value.
 > 
-> Fixes: aa2d0bf04a3c ("arm64: dts: qcom: sm8450: add interconnect nodes")
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> In general, updated LTR threshold scale and value should be
+> less than max snoop/non snoop value to enter the device
+> into L1.2 state.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+This affects all PCIe devices, so please include the PCIe spec
+citation that leads to this change.
 
-Bjorn, could you please this pick for the -rc kernel?
+Please wrap the commit log to fill 75 columns.
 
+Thanks a lot for looking at this!  L1.2 and LTR is real problem area,
+and it would be great if we could get it all sorted out.
+
+> Signed-off-by: Prasad Malisetty <quic_pmaliset@quicinc.com>
+> 
 > ---
->   arch/arm64/boot/dts/qcom/sm8450.dtsi | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+> Changes since v1:
+> 	- Added missing variable declaration in v1 patch.
+> ---
+>  drivers/pci/pcie/aspm.c | 12 +++++++++---
+>  1 file changed, 9 insertions(+), 3 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 0cd5af8c03bd..bbd38b55e976 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -1376,8 +1376,8 @@ ufs_mem_hc: ufshc@1d84000 {
->   
->   			iommus = <&apps_smmu 0xe0 0x0>;
->   
-> -			interconnects = <&aggre1_noc MASTER_UFS_MEM &mc_virt SLAVE_EBI1>,
-> -					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_UFS_MEM_CFG>;
-> +			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI1 0>,
-> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
->   			interconnect-names = "ufs-ddr", "cpu-ufs";
->   			clock-names =
->   				"core_clk",
-
-
--- 
-With best wishes
-Dmitry
+> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+> index a96b742..a67746c 100644
+> --- a/drivers/pci/pcie/aspm.c
+> +++ b/drivers/pci/pcie/aspm.c
+> @@ -463,6 +463,7 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+>  	u32 val1, val2, scale1, scale2;
+>  	u32 t_common_mode, t_power_on, l1_2_threshold, scale, value;
+>  	u32 ctl1 = 0, ctl2 = 0;
+> +	u32 cap;
+>  	u32 pctl1, pctl2, cctl1, cctl2;
+>  	u32 pl1_2_enables, cl1_2_enables;
+>  
+> @@ -499,9 +500,14 @@ static void aspm_calc_l1ss_info(struct pcie_link_state *link,
+>  	 * Table 5-11.  T(POWER_OFF) is at most 2us and T(L1.2) is at
+>  	 * least 4us.
+>  	 */
+> -	l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
+> -	encode_l12_threshold(l1_2_threshold, &scale, &value);
+> -	ctl1 |= t_common_mode << 8 | scale << 29 | value << 16;
+> +	pcie_capability_read_dword(child, PCI_EXP_DEVCAP2, &cap);
+> +	if (!(cap & PCI_EXP_DEVCAP2_LTR)) {
+> +		l1_2_threshold = 2 + 4 + t_common_mode + t_power_on;
+> +		encode_l12_threshold(l1_2_threshold, &scale, &value);
+> +		ctl1 |= scale << 29 | value << 16;
+> +	}
+> +
+> +	ctl1 |= t_common_mode;
+>  
+>  	/* Some broken devices only support dword access to L1 SS */
+>  	pci_read_config_dword(parent, parent->l1ss + PCI_L1SS_CTL1, &pctl1);
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
