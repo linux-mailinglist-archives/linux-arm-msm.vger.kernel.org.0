@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C3A784F4BED
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:10:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EE364F4BE2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:10:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1573675AbiDEXHW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Apr 2022 19:07:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48842 "EHLO
+        id S1453821AbiDEXGv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Apr 2022 19:06:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1443735AbiDEPkO (ORCPT
+        with ESMTP id S1443738AbiDEPkO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 5 Apr 2022 11:40:14 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8551FE0B7
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 06:58:45 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id h23-20020a17090a051700b001c9c1dd3acbso2726281pjh.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 06:58:45 -0700 (PDT)
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A1BF1A3B7
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 06:58:50 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id ch16-20020a17090af41000b001ca867ef52bso2211628pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 06:58:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JPnLdxVwWqpS/Y43SlQYTqZKeEDygkSAdozHlJ6hMrY=;
-        b=ZgS6la0kq3ydpDai5iK3HNh9vDJJ9u9/nEgU+OUeST2SjC3Ty94WhsIOvb/PWRXHpH
-         pNBryBDpxMsq2shcjpat96gbydz2APlKuFcdA5C80LfFKLCthnYLtaW9WAGqV0Qy+13G
-         5VJGxx1blQftKhpXSaIH3tj+RZmzR0f8DquJJGlAcx4BWAUUpOYPLTU8nYV/zQML/1DG
-         BPozEhVjUE3XY1sulwEkCI7SomyQP5X1H4qGmBbb3niKkPlDaza0RoV+HivfEUSdAbRn
-         jdBQrA4Puo3HC0sWfla1OsRJX8jDsYULXAhyn+KrHrlDZxk62a54uxPsTr+XFaAQSa+3
-         wx2g==
+        bh=ccP+sfP/RhErj5M6yeqDbDlXHknxu9wEXiHf6PwTOX4=;
+        b=gA4ReVzJe03dAPGW9jNQKKZkFLrJd4fQTS2rTmNEgtRquECJ1PVhR0ktd2su88TXD8
+         FEPc1t2rDicwS5K4PV0BYzRHkZHGIq63bxvwRqX4XKle5ut/MNosC2CfFetFo/WjkR9d
+         UhxsbyJoB11xJWGZw71oGhriE4xVEO7aGCFAhsjvYqWBZU3qhDjjARLlpcVAoDCYXZtW
+         vixPkPANVnNpno+TE92eisFHqhbzkVKDoiuaLGjMTchru+OCMPLGzqN1fCcslyVc9pCk
+         vtABbOOybVHsYCQDBSQgYpFr1FQnKDLMoHjz/8/oZqRMx1gzngzYh06eATEeOpg8zkJh
+         Ihaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JPnLdxVwWqpS/Y43SlQYTqZKeEDygkSAdozHlJ6hMrY=;
-        b=K9WoUDgArl1HLFKkyGHyQVCvjB/+eyzjYMY1qQ/p/5B/FwO7zN46yOs8+w3G1AVzBp
-         P9LVpaicmwiyhbyBwo4PgJK21R1itA2LgmyoLPDuPXzCB5LKJ7oUJZC7XkNhgboa08DC
-         IMbEvs4nQikz1P+OLmnqZOCVPd6PGse/6ETjM33SNn+q5xi5E+nHokOnm6+14ttFTzn4
-         dyQbQjQyv1g0aHtZEPFhYKtVh+9BHfXZV35C7ImbLZmmJ42rmcdXVhPS+D3GB3ccGruj
-         1UzN1SbqD7dbh2LhUhkGEdPrTbnpQYVjupVH5DuF1sFP1VZ2U0HSaUvp0/J3H54q6fqu
-         BcTA==
-X-Gm-Message-State: AOAM530N7rlo1LFdnwh8LUeInDxSmg6sRMLgdZZtits/ydHyS5lHQ1QQ
-        duRFI1UzgIuZpfhsIYO+Ev0JEbTv/i+m
-X-Google-Smtp-Source: ABdhPJx14TxvP/wVvUCdEPeqQpIEydnQtStLCTq4xa7VuMPl4IM7vLmPEdRsfEciB6so9sB0G8pR0w==
-X-Received: by 2002:a17:90b:3881:b0:1c7:c02b:bcf8 with SMTP id mu1-20020a17090b388100b001c7c02bbcf8mr4317123pjb.131.1649167124899;
-        Tue, 05 Apr 2022 06:58:44 -0700 (PDT)
+        bh=ccP+sfP/RhErj5M6yeqDbDlXHknxu9wEXiHf6PwTOX4=;
+        b=QHDC0Z4jEJSXcr9rPK3O8wKbLp6IdgNa10qtUcs6Ks5HNhwH0uYn0rxQZEuTSgodrZ
+         3UM/w/A2u0Afx86a8khldZnJLiYjghZGj6EJE4xAsw12rZh+xG6Ie3oAgoy2UKOefcwK
+         /rzFl/xeMObTevMaxbIJOMeqQvzueJJEsxcu05hJOm3k90a13OomiDeIOToOvvNQ2COw
+         tHIBQm2Byxe87t0j3SSyrfZ3gqc0vZmGusCSnReKsxC4rYcFWFNGsWLac9M8hY64yiAj
+         SMriK2UNdt2WuKDEuuPosyb+XldVK2J0mGy3vvHI8ie+41DQiaZPscEfnjpInZFDNfGV
+         e7sg==
+X-Gm-Message-State: AOAM532VCda5u1nZykRjM0H2ofWDpGCR4JimBX/P04cMscFCxO3pivM+
+        tdqruKEdXQBRgF1PCjMzFphopbiTkjgi
+X-Google-Smtp-Source: ABdhPJx17M6CrvP41RxJBJREkESN1xqKhkCHYc56cP6kh9jJDo+HjN2b77XRB6M+3b62wgHUB7/ksA==
+X-Received: by 2002:a17:90a:c504:b0:1bf:6d9f:65a6 with SMTP id k4-20020a17090ac50400b001bf6d9f65a6mr4217009pjt.204.1649167129683;
+        Tue, 05 Apr 2022 06:58:49 -0700 (PDT)
 Received: from localhost.localdomain ([59.92.98.98])
-        by smtp.gmail.com with ESMTPSA id u14-20020a056a00124e00b004fab8f3245fsm16785402pfi.149.2022.04.05.06.58.40
+        by smtp.gmail.com with ESMTPSA id u14-20020a056a00124e00b004fab8f3245fsm16785402pfi.149.2022.04.05.06.58.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Apr 2022 06:58:44 -0700 (PDT)
+        Tue, 05 Apr 2022 06:58:49 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     gregkh@linuxfoundation.org
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
@@ -55,9 +55,9 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
         bjorn.andersson@linaro.org, dmitry.baryshkov@linaro.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 08/18] bus: mhi: ep: Add support for processing MHI endpoint interrupts
-Date:   Tue,  5 Apr 2022 19:27:44 +0530
-Message-Id: <20220405135754.6622-9-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 09/18] bus: mhi: ep: Add support for powering up the MHI endpoint stack
+Date:   Tue,  5 Apr 2022 19:27:45 +0530
+Message-Id: <20220405135754.6622-10-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20220405135754.6622-1-manivannan.sadhasivam@linaro.org>
 References: <20220405135754.6622-1-manivannan.sadhasivam@linaro.org>
@@ -73,238 +73,301 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for processing MHI endpoint interrupts such as control
-interrupt, command interrupt and channel interrupt from the host.
-
-The interrupts will be generated in the endpoint device whenever host
-writes to the corresponding doorbell registers. The doorbell logic
-is handled inside the hardware internally.
+Add support for MHI endpoint power_up that includes initializing the MMIO
+and rings, caching the host MHI registers, and setting the MHI state to M0.
+After registering the MHI EP controller, the stack has to be powered up
+for usage.
 
 Reviewed-by: Alex Elder <elder@linaro.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/bus/mhi/ep/main.c | 124 +++++++++++++++++++++++++++++++++++++-
- include/linux/mhi_ep.h    |   4 ++
- 2 files changed, 126 insertions(+), 2 deletions(-)
+ drivers/bus/mhi/ep/main.c | 205 ++++++++++++++++++++++++++++++++++++++
+ include/linux/mhi_ep.h    |  16 +++
+ 2 files changed, 221 insertions(+)
 
 diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index c912daf6dc65..4e82006bd83b 100644
+index 4e82006bd83b..20d579733486 100644
 --- a/drivers/bus/mhi/ep/main.c
 +++ b/drivers/bus/mhi/ep/main.c
-@@ -11,6 +11,7 @@
- #include <linux/dma-direction.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
-+#include <linux/irq.h>
- #include <linux/mhi_ep.h>
- #include <linux/mod_devicetable.h>
+@@ -17,6 +17,9 @@
  #include <linux/module.h>
-@@ -142,6 +143,112 @@ static void mhi_ep_state_worker(struct work_struct *work)
- 	}
+ #include "internal.h"
+ 
++#define M0_WAIT_DELAY_MS	100
++#define M0_WAIT_COUNT		100
++
+ static DEFINE_IDA(mhi_ep_cntrl_ida);
+ 
+ static int mhi_ep_send_event(struct mhi_ep_cntrl *mhi_cntrl, u32 ring_idx,
+@@ -106,6 +109,154 @@ static int mhi_ep_send_cmd_comp_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_e
+ 	return mhi_ep_send_event(mhi_cntrl, 0, &event, 0);
  }
  
-+static void mhi_ep_queue_channel_db(struct mhi_ep_cntrl *mhi_cntrl, unsigned long ch_int,
-+				    u32 ch_idx)
++static int mhi_ep_cache_host_cfg(struct mhi_ep_cntrl *mhi_cntrl)
 +{
-+	struct mhi_ep_ring_item *item;
-+	struct mhi_ep_ring *ring;
-+	bool work = !!ch_int;
-+	LIST_HEAD(head);
-+	u32 i;
++	size_t cmd_ctx_host_size, ch_ctx_host_size, ev_ctx_host_size;
++	struct device *dev = &mhi_cntrl->mhi_dev->dev;
++	int ret;
 +
-+	/* First add the ring items to a local list */
-+	for_each_set_bit(i, &ch_int, 32) {
-+		/* Channel index varies for each register: 0, 32, 64, 96 */
-+		u32 ch_id = ch_idx + i;
++	/* Update the number of event rings (NER) programmed by the host */
++	mhi_ep_mmio_update_ner(mhi_cntrl);
 +
-+		ring = &mhi_cntrl->mhi_chan[ch_id].ring;
-+		item = kzalloc(sizeof(*item), GFP_ATOMIC);
-+		if (!item)
-+			return;
++	dev_dbg(dev, "Number of Event rings: %u, HW Event rings: %u\n",
++		 mhi_cntrl->event_rings, mhi_cntrl->hw_event_rings);
 +
-+		item->ring = ring;
-+		list_add_tail(&item->node, &head);
++	ch_ctx_host_size = sizeof(struct mhi_chan_ctxt) * mhi_cntrl->max_chan;
++	ev_ctx_host_size = sizeof(struct mhi_event_ctxt) * mhi_cntrl->event_rings;
++	cmd_ctx_host_size = sizeof(struct mhi_cmd_ctxt) * NR_OF_CMD_RINGS;
++
++	/* Get the channel context base pointer from host */
++	mhi_ep_mmio_get_chc_base(mhi_cntrl);
++
++	/* Allocate and map memory for caching host channel context */
++	ret = mhi_cntrl->alloc_map(mhi_cntrl, mhi_cntrl->ch_ctx_host_pa,
++				   &mhi_cntrl->ch_ctx_cache_phys,
++				   (void __iomem **) &mhi_cntrl->ch_ctx_cache,
++				   ch_ctx_host_size);
++	if (ret) {
++		dev_err(dev, "Failed to allocate and map ch_ctx_cache\n");
++		return ret;
 +	}
 +
-+	/* Now, splice the local list into ch_db_list and queue the work item */
-+	if (work) {
-+		spin_lock(&mhi_cntrl->list_lock);
-+		list_splice_tail_init(&head, &mhi_cntrl->ch_db_list);
-+		spin_unlock(&mhi_cntrl->list_lock);
++	/* Get the event context base pointer from host */
++	mhi_ep_mmio_get_erc_base(mhi_cntrl);
++
++	/* Allocate and map memory for caching host event context */
++	ret = mhi_cntrl->alloc_map(mhi_cntrl, mhi_cntrl->ev_ctx_host_pa,
++				   &mhi_cntrl->ev_ctx_cache_phys,
++				   (void __iomem **) &mhi_cntrl->ev_ctx_cache,
++				   ev_ctx_host_size);
++	if (ret) {
++		dev_err(dev, "Failed to allocate and map ev_ctx_cache\n");
++		goto err_ch_ctx;
 +	}
-+}
 +
-+/*
-+ * Channel interrupt statuses are contained in 4 registers each of 32bit length.
-+ * For checking all interrupts, we need to loop through each registers and then
-+ * check for bits set.
-+ */
-+static void mhi_ep_check_channel_interrupt(struct mhi_ep_cntrl *mhi_cntrl)
-+{
-+	u32 ch_int, ch_idx, i;
++	/* Get the command context base pointer from host */
++	mhi_ep_mmio_get_crc_base(mhi_cntrl);
 +
-+	/* Bail out if there is no channel doorbell interrupt */
-+	if (!mhi_ep_mmio_read_chdb_status_interrupts(mhi_cntrl))
-+		return;
-+
-+	for (i = 0; i < MHI_MASK_ROWS_CH_DB; i++) {
-+		ch_idx = i * MHI_MASK_CH_LEN;
-+
-+		/* Only process channel interrupt if the mask is enabled */
-+		ch_int = mhi_cntrl->chdb[i].status & mhi_cntrl->chdb[i].mask;
-+		if (ch_int) {
-+			mhi_ep_queue_channel_db(mhi_cntrl, ch_int, ch_idx);
-+			mhi_ep_mmio_write(mhi_cntrl, MHI_CHDB_INT_CLEAR_n(i),
-+							mhi_cntrl->chdb[i].status);
-+		}
++	/* Allocate and map memory for caching host command context */
++	ret = mhi_cntrl->alloc_map(mhi_cntrl, mhi_cntrl->cmd_ctx_host_pa,
++				   &mhi_cntrl->cmd_ctx_cache_phys,
++				   (void __iomem **) &mhi_cntrl->cmd_ctx_cache,
++				   cmd_ctx_host_size);
++	if (ret) {
++		dev_err(dev, "Failed to allocate and map cmd_ctx_cache\n");
++		goto err_ev_ctx;
 +	}
++
++	/* Initialize command ring */
++	ret = mhi_ep_ring_start(mhi_cntrl, &mhi_cntrl->mhi_cmd->ring,
++				(union mhi_ep_ring_ctx *)mhi_cntrl->cmd_ctx_cache);
++	if (ret) {
++		dev_err(dev, "Failed to start the command ring\n");
++		goto err_cmd_ctx;
++	}
++
++	return ret;
++
++err_cmd_ctx:
++	mhi_cntrl->unmap_free(mhi_cntrl, mhi_cntrl->cmd_ctx_host_pa, mhi_cntrl->cmd_ctx_cache_phys,
++			      (void __iomem *) mhi_cntrl->cmd_ctx_cache, cmd_ctx_host_size);
++
++err_ev_ctx:
++	mhi_cntrl->unmap_free(mhi_cntrl, mhi_cntrl->ev_ctx_host_pa, mhi_cntrl->ev_ctx_cache_phys,
++			      (void __iomem *) mhi_cntrl->ev_ctx_cache, ev_ctx_host_size);
++
++err_ch_ctx:
++	mhi_cntrl->unmap_free(mhi_cntrl, mhi_cntrl->ch_ctx_host_pa, mhi_cntrl->ch_ctx_cache_phys,
++			      (void __iomem *) mhi_cntrl->ch_ctx_cache, ch_ctx_host_size);
++
++	return ret;
 +}
 +
-+static void mhi_ep_process_ctrl_interrupt(struct mhi_ep_cntrl *mhi_cntrl,
-+					 enum mhi_state state)
++static void mhi_ep_free_host_cfg(struct mhi_ep_cntrl *mhi_cntrl)
 +{
-+	struct mhi_ep_state_transition *item;
++	size_t cmd_ctx_host_size, ch_ctx_host_size, ev_ctx_host_size;
 +
-+	item = kzalloc(sizeof(*item), GFP_ATOMIC);
-+	if (!item)
-+		return;
++	ch_ctx_host_size = sizeof(struct mhi_chan_ctxt) * mhi_cntrl->max_chan;
++	ev_ctx_host_size = sizeof(struct mhi_event_ctxt) * mhi_cntrl->event_rings;
++	cmd_ctx_host_size = sizeof(struct mhi_cmd_ctxt) * NR_OF_CMD_RINGS;
 +
-+	item->state = state;
-+	spin_lock(&mhi_cntrl->list_lock);
-+	list_add_tail(&item->node, &mhi_cntrl->st_transition_list);
-+	spin_unlock(&mhi_cntrl->list_lock);
++	mhi_cntrl->unmap_free(mhi_cntrl, mhi_cntrl->cmd_ctx_host_pa, mhi_cntrl->cmd_ctx_cache_phys,
++			      (void __iomem *) mhi_cntrl->cmd_ctx_cache, cmd_ctx_host_size);
 +
-+	queue_work(mhi_cntrl->wq, &mhi_cntrl->state_work);
++	mhi_cntrl->unmap_free(mhi_cntrl, mhi_cntrl->ev_ctx_host_pa, mhi_cntrl->ev_ctx_cache_phys,
++			      (void __iomem *) mhi_cntrl->ev_ctx_cache, ev_ctx_host_size);
++
++	mhi_cntrl->unmap_free(mhi_cntrl, mhi_cntrl->ch_ctx_host_pa, mhi_cntrl->ch_ctx_cache_phys,
++			      (void __iomem *) mhi_cntrl->ch_ctx_cache, ch_ctx_host_size);
 +}
 +
-+/*
-+ * Interrupt handler that services interrupts raised by the host writing to
-+ * MHICTRL and Command ring doorbell (CRDB) registers for state change and
-+ * channel interrupts.
-+ */
-+static irqreturn_t mhi_ep_irq(int irq, void *data)
++static void mhi_ep_enable_int(struct mhi_ep_cntrl *mhi_cntrl)
 +{
-+	struct mhi_ep_cntrl *mhi_cntrl = data;
++	/*
++	 * Doorbell interrupts are enabled when the corresponding channel gets started.
++	 * Enabling all interrupts here triggers spurious irqs as some of the interrupts
++	 * associated with hw channels always get triggered.
++	 */
++	mhi_ep_mmio_enable_ctrl_interrupt(mhi_cntrl);
++	mhi_ep_mmio_enable_cmdb_interrupt(mhi_cntrl);
++}
++
++static int mhi_ep_enable(struct mhi_ep_cntrl *mhi_cntrl)
++{
 +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
 +	enum mhi_state state;
-+	u32 int_value;
++	bool mhi_reset;
++	u32 count = 0;
++	int ret;
 +
-+	/* Acknowledge the ctrl interrupt */
-+	int_value = mhi_ep_mmio_read(mhi_cntrl, MHI_CTRL_INT_STATUS);
-+	mhi_ep_mmio_write(mhi_cntrl, MHI_CTRL_INT_CLEAR, int_value);
++	/* Wait for Host to set the M0 state */
++	do {
++		msleep(M0_WAIT_DELAY_MS);
++		mhi_ep_mmio_get_mhi_state(mhi_cntrl, &state, &mhi_reset);
++		if (mhi_reset) {
++			/* Clear the MHI reset if host is in reset state */
++			mhi_ep_mmio_clear_reset(mhi_cntrl);
++			dev_info(dev, "Detected Host reset while waiting for M0\n");
++		}
++		count++;
++	} while (state != MHI_STATE_M0 && count < M0_WAIT_COUNT);
 +
-+	/* Check for ctrl interrupt */
-+	if (FIELD_GET(MHI_CTRL_INT_STATUS_MSK, int_value)) {
-+		dev_dbg(dev, "Processing ctrl interrupt\n");
-+		mhi_ep_process_ctrl_interrupt(mhi_cntrl, state);
++	if (state != MHI_STATE_M0) {
++		dev_err(dev, "Host failed to enter M0\n");
++		return -ETIMEDOUT;
 +	}
 +
-+	/* Check for command doorbell interrupt */
-+	if (FIELD_GET(MHI_CTRL_INT_STATUS_CRDB_MSK, int_value))
-+		dev_dbg(dev, "Processing command doorbell interrupt\n");
++	ret = mhi_ep_cache_host_cfg(mhi_cntrl);
++	if (ret) {
++		dev_err(dev, "Failed to cache host config\n");
++		return ret;
++	}
 +
-+	/* Check for channel interrupts */
-+	mhi_ep_check_channel_interrupt(mhi_cntrl);
++	mhi_ep_mmio_set_env(mhi_cntrl, MHI_EE_AMSS);
 +
-+	return IRQ_HANDLED;
++	/* Enable all interrupts now */
++	mhi_ep_enable_int(mhi_cntrl);
++
++	return 0;
 +}
++
+ static void mhi_ep_state_worker(struct work_struct *work)
+ {
+ 	struct mhi_ep_cntrl *mhi_cntrl = container_of(work, struct mhi_ep_cntrl, state_work);
+@@ -249,6 +400,60 @@ static irqreturn_t mhi_ep_irq(int irq, void *data)
+ 	return IRQ_HANDLED;
+ }
+ 
++int mhi_ep_power_up(struct mhi_ep_cntrl *mhi_cntrl)
++{
++	struct device *dev = &mhi_cntrl->mhi_dev->dev;
++	int ret, i;
++
++	/*
++	 * Mask all interrupts until the state machine is ready. Interrupts will
++	 * be enabled later with mhi_ep_enable().
++	 */
++	mhi_ep_mmio_mask_interrupts(mhi_cntrl);
++	mhi_ep_mmio_init(mhi_cntrl);
++
++	mhi_cntrl->mhi_event = kzalloc(mhi_cntrl->event_rings * (sizeof(*mhi_cntrl->mhi_event)),
++					GFP_KERNEL);
++	if (!mhi_cntrl->mhi_event)
++		return -ENOMEM;
++
++	/* Initialize command, channel and event rings */
++	mhi_ep_ring_init(&mhi_cntrl->mhi_cmd->ring, RING_TYPE_CMD, 0);
++	for (i = 0; i < mhi_cntrl->max_chan; i++)
++		mhi_ep_ring_init(&mhi_cntrl->mhi_chan[i].ring, RING_TYPE_CH, i);
++	for (i = 0; i < mhi_cntrl->event_rings; i++)
++		mhi_ep_ring_init(&mhi_cntrl->mhi_event[i].ring, RING_TYPE_ER, i);
++
++	mhi_cntrl->mhi_state = MHI_STATE_RESET;
++
++	/* Set AMSS EE before signaling ready state */
++	mhi_ep_mmio_set_env(mhi_cntrl, MHI_EE_AMSS);
++
++	/* All set, notify the host that we are ready */
++	ret = mhi_ep_set_ready_state(mhi_cntrl);
++	if (ret)
++		goto err_free_event;
++
++	dev_dbg(dev, "READY state notification sent to the host\n");
++
++	ret = mhi_ep_enable(mhi_cntrl);
++	if (ret) {
++		dev_err(dev, "Failed to enable MHI endpoint\n");
++		goto err_free_event;
++	}
++
++	enable_irq(mhi_cntrl->irq);
++	mhi_cntrl->enabled = true;
++
++	return 0;
++
++err_free_event:
++	kfree(mhi_cntrl->mhi_event);
++
++	return ret;
++}
++EXPORT_SYMBOL_GPL(mhi_ep_power_up);
 +
  static void mhi_ep_release_device(struct device *dev)
  {
  	struct mhi_ep_device *mhi_dev = to_mhi_ep_device(dev);
-@@ -338,7 +445,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
- 	struct mhi_ep_device *mhi_dev;
- 	int ret;
- 
--	if (!mhi_cntrl || !mhi_cntrl->cntrl_dev || !mhi_cntrl->mmio)
-+	if (!mhi_cntrl || !mhi_cntrl->cntrl_dev || !mhi_cntrl->mmio || !mhi_cntrl->irq)
- 		return -EINVAL;
- 
- 	ret = mhi_ep_chan_init(mhi_cntrl, config);
-@@ -360,6 +467,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
- 	}
- 
- 	INIT_LIST_HEAD(&mhi_cntrl->st_transition_list);
-+	INIT_LIST_HEAD(&mhi_cntrl->ch_db_list);
- 	spin_lock_init(&mhi_cntrl->state_lock);
- 	spin_lock_init(&mhi_cntrl->list_lock);
- 	mutex_init(&mhi_cntrl->event_lock);
-@@ -375,12 +483,20 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
- 
- 	mhi_cntrl->index = ret;
- 
-+	irq_set_status_flags(mhi_cntrl->irq, IRQ_NOAUTOEN);
-+	ret = request_irq(mhi_cntrl->irq, mhi_ep_irq, IRQF_TRIGGER_HIGH,
-+			  "doorbell_irq", mhi_cntrl);
-+	if (ret) {
-+		dev_err(mhi_cntrl->cntrl_dev, "Failed to request Doorbell IRQ\n");
-+		goto err_ida_free;
-+	}
-+
- 	/* Allocate the controller device */
- 	mhi_dev = mhi_ep_alloc_device(mhi_cntrl, MHI_DEVICE_CONTROLLER);
- 	if (IS_ERR(mhi_dev)) {
- 		dev_err(mhi_cntrl->cntrl_dev, "Failed to allocate controller device\n");
- 		ret = PTR_ERR(mhi_dev);
--		goto err_ida_free;
-+		goto err_free_irq;
- 	}
- 
- 	dev_set_name(&mhi_dev->dev, "mhi_ep%u", mhi_cntrl->index);
-@@ -397,6 +513,8 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
- 
- err_put_dev:
- 	put_device(&mhi_dev->dev);
-+err_free_irq:
-+	free_irq(mhi_cntrl->irq, mhi_cntrl);
- err_ida_free:
- 	ida_free(&mhi_ep_cntrl_ida, mhi_cntrl->index);
- err_destroy_wq:
-@@ -416,6 +534,8 @@ void mhi_ep_unregister_controller(struct mhi_ep_cntrl *mhi_cntrl)
- 
- 	destroy_workqueue(mhi_cntrl->wq);
- 
-+	free_irq(mhi_cntrl->irq, mhi_cntrl);
-+
- 	kfree(mhi_cntrl->mhi_cmd);
- 	kfree(mhi_cntrl->mhi_chan);
- 
 diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
-index 2880d2aa88b8..137bd3ee2e43 100644
+index 137bd3ee2e43..3b065f82fbeb 100644
 --- a/include/linux/mhi_ep.h
 +++ b/include/linux/mhi_ep.h
-@@ -70,6 +70,7 @@ struct mhi_ep_db_info {
+@@ -65,6 +65,9 @@ struct mhi_ep_db_info {
+  * @ch_ctx_host_pa: Physical address of host channel context data structure
+  * @ev_ctx_host_pa: Physical address of host event context data structure
+  * @cmd_ctx_host_pa: Physical address of host command context data structure
++ * @ch_ctx_cache_phys: Physical address of the host channel context cache
++ * @ev_ctx_cache_phys: Physical address of the host event context cache
++ * @cmd_ctx_cache_phys: Physical address of the host command context cache
+  * @chdb: Array of channel doorbell interrupt info
+  * @event_lock: Lock for protecting event rings
   * @list_lock: Lock for protecting state transition and channel doorbell lists
-  * @state_lock: Lock for protecting state transitions
-  * @st_transition_list: List of state transitions
-+ * @ch_db_list: List of queued channel doorbells
-  * @wq: Dedicated workqueue for handling rings and state changes
-  * @state_work: State transition worker
-  * @raise_irq: CB function for raising IRQ to the host
-@@ -85,6 +86,7 @@ struct mhi_ep_db_info {
-  * @chdb_offset: Channel doorbell offset set by the host
+@@ -87,6 +90,7 @@ struct mhi_ep_db_info {
   * @erdb_offset: Event ring doorbell offset set by the host
   * @index: MHI Endpoint controller index
-+ * @irq: IRQ used by the endpoint controller
+  * @irq: IRQ used by the endpoint controller
++ * @enabled: Check if the endpoint controller is enabled or not
   */
  struct mhi_ep_cntrl {
  	struct device *cntrl_dev;
-@@ -109,6 +111,7 @@ struct mhi_ep_cntrl {
- 	spinlock_t state_lock;
+@@ -104,6 +108,9 @@ struct mhi_ep_cntrl {
+ 	u64 ch_ctx_host_pa;
+ 	u64 ev_ctx_host_pa;
+ 	u64 cmd_ctx_host_pa;
++	phys_addr_t ch_ctx_cache_phys;
++	phys_addr_t ev_ctx_cache_phys;
++	phys_addr_t cmd_ctx_cache_phys;
  
- 	struct list_head st_transition_list;
-+	struct list_head ch_db_list;
- 
- 	struct workqueue_struct *wq;
- 	struct work_struct state_work;
-@@ -130,6 +133,7 @@ struct mhi_ep_cntrl {
- 	u32 chdb_offset;
+ 	struct mhi_ep_db_info chdb[4];
+ 	struct mutex event_lock;
+@@ -134,6 +141,7 @@ struct mhi_ep_cntrl {
  	u32 erdb_offset;
  	u32 index;
-+	int irq;
+ 	int irq;
++	bool enabled;
  };
  
  /**
+@@ -228,4 +236,12 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+  */
+ void mhi_ep_unregister_controller(struct mhi_ep_cntrl *mhi_cntrl);
+ 
++/**
++ * mhi_ep_power_up - Power up the MHI endpoint stack
++ * @mhi_cntrl: MHI Endpoint controller
++ *
++ * Return: 0 if power up succeeds, a negative error code otherwise.
++ */
++int mhi_ep_power_up(struct mhi_ep_cntrl *mhi_cntrl);
++
+ #endif
 -- 
 2.25.1
 
