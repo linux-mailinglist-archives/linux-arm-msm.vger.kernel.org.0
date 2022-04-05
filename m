@@ -2,50 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F52A4F35B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Apr 2022 15:53:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D03174F35AD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Apr 2022 15:52:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233692AbiDEKyS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Apr 2022 06:54:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59290 "EHLO
+        id S232746AbiDEKyA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Apr 2022 06:54:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346800AbiDEJpc (ORCPT
+        with ESMTP id S1347136AbiDEJqC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Apr 2022 05:45:32 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C60BADBD07
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 02:31:53 -0700 (PDT)
+        Tue, 5 Apr 2022 05:46:02 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B483DCE26;
+        Tue,  5 Apr 2022 02:32:30 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 60D24616D4
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 09:31:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CF9CC385A8;
-        Tue,  5 Apr 2022 09:31:50 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id EF9C361368;
+        Tue,  5 Apr 2022 09:32:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42851C385A2;
+        Tue,  5 Apr 2022 09:32:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649151112;
-        bh=86V35tezb7CnVylE5xhcOrRZJnrJztG/nm4t18+1yUk=;
+        s=k20201202; t=1649151149;
+        bh=LMWjnRihmAkYJ4VE026+EhIuf0h/R47oaYeDgl0V7PM=;
         h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=cgaphUKPI+f4uVShNLg3NRNpwdZ7b84IuOhO5OSefGnWv3VRUTRgWBR9cTlKAkPC0
-         qOK4leaT5YVrerXCeE2R7WAA1rcaWnV0pOS5fM/rSmYWdiCZwBBHVvxNPQ74jxQVIC
-         /AsqTeRA+guAKOWTijKZ0CgWOIDMoDYLqgxEvcHv12iBpQbRfrQ1tN0Z0EIr9BoB+Q
-         JNVcua9PMUUtZfcjZHrOxbHYt+TbIzgSxtbftttbVVSo0IUOf//shbNr+zZHbmLlXL
-         rbuM5UvcdsEdoLUXwDz9wg4i59nRvb5VmzFKqdlU7v5uk2Q7P48bQ9duifOtcmOPme
-         GHagk96RP9o7w==
+        b=YFSU+3oYLQYgTZ0hlJ0IlSF1Ou+RUMIgREyudOvmFbgFptcZI6uUNOyQpx7QOtVXM
+         VId6j+7j0Knrvvi+/1P5/FnhR5m69iy1fwCmFHBxwkVnj2x5oH7yV3EREKgdXcAJlx
+         ZXGrZ8g3OBO+7sH1hvV0T3Tv2Xn6IfCMpnU/PrPVRBzUtrJwtjH9S+tQ21D6QSaSRb
+         lY7GwdZgYaDBRg7b5IiACltkwJCdgeJQIPwc6k5PaNBfEzj4ZvgNa4Jn01N6SX6cU0
+         QMf8Wzw/lB3A6TOyc4mmWGxMYelT7/T9DQ5ShXW7Nwsjhk9+FveJFdXdFxJiDeKxiz
+         blXpxRCQ0yBkw==
 From:   Mark Brown <broonie@kernel.org>
-To:     Judy Hsiao <judyhsiao@chromium.org>
-Cc:     Takashi Iwai <tiwai@suse.com>, yuhsuan@chromium.org,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Jaroslav Kysela <perex@perex.cz>, judyhsiao@google.com,
-        alsa-devel@alsa-project.org,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        swboyd@chromium.org, dianders@chromium.org, cychiang@google.com,
+To:     agross@kernel.org, krzk+dt@kernel.org, bjorn.andersson@linaro.org,
+        robh+dt@kernel.org, singh.kuldeep87k@gmail.com, krzk@kernel.org
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        robh@kernel.org, linux-spi@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-In-Reply-To: <20220331084201.62815-1-judyhsiao@chromium.org>
-References: <20220331084201.62815-1-judyhsiao@chromium.org>
-Subject: Re: [v2] ASoC: qcom: Add driver support for ALC5682I-VS
-Message-Id: <164915111030.276574.7396913741525054470.b4-ty@kernel.org>
-Date:   Tue, 05 Apr 2022 10:31:50 +0100
+In-Reply-To: <20220328192006.18523-1-singh.kuldeep87k@gmail.com>
+References: <20220328192006.18523-1-singh.kuldeep87k@gmail.com>
+Subject: Re: [PATCH v2] dt-bindings: spi: qcom-qspi: Add minItems to interconnect-names
+Message-Id: <164915114699.276894.10846659082729207410.b4-ty@kernel.org>
+Date:   Tue, 05 Apr 2022 10:32:26 +0100
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -59,19 +56,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 31 Mar 2022 16:42:01 +0800, Judy Hsiao wrote:
-> Add Machine driver support for ALC5682I-VS codec.
+On Tue, 29 Mar 2022 00:50:06 +0530, Kuldeep Singh wrote:
+> Add minItems constraint to interconnect-names as well. The schema
+> currently tries to match 2 names and fail for DTs with single entry.
+> 
+> With the change applied, below interconnect-names values are possible:
+> ['qspi-config'], ['qspi-config', 'qspi-memory']
 > 
 > 
+> [...]
 
 Applied to
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
 Thanks!
 
-[1/1] ASoC: qcom: Add driver support for ALC5682I-VS
-      commit: c5198db82d4c257d4d9fb9dc0db329482f3d08b9
+[1/1] dt-bindings: spi: qcom-qspi: Add minItems to interconnect-names
+      commit: e23d86c49a9c78e8dbe3abff20b30812b26ab427
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
