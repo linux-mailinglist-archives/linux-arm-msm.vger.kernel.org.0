@@ -2,68 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 624884F4BAC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:06:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B1194F4BEE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:10:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232600AbiDEXEH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Apr 2022 19:04:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51088 "EHLO
+        id S1575393AbiDEXHY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Apr 2022 19:07:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1443709AbiDEPkL (ORCPT
+        with ESMTP id S1446545AbiDEPos (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Apr 2022 11:40:11 -0400
-Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 745F3185000
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 06:58:18 -0700 (PDT)
-Received: by mail-qt1-x82a.google.com with SMTP id o15so9714245qtv.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 06:58:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4Zo1koAQLSqT+JlliAq41n9EK+T7UuDXU3++Yy/OL90=;
-        b=pYOq3UGJ9TuIXdMMMK/F/k3jSEPQuAMk+I1l80ZkCtTU38iwbrbYh/MmB6ZwhRGL46
-         7ZF/j58tDSvOPdcKV47hG6AbEPYz91zXGhTpCa2J8xpZ/juYLcNWpAKAlTfFhqDYI/ng
-         tfCpikouSwxh9W4Q3CBrXgepftQ89pHlQ9VH8GnTvWJPjfI855qfNk2HAo0md0SjLMNO
-         yZoymPDDM/IIOizehI3PWyG0QjrKc19XUDE3yPjkc28DIFrfEi1r30qlb6T1aqd/oQTM
-         +PBLdeYs8i7R6+WZSzhPaHlAA9oAZx5z4by2ZDiCwd/V1jv7s89BtY1K3X9IGRu/XK6+
-         3rfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4Zo1koAQLSqT+JlliAq41n9EK+T7UuDXU3++Yy/OL90=;
-        b=zMmHUt8e9JKlvPkBjbzOMqkP1halBNpgeVQquGvshjHAhN7KP/uFqzuL8nz8BnlpRn
-         iFQwR2U8XL8h/MbOcc9I806ogBguU/9VdHEIFG/YJWEugjmYCp5bA047sXla1fkTJ23C
-         y2iKNapKO6USF9jKm5MV56KshRY+6vg1nHfFIjw+sMYZEhsYTnrq77+KA5RLbqqF0qSt
-         TgsZGYcoD1G+mkMQJ7JMoZI7Y73Ar3MAvZTdxHkdgdoSOHR96mbzwnYIKDQj8OPcwZuK
-         rbQ2U6LnmIEwndivnSVlduDimWmhkos7X6+YBd1tRzdngJhy+aknu5Dffd1rJZy4zi3f
-         qLQw==
-X-Gm-Message-State: AOAM532U92jKBsKpM8kjbRcUwf3fgxk3rBvsD6ExXuBa0rSqULUT+dh2
-        vTS/ezEHYqlgnOvgcI1ggHysEwkUdMlTKNnXPjxbBQ==
-X-Google-Smtp-Source: ABdhPJz/N9m3G+9VZYfO3dFBtZYE5Y4RILMfHESwLIPYnr2rLZvWX9Vt+wYFpiNptzVDvlPI4eFmvvGPXv4BsWAZL2E=
-X-Received: by 2002:ac8:7dd1:0:b0:2e0:6fe1:189b with SMTP id
- c17-20020ac87dd1000000b002e06fe1189bmr3138136qte.629.1649167097585; Tue, 05
- Apr 2022 06:58:17 -0700 (PDT)
+        Tue, 5 Apr 2022 11:44:48 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05B6A220E6;
+        Tue,  5 Apr 2022 07:17:48 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D3A6860B0E;
+        Tue,  5 Apr 2022 14:17:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25BEC385A6;
+        Tue,  5 Apr 2022 14:17:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1649168267;
+        bh=MGKEOKuzG/zvLfWYpwbNWne2VYHu0gGNwDsvDh8cPyw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jPqroh2EK0MDuPgb5WnacCf6ssZHd95lDMSvChNGm9ZJ2nxe9+1xVISwVR1W77n7L
+         cdrLs31WHH+F0ZSAp8+eDIIhyK1D+5oOwGGfYe5TuF4MbSv5lJZF2/1ezRv3TWRAal
+         Qi4GZhfZai8uFU71eo9PKZPO7K5gkNmv931k48ZSHn5zD6Wci2PXCZNL4EUGuiSVHw
+         Y+JugbJ6g7lkPZAVu+8LZDe50CFE/R/Cfk5jUFN0GT27J5J1pHGsm1ILDxjWhUk956
+         52g791GTXf7nJry3EMVA/2dO28tDf2u6kjCfWNsjhPvsg0XsRDquQFbXWpy3k46Iw6
+         NRVwdMSGty9/A==
+Date:   Tue, 5 Apr 2022 15:17:41 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Satya Priya <quic_c_skakit@quicinc.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        quic_collinsd@quicinc.com, quic_subbaram@quicinc.com,
+        quic_jprakash@quicinc.com
+Subject: Re: [PATCH V9 4/6] regulator: Add a regulator driver for the PM8008
+ PMIC
+Message-ID: <YkxPhcgBU3/5zu/P@sirena.org.uk>
+References: <1649166633-25872-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1649166633-25872-5-git-send-email-quic_c_skakit@quicinc.com>
 MIME-Version: 1.0
-References: <20220404163436.956875-1-vkoul@kernel.org> <20220404163436.956875-15-vkoul@kernel.org>
-In-Reply-To: <20220404163436.956875-15-vkoul@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 5 Apr 2022 16:58:06 +0300
-Message-ID: <CAA8EJpr5CwJ1_aKQ3Crqbjy8-=igazdWvN4VeZtp0fT85nXE6w@mail.gmail.com>
-Subject: Re: [PATCH v6 14/14] drm/msm/dsi: Add support for DSC configuration
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="8dPCbrnld0sz6d93"
+Content-Disposition: inline
+In-Reply-To: <1649166633-25872-5-git-send-email-quic_c_skakit@quicinc.com>
+X-Cookie: diplomacy, n:
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -72,154 +64,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 4 Apr 2022 at 19:35, Vinod Koul <vkoul@kernel.org> wrote:
->
-> When DSC is enabled, we need to configure DSI registers accordingly and
-> configure the respective stream compression registers.
->
-> Add support to calculate the register setting based on DSC params and
-> timing information and configure these registers.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+--8dPCbrnld0sz6d93
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+On Tue, Apr 05, 2022 at 07:20:31PM +0530, Satya Priya wrote:
 
-> ---
->  drivers/gpu/drm/msm/dsi/dsi_host.c | 98 +++++++++++++++++++++++++++++-
->  1 file changed, 97 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index eb0be34add45..f3ed6c40b9e1 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -912,6 +912,65 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
->                 dsi_write(msm_host, REG_DSI_CPHY_MODE_CTRL, BIT(0));
->  }
->
-> +static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mode, u32 hdisplay)
-> +{
-> +       struct msm_display_dsc_config *dsc = msm_host->dsc;
-> +       u32 reg, intf_width, reg_ctrl, reg_ctrl2;
-> +       u32 slice_per_intf, total_bytes_per_intf;
-> +       u32 pkt_per_line;
-> +       u32 bytes_in_slice;
-> +       u32 eol_byte_num;
-> +
-> +       /* first calculate dsc parameters and then program
-> +        * compress mode registers
-> +        */
-> +       intf_width = hdisplay;
-> +       slice_per_intf = DIV_ROUND_UP(intf_width, dsc->drm->slice_width);
-> +
-> +       /* If slice_per_pkt is greater than slice_per_intf
-> +        * then default to 1. This can happen during partial
-> +        * update.
-> +        */
-> +       if (slice_per_intf > dsc->drm->slice_count)
-> +               dsc->drm->slice_count = 1;
-> +
-> +       slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->drm->slice_width);
-> +       bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width * dsc->drm->bits_per_pixel, 8);
-> +
-> +       dsc->drm->slice_chunk_size = bytes_in_slice;
-> +
-> +       total_bytes_per_intf = bytes_in_slice * slice_per_intf;
-> +
-> +       eol_byte_num = total_bytes_per_intf % 3;
-> +       pkt_per_line = slice_per_intf / dsc->drm->slice_count;
-> +
-> +       if (is_cmd_mode) /* packet data type */
-> +               reg = DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE(MIPI_DSI_DCS_LONG_WRITE);
-> +       else
-> +               reg = DSI_VIDEO_COMPRESSION_MODE_CTRL_DATATYPE(MIPI_DSI_COMPRESSED_PIXEL_STREAM);
-> +
-> +       /* DSI_VIDEO_COMPRESSION_MODE & DSI_COMMAND_COMPRESSION_MODE
-> +        * registers have similar offsets, so for below common code use
-> +        * DSI_VIDEO_COMPRESSION_MODE_XXXX for setting bits
-> +        */
-> +       reg |= DSI_VIDEO_COMPRESSION_MODE_CTRL_PKT_PER_LINE(pkt_per_line >> 1);
-> +       reg |= DSI_VIDEO_COMPRESSION_MODE_CTRL_EOL_BYTE_NUM(eol_byte_num);
-> +       reg |= DSI_VIDEO_COMPRESSION_MODE_CTRL_EN;
-> +
-> +       if (is_cmd_mode) {
-> +               reg_ctrl = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL);
-> +               reg_ctrl2 = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2);
-> +
-> +               reg_ctrl |= reg;
-> +               reg_ctrl2 |= DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM0_SLICE_WIDTH(bytes_in_slice);
-> +
-> +               dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL, reg);
-> +               dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2, reg_ctrl2);
-> +       } else {
-> +               dsi_write(msm_host, REG_DSI_VIDEO_COMPRESSION_MODE_CTRL, reg);
-> +       }
-> +}
-> +
->  static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->  {
->         struct drm_display_mode *mode = msm_host->mode;
-> @@ -944,7 +1003,38 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->                 hdisplay /= 2;
->         }
->
-> +       if (msm_host->dsc) {
-> +               struct msm_display_dsc_config *dsc = msm_host->dsc;
-> +
-> +               /* update dsc params with timing params */
-> +               if (!dsc || !mode->hdisplay || !mode->vdisplay) {
-> +                       pr_err("DSI: invalid input: pic_width: %d pic_height: %d\n",
-> +                              mode->hdisplay, mode->vdisplay);
-> +                       return;
-> +               }
-> +
-> +               dsc->drm->pic_width = mode->hdisplay;
-> +               dsc->drm->pic_height = mode->vdisplay;
-> +               DBG("Mode %dx%d\n", dsc->drm->pic_width, dsc->drm->pic_height);
-> +
-> +               /* we do the calculations for dsc parameters here so that
-> +                * panel can use these parameters
-> +                */
-> +               dsi_populate_dsc_params(dsc);
-> +
-> +               /* Divide the display by 3 but keep back/font porch and
-> +                * pulse width same
-> +                */
-> +               h_total -= hdisplay;
-> +               hdisplay /= 3;
-> +               h_total += hdisplay;
-> +               ha_end = ha_start + hdisplay;
-> +       }
-> +
->         if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
-> +               if (msm_host->dsc)
-> +                       dsi_update_dsc_timing(msm_host, false, mode->hdisplay);
-> +
->                 dsi_write(msm_host, REG_DSI_ACTIVE_H,
->                         DSI_ACTIVE_H_START(ha_start) |
->                         DSI_ACTIVE_H_END(ha_end));
-> @@ -963,8 +1053,14 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->                         DSI_ACTIVE_VSYNC_VPOS_START(vs_start) |
->                         DSI_ACTIVE_VSYNC_VPOS_END(vs_end));
->         } else {                /* command mode */
-> +               if (msm_host->dsc)
-> +                       dsi_update_dsc_timing(msm_host, true, mode->hdisplay);
-> +
->                 /* image data and 1 byte write_memory_start cmd */
-> -               wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
-> +               if (!msm_host->dsc)
-> +                       wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
-> +               else
-> +                       wc = mode->hdisplay / 2 + 1;
->
->                 dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL,
->                         DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
-> --
-> 2.34.1
->
+> +#include <linux/regulator/driver.h>
+> +#include <linux/regulator/machine.h>
 
+Why does the driver need machine.h?  That's usually a bug, though I
+didn't spot anywhere where it's used so it's probably just an extra
+header.
 
--- 
-With best wishes
-Dmitry
+> +	.set_voltage_sel	= pm8008_regulator_set_voltage,
+> +	.get_voltage		= pm8008_regulator_get_voltage,
+
+You shouldn't mix and match the selector and non-selector operations,
+since the device just takes a voltage you may as well just use the
+non-selector version for both.
+
+Otherwise this all looks good, just those two minor points.
+
+--8dPCbrnld0sz6d93
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmJMT4QACgkQJNaLcl1U
+h9Bdqwf/cnfMmHDYBGxtxH531FkOi4AeNT824yzuUtVFoHINPdPqnSCCwvXipYpl
+L30uSZNKRSR2QOZ/M9jBxvKc5z+IsAYrkke05aYIWQM/oM/EdOFLvxNR/tVufCML
+wdZteUHPdYrx2NbuwHFEUvdFM/RoC3DKMvkn8FJgeSHi2831V6ubErKw7fp71AkV
+12zOtGw0i0fTApbzzhdOAXQPgWuPlnxuFCcr5dnWy0TcY0v8Gf1991tsyv9hSfVj
+mcHHSqNc3UjqDCNMdWRfOoJXjImyTfQ0oKi5abrw4F+A5FY3JpnOU07qJHm5QgKM
+8naBiSlmOAkzS3JIMaAPDvk9tcTYbQ==
+=hFPV
+-----END PGP SIGNATURE-----
+
+--8dPCbrnld0sz6d93--
