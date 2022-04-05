@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27E874F35AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Apr 2022 15:52:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F52A4F35B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Apr 2022 15:53:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233142AbiDEKyI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Apr 2022 06:54:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54028 "EHLO
+        id S233692AbiDEKyS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Apr 2022 06:54:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346600AbiDEJpM (ORCPT
+        with ESMTP id S1346800AbiDEJpc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Apr 2022 05:45:12 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24220DAFDF;
-        Tue,  5 Apr 2022 02:31:04 -0700 (PDT)
+        Tue, 5 Apr 2022 05:45:32 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C60BADBD07
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 02:31:53 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C87C9B81C9A;
-        Tue,  5 Apr 2022 09:31:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81866C385A0;
-        Tue,  5 Apr 2022 09:30:58 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 60D24616D4
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 09:31:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CF9CC385A8;
+        Tue,  5 Apr 2022 09:31:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649151061;
-        bh=L/0Q71877NZ2dI0wBiiMHZiv88UEejC3hMOyoQIhhOM=;
+        s=k20201202; t=1649151112;
+        bh=86V35tezb7CnVylE5xhcOrRZJnrJztG/nm4t18+1yUk=;
         h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=AgDJjONY1wQTxOWX0xahtmDF9bEXicjJL27tCntdMedb4VNO9KYvVoiAWMZPjA7Lj
-         5NnZrRhEeZ9zt6Pa0v0rHidk3XSkliXvAN+6REZapyLd168aFSyhQUMPoT5KUlGiX9
-         ePo3rAwYd/Yl29hQUC1h1tC6GjJf5RFlNwriiPrAo8/j8ff3cJBV/w39v07IR114oQ
-         AdcExNHquO/rGrr82eqJTDlim0QeYHEdOWUdYFS6eulDqg16E2wPB1WyIxiN3IHc3u
-         9Bk+i9XHTAC2gT9z5/hqWISvs0kDF3NYSuEWlES2a11NSIwETChz3aEgX1Ye5jeVGr
-         AoigEHcyZE+IQ==
+        b=cgaphUKPI+f4uVShNLg3NRNpwdZ7b84IuOhO5OSefGnWv3VRUTRgWBR9cTlKAkPC0
+         qOK4leaT5YVrerXCeE2R7WAA1rcaWnV0pOS5fM/rSmYWdiCZwBBHVvxNPQ74jxQVIC
+         /AsqTeRA+guAKOWTijKZ0CgWOIDMoDYLqgxEvcHv12iBpQbRfrQ1tN0Z0EIr9BoB+Q
+         JNVcua9PMUUtZfcjZHrOxbHYt+TbIzgSxtbftttbVVSo0IUOf//shbNr+zZHbmLlXL
+         rbuM5UvcdsEdoLUXwDz9wg4i59nRvb5VmzFKqdlU7v5uk2Q7P48bQ9duifOtcmOPme
+         GHagk96RP9o7w==
 From:   Mark Brown <broonie@kernel.org>
-To:     quic_plai@quicinc.com, srinivas.kandagatla@linaro.org,
-        agross@kernel.org, judyhsiao@chromium.org,
-        linux-kernel@vger.kernel.org, lgirdwood@gmail.com,
-        quic_srivasam@quicinc.com, robh+dt@kernel.org, swboyd@chromium.org,
-        tiwai@suse.com, bjorn.andersson@linaro.org,
-        alsa-devel@alsa-project.org, perex@perex.cz,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     quic_potturu@quicinc.com
-In-Reply-To: <1647965937-32203-1-git-send-email-quic_srivasam@quicinc.com>
-References: <1647965937-32203-1-git-send-email-quic_srivasam@quicinc.com>
-Subject: Re: [PATCH] ASoC: codecs: Fix error handling in power domain init and exit handlers
-Message-Id: <164915105825.276574.11537900689104070957.b4-ty@kernel.org>
-Date:   Tue, 05 Apr 2022 10:30:58 +0100
+To:     Judy Hsiao <judyhsiao@chromium.org>
+Cc:     Takashi Iwai <tiwai@suse.com>, yuhsuan@chromium.org,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Jaroslav Kysela <perex@perex.cz>, judyhsiao@google.com,
+        alsa-devel@alsa-project.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        swboyd@chromium.org, dianders@chromium.org, cychiang@google.com,
+        linux-arm-msm@vger.kernel.org
+In-Reply-To: <20220331084201.62815-1-judyhsiao@chromium.org>
+References: <20220331084201.62815-1-judyhsiao@chromium.org>
+Subject: Re: [v2] ASoC: qcom: Add driver support for ALC5682I-VS
+Message-Id: <164915111030.276574.7396913741525054470.b4-ty@kernel.org>
+Date:   Tue, 05 Apr 2022 10:31:50 +0100
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -59,15 +59,10 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 22 Mar 2022 21:48:57 +0530, Srinivasa Rao Mandadapu wrote:
-> Update error handling in power domain init and exit handlers, as existing handling
-> may cause issues in device remove function.
-> Use appropriate pm core api for power domain get and sync to avoid redundant code.
-> 
-> Fixes: 9e3d83c52844 ("ASoC: codecs: Add power domains support in digital macro codecs")
+On Thu, 31 Mar 2022 16:42:01 +0800, Judy Hsiao wrote:
+> Add Machine driver support for ALC5682I-VS codec.
 > 
 > 
-> [...]
 
 Applied to
 
@@ -75,8 +70,8 @@ Applied to
 
 Thanks!
 
-[1/1] ASoC: codecs: Fix error handling in power domain init and exit handlers
-      commit: 1a8ee4cf84187bce17c76886eb6dd9389c3b99a8
+[1/1] ASoC: qcom: Add driver support for ALC5682I-VS
+      commit: c5198db82d4c257d4d9fb9dc0db329482f3d08b9
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
