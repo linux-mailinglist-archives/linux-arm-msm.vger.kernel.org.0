@@ -2,333 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D03434F4BD2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:07:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B4564F4BCF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:06:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1447438AbiDEXGC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Apr 2022 19:06:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49476 "EHLO
+        id S1391126AbiDEXFi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Apr 2022 19:05:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1447085AbiDEPpp (ORCPT
+        with ESMTP id S1443610AbiDEPj7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Apr 2022 11:45:45 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1178D7E583;
-        Tue,  5 Apr 2022 07:20:04 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 73F9BB81E3D;
-        Tue,  5 Apr 2022 14:20:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FB7C385A0;
-        Tue,  5 Apr 2022 14:20:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649168402;
-        bh=dc45WnQh0XkwaqeGUyTJ67z7YNeqRTjfgC0FPHFrHso=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=MRGWno1cU58iqjN429BjD9E+uM/lLD15OlF3SPmpxxGquaHaRzXhXdVaLcBgbYxsr
-         tOCdfTjIE8Gu1mQTkzqPOsrypjTcrejI5FvWccefvcMdogpeFtHWcemsr2WWtn6k+c
-         x4NUDhx9iHux5PPQHirACc1I/JcuGdzFl9eLmUjEsPWGR1Wn1U1Xk9chXGVTbFn+zz
-         i8BJjosrU02/ABpipgWUuu8XzdH6aECeHZ5HPOHfYUHx3zSAYbDV9PDSFwjJsUrejA
-         bSrJTcVryg+ajrcxt3jhc9JVtpmSYF3uSzuYKx2y9JG/kAFWh99t88nq0Uw6/5Izmn
-         dRJqjM+0XhdnQ==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
-        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <maz@kernel.org>)
-        id 1nbjeA-001q4g-AF; Tue, 05 Apr 2022 14:55:02 +0100
-From:   Marc Zyngier <maz@kernel.org>
-To:     linux-kernel@vger.kernel.org
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Joey Gouly <joey.gouly@arm.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-        Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-        linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, kernel-team@android.com
-Subject: [PATCH v2 10/10] Documentation: Update the recommended pattern for GPIO irqchips
-Date:   Tue,  5 Apr 2022 14:54:44 +0100
-Message-Id: <20220405135444.199295-11-maz@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220405135444.199295-1-maz@kernel.org>
-References: <20220405135444.199295-1-maz@kernel.org>
+        Tue, 5 Apr 2022 11:39:59 -0400
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C006D17B0FB
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 06:57:14 -0700 (PDT)
+Received: by mail-qt1-x833.google.com with SMTP id v2so11099567qtc.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 06:57:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ooVTJG6qHCp0yXAPzRm26+nzLP9pRyshNnyYCdC2/cI=;
+        b=IjO1lAYG9dMjEoFuBKubL4solYQl93gBLvk38hPySmUXvALA+uoqB5JW6jq462kv3w
+         XAv4VTxdhTe/Ar+F3ht8PctXXH1Z/CEFWL8rIGHVVnKhc8NrYKoeNDSb+gwniYzUwdqy
+         cPCbAw7DBwC9H/iGurSWWopq5BX213OioWQjNpms7RtaNWffKommNV11P0techfv+VWq
+         jmsl/Xrr/T99SAhsTZABhIAE2rf0H6z4BIeaC/xRBzZudWiZxfRd5sdUll3mUyKzmwBM
+         mhubX3e2dDLaS2a/nEk3lBLHP4BdREc3DkUve465WChVkkGjPKvW4m2oQ5IIZOJ7aAL6
+         m6WQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ooVTJG6qHCp0yXAPzRm26+nzLP9pRyshNnyYCdC2/cI=;
+        b=Rsg2V+NeLl1+n5hnJCEWl5c8IFsWX+kHnG8kYuHBNrqGvgvaQDI4MnVq0WivCMDP2X
+         cLIWn5nq1G7dohrvy26EIr9n2HnDNpRsR8DhJ0bGjyF3cvWiEwNmIr8IinNJoUldk+s7
+         fsWxEKjPGEkvyUfPR76kz6fChT/IuOkWSOM0XxpyD3+eEzwWtCiWzv+lomX3mE2CooOR
+         gUKfwAd1Ly616cQRenyTcuJXpbTnAP26TutC6A+3fx9eELYd6aSdE1w3LS17goTuNkHU
+         4DpefPrRhlUrlfIOVc/jb9ZUuQhh1V6R5PiyEu9fhFmIj4HJw+f9D1avZtg1rbQtQsBV
+         tVNw==
+X-Gm-Message-State: AOAM530mX4d07JldJZq6qtnrSdMmoRbNisFjVeJwSQEIdKth77+c7xTa
+        OLyMbys97idC4J7YovRHtXnGTZNisnwQXbc6OXTnVw==
+X-Google-Smtp-Source: ABdhPJyvUqZgngY2xTxFZn28xhxZyEZiZ6UDJJnFxcDrOQUW4IEe+56aagmVfjuPhPAcWrPVD5R+J8V5qHnj4OpopWI=
+X-Received: by 2002:ac8:4e52:0:b0:2e1:dad8:5141 with SMTP id
+ e18-20020ac84e52000000b002e1dad85141mr3050575qtw.62.1649167033885; Tue, 05
+ Apr 2022 06:57:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: linux-kernel@vger.kernel.org, linus.walleij@linaro.org, brgl@bgdev.pl, thierry.reding@gmail.com, joey.gouly@arm.com, jonathanh@nvidia.com, marcan@marcan.st, sven@svenpeter.dev, alyssa@rosenzweig.io, bjorn.andersson@linaro.org, agross@kernel.org, jeffrey.l.hugo@gmail.com, tglx@linutronix.de, Basavaraj.Natikar@amd.com, Shyam-sundar.S-k@amd.com, linux-gpio@vger.kernel.org, linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20220404163436.956875-1-vkoul@kernel.org> <20220404163436.956875-14-vkoul@kernel.org>
+In-Reply-To: <20220404163436.956875-14-vkoul@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 5 Apr 2022 16:57:02 +0300
+Message-ID: <CAA8EJprGaix=6q0X4HVb2-yFb1LoF9M7qJE3Vgr5oxZZFp6tFQ@mail.gmail.com>
+Subject: Re: [PATCH v6 13/14] drm/msm: Update generated headers
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,UPPERCASE_50_75
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update the documentation to get rid of the per-gpio_irq_chip
-irq_chip structure, and give examples of the new pattern.
+On Mon, 4 Apr 2022 at 19:35, Vinod Koul <vkoul@kernel.org> wrote:
+>
+> Update headers from mesa commit:
+>
+>   commit 28ae397be111c37c6ced397e12d453a7695701bd
+>   Author: Vinod Koul <vkoul@kernel.org>
+>   Date:   Fri Apr 1 16:53:04 2022 +0530
+>
+>       freedreno/registers: update dsi registers to support dsc
+>
+>       Display Stream compression (DSC) compresses the display stream in
+>       host which is later decoded by panel. This requires addition of 3 new
+>       DSI registers to support DSC over DSI.
+>
+>       Signed-off-by: Vinod Koul <vkoul@kernel.org>
+>       Part-of: <https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/14967>
+>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- Documentation/driver-api/gpio/driver.rst | 175 ++++++++++++++++++-----
- 1 file changed, 142 insertions(+), 33 deletions(-)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-diff --git a/Documentation/driver-api/gpio/driver.rst b/Documentation/driver-api/gpio/driver.rst
-index bbc53920d4dd..7e9f1167ea7d 100644
---- a/Documentation/driver-api/gpio/driver.rst
-+++ b/Documentation/driver-api/gpio/driver.rst
-@@ -417,30 +417,66 @@ struct gpio_irq_chip inside struct gpio_chip before adding the gpio_chip.
- If you do this, the additional irq_chip will be set up by gpiolib at the
- same time as setting up the rest of the GPIO functionality. The following
- is a typical example of a chained cascaded interrupt handler using
--the gpio_irq_chip:
-+the gpio_irq_chip. Note how the mask/unmask (or disable/enable) functions
-+call into the core gpiolib code:
- 
- .. code-block:: c
- 
--  /* Typical state container with dynamic irqchip */
-+  /* Typical state container */
-   struct my_gpio {
-       struct gpio_chip gc;
--      struct irq_chip irq;
-+  };
-+
-+  static void my_gpio_mask_irq(struct irq_data *d)
-+  {
-+      struct gpio_chip *gc = irq_desc_get_handler_data(d);
-+
-+      /*
-+       * Perform any necessary action to mask the interrupt,
-+       * and then call into the core code to synchronise the
-+       * state.
-+       */
-+
-+      gpiochip_disable_irq(gc, d->hwirq);
-+  }
-+
-+  static void my_gpio_unmask_irq(struct irq_data *d)
-+  {
-+      struct gpio_chip *gc = irq_desc_get_handler_data(d);
-+
-+      gpiochip_disable_irq(gc, d->hwirq);
-+
-+      /*
-+       * Perform any necessary action to unmask the interrupt,
-+       * after having called into the core code to synchronise
-+       * the state.
-+       */
-+  }
-+
-+  /*
-+   * Statically populate the irqchip. Note that it is made const
-+   * (further indicated by the IRQCHIP_IMMUTABLE flag), and that
-+   * the GPIOCHIP_IRQ_RESOURCE_HELPER macro adds some extra
-+   * callbacks to the structure.
-+   */
-+  static const struct irq_chip my_gpio_irq_chip = {
-+      .name		= "my_gpio_irq",
-+      .irq_ack		= my_gpio_ack_irq,
-+      .irq_mask		= my_gpio_mask_irq,
-+      .irq_unmask	= my_gpio_unmask_irq,
-+      .irq_set_type	= my_gpio_set_irq_type,
-+      .flags		= IRQCHIP_IMMUTABLE,
-+      /* Provide the gpio resource callbacks */
-+      GPIOCHIP_IRQ_RESOURCE_HELPERS,
-   };
- 
-   int irq; /* from platform etc */
-   struct my_gpio *g;
-   struct gpio_irq_chip *girq;
- 
--  /* Set up the irqchip dynamically */
--  g->irq.name = "my_gpio_irq";
--  g->irq.irq_ack = my_gpio_ack_irq;
--  g->irq.irq_mask = my_gpio_mask_irq;
--  g->irq.irq_unmask = my_gpio_unmask_irq;
--  g->irq.irq_set_type = my_gpio_set_irq_type;
--
-   /* Get a pointer to the gpio_irq_chip */
-   girq = &g->gc.irq;
--  girq->chip = &g->irq;
-+  gpio_irq_chip_set_chip(girq, &my_gpio_irq_chip);
-   girq->parent_handler = ftgpio_gpio_irq_handler;
-   girq->num_parents = 1;
-   girq->parents = devm_kcalloc(dev, 1, sizeof(*girq->parents),
-@@ -458,23 +494,58 @@ the interrupt separately and go with it:
- 
- .. code-block:: c
- 
--  /* Typical state container with dynamic irqchip */
-+  /* Typical state container */
-   struct my_gpio {
-       struct gpio_chip gc;
--      struct irq_chip irq;
-+  };
-+
-+  static void my_gpio_mask_irq(struct irq_data *d)
-+  {
-+      struct gpio_chip *gc = irq_desc_get_handler_data(d);
-+
-+      /*
-+       * Perform any necessary action to mask the interrupt,
-+       * and then call into the core code to synchronise the
-+       * state.
-+       */
-+
-+      gpiochip_disable_irq(gc, d->hwirq);
-+  }
-+
-+  static void my_gpio_unmask_irq(struct irq_data *d)
-+  {
-+      struct gpio_chip *gc = irq_desc_get_handler_data(d);
-+
-+      gpiochip_disable_irq(gc, d->hwirq);
-+
-+      /*
-+       * Perform any necessary action to unmask the interrupt,
-+       * after having called into the core code to synchronise
-+       * the state.
-+       */
-+  }
-+
-+  /*
-+   * Statically populate the irqchip. Note that it is made const
-+   * (further indicated by the IRQCHIP_IMMUTABLE flag), and that
-+   * the GPIOCHIP_IRQ_RESOURCE_HELPER macro adds some extra
-+   * callbacks to the structure.
-+   */
-+  static const struct irq_chip my_gpio_irq_chip = {
-+      .name		= "my_gpio_irq",
-+      .irq_ack		= my_gpio_ack_irq,
-+      .irq_mask		= my_gpio_mask_irq,
-+      .irq_unmask	= my_gpio_unmask_irq,
-+      .irq_set_type	= my_gpio_set_irq_type,
-+      .flags		= IRQCHIP_IMMUTABLE,
-+      /* Provide the gpio resource callbacks */
-+      GPIOCHIP_IRQ_RESOURCE_HELPERS,
-   };
- 
-   int irq; /* from platform etc */
-   struct my_gpio *g;
-   struct gpio_irq_chip *girq;
- 
--  /* Set up the irqchip dynamically */
--  g->irq.name = "my_gpio_irq";
--  g->irq.irq_ack = my_gpio_ack_irq;
--  g->irq.irq_mask = my_gpio_mask_irq;
--  g->irq.irq_unmask = my_gpio_unmask_irq;
--  g->irq.irq_set_type = my_gpio_set_irq_type;
--
-   ret = devm_request_threaded_irq(dev, irq, NULL,
- 		irq_thread_fn, IRQF_ONESHOT, "my-chip", g);
-   if (ret < 0)
-@@ -482,7 +553,7 @@ the interrupt separately and go with it:
- 
-   /* Get a pointer to the gpio_irq_chip */
-   girq = &g->gc.irq;
--  girq->chip = &g->irq;
-+  gpio_irq_chip_set_chip(girq, &my_gpio_irq_chip);
-   /* This will let us handle the parent IRQ in the driver */
-   girq->parent_handler = NULL;
-   girq->num_parents = 0;
-@@ -500,24 +571,61 @@ In this case the typical set-up will look like this:
-   /* Typical state container with dynamic irqchip */
-   struct my_gpio {
-       struct gpio_chip gc;
--      struct irq_chip irq;
-       struct fwnode_handle *fwnode;
-   };
- 
--  int irq; /* from platform etc */
-+  static void my_gpio_mask_irq(struct irq_data *d)
-+  {
-+      struct gpio_chip *gc = irq_desc_get_handler_data(d);
-+
-+      /*
-+       * Perform any necessary action to mask the interrupt,
-+       * and then call into the core code to synchronise the
-+       * state.
-+       */
-+
-+      gpiochip_disable_irq(gc, d->hwirq);
-+      irq_mask_mask_parent(d);
-+  }
-+
-+  static void my_gpio_unmask_irq(struct irq_data *d)
-+  {
-+      struct gpio_chip *gc = irq_desc_get_handler_data(d);
-+
-+      gpiochip_disable_irq(gc, d->hwirq);
-+
-+      /*
-+       * Perform any necessary action to unmask the interrupt,
-+       * after having called into the core code to synchronise
-+       * the state.
-+       */
-+
-+      irq_mask_unmask_parent(d);
-+  }
-+
-+  /*
-+   * Statically populate the irqchip. Note that it is made const
-+   * (further indicated by the IRQCHIP_IMMUTABLE flag), and that
-+   * the GPIOCHIP_IRQ_RESOURCE_HELPER macro adds some extra
-+   * callbacks to the structure.
-+   */
-+  static const struct irq_chip my_gpio_irq_chip = {
-+      .name		= "my_gpio_irq",
-+      .irq_ack		= my_gpio_ack_irq,
-+      .irq_mask		= my_gpio_mask_irq,
-+      .irq_unmask	= my_gpio_unmask_irq,
-+      .irq_set_type	= my_gpio_set_irq_type,
-+      .flags		= IRQCHIP_IMMUTABLE,
-+      /* Provide the gpio resource callbacks */
-+      GPIOCHIP_IRQ_RESOURCE_HELPERS,
-+  };
-+
-   struct my_gpio *g;
-   struct gpio_irq_chip *girq;
- 
--  /* Set up the irqchip dynamically */
--  g->irq.name = "my_gpio_irq";
--  g->irq.irq_ack = my_gpio_ack_irq;
--  g->irq.irq_mask = my_gpio_mask_irq;
--  g->irq.irq_unmask = my_gpio_unmask_irq;
--  g->irq.irq_set_type = my_gpio_set_irq_type;
--
-   /* Get a pointer to the gpio_irq_chip */
-   girq = &g->gc.irq;
--  girq->chip = &g->irq;
-+  gpio_irq_chip_set_chip(girq, &my_gpio_irq_chip);
-   girq->default_type = IRQ_TYPE_NONE;
-   girq->handler = handle_bad_irq;
-   girq->fwnode = g->fwnode;
-@@ -605,8 +713,9 @@ When implementing an irqchip inside a GPIO driver, these two functions should
- typically be called in the .irq_disable() and .irq_enable() callbacks from the
- irqchip.
- 
--When using the gpiolib irqchip helpers, these callbacks are automatically
--assigned.
-+When IRQCHIP_IMMUTABLE is not advertised by the irqchip, these callbacks
-+are automatically assigned. This behaviour is deprecated and on its way
-+to be removed from the kernel.
- 
- 
- Real-Time compliance for GPIO IRQ chips
+
+> ---
+>  drivers/gpu/drm/msm/dsi/dsi.xml.h | 80 +++++++++++++++++++++++++++++++
+>  1 file changed, 80 insertions(+)
+>
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi.xml.h b/drivers/gpu/drm/msm/dsi/dsi.xml.h
+> index 4dee6f0bdda6..d1b2a17b0a66 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi.xml.h
+> +++ b/drivers/gpu/drm/msm/dsi/dsi.xml.h
+> @@ -704,5 +704,85 @@ static inline uint32_t DSI_VERSION_MAJOR(uint32_t val)
+>
+>  #define REG_DSI_CPHY_MODE_CTRL                                 0x000002d4
+>
+> +#define REG_DSI_VIDEO_COMPRESSION_MODE_CTRL                    0x0000029c
+> +#define DSI_VIDEO_COMPRESSION_MODE_CTRL_WC__MASK               0xffff0000
+> +#define DSI_VIDEO_COMPRESSION_MODE_CTRL_WC__SHIFT              16
+> +static inline uint32_t DSI_VIDEO_COMPRESSION_MODE_CTRL_WC(uint32_t val)
+> +{
+> +       return ((val) << DSI_VIDEO_COMPRESSION_MODE_CTRL_WC__SHIFT) & DSI_VIDEO_COMPRESSION_MODE_CTRL_WC__MASK;
+> +}
+> +#define DSI_VIDEO_COMPRESSION_MODE_CTRL_DATATYPE__MASK         0x00003f00
+> +#define DSI_VIDEO_COMPRESSION_MODE_CTRL_DATATYPE__SHIFT                8
+> +static inline uint32_t DSI_VIDEO_COMPRESSION_MODE_CTRL_DATATYPE(uint32_t val)
+> +{
+> +       return ((val) << DSI_VIDEO_COMPRESSION_MODE_CTRL_DATATYPE__SHIFT) & DSI_VIDEO_COMPRESSION_MODE_CTRL_DATATYPE__MASK;
+> +}
+> +#define DSI_VIDEO_COMPRESSION_MODE_CTRL_PKT_PER_LINE__MASK     0x000000c0
+> +#define DSI_VIDEO_COMPRESSION_MODE_CTRL_PKT_PER_LINE__SHIFT    6
+> +static inline uint32_t DSI_VIDEO_COMPRESSION_MODE_CTRL_PKT_PER_LINE(uint32_t val)
+> +{
+> +       return ((val) << DSI_VIDEO_COMPRESSION_MODE_CTRL_PKT_PER_LINE__SHIFT) & DSI_VIDEO_COMPRESSION_MODE_CTRL_PKT_PER_LINE__MASK;
+> +}
+> +#define DSI_VIDEO_COMPRESSION_MODE_CTRL_EOL_BYTE_NUM__MASK     0x00000030
+> +#define DSI_VIDEO_COMPRESSION_MODE_CTRL_EOL_BYTE_NUM__SHIFT    4
+> +static inline uint32_t DSI_VIDEO_COMPRESSION_MODE_CTRL_EOL_BYTE_NUM(uint32_t val)
+> +{
+> +       return ((val) << DSI_VIDEO_COMPRESSION_MODE_CTRL_EOL_BYTE_NUM__SHIFT) & DSI_VIDEO_COMPRESSION_MODE_CTRL_EOL_BYTE_NUM__MASK;
+> +}
+> +#define DSI_VIDEO_COMPRESSION_MODE_CTRL_EN                     0x00000001
+> +
+> +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL                  0x000002a4
+> +#define DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM1_DATATYPE__MASK       0x3f000000
+> +#define DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM1_DATATYPE__SHIFT      24
+> +static inline uint32_t DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM1_DATATYPE(uint32_t val)
+> +{
+> +       return ((val) << DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM1_DATATYPE__SHIFT) & DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM1_DATATYPE__MASK;
+> +}
+> +#define DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM1_PKT_PER_LINE__MASK   0x00c00000
+> +#define DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM1_PKT_PER_LINE__SHIFT  22
+> +static inline uint32_t DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM1_PKT_PER_LINE(uint32_t val)
+> +{
+> +       return ((val) << DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM1_PKT_PER_LINE__SHIFT) & DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM1_PKT_PER_LINE__MASK;
+> +}
+> +#define DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM1_EOL_BYTE_NUM__MASK   0x00300000
+> +#define DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM1_EOL_BYTE_NUM__SHIFT  20
+> +static inline uint32_t DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM1_EOL_BYTE_NUM(uint32_t val)
+> +{
+> +       return ((val) << DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM1_EOL_BYTE_NUM__SHIFT) & DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM1_EOL_BYTE_NUM__MASK;
+> +}
+> +#define DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM1_EN           0x00010000
+> +#define DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE__MASK       0x00003f00
+> +#define DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE__SHIFT      8
+> +static inline uint32_t DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE(uint32_t val)
+> +{
+> +       return ((val) << DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE__SHIFT) & DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE__MASK;
+> +}
+> +#define DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_PKT_PER_LINE__MASK   0x000000c0
+> +#define DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_PKT_PER_LINE__SHIFT  6
+> +static inline uint32_t DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_PKT_PER_LINE(uint32_t val)
+> +{
+> +       return ((val) << DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_PKT_PER_LINE__SHIFT) & DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_PKT_PER_LINE__MASK;
+> +}
+> +#define DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_EOL_BYTE_NUM__MASK   0x00000030
+> +#define DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_EOL_BYTE_NUM__SHIFT  4
+> +static inline uint32_t DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_EOL_BYTE_NUM(uint32_t val)
+> +{
+> +       return ((val) << DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_EOL_BYTE_NUM__SHIFT) & DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_EOL_BYTE_NUM__MASK;
+> +}
+> +#define DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_EN           0x00000001
+> +
+> +#define REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2                 0x000002a8
+> +#define DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM1_SLICE_WIDTH__MASK   0xffff0000
+> +#define DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM1_SLICE_WIDTH__SHIFT  16
+> +static inline uint32_t DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM1_SLICE_WIDTH(uint32_t val)
+> +{
+> +       return ((val) << DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM1_SLICE_WIDTH__SHIFT) & DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM1_SLICE_WIDTH__MASK;
+> +}
+> +#define DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM0_SLICE_WIDTH__MASK   0x0000ffff
+> +#define DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM0_SLICE_WIDTH__SHIFT  0
+> +static inline uint32_t DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM0_SLICE_WIDTH(uint32_t val)
+> +{
+> +       return ((val) << DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM0_SLICE_WIDTH__SHIFT) & DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM0_SLICE_WIDTH__MASK;
+> +}
+>
+>  #endif /* DSI_XML */
+> --
+> 2.34.1
+>
+
+
 -- 
-2.34.1
-
+With best wishes
+Dmitry
