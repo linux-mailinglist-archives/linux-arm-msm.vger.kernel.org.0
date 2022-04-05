@@ -2,69 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A73D4F4BC8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:06:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4102E4F4BFF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:11:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349243AbiDEXFP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Apr 2022 19:05:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60834 "EHLO
+        id S1575511AbiDEXIC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Apr 2022 19:08:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1573504AbiDETNT (ORCPT
+        with ESMTP id S1573512AbiDETP3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Apr 2022 15:13:19 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89023E885A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 12:11:20 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id q129so106896oif.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 12:11:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=+sCFFwWhVh6IX8olIQEwfE/A9caFnSQEQiTDby/DQD0=;
-        b=htZpWkYwxplvXURN6IyOQGpIM7h5Xaj/QSzBur6jP2dUuzrHLspI/2pUZmT5jJA26H
-         p/MLtsHVJX059A4he5GjdU7AnIBH/Pd0MiOXNMrXW2bsC3jr4X325qgSdNfJIFuKm3ww
-         oFU8c/+S2YeMLeJkGp8/tNdI4mm3Jyzt9cj4E=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=+sCFFwWhVh6IX8olIQEwfE/A9caFnSQEQiTDby/DQD0=;
-        b=ObqL/8K3ALI8Sl8SOxZgEjTYj5vrA1gWG8LIrTMJeWqleuENhKpA/RrrU//5UA6xQL
-         PLSjt5kgpfQLVMFnJmHanEr+giLBDOrZAEeVF5JhDKagXs/hIE4HEjVJbwz5EE+syvDh
-         r+G/BcUrglRiRnG5r0aQD1So4ykHCPXwHE5qj81SpA+x9JJw6mMrc8GMZBQCD27yfc++
-         wUeTU0r7xEiOJZsvBLDoSgPA+k5Z3iMEEcUi7yVl3wlvgQIKLDceuveke1n/rCQMyvw0
-         mRx06jfHJmFYx+OIGXBJwmOubLjeh5GCJ+jk5eEmUWgfVzWSKI0u2wSj1T1AOUm2Frjm
-         tWcQ==
-X-Gm-Message-State: AOAM533PONcZEQk1WlXK8UGcF74w4hV5ZqAlzCLkyIMF8SKjBIlWKR1r
-        q4slipOVGhHBxm+IACcrMRqH/IihEQOelJhB/6SRzHrvlyY=
-X-Google-Smtp-Source: ABdhPJxaJqt3rZ7rG2CvTp/vFfikXLJk33kvQpji7R5HlYgG9oSpRARWmCg3M9/Tlt7qRxM2Iw5QQ2YqXcp5w3lOf1A=
-X-Received: by 2002:aca:a9c8:0:b0:2da:45b6:b796 with SMTP id
- s191-20020acaa9c8000000b002da45b6b796mr1996111oie.193.1649185879962; Tue, 05
- Apr 2022 12:11:19 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 5 Apr 2022 14:11:19 -0500
+        Tue, 5 Apr 2022 15:15:29 -0400
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DA08E8863;
+        Tue,  5 Apr 2022 12:13:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1649186010; x=1680722010;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=BNf83Q5/1PWslvUKwhpqfDSkCkwhO7rU7ZNMZq/zkYQ=;
+  b=Nt2ugVq6ZqMblcRfnRhyCnAxy015M6MbzzTPNbCb/H01NrCxC4uk/jyq
+   fTEuDmhHr+quQtYAmqZ4BxshifjuQsS+SuTJxihfGuuJAVixuGGAF+0o4
+   HH/8Lybx4V9Thi3oZUOfc2RoWJ+Cz9j1CydcV4ercgQmxthp8izNPxrlr
+   iZSsxGLiFqo2E7DnEUIQkaxrPlpDDoqn1MrKHkTcEYQQF+GwvbbeVY0CX
+   hX6AJrEHJIF2OwyluXlj+f6+N9yhwBkI6gzIRDoIxZncBLmCb7KZ6Bevy
+   7OES3n4SCWpv73ibtRG9yMv0yFVscSQlTSzm/GuDL9SYqv91ZfrEWD8PP
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10308"; a="240777555"
+X-IronPort-AV: E=Sophos;i="5.90,236,1643702400"; 
+   d="scan'208";a="240777555"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Apr 2022 12:13:30 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,236,1643702400"; 
+   d="scan'208";a="789979762"
+Received: from lkp-server02.sh.intel.com (HELO a44fdfb70b94) ([10.239.97.151])
+  by fmsmga006.fm.intel.com with ESMTP; 05 Apr 2022 12:13:27 -0700
+Received: from kbuild by a44fdfb70b94 with local (Exim 4.95)
+        (envelope-from <lkp@intel.com>)
+        id 1nbocI-0003gn-FR;
+        Tue, 05 Apr 2022 19:13:26 +0000
+Date:   Wed, 6 Apr 2022 03:12:36 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
+Cc:     llvm@lists.linux.dev, kbuild-all@lists.01.org,
+        Jonathan Marek <jonathan@marek.ca>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        dri-devel@lists.freedesktop.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 14/14] drm/msm/dsi: Add support for DSC configuration
+Message-ID: <202204060308.OkAS3XG3-lkp@intel.com>
+References: <20220404163436.956875-15-vkoul@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <1649166633-25872-6-git-send-email-quic_c_skakit@quicinc.com>
-References: <1649166633-25872-1-git-send-email-quic_c_skakit@quicinc.com> <1649166633-25872-6-git-send-email-quic_c_skakit@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Tue, 5 Apr 2022 14:11:19 -0500
-Message-ID: <CAE-0n51rLRcWE+h3zaWNy-nJYK4tQoivjdbfgYrwTJbjYYxWFw@mail.gmail.com>
-Subject: Re: [PATCH V9 5/6] arm64: dts: qcom: pm8008: Add base dts file
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Satya Priya <quic_c_skakit@quicinc.com>
-Cc:     Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_collinsd@quicinc.com, quic_subbaram@quicinc.com,
-        quic_jprakash@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220404163436.956875-15-vkoul@kernel.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,34 +72,101 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Satya Priya (2022-04-05 06:50:32)
-> diff --git a/arch/arm64/boot/dts/qcom/pm8008.dtsi b/arch/arm64/boot/dts/qcom/pm8008.dtsi
-> new file mode 100644
-> index 0000000..24bd832
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/pm8008.dtsi
-> @@ -0,0 +1,47 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +// Copyright (c) 2022, The Linux Foundation. All rights reserved.
-> +
-> +&pm8008_bus {
-> +       pm8008: pm8008@8 {
+Hi Vinod,
 
-pmic@8
+I love your patch! Perhaps something to improve:
 
-> +               compatible = "qcom,pm8008";
-> +               reg = <0x8>;
-> +               #address-cells = <1>;
-> +               #size-cells = <0>;
-> +               #interrupt-cells = <2>;
-> +       };
-> +
-> +       pm8008_regulators: pm8008@9 {
+[auto build test WARNING on 05241de1f69eb7f56b0a5e0bec96a7752fad1b2f]
 
-pmic@9
+url:    https://github.com/intel-lab-lkp/linux/commits/Vinod-Koul/drm-msm-Add-Display-Stream-Compression-Support/20220405-003745
+base:   05241de1f69eb7f56b0a5e0bec96a7752fad1b2f
+config: hexagon-randconfig-r004-20220405 (https://download.01.org/0day-ci/archive/20220406/202204060308.OkAS3XG3-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project c4a1b07d0979e7ff20d7d541af666d822d66b566)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/6c54db3ee1e02d639e568c37121f797ac586af3d
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Vinod-Koul/drm-msm-Add-Display-Stream-Compression-Support/20220405-003745
+        git checkout 6c54db3ee1e02d639e568c37121f797ac586af3d
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=hexagon SHELL=/bin/bash drivers/gpu/drm/msm/
 
-> +               compatible = "qcom,pm8008-regulators";
-> +               reg = <0x9>;
-> +               #address-cells = <0>;
-> +               #size-cells = <0>;
-> +
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/gpu/drm/msm/dsi/dsi_host.c:918:23: warning: variable 'reg_ctrl' set but not used [-Wunused-but-set-variable]
+           u32 reg, intf_width, reg_ctrl, reg_ctrl2;
+                                ^
+   1 warning generated.
+
+
+vim +/reg_ctrl +918 drivers/gpu/drm/msm/dsi/dsi_host.c
+
+   914	
+   915	static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mode, u32 hdisplay)
+   916	{
+   917		struct msm_display_dsc_config *dsc = msm_host->dsc;
+ > 918		u32 reg, intf_width, reg_ctrl, reg_ctrl2;
+   919		u32 slice_per_intf, total_bytes_per_intf;
+   920		u32 pkt_per_line;
+   921		u32 bytes_in_slice;
+   922		u32 eol_byte_num;
+   923	
+   924		/* first calculate dsc parameters and then program
+   925		 * compress mode registers
+   926		 */
+   927		intf_width = hdisplay;
+   928		slice_per_intf = DIV_ROUND_UP(intf_width, dsc->drm->slice_width);
+   929	
+   930		/* If slice_per_pkt is greater than slice_per_intf
+   931		 * then default to 1. This can happen during partial
+   932		 * update.
+   933		 */
+   934		if (slice_per_intf > dsc->drm->slice_count)
+   935			dsc->drm->slice_count = 1;
+   936	
+   937		slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->drm->slice_width);
+   938		bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width * dsc->drm->bits_per_pixel, 8);
+   939	
+   940		dsc->drm->slice_chunk_size = bytes_in_slice;
+   941	
+   942		total_bytes_per_intf = bytes_in_slice * slice_per_intf;
+   943	
+   944		eol_byte_num = total_bytes_per_intf % 3;
+   945		pkt_per_line = slice_per_intf / dsc->drm->slice_count;
+   946	
+   947		if (is_cmd_mode) /* packet data type */
+   948			reg = DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE(MIPI_DSI_DCS_LONG_WRITE);
+   949		else
+   950			reg = DSI_VIDEO_COMPRESSION_MODE_CTRL_DATATYPE(MIPI_DSI_COMPRESSED_PIXEL_STREAM);
+   951	
+   952		/* DSI_VIDEO_COMPRESSION_MODE & DSI_COMMAND_COMPRESSION_MODE
+   953		 * registers have similar offsets, so for below common code use
+   954		 * DSI_VIDEO_COMPRESSION_MODE_XXXX for setting bits
+   955		 */
+   956		reg |= DSI_VIDEO_COMPRESSION_MODE_CTRL_PKT_PER_LINE(pkt_per_line >> 1);
+   957		reg |= DSI_VIDEO_COMPRESSION_MODE_CTRL_EOL_BYTE_NUM(eol_byte_num);
+   958		reg |= DSI_VIDEO_COMPRESSION_MODE_CTRL_EN;
+   959	
+   960		if (is_cmd_mode) {
+   961			reg_ctrl = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL);
+   962			reg_ctrl2 = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2);
+   963	
+   964			reg_ctrl |= reg;
+   965			reg_ctrl2 |= DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM0_SLICE_WIDTH(bytes_in_slice);
+   966	
+   967			dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL, reg);
+   968			dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2, reg_ctrl2);
+   969		} else {
+   970			dsi_write(msm_host, REG_DSI_VIDEO_COMPRESSION_MODE_CTRL, reg);
+   971		}
+   972	}
+   973	
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
