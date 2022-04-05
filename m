@@ -2,121 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89C654F4BF0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:10:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50CBC4F4BD6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:10:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1575403AbiDEXHc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Apr 2022 19:07:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51126 "EHLO
+        id S1449141AbiDEXGQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Apr 2022 19:06:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352510AbiDEUt3 (ORCPT
+        with ESMTP id S1388221AbiDEVxo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Apr 2022 16:49:29 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B40A42AC4;
-        Tue,  5 Apr 2022 13:23:35 -0700 (PDT)
+        Tue, 5 Apr 2022 17:53:44 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 347859BB99;
+        Tue,  5 Apr 2022 14:08:01 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id n6-20020a17090a670600b001caa71a9c4aso727554pjj.1;
+        Tue, 05 Apr 2022 14:08:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649190216; x=1680726216;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=+7AtI8Svdw+YyS90Bb5N100rWVe2spjtKW5TxoNJUo0=;
-  b=f8PILEMau1vB44h12kQZMho1IshiPyRNzOt+amq9svlQ1Ao+n8jcdHRA
-   yKx3WmD8QIBBX5naiwVV2featY2FuC3oH2Hqu+YaB51B1bqsJdcRPvapS
-   tvS5TgIQA+JZ7iOf1CbANi5fFomrID/sC8R9sB3lLgmX7P5X3WHzrbJd6
-   E=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 05 Apr 2022 13:23:24 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Apr 2022 13:23:24 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 5 Apr 2022 13:23:23 -0700
-Received: from [10.110.86.177] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 5 Apr 2022
- 13:23:22 -0700
-Message-ID: <daafdfd8-312e-cf42-d7bb-3fb914d443dc@quicinc.com>
-Date:   Tue, 5 Apr 2022 13:23:22 -0700
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mWNZR3xN77lNH2+vVDvTz9kvxP5RMITjN/TwsKnJ1EE=;
+        b=CE3++kpN4KX/5Ou/GyMP/XDiEd+sD6aWdaoMGXv4koz7pe5HZ3O9oNn0BbHievdDsy
+         gRraAn36CY5Vma4XfiauMtY8wBad6zfiIwOLvsgMPNq34HhD0KfoXxurSjEIE0UMZOh5
+         x8ksydmWAW8+HpNcMCEsxinGUGHuP1Jv8ovCsgtALHsghN1aQjvLZBBXbppcdTVOx6Bh
+         QjPyZ58k/nITx+UVSjKoUladchE217a6C0hJOL9lrDJLGnTwgsl5K/mVqM2ezfa4okJN
+         i4q1U+ZWc/7iBEMJWWgn0WhzhFlyP3sgMJ51d7vVHuQUQB4ChLywUpZFRO0mJ0S59wAg
+         2qHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mWNZR3xN77lNH2+vVDvTz9kvxP5RMITjN/TwsKnJ1EE=;
+        b=IiFYvgclppjNyhpV/J48Icn5yiBtdXfU+YfPySCJiP/US4XOfxFAAF6z7MgRCSYjJg
+         xpzDsbCfLaR5KcgSIjaVFG1f9XhG7LDy0eOIs5/k5Bt1n/2kAMneQNJdaqdHWFtpsqIt
+         8SNtWX+YUxXA7gMa+XMU/QTQF8qcOPSjQuX2CLrEG7KbLDYVAiGCoci4n4EfoGVd5LOL
+         0+niRQqYAiM5pt+aZgEOuZd4oAVGeXr2NdWlBd5lboiErjmyGl05RKqrqpT2QMrsuECE
+         jksatC1Mk1Lx5dRAN50aA7h0awRkH8NCretItbhxW86sx4k8BGbpf/xT0tRby3XZmQ7f
+         PFCg==
+X-Gm-Message-State: AOAM5337qpdkllexSWjAeepze6y2Vx0XgSJ2HbVszW9uXWfker1C2wE7
+        Ckmy91IcCZSV3eYWEyoP7yU=
+X-Google-Smtp-Source: ABdhPJy/JsdSFdDHguhmquGdEb4TaMTjGtBm4D+kWA4UKyn1DlVjMUH9Fy7l9i8vDn9GSpYiwsLeiQ==
+X-Received: by 2002:a17:90a:c3:b0:1ca:54c1:a684 with SMTP id v3-20020a17090a00c300b001ca54c1a684mr6138269pjd.148.1649192880749;
+        Tue, 05 Apr 2022 14:08:00 -0700 (PDT)
+Received: from jaschultz-Thelio-Major.corp.microsoft.com ([2001:4898:80e8:3:511c:41a7:57f7:f826])
+        by smtp.gmail.com with ESMTPSA id k22-20020aa788d6000000b004faaf897064sm16240010pff.106.2022.04.05.14.07.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Apr 2022 14:08:00 -0700 (PDT)
+From:   Jarrett Schultz <jaschultzms@gmail.com>
+X-Google-Original-From: Jarrett Schultz <jaschultzMS@gmail.com>
+To:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Mark Gross <markgross@kernel.org>,
+        Maximilian Luz <luzmaximilian@gmail.com>
+Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+        Felipe Balbi <balbi@kernel.org>,
+        Jarrett Schultz <jaschultz@microsoft.com>
+Subject: [PATCH v5 0/4] platform: surface: Introduce Surface XBL Driver
+Date:   Tue,  5 Apr 2022 14:07:46 -0700
+Message-Id: <20220405210750.619511-1-jaschultzMS@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v2] bus: mhi: host: pci_generic: Add missing poweroff() PM
- callback
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        <mhi@lists.linux.dev>
-CC:     <quic_hemantk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <loic.poulain@linaro.org>,
-        <stable@vger.kernel.org>
-References: <20220405125907.5644-1-manivannan.sadhasivam@linaro.org>
-From:   Bhaumik Vasav Bhatt <quic_bbhatt@quicinc.com>
-In-Reply-To: <20220405125907.5644-1-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Jarrett Schultz <jaschultz@microsoft.com>
 
-On 4/5/2022 5:59 AM, Manivannan Sadhasivam wrote:
-> During hibernation process, once thaw() stage completes, the MHI endpoint
-> devices will be in M0 state post recovery. After that, the devices will be
-> powered down so that the system can enter the target sleep state. During
-> this stage, the PCI core will put the devices in D3hot. But this transition
-> is allowed by the MHI spec. The devices can only enter D3hot when it is in
-> M3 state.
->
-> So for fixing this issue, let's add the poweroff() callback that will get
-> executed before putting the system in target sleep state during
-> hibernation. This callback will power down the device properly so that it
-> could be restored during restore() or thaw() stage.
->
-> Cc: stable@vger.kernel.org
-> Fixes: 5f0c2ee1fe8d ("bus: mhi: pci-generic: Fix hibernation")
-> Reported-by: Hemant Kumar <quic_hemantk@quicinc.com>
-> Suggested-by: Hemant Kumar <quic_hemantk@quicinc.com>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->
-> Changes in v2:
->
-> * Hemant suggested to use restore function for poweroff() callback as we can
-> make sure that the device gets powered down properly.
->
->   drivers/bus/mhi/host/pci_generic.c | 1 +
->   1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 9527b7d63840..ef85dbfb3216 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -1085,6 +1085,7 @@ static const struct dev_pm_ops mhi_pci_pm_ops = {
->   	.resume = mhi_pci_resume,
->   	.freeze = mhi_pci_freeze,
->   	.thaw = mhi_pci_restore,
-> +	.poweroff = mhi_pci_freeze,
+After v4, there were some suggestions to change the driver again to use
+nvmem that would include some other changes to the sm8150 dtsi. While
+the suggestions make sense, this driver was supposed to remain simple
+for the introduction in order to get it into the tree and I think that
+it would be best to implement those and any other suggestions in a future
+patch. Hopefully this patch is now in a state where it can be accepted.
+Thanks to all who have helped and been patient along the way, this was
+my first patch :)
 
-It is possible that .thaw() queues recovery work and recovery work is 
-still running
+~ Jarrett
 
-while .poweroff() is called. I would suggest adding a flush_work() in 
-freeze such that
+---
 
-we don't try to power off while we're also trying to power on MHI from 
-recovery work.
+Introduce the Surface Extensible Boot Loader driver for the Surface Duo.
+Exposes information about the driver to user space via sysfs for
+consumption in manufacturing mode.
 
->   	.restore = mhi_pci_restore,
->   #endif
->   };
+---
+
+Changes in v5:
+
+ - Minor changes to yaml
+
+---
+
+Changes in v4:
+
+ - Small binding definition changes
+ - Removed ACPI propagation from patch series since it has been
+   cherry-picked
+ - Fixed the Signed-off-by: and From: mismatch
+
+---
+
+Changes in v3:
+ - For the yaml documentation:
+    * Updated description
+    * Fixed examples
+    * Updated 'required' field
+ - Further propogated ACPI dependency in Kconfigs
+ - Updated sysfs several binding descriptions
+ - Renamed files to conform to naming conventions
+
+---
+
+Changes in v2:
+ - Per Maximilian, added patch 2: propagated ACPI dependency from the
+   directory as a whole to each individual driver
+ - For the yaml documentation:
+    * Removed json-schema dependence
+    * Elaborated on description of driver
+    * Updated example
+ - Changed target KernelVersion in sysfs documentation
+ - Updated MAINTAINER changes to be properly applied across patches
+ - For the driver itself,
+    * Added types.h inclusion and removed unused inclusions
+    * Minor updates to code and acronym style
+    * Remove __packed attribute on driver struct
+    * Use .dev_groups for sysfs
+ - Added more in-depth description of driver in Kconfig
+ - Modified dts to reference a newly added section in sm8150.dtsi
+
+---
+
+Jarrett Schultz (4):
+  dt-bindings: platform: microsoft: Document surface xbl
+  platform: surface: Add surface xbl
+  arm64: dts: qcom: sm8150: Add imem section
+  arm64: dts: qcom: surface-duo: Add surface xbl
+
+ .../ABI/testing/sysfs-platform-surface-xbl    |  79 ++++++++
+ .../platform/microsoft/surface-xbl.yaml       |  70 +++++++
+ MAINTAINERS                                   |   9 +
+ .../dts/qcom/sm8150-microsoft-surface-duo.dts |  10 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |   8 +
+ drivers/platform/surface/Kconfig              |  12 ++
+ drivers/platform/surface/Makefile             |   1 +
+ drivers/platform/surface/surface_xbl.c        | 186 ++++++++++++++++++
+ 8 files changed, 375 insertions(+)
+ create mode 100644 Documentation/ABI/testing/sysfs-platform-surface-xbl
+ create mode 100644 Documentation/devicetree/bindings/platform/microsoft/surface-xbl.yaml
+ create mode 100644 drivers/platform/surface/surface_xbl.c
+
+-- 
+2.25.1
+
