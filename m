@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B7C44F4BDF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:10:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B48C14F4BBF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:06:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1452668AbiDEXGo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Apr 2022 19:06:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48792 "EHLO
+        id S243376AbiDEXEv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Apr 2022 19:04:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1443747AbiDEPkP (ORCPT
+        with ESMTP id S1443752AbiDEPkP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 5 Apr 2022 11:40:15 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C4701FCC2
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 06:58:56 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id b15so12174688pfm.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 06:58:56 -0700 (PDT)
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F47436176
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 06:59:02 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id h23-20020a17090a051700b001c9c1dd3acbso2727153pjh.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 06:59:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Bmelj8zspcRkN5OX8DNe2PV6W/VRFRvCWxHNctPaPZA=;
-        b=YhhSNA1OBVQonIaLXMiQYWLlVnraAbmy19de5twCLbux8x7TpHoPiH4QbCytLrIv7D
-         636xS6dz++z5UEt5F7Hwd41xd1/V2xdM0FtXFO2nm9JUlgpMmzNsWqdSAzoKD4uG6dmR
-         ndAb1SPDJfiCW/yGl1QB78p2HikvDdnb93ScsXnbpw9BhNmFlHkqXuMxPDUQtSNdg1rQ
-         /vI5Q+GIDHlpBHNnag1BvwJ6QebMq0f60Vephhf7G4VdXH0PFG8r6BcDlJiFbFVfgsZD
-         AMaEdt5QhSpIRqOibSE2UJ13ff7JBSenDqxraJebtW4e26Byen0I+Uf4GwG/m6KQTvmR
-         IFlQ==
+        bh=JVY0XWgEFqKBcBODC2aUro0wfNuh9F1jWG0iBRjJKlc=;
+        b=CECHhSi/ChNCnFKW2Ngi29bDNCcnGA/F27Lvfwc5z7aBv8cgV89+bLnAJZXED1q3Rt
+         4LYOl3F28MFjBtioSeqm4Y0Po6Ofj8EPYewrSfcdIsdZJr10IW/RIIRCAN2rBu48CJqI
+         +pVdaNOgH90MUSkdnMI8re8aei67Zf51SmgwBsLI+qrpI85OgQRnpommdDfFpBu0rSXR
+         CvevSEUGmSluIXyF1Zl0wmL1MUwnB966oQlBf4SyBaXcKetVw0PQf14m0Rxgg1B5EAjk
+         JrDRs5hyuAnpdSqcFJVXIGyfie366HBo0oNqaT/bDxpAnu2PlB1AiG1K1WLlMB6K9M0K
+         6owA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Bmelj8zspcRkN5OX8DNe2PV6W/VRFRvCWxHNctPaPZA=;
-        b=05QyevmazvAt76koUkIgIJX1dIn4ldRblKzkmguM278Ile51qs12ta6CmOKVTcK5CQ
-         RNMuSAgr4OnVYXB2bpuT03z4BvJPEQ4kdcojLPsN483YedJc6ZcHfOFjOgDANMNP4zB7
-         fFYxAJyHHYkKLy+UGiRIsjO4sySAhI/86CaDF9NB90uch6vf51Rp74AAMHDBSJu9tYtk
-         /tlTw1bREpEr9kKv+uMgRv4sbQSIenKxkHs+YHXDdNPqa3XSx+1n9Pxm1uhuhudWT81V
-         xJOhQdw2WdACwq5XRTTizw1QHJqyeXiY2cUDO0f+2qYMRfccnHfauX3CjZ4nd+xgIAO9
-         K9tQ==
-X-Gm-Message-State: AOAM531LMQKUg6E6OJVcznjWZYMG5FASZV0WwUHutUaw+y0Uw8W4ybxI
-        pnBTNq6RxItP2+pl/moii7KL
-X-Google-Smtp-Source: ABdhPJzauq+Id391HU1LBwX25YeLxQps8qIaXH8BAQx+fRGgrGdWICOlILSGpH2os6BDmEcCCPvF7Q==
-X-Received: by 2002:a63:d454:0:b0:386:86:6aaa with SMTP id i20-20020a63d454000000b0038600866aaamr2999348pgj.60.1649167135756;
-        Tue, 05 Apr 2022 06:58:55 -0700 (PDT)
+        bh=JVY0XWgEFqKBcBODC2aUro0wfNuh9F1jWG0iBRjJKlc=;
+        b=MnRuFjIE8U4SEJRu5PgG29XPIt4YvoDe1F66RUtwmIU7tBT0GZoGWXCG2V/xoJIHxm
+         qkS4gGoaaGT96MyP5P2v51nBesKLZp4r80TrmNjRR0ENZxhkdJKEqOPR7r2+Kl8T8hLz
+         7H/0QnlZLsQyi1RjmMUVhNkv+BYH8QbJDOoL6a9HL9KcbqshIb/5En1beMIH2sCgIP1J
+         UvD31pKnBEqljtld1d7k+tJZdg3v14RxKo7VHXmCKcpcVaOyoBfDF+1tPQt2U1uqVYeK
+         jYrcuo5F6RkF8hcC3eUIX6MkeqTXhRDjDyQNTFzikOQ9K9cMxeGkGvvfOUOO0qBQZ4sF
+         l9MQ==
+X-Gm-Message-State: AOAM532B5MNUxFLWVkXGOro0X/CGvV9N9xhEZnUK/B7/3jA6AK8kJpK4
+        Yxf8LjNYbAWY2EVy1owq//Tp
+X-Google-Smtp-Source: ABdhPJwK3St2JVbbAtrnVzRWtsiBsVw3gbgAM6i1UuW6XZU7wesesimCY8QWNogjeThdPm+Ge5XA7w==
+X-Received: by 2002:a17:902:f792:b0:153:1566:18 with SMTP id q18-20020a170902f79200b0015315660018mr3666448pln.115.1649167141703;
+        Tue, 05 Apr 2022 06:59:01 -0700 (PDT)
 Received: from localhost.localdomain ([59.92.98.98])
-        by smtp.gmail.com with ESMTPSA id u14-20020a056a00124e00b004fab8f3245fsm16785402pfi.149.2022.04.05.06.58.50
+        by smtp.gmail.com with ESMTPSA id u14-20020a056a00124e00b004fab8f3245fsm16785402pfi.149.2022.04.05.06.58.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Apr 2022 06:58:55 -0700 (PDT)
+        Tue, 05 Apr 2022 06:59:01 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     gregkh@linuxfoundation.org
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
@@ -55,9 +55,9 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         quic_bbhatt@quicinc.com, quic_jhugo@quicinc.com,
         bjorn.andersson@linaro.org, dmitry.baryshkov@linaro.org,
         Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 10/18] bus: mhi: ep: Add support for powering down the MHI endpoint stack
-Date:   Tue,  5 Apr 2022 19:27:46 +0530
-Message-Id: <20220405135754.6622-11-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 11/18] bus: mhi: ep: Add support for handling MHI_RESET
+Date:   Tue,  5 Apr 2022 19:27:47 +0530
+Message-Id: <20220405135754.6622-12-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20220405135754.6622-1-manivannan.sadhasivam@linaro.org>
 References: <20220405135754.6622-1-manivannan.sadhasivam@linaro.org>
@@ -73,144 +73,127 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for MHI endpoint power_down that includes stopping all
-available channels, destroying the channels, resetting the event and
-transfer rings and freeing the host cache.
+Add support for handling MHI_RESET in MHI endpoint stack. MHI_RESET will
+be issued by the host during shutdown and during error scenario so that
+it can recover the endpoint device without restarting the whole device.
 
-The stack will be powered down whenever the physical bus link goes down.
+MHI_RESET handling involves resetting the internal MHI registers, data
+structures, state machines, resetting all channels/rings and setting
+MHICTRL.RESET bit to 0. Additionally the device will also move to READY
+state if the reset was due to SYS_ERR.
 
 Reviewed-by: Alex Elder <elder@linaro.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/bus/mhi/ep/main.c | 78 +++++++++++++++++++++++++++++++++++++++
- include/linux/mhi_ep.h    |  6 +++
- 2 files changed, 84 insertions(+)
+ drivers/bus/mhi/ep/main.c | 53 +++++++++++++++++++++++++++++++++++++++
+ include/linux/mhi_ep.h    |  2 ++
+ 2 files changed, 55 insertions(+)
 
 diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index 20d579733486..968025e4d3ac 100644
+index 968025e4d3ac..d36708d43eb6 100644
 --- a/drivers/bus/mhi/ep/main.c
 +++ b/drivers/bus/mhi/ep/main.c
-@@ -22,6 +22,8 @@
+@@ -381,6 +381,7 @@ static irqreturn_t mhi_ep_irq(int irq, void *data)
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+ 	enum mhi_state state;
+ 	u32 int_value;
++	bool mhi_reset;
  
- static DEFINE_IDA(mhi_ep_cntrl_ida);
- 
-+static int mhi_ep_destroy_device(struct device *dev, void *data);
-+
- static int mhi_ep_send_event(struct mhi_ep_cntrl *mhi_cntrl, u32 ring_idx,
- 			     struct mhi_ring_element *el, bool bei)
- {
-@@ -400,6 +402,68 @@ static irqreturn_t mhi_ep_irq(int irq, void *data)
- 	return IRQ_HANDLED;
- }
- 
-+static void mhi_ep_abort_transfer(struct mhi_ep_cntrl *mhi_cntrl)
-+{
-+	struct mhi_ep_ring *ch_ring, *ev_ring;
-+	struct mhi_result result = {};
-+	struct mhi_ep_chan *mhi_chan;
-+	int i;
-+
-+	/* Stop all the channels */
-+	for (i = 0; i < mhi_cntrl->max_chan; i++) {
-+		mhi_chan = &mhi_cntrl->mhi_chan[i];
-+		if (!mhi_chan->ring.started)
-+			continue;
-+
-+		mutex_lock(&mhi_chan->lock);
-+		/* Send channel disconnect status to client drivers */
-+		if (mhi_chan->xfer_cb) {
-+			result.transaction_status = -ENOTCONN;
-+			result.bytes_xferd = 0;
-+			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
+ 	/* Acknowledge the ctrl interrupt */
+ 	int_value = mhi_ep_mmio_read(mhi_cntrl, MHI_CTRL_INT_STATUS);
+@@ -389,6 +390,14 @@ static irqreturn_t mhi_ep_irq(int irq, void *data)
+ 	/* Check for ctrl interrupt */
+ 	if (FIELD_GET(MHI_CTRL_INT_STATUS_MSK, int_value)) {
+ 		dev_dbg(dev, "Processing ctrl interrupt\n");
++		mhi_ep_mmio_get_mhi_state(mhi_cntrl, &state, &mhi_reset);
++		if (mhi_reset) {
++			dev_info(dev, "Host triggered MHI reset!\n");
++			disable_irq_nosync(mhi_cntrl->irq);
++			schedule_work(&mhi_cntrl->reset_work);
++			return IRQ_HANDLED;
 +		}
 +
-+		mhi_chan->state = MHI_CH_STATE_DISABLED;
-+		mutex_unlock(&mhi_chan->lock);
+ 		mhi_ep_process_ctrl_interrupt(mhi_cntrl, state);
+ 	}
+ 
+@@ -464,6 +473,49 @@ static void mhi_ep_abort_transfer(struct mhi_ep_cntrl *mhi_cntrl)
+ 	mhi_cntrl->enabled = false;
+ }
+ 
++static void mhi_ep_reset_worker(struct work_struct *work)
++{
++	struct mhi_ep_cntrl *mhi_cntrl = container_of(work, struct mhi_ep_cntrl, reset_work);
++	struct device *dev = &mhi_cntrl->mhi_dev->dev;
++	enum mhi_state cur_state;
++	int ret;
++
++	mhi_ep_abort_transfer(mhi_cntrl);
++
++	spin_lock_bh(&mhi_cntrl->state_lock);
++	/* Reset MMIO to signal host that the MHI_RESET is completed in endpoint */
++	mhi_ep_mmio_reset(mhi_cntrl);
++	cur_state = mhi_cntrl->mhi_state;
++	spin_unlock_bh(&mhi_cntrl->state_lock);
++
++	/*
++	 * Only proceed further if the reset is due to SYS_ERR. The host will
++	 * issue reset during shutdown also and we don't need to do re-init in
++	 * that case.
++	 */
++	if (cur_state == MHI_STATE_SYS_ERR) {
++		mhi_ep_mmio_init(mhi_cntrl);
++
++		/* Set AMSS EE before signaling ready state */
++		mhi_ep_mmio_set_env(mhi_cntrl, MHI_EE_AMSS);
++
++		/* All set, notify the host that we are ready */
++		ret = mhi_ep_set_ready_state(mhi_cntrl);
++		if (ret)
++			return;
++
++		dev_dbg(dev, "READY state notification sent to the host\n");
++
++		ret = mhi_ep_enable(mhi_cntrl);
++		if (ret) {
++			dev_err(dev, "Failed to enable MHI endpoint: %d\n", ret);
++			return;
++		}
++
++		enable_irq(mhi_cntrl->irq);
 +	}
-+
-+	flush_workqueue(mhi_cntrl->wq);
-+
-+	/* Destroy devices associated with all channels */
-+	device_for_each_child(&mhi_cntrl->mhi_dev->dev, NULL, mhi_ep_destroy_device);
-+
-+	/* Stop and reset the transfer rings */
-+	for (i = 0; i < mhi_cntrl->max_chan; i++) {
-+		mhi_chan = &mhi_cntrl->mhi_chan[i];
-+		if (!mhi_chan->ring.started)
-+			continue;
-+
-+		ch_ring = &mhi_cntrl->mhi_chan[i].ring;
-+		mutex_lock(&mhi_chan->lock);
-+		mhi_ep_ring_reset(mhi_cntrl, ch_ring);
-+		mutex_unlock(&mhi_chan->lock);
-+	}
-+
-+	/* Stop and reset the event rings */
-+	for (i = 0; i < mhi_cntrl->event_rings; i++) {
-+		ev_ring = &mhi_cntrl->mhi_event[i].ring;
-+		if (!ev_ring->started)
-+			continue;
-+
-+		mutex_lock(&mhi_cntrl->event_lock);
-+		mhi_ep_ring_reset(mhi_cntrl, ev_ring);
-+		mutex_unlock(&mhi_cntrl->event_lock);
-+	}
-+
-+	/* Stop and reset the command ring */
-+	mhi_ep_ring_reset(mhi_cntrl, &mhi_cntrl->mhi_cmd->ring);
-+
-+	mhi_ep_free_host_cfg(mhi_cntrl);
-+	mhi_ep_mmio_mask_interrupts(mhi_cntrl);
-+
-+	mhi_cntrl->enabled = false;
 +}
 +
  int mhi_ep_power_up(struct mhi_ep_cntrl *mhi_cntrl)
  {
  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-@@ -454,6 +518,16 @@ int mhi_ep_power_up(struct mhi_ep_cntrl *mhi_cntrl)
- }
- EXPORT_SYMBOL_GPL(mhi_ep_power_up);
+@@ -738,6 +790,7 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+ 	}
  
-+void mhi_ep_power_down(struct mhi_ep_cntrl *mhi_cntrl)
-+{
-+	if (mhi_cntrl->enabled)
-+		mhi_ep_abort_transfer(mhi_cntrl);
-+
-+	kfree(mhi_cntrl->mhi_event);
-+	disable_irq(mhi_cntrl->irq);
-+}
-+EXPORT_SYMBOL_GPL(mhi_ep_power_down);
-+
- static void mhi_ep_release_device(struct device *dev)
- {
- 	struct mhi_ep_device *mhi_dev = to_mhi_ep_device(dev);
-@@ -733,6 +807,10 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
- }
- EXPORT_SYMBOL_GPL(mhi_ep_register_controller);
+ 	INIT_WORK(&mhi_cntrl->state_work, mhi_ep_state_worker);
++	INIT_WORK(&mhi_cntrl->reset_work, mhi_ep_reset_worker);
  
-+/*
-+ * It is expected that the controller drivers will power down the MHI EP stack
-+ * using "mhi_ep_power_down()" before calling this function to unregister themselves.
-+ */
- void mhi_ep_unregister_controller(struct mhi_ep_cntrl *mhi_cntrl)
- {
- 	struct mhi_ep_device *mhi_dev = mhi_cntrl->mhi_dev;
+ 	mhi_cntrl->wq = alloc_workqueue("mhi_ep_wq", 0, 0);
+ 	if (!mhi_cntrl->wq) {
 diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
-index 3b065f82fbeb..9da683e8302c 100644
+index 9da683e8302c..2f31a54c205f 100644
 --- a/include/linux/mhi_ep.h
 +++ b/include/linux/mhi_ep.h
-@@ -244,4 +244,10 @@ void mhi_ep_unregister_controller(struct mhi_ep_cntrl *mhi_cntrl);
-  */
- int mhi_ep_power_up(struct mhi_ep_cntrl *mhi_cntrl);
+@@ -76,6 +76,7 @@ struct mhi_ep_db_info {
+  * @ch_db_list: List of queued channel doorbells
+  * @wq: Dedicated workqueue for handling rings and state changes
+  * @state_work: State transition worker
++ * @reset_work: Worker for MHI Endpoint reset
+  * @raise_irq: CB function for raising IRQ to the host
+  * @alloc_map: CB function for allocating memory in endpoint for storing host context and mapping it
+  * @unmap_free: CB function to unmap and free the allocated memory in endpoint for storing host context
+@@ -122,6 +123,7 @@ struct mhi_ep_cntrl {
  
-+/**
-+ * mhi_ep_power_down - Power down the MHI endpoint stack
-+ * @mhi_cntrl: MHI controller
-+ */
-+void mhi_ep_power_down(struct mhi_ep_cntrl *mhi_cntrl);
-+
- #endif
+ 	struct workqueue_struct *wq;
+ 	struct work_struct state_work;
++	struct work_struct reset_work;
+ 
+ 	void (*raise_irq)(struct mhi_ep_cntrl *mhi_cntrl, u32 vector);
+ 	int (*alloc_map)(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr, phys_addr_t *phys_ptr,
 -- 
 2.25.1
 
