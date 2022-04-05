@@ -2,90 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DEBF64F4BD1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:06:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 45EEB4F4BE0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:10:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1446429AbiDEXFx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Apr 2022 19:05:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32884 "EHLO
+        id S1453677AbiDEXGt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Apr 2022 19:06:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1458011AbiDERFA (ORCPT
+        with ESMTP id S1458174AbiDERNK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Apr 2022 13:05:00 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2274C8BE25
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 10:03:01 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id bg10so28067635ejb.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 10:03:01 -0700 (PDT)
+        Tue, 5 Apr 2022 13:13:10 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 051FF32989
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 10:11:10 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id w17-20020a056830111100b005b22c584b93so9792346otq.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 10:11:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=W9jjXhkkwggvTX4fvJBrk+j1Dfql0KOELV0oxfWMhuc=;
-        b=Da196R/xzbnxuTIH3vscQpCMovYwydT/AzCJSlQj8Eqi4CvIwtAd/mUQm9MmrSBpfo
-         C+EBgKeBCuBKVRkDsHPA8cOoIX8OcoIl86zyYotKiHUopfezjcGIoi0dE+KUYYdh8QMp
-         KVzZw8avVxGZB0tQNm3+yFeorwp26KB33gYBo=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=2aY58p3Eu08i1zvroIKdthxIFG+lHzOcPDP1Vod5UdQ=;
+        b=BJlLixmapZXG3Z12MRft8f1o+ERnrNsMEOuO+htxHtOkkXNoC4g+Fj1hvUrrz2eiR4
+         bbLh9uCYeNiIVW87oZB/Hf2zirGPhRhZs4MZFYQKP0lT5uFogrweIdBUU638/F+vk8MM
+         1XdUXhdAsAizdg4UAkuu6oeBzHDIdwhMxz+vGg+2NqOPoCUyUnwMUPKELdYC0y2EEVnx
+         l302qabGpKEelNd6fdET2izAcrhjx6ZXdty+FKfxGQhRT1RWJZTm6vZ6qscVeEq76dyX
+         QL55dLz7mFEFaoJpPbnuJnPj9hVDedGHH2VDGUnoO0snxp7Lh/xCE0QEunJnYaWLh0gi
+         0wsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=W9jjXhkkwggvTX4fvJBrk+j1Dfql0KOELV0oxfWMhuc=;
-        b=TtddMsTRidw9tFAdDDg8cVHhcHRiPFPnHkDQ6GyNNfSHrYLib3/NPY5WHgO9hlHYel
-         UwqOWgNfKS1s+qTmloCKJ2TSNyqe1TciuHBaglCfHJO4bTJIg9dfyuI1ZIa3DsMZp1Ml
-         fjKnQOB9+f83AoaykadZoqPJQQhXCL+DDv+Oy01DSaEqAkMq6vaQfEChfwIH2p3XOsHR
-         LeOiuj3x1cxgAJfF1eSAv01s/jXC0O/fF+3VwtTslGCvaCkF1ybajLwkDj8ktQfMuaRA
-         YUxMnB5TLO8LX7IXiKd0kiAV4O9T1RzOpVWV0D4HQDnLXsecn9n2uewud6BzeVvZ6PXn
-         kiog==
-X-Gm-Message-State: AOAM532KZMprh2dvV7Mr/P+dvvkhpoyfi8lUZ9sMWKumZqAUBD6W3xeC
-        EduXDbZh5w5AbORMQUcpgj7BxCHngKnOMfnZ
-X-Google-Smtp-Source: ABdhPJwYz2K61bHVShjbuf0mxJ42/fm4bn63F8cHRvpj5Jq9hB6fumEYNU61bItlZ5FjiOesTlXVuA==
-X-Received: by 2002:a17:907:7b88:b0:6df:ee7d:10e2 with SMTP id ne8-20020a1709077b8800b006dfee7d10e2mr4690717ejc.586.1649178179354;
-        Tue, 05 Apr 2022 10:02:59 -0700 (PDT)
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com. [209.85.128.49])
-        by smtp.gmail.com with ESMTPSA id au22-20020a170907093600b006e4ad0bf8f7sm5660678ejc.91.2022.04.05.10.02.56
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Apr 2022 10:02:57 -0700 (PDT)
-Received: by mail-wm1-f49.google.com with SMTP id l62-20020a1c2541000000b0038e4570af2fso7192wml.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 10:02:56 -0700 (PDT)
-X-Received: by 2002:a05:600c:4f10:b0:38c:ae36:d305 with SMTP id
- l16-20020a05600c4f1000b0038cae36d305mr3996092wmq.34.1649178175654; Tue, 05
- Apr 2022 10:02:55 -0700 (PDT)
-MIME-Version: 1.0
-References: <1648656179-10347-1-git-send-email-quic_sbillaka@quicinc.com>
- <1648656179-10347-2-git-send-email-quic_sbillaka@quicinc.com>
- <CAD=FV=X+QvjwoT2zGP82KW4kD0oMUY6ZgCizSikNX_Uj8dNDqA@mail.gmail.com>
- <392b933f-760c-3c81-1040-c514045df3da@linaro.org> <CAD=FV=W4PYK-t607yjRbfjDjjEZX0KdgHDRukw_vSH8E8EDH6w@mail.gmail.com>
- <CAA8EJppt9XONbgtKfmHmN+==QNqiVJeb8GKJFdZm=yyY-tgmHQ@mail.gmail.com>
- <CAD=FV=U5-sTDLYdkeJWLAOG-0wgxR49VxtwUyUO7z2PuibLGsg@mail.gmail.com> <CAA8EJppgfYgQjG8A4LsR-1wmBj3Ku3eO8cKfAYhxjWXL7e3eHg@mail.gmail.com>
-In-Reply-To: <CAA8EJppgfYgQjG8A4LsR-1wmBj3Ku3eO8cKfAYhxjWXL7e3eHg@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 5 Apr 2022 10:02:42 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=V=a1CnT8fqTJR40WoS3BaDQ3xZ=HnHVHqZh=MEmVUZBA@mail.gmail.com>
-Message-ID: <CAD=FV=V=a1CnT8fqTJR40WoS3BaDQ3xZ=HnHVHqZh=MEmVUZBA@mail.gmail.com>
-Subject: Re: [PATCH v6 1/8] drm/msm/dp: Add eDP support via aux_bus
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=2aY58p3Eu08i1zvroIKdthxIFG+lHzOcPDP1Vod5UdQ=;
+        b=CFD434eGW9PBKf/LVBtPITpDzgiftCC5PHQoF9bfqRLPlpJn3x0Fi1DGTf0w499aFa
+         3PgHfFXCwqHMdSzeXDnFFhVyKR2d/l/6zSxScsAVEGKOUdSVOnN6+PdWbBjnR3jFDeBS
+         X3ii3qAOefBqRvzyr0QWb714IKW/2CeeqHaOe0TYB9ooUxyxqMQskB9LX6baJ7U1BhZG
+         TehhqMIilVa7t0LrlSb3laegY/xT5/03y4T6NAMoY2cmxGkom+s+FsB8bEtxRPmjWVIm
+         +BixE/GAFo4QA8zuqHr4kUOR1MqqBHJS/QtqPIHjfKL+HBFo7RnpwhsIWzsIjbt4G5pB
+         wWgw==
+X-Gm-Message-State: AOAM5326e0vMXCnVu04wR9sT2CkQ3eUpVRrN280bxiY0YihK0nRDHaP1
+        m2OblUOHEXBbGpnhGS0mWihkBg==
+X-Google-Smtp-Source: ABdhPJw3Dog+Ye6joupCF1nJ1gu6mLF/8uu2LULDI3pj1f67IYGzNXfMwLJXsBStJIdXMshXWyQ+wg==
+X-Received: by 2002:a9d:6442:0:b0:5b2:3851:597 with SMTP id m2-20020a9d6442000000b005b238510597mr1566869otl.247.1649178669314;
+        Tue, 05 Apr 2022 10:11:09 -0700 (PDT)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id e4-20020a056808148400b002d9be41b179sm5680214oiw.50.2022.04.05.10.11.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Apr 2022 10:11:08 -0700 (PDT)
+Date:   Tue, 5 Apr 2022 10:13:31 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        quic_kalyant <quic_kalyant@quicinc.com>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        quic_vproddut <quic_vproddut@quicinc.com>,
-        "Aravind Venkateswaran (QUIC)" <quic_aravindh@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Bean Huo <beanhuo@micron.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Subject: Re: [RFC PATCH 3/4] arm64: dts: qcom: sdm845: control RPMHPD
+ performance states with UFS
+Message-ID: <Ykx4u+E/vDNrQRUg@ripper>
+References: <20220401145820.1003826-1-krzysztof.kozlowski@linaro.org>
+ <20220401145820.1003826-4-krzysztof.kozlowski@linaro.org>
+ <0da0b229-3493-967d-c14d-60d3246b07b2@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0da0b229-3493-967d-c14d-60d3246b07b2@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -93,105 +88,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Sun 03 Apr 17:02 PDT 2022, Dmitry Baryshkov wrote:
 
-On Tue, Apr 5, 2022 at 5:54 AM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
-> > 3. For DP and eDP HPD means something a little different. Essentially
-> > there are two concepts: a) is a display physically connected and b) is
-> > the display powered up and ready. For DP, the two are really tied
-> > together. From the kernel's point of view you never "power down" a DP
-> > display and you can't detect that it's physically connected until it's
-> > ready. Said another way, on you tie "is a display there" to the HPD
-> > line and the moment a display is there it's ready for you to do AUX
-> > transfers. For eDP, in the lowest power state of a display it _won't_
-> > assert its "HPD" signal. However, it's still physically present. For
-> > eDP you simply have to _assume_ it's present without any actual proof
-> > since you can't get proof until you power it up. Thus for eDP, you
-> > report that the display is there as soon as we're asked. We can't
-> > _talk_ to the display yet, though. So in get_modes() we need to be
-> > able to power the display on enough to talk over the AUX channel to
-> > it. As part of this, we wait for the signal named "HPD" which really
-> > means "panel finished powering on" in this context.
-> >
-> > NOTE: for aux transfer, we don't have the _display_ pipe and clocks
-> > running. We only have enough stuff running to do the AUX transfer.
-> > We're not clocking out pixels. We haven't fully powered on the
-> > display. The AUX transfer is designed to be something that can be done
-> > early _before_ you turn on the display.
-> >
-> >
-> > OK, so basically that was a longwinded way of saying: yes, we could
-> > avoid the AUX transfer in probe, but we can't wait all the way to
-> > enable. We have to be able to transfer in get_modes(). If you think
-> > that's helpful I think it'd be a pretty easy patch to write even if it
-> > would look a tad bit awkward IMO. Let me know if you want me to post
-> > it up.
->
-> I think it would be a good idea. At least it will allow us to judge,
-> which is the more correct way.
+> On 01/04/2022 17:58, Krzysztof Kozlowski wrote:
+> > UFS, when scaling gears, should choose appropriate performance state of
+> > RPMHPD power domain controller.  Since UFS belongs to UFS_PHY_GDSC power
+> > domain, add necessary parent power domain to GCC.
+> 
+> This will cause all gcc GDSCs to be rooted in the CX. Are we sure that this
+> is an expected (and correct) change?
+> 
 
-I'm still happy to prototype this, but the more I think about it the
-more it feels like a workaround for the Qualcomm driver. The eDP panel
-driver is actually given a pointer to the AUX bus at probe time. It's
-really weird to say that we can't do a transfer on it yet... As you
-said, this is a little sideband bus. It should be able to be used
-without all the full blown infra of the rest of the driver.
+Per the last part of Rajendra's reply in [1], this should be fine.
+Naturally we might have to come up with some way to bind gdscs to one of
+multiple power-domains if that changes.
 
+[1] https://lore.kernel.org/all/5e572c50-d6fe-5a21-d09f-f11a072538c5@codeaurora.org/
 
-> And I also think it might help the ti,sn65dsi86 driver, as it won't
-> have to ensure that gpio is available during the AUX bus probe.
+Regards,
+Bjorn
 
-The ti,sn65dsi86 GPIO issue has been solved for a while, though so not
-sure why we need to do something there? I'm also unclear how it would
-have helped. In this discussion, we've agreed that the panel driver
-would still acquire resources during its probe time and the only thing
-that would be delayed would be the first AUX transfer. The GPIO is a
-resource here and it's ideal to acquire it at probe time so we could
-EPROBE_DEFER if needed.
-
-
-> BTW, another random idea, before you start coding.
->
-> We have the bridge's hpd_notify call. Currently it is called only by
-> the means of drm_bridge_connector's HPD mechanism, tied to the bridge
-> registering as DRM_BRIDGE_OP_HPD.
-> It looks to me like it might be a perfect fit for the first aux-bus
-> related reads.
->
-> We'd need to trigger it manually once and tie it to the new
-> drm_panel_funcs callback, which in turn would probe the aux bus,
-> create backlight, etc.
->
-> Regarding the Sankeerth's patch. I have been comparing it with the
-> hpd_event_thread()'s calls.
-> It looks to me like we should reuse dp_display_config_hpd()
-> /EV_HPD_INIT_SETUP and maybe others.
->
-> What I'm trying to say is that if we split AUX probing and first AUX
-> transfers, it would be possible to reuse a significant part of MSM DP
-> HPD machine rather than hacking around it and replicating it manually.
-
-I'm not sure I completely understand, but I'm pretty wary here. It's
-my assertion that all of the current "HPD" infrastructure in DRM all
-relates to the physical presence of the panel. If you start
-implementing these functions for eDP I think you're going to confuse
-the heck out of everything. The kernel will think that this is a
-display that's sometimes not there. Whenever the display is powered
-off then HPD will be low and it will look like there's no display.
-Nothing will ever try to power it on because it looks like there's no
-display.
-
-I think your idea is to "trigger once" at bootup and then it all
-magically works, right? ...but what about after bootup? If you turn
-the display off for whatever reason (modeset or you simply close the
-lid of your laptop because you're using an external display) and then
-you want to use the eDP display again, how do you kickstart the
-process another time? You can't reboot, and when the display is off
-the HPD line is low.
-
-I can't say it enough times, HPD on eDP _does not mean hot plug
-detect_. The panel is always there. HPD is really a "panel ready /
-panel notify" signal for eDP. That's fully what its function is.
-
--Doug
+> > 
+> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > ---
+> >   arch/arm64/boot/dts/qcom/sdm845.dtsi | 17 ++++++++++++++++-
+> >   1 file changed, 16 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > index b31bf62e8680..c999b41c2605 100644
+> > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> > @@ -1078,6 +1078,7 @@ gcc: clock-controller@100000 {
+> >   			#clock-cells = <1>;
+> >   			#reset-cells = <1>;
+> >   			#power-domain-cells = <1>;
+> > +			power-domains = <&rpmhpd SDM845_CX>;
+> >   		};
+> >   		qfprom@784000 {
+> > @@ -2336,8 +2337,22 @@ ufs_mem_hc: ufshc@1d84000 {
+> >   				<0 0>,
+> >   				<0 0>,
+> >   				<0 300000000>;
+> > -
+> > +			operating-points-v2 = <&ufs_opp_table>;
+> >   			status = "disabled";
+> > +
+> > +			ufs_opp_table: opp-table {
+> > +				compatible = "operating-points-v2";
+> > +
+> > +				opp-50000000 {
+> > +					opp-hz = /bits/ 64 <50000000>;
+> > +					required-opps = <&rpmhpd_opp_svs>;
+> > +				};
+> > +
+> > +				opp-200000000 {
+> > +					opp-hz = /bits/ 64 <200000000>;
+> > +					required-opps = <&rpmhpd_opp_nom>;
+> > +				};
+> > +			};
+> >   		};
+> >   		ufs_mem_phy: phy@1d87000 {
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
