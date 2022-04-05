@@ -2,221 +2,216 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 186454F564D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 08:24:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C38D14F5631
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 08:23:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231159AbiDFFh5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Apr 2022 01:37:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59730 "EHLO
+        id S1345383AbiDFFjc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Apr 2022 01:39:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1450639AbiDFBsr (ORCPT
+        with ESMTP id S1846085AbiDFCCn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Apr 2022 21:48:47 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C3A0939C5
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 16:25:03 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id s14-20020a17090a880e00b001caaf6d3dd1so4106809pjn.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 16:25:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=0LYEJd2GcAImXdy5Qzf13hezwUog634yjubbnjvy8iQ=;
-        b=nViJsTS49LeK8CtJKE4/dStxLrc0nI8fxTJcmGcHleboeoOxmuC2IUhzkt1uo2Qn+5
-         RjEYseHYejqXNadnXSibnx77DkSgQdeH0QAqzxOgy4Gp70n6bUARPQ/13HvQZkvocdfk
-         Agpdc8fQW9kiEXGQGb8Z6/2BTUqrzMfZd24fU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=0LYEJd2GcAImXdy5Qzf13hezwUog634yjubbnjvy8iQ=;
-        b=pkCbScommtj3O7foO5KJAYFJnUWpnUTs8pp1+7uIw8IjlvhMDhqTpoh838EfqZ1LIy
-         S4hL0xXWbMvpnx3/lXqjvoG8EBZpsKaxOQ1dtHDcTAdB/kHMrypJCh3EfCgmm9oMvuSj
-         lSITbF1V/ynMy61l6NBZjJSXnyr1Lp7rVAba3/juiD4T/cCwOpxaHtb6ZxgqhuJviXgV
-         3oRqfZtA4/+sYfp6gTNbiIIcaYA2+iADSt3Cp73pMPKwiLHkOheYvjY+QiJN41nEkPkr
-         +HzfOIBKTeeNs0eTOK4Mx2QDBe4oXU57rkCKFl9Fs7rYF1Z/GqKRMyOcyMeD44Qz5JjD
-         x9ZA==
-X-Gm-Message-State: AOAM5315n+igQqk7CQWsfAcX6WhbLlnK1ujULFGbzpe/L7g0cv9QTqqx
-        c+x137X1lnqdAhBd44pgQ+wvCp5SXzHZQQ==
-X-Google-Smtp-Source: ABdhPJzhSw2ai28dsBs+iFYDTqHdriOs8oBBTEugVnQdu3hZkzLZNWHaNBv89hnyyEur/XoPXvNbRA==
-X-Received: by 2002:a17:902:e545:b0:154:4d5b:2006 with SMTP id n5-20020a170902e54500b001544d5b2006mr5853057plf.94.1649201102818;
-        Tue, 05 Apr 2022 16:25:02 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:6b63:d403:e31b:da39])
-        by smtp.gmail.com with UTF8SMTPSA id b7-20020a17090ae38700b001ca8947e73csm3271574pjz.0.2022.04.05.16.25.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Apr 2022 16:25:02 -0700 (PDT)
-Date:   Tue, 5 Apr 2022 16:25:00 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rohitkr@quicinc.com,
-        srinivas.kandagatla@linaro.org, dianders@chromium.org,
-        swboyd@chromium.org, judyhsiao@chromium.org,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Subject: Re: [PATCH v6 2/3] arm64: dts: qcom: sc7280: Add lpass cpu node
-Message-ID: <YkzPzP7kYgaYKwcQ@google.com>
-References: <1649157220-29304-1-git-send-email-quic_srivasam@quicinc.com>
- <1649157220-29304-3-git-send-email-quic_srivasam@quicinc.com>
+        Tue, 5 Apr 2022 22:02:43 -0400
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79D4C6D192;
+        Tue,  5 Apr 2022 16:31:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1649201512; x=1680737512;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=9ld9YxnqQ/tft6SeSwMe4rrTweNCvt3iXi6pX/TyAqE=;
+  b=fozqsz2PTcQO+d57DH3pkHP71I+x5PqwJXiDmTKc7kuTKqArJGT1BFQH
+   euKrjIah4DcYVphme/o344sFicDodz4fkuv6oDs6BsJlGQaY/hQDzUVi9
+   kiwhTI3y2sBlXYWg25uXJn38QdIX6fNhC8VdRZWTlXWVU9v0+zvcX85jU
+   7sC7xxdEvFeiXmD0hXs7kDRlIqUUJav/hSDPYkSXnjJUdIHs82Qs4PrU8
+   XAwXZMshGLEtAl/Rq3Bv4fISgIIXZNlGI+4R/o7UfGS0g1om8bHPfvi00
+   Z5jE8eSYqmkCg/OYWplZThej8DAIPcAjfbBEcOmXGUxMwdpwGSizmChWj
+   Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10308"; a="260586444"
+X-IronPort-AV: E=Sophos;i="5.90,238,1643702400"; 
+   d="scan'208";a="260586444"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Apr 2022 16:31:51 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,238,1643702400"; 
+   d="scan'208";a="790051672"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+  by fmsmga006.fm.intel.com with ESMTP; 05 Apr 2022 16:31:50 -0700
+Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.27; Tue, 5 Apr 2022 16:31:49 -0700
+Received: from orsmsx604.amr.corp.intel.com (10.22.229.17) by
+ ORSMSX612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.27; Tue, 5 Apr 2022 16:31:49 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx604.amr.corp.intel.com (10.22.229.17) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.27 via Frontend Transport; Tue, 5 Apr 2022 16:31:49 -0700
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.175)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2308.27; Tue, 5 Apr 2022 16:31:46 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ikK/bGFmqhRcKq7GGdaRun5tD+ymfOSEyExRD8dOVURV3UDr6WOhdEuLCSJL1zNYwryZMlOTbHqXm/mIf2cQ71CKiCw06tKg1BaPbTi40vg7OCjH3ve+nfux08ueq4tdhLH9pdCDZ4Nsvqe4/EX9XbMVxzOILJU4ilzOMTTADOQ+2oOtz1mvhrMUchs7nvrt8bhj3wZxeUFAn9+3I041xclEG+43lDW6VjKJXhA1Ot29rAg3emPWecAphB+qGDd8wd6HAxnPlz4+9GcMTaZJSertldfdgliIXwf5iQGJ/dwDvZa8BvirQAWZ7pEWLQuKT566wQrqQ8lcGZJlJGEnZQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9ld9YxnqQ/tft6SeSwMe4rrTweNCvt3iXi6pX/TyAqE=;
+ b=QW2nv/VgYuvji/uKvx3rsMmlTFFM8R9jIyOWMPEeSs1PCKm8qU5jiaK+vQbN51hObTp+28Aj08Ba0th9aPX8uJQwn/MChOqd9ZdH/X/4BW7J2rELpCBWATIodoXk6K9yE13WDsrMeBt/i9QMqSEyUBnduwdpE5jK6MH9qR4oNqOdCCrOgu8iW7obEdF/q3e8kRIA7QJqFoE79c+9D6aB0/LBgRMZuVZJHysdm9/tBt/JR3mWV77Fu5riPxP2HEnZvPGcSaYDyLxLp94cv4rN6EYmOiywX7fEQPeL3/ndaWLu04eaP/wsxM+aDYnfXOGj04TrVCQDtA3kbxsYbrrUrg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
+ by BYAPR11MB3749.namprd11.prod.outlook.com (2603:10b6:a03:b0::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5123.31; Tue, 5 Apr
+ 2022 23:31:44 +0000
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::c4ea:a404:b70b:e54e]) by BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::c4ea:a404:b70b:e54e%7]) with mapi id 15.20.5123.031; Tue, 5 Apr 2022
+ 23:31:44 +0000
+From:   "Tian, Kevin" <kevin.tian@intel.com>
+To:     Jason Gunthorpe <jgg@nvidia.com>,
+        Alex Williamson <alex.williamson@redhat.com>,
+        Lu Baolu <baolu.lu@linux.intel.com>
+CC:     Christian Benvenuti <benve@cisco.com>,
+        Cornelia Huck <cohuck@redhat.com>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
+        Jason Wang <jasowang@redhat.com>,
+        "Joerg Roedel" <joro@8bytes.org>,
+        "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
+        "linux-s390@vger.kernel.org" <linux-s390@vger.kernel.org>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        "Michael S. Tsirkin" <mst@redhat.com>,
+        Nelson Escobar <neescoba@cisco.com>,
+        "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        "Suravee Suthikulpanit" <suravee.suthikulpanit@amd.com>,
+        "virtualization@lists.linux-foundation.org" 
+        <virtualization@lists.linux-foundation.org>,
+        Will Deacon <will@kernel.org>, Christoph Hellwig <hch@lst.de>
+Subject: RE: [PATCH 3/5] iommu: Introduce the domain op
+ enforce_cache_coherency()
+Thread-Topic: [PATCH 3/5] iommu: Introduce the domain op
+ enforce_cache_coherency()
+Thread-Index: AQHYSQiEbYC3kRQ06EKEzYAnMp+0x6zhusQAgAA0Q4CAAAdUsA==
+Date:   Tue, 5 Apr 2022 23:31:44 +0000
+Message-ID: <BN9PR11MB52769195041933E35E9D8D428CE49@BN9PR11MB5276.namprd11.prod.outlook.com>
+References: <0-v1-ef02c60ddb76+12ca2-intel_no_snoop_jgg@nvidia.com>
+ <3-v1-ef02c60ddb76+12ca2-intel_no_snoop_jgg@nvidia.com>
+ <20220405135036.4812c51e.alex.williamson@redhat.com>
+ <20220405225739.GW2120790@nvidia.com>
+In-Reply-To: <20220405225739.GW2120790@nvidia.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: a81af7e0-4fab-4900-09f2-08da175c7222
+x-ms-traffictypediagnostic: BYAPR11MB3749:EE_
+x-microsoft-antispam-prvs: <BYAPR11MB3749F66EB97A17ACDAE93AA58CE49@BYAPR11MB3749.namprd11.prod.outlook.com>
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 1yYQP7AAmIBTTJMCFRAS5iBvOFqJgFQriYeFjiwW5C/Ttv1K2+55YfTlHuSqZ9JsadWxB+nA4RdGtaRibBOwjMI9IeFGDbchwZ5NzO/jTPg68f0Aek1/sAFZ5uUV6nEqeQKyXJ4vGMquflQI27WWwkUGAgjd+v4kAYs7SBe5ujuAU7IdpI3lT9Z9Irsr/vVYtki+N18ovZaBr4qQsw+ogZHUX8CCPDHE99Wvr/ZYSQN0S6bVoppjyba4mokG3IuF5FUFb2A5kyKypc2Rf3C5AMS55cL8ZAbUlqKrPpDC9MLlET0En/aw3g0tklOXw7tK/vFXDN6NwxMAoCWWAqa1VqX7N1UDtvNzzoN5jsa+yRliXR4eHxqz0mhUaoaA3kiTm8zfb8x7zBNCzVxW8C2FXbuBrntXjFDlSpGOifMBe/xAwxacXEz8Hg3Wi/HNmz04pbsM5MqPhPd+uQk5zbO1cca/ycpKTrq2PAjUefPPir7J2hiKpMZGv4ShMptOd2bye88Swdcv/9GmvMPp/6sx+THo7PZLNJvZwJ3d+kREDT1mqClxP8d+4vP5Bu6G2m9Bk/ebutxFGyqOnBFqrsmQCREj4yLo0i7RQWhAbQSCHWUyZ2HdQjjxJLMS0t4lyGFlUZWDPM4MYN7HsUVTnYiYxc/qhxnAMWty9erwuHzoI1kcbJTfvu5M1mQzhlye5s6ZIBCUlnjrIYWWpWAOICezdQ==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(366004)(66476007)(26005)(186003)(66446008)(110136005)(316002)(76116006)(52536014)(55016003)(8936002)(71200400001)(66556008)(7416002)(83380400001)(66946007)(5660300002)(33656002)(86362001)(54906003)(6506007)(7696005)(2906002)(38100700002)(64756008)(9686003)(122000001)(8676002)(508600001)(38070700005)(4326008)(82960400001);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?eFFENW9rMUtkQUV0ek1UcWlHR1dkZWxzZzFpQUhsL21tcElidzc2bkVPelFM?=
+ =?utf-8?B?eTJLdk5rdUx0cENtR0NBU216cVhiQWpncVBXcmhXSVVGaEkwYnZISWZlait6?=
+ =?utf-8?B?WGg0TTdlYWVoVWF1aVlZMWY1UTFubS9qMDVodUp5Z3pFU3pEZlF5Nm9zdW10?=
+ =?utf-8?B?SzkwR28xYWNXVDVNSzZwSFhOZks4c21BWnljS2VIZlFXeEZoYnpySllzdWV4?=
+ =?utf-8?B?MjNLUlV0QzJ2SDlwZFZyR0RVQ0tRdmVRdGxQbWZRYU12YmM1S0dzV0xyeVYv?=
+ =?utf-8?B?bHFPcjJocXFIQm5OeDBpaHZiZ0pkRlh4L3d5U2R2ZjArVy9NaWU5L3hNSkpt?=
+ =?utf-8?B?dVRha1IxNG94OFNTcjQzNWJBbExyankyakRTSXlKL3pMc0UxTlpWYnhGYmFO?=
+ =?utf-8?B?KzFJbmpaUzZsdlZINUc0TFZXTU9PQkJkeWRTQkFLYTlXSGNaTHBlaW5iL2tu?=
+ =?utf-8?B?dW90b1J6NFpIUEg4WGg3NWdXTEUxZE95cWlDOU5rQ25wVEpzVVNFbXZWUXJQ?=
+ =?utf-8?B?NXFSV2lhQ3FaUlRsVWU4Q1pmTkdONy8wZ3h4amlWaXd4VllSUm1FN3diaTd6?=
+ =?utf-8?B?K051dWxiSXRJRGF0RjhhUVhKWUxWQzZWZm44K2ZQcDJ0Q0JVaEVKVkNRcEY0?=
+ =?utf-8?B?S1Y1VysvbXVMZDJrL1FQRTJoZkRQYXB5TjZhUnRZd3pSUDJlWnQ4bjQyMXZX?=
+ =?utf-8?B?c1VsV1N3Y0VZdHozUHorMDQ1MUwvWlc1UTVKVG14a09WellDUS9NeGpkb0hw?=
+ =?utf-8?B?Q1JtSFI5TFhzZEw2R0ZuNWRwRmpDSU1HVVBwVFZaeVRBQXc1MDZZN2pENGVL?=
+ =?utf-8?B?Z0lySjR2SkxpdWs5K0RxT0JGaWdxekRqK1FvM0lWR3RFQWF1V3hjQjIxTmwx?=
+ =?utf-8?B?Z3UrWldJUUZ5RU4raU5CbjIxcFpEQ3V4bkZ5M1J1MlZUVUc5THNWTXJLZng4?=
+ =?utf-8?B?TzZ6WVFzaW11MzJ3MzlOdkd1eWRRcnh4VkJoeXdOckQ3MjYremI0dnJqUlZI?=
+ =?utf-8?B?QzlTZmlIanExQlhzOENtVStJVGxUQTNNRjhrTFpmVnFlUDEyNkpHTkx4dnp3?=
+ =?utf-8?B?bk9ZMjVxUmRlQnVDSzhqdC8zcnVhVXZYcGthbjNJMFBrMnZKdHVJRkVNODFt?=
+ =?utf-8?B?MHhvK0ExanFYOUNBVkhXL0dmQTV6dWZoRjlDWXFEY01GVjlkbk1vTUJGVm9I?=
+ =?utf-8?B?dHA0UTl5QUQrLzBHbDIxVjdqVTZwQTY4MmlrbHgva2t2dWVqeHV2TDRtTnor?=
+ =?utf-8?B?L0lOM1l1dzgwdjBFZlU4VUtmaGdQU1doYml6d0pqeUtGZ085aG1UblA4bXN0?=
+ =?utf-8?B?SGpZenRMYVpEQ1p5RmhTTitrOVNaQ2kxNFRscEthWUFtbVg4bkllWUV0NStq?=
+ =?utf-8?B?U254eGJCVzJ0RndQbXlPSWpmcWtVTndpcFd2VkZuY095TmFpaEpxN2piZTVS?=
+ =?utf-8?B?U3BrUVRWaExMTkkraEswWnJnb281MGp6TGhneXRNa2ZKVXBUZUF2bHdOR0ZG?=
+ =?utf-8?B?clZXQ1NvZEc5WnJXQnFhdUN3Y0xZTWYyVGVjTUFrcHFSY2xpUnFtS0hxbkxP?=
+ =?utf-8?B?N21QMDNDeFFTcHcwNy85bEdNNjJRdytHdXZjR1MxSVZaODdTeVNXNkdLdU9K?=
+ =?utf-8?B?eSt5aElOTnd0em94cnQ1MFVNZElvdGJqdXppZDJ3KzV5T2lUUVp1Q1o3L2cw?=
+ =?utf-8?B?NGNNK0N4YlJhYzFpdFVTeis2L0EzWWVoLzdmVENCdVdwSVpzK2lxRnBhVGFs?=
+ =?utf-8?B?aDl4bUZrOXUrcW1TU3ZRRmdnYlZaUVAwbUFtWlJ4RWw3MHB2VjYzeHRuaE5O?=
+ =?utf-8?B?dnQ4TlIvRmxkVUt2Z0l0ditHQUNrUXRlWTRraHJibEZLNnprb3pIL3dJZmNU?=
+ =?utf-8?B?V1ZNQzZ0NmNOR0NXWnJkUmNyOFhMLzJZV2VMcyttVVY3eTFiSnp6bGtxRkJH?=
+ =?utf-8?B?cnZna0RucUU1bS9xMFp0Mi9Ra1RLSndTOEdwdUNJazVjWWJxUEtxL1gyVjIz?=
+ =?utf-8?B?OThuSHFhZXlDU3RRRTdFVnM2UWhLN296K3NFbUNTVXc0TXVNU09lSkpnUTdG?=
+ =?utf-8?B?QWpFaXJEZDlRT09oTFZrdzhDY0lUU3k4S20wa295c3FIeERuNkVOMXdGOFFx?=
+ =?utf-8?B?QkVnM2RpcG15MWgwVTkrb2NMR3ZRSWdaWnpWQ0VYRDRmYkllN1JsN0xXaEpQ?=
+ =?utf-8?B?Zkk1T3lIajJQQmFwNk9ML0VrWEF4RDh6U24vMlJYUlE5bGVJdDZidGpJS3VK?=
+ =?utf-8?B?SFd1aE9FRUVsODVMQmZZYmZabXhvRzltRkhjRnVVK1pHbW1LSE1iRk1rU2l5?=
+ =?utf-8?B?b0R5Uk1NaTFWS1RzejBBWTRCUVZwYzRNdVFKS0FZNU42S1BIOUZQQT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1649157220-29304-3-git-send-email-quic_srivasam@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a81af7e0-4fab-4900-09f2-08da175c7222
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Apr 2022 23:31:44.3735
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: LoproUycFzsFr3d1QfdiOOK6W6XLxgoAt5z6sK+akKad2NtiDZaMXJt3YLALySSRhoMcARRLrVsaK2BGiOupUw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR11MB3749
+X-OriginatorOrg: intel.com
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 05, 2022 at 04:43:39PM +0530, Srinivasa Rao Mandadapu wrote:
-> Add lpass cpu node for audio on sc7280 based platforms.
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 28 ++++++++++++++
->  arch/arm64/boot/dts/qcom/sc7280.dtsi     | 63 ++++++++++++++++++++++++++++++++
->  2 files changed, 91 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> index 83c76b2..e3d8cbf 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> @@ -273,6 +273,34 @@
->  	modem-init;
->  };
->  
-> +&lpass_cpu {
-> +	status = "okay";
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&sec_mi2s_data0>, <&sec_mi2s_sclk>, <&sec_mi2s_ws>;
-> +
-> +	mi2s-secondary@1 {
-
-in line with an earlier comment, the primary/secondary terminology seem to
-reflect how things are called in the datasheet (which only talks about a
-primary/secondary master clock, otherwise about mi2sN). How about calling
-these nodes 'dai-link@N' as in the binding (and a bunch of other
-boards/SoCs)?
-
-> +		reg = <MI2S_SECONDARY>;
-> +		qcom,playback-sd-lines = <0>;
-> +	};
-> +
-> +	hdmi-primary@5 {
-> +		reg = <LPASS_DP_RX>;
-> +	};
-> +
-> +	wcd-rx@6 {
-> +		reg = <LPASS_CDC_DMA_RX0>;
-> +	};
-> +
-> +	wcd-tx@19 {
-> +		reg = <LPASS_CDC_DMA_TX3>;
-> +	};
-> +
-> +	va-tx@25 {
-> +		reg = <LPASS_CDC_DMA_VA_TX0>;
-> +	};
-> +};
-> +
->  &lpass_tlmm {
->  	dmic01_active: dmic01-active {
->  		clk {
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 78ec84c..e808d53 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -19,6 +19,7 @@
->  #include <dt-bindings/reset/qcom,sdm845-aoss.h>
->  #include <dt-bindings/reset/qcom,sdm845-pdc.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> +#include <dt-bindings/sound/qcom,lpass.h>
->  #include <dt-bindings/thermal/thermal.h>
->  
->  / {
-> @@ -2101,6 +2102,68 @@
->  			#clock-cells = <1>;
->  		};
->  
-> +		lpass_cpu: audio@3987000 {
-> +			compatible = "qcom,sc7280-lpass-cpu";
-> +
-> +			reg = <0 0x03987000 0 0x68000>,
-> +			      <0 0x03b00000 0 0x29000>,
-> +			      <0 0x03260000 0 0xc000>,
-> +			      <0 0x03280000 0 0x29000>,
-> +			      <0 0x03340000 0 0x29000>,
-> +			      <0 0x0336c000 0 0x3000>;
-> +
-
-Drop empty line, 'reg' and 'reg-names' belong together'.
-
-> +			reg-names = "lpass-hdmiif",
-> +				    "lpass-lpaif",
-> +				    "lpass-rxtx-cdc-dma-lpm",
-> +				    "lpass-rxtx-lpaif",
-> +				    "lpass-va-lpaif",
-> +				    "lpass-va-cdc-dma-lpm";
-> +
-> +			iommus = <&apps_smmu 0x1820 0>,
-> +				 <&apps_smmu 0x1821 0>,
-> +				 <&apps_smmu 0x1832 0>;
-> +			status = "disabled";
-
-Detter put this at the end as many other nodes do, rather than
-'hiding' it inmidst of the hardware description.
-
-> +
-> +			power-domains =	<&rpmhpd SC7280_LCX>;
-> +			power-domain-names = "lcx";
-> +			required-opps = <&rpmhpd_opp_nom>;
-> +
-> +			clocks = <&lpass_aon LPASS_AON_CC_AUDIO_HM_H_CLK>,
-> +				 <&lpass_audiocc LPASS_AUDIO_CC_EXT_MCLK0_CLK>,
-> +				 <&lpasscore LPASS_CORE_CC_SYSNOC_MPORT_CORE_CLK>,
-> +				 <&lpasscore LPASS_CORE_CC_EXT_IF0_IBIT_CLK>,
-> +				 <&lpasscore LPASS_CORE_CC_EXT_IF1_IBIT_CLK>,
-> +				 <&lpass_audiocc LPASS_AUDIO_CC_CODEC_MEM_CLK>,
-> +				 <&lpass_audiocc LPASS_AUDIO_CC_CODEC_MEM0_CLK>,
-> +				 <&lpass_audiocc LPASS_AUDIO_CC_CODEC_MEM1_CLK>,
-> +				 <&lpass_audiocc LPASS_AUDIO_CC_CODEC_MEM2_CLK>,
-> +				 <&lpass_aon LPASS_AON_CC_VA_MEM0_CLK>;
-> +			clock-names = "aon_cc_audio_hm_h",
-> +				      "audio_cc_ext_mclk0",
-> +				      "core_cc_sysnoc_mport_core",
-> +				      "core_cc_ext_if0_ibit",
-> +				      "core_cc_ext_if1_ibit",
-> +				      "audio_cc_codec_mem",
-> +				      "audio_cc_codec_mem0",
-> +				      "audio_cc_codec_mem1",
-> +				      "audio_cc_codec_mem2",
-> +				      "aon_cc_va_mem0";
-> +
-> +			#sound-dai-cells = <1>;
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 268 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 176 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>;
-> +
-
-drop empty line, 'interrupts' and 'interrupt-names' belong together.
-
-> +			interrupt-names = "lpass-irq-lpaif",
-> +					  "lpass-irq-hdmi",
-> +					  "lpass-irq-vaif",
-> +					  "lpass-irq-rxtxif";
-> +		};
-> +
->  		lpass_ag_noc: interconnect@3c40000 {
->  			reg = <0 0x03c40000 0 0xf080>;
->  			compatible = "qcom,sc7280-lpass-ag-noc";
+PiBGcm9tOiBKYXNvbiBHdW50aG9ycGUgPGpnZ0BudmlkaWEuY29tPg0KPiBTZW50OiBXZWRuZXNk
+YXksIEFwcmlsIDYsIDIwMjIgNjo1OCBBTQ0KPiANCj4gT24gVHVlLCBBcHIgMDUsIDIwMjIgYXQg
+MDE6NTA6MzZQTSAtMDYwMCwgQWxleCBXaWxsaWFtc29uIHdyb3RlOg0KPiA+ID4NCj4gPiA+ICtz
+dGF0aWMgYm9vbCBpbnRlbF9pb21tdV9lbmZvcmNlX2NhY2hlX2NvaGVyZW5jeShzdHJ1Y3QNCj4g
+aW9tbXVfZG9tYWluICpkb21haW4pDQo+ID4gPiArew0KPiA+ID4gKwlzdHJ1Y3QgZG1hcl9kb21h
+aW4gKmRtYXJfZG9tYWluID0gdG9fZG1hcl9kb21haW4oZG9tYWluKTsNCj4gPiA+ICsNCj4gPiA+
+ICsJaWYgKCFkbWFyX2RvbWFpbi0+aW9tbXVfc25vb3BpbmcpDQo+ID4gPiArCQlyZXR1cm4gZmFs
+c2U7DQo+ID4gPiArCWRtYXJfZG9tYWluLT5lbmZvcmNlX25vX3Nub29wID0gdHJ1ZTsNCj4gPiA+
+ICsJcmV0dXJuIHRydWU7DQo+ID4gPiArfQ0KPiA+DQo+ID4gRG9uJ3Qgd2UgaGF2ZSBpc3N1ZXMg
+aWYgd2UgdHJ5IHRvIHNldCBETUFfUFRFX1NOUCBvbiBETUFScyB0aGF0IGRvbid0DQo+ID4gc3Vw
+cG9ydCBpdCwgaWUuIHJlc2VydmVkIHJlZ2lzdGVyIGJpdCBzZXQgaW4gcHRlIGZhdWx0cz8NCj4g
+DQo+IFRoZSB3YXkgdGhlIEludGVsIGRyaXZlciBpcyBzZXR1cCB0aGF0IGlzIG5vdCBwb3NzaWJs
+ZS4gQ3VycmVudGx5IGl0DQo+IGRvZXM6DQo+IA0KPiAgc3RhdGljIGJvb2wgaW50ZWxfaW9tbXVf
+Y2FwYWJsZShlbnVtIGlvbW11X2NhcCBjYXApDQo+ICB7DQo+IAlpZiAoY2FwID09IElPTU1VX0NB
+UF9DQUNIRV9DT0hFUkVOQ1kpDQo+IAkJcmV0dXJuIGRvbWFpbl91cGRhdGVfaW9tbXVfc25vb3Bp
+bmcoTlVMTCk7DQo+IA0KPiBXaGljaCBpcyBhIGdsb2JhbCBwcm9wZXJ0eSB1bnJlbGF0ZWQgdG8g
+YW55IGRldmljZS4NCj4gDQo+IFRodXMgZWl0aGVyIGFsbCBkZXZpY2VzIGFuZCBhbGwgZG9tYWlu
+cyBzdXBwb3J0IGlvbW11X3Nub29waW5nLCBvcg0KPiBub25lIGRvLg0KPiANCj4gSXQgaXMgdW5j
+bGVhciBiZWNhdXNlIGZvciBzb21lIHJlYXNvbiB0aGUgZHJpdmVyIHJlY2FsY3VsYXRlcyB0aGlz
+DQo+IGFsbW9zdCBjb25zdGFudCB2YWx1ZSBvbiBldmVyeSBkZXZpY2UgYXR0YWNoLi4NCg0KVGhl
+IHJlYXNvbiBpcyBzaW1wbHkgYmVjYXVzZSBpb21tdSBjYXBhYmlsaXR5IGlzIGEgZ2xvYmFsIGZs
+YWcg8J+YiQ0KDQp3aGVuIHRoZSBjYXAgaXMgcmVtb3ZlZCBieSB0aGlzIHNlcmllcyBJIGRvbid0
+IHRoaW5rIHdlIG5lZWQga2VlcCB0aGF0DQpnbG9iYWwgcmVjYWxjdWxhdGlvbiB0aGluZy4NCg0K
+VGhhbmtzDQpLZXZpbg0K
