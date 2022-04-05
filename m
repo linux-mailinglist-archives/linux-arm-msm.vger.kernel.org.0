@@ -2,253 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC0594F4BC2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:06:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 89C654F4BF0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 03:10:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344306AbiDEXE7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Apr 2022 19:04:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60030 "EHLO
+        id S1575403AbiDEXHc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Apr 2022 19:07:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1573722AbiDETwr (ORCPT
+        with ESMTP id S1352510AbiDEUt3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Apr 2022 15:52:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id DE89C1D0C7
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 12:50:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1649188248;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=BMvE598geYS7AsLGKolv801H0ecrutTt3W25tuDKPtk=;
-        b=SictgNJBk3giCIYkRmubKGyabHDAlqJEEnx5KtKuwQ2ZXgUg0o4ZsOtS432o9t02MyOzAN
-        kWOcVyxFTB/biXhgYJqoAlc1g5jEuiKcHQ7XR8Ql8WC8TZnPPK2qIGyMrX22IkT/FnNPt+
-        qU82XfUI2M+V07iYZuyxu8VEK2hIgRU=
-Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
- [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-303-emQqrU_YMLKfCX0L5svdPA-1; Tue, 05 Apr 2022 15:50:39 -0400
-X-MC-Unique: emQqrU_YMLKfCX0L5svdPA-1
-Received: by mail-io1-f71.google.com with SMTP id g16-20020a05660203d000b005f7b3b0642eso186509iov.16
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 12:50:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=BMvE598geYS7AsLGKolv801H0ecrutTt3W25tuDKPtk=;
-        b=SaX1umfWjwefvc+wujHOAZAuxIQEoT8ps9EQBD7GeZGOE0/jxTG/7I1Cr1+WZz38Uw
-         /FEwYgzOyubNz0+q8Pmon/FqmFs8DqL0MnwKhbA5emSA5w8FD3b5jI8shItdWK9AAwZa
-         BTpWmVkh/9YrsdfYNYS+EQeadfZOEjAk/Bm3WADA53Vel2Lb3X5cb6D6G3Woj6ze+n3O
-         fInkEuMimPT2w5sjv71O1bb1FF13l26mLwk2ObI8iolxBCvR/jbVVyZSQHt6DE+N1AmU
-         YWOFg0eYOxvMQQZRYlkME6t79yl6MvhMV+qI1mGLlq+ciJ1qP7GPX1AG3z8woqKW0Xmd
-         1oGQ==
-X-Gm-Message-State: AOAM5321w7v4qx6tJLQdQ/9H3f/5oO5g/ugabi4WEljAuDueNIf11WPT
-        erivciYiVei1O66Jg5mAFTG6uT7FWG8LogON7mnm+uJAPCtf3/iDCxOitKjQxRfDMKZB0qgBXV+
-        WtAR0o9K2lmSXbUOfaA1Q/TdOQw==
-X-Received: by 2002:a02:29c2:0:b0:323:a234:9df7 with SMTP id p185-20020a0229c2000000b00323a2349df7mr2968422jap.43.1649188238740;
-        Tue, 05 Apr 2022 12:50:38 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJyCZgg4vIZs3ezp1ecKFvBApBInnRyJCHzNn5JkctUv/g96VC+Jzbb1H1znHS07OnzGhGeLgw==
-X-Received: by 2002:a02:29c2:0:b0:323:a234:9df7 with SMTP id p185-20020a0229c2000000b00323a2349df7mr2968392jap.43.1649188238422;
-        Tue, 05 Apr 2022 12:50:38 -0700 (PDT)
-Received: from redhat.com ([38.15.36.239])
-        by smtp.gmail.com with ESMTPSA id 13-20020a056e0211ad00b002ca32cb7a18sm5029165ilj.49.2022.04.05.12.50.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Apr 2022 12:50:37 -0700 (PDT)
-Date:   Tue, 5 Apr 2022 13:50:36 -0600
-From:   Alex Williamson <alex.williamson@redhat.com>
-To:     Jason Gunthorpe <jgg@nvidia.com>
-Cc:     Lu Baolu <baolu.lu@linux.intel.com>,
-        Christian Benvenuti <benve@cisco.com>,
-        Cornelia Huck <cohuck@redhat.com>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        iommu@lists.linux-foundation.org, Jason Wang <jasowang@redhat.com>,
-        Joerg Roedel <joro@8bytes.org>, kvm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-rdma@vger.kernel.org,
-        linux-s390@vger.kernel.org,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        "Michael S. Tsirkin" <mst@redhat.com>,
-        Nelson Escobar <neescoba@cisco.com>, netdev@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-        virtualization@lists.linux-foundation.org,
-        Will Deacon <will@kernel.org>, Christoph Hellwig <hch@lst.de>,
-        "Tian, Kevin" <kevin.tian@intel.com>
-Subject: Re: [PATCH 3/5] iommu: Introduce the domain op
- enforce_cache_coherency()
-Message-ID: <20220405135036.4812c51e.alex.williamson@redhat.com>
-In-Reply-To: <3-v1-ef02c60ddb76+12ca2-intel_no_snoop_jgg@nvidia.com>
-References: <0-v1-ef02c60ddb76+12ca2-intel_no_snoop_jgg@nvidia.com>
-        <3-v1-ef02c60ddb76+12ca2-intel_no_snoop_jgg@nvidia.com>
-Organization: Red Hat
+        Tue, 5 Apr 2022 16:49:29 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B40A42AC4;
+        Tue,  5 Apr 2022 13:23:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1649190216; x=1680726216;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=+7AtI8Svdw+YyS90Bb5N100rWVe2spjtKW5TxoNJUo0=;
+  b=f8PILEMau1vB44h12kQZMho1IshiPyRNzOt+amq9svlQ1Ao+n8jcdHRA
+   yKx3WmD8QIBBX5naiwVV2featY2FuC3oH2Hqu+YaB51B1bqsJdcRPvapS
+   tvS5TgIQA+JZ7iOf1CbANi5fFomrID/sC8R9sB3lLgmX7P5X3WHzrbJd6
+   E=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 05 Apr 2022 13:23:24 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Apr 2022 13:23:24 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 5 Apr 2022 13:23:23 -0700
+Received: from [10.110.86.177] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 5 Apr 2022
+ 13:23:22 -0700
+Message-ID: <daafdfd8-312e-cf42-d7bb-3fb914d443dc@quicinc.com>
+Date:   Tue, 5 Apr 2022 13:23:22 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v2] bus: mhi: host: pci_generic: Add missing poweroff() PM
+ callback
+Content-Language: en-US
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        <mhi@lists.linux.dev>
+CC:     <quic_hemantk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <loic.poulain@linaro.org>,
+        <stable@vger.kernel.org>
+References: <20220405125907.5644-1-manivannan.sadhasivam@linaro.org>
+From:   Bhaumik Vasav Bhatt <quic_bbhatt@quicinc.com>
+In-Reply-To: <20220405125907.5644-1-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue,  5 Apr 2022 13:16:02 -0300
-Jason Gunthorpe <jgg@nvidia.com> wrote:
 
-> This new mechanism will replace using IOMMU_CAP_CACHE_COHERENCY and
-> IOMMU_CACHE to control the no-snoop blocking behavior of the IOMMU.
-> 
-> Currently only Intel and AMD IOMMUs are known to support this
-> feature. They both implement it as an IOPTE bit, that when set, will cause
-> PCIe TLPs to that IOVA with the no-snoop bit set to be treated as though
-> the no-snoop bit was clear.
-> 
-> The new API is triggered by calling enforce_cache_coherency() before
-> mapping any IOVA to the domain which globally switches on no-snoop
-> blocking. This allows other implementations that might block no-snoop
-> globally and outside the IOPTE - AMD also documents such an HW capability.
-> 
-> Leave AMD out of sync with Intel and have it block no-snoop even for
-> in-kernel users. This can be trivially resolved in a follow up patch.
-> 
-> Only VFIO will call this new API.
-> 
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+On 4/5/2022 5:59 AM, Manivannan Sadhasivam wrote:
+> During hibernation process, once thaw() stage completes, the MHI endpoint
+> devices will be in M0 state post recovery. After that, the devices will be
+> powered down so that the system can enter the target sleep state. During
+> this stage, the PCI core will put the devices in D3hot. But this transition
+> is allowed by the MHI spec. The devices can only enter D3hot when it is in
+> M3 state.
+>
+> So for fixing this issue, let's add the poweroff() callback that will get
+> executed before putting the system in target sleep state during
+> hibernation. This callback will power down the device properly so that it
+> could be restored during restore() or thaw() stage.
+>
+> Cc: stable@vger.kernel.org
+> Fixes: 5f0c2ee1fe8d ("bus: mhi: pci-generic: Fix hibernation")
+> Reported-by: Hemant Kumar <quic_hemantk@quicinc.com>
+> Suggested-by: Hemant Kumar <quic_hemantk@quicinc.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  drivers/iommu/amd/iommu.c   |  7 +++++++
->  drivers/iommu/intel/iommu.c | 14 +++++++++++++-
->  include/linux/intel-iommu.h |  1 +
->  include/linux/iommu.h       |  4 ++++
->  4 files changed, 25 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-> index a1ada7bff44e61..e500b487eb3429 100644
-> --- a/drivers/iommu/amd/iommu.c
-> +++ b/drivers/iommu/amd/iommu.c
-> @@ -2271,6 +2271,12 @@ static int amd_iommu_def_domain_type(struct device *dev)
->  	return 0;
->  }
->  
-> +static bool amd_iommu_enforce_cache_coherency(struct iommu_domain *domain)
-> +{
-> +	/* IOMMU_PTE_FC is always set */
-> +	return true;
-> +}
-> +
->  const struct iommu_ops amd_iommu_ops = {
->  	.capable = amd_iommu_capable,
->  	.domain_alloc = amd_iommu_domain_alloc,
-> @@ -2293,6 +2299,7 @@ const struct iommu_ops amd_iommu_ops = {
->  		.flush_iotlb_all = amd_iommu_flush_iotlb_all,
->  		.iotlb_sync	= amd_iommu_iotlb_sync,
->  		.free		= amd_iommu_domain_free,
-> +		.enforce_cache_coherency = amd_iommu_enforce_cache_coherency,
->  	}
->  };
->  
-> diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-> index df5c62ecf942b8..f08611a6cc4799 100644
-> --- a/drivers/iommu/intel/iommu.c
-> +++ b/drivers/iommu/intel/iommu.c
-> @@ -4422,7 +4422,8 @@ static int intel_iommu_map(struct iommu_domain *domain,
->  		prot |= DMA_PTE_READ;
->  	if (iommu_prot & IOMMU_WRITE)
->  		prot |= DMA_PTE_WRITE;
-> -	if ((iommu_prot & IOMMU_CACHE) && dmar_domain->iommu_snooping)
-> +	if (((iommu_prot & IOMMU_CACHE) && dmar_domain->iommu_snooping) ||
-> +	    dmar_domain->enforce_no_snoop)
->  		prot |= DMA_PTE_SNP;
->  
->  	max_addr = iova + size;
-> @@ -4545,6 +4546,16 @@ static phys_addr_t intel_iommu_iova_to_phys(struct iommu_domain *domain,
->  	return phys;
->  }
->  
-> +static bool intel_iommu_enforce_cache_coherency(struct iommu_domain *domain)
-> +{
-> +	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
-> +
-> +	if (!dmar_domain->iommu_snooping)
-> +		return false;
-> +	dmar_domain->enforce_no_snoop = true;
-> +	return true;
-> +}
+>
+> Changes in v2:
+>
+> * Hemant suggested to use restore function for poweroff() callback as we can
+> make sure that the device gets powered down properly.
+>
+>   drivers/bus/mhi/host/pci_generic.c | 1 +
+>   1 file changed, 1 insertion(+)
+>
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 9527b7d63840..ef85dbfb3216 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -1085,6 +1085,7 @@ static const struct dev_pm_ops mhi_pci_pm_ops = {
+>   	.resume = mhi_pci_resume,
+>   	.freeze = mhi_pci_freeze,
+>   	.thaw = mhi_pci_restore,
+> +	.poweroff = mhi_pci_freeze,
 
-Don't we have issues if we try to set DMA_PTE_SNP on DMARs that don't
-support it, ie. reserved register bit set in pte faults?  It seems
-really inconsistent here that I could make a domain that supports
-iommu_snooping, set enforce_no_snoop = true, then add another DMAR to
-the domain that may not support iommu_snooping, I'd get false on the
-subsequent enforcement test, but the dmar_domain is still trying to use
-DMA_PTE_SNP.
+It is possible that .thaw() queues recovery work and recovery work is 
+still running
 
-There's also a disconnect, maybe just in the naming or documentation,
-but if I call enforce_cache_coherency for a domain, that seems like the
-domain should retain those semantics regardless of how it's modified,
-ie. "enforced".  For example, if I tried to perform the above operation,
-I should get a failure attaching the device that brings in the less
-capable DMAR because the domain has been set to enforce this feature.
+while .poweroff() is called. I would suggest adding a flush_work() in 
+freeze such that
 
-If the API is that I need to re-enforce_cache_coherency on every
-modification of the domain, shouldn't dmar_domain->enforce_no_snoop
-also return to a default value on domain changes?
+we don't try to power off while we're also trying to power on MHI from 
+recovery work.
 
-Maybe this should be something like set_no_snoop_squashing with the
-above semantics, it needs to be re-applied whenever the domain:device
-composition changes?  Thanks,
-
-Alex
-
-> +
->  static bool intel_iommu_capable(enum iommu_cap cap)
->  {
->  	if (cap == IOMMU_CAP_CACHE_COHERENCY)
-> @@ -4898,6 +4909,7 @@ const struct iommu_ops intel_iommu_ops = {
->  		.iotlb_sync		= intel_iommu_tlb_sync,
->  		.iova_to_phys		= intel_iommu_iova_to_phys,
->  		.free			= intel_iommu_domain_free,
-> +		.enforce_cache_coherency = intel_iommu_enforce_cache_coherency,
->  	}
->  };
->  
-> diff --git a/include/linux/intel-iommu.h b/include/linux/intel-iommu.h
-> index 2f9891cb3d0014..1f930c0c225d94 100644
-> --- a/include/linux/intel-iommu.h
-> +++ b/include/linux/intel-iommu.h
-> @@ -540,6 +540,7 @@ struct dmar_domain {
->  	u8 has_iotlb_device: 1;
->  	u8 iommu_coherency: 1;		/* indicate coherency of iommu access */
->  	u8 iommu_snooping: 1;		/* indicate snooping control feature */
-> +	u8 enforce_no_snoop : 1;        /* Create IOPTEs with snoop control */
->  
->  	struct list_head devices;	/* all devices' list */
->  	struct iova_domain iovad;	/* iova's that belong to this domain */
-> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> index 9208eca4b0d1ac..fe4f24c469c373 100644
-> --- a/include/linux/iommu.h
-> +++ b/include/linux/iommu.h
-> @@ -272,6 +272,9 @@ struct iommu_ops {
->   * @iotlb_sync: Flush all queued ranges from the hardware TLBs and empty flush
->   *            queue
->   * @iova_to_phys: translate iova to physical address
-> + * @enforce_cache_coherency: Prevent any kind of DMA from bypassing IOMMU_CACHE,
-> + *                           including no-snoop TLPs on PCIe or other platform
-> + *                           specific mechanisms.
->   * @enable_nesting: Enable nesting
->   * @set_pgtable_quirks: Set io page table quirks (IO_PGTABLE_QUIRK_*)
->   * @free: Release the domain after use.
-> @@ -300,6 +303,7 @@ struct iommu_domain_ops {
->  	phys_addr_t (*iova_to_phys)(struct iommu_domain *domain,
->  				    dma_addr_t iova);
->  
-> +	bool (*enforce_cache_coherency)(struct iommu_domain *domain);
->  	int (*enable_nesting)(struct iommu_domain *domain);
->  	int (*set_pgtable_quirks)(struct iommu_domain *domain,
->  				  unsigned long quirks);
-
+>   	.restore = mhi_pci_restore,
+>   #endif
+>   };
