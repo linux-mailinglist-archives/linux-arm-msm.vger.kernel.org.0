@@ -2,68 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D6334F5763
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 10:15:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 969114F589F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 11:16:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242609AbiDFIPD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Apr 2022 04:15:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46830 "EHLO
+        id S239249AbiDFJCI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Apr 2022 05:02:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232289AbiDFIM6 (ORCPT
+        with ESMTP id S1452943AbiDFI6k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Apr 2022 04:12:58 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40E431B2C5F
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 19:15:56 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id r66so997965pgr.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 19:15:56 -0700 (PDT)
+        Wed, 6 Apr 2022 04:58:40 -0400
+Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 630D611FE17
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 19:51:25 -0700 (PDT)
+Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-e1e5e8d9faso1545404fac.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 19:51:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=p+/JljknQMw8XcaBWsgixj9umqk5+DiaogKeytdkVos=;
-        b=Gfr4nEj+95ViBM7QBzuL4YUTuNGg3zJNjfqKZQcjWytKE3qpaNx2nTyIYl8cLOUpAn
-         ztA05KhFvw8oL7Iqe/XzFOIQSTO6GNaAtzIcGrg0dhj5WswJ56DpP/aOpuexPZByH17Y
-         4a0AneA0chnYOxFNjE++clig/VN4lo//nuQ7U=
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=b3VgmcVE3acBeuODdkvAAtJXlVuslI4bEciUTqIWCXk=;
+        b=Uv+PIrB6cyK6LLEXHNe2noHhf63P0v4ECfEtz/zC4+ThCOWRUaiT7C7Ei3Fflk8r8X
+         Y8JNk9YQ8oaJTVUPPWKg6Afa+IcWnWZ/VLZehdbhOcW7rEpo0BdJaCM27cnSCvOT9yld
+         YHThOe5G+JB5u6NVpg8gKhFqzWQgxAFswR/Sw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=p+/JljknQMw8XcaBWsgixj9umqk5+DiaogKeytdkVos=;
-        b=hUqRANTEY0ZjEGn/jOO3MwwKKEDz4vvT1pJMy/V7HzvN8DXT/hOKzgBAf/+qEQF50a
-         LcQhCxaLXDovnb0Io7HJfhV2BPX7dIDYmocjcjFCgEze/Kg9382Kq5crAZkX9t4HmwXd
-         HY7RBSY/q1ymqs+47wBGaRMtZ9rCYIpitX73PNm9ivLekwGataZ338NN4RjjU2n6qJNz
-         UDjxgdLtEtYy30nZ3e5NZc2sqCceTLRDFDtPrcUCgGSTS469ewZ/PT+9CI7R+7ED5m6R
-         91ImqAKKxJrQr47aNuC/cFitE8yJcOGyFmvff7bScd9Iy8R4xe/yhfxR8JZZ8Kr4SOeP
-         BGng==
-X-Gm-Message-State: AOAM533iSYGpws0edExyjBv2XMgkojXMbRRSzGylQSgcDxKwL49alBn/
-        mCjWWj/NjJ/MFQtxNyZbZoymOg==
-X-Google-Smtp-Source: ABdhPJwbRb3OJuCGiMt66+NRuG+xEgZDPyRbFkqYOfW6pu+kNIq7dYqMaCrpJnztt3UbP5q827JN3A==
-X-Received: by 2002:aa7:9e0f:0:b0:4fd:fb27:a42 with SMTP id y15-20020aa79e0f000000b004fdfb270a42mr6736930pfq.13.1649211355504;
-        Tue, 05 Apr 2022 19:15:55 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:6b63:d403:e31b:da39])
-        by smtp.gmail.com with UTF8SMTPSA id d21-20020a056a0024d500b004fb0e7c7c3bsm18115245pfv.161.2022.04.05.19.15.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Apr 2022 19:15:54 -0700 (PDT)
-Date:   Tue, 5 Apr 2022 19:15:53 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rohitkr@quicinc.com,
-        srinivas.kandagatla@linaro.org, dianders@chromium.org,
-        swboyd@chromium.org, judyhsiao@chromium.org,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>
-Subject: Re: [PATCH v6 2/2] arm64: dts: qcom: sc7280: add lpass lpi pin
- controller node
-Message-ID: <Ykz32cMNG8PhN2c+@google.com>
-References: <1649157167-29106-1-git-send-email-quic_srivasam@quicinc.com>
- <1649157167-29106-3-git-send-email-quic_srivasam@quicinc.com>
- <Ykx47AlGYa8s5FTa@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=b3VgmcVE3acBeuODdkvAAtJXlVuslI4bEciUTqIWCXk=;
+        b=GuQrz9BA8zVno11GP/KAVmKPYncty8hNetH4Ih5ihM1Ci4QaX8xLHXBJ5qTmrcH4rT
+         Hh/+OToxCl3m6xB1cGFGpFW28ZPTBk0iRkk5cV1cr7N3kqNIywD0d8/fSLCA+0guyL1m
+         ghQ/5qTMYFfFJExbCbWrYpaIYLgkJct3YcH5pKlaBSft4b4P6W1Mxw70VpXNiVXIu15h
+         iE9a8wBDrzZnTM5uLvamQyObhooFfWl9txTSx0XnCJDkUzqc4xWT6ISmrRmihpSrX17O
+         2rg9m3gcunp3QQNgYoODFOX644Ua5MxHAl6BPyzZrlCsqrmh6FfRRZ7+3od7o83GeX8R
+         Go4A==
+X-Gm-Message-State: AOAM530icPEV2QXdURQMg2+uTVHiLJyck8p4BCfAn++KtCxhlf4eYIn/
+        e7Jc8wAArn4HAPqdHEWYDxWu+QBtzekKIR8XMfTe+A==
+X-Google-Smtp-Source: ABdhPJwyhOMQxO9obsul5Y1w7P3cWlG8E3ejPRdOhFNq/BGZk2T4u3pPnhmUkLRH6BtD6orCVzZkjOczXsYtx4cXWZk=
+X-Received: by 2002:a05:6870:558e:b0:e1:db7c:26aa with SMTP id
+ n14-20020a056870558e00b000e1db7c26aamr2980516oao.63.1649213484466; Tue, 05
+ Apr 2022 19:51:24 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 5 Apr 2022 19:51:24 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Ykx47AlGYa8s5FTa@google.com>
+In-Reply-To: <20220405234551.359453-2-dmitry.baryshkov@linaro.org>
+References: <20220405234551.359453-1-dmitry.baryshkov@linaro.org> <20220405234551.359453-2-dmitry.baryshkov@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Tue, 5 Apr 2022 19:51:24 -0700
+Message-ID: <CAE-0n53p7MsvwzqzzyHdRzX2XV9_Lv7poTuZMQowha0=f=QZSA@mail.gmail.com>
+Subject: Re: [PATCH 1/4] drm/msm/hdmi: properly add and remove created bridges
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -74,286 +70,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 05, 2022 at 10:14:20AM -0700, Matthias Kaehlcke wrote:
-> On Tue, Apr 05, 2022 at 04:42:47PM +0530, Srinivasa Rao Mandadapu wrote:
-> > Add LPASS LPI pinctrl node required for Audio functionality on sc7280
-> > based platforms.
-> > 
-> > Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-> > Co-developed-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> > Signed-off-by: Venkata Prasad Potturu <quic_potturu@quicinc.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi |  98 ++++++++++++++++++++++++++++
-> >  arch/arm64/boot/dts/qcom/sc7280.dtsi     | 107 +++++++++++++++++++++++++++++++
-> >  2 files changed, 205 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> > index 2afbbe3..f912a89 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> > @@ -238,6 +238,104 @@
-> >  	modem-init;
-> >  };
-> >  
-> > +&lpass_tlmm {
-> > +	dmic01_active: dmic01-active {
-> > +		clk {
-> > +			drive-strength = <8>;
-> > +		};
-> > +
-> > +		data {
-> > +			drive-strength = <8>;
-> 
-> The DMIC data pins are input pins, right? Why does an input pin need a drive
-> strength? Same for other input pins.
-> 
-> > +		};
-> > +	};
-> 
-> There's no need to reference 'lpass_tlmm' nor to repeat $label: $node.
-> Instead just use phandles:
-> 
-> &dmic01_active {
-> 	clk {
-> 		drive-strength = <8>;
-> 	};
-> 
-> 	data {
-> 		drive-strength = <8>;
-> 	};
-> };
-> 
-> Rather than replicating the node hierarchy you could also just give each pin a
-> label, and then:
-> 
-> &dmic01_clk_active {
-> 	drive-strength = <8>;
-> };
-> 
-> &dmic01_data_active {
-> 	drive-strength = <8>;
-> };
-> 
-> I don't have a strong preference, but wonder if the grouping adds any value.
+Quoting Dmitry Baryshkov (2022-04-05 16:45:48)
+> Add calls to drm_bridge_add()/drm_bridge_remove() for the internal HDMI
+> bridges. This fixes the following warning.
+>
+> [    2.195003] ------------[ cut here ]------------
 
-One more thing: please also drop the '_active' suffix, it is not needed. With
-that I think it's clearer to get rid of the grouping.
+Usually this line is left out
 
-> > +
-> > +	dmic01_sleep: dmic01-sleep {
-> > +		clk {
-> > +			drive-strength = <2>;
-> > +			bias-disable;
-> > +		};
-> > +
-> > +		data {
-> > +			drive-strength = <2>;
-> > +			pull-down;
-> > +		};
-> > +	};
-> > +
-> > +	dmic23_active: dmic02-active {
-> > +		clk {
-> > +			drive-strength = <8>;
-> > +		};
-> > +
-> > +		data {
-> > +			drive-strength = <8>;
-> > +		};
-> > +	};
-> > +
-> > +	dmic23_sleep: dmic02-sleep {
-> > +		clk {
-> > +			drive-strength = <2>;
-> > +			bias-disable;
-> > +		};
-> > +
-> > +		data {
-> > +			drive-strength = <2>;
-> > +			pull-down;
-> > +		};
-> > +	};
-> > +
-> > +	rx_swr_active: rx-swr-active {
-> > +		clk {
-> > +			drive-strength = <2>;
-> > +			slew-rate = <1>;
-> > +			bias-disable;
-> > +		};
-> > +
-> > +		data {
-> > +			drive-strength = <2>;
-> > +			slew-rate = <1>;
-> > +			bias-bus-hold;
-> > +		};
-> > +	};
-> > +
-> > +	rx_swr_sleep: rx-swr-sleep {
-> > +		clk {
-> > +			drive-strength = <2>;
-> > +			bias-pull-down;
-> > +		};
-> > +
-> > +		data {
-> > +			drive-strength = <2>;
-> > +			bias-pull-down;
-> > +		};
-> > +	};
-> > +
-> > +	tx_swr_active: tx-swr-active {
-> > +		clk {
-> > +			drive-strength = <2>;
-> > +			slew-rate = <1>;
-> > +			bias-disable;
-> > +		};
-> > +
-> > +		data {
-> > +			drive-strength = <2>;
-> > +			slew-rate = <1>;
-> > +			bias-bus-hold;
-> > +		};
-> > +	};
-> > +
-> > +	tx_swr_sleep: tx-swr-sleep {
-> > +		clk {
-> > +			drive-strength = <2>;
-> > +			bias-pull-down;
-> > +		};
-> > +
-> > +		data {
-> > +			drive-strength = <2>;
-> > +			bias-bus-hold;
-> > +		};
-> > +	};
-> > +};
-> > +
-> >  &pcie1 {
-> >  	status = "okay";
-> >  	perst-gpio = <&tlmm 2 GPIO_ACTIVE_LOW>;
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > index 8d8cec5..db74fc3 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > @@ -1987,6 +1987,113 @@
-> >  			qcom,bcm-voters = <&apps_bcm_voter>;
-> >  		};
-> >  
-> > +		lpass_tlmm: pinctrl@33c0000 {
-> > +			compatible = "qcom,sc7280-lpass-lpi-pinctrl";
-> > +			reg = <0 0x33c0000 0x0 0x20000>,
-> > +				<0 0x3550000 0x0 0x10000>;
-> 
-> Pad addresses to 8 digits.
-> 
-> > +			gpio-controller;
-> > +			#gpio-cells = <2>;
-> > +			gpio-ranges = <&lpass_tlmm 0 0 15>;
-> > +
-> > +			#clock-cells = <1>;
-> > +
-> > +			dmic01_active: dmic01-active {
-> > +				clk {
-> > +					pins = "gpio6";
-> > +					function = "dmic1_clk";
-> > +				};
-> > +
-> > +				data {
-> > +					pins = "gpio7";
-> > +					function = "dmic1_data";
-> > +				};
-> > +			};
-> > +
-> > +			dmic01_sleep: dmic01-sleep {
-> > +				clk {
-> > +					pins = "gpio6";
-> > +					function = "dmic1_clk";
-> > +				};
-> > +
-> > +				data {
-> > +					pins = "gpio7";
-> > +					function = "dmic1_data";
-> > +				};
-> > +			};
-> > +
-> > +			dmic23_active: dmic02-active {
-> 
-> is it intentional that the node name is 'dmic02*', but the label 'dmic23*'?
-> 
-> > +				clk {
-> > +					pins = "gpio8";
-> > +					function = "dmic2_clk";
-> > +				};
-> > +
-> > +				data {
-> > +					pins = "gpio9";
-> > +					function = "dmic2_data";
-> > +				};
-> > +			};
-> > +
-> > +			dmic23_sleep: dmic02-sleep {
-> 
-> ditto
-> 
-> > +				clk {
-> > +					pins = "gpio8";
-> > +					function = "dmic2_clk";
-> > +				};
-> > +
-> > +				data {
-> > +					pins = "gpio9";
-> > +					function = "dmic2_data";
-> > +				};
-> > +			};
-> > +
-> > +			rx_swr_active: rx-swr-active {
-> > +				clk {
-> > +					pins = "gpio3";
-> > +					function = "swr_rx_clk";
-> > +				};
-> > +
-> > +				data {
-> > +					pins = "gpio4", "gpio5";
-> > +					function = "swr_rx_data";
-> > +				};
-> > +			};
-> > +
-> > +			rx_swr_sleep: rx-swr-sleep {
-> > +				clk {
-> > +					pins = "gpio3";
-> > +					function = "swr_rx_clk";
-> > +				};
-> > +
-> > +				data {
-> > +					pins = "gpio4", "gpio5";
-> > +					function = "swr_rx_data";
-> > +				};
-> > +			};
-> > +
-> > +			tx_swr_active: tx-swr-active {
-> > +				clk {
-> > +					pins = "gpio0";
-> > +					function = "swr_tx_clk";
-> > +				};
-> > +
-> > +				data {
-> > +					pins = "gpio1", "gpio2", "gpio14";
-> > +					function = "swr_tx_data";
-> > +				};
-> > +			};
-> > +
-> > +			tx_swr_sleep: tx-swr-sleep {
-> > +				clk {
-> > +					pins = "gpio0";
-> > +					function = "swr_tx_clk";
-> > +				};
-> > +
-> > +				data {
-> > +					pins = "gpio1", "gpio2", "gpio14";
-> > +					function = "swr_tx_data";
-> > +				};
-> > +			};
-> > +		};
-> > +
-> >  		gpu: gpu@3d00000 {
-> >  			compatible = "qcom,adreno-635.0", "qcom,adreno";
-> >  			reg = <0 0x03d00000 0 0x40000>,
+> [    2.195044] WARNING: CPU: 0 PID: 1 at kernel/locking/mutex.c:579 __mutex_lock+0x840/0x9f4
+
+And the timestamp is removed
+
+> [    2.198774] DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+> [    2.198786] Modules linked in:
+> [    2.211868] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.18.0-rc1-00002-g3054695a0d27-dirty #55
+> [    2.214671] Hardware name: Generic DT based system
+> [    2.223265]  unwind_backtrace from show_stack+0x10/0x14
+> [    2.228036]  show_stack from dump_stack_lvl+0x58/0x70
+> [    2.233159]  dump_stack_lvl from __warn+0xc8/0x1e8
+> [    2.238367]  __warn from warn_slowpath_fmt+0x78/0xa8
+> [    2.243054]  warn_slowpath_fmt from __mutex_lock+0x840/0x9f4
+> [    2.248174]  __mutex_lock from mutex_lock_nested+0x1c/0x24
+> [    2.253818]  mutex_lock_nested from drm_bridge_hpd_enable+0x2c/0x84
+> [    2.259116]  drm_bridge_hpd_enable from msm_hdmi_modeset_init+0xc0/0x21c
+> [    2.265279]  msm_hdmi_modeset_init from mdp4_kms_init+0x53c/0x90c
+> [    2.272223]  mdp4_kms_init from msm_drm_bind+0x514/0x698
+> [    2.278212]  msm_drm_bind from try_to_bring_up_aggregate_device+0x160/0x1bc
+
+I'd probably cut it off here.
+
+Is there any Fixes tag for this? Still seems worthwhile to have one even
+if this is a lockdep warning.
