@@ -2,140 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 161EE4F62BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 17:18:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 221AC4F62DC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 17:18:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235537AbiDFPLi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Apr 2022 11:11:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52148 "EHLO
+        id S235886AbiDFPQj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Apr 2022 11:16:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235707AbiDFPLX (ORCPT
+        with ESMTP id S235757AbiDFPQb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Apr 2022 11:11:23 -0400
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2062e.outbound.protection.outlook.com [IPv6:2a01:111:f400:7e89::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6A5922EB3D;
-        Wed,  6 Apr 2022 05:11:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=aAddBGI/bZvKLiGatfWKhfLA9eAm+JA6AeWvjD/t053IJFAVLNxGh1WNeS+JKLGJ1yG+JwSdKbMVOHWBHLef8jfd9HiOUvTquiHAvEkb7MPm5hD04WcnLlmHvJaIm+zq0YL/ztkdMznMQeVOfcwvukWj4fxXsma3kRERd//+dk+u9vkpVUSyG1xc1I0Fb3C727nA//aQwAOnNaNRMknpvYF0q4/ZuQeWPFb9BkODClTM5seNn+vnMu8vGJ+d4c4GrHb6ItqOOOQcZe2bOO9MDIMTmjAduk3L7bQt6l+0NgEh5BwnBXi7La7ho7LP1AQy1ewV74owTdetQdJxdmhQ5Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=maJk1G8B0XfwbBilLG6EGxqigu+g9r6jhgjUxosvpxw=;
- b=ch5G2WUoI96mz/63EfAmySIRO2q+g+KnlEm+A5+wMYP8EBRJrcTpqg9hQoR3bp5Xx8+wNrhLNWdBBqDIq9b4rhffiDD1VKETcTQMpqfCZB2kFc0hVBs/2Tiru3KHJqhhCPleNkQQDgbqOwKqJ4YjRRWNegIkHEvHv3bYx85Yfyx0FAxEB9le0jroiRAJvH0asAcTri+YzGMGZlbMye0y2K/ohJ6aba9hn4EajeU6SaQF586r9iUotnOOtoOjyAzRc4Fh7xJvkOK0l6/HIX/LuttDyxgAz+4xaUOEq1zHTxhpvC6xunZ9aBXKOh34dDAK8uaxT205CHNT1qcPsyFQrA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=maJk1G8B0XfwbBilLG6EGxqigu+g9r6jhgjUxosvpxw=;
- b=eFQ9gUjBc6K/JV4N/p4+rbqjqlgHj4Uq6GWgX1S5kJplWXLlMcz3tSnLjM4ipAU/bsRRpdhpPmxH1CyfpUUdqreYlTNhdxw/HEy28Hvt3gBFN1GZC5z6xFm4Q2P0NRspEeFCpDjGgeccfmBx6m/H7afk5+2fXtKMv0ElXB9u0BH/8i/RTZ72PTE3k0VcqbzIJKSJs4MGnWKWIOB1mzAQAxa7ekq6CATW3EzGjsw6UOMJO9dkylq+iI7z9jWfVAzWM6B8LMQKjz6ijJVjbr9QL3xUuC/Q76XCrTcGZMFyzMFMDA6hRxBegVSIcJAX1K+ERma1AJiJAtbrnWm/8TMd5A==
-Received: from MN2PR12MB3344.namprd12.prod.outlook.com (2603:10b6:208:c5::10)
- by BYAPR12MB3336.namprd12.prod.outlook.com (2603:10b6:a03:d7::26) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5144.21; Wed, 6 Apr
- 2022 12:07:34 +0000
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from MN2PR12MB4192.namprd12.prod.outlook.com (2603:10b6:208:1d5::15)
- by MN2PR12MB3344.namprd12.prod.outlook.com (2603:10b6:208:c5::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5123.31; Wed, 6 Apr
- 2022 12:07:32 +0000
-Received: from MN2PR12MB4192.namprd12.prod.outlook.com
- ([fe80::cdfb:f88e:410b:9374]) by MN2PR12MB4192.namprd12.prod.outlook.com
- ([fe80::cdfb:f88e:410b:9374%6]) with mapi id 15.20.5144.021; Wed, 6 Apr 2022
- 12:07:32 +0000
-Date:   Wed, 6 Apr 2022 09:07:30 -0300
-From:   Jason Gunthorpe <jgg@nvidia.com>
-To:     Christoph Hellwig <hch@lst.de>
-Cc:     Alex Williamson <alex.williamson@redhat.com>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Christian Benvenuti <benve@cisco.com>,
-        Cornelia Huck <cohuck@redhat.com>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        iommu@lists.linux-foundation.org, Jason Wang <jasowang@redhat.com>,
-        Joerg Roedel <joro@8bytes.org>, kvm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-rdma@vger.kernel.org,
-        linux-s390@vger.kernel.org,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        "Michael S. Tsirkin" <mst@redhat.com>,
-        Nelson Escobar <neescoba@cisco.com>, netdev@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-        virtualization@lists.linux-foundation.org,
-        Will Deacon <will@kernel.org>,
-        "Tian, Kevin" <kevin.tian@intel.com>
-Subject: Re: [PATCH 1/5] iommu: Replace uses of IOMMU_CAP_CACHE_COHERENCY
- with dev_is_dma_coherent()
-Message-ID: <20220406120730.GA2120790@nvidia.com>
-References: <0-v1-ef02c60ddb76+12ca2-intel_no_snoop_jgg@nvidia.com>
- <1-v1-ef02c60ddb76+12ca2-intel_no_snoop_jgg@nvidia.com>
- <20220406053039.GA10580@lst.de>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220406053039.GA10580@lst.de>
-X-ClientProxiedBy: YT3PR01CA0044.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:82::29) To MN2PR12MB4192.namprd12.prod.outlook.com
- (2603:10b6:208:1d5::15)
+        Wed, 6 Apr 2022 11:16:31 -0400
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48D8A63FF5E;
+        Wed,  6 Apr 2022 05:16:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1649247410; x=1680783410;
+  h=to:cc:references:from:subject:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=rpKYLZdYBLhVE5YeaVAJgHvi/eQxc/sAqc3k28IE/NI=;
+  b=CDKg/bhl+u9U8i1vhxt63LMkRsvzz+dkYGafeBX2GnqwA56vDti9nNOZ
+   PlSjgiChFQ3QJQnDld5AdL4wf9RYCmvddByJnbMS8qTCprBC5CwP3V0c/
+   aj9Y0lyOz44otWSQEmkfLn/LX7evx46t4cXjpm+SlgF/G6AbyFu0DrHS1
+   zkEAQR5YfZkzXI6bliDq9SjenZykKUQ7X6Yv+7tFNXFsNRLfqGbyCMlvQ
+   dLy4BJ8hCt2HwDaj7X8NLyWqORFlrQsdInCc9UNIFQHE+8jDr1gyIVvMb
+   8MZTIlnGp79J5F14ZLLfrqxNCxL4CNL1FR8zUFUPE1vLAArIX0fR4QzZL
+   Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10308"; a="321724888"
+X-IronPort-AV: E=Sophos;i="5.90,239,1643702400"; 
+   d="scan'208";a="321724888"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Apr 2022 05:16:31 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,239,1643702400"; 
+   d="scan'208";a="658504053"
+Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
+  by orsmga004.jf.intel.com with ESMTP; 06 Apr 2022 05:16:25 -0700
+To:     Pavan Kondeti <quic_pkondeti@quicinc.com>
+Cc:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        "Sandeep Maheswaram (Temp)" <quic_c_sanm@quicinc.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Peter Chen <peter.chen@kernel.org>,
+        Pawel Laszczak <pawell@cadence.com>,
+        Roger Quadros <rogerq@kernel.org>,
+        Aswath Govindraju <a-govindraju@ti.com>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_ppratap@quicinc.com,
+        quic_kriskura@quicinc.com
+References: <4c2a28ad-b866-1b65-e73a-4eda0596cea2@linux.intel.com>
+ <Yj2nPa6/Y01P5aCY@kuha.fi.intel.com>
+ <4619c75c-cd34-82f2-56e1-a8bcb6d97177@linux.intel.com>
+ <Yj3h4p/kmZTvMz0O@kuha.fi.intel.com>
+ <fae54b27-9ae2-ecfc-69ae-40e5f5e1afbe@quicinc.com>
+ <bd694ef9-be57-79f1-e95e-5501c396be25@linux.intel.com>
+ <YkWNpTLjh2weX9Mk@kuha.fi.intel.com>
+ <20220404082516.GE29680@hu-pkondeti-hyd.qualcomm.com>
+ <20220406062543.GA10801@hu-pkondeti-hyd.qualcomm.com>
+ <1234f637-9420-77e2-dc61-7e702ac8abe0@linux.intel.com>
+ <20220406110153.GE10801@hu-pkondeti-hyd.qualcomm.com>
+From:   Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: Re: [PATCH v3 3/3] usb: dwc: host: add xhci_plat_priv quirk
+ XHCI_SKIP_PHY_INIT
+Message-ID: <f578947c-fb10-11b7-abe8-28b6b3f6bb0c@linux.intel.com>
+Date:   Wed, 6 Apr 2022 15:18:17 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Firefox/78.0 Thunderbird/78.14.0
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 8ce4e903-65f4-4e65-a5a8-08da17c60766
-X-MS-TrafficTypeDiagnostic: MN2PR12MB3344:EE_|BYAPR12MB3336:EE_
-X-Microsoft-Antispam-PRVS: <MN2PR12MB33447FB9A91EA234E565A4E0C2E79@MN2PR12MB3344.namprd12.prod.outlook.com>
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: N7JD+kwH+F/mxIav3NbMX6KSHi7GQLHEYcbbzpGCpsfsHzdNTszL0tLM3ZWL3z363bK7MStPf4mxbqE0F04jlx9kWRW37PcBvQR/nlqH4yYI1+CB9m6sfUY7zKWUng0+kU0U46+DfMqhiAHvB0j1o/9aGyj1/PHvEG5GraRhKLHAdOqHI2buea5JJt/CVJ9KpztBFTJmj93lm3P/1q2iImOXE+a1aRH0tFIRB1ac+8KJ3+auX+2PWEOGk5f4E16CyyfBZi7g9ncOLMc/q4ii7SEsz2cD164yDZHN2djBqedNKxpX+3tkpPoGIU6v/BIWBknKqn13quI7tb8gPSgmG3EZJRyLYNBi4uBKn4L3TPUSlKtc0Ytz0D8MpJSTeMn56AfjVFXwNtOClZjV3LSe1Kvmu2WBinAufyvgWEvVxjJvPoHp+DOLSHsMZwE6yirPO/SICikIdyLslKjr5wwwRvLETBFt1z4WnWSsYjdplCBMqzFJ6nqkDyo3kq074Tny4aBvj8lIvw4jt1deu4ILCyplhaYzPjk61OauBdI55HnYvlP/fgazcpvMujeH5IO2Pdy+71EGW/hYO3+v9ecJR6bjV3DmWwFwIQonaX06gO/X/nIyB3h7ZUMkjCSCTULsPEjxXbN6bI+v5GjOyn18vg==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB3344.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(66946007)(4326008)(66556008)(33656002)(66476007)(316002)(6916009)(54906003)(8676002)(6486002)(38100700002)(36756003)(86362001)(26005)(1076003)(186003)(508600001)(6506007)(6512007)(8936002)(4744005)(2616005)(7416002)(5660300002)(2906002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?TlYjIsdBmwLbC0TirZBTT4IXFEbhKW/TsEgQLvqdJHpEFRhET3FVLZ+ezBiu?=
- =?us-ascii?Q?7ECcRvNIlZQ01QEQ5c2smjfCLxBQgHejc38TFDK/41LYl72hLN5DKpBvFwN6?=
- =?us-ascii?Q?F050xtJHfhu4xoDuOgBN/yHqAiMCkNriV1lcQ6NbZdRMjkAI9OpHoiVL7i/E?=
- =?us-ascii?Q?Ou71W6WeogPccoOlIrOCYrjHK6DuX0zY/9agP14hqPnEyk4suftpw44nki4t?=
- =?us-ascii?Q?6Ir4LWsHihECoA5ACg3+5tdVCwEsHbSVLeaXmQcerpuf3k/2dshC/lsliyKT?=
- =?us-ascii?Q?tPEMC7RD+MPx6IggUfY1YOq4d+jaZLyDwzOjZlymPPROwnf3fOh91h7S1M/C?=
- =?us-ascii?Q?prRy2Y2a/Yp6VsLFYZNkihuTI5TyLNPSUyVcjph7zNtXa9lyScqtyQQUiO30?=
- =?us-ascii?Q?gXESldRMiLPQmaEkGG6f6BOM5Bkk4nBZsh9AHDcuTzb3qnnmuPq78rDIOxYu?=
- =?us-ascii?Q?Qo0qwPqjvYvtgwAndnZxV8HyWebMK0ju1G4ntCraoY0TLqHM4vm6INPLNX93?=
- =?us-ascii?Q?srXSnTVH2KzxTOBwrkxvIu4cFT20h6ulMFzCgp5u3Z/lkdyNnXXtL7ZwqqUl?=
- =?us-ascii?Q?zavjQB15ZtLoYV1YFRt+W/IoABup8z7ISvq0NaIxVAso7dO2+4aAZpHizppm?=
- =?us-ascii?Q?1yHh/1Lqff7XkM0vijPCLboZMV/Ibfaf08j/56KnUJDDuL8xM9m5+fJm1y+F?=
- =?us-ascii?Q?qvXxFhGEnweOTrX5u6NafeJg5jRK0ogJB+QaiB72RTD4T5xTYc4zT3fgyXPq?=
- =?us-ascii?Q?vp8mbLEQF4/7JwBP+uHgqkYxGc7v4mrnzeURIzhDKhnUoLYYfbRq3cRnIuj8?=
- =?us-ascii?Q?eogLYILW6M7RmZe6RuhNriAWjJDkpF1qSOS7FMR3NE7R3/3Sw3Ir7WYn/LtM?=
- =?us-ascii?Q?KYYx/30qvURsXLpXmMnuzAY+cYmba2DNjW8VlsrY0v6lbkIoMoURRe8E9tG5?=
- =?us-ascii?Q?ZZ3iEdSCoOcFeLJzmyhJAVWhphAU6cdpIGIrrwEaEsXZcDD3JWzmFqsYpZ8c?=
- =?us-ascii?Q?2bdGjk/0AZHkSeyc/LsjUTRze3gSSHGw6Zsz+bJQUk4nw2x+SEHSPCAdPw52?=
- =?us-ascii?Q?joE3L+DIZ6ElAmp3viy5O/oKXmXIwlfQV7+a3PinhZDSMTxWb24vrDBss2R6?=
- =?us-ascii?Q?r03elvXKkOCuk6mV+wqHVILrJQlF+roRwt8SybKzEk9Ijq3qwQ+iMvMIt7mC?=
- =?us-ascii?Q?YbUErZ6BHN1jou8Q2GUvH4gat+IENTF/Qia/pT0n5drbdJmiUFM+OSKA6WaH?=
- =?us-ascii?Q?7Apprk64vFnMsCqN3Iddze1fHmPM+83MnL6UiwRhTqAY7zBq99uRsBZj/93q?=
- =?us-ascii?Q?1pC4nx4+JqlThj7z5C0EAvRpl5fd7ayTnibe2si+1jFWrsSy21Nv1ORyyQ1x?=
- =?us-ascii?Q?5hDMoCgvh+vWxC+zJAwu2FUdfpwqeBWxwWUKT9z1fc+KP0OA16qQG3yiQWqL?=
- =?us-ascii?Q?DokQw7u+u1yKkmixKVD4kAGzTDkQsvzqbk3sosow3tAAmRKPah5gjEhkEhZW?=
- =?us-ascii?Q?NFNBVDdJ38oQVuFNAldY9KhlGQRl5X0h2zzHMRyJayC1/qi0LhdMJcXTBc5t?=
- =?us-ascii?Q?6mlpu+OZsGPOR8QpYI4XkzET2AfDHUGiZ3YcOsDGSS+htJnREVB855cZ5MNl?=
- =?us-ascii?Q?relNOWPzJBzMABsz2W6c7Wm3C5E9E70Qfumw9I5ufiyMNkFouKwt4WTJ5fmC?=
- =?us-ascii?Q?tGCKkObIe8pGneISmkif8vHyN4uVw3cUaZ4ybkOBYvKi281RizTNMLQDArCi?=
- =?us-ascii?Q?gwQek0fk0A=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8ce4e903-65f4-4e65-a5a8-08da17c60766
-X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB4192.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Apr 2022 12:07:32.4132
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 9Lbbj6FnmzszPjVrdqxJmh6hu1XcCqdudqqXpbOy+7hMDO3yZ2aJTx0WOLBfhpWp
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR12MB3336
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=no
+In-Reply-To: <20220406110153.GE10801@hu-pkondeti-hyd.qualcomm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -143,32 +87,265 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 06, 2022 at 07:30:39AM +0200, Christoph Hellwig wrote:
-> On Tue, Apr 05, 2022 at 01:16:00PM -0300, Jason Gunthorpe wrote:
-> > diff --git a/drivers/infiniband/hw/usnic/usnic_uiom.c b/drivers/infiniband/hw/usnic/usnic_uiom.c
-> > index 760b254ba42d6b..24d118198ac756 100644
-> > +++ b/drivers/infiniband/hw/usnic/usnic_uiom.c
-> > @@ -42,6 +42,7 @@
-> >  #include <linux/list.h>
-> >  #include <linux/pci.h>
-> >  #include <rdma/ib_verbs.h>
-> > +#include <linux/dma-map-ops.h>
-> >  
-> >  #include "usnic_log.h"
-> >  #include "usnic_uiom.h"
-> > @@ -474,6 +475,12 @@ int usnic_uiom_attach_dev_to_pd(struct usnic_uiom_pd *pd, struct device *dev)
-> >  	struct usnic_uiom_dev *uiom_dev;
-> >  	int err;
-> >  
-> > +	if (!dev_is_dma_coherent(dev)) {
+On 6.4.2022 14.01, Pavan Kondeti wrote:
+> Hi Mathias,
 > 
-> Which part of the comment at the top of dma-map-ops.h is not clear
-> enough to you?
+> On Wed, Apr 06, 2022 at 01:52:56PM +0300, Mathias Nyman wrote:
+>> Hi
+>>
+>> Sorry about the delayed response.
+>>
+>>
+>> On 6.4.2022 9.25, Pavan Kondeti wrote:
+>>> Hi Heikki/Mathias,
+>>>
+>>> On Mon, Apr 04, 2022 at 01:55:16PM +0530, Pavan Kondeti wrote:
+>>>> Hi Heikki,
+>>>>
+>>>> On Thu, Mar 31, 2022 at 02:16:53PM +0300, Heikki Krogerus wrote:
+>>>>> On Wed, Mar 30, 2022 at 08:47:34PM +0300, Mathias Nyman wrote:
+>>>>>> On 29.3.2022 12.18, Sandeep Maheswaram (Temp) wrote:
+>>>>>>> Hi Mathias,Heikki
+>>>>>>>
+>>>>>>> On 3/25/2022 9:08 PM, Heikki Krogerus wrote:
+>>>>>>>> On Fri, Mar 25, 2022 at 04:33:27PM +0200, Mathias Nyman wrote:
+>>>>>>>>> On 25.3.2022 13.27, Heikki Krogerus wrote:
+>>>>>>>>>> On Fri, Mar 25, 2022 at 12:36:22AM +0200, Mathias Nyman wrote:
+>>>>>>>>>>> On 24.3.2022 14.27, Heikki Krogerus wrote:
+>>>>>>>>>>>> On Thu, Mar 24, 2022 at 12:07:11PM +0530, Sandeep Maheswaram wrote:
+>>>>>>>>>>>>> Currently the phy init is done from dwc3 and also xhci which makes the
+>>>>>>>>>>>>> runtime_usage value 2 for the phy which causes issue during runtime
+>>>>>>>>>>>>> suspend. When we run the below command the runtime_status still shows
+>>>>>>>>>>>>> active.
+>>>>>>>>>>>>> echo auto > /sys/bus/platform/devices/88e3000.phy/power/control
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> dwc3 manages PHY by own DRD driver, so skip the management by
+>>>>>>>>>>>>> HCD core by setting this quirk.
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+>>>>>>>>>>>>> ---
+>>>>>>>>>>>>>   drivers/usb/dwc3/host.c | 13 +++++++++++++
+>>>>>>>>>>>>>   1 file changed, 13 insertions(+)
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> diff --git a/drivers/usb/dwc3/host.c b/drivers/usb/dwc3/host.c
+>>>>>>>>>>>>> index eda8719..d4fcf06 100644
+>>>>>>>>>>>>> --- a/drivers/usb/dwc3/host.c
+>>>>>>>>>>>>> +++ b/drivers/usb/dwc3/host.c
+>>>>>>>>>>>>> @@ -13,6 +13,12 @@
+>>>>>>>>>>>>>   #include <linux/platform_device.h>
+>>>>>>>>>>>>>     #include "core.h"
+>>>>>>>>>>>>> +#include <linux/usb/xhci-plat.h>
+>>>>>>>>>>>>> +#include <linux/usb/xhci-quirks.h>
+>>>>>>>>>>>>> +
+>>>>>>>>>>>>> +static const struct xhci_plat_priv xhci_plat_dwc3_xhci = {
+>>>>>>>>>>>>> +    .quirks = XHCI_SKIP_PHY_INIT,
+>>>>>>>>>>>>> +};
+>>>>>>>>>>>>>     static void dwc3_host_fill_xhci_irq_res(struct dwc3 *dwc,
+>>>>>>>>>>>>>                       int irq, char *name)
+>>>>>>>>>>>>> @@ -122,6 +128,13 @@ int dwc3_host_init(struct dwc3 *dwc)
+>>>>>>>>>>>>>           }
+>>>>>>>>>>>>>       }
+>>>>>>>>>>>>>   +    ret = platform_device_add_data(xhci, &xhci_plat_dwc3_xhci,
+>>>>>>>>>>>>> +            sizeof(xhci_plat_dwc3_xhci));
+>>>>>>>>>>>>> +    if (ret) {
+>>>>>>>>>>>>> +        dev_err(dwc->dev, "failed to add data to xHCI\n");
+>>>>>>>>>>>>> +        goto err;
+>>>>>>>>>>>>> +    }
+>>>>>>>>>>>>> +
+>>>>>>>>>>>>>       ret = platform_device_add(xhci);
+>>>>>>>>>>>>>       if (ret) {
+>>>>>>>>>>>>>           dev_err(dwc->dev, "failed to register xHCI device\n");
+>>>>>>>>>>>> I think you should just use device property:
+>>>>>>>>>>>>
+>>>>>>>>>>> This was suggested in an earlier series, but was rejected as it also added
+>>>>>>>>>>> the property as a device tree parameter.
+>>>>>>>>>>>
+>>>>>>>>>>> I think adding more device properties can be messy in the long run, especially if we
+>>>>>>>>>>> need to add them for many of the existing xhci quirks.
+>>>>>>>>>>> We also end up with a mix where some device properties are listed as device tree
+>>>>>>>>>>> parameters, and some not.
+>>>>>>>>>>>
+>>>>>>>>>>> Defining xhci quirks and platform data structure in headers shared with dwc3 and cdns3
+>>>>>>>>>>> allow those drivers to easily set any existing xhci quirk, or other possible optional
+>>>>>>>>>>> callbacks.
+>>>>>>>>>>>
+>>>>>>>>>>> cdns3 driver is already doing this, but it includes the full xhci.h header.
+>>>>>>>>>>> This series cleans up that a bit so cdns3 will only include xhci quirk bits and
+>>>>>>>>>>> platform data structure.
+>>>>>>>>>>>
+>>>>>>>>>>> On the downside we add a couple xhci related header files to include/linux/usb/
+>>>>>>>>>>> Let me know if you see any other issues I missed with this approach.
+>>>>>>>>>> The problem here is that these drivers are now coupled together, and
+>>>>>>>>>> that should not be taken lightly. We have a dependency hell in our
+>>>>>>>>>> hands with a lot of drivers, and the culprit is always platform data.
+>>>>>>>>>>
+>>>>>>>>>> Build-in device properties may be messy, but I would still say they
+>>>>>>>>>> are less messy than those quirk flags - you got to admit, they are a
+>>>>>>>>>> mess. The benefit from build-in properties is in any case the fact
+>>>>>>>>>> that they remove the need to couple these drivers together.
+>>>>>>>>> Agree, quirk bits are messy. Any suggestion that would work with
+>>>>>>>>> PCI xHCI devices, devicetree, and "pure" platform devices?
+>>>>>>>> I think xHCI driver should always be able to rely on being able to
+>>>>>>>> read this kind of information from the fwnode. If there is no actual
+>>>>>>>> firmware node (DT or ACPI), or if it's missing some information, the
+>>>>>>>> glue driver needs to populate software node for the xHCI.
+>>>>>>>>
+>>>>>>>> Right now I just want to avoid having to pass the quirks using
+>>>>>>>> platform data from drivers such as drivers/usb/cdns3/host.c and
+>>>>>>>> drivers/usb/dwc3/host.c to xHCI.
+>>>>>>>>
+>>>>>>>> One way we could do that is by defining compatibility ID for both of
+>>>>>>>> them that we provide using a single device property (like I guess DT
+>>>>>>>> does). Then based on that compatibility ID, xhci-plat.c can set the
+>>>>>>>> actual "static" quirk flags. That we could already do easily. How
+>>>>>>>> would that sound to you?
+>>>>>>
+>>>>>> Sounds good. 
+>>>>>>
+>>>>>>>
+>>>>>>> This was my previous patch where I was using device tree property. Should we go ahead with this approach?
+>>>>>>>
+>>>>>>> https://patchwork.kernel.org/project/linux-arm-msm/cover/1636353710-25582-1-git-send-email-quic_c_sanm@quicinc.com/
+>>>>>>>
+>>>>>>> Any further changes to this ?
+>>>>>>
+>>>>>> By dropping the DT part of that series we get a similar built-in device property
+>>>>>> solution as Heikki initially suggested.
+>>>>>>
+>>>>>> How about adding the compatibility ID device property that was just suggested?
+>>>>>> Then matching the Id in xhci-plat.c against a static table containing Ids and
+>>>>>> xhci_plat_priv structures, with the needed quirks for dwc3.
+>>>>>
+>>>>> There was a comment from Pavan. Is it still possible to get this
+>>>>> detail from DT?
+>>>>> I guess that would still be ideal, right?
+>>>>>
+>>>> I was suggesting if we can have device tree param like the patch sandeep
+>>>> pointed out.
+>>>>
+>>>> How would adding a compatible index to usb_xhci_of_match[] would work
+>>>> actually? I ask this because, dwc3/host.c creates platform device and
+>>>> it is not associated with any of_node, so of_driver_match_device() called
+>>>> from platform bus match method does not work. one way to achieve this would
+>>>> be by matching against sysdev. Something like below. Is it acceptible?
+>>>>
+>>>> diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
+>>>> index 649ffd8..bd5d055 100644
+>>>> --- a/drivers/usb/host/xhci-plat.c
+>>>> +++ b/drivers/usb/host/xhci-plat.c
+>>>> @@ -126,6 +126,10 @@ static const struct xhci_plat_priv xhci_plat_brcm = {
+>>>>  	.quirks = XHCI_RESET_ON_RESUME,
+>>>>  };
+>>>>  
+>>>> +static const struct xhci_plat_priv xhci_plat_dwc3 = {
+>>>> +	.quirks = XHCI_SKIP_PHY_INIT,
+>>>> +};
+>>>> +
+>>>>  static const struct of_device_id usb_xhci_of_match[] = {
+>>>>  	{
+>>>>  		.compatible = "generic-xhci",
+>>>> @@ -167,6 +171,9 @@ static const struct of_device_id usb_xhci_of_match[] = {
+>>>>  	}, {
+>>>>  		.compatible = "brcm,bcm7445-xhci",
+>>>>  		.data = &xhci_plat_brcm,
+>>>> +	}, {
+>>>> +		.compatible = "snps,dwc3",
+>>>> +		.data = &xhci_plat_dwc3,
+>>>>  	},
+>>
+>> Isn't there a risk that xhci-plat now binds to the parent dwc3 device?
+>> competing with the similar of_match_table entry created in drivers/usb/dwc3/core.c
+> 
+> Sill of me. Yes, it does not work. Thanks for pointing it out.
+> 
+>>
+>>>>  	{},
+>>>>  };
+>>>> @@ -274,6 +281,15 @@ static int xhci_plat_probe(struct platform_device *pdev)
+>>>>  	else
+>>>>  		priv_match = dev_get_platdata(&pdev->dev);
+>>>>  
+>>>> +	/* allow private data mapping with the sysdev compatible */
+>>>> +	if (!priv_match) {
+>>>> +		struct of_device_id *match;
+>>>> +
+>>>> +		match = of_match_device(usb_xhci_of_match, sysdev);
+>>>> +		if (match)
+>>>> +			priv_match = match->data;
+>>>> +	}
+>>>> +
+>>>>  	if (priv_match) {
+>>>>  		priv = hcd_to_xhci_priv(hcd);
+>>>>  		/* Just copy data for now */
+>>>>
+>>>>> I have another question. Can't we now just assume that if the sysdev
+>>>>> is the parent (or grandparent), then the phy initialization should
+>>>>> always be skipped? In that case we could just do something like this:
+>>>>>
+>>>>> diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
+>>>>> index 649ffd861b44e..1018b33488046 100644
+>>>>> --- a/drivers/usb/host/xhci-plat.c
+>>>>> +++ b/drivers/usb/host/xhci-plat.c
+>>>>> @@ -212,8 +212,12 @@ static int xhci_plat_probe(struct platform_device *pdev)
+>>>>>  #endif
+>>>>>         }
+>>>>>  
+>>>>> -       if (!sysdev)
+>>>>> +       if (sysdev) {
+>>>>> +               if (sysdev != &pdev->dev)
+>>>>> +                       hcd->skip_phy_initialization = 1;
+>>>>> +       } else {
+>>>>>                 sysdev = &pdev->dev;
+>>>>> +       }
+>>>>>  
+>>>>>         if (WARN_ON(!sysdev->dma_mask))
+>>>>>                 /* Platform did not initialize dma_mask */
+>>>>>
+>>>>>
+>>>>> I did not go through all the drivers that carefully, so I may have
+>>>>> missed something, but it looks like the only drivers that can have the
+>>>>> sysdev as the parent or grandparent are cdns3 and dwc3.
+>>>>>
+>>>> I cross checked and these are two drivers that are creating xhci-plat device.
+>>>> So this patch would definitely work. However I am not sure in future if any
+>>>> device created via device tree would want to use this feature. For now,
+>>>> it looks good. It Mathias, Do you see any problem with this approach?
+>>>>
+>>
+>> Would work for now but seems like a risk to assume this would hold for all future
+>> xhci platform devices. 
+>>
+> Agree that it may break in future for other drivers.
+> 
+>>>
+>>> Can you please provide your suggestions on this? We have discussed about
+>>> 3 approaches here other than the whole platform data refactoring done.
+>>>
+>>> (1) Introduce a new dT property and expect dwc3/host.c to set this property
+>>> to skip the phy initialization.
+>>
+>> Adding one more device property to swnode in dwc3/host.c starts
+>> to look like the best option for now even if it didn't appeal initially.
+>>
+>> The place creating the xhci platform device should have best info on what properties
+>> are needed for the platform device.
+>>
+>> So this would be just like Heikki's first suggestion, or Sandeep's patches 2/3 and 3/3 in:
+>> https://patchwork.kernel.org/project/linux-arm-msm/cover/1636353710-25582-1-git-send-email-quic_c_sanm@quicinc.com/
+>> but without the devicetree binding documentation part.
+>>
+> Why do you say devicetree binding doc is not needed in this case? Possible
+> that xhci-plat's device can be coming from dT and this param is passed to
+> skip initialization of PHY.
 
-Didn't see it
+Adding it is fine by me. It was rejected earlier by Rob Herring
 
-I'll move dev_is_dma_coherent to device.h along with
-device_iommu_mapped() and others then
+But we can live without it.
+In dwc3 and cdns3 "pure" platform case we add the device property when
+creating the device.
 
-Thanks,
-Jason
+In dT case we should have a compatible entry, and we can add a matching
+entry in usb_xhci_of_match[] which sets the needed quirk.
+
+Thanks
+-Mathias
