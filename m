@@ -2,57 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BD7C14F6142
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 16:15:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58BFC4F6144
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 16:15:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234293AbiDFOGg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Apr 2022 10:06:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37706 "EHLO
+        id S234310AbiDFOJW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Apr 2022 10:09:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234320AbiDFOGR (ORCPT
+        with ESMTP id S234269AbiDFOHZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Apr 2022 10:06:17 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7930947584A;
-        Wed,  6 Apr 2022 02:41:28 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4FB1261610;
-        Wed,  6 Apr 2022 09:41:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D0E8C385A5;
-        Wed,  6 Apr 2022 09:41:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649238086;
-        bh=U5Bqi3NaVVv4LuUNQNUHVGlc3p2darzi8Idayz0D3lY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=dzb/1FbsMflBZoPlj08mZXKo60UnHEvWyVXZFlHYACvZJZjxSSwer+oIeovUIev9V
-         Bxf1Aj/5DiKEDNt3plAKsg7DPdXGEEdTXCf8JzeTmMu8gQUEifrIUOFy1tinQNOYIY
-         g/CUPc45wUivQGCWzJ/MKFggvMP+qqdzlh+06pMoFCFmBfdn6dp5NkJhMGjcG7UiKM
-         E8z09PwMkboQrQfeAm0xolRYGg1b90YmOaNdijp+s3kucgRVe3qWGHngDVALB8WQgJ
-         +fpdWZSIgnQTa0F7j7BYkUvtYECfXhLNs4+Jj8N+/IqIFHVN7Xejk4FLmMQAjUMRRQ
-         HZlU8ZsXjGFUA==
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v7 11/14] drm/msm/disp/dpu1: Add DSC support in RM
-Date:   Wed,  6 Apr 2022 15:10:28 +0530
-Message-Id: <20220406094031.1027376-12-vkoul@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220406094031.1027376-1-vkoul@kernel.org>
-References: <20220406094031.1027376-1-vkoul@kernel.org>
+        Wed, 6 Apr 2022 10:07:25 -0400
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E940C218D92;
+        Wed,  6 Apr 2022 02:46:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1649238415; x=1680774415;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=k30NW3oH5aIyNVH7D5psD8nWjzpjRL4SLC4BFhm/zsc=;
+  b=APGvTSOqZoQB/Yp+wUmzIgLLRLp+UN7r6wZMoS+O9xUiJ7tk643v6EkF
+   8p0FzIUHv6NBmFHP5mzPZFkcwTERaIUkRVMvPbTbDrP5iOfaZXDpn7NP+
+   OcI5r28mgMYFprGqjkx9Crn9cTn6MJ93yqgeRF6flVRIo8ycTc93u60Oe
+   A=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 06 Apr 2022 02:46:54 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Apr 2022 02:46:54 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 6 Apr 2022 02:46:53 -0700
+Received: from [10.216.35.29] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 6 Apr 2022
+ 02:46:46 -0700
+Message-ID: <6813f01b-f8f5-0e81-5edd-f9375981ebcd@quicinc.com>
+Date:   Wed, 6 Apr 2022 15:16:40 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH V3] mmc: sdhci-msm: Reset GCC_SDCC_BCR register for SDHC
+Content-Language: en-US
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     <adrian.hunter@intel.com>, <ulf.hansson@linaro.org>,
+        <robh+dt@kernel.org>, <quic_asutoshd@quicinc.com>,
+        <quic_rampraka@quicinc.com>, <quic_pragalla@quicinc.com>,
+        <quic_sartgarg@quicinc.com>, <quic_nitirawa@quicinc.com>,
+        <quic_sayalil@quicinc.com>, <agross@kernel.org>,
+        <krzysztof.kozlowski@canonical.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1648710182-31899-1-git-send-email-quic_c_sbhanu@quicinc.com>
+ <YkX2BrTjgexrIHtR@ripper>
+From:   "Sajida Bhanu (Temp)" <quic_c_sbhanu@quicinc.com>
+In-Reply-To: <YkX2BrTjgexrIHtR@ripper>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -61,150 +73,149 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This add the bits in RM to enable the DSC blocks
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h |  1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c  | 56 +++++++++++++++++++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h  |  1 +
- 3 files changed, 58 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-index 779e7bd01efd..a41f0eb2761b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-@@ -145,6 +145,7 @@ struct dpu_global_state {
- 	uint32_t mixer_to_enc_id[LM_MAX - LM_0];
- 	uint32_t ctl_to_enc_id[CTL_MAX - CTL_0];
- 	uint32_t dspp_to_enc_id[DSPP_MAX - DSPP_0];
-+	uint32_t dsc_to_enc_id[DSC_MAX - DSC_0];
- };
- 
- struct dpu_global_state
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-index 7497538adae1..0e6634b217aa 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-@@ -11,6 +11,7 @@
- #include "dpu_hw_intf.h"
- #include "dpu_hw_dspp.h"
- #include "dpu_hw_merge3d.h"
-+#include "dpu_hw_dsc.h"
- #include "dpu_encoder.h"
- #include "dpu_trace.h"
- 
-@@ -77,6 +78,15 @@ int dpu_rm_destroy(struct dpu_rm *rm)
- 	for (i = 0; i < ARRAY_SIZE(rm->hw_intf); i++)
- 		dpu_hw_intf_destroy(rm->hw_intf[i]);
- 
-+	for (i = 0; i < ARRAY_SIZE(rm->dsc_blks); i++) {
-+		struct dpu_hw_dsc *hw;
-+
-+		if (rm->dsc_blks[i]) {
-+			hw = to_dpu_hw_dsc(rm->dsc_blks[i]);
-+			dpu_hw_dsc_destroy(hw);
-+		}
-+	}
-+
- 	return 0;
- }
- 
-@@ -210,6 +220,19 @@ int dpu_rm_init(struct dpu_rm *rm,
- 		rm->dspp_blks[dspp->id - DSPP_0] = &hw->base;
- 	}
- 
-+	for (i = 0; i < cat->dsc_count; i++) {
-+		struct dpu_hw_dsc *hw;
-+		const struct dpu_dsc_cfg *dsc = &cat->dsc[i];
-+
-+		hw = dpu_hw_dsc_init(dsc->id, mmio, cat);
-+		if (IS_ERR_OR_NULL(hw)) {
-+			rc = PTR_ERR(hw);
-+			DPU_ERROR("failed dsc object creation: err %d\n", rc);
-+			goto fail;
-+		}
-+		rm->dsc_blks[dsc->id - DSC_0] = &hw->base;
-+	}
-+
- 	return 0;
- 
- fail:
-@@ -441,6 +464,28 @@ static int _dpu_rm_reserve_ctls(
- 	return 0;
- }
- 
-+static int _dpu_rm_reserve_dsc(struct dpu_rm *rm,
-+			       struct dpu_global_state *global_state,
-+			       struct drm_encoder *enc,
-+			       const struct msm_display_topology *top)
-+{
-+	int num_dsc = top->num_dsc;
-+	int i;
-+
-+	/* check if DSC required are allocated or not */
-+	for (i = 0; i < num_dsc; i++) {
-+		if (global_state->dsc_to_enc_id[i]) {
-+			DPU_ERROR("DSC %d is already allocated\n", i);
-+			return -EIO;
-+		}
-+	}
-+
-+	for (i = 0; i < num_dsc; i++)
-+		global_state->dsc_to_enc_id[i] = enc->base.id;
-+
-+	return 0;
-+}
-+
- static int _dpu_rm_make_reservation(
- 		struct dpu_rm *rm,
- 		struct dpu_global_state *global_state,
-@@ -462,6 +507,10 @@ static int _dpu_rm_make_reservation(
- 		return ret;
- 	}
- 
-+	ret  = _dpu_rm_reserve_dsc(rm, global_state, enc, &reqs->topology);
-+	if (ret)
-+		return ret;
-+
- 	return ret;
- }
- 
-@@ -499,6 +548,8 @@ void dpu_rm_release(struct dpu_global_state *global_state,
- 		ARRAY_SIZE(global_state->mixer_to_enc_id), enc->base.id);
- 	_dpu_rm_clear_mapping(global_state->ctl_to_enc_id,
- 		ARRAY_SIZE(global_state->ctl_to_enc_id), enc->base.id);
-+	_dpu_rm_clear_mapping(global_state->dsc_to_enc_id,
-+		ARRAY_SIZE(global_state->dsc_to_enc_id), enc->base.id);
- }
- 
- int dpu_rm_reserve(
-@@ -567,6 +618,11 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
- 		hw_to_enc_id = global_state->dspp_to_enc_id;
- 		max_blks = ARRAY_SIZE(rm->dspp_blks);
- 		break;
-+	case DPU_HW_BLK_DSC:
-+		hw_blks = rm->dsc_blks;
-+		hw_to_enc_id = global_state->dsc_to_enc_id;
-+		max_blks = ARRAY_SIZE(rm->dsc_blks);
-+		break;
- 	default:
- 		DPU_ERROR("blk type %d not managed by rm\n", type);
- 		return 0;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-index 9b13200a050a..32e0d8aa65ab 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
-@@ -28,6 +28,7 @@ struct dpu_rm {
- 	struct dpu_hw_intf *hw_intf[INTF_MAX - INTF_0];
- 	struct dpu_hw_blk *dspp_blks[DSPP_MAX - DSPP_0];
- 	struct dpu_hw_blk *merge_3d_blks[MERGE_3D_MAX - MERGE_3D_0];
-+	struct dpu_hw_blk *dsc_blks[DSC_MAX - DSC_0];
- };
- 
- /**
--- 
-2.34.1
-
+On 4/1/2022 12:12 AM, Bjorn Andersson wrote:
+> On Thu 31 Mar 00:03 PDT 2022, Shaik Sajida Bhanu wrote:
+>
+>> Reset GCC_SDCC_BCR register before every fresh initilazation. This will
+>> reset whole SDHC-msm controller, clears the previous power control
+>> states and avoids, software reset timeout issues as below.
+>>
+>> [ 5.458061][ T262] mmc1: Reset 0x1 never completed.
+>> [ 5.462454][ T262] mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
+>> [ 5.469065][ T262] mmc1: sdhci: Sys addr: 0x00000000 | Version: 0x00007202
+>> [ 5.475688][ T262] mmc1: sdhci: Blk size: 0x00000000 | Blk cnt: 0x00000000
+>> [ 5.482315][ T262] mmc1: sdhci: Argument: 0x00000000 | Trn mode: 0x00000000
+>> [ 5.488927][ T262] mmc1: sdhci: Present: 0x01f800f0 | Host ctl: 0x00000000
+>> [ 5.495539][ T262] mmc1: sdhci: Power: 0x00000000 | Blk gap: 0x00000000
+>> [ 5.502162][ T262] mmc1: sdhci: Wake-up: 0x00000000 | Clock: 0x00000003
+>> [ 5.508768][ T262] mmc1: sdhci: Timeout: 0x00000000 | Int stat: 0x00000000
+>> [ 5.515381][ T262] mmc1: sdhci: Int enab: 0x00000000 | Sig enab: 0x00000000
+>> [ 5.521996][ T262] mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+>> [ 5.528607][ T262] mmc1: sdhci: Caps: 0x362dc8b2 | Caps_1: 0x0000808f
+>> [ 5.535227][ T262] mmc1: sdhci: Cmd: 0x00000000 | Max curr: 0x00000000
+>> [ 5.541841][ T262] mmc1: sdhci: Resp[0]: 0x00000000 | Resp[1]: 0x00000000
+>> [ 5.548454][ T262] mmc1: sdhci: Resp[2]: 0x00000000 | Resp[3]: 0x00000000
+>> [ 5.555079][ T262] mmc1: sdhci: Host ctl2: 0x00000000
+>> [ 5.559651][ T262] mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP-----------
+>> [ 5.566621][ T262] mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg: 0x6000642c | DLL cfg2: 0x0020a000
+>> [ 5.575465][ T262] mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl: 0x00010800 | DDR cfg: 0x80040873
+>> [ 5.584658][ T262] mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88218a8 Vndr func3: 0x02626040
+>>
+>> Fixes: 0eb0d9f4de34 ("mmc: sdhci-msm: Initial support for Qualcomm chipsets")
+>> Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
+>> ---
+>>
+>> Changes since V2:
+>> 	- Dropped new line after fixes tag as suggested by Bjorn
+>> 	  Andersson.
+>> 	- Passed device structure instead of passing platform_device
+>> 	  structure as a argument for sdhci_msm_gcc_reset() as suggested
+>> 	  by Bjorn Andersson.
+>> 	- Replaced dev_err() with dev_err_probe() as suggested by Bjorn
+>> 	  Andersson.
+> Thanks, looks much better. Still some things I would like to see
+> improved below.
+Sure
+>> Changes since V1:
+>> 	- Added fixes tag as suggested by Ulf Hansson.
+>> 	- Replaced devm_reset_control_get() with
+>> 	  devm_reset_control_get_optional_exclusive() as suggested by
+>> 	  Ulf Hansson.
+>> ---
+>>   drivers/mmc/host/sdhci-msm.c | 39 +++++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 39 insertions(+)
+>>
+>> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+>> index 50c71e0..e15e789 100644
+>> --- a/drivers/mmc/host/sdhci-msm.c
+>> +++ b/drivers/mmc/host/sdhci-msm.c
+>> @@ -17,6 +17,7 @@
+>>   #include <linux/regulator/consumer.h>
+>>   #include <linux/interconnect.h>
+>>   #include <linux/pinctrl/consumer.h>
+>> +#include <linux/reset.h>
+>>   
+>>   #include "sdhci-pltfm.h"
+>>   #include "cqhci.h"
+>> @@ -284,6 +285,7 @@ struct sdhci_msm_host {
+>>   	bool uses_tassadar_dll;
+>>   	u32 dll_config;
+>>   	u32 ddr_config;
+>> +	struct reset_control *core_reset;
+>>   	bool vqmmc_enabled;
+>>   };
+>>   
+>> @@ -2482,6 +2484,39 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
+>>   	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
+>>   }
+>>   
+>> +static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
+>> +{
+>> +	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+>> +	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+>> +	int ret = 0;
+> First use of this variable is an assignment, so no need to initialize it
+> here.
+Sure
+>> +
+>> +	msm_host->core_reset = devm_reset_control_get_optional_exclusive(dev, "core_reset");
+> reset-names will only be used to identify resets and hence there's no
+> reason to include "_reset" in the identifier.
+>
+> If this is the only reset for the controller, there's actually no reason
+> for identifying it, you can omit reset-names from the binding and just
+> pass NULL here (to get the first resets = <>).
+ok Sure
+>> +	if (IS_ERR(msm_host->core_reset))
+>> +		return dev_err_probe(dev, PTR_ERR(msm_host->core_reset),
+>> +				"unable to acquire core_reset\n");
+>> +
+>> +	if (!msm_host->core_reset)
+>> +		return 0;
+>> +
+>> +	ret = reset_control_assert(msm_host->core_reset);
+>> +	if (ret)
+>> +		return dev_err_probe(dev, ret, "core_reset assert failed\n");
+>> +
+>> +	/*
+>> +	 * The hardware requirement for delay between assert/deassert
+>> +	 * is at least 3-4 sleep clock (32.7KHz) cycles, which comes to
+>> +	 * ~125us (4/32768). To be on the safe side add 200us delay.
+>> +	 */
+>> +	usleep_range(200, 210);
+>> +
+>> +	ret = reset_control_deassert(msm_host->core_reset);
+>> +	if (ret)
+>> +		return dev_err_probe(dev, ret, "core_reset deassert failed\n");
+>> +
+>> +	usleep_range(200, 210);
+>> +
+> sdhci_msm_gcc_reset() is only called once during probe(), so there's no
+> reason to carry the reset_control pointer in struct sdhci_msm_host. Make
+> it a local variable and use reset_control_get_optional_exclusive() and
+> reset_control_put() the reset here before returning.
+>
+> Regards,
+> Bjorn
+Sure Thanks for the review.
+>> +	return 0;
+>> +}
+>>   
+>>   static int sdhci_msm_probe(struct platform_device *pdev)
+>>   {
+>> @@ -2529,6 +2564,10 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>>   
+>>   	msm_host->saved_tuning_phase = INVALID_TUNING_PHASE;
+>>   
+>> +	ret = sdhci_msm_gcc_reset(&pdev->dev, host);
+>> +	if (ret)
+>> +		goto pltfm_free;
+>> +
+>>   	/* Setup SDCC bus voter clock. */
+>>   	msm_host->bus_clk = devm_clk_get(&pdev->dev, "bus");
+>>   	if (!IS_ERR(msm_host->bus_clk)) {
+>> -- 
+>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+>> of Code Aurora Forum, hosted by The Linux Foundation
+>>
