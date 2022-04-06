@@ -2,45 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D71034F64B8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 18:08:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6879A4F6441
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 18:07:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236641AbiDFP6b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Apr 2022 11:58:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43220 "EHLO
+        id S236767AbiDFP6d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Apr 2022 11:58:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237058AbiDFP5h (ORCPT
+        with ESMTP id S237533AbiDFP6O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Apr 2022 11:57:37 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18C4B5A85DD;
-        Wed,  6 Apr 2022 06:22:46 -0700 (PDT)
+        Wed, 6 Apr 2022 11:58:14 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2D102AA18D;
+        Wed,  6 Apr 2022 06:25:24 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 4366FCE232F;
-        Wed,  6 Apr 2022 13:22:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B691CC385A1;
-        Wed,  6 Apr 2022 13:22:41 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5F50B60BBC;
+        Wed,  6 Apr 2022 13:25:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185FAC385A1;
+        Wed,  6 Apr 2022 13:25:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649251363;
-        bh=8Tfbq//FlhZWD3Cw0VcZ0rfbLlylOVhmSLZROKwe0ws=;
+        s=k20201202; t=1649251523;
+        bh=QGkEFEefYTEXkBMQJmoYFoH64Owk00x5HUyX9UzaMs8=;
         h=From:To:Cc:Subject:Date:From;
-        b=lmBKWZHZuPJb7WAFtjmHzE/A7eR9iNmRM6gDhTJrTFKzuVwpEjo8veG1B++eysUT0
-         FxzMEUHBRHcS/LHAjbeskVhKzc2ELWFr+dJJ9KHx0QET1OYTSjIdvOjEqRMa5mAoz3
-         F1VfdYvybYCJxj+isHL5g1nvQsMKoHkXzAEFCX8twgWd768A4QXygNsqvc0F+8wns2
-         3jXDy5GjyFowV87vx4kSqXnO8fyubYhagNDSgPjA6zTpq2NrWUZWProh/eFMEEgkVy
-         zMyu+JiEtBbBj2zbmizF6G9JexLL7zqB9sXHk6OuYTOM5DkYPbdLFbFz1V8EYR0CNJ
-         CyJw3AOOEPJLA==
+        b=TwpYw6Fg0t6V8g3Y7nVZRVWV8NiF+3mdJQYWFirzVZ4t+NhlaKECJ3JtqEhRg8ktS
+         Gq60nyUvTUKVGCu8Fr5ISHt5ArbWDbdaTXwyrTRLUeiZ+TBf1YrDCSf4vYUyiYpy25
+         9KfXhv2PzqvtCB/Xiv1Gus4I82LFALzoLrwETJmc6eqB4ZJlFi7YtDHb/WvlIDVfqA
+         dlMYd43CgZOk/+1b7zjWOgPizhaLY587A2LsD45zBzb1HbHsPe0ASSRZpjWJ82Z35Y
+         D8WiAPxLT4iwfiatsghZPzA+MzynRuupSb8cHIleMmFvveK8tlC9q4aoUMWiBGbxd4
+         Nh+3Ypkh8Up1w==
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Mark Brown <broonie@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] spi: core: add dma_map_dev for __spi_unmap_msg()
-Date:   Wed,  6 Apr 2022 18:52:38 +0530
-Message-Id: <20220406132238.1029249-1-vkoul@kernel.org>
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/3] dmaengine: qcom: gpi: set chain and link flag for duplex
+Date:   Wed,  6 Apr 2022 18:55:06 +0530
+Message-Id: <20220406132508.1029348-1-vkoul@kernel.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -54,37 +53,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Commit b470e10eb43f ("spi: core: add dma_map_dev for dma device") added
-dma_map_dev for _spi_map_msg() but missed to add for unmap routine,
-__spi_unmap_msg(), so add it now.
+Newer platforms seem to have strict requirement for TRE flags which
+causes transaction to timeout. This was resolved to missing chain and
+link flag for duplex spi transaction.
 
-Fixes: b470e10eb43f ("spi: core: add dma_map_dev for dma device")
-Cc: stable@vger.kernel.org # v5.14+
+So add these two flags.
+
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- drivers/spi/spi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/dma/qcom/gpi.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index c4dd1200fe99..32443ae175fd 100644
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -1130,11 +1130,15 @@ static int __spi_unmap_msg(struct spi_controller *ctlr, struct spi_message *msg)
+diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+index 94f3648f7483..3429ceccd13b 100644
+--- a/drivers/dma/qcom/gpi.c
++++ b/drivers/dma/qcom/gpi.c
+@@ -1754,10 +1754,14 @@ static int gpi_create_spi_tre(struct gchan *chan, struct gpi_desc *desc,
+ 		tre->dword[2] = u32_encode_bits(spi->rx_len, TRE_RX_LEN);
  
- 	if (ctlr->dma_tx)
- 		tx_dev = ctlr->dma_tx->device->dev;
-+	else if (ctlr->dma_map_dev)
-+		tx_dev = ctlr->dma_map_dev;
- 	else
- 		tx_dev = ctlr->dev.parent;
+ 		tre->dword[3] = u32_encode_bits(TRE_TYPE_GO, TRE_FLAGS_TYPE);
+-		if (spi->cmd == SPI_RX)
++		if (spi->cmd == SPI_RX) {
+ 			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOB);
+-		else
++		} else if (spi->cmd == SPI_TX) {
++			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_CHAIN);
++		} else { /* SPI_DUPLEX */
+ 			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_CHAIN);
++			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_LINK);
++		}
+ 	}
  
- 	if (ctlr->dma_rx)
- 		rx_dev = ctlr->dma_rx->device->dev;
-+	else if (ctlr->dma_map_dev)
-+		rx_dev = ctlr->dma_map_dev;
- 	else
- 		rx_dev = ctlr->dev.parent;
- 
+ 	/* create the dma tre */
 -- 
 2.34.1
 
