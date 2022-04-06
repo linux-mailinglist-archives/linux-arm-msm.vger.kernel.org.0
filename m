@@ -2,97 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B77864F6B02
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 22:12:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E96584F6B04
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 22:12:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233983AbiDFUOj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Apr 2022 16:14:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43628 "EHLO
+        id S234189AbiDFUOn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Apr 2022 16:14:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236982AbiDFUNz (ORCPT
+        with ESMTP id S236448AbiDFUNm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Apr 2022 16:13:55 -0400
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A3131140A1;
-        Wed,  6 Apr 2022 10:44:59 -0700 (PDT)
-Received: by mail-ot1-f42.google.com with SMTP id a17-20020a9d3e11000000b005cb483c500dso2205336otd.6;
-        Wed, 06 Apr 2022 10:44:59 -0700 (PDT)
+        Wed, 6 Apr 2022 16:13:42 -0400
+Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C4521B8FDF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Apr 2022 11:16:10 -0700 (PDT)
+Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-d6ca46da48so3776196fac.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Apr 2022 11:16:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=W6QLU9dpsf8mc4939lySYzSPSw/dtTexZuzBHIuLUrg=;
+        b=EBTf1bBIiIG/kG0lhqJVTnNvF5u0I5Bml0AKBgrXKGQB/0qt+BtzLG+NBXiFyM1x8D
+         olDpNLvBJ790rjNjiYjgWvGsRpx8xFizHYfJ16SP9BmBooefqv5zWU3ErFPjkkz+knCA
+         rIsgx8howkxkhEF/ME5pJYrDyjSfoyrm1ECGk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=UQGAhVkoMVchgmtJMVhAtK7JRG3UaGk6gAi1FHksJok=;
-        b=CxQ0tfR/V0mUHbcjblolrvkLrAtOuBoAnQSQ9ujIar9o8fprzjeQkvLC6lTvTlxSi3
-         aH0gqT9y4k3T9r8rDk7LBi5FS6ImS1jEw7AO/Jfbl/23gFYCdNYYaY79Or+wZxKs1Ibd
-         KjS12E7UQ5/3ZtUZK4wV0fwuKLhzpET28ovQ28EAXCLPkaM8YqtfUNMw724ic/Jqd+md
-         mxzn9VBcicTAUW44xqPREQwA/WLcvOxpJP/DBADaqK7//GpMZlbnkFN1JEjiGpyTgh+L
-         u4lt8ZhbFfegDDjNsysJ7k3g9VtwE/xkWpL1h2d4s0oiGXhpQi2Ms/cBZny5u5TqyRdp
-         fvpg==
-X-Gm-Message-State: AOAM530EAr7Xcj9g6P8BdZpRKKk7zk4Pybo5vE0vQSn/EpTJkQ3+3CJJ
-        oyvKF2CdpEyaygGwjUB2zg==
-X-Google-Smtp-Source: ABdhPJxmVkSyx43KIty/v1EZpatUCR4dvx3Ts6J5KNstYq0qO+8+CbAh29CaRQszr4r5SfRUiJs+4A==
-X-Received: by 2002:a05:6830:82a:b0:5b2:36d5:1603 with SMTP id t10-20020a056830082a00b005b236d51603mr3472144ots.240.1649267098688;
-        Wed, 06 Apr 2022 10:44:58 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id e4-20020a056870920400b000e1bdf90ba5sm6236468oaf.22.2022.04.06.10.44.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Apr 2022 10:44:58 -0700 (PDT)
-Received: (nullmailer pid 2481314 invoked by uid 1000);
-        Wed, 06 Apr 2022 17:44:57 -0000
-Date:   Wed, 6 Apr 2022 12:44:57 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        Mark Brown <broonie@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Kuldeep Singh <singh.kuldeep87k@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>
-Subject: Re: [PATCH v3 1/2] spi: dt-bindings: qcom,spi-geni-qcom: convert to
- dtschema
-Message-ID: <Yk3RmTJD5XHX1hIM@robh.at.kernel.org>
-References: <20220404064017.68634-1-krzysztof.kozlowski@linaro.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=W6QLU9dpsf8mc4939lySYzSPSw/dtTexZuzBHIuLUrg=;
+        b=WWJph0S8K6VMw6Z8j44Mz+aMkZR3Df3/XhQaU5EYYrubYiorjPKx/+3qOAWoFo+zTz
+         eYj4WoxLUpJFqS7kFAu3PRFQyRB9BHoNJt6npA4CD8AZej5FDqp1ZEGKJV53gVjJKRLM
+         YhLJPfC8JHhlsmzEOgigoK9Pivy3M72RCdQfkPIVyNWWuYVH/fxPM4yeegYoMglhHuOK
+         LwQS8oMu94TXSCkWVPeNtv/bwyEl5FkK0aYDzsGq3MuxSbOszMd80Fm2nP/Kmn8LWdYa
+         cxyID4BjMabLUFbRpqexGynPVpQmOpo1LTN9n/8uRnZW2n5fqIvkZOZsxKblfUr1r2jn
+         IASw==
+X-Gm-Message-State: AOAM5315nfQwBPTcbI1cXjcd4ZHvAIuHYfb0JwcRNrg7NHB9i8LTwbKq
+        /uTiolQvZvAIAFlZwPzd4mt6W7BEcF9Fktrjym54/g==
+X-Google-Smtp-Source: ABdhPJw1RdwYSbawGoUWfudSiGTBCjFseP6+LEsJiUEoEd7sXlF3awSAqT7Ef73IMxW5Sp5PVs4oa7X7vTackHPxJx4=
+X-Received: by 2002:a05:6870:558e:b0:e1:db7c:26aa with SMTP id
+ n14-20020a056870558e00b000e1db7c26aamr4580721oao.63.1649268969711; Wed, 06
+ Apr 2022 11:16:09 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 6 Apr 2022 11:16:09 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220404064017.68634-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <Yk3NkNK3e+fgj4eG@sirena.org.uk>
+References: <1649166633-25872-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1649166633-25872-5-git-send-email-quic_c_skakit@quicinc.com>
+ <CAE-0n53G-atsuwqcgNvi3nvWyiO3P=pSj5zDUMYj0ELVYJE54Q@mail.gmail.com>
+ <Yk1B4f51WMGIV9WB@sirena.org.uk> <CAE-0n53Cv_bR92M64dhdnDge_=_jeOs4VZzDhUkksN90Y7rgog@mail.gmail.com>
+ <Yk21pdu16lyR8jXm@sirena.org.uk> <CAE-0n50C8khP2x4sgNP5xnfLVMRQj2=LChyWWx1BWL+Xgecgyw@mail.gmail.com>
+ <Yk3Bfnxe/meBYokp@sirena.org.uk> <CAE-0n53O23=N0zkZpg87Q3EyKquLe3WLNJT8qnZz4WEor6QK7A@mail.gmail.com>
+ <Yk3NkNK3e+fgj4eG@sirena.org.uk>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Wed, 6 Apr 2022 11:16:09 -0700
+Message-ID: <CAE-0n51DJyWQKG1AsMjD1wwxx=KCyvyp7-P9BGfiRX=EKjxfdw@mail.gmail.com>
+Subject: Re: [PATCH V9 4/6] regulator: Add a regulator driver for the PM8008 PMIC
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_collinsd@quicinc.com,
+        quic_subbaram@quicinc.com, quic_jprakash@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 04 Apr 2022 08:40:16 +0200, Krzysztof Kozlowski wrote:
-> Convert the GENI based Qualcomm Universal Peripheral (QUP) Serial
-> Peripheral Interface (SPI) bindings to DT Schema.
-> 
-> The original bindings in TXT were not complete, so add during conversion
-> properties already used in DTS and/or in the driver: dmas,
-> interconnects, operating points and power-domains.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Changes since v2:
-> 1. Drop reg-names.
-> 
-> Changes since v1:
-> 1. Correct $ref path and remove interconnect minItems (Kuldeep).
-> 2. Remove child tpm device from example.
-> 3. Pad reg hex addresses with 00.
-> ---
->  .../bindings/spi/qcom,spi-geni-qcom.txt       |  39 ------
->  .../bindings/spi/qcom,spi-geni-qcom.yaml      | 116 ++++++++++++++++++
->  2 files changed, 116 insertions(+), 39 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.txt
->  create mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-geni-qcom.yaml
-> 
+Quoting Mark Brown (2022-04-06 10:27:44)
+> On Wed, Apr 06, 2022 at 10:21:01AM -0700, Stephen Boyd wrote:
+> > Quoting Mark Brown (2022-04-06 09:36:14)
+> > > On Wed, Apr 06, 2022 at 08:51:48AM -0700, Stephen Boyd wrote:
+>
+> > > > My guess is that this is one IC that responds to multiple i2c addresses.
+> > > > The "main" qcom,pm8008 address is 0x8 and that supports things like
+> > > > interrupts. Then there's an address for regulators at 0x9 which controls
+> > > > the handful of LDOs on the PMIC.
+>
+> > > So it's like the TI TWL4030 and Palmas - in which case it should
+> > > probably be handled similarly?
+>
+> > How did those work out? I wasn't involved and I don't know what you
+> > mean. Do they have multiple i2c addresses they respond to?
+>
+> Yes, exactly.  The main device uses i2c_new_dummy_device() to
+> instantiate the extras when it probes.  See twl-core.c
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Cool. That approach sounds good to me. Then the regulators can be child
+nodes of the qcom,pm8008 node at i2c address 0x8? It still feels like
+making a struct driver for each regulator node is overkill and will
+waste memory.
+
+>
+> >
+> > > Note that the original sumbission was
+> > > *also* a MFD subfunction, but using a DT compatible to match the
+> > > platform device - this is the first I've heard of this being a separate
+> > > I2C function.
+>
+> > I'm mainly looking at the dts file now. It clearly has two i2c devices
+> > at 0x8 and 0x9. Maybe the regulator driver followed the mfd design
+> > because the first driver for this device is an mfd.
+>
+> I'm guessing from the naming that they're also externally described as
+> the same device - presumably it's two dies shoved together in the same
+> package for some reason without being otherwise joined up.  Is the
+> second device geniunely regulators only or does it have anything else
+> bundled in there?
+
+I think it's regulators only. Pretty sure I asked qcom this a round or
+two ago on this patch series and they said that. Let's wait for Satya to
+respond.
