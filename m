@@ -2,70 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EEAB54F617C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 16:17:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA4744F613A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 16:15:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234553AbiDFORO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Apr 2022 10:17:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52006 "EHLO
+        id S233923AbiDFNzq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Apr 2022 09:55:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234650AbiDFOQ4 (ORCPT
+        with ESMTP id S233926AbiDFNzg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Apr 2022 10:16:56 -0400
-Received: from mail-oa1-x31.google.com (mail-oa1-x31.google.com [IPv6:2001:4860:4864:20::31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3EC246653D
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Apr 2022 18:58:44 -0700 (PDT)
-Received: by mail-oa1-x31.google.com with SMTP id 586e51a60fabf-de48295467so1447613fac.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Apr 2022 18:58:44 -0700 (PDT)
+        Wed, 6 Apr 2022 09:55:36 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2FBF594A12;
+        Wed,  6 Apr 2022 02:06:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=DIVGMsVz0TJ2gV9WgOfFFiA5gprB53tRsUuj8i64WaE=;
-        b=IVl44d/QhSPb+vA65mjFI4QChRvBC65acN6oulekqU11IURJUXLWGepW0IbWIkETJy
-         +WrVrlZdgkcjdpCGWe5Ypk8BbFo4Srsdx5lGVYum8opBfgNK1ukiEaUzavcB9V0i23rJ
-         iGmIv0l4Ztmr9owj6F0mBxOG9orcs5peuCsOM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=DIVGMsVz0TJ2gV9WgOfFFiA5gprB53tRsUuj8i64WaE=;
-        b=mCuAeD4kyGtl/gruklpkpvJlsWfgO2eJRXg/TCooDks0uIe3IPfNUNiZWMXYbG3Cws
-         wZ3t9yevX6Jgd/SdOsndbD8sh6wheqqR5yFzRIpq7FfO+JaxgfBvheH0AgzjFVUCxgkn
-         NTgIk4iVPpP7KrQ6XDk2eowZ1i9OFAm8tYIZfZxevCXy/RaWilDzzRPRvSyrarIDlqH4
-         kKR1ccv7U2mAQ3nC0qdIxddQJQ8oOE2/k2bihSvQri23hYq8nlw+6f2f/cOzkUihdldN
-         Dgqo8OL/m7uWSYwfGT4PpGP2Nbgb1uIwIUUIRdw4dENRXNCchNrQIG8C/ECj3oUC0tNk
-         VfdA==
-X-Gm-Message-State: AOAM5324C7T8I//KzBk32hajycGtPeTRA9gRcumlABUJYBs513nMIcad
-        s9KTZ0+v6DQXoI+F47Hxq8Bu4XiXb8lRzrN8lfSvFXEToF4=
-X-Google-Smtp-Source: ABdhPJygRyk6aXcwBIkmW3sXOMOwd//3/kqvY2L6PMY2iOeU+lK9xBLITJ+JWL6zDwHPOXhk4dBea47tvccNlzGqjpY=
-X-Received: by 2002:a05:6870:e314:b0:e1:e5f0:d777 with SMTP id
- z20-20020a056870e31400b000e1e5f0d777mr2777654oad.193.1649210324223; Tue, 05
- Apr 2022 18:58:44 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 5 Apr 2022 18:58:43 -0700
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1649235981; x=1680771981;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=aX+b1uqq4+PfyGSXyXG4gQ8cO/HihiWD/0mraoJeuq0=;
+  b=RWM5aX6kTc1rZfBvEoeEJE24gEdXq7gOyEHv9VEtYtkMBaoWQLJVElhY
+   kspb2rzc+/7ZQk35eA8MzHfewuT82IcLZUOfyyD/UlL+vUqda7yLPqvm/
+   oKR/ixglleSCmHsGvo3e6NCGA8UCbrdxMrgzHc6AYNzTzKTCvNkhX6bi0
+   w=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 06 Apr 2022 02:06:13 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Apr 2022 02:06:12 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 6 Apr 2022 02:06:12 -0700
+Received: from [10.216.50.162] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 6 Apr 2022
+ 02:06:08 -0700
+Subject: Re: [PATCH V9 4/6] regulator: Add a regulator driver for the PM8008
+ PMIC
+To:     Mark Brown <broonie@kernel.org>
+CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <swboyd@chromium.org>,
+        <quic_collinsd@quicinc.com>, <quic_subbaram@quicinc.com>,
+        <quic_jprakash@quicinc.com>
+References: <1649166633-25872-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1649166633-25872-5-git-send-email-quic_c_skakit@quicinc.com>
+ <YkxPhcgBU3/5zu/P@sirena.org.uk>
+From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
+Message-ID: <85ceeb51-56d2-4e87-c67d-c203a30ecfec@quicinc.com>
+Date:   Wed, 6 Apr 2022 14:36:04 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <20220330223008.649274-5-dmitry.baryshkov@linaro.org>
-References: <20220330223008.649274-1-dmitry.baryshkov@linaro.org> <20220330223008.649274-5-dmitry.baryshkov@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Tue, 5 Apr 2022 18:58:43 -0700
-Message-ID: <CAE-0n50gmcGrqj5p92tdTe4cyqhT4kiucRahnuLAuNtbZmXWDQ@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] drm/msm/dp: make dp_connector_mode_valid() more precise
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        Sean Paul <sean@poorly.run>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <YkxPhcgBU3/5zu/P@sirena.org.uk>
+Content-Type: text/plain; charset="windows-1252"; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,13 +75,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2022-03-30 15:30:08)
-> Make dp_connector_mode_valid() return precise MODE_CLOCK_HIGH rather
-> than generic MODE_BAD in case the mode clock is higher than
-> DP_MAX_PIXEL_CLK_KHZ (675 MHz).
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
 
-Suggested-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+On 4/5/2022 7:47 PM, Mark Brown wrote:
+> On Tue, Apr 05, 2022 at 07:20:31PM +0530, Satya Priya wrote:
+>
+>> +#include <linux/regulator/driver.h>
+>> +#include <linux/regulator/machine.h>
+> Why does the driver need machine.h?  That's usually a bug, though I
+> didn't spot anywhere where it's used so it's probably just an extra
+> header.
+
+
+Yeah, I'll remove it. Thanks for spotting this.
+
+
+>> +	.set_voltage_sel	= pm8008_regulator_set_voltage,
+>> +	.get_voltage		= pm8008_regulator_get_voltage,
+> You shouldn't mix and match the selector and non-selector operations,
+> since the device just takes a voltage you may as well just use the
+> non-selector version for both.
+
+
+I was suggested to use set_voltage_sel on my previous posts. I think 
+I'll use get_voltage_sel to avoid mixing selector and non-selector APIs.
+
+
+> Otherwise this all looks good, just those two minor points.
