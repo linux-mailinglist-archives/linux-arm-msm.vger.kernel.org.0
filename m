@@ -2,94 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF2604F6A1C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 21:38:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80E324F6A0A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 21:34:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232265AbiDFTkO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Apr 2022 15:40:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58840 "EHLO
+        id S232110AbiDFTgD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Apr 2022 15:36:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231934AbiDFTjf (ORCPT
+        with ESMTP id S231732AbiDFTfx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Apr 2022 15:39:35 -0400
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A62EB1A3967;
-        Wed,  6 Apr 2022 10:45:13 -0700 (PDT)
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-e1dcc0a327so3746539fac.1;
-        Wed, 06 Apr 2022 10:45:13 -0700 (PDT)
+        Wed, 6 Apr 2022 15:35:53 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 664C61E4629
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Apr 2022 11:02:45 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id d15so2623712pll.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Apr 2022 11:02:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=FOXsiXJAKtMLGXYAK3r6oxcC+auPPBmHNsoM8lFZURA=;
+        b=PAZ/A8rZS2CY5N8UncYL8kPPJsSOXNe1/sGOku+QaGVMSMpyJ3nupUnAicTVxA23vZ
+         Wq3Y5a6Qgxs4ExAWWf2yJX6U4DqYlgivwlQ52e/7+C/Nz7vQXv5MFNwPhqCeG1MgZSvD
+         4jWp9zXXk0cBtS1yn+3/Xk/S6556cO53u1oM4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=L5TvrQjpMWSCvDIj2tp5HdoUF6y6vYimFqx2SemcKe8=;
-        b=U8EDWZGrOhyYcDyd0nLKND9znK9AbRVolGZ8Nf/mIbB+8XJvs3EWdYjLxFehq+14z3
-         ZZzG1qrZW2bI8voW7Q7JHk1N833DoP+LqKUaDNRXZBVWnDzybUnX0KMl3w/TTarlSjRs
-         AAzgwpOj/46iHJ4IZG/yF/7bG24IgdHGK1jDmPRjR0m5DW/QKjtXQb8FPo79lw3ZiPnE
-         fRGXWt5T9Z92SvIGKuBjmi0YYowGVBlLouGOTVMZVMOj2L/4PtglqeXiExxjYMn7BJJO
-         h6slRrskX9TSs4+rId56jpuPCiwfAuofW5TEILdr9/UUe55oMOlNBVqTVduhgX1VNWua
-         R/7w==
-X-Gm-Message-State: AOAM531VtMy+yroPWIWLTn9ccR+x4LQE+I5m9i9pzprfUybomeIZMsj6
-        K9TvERxkDVtrhCU9B9m6nA==
-X-Google-Smtp-Source: ABdhPJxevK8UXw8048KxmB62o7gsRRl5YC6His46gPTV8+KpOCTt5xixSjhRHKnoLPd4JALpA8l/5w==
-X-Received: by 2002:a05:6870:210b:b0:de:6ec1:3f59 with SMTP id f11-20020a056870210b00b000de6ec13f59mr4505084oae.171.1649267112959;
-        Wed, 06 Apr 2022 10:45:12 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id hg14-20020a056870790e00b000e1c070a73asm6082977oab.55.2022.04.06.10.45.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Apr 2022 10:45:11 -0700 (PDT)
-Received: (nullmailer pid 2481762 invoked by uid 1000);
-        Wed, 06 Apr 2022 17:45:10 -0000
-Date:   Wed, 6 Apr 2022 12:45:10 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     devicetree@vger.kernel.org,
-        Kuldeep Singh <singh.kuldeep87k@gmail.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Mark Brown <broonie@kernel.org>, Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH v3 2/2] dt-bindings: qcom: qcom,geni-se: refer to
- dtschema for SPI
-Message-ID: <Yk3RpmKj0eRKnCdU@robh.at.kernel.org>
-References: <20220404064017.68634-1-krzysztof.kozlowski@linaro.org>
- <20220404064017.68634-2-krzysztof.kozlowski@linaro.org>
+        bh=FOXsiXJAKtMLGXYAK3r6oxcC+auPPBmHNsoM8lFZURA=;
+        b=EXFO6K31pBmlCX69F7GXYFEowhuZTr5XZ/6XMfR6F7EM8lQh9pBortrzaWCWXD3k0y
+         XrKpzmER+6VTAopqbQ4gUbCSlBx/2vDI4Rh1nCJvgxsdcAZVknrn8OFMwVWJoXNbUDr5
+         1muXTnLRJ76v/i4OPWmEjTudmNo8Vtzj5DeKVI36GzDAJa2VgH6pwLalQbs9cuU+1jl8
+         4W51DXP7Z/OiLUGM86rqb6ocZFGZRh4KzIanQ7ErPa7QjYeaSk1Z084iblstWwJABhrZ
+         0eVD/OkZbWZ+JSU67QeM96b+a888KDyT/8Vsiyrre9rZ2TLH3K5Y49YpyekxB8GfN8Ok
+         HUPA==
+X-Gm-Message-State: AOAM532GjR8lKYt1Ta7Ur9nXPR0qoNF7cmCpxog5G+szYYdMdgSGwchn
+        J+3lKdC570agrbPgiwaOM93gkJ3MFa5GKw==
+X-Google-Smtp-Source: ABdhPJzwbh3laItq2cdNTEF67N9FfUifv3GDwvRrfwlLqVMFVY92eizIQGODQlB5BG3tLdlTQ0MFaQ==
+X-Received: by 2002:a17:90a:49c1:b0:1ca:c243:db77 with SMTP id l1-20020a17090a49c100b001cac243db77mr11069186pjm.215.1649268164727;
+        Wed, 06 Apr 2022 11:02:44 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:dddf:7cc7:1261:9584])
+        by smtp.gmail.com with UTF8SMTPSA id h10-20020a056a00230a00b004faa0f67c3esm18870536pfh.23.2022.04.06.11.02.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Apr 2022 11:02:43 -0700 (PDT)
+Date:   Wed, 6 Apr 2022 11:02:41 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v4] arm64: dts: qcom: sc7280: Add WCN6750 WiFi node
+Message-ID: <Yk3Vwev3AgQgd1LK@google.com>
+References: <20220406111303.27670-1-quic_mpubbise@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220404064017.68634-2-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <20220406111303.27670-1-quic_mpubbise@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 04 Apr 2022 08:40:17 +0200, Krzysztof Kozlowski wrote:
-> After adding DT schema for the SPI controller, the Qualcomm GENI Serial
-> Engine QUP Wrapper Controller bindings can reference it directly for
-> full schema validation.
+On Wed, Apr 06, 2022 at 04:43:03PM +0530, Manikanta Pubbisetty wrote:
+> Add DTS node for WCN6750 WiFi chipset.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Kuldeep Singh <singh.kuldeep87k@gmail.com>
-> 
-> ---
-> 
-> Changes since v2:
-> 1. Add tag.
-> 
-> Changes since v1:
-> 1. None
-> 
-> Patch depends on previous patch (DT schema conversion).
-> ---
->  .../bindings/soc/qcom/qcom,geni-se.yaml       | 22 +------------------
->  1 file changed, 1 insertion(+), 21 deletions(-)
-> 
+> Signed-off-by: Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
