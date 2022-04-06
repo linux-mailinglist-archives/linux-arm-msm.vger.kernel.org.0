@@ -2,70 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 213A64F5EB1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 15:04:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 098054F5F64
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 15:29:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230167AbiDFNDQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Apr 2022 09:03:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41016 "EHLO
+        id S231730AbiDFNHv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Apr 2022 09:07:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232456AbiDFNDB (ORCPT
+        with ESMTP id S230152AbiDFNHK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Apr 2022 09:03:01 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F5DD5CCC92;
-        Wed,  6 Apr 2022 02:30:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649237449; x=1680773449;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=SFtc5Cx+6Nw5kBcMc7124XPPOGKJlKRghgQoJVTH32U=;
-  b=qQZdlqzBL4KzIAEwj1Qq+TFHVB8V6MozN6gKjS/caMY1LveIGpoi4iP+
-   5KOAGeWKQe3a9yhWouxmj1HMAPYa8x9YmixZ7/RUHqYNqi8Z2u40wr0r8
-   yMVgq3v40Bdn14hgu68sGyy9Uk+HxyChY2ZcX7PIkH7OBJeA0Pxt1Katw
-   0=;
-Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 06 Apr 2022 02:28:09 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Apr 2022 02:28:08 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 6 Apr 2022 02:28:07 -0700
-Received: from [10.216.50.162] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 6 Apr 2022
- 02:28:02 -0700
-Subject: Re: [PATCH V9 5/6] arm64: dts: qcom: pm8008: Add base dts file
-To:     Stephen Boyd <swboyd@chromium.org>,
+        Wed, 6 Apr 2022 09:07:10 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7B872C2EDC;
+        Wed,  6 Apr 2022 02:41:02 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5A560613E2;
+        Wed,  6 Apr 2022 09:40:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 420C5C385A3;
+        Wed,  6 Apr 2022 09:40:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1649238041;
+        bh=LFn4Z3HJtRBtsjdig33zpL7sM5WeXwuOfvZWCki7ZKc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=sPeeV1K8kmQwqk2m5P4+Edcr+WImbyZwE5h/m079H9QkDrG6cWX1Q3VaSyFQWGwY+
+         dhCikRrG45VGXuggy5iOD+HqWMWk5Y6d5ghz7XuIWmThZuyA9i9fRP4gKCalK6bJLC
+         K49XlpO9ccjrNciVm7PMpWAFurimkdh9i5ONxnC3+Es5di1a/FqL/tR97/IOegSa7t
+         bdzgf4DB6+ClwxOlxo2jj/FnpKjWs7mi0r/QJXm/aWyvphk+pGnFsfSS71FmAZuDMl
+         cyT/OXHQB+SNYprnoc4Fnn/68i7JKaVsfK0NUmLuQ8Xq925FfFm2MZr23+Heuz3iWs
+         HxayYCOOL2G/g==
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-CC:     Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_collinsd@quicinc.com>,
-        <quic_subbaram@quicinc.com>, <quic_jprakash@quicinc.com>
-References: <1649166633-25872-1-git-send-email-quic_c_skakit@quicinc.com>
- <1649166633-25872-6-git-send-email-quic_c_skakit@quicinc.com>
- <CAE-0n51rLRcWE+h3zaWNy-nJYK4tQoivjdbfgYrwTJbjYYxWFw@mail.gmail.com>
-From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
-Message-ID: <8c8bf971-b6d3-9669-4da4-e81701d9c79e@quicinc.com>
-Date:   Wed, 6 Apr 2022 14:57:59 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Vinod Koul <vkoul@kernel.org>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v7 00/14] drm/msm: Add Display Stream Compression Support
+Date:   Wed,  6 Apr 2022 15:10:17 +0530
+Message-Id: <20220406094031.1027376-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n51rLRcWE+h3zaWNy-nJYK4tQoivjdbfgYrwTJbjYYxWFw@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,38 +59,119 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Display Stream Compression (DSC) compresses the display stream in host which
+is later decoded by panel. This series enables this for Qualcomm msm driver.
+This was tested on Google Pixel3 phone which use LGE SW43408 panel.
+ 
+The changes include DSC data and hardware block enabling for DPU1 then
+support in encoder. We also add support in DSI and introduce required
+topology changes.
+ 
+In order for panel to set the DSC parameters we add dsc in drm_panel and
+pass the dsc configuration from the panel driver
 
-On 4/6/2022 12:41 AM, Stephen Boyd wrote:
-> Quoting Satya Priya (2022-04-05 06:50:32)
->> diff --git a/arch/arm64/boot/dts/qcom/pm8008.dtsi b/arch/arm64/boot/dts/qcom/pm8008.dtsi
->> new file mode 100644
->> index 0000000..24bd832
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/pm8008.dtsi
->> @@ -0,0 +1,47 @@
->> +// SPDX-License-Identifier: BSD-3-Clause
->> +// Copyright (c) 2022, The Linux Foundation. All rights reserved.
->> +
->> +&pm8008_bus {
->> +       pm8008: pm8008@8 {
-> pmic@8
+Complete changes which enable this for Pixel3 along with panel driver (not
+part of this series) and DT changes can be found at:
+git.linaro.org/people/vinod.koul/kernel.git pixel/dsc_v7
+ 
+Comments welcome!
 
+Changes since v6:
+ - Fix warning reported by kbuild bot
+ - Add r-b by Dmitry
 
-Sorry I missed this change. I'll change it in next post.
+Changes since v5:
+ - rebase on msm-next
+ - use generated header patch from mesa for dsc registers
+ - use generated header macros for dsc register calculation
+ - remove msm dsc struct (Dmitry)
 
+Changes since v4:
+ - Use new apprach based on Abhinav suggestion for dsc with 3d-merge
+ - Make common function for dsc timing caln and call that from video and cmd
+   mode
+ - update description for patch "Pass DSC params to drm_panel"
+ - update couple of typos as pointed by Marijn
+ - drop dpu_encoder_dsc_pclk_param_calc() as that was duplicating the caln
+   done in dsi timing
+ - Update copyright to 2022 to new files
+ - Update Abhinav's email to new quic one
 
->> +               compatible = "qcom,pm8008";
->> +               reg = <0x8>;
->> +               #address-cells = <1>;
->> +               #size-cells = <0>;
->> +               #interrupt-cells = <2>;
->> +       };
->> +
->> +       pm8008_regulators: pm8008@9 {
-> pmic@9
->
->> +               compatible = "qcom,pm8008-regulators";
->> +               reg = <0x9>;
->> +               #address-cells = <0>;
->> +               #size-cells = <0>;
->> +
+Changes since v3:
+ - Merge changes from Dmitry to have dsc per encoder instance
+ - add warning for dsc and mode3d enabled together
+ - set dsc in dpu_encoder_phys_vid as well
+ - remove dsc hardcoded mask
+ - use devm_kzalloc for memory allocation for dsc
+
+Changes since v2:
+ - Fix comments by Dimitry except the dsc being global.
+ - Move RM patch later for dependency on topology now
+ - Add patch for mode valid callback for dsi_mgr
+ - Add missing structure documentation patch
+ - Fix errors in mode_3d changes
+ - Rebase on v5.16-rc1 and test
+
+Changes since v1:
+ - Fix various issues spotted by kbuildbot
+ - Rebase to v5.15-rc3
+ - Remove unused fields and duplicate defines
+ - Enable DSC blocks only when DSC is enabled
+ - remove sdm845 feature mask, use 0
+ - Check for DSC in hw_ctl
+
+Changes since RFC:
+ - Drop the DT binding patch as we derive the configuration from panel
+ - Drop the drm api patch as we no longer need it (use pps drm api)
+ - Fix comments raised by Dimitry
+ - Add dsc parameters calculation from downstream
+
+Dmitry Baryshkov (1):
+  drm/msm/dpu: don't use merge_3d if DSC merge topology is used
+
+Vinod Koul (13):
+  drm/msm/dsi: add support for dsc data
+  drm/msm/dsi: Pass DSC params to drm_panel
+  drm/msm/disp/dpu1: Add support for DSC
+  drm/msm/disp/dpu1: Add support for DSC in pingpong block
+  drm/msm/disp/dpu1: Add DSC for SDM845 to hw_catalog
+  drm/msm/disp/dpu1: Add DSC support in hw_ctl
+  drm/msm/disp/dpu1: Add support for DSC in encoder
+  drm/msm: Add missing num_dspp field documentation
+  drm/msm/disp/dpu1: Add support for DSC in topology
+  drm/msm/disp/dpu1: Add DSC support in RM
+  drm/msm/dsi: add mode valid callback for dsi_mgr
+  drm/msm: Update generated headers
+  drm/msm/dsi: Add support for DSC configuration
+
+ drivers/gpu/drm/msm/Makefile                  |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 157 +++++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h   |   8 +
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  12 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  20 ++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  13 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c    |  11 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h    |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c    | 215 ++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h    |  80 +++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |  13 +
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   |  32 ++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   |  14 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        |  56 ++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h        |   1 +
+ drivers/gpu/drm/msm/dsi/dsi.c                 |   5 +
+ drivers/gpu/drm/msm/dsi/dsi.h                 |   3 +
+ drivers/gpu/drm/msm/dsi/dsi.xml.h             |  80 +++++
+ drivers/gpu/drm/msm/dsi/dsi_host.c            | 276 +++++++++++++++++-
+ drivers/gpu/drm/msm/dsi/dsi_manager.c         |  12 +
+ drivers/gpu/drm/msm/msm_drv.h                 |  15 +
+ include/drm/drm_panel.h                       |   7 +
+ 24 files changed, 1032 insertions(+), 4 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
+
+-- 
+2.34.1
+
