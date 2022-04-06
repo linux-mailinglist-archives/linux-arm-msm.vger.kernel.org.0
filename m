@@ -2,70 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 613644F5F4C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 15:29:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A1234F5FAB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 15:30:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233046AbiDFNS6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Apr 2022 09:18:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59056 "EHLO
+        id S232266AbiDFNU4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Apr 2022 09:20:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234026AbiDFNS3 (ORCPT
+        with ESMTP id S233210AbiDFNUr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Apr 2022 09:18:29 -0400
-Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21285487836;
-        Wed,  6 Apr 2022 02:57:02 -0700 (PDT)
+        Wed, 6 Apr 2022 09:20:47 -0400
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C52FCDAFCA
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Apr 2022 03:01:22 -0700 (PDT)
+Received: by mail-qt1-x832.google.com with SMTP id 10so3355136qtz.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Apr 2022 03:01:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649239022; x=1680775022;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=ERPgTnXmQsu31W+J+z1B28Xpq+U2xik3DY6Aw2uFZUs=;
-  b=uUq9cEFsJSkRVYq49Dflp/x9OfatQeEeHi2FB1cOFrF8MAmcxPAKXkOg
-   f3+EuDyDNCO+vDGnLYMVJUhQajMLMElMhAMkxCMg2qhHZyKDknnA4Pf8n
-   hbZrlYCGErUp//iko6jm3w7nPrIH3duQxh469mw1KbAj1WpDQNd4gKxXP
-   Q=;
-Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 06 Apr 2022 02:57:01 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Apr 2022 02:57:01 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 6 Apr 2022 02:57:00 -0700
-Received: from [10.216.35.29] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 6 Apr 2022
- 02:56:52 -0700
-Message-ID: <278b3ab9-a790-76f2-df6d-97b37d5e5e23@quicinc.com>
-Date:   Wed, 6 Apr 2022 15:26:47 +0530
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nF1xNfj+J34XrxSolTF0D+orBqwvLN2KXHwwalZ4HTY=;
+        b=wMZd4R/cJhJ0o5uoKdvVDyQbmt+R0cgDYTu4JUHaYhNncFM5q3J2vIFNDb6TYhq3LE
+         1W4tlDgycH1xe5kmdKZiAKsDXZDO2eoIWr9IG4QUl2HXztiNpg2QEpXjEdvM+HqLQ0F7
+         kEBsIzbv7rm5tWx89SgopcE6Y21ULM2Ra2BUCx0WoLeB3sHu7yglx2NCzrpL4W+1Ax6w
+         xnLlNpMzURktWbZ+6A4hxd3K4LdO1umpftfSXwqwzTpZcGB1iWe3eRnfZKwRHtrDrzfC
+         6ukVilvbwKDLkLBScgPEwiSVUIjS1oME067AS55bD9Lc2ooX2knRqNavt5FdWtw0kOwD
+         bFqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=nF1xNfj+J34XrxSolTF0D+orBqwvLN2KXHwwalZ4HTY=;
+        b=qf1tjf9VHPfQ1MiqJNG9QRpsBwdoS27Oitj+LGNajHkTqdI5zqtJWRCib2iQjz73Ya
+         cdt8X868VXYlcb/HyMWhkiPjItCRUS9+IsKBFqClkEpoTrG0TUEO4Q3yLm8MaBzHPcKI
+         2jifnkr5ja9mpVwKkfROBIkEAuizaRhs0ERwxubFm7ss+ZI3yCWAGcjNKKSOWSn9DgnF
+         h/I9J/bwMHou5E+CwgIUR5N7ZSrcYIYyixAvWwnz9KeG/YG/kcM1BokSPLGUmzCDClcZ
+         JmGx/Ql3qrGjDnyRmdRn+3+yIy/sUGje9HmsFaMrsEpwZoSo58syIRxjuTMBmhG0/sOD
+         Zo4w==
+X-Gm-Message-State: AOAM533vostNZO6faOdzASjN5A2MBdsqyP4tNXit/0gGgxmX6Z4N2/Xx
+        JpFfSW0I984fXgoO66o4L8Vsb4bvgf7rrBCSYiVuQw==
+X-Google-Smtp-Source: ABdhPJwifkB/hY55P59uzoya9A0itxh640pczG4PfHi0w+ZaI8JqLhcORl90QHWitXyvPRj+jQS9OQSCdNRAmmRwB0A=
+X-Received: by 2002:ac8:4e52:0:b0:2e1:dad8:5141 with SMTP id
+ e18-20020ac84e52000000b002e1dad85141mr6605974qtw.62.1649239280348; Wed, 06
+ Apr 2022 03:01:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH V3 2/2] arm64: dts: qcom: sc7280: Add reset entries for
- SDCC controllers
-Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <devicetree@vger.kernel.org>,
-        <krzk+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <robh+dt@kernel.org>, <ulf.hansson@linaro.org>
-CC:     <quic_rampraka@quicinc.com>, <quic_pragalla@quicinc.com>,
-        <quic_sartgarg@quicinc.com>, <quic_nitirawa@quicinc.com>,
-        <quic_sayalil@quicinc.com>
-References: <1647532165-6302-1-git-send-email-quic_c_sbhanu@quicinc.com>
- <1647532165-6302-3-git-send-email-quic_c_sbhanu@quicinc.com>
- <CAE-0n53BBzgU6AJ70JNUBBkDZ1c9ZmpX8ZXLcxLxmmg1=UnSLw@mail.gmail.com>
-From:   "Sajida Bhanu (Temp)" <quic_c_sbhanu@quicinc.com>
-In-Reply-To: <CAE-0n53BBzgU6AJ70JNUBBkDZ1c9ZmpX8ZXLcxLxmmg1=UnSLw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+References: <20220405235059.359738-1-dmitry.baryshkov@linaro.org>
+ <20220405235059.359738-4-dmitry.baryshkov@linaro.org> <CAE-0n501rjepeF3Oc6g05ctyGYdZTPR1+OMC=piQEtUZT+03=w@mail.gmail.com>
+In-Reply-To: <CAE-0n501rjepeF3Oc6g05ctyGYdZTPR1+OMC=piQEtUZT+03=w@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 6 Apr 2022 13:01:09 +0300
+Message-ID: <CAA8EJppOtqSD0+3C60Qz77oCGgq0=bqC6dLK8sN_S8uRvCQ0wQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] drm/msm: don't store created planes, connectors and encoders
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,54 +71,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-Thanks for the review.
-
-Please find the inline comments.
-
-Thanks,
-Sajida
-
-On 4/2/2022 3:39 AM, Stephen Boyd wrote:
-> Quoting Shaik Sajida Bhanu (2022-03-17 08:49:25)
->> Add gcc hardware reset entries for eMMC and SD card.
->>
->> Signed-off-by: Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 8 ++++++++
->>   1 file changed, 8 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index c07765d..cd50ea3 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -881,6 +881,10 @@
->>                          mmc-hs400-1_8v;
->>                          mmc-hs400-enhanced-strobe;
->>
->> +                       /* gcc hardware reset entry for eMMC */
-> Please don't add this worthless comment.
+On Wed, 6 Apr 2022 at 07:03, Stephen Boyd <swboyd@chromium.org> wrote:
 >
->> +                       resets = <&gcc GCC_SDCC1_BCR>;
->> +                       reset-names = "core_reset";
-> A "_reset" postfix is redundant. In fact, reset-names shouldn't even be
-> required.
-Ok
->> +
->>                          sdhc1_opp_table: opp-table {
->>                                  compatible = "operating-points-v2";
->>
->> @@ -2686,6 +2690,10 @@
->>
->>                          qcom,dll-config = <0x0007642c>;
->>
->> +                       /* gcc hardware reset entry for SD card */
-> Please don't add this worthless comment.
-Sure will remove the comment.
->> +                       resets = <&gcc GCC_SDCC2_BCR>;
->> +                       reset-names = "core_reset";
->> +
->>                          sdhc2_opp_table: opp-table {
->>                                  compatible = "operating-points-v2";
->>
+> Quoting Dmitry Baryshkov (2022-04-05 16:50:59)
+> > diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> > index d661debb50f1..ee3093890d97 100644
+> > --- a/drivers/gpu/drm/msm/msm_drv.h
+> > +++ b/drivers/gpu/drm/msm/msm_drv.h
+> > @@ -184,23 +184,14 @@ struct msm_drm_private {
+> >
+> >         struct workqueue_struct *wq;
+> >
+> > -       unsigned int num_planes;
+> > -       struct drm_plane *planes[MAX_PLANES];
+>
+> Can we get rid of MAX_PLANES?
+
+Sure, I'll drop all these defines in v2.
+
+>
+> > -
+> >         unsigned int num_crtcs;
+> >         struct drm_crtc *crtcs[MAX_CRTCS];
+> >
+> >         struct msm_drm_thread event_thread[MAX_CRTCS];
+> >
+> > -       unsigned int num_encoders;
+> > -       struct drm_encoder *encoders[MAX_ENCODERS];
+>
+> And MAX_ENCODERS?
+>
+> > -
+> >         unsigned int num_bridges;
+> >         struct drm_bridge *bridges[MAX_BRIDGES];
+> >
+> > -       unsigned int num_connectors;
+> > -       struct drm_connector *connectors[MAX_CONNECTORS];
+>
+> And MAX_CONNECTORS?
+
+
+
+-- 
+With best wishes
+Dmitry
