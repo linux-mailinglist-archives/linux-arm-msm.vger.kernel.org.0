@@ -2,105 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F5B84F5CB2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 13:56:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 355E84F5BF6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Apr 2022 13:12:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230249AbiDFLzW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Apr 2022 07:55:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36432 "EHLO
+        id S244273AbiDFLHX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Apr 2022 07:07:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230263AbiDFLy5 (ORCPT
+        with ESMTP id S239276AbiDFLGb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Apr 2022 07:54:57 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2096D2DBFF1;
-        Wed,  6 Apr 2022 00:16:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649229404; x=1680765404;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references;
-  bh=G8TAxFuMIH2k2HAYU7fzVN3wL8YmlGxi1x8C6tasnho=;
-  b=xypWVrB73Siu4NHZtcB2SgV+cBlneJ71qSOTF+80qifkROoacMV14oSb
-   ulI5uMOys0d/uryyEavFTea+RAnH8TRz7Ggp70KY5yrY/PZvEDtiMj/uV
-   aS09iCyLM5xrI5mqKhgNZBSlMEWZ2dLMQlHgoDRAaxbdvgy4rvcVWYrdB
-   c=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 06 Apr 2022 00:16:37 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 06 Apr 2022 00:16:35 -0700
-X-QCInternal: smtphost
-Received: from hu-vnivarth-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.111.166])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 06 Apr 2022 12:46:34 +0530
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
-        id 0F7223B51; Wed,  6 Apr 2022 12:46:34 +0530 (+0530)
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Subject: [V3 3/3] arch: arm64: dts: qcom: Configure cts sleep pinctrl to bias-bus-hold
-Date:   Wed,  6 Apr 2022 12:46:02 +0530
-Message-Id: <1649229362-31183-4-git-send-email-quic_vnivarth@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1649229362-31183-1-git-send-email-quic_vnivarth@quicinc.com>
-References: <1649229362-31183-1-git-send-email-quic_vnivarth@quicinc.com>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Wed, 6 Apr 2022 07:06:31 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66C4752D937;
+        Wed,  6 Apr 2022 00:31:52 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 021A461A18;
+        Wed,  6 Apr 2022 07:31:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B518AC385A1;
+        Wed,  6 Apr 2022 07:31:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1649230311;
+        bh=4OdkhvEEYFb30dY1CDwXCL23c70yBUDT5ZpEdJoNKVA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ZhfOPsFNLhy69jImyBcschJS7IO1/eOfkF1xYvu9yRu0Y7clNBS5VB9hzspDkNihR
+         /fcnBEdlYrFaoS2wWns52cMYmghCllZRsoxAY6qladsKj39FkC4rTNmAaweFKvgLuA
+         5AiBaSJNKijwuYu6dnTEoN/KPCmKytlpvb7iV1bpAFfwoTR9HqgV9ASsf2TkhfqE7V
+         CkU54ItFYpUm2fQSyQLqPgqxki5E6Os4S8Hnrh8bJi2FLe4f8IZEGh06EXnEZVbkUl
+         je11BorseLOpZy0ftQOQ6q+OiwT7NN3vX+TMPtR6A3LWOEedtLl+Ka2Y6xOD/15u5R
+         xpPfDgZH/Yk3w==
+Date:   Wed, 6 Apr 2022 08:31:45 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Satya Priya <quic_c_skakit@quicinc.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_collinsd@quicinc.com,
+        quic_subbaram@quicinc.com, quic_jprakash@quicinc.com
+Subject: Re: [PATCH V9 4/6] regulator: Add a regulator driver for the PM8008
+ PMIC
+Message-ID: <Yk1B4f51WMGIV9WB@sirena.org.uk>
+References: <1649166633-25872-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1649166633-25872-5-git-send-email-quic_c_skakit@quicinc.com>
+ <CAE-0n53G-atsuwqcgNvi3nvWyiO3P=pSj5zDUMYj0ELVYJE54Q@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="1fZokU+A3IfX11ol"
+Content-Disposition: inline
+In-Reply-To: <CAE-0n53G-atsuwqcgNvi3nvWyiO3P=pSj5zDUMYj0ELVYJE54Q@mail.gmail.com>
+X-Cookie: Look ere ye leap.
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-WLAN rail was leaking power during RBSC/sleep even after turning BT off.
-Change sleep pinctrl configuration to handle same.
 
-Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
----
-v3: apply same change to active state and other sc7280*.dts* as well
-v2: used bias-bus-hold as per review comments
-v1: intial patch used bias-disable for sleep pinctrl in sc7280-idp only
----
- arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+--1fZokU+A3IfX11ol
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-index b833ba1..602ebd4 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-@@ -398,8 +398,11 @@ mos_bt_uart: &uart7 {
- 
- /* For mos_bt_uart */
- &qup_uart7_cts {
--	/* Configure a pull-down on CTS to match the pull of the Bluetooth module. */
--	bias-pull-down;
-+	/*
-+	 * Configure a bias-bus-hold on CTS to lower power usage
-+	 * when BT is turned off.
-+	 */
-+	bias-bus-hold;
- };
- 
- /* For mos_bt_uart */
-@@ -490,10 +493,10 @@ mos_bt_uart: &uart7 {
- 		pins = "gpio28";
- 		function = "gpio";
- 		/*
--		 * Configure a pull-down on CTS to match the pull of
--		 * the Bluetooth module.
-+		 * Configure a bias-bus-hold on CTS to lower power usage
-+		 * when BT is turned off.
- 		 */
--		bias-pull-down;
-+		bias-bus-hold;
- 	};
- 
- 	/* For mos_bt_uart */
--- 
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
+On Tue, Apr 05, 2022 at 02:09:06PM -0500, Stephen Boyd wrote:
+> Quoting Satya Priya (2022-04-05 06:50:31)
 
+> > +static struct platform_driver pm8008_regulator_driver = {
+
+> Why isn't this an i2c driver?
+
+It's a MFD function driver isn't it?
+
+--1fZokU+A3IfX11ol
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmJNQeAACgkQJNaLcl1U
+h9BClwf/XphXahPP1Q0dwmBa+CnIimd5+5lPK3IhcShBpdms/RROT2WjAbidbdCL
+ANL3Nd3XHFXASyUR0XuvLIJKJ4irtc9a4iLEeLh31Ti4RjVnxJ9Sm5OSwiw51MxK
+iLep/0tmten8qmPJPuvXaIpNwuaw9HHkLSY88CtbUr+esu2arIuedmbqje9o10Sl
+R2+3yvB2yQe6f41og79A65KmNV2ZwhYC9aefKzdkg9amNcTcZPeA4+8uYugPBv5J
+VhTJ8XIcc0ty9CS/vGEPIPf2j+ecPltJghK4CEhfHHCGhos9pjsYkEwrxIWSwzgu
+8jXlSjZzWUk+Hos9FgKfDK+ww8foWQ==
+=PS01
+-----END PGP SIGNATURE-----
+
+--1fZokU+A3IfX11ol--
