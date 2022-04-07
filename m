@@ -2,99 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00B814F776E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Apr 2022 09:26:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCA074F7791
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Apr 2022 09:33:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238974AbiDGH2q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Apr 2022 03:28:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41736 "EHLO
+        id S241827AbiDGHew (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Apr 2022 03:34:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241955AbiDGH2R (ORCPT
+        with ESMTP id S231149AbiDGHev (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Apr 2022 03:28:17 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B11D0B6D11;
-        Thu,  7 Apr 2022 00:26:15 -0700 (PDT)
+        Thu, 7 Apr 2022 03:34:51 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88F89177D35
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Apr 2022 00:32:49 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id g20so5365084edw.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Apr 2022 00:32:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649316375; x=1680852375;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references;
-  bh=7j8XYUAv1vr0VyJnGy5NGzz9qT476I8xUjAkxpXl+to=;
-  b=he+6DSD9HW+LHUeUH+m4JJftPSVnmko3WBWU5mheJ15XtG74S0H9iEUb
-   37OpvGZK9RMGbe2xQSgqx1x7XggLLwYd5eqyaMTaQCuxlXO/qgU0iKBOE
-   0aG5PWwIAbF4xLp7wfodfqUTwtvPcrem1rjceV2nVbbpAFOHlQsXcGMY3
-   c=;
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 07 Apr 2022 00:26:15 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 07 Apr 2022 00:26:14 -0700
-X-QCInternal: smtphost
-Received: from hu-vnivarth-hyd.qualcomm.com (HELO hu-sgudaval-hyd.qualcomm.com) ([10.213.111.166])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 07 Apr 2022 12:56:01 +0530
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
-        id 3C8273B72; Thu,  7 Apr 2022 12:56:00 +0530 (+0530)
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-To:     agross@kernel.org, bjorn.andersson@linaro.org,
-        gregkh@linuxfoundation.org, jirislaby@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Subject: [V3] drivers/tty/serial/qcom-geni-serial: Do stop_rx in suspend path for console if console_suspend is disabled
-Date:   Thu,  7 Apr 2022 12:55:51 +0530
-Message-Id: <1649316351-9220-2-git-send-email-quic_vnivarth@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1649316351-9220-1-git-send-email-quic_vnivarth@quicinc.com>
-References: <1649316351-9220-1-git-send-email-quic_vnivarth@quicinc.com>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=+EUKtGXqpzIiuM97OU9EnfIBqXUuugdodntp3RmpB2g=;
+        b=MLD6Pa+acykChUKYnfN5TlyaI2DFI3571kmJ0xwMHyfkfJkDEmnAFhXVSgHmKhSdUU
+         CZQ1lyks55pzyVktHVoYFbNKKG8kXahI6EhIs8eGSfn1O9f3ntDxN5C6Y/zTn90o+YQ8
+         EhWiMs6RJVWYj0ehCvlPSAWsXpJ9W0C3Nw5DvvPo0IdrQvYQyWS0yh/3cKz7SAE5VvtF
+         3CeyNI4eGh3tkj20VQ95XOGK8FZFWFF3B6WEUxCxFGdxVPMnAW9+8iZdoBEKMk7ogPHa
+         92G465mJCWogofCCre/3YYA+mwoaqVb026bmzJ/K6K8lcgj+t+xx5V3ZEDCeftNXbHDo
+         wlag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=+EUKtGXqpzIiuM97OU9EnfIBqXUuugdodntp3RmpB2g=;
+        b=aDTkdpxvxXdmm47UTOjalWO3jBhKFPbQSTKesM6Vxm6UXZBYN3cPpSUADGNa2wfwd1
+         ILAMEmIqcMb2lUEYHo13Y6fZBY8jYjnrXA4A+1hV6Ux93ezlVaABebk+T6dMMH8ECKYz
+         mZXJZhLPnTraxvC+CwG/5D8aS5AQ17qlgD/U4+Au4HQYM6/xrJOEmnbhhXPMZnPkITS3
+         yl5784btVaT2VxxdoJl1N4gDhaq3bW9xprYCWpoMcL0fE1tQVAIm27ZvvjUATQpvarbr
+         Ihk+TwXOQuJTzcv1Gm4hhLVsnUYFXGUKZD+OyQzx9xi4NLhWpnlPdEUYCGDBYhknjTgQ
+         u3Pw==
+X-Gm-Message-State: AOAM5300avh9q6rS2x/SrueeILO8uKcsZEKFGqx8FT+gMIPFXU5Q2Qaf
+        IrULj2FMA10ZD20DJx7JKCXGOg==
+X-Google-Smtp-Source: ABdhPJyIpHoo5CyU+omZm76Ir2AEajIb5A/rhFDOmn6KNjdwWWGCZXA1IvhboAVJ40Su1x4Bx+KhiQ==
+X-Received: by 2002:a50:f106:0:b0:41c:d793:3ae5 with SMTP id w6-20020a50f106000000b0041cd7933ae5mr12892876edl.390.1649316768155;
+        Thu, 07 Apr 2022 00:32:48 -0700 (PDT)
+Received: from [192.168.0.185] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.gmail.com with ESMTPSA id lj11-20020a170906f9cb00b006e8402c3379sm32496ejb.58.2022.04.07.00.32.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Apr 2022 00:32:47 -0700 (PDT)
+Message-ID: <f3f5c297-a94b-9544-5673-3da3188623f9@linaro.org>
+Date:   Thu, 7 Apr 2022 09:32:46 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH 2/3] dt-bindings: dmaengine: qcom: gpi: add compatible for
+ sm8350/sm8350
+Content-Language: en-US
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        devicetree@vger.kernel.org
+References: <20220406132508.1029348-1-vkoul@kernel.org>
+ <20220406132508.1029348-2-vkoul@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220406132508.1029348-2-vkoul@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-For the case of console_suspend disabled, if back to back suspend/resume
-test is executed, at the end of test, sometimes console would appear to
-be frozen not responding to input. This would happen because, for
-console_suspend disabled, suspend/resume routines only turn resources
-off/on but don't do a port close/open.
-As a result, during resume, some rx transactions come in before system is
-ready, malfunction of rx happens in turn resulting in console appearing
-to be stuck.
+On 06/04/2022 15:25, Vinod Koul wrote:
+> Add the compatible for newer qcom socs with gpi dma i.e qcom sm8350 and
+> sm8450.
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+>  Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
 
-Do a stop_rx in suspend sequence to prevent this. start_rx is already
-present in resume sequence as part of call to set_termios which does a
-stop_rx/start_rx.
 
-Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
----
-v3: swapped the order of conditions to be more human readable
-v2: restricted patch to contain only stop_rx in suspend sequence
-v1: intial patch contained 2 additional unrelated changes in vicinity
----
- drivers/tty/serial/qcom_geni_serial.c | 4 ++++
- 1 file changed, 4 insertions(+)
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 1543a60..53723d2 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1481,6 +1481,10 @@ static int __maybe_unused qcom_geni_serial_sys_suspend(struct device *dev)
- 	struct uart_port *uport = &port->uport;
- 	struct qcom_geni_private_data *private_data = uport->private_data;
- 
-+	/* do a stop_rx here, start_rx is handled in uart_resume_port by call to setermios */
-+	if (uart_console(uport) && !console_suspend_enabled)
-+		uport->ops->stop_rx(uport);
-+
- 	/*
- 	 * This is done so we can hit the lowest possible state in suspend
- 	 * even with no_console_suspend
--- 
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
 
+Best regards,
+Krzysztof
