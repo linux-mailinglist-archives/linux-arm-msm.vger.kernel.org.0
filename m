@@ -2,62 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF32A4F7E19
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Apr 2022 13:33:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF8BD4F7E21
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Apr 2022 13:38:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236751AbiDGLfL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Apr 2022 07:35:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38422 "EHLO
+        id S236858AbiDGLka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Apr 2022 07:40:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232651AbiDGLfJ (ORCPT
+        with ESMTP id S236391AbiDGLk3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Apr 2022 07:35:09 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5448411DD19;
-        Thu,  7 Apr 2022 04:33:10 -0700 (PDT)
+        Thu, 7 Apr 2022 07:40:29 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B36D5F8E7;
+        Thu,  7 Apr 2022 04:38:30 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E000561E7E;
-        Thu,  7 Apr 2022 11:33:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C04C385A4;
-        Thu,  7 Apr 2022 11:33:09 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0DF7061E11;
+        Thu,  7 Apr 2022 11:38:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63D5DC385A0;
+        Thu,  7 Apr 2022 11:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1649331189;
-        bh=afAHMXI/+97xz/pqhFgQCdEbLqnWZ0KuOYIPwHdj95s=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=Jo49GSPW39lIpVk8HI4EkVqBia1qwzJ+ivXJwW9y/1zviHZuNTVtdNZ/AvxjeDvZV
-         QlaAptWYuLKtGMxIx8c77oG/C5ldgBUP6ldr6kYfjbSpM2I0zpwFNX/WIpda7P4g43
-         wHrS3wy0g2VFqArV7z0tjXWE8Xpps4nYJWcZpgqbDnyWKav7zb8bMZu8Vj3qQ28x7r
-         xWNGd8HkNQvWTcVU0XwTRXu26JwKbgH6kBhu34tG6LpQIEpd7A5wbQSE5T3tqpnZ1c
-         +FuN4GsgsJEYKBAiNYt4ShhaQOnSZtrsx81gwWQCdZ1yklEl7otD4qVD9fKOUis6Yz
-         jXjLJWSJ7MI5A==
-Received: by mail-pf1-f169.google.com with SMTP id b15so5182238pfm.5;
-        Thu, 07 Apr 2022 04:33:09 -0700 (PDT)
-X-Gm-Message-State: AOAM530+huPvy5YcGdFwsGPMLFXYL6+XTP2XfjXwqVHMLZTaeZbhdu0f
-        faSWwXVRKesNKk491YrOMVHsaCAC+Y3yZqwWSY8=
-X-Google-Smtp-Source: ABdhPJzmpH6LsNZA/AxxNXzRC5tAwZhDCYBjDPMbk6i2A4Wh2dNjxJQO1spVY+LTOIoRI6FSSdQtm7clTckDNI4oI2c=
-X-Received: by 2002:a05:6a00:1501:b0:4fb:2d19:b6a8 with SMTP id
- q1-20020a056a00150100b004fb2d19b6a8mr13844107pfu.21.1649331188732; Thu, 07
- Apr 2022 04:33:08 -0700 (PDT)
+        s=k20201202; t=1649331509;
+        bh=TG0yL4INQRkSWREccn9ae6NDvDoCcJKDi8COYvkgGgs=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=SfmDwz9CXnvV6mzu9+3DgBV3o1t++mInJYjqeuJHR3/Umq6H1EoMXZ+FNSmPsF9/O
+         mQyOlBoV3xMDMnDjEQU/hV0Bv+1VzYKxXgTOEmWlQEz4ZBhD5kKv8hB09FyntYt9Gd
+         ifxHmsDKvK3OYyfLlak9t7NcEOcZr24W/M9cT9giJj+S97IaHCnWAQbF8aGuGWCIlu
+         ry7NTvnvfnUMFs4WYK2ijfiJyxWIrZyXb6PO/4zBkYKQVrA3pfALJyzsbbC5rLcZiT
+         zBWRsp1iFME84R5kXgMW3IOQ3G6q9aZxQ/MU4sxTNDR8n9Ih/TDOFbEseGwKB28/SY
+         n2LOxe/zNPKMw==
+Message-ID: <78ddc1a6-4597-46b7-76f0-32087ed62546@kernel.org>
+Date:   Thu, 7 Apr 2022 13:38:24 +0200
 MIME-Version: 1.0
-References: <20220407075427.41141-1-chenxiangrui@huaqin.corp-partner.google.com>
-In-Reply-To: <20220407075427.41141-1-chenxiangrui@huaqin.corp-partner.google.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-Date:   Thu, 7 Apr 2022 13:32:57 +0200
-X-Gmail-Original-Message-ID: <CAJKOXPf38LTFzjP0mDEu0wo3AmTPLgU_jv7t+TXxJTuVtoVkVw@mail.gmail.com>
-Message-ID: <CAJKOXPf38LTFzjP0mDEu0wo3AmTPLgU_jv7t+TXxJTuVtoVkVw@mail.gmail.com>
-Subject: Re: [PATCH] [v2]arm64: dts: qcom: Add sc7180-gelarshie
-To:     Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>
-Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] arm64: dts: qcom: Add sc7180-gelarshie
+Content-Language: en-US
+To:     Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>,
+        Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <20220406094156.3191-1-chenxiangrui@huaqin.corp-partner.google.com>
+ <Yk21MbGKVi8d9cAy@google.com>
+ <CA+Bnokw-8023cvifSZtT8WR4TvUi8K3512TmEoXhKezMjbQNUQ@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <CA+Bnokw-8023cvifSZtT8WR4TvUi8K3512TmEoXhKezMjbQNUQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-10.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -65,28 +66,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 7 Apr 2022 at 09:54, Mars Chen
-<chenxiangrui@huaqin.corp-partner.google.com> wrote:
->
-> Add device tree for Gelarshie, a trogdor variant
->
-> Signed-off-by: Mars Chen <chenxiangrui@huaqin.corp-partner.google.com>
+On 07/04/2022 10:15, Mars Chen wrote:
+> Hi Matthias,
+> I had removed camera related files on upstream device trees.
+> 
+> Hi Krzysztof,
+> The v2 patch just addressed the v1 patch comment and I had sent the v2
+> patch. 
+> 
 
-Your subject is incorrect. Please use `git format-patch -v2`. You
-still did not provide a changelog (put under ---) against v1. You
-still did not reply to my comments and did not implement them.
-https://lore.kernel.org/linux-devicetree/a0eb6bf9-256a-29b1-2211-496df710f531@linaro.org/
+Hi,
 
-If they are unclear, please respond to them, so I can clarify. However
-you did not respond but resent without implementing them, so it looks
-like you ignore the comments.
-
-This is not a good process. :(
-
-Please read again:
-https://elixir.bootlin.com/linux/v5.18-rc1/source/Documentation/process/submitting-patches.rst#L307
-
-I am sorry, but I have to NAK the patch till you respond to my comments.
+I do not see it being addressed at all. :(
 
 Best regards,
 Krzysztof
