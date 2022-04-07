@@ -2,119 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E78AE4F8685
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Apr 2022 19:47:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D1E14F86D1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Apr 2022 20:02:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241592AbiDGRtA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Apr 2022 13:49:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57172 "EHLO
+        id S1346724AbiDGSEB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Apr 2022 14:04:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235671AbiDGRs7 (ORCPT
+        with ESMTP id S1346716AbiDGSEB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Apr 2022 13:48:59 -0400
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D632186FB;
-        Thu,  7 Apr 2022 10:46:58 -0700 (PDT)
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-d39f741ba0so7107973fac.13;
-        Thu, 07 Apr 2022 10:46:58 -0700 (PDT)
+        Thu, 7 Apr 2022 14:04:01 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5158DC6824
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Apr 2022 11:02:00 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id p8so6145176pfh.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Apr 2022 11:02:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=F4m+NmCt6OQn1SzMUe8Cohym4BG+NQ3hA7612DJmQk8=;
+        b=gxJe8yE0vDDooVk/tyWuz6yS5lmQYS/Wkon9uCa6FbL1Vp+1car52FqOuW/+gvGVtr
+         uRFXlYXosH7BLeaJQ/dxhonfjStPz7APnzrBFOHVy8ov9Dm1Qt5vTegZpuZo3JL4j/yS
+         Mt/CLtsQsj2t2PTylkSKsg9ChciEv8RgvBrkE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=MmJLuyekwoblpDX5b95jqgHit0wkMxVufsew2de6Slo=;
-        b=0T5kaHlE1ipsHES8GxwMFE+DH+UvG7yo9S1SjOA8OaNGX0IYQzJZo76rn0/intxKMZ
-         K8NK3KQ1dN+0sl8WOZ02/N46Lc8fb9hrdG7BdBQd2iepC2Bim6q1d53u3BLucg4zT9pu
-         O5kShshmE5PSZIfYNoVJqV0hZ+vGJI8F3GV5Gp9/M2YeuL1sMKhqbJtxOGn5yZUnclsv
-         9MvEAozfXc7r2sGIEsRav/byS/MGRed01yqoFimbNOb7vvXb9E1hDvlrp5Jr1uDG1OY1
-         rxI1Ll9U6ANtOtjiPL6Q5XEX2Lp8guKUMCzVwiZXEuCELrGDCMXgTFmJdlu3R/TlmPyD
-         V+FA==
-X-Gm-Message-State: AOAM530oNeayLCliorKugaC151UzHBIFWIX6pJXW/QHK11eSjUUf03Kw
-        7cLwE1yj+jZ9IFecKMYE2Q==
-X-Google-Smtp-Source: ABdhPJw754vwBgnN/nBlQiTizQIA1UI3kDsgOYrCH4cfGSEpTe/2uKtRnMgf93qE3ml0Uw6wprvEeA==
-X-Received: by 2002:a05:6870:2310:b0:da:b3f:2b76 with SMTP id w16-20020a056870231000b000da0b3f2b76mr6804229oao.277.1649353617755;
-        Thu, 07 Apr 2022 10:46:57 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id o17-20020a9d5c11000000b005b2611a13edsm8263373otk.61.2022.04.07.10.46.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Apr 2022 10:46:57 -0700 (PDT)
-Received: (nullmailer pid 1614078 invoked by uid 1000);
-        Thu, 07 Apr 2022 17:46:56 -0000
-Date:   Thu, 7 Apr 2022 12:46:56 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        bh=F4m+NmCt6OQn1SzMUe8Cohym4BG+NQ3hA7612DJmQk8=;
+        b=qv1qwONDQD2Uv778vskeGGXyb9h1cVdSotYX+W/Nlis8+oppslJbu4J7w2PKcmt7XQ
+         kAec1iX6Doc2RuF1h1BSx2klED5oHncn5ZvgH3WB6903gANlphxcVQuYCvd0DhX+dc15
+         NWE81/XziISPjSzCVkkI9bzuvczywuUQibhvG2pDE1LANw8G1OkRkNIMjpg426/n5ilZ
+         JYb/2AePccxfDu4jyKlHz67FIriMbEgEt/UJe/ybW0ZUyNykTBdDLqm2l7+tFrqfCV/W
+         SM5dc6MZdFbdNT3w+fAKHXoGXj8bE7k5lSS1HRmV4KhO1Y4vDQHs7CAZ2qdHTkyLXK9V
+         cxJw==
+X-Gm-Message-State: AOAM530AP0RgFIHhOp863MTEStqEdF5GDDM7MVMYIPEtqDnFuOAmHv91
+        EWDlFl9ET83x6ZzjkhtNhwLwZQ==
+X-Google-Smtp-Source: ABdhPJzRd2qZYYwG5AfxTyIymC3MZj/ozFy0iyV+2G1omVsn91D0Sgr3xC08x23KE/K5bh1F6e4nmg==
+X-Received: by 2002:a05:6a00:190a:b0:4fa:e4e9:7126 with SMTP id y10-20020a056a00190a00b004fae4e97126mr15410147pfi.65.1649354519621;
+        Thu, 07 Apr 2022 11:01:59 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:693e:9ca0:42a0:6bf7])
+        by smtp.gmail.com with UTF8SMTPSA id x12-20020aa7956c000000b004fdf7a4d49dsm16020425pfq.158.2022.04.07.11.01.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Apr 2022 11:01:59 -0700 (PDT)
+Date:   Thu, 7 Apr 2022 11:01:57 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-spi@vger.kernel.org,
-        Kuldeep Singh <singh.kuldeep87k@gmail.com>
-Subject: Re: [PATCH v4 0/9] dt-bindings: qcom: convert entire GSBI (QUP
- I2C/SPI/UART) to DT schema
-Message-ID: <Yk8jkJepgcRMo73l@robh.at.kernel.org>
-References: <20220405063451.12011-1-krzysztof.kozlowski@linaro.org>
+        Felipe Balbi <balbi@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_kriskura@quicinc.com, quic_vpulyala@quicinc.com
+Subject: Re: [PATCH v12 4/6] usb: dwc3: qcom: Keep power domain on to retain
+ controller status
+Message-ID: <Yk8nFZhLgdTQsllD@google.com>
+References: <1649321104-31322-1-git-send-email-quic_c_sanm@quicinc.com>
+ <1649321104-31322-5-git-send-email-quic_c_sanm@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220405063451.12011-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+In-Reply-To: <1649321104-31322-5-git-send-email-quic_c_sanm@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 05, 2022 at 08:34:42AM +0200, Krzysztof Kozlowski wrote:
-> Hi,
+On Thu, Apr 07, 2022 at 02:15:02PM +0530, Sandeep Maheswaram wrote:
+> Keep the power domain on in order to retain controller status and
+> to support wakeup from devices.
 > 
-> Changes since v3
-> ================
-> 1. Correct dmas in serial/UART bindings example.
-> 2. Use "const" in compatible for GSBI.
-> 3. Add review tags.
+> Signed-off-by: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> ---
+>  drivers/usb/dwc3/dwc3-qcom.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
 > 
-> Changes since v2
-> ================
-> 1. Several new schema patches (GSBI, I2C and UART schema).
-> 2. Several DTS fixes for clocks and DMAs. The choice of dma tx-rx
->    and clocks core-iface was by more-or-less number of fixes needed.
-> 3. Add Kuldeep acks to patches without changes.
-> 
-> Changes since v1
-> ================
-> 1. Fix path in com/qcom,gsbi.txt.
-> 2. Merge clock-names in example, correct $ref path (Kuldeep).
-> 
-> Merging
-> =======
-> 1. The DTS patches are independent and silence warnings pointed
->     out by schema.
-> 
-> 2. The DT schema patches should be taken together as GSBI (final patch)
->    depends on previous bindings.
-> 
-> Best regards,
-> Krzysztof
-> 
-> Cc: Kuldeep Singh <singh.kuldeep87k@gmail.com>
-> 
-> Krzysztof Kozlowski (9):
->   arm64: dts: qcom: align dmas in I2C/SPI/UART with DT schema
->   arm64: dts: qcom: align clocks in I2C/SPI with DT schema
->   ARM: dts: qcom: ipq4019: align dmas in SPI/UART with DT schema
->   ARM: dts: qcom: ipq4019: align clocks in I2C with DT schema
->   ARM: dts: qcom: msm8660: disable GSBI8
->   spi: dt-bindings: qcom,spi-qup: convert to dtschema
->   dt-bindings: serial: qcom,msm-uartdm: convert to dtschema
->   dt-bindings: i2c: qcom,i2c-qup: convert to dtschema
->   dt-bindings: qcom: qcom,gsbi: convert to dtschema
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index 9804a19..35087cf 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -17,6 +17,7 @@
+>  #include <linux/of_platform.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/phy/phy.h>
+> +#include <linux/pm_domain.h>
+>  #include <linux/usb/of.h>
+>  #include <linux/reset.h>
+>  #include <linux/iopoll.h>
+> @@ -724,6 +725,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+>  	struct resource		*res, *parent_res = NULL;
+>  	int			ret, i;
+>  	bool			ignore_pipe_clk;
+> +	struct generic_pm_domain *genpd;
+>  
+>  	qcom = devm_kzalloc(&pdev->dev, sizeof(*qcom), GFP_KERNEL);
+>  	if (!qcom)
+> @@ -732,6 +734,8 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+>  	platform_set_drvdata(pdev, qcom);
+>  	qcom->dev = &pdev->dev;
+>  
+> +	genpd = pd_to_genpd(qcom->dev->pm_domain);
+> +
+>  	if (has_acpi_companion(dev)) {
+>  		qcom->acpi_pdata = acpi_device_get_match_data(dev);
+>  		if (!qcom->acpi_pdata) {
+> @@ -839,6 +843,8 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto interconnect_exit;
+>  
+> +	genpd->flags |= GENPD_FLAG_ALWAYS_ON;
 
-Patches 6-9 applied.
+Not sure it really matters, but could this be done conditionally based
+on device_can_wakeup() of the dwc3 core device?
 
-Rob
+> +
+>  	device_init_wakeup(&pdev->dev, 1);
+
+Now that the dwc3 core looks at the wakeup-source property it seems
+this driver should enable wakeup only when it is enabled for the
+core.
+
+Actually I wonder if it would make sense to leave wakeup for dwc3-qcom
+'officially' disabled, and just make all wakeup related decisions
+based on the wakeup configuration of the dwc3 core (as
+dwc3_qcom_en/disable_interrupts() already do). The separate wakeup
+policies for dwc3 core and dwc3-qcom are confusing and don't seem to
+add any value.
