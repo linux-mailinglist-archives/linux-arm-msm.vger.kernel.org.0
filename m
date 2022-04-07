@@ -2,65 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E883C4F75C2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Apr 2022 08:12:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F6174F769A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Apr 2022 08:50:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235772AbiDGGOF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Apr 2022 02:14:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38894 "EHLO
+        id S241445AbiDGGwz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Apr 2022 02:52:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234204AbiDGGOE (ORCPT
+        with ESMTP id S241513AbiDGGwt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Apr 2022 02:14:04 -0400
-Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77759DE098;
-        Wed,  6 Apr 2022 23:12:02 -0700 (PDT)
+        Thu, 7 Apr 2022 02:52:49 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B210E72BD
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Apr 2022 23:50:50 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id n6so8721533ejc.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Apr 2022 23:50:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1649311923; x=1680847923;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=nBxEeOwcr6xTw6EPEUZhmjsNBINTTtRUxCKTCYECXjA=;
-  b=d0PC2xj2pxaOPHpDy1BU5+q/DY6uhbMwbt9sEhaQ8MGz8yAUvys0aX2S
-   HfAEj81lYZI/loDgK7ILqi6qwDWdjcdwadQ3RqSROfEFvpvuygRNHmSzt
-   zIVWzsQ6NRaeJYdgN7isk2tNtSOR8AV0rNUGoqTh7aoymI+RyNH3dieIl
-   A=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 06 Apr 2022 23:12:01 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Apr 2022 23:12:00 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 6 Apr 2022 23:12:00 -0700
-Received: from [10.50.10.231] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 6 Apr 2022
- 23:11:56 -0700
-Message-ID: <5c87d5d9-66d0-41d9-4adb-53b3ec7cadeb@quicinc.com>
-Date:   Thu, 7 Apr 2022 11:41:50 +0530
+        d=linaro.org; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=sOBNvgaCeaKUl0pCxOaStgi4AtDvD5vTjwRPpX1afgI=;
+        b=OfjisoY9ADHB/LAaU3PStatTtPjqHuthog/JZLRiCrE400Z4N5kB45I/5186gttD2r
+         nqF/uKXWfo1Ud2MnP4pJ4WC0knoEmRdfJ91hf6/vlL68eVgvu0RHxoNJkP9g4Zs76DVJ
+         8RH+bH6R+U4/4sVd/QlFSuXrGdiPzwJX/TWcVAJTbIRzADsNPy/b5nd6PyTYpQgdHC3x
+         YvayfjGXngIvyYwfBvD35tuOGFTd1+j1ItNqYcQtYbPwo+lNLY7Voo110/C1DT3yhDB8
+         HP65WkWBPWfVa/ZQQj97DlMrjNMzeoNE0BDy+7hdFtN3fnCn3kXL+NfqMoe8WTA5oHi0
+         biNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=sOBNvgaCeaKUl0pCxOaStgi4AtDvD5vTjwRPpX1afgI=;
+        b=bRyiIEvIPD0qDzHa3jdo1E5IC1PvpfJnGPmXy4VaEaSZ8WM1VKaB3d/cKbb66F4QCU
+         1IexW070SqFNH47WqdUC7oaweHeTOAN4KUjnzwZJaMAOeoT0ME5m3gMc/pQU/m4sabxm
+         J5crhNLVpu175/gxRj3E4AUmdPIV//VFc8Auudc8UROka2uT/fl6k4AwJBSLi9lGjGZW
+         ZjssG5AMHwGjDGVPwhsaqjvPnZjoowHA9naNnIDM2OOHaRnoFbX44hrZph3S0Zv08PVp
+         DrG/Dwd+zeLjG94qo5DmrSia2VzL3GArDqjgO6fMzMUwv9JlbeA7NEur2Zw4Df6HWxfk
+         LnNg==
+X-Gm-Message-State: AOAM530elymktgztjrqJ35W//See2LkwleBelOb81Qx00LtWiZgSFiiy
+        Y5BNUuFulmTKPFa733sWCciwJQ==
+X-Google-Smtp-Source: ABdhPJwZHd06+OJimqgTZYQ8rpgiu2LawfUnsP7vAlBXm6qHLY+PkgrfMGAWiY+1/KrNeuluf81U8Q==
+X-Received: by 2002:a17:907:86a8:b0:6e7:fbfd:b5fa with SMTP id qa40-20020a17090786a800b006e7fbfdb5famr12305824ejc.703.1649314248606;
+        Wed, 06 Apr 2022 23:50:48 -0700 (PDT)
+Received: from [192.168.0.185] (xdsl-188-155-201-27.adslplus.ch. [188.155.201.27])
+        by smtp.gmail.com with ESMTPSA id z9-20020a17090655c900b006e83ffe41f3sm23085ejp.150.2022.04.06.23.50.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Apr 2022 23:50:48 -0700 (PDT)
+Message-ID: <081c5f7f-31d5-f797-e107-1ea5c9639a5a@linaro.org>
+Date:   Thu, 7 Apr 2022 08:50:47 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH v11] arm64: dts: qcom: sc7280: Add WPSS remoteproc node
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v2] dt-bindings: qcom: update maintainers (drop Akash and
+ Mukesh)
 Content-Language: en-US
-To:     Stephen Boyd <swboyd@chromium.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <robh+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_sibis@quicinc.com>,
-        <kuabhs@chromium.org>, <quic_pillair@quicinc.com>
-References: <20220406111101.27412-1-quic_mpubbise@quicinc.com>
- <CAE-0n51vq_V85SKh+hN1Ueas9t1dV7ZFaFyQsG9vukRBAHUc5A@mail.gmail.com>
-From:   Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
-In-Reply-To: <CAE-0n51vq_V85SKh+hN1Ueas9t1dV7ZFaFyQsG9vukRBAHUc5A@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Rob Herring <robh@kernel.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-kernel@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-spi@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20220405063724.12850-1-krzysztof.kozlowski@linaro.org>
+ <Yk3X94DwNR4AcPP4@robh.at.kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <Yk3X94DwNR4AcPP4@robh.at.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -69,28 +81,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 4/6/2022 8:47 PM, Stephen Boyd wrote:
-> Quoting Manikanta Pubbisetty (2022-04-06 04:11:01)
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> index ecbf2b89d896..f61a3e15fa8b 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> @@ -547,3 +547,6 @@ sw_ctrl: sw-ctrl {
->>          };
->>   };
+On 06/04/2022 20:12, Rob Herring wrote:
+> On Tue, 05 Apr 2022 08:37:24 +0200, Krzysztof Kozlowski wrote:
+>> Emails to Akash Asthana and Mukesh Savaliya bounce (550: Recipient
+>> address rejected: User unknown in virtual alias table), so switch
+>> maintainer to Bjorn (as active Qualcomm platform maintainer).
 >>
->> +&remoteproc_wpss {
->> +       status = "okay";
->> +};
+>> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
+>> ---
+>>
+>> Changes since v1:
+>> 1. Add only Bjorn.
+>> ---
+>>  Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml  | 3 +--
+>>  Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml | 3 +--
+>>  2 files changed, 2 insertions(+), 4 deletions(-)
+>>
 > 
-> This should be before the PINCTRL section in this file. I believe after
-> the uart node.
+> Acked-by: Rob Herring <robh@kernel.org>
+> 
+> Let me know if you'd rather me pick this up (and the pile of other QCom 
+> bindings).
 
-I have not understood your concern, any specific reason as why 
-remoteproc_wpss node has to be before PINCTRL section?
-There is no problem in moving, just wanted to understand the reason.
+Yes, please pick them up. Few other Qualcomm bindings depend on each
+other (SPI+I2C+Serial to finally convert the GSBI which uses it), so not
+all of them can go via respective subsystems.
 
-Thanks,
-Manikanta
+Best regards,
+Krzysztof
