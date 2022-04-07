@@ -2,110 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 262C94F8B0D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Apr 2022 02:56:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68C8A4F8B7C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Apr 2022 02:56:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232277AbiDGWkY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Apr 2022 18:40:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45370 "EHLO
+        id S232214AbiDGWkx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Apr 2022 18:40:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232155AbiDGWkP (ORCPT
+        with ESMTP id S232306AbiDGWkq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Apr 2022 18:40:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 65FFE129E8E
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Apr 2022 15:37:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1649371064;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=NOIZSnS98gQ3xydj16FHLPEIjDJjA+ZwlFfjRBiVUDY=;
-        b=Ufpqi9h9sFb+JOx8UKIkxqn0Qet61F8SOHh0vJ891v2iq9Quf5c8evRD75w/XaWkVoJDsJ
-        bYj0zmQLayYIhxEsKb23N4o6pgXtTMKJDiO8+kig/FxupnZZpjYtOK2e/Wzba+M9manIYp
-        tx9GVjCDsgDiu0SboTBPWizpKbKZvQM=
-Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com
- [209.85.160.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-189-os8_b5-YMKuX3H4LhWVEeQ-1; Thu, 07 Apr 2022 18:37:41 -0400
-X-MC-Unique: os8_b5-YMKuX3H4LhWVEeQ-1
-Received: by mail-oa1-f71.google.com with SMTP id 586e51a60fabf-e2100f7451so3756191fac.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Apr 2022 15:37:41 -0700 (PDT)
+        Thu, 7 Apr 2022 18:40:46 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D85B14F12A
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Apr 2022 15:38:34 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id 75so632447qkk.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Apr 2022 15:38:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20210112.gappssmtp.com; s=20210112;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=uqhxauvR8mCQfoS6i8uwjBu35yp97nhbeSWZ8vnrwZY=;
+        b=bV88Cr4N/znjGzgB7rGsAMSx7HMUtAsLuyAIexD78fMOdCSuQ4MWuJ6OWLMzjvmh27
+         B6cXdE4QcijqPh4lAqbIFQ/biCEolBwl/UxDmX9z5aUx0c0ovN49h0qKtiOm/SmUy5Z5
+         IEpDqqhlkjAtOwgomHhNLK4qkn5julTyvpYtfEIWo6dsgQ5ivqU4W4ufglNIlUTwYGpB
+         LvVjmvxW1ov4qozfnpoxVU8VcObOqTF+yubspktLowPr5W+rm1f+o06nEbTryAi0JGoO
+         KfsMn8WLSmCtqFxHdzrjnRtrQBJrclEILUxOTHtjeC5LTx8obNvyFuRJEbMhgG55vpe0
+         tmxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:organization:mime-version:content-transfer-encoding;
-        bh=NOIZSnS98gQ3xydj16FHLPEIjDJjA+ZwlFfjRBiVUDY=;
-        b=GRBocszBBP2qadaiErFsy187YjxqOoe+buNij90mi2kY6mLSmB6sIyWogRWnqHt1uV
-         0oagtutbJp6euWSc896OLrbW3/LXSj3jkXk27KbegyqrcIQfHTA+8OsbLIMbeGfI2Rm+
-         Zfj/oQMf3sh3PAvSQ5Fb5tQoVFWmECUPvQCrNQhS0fkJNYyo090dRwuruz11U/AK3Aet
-         zAfWlFv0TRhUND+nXRm7pH9+2fv/rzFJ0QWvAtrCqO52NxTs2JBjlVO+ox0n72YQo7eY
-         pSifFlVPbItHE8Gu2N+abA+R0BwcfdCoWWbcejovqYqo0G8o5+UPz5Uspa4i9W9Ltbkq
-         W7IQ==
-X-Gm-Message-State: AOAM531PMVGezUSiSISN2iQvsc7lVnzhDrf03lDK6h4Nwy3udfj8bu3D
-        diJxLGIfyO2RFgilPKa2gCAvi+wH+b4osudIltMPtN8ZkFFrCewpfc9XvjUMbGH6IGj6WlT6c9P
-        g82z44iY30l+fWz8pIf8Pw3nbAg==
-X-Received: by 2002:a9d:ee7:0:b0:5cd:feb9:66b5 with SMTP id 94-20020a9d0ee7000000b005cdfeb966b5mr5515074otj.216.1649371061194;
-        Thu, 07 Apr 2022 15:37:41 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJxcVZwyerJlnB50z195byTw9JBG/9w1iOCvt6QyoKpKsIz/rFvJndsMgHRlm6GD1Fo6Sk8OMg==
-X-Received: by 2002:a9d:ee7:0:b0:5cd:feb9:66b5 with SMTP id 94-20020a9d0ee7000000b005cdfeb966b5mr5515064otj.216.1649371060962;
-        Thu, 07 Apr 2022 15:37:40 -0700 (PDT)
-Received: from redhat.com ([38.15.36.239])
-        by smtp.gmail.com with ESMTPSA id c8-20020a4ad788000000b0031ce69b1640sm7642523oou.10.2022.04.07.15.37.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Apr 2022 15:37:40 -0700 (PDT)
-Date:   Thu, 7 Apr 2022 16:37:37 -0600
-From:   Alex Williamson <alex.williamson@redhat.com>
-To:     Jason Gunthorpe <jgg@nvidia.com>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        "Tian, Kevin" <kevin.tian@intel.com>,
-        Christoph Hellwig <hch@lst.de>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Christian Benvenuti <benve@cisco.com>,
-        Cornelia Huck <cohuck@redhat.com>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
-        Jason Wang <jasowang@redhat.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
-        "linux-s390@vger.kernel.org" <linux-s390@vger.kernel.org>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        "Michael S. Tsirkin" <mst@redhat.com>,
-        Nelson Escobar <neescoba@cisco.com>,
-        "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-        "virtualization@lists.linux-foundation.org" 
-        <virtualization@lists.linux-foundation.org>,
-        Will Deacon <will@kernel.org>
-Subject: Re: [PATCH 1/5] iommu: Replace uses of IOMMU_CAP_CACHE_COHERENCY
- with dev_is_dma_coherent()
-Message-ID: <20220407163737.2a7ccd7a.alex.williamson@redhat.com>
-In-Reply-To: <20220407152331.GN2120790@nvidia.com>
-References: <db5a6daa-bfe9-744f-7fc5-d5167858bc3e@arm.com>
-        <20220406142432.GF2120790@nvidia.com>
-        <20220406151823.GG2120790@nvidia.com>
-        <20220406155056.GA30433@lst.de>
-        <20220406160623.GI2120790@nvidia.com>
-        <20220406161031.GA31790@lst.de>
-        <20220406171729.GJ2120790@nvidia.com>
-        <BN9PR11MB5276F9CEA2B01B3E75094B6D8CE69@BN9PR11MB5276.namprd11.prod.outlook.com>
-        <20220407135946.GM2120790@nvidia.com>
-        <fb55a025-348e-800c-e368-48be075d8e9c@arm.com>
-        <20220407152331.GN2120790@nvidia.com>
-Organization: Red Hat
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=uqhxauvR8mCQfoS6i8uwjBu35yp97nhbeSWZ8vnrwZY=;
+        b=hyQtB/DM8B6/bhpO+eBOStKF69HD+M7zyX7CPwWhaQ3ApGICFpBNqIIo8jjEcvRC0c
+         JMq71XI9qi3C3H6RDf4njw5//mWD+4HbzKDnovPqR0f5b8vsihHIXWc9y+1Xvb23D7rh
+         PasJdiKIzokCs7M0/V/t36zgtkhvVZYXn+TUQC+142bmTAARhT2i0+i1gSu9n5w48Kaj
+         DA0DfNURKQnvd4KpuKFUwTO9KnWHyHpXd6FrI0s13OxP2+evjnujTNYaCryJr9srO/8I
+         eEkL2QrgOCiVUjAzBXi2oqWdW+DErY1GqaB5lVk0FGASQqNadA2hE4cEZH9qJJxPo80B
+         hF5g==
+X-Gm-Message-State: AOAM532ehj/modhVdhfgAAO4yaN8SFO6YtiDVRIHhD/AvibtLQYvxGNv
+        nddVX+i3OrvSc+xh2Xahax3LtKbftFYmLAPk
+X-Google-Smtp-Source: ABdhPJxoGTF+jmO49F17rm1r53RiWDqavHKmNkl6FMddkvgVQv8x1rO57QH8eX2rdEH2xyqRsdrSKw==
+X-Received: by 2002:a05:620a:290d:b0:67d:b5f5:302a with SMTP id m13-20020a05620a290d00b0067db5f5302amr10625916qkp.399.1649371113127;
+        Thu, 07 Apr 2022 15:38:33 -0700 (PDT)
+Received: from [192.168.0.189] (modemcable134.222-177-173.mc.videotron.ca. [173.177.222.134])
+        by smtp.gmail.com with ESMTPSA id h6-20020ac85e06000000b002e1e8a98abbsm17018685qtx.41.2022.04.07.15.38.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Apr 2022 15:38:32 -0700 (PDT)
+Subject: Re: [PATCH] arm64: dts: qcom: sm8450: delete incorrect ufs
+ interconnect fields
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org
+References: <20220407172145.31903-1-jonathan@marek.ca>
+ <e41c26c2-8aa4-cfd2-27b0-eb011f45eda0@linaro.org>
+ <865ff6bc-95a2-8b39-5cf2-bb2d3f592c5a@linaro.org>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <f1fb2d71-4adf-bcc7-76b3-c7102ab9f2e9@marek.ca>
+Date:   Thu, 7 Apr 2022 18:38:34 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+In-Reply-To: <865ff6bc-95a2-8b39-5cf2-bb2d3f592c5a@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
         T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -114,27 +85,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 7 Apr 2022 12:23:31 -0300
-Jason Gunthorpe <jgg@nvidia.com> wrote:
-
-> On Thu, Apr 07, 2022 at 04:17:11PM +0100, Robin Murphy wrote:
+On 4/7/22 5:16 PM, Krzysztof Kozlowski wrote:
+> On 07/04/2022 21:40, Vladimir Zapolskiy wrote:
+>> On 4/7/22 20:21, Jonathan Marek wrote:
+>>> Upstream sm8450.dtsi has #interconnect-cells = <2>; so these are wrong.
+>>> Ignored and undocumented with upstream UFS driver so delete for now.
 > 
-> > For the specific case of overriding PCIe No Snoop (which is more problematic
-> > from an Arm SMMU PoV) when assigning to a VM, would that not be easier
-> > solved by just having vfio-pci clear the "Enable No Snoop" control bit in
-> > the endpoint's PCIe capability?  
+> This is the upstream and they are documented here, although as pointed
+> by Vladimir this was rather a reverse-documentation. The documentation
+> might be incorrect, but then the bindings should be corrected instead of
+> only modifying the DTS.
 > 
-> Ideally.
+>>
+>> Basically the description was added by a commit 462c5c0aa798 ("dt-bindings: ufs:
+>> qcom,ufs: convert to dtschema").
+>>
+>> It's questionable, if an example in the new yaml file is totally correct
+>> in connection to the discussed issue.
 > 
-> That was rediscussed recently, apparently there are non-compliant
-> devices and drivers that just ignore the bit. 
+> To be honest - the example probably is not correct, because it was based
+> on existing DTS without your patch. :)
 > 
-> Presumably this is why x86 had to move to an IOMMU enforced feature..
+> Another question is whether the interconnect properties are here correct
+> at all. I assumed that DTS is correct because it should describe the
+> hardware, even if driver does not use it. However maybe that was a false
+> assumption...
+> 
 
-I considered this option when implementing the current solution, but
-ultimately I didn't have confidence in being able to prevent drivers
-from using device specific means to effect the change anyway.  GPUs
-especially have various back channels to config space.  Thanks,
+writing-bindings.rst says it is OK to document even if it isn't used by 
+the driver (seems wrong to me, at least for interconnects which are a 
+firmware abstraction and not hardware).
 
-Alex
+462c5c0aa798 wasn't in my 5.17+ tree pulled after dts changes were 
+merged (I guess doc changes come later), so my commit message is 
+incorrect, but I think it makes more sense to have the documentation 
+reflect the driver. Its also not an important issue, so I'll let others 
+sort it out.
 
+> 
+> Best regards,
+> Krzysztof
+> 
