@@ -2,97 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C09934F721E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Apr 2022 04:33:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A16174F7519
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Apr 2022 07:12:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231706AbiDGCf3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Apr 2022 22:35:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57380 "EHLO
+        id S237482AbiDGFOx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Apr 2022 01:14:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231450AbiDGCf0 (ORCPT
+        with ESMTP id S234584AbiDGFOt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Apr 2022 22:35:26 -0400
-Received: from out203-205-251-59.mail.qq.com (out203-205-251-59.mail.qq.com [203.205.251.59])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2D951FCD25
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Apr 2022 19:33:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
-        s=s201512; t=1649298800;
-        bh=EE9E+vmbSiL+K//wojxGVNYmWUWjLLsXN8IgKVrebUk=;
-        h=From:To:Cc:Subject:Date;
-        b=ivRlrVJoT0v+mTOzm6s/oAswDYTw+6ltGyTev/vN479NeRYUxDCaUkQy2dd6kbZQQ
-         8i2Y+CMdwoWrGDFguSlR6zamuBgxvSCDnLB4JoAye1qBO/xudMiCRG/JfUWTmVzDj+
-         gsMHp2L5lK4T373oN8Su5kslSjWu7SsjSkN/znsQ=
-Received: from localhost.localdomain ([43.227.138.48])
-        by newxmesmtplogicsvrszb6.qq.com (NewEsmtp) with SMTP
-        id 8082725D; Thu, 07 Apr 2022 10:32:08 +0800
-X-QQ-mid: xmsmtpt1649298728tccwz3535
-Message-ID: <tencent_8E2A1C78140EE1784AB2FF4B2088CC0AB908@qq.com>
-X-QQ-XMAILINFO: NSMIDlHhjvLjbXcmEjGjYtMMB+VxtOCuqM52WBMXPTZa5F9/hJEebwSU+dSyh+
-         7DH+K4JCzvWDAE2eWZm4BoFyPznmN7xhHELxv+2zcDNzm5tG/NvjSbBPXMoIRXICEgy7IPe3Mkbg
-         2YvBRmYADVDi2NnIBnTxVNEVk0s6jPXhUDMnnwPwS8tGvymQkEHYOyVVwabh8PHONsCr8UxennEI
-         2rczCZMJhDKnn1SsowQH20yEc8UvqiCnyEPR1UvJKVeCh1B/XWoyx98Dxa8i9K3c+nkhrHFQmfiJ
-         EefFHV4HCPA2Jdvgh++/jgIZRWJy9qQn/3wVevqYub1ZqJfFY7/owJzgDnQqNqIsrR4cdHzp9oA/
-         VGn59ERTFRjezkhVk2qVVfky8SkvymTT18b08Ltmy+Mg/KLztiv4FVXL6f0mW6Q7LXoqJpu4pRmj
-         f8JcbGA+cZGAkznfpPo7FVbfpTLXnOgj7z7VlR0ZwRuHxaeTiDPQioe5BbZK1yivn0HtM5IvSFHo
-         EmlrIe9r4UAScMtBOqJjAXaKC2vtaS2K2qFf6DQizXTeOjNIk2r1mpbNK+wCPXsOy2WRT7NlHjZ1
-         boNu7eNzS84EfqN/NU9Uiujal69kaQ8wS767eTRNkOqIj6JAeU0HhJAxS0gf87joAL9bCyyLncSq
-         Xuutjrjh9Q+FlJ7LwIZIu0ZB29VTnnBwVcEL8I3elo1lQ/454vlId/Ht8P3pUka77/zJrWcyu34z
-         d1fMesTcUmBq6Woqwe96DhUcbdUktUtUupCNLVP+rXQ5ZOCj+1wWRU+00Mqz/Yp95ezOHsrUM5ZJ
-         g+A4q2PCokVhj8QtZoPOJ/B78AeGQXPY5AaL9tfYm/5BwLdyp/NYvLJUlrWNUD5lctGJSMCbVGm1
-         npco49BZrkNCXZjLY9ZUJXOonZOP6rux1flXJ/f5YPvHFEGCFrBRA/PO2Y1FjfK2Q9mRMlvQUh6m
-         VpUX3Nun3qh06suqvJlQ==
-From:   xkernel.wang@foxmail.com
-To:     robdclark@gmail.com, quic_abhinavk@quicinc.com
-Cc:     sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Xiaoke Wang <xkernel.wang@foxmail.com>
-Subject: [PATCH v2] drm/msm/mdp5: check the return of kzalloc()
-Date:   Thu,  7 Apr 2022 10:31:51 +0800
-X-OQ-MSGID: <20220407023151.13663-1-xkernel.wang@foxmail.com>
+        Thu, 7 Apr 2022 01:14:49 -0400
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 087C295A04;
+        Wed,  6 Apr 2022 22:12:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1649308369; x=1680844369;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=WRHcwAZsrJSbQqVeku+LCjPc+dm4mQsYd2guFxSdvzM=;
+  b=YlgnlEVN0s3P75zZTRifc2VE/O+DuHooQrXElTrgPNw/83M+6DrYZh6s
+   5DmwdpY44NCub6kQbaoTW0ooP7usgQHFFr4ds69k4JUjF7VRri62/+zon
+   MUiZdmxSvK1z11ErhFuOlbX70WpP87fywwcRtbM3xoISnpbD4cIjYGtVy
+   w=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 06 Apr 2022 22:12:48 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Apr 2022 22:12:48 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 6 Apr 2022 22:12:48 -0700
+Received: from [10.216.2.192] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 6 Apr 2022
+ 22:12:43 -0700
+Subject: Re: [PATCH V9 4/6] regulator: Add a regulator driver for the PM8008
+ PMIC
+To:     Stephen Boyd <swboyd@chromium.org>, Mark Brown <broonie@kernel.org>
+CC:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_collinsd@quicinc.com>,
+        <quic_subbaram@quicinc.com>, <quic_jprakash@quicinc.com>
+References: <1649166633-25872-1-git-send-email-quic_c_skakit@quicinc.com>
+ <1649166633-25872-5-git-send-email-quic_c_skakit@quicinc.com>
+ <CAE-0n53G-atsuwqcgNvi3nvWyiO3P=pSj5zDUMYj0ELVYJE54Q@mail.gmail.com>
+ <Yk1B4f51WMGIV9WB@sirena.org.uk>
+ <CAE-0n53Cv_bR92M64dhdnDge_=_jeOs4VZzDhUkksN90Y7rgog@mail.gmail.com>
+ <Yk21pdu16lyR8jXm@sirena.org.uk>
+ <CAE-0n50C8khP2x4sgNP5xnfLVMRQj2=LChyWWx1BWL+Xgecgyw@mail.gmail.com>
+ <Yk3Bfnxe/meBYokp@sirena.org.uk>
+ <CAE-0n53O23=N0zkZpg87Q3EyKquLe3WLNJT8qnZz4WEor6QK7A@mail.gmail.com>
+ <Yk3NkNK3e+fgj4eG@sirena.org.uk>
+ <CAE-0n51DJyWQKG1AsMjD1wwxx=KCyvyp7-P9BGfiRX=EKjxfdw@mail.gmail.com>
+From:   "Satya Priya Kakitapalli (Temp)" <quic_c_skakit@quicinc.com>
+Message-ID: <aae93f42-c949-0b86-6559-01a4d07fb838@quicinc.com>
+Date:   Thu, 7 Apr 2022 10:42:39 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        HELO_DYNAMIC_IPADDR,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,RDNS_DYNAMIC,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.6
+In-Reply-To: <CAE-0n51DJyWQKG1AsMjD1wwxx=KCyvyp7-P9BGfiRX=EKjxfdw@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Xiaoke Wang <xkernel.wang@foxmail.com>
 
-kzalloc() is a memory allocation function which can return NULL when
-some internal memory errors happen. So it is better to check it to
-prevent potential wrong memory access.
+On 4/6/2022 11:46 PM, Stephen Boyd wrote:
+> Quoting Mark Brown (2022-04-06 10:27:44)
+>> On Wed, Apr 06, 2022 at 10:21:01AM -0700, Stephen Boyd wrote:
+>>> Quoting Mark Brown (2022-04-06 09:36:14)
+>>>> On Wed, Apr 06, 2022 at 08:51:48AM -0700, Stephen Boyd wrote:
+>>>>> My guess is that this is one IC that responds to multiple i2c addresses.
+>>>>> The "main" qcom,pm8008 address is 0x8 and that supports things like
+>>>>> interrupts. Then there's an address for regulators at 0x9 which controls
+>>>>> the handful of LDOs on the PMIC.
+>>>> So it's like the TI TWL4030 and Palmas - in which case it should
+>>>> probably be handled similarly?
+>>> How did those work out? I wasn't involved and I don't know what you
+>>> mean. Do they have multiple i2c addresses they respond to?
+>> Yes, exactly.  The main device uses i2c_new_dummy_device() to
+>> instantiate the extras when it probes.  See twl-core.c
+> Cool. That approach sounds good to me. Then the regulators can be child
+> nodes of the qcom,pm8008 node at i2c address 0x8? It still feels like
+> making a struct driver for each regulator node is overkill and will
+> waste memory.
+>
+>>>> Note that the original sumbission was
+>>>> *also* a MFD subfunction, but using a DT compatible to match the
+>>>> platform device - this is the first I've heard of this being a separate
+>>>> I2C function.
+>>> I'm mainly looking at the dts file now. It clearly has two i2c devices
+>>> at 0x8 and 0x9. Maybe the regulator driver followed the mfd design
+>>> because the first driver for this device is an mfd.
+>> I'm guessing from the naming that they're also externally described as
+>> the same device - presumably it's two dies shoved together in the same
+>> package for some reason without being otherwise joined up.  Is the
+>> second device geniunely regulators only or does it have anything else
+>> bundled in there?
+> I think it's regulators only. Pretty sure I asked qcom this a round or
+> two ago on this patch series and they said that. Let's wait for Satya to
+> respond.
 
-Besides, since mdp5_plane_reset() is void type, so we should better
-set `plane-state` to NULL after releasing it.
 
-Signed-off-by: Xiaoke Wang <xkernel.wang@foxmail.com>
----
-ChangeLog:
-v1->v2 simplify the patch and update the description.
- drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 3 +++
- 1 file changed, 3 insertions(+)
+Yes, it contains regulators only.
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-index c6b69af..50e8542 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-@@ -90,7 +90,10 @@ static void mdp5_plane_reset(struct drm_plane *plane)
- 		__drm_atomic_helper_plane_destroy_state(plane->state);
- 
- 	kfree(to_mdp5_plane_state(plane->state));
-+	plane->state = NULL;
- 	mdp5_state = kzalloc(sizeof(*mdp5_state), GFP_KERNEL);
-+	if (!mdp5_state)
-+		return;
- 
- 	if (plane->type == DRM_PLANE_TYPE_PRIMARY)
- 		mdp5_state->base.zpos = STAGE_BASE;
--- 
